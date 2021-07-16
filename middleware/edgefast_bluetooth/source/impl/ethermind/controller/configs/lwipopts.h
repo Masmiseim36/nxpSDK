@@ -436,8 +436,7 @@
  */
 #define TCP_LISTEN_BACKLOG 1
 
-/* wmsdk; This is not needed now as error codes are taken from standard libc */
-#define LWIP_PROVIDE_ERRNO 1
+#define LWIP_ERRNO_STDINCLUDE 1
 #define ERRNO              1
 
 //#define LWIP_SNMP 1

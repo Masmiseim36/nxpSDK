@@ -202,6 +202,7 @@ struct bt_a2dp_control_cb {
 	 *  @param err a2dp configuration result.
 	 */
 	void (*configured)(struct bt_a2dp *a2dp, struct a2dp_configure_result *config);
+#if ((defined(CONFIG_BT_A2DP_SINK)) && (CONFIG_BT_A2DP_SINK > 0U))
 	/** @brief The media streaming is started, only for sink.*/
 	bt_a2dp_start_cb_t sink_start_play;
 	/** @brief the media streaming is suspended, only for sink.*/
@@ -212,6 +213,7 @@ struct bt_a2dp_control_cb {
 	 *  @param err error code.
 	 */
 	void (*sink_streamer_data)(struct bt_a2dp *a2dp, uint8_t *data, uint32_t length);
+#endif
 };
 
 /** @brief The connecting callback */
@@ -357,6 +359,7 @@ int bt_a2dp_configure_endpoint(struct bt_a2dp *a2dp, struct bt_a2dp_endpoint *en
  */
 int bt_a2dp_deconfigure(struct bt_a2dp *a2dp, bt_a2dp_deconfigure_cb_t cb);
 
+#if ((defined(CONFIG_BT_A2DP_SOURCE)) && (CONFIG_BT_A2DP_SOURCE > 0U))
 /** @brief start a2dp streamer, it is source only.
  *
  *  @param a2dp The a2dp instance.
@@ -374,6 +377,7 @@ int bt_a2dp_src_start(struct bt_a2dp *a2dp, bt_a2dp_start_cb_t cb);
  *  @return 0 in case of success and error code in case of error.
  */
 int bt_a2dp_src_suspend(struct bt_a2dp *a2dp, bt_a2dp_suspend_cb_t cb);
+#endif
 
 /** @brief get the peer's endpoint information that is configured.
  *
@@ -397,6 +401,7 @@ struct bt_a2dp_endpoint *bt_a2dp_get_configured_peer_endpoint(struct bt_a2dp *a2
 int bt_a2dp_reconfigure(struct bt_a2dp *a2dp, struct bt_a2dp_preset *config,
 		bt_a2dp_configure_cb_t cb);
 
+#if ((defined(CONFIG_BT_A2DP_SOURCE)) && (CONFIG_BT_A2DP_SOURCE > 0U))
 /** @brief send a2dp streamer data
  *
  *  @param a2dp The a2dp instance.
@@ -406,7 +411,9 @@ int bt_a2dp_reconfigure(struct bt_a2dp *a2dp, struct bt_a2dp_preset *config,
  *  @return 0 in case of success and error code in case of error.
  */
 int bt_a2dp_src_media_write(struct bt_a2dp *a2dp, uint8_t *data, uint16_t datalen);
+#endif
 
+#if ((defined(CONFIG_BT_A2DP_SINK)) && (CONFIG_BT_A2DP_SINK > 0U))
 /** @brief notify the streamer data is consumed.
  *
  *  The streamer data is received in sink_streamer_data callback
@@ -418,6 +425,7 @@ int bt_a2dp_src_media_write(struct bt_a2dp *a2dp, uint8_t *data, uint16_t datale
  *  @return 0 in case of success and error code in case of error.
  */
 int bt_a2dp_snk_media_sync(struct bt_a2dp *a2dp, uint8_t *data, uint16_t datalen);
+#endif
 
 #ifdef __cplusplus
 }

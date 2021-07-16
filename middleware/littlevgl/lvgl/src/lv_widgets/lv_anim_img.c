@@ -432,17 +432,11 @@ static lv_res_t lv_anim_img_signal(lv_obj_t * img, lv_signal_t sign, void * para
 
 static void index_change(lv_obj_t * obj, lv_anim_value_t index)
 {
-    lv_anim_img_ext_t * ext_attr = lv_obj_get_ext_attr(obj);
+	lv_coord_t idx;
 
-    if(index == ext_attr->pic_count) {
-        return;
-    }
-
-    if(ext_attr->last_index != index) {
-        lv_anim_img_set_src(obj, ext_attr->dsc[index]);
-        ext_attr->last_index = index;
-    }
-
+	lv_anim_img_ext_t * ext_attr = lv_obj_get_ext_attr(obj);
+	idx = index % ext_attr->pic_count;
+	lv_anim_img_set_src(obj, ext_attr->dsc[idx]);
 }
 
 

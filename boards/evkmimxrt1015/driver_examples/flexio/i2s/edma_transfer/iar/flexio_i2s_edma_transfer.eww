@@ -9,10 +9,6 @@
       </member>
       <member>
         <project>flexio_i2s_edma_transfer</project>
-        <configuration>debug</configuration>
-      </member>
-      <member>
-        <project>flexio_i2s_edma_transfer</project>
         <configuration>flexspi_nor_debug</configuration>
       </member>
       <member>
@@ -25,13 +21,6 @@
       <member>
         <project>flexio_i2s_edma_transfer</project>
         <configuration>release</configuration>
-      </member>
-    </batchDefinition>
-    <batchDefinition>
-      <name>debug</name>
-      <member>
-        <project>flexio_i2s_edma_transfer</project>
-        <configuration>debug</configuration>
       </member>
     </batchDefinition>
     <batchDefinition>

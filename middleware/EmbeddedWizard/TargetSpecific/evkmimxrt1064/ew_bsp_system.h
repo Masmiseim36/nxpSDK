@@ -19,7 +19,7 @@
 ********************************************************************************
 *
 * DESCRIPTION:
-*   This file is part of the interface (glue layer) between an Embedded Wizard 
+*   This file is part of the interface (glue layer) between an Embedded Wizard
 *   generated UI application and the board support package (BSP) of a dedicated
 *   target.
 *   This template is responsible to configurate the entire system (CPU clock,
@@ -39,10 +39,11 @@
 
 /*******************************************************************************
 * FUNCTION:
-*   EwBspConfigSystem
+*   EwBspSystemInit
 *
 * DESCRIPTION:
-*   Configuration of system components (CPU clock, memory, qspi, ...)
+*   The function EwBspSystemInit initializes the system components. 
+*   (CPU clock, memory, qspi, ...)
 *
 * ARGUMENTS:
 *   None
@@ -51,7 +52,27 @@
 *   None
 *
 *******************************************************************************/
-void EwBspConfigSystem
+void EwBspSystemInit
+( 
+  void
+);
+
+
+/*******************************************************************************
+* FUNCTION:
+*   EwBspSystemDone
+*
+* DESCRIPTION:
+*   The function EwBspSystemDone terminates the system components.
+*
+* ARGUMENTS:
+*   None
+*
+* RETURN VALUE:
+*   None
+*
+*******************************************************************************/
+void EwBspSystemDone
 ( 
   void
 );

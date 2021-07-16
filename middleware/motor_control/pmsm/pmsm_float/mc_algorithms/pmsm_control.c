@@ -144,8 +144,8 @@ void MCS_PMSMFocCtrl(mcs_pmsm_foc_t *psFocPMSM)
 void MCS_PMSMFocCtrlSpeed(mcs_speed_t *psSpeed)
 {
     /* Speed saturation flag given by the Q current controller saturation flag and speed controller saturation flag */
-    psSpeed->bSpeedPiStopInteg = (psSpeed->sSpeedPiParams.bLimFlag | psSpeed->bIqPiLimFlag) &
-                                 (MLIB_Abs_FLT(psSpeed->fltSpeedCmd) >= MLIB_Abs_FLT(psSpeed->fltSpeedFilt));
+    psSpeed->bSpeedPiStopInteg = (bool_t)((psSpeed->sSpeedPiParams.bLimFlag | psSpeed->bIqPiLimFlag) &
+    		(bool_t)(MLIB_Abs_FLT(psSpeed->fltSpeedCmd) >= MLIB_Abs_FLT(psSpeed->fltSpeedFilt)));
 
     /* Speed ramp generation */
     psSpeed->fltSpeedRamp = GFLIB_Ramp_FLT(psSpeed->fltSpeedCmd, &psSpeed->sSpeedRampParams);
@@ -187,7 +187,7 @@ void MCS_PMSMFocCtrlPosition(mcs_position_t *psPosition)
 void MCS_PMSMAlignment(mcs_alignment_t *psAlignment)
 {
     /* first half duration time is position set to 120 degree */
-    if (psAlignment->ui16TimeHalf > 0)
+    if (psAlignment->ui16TimeHalf > 0U)
     {
         psAlignment->f16PosAlign = FRAC16(120.0 / 180.0);
         psAlignment->ui16TimeHalf--;
@@ -260,11 +260,15 @@ void MCS_PMSMScalarCtrl(mcs_pmsm_scalar_ctrl_t *psScalarPMSM)
 
     /* voltage limitation to f16UqMin */
     if (psScalarPMSM->sUDQReq.fltQ >= 0.0F)
+    {
         psScalarPMSM->sUDQReq.fltQ = GFLIB_LowerLimit_FLT(psScalarPMSM->sUDQReq.fltQ,
                                                                      psScalarPMSM->fltUqMin);
+    }
     else
+    {
         psScalarPMSM->sUDQReq.fltQ = GFLIB_UpperLimit_FLT(psScalarPMSM->sUDQReq.fltQ,
                                                                      MLIB_Neg_FLT(psScalarPMSM->fltUqMin));
+    }
 
     /* stator voltage angle , used the same integrator as for the open-loop start up*/
     psScalarPMSM->f16PosElScalar = GFLIB_Integrator_F16(
@@ -292,8 +296,8 @@ static void MCS_DTComp(GMCLIB_2COOR_ALBE_T_FLT *sUAlBeDTComp,
     fltUerrMax = *pfltUDtComp;
 
     /* compensate phase A */
-    i16CurrSign = (sIABC->fltA > fltPwrStgCharIRange) - (sIABC->fltA < -fltPwrStgCharIRange);
-    if (!i16CurrSign)
+    i16CurrSign = (int16_t)((sIABC->fltA > fltPwrStgCharIRange) - (sIABC->fltA < -fltPwrStgCharIRange));
+    if (!(bool_t)(i16CurrSign))
     {
         sUABCErr.fltA = GFLIB_Lut1D_FLT(sIABC->fltA, pfltUDtComp, &sLUTUDtComp);
     }
@@ -304,8 +308,8 @@ static void MCS_DTComp(GMCLIB_2COOR_ALBE_T_FLT *sUAlBeDTComp,
     }
 
     /* compensate phase B */
-    i16CurrSign = (sIABC->fltB > fltPwrStgCharIRange) - (sIABC->fltB < -fltPwrStgCharIRange);
-    if (!i16CurrSign)
+    i16CurrSign = (int16_t)((sIABC->fltB > fltPwrStgCharIRange) - (sIABC->fltB < -fltPwrStgCharIRange));
+    if (!(bool_t)(i16CurrSign))
     {
         sUABCErr.fltB = GFLIB_Lut1D_FLT(sIABC->fltB, pfltUDtComp, &sLUTUDtComp);
     }
@@ -316,8 +320,8 @@ static void MCS_DTComp(GMCLIB_2COOR_ALBE_T_FLT *sUAlBeDTComp,
     }
 
     /* compensate phase C */
-    i16CurrSign = (sIABC->fltC > fltPwrStgCharIRange) - (sIABC->fltC < -fltPwrStgCharIRange);
-    if (!i16CurrSign)
+    i16CurrSign = (int16_t)((sIABC->fltC > fltPwrStgCharIRange) - (sIABC->fltC < -fltPwrStgCharIRange));
+    if (!(bool_t)(i16CurrSign))
     {
         sUABCErr.fltC = GFLIB_Lut1D_FLT(sIABC->fltC, pfltUDtComp, &sLUTUDtComp);
     }

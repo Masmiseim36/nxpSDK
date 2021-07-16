@@ -266,7 +266,6 @@ uint32_t HTTPSRV_init(HTTPSRV_PARAM_STRUCT *params);
 
 /*
 ** Stop and release HTTP server
-** Returns HTTPSRV_OK when successful, HTTPSRV_ERR otherwise.
 */
 void HTTPSRV_release(uint32_t server_h);
 

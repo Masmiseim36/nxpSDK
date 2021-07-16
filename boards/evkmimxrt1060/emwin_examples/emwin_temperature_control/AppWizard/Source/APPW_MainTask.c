@@ -3,7 +3,7 @@
 *        Solutions for real time microcontroller applications        *
 **********************************************************************
 *                                                                    *
-*        (c) 1996 - 2020  SEGGER Microcontroller GmbH                *
+*        (c) 1996 - 2021  SEGGER Microcontroller GmbH                *
 *                                                                    *
 *        Internet: www.segger.com    Support:  support@segger.com    *
 *                                                                    *
@@ -29,6 +29,10 @@ void MainTask(void) {
   // Initialize AppWizard
   //
   APPW_Init(APPW_PROJECT_PATH);
+  //
+  // Create all persistent screens except initial screen
+  //
+  APPW_CreatePersistentScreens();
   //
   // Create initial screen...
   //

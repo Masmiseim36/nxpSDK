@@ -50,6 +50,10 @@ typedef struct
 {
     os_thread_t wm_wifi_main_thread;
     os_thread_t wm_wifi_core_thread;
+#ifdef CONFIG_WMM
+    /** Thread handle for sending data */
+    os_thread_t wm_wifi_driver_tx;
+#endif
     os_queue_t *wlc_mgr_event_queue;
 
     void (*data_intput_callback)(const uint8_t interface, const uint8_t *buffer, const uint16_t len);
@@ -60,11 +64,19 @@ typedef struct
     os_mutex_t command_lock;
     os_semaphore_t command_resp_sem;
     os_mutex_t mcastf_mutex;
-
+#ifdef CONFIG_WMM
+    /** Semaphore to protect data parameters */
+    os_semaphore_t tx_data_sem;
+#endif
     unsigned last_sent_cmd_msec;
 
     /* Queue for events/data from low level interface driver */
     os_queue_t io_events;
+#ifdef CONFIG_WMM
+    /** Queue for sending data packets to fw */
+    os_queue_t tx_data;
+    os_queue_pool_t tx_data_queue_data;
+#endif
     os_queue_pool_t io_events_queue_data;
 
     mcast_filter *start_list;
@@ -112,6 +124,19 @@ typedef struct
     t_u8 chan_num;
     /** HT Capability Info */
     t_u16 ht_cap_info;
+#ifdef CONFIG_WMM
+    /** Outbuf index */
+    t_u8 pkt_index[MAX_AC_QUEUES];
+    /** packet count */
+    t_u8 pkt_cnt[MAX_AC_QUEUES];
+    /** send packet index */
+    t_u8 send_index[MAX_AC_QUEUES];
+    /** WMM queues block lengths */
+    t_u32 bk_pkt_len[BK_MAX_BUF];
+    t_u32 be_pkt_len[BE_MAX_BUF];
+    t_u32 vi_pkt_len[VI_MAX_BUF];
+    t_u32 vo_pkt_len[VO_MAX_BUF];
+#endif
 #ifdef CONFIG_WIFI_FW_DEBUG
     /** This function mount USB device.
      *

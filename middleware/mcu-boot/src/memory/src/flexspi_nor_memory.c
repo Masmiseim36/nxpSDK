@@ -1139,12 +1139,14 @@ bool is_flexspi_nor_configured()
     return s_flexspiNorContext.isConfigured;
 }
 
+#if BL_FEATURE_FLEXSPI_ALIAS_AREA
 //! @brief Convert flexspi alias address to amba address.
 static uint32_t flexspi_get_map_address(uint32_t aliasAddr)
 {
     // Currently for RT1170/RT1160 only
     return aliasAddr + (g_memoryMap[kIndexFlexSpiNor].startAddress - g_memoryMap[kIndexFlexSpiNorAlias].startAddress);
 }
+#endif
 
 //! @brief Convert flexspi amba address to physical address
 static uint32_t flexspi_get_phy_address(uint32_t mapAddr)

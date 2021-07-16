@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 NXP
+ * Copyright 2018 ,2021 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -45,8 +45,14 @@ extern "C" {
 void BOARD_InitBootPins(void);
 
 /* GPIO_AD_B0_06 (number 105), UART1_TXD/J17[6] */
+/* Routed pin properties */
+#define BOARD_INITPINS_UART1_TXD_PERIPHERAL                              LPUART1   /*!< Peripheral name */
+#define BOARD_INITPINS_UART1_TXD_SIGNAL                                       TX   /*!< Signal name */
 
 /* GPIO_AD_B0_07 (number 101), UART1_RXD/J17[4] */
+/* Routed pin properties */
+#define BOARD_INITPINS_UART1_RXD_PERIPHERAL                              LPUART1   /*!< Peripheral name */
+#define BOARD_INITPINS_UART1_RXD_SIGNAL                                       RX   /*!< Signal name */
 
 
 /*!

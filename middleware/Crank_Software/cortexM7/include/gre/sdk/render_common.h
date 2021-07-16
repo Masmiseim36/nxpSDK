@@ -86,37 +86,73 @@ typedef struct _gr_render_font_info {
 
 /*
  * Convert a dimension to a rectangle
- * @param rect The rect to return, left and top can be preset with an offset
+ * 
+ * @param rect The gr_render_rect_t rect to convert 
+ * The rect to return, left and top can be preset with an offset
  * @param size The dimensions to convert
  */
-DLLExport void	gr_size_to_rect(gr_render_rect_t *rect, gr_render_size_t *size);
+#define gr_size_to_rect(_rect, _size) {							\
+		(_rect)->right = (_rect)->left + (_size)->width - 1;	\
+		(_rect)->bottom = (_rect)->top + (_size)->height - 1;	\
+	}
 
 /*
  * Get the dimensions of a rectangle
- * @param rect The rect to convert
- * @param size A location to store the size
- */
-DLLExport void	gr_rect_to_size(gr_render_rect_t *rect, gr_render_size_t *size);
+ * 
+ * @param rect The gr_render_rect_t rect to convert
+ * @param size The gr_render_size_t to contain the size
+ */	
+#define gr_rect_to_size(_rect, _size) {							\
+		(_size)->width = (_rect)->right - (_rect)->left + 1;  	\
+		(_size)->height = (_rect)->bottom - (_rect)->top + 1;	\
+	}
 
 /*
  * Translate a rectangle
- * @param rect 	The rect to translate
+ * 
+ * @param rect 	The gr_render_rect_t rect to translate
  * @param x 	The x offset
  * @param y 	The y offset
  */
-DLLExport void	gr_translate_rect(gr_render_rect_t *rect, int x, int y);
+#define gr_translate_rect(_rect, _x, _y) {			\
+		int _tx = (_x);								\
+		int _ty = (_y);								\
+		(_rect)->left += (_tx);						\
+		(_rect)->right += (_tx);					\
+		(_rect)->top += (_ty);						\
+		(_rect)->bottom += (_ty);					\
+	}
 
 /*
- * Does the given point intersect the rectangle
+ * Determine if a point lies within the bounds of a rectangle
+ * 
  * @param x 	The x position to check
  * @param y 	The y position to check
- * @param rect 	The rectangle to check
+ * @param rect 	The gr_render_rect_t rect
  * @returns 1 for intersection, 0 on non intersection
  */
-DLLExport int 	gr_point_in_rect(int x, int y, gr_render_rect_t *rect);
+#define gr_point_in_rect(_x, _y, _rect)				\
+	(((_x) < (_rect)->left) || 						\
+	 ((_y) < (_rect)->top) || 						\
+	 ((_x) > (_rect)->right) || 					\
+	 ((_y) > (_rect)->bottom)) ? 0 : 1
+
+/*
+ * Determine if one rectangle is fully enclosed in another rectangle
+ * 
+ * @param outside The larger (outside) gr_render_rect_t
+ * @param inside The smaller (inside) gr_render_rect_t
+ * @returns	1 if inside is fully contained within outside
+ */
+#define gr_rect_in_rect(_outside, _inside) 				\
+	(((_inside)->left >= (_outside)->left) && 			\
+	 ((_inside)->right <= (_outside)->right) &&			\
+	 ((_inside)->top >= (_outside)->top) && 				\
+	 ((_inside)->bottom <= (_outside)->bottom)) ? 1 : 0
 
 /*
  * Combine the src rectangle with the destination, the destination may be modified
+ * 
  * @param dst The destination rectangle
  * @param src The source rectangle
  */
@@ -124,16 +160,18 @@ DLLExport void 	gr_rect_combine(gr_render_rect_t *dst, gr_render_rect_t *src);
 
 /*
  * Calculate if a rectangle intersects a rectangle list.  And optionally merge this rect with the list
+ * 
  * @param rect 		The rectangle to check
- * @param list 		The list of rectangle to check against
+ * @param list 		A list of existing non-self-intersecting rectangles to check against
  * @param list_size The number of rectangles in the list
- * @param merge  	If non-zero then this rectangle will be MERGED/added into the list. End result is not an intersection
- * @returns 1 if the rectangle intersects the list, 0 on failure
+ * @param merge  	If non-zero then this rectangle will be MERGED into the list if an intersection is found
+ * @returns 0 on failure to intersect, otherwise the size of the rectangle list (always non-zero may get smaller than list_size on intersect)
  */
 DLLExport int 	gr_rect_intersect(gr_render_rect_t *rect, gr_render_rect_t *list, unsigned list_size, unsigned merge);
 
 /*
  * Calculate the bounding rectangle of a rectangle list
+ * 
  * @param bounds The location to store the returned rectangle
  * @param list The rectangle list
  * @param list_size The number of rectangles in the list
@@ -142,6 +180,7 @@ DLLExport void 	gr_rect_bounds(gr_render_rect_t *bounds, gr_render_rect_t *list,
 
 /*
  * Rotate a rectangle
+ * 
  * @param rect 		The source rectangle to rotate
  * @param bounds 	The bounding size of the new rectangle
  * @param rotation 	The degrees to rotate
@@ -150,18 +189,11 @@ DLLExport void 	gr_rect_rotate_bounds(gr_render_rect_t *rect, gr_render_size_t *
 
 /*
  * Rotate a rectangle with float precision
+ * 
  * @param rect 		The source rectangle to rotate
  * @param bounds 	The bounding size of the new rectangle
  * @param rotation 	The degrees to rotate
  */
 DLLExport void 	gr_rect_rotate_bounds_f(gr_render_rect_t *rect, float *width, float *height, gr_float_t rotation);
-
-/*
- * Determines if a rectangle is fully contained in another rectangle
- * @param rect 		The 'larger' rectangle
- * @param check 	The rectangle to check for containment
- * @returns	1 if check is fully contained inside rect
- */
-DLLExport int gr_rect_in_rect(gr_render_rect_t *rect, gr_render_rect_t *check);
 
 #endif /* GR_RENDER_COMMON_H */

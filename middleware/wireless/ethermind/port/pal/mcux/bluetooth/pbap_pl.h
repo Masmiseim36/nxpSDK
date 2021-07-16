@@ -18,7 +18,7 @@
 
 /* --------------------------------------------- Global Definitions */
 /* Max Folder Name length */
-#define PBAP_FOLDER_NAME_LEN                100
+#define PBAP_FOLDER_NAME_LEN                100U
 
 /* Reference folder for PBAP Client objects */
 #define   APPL_PBAP_FOLDER_REFERENCE \
@@ -28,20 +28,29 @@
 #define PBAP_ROOT_FOLDER_BASE \
     BT_FOPS_PATH_JOIN(BT_FOPS_BASE,"data" BT_FOPS_PATH_SEP "pbap" BT_FOPS_PATH_SEP "phonebook")
 
+/* Base folder for PBAP objects */
+#define PBAP_TELECOM_PB_FOLDER          "telecom/pb"
+#define PBAP_TELECOM_MCH_FOLDER         "telecom/mch"
+#define PBAP_TELECOM_OCH_FOLDER         "telecom/och"
+#define PBAP_TELECOM_ICH_FOLDER         "telecom/ich"
+#define PBAP_TELECOM_SPD_FOLDER         "telecom/spd"
+#define PBAP_TELECOM_FAV_FOLDER         "telecom/fav"
+#define PBAP_TELECOM_CCH_FOLDER         "telecom/cch"
+
 #define PBAP_PB_LISTING_FILE_NAME           "vcard_listing.xml"
 #define PBAP_PB_NAME                        "pb.vcf"
 #define PBAP_VCARD_NAME                     "vcard.obj"
 #define PBAP_ROOT_FOLDER                    "root"
 
-#define MAX_VCARDS                          20
-#define MAX_VCARD_PROPERTIES                20
-#define MAX_VCARD_PROP_PARAMS               4
+#define MAX_VCARDS                          20U
+#define MAX_VCARD_PROPERTIES                20U
+#define MAX_VCARD_PROP_PARAMS               4U
 
-#define MAX_VCARD_NAME_LEN                  64
-#define MAX_VCARD_TEL_LEN                   20
-#define MAX_VCARD_UID_LEN                   32
+#define MAX_VCARD_NAME_LEN                  64U
+#define MAX_VCARD_TEL_LEN                   20U
+#define MAX_VCARD_UID_LEN                   32U
 
-#define MAX_PBAP_FILE_OBJ_NAME_LEN          128
+#define MAX_PBAP_FILE_OBJ_NAME_LEN          128U
 
 /* --------------------------------------------- Structures/Data Types */
 
@@ -148,38 +157,38 @@ typedef struct _PBAP_VCARD_LIST
 #endif /* PBAP_DEBUG */
 
 /* vCard Property Bit Mask Defines */
-#define     VCARD_PROP_BIT_MASK_VERSION                     0x00000001
-#define     VCARD_PROP_BIT_MASK_FN                          0x00000002
-#define     VCARD_PROP_BIT_MASK_N                           0x00000004
-#define     VCARD_PROP_BIT_MASK_PHOTO                       0x00000008
-#define     VCARD_PROP_BIT_MASK_BDAY                        0x00000010
-#define     VCARD_PROP_BIT_MASK_ADR                         0x00000020
-#define     VCARD_PROP_BIT_MASK_LABEL                       0x00000040
-#define     VCARD_PROP_BIT_MASK_TEL                         0x00000080
-#define     VCARD_PROP_BIT_MASK_EMAIL                       0x00000100
-#define     VCARD_PROP_BIT_MASK_MAILER                      0x00000200
-#define     VCARD_PROP_BIT_MASK_TZ                          0x00000400
-#define     VCARD_PROP_BIT_MASK_GEO                         0x00000800
-#define     VCARD_PROP_BIT_MASK_TITLE                       0x00001000
-#define     VCARD_PROP_BIT_MASK_ROLE                        0x00002000
-#define     VCARD_PROP_BIT_MASK_LOGO                        0x00004000
-#define     VCARD_PROP_BIT_MASK_AGENT                       0x00008000
-#define     VCARD_PROP_BIT_MASK_ORG                         0x00010000
-#define     VCARD_PROP_BIT_MASK_NOTE                        0x00020000
-#define     VCARD_PROP_BIT_MASK_REV                         0x00040000
-#define     VCARD_PROP_BIT_MASK_SOUND                       0x00080000
-#define     VCARD_PROP_BIT_MASK_URL                         0x00100000
-#define     VCARD_PROP_BIT_MASK_UID                         0x00200000
-#define     VCARD_PROP_BIT_MASK_KEY                         0x00400000
-#define     VCARD_PROP_BIT_MASK_NICKNAME                    0x00800000
-#define     VCARD_PROP_BIT_MASK_CATEGORIES                  0x01000000
-#define     VCARD_PROP_BIT_MASK_PROID                       0x02000000
-#define     VCARD_PROP_BIT_MASK_CLASS                       0x04000000
-#define     VCARD_PROP_BIT_MASK_SORT_STRING                 0x08000000
-#define     VCARD_PROP_BIT_MASK_X_IRMC_CALL_DATETIME        0x10000000
-#define     VCARD_PROP_BIT_MASK_X_BT_SPEEDDIALKEY           0x20000000
-#define     VCARD_PROP_BIT_MASK_X_BT_UCI                    0x40000000
-#define     VCARD_PROP_BIT_MASK_X_BT_UID                    0x80000000
+#define     VCARD_PROP_BIT_MASK_VERSION                     0x00000001U
+#define     VCARD_PROP_BIT_MASK_FN                          0x00000002U
+#define     VCARD_PROP_BIT_MASK_N                           0x00000004U
+#define     VCARD_PROP_BIT_MASK_PHOTO                       0x00000008U
+#define     VCARD_PROP_BIT_MASK_BDAY                        0x00000010U
+#define     VCARD_PROP_BIT_MASK_ADR                         0x00000020U
+#define     VCARD_PROP_BIT_MASK_LABEL                       0x00000040U
+#define     VCARD_PROP_BIT_MASK_TEL                         0x00000080U
+#define     VCARD_PROP_BIT_MASK_EMAIL                       0x00000100U
+#define     VCARD_PROP_BIT_MASK_MAILER                      0x00000200U
+#define     VCARD_PROP_BIT_MASK_TZ                          0x00000400U
+#define     VCARD_PROP_BIT_MASK_GEO                         0x00000800U
+#define     VCARD_PROP_BIT_MASK_TITLE                       0x00001000U
+#define     VCARD_PROP_BIT_MASK_ROLE                        0x00002000U
+#define     VCARD_PROP_BIT_MASK_LOGO                        0x00004000U
+#define     VCARD_PROP_BIT_MASK_AGENT                       0x00008000U
+#define     VCARD_PROP_BIT_MASK_ORG                         0x00010000U
+#define     VCARD_PROP_BIT_MASK_NOTE                        0x00020000U
+#define     VCARD_PROP_BIT_MASK_REV                         0x00040000U
+#define     VCARD_PROP_BIT_MASK_SOUND                       0x00080000U
+#define     VCARD_PROP_BIT_MASK_URL                         0x00100000U
+#define     VCARD_PROP_BIT_MASK_UID                         0x00200000U
+#define     VCARD_PROP_BIT_MASK_KEY                         0x00400000U
+#define     VCARD_PROP_BIT_MASK_NICKNAME                    0x00800000U
+#define     VCARD_PROP_BIT_MASK_CATEGORIES                  0x01000000U
+#define     VCARD_PROP_BIT_MASK_PROID                       0x02000000U
+#define     VCARD_PROP_BIT_MASK_CLASS                       0x04000000U
+#define     VCARD_PROP_BIT_MASK_SORT_STRING                 0x08000000U
+#define     VCARD_PROP_BIT_MASK_X_IRMC_CALL_DATETIME        0x10000000U
+#define     VCARD_PROP_BIT_MASK_X_BT_SPEEDDIALKEY           0x20000000U
+#define     VCARD_PROP_BIT_MASK_X_BT_UCI                    0x40000000U
+#define     VCARD_PROP_BIT_MASK_X_BT_UID                    0x80000000U
 
 /* --------------------------------------------- Internal Functions */
 
@@ -199,7 +208,8 @@ API_RESULT BT_pbap_build_xml_vcard_listing_pl
                /* IN */  UCHAR   *listingfile,
                /* IN */  PBAP_VCARD_LIST   * vcards,
                /* IN */  UINT16  num_vcards,
-               /* IN */  PBAP_APPL_PARAMS *appl_params
+               /* IN */  PBAP_APPL_PARAMS *appl_params,
+               /* OUT */ UINT16   *filtered_vcard_cnt
            );
 
 API_RESULT BT_pbap_get_vcard_list_pl

@@ -16,6 +16,7 @@
 
 /* ----------------------------------------- Header File Inclusion */
 #include "BT_common.h"
+
 /**
  * \addtogroup bt_utils Utilities
  * \{
@@ -45,7 +46,7 @@
 /**
  * This value determines the length of the RACP Operand Array
  */
-#define RACP_MAX_OPERAND_LEN                      20
+#define RACP_MAX_OPERAND_LEN                      20U
 /**
  * \endcond
  */
@@ -55,56 +56,56 @@
  *  Success respose code is used when the procedure requested by the sensor
  *  is successfully completed.
  */
-#define RACP_SUCCESS                              0x01
+#define RACP_SUCCESS                              0x01U
 
 /**
  *  Opcode not supported response code is used when the handling of requested
  *  opcode by the sensor is not supported.
  */
-#define RACP_OP_CODE_NOT_SUPPORTED                0x02
+#define RACP_OP_CODE_NOT_SUPPORTED                0x02U
 
 /**
  *  Invalid operator response code is used when the requested operator by the
  *  sensor is invalid or not defined by the specification.
  */
-#define RACP_INVALID_OPERATOR                     0x03
+#define RACP_INVALID_OPERATOR                     0x03U
 
 /**
  *  Operator not supported response code is used when the handling of requested
  *  operator by the sensor is not supported.
  */
-#define RACP_OPERATOR_NOT_SUPPORTED               0x04
+#define RACP_OPERATOR_NOT_SUPPORTED               0x04U
 
 /**
  *  Invalid operand response code is used when the requested operand filter
  *  type by the sensor is invalid or not defined by the specification.
  */
-#define RACP_INVALID_OPERAND                      0x05
+#define RACP_INVALID_OPERAND                      0x05U
 
 /**
  *  No records found response code is used when the sensor does not have any
  *  stored records that meet the specified criteria.
  */
-#define RACP_NO_RECORDS_FOUND                     0x06
+#define RACP_NO_RECORDS_FOUND                     0x06U
 
 /**
  *  Abort unsuccessful response code is used when the abort operation
  *  requested by the sensor cannot be processed.
  */
-#define RACP_ABORT_UNSUCCESSFUL                   0x07
+#define RACP_ABORT_UNSUCCESSFUL                   0x07U
 
 /**
  *  Procedure incomplete response code is used when the procedure requested
  *  by the sensor was required to interrupt before completion for an
  *  unspecified reason.
  */
-#define RACP_PROCEDURE_INCOMPLETE                 0x08
+#define RACP_PROCEDURE_INCOMPLETE                 0x08U
 
 /**
  *  Operand not supported response code is used when the handling of requested
  *  operand filter type by the sensor is not supported.
  */
-#define RACP_OPERAND_NOT_SUPPORTED                0x09
+#define RACP_OPERAND_NOT_SUPPORTED                0x09U
 /** \} */
 /** \} */
 
@@ -232,7 +233,6 @@ typedef struct _RACP_MODULE_T
 } RACP_MODULE_T;
 
 /** \} */
-
 /** \} */
 
 /* ----------------------------------------- Function Declarations */
@@ -299,18 +299,22 @@ API_RESULT BT_racp_register_module
  *         RACP module identifier
  *
  *  \param [in] data
+ *         RACP message
  *
  *  \param [in] data_length
+ *         RACP message length
  *
  *  \param [out] racp_req_inf
+ *         Pointer to RACP request info structure (\ref RACP_REQ_INFO)
+ *         where the RACP message is parsed and filled.
  *
  *  \return API_SUCCESS or an error code indicating reason for failure
  */
 API_RESULT BT_racp_req_handler
            (
-                /* IN */   UCHAR         racp_id,
+                /* IN */   UCHAR           racp_id,
                 /* IN */   UCHAR         * data,
-                /* IN */   UINT16        data_length,
+                /* IN */   UINT16          data_length,
                 /* OUT */  RACP_REQ_INFO * racp_req_inf
            );
 

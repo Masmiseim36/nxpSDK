@@ -21,13 +21,13 @@ extern "C" {
 
 struct EIQ_IWorker_t;
 
-typedef void (*EIQ_IWorkerUpdater_t)(struct EIQ_IWorker_t*);
+typedef void (*EIQ_IWorkerUpdater_t)(struct EIQ_IWorker_t* worker);
 
 /*! @brief Image structure */
 typedef struct EIQ_IWorker_t
 {
-  status_t (*start)(void);
-  status_t (*stop)(void);
+  void (*start)(void);
+  void (*stop)(void);
   bool (*isReady)(void);
   void (*notify)(void);
   Dims_t (*getResolution)(void);

@@ -5,8 +5,8 @@ This sample demonstrates the Storyboard engine in its low memory configuration w
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.9
-- MCUXpresso  11.3.0
+- IAR embedded Workbench  9.10.2
+- MCUXpresso  11.4.0
 
 Hardware requirements
 =====================

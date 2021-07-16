@@ -1,8 +1,7 @@
 /*
-* Copyright 2019,2020 NXP
-* All rights reserved.
 *
-* SPDX-License-Identifier: BSD-3-Clause
+* Copyright 2019,2020 NXP
+* SPDX-License-Identifier: Apache-2.0
 */
 
 /** @file */
@@ -294,6 +293,38 @@ typedef enum
     kSE05x_GP_TAG_DR_SE = 0x85,
     kSE05x_GP_TAG_RECEIPT = 0x86,
     kSE05x_GP_TAG_SCP_PARMS = 0x90,
+
+#if SSS_HAVE_APPLET_SE051_UWB
+    /** FiRaLite applet specific Tags */
+    kSE05x_FIRALITE_OID_TAG = 0x06,
+    kSE05x_FIRALITE_OPTSA_TAG = 0x80,
+    kSE05x_FIRALITE_SESSION_ID_TAG = 0x80,
+    kSE05x_FIRALITE_DISPATCH_TAG = 0x81,
+    kSE05x_FIRALITE_TUNNEL_TAG = 0x81,
+    kSE05x_FIRALITE_PROPRIETARY_CMD_TAG = 0x70,
+    kSE05x_FIRALITE_TAG_FCI_TEMPLATE = 0x6F,
+    kSE05x_FIRALITE_TAG_PROP_RSP_TEMPLATE = 0x71,
+    kSE05x_FIRALITE_TAG_STATUS = 0x80,
+    kSE05x_FIRALITE_TAG_NOTIFICATION_FORMAT = 0x80,
+    kSE05x_FIRALITE_TAG_COMMAND_OR_RESPONSE = 0x81,
+    kSE05x_FIRALITE_TAG_EVENT_ID = 0x81,
+    kSE05x_FIRALITE_TAG_EVENT_DATA = 0x82,
+    kSE05x_FIRALITE_TAG_AID = 0x84,
+    kSE05x_FIRALITE_TAG_PROPRIETARY = 0x85,
+    kSE05x_FIRALITE_TAG_NOTIFICATION = 0xE1,
+
+    /** SUS Client specific Tags */
+    kSE05x_SUS_TAG_RANGING_SESSION_KEY = 0xC0,
+    kSE05x_SUS_TAG_RESPONDER_RANGING_KEY,
+    kSE05x_SUS_TAG_PROXIMITY_DISTANCE,
+    kSE05x_SUS_TAG_ANGLE_OF_ARRIVAL,
+    kSE05x_SUS_TAG_CLIENT_DATA,
+    kSE05x_SUS_TAG_TRANSACTION_IDENTIFIER,
+    kSE05x_SUS_TAG_KEY_IDENTIFIER,
+    kSE05x_SUS_TAG_ARIBTARY_DATA,
+    kSE05x_SUS_TAG_FINALIZATION_APPLET_AID = 0XCE,
+    kSE05x_SUS_TAG_SESSION_ID,
+#endif
 } SE05x_TAG_t;
 
 #ifndef __DOXYGEN__
@@ -645,7 +676,7 @@ typedef enum
     kSE05x_TransientIndicator_TRANSIENT = 0x02,
 } SE05x_TransientIndicator_t;
 
-/** TODO */
+/** Whether object attribute is set */
 typedef enum
 {
     /** Invalid */
@@ -752,7 +783,7 @@ typedef enum
 /**
  * the maximum APDU payload length will be smaller, depending on which protocol applies, etc.
  */
-#define SE050_MAX_APDU_PAYLOAD_LENGTH 896
+#define SE050_MAX_APDU_PAYLOAD_LENGTH 892
 //#define SE050_DEFAULT_MAX_ATTEMPTS 10
 
 /** 3 MSBit for instruction characteristics. */
@@ -939,6 +970,7 @@ typedef enum
 /** Symmetric keys */
 typedef enum
 {
+    kSE05x_SymmKeyType_NA = 0,
     kSE05x_SymmKeyType_AES = kSE05x_P1_AES,
     kSE05x_SymmKeyType_DES = kSE05x_P1_DES,
     kSE05x_SymmKeyType_HMAC = kSE05x_P1_HMAC,

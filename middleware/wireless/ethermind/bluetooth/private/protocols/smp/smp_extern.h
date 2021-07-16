@@ -33,11 +33,6 @@ BT_DEFINE_MUTEX_TYPE (extern, smp_mutex)
 /** Private Address Procedure Information */
 extern SMP_PVT_ADDR smp_pvt_addr;
 
-#if (0 != BT_MAX_BONDED_LE_DEVICES)
-/** Number of bonded devices */
-extern UCHAR smp_num_bonded_device;
-#endif /* (0 != BT_MAX_BONDED_LE_DEVICES) */
-
 /** SMP Toolbox context */
 extern SMP_TBX_CONTEXT tbx_context;
 

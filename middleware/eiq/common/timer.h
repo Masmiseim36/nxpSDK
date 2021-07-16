@@ -16,7 +16,7 @@ extern "C" {
  * Prototypes
  ******************************************************************************/
  
-void TIMER_Init();
+void TIMER_Init(void);
 
 int TIMER_GetTimeInUS(void);
 

@@ -111,7 +111,7 @@ void debugHardfault(uint32_t *sp)
     sprintf(msg, "PSR         0x%08lx\n", psr);
 #endif /* 0 */
 
-    while(1);
+    while(1U);
 }
 
 #if 0

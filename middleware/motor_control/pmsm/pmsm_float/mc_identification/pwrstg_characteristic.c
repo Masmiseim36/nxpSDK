@@ -27,16 +27,16 @@ float_t fltIdfbckFilt;      /* Filtered Id feedback value */
 void MID_GetTransferCharacteristic(mid_get_char_t *sTransferCharFcn)
 {
     /* Initialisation */
-    if (sTransferCharFcn->ui16Active == 0U)
+    if (sTransferCharFcn->bActive == FALSE)
     {
-        sTransferCharFcn->ui16Active                 = TRUE;
-        sTransferCharFcn->ui16LoopCounter            = 0;
+        sTransferCharFcn->bActive                 = TRUE;
+        sTransferCharFcn->ui16LoopCounter            = 0U;
         sTransferCharFcn->fltIdReqActual             = MLIB_Neg_FLT(sTransferCharFcn->fltIdCalib);
         *(sTransferCharFcn->pfltIdReq)               = sTransferCharFcn->fltIdReqActual;
-        sTransferCharFcn->ui16LUTIndex               = 0;
-        sTransferCharFcn->sUdReqMA32Filter.fltLambda = 1.0 / 20.0;
+        sTransferCharFcn->ui16LUTIndex               = 0U;
+        sTransferCharFcn->sUdReqMA32Filter.fltLambda = 1.0F / 20.0F;
         GDFLIB_FilterMAInit_FLT(0.0, &sTransferCharFcn->sUdReqMA32Filter);
-        sTransferCharFcn->sIdfbckMA32Filter.fltLambda = 1.0 / 20.0;
+        sTransferCharFcn->sIdfbckMA32Filter.fltLambda = 1.0F / 20.0F;
         GDFLIB_FilterMAInit_FLT(0.0, &sTransferCharFcn->sIdfbckMA32Filter);
     }
 
@@ -56,15 +56,15 @@ void MID_GetTransferCharacteristic(mid_get_char_t *sTransferCharFcn)
             (sTransferCharFcn->ui16LUTIndex == 0U))
         {
             g_sMID.ui16FaultMID |= MID_FAULT_TOO_HIGH_RS;
-            sTransferCharFcn->ui16Active   = FALSE;
-            *(sTransferCharFcn->pfltIdReq) = 0.0;
+            sTransferCharFcn->bActive   = FALSE;
+            *(sTransferCharFcn->pfltIdReq) = 0.0F;
         }
         /* Check if motor is connected */
         if ((MLIB_Abs_FLT(*(sTransferCharFcn->pfltIdfbck)) < MID_K_I_50MA) && (sTransferCharFcn->ui16LUTIndex == 0U))
         {
             g_sMID.ui16FaultMID |= MID_FAULT_NO_MOTOR;
-            sTransferCharFcn->ui16Active   = FALSE;
-            *(sTransferCharFcn->pfltIdReq) = 0.0;
+            sTransferCharFcn->bActive   = FALSE;
+            *(sTransferCharFcn->pfltIdReq) = 0.0F;
         }
 
         /* Calculate voltage drop from Rs and Id */
@@ -86,8 +86,8 @@ void MID_GetTransferCharacteristic(mid_get_char_t *sTransferCharFcn)
         /* End after last current was measured */
         if (sTransferCharFcn->ui16LUTIndex >= MID_CHAR_CURRENT_POINT_NUMBERS)
         {
-            sTransferCharFcn->ui16Active   = FALSE;
-            *(sTransferCharFcn->pfltIdReq) = 0.0;
+            sTransferCharFcn->bActive   = FALSE;
+            *(sTransferCharFcn->pfltIdReq) = 0.0F;
         }
     }
 }

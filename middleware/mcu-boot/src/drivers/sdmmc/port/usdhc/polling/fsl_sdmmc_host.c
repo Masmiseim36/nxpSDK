@@ -1,35 +1,8 @@
 /*
- * The Clear BSD License
- * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2021 NXP
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted (subject to the limitations in the disclaimer below) provided
- * that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of the copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #include "fsl_sdmmc_host.h"
@@ -39,12 +12,12 @@
 #ifdef BOARD_USDHC_CD_PORT_BASE
 #include "fsl_port.h"
 #endif
-#include "microseconds/microseconds.h"
+#include "microseconds.h"
 #include "sdmmc_init.h"
 
 /*******************************************************************************
-* Definitions
-******************************************************************************/
+ * Definitions
+ ******************************************************************************/
 /* ADMA table length united as word.
  *
  * One ADMA2 table item occupy two words which can transfer maximum 0xFFFFU bytes one time.
@@ -140,7 +113,9 @@ static status_t SDMMCHOST_TransferFunction(SDMMCHOST_TYPE *base, SDMMCHOST_TRANS
         memset(&dmaConfig, 0, sizeof(usdhc_adma_config_t));
         /* config adma */
         dmaConfig.dmaMode = USDHC_DMA_MODE;
+#if !(defined(FSL_FEATURE_USDHC_HAS_NO_RW_BURST_LEN) && FSL_FEATURE_USDHC_HAS_NO_RW_BURST_LEN)
         dmaConfig.burstLen = kUSDHC_EnBurstLenForINCR;
+#endif // !FSL_FEATURE_USDHC_HAS_NO_RW_BURST_LEN
         dmaConfig.admaTable = g_usdhcAdma2Table;
         dmaConfig.admaTableWords = USDHC_ADMA_TABLE_WORDS;
     }
@@ -327,9 +302,10 @@ status_t SDMMCHOST_Init(SDMMCHOST_CONFIG *host, void *userData)
     usdhcHost->config.endianMode = USDHC_ENDIAN_MODE;
     usdhcHost->config.readWatermarkLevel = USDHC_READ_WATERMARK_LEVEL;
     usdhcHost->config.writeWatermarkLevel = USDHC_WRITE_WATERMARK_LEVEL;
+#if !(defined(FSL_FEATURE_USDHC_HAS_NO_RW_BURST_LEN) && FSL_FEATURE_USDHC_HAS_NO_RW_BURST_LEN)
     usdhcHost->config.readBurstLen = USDHC_READ_BURST_LEN;
     usdhcHost->config.writeBurstLen = USDHC_WRITE_BURST_LEN;
-
+#endif
     USDHC_Init(usdhcHost->base, &(usdhcHost->config));
 
     /* Define transfer function. */

@@ -7,6 +7,12 @@
 #define _PERIPHERALS_H_
 
 /***********************************************************************************************************************
+ * User includes
+ **********************************************************************************************************************/
+#include "lfs_mflash.h"
+
+
+/***********************************************************************************************************************
  * Included files
  **********************************************************************************************************************/
 #include "fsl_common.h"
@@ -17,41 +23,50 @@ extern "C" {
 #endif /* __cplusplus */
 
 /***********************************************************************************************************************
+ * User definitions
+ **********************************************************************************************************************/
+#define LITTLEFS_START_ADDR 0x400000
+
+
+/***********************************************************************************************************************
  * Definitions
  **********************************************************************************************************************/
 /* Definitions for BOARD_InitPeripherals functional group */
 /* Maximum block read size definition */
-#define BOARD_LITTLEFS_READ_SIZE 16
+#define LITTLEFS_READ_SIZE 16
 /* Maximum block program size definition */
-#define BOARD_LITTLEFS_PROG_SIZE 256
+#define LITTLEFS_PROG_SIZE 256
 /* Erasable block size definition */
-#define BOARD_LITTLEFS_BLOCK_SIZE 4096
+#define LITTLEFS_BLOCK_SIZE 4096
 /* Minimum block cache size definition */
-#define BOARD_LITTLEFS_CACHE_SIZE 256
+#define LITTLEFS_CACHE_SIZE 256
 /* Minimum lookahead buffer size definition */
-#define BOARD_LITTLEFS_LOOKAHEAD_SIZE 16
+#define LITTLEFS_LOOKAHEAD_SIZE 16
 
 /***********************************************************************************************************************
  * Global variables
  **********************************************************************************************************************/
-/* BOARD_LittleFS configuration */
-extern const struct lfs_config BOARD_LittleFS_config;
+/* LittleFS context */
+extern struct lfs_mflash_ctx LittleFS_ctx;
+/* LittleFS configuration */
+extern const struct lfs_config LittleFS_config;
 
 /***********************************************************************************************************************
  * Callback functions
  **********************************************************************************************************************/
-/* BOARD_LittleFS read a block region callback*/
-extern int lfs_qspiflash_read(const struct lfs_config*, lfs_block_t, lfs_off_t, void*, lfs_size_t);
-/* BOARD_LittleFS program a block region callback*/
-extern int lfs_qspiflash_prog(const struct lfs_config*, lfs_block_t, lfs_off_t, const void*, lfs_size_t);
-/* BOARD_LittleFS erase a block callback*/
-extern int lfs_qspiflash_erase(const struct lfs_config*, lfs_block_t);
-/* BOARD_LittleFS state sync callback*/
-extern int lfs_qspiflash_sync(const struct lfs_config*);
+/* LittleFS read a block region callback*/
+extern int lfs_mflash_read(const struct lfs_config*, lfs_block_t, lfs_off_t, void*, lfs_size_t);
+/* LittleFS program a block region callback*/
+extern int lfs_mflash_prog(const struct lfs_config*, lfs_block_t, lfs_off_t, const void*, lfs_size_t);
+/* LittleFS erase a block callback*/
+extern int lfs_mflash_erase(const struct lfs_config*, lfs_block_t);
+/* LittleFS state sync callback*/
+extern int lfs_mflash_sync(const struct lfs_config*);
 
 /***********************************************************************************************************************
  * Initialization functions
  **********************************************************************************************************************/
+
 void BOARD_InitPeripherals(void);
 
 /***********************************************************************************************************************

@@ -71,9 +71,6 @@
     #include "att.h"
 #endif /* ATT */
 
-#ifdef BT_ANALYZER
-#include "analyzer_interface.h"
-#endif /* BT_ANALYZER */
 
 /* ------------------------------------------- External Global Variables */
 
@@ -169,10 +166,6 @@ void ethermind_init_upper_pl (void)
 #ifdef ATT
     em_att_init();
 #endif /* ATT */
-
-#ifdef BT_ANALYZER
-    init_analyzer();
-#endif /* BT_ANALYZER */
 }
 
 

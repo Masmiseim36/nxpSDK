@@ -14,10 +14,10 @@ slave is correct.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.9
-- Keil MDK  5.33
-- GCC ARM Embedded  9.3.1
-- MCUXpresso  11.3.0
+- IAR embedded Workbench  9.10.2
+- Keil MDK  5.34
+- GCC ARM Embedded  10.2.1
+- MCUXpresso  11.4.0
 
 Hardware requirements
 =====================
@@ -33,8 +33,8 @@ LPI2C one board:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 MASTER_BOARD        CONNECTS TO         SLAVE_BOARD
 Pin Name     Board Location     Pin Name     Board Location
-LPI2C1_SCL   J23-5              LPI2C1_SCL   J23-5
-LPI2C1_SDA   J23-6              LPI2C1_SDA   J23-6
+LPI2C1_SDA   J23-5              LPI2C1_SDA   J23-5
+LPI2C1_SCL   J23-6              LPI2C1_SCL   J23-6
 GND          J24-7              GND          J24-7
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 

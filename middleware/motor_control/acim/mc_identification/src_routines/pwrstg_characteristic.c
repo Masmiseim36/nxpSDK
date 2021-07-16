@@ -21,9 +21,9 @@
 void MID_GetTrfChar(void)
 {
     /* initialization */
-    if (g_sMID.sPwrStgCh.ui16Active == 0U)
+    if (g_sMID.sPwrStgCh.bActive == FALSE)
     {
-        g_sMID.sPwrStgCh.ui16Active     = TRUE;
+        g_sMID.sPwrStgCh.bActive        = TRUE;
         g_sMID.ui32LoopCntr             = 0;
         g_sMID.sPwrStgCh.fltIReqAct     = -g_sMID.sPwrStgCh.fltICal;
         *g_sMID.sIO.pfltIdReq           = g_sMID.sPwrStgCh.fltIReqAct;
@@ -41,7 +41,7 @@ void MID_GetTrfChar(void)
                                 g_sMID.sPwrStgCh.pfltUErrLUT[g_sMID.sPwrStgCh.ui16LUTId]);
 
     /* after 300ms settling of Id start calculation */
-    if (g_sMID.ui32LoopCntr >= (MID_PWRCHR_MEASTIME * M1_MID_TIME_ONESEC))
+    if (g_sMID.ui32LoopCntr >= ((uint32_t)(MID_PWRCHR_MEASTIME * M1_MID_TIME_ONESEC)))
     {
         /* check if Rs is low enough to reach 2A */
         if ((MLIB_Abs_FLT(*g_sMID.sIO.pfltId) < (g_sMID.sPwrStgCh.fltICal - MID_RS_MIN_CURR)) &&
@@ -49,7 +49,7 @@ void MID_GetTrfChar(void)
         {
             g_sMID.ui16FaultMID |= MID_FAULT_TOO_HIGH_RS;
             *g_sMID.sIO.pfltIdReq       = 0.0F;
-            g_sMID.sPwrStgCh.ui16Active = FALSE;
+            g_sMID.sPwrStgCh.bActive = FALSE;
         }
 
         /* check if motor is connected */
@@ -57,7 +57,7 @@ void MID_GetTrfChar(void)
         {
             g_sMID.ui16FaultMID |= MID_FAULT_NO_MOTOR;
             *g_sMID.sIO.pfltIdReq       = 0.0F;
-            g_sMID.sPwrStgCh.ui16Active = FALSE;
+            g_sMID.sPwrStgCh.bActive = FALSE;
         }
 
         /* divide error voltage by DC-bus voltage */
@@ -70,9 +70,9 @@ void MID_GetTrfChar(void)
         g_sMID.ui32LoopCntr   = 0;
 
         /* end after last current was measured */
-        if (g_sMID.sPwrStgCh.ui16LUTId >= MID_PWRCHR_CURR_POINT_NUM)
+        if ((bool_t)(g_sMID.sPwrStgCh.ui16LUTId >= (uint16_t)MID_PWRCHR_CURR_POINT_NUM))
         {
-            g_sMID.sPwrStgCh.ui16Active = FALSE;
+            g_sMID.sPwrStgCh.bActive = FALSE;
             *g_sMID.sIO.pfltIdReq       = 0.0F;
         }
         else

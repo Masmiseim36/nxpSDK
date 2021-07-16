@@ -23,7 +23,7 @@
 #elif defined(SD8977)
 #include "sduart8977_wlan_bt.h"
 #elif defined(SD8978)
-#include "sduart8978_wlan_bt.h"
+#include "sduartIW416_wlan_bt.h"
 #elif defined(SD8987)
 #include "sduart8987_wlan_bt.h"
 #elif defined(SD8997)

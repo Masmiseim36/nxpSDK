@@ -9,13 +9,11 @@
 #ifndef __USB_DEVICE_DESCRIPTOR_H__
 #define __USB_DEVICE_DESCRIPTOR_H__
 
+#include "usb_audio_config.h"
 #include "usb_device_audio.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-/*! @brief Whether USB Audio use syn mode or not. */
-#define USB_DEVICE_AUDIO_USE_SYNC_MODE (0U)
-
 #define USB_DEVICE_VID (0x1FC9U)
 #define USB_DEVICE_PID (0x00A4U)
 
@@ -65,6 +63,18 @@
 #define USB_AUDIO_RECORDER_STREAM_INTERFACE_INDEX (1)
 #define USB_AUDIO_SPEAKER_STREAM_INTERFACE_INDEX  (2)
 #define USB_HID_KEYBOARD_INTERFACE_INDEX          (3)
+
+#define USB_AUDIO_CONTROL_INTERFACE_ALTERNATE_COUNT         (1)
+#define USB_AUDIO_RECORDER_STREAM_INTERFACE_ALTERNATE_COUNT (2)
+#define USB_AUDIO_SPEAKER_STREAM_INTERFACE_ALTERNATE_COUNT  (2)
+#define USB_AUDIO_CONTROL_INTERFACE_ALTERNATE_0             (0)
+#define USB_AUDIO_RECORDER_STREAM_INTERFACE_ALTERNATE_0     (0)
+#define USB_AUDIO_RECORDER_STREAM_INTERFACE_ALTERNATE_1     (1)
+#define USB_AUDIO_SPEAKER_STREAM_INTERFACE_ALTERNATE_0      (0)
+#define USB_AUDIO_SPEAKER_STREAM_INTERFACE_ALTERNATE_1      (1)
+
+#define USB_HID_KEYBOARD_INTERFACE_ALTERNATE_COUNT (1)
+#define USB_HID_KEYBOARD_INTERFACE_ALTERNATE_0     (0)
 
 #if defined(USB_DEVICE_AUDIO_USE_SYNC_MODE) && (USB_DEVICE_AUDIO_USE_SYNC_MODE > 0U)
 #define USB_AUDIO_SPEAKER_STREAM_ENDPOINT_COUNT (1)

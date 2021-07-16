@@ -986,6 +986,78 @@ static void test_wlan_get_uap_sta_list(int argc, char **argv)
     os_mem_free(sl);
 }
 
+static void test_wlan_ieee_ps(int argc, char **argv)
+{
+    int choice = -1;
+    int ret    = -WM_FAIL;
+
+    if (argc < 2)
+    {
+        (void)PRINTF("Usage: %s <0/1>\r\n", argv[0]);
+        (void)PRINTF("Error: Specify 0 to Disable or 1 to Enable\r\n");
+        return;
+    }
+
+    choice = atoi(argv[1]);
+
+    if (choice == 0)
+    {
+        ret = wlan_ieeeps_off();
+        if (ret == WM_SUCCESS)
+            (void)PRINTF("Turned off IEEE Power Save mode");
+        else
+            (void)PRINTF("Failed to turn off IEEE Power Save mode, error: %d", ret);
+    }
+    else if (choice == 1)
+    {
+        ret = wlan_ieeeps_on(WAKE_ON_ARP_BROADCAST | WAKE_ON_UNICAST | WAKE_ON_MULTICAST | WAKE_ON_MAC_EVENT);
+        if (ret == WM_SUCCESS)
+            (void)PRINTF("Turned on IEEE Power Save mode");
+        else
+            (void)PRINTF("Failed to turn on IEEE Power Save mode, error: %d", ret);
+    }
+    else
+    {
+        (void)PRINTF("Error: Specify 0 to Disable or 1 to Enable\r\n");
+    }
+}
+
+static void test_wlan_deep_sleep_ps(int argc, char **argv)
+{
+    int choice = -1;
+    int ret    = -WM_FAIL;
+
+    if (argc < 2)
+    {
+        (void)PRINTF("Usage: %s <0/1>\r\n", argv[0]);
+        (void)PRINTF("Error: Specify 0 to Disable or 1 to Enable\r\n");
+        return;
+    }
+
+    choice = atoi(argv[1]);
+
+    if (choice == 0)
+    {
+        ret = wlan_deepsleepps_off();
+        if (ret == WM_SUCCESS)
+            (void)PRINTF("Turned off Deep Sleep Power Save mode");
+        else
+            (void)PRINTF("Failed to turn off Deep Sleep Power Save mode, error: %d", ret);
+    }
+    else if (choice == 1)
+    {
+        ret = wlan_deepsleepps_on();
+        if (ret == WM_SUCCESS)
+            (void)PRINTF("Turned on Deep Sleep Power Save mode");
+        else
+            (void)PRINTF("Failed to turn on Deep Sleep Power Save mode, error: %d", ret);
+    }
+    else
+    {
+        (void)PRINTF("Error: Specify 0 to Disable or 1 to Enable\r\n");
+    }
+}
+
 static struct cli_command tests[] = {
     {"wlan-scan", NULL, test_wlan_scan},
     {"wlan-scan-opt", "ssid <ssid> bssid ...", test_wlan_scan_opt},
@@ -1001,6 +1073,8 @@ static struct cli_command tests[] = {
     {"wlan-address", NULL, test_wlan_address},
     {"wlan-get-uap-channel", NULL, test_wlan_get_uap_channel},
     {"wlan-get-uap-sta-list", NULL, test_wlan_get_uap_sta_list},
+    {"wlan-ieee-ps", "<0/1>", test_wlan_ieee_ps},
+    {"wlan-deep-sleep-ps", "<0/1>", test_wlan_deep_sleep_ps},
 };
 
 /* Register our commands with the MTF. */

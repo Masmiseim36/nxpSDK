@@ -1,6 +1,6 @@
 # CROSS COMPILER SETTING
 SET(CMAKE_SYSTEM_NAME Generic)
-CMAKE_MINIMUM_REQUIRED (VERSION 3.1.1)
+CMAKE_MINIMUM_REQUIRED (VERSION 3.10.0)
 
 # THE VERSION NUMBER
 SET (Tutorial_VERSION_MAJOR 1)
@@ -42,7 +42,7 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../../devices/MIMXRT1052
     ${ProjDirPath}/../../../../../../devices/MIMXRT1052/drivers
     ${ProjDirPath}/../../../../../../middleware/mcu-boot
-    ${ProjDirPath}/../../../../../../CMSIS/Include
+    ${ProjDirPath}/../../../../../../CMSIS/Core/Include
 )
 
 # include modules
@@ -60,11 +60,7 @@ include(middleware_mcu-boot_src_startup_MIMXRT1052)
 
 include(middleware_mcu-boot_milliseconds_MIMXRT1052)
 
-include(CMSIS_Include_core_cm7_MIMXRT1052)
-
-include(CMSIS_Include_common_MIMXRT1052)
-
-include(CMSIS_Include_dsp_MIMXRT1052)
+include(CMSIS_Include_core_cm_MIMXRT1052)
 
 include(driver_clock_MIMXRT1052)
 

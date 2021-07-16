@@ -6,11 +6,11 @@
 /* clang-format off */
 /* TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 !!GlobalInfo
-product: Peripherals v8.0
+product: Peripherals v9.0
 processor: MIMXRT1052xxxxB
 package_id: MIMXRT1052DVL6B
 mcu_data: ksdk2_0
-processor_version: 0.0.1
+processor_version: 9.0.1
 board: IMXRT1050-EVKB
 functionalGroups:
 - name: BOARD_InitPeripherals
@@ -24,8 +24,8 @@ component:
 - type: 'system'
 - type_id: 'system'
 - global_system_definitions:
-  - user_definitions: ''
-  - user_includes: ''
+  - user_definitions: '#define LITTLEFS_START_ADDR 0x2000000\n'
+  - user_includes: '#include "lfs_mflash.h"\n'
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS **********/
 /* clang-format on */
 
@@ -52,16 +52,16 @@ instance:
 - config_sets:
   - general_config:
     - lfsConfig:
-      - enableUserContext: 'false'
+      - enableUserContext: 'true'
       - userContext:
         - contextVar: '(void*)&LittleFS_ctx'
-        - contextDef: 'uint32_t LittleFS_ctx'
-        - disableContextDeclaration: 'false'
+        - contextDef: 'struct lfs_mflash_ctx LittleFS_ctx'
+        - disableContextDeclaration: 'true'
       - userCallbacks:
-        - read: 'lfs_hyperflash_read'
-        - prog: 'lfs_hyperflash_prog'
-        - erase: 'lfs_hyperflash_erase'
-        - sync: 'lfs_hyperflash_sync'
+        - read: 'lfs_mflash_read'
+        - prog: 'lfs_mflash_prog'
+        - erase: 'lfs_mflash_erase'
+        - sync: 'lfs_mflash_sync'
       - readSize: '16'
       - progSize: '512'
       - blockSize: '0x40000'
@@ -90,11 +90,11 @@ instance:
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS **********/
 /* clang-format on */
 const struct lfs_config LittleFS_config = {
-  .context = NULL,
-  .read = lfs_hyperflash_read,
-  .prog = lfs_hyperflash_prog,
-  .erase = lfs_hyperflash_erase,
-  .sync = lfs_hyperflash_sync,
+  .context = (void*)&LittleFS_ctx,
+  .read = lfs_mflash_read,
+  .prog = lfs_mflash_prog,
+  .erase = lfs_mflash_erase,
+  .sync = lfs_mflash_sync,
   .read_size = LITTLEFS_READ_SIZE,
   .prog_size = LITTLEFS_PROG_SIZE,
   .block_size = LITTLEFS_BLOCK_SIZE,

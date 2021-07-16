@@ -41,7 +41,7 @@ static BT_GATT_SERVICE_DEFINE(pxr_svc,
                    BT_GATT_PERM_WRITE, NULL, write_ias_alert_level, &ias_alert_level),
 
     BT_GATT_PRIMARY_SERVICE(BT_UUID_TPS),
-    BT_GATT_CHARACTERISTIC(BT_UUID_TX_POWER, BT_GATT_CHRC_READ,
+    BT_GATT_CHARACTERISTIC(BT_UUID_TPS_TX_POWER_LEVEL, BT_GATT_CHRC_READ,
                    BT_GATT_PERM_READ, read_tps_power_level, NULL, &tps_power_level),
     BT_GATT_DESCRIPTOR(BT_UUID_GATT_CPF, BT_GATT_PERM_READ, read_tps_power_level_desc, NULL, pres_format_desc),
 );

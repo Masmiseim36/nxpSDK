@@ -45,14 +45,14 @@
  *
  */
 /*@{*/
-#define AVRCP_CAI_CONNECT_CNF                           0x01
-#define AVRCP_CAI_DISCONNECT_CNF                        0x02
-#define AVRCP_CAI_TRANSPORT_CLOSE_CNF                   0x03
-#define AVRCP_CAI_TRANSPORT_CLOSE_IND                   0x04
-#define AVRCP_CAI_GET_IMAGE_PROPERTIES_CNF              0x05
-#define AVRCP_CAI_GET_IMAGE_CNF                         0x06
-#define AVRCP_CAI_GET_LINKED_THUMBNAIL_CNF              0x07
-#define AVRCP_CAI_GET_ABORT_CNF                         0x08
+#define AVRCP_CAI_CONNECT_CNF                           0x01U
+#define AVRCP_CAI_DISCONNECT_CNF                        0x02U
+#define AVRCP_CAI_TRANSPORT_CLOSE_CNF                   0x03U
+#define AVRCP_CAI_TRANSPORT_CLOSE_IND                   0x04U
+#define AVRCP_CAI_GET_IMAGE_PROPERTIES_CNF              0x05U
+#define AVRCP_CAI_GET_IMAGE_CNF                         0x06U
+#define AVRCP_CAI_GET_LINKED_THUMBNAIL_CNF              0x07U
+#define AVRCP_CAI_GET_ABORT_CNF                         0x08U
 /*@}*/
 /* AVRCP Cover Art Responder Notification Callback Event Types */
 /**
@@ -62,14 +62,14 @@
  *
  */
 /*@{*/
-#define AVRCP_CAR_CONNECT_IND                           0x31
-#define AVRCP_CAR_DISCONNECT_IND                        0x32
-#define AVRCP_CAR_TRANSPORT_CLOSE_CNF                   0x33
-#define AVRCP_CAR_TRANSPORT_CLOSE_IND                   0x34
-#define AVRCP_CAR_GET_IMAGE_PROPERTIES_IND              0x35
-#define AVRCP_CAR_GET_IMAGE_IND                         0x36
-#define AVRCP_CAR_GET_LINKED_THUMBNAIL_IND              0x37
-#define AVRCP_CAR_GET_ABORT_IND                         0x38
+#define AVRCP_CAR_CONNECT_IND                           0x31U
+#define AVRCP_CAR_DISCONNECT_IND                        0x32U
+#define AVRCP_CAR_TRANSPORT_CLOSE_CNF                   0x33U
+#define AVRCP_CAR_TRANSPORT_CLOSE_IND                   0x34U
+#define AVRCP_CAR_GET_IMAGE_PROPERTIES_IND              0x35U
+#define AVRCP_CAR_GET_IMAGE_IND                         0x36U
+#define AVRCP_CAR_GET_LINKED_THUMBNAIL_IND              0x37U
+#define AVRCP_CAR_GET_ABORT_IND                         0x38U
 /*@}*/
 /* Cover Art Target Header Size */
 /**
@@ -79,7 +79,7 @@
  *
  */
 /*@{*/
-#define AVRCP_CA_TARGET_HDR_SIZE                        0x10
+#define AVRCP_CA_TARGET_HDR_SIZE                        0x10U
 /*@}*/
 /* Supported Image Formats */
 /**
@@ -89,9 +89,9 @@
  *
  */
 /*@{*/
-#define COVER_ART_FORMAT_JPEG                           0x01
-#define COVER_ART_FORMAT_GIF                            0x02
-#define COVER_ART_FORMAT_INVALID                        0xFF
+#define COVER_ART_FORMAT_JPEG                           0x01U
+#define COVER_ART_FORMAT_GIF                            0x02U
+#define COVER_ART_FORMAT_INVALID                        0xFFU
 /*@}*/
 /* Dynamic PSM used for Cover Art */
 /**
@@ -101,7 +101,7 @@
  *
  */
  /*@{*/
-#define COVER_ART_GOEP_L2CAP_PSM                        0x1005
+#define COVER_ART_GOEP_L2CAP_PSM                        0x1005U
 /*@}*/
 /* AVRCP Cover Art OBEX Response Codes */
 /**
@@ -131,12 +131,12 @@
  *
  */
 /*@{*/
-#define OBEX_HDR_IMG_HANDLE                             0x30
-#define OBEX_HDR_IMG_DESCRIPTOR                         0x71
+#define OBEX_HDR_IMG_HANDLE                             0x30U
+#define OBEX_HDR_IMG_DESCRIPTOR                         0x71U
 /*@}*/
-#define AVRCP_CA_EVENT_INVALID                          0xFF
-#define AVRCP_CA_ENTITY_INVALID                         0xFF
-#define AVRCP_CA_INVALID_OBEX_CONNECTION_ID             0xFFFFFFFF
+#define AVRCP_CA_EVENT_INVALID                          0xFFU
+#define AVRCP_CA_ENTITY_INVALID                         0xFFU
+#define AVRCP_CA_INVALID_OBEX_CONNECTION_ID             0xFFFFFFFFU
 
 /* To initialize a Header Structure */
 #define CA_INIT_HEADER_STRUCT(hs)    \

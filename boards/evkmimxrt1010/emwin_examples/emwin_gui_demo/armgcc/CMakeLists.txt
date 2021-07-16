@@ -1,6 +1,6 @@
 # CROSS COMPILER SETTING
 SET(CMAKE_SYSTEM_NAME Generic)
-CMAKE_MINIMUM_REQUIRED (VERSION 3.1.1)
+CMAKE_MINIMUM_REQUIRED (VERSION 3.10.0)
 
 # THE VERSION NUMBER
 SET (Tutorial_VERSION_MAJOR 1)
@@ -59,7 +59,7 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../components/lists
     ${ProjDirPath}/../../../../../devices/MIMXRT1011/xip
     ${ProjDirPath}/../../../xip
-    ${ProjDirPath}/../../../../../CMSIS/Include
+    ${ProjDirPath}/../../../../../CMSIS/Core/Include
     ${ProjDirPath}/../../../../../CMSIS/Driver/Include
     ${ProjDirPath}/../../../../../devices/MIMXRT1011/utilities
 )
@@ -111,13 +111,9 @@ include(driver_igpio_MIMXRT1011)
 
 include(driver_xip_device_MIMXRT1011)
 
-include(driver_xip_board_MIMXRT1011)
+include(driver_xip_board_evkmimxrt1010_MIMXRT1011)
 
-include(CMSIS_Include_core_cm7_MIMXRT1011)
-
-include(CMSIS_Include_common_MIMXRT1011)
-
-include(CMSIS_Include_dsp_MIMXRT1011)
+include(CMSIS_Include_core_cm_MIMXRT1011)
 
 include(CMSIS_Driver_Include_I2C_MIMXRT1011)
 
@@ -144,11 +140,11 @@ target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE nosys)
 
 if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
     target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/emwin/emWin_library/ARMGCC/libemWin_M7.a)
-endif()
+endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
 
 if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
     target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/emwin/emWin_library/ARMGCC/libemWin_M7.a)
-endif()
+endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
 
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--end-group)
 

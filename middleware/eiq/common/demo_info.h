@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 NXP
+ * Copyright 2021 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -8,18 +8,25 @@
 #ifndef _DEMO_INFO_H_
 #define _DEMO_INFO_H_
 
-#if defined(__cplusplus)
-extern "C" {
-#endif /* __cplusplus */
+#include <stdio.h>
+
+#include "demo_config.h"
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
 
-void DEMO_PrintInfo();
+#define CHECK_STATUS(STATUS, FUNCTION, MESSAGE)                  \
+    (STATUS) = (FUNCTION);                                       \
+    if ((STATUS) != 0)                                           \
+    {                                                            \
+        printf(MESSAGE EOL "Error code: %d" EOL, (int)(STATUS)); \
+    }                                                            \
+    do                                                           \
+    {                                                            \
+        ;                                                        \
+    } while (STATUS)
 
-#if defined(__cplusplus)
-}
-#endif /* __cplusplus */
+void DEMO_PrintInfo(void);
 
 #endif /* _DEMO_INFO_H_ */

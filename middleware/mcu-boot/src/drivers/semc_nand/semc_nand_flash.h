@@ -1,6 +1,7 @@
 /*
- * Copyright 2016-2018 NXP
+ * Copyright 2017 NXP
  * All rights reserved.
+ *
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -8,9 +9,9 @@
 #ifndef __SEMC_NAND_FLASH_H__
 #define __SEMC_NAND_FLASH_H__
 
-#include "bl_semc.h"
-#include "bootloader_common.h"
 #include "fsl_common.h"
+#include "bootloader_common.h"
+#include "bl_semc.h"
 #include "nand_ecc.h"
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -47,6 +48,8 @@ enum _semc_nand_status
     kStatus_SemcNAND_EraseVerifyFailure = MAKE_STATUS(kStatusGroup_SemcNAND, 9),
     kStatus_SemcNAND_InvalidReadbackBuffer = MAKE_STATUS(kStatusGroup_SemcNAND, 10),
     kStatus_SemcNAND_CannotDisableDeviceEcc = MAKE_STATUS(kStatusGroup_SemcNAND, 11),
+    kStatus_SemcNAND_ReadError = MAKE_STATUS(kStatusGroup_SemcNAND, 12),
+    kStatus_SemcNAND_SetInternalEccFailure = MAKE_STATUS(kStatusGroup_SemcNAND, 13),
 
     kStatus_SemcNAND_InvalidCfgTag = MAKE_STATUS(kStatusGroup_SemcNAND, 0x10),
     kStatus_SemcNAND_FailToUpdateFcb = MAKE_STATUS(kStatusGroup_SemcNAND, 0x11),
@@ -110,8 +113,8 @@ enum _semc_nand_ecc_check_option
 //! @brief SEMC Parallel NAND Flash ecc check type
 enum _semc_nand_ecc_check_type
 {
-    kSemcNandEccCheckType_SoftwareECC = 0U,
-    kSemcNandEccCheckType_DeviceECC = 1U,
+    kSemcNandEccCheckType_DeviceECC = 0U,
+    kSemcNandEccCheckType_SoftwareECC = 1U,
 };
 
 //! @brief SEMC Parallel NAND Flash device ecc status
@@ -153,6 +156,24 @@ enum _semc_nand_readback_verify_option
     kSemcNandReadbackVerifyOption_Enabled = 0U,
     kSemcNandReadbackVerifyOption_Disabled = 1U,
 };
+
+//! @brief SEMC Parallel Nand timing parameter cycle for NANDCR1/2
+typedef struct __nand_ac_timing_parameter_cycle
+{
+    uint8_t CEITV;
+    uint8_t TA;
+    uint8_t REH;
+    uint8_t REL;
+    uint8_t WEH;
+    uint8_t WEL;
+    uint8_t CEH;
+    uint8_t CES;
+    uint8_t TWB;
+    uint8_t TRR;
+    uint8_t TADL;
+    uint8_t TRHW;
+    uint8_t TWHR;
+} nand_ac_timing_parameter_cycle_t;
 
 typedef struct __nand_ac_timing_parameter
 {
@@ -207,7 +228,8 @@ typedef struct __semc_nand_config
 //! Parallel NAND Configuration Option
 typedef struct _parallel_nand_config_option
 {
-    union {
+    union
+    {
         struct
         {
             uint32_t onfiVersion : 3;    //!< ONFI version
@@ -236,36 +258,29 @@ typedef struct _parallel_nand_config_option
 ////////////////////////////////////////////////////////////////////////////////
 
 #ifdef __cplusplus
-extern "C"
-{
+extern "C" {
 #endif
 
-    //!@brief Initialize Parallel NAND devices via SEMC
-    status_t semc_nand_flash_init(semc_nand_config_t *config);
+//!@brief Initialize Parallel NAND devices via SEMC
+status_t semc_nand_flash_init(semc_nand_config_t *config);
 
-    //!@brief Read page data from Parallel NAND via SEMC
-    status_t semc_nand_flash_read_page(semc_nand_config_t *config,
-                                       uint32_t pageIndex,
-                                       uint8_t *buffer,
-                                       uint32_t length);
+//!@brief Read page data from Parallel NAND via SEMC
+status_t semc_nand_flash_read_page(semc_nand_config_t *config, uint32_t pageIndex, uint8_t *buffer, uint32_t length);
 
-    //!@brief Program page data to Parallel NAND via SEMC
-    status_t semc_nand_flash_page_program(semc_nand_config_t *config,
-                                          uint32_t pageIndex,
-                                          uint8_t *src,
-                                          uint32_t length);
+//!@brief Program page data to Parallel NAND via SEMC
+status_t semc_nand_flash_page_program(semc_nand_config_t *config, uint32_t pageIndex, uint8_t *src, uint32_t length);
 
-    //!@brief Erase blocks of the Parallel NAND devices
-    status_t semc_nand_flash_erase_block(semc_nand_config_t *config, uint32_t blockIndex);
+//!@brief Erase blocks of the Parallel NAND devices
+status_t semc_nand_flash_erase_block(semc_nand_config_t *config, uint32_t blockIndex);
 
-    //!@brief Verify erase on Parallel NAND device
-    status_t semc_nand_flash_verify_erase(semc_nand_config_t *config, uint32_t pageIndex, uint32_t pageCount);
+//!@brief Verify erase on Parallel NAND device
+status_t semc_nand_flash_verify_erase(semc_nand_config_t *config, uint32_t pageIndex, uint32_t pageCount);
 
-    //!@brief Verify program on Parallel NAND device
-    status_t semc_nand_flash_verify_page_program(semc_nand_config_t *config,
-                                                 uint32_t pageIndex,
-                                                 const uint8_t *src,
-                                                 uint32_t lengthInBytes);
+//!@brief Verify program on Parallel NAND device
+status_t semc_nand_flash_verify_page_program(semc_nand_config_t *config,
+                                             uint32_t pageIndex,
+                                             const uint8_t *src,
+                                             uint32_t lengthInBytes);
 
 #ifdef __cplusplus
 }

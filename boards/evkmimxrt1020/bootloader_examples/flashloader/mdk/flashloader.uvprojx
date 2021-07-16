@@ -330,7 +330,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb  -Wno-null-dereference  -Wno-unknown-attributes  -Wno-expansion-to-defined  -Wno-invalid-noreturn</MiscControls>
               <Define>NDEBUG, CPU_MIMXRT1021DAG5A, CPU_IS_ARM_CORTEX_M7=1, BL_TARGET_RAM, MIMXRT1021, USB_STACK_BM</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../devices/MIMXRT1021;../../../../../devices/MIMXRT1021/drivers;../../../../../middleware/mcu-boot/src/bm_usb;../../../../../middleware/mcu-boot/src/autobaud;../../../../../middleware/mcu-boot/src/bootloader;../../../../../middleware/mcu-boot/src/crc;../../../../../middleware/mcu-boot/src/include;../../../../../middleware/mcu-boot/src/memory;../../../../../middleware/mcu-boot/src/memory/src;../../../../../middleware/mcu-boot/src/startup;../../../../../middleware/mcu-boot/src/packet;../../../../../middleware/mcu-boot/src/property;../../../../../middleware/mcu-boot/src/sbloader;../../../../../middleware/mcu-boot/src/utilities;../../../../../middleware/mcu-boot/src/drivers/smc;../../../../../middleware/mcu-boot/src/drivers/dcp;../../../../../middleware/mcu-boot/src/drivers/trng;../../../../../middleware/mcu-boot/targets/MIMXRT1021/src;../../../../../middleware/usb/device;../../../../../components/osa;../../../../../middleware/usb/include;../../../../../middleware/mcu-boot/src/drivers/microseconds;../../../../../middleware/mcu-boot/src/drivers/flexspi;../../../../../middleware/mcu-boot/src/drivers/flexspi_nand;../../../../../middleware/mcu-boot/src/drivers/ocotp;../../../../../CMSIS/Include;../../../../../components/lists;../../../../../middleware/usb/phy;../../../../../middleware/mcu-boot/src/drivers/flexspi_nor;../../../../../middleware/mcu-boot/src/drivers/semc;../../../../../middleware/mcu-boot/src/drivers/semc_nor;../../../../../middleware/mcu-boot/src/drivers/semc_nand;../../../../../middleware/mcu-boot/src/drivers/nand_ecc;../../../../../middleware/mcu-boot/src/drivers/usdhc;../../../../../middleware/mcu-boot/src/drivers/sdmmc/inc;../../../../../middleware/mcu-boot/src/drivers/serial_nor_eeprom</IncludePath>
+              <IncludePath>..;../../../../../devices/MIMXRT1021;../../../../../devices/MIMXRT1021/drivers;../../../../../middleware/mcu-boot/src/bm_usb;../../../../../middleware/mcu-boot/src/autobaud;../../../../../middleware/mcu-boot/src/bootloader;../../../../../middleware/mcu-boot/src/crc;../../../../../middleware/mcu-boot/src/include;../../../../../middleware/mcu-boot/src/memory;../../../../../middleware/mcu-boot/src/memory/src;../../../../../middleware/mcu-boot/src/startup;../../../../../middleware/mcu-boot/src/packet;../../../../../middleware/mcu-boot/src/property;../../../../../middleware/mcu-boot/src/sbloader;../../../../../middleware/mcu-boot/src/utilities;../../../../../middleware/mcu-boot/src/drivers/smc;../../../../../middleware/mcu-boot/src/drivers/dcp;../../../../../middleware/mcu-boot/src/drivers/trng;../../../../../middleware/mcu-boot/targets/MIMXRT1021/src;../../../../../middleware/usb/device;../../../../../components/osa;../../../../../middleware/usb/include;../../../../../middleware/mcu-boot/src/drivers/microseconds;../../../../../middleware/mcu-boot/src/drivers/flexspi;../../../../../middleware/mcu-boot/src/drivers/flexspi_nand;../../../../../middleware/mcu-boot/src/drivers/ocotp;../../../../../CMSIS/Core/Include;../../../../../components/lists;../../../../../middleware/usb/phy;../../../../../middleware/mcu-boot/src/drivers/flexspi_nor;../../../../../middleware/mcu-boot/src/drivers/semc;../../../../../middleware/mcu-boot/src/drivers/semc_nor;../../../../../middleware/mcu-boot/src/drivers/semc_nand;../../../../../middleware/mcu-boot/src/drivers/nand_ecc;../../../../../middleware/mcu-boot/src/drivers/usdhc;../../../../../middleware/mcu-boot/src/drivers/sdmmc/inc;../../../../../middleware/mcu-boot/src/drivers/serial_nor_eeprom</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -364,9 +364,9 @@
             <ScatterFile>../../../../../middleware/mcu-boot/targets/common/linker/arm/MIMXRT1021/MIMXRT1021_ram_flashloader.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --datacompressor off --entry=Reset_Handler</Misc>
+            <Misc>--remove --legacyalign --datacompressor off --entry=Reset_Handler</Misc>
             <LinkerInputFile/>
-            <DisabledWarnings>6314</DisabledWarnings>
+            <DisabledWarnings>6314,L3912W</DisabledWarnings>
           </LDads>
         </TargetArmAds>
       </TargetOption>
@@ -464,6 +464,16 @@
               <FileName>fsl_common.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MIMXRT1021/drivers/fsl_common.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1021/drivers/fsl_common_arm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1021/drivers/fsl_common_arm.h</FilePath>
             </File>
             <File>
               <FileName>fsl_lpspi.c</FileName>
@@ -1301,64 +1311,49 @@
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
-              <FileName>core_cm7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/core_cm7.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
-            </File>
-            <File>
               <FileName>cmsis_armcc.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_armcc.h</FilePath>
+              <FilePath>../../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_armclang.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_armclang.h</FilePath>
+              <FilePath>../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_armclang_ltm.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_armclang_ltm.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_gcc.h</FilePath>
+              <FilePath>../../../../../CMSIS/Core/Include/cmsis_armclang_ltm.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_compiler.h</FilePath>
+              <FilePath>../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
             </File>
             <File>
-              <FileName>cmsis_version.h</FileName>
+              <FileName>cmsis_gcc.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_version.h</FilePath>
+              <FilePath>../../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_iccarm.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_iccarm.h</FilePath>
+              <FilePath>../../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
-              <FileName>arm_common_tables.h</FileName>
+              <FileName>cmsis_version.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/arm_common_tables.h</FilePath>
+              <FilePath>../../../../../CMSIS/Core/Include/cmsis_version.h</FilePath>
             </File>
             <File>
-              <FileName>arm_const_structs.h</FileName>
+              <FileName>core_cm7.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/arm_const_structs.h</FilePath>
+              <FilePath>../../../../../CMSIS/Core/Include/core_cm7.h</FilePath>
             </File>
             <File>
-              <FileName>arm_math.h</FileName>
+              <FileName>mpu_armv7.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/arm_math.h</FilePath>
+              <FilePath>../../../../../CMSIS/Core/Include/mpu_armv7.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1516,44 +1511,49 @@
           <GroupName>source/drivers/sdmmc</GroupName>
           <Files>
             <File>
-              <FileName>bl_card.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/mcu-boot/src/drivers/sdmmc/inc/bl_card.h</FilePath>
-            </File>
-            <File>
-              <FileName>bl_host.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/mcu-boot/src/drivers/sdmmc/inc/bl_host.h</FilePath>
-            </File>
-            <File>
-              <FileName>bl_sdmmc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/mcu-boot/src/drivers/sdmmc/inc/bl_sdmmc.h</FilePath>
-            </File>
-            <File>
-              <FileName>bl_specification.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/mcu-boot/src/drivers/sdmmc/inc/bl_specification.h</FilePath>
-            </File>
-            <File>
-              <FileName>bl_host.c</FileName>
+              <FileName>fsl_mmc.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/mcu-boot/src/drivers/sdmmc/port/usdhc/polling/bl_host.c</FilePath>
+              <FilePath>../../../../../middleware/mcu-boot/src/drivers/sdmmc/src/fsl_mmc.c</FilePath>
             </File>
             <File>
-              <FileName>bl_sd.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/mcu-boot/src/drivers/sdmmc/src/bl_sd.c</FilePath>
+              <FileName>fsl_mmc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mcu-boot/src/drivers/sdmmc/inc/fsl_mmc.h</FilePath>
             </File>
             <File>
-              <FileName>bl_mmc.c</FileName>
+              <FileName>fsl_sd.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/mcu-boot/src/drivers/sdmmc/src/bl_mmc.c</FilePath>
+              <FilePath>../../../../../middleware/mcu-boot/src/drivers/sdmmc/src/fsl_sd.c</FilePath>
             </File>
             <File>
-              <FileName>bl_sdmmc.c</FileName>
+              <FileName>fsl_sd.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mcu-boot/src/drivers/sdmmc/inc/fsl_sd.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_sdmmc_common.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/mcu-boot/src/drivers/sdmmc/src/bl_sdmmc.c</FilePath>
+              <FilePath>../../../../../middleware/mcu-boot/src/drivers/sdmmc/src/fsl_sdmmc_common.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_sdmmc_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mcu-boot/src/drivers/sdmmc/inc/fsl_sdmmc_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_sdmmc_host.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mcu-boot/src/drivers/sdmmc/inc/fsl_sdmmc_host.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_sdmmc_host.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mcu-boot/src/drivers/sdmmc/port/usdhc/polling/fsl_sdmmc_host.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_sdmmc_spec.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mcu-boot/src/drivers/sdmmc/inc/fsl_sdmmc_spec.h</FilePath>
             </File>
           </Files>
         </Group>

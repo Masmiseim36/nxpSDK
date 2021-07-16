@@ -19,20 +19,6 @@
  * Variables
  ******************************************************************************/
 
-/* global control variables */
-extern bool_t bDemoMode;
-
-/* global used misc variables */
-extern uint32_t g_ui32NumberOfCycles;
-extern uint32_t g_ui32MaxNumberOfCycles;
-
-/* Application and board ID */
-extern app_ver_t g_sAppIdFM;
-
-extern bool_t g_bM1SwitchAppOnOff;
-extern mcdef_acim_t g_sM1Drive;
-extern sm_app_ctrl_t g_sM1Ctrl;
-
 /*******************************************************************************
  * Code
  ******************************************************************************/
@@ -47,11 +33,9 @@ extern sm_app_ctrl_t g_sM1Ctrl;
 FMSTR_TSA_TABLE_BEGIN(g_sM1Drive_table)
 
 /* g_sM1Drive structure definition */
-#if (DEMO == 0)                                                    // Add variables used in non-demo project
 FMSTR_TSA_RW_VAR(g_sM1Drive.eControl, FMSTR_TSA_UINT16)            /* MCAT control */
 FMSTR_TSA_RW_VAR(g_sClockSetup.ui16SlowLoopFreq, FMSTR_TSA_UINT16) /* Slow control loop Frequency */
 FMSTR_TSA_RW_VAR(g_sClockSetup.ui16FastLoopFreq, FMSTR_TSA_UINT16) /* Fast control loop Frequency */
-#endif
 
 FMSTR_TSA_RW_VAR(g_sM1Drive.sFaultIdCaptured, FMSTR_TSA_UINT16) /* Captured fault */
 FMSTR_TSA_RW_VAR(g_sM1Drive.sFaultIdPending, FMSTR_TSA_UINT16)  /* Pending fault */
@@ -206,7 +190,6 @@ FMSTR_TSA_TABLE_END()
  *
  * @return None
  */
-#if !defined(DEMO)
 FMSTR_TSA_TABLE_BEGIN(g_sMID_table)
 /* MID control variables */
 FMSTR_TSA_RW_VAR(g_sMID.eCalcElPar, FMSTR_TSA_UINT8)      /* Status bit of control electrical parameter calculation */
@@ -254,12 +237,12 @@ FMSTR_TSA_RW_MEM(g_sMID.sPwrStgCh.pfltUErrLUT,
                  (65 << 1))                                          /* MID TransCharError */
 FMSTR_TSA_RW_VAR(g_sMID.sPwrStgCh.fltRs, FMSTR_TSA_FLOAT)            /* Stator resistance */
 FMSTR_TSA_RW_VAR(g_sMID.sPwrStgCh.ui16NumOfChPnts, FMSTR_TSA_UINT16) /* Active time counter */
-FMSTR_TSA_RW_VAR(g_sMID.sPwrStgCh.ui16Active, FMSTR_TSA_UINT16)      /* Active time counter */
+FMSTR_TSA_RW_VAR(g_sMID.sPwrStgCh.bActive, FMSTR_TSA_UINT16)      /* Active time counter */
 
 /* g_sMID.sRs definitions */
 FMSTR_TSA_RW_VAR(g_sMID.sRs.fltILPF, FMSTR_TSA_FLOAT)     /* Current low-pass filter */
 FMSTR_TSA_RW_VAR(g_sMID.sRs.fltIMeas, FMSTR_TSA_FLOAT)    /* Current measured */
-FMSTR_TSA_RW_VAR(g_sMID.sRs.ui16Active, FMSTR_TSA_UINT16) /* Active time counter */
+FMSTR_TSA_RW_VAR(g_sMID.sRs.bActive, FMSTR_TSA_UINT16) /* Active time counter */
 
 /* g_sMID.sNoLoad definitions */
 FMSTR_TSA_RW_VAR(g_sMID.sNoLoad.fltUMeas, FMSTR_TSA_FLOAT)    /* Measured motor voltage */
@@ -269,7 +252,7 @@ FMSTR_TSA_RW_VAR(g_sMID.sNoLoad.fltUrms, FMSTR_TSA_FLOAT)     /* Rms value of mo
 FMSTR_TSA_RW_VAR(g_sMID.sNoLoad.fltIrms, FMSTR_TSA_FLOAT)     /* Rms value of motor current */
 FMSTR_TSA_RW_VAR(g_sMID.sNoLoad.fltP, FMSTR_TSA_FLOAT)        /* Active power */
 FMSTR_TSA_RW_VAR(g_sMID.sNoLoad.fltQ, FMSTR_TSA_FLOAT)        /* Reactive power */
-FMSTR_TSA_RW_VAR(g_sMID.sNoLoad.ui16Active, FMSTR_TSA_UINT16) /* Active time counter */
+FMSTR_TSA_RW_VAR(g_sMID.sNoLoad.bActive, FMSTR_TSA_UINT16) /* Active time counter */
 
 /* g_sMID.sBlocked definitions */
 FMSTR_TSA_RW_VAR(g_sMID.sBlocked.fltIrmsMeas, FMSTR_TSA_FLOAT) /* Rms value of measured motor current */
@@ -279,7 +262,7 @@ FMSTR_TSA_RW_VAR(g_sMID.sBlocked.fltUrms, FMSTR_TSA_FLOAT)     /* Rms value of m
 FMSTR_TSA_RW_VAR(g_sMID.sBlocked.fltIrms, FMSTR_TSA_FLOAT)     /* Rms value of motor current */
 FMSTR_TSA_RW_VAR(g_sMID.sBlocked.fltP, FMSTR_TSA_FLOAT)        /* Active power */
 FMSTR_TSA_RW_VAR(g_sMID.sBlocked.fltQ, FMSTR_TSA_FLOAT)        /* Reactive power */
-FMSTR_TSA_RW_VAR(g_sMID.sBlocked.ui16Active, FMSTR_TSA_UINT16) /* Active time counter */
+FMSTR_TSA_RW_VAR(g_sMID.sBlocked.bActive, FMSTR_TSA_UINT16) /* Active time counter */
 
 /* g_sMID.sMech definitions */
 FMSTR_TSA_RW_VAR(g_sMID.sMech.eState,
@@ -294,14 +277,13 @@ FMSTR_TSA_RW_VAR(g_sMID.sMech.fltTrqLPF, FMSTR_TSA_FLOAT)     /* Torque low pass
 FMSTR_TSA_RW_VAR(g_sMID.sMech.fltLPFCoeff, FMSTR_TSA_FLOAT)   /* Low pass filter coefficient */
 FMSTR_TSA_RW_VAR(g_sMID.sMech.fltTrqInteg, FMSTR_TSA_FLOAT)   /* Integration constant */
 FMSTR_TSA_RW_VAR(g_sMID.sMech.fltGainTrq, FMSTR_TSA_FLOAT)    /* Torque gain */
-FMSTR_TSA_RW_VAR(g_sMID.sMech.ui16Active, FMSTR_TSA_UINT16)   /* Active time counter */
+FMSTR_TSA_RW_VAR(g_sMID.sMech.bActive, FMSTR_TSA_UINT16)   /* Active time counter */
 
 /* g_sMID.sCalcPwr definitions */
 FMSTR_TSA_RW_VAR(g_sMID.sCalcPwr.fltUrmsAvg, FMSTR_TSA_FLOAT) /* Rms avarage value of motor voltage */
 FMSTR_TSA_RW_VAR(g_sMID.sCalcPwr.fltIrmsAvg, FMSTR_TSA_FLOAT) /* Rms avarage value of motor current */
 
 FMSTR_TSA_TABLE_END()
-#endif
 
 /*!
  * @brief Global table with global variables used in TSA
@@ -352,17 +334,10 @@ FMSTR_TSA_TABLE_END()
  *
  * @return None
  */
-#if defined(DEMO) /* If demo mode is selected */
-FMSTR_TSA_TABLE_LIST_BEGIN()
-FMSTR_TSA_TABLE(g_sM1Drive_table)
-FMSTR_TSA_TABLE(global_table)
-FMSTR_TSA_TABLE(sAppIdFM_table)
-FMSTR_TSA_TABLE_LIST_END()
-#else /* If demo mode is NOT selected */
+
 FMSTR_TSA_TABLE_LIST_BEGIN()
 FMSTR_TSA_TABLE(g_sM1Drive_table)
 FMSTR_TSA_TABLE(g_sMID_table)
 FMSTR_TSA_TABLE(global_table)
 FMSTR_TSA_TABLE(sAppIdFM_table)
 FMSTR_TSA_TABLE_LIST_END()
-#endif

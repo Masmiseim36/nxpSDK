@@ -14,7 +14,7 @@
 #include "mlib_FP.h"
 #include "calc_power.h"
 
-#include "mcdrv.h"
+#include "mc_periph_init.h"
 
 /*******************************************************************************
  * Definitions
@@ -166,7 +166,7 @@ typedef struct
     float_t fltRs;                                  /* stator resistance of calibration motor [ohm] */
     uint16_t ui16LUTId;       /* look-up table index, counts until a whole characteristic is measured */
     uint16_t ui16NumOfChPnts; /* number of points in LUT */
-    uint16_t ui16Active;      /* indicates whether transfer characteristic is being measured (true) or not (false) */
+    uint16_t bActive;      /* indicates whether transfer characteristic is being measured (true) or not (false) */
 } mid_get_char_a1_t;
 
 /* stator resistance measurement */
@@ -176,7 +176,7 @@ typedef struct
     float_t fltILPF;         /* filtered measured DC current [A] */
     uint32_t ui32TimeMeas;   /* measurement duration */
     uint32_t ui32TimeSettle; /* current settling duration */
-    uint16_t ui16Active;     /* indicates whether Rs is being measured (true) or not (false) */
+    uint16_t bActive;     /* indicates whether Rs is being measured (true) or not (false) */
 } mid_get_rs_a1_t;
 
 /* no-load measurement */
@@ -192,7 +192,7 @@ typedef struct
     float_t fltQ;                  /* measured reactive power on motor [var] */
     uint32_t ui32TimeMeas;         /* measurement duration */
     uint32_t ui32TimeSettle;       /* rotor settling duration */
-    uint16_t ui16Active;           /* indicates whether no-load test is active (true) or not (false) */
+    uint16_t bActive;           /* indicates whether no-load test is active (true) or not (false) */
 } mid_test_noload_a1_t;
 
 /* blocked-rotor test */
@@ -207,7 +207,7 @@ typedef struct
     float_t fltP;                        /* average stator reql power [W] */
     float_t fltQ;                        /* average stator reactive power [var] */
     uint32_t ui32TimeMeas;               /* time of measurement */
-    uint16_t ui16Active;                 /* indicates whether blocked rotor test is active (true) or not (false) */
+    uint16_t bActive;                 /* indicates whether blocked rotor test is active (true) or not (false) */
     bool_t bIrmsPISatFlg;                /* PI controller saturation flag */
 } mid_test_blocked_a1_t;
 
@@ -236,7 +236,7 @@ typedef struct
     float_t fltFreqSLoop;       /* speed loop bandwidth frequency */
     uint32_t ui32TimeMeasMax;   /* acceleration measurement time limit */
     uint32_t ui32TimeSettleMax; /* deceleration measurement time limit */
-    uint16_t ui16Active;        /* indicates whether measurement is active (true) or not (false) */
+    uint16_t bActive;        /* indicates whether measurement is active (true) or not (false) */
 
 } mid_mech_a1_t;
 

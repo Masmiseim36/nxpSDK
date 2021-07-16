@@ -11,7 +11,7 @@
 #include "FreeRTOS.h"
 #include "mflash_file.h"
 #include "fsl_debug_console.h"
-#include "iot_pkcs11_config.h"
+#include "core_pkcs11_config.h"
 #include "sslsrv.h"
 #include "sslsrv_keys.h"
 

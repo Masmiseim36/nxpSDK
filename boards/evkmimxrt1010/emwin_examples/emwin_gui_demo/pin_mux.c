@@ -26,10 +26,10 @@ processor_version: 0.7.7
 #include "pin_mux.h"
 
 /* FUNCTION ************************************************************************************************************
- * 
+ *
  * Function Name : BOARD_InitBootPins
  * Description   : Calls initialization functions.
- * 
+ *
  * END ****************************************************************************************************************/
 void BOARD_InitBootPins(void) {
     BOARD_InitPins();
@@ -148,23 +148,6 @@ void LPSPI1_InitPins(void) {
                                                  Hyst. Enable Field: Hysteresis Disabled */
 }
 
-void LPSPI1_DeinitPins(void)
-{
-  IOMUXC_SetPinMux(
-      IOMUXC_GPIO_AD_03_LPSPI1_SDI,           /* GPIO_AD_03 is configured as LPSPI1_SDI */
-      0U);                                    /* Software Input On Field: Input Path is determined by functionality */
-  IOMUXC_SetPinMux(
-      IOMUXC_GPIO_AD_04_LPSPI1_SDO,           /* GPIO_AD_04 is configured as LPSPI1_SDO */
-      0U);                                    /* Software Input On Field: Input Path is determined by functionality */
-  IOMUXC_SetPinMux(
-      IOMUXC_GPIO_AD_05_LPSPI1_PCS0,          /* GPIO_AD_05 is configured as LPSPI1_PCS0 */
-      0U);                                    /* Software Input On Field: Input Path is determined by functionality */
-  IOMUXC_SetPinMux(
-      IOMUXC_GPIO_AD_06_LPSPI1_SCK,           /* GPIO_AD_06 is configured as LPSPI1_SCK */
-      0U);                                    /* Software Input On Field: Input Path is determined by functionality */
-}
-
-
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 LPI2C1_InitPins:
@@ -214,14 +197,51 @@ void LPI2C1_InitPins(void) {
                                                  Hyst. Enable Field: Hysteresis Disabled */
 }
 
-void LPI2C1_DeinitPins(void)
-{
-  IOMUXC_SetPinMux(
-      IOMUXC_GPIO_01_LPI2C1_SDA,              /* GPIO_01 is configured as LPI2C1_SDA */
-      0U);                                    /* Software Input On Field: Input Path is determined by functionality */
-  IOMUXC_SetPinMux(
-      IOMUXC_GPIO_02_LPI2C1_SCL,              /* GPIO_02 is configured as LPI2C1_SCL */
-      0U);                                    /* Software Input On Field: Input Path is determined by functionality */
+
+/*
+ * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
+LPSPI1_DeinitPins:
+- options: {callFromInitBoot: 'false', coreID: core0, enableClock: 'false'}
+- pin_list:
+  - {pin_num: '55', peripheral: LPSPI1, signal: PCS0, pin_signal: GPIO_AD_05}
+  - {pin_num: '52', peripheral: LPSPI1, signal: SCK, pin_signal: GPIO_AD_06}
+  - {pin_num: '57', peripheral: LPSPI1, signal: SDI, pin_signal: GPIO_AD_03}
+  - {pin_num: '56', peripheral: LPSPI1, signal: SDO, pin_signal: GPIO_AD_04}
+ * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
+ */
+
+/* FUNCTION ************************************************************************************************************
+ *
+ * Function Name : LPSPI1_DeinitPins
+ * Description   : Configures pin routing and optionally pin electrical features.
+ *
+ * END ****************************************************************************************************************/
+void LPSPI1_DeinitPins(void) {
+  IOMUXC_SetPinMux(IOMUXC_GPIO_AD_03_LPSPI1_SDI, 0U);
+  IOMUXC_SetPinMux(IOMUXC_GPIO_AD_04_LPSPI1_SDO, 0U);
+  IOMUXC_SetPinMux(IOMUXC_GPIO_AD_05_LPSPI1_PCS0, 0U);
+  IOMUXC_SetPinMux(IOMUXC_GPIO_AD_06_LPSPI1_SCK, 0U);
+}
+
+/*
+ * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
+LPI2C1_DeinitPins:
+- options: {callFromInitBoot: 'false', coreID: core0, enableClock: 'false'}
+- pin_list:
+  - {pin_num: '11', peripheral: LPI2C1, signal: SCL, pin_signal: GPIO_02}
+  - {pin_num: '12', peripheral: LPI2C1, signal: SDA, pin_signal: GPIO_01}
+ * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
+ */
+
+/* FUNCTION ************************************************************************************************************
+ *
+ * Function Name : LPI2C1_DeinitPins
+ * Description   : Configures pin routing and optionally pin electrical features.
+ *
+ * END ****************************************************************************************************************/
+void LPI2C1_DeinitPins(void) {
+  IOMUXC_SetPinMux(IOMUXC_GPIO_01_LPI2C1_SDA, 0U);
+  IOMUXC_SetPinMux(IOMUXC_GPIO_02_LPI2C1_SCL, 0U);
 }
 
 /***********************************************************************************************************************

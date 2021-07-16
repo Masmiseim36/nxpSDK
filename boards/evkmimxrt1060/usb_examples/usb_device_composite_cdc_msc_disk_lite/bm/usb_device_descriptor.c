@@ -16,7 +16,7 @@
  * Variables
  ******************************************************************************/
 uint8_t g_currentConfigure = 0;
-uint8_t g_interface[USB_CDC_VCOM_INTERFACE_COUNT];
+uint8_t g_interface[USB_INTERFACE_COUNT];
 
 /* Define device descriptor */
 USB_DMA_INIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE)
@@ -106,7 +106,7 @@ uint8_t g_UsbDeviceConfigurationDescriptor[] = {
     0x02,
 
     /* Interface Descriptor */
-    USB_DESCRIPTOR_LENGTH_INTERFACE, USB_DESCRIPTOR_TYPE_INTERFACE, USB_CDC_VCOM_CIC_INTERFACE_INDEX, 0x00,
+    USB_DESCRIPTOR_LENGTH_INTERFACE, USB_DESCRIPTOR_TYPE_INTERFACE, USB_CDC_VCOM_CIC_INTERFACE_INDEX, USB_CDC_VCOM_CIC_INTERFACE_ALTERNATE_0,
     USB_CDC_VCOM_CIC_ENDPOINT_COUNT, USB_CDC_VCOM_CIC_CLASS, USB_CDC_VCOM_CIC_SUBCLASS, USB_CDC_VCOM_CIC_PROTOCOL, 0x00,
 
     /* CDC Class-Specific descriptor */
@@ -141,7 +141,7 @@ uint8_t g_UsbDeviceConfigurationDescriptor[] = {
     FS_CDC_VCOM_INTERRUPT_IN_INTERVAL,
 
     /* Data Interface Descriptor */
-    USB_DESCRIPTOR_LENGTH_INTERFACE, USB_DESCRIPTOR_TYPE_INTERFACE, USB_CDC_VCOM_DIC_INTERFACE_INDEX, 0x00,
+    USB_DESCRIPTOR_LENGTH_INTERFACE, USB_DESCRIPTOR_TYPE_INTERFACE, USB_CDC_VCOM_DIC_INTERFACE_INDEX, USB_CDC_VCOM_DIC_INTERFACE_ALTERNATE_0,
     USB_CDC_VCOM_DIC_ENDPOINT_COUNT, USB_CDC_VCOM_DIC_CLASS, USB_CDC_VCOM_DIC_SUBCLASS, USB_CDC_VCOM_DIC_PROTOCOL,
     0x00, /* Interface Description String Index*/
 
@@ -156,7 +156,7 @@ uint8_t g_UsbDeviceConfigurationDescriptor[] = {
     USB_SHORT_GET_HIGH(FS_CDC_VCOM_BULK_OUT_PACKET_SIZE), 0x00, /* The polling interval value is every 0 Frames */
 
     /* MSC Interface Descriptor */
-    USB_DESCRIPTOR_LENGTH_INTERFACE, USB_DESCRIPTOR_TYPE_INTERFACE, USB_MSC_DISK_INTERFACE_INDEX, 0x00,
+    USB_DESCRIPTOR_LENGTH_INTERFACE, USB_DESCRIPTOR_TYPE_INTERFACE, USB_MSC_DISK_INTERFACE_INDEX, USB_MSC_DISK_INTERFACE_ALTERNATE_0,
     USB_MSC_DISK_ENDPOINT_COUNT, USB_MSC_DISK_CLASS, USB_MSC_DISK_SUBCLASS, USB_MSC_DISK_PROTOCOL,
     0x00, /* Interface Description String Index*/
 
@@ -356,7 +356,7 @@ usb_status_t USB_DeviceGetDescriptor(usb_device_handle handle,
 
                 if (USB_DEVICE_STRING_COUNT == langIndex)
                 {
-                    langId = 0;
+                    return kStatus_USB_InvalidRequest;
                 }
                 *buffer = (uint8_t *)g_UsbDeviceLanguageList.languageList[langId].string[langIndex];
                 *length = g_UsbDeviceLanguageList.languageList[langId].length[langIndex];
@@ -436,8 +436,12 @@ usb_status_t USB_DeviceGetConfigure(usb_device_handle handle, uint8_t *configure
  */
 usb_status_t USB_DeviceSetInterface(usb_device_handle handle, uint8_t interface, uint8_t alternateSetting)
 {
-    g_interface[interface] = alternateSetting;
-    return USB_DeviceCallback(handle, kUSB_DeviceEventSetInterface, &interface);
+    if (interface < USB_INTERFACE_COUNT)
+    {
+        g_interface[interface] = alternateSetting;
+        return USB_DeviceCallback(handle, kUSB_DeviceEventSetInterface, &interface);
+    }
+    return kStatus_USB_InvalidRequest;
 }
 
 /*!
@@ -453,8 +457,12 @@ usb_status_t USB_DeviceSetInterface(usb_device_handle handle, uint8_t interface,
  */
 usb_status_t USB_DeviceGetInterface(usb_device_handle handle, uint8_t interface, uint8_t *alternateSetting)
 {
-    *alternateSetting = g_interface[interface];
-    return kStatus_USB_Success;
+    if (interface < USB_INTERFACE_COUNT)
+    {
+        *alternateSetting = g_interface[interface];
+        return kStatus_USB_Success;
+    }
+    return kStatus_USB_InvalidRequest;
 }
 
 /*!

@@ -43,9 +43,6 @@ ULONG thread_5_counter;
 ULONG thread_6_counter;
 ULONG thread_7_counter;
 
-/* Define the SysTick cycles which will be loaded on tx_initialize_low_level.s */
-int systick_cycles;
-
 /* memory pool */
 char mem_pool[DEMO_BYTE_POOL_SIZE];
 
@@ -73,9 +70,6 @@ int main()
     BOARD_InitDebugConsole();
 
     PRINTF("THREADX example ...\r\n");
-
-    /* This sentence must be called before tx_kernel_enter(). */
-    systick_cycles = (SystemCoreClock / TX_TIMER_TICKS_PER_SECOND) - 1;
 
     /* Enter the ThreadX kernel.  */
     tx_kernel_enter();

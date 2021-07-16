@@ -186,6 +186,7 @@
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
           <state>SD_ENABLED</state>
           <state>CODEC_CS42888_ENABLE</state>
+          <state>MCUXPRESSO_SDK</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -323,8 +324,8 @@
           <state>$PROJ_DIR$/../../../../../../components/i2c</state>
           <state>$PROJ_DIR$/../../../../../../components/codec</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/port/cs42888</state>
+          <state>$PROJ_DIR$/../../../../../../components/codec/port</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/utilities/debug_console_lite</state>
-          <state>$PROJ_DIR$/../../../../../../components/codec/cs42888</state>
           <state>$PROJ_DIR$/../../../../../../middleware/fatfs/source</state>
           <state>$PROJ_DIR$/../../../../../../middleware/fatfs/source/fsl_sd_disk</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052</state>
@@ -332,9 +333,10 @@
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/xip</state>
           <state>$PROJ_DIR$/../../../../xip</state>
-          <state>$PROJ_DIR$/../../../../../../CMSIS/Include</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/sdmmc/osa</state>
           <state>$PROJ_DIR$/../../../../../../components/osa</state>
+          <state>$PROJ_DIR$/../../../../../../components/codec/cs42888</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -798,7 +800,7 @@
         </option>
         <option>
           <name>IlinkOverrideProgramEntryLabel</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>IlinkProgramEntryLabelSelect</name>
@@ -806,7 +808,7 @@
         </option>
         <option>
           <name>IlinkProgramEntryLabel</name>
-          <state>__iar_program_start</state>
+          <state>Reset_Handler</state>
         </option>
         <option>
           <name>DoFill</name>
@@ -1173,6 +1175,7 @@
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
           <state>SD_ENABLED</state>
           <state>CODEC_CS42888_ENABLE</state>
+          <state>MCUXPRESSO_SDK</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -1310,8 +1313,8 @@
           <state>$PROJ_DIR$/../../../../../../components/i2c</state>
           <state>$PROJ_DIR$/../../../../../../components/codec</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/port/cs42888</state>
+          <state>$PROJ_DIR$/../../../../../../components/codec/port</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/utilities/debug_console_lite</state>
-          <state>$PROJ_DIR$/../../../../../../components/codec/cs42888</state>
           <state>$PROJ_DIR$/../../../../../../middleware/fatfs/source</state>
           <state>$PROJ_DIR$/../../../../../../middleware/fatfs/source/fsl_sd_disk</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052</state>
@@ -1319,9 +1322,10 @@
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/xip</state>
           <state>$PROJ_DIR$/../../../../xip</state>
-          <state>$PROJ_DIR$/../../../../../../CMSIS/Include</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/sdmmc/osa</state>
           <state>$PROJ_DIR$/../../../../../../components/osa</state>
+          <state>$PROJ_DIR$/../../../../../../components/codec/cs42888</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1785,7 +1789,7 @@
         </option>
         <option>
           <name>IlinkOverrideProgramEntryLabel</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>IlinkProgramEntryLabelSelect</name>
@@ -1793,7 +1797,7 @@
         </option>
         <option>
           <name>IlinkProgramEntryLabel</name>
-          <state>__iar_program_start</state>
+          <state>Reset_Handler</state>
         </option>
         <option>
           <name>DoFill</name>
@@ -2160,6 +2164,7 @@
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
           <state>SD_ENABLED</state>
           <state>CODEC_CS42888_ENABLE</state>
+          <state>MCUXPRESSO_SDK</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -2297,8 +2302,8 @@
           <state>$PROJ_DIR$/../../../../../../components/i2c</state>
           <state>$PROJ_DIR$/../../../../../../components/codec</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/port/cs42888</state>
+          <state>$PROJ_DIR$/../../../../../../components/codec/port</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/utilities/debug_console_lite</state>
-          <state>$PROJ_DIR$/../../../../../../components/codec/cs42888</state>
           <state>$PROJ_DIR$/../../../../../../middleware/fatfs/source</state>
           <state>$PROJ_DIR$/../../../../../../middleware/fatfs/source/fsl_sd_disk</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052</state>
@@ -2306,9 +2311,10 @@
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/xip</state>
           <state>$PROJ_DIR$/../../../../xip</state>
-          <state>$PROJ_DIR$/../../../../../../CMSIS/Include</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/sdmmc/osa</state>
           <state>$PROJ_DIR$/../../../../../../components/osa</state>
+          <state>$PROJ_DIR$/../../../../../../components/codec/cs42888</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -2772,7 +2778,7 @@
         </option>
         <option>
           <name>IlinkOverrideProgramEntryLabel</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>IlinkProgramEntryLabelSelect</name>
@@ -2780,7 +2786,7 @@
         </option>
         <option>
           <name>IlinkProgramEntryLabel</name>
-          <state>__iar_program_start</state>
+          <state>Reset_Handler</state>
         </option>
         <option>
           <name>DoFill</name>
@@ -3145,6 +3151,7 @@
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
           <state>SD_ENABLED</state>
           <state>CODEC_CS42888_ENABLE</state>
+          <state>MCUXPRESSO_SDK</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -3282,8 +3289,8 @@
           <state>$PROJ_DIR$/../../../../../../components/i2c</state>
           <state>$PROJ_DIR$/../../../../../../components/codec</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/port/cs42888</state>
+          <state>$PROJ_DIR$/../../../../../../components/codec/port</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/utilities/debug_console_lite</state>
-          <state>$PROJ_DIR$/../../../../../../components/codec/cs42888</state>
           <state>$PROJ_DIR$/../../../../../../middleware/fatfs/source</state>
           <state>$PROJ_DIR$/../../../../../../middleware/fatfs/source/fsl_sd_disk</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052</state>
@@ -3291,9 +3298,10 @@
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/xip</state>
           <state>$PROJ_DIR$/../../../../xip</state>
-          <state>$PROJ_DIR$/../../../../../../CMSIS/Include</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/sdmmc/osa</state>
           <state>$PROJ_DIR$/../../../../../../components/osa</state>
+          <state>$PROJ_DIR$/../../../../../../components/codec/cs42888</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -3757,7 +3765,7 @@
         </option>
         <option>
           <name>IlinkOverrideProgramEntryLabel</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>IlinkProgramEntryLabelSelect</name>
@@ -3765,7 +3773,7 @@
         </option>
         <option>
           <name>IlinkProgramEntryLabel</name>
-          <state>__iar_program_start</state>
+          <state>Reset_Handler</state>
         </option>
         <option>
           <name>DoFill</name>
@@ -4132,6 +4140,7 @@
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
           <state>SD_ENABLED</state>
           <state>CODEC_CS42888_ENABLE</state>
+          <state>MCUXPRESSO_SDK</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -4269,8 +4278,8 @@
           <state>$PROJ_DIR$/../../../../../../components/i2c</state>
           <state>$PROJ_DIR$/../../../../../../components/codec</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/port/cs42888</state>
+          <state>$PROJ_DIR$/../../../../../../components/codec/port</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/utilities/debug_console_lite</state>
-          <state>$PROJ_DIR$/../../../../../../components/codec/cs42888</state>
           <state>$PROJ_DIR$/../../../../../../middleware/fatfs/source</state>
           <state>$PROJ_DIR$/../../../../../../middleware/fatfs/source/fsl_sd_disk</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052</state>
@@ -4278,9 +4287,10 @@
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/xip</state>
           <state>$PROJ_DIR$/../../../../xip</state>
-          <state>$PROJ_DIR$/../../../../../../CMSIS/Include</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/sdmmc/osa</state>
           <state>$PROJ_DIR$/../../../../../../components/osa</state>
+          <state>$PROJ_DIR$/../../../../../../components/codec/cs42888</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -4744,7 +4754,7 @@
         </option>
         <option>
           <name>IlinkOverrideProgramEntryLabel</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>IlinkProgramEntryLabelSelect</name>
@@ -4752,7 +4762,7 @@
         </option>
         <option>
           <name>IlinkProgramEntryLabel</name>
-          <state>__iar_program_start</state>
+          <state>Reset_Handler</state>
         </option>
         <option>
           <name>DoFill</name>
@@ -5119,6 +5129,7 @@
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
           <state>SD_ENABLED</state>
           <state>CODEC_CS42888_ENABLE</state>
+          <state>MCUXPRESSO_SDK</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -5256,8 +5267,8 @@
           <state>$PROJ_DIR$/../../../../../../components/i2c</state>
           <state>$PROJ_DIR$/../../../../../../components/codec</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/port/cs42888</state>
+          <state>$PROJ_DIR$/../../../../../../components/codec/port</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/utilities/debug_console_lite</state>
-          <state>$PROJ_DIR$/../../../../../../components/codec/cs42888</state>
           <state>$PROJ_DIR$/../../../../../../middleware/fatfs/source</state>
           <state>$PROJ_DIR$/../../../../../../middleware/fatfs/source/fsl_sd_disk</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052</state>
@@ -5265,9 +5276,10 @@
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/xip</state>
           <state>$PROJ_DIR$/../../../../xip</state>
-          <state>$PROJ_DIR$/../../../../../../CMSIS/Include</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/sdmmc/osa</state>
           <state>$PROJ_DIR$/../../../../../../components/osa</state>
+          <state>$PROJ_DIR$/../../../../../../components/codec/cs42888</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -5731,7 +5743,7 @@
         </option>
         <option>
           <name>IlinkOverrideProgramEntryLabel</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>IlinkProgramEntryLabelSelect</name>
@@ -5739,7 +5751,7 @@
         </option>
         <option>
           <name>IlinkProgramEntryLabel</name>
-          <state>__iar_program_start</state>
+          <state>Reset_Handler</state>
         </option>
         <option>
           <name>DoFill</name>
@@ -5982,6 +5994,12 @@
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/drivers/fsl_common.c</name>
     </file>
     <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/drivers/fsl_common_arm.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/drivers/fsl_common_arm.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1052/drivers/fsl_cache.c</name>
     </file>
     <file>
@@ -6110,12 +6128,21 @@
     <file>
       <name>$PROJ_DIR$/../../../../../../components/codec/fsl_codec_common.c</name>
     </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../components/codec/port/cs42888/fsl_codec_adapter.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../components/codec/port/cs42888/fsl_codec_adapter.h</name>
-    </file>
+    <group>
+      <name>port</name>
+      <group>
+        <name>cs42888</name>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../components/codec/port/cs42888/fsl_codec_cs42888_adapter.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../components/codec/port/cs42888/fsl_codec_cs42888_adapter.h</name>
+        </file>
+      </group>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/codec/port/fsl_codec_adapter.h</name>
+      </file>
+    </group>
     <file>
       <name>$PROJ_DIR$/../../../../../../components/codec/cs42888/fsl_cs42888.h</name>
     </file>
@@ -6188,7 +6215,13 @@
         <name>$PROJ_DIR$/../../../../../../middleware/fatfs/source/diskio.c</name>
       </file>
       <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/fatfs/source/diskio.h</name>
+      </file>
+      <file>
         <name>$PROJ_DIR$/../../../../../../middleware/fatfs/source/ff.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/fatfs/source/ff.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../../middleware/fatfs/source/ffsystem.c</name>
@@ -6196,19 +6229,13 @@
       <file>
         <name>$PROJ_DIR$/../../../../../../middleware/fatfs/source/ffunicode.c</name>
       </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/fatfs/source/diskio.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/fatfs/source/ff.h</name>
-      </file>
       <group>
         <name>fsl_sd_disk</name>
         <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/fatfs/source/fsl_sd_disk/fsl_sd_disk.h</name>
+          <name>$PROJ_DIR$/../../../../../../middleware/fatfs/source/fsl_sd_disk/fsl_sd_disk.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/fatfs/source/fsl_sd_disk/fsl_sd_disk.c</name>
+          <name>$PROJ_DIR$/../../../../../../middleware/fatfs/source/fsl_sd_disk/fsl_sd_disk.h</name>
         </file>
       </group>
     </group>
@@ -6255,40 +6282,31 @@
   <group>
     <name>CMSIS</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/core_cm7.h</name>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/cmsis_armcc.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/mpu_armv7.h</name>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/cmsis_armclang.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_armcc.h</name>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/cmsis_armclang_ltm.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_armclang.h</name>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/cmsis_compiler.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_armclang_ltm.h</name>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/cmsis_gcc.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_gcc.h</name>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/cmsis_iccarm.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_compiler.h</name>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/cmsis_version.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_version.h</name>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/core_cm7.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_iccarm.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/arm_common_tables.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/arm_const_structs.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/arm_math.h</name>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/mpu_armv7.h</name>
     </file>
   </group>
 </project>

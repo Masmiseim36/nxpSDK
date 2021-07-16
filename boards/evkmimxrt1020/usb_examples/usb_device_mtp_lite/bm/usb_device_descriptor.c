@@ -85,7 +85,7 @@ uint8_t g_UsbDeviceConfigurationDescriptor[] = {
     USB_DESCRIPTOR_LENGTH_INTERFACE, /* Size of this descriptor in bytes */
     USB_DESCRIPTOR_TYPE_INTERFACE,   /* INTERFACE Descriptor Type */
     USB_MTP_INTERFACE_INDEX,         /* Number of this interface. */
-    0x00U,                           /* Value used to select this alternate setting
+    USB_MTP_INTERFACE_ALTERNATE_0,   /* Value used to select this alternate setting
                                                             for the interface identified in the prior field */
     USB_MTP_ENDPOINT_COUNT,          /* Number of endpoints used by this
                                                               interface (excluding endpoint zero). */
@@ -204,7 +204,7 @@ uint8_t g_UsbDeviceString3[] = {2U + 2U * 16U, USB_DESCRIPTOR_TYPE_STRING,
                                 'F',           0x00U};
 
 USB_DMA_INIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE)
-uint8_t g_UsbDeviceString4[] = {2U + 2U * 16U, USB_DESCRIPTOR_TYPE_STRING, 'M', 0x00U, 'T', 0x00U, 'P', 0x00U};
+uint8_t g_UsbDeviceString4[] = {2U + 2U * 3U, USB_DESCRIPTOR_TYPE_STRING, 'M', 0x00U, 'T', 0x00U, 'P', 0x00U};
 
 USB_DMA_INIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE)
 uint8_t g_UsbDeviceStringN[] = {2U + 2U * 16U, USB_DESCRIPTOR_TYPE_STRING,
@@ -349,14 +349,22 @@ usb_status_t USB_DeviceGetConfigure(usb_device_handle handle, uint8_t *configure
 /* Set current alternate settting of the interface request */
 usb_status_t USB_DeviceSetInterface(usb_device_handle handle, uint8_t interface, uint8_t alternateSetting)
 {
-    g_UsbDeviceInterface[interface] = alternateSetting;
-    return USB_DeviceCallback(handle, kUSB_DeviceEventSetInterface, &interface);
+    if (interface < USB_MTP_INTERFACE_COUNT)
+    {
+        g_UsbDeviceInterface[interface] = alternateSetting;
+        return USB_DeviceCallback(handle, kUSB_DeviceEventSetInterface, &interface);
+    }
+    return kStatus_USB_InvalidRequest;
 }
 /* Get current alternate settting of the interface request */
 usb_status_t USB_DeviceGetInterface(usb_device_handle handle, uint8_t interface, uint8_t *alternateSetting)
 {
-    *alternateSetting = g_UsbDeviceInterface[interface];
-    return kStatus_USB_Success;
+    if (interface < USB_MTP_INTERFACE_COUNT)
+    {
+        *alternateSetting = g_UsbDeviceInterface[interface];
+        return kStatus_USB_Success;
+    }
+    return kStatus_USB_InvalidRequest;
 }
 
 /* Due to the difference of HS and FS descriptors, the device descriptors and configurations need to be updated to match

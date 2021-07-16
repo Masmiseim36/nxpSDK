@@ -21,8 +21,8 @@
 #include "EM_platform.h"
 
 /* -------------------------------------------- Global Definitions */
-#define EM_SUCCESS                  0x0000
-#define EM_FAILURE                  0xFFFF
+#define EM_SUCCESS                  0x0000U
+#define EM_FAILURE                  0xFFFFU
 
 #define EM_THREAD_RETURN_VAL_SUCCESS
 #define EM_THREAD_RETURN_VAL_FAILURE
@@ -53,8 +53,8 @@
 /**
  * Default EM Task's preferred Stack Depth and Priority
  */
-#define EM_OS_TASK_STACKDEPTH           (4 * 1024)
-#define EM_OS_TASK_PRIORITY             (6)
+#define EM_OS_TASK_STACKDEPTH           (4U * 1024U)
+#define EM_OS_TASK_PRIORITY             (6U)
 
 /**
  * Macro for Default Task Name.
@@ -135,20 +135,21 @@ typedef UINT16 EM_RESULT;
 /* Abstractions for String library functions */
 #define EM_str_len(s)                 strlen((char *)(s))
 #define EM_str_n_len(s, sz)           strnlen((char *)(s), (sz))
-#define EM_str_copy(d, s)             strcpy((char *)(d), (char *)(s))
-#define EM_str_n_copy(d, s, n)        strncpy((char *)(d), (char *)(s), n)
+#define EM_str_copy(d, s)             (void)strcpy((char *)(d), (char *)(s))
+#define EM_str_n_copy(d, s, n)        (void)strncpy((char *)(d), (char *)(s), n)
 #define EM_str_cmp(s1, s2)            strcmp((char *)(s1), (char *)(s2))
 #define EM_str_n_cmp(s1, s2, n)       strncmp((char *)(s1), (char *)(s2), n)
-#define EM_str_cat(d, s)              strcat((char *)(d), (char *)(s))
-#define EM_str_n_cat(d, s, sz)        strncat((char *)(d), (char *)(s), (sz))
+#define EM_str_cat(d, s)              (void)strcat((char *)(d), (char *)(s))
+#define EM_str_n_cat(d, s, sz)        (void)strncat((char *)(d), (char *)(s), (sz))
 #define EM_str_str(s, ss)             strstr((char *)(s), (char *)(ss))
 #define EM_str_n_casecmp(s1, s2, n)   _strnicmp ((char *)(s1), (char *)(s2), n)
+#define EM_str_print(...)             (void)sprintf(__VA_ARGS__)
 
 /* Abstractions for memory functions */
-#define EM_mem_move(d, s, n)          memmove((d), (s), (n))
+#define EM_mem_move(d, s, n)          (void)memmove((d), (s), (n))
 #define EM_mem_cmp(p1, p2, n)         memcmp((p1), (p2), (n))
-#define EM_mem_set(p, v, n)           memset((p), (v), (n))
-#define EM_mem_copy(p1, p2, n)        memcpy((p1), (p2), (n))
+#define EM_mem_set(p, v, n)           (void)memset((p), (v), (n))
+#define EM_mem_copy(p1, p2, n)        (void)memcpy((p1), (p2), (n))
 
 /* -------------------------------------------- Data Structures */
 /** Structure to have the local time */

@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['post_5fproc_5fargs_468',['post_proc_args',['../structpost__proc__args.html',1,'']]],
-  ['post_5fprocess_5fdesc_5ft_469',['POST_PROCESS_DESC_T',['../structPOST__PROCESS__DESC__T.html',1,'']]]
+  ['queue_5fset_5fbuffer_5ft_473',['QUEUE_SET_BUFFER_T',['../structQUEUE__SET__BUFFER__T.html',1,'']]]
 ];

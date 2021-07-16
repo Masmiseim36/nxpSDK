@@ -15,7 +15,8 @@
 #include "stdlib.h"
 
 /*!
- * @addtogroup SDMMC_COMMON
+ * @addtogroup sdmmc_common SDMMC Common
+ * @ingroup card
  * @{
  */
 
@@ -115,6 +116,10 @@ enum
     kStatus_SDMMC_CardDetectFailed      = MAKE_STATUS(kStatusGroup_SDMMC, 40U), /*!<  card detect failed */
     kStatus_SDMMC_AuSizeNotSetProperly  = MAKE_STATUS(kStatusGroup_SDMMC, 41U), /*!<  AU size not set properly */
     kStatus_SDMMC_PollingCardIdleFailed = MAKE_STATUS(kStatusGroup_SDMMC, 42U), /*!< polling card idle status failed */
+    kStatus_SDMMC_DeselectCardFailed    = MAKE_STATUS(kStatusGroup_SDMMC, 43U), /*!< deselect card failed */
+    kStatus_SDMMC_CardStatusIdle        = MAKE_STATUS(kStatusGroup_SDMMC, 44U), /*!< card idle  */
+    kStatus_SDMMC_CardStatusBusy        = MAKE_STATUS(kStatusGroup_SDMMC, 45U), /*!< card busy */
+    kStatus_SDMMC_CardInitFailed        = MAKE_STATUS(kStatusGroup_SDMMC, 46U), /*!< card init failed */
 };
 
 /*! @brief sdmmc signal line
@@ -158,6 +163,15 @@ enum
 enum
 {
     kSDMMC_Support8BitWidth = 1U, /*!< 8 bit data width capability */
+};
+
+/*!@ brief sdmmc data packet format
+ * @anchor _sdmmc_data_packet_format
+ */
+enum
+{
+    kSDMMC_DataPacketFormatLSBFirst, /*!< usual data packet format LSB first, MSB last */
+    kSDMMC_DataPacketFormatMSBFirst, /*!< Wide width data packet format MSB first, LSB last */
 };
 
 /*! @brief sd card detect type */
@@ -229,7 +243,10 @@ typedef void (*sd_io_strength_t)(uint32_t busFreq);
 /*! @brief sdcard user parameter */
 typedef struct _sd_usr_param
 {
-    sd_pwr_t pwr;                /*!< power control configuration pointer */
+    sd_pwr_t pwr;             /*!< power control configuration pointer */
+    uint32_t powerOnDelayMS;  /*!< power on delay time */
+    uint32_t powerOffDelayMS; /*!< power off delay time */
+
     sd_io_strength_t ioStrength; /*!< swicth sd io strength */
     sd_io_voltage_t *ioVoltage;  /*!< switch io voltage */
     sd_detect_card_t *cd;        /*!< card detect */
@@ -251,7 +268,10 @@ typedef struct _sdio_card_int
 /*! @brief sdio user parameter */
 typedef struct _sdio_usr_param
 {
-    sd_pwr_t pwr;                /*!< power control configuration pointer */
+    sd_pwr_t pwr;             /*!< power control configuration pointer */
+    uint32_t powerOnDelayMS;  /*!< power on delay time */
+    uint32_t powerOffDelayMS; /*!< power off delay time */
+
     sd_io_strength_t ioStrength; /*!< swicth sd io strength */
     sd_io_voltage_t *ioVoltage;  /*!< switch io voltage */
     sd_detect_card_t *cd;        /*!< card detect */

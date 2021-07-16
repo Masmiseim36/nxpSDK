@@ -13,7 +13,7 @@
 #define _H_RACP_
 
 /* ----------------------------------------- Header File Inclusion */
-#include "BT_common.h"
+#include "BT_racp.h"
 
 /* ----------------------------------------- Global Definitions */
 
@@ -89,18 +89,18 @@
 
 #define racp_validate_opcode(opcode)\
         if (! (( RACP_REPORT_NUMBER_OF_STORED_RECORD >= (opcode)) && \
-              ( RACP_REPORT_STORED_RECORD <= (opcode))) )\
+              ( RACP_REPORT_STORED_RECORD <= (opcode))) ) \
         {\
             RACP_ERR("[**ERR**] RACP opcode not supported\n"); \
-            return RACP_ERR_ID | RACP_OP_CODE_NOT_SUPPORTED; \
+            return (RACP_ERR_ID | RACP_OP_CODE_NOT_SUPPORTED); \
         }
 
+/* Validate Operator, an unsigned value */
 #define racp_validate_operator(oprtr)\
-        if (!((RACP_LAST_RECORD_OPERATOR >= (oprtr)) && \
-            (RACP_NULL_OPERATOR <= (oprtr))))\
+        if (RACP_LAST_RECORD_OPERATOR < (oprtr)) \
         {\
             RACP_ERR("[**ERR**] RACP operator not supported\n"); \
-            return RACP_ERR_ID | RACP_OPERATOR_NOT_SUPPORTED; \
+            return (RACP_ERR_ID | RACP_OPERATOR_NOT_SUPPORTED); \
         }
 
 #define RACP_OPERAND_SUPPORTED_OPERATOR(op)\

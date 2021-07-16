@@ -203,16 +203,16 @@ static void _FMSTR_S32S247TV_EnableTransmitInterrupt(FMSTR_BOOL enable)
 
 static void _FMSTR_S32S247TV_EnableTransmitCompleteInterrupt(FMSTR_BOOL enable)
 {
-	if(enable)
-	{
-		/* Enable interrupt */
-		FMSTR_SETBIT(fmstr_LINFLEXDBaseAddr, FMSTR_LINFLEXD_LINIER_OFFSET, FMSTR_LINFLEXD_LINIER_DTIE);
-	}
-	else
-	{
-		/* Disable interrupt */
-		FMSTR_CLRBIT(fmstr_LINFLEXDBaseAddr, FMSTR_LINFLEXD_LINIER_OFFSET, FMSTR_LINFLEXD_LINIER_DTIE);
-	}
+    if(enable)
+    {
+        /* Enable interrupt */
+        FMSTR_SETBIT(fmstr_LINFLEXDBaseAddr, FMSTR_LINFLEXD_LINIER_OFFSET, FMSTR_LINFLEXD_LINIER_DTIE);
+    }
+    else
+    {
+        /* Disable interrupt */
+        FMSTR_CLRBIT(fmstr_LINFLEXDBaseAddr, FMSTR_LINFLEXD_LINIER_OFFSET, FMSTR_LINFLEXD_LINIER_DTIE);
+    }
 }
 
 /******************************************************************************

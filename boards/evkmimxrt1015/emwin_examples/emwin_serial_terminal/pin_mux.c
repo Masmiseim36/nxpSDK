@@ -164,21 +164,6 @@ void LPSPI1_InitPins(void) {
                                                  Hyst. Enable Field: Hysteresis Disabled */
 }
 
-void LPSPI1_DeinitPins(void)
-{
-    IOMUXC_SetPinMux(
-      IOMUXC_GPIO_AD_B0_10_GPIO1_IO10,        /* GPIO_AD_B0_10 is configured as GPIO1_IO10 */
-      0U);                                    /* Software Input On Field: Input Path is determined by functionality */
-  IOMUXC_SetPinMux(
-      IOMUXC_GPIO_AD_B0_11_GPIO1_IO11,        /* GPIO_AD_B0_11 is configured as GPIO1_IO11 */
-      0U);                                    /* Software Input On Field: Input Path is determined by functionality */
-  IOMUXC_SetPinMux(
-      IOMUXC_GPIO_AD_B0_12_GPIO1_IO12,        /* GPIO_AD_B0_12 is configured as GPIO1_IO12 */
-      0U);                                    /* Software Input On Field: Input Path is determined by functionality */
-  IOMUXC_SetPinMux(
-      IOMUXC_GPIO_AD_B0_13_GPIO1_IO13,        /* GPIO_AD_B0_13 is configured as GPIO1_IO13 */
-      0U);                                    /* Software Input On Field: Input Path is determined by functionality */
-}
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 LPI2C1_InitPins:
@@ -206,15 +191,52 @@ void LPI2C1_InitPins(void) {
       1U);                                    /* Software Input On Field: Force input path of pad GPIO_AD_B1_15 */
 }
 
-void LPI2C1_DeinitPins(void)
-{
-  IOMUXC_SetPinMux(
-      IOMUXC_GPIO_AD_B1_14_GPIO1_IO30,        /* GPIO_AD_B1_14 is configured as GPIO1_IO30 */
-      0U);                                    /* Software Input On Field: Input Path is determined by functionality */
-  IOMUXC_SetPinMux(
-      IOMUXC_GPIO_AD_B1_15_GPIO1_IO31,        /* GPIO_AD_B1_15 is configured as GPIO1_IO31 */
-      0U);                                    /* Software Input On Field: Input Path is determined by functionality */
+/*
+ * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
+LPSPI1_DeinitPins:
+- options: {callFromInitBoot: 'false', coreID: core0, enableClock: 'false'}
+- pin_list:
+  - {pin_num: '65', peripheral: LPSPI1, signal: SCK, pin_signal: GPIO_AD_B0_10}
+  - {pin_num: '64', peripheral: LPSPI1, signal: PCS0, pin_signal: GPIO_AD_B0_11}
+  - {pin_num: '63', peripheral: LPSPI1, signal: SDO, pin_signal: GPIO_AD_B0_12}
+  - {pin_num: '62', peripheral: LPSPI1, signal: SDI, pin_signal: GPIO_AD_B0_13}
+ * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
+ */
+
+/* FUNCTION ************************************************************************************************************
+ *
+ * Function Name : LPSPI1_DeinitPins
+ * Description   : Configures pin routing and optionally pin electrical features.
+ *
+ * END ****************************************************************************************************************/
+void LPSPI1_DeinitPins(void) {
+  IOMUXC_SetPinMux(IOMUXC_GPIO_AD_B0_10_LPSPI1_SCK, 0U);
+  IOMUXC_SetPinMux(IOMUXC_GPIO_AD_B0_11_LPSPI1_PCS0, 0U);
+  IOMUXC_SetPinMux(IOMUXC_GPIO_AD_B0_12_LPSPI1_SDO, 0U);
+  IOMUXC_SetPinMux(IOMUXC_GPIO_AD_B0_13_LPSPI1_SDI, 0U);
 }
+
+/*
+ * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
+LPI2C1_DeinitPins:
+- options: {callFromInitBoot: 'false', coreID: core0, enableClock: 'false'}
+- pin_list:
+  - {pin_num: '52', peripheral: LPI2C1, signal: SDA, pin_signal: GPIO_AD_B1_15}
+  - {pin_num: '53', peripheral: LPI2C1, signal: SCL, pin_signal: GPIO_AD_B1_14}
+ * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
+ */
+
+/* FUNCTION ************************************************************************************************************
+ *
+ * Function Name : LPI2C1_DeinitPins
+ * Description   : Configures pin routing and optionally pin electrical features.
+ *
+ * END ****************************************************************************************************************/
+void LPI2C1_DeinitPins(void) {
+  IOMUXC_SetPinMux(IOMUXC_GPIO_AD_B1_14_LPI2C1_SCL, 0U);
+  IOMUXC_SetPinMux(IOMUXC_GPIO_AD_B1_15_LPI2C1_SDA, 0U);
+}
+
 /***********************************************************************************************************************
  * EOF
  **********************************************************************************************************************/

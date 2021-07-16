@@ -179,6 +179,9 @@ typedef enum {
     STREAM_PIPELINE_PCM_AIRPLAY,
     STREAM_PIPELINE_PCM_ASYNC,
     STREAM_PIPELINE_PCM_ANALOG,
+    STREAM_PIPELINE_MIC2FILE,
+    STREAM_PIPELINE_VIT,
+    STREAM_PIPELINE_EAP,
     STREAM_PIPELINE_MAX
 } StreamPipelineType;
 
@@ -191,6 +194,8 @@ typedef enum {
     ELEMENT_MEM_SINK_INDEX,
     ELEMENT_AUDIO_SINK_INDEX,
     ELEMENT_DECODER_INDEX,
+    ELEMENT_VIT_INDEX,
+    ELEMENT_EAP_INDEX,
     ELEMENT_LAST_INDEX
 } ElementIndex;
 
@@ -219,6 +224,10 @@ typedef enum {
     /* Decoder element (with one source pad and three sink pads) */
     TYPE_ELEMENT_DECODER     = BUILD_ELEMENT (1, 3, ELEMENT_DECODER_INDEX),
         /**< @brief Decoder element */
+    TYPE_ELEMENT_VIT_SINK    = BUILD_ELEMENT (0, 1, ELEMENT_VIT_INDEX),
+
+    TYPE_ELEMENT_EAP         = BUILD_ELEMENT (1, 1, ELEMENT_EAP_INDEX),
+
     TYPE_ELEMENT_LAST        = ELEMENT_LAST_INDEX
 } StreamElementType;
 

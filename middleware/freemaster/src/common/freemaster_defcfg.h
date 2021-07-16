@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2007-2015 Freescale Semiconductor, Inc.
- * Copyright 2018-2020 NXP
+ * Copyright 2018-2021 NXP
  *
  * License: NXP LA_OPT_NXP_Software_License
  *
@@ -32,8 +32,8 @@
 #include "freemaster_cfg.h"
 
 /* Define global version macro */
-#define FMSTR_VERSION     0x00030000 /* 3.0.0 */
-#define FMSTR_VERSION_STR "3.0.0"
+#define FMSTR_VERSION     0x00030004
+#define FMSTR_VERSION_STR "3.0.4"
 
 /******************************************************************************
  * Configuration check
@@ -62,21 +62,30 @@
 #define FMSTR_DISABLE 0
 #endif
 
+/* Protocol session */
+#ifndef FMSTR_SESSION_COUNT
+#define FMSTR_SESSION_COUNT 1
+#endif
+
+#if FMSTR_SESSION_COUNT == 0
+#error Count of sessions (FMSTR_SESSION_COUNT) cannot be zero!
+#endif
+
 /* transport MUST be defined in configuration */
 #if FMSTR_DISABLE == 0 && !defined(FMSTR_TRANSPORT)
 #error No FreeMASTER communication transport interface is enabled. Please choose the interface (FMSTR_TRANSPORT) or set FMSTR_DISABLE option to 1.
 #endif
 
 #ifndef FMSTR_APPLICATION_STR
-#define FMSTR_APPLICATION_STR "Unknown Application"
+#define FMSTR_APPLICATION_STR "Not defined"
 #endif
 
 #ifndef FMSTR_DESCRIPTION_STR
-#define FMSTR_DESCRIPTION_STR "Unknown Description"
+#define FMSTR_DESCRIPTION_STR "Not defined"
 #endif
 
 #ifndef FMSTR_BUILDTIME_STR
-#define FMSTR_BUILDTIME_STR __DATE__ " " __TIME__
+#define FMSTR_BUILDTIME_STR "Build date not specified" /* e.g: __DATE__ " " __TIME__ */
 #endif
 
 /* Remote access to device enabled by default */
@@ -154,11 +163,11 @@
 #endif
 
 #if FMSTR_USE_RECORDER > 255
-#error The count of enabled recorders MUST be smaller than 255.
+#error Number of enabled recorders MUST be smaller than 255.
 #endif
 
 #if FMSTR_USE_SCOPE > 255
-#error The count of enabled scopes MUST be smaller than 255.
+#error Number of enabled oscilloscopes MUST be smaller than 255.
 #endif
 
 /* check recorder settings */
@@ -233,7 +242,7 @@
 #endif
 
 #if FMSTR_USE_PIPES > 127
-#error The count of enabled pipes MUST be smaller than 127.
+#error Number of enabled pipes MUST be smaller than 127.
 #endif
 
 #if FMSTR_USE_PIPES > 0

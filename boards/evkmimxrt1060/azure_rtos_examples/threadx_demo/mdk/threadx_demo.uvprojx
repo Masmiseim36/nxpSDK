@@ -329,9 +329,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>DEBUG, __CLANG_ARM, CPU_MIMXRT1062DVL6A, SDK_DEBUGCONSOLE_UART, PRINTF_FLOAT_ENABLE=1, SCANF_FLOAT_ENABLE=1, PRINTF_ADVANCED_ENABLE=1, SCANF_ADVANCED_ENABLE=0, SERIAL_PORT_TYPE_UART=1, TX_INCLUDE_USER_DEFINE_FILE</Define>
+              <Define>DEBUG, __CLANG_ARM, CPU_MIMXRT1062DVL6A, SDK_DEBUGCONSOLE_UART, PRINTF_FLOAT_ENABLE=1, SCANF_FLOAT_ENABLE=1, PRINTF_ADVANCED_ENABLE=1, SCANF_ADVANCED_ENABLE=0, SERIAL_PORT_TYPE_UART=1, TX_INCLUDE_USER_DEFINE_FILE, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../devices/MIMXRT1062/drivers;../../../../../devices/MIMXRT1062;../../../../../devices/MIMXRT1062/utilities/str;../../../../../devices/MIMXRT1062/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../../../devices/MIMXRT1062/xip;../../../xip;../../../../../rtos/azure-rtos/threadx/common/inc;../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/inc;../../../../../CMSIS/Include</IncludePath>
+              <IncludePath>..;../../../../../devices/MIMXRT1062/drivers;../../../../../devices/MIMXRT1062;../../../../../devices/MIMXRT1062/utilities/str;../../../../../devices/MIMXRT1062/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../../../devices/MIMXRT1062/xip;../../../xip;../../../../../rtos/azure-rtos/threadx/common/inc;../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/inc;../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -365,7 +365,7 @@
             <ScatterFile>MIMXRT1062xxxxx_ram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>../../../../../rtos/azure-rtos/binary/threadx/mdk/libthreadx.lib --remove</Misc>
+            <Misc>../../../../../rtos/azure-rtos/binary/threadx/cortex_m7/mdk/libthreadx.lib --remove --entry=Reset_Handler</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -428,7 +428,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>ports</GroupName>
+          <GroupName>azure-rtos/config</GroupName>
           <Files>
             <File>
               <FileName>tx_user.h</FileName>
@@ -469,6 +469,16 @@
               <FileName>fsl_common.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MIMXRT1062/drivers/fsl_common.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1062/drivers/fsl_common_arm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1062/drivers/fsl_common_arm.h</FilePath>
             </File>
             <File>
               <FileName>fsl_lpuart.h</FileName>
@@ -661,6 +671,16 @@
           <GroupName>azure-rtos/threadx/common/inc</GroupName>
           <Files>
             <File>
+              <FileName>tx_api.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/threadx/common/inc/tx_api.h</FilePath>
+            </File>
+            <File>
+              <FileName>tx_block_pool.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/threadx/common/inc/tx_block_pool.h</FilePath>
+            </File>
+            <File>
               <FileName>tx_byte_pool.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../rtos/azure-rtos/threadx/common/inc/tx_byte_pool.h</FilePath>
@@ -671,19 +691,9 @@
               <FilePath>../../../../../rtos/azure-rtos/threadx/common/inc/tx_event_flags.h</FilePath>
             </File>
             <File>
-              <FileName>tx_timer.h</FileName>
+              <FileName>tx_initialize.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/threadx/common/inc/tx_timer.h</FilePath>
-            </File>
-            <File>
-              <FileName>tx_queue.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/threadx/common/inc/tx_queue.h</FilePath>
-            </File>
-            <File>
-              <FileName>tx_thread.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/threadx/common/inc/tx_thread.h</FilePath>
+              <FilePath>../../../../../rtos/azure-rtos/threadx/common/inc/tx_initialize.h</FilePath>
             </File>
             <File>
               <FileName>tx_mutex.h</FileName>
@@ -691,34 +701,44 @@
               <FilePath>../../../../../rtos/azure-rtos/threadx/common/inc/tx_mutex.h</FilePath>
             </File>
             <File>
+              <FileName>tx_queue.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/threadx/common/inc/tx_queue.h</FilePath>
+            </File>
+            <File>
+              <FileName>tx_semaphore.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/threadx/common/inc/tx_semaphore.h</FilePath>
+            </File>
+            <File>
+              <FileName>tx_thread.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/threadx/common/inc/tx_thread.h</FilePath>
+            </File>
+            <File>
+              <FileName>tx_timer.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/threadx/common/inc/tx_timer.h</FilePath>
+            </File>
+            <File>
               <FileName>tx_trace.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../rtos/azure-rtos/threadx/common/inc/tx_trace.h</FilePath>
-            </File>
-            <File>
-              <FileName>tx_initialize.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/threadx/common/inc/tx_initialize.h</FilePath>
-            </File>
-            <File>
-              <FileName>tx_api.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/threadx/common/inc/tx_api.h</FilePath>
             </File>
             <File>
               <FileName>tx_user_sample.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../rtos/azure-rtos/threadx/common/inc/tx_user_sample.h</FilePath>
             </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>azure-rtos/threadx/ports/common</GroupName>
+          <Files>
             <File>
-              <FileName>tx_block_pool.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/threadx/common/inc/tx_block_pool.h</FilePath>
-            </File>
-            <File>
-              <FileName>tx_semaphore.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/threadx/common/inc/tx_semaphore.h</FilePath>
+              <FileName>tx_initialize_low_level.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/threadx/ports/common/tx_initialize_low_level.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -736,9 +756,39 @@
           <GroupName>azure-rtos/threadx/ports/cortex_m7/ac6/src</GroupName>
           <Files>
             <File>
-              <FileName>tx_initialize_low_level.S</FileName>
+              <FileName>tx_thread_context_restore.S</FileName>
               <FileType>2</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/src/tx_initialize_low_level.S</FilePath>
+              <FilePath>../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/src/tx_thread_context_restore.S</FilePath>
+            </File>
+            <File>
+              <FileName>tx_thread_context_save.S</FileName>
+              <FileType>2</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/src/tx_thread_context_save.S</FilePath>
+            </File>
+            <File>
+              <FileName>tx_thread_interrupt_control.S</FileName>
+              <FileType>2</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/src/tx_thread_interrupt_control.S</FilePath>
+            </File>
+            <File>
+              <FileName>tx_thread_schedule.S</FileName>
+              <FileType>2</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/src/tx_thread_schedule.S</FilePath>
+            </File>
+            <File>
+              <FileName>tx_thread_stack_build.S</FileName>
+              <FileType>2</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/src/tx_thread_stack_build.S</FilePath>
+            </File>
+            <File>
+              <FileName>tx_thread_system_return.S</FileName>
+              <FileType>2</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/src/tx_thread_system_return.S</FilePath>
+            </File>
+            <File>
+              <FileName>tx_timer_interrupt.S</FileName>
+              <FileType>2</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/src/tx_timer_interrupt.S</FilePath>
             </File>
           </Files>
         </Group>
@@ -746,64 +796,49 @@
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
-              <FileName>core_cm7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/core_cm7.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
-            </File>
-            <File>
               <FileName>cmsis_armcc.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_armcc.h</FilePath>
+              <FilePath>../../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_armclang.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_armclang.h</FilePath>
+              <FilePath>../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_armclang_ltm.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_armclang_ltm.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_gcc.h</FilePath>
+              <FilePath>../../../../../CMSIS/Core/Include/cmsis_armclang_ltm.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_compiler.h</FilePath>
+              <FilePath>../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
             </File>
             <File>
-              <FileName>cmsis_version.h</FileName>
+              <FileName>cmsis_gcc.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_version.h</FilePath>
+              <FilePath>../../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_iccarm.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_iccarm.h</FilePath>
+              <FilePath>../../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
-              <FileName>arm_common_tables.h</FileName>
+              <FileName>cmsis_version.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/arm_common_tables.h</FilePath>
+              <FilePath>../../../../../CMSIS/Core/Include/cmsis_version.h</FilePath>
             </File>
             <File>
-              <FileName>arm_const_structs.h</FileName>
+              <FileName>core_cm7.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/arm_const_structs.h</FilePath>
+              <FilePath>../../../../../CMSIS/Core/Include/core_cm7.h</FilePath>
             </File>
             <File>
-              <FileName>arm_math.h</FileName>
+              <FileName>mpu_armv7.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/arm_math.h</FilePath>
+              <FilePath>../../../../../CMSIS/Core/Include/mpu_armv7.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1135,9 +1170,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, DEBUG, __CLANG_ARM, CPU_MIMXRT1062DVL6A, SDK_DEBUGCONSOLE_UART, PRINTF_FLOAT_ENABLE=1, SCANF_FLOAT_ENABLE=1, PRINTF_ADVANCED_ENABLE=1, SCANF_ADVANCED_ENABLE=0, SERIAL_PORT_TYPE_UART=1, TX_INCLUDE_USER_DEFINE_FILE</Define>
+              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, DEBUG, __CLANG_ARM, CPU_MIMXRT1062DVL6A, SDK_DEBUGCONSOLE_UART, PRINTF_FLOAT_ENABLE=1, SCANF_FLOAT_ENABLE=1, PRINTF_ADVANCED_ENABLE=1, SCANF_ADVANCED_ENABLE=0, SERIAL_PORT_TYPE_UART=1, TX_INCLUDE_USER_DEFINE_FILE, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../devices/MIMXRT1062/drivers;../../../../../devices/MIMXRT1062;../../../../../devices/MIMXRT1062/utilities/str;../../../../../devices/MIMXRT1062/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../../../devices/MIMXRT1062/xip;../../../xip;../../../../../rtos/azure-rtos/threadx/common/inc;../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/inc;../../../../../CMSIS/Include</IncludePath>
+              <IncludePath>..;../../../../../devices/MIMXRT1062/drivers;../../../../../devices/MIMXRT1062;../../../../../devices/MIMXRT1062/utilities/str;../../../../../devices/MIMXRT1062/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../../../devices/MIMXRT1062/xip;../../../xip;../../../../../rtos/azure-rtos/threadx/common/inc;../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/inc;../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1171,7 +1206,7 @@
             <ScatterFile>MIMXRT1062xxxxx_flexspi_nor.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>../../../../../rtos/azure-rtos/binary/threadx/mdk/libthreadx.lib --remove --predefine="-DXIP_BOOT_HEADER_ENABLE=1"</Misc>
+            <Misc>../../../../../rtos/azure-rtos/binary/threadx/cortex_m7/mdk/libthreadx.lib --remove --entry=Reset_Handler --predefine="-DXIP_BOOT_HEADER_ENABLE=1"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -1234,7 +1269,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>ports</GroupName>
+          <GroupName>azure-rtos/config</GroupName>
           <Files>
             <File>
               <FileName>tx_user.h</FileName>
@@ -1275,6 +1310,16 @@
               <FileName>fsl_common.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MIMXRT1062/drivers/fsl_common.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1062/drivers/fsl_common_arm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1062/drivers/fsl_common_arm.h</FilePath>
             </File>
             <File>
               <FileName>fsl_lpuart.h</FileName>
@@ -1467,6 +1512,16 @@
           <GroupName>azure-rtos/threadx/common/inc</GroupName>
           <Files>
             <File>
+              <FileName>tx_api.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/threadx/common/inc/tx_api.h</FilePath>
+            </File>
+            <File>
+              <FileName>tx_block_pool.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/threadx/common/inc/tx_block_pool.h</FilePath>
+            </File>
+            <File>
               <FileName>tx_byte_pool.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../rtos/azure-rtos/threadx/common/inc/tx_byte_pool.h</FilePath>
@@ -1477,19 +1532,9 @@
               <FilePath>../../../../../rtos/azure-rtos/threadx/common/inc/tx_event_flags.h</FilePath>
             </File>
             <File>
-              <FileName>tx_timer.h</FileName>
+              <FileName>tx_initialize.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/threadx/common/inc/tx_timer.h</FilePath>
-            </File>
-            <File>
-              <FileName>tx_queue.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/threadx/common/inc/tx_queue.h</FilePath>
-            </File>
-            <File>
-              <FileName>tx_thread.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/threadx/common/inc/tx_thread.h</FilePath>
+              <FilePath>../../../../../rtos/azure-rtos/threadx/common/inc/tx_initialize.h</FilePath>
             </File>
             <File>
               <FileName>tx_mutex.h</FileName>
@@ -1497,34 +1542,44 @@
               <FilePath>../../../../../rtos/azure-rtos/threadx/common/inc/tx_mutex.h</FilePath>
             </File>
             <File>
+              <FileName>tx_queue.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/threadx/common/inc/tx_queue.h</FilePath>
+            </File>
+            <File>
+              <FileName>tx_semaphore.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/threadx/common/inc/tx_semaphore.h</FilePath>
+            </File>
+            <File>
+              <FileName>tx_thread.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/threadx/common/inc/tx_thread.h</FilePath>
+            </File>
+            <File>
+              <FileName>tx_timer.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/threadx/common/inc/tx_timer.h</FilePath>
+            </File>
+            <File>
               <FileName>tx_trace.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../rtos/azure-rtos/threadx/common/inc/tx_trace.h</FilePath>
-            </File>
-            <File>
-              <FileName>tx_initialize.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/threadx/common/inc/tx_initialize.h</FilePath>
-            </File>
-            <File>
-              <FileName>tx_api.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/threadx/common/inc/tx_api.h</FilePath>
             </File>
             <File>
               <FileName>tx_user_sample.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../rtos/azure-rtos/threadx/common/inc/tx_user_sample.h</FilePath>
             </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>azure-rtos/threadx/ports/common</GroupName>
+          <Files>
             <File>
-              <FileName>tx_block_pool.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/threadx/common/inc/tx_block_pool.h</FilePath>
-            </File>
-            <File>
-              <FileName>tx_semaphore.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/threadx/common/inc/tx_semaphore.h</FilePath>
+              <FileName>tx_initialize_low_level.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/threadx/ports/common/tx_initialize_low_level.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1542,9 +1597,39 @@
           <GroupName>azure-rtos/threadx/ports/cortex_m7/ac6/src</GroupName>
           <Files>
             <File>
-              <FileName>tx_initialize_low_level.S</FileName>
+              <FileName>tx_thread_context_restore.S</FileName>
               <FileType>2</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/src/tx_initialize_low_level.S</FilePath>
+              <FilePath>../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/src/tx_thread_context_restore.S</FilePath>
+            </File>
+            <File>
+              <FileName>tx_thread_context_save.S</FileName>
+              <FileType>2</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/src/tx_thread_context_save.S</FilePath>
+            </File>
+            <File>
+              <FileName>tx_thread_interrupt_control.S</FileName>
+              <FileType>2</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/src/tx_thread_interrupt_control.S</FilePath>
+            </File>
+            <File>
+              <FileName>tx_thread_schedule.S</FileName>
+              <FileType>2</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/src/tx_thread_schedule.S</FilePath>
+            </File>
+            <File>
+              <FileName>tx_thread_stack_build.S</FileName>
+              <FileType>2</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/src/tx_thread_stack_build.S</FilePath>
+            </File>
+            <File>
+              <FileName>tx_thread_system_return.S</FileName>
+              <FileType>2</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/src/tx_thread_system_return.S</FilePath>
+            </File>
+            <File>
+              <FileName>tx_timer_interrupt.S</FileName>
+              <FileType>2</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/src/tx_timer_interrupt.S</FilePath>
             </File>
           </Files>
         </Group>
@@ -1552,64 +1637,49 @@
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
-              <FileName>core_cm7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/core_cm7.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
-            </File>
-            <File>
               <FileName>cmsis_armcc.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_armcc.h</FilePath>
+              <FilePath>../../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_armclang.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_armclang.h</FilePath>
+              <FilePath>../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_armclang_ltm.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_armclang_ltm.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_gcc.h</FilePath>
+              <FilePath>../../../../../CMSIS/Core/Include/cmsis_armclang_ltm.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_compiler.h</FilePath>
+              <FilePath>../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
             </File>
             <File>
-              <FileName>cmsis_version.h</FileName>
+              <FileName>cmsis_gcc.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_version.h</FilePath>
+              <FilePath>../../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_iccarm.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_iccarm.h</FilePath>
+              <FilePath>../../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
-              <FileName>arm_common_tables.h</FileName>
+              <FileName>cmsis_version.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/arm_common_tables.h</FilePath>
+              <FilePath>../../../../../CMSIS/Core/Include/cmsis_version.h</FilePath>
             </File>
             <File>
-              <FileName>arm_const_structs.h</FileName>
+              <FileName>core_cm7.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/arm_const_structs.h</FilePath>
+              <FilePath>../../../../../CMSIS/Core/Include/core_cm7.h</FilePath>
             </File>
             <File>
-              <FileName>arm_math.h</FileName>
+              <FileName>mpu_armv7.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/arm_math.h</FilePath>
+              <FilePath>../../../../../CMSIS/Core/Include/mpu_armv7.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1941,9 +2011,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>NDEBUG, __CLANG_ARM, CPU_MIMXRT1062DVL6A, SDK_DEBUGCONSOLE_UART, PRINTF_FLOAT_ENABLE=1, SCANF_FLOAT_ENABLE=1, PRINTF_ADVANCED_ENABLE=1, SCANF_ADVANCED_ENABLE=0, SERIAL_PORT_TYPE_UART=1, TX_INCLUDE_USER_DEFINE_FILE</Define>
+              <Define>NDEBUG, __CLANG_ARM, CPU_MIMXRT1062DVL6A, SDK_DEBUGCONSOLE_UART, PRINTF_FLOAT_ENABLE=1, SCANF_FLOAT_ENABLE=1, PRINTF_ADVANCED_ENABLE=1, SCANF_ADVANCED_ENABLE=0, SERIAL_PORT_TYPE_UART=1, TX_INCLUDE_USER_DEFINE_FILE, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../devices/MIMXRT1062/drivers;../../../../../devices/MIMXRT1062;../../../../../devices/MIMXRT1062/utilities/str;../../../../../devices/MIMXRT1062/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../../../devices/MIMXRT1062/xip;../../../xip;../../../../../rtos/azure-rtos/threadx/common/inc;../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/inc;../../../../../CMSIS/Include</IncludePath>
+              <IncludePath>..;../../../../../devices/MIMXRT1062/drivers;../../../../../devices/MIMXRT1062;../../../../../devices/MIMXRT1062/utilities/str;../../../../../devices/MIMXRT1062/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../../../devices/MIMXRT1062/xip;../../../xip;../../../../../rtos/azure-rtos/threadx/common/inc;../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/inc;../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1977,7 +2047,7 @@
             <ScatterFile>MIMXRT1062xxxxx_ram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>../../../../../rtos/azure-rtos/binary/threadx/mdk/libthreadx.lib --remove</Misc>
+            <Misc>../../../../../rtos/azure-rtos/binary/threadx/cortex_m7/mdk/libthreadx.lib --remove --entry=Reset_Handler</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -2040,7 +2110,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>ports</GroupName>
+          <GroupName>azure-rtos/config</GroupName>
           <Files>
             <File>
               <FileName>tx_user.h</FileName>
@@ -2081,6 +2151,16 @@
               <FileName>fsl_common.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MIMXRT1062/drivers/fsl_common.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1062/drivers/fsl_common_arm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1062/drivers/fsl_common_arm.h</FilePath>
             </File>
             <File>
               <FileName>fsl_lpuart.h</FileName>
@@ -2273,6 +2353,16 @@
           <GroupName>azure-rtos/threadx/common/inc</GroupName>
           <Files>
             <File>
+              <FileName>tx_api.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/threadx/common/inc/tx_api.h</FilePath>
+            </File>
+            <File>
+              <FileName>tx_block_pool.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/threadx/common/inc/tx_block_pool.h</FilePath>
+            </File>
+            <File>
               <FileName>tx_byte_pool.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../rtos/azure-rtos/threadx/common/inc/tx_byte_pool.h</FilePath>
@@ -2283,19 +2373,9 @@
               <FilePath>../../../../../rtos/azure-rtos/threadx/common/inc/tx_event_flags.h</FilePath>
             </File>
             <File>
-              <FileName>tx_timer.h</FileName>
+              <FileName>tx_initialize.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/threadx/common/inc/tx_timer.h</FilePath>
-            </File>
-            <File>
-              <FileName>tx_queue.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/threadx/common/inc/tx_queue.h</FilePath>
-            </File>
-            <File>
-              <FileName>tx_thread.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/threadx/common/inc/tx_thread.h</FilePath>
+              <FilePath>../../../../../rtos/azure-rtos/threadx/common/inc/tx_initialize.h</FilePath>
             </File>
             <File>
               <FileName>tx_mutex.h</FileName>
@@ -2303,34 +2383,44 @@
               <FilePath>../../../../../rtos/azure-rtos/threadx/common/inc/tx_mutex.h</FilePath>
             </File>
             <File>
+              <FileName>tx_queue.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/threadx/common/inc/tx_queue.h</FilePath>
+            </File>
+            <File>
+              <FileName>tx_semaphore.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/threadx/common/inc/tx_semaphore.h</FilePath>
+            </File>
+            <File>
+              <FileName>tx_thread.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/threadx/common/inc/tx_thread.h</FilePath>
+            </File>
+            <File>
+              <FileName>tx_timer.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/threadx/common/inc/tx_timer.h</FilePath>
+            </File>
+            <File>
               <FileName>tx_trace.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../rtos/azure-rtos/threadx/common/inc/tx_trace.h</FilePath>
-            </File>
-            <File>
-              <FileName>tx_initialize.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/threadx/common/inc/tx_initialize.h</FilePath>
-            </File>
-            <File>
-              <FileName>tx_api.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/threadx/common/inc/tx_api.h</FilePath>
             </File>
             <File>
               <FileName>tx_user_sample.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../rtos/azure-rtos/threadx/common/inc/tx_user_sample.h</FilePath>
             </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>azure-rtos/threadx/ports/common</GroupName>
+          <Files>
             <File>
-              <FileName>tx_block_pool.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/threadx/common/inc/tx_block_pool.h</FilePath>
-            </File>
-            <File>
-              <FileName>tx_semaphore.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/threadx/common/inc/tx_semaphore.h</FilePath>
+              <FileName>tx_initialize_low_level.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/threadx/ports/common/tx_initialize_low_level.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2348,9 +2438,39 @@
           <GroupName>azure-rtos/threadx/ports/cortex_m7/ac6/src</GroupName>
           <Files>
             <File>
-              <FileName>tx_initialize_low_level.S</FileName>
+              <FileName>tx_thread_context_restore.S</FileName>
               <FileType>2</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/src/tx_initialize_low_level.S</FilePath>
+              <FilePath>../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/src/tx_thread_context_restore.S</FilePath>
+            </File>
+            <File>
+              <FileName>tx_thread_context_save.S</FileName>
+              <FileType>2</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/src/tx_thread_context_save.S</FilePath>
+            </File>
+            <File>
+              <FileName>tx_thread_interrupt_control.S</FileName>
+              <FileType>2</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/src/tx_thread_interrupt_control.S</FilePath>
+            </File>
+            <File>
+              <FileName>tx_thread_schedule.S</FileName>
+              <FileType>2</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/src/tx_thread_schedule.S</FilePath>
+            </File>
+            <File>
+              <FileName>tx_thread_stack_build.S</FileName>
+              <FileType>2</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/src/tx_thread_stack_build.S</FilePath>
+            </File>
+            <File>
+              <FileName>tx_thread_system_return.S</FileName>
+              <FileType>2</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/src/tx_thread_system_return.S</FilePath>
+            </File>
+            <File>
+              <FileName>tx_timer_interrupt.S</FileName>
+              <FileType>2</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/src/tx_timer_interrupt.S</FilePath>
             </File>
           </Files>
         </Group>
@@ -2358,64 +2478,49 @@
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
-              <FileName>core_cm7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/core_cm7.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
-            </File>
-            <File>
               <FileName>cmsis_armcc.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_armcc.h</FilePath>
+              <FilePath>../../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_armclang.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_armclang.h</FilePath>
+              <FilePath>../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_armclang_ltm.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_armclang_ltm.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_gcc.h</FilePath>
+              <FilePath>../../../../../CMSIS/Core/Include/cmsis_armclang_ltm.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_compiler.h</FilePath>
+              <FilePath>../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
             </File>
             <File>
-              <FileName>cmsis_version.h</FileName>
+              <FileName>cmsis_gcc.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_version.h</FilePath>
+              <FilePath>../../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_iccarm.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_iccarm.h</FilePath>
+              <FilePath>../../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
-              <FileName>arm_common_tables.h</FileName>
+              <FileName>cmsis_version.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/arm_common_tables.h</FilePath>
+              <FilePath>../../../../../CMSIS/Core/Include/cmsis_version.h</FilePath>
             </File>
             <File>
-              <FileName>arm_const_structs.h</FileName>
+              <FileName>core_cm7.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/arm_const_structs.h</FilePath>
+              <FilePath>../../../../../CMSIS/Core/Include/core_cm7.h</FilePath>
             </File>
             <File>
-              <FileName>arm_math.h</FileName>
+              <FileName>mpu_armv7.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/arm_math.h</FilePath>
+              <FilePath>../../../../../CMSIS/Core/Include/mpu_armv7.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2747,9 +2852,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, NDEBUG, __CLANG_ARM, CPU_MIMXRT1062DVL6A, SDK_DEBUGCONSOLE_UART, PRINTF_FLOAT_ENABLE=1, SCANF_FLOAT_ENABLE=1, PRINTF_ADVANCED_ENABLE=1, SCANF_ADVANCED_ENABLE=0, SERIAL_PORT_TYPE_UART=1, TX_INCLUDE_USER_DEFINE_FILE</Define>
+              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, NDEBUG, __CLANG_ARM, CPU_MIMXRT1062DVL6A, SDK_DEBUGCONSOLE_UART, PRINTF_FLOAT_ENABLE=1, SCANF_FLOAT_ENABLE=1, PRINTF_ADVANCED_ENABLE=1, SCANF_ADVANCED_ENABLE=0, SERIAL_PORT_TYPE_UART=1, TX_INCLUDE_USER_DEFINE_FILE, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../devices/MIMXRT1062/drivers;../../../../../devices/MIMXRT1062;../../../../../devices/MIMXRT1062/utilities/str;../../../../../devices/MIMXRT1062/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../../../devices/MIMXRT1062/xip;../../../xip;../../../../../rtos/azure-rtos/threadx/common/inc;../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/inc;../../../../../CMSIS/Include</IncludePath>
+              <IncludePath>..;../../../../../devices/MIMXRT1062/drivers;../../../../../devices/MIMXRT1062;../../../../../devices/MIMXRT1062/utilities/str;../../../../../devices/MIMXRT1062/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../../../devices/MIMXRT1062/xip;../../../xip;../../../../../rtos/azure-rtos/threadx/common/inc;../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/inc;../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2783,7 +2888,7 @@
             <ScatterFile>MIMXRT1062xxxxx_flexspi_nor.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>../../../../../rtos/azure-rtos/binary/threadx/mdk/libthreadx.lib --remove --predefine="-DXIP_BOOT_HEADER_ENABLE=1"</Misc>
+            <Misc>../../../../../rtos/azure-rtos/binary/threadx/cortex_m7/mdk/libthreadx.lib --remove --entry=Reset_Handler --predefine="-DXIP_BOOT_HEADER_ENABLE=1"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -2846,7 +2951,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>ports</GroupName>
+          <GroupName>azure-rtos/config</GroupName>
           <Files>
             <File>
               <FileName>tx_user.h</FileName>
@@ -2887,6 +2992,16 @@
               <FileName>fsl_common.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MIMXRT1062/drivers/fsl_common.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1062/drivers/fsl_common_arm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1062/drivers/fsl_common_arm.h</FilePath>
             </File>
             <File>
               <FileName>fsl_lpuart.h</FileName>
@@ -3079,6 +3194,16 @@
           <GroupName>azure-rtos/threadx/common/inc</GroupName>
           <Files>
             <File>
+              <FileName>tx_api.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/threadx/common/inc/tx_api.h</FilePath>
+            </File>
+            <File>
+              <FileName>tx_block_pool.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/threadx/common/inc/tx_block_pool.h</FilePath>
+            </File>
+            <File>
               <FileName>tx_byte_pool.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../rtos/azure-rtos/threadx/common/inc/tx_byte_pool.h</FilePath>
@@ -3089,19 +3214,9 @@
               <FilePath>../../../../../rtos/azure-rtos/threadx/common/inc/tx_event_flags.h</FilePath>
             </File>
             <File>
-              <FileName>tx_timer.h</FileName>
+              <FileName>tx_initialize.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/threadx/common/inc/tx_timer.h</FilePath>
-            </File>
-            <File>
-              <FileName>tx_queue.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/threadx/common/inc/tx_queue.h</FilePath>
-            </File>
-            <File>
-              <FileName>tx_thread.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/threadx/common/inc/tx_thread.h</FilePath>
+              <FilePath>../../../../../rtos/azure-rtos/threadx/common/inc/tx_initialize.h</FilePath>
             </File>
             <File>
               <FileName>tx_mutex.h</FileName>
@@ -3109,34 +3224,44 @@
               <FilePath>../../../../../rtos/azure-rtos/threadx/common/inc/tx_mutex.h</FilePath>
             </File>
             <File>
+              <FileName>tx_queue.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/threadx/common/inc/tx_queue.h</FilePath>
+            </File>
+            <File>
+              <FileName>tx_semaphore.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/threadx/common/inc/tx_semaphore.h</FilePath>
+            </File>
+            <File>
+              <FileName>tx_thread.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/threadx/common/inc/tx_thread.h</FilePath>
+            </File>
+            <File>
+              <FileName>tx_timer.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/threadx/common/inc/tx_timer.h</FilePath>
+            </File>
+            <File>
               <FileName>tx_trace.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../rtos/azure-rtos/threadx/common/inc/tx_trace.h</FilePath>
-            </File>
-            <File>
-              <FileName>tx_initialize.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/threadx/common/inc/tx_initialize.h</FilePath>
-            </File>
-            <File>
-              <FileName>tx_api.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/threadx/common/inc/tx_api.h</FilePath>
             </File>
             <File>
               <FileName>tx_user_sample.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../rtos/azure-rtos/threadx/common/inc/tx_user_sample.h</FilePath>
             </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>azure-rtos/threadx/ports/common</GroupName>
+          <Files>
             <File>
-              <FileName>tx_block_pool.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/threadx/common/inc/tx_block_pool.h</FilePath>
-            </File>
-            <File>
-              <FileName>tx_semaphore.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/threadx/common/inc/tx_semaphore.h</FilePath>
+              <FileName>tx_initialize_low_level.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/threadx/ports/common/tx_initialize_low_level.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -3154,9 +3279,39 @@
           <GroupName>azure-rtos/threadx/ports/cortex_m7/ac6/src</GroupName>
           <Files>
             <File>
-              <FileName>tx_initialize_low_level.S</FileName>
+              <FileName>tx_thread_context_restore.S</FileName>
               <FileType>2</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/src/tx_initialize_low_level.S</FilePath>
+              <FilePath>../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/src/tx_thread_context_restore.S</FilePath>
+            </File>
+            <File>
+              <FileName>tx_thread_context_save.S</FileName>
+              <FileType>2</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/src/tx_thread_context_save.S</FilePath>
+            </File>
+            <File>
+              <FileName>tx_thread_interrupt_control.S</FileName>
+              <FileType>2</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/src/tx_thread_interrupt_control.S</FilePath>
+            </File>
+            <File>
+              <FileName>tx_thread_schedule.S</FileName>
+              <FileType>2</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/src/tx_thread_schedule.S</FilePath>
+            </File>
+            <File>
+              <FileName>tx_thread_stack_build.S</FileName>
+              <FileType>2</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/src/tx_thread_stack_build.S</FilePath>
+            </File>
+            <File>
+              <FileName>tx_thread_system_return.S</FileName>
+              <FileType>2</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/src/tx_thread_system_return.S</FilePath>
+            </File>
+            <File>
+              <FileName>tx_timer_interrupt.S</FileName>
+              <FileType>2</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/src/tx_timer_interrupt.S</FilePath>
             </File>
           </Files>
         </Group>
@@ -3164,64 +3319,49 @@
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
-              <FileName>core_cm7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/core_cm7.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
-            </File>
-            <File>
               <FileName>cmsis_armcc.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_armcc.h</FilePath>
+              <FilePath>../../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_armclang.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_armclang.h</FilePath>
+              <FilePath>../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_armclang_ltm.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_armclang_ltm.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_gcc.h</FilePath>
+              <FilePath>../../../../../CMSIS/Core/Include/cmsis_armclang_ltm.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_compiler.h</FilePath>
+              <FilePath>../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
             </File>
             <File>
-              <FileName>cmsis_version.h</FileName>
+              <FileName>cmsis_gcc.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_version.h</FilePath>
+              <FilePath>../../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_iccarm.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_iccarm.h</FilePath>
+              <FilePath>../../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
-              <FileName>arm_common_tables.h</FileName>
+              <FileName>cmsis_version.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/arm_common_tables.h</FilePath>
+              <FilePath>../../../../../CMSIS/Core/Include/cmsis_version.h</FilePath>
             </File>
             <File>
-              <FileName>arm_const_structs.h</FileName>
+              <FileName>core_cm7.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/arm_const_structs.h</FilePath>
+              <FilePath>../../../../../CMSIS/Core/Include/core_cm7.h</FilePath>
             </File>
             <File>
-              <FileName>arm_math.h</FileName>
+              <FileName>mpu_armv7.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/arm_math.h</FilePath>
+              <FilePath>../../../../../CMSIS/Core/Include/mpu_armv7.h</FilePath>
             </File>
           </Files>
         </Group>

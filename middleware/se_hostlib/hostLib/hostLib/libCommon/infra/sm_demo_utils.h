@@ -3,15 +3,9 @@
  * @author NXP Semiconductors
  * @version 1.0
  * @par LICENSE
- * Copyright 2016 NXP
  *
- * This software is owned or controlled by NXP and may only be used
- * strictly in accordance with the applicable license terms.  By expressly
- * accepting such terms or by downloading, installing, activating and/or
- * otherwise using the software, you are agreeing that you have read, and
- * that you agree to comply with and are bound by, such license terms.  If
- * you do not agree to be bound by the applicable license terms, then you
- * may not retain, install, activate or otherwise use the software.
+ * Copyright 2016 NXP
+ * SPDX-License-Identifier: Apache-2.0
  *
  * @par Description
  * This file provides the interface to utility functions used by the example programs, not
@@ -42,7 +36,9 @@ extern "C" {
 /*******************************************************************************
  * includes
  ******************************************************************************/
+#if defined (LPC_ENET) || defined (LPC_WIFI)
 #include "jsmn.h"
+#endif
 
 /*******************************************************************************
  * DEFINITONS
@@ -82,7 +78,9 @@ extern int SetGetFlag_GPstorage(U32 *p_val, GpStorageMode_t mode, HLSE_OBJECT_HA
 extern int GetHandle_GPstorage(HLSE_OBJECT_INDEX index);
 #endif
 
+#if defined (LPC_ENET) || defined (LPC_WIFI)
 extern int8_t jsoneq(const char *json, jsmntok_t *tok, const char *s);
+#endif
 #ifdef __cplusplus
 }
 #endif

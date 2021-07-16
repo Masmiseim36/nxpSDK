@@ -23,10 +23,12 @@
 #define HCI_START_OF_L2CAP_PACKET                   0x02
 #define HCI_CONTINUATION_OF_L2CAP_PACKET            0x01
 
-#ifdef BT_PBF
+/**
+ * Non - Automatically - Flushable Packet Boundary Flag
+ * introduced with 2.1+EDR Specification
+ */
 #define HCI_START_OF_NON_FLUSHABLE_L2CAP_PACKET     0x00
 #define HCI_START_OF_FLUSHABLE_L2CAP_PACKET         0x02
-#endif /* BT_PBF */
 
 /* Broadcast flag in the ACL Data Header */
 #define HCI_NO_BROADCAST                            0x00

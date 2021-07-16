@@ -7,7 +7,7 @@
 
 #include "littlevgl_support.h"
 #include "lvgl.h"
-#if defined(FSL_RTOS_FREE_RTOS)
+#if defined(SDK_OS_FREE_RTOS)
 #include "FreeRTOS.h"
 #include "semphr.h"
 #endif
@@ -72,7 +72,7 @@ static uint32_t SPI_WaitEvent(void)
 
     while (!spi_event_received)
     {
-#if defined(FSL_RTOS_FREE_RTOS)
+#if defined(SDK_OS_FREE_RTOS)
         vTaskDelay(1);
 #endif
     }
@@ -165,7 +165,7 @@ static void my_disp_flush(lv_disp_drv_t *disp_drv, const lv_area_t *area, lv_col
     lv_coord_t y2 = area->y2;
 
     uint8_t data[4];
-    uint32_t send_size               = (x2 - x1 + 1) * (y2 - y1 + 1) * 2;
+    uint32_t send_size = (x2 - x1 + 1) * (y2 - y1 + 1) * 2;
     /*Column addresses*/
     APP_pfWrite8_A0(ILI9341_CMD_COLADDR);
     data[0] = (x1 >> 8) & 0xFF;
@@ -185,7 +185,7 @@ static void my_disp_flush(lv_disp_drv_t *disp_drv, const lv_area_t *area, lv_col
     /*Memory write*/
     APP_pfWrite8_A0(ILI9341_CMD_GRAM);
 
-    APP_pfWriteM8_A1((void*)color_p, send_size);
+    APP_pfWriteM8_A1((void *)color_p, send_size);
 
     lv_disp_flush_ready(disp_drv);
 }

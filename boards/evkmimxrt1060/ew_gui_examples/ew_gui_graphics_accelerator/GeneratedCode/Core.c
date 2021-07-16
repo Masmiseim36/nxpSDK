@@ -21,8 +21,8 @@
 * Please do not make any modifications of this file! The modifications are lost
 * when the file is generated again by Embedded Wizard Studio!
 *
-* Version  : 9.30
-* Date     : 14.02.2020  8:00:50
+* Version  : 10.0
+* Date     : 17.02.2021  8:00:50
 * Profile  : iMX_RT
 * Platform : NXP.iMX_RT.RGB565
 *
@@ -1040,7 +1040,7 @@ void CoreQuadView_OnSetPoint1( CoreQuadView _this, XPoint value )
    the quad, the method returns 'false'. */
 XBool CoreQuadView_IsPointInside( CoreQuadView _this, XPoint aPoint )
 {
-  XPoint points[ 4 ];
+  XPoint points[ 4 ] = {0};
   XInt32 i = 0;
   XInt32 j = 3;
   XBool inside1 = 0;
@@ -1497,6 +1497,17 @@ void CoreGroup__Done( CoreGroup _this )
 
   /* Don't forget to deinitialize the super class ... */
   CoreRectView__Done( &_this->_Super );
+}
+
+/* The method Init() is invoked automatically after the component has been created. 
+   This method can be overridden and filled with logic containing additional initialization 
+   statements. */
+void CoreGroup_Init( CoreGroup _this, XHandle aArg )
+{
+  /* Dummy expressions to avoid the 'C' warning 'unused argument'. */
+  EW_UNUSED_ARG( aArg );
+
+  CoreGroup_InvalidateViewState( _this );
 }
 
 /* The method Draw() is invoked automatically if parts of the view should be redrawn 
@@ -2417,7 +2428,7 @@ void CoreGroup_InvalidateArea( CoreGroup _this, XRect aArea )
     {
       XBool fullOffScreenBufferUpdate = 0;
       XRect oldInvalidArea = buf->InvalidArea;
-      fullOffScreenBufferUpdate = EwFullOffScreenBufferUpdate;
+      fullOffScreenBufferUpdate = (XBool)EwFullOffScreenBufferUpdate;
 
       if ( fullOffScreenBufferUpdate )
         buf->InvalidArea = EwGetRectORect( grp->Super1.Bounds );
@@ -2444,17 +2455,6 @@ void CoreGroup_InvalidateArea( CoreGroup _this, XRect aArea )
 void CoreGroup__InvalidateArea( void* _this, XRect aArea )
 {
   ((CoreGroup)_this)->_VMT->InvalidateArea((CoreGroup)_this, aArea );
-}
-
-/* The method Init() is invoked automatically after the component has been created. 
-   This method can be overridden and filled with logic containing additional initialization 
-   statements. */
-void CoreGroup_Init( CoreGroup _this, XHandle aArg )
-{
-  /* Dummy expressions to avoid the 'C' warning 'unused argument'. */
-  EW_UNUSED_ARG( aArg );
-
-  CoreGroup_InvalidateViewState( _this );
 }
 
 /* The method FindSiblingView() searches for a sibling view of the view specified 
@@ -3027,7 +3027,7 @@ void CoreRoot_InvalidateArea( CoreRoot _this, XRect aArea )
     }
 
     fullOffScreenBufferUpdate = 0;
-    fullOffScreenBufferUpdate = EwFullOffScreenBufferUpdate;
+    fullOffScreenBufferUpdate = (XBool)EwFullOffScreenBufferUpdate;
 
     if ( fullOffScreenBufferUpdate )
       _this->Super1.buffer->InvalidArea = EwGetRectORect( _this->Super2.Bounds );
@@ -3248,11 +3248,9 @@ XInt32 CoreRoot__GetFPS( void* _this )
 XRect CoreRoot_Update( CoreRoot _this )
 {
   if ( _this->canvas == 0 )
-  {
     _this->canvas = EwNewObject( GraphicsCanvas, 0 );
-    ResourcesBitmap__OnSetFrameSize( _this->canvas, EwGetRectSize( _this->Super2.Bounds ));
-  }
 
+  ResourcesBitmap__OnSetFrameSize( _this->canvas, EwGetRectSize( _this->Super2.Bounds ));
   ResourcesBitmap__Update( _this->canvas );
   return CoreRoot_UpdateGE20( _this, _this->canvas );
 }
@@ -3426,7 +3424,7 @@ XInt32 CoreRoot_BeginUpdate( CoreRoot _this )
   if (( !preserveFramebufferContent && !fullScreenUpdate ) && ( _this->noOfRegions 
       > 0 ))
   {
-    XRect tmpRegions[ 3 ];
+    XRect tmpRegions[ 3 ] = {0};
     XInt32 tmpNoOfRegions = _this->noOfRegions;
 
     for ( i = 0; i < tmpNoOfRegions; i = i + 1 )
@@ -4027,6 +4025,9 @@ void CoreRoot_RetargetCursorWithReason( CoreRoot _this, CoreView aNewTarget, Cor
   if ((CoreRoot)aNewTarget == _this )
     aNewTarget = 0;
 
+  if ( !( aNewTarget != 0 ) && ( _this->modalGroups != 0 ))
+    aNewTarget = ((CoreView)_this->modalGroups->group );
+
   if ( _this->cursorTargetView[ EwCheckIndex( _this->cursorFinger, 10 )] == 0 )
     return;
 
@@ -4186,6 +4187,15 @@ void CoreEvent__Done( CoreEvent _this )
   XObject__Done( &_this->_Super );
 }
 
+/* 'C' function for method : 'Core::Event.Init()' */
+void CoreEvent_Init( CoreEvent _this, XHandle aArg )
+{
+  /* Dummy expressions to avoid the 'C' warning 'unused argument'. */
+  EW_UNUSED_ARG( aArg );
+
+  _this->Time = CoreEvent_GetCurrentTime( _this );
+}
+
 /* The method 'GetCurrentTime()' returns the current time expressed in milliseconds. 
    The value can be used e.g. to calculate the time span elapsed since the event 
    was generated (see @Time). */
@@ -4199,15 +4209,6 @@ XUInt32 CoreEvent_GetCurrentTime( CoreEvent _this )
   ticksCount = 0;
   ticksCount = (XUInt32)EwGetTicks();
   return ticksCount;
-}
-
-/* 'C' function for method : 'Core::Event.Init()' */
-void CoreEvent_Init( CoreEvent _this, XHandle aArg )
-{
-  /* Dummy expressions to avoid the 'C' warning 'unused argument'. */
-  EW_UNUSED_ARG( aArg );
-
-  _this->Time = CoreEvent_GetCurrentTime( _this );
 }
 
 /* Variants derived from the class : 'Core::Event' */
@@ -5263,7 +5264,7 @@ CoreCursorHit CoreSimpleTouchHandler_CursorHitTest( CoreSimpleTouchHandler _this
   }
   else
   {
-    XPoint points[ 9 ];
+    XPoint points[ 9 ] = {0};
     XInt32 i;
     points[ 0 ] = EwGetRectCenter( aArea );
     points[ 1 ] = points[ 0 ];
@@ -5374,6 +5375,26 @@ void CoreKeyPressHandler__Done( CoreKeyPressHandler _this )
   XObject__Done( &_this->_Super );
 }
 
+/* 'C' function for method : 'Core::KeyPressHandler.Init()' */
+void CoreKeyPressHandler_Init( CoreKeyPressHandler _this, XHandle aArg )
+{
+  CoreGroup group;
+
+  /* Dummy expressions to avoid the 'C' warning 'unused argument'. */
+  EW_UNUSED_ARG( aArg );
+
+  group = EwCastObject( _this->_XObject._Link, CoreGroup );
+
+  if ( group == 0 )
+  {
+    EwThrow( EwLoadString( &_Const000A ));
+    return;
+  }
+
+  _this->next = group->keyHandlers;
+  group->keyHandlers = _this;
+}
+
 /* 'C' function for method : 'Core::KeyPressHandler.HandleEvent()' */
 XBool CoreKeyPressHandler_HandleEvent( CoreKeyPressHandler _this, CoreKeyEvent aEvent )
 {
@@ -5412,26 +5433,6 @@ XBool CoreKeyPressHandler_HandleEvent( CoreKeyPressHandler _this, CoreKeyEvent a
   }
 
   return 0;
-}
-
-/* 'C' function for method : 'Core::KeyPressHandler.Init()' */
-void CoreKeyPressHandler_Init( CoreKeyPressHandler _this, XHandle aArg )
-{
-  CoreGroup group;
-
-  /* Dummy expressions to avoid the 'C' warning 'unused argument'. */
-  EW_UNUSED_ARG( aArg );
-
-  group = EwCastObject( _this->_XObject._Link, CoreGroup );
-
-  if ( group == 0 )
-  {
-    EwThrow( EwLoadString( &_Const000A ));
-    return;
-  }
-
-  _this->next = group->keyHandlers;
-  group->keyHandlers = _this;
 }
 
 /* Variants derived from the class : 'Core::KeyPressHandler' */

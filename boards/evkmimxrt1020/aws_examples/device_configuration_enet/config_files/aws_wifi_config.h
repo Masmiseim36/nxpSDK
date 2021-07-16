@@ -1,6 +1,6 @@
 /*
- * FreeRTOS V1.2.0
- * Copyright (C) 2017 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
+ * FreeRTOS V1.4.8
+ * Copyright (C) 2020 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
  * this software and associated documentation files (the "Software"), to deal in
@@ -42,13 +42,50 @@
 #define wificonfigMAX_BSSID_LEN               ( 6 )
 
 /**
- * @brief Max passphrase length.
+ * @brief Max number of WEP keys supported.
  */
-#define wificonfigMAX_PASSPHRASE_LEN          ( 32 )
+
+#define wificonfigMAX_WEPKEYS                  ( 4 )
+
+/**
+ * @brief Max WEP key length
+ */
+#define wificonfigMAX_WEPKEY_LEN              ( 26 )
+
+/**
+ * @brief Max passphrase length.
+ * 
+ * This length is designated by the Wi-Fi driver as both the WPA PSK and
+ * Passphrase length.
+ */
+#define wificonfigMAX_PASSPHRASE_LEN          ( 64 )
 
 /**
  * @brief DNS query timeout when getting a host IP.
  */
 #define wificonfigDNS_QUERY_TIMEOUT           ( 10000 )
+
+/**
+ * @brief Soft Access point SSID
+ */
+#define wificonfigACCESS_POINT_SSID_PREFIX    ( "ConfigureMe" )
+
+/**
+ * @brief Soft Access point Passkey
+ */
+#define wificonfigACCESS_POINT_PASSKEY        ( "awsiotdevice" )
+
+/**
+ * @brief Soft Access point Channel
+ */
+#define wificonfigACCESS_POINT_CHANNEL        ( 11 )
+
+/**
+ * @brief Soft Access point security
+ * WPA2 Security, see WIFISecurity_t
+ * other values are - eWiFiSecurityOpen, eWiFiSecurityWEP, eWiFiSecurityWPA
+ */
+#define wificonfigACCESS_POINT_SECURITY       ( eWiFiSecurityWPA2 )
+
 
 #endif

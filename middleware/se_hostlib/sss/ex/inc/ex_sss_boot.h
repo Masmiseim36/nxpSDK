@@ -1,8 +1,7 @@
 /*
- * Copyright 2019-2020 NXP
- * All rights reserved.
  *
- * SPDX-License-Identifier: BSD-3-Clause
+ * Copyright 2019-2020 NXP
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 /** @file
@@ -191,6 +190,9 @@ bool ex_sss_boot_isSocketPortName(const char *portName);
 
 /** Open an example session */
 sss_status_t ex_sss_boot_open(ex_sss_boot_ctx_t *pCtx, const char *portName);
+
+/** Open an example cc session */
+sss_status_t ex_sss_boot_open_on_id(ex_sss_boot_ctx_t *pCtx, const char *portName, const int32_t authId);
 
 /** Open an example session */
 sss_status_t ex_sss_boot_factory_reset(ex_sss_boot_ctx_t *pCtx);

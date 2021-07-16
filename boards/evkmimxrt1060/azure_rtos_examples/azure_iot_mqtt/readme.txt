@@ -1,44 +1,68 @@
 Overview
 ========
-This example demonstrates how to communicate with Azure IoT through MQTT.
+This example demonstrates how to communicate with Azure IoT Hub through MQTT.
 
 Prerequisites
-1. Register an Azure account. (https://azure.microsoft.com/)
-   Note that the name used in the manual can be changed accordingly.
+Before running the example, need to set up a device in Azure IoT Hub, and write the device parameters in the example code.
 
-2. Install Azure CLI. Refer to https://docs.microsoft.com/en-us/cli/azure/install-azure-cli?view=azure-cli-latest
+Here, we demonstrate how to setup a device in Azure IoT Hub. If you are not familiar with Azure CLI, please refer to
+the document for the details. (https://docs.microsoft.com/en-us/azure/iot-hub/)
 
-3. Create an IoT hub called "imxrthub" in the resource group "imxrthub-test".
-   > az login
-   > az extension add --name azure-iot
-   > az iot hub create --resource-group imxrthub-test --name imxrthub
+Note that these steps assume you use the Azure IoT Hub for the first time.
 
-3. Register a device with the device ID "imxrt1050" in the IoT hub "imxrthub".
-   > az extension add --name azure-cli-iot-ext
-   > az iot hub device-identity create --hub-name imxrthub --device-id imxrt1050
+1. Register an Azure account.
 
-4. Retrieve your Device Connection String using the Azure CLI.
-   Get these parameters from the connectionString:
-     HostName (HOST_NAME): imxrthub.azure-devices.net
-     DeviceId (DEVICE_ID): imxrt1050
-   > az iot hub device-identity show-connection-string --device-id imxrt1050 --hub-name imxrthub
+2. Install Azure CLI locally, or use Azure CLoud Shell.
 
-5. Get a valid IoT hub SAS token. Note that the SAS token will expire in one hour by default.
-   sas (DEVICE_SAS): SharedAccessSignature sr=imxrthub.azure-devices.net%2Fdevices%2Fimxrt1050&sig=...
-   > az iot hub generate-sas-token -d imxrt1050 -n imxrthub
+3. Before using any CLI commands locally, you need to sign in:
+     > az login
 
-6. Write the above device parameters into the source code, rtos/azure-rtos/boards/examples/azure_iot_mqtt/sample_azure_iot.c.
-   Fill these three macros, HOST_NAME, DEVICE_ID, DEVICE_SAS.
+4. Add the Microsoft Azure IoT Extension for Azure CLI.
+     > az extension add --name azure-iot
 
-7. Build the code and write it into the on-board Flash.
+5: Create a new resource group which is a logical container into which Azure IoT Hub are deployed and managed.
+   {MyResourceGroupName}: Name of the new resource group
+   {MyResourceLocation}: Location, for example, westus. Select a location from: az account list-locations -o table.
+     > az group create --name {MyResourceGroupName} --location {MyResourceLocation}
+
+6: Create a new IoT Hub in the resource group.
+   {MyResourceGroupName}: The name of the resource group you just created.
+   {MyIoTHubName}: Name of the new IoT Hub. This name must be globally unique. If failed, please try another name.
+     > az iot hub create --resource-group {MyResourceGroupName} --name {MyIoTHubName}
+
+7: Create a new device identity in the Hub IoT.
+   {MyIoTHubName}: Name of the IoT Hub just created
+   {MyDeviceId}: ID of the new device
+     > az iot hub device-identity create --hub-name {MyIoTHubName} --device-id {MyDeviceId}
+
+8: Create a new device SAS token for the device {MyDeviceId}. Note that the token is only valid in 3600 seconds.
+     > az iot hub generate-sas-token --hub-name {MyIoTHubName} --device-id {MyDeviceId}
+   If you want to set a specified valid duration, please use the parameter, --duration {seconds}, to set the valid
+   token duration in seconds.
+   The command result is in the JSON format, like:
+     {
+        "sas": "{MySASToken}"
+     }
+
+9. Write the above device parameters into the source code, sample_azure_iot.c, in your project. Fill these three macros,
+   HOST_NAME, DEVICE_ID, DEVICE_SAS.
+     HOST_NAME: {MyIoTHubName}.azure-devices.net
+     DEVICE_ID: {MyDeviceId}
+     DEVICE_SAS: {MySASToken}
+   For example:
+     #define HOST_NAME "test-hub.azure-devices.net"
+     #define DEVICE_ID "test-dev"
+     #define DEVICE_SAS "SharedAccessSignature sr=test-hub.azure-devices.net%2Fdevices%2Ftest-dev&sig=57jVRiSOeoX9g4aI6iyP6tFzrjEdam5SpdNITeeUbVY%3D&se=1615181586"
+
+10. Build the code and write it into the on-board Flash.
 
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.9
-- Keil MDK  5.33
-- GCC ARM Embedded  9.3.1
-- MCUXpresso  11.3.0
+- IAR embedded Workbench  9.10.2
+- Keil MDK  5.34
+- GCC ARM Embedded  10.2.1
+- MCUXpresso  11.4.0
 
 Hardware requirements
 =====================
@@ -62,9 +86,11 @@ Prepare the Demo
     - No flow control
 3.  Insert Cable to Ethernet RJ45 port and connect it to a ethernet switch.
 4.  Write the program to the flash of the target board.
+5.  Press the reset button on your board to start the demo.
+
 Running the demo
 ================
-1. When the demo is running, the serial port will output:
+When the demo is running, the serial port will output, for example:
 
 Start the azure_iot_mqtt example...
 DHCP In Progress...

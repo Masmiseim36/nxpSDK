@@ -15,8 +15,6 @@
  * Variables
  ******************************************************************************/
 
-static bool_t s_statusPass;
-
 /*******************************************************************************
  * Code
  ******************************************************************************/
@@ -26,13 +24,11 @@ static bool_t s_statusPass;
  *
  * @param this   Pointer to the current object
  *
- * @return boot_t true on success
+ * @return none
  */
-bool_t MCDRV_Curr3Ph2ShGet(mcdrv_adc_t *this)
+void MCDRV_Curr3Ph2ShGet(mcdrv_adc_t *this)
 {
     GMCLIB_3COOR_T_F16 sIABCtemp;
-
-    s_statusPass = TRUE;
 
     switch (*this->pui16SVMSector)
     {
@@ -91,7 +87,6 @@ bool_t MCDRV_Curr3Ph2ShGet(mcdrv_adc_t *this)
     this->psIABC->f16B = sIABCtemp.f16B;
     this->psIABC->f16C = sIABCtemp.f16C;
 
-    return (s_statusPass);
 }
 
 /*!
@@ -99,11 +94,10 @@ bool_t MCDRV_Curr3Ph2ShGet(mcdrv_adc_t *this)
  *
  * @param this   Pointer to the current object
  *
- * @return boot_t true on success
+ * @return none
  */
-bool_t MCDRV_Curr3Ph2ShChanAssignInit(mcdrv_adc_t *this)
+void MCDRV_Curr3Ph2ShChanAssignInit(mcdrv_adc_t *this)
 {
-    s_statusPass = TRUE;
 
     /* sector 1&6, direct sensing of phases B and C */
     this->sCurrSec16.pui16HCPhaB = (uint16_t *)&this->sCurrSec16.pAdcBasePhaB->HC[this->sCurrSec16.ui16RsltRegPhaB];
@@ -131,7 +125,6 @@ bool_t MCDRV_Curr3Ph2ShChanAssignInit(mcdrv_adc_t *this)
     /* set particular HCx for VDcb channel */
     *this->pui16HCVDcb = ((this->ui16ChanNumVDcb) | (ADC_HC_AIEN_MASK));
 
-    return (s_statusPass);
 }
 
 /*!
@@ -139,11 +132,10 @@ bool_t MCDRV_Curr3Ph2ShChanAssignInit(mcdrv_adc_t *this)
  *
  * @param this   Pointer to the current object
  *
- * @return boot_t true on success
+ * @return none
  */
-bool_t MCDRV_Curr3Ph2ShChanAssign(mcdrv_adc_t *this)
+void MCDRV_Curr3Ph2ShChanAssign(mcdrv_adc_t *this)
 {
-    s_statusPass = TRUE;
 
     switch (*this->pui16SVMSector)
     {
@@ -181,7 +173,7 @@ bool_t MCDRV_Curr3Ph2ShChanAssign(mcdrv_adc_t *this)
 
             break;
     }
-    return (s_statusPass);
+
 }
 
 /*!
@@ -189,11 +181,10 @@ bool_t MCDRV_Curr3Ph2ShChanAssign(mcdrv_adc_t *this)
  *
  * @param this   Pointer to the current object
  *
- * @return boot_t true on success
+ * @return none
  */
-bool_t MCDRV_Curr3Ph2ShCalibInit(mcdrv_adc_t *this)
+void MCDRV_Curr3Ph2ShCalibInit(mcdrv_adc_t *this)
 {
-    s_statusPass = TRUE;
 
     /* clear offset values */
     this->sCurrSec16.ui16OffsetPhaB = 0;
@@ -225,7 +216,6 @@ bool_t MCDRV_Curr3Ph2ShCalibInit(mcdrv_adc_t *this)
     GDFLIB_FilterMAInit_F16((frac16_t)0, &this->sCurrSec45.ui16FiltPhaA);
     GDFLIB_FilterMAInit_F16((frac16_t)0, &this->sCurrSec45.ui16FiltPhaB);
 
-    return (s_statusPass);
 }
 
 /*!
@@ -233,11 +223,10 @@ bool_t MCDRV_Curr3Ph2ShCalibInit(mcdrv_adc_t *this)
  *
  * @param this   Pointer to the current object
  *
- * @return boot_t true on success
+ * @return none
  */
-bool_t MCDRV_Curr3Ph2ShCalib(mcdrv_adc_t *this)
+void MCDRV_Curr3Ph2ShCalib(mcdrv_adc_t *this)
 {
-    s_statusPass = TRUE;
 
     switch (*this->pui16SVMSector)
     {
@@ -276,7 +265,6 @@ bool_t MCDRV_Curr3Ph2ShCalib(mcdrv_adc_t *this)
             break;
     }
 
-    return (s_statusPass);
 }
 
 /*!
@@ -284,11 +272,10 @@ bool_t MCDRV_Curr3Ph2ShCalib(mcdrv_adc_t *this)
  *
  * @param this   Pointer to the current object
  *
- * @return boot_t true on success
+ * @return none
  */
-bool_t MCDRV_Curr3Ph2ShCalibSet(mcdrv_adc_t *this)
+void MCDRV_Curr3Ph2ShCalibSet(mcdrv_adc_t *this)
 {
-    s_statusPass = TRUE;
 
     /* pass calibration data for sector 1 and 6 */
     this->sCurrSec16.ui16OffsetPhaB = this->sCurrSec16.ui16CalibPhaB;
@@ -302,7 +289,6 @@ bool_t MCDRV_Curr3Ph2ShCalibSet(mcdrv_adc_t *this)
     this->sCurrSec45.ui16OffsetPhaA = this->sCurrSec45.ui16CalibPhaA;
     this->sCurrSec45.ui16OffsetPhaB = this->sCurrSec45.ui16CalibPhaB;
 
-    return (s_statusPass);
 }
 
 /*!
@@ -310,16 +296,14 @@ bool_t MCDRV_Curr3Ph2ShCalibSet(mcdrv_adc_t *this)
  *
  * @param this   Pointer to the current object
  *
- * @return boot_t true on success
+ * @return none
  */
-bool_t MCDRV_VoltDcBusGet(mcdrv_adc_t *this)
+void MCDRV_VoltDcBusGet(mcdrv_adc_t *this)
 {
-    s_statusPass = TRUE;
 
     /* read DC-bus voltage sample from defined ADCx result register */
     *this->pf16UDcBus = (frac16_t)((this->pui32UdcbAdcBase->R[this->ui16RsltRegVDcb]) << 5);
 
-    return (s_statusPass);
 }
 
 /*!
@@ -327,14 +311,12 @@ bool_t MCDRV_VoltDcBusGet(mcdrv_adc_t *this)
  *
  * @param this   Pointer to the current object
  *
- * @return boot_t true on success
+ * @return none
  */
-bool_t MCDRV_AuxValGet(mcdrv_adc_t *this)
+void MCDRV_AuxValGet(mcdrv_adc_t *this)
 {
-    s_statusPass = TRUE;
 
     /* read Auxiliary channel sample from defined ADCx result register */
     *this->pui16AuxChan = (frac16_t)(this->pui32AuxAdcBase->R[this->ui16RsltRegAux]);
 
-    return (s_statusPass);
 }

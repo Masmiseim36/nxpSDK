@@ -30,6 +30,7 @@
 extern   "C" {
 #endif
 
+#include "board.h"
 
 /* Include ThreadX header file, if not already.  */
 
@@ -54,11 +55,6 @@ extern   "C" {
 /****** DRIVER SPECIFIC ****** Start of part/vendor specific include area.  Include any such files here!  */
 
 /****** DRIVER SPECIFIC ****** End of part/vendor specific include file area!  */
-
-
-#define CORE_CLK_FREQ  CLOCK_GetFreq(kCLOCK_AhbClk)
-#define EXAMPLE_ENET ENET
-#define EXAMPLE_PHY  0x02U
 
 /*ARM Cortex M4 implementation for interrupt priority shift*/
 #define ARM_INTERRUPT_LEVEL_BITS 4
@@ -215,6 +211,9 @@ typedef struct NX_DRIVER_INFORMATION_STRUCT
 /****** DRIVER SPECIFIC ****** Start of part/vendor specific external function prototypes.  A typical NetX Ethernet driver
                                should expose its entry function as well as its interrupt handling function(s) here. All other
                                functions in the driver should have local scope, i.e., defined as static.  */
+
+/* Return the ENET MDIO interface clock frequency. Define it in board-related code. */
+uint32_t BOARD_GetMDIOClock(void);
 
 /* Define global driver entry function. */
 

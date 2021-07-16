@@ -28,7 +28,7 @@ mid_struct_a1_t g_sMID;
 /* state machine functions field */
 const mid_pfcn_void_pms g_MID_SM_STATE_TABLE[8] = {MID_SM_StateStart, MID_SM_StateStop,   MID_SM_StatePwrStgCharact,
                                                    MID_SM_StateRs,    MID_SM_StateNoLoad, MID_SM_StateBlocked,
-                                                   MID_SM_StateMech};
+                                                   MID_SM_StateMech, 0};
 
 /*******************************************************************************
  * Code
@@ -46,7 +46,7 @@ static void MID_SM_StateStart(mid_sm_app_ctrl_t *psAppCtrl)
     /* call user START function */
     psAppCtrl->psState->MID_Start();
 
-    if (g_sMID.ui16FaultMID)
+    if ((bool_t)g_sMID.ui16FaultMID)
     {
         return;
     }
@@ -84,7 +84,7 @@ static void MID_SM_StateRs(mid_sm_app_ctrl_t *psAppCtrl)
     /* call user Rs function */
     psAppCtrl->psState->MID_Rs();
 
-    if (g_sMID.ui16FaultMID)
+    if ((bool_t)g_sMID.ui16FaultMID)
     {
         return;
     }
@@ -118,7 +118,7 @@ static void MID_SM_StateNoLoad(mid_sm_app_ctrl_t *psAppCtrl)
     /* call user no-load measurement function */
     psAppCtrl->psState->MID_NoLoad();
 
-    if (g_sMID.ui16FaultMID)
+    if ((bool_t)g_sMID.ui16FaultMID)
     {
         return;
     }
@@ -152,7 +152,7 @@ static void MID_SM_StateBlocked(mid_sm_app_ctrl_t *psAppCtrl)
     /* call user blocked-rotor measurement function */
     psAppCtrl->psState->MID_Blocked();
 
-    if (g_sMID.ui16FaultMID)
+    if ((bool_t)g_sMID.ui16FaultMID)
     {
         return;
     }
@@ -186,7 +186,7 @@ static void MID_SM_StateMech(mid_sm_app_ctrl_t *psAppCtrl)
     /* call user MECH function */
     psAppCtrl->psState->MID_Mech();
 
-    if (g_sMID.ui16FaultMID)
+    if ((bool_t)g_sMID.ui16FaultMID)
     {
         return;
     }
@@ -220,7 +220,7 @@ static void MID_SM_StatePwrStgCharact(mid_sm_app_ctrl_t *psAppCtrl)
     /* call user PwrStgCharact function */
     psAppCtrl->psState->MID_PwrStgCharact();
 
-    if (g_sMID.ui16FaultMID)
+    if ((bool_t)g_sMID.ui16FaultMID)
     {
     	return;
     }

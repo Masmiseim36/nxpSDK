@@ -153,6 +153,7 @@ typedef UINT16 EM_RESULT;
 #define EM_str_cat(d, s)              strcat((char *)(d), (char *)(s))
 #define EM_str_str(s, ss)             strstr((char *)(s), (char *)(ss))
 #define EM_str_n_casecmp(s1, s2, n)   _strnicmp ((char *)(s1), (char *)(s2), n)
+#define EM_str_print(...)             (void)sprintf(__VA_ARGS__)
 
 /* Abstractions for memory functions */
 #define EM_mem_move(d, s, n)          memmove((d), (s), (n))

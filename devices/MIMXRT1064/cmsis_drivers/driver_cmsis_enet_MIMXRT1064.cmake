@@ -1,26 +1,24 @@
-if(NOT DRIVER_CMSIS_ENET_MIMXRT1064_INCLUDED)
-    
-    set(DRIVER_CMSIS_ENET_MIMXRT1064_INCLUDED true CACHE BOOL "driver_cmsis_enet component is included.")
+include_guard(GLOBAL)
+message("driver_cmsis_enet component is included.")
 
-    target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
-        ${CMAKE_CURRENT_LIST_DIR}/fsl_enet_cmsis.c
-        ${CMAKE_CURRENT_LIST_DIR}/fsl_enet_phy_cmsis.c
-    )
-
-
-    target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
-        ${CMAKE_CURRENT_LIST_DIR}/.
-    )
+target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
+    ${CMAKE_CURRENT_LIST_DIR}/fsl_enet_cmsis.c
+    ${CMAKE_CURRENT_LIST_DIR}/fsl_enet_phy_cmsis.c
+)
 
 
-    include(driver_enet_MIMXRT1064)
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
+    ${CMAKE_CURRENT_LIST_DIR}/.
+)
 
-    include(CMSIS_Driver_Include_Ethernet_MAC_MIMXRT1064)
 
-    include(CMSIS_Driver_Include_Ethernet_PHY_MIMXRT1064)
+include(driver_enet_MIMXRT1064)
 
-    include(CMSIS_Driver_Include_Ethernet_MIMXRT1064)
+include(CMSIS_Driver_Include_Ethernet_MAC_MIMXRT1064)
 
-    include(driver_phy-common_MIMXRT1064)
+include(CMSIS_Driver_Include_Ethernet_PHY_MIMXRT1064)
 
-endif()
+include(CMSIS_Driver_Include_Ethernet_MIMXRT1064)
+
+include(driver_phy-common_MIMXRT1064)
+

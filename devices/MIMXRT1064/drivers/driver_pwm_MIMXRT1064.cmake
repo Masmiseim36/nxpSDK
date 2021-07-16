@@ -1,17 +1,15 @@
-if(NOT DRIVER_PWM_MIMXRT1064_INCLUDED)
-    
-    set(DRIVER_PWM_MIMXRT1064_INCLUDED true CACHE BOOL "driver_pwm component is included.")
+include_guard(GLOBAL)
+message("driver_pwm component is included.")
 
-    target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
-        ${CMAKE_CURRENT_LIST_DIR}/fsl_pwm.c
-    )
-
-
-    target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
-        ${CMAKE_CURRENT_LIST_DIR}/.
-    )
+target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
+    ${CMAKE_CURRENT_LIST_DIR}/fsl_pwm.c
+)
 
 
-    include(driver_common_MIMXRT1064)
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
+    ${CMAKE_CURRENT_LIST_DIR}/.
+)
 
-endif()
+
+include(driver_common_MIMXRT1064)
+

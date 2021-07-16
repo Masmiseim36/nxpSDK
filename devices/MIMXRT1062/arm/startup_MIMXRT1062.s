@@ -4,11 +4,11 @@
 /*            MIMXRT1062                                                     */
 /*  @version: 1.2                                                            */
 /*  @date:    2019-4-29                                                      */
-/*  @build:   b190919                                                        */
+/*  @build:   b210419                                                        */
 /* ------------------------------------------------------------------------- */
 /*                                                                           */
 /* Copyright 1997-2016 Freescale Semiconductor, Inc.                         */
-/* Copyright 2016-2019 NXP                                                   */
+/* Copyright 2016-2021 NXP                                                   */
 /* All rights reserved.                                                      */
 /*                                                                           */
 /* SPDX-License-Identifier: BSD-3-Clause                                     */
@@ -291,7 +291,6 @@ __Vectors:
 
     .thumb_func
     .align 2
-    .globl   Reset_Handler
     .weak    Reset_Handler
     .type    Reset_Handler, %function
 Reset_Handler:

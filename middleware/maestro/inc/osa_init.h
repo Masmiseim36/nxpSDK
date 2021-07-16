@@ -22,10 +22,19 @@
  *          This function performs the necessary initialization and
  *          allocations.
  * @retval  ERRCODE_NO_ERROR  Function succeeded
- * @retval  ERRCODE_GENERAL_ERROR   Error initializing OSA.  Memory allocations
+ * @retval  ERRCODE_GENERAL_ERROR   Error initializing OSA. Memory allocations
  *                                  failed.
 */
 int osa_init(void);
+
+/*!
+ * @ingroup libosa
+ * @brief   Deinitialize the OSA library
+ * @details Free the OSA structures
+ * @retval  ERRCODE_NO_ERROR  Function succeeded
+ * @retval  ERRCODE_GENERAL_ERROR   Error deinitializing OSA. Memory free failed.
+*/
+int osa_deinit(void);
 
 #endif
 

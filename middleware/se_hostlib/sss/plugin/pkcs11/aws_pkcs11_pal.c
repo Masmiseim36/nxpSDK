@@ -39,7 +39,7 @@
 #include "semphr.h"
 #include "task.h"
 #endif
-#include "iot_pkcs11.h"
+#include "core_pkcs11.h"
 
 /* mbedTLS includes. */
 #if !defined(MBEDTLS_CONFIG_FILE)
@@ -114,6 +114,8 @@ static SemaphoreHandle_t xSemaphore;
 extern ex_sss_boot_ctx_t *pex_sss_demo_boot_ctx;
 extern ex_sss_cloud_ctx_t *pex_sss_demo_tls_ctx;
 extern char *g_port_name;
+
+#undef DEBUG_PKCS11_PAL
 
 #define PKCS11_TOKEN_LABEL                               \
     {                                                    \
@@ -199,6 +201,15 @@ extern char *g_port_name;
         }                                              \
     }
 
+/**
+ * Defines OpenSC NON_REPUDIATION attribute
+ */
+#define SC_VENDOR_DEFINED 0x4F534300 /* OSC */
+// CKA_OPENSC_NON_REPUDIATION for OpenSC 0.17
+#define CKA_OPENSC_NON_REPUDIATION_0_17 (CKA_VENDOR_DEFINED | 1UL)
+// CKA_OPENSC_NON_REPUDIATION for OpenSC 0.21
+#define CKA_OPENSC_NON_REPUDIATION_0_21 (CKA_VENDOR_DEFINED | SC_VENDOR_DEFINED | 1UL)
+
 // uint8_t nist_header_start[] = { 0x30, 0x81, 0x87, 0x02, 0x01, 0x00, 0x30, 0x13,
 //         0x06, 0x07, 0x2A, 0x86, 0x48, 0xCE, 0x3D, 0x02,
 //         0x01, 0x06, 0x08, 0x2A, 0x86, 0x48, 0xCE, 0x3D,
@@ -206,6 +217,18 @@ extern char *g_port_name;
 //         0x01, 0x01, 0x04, 0x20};
 
 // uint8_t nist_header_end[] = {0xA1, 0x44, 0x03, 0x42, 0x00 };
+
+#define DEFAULT_POLICY_SYMM_KEY                                                                                       \
+    (POLICY_OBJ_ALLOW_DELETE | POLICY_OBJ_ALLOW_SIGN | POLICY_OBJ_ALLOW_VERIFY | POLICY_OBJ_ALLOW_ENC |               \
+        POLICY_OBJ_ALLOW_DEC | POLICY_OBJ_ALLOW_KDF | POLICY_OBJ_ALLOW_WRAP | POLICY_OBJ_ALLOW_WRITE |                \
+        POLICY_OBJ_ALLOW_GEN | POLICY_OBJ_ALLOW_DESFIRE_AUTHENTICATION | POLICY_OBJ_ALLOW_DESFIRE_DUMP_SESSION_KEYS | \
+        POLICY_OBJ_ALLOW_IMPORT_EXPORT)
+#define DEFAULT_POLICY_ASYMM_KEY                                                                        \
+    (POLICY_OBJ_ALLOW_DELETE | POLICY_OBJ_ALLOW_SIGN | POLICY_OBJ_ALLOW_VERIFY | POLICY_OBJ_ALLOW_ENC | \
+        POLICY_OBJ_ALLOW_DEC | POLICY_OBJ_ALLOW_KDF | POLICY_OBJ_ALLOW_WRAP | POLICY_OBJ_ALLOW_WRITE |  \
+        POLICY_OBJ_ALLOW_GEN | POLICY_OBJ_ALLOW_KA | POLICY_OBJ_ALLOW_READ | POLICY_OBJ_ALLOW_IMPORT_EXPORT)
+#define DEFAULT_POLICY_BIN_COUNT_PCR (POLICY_OBJ_ALLOW_DELETE | POLICY_OBJ_ALLOW_WRITE | POLICY_OBJ_ALLOW_READ)
+#define DEFAULT_POLICY_USERID (POLICY_OBJ_ALLOW_DELETE | POLICY_OBJ_ALLOW_WRITE)
 
 static int sessionCount         = 0;
 static bool cryptokiInitialized = false;
@@ -269,6 +292,25 @@ typedef struct P11Session
 #endif
 } P11Session_t, *P11SessionPtr_t;
 
+#if SSS_HAVE_SE05X_VER_GTE_06_00
+/**
+ * SE05x Attribute.
+ */
+typedef struct _se05x_object_attribute
+{
+    uint32_t obj_id;                /**< Object identifier. */
+    uint8_t obj_type;               /**< Object type. */
+    SE05x_SetIndicator_t auth_attr; /**< Authentication attribute. */
+    uint16_t auth_attempts;         /**< Authentication attempts counter. Only for Authentication Object*/
+    uint16_t min_AEAD_tag_len;      /**< Minimum tag length for AEAD operations. Only for non-Authentication Object*/
+    uint32_t auth_obj_id;           /**< Authentication object identifier */
+    uint16_t max_attempts;          /**< Maximum authentication attempts */
+    SE05x_Origin_t origin;          /**< The origin of the Secure Object */
+    uint32_t version;               /**< The Secure Object version. */
+    uint32_t policy_num;            /**< Number of policy */
+} se05x_object_attribute;
+#endif
+
 /*-----------------------------------------------------------*/
 // static void prvFreeKey( P11KeyPtr_t pxKey );
 // static int awsRetreieve_certificate(unsigned char *pbuf, uint8_t index, uint32_t *outbuflen);
@@ -310,6 +352,7 @@ CK_RV EcRandSToSignature(uint8_t *rands, const size_t rands_len, uint8_t *output
 CK_RV EcPublickeyGetEcParams(uint8_t *input, size_t *dataLen);
 CK_RV parseCertificateGetAttribute(
     uint32_t xObject, CK_ATTRIBUTE_TYPE attributeType, uint8_t *pData, CK_ULONG *ulAttrLength);
+CK_BBOOL isX509Certificate(uint32_t xObject);
 
 #if SSS_HAVE_ALT_A71CH
 static U16 HLSE_Create_token(
@@ -391,7 +434,7 @@ int mbedtls_ssl_set_curve_list(mbedtls_ssl_config *conf, uint32_t keyIndex)
     };
     uint8_t objectIdLen = sizeof(objectId);
     int i               = 0;
-    size_t compareLen = 0;
+    size_t compareLen   = 0;
     // uint32_t keyIndex = 0;
     // LabelToKeyId((unsigned char*)pcLabelName, strlen(pcLabelName), &keyIndex);
 
@@ -428,7 +471,7 @@ int mbedtls_ssl_set_curve_list(mbedtls_ssl_config *conf, uint32_t keyIndex)
             continue;
         }
 
-        if (objectIdLen * sizeof(uint32_t) > 64){
+        if (objectIdLen * sizeof(uint32_t) > 64) {
             compareLen = 64;
         }
         else {
@@ -1003,19 +1046,19 @@ CK_RV GetSSSAlgorithm(const sss_algorithm_t algorithm, sss_algorithm_t *digest_a
 
 CK_RV LabelToKeyId(unsigned char *label, size_t labelSize, uint32_t *keyId)
 {
-    CK_RV result        = CKR_OK;
-    sss_status_t status = kStatus_SSS_Fail;
-    sss_digest_t digest_ctx;
-    uint8_t digest[64] = {0};
-    size_t digest_size = sizeof(digest);
+    CK_RV result            = CKR_OK;
+    sss_status_t status     = kStatus_SSS_Fail;
+    sss_digest_t digest_ctx = {0};
+    uint8_t digest[64]      = {0};
+    size_t digest_size      = sizeof(digest);
     if (labelSize == 0) {
         LOCK_MUTEX_FOR_RTOS
         {
             sss_rng_context_t sss_rng_ctx;
-            uint8_t rngData[10];
-            size_t rngDataLen = sizeof(rngData);
-            status            = sss_rng_context_init(&sss_rng_ctx, &pex_sss_demo_boot_ctx->session /* Session */);
-            status            = sss_rng_get_random(&sss_rng_ctx, rngData, rngDataLen);
+            uint8_t rngData[10] = {0};
+            size_t rngDataLen   = sizeof(rngData);
+            status              = sss_rng_context_init(&sss_rng_ctx, &pex_sss_demo_boot_ctx->session /* Session */);
+            status              = sss_rng_get_random(&sss_rng_ctx, rngData, rngDataLen);
             if (status != kStatus_SSS_Success) {
                 result = CKR_DEVICE_ERROR;
                 UNLOCK_MUTEX_FOR_RTOS
@@ -1709,6 +1752,7 @@ CK_RV EcRandSToSignature(uint8_t *rands, const size_t rands_len, uint8_t *output
     size_t signatureLen    = sizeof(signature);
     size_t componentLen    = (rands_len) / 2;
     uint8_t tag            = ASN_TAG_INT;
+    size_t totalLen;
 
     xResult = SetASNTLV(tag, &rands[componentLen], componentLen, signature, &signatureLen);
     if (xResult != CKR_OK) {
@@ -1720,7 +1764,7 @@ CK_RV EcRandSToSignature(uint8_t *rands, const size_t rands_len, uint8_t *output
         goto exit;
     }
 
-    size_t totalLen = sizeof(signature) - signatureLen;
+    totalLen = sizeof(signature) - signatureLen;
 
     if (totalLen <= 127) {
         if (signatureLen < 1) {
@@ -1787,10 +1831,10 @@ CK_RV EcPublickeyGetEcParams(uint8_t *input, size_t *dataLen)
 
     if ((len & 0x80) == 0x80) {
         if ((len & 0x7F) == 0x01) {
-            len = data[index++];
+            // len = data[index++];
         }
         else if ((len & 0x7F) == 0x02) {
-            len   = (data[index] << 8) | data[index + 1];
+            // len   = (data[index] << 8) | data[index + 1];
             index = index + 2;
         }
     }
@@ -1809,10 +1853,10 @@ CK_RV EcPublickeyGetEcParams(uint8_t *input, size_t *dataLen)
 
     if ((len & 0x80) == 0x80) {
         if ((len & 0x7F) == 0x01) {
-            len = data[index++];
+            // len = data[index++];
         }
         else if ((len & 0x7F) == 0x02) {
-            len   = (data[index] << 8) | data[index + 1];
+            // len   = (data[index] << 8) | data[index + 1];
             index = index + 2;
         }
     }
@@ -1879,6 +1923,37 @@ exit:
     return xResult;
 }
 
+CK_BBOOL isX509Certificate(uint32_t xObject)
+{
+    CK_BBOOL xResult        = CK_FALSE;
+    sss_object_t sss_object = {0};
+    uint8_t data[2048]      = {0};
+    size_t dataLen          = sizeof(data);
+    size_t KeyBitLen        = 0;
+    mbedtls_x509_crt certificate;
+
+    /* NOTE: MUTEX LOCK IS NOT USED HERE BECAUSE THIS FUNCTION IS CALLED ONLY WHEN WE HAVE ALREADY LOCKED THE MUTEX */
+
+    if (kStatus_SSS_Success != (sss_key_object_init(&sss_object, &pex_sss_demo_boot_ctx->ks))) {
+        return xResult;
+    }
+    if (kStatus_SSS_Success != (sss_key_object_get_handle(&sss_object, xObject))) {
+        return xResult;
+    }
+    if (kStatus_SSS_Success !=
+        sss_key_store_get_key(&pex_sss_demo_boot_ctx->ks, &sss_object, &data[0], &dataLen, &KeyBitLen)) {
+        return xResult;
+    }
+
+    mbedtls_x509_crt_init(&certificate);
+    if (0 != mbedtls_x509_crt_parse(&certificate, (const unsigned char *)data, dataLen)) {
+        return xResult;
+    }
+
+    xResult = CK_TRUE;
+    return xResult;
+}
+
 CK_RV parseCertificateGetAttribute(
     uint32_t xObject, CK_ATTRIBUTE_TYPE attributeType, uint8_t *pData, CK_ULONG *ulAttrLength)
 {
@@ -1895,6 +1970,7 @@ CK_RV parseCertificateGetAttribute(
     uint8_t pubdata[2048] = {0};
     size_t pubdataLen     = sizeof(data);
     size_t i              = 0;
+    int len;
 
     /* NOTE: MUTEX LOCK IS NOT USED HERE BECAUSE THIS FUNCTION IS CALLED ONLY WHEN WE HAVE ALREADY LOCKED THE MUTEX */
 
@@ -1925,8 +2001,8 @@ CK_RV parseCertificateGetAttribute(
             xResult = CKR_ATTRIBUTE_SENSITIVE;
         }
         else {
-            pk      = &certificate.pk;
-            int len = mbedtls_pk_write_pubkey_der(pk, pubdata, pubdataLen);
+            pk  = &certificate.pk;
+            len = mbedtls_pk_write_pubkey_der(pk, pubdata, pubdataLen);
             if (len < 0) {
                 xResult = CKR_FUNCTION_FAILED;
                 break;
@@ -1942,8 +2018,8 @@ CK_RV parseCertificateGetAttribute(
         }
         break;
     case CKA_HASH_OF_SUBJECT_PUBLIC_KEY:
-        pk      = &certificate.pk;
-        int len = mbedtls_pk_write_pubkey_der(pk, pubdata, pubdataLen);
+        pk  = &certificate.pk;
+        len = mbedtls_pk_write_pubkey_der(pk, pubdata, pubdataLen);
         if (len < 0) {
             xResult = CKR_FUNCTION_FAILED;
             break;
@@ -1958,6 +2034,23 @@ CK_RV parseCertificateGetAttribute(
         *ulAttrLength = len;
 
         break;
+
+    case CKA_SUBJECT:
+        if (certificate.subject_raw.p != NULL) {
+            if ((int)(*ulAttrLength) < certificate.subject_raw.len) {
+                LOG_E("Buffer too small");
+                xResult = CKR_BUFFER_TOO_SMALL;
+                break;
+            }
+            memcpy(pData, certificate.subject_raw.p, certificate.subject_raw.len);
+            *ulAttrLength = certificate.subject_raw.len;
+            break;
+        }
+        else {
+            xResult = CKR_FUNCTION_FAILED;
+            break;
+        }
+
     default:
         LOG_W("Attribute required : 0x%08lx\n", attributeType);
         xResult = CKR_ATTRIBUTE_SENSITIVE;
@@ -1965,72 +2058,75 @@ CK_RV parseCertificateGetAttribute(
 
     ENSURE_OR_GO_EXIT(xResult == CKR_OK);
 
-    xResult       = CKR_FUNCTION_FAILED;
-    uint8_t *pTLV = &pData[0];
-    ENSURE_OR_GO_EXIT(*pTLV == 0x30);
+    if ((attributeType == CKA_HASH_OF_ISSUER_PUBLIC_KEY) || (attributeType == CKA_HASH_OF_SUBJECT_PUBLIC_KEY)) {
+        xResult       = CKR_FUNCTION_FAILED;
+        uint8_t *pTLV = &pData[0];
+        ENSURE_OR_GO_EXIT(*pTLV == 0x30);
 
-    /*
-     *  Public key will be of the following format
-     *  30 ZZ
-     *      30 XX
-     *          KEY_PARAMETERS
-     *      03 YY
-     *          PUBLIC_KEY
-     */
+        /*
+        *  Public key will be of the following format
+        *  30 ZZ
+        *      30 XX
+        *          KEY_PARAMETERS
+        *      03 YY
+        *          PUBLIC_KEY
+        */
 
-    size_t tagLen = 0, bufindex = 0;
-    int ret = asn_1_parse_tlv(pTLV, &tagLen, &bufindex); /* Parse initial sequence */
-    ENSURE_OR_GO_EXIT(ret == 0);
-    pTLV = pTLV + bufindex;
-    ENSURE_OR_GO_EXIT(*pTLV == 0x30);
-    bufindex = 0;
-    ret      = asn_1_parse_tlv(pTLV, &tagLen, &bufindex); /* Parse key parameters */
-    ENSURE_OR_GO_EXIT(ret == 0);
-    /* Parse next tag */
-    ASN1_SKIP_TO_NEXT_TAG(pTLV, tagLen)
-    ENSURE_OR_GO_EXIT(*pTLV == 0x03);
-    bufindex = 0;
-    ret      = asn_1_parse_tlv(pTLV, &tagLen, &bufindex);
-    ENSURE_OR_GO_EXIT(ret == 0);
-    pTLV += bufindex;
-    if (*pTLV == 0x00) {
-        pTLV++;
-        tagLen--;
-    }
+        size_t tagLen = 0, bufindex = 0;
+        int ret = asn_1_parse_tlv(pTLV, &tagLen, &bufindex); /* Parse initial sequence */
+        ENSURE_OR_GO_EXIT(ret == 0);
+        pTLV = pTLV + bufindex;
+        ENSURE_OR_GO_EXIT(*pTLV == 0x30);
+        bufindex = 0;
+        ret      = asn_1_parse_tlv(pTLV, &tagLen, &bufindex); /* Parse key parameters */
+        ENSURE_OR_GO_EXIT(ret == 0);
+        /* Parse next tag */
+        ASN1_SKIP_TO_NEXT_TAG(pTLV, tagLen)
+        ENSURE_OR_GO_EXIT(*pTLV == 0x03);
+        bufindex = 0;
+        ret      = asn_1_parse_tlv(pTLV, &tagLen, &bufindex);
+        ENSURE_OR_GO_EXIT(ret == 0);
+        pTLV += bufindex;
+        if (*pTLV == 0x00) {
+            pTLV++;
+            tagLen--;
+        }
 
-    xResult = CKR_OK;
+        xResult = CKR_OK;
 
-    status = sss_digest_context_init(&digestCtx, &pex_sss_demo_boot_ctx->session, digest_algorithm, kMode_SSS_Digest);
-    if (status != kStatus_SSS_Success) {
-        return CKR_DEVICE_ERROR;
-    }
-    status = sss_digest_init(&digestCtx);
-    if (status != kStatus_SSS_Success) {
-        sss_digest_context_free(&digestCtx);
-        return CKR_DEVICE_ERROR;
-    }
-    while (tagLen > 500) {
-        status = sss_digest_update(&digestCtx, &pTLV[0 + i * 500], 500);
+        status =
+            sss_digest_context_init(&digestCtx, &pex_sss_demo_boot_ctx->session, digest_algorithm, kMode_SSS_Digest);
+        if (status != kStatus_SSS_Success) {
+            return CKR_DEVICE_ERROR;
+        }
+        status = sss_digest_init(&digestCtx);
         if (status != kStatus_SSS_Success) {
             sss_digest_context_free(&digestCtx);
             return CKR_DEVICE_ERROR;
         }
-        i++;
-        tagLen -= 500;
-    }
-    status = sss_digest_update(&digestCtx, &pTLV[0 + i * 500], tagLen);
-    if (status != kStatus_SSS_Success) {
-        sss_digest_context_free(&digestCtx);
-        return CKR_DEVICE_ERROR;
-    }
+        while (tagLen > 500) {
+            status = sss_digest_update(&digestCtx, &pTLV[0 + i * 500], 500);
+            if (status != kStatus_SSS_Success) {
+                sss_digest_context_free(&digestCtx);
+                return CKR_DEVICE_ERROR;
+            }
+            i++;
+            tagLen -= 500;
+        }
+        status = sss_digest_update(&digestCtx, &pTLV[0 + i * 500], tagLen);
+        if (status != kStatus_SSS_Success) {
+            sss_digest_context_free(&digestCtx);
+            return CKR_DEVICE_ERROR;
+        }
 
-    *ulAttrLength = 20 /* SHA-1 data length */;
-    status        = sss_digest_finish(&digestCtx, &pData[0], (size_t *)ulAttrLength);
-    if (status != kStatus_SSS_Success) {
+        *ulAttrLength = 20 /* SHA-1 data length */;
+        status        = sss_digest_finish(&digestCtx, &pData[0], (size_t *)ulAttrLength);
+        if (status != kStatus_SSS_Success) {
+            sss_digest_context_free(&digestCtx);
+            return CKR_DEVICE_ERROR;
+        }
         sss_digest_context_free(&digestCtx);
-        return CKR_DEVICE_ERROR;
     }
-    sss_digest_context_free(&digestCtx);
 
 exit:
     return xResult;
@@ -2346,7 +2442,7 @@ CK_DEFINE_FUNCTION(CK_RV, C_GenerateRandom)
 
     /*lint !e9072 It's OK to have different parameter name. */
     // return CKR_DEVICE_ERROR;
-#if SSS_HAVE_ALT_SSS
+#if SSS_HAVE_ALT_SSS || SSS_HAVE_ALT_A71CH
     (void)(xSession);
 #else
     P11SessionPtr_t pxSessionObj = prvSessionPointerFromHandle(xSession);
@@ -2362,7 +2458,7 @@ CK_DEFINE_FUNCTION(CK_RV, C_GenerateRandom)
         return CKR_OK;
     }
     else {
-#if SSS_HAVE_ALT_SSS
+#if SSS_HAVE_ALT_SSS || SSS_HAVE_ALT_A71CH
         LOCK_MUTEX_FOR_RTOS
         {
             sss_status_t sss_status = kStatus_SSS_Fail;
@@ -2490,8 +2586,8 @@ CK_DEFINE_FUNCTION(CK_RV, C_Verify)
     size_t dataLen     = sizeof(data);
     if (pxSessionObj->xOperationInProgress != CKM_RSA_PKCS_PSS && pxSessionObj->xOperationInProgress != CKM_ECDSA &&
         pxSessionObj->xOperationInProgress != CKM_RSA_PKCS) {
-        sss_digest_t digestCtx;
-        size_t i = 0;
+        sss_digest_t digestCtx = {0};
+        size_t i               = 0;
 
         xResult = GetSSSAlgorithm(algorithm, &digest_algorithm);
         if (xResult != CKR_OK) {
@@ -2624,7 +2720,7 @@ CK_DEFINE_FUNCTION(CK_RV, C_Sign)
     sss_status_t status;
     sss_object_t object;
     sss_asymmetric_t asymmCtx;
-    sss_algorithm_t algorithm;
+    sss_algorithm_t algorithm = kAlgorithm_None;
     sss_algorithm_t digest_algorithm;
 
     xResult = ParseSignMechanism(pxSessionObj, &algorithm);
@@ -2755,8 +2851,8 @@ CK_DEFINE_FUNCTION(CK_RV, C_Sign)
         }
     }
     else {
-        sss_digest_t digestCtx;
-        size_t i = 0;
+        sss_digest_t digestCtx = {0};
+        size_t i               = 0;
 
         xResult = GetSSSAlgorithm(algorithm, &digest_algorithm);
         if (xResult != CKR_OK) {
@@ -2976,9 +3072,9 @@ static sss_status_t sss_create_token(sss_key_store_t *keystore,
 #if SSS_HAVE_APPLET_SE05X_IOT
 static smStatus_t read_id_list(uint32_t *idlist, size_t *idlistlen)
 {
-    uint8_t pmore = kSE05x_MoreIndicator_NA;
+    uint8_t pmore      = kSE05x_MoreIndicator_NA;
     uint8_t list[1024] = {0};
-    size_t listlen = sizeof(list);
+    size_t listlen     = sizeof(list);
     size_t i, k = 0;
     smStatus_t retStatus          = SM_NOT_OK;
     uint16_t outputOffset         = 0;
@@ -3784,6 +3880,7 @@ CK_DEFINE_FUNCTION(CK_RV, C_Initialize)(CK_VOID_PTR pvInitArgs)
             status = CKR_CANT_LOCK;
             goto exit;
         }
+        ret = EBUSY;
         while (ret == EBUSY) {
             ret = pthread_mutex_init(&gFilelock, NULL);
         }
@@ -3829,6 +3926,167 @@ CK_DEFINE_FUNCTION(CK_RV, C_Finalize)(CK_VOID_PTR pvReserved)
     return xResult;
 }
 
+#if SSS_HAVE_SE05X_VER_GTE_06_00
+/**
+ * @brief Parse object attribtes from Se05x_API_ReadObjectAttributes. Check specific policy is allowed
+ *
+ * @param[out] pAttribute                Return attribute value.
+ * @param[in] rsp                        Response from Se05x_API_ReadObjectAttributes.
+ * @param[in] rspLen                     Response length.
+ * @param[in] objectType                 Object type.
+ * @param[in] cipherType                 Cipher type.
+ * @param[in] policy_map                 Policy to be checked.
+ * @param[out] pAllow                    Return if policy is allowed. If NULL, policy_map will not be checked.
+ *
+ *
+ * @return kStatus_SSS_Success if successful.
+ */
+static sss_status_t parseAtrribute(se05x_object_attribute *pAttribute,
+    uint8_t *rsp,
+    size_t rspLen,
+    uint32_t objectType,
+    uint32_t cipherType,
+    uint32_t policy_map,
+    CK_BBOOL *pAllow)
+{
+    uint32_t i;
+    uint32_t policyEnd;
+    uint32_t policyStart = 14;
+    uint8_t policy_len;   /**< Length of policy. */
+    uint32_t auth_obj_id; /**< Authentication object identifier */
+    uint32_t ar_header;   /**< AR Header */
+    CK_BBOOL found_policy = CK_FALSE;
+    uint32_t default_policy;
+
+    if (rsp == NULL) {
+        // Object attribute should be at least 19 bytes (without policy).
+        LOG_E("Incomplete Object Attribute");
+        return kStatus_SSS_Fail;
+    }
+
+    if (rspLen < 19) {
+        // Object attribute should be at least 19 bytes (without policy).
+        LOG_E("Incomplete Object Attribute");
+        return kStatus_SSS_Fail;
+    }
+    policyEnd = (uint32_t)(rspLen - 5);
+
+    // Parse Attribute
+    pAttribute->obj_id    = ((rsp[0] << 8 * 3) | (rsp[1] << 8 * 2) | (rsp[2] << 8 * 1) | (rsp[3]));
+    pAttribute->obj_type  = rsp[4];
+    pAttribute->auth_attr = rsp[5];
+    if (pAttribute->auth_attr == kSE05x_SetIndicator_SET) {
+        pAttribute->auth_attempts = ((rsp[6] << 8 * 1) | (rsp[7]));
+        pAttribute->max_attempts  = ((rsp[12] << 8 * 1) | (rsp[13]));
+    }
+    else {
+        pAttribute->min_AEAD_tag_len = ((rsp[6] << 8 * 1) | (rsp[7]));
+    }
+    pAttribute->auth_obj_id = ((rsp[8] << 8 * 3) | (rsp[9] << 8 * 2) | (rsp[10] << 8 * 1) | (rsp[11]));
+    pAttribute->origin      = rsp[policyEnd];
+    pAttribute->version     = (rsp[policyEnd + 1] << 8 * 3) | (rsp[policyEnd + 2] << 8 * 2) |
+                          (rsp[policyEnd + 3] << 8 * 1) | (rsp[policyEnd + 4]);
+#ifdef DEBUG_PKCS11_PAL
+    LOG_I("#####################################################");
+
+    LOG_I("Object identifier : 0x%08X", pAttribute->obj_id);
+    LOG_I("Object type : 0x%08X", pAttribute->obj_type);
+    LOG_I("Authentication attribute : 0x%08X", pAttribute->auth_attr);
+    if (pAttribute->auth_attr == kSE05x_SetIndicator_SET) {
+        LOG_I("No. of failed attempts for Auth : %d", pAttribute->auth_attempts);
+        if (pAttribute->max_attempts == 0) {
+            LOG_I("Max auth attempts : Unlimited");
+        }
+        else {
+            LOG_I("Max auth attempts : %d", pAttribute->max_attempts);
+        }
+    }
+    else {
+        LOG_I("Minimum tag length for AEAD operations : %d", pAttribute->min_AEAD_tag_len);
+    }
+    LOG_I("Auth object Id : 0x%08X", pAttribute->auth_obj_id);
+    LOG_I("Origin : 0x%02X", pAttribute->origin);
+    LOG_I("Secure object version : 0x%08X", pAttribute->version);
+    LOG_I("#####################################################");
+#endif
+
+    if (pAllow != NULL) {
+        // Check policy set and decide if not allowed.
+        for (i = policyStart; i < policyEnd;) {
+            policy_len  = rsp[i];
+            auth_obj_id = ((rsp[i + 1] << 8 * 3) | (rsp[i + 2] << 8 * 2) | (rsp[i + 3] << 8 * 1) | (rsp[i + 4]));
+            ar_header   = ((rsp[i + 5] << 8 * 3) | (rsp[i + 6] << 8 * 2) | (rsp[i + 7] << 8 * 1) | (rsp[i + 8]));
+#ifdef DEBUG_PKCS11_PAL
+            LOG_I("Policy auth object Id : 0x%08X", auth_obj_id);
+            LOG_I("Policy Access rules : 0x%08X", ar_header);
+            LOG_I("Required policy : 0x%02X", policy_map);
+#endif
+#ifdef SSS_EX_SE05x_AUTH_ID
+            // Specific user policy. It overrides the policy for all other users.
+            if (auth_obj_id == SSS_EX_SE05x_AUTH_ID) {
+                if ((ar_header & policy_map) == 0) {
+                    *pAllow = CK_FALSE;
+                    return kStatus_SSS_Success;
+                }
+                else {
+                    *pAllow = CK_TRUE;
+                    return kStatus_SSS_Success;
+                }
+            }
+#endif
+            // Policy for all user. Continue to check if there are specific user policy.
+            if (auth_obj_id == 0) {
+                if ((ar_header & policy_map) == 0) {
+                    *pAllow = CK_FALSE;
+                }
+                else {
+                    *pAllow = CK_TRUE;
+                }
+                // Found policy for all user.
+                found_policy = CK_TRUE;
+            }
+
+            i += policy_len + 1;
+        }
+
+        if (found_policy == CK_TRUE) {
+            // Found policy. Not need to check default policy.
+            return kStatus_SSS_Success;
+        }
+
+        if (pAttribute->auth_attr == kSE05x_SetIndicator_SET) {
+            // Authentication Object
+            default_policy = POLICY_OBJ_ALLOW_READ;
+        }
+        else {
+            // Generic SecureObject
+            if ((objectType == kSSS_KeyPart_Pair) || (objectType == kSSS_KeyPart_Public)) {
+                default_policy = DEFAULT_POLICY_ASYMM_KEY;
+            }
+            else if ((cipherType == kSSS_CipherType_Binary) || (cipherType == kSSS_CipherType_Count) ||
+                     (cipherType == kSSS_CipherType_PCR)) {
+                default_policy = DEFAULT_POLICY_BIN_COUNT_PCR;
+            }
+            else if (cipherType == kSSS_CipherType_UserID) {
+                default_policy = DEFAULT_POLICY_USERID;
+            }
+            else
+                default_policy = DEFAULT_POLICY_SYMM_KEY;
+        }
+#ifdef DEBUG_PKCS11_PAL
+        LOG_I("Default policy : 0x%02X, Required policy : 0x%02X", default_policy, policy_map);
+#endif
+
+        if (default_policy & policy_map)
+            *pAllow = CK_TRUE;
+        else
+            *pAllow = CK_FALSE;
+    }
+
+    return kStatus_SSS_Success;
+}
+#endif
+
 /**
  * @brief Query the value of the specified cryptographic object attribute.
  */
@@ -3844,6 +4102,7 @@ CK_DEFINE_FUNCTION(CK_RV, C_GetAttributeValue)
     CK_ULONG ulAttrLength     = 0;
     CK_ULONG xP11KeyType, iAttrib, objectClass;
     CK_BBOOL supported = CK_FALSE;
+    CK_HW_FEATURE_TYPE hwFeatureType;
 
     if (!pxTemplate) {
         return CKR_ARGUMENTS_BAD;
@@ -3874,8 +4133,47 @@ CK_DEFINE_FUNCTION(CK_RV, C_GetAttributeValue)
             uint16_t outKeyIndex;
             size_t pubKeyLen;
             char label[80];
-            uint32_t keyId                = 0;
-            CK_CERTIFICATE_TYPE cert_type = CKC_X_509;
+            uint32_t keyId                     = 0;
+            CK_CERTIFICATE_TYPE cert_type      = CKC_X_509;
+            CK_MECHANISM_TYPE rsa_mechanisms[] = {
+                /* RSA Algorithms */
+                CKM_RSA_PKCS,
+                CKM_SHA1_RSA_PKCS,
+                CKM_SHA224_RSA_PKCS,
+                CKM_SHA256_RSA_PKCS,
+                CKM_SHA384_RSA_PKCS,
+                CKM_SHA512_RSA_PKCS,
+                CKM_RSA_PKCS_PSS,
+                CKM_SHA1_RSA_PKCS_PSS,
+                CKM_SHA224_RSA_PKCS_PSS,
+                CKM_SHA256_RSA_PKCS_PSS,
+                CKM_SHA384_RSA_PKCS_PSS,
+                CKM_SHA512_RSA_PKCS_PSS,
+                CKM_RSA_PKCS_OAEP,
+            };
+            CK_MECHANISM_TYPE aes_mechanisms[] = {
+                /* AES Algorithms  */
+                CKM_AES_ECB,
+                CKM_AES_CBC,
+                CKM_AES_CTR,
+            };
+            CK_MECHANISM_TYPE ecc_mechanisms[] = {
+                /* ECDSA */
+                CKM_ECDSA,
+                CKM_ECDSA_SHA1,
+            };
+            CK_MECHANISM_TYPE des_mechanisms[] = {
+                /* DES Algorithms  */
+                CKM_DES_ECB,
+                CKM_DES_CBC,
+            };
+#if SSS_HAVE_APPLET_SE05X_IOT
+            sss_se05x_session_t *se05x_session = (sss_se05x_session_t *)(&(pex_sss_demo_boot_ctx->session));
+#endif
+#if SSS_HAVE_SE05X_VER_GTE_06_00
+            se05x_object_attribute obj_attr = {0};
+#endif
+
             // LOG_I("Attribute required : 0x%08lx\n", pxTemplate[ iAttrib ].type);
 
             switch (pxTemplate[iAttrib].type) {
@@ -4002,6 +4300,33 @@ CK_DEFINE_FUNCTION(CK_RV, C_GetAttributeValue)
                     pvAttr       = (void *)&data[0];
                     ulAttrLength = dataLen;
                     break;
+                case kSSS_CipherType_AES:
+                case kSSS_CipherType_DES:
+                    ulAttrLength = CK_UNAVAILABLE_INFORMATION;
+                    xResult      = CKR_ATTRIBUTE_SENSITIVE;
+                    LOG_W("Not allowed to readout Symmetric key value");
+                    break;
+#if SSS_HAVE_APPLET_SE05X_IOT
+                case kSSS_CipherType_Count:
+                    if (kStatus_SSS_Success !=
+                        sss_key_store_get_key(
+                            &pex_sss_demo_boot_ctx->ks, &sss_object, &data[0], &dataLen, &KeyBitLen)) {
+                        ulAttrLength = 0;
+                        xResult      = CKR_FUNCTION_FAILED;
+                        break;
+                    }
+
+                    // Follow the spec. Increase counter each time its value is read.
+                    if (SM_OK != Se05x_API_IncCounter(&se05x_session->s_ctx, sss_object.keyId)) {
+                        ulAttrLength = 0;
+                        xResult      = CKR_FUNCTION_FAILED;
+                        break;
+                    }
+
+                    pvAttr       = (void *)&data[0];
+                    ulAttrLength = dataLen;
+                    break;
+#endif
                 default:
                     ulAttrLength = 0;
                     xResult      = CKR_ARGUMENTS_BAD;
@@ -4084,6 +4409,15 @@ CK_DEFINE_FUNCTION(CK_RV, C_GetAttributeValue)
                     break;
                 }
 
+                // CKA_MODULUS is only valid for RSA Key. Issue triggered by OpenSSH7.6(SIMW-2669)
+                if ((sss_object.cipherType != kSSS_CipherType_RSA) &&
+                    (sss_object.cipherType != kSSS_CipherType_RSA_CRT)) {
+                    LOG_W("Object %08X cipher type is not RSA.", (unsigned int)sss_object.keyId);
+                    ulAttrLength = CK_UNAVAILABLE_INFORMATION;
+                    xResult      = CKR_ARGUMENTS_BAD;
+                    break;
+                }
+
                 if (kStatus_SSS_Success !=
                     sss_key_store_get_key(&pex_sss_demo_boot_ctx->ks, &sss_object, &data[0], &dataLen, &KeyBitLen)) {
                     ulAttrLength = 0;
@@ -4112,6 +4446,15 @@ CK_DEFINE_FUNCTION(CK_RV, C_GetAttributeValue)
                 if (kStatus_SSS_Success != (sss_key_object_get_handle(&sss_object, xObject))) {
                     ulAttrLength = 0;
                     xResult      = CKR_FUNCTION_FAILED;
+                    break;
+                }
+
+                // CKA_MODULUS is only valid for RSA Key. Issue triggered by OpenSSH7.6(SIMW-2669)
+                if ((sss_object.cipherType != kSSS_CipherType_RSA) &&
+                    (sss_object.cipherType != kSSS_CipherType_RSA_CRT)) {
+                    LOG_W("Object %08X cipher type is not RSA.", (unsigned int)sss_object.keyId);
+                    ulAttrLength = CK_UNAVAILABLE_INFORMATION;
+                    xResult      = CKR_ARGUMENTS_BAD;
                     break;
                 }
 
@@ -4256,7 +4599,29 @@ CK_DEFINE_FUNCTION(CK_RV, C_GetAttributeValue)
                 }
                 else if (sss_object.objectType == kSSS_KeyPart_Default) {
                     if (sss_object.cipherType == kSSS_CipherType_Binary) {
-                        objectClass  = CKO_CERTIFICATE;
+                        CK_BBOOL isX509Cert = CK_FALSE;
+                        isX509Cert          = isX509Certificate(sss_object.keyId);
+
+                        if (isX509Cert == CK_TRUE) {
+                            objectClass  = CKO_CERTIFICATE;
+                            pvAttr       = &objectClass;
+                            ulAttrLength = sizeof(objectClass);
+                        }
+                        else {
+                            objectClass = CKO_DATA;
+                            pvAttr      = &objectClass;
+                            ;
+                            ulAttrLength = sizeof(objectClass);
+                        }
+                    }
+                    else if (sss_object.cipherType == kSSS_CipherType_Count) {
+                        objectClass  = CKO_HW_FEATURE;
+                        pvAttr       = &objectClass;
+                        ulAttrLength = sizeof(objectClass);
+                    }
+                    else if ((sss_object.cipherType == kSSS_CipherType_UserID) ||
+                             (sss_object.cipherType == kSSS_CipherType_PCR)) {
+                        objectClass  = CKO_DATA;
                         pvAttr       = &objectClass;
                         ulAttrLength = sizeof(objectClass);
                     }
@@ -4265,6 +4630,32 @@ CK_DEFINE_FUNCTION(CK_RV, C_GetAttributeValue)
                         pvAttr       = &objectClass;
                         ulAttrLength = sizeof(objectClass);
                     }
+                }
+                else {
+                    ulAttrLength    = CK_UNAVAILABLE_INFORMATION;
+                    xResult         = CKR_ATTRIBUTE_SENSITIVE;
+                    infoUnavailable = CK_TRUE;
+                }
+                break;
+
+            case CKA_HW_FEATURE_TYPE:
+
+                if (kStatus_SSS_Success != (sss_key_object_init(&sss_object, &pex_sss_demo_boot_ctx->ks))) {
+                    ulAttrLength = 0;
+                    xResult      = CKR_FUNCTION_FAILED;
+                    break;
+                }
+                if (kStatus_SSS_Success != (sss_key_object_get_handle(&sss_object, xObject))) {
+                    ulAttrLength = 0;
+                    xResult      = CKR_FUNCTION_FAILED;
+                    break;
+                }
+
+                if ((sss_object.objectType == kSSS_KeyPart_Default) &&
+                    (sss_object.cipherType == kSSS_CipherType_Count)) {
+                    hwFeatureType = CKH_MONOTONIC_COUNTER;
+                    pvAttr        = &hwFeatureType;
+                    ulAttrLength  = sizeof(hwFeatureType);
                 }
                 else {
                     ulAttrLength    = CK_UNAVAILABLE_INFORMATION;
@@ -4454,6 +4845,7 @@ CK_DEFINE_FUNCTION(CK_RV, C_GetAttributeValue)
 
             case CKA_HASH_OF_SUBJECT_PUBLIC_KEY:
             case CKA_HASH_OF_ISSUER_PUBLIC_KEY:
+            case CKA_SUBJECT:
                 ulAttrLength = sizeof(data);
                 xResult =
                     parseCertificateGetAttribute((uint32_t)xObject, pxTemplate[iAttrib].type, &data[0], &ulAttrLength);
@@ -4464,6 +4856,255 @@ CK_DEFINE_FUNCTION(CK_RV, C_GetAttributeValue)
                 else {
                     pvAttr = &data[0];
                 }
+                break;
+
+            case CKA_OPENSC_NON_REPUDIATION_0_17:
+            case CKA_OPENSC_NON_REPUDIATION_0_21:
+                //Not support NON-REPUDIATION signature
+                supported    = CK_FALSE;
+                pvAttr       = &supported;
+                ulAttrLength = sizeof(supported);
+                break;
+
+            case CKA_SENSITIVE:
+            case CKA_ALWAYS_SENSITIVE:
+                supported = CK_FALSE;
+                if (kStatus_SSS_Success != (sss_key_object_init(&sss_object, &pex_sss_demo_boot_ctx->ks))) {
+                    ulAttrLength = 0;
+                    xResult      = CKR_FUNCTION_FAILED;
+                    break;
+                }
+                if (kStatus_SSS_Success != (sss_key_object_get_handle(&sss_object, xObject))) {
+                    ulAttrLength = 0;
+                    xResult      = CKR_FUNCTION_FAILED;
+                    break;
+                }
+
+                if (sss_object.objectType == kSSS_KeyPart_Private || sss_object.objectType == kSSS_KeyPart_Pair) {
+                    // Private key
+                    supported = CK_TRUE;
+                }
+                else if (sss_object.objectType == kSSS_KeyPart_Default) {
+                    if ((sss_object.cipherType != kSSS_CipherType_Binary) &&
+                        (sss_object.cipherType != kSSS_CipherType_Count)) {
+                        // Secret key
+                        supported = CK_TRUE;
+                    }
+                }
+
+                pvAttr       = &supported;
+                ulAttrLength = sizeof(supported);
+
+                break;
+
+            case CKA_EXTRACTABLE:
+                supported = CK_TRUE;
+                if (kStatus_SSS_Success != (sss_key_object_init(&sss_object, &pex_sss_demo_boot_ctx->ks))) {
+                    ulAttrLength = 0;
+                    xResult      = CKR_FUNCTION_FAILED;
+                    break;
+                }
+                if (kStatus_SSS_Success != (sss_key_object_get_handle(&sss_object, xObject))) {
+                    ulAttrLength = 0;
+                    xResult      = CKR_FUNCTION_FAILED;
+                    break;
+                }
+
+#if SSS_HAVE_SE05X_VER_GTE_06_00
+                // Get attribute
+                if (SM_OK != Se05x_API_ReadObjectAttributes(&se05x_session->s_ctx, sss_object.keyId, data, &dataLen)) {
+                    ulAttrLength = 0;
+                    xResult      = CKR_FUNCTION_FAILED;
+                    break;
+                }
+
+                if (kStatus_SSS_Success != parseAtrribute(&obj_attr,
+                                               data,
+                                               dataLen,
+                                               sss_object.objectType,
+                                               sss_object.cipherType,
+                                               POLICY_OBJ_ALLOW_IMPORT_EXPORT,
+                                               &supported)) {
+                    ulAttrLength = 0;
+                    xResult      = CKR_FUNCTION_FAILED;
+                    break;
+                }
+
+#else
+                // SE050 doesn't support ReadObjectAttributes, so use pre-defined value according to key type.
+                supported = CK_TRUE;
+                if (sss_object.objectType == kSSS_KeyPart_Private || sss_object.objectType == kSSS_KeyPart_Pair) {
+                    // Private key
+                    supported = CK_FALSE;
+                }
+                else if (sss_object.objectType == kSSS_KeyPart_Default) {
+                    if ((sss_object.cipherType != kSSS_CipherType_Binary) &&
+                        (sss_object.cipherType != kSSS_CipherType_Count)) {
+                        // Secret key
+                        supported = CK_FALSE;
+                    }
+                }
+#endif /* SSS_HAVE_SE05X_VER_GTE_06_00 */
+                pvAttr       = &supported;
+                ulAttrLength = sizeof(supported);
+
+                break;
+
+            case CKA_NEVER_EXTRACTABLE:
+                //Not NEVER_EXTRACTABLE
+                supported    = CK_FALSE;
+                pvAttr       = &supported;
+                ulAttrLength = sizeof(supported);
+                break;
+
+            case CKA_LOCAL:
+
+#if SSS_HAVE_SE05X_VER_GTE_06_00
+                if (kStatus_SSS_Success != (sss_key_object_init(&sss_object, &pex_sss_demo_boot_ctx->ks))) {
+                    ulAttrLength = 0;
+                    xResult      = CKR_FUNCTION_FAILED;
+                    break;
+                }
+                if (kStatus_SSS_Success != (sss_key_object_get_handle(&sss_object, xObject))) {
+                    ulAttrLength = 0;
+                    xResult      = CKR_FUNCTION_FAILED;
+                    break;
+                }
+
+                // Get attribute
+                if (SM_OK != Se05x_API_ReadObjectAttributes(&se05x_session->s_ctx, sss_object.keyId, data, &dataLen)) {
+                    ulAttrLength = 0;
+                    xResult      = CKR_FUNCTION_FAILED;
+                    break;
+                }
+
+                // Parse attribute for Origin value
+                if (kStatus_SSS_Success !=
+                    parseAtrribute(&obj_attr, data, dataLen, sss_object.objectType, sss_object.cipherType, 0, NULL)) {
+                    ulAttrLength = 0;
+                    xResult      = CKR_FUNCTION_FAILED;
+                    break;
+                }
+
+                if (obj_attr.origin == kSE05x_Origin_INTERNAL) {
+                    supported = CK_TRUE;
+                }
+                else
+                    supported = CK_FALSE;
+#else
+                // SE050 doesn't support ReadObjectAttributes, so use pre-defined value.
+                supported = CK_FALSE;
+#endif /* SSS_HAVE_SE05X_VER_GTE_06_00 */
+                pvAttr       = &supported;
+                ulAttrLength = sizeof(supported);
+
+                break;
+
+            case CKA_ALLOWED_MECHANISMS:
+                if (kStatus_SSS_Success != (sss_key_object_init(&sss_object, &pex_sss_demo_boot_ctx->ks))) {
+                    ulAttrLength = 0;
+                    xResult      = CKR_FUNCTION_FAILED;
+                    break;
+                }
+                if (kStatus_SSS_Success != (sss_key_object_get_handle(&sss_object, xObject))) {
+                    ulAttrLength = 0;
+                    xResult      = CKR_FUNCTION_FAILED;
+                    break;
+                }
+
+                switch (sss_object.cipherType) {
+                case kSSS_CipherType_RSA:
+                case kSSS_CipherType_RSA_CRT:
+                    pvAttr       = (void *)rsa_mechanisms;
+                    ulAttrLength = sizeof(rsa_mechanisms);
+
+                    break;
+                case kSSS_CipherType_EC_NIST_P:
+                case kSSS_CipherType_EC_BRAINPOOL:
+                case kSSS_CipherType_EC_NIST_K:
+                case kSSS_CipherType_EC_TWISTED_ED:
+                case kSSS_CipherType_EC_MONTGOMERY:
+                case kSSS_CipherType_EC_BARRETO_NAEHRIG:
+                    pvAttr       = (void *)ecc_mechanisms;
+                    ulAttrLength = sizeof(ecc_mechanisms);
+
+                    break;
+                case kSSS_CipherType_AES:
+                    pvAttr       = (void *)aes_mechanisms;
+                    ulAttrLength = sizeof(aes_mechanisms);
+
+                    break;
+                case kSSS_CipherType_DES:
+                    pvAttr       = (void *)des_mechanisms;
+                    ulAttrLength = sizeof(des_mechanisms);
+
+                    break;
+                default:
+                    ulAttrLength = 0;
+                    xResult      = CKR_ARGUMENTS_BAD;
+                    break;
+                }
+
+                break;
+
+            case CKA_APPLICATION:
+            case CKA_OBJECT_ID:
+                // CKA_APPLICATION: Description of the application that manages the object (default empty)
+                // CKA_VALUE: DER-encoding of the object identifier indicating the data object type (default empty)
+                pvAttr       = NULL;
+                ulAttrLength = 0;
+
+                break;
+
+            case CKA_MODIFIABLE:
+                supported = CK_TRUE;
+                if (kStatus_SSS_Success != (sss_key_object_init(&sss_object, &pex_sss_demo_boot_ctx->ks))) {
+                    ulAttrLength = 0;
+                    xResult      = CKR_FUNCTION_FAILED;
+                    break;
+                }
+                if (kStatus_SSS_Success != (sss_key_object_get_handle(&sss_object, xObject))) {
+                    ulAttrLength = 0;
+                    xResult      = CKR_FUNCTION_FAILED;
+                    break;
+                }
+
+#if SSS_HAVE_SE05X_VER_GTE_06_00
+                // Get attribute
+                if (SM_OK != Se05x_API_ReadObjectAttributes(&se05x_session->s_ctx, sss_object.keyId, data, &dataLen)) {
+                    ulAttrLength = 0;
+                    xResult      = CKR_FUNCTION_FAILED;
+                    break;
+                }
+
+                if (kStatus_SSS_Success != parseAtrribute(&obj_attr,
+                                               data,
+                                               dataLen,
+                                               sss_object.objectType,
+                                               sss_object.cipherType,
+                                               POLICY_OBJ_ALLOW_WRITE,
+                                               &supported)) {
+                    ulAttrLength = 0;
+                    xResult      = CKR_FUNCTION_FAILED;
+                    break;
+                }
+
+#else
+                // SE050 doesn't support ReadObjectAttributes, so use pre-defined value.
+                supported = CK_TRUE;
+#endif /* SSS_HAVE_SE05X_VER_GTE_06_00 */
+                pvAttr       = &supported;
+                ulAttrLength = sizeof(supported);
+
+                break;
+
+            case CKA_PRIVATE:
+                // When the CKA_PRIVATE attribute is CK_TRUE, a user may not access the object until
+                // the user has been authenticated to the token.
+                supported    = CK_FALSE;
+                pvAttr       = &supported;
+                ulAttrLength = sizeof(supported);
+
                 break;
 
             default:
@@ -4480,7 +5121,7 @@ CK_DEFINE_FUNCTION(CK_RV, C_GetAttributeValue)
                  * Copy out the data and size.
                  */
 
-                if (NULL != pxTemplate[iAttrib].pValue && !infoUnavailable) {
+                if (NULL != pxTemplate[iAttrib].pValue && !infoUnavailable && (NULL != pvAttr)) {
                     if (pxTemplate[iAttrib].ulValueLen < ulAttrLength) {
                         xResult      = CKR_BUFFER_TOO_SMALL;
                         ulAttrLength = CK_UNAVAILABLE_INFORMATION;
@@ -4694,8 +5335,8 @@ CK_DEFINE_FUNCTION(CK_RV, C_FindObjects)
     else if ((pdFALSE == xDone)) {
 #if SSS_HAVE_ALT_SSS && SSS_HAVE_APPLET_SE05X_IOT
         uint32_t object_list[40] = {0};
-        size_t object_list_size = sizeof(object_list) / sizeof(object_list[0]);
-        smStatus_t sm_status    = read_id_list(object_list, &object_list_size);
+        size_t object_list_size  = sizeof(object_list) / sizeof(object_list[0]);
+        smStatus_t sm_status     = read_id_list(object_list, &object_list_size);
         if (sm_status != SM_OK) {
             xResult = CKR_FUNCTION_FAILED;
             xDone   = pdTRUE;
@@ -4733,7 +5374,11 @@ CK_DEFINE_FUNCTION(CK_RV, C_FindObjects)
                 }
                 else if (pxSession->xFindObjectClass != pkcs11INVALID_OBJECT_CLASS &&
                          pxSession->xFindObjectKeyType == pkcs11INVALID_KEY_TYPE) {
-                    if ((object.cipherType == kSSS_CipherType_Binary &&
+                    CK_BBOOL isX509Cert = CK_FALSE;
+                    if (object.cipherType == kSSS_CipherType_Binary) {
+                        isX509Cert = isX509Certificate(id);
+                    }
+                    if ((object.cipherType == kSSS_CipherType_Binary && isX509Cert == CK_TRUE &&
                             pxSession->xFindObjectClass == CKO_CERTIFICATE) ||
                         (object.objectType == kSSS_KeyPart_Pair && pxSession->xFindObjectClass == CKO_PRIVATE_KEY) ||
                         (object.objectType == kSSS_KeyPart_Public && pxSession->xFindObjectClass == CKO_PUBLIC_KEY)) {
@@ -4764,7 +5409,13 @@ CK_DEFINE_FUNCTION(CK_RV, C_FindObjects)
                 }
                 else if (pxSession->xFindObjectClass != pkcs11INVALID_OBJECT_CLASS &&
                          pxSession->xFindObjectKeyType != pkcs11INVALID_KEY_TYPE) {
-                    if ((object.objectType == kSSS_KeyPart_Pair && pxSession->xFindObjectClass == CKO_PRIVATE_KEY) ||
+                    CK_BBOOL isX509Cert = CK_FALSE;
+                    if (object.cipherType == kSSS_CipherType_Binary) {
+                        isX509Cert = isX509Certificate(id);
+                    }
+                    if ((object.cipherType == kSSS_CipherType_Binary && isX509Cert == CK_TRUE &&
+                            pxSession->xFindObjectClass == CKO_CERTIFICATE) ||
+                        (object.objectType == kSSS_KeyPart_Pair && pxSession->xFindObjectClass == CKO_PRIVATE_KEY) ||
                         (object.objectType == kSSS_KeyPart_Public && pxSession->xFindObjectClass == CKO_PUBLIC_KEY)) {
                         if ((object.cipherType == kSSS_CipherType_AES && pxSession->xFindObjectKeyType == CKK_AES) ||
                             (object.cipherType == kSSS_CipherType_DES && pxSession->xFindObjectKeyType == CKK_DES) ||
@@ -4919,8 +5570,13 @@ CK_DEFINE_FUNCTION(CK_RV, C_OpenSession)
         *pxSession = (CK_SESSION_HANDLE)pxSessionObj; /*lint !e923 Allow casting pointer to integer type for handle. */
     }
 
-    if ((NULL != pxSessionObj) && (CKR_OK != xResult)) {
-        SSS_FREE(pxSessionObj);
+    if (NULL != pxSessionObj) {
+        if (CKR_OK != xResult) {
+            SSS_FREE(pxSessionObj);
+            return CKR_FUNCTION_FAILED;
+        }
+    }
+    else {
         return CKR_FUNCTION_FAILED;
     }
 
@@ -5202,6 +5858,7 @@ CK_DEFINE_FUNCTION(CK_RV, C_VerifyInit)
 CK_RV ParseSignMechanism(P11SessionPtr_t pxSession, sss_algorithm_t *algorithm)
 {
     CK_RV xResult = CKR_OK;
+    CK_RSA_PKCS_PSS_PARAMS_PTR param;
     switch (pxSession->xOperationInProgress) {
     case CKM_RSA_PKCS:
         *algorithm = kAlgorithm_SSS_RSASSA_PKCS1_V1_5_NO_HASH;
@@ -5212,7 +5869,7 @@ CK_RV ParseSignMechanism(P11SessionPtr_t pxSession, sss_algorithm_t *algorithm)
             xResult = CKR_ARGUMENTS_BAD;
             break;
         }
-        CK_RSA_PKCS_PSS_PARAMS_PTR param = (CK_RSA_PKCS_PSS_PARAMS_PTR)pxSession->mechParameter;
+        param = (CK_RSA_PKCS_PSS_PARAMS_PTR)pxSession->mechParameter;
         switch (param->hashAlg) {
         case CKM_SHA_1:
             *algorithm = kAlgorithm_SSS_RSASSA_PKCS1_PSS_MGF1_SHA1;
@@ -5301,6 +5958,7 @@ CK_RV ParseEncryptionMechanism(P11SessionPtr_t pxSession, sss_algorithm_t *algor
         CK_ULONG ulSourceDataLen;
     } CK_RSA_PKCS_OAEP_PARAMS;*/
     CK_RV xResult = CKR_OK;
+    CK_RSA_PKCS_OAEP_PARAMS_PTR param;
     switch (pxSession->xOperationInProgress) {
     case CKM_RSA_PKCS:
     case CKM_SHA1_RSA_PKCS:
@@ -5322,7 +5980,7 @@ CK_RV ParseEncryptionMechanism(P11SessionPtr_t pxSession, sss_algorithm_t *algor
             xResult = CKR_ARGUMENTS_BAD;
             break;
         }
-        CK_RSA_PKCS_OAEP_PARAMS_PTR param = (CK_RSA_PKCS_OAEP_PARAMS_PTR)pxSession->mechParameter;
+        param = (CK_RSA_PKCS_OAEP_PARAMS_PTR)pxSession->mechParameter;
         switch (param->hashAlg) {
         case CKM_SHA_1:
             if (param->mgf == CKG_MGF1_SHA1) {
@@ -5998,6 +6656,7 @@ CK_DEFINE_FUNCTION(CK_RV, C_Digest)
                     goto cleanup;
                 }
                 status = sss_digest_finish(&pxSessionObj->digest_ctx, &output[0], &outputLen);
+                sss_digest_context_free(&pxSessionObj->digest_ctx);
                 if (status != kStatus_SSS_Success) {
                     pxSessionObj->xOperationInProgress = pkcs11NO_OPERATION;
                     xResult                            = CKR_DEVICE_ERROR;
@@ -6301,8 +6960,7 @@ CK_DEFINE_FUNCTION(CK_RV, C_GenerateKeyPair)
             return xResult;
         }
 
-        if (sizeof(oid) > oidLen)
-        {
+        if (sizeof(oid) > oidLen) {
             if (memcmp(&oid[oidLen], &ec_params[0], sizeof(oid) - oidLen) == 0) {
                 KeyBitLen = 192;
                 goto cont;
@@ -6317,9 +6975,11 @@ CK_DEFINE_FUNCTION(CK_RV, C_GenerateKeyPair)
             return xResult;
         }
 
-        if (memcmp(&oid[oidLen], &ec_params[0], sizeof(oid) - oidLen) == 0) {
-            KeyBitLen = 224;
-            goto cont;
+        if (sizeof(oid) > oidLen) {
+            if (memcmp(&oid[oidLen], &ec_params[0], sizeof(oid) - oidLen) == 0) {
+                KeyBitLen = 224;
+                goto cont;
+            }
         }
         oidLen = sizeof(oid);
 
@@ -7195,8 +7855,6 @@ CK_DEFINE_FUNCTION(CK_RV, C_WaitForSlotEvent)
     return CKR_FUNCTION_NOT_SUPPORTED;
 }
 
-
-
 /**
  * @brief Writes a file to local storage.
  *
@@ -7208,11 +7866,9 @@ CK_DEFINE_FUNCTION(CK_RV, C_WaitForSlotEvent)
  *
  * @return The file handle of the object that was stored.
  */
-CK_OBJECT_HANDLE PKCS11_PAL_SaveObject( CK_ATTRIBUTE_PTR pxLabel,
-                                        CK_BYTE_PTR pucData,
-                                        CK_ULONG ulDataSize )
+CK_OBJECT_HANDLE PKCS11_PAL_SaveObject(CK_ATTRIBUTE_PTR pxLabel, CK_BYTE_PTR pucData, CK_ULONG ulDataSize)
 {
-/*Function to be implemented if required*/
+    /*Function to be implemented if required*/
     return 0;
 }
 
@@ -7231,18 +7887,15 @@ CK_OBJECT_HANDLE PKCS11_PAL_SaveObject( CK_ATTRIBUTE_PTR pxLabel,
  * @return The object handle if operation was successful.
  * Returns eInvalidHandle if unsuccessful.
  */
-CK_OBJECT_HANDLE PKCS11_PAL_FindObject( CK_BYTE_PTR pxLabel,
-                                        CK_ULONG usLength )
+CK_OBJECT_HANDLE PKCS11_PAL_FindObject(CK_BYTE_PTR pxLabel, CK_ULONG usLength)
 {
-/*Function to be implemented if required*/
+    /*Function to be implemented if required*/
     return 0;
 }
 
-
-CK_RV PKCS11_PAL_Initialize( void )
+CK_RV PKCS11_PAL_Initialize(void)
 {
-
-/*Function to be implemented if required*/
+    /*Function to be implemented if required*/
     return 0;
 }
 
@@ -7254,10 +7907,8 @@ CK_RV PKCS11_PAL_Initialize( void )
 * @param[in] ulDataSize    The length of the buffer to free.
 *                          (*pulDataSize from PKCS11_PAL_GetObjectValue())
 */
-void PKCS11_PAL_GetObjectValueCleanup( uint8_t * pucData,
-    uint32_t ulDataSize )
+void PKCS11_PAL_GetObjectValueCleanup(uint8_t *pucData, uint32_t ulDataSize)
 {
-
 }
 
 /**
@@ -7283,16 +7934,12 @@ void PKCS11_PAL_GetObjectValueCleanup( uint8_t * pucData,
 * buffer could not be allocated, CKR_FUNCTION_FAILED for device driver
 * error.
 */
-CK_RV PKCS11_PAL_GetObjectValue( CK_OBJECT_HANDLE xHandle,
-    uint8_t ** ppucData,
-    uint32_t * pulDataSize,
-    CK_BBOOL * pIsPrivate )
+CK_RV PKCS11_PAL_GetObjectValue(
+    CK_OBJECT_HANDLE xHandle, uint8_t **ppucData, uint32_t *pulDataSize, CK_BBOOL *pIsPrivate)
 {
     /*Function to be implemented if required*/
     CK_RV xReturn = CKR_OK;
     return xReturn;
 }
-
-
 
 #endif /* TGT_A71CH */

@@ -1,19 +1,17 @@
-if(NOT DRIVER_LPUART_EDMA_MIMXRT1021_INCLUDED)
-    
-    set(DRIVER_LPUART_EDMA_MIMXRT1021_INCLUDED true CACHE BOOL "driver_lpuart_edma component is included.")
+include_guard(GLOBAL)
+message("driver_lpuart_edma component is included.")
 
-    target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
-        ${CMAKE_CURRENT_LIST_DIR}/fsl_lpuart_edma.c
-    )
-
-
-    target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
-        ${CMAKE_CURRENT_LIST_DIR}/.
-    )
+target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
+    ${CMAKE_CURRENT_LIST_DIR}/fsl_lpuart_edma.c
+)
 
 
-    include(driver_edma_MIMXRT1021)
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
+    ${CMAKE_CURRENT_LIST_DIR}/.
+)
 
-    include(driver_lpuart_MIMXRT1021)
 
-endif()
+include(driver_edma_MIMXRT1021)
+
+include(driver_lpuart_MIMXRT1021)
+

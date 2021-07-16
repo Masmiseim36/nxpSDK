@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2007-2015 Freescale Semiconductor, Inc.
- * Copyright 2020 NXP
+ * Copyright 2020-2021 NXP
  *
  * License: NXP LA_OPT_NXP_Software_License
  *
@@ -121,14 +121,73 @@ const FMSTR_SERIAL_DRV_INTF FMSTR_SERIAL_56F800E_EONCE =
 * General peripheral space access macros
 *****************************************************************************************/
 
+/* When enabled, assembler macros will be used to access the EOnCE registers. This code
+ * is able to access the registers at 'far' address at base 0xffff00 even in SDM model. */
+#if 1
+
+#define FMSTR_SETBIT(baseAddr, regOffset, bitField) do { \
+        register FMSTR_U16* rX; \
+        asm ( move.l baseAddr, rX); \
+        asm ( bfset bitField, X:(rX+regOffset) ); \
+    } while(0)
+
+#define FMSTR_CLRBIT(baseAddr, regOffset, bitField) do { \
+        register FMSTR_U16* rX; \
+        asm ( move.l baseAddr, rX); \
+        asm ( bfclr bitField, X:(rX+regOffset) ); \
+    } while(0)
+
+#define FMSTR_TSTBIT(baseAddr, regOffset, bitField) \
+    (FMSTR_GETREG((baseAddr), (regOffset)) & (bitField))
+
+static inline void FMSTR_SETREG(register FMSTR_U32 baseAddr, register FMSTR_U32 regOffset, register FMSTR_U16 newValue)
+{
+    register FMSTR_U16* rX;
+    baseAddr += regOffset;
+    asm ( move.l baseAddr, rX);
+    asm ( move.w newValue, X:(rX+0) );
+}
+
+static inline FMSTR_U16 FMSTR_GETREG(register FMSTR_U32 baseAddr, register FMSTR_U32 regOffset)
+{
+    register FMSTR_U16* rX;
+    register FMSTR_U16 val;
+    baseAddr += regOffset;
+    asm ( move.l baseAddr, rX);
+    asm ( move.w X:(rX+0), val );
+    return val;
+}
+
+static inline void FMSTR_SETREG32(register FMSTR_U32 baseAddr, register FMSTR_U32 regOffset, register FMSTR_U32 newValue)
+{
+    register FMSTR_U32* rX;
+    baseAddr += regOffset;
+    asm ( move.l baseAddr, rX);
+    asm ( move.l newValue, X:(rX+0) );
+}
+
+static inline FMSTR_U32 FMSTR_GETREG32(register FMSTR_U32 baseAddr, register FMSTR_U32 regOffset)
+{
+    register FMSTR_U32* rX;
+    register FMSTR_U32 val;
+    baseAddr += regOffset;
+    asm ( move.l baseAddr, rX);
+    asm ( move.l X:(rX+0), val );
+    return val;
+}
+
+#else /* When assembler macros are disabled above, this is an equivalent pure C code which will only work in LDM. */ 
+
 #define FMSTR_SETBIT(base, offset, bit)     (*(volatile FMSTR_U16*)(((FMSTR_U32)(base))+(offset)) |= bit)
 #define FMSTR_CLRBIT(base, offset, bit)     (*(volatile FMSTR_U16*)(((FMSTR_U32)(base))+(offset)) &= (FMSTR_U16)~((FMSTR_U16)(bit)))
 #define FMSTR_TSTBIT(base, offset, bit)     (*(volatile FMSTR_U16*)(((FMSTR_U32)(base))+(offset)) & (bit))
 #define FMSTR_SETREG(base, offset, value)   (*(volatile FMSTR_U16*)(((FMSTR_U32)(base))+(offset)) = value)
 #define FMSTR_GETREG(base, offset)          (*(volatile FMSTR_U16*)(((FMSTR_U32)(base))+(offset)))
-
 #define FMSTR_SETREG32(base, offset, value) (*(volatile FMSTR_U32*)(((FMSTR_U32)(base))+(offset)) = value)
 #define FMSTR_GETREG32(base, offset)        (*(volatile FMSTR_U32*)(((FMSTR_U32)(base))+(offset)))
+
+#endif
+
 
 /****************************************************************************************
 * EONCE module constants

@@ -11,7 +11,8 @@
 #include "fsl_sdmmc_common.h"
 
 /*!
- * @addtogroup SDIOCARD
+ * @addtogroup sdiocard SDIO Card Driver
+ * @ingroup card
  * @{
  */
 
@@ -19,7 +20,7 @@
  * Definitions
  ******************************************************************************/
 /*! @brief Middleware version. */
-#define FSL_SDIO_DRIVER_VERSION (MAKE_VERSION(2U, 3U, 2U)) /*2.3.2*/
+#define FSL_SDIO_DRIVER_VERSION (MAKE_VERSION(2U, 4U, 0U)) /*2.4.0*/
 
 /*!@brief sdio device support maximum IO number */
 #ifndef FSL_SDIO_MAX_IO_NUMS
@@ -75,6 +76,7 @@ struct _sdio_card
     sdio_io_irq_handler_t ioIRQHandler[FSL_SDIO_MAX_IO_NUMS]; /*!< io IRQ handler */
     uint8_t ioIntIndex;                                       /*!< used to record current enabled io interrupt index */
     uint8_t ioIntNums;                                        /*!< used to record total enabled io interrupt numbers  */
+    sdmmc_osa_mutex_t lock;                                   /*!< card access lock */
 };
 
 /*************************************************************************************************
@@ -90,6 +92,14 @@ extern "C" {
 
 /*!
  * @brief SDIO card init function
+ *
+ *
+ * Thread safe function, please note that the function will create the mutex lock dynamically by default,
+ * so to avoid the mutex create redundantly, application must follow bellow sequence for card re-initialization
+ * @code
+ * SDIO_Deinit(card);
+ * SDIO_Init(card);
+ * @endcode
  *
  * @param card Card descriptor.
  * @retval kStatus_SDMMC_GoIdleFailed
@@ -108,6 +118,8 @@ status_t SDIO_Init(sdio_card_t *card);
 /*!
  * @brief SDIO card deinit, include card and host deinit.
  *
+ * Please note it is a thread safe function.
+ *
  * @param card Card descriptor.
  */
 void SDIO_Deinit(sdio_card_t *card);
@@ -117,6 +129,13 @@ void SDIO_Deinit(sdio_card_t *card);
  *
  * This function initializes the card only, make sure the host is ready when call this function,
  * otherwise it will return kStatus_SDMMC_HostNotReady.
+ *
+ * Thread safe function, please note that the function will create the mutex lock dynamically by default,
+ * so to avoid the mutex create redundantly, application must follow bellow sequence for card re-initialization
+ * @code
+ * SDIO_CardDeinit(card);
+ * SDIO_CardInit(card);
+ * @endcode
  *
  * @param card Card descriptor.
  * @retval kStatus_SDMMC_HostNotReady host is not ready.
@@ -139,6 +158,8 @@ status_t SDIO_CardInit(sdio_card_t *card);
  * @brief Deinitializes the card.
  *
  * This function deinitializes the specific card.
+ *
+ * Please note it is a thread safe function.
  *
  * @param card Card descriptor.
  */
@@ -167,43 +188,9 @@ void SDIO_HostDeinit(sdio_card_t *card);
  *
  * This function reset the specific host.
  *
- * @deprecated Do not use this function. It has been superceded by @ref SDIO_HostDoReset.
- *
- * @param host host descriptor.
- */
-void SDIO_HostReset(SDMMCHOST_CONFIG *host);
-
-/*!
- * @brief reset the host.
- *
- * This function reset the specific host.
- *
  * @param card Card descriptor.
  */
 void SDIO_HostDoReset(sdio_card_t *card);
-
-/*!
- * @brief power on card.
- *
- * The power on operation depend on host or the user define power on function.
- *
- * @deprecated Do not use this function.  It has been superceded by @ref SDIO_SetCardPower.
- *
- * @param base host base address.
- * @param pwr user define power control configuration
- */
-void SDIO_PowerOnCard(SDMMCHOST_TYPE *base, const sdmmchost_pwr_card_t *pwr);
-
-/*!
- * @brief power on card.
- *
- * The power off operation depend on host or the user define power on function.
- * @deprecated Do not use this function.  It has been superceded by @ref SDIO_SetCardPower.
- *
- * @param base host base address.
- * @param pwr user define power control configuration
- */
-void SDIO_PowerOffCard(SDMMCHOST_TYPE *base, const sdmmchost_pwr_card_t *pwr);
 
 /*!
  * @brief set card power.
@@ -291,18 +278,6 @@ status_t SDIO_ReadCIS(sdio_card_t *card, sdio_func_num_t func, const uint32_t *t
  * @brief sdio wait card detect function.
  *
  * Detect card through GPIO, CD, DATA3.
- *
- * @deprecated Do not use this function.  It has been superceded by @ref SDIO_PollingCardInsert.
- * @param hostBase card descriptor.
- * @param cd detect configuration
- * @param waitCardStatus wait card detect status
- */
-status_t SDIO_WaitCardDetectStatus(SDMMCHOST_TYPE *hostBase, const sdmmchost_detect_card_t *cd, bool waitCardStatus);
-
-/*!
- * @brief sdio wait card detect function.
- *
- * Detect card through GPIO, CD, DATA3.
  * @param card card descriptor.
  * @param status detect status, kSD_Inserted or kSD_Removed.
  */
@@ -325,6 +300,8 @@ bool SDIO_IsCardPresent(sdio_card_t *card);
 /*!
  * @brief IO direct write transfer function
  *
+ * Please note it is a thread safe function.
+ *
  * @param card Card descriptor.
  * @param func IO numner
  * @param regAddr register address
@@ -338,6 +315,8 @@ status_t SDIO_IO_Write_Direct(sdio_card_t *card, sdio_func_num_t func, uint32_t 
 /*!
  * @brief IO direct read transfer function
  *
+ * Please note it is a thread safe function.
+ *
  * @param card Card descriptor.
  * @param func IO number
  * @param regAddr register address
@@ -349,6 +328,8 @@ status_t SDIO_IO_Read_Direct(sdio_card_t *card, sdio_func_num_t func, uint32_t r
 
 /*!
  * @brief IO direct read/write transfer function
+ *
+ * Please note it is a thread safe function.
  *
  * @param card Card descriptor.
  * @param direction io access direction, please reference sdio_io_direction_t.
@@ -371,6 +352,8 @@ status_t SDIO_IO_RW_Direct(sdio_card_t *card,
 /*!
  * @brief IO extended write transfer function
  *
+ * Please note it is a thread safe function.
+ *
  * @param card Card descriptor.
  * @param func IO number
  * @param regAddr register address
@@ -385,6 +368,8 @@ status_t SDIO_IO_Write_Extended(
     sdio_card_t *card, sdio_func_num_t func, uint32_t regAddr, uint8_t *buffer, uint32_t count, uint32_t flags);
 /*!
  * @brief IO extended read transfer function
+ *
+ * Please note it is a thread safe function.
  *
  * @param card Card descriptor.
  * @param func IO number
@@ -475,10 +460,11 @@ status_t SDIO_GetPendingInterrupt(sdio_card_t *card, uint8_t *pendingInt);
  * This function can be used for trnansfer direct/extend command.
  * Please pay attention to the non-align data buffer address transfer,
  * if data buffer address can not meet host controller internal DMA requirement, sdio driver will try to use
- internal align buffer if data size is not bigger than internal buffer size,
+ * internal align buffer if data size is not bigger than internal buffer size,
  * Align address transfer always can get a better performance, so if application want sdio driver make sure buffer
- address align,
- * please redefine the SDMMC_GLOBAL_BUFFER_SIZE macro to a value which is big enough for your application.
+ * address align,
+ *
+ * Please note it is a thread safe function.
  *
  * @param card card descriptor.
  * @param cmd command to transfer
@@ -513,10 +499,11 @@ void SDIO_SetIOIRQHandler(sdio_card_t *card, sdio_func_num_t func, sdio_io_irq_h
  * This function is used to handle the pending io interrupt.
  * To reigster a IO IRQ handler,
  * @code
- * //initialization
  * SDIO_EnableIOInterrupt(card, 0, true);
  * SDIO_SetIOIRQHandler(card, 0, func0_handler);
- * //call it in interrupt callback
+ * @endcode
+ * call it in interrupt callback
+ * @code
  * SDIO_HandlePendingIOInterrupt(card);
  * @endcode
  * To releae a IO IRQ handler,

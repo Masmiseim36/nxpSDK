@@ -2,10 +2,10 @@
 *
 * E M B E D D E D   W I Z A R D   S I M U L A T I O N
 *
-* In this example a simulation of the user interface is integrated as well. It can
-* be executed with the MCUXpresso's built-in web browser. The simulation is
-* located in the folder 'ew_gui_examples\<example_name>\Simulation'. The
-* simulation uses the JS/WebGL Embedded Wizard Platform Package.
+* For this example a simulation of the user interface is also available. 
+* It can be used under following link 
+* http://www.embedded-wizard.de/NXP-SDK-Examples/<board_name>/<example_name>/Simulation/
+* with any web browser. The simulation uses the JS/WebGL Embedded Wizard Platform Package.
 *
 *******************************************************************************/
 
@@ -61,7 +61,7 @@
 
   #define semtstSTACK_SIZE    configMINIMAL_STACK_SIZE * 10
 
-  static void GuiThread( void * arg );
+  static void GuiThread( void* arg );
 
 #endif
 
@@ -80,7 +80,7 @@
 *   None
 *
 * RETURN VALUE:
-*   None
+*   Zero if successful.
 *
 *******************************************************************************/
 int main( void )
@@ -93,7 +93,7 @@ int main( void )
 
   /* initialize Embedded Wizard application */
   if ( EwInit() == 0 )
-    return 0;
+    return 1;
 
   EwPrintSystemInfo();
 
@@ -103,6 +103,9 @@ int main( void )
 
   /* de-initialize Embedded Wizard application */
   EwDone();
+
+  /* restore console */
+  EwBspConsoleDone();
 
   /* terminate the system */
   EwBspSystemDone();
@@ -139,11 +142,17 @@ int main( void )
 
   /* create thread that drives the Embedded Wizard GUI application... */
   EwPrint( "Create UI thread...                          " );
-  xTaskCreate( GuiThread, "EmWi_Task", semtstSTACK_SIZE, NULL, 0, NULL );
+  xTaskCreate( GuiThread, "EmWi_Task", semtstSTACK_SIZE, NULL, 1, NULL );
   EwPrint( "[OK]\n" );
 
   /* ...and start scheduler */
   vTaskStartScheduler();
+
+  /* restore console */
+  EwBspConsoleDone();
+
+  /* terminate the system */
+  EwBspSystemDone();
 
   return 0;
 }

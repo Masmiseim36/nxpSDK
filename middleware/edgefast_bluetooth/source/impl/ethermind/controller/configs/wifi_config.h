@@ -1,3 +1,10 @@
+/*
+ * Copyright 2021 NXP
+ *
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
+ */
+
 #ifndef _WIFI_CONFIG_H__
 #define _WIFI_CONFIG_H__
 
@@ -17,12 +24,19 @@
 #define SDMMCHOST_OPERATION_VOLTAGE_3V3
 /* #define SDMMCHOST_OPERATION_VOLTAGE_1V8 */
 #define SD_CLOCK_MAX (25000000U)
-#elif defined(WIFI_BOARD_AW_CM358MA)
+#elif defined(WIFI_BOARD_AW_CM358)
 #define SD8987
 /* #define SDMMCHOST_OPERATION_VOLTAGE_3V3 */
 #define SDMMCHOST_OPERATION_VOLTAGE_1V8
-#define SD_CLOCK_MAX (25000000U)
-#define CONFIG_BT_HCI_BAUDRATE (3000000U)
+#define SD_TIMING_MAX kSD_TimingDDR50Mode /* For 1V8 only */
+#elif defined(K32W061_TRANSCEIVER)
+/*
+* Wifi functions are not used with K32W061 but wifi files require to
+* be built, so stub macro are defined. Wifi functions won't be used at
+* link stage for k32w061 transceiver
+*
+*/
+#define SD8987
 #else
 #error "Please define macro related to wifi board"
 #endif
@@ -32,8 +46,13 @@
 #define CONFIG_UAP_AMPDU_RX   1
 #define CONFIG_WIFI_MAX_PRIO (configMAX_PRIORITIES - 1)
 
-#if defined(SD8977) || defined(SD8978)
+#if defined(SD8977) || defined(SD8978) || defined(SD8987)
 #define CONFIG_5GHz_SUPPORT 1
+#endif
+
+#if defined(SD8987)
+#define CONFIG_11AC
+#undef CONFIG_WMM
 #endif
 
 /* Logs */
@@ -58,4 +77,4 @@
 #undef CONFIG_WIFI_TIMER_DEBUG
 #undef CONFIG_WIFI_SDIO_DEBUG
 
-#endif
+#endif /* __WIFI_CONFIG_H__ */  

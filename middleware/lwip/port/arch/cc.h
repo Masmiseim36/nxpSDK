@@ -33,7 +33,7 @@
 
 /*
  * Copyright (c) 2013-2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2018, 2020 NXP
+ * Copyright 2016-2018, 2020-2021 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -46,7 +46,15 @@
 #define LWIP_NO_INTTYPES_H 1
 #endif
 
-#if defined(LWIP_TIMEVAL_PRIVATE) && (LWIP_TIMEVAL_PRIVATE == 0)
+#ifndef LWIP_TIMEVAL_PRIVATE
+#ifdef __NEWLIB__
+#define LWIP_TIMEVAL_PRIVATE 0
+#else
+#define LWIP_TIMEVAL_PRIVATE 1
+#endif /* __NEWLIB__ */
+#endif /* LWIP_TIMEVAL_PRIVATE */
+
+#if (LWIP_TIMEVAL_PRIVATE == 0)
 #include <sys/time.h>
 #endif
 

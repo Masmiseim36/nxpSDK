@@ -38,12 +38,12 @@
  * Describes Constants defined by the module.
  */
 /* Storage types currently supported */
-#define STORAGE_TYPE_PERSISTENT                  0
+#define STORAGE_TYPE_PERSISTENT                  0U
 #ifndef STORAGE_RETENTION_SUPPORT
-#define STORAGE_NUM_TYPES                        1
+#define STORAGE_NUM_TYPES                        1U
 #else /* STORAGE_RETENTION_SUPPORT */
-#define STORAGE_TYPE_RETENTION                   1
-#define STORAGE_NUM_TYPES                        2
+#define STORAGE_TYPE_RETENTION                   1U
+#define STORAGE_NUM_TYPES                        2U
 #endif /* STORAGE_RETENTION_SUPPORT */
 
 /* Storage Operations */
@@ -53,8 +53,8 @@
  * Constant Definitions for Storage Operations
  */
 /*@{*/
-#define STORAGE_STORE                            0x00
-#define STORAGE_LOAD                             0x01
+#define STORAGE_STORE                            0x00U
+#define STORAGE_LOAD                             0x01U
 /*@}*/
 /* Core module persistent storage IDs */
 /**
@@ -63,18 +63,18 @@
  * Constant Definitions for Core module persistent storage IDs
  */
 /*@{*/
-#define STORAGE_DQ_PID                           0
-#define STORAGE_SMP_PID                          1
-#define STORAGE_SM_PID                           2
-#define STORAGE_MCAP_PID                         3
+#define STORAGE_DQ_PID                           0U
+#define STORAGE_SMP_PID                          1U
+#define STORAGE_SM_PID                           2U
+#define STORAGE_MCAP_PID                         3U
 /*@}*/
 /* Number of core module persistent storage IDs */
-#define STORAGE_NUM_PIDS                         4
+#define STORAGE_NUM_PIDS                         4U
 
 /* Core module retention storage IDs */
 
 /* Number of core module retention storage IDs */
-#define STORAGE_NUM_RIDS                         0
+#define STORAGE_NUM_RIDS                         0U
 
 /**
  *  Storage Events
@@ -87,13 +87,13 @@
 
 /* Storage Events */
 /* Authentication Update */
-#define STORAGE_EVENT_AUTH_UPDATE                 0x0001
+#define STORAGE_EVENT_AUTH_UPDATE                 0x0001U
 
 /* Shutdown */
-#define STORAGE_EVENT_SHUTDOWN                    0x0002
+#define STORAGE_EVENT_SHUTDOWN                    0x0002U
 
 /* Others */
-#define STORAGE_EVENT_OTHERS                      0x0004
+#define STORAGE_EVENT_OTHERS                      0x0004U
 
 /* All events - used as mask to enable all storage events */
 #define STORAGE_EVENTS_ALL                        \

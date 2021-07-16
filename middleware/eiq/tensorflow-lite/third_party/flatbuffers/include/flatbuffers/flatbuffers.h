@@ -14,13 +14,15 @@
  * limitations under the License.
  */
 
-// File modified by NXP. Changes are described in file
-// /middleware/eiq/tensorflow-lite/readme.txt in section "Release notes"
-
 #ifndef FLATBUFFERS_H_
 #define FLATBUFFERS_H_
 
 #include "flatbuffers/base.h"
+#include "flatbuffers/stl_emulation.h"
+
+#ifndef FLATBUFFERS_CPP98_STL
+  #include <functional>
+#endif
 
 #if defined(FLATBUFFERS_NAN_DEFAULTS)
 #  include <cmath>
@@ -583,6 +585,14 @@ static inline std::string GetString(const String *str) {
 static inline const char *GetCstring(const String *str) {
   return str ? str->c_str() : "";
 }
+
+#ifdef FLATBUFFERS_HAS_STRING_VIEW
+// Convenience function to get string_view from a String returning an empty
+// string_view on null pointer.
+static inline flatbuffers::string_view GetStringView(const String *str) {
+  return str ? str->string_view() : flatbuffers::string_view();
+}
+#endif  // FLATBUFFERS_HAS_STRING_VIEW
 
 // Allocator interface. This is flatbuffers-specific and meant only for
 // `vector_downward` usage.
@@ -1214,7 +1224,7 @@ class FlatBufferBuilder {
   /// you call Finish()). You can use this information if you need to embed
   /// a FlatBuffer in some other buffer, such that you can later read it
   /// without first having to copy it into its own buffer.
-  size_t GetBufferMinAlignment() {
+  size_t GetBufferMinAlignment() const {
     Finished();
     return minalign_;
   }
@@ -1294,6 +1304,11 @@ class FlatBufferBuilder {
   template<typename T> void AddElement(voffset_t field, T e, T def) {
     // We don't serialize values equal to the default.
     if (IsTheSameAs(e, def) && !force_defaults_) return;
+    auto off = PushElement(e);
+    TrackField(field, off);
+  }
+
+  template<typename T> void AddElement(voffset_t field, T e) {
     auto off = PushElement(e);
     TrackField(field, off);
   }
@@ -1602,6 +1617,9 @@ class FlatBufferBuilder {
     // causing the wrong overload to be selected, remove it.
     AssertScalarT<T>();
     StartVector(len, sizeof(T));
+    if (len == 0) {
+      return Offset<Vector<T>>(EndVector(len));
+    }
     // clang-format off
     #if FLATBUFFERS_LITTLEENDIAN
       PushBytes(reinterpret_cast<const uint8_t *>(v), len * sizeof(T));
@@ -1798,8 +1816,8 @@ class FlatBufferBuilder {
       return a.KeyCompareLessThan(&b);
     }
 
-   private:
-    StructKeyComparator &operator=(const StructKeyComparator &);
+    FLATBUFFERS_DELETE_FUNC(
+        StructKeyComparator &operator=(const StructKeyComparator &))
   };
   /// @endcond
 
@@ -1874,10 +1892,7 @@ class FlatBufferBuilder {
     vector_downward &buf_;
 
    private:
-    TableKeyComparator &operator=(const TableKeyComparator &other) {
-      buf_ = other.buf_;
-      return *this;
-    }
+    FLATBUFFERS_DELETE_FUNC(TableKeyComparator &operator=(const TableKeyComparator &other))
   };
   /// @endcond
 
@@ -2195,7 +2210,9 @@ class Verifier FLATBUFFERS_FINAL_CLASS {
   }
 
   // Verify a pointer (may be NULL) of a table type.
-  template<typename T> bool VerifyTable(const T *table);
+  template<typename T> bool VerifyTable(const T *table) {
+    return !table || table->Verify(*this);
+  }
 
   // Verify a pointer (may be NULL) of any vector type.
   template<typename T> bool VerifyVector(const Vector<T> *vec) const {
@@ -2270,8 +2287,8 @@ class Verifier FLATBUFFERS_FINAL_CLASS {
 
   template<typename T>
   bool VerifyBufferFromStart(const char *identifier, size_t start) {
-    if (identifier && (size_ < 2 * sizeof(flatbuffers::uoffset_t) ||
-                       !BufferHasIdentifier(buf_ + start, identifier))) {
+    if (identifier && !Check((size_ >= 2 * sizeof(flatbuffers::uoffset_t) &&
+                              BufferHasIdentifier(buf_ + start, identifier)))) {
       return false;
     }
 
@@ -2359,10 +2376,6 @@ class Verifier FLATBUFFERS_FINAL_CLASS {
   mutable size_t upper_bound_;
   bool check_alignment_;
 };
-
-template<typename T> bool Verifier::VerifyTable(const T *table) {
-  return !table || table->Verify(*this);
-}
 
 // Convenient way to bundle a buffer and its length, to pass it around
 // typed by its root.
@@ -2457,9 +2470,23 @@ class Table {
     return field_offset ? reinterpret_cast<P>(p) : nullptr;
   }
 
+  template<typename Raw, typename Face>
+  flatbuffers::Optional<Face> GetOptional(voffset_t field) const {
+    auto field_offset = GetOptionalFieldOffset(field);
+    auto p = data_ + field_offset;
+    return field_offset ? Optional<Face>(static_cast<Face>(ReadScalar<Raw>(p)))
+                        : Optional<Face>();
+  }
+
   template<typename T> bool SetField(voffset_t field, T val, T def) {
     auto field_offset = GetOptionalFieldOffset(field);
     if (!field_offset) return IsTheSameAs(val, def);
+    WriteScalar(data_ + field_offset, val);
+    return true;
+  }
+  template<typename T> bool SetField(voffset_t field, T val) {
+    auto field_offset = GetOptionalFieldOffset(field);
+    if (!field_offset) return false;
     WriteScalar(data_ + field_offset, val);
     return true;
   }
@@ -2529,6 +2556,17 @@ class Table {
 
   uint8_t data_[1];
 };
+
+// This specialization allows avoiding warnings like:
+// MSVC C4800: type: forcing value to bool 'true' or 'false'.
+template<>
+inline flatbuffers::Optional<bool> Table::GetOptional<uint8_t, bool>(
+    voffset_t field) const {
+  auto field_offset = GetOptionalFieldOffset(field);
+  auto p = data_ + field_offset;
+  return field_offset ? Optional<bool>(ReadScalar<uint8_t>(p) != 0)
+                      : Optional<bool>();
+}
 
 template<typename T>
 void FlatBufferBuilder::Required(Offset<T> table, voffset_t field) {
@@ -2655,19 +2693,6 @@ inline int LookupEnum(const char **names, const char *name) {
   #define FLATBUFFERS_STRUCT_END(name, size) \
     _Pragma("pack()") \
     static_assert(sizeof(name) == size, "compiler breaks packing rules")
-#elif defined(__ICCARM__)
-  #define CONCAT(a,b) a##b
-  #define DECLARE_ALIGNED(n) CONCAT(DECLARE_ALIGNED_,n)
-  #define DECLARE_ALIGNED_1 _Pragma("data_alignment=1")
-  #define DECLARE_ALIGNED_8 _Pragma("data_alignment=8")
-  #define DECLARE_ALIGNED_16 _Pragma("data_alignment=16")
-  #define DECLARE_ALIGNED_32 _Pragma("data_alignment=32")
-  #define DECLARE_ALIGNED_256 _Pragma("data_alignment=256")
-  #define MANUALLY_ALIGNED_STRUCT(alignment) \
-    DECLARE_ALIGNED(alignment) \
-    struct
-  #define STRUCT_END(name, size) \
-    _Pragma("data_alignment")
 #else
   #error Unknown compiler, please define structure alignment macros
 #endif
@@ -2722,7 +2747,7 @@ inline const char * const *ElementaryTypeNames() {
 // Basic type info cost just 16bits per field!
 struct TypeCode {
   uint16_t base_type : 4;  // ElementaryType
-  uint16_t is_vector : 1;
+  uint16_t is_repeating : 1;  // Either vector (in table) or array (in struct)
   int16_t sequence_ref : 11;  // Index into type_refs below, or -1 for none.
 };
 
@@ -2738,6 +2763,7 @@ struct TypeTable {
   size_t num_elems;  // of type_codes, values, names (but not type_refs).
   const TypeCode *type_codes;     // num_elems count
   const TypeFunction *type_refs;  // less than num_elems entries (see TypeCode).
+  const int16_t *array_sizes;     // less than num_elems entries (see TypeCode).
   const int64_t *values;  // Only set for non-consecutive enum/union or structs.
   const char *const *names;  // Only set if compiled with --reflect-names.
 };

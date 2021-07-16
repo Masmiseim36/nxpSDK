@@ -1,0 +1,1407 @@
+$version 10.00
+
+// Device Class
+note group GlobalsNote
+{
+  attr Bounds = <270,380,520,530>;
+}
+
+// Constants
+note group ConstantsNote
+{
+  attr Bounds = <20,380,260,530>;
+}
+
+// Resources
+note group Note
+{
+  attr Bounds = <530,0,1180,220>;
+}
+
+$rect <40,150,280,190>
+$output false
+autoobject WidgetSet::ToggleButtonConfig SwingSwitchConfig
+{
+  preset FaceOnFrameActive = 3;
+  preset FaceOnFrameFocused = 1;
+  preset FaceOnFrameDisabled = 1;
+  preset FaceOnFrameDefault = 1;
+  preset FaceOnActive = Thermostat::SwingSwitch;
+  preset FaceOnFocused = Thermostat::SwingSwitch;
+  preset FaceOnDisabled = Thermostat::SwingSwitch;
+  preset FaceOnDefault = Thermostat::SwingSwitch;
+  preset FaceOffFrameActive = 2;
+  preset FaceOffFrameFocused = 0;
+  preset FaceOffFrameDisabled = 0;
+  preset FaceOffFrameDefault = 0;
+  preset FaceOffActive = Thermostat::SwingSwitch;
+  preset FaceOffFocused = Thermostat::SwingSwitch;
+  preset FaceOffDisabled = Thermostat::SwingSwitch;
+  preset FaceOffDefault = Thermostat::SwingSwitch;
+  preset WidgetMaxSize = <46,27>;
+  preset WidgetMinSize = <46,27>;
+}
+
+$rect <290,150,490,190>
+$output false
+resource Resources::Bitmap SwingSwitch
+{
+  attr bitmapfile FileName = .\Res\SwingSwitch.png;
+  attr bitmapdithering Dithering = Auto;
+  attr framesize FrameSize = <46,27>;
+  attr framedelay FrameDelay;
+  attr bitmapformat Format = Alpha8;
+  attr bitmapmode Mode = Default;
+}
+
+$rect <290,190,490,230>
+$output false
+resource Resources::Bitmap ButtonDay
+{
+  attr bitmapfile FileName = .\Res\ButtonDay.png;
+  attr bitmapdithering Dithering = Auto;
+  attr framesize FrameSize = <27,27>;
+  attr framedelay FrameDelay;
+  attr bitmapformat Format = Alpha8;
+  attr bitmapmode Mode = Default;
+}
+
+$rect <290,230,490,270>
+$output false
+resource Resources::Bitmap ButtonNight
+{
+  attr bitmapfile FileName = .\Res\ButtonNight.png;
+  attr bitmapdithering Dithering = Auto;
+  attr framesize FrameSize = <27,27>;
+  attr framedelay FrameDelay;
+  attr bitmapformat Format = Alpha8;
+  attr bitmapmode Mode = Default;
+}
+
+$rect <290,270,490,310>
+$output false
+resource Resources::Bitmap ButtonVacation
+{
+  attr bitmapfile FileName = .\Res\ButtonVacation.png;
+  attr bitmapdithering Dithering = Auto;
+  attr framesize FrameSize = <27,27>;
+  attr framedelay FrameDelay;
+  attr bitmapformat Format = Alpha8;
+  attr bitmapmode Mode = Default;
+}
+
+$rect <40,190,280,230>
+$output false
+autoobject WidgetSet::RadioButtonConfig RadioButtonDayConfig
+{
+  preset LabelOnColorActive = #FFFFFFFF;
+  preset LabelOnColorFocused = #FFFFFFFF;
+  preset LabelOnColorDefault = #FFFFFFFF;
+  preset LabelOffColorActive = #FFFFFFFF;
+  preset LabelOffColorFocused = #FFFFFFFF;
+  preset LabelOffColorDefault = #FFFFFFFF;
+  preset LabelMarginLeft = 36;
+  preset LabelAlignment = Views::TextAlignment[AlignHorzLeft, AlignVertCenter];
+  preset LabelOnFont = Thermostat::FontL;
+  preset LabelOffFont = Thermostat::FontL;
+  preset FaceLayout = Core::Layout[AlignToBottom, AlignToLeft, AlignToTop];
+  preset FaceOnFrameActive = 1;
+  preset FaceOnFrameFocused = 1;
+  preset FaceOnFrameDisabled = 1;
+  preset FaceOnFrameDefault = 1;
+  preset FaceOnActive = Thermostat::ButtonDay;
+  preset FaceOnFocused = Thermostat::ButtonDay;
+  preset FaceOnDisabled = Thermostat::ButtonDay;
+  preset FaceOnDefault = Thermostat::ButtonDay;
+  preset FaceOffFrameActive = 0;
+  preset FaceOffFrameFocused = 0;
+  preset FaceOffFrameDisabled = 0;
+  preset FaceOffFrameDefault = 0;
+  preset FaceOffActive = Thermostat::ButtonDay;
+  preset FaceOffFocused = Thermostat::ButtonDay;
+  preset FaceOffDisabled = Thermostat::ButtonDay;
+  preset FaceOffDefault = Thermostat::ButtonDay;
+  preset WidgetMaxSize = <270,27>;
+  preset WidgetMinSize = <27,27>;
+}
+
+$rect <40,230,280,270>
+$output false
+autoobject WidgetSet::RadioButtonConfig RadioButtonNightConfig
+{
+  preset LabelOnColorActive = #FFFFFFFF;
+  preset LabelOnColorFocused = #FFFFFFFF;
+  preset LabelOnColorDefault = #FFFFFFFF;
+  preset LabelOffColorActive = #FFFFFFFF;
+  preset LabelOffColorFocused = #FFFFFFFF;
+  preset LabelOffColorDefault = #FFFFFFFF;
+  preset LabelMarginLeft = 36;
+  preset LabelAlignment = Views::TextAlignment[AlignHorzLeft, AlignVertCenter];
+  preset LabelOnFont = Thermostat::FontL;
+  preset LabelOffFont = Thermostat::FontL;
+  preset FaceLayout = Core::Layout[AlignToBottom, AlignToLeft, AlignToTop];
+  preset FaceOnFrameActive = 1;
+  preset FaceOnFrameFocused = 1;
+  preset FaceOnFrameDisabled = 1;
+  preset FaceOnFrameDefault = 1;
+  preset FaceOnActive = Thermostat::ButtonNight;
+  preset FaceOnFocused = Thermostat::ButtonNight;
+  preset FaceOnDisabled = Thermostat::ButtonNight;
+  preset FaceOnDefault = Thermostat::ButtonNight;
+  preset FaceOffFrameActive = 0;
+  preset FaceOffFrameFocused = 0;
+  preset FaceOffFrameDisabled = 0;
+  preset FaceOffFrameDefault = 0;
+  preset FaceOffActive = Thermostat::ButtonNight;
+  preset FaceOffFocused = Thermostat::ButtonNight;
+  preset FaceOffDisabled = Thermostat::ButtonNight;
+  preset FaceOffDefault = Thermostat::ButtonNight;
+  preset WidgetMaxSize = <270,27>;
+  preset WidgetMinSize = <27,27>;
+}
+
+$rect <40,270,280,310>
+$output false
+autoobject WidgetSet::RadioButtonConfig RadioButtonVacationConfig
+{
+  preset LabelOnColorActive = #FFFFFFFF;
+  preset LabelOnColorFocused = #FFFFFFFF;
+  preset LabelOnColorDefault = #FFFFFFFF;
+  preset LabelOffColorActive = #FFFFFFFF;
+  preset LabelOffColorFocused = #FFFFFFFF;
+  preset LabelOffColorDefault = #FFFFFFFF;
+  preset LabelMarginLeft = 36;
+  preset LabelAlignment = Views::TextAlignment[AlignHorzLeft, AlignVertCenter];
+  preset LabelOnFont = Thermostat::FontL;
+  preset LabelOffFont = Thermostat::FontL;
+  preset FaceLayout = Core::Layout[AlignToBottom, AlignToLeft, AlignToTop];
+  preset FaceOnFrameActive = 1;
+  preset FaceOnFrameFocused = 1;
+  preset FaceOnFrameDisabled = 1;
+  preset FaceOnFrameDefault = 1;
+  preset FaceOnActive = Thermostat::ButtonVacation;
+  preset FaceOnFocused = Thermostat::ButtonVacation;
+  preset FaceOnDisabled = Thermostat::ButtonVacation;
+  preset FaceOnDefault = Thermostat::ButtonVacation;
+  preset FaceOffFrameActive = 0;
+  preset FaceOffFrameFocused = 0;
+  preset FaceOffFrameDisabled = 0;
+  preset FaceOffFrameDefault = 0;
+  preset FaceOffActive = Thermostat::ButtonVacation;
+  preset FaceOffFocused = Thermostat::ButtonVacation;
+  preset FaceOffDisabled = Thermostat::ButtonVacation;
+  preset FaceOffDefault = Thermostat::ButtonVacation;
+  preset WidgetMaxSize = <270,27>;
+  preset WidgetMinSize = <27,27>;
+}
+
+// Font resources used for the different widgets. If you want to change the fonts \
+// within your project, just create a variant of these font resources and define \
+// the attributes of the font resources according your design ideas.
+$rect <960,80,1160,120>
+$output false
+resource Resources::Font FontL
+{
+  attr fontname FontName = Roboto Light;
+  attr fontheight Height = 24;
+  attr fontquality Quality = High;
+  attr fontranges Ranges = 0x20-0xFF;
+  attr fontaspectratio AspectRatio = 1.0;
+  attr fontbold Bold = false;
+  attr fontitalic Italic = false;
+}
+
+$rect <290,310,490,350>
+$output false
+resource Resources::Bitmap VertBar
+{
+  attr bitmapfile FileName = .\Res\VertBar.png;
+  attr bitmapdithering Dithering = Auto;
+  attr framesize FrameSize = <16,160>;
+  attr framedelay FrameDelay;
+  attr bitmapformat Format = Alpha8;
+  attr bitmapmode Mode = Default;
+}
+
+$rect <40,310,280,350>
+$output false
+autoobject WidgetSet::VerticalSliderConfig VerticalSliderConfig
+{
+  preset TrackAboveFrameActive = 0;
+  preset TrackAboveFrameFocused = 0;
+  preset TrackAboveFrameDisabled = 0;
+  preset TrackAboveFrameDefault = 0;
+  preset TrackAboveActive = Thermostat::VertBar;
+  preset TrackAboveFocused = Thermostat::VertBar;
+  preset TrackAboveDisabled = Thermostat::VertBar;
+  preset TrackAboveDefault = Thermostat::VertBar;
+  preset TrackBelowFrameActive = 1;
+  preset TrackBelowFrameFocused = 1;
+  preset TrackBelowFrameDisabled = 1;
+  preset TrackBelowFrameDefault = 1;
+  preset TrackBelowActive = Thermostat::VertBar;
+  preset TrackBelowFocused = Thermostat::VertBar;
+  preset TrackBelowDisabled = Thermostat::VertBar;
+  preset TrackBelowDefault = Thermostat::VertBar;
+  preset WidgetMaxSize = <16,160>;
+  preset WidgetMinSize = <16,160>;
+}
+
+$rect <290,420,490,460>
+$output false
+class DeviceClass : Templates::DeviceClass
+{
+  // The property 'ActualTemp' represents the current temperature value in 1/10 degrees. \
+  // In a real system this value is measured and provided by the underlying system.
+  $rect <220,60,420,100>
+  property int32 ActualTemp = 155;
+
+  // This method is intended to be called by the device to notify the GUI application \
+  // about an alternation of the property 'ActualTemp'.
+  $rect <20,60,220,100>
+  $output true
+  method void UpdateActualTemp( arg int32 aNewValue )
+  {
+    // Only if the reported value does differ from the one stored currently in the property.
+    if ( aNewValue != pure ActualTemp )
+    {
+      // Remember the new value in the internal memory of the property.
+      pure ActualTemp = aNewValue;
+
+      // Notify all associated property observers.
+      notifyobservers ^ActualTemp;
+    }
+  }
+
+  // Interface to read and modify a device setting or state value
+  note group Note1
+  {
+    attr Bounds = <10,10,640,280>;
+  }
+
+  // The property 'NominalTemp' represents the current temperature set value in 1/10 \
+  // degrees. This value is set by the GUI application and forwarded to the underlying \
+  // system.
+  $rect <220,100,420,140>
+  property int32 NominalTemp = 215;
+
+  $rect <420,100,620,140>
+  onset NominalTemp
+  {
+    // The property doesn't change -> nothing to do.
+    if ( pure NominalTemp == value )
+      return;
+
+    // Remember the new value in the internal memory of the property.
+    pure NominalTemp = value;
+
+    // For target code generation you will use your specific device API 
+    // to change the affected value.
+    $if !$prototyper
+      native ( value )
+      {
+        /*
+           TO DO:
+
+           You can call a function of your own device API or you simply
+           modify a variable existing in your middleware to reflect the
+           new value:
+
+           YourDevice_SetSomeValue( value );
+
+           or
+
+           YourDevice_SomeVariable = value;
+        */
+      }
+    $endif
+
+    // Notify all associated property observers.
+    notifyobservers ^NominalTemp;
+  }
+
+  $rect <220,140,420,180>
+  property int32 FanSpeed = 30;
+
+  $rect <420,140,620,180>
+  onset FanSpeed
+  {
+    // The property doesn't change -> nothing to do.
+    if ( pure FanSpeed == value )
+      return;
+
+    // Remember the new value in the internal memory of the property.
+    pure FanSpeed = value;
+
+    // For target code generation you will use your specific device API 
+    // to change the affected value.
+    $if !$prototyper
+      native ( value )
+      {
+        /*
+           TO DO:
+
+           You can call a function of your own device API or you simply
+           modify a variable existing in your middleware to reflect the
+           new value:
+
+           YourDevice_SetSomeValue( value );
+
+           or
+
+           YourDevice_SomeVariable = value;
+        */
+      }
+    $endif
+
+    // Notify all associated property observers.
+    notifyobservers ^FanSpeed;
+  }
+
+  $rect <220,180,420,220>
+  property bool SwingMode = false;
+
+  $rect <420,180,620,220>
+  onset SwingMode
+  {
+    // The property doesn't change -> nothing to do.
+    if ( pure SwingMode == value )
+      return;
+
+    // Remember the new value in the internal memory of the property.
+    pure SwingMode = value;
+
+    // For target code generation you will use your specific device API 
+    // to change the affected value.
+    $if !$prototyper
+      native ( value )
+      {
+        /*
+           TO DO:
+
+           You can call a function of your own device API or you simply
+           modify a variable existing in your middleware to reflect the
+           new value:
+
+           YourDevice_SetSomeValue( value );
+
+           or
+
+           YourDevice_SomeVariable = value;
+        */
+      }
+    $endif
+
+    // Notify all associated property observers.
+    notifyobservers ^SwingMode;
+  }
+
+  $rect <20,340,220,380>
+  slot ChangeActualTemp
+  {
+    /* this is just a simulation of heating / cooling */
+    var int32 temp = ActualTemp;
+
+    if ( temp < NominalTemp )
+      temp = temp + 1;
+    else if ( temp > NominalTemp )
+      temp = temp - 1;
+
+    UpdateActualTemp( temp );
+
+  }
+
+  $rect <220,340,420,380>
+  object Core::Timer ChangeTempTimer
+  {
+    preset OnTrigger = ChangeActualTemp;
+    preset Period = 150;
+    preset Enabled = true;
+  }
+
+  // Animate Temperature
+  note group TemperatureNote
+  {
+    attr Bounds = <10,290,440,400>;
+  }
+
+  // This is used to set the actual temperature closer and closer to the nominal \
+  // - just for demonstration purposes.
+  note legend TempNote
+  {
+    attr Bounds = <450,290,750,400>;
+  }
+
+  $rect <220,220,420,260>
+  property int32 SettingNo = 0;
+
+  $rect <420,220,620,260>
+  onset SettingNo
+  {
+    /* limit to three settings */
+    if ( value > 2 )
+      value = 2;
+    if ( value < 0 )
+      value = 0;
+
+
+    // The property doesn't change -> nothing to do.
+    if ( pure SettingNo == value )
+      return;
+
+    // Remember the new value in the internal memory of the property.
+    pure SettingNo = value;
+
+    // For target code generation you will use your specific device API 
+    // to change the affected value.
+    $if !$prototyper
+      native ( value )
+      {
+        /*
+           TO DO:
+
+           You can call a function of your own device API or you simply
+           modify a variable existing in your middleware to reflect the
+           new value:
+
+           YourDevice_SetSomeValue( value );
+
+           or
+
+           YourDevice_SomeVariable = value;
+        */
+      }
+    $endif
+
+    // Notify all associated property observers.
+    notifyobservers ^SettingNo;
+  }
+}
+
+$rect <290,460,490,500>
+autoobject Thermostat::DeviceClass Device;
+
+$rect <550,40,750,80>
+$output false
+resource Resources::Bitmap Wheels
+{
+  attr bitmapfile FileName = .\Res\Wheels.png;
+  attr bitmapdithering Dithering = Auto;
+  attr framesize FrameSize = <204,204>;
+  attr framedelay FrameDelay;
+  attr bitmapformat Format = Alpha8;
+  attr bitmapmode Mode = Default;
+}
+
+$rect <550,80,750,120>
+$output false
+resource Resources::Bitmap Controller
+{
+  attr bitmapfile FileName = .\Res\Controller.png;
+  attr bitmapdithering Dithering = Auto;
+  attr framesize FrameSize;
+  attr framedelay FrameDelay;
+  attr bitmapformat Format = Native;
+  attr bitmapmode Mode = Default;
+}
+
+$rect <290,40,490,80>
+$output false
+class TemperatureController : Core::Group
+{
+  $rect <0,250,200,290>
+  inherited property Bounds = <0,0,210,210>;
+
+  $rect <0,330,200,370>
+  inherited method UpdateLayout()
+  {
+    // Always invoke the inherited method.
+    super( aSize );
+
+    /* determine center point */
+    var int32 cX = aSize.x / 2;
+    var int32 cY = aSize.y / 2;
+
+    /* arrange the minmax indicator */
+    DeltaTempView.Bounds = rect( <0,0>, aSize );
+    DeltaTempView.Offset = point( cX, cY );
+
+  }
+
+  $rect <0,290,200,330>
+  inherited method UpdateViewState()
+  {
+    /* Always invoke the inherited method */
+    super( aState );
+
+    var int32 alpha = 0;
+    var int32 actual = pure ActualValue;
+    var float actAngle = 0.0;
+    var int32 nominal = pure NominalValue;
+    var float nomAngle = 0.0;
+
+    /* ensure limits of the temperature values */
+    if ( actual < pure MinValue )
+      actual = pure MinValue;
+    if ( actual > pure MaxValue )
+      actual = pure MaxValue;
+    if ( nominal < pure MinValue )
+      nominal = pure MinValue;
+    if ( nominal > pure MaxValue )
+      nominal = pure MaxValue;
+
+    /* calculate angles for actual and nominal temperature */
+    if ( pure MaxValue > pure MinValue)
+    {
+      actAngle = 135.0 - (float)( actual - pure MinValue ) * 270.0 / (float)( pure MaxValue - pure MinValue ); 
+      nomAngle = 135.0 - (float)( nominal - pure MinValue ) * 270.0 / (float)( pure MaxValue - pure MinValue ); 
+    }
+
+    /* place the needle at nominal temperature */
+    Needle.RotateAndScale( Foreground.Bounds.center, nomAngle, 1.0, 1.0 );
+
+    var int32 inner = 54;
+    var int32 outer = 61;
+
+    /* calculate the delta temperature indicator */
+    if (( pure MaxValue > pure MinValue) && ( actual != nominal ))
+    {
+      /* draw line for actAngle and an arc between actAngle and nomAngle */
+      DeltaTempPath.InitSubPath( 0, 84 );
+      DeltaTempPath.Rotate( -actAngle -90.0 );
+      DeltaTempPath.Begin( 0, inner, 0 );
+      DeltaTempPath.AddLine( 0, outer, 0 );
+      DeltaTempPath.AddArc( 0, 0, 0, outer, outer, 0, -nomAngle + actAngle, 80 );
+      DeltaTempPath.Rotate( actAngle + 90.0 );
+    }
+    else
+    {
+      /* clear the path */
+      DeltaTempPath.InitSubPath( 0, 84 );
+    }
+
+    /* colorize the delta temperature indicator and the heat/cool symbol */
+    if ( actual < nominal )
+    {
+      /* heating */
+      Symbol.FrameNumber = 0;
+      Symbol.Color = Thermostat::ColorHot;
+      DeltaTempView.Color = Thermostat::ColorHot;
+      alpha = ( nominal - actual ) * 10;
+    }
+    else if ( actual > nominal )
+    {
+      /* cooling */
+      Symbol.FrameNumber = 1;
+      Symbol.Color = Thermostat::ColorCold;
+      DeltaTempView.Color = Thermostat::ColorCold;
+      alpha = ( actual - nominal ) * 10;
+    }
+    if ( alpha > 255 )
+      alpha = 255;
+    Symbol.Opacity = alpha;
+
+    /* format the string for the digital temperature display */
+    ActualText.String = string( actual / 10 ) + "." + string( actual % 10 ) + "°C";
+    NominalText.String = string( nominal / 10 ) + "." + string( nominal % 10 ) + "°C";
+
+    /* the color of the actual temperature text should correspond to the temperature */
+    alpha = ( actual - pure MinValue ) * 255 / ( pure MaxValue - pure MinValue );
+    var color hot = Thermostat::ColorHot * alpha;
+    var color cold = Thermostat::ColorCold * (uint8)( 255 - alpha );
+    ActualText.Color = hot + cold;
+
+  }
+
+  // This is a rotate gesture handler.
+  $rect <20,20,160,60>
+  object Core::RotateTouchHandler RotateTouchHandler
+  {
+    preset Layout = Core::Layout[AlignToLeft, AlignToRight, AlignToTop];
+    preset Bounds = <0,0,210,210>;
+    preset OnRotate = onRotateSlot;
+    preset OnEnd = onEndSlot;
+    preset OnStart = onStartSlot;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Image Wheel
+  {
+    preset Bounds = <0,0,210,210>;
+    preset Bitmap = Thermostat::Wheels;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Image Foreground
+  {
+    preset Bounds = <10,10,200,200>;
+    preset Bitmap = Thermostat::Controller;
+  }
+
+  $rect <20,20,160,60>
+  object Views::WarpImage Needle
+  {
+    preset Point4 = <161,49>;
+    preset Point3 = <175,63>;
+    preset Point2 = <184,54>;
+    preset Point1 = <170,40>;
+    preset SourceAnchor = <10,80>;
+    preset Bitmap = Thermostat::Needle;
+  }
+
+  // The property 'NominalValue' represents the current temperature set value in \
+  // 1/10 degrees. 
+  $rect <400,130,600,170>
+  property int32 NominalValue = 300;
+
+  $rect <600,130,800,170>
+  onset NominalValue
+  {
+    /* check if the given value differs from the current value */
+    if ( pure NominalValue == value )
+      return;
+
+    /* store the new value */
+    pure NominalValue = value;
+
+    /* ...and finally, force an update */
+    InvalidateViewState();
+  }
+
+  // The property 'ActualValue' represents the current temperature value in 1/10 \
+  // degrees.
+  $rect <400,90,600,130>
+  property int32 ActualValue = 150;
+
+  $rect <600,90,800,130>
+  onset ActualValue
+  {
+    /* check if the given value differs from the current value */
+    if ( pure ActualValue == value )
+      return;
+
+    /* store the new value */
+    pure ActualValue = value;
+
+    /* ...and finally, force an update */
+    InvalidateViewState();
+  }
+
+  // This slot method will receive a signal, if the value of the property assigned \
+  // to @Outlet has been changed by another widget or by the application logic. In \
+  // response to this notification, the widget will update itself.
+  $rect <800,210,1000,250>
+  slot outletNominalSlot
+  {
+    /* update the current state of the widget */
+    if ( OutletNominal != null )
+      NominalValue = OutletNominal^;
+  }
+
+  $rect <600,210,800,250>
+  onset OutletNominal
+  {
+    /* check if the new outlet differs from the currently used outlet */
+    if ( pure OutletNominal == value )
+      return;
+
+    /* detach from the previous outlet */
+    if ( pure OutletNominal != null )
+      detachobserver outletNominalSlot, pure OutletNominal;
+
+    /* store the new outlet */
+    pure OutletNominal = value;
+
+    /* ... and attach to the new one */
+    if ( value != null )
+      attachobserver outletNominalSlot, value;
+
+    /* finally, update the current state of the widget by posting a signal to the outlet slot */
+    if ( value != null )
+      postsignal outletNominalSlot;
+  }
+
+  // The property 'OutletNominal' provides an interface for the Controller-View model. \
+  // In the Controller-View model, the widgets (views) and the application logic \
+  // (controllers) are always kept apart. An automatism behind this model ensures, \
+  // that widgets are notified automatically as soon as the affected controller has \
+  // changed its state. On the other hand, user interactions on a widget cause the \
+  // affected controller to execute the application logic. Usually, a controller \
+  // is a simple Chora object containg several properties and the implementation \
+  // of onget/onset method.
+  // By assigning a property reference, Outlet establishes a connection between the \
+  // widget and the controller object, the affected property belongs to. After this, \
+  // the widget is able to read and modify the referred property in response to the \
+  // user interactions. It is also able to adapt the widget appearance, if the value \
+  // of the referred property has been modified by another widget or by the application \
+  // logic itself.
+  $rect <400,210,600,250>
+  property ^int32 OutletNominal = null;
+
+  // This slot method will receive a signal, if the value of the property assigned \
+  // to @Outlet has been changed by another widget or by the application logic. In \
+  // response to this notification, the widget will update itself.
+  $rect <800,170,1000,210>
+  slot outletCurrentSlot
+  {
+    /* update the current state of the widget */
+    if ( OutletActual != null )
+      ActualValue = OutletActual^;
+  }
+
+  $rect <600,170,800,210>
+  onset OutletActual
+  {
+    /* check if the new outlet differs from the currently used outlet */
+    if ( pure OutletActual == value )
+      return;
+
+    /* detach from the previous outlet */
+    if ( pure OutletActual != null )
+      detachobserver outletCurrentSlot, pure OutletActual;
+
+    /* store the new outlet */
+    pure OutletActual = value;
+
+    /* ... and attach to the new one */
+    if ( value != null )
+      attachobserver outletCurrentSlot, value;
+
+    /* finally, update the current state of the widget by posting a signal to the outlet slot */
+    if ( value != null )
+      postsignal outletCurrentSlot;
+  }
+
+  // The property 'OutletActual' provides an interface for the Controller-View model. \
+  // In the Controller-View model, the widgets (views) and the application logic \
+  // (controllers) are always kept apart. An automatism behind this model ensures, \
+  // that widgets are notified automatically as soon as the affected controller has \
+  // changed its state. On the other hand, user interactions on a widget cause the \
+  // affected controller to execute the application logic. Usually, a controller \
+  // is a simple Chora object containg several properties and the implementation \
+  // of onget/onset method.
+  // By assigning a property reference, Outlet establishes a connection between the \
+  // widget and the controller object, the affected property belongs to. After this, \
+  // the widget is able to read and modify the referred property in response to the \
+  // user interactions. It is also able to adapt the widget appearance, if the value \
+  // of the referred property has been modified by another widget or by the application \
+  // logic itself.
+  $rect <400,170,600,210>
+  property ^int32 OutletActual = null;
+
+  // The property 'MaxValue' defines the maximum value of the temperature control \
+  // in 1/10 degrees.
+  $rect <400,50,600,90>
+  property int32 MaxValue = 400;
+
+  $rect <600,50,800,90>
+  onset MaxValue
+  {
+    /* check if the given value differs from the current value */
+    if ( pure MaxValue == value )
+      return;
+
+    /* store the new value */
+    pure MaxValue = value;
+
+    /* ...and finally, force an update */
+    InvalidateViewState();
+  }
+
+  // The property 'MinValue' defines the minimum value of the temperature control \
+  // in 1/10 degrees.
+  $rect <400,10,600,50>
+  property int32 MinValue = 100;
+
+  $rect <600,10,800,50>
+  onset MinValue
+  {
+    /* check if the given value differs from the current value */
+    if ( pure MinValue == value )
+      return;
+
+    /* store the new value */
+    pure MinValue = value;
+
+    /* ...and finally, force an update */
+    InvalidateViewState();
+  }
+
+  $rect <400,350,600,390>
+  slot onStartSlot
+  {
+    /* user interaction begins */
+    InvalidateViewState();
+    startValue = NominalValue;
+
+    /* nominal text has to be shown */
+    NominalText.Opacity = 0xFF;
+    ActualText.Opacity  = 0x00;
+    FadeTextEffect.Enabled = false;
+
+
+  }
+
+  $rect <400,388,600,428>
+  slot onRotateSlot
+  {
+    var int32 temp = 0;
+    var int32 delta = 0;
+
+    /* ensure that the current set value and the given minimum and maximum values are valid */
+    if (( pure MaxValue > pure MinValue) && ( pure NominalValue >= pure MinValue) && ( pure NominalValue <= pure MaxValue))
+    {
+      /* convert rotation angle into value change */
+      delta = (int32)RotateTouchHandler.Relative * ( pure MaxValue - pure MinValue ) / 720;
+    }
+
+    /* caluclate new desired temperature value */
+    temp = startValue - delta;
+    if ( temp < pure MinValue )
+      temp = pure MinValue;
+    if ( temp > pure MaxValue )
+      temp = pure MaxValue;
+
+    /* inform others about the changed value */
+    if ( pure NominalValue != temp )
+    {
+      var int32 inx = Wheel.FrameNumber;
+
+      /* update the wheel */
+      if ( pure NominalValue - temp > 0 )
+        inx = inx - 1;
+      else
+        inx = inx + 1;
+
+      if ( inx < 0 )
+        inx = 3;
+      if ( inx > 3 )
+        inx = 0;
+
+      Wheel.FrameNumber = inx;
+      NominalValue = temp;
+
+      /* update the attached outlet, if there is one... */
+      if (  OutletNominal != null )
+        OutletNominal^ = NominalValue;
+
+      /* ... and inform other observers, that the outlet has changed its value */
+      notifyobservers OutletNominal;
+
+    }
+
+  }
+
+  $rect <400,427,600,467>
+  slot onEndSlot
+  {
+    /* end of interaction */
+    InvalidateViewState();
+
+    /* restart timer for fading nominal text to actual text */
+    FadeTextEffect.Enabled = true;
+
+  }
+
+  $rect <400,310,600,350>
+  var int32 startValue;
+
+  $rect <400,260,600,300>
+  object Graphics::Path DeltaTempPath;
+
+  $rect <20,20,160,60>
+  object Views::StrokePath DeltaTempView
+  {
+    preset Bounds = <0,0,340,340>;
+    preset Color = #0000FFFF;
+    preset Width = 3;
+    preset Path = DeltaTempPath;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Image Symbol
+  {
+    preset Bounds = <90,156,120,186>;
+    preset Bitmap = Thermostat::SymbolHeadCool;
+  }
+
+  // This is an ordinary text view.
+  $rect <20,20,160,60>
+  object Views::Text ActualText
+  {
+    preset Layout = Core::Layout[AlignToBottom, AlignToRight, AlignToTop, ResizeHorz, ResizeVert];
+    preset Bounds = <40,80,160,130>;
+    preset Alignment = Views::TextAlignment[AlignHorzRight, AlignVertCenter];
+    preset String = "20.0°C";
+    preset Font = Thermostat::FontXXL;
+    preset Color = #000000FF;
+  }
+
+  // This is an ordinary text view.
+  $rect <20,20,160,60>
+  object Views::Text NominalText
+  {
+    preset Layout = Core::Layout[AlignToBottom, AlignToRight, AlignToTop, ResizeHorz, ResizeVert];
+    preset Bounds = <40,80,160,130>;
+    preset Alignment = Views::TextAlignment[AlignHorzRight, AlignVertCenter];
+    preset String = "20.0°C";
+    preset Font = Thermostat::FontXXL;
+    preset Color = #000000FF;
+    preset Opacity = 0;
+  }
+
+  $rect <600,260,800,300>
+  object Effects::Int32Effect FadeTextEffect
+  {
+    preset OnAnimate = fadeText;
+    preset NoOfCycles = 1;
+    preset CycleDuration = 500;
+    preset InitialDelay = 1200;
+  }
+
+  $rect <800,260,1000,300>
+  slot fadeText
+  {
+    sender; /* the method is called from the sender object */
+
+    NominalText.Opacity = 0xFF - FadeTextEffect.Value;
+    ActualText.Opacity  = FadeTextEffect.Value;
+
+  }
+
+  $rect <200,290,400,330>
+  slot incrNominal
+  {
+    sender; /* the method is called from the sender object */
+    var int32 temp = NominalValue + 5;
+
+    /* nominal text has to be shown */
+    NominalText.Opacity = 0xFF;
+    ActualText.Opacity  = 0x00;
+    FadeTextEffect.Enabled = false;
+
+    /* check limits */
+    if ( temp > pure MaxValue )
+      temp = pure MaxValue;
+
+    NominalValue = temp;
+
+    /* update the attached outlet, if there is one... */
+    if (  OutletNominal != null )
+      OutletNominal^ = NominalValue;
+
+    /* ... and inform other observers, that the outlet has changed its value */
+    notifyobservers OutletNominal;
+
+    /* restart timer for fading nominal text to actual text */
+    FadeTextEffect.Enabled = true;
+  }
+
+  $rect <200,330,400,370>
+  slot decrNominal
+  {
+    sender; /* the method is called from the sender object */
+    var int32 temp = NominalValue - 5;
+
+    /* nominal text has to be shown */
+    NominalText.Opacity = 0xFF;
+    ActualText.Opacity  = 0x00;
+    FadeTextEffect.Enabled = false;
+
+    /* check limits */
+    if ( temp < pure MinValue )
+      temp = pure MinValue;
+
+    NominalValue = temp;
+
+    /* update the attached outlet, if there is one... */
+    if (  OutletNominal != null )
+      OutletNominal^ = NominalValue;
+
+    /* ... and inform other observers, that the outlet has changed its value */
+    notifyobservers OutletNominal;
+
+    /* restart timer for fading nominal text to actual text */
+    FadeTextEffect.Enabled = true;
+  }
+
+  // This is a generic touch handler.
+  $rect <20,20,160,60>
+  object Core::SimpleTouchHandler SimpleTouchHandlerPlus
+  {
+    preset Point4 = <80,92>;
+    preset Point3 = <128,92>;
+    preset Point2 = <128,44>;
+    preset Point1 = <80,44>;
+    preset OnPress = incrNominal;
+    preset MaxStrikeCount = 100;
+  }
+
+  // This is a generic touch handler.
+  $rect <20,20,160,60>
+  object Core::SimpleTouchHandler SimpleTouchHandlerMinus
+  {
+    preset Point4 = <80,167>;
+    preset Point3 = <129,167>;
+    preset Point2 = <129,120>;
+    preset Point1 = <80,120>;
+    preset OnPress = decrNominal;
+    preset MaxStrikeCount = 100;
+  }
+
+  // This is the core of the SmartThermostat application. This class contains the \
+  // both needles for nominal and actual temperature, the rotatable wheel and all \
+  // of the calcualtion that is needed to draw the dynamic elements of the thermostat.
+  note legend Note
+  {
+    attr Bounds = <610,310,1010,440>;
+  }
+}
+
+$rect <550,120,750,160>
+$output false
+resource Resources::Bitmap Needle
+{
+  attr bitmapfile FileName = .\Res\Needle.png;
+  attr bitmapdithering Dithering = Auto;
+  attr framesize FrameSize;
+  attr framedelay FrameDelay;
+  attr bitmapformat Format = Alpha8;
+  attr bitmapmode Mode = Default;
+}
+
+$rect <40,420,240,460>
+$output false
+const color ColorCold = #1488D7FF;
+
+$rect <40,460,240,500>
+$output false
+const color ColorHot = #C70B6AFF;
+
+$rect <550,160,750,200>
+$output false
+resource Resources::Bitmap SymbolHeadCool
+{
+  attr bitmapfile FileName = .\Res\SymbolHeadCool.png;
+  attr bitmapdithering Dithering = Auto;
+  attr framesize FrameSize = <22,22>;
+  attr framedelay FrameDelay;
+  attr bitmapformat Format = Alpha8;
+  attr bitmapmode Mode = Default;
+}
+
+// Font resources used for the different widgets. If you want to change the fonts \
+// within your project, just create a variant of these font resources and define \
+// the attributes of the font resources according your design ideas.
+$rect <960,40,1160,80>
+$output false
+resource Resources::Font FontXXL
+{
+  attr fontname FontName = Roboto Light;
+  attr fontheight Height = 42;
+  attr fontquality Quality = High;
+  attr fontranges Ranges = '0'-'9','.','°','C';
+  attr fontaspectratio AspectRatio = 1.0;
+  attr fontbold Bold = false;
+  attr fontitalic Italic = false;
+}
+
+$rect <40,40,280,80>
+$output false
+class Thermostat : Core::Group
+{
+  $rect <720,10,920,50>
+  inherited property Bounds = <0,0,480,272>;
+
+  $rect <20,20,160,60>
+  object Views::Wallpaper Background
+  {
+    preset Bounds = <0,0,480,272>;
+    preset Bitmap = Thermostat::BackgroundDay;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Wallpaper Overlay
+  {
+    preset Bounds = <0,0,480,272>;
+    preset Bitmap = Thermostat::BackgroundDay;
+    preset Opacity = 0;
+  }
+
+  $rect <20,20,160,60>
+  object WidgetSet::ToggleButton ToggleButton
+  {
+    preset Bounds = <409,210,455,237>;
+    preset Outlet = ^Thermostat::Device.SwingMode;
+    preset Label = "Caption";
+    preset Appearance = Thermostat::SwingSwitchConfig;
+  }
+
+  $rect <20,20,160,60>
+  object WidgetSet::RadioButton RadioDay
+  {
+    preset Bounds = <10,80,130,107>;
+    preset Outlet = ^Thermostat::Device.SettingNo;
+    preset Label = "Day";
+    preset Appearance = Thermostat::RadioButtonDayConfig;
+  }
+
+  $rect <20,20,160,60>
+  object WidgetSet::RadioButton RadioNight
+  {
+    preset Bounds = <10,120,130,147>;
+    preset OutletSelector = 1;
+    preset Outlet = ^Thermostat::Device.SettingNo;
+    preset Label = "Night";
+    preset Appearance = Thermostat::RadioButtonNightConfig;
+  }
+
+  $rect <20,20,160,60>
+  object WidgetSet::RadioButton RadioVacation
+  {
+    preset Bounds = <10,160,130,187>;
+    preset OutletSelector = 2;
+    preset Outlet = ^Thermostat::Device.SettingNo;
+    preset Label = "Vacation";
+    preset Appearance = Thermostat::RadioButtonVacationConfig;
+  }
+
+  $rect <20,20,160,60>
+  object WidgetSet::VerticalSlider VerticalSlider
+  {
+    preset Bounds = <438,30,454,190>;
+    preset Outlet = ^Thermostat::Device.FanSpeed;
+    preset Appearance = Thermostat::VerticalSliderConfig;
+  }
+
+  $rect <520,10,720,50>
+  var Thermostat::DeviceClass Device = Thermostat::Device;
+
+  $rect <20,20,160,60>
+  object Views::Image FanHi
+  {
+    preset Bounds = <398,30,428,60>;
+    preset FrameNumber = 1;
+    preset Bitmap = Thermostat::SymbolFan;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Image FanHi1
+  {
+    preset Bounds = <402,164,432,194>;
+    preset FrameNumber = 0;
+    preset Bitmap = Thermostat::SymbolFan;
+  }
+
+  $rect <20,20,160,60>
+  object Thermostat::TemperatureController TemperatureController
+  {
+    preset Bounds = <140,30,350,240>;
+    preset OutletNominal = ^Thermostat::Device.NominalTemp;
+    preset OutletActual = ^Thermostat::Device.ActualTemp;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Text Title
+  {
+    preset Bounds = <10,0,180,39>;
+    preset Alignment = Views::TextAlignment[AlignHorzLeft, AlignVertCenter];
+    preset String = "LIVING ROOM";
+    preset Font = Thermostat::FontL;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Text OnOffButtonText
+  {
+    preset Bounds = <400,240,469,265>;
+    preset String = "SWING";
+    preset Font = Thermostat::FontM;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Image ErgosignLogo
+  {
+    preset Bounds = <0,230,100,270>;
+    preset Bitmap = Thermostat::Ergosign;
+  }
+
+  $rect <720,120,920,160>
+  slot changeBackFinished
+  {
+    sender; /* the method is called from the sender object */
+
+    Background.Bitmap = Overlay.Bitmap;
+    Overlay.Opacity = 0x00;
+
+  }
+
+  $rect <520,120,720,160>
+  object Effects::Int32Effect FadeEffect
+  {
+    preset OnFinished = changeBackFinished;
+    preset NoOfCycles = 1;
+    preset Outlet = ^Overlay.Opacity;
+  }
+
+  $rect <520,70,720,110>
+  object Core::PropertyObserver SettingsObserver
+  {
+    preset OnEvent = onSettingChanged;
+    preset Outlet = ^Thermostat::Device.SettingNo;
+  }
+
+  // This slot method is executed when the associated property observer 'PropertyObserver' \
+  // is notified.
+  $rect <720,70,920,110>
+  slot onSettingChanged
+  {
+    Overlay.Opacity = 0x00;
+    FadeEffect.Enabled = false;
+
+    /* select new background */
+    switch ( Device.SettingNo )
+    {
+      case 0: Overlay.Bitmap = Thermostat::BackgroundDay;
+      case 1: Overlay.Bitmap = Thermostat::BackgroundNight;
+      default: Overlay.Bitmap = Thermostat::BackgroundDefault;
+    }
+
+    FadeEffect.Enabled = true;
+
+  }
+
+  // Slot method to trigger the next phase of the auto demo.
+  $rect <520,190,720,230>
+  slot AutoDemoSlot
+  {
+    sender; /* the method is called from the sender object */
+
+    switch ( AutoState )
+    {
+      case  0: Device.NominalTemp = 335;
+      case  1: Device.SettingNo = 1;
+      case  2: Device.NominalTemp = 185;
+      case  3: Device.SettingNo = 2;
+      case  4: Device.SettingNo = 0;
+      case  5: 
+      {
+        Device.NominalTemp = 225;
+        Device.FanSpeed = 80;
+        Device.SwingMode = true;
+      }
+      case  6: 
+      {
+        Device.NominalTemp = 190;
+        Device.FanSpeed = 30;
+        Device.SwingMode = false;
+      }
+      default:
+       ;
+    }
+
+    AutoState = AutoState + 1;
+    if ( AutoState > 6 )
+      AutoState = 0;
+  }
+
+  // Variable to store the current phase of the auto demo.
+  $rect <730,190,930,230>
+  var int32 AutoState = 0;
+
+  // Timer object to drive the auto demo mode.
+  $rect <520,230,720,270>
+  object Core::Timer AutoDemoTimer
+  {
+    preset OnTrigger = AutoDemoSlot;
+    preset Period = 4000;
+    preset Begin = 0;
+  }
+}
+
+$rect <750,80,950,120>
+$output false
+resource Resources::Bitmap BackgroundDay
+{
+  attr bitmapfile FileName = .\Res\BackgroundDay.png;
+  attr bitmapdithering Dithering = Auto;
+  attr framesize FrameSize;
+  attr framedelay FrameDelay;
+  attr bitmapformat Format = RGB565;
+  attr bitmapmode Mode = Default;
+}
+
+$rect <750,120,950,160>
+$output false
+resource Resources::Bitmap BackgroundNight
+{
+  attr bitmapfile FileName = .\Res\BackgroundNight.png;
+  attr bitmapdithering Dithering = Auto;
+  attr framesize FrameSize;
+  attr framedelay FrameDelay;
+  attr bitmapformat Format = RGB565;
+  attr bitmapmode Mode = Default;
+}
+
+$rect <750,160,950,200>
+$output false
+resource Resources::Bitmap SymbolFan
+{
+  attr bitmapfile FileName = .\Res\SymbolFan.png;
+  attr bitmapdithering Dithering = Auto;
+  attr framesize FrameSize = <22,22>;
+  attr framedelay FrameDelay;
+  attr bitmapformat Format = Alpha8;
+  attr bitmapmode Mode = Default;
+}
+
+// Font resources used for the different widgets. If you want to change the fonts \
+// within your project, just create a variant of these font resources and define \
+// the attributes of the font resources according your design ideas.
+$rect <960,120,1160,160>
+$output false
+resource Resources::Font FontM
+{
+  attr fontname FontName = Roboto Light;
+  attr fontheight Height = 15;
+  attr fontquality Quality = High;
+  attr fontranges Ranges = 0x20-0xFF;
+  attr fontaspectratio AspectRatio = 1.0;
+  attr fontbold Bold = false;
+  attr fontitalic Italic = false;
+}
+
+$rect <750,40,950,80>
+$output false
+resource Resources::Bitmap BackgroundDefault
+{
+  attr bitmapfile FileName = .\Res\BackgroundDefault.png;
+  attr bitmapdithering Dithering = Auto;
+  attr framesize FrameSize;
+  attr framedelay FrameDelay;
+  attr bitmapformat Format = RGB565;
+  attr bitmapmode Mode = Default;
+}
+
+// Standard wigets configured for the SmartThermostat
+note group Note1
+{
+  attr Bounds = <20,110,520,370>;
+}
+
+$rect <960,160,1160,200>
+$output false
+resource Resources::Bitmap Ergosign
+{
+  attr bitmapfile FileName = .\Res\Ergosign.png;
+  attr bitmapdithering Dithering = Auto;
+  attr framesize FrameSize;
+  attr framedelay FrameDelay;
+  attr bitmapformat Format = Native;
+  attr bitmapmode Mode = Default;
+}
+
+// SmartThermostat main screen and temperature controller
+note group Note4
+{
+  attr Bounds = <20,0,520,100>;
+}

@@ -25,6 +25,8 @@ typedef struct _controller_hci_uart_config
 /* Initialize the platform */
 void controller_init(void);
 
+int controller_hci_uart_get_configuration(controller_hci_uart_config_t *config);
+
 #ifdef __cplusplus
 }
 #endif

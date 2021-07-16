@@ -1,10 +1,8 @@
-if(NOT MIDDLEWARE_MCU-BOOT_MIMXRT1064_DRIVERS_MIMXRT1064_INCLUDED)
-    
-    set(MIDDLEWARE_MCU-BOOT_MIMXRT1064_DRIVERS_MIMXRT1064_INCLUDED true CACHE BOOL "middleware_mcu-boot_MIMXRT1064_drivers component is included.")
+include_guard(GLOBAL)
+message("middleware_mcu-boot_MIMXRT1064_drivers component is included.")
 
 
-    target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
-        ${CMAKE_CURRENT_LIST_DIR}/targets/MIMXRT1064/src
-    )
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
+    ${CMAKE_CURRENT_LIST_DIR}/targets/MIMXRT1064/src
+)
 
-endif()

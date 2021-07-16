@@ -68,72 +68,72 @@
 
 /* ----------------------------------------- Global Definitions */
 /** Boolean Truth Values */
-#define SM_TRUE                                 0x1
-#define SM_FALSE                                0x0
+#define SM_TRUE                                 0x1U
+#define SM_FALSE                                0x0U
 
 /** Pairable & Bondable Mode Mask */
-#define SM_PAIRABLE_MASK                        0x01
-#define SM_BONDABLE_MASK                        0x02
+#define SM_PAIRABLE_MASK                        0x01U
+#define SM_BONDABLE_MASK                        0x02U
 
 /** Bit Positions of SM Device Attributes in Device Database */
-#define SM_DEV_TRUSTED_BIT                      0
-#define SM_DEV_AUTHENTICATE_BIT                 1
-#define SM_DEV_ENCRYPT_BIT                      3
-#define SM_DEV_LK_AVLBL_BIT                     5
-#define SM_DEV_INCOMING_BIT                     6
-#define SM_DEV_ACL_INITIATED_BIT                7
+#define SM_DEV_TRUSTED_BIT                      0U
+#define SM_DEV_AUTHENTICATE_BIT                 1U
+#define SM_DEV_ENCRYPT_BIT                      3U
+#define SM_DEV_LK_AVLBL_BIT                     5U
+#define SM_DEV_INCOMING_BIT                     6U
+#define SM_DEV_ACL_INITIATED_BIT                7U
 
 /** Bit Masks for Setting & Resetting Device Attributes in Device Database */
-#define SM_DEV_TRUSTED_MASK                     0xFE
-#define SM_DEV_AUTHENTICATE_MASK                0xF9
-#define SM_DEV_ENCRYPT_MASK                     0xE7
-#define SM_DEV_LK_AVLBL_MASK                    0xDF
-#define SM_DEV_INCOMING_MASK                    0xBF
-#define SM_DEV_ACL_INITIATED_MASK               0x7F
+#define SM_DEV_TRUSTED_MASK                     0xFEU
+#define SM_DEV_AUTHENTICATE_MASK                0xF9U
+#define SM_DEV_ENCRYPT_MASK                     0xE7U
+#define SM_DEV_LK_AVLBL_MASK                    0xDFU
+#define SM_DEV_INCOMING_MASK                    0xBFU
+#define SM_DEV_ACL_INITIATED_MASK               0x7FU
 
 /** State of a Device Database Entry */
-#define SM_DEVICE_INVALID                       0x00
-#define SM_DEVICE_USED                          0x01
-#define SM_DEVICE_CAN_BE_FREED                  0x02
+#define SM_DEVICE_INVALID                       0x00U
+#define SM_DEVICE_USED                          0x01U
+#define SM_DEVICE_CAN_BE_FREED                  0x02U
 
 /** Bit Positions for SM Service Attributes in Service Database */
-#define SM_SRV_VALID_BIT                        0
-#define SM_SRV_AUTHENTICATE_BIT                 1
-#define SM_SRV_AUTHORIZE_BIT                    4
-#define SM_SRV_ENCRYPT_BIT                      6
-#define SM_SRV_DEFAULT_SEC_BIT                  7
-#define SM_SRV_NO_BONDING_BIT                   8
+#define SM_SRV_VALID_BIT                        0U
+#define SM_SRV_AUTHENTICATE_BIT                 1U
+#define SM_SRV_AUTHORIZE_BIT                    4U
+#define SM_SRV_ENCRYPT_BIT                      6U
+#define SM_SRV_DEFAULT_SEC_BIT                  7U
+#define SM_SRV_NO_BONDING_BIT                   8U
 
 /** Bit Masks for Setting & Resetting Service Attributes in Service Database */
-#define SM_SRV_VALID_MASK                       0xFFFFFFFE
-#define SM_SRV_AUTHENTICATE_MASK                0xFFFFFFF1
-#define SM_SRV_AUTHORIZE_MASK                   0xFFFFFFCF
-#define SM_SRV_ENCRYPT_MASK                     0xFFFFFFBF
-#define SM_SRV_DEFAULT_SEC_MASK                 0xFFFFFF7F
-#define SM_SRV_NO_BONDING_MASK                  0xFFFFFEFF
+#define SM_SRV_VALID_MASK                       0xFFFFFFFEU
+#define SM_SRV_AUTHENTICATE_MASK                0xFFFFFFF1U
+#define SM_SRV_AUTHORIZE_MASK                   0xFFFFFFCFU
+#define SM_SRV_ENCRYPT_MASK                     0xFFFFFFBFU
+#define SM_SRV_DEFAULT_SEC_MASK                 0xFFFFFF7FU
+#define SM_SRV_NO_BONDING_MASK                  0xFFFFFEFFU
 
 /** States of SM Security Access Contexts */
-#define SM_CONTEXT_INACTIVE                     0x00
-#define SM_CONTEXT_ACTIVE                       0x01
-#define SM_CONTEXT_W4_AUTHORIZATION             0x02
-#define SM_CONTEXT_W4_AUTHENTICATION            0x04
-#define SM_CONTEXT_W4_ENCRYPTION                0x08
-#define SM_CONTEXT_ANY                          0xFF
+#define SM_CONTEXT_INACTIVE                     0x00U
+#define SM_CONTEXT_ACTIVE                       0x01U
+#define SM_CONTEXT_W4_AUTHORIZATION             0x02U
+#define SM_CONTEXT_W4_AUTHENTICATION            0x04U
+#define SM_CONTEXT_W4_ENCRYPTION                0x08U
+#define SM_CONTEXT_ANY                          0xFFU
 
 /** Entry Points for Security Access State Machine */
-#define SM_SAC_AUTHENTICATION                   0x01
-#define SM_SAC_AUTHORIZATION                    0x02
-#define SM_SAC_ENCRYPTION                       0x03
+#define SM_SAC_AUTHENTICATION                   0x01U
+#define SM_SAC_AUTHORIZATION                    0x02U
+#define SM_SAC_ENCRYPTION                       0x03U
 
 /** Device Authentication States */
-#define SM_NOT_AUTHENTICATED                    0x00
-#define SM_AUTHENTICATED                        0x01
-#define SM_AUTHENTICATION_IN_PROGRESS           0x02
+#define SM_NOT_AUTHENTICATED                    0x00U
+#define SM_AUTHENTICATED                        0x01U
+#define SM_AUTHENTICATION_IN_PROGRESS           0x02U
 
 /** Device Encryption States */
-#define SM_NOT_ENCRYPTED                        0x00
-#define SM_ENCRYPTED                            0x01
-#define SM_ENCRYPTION_IN_PROGRESS               0x03
+#define SM_NOT_ENCRYPTED                        0x00U
+#define SM_ENCRYPTED                            0x01U
+#define SM_ENCRYPTION_IN_PROGRESS               0x03U
 
 /* Default Service Authentication & Encryption Requirements */
 #ifdef BT_SSP
@@ -149,9 +149,9 @@
 #endif /* BT_BRSC */
 
 #else  /* BT_SSP */
-#define SM_DEFAULT_SERVICE_SECURITY_LEVEL       0x01
+#define SM_DEFAULT_SERVICE_SECURITY_LEVEL       0x01U
 #endif /* BT_SSP */
-#define SM_DEFAULT_SERVICE_ENCRYPTION           0x01
+#define SM_DEFAULT_SERVICE_ENCRYPTION           0x01U
 
 
 /* ----------------------------------------- Macros */

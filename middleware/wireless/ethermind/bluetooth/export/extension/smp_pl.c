@@ -110,42 +110,42 @@ SMP_LESC_OOB_GEN_COMPLETE_CB smp_lesc_oob_gen_handler;
 DECL_STATIC SMP_KEY_DIST key_distribution_info_pl =
 {
     /* LTK */
-    {0xD6, 0x93, 0xE8, 0xA4, 0x23, 0x55, 0x48, 0x99,
-     0x1D, 0x77, 0x61, 0xE6, 0x63, 0x2B, 0x10, 0x8E},
+    {0xD6U, 0x93U, 0xE8U, 0xA4U, 0x23U, 0x55U, 0x48U, 0x99U,
+     0x1DU, 0x77U, 0x61U, 0xE6U, 0x63U, 0x2BU, 0x10U, 0x8EU},
 
     /* EDIV and RAND*/
-    {0x99, 0x1F, 0x26, 0x1E, 0xF6, 0x09, 0x97, 0x2E, 0xAD, 0x7E},
+    {0x99U, 0x1FU, 0x26U, 0x1EU, 0xF6U, 0x09U, 0x97U, 0x2EU, 0xADU, 0x7EU},
 
     /* IRK */
-    {0x0A, 0x2D, 0xF4, 0x65, 0xE3, 0xBD, 0x7B, 0x49,
-     0x1E, 0xB4, 0xC0, 0x95, 0x95, 0x13, 0x46, 0x73},
+    {0x0AU, 0x2DU, 0xF4U, 0x65U, 0xE3U, 0xBDU, 0x7BU, 0x49U,
+     0x1EU, 0xB4U, 0xC0U, 0x95U, 0x95U, 0x13U, 0x46U, 0x73U},
 
     /* Type and BD Addr */
-    {0x00, 0x00, 0xC0, 0xFF, 0xEE, 0xDE, 0xDA},
+    {0x00U, 0x00U, 0xC0U, 0xFFU, 0xEEU, 0xDEU, 0xDAU},
 
     /* CSRK */
-    {0x90, 0xD5, 0x06, 0x95, 0x92, 0xED, 0x91, 0xD7,
-     0xA8, 0x9E, 0x2C, 0xDC, 0x4A, 0x93, 0x5B, 0xF9}
+    {0x90U, 0xD5U, 0x06U, 0x95U, 0x92U, 0xEDU, 0x91U, 0xD7U,
+     0xA8U, 0x9EU, 0x2CU, 0xDCU, 0x4AU, 0x93U, 0x5BU, 0xF9U}
 };
 
 #ifdef SMP_PL_ENABLE_KEY_GENERATION
 
-#define KEY_STATE_IN_LTK_GEN     0x01
-#define KEY_STATE_IN_CSRK_GEN    0x02
-#define KEY_STATE_IN_IRK_GEN     0x04
-#define KEY_STATE_IN_DHK_GEN     0x08
-#define KEY_STATE_IN_EDIV_GEN    0x10
+#define KEY_STATE_IN_LTK_GEN     0x01U
+#define KEY_STATE_IN_CSRK_GEN    0x02U
+#define KEY_STATE_IN_IRK_GEN     0x04U
+#define KEY_STATE_IN_DHK_GEN     0x08U
+#define KEY_STATE_IN_EDIV_GEN    0x10U
 
-DECL_STATIC UCHAR er_pl[16] = {0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
-                                       0x08, 0x09, 0x0A, 0x0B, 0x0C, 0x0D, 0x0E, 0x0F};
+DECL_STATIC UCHAR er_pl[16U] = {0x00U, 0x01U, 0x02U, 0x03U, 0x04U, 0x05U, 0x06U, 0x07U,
+                                0x08U, 0x09U, 0x0AU, 0x0BU, 0x0CU, 0x0DU, 0x0EU, 0x0FU};
 
-DECL_STATIC UCHAR ir_pl[16] = {0x0F, 0x0E, 0x0D, 0x0C, 0x0B, 0x0A, 0x09, 0x08,
-                                       0x07, 0x06, 0x05, 0x04, 0x03, 0x02, 0x01, 0x00};
+DECL_STATIC UCHAR ir_pl[16U] = {0x0FU, 0x0EU, 0x0DU, 0x0CU, 0x0BU, 0x0AU, 0x09U, 0x08U,
+                                0x07U, 0x06U, 0x05U, 0x04U, 0x03U, 0x02U, 0x01U, 0x00U};
 
 DECL_STATIC UINT16 div_pl;
 
-DECL_STATIC UCHAR dhk_pl[16];
-DECL_STATIC UCHAR * rnd_pl = &key_distribution_info_pl.mid_info[2];
+DECL_STATIC UCHAR dhk_pl[16U];
+DECL_STATIC UCHAR * rnd_pl = &key_distribution_info_pl.mid_info[2U];
 
 DECL_STATIC UINT16 ediv_pl;
 DECL_STATIC UINT16 div_y;
@@ -154,8 +154,8 @@ DECL_STATIC UCHAR * ltk_pl = key_distribution_info_pl.enc_info;
 DECL_STATIC UCHAR * csrk_pl = key_distribution_info_pl.sign_info;
 DECL_STATIC UCHAR * irk_pl = key_distribution_info_pl.id_info;
 
-DECL_STATIC UCHAR key_gen_state = 0x00;
-DECL_STATIC UCHAR auto_generate = 0x00;
+DECL_STATIC UCHAR key_gen_state = 0x00U;
+DECL_STATIC UCHAR auto_generate = 0x00U;
 
 DECL_STATIC API_RESULT smp_func_d1 (UCHAR * k, UINT16 d, UINT16 r);
 DECL_STATIC API_RESULT smp_func_dm (UCHAR * k, UCHAR * r);
@@ -177,22 +177,22 @@ UCHAR                smp_ecdh_pub_key_pl[SMP_LESC_PUBLIC_KEY_SIZE];
 #ifdef SMP_LESC_CONST_OOB_VAL_SUPPORT
 DECL_CONST DECL_STATIC UCHAR smp_ecdh_oob_priv_key_pl[] =
 {
-    0x56, 0x9A, 0x68, 0xF7, 0xB9, 0xAA, 0x83, 0x58,
-    0xB7, 0xAB, 0x56, 0x34, 0x1E, 0xD8, 0x3B, 0x67,
-    0x3C, 0xE6, 0xA5, 0xF6, 0xF9, 0xF3, 0xDD, 0x20,
-    0x6B, 0xB2, 0x2D, 0x76, 0x31, 0x78, 0x10, 0x54
+    0x56U, 0x9AU, 0x68U, 0xF7U, 0xB9U, 0xAAU, 0x83U, 0x58U,
+    0xB7U, 0xABU, 0x56U, 0x34U, 0x1EU, 0xD8U, 0x3BU, 0x67U,
+    0x3CU, 0xE6U, 0xA5U, 0xF6U, 0xF9U, 0xF3U, 0xDDU, 0x20U,
+    0x6BU, 0xB2U, 0x2DU, 0x76U, 0x31U, 0x78U, 0x10U, 0x54U
 };
 
 DECL_CONST DECL_STATIC UCHAR smp_ecdh_oob_pub_key_pl[] =
 {
-    0xF2, 0x00, 0xD3, 0x55, 0xE9, 0x8B, 0x7F, 0xF8,
-    0x7A, 0x01, 0xCD, 0xE2, 0x2F, 0x78, 0x0E, 0x14,
-    0xC8, 0x35, 0xC3, 0x3F, 0x76, 0x02, 0xC0, 0x76,
-    0x4E, 0x60, 0xB3, 0x1C, 0xF3, 0xF7, 0x67, 0x7D,
-    0xCB, 0x21, 0x92, 0x10, 0x73, 0x34, 0x48, 0x88,
-    0x00, 0x62, 0xE1, 0xF3, 0xF5, 0x8E, 0xF1, 0x7B,
-    0x19, 0x8C, 0x67, 0xC6, 0xD4, 0x0B, 0xD6, 0xFC,
-    0x7D, 0x6E, 0xAB, 0x37, 0xBA, 0x5D, 0x71, 0x09
+    0xF2U, 0x00U, 0xD3U, 0x55U, 0xE9U, 0x8BU, 0x7FU, 0xF8U,
+    0x7AU, 0x01U, 0xCDU, 0xE2U, 0x2FU, 0x78U, 0x0EU, 0x14U,
+    0xC8U, 0x35U, 0xC3U, 0x3FU, 0x76U, 0x02U, 0xC0U, 0x76U,
+    0x4EU, 0x60U, 0xB3U, 0x1CU, 0xF3U, 0xF7U, 0x67U, 0x7DU,
+    0xCBU, 0x21U, 0x92U, 0x10U, 0x73U, 0x34U, 0x48U, 0x88U,
+    0x00U, 0x62U, 0xE1U, 0xF3U, 0xF5U, 0x8EU, 0xF1U, 0x7BU,
+    0x19U, 0x8CU, 0x67U, 0xC6U, 0xD4U, 0x0BU, 0xD6U, 0xFCU,
+    0x7DU, 0x6EU, 0xABU, 0x37U, 0xBAU, 0x5DU, 0x71U, 0x09U
 };
 #endif /* SMP_LESC_CONST_OOB_VAL_SUPPORT */
 #endif /* SMP_HAVE_TBX_PL_ECDH */
@@ -229,7 +229,7 @@ void smp_init_pl (void)
     UCHAR i;
 
 #if (SMP_PL_DEVICE_LIST_SIZE > 1)
-    for (i = 0; i < SMP_PL_DEVICE_LIST_SIZE; i++)
+    for (i = 0U; i < SMP_PL_DEVICE_LIST_SIZE; i++)
 #else /* (SMP_PL_DEVICE_LIST_SIZE > 1) */
     i = 0;
 #endif /* (SMP_PL_DEVICE_LIST_SIZE > 1) */
@@ -237,15 +237,20 @@ void smp_init_pl (void)
         /* Initialize the device entuty */
         BT_mem_set (&smp_pl_device_list[i], 0x00, sizeof (SMP_DEVICE_PL));
     }
+
+#ifdef SMP_LESC
+    /* Initialize state to IDLE */
+    SMP_LESC_OOB_SET_STATE(&smp_lesc_oob_data, SMP_OOB_STATE_IDLE);
+#endif /* SMP_LESC */
 #endif /* SMP_HAVE_OOB_SUPPORT */
 
     /* Initialize platform constants */
     smp_io_capability_pl = SMP_DEFAULT_IO_CAPABILITY;
-    smp_key_distribution_pl = 0x77;
+    smp_key_distribution_pl = 0x77U;
     smp_encrytion_key_size_pl = SMP_MAX_ENCRYPTION_KEY_SIZE_PL;
 
     /* Initialize platform rank count */
-    smp_rank_count_pl = 0;
+    smp_rank_count_pl = 0U;
 
     /* Initialize to strict MITM requirements by platform */
     smp_mitm_policy_pl = SMP_PL_SEC_MITM_STRICT;
@@ -259,7 +264,7 @@ void smp_init_pl (void)
 #endif /* SMP_LESC */
 
     /* Initializing Passkey Updation Mode */
-    smp_passkey_revamp_mode_pl = 0x01;
+    smp_passkey_revamp_mode_pl = 0x01U;
 }
 
 
@@ -280,16 +285,16 @@ API_RESULT BT_smp_add_device_pl (/* IN */ BT_DEVICE_ADDR * bd_addr)
 
     /* Check for a free entity */
 #if (SMP_PL_DEVICE_LIST_SIZE > 1)
-    for (i = 0; i < SMP_PL_DEVICE_LIST_SIZE; i++)
+    for (i = 0U; i < SMP_PL_DEVICE_LIST_SIZE; i++)
 #else /* (SMP_PL_DEVICE_LIST_SIZE > 1) */
     i = 0;
 #endif /* (SMP_PL_DEVICE_LIST_SIZE > 1) */
     {
-        if (0x00 == smp_pl_device_list[i].used)
+        if (0x00U == smp_pl_device_list[i].used)
         {
             BT_COPY_BD_ADDR_AND_TYPE (&smp_pl_device_list[i].bd_addr, bd_addr);
 
-            smp_pl_device_list[i].used = 0x01;
+            smp_pl_device_list[i].used = 0x01U;
 
             return API_SUCCESS;
         }
@@ -315,7 +320,7 @@ API_RESULT BT_smp_remove_device_pl (/* IN */ BT_DEVICE_ADDR * bd_addr)
 
     /* Look up platform database to check for the device */
 #if (SMP_PL_DEVICE_LIST_SIZE > 1)
-    for (i = 0; i < SMP_PL_DEVICE_LIST_SIZE; i++)
+    for (i = 0U; i < SMP_PL_DEVICE_LIST_SIZE; i++)
 #else /* (SMP_PL_DEVICE_LIST_SIZE > 1) */
     i = 0;
 #endif /* (SMP_PL_DEVICE_LIST_SIZE > 1) */
@@ -323,7 +328,7 @@ API_RESULT BT_smp_remove_device_pl (/* IN */ BT_DEVICE_ADDR * bd_addr)
         if (BT_TRUE ==
             BT_COMPARE_BD_ADDR_AND_TYPE (bd_addr, &smp_pl_device_list[i].bd_addr))
         {
-            smp_pl_device_list[i].used = 0x00;
+            smp_pl_device_list[i].used = 0x00U;
 
             return API_SUCCESS;
         }
@@ -387,7 +392,7 @@ void smp_get_peer_oob_availability_pl
     UCHAR i;
 
     /* Initialize OOB flag */
-    *oob = 0x00;
+    *oob = 0x00U;
 
     /* Get the device address for the given peer handle */
     retval = BT_smp_get_bd_addr (di, &bd_addr);
@@ -400,12 +405,12 @@ void smp_get_peer_oob_availability_pl
 
     /* Look up platform database to check OOB support for the device */
 #if (SMP_PL_DEVICE_LIST_SIZE > 1)
-    for (i = 0; i < SMP_PL_DEVICE_LIST_SIZE; i++)
+    for (i = 0U; i < SMP_PL_DEVICE_LIST_SIZE; i++)
 #else /* (SMP_PL_DEVICE_LIST_SIZE > 1) */
     i = 0;
 #endif /* (SMP_PL_DEVICE_LIST_SIZE > 1) */
     {
-        if ((0x01 == smp_pl_device_list[i].used) &&
+        if ((0x01U == smp_pl_device_list[i].used) &&
             (BT_TRUE ==
              BT_COMPARE_BD_ADDR_AND_TYPE (&bd_addr, &smp_pl_device_list[i].bd_addr)))
         {
@@ -456,12 +461,12 @@ API_RESULT smp_get_oob_tk_pl
 
     /* Look up platform database to check OOB support for the device */
 #if (SMP_PL_DEVICE_LIST_SIZE > 1)
-    for (i = 0; i < SMP_PL_DEVICE_LIST_SIZE; i++)
+    for (i = 0U; i < SMP_PL_DEVICE_LIST_SIZE; i++)
 #else /* (SMP_PL_DEVICE_LIST_SIZE > 1) */
     i = 0;
 #endif /* (SMP_PL_DEVICE_LIST_SIZE > 1) */
     {
-        if ((0x01 == smp_pl_device_list[i].used) &&
+        if ((0x01U == smp_pl_device_list[i].used) &&
             (BT_TRUE ==
              BT_COMPARE_BD_ADDR_AND_TYPE (&bd_addr, &smp_pl_device_list[i].bd_addr)))
         {
@@ -527,12 +532,12 @@ API_RESULT smp_get_lesc_oob_pl
 
     /* Look up platform database to check OOB support for the device */
 #if (SMP_PL_DEVICE_LIST_SIZE > 1)
-    for (i = 0; i < SMP_PL_DEVICE_LIST_SIZE; i++)
+    for (i = 0U; i < SMP_PL_DEVICE_LIST_SIZE; i++)
 #else /* (SMP_PL_DEVICE_LIST_SIZE > 1) */
     i = 0;
 #endif /* (SMP_PL_DEVICE_LIST_SIZE > 1) */
     {
-        if ((0x01 == smp_pl_device_list[i].used) &&
+        if ((0x01U == smp_pl_device_list[i].used) &&
             (BT_TRUE ==
              BT_COMPARE_BD_ADDR_AND_TYPE (&bd_addr, &smp_pl_device_list[i].bd_addr)))
         {
@@ -645,27 +650,27 @@ API_RESULT BT_smp_encrypt_pl
     return retval;
 #else
     void * ctx;
-    static UCHAR enc_out[0x10];
+    static UCHAR enc_out[0x10U];
 
     /* SMP Update Command Counter */
     smp_assign_encrypt_cmd_counter_pl(cmd_counter);
 
     /* Convert the incoming Little Endian input to Big Endian */
-    smp_reverse_octet_stream_pl (key, 0x10);
-    smp_reverse_octet_stream_pl (text, 0x10);
+    smp_reverse_octet_stream_pl (key, 0x10U);
+    smp_reverse_octet_stream_pl (text, 0x10U);
 
-    ctx = aes_encrypt_init (key, 0x10);
+    ctx = aes_encrypt_init (key, 0x10U);
     aes_encrypt (ctx, text, enc_out);
     aes_encrypt_deinit (ctx);
 
     /* Convert the outgoing Big Endian output to Little Endian */
-    smp_reverse_octet_stream_pl (enc_out, 0x10);
-    smp_reverse_octet_stream_pl (key, 0x10);
-    smp_reverse_octet_stream_pl (text, 0x10);
+    smp_reverse_octet_stream_pl (enc_out, 0x10U);
+    smp_reverse_octet_stream_pl (key, 0x10U);
+    smp_reverse_octet_stream_pl (text, 0x10U);
 
     /* Enqueue to write Task */
 #ifdef SMP_HAVE_TBX_CMD_WT_BH
-    return smp_enqueue_cmd_op_to_wt(enc_out,0x00,0x10,SMP_TBX_ENCRYPT_CMD,*cmd_counter);
+    return smp_enqueue_cmd_op_to_wt(enc_out,0x00U,0x10U,SMP_TBX_ENCRYPT_CMD,*cmd_counter);
 #else /* SMP_HAVE_TBX_CMD_WT_BH */
     return API_FAILURE;
 #endif /* SMP_HAVE_TBX_CMD_WT_BH */
@@ -677,11 +682,11 @@ void smp_reverse_octet_stream_pl(UCHAR * buffer, UINT16 buffer_len)
     UINT16 index;
     UCHAR  temp;
 
-    for (index = 0; index < (buffer_len/2); index ++)
+    for (index = 0U; index < (buffer_len/2U); index ++)
     {
         temp = buffer[index];
-        buffer[index] = buffer[buffer_len - (index + 1)];
-        buffer[buffer_len - (index + 1)] = temp;
+        buffer[index] = buffer[buffer_len - (index + 1U)];
+        buffer[buffer_len - (index + 1U)] = temp;
     }
 }
 #endif /* SMP_HAVE_TBX_PL_ENC */
@@ -741,7 +746,7 @@ API_RESULT smp_gen_public_key_pl (void)
     {
        ret = ssp_get_ecdh_keypair(&smp_ecdh_priv_key_pl, &pub_key);
 
-       if(0 != ret)
+       if(0U != ret)
        {
             break;
        }
@@ -769,10 +774,10 @@ API_RESULT smp_gen_public_key_pl (void)
     return smp_enqueue_cmd_op_to_wt
            (
                smp_ecdh_pub_key_pl,
-               0x00,
+               0x00U,
                SMP_LESC_PUBLIC_KEY_SIZE,
                SMP_TBX_READ_L_P256_PUB_KEY_CMD,
-               0x00
+               0x00U
             );
 #else /* SMP_HAVE_TBX_CMD_WT_BH */
     return API_FAILURE;
@@ -795,7 +800,7 @@ API_RESULT smp_gen_dh_key_pl (UCHAR * r_pub_key)
     {
        ret = ssp_get_dhkey(&smp_ecdh_priv_key_pl, &peer_ecdh_pub_key, &smp_ecdh_dhkey_pl);
 
-       if(0 != ret)
+       if(0U != ret)
        {
             break;
        }
@@ -804,7 +809,7 @@ API_RESULT smp_gen_dh_key_pl (UCHAR * r_pub_key)
     ssp_shutdown();
 
     /* If ret = 1 assign status as 0x00, else status is Invalid HCI Command Parameters */
-    ret = (((1 == ret) ? (UCHAR)API_SUCCESS : (UCHAR)HC_INVALID_HCI_COMMAND_PARAMETERS));
+    ret = (((1U == ret) ? (UCHAR)API_SUCCESS : (UCHAR)HC_INVALID_HCI_COMMAND_PARAMETERS));
 
     SMP_TRC(
     "[SMP-PL] Generated DHKey with retval 0x%02X: \n", ret);
@@ -819,7 +824,7 @@ API_RESULT smp_gen_dh_key_pl (UCHAR * r_pub_key)
                ret,
                SMP_LESC_DHKEY_SIZE,
                SMP_TBX_GEN_DHKEY_CMD,
-               0x00
+               0x00U
             );
 #else /* SMP_HAVE_TBX_CMD_WT_BH */
     return API_FAILURE;
@@ -846,7 +851,7 @@ API_RESULT BT_smp_mark_device_untrusted_pl (/* IN */ SMP_BD_HANDLE * bd_handle)
     UCHAR di;
 
     /* Validate parameters */
-    if((!SMP_IS_VALID_BD_HANDLE(bd_handle)))
+    if(0U == (SMP_IS_VALID_BD_HANDLE(bd_handle)))
     {
         SMP_ERR(
         "[SMP] Invalid paramter.\n");
@@ -907,7 +912,7 @@ API_RESULT BT_smp_mark_device_untrusted_pl (/* IN */ SMP_BD_HANDLE * bd_handle)
     SMP_SET_BONDING_OFF(smp_devices[di].dev_attr);
 
     /* Set device valid flag */
-    smp_set_device_validity(di);
+    (BT_IGNORE_RETURN_VALUE) smp_set_device_validity(di);
 
     /* If not connected, Reset the device entity from SMP and other Modules */
     if (SMP_ENTITY_CONNECTED != SMP_GET_ENTITY_CONNECTION(smp_devices[di].state))
@@ -963,7 +968,7 @@ API_RESULT BT_smp_get_long_term_key_pl
 
     /* Check for Rand and Div mapping */
     if ((div == div_pl) &&
-        (!(BT_mem_cmp(rnd, rnd_pl, SMP_RAND_64B_SIZE))))
+        (0U == (BT_mem_cmp(rnd, rnd_pl, SMP_RAND_64B_SIZE))))
     {
         /* Copy the Encryption Key pointer */
         BT_mem_copy(ltk, key_distribution_info_pl.enc_info, SMP_LTK_SIZE);
@@ -1163,7 +1168,7 @@ API_RESULT BT_smp_set_oob_data_pl
     oob_flag);
 
     /* If OOB data available and data pointer is NULL or invalid flag */
-    if ((NULL == bd_addr) || ((0x01 == oob_flag) && (NULL == oob)) || (oob_flag > 0x01))
+    if ((NULL == bd_addr) || ((0x01U == oob_flag) && (NULL == oob)) || (oob_flag > 0x01U))
     {
         SMP_ERR(
         "[SMP] Invalid paramter.\n");
@@ -1174,12 +1179,12 @@ API_RESULT BT_smp_set_oob_data_pl
 
     /* Look up platform database to get the device id */
 #if (SMP_PL_DEVICE_LIST_SIZE > 1)
-    for (i = 0; i < SMP_PL_DEVICE_LIST_SIZE; i++)
+    for (i = 0U; i < SMP_PL_DEVICE_LIST_SIZE; i++)
 #else /* (SMP_PL_DEVICE_LIST_SIZE > 1) */
     i = 0;
 #endif /* (SMP_PL_DEVICE_LIST_SIZE > 1) */
     {
-        if ((0x01 == smp_pl_device_list[i].used) &&
+        if ((0x01U == smp_pl_device_list[i].used) &&
             (BT_TRUE ==
              BT_COMPARE_BD_ADDR_AND_TYPE (bd_addr, &smp_pl_device_list[i].bd_addr)))
         {
@@ -1187,7 +1192,7 @@ API_RESULT BT_smp_set_oob_data_pl
             smp_pl_device_list[i].oob_flag = oob_flag;
 
             /* Copy the Temp Key if OOB data is set */
-            if (0x01 == oob_flag)
+            if (0x01U == oob_flag)
             {
 #ifdef SMP_LESC
                 BT_mem_copy
@@ -1275,12 +1280,12 @@ API_RESULT BT_smp_get_oob_data_pl
      * and get the data
      */
 #if (SMP_PL_DEVICE_LIST_SIZE > 1)
-    for (i = 0; i < SMP_PL_DEVICE_LIST_SIZE; i++)
+    for (i = 0U; i < SMP_PL_DEVICE_LIST_SIZE; i++)
 #else /* (SMP_PL_DEVICE_LIST_SIZE > 1) */
     i = 0;
 #endif /* (SMP_PL_DEVICE_LIST_SIZE > 1) */
     {
-        if ((0x01 == smp_pl_device_list[i].used) &&
+        if ((0x01U == smp_pl_device_list[i].used) &&
             (BT_TRUE ==
              BT_COMPARE_BD_ADDR_AND_TYPE (bd_addr, &smp_pl_device_list[i].bd_addr)))
         {
@@ -1288,7 +1293,7 @@ API_RESULT BT_smp_get_oob_data_pl
             *oob_flag = smp_pl_device_list[i].oob_flag;
 
             /* Get the Temp Key if OOB data is available */
-            if (0x01 == (*oob_flag))
+            if (0x01U == (*oob_flag))
             {
 #ifdef SMP_LESC
                 BT_mem_copy (oob->lesc_rand, smp_pl_device_list[i].rand, SMP_OOB_RANDOM_VAL_SIZE);
@@ -1423,14 +1428,14 @@ void BT_smp_set_key_press_ntf_pl (UCHAR flag)
 API_RESULT smp_purge_device_list_pl (UCHAR *free_index)
 {
     UCHAR max_rank_device = SMP_MAX_DEVICES;
-    SMP_DEVICE_ATTR_PL max_rank = 0;
+    SMP_DEVICE_ATTR_PL max_rank = 0U;
     UCHAR di;
     API_RESULT retval;
 
     SMP_TRC(
     "[SMP] Purging the device list to free a device database entity.\n");
 
-    for(di = 0; di < SMP_MAX_DEVICES; di++)
+    for(di = 0U; di < SMP_MAX_DEVICES; di++)
     {
         /* Store max ranked device index */
         if((SMP_ENTITY_VALID_TRUSTED == SMP_GET_ENTITY_VALIDITY(smp_devices[di].state)) &&
@@ -1528,16 +1533,16 @@ void smp_update_device_attr_pl (UCHAR operation, UCHAR di)
          *  Deletion of Rank is handled only if the Device has
          *  been provided with a valid Rank before.
          */
-        if (0 != smp_devices[di].db.device_attr_pl)
+        if (0U != smp_devices[di].db.device_attr_pl)
         {
             /* Save current Rank of the Device */
             rank = smp_devices[di].db.device_attr_pl;
 
             /* Reset Device's Rank */
-            smp_devices[di].db.device_attr_pl = 0;
+            smp_devices[di].db.device_attr_pl = 0U;
 
             /* Decrement Ranks of Devices holding Ranks above this Device */
-            for (i = 0; i < SMP_MAX_DEVICES; i ++)
+            for (i = 0U; i < SMP_MAX_DEVICES; i ++)
             {
                 if ((i == di) ||
                     (SMP_ENTITY_VALID_TRUSTED != SMP_GET_ENTITY_VALIDITY(smp_devices[i].state)))
@@ -1574,7 +1579,7 @@ void smp_update_device_attr_pl (UCHAR operation, UCHAR di)
          *  it a Rank provisionally so that it is put in the end
          *  of the Rank list.
          */
-        if (0 == smp_devices[di].db.device_attr_pl)
+        if (0U == smp_devices[di].db.device_attr_pl)
         {
             /* Increment Rank Count offered so far */
             smp_rank_count_pl ++;
@@ -1588,17 +1593,17 @@ void smp_update_device_attr_pl (UCHAR operation, UCHAR di)
          *  then nothing needs to be done - the Device continues to
          *  hold Rank 1.
          */
-        rank = 1;
-        if (1 != smp_devices[di].db.device_attr_pl)
+        rank = 1U;
+        if (1U != smp_devices[di].db.device_attr_pl)
         {
             /* Save current Rank of the Device */
             rank = smp_devices[di].db.device_attr_pl;
 
             /* Move the Device at the top of Rank List */
-            smp_devices[di].db.device_attr_pl = 1;
+            smp_devices[di].db.device_attr_pl = 1U;
 
             /* Update Rank of Devices appearing below by 1 */
-            for (i = 0; i < SMP_MAX_DEVICES; i ++)
+            for (i = 0U; i < SMP_MAX_DEVICES; i ++)
             {
                 if ((i == di) ||
                     (SMP_ENTITY_VALID_TRUSTED != SMP_GET_ENTITY_VALIDITY(smp_devices[i].state)))
@@ -1613,8 +1618,10 @@ void smp_update_device_attr_pl (UCHAR operation, UCHAR di)
             }
         }
         break;
-        default: /* Do nothing */
-            break;
+
+    default: /* Do nothing */
+        SMP_TRC("Invalid Operation\n");
+        break;
     }
 
 #ifdef SMP_STORAGE
@@ -1640,7 +1647,7 @@ void smp_update_device_attr_pl (UCHAR operation, UCHAR di)
         }
 
         /* Update Persistent Storage */
-        BT_storage_store_db(STORAGE_TYPE_PERSISTENT, storage_type);
+        (BT_IGNORE_RETURN_VALUE) BT_storage_store_db(STORAGE_TYPE_PERSISTENT, storage_type);
 
         /* Lock SMP */
         smp_lock_void();
@@ -1682,14 +1689,14 @@ API_RESULT smp_check_pairing_security_pl
      * it's requirement failure, else requirement met.
      */
     return ((auth_req & SMP_AUTHREQ_MITM_BITMASK) &&
-            (0x00 == assoc))?
+            (0x00U == assoc))?
             ((SMP_PL_SEC_MITM_STRICT == smp_mitm_policy_pl)?
              (API_FAILURE): (API_SUCCESS)): (API_SUCCESS);
 #else /* SMP_LESC */
     return ((SMP_TRUE != SMP_AUTHREQ_IS_LESC(auth_req)) && ((SMP_PL_LESC_STRICT ==
            smp_lesc_policy_pl)))? (API_FAILURE) :\
            ((auth_req & SMP_AUTHREQ_MITM_BITMASK) &&
-           (0x00 == assoc))?
+           (0x00U == assoc))?
            ((SMP_PL_SEC_MITM_STRICT == smp_mitm_policy_pl)?
            (API_FAILURE): (API_SUCCESS)): (API_SUCCESS);
 #endif /* SMP_LESC */
@@ -1724,14 +1731,14 @@ API_RESULT BT_smp_set_local_identity_addr(/* IN */ SMP_BD_ADDR * bd_addr)
     /* Copy Identity Address */
     BT_COPY_BD_ADDR
     (
-        &key_distribution_info_pl.id_addr_info[1],
+        &key_distribution_info_pl.id_addr_info[1U],
         &bd_addr->addr
     );
 
     /* Copy Identity Address Type */
     BT_COPY_TYPE
     (
-        key_distribution_info_pl.id_addr_info[0],
+        key_distribution_info_pl.id_addr_info[0U],
         bd_addr->type
     );
 
@@ -1790,7 +1797,7 @@ API_RESULT smp_resolve_connection_address_pl
 API_RESULT BT_smp_generate_keys_pl (UINT16 div)
 {
     div_pl = div;
-    auto_generate = 0x01;
+    auto_generate = 0x01U;
     return BT_smp_generate_ediv_pl();
 }
 
@@ -1806,7 +1813,7 @@ API_RESULT BT_smp_generate_keys_pl (UINT16 div)
 API_RESULT BT_smp_generate_ediv_pl (void)
 {
     /* Validate state to check if no other operation id on */
-    if (0x00 != key_gen_state)
+    if (0x00U != key_gen_state)
     {
         return API_FAILURE;
     }
@@ -1837,7 +1844,7 @@ API_RESULT BT_smp_generate_ediv_pl (void)
 API_RESULT BT_smp_generate_ltk_pl (void)
 {
     /* Validate state to check if no other operation id on */
-    if (0x00 != key_gen_state)
+    if (0x00U != key_gen_state)
     {
         return API_FAILURE;
     }
@@ -1846,7 +1853,7 @@ API_RESULT BT_smp_generate_ltk_pl (void)
     key_gen_state = KEY_STATE_IN_LTK_GEN;
 
     /* LTK = d1(ER, DIV, 0) */
-    smp_func_d1 (er_pl, div_pl, 0x00);
+    smp_func_d1 (er_pl, div_pl, 0x00U);
 
     return API_SUCCESS;
 }
@@ -1863,7 +1870,7 @@ API_RESULT BT_smp_generate_ltk_pl (void)
 API_RESULT BT_smp_generate_csrk_pl (void)
 {
     /* Validate state to check if no other operation id on */
-    if (0x00 != key_gen_state)
+    if (0x00U != key_gen_state)
     {
         return API_FAILURE;
     }
@@ -1872,7 +1879,7 @@ API_RESULT BT_smp_generate_csrk_pl (void)
     key_gen_state = KEY_STATE_IN_CSRK_GEN;
 
     /* CSRK = d1(ER, DIV, 1) */
-    smp_func_d1 (er_pl, div_pl, 0x01);
+    smp_func_d1 (er_pl, div_pl, 0x01U);
 
     return API_SUCCESS;
 }
@@ -1890,7 +1897,7 @@ API_RESULT BT_smp_generate_csrk_pl (void)
 API_RESULT BT_smp_generate_irk_pl (void)
 {
     /* Validate state to check if no other operation id on */
-    if (0x00 != key_gen_state)
+    if (0x00U != key_gen_state)
     {
         return API_FAILURE;
     }
@@ -1899,7 +1906,7 @@ API_RESULT BT_smp_generate_irk_pl (void)
     key_gen_state = KEY_STATE_IN_IRK_GEN;
 
     /* IRK = d1(IR, 1, 0) */
-    smp_func_d1 (ir_pl, 0x01, 0x00);
+    smp_func_d1 (ir_pl, 0x01U, 0x00U);
 
     return API_SUCCESS;
 }
@@ -1917,7 +1924,7 @@ API_RESULT BT_smp_generate_irk_pl (void)
 API_RESULT BT_smp_generate_dhk_pl (void)
 {
     /* Validate state to check if no other operation id on */
-    if (0x00 != key_gen_state)
+    if (0x00U != key_gen_state)
     {
         return API_FAILURE;
     }
@@ -1926,7 +1933,7 @@ API_RESULT BT_smp_generate_dhk_pl (void)
     key_gen_state = KEY_STATE_IN_DHK_GEN;
 
     /* DHK = d1(IR, 3, 0) */
-    smp_func_d1 (ir_pl, 0x03, 0x00);
+    smp_func_d1 (ir_pl, 0x03U, 0x00U);
 
     return API_SUCCESS;
 }
@@ -1948,15 +1955,15 @@ API_RESULT BT_smp_generate_dhk_pl (void)
  */
 DECL_STATIC API_RESULT smp_func_d1 (UCHAR * k, UINT16 d, UINT16 r)
 {
-    UCHAR _d[16];
+    UCHAR _d[16U];
     UCHAR count;
 
     /* _d = padding (96 bits) || r || d */
-    BT_mem_set (_d, 0x00, 16);
-    _d[0] = (UCHAR)d;
-    _d[1] = (UCHAR)(d >> 8);
-    _d[2] = (UCHAR)r;
-    _d[3] = (UCHAR)(r >> 8);
+    BT_mem_set (_d, 0x00, 16U);
+    _d[0U] = (UCHAR)d;
+    _d[1U] = (UCHAR)(d >> 8U);
+    _d[2U] = (UCHAR)r;
+    _d[3U] = (UCHAR)(r >> 8U);
 
     /* d1(k, d, r) = e(k, _d) */
 
@@ -1982,12 +1989,12 @@ DECL_STATIC API_RESULT smp_func_d1 (UCHAR * k, UINT16 d, UINT16 r)
  */
 DECL_STATIC API_RESULT smp_func_dm (UCHAR * k, UCHAR * r)
 {
-    UCHAR _r[16];
+    UCHAR _r[16U];
     UCHAR count;
 
     /* _r = padding (64 bits) || r */
-    BT_mem_set (_r, 0x00, 16);
-    BT_mem_copy (_r, r, 8);
+    BT_mem_set (_r, 0x00, 16U);
+    BT_mem_copy (_r, r, 8U);
 
     /* dm(k, r) = e(k, _r) mod 2^16 */
     smp_tbx_128B_encrypt(k, _r, &count);
@@ -2009,7 +2016,7 @@ DECL_STATIC API_RESULT smp_func_dm (UCHAR * k, UCHAR * r)
 void smp_rand_complete_pl (UCHAR * data, UINT16 datalen)
 {
     /* Validate state */
-    if (KEY_STATE_IN_EDIV_GEN & key_gen_state)
+    if (0U != (KEY_STATE_IN_EDIV_GEN & key_gen_state))
     {
         /* Update the RAND for Master Identification */
         BT_mem_copy (rnd_pl, data, SMP_RAND_64B_SIZE);
@@ -2018,7 +2025,7 @@ void smp_rand_complete_pl (UCHAR * data, UINT16 datalen)
         key_gen_state |= KEY_STATE_IN_DHK_GEN;
 
         /* DHK = d1(IR, 3, 0) */
-        smp_func_d1 (ir_pl, 0x03, 0x00);
+        smp_func_d1 (ir_pl, 0x03U, 0x00U);
     }
 }
 
@@ -2049,7 +2056,7 @@ void smp_encryption_complete_pl (UCHAR * data, UINT16 datalen)
         /* Reset state bit */
         key_gen_state &= (UCHAR)(~KEY_STATE_IN_DHK_GEN);
 
-        if (KEY_STATE_IN_EDIV_GEN & key_gen_state)
+        if (0U != (KEY_STATE_IN_EDIV_GEN & key_gen_state))
         {
             smp_func_dm (dhk_pl, rnd_pl);
         }
@@ -2071,7 +2078,7 @@ void smp_encryption_complete_pl (UCHAR * data, UINT16 datalen)
         ediv_pl = div_y ^ div_pl;
         BT_PACK_LE_2_BYTE(key_distribution_info_pl.mid_info, &ediv_pl);
 
-        if (auto_generate)
+        if (0U != auto_generate)
         {
             BT_smp_generate_ltk_pl();
         }
@@ -2089,7 +2096,7 @@ void smp_encryption_complete_pl (UCHAR * data, UINT16 datalen)
         /* Reset state bit */
         key_gen_state &= (UCHAR)(~KEY_STATE_IN_LTK_GEN);
 
-        if (auto_generate)
+        if (0U != auto_generate)
         {
             /*
              * Enable when needed to generate CSRK.
@@ -2097,7 +2104,7 @@ void smp_encryption_complete_pl (UCHAR * data, UINT16 datalen)
              */
             /* BT_smp_generate_csrk_pl(); */
 
-            auto_generate = 0x00;
+            auto_generate = 0x00U;
         }
     }
     else if (KEY_STATE_IN_CSRK_GEN & key_gen_state)
@@ -2113,7 +2120,7 @@ void smp_encryption_complete_pl (UCHAR * data, UINT16 datalen)
         /* Reset state bit */
         key_gen_state &= (UCHAR)(~KEY_STATE_IN_CSRK_GEN);
 
-        if (auto_generate)
+        if (0U != auto_generate)
         {
             /*
              * Enable when needed to generate IRK.
@@ -2121,7 +2128,7 @@ void smp_encryption_complete_pl (UCHAR * data, UINT16 datalen)
              */
             /* BT_smp_generate_irk_pl(); */
 
-            auto_generate = 0x00;
+            auto_generate = 0x00U;
         }
     }
     else if (KEY_STATE_IN_IRK_GEN & key_gen_state)
@@ -2137,10 +2144,14 @@ void smp_encryption_complete_pl (UCHAR * data, UINT16 datalen)
         /* Reset state bit */
         key_gen_state &= (UCHAR)(~KEY_STATE_IN_IRK_GEN);
 
-        if (auto_generate)
+        if (0U != auto_generate)
         {
-            auto_generate = 0x00;
+            auto_generate = 0x00U;
         }
+    }
+    else
+    {
+        /* MISRA C-2012 Rule 15.7 */
     }
 }
 #endif /* SMP_PL_ENABLE_KEY_GENERATION */
@@ -2162,14 +2173,13 @@ API_RESULT BT_smp_generate_lesc_oob_local_data_pl
     SMP_LESC_OOB_SET_STATE(&smp_lesc_oob_data,SMP_OOB_STATE_RAND_GEN);
 
     /* Call Random Number Generation here */
-    smp_tbx_generate_rand();
+    (BT_IGNORE_RETURN_VALUE) smp_tbx_generate_rand();
 
     return API_SUCCESS;
 }
 
 void smp_lesc_oob_handle_cmd_complete(UCHAR * data, UINT16 datalen)
 {
-
     /* Check the state of the LESC OOB data structure */
     switch(smp_lesc_oob_data.state)
     {
@@ -2179,11 +2189,18 @@ void smp_lesc_oob_handle_cmd_complete(UCHAR * data, UINT16 datalen)
             BT_mem_set(smp_lesc_oob_data.rand,0x00,SMP_OOB_RANDOM_VAL_SIZE);
 
 #ifndef SMP_LESC_CONST_OOB_VAL_SUPPORT
-            /*
-             *  NOTE: If SMP_LESC_CONST_OOB_VAL_SUPPORT make the random
-             *        number as all zeros.
-             */
-            BT_mem_copy(smp_lesc_oob_data.rand,data,datalen);
+            if (SMP_OOB_RANDOM_VAL_SIZE == datalen)
+            {
+                /*
+                 *  NOTE: If SMP_LESC_CONST_OOB_VAL_SUPPORT make the random
+                 *        number as all zeros.
+                 */
+                BT_mem_copy(smp_lesc_oob_data.rand, data, datalen);
+            }
+            else
+            {
+                SMP_ERR("[SMP_PL] SMP_OOB_RANDOM_VAL_SIZE != datalen\n");
+            }
 #else
             BT_IGNORE_UNUSED_PARAM(datalen);
 #endif /* SMP_LESC_CONST_OOB_VAL_SUPPORT */
@@ -2192,13 +2209,23 @@ void smp_lesc_oob_handle_cmd_complete(UCHAR * data, UINT16 datalen)
             SMP_LESC_OOB_SET_STATE(&smp_lesc_oob_data,SMP_OOB_STATE_PUB_KEY_GEN);
 
             /* Invoke Public Key Generation */
-            smp_tbx_read_l_p256_pub_key();
+            (BT_IGNORE_RETURN_VALUE) smp_tbx_read_l_p256_pub_key();
             break;
 
         case SMP_OOB_STATE_PUB_KEY_GEN:
             {
                 UCHAR * plain_text;
-                UINT16 plain_text_len = 0;
+                UINT16 plain_text_len = 0U;
+
+                if (SMP_OOB_PUBLIC_KEY_SIZE != datalen)
+                {
+                    SMP_ERR("[SMP_PL] SMP_OOB_PUBLIC_KEY_SIZE != datalen\n");
+
+                    /* Initialize state to IDLE */
+                    SMP_LESC_OOB_SET_STATE(&smp_lesc_oob_data, SMP_OOB_STATE_IDLE);
+
+                    break;
+                }
 
                 /* Populate the X co-ordinate of the Public Key*/
                 BT_mem_copy(smp_lesc_oob_data.pkey,data,SMP_OOB_PUBLIC_KEY_SIZE);
@@ -2224,7 +2251,7 @@ void smp_lesc_oob_handle_cmd_complete(UCHAR * data, UINT16 datalen)
                 plain_text_len += SMP_OOB_PUBLIC_KEY_X_SIZE;
 
                 /* Call the G2 Security function */
-                smp_tbx_128_aes_cmac
+                (BT_IGNORE_RETURN_VALUE) smp_tbx_128_aes_cmac
                 (
                     AES_CMAC_MAC_GENERATE,
                     SMP_AES_CMAC_LESC_CONF_VAL_GEN_OP,
@@ -2242,6 +2269,7 @@ void smp_lesc_oob_handle_cmd_complete(UCHAR * data, UINT16 datalen)
 
         default:
             /* Drop the Packet as LESC OOB is not in a state to process this */
+            SMP_TRC("Invalid State\n");
             break;
     }
 }
@@ -2259,7 +2287,7 @@ void smp_lesc_oob_cnf_val_gen_complete(void)
         /* Call the application Handler */
         smp_lesc_oob_gen_handler(&smp_lesc_oob_data);
 
-        /* Change state to Confirm Value Generation */
+        /* Change state to IDLE */
         SMP_LESC_OOB_SET_STATE(&smp_lesc_oob_data,SMP_OOB_STATE_IDLE);
     }
 }
@@ -2274,9 +2302,9 @@ API_RESULT BT_smp_get_lk_ltk_pl
                UCHAR                           ct2
            )
 {
-    UCHAR  * plain_text = NULL;
-    UCHAR  * enc_key = NULL;
-    UINT16 plain_text_size = 0U;
+    UCHAR  * plain_text;
+    UCHAR  * enc_key;
+    UINT16 plain_text_size;
 
     if (SMP_LESC_LK_LTK_IDLE != SMP_LESC_LK_LTK_GET_STATE(&smp_lesc_txp_keys))
     {
@@ -2292,10 +2320,14 @@ API_RESULT BT_smp_get_lk_ltk_pl
         smp_lesc_lk_ltk_gen_handler = handler;
     }
 
+    plain_text = NULL;
+    plain_text_size = 0U;
+    enc_key = NULL;
+
     /* Invoke H6 function through AES CMAC */
     if (SMP_LESC_LK_FROM_LTK == mode)
     {
-        if (0 == ct2)
+        if (0U == ct2)
         {
             SMP_TRC("[SMP] LTK to LK, CT2 = 0\n");
 
@@ -2338,7 +2370,7 @@ API_RESULT BT_smp_get_lk_ltk_pl
     }
     else if (SMP_LESC_LTK_FROM_LK == mode)
     {
-        if (0 == ct2)
+        if (0U == ct2)
         {
             SMP_TRC("[SMP] LK to LTK, CT2 = 0\n");
 
@@ -2379,6 +2411,10 @@ API_RESULT BT_smp_get_lk_ltk_pl
             plain_text_size = SMP_LESC_KEY_SIZE;
         }
     }
+    else
+    {
+        /* MISRA C-2012 Rule 15.7 */
+    }
 
 #ifdef SMP_DATA_DEBUG
     SMP_TRC (
@@ -2387,6 +2423,11 @@ API_RESULT BT_smp_get_lk_ltk_pl
     SMP_debug_dump_bytes (plain_text, SMP_LESC_KEYID_SIZE);
     SMP_debug_dump_bytes (enc_key, SMP_RAND_128B_SIZE);
 #endif /* SMP_DATA_DEBUG */
+
+    if (NULL == enc_key)
+    {
+        return API_FAILURE;
+    }
 
     /* Call the h6 Security function */
     return smp_tbx_128_aes_cmac
@@ -2427,7 +2468,7 @@ void smp_lesc_lk_ltk_complete (void)
 #endif /* SMP_DATA_DEBUG */
 
                 /* Invoke H6 Again with the tmp1 AES-CMAC Output */
-                smp_tbx_128_aes_cmac
+                (BT_IGNORE_RETURN_VALUE) smp_tbx_128_aes_cmac
                 (
                     AES_CMAC_MAC_GENERATE,
                     SMP_AES_CMAC_LESC_LINK_KEY_CONV_OP,
@@ -2455,7 +2496,7 @@ void smp_lesc_lk_ltk_complete (void)
                 SMP_debug_dump_bytes (smp_lesc_txp_keys.temp, SMP_RAND_128B_SIZE);
 #endif /* SMP_DATA_DEBUG */
                 /* Invoke H6 Again with the tmp2 AES-CMAC Output */
-                smp_tbx_128_aes_cmac
+                (BT_IGNORE_RETURN_VALUE) smp_tbx_128_aes_cmac
                 (
                     AES_CMAC_MAC_GENERATE,
                     SMP_AES_CMAC_LESC_LINK_KEY_CONV_OP,
@@ -2484,7 +2525,9 @@ void smp_lesc_lk_ltk_complete (void)
                 smp_lesc_lk_ltk_gen_handler(&smp_lesc_txp_keys);
             }
             break;
+
         default:
+            SMP_TRC("Invalid State\n");
             break;
     }
 }
@@ -2587,7 +2630,7 @@ API_RESULT smp_revamp_passkey_pl
     UINT32     t_pkey_val;
 
     retval     = API_SUCCESS;
-    t_pkey_val = 0x00000000;
+    t_pkey_val = 0x00000000U;
 
     SMP_TRC (
     "[SMP]: >> smp_revamp_passkey_pl\n");
@@ -2604,7 +2647,7 @@ API_RESULT smp_revamp_passkey_pl
     else
     {
         /* The Passkey data len shall be more than 3 octets */
-        if (0x03 > (*p_key_len))
+        if (0x03U > (*p_key_len))
         {
             SMP_ERR (
             "[SMP]: Length of data less than 3 Octets not accepted "
@@ -2648,16 +2691,16 @@ API_RESULT smp_revamp_passkey_pl
 
             switch (smp_passkey_revamp_mode_pl)
             {
-                case 0x01:
+                case 0x01U:
                     /* Modulus of 1000000 */
-                    t_pkey_val = t_pkey_val % 1000000;
-                    (*p_key_len) = 3;
+                    t_pkey_val = t_pkey_val % 1000000U;
+                    (*p_key_len) = 3U;
                     break;
 
-                case 0x02:
+                case 0x02U:
                     /* Masking with 2^19 - 1 i.e. 0x7FFFF[524287] */
-                    t_pkey_val &= 0x07FFFF;
-                    (*p_key_len) = 3;
+                    t_pkey_val &= 0x07FFFFU;
+                    (*p_key_len) = 3U;
                     break;
 
                 default:
@@ -2665,8 +2708,8 @@ API_RESULT smp_revamp_passkey_pl
                      * Truncate length to 2 bytes, Passkey will range from
                      * 000000 - 065525
                      */
-                    t_pkey_val &= 0x0000FFFF;
-                    (*p_key_len) = 2;
+                    t_pkey_val &= 0x0000FFFFU;
+                    (*p_key_len) = 2U;
 
                     break;
             }

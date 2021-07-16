@@ -21,9 +21,9 @@
 void MID_testBlocked(void)
 {
     /* initialization */
-    if (g_sMID.sBlocked.ui16Active == FALSE)
+    if (g_sMID.sBlocked.bActive == FALSE)
     {
-        g_sMID.sBlocked.ui16Active             = TRUE;
+        g_sMID.sBlocked.bActive                = TRUE;
         g_sMID.ui32LoopCntr                    = 0;
         g_sMID.sBlocked.fltFMeas               = g_sMID.sPar.fltFreqN;
         g_sMID.sBlocked.fltUMeas               = 0.0F;
@@ -68,7 +68,7 @@ void MID_testBlocked(void)
 
         g_sMID.sBlocked.fltUMeas   = 0.0F;
         g_sMID.sBlocked.fltFMeas   = 0.0F;
-        g_sMID.sBlocked.ui16Active = FALSE;
+        g_sMID.sBlocked.bActive    = FALSE;
         g_sMID.sCalcPwr.bCalcPwr   = FALSE;
         g_sMID.eCalcElPar          = kMID_CalcWorking;
     }

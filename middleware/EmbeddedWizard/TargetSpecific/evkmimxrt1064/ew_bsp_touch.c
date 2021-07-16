@@ -30,6 +30,7 @@
 #include "fsl_lpi2c.h"
 #include "fsl_ft5406_rt.h"
 
+#include "ewconfig.h"
 #include "ewrte.h"
 #include "ewgfxdriver.h"
 #include "ewextgfx.h"
@@ -37,17 +38,34 @@
 #include "ew_bsp_clock.h"
 #include "ew_bsp_touch.h"
 
-#if ( EW_SURFACE_ROTATION == 90 ) || ( EW_SURFACE_ROTATION == 180 )
-  static int                    TouchAreaWidth  = 0;
-#endif
+#define NO_OF_FINGERS                   FT5406_RT_MAX_TOUCHES
+#define DELTA_TOUCH                     16
+#define DELTA_TIME                      500
 
-#if ( EW_SURFACE_ROTATION == 180 ) || ( EW_SURFACE_ROTATION == 270 )
-  static int                    TouchAreaHeight = 0;
-#endif
+/* additional touch flag to indicate idle state */
+#define EW_BSP_TOUCH_IDLE               0
+
+/* additional touch flag to indicate hold state */
+#define EW_BSP_TOUCH_HOLD               4
+
+/* structure to store internal touch information for one finger */
+typedef struct
+{
+  int           XPos;      /* horizontal position in pixel */
+  int           YPos;      /* vertical position in pixel */
+  unsigned long Ticks;     /* time of recent touch event */
+  unsigned char TouchId;   /* constant touch ID provided by touch controller */
+  unsigned char State;     /* current state within a touch cycle */
+} XTouchData;
 
 
+static int           TouchAreaWidth  = 0;
+static int           TouchAreaHeight = 0;
 
-/* Touch */
+static XTouchEvent   TouchEvent[ NO_OF_FINGERS ];
+static XTouchData    TouchData[ NO_OF_FINGERS ];
+
+
 #define EXAMPLE_I2C_MASTER_BASE (I2C2_BASE)
 #define I2C_MASTER_CLOCK_FREQUENCY (12000000)
 
@@ -64,17 +82,17 @@
 #define BOARD_TOUCH_I2C_CLOCK_FREQ ((CLOCK_GetFreq(kCLOCK_Usb1PllClk) / 8) / (LPI2C_CLOCK_SOURCE_DIVIDER + 1U))
 #define BOARD_TOUCH_I2C_BAUDRATE 100000U
 
- 
 /* Touch driver handle. */
 static ft5406_rt_handle_t touchHandle;
+static touch_point_t      touchArray[ FT5406_RT_MAX_TOUCHES ];
 
-  
+
 /*******************************************************************************
 * FUNCTION:
-*   EwBspConfigTouch
+*   EwBspTouchInit
 *
 * DESCRIPTION:
-*   Configure the touch driver.
+*   Initializes the touch driver.
 *
 * ARGUMENTS:
 *   aWidth  - Width of the toucharea (framebuffer) in pixel.
@@ -84,7 +102,7 @@ static ft5406_rt_handle_t touchHandle;
 *   None
 *
 *******************************************************************************/
-void EwBspConfigTouch( int aWidth, int aHeight )
+void EwBspTouchInit( int aWidth, int aHeight )
 {
   lpi2c_master_config_t masterConfig = {0};
   /*
@@ -107,84 +125,201 @@ void EwBspConfigTouch( int aWidth, int aHeight )
 
   /* Initialize the touch handle. */
   FT5406_RT_Init(&touchHandle, BOARD_TOUCH_I2C);
-    
-#if ( EW_SURFACE_ROTATION == 90 ) || ( EW_SURFACE_ROTATION == 180 )
-  TouchAreaWidth  = aWidth;
-#endif
 
-#if ( EW_SURFACE_ROTATION == 180 ) || ( EW_SURFACE_ROTATION == 270 )
+  TouchAreaWidth  = aWidth;
   TouchAreaHeight = aHeight;
-#endif    
+
+  /* clear all touch state variables */
+  memset( TouchData, 0, sizeof( TouchData ));
 }
 
 
 /*******************************************************************************
 * FUNCTION:
-*   EwBspGetTouchPosition
+*   EwBspTouchDone
 *
 * DESCRIPTION:
-*   The function EwBspGetTouchPosition reads the current touch position from the
-*   touch driver and returns the current position and status. The orientation
-*   of the touch positions is adjusted to match GUI coordinates.
+*   Terminates the touch driver.
 *
 * ARGUMENTS:
-*   aPos - Pointer to XPoint structure to return the current position.
+*   None
 *
 * RETURN VALUE:
-*   Returns 1 if a touch event is detected, otherwise 0.
+*   None
 *
 *******************************************************************************/
-int EwBspGetTouchPosition( XPoint* aPos )
+void EwBspTouchDone( void )
 {
-  static int    lastCursorPosX = 0;
-  static int    lastCursorPosY = 0;
-  int           retval         = 0;
-  int           cursorPosX;
-  int           cursorPosY;
+}
+
+
+/*******************************************************************************
+* FUNCTION:
+*   EwBspTouchGetEvents
+*
+* DESCRIPTION:
+*   The function EwBspTouchGetEvents reads the current touch positions from the
+*   touch driver and returns the current touch position and touch status of the
+*   different fingers. The returned number of touch events indicates the number
+*   of XTouchEvent that contain position and status information.
+*   The orientation of the touch positions is adjusted to match GUI coordinates.
+*   If the hardware supports only single touch, the finger number is always 0.
+*
+* ARGUMENTS:
+*   aTouchEvent - Pointer to return array of XTouchEvent.
+*
+* RETURN VALUE:
+*   Returns the number of detected touch events, otherwise 0.
+*
+*******************************************************************************/
+int EwBspTouchGetEvents( XTouchEvent** aTouchEvent )
+{
   status_t      status;
-  touch_event_t touch_event;  
-  
-  CPU_LOAD_SET_IDLE();
+  int           touchCount;
+  int           x, y;
+  int           t;
+  int           f;
+  unsigned long ticks;
+  int           noOfEvents = 0;
+  int           finger;
+  char          identified[ NO_OF_FINGERS ];
+  XTouchData*   touch;
+
   /* access touch driver to receive current touch status and position */
-  status = FT5406_RT_GetSingleTouch(&touchHandle, 
-    &touch_event, &cursorPosY, &cursorPosX);
+  CPU_LOAD_SET_IDLE();
+  status = FT5406_RT_GetMultiTouch( &touchHandle, &touchCount, touchArray );
   CPU_LOAD_SET_ACTIVE();
 
   if ( status != kStatus_Success )
   {
-    EwPrint( "error reading touch controller\r\n" );
+    EwPrint( "EwBspTouchGetEvents: error reading touch controller\n" );
+    return 0;
   }
-  else if ( touch_event == kTouch_Contact )
+
+  /* all fingers have the state unidentified */
+  memset( identified, 0, sizeof( identified ));
+
+  /* get current time in ms */
+  ticks = EwGetTicks();
+
+  /* iterate through all touch events from the hardware */
+  for ( t = 0; t < touchCount; t++ )
   {
+    /* check for valid coordinates - coordinates provided swapped by FT5406 */
+    if (( touchArray[ t ].TOUCH_Y > TouchAreaWidth ) || ( touchArray[ t ].TOUCH_X > TouchAreaHeight ))
+      continue;
+
+    /* apply screen rotation and swap coordinates provided by FT5406 touch driver */
     #if ( EW_SURFACE_ROTATION == 90 )
 
-      lastCursorPosX = cursorPosY;
-      lastCursorPosY = TouchAreaWidth - cursorPosX;
+      x = touchArray[ t ].TOUCH_X;
+      y = TouchAreaWidth  - touchArray[ t ].TOUCH_Y;
 
     #elif ( EW_SURFACE_ROTATION == 270 )
 
-      lastCursorPosX = TouchAreaHeight - cursorPosY;
-      lastCursorPosY = cursorPosX;
+      x = TouchAreaHeight - touchArray[ t ].TOUCH_X;
+      y = touchArray[ t ].TOUCH_Y;
 
     #elif ( EW_SURFACE_ROTATION == 180 )
 
-      lastCursorPosX = TouchAreaWidth  - cursorPosX;
-      lastCursorPosY = TouchAreaHeight - cursorPosY;
+      x = TouchAreaWidth  - touchArray[ t ].TOUCH_Y;
+      y = TouchAreaHeight - touchArray[ t ].TOUCH_X;
 
     #else
 
-      lastCursorPosX = cursorPosX;
-      lastCursorPosY = cursorPosY;
+      x = touchArray[ t ].TOUCH_Y;
+      y = touchArray[ t ].TOUCH_X;
 
     #endif
-    
-    retval = 1;
+
+    /* Important note: The FT5406 driver does not provde down/up status information - the current
+       phase within the touch cycle has to be determined by the software */
+    /* iterate through all fingers to find a finger that matches with the provided touch event */
+    for ( finger = -1, f = 0; f < NO_OF_FINGERS; f++ )
+    {
+      touch = &TouchData[ f ];
+
+      /* check if the finger is already active */
+      if (( touch->State != EW_BSP_TOUCH_IDLE ) && ( touch->TouchId == touchArray[ t ].TOUCH_ID ))
+      {
+        finger = f;
+        break;
+      }
+
+      /* check if the finger was used within the recent time span and if the touch position is in the vicinity */
+      if (( touch->State == EW_BSP_TOUCH_IDLE ) && ( ticks < touch->Ticks + DELTA_TIME )
+        && ( x > touch->XPos - DELTA_TOUCH ) && ( x < touch->XPos + DELTA_TOUCH )
+        && ( y > touch->YPos - DELTA_TOUCH ) && ( y < touch->YPos + DELTA_TOUCH ))
+        finger = f;
+
+      /* otherwise take the first free finger */
+      if (( touch->State == EW_BSP_TOUCH_IDLE ) && ( finger == -1 ))
+        finger = f;
+    }
+
+    /* determine the state within a touch cycle and assign the touch parameter to the found finger */
+    if ( finger >= 0 )
+    {
+      touch = &TouchData[ finger ];
+      identified[ finger ] = 1;
+
+      /* check for start of touch cycle */
+      if ( touch->State == EW_BSP_TOUCH_IDLE )
+        touch->State = EW_BSP_TOUCH_DOWN;
+      else
+      {
+        /* check if the finger has moved */
+        if (( touch->XPos != x ) || ( touch->YPos != y ))
+          touch->State = EW_BSP_TOUCH_MOVE;
+        else
+          touch->State = EW_BSP_TOUCH_HOLD;
+      }
+
+      /* store current touch parameter */
+      touch->XPos    = x;
+      touch->YPos    = y;
+      touch->TouchId = touchArray[ t ].TOUCH_ID;
+      touch->Ticks   = ticks;
+    }
   }
- 
-  /* return valid touch event */
-  aPos->X = lastCursorPosX;
-  aPos->Y = lastCursorPosY;  
-  return retval;
+
+  /* prepare sequence of touch events suitable for Embedded Wizard GUI application */
+  for ( f = 0; f < NO_OF_FINGERS; f++ )
+  {
+    touch = &TouchData[ f ];
+
+    /* begin of a touch cycle */
+    if ( identified[ f ] && ( touch->State == EW_BSP_TOUCH_DOWN ))
+      TouchEvent[ noOfEvents ].State = EW_BSP_TOUCH_DOWN;
+
+    /* move within a touch cycle */
+    else if ( identified[ f ] && ( touch->State == EW_BSP_TOUCH_MOVE ))
+      TouchEvent[ noOfEvents ].State = EW_BSP_TOUCH_MOVE;
+
+    /* end of a touch cycle */
+    else if ( !identified[ f ] && ( touch->State != EW_BSP_TOUCH_IDLE ))
+    {
+      TouchEvent[ noOfEvents ].State = EW_BSP_TOUCH_UP;
+      touch->State = EW_BSP_TOUCH_IDLE;
+    }
+    else
+      continue;
+
+    TouchEvent[ noOfEvents ].XPos   = touch->XPos;
+    TouchEvent[ noOfEvents ].YPos   = touch->YPos;
+    TouchEvent[ noOfEvents ].Finger = f;
+
+    // EwPrint( "Touch event for finger %d with state %d ( %4d, %4d )\n", f, TouchEvent[ noOfEvents ].State, TouchEvent[ noOfEvents ].XPos, TouchEvent[ noOfEvents ].YPos );
+
+    noOfEvents++;
+  }
+
+  /* return the prepared touch events and the number of prepared touch events */
+  if ( aTouchEvent )
+    *aTouchEvent = TouchEvent;
+
+  return noOfEvents;
 }
 
-/* mli */
+
+/* mli, msy */

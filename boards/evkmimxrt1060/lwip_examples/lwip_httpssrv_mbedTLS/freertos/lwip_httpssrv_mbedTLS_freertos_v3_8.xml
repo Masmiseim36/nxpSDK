@@ -6,15 +6,15 @@
     <definition extID="platform.drivers.trng.MIMXRT1062"/>
     <definition extID="platform.drivers.dcp.MIMXRT1062"/>
     <definition extID="platform.drivers.cache_armv7_m7.MIMXRT1062"/>
+    <definition extID="middleware.mbedtls.MIMXRT1062"/>
     <definition extID="middleware.mbedtls.port.ksdk.MIMXRT1062"/>
     <definition extID="middleware.mbedtls.rt.MIMXRT1062"/>
     <definition extID="middleware.lwip.apps.httpssrv.MIMXRT1062"/>
-    <definition extID="middleware.mbedtls.MIMXRT1062"/>
-    <definition extID="utility.debug_console.MIMXRT1062"/>
     <definition extID="middleware.lwip.enet_ethernetif.MIMXRT1062"/>
     <definition extID="middleware.lwip.MIMXRT1062"/>
     <definition extID="driver.phy-common.MIMXRT1062"/>
     <definition extID="platform.drivers.enet.MIMXRT1062"/>
+    <definition extID="utility.debug_console.MIMXRT1062"/>
     <definition extID="platform.drivers.clock.MIMXRT1062"/>
     <definition extID="middleware.freertos-kernel.heap_3.MIMXRT1062"/>
     <definition extID="platform.drivers.common.MIMXRT1062"/>
@@ -29,11 +29,9 @@
     <definition extID="platform.utilities.assert.MIMXRT1062"/>
     <definition extID="platform.drivers.igpio.MIMXRT1062"/>
     <definition extID="platform.drivers.xip_device.MIMXRT1062"/>
-    <definition extID="platform.drivers.xip_board.MIMXRT1062"/>
+    <definition extID="platform.drivers.xip_board.evkmimxrt1060.MIMXRT1062"/>
     <definition extID="driver.mdio-common.MIMXRT1062"/>
-    <definition extID="platform.Include_core_cm7.MIMXRT1062"/>
-    <definition extID="platform.Include_common.MIMXRT1062"/>
-    <definition extID="platform.Include_dsp.MIMXRT1062"/>
+    <definition extID="CMSIS_Include_core_cm.MIMXRT1062"/>
     <definition extID="middleware.lwip.apps.httpsrv.MIMXRT1062"/>
     <definition extID="middleware.freertos-kernel.MIMXRT1062"/>
     <definition extID="middleware.freertos-kernel.extension.MIMXRT1062"/>
@@ -49,7 +47,7 @@
     <definition extID="com.crt.advproject.config.exe.debug"/>
     <definition extID="com.crt.advproject.config.exe.release"/>
   </externalDefinitions>
-  <example id="evkmimxrt1060_lwip_httpssrv_mbedTLS_freertos" name="lwip_httpssrv_mbedTLS_freertos" dependency="driver.mdio-enet.MIMXRT1062 driver.phy-device-ksz8081.MIMXRT1062 platform.drivers.trng.MIMXRT1062 platform.drivers.dcp.MIMXRT1062 platform.drivers.cache_armv7_m7.MIMXRT1062 middleware.mbedtls.port.ksdk.MIMXRT1062 middleware.mbedtls.rt.MIMXRT1062 middleware.lwip.apps.httpssrv.MIMXRT1062 middleware.mbedtls.MIMXRT1062 utility.debug_console.MIMXRT1062 middleware.lwip.enet_ethernetif.MIMXRT1062 middleware.lwip.MIMXRT1062 driver.phy-common.MIMXRT1062 platform.drivers.enet.MIMXRT1062 platform.drivers.clock.MIMXRT1062 middleware.freertos-kernel.heap_3.MIMXRT1062 platform.drivers.common.MIMXRT1062 device.MIMXRT1062_CMSIS.MIMXRT1062 component.lpuart_adapter.MIMXRT1062 component.serial_manager.MIMXRT1062 component.lists.MIMXRT1062 component.serial_manager_uart.MIMXRT1062 platform.drivers.lpuart.MIMXRT1062 device.MIMXRT1062_startup.MIMXRT1062 platform.drivers.iomuxc.MIMXRT1062 platform.utilities.assert.MIMXRT1062 platform.drivers.igpio.MIMXRT1062 platform.drivers.xip_device.MIMXRT1062 platform.drivers.xip_board.MIMXRT1062 driver.mdio-common.MIMXRT1062 platform.Include_core_cm7.MIMXRT1062 platform.Include_common.MIMXRT1062 platform.Include_dsp.MIMXRT1062 middleware.lwip.apps.httpsrv.MIMXRT1062 middleware.freertos-kernel.MIMXRT1062 middleware.freertos-kernel.extension.MIMXRT1062 platform.utilities.misc_utilities.MIMXRT1062 device.MIMXRT1062_system.MIMXRT1062" category="lwip_examples">
+  <example id="evkmimxrt1060_lwip_httpssrv_mbedTLS_freertos" name="lwip_httpssrv_mbedTLS_freertos" dependency="driver.mdio-enet.MIMXRT1062 driver.phy-device-ksz8081.MIMXRT1062 platform.drivers.trng.MIMXRT1062 platform.drivers.dcp.MIMXRT1062 platform.drivers.cache_armv7_m7.MIMXRT1062 middleware.mbedtls.MIMXRT1062 middleware.mbedtls.port.ksdk.MIMXRT1062 middleware.mbedtls.rt.MIMXRT1062 middleware.lwip.apps.httpssrv.MIMXRT1062 middleware.lwip.enet_ethernetif.MIMXRT1062 middleware.lwip.MIMXRT1062 driver.phy-common.MIMXRT1062 platform.drivers.enet.MIMXRT1062 utility.debug_console.MIMXRT1062 platform.drivers.clock.MIMXRT1062 middleware.freertos-kernel.heap_3.MIMXRT1062 platform.drivers.common.MIMXRT1062 device.MIMXRT1062_CMSIS.MIMXRT1062 component.lpuart_adapter.MIMXRT1062 component.serial_manager.MIMXRT1062 component.lists.MIMXRT1062 component.serial_manager_uart.MIMXRT1062 platform.drivers.lpuart.MIMXRT1062 device.MIMXRT1062_startup.MIMXRT1062 platform.drivers.iomuxc.MIMXRT1062 platform.utilities.assert.MIMXRT1062 platform.drivers.igpio.MIMXRT1062 platform.drivers.xip_device.MIMXRT1062 platform.drivers.xip_board.evkmimxrt1060.MIMXRT1062 driver.mdio-common.MIMXRT1062 CMSIS_Include_core_cm.MIMXRT1062 middleware.lwip.apps.httpsrv.MIMXRT1062 middleware.freertos-kernel.MIMXRT1062 middleware.freertos-kernel.extension.MIMXRT1062 platform.utilities.misc_utilities.MIMXRT1062 device.MIMXRT1062_system.MIMXRT1062" category="lwip_examples">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -98,8 +96,10 @@
           <value>HTTPSRV_CFG_WEBSOCKET_ENABLED=1</value>
           <value>HTTPSRV_CFG_MBEDTLS_ENABLE=1</value>
           <value>MBEDTLS_CONFIG_FILE='"ksdk_mbedtls_config.h"'</value>
+          <value>LWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1</value>
           <value>SERIAL_PORT_TYPE_UART=1</value>
-          <value>FSL_RTOS_FREE_RTOS</value>
+          <value>SDK_OS_FREE_RTOS</value>
+          <value>MCUXPRESSO_SDK</value>
         </option>
         <option id="com.crt.advproject.gas.fpu" type="enum">
           <value>com.crt.advproject.gas.fpu.fpv5dp.hard</value>

@@ -19,7 +19,7 @@
 ********************************************************************************
 *
 * DESCRIPTION:
-*   This file is part of the interface (glue layer) between an Embedded Wizard 
+*   This file is part of the interface (glue layer) between an Embedded Wizard
 *   generated UI application and the board support package (BSP) of a dedicated
 *   target.
 *   This template provides access to some LEDs and buttons of the board.
@@ -56,7 +56,7 @@ typedef void ( * TButtonCallback ) ( int aButtonPresssed );
 
 /*******************************************************************************
 * FUNCTION:
-*   EwBspConfigButton
+*   EwBspInOutInitButton
 *
 * DESCRIPTION:
 *   Configures one hardware button of the board used for demo applications.
@@ -68,7 +68,7 @@ typedef void ( * TButtonCallback ) ( int aButtonPresssed );
 *   None
 *
 *******************************************************************************/
-void EwBspConfigButton
+void EwBspInOutInitButton
 (
   TButtonCallback             aButtonCallback
 );
@@ -76,7 +76,7 @@ void EwBspConfigButton
 
 /*******************************************************************************
 * FUNCTION:
-*   EwBspConfigLed
+*   EwBspInOutInitLed
 *
 * DESCRIPTION:
 *   Configures one LED of the board used for demo applications.
@@ -88,15 +88,15 @@ void EwBspConfigButton
 *   None
 *
 *******************************************************************************/
-void EwBspConfigLed
-( 
+void EwBspInOutInitLed
+(
   void
 );
 
 
 /*******************************************************************************
 * FUNCTION:
-*   EwBspLedOn
+*   EwBspInOutLedOn
 *
 * DESCRIPTION:
 *   Switch LED on (used for demo applications).
@@ -108,15 +108,15 @@ void EwBspConfigLed
 *   None
 *
 *******************************************************************************/
-void EwBspLedOn
-( 
-  void 
+void EwBspInOutLedOn
+(
+  void
 );
 
 
 /*******************************************************************************
 * FUNCTION:
-*   EwBspLedOff
+*   EwBspInOutLedOff
 *
 * DESCRIPTION:
 *   Switch LED off (used for demo applications).
@@ -128,9 +128,30 @@ void EwBspLedOn
 *   None
 *
 *******************************************************************************/
-void EwBspLedOff
-( 
+void EwBspInOutLedOff
+(
   void
+);
+
+
+/*******************************************************************************
+* FUNCTION:
+*   EwBspInOutEventHandler
+*
+* DESCRIPTION:
+*   The function EwBspInOutEventHandler is called from GPIO driver in case of 
+*   an input event.
+*
+* ARGUMENTS:
+*   aEventId - An optional target specific event ID.
+*
+* RETURN VALUE:
+*   None.
+*
+*******************************************************************************/
+void EwBspInOutEventHandler
+( 
+  int aEventId
 );
 
 

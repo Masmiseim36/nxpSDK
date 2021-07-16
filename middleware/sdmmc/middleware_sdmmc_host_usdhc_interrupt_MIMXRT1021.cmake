@@ -1,21 +1,21 @@
-if(NOT MIDDLEWARE_SDMMC_HOST_USDHC_INTERRUPT_MIMXRT1021_INCLUDED)
-    
-    set(MIDDLEWARE_SDMMC_HOST_USDHC_INTERRUPT_MIMXRT1021_INCLUDED true CACHE BOOL "middleware_sdmmc_host_usdhc_interrupt component is included.")
+include_guard(GLOBAL)
+message("middleware_sdmmc_host_usdhc_interrupt component is included.")
 
-    target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
-        ${CMAKE_CURRENT_LIST_DIR}/host/usdhc/non_blocking/fsl_sdmmc_host.c
-    )
-
-
-    target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
-        ${CMAKE_CURRENT_LIST_DIR}/host/usdhc
-    )
+target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
+    ${CMAKE_CURRENT_LIST_DIR}/host/usdhc/non_blocking/fsl_sdmmc_host.c
+)
 
 
-    include(middleware_sdmmc_common_MIMXRT1021)
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
+    ${CMAKE_CURRENT_LIST_DIR}/host/usdhc
+)
 
-    include(middleware_sdmmc_osa_bm_MIMXRT1021)
 
-    include(driver_usdhc_MIMXRT1021)
+include(driver_cache_armv7_m7_MIMXRT1021)
 
-endif()
+include(middleware_sdmmc_common_MIMXRT1021)
+
+include(middleware_sdmmc_osa_bm_MIMXRT1021)
+
+include(driver_usdhc_MIMXRT1021)
+

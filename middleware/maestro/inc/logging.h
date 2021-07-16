@@ -257,6 +257,12 @@ char* error_name(const uint32_t error_id);
 void init_logging(void);
 
 /*!
+ * @brief  Deinitializes the module.
+ *
+ */
+void deinit_logging(void);
+
+/*!
  * @brief  Prints the settings for active modules, level and output.
  *
  */

@@ -83,6 +83,7 @@ int main(void)
     BOARD_InitPins();
     BOARD_BootClockRUN();
     BOARD_InitDebugConsole();
+    CRYPTO_InitHardware();
 
     if (xTaskCreate(main_task, "main_task", configMINIMAL_STACK_SIZE * 8, NULL, tskIDLE_PRIORITY + 1, NULL) != pdPASS)
     {
@@ -127,24 +128,28 @@ void main_task(void *pvParameters)
 
 static void prvWifiConnect(void)
 {
-    WIFINetworkParams_t xNetworkParams;
     WIFIReturnCode_t xWifiStatus;
     uint8_t ucTempIp[4];
 
     /* Initialize Network params. */
-    xNetworkParams.pcSSID           = clientcredentialWIFI_SSID;
-    xNetworkParams.ucSSIDLength     = sizeof(clientcredentialWIFI_SSID);
-    xNetworkParams.pcPassword       = clientcredentialWIFI_PASSWORD;
-    xNetworkParams.ucPasswordLength = sizeof(clientcredentialWIFI_PASSWORD);
-    xNetworkParams.xSecurity        = clientcredentialWIFI_SECURITY;
-    xNetworkParams.cChannel         = 0;
+    WIFINetworkParams_t xNetworkParams = {
+        .ucSSID       = clientcredentialWIFI_SSID,
+        .ucSSIDLength = sizeof(clientcredentialWIFI_SSID) - 1,
+        .xPassword.xWPA =
+            {
+                .cPassphrase = clientcredentialWIFI_PASSWORD,
+                .ucLength    = sizeof(clientcredentialWIFI_PASSWORD) - 1,
+            },
+        .xSecurity = clientcredentialWIFI_SECURITY,
+        .ucChannel = 0,
+    };
 
     configPRINTF(("Starting Wi-Fi...\r\n"));
 
     xWifiStatus = WIFI_On();
     if (xWifiStatus == eWiFiSuccess)
     {
-        configPRINTF(("Wi-Fi module initialized. Connecting to AP %s...\r\n", xNetworkParams.pcSSID));
+        configPRINTF(("Wi-Fi module initialized. Connecting to AP %s...\r\n", xNetworkParams.ucSSID));
     }
     else
     {
@@ -161,7 +166,7 @@ static void prvWifiConnect(void)
     xWifiStatus = WIFI_ConnectAP(&xNetworkParams);
     if (xWifiStatus == eWiFiSuccess)
     {
-        configPRINTF(("Wi-Fi connected to AP %s.\r\n", xNetworkParams.pcSSID));
+        configPRINTF(("Wi-Fi connected to AP %s.\r\n", xNetworkParams.ucSSID));
 
         xWifiStatus = WIFI_GetIP(ucTempIp);
         if (eWiFiSuccess == xWifiStatus)
@@ -171,7 +176,7 @@ static void prvWifiConnect(void)
     }
     else
     {
-        configPRINTF(("Wi-Fi failed to connect to AP %s.\r\n", xNetworkParams.pcSSID));
+        configPRINTF(("Wi-Fi failed to connect to AP %s.\r\n", xNetworkParams.ucSSID));
 
         /* Delay to allow the lower priority logging task to print the above status. */
         vTaskDelay(pdMS_TO_TICKS(mainLOGGING_WIFI_STATUS_DELAY));

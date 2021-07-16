@@ -22,7 +22,7 @@
 #define IEC60730B_WDOG_H_
 
 /*
- * List of devices and supported functions can be found in library user guide, 
+ * List of devices and supported functions can be found in library user guide,
  * section Core self test library - source code version.
  */
 
@@ -32,21 +32,21 @@
 /******************************************************************************
  * Definitions
  ******************************************************************************/
-#define FS_FAIL_WDOG_OVER_RESET       (FS_WDOG_CODE + 0x1U)
-#define FS_FAIL_WDOG_VALUE            (FS_WDOG_CODE + 0x2U)
-#define FS_FAIL_WDOG_WRONG_RESET      (FS_WDOG_CODE + 0x3U)
-#define FS_FAIL_WDOG_WRONG_REFRESH    (FS_WDOG_CODE + 0x4U)
+#define FS_FAIL_WDOG_OVER_RESET    (FS_WDOG_CODE + 0x1U)
+#define FS_FAIL_WDOG_VALUE         (FS_WDOG_CODE + 0x2U)
+#define FS_FAIL_WDOG_WRONG_RESET   (FS_WDOG_CODE + 0x3U)
+#define FS_FAIL_WDOG_WRONG_REFRESH (FS_WDOG_CODE + 0x4U)
 
 #define FS_WDOG_SRS_WIDE_8b  1
 #define FS_WDOG_SRS_WIDE_32b 0
-   
+
 #define FS_KINETIS_WDOG 0
 #define FS_WDOG32       1
 #define FS_COP_WDOG     2
 #define FS_IMXRT        3
 #define FS_IMX8M        4
 #define FS_IMXRTWDOG    5
-   
+
 /* Watchdog test structure - must be placed in memory section which is not touched
  * by startup code (only POR reset can touch selected memory section). */
 typedef struct
@@ -70,13 +70,15 @@ typedef struct
  *           Function clears the WD resets counter to 0.
  *           No WD settings are changed here. It starts the LPTMR which must
  *           be configured before the function call occurs.
- *           Within the waiting endless loop, value from LPTMR is periodically 
+ *           Within the waiting endless loop, value from LPTMR is periodically
  *           stored to reserved area in RAM.
  *
  * @param    *pWatchdogBackup - pointer to structure with fs_wdog_test_t variables.
- * @param    refresh_index - Index for select WDOG refresh sequence : FS_KINETIS_WDOG, FS_WDOG32 or FS_COP_WDOG - see LIbrary UG, chapter "Dedicated function" for your device to chooce correct type.
+ * @param    refresh_index - Index for select WDOG refresh sequence : FS_KINETIS_WDOG, FS_WDOG32 or FS_COP_WDOG - see
+ *LIbrary UG, chapter "Dedicated function" for your device to chooce correct type.
  *
- * @return   FS_RESULT - FS_FAIL_WDOG_WRONG_REFRESH - if refresh sequence index out of range, otherwise function wait on WDOG refresh
+ * @return   FS_RESULT - FS_FAIL_WDOG_WRONG_REFRESH - if refresh sequence index out of range, otherwise function wait on
+ *WDOG refresh
  *
  ******************************************************************************/
 FS_RESULT FS_WDOG_Setup_LPTMR(fs_wdog_test_t *pWatchdogBackup, uint8_t refresh_index);
@@ -88,7 +90,7 @@ FS_RESULT FS_WDOG_Setup_LPTMR(fs_wdog_test_t *pWatchdogBackup, uint8_t refresh_i
  *           Function clears the WD resets counter to 0.
  *           No WD settings are changed here. It starts the RTC which must
  *           be configured before the function call occurs.
- *           Within the waiting endless loop, value from RTC is periodically 
+ *           Within the waiting endless loop, value from RTC is periodically
  *           stored to reserved area in RAM.
  *
  * @param    *pWatchdogBackup - pointer to structure with fs_wdog_test_t variables.
@@ -105,16 +107,18 @@ void FS_WDOG_Setup_KE0XZ(fs_wdog_test_t *pWatchdogBackup);
  *           Function clears the WD resets counter to 0.
  *           No WD settings are changed here. It starts the GPT which must
  *           be configured before the function call occurs.
- *           Within the waiting endless loop, value from GPT is periodically 
+ *           Within the waiting endless loop, value from GPT is periodically
  *           stored to reserved area in RAM.
  *
  * @param    *pWatchdogBackup - pointer to structure with fs_wdog_test_t variables.
- * @param    refresh_index - Index for select WDOG refresh sequence : FS_IMXRT, FS_IMX8M, FS_RTWDOG  - see LIbrary UG, chapter "Dedicated function" for your device to chooce correct type.
+ * @param    refresh_index - Index for select WDOG refresh sequence : FS_IMXRT, FS_IMX8M, FS_RTWDOG  - see LIbrary UG,
+ *chapter "Dedicated function" for your device to chooce correct type.
  *
- * @return   FS_RESULT - FS_FAIL_WDOG_WRONG_REFRESH - if refresh sequence index out of range, otherwise function wait on WDOG refresh 
+ * @return   FS_RESULT - FS_FAIL_WDOG_WRONG_REFRESH - if refresh sequence index out of range, otherwise function wait on
+ *WDOG refresh
  *
  ******************************************************************************/
-FS_RESULT FS_WDOG_Setup_IMX_GPT(fs_wdog_test_t *pWatchdogBackup, uint8_t refresh_index );
+FS_RESULT FS_WDOG_Setup_IMX_GPT(fs_wdog_test_t *pWatchdogBackup, uint8_t refresh_index);
 
 /*******************************************************************************
  *
@@ -123,7 +127,7 @@ FS_RESULT FS_WDOG_Setup_IMX_GPT(fs_wdog_test_t *pWatchdogBackup, uint8_t refresh
  *           Function clears the WD resets counter to 0.
  *           No WD settings are changed here. It starts the CTIMER which must
  *           be configured before the function call occurs.
- *           Within the waiting endless loop, value from CTIMER is periodically 
+ *           Within the waiting endless loop, value from CTIMER is periodically
  *           stored to reserved area in RAM.
  *
  * @param    *pWatchdogBackup - pointer to structure with fs_wdog_test_t variables.
@@ -141,7 +145,7 @@ void FS_WDOG_Setup_WWDT_LPC(fs_wdog_test_t *pWatchdogBackup);
  *           Function clears the WD resets counter to 0.
  *           No WD settings are changed here. It starts the LPTMR which must
  *           be configured before the function call occurs.
- *           Within the waiting endless loop, value from LPTMR is periodically 
+ *           Within the waiting endless loop, value from LPTMR is periodically
  *           stored to reserved area in RAM.
  *
  * @param    *pWatchdogBackup - pointer to structure with fs_wdog_test_t variables.
@@ -153,21 +157,20 @@ void FS_WDOG_Setup_WWDT_LPC(fs_wdog_test_t *pWatchdogBackup);
  ******************************************************************************/
 void FS_WDOG_Setup_WWDT_LPC_mrt(fs_wdog_test_t *pWatchdogBackup, uint8_t channel);
 
-
 /*******************************************************************************
  *
- * @brief    Function should be called after every WD reset, its calling should 
+ * @brief    Function should be called after every WD reset, its calling should
  *           be handled by conditional execution in application.
  *
  *           If the source of reset is WD, function increments the wd_reset counter.
- *           If the reset counter has overflowed, function will wait in endless 
+ *           If the reset counter has overflowed, function will wait in endless
  *           loop if it is enabled.
  *
  *           If the source of reset is WD, function check the timeout
- *           value. If it is not in range, function will wait in the endless 
+ *           value. If it is not in range, function will wait in the endless
  *           loop if enabled.
  *
- *           If the source of reset isn't WD or POR, function will sets the 
+ *           If the source of reset isn't WD or POR, function will sets the
  *           wdTestUncompleteFlag and will wait in endless loop if enabled.
  *
  * @param    limitHigh         - precalculated limit value for the reference counter.
@@ -175,55 +178,36 @@ void FS_WDOG_Setup_WWDT_LPC_mrt(fs_wdog_test_t *pWatchdogBackup, uint8_t channel
  * @param    limitResets       - limit value for watchdog resets.
  * @param    endlessLoopEnable - enable or disable endless loop within the function.
  * @param    *pWatchdogBackup  - pointer to structure with fs_wdog_test_t variables.
- * @param    clear_flag        - flag for clear WDOG reset flag, "1" cause clear WDOG reset flag (by write 1 to WDOG flag bit) 
- * @param    reg_wide          - define wide of SRS register in correspond device, put FS_WDOG_SRS_WIDE_8b for 8Bit and FS_WDOG_SRS_WIDE_32b for 32bit wide
+ * @param    clear_flag        - flag for clear WDOG reset flag, "1" cause clear WDOG reset flag (by write 1 to WDOG
+ *flag bit)
+ * @param    reg_wide          - define wide of SRS register in correspond device, put FS_WDOG_SRS_WIDE_8b for 8Bit and
+ *FS_WDOG_SRS_WIDE_32b for 32bit wide
  *
  * @return   uint32_t FS_PASS or FS_FAIL_WDOG_OVER_RESET or FS_FAIL_WDOG_VALUE or FS_FAIL_WDOG_WRONG_RESET
  *
  ******************************************************************************/
-uint32_t FS_WDOG_Check(uint32_t limitHigh, uint32_t limitLow, uint32_t limitResets, bool_t endlessLoopEnable, fs_wdog_test_t *pWatchdogBackup, bool_t clear_flag, bool_t RegWide8b);
+uint32_t FS_WDOG_Check(uint32_t limitHigh,
+                       uint32_t limitLow,
+                       uint32_t limitResets,
+                       bool_t endlessLoopEnable,
+                       fs_wdog_test_t *pWatchdogBackup,
+                       bool_t clear_flag,
+                       bool_t RegWide8b);
 
 /*******************************************************************************
  *
- * @brief    Function should be called after every WD reset, its calling should 
+ * @brief    Function should be called after every WD reset, its calling should
  *           be handled by conditional execution in application.
  *
  *           If the source of reset is WD, function increments the wd_reset counter.
- *           If the reset counter has overflowed, function will wait in endless 
+ *           If the reset counter has overflowed, function will wait in endless
  *           loop if it is enabled.
  *
  *           If the source of reset is WD, function check the timeout
- *           value. If it is not in range, function will wait in the endless 
+ *           value. If it is not in range, function will wait in the endless
  *           loop if enabled.
  *
- *           If the source of reset isn't WD or POR, function will sets the 
- *           wdTestUncompleteFlag and will wait in endless loop if enabled.
- *
- * @param    limitHigh         - precalculated limit value for the reference counter.
- * @param    limitLow          - precalculated limit value for the reference counter.
- * @param    limitResets       - limit value for watchdog resets.
- * @param    endlessLoopEnable - enable or disable endless loop within the function.
- * @param    *pWatchdogBackup  - pointer to structure with fs_wdog_test_t variables.
- *
- * @return   uint32_t FS_PASS or FS_FAIL_WDOG_OVER_RESET or FS_FAIL_WDOG_VALUE or FS_FAIL_WDOG_WRONG_RESET
- *
- ******************************************************************************/
-uint32_t FS_WDOG_Check_WWDT_LPC(uint32_t limitHigh, uint32_t limitLow, uint32_t limitResets, bool_t endlessLoopEnable, fs_wdog_test_t *pWatchdogBackup);
-
-/*******************************************************************************
- *
- * @brief    Function should be called after every WD reset, its calling should 
- *           be handled by conditional execution in application.
- *
- *           If the source of reset is WD, function increments the wd_reset counter.
- *           If the reset counter has overflowed, function will wait in endless 
- *           loop if it is enabled.
- *
- *           If the source of reset is WD, function check the timeout
- *           value. If it is not in range, function will wait in the endless 
- *           loop if enabled.
- *
- *           If the source of reset isn't WD or POR, function will sets the 
+ *           If the source of reset isn't WD or POR, function will sets the
  *           wdTestUncompleteFlag and will wait in endless loop if enabled.
  *
  * @param    limitHigh         - precalculated limit value for the reference counter.
@@ -235,7 +219,42 @@ uint32_t FS_WDOG_Check_WWDT_LPC(uint32_t limitHigh, uint32_t limitLow, uint32_t 
  * @return   uint32_t FS_PASS or FS_FAIL_WDOG_OVER_RESET or FS_FAIL_WDOG_VALUE or FS_FAIL_WDOG_WRONG_RESET
  *
  ******************************************************************************/
-uint32_t FS_WDOG_Check_WWDT_LPC55SXX(uint32_t limitHigh, uint32_t limitLow, uint32_t limitResets, bool_t endlessLoopEnable, fs_wdog_test_t *pWatchdogBackup);
+uint32_t FS_WDOG_Check_WWDT_LPC(uint32_t limitHigh,
+                                uint32_t limitLow,
+                                uint32_t limitResets,
+                                bool_t endlessLoopEnable,
+                                fs_wdog_test_t *pWatchdogBackup);
+
+/*******************************************************************************
+ *
+ * @brief    Function should be called after every WD reset, its calling should
+ *           be handled by conditional execution in application.
+ *
+ *           If the source of reset is WD, function increments the wd_reset counter.
+ *           If the reset counter has overflowed, function will wait in endless
+ *           loop if it is enabled.
+ *
+ *           If the source of reset is WD, function check the timeout
+ *           value. If it is not in range, function will wait in the endless
+ *           loop if enabled.
+ *
+ *           If the source of reset isn't WD or POR, function will sets the
+ *           wdTestUncompleteFlag and will wait in endless loop if enabled.
+ *
+ * @param    limitHigh         - precalculated limit value for the reference counter.
+ * @param    limitLow          - precalculated limit value for the reference counter.
+ * @param    limitResets       - limit value for watchdog resets.
+ * @param    endlessLoopEnable - enable or disable endless loop within the function.
+ * @param    *pWatchdogBackup  - pointer to structure with fs_wdog_test_t variables.
+ *
+ * @return   uint32_t FS_PASS or FS_FAIL_WDOG_OVER_RESET or FS_FAIL_WDOG_VALUE or FS_FAIL_WDOG_WRONG_RESET
+ *
+ ******************************************************************************/
+uint32_t FS_WDOG_Check_WWDT_LPC55SXX(uint32_t limitHigh,
+                                     uint32_t limitLow,
+                                     uint32_t limitResets,
+                                     bool_t endlessLoopEnable,
+                                     fs_wdog_test_t *pWatchdogBackup);
 
 #endif /* __ASM__ */
 #endif /* IEC60730B_WDOG_H_ */

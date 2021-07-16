@@ -25,15 +25,15 @@ void MID_getRs(mid_get_rs_t *sRsMeasFcn)
     float_t fltRsUdReqFilt, fltRsIdfbckFilt;
 
     /* Initialization */
-    if (sRsMeasFcn->ui16Active == 0U)
+    if (sRsMeasFcn->bActive == FALSE)
     {
-        sRsMeasFcn->ui16Active                 = TRUE;
-        sRsMeasFcn->ui16LoopCounter            = 0;
-        sRsMeasFcn->fltRs                      = 0.0;
-        sRsMeasFcn->sUdReqMA32Filter.fltLambda = 1.0 / 20.0;
-        GDFLIB_FilterMAInit_FLT(0.0, &sRsMeasFcn->sUdReqMA32Filter);
-        sRsMeasFcn->sIdfbckMA32Filter.fltLambda = 1.0 / 20.0;
-        GDFLIB_FilterMAInit_FLT(0.0, &sRsMeasFcn->sIdfbckMA32Filter);
+        sRsMeasFcn->bActive                 = TRUE;
+        sRsMeasFcn->ui16LoopCounter            = 0U;
+        sRsMeasFcn->fltRs                      = 0.0F;
+        sRsMeasFcn->sUdReqMA32Filter.fltLambda = 1.0F / 20.0F;
+        GDFLIB_FilterMAInit_FLT(0.0F, &sRsMeasFcn->sUdReqMA32Filter);
+        sRsMeasFcn->sIdfbckMA32Filter.fltLambda = 1.0F / 20.0F;
+        GDFLIB_FilterMAInit_FLT(0.0F, &sRsMeasFcn->sIdfbckMA32Filter);
 
         /* Set the measuring current Id_meas*/
         *(sRsMeasFcn->pfltIdReq) = sRsMeasFcn->fltIdMeas;
@@ -83,6 +83,6 @@ void MID_getRs(mid_get_rs_t *sRsMeasFcn)
     /* Exit the function after 2400ms */
     if (sRsMeasFcn->ui16LoopCounter > (uint16_t)MID_TIME_2400MS)
     {
-        sRsMeasFcn->ui16Active = FALSE;
+        sRsMeasFcn->bActive = FALSE;
     }
 }

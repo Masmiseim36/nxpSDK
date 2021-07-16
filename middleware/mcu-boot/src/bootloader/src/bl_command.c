@@ -8,6 +8,7 @@
 
 #include <stdint.h>
 #include <string.h>
+
 #include "bootloader.h"
 #include "bootloader_common.h"
 #include "fsl_assert.h"
@@ -193,52 +194,56 @@ const command_handler_entry_t g_commandHandlerTable[] = {
 #endif // BL_FEATURE_RELIABLE_UPDATE
 #if BL_FEATURE_GEN_KEYBLOB
     { handle_generate_key_blob, handle_key_blob_data }, // kCommandTag_GenerateKeyBlob = 0x13
+#else
+    { 0 },
 #endif
-    { 0 },                                              // 0x14
+    { 0 }, // 0x14
 #if BL_FEATURE_KEY_PROVISIONING
     { handle_key_provisioning, handle_data_bidirection }, // kCommandTag_KeyProvisioning = 0x15
 #else
     { 0 },
-#endif                                                    // BL_FEATURE_KEY_PROVISIONING
-#else                                                     // BL_FEATURE_MIN_PROFILE
-    { handle_flash_erase_all, NULL },                   // kCommandTag_FlashEraseAll = 0x01
-    { handle_flash_erase_region, NULL },                // kCommandTag_FlashEraseRegion = 0x02
+#endif // BL_FEATURE_KEY_PROVISIONING
+#else  // BL_FEATURE_MIN_PROFILE
+    { handle_flash_erase_all, NULL },                     // kCommandTag_FlashEraseAll = 0x01
+    { handle_flash_erase_region, NULL },                  // kCommandTag_FlashEraseRegion = 0x02
 #if BL_FEATURE_READ_MEMORY
-    { handle_read_memory, handle_data_producer },       // kCommandTag_ReadMemory = 0x03
+    { handle_read_memory, handle_data_producer },         // kCommandTag_ReadMemory = 0x03
 #else // BL_FEATURE_READ_MEMORY
     { 0 }, // kCommandTag_ReadMemory = 0x03
 #endif
-    { handle_write_memory, handle_data_consumer },      // kCommandTag_WriteMemory = 0x04
+    { handle_write_memory, handle_data_consumer },        // kCommandTag_WriteMemory = 0x04
 #if BL_FEATURE_FILL_MEMORY
-    { handle_fill_memory, NULL },                       // kCommandTag_FillMemory = 0x05
+    { handle_fill_memory, NULL },                         // kCommandTag_FillMemory = 0x05
 #else
     { 0 },
 #endif // BL_FEATURE_FILL_MEMORY
 #if BL_FEATURE_FLASH_SECURITY
-    { handle_flash_security_disable, NULL },            // kCommandTag_FlashSecurityDisable = 0x06
+    { handle_flash_security_disable, NULL },              // kCommandTag_FlashSecurityDisable = 0x06
 #else
     { 0 },
 #endif // BL_FEATURE_FLASH_SECURITY
-    { handle_get_property, NULL },                      // kCommandTag_GetProperty = 0x07
-    { 0 },                                              // kCommandTag_ReceiveSbFile = 0x08
-    { handle_execute, NULL },                           // kCommandTag_Execute = 0x09
-    { 0 },                                              // kCommandTag_Call = 0x0a
-    { handle_reset, NULL },                             // kCommandTag_Reset = 0x0b
-    { handle_set_property, NULL },                      // kCommandTag_SetProperty = 0x0c
+    { handle_get_property, NULL },                        // kCommandTag_GetProperty = 0x07
+    { 0 },                                                // kCommandTag_ReceiveSbFile = 0x08
+    { handle_execute, NULL },                             // kCommandTag_Execute = 0x09
+    { 0 },                                                // kCommandTag_Call = 0x0a
+    { handle_reset, NULL },                               // kCommandTag_Reset = 0x0b
+    { handle_set_property, NULL },                        // kCommandTag_SetProperty = 0x0c
 #if BL_FEATURE_ERASEALL_UNSECURE
-    { handle_flash_erase_all_unsecure, NULL },          // kCommandTag_FlashEraseAllUnsecure = 0x0d
+    { handle_flash_erase_all_unsecure, NULL },            // kCommandTag_FlashEraseAllUnsecure = 0x0d
 #else  // BL_FEATURE_ERASEALL_UNSECURE
     { 0 }, // kCommandTag_FlashEraseAllUnsecure = 0x0d
 #endif // BL_FEATURE_ERASEALL_UNSECURE
-    { 0 },                                              // kCommandTag_ProgramOnce = 0x0e
-    { 0 },                                              // kCommandTag_ReadOnce = 0x0f
-    { 0 },                                              // kCommandTag_ReadResource = 0x10
-    { 0 },                                              // kCommandTag_ConfigureQuadSpi = 0x11
-    { 0 },                                              // kCommandTag_ReliableUpdate = 0x12
+    { 0 },                                                // kCommandTag_ProgramOnce = 0x0e
+    { 0 },                                                // kCommandTag_ReadOnce = 0x0f
+    { 0 },                                                // kCommandTag_ReadResource = 0x10
+    { 0 },                                                // kCommandTag_ConfigureQuadSpi = 0x11
+    { 0 },                                                // kCommandTag_ReliableUpdate = 0x12
 #if BL_FEATURE_GEN_KEYBLOB
-    { handle_generate_key_blob, handle_key_blob_data }, // kCommandTag_GenerateKeyBlob = 0x13
+    { handle_generate_key_blob, handle_key_blob_data },   // kCommandTag_GenerateKeyBlob = 0x13
+#else
+    { 0 },
 #endif
-    { 0 },                                              // 0x14
+    { 0 },                                                // 0x14
 #if BL_FEATURE_KEY_PROVISIONING
     { handle_key_provisioning, handle_data_bidirection }, // kCommandTag_KeyProvisioning = 0x15
 #else
@@ -489,18 +494,6 @@ void handle_flash_erase_all(uint8_t *packet, uint32_t packetLength)
     flash_erase_all_packet_t *commandPacket = (flash_erase_all_packet_t *)packet;
     status_t status = kStatus_Success;
 
-// Call flash erase all implementation.
-// For target without QSPI module, ignore the memory identifier
-#if ((!BL_FEATURE_QSPI_MODULE) && (!BL_FEATURE_FAC_ERASE) && (!BL_FEATURE_EXPAND_MEMORY) && \
-     (!BL_FEATURE_HAS_NO_INTERNAL_FLASH))
-    status = flash_mem_erase_all();
-#if BL_FEATURE_SUPPORT_DFLASH
-    if (g_bootloaderContext.dflashDriverInterface != NULL)
-    {
-        status += flexNVM_mem_erase_all();
-    }
-#endif // BL_FEATURE_SUPPORT_DFLASH
-#else
     switch (commandPacket->memoryId)
     {
 #if !BL_FEATURE_HAS_NO_INTERNAL_FLASH
@@ -578,8 +571,6 @@ void handle_flash_erase_all(uint8_t *packet, uint32_t packetLength)
             status = kStatus_InvalidArgument;
             break;
     }
-#endif // #if ((!BL_FEATURE_QSPI_MODULE) && (!BL_FEATURE_FAC_ERASE) && (!BL_FEATURE_EXPAND_MEMORY) &&
-       // (!BL_FEATURE_HAS_NO_INTERNAL_FLASH))
 
     send_generic_response(status, commandPacket->commandPacket.commandTag);
 }
@@ -715,6 +706,7 @@ void handle_write_memory(uint8_t *packet, uint32_t packetLength)
     g_bootloaderContext.commandInterface->stateData->dataPhase.count = command->byteCount;
     g_bootloaderContext.commandInterface->stateData->dataPhase.address = command->startAddress;
     g_bootloaderContext.commandInterface->stateData->dataPhase.commandTag = kCommandTag_WriteMemory;
+
     send_generic_response(kStatus_Success, command->commandPacket.commandTag);
 }
 
@@ -808,7 +800,7 @@ void handle_generate_key_blob(uint8_t *packet, uint32_t packetLength)
         uint32_t key_blob_size = 0;
         status = generate_key_blob(key_data, key_size, key_sel, key_blob, &key_blob_size);
 
-        if ((kStatus_Success!=status) || (key_blob_size==0) || (key_blob_size>sizeof key_blob))
+        if ((kStatus_Success != status) || (key_blob_size == 0) || (key_blob_size > sizeof key_blob))
         {
             key_blob_size = 0;
         }
@@ -979,6 +971,18 @@ status_t handle_data_consumer(bool *hasMoreData)
     uint8_t *packet;
     uint32_t packetLength = 0;
     status_t status;
+
+    if (g_bootloaderContext.commandInterface->stateData->dataPhase.commandTag == kCommandTag_WriteMemory)
+    {
+        status = mem_write_check(dataAddress, remaining, memoryId);
+        if (status != kStatus_Success)
+        {
+            g_bootloaderContext.activePeripheral->packetInterface->abortDataPhase(g_bootloaderContext.activePeripheral);
+            finalize_data_phase(status);
+            *hasMoreData = false;
+            return status;
+        }
+    }
 
     // Read the data packet.
     status = g_bootloaderContext.activePeripheral->packetInterface->readPacket(

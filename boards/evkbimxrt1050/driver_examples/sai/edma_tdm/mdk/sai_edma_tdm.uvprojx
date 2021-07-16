@@ -328,9 +328,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>DEBUG, CPU_MIMXRT1052DVL6B, FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, SDK_I2C_BASED_COMPONENT_USED=1, SD_ENABLED, CODEC_CS42888_ENABLE</Define>
+              <Define>DEBUG, CPU_MIMXRT1052DVL6B, FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, SDK_I2C_BASED_COMPONENT_USED=1, SD_ENABLED, CODEC_CS42888_ENABLE, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../devices/MIMXRT1052/drivers;../../../../../../middleware/sdmmc/sd;../../../../../../middleware/sdmmc/common;../../../../../../middleware/sdmmc/host/usdhc;../../../../../../components/codec/i2c;../../../../../../components/i2c;../../../../../../components/codec;../../../../../../components/codec/port/cs42888;../../../../../../devices/MIMXRT1052/utilities/debug_console_lite;../../../../../../components/codec/cs42888;../../../../../../middleware/fatfs/source;../../../../../../middleware/fatfs/source/fsl_sd_disk;../../../../../../devices/MIMXRT1052;../../../../../../components/uart;../../../../../../components/lists;../../../../../../devices/MIMXRT1052/xip;../../../../xip;../../../../../../CMSIS/Include;../../../../../../middleware/sdmmc/osa;../../../../../../components/osa</IncludePath>
+              <IncludePath>..;../../../../../../devices/MIMXRT1052/drivers;../../../../../../middleware/sdmmc/sd;../../../../../../middleware/sdmmc/common;../../../../../../middleware/sdmmc/host/usdhc;../../../../../../components/codec/i2c;../../../../../../components/i2c;../../../../../../components/codec;../../../../../../components/codec/port/cs42888;../../../../../../components/codec/port;../../../../../../devices/MIMXRT1052/utilities/debug_console_lite;../../../../../../middleware/fatfs/source;../../../../../../middleware/fatfs/source/fsl_sd_disk;../../../../../../devices/MIMXRT1052;../../../../../../components/uart;../../../../../../components/lists;../../../../../../devices/MIMXRT1052/xip;../../../../xip;../../../../../../CMSIS/Core/Include;../../../../../../middleware/sdmmc/osa;../../../../../../components/osa;../../../../../../components/codec/cs42888</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -364,7 +364,7 @@
             <ScatterFile>MIMXRT1052xxxxx_ram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove</Misc>
+            <Misc>--remove --entry=Reset_Handler</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -474,6 +474,16 @@
               <FileName>fsl_common.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT1052/drivers/fsl_common.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1052/drivers/fsl_common_arm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1052/drivers/fsl_common_arm.h</FilePath>
             </File>
             <File>
               <FileName>fsl_cache.c</FileName>
@@ -671,16 +681,6 @@
               <FilePath>../../../../../../components/codec/fsl_codec_common.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_codec_adapter.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/codec/port/cs42888/fsl_codec_adapter.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_codec_adapter.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/codec/port/cs42888/fsl_codec_adapter.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_cs42888.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../components/codec/cs42888/fsl_cs42888.h</FilePath>
@@ -704,6 +704,31 @@
               <FileName>fsl_adapter_lpi2c.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../components/i2c/fsl_adapter_lpi2c.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>codec/port/cs42888</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_codec_cs42888_adapter.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/codec/port/cs42888/fsl_codec_cs42888_adapter.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_codec_cs42888_adapter.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/codec/port/cs42888/fsl_codec_cs42888_adapter.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>codec/port</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_codec_adapter.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/codec/port/fsl_codec_adapter.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -736,9 +761,19 @@
               <FilePath>../../../../../../middleware/fatfs/source/diskio.c</FilePath>
             </File>
             <File>
+              <FileName>diskio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/fatfs/source/diskio.h</FilePath>
+            </File>
+            <File>
               <FileName>ff.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/fatfs/source/ff.c</FilePath>
+            </File>
+            <File>
+              <FileName>ff.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/fatfs/source/ff.h</FilePath>
             </File>
             <File>
               <FileName>ffsystem.c</FileName>
@@ -750,30 +785,20 @@
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/fatfs/source/ffunicode.c</FilePath>
             </File>
-            <File>
-              <FileName>diskio.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/fatfs/source/diskio.h</FilePath>
-            </File>
-            <File>
-              <FileName>ff.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/fatfs/source/ff.h</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>
           <GroupName>fatfs/source/fsl_sd_disk</GroupName>
           <Files>
             <File>
-              <FileName>fsl_sd_disk.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/fatfs/source/fsl_sd_disk/fsl_sd_disk.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_sd_disk.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/fatfs/source/fsl_sd_disk/fsl_sd_disk.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_sd_disk.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/fatfs/source/fsl_sd_disk/fsl_sd_disk.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -876,64 +901,49 @@
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
-              <FileName>core_cm7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/core_cm7.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
-            </File>
-            <File>
               <FileName>cmsis_armcc.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_armcc.h</FilePath>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_armclang.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_armclang.h</FilePath>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_armclang_ltm.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_armclang_ltm.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_gcc.h</FilePath>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armclang_ltm.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_compiler.h</FilePath>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
             </File>
             <File>
-              <FileName>cmsis_version.h</FileName>
+              <FileName>cmsis_gcc.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_version.h</FilePath>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_iccarm.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_iccarm.h</FilePath>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
-              <FileName>arm_common_tables.h</FileName>
+              <FileName>cmsis_version.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/arm_common_tables.h</FilePath>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_version.h</FilePath>
             </File>
             <File>
-              <FileName>arm_const_structs.h</FileName>
+              <FileName>core_cm7.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/arm_const_structs.h</FilePath>
+              <FilePath>../../../../../../CMSIS/Core/Include/core_cm7.h</FilePath>
             </File>
             <File>
-              <FileName>arm_math.h</FileName>
+              <FileName>mpu_armv7.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/arm_math.h</FilePath>
+              <FilePath>../../../../../../CMSIS/Core/Include/mpu_armv7.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1304,9 +1314,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, DEBUG, CPU_MIMXRT1052DVL6B, FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, SDK_I2C_BASED_COMPONENT_USED=1, SD_ENABLED, CODEC_CS42888_ENABLE</Define>
+              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, DEBUG, CPU_MIMXRT1052DVL6B, FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, SDK_I2C_BASED_COMPONENT_USED=1, SD_ENABLED, CODEC_CS42888_ENABLE, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../devices/MIMXRT1052/drivers;../../../../../../middleware/sdmmc/sd;../../../../../../middleware/sdmmc/common;../../../../../../middleware/sdmmc/host/usdhc;../../../../../../components/codec/i2c;../../../../../../components/i2c;../../../../../../components/codec;../../../../../../components/codec/port/cs42888;../../../../../../devices/MIMXRT1052/utilities/debug_console_lite;../../../../../../components/codec/cs42888;../../../../../../middleware/fatfs/source;../../../../../../middleware/fatfs/source/fsl_sd_disk;../../../../../../devices/MIMXRT1052;../../../../../../components/uart;../../../../../../components/lists;../../../../../../devices/MIMXRT1052/xip;../../../../xip;../../../../../../CMSIS/Include;../../../../../../middleware/sdmmc/osa;../../../../../../components/osa</IncludePath>
+              <IncludePath>..;../../../../../../devices/MIMXRT1052/drivers;../../../../../../middleware/sdmmc/sd;../../../../../../middleware/sdmmc/common;../../../../../../middleware/sdmmc/host/usdhc;../../../../../../components/codec/i2c;../../../../../../components/i2c;../../../../../../components/codec;../../../../../../components/codec/port/cs42888;../../../../../../components/codec/port;../../../../../../devices/MIMXRT1052/utilities/debug_console_lite;../../../../../../middleware/fatfs/source;../../../../../../middleware/fatfs/source/fsl_sd_disk;../../../../../../devices/MIMXRT1052;../../../../../../components/uart;../../../../../../components/lists;../../../../../../devices/MIMXRT1052/xip;../../../../xip;../../../../../../CMSIS/Core/Include;../../../../../../middleware/sdmmc/osa;../../../../../../components/osa;../../../../../../components/codec/cs42888</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1340,7 +1350,7 @@
             <ScatterFile>MIMXRT1052xxxxx_flexspi_nor.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --predefine="-DXIP_BOOT_HEADER_ENABLE=1"</Misc>
+            <Misc>--remove --entry=Reset_Handler --predefine="-DXIP_BOOT_HEADER_ENABLE=1"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -1450,6 +1460,16 @@
               <FileName>fsl_common.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT1052/drivers/fsl_common.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1052/drivers/fsl_common_arm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1052/drivers/fsl_common_arm.h</FilePath>
             </File>
             <File>
               <FileName>fsl_cache.c</FileName>
@@ -1647,16 +1667,6 @@
               <FilePath>../../../../../../components/codec/fsl_codec_common.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_codec_adapter.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/codec/port/cs42888/fsl_codec_adapter.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_codec_adapter.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/codec/port/cs42888/fsl_codec_adapter.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_cs42888.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../components/codec/cs42888/fsl_cs42888.h</FilePath>
@@ -1680,6 +1690,31 @@
               <FileName>fsl_adapter_lpi2c.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../components/i2c/fsl_adapter_lpi2c.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>codec/port/cs42888</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_codec_cs42888_adapter.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/codec/port/cs42888/fsl_codec_cs42888_adapter.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_codec_cs42888_adapter.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/codec/port/cs42888/fsl_codec_cs42888_adapter.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>codec/port</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_codec_adapter.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/codec/port/fsl_codec_adapter.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1712,9 +1747,19 @@
               <FilePath>../../../../../../middleware/fatfs/source/diskio.c</FilePath>
             </File>
             <File>
+              <FileName>diskio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/fatfs/source/diskio.h</FilePath>
+            </File>
+            <File>
               <FileName>ff.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/fatfs/source/ff.c</FilePath>
+            </File>
+            <File>
+              <FileName>ff.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/fatfs/source/ff.h</FilePath>
             </File>
             <File>
               <FileName>ffsystem.c</FileName>
@@ -1726,30 +1771,20 @@
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/fatfs/source/ffunicode.c</FilePath>
             </File>
-            <File>
-              <FileName>diskio.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/fatfs/source/diskio.h</FilePath>
-            </File>
-            <File>
-              <FileName>ff.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/fatfs/source/ff.h</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>
           <GroupName>fatfs/source/fsl_sd_disk</GroupName>
           <Files>
             <File>
-              <FileName>fsl_sd_disk.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/fatfs/source/fsl_sd_disk/fsl_sd_disk.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_sd_disk.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/fatfs/source/fsl_sd_disk/fsl_sd_disk.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_sd_disk.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/fatfs/source/fsl_sd_disk/fsl_sd_disk.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1852,64 +1887,49 @@
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
-              <FileName>core_cm7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/core_cm7.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
-            </File>
-            <File>
               <FileName>cmsis_armcc.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_armcc.h</FilePath>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_armclang.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_armclang.h</FilePath>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_armclang_ltm.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_armclang_ltm.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_gcc.h</FilePath>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armclang_ltm.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_compiler.h</FilePath>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
             </File>
             <File>
-              <FileName>cmsis_version.h</FileName>
+              <FileName>cmsis_gcc.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_version.h</FilePath>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_iccarm.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_iccarm.h</FilePath>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
-              <FileName>arm_common_tables.h</FileName>
+              <FileName>cmsis_version.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/arm_common_tables.h</FilePath>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_version.h</FilePath>
             </File>
             <File>
-              <FileName>arm_const_structs.h</FileName>
+              <FileName>core_cm7.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/arm_const_structs.h</FilePath>
+              <FilePath>../../../../../../CMSIS/Core/Include/core_cm7.h</FilePath>
             </File>
             <File>
-              <FileName>arm_math.h</FileName>
+              <FileName>mpu_armv7.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/arm_math.h</FilePath>
+              <FilePath>../../../../../../CMSIS/Core/Include/mpu_armv7.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2280,9 +2300,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>SKIP_SYSCLK_INIT, DATA_SECTION_IS_CACHEABLE=1, DEBUG, CPU_MIMXRT1052DVL6B, FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, SDK_I2C_BASED_COMPONENT_USED=1, SD_ENABLED, CODEC_CS42888_ENABLE</Define>
+              <Define>SKIP_SYSCLK_INIT, DATA_SECTION_IS_CACHEABLE=1, DEBUG, CPU_MIMXRT1052DVL6B, FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, SDK_I2C_BASED_COMPONENT_USED=1, SD_ENABLED, CODEC_CS42888_ENABLE, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../devices/MIMXRT1052/drivers;../../../../../../middleware/sdmmc/sd;../../../../../../middleware/sdmmc/common;../../../../../../middleware/sdmmc/host/usdhc;../../../../../../components/codec/i2c;../../../../../../components/i2c;../../../../../../components/codec;../../../../../../components/codec/port/cs42888;../../../../../../devices/MIMXRT1052/utilities/debug_console_lite;../../../../../../components/codec/cs42888;../../../../../../middleware/fatfs/source;../../../../../../middleware/fatfs/source/fsl_sd_disk;../../../../../../devices/MIMXRT1052;../../../../../../components/uart;../../../../../../components/lists;../../../../../../devices/MIMXRT1052/xip;../../../../xip;../../../../../../CMSIS/Include;../../../../../../middleware/sdmmc/osa;../../../../../../components/osa</IncludePath>
+              <IncludePath>..;../../../../../../devices/MIMXRT1052/drivers;../../../../../../middleware/sdmmc/sd;../../../../../../middleware/sdmmc/common;../../../../../../middleware/sdmmc/host/usdhc;../../../../../../components/codec/i2c;../../../../../../components/i2c;../../../../../../components/codec;../../../../../../components/codec/port/cs42888;../../../../../../components/codec/port;../../../../../../devices/MIMXRT1052/utilities/debug_console_lite;../../../../../../middleware/fatfs/source;../../../../../../middleware/fatfs/source/fsl_sd_disk;../../../../../../devices/MIMXRT1052;../../../../../../components/uart;../../../../../../components/lists;../../../../../../devices/MIMXRT1052/xip;../../../../xip;../../../../../../CMSIS/Core/Include;../../../../../../middleware/sdmmc/osa;../../../../../../components/osa;../../../../../../components/codec/cs42888</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2316,7 +2336,7 @@
             <ScatterFile>MIMXRT1052xxxxx_sdram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove</Misc>
+            <Misc>--remove --entry=Reset_Handler</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -2426,6 +2446,16 @@
               <FileName>fsl_common.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT1052/drivers/fsl_common.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1052/drivers/fsl_common_arm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1052/drivers/fsl_common_arm.h</FilePath>
             </File>
             <File>
               <FileName>fsl_cache.c</FileName>
@@ -2623,16 +2653,6 @@
               <FilePath>../../../../../../components/codec/fsl_codec_common.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_codec_adapter.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/codec/port/cs42888/fsl_codec_adapter.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_codec_adapter.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/codec/port/cs42888/fsl_codec_adapter.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_cs42888.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../components/codec/cs42888/fsl_cs42888.h</FilePath>
@@ -2656,6 +2676,31 @@
               <FileName>fsl_adapter_lpi2c.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../components/i2c/fsl_adapter_lpi2c.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>codec/port/cs42888</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_codec_cs42888_adapter.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/codec/port/cs42888/fsl_codec_cs42888_adapter.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_codec_cs42888_adapter.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/codec/port/cs42888/fsl_codec_cs42888_adapter.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>codec/port</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_codec_adapter.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/codec/port/fsl_codec_adapter.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2688,9 +2733,19 @@
               <FilePath>../../../../../../middleware/fatfs/source/diskio.c</FilePath>
             </File>
             <File>
+              <FileName>diskio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/fatfs/source/diskio.h</FilePath>
+            </File>
+            <File>
               <FileName>ff.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/fatfs/source/ff.c</FilePath>
+            </File>
+            <File>
+              <FileName>ff.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/fatfs/source/ff.h</FilePath>
             </File>
             <File>
               <FileName>ffsystem.c</FileName>
@@ -2702,30 +2757,20 @@
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/fatfs/source/ffunicode.c</FilePath>
             </File>
-            <File>
-              <FileName>diskio.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/fatfs/source/diskio.h</FilePath>
-            </File>
-            <File>
-              <FileName>ff.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/fatfs/source/ff.h</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>
           <GroupName>fatfs/source/fsl_sd_disk</GroupName>
           <Files>
             <File>
-              <FileName>fsl_sd_disk.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/fatfs/source/fsl_sd_disk/fsl_sd_disk.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_sd_disk.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/fatfs/source/fsl_sd_disk/fsl_sd_disk.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_sd_disk.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/fatfs/source/fsl_sd_disk/fsl_sd_disk.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2828,64 +2873,49 @@
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
-              <FileName>core_cm7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/core_cm7.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
-            </File>
-            <File>
               <FileName>cmsis_armcc.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_armcc.h</FilePath>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_armclang.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_armclang.h</FilePath>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_armclang_ltm.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_armclang_ltm.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_gcc.h</FilePath>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armclang_ltm.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_compiler.h</FilePath>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
             </File>
             <File>
-              <FileName>cmsis_version.h</FileName>
+              <FileName>cmsis_gcc.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_version.h</FilePath>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_iccarm.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_iccarm.h</FilePath>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
-              <FileName>arm_common_tables.h</FileName>
+              <FileName>cmsis_version.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/arm_common_tables.h</FilePath>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_version.h</FilePath>
             </File>
             <File>
-              <FileName>arm_const_structs.h</FileName>
+              <FileName>core_cm7.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/arm_const_structs.h</FilePath>
+              <FilePath>../../../../../../CMSIS/Core/Include/core_cm7.h</FilePath>
             </File>
             <File>
-              <FileName>arm_math.h</FileName>
+              <FileName>mpu_armv7.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/arm_math.h</FilePath>
+              <FilePath>../../../../../../CMSIS/Core/Include/mpu_armv7.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -3256,9 +3286,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>NDEBUG, CPU_MIMXRT1052DVL6B, FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, SDK_I2C_BASED_COMPONENT_USED=1, SD_ENABLED, CODEC_CS42888_ENABLE</Define>
+              <Define>NDEBUG, CPU_MIMXRT1052DVL6B, FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, SDK_I2C_BASED_COMPONENT_USED=1, SD_ENABLED, CODEC_CS42888_ENABLE, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../devices/MIMXRT1052/drivers;../../../../../../middleware/sdmmc/sd;../../../../../../middleware/sdmmc/common;../../../../../../middleware/sdmmc/host/usdhc;../../../../../../components/codec/i2c;../../../../../../components/i2c;../../../../../../components/codec;../../../../../../components/codec/port/cs42888;../../../../../../devices/MIMXRT1052/utilities/debug_console_lite;../../../../../../components/codec/cs42888;../../../../../../middleware/fatfs/source;../../../../../../middleware/fatfs/source/fsl_sd_disk;../../../../../../devices/MIMXRT1052;../../../../../../components/uart;../../../../../../components/lists;../../../../../../devices/MIMXRT1052/xip;../../../../xip;../../../../../../CMSIS/Include;../../../../../../middleware/sdmmc/osa;../../../../../../components/osa</IncludePath>
+              <IncludePath>..;../../../../../../devices/MIMXRT1052/drivers;../../../../../../middleware/sdmmc/sd;../../../../../../middleware/sdmmc/common;../../../../../../middleware/sdmmc/host/usdhc;../../../../../../components/codec/i2c;../../../../../../components/i2c;../../../../../../components/codec;../../../../../../components/codec/port/cs42888;../../../../../../components/codec/port;../../../../../../devices/MIMXRT1052/utilities/debug_console_lite;../../../../../../middleware/fatfs/source;../../../../../../middleware/fatfs/source/fsl_sd_disk;../../../../../../devices/MIMXRT1052;../../../../../../components/uart;../../../../../../components/lists;../../../../../../devices/MIMXRT1052/xip;../../../../xip;../../../../../../CMSIS/Core/Include;../../../../../../middleware/sdmmc/osa;../../../../../../components/osa;../../../../../../components/codec/cs42888</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -3292,7 +3322,7 @@
             <ScatterFile>MIMXRT1052xxxxx_ram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove</Misc>
+            <Misc>--remove --entry=Reset_Handler</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -3402,6 +3432,16 @@
               <FileName>fsl_common.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT1052/drivers/fsl_common.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1052/drivers/fsl_common_arm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1052/drivers/fsl_common_arm.h</FilePath>
             </File>
             <File>
               <FileName>fsl_cache.c</FileName>
@@ -3599,16 +3639,6 @@
               <FilePath>../../../../../../components/codec/fsl_codec_common.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_codec_adapter.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/codec/port/cs42888/fsl_codec_adapter.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_codec_adapter.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/codec/port/cs42888/fsl_codec_adapter.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_cs42888.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../components/codec/cs42888/fsl_cs42888.h</FilePath>
@@ -3632,6 +3662,31 @@
               <FileName>fsl_adapter_lpi2c.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../components/i2c/fsl_adapter_lpi2c.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>codec/port/cs42888</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_codec_cs42888_adapter.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/codec/port/cs42888/fsl_codec_cs42888_adapter.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_codec_cs42888_adapter.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/codec/port/cs42888/fsl_codec_cs42888_adapter.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>codec/port</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_codec_adapter.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/codec/port/fsl_codec_adapter.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -3664,9 +3719,19 @@
               <FilePath>../../../../../../middleware/fatfs/source/diskio.c</FilePath>
             </File>
             <File>
+              <FileName>diskio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/fatfs/source/diskio.h</FilePath>
+            </File>
+            <File>
               <FileName>ff.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/fatfs/source/ff.c</FilePath>
+            </File>
+            <File>
+              <FileName>ff.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/fatfs/source/ff.h</FilePath>
             </File>
             <File>
               <FileName>ffsystem.c</FileName>
@@ -3678,30 +3743,20 @@
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/fatfs/source/ffunicode.c</FilePath>
             </File>
-            <File>
-              <FileName>diskio.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/fatfs/source/diskio.h</FilePath>
-            </File>
-            <File>
-              <FileName>ff.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/fatfs/source/ff.h</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>
           <GroupName>fatfs/source/fsl_sd_disk</GroupName>
           <Files>
             <File>
-              <FileName>fsl_sd_disk.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/fatfs/source/fsl_sd_disk/fsl_sd_disk.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_sd_disk.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/fatfs/source/fsl_sd_disk/fsl_sd_disk.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_sd_disk.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/fatfs/source/fsl_sd_disk/fsl_sd_disk.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -3804,64 +3859,49 @@
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
-              <FileName>core_cm7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/core_cm7.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
-            </File>
-            <File>
               <FileName>cmsis_armcc.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_armcc.h</FilePath>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_armclang.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_armclang.h</FilePath>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_armclang_ltm.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_armclang_ltm.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_gcc.h</FilePath>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armclang_ltm.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_compiler.h</FilePath>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
             </File>
             <File>
-              <FileName>cmsis_version.h</FileName>
+              <FileName>cmsis_gcc.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_version.h</FilePath>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_iccarm.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_iccarm.h</FilePath>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
-              <FileName>arm_common_tables.h</FileName>
+              <FileName>cmsis_version.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/arm_common_tables.h</FilePath>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_version.h</FilePath>
             </File>
             <File>
-              <FileName>arm_const_structs.h</FileName>
+              <FileName>core_cm7.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/arm_const_structs.h</FilePath>
+              <FilePath>../../../../../../CMSIS/Core/Include/core_cm7.h</FilePath>
             </File>
             <File>
-              <FileName>arm_math.h</FileName>
+              <FileName>mpu_armv7.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/arm_math.h</FilePath>
+              <FilePath>../../../../../../CMSIS/Core/Include/mpu_armv7.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -4232,9 +4272,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, NDEBUG, CPU_MIMXRT1052DVL6B, FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, SDK_I2C_BASED_COMPONENT_USED=1, SD_ENABLED, CODEC_CS42888_ENABLE</Define>
+              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, NDEBUG, CPU_MIMXRT1052DVL6B, FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, SDK_I2C_BASED_COMPONENT_USED=1, SD_ENABLED, CODEC_CS42888_ENABLE, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../devices/MIMXRT1052/drivers;../../../../../../middleware/sdmmc/sd;../../../../../../middleware/sdmmc/common;../../../../../../middleware/sdmmc/host/usdhc;../../../../../../components/codec/i2c;../../../../../../components/i2c;../../../../../../components/codec;../../../../../../components/codec/port/cs42888;../../../../../../devices/MIMXRT1052/utilities/debug_console_lite;../../../../../../components/codec/cs42888;../../../../../../middleware/fatfs/source;../../../../../../middleware/fatfs/source/fsl_sd_disk;../../../../../../devices/MIMXRT1052;../../../../../../components/uart;../../../../../../components/lists;../../../../../../devices/MIMXRT1052/xip;../../../../xip;../../../../../../CMSIS/Include;../../../../../../middleware/sdmmc/osa;../../../../../../components/osa</IncludePath>
+              <IncludePath>..;../../../../../../devices/MIMXRT1052/drivers;../../../../../../middleware/sdmmc/sd;../../../../../../middleware/sdmmc/common;../../../../../../middleware/sdmmc/host/usdhc;../../../../../../components/codec/i2c;../../../../../../components/i2c;../../../../../../components/codec;../../../../../../components/codec/port/cs42888;../../../../../../components/codec/port;../../../../../../devices/MIMXRT1052/utilities/debug_console_lite;../../../../../../middleware/fatfs/source;../../../../../../middleware/fatfs/source/fsl_sd_disk;../../../../../../devices/MIMXRT1052;../../../../../../components/uart;../../../../../../components/lists;../../../../../../devices/MIMXRT1052/xip;../../../../xip;../../../../../../CMSIS/Core/Include;../../../../../../middleware/sdmmc/osa;../../../../../../components/osa;../../../../../../components/codec/cs42888</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -4268,7 +4308,7 @@
             <ScatterFile>MIMXRT1052xxxxx_flexspi_nor.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --predefine="-DXIP_BOOT_HEADER_ENABLE=1"</Misc>
+            <Misc>--remove --entry=Reset_Handler --predefine="-DXIP_BOOT_HEADER_ENABLE=1"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -4378,6 +4418,16 @@
               <FileName>fsl_common.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT1052/drivers/fsl_common.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1052/drivers/fsl_common_arm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1052/drivers/fsl_common_arm.h</FilePath>
             </File>
             <File>
               <FileName>fsl_cache.c</FileName>
@@ -4575,16 +4625,6 @@
               <FilePath>../../../../../../components/codec/fsl_codec_common.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_codec_adapter.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/codec/port/cs42888/fsl_codec_adapter.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_codec_adapter.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/codec/port/cs42888/fsl_codec_adapter.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_cs42888.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../components/codec/cs42888/fsl_cs42888.h</FilePath>
@@ -4608,6 +4648,31 @@
               <FileName>fsl_adapter_lpi2c.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../components/i2c/fsl_adapter_lpi2c.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>codec/port/cs42888</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_codec_cs42888_adapter.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/codec/port/cs42888/fsl_codec_cs42888_adapter.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_codec_cs42888_adapter.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/codec/port/cs42888/fsl_codec_cs42888_adapter.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>codec/port</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_codec_adapter.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/codec/port/fsl_codec_adapter.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -4640,9 +4705,19 @@
               <FilePath>../../../../../../middleware/fatfs/source/diskio.c</FilePath>
             </File>
             <File>
+              <FileName>diskio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/fatfs/source/diskio.h</FilePath>
+            </File>
+            <File>
               <FileName>ff.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/fatfs/source/ff.c</FilePath>
+            </File>
+            <File>
+              <FileName>ff.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/fatfs/source/ff.h</FilePath>
             </File>
             <File>
               <FileName>ffsystem.c</FileName>
@@ -4654,30 +4729,20 @@
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/fatfs/source/ffunicode.c</FilePath>
             </File>
-            <File>
-              <FileName>diskio.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/fatfs/source/diskio.h</FilePath>
-            </File>
-            <File>
-              <FileName>ff.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/fatfs/source/ff.h</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>
           <GroupName>fatfs/source/fsl_sd_disk</GroupName>
           <Files>
             <File>
-              <FileName>fsl_sd_disk.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/fatfs/source/fsl_sd_disk/fsl_sd_disk.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_sd_disk.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/fatfs/source/fsl_sd_disk/fsl_sd_disk.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_sd_disk.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/fatfs/source/fsl_sd_disk/fsl_sd_disk.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -4780,64 +4845,49 @@
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
-              <FileName>core_cm7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/core_cm7.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
-            </File>
-            <File>
               <FileName>cmsis_armcc.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_armcc.h</FilePath>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_armclang.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_armclang.h</FilePath>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_armclang_ltm.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_armclang_ltm.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_gcc.h</FilePath>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armclang_ltm.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_compiler.h</FilePath>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
             </File>
             <File>
-              <FileName>cmsis_version.h</FileName>
+              <FileName>cmsis_gcc.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_version.h</FilePath>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_iccarm.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_iccarm.h</FilePath>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
-              <FileName>arm_common_tables.h</FileName>
+              <FileName>cmsis_version.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/arm_common_tables.h</FilePath>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_version.h</FilePath>
             </File>
             <File>
-              <FileName>arm_const_structs.h</FileName>
+              <FileName>core_cm7.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/arm_const_structs.h</FilePath>
+              <FilePath>../../../../../../CMSIS/Core/Include/core_cm7.h</FilePath>
             </File>
             <File>
-              <FileName>arm_math.h</FileName>
+              <FileName>mpu_armv7.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/arm_math.h</FilePath>
+              <FilePath>../../../../../../CMSIS/Core/Include/mpu_armv7.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -5208,9 +5258,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>SKIP_SYSCLK_INIT, DATA_SECTION_IS_CACHEABLE=1, NDEBUG, CPU_MIMXRT1052DVL6B, FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, SDK_I2C_BASED_COMPONENT_USED=1, SD_ENABLED, CODEC_CS42888_ENABLE</Define>
+              <Define>SKIP_SYSCLK_INIT, DATA_SECTION_IS_CACHEABLE=1, NDEBUG, CPU_MIMXRT1052DVL6B, FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, SDK_I2C_BASED_COMPONENT_USED=1, SD_ENABLED, CODEC_CS42888_ENABLE, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../devices/MIMXRT1052/drivers;../../../../../../middleware/sdmmc/sd;../../../../../../middleware/sdmmc/common;../../../../../../middleware/sdmmc/host/usdhc;../../../../../../components/codec/i2c;../../../../../../components/i2c;../../../../../../components/codec;../../../../../../components/codec/port/cs42888;../../../../../../devices/MIMXRT1052/utilities/debug_console_lite;../../../../../../components/codec/cs42888;../../../../../../middleware/fatfs/source;../../../../../../middleware/fatfs/source/fsl_sd_disk;../../../../../../devices/MIMXRT1052;../../../../../../components/uart;../../../../../../components/lists;../../../../../../devices/MIMXRT1052/xip;../../../../xip;../../../../../../CMSIS/Include;../../../../../../middleware/sdmmc/osa;../../../../../../components/osa</IncludePath>
+              <IncludePath>..;../../../../../../devices/MIMXRT1052/drivers;../../../../../../middleware/sdmmc/sd;../../../../../../middleware/sdmmc/common;../../../../../../middleware/sdmmc/host/usdhc;../../../../../../components/codec/i2c;../../../../../../components/i2c;../../../../../../components/codec;../../../../../../components/codec/port/cs42888;../../../../../../components/codec/port;../../../../../../devices/MIMXRT1052/utilities/debug_console_lite;../../../../../../middleware/fatfs/source;../../../../../../middleware/fatfs/source/fsl_sd_disk;../../../../../../devices/MIMXRT1052;../../../../../../components/uart;../../../../../../components/lists;../../../../../../devices/MIMXRT1052/xip;../../../../xip;../../../../../../CMSIS/Core/Include;../../../../../../middleware/sdmmc/osa;../../../../../../components/osa;../../../../../../components/codec/cs42888</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -5244,7 +5294,7 @@
             <ScatterFile>MIMXRT1052xxxxx_sdram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove</Misc>
+            <Misc>--remove --entry=Reset_Handler</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -5354,6 +5404,16 @@
               <FileName>fsl_common.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT1052/drivers/fsl_common.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1052/drivers/fsl_common_arm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1052/drivers/fsl_common_arm.h</FilePath>
             </File>
             <File>
               <FileName>fsl_cache.c</FileName>
@@ -5551,16 +5611,6 @@
               <FilePath>../../../../../../components/codec/fsl_codec_common.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_codec_adapter.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/codec/port/cs42888/fsl_codec_adapter.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_codec_adapter.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/codec/port/cs42888/fsl_codec_adapter.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_cs42888.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../components/codec/cs42888/fsl_cs42888.h</FilePath>
@@ -5584,6 +5634,31 @@
               <FileName>fsl_adapter_lpi2c.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../components/i2c/fsl_adapter_lpi2c.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>codec/port/cs42888</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_codec_cs42888_adapter.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/codec/port/cs42888/fsl_codec_cs42888_adapter.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_codec_cs42888_adapter.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/codec/port/cs42888/fsl_codec_cs42888_adapter.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>codec/port</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_codec_adapter.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/codec/port/fsl_codec_adapter.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -5616,9 +5691,19 @@
               <FilePath>../../../../../../middleware/fatfs/source/diskio.c</FilePath>
             </File>
             <File>
+              <FileName>diskio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/fatfs/source/diskio.h</FilePath>
+            </File>
+            <File>
               <FileName>ff.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/fatfs/source/ff.c</FilePath>
+            </File>
+            <File>
+              <FileName>ff.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/fatfs/source/ff.h</FilePath>
             </File>
             <File>
               <FileName>ffsystem.c</FileName>
@@ -5630,30 +5715,20 @@
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/fatfs/source/ffunicode.c</FilePath>
             </File>
-            <File>
-              <FileName>diskio.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/fatfs/source/diskio.h</FilePath>
-            </File>
-            <File>
-              <FileName>ff.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/fatfs/source/ff.h</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>
           <GroupName>fatfs/source/fsl_sd_disk</GroupName>
           <Files>
             <File>
-              <FileName>fsl_sd_disk.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/fatfs/source/fsl_sd_disk/fsl_sd_disk.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_sd_disk.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/fatfs/source/fsl_sd_disk/fsl_sd_disk.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_sd_disk.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/fatfs/source/fsl_sd_disk/fsl_sd_disk.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -5756,64 +5831,49 @@
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
-              <FileName>core_cm7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/core_cm7.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
-            </File>
-            <File>
               <FileName>cmsis_armcc.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_armcc.h</FilePath>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_armclang.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_armclang.h</FilePath>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_armclang_ltm.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_armclang_ltm.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_gcc.h</FilePath>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armclang_ltm.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_compiler.h</FilePath>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
             </File>
             <File>
-              <FileName>cmsis_version.h</FileName>
+              <FileName>cmsis_gcc.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_version.h</FilePath>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_iccarm.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_iccarm.h</FilePath>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
-              <FileName>arm_common_tables.h</FileName>
+              <FileName>cmsis_version.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/arm_common_tables.h</FilePath>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_version.h</FilePath>
             </File>
             <File>
-              <FileName>arm_const_structs.h</FileName>
+              <FileName>core_cm7.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/arm_const_structs.h</FilePath>
+              <FilePath>../../../../../../CMSIS/Core/Include/core_cm7.h</FilePath>
             </File>
             <File>
-              <FileName>arm_math.h</FileName>
+              <FileName>mpu_armv7.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/arm_math.h</FilePath>
+              <FilePath>../../../../../../CMSIS/Core/Include/mpu_armv7.h</FilePath>
             </File>
           </Files>
         </Group>

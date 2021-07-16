@@ -26,7 +26,7 @@ DECL_STATIC UINT32 em_runtime_debug_flag[EM_MAX_MODULE_PAGE_COUNT];
 #endif /* EM_ENABLE_DISABLE_RUNTIME_DEBUG */
 
 /* Hack. TBD */
-#define EM_MODULE_ID_DEBUG                  0
+#define EM_MODULE_ID_DEBUG                  0U
 /* ------------------------------------------------- Functions */
 
 void EM_debug_init (void)
@@ -39,12 +39,12 @@ void EM_debug_init (void)
 
 #ifndef EM_DISABLE_DEBUG_LOG_ON_STARTUP
     /* Enable all module debug log - by default */
-    enable_all_bit_mask = 0xFFFFFFFF;
+    enable_all_bit_mask = 0xFFFFFFFFU;
 #else
-    enable_all_bit_mask = 0x00000000;
+    enable_all_bit_mask = 0x00000000U;
 #endif /* EM_DISABLE_DEBUG_LOG_ON_STARTUP */
 
-    for (page_index = 0; page_index < EM_MAX_MODULE_PAGE_COUNT; page_index++)
+    for (page_index = 0U; page_index < EM_MAX_MODULE_PAGE_COUNT; page_index++)
     {
         em_runtime_debug_flag[page_index] = enable_all_bit_mask;
     }
@@ -84,34 +84,34 @@ INT32 EM_debug_printf(UCHAR msg_type, UINT32 module_id, const CHAR *fmt, ...)
 #endif /* EM_ENABLE_DISABLE_RUNTIME_DEBUG */
 
     va_start (parg, fmt);
-    DbgConsole_Printf (fmt, parg);
+    (void) DbgConsole_Printf (fmt, parg);
     va_end (parg);
 
-    return 0;
+    return 0U;
 }
 
 INT32 EM_debug_dump_bytes(UINT32 module_id, UCHAR *buffer, UINT32 length)
 {
-    char hex_stream[49];
-    char char_stream[17];
+    char hex_stream[49U];
+    char char_stream[17U];
     UINT32 i;
     UINT16 offset, count;
     UCHAR c;
 
-    EM_debug_dump(module_id, "-- Dumping %d Bytes --\n",
+    (void) EM_debug_dump(module_id, "-- Dumping %d Bytes --\n",
     (int)length);
 
-    EM_debug_dump(module_id,
+    (void) EM_debug_dump(module_id,
     "-------------------------------------------------------------------\n");
 
-    count = 0;
-    offset = 0;
-    for(i = 0; i < length; i ++)
+    count = 0U;
+    offset = 0U;
+    for(i = 0U; i < length; i ++)
     {
         c =  buffer[i];
-        sprintf(hex_stream + offset, "%02X ", c);
+        (void) sprintf(hex_stream + offset, "%02X ", c);
 
-        if ( (c >= 0x20) && (c <= 0x7E) )
+        if ( (c >= 0x20U) && (c <= 0x7EU) )
         {
             char_stream[count] = c;
         }
@@ -121,74 +121,74 @@ INT32 EM_debug_dump_bytes(UINT32 module_id, UCHAR *buffer, UINT32 length)
         }
 
         count ++;
-        offset += 3;
+        offset += 3U;
 
-        if(16 == count)
+        if(16U == count)
         {
             char_stream[count] = '\0';
-            count = 0;
-            offset = 0;
+            count = 0U;
+            offset = 0U;
 
-            EM_debug_dump(module_id, "%s   %s\n",
+            (void) EM_debug_dump(module_id, "%s   %s\n",
             hex_stream, char_stream);
 
-            EM_mem_set(hex_stream, 0, 49);
-            EM_mem_set(char_stream, 0, 17);
+            EM_mem_set(hex_stream, 0U, 49U);
+            EM_mem_set(char_stream, 0U, 17U);
         }
     }
 
-    if(0 != offset)
+    if(0U != offset)
     {
         char_stream[count] = '\0';
 
         /* Maintain the alignment */
-        EM_debug_dump(module_id, "%-48s   %s\n",
+        (void) EM_debug_dump(module_id, "%-48s   %s\n",
         hex_stream, char_stream);
     }
 
-    EM_debug_dump(module_id,
+    (void) EM_debug_dump(module_id,
     "-------------------------------------------------------------------\n");
 
-    return 0;
+    return 0U;
 }
 
 
 INT32 EM_debug_dump_decimal(UINT32 module_id, UCHAR *buffer, UINT32 length)
 {
-    char stream[100];
+    char stream[100U];
     UINT32 i;
     UINT16 offset, count;
 
-    EM_debug_dump(module_id, "Dumping %d Bytes (In Decimal): ------>\n",
+    (void) EM_debug_dump(module_id, "Dumping %d Bytes (In Decimal): ------>\n",
     (int)length);
 
-    count = 0;
-    offset = 0;
-    for(i = 0; i < length; i ++)
+    count = 0U;
+    offset = 0U;
+    for(i = 0U; i < length; i ++)
     {
-        sprintf(stream + offset, "%3d ", (unsigned int)buffer[i]);
+        (void) sprintf(stream + offset, "%3d ", (unsigned int)buffer[i]);
         count ++;
-        offset += 4;
+        offset += 4U;
 
-        if(16 == count)
+        if(16U == count)
         {
-            count = 0;
-            offset = 0;
+            count = 0U;
+            offset = 0U;
 
-            EM_debug_dump(module_id, "%s\n", stream);
+            (void) EM_debug_dump(module_id, "%s\n", stream);
 
-            EM_mem_set(stream, 0, 100);
+            EM_mem_set(stream, 0U, 100U);
         }
     }
 
-    if(0 != offset)
+    if(0U != offset)
     {
-        EM_debug_dump(module_id, "%s\n", stream);
+        (void) EM_debug_dump(module_id, "%s\n", stream);
     }
 
-    EM_debug_dump(module_id, "<------------------------------------>\n");
+    (void) EM_debug_dump(module_id, "<------------------------------------>\n");
 
-    return 0;
+    return 0U;
 }
 #endif /* EM_DISABLE_ALL_DEBUG */
 
@@ -232,14 +232,14 @@ void EM_update_module_debug_flag(UINT32 module_id, UCHAR flag)
     {
         if (EM_DEBUG_ENABLE == flag)
         {
-            module_bit_mask = 0xFFFFFFFF;
+            module_bit_mask = 0xFFFFFFFFU;
         }
         else
         {
-            module_bit_mask = 0x00000000;
+            module_bit_mask = 0x00000000U;
         }
 
-        for (page_index = 0; page_index < EM_MAX_MODULE_PAGE_COUNT; page_index++)
+        for (page_index = 0U; page_index < EM_MAX_MODULE_PAGE_COUNT; page_index++)
         {
             em_runtime_debug_flag[page_index] = module_bit_mask;
         }

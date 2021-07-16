@@ -1,6 +1,5 @@
 /*
- * Copyright 2014-2015 Freescale Semiconductor, Inc.
- * Copyright 2016-2018 NXP
+ * Copyright 2016-2021 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -26,6 +25,17 @@ enum _target_version_constants
     kTarget_Version_Major = 1,
     kTarget_Version_Minor = 0,
     kTarget_Version_Bugfix = 0
+};
+
+//! @brief Memory Map index constants
+enum
+{
+    kIndexSRAM = 0,
+    kIndexDTCM = 1,
+    kIndexOCRAM = 2,
+    kIndexFlexSpiNor = 3,
+    kIndexSemcNor = 4,
+    kSRAMSeparatrix = (uint32_t)0x20000000 //!< This value is the start address of SRAM_U
 };
 
 //! @brief FlexSPI supported speed defintions

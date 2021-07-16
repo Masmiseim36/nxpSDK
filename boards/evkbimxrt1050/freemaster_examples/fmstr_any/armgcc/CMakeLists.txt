@@ -1,6 +1,6 @@
 # CROSS COMPILER SETTING
 SET(CMAKE_SYSTEM_NAME Generic)
-CMAKE_MINIMUM_REQUIRED (VERSION 3.1.1)
+CMAKE_MINIMUM_REQUIRED (VERSION 3.10.0)
 
 # THE VERSION NUMBER
 SET (Tutorial_VERSION_MAJOR 1)
@@ -62,13 +62,14 @@ target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
 set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../devices/MIMXRT1052/drivers
     ${ProjDirPath}/../../../../../middleware/freemaster
+    ${ProjDirPath}/../../../../../devices/MIMXRT1052/utilities/debug_console_lite
     ${ProjDirPath}/../../../../../devices/MIMXRT1052
     ${ProjDirPath}/../../../../../components/uart
+    ${ProjDirPath}/../../../../../components/serial_manager
     ${ProjDirPath}/../../../../../components/lists
     ${ProjDirPath}/../../../../../devices/MIMXRT1052/xip
     ${ProjDirPath}/../../../xip
-    ${ProjDirPath}/../../../../../devices/MIMXRT1052/utilities/debug_console_lite
-    ${ProjDirPath}/../../../../../CMSIS/Include
+    ${ProjDirPath}/../../../../../CMSIS/Core/Include
     ${ProjDirPath}/../../../../../devices/MIMXRT1052/utilities
 )
 
@@ -79,6 +80,10 @@ include(driver_lpuart_MIMXRT1052)
 
 include(middleware_fmstr_MIMXRT1052)
 
+include(utility_debug_console_lite_MIMXRT1052)
+
+include(utility_assert_lite_MIMXRT1052)
+
 include(driver_clock_MIMXRT1052)
 
 include(driver_common_MIMXRT1052)
@@ -87,7 +92,11 @@ include(device_MIMXRT1052_CMSIS_MIMXRT1052)
 
 include(component_lpuart_adapter_MIMXRT1052)
 
+include(component_serial_manager_MIMXRT1052)
+
 include(component_lists_MIMXRT1052)
+
+include(component_serial_manager_uart_MIMXRT1052)
 
 include(device_MIMXRT1052_startup_MIMXRT1052)
 
@@ -97,19 +106,11 @@ include(driver_igpio_MIMXRT1052)
 
 include(driver_xip_device_MIMXRT1052)
 
-include(driver_xip_board_MIMXRT1052)
+include(driver_xip_board_evkbimxrt1050_MIMXRT1052)
 
 include(middleware_fmstr_platform_gen32le_MIMXRT1052)
 
-include(utility_debug_console_lite_MIMXRT1052)
-
-include(utility_assert_lite_MIMXRT1052)
-
-include(CMSIS_Include_core_cm7_MIMXRT1052)
-
-include(CMSIS_Include_common_MIMXRT1052)
-
-include(CMSIS_Include_dsp_MIMXRT1052)
+include(CMSIS_Include_core_cm_MIMXRT1052)
 
 include(utilities_misc_utilities_MIMXRT1052)
 

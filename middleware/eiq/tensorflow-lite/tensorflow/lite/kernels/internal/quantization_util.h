@@ -12,10 +12,6 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 ==============================================================================*/
-
-/* File modified by NXP. Changes are described in file
-   /middleware/eiq/tensorflow-lite/readme.txt in section "Release notes" */
-
 #ifndef TENSORFLOW_LITE_KERNELS_INTERNAL_QUANTIZATION_UTIL_H_
 #define TENSORFLOW_LITE_KERNELS_INTERNAL_QUANTIZATION_UTIL_H_
 
@@ -34,8 +30,8 @@ namespace tflite {
 template <typename T>
 QuantizationParams ChooseQuantizationParams(double rmin, double rmax,
                                             bool narrow_range) {
-  const T qmin = ::std::numeric_limits<T>::min() + (narrow_range ? 1 : 0);
-  const T qmax = ::std::numeric_limits<T>::max();
+  const T qmin = std::numeric_limits<T>::min() + (narrow_range ? 1 : 0);
+  const T qmax = std::numeric_limits<T>::max();
   const double qmin_double = qmin;
   const double qmax_double = qmax;
   // 0 should always be a representable value. Let's assume that the initial
@@ -68,9 +64,9 @@ QuantizationParams ChooseQuantizationParams(double rmin, double rmax,
   const double zero_point_from_min = qmin_double - rmin / scale;
   const double zero_point_from_max = qmax_double - rmax / scale;
   const double zero_point_from_min_error =
-      ::std::abs(qmin_double) + ::std::abs(rmin / scale);
+      std::abs(qmin_double) + std::abs(rmin / scale);
   const double zero_point_from_max_error =
-      ::std::abs(qmax_double) + ::std::abs(rmax / scale);
+      std::abs(qmax_double) + std::abs(rmax / scale);
 
   const double zero_point_double =
       zero_point_from_min_error < zero_point_from_max_error
@@ -130,46 +126,46 @@ QuantizationParams ChooseQuantizationParams(double rmin, double rmax) {
 // TODO(sfeuz): Replace by absl::SafeCast once available.
 template <class IntOut, class FloatIn>
 IntOut SafeCast(FloatIn x) {
-  static_assert(!::std::numeric_limits<FloatIn>::is_integer,
+  static_assert(!std::numeric_limits<FloatIn>::is_integer,
                 "FloatIn is integer");
-  static_assert(::std::numeric_limits<IntOut>::is_integer,
+  static_assert(std::numeric_limits<IntOut>::is_integer,
                 "IntOut is not integer");
-  static_assert(::std::numeric_limits<IntOut>::radix == 2, "IntOut is base 2");
+  static_assert(std::numeric_limits<IntOut>::radix == 2, "IntOut is base 2");
 
   // Special case NaN, for which the logic below doesn't work.
-  if (::std::isnan(x)) {
+  if (std::isnan(x)) {
     return 0;
   }
 
   // Negative values all clip to zero for unsigned results.
-  if (!::std::numeric_limits<IntOut>::is_signed && x < 0) {
+  if (!std::numeric_limits<IntOut>::is_signed && x < 0) {
     return 0;
   }
 
   // Handle infinities.
-  if (::std::isinf(x)) {
-    return x < 0 ? ::std::numeric_limits<IntOut>::min()
-                 : ::std::numeric_limits<IntOut>::max();
+  if (std::isinf(x)) {
+    return x < 0 ? std::numeric_limits<IntOut>::min()
+                 : std::numeric_limits<IntOut>::max();
   }
 
   // Set exp such that x == f * 2^exp for some f with |f| in [0.5, 1.0),
   // unless x is zero in which case exp == 0. Note that this implies that the
   // magnitude of x is strictly less than 2^exp.
   int exp = 0;
-  ::std::frexp(x, &exp);
+  std::frexp(x, &exp);
 
   // Let N be the number of non-sign bits in the representation of IntOut. If
   // the magnitude of x is strictly less than 2^N, the truncated version of x
   // is representable as IntOut. The only representable integer for which this
   // is not the case is kMin for signed types (i.e. -2^N), but that is covered
   // by the fall-through below.
-  if (exp <= ::std::numeric_limits<IntOut>::digits) {
+  if (exp <= std::numeric_limits<IntOut>::digits) {
     return x;
   }
 
   // Handle numbers with magnitude >= 2^N.
-  return x < 0 ? ::std::numeric_limits<IntOut>::min()
-               : ::std::numeric_limits<IntOut>::max();
+  return x < 0 ? std::numeric_limits<IntOut>::min()
+               : std::numeric_limits<IntOut>::max();
 }
 
 // Decompose a double multiplier into a Q0.31 int32 representation of its
@@ -179,7 +175,7 @@ IntOut SafeCast(FloatIn x) {
 // Restricted to the case where the multiplier < 1 (and non-negative).
 void QuantizeMultiplierSmallerThanOneExp(double double_multiplier,
                                          int32_t* quantized_multiplier,
-                                         int32_t* left_shift);
+                                         int* left_shift);
 
 // Decompose a double multiplier into a Q0.31 int32 representation of its
 // significand, and shift representation of its exponent.
@@ -187,7 +183,7 @@ void QuantizeMultiplierSmallerThanOneExp(double double_multiplier,
 // Restricted to the case where the multiplier > 1.
 void QuantizeMultiplierGreaterThanOne(double double_multiplier,
                                       int32_t* quantized_multiplier,
-                                      int32_t* left_shift);
+                                      int* left_shift);
 
 // Decompose a double multiplier into a Q0.31 int32 representation of its
 // significand, and shift representation of its exponent.
@@ -197,7 +193,7 @@ void QuantizeMultiplierGreaterThanOne(double double_multiplier,
 // Negative for a right-shift (when the multiplier is <1), positive for a
 // left-shift (when the multiplier is >1)
 void QuantizeMultiplier(double double_multiplier, int32_t* quantized_multiplier,
-                        int32_t* shift);
+                        int* shift);
 
 // Splits a double input value into a returned fraction, and a shift value from
 // the exponent, using only bitwise and integer operations to support
@@ -243,14 +239,14 @@ int IntegerDoubleCompare(double a, double b);
 // significand and exponent.
 void PreprocessSoftmaxScaling(double beta, double input_scale,
                               int input_integer_bits,
-                              int32_t* quantized_multiplier, int32_t* left_shift);
+                              int32_t* quantized_multiplier, int* left_shift);
 // Like PreprocessSoftmaxScaling, but inverse scaling factors also calculated.
 void PreprocessLogSoftmaxScalingExp(double beta, double input_scale,
                                     int input_integer_bits,
                                     int32_t* quantized_multiplier,
-                                    int32_t* left_shift,
+                                    int* left_shift,
                                     int32_t* reverse_scaling_divisor,
-                                    int32_t* reverse_scaling_left_shift);
+                                    int* reverse_scaling_left_shift);
 // Calculate the largest input that will result in a within-bounds intermediate
 // result within MultiplyByQuantizedMultiplierGreaterThanOne.  In other words,
 // it must not overflow before we reduce the value by multiplication by the
@@ -289,7 +285,7 @@ bool CheckedLog2(const float x, int* log2_result);
 // left-shift (when the multiplier is >1)
 void QuantizeMultiplierArray(const double* effective_scales, size_t size,
                              int32_t* effective_scale_significand,
-                             int32_t* effective_shift);
+                             int* effective_shift);
 
 }  // namespace tflite
 

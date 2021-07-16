@@ -4,67 +4,50 @@
  * For more information email info@cranksoftware.com.
  */
 
+#include <gre/sdk/greal.h>
 #include <FreeRTOS.h>
 #include <task.h>
-#include <gre/sdk/greal.h>
 
 #ifdef GRE_TARGET_TOOLCHAIN_iar
 #include <iar_dlmalloc.h>
+#endif
+
+#if (defined(GRE_TARGET_TOOLCHAIN_mcuxpresso) || defined(GRE_TARGET_TOOLCHAIN_cube))
+#include <malloc.h>
+#endif
 
 xTaskHandle		idle_handle = NULL;
-uint32_t  		cpu_usage = 0; 
+long 			tick_count = 0;
+uint64_t  		cpu_usage = 0; 
 uint32_t		cpu_idle_start = 0; 
 uint32_t		cpu_idle_spent = 0; 
 uint32_t		cpu_idle_total = 0;
-uint32_t 		call_count = 0; 
-
-size_t			initial_mem = 0; 
-size_t			average_mem = 0; 
-size_t 			highest_mem = 0; 
-uint64_t		total_mem = 0; 
-
 
 void 
 vApplicationIdleHook(void) {
 	if( idle_handle == NULL ) {
+		/**
+		 * Store the handle to the idle task. 
+		 */
 		idle_handle = xTaskGetCurrentTaskHandle();
 	}
 }
 
 void 
 vApplicationTickHook (void) {
-	static int tick_count = 0;
-	
-	if(tick_count++ > 1000) {
-		tick_count = 0;
-		
-		if(cpu_idle_start != 0) {
-			return; 
-		}
-		
-		if(cpu_idle_total > 1000) {
-			cpu_idle_total = 1000;
-		}
-	
-		cpu_usage += (100 - (cpu_idle_total * 100) / 1000);
-		cpu_idle_total = 0;
-		call_count++; 
-	}
+	tick_count++; 
 }
 
 void 
-StartIdleMonitor (void) {
-  if(xTaskGetCurrentTaskHandle() == xTaskGetIdleTaskHandle()) {
+greal_task_switched_in (void) {
+  if(xTaskGetCurrentTaskHandle() == idle_handle) {
     cpu_idle_start = xTaskGetTickCountFromISR();
   }
 }
 
 void 
-EndIdleMonitor (void) {
+greal_task_switched_out (void) {
 	if(xTaskGetCurrentTaskHandle() == idle_handle) {
-		/**
-		 * Store the handle to the idle task. 
-		 */
     	cpu_idle_spent = xTaskGetTickCountFromISR() - cpu_idle_start;
 		cpu_idle_start = 0; 
     	cpu_idle_total += cpu_idle_spent; 
@@ -74,7 +57,7 @@ EndIdleMonitor (void) {
 void *
 greal_setup_metrics(void) {
 	/**
-	 * Not implemented.
+	 * Not implemented as this is not needed on FreeRTOS platforms.
 	 */
 	return NULL; 
 }
@@ -82,7 +65,7 @@ greal_setup_metrics(void) {
 void 
 greal_teardown_metrics(void *data) {
 	/**
-	 * Not implemented.
+	 * Not implemented as this is not needed on FreeRTOS platforms.
 	 */
 	return; 
 }
@@ -90,91 +73,41 @@ greal_teardown_metrics(void *data) {
 
 long 
 greal_get_process_memory_usage(void *data) {
+#if defined GRE_TARGET_TOOLCHAIN_iar
 	struct mallinfo nm = __iar_dlmallinfo();
 	return nm.uordblks; 
-}
+#elif (defined(GRE_TARGET_TOOLCHAIN_mcuxpresso) || defined(GRE_TARGET_TOOLCHAIN_cube))
+	struct mallinfo minfo;
+	long used;
 
-long 
-greal_get_heap_memory_usage(void *data) {
-	/**
-	 * Not implemented.
-	 */
-	return 0; 
-}
+	minfo = mallinfo();
 
-long 
-greal_get_sbengine_cpu_time(void *data) {
-	return cpu_usage * portTICK_RATE_MS ; 
-}
+	used = minfo.uordblks;
 
+	//This field is mis-leading and depends significantly on the implementation
+	used += minfo.usmblks;
+
+	return used;
 #else
-
-void *
-greal_setup_metrics(void) {
-	/**
-	 * Not implemented.
-	 */
-	return NULL; 
-}
-
-void 
-greal_teardown_metrics(void *data) {
-	/**
-	 * Not implemented.
-	 */
-	return; 
-}
-
-long 
-greal_get_process_memory_usage(void *data) {
-	/**
-	 * Not implemented.
-	 */
 	return 0; 
+#endif
 }
 
 long 
 greal_get_heap_memory_usage(void *data) {
 	/**
-	 * Not implemented.
+	 * Not implemented as this value doesn't make sense on FreeRTOS platforms.
 	 */
 	return 0; 
 }
 
-long  
+long 
 greal_get_sbengine_cpu_time(void *data) {
-	/**
-	 * Not implemented.
-	 */
-	return 0; 
+	//RJD:  This API is expecting the total number of milliseconds that 
+	// the app has been running.  Also, this currently isn't a great measurement as it
+	// just reports the time that the system is not idle. 
+	cpu_usage += tick_count - cpu_idle_total;
+	tick_count = 0; 
+	cpu_idle_total = 0; 
+	return cpu_usage * portTICK_PERIOD_MS; 
 }
-
-void 
-vApplicationIdleHook(void) {
-	/**
-	 * Not implemented.
-	 */
-}
-
-void 
-vApplicationTickHook (void) {
-	/**
-	 * Not implemented.
-	 */
-}
-
-void 
-StartIdleMonitor (void) {
-	/**
-	 * Not implemented.
-	 */
-}
-
-void 
-EndIdleMonitor (void) {
-	/**
-	 * Not implemented.
-	 */
-}
-
-#endif

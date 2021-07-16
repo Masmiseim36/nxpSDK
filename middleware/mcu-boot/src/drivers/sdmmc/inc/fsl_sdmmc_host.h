@@ -1,35 +1,8 @@
 /*
- * The Clear BSD License
- * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2021 NXP
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted (subject to the limitations in the disclaimer below) provided
- * that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of the copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #ifndef _FSL_SDMMC_HOST_H
@@ -38,11 +11,11 @@
 #include "fsl_common.h"
 //#include "board.h"
 #if defined(FSL_FEATURE_SOC_SDHC_COUNT) && FSL_FEATURE_SOC_SDHC_COUNT > 0U
-#include "fsl_sdhc.h"
+#include "bl_sdhc.h"
 #elif defined(FSL_FEATURE_SOC_SDIF_COUNT) && FSL_FEATURE_SOC_SDIF_COUNT > 0U
-#include "fsl_sdif.h"
+#include "bl_sdif.h"
 #elif defined(FSL_FEATURE_SOC_USDHC_COUNT) && FSL_FEATURE_SOC_USDHC_COUNT > 0U
-#include "usdhc/fsl_usdhc.h"
+#include "bl_usdhc.h"
 #if (FSL_FEATURE_SOC_IOMUXC_COUNT != 0U)
 #include "fsl_iomuxc.h"
 #else
@@ -256,7 +229,7 @@ enum _host_capability
 #define SDHC_ADMA_TABLE_WORDS (8U)
 
 /*********************************************************SDIF**********************************************************/
-#elif(defined(FSL_FEATURE_SOC_SDIF_COUNT) && (FSL_FEATURE_SOC_SDIF_COUNT > 0U))
+#elif (defined(FSL_FEATURE_SOC_SDIF_COUNT) && (FSL_FEATURE_SOC_SDIF_COUNT > 0U))
 
 /*define host baseaddr ,clk freq, IRQ number*/
 #define MMC_HOST_BASEADDR BOARD_SDIF_BASEADDR
@@ -405,7 +378,7 @@ enum _host_capability
 #define SDMMCHOST_DMA_BUFFER_ADDR_ALIGN (4U)
 
 /*********************************************************USDHC**********************************************************/
-#elif(defined(FSL_FEATURE_SOC_USDHC_COUNT) && (FSL_FEATURE_SOC_USDHC_COUNT > 0U))
+#elif (defined(FSL_FEATURE_SOC_USDHC_COUNT) && (FSL_FEATURE_SOC_USDHC_COUNT > 0U))
 
 /*define host baseaddr ,clk freq, IRQ number*/
 #define MMC_HOST_BASEADDR BOARD_MMC_HOST_BASEADDR
@@ -617,8 +590,8 @@ enum _host_capability
 typedef void (*sdmmchost_cd_callback_t)(bool isInserted, void *userData);
 
 /*! @brief host Endian mode
-* corresponding to driver define
-*/
+ * corresponding to driver define
+ */
 enum _sdmmchost_endian_mode
 {
     kSDMMCHOST_EndianModeBig = 0U,         /*!< Big endian mode */
@@ -664,95 +637,96 @@ typedef struct _sdmmchost_pwr_card
  * API
  ******************************************************************************/
 #if defined(__cplusplus)
-extern "C" {
+extern "C"
+{
 #endif
 
-/*!
- * @name adaptor function
- * @{
- */
+    /*!
+     * @name adaptor function
+     * @{
+     */
 
-/*!
- * @brief host not support function, this function is used for host not support feature
- * @param  void parameter ,used to avoid build warning
- * @retval kStatus_Fail ,host do not suppport
- */
-static inline status_t SDMMCHOST_NotSupport(void *parameter)
-{
-    parameter = parameter;
-    return kStatus_Success;
-}
+    /*!
+     * @brief host not support function, this function is used for host not support feature
+     * @param  void parameter ,used to avoid build warning
+     * @retval kStatus_Fail ,host do not suppport
+     */
+    static inline status_t SDMMCHOST_NotSupport(void *parameter)
+    {
+        parameter = parameter;
+        return kStatus_Success;
+    }
 
-/*!
- * @brief Detect card insert, only need for SD cases.
- * @param base the pointer to host base address
- * @param cd card detect configuration
- * @param waitCardStatus status which user want to wait
- * @retval kStatus_Success detect card insert
- * @retval kStatus_Fail card insert event fail
- */
-status_t SDMMCHOST_WaitCardDetectStatus(SDMMCHOST_TYPE *hostBase,
-                                        const sdmmchost_detect_card_t *cd,
-                                        bool waitCardStatus);
+    /*!
+     * @brief Detect card insert, only need for SD cases.
+     * @param base the pointer to host base address
+     * @param cd card detect configuration
+     * @param waitCardStatus status which user want to wait
+     * @retval kStatus_Success detect card insert
+     * @retval kStatus_Fail card insert event fail
+     */
+    status_t SDMMCHOST_WaitCardDetectStatus(SDMMCHOST_TYPE *hostBase,
+                                            const sdmmchost_detect_card_t *cd,
+                                            bool waitCardStatus);
 
-/*!
- * @brief Check card is present or not., only used for ROM
- * @param base the pointer to host base address
- * @param card detect configuration
- * @retval true card is present
- * @retval false card is not present
- */
-bool SDMMCHOST_BL_IsCardPresent(SDMMCHOST_TYPE *base, const sdmmchost_detect_card_type_t cdType);
+    /*!
+     * @brief Check card is present or not., only used for ROM
+     * @param base the pointer to host base address
+     * @param card detect configuration
+     * @retval true card is present
+     * @retval false card is not present
+     */
+    bool SDMMCHOST_BL_IsCardPresent(SDMMCHOST_TYPE *base, const sdmmchost_detect_card_type_t cdType);
 
-/*!
- * @brief check card is present or not.
- * @retval true card is present
- * @retval false card is not present
- */
-bool SDMMCHOST_IsCardPresent(void);
+    /*!
+     * @brief check card is present or not.
+     * @retval true card is present
+     * @retval false card is not present
+     */
+    bool SDMMCHOST_IsCardPresent(void);
 
-/*!
- * @brief Init host controller.
- * @param host the pointer to host structure in card structure.
- * @param userData specific user data
- * @retval kStatus_Success host init success
- * @retval kStatus_Fail event fail
- */
-status_t SDMMCHOST_Init(SDMMCHOST_CONFIG *host, void *userData);
+    /*!
+     * @brief Init host controller.
+     * @param host the pointer to host structure in card structure.
+     * @param userData specific user data
+     * @retval kStatus_Success host init success
+     * @retval kStatus_Fail event fail
+     */
+    status_t SDMMCHOST_Init(SDMMCHOST_CONFIG *host, void *userData);
 
-/*!
- * @brief reset host controller.
- * @param host base address.
- */
-void SDMMCHOST_Reset(SDMMCHOST_TYPE *base);
+    /*!
+     * @brief reset host controller.
+     * @param host base address.
+     */
+    void SDMMCHOST_Reset(SDMMCHOST_TYPE *base);
 
-/*!
- * @brief Deinit host controller.
- * @param host the pointer to host structure in card structure.
- */
-void SDMMCHOST_Deinit(void *host);
+    /*!
+     * @brief Deinit host controller.
+     * @param host the pointer to host structure in card structure.
+     */
+    void SDMMCHOST_Deinit(void *host);
 
-/*!
- * @brief host power off card function.
- * @param base host base address.
- * @param pwr depend on user define power configuration.
- */
-void SDMMCHOST_PowerOffCard(SDMMCHOST_TYPE *base, const sdmmchost_pwr_card_t *pwr);
+    /*!
+     * @brief host power off card function.
+     * @param base host base address.
+     * @param pwr depend on user define power configuration.
+     */
+    void SDMMCHOST_PowerOffCard(SDMMCHOST_TYPE *base, const sdmmchost_pwr_card_t *pwr);
 
-/*!
- * @brief host power on card function.
- * @param base host base address.
- * @param pwr depend on user define power configuration.
- */
-void SDMMCHOST_PowerOnCard(SDMMCHOST_TYPE *base, const sdmmchost_pwr_card_t *pwr);
+    /*!
+     * @brief host power on card function.
+     * @param base host base address.
+     * @param pwr depend on user define power configuration.
+     */
+    void SDMMCHOST_PowerOnCard(SDMMCHOST_TYPE *base, const sdmmchost_pwr_card_t *pwr);
 
-/*!
- * @brief SDMMC host delay function.
- * @param milliseconds delay counter.
- */
-void SDMMCHOST_Delay(uint32_t milliseconds);
+    /*!
+     * @brief SDMMC host delay function.
+     * @param milliseconds delay counter.
+     */
+    void SDMMCHOST_Delay(uint32_t milliseconds);
 
-/* @} */
+    /* @} */
 
 #if defined(__cplusplus)
 }

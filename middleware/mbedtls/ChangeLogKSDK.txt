@@ -2,7 +2,23 @@
 @page middleware_log Middleware Change Log
  
 @section mbedtls mbedTLS for MCUXpresso SDK
-  The current version of mbedTLS is based on mbedTLS 2.16.6 released 2020-04-14
+  The current version of mbedTLS is based on mbedTLS 2.26.0 released 2021-03-08
+  
+  - 2.26.0
+    - New features:
+      - Ported mbedTLS 2.26.0 to SDK.
+
+  - 2.16.6_rev5
+    - New features:
+      - Changed return type of CRYPTO_InitHardware() from void to status_t. Added check of this return value in selftest.c and benchmark.c files.
+
+  - 2.16.6_rev4
+    - New features:
+      - Added mutex for HW modules HASHCRYPT and CASPER. Enabled by MBEDTLS_THREADING_C
+
+  - 2.16.6_rev3
+    - New features:
+      - Added support for KW45 device with latest Sentinel200. Port of SSS API mbedtls implementation to KW45.
 
   - 2.16.6_rev2
     - New features:

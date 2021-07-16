@@ -63,7 +63,7 @@ typedef enum
     ev_smp_nkey_cnf = 0x10,
     ev_smp_unknown = 0xFF
 
-} EVENTS;
+} SMP_EVENTS;
 
 /* Level 0 State Defines */
 typedef enum
@@ -94,7 +94,7 @@ typedef enum
     SL_0_IN_LESC_KEY_GEN = 0x00800000,
     SL_0_W4_NKEY_DHKEY_CONF = 0x01000000
 
-} STATES_LEVEL_0;
+} SMP_STATES_LEVEL_0;
 
 #define NOP    0xFF
 

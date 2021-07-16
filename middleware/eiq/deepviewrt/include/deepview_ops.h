@@ -6,9 +6,9 @@
  *
  * Authorization to use this header is provided through a DeepViewRT license.
  *
- * @file deepview_ops.h DeepView RT Operator Kernels
+ * @file deepview_ops.h DeepViewRT Operator Kernels
  *
- * The DeepView RT Operator Kernels provide the implementations of the various
+ * The DeepViewRT Operator Kernels provide the implementations of the various
  * algorithms used in the assembly of layers.
  */
 
@@ -244,8 +244,8 @@ NN_AVAILABLE_SINCE_2_4
 NN_API
 NNError
 nn_swish(NNTensor* output, NNTensor* input);
-	
-	
+
+
 /**
  * @brief nn_prelu implements the parametric rectified linear unit.
  */
@@ -750,7 +750,7 @@ nn_resize(NNTensor* output,
           int       mode,
           bool      align_corners,
           bool      half_pixel_centers);
-	
+
 #ifdef __cplusplus
 }
 #endif

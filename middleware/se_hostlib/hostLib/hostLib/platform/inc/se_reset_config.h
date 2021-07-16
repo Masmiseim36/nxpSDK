@@ -1,12 +1,5 @@
 /* Copyright 2018-2019 NXP
- *
- * This software is owned or controlled by NXP and may only be used
- * strictly in accordance with the applicable license terms.  By expressly
- * accepting such terms or by downloading, installing, activating and/or
- * otherwise using the software, you are agreeing that you have read, and
- * that you agree to comply with and are bound by, such license terms.  If
- * you do not agree to be bound by the applicable license terms, then you
- * may not retain, install, activate or otherwise use the software.
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 #ifndef _SE_RESET_CONFIG_H
@@ -31,6 +24,9 @@
 #elif defined(CPU_MIMXRT1062DVL6A)
 #define SE05X_ENA_HOST_PORT BOARD_USER_LED_GPIO
 #define SE05X_ENA_HOST_PIN 11U
+#elif defined(CPU_MIMXRT1176DVMAA_cm7)
+#define SE05X_ENA_HOST_PORT GPIO9
+#define SE05X_ENA_HOST_PIN 4U
 #elif defined(LPC_55x)
 #define SE05X_ENA_HOST_PORT BOARD_SW2_GPIO_PORT
 #define SE05X_ENA_HOST_PIN BOARD_SW1_GPIO_PIN

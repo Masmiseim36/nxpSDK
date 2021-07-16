@@ -5818,7 +5818,6 @@ static LV_ATTRIBUTE_LARGE_CONST const uint8_t gylph_bitmap[] = {
 
 };
 
-
 /*---------------------
  *  GLYPH DESCRIPTION
  *--------------------*/
@@ -6508,8 +6507,6 @@ static const lv_font_fmt_txt_cmap_t cmaps[] =
     }
 };
 
-
-
 /*--------------------
  *  ALL CUSTOM DATA
  *--------------------*/
@@ -6527,7 +6524,6 @@ static lv_font_fmt_txt_dsc_t font_dsc = {
     .bitmap_format = 0
 };
 
-
 /*-----------------
  *  PUBLIC FONT
  *----------------*/
@@ -6541,8 +6537,11 @@ lv_font_t lv_font_dejavu_16_persian_hebrew = {
 #if !(LVGL_VERSION_MAJOR == 6 && LVGL_VERSION_MINOR == 0)
     .subpx = LV_FONT_SUBPX_NONE,
 #endif
+#if LV_VERSION_CHECK(7, 4, 0)
+    .underline_position = -1,
+    .underline_thickness = 1,
+#endif
     .dsc = &font_dsc           /*The custom font data. Will be accessed by `get_glyph_bitmap/dsc` */
 };
 
 #endif /*#if LV_FONT_DEJAVU_16_PERSIAN_HEBREW*/
-

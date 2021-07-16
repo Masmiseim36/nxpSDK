@@ -40,84 +40,84 @@
 /**
  *  HFP Unit Notification Callback Event Types
  */
-/* Connection Management Events */
-#define HFP_UNIT_CONNECT_CNF                    0x01
-#define HFP_UNIT_CONNECT_IND                    0x02
-#define HFP_UNIT_DISCONNECT_CNF                 0x03
-#define HFP_UNIT_DISCONNECT_IND                 0x04
-#define HFP_UNIT_STOP_CNF                       0x05
+/** Connection Management Events */
+#define HFP_UNIT_CONNECT_CNF                    0x01U
+#define HFP_UNIT_CONNECT_IND                    0x02U
+#define HFP_UNIT_DISCONNECT_CNF                 0x03U
+#define HFP_UNIT_DISCONNECT_IND                 0x04U
+#define HFP_UNIT_STOP_CNF                       0x05U
 
-/* Voice Call Events */
-#define HFP_UNIT_INCALL_ALERT                   0x11
-#define HFP_UNIT_CLI_DIGITS                     0x12
-#define HFP_UNIT_CALL_WAITING_IND               0x13
-#define HFP_UNIT_CALLSETUP                      0x14
-#define HFP_UNIT_NO_CALL                        0x15
-#define HFP_UNIT_CALL_ACTIVE                    0x16
-#define HFP_UNIT_SEND_DTMF_CNF                  0x17
-#define HFP_UNIT_TWC_CALL_CTRL_CNF              0x18
-#define HFP_UNIT_CALLHANGUP_CNF                 0x19
-#define HFP_UNIT_OUTCALL_CNF                    0x1A
-#define HFP_UNIT_INCALL_ACCEPT_CNF              0x1B
-#define HFP_UNIT_CHLD_MPRTY_CAP                 0x1C
+/** Voice Call Events */
+#define HFP_UNIT_INCALL_ALERT                   0x11U
+#define HFP_UNIT_CLI_DIGITS                     0x12U
+#define HFP_UNIT_CALL_WAITING_IND               0x13U
+#define HFP_UNIT_CALLSETUP                      0x14U
+#define HFP_UNIT_NO_CALL                        0x15U
+#define HFP_UNIT_CALL_ACTIVE                    0x16U
+#define HFP_UNIT_SEND_DTMF_CNF                  0x17U
+#define HFP_UNIT_TWC_CALL_CTRL_CNF              0x18U
+#define HFP_UNIT_CALLHANGUP_CNF                 0x19U
+#define HFP_UNIT_OUTCALL_CNF                    0x1AU
+#define HFP_UNIT_INCALL_ACCEPT_CNF              0x1BU
+#define HFP_UNIT_CHLD_MPRTY_CAP                 0x1CU
 
-/* Miscellaneous Indications */
-#define HFP_UNIT_AG_ERROR_IND                   0x21
-#define HFP_UNIT_BSIR_IND                       0x22
-#define HFP_UNIT_VGM_IND                        0x23
-#define HFP_UNIT_VGS_IND                        0x24
-#define HFP_UNIT_VOICE_RECOG_IND                0x25
-#define HFP_UNIT_VOICETAG_PHNUM_IND             0x26
-#define HFP_UNIT_AG_SERVICE_IND                 0x27
-#define HFP_UNIT_CIEV_SIGNAL_IND                0x28
-#define HFP_UNIT_CIEV_ROAM_IND                  0x29
-#define HFP_UNIT_CIEV_BATTCHG_IND               0x2A
-#define HFP_UNIT_PEER_IND_STATUS_CNF            0x2B
-#define HFP_UNIT_PEER_IND_STATUS_IND            0x2C
-#define HFP_UNIT_OK_IND                         0x2D
+/** Miscellaneous Indications */
+#define HFP_UNIT_AG_ERROR_IND                   0x21U
+#define HFP_UNIT_BSIR_IND                       0x22U
+#define HFP_UNIT_VGM_IND                        0x23U
+#define HFP_UNIT_VGS_IND                        0x24U
+#define HFP_UNIT_VOICE_RECOG_IND                0x25U
+#define HFP_UNIT_VOICETAG_PHNUM_IND             0x26U
+#define HFP_UNIT_AG_SERVICE_IND                 0x27U
+#define HFP_UNIT_CIEV_SIGNAL_IND                0x28U
+#define HFP_UNIT_CIEV_ROAM_IND                  0x29U
+#define HFP_UNIT_CIEV_BATTCHG_IND               0x2AU
+#define HFP_UNIT_PEER_IND_STATUS_CNF            0x2BU
+#define HFP_UNIT_PEER_IND_STATUS_IND            0x2CU
+#define HFP_UNIT_OK_IND                         0x2DU
 
-/* Confirmations for API Requests */
-#define HFP_UNIT_VREC_ENABLE_CNF                0x31
-#define HFP_UNIT_VREC_DISABLE_CNF               0x32
-#define HFP_UNIT_ECNR_CNF                       0x33
-#define HFP_UNIT_CLIP_CNF                       0x34
-#define HFP_UNIT_CCWA_CNF                       0x35
-#define HFP_UNIT_VOICETAG_PHNUM_CNF             0x36
-#define HFP_UNIT_SET_VGM_CNF                    0x37
-#define HFP_UNIT_SET_VGS_CNF                    0x38
+/** Confirmations for API Requests */
+#define HFP_UNIT_VREC_ENABLE_CNF                0x31U
+#define HFP_UNIT_VREC_DISABLE_CNF               0x32U
+#define HFP_UNIT_ECNR_CNF                       0x33U
+#define HFP_UNIT_CLIP_CNF                       0x34U
+#define HFP_UNIT_CCWA_CNF                       0x35U
+#define HFP_UNIT_VOICETAG_PHNUM_CNF             0x36U
+#define HFP_UNIT_SET_VGM_CNF                    0x37U
+#define HFP_UNIT_SET_VGS_CNF                    0x38U
 
-/* HFP-1.5 Events */
-#define HFP_UNIT_RECVD_BTRH_IND                 0x41
-#define HFP_UNIT_REQ_SUB_NUM_IND                0x42
-#define HFP_UNIT_COPS_QUERY_RESULT_IND          0x43
-#define HFP_UNIT_CURRENT_CALL_LIST_IND          0x44
-#define HFP_UNIT_CALL_HELD_IND                  0x45
-#define HFP_UNIT_CMEE_IND                       0x46
-#define HFP_UNIT_CMEE_CNF                       0x47
-#define HFP_UNIT_REQ_SUB_NUM_CNF                0x48
-#define HFP_UNIT_SET_NW_NAME_FORMAT_CNF         0x49
-#define HFP_UNIT_ADV_CALL_HOLD_CNF              0x4A
-#define HFP_UNIT_COPS_QUERY_CNF                 0x4B
-#define HFP_UNIT_CURRENT_CALL_LIST_CNF          0x4C
-#define HFP_UNIT_SEND_BTRH_CNF                  0x4D
+/** HFP-1.5 Events */
+#define HFP_UNIT_RECVD_BTRH_IND                 0x41U
+#define HFP_UNIT_REQ_SUB_NUM_IND                0x42U
+#define HFP_UNIT_COPS_QUERY_RESULT_IND          0x43U
+#define HFP_UNIT_CURRENT_CALL_LIST_IND          0x44U
+#define HFP_UNIT_CALL_HELD_IND                  0x45U
+#define HFP_UNIT_CMEE_IND                       0x46U
+#define HFP_UNIT_CMEE_CNF                       0x47U
+#define HFP_UNIT_REQ_SUB_NUM_CNF                0x48U
+#define HFP_UNIT_SET_NW_NAME_FORMAT_CNF         0x49U
+#define HFP_UNIT_ADV_CALL_HOLD_CNF              0x4AU
+#define HFP_UNIT_COPS_QUERY_CNF                 0x4BU
+#define HFP_UNIT_CURRENT_CALL_LIST_CNF          0x4CU
+#define HFP_UNIT_SEND_BTRH_CNF                  0x4DU
 
-/* HFP-1.6 Events */
-#define HFP_UNIT_BIA_CNF                        0x4E
-#define HFP_UNIT_BAC_CNF                        0x4F
-#define HFP_UNIT_BCC_CNF                        0x50
-#define HFP_UNIT_BCS_CNF                        0x51
-#define HFP_UNIT_BCS_IND                        0x52
+/** HFP-1.6 Events */
+#define HFP_UNIT_BIA_CNF                        0x4EU
+#define HFP_UNIT_BAC_CNF                        0x4FU
+#define HFP_UNIT_BCC_CNF                        0x50U
+#define HFP_UNIT_BCS_CNF                        0x51U
+#define HFP_UNIT_BCS_IND                        0x52U
 
-/* HFP-1.7 Events */
-#define HFP_UNIT_BIEV_CNF                       0x53
-#define HFP_UNIT_BIND_IND                       0x54
+/** HFP-1.7 Events */
+#define HFP_UNIT_BIEV_CNF                       0x53U
+#define HFP_UNIT_BIND_IND                       0x54U
 
-/* HFP-1.8 Events */
-#define HFP_UNIT_ENH_VREC_ENABLE_CNF            0x55
+/** HFP-1.8 Events */
+#define HFP_UNIT_ENH_VREC_ENABLE_CNF            0x55U
 
-/* Data Mode Events */
-#define HFP_UNIT_SEND_DATA_CNF                  0xE0
-#define HFP_UNIT_RECVD_DATA_IND                 0xE1
+/** Data Mode Events */
+#define HFP_UNIT_SEND_DATA_CNF                  0xE0U
+#define HFP_UNIT_RECVD_DATA_IND                 0xE1U
 /** \} */
 /**
  * \defgroup hfp_unit_defines Defines
@@ -132,87 +132,87 @@
 /**
  *  List of HFP Commands
  */
-/* Service Level Connection Commands */
-#define HFP_UNIT_AT_BRSF                        0x00
-#define HFP_UNIT_AT_CIND_TEST                   0x01
-#define HFP_UNIT_AT_CIND_READ                   0x02
-#define HFP_UNIT_AT_CMER_ENABLE                 0x03
-#define HFP_UNIT_AT_CHLDQ                       0x04
+/** Service Level Connection Commands */
+#define HFP_UNIT_AT_BRSF                        0x00U
+#define HFP_UNIT_AT_CIND_TEST                   0x01U
+#define HFP_UNIT_AT_CIND_READ                   0x02U
+#define HFP_UNIT_AT_CMER_ENABLE                 0x03U
+#define HFP_UNIT_AT_CHLDQ                       0x04U
 
-/* Commands without User Data (except SLC Commands) */
-#define HFP_UNIT_AT_CHUP                        0x05  /**< Hang up */
-#define HFP_UNIT_AT_ATA                         0x06  /**< Accept */
+/** Commands without User Data (except SLC Commands) */
+#define HFP_UNIT_AT_CHUP                        0x05U  /**< Hang up */
+#define HFP_UNIT_AT_ATA                         0x06U  /**< Accept */
 
-/* Multiparty */
-#define HFP_UNIT_AT_CHLDV0                      0x07
-#define HFP_UNIT_AT_CHLDV1                      0x08
-#define HFP_UNIT_AT_CHLDV2                      0x09
-#define HFP_UNIT_AT_CHLDV3                      0x0A
-#define HFP_UNIT_AT_CHLDV4                      0x0B
+/** Multiparty */
+#define HFP_UNIT_AT_CHLDV0                      0x07U
+#define HFP_UNIT_AT_CHLDV1                      0x08U
+#define HFP_UNIT_AT_CHLDV2                      0x09U
+#define HFP_UNIT_AT_CHLDV3                      0x0AU
+#define HFP_UNIT_AT_CHLDV4                      0x0BU
 
-/* CLIP */
-#define HFP_UNIT_AT_CLIP_ENABLE                 0x0C
-#define HFP_UNIT_AT_CLIP_DISABLE                0x0D
+/** CLIP */
+#define HFP_UNIT_AT_CLIP_ENABLE                 0x0CU
+#define HFP_UNIT_AT_CLIP_DISABLE                0x0DU
 
-/* Call Waiting */
-#define HFP_UNIT_AT_CCWAL_ENABLE                0x0E
-#define HFP_UNIT_AT_CCWAL_DISABLE               0x0F
+/** Call Waiting */
+#define HFP_UNIT_AT_CCWAL_ENABLE                0x0EU
+#define HFP_UNIT_AT_CCWAL_DISABLE               0x0FU
 
-/* Voice Recognition */
-#define HFP_UNIT_AT_BVRA_ENABLE                 0x10
-#define HFP_UNIT_AT_BVRA_DISABLE                0x11
+/** Voice Recognition */
+#define HFP_UNIT_AT_BVRA_ENABLE                 0x10U
+#define HFP_UNIT_AT_BVRA_DISABLE                0x11U
 
-#define HFP_UNIT_AT_NREC_DISABLE                0x12 /**< Disable ECNR */
-#define HFP_UNIT_AT_BINPV1                      0x13 /**< Voice Tag */
-#define HFP_UNIT_AT_BLDN                        0x14 /**< Redial */
+#define HFP_UNIT_AT_NREC_DISABLE                0x12U /**< Disable ECNR */
+#define HFP_UNIT_AT_BINPV1                      0x13U /**< Voice Tag */
+#define HFP_UNIT_AT_BLDN                        0x14U /**< Redial */
 
-/* Commands with User Data (except SLC Commands) */
-#define HFP_UNIT_AT_DD                          0x15 /**< Dial */
-#define HFP_UNIT_AT_DM                          0x16 /**< Memdial */
-#define HFP_UNIT_AT_VGS                         0x17 /**< Speaker Gain */
-#define HFP_UNIT_AT_VGM                         0x18 /**< Microphone gain */
-#define HFP_UNIT_AT_VTS                         0x19 /**< DTMF */
+/** Commands with User Data (except SLC Commands) */
+#define HFP_UNIT_AT_DD                          0x15U /**< Dial */
+#define HFP_UNIT_AT_DM                          0x16U /**< Memdial */
+#define HFP_UNIT_AT_VGS                         0x17U /**< Speaker Gain */
+#define HFP_UNIT_AT_VGM                         0x18U /**< Microphone gain */
+#define HFP_UNIT_AT_VTS                         0x19U /**< DTMF */
 
-/* HFP-1.5 Commands */
-#define HFP_UNIT_AT_CNUM                        0x1A /**< Subscriber Number */
-#define HFP_UNIT_AT_QRAH                        0x1B /**< Query Resp & Hold */
-#define HFP_UNIT_AT_S_NW_NAME_FORMAT            0x1C /**< Set NW Name Format */
-#define HFP_UNIT_AT_COPS_Q                      0x1D /**< Operator Selection */
-#define HFP_UNIT_AT_CLCC                        0x1E /**< List Current Calls */
+/** HFP-1.5 Commands */
+#define HFP_UNIT_AT_CNUM                        0x1AU /**< Subscriber Number */
+#define HFP_UNIT_AT_QRAH                        0x1BU /**< Query Resp & Hold */
+#define HFP_UNIT_AT_S_NW_NAME_FORMAT            0x1CU /**< Set NW Name Format */
+#define HFP_UNIT_AT_COPS_Q                      0x1DU /**< Operator Selection */
+#define HFP_UNIT_AT_CLCC                        0x1EU /**< List Current Calls */
 
-/* Send Response & Hold */
-#define HFP_UNIT_AT_BTRH_HOLD                   0x1F
-#define HFP_UNIT_AT_BTRH_ACCEPT                 0x20
-#define HFP_UNIT_AT_BTRH_REJECT                 0x21
+/** Send Response & Hold */
+#define HFP_UNIT_AT_BTRH_HOLD                   0x1FU
+#define HFP_UNIT_AT_BTRH_ACCEPT                 0x20U
+#define HFP_UNIT_AT_BTRH_REJECT                 0x21U
 
-/* Enhanced Error Reporting */
-#define HFP_UNIT_AT_CMEE_ENABLE                 0x22
-#define HFP_UNIT_AT_CMEE_DISABLE                0x23
+/** Enhanced Error Reporting */
+#define HFP_UNIT_AT_CMEE_ENABLE                 0x22U
+#define HFP_UNIT_AT_CMEE_DISABLE                0x23U
 
-/* Advanced Call Hold */
-#define HFP_UNIT_AT_ADV_CHLDV                   0x24
+/** Advanced Call Hold */
+#define HFP_UNIT_AT_ADV_CHLDV                   0x24U
 
-/* HFP-1.6 Commands */
-/* Individual Indicator Activation */
-#define HFP_UNIT_AT_BIA                         0x25
-/* Available Codecs */
-#define HFP_UNIT_AT_BAC                         0x26
-/* Trigger Codec Connection */
-#define HFP_UNIT_AT_BCC                         0x27
-/* Codec Confirmation */
-#define HFP_UNIT_AT_BCS                         0x28
+/** HFP-1.6 Commands */
+/** Individual Indicator Activation */
+#define HFP_UNIT_AT_BIA                         0x25U
+/** Available Codecs */
+#define HFP_UNIT_AT_BAC                         0x26U
+/** Trigger Codec Connection */
+#define HFP_UNIT_AT_BCC                         0x27U
+/** Codec Confirmation */
+#define HFP_UNIT_AT_BCS                         0x28U
 
-/* HFP-1.7 Commands */
-/* List HF Indicators to AG */
-#define HFP_UNIT_AT_BIND_LIST                   0x29
-/* Get AG Supported HF Indicators */
-#define HFP_UNIT_AT_BIND_TEST                   0x2A
-/* Read Status of HF Indicators in AG */
-#define HFP_UNIT_AT_BIND_READ                   0x2B
-/* Update HF Indicator Value */
-#define HFP_UNIT_AT_BIEV                        0x2C
+/** HFP-1.7 Commands */
+/** List HF Indicators to AG */
+#define HFP_UNIT_AT_BIND_LIST                   0x29U
+/** Get AG Supported HF Indicators */
+#define HFP_UNIT_AT_BIND_TEST                   0x2AU
+/** Read Status of HF Indicators in AG */
+#define HFP_UNIT_AT_BIND_READ                   0x2BU
+/** Update HF Indicator Value */
+#define HFP_UNIT_AT_BIEV                        0x2CU
 
-/* HFP-1.8 Commands */
+/** HFP-1.8 Commands */
 /**
  * This command is used:
  * 1. To indicate the HF Unit is ready to accept audio when the
@@ -220,120 +220,120 @@
  * 2. This command can also be used to terminate the ongoing VR session
  *    and prepare for a new session.
  */
-#define HFP_UNIT_AT_BVRA_ACCEPT_AUDIO           0x2D
+#define HFP_UNIT_AT_BVRA_ACCEPT_AUDIO           0x2DU
 
-/* Data Mode (Send String) Commands */
-#define HFP_UNIT_AT_SEND_STRING                 0xE0
+/** Data Mode (Send String) Commands */
+#define HFP_UNIT_AT_SEND_STRING                 0xE0U
 
 /**
  *  Type of HFP Unit Device (HFP_UNIT_DEVICE_TYPE)
  */
-#define HFP_UNIT_DEVICE_SPEAKER                 0x00
-#define HFP_UNIT_DEVICE_MICROPHONE              0x01
+#define HFP_UNIT_DEVICE_SPEAKER                 0x00U
+#define HFP_UNIT_DEVICE_MICROPHONE              0x01U
 
 /**
  *  Three Way Call (TWC) Options (HFP_UNIT_TWC_CONTROL_TYPE)
  */
-#define HFP_UNIT_TWC_REJECT_NEW_WAITING_CALL    0x00
-#define HFP_UNIT_TWC_ACCEPT_NEW_WAITING_CALL    0x01
-#define HFP_UNIT_TWC_CALL_HOLD                  0x02
-#define HFP_UNIT_TWC_CALL_CONFERENCE            0x03
-#define HFP_UNIT_TWC_TERMINATE_SELF_FROM_TWC    0x04
+#define HFP_UNIT_TWC_REJECT_NEW_WAITING_CALL    0x00U
+#define HFP_UNIT_TWC_ACCEPT_NEW_WAITING_CALL    0x01U
+#define HFP_UNIT_TWC_CALL_HOLD                  0x02U
+#define HFP_UNIT_TWC_CALL_CONFERENCE            0x03U
+#define HFP_UNIT_TWC_TERMINATE_SELF_FROM_TWC    0x04U
 
 /**
  *  Supported Features (HFP_UNIT_FEATURE)
  */
-#define HFP_UNIT_FEATURE_CLIP                   0x00
-#define HFP_UNIT_FEATURE_CCWA                   0x01
-#define HFP_UNIT_FEATURE_ECNR                   0x02
-#define HFP_UNIT_FEATURE_BVRA                   0x03
-#define HFP_UNIT_FEATURE_BINP                   0x04
+#define HFP_UNIT_FEATURE_CLIP                   0x00U
+#define HFP_UNIT_FEATURE_CCWA                   0x01U
+#define HFP_UNIT_FEATURE_ECNR                   0x02U
+#define HFP_UNIT_FEATURE_BVRA                   0x03U
+#define HFP_UNIT_FEATURE_BINP                   0x04U
 
 /**
  *  To Enable/Disable AG to send HFP Indications (HFP_UNIT_ACTION_TYPE)
  *  For example, CLIP.
  */
-#define HFP_UNIT_ACTION_DISABLE                 0x00
-#define HFP_UNIT_ACTION_ENABLE                  0x01
+#define HFP_UNIT_ACTION_DISABLE                 0x00U
+#define HFP_UNIT_ACTION_ENABLE                  0x01U
 
-/* HFP 1.8 related */
-#define HFP_UNIT_ACTION_ENH_VREC_ENABLE         0x02
+/** HFP 1.8 related */
+#define HFP_UNIT_ACTION_ENH_VREC_ENABLE         0x02U
 
 /**
  *  Types for Response & Hold Commands (HFP_UNIT_HELD_INCALL_OPTIONS)
  */
-#define HFP_UNIT_RANDH_HOLD                     0x00
-#define HFP_UNIT_RANDH_ACCEPT                   0x01
-#define HFP_UNIT_RANDH_REJECT                   0x02
+#define HFP_UNIT_RANDH_HOLD                     0x00U
+#define HFP_UNIT_RANDH_ACCEPT                   0x01U
+#define HFP_UNIT_RANDH_REJECT                   0x02U
 
 /**
  * HF Unit BRSF Command Supported Feature Bit-Masks
  */
-#define HFP_UNIT_BRSF_CMD_FEATURE_BIT_ECNR             0
-#define HFP_UNIT_BRSF_CMD_FEATURE_BIT_TWC              1
-#define HFP_UNIT_BRSF_CMD_FEATURE_BIT_CLIP             2
-#define HFP_UNIT_BRSF_CMD_FEATURE_BIT_VRA              3
-#define HFP_UNIT_BRSF_CMD_FEATURE_BIT_REM_VOL_CTRL     4
-#define HFP_UNIT_BRSF_CMD_FEATURE_BIT_ENH_CALL_STAT    5
-#define HFP_UNIT_BRSF_CMD_FEATURE_BIT_ENH_CALL_CTRL    6
-#define HFP_UNIT_BRSF_CMD_FEATURE_BIT_CODEC_NEGO       7
-#define HFP_UNIT_BRSF_CMD_FEATURE_BIT_HF_INDICATORS    8
-#define HFP_UNIT_BRSF_CMD_FEATURE_BIT_ESCO_S4_SETTING  9
+#define HFP_UNIT_BRSF_CMD_FEATURE_BIT_ECNR             0U
+#define HFP_UNIT_BRSF_CMD_FEATURE_BIT_TWC              1U
+#define HFP_UNIT_BRSF_CMD_FEATURE_BIT_CLIP             2U
+#define HFP_UNIT_BRSF_CMD_FEATURE_BIT_VRA              3U
+#define HFP_UNIT_BRSF_CMD_FEATURE_BIT_REM_VOL_CTRL     4U
+#define HFP_UNIT_BRSF_CMD_FEATURE_BIT_ENH_CALL_STAT    5U
+#define HFP_UNIT_BRSF_CMD_FEATURE_BIT_ENH_CALL_CTRL    6U
+#define HFP_UNIT_BRSF_CMD_FEATURE_BIT_CODEC_NEGO       7U
+#define HFP_UNIT_BRSF_CMD_FEATURE_BIT_HF_INDICATORS    8U
+#define HFP_UNIT_BRSF_CMD_FEATURE_BIT_ESCO_S4_SETTING  9U
 
-/* HFP 1.8 related */
-#define HFP_UNIT_BRSF_CMD_FEATURE_BIT_ENH_VR_STATUS   10
-#define HFP_UNIT_BRSF_CMD_FEATURE_BIT_VR_TEXT         11
+/** HFP 1.8 related */
+#define HFP_UNIT_BRSF_CMD_FEATURE_BIT_ENH_VR_STATUS   10U
+#define HFP_UNIT_BRSF_CMD_FEATURE_BIT_VR_TEXT         11U
 
 /**
  * HF Unit BRSF Response Supported Feature Bit-Masks
  */
-#define HFP_UNIT_BRSF_RSP_FEATURE_BIT_TWC              0
-#define HFP_UNIT_BRSF_RSP_FEATURE_BIT_ECNR             1
-#define HFP_UNIT_BRSF_RSP_FEATURE_BIT_VRA              2
-#define HFP_UNIT_BRSF_RSP_FEATURE_BIT_INBAND_RING      3
-#define HFP_UNIT_BRSF_RSP_FEATURE_BIT_VOICE_TAG        4
-#define HFP_UNIT_BRSF_RSP_FEATURE_BIT_CALL_REJECT      5
-#define HFP_UNIT_BRSF_RSP_FEATURE_BIT_ENH_CALL_STAT    6
-#define HFP_UNIT_BRSF_RSP_FEATURE_BIT_ENH_CALL_CTRL    7
-#define HFP_UNIT_BRSF_RSP_FEATURE_BIT_EXT_ERROR_CODES  8
-#define HFP_UNIT_BRSF_RSP_FEATURE_BIT_CODEC_NEGO       9
-#define HFP_UNIT_BRSF_RSP_FEATURE_BIT_HF_INDICATORS   10
-#define HFP_UNIT_BRSF_RSP_FEATURE_BIT_ESCO_S4_SETTING 11
+#define HFP_UNIT_BRSF_RSP_FEATURE_BIT_TWC              0U
+#define HFP_UNIT_BRSF_RSP_FEATURE_BIT_ECNR             1U
+#define HFP_UNIT_BRSF_RSP_FEATURE_BIT_VRA              2U
+#define HFP_UNIT_BRSF_RSP_FEATURE_BIT_INBAND_RING      3U
+#define HFP_UNIT_BRSF_RSP_FEATURE_BIT_VOICE_TAG        4U
+#define HFP_UNIT_BRSF_RSP_FEATURE_BIT_CALL_REJECT      5U
+#define HFP_UNIT_BRSF_RSP_FEATURE_BIT_ENH_CALL_STAT    6U
+#define HFP_UNIT_BRSF_RSP_FEATURE_BIT_ENH_CALL_CTRL    7U
+#define HFP_UNIT_BRSF_RSP_FEATURE_BIT_EXT_ERROR_CODES  8U
+#define HFP_UNIT_BRSF_RSP_FEATURE_BIT_CODEC_NEGO       9U
+#define HFP_UNIT_BRSF_RSP_FEATURE_BIT_HF_INDICATORS   10U
+#define HFP_UNIT_BRSF_RSP_FEATURE_BIT_ESCO_S4_SETTING 11U
 
-/* HFP 1.8 related */
-#define HFP_UNIT_BRSF_RSP_FEATURE_BIT_ENH_VR_STATUS   12
-#define HFP_UNIT_BRSF_RSP_FEATURE_BIT_VR_TEXT         13
+/** HFP 1.8 related */
+#define HFP_UNIT_BRSF_RSP_FEATURE_BIT_ENH_VR_STATUS   12U
+#define HFP_UNIT_BRSF_RSP_FEATURE_BIT_VR_TEXT         13U
 
-/* HFP Codec IDs  */
-#define HFP_UNIT_CODEC_ID_CVSD                         0x01
-#define HFP_UNIT_CODEC_ID_MSBC                         0x02
+/** HFP Codec IDs  */
+#define HFP_UNIT_CODEC_ID_CVSD                         0x01U
+#define HFP_UNIT_CODEC_ID_MSBC                         0x02U
 
-/* HF Indicator IDs */
-#define HFP_UNIT_HF_IND_ID_ENHANCED_SAFETY             0x0001
-#define HFP_UNIT_HF_IND_ID_BATTERY_LEVEL               0x0002
+/** HF Indicator IDs */
+#define HFP_UNIT_HF_IND_ID_ENHANCED_SAFETY             0x0001U
+#define HFP_UNIT_HF_IND_ID_BATTERY_LEVEL               0x0002U
 
 /* ======= HFP 1.8 related defines ======= */
 /**
  * Bitmask to reflect the current state of Voice recognition engine in AG.
  */
-#define HFP_ENH_VR_STATE_AG_READY_2_ACCEPT_AUDIO_INPUT      0x01
-#define HFP_ENH_VR_STATE_AG_SENDING_AUDIO_TO_HF             0x02
-#define HFP_ENH_VR_STATE_AG_PROCESSING_AUDIO_INPUT          0x04
+#define HFP_ENH_VR_STATE_AG_READY_2_ACCEPT_AUDIO_INPUT      0x01U
+#define HFP_ENH_VR_STATE_AG_SENDING_AUDIO_TO_HF             0x02U
+#define HFP_ENH_VR_STATE_AG_PROCESSING_AUDIO_INPUT          0x04U
 
 /**
  * Voice Recognition Text Type defines
  */
-#define HFP_ENH_VR_TEXT_TYPE_TEXT_FROM_HF_AUDIO             0x00
-#define HFP_ENH_VR_TEXT_TYPE_TEXT_FROM_AG_AUDIO             0x01
-#define HFP_ENH_VR_TEXT_TYPE_TEXT_FROM_AG_AUDIO_WITH_Q      0x02
-#define HFP_ENH_VR_TEXT_TYPE_TEXT_FROM_AG_AUDIO_WITH_ERR    0x03
+#define HFP_ENH_VR_TEXT_TYPE_TEXT_FROM_HF_AUDIO             0x00U
+#define HFP_ENH_VR_TEXT_TYPE_TEXT_FROM_AG_AUDIO             0x01U
+#define HFP_ENH_VR_TEXT_TYPE_TEXT_FROM_AG_AUDIO_WITH_Q      0x02U
+#define HFP_ENH_VR_TEXT_TYPE_TEXT_FROM_AG_AUDIO_WITH_ERR    0x03U
 
 /**
  * Voice Recognition Text Operation defines
  */
-#define HFP_ENH_VR_TEXT_OP_NEW_TEXT                         0x01
-#define HFP_ENH_VR_TEXT_OP_REPLACE                          0x02
-#define HFP_ENH_VR_TEXT_OP_APPEND                           0x03
+#define HFP_ENH_VR_TEXT_OP_NEW_TEXT                         0x01U
+#define HFP_ENH_VR_TEXT_OP_REPLACE                          0x02U
+#define HFP_ENH_VR_TEXT_OP_APPEND                           0x03U
 /** \} */
 /** \} */
 /* ------------------------------------------- Macros */
@@ -343,7 +343,7 @@
  * Describes Utility Macros defined by the module.
  */
 #define HFP_UNIT_BRSF_IS_FEATURE_SET(value, feature) \
-        ((value) & (1 << (feature)))? (BT_TRUE): (BT_FALSE)
+        ((value) & (1U << (feature)))? (BT_TRUE): (BT_FALSE)
 /** \} */
 /* ------------------------------------------- Structures/Data Types */
 /**
@@ -914,7 +914,7 @@ API_RESULT BT_hfp_unit_get_peer_supported_features
             (hdl),                                 \
             HFP_UNIT_AT_CIND_READ,                 \
             NULL,                                  \
-            0                                      \
+            0U                                     \
         )
 
 /**
@@ -965,7 +965,7 @@ API_RESULT BT_hfp_unit_get_peer_supported_features
             (hdl),               \
             HFP_UNIT_AT_BLDN,    \
             NULL,                \
-            0                    \
+            0U                   \
         )
 
 /**
@@ -1016,7 +1016,7 @@ API_RESULT BT_hfp_unit_get_peer_supported_features
             (hdl),                  \
             HFP_UNIT_AT_ATA,        \
             NULL,                   \
-            0                       \
+            0U                      \
         )
 
 /**
@@ -1038,7 +1038,7 @@ API_RESULT BT_hfp_unit_get_peer_supported_features
             (hdl),                  \
             HFP_UNIT_AT_CHUP,       \
             NULL,                   \
-            0                       \
+            0U                      \
         )
 
 /**
@@ -1098,7 +1098,7 @@ API_RESULT BT_hfp_unit_get_peer_supported_features
                (hdl),                                \
                (UCHAR) (HFP_UNIT_AT_CHLDV0 + (ct)),  \
                NULL,                                 \
-               0                                     \
+               0U                                    \
            ))
 
 /**
@@ -1307,7 +1307,7 @@ API_RESULT BT_hfp_unit_register_rfcomm_cb
             (hdl),                              \
             HFP_UNIT_AT_CNUM,                   \
             NULL,                               \
-            0                                   \
+            0U                                  \
         )
 
 /**
@@ -1330,7 +1330,7 @@ API_RESULT BT_hfp_unit_register_rfcomm_cb
             (hdl),                              \
             HFP_UNIT_AT_QRAH,                   \
             NULL,                               \
-            0                                   \
+            0U                                  \
         )
 
 /**
@@ -1352,7 +1352,7 @@ API_RESULT BT_hfp_unit_register_rfcomm_cb
             (hdl),                               \
             HFP_UNIT_AT_S_NW_NAME_FORMAT,        \
             NULL,                                \
-            0                                    \
+            0U                                   \
         )
 
 /**
@@ -1374,7 +1374,7 @@ API_RESULT BT_hfp_unit_register_rfcomm_cb
             (hdl),                                \
             HFP_UNIT_AT_COPS_Q,                   \
             NULL,                                 \
-            0                                     \
+            0U                                    \
         )
 
 /**
@@ -1397,7 +1397,7 @@ API_RESULT BT_hfp_unit_register_rfcomm_cb
             (hdl),                                \
             HFP_UNIT_AT_CLCC,                     \
             NULL,                                 \
-            0                                     \
+            0U                                    \
         )
 
 /**
@@ -1427,7 +1427,7 @@ API_RESULT BT_hfp_unit_register_rfcomm_cb
                (hdl),                                  \
                (UCHAR) (HFP_UNIT_AT_BTRH_HOLD + (ct)), \
                NULL,                                   \
-               0                                       \
+               0U                                      \
            ))
 
 /**
@@ -1439,7 +1439,7 @@ API_RESULT BT_hfp_unit_register_rfcomm_cb
  *  \param [in] hdl
  *              Connection Handle to identify the connection to remote AG.
  *
-  *  \param [in] val
+ *  \param [in] val
  *              Type of call hold with call ID.
  *
  *  \return
@@ -1474,7 +1474,7 @@ API_RESULT BT_hfp_unit_register_rfcomm_cb
             (hdl),                             \
             HFP_UNIT_AT_CMEE_ENABLE,           \
             NULL,                              \
-            0                                  \
+            0U                                 \
         )
 
 /**
@@ -1496,7 +1496,7 @@ API_RESULT BT_hfp_unit_register_rfcomm_cb
             (hdl),                              \
             HFP_UNIT_AT_CMEE_DISABLE,           \
             NULL,                               \
-            0                                   \
+            0U                                  \
         )
 #endif /* HFP_UNIT_1_5 */
 
@@ -1703,7 +1703,7 @@ API_RESULT BT_hfp_unit_avl_cdc_list_num
             (hdl),                                \
             HFP_UNIT_AT_BCC,                      \
             NULL,                                 \
-            0                                     \
+            0U                                    \
         )
 
 /**

@@ -31,6 +31,7 @@
 #include "pin_mux.h"
 #include "fsl_gpio.h"
 
+#include "ewconfig.h"
 #include "ewrte.h"
 #include "ewgfx.h"
 #include "ewextgfx.h"
@@ -45,7 +46,18 @@
   #include "task.h"
   #include "semphr.h"
 
-  static SemaphoreHandle_t    LcdUpdateSemaphore;
+  static SemaphoreHandle_t      LcdUpdateSemaphore;
+
+#endif
+
+#if EW_USE_DOUBLE_BUFFER == 1
+
+  static __IO uint32_t          PendingFramebuffer = 0;
+
+#else
+
+  static volatile unsigned long VSyncTime          = 0;
+  static volatile unsigned long VSyncDuration      = 0;
 
 #endif
 
@@ -76,32 +88,14 @@
 
 #define V_SYNC_OFFSET  10
 
-static __IO uint32_t     PendingFramebuffer = 0;
-
-#if EW_USE_DOUBLE_BUFFER == 0
-  static int               DisplayHeight      = 0;
-#endif
-
-#if EW_USE_DOUBLE_BUFFER == 1
-
-
-#else
-
-  static volatile unsigned long    VSyncTime          = 0;
-  static volatile unsigned long    VSyncDuration      = 0;
-
-#endif
-
-
-
 
 /* Initialize the LCD_DISP. */
-void BOARD_InitLcd(void)
+void BOARD_InitLcd( void )
 {
     volatile uint32_t i = 0x100U;
 
     gpio_pin_config_t config = {
-        kGPIO_DigitalOutput, 0, kGPIO_NoIntmode,
+        kGPIO_DigitalOutput, 0,
     };
 
     /* Reset the LCD. */
@@ -120,7 +114,7 @@ void BOARD_InitLcd(void)
 }
 
 
-void BOARD_InitLcdifPixelClock(void)
+void BOARD_InitLcdifPixelClock( void )
 {
     /*
      * The desired output frame rate is 60Hz. So the pixel clock frequency is:
@@ -153,156 +147,60 @@ void BOARD_InitLcdifPixelClock(void)
     CLOCK_SetDiv(kCLOCK_LcdifDiv, 1);
 }
 
-
-/*******************************************************************************
-* FUNCTION:
-*   EwBspConfigDisplay
-*
-* DESCRIPTION:
-*   Configures the display hardware.
-*
-* ARGUMENTS:
-*   aWidth   - Width of the framebuffer in pixel.
-*   aHeight  - Height of the framebuffer in pixel.
-*   aAddress - Startaddress of the framebuffer.
-*
-* RETURN VALUE:
-*   None
-*
-*******************************************************************************/
-void EwBspConfigDisplay( int aWidth, int aHeight, void* aAddress )
+void LCDIF_IRQHandler( void )
 {
-  #if EW_USE_FREE_RTOS == 1
+  uint32_t intStatus;
 
-  LcdUpdateSemaphore = xSemaphoreCreateBinary();
+  intStatus = ELCDIF_GetInterruptStatus( LCDIF );
+  ELCDIF_ClearInterruptStatus( LCDIF, intStatus );
 
-  #endif
-
-  BOARD_InitLcdifPixelClock();
-  BOARD_InitLcd();
-
-  const elcdif_rgb_mode_config_t config =
+  if ( intStatus & kELCDIF_CurFrameDone )
   {
-    .panelWidth = aWidth,
-    .panelHeight = aHeight,
-    .hsw = LCD_HSW,
-    .hfp = LCD_HFP,
-    .hbp = LCD_HBP,
-    .vsw = LCD_VSW,
-    .vfp = LCD_VFP,
-    .vbp = LCD_VBP,
-    .polarityFlags = LCD_POL_FLAGS,
-    .bufferAddr = ( uint32_t ) aAddress,
-#if   ( EW_FRAME_BUFFER_COLOR_FORMAT == EW_FRAME_BUFFER_COLOR_FORMAT_RGBA8888 )
-    .pixelFormat = kELCDIF_PixelFormatXRGB8888,
-    .dataBus = kELCDIF_DataBus16Bit
-#elif ( EW_FRAME_BUFFER_COLOR_FORMAT == EW_FRAME_BUFFER_COLOR_FORMAT_RGB888 )
-    .pixelFormat = kELCDIF_PixelFormatRGB888,
-    .dataBus = kELCDIF_DataBus16Bit
-#elif ( EW_FRAME_BUFFER_COLOR_FORMAT == EW_FRAME_BUFFER_COLOR_FORMAT_RGB565 )
-    .pixelFormat = kELCDIF_PixelFormatRGB565,
-    .dataBus = kELCDIF_DataBus16Bit
-#elif (( EW_FRAME_BUFFER_COLOR_FORMAT == EW_FRAME_BUFFER_COLOR_FORMAT_Index8 ) || \
-       ( EW_FRAME_BUFFER_COLOR_FORMAT == EW_FRAME_BUFFER_COLOR_FORMAT_LumA44 ))
-    .pixelFormat = kELCDIF_PixelFormatRAW8,
-    .dataBus = kELCDIF_DataBus8Bit,
-#endif
-  };
+    #if EW_USE_DOUBLE_BUFFER == 1
 
-  ELCDIF_RgbModeInit(LCDIF, &config);
-  EnableIRQ(LCDIF_IRQn);
-  NVIC_SetPriority(LCDIF_IRQn, 8);
-  ELCDIF_EnableInterrupts(LCDIF, kELCDIF_CurFrameDoneInterruptEnable);
-  ELCDIF_RgbModeStart(LCDIF);
+      if ( PendingFramebuffer )
+      {
+        #if EW_USE_FREE_RTOS == 1
 
-#if EW_USE_DOUBLE_BUFFER == 0
-  DisplayHeight      = aHeight;
-#endif
+          xSemaphoreGiveFromISR( LcdUpdateSemaphore, NULL );
 
-  /* In case you get LCD underflows (e.g. flickering of LCD while PXP is active),
-     you can increase the read priority for the LCD by modifying the NIC read_qos
-     value for it. It is at 0x41044100 (register that isn’t in the header file)
-     The default value is 1 which is a pretty low priority.
-     If you change this register to a value grater than 1 (up to 5), then that
-     will make the LCD higher priority. It should solve the underflow issue.
-     If it creates a problem for another master, then you might need to experiment
-     with the value to find something that keeps the LCD from underflowing, but
-     allows enough bandwidth for other masters.
-  */
-  /*
-  {
-    uint32_t* LCD_read_qos = (uint32_t*)0x41044100;
-    *LCD_read_qos = 0x02;
+        #endif
+
+        PendingFramebuffer = 0;
+      }
+
+    #else
+
+      unsigned long curTicks = DWT->CYCCNT;
+      VSyncDuration = curTicks - VSyncTime;
+      VSyncTime = curTicks;
+
+    #endif
   }
-  */
-}
 
-
-/*******************************************************************************
-* FUNCTION:
-*   EwBspDisplayWaitForCompletion
-*
-* DESCRIPTION:
-*   The function EwBspDisplayWaitForCompletion returns as soon as the LCD update
-*   has been completed.
-*
-* ARGUMENTS:
-*   None
-*
-* RETURN VALUE:
-*   None
-*
-*******************************************************************************/
-#if EW_USE_DOUBLE_BUFFER == 1
-void EwBspDisplayWaitForCompletion( void )
-{
-  CPU_LOAD_SET_IDLE();
-
-  #if EW_USE_FREE_RTOS == 1
-
-    xSemaphoreTake(LcdUpdateSemaphore, 1000 / portTICK_PERIOD_MS);
-
-  #else
-
-    while( PendingFramebuffer );
-
+  /* add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
+     exception return operation might vector to incorrect interrupt */
+  #if defined __CORTEX_M && (__CORTEX_M == 4U)
+    __DSB();
   #endif
-
-  CPU_LOAD_SET_ACTIVE();
 }
-#endif
 
 
-/*******************************************************************************
-* FUNCTION:
-*   EwBspSyncOnDisplayLine
-*
-* DESCRIPTION:
-*   The function EwBspSyncOnDisplayLine returns as soon as the display is updating
-*   the requested line number.
-*
-* ARGUMENTS:
-*   aLine - Number of the display line to be reached by LTDC
-*
-* RETURN VALUE:
-*   None
-*
-*******************************************************************************/
+/* Helper function to sync on a certain line number updated by the display.
+   This function is necessary when the system is used in single framebuffer mode. */
 #if EW_USE_DOUBLE_BUFFER == 0
-void EwBspSyncOnDisplayLine( int aLine )
+static void SyncOnLine( int aLine )
 {
   unsigned long ticksTillRequestedLine;
   unsigned long localVSyncTime;
 
-
   if ( aLine == 0 )
-    aLine += DisplayHeight;
+    aLine += FRAME_BUFFER_HEIGHT;
 
   /* calculate time tick that corresponds to requested line */
-  ticksTillRequestedLine = VSyncDuration / DisplayHeight * (aLine + V_SYNC_OFFSET);
+  ticksTillRequestedLine = VSyncDuration / FRAME_BUFFER_HEIGHT * (aLine + V_SYNC_OFFSET);
 
   CPU_LOAD_SET_IDLE();
-
 
   /* if requested line is missed, wait for next display frame (next V-sync) */
   while (( DWT->CYCCNT - VSyncTime ) > ticksTillRequestedLine )
@@ -320,99 +218,292 @@ void EwBspSyncOnDisplayLine( int aLine )
 
 /*******************************************************************************
 * FUNCTION:
-*   LCD_IRQHandler
+*   EwBspDisplayInit
 *
 * DESCRIPTION:
-*   LCD Interrupt Handler.
+*   The function EwBspDisplayInit initializes the display hardware and returns
+*   the display parameter.
 *
 * ARGUMENTS:
-*   None
+*   aDisplayInfo - Display info data structure.
 *
 * RETURN VALUE:
-*   None
+*   Returns 1 if successful, 0 otherwise.
 *
 *******************************************************************************/
-void LCDIF_IRQHandler(void)
+int EwBspDisplayInit( XDisplayInfo* aDisplayInfo )
 {
-  uint32_t intStatus;
+  #if EW_USE_FREE_RTOS == 1
 
-  intStatus = ELCDIF_GetInterruptStatus(LCDIF);
-  ELCDIF_ClearInterruptStatus(LCDIF, intStatus);
+    /* create semaphore for handling double-buffering on V-sync */
+    LcdUpdateSemaphore = xSemaphoreCreateBinary();
+    xSemaphoreGive( LcdUpdateSemaphore );
 
-  if (intStatus & kELCDIF_CurFrameDone)
+  #endif
+
+  BOARD_InitLcdifPixelClock();
+  BOARD_InitLcd();
+
+  const elcdif_rgb_mode_config_t config =
   {
+    .panelWidth = FRAME_BUFFER_WIDTH,
+    .panelHeight = FRAME_BUFFER_HEIGHT,
+    .hsw = LCD_HSW,
+    .hfp = LCD_HFP,
+    .hbp = LCD_HBP,
+    .vsw = LCD_VSW,
+    .vfp = LCD_VFP,
+    .vbp = LCD_VBP,
+    .polarityFlags = LCD_POL_FLAGS,
+    .bufferAddr = ( uint32_t ) FRAME_BUFFER_ADDR,
+    #if   ( EW_FRAME_BUFFER_COLOR_FORMAT == EW_FRAME_BUFFER_COLOR_FORMAT_RGBA8888 )
+      .pixelFormat = kELCDIF_PixelFormatXRGB8888,
+      .dataBus = kELCDIF_DataBus16Bit
+    #elif ( EW_FRAME_BUFFER_COLOR_FORMAT == EW_FRAME_BUFFER_COLOR_FORMAT_RGB888 )
+      .pixelFormat = kELCDIF_PixelFormatRGB888,
+      .dataBus = kELCDIF_DataBus16Bit
+    #elif ( EW_FRAME_BUFFER_COLOR_FORMAT == EW_FRAME_BUFFER_COLOR_FORMAT_RGB565 )
+      .pixelFormat = kELCDIF_PixelFormatRGB565,
+      .dataBus = kELCDIF_DataBus16Bit
+    #elif (( EW_FRAME_BUFFER_COLOR_FORMAT == EW_FRAME_BUFFER_COLOR_FORMAT_Index8 ) || \
+           ( EW_FRAME_BUFFER_COLOR_FORMAT == EW_FRAME_BUFFER_COLOR_FORMAT_LumA44 ))
+      .pixelFormat = kELCDIF_PixelFormatRAW8,
+      .dataBus = kELCDIF_DataBus8Bit,
+    #endif
+  };
 
-#if EW_USE_DOUBLE_BUFFER
+  ELCDIF_RgbModeInit(LCDIF, &config);
+  EnableIRQ(LCDIF_IRQn);
+  NVIC_SetPriority(LCDIF_IRQn, 8);
+  ELCDIF_EnableInterrupts(LCDIF, kELCDIF_CurFrameDoneInterruptEnable);
+  ELCDIF_RgbModeStart(LCDIF);
 
-    if  ( PendingFramebuffer )
-    {
-      #if EW_USE_FREE_RTOS == 1
-      xSemaphoreGiveFromISR( LcdUpdateSemaphore, NULL );
-      #endif
-
-      PendingFramebuffer = 0;
-    }
-
-#else
-
-    unsigned long curTicks = DWT->CYCCNT;
-    VSyncDuration = curTicks - VSyncTime;
-    VSyncTime = curTicks;
-
-#endif
-
+  /* Workaround for LCD buffer underflows (flickering) by setting up the LCDIF
+     to have higher bus priority:
+     In case you get LCD underflows (e.g. flickering of LCD while PXP is active),
+     you can increase the read priority for the LCD by modifying the NIC read_qos
+     value for it. It is at 0x41044100 (register that isn’t in the header file)
+     The default value is 1 which is a pretty low priority.
+     If you change this register to a value grater than 1 (up to 5), then that
+     will make the LCD higher priority. It should solve the underflow issue.
+     If it creates a problem for another master, then you might need to experiment
+     with the value to find something that keeps the LCD from underflowing, but
+     allows enough bandwidth for other masters.
+  */
+  /*
+  {
+    uint32_t* LCD_read_qos = (uint32_t*)0x41044100;
+    *LCD_read_qos = 0x02;
   }
-/* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-  exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+  */
+
+  /* return the current display configuration */
+  if ( aDisplayInfo )
+  {
+    memset( aDisplayInfo, 0, sizeof( XDisplayInfo ));
+    aDisplayInfo->FrameBuffer   = (void*)FRAME_BUFFER_ADDR;
+    aDisplayInfo->DoubleBuffer  = (void*)DOUBLE_BUFFER_ADDR;
+    aDisplayInfo->BufferWidth   = FRAME_BUFFER_WIDTH;
+    aDisplayInfo->BufferHeight  = FRAME_BUFFER_HEIGHT;
+    aDisplayInfo->DisplayWidth  = FRAME_BUFFER_WIDTH;
+    aDisplayInfo->DisplayHeight = FRAME_BUFFER_HEIGHT;
+
+    #if EW_USE_DOUBLE_BUFFER == 1
+      aDisplayInfo->UpdateMode  = EW_BSP_DISPLAY_UPDATE_NORMAL;
+    #else
+      aDisplayInfo->UpdateMode  = EW_BSP_DISPLAY_UPDATE_PARTIAL;
+    #endif
+  }
+  return 1;
 }
 
 
 /*******************************************************************************
 * FUNCTION:
-*   EwBspSetFramebufferAddress
+*   EwBspDisplayDone
 *
 * DESCRIPTION:
-*   The function EwBspSetFramebufferAddress is called from the Graphics Engine
-*   in order to change the currently active framebuffer address. If the display
-*   is running in a double-buffering mode, the function is called after each
-*   screen update.
-*   Changing the framebuffer address should be synchronized with V-sync.
-*   In case of double-buffering, the function has to wait and return after
-*   the V-sync was detected.
+*   The function EwBspDisplayDone deinitializes the display hardware.
 *
 * ARGUMENTS:
-*   aAddress - New address of the framebuffer to be shown on the display.
+*   None
 *
 * RETURN VALUE:
 *   None
 *
 *******************************************************************************/
-void EwBspSetFramebufferAddress( unsigned long aAddress )
+void EwBspDisplayDone( void )
 {
-#if EW_USE_DOUBLE_BUFFER == 1
-
-  DisableIRQ( LCDIF_IRQn );
-  /* set pending framebuffer address to be used on next V-sync */
-  ELCDIF_SetNextBufferAddr( LCDIF, aAddress );
-  PendingFramebuffer = aAddress;
-  EnableIRQ( LCDIF_IRQn );
-
-#else
-
-
-#endif
 }
 
 
 /*******************************************************************************
 * FUNCTION:
-*   EwBspSetFramebufferClut
+*   EwBspDisplayGetUpdateArea
 *
 * DESCRIPTION:
-*   The function EwBspSetFramebufferClut is called from the Graphics Engine
+*   The function EwBspDisplayGetUpdateArea returns the next update area
+*   depending on the selected display mode:
+*   In case of a synchroneous single-buffer, the function has to return the
+*   the rectangular areas that correspond to the horizontal stripes (fields)
+*   of the framebuffer.
+*   In case of a scratch-pad buffer, the function has to return the subareas
+*   that fit into the provided update rectangle.
+*   During each display update, this function is called until it returns 0.
+*
+* ARGUMENTS:
+*   aUpdateRect - Rectangular area which should be updated (redrawn).
+*
+* RETURN VALUE:
+*   Returns 1 if a further update area can be provided, 0 otherwise.
+*
+*******************************************************************************/
+int EwBspDisplayGetUpdateArea( XRect* aUpdateRect )
+{
+  #if EW_USE_DOUBLE_BUFFER == 0
+
+    static int field = 0;
+
+    /* determine rectangular area of current field */
+    #if EW_SURFACE_ROTATION == 0
+      *aUpdateRect = EwNewRect( 0, field * FRAME_BUFFER_HEIGHT / NUMBER_OF_FIELDS,
+        FRAME_BUFFER_WIDTH, ( field + 1 ) * FRAME_BUFFER_HEIGHT / NUMBER_OF_FIELDS );
+    #endif
+
+    #if EW_SURFACE_ROTATION == 90
+      *aUpdateRect = EwNewRect( field * FRAME_BUFFER_HEIGHT / NUMBER_OF_FIELDS, 0,
+        ( field + 1 ) * FRAME_BUFFER_HEIGHT / NUMBER_OF_FIELDS, FRAME_BUFFER_WIDTH );
+    #endif
+
+    #if EW_SURFACE_ROTATION == 180
+      *aUpdateRect = EwNewRect( 0, FRAME_BUFFER_HEIGHT - ( field + 1 ) * FRAME_BUFFER_HEIGHT / NUMBER_OF_FIELDS,
+        FRAME_BUFFER_WIDTH, FRAME_BUFFER_HEIGHT - field * FRAME_BUFFER_HEIGHT / NUMBER_OF_FIELDS );
+    #endif
+
+    #if EW_SURFACE_ROTATION == 270
+      *aUpdateRect = EwNewRect( FRAME_BUFFER_HEIGHT - ( field + 1 ) * FRAME_BUFFER_HEIGHT / NUMBER_OF_FIELDS,
+        0, FRAME_BUFFER_HEIGHT - field * FRAME_BUFFER_HEIGHT / NUMBER_OF_FIELDS, FRAME_BUFFER_WIDTH );
+    #endif
+
+    /* next field */
+    field++;
+
+    /* sync on start line of next field to ensure save drawing operation */
+    SyncOnLine(( field % NUMBER_OF_FIELDS ) * FRAME_BUFFER_HEIGHT / NUMBER_OF_FIELDS );
+
+    if ( field <= NUMBER_OF_FIELDS )
+      return 1;
+
+    field = 0;
+
+  #endif
+
+  return 0;
+}
+
+
+/*******************************************************************************
+* FUNCTION:
+*   EwBspDisplayWaitForCompletion
+*
+* DESCRIPTION:
+*   The function EwBspDisplayWaitForCompletion is called from the Graphics Engine
+*   to ensure that all pending activities of the display system are completed, so
+*   that the rendering of the next frame can start.
+*   In case of a double-buffering system, the function has to wait until the
+*   V-sync has occured and the pending buffer is used by the display controller.
+*   In case of an external display controller, the function has to wait until
+*   the transfer (update) of the graphics data has been completed and there are
+*   no pending buffers.
+*
+* ARGUMENTS:
+*   None
+*
+* RETURN VALUE:
+*   None
+*
+*******************************************************************************/
+void EwBspDisplayWaitForCompletion( void )
+{
+  #if EW_USE_DOUBLE_BUFFER == 1
+
+    CPU_LOAD_SET_IDLE();
+
+    #if EW_USE_FREE_RTOS == 1
+
+      /* wait until pending framebuffer is used as current framebuffer and
+         use CPU time for other tasks */
+      while ( PendingFramebuffer )
+      {
+        if ( xSemaphoreTake( LcdUpdateSemaphore, 1000 / portTICK_PERIOD_MS ) == pdTRUE )
+          xSemaphoreGive( LcdUpdateSemaphore );
+      }
+
+    #else
+
+      /* wait until pending framebuffer is used as current framebuffer */
+      while( PendingFramebuffer )
+        ;
+
+    #endif
+
+    CPU_LOAD_SET_ACTIVE();
+
+  #endif
+}
+
+
+/*******************************************************************************
+* FUNCTION:
+*   EwBspDisplayCommitBuffer
+*
+* DESCRIPTION:
+*   The function EwBspDisplayCommitBuffer is called from the Graphics Engine
+*   when the rendering of a certain buffer has been completed.
+*   The type of buffer depends on the selected framebuffer concept.
+*   If the display is running in a double-buffering mode, the function is called
+*   after each buffer update in order to change the currently active framebuffer
+*   address. Changing the framebuffer address should be synchronized with V-sync.
+*   If the system is using an external graphics controller, this function is
+*   responsible to start the transfer of the framebuffer content.
+*
+* ARGUMENTS:
+*   aAddress - Address of the framebuffer to be shown on the display.
+*   aX,
+*   aY       - Origin of the area which has been updated by the Graphics Engine.
+*   aWidth,
+*   aHeight  - Size of the area which has been updated by the Graphics Engine.
+*
+* RETURN VALUE:
+*   None
+*
+*******************************************************************************/
+void EwBspDisplayCommitBuffer( void* aAddress, int aX, int aY, int aWidth, int aHeight )
+{
+  #if EW_USE_DOUBLE_BUFFER == 1
+
+    DisableIRQ( LCDIF_IRQn );
+
+    /* set pending framebuffer address to be used on next V-sync */
+    PendingFramebuffer = (uint32_t)aAddress;
+    ELCDIF_SetNextBufferAddr( LCDIF, (uint32_t)aAddress );
+
+    #if EW_USE_FREE_RTOS == 1
+      xSemaphoreTake( LcdUpdateSemaphore, 0 );
+    #endif
+
+    EnableIRQ( LCDIF_IRQn );
+
+  #endif
+}
+
+
+/*******************************************************************************
+* FUNCTION:
+*   EwBspDisplaySetClut
+*
+* DESCRIPTION:
+*   The function EwBspDisplaySetClut is called from the Graphics Engine
 *   in order to update the hardware CLUT of the current framebuffer.
 *   The function is only called when the color format of the framebuffer is
 *   Index8 or LumA44.
@@ -424,22 +515,22 @@ void EwBspSetFramebufferAddress( unsigned long aAddress )
 *   None
 *
 *******************************************************************************/
-void EwBspSetFramebufferClut( unsigned long* aClut )
+void EwBspDisplaySetClut( unsigned long* aClut )
 {
   int i;
   static uint32_t clut[ 256 ];
 
-  for ( i=0; i < 256; i++ )
-    clut[i] = ((( aClut[i] & 0x00F80000 ) >> (3 + 16)) << 11 ) |
-              ((( aClut[i] & 0x0000F800 ) >> (2 +  8)) <<  5 ) |
-              ((( aClut[i] & 0x000000F8 ) >> (3 +  0)) <<  0 );
+  for ( i = 0; i < 256; i++ )
+    clut[ i ] = ((( aClut[ i ] & 0x00F80000 ) >> ( 3 + 16 )) << 11 ) |
+                ((( aClut[ i ] & 0x0000F800 ) >> ( 2 +  8 )) <<  5 ) |
+                ((( aClut[ i ] & 0x000000F8 ) >> ( 3 +  0 )) <<  0 );
 
-  /* Load the LUT data. */
-  ELCDIF_UpdateLut(LCDIF, kELCDIF_Lut0, 0, clut, ELCDIF_LUT_ENTRY_NUM);
-  ELCDIF_UpdateLut(LCDIF, kELCDIF_Lut1, 0, clut, ELCDIF_LUT_ENTRY_NUM);
+  /* load the LUT data */
+  ELCDIF_UpdateLut( LCDIF, kELCDIF_Lut0, 0, clut, ELCDIF_LUT_ENTRY_NUM );
+  ELCDIF_UpdateLut( LCDIF, kELCDIF_Lut1, 0, clut, ELCDIF_LUT_ENTRY_NUM );
 
-  ELCDIF_EnableLut(LCDIF, true);
+  ELCDIF_EnableLut( LCDIF, true );
 }
 
 
-/* mli */
+/* mli, msy */

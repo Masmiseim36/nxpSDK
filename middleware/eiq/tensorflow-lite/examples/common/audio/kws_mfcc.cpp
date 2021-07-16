@@ -51,6 +51,7 @@ void KWS_MFCC::init_mfcc()
 
   audio_buffer = 0;
   mfcc_buffer_size = 0;
+  mfcc_buffer_head = 0;
 
   mfcc = new MFCC(num_mfcc_features, frame_len);
   mfcc_buffer = new float[num_frames * num_mfcc_features];
@@ -58,18 +59,24 @@ void KWS_MFCC::init_mfcc()
   audio_buffer_size = audio_block_size + frame_len - frame_shift;
 }
 
+void KWS_MFCC::store_features(uint8_t* out_data)
+{
+  /* <min, max> range for quantization of features. */
+  float min = -247.0;
+  float max = 30.0;
+
+  for (int i = 0; i < MFCC_BUFFER_SIZE; i++)
+  {
+    out_data[i] = (uint8_t)round((255.0 * (mfcc_buffer[(i + mfcc_buffer_head) % MFCC_BUFFER_SIZE] - min)) / (max - min));
+  }
+}
+
 void KWS_MFCC::extract_features() 
 {
-  if (num_frames > recording_win)
-  {
-    // move old features left
-    memmove(mfcc_buffer, mfcc_buffer + (recording_win * num_mfcc_features), (num_frames - recording_win) * num_mfcc_features);
-  }
-  // compute features only for the newly recorded audio
-  int32_t mfcc_buffer_head = (num_frames - recording_win) * num_mfcc_features; 
-  for (uint16_t f = 0; f < recording_win; f++) 
+  /* Each iteration adds NUM_MFCC_FEATURES MFCC coefficients and moves the mfcc_buffer_head forward accordingly */
+  for (int f = 0; f < recording_win; f++)
   {
     mfcc->mfcc_compute(audio_buffer + (f * frame_shift), &mfcc_buffer[mfcc_buffer_head]);
-    mfcc_buffer_head += num_mfcc_features;
+    mfcc_buffer_head = (mfcc_buffer_head + num_mfcc_features) % MFCC_BUFFER_SIZE;
   }
 }

@@ -45,7 +45,7 @@
  */
 #ifdef FTP_1_3
 /* OBEX L2CAP PSM for local client entities */
-#define FTP_OBEX_L2CAP_PSM    0x8201
+#define FTP_OBEX_L2CAP_PSM    0x8201U
 #endif /* FTP_1_3 */
 
 /**
@@ -70,10 +70,10 @@
  * Constant Defines for Connection belonging to \ref FTP_CLIENT_EVENTS
  */
 /*@{*/
-#define FTP_CLIENT_CONNECT_CNF                   0x01
-#define FTP_CLIENT_DISCONNECT_CNF                0x02
-#define FTP_CLIENT_TRANSPORT_CLOSE_CNF           0x03
-#define FTP_CLIENT_TRANSPORT_CLOSE_IND           0x04
+#define FTP_CLIENT_CONNECT_CNF                   0x01U
+#define FTP_CLIENT_DISCONNECT_CNF                0x02U
+#define FTP_CLIENT_TRANSPORT_CLOSE_CNF           0x03U
+#define FTP_CLIENT_TRANSPORT_CLOSE_IND           0x04U
 /*@}*/
 
 /**
@@ -82,8 +82,8 @@
  * Constant Defines for Folder Browsing belonging to \ref FTP_CLIENT_EVENTS
  */
 /*@{*/
-#define FTP_CLIENT_SET_FOLDER_CNF                0x05
-#define FTP_CLIENT_GET_FOLDER_LISTING_CNF        0x06
+#define FTP_CLIENT_SET_FOLDER_CNF                0x05U
+#define FTP_CLIENT_GET_FOLDER_LISTING_CNF        0x06U
 /*@}*/
 
 /**
@@ -92,8 +92,8 @@
  * Constant Defines for Object Transfer belonging to \ref FTP_CLIENT_EVENTS
  */
 /*@{*/
-#define FTP_CLIENT_PUSH_OBJ_CNF                  0x07
-#define FTP_CLIENT_PULL_OBJ_CNF                  0x08
+#define FTP_CLIENT_PUSH_OBJ_CNF                  0x07U
+#define FTP_CLIENT_PULL_OBJ_CNF                  0x08U
 /*@}*/
 
 /**
@@ -102,9 +102,9 @@
  * Constant Defines for Object Manipulation belonging to \ref FTP_CLIENT_EVENTS
  */
 /*@{*/
-#define FTP_CLIENT_DELETE_OBJ_CNF                0x09
-#define FTP_CLIENT_ACTION_CNF                    0x0A
-#define FTP_CLIENT_ABORT_CNF                     0x0B
+#define FTP_CLIENT_DELETE_OBJ_CNF                0x09U
+#define FTP_CLIENT_ACTION_CNF                    0x0AU
+#define FTP_CLIENT_ABORT_CNF                     0x0BU
 /*@}*/
 /** \} */
 
@@ -120,10 +120,10 @@
  * Constant Defines for Connection belonging to \ref FTP_SERVER_EVENTS
  */
 /*@{*/
-#define FTP_SERVER_CONNECT_IND                   0x01
-#define FTP_SERVER_DISCONNECT_IND                0x02
-#define FTP_SERVER_TRANSPORT_CLOSE_CNF           0x03
-#define FTP_SERVER_TRANSPORT_CLOSE_IND           0x04
+#define FTP_SERVER_CONNECT_IND                   0x01U
+#define FTP_SERVER_DISCONNECT_IND                0x02U
+#define FTP_SERVER_TRANSPORT_CLOSE_CNF           0x03U
+#define FTP_SERVER_TRANSPORT_CLOSE_IND           0x04U
 /*@}*/
 
 /**
@@ -132,8 +132,8 @@
  * Constant Defines for Folder Browsing belonging to \ref FTP_SERVER_EVENTS
  */
 /*@{*/
-#define FTP_SERVER_SET_FOLDER_IND                0x05
-#define FTP_SERVER_GET_FOLDER_LISTING_IND        0x06
+#define FTP_SERVER_SET_FOLDER_IND                0x05U
+#define FTP_SERVER_GET_FOLDER_LISTING_IND        0x06U
 /*@}*/
 
 /**
@@ -142,8 +142,8 @@
  * Constant Defines for Object Transfer belonging to \ref FTP_SERVER_EVENTS
  */
 /*@{*/
-#define FTP_SERVER_PUSH_FILE_IND                 0x07
-#define FTP_SERVER_PULL_FILE_IND                 0x08
+#define FTP_SERVER_PUSH_FILE_IND                 0x07U
+#define FTP_SERVER_PULL_FILE_IND                 0x08U
 /*@}*/
 
 /**
@@ -152,13 +152,13 @@
  * Constant Defines for Object Manipulation belonging to \ref FTP_SERVER_EVENTS
  */
 /*@{*/
-#define FTP_SERVER_DELETE_FILE_IND               0x09
-#define FTP_SERVER_ACTION_IND                    0x0A
-#define FTP_SERVER_ABORT_IND                     0x0B
+#define FTP_SERVER_DELETE_FILE_IND               0x09U
+#define FTP_SERVER_ACTION_IND                    0x0AU
+#define FTP_SERVER_ABORT_IND                     0x0BU
 /*@}*/
 
-#define FTP_EVENT_INVALID                        0xFF
-#define FTP_ENTITY_INVALID                       0xFF
+#define FTP_EVENT_INVALID                        0xFFU
+#define FTP_ENTITY_INVALID                       0xFFU
 /** \} */
 
 /**
@@ -190,10 +190,10 @@
  * Constant Defines for FTP SetPath parameter values
  */
 /*@{*/
-#define FTP_SET_NEW_FOLDER                       0x00
-#define FTP_SET_CHILD_FOLDER                     0x01
-#define FTP_SET_PARENT_FOLDER                    0x02
-#define FTP_SET_ROOT_FOLDER                      0x03
+#define FTP_SET_NEW_FOLDER                       0x00U
+#define FTP_SET_CHILD_FOLDER                     0x01U
+#define FTP_SET_PARENT_FOLDER                    0x02U
+#define FTP_SET_ROOT_FOLDER                      0x03U
 /*@}*/
 
 #ifdef OBEX_ENH_SUPPORT
@@ -203,9 +203,9 @@
  * Constant Defines for FTP Action Identifiers
  */
 /*@{*/
-#define  FTP_ACTION_ID_COPY                     0x00 /* OBEX_ACTION_COPY_ID */
-#define  FTP_ACTION_ID_MOVE                     0x01 /* OBEX_ACTION_MOVE_ID */
-#define  FTP_ACTION_ID_SET_PER                  0x02 /* OBEX_ACTION_SET_OBJ_PER_ID */
+#define  FTP_ACTION_ID_COPY                     0x00U /* OBEX_ACTION_COPY_ID */
+#define  FTP_ACTION_ID_MOVE                     0x01U /* OBEX_ACTION_MOVE_ID */
+#define  FTP_ACTION_ID_SET_PER                  0x02U /* OBEX_ACTION_SET_OBJ_PER_ID */
 /*@}*/
 #endif /* OBEX_ENH_SUPPORT */
 /** \} */
@@ -476,7 +476,7 @@ typedef API_RESULT (* FTP_EVENT_NTF_CB)
 /** To initialize a Header Structure */
 #define FTP_INIT_HEADER_STRUCT(hs)    \
         (hs).value = NULL;    \
-        (hs).length = 0;
+        (hs).length = 0U;
 /** \} */
 
 
@@ -793,7 +793,6 @@ API_RESULT BT_ftp_client_get_folder_listing
 
 #ifdef FTP_1_3
 /**
- *
  *  \brief To manipulate a file/folder in the FTP server.
  *
  *  \par Description:

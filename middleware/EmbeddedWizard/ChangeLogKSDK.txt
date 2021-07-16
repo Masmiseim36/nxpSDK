@@ -2,7 +2,11 @@
 @page middleware_log Middleware Change Log
 
 @section embedded_wizard Embedded Wizard GUI library
-  The currently supported version is 9.30.
+  The currently supported version is 10.00.
+
+  10.00_rev0
+    - update to version 10.00
+    - add support for RT1010, RT1170, LPC55S69
 
   9.30_rev0
     - Remove conditional include of RTE_Components.h in ewdef.h

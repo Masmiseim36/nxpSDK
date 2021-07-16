@@ -1,13 +1,7 @@
 /*
- * Copyright 2019 NXP
  *
- * This software is owned or controlled by NXP and may only be used
- * strictly in accordance with the applicable license terms.  By expressly
- * accepting such terms or by downloading, installing, activating and/or
- * otherwise using the software, you are agreeing that you have read, and
- * that you agree to comply with and are bound by, such license terms.  If
- * you do not agree to be bound by the applicable license terms, then you
- * may not retain, install, activate or otherwise use the software.
+ * Copyright 2019 NXP
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 /* Common header fils used by Freedom K64F */
@@ -85,6 +79,12 @@ void ex_sss_main_ksdk_boot_rtos_task()
 
 void ex_sss_main_ksdk_success()
 {
+#if defined(SECURE_WORLD)
+    puf_config_t conf;
+    PUF_GetDefaultConfig(&conf);
+    PUF_Deinit(PUF, &conf);
+#endif
+
     LED_BLUE_OFF();
     LED_RED_OFF();
     LED_GREEN_ON();
@@ -92,6 +92,11 @@ void ex_sss_main_ksdk_success()
 
 void ex_sss_main_ksdk_failure()
 {
+#if defined(SECURE_WORLD)
+    puf_config_t conf;
+    PUF_GetDefaultConfig(&conf);
+    PUF_Deinit(PUF, &conf);
+#endif
     LED_BLUE_OFF();
     LED_RED_ON();
     LED_GREEN_OFF();

@@ -21,8 +21,8 @@
 * Please do not make any modifications of this file! The modifications are lost
 * when the file is generated again by Embedded Wizard Studio!
 *
-* Version  : 9.30
-* Date     : 14.02.2020  8:00:50
+* Version  : 10.0
+* Date     : 17.02.2021  8:00:50
 * Profile  : iMX_RT
 * Platform : NXP.iMX_RT.RGB565
 *
@@ -37,12 +37,12 @@
 #endif
 
 #include "ewrte.h"
-#if EW_RTE_VERSION != 0x0009001E
+#if EW_RTE_VERSION != 0x000A0000
   #error Wrong version of Embedded Wizard Runtime Environment.
 #endif
 
 #include "ewgfx.h"
-#if EW_GFX_VERSION != 0x0009001E
+#if EW_GFX_VERSION != 0x000A0000
   #error Wrong version of Embedded Wizard Graphics Engine.
 #endif
 
@@ -52,10 +52,10 @@
 #include "_WidgetSetToggleButtonConfig.h"
 #include "_WidgetSetWidgetConfig.h"
 
-/* Bitmap resource : 'WidgetSet::PushButtonMedium' */
+/* Bitmap resource used per default by the Widgets customized for the medium size. */
 EW_DECLARE_BITMAP_RES( WidgetSetPushButtonMedium )
 
-/* Bitmap resource : 'WidgetSet::SwitchMedium' */
+/* Bitmap resource used per default by the Widgets customized for the medium size. */
 EW_DECLARE_BITMAP_RES( WidgetSetSwitchMedium )
 
 /* This autoobject provides one of the default customizations for the 'toggle' widget 

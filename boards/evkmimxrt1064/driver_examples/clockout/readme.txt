@@ -3,13 +3,15 @@ Overview
 The ccm_clockout driver example shows how to output the internal clock signal. In this driver example, users can choose
 the clock signal to be outputted, and the divider of the output clock signal. By probing the output pin, users can
 observe the selected internal clock signal.
+Please note that different targets may have different default clock configurations, so the frequency of the same clock
+root may be different in different targets even though the dividers are set as the same value.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.9
-- Keil MDK  5.33
-- GCC ARM Embedded  9.3.1
-- MCUXpresso  11.3.0
+- IAR embedded Workbench  9.10.2
+- Keil MDK  5.34
+- GCC ARM Embedded  10.2.1
+- MCUXpresso  11.4.0
 
 Hardware requirements
 =====================

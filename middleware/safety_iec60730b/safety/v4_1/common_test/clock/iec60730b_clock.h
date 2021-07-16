@@ -23,9 +23,8 @@
 
 #include "iec60730b_types.h"
 
-
 /*
- * List of devices and supported functions can be found in library user guide, 
+ * List of devices and supported functions can be found in library user guide,
  * section Core self test library - source code version.
  */
 
@@ -33,8 +32,8 @@
  * Macros
  ******************************************************************************/
 /* Return values */
-#define FS_FAIL_CLK      (FS_CLK_CODE + 0x1U)
-#define FS_CLK_PROGRESS  (FS_CLK_CODE + 0x2U)
+#define FS_FAIL_CLK     (FS_CLK_CODE + 0x1U)
+#define FS_CLK_PROGRESS (FS_CLK_CODE + 0x2U)
 
 /* Assembler skips following section */
 #ifndef __ASM__

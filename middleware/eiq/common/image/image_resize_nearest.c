@@ -7,7 +7,21 @@
 
 #include "image_utils.h"
 
-/* Simple resize using nearest neighbor */
+/*******************************************************************************
+ * Code
+ ******************************************************************************/
+
+/*!
+ * @brief Simple resizes using nearest neighbor.
+ *
+ * @param srcData to original image data
+ * @param srcWidth original image width
+ * @param srcHeight original image height
+ * @param dstData to destination image data
+ * @param dstWidth destination image width
+ * @param dstHeight destination image height
+ * @param channels count
+ */
 void IMAGE_Resize(uint8_t* srcData, int srcWidth, int srcHeight,
                   uint8_t* dstData, int dstWidth, int dstHeight, int channels)
 {

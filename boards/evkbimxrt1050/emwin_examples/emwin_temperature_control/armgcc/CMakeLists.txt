@@ -1,6 +1,6 @@
 # CROSS COMPILER SETTING
 SET(CMAKE_SYSTEM_NAME Generic)
-CMAKE_MINIMUM_REQUIRED (VERSION 3.1.1)
+CMAKE_MINIMUM_REQUIRED (VERSION 3.10.0)
 
 # THE VERSION NUMBER
 SET (Tutorial_VERSION_MAJOR 1)
@@ -42,25 +42,25 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../clock_config.h"
 "${ProjDirPath}/../dcd.c"
 "${ProjDirPath}/../dcd.h"
-"${ProjDirPath}/../AppWizard/Resource/Font/Roboto_24_Normal_EXT_AA4.c"
 "${ProjDirPath}/../AppWizard/Resource/Font/NettoOT_24_Normal_EXT_AA4.c"
 "${ProjDirPath}/../AppWizard/Resource/Font/Roboto_16_Normal_EXT_AA4.c"
-"${ProjDirPath}/../AppWizard/Resource/Image/SeggerLogo_80x40.c"
-"${ProjDirPath}/../AppWizard/Resource/Image/KNOB_106x106.c"
-"${ProjDirPath}/../AppWizard/Resource/Image/GreenGlowMarker_16x9.c"
-"${ProjDirPath}/../AppWizard/Resource/Image/ButtonRound_48x21.c"
-"${ProjDirPath}/../AppWizard/Resource/Image/TemperatureControl_3_480x272.c"
+"${ProjDirPath}/../AppWizard/Resource/Font/Roboto_24_Normal_EXT_AA4.c"
 "${ProjDirPath}/../AppWizard/Resource/Image/ButtonRoundPressed_48x21.c"
-"${ProjDirPath}/../AppWizard/Resource/Text/APPW_Pattern.c"
+"${ProjDirPath}/../AppWizard/Resource/Image/ButtonRound_48x21.c"
+"${ProjDirPath}/../AppWizard/Resource/Image/GreenGlowMarker_16x9.c"
+"${ProjDirPath}/../AppWizard/Resource/Image/KNOB_106x106.c"
+"${ProjDirPath}/../AppWizard/Resource/Image/SeggerLogo_80x40.c"
+"${ProjDirPath}/../AppWizard/Resource/Image/TemperatureControl_3_480x272.c"
 "${ProjDirPath}/../AppWizard/Resource/Text/APPW_Language_0.c"
+"${ProjDirPath}/../AppWizard/Resource/Text/APPW_Pattern.c"
 "${ProjDirPath}/../AppWizard/Source/APPW_MainTask.c"
 "${ProjDirPath}/../AppWizard/Source/CustomCode/Application.h"
 "${ProjDirPath}/../AppWizard/Source/CustomCode/ID_SCREEN_TEMP_CTRL_Slots.c"
-"${ProjDirPath}/../AppWizard/Source/Generated/ID_SCREEN_TEMP_CTRL.c"
-"${ProjDirPath}/../AppWizard/Source/Generated/Resource.h"
 "${ProjDirPath}/../AppWizard/Source/Generated/APPWConf.c"
-"${ProjDirPath}/../AppWizard/Source/Generated/Resource.c"
+"${ProjDirPath}/../AppWizard/Source/Generated/ID_SCREEN_TEMP_CTRL.c"
 "${ProjDirPath}/../AppWizard/Source/Generated/ID_SCREEN_TEMP_CTRL.h"
+"${ProjDirPath}/../AppWizard/Source/Generated/Resource.c"
+"${ProjDirPath}/../AppWizard/Source/Generated/Resource.h"
 "${ProjDirPath}/../AppWizard/APPW_X_NoFS.c"
 )
 
@@ -78,7 +78,7 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../components/lists
     ${ProjDirPath}/../../../../../devices/MIMXRT1052/xip
     ${ProjDirPath}/../../../xip
-    ${ProjDirPath}/../../../../../CMSIS/Include
+    ${ProjDirPath}/../../../../../CMSIS/Core/Include
     ${ProjDirPath}/../../../../../devices/MIMXRT1052/utilities
 )
 
@@ -119,13 +119,9 @@ include(driver_igpio_MIMXRT1052)
 
 include(driver_xip_device_MIMXRT1052)
 
-include(driver_xip_board_MIMXRT1052)
+include(driver_xip_board_evkbimxrt1050_MIMXRT1052)
 
-include(CMSIS_Include_core_cm7_MIMXRT1052)
-
-include(CMSIS_Include_common_MIMXRT1052)
-
-include(CMSIS_Include_dsp_MIMXRT1052)
+include(CMSIS_Include_core_cm_MIMXRT1052)
 
 include(utilities_misc_utilities_MIMXRT1052)
 
@@ -144,11 +140,11 @@ target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE nosys)
 
 if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_sdram_debug)
     target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/emwin/emWin_library/ARMGCC/libemWin_M7.a)
-endif()
+endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_sdram_debug)
 
 if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_sdram_release)
     target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/emwin/emWin_library/ARMGCC/libemWin_M7.a)
-endif()
+endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_sdram_release)
 
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--end-group)
 

@@ -21,8 +21,8 @@
 * Please do not make any modifications of this file! The modifications are lost
 * when the file is generated again by Embedded Wizard Studio!
 *
-* Version  : 9.30
-* Date     : 14.02.2020  8:00:50
+* Version  : 10.0
+* Date     : 17.02.2021  8:00:50
 * Profile  : iMX_RT
 * Platform : NXP.iMX_RT.RGB565
 *
@@ -37,12 +37,12 @@
 #endif
 
 #include "ewrte.h"
-#if EW_RTE_VERSION != 0x0009001E
+#if EW_RTE_VERSION != 0x000A0000
   #error Wrong version of Embedded Wizard Runtime Environment.
 #endif
 
 #include "ewgfx.h"
-#if EW_GFX_VERSION != 0x0009001E
+#if EW_GFX_VERSION != 0x000A0000
   #error Wrong version of Embedded Wizard Graphics Engine.
 #endif
 
@@ -174,6 +174,9 @@ EW_DEFINE_METHODS( ViewsText, CoreRectView )
   EW_METHOD( OnSetBounds,       void )( ViewsText _this, XRect value )
 EW_END_OF_METHODS( ViewsText )
 
+/* 'C' function for method : 'Views::Text.Done()' */
+void ViewsText_Done( ViewsText _this );
+
 /* The method Draw() is invoked automatically if parts of the view should be redrawn 
    on the screen. This can occur when e.g. the view has been moved or the appearance 
    of the view has changed before.
@@ -204,9 +207,6 @@ void ViewsText_Draw( ViewsText _this, GraphicsCanvas aCanvas, XRect aClip, XPoin
 
 /* 'C' function for method : 'Views::Text.OnSetBounds()' */
 void ViewsText_OnSetBounds( ViewsText _this, XRect value );
-
-/* 'C' function for method : 'Views::Text.Done()' */
-void ViewsText_Done( ViewsText _this );
 
 /* 'C' function for method : 'Views::Text.freeBidi()' */
 void ViewsText_freeBidi( ViewsText _this, XHandle aBidi );

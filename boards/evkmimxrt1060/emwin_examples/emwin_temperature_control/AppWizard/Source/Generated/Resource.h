@@ -3,7 +3,7 @@
 *        Solutions for real time microcontroller applications        *
 **********************************************************************
 *                                                                    *
-*        (c) 1996 - 2020  SEGGER Microcontroller GmbH                *
+*        (c) 1996 - 2021  SEGGER Microcontroller GmbH                *
 *                                                                    *
 *        Internet: www.segger.com    Support:  support@segger.com    *
 *                                                                    *
@@ -40,7 +40,6 @@ Purpose     : Generated file do NOT edit!
 #define ID_TEXT_11 14
 
 #define APPW_MANAGE_TEXT APPW_MANAGE_TEXT_EXT
-
 extern const unsigned char acAPPW_Language_0[];
 
 /*********************************************************************
@@ -66,7 +65,7 @@ extern const unsigned char acSeggerLogo_80x40[];
 *
 *       Screens
 */
-#define ID_SCREEN_TEMP_CTRL (GUI_ID_USER + 4096)
+#define ID_SCREEN_TEMP_CTRL (GUI_ID_USER + 0)
 
 extern APPW_ROOT_INFO ID_SCREEN_TEMP_CTRL_RootInfo;
 
@@ -76,7 +75,7 @@ extern APPW_ROOT_INFO ID_SCREEN_TEMP_CTRL_RootInfo;
 *
 *       Project path
 */
-#define APPW_PROJECT_PATH ""
+#define APPW_PROJECT_PATH "C:/Users/nxf33034/projects/emwin/Temp_ctrl_3"
 
 #endif  // RESOURCE_H
 

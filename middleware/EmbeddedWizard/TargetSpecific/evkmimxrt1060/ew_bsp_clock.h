@@ -40,8 +40,8 @@
 
 
 #if EW_CPU_LOAD_MEASURING == 1
-  #define CPU_LOAD_SET_IDLE()           EwBspCpuLoadSetIdle()
-  #define CPU_LOAD_SET_ACTIVE()         EwBspCpuLoadSetActive()
+  #define CPU_LOAD_SET_IDLE()           EwBspClockCpuLoadSetIdle()
+  #define CPU_LOAD_SET_ACTIVE()         EwBspClockCpuLoadSetActive()
 #else
   #define CPU_LOAD_SET_IDLE()
   #define CPU_LOAD_SET_ACTIVE()
@@ -50,10 +50,10 @@
 
 /*******************************************************************************
 * FUNCTION:
-*   EwBspConfigSystemTick
+*   EwBspClockInit
 *
 * DESCRIPTION:
-*   Configure the system tick counter.
+*   Initialises the system clock and the real time clock.
 *
 * ARGUMENTS:
 *   None
@@ -62,7 +62,7 @@
 *   None
 *
 *******************************************************************************/
-void EwBspConfigSystemTick
+void EwBspClockInit
 (
   void
 );
@@ -70,10 +70,10 @@ void EwBspConfigSystemTick
 
 /*******************************************************************************
 * FUNCTION:
-*   EwBspSystemTickIncrement
+*   EwBspClockTickIncrement
 *
 * DESCRIPTION:
-*   The function EwBspSystemTickIncrement increments the millisecond counter,
+*   The function EwBspClockTickIncrement increments the millisecond counter,
 *   which is used by the Runtime Environmet (RTE) to trigger timer events.
 *
 * ARGUMENTS:
@@ -83,7 +83,7 @@ void EwBspConfigSystemTick
 *   None
 *
 *******************************************************************************/
-void EwBspSystemTickIncrement
+void EwBspClockTickIncrement
 (
   void
 );
@@ -91,27 +91,27 @@ void EwBspSystemTickIncrement
 
 /*******************************************************************************
 * FUNCTION:
-*   EwBspConfigRealTimeClock
+*   EwBspClockGetTicks
 *
 * DESCRIPTION:
-*   Configures the Real Time Clock.
+*   The function EwBspClockGetTicks returns the current ticks counter value.
 *
 * ARGUMENTS:
 *   None
 *
 * RETURN VALUE:
-*   None
+*   The current ticks counter value.
 *
 *******************************************************************************/
-void EwBspConfigRealTimeClock
-(
-  void
+unsigned long EwBspClockGetTicks
+( 
+  void 
 );
 
 
 /*******************************************************************************
 * FUNCTION:
-*   EwBspGetTime
+*   EwBspClockGetTime
 *
 * DESCRIPTION:
 *   Returns the current time in seconds since 01.01.1970.
@@ -123,7 +123,7 @@ void EwBspConfigRealTimeClock
 *   The current time in seconds since 01.01.1970.
 *
 *******************************************************************************/
-unsigned long EwBspGetTime
+unsigned long EwBspClockGetTime
 (
   void
 );
@@ -131,13 +131,19 @@ unsigned long EwBspGetTime
 
 /*******************************************************************************
 * FUNCTION:
-*   EwBspSetTime
+*   EwBspClockSetTime
 *
 * DESCRIPTION:
-*   Sets the given time in seconds since 01.01.1970 at real time clock.
+*   Sets the given time in seconds since 01.01.1970 at real time clock (RTC).
+*
+* ARGUMENTS:
+*   aTime - the time in seconds since 01.01.1970 to set in real time clock.
+*
+* RETURN VALUE:
+*   None.
 *
 *******************************************************************************/
-void EwBspSetTime
+void EwBspClockSetTime
 (
   unsigned long aTime
 );
@@ -145,7 +151,7 @@ void EwBspSetTime
 
 /*******************************************************************************
 * FUNCTION:
-*   EwBspGetCpuLoad
+*   EwBspClockGetCpuLoad
 *
 * DESCRIPTION:
 *   Returns the current CPU load as percent value.
@@ -157,7 +163,7 @@ void EwBspSetTime
 *   The current CPU load.
 *
 *******************************************************************************/
-int EwBspGetCpuLoad
+int EwBspClockGetCpuLoad
 (
   void
 );
@@ -165,7 +171,7 @@ int EwBspGetCpuLoad
 
 /*******************************************************************************
 * FUNCTION:
-*   EwBspCpuLoadSetActive
+*   EwBspClockCpuLoadSetActive
 *
 * DESCRIPTION:
 *   Starts the CPU load counting. Call this function whenever CPU processing
@@ -177,7 +183,7 @@ int EwBspGetCpuLoad
 *   None
 *
 *******************************************************************************/
-void EwBspCpuLoadSetActive
+void EwBspClockCpuLoadSetActive
 (
   void
 );
@@ -185,7 +191,7 @@ void EwBspCpuLoadSetActive
 
 /*******************************************************************************
 * FUNCTION:
-*   EwBspCpuLoadSetIdle
+*   EwBspClockCpuLoadSetIdle
 *
 * DESCRIPTION:
 *   Stops the CPU load counting. Call this function whenever CPU processing is
@@ -199,7 +205,7 @@ void EwBspCpuLoadSetActive
 *   None
 *
 *******************************************************************************/
-void EwBspCpuLoadSetIdle
+void EwBspClockCpuLoadSetIdle
 (
   void
 );

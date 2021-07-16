@@ -49,7 +49,7 @@
 #define SMP_FALSE                                   BT_FALSE
 
 /** Invalid SMP Device handle */
-#define SMP_BD_INVALID_HANDLE                       0xFF
+#define SMP_BD_INVALID_HANDLE                       0xFFU
 
 /**
  * \defgroup smp_config Configurations
@@ -59,22 +59,22 @@
 
 #ifndef SMP_LESC
 /** SMP L2CAP Channel Maximum Transfer Unit */
-#define SMP_MTU                                     23
+#define SMP_MTU                                     23U
 #else
-#define SMP_MTU                                     65
+#define SMP_MTU                                     65U
 #endif /* SMP_LESC */
 
 /** SMP L2CAP Flush Timout, set to Infinite as per specification */
-#define SMP_FLUSH_TIMEOUT                           0xFFFF
+#define SMP_FLUSH_TIMEOUT                           0xFFFFU
 
 /** SMP L2CAP Quality of Service, set to Best Effort as per specification */
-#define SMP_QOS                                     0x01 /* Best Effort (Default) */
+#define SMP_QOS                                     0x01U /* Best Effort (Default) */
 
 /** SMP L2CAP operation mode, set to Basic Mode as per specification */
 #define SMP_MODE                                    L2CAP_MODE_BASIC
 
 /** SMP Procedure Timeout */
-#define SMP_PROCEDURE_TIMEOUT                       30 /* Seconds */
+#define SMP_PROCEDURE_TIMEOUT                       30U /* Seconds */
 
 /** \} */
 
@@ -86,47 +86,47 @@
  */
 
 /** SMP Pairing Request Command Code */
-#define SMP_CODE_PAIRING_REQUEST                    0x01
+#define SMP_CODE_PAIRING_REQUEST                    0x01U
 
 /** SMP Pairing Response Command Code */
-#define SMP_CODE_PAIRING_RESPONSE                   0x02
+#define SMP_CODE_PAIRING_RESPONSE                   0x02U
 
 /** SMP Pairing Confirm Command Code */
-#define SMP_CODE_PAIRING_CONFIRM                    0x03
+#define SMP_CODE_PAIRING_CONFIRM                    0x03U
 
 /** SMP Pairing Random Command Code */
-#define SMP_CODE_PAIRING_RANDOM                     0x04
+#define SMP_CODE_PAIRING_RANDOM                     0x04U
 
 /** SMP Pairing Failed Command Code */
-#define SMP_CODE_PAIRING_FAILED                     0x05
+#define SMP_CODE_PAIRING_FAILED                     0x05U
 
 /** SMP Encryptino Information Command Code */
-#define SMP_CODE_ENCRYPTION_INFORMATION             0x06
+#define SMP_CODE_ENCRYPTION_INFORMATION             0x06U
 
 /** SMP Master Identification Command Code */
-#define SMP_CODE_MASTER_IDENTIFICATION              0x07
+#define SMP_CODE_MASTER_IDENTIFICATION              0x07U
 
 /** SMP Identity Information Command Code */
-#define SMP_CODE_IDENTITY_INFORMATION               0x08
+#define SMP_CODE_IDENTITY_INFORMATION               0x08U
 
 /** SMP Identity Address Information Command Code */
-#define SMP_CODE_IDENTITY_ADDRESS_INFORMATION       0x09
+#define SMP_CODE_IDENTITY_ADDRESS_INFORMATION       0x09U
 
 /** SMP Signing Information Command Code */
-#define SMP_CODE_SIGNING_INFORMATION                0x0A
+#define SMP_CODE_SIGNING_INFORMATION                0x0AU
 
 /** SMP Security Request Command Code */
-#define SMP_CODE_SECURITY_REQUEST                   0x0B
+#define SMP_CODE_SECURITY_REQUEST                   0x0BU
 
 #ifdef SMP_LESC
 /** SMP Pairing Public Key  Code */
-#define SMP_CODE_PAIRING_PUBLIC_KEY                 0x0C
+#define SMP_CODE_PAIRING_PUBLIC_KEY                 0x0CU
 
 /** SMP Pairing DHkey Check Code */
-#define SMP_CODE_PAIRING_DHKEY_CHECK                0x0D
+#define SMP_CODE_PAIRING_DHKEY_CHECK                0x0DU
 
 /** SMP Pairing Keypress notification Code */
-#define SMP_CODE_PAIRING_KEYPRESS_NTF               0x0E
+#define SMP_CODE_PAIRING_KEYPRESS_NTF               0x0EU
 #endif /* SMP_LESC */
 
 /** \} */
@@ -139,34 +139,34 @@
  */
 
 /** LE Security Mode 1 */
-#define SMP_SEC_MODE_1                              0x10
+#define SMP_SEC_MODE_1                              0x10U
 
 /** LE Security Mode 2 */
-#define SMP_SEC_MODE_2                              0x20
+#define SMP_SEC_MODE_2                              0x20U
 
 /** LE Security Mode Mask */
-#define SMP_SEC_MODE_MASK                           0xF0
+#define SMP_SEC_MODE_MASK                           0xF0U
 
 /**
  * Level 0 -
  * For Mode 1: No Security (No Authentication & No Encryption)
  * For Mode 2: NA
  */
-#define SMP_SEC_LEVEL_0                             0x00
+#define SMP_SEC_LEVEL_0                             0x00U
 
 /**
  * Level 1 -
  * For Mode 1: Unauthenticated pairing with encryption (No MITM)
  * For Mode 2: Unauthenticated pairing with data signing (No MITM)
  */
-#define SMP_SEC_LEVEL_1                             0x01
+#define SMP_SEC_LEVEL_1                             0x01U
 
 /**
  * Level 2 -
  * For Mode 1: Authenticated pairing with encryption (With MITM)
  * For Mode 2: Authenticated pairing with data signing (With MITM)
  */
-#define SMP_SEC_LEVEL_2                             0x02
+#define SMP_SEC_LEVEL_2                             0x02U
 
 #ifdef SMP_LESC
 /**
@@ -174,95 +174,95 @@
  * For Mode 1: Authenticated LE Secure Connections pairing with encryption
  * For Mode 2: ???
  */
-#define SMP_SEC_LEVEL_3                             0x03
+#define SMP_SEC_LEVEL_3                             0x03U
 #endif /* SMP_LESC */
 
 /** LE Security Level Mask */
-#define SMP_SEC_LEVEL_MASK                          0x0F
+#define SMP_SEC_LEVEL_MASK                          0x0FU
 
 #ifdef SMP_LESC
 /** LE Security Modes */
-#define SMP_LEGACY_MODE                             0x01
-#define SMP_LESC_MODE                               0x02
+#define SMP_LEGACY_MODE                             0x01U
+#define SMP_LESC_MODE                               0x02U
 
 /** LE Pairing Mode Mask */
-#define SMP_PAIRING_MODE_MASK                       0x03
+#define SMP_PAIRING_MODE_MASK                       0x03U
 
 /** LE Secure Connection Bit */
-#define SMP_SEC_LESC                                0x80
-#define SMP_LESC_AUTH_REQ_BIT_SET_MASK              0x08
-#define SMP_LESC_KEY_PRESS_AUTH_REQ_BIT_SET_MASK    0x10
+#define SMP_SEC_LESC                                0x80U
+#define SMP_LESC_AUTH_REQ_BIT_SET_MASK              0x08U
+#define SMP_LESC_KEY_PRESS_AUTH_REQ_BIT_SET_MASK    0x10U
 #endif /* SMP_LESC */
 
 /** SMP No Bonding support */
-#define SMP_BONDING_NONE                            0x00
+#define SMP_BONDING_NONE                            0x00U
 
 /** SMP availability of Bonding support */
-#define SMP_BONDING                                 0x01
+#define SMP_BONDING                                 0x01U
 
 /** SMP Display Only IO Capability */
-#define SMP_IOCAP_DISPLAY_ONLY                      0x00
+#define SMP_IOCAP_DISPLAY_ONLY                      0x00U
 
 /** SMP Display Yes/No IO Capability */
-#define SMP_IOCAP_DISPLAY_YESNO                     0x01
+#define SMP_IOCAP_DISPLAY_YESNO                     0x01U
 
 /** SMP Keyboard Only IO Capability */
-#define SMP_IOCAP_KEYBOARD_ONLY                     0x02
+#define SMP_IOCAP_KEYBOARD_ONLY                     0x02U
 
 /** SMP No IO Capability */
-#define SMP_IOCAP_NOINPUT_NOOUTPUT                  0x03
+#define SMP_IOCAP_NOINPUT_NOOUTPUT                  0x03U
 
 /** SMP Keyboard Display IO Capability */
-#define SMP_IOCAP_KEYBOARD_DISPLAY                  0x04
+#define SMP_IOCAP_KEYBOARD_DISPLAY                  0x04U
 
 /** SMP Unavailability of OOB Data */
-#define SMP_OOB_AUTH_DATA_UNAVAILABLE               0x00
+#define SMP_OOB_AUTH_DATA_UNAVAILABLE               0x00U
 
 /** SMP Availability of OOB Data */
-#define SMP_OOB_AUTH_DATA_AVAILABLE                 0x01
+#define SMP_OOB_AUTH_DATA_AVAILABLE                 0x01U
 
 /**
  * SMP Encryption Key bit-mask, to indicate LTK, EDIV and RAND sharing during
  * the key distribution
  */
-#define SMP_DIST_MASK_ENC_KEY                       0x01
+#define SMP_DIST_MASK_ENC_KEY                       0x01U
 
 /**
  * SMP Id Key bit-mask, to indicate IRK and Address sharing during
  * the key distribution
  */
-#define SMP_DIST_MASK_ID_KEY                        0x02
+#define SMP_DIST_MASK_ID_KEY                        0x02U
 
 /**
  * SMP Sign bit-mask, to indicate CSRK sharing during the key distribution
  */
-#define SMP_DIST_MASK_SIGN_KEY                      0x04
+#define SMP_DIST_MASK_SIGN_KEY                      0x04U
 
 /**
  * SMP Link Key bit-mask, to indicate Link Key generation during the key distribution
  */
-#define SMP_DIST_MASK_LINK_KEY                      0x08
+#define SMP_DIST_MASK_LINK_KEY                      0x08U
 
 /**
  * SMP Minimum Encryption Key size that can be supported
  */
-#define SMP_MIN_ENCRYPTION_KEY_SIZE                 7
+#define SMP_MIN_ENCRYPTION_KEY_SIZE                 7U
 
 /**
 * SMP Maximum Encryption Key size that can be supported
 */
-#define SMP_MAX_ENCRYPTION_KEY_SIZE                 16
+#define SMP_MAX_ENCRYPTION_KEY_SIZE                 16U
 
 /** SMP Entity Authentication state masks for security attribute */
-#define SMP_ENTITY_AUTH_OFF                         0x00
-#define SMP_ENTITY_AUTH_IN_PROGRESS                 0x01
-#define SMP_ENTITY_AUTH_ON                          0x02
-#define SMP_ENTITY_AUTH_MASK                        0xFC
+#define SMP_ENTITY_AUTH_OFF                         0x00U
+#define SMP_ENTITY_AUTH_IN_PROGRESS                 0x01U
+#define SMP_ENTITY_AUTH_ON                          0x02U
+#define SMP_ENTITY_AUTH_MASK                        0xFCU
 
 #ifdef SMP_LESC
 /* SMP Numeric Key Comparison User Response Types */
-#define SMP_NUM_COMP_CNF_POSITIVE                   0x00
-#define SMP_NUM_COMP_CNF_NEGATIVE                   0x01
+#define SMP_NUM_COMP_CNF_POSITIVE                   0x00U
+#define SMP_NUM_COMP_CNF_NEGATIVE                   0x01U
 #endif /* SMP_LESC */
 
 /** \} */
@@ -275,53 +275,53 @@
  */
 
 /** User Passkey size */
-#define SMP_USER_PASSKEY_SIZE                       6
+#define SMP_USER_PASSKEY_SIZE                       6U
 
 /** Identity Address data size */
-#define SMP_IDADDR_SIZE                             7
+#define SMP_IDADDR_SIZE                             7U
 
 /** Identity Resolving Key size */
-#define SMP_IRK_SIZE                                16
+#define SMP_IRK_SIZE                                16U
 
 /** Connection Signature Resolving key size */
-#define SMP_CSRK_SIZE                               16
+#define SMP_CSRK_SIZE                               16U
 
 /** Long Term Key Size size */
-#define SMP_LTK_SIZE                                16
+#define SMP_LTK_SIZE                                16U
 
 /** Encrypted Diversifier size */
-#define SMP_EDIV_SIZE                               2
+#define SMP_EDIV_SIZE                               2U
 
 /** 24 Bit Random Number size */
-#define SMP_RAND_24B_SIZE                           3
+#define SMP_RAND_24B_SIZE                           3U
 
 /** 64 Bit Random Number size */
-#define SMP_RAND_64B_SIZE                           8
+#define SMP_RAND_64B_SIZE                           8U
 
 /** 128 Bit Random Number size */
-#define SMP_RAND_128B_SIZE                          16
+#define SMP_RAND_128B_SIZE                          16U
 
 #ifdef SMP_LESC
 /* 64 Byte Public Key */
-#define SMP_LESC_PUBLIC_KEY_SIZE                    64
+#define SMP_LESC_PUBLIC_KEY_SIZE                    64U
 
 /* 32 Byte Public Key X Coordinate */
-#define SMP_LESC_PUBLIC_KEY_X_SIZE                  32
+#define SMP_LESC_PUBLIC_KEY_X_SIZE                  32U
 
 /* 32 Byte Public Key Y Coordinate */
-#define SMP_LESC_PUBLIC_KEY_Y_SIZE                  32
+#define SMP_LESC_PUBLIC_KEY_Y_SIZE                  32U
 
 /* 256 bit DHkey */
-#define SMP_LESC_DHKEY_SIZE                         32
+#define SMP_LESC_DHKEY_SIZE                         32U
 
 /* 32 Byte Private Key */
-#define SMP_LESC_PRIVATE_KEY_SIZE                   32
+#define SMP_LESC_PRIVATE_KEY_SIZE                   32U
 
 /* 128 bit MACKEY */
-#define SMP_LESC_MACKEY_SIZE                        16
+#define SMP_LESC_MACKEY_SIZE                        16U
 
 /* 128 bit LK size */
-#define SMP_LK_SIZE                                 16
+#define SMP_LK_SIZE                                 16U
 #endif /* SMP_LESC */
 
 /** \} */
@@ -340,9 +340,9 @@
 #define SMP_LINK_ANY                                DQ_LINK_ANY
 
 /** Cross transport information masks */
-#define SMP_XTX_DISABLE                             0x00
-#define SMP_XTX_KEYGEN_MASK                         0x01
-#define SMP_XTX_H7_MASK                             0x02
+#define SMP_XTX_DISABLE                             0x00U
+#define SMP_XTX_KEYGEN_MASK                         0x01U
+#define SMP_XTX_H7_MASK                             0x02U
 
 /** \} */
 
@@ -353,13 +353,13 @@
  */
 
 /* Generate signature action */
-#define SMP_SIGN_GENERATE                           0x00
+#define SMP_SIGN_GENERATE                           0x00U
 
 /* Verify signature action */
-#define SMP_SIGN_VERIFY                             0x01
+#define SMP_SIGN_VERIFY                             0x01U
 
 /** 64 Bit signature Message Authentication Code size */
-#define SMP_SIGN_MAC_SIZE                           8
+#define SMP_SIGN_MAC_SIZE                           8U
 /**
  * NOTE: 'TO BE Depricated'
  * Having the old Signature MAC size definition for Appl Backward compatibility.
@@ -373,19 +373,19 @@
  * \{
  *  This section lists the types of different operations used in SMP AES CMAC
  */
-#define SMP_AES_CMAC_SIGN_OP                        0x81
-#define SMP_AES_CMAC_LESC_CONF_VAL_GEN_OP           0x82
-#define SMP_AES_CMAC_LESC_T_KEY_GEN_OP              0x83
-#define SMP_AES_CMAC_LESC_LTK_GEN_OP                0x84
-#define SMP_AES_CMAC_LESC_MACKEY_GEN_OP             0x85
-#define SMP_AES_CMAC_LESC_CHK_VAL_GEN_OP            0x86
-#define SMP_AES_CMAC_LESC_NUM_COMP_VAL_GEN_OP       0x87
-#define SMP_AES_CMAC_LESC_LINK_KEY_CONV_OP          0x88
-#define SMP_AES_CMAC_INVALID_OP                     0xFF
+#define SMP_AES_CMAC_SIGN_OP                        0x81U
+#define SMP_AES_CMAC_LESC_CONF_VAL_GEN_OP           0x82U
+#define SMP_AES_CMAC_LESC_T_KEY_GEN_OP              0x83U
+#define SMP_AES_CMAC_LESC_LTK_GEN_OP                0x84U
+#define SMP_AES_CMAC_LESC_MACKEY_GEN_OP             0x85U
+#define SMP_AES_CMAC_LESC_CHK_VAL_GEN_OP            0x86U
+#define SMP_AES_CMAC_LESC_NUM_COMP_VAL_GEN_OP       0x87U
+#define SMP_AES_CMAC_LESC_LINK_KEY_CONV_OP          0x88U
+#define SMP_AES_CMAC_INVALID_OP                     0xFFU
 /** \} */
 
 /** 128 Bit AES_CMAC Message Authentication Code size */
-#define SMP_AES_CMAC_MAC_SIZE                       16
+#define SMP_AES_CMAC_MAC_SIZE                       16U
 
 /**
  * \defgroup smp_reply_cmds Reply Command Codes
@@ -394,29 +394,29 @@
  */
 
 /** SMP Authentication Request Reply command */
-#define SMP_AUTHENTICATION_REQUEST_REPLY            0x81
+#define SMP_AUTHENTICATION_REQUEST_REPLY            0x81U
 
 /** SMP Passkey Entry Request Reply command */
-#define SMP_PASSKEY_ENTRY_REQUEST_REPLY             0x82
+#define SMP_PASSKEY_ENTRY_REQUEST_REPLY             0x82U
 
 /** SMP Long Term Key Request Reply command */
-#define SMP_LONG_TERM_KEY_REQUEST_REPLY             0x83
+#define SMP_LONG_TERM_KEY_REQUEST_REPLY             0x83U
 
 /** SMP Key Exchange Info Request Reply command */
-#define SMP_KEY_EXCHANGE_INFO_REQUEST_REPLY         0x84
+#define SMP_KEY_EXCHANGE_INFO_REQUEST_REPLY         0x84U
 
 #ifdef SMP_LESC
 /** SMP Numeric Comparision generation */
-#define SMP_NKEY_COMP_GEN                           0x85
+#define SMP_NKEY_COMP_GEN                           0x85U
 
 /** SMP LESC Key Generation */
-#define SMP_LESC_KEY_GENERATION                     0x86
+#define SMP_LESC_KEY_GENERATION                     0x86U
 
 /** SMP Numeric Comparision User Confirmation */
-#define SMP_NKEY_COMP_CNF_USER_REPLY                0x87
+#define SMP_NKEY_COMP_CNF_USER_REPLY                0x87U
 
 /** SMP PASSKEY Key Press Notification Command */
-#define SMP_LESC_KEY_PRESS_NTF                      0x88
+#define SMP_LESC_KEY_PRESS_NTF                      0x88U
 #endif /* SMP_LESC */
 
 /** \} */
@@ -434,81 +434,81 @@
 /**
  * No Error
  */
-#define SMP_ERROR_NONE                              0x00
+#define SMP_ERROR_NONE                              0x00U
 
 /**
  * User input of passkey failed, for example, the user cancelled the operation
  */
-#define SMP_ERROR_PASSKEY_ENTRY_FAILED              0x01
+#define SMP_ERROR_PASSKEY_ENTRY_FAILED              0x01U
 
 /**
  * Out Of Band data is not available
  */
-#define SMP_ERROR_OOB_NOT_AVAILABLE                 0x02
+#define SMP_ERROR_OOB_NOT_AVAILABLE                 0x02U
 
 /**
  * Pairing procedure cannot be performed as authentication
  * requirements cannot be met due to IO capabilities of one or both devices
  */
-#define SMP_ERROR_AUTHENTICATION_REQUIREMENTS       0x03
+#define SMP_ERROR_AUTHENTICATION_REQUIREMENTS       0x03U
 
 /**
  * Confirm value does not match the calculated compare value
  */
-#define SMP_ERROR_CONFIRM_VALUE_FAILED              0x04
+#define SMP_ERROR_CONFIRM_VALUE_FAILED              0x04U
 
 /**
  * Pairing is not supported by the device
  */
-#define SMP_ERROR_PAIRING_NOT_SUPPORTED             0x05
+#define SMP_ERROR_PAIRING_NOT_SUPPORTED             0x05U
 
 /**
  * Insufficient key size for the security requirements of this device
  */
-#define SMP_ERROR_ENCRYPTION_KEY_SIZE               0x06
+#define SMP_ERROR_ENCRYPTION_KEY_SIZE               0x06U
 
 /**
  * SMP command received is not supported
  */
-#define SMP_ERROR_COMMAND_NOT_SUPPORTED             0x07
+#define SMP_ERROR_COMMAND_NOT_SUPPORTED             0x07U
 
 /**
  * Pairing failed due to an unspecified reason
  */
-#define SMP_ERROR_UNSPECIFIED_REASON                0x08
+#define SMP_ERROR_UNSPECIFIED_REASON                0x08U
 
 /**
  * Pairing or authentication procedure is disallowed because too little time
  * has elapsed since last pairing request or security request
  */
-#define SMP_ERROR_REPEATED_ATTEMTS                  0x09
+#define SMP_ERROR_REPEATED_ATTEMTS                  0x09U
 
 /**
  * Invalid Parameters in Request - Invalid Command length and Parameter value
  * outside range
  */
-#define SMP_ERROR_INVALID_PARAMETERS                0x0A
+#define SMP_ERROR_INVALID_PARAMETERS                0x0AU
 
 #ifdef SMP_LESC
 /**
  * Pairing Failed due to DH key check failed
  */
-#define SMP_ERROR_DHKEY_CHECK_FAILED               0x0B
+#define SMP_ERROR_DHKEY_CHECK_FAILED                0x0BU
 
 /**
  * Pairing Failed due to Numeric Comparision Failed
  */
-#define SMP_ERROR_NUMERIC_COMPARISON_FAILED        0x0C
+#define SMP_ERROR_NUMERIC_COMPARISON_FAILED         0x0CU
 
 /**
  * Pairing Failed due to BR/EDR pairing process in progress
  */
-#define SMP_ERROR_BREDR_PAIRING_IN_PROGRESS        0x0D
+#define SMP_ERROR_BREDR_PAIRING_IN_PROGRESS         0x0DU
 
 /**
  * Pairing Failed due to CrossTransport Key generation not allowed
  */
-#define SMP_ERROR_CT_KEY_GEN_NOT_ALLOWED           0x0E
+#define SMP_ERROR_CT_KEY_GEN_NOT_ALLOWED            0x0EU
 #endif /* SMP_LESC */
 
 /** \} */
@@ -538,7 +538,7 @@
  *
  * \return \ref API_SUCCESS (always)
  */
-#define SMP_AUTHENTICATION_COMPLETE                 0x01
+#define SMP_AUTHENTICATION_COMPLETE                 0x01U
 
 /**
  * This event indicates Authentication Request received from the peer device,
@@ -558,7 +558,7 @@
  * \note On receiving this event, the application is expected to reply using the
  * \ref BT_smp_authentication_request_reply API
  */
-#define SMP_AUTHENTICATION_REQUEST                  0x02
+#define SMP_AUTHENTICATION_REQUEST                  0x02U
 
 /**
  * This event indicates SMP has requested for a passkey to be used during
@@ -577,7 +577,7 @@
  * \note On receiving this event, the application is expected to reply using the
  * \ref BT_smp_passkey_entry_request_reply API
  */
-#define SMP_PASSKEY_ENTRY_REQUEST                   0x03
+#define SMP_PASSKEY_ENTRY_REQUEST                   0x03U
 
 /**
  * This event indicates SMP has requested to display passkey during
@@ -607,7 +607,7 @@
  *     *((UINT32 *)event_data) = APPL_SMP_PASSKEY;
  *     return SMP_DISPLAY_PASSKEY_UPDATED;
  */
-#define SMP_PASSKEY_DISPLAY_REQUEST                 0x04
+#define SMP_PASSKEY_DISPLAY_REQUEST                 0x04U
 
 /**
  * This event indicates that peer Master device has started an encryption
@@ -629,7 +629,7 @@
  * \note On receiving this event, the application is expected to reply using the
  * \ref BT_smp_long_term_key_request_reply API
  */
-#define SMP_LONG_TERM_KEY_REQUEST                   0x05
+#define SMP_LONG_TERM_KEY_REQUEST                   0x05U
 
 /**
  * This event indicates that pairing procedure has requested for Key
@@ -652,7 +652,7 @@
  * \note On receiving this event, the application is expected to reply using the
  * \ref BT_smp_key_exchange_info_request_reply API
  */
-#define SMP_KEY_EXCHANGE_INFO_REQUEST               0x06
+#define SMP_KEY_EXCHANGE_INFO_REQUEST               0x06U
 
 /**
  * This event indicates that pairing procedure is notifying Key exchange data
@@ -675,7 +675,7 @@
  * \note On receiving this event, the application is expected to store the keys
  * that may be required for future procedures
  */
-#define SMP_KEY_EXCHANGE_INFO                       0x07
+#define SMP_KEY_EXCHANGE_INFO                       0x07U
 
 /**
  * This event indicates that the resolvable private address is created
@@ -693,7 +693,7 @@
  *
  * \return \ref API_SUCCESS (always)
  */
-#define SMP_RESOLVABLE_PVT_ADDR_CREATE_CNF            0x08
+#define SMP_RESOLVABLE_PVT_ADDR_CREATE_CNF            0x08U
 
 /**
  * This event indicates that the resolvable private address is verified
@@ -709,7 +709,7 @@
  *
  * \return \ref API_SUCCESS (always)
  */
-#define SMP_RESOLVABLE_PVT_ADDR_VERIFY_CNF            0x09
+#define SMP_RESOLVABLE_PVT_ADDR_VERIFY_CNF            0x09U
 
 /**
  * This event indicates the completion of signature generation for a data that
@@ -726,7 +726,7 @@
  *
  * \return \ref API_SUCCESS (always)
  */
-#define SMP_DATA_SIGNING_COMPLETE                     0x0A
+#define SMP_DATA_SIGNING_COMPLETE                     0x0AU
 
 /**
  * This event indicates the completion of verification of signed data received
@@ -743,7 +743,7 @@
  *
  * \return \ref API_SUCCESS (always)
  */
-#define SMP_SIGN_DATA_VERIFICATION_COMPLETE           0x0B
+#define SMP_SIGN_DATA_VERIFICATION_COMPLETE           0x0BU
 
 #ifdef SMP_LESC
 /**
@@ -763,7 +763,7 @@
  * \note On receiving this event, the application is expected to reply using the
  * \ref BT_smp_nkey_comp_cnf_reply API
  */
-#define SMP_NUMERIC_KEY_COMPARISON_CNF_REQUEST        0x0C
+#define SMP_NUMERIC_KEY_COMPARISON_CNF_REQUEST        0x0CU
 
 /**
  * This event indicates that pairing procedure is notifying KeyPress Events
@@ -781,7 +781,7 @@
  *
  * \note This event is an informative event for the Upper Layer
  */
-#define SMP_KEY_PRESS_NOTIFICATION_EVENT              0x0D
+#define SMP_KEY_PRESS_NOTIFICATION_EVENT              0x0DU
 #endif /* SMP_LESC */
 
 /**
@@ -792,7 +792,7 @@
  * This event indicates an invalid event received through
  * \ref SMP_UI_NOTIFY_CB callback.
  */
-#define SMP_EVENT_INVALID                             0xFF
+#define SMP_EVENT_INVALID                             0xFFU
 
 /** \} */
 
@@ -854,7 +854,7 @@
  * This macro validates a Bluetooth device handle type as in \ref SMP_BD_HANDLE
  */ /* TODO: Make it generic across LE */
 #define SMP_IS_VALID_BD_HANDLE(bd_handle) \
-    (((NULL != (bd_handle)) && (0xFF != *(bd_handle)))? (SMP_TRUE): (SMP_FALSE))
+    (((NULL != (bd_handle)) && (0xFFU != *(bd_handle)))? (SMP_TRUE): (SMP_FALSE))
 
 /**
  * \}
@@ -923,12 +923,19 @@ typedef struct _SMP_AUTH_INFO
      */
     UCHAR transport;
 
+#ifdef SMP_ENABLE_BLURTOOTH_VU_UPDATE
+    /**
+     * Local role desired, based on the role
+     * in the other transport during authentication
+     */
+    UCHAR role;
+#endif /* SMP_ENABLE_BLURTOOTH_VU_UPDATE */
+
     /**
      * Cross transport information
      */
     UCHAR xtx_info;
 #endif /* SMP_LESC_CROSS_TXP_KEY_GEN */
-
     /**
      * The data length of the data
      */
@@ -1156,6 +1163,25 @@ API_RESULT BT_smp_authenticate
                /* IN */ SMP_AUTH_INFO  * auth_info
            );
 
+/**
+ * \brief To get the pairing request pdu
+ *
+ * \par Description:
+ *      This API is used to get the pairing request pdu
+ *
+ * \param [in] bd_handle  Pointer to peer device handle as in \ref SMP_BD_HANDLE
+ *
+ * \param [out] preq  piaring request pdu
+ *
+ * \return API_SUCCESS if Successful else and Error code describing
+ * cause of failure.
+ *
+ */
+API_RESULT BT_smp_get_pairing_req_pdu
+           (
+               /* IN */ SMP_BD_HANDLE   * bd_handle,
+               /* OUT */ UCHAR *preq
+           );
 
 /**
  * \brief To intiate encryption procedure
@@ -1238,7 +1264,7 @@ API_RESULT BT_smp_encrypt
         BT_smp_param_request_reply                                      \
         ((bd_handle), SMP_PASSKEY_ENTRY_REQUEST_REPLY,                  \
         (SMP_TRUE == (status))? (pass_key): NULL,                       \
-        (SMP_TRUE == (status))? sizeof(UINT32): 0)                      \
+        (SMP_TRUE == (status))? sizeof(UINT32): 0U)
 
 /**
  * \brief To reply to Long Term Key request from SMP
@@ -1268,7 +1294,7 @@ API_RESULT BT_smp_encrypt
         BT_smp_param_request_reply                                      \
         ((bd_handle), SMP_LONG_TERM_KEY_REQUEST_REPLY,                  \
         (SMP_TRUE == (status))? (ltk): NULL,                            \
-        (SMP_TRUE == (status))? SMP_LTK_SIZE: 0)
+        (SMP_TRUE == (status))? SMP_LTK_SIZE: 0U)
 
 /**
  * \brief To reply to Key Exchange Information Request from SMP
@@ -1393,7 +1419,6 @@ API_RESULT  BT_smp_data_sign
                 /* IN */  UCHAR    * key,
                 /* OUT */ UCHAR    * mac
             );
-
 
 /**
  * \brief To sign data with given key for transmission
@@ -1689,7 +1714,6 @@ API_RESULT BT_smp_resolve_device
 #define BT_smp_get_bd_addr(bd_handle, bd_addr) \
         device_queue_get_remote_addr((bd_handle), (bd_addr))
 
-
 /**
  * \brief To update the RPA of a peer device
  *
@@ -1745,6 +1769,7 @@ API_RESULT smp_tbx_test_lesc_funcs
 };
 #endif
 
+/** \} */
 /** \} */
 /** \} */
 

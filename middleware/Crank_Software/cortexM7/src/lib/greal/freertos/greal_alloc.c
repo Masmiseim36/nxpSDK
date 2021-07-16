@@ -221,6 +221,10 @@ char *
 greal_strdup(const char *s1) {
 	void *ptr;
 	int  nbytes;
+	
+	if(!s1) {
+		return NULL;
+	}
 
 	nbytes = strlen(s1) + 1;
 	ptr = greal_malloc(nbytes);
@@ -268,6 +272,10 @@ greal_calloc(size_t nelem, size_t elsize) {
 #ifndef _GREAL_STRDUP_
 char *
 greal_strdup(const char *s1) {
+	//strdup doesn't account for null being OK as input
+	if(!s1) {
+		return NULL;
+	}
 	return strdup(s1);
 }
 #endif

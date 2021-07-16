@@ -932,7 +932,8 @@
  * LWIP_DHCP_DOES_ACD_CHECK==1: Perform address conflict detection on the dhcp address.
  */
 #if !defined LWIP_DHCP_DOES_ACD_CHECK || defined __DOXYGEN__
-#define LWIP_DHCP_DOES_ACD_CHECK        LWIP_DHCP
+/* NXP changed default to 0 even if DHCP is on */
+#define LWIP_DHCP_DOES_ACD_CHECK        0
 #endif
 
 /**

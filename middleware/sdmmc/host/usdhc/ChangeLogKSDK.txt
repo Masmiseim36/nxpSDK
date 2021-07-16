@@ -2,7 +2,16 @@
 @page middleware_log Middleware Change Log
 
 @section host_usdhc Host USDHC driver for MCUXpresso SDK
-The current driver version is 2.5.3.
+The current driver version is 2.6.0.
+
+  - 2.6.0
+    - Improvements
+      - Removed deprecated api in SDHC host driver.
+      - Added SDMMCHOST_ConvertDataToLittleEndian api.
+      - Added capability/maxBlockCount/maxBlockSize in host decriptior.
+      - Improved the manual tuning flow according to specification.
+      - Added mutual exclusive access for function init/deinit/reset/transfer function.
+      - Fixed violations of MISRA C-2012 rule 10.1, 10.4, 16.3, 4.7.
 
   - 2.5.3
     - Bug Fixes

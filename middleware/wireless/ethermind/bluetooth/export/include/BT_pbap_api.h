@@ -46,36 +46,36 @@
  */
 
 #ifdef PBAP_1_2
-#define PBAP_OBEX_L2CAP_PSM                       0x8801
+#define PBAP_OBEX_L2CAP_PSM                       0x8801U
 #endif /* PBAP_1_2 */
 
 /**
  *  PBAP Event Notification Callback Event Types
  */
-#define PBAP_PCE_CONNECT_CFM                      0x01
-#define PBAP_PCE_GET_PHONEBOOK_CFM                0x02
-#define PBAP_PCE_GET_VCARD_LIST_CFM               0x03
-#define PBAP_PCE_GET_VCARD_CFM                    0x04
-#define PBAP_PCE_SET_PHONEBOOK_CFM                0x05
-#define PBAP_PCE_ABORT_CFM                        0x06
-#define PBAP_PCE_DISCONNECT_CFM                   0x07
-#define PBAP_PCE_TRANSPORT_CLOSE_IND              0x08
-#define PBAP_PCE_TRANSPORT_CLOSE_CFM              0x09
-#define PBAP_PCE_IDLE_TIMEOUT_IND                 0x0A
+#define PBAP_PCE_CONNECT_CFM                      0x01U
+#define PBAP_PCE_GET_PHONEBOOK_CFM                0x02U
+#define PBAP_PCE_GET_VCARD_LIST_CFM               0x03U
+#define PBAP_PCE_GET_VCARD_CFM                    0x04U
+#define PBAP_PCE_SET_PHONEBOOK_CFM                0x05U
+#define PBAP_PCE_ABORT_CFM                        0x06U
+#define PBAP_PCE_DISCONNECT_CFM                   0x07U
+#define PBAP_PCE_TRANSPORT_CLOSE_IND              0x08U
+#define PBAP_PCE_TRANSPORT_CLOSE_CFM              0x09U
+#define PBAP_PCE_IDLE_TIMEOUT_IND                 0x0AU
 
-#define PBAP_PSE_CONNECT_IND                      0x11
-#define PBAP_PSE_GET_PHONEBOOK_IND                0x12
-#define PBAP_PSE_GET_VCARD_LIST_IND               0x13
-#define PBAP_PSE_GET_VCARD_IND                    0x14
-#define PBAP_PSE_SET_PHONEBOOK_IND                0x15
-#define PBAP_PSE_ABORT_IND                        0x16
-#define PBAP_PSE_DISCONNECT_IND                   0x17
-#define PBAP_PSE_TRANSPORT_CLOSE_IND              0x18
-#define PBAP_PSE_TRANSPORT_CLOSE_CFM              0x19
-#define PBAP_PSE_IDLE_TIMEOUT_IND                 0x1A
+#define PBAP_PSE_CONNECT_IND                      0x11U
+#define PBAP_PSE_GET_PHONEBOOK_IND                0x12U
+#define PBAP_PSE_GET_VCARD_LIST_IND               0x13U
+#define PBAP_PSE_GET_VCARD_IND                    0x14U
+#define PBAP_PSE_SET_PHONEBOOK_IND                0x15U
+#define PBAP_PSE_ABORT_IND                        0x16U
+#define PBAP_PSE_DISCONNECT_IND                   0x17U
+#define PBAP_PSE_TRANSPORT_CLOSE_IND              0x18U
+#define PBAP_PSE_TRANSPORT_CLOSE_CFM              0x19U
+#define PBAP_PSE_IDLE_TIMEOUT_IND                 0x1AU
 
-#define PBAP_PCE_ERROR_IND                        0x30
-#define PBAP_PSE_ERROR_IND                        0x31
+#define PBAP_PCE_ERROR_IND                        0x30U
+#define PBAP_PSE_ERROR_IND                        0x31U
 
 
 /**
@@ -94,127 +94,127 @@
 
 /** Maximum number of Application Headers */
 #ifdef PBAP_1_2
-#define PBAP_MAX_NUM_APPL_HDRS                    0x10 /* 16 */
+#define PBAP_MAX_NUM_APPL_HDRS                    0x10U /* 16 */
 #else
-#define PBAP_MAX_NUM_APPL_HDRS                    0x09 /* 9 */
+#define PBAP_MAX_NUM_APPL_HDRS                    0x09U /* 9 */
 #endif /* PBAP_1_2 */
 
 /** Maximum OBEX PIN SIZE supported */
-#define PBAP_OBEX_MAX_PIN_SIZE                    0x10 /* 16 */
+#define PBAP_OBEX_MAX_PIN_SIZE                    0x10U /* 16 */
 
 /** Authentication Challenge/ Response Size */
-#define PBAP_OBEX_AUTH_CHALLENGE_RESP_SIZE        0x10 /* 16 */
+#define PBAP_OBEX_AUTH_CHALLENGE_RESP_SIZE        0x10U /* 16 */
 
 /** PBAP Target Header Size */
-#define PBAP_TARGET_HDR_SIZE                      0x10 /* 16 */
+#define PBAP_TARGET_HDR_SIZE                      0x10U /* 16 */
 
 /* ==== PBAPv1.2 Related Definitions =========  */
 
 /** PBAP Version Counter size */
-#define PBAP_FLDR_VER_CNTR_SIZE                   0x10 /* 16 */
+#define PBAP_FLDR_VER_CNTR_SIZE                   0x10U /* 16 */
 
 /** PBAP vCARD Selector size */
-#define PBAP_VCARD_SELECTOR_SIZE                  0x08 /* 8 */
+#define PBAP_VCARD_SELECTOR_SIZE                  0x08U /* 8 */
 
 /** PBAP Database Identifiers size */
-#define PBAP_DATABASE_IDENTIFIER_SIZE             0x10 /* 16 */
+#define PBAP_DATABASE_IDENTIFIER_SIZE             0x10U /* 16 */
 
 /** PBAP Supported Features size */
-#define PBAP_FEATURES_SIZE                        0x04 /* 4 */
+#define PBAP_FEATURES_SIZE                        0x04U /* 4 */
 
 /**
  *  Search Attributes
  */
-#define PBAP_SEARCH_ATTR_NAME                     0x00
-#define PBAP_SEARCH_ATTR_NUMBER                   0x01
-#define PBAP_SEARCH_ATTR_SOUND                    0x02
+#define PBAP_SEARCH_ATTR_NAME                     0x00U
+#define PBAP_SEARCH_ATTR_NUMBER                   0x01U
+#define PBAP_SEARCH_ATTR_SOUND                    0x02U
 
 /**
  *  Application parameters Tag IDs
  */
-#define PBAP_TAG_ID_ORDER                             0x01 /* 1  Byte Length  */
-#define PBAP_TAG_ID_SEARCH_VALUE                      0x02 /* Variable Length */
-#define PBAP_TAG_ID_SEARCH_ATTRIBUTE                  0x03 /* 1  Byte Length  */
-#define PBAP_TAG_ID_MAX_LIST_COUNT                    0x04 /* 2       "       */
-#define PBAP_TAG_ID_LIST_START_OFFSET                 0x05 /* 2       "       */
-#define PBAP_TAG_ID_FILTER                            0x06 /* 8       "       */
-#define PBAP_TAG_ID_FORMAT                            0x07 /* 1       "       */
-#define PBAP_TAG_ID_PHONE_BOOK_SIZE                   0x08 /* 2       "       */
-#define PBAP_TAG_ID_NEW_MISSED_CALLS                  0x09 /* 1       "       */
+#define PBAP_TAG_ID_ORDER                             0x01U /* 1  Byte Length  */
+#define PBAP_TAG_ID_SEARCH_VALUE                      0x02U /* Variable Length */
+#define PBAP_TAG_ID_SEARCH_ATTRIBUTE                  0x03U /* 1  Byte Length  */
+#define PBAP_TAG_ID_MAX_LIST_COUNT                    0x04U /* 2       "       */
+#define PBAP_TAG_ID_LIST_START_OFFSET                 0x05U /* 2       "       */
+#define PBAP_TAG_ID_FILTER                            0x06U /* 8       "       */
+#define PBAP_TAG_ID_FORMAT                            0x07U /* 1       "       */
+#define PBAP_TAG_ID_PHONE_BOOK_SIZE                   0x08U /* 2       "       */
+#define PBAP_TAG_ID_NEW_MISSED_CALLS                  0x09U /* 1       "       */
 
 /** PBAPv1.2 Related TAG ID's */
-#define PBAP_TAG_ID_PRIMARY_FOLDER_VERSION            0x0A /* 16 Byte Length */
-#define PBAP_TAG_ID_SECONDARY_FOLDER_VERSION          0x0B /* 16     "       */
-#define PBAP_TAG_ID_VCARD_SELECTOR                    0x0C /* 8      "       */
-#define PBAP_TAG_ID_DATABASE_IDENTIFIER               0x0D /* 16     "       */
-#define PBAP_TAG_ID_VCARD_SELECTOR_OPERATOR           0x0E /* 1      "       */
-#define PBAP_TAG_ID_RESET_NEW_MISSED_CALLS            0x0F /* 1      "       */
-#define PBAP_TAG_ID_PBAP_SUPPORTED_FEATURES           0x10 /* 4      "       */
+#define PBAP_TAG_ID_PRIMARY_FOLDER_VERSION            0x0AU /* 16 Byte Length */
+#define PBAP_TAG_ID_SECONDARY_FOLDER_VERSION          0x0BU /* 16     "       */
+#define PBAP_TAG_ID_VCARD_SELECTOR                    0x0CU /* 8      "       */
+#define PBAP_TAG_ID_DATABASE_IDENTIFIER               0x0DU /* 16     "       */
+#define PBAP_TAG_ID_VCARD_SELECTOR_OPERATOR           0x0EU /* 1      "       */
+#define PBAP_TAG_ID_RESET_NEW_MISSED_CALLS            0x0FU /* 1      "       */
+#define PBAP_TAG_ID_PBAP_SUPPORTED_FEATURES           0x10U /* 4      "       */
 
 /**
  *  Application parameters flags corresponding to each Tag
  */
-#define PBAP_FLAG_ORDER                           0x0001
-#define PBAP_FLAG_SEARCH_VALUE                    0x0002
-#define PBAP_FLAG_SEARCH_ATTRIBUTE                0x0004
-#define PBAP_FLAG_MAX_LIST_COUNT                  0x0008
-#define PBAP_FLAG_LIST_START_OFFSET               0x0010
-#define PBAP_FLAG_FILTER                          0x0020
-#define PBAP_FLAG_FORMAT                          0x0040
-#define PBAP_FLAG_PHONE_BOOK_SIZE                 0x0080
-#define PBAP_FLAG_NEW_MISSED_CALLS                0x0100
+#define PBAP_FLAG_ORDER                           0x0001U
+#define PBAP_FLAG_SEARCH_VALUE                    0x0002U
+#define PBAP_FLAG_SEARCH_ATTRIBUTE                0x0004U
+#define PBAP_FLAG_MAX_LIST_COUNT                  0x0008U
+#define PBAP_FLAG_LIST_START_OFFSET               0x0010U
+#define PBAP_FLAG_FILTER                          0x0020U
+#define PBAP_FLAG_FORMAT                          0x0040U
+#define PBAP_FLAG_PHONE_BOOK_SIZE                 0x0080U
+#define PBAP_FLAG_NEW_MISSED_CALLS                0x0100U
 
 /** PBAP v1.2 related application flags */
-#define PBAP_FLAG_PRIMARY_FOLDER_VERSION          0x0200
-#define PBAP_FLAG_SECONDARY_FOLDER_VERSION        0x0400
-#define PBAP_FLAG_VCARD_SELECTOR                  0x0800
-#define PBAP_FLAG_DATABASE_IDENTIFIER             0x1000
-#define PBAP_FLAG_VCARD_SELECTOR_OPERATOR         0x2000
-#define PBAP_FLAG_RESET_NEW_MISSED_CALLS          0x4000
-#define PBAP_FLAG_SUPPORTED_FEATURES              0x8000
+#define PBAP_FLAG_PRIMARY_FOLDER_VERSION          0x0200U
+#define PBAP_FLAG_SECONDARY_FOLDER_VERSION        0x0400U
+#define PBAP_FLAG_VCARD_SELECTOR                  0x0800U
+#define PBAP_FLAG_DATABASE_IDENTIFIER             0x1000U
+#define PBAP_FLAG_VCARD_SELECTOR_OPERATOR         0x2000U
+#define PBAP_FLAG_RESET_NEW_MISSED_CALLS          0x4000U
+#define PBAP_FLAG_SUPPORTED_FEATURES              0x8000U
 
 /**
  *  Attribute Mask: used in case of Filtering
  */
-#define PBAP_FLAG_VCARD_VERSION                   0x00000001
-#define PBAP_FLAG_FN                              0x00000002
-#define PBAP_FLAG_N                               0x00000004
-#define PBAP_FLAG_PHOTO                           0x00000008
-#define PBAP_FLAG_BDAY                            0x00000010
-#define PBAP_FLAG_ADR                             0x00000020
-#define PBAP_FLAG_LABEL                           0x00000040
-#define PBAP_FLAG_TEL                             0x00000080
-#define PBAP_FLAG_EMAIL                           0x00000100
-#define PBAP_FLAG_MAILER                          0x00000200
-#define PBAP_FLAG_TZ                              0x00000400
-#define PBAP_FLAG_GEO                             0x00000800
-#define PBAP_FLAG_TITLE                           0x00001000
-#define PBAP_FLAG_ROLE                            0x00002000
-#define PBAP_FLAG_LOGO                            0x00004000
-#define PBAP_FLAG_AGENT                           0x00008000
-#define PBAP_FLAG_ORG                             0x00010000
-#define PBAP_FLAG_NOTE                            0x00020000
-#define PBAP_FLAG_REV                             0x00040000
-#define PBAP_FLAG_SOUND                           0x00080000
-#define PBAP_FLAG_URL                             0x00100000
-#define PBAP_FLAG_UID                             0x00200000
-#define PBAP_FLAG_KEY                             0x00400000
-#define PBAP_FLAG_NICKNAME                        0x00800000
-#define PBAP_FLAG_CATEGORIES                      0x01000000
-#define PBAP_FLAG_PROID                           0x02000000
-#define PBAP_FLAG_CLASS                           0x04000000
-#define PBAP_FLAG_SORTSTRING                      0x08000000
-#define PBAP_FLAG_X_IRMC_CALL_DATETIME            0x10000000
-#define PBAP_FLAG_X_BT_SPEEDDIALKEY               0x20000000
-#define PBAP_FLAG_X_BT_UCI                        0x40000000
-#define PBAP_FLAG_X_BT_UID                        0x80000000
+#define PBAP_FLAG_VCARD_VERSION                   0x00000001U
+#define PBAP_FLAG_FN                              0x00000002U
+#define PBAP_FLAG_N                               0x00000004U
+#define PBAP_FLAG_PHOTO                           0x00000008U
+#define PBAP_FLAG_BDAY                            0x00000010U
+#define PBAP_FLAG_ADR                             0x00000020U
+#define PBAP_FLAG_LABEL                           0x00000040U
+#define PBAP_FLAG_TEL                             0x00000080U
+#define PBAP_FLAG_EMAIL                           0x00000100U
+#define PBAP_FLAG_MAILER                          0x00000200U
+#define PBAP_FLAG_TZ                              0x00000400U
+#define PBAP_FLAG_GEO                             0x00000800U
+#define PBAP_FLAG_TITLE                           0x00001000U
+#define PBAP_FLAG_ROLE                            0x00002000U
+#define PBAP_FLAG_LOGO                            0x00004000U
+#define PBAP_FLAG_AGENT                           0x00008000U
+#define PBAP_FLAG_ORG                             0x00010000U
+#define PBAP_FLAG_NOTE                            0x00020000U
+#define PBAP_FLAG_REV                             0x00040000U
+#define PBAP_FLAG_SOUND                           0x00080000U
+#define PBAP_FLAG_URL                             0x00100000U
+#define PBAP_FLAG_UID                             0x00200000U
+#define PBAP_FLAG_KEY                             0x00400000U
+#define PBAP_FLAG_NICKNAME                        0x00800000U
+#define PBAP_FLAG_CATEGORIES                      0x01000000U
+#define PBAP_FLAG_PROID                           0x02000000U
+#define PBAP_FLAG_CLASS                           0x04000000U
+#define PBAP_FLAG_SORTSTRING                      0x08000000U
+#define PBAP_FLAG_X_IRMC_CALL_DATETIME            0x10000000U
+#define PBAP_FLAG_X_BT_SPEEDDIALKEY               0x20000000U
+#define PBAP_FLAG_X_BT_UCI                        0x40000000U
+#define PBAP_FLAG_X_BT_UID                        0x80000000U
 
 /**
  *  SET PATH Flags
  */
-#define PBAP_SET_CHILD_FOLDER                     0x01
-#define PBAP_SET_PARENT_FOLDER                    0x02
-#define PBAP_SET_ROOT_FOLDER                      0x03
+#define PBAP_SET_CHILD_FOLDER                     0x01U
+#define PBAP_SET_PARENT_FOLDER                    0x02U
+#define PBAP_SET_ROOT_FOLDER                      0x03U
 /** \} */
 /** \} */
 
@@ -228,42 +228,42 @@
  * To set application parameter flag
  */
 #define PBAP_SET_APPL_PARAM_FLAG(flag, set_field)   \
-        flag = flag | set_field;
+        (flag) = (flag) | (set_field)
 
 /**
  * To retrieve the field value (Set/Reset)
  */
 #define PBAP_GET_APPL_PARAM_FLAG(flag, get_field)   \
-        (flag & get_field)
+        ((flag) & (get_field))
 
 /**
  * Resets all the fields of the application parameter flag
  */
 #define PBAP_RESET_APPL_PARAM_FLAG(flag)            \
-        flag = 0x00;
+        (flag) = 0x00U
 
 /**
  * To set the filter flag
  */
-#define PBAP_SET_FILTER_FLAG(flag, set_field)                                 \
-        (set_field < 0x00010000)? (*(flag + 0) = ((*(flag + 0)) | set_field)):\
-        (*(flag + 1) = ((*(flag + 1)) | (set_field/0x00010000)));
+#define PBAP_SET_FILTER_FLAG(flag, set_field)                                    \
+        ((set_field) < 0x00010000U)? (*((flag) + 0U) = ((*((flag) + 0U)) | (set_field))):\
+        (*((flag) + 1) = ((*((flag) + 1U)) | ((set_field)/0x00010000U)))
 
 /**
  * To retrieve the field value (Set/Reset)
  */
-#define PBAP_GET_FILTER_FLAG(flag, get_field)                   \
-        (get_field < 0x00010000) ? (*(flag + 0) & get_field) :  \
-        (*(flag + 1) & (get_field/0x00010000))
+#define PBAP_GET_FILTER_FLAG(flag, get_field)                     \
+        ((get_field) < 0x00010000U) ? (*((flag) + 0U) & (get_field)) :  \
+        (*((flag) + 1U) & ((get_field)/0x00010000U))
 
 /**
  * Resets all the fields of the filter flag
  */
 #define PBAP_RESET_FILTER_FLAG(flag)            \
-        *(flag + 0) = 0x00;                     \
-        *(flag + 1) = 0x00;                     \
-        *(flag + 2) = 0x00;                     \
-        *(flag + 3) = 0x00;
+        *((flag) + 0U) = 0x00U;                   \
+        *((flag) + 1U) = 0x00U;                   \
+        *((flag) + 2U) = 0x00U;                   \
+        *((flag) + 3U) = 0x00U
 
 /**
  * To update the header value and lenth fields
@@ -271,15 +271,15 @@
 #define PBAP_COPY_HEADER_STRUCT(hdr, len, val)  \
         (len) = (hdr)->length;                  \
         BT_str_n_copy((val), (hdr)->value, (len));    \
-        (val)[(len)] = '\0';
+        (val)[(len)] = '\0'
 
 /**
  * To copy the application parameter
  */
 #define PBAP_COPY_APPL_PARAMS(to_params, from_params, search_value_out)     \
-        BT_mem_set((to_params), 0, sizeof(PBAP_APPL_PARAMS));               \
+        BT_mem_set((to_params), 0U, sizeof(PBAP_APPL_PARAMS));              \
         BT_mem_copy((to_params), (from_params), sizeof(PBAP_APPL_PARAMS));  \
-        if((from_params)->search_value.length != 0 &&                       \
+        if((from_params)->search_value.length != 0U &&                      \
            (from_params)->search_value.value != NULL)                       \
         {                                                                   \
             BT_mem_copy((search_value_out),                                 \
@@ -344,7 +344,7 @@ typedef struct _PBAP_APPL_PARAMS
     /**
      * Attribute Mask
      */
-    UINT16               filter[4];
+    UINT16               filter[4U];
 
     /**
      * Maximum entries in the list
@@ -431,7 +431,7 @@ typedef struct _PBAP_APPL_PARAMS
     /**
      * vCard Selector, Attribute mask
      */
-    UINT16     vcard_selector[4];
+    UINT16     vcard_selector[4U];
 
     /**
      * vCard selector operator when multiple

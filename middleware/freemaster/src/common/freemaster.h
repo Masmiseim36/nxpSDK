@@ -197,8 +197,6 @@ typedef struct
         }                                   \
     } while (0 == 1)
 
-#define FMSTR_ASSERT_RETURN_VOID(condition) FMSTR_ASSERT_RETURN_VAL(condition, /*nothing*/)
-
 /******************************************************************************
  * standard library functions; redirected to internal implementations by default.
  ******************************************************************************/

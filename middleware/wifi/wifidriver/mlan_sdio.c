@@ -176,6 +176,9 @@ static void sdio_controller_init(void)
     BOARD_SDIO_Config(&wm_g_sd, SDIOCARD_DetectCallBack, BOARD_SDMMC_SDIO_HOST_IRQ_PRIORITY,
                       SDIO_CardInterruptCallBack);
 
+#if defined(SD_TIMING_MAX)
+    wm_g_sd.currentTiming = SD_TIMING_MAX;
+#endif
 #if defined(SD_CLOCK_MAX)
     wm_g_sd.usrParam.maxFreq = SD_CLOCK_MAX;
 #endif
@@ -212,11 +215,6 @@ static int sdio_card_init(void)
 
     /* power off card */
     SDIO_SetCardPower(&wm_g_sd, false);
-    /* card detect */
-    if (SDIO_PollingCardInsert(&wm_g_sd, kSD_Inserted) != kStatus_Success)
-    {
-        return kStatus_SDMMC_CardDetectFailed;
-    }
     /* power on card */
     SDIO_SetCardPower(&wm_g_sd, true);
 

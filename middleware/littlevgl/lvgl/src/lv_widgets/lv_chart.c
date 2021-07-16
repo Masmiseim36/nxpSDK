@@ -51,10 +51,10 @@ static lv_style_list_t * lv_chart_get_style(lv_obj_t * chart, uint8_t part);
 static void draw_series_bg(lv_obj_t * chart, const lv_area_t * series_area, const lv_area_t * mask);
 static void draw_series_line(lv_obj_t * chart, const lv_area_t * series_area, const lv_area_t * clip_area);
 static void draw_series_column(lv_obj_t * chart, const lv_area_t * series_area, const lv_area_t * clip_area);
+static void draw_cursors(lv_obj_t * chart, const lv_area_t * series_area, const lv_area_t * clip_area);
 static void draw_axes(lv_obj_t * chart, const lv_area_t * series_area, const lv_area_t * mask);
 static void invalidate_lines(lv_obj_t * chart, uint16_t i);
 static void invalidate_columns(lv_obj_t * chart, uint16_t i);
-static void get_series_area(lv_obj_t * chart, lv_area_t * series_area);
 static void get_next_axis_label(lv_chart_label_iterator_t * iterator, char * buf);
 static inline bool is_tick_with_label(uint8_t tick_num, lv_chart_axis_cfg_t * axis);
 static lv_chart_label_iterator_t create_axis_label_iter(const char * list, uint8_t iterator_dir);
@@ -98,6 +98,7 @@ lv_obj_t * lv_chart_create(lv_obj_t * par, const lv_obj_t * copy)
     }
 
     _lv_ll_init(&ext->series_ll, sizeof(lv_chart_series_t));
+    _lv_ll_init(&ext->cursors_ll, sizeof(lv_chart_cursor_t));
 
     uint8_t i;
     for(i = 0; i < _LV_CHART_AXIS_LAST; i++) {
@@ -122,6 +123,7 @@ lv_obj_t * lv_chart_create(lv_obj_t * par, const lv_obj_t * copy)
 
     lv_style_list_init(&ext->style_series_bg);
     lv_style_list_init(&ext->style_series);
+    lv_style_list_init(&ext->style_cursors);
 
     if(ancestor_design == NULL) ancestor_design = lv_obj_get_design_cb(chart);
     if(ancestor_signal == NULL) ancestor_signal = lv_obj_get_signal_cb(chart);
@@ -140,6 +142,7 @@ lv_obj_t * lv_chart_create(lv_obj_t * par, const lv_obj_t * copy)
 
         lv_style_list_copy(&ext->style_series, &ext_copy->style_series);
         lv_style_list_copy(&ext->style_series_bg, &ext_copy->style_series_bg);
+        lv_style_list_copy(&ext->style_cursors, &ext_copy->style_cursors);
 
         ext->type       = ext_copy->type;
         ext->hdiv_cnt   = ext_copy->hdiv_cnt;
@@ -192,6 +195,7 @@ lv_chart_series_t * lv_chart_add_series(lv_obj_t * chart, lv_color_t color)
 
     ser->start_point = 0;
     ser->ext_buf_assigned = false;
+    ser->hidden = 0;
     ser->y_axis = LV_CHART_AXIS_PRIMARY_Y;
 
     uint16_t i;
@@ -202,6 +206,50 @@ lv_chart_series_t * lv_chart_add_series(lv_obj_t * chart, lv_color_t color)
     }
 
     return ser;
+}
+
+/**
+ * Deallocate and remove a data series from a chart
+ * @param chart pointer to a chart object
+ * @param series pointer to a data series on 'chart'
+ */
+void lv_chart_remove_series(lv_obj_t * chart, lv_chart_series_t * series)
+{
+    LV_ASSERT_OBJ(chart, LV_OBJX_NAME);
+    LV_ASSERT_NULL(series);
+
+    if(chart == NULL || series == NULL) return;
+    lv_chart_ext_t * ext = lv_obj_get_ext_attr(chart);
+    if(!series->ext_buf_assigned && series->points) lv_mem_free(series->points);
+
+    _lv_ll_remove(&ext->series_ll, series);
+    lv_mem_free(series);
+
+    return;
+}
+
+/**
+ * Add a cursor with a given color
+ * @param chart pointer to chart object
+ * @param color color of the cursor
+ * @param dir direction of the cursor. `LV_CHART_CURSOR_RIGHT/LEFT/TOP/DOWN`. OR-ed values are possible
+ * @return pointer to the created cursor
+ */
+lv_chart_cursor_t  * lv_chart_add_cursor(lv_obj_t * chart, lv_color_t color, lv_cursor_direction_t axes)
+{
+    LV_ASSERT_OBJ(chart, LV_OBJX_NAME);
+
+    lv_chart_ext_t * ext    = lv_obj_get_ext_attr(chart);
+    lv_chart_cursor_t * cursor = _lv_ll_ins_head(&ext->cursors_ll);
+    LV_ASSERT_MEM(cursor);
+    if(cursor == NULL) return NULL;
+
+    cursor->point.x = 0U;
+    cursor->point.y = LV_CHART_POINT_DEF;
+    cursor->color = color;
+    cursor->axes = axes;
+
+    return cursor;
 }
 
 /**
@@ -224,6 +272,21 @@ void lv_chart_clear_series(lv_obj_t * chart, lv_chart_series_t * series)
     }
 
     series->start_point = 0;
+}
+
+/**
+ * Hide/Unhide a single series of a chart.
+ * @param chart pointer to a chart object.
+ * @param series pointer to a series object
+ * @param hide true: hide the series
+ */
+void lv_chart_hide_series(lv_obj_t * chart, lv_chart_series_t * series, bool hide)
+{
+    LV_ASSERT_OBJ(chart, LV_OBJX_NAME);
+    LV_ASSERT_NULL(series);
+
+    series->hidden = hide ? 1 : 0;
+    lv_chart_refresh(chart);
 }
 
 /*=====================
@@ -269,7 +332,7 @@ void lv_chart_set_y_range(lv_obj_t * chart, lv_chart_axis_t axis, lv_coord_t ymi
     if(ext->ymin[axis] == ymin && ext->ymax[axis] == ymax) return;
 
     ext->ymin[axis] = ymin;
-    ext->ymax[axis] = ymax;
+    ext->ymax[axis] = (ymax == ymin ? ymax + 1 : ymax);
 
     lv_chart_refresh(chart);
 }
@@ -361,7 +424,7 @@ void lv_chart_set_point_count(lv_obj_t * chart, uint16_t point_cnt)
  * Initialize all data points with a value
  * @param chart pointer to chart object
  * @param ser pointer to a data series on 'chart'
- * @param y the new value  for all points
+ * @param y the new value for all points
  */
 void lv_chart_init_points(lv_obj_t * chart, lv_chart_series_t * ser, lv_coord_t y)
 {
@@ -629,6 +692,23 @@ void lv_chart_set_series_axis(lv_obj_t * chart, lv_chart_series_t * ser, lv_char
     lv_chart_refresh(chart);
 }
 
+/**
+ * Set the coordinate of the cursor with respect
+ * to the origin of series area of the chart.
+ * @param chart pointer to a chart object.
+ * @param cursor pointer to the cursor.
+ * @param point the new coordinate of cursor relative to the series area
+ */
+void lv_chart_set_cursor_point(lv_obj_t * chart, lv_chart_cursor_t * cursor, lv_point_t * point)
+{
+    LV_ASSERT_NULL(cursor);
+    LV_UNUSED(chart);
+
+    cursor->point.x = point->x;
+    cursor->point.y = point->y;
+    lv_chart_refresh(chart);
+}
+
 /*=====================
  * Getter functions
  *====================*/
@@ -702,6 +782,137 @@ lv_chart_axis_t lv_chart_get_series_axis(lv_obj_t * chart, lv_chart_series_t * s
 
     return ser->y_axis;
 }
+
+/**
+ * Get the coordinate of the cursor with respect
+ * to the origin of series area of the chart.
+ * @param chart pointer to a chart object
+ * @param cursor pointer to cursor
+ * @return coordinate of the cursor as lv_point_t
+ */
+lv_point_t lv_chart_get_cursor_point(lv_obj_t * chart, lv_chart_cursor_t * cursor)
+{
+    LV_ASSERT_NULL(cursor);
+    LV_UNUSED(chart);
+
+    return cursor->point;
+}
+
+/**
+ * Get the nearest index to an X coordinate
+ * @param chart pointer to a chart object
+ * @param coord the coordination of the point relative to the series area.
+ * @return the found index
+ */
+uint16_t lv_chart_get_nearest_index_from_coord(lv_obj_t * chart, lv_coord_t x)
+{
+    lv_area_t series_area;
+    lv_chart_get_series_area(chart, &series_area);
+
+    lv_coord_t w = lv_area_get_width(&series_area);
+    lv_chart_ext_t * ext = lv_obj_get_ext_attr(chart);
+
+    if(x < 0) return 0;
+    if(x > w) return ext->point_cnt - 1;
+    if(ext->type == LV_CHART_TYPE_LINE) return (x * (ext->point_cnt - 1) + w / 2) / w;
+    if(ext->type == LV_CHART_TYPE_COLUMN) return (x * ext->point_cnt) / w;
+
+    return 0;
+}
+
+/**
+ * Get the x coordinate of the an index with respect
+ * to the origin of series area of the chart.
+ * @param chart pointer to a chart object
+ * @param ser pointer to series
+ * @param id the index.
+ * @return x coordinate of index
+ */
+lv_coord_t lv_chart_get_x_from_index(lv_obj_t * chart, lv_chart_series_t * ser, uint16_t id)
+{
+    LV_ASSERT_NULL(chart);
+    LV_ASSERT_NULL(ser);
+
+    lv_chart_ext_t * ext = lv_obj_get_ext_attr(chart);
+    if(id >= ext->point_cnt) {
+        LV_LOG_WARN("Invalid index: %d", id);
+        return 0;
+    }
+
+    lv_area_t series_area;
+    lv_chart_get_series_area(chart, &series_area);
+
+    lv_coord_t w = lv_area_get_width(&series_area);
+
+    lv_coord_t x = 0;
+
+    if(ext->type & LV_CHART_TYPE_LINE) {
+        x = (w * id) / (ext->point_cnt - 1);
+    }
+    else if(ext->type & LV_CHART_TYPE_COLUMN) {
+        lv_coord_t col_w = w / ((_lv_ll_get_len(&ext->series_ll) + 1) * ext->point_cnt); /* Suppose + 1 series as separator*/
+        lv_chart_series_t * itr_ser = NULL;
+        lv_style_int_t col_space = lv_obj_get_style_pad_inner(chart, LV_CHART_PART_SERIES);
+
+        x = (int32_t)((int32_t)w * id) / ext->point_cnt;
+        x += col_w / 2; /*Start offset*/
+
+        _LV_LL_READ_BACK(ext->series_ll, itr_ser) {
+            if(itr_ser == ser) break;
+            x += col_w;
+        }
+
+        x += (col_w - col_space) / 2;
+    }
+
+    return x;
+}
+
+/**
+ * Get the y coordinate of the an index with respect
+ * to the origin of series area of the chart.
+ * @param chart pointer to a chart object
+ * @param ser pointer to series
+ * @param id the index.
+ * @return y coordinate of index
+ */
+lv_coord_t lv_chart_get_y_from_index(lv_obj_t * chart, lv_chart_series_t * ser, uint16_t id)
+{
+    LV_ASSERT_NULL(chart);
+    LV_ASSERT_NULL(ser);
+
+    lv_chart_ext_t * ext = lv_obj_get_ext_attr(chart);
+    if(id >= ext->point_cnt) {
+        LV_LOG_WARN("Invalid index: %d", id);
+        return 0;
+    }
+
+    lv_area_t series_area;
+    lv_chart_get_series_area(chart, &series_area);
+
+    lv_coord_t h = lv_area_get_height(&series_area);
+
+    int32_t y = (int32_t)((int32_t)ser->points[id] - ext->ymin[ser->y_axis]) * h;
+    y = y / (ext->ymax[ser->y_axis] - ext->ymin[ser->y_axis]);
+    y  = h - y;
+
+    return (lv_coord_t)y;
+}
+
+/**
+ * Get the series area of a chart.
+ * @param chart pointer to a chart object
+ * @param series_area pointer to an area variable that the result will be put in.
+ */
+void lv_chart_get_series_area(lv_obj_t * chart, lv_area_t * series_area)
+{
+    lv_area_copy(series_area, &chart->coords);
+    series_area->x1 += lv_obj_get_style_pad_left(chart, LV_CHART_PART_BG);
+    series_area->x2 -= lv_obj_get_style_pad_right(chart, LV_CHART_PART_BG);
+    series_area->y1 += lv_obj_get_style_pad_top(chart, LV_CHART_PART_BG);
+    series_area->y2 -= lv_obj_get_style_pad_bottom(chart, LV_CHART_PART_BG);
+}
+
 /*=====================
  * Other functions
  *====================*/
@@ -744,15 +955,15 @@ static lv_design_res_t lv_chart_design(lv_obj_t * chart, const lv_area_t * clip_
         lv_draw_rect(&chart->coords, clip_area, &bg_dsc);
 
         lv_area_t series_area;
-        get_series_area(chart, &series_area);
+        lv_chart_get_series_area(chart, &series_area);
 
         draw_series_bg(chart, &series_area, clip_area);
         draw_axes(chart, &series_area, clip_area);
 
-
         lv_chart_ext_t * ext = lv_obj_get_ext_attr(chart);
         if(ext->type & LV_CHART_TYPE_LINE) draw_series_line(chart, &series_area, clip_area);
         if(ext->type & LV_CHART_TYPE_COLUMN) draw_series_column(chart, &series_area, clip_area);
+        draw_cursors(chart, &series_area, clip_area);
 
     }
     return LV_DESIGN_RES_OK;
@@ -794,12 +1005,12 @@ static lv_res_t lv_chart_signal(lv_obj_t * chart, lv_signal_t sign, void * param
         _lv_ll_clear(&ext->series_ll);
 
         lv_obj_clean_style_list(chart, LV_CHART_PART_SERIES);
+        lv_obj_clean_style_list(chart, LV_CHART_PART_CURSOR);
         lv_obj_clean_style_list(chart, LV_CHART_PART_SERIES_BG);
     }
 
     return res;
 }
-
 
 /**
  * Get the style descriptor of a part of the object
@@ -823,6 +1034,9 @@ static lv_style_list_t * lv_chart_get_style(lv_obj_t * chart, uint8_t part)
             break;
         case LV_CHART_PART_SERIES:
             style_dsc_p = &ext->style_series;
+            break;
+        case LV_CHART_PART_CURSOR:
+            style_dsc_p = &ext->style_cursors;
             break;
         default:
             style_dsc_p = NULL;
@@ -953,7 +1167,6 @@ static void draw_series_line(lv_obj_t * chart, const lv_area_t * series_area, co
     point_dsc.bg_opa = line_dsc.opa;
     point_dsc.radius = LV_RADIUS_CIRCLE;
 
-
     lv_coord_t point_radius = lv_obj_get_style_size(chart, LV_CHART_PART_SERIES);
 
     /*Do not bother with line ending is the point will over it*/
@@ -961,6 +1174,7 @@ static void draw_series_line(lv_obj_t * chart, const lv_area_t * series_area, co
 
     /*Go through all data lines*/
     _LV_LL_READ_BACK(ext->series_ll, ser) {
+        if(ser->hidden) continue;
         line_dsc.color = ser->color;
         point_dsc.bg_color = ser->color;
         area_dsc.bg_color = ser->color;
@@ -974,7 +1188,7 @@ static void draw_series_line(lv_obj_t * chart, const lv_area_t * series_area, co
         lv_coord_t p_act = start_point;
         lv_coord_t p_prev = start_point;
         int32_t y_tmp = (int32_t)((int32_t)ser->points[p_prev] - ext->ymin[ser->y_axis]) * h;
-        y_tmp  = y_tmp / (ext->ymax[ser->y_axis] - ext->ymin[ser->y_axis]);
+        y_tmp = y_tmp / (ext->ymax[ser->y_axis] - ext->ymin[ser->y_axis]);
         p2.y   = h - y_tmp + y_ofs;
 
         for(i = 0; i < ext->point_cnt; i++) {
@@ -1097,6 +1311,7 @@ static void draw_series_column(lv_obj_t * chart, const lv_area_t * series_area, 
 
         /*Draw the current point of all data line*/
         _LV_LL_READ_BACK(ext->series_ll, ser) {
+            if(ser->hidden) continue;
             lv_coord_t start_point = ext->update_mode == LV_CHART_UPDATE_MODE_SHIFT ? ser->start_point : 0;
 
             col_a.x1 = x_act;
@@ -1118,6 +1333,94 @@ static void draw_series_column(lv_obj_t * chart, const lv_area_t * series_area, 
             }
         }
     }
+}
+
+/**
+ * Draw the cursors as lines on a chart
+ * @param chart pointer to chart object
+ * @param clip_area the object will be drawn only in this area
+ */
+static void draw_cursors(lv_obj_t * chart, const lv_area_t * series_area, const lv_area_t * clip_area)
+{
+    lv_area_t series_mask;
+    bool mask_ret = _lv_area_intersect(&series_mask, series_area, clip_area);
+    if(mask_ret == false) return;
+
+    lv_chart_ext_t * ext = lv_obj_get_ext_attr(chart);
+    if(_lv_ll_is_empty(&ext->cursors_ll)) return;
+
+    lv_point_t p1;
+    lv_point_t p2;
+    lv_chart_cursor_t * cursor;
+
+    lv_draw_line_dsc_t line_dsc;
+    lv_draw_line_dsc_init(&line_dsc);
+    lv_obj_init_draw_line_dsc(chart, LV_CHART_PART_CURSOR, &line_dsc);
+
+    lv_draw_rect_dsc_t point_dsc;
+    lv_draw_rect_dsc_init(&point_dsc);
+    point_dsc.bg_opa = line_dsc.opa;
+    point_dsc.radius = LV_RADIUS_CIRCLE;
+
+    lv_coord_t point_radius = lv_obj_get_style_size(chart, LV_CHART_PART_CURSOR);
+
+    /*Do not bother with line ending is the point will over it*/
+    if(point_radius > line_dsc.width / 2) line_dsc.raw_end = 1;
+
+    /*Go through all cursor lines*/
+    _LV_LL_READ_BACK(ext->cursors_ll, cursor) {
+        line_dsc.color = cursor->color;
+        point_dsc.bg_color = cursor->color;
+
+        if(cursor->axes & LV_CHART_CURSOR_RIGHT) {
+            p1.x = series_area->x1 + cursor->point.x;
+            p1.y = series_area->y1 + cursor->point.y;
+            p2.x = series_area->x2;
+            p2.y = p1.y;
+            lv_draw_line(&p1, &p2, &series_mask, &line_dsc);
+        }
+
+        if(cursor->axes & LV_CHART_CURSOR_UP) {
+
+            p1.x = series_area->x1 + cursor->point.x;
+            p1.y = series_area->y1;
+            p2.x = p1.x;
+            p2.y = series_area->y1 + cursor->point.y;
+            lv_draw_line(&p1, &p2, &series_mask, &line_dsc);
+        }
+
+        if(cursor->axes & LV_CHART_CURSOR_LEFT) {
+            p1.x = series_area->x1;
+            p1.y = series_area->y1 + cursor->point.y;
+            p2.x = p1.x + cursor->point.x;
+            p2.y = p1.y;
+            lv_draw_line(&p1, &p2, &series_mask, &line_dsc);
+        }
+
+        if(cursor->axes & LV_CHART_CURSOR_DOWN) {
+
+            p1.x = series_area->x1 + cursor->point.x;
+            p1.y = series_area->y1 + cursor->point.y;
+            p2.x = p1.x;
+            p2.y = series_area->y2;
+            lv_draw_line(&p1, &p2, &series_mask, &line_dsc);
+        }
+
+        if(point_radius) {
+            lv_area_t point_area;
+
+            point_area.x1 = series_area->x1 + cursor->point.x - point_radius;
+            point_area.x2 = series_area->x1 + cursor->point.x + point_radius;
+
+            point_area.y1 = series_area->y1 + cursor->point.y - point_radius;
+            point_area.y2 = series_area->y1 + cursor->point.y + point_radius;
+
+            /*Don't limit to `series_mask` to get full circles on the ends*/
+            lv_draw_rect(&point_area, clip_area, &point_dsc);
+        }
+
+    }
+
 }
 
 /**
@@ -1358,7 +1661,10 @@ static void draw_y_ticks(lv_obj_t * chart, const lv_area_t * series_area, const 
                                  LV_COORD_MAX, LV_TXT_FLAG_CENTER);
 
                 /* set the area at some distance of the major tick len left of the tick */
-                lv_area_t a = {.y1 = p2.y - size.y / 2, .y2 = p2.y + size.y / 2};
+                /* changed to explicit member initialization to allow compilation as c++ */
+                lv_area_t a;
+                a.y1 = p2.y - size.y / 2;
+                a.y2 = p2.y + size.y / 2;
 
                 if(which_axis == LV_CHART_AXIS_PRIMARY_Y) {
                     a.x1 = p2.x - size.x - label_dist;
@@ -1397,7 +1703,6 @@ static void draw_x_ticks(lv_obj_t * chart, const lv_area_t * series_area, const 
     lv_draw_label_dsc_t label_dsc;
     lv_draw_label_dsc_init(&label_dsc);
     lv_obj_init_draw_label_dsc(chart, LV_CHART_PART_BG, &label_dsc);
-
 
     /* calculate the size of tick marks */
     if(ext->x_axis.major_tick_len == LV_CHART_TICK_LENGTH_AUTO)
@@ -1497,7 +1802,7 @@ static void invalidate_lines(lv_obj_t * chart, uint16_t i)
     if(i >= ext->point_cnt) return;
 
     lv_area_t series_area;
-    get_series_area(chart, &series_area);
+    lv_chart_get_series_area(chart, &series_area);
 
     lv_coord_t w     = lv_area_get_width(&series_area);
     lv_coord_t x_ofs = series_area.x1;
@@ -1523,7 +1828,6 @@ static void invalidate_lines(lv_obj_t * chart, uint16_t i)
     }
 }
 
-
 /**
  * invalid area of the new column data lines on a chart
  * @param chart pointer to chart object
@@ -1534,7 +1838,7 @@ static void invalidate_columns(lv_obj_t * chart, uint16_t i)
     lv_chart_ext_t * ext = lv_obj_get_ext_attr(chart);
 
     lv_area_t series_area;
-    get_series_area(chart, &series_area);
+    lv_chart_get_series_area(chart, &series_area);
 
     lv_area_t col_a;
     lv_coord_t w     = lv_area_get_width(&series_area);
@@ -1550,15 +1854,6 @@ static void invalidate_columns(lv_obj_t * chart, uint16_t i)
     col_a.x2 = col_a.x1 + col_w;
 
     _lv_inv_area(lv_obj_get_disp(chart), &col_a);
-}
-
-static void get_series_area(lv_obj_t * chart, lv_area_t * series_area)
-{
-    lv_area_copy(series_area, &chart->coords);
-    series_area->x1 += lv_obj_get_style_pad_left(chart, LV_CHART_PART_BG);
-    series_area->x2 -= lv_obj_get_style_pad_right(chart, LV_CHART_PART_BG);
-    series_area->y1 += lv_obj_get_style_pad_top(chart, LV_CHART_PART_BG);
-    series_area->y2 -= lv_obj_get_style_pad_bottom(chart, LV_CHART_PART_BG);
 }
 
 #endif

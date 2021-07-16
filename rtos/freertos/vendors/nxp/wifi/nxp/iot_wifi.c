@@ -1,7 +1,7 @@
 /*
  * Amazon FreeRTOS Wi-Fi
  *
- *  Copyright 2019-2020 NXP
+ *  Copyright 2019-2021 NXP
  *
  *  NXP CONFIDENTIAL
  *  The source code contained or described herein and all documents related to
@@ -45,7 +45,7 @@
 #elif defined(SD8977)
 #include "sduart8977_wlan_bt.h"
 #elif defined(SD8978)
-#include "sduart8978_wlan_bt.h"
+#include "sduartIW416_wlan_bt.h"
 #elif defined(SD8987)
 #include "sduart8987_wlan_bt.h"
 #elif defined(SD8997)
@@ -58,14 +58,12 @@
 
 #include "fsl_debug_console.h"
 
-#define wm_wlan_e(...)                             \
-    wmlog_e("wm_wlan", ##__VA_ARGS__)
-#define wm_wlan_w(...)                             \
-    wmlog_w("wm_wlan", ##__VA_ARGS__)
-#define wm_wlan_d(...)                             \
-    wmlog("wm_wlan", ##__VA_ARGS__)
+#define wm_wlan_e(...) wmlog_e("wm_wlan", ##__VA_ARGS__)
+#define wm_wlan_w(...) wmlog_w("wm_wlan", ##__VA_ARGS__)
+#define wm_wlan_d(...) wmlog("wm_wlan", ##__VA_ARGS__)
 
-#define wmprintf(...) wmlog("wm_wlan", ##__VA_ARGS__)
+//#define wmprintf(...) wmlog("wm_wlan", ##__VA_ARGS__)
+#define wmprintf vLoggingPrintf
 
 static os_semaphore_t scan_protection_sem;
 
@@ -79,20 +77,23 @@ static int wlan_event_callback(enum wlan_event_reason event, void *data)
     char ip[16];
 
     /* After successful wlan subsytem initialization */
-    if (event == WLAN_REASON_INITIALIZED) {
-        wmprintf("WLAN_REASON_INITIALIZED\r\n");
+    if (event == WLAN_REASON_INITIALIZED)
+    {
+        // wmprintf("WLAN_REASON_INITIALIZED\r\n");
 
-        ret = os_mutex_create(&wlan_mtx, "wlanmtx",
-                OS_MUTEX_INHERIT);
-        if (ret != WM_SUCCESS) {
+        ret = os_mutex_create(&wlan_mtx, "wlanmtx", OS_MUTEX_INHERIT);
+        if (ret != WM_SUCCESS)
+        {
             return eWiFiFailure;
         }
         os_semaphore_put(&wlan_init_sem);
     }
 
-    if (event == WLAN_REASON_SUCCESS) {
+    if (event == WLAN_REASON_SUCCESS)
+    {
         ret = wlan_get_address(&addr);
-        if (ret != WM_SUCCESS) {
+        if (ret != WM_SUCCESS)
+        {
             wmprintf("failed to get IP address\r\n");
             return 0;
         }
@@ -102,45 +103,50 @@ static int wlan_event_callback(enum wlan_event_reason event, void *data)
         wmprintf("Connected to with IP = [%s]\r\n", ip);
     }
 
-    if (event == WLAN_REASON_USER_DISCONNECT) {
-	    wmprintf("Dis-connected\r\n");
+    if (event == WLAN_REASON_USER_DISCONNECT)
+    {
+        wmprintf("Dis-connected\r\n");
     }
 
     return 0;
 }
 
 /*-----------------------------------------------------------*/
-WIFIReturnCode_t WIFI_On( void )
+WIFIReturnCode_t WIFI_On(void)
 {
     int rv;
     static bool wifi_init_done = false;
 
-    if(wifi_init_done)
-	return eWiFiSuccess;
+    if (wifi_init_done)
+        return eWiFiSuccess;
 
     rv = os_semaphore_create(&wlan_init_sem, "wlansem");
-    if (rv != WM_SUCCESS) {
-            return eWiFiFailure;
+    if (rv != WM_SUCCESS)
+    {
+        return eWiFiFailure;
     }
 
     /* Consume so that 'get' blocks when used later */
     os_semaphore_get(&wlan_init_sem, OS_WAIT_FOREVER);
 
     rv = wlan_init(wlan_fw_bin, wlan_fw_bin_len);
-    if (rv != WM_SUCCESS) {
+    if (rv != WM_SUCCESS)
+    {
         os_semaphore_delete(&wlan_init_sem);
         return eWiFiFailure;
     }
 
     rv = wlan_start(wlan_event_callback);
-    if (rv != WM_SUCCESS) {
+    if (rv != WM_SUCCESS)
+    {
         os_semaphore_delete(&wlan_init_sem);
         return eWiFiFailure;
     }
 
     /* Wait till app framework is initialized */
     rv = os_semaphore_get(&wlan_init_sem, OS_WAIT_FOREVER);
-    if (rv != WM_SUCCESS) {
+    if (rv != WM_SUCCESS)
+    {
         os_semaphore_delete(&wlan_init_sem);
         return eWiFiFailure;
     }
@@ -152,66 +158,66 @@ WIFIReturnCode_t WIFI_On( void )
 }
 /*-----------------------------------------------------------*/
 
-WIFIReturnCode_t WIFI_Off( void )
+WIFIReturnCode_t WIFI_Off(void)
 {
     return eWiFiSuccess;
 }
 /*-----------------------------------------------------------*/
 
-#define IS_SSID_LEN_VALID(x) \
-        ((x) <=  wificonfigMAX_SSID_LEN && (x) > 0)
-#define IS_PASSPHRASE_LEN_VALID(x) \
-        ((x) <= wificonfigMAX_PASSPHRASE_LEN && (x) > 0)
+#define IS_SSID_LEN_VALID(x)       ((x) <= wificonfigMAX_SSID_LEN && (x) > 0)
+#define IS_PASSPHRASE_LEN_VALID(x) ((x) <= wificonfigMAX_PASSPHRASE_LEN && (x) > 0)
 
-WIFIReturnCode_t WIFI_ConnectAP( const WIFINetworkParams_t * const pxNetworkParams )
+WIFIReturnCode_t WIFI_ConnectAP(const WIFINetworkParams_t *const pxNetworkParams)
 {
     int ret = eWiFiFailure;
     struct wlan_network home_nw;
     enum wlan_connection_state state;
-    size_t ssid_len;
 
-    int retry_cnt = 3;
+    int retry_cnt     = 3;
     int connect_retry = 10;
 
     if (os_mutex_get(&wlan_mtx, OS_WAIT_FOREVER) != WM_SUCCESS)
-           return eWiFiFailure;
+        return eWiFiFailure;
 
-    if(pxNetworkParams == NULL)
+    if (pxNetworkParams == NULL)
         goto fail;
 
-    if (pxNetworkParams->pcSSID == NULL || pxNetworkParams->xSecurity ==
-            eWiFiSecurityNotSupported) {
-        goto fail;
-    }
-
-    if (pxNetworkParams->xSecurity != eWiFiSecurityOpen && pxNetworkParams->pcPassword == NULL) {
+    if (pxNetworkParams->xSecurity == eWiFiSecurityNotSupported)
+    {
         goto fail;
     }
 
     if (!IS_SSID_LEN_VALID(pxNetworkParams->ucSSIDLength) ||
-            (pxNetworkParams->xSecurity != eWiFiSecurityOpen &&
-            !IS_PASSPHRASE_LEN_VALID(pxNetworkParams->ucPasswordLength))) {
-	goto fail;
+        (pxNetworkParams->xSecurity != eWiFiSecurityOpen &&
+         !IS_PASSPHRASE_LEN_VALID(pxNetworkParams->xPassword.xWPA.ucLength)))
+    {
+        goto fail;
     }
 
-    if (wlan_get_connection_state(&state)) {
-		wmprintf("Error: unable to get "
-				"connection state\r\n");
-	goto fail;
+    if (wlan_get_connection_state(&state))
+    {
+        wmprintf(
+            "Error: unable to get "
+            "connection state\r\n");
+        goto fail;
     }
 
-    if (state == WLAN_CONNECTED) {
+    if (state == WLAN_CONNECTED)
+    {
         int connect_retry = 200;
-        ret = wlan_disconnect();
+        ret               = wlan_disconnect();
         if (ret != WM_SUCCESS)
             goto fail;
 
-        do {
+        do
+        {
             /* wait for interface up */
             os_thread_sleep(os_msec_to_ticks(50));
 
-            if (wlan_get_connection_state(&state)) {
-            wmprintf("Error: unable to get "
+            if (wlan_get_connection_state(&state))
+            {
+                wmprintf(
+                    "Error: unable to get "
                     "connection state\r\n");
                 continue;
             }
@@ -220,35 +226,30 @@ WIFIReturnCode_t WIFI_ConnectAP( const WIFINetworkParams_t * const pxNetworkPara
                 break;
         } while (connect_retry--);
 
-        if (state != WLAN_DISCONNECTED) {
+        if (state != WLAN_DISCONNECTED)
+        {
             wmprintf("Error: Not connected.\r\n");
             goto fail;
         }
     }
 
     memset(&home_nw, 0, sizeof(home_nw));
-
     strncpy(home_nw.name, "aws_network", WLAN_NETWORK_NAME_MAX_LENGTH);
 
-    ssid_len = strlen(pxNetworkParams->pcSSID);
-    if (ssid_len > IEEEtypes_SSID_SIZE)
-    {
-        ssid_len = IEEEtypes_SSID_SIZE;
-    }
-
     /* Set SSID as passed by the user */
-    strncpy(home_nw.ssid, pxNetworkParams->pcSSID, ssid_len);
+    memcpy(home_nw.ssid, pxNetworkParams->ucSSID, pxNetworkParams->ucSSIDLength);
 
-    if(pxNetworkParams->pcPassword) {
+    if (pxNetworkParams->xPassword.xWPA.ucLength > 0)
+    {
         /* Set the passphrase */
-        //strncpy(home_nw.security.psk, pxNetworkParams->pcPassword, PASSWORD_MAX_LENGTH);
-        strcpy(home_nw.security.psk, pxNetworkParams->pcPassword);
+        memcpy(home_nw.security.psk, pxNetworkParams->xPassword.xWPA.cPassphrase,
+               pxNetworkParams->xPassword.xWPA.ucLength);
 
         /* Set the passphrase length */
-        home_nw.security.psk_len = strlen(home_nw.security.psk);
+        home_nw.security.psk_len = pxNetworkParams->xPassword.xWPA.ucLength;
     }
 
-    home_nw.channel = pxNetworkParams->cChannel;
+    // home_nw.channel = pxNetworkParams->ucChannel;
 
     if (pxNetworkParams->xSecurity == eWiFiSecurityOpen)
         home_nw.security.type = WLAN_SECURITY_NONE;
@@ -259,75 +260,84 @@ WIFIReturnCode_t WIFI_ConnectAP( const WIFINetworkParams_t * const pxNetworkPara
     else if (pxNetworkParams->xSecurity == eWiFiSecurityWPA2)
         home_nw.security.type = WLAN_SECURITY_WPA2;
 
-    home_nw.type = WLAN_BSS_TYPE_STA;
-    home_nw.role = WLAN_BSS_ROLE_STA;
+    home_nw.type              = WLAN_BSS_TYPE_STA;
+    home_nw.role              = WLAN_BSS_ROLE_STA;
     home_nw.ip.ipv4.addr_type = ADDR_TYPE_DHCP;
 
     ret = wlan_remove_network("aws_network");
-    if (ret != WM_SUCCESS && ret != -WM_E_INVAL) {
-	wmprintf(" Failed to add network %d\r\n", ret);
-	goto fail;
+    if (ret != WM_SUCCESS && ret != -WM_E_INVAL)
+    {
+        wmprintf(" Failed to add network %d\r\n", ret);
+        goto fail;
     }
 
     ret = wlan_add_network(&home_nw);
-    if (ret != WM_SUCCESS) {
-	wmprintf(" Failed to add network %d\r\n", ret);
-	goto fail;
+    if (ret != WM_SUCCESS)
+    {
+        wmprintf(" Failed to add network %d\r\n", ret);
+        goto fail;
     }
 
-
-    do {
+    do
+    {
         wmprintf("Connecting to %s .....\r\n", home_nw.ssid);
 
         ret = wlan_connect(home_nw.name);
 
-        if (ret != 0) {
+        if (ret != 0)
+        {
             wmprintf("Failed to connect %d\r\n", ret);
             goto retry;
         }
 
         connect_retry = 2000;
 
-        do {
+        do
+        {
             /* wait for interface up */
             os_thread_sleep(os_msec_to_ticks(50));
 
-            if (wlan_get_connection_state(&state)) {
-		    wmprintf("Error: unable to get "
-				    "connection state\r\n");
-		    continue;
-	    }
+            if (wlan_get_connection_state(&state))
+            {
+                wmprintf(
+                    "Error: unable to get "
+                    "connection state\r\n");
+                continue;
+            }
 
-	    if (state == WLAN_CONNECTED || connect_retry == 0)
-		    break;
-	} while (connect_retry--);
+            if (state == WLAN_CONNECTED || connect_retry == 0)
+                break;
+        } while (connect_retry--);
 
-	if (state != WLAN_CONNECTED) {
-		wmprintf("Error: Not connected.\r\n");
-		goto retry;
-	}
+        if (state != WLAN_CONNECTED)
+        {
+            wmprintf("Error: Not connected.\r\n");
+            goto retry;
+        }
 
-	if (os_mutex_put(&wlan_mtx) != WM_SUCCESS)
+        if (os_mutex_put(&wlan_mtx) != WM_SUCCESS)
             return eWiFiFailure;
 
         return eWiFiSuccess;
-retry:
+    retry:
         retry_cnt--;
         wmprintf("Connect to AP FAIL ! Retrying ..... \r\n");
 
     } while (retry_cnt != 0);
 
-    if (retry_cnt == 0) {
+    if (retry_cnt == 0)
+    {
         os_thread_sleep(os_msec_to_ticks(500));
 
-	wmprintf("Connection Failed !\r\n");
+        wmprintf("Connection Failed !\r\n");
 
-	ret = wlan_disconnect();
-	if (ret != 0) {
-	    wmprintf("Failed to disconnect \r\n");
-	    if (os_mutex_put(&wlan_mtx) != WM_SUCCESS)
+        ret = wlan_disconnect();
+        if (ret != 0)
+        {
+            wmprintf("Failed to disconnect \r\n");
+            if (os_mutex_put(&wlan_mtx) != WM_SUCCESS)
                 return eWiFiFailure;
-        return eWiFiFailure;
+            return eWiFiFailure;
         }
         if (os_mutex_put(&wlan_mtx) != WM_SUCCESS)
             return eWiFiFailure;
@@ -350,41 +360,45 @@ fail:
 }
 /*-----------------------------------------------------------*/
 
-WIFIReturnCode_t WIFI_Disconnect( void )
+WIFIReturnCode_t WIFI_Disconnect(void)
 {
     int ret = eWiFiFailure;
     enum wlan_connection_state state;
     int connect_retry = 200;
 
     if (os_mutex_get(&wlan_mtx, OS_WAIT_FOREVER) != WM_SUCCESS)
-           return eWiFiFailure;
+        return eWiFiFailure;
 
     ret = wlan_disconnect();
     if (ret != WM_SUCCESS)
-	    goto fail;
+        goto fail;
 
-    do {
+    do
+    {
         /* wait for interface up */
         os_thread_sleep(os_msec_to_ticks(50));
 
-	if (wlan_get_connection_state(&state)) {
-	    wmprintf("Error: unable to get "
-			"connection state\r\n");
-	    continue;
-	}
+        if (wlan_get_connection_state(&state))
+        {
+            wmprintf(
+                "Error: unable to get "
+                "connection state\r\n");
+            continue;
+        }
 
-            if (state == WLAN_DISCONNECTED || connect_retry == 0)
-	    break;
+        if (state == WLAN_DISCONNECTED || connect_retry == 0)
+            break;
     } while (connect_retry--);
 
-    if (state != WLAN_DISCONNECTED) {
-	wmprintf("Error: Not connected.\r\n");
-	goto fail;
+    if (state != WLAN_DISCONNECTED)
+    {
+        wmprintf("Failed to disconnect\r\n");
+        goto fail;
     }
 fail:
 
     if (os_mutex_put(&wlan_mtx) != WM_SUCCESS)
-           return eWiFiFailure;
+        return eWiFiFailure;
 
     if (ret != 0)
     {
@@ -397,7 +411,7 @@ fail:
 }
 /*-----------------------------------------------------------*/
 
-WIFIReturnCode_t WIFI_Reset( void )
+WIFIReturnCode_t WIFI_Reset(void)
 {
     return eWiFiNotSupported;
 }
@@ -406,7 +420,8 @@ WIFIReturnCode_t WIFI_Reset( void )
 //#define CONFIG_MAX_AP_ENTRIES 20
 #define MAX_SITES CONFIG_MAX_AP_ENTRIES
 
-struct site_survey {
+struct site_survey
+{
     struct wlan_scan_result sites[MAX_SITES];
     unsigned int num_sites;
     os_mutex_t lock;
@@ -432,7 +447,8 @@ static int prov_handle_scan_results(unsigned int count)
      * Loop through till we have results to process or
      * run out of space in survey.sites
      */
-    for (i = 0; i < count && j < MAX_SITES; i++) {
+    for (i = 0; i < count && j < MAX_SITES; i++)
+    {
         if (wlan_get_scan_result(i, &survey.sites[j]))
             break;
 
@@ -450,43 +466,46 @@ static int prov_handle_scan_results(unsigned int count)
 
 #define DEFAULT_SCAN_PROTECTION_TIMEOUT 1000
 
-WIFIReturnCode_t WIFI_Scan( WIFIScanResult_t * pxBuffer,
-                            uint8_t ucNumNetworks )
+WIFIReturnCode_t WIFI_Scan(WIFIScanResult_t *pxBuffer, uint8_t ucNumNetworks)
 {
     int ret = 0;
-    int i = 0;
+    int i   = 0;
 
     if (os_mutex_get(&wlan_mtx, OS_WAIT_FOREVER) != WM_SUCCESS)
-           return eWiFiFailure;
+        return eWiFiFailure;
 
-    if (pxBuffer == NULL) {
-           os_mutex_put(&wlan_mtx);
-           return eWiFiFailure;
+    if (pxBuffer == NULL)
+    {
+        os_mutex_put(&wlan_mtx);
+        return eWiFiFailure;
     }
 
     memset(pxBuffer, 0, sizeof(WIFIScanResult_t) * ucNumNetworks);
 
     ret = os_semaphore_create(&scan_protection_sem, "scanprotsem");
-    if (ret != WM_SUCCESS) {
+    if (ret != WM_SUCCESS)
+    {
         os_mutex_put(&wlan_mtx);
         return eWiFiFailure;
     }
 
-    ret = os_mutex_create(&survey.lock, "survey-mtx",
-			OS_MUTEX_INHERIT);
-    if (ret != WM_SUCCESS) {
+    ret = os_mutex_create(&survey.lock, "survey-mtx", OS_MUTEX_INHERIT);
+    if (ret != WM_SUCCESS)
+    {
         os_semaphore_delete(&scan_protection_sem);
         os_mutex_put(&wlan_mtx);
         return eWiFiFailure;
     }
 
-    ret = os_semaphore_get(&scan_protection_sem, os_msec_to_ticks(
-            DEFAULT_SCAN_PROTECTION_TIMEOUT * 1000));
+    ret = os_semaphore_get(&scan_protection_sem, os_msec_to_ticks(DEFAULT_SCAN_PROTECTION_TIMEOUT * 1000));
 
-    if (ret != WM_SUCCESS) {
-        wm_wlan_e("Scan protection timeout occurred."
-                   " Failed to get the scan protection for scan start"
-                   " semaphore", ret);
+    if (ret != WM_SUCCESS)
+    {
+        wm_wlan_e(
+            "Scan protection timeout occurred."
+            " Failed to get the scan protection for scan start"
+            " semaphore",
+            ret);
         os_mutex_delete(&survey.lock);
         os_semaphore_delete(&scan_protection_sem);
         os_mutex_put(&wlan_mtx);
@@ -502,51 +521,56 @@ WIFIReturnCode_t WIFI_Scan( WIFIScanResult_t * pxBuffer,
         return eWiFiFailure;
     }
 
-    ret = os_semaphore_get(&scan_protection_sem, os_msec_to_ticks(
-            DEFAULT_SCAN_PROTECTION_TIMEOUT * 1000));
-    if (ret != WM_SUCCESS) {
-        wm_wlan_e("Scan protection timeout occurred."
-                   " Failed to get the scan protection for scan result"
-                   " semaphore", ret);
+    ret = os_semaphore_get(&scan_protection_sem, os_msec_to_ticks(DEFAULT_SCAN_PROTECTION_TIMEOUT * 1000));
+    if (ret != WM_SUCCESS)
+    {
+        wm_wlan_e(
+            "Scan protection timeout occurred."
+            " Failed to get the scan protection for scan result"
+            " semaphore",
+            ret);
         os_mutex_delete(&survey.lock);
         os_semaphore_delete(&scan_protection_sem);
         os_mutex_put(&wlan_mtx);
         return eWiFiFailure;
     }
 
-    if(survey.num_sites < ucNumNetworks ) {
+    if (survey.num_sites < ucNumNetworks)
+    {
         ucNumNetworks = survey.num_sites;
     }
 
-    for(i = 0; i < ucNumNetworks; i++) {
-        pxBuffer[i].cChannel = survey.sites[i].channel;
-        pxBuffer[i].cRSSI = survey.sites[i].rssi;
+    for (i = 0; i < ucNumNetworks; i++)
+    {
+        pxBuffer[i].ucChannel = survey.sites[i].channel;
+        pxBuffer[i].cRSSI     = survey.sites[i].rssi;
 
-
-        if (survey.sites[i].ssid_len) {
-            strncpy(pxBuffer[i].cSSID, survey.sites[i].ssid, survey.sites[i].ssid_len);
-            pxBuffer[i].ucHidden = 0;
-        } else {
-//            strncpy(pxBuffer[i].cSSID, survey.sites[i].ssid, wificonfigMAX_SSID_LEN + 1);
-            pxBuffer[i].ucHidden = 1;
+        if (survey.sites[i].ssid_len)
+        {
+            strncpy((char *)pxBuffer[i].ucSSID, survey.sites[i].ssid, survey.sites[i].ssid_len);
         }
 
         memcpy((char *)pxBuffer[i].ucBSSID, survey.sites[i].bssid, wificonfigMAX_BSSID_LEN);
 
-        if(survey.sites[i].wep) {
-             pxBuffer[i].xSecurity = eWiFiSecurityWEP;
+        if (survey.sites[i].wep)
+        {
+            pxBuffer[i].xSecurity = eWiFiSecurityWEP;
         }
-        else if (survey.sites[i].wpa) {
-             pxBuffer[i].xSecurity = eWiFiSecurityWPA;
+        else if (survey.sites[i].wpa)
+        {
+            pxBuffer[i].xSecurity = eWiFiSecurityWPA;
         }
-        else if (survey.sites[i].wpa2) {
-             pxBuffer[i].xSecurity = eWiFiSecurityWPA2;
+        else if (survey.sites[i].wpa2)
+        {
+            pxBuffer[i].xSecurity = eWiFiSecurityWPA2;
         }
-        else if (survey.sites[i].wpa2_entp || survey.sites[i].wpa3_sae) {
-             pxBuffer[i].xSecurity = eWiFiSecurityNotSupported;
+        else if (survey.sites[i].wpa2_entp || survey.sites[i].wpa3_sae)
+        {
+            pxBuffer[i].xSecurity = eWiFiSecurityNotSupported;
         }
-        else {
-             pxBuffer[i].xSecurity = eWiFiSecurityOpen;
+        else
+        {
+            pxBuffer[i].xSecurity = eWiFiSecurityOpen;
         }
     }
 
@@ -560,68 +584,66 @@ WIFIReturnCode_t WIFI_Scan( WIFIScanResult_t * pxBuffer,
 }
 /*-----------------------------------------------------------*/
 
-WIFIReturnCode_t WIFI_SetMode( WIFIDeviceMode_t xDeviceMode )
+WIFIReturnCode_t WIFI_SetMode(WIFIDeviceMode_t xDeviceMode)
 {
     /* FIX ME. */
     return eWiFiNotSupported;
 }
 /*-----------------------------------------------------------*/
 
-WIFIReturnCode_t WIFI_GetMode( WIFIDeviceMode_t * pxDeviceMode )
+WIFIReturnCode_t WIFI_GetMode(WIFIDeviceMode_t *pxDeviceMode)
 {
     /* FIX ME. */
     return eWiFiNotSupported;
 }
 /*-----------------------------------------------------------*/
 
-WIFIReturnCode_t WIFI_NetworkAdd( const WIFINetworkProfile_t * const pxNetworkProfile,
-                                  uint16_t * pusIndex )
+WIFIReturnCode_t WIFI_NetworkAdd(const WIFINetworkProfile_t *const pxNetworkProfile, uint16_t *pusIndex)
 {
     /* FIX ME. */
     return eWiFiNotSupported;
 }
 /*-----------------------------------------------------------*/
 
-WIFIReturnCode_t WIFI_NetworkGet( WIFINetworkProfile_t * pxNetworkProfile,
-                                  uint16_t usIndex )
+WIFIReturnCode_t WIFI_NetworkGet(WIFINetworkProfile_t *pxNetworkProfile, uint16_t usIndex)
 {
     /* FIX ME. */
     return eWiFiNotSupported;
 }
 /*-----------------------------------------------------------*/
 
-WIFIReturnCode_t WIFI_NetworkDelete( uint16_t usIndex )
+WIFIReturnCode_t WIFI_NetworkDelete(uint16_t usIndex)
 {
     /* FIX ME. */
     return eWiFiNotSupported;
 }
 /*-----------------------------------------------------------*/
 
-WIFIReturnCode_t WIFI_Ping( uint8_t * pucIPAddr,
-                            uint16_t usCount,
-                            uint32_t ulIntervalMS )
+WIFIReturnCode_t WIFI_Ping(uint8_t *pucIPAddr, uint16_t usCount, uint32_t ulIntervalMS)
 {
     /* FIX ME. */
     return eWiFiNotSupported;
 }
 /*-----------------------------------------------------------*/
 
-WIFIReturnCode_t WIFI_GetIP( uint8_t * pucIPAddr )
+WIFIReturnCode_t WIFI_GetIP(uint8_t *pucIPAddr)
 {
     struct wlan_ip_config ip_addr;
     int ret;
 
-    if (pucIPAddr == NULL) {
+    if (pucIPAddr == NULL)
+    {
         return eWiFiFailure;
     }
 
     ret = wlan_get_address(&ip_addr);
 
-    if (ret != WM_SUCCESS) {
+    if (ret != WM_SUCCESS)
+    {
         wm_wlan_e("app_network_config: failed to get IP address");
         memset(pucIPAddr, 0, 4);
         return eWiFiFailure;
-     }
+    }
 
     memcpy(pucIPAddr, &(ip_addr.ipv4.address), 4);
 
@@ -629,13 +651,15 @@ WIFIReturnCode_t WIFI_GetIP( uint8_t * pucIPAddr )
 }
 /*-----------------------------------------------------------*/
 
-WIFIReturnCode_t WIFI_GetMAC( uint8_t * pucMac )
+WIFIReturnCode_t WIFI_GetMAC(uint8_t *pucMac)
 {
-    if (pucMac == NULL) {
+    if (pucMac == NULL)
+    {
         return eWiFiFailure;
     }
 
-    if (WM_SUCCESS != wlan_get_mac_address(pucMac)) {
+    if (WM_SUCCESS != wlan_get_mac_address(pucMac))
+    {
         return eWiFiFailure;
     }
 
@@ -643,63 +667,128 @@ WIFIReturnCode_t WIFI_GetMAC( uint8_t * pucMac )
 }
 /*-----------------------------------------------------------*/
 
-WIFIReturnCode_t WIFI_GetHostIP( char * pcHost,
-                                 uint8_t * pucIPAddr )
+WIFIReturnCode_t WIFI_GetHostIP(char *pcHost, uint8_t *pucIPAddr)
 {
     /* FIX ME. */
     return eWiFiNotSupported;
 }
 /*-----------------------------------------------------------*/
 
-WIFIReturnCode_t WIFI_StartAP( void )
+WIFIReturnCode_t WIFI_StartAP(void)
 {
     /* FIX ME. */
     return eWiFiNotSupported;
 }
 /*-----------------------------------------------------------*/
 
-WIFIReturnCode_t WIFI_StopAP( void )
+WIFIReturnCode_t WIFI_StopAP(void)
 {
     /* FIX ME. */
     return eWiFiNotSupported;
 }
 /*-----------------------------------------------------------*/
 
-WIFIReturnCode_t WIFI_ConfigureAP( const WIFINetworkParams_t * const pxNetworkParams )
+WIFIReturnCode_t WIFI_ConfigureAP(const WIFINetworkParams_t *const pxNetworkParams)
 {
     /* FIX ME. */
     return eWiFiNotSupported;
 }
 /*-----------------------------------------------------------*/
 
-WIFIReturnCode_t WIFI_SetPMMode( WIFIPMMode_t xPMModeType,
-                                 const void * pvOptionValue )
+WIFIReturnCode_t WIFI_SetPMMode(WIFIPMMode_t xPMModeType, const void *pvOptionValue)
 {
     /* FIX ME. */
     return eWiFiNotSupported;
 }
 /*-----------------------------------------------------------*/
 
-WIFIReturnCode_t WIFI_GetPMMode( WIFIPMMode_t * pxPMModeType,
-                                 void * pvOptionValue )
+WIFIReturnCode_t WIFI_GetPMMode(WIFIPMMode_t *pxPMModeType, void *pvOptionValue)
 {
     /* FIX ME. */
     return eWiFiNotSupported;
 }
 /*-----------------------------------------------------------*/
 
-BaseType_t WIFI_IsConnected(void)
+BaseType_t WIFI_IsConnected(const WIFINetworkParams_t *pxNetworkParams)
 {
-    if(is_sta_connected())
+    if (is_sta_connected())
         return pdTRUE;
 
     return pdFALSE;
 }
 /*-----------------------------------------------------------*/
 
-WIFIReturnCode_t WIFI_RegisterNetworkStateChangeEventCallback( IotNetworkStateChangeEventCallback_t xCallback  )
+WIFIReturnCode_t WIFI_RegisterEvent(WIFIEventType_t xEventType, WIFIEventHandler_t xHandler)
 {
-    /** Needs to implement dispatching network state change events **/
     return eWiFiNotSupported;
 }
 
+WIFIReturnCode_t WIFI_StartScan(WIFIScanConfig_t *pxScanConfig)
+{
+    return eWiFiNotSupported;
+}
+
+WIFIReturnCode_t WIFI_GetScanResults(const WIFIScanResult_t **pxBuffer, uint16_t *ucNumNetworks)
+{
+    return eWiFiNotSupported;
+}
+
+WIFIReturnCode_t WIFI_StartConnectAP(const WIFINetworkParams_t *pxNetworkParams)
+{
+    return eWiFiNotSupported;
+}
+
+WIFIReturnCode_t WIFI_StartDisconnect(void)
+{
+    return eWiFiNotSupported;
+}
+
+WIFIReturnCode_t WIFI_GetConnectionInfo(WIFIConnectionInfo_t *pxConnectionInfo)
+{
+    return eWiFiNotSupported;
+}
+
+WIFIReturnCode_t WIFI_GetIPInfo(WIFIIPConfiguration_t *pxIPInfo)
+{
+    return eWiFiNotSupported;
+}
+
+WIFIReturnCode_t WIFI_GetRSSI(int8_t *pcRSSI)
+{
+    return eWiFiNotSupported;
+}
+
+WIFIReturnCode_t WIFI_GetStationList(WIFIStationInfo_t *pxStationList, uint8_t *pcStationListSize)
+{
+    return eWiFiNotSupported;
+}
+
+WIFIReturnCode_t WIFI_StartDisconnectStation(uint8_t *pucMac)
+{
+    return eWiFiNotSupported;
+}
+
+WIFIReturnCode_t WIFI_SetMAC(uint8_t *pucMac)
+{
+    return eWiFiNotSupported;
+}
+
+WIFIReturnCode_t WIFI_SetCountryCode(const char *pcCountryCode)
+{
+    return eWiFiNotSupported;
+}
+
+WIFIReturnCode_t WIFI_GetCountryCode(char *pcCountryCode)
+{
+    return eWiFiNotSupported;
+}
+
+WIFIReturnCode_t WIFI_GetStatistic(WIFIStatisticInfo_t *pxStats)
+{
+    return eWiFiNotSupported;
+}
+
+WIFIReturnCode_t WIFI_GetCapability(WIFICapabilityInfo_t *pxCaps)
+{
+    return eWiFiNotSupported;
+}

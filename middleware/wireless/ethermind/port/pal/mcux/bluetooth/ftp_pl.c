@@ -14,6 +14,7 @@
 /* ----------------------------------------- Header File Inclusion */
 #include "ftp_pl.h"
 
+#ifdef FTP
 /* ----------------------------------------- External Global Variables */
 
 
@@ -63,7 +64,7 @@ API_RESULT BT_ftp_server_create_xml_dir_listing
     API_RESULT retval;
     BT_FOPS_FILINFO info;
     UCHAR parent[]="folder-listing";
-    UCHAR dir[EM_FOPS_MAX_DIRECTORY_SIZE];
+    UCHAR dir[BT_FOPS_MAX_DIRECTORY_SIZE];
 
     if ((NULL == xml_fd) || (NULL == dir_entry))
     {
@@ -92,7 +93,7 @@ API_RESULT BT_ftp_server_create_xml_dir_listing
         "[FTP_PL] The first file/directory found is %s\n",
         FindFileData.cFileName);
 
-        if(info.fattrib & BT_FOPS_MASK_FOLDER)
+        if(0U != (info.fattrib & BT_FOPS_MASK_FOLDER))
         {
             FTP_PL_INF(
             "[FTP_PL] It is a directory\n");
@@ -120,12 +121,13 @@ API_RESULT BT_ftp_server_create_xml_dir_listing
 #endif /* 0 */
 
     BT_fops_file_print(xml_fd ,"<%s>\n",parent);
-    while (1)
+
+    BT_LOOP_FOREVER()
     {
         if((0 != BT_str_cmp(".", info.fname)) &&
            (0 != BT_str_cmp("..", info.fname)))
         {
-			if(info.fattrib & BT_FOPS_MASK_FOLDER)
+			if(0U != (info.fattrib & BT_FOPS_MASK_FOLDER))
 			{
 				FTP_PL_INF(
 				"[FTP_PL] It is a directory\n");
@@ -156,8 +158,8 @@ API_RESULT BT_ftp_server_create_xml_dir_listing
     }
 
     BT_fops_file_print(xml_fd ,"</%s>\n",parent);
-    BT_fops_access_close(&h);
+    (BT_IGNORE_RETURN_VALUE) BT_fops_access_close(&h);
 
     return API_SUCCESS;
 }
-
+#endif /* FTP */

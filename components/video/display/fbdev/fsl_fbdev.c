@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2020 NXP
+ * Copyright 2019-2021 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -29,7 +29,7 @@ status_t FBDEV_Open(fbdev_t *fbdev, const dc_fb_t *dc, uint8_t layer)
 {
     status_t status;
 
-    assert(fbdev);
+    assert(NULL != fbdev);
 
     (void)memset(fbdev, 0, sizeof(fbdev_t));
 
@@ -243,8 +243,5 @@ static void FBDEV_BufferSwitchOffCallback(void *param, void *switchOffBuffer)
 
     (void)xSemaphoreGiveFromISR(fbdev->semaFramePending, &framePendingWake);
 
-    if ((fbManagerWake == pdTRUE) || (framePendingWake == pdTRUE))
-    {
-        portYIELD_FROM_ISR(pdTRUE);
-    }
+    portYIELD_FROM_ISR((fbManagerWake == pdTRUE) || (framePendingWake == pdTRUE));
 }

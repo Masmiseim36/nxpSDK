@@ -1,6 +1,6 @@
 # CROSS COMPILER SETTING
 SET(CMAKE_SYSTEM_NAME Generic)
-CMAKE_MINIMUM_REQUIRED (VERSION 3.1.1)
+CMAKE_MINIMUM_REQUIRED (VERSION 3.10.0)
 
 # THE VERSION NUMBER
 SET (Tutorial_VERSION_MAJOR 1)
@@ -53,7 +53,6 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 )
 
 target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
-    ${ProjDirPath}/.. flexspi_nor_debug
     ${ProjDirPath}/..
     ${ProjDirPath}/../../../..
 )
@@ -68,7 +67,7 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../../components/lists
     ${ProjDirPath}/../../../../../../devices/MIMXRT1064/xip
     ${ProjDirPath}/../../../../xip
-    ${ProjDirPath}/../../../../../../CMSIS/Include
+    ${ProjDirPath}/../../../../../../CMSIS/Core/Include
 )
 
 # include modules
@@ -108,13 +107,9 @@ include(utility_assert_MIMXRT1064)
 
 include(driver_xip_device_MIMXRT1064)
 
-include(driver_xip_board_MIMXRT1064)
+include(driver_xip_board_evkmimxrt1064_MIMXRT1064)
 
-include(CMSIS_Include_core_cm7_MIMXRT1064)
-
-include(CMSIS_Include_common_MIMXRT1064)
-
-include(CMSIS_Include_dsp_MIMXRT1064)
+include(CMSIS_Include_core_cm_MIMXRT1064)
 
 include(middleware_freertos-kernel_MIMXRT1064)
 

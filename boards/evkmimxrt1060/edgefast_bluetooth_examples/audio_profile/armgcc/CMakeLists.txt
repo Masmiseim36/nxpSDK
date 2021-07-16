@@ -1,6 +1,6 @@
 # CROSS COMPILER SETTING
 SET(CMAKE_SYSTEM_NAME Generic)
-CMAKE_MINIMUM_REQUIRED (VERSION 3.1.1)
+CMAKE_MINIMUM_REQUIRED (VERSION 3.10.0)
 
 # THE VERSION NUMBER
 SET (Tutorial_VERSION_MAJOR 1)
@@ -32,8 +32,8 @@ include(${ProjDirPath}/config.cmake)
 
 add_executable(${MCUX_SDK_PROJECT_NAME} 
 "${ProjDirPath}/../app_config.h"
-"${ProjDirPath}/../../../sdmmc_config.c"
-"${ProjDirPath}/../../../sdmmc_config.h"
+"${ProjDirPath}/../sdmmc_config.c"
+"${ProjDirPath}/../sdmmc_config.h"
 "${ProjDirPath}/../edgefast_bluetooth_config.h"
 "${ProjDirPath}/../cmd.c"
 "${ProjDirPath}/../cmd.h"
@@ -45,21 +45,8 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../app_a2dp.h"
 "${ProjDirPath}/../app_common.c"
 "${ProjDirPath}/../app_common.h"
-"${ProjDirPath}/../aws_mbedtls_config.h"
-"${ProjDirPath}/../config_files/wifi/aws_iot_network_config.h"
-"${ProjDirPath}/../config_files/aws_bufferpool_config.h"
-"${ProjDirPath}/../config_files/aws_demo_config.h"
-"${ProjDirPath}/../config_files/aws_ggd_config.h"
-"${ProjDirPath}/../config_files/aws_mqtt_config.h"
-"${ProjDirPath}/../config_files/aws_secure_sockets_config.h"
-"${ProjDirPath}/../config_files/aws_shadow_config.h"
-"${ProjDirPath}/../config_files/aws_wifi_config.h"
-"${ProjDirPath}/../config_files/FreeRTOSIPConfig.h"
-"${ProjDirPath}/../config_files/iot_config.h"
-"${ProjDirPath}/../config_files/iot_mqtt_agent_config.h"
-"${ProjDirPath}/../config_files/iot_pkcs11_config.h"
-"${ProjDirPath}/../init_network/init_wifi.c"
 "${ProjDirPath}/../remote_control.c"
+"${ProjDirPath}/../config_files/aws_wifi_config.h"
 "${ProjDirPath}/../audio.conf.h"
 "${ProjDirPath}/../audio_cfg.h"
 "${ProjDirPath}/../os_cfg.h"
@@ -71,6 +58,19 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../usb_host_fatfs.h"
 "${ProjDirPath}/../usb_host_config.h"
 "${ProjDirPath}/../ffconf.h"
+"${ProjDirPath}/../config_files/aws_mbedtls_config.h"
+"${ProjDirPath}/../config_files/aws_bufferpool_config.h"
+"${ProjDirPath}/../config_files/aws_demo_config.h"
+"${ProjDirPath}/../config_files/aws_mqtt_config.h"
+"${ProjDirPath}/../config_files/aws_secure_sockets_config.h"
+"${ProjDirPath}/../config_files/aws_shadow_config.h"
+"${ProjDirPath}/../config_files/FreeRTOSIPConfig.h"
+"${ProjDirPath}/../config_files/iot_config.h"
+"${ProjDirPath}/../config_files/iot_mqtt_agent_config.h"
+"${ProjDirPath}/../config_files/core_mqtt_config.h"
+"${ProjDirPath}/../config_files/core_pkcs11_config.h"
+"${ProjDirPath}/../config_files/aws_iot_network_config.h"
+"${ProjDirPath}/../config_files/shadow_config.h"
 "${ProjDirPath}/../board.c"
 "${ProjDirPath}/../board.h"
 "${ProjDirPath}/../clock_config.c"
@@ -146,7 +146,8 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../../../../../middleware/wifi/incl/wmlog.h"
 "${ProjDirPath}/../../../../../middleware/wifi/incl/wmtypes.h"
 "${ProjDirPath}/../../../../../middleware/wifi/wifi_bt_firmware/sd8801_wlan.h"
-"${ProjDirPath}/../../../../../middleware/wifi/wifi_bt_firmware/sduart8978_wlan_bt.h"
+"${ProjDirPath}/../../../../../middleware/wifi/wifi_bt_firmware/sduartIW416_wlan_bt.h"
+"${ProjDirPath}/../../../../../middleware/wifi/wifi_bt_firmware/sduart8987_wlan_bt.h"
 "${ProjDirPath}/../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/controller/configs/lwipopts.h"
 "${ProjDirPath}/../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/controller/configs/lwippools.h"
 "${ProjDirPath}/../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/controller/configs/wifi_config.h"
@@ -160,59 +161,59 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/export/eOSAL/eBT_os.h"
 "${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/export/eOSAL/eBT_serial.h"
 "${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/export/eOSAL/eBT_timer.h"
-"${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/export/include/BT_ftp_api.h"
+"${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/export/include/BT_a2dp_api.h"
+"${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/export/include/BT_api.h"
+"${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/export/include/BT_assigned_numbers.h"
 "${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/export/include/BT_at_parser_api.h"
-"${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/export/include/write_task.h"
-"${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/export/include/BT_bpp_api.h"
-"${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/export/include/BT_security.h"
+"${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/export/include/BT_att_api.h"
+"${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/export/include/BT_avctp_api.h"
+"${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/export/include/BT_avdtp_api.h"
+"${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/export/include/BT_avrcp_api.h"
+"${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/export/include/BT_avrcp_ca_api.h"
 "${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/export/include/BT_bip_api.h"
+"${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/export/include/BT_bnep_api.h"
+"${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/export/include/BT_bottom_half.h"
+"${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/export/include/BT_bpp_api.h"
+"${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/export/include/BT_common.h"
+"${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/export/include/BT_ctn_api.h"
+"${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/export/include/BT_dbase_api.h"
+"${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/export/include/BT_device_queue.h"
+"${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/export/include/BT_error.h"
+"${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/export/include/BT_ftp_api.h"
+"${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/export/include/BT_gap_api.h"
+"${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/export/include/BT_gatt_db_api.h"
+"${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/export/include/BT_hci_api.h"
+"${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/export/include/BT_hdp_api.h"
+"${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/export/include/BT_hfp_ag_api.h"
+"${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/export/include/BT_hfp_unit_api.h"
+"${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/export/include/BT_hid_device_api.h"
+"${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/export/include/BT_hid_host_api.h"
+"${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/export/include/BT_irobex_api.h"
+"${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/export/include/BT_jpl_api.h"
+"${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/export/include/BT_map_api.h"
+"${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/export/include/BT_mcap_api.h"
+"${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/export/include/BT_obex_api.h"
 "${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/export/include/BT_opp_api.h"
 "${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/export/include/BT_pan_api.h"
-"${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/export/include/BT_dbase_api.h"
-"${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/export/include/BT_a2dp_api.h"
-"${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/export/include/BT_hid_host_api.h"
-"${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/export/include/BT_hfp_ag_api.h"
-"${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/export/include/BT_status.h"
-"${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/export/include/fsm_defines.h"
-"${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/export/include/BT_bottom_half.h"
-"${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/export/include/BT_racp.h"
-"${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/export/include/BT_jpl_api.h"
-"${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/export/include/BT_snoop.h"
-"${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/export/include/gatt_defines.h"
-"${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/export/include/BT_storage.h"
-"${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/export/include/BT_rfcomm_api.h"
-"${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/export/include/BT_gatt_db_api.h"
-"${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/export/include/BT_assigned_numbers.h"
-"${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/export/include/BT_avdtp_api.h"
-"${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/export/include/BT_hdp_api.h"
-"${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/export/include/BT_bnep_api.h"
-"${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/export/include/BT_att_api.h"
-"${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/export/include/hci_transport.h"
-"${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/export/include/fsm_engine.h"
-"${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/export/include/BT_error.h"
-"${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/export/include/BT_api.h"
-"${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/export/include/BT_smp_api.h"
-"${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/export/include/BT_obex_api.h"
-"${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/export/include/BT_ctn_api.h"
-"${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/export/include/BT_sdp_api.h"
-"${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/export/include/l2cap.h"
-"${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/export/include/BT_version.h"
-"${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/export/include/BT_hfp_unit_api.h"
-"${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/export/include/BT_device_queue.h"
-"${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/export/include/BT_common.h"
-"${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/export/include/BT_avctp_api.h"
-"${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/export/include/BT_avrcp_ca_api.h"
-"${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/export/include/BT_avrcp_api.h"
-"${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/export/include/BT_mcap_api.h"
-"${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/export/include/BT_spp_api.h"
 "${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/export/include/BT_pbap_api.h"
+"${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/export/include/BT_racp.h"
+"${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/export/include/BT_rfcomm_api.h"
 "${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/export/include/BT_sap_api.h"
-"${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/export/include/BT_hid_device_api.h"
+"${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/export/include/BT_sdp_api.h"
+"${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/export/include/BT_security.h"
 "${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/export/include/BT_sm_api.h"
-"${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/export/include/BT_irobex_api.h"
-"${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/export/include/BT_hci_api.h"
-"${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/export/include/BT_map_api.h"
-"${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/export/include/BT_gap_api.h"
+"${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/export/include/BT_smp_api.h"
+"${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/export/include/BT_snoop.h"
+"${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/export/include/BT_spp_api.h"
+"${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/export/include/BT_status.h"
+"${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/export/include/BT_storage.h"
+"${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/export/include/BT_version.h"
+"${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/export/include/fsm_defines.h"
+"${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/export/include/fsm_engine.h"
+"${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/export/include/gatt_defines.h"
+"${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/export/include/hci_transport.h"
+"${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/export/include/l2cap.h"
+"${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/export/include/write_task.h"
 "${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/export/vendor/vendor_specific_commands.h"
 "${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/export/vendor/vendor_specific_init.c"
 "${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/export/vendor/vendor_specific_init.h"
@@ -236,29 +237,29 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/private/protocols/smp/smp_internal.h"
 "${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/private/utils/aes_cmac/aes_cmac.h"
 "${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/private/utils/at_parser/at_parser_hsp_hfp.h"
-"${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/private/utils/object_parser/tokenizer.h"
 "${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/private/utils/object_parser/object_parser_api.h"
+"${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/private/utils/object_parser/tokenizer.h"
 "${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/private/utils/racp/racp.h"
 "${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/private/utils/storage/storage.h"
 "${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/private/utils/xml_parser/xml_common_defines.h"
 "${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/private/utils/xml_parser/xml_encoder.h"
 "${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/private/utils/xml_parser/xml_parser.h"
-"${ProjDirPath}/../../../../../middleware/wireless/ethermind/port/osal/src/freertos/EM_debug_api.h"
-"${ProjDirPath}/../../../../../middleware/wireless/ethermind/port/osal/src/freertos/EM_serial.c"
-"${ProjDirPath}/../../../../../middleware/wireless/ethermind/port/osal/src/freertos/EM_timer.c"
-"${ProjDirPath}/../../../../../middleware/wireless/ethermind/port/osal/src/freertos/EM_os.c"
-"${ProjDirPath}/../../../../../middleware/wireless/ethermind/port/osal/src/freertos/EM_debug_internal.h"
-"${ProjDirPath}/../../../../../middleware/wireless/ethermind/port/osal/src/freertos/EM_fops.h"
-"${ProjDirPath}/../../../../../middleware/wireless/ethermind/port/osal/src/freertos/EM_serial.h"
-"${ProjDirPath}/../../../../../middleware/wireless/ethermind/port/osal/src/freertos/EM_timer_internal.h"
-"${ProjDirPath}/../../../../../middleware/wireless/ethermind/port/osal/src/freertos/EM_fops.c"
-"${ProjDirPath}/../../../../../middleware/wireless/ethermind/port/osal/src/freertos/EM_debug.h"
-"${ProjDirPath}/../../../../../middleware/wireless/ethermind/port/osal/src/freertos/EM_debug.c"
-"${ProjDirPath}/../../../../../middleware/wireless/ethermind/port/osal/src/freertos/EM_os.h"
-"${ProjDirPath}/../../../../../middleware/wireless/ethermind/port/osal/src/freertos/EM_config.c"
 "${ProjDirPath}/../../../../../middleware/wireless/ethermind/port/osal/src/freertos/EM_assert.h"
+"${ProjDirPath}/../../../../../middleware/wireless/ethermind/port/osal/src/freertos/EM_config.c"
 "${ProjDirPath}/../../../../../middleware/wireless/ethermind/port/osal/src/freertos/EM_config.h"
+"${ProjDirPath}/../../../../../middleware/wireless/ethermind/port/osal/src/freertos/EM_debug.c"
+"${ProjDirPath}/../../../../../middleware/wireless/ethermind/port/osal/src/freertos/EM_debug.h"
+"${ProjDirPath}/../../../../../middleware/wireless/ethermind/port/osal/src/freertos/EM_debug_api.h"
+"${ProjDirPath}/../../../../../middleware/wireless/ethermind/port/osal/src/freertos/EM_debug_internal.h"
+"${ProjDirPath}/../../../../../middleware/wireless/ethermind/port/osal/src/freertos/EM_fops.c"
+"${ProjDirPath}/../../../../../middleware/wireless/ethermind/port/osal/src/freertos/EM_fops.h"
+"${ProjDirPath}/../../../../../middleware/wireless/ethermind/port/osal/src/freertos/EM_os.c"
+"${ProjDirPath}/../../../../../middleware/wireless/ethermind/port/osal/src/freertos/EM_os.h"
+"${ProjDirPath}/../../../../../middleware/wireless/ethermind/port/osal/src/freertos/EM_serial.c"
+"${ProjDirPath}/../../../../../middleware/wireless/ethermind/port/osal/src/freertos/EM_serial.h"
+"${ProjDirPath}/../../../../../middleware/wireless/ethermind/port/osal/src/freertos/EM_timer.c"
 "${ProjDirPath}/../../../../../middleware/wireless/ethermind/port/osal/src/freertos/EM_timer.h"
+"${ProjDirPath}/../../../../../middleware/wireless/ethermind/port/osal/src/freertos/EM_timer_internal.h"
 "${ProjDirPath}/../../../../../middleware/wireless/ethermind/port/pal/mcux/bluetooth/BT_assert.h"
 "${ProjDirPath}/../../../../../middleware/wireless/ethermind/port/pal/mcux/bluetooth/BT_config.h"
 "${ProjDirPath}/../../../../../middleware/wireless/ethermind/port/pal/mcux/bluetooth/BT_debug.h"
@@ -294,22 +295,22 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../../../../../middleware/wireless/ethermind/port/pal/mcux/bluetooth/controller.h"
 "${ProjDirPath}/../../../../../middleware/wireless/ethermind/port/pal/mcux/bluetooth/controller/controller_wifi_nxp.c"
 "${ProjDirPath}/../../../../../middleware/wireless/ethermind/port/pal/mcux/bluetooth/controller/controller_wifi_nxp.h"
-"${ProjDirPath}/../../../../../middleware/wireless/ethermind/port/pal/mcux/ethal/ethal_timer_internal.h"
-"${ProjDirPath}/../../../../../middleware/wireless/ethermind/port/pal/mcux/ethal/ethal_debug.c"
-"${ProjDirPath}/../../../../../middleware/wireless/ethermind/port/pal/mcux/ethal/ethal_config.c"
-"${ProjDirPath}/../../../../../middleware/wireless/ethermind/port/pal/mcux/ethal/ethal_fops.c"
-"${ProjDirPath}/../../../../../middleware/wireless/ethermind/port/pal/mcux/ethal/ethal_serial.h"
-"${ProjDirPath}/../../../../../middleware/wireless/ethermind/port/pal/mcux/ethal/ethal_config.h"
-"${ProjDirPath}/../../../../../middleware/wireless/ethermind/port/pal/mcux/ethal/ethal_timer.c"
-"${ProjDirPath}/../../../../../middleware/wireless/ethermind/port/pal/mcux/ethal/ethal_fops.h"
-"${ProjDirPath}/../../../../../middleware/wireless/ethermind/port/pal/mcux/ethal/ethal_debug_api.h"
 "${ProjDirPath}/../../../../../middleware/wireless/ethermind/port/pal/mcux/ethal/ethal_assert.h"
+"${ProjDirPath}/../../../../../middleware/wireless/ethermind/port/pal/mcux/ethal/ethal_config.c"
+"${ProjDirPath}/../../../../../middleware/wireless/ethermind/port/pal/mcux/ethal/ethal_config.h"
+"${ProjDirPath}/../../../../../middleware/wireless/ethermind/port/pal/mcux/ethal/ethal_debug.c"
 "${ProjDirPath}/../../../../../middleware/wireless/ethermind/port/pal/mcux/ethal/ethal_debug.h"
-"${ProjDirPath}/../../../../../middleware/wireless/ethermind/port/pal/mcux/ethal/ethal_serial.c"
-"${ProjDirPath}/../../../../../middleware/wireless/ethermind/port/pal/mcux/ethal/ethal_os.c"
-"${ProjDirPath}/../../../../../middleware/wireless/ethermind/port/pal/mcux/ethal/ethal_timer.h"
-"${ProjDirPath}/../../../../../middleware/wireless/ethermind/port/pal/mcux/ethal/ethal_os.h"
+"${ProjDirPath}/../../../../../middleware/wireless/ethermind/port/pal/mcux/ethal/ethal_debug_api.h"
 "${ProjDirPath}/../../../../../middleware/wireless/ethermind/port/pal/mcux/ethal/ethal_debug_internal.h"
+"${ProjDirPath}/../../../../../middleware/wireless/ethermind/port/pal/mcux/ethal/ethal_fops.c"
+"${ProjDirPath}/../../../../../middleware/wireless/ethermind/port/pal/mcux/ethal/ethal_fops.h"
+"${ProjDirPath}/../../../../../middleware/wireless/ethermind/port/pal/mcux/ethal/ethal_os.c"
+"${ProjDirPath}/../../../../../middleware/wireless/ethermind/port/pal/mcux/ethal/ethal_os.h"
+"${ProjDirPath}/../../../../../middleware/wireless/ethermind/port/pal/mcux/ethal/ethal_serial.c"
+"${ProjDirPath}/../../../../../middleware/wireless/ethermind/port/pal/mcux/ethal/ethal_serial.h"
+"${ProjDirPath}/../../../../../middleware/wireless/ethermind/port/pal/mcux/ethal/ethal_timer.c"
+"${ProjDirPath}/../../../../../middleware/wireless/ethermind/port/pal/mcux/ethal/ethal_timer.h"
+"${ProjDirPath}/../../../../../middleware/wireless/ethermind/port/pal/mcux/ethal/ethal_timer_internal.h"
 "${ProjDirPath}/../../../../../middleware/wireless/ethermind/port/pal/mcux/sbc/sbc_os.h"
 "${ProjDirPath}/../../../../../middleware/wireless/ethermind/port/pal/mcux/EM_platform.c"
 "${ProjDirPath}/../../../../../middleware/wireless/ethermind/port/pal/mcux/EM_platform.h"
@@ -329,46 +330,46 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/export/extension/sm_ssp_pl.h"
 "${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/export/extension/smp_pl.c"
 "${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/export/extension/smp_pl.h"
-"${ProjDirPath}/../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/a2dp.c"
-"${ProjDirPath}/../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/a2dp_internal.h"
-"${ProjDirPath}/../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/att.c"
-"${ProjDirPath}/../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/at.h"
-"${ProjDirPath}/../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/att_internal.h"
-"${ProjDirPath}/../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/avdtp_internal.h"
-"${ProjDirPath}/../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/conn.c"
-"${ProjDirPath}/../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/conn_internal.h"
-"${ProjDirPath}/../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/crypto.c"
-"${ProjDirPath}/../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/crypto_internal.h"
-"${ProjDirPath}/../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/gatt.c"
-"${ProjDirPath}/../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/gatt_internal.h"
-"${ProjDirPath}/../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/hci_core.c"
-"${ProjDirPath}/../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/hci_core.h"
-"${ProjDirPath}/../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/hci_ecc.h"
-"${ProjDirPath}/../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/ecc.h"
-"${ProjDirPath}/../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/keys.c"
-"${ProjDirPath}/../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/keys.h"
-"${ProjDirPath}/../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/keys_br.c"
-"${ProjDirPath}/../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/l2cap.c"
-"${ProjDirPath}/../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/l2cap_br.c"
-"${ProjDirPath}/../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/l2cap_internal.h"
-"${ProjDirPath}/../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/monitor.c"
-"${ProjDirPath}/../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/monitor.h"
-"${ProjDirPath}/../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/rfcomm.c"
-"${ProjDirPath}/../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/rfcomm_internal.h"
-"${ProjDirPath}/../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/spp.c"
-"${ProjDirPath}/../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/rpa.c"
-"${ProjDirPath}/../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/rpa.h"
-"${ProjDirPath}/../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/settings.h"
-"${ProjDirPath}/../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/sdp.c"
-"${ProjDirPath}/../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/sdp_internal.h"
-"${ProjDirPath}/../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/smp.c"
-"${ProjDirPath}/../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/smp.h"
-"${ProjDirPath}/../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/ssp.c"
-"${ProjDirPath}/../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/ssp.h"
-"${ProjDirPath}/../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/uuid.c"
-"${ProjDirPath}/../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/hfp_ag.c"
-"${ProjDirPath}/../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/hfp_hf.c"
-"${ProjDirPath}/../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/hfp_internal.h"
+"${ProjDirPath}/../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/bt_pal_a2dp.c"
+"${ProjDirPath}/../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/bt_pal_a2dp_internal.h"
+"${ProjDirPath}/../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/bt_pal_att.c"
+"${ProjDirPath}/../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/bt_pal_at.h"
+"${ProjDirPath}/../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/bt_pal_att_internal.h"
+"${ProjDirPath}/../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/bt_pal_avdtp_internal.h"
+"${ProjDirPath}/../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/bt_pal_conn.c"
+"${ProjDirPath}/../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/bt_pal_conn_internal.h"
+"${ProjDirPath}/../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/bt_pal_crypto.c"
+"${ProjDirPath}/../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/bt_pal_crypto_internal.h"
+"${ProjDirPath}/../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/bt_pal_gatt.c"
+"${ProjDirPath}/../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/bt_pal_gatt_internal.h"
+"${ProjDirPath}/../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/bt_pal_hci_core.c"
+"${ProjDirPath}/../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/bt_pal_hci_core.h"
+"${ProjDirPath}/../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/bt_pal_hci_ecc.h"
+"${ProjDirPath}/../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/bt_pal_ecc.h"
+"${ProjDirPath}/../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/bt_pal_keys.c"
+"${ProjDirPath}/../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/bt_pal_keys.h"
+"${ProjDirPath}/../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/bt_pal_keys_br.c"
+"${ProjDirPath}/../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/bt_pal_l2cap.c"
+"${ProjDirPath}/../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/bt_pal_l2cap_br.c"
+"${ProjDirPath}/../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/bt_pal_l2cap_internal.h"
+"${ProjDirPath}/../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/bt_pal_monitor.c"
+"${ProjDirPath}/../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/bt_pal_monitor.h"
+"${ProjDirPath}/../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/bt_pal_rfcomm.c"
+"${ProjDirPath}/../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/bt_pal_rfcomm_internal.h"
+"${ProjDirPath}/../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/bt_pal_spp.c"
+"${ProjDirPath}/../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/bt_pal_rpa.c"
+"${ProjDirPath}/../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/bt_pal_rpa.h"
+"${ProjDirPath}/../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/bt_pal_settings.h"
+"${ProjDirPath}/../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/bt_pal_sdp.c"
+"${ProjDirPath}/../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/bt_pal_sdp_internal.h"
+"${ProjDirPath}/../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/bt_pal_smp.c"
+"${ProjDirPath}/../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/bt_pal_smp.h"
+"${ProjDirPath}/../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/bt_pal_ssp.c"
+"${ProjDirPath}/../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/bt_pal_ssp.h"
+"${ProjDirPath}/../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/bt_pal_uuid.c"
+"${ProjDirPath}/../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/bt_pal_hfp_ag.c"
+"${ProjDirPath}/../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/bt_pal_hfp_hf.c"
+"${ProjDirPath}/../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/bt_pal_hfp_internal.h"
 "${ProjDirPath}/../../../../../middleware/edgefast_bluetooth/include/bluetooth/a2dp.h"
 "${ProjDirPath}/../../../../../middleware/edgefast_bluetooth/include/bluetooth/a2dp-codec.h"
 "${ProjDirPath}/../../../../../middleware/edgefast_bluetooth/include/bluetooth/addr.h"
@@ -419,16 +420,11 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 )
 
 target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
-    ${ProjDirPath}/.. flexspi_nor_debug
-    ${ProjDirPath}/../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/controller/configs flexspi_nor_debug
     ${ProjDirPath}/..
-    ${ProjDirPath}/../../..
     ${ProjDirPath}/../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/controller/configs
-    ${ProjDirPath}/../config_files/wifi
-    ${ProjDirPath}/../config_files
-    ${ProjDirPath}/../config_files_wifi_nxp
-    ${ProjDirPath}/../lwipopts_wifi_nxp
+    ${ProjDirPath}/../../..
     ${ProjDirPath}/../../../../../middleware/edgefast_bluetooth/examples/audio_profile
+    ${ProjDirPath}/../config_files
     ${ProjDirPath}/../../../../../middleware/wifi/incl/wifidriver
     ${ProjDirPath}/../../../../../middleware/wifi/wifidriver/incl
     ${ProjDirPath}/../../../../../middleware/wifi/wifidriver
@@ -478,7 +474,6 @@ target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
     ${ProjDirPath}/../../../../../middleware/edgefast_bluetooth/include
     ${ProjDirPath}/../../../../../middleware/edgefast_bluetooth/bluetooth
     ${ProjDirPath}/../../../../../middleware/edgefast_bluetooth/source/porting
-    ${ProjDirPath}/../../../../../middleware/edgefast_bluetooth/include/toolchain
     ${ProjDirPath}/../../../../../middleware/edgefast_bluetooth/source/services
 )
 
@@ -513,7 +508,7 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../components/internal_flash
     ${ProjDirPath}/../../../../../middleware/wireless
     ${ProjDirPath}/../../../../../components/nvm
-    ${ProjDirPath}/../../../../../CMSIS/Include
+    ${ProjDirPath}/../../../../../CMSIS/Core/Include
     ${ProjDirPath}/../../../../../components/log
 )
 
@@ -538,7 +533,7 @@ include(utility_debug_console_MIMXRT1062)
 
 include(driver_xip_device_MIMXRT1062)
 
-include(driver_xip_board_MIMXRT1062)
+include(driver_xip_board_evkmimxrt1060_MIMXRT1062)
 
 include(driver_iomuxc_MIMXRT1062)
 
@@ -586,6 +581,16 @@ include(middleware_fatfs_MIMXRT1062)
 
 include(middleware_fatfs_usb_MIMXRT1062)
 
+include(component_mflash_file_MIMXRT1062)
+
+include(component_mflash_rt1060_MIMXRT1062)
+
+include(middleware_mbedtls_MIMXRT1062)
+
+include(middleware_mbedtls_port_ksdk_MIMXRT1062)
+
+include(middleware_mbedtls_rt_MIMXRT1062)
+
 include(middleware_freertos-kernel_heap_4_MIMXRT1062)
 
 include(utility_shell_MIMXRT1062)
@@ -606,35 +611,31 @@ include(middleware_freertos-aws_iot_libraries_abstractions_secure_sockets_MIMXRT
 
 include(middleware_freertos-aws_iot_libraries_freertos_plus_standard_crypto_MIMXRT1062)
 
-include(middleware_freertos-aws_iot_libraries_freertos_plus_standard_pkcs11_MIMXRT1062)
-
 include(middleware_freertos-aws_iot_libraries_freertos_plus_standard_utils_MIMXRT1062)
 
 include(middleware_freertos-aws_iot_libraries_freertos_plus_standard_tls_MIMXRT1062)
 
 include(middleware_freertos-aws_iot_libraries_abstractions_pkcs11_MIMXRT1062)
 
-include(middleware_freertos-aws_iot_libraries_3rdparty_pkcs11_MIMXRT1062)
+include(middleware_freertos-aws_iot_libraries_abstractions_pkcs11_mbedtls_MIMXRT1062)
 
-include(middleware_freertos-aws_iot_libraries_3rdparty_jsmn_MIMXRT1062)
+include(middleware_freertos-aws_iot_libraries_3rdparty_pkcs11_MIMXRT1062)
 
 include(middleware_freertos-aws_iot_vendor_nxp_pkcs11_MIMXRT1062)
 
-include(component_mflash_file_MIMXRT1062)
-
-include(component_mflash_rt1060_MIMXRT1062)
-
-include(middleware_mbedtls_MIMXRT1062)
-
-include(middleware_mbedtls_port_ksdk_MIMXRT1062)
-
-include(middleware_mbedtls_rt_MIMXRT1062)
-
-include(middleware_freertos-aws_iot_c_sdk_standard_shadow_MIMXRT1062)
+include(middleware_freertos-aws_iot_libraries_c_sdk_standard_shadow_MIMXRT1062)
 
 include(middleware_lwip_MIMXRT1062)
 
 include(middleware_wifi_MIMXRT1062)
+
+include(middleware_freertos-aws_iot_libraries_logging_MIMXRT1062)
+
+include(middleware_freertos-aws_iot_libraries_device_shadow_for_aws_MIMXRT1062)
+
+include(middleware_freertos-aws_iot_libraries_corejason_MIMXRT1062)
+
+include(middleware_freertos-aws_iot_mqtt_demo_helpers_MIMXRT1062)
 
 include(component_flexspi_nor_flash_adapter_MIMXRT1062)
 
@@ -650,11 +651,7 @@ include(component_nvm_adapter_MIMXRT1062)
 
 include(utilities_misc_utilities_MIMXRT1062)
 
-include(CMSIS_Include_core_cm7_MIMXRT1062)
-
-include(CMSIS_Include_common_MIMXRT1062)
-
-include(CMSIS_Include_dsp_MIMXRT1062)
+include(CMSIS_Include_core_cm_MIMXRT1062)
 
 include(device_MIMXRT1062_system_MIMXRT1062)
 
@@ -666,7 +663,7 @@ include(middleware_freertos-kernel_extension_MIMXRT1062)
 
 include(driver_usdhc_MIMXRT1062)
 
-include(middleware_freertos-aws_iot_common_MIMXRT1062)
+include(middleware_freertos-aws_iot_libraries_c_sdk_standard_common_MIMXRT1062)
 
 include(middleware_maestro_framework_doc_MIMXRT1062)
 
@@ -676,23 +673,31 @@ include(middleware_usb_host_common_header_MIMXRT1062)
 
 include(middleware_usb_host_msd_MIMXRT1062)
 
+include(component_mflash_common_MIMXRT1062)
+
 include(middleware_wifi_wifidriver_MIMXRT1062)
 
 include(middleware_freertos-aws_iot_libraries_3rdparty_mbedtls_utils_MIMXRT1062)
 
-include(middleware_freertos-aws_iot_libraries_abstractions_threading_alt_MIMXRT1062)
+include(middleware_freertos-aws_iot_libraries_3rdparty_mbedtls_config_MIMXRT1062)
 
 include(middleware_freertos-aws_iot_network_manager_MIMXRT1062)
 
 include(middleware_freertos-aws_iot_mqtt_MIMXRT1062)
 
-include(component_mflash_common_MIMXRT1062)
+include(middleware_freertos-aws_iot_libraries_coremqtt_MIMXRT1062)
 
-include(middleware_freertos-aws_iot_c_sdk_standard_serializer_MIMXRT1062)
+include(middleware_freertos-aws_iot_libraries_c_sdk_standard_serializer_MIMXRT1062)
 
 include(component_log_backend_debugconsole_MIMXRT1062)
 
 include(component_log_MIMXRT1062)
+
+include(middleware_freertos-aws_iot_libraries_abstractions_transport_MIMXRT1062)
+
+include(middleware_freertos-aws_iot_libraries_abstractions_backoff_algorithm_MIMXRT1062)
+
+include(middleware_freertos-aws_iot_pkcs11_helpers_MIMXRT1062)
 
 
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--start-group)
@@ -706,252 +711,236 @@ target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE gcc)
 target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE nosys)
 
 if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/cm7f/gcc/libethermind_bt_core.a)
-endif()
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/maestro/libs/cm7f/armgcc/release/libmaestro_streamer.a)
+endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
 
 if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/cm7f/gcc/libethermind_bt_util.a)
-endif()
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/maestro/libs/cm7f/armgcc/release/libmaestro_cci.a)
+endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
 
 if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/cm7f/gcc/libethermind_bt_protocol.a)
-endif()
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/maestro/libs/cm7f/armgcc/release/libmaestro_utils.a)
+endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
+
+if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/maestro/libs/cm7f/armgcc/release/libmp3.a)
+endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
+
+if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/maestro/libs/cm7f/armgcc/release/libopus.a)
+endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
+
+if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/maestro/libs/cm7f/armgcc/release/libogg.a)
+endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
+
+if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/maestro/libs/cm7f/armgcc/release/libsrc48.a)
+endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
+
+if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/maestro/libs/cm7f/armgcc/release/libwav.a)
+endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
 
 if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
     target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/cm7f/gcc/libethermind_bt_a2dp.a)
-endif()
-
-if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/cm7f/gcc/libethermind_sbc_common.a)
-endif()
-
-if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/cm7f/gcc/libethermind_sbc_encoder.a)
-endif()
-
-if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/cm7f/gcc/libethermind_sbc_decoder.a)
-endif()
-
-if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/cm7f/gcc/libethermind_bt_gatt.a)
-endif()
-
-if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/cm7f/gcc/libethermind_bt_bpp.a)
-endif()
-
-if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/cm7f/gcc/libethermind_bt_bip.a)
-endif()
+endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
 
 if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
     target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/cm7f/gcc/libethermind_bt_avrcp.a)
-endif()
+endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
 
 if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/cm7f/gcc/libethermind_bt_ftp.a)
-endif()
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/cm7f/gcc/libethermind_bt_bip.a)
+endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
 
 if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/cm7f/gcc/libethermind_bt_hid.a)
-endif()
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/cm7f/gcc/libethermind_bt_bpp.a)
+endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
+
+if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/cm7f/gcc/libethermind_bt_core.a)
+endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
 
 if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
     target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/cm7f/gcc/libethermind_bt_ctn.a)
-endif()
+endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
 
 if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/cm7f/gcc/libethermind_bt_pbap.a)
-endif()
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/cm7f/gcc/libethermind_bt_ftp.a)
+endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
 
 if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/cm7f/gcc/libethermind_bt_spp.a)
-endif()
-
-if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/cm7f/gcc/libethermind_bt_sap.a)
-endif()
-
-if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/cm7f/gcc/libethermind_bt_map.a)
-endif()
-
-if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/cm7f/gcc/libethermind_bt_opp.a)
-endif()
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/cm7f/gcc/libethermind_bt_gatt.a)
+endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
 
 if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
     target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/cm7f/gcc/libethermind_bt_hfp.a)
-endif()
+endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
 
 if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/maestro/libs/cm7f/gcc/libwavdec.a)
-endif()
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/cm7f/gcc/libethermind_bt_hid.a)
+endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
 
 if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/maestro/libs/cm7f/gcc/libsrc48k.a)
-endif()
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/cm7f/gcc/libethermind_bt_map.a)
+endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
 
 if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/maestro/libs/cm7f/gcc/libosa.a)
-endif()
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/cm7f/gcc/libethermind_bt_opp.a)
+endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
 
 if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/maestro/libs/cm7f/gcc/libcommon.a)
-endif()
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/cm7f/gcc/libethermind_bt_pan.a)
+endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
 
 if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/maestro/libs/cm7f/gcc/libccicontainer.a)
-endif()
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/cm7f/gcc/libethermind_bt_pbap.a)
+endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
 
 if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/maestro/libs/cm7f/gcc/libmp3dec.a)
-endif()
-
-if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/maestro/libs/cm7f/gcc/libogg.a)
-endif()
-
-if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/maestro/libs/cm7f/gcc/libstreamer.a)
-endif()
-
-if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/maestro/libs/cm7f/gcc/libccimeta.a)
-endif()
-
-if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/maestro/libs/cm7f/gcc/libopusfile.a)
-endif()
-
-if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/maestro/libs/cm7f/gcc/libopus.a)
-endif()
-
-if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/cm7f/gcc/libethermind_bt_core.a)
-endif()
-
-if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/cm7f/gcc/libethermind_bt_util.a)
-endif()
-
-if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
     target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/cm7f/gcc/libethermind_bt_protocol.a)
-endif()
+endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
+
+if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/cm7f/gcc/libethermind_bt_sap.a)
+endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
+
+if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/cm7f/gcc/libethermind_bt_spp.a)
+endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
+
+if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/cm7f/gcc/libethermind_bt_util.a)
+endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
+
+if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/cm7f/gcc/libethermind_sbc_common.a)
+endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
+
+if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/cm7f/gcc/libethermind_sbc_decoder.a)
+endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
+
+if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/cm7f/gcc/libethermind_sbc_encoder.a)
+endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
+
+if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/maestro/libs/cm7f/armgcc/release/libmaestro_streamer.a)
+endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
+
+if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/maestro/libs/cm7f/armgcc/release/libmaestro_cci.a)
+endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
+
+if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/maestro/libs/cm7f/armgcc/release/libmaestro_utils.a)
+endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
+
+if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/maestro/libs/cm7f/armgcc/release/libmp3.a)
+endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
+
+if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/maestro/libs/cm7f/armgcc/release/libopus.a)
+endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
+
+if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/maestro/libs/cm7f/armgcc/release/libogg.a)
+endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
+
+if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/maestro/libs/cm7f/armgcc/release/libsrc48.a)
+endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
+
+if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/maestro/libs/cm7f/armgcc/release/libwav.a)
+endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
 
 if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
     target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/cm7f/gcc/libethermind_bt_a2dp.a)
-endif()
-
-if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/cm7f/gcc/libethermind_sbc_common.a)
-endif()
-
-if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/cm7f/gcc/libethermind_sbc_encoder.a)
-endif()
-
-if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/cm7f/gcc/libethermind_sbc_decoder.a)
-endif()
-
-if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/cm7f/gcc/libethermind_bt_gatt.a)
-endif()
-
-if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/cm7f/gcc/libethermind_bt_bpp.a)
-endif()
-
-if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/cm7f/gcc/libethermind_bt_bip.a)
-endif()
+endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
 
 if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
     target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/cm7f/gcc/libethermind_bt_avrcp.a)
-endif()
+endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
 
 if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/cm7f/gcc/libethermind_bt_ftp.a)
-endif()
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/cm7f/gcc/libethermind_bt_bip.a)
+endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
 
 if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/cm7f/gcc/libethermind_bt_hid.a)
-endif()
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/cm7f/gcc/libethermind_bt_bpp.a)
+endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
+
+if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/cm7f/gcc/libethermind_bt_core.a)
+endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
 
 if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
     target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/cm7f/gcc/libethermind_bt_ctn.a)
-endif()
+endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
 
 if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/cm7f/gcc/libethermind_bt_pbap.a)
-endif()
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/cm7f/gcc/libethermind_bt_ftp.a)
+endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
 
 if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/cm7f/gcc/libethermind_bt_spp.a)
-endif()
-
-if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/cm7f/gcc/libethermind_bt_sap.a)
-endif()
-
-if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/cm7f/gcc/libethermind_bt_map.a)
-endif()
-
-if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/cm7f/gcc/libethermind_bt_opp.a)
-endif()
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/cm7f/gcc/libethermind_bt_gatt.a)
+endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
 
 if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
     target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/cm7f/gcc/libethermind_bt_hfp.a)
-endif()
+endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
 
 if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/maestro/libs/cm7f/gcc/libwavdec.a)
-endif()
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/cm7f/gcc/libethermind_bt_hid.a)
+endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
 
 if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/maestro/libs/cm7f/gcc/libsrc48k.a)
-endif()
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/cm7f/gcc/libethermind_bt_map.a)
+endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
 
 if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/maestro/libs/cm7f/gcc/libosa.a)
-endif()
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/cm7f/gcc/libethermind_bt_opp.a)
+endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
 
 if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/maestro/libs/cm7f/gcc/libcommon.a)
-endif()
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/cm7f/gcc/libethermind_bt_pan.a)
+endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
 
 if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/maestro/libs/cm7f/gcc/libccicontainer.a)
-endif()
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/cm7f/gcc/libethermind_bt_pbap.a)
+endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
 
 if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/maestro/libs/cm7f/gcc/libmp3dec.a)
-endif()
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/cm7f/gcc/libethermind_bt_protocol.a)
+endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
 
 if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/maestro/libs/cm7f/gcc/libogg.a)
-endif()
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/cm7f/gcc/libethermind_bt_sap.a)
+endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
 
 if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/maestro/libs/cm7f/gcc/libstreamer.a)
-endif()
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/cm7f/gcc/libethermind_bt_spp.a)
+endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
 
 if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/maestro/libs/cm7f/gcc/libccimeta.a)
-endif()
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/cm7f/gcc/libethermind_bt_util.a)
+endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
 
 if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/maestro/libs/cm7f/gcc/libopusfile.a)
-endif()
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/cm7f/gcc/libethermind_sbc_common.a)
+endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
 
 if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/maestro/libs/cm7f/gcc/libopus.a)
-endif()
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/cm7f/gcc/libethermind_sbc_decoder.a)
+endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
+
+if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/cm7f/gcc/libethermind_sbc_encoder.a)
+endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
 
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--end-group)
 

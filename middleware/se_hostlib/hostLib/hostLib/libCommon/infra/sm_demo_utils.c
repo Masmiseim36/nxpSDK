@@ -3,15 +3,9 @@
  * @author NXP Semiconductors
  * @version 1.0
  * @par License
- * Copyright 2017,2018,2020 NXP
  *
- * This software is owned or controlled by NXP and may only be used
- * strictly in accordance with the applicable license terms.  By expressly
- * accepting such terms or by downloading, installing, activating and/or
- * otherwise using the software, you are agreeing that you have read, and
- * that you agree to comply with and are bound by, such license terms.  If
- * you do not agree to be bound by the applicable license terms, then you
- * may not retain, install, activate or otherwise use the software.
+ * Copyright 2017,2018,2020 NXP
+ * SPDX-License-Identifier: Apache-2.0
  *
  * @par Description
  * Initialize LWIP / Ethernet / DHCP Connection on board
@@ -57,23 +51,43 @@
 #   include "netif/ethernet.h"
 #   include "enet_ethernetif.h"
 #   include "lwip/netifapi.h"
-#   include "fsl_phyksz8081.h"
+#ifdef EXAMPLE_USE_100M_ENET_PORT
+#include "fsl_phyksz8081.h"
+#else
+#include "fsl_phyrtl8211f.h"
+#endif
 #   include "fsl_enet_mdio.h"
 #endif
 
 #if defined (LPC_ENET)
 /* ENET clock frequency. */
+#if defined(CPU_MIMXRT1176DVMAA_cm7)
+#define EXAMPLE_CLOCK_FREQ CLOCK_GetRootClockFreq(kCLOCK_Root_Bus)
+#elif defined(CPU_MIMXRT1062DVL6A)
+#define EXAMPLE_CLOCK_FREQ CLOCK_GetFreq(kCLOCK_IpgClk)
+#else
 #define EXAMPLE_CLOCK_FREQ CLOCK_GetFreq(kCLOCK_CoreSysClk)
-#ifndef EXAMPLE_NETIF_INIT_FN
-/*! @brief Network interface initialization function. */
-#define EXAMPLE_NETIF_INIT_FN ethernetif0_init
-#endif /* EXAMPLE_NETIF_INIT_FN */
-
+#endif // CPU_MIMXRT1176DVMAA_cm7
 /* MDIO operations. */
 #define EXAMPLE_MDIO_OPS enet_ops
 
+#ifdef EXAMPLE_USE_100M_ENET_PORT
+/* Address of PHY interface. */
+#define EXAMPLE_PHY_ADDRESS BOARD_ENET0_PHY_ADDRESS
 /* PHY operations. */
 #define EXAMPLE_PHY_OPS phyksz8081_ops
+/* ENET instance select. */
+#define EXAMPLE_NETIF_INIT_FN ethernetif0_init
+#else
+/* Address of PHY interface. */
+#define EXAMPLE_PHY_ADDRESS   BOARD_ENET1_PHY_ADDRESS
+/* PHY operations. */
+#define EXAMPLE_PHY_OPS       phyrtl8211f_ops
+/* ENET instance select. */
+#define EXAMPLE_NETIF_INIT_FN ethernetif1_init
+#endif // EXAMPLE_USE_100M_ENET_PORT
+
+/* PHY operations. */
 #endif  // (LPC_ENET)
 
 #include "HLSEAPI.h"
@@ -89,20 +103,17 @@
         0x04, 0x12, 0x13, 0xB1, 0x11, 0x90 \
     }
 
-/* Address of PHY interface. */
-#define EXAMPLE_PHY_ADDRESS ((uint32_t)BOARD_ENET0_PHY_ADDRESS)
-
 /* System clock name. */
 #define EXAMPLE_CLOCK_NAME kCLOCK_CoreSysClk
 
 /* Facilitate a simple hash for unique MAC Address based on an input 18 byte UID */
 #define MAC_HASH(N)  \
-    fsl_enet_config0.macAddress[N] = buffer[(N+2)+(5*0)] ^ buffer[(N+2)+(5*1)] ^ buffer[(N+2)+(5*2)]
+    enet_config.macAddress[N] = buffer[(N+2)+(5*0)] ^ buffer[(N+2)+(5*1)] ^ buffer[(N+2)+(5*2)]
 
 /*******************************************************************************
  * Static variables
  ******************************************************************************/
-static struct netif fsl_netif0;
+static struct netif fsl_netif;
 static mdio_handle_t mdioHandle = {.ops = &EXAMPLE_MDIO_OPS};
 static phy_handle_t phyHandle   = {.phyAddr = EXAMPLE_PHY_ADDRESS, .mdioHandle = &mdioHandle, .ops = &EXAMPLE_PHY_OPS};
 
@@ -149,8 +160,8 @@ void BOARD_InitNetwork_MAC(const unsigned char buffer[18])
 #elif defined(LPC_ENET)
 #if FSL_FEATURE_SOC_ENET_COUNT > 0  || FSL_FEATURE_SOC_LPC_ENET_COUNT > 0
 
-    ip4_addr_t fsl_netif0_ipaddr, fsl_netif0_netmask, fsl_netif0_gw;
-    ethernetif_config_t fsl_enet_config0 = {
+    ip4_addr_t netif_ipaddr, netif_netmask, netif_gw;
+    ethernetif_config_t enet_config = {
             .phyHandle  = &phyHandle,
             .macAddress = configMAC_ADDR,
     #if defined(FSL_FEATURE_SOC_LPC_ENET_COUNT) && (FSL_FEATURE_SOC_LPC_ENET_COUNT > 0)
@@ -168,27 +179,26 @@ void BOARD_InitNetwork_MAC(const unsigned char buffer[18])
 
     mdioHandle.resource.csrClock_Hz = EXAMPLE_CLOCK_FREQ;
 
-    IP4_ADDR(&fsl_netif0_ipaddr, 0U, 0U, 0U, 0U);
-    IP4_ADDR(&fsl_netif0_netmask, 0U, 0U, 0U, 0U);
-    IP4_ADDR(&fsl_netif0_gw, 0U, 0U, 0U, 0U);
+    IP4_ADDR(&netif_ipaddr, 0U, 0U, 0U, 0U);
+    IP4_ADDR(&netif_netmask, 0U, 0U, 0U, 0U);
+    IP4_ADDR(&netif_gw, 0U, 0U, 0U, 0U);
 
     LOG_I("Connecting to network\r\n");
     tcpip_init(NULL, NULL);
 
-    netif_add(&fsl_netif0, &fsl_netif0_ipaddr, &fsl_netif0_netmask, &fsl_netif0_gw, &fsl_enet_config0, ethernetif0_init,
-              tcpip_input);
-    netif_set_default(&fsl_netif0);
-    netif_set_up(&fsl_netif0);
+    netif_add(&fsl_netif, &netif_ipaddr, &netif_netmask, &netif_gw, &enet_config, EXAMPLE_NETIF_INIT_FN, tcpip_input);
+    netif_set_default(&fsl_netif);
+    netif_set_up(&fsl_netif);
 //    netifapi_netif_add(&fsl_netif0, &fsl_netif0_ipaddr, &fsl_netif0_netmask, &fsl_netif0_gw, &fsl_enet_config0,
 //                       ethernetif0_init, tcpip_input);
 //    netifapi_netif_set_default(&fsl_netif0);
 //    netifapi_netif_set_up(&fsl_netif0);
 
     LOG_I("Getting IP address from DHCP ...\n");
-    dhcp_start(&fsl_netif0);
+    dhcp_start(&fsl_netif);
 
     struct dhcp *dhcp;
-    dhcp = (struct dhcp *)netif_get_client_data(&fsl_netif0, LWIP_NETIF_CLIENT_DATA_INDEX_DHCP);
+    dhcp = (struct dhcp *)netif_get_client_data(&fsl_netif, LWIP_NETIF_CLIENT_DATA_INDEX_DHCP);
 
     while (dhcp->state != DHCP_STATE_BOUND)
     {
@@ -197,9 +207,9 @@ void BOARD_InitNetwork_MAC(const unsigned char buffer[18])
 
     if (dhcp->state == DHCP_STATE_BOUND)
     {
-        LOG_I("\r\n IPv4 Address     : %u.%u.%u.%u\r\n", ((u8_t *) &fsl_netif0.ip_addr.addr)[0],
-            ((u8_t *) &fsl_netif0.ip_addr.addr)[1], ((u8_t *) &fsl_netif0.ip_addr.addr)[2],
-            ((u8_t *) &fsl_netif0.ip_addr.addr)[3]);
+        LOG_I("\r\n IPv4 Address     : %u.%u.%u.%u\r\n", ((u8_t *) &fsl_netif.ip_addr.addr)[0],
+            ((u8_t *) &fsl_netif.ip_addr.addr)[1], ((u8_t *) &fsl_netif.ip_addr.addr)[2],
+            ((u8_t *) &fsl_netif.ip_addr.addr)[3]);
     }
     LOG_I("DHCP OK\r\n");
 #endif /* FSL_FEATURE_SOC_ENET_COUNT > 0 */
@@ -302,6 +312,7 @@ int GetHandle_GPstorage(HLSE_OBJECT_INDEX index)
 
 #endif
 
+#if defined (LPC_ENET) || defined (LPC_WIFI)
 /*JSON utility function to check equality */
 int8_t jsoneq(const char *json, jsmntok_t *tok, const char *s) {
     if(tok->type == JSMN_STRING) {
@@ -313,5 +324,7 @@ int8_t jsoneq(const char *json, jsmntok_t *tok, const char *s) {
     }
     return -1;
 }
+#endif
 
 #endif /* USE_RTOS */
+

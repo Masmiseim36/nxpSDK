@@ -1,21 +1,19 @@
-if(NOT UTILITY_SHELL_MIMXRT1011_INCLUDED)
-    
-    set(UTILITY_SHELL_MIMXRT1011_INCLUDED true CACHE BOOL "utility_shell component is included.")
+include_guard(GLOBAL)
+message("utility_shell component is included.")
 
-    target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
-        ${CMAKE_CURRENT_LIST_DIR}/fsl_shell.c
-    )
-
-
-    target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
-        ${CMAKE_CURRENT_LIST_DIR}/.
-    )
+target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
+    ${CMAKE_CURRENT_LIST_DIR}/fsl_shell.c
+)
 
 
-    include(utility_debug_console_MIMXRT1011)
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
+    ${CMAKE_CURRENT_LIST_DIR}/.
+)
 
-    include(component_lists_MIMXRT1011)
 
-    include(driver_common_MIMXRT1011)
+include(utility_debug_console_MIMXRT1011)
 
-endif()
+include(component_lists_MIMXRT1011)
+
+include(driver_common_MIMXRT1011)
+

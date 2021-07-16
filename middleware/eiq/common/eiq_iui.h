@@ -16,14 +16,14 @@ extern "C" {
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-  typedef void (*EIQ_IBufferAddrUpdater_t)(uint32_t);
+  typedef void (*EIQ_IBufferAddrUpdater_t)(uint32_t bufferAddr);
   typedef void (*EIQ_IUpdater_t)(void);
 
 /*! @brief Image structure */
 typedef struct
 {
   void (*start)(void);
-  Dims_t (*getResolution)();
+  Dims_t (*getResolution)(void);
   void (*notify)(void);
 } EIQ_IUi_t;
 

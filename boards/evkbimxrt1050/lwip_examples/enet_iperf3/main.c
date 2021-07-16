@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2013 - 2014, Freescale Semiconductor, Inc.
- * Copyright 2016-2020 NXP
+ * Copyright 2016-2021 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -21,10 +21,10 @@
 
 #include "iperf_api.h"
 
-#include "fsl_gpio.h"
-#include "fsl_iomuxc.h"
 #include "fsl_phyksz8081.h"
 #include "fsl_enet_mdio.h"
+#include "fsl_gpio.h"
+#include "fsl_iomuxc.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -45,7 +45,7 @@
 #define EXAMPLE_PHY_OPS phyksz8081_ops
 
 /* ENET clock frequency. */
-#define EXAMPLE_CLOCK_FREQ CLOCK_GetFreq(kCLOCK_CoreSysClk)
+#define EXAMPLE_CLOCK_FREQ CLOCK_GetFreq(kCLOCK_IpgClk)
 
 #define RECV_TIMEOUT_MS 100
 
@@ -71,7 +71,7 @@
 #include "fsl_phy.h"
 #include "lwip/prot/dhcp.h"
 
-#define UDP_RX_BANDWIDTH "0"
+#define UDP_RX_BANDWIDTH "20000000"
 
 #define TASK_MAIN_PRIO (configMAX_PRIORITIES - 2)
 
@@ -892,7 +892,11 @@ int main(void)
     GPIO_WritePinOutput(GPIO1, 9, 1);
 
     iperf_timer = xTimerCreate("iperf_timer", configTICK_RATE_HZ * 12, pdFALSE, (void *)0, callback_time);
-    assert(NULL != iperf_timer);
+    if (iperf_timer == NULL)
+    {
+        PRINTF("Failed to create a timer!\r\n");
+        __BKPT(0);
+    }
 
     result = xTaskCreate(task_main, "main", TASK_MAIN_STACK_SIZE, &iperf_test, TASK_MAIN_PRIO, &task_main_task_handler);
 

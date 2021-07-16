@@ -600,7 +600,7 @@ BOARD_InitArduinoUARTPins:
 - options: {callFromInitBoot: 'true', coreID: core0, enableClock: 'true'}
 - pin_list:
   - {pin_num: J12, peripheral: LPUART3, signal: TX, pin_signal: GPIO_AD_B1_06, software_input_on: no_init, hysteresis_enable: no_init, pull_up_down_config: Pull_Down_100K_Ohm,
-    pull_keeper_select: Keeper, pull_keeper_enable: Enable, open_drain: Disable, speed: MHZ_100}
+    pull_keeper_select: Keeper, pull_keeper_enable: Enable, open_drain: Disable, speed: MHZ_100, drive_strength: R0_3}
   - {pin_num: K12, peripheral: LPUART3, signal: RTS_B, pin_signal: GPIO_AD_B1_05, hysteresis_enable: Disable, pull_up_down_config: Pull_Down_100K_Ohm, pull_keeper_select: Keeper,
     pull_keeper_enable: Enable, open_drain: Disable, speed: MHZ_100}
   - {pin_num: L12, peripheral: LPUART3, signal: CTS_B, pin_signal: GPIO_AD_B1_04, hysteresis_enable: Disable, pull_up_down_config: Pull_Down_100K_Ohm, pull_keeper_select: Keeper,
@@ -653,8 +653,8 @@ void BOARD_InitArduinoUARTPins(void) {
                                                  Hyst. Enable Field: Hysteresis Disabled */
   IOMUXC_SetPinConfig(
       IOMUXC_GPIO_AD_B1_06_LPUART3_TX,        /* GPIO_AD_B1_06 PAD functional properties : */
-      0x10B0U);                               /* Slew Rate Field: Slow Slew Rate
-                                                 Drive Strength Field: R0/6
+      0x1098U);                               /* Slew Rate Field: Slow Slew Rate
+                                                 Drive Strength Field: R0/3
                                                  Speed Field: medium(100MHz)
                                                  Open Drain Enable Field: Open Drain Disabled
                                                  Pull / Keep Enable Field: Pull/Keeper Enabled

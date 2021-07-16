@@ -1,0 +1,677 @@
+$version 10.00
+
+// This is the root component of the entire GUI application.
+$rect <30,60,230,100>
+$output false
+class Waveform : Core::Group
+{
+  $rect <10,290,210,330>
+  inherited property Bounds = <0,0,320,240>;
+
+  $rect <10,330,210,370>
+  inherited method Init()
+  {
+    /* take the initial settings */
+    signal SettingsChanged;
+  }
+
+  $rect <410,390,610,430>
+  inherited property Focus = null;
+
+  // This is a filled rectangle view.
+  $rect <20,20,160,60>
+  object Views::Rectangle Rectangle
+  {
+    preset Bounds = <0,0,320,240>;
+    preset Color = #000000FF;
+  }
+
+  // This is a bitmap frame view.
+  $rect <20,20,160,60>
+  object Views::Frame Frame
+  {
+    preset Bounds = <5,30,175,235>;
+    preset Color = Waveform::ThemeColor;
+    preset Bitmap = Waveform::PanelBorder;
+  }
+
+  // This is a slide gesture handler.
+  $rect <20,20,160,60>
+  object Core::SlideTouchHandler SlideTouchHandler
+  {
+    preset Bounds = <160,0,320,240>;
+    preset SnapNext = <0,210>;
+    preset SlideHorz = false;
+    preset ResetSpace = 50;
+  }
+
+  // This is an outline view to group other views together.
+  $rect <20,20,160,60>
+  object Core::Outline Outline
+  {
+    preset Bounds = <180,30,320,240>;
+    preset SlideHandler = SlideTouchHandler;
+    preset Formation = Core::Formation.TopToBottom;
+  }
+
+  $rect <20,20,160,60>
+  object Waveform::ChannelPanel ChannelPanel1
+  {
+    preset Bounds = <180,30,320,240>;
+    preset Embedded = true;
+    preset Frequency = 100;
+    preset Amplitude = 14;
+    preset OnChanged = SettingsChanged;
+    preset Caption = "Channel 1";
+  }
+
+  $rect <20,20,160,60>
+  object Waveform::ChannelPanel ChannelPanel2
+  {
+    preset Bounds = <320,30,460,240>;
+    preset Embedded = true;
+    preset Frequency = 71;
+    preset Amplitude = 15;
+    preset Waveform = Waveform::WaveformType.Square;
+    preset OnChanged = SettingsChanged;
+    preset Caption = "Channel 2";
+  }
+
+  // The slot method 'SettingsChanged' is called when the user has changed the current \
+  // waveform gernator channel settings.
+  $rect <410,290,610,330>
+  slot SettingsChanged
+  {
+    /* recalculate all coordinates */
+    CalculatePath();
+
+    /* update description of channel 1 */
+    TextCh1.String = "Ch1:\n" + string( ChannelPanel1.Frequency ) + " Hz\n" + string( ChannelPanel1.Amplitude ) + " mV\n";
+
+    if ( ChannelPanel1.Waveform == Waveform::WaveformType.Sinus )
+      TextCh1.String = TextCh1.String + "sine";
+    else if ( ChannelPanel1.Waveform == Waveform::WaveformType.Square )
+      TextCh1.String = TextCh1.String + "square";
+    else if ( ChannelPanel1.Waveform == Waveform::WaveformType.Ramp )
+      TextCh1.String = TextCh1.String + "ramp";
+
+    /* update description of channel 2 */
+    TextCh2.String = "Ch2:\n" + string( ChannelPanel2.Frequency ) + " Hz\n" + string( ChannelPanel2.Amplitude ) + " mV\n";
+
+    if ( ChannelPanel2.Waveform == Waveform::WaveformType.Sinus )
+      TextCh2.String = TextCh2.String + "sine";
+    else if ( ChannelPanel2.Waveform == Waveform::WaveformType.Square )
+      TextCh2.String = TextCh2.String + "square";
+    else if ( ChannelPanel2.Waveform == Waveform::WaveformType.Ramp )
+      TextCh2.String = TextCh2.String + "ramp";
+
+    /* if any noise waveform is selected, we need an continuous update... */
+    RecalcTimer.Enabled = ( ChannelPanel1.Waveform == Waveform::WaveformType.Noise
+                         || ChannelPanel2.Waveform == Waveform::WaveformType.Noise );
+
+
+
+  }
+
+  // This is a timer object to trigger continuous recalculation of coordinates in \
+  // case of a noise waveform.
+  $rect <10,390,210,430>
+  object Core::Timer RecalcTimer
+  {
+    preset OnTrigger = TimerSlot;
+    preset Period = 250;
+  }
+
+  // Slot method to force the recalculation of coordinates in case of a noise waveform.
+  $rect <210,390,410,430>
+  slot TimerSlot
+  {
+    /* just make the mathematics... */
+    CalculatePath();
+  }
+
+  // The main class of the demo contains a Views::StrokePath object to display the \
+  // resulting waveform by adding the signals of channel 1 and 2. The method 'CalculatePath' \
+  // is responsible to calculate the path of the simulated waveform.
+  // The right part of the application contains an Outline object that arranges three \
+  // embedded panels: ChannelPanel1, ChannelPanel2 and InfoPanel. The attached SlideTouchHandler \
+  // makes it possible to shift the panels up and down by a simple up/down slide \
+  // gesture.
+  note legend Note
+  {
+    attr Bounds = <0,450,600,590>;
+  }
+
+  // This is a slot method.
+  $rect <610,330,810,370>
+  slot AnimateFrequency
+  {
+    sender; /* the method is called from the sender object */
+    notifyobservers ^ChannelPanel1.Frequency;
+    postsignal SettingsChanged;
+
+
+  }
+
+  // This is an int32 change effect.
+  $rect <610,290,810,330>
+  object Effects::Int32Effect AutoDemoTimer
+  {
+    preset OnAnimate = AnimateFrequency;
+    preset Symmetric = true;
+    preset CycleDuration = 12000;
+    preset InitialDelay = 0;
+    preset Value2 = 140;
+    preset Value1 = 60;
+    preset Outlet = ^ChannelPanel1.Frequency;
+  }
+
+  // The method 'CalculatePath' contains all the mathematics to calculate the waveform \
+  // path (= all graph coordinates) according the current waveform generator settings.
+  $rect <210,290,410,330>
+  method void CalculatePath()
+  {
+    var float f1 = (float)ChannelPanel1.Frequency;
+    var float a1 = (float)ChannelPanel1.Amplitude / 20.0;
+
+    var float f2 = (float)ChannelPanel2.Frequency;
+    var float a2 = (float)ChannelPanel2.Amplitude / 20.0;
+
+    var float r1 = 0.0;
+    var float r2 = 0.0;
+
+    var float x = 0.0;
+    var float y = 0.0;
+    var float yOffset = (float)StrokePath.Bounds.h / 2.0;
+    var float xFactor = (float)StrokePath.Bounds.w / 4.0;
+    var float yFactor = (float)StrokePath.Bounds.h / 4.0;
+
+    /* clear the path */
+    Path.InitSubPath( 0, 4 * 20 + 2 );
+
+    /* calculate values for four divisions in horizontal direction */
+    while ( x < 4.0 )
+    {
+      /* calculate result of channel 1 - according selected waveform */
+      if ( ChannelPanel1.Waveform == Waveform::WaveformType.Sinus )
+        r1 = math_sin( f1 * x * 360.0 / 100.0) * a1;
+      else if ( ChannelPanel1.Waveform == Waveform::WaveformType.Square )
+        r1 = ((float)((int32)( f1 * x * 2.0 / 100.0 ) & 0x01 ) * 2.0 - 1.0 ) * a1;
+      else if ( ChannelPanel1.Waveform == Waveform::WaveformType.Ramp )
+        r1 =  ((float)((int32)( f1 * x * 1.0 ) % 100 ) / 100.0 * (-2.0) + 1.0 ) * a1;
+      else
+        r1 = (float)math_rand( -100, 100 ) * a1 / 100.0;
+
+      /* calculate result of channel 2 - according selected waveform */
+      if ( ChannelPanel2.Waveform == Waveform::WaveformType.Sinus )
+        r2 = math_sin( f2 * x * 360.0 / 100.0) * a2;
+      else if ( ChannelPanel2.Waveform == Waveform::WaveformType.Square )
+        r2 = ((float)((int32)( f2 * x * 2.0 / 100.0 ) & 0x01 ) * 2.0 - 1.0 ) * a2;
+      else if ( ChannelPanel2.Waveform == Waveform::WaveformType.Ramp )
+        r2 =  ((float)((int32)( f2 * x * 1.0 ) % 100 ) / 100.0 * (-2.0) + 1.0 ) * a2;
+      else
+        r2 = (float)math_rand( -100, 100 ) * a2 / 100.0;
+
+      /* add the sum of both results */
+      y = ( r1 + r2 ) * yFactor + yOffset;
+
+      /* start the path */
+      if ( x == 0.0 )
+        Path.Begin( 0, x * xFactor, y );
+
+      /* add a new line segment to the path */
+      Path.AddLine( 0, x * xFactor, y );
+
+      /* 20 points per division */
+      x = x + 0.05;
+    }
+
+  }
+
+  $rect <20,20,160,60>
+  object Views::Line LineCenter
+  {
+    preset Point2 = <170,135>;
+    preset Point1 = <10,135>;
+    preset Color = #0C0E6EFF;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Line LineTop
+  {
+    preset Point2 = <170,66>;
+    preset Point1 = <10,66>;
+    preset Color = #0C0E6EFF;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Line LineBotom
+  {
+    preset Point2 = <170,204>;
+    preset Point1 = <10,204>;
+    preset Color = #0C0E6EFF;
+  }
+
+  $rect <210,330,410,370>
+  object Graphics::Path Path;
+
+  $rect <20,20,160,60>
+  object Views::StrokePath StrokePath
+  {
+    preset Layout = Core::Layout[AlignToBottom, AlignToLeft, AlignToRight, AlignToTop, ResizeHorz, ResizeVert];
+    preset Bounds = <10,35,170,230>;
+    preset Width = 2.5;
+    preset Path = Path;
+  }
+
+  // How to use vector graphics?
+  // https://doc.embedded-wizard.de/stroked-path-view
+  // https://doc.embedded-wizard.de/path-data
+  note legend Note8
+  {
+    attr Bounds = <350,170,730,250>;
+  }
+
+  // This is an ordinary text view.
+  $rect <20,20,160,60>
+  object Views::Text TextCh1
+  {
+    preset Bounds = <10,140,90,230>;
+    preset Alignment = Views::TextAlignment[AlignHorzLeft, AlignVertBottom];
+    preset String = "Ch1:";
+    preset Font = Resources::FontSmall;
+    preset Color = Waveform::ThemeColor;
+  }
+
+  // This is an ordinary text view.
+  $rect <20,20,160,60>
+  object Views::Text TextCh2
+  {
+    preset Bounds = <85,140,170,230>;
+    preset Alignment = Views::TextAlignment[AlignHorzRight, AlignVertBottom];
+    preset String = "Ch1:";
+    preset Font = Resources::FontSmall;
+    preset Color = Waveform::ThemeColor;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Text Caption
+  {
+    preset Bounds = <5,0,300,30>;
+    preset Alignment = Views::TextAlignment[AlignHorzLeft, AlignVertCenter];
+    preset String = "Waveform Generator Demo";
+    preset Font = Resources::FontMedium;
+    preset Color = Waveform::ThemeColor;
+  }
+}
+
+// The 'ChannelPanel' class implements a complete UI components for making all user \
+// settings of a waveform generator channel.
+$rect <30,180,230,220>
+$output false
+class ChannelPanel : Core::Group
+{
+  $rect <0,270,200,310>
+  inherited property Bounds = <0,0,140,210>;
+
+  // This is a bitmap frame view.
+  $rect <20,20,160,60>
+  object Views::Frame Frame
+  {
+    preset Bounds = <5,20,135,205>;
+    preset Color = Waveform::ThemeColor;
+    preset Bitmap = Waveform::PanelBorder;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Text CaptionText
+  {
+    preset Bounds = <5,0,120,30>;
+    preset Alignment = Views::TextAlignment[AlignHorzLeft, AlignVertCenter];
+    preset String = "Text";
+    preset Font = Resources::FontMedium;
+    preset Color = Waveform::ThemeColor;
+  }
+
+  $rect <20,20,160,60>
+  object WidgetSet::HorizontalSlider SliderFrequency
+  {
+    preset Bounds = <17,20,122,70>;
+    preset OnChange = OnSlider;
+    preset Outlet = ^Frequency;
+    preset MaxValue = 200;
+    preset MinValue = 10;
+    preset Appearance = WidgetSet::HorizontalSlider_Small;
+  }
+
+  $rect <20,20,160,60>
+  object WidgetSet::HorizontalSlider SliderAmplitude
+  {
+    preset Bounds = <17,75,122,125>;
+    preset OnChange = OnSlider;
+    preset Outlet = ^Amplitude;
+    preset MaxValue = 50;
+    preset Appearance = WidgetSet::HorizontalSlider_Small;
+  }
+
+  // This is an ordinary text view.
+  $rect <20,20,160,60>
+  object Views::Text Text1
+  {
+    preset Bounds = <17,58,133,78>;
+    preset Alignment = Views::TextAlignment[AlignHorzLeft, AlignVertCenter];
+    preset String = "Frequency [Hz]";
+    preset Font = Resources::FontSmall;
+    preset Color = Waveform::ThemeColor;
+  }
+
+  // This is an ordinary text view.
+  $rect <20,20,160,60>
+  object Views::Text Text2
+  {
+    preset Bounds = <17,113,143,133>;
+    preset Alignment = Views::TextAlignment[AlignHorzLeft, AlignVertCenter];
+    preset String = "Amplitude [mV]";
+    preset Font = Resources::FontSmall;
+    preset Color = Waveform::ThemeColor;
+  }
+
+  // The property 'Frequency' stores the current frequency of the simulated waveform \
+  // generator channel.
+  $rect <200,50,400,90>
+  property int32 Frequency = 100;
+
+  // The property 'Amplitude' stores the current amplitude of the simulated waveform \
+  // generator channel.
+  $rect <200,90,400,130>
+  property int32 Amplitude = 10;
+
+  // The property 'Waveform' stores the currently selected waveform of the simulated \
+  // waveform generator channel.
+  $rect <200,270,400,310>
+  property Waveform::WaveformType Waveform = Waveform::WaveformType.Sinus;
+
+  // Slot method, called when the user changed a slider value.
+  $rect <400,70,600,110>
+  slot OnSlider
+  {
+    postsignal OnChanged;
+
+  }
+
+  // Slot method, called when the user pressed the corresponding waveform selection \
+  // button.
+  $rect <200,180,400,220>
+  slot OnSinus
+  {
+    /* select new waveform */
+    Waveform = Waveform::WaveformType.Sinus;
+
+    postsignal OnChanged;
+
+  }
+
+  // The slot method 'OnChanged' is called each time the user has changed one of \
+  // the current waveform generator channel settings.
+  $rect <400,270,600,310>
+  property slot OnChanged = null;
+
+  $rect <20,20,160,60>
+  object WidgetSet::RadioButton ButtonSinus
+  {
+    preset Bounds = <15,140,45,200>;
+    preset Selected = true;
+    preset OnSelect = OnSinus;
+    preset IconOnFrameActive = 0;
+    preset IconOnFrameFocused = 0;
+    preset IconOnFrameDisabled = 0;
+    preset IconOnFrameDefault = 0;
+    preset IconOffFrameActive = 0;
+    preset IconOffFrameFocused = 0;
+    preset IconOffFrameDisabled = 0;
+    preset IconOffFrameDefault = 0;
+    preset Icon = Waveform::WaveformIcons;
+    preset Appearance = CheckBox;
+  }
+
+  $rect <20,20,160,60>
+  object WidgetSet::RadioButton ButtonSquare
+  {
+    preset Bounds = <55,140,85,200>;
+    preset OnSelect = OnSquare;
+    preset IconOnFrameActive = 1;
+    preset IconOnFrameFocused = 1;
+    preset IconOnFrameDisabled = 1;
+    preset IconOnFrameDefault = 1;
+    preset IconOffFrameActive = 1;
+    preset IconOffFrameFocused = 1;
+    preset IconOffFrameDisabled = 1;
+    preset IconOffFrameDefault = 1;
+    preset Icon = Waveform::WaveformIcons;
+    preset Appearance = CheckBox;
+  }
+
+  $rect <20,20,160,60>
+  object WidgetSet::RadioButton ButtonRamp
+  {
+    preset Bounds = <95,140,125,200>;
+    preset OnSelect = OnRamp;
+    preset IconOnFrameActive = 2;
+    preset IconOnFrameFocused = 2;
+    preset IconOnFrameDisabled = 2;
+    preset IconOnFrameDefault = 2;
+    preset IconOffFrameActive = 2;
+    preset IconOffFrameFocused = 2;
+    preset IconOffFrameDisabled = 2;
+    preset IconOffFrameDefault = 2;
+    preset Icon = Waveform::WaveformIcons;
+    preset Appearance = CheckBox;
+  }
+
+  $rect <400,0,600,40>
+  onset Caption
+  {
+    /* store the given value */
+    pure Caption = value;
+
+    /* and assign it to the text item */
+    CaptionText.String = value;
+  }
+
+  // The property 'Caption' stores the text to display within the item.
+  $rect <200,0,400,40>
+  property string Caption = "Channel";
+
+  // Slot method, called when the user pressed the corresponding waveform selection \
+  // button.
+  $rect <200,220,400,260>
+  slot OnSquare
+  {
+    /* select new waveform */
+    Waveform = Waveform::WaveformType.Square;
+
+    postsignal OnChanged;
+
+  }
+
+  // Slot method, called when the user pressed the corresponding waveform selection \
+  // button.
+  $rect <400,180,600,220>
+  slot OnRamp
+  {
+    /* select new waveform */
+    Waveform = Waveform::WaveformType.Ramp;
+
+    postsignal OnChanged;
+
+  }
+
+  $rect <200,310,400,350>
+  onset Waveform
+  {
+    pure Waveform = value;
+
+    /* set the buttons according given value */
+    ButtonSinus.Selected  = value == Waveform::WaveformType.Sinus; 
+    ButtonSquare.Selected = value == Waveform::WaveformType.Square; 
+    ButtonRamp.Selected   = value == Waveform::WaveformType.Ramp; 
+
+  }
+
+  // The ChannelPannel class contains all widgets to choose the current signal source \
+  // and to configure the waveform paramters.
+  // Each time the user has changed the waveform settings, a signal is sent to the \
+  // slot method 'OnChanged'.
+  note legend Note
+  {
+    attr Bounds = <0,360,600,460>;
+  }
+
+  // This object provides a customization for the 'toggle' widget (WidgetSet::ToggleButton) \
+  // to show it as 'checkbox' with an icon below the checkbox.
+  $rect <200,140,400,180>
+  object WidgetSet::RadioButtonConfig CheckBox
+  {
+    preset LabelOnColorActive = #6C6E70FF;
+    preset LabelOnColorFocused = #6C6E70FF;
+    preset LabelOnColorDisabled = #A8ABABFF;
+    preset LabelOnColorDefault = #6C6E70FF;
+    preset LabelOffColorActive = #6C6E70FF;
+    preset LabelOffColorFocused = #6C6E70FF;
+    preset LabelOffColorDisabled = #A8ABABFF;
+    preset LabelOffColorDefault = #6C6E70FF;
+    preset LabelMarginLeft = 34;
+    preset IconOnTintActive = Waveform::ThemeColor;
+    preset IconOnTintFocused = Waveform::ThemeColor;
+    preset IconOnTintDisabled = Waveform::ThemeColor;
+    preset IconOnTintDefault = Waveform::ThemeColor;
+    preset IconOffTintActive = Waveform::ThemeColor;
+    preset IconOffTintFocused = Waveform::ThemeColor;
+    preset IconOffTintDisabled = Waveform::ThemeColor;
+    preset IconOffTintDefault = Waveform::ThemeColor;
+    preset IconMarginTop = 30;
+    preset LabelAlignment = Views::TextAlignment[AlignHorzLeft, AlignVertCenter];
+    preset LabelOnFont = Resources::FontSmall;
+    preset LabelOffFont = Resources::FontSmall;
+    preset IconAlignment = Views::ImageAlignment[AlignHorzCenter, AlignVertTop];
+    preset FaceLayout = Core::Layout[AlignToTop];
+    preset FaceOnFrameActive = 7;
+    preset FaceOnFrameFocused = 5;
+    preset FaceOnFrameDisabled = 1;
+    preset FaceOnFrameDefault = 3;
+    preset FaceOnActive = WidgetSet::CheckBoxSmall;
+    preset FaceOnFocused = WidgetSet::CheckBoxSmall;
+    preset FaceOnDisabled = WidgetSet::CheckBoxSmall;
+    preset FaceOnDefault = WidgetSet::CheckBoxSmall;
+    preset FaceOffFrameActive = 6;
+    preset FaceOffFrameFocused = 4;
+    preset FaceOffFrameDisabled = 0;
+    preset FaceOffFrameDefault = 2;
+    preset FaceOffActive = WidgetSet::CheckBoxSmall;
+    preset FaceOffFocused = WidgetSet::CheckBoxSmall;
+    preset FaceOffDisabled = WidgetSet::CheckBoxSmall;
+    preset FaceOffDefault = WidgetSet::CheckBoxSmall;
+    preset WidgetMinSize = <26,26>;
+  }
+}
+
+// Bitmap resource containing the border (frame) of all panels used within the demo.
+$rect <280,180,480,220>
+$output false
+resource Resources::Bitmap PanelBorder
+{
+  attr bitmapfile FileName;
+  attr alphafile AlphaName = .\Res\Border.png;
+  attr framesize FrameSize;
+  attr framedelay FrameDelay;
+}
+
+// Enumeration definition of supported waveforms.
+$rect <280,60,480,100>
+$output false
+enum WaveformType
+{
+  $rect <10,10,150,50>
+  item Ground;
+
+  $rect <160,10,300,50>
+  item Sinus;
+
+  $rect <310,10,450,50>
+  item Square;
+
+  $rect <10,60,150,100>
+  item Ramp;
+
+  $rect <160,60,300,100>
+  item Pulse;
+
+  $rect <310,60,450,100>
+  item Noise;
+}
+
+// Bitmap resource containing the icons for the waveform selction buttons.
+$rect <280,260,480,300>
+$output false
+resource Resources::Bitmap WaveformIcons
+{
+  attr bitmapfile FileName;
+  attr alphafile AlphaName = .\Res\WaveformIcons.png;
+  attr framesize FrameSize = <24,24>;
+  attr framedelay FrameDelay;
+}
+
+// Bitmap resource to create a soft fade-out within scrollable channel list.
+$rect <280,220,480,260>
+$output false
+resource Resources::Bitmap Fader
+{
+  attr bitmapfile FileName;
+  attr alphafile AlphaName = .\Res\Fader.png;
+  attr framesize FrameSize;
+  attr framedelay FrameDelay;
+}
+
+// Panels
+note group Note2
+{
+  attr Bounds = <10,130,250,320>;
+}
+
+// Type definition
+note group Note3
+{
+  attr Bounds = <260,10,500,120>;
+}
+
+// Waveform class
+note group Note4
+{
+  attr Bounds = <10,10,250,120>;
+}
+
+// Bitmaps
+note group Note5
+{
+  attr Bounds = <260,130,500,320>;
+}
+
+// The sample application 'WaveformGenerator' is focused on the calculation and presentation \
+// of dynamic data as graph diagramm by using the Charts::Graph class.
+// 
+// Within this example, two data sources ("Channel1" and "Channel2") can be configured \
+// to provide a sine, square, ramp or noise signal with a certain amplitude and frequency. \
+// These two signals are then added and used to calculate the list of coordinates \
+// for the graph. Each time the signal has changed, a complete set of coordinates \
+// is calulated and the graph is updated.
+// 
+// This waveform generator demo and the different assets are designed for a screen \
+// size of 320x240 pixels.
+note legend Note
+{
+  attr Bounds = <10,330,500,610>;
+}
+
+$rect <30,260,230,300>
+$output false
+const color ThemeColor = #B2D339FF;

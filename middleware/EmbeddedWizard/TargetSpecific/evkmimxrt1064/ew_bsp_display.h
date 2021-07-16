@@ -37,27 +37,120 @@
 #endif
 
 
-/*******************************************************************************
-* FUNCTION:
-*   EwBspConfigDisplay
+/* flag to indicate normal display update with full access to frame buffer */
+#define EW_BSP_DISPLAY_UPDATE_NORMAL         0x00000000
+
+/* flag to indicate partial frame buffer update in case of a synchroneous single
+   buffer - update is divided in stripes (fields) defined by the display driver */
+#define EW_BSP_DISPLAY_UPDATE_PARTIAL        0x00000001
+
+/* flag to indicate display update by using a scratch-pad buffer - update is done
+   in subareas that fit into the scratch-pad buffer */
+#define EW_BSP_DISPLAY_UPDATE_SCRATCHPAD     0x00000002
+
+
+/******************************************************************************
+* TYPE:
+*   XDisplayInfo
 *
 * DESCRIPTION:
-*   Configures the display hardware.
+*   The structure XDisplayInfo describes the attributes and current configuration
+*   of the display. The interpretation and usage of the members may depend on the
+*   underlying system and the selected framebuffer integration scenario.
+*
+* ELEMENTS:
+*   FrameBuffer    - Pointer to the framebuffer memory. In case of double-buffering
+*     it refers to the first framebuffer (not the currently active front-buffer).
+*     If the display is updated from a scrach-pad buffer, the pointer refers to
+*     the scratch-pad buffer memory.
+*   DoubleBuffer   - Pointer to the second framebuffer or scratch-pad buffer in
+*     case of double-buffering.
+*   BufferWidth    - Width of the framebuffer(s) / scratch-pad buffer(s) in pixel.
+*   BufferHeight   - Height of the framebuffer(s) / scratch-pad buffer(s) in pixel.
+*   DisplayWidth   - Width of the display in pixel.
+*   DisplayHeight  - Height of the display in pixel.
+*   UpdateMode     - The display update mode (normal, partial, scratch-pad).
+*   Context        - Optional pointer to a target specific struct.
+*
+******************************************************************************/
+typedef struct
+{
+  void* FrameBuffer;
+  void* DoubleBuffer;
+  int   BufferWidth;
+  int   BufferHeight;
+  int   DisplayWidth;
+  int   DisplayHeight;
+  int   UpdateMode;
+  void* Context;
+} XDisplayInfo;
+
+
+/*******************************************************************************
+* FUNCTION:
+*   EwBspDisplayInit
+*
+* DESCRIPTION:
+*   The function EwBspDisplayInit initializes the display hardware and returns
+*   the display parameter.
 *
 * ARGUMENTS:
-*   aWidth   - Width of the framebuffer in pixel.
-*   aHeight  - Height of the framebuffer in pixel.
-*   aAddress - Startaddress of the framebuffer.
+*   aDisplayInfo - Display info data structure.
+*
+* RETURN VALUE:
+*   Returns 1 if successful, 0 otherwise.
+*
+*******************************************************************************/
+int EwBspDisplayInit
+(
+  XDisplayInfo*               aDisplayInfo
+);
+
+
+/*******************************************************************************
+* FUNCTION:
+*   EwBspDisplayDone
+*
+* DESCRIPTION:
+*   The function EwBspDisplayDone deinitializes the display hardware.
+*
+* ARGUMENTS:
+*   None
 *
 * RETURN VALUE:
 *   None
 *
 *******************************************************************************/
-void EwBspConfigDisplay
+void EwBspDisplayDone
 (
-  int                         aWidth,
-  int                         aHeight,
-  void*                       aAddress
+  void
+);
+
+
+/*******************************************************************************
+* FUNCTION:
+*   EwBspDisplayGetUpdateArea
+*
+* DESCRIPTION:
+*   The function EwBspDisplayGetUpdateArea returns the next update area
+*   depending on the selected display mode:
+*   In case of a synchroneous single-buffer, the function has to return the
+*   the rectangular areas that correspond to the horizontal stripes (fields)
+*   of the framebuffer.
+*   In case of a scratch-pad buffer, the function has to return the subareas
+*   that fit into the provided update rectangle.
+*   During each display update, this function is called until it returns 0.
+*
+* ARGUMENTS:
+*   aUpdateRect - Rectangular area which should be updated (redrawn).
+*
+* RETURN VALUE:
+*   Returns 1 if a further update area can be provided, 0 otherwise.
+*
+*******************************************************************************/
+int EwBspDisplayGetUpdateArea
+(
+  XRect* aUpdateRect
 );
 
 
@@ -66,8 +159,14 @@ void EwBspConfigDisplay
 *   EwBspDisplayWaitForCompletion
 *
 * DESCRIPTION:
-*   The function EwBspDisplayWaitForCompletion returns as soon as the LCD update
-*   has been completed.
+*   The function EwBspDisplayWaitForCompletion is called from the Graphics Engine
+*   to ensure that all pending activities of the display system are completed, so
+*   that the rendering of the next frame can start.
+*   In case of a double-buffering system, the function has to wait until the
+*   V-sync has occured and the pending buffer is used by the display controller.
+*   In case of an external display controller, the function has to wait until
+*   the transfer (update) of the graphics data has been completed and there are
+*   no pending buffers.
 *
 * ARGUMENTS:
 *   None
@@ -84,57 +183,45 @@ void EwBspDisplayWaitForCompletion
 
 /*******************************************************************************
 * FUNCTION:
-*   EwBspSyncOnDisplayLine
+*   EwBspDisplayCommitBuffer
 *
 * DESCRIPTION:
-*   The function EwBspSyncOnDisplayLine returns as soon as the display is updating
-*   the requested line number.
+*   The function EwBspDisplayCommitBuffer is called from the Graphics Engine
+*   when the rendering of a certain buffer has been completed.
+*   The type of buffer depends on the selected framebuffer concept.
+*   If the display is running in a double-buffering mode, the function is called
+*   after each buffer update in order to change the currently active framebuffer
+*   address. Changing the framebuffer address should be synchronized with V-sync.
+*   If the system is using an external graphics controller, this function is
+*   responsible to start the transfer of the framebuffer content.
 *
 * ARGUMENTS:
-*   aLine - Number of the display line to be reached by LTDC
+*   aAddress - Address of the framebuffer to be shown on the display.
+*   aX,
+*   aY       - Origin of the area which has been updated by the Graphics Engine.
+*   aWidth,
+*   aHeight  - Size of the area which has been updated by the Graphics Engine.
 *
 * RETURN VALUE:
 *   None
 *
 *******************************************************************************/
-void EwBspSyncOnDisplayLine
+void EwBspDisplayCommitBuffer
 (
-  int                         aLine
+  void*                       aAddress,
+  int                         aX,
+  int                         aY,
+  int                         aWidth,
+  int                         aHeight
 );
 
 
 /*******************************************************************************
 * FUNCTION:
-*   EwBspSetFramebufferAddress
+*   EwBspDisplaySetClut
 *
 * DESCRIPTION:
-*   The function EwBspSetFramebufferAddress is called from the Graphics Engine
-*   in order to change the currently active framebuffer address. If the display
-*   is running in a double-buffering mode, the function is called after each
-*   screen update.
-*   Changing the framebuffer address should be synchronized with V-sync.
-*   In case of double-buffering, the function has to wait and return after
-*   the V-sync was detected.
-*
-* ARGUMENTS:
-*   aAddress - New address of the framebuffer to be shown on the display.
-*
-* RETURN VALUE:
-*   None
-*
-*******************************************************************************/
-void EwBspSetFramebufferAddress
-(
-  unsigned long               aAddress
-);
-
-
-/*******************************************************************************
-* FUNCTION:
-*   EwBspSetFramebufferClut
-*
-* DESCRIPTION:
-*   The function EwBspSetFramebufferClut is called from the Graphics Engine
+*   The function EwBspDisplaySetClut is called from the Graphics Engine
 *   in order to update the hardware CLUT of the current framebuffer.
 *   The function is only called when the color format of the framebuffer is
 *   Index8 or LumA44.
@@ -146,7 +233,7 @@ void EwBspSetFramebufferAddress
 *   None
 *
 *******************************************************************************/
-void EwBspSetFramebufferClut
+void EwBspDisplaySetClut
 (
   unsigned long*              aClut
 );

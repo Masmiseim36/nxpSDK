@@ -19,10 +19,10 @@
 ********************************************************************************
 *
 * DESCRIPTION:
-*   This file is part of the interface (glue layer) between an Embedded Wizard 
+*   This file is part of the interface (glue layer) between an Embedded Wizard
 *   generated UI application and the board support package (BSP) of a dedicated
 *   target.
-*   This template is responsible to initialize the touch driver of the display 
+*   This template is responsible to initialize the touch driver of the display
 *   hardware and to receive the touch events for the UI application.
 *
 *******************************************************************************/
@@ -37,12 +37,46 @@
 #endif
 
 
-/*******************************************************************************
-* FUNCTION:
-*   EwBspConfigTouch
+/* flag to indicate begin of a touch cycle for a certain finger (event down) */
+#define EW_BSP_TOUCH_DOWN               1
+
+/* flag to indicate movement within a touch cycle for a certain finger (event move) */
+#define EW_BSP_TOUCH_MOVE               2
+
+/* flag to indicate end of a touch cycle for a certain finger (event up) */
+#define EW_BSP_TOUCH_UP                 3
+
+
+/******************************************************************************
+* TYPE:
+*   XTouchEvent
 *
 * DESCRIPTION:
-*   Configure the touch driver.
+*   The structure XTouchEvent describes the touch position and touch state of a
+*   single finger.
+*
+* ELEMENTS:
+*   XPos           - Horizontal position of the touch event.
+*   YPos           - Vertical position of the touch event.
+*   Finger         - Number of the finger (0...9).
+*   State          - State within the touch cycle (down - move - up).
+*
+******************************************************************************/
+typedef struct
+{
+  int   XPos;
+  int   YPos;
+  int   Finger;
+  int   State;
+} XTouchEvent;
+
+
+/*******************************************************************************
+* FUNCTION:
+*   EwBspTouchInit
+*
+* DESCRIPTION:
+*   Initializes the touch driver.
 *
 * ARGUMENTS:
 *   aWidth  - Width of the toucharea (framebuffer) in pixel.
@@ -52,8 +86,8 @@
 *   None
 *
 *******************************************************************************/
-void EwBspConfigTouch
-( 
+void EwBspTouchInit
+(
   int                         aWidth,
   int                         aHeight
 );
@@ -61,23 +95,67 @@ void EwBspConfigTouch
 
 /*******************************************************************************
 * FUNCTION:
-*   EwBspGetTouchPosition
+*   EwBspTouchDone
 *
 * DESCRIPTION:
-*   The function EwBspGetTouchPosition reads the current touch position from the
-*   touch driver and returns the current position and status. The orientation
-*   of the touch positions is adjusted to match GUI coordinates.
+*   Terminates the touch driver.
 *
 * ARGUMENTS:
-*   aPos - Pointer to XPoint structure to return the current position.
+*   None
 *
 * RETURN VALUE:
-*   Returns 1 if a touch event is detected, otherwise 0.
+*   None
 *
 *******************************************************************************/
-int EwBspGetTouchPosition
+void EwBspTouchDone
 (
-  XPoint*                     aPos
+  void
+);
+
+
+/*******************************************************************************
+* FUNCTION:
+*   EwBspTouchGetEvents
+*
+* DESCRIPTION:
+*   The function EwBspTouchGetEvents reads the current touch positions from the
+*   touch driver and returns the current touch position and touch status of the
+*   different fingers. The returned number of touch events indicates the number
+*   of XTouchEvent that contain position and status information.
+*   The orientation of the touch positions is adjusted to match GUI coordinates.
+*   If the hardware supports only single touch, the finger number is always 0.
+*
+* ARGUMENTS:
+*   aTouchEvent - Pointer to return array of XTouchEvent.
+*
+* RETURN VALUE:
+*   Returns the number of detected touch events, otherwise 0.
+*
+*******************************************************************************/
+int EwBspTouchGetEvents
+(
+  XTouchEvent**               aTouchEvent
+);
+
+
+/*******************************************************************************
+* FUNCTION:
+*   EwBspTouchEventHandler
+*
+* DESCRIPTION:
+*   The function EwBspInOutEventHandler is called from the touch screen driver
+*   in case of a touch event.
+*
+* ARGUMENTS:
+*   aEventId - An optional target specific event ID.
+*
+* RETURN VALUE:
+*   None.
+*
+*******************************************************************************/
+void EwBspTouchEventHandler
+(
+  int aEventId
 );
 
 

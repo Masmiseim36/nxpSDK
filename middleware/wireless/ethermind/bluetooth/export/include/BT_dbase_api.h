@@ -39,106 +39,106 @@
  * \{
  * Describes Constants defined by the module.
  */
-#define DB_RECORD_ACTIVE           1
-#define DB_RECORD_INACTIVE         0
+#define DB_RECORD_ACTIVE           1U
+#define DB_RECORD_INACTIVE         0U
 
 /* SDP Server Record Handle */
-#define SDP_SERVER_RECORD_HANDLE                0x00000000
+#define SDP_SERVER_RECORD_HANDLE                0x00000000U
 
 /* Start of other valid SDP Record Handles */
-#define SDP_START_OF_VALID_RECORD_HANDLE        0x00010000
+#define SDP_START_OF_VALID_RECORD_HANDLE        0x00010000U
 
 /* PnP Info Attribute IDs */
-#define PNP_INFO_SPECIFICATION_ID_ATTR_ID       0x0200
-#define PNP_INFO_VENDOR_ID_ATTR_ID              0x0201
-#define PNP_INFO_PRODUCT_ID_ATTR_ID             0x0202
-#define PNP_INFO_VERSION_ATTRIBUTE_ATTR_ID      0x0203
-#define PNP_INFO_PRIMARY_RECORD_ATTR_ID         0x0204
-#define PNP_INFO_VENDOR_ID_SOURCE_ATTR_ID       0x0205
+#define PNP_INFO_SPECIFICATION_ID_ATTR_ID       0x0200U
+#define PNP_INFO_VENDOR_ID_ATTR_ID              0x0201U
+#define PNP_INFO_PRODUCT_ID_ATTR_ID             0x0202U
+#define PNP_INFO_VERSION_ATTRIBUTE_ATTR_ID      0x0203U
+#define PNP_INFO_PRIMARY_RECORD_ATTR_ID         0x0204U
+#define PNP_INFO_VENDOR_ID_SOURCE_ATTR_ID       0x0205U
 
 
-#define PNP_INFO_BASE_SERVICE_ID                (0x0620 | BASE_SERVICE_ID)
+#define PNP_INFO_BASE_SERVICE_ID                (0x0620U | BASE_SERVICE_ID)
 
 /* Attribute Identifier Codes Definitions */
-#define SERVICE_RECORD_HANDLE                   0x0000
-#define SERVICE_CLASS_ID_LIST                   0x0001
-#define SERVICE_RECORD_STATE                    0x0002
-#define SERVICE_ID                              0x0003
-#define PROTOCOL_DESC_LIST                      0x0004
-#define BROWSE_GROUP_LIST                       0x0005
-#define LANG_BASE_ATTR_ID_LIST                  0x0006
-#define SERVICE_INFO_TIME_TO_LIVE               0x0007
-#define SERVICE_AVAILABILITY                    0x0008
-#define BLUETOOTH_PROFILE_DESC_LIST             0x0009
-#define DOCUMENTATION_URL                       0x000A
-#define CLIENT_EXECUTABLE_URL                   0x000B
-#define ICON_URL                                0x000C
-#define ADDITIONAL_PROT_DESC_LIST_ID            0x000D
+#define SERVICE_RECORD_HANDLE                   0x0000U
+#define SERVICE_CLASS_ID_LIST                   0x0001U
+#define SERVICE_RECORD_STATE                    0x0002U
+#define SERVICE_ID                              0x0003U
+#define PROTOCOL_DESC_LIST                      0x0004U
+#define BROWSE_GROUP_LIST                       0x0005U
+#define LANG_BASE_ATTR_ID_LIST                  0x0006U
+#define SERVICE_INFO_TIME_TO_LIVE               0x0007U
+#define SERVICE_AVAILABILITY                    0x0008U
+#define BLUETOOTH_PROFILE_DESC_LIST             0x0009U
+#define DOCUMENTATION_URL                       0x000AU
+#define CLIENT_EXECUTABLE_URL                   0x000BU
+#define ICON_URL                                0x000CU
+#define ADDITIONAL_PROT_DESC_LIST_ID            0x000DU
 
-#define VERSION_NO_LIST                         0x0200
-#define SERVICE_DATABASE_STATE                  0x0201
-#define GROUP_ID                                0x0200
-#define SUPPORTED_FEATURES                      0x0200
+#define VERSION_NO_LIST                         0x0200U
+#define SERVICE_DATABASE_STATE                  0x0201U
+#define GROUP_ID                                0x0200U
+#define SUPPORTED_FEATURES                      0x0200U
 
-#define REMOTE_AUDIO_VOL_CTRL                   0x0302
-#define EXTERNAL_NETWORK                        0x0301
-#define SERVICE_VERSION                         0x0300
-#define SUPPORTED_DATA_STORES_LIST              0x0301
-#define SUPPORTED_FORMATS_LIST                  0x0303
-#define FAX_1_CLASS_SUPPORT                     0x0302
-#define FAX_2_0_CLASS_SUPPORT                   0x0303
-#define FAX_2_CLASS_SUPPORT                     0x0304
-#define AUDIO_FEEDBACK_SUPPORT                  0x0305
+#define REMOTE_AUDIO_VOL_CTRL                   0x0302U
+#define EXTERNAL_NETWORK                        0x0301U
+#define SERVICE_VERSION                         0x0300U
+#define SUPPORTED_DATA_STORES_LIST              0x0301U
+#define SUPPORTED_FORMATS_LIST                  0x0303U
+#define FAX_1_CLASS_SUPPORT                     0x0302U
+#define FAX_2_0_CLASS_SUPPORT                   0x0303U
+#define FAX_2_CLASS_SUPPORT                     0x0304U
+#define AUDIO_FEEDBACK_SUPPORT                  0x0305U
 
-#define SDP_ATTR_ID_SUPPORTED_CAPABILITIES      0x0310
-#define SDP_ATTR_ID_SUPPORTED_FUNCTIONS         0x0312
-#define SDP_ATTR_ID_TOTAL_IMG_DATA_CAPACITY     0x0313
-#define SUPPORTED_REPOSITORIES                  0x0314
+#define SDP_ATTR_ID_SUPPORTED_CAPABILITIES      0x0310U
+#define SDP_ATTR_ID_SUPPORTED_FUNCTIONS         0x0312U
+#define SDP_ATTR_ID_TOTAL_IMG_DATA_CAPACITY     0x0313U
+#define SUPPORTED_REPOSITORIES                  0x0314U
 
-#define MAS_INSTANCE_ID                         0x0315
-#define SUPPORTED_MESSAGE_TYPES                 0x0316
+#define MAS_INSTANCE_ID                         0x0315U
+#define SUPPORTED_MESSAGE_TYPES                 0x0316U
 
 /* MPS Attribute IDs */
-#define MPS_MPSD_SCENARIOS_ATTR_ID              0x0200
-#define MPS_MPMD_SCENARIOS_ATTR_ID              0x0201
-#define MPS_SUPP_PROF_PROT_DEP_ATTR_ID          0x0202
+#define MPS_MPSD_SCENARIOS_ATTR_ID              0x0200U
+#define MPS_MPMD_SCENARIOS_ATTR_ID              0x0201U
+#define MPS_SUPP_PROF_PROT_DEP_ATTR_ID          0x0202U
 
-#define GOEP_L2CAP_PSM_ATTR_ID                  0x0200
+#define GOEP_L2CAP_PSM_ATTR_ID                  0x0200U
 
 /*
  * Below attributes form offsets from the base attr id that is specied
  * under the values of Lang_base_attr_id_list (attrid: 0x0006).
  */
-#define LANG_BASE_ATTR_ID                        0x0100
-#define SERVICE_NAME_ATTR_ID                    ( 0x0100 + 0 )
-#define SERVICE_DESC_ATTR_ID                    ( 0x0100 + 1 )
-#define PROVIDER_NAME_ATTR_ID                   ( 0x0100 + 2 )
+#define LANG_BASE_ATTR_ID                        0x0100U
+#define SERVICE_NAME_ATTR_ID                    ( 0x0100U + 0U )
+#define SERVICE_DESC_ATTR_ID                    ( 0x0100U + 1U )
+#define PROVIDER_NAME_ATTR_ID                   ( 0x0100U + 2U )
 
 /* BPP Attribute Ids */
-#define PRINTER_STATUS_CHANNEL                  0x0305
-#define RUI_JOB_CHANNEL                         0x0374
+#define PRINTER_STATUS_CHANNEL                  0x0305U
+#define RUI_JOB_CHANNEL                         0x0374U
 /**
  * @name BPP Attribute Ids
  */
 /*@{*/
-#define BPP_DOCUMENT_FORMATS_SUPPORTED_ATTR_ID              0x0350
-#define BPP_CHARACTER_REPERTOIRES_SUPPORTED_ATTR_ID         0x0352
-#define BPP_XHTML_PRINT_IMG_FORMATS_SUPPORTED_ATTR_ID       0x0354
-#define BPP_COLOR_SUPPORTED_ATTR_ID                         0x0356
-#define BPP_1284ID_ATTR_ID                                  0x0358
-#define BPP_PRINTER_NAME_ATTR_ID                            0x035A
-#define BPP_PRINTER_LOCATION_ATTR_ID                        0x035C
-#define BPP_DUPLEX_SUPPORTED_ATTR_ID                        0x035E
-#define BPP_MEDIA_TYPES_SUPPORTED_ATTR_ID                   0x0360
-#define BPP_MAX_MEDIA_WIDTH_ATTR_ID                         0x0362
-#define BPP_MAX_MEDIA_LENGTH_ATTR_ID                        0x0364
-#define BPP_ENHANCED_LAYOUT_SUPPORTED_ATTR_ID               0x0366
-#define BPP_RUI_FORMATS_SUPPORTED_ATTR_ID                   0x0368
-#define BPP_REF_PRINTING_RUI_SUPPORTED_ATTR_ID              0x0370
-#define BPP_DIRECT_PRINTING_RUI_SUPPORTED_ATTR_ID           0x0372
-#define BPP_REF_PRINTING_TOP_URL_ATTR_ID                    0x0374
-#define BPP_DIRECT_PRINTING_TOP_URL_ATTR_ID                 0x0376
-#define BPP_PRINTER_ADMIN_RUI_TOP_URL_ATTR_ID               0x0378
+#define BPP_DOCUMENT_FORMATS_SUPPORTED_ATTR_ID              0x0350U
+#define BPP_CHARACTER_REPERTOIRES_SUPPORTED_ATTR_ID         0x0352U
+#define BPP_XHTML_PRINT_IMG_FORMATS_SUPPORTED_ATTR_ID       0x0354U
+#define BPP_COLOR_SUPPORTED_ATTR_ID                         0x0356U
+#define BPP_1284ID_ATTR_ID                                  0x0358U
+#define BPP_PRINTER_NAME_ATTR_ID                            0x035AU
+#define BPP_PRINTER_LOCATION_ATTR_ID                        0x035CU
+#define BPP_DUPLEX_SUPPORTED_ATTR_ID                        0x035EU
+#define BPP_MEDIA_TYPES_SUPPORTED_ATTR_ID                   0x0360U
+#define BPP_MAX_MEDIA_WIDTH_ATTR_ID                         0x0362U
+#define BPP_MAX_MEDIA_LENGTH_ATTR_ID                        0x0364U
+#define BPP_ENHANCED_LAYOUT_SUPPORTED_ATTR_ID               0x0366U
+#define BPP_RUI_FORMATS_SUPPORTED_ATTR_ID                   0x0368U
+#define BPP_REF_PRINTING_RUI_SUPPORTED_ATTR_ID              0x0370U
+#define BPP_DIRECT_PRINTING_RUI_SUPPORTED_ATTR_ID           0x0372U
+#define BPP_REF_PRINTING_TOP_URL_ATTR_ID                    0x0374U
+#define BPP_DIRECT_PRINTING_TOP_URL_ATTR_ID                 0x0376U
+#define BPP_PRINTER_ADMIN_RUI_TOP_URL_ATTR_ID               0x0378U
 /*@}*/
 
 
@@ -147,9 +147,9 @@
  * @name HCRP Profile Attribute IDs
  */
 /*@{*/
-#define HCRP_1284ID_ATTR_ID                                 0x0300
-#define HCRP_DEVICE_NAME_ATTR_ID                            0x0302
-#define HCRP_FRIENDLY_NAME_ATTR_ID                          0x0304
+#define HCRP_1284ID_ATTR_ID                                 0x0300U
+#define HCRP_DEVICE_NAME_ATTR_ID                            0x0302U
+#define HCRP_FRIENDLY_NAME_ATTR_ID                          0x0304U
 /*@}*/
 
 /* HID Profile Attribute IDs */
@@ -157,23 +157,23 @@
  * @name HID Profile Attribute IDs
  */
 /*@{*/
-#define HID_DEVICE_RELEASE_NUMBER_ATTR_ID                   0x0200
-#define HID_PARSER_VERSION_ATTR_ID                          0x0201
-#define HID_DEVICE_SUBCLASS_ATTR_ID                         0x0202
-#define HID_COUNTRY_CODE_ATTR_ID                            0x0203
-#define HID_VIRTUAL_CABLE_ATTR_ID                           0x0204
-#define HID_RECONNECT_INITIATE_ATTR_ID                      0x0205
-#define HID_DESCRIPTOR_LIST_ATTR_ID                         0x0206
-#define HID_LANGID_BASE_LIST_ATTR_ID                        0x0207
-#define HID_SDP_DISABLE_ATTR_ID                             0x0208
-#define HID_BATTERY_POWER_ATTR_ID                           0x0209
-#define HID_REMOTE_WAKE_ATTR_ID                             0x020A
-#define HID_PROFILE_VERSION_ATTR_ID                         0x020B
-#define HID_SUPERVISION_TIMEOUT_ATTR_ID                     0x020C
-#define HID_NORMALLY_CONNECTABLE_ATTR_ID                    0x020D
-#define HID_BOOT_DEVICE_ATTR_ID                             0x020E
-#define HID_SSR_HOST_MAX_LATENCY_ATTR_ID                    0x020F
-#define HID_SSR_HOST_MIN_TIMEOUT_ATTR_ID                    0x0210
+#define HID_DEVICE_RELEASE_NUMBER_ATTR_ID                   0x0200U
+#define HID_PARSER_VERSION_ATTR_ID                          0x0201U
+#define HID_DEVICE_SUBCLASS_ATTR_ID                         0x0202U
+#define HID_COUNTRY_CODE_ATTR_ID                            0x0203U
+#define HID_VIRTUAL_CABLE_ATTR_ID                           0x0204U
+#define HID_RECONNECT_INITIATE_ATTR_ID                      0x0205U
+#define HID_DESCRIPTOR_LIST_ATTR_ID                         0x0206U
+#define HID_LANGID_BASE_LIST_ATTR_ID                        0x0207U
+#define HID_SDP_DISABLE_ATTR_ID                             0x0208U
+#define HID_BATTERY_POWER_ATTR_ID                           0x0209U
+#define HID_REMOTE_WAKE_ATTR_ID                             0x020AU
+#define HID_PROFILE_VERSION_ATTR_ID                         0x020BU
+#define HID_SUPERVISION_TIMEOUT_ATTR_ID                     0x020CU
+#define HID_NORMALLY_CONNECTABLE_ATTR_ID                    0x020DU
+#define HID_BOOT_DEVICE_ATTR_ID                             0x020EU
+#define HID_SSR_HOST_MAX_LATENCY_ATTR_ID                    0x020FU
+#define HID_SSR_HOST_MIN_TIMEOUT_ATTR_ID                    0x0210U
 /*@}*/
 
 /* PAN Profile Attribute Ids */
@@ -181,10 +181,10 @@
  * @name PAN Profile Attribute Ids
  */
 /*@{*/
-#define IP_SUBNET_ID                                        0x0200
-#define SECURITY_DESC_ID                                    0x030A
-#define NET_ACCESS_TYPE_ID                                  0x030B
-#define MAX_NET_ACCESS_RATE                                 0x030C
+#define IP_SUBNET_ID                                        0x0200U
+#define SECURITY_DESC_ID                                    0x030AU
+#define NET_ACCESS_TYPE_ID                                  0x030BU
+#define MAX_NET_ACCESS_RATE                                 0x030CU
 /*@}*/
 
 /* HFP &Imaging Attribute IDs */
@@ -192,258 +192,258 @@
  * @name HFP &Imaging Attribute IDs
  */
 /*@{*/
-#define SUPPORTED_FEATURES_ATTR_ID                          0x0311
+#define SUPPORTED_FEATURES_ATTR_ID                          0x0311U
 /*@}*/
 /* HFP Attrib IDs*/
 /**
  * @name HFP &Imaging Attribute IDs
  */
 /*@{*/
-#define HFP_NETWORK_ATTR_ID                                 0x0301
+#define HFP_NETWORK_ATTR_ID                                 0x0301U
 /*@}*/
 /* Few more constants evolve during Lang_base_attr_id_list */
 /**
  * @name Lang base Attribute IDs
  */
 /*@{*/
-#define LANG_ISO639_ID                                      0x656E
-#define LANG_CHAR_ENC_IANA_ID                               0x006A
+#define LANG_ISO639_ID                                      0x656EU
+#define LANG_CHAR_ENC_IANA_ID                               0x006AU
 /*@}*/
 /* PBAP Attribute IDs */
 /**
  * @name PBAP Attribute IDs
  */
 /*@{*/
-#define PBAP_SUPPORTED_REPOSITORIES                         0x0314
-#define PBAP_SUPPORTED_FEATURES_ATTR_ID                     0x0317
+#define PBAP_SUPPORTED_REPOSITORIES                         0x0314U
+#define PBAP_SUPPORTED_FEATURES_ATTR_ID                     0x0317U
 /*@}*/
 /* MAP Attribute IDs */
 /**
  * @name MAP Attribute IDs
  */
 /*@{*/
-#define MAP_MAS_INSTANCE_ID_ATTR_ID                         0x0315
-#define MAP_SUPPORTED_MSG_TYPES_ATTR_ID                     0x0316
-#define MAP_SUPPORTED_FEATURES_ATTR_ID                      0x0317
+#define MAP_MAS_INSTANCE_ID_ATTR_ID                         0x0315U
+#define MAP_SUPPORTED_MSG_TYPES_ATTR_ID                     0x0316U
+#define MAP_SUPPORTED_FEATURES_ATTR_ID                      0x0317U
 /*@}*/
 /* CTN Attribute IDs */
 /**
  * @name CTN Attribute IDs
  */
 /*@{*/
-#define CTN_CAS_INSTANCE_ID_ATTR_ID                         0x0315
-#define CTN_SUPPORTED_FEATURES_ATTR_ID                      0x0317
+#define CTN_CAS_INSTANCE_ID_ATTR_ID                         0x0315U
+#define CTN_SUPPORTED_FEATURES_ATTR_ID                      0x0317U
 /*@}*/
 /* MPS Attribute IDs */
 /**
  * @name CTN Attribute IDs
  */
 /*@{*/
-#define MPS_MPSD_SCENARIOS_ATTR_ID                          0x0200
-#define MPS_MPMD_SCENARIOS_ATTR_ID                          0x0201
-#define MPS_SUPP_PROF_PROT_DEP_ATTR_ID                      0x0202
+#define MPS_MPSD_SCENARIOS_ATTR_ID                          0x0200U
+#define MPS_MPMD_SCENARIOS_ATTR_ID                          0x0201U
+#define MPS_SUPP_PROF_PROT_DEP_ATTR_ID                      0x0202U
 /*@}*/
 /* 32 bit Protocol UUID's definitions */
 /**
  * @name 32 bit Protocol UUID's definitions
  */
 /*@{*/
-#define SDP_UUID                                0x00000001
-#define RFCOMM_UUID                             0x00000003
-#define TCSBIN_UUID                             0x00000005
-#define ATT_PROTO_UUID                          0x00000007
-#define L2CAP_UUID                              0x00000100
-#define IP_UUID                                 0x00000009
-#define UDP_UUID                                0x00000002
-#define TCP_UUID                                0x00000004
-#define TCSAT_UUID                              0x00000006
-#define OBEX_UUID                               0x00000008
-#define FTP_UUID                                0x0000000A
-#define HTTP_UUID                               0x0000000C
-#define WSP_UUID                                0x0000000E
+#define SDP_UUID                                0x00000001U
+#define RFCOMM_UUID                             0x00000003U
+#define TCSBIN_UUID                             0x00000005U
+#define ATT_PROTO_UUID                          0x00000007U
+#define L2CAP_UUID                              0x00000100U
+#define IP_UUID                                 0x00000009U
+#define UDP_UUID                                0x00000002U
+#define TCP_UUID                                0x00000004U
+#define TCSAT_UUID                              0x00000006U
+#define OBEX_UUID                               0x00000008U
+#define FTP_UUID                                0x0000000AU
+#define HTTP_UUID                               0x0000000CU
+#define WSP_UUID                                0x0000000EU
 /*@}*/
-#define ROOT_ID                                 0x00001002
+#define ROOT_ID                                 0x00001002U
 
 /* Service Class UUID's definitions */
 /**
  * @name Service Class UUID's definitions
  */
 /*@{*/
-#define SDPSERVER_SERVICECLASS_UUID             0x00001000
-#define BROWSEGROUPDESC_SERVICECLASS_UUID       0x00001001
-#define PUBLICBROWSEGROUP_UUID                  0x00001002
-#define SERIALPORT_UUID                         0x00001101
-#define LANACCESS_USINGPPP_UUID                 0x00001102
-#define DIALUP_NETWORKING_UUID                  0x00001103
-#define IRMCSYNC_UUID                           0x00001104
-#define OBEXOBJECT_PUSH_UUID                    0x00001105
-#define OBEXFILETRANSFER_UUID                   0x00001106
-#define IRMCSYNC_COMMAND_UUID                   0x00001107
-#define HEADSET_UUID                            0x00001108
-#define CORDLESS_TELEPHONY_UUID                 0x00001109
-#define INTERCOM_UUID                           0x00001110
-#define FAX_UUID                                0x00001111
-#define HEADSET_AUDIOGATEWAY_UUID               0x00001112
-#define PNP_INFO_UUID                           0x00001200
-#define GENERIC_NETWORKING_UUID                 0x00001201
-#define GENERIC_FILETRANSFER_UUID               0x00001202
-#define GENERIC_AUDIO_UUID                      0x00001203
-#define GENERIC_TELEPHONY_UUID                  0x00001204
-#define HEADSET_HS_UUID                         0x00001131
+#define SDPSERVER_SERVICECLASS_UUID             0x00001000U
+#define BROWSEGROUPDESC_SERVICECLASS_UUID       0x00001001U
+#define PUBLICBROWSEGROUP_UUID                  0x00001002U
+#define SERIALPORT_UUID                         0x00001101U
+#define LANACCESS_USINGPPP_UUID                 0x00001102U
+#define DIALUP_NETWORKING_UUID                  0x00001103U
+#define IRMCSYNC_UUID                           0x00001104U
+#define OBEXOBJECT_PUSH_UUID                    0x00001105U
+#define OBEXFILETRANSFER_UUID                   0x00001106U
+#define IRMCSYNC_COMMAND_UUID                   0x00001107U
+#define HEADSET_UUID                            0x00001108U
+#define CORDLESS_TELEPHONY_UUID                 0x00001109U
+#define INTERCOM_UUID                           0x00001110U
+#define FAX_UUID                                0x00001111U
+#define HEADSET_AUDIOGATEWAY_UUID               0x00001112U
+#define PNP_INFO_UUID                           0x00001200U
+#define GENERIC_NETWORKING_UUID                 0x00001201U
+#define GENERIC_FILETRANSFER_UUID               0x00001202U
+#define GENERIC_AUDIO_UUID                      0x00001203U
+#define GENERIC_TELEPHONY_UUID                  0x00001204U
+#define HEADSET_HS_UUID                         0x00001131U
 /*@}*/
 /* PAN UUIDs */
 /**
  * @name PAN UUIDs
  */
 /*@{*/
-#define BNEP_UUID                               0x0000000F
-#define PANU_UUID                               0x00001115
-#define NETWORK_ACCESS_POINT_UUID               0x00001116
-#define GROUP_NETWORK_UUID                      0x00001117
+#define BNEP_UUID                               0x0000000FU
+#define PANU_UUID                               0x00001115U
+#define NETWORK_ACCESS_POINT_UUID               0x00001116U
+#define GROUP_NETWORK_UUID                      0x00001117U
 /*@}*/
 /* BPP UUIDs */
 /**
  * @name BPP UUIDs
  */
 /*@{*/
-#define BPP_UUID                                0x00001122
-#define BPP_DIRECT_PRINTING_UUID                0x00001118
-#define BPP_REFERENCE_PRINTING_UUID             0x00001119
-#define BPP_DIRECT_PRINT_REF_OBJ_SERVICE_UUID   0x00001120
-#define BPP_REFLECTED_UI_UUID                   0x00001121
-#define BPP_PRINTING_STATUS_UUID                0x00001123
+#define BPP_UUID                                0x00001122U
+#define BPP_DIRECT_PRINTING_UUID                0x00001118U
+#define BPP_REFERENCE_PRINTING_UUID             0x00001119U
+#define BPP_DIRECT_PRINT_REF_OBJ_SERVICE_UUID   0x00001120U
+#define BPP_REFLECTED_UI_UUID                   0x00001121U
+#define BPP_PRINTING_STATUS_UUID                0x00001123U
 /*@}*/
 /* Imaging UUIDs */
 /**
  * @name Imaging UUIDs
  */
 /*@{*/
-#define IMAGING_UUID                            0x0000111A
-#define IMAGING_RESPONDER_UUID                  0x0000111B
-#define IMAGING_AUTOMATIC_ARCHIVE_UUID          0x0000111C
-#define IMAGING_REFERENCED_OBJECTS_UUID         0x0000111D
+#define IMAGING_UUID                            0x0000111AU
+#define IMAGING_RESPONDER_UUID                  0x0000111BU
+#define IMAGING_AUTOMATIC_ARCHIVE_UUID          0x0000111CU
+#define IMAGING_REFERENCED_OBJECTS_UUID         0x0000111DU
 /*@}*/
 /* HID Profile UUIDs */
 /**
  * @name HID Profile UUIDs
  */
 /*@{*/
-#define HIDP_UUID                               0x00000011
-#define HID_SERVICE_UUID                        0x00001124
+#define HIDP_UUID                               0x00000011U
+#define HID_SERVICE_UUID                        0x00001124U
 /*@}*/
 /* HCRP UUIDs */
 /**
  * @name HCRP UUIDs
  */
 /*@{*/
-#define HCRP_CONTROL_CH_UUID                    0x00000012
-#define HCRP_DATA_CH_UUID                       0x00000014
-#define HCRP_NOTIFY_CH_UUID                     0x00000016
-#define HCRP_UUID                               0x00001125
-#define HCRP_PRINT_UUID                         0x00001126
-#define HCRP_SCAN_UUID                          0x00001127
+#define HCRP_CONTROL_CH_UUID                    0x00000012U
+#define HCRP_DATA_CH_UUID                       0x00000014U
+#define HCRP_NOTIFY_CH_UUID                     0x00000016U
+#define HCRP_UUID                               0x00001125U
+#define HCRP_PRINT_UUID                         0x00001126U
+#define HCRP_SCAN_UUID                          0x00001127U
 /*@}*/
 /* HFP HFU/AG UUIDs */
 /**
  * @name  HFP HFU/AG UUIDs
  */
 /*@{*/
-#define HFP_HFU_HANDS_FREE_UUID                 0x0000111E
-#define HFP_AG_AUDIO_GATEWAY_UUID               0x0000111F
-#define HFP_GENERIC_AUDIO                       0x00001203
+#define HFP_HFU_HANDS_FREE_UUID                 0x0000111EU
+#define HFP_AG_AUDIO_GATEWAY_UUID               0x0000111FU
+#define HFP_GENERIC_AUDIO                       0x00001203U
 /*@}*/
 /* AV Protocol UUIDs */
 /**
  * @name  HFP HFU/AG UUIDs
  */
 /*@{*/
-#define AVCTP_UUID                              0x00000017
-#define AVDTP_UUID                              0x00000019
+#define AVCTP_UUID                              0x00000017U
+#define AVDTP_UUID                              0x00000019U
 /*@}*/
 /* A2DP UUIDs */
 /**
  * @name  HFP HFU/AG UUIDs
  */
 /*@{*/
-#define A2DP_UUID                               0x0000110D
-#define A2DP_SOURCE_UUID                        0x0000110A
-#define A2DP_SINK_UUID                          0x0000110B
+#define A2DP_UUID                               0x0000110DU
+#define A2DP_SOURCE_UUID                        0x0000110AU
+#define A2DP_SINK_UUID                          0x0000110BU
 /*@}*/
 /* AVRCP UUIDs */
 /**
  * @name  AVRCP UUIDs
  */
 /*@{*/
-#define AVRCP_TARGET_UUID                       0x0000110C
-#define AVRCP_UUID                              0x0000110E
-#define AVRCP_CONTROLLER_UUID                   0x0000110F
+#define AVRCP_TARGET_UUID                       0x0000110CU
+#define AVRCP_UUID                              0x0000110EU
+#define AVRCP_CONTROLLER_UUID                   0x0000110FU
 /*@}*/
 /* UDIP UUIDs */
 /**
  * @name  UDIP UUIDs
  */
 /*@{*/
-#define UDI_UE_UUID                             0x0000112A
-#define UDI_TE_UUID                             0x0000112B
+#define UDI_UE_UUID                             0x0000112AU
+#define UDI_TE_UUID                             0x0000112BU
 /*@}*/
 /* PHONEBOOK UUIDs */
 /**
  * @name  PHONEBOOK UUIDs
  */
 /*@{*/
-#define PHONEBOOK_PCE_UUID                      0x0000112E
-#define PHONEBOOK_PSE_UUID                      0x0000112F
-#define PHONEBOOK_UUID                          0x00001130
+#define PHONEBOOK_PCE_UUID                      0x0000112EU
+#define PHONEBOOK_PSE_UUID                      0x0000112FU
+#define PHONEBOOK_UUID                          0x00001130U
 /*@}*/
 /* SIM Access Profile UUID */
 /**
  * @name  SIM Access Profile UUIDs
  */
 /*@{*/
-#define SIM_ACCESS_UUID                         0x0000112D
+#define SIM_ACCESS_UUID                         0x0000112DU
 /*@}*/
 /* MCAP UUIDs */
 /**
  * @name  MCAP UUIDs
  */
 /*@{*/
-#define MCAP_CONTROL_CHANNEL_UUID               0x0000001E
-#define MCAP_DATA_CHANNEL_UUID                  0x0000001F
+#define MCAP_CONTROL_CHANNEL_UUID               0x0000001EU
+#define MCAP_DATA_CHANNEL_UUID                  0x0000001FU
 /*@}*/
 /* HDP UUIDs */
 /**
  * @name  HDP UUIDs
  */
 /*@{*/
-#define HDP_UUID                                0x00001400
-#define HDP_SOURCE_UUID                         0x00001401
-#define HDP_SINK_UUID                           0x00001402
+#define HDP_UUID                                0x00001400U
+#define HDP_SOURCE_UUID                         0x00001401U
+#define HDP_SINK_UUID                           0x00001402U
 /*@}*/
 /* MAP UUID */
 /**
  * @name  MAP UUID
  */
 /*@{*/
-#define MAP_MAS_UUID                            0x00001132
-#define MAP_MNS_UUID                            0x00001133
-#define MAP_UUID                                0x00001134
+#define MAP_MAS_UUID                            0x00001132U
+#define MAP_MNS_UUID                            0x00001133U
+#define MAP_UUID                                0x00001134U
 /*@}*/
 /* GNSS UUID */
 /**
  * @name   GNSS UUID
  */
 /*@{*/
-#define GNSS_UUID                               0x00001135
-#define GNSS_SERVER_UUID                        0x00001136
+#define GNSS_UUID                               0x00001135U
+#define GNSS_SERVER_UUID                        0x00001136U
 /*@}*/
 /* CTN UUID */
 /**
  * @name   CTN UUID
  */
 /*@{*/
-#define CTN_CAS_UUID                            0x0000113C
-#define CTN_CNS_UUID                            0x0000113D
-#define CTN_UUID                                0x0000113E
+#define CTN_CAS_UUID                            0x0000113CU
+#define CTN_CNS_UUID                            0x0000113DU
+#define CTN_UUID                                0x0000113EU
 /*@}*/
 
 /* New Defines for SDP headers */
@@ -451,17 +451,17 @@
  * @name   New Defines for SDP headers
  */
 /*@{*/
-#define DB_2BYTE_UUID_HEADER                    0x19
-#define DB_4BYTE_UUID_HEADER                    0x1A
-#define DB_16BYTE_UUID_HEADER                   0x1C
-#define DB_DATA_ELEM_ALT_HEADER                 0x36
-#define DB_DATA_ELEM_SEQ_HEADER                 0x35
-#define DB_4BYTE_INT_HEADER                     0x0A
-#define DB_2BYTE_INT_HEADER                     0x09
-#define DB_1BYTE_INT_HEADER                     0x08
-#define DB_URL_STR_HEADER                       0x45
-#define DB_TEXT_STR_HEADER                      0x25
-#define DB_BOOLEAN_HEADER                       0x28
+#define DB_2BYTE_UUID_HEADER                    0x19U
+#define DB_4BYTE_UUID_HEADER                    0x1AU
+#define DB_16BYTE_UUID_HEADER                   0x1CU
+#define DB_DATA_ELEM_ALT_HEADER                 0x36U
+#define DB_DATA_ELEM_SEQ_HEADER                 0x35U
+#define DB_4BYTE_INT_HEADER                     0x0AU
+#define DB_2BYTE_INT_HEADER                     0x09U
+#define DB_1BYTE_INT_HEADER                     0x08U
+#define DB_URL_STR_HEADER                       0x45U
+#define DB_TEXT_STR_HEADER                      0x25U
+#define DB_BOOLEAN_HEADER                       0x28U
 /*@}*/
 /*
  * All Service IDs for the profiles. Profiles can use a range of xxx0 to
@@ -472,37 +472,37 @@
  * @name   All Service IDs for the profiles.
  */
 /*@{*/
-#define BASE_SERVICE_ID               0xA000
+#define BASE_SERVICE_ID               0xA000U
 
-#define GAP_BASE_SERVICE_ID          (0x0500 | BASE_SERVICE_ID)
-#define SDAP_BASE_SERVICE_ID         (0x0510 | BASE_SERVICE_ID)
-#define CTP_BASE_SERVICE_ID          (0x0520 | BASE_SERVICE_ID)
-#define ICP_BASE_SERVICE_ID          (0x0530 | BASE_SERVICE_ID)
-#define SPP_BASE_SERVICE_ID          (0x0540 | BASE_SERVICE_ID)
-#define HEADSET_BASE_SERVICE_ID      (0x0550 | BASE_SERVICE_ID)
-#define DUNP_BASE_SERVICE_ID         (0x0560 | BASE_SERVICE_ID)
-#define FAX_BASE_SERVICE_ID          (0x0570 | BASE_SERVICE_ID)
-#define LAP_BASE_SERVICE_ID          (0x0580 | BASE_SERVICE_ID)
-#define GOBEX_BASE_SERVICE_ID        (0x0590 | BASE_SERVICE_ID)
-#define OPP_BASE_SERVICE_ID          (0x05A0 | BASE_SERVICE_ID)
-#define FTP_BASE_SERVICE_ID          (0x05B0 | BASE_SERVICE_ID)
-#define SYNC_BASE_SERVICE_ID         (0x05C0 | BASE_SERVICE_ID)
-#define HCRP_BASE_SERVICE_ID         (0x05D0 | BASE_SERVICE_ID)
-#define HID_BASE_SERVICE_ID          (0x05E0 | BASE_SERVICE_ID)
-#define HFP_BASE_SERVICE_ID          (0x05F0 | BASE_SERVICE_ID)
-#define PAN_BASE_SERVICE_ID          (0x0600 | BASE_SERVICE_ID)
-#define A2DP_BASE_SERVICE_ID         (0x0610 | BASE_SERVICE_ID)
+#define GAP_BASE_SERVICE_ID          (0x0500U | BASE_SERVICE_ID)
+#define SDAP_BASE_SERVICE_ID         (0x0510U | BASE_SERVICE_ID)
+#define CTP_BASE_SERVICE_ID          (0x0520U | BASE_SERVICE_ID)
+#define ICP_BASE_SERVICE_ID          (0x0530U | BASE_SERVICE_ID)
+#define SPP_BASE_SERVICE_ID          (0x0540U | BASE_SERVICE_ID)
+#define HEADSET_BASE_SERVICE_ID      (0x0550U | BASE_SERVICE_ID)
+#define DUNP_BASE_SERVICE_ID         (0x0560U | BASE_SERVICE_ID)
+#define FAX_BASE_SERVICE_ID          (0x0570U | BASE_SERVICE_ID)
+#define LAP_BASE_SERVICE_ID          (0x0580U | BASE_SERVICE_ID)
+#define GOBEX_BASE_SERVICE_ID        (0x0590U | BASE_SERVICE_ID)
+#define OPP_BASE_SERVICE_ID          (0x05A0U | BASE_SERVICE_ID)
+#define FTP_BASE_SERVICE_ID          (0x05B0U | BASE_SERVICE_ID)
+#define SYNC_BASE_SERVICE_ID         (0x05C0U | BASE_SERVICE_ID)
+#define HCRP_BASE_SERVICE_ID         (0x05D0U | BASE_SERVICE_ID)
+#define HID_BASE_SERVICE_ID          (0x05E0U | BASE_SERVICE_ID)
+#define HFP_BASE_SERVICE_ID          (0x05F0U | BASE_SERVICE_ID)
+#define PAN_BASE_SERVICE_ID          (0x0600U | BASE_SERVICE_ID)
+#define A2DP_BASE_SERVICE_ID         (0x0610U | BASE_SERVICE_ID)
 
-#define MCM_BASE_SERVICE_ID          (0x0800 | BASE_SERVICE_ID)
-#define BPP_BASE_SERVICE_ID          (0x0900 | BASE_SERVICE_ID)
+#define MCM_BASE_SERVICE_ID          (0x0800U | BASE_SERVICE_ID)
+#define BPP_BASE_SERVICE_ID          (0x0900U | BASE_SERVICE_ID)
 /*@}*/
 /* ----------- Global structures */
 /* --------------------- Enumerators Declarations section ---*/
 enum attr_type
 {
-    DB_NIL = 0,
-    DB_UNSIGNED_INT = 1,
-    DB_SIGNED_2COM_INT = 2,
+    DB_NIL = 0U,
+    DB_UNSIGNED_INT = 1U,
+    DB_SIGNED_2COM_INT = 2U,
     DB_UUID,
     DB_TEXT_STR,
     DB_BOOLEAN,
@@ -516,26 +516,26 @@ enum attr_type
  * @name   Constant Definitions of DB Record
  */
 /*@{*/
-#define DB_RECORD_A2DP_SINK                          0x80
-#define DB_RECORD_A2DP_SOURCE                        0x81
-#define DB_RECORD_AVRCP_TARGET                       0x82
-#define DB_RECORD_AVRCP_CONTROLLER                   0x83
-#define DB_RECORD_RO                                 0x84
-#define DB_RECORD_ARCHIVED_OBJECTS                   0x85
-#define DB_RECORD_BIP                                0x86
-#define DB_RECORD_BPP                                0x87
-#define DB_RECORD_BASIC_PRINTING_REFERENCED_OBJECTS  0x88
-#define DB_RECORD_FTP                                0x89
-#define DB_RECORD_MAP_MCE                            0x8A
-#define DB_RECORD_MAP_MSE                            0x8B
-#define DB_RECORD_OPP                                0x8C
-#define DB_RECORD_PBAP_PCE                           0x8D
-#define DB_RECORD_PBAP_PSE                           0x8E
-#define DB_RECORD_SAP                                0x8F
-#define DB_RECORD_UDI_UE                             0x90
-#define DB_RECORD_UDI_TE                             0x91
-#define DB_RECORD_CTN_CCE                            0x92
-#define DB_RECORD_CTN_CSE                            0x93
+#define DB_RECORD_A2DP_SINK                          0x80U
+#define DB_RECORD_A2DP_SOURCE                        0x81U
+#define DB_RECORD_AVRCP_TARGET                       0x82U
+#define DB_RECORD_AVRCP_CONTROLLER                   0x83U
+#define DB_RECORD_RO                                 0x84U
+#define DB_RECORD_ARCHIVED_OBJECTS                   0x85U
+#define DB_RECORD_BIP                                0x86U
+#define DB_RECORD_BPP                                0x87U
+#define DB_RECORD_BASIC_PRINTING_REFERENCED_OBJECTS  0x88U
+#define DB_RECORD_FTP                                0x89U
+#define DB_RECORD_MAP_MCE                            0x8AU
+#define DB_RECORD_MAP_MSE                            0x8BU
+#define DB_RECORD_OPP                                0x8CU
+#define DB_RECORD_PBAP_PCE                           0x8DU
+#define DB_RECORD_PBAP_PSE                           0x8EU
+#define DB_RECORD_SAP                                0x8FU
+#define DB_RECORD_UDI_UE                             0x90U
+#define DB_RECORD_UDI_TE                             0x91U
+#define DB_RECORD_CTN_CCE                            0x92U
+#define DB_RECORD_CTN_CSE                            0x93U
 /*@}*/
 #endif /* SDP_HAVE_LIB_INDEPENDENT_DBASE_SUPPORT */
 /** \} */
@@ -589,7 +589,6 @@ void BT_dbase_init
          void
      );
 /**
- *
  *  \brief To get SDDB Record Handles for an UUID search pattern
  *
  *  \par Description:
@@ -627,7 +626,6 @@ API_RESULT BT_dbase_get_rec_handles
            );
 
 /**
- *
  *  \brief To get an Attribute Value from an SDDB Record
  *
  *  \par Description:
@@ -726,7 +724,6 @@ API_RESULT BT_dbase_update_attr_value
  *       API_SUCCESS or one of the error codes as defined in \ref BLE_ERROR_CODES.
  *
  *  \note
- *
  */
 API_RESULT BT_dbase_change_attr_value
            (
@@ -751,7 +748,6 @@ API_RESULT BT_dbase_change_attr_value
  *       API_SUCCESS or one of the error codes as defined in \ref BLE_ERROR_CODES.
  *
  *  \note
- *
  */
 API_RESULT BT_dbase_activate_record
            (
@@ -773,7 +769,6 @@ API_RESULT BT_dbase_activate_record
  *       API_SUCCESS or one of the error codes as defined in \ref BLE_ERROR_CODES.
  *
  *  \note
- *
  */
 API_RESULT BT_dbase_inactivate_record
            (
@@ -805,7 +800,6 @@ API_RESULT BT_dbase_inactivate_record
  *       API_SUCCESS or one of the error codes as defined in \ref BLE_ERROR_CODES.
  *
  *  \note
- *
  */
 API_RESULT BT_dbase_get_record_handle
            (

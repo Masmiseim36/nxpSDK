@@ -12,7 +12,7 @@
     <definition extID="platform.drivers.cache_armv7_m7.MIMXRT1021"/>
     <definition extID="component.codec_i2c.MIMXRT1021"/>
     <definition extID="component.lpi2c_adapter.MIMXRT1021"/>
-    <definition extID="platform.CMSIS_DSP_Lib.arm_cortexM7lfsp_math.MIMXRT1021"/>
+    <definition extID="CMSIS_DSP_Library.MIMXRT1021"/>
     <definition extID="middleware.sdmmc.sd.MIMXRT1021"/>
     <definition extID="middleware.sdmmc.common.MIMXRT1021"/>
     <definition extID="middleware.sdmmc.host.usdhc.MIMXRT1021"/>
@@ -32,10 +32,8 @@
     <definition extID="platform.drivers.iomuxc.MIMXRT1021"/>
     <definition extID="platform.drivers.igpio.MIMXRT1021"/>
     <definition extID="platform.drivers.xip_device.MIMXRT1021"/>
-    <definition extID="platform.drivers.xip_board.MIMXRT1021"/>
-    <definition extID="platform.Include_core_cm7.MIMXRT1021"/>
-    <definition extID="platform.Include_common.MIMXRT1021"/>
-    <definition extID="platform.Include_dsp.MIMXRT1021"/>
+    <definition extID="platform.drivers.xip_board.evkmimxrt1020.MIMXRT1021"/>
+    <definition extID="CMSIS_Include_core_cm.MIMXRT1021"/>
     <definition extID="middleware.sdmmc.osa.bm.MIMXRT1021"/>
     <definition extID="component.osa_bm.MIMXRT1021"/>
     <definition extID="platform.utilities.misc_utilities.MIMXRT1021"/>
@@ -48,7 +46,7 @@
     <definition extID="com.crt.advproject.config.exe.debug"/>
     <definition extID="com.crt.advproject.config.exe.release"/>
   </externalDefinitions>
-  <example id="evkmimxrt1020_sai_peripheral" name="sai_peripheral" dependency="platform.drivers.lpi2c.MIMXRT1021 driver.wm8960.MIMXRT1021 platform.drivers.usdhc.MIMXRT1021 middleware.fatfs.MIMXRT1021 middleware.fatfs.sd.MIMXRT1021 driver.codec.MIMXRT1021 platform.drivers.common.MIMXRT1021 component.wm8960_adapter.MIMXRT1021 platform.drivers.cache_armv7_m7.MIMXRT1021 component.codec_i2c.MIMXRT1021 component.lpi2c_adapter.MIMXRT1021 platform.CMSIS_DSP_Lib.arm_cortexM7lfsp_math.MIMXRT1021 middleware.sdmmc.sd.MIMXRT1021 middleware.sdmmc.common.MIMXRT1021 middleware.sdmmc.host.usdhc.MIMXRT1021 middleware.sdmmc.host.usdhc.interrupt.MIMXRT1021 utility.debug_console_lite.MIMXRT1021 platform.utilities.assert_lite.MIMXRT1021 platform.drivers.clock.MIMXRT1021 platform.drivers.sai.MIMXRT1021 platform.drivers.sai_edma.MIMXRT1021 platform.drivers.dmamux.MIMXRT1021 platform.drivers.edma.MIMXRT1021 device.MIMXRT1021_CMSIS.MIMXRT1021 component.lpuart_adapter.MIMXRT1021 component.lists.MIMXRT1021 platform.drivers.lpuart.MIMXRT1021 device.MIMXRT1021_startup.MIMXRT1021 platform.drivers.iomuxc.MIMXRT1021 platform.drivers.igpio.MIMXRT1021 platform.drivers.xip_device.MIMXRT1021 platform.drivers.xip_board.MIMXRT1021 platform.Include_core_cm7.MIMXRT1021 platform.Include_common.MIMXRT1021 platform.Include_dsp.MIMXRT1021 middleware.sdmmc.osa.bm.MIMXRT1021 component.osa_bm.MIMXRT1021 platform.utilities.misc_utilities.MIMXRT1021 device.MIMXRT1021_system.MIMXRT1021" category="demo_apps">
+  <example id="evkmimxrt1020_sai_peripheral" name="sai_peripheral" dependency="platform.drivers.lpi2c.MIMXRT1021 driver.wm8960.MIMXRT1021 platform.drivers.usdhc.MIMXRT1021 middleware.fatfs.MIMXRT1021 middleware.fatfs.sd.MIMXRT1021 driver.codec.MIMXRT1021 platform.drivers.common.MIMXRT1021 component.wm8960_adapter.MIMXRT1021 platform.drivers.cache_armv7_m7.MIMXRT1021 component.codec_i2c.MIMXRT1021 component.lpi2c_adapter.MIMXRT1021 CMSIS_DSP_Library.MIMXRT1021 middleware.sdmmc.sd.MIMXRT1021 middleware.sdmmc.common.MIMXRT1021 middleware.sdmmc.host.usdhc.MIMXRT1021 middleware.sdmmc.host.usdhc.interrupt.MIMXRT1021 utility.debug_console_lite.MIMXRT1021 platform.utilities.assert_lite.MIMXRT1021 platform.drivers.clock.MIMXRT1021 platform.drivers.sai.MIMXRT1021 platform.drivers.sai_edma.MIMXRT1021 platform.drivers.dmamux.MIMXRT1021 platform.drivers.edma.MIMXRT1021 device.MIMXRT1021_CMSIS.MIMXRT1021 component.lpuart_adapter.MIMXRT1021 component.lists.MIMXRT1021 platform.drivers.lpuart.MIMXRT1021 device.MIMXRT1021_startup.MIMXRT1021 platform.drivers.iomuxc.MIMXRT1021 platform.drivers.igpio.MIMXRT1021 platform.drivers.xip_device.MIMXRT1021 platform.drivers.xip_board.evkmimxrt1020.MIMXRT1021 CMSIS_Include_core_cm.MIMXRT1021 middleware.sdmmc.osa.bm.MIMXRT1021 component.osa_bm.MIMXRT1021 platform.utilities.misc_utilities.MIMXRT1021 device.MIMXRT1021_system.MIMXRT1021" category="demo_apps">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -74,6 +72,7 @@
           <value>BOARD_USE_CODEC=1</value>
           <value>CODEC_WM8960_ENABLE</value>
           <value>SD_ENABLED</value>
+          <value>MCUXPRESSO_SDK</value>
         </option>
         <option id="com.crt.advproject.gcc.exe.debug.option.optimization.level" type="enum">
           <value>gnu.c.optimization.level.optimize</value>

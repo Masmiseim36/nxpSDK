@@ -1,17 +1,15 @@
-if(NOT DRIVER_PHYKSZ8081_MIMXRT1021_INCLUDED)
-    
-    set(DRIVER_PHYKSZ8081_MIMXRT1021_INCLUDED true CACHE BOOL "driver_phyksz8081 component is included.")
+include_guard(GLOBAL)
+message("driver_phyksz8081 component is included.")
 
-    target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
-        ${CMAKE_CURRENT_LIST_DIR}/fsl_phy.c
-    )
-
-
-    target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
-        ${CMAKE_CURRENT_LIST_DIR}/.
-    )
+target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
+    ${CMAKE_CURRENT_LIST_DIR}/fsl_phy.c
+)
 
 
-    include(driver_enet_MIMXRT1021)
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
+    ${CMAKE_CURRENT_LIST_DIR}/.
+)
 
-endif()
+
+include(driver_enet_MIMXRT1021)
+

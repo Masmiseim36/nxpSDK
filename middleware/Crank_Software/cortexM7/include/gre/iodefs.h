@@ -60,11 +60,6 @@
 #define	GR_EVENT_BTN_MIDDLE				0x0002
 #define	GR_EVENT_BTN_RIGHT				0x0004
 
-enum GR_PTR_SUBTYPES {
-	GR_EVENT_RELEASE_IN,
-	GR_EVENT_RELEASE_OUT
-};
-
 #define GR_EVENT_PTR_FMT 				"4u1 button 4u1 timestamp 2u1 subtype 2s1 x 2s1 y 2s1 z 2s1 id 2s1 spare"
 typedef struct gr_ptr_event {
 	uint32_t	button;
@@ -210,13 +205,44 @@ typedef enum gr_key {
 	GR_KEY_INSERT		= 0x2D,
 	GR_KEY_DELETE		= 0x2E,
 
-	//GR_KEY_0 			= 0x30,
-	//..
-	//GR_KEY_9 			= 0x39,
+	GR_KEY_0			= 0x30,
+	GR_KEY_1			= 0x31,
+	GR_KEY_2			= 0x32,
+	GR_KEY_3			= 0x33,
+	GR_KEY_4			= 0x34,
+	GR_KEY_5			= 0x35,
+	GR_KEY_6			= 0x36,
+	GR_KEY_7			= 0x37,
+	GR_KEY_8			= 0x38,
+	GR_KEY_9			= 0x39,
 
-	//GR_KEY_A 			= 0x41,
-	//..
-	//GR_KEY_Z 			= 0x5A,
+	GR_KEY_A			= 0x41,
+	GR_KEY_B			= 0x42,
+	GR_KEY_C			= 0x43,
+	GR_KEY_D			= 0x44,
+	GR_KEY_E			= 0x45,
+	GR_KEY_F			= 0x46,
+	GR_KEY_G			= 0x47,
+	GR_KEY_H			= 0x48,
+	GR_KEY_I			= 0x49,
+	GR_KEY_J			= 0x4A,
+	GR_KEY_K			= 0x4B,
+	GR_KEY_L			= 0x4C,
+	GR_KEY_M			= 0x4D,
+	GR_KEY_N			= 0x4E,
+	GR_KEY_O			= 0x4F,
+	GR_KEY_P			= 0x50,
+	GR_KEY_Q			= 0x51,
+	GR_KEY_R			= 0x52,
+	GR_KEY_S			= 0x53,
+	GR_KEY_T			= 0x54,
+	GR_KEY_U			= 0x55,
+	GR_KEY_V			= 0x56,
+	GR_KEY_W			= 0x57,
+	GR_KEY_X			= 0x58,
+	GR_KEY_Y			= 0x59,
+	GR_KEY_Z			= 0x5A,
+
 	//L/R Windows keys or Command keys
 	GR_KEY_LGUI 		= 0x5B,
 	GR_KEY_RGUI 		= 0x5C,
@@ -338,7 +364,7 @@ typedef struct gr_redraw_event {
 } gr_redraw_event_t;
 
 #define GR_EVENT_REDRAW_COMPLETE		"gre.redraw.complete"
-#define GR_EVENT_REDRAW_COMPLETE_FMT	NULL
+#define GR_EVENT_REDRAW_COMPLETE_FMT	"4s1 x 4s1 y 4u1 width 4u1 height"
 
 /*
  * Enable/Disable Software cursor in the screen manager

@@ -21,11 +21,11 @@
 void MID_getMech(void)
 {
     /* initialization */
-    if (g_sMID.sMech.ui16Active == FALSE)
+    if (g_sMID.sMech.bActive == FALSE)
     {
-        g_sMID.sMech.ui16Active = TRUE;
+        g_sMID.sMech.bActive    = TRUE;
         g_sMID.sMech.eState     = kMID_MechInit;
-        g_sMID.ui32LoopCntr     = 0;
+        g_sMID.ui32LoopCntr     = 0U;
 
         g_sMID.sMech.fltTrqLPF   = 0.0F;
         g_sMID.sMech.fltSpdLPF   = 0.0F;
@@ -114,7 +114,7 @@ void MID_getMech(void)
 
         case kMID_MechDecelerate:
             /* check the timer */
-            if (g_sMID.ui32LoopCntr < (0.05F * M1_MID_TIME_ONESEC))
+            if (g_sMID.ui32LoopCntr < (uint32_t)(0.05F * M1_MID_TIME_ONESEC))
             {
                 *g_sMID.sIO.pfltIdReq    = MID_MECH_ID_DECEL_PCT * g_sMID.sAlgNew.fltIdStart;
                 g_sMID.sMech.fltSpdElMax = g_sMID.sMech.fltSpdLPF;
@@ -129,7 +129,7 @@ void MID_getMech(void)
             }
             else
             {
-            	;
+            	/* no action */;
             }
 
             /* check whether the speed dropped to 63pct of maximum*/
@@ -149,7 +149,7 @@ void MID_getMech(void)
             *g_sMID.sIO.pfltIqReq = 0.0F;
 
             /* clear flag */
-            g_sMID.sMech.ui16Active = FALSE;
+            g_sMID.sMech.bActive  = FALSE;
             g_sMID.eCalcMechPar     = kMID_CalcWorking;
             break;
     }

@@ -7,6 +7,7 @@
     <definition extID="platform.drivers.flexspi.MIMXRT1064"/>
     <definition extID="component.mflash_file.MIMXRT1064"/>
     <definition extID="component.mflash.rt1064.MIMXRT1064"/>
+    <definition extID="middleware.mbedtls.MIMXRT1064"/>
     <definition extID="middleware.mbedtls.port.ksdk.MIMXRT1064"/>
     <definition extID="middleware.mbedtls.rt.MIMXRT1064"/>
     <definition extID="middleware.freertos-aws_iot.vendor.nxp.wifi.MIMXRT1064"/>
@@ -24,12 +25,14 @@
     <definition extID="middleware.sdmmc.host.usdhc.freertos.MIMXRT1064"/>
     <definition extID="middleware.freertos-kernel.MIMXRT1064"/>
     <definition extID="middleware.freertos-kernel.heap_4.MIMXRT1064"/>
-    <definition extID="middleware.freertos-aws_iot.c_sdk.standard.shadow.MIMXRT1064"/>
-    <definition extID="middleware.freertos-aws_iot.c_sdk.standard.serializer.MIMXRT1064"/>
+    <definition extID="middleware.freertos-aws_iot.libraries.c_sdk.standard.shadow.MIMXRT1064"/>
+    <definition extID="middleware.freertos-aws_iot.libraries.c_sdk.standard.serializer.MIMXRT1064"/>
     <definition extID="middleware.freertos-aws_iot.libraries.3rdparty.pkcs11.MIMXRT1064"/>
     <definition extID="middleware.freertos-aws_iot.vendor.nxp.pkcs11.MIMXRT1064"/>
     <definition extID="middleware.freertos-aws_iot.libraries.abstractions.pkcs11.MIMXRT1064"/>
-    <definition extID="middleware.mbedtls.MIMXRT1064"/>
+    <definition extID="middleware.freertos-aws_iot.libraries.abstractions.pkcs11_mbedtls.MIMXRT1064"/>
+    <definition extID="middleware.freertos-aws_iot.libraries.logging.MIMXRT1064"/>
+    <definition extID="middleware.freertos-aws_iot.libraries.3rdparty.mbedtls_config.MIMXRT1064"/>
     <definition extID="platform.drivers.clock.MIMXRT1064"/>
     <definition extID="platform.drivers.common.MIMXRT1064"/>
     <definition extID="device.MIMXRT1064_CMSIS.MIMXRT1064"/>
@@ -43,24 +46,22 @@
     <definition extID="platform.utilities.assert.MIMXRT1064"/>
     <definition extID="platform.drivers.igpio.MIMXRT1064"/>
     <definition extID="platform.drivers.xip_device.MIMXRT1064"/>
-    <definition extID="platform.drivers.xip_board.MIMXRT1064"/>
-    <definition extID="platform.Include_core_cm7.MIMXRT1064"/>
-    <definition extID="platform.Include_common.MIMXRT1064"/>
-    <definition extID="platform.Include_dsp.MIMXRT1064"/>
+    <definition extID="platform.drivers.xip_board.evkmimxrt1064.MIMXRT1064"/>
+    <definition extID="CMSIS_Include_core_cm.MIMXRT1064"/>
     <definition extID="component.mflash.common.MIMXRT1064"/>
     <definition extID="middleware.freertos-aws_iot.libraries.abstractions.wifi.MIMXRT1064"/>
-    <definition extID="middleware.freertos-aws_iot.common.MIMXRT1064"/>
+    <definition extID="middleware.freertos-aws_iot.libraries.c_sdk.standard.common.MIMXRT1064"/>
     <definition extID="middleware.freertos-kernel.extension.MIMXRT1064"/>
     <definition extID="middleware.freertos-aws_iot.libraries.abstractions.platform.MIMXRT1064"/>
     <definition extID="middleware.freertos-aws_iot.libraries.abstractions.secure_sockets.MIMXRT1064"/>
+    <definition extID="middleware.wifi.wifidriver.MIMXRT1064"/>
     <definition extID="middleware.freertos-aws_iot.libraries.freertos_plus.standard.tls.MIMXRT1064"/>
     <definition extID="middleware.freertos-aws_iot.libraries.3rdparty.mbedtls_utils.MIMXRT1064"/>
     <definition extID="middleware.freertos-aws_iot.libraries.freertos_plus.standard.crypto.MIMXRT1064"/>
-    <definition extID="middleware.freertos-aws_iot.libraries.abstractions.threading_alt.MIMXRT1064"/>
-    <definition extID="middleware.freertos-aws_iot.libraries.freertos_plus.standard.pkcs11.MIMXRT1064"/>
     <definition extID="middleware.freertos-aws_iot.libraries.freertos_plus.standard.utils.MIMXRT1064"/>
     <definition extID="middleware.freertos-aws_iot.network_manager.MIMXRT1064"/>
     <definition extID="middleware.freertos-aws_iot.mqtt.MIMXRT1064"/>
+    <definition extID="middleware.freertos-aws_iot.libraries.coremqtt.MIMXRT1064"/>
     <definition extID="middleware.freertos-aws_iot.libraries.3rdparty.jsmn.MIMXRT1064"/>
     <definition extID="middleware.sdmmc.osa.freertos.MIMXRT1064"/>
     <definition extID="component.osa_free_rtos.MIMXRT1064"/>
@@ -75,7 +76,7 @@
     <definition extID="com.crt.advproject.config.exe.debug"/>
     <definition extID="com.crt.advproject.config.exe.release"/>
   </externalDefinitions>
-  <example id="evkmimxrt1064_aws_greengrass_discovery_wifi_nxp" name="aws_greengrass_discovery_wifi_nxp" dependency="platform.drivers.trng.MIMXRT1064 platform.drivers.dcp.MIMXRT1064 platform.drivers.cache_armv7_m7.MIMXRT1064 platform.drivers.flexspi.MIMXRT1064 component.mflash_file.MIMXRT1064 component.mflash.rt1064.MIMXRT1064 middleware.mbedtls.port.ksdk.MIMXRT1064 middleware.mbedtls.rt.MIMXRT1064 middleware.freertos-aws_iot.vendor.nxp.wifi.MIMXRT1064 middleware.freertos-aws_iot.vendor.nxp.secure_sockets.lwip.MIMXRT1064 middleware.freertos-aws_iot.demos.MIMXRT1064 middleware.freertos-aws_iot.demos_greengrass_discovery.MIMXRT1064 middleware.freertos-aws_iot.demos.dev_mode_key_provisioning.MIMXRT1064 middleware.freertos-aws_iot.libraries.freertos_plus.aws.greengrass.MIMXRT1064 middleware.lwip.MIMXRT1064 utility.debug_console.MIMXRT1064 middleware.wifi.MIMXRT1064 middleware.sdmmc.sdio.MIMXRT1064 middleware.sdmmc.common.MIMXRT1064 middleware.sdmmc.host.usdhc.MIMXRT1064 middleware.sdmmc.host.usdhc.freertos.MIMXRT1064 middleware.freertos-kernel.MIMXRT1064 middleware.freertos-kernel.heap_4.MIMXRT1064 middleware.freertos-aws_iot.c_sdk.standard.shadow.MIMXRT1064 middleware.freertos-aws_iot.c_sdk.standard.serializer.MIMXRT1064 middleware.freertos-aws_iot.libraries.3rdparty.pkcs11.MIMXRT1064 middleware.freertos-aws_iot.vendor.nxp.pkcs11.MIMXRT1064 middleware.freertos-aws_iot.libraries.abstractions.pkcs11.MIMXRT1064 middleware.mbedtls.MIMXRT1064 platform.drivers.clock.MIMXRT1064 platform.drivers.common.MIMXRT1064 device.MIMXRT1064_CMSIS.MIMXRT1064 component.lpuart_adapter.MIMXRT1064 component.serial_manager.MIMXRT1064 component.lists.MIMXRT1064 component.serial_manager_uart.MIMXRT1064 platform.drivers.lpuart.MIMXRT1064 device.MIMXRT1064_startup.MIMXRT1064 platform.drivers.iomuxc.MIMXRT1064 platform.utilities.assert.MIMXRT1064 platform.drivers.igpio.MIMXRT1064 platform.drivers.xip_device.MIMXRT1064 platform.drivers.xip_board.MIMXRT1064 platform.Include_core_cm7.MIMXRT1064 platform.Include_common.MIMXRT1064 platform.Include_dsp.MIMXRT1064 component.mflash.common.MIMXRT1064 middleware.freertos-aws_iot.libraries.abstractions.wifi.MIMXRT1064 middleware.freertos-aws_iot.common.MIMXRT1064 middleware.freertos-kernel.extension.MIMXRT1064 middleware.freertos-aws_iot.libraries.abstractions.platform.MIMXRT1064 middleware.freertos-aws_iot.libraries.abstractions.secure_sockets.MIMXRT1064 middleware.freertos-aws_iot.libraries.freertos_plus.standard.tls.MIMXRT1064 middleware.freertos-aws_iot.libraries.3rdparty.mbedtls_utils.MIMXRT1064 middleware.freertos-aws_iot.libraries.freertos_plus.standard.crypto.MIMXRT1064 middleware.freertos-aws_iot.libraries.abstractions.threading_alt.MIMXRT1064 middleware.freertos-aws_iot.libraries.freertos_plus.standard.pkcs11.MIMXRT1064 middleware.freertos-aws_iot.libraries.freertos_plus.standard.utils.MIMXRT1064 middleware.freertos-aws_iot.network_manager.MIMXRT1064 middleware.freertos-aws_iot.mqtt.MIMXRT1064 middleware.freertos-aws_iot.libraries.3rdparty.jsmn.MIMXRT1064 middleware.sdmmc.osa.freertos.MIMXRT1064 component.osa_free_rtos.MIMXRT1064 platform.drivers.usdhc.MIMXRT1064 platform.utilities.misc_utilities.MIMXRT1064 device.MIMXRT1064_system.MIMXRT1064" category="aws_examples">
+  <example id="evkmimxrt1064_aws_greengrass_discovery_wifi_nxp" name="aws_greengrass_discovery_wifi_nxp" dependency="platform.drivers.trng.MIMXRT1064 platform.drivers.dcp.MIMXRT1064 platform.drivers.cache_armv7_m7.MIMXRT1064 platform.drivers.flexspi.MIMXRT1064 component.mflash_file.MIMXRT1064 component.mflash.rt1064.MIMXRT1064 middleware.mbedtls.MIMXRT1064 middleware.mbedtls.port.ksdk.MIMXRT1064 middleware.mbedtls.rt.MIMXRT1064 middleware.freertos-aws_iot.vendor.nxp.wifi.MIMXRT1064 middleware.freertos-aws_iot.vendor.nxp.secure_sockets.lwip.MIMXRT1064 middleware.freertos-aws_iot.demos.MIMXRT1064 middleware.freertos-aws_iot.demos_greengrass_discovery.MIMXRT1064 middleware.freertos-aws_iot.demos.dev_mode_key_provisioning.MIMXRT1064 middleware.freertos-aws_iot.libraries.freertos_plus.aws.greengrass.MIMXRT1064 middleware.lwip.MIMXRT1064 utility.debug_console.MIMXRT1064 middleware.wifi.MIMXRT1064 middleware.sdmmc.sdio.MIMXRT1064 middleware.sdmmc.common.MIMXRT1064 middleware.sdmmc.host.usdhc.MIMXRT1064 middleware.sdmmc.host.usdhc.freertos.MIMXRT1064 middleware.freertos-kernel.MIMXRT1064 middleware.freertos-kernel.heap_4.MIMXRT1064 middleware.freertos-aws_iot.libraries.c_sdk.standard.shadow.MIMXRT1064 middleware.freertos-aws_iot.libraries.c_sdk.standard.serializer.MIMXRT1064 middleware.freertos-aws_iot.libraries.3rdparty.pkcs11.MIMXRT1064 middleware.freertos-aws_iot.vendor.nxp.pkcs11.MIMXRT1064 middleware.freertos-aws_iot.libraries.abstractions.pkcs11.MIMXRT1064 middleware.freertos-aws_iot.libraries.abstractions.pkcs11_mbedtls.MIMXRT1064 middleware.freertos-aws_iot.libraries.logging.MIMXRT1064 middleware.freertos-aws_iot.libraries.3rdparty.mbedtls_config.MIMXRT1064 platform.drivers.clock.MIMXRT1064 platform.drivers.common.MIMXRT1064 device.MIMXRT1064_CMSIS.MIMXRT1064 component.lpuart_adapter.MIMXRT1064 component.serial_manager.MIMXRT1064 component.lists.MIMXRT1064 component.serial_manager_uart.MIMXRT1064 platform.drivers.lpuart.MIMXRT1064 device.MIMXRT1064_startup.MIMXRT1064 platform.drivers.iomuxc.MIMXRT1064 platform.utilities.assert.MIMXRT1064 platform.drivers.igpio.MIMXRT1064 platform.drivers.xip_device.MIMXRT1064 platform.drivers.xip_board.evkmimxrt1064.MIMXRT1064 CMSIS_Include_core_cm.MIMXRT1064 component.mflash.common.MIMXRT1064 middleware.freertos-aws_iot.libraries.abstractions.wifi.MIMXRT1064 middleware.freertos-aws_iot.libraries.c_sdk.standard.common.MIMXRT1064 middleware.freertos-kernel.extension.MIMXRT1064 middleware.freertos-aws_iot.libraries.abstractions.platform.MIMXRT1064 middleware.freertos-aws_iot.libraries.abstractions.secure_sockets.MIMXRT1064 middleware.wifi.wifidriver.MIMXRT1064 middleware.freertos-aws_iot.libraries.freertos_plus.standard.tls.MIMXRT1064 middleware.freertos-aws_iot.libraries.3rdparty.mbedtls_utils.MIMXRT1064 middleware.freertos-aws_iot.libraries.freertos_plus.standard.crypto.MIMXRT1064 middleware.freertos-aws_iot.libraries.freertos_plus.standard.utils.MIMXRT1064 middleware.freertos-aws_iot.network_manager.MIMXRT1064 middleware.freertos-aws_iot.mqtt.MIMXRT1064 middleware.freertos-aws_iot.libraries.coremqtt.MIMXRT1064 middleware.freertos-aws_iot.libraries.3rdparty.jsmn.MIMXRT1064 middleware.sdmmc.osa.freertos.MIMXRT1064 component.osa_free_rtos.MIMXRT1064 platform.drivers.usdhc.MIMXRT1064 platform.utilities.misc_utilities.MIMXRT1064 device.MIMXRT1064_system.MIMXRT1064" category="aws_examples">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -96,12 +97,12 @@
           <value>XIP_BOOT_HEADER_ENABLE=1</value>
           <value>USE_RTOS=1</value>
           <value>MBEDTLS_CONFIG_FILE='"aws_mbedtls_config.h"'</value>
-          <value>WIFI_BOARD_PAN9026_SDIO</value>
           <value>ggdconfigTCP_RECEIVE_TIMEOUT_MS=15000</value>
           <value>MFLASH_FILE_BASEADDR=1572864</value>
           <value>SDIO_ENABLED</value>
-          <value>FSL_RTOS_FREE_RTOS</value>
+          <value>SDK_OS_FREE_RTOS</value>
           <value>SERIAL_PORT_TYPE_UART=1</value>
+          <value>MCUXPRESSO_SDK</value>
         </option>
         <option id="com.crt.advproject.gas.hdrlib" type="enum">
           <value>com.crt.advproject.gas.hdrlib.newlibnano</value>
@@ -141,7 +142,7 @@
           <value>com.crt.advproject.misc.dialect.gnu99</value>
         </option>
         <option id="gnu.c.compiler.option.misc.other" type="string">
-          <value>-fomit-frame-pointer -c -ffunction-sections -fdata-sections -ffreestanding -fno-builtin -imacros "wifi_config.h"</value>
+          <value>-fomit-frame-pointer -c -ffunction-sections -fdata-sections -ffreestanding -fno-builtin -imacros "app_config.h"</value>
         </option>
         <option id="gnu.c.compiler.option.warnings.allwarn" type="boolean">
           <value>false</value>
@@ -226,7 +227,10 @@
       <files mask="FreeRTOSIPConfig.h"/>
       <files mask="iot_config.h"/>
       <files mask="iot_mqtt_agent_config.h"/>
-      <files mask="iot_pkcs11_config.h"/>
+      <files mask="core_mqtt_config.h"/>
+      <files mask="core_pkcs11_config.h"/>
+      <files mask="shadow_config.h"/>
+      <files mask="shadow_demo_config.h"/>
     </source>
     <source path="boards/evkmimxrt1064/aws_examples/greengrass_discovery_wifi_nxp/iar/linker" project_relative_path="evkmimxrt1064/aws_examples/common/linker" type="linker" toolchain="iar">
       <files mask="MIMXRT1064xxxxx_flexspi_nor.icf"/>
@@ -256,10 +260,16 @@
       <files mask="aws_mbedtls_config.h"/>
     </source>
     <source path="boards/evkmimxrt1064/aws_examples/greengrass_discovery_wifi_nxp" project_relative_path="source" type="c_include">
+      <files mask="app_config.h"/>
+    </source>
+    <source path="boards/evkmimxrt1064/aws_examples/greengrass_discovery_wifi_nxp" project_relative_path="source" type="c_include">
       <files mask="wifi_config.h"/>
     </source>
     <source path="boards/evkmimxrt1064/aws_examples/greengrass_discovery_wifi_nxp" project_relative_path="doc" type="doc" toolchain="iar mdk mcuxpresso armgcc">
       <files mask="readme.txt"/>
+    </source>
+    <source path="boards/evkmimxrt1064/aws_examples/greengrass_discovery_wifi_nxp/mdk" project_relative_path="evkmimxrt1064" type="configuration" toolchain="mdk">
+      <files mask="evkmimxrt1064_flexspi_nor.ini"/>
     </source>
   </example>
 </ksdk:examples>

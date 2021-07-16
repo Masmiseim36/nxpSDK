@@ -1,8 +1,7 @@
 /*
-* Copyright 2019,2020 NXP
-* All rights reserved.
 *
-* SPDX-License-Identifier: BSD-3-Clause
+* Copyright 2019,2020 NXP
+* SPDX-License-Identifier: Apache-2.0
 */
 
 #ifndef SE05X_TLV_H_INC
@@ -295,6 +294,7 @@ int tlvGet_U16(uint8_t *buf, size_t *pBufIndex, const size_t bufLen, SE05x_TAG_t
 int tlvGet_U32(uint8_t *buf, size_t *pBufIndex, const size_t bufLen, SE05x_TAG_t tag, uint32_t *pRsp);
 
 int tlvGet_u8buf(uint8_t *buf, size_t *pBufIndex, const size_t bufLen, SE05x_TAG_t tag, uint8_t *rsp, size_t *pRspLen);
+int tlvGet_ValueIndex(uint8_t *buf, size_t *pBufIndex, const size_t bufLen, SE05x_TAG_t tag);
 int tlvGet_Se05xSession(
     uint8_t *buf, size_t *pBufIndex, const size_t bufLen, SE05x_TAG_t tag, pSe05xSession_t *pSessionId);
 int tlvGet_TimeStamp(uint8_t *buf, size_t *pBufIndex, const size_t bufLen, SE05x_TAG_t tag, SE05x_TimeStamp_t *pTs);

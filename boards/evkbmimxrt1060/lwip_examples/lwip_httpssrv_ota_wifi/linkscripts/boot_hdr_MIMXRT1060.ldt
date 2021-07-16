@@ -1,0 +1,9 @@
+/* OTA bootloader header */
+.boot_hdr : ALIGN(${text_align})
+{
+    FILL(0xff)
+    __boot_hdr_start__ = ABSOLUTE(.) ;
+    KEEP (*/ota_bootloader_hdr.o(.text .text* .rodata .rodata*))
+    __boot_hdr_end__ = ABSOLUTE(.) ;
+    . = 0x400 ;
+} >${CODE}

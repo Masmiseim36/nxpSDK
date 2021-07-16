@@ -29,7 +29,7 @@ typedef FIL* EM_fops_file_handle;
 typedef DIR EM_fops_object_handle;
 
 #ifndef EM_FOPS_FILE_SYNC_IN_IDLE
-#define EM_FOPS_FILE_SYNC_IN_IDLE 1
+#define EM_FOPS_FILE_SYNC_IN_IDLE 1U
 #endif
 
 #if EM_FOPS_FILE_SYNC_IN_IDLE
@@ -39,11 +39,11 @@ typedef DIR EM_fops_object_handle;
 #endif
 
 #ifndef EM_FOPS_FILE_SYNC_TASK_STACK_SIZE
-#define EM_FOPS_FILE_SYNC_TASK_STACK_SIZE 1024
+#define EM_FOPS_FILE_SYNC_TASK_STACK_SIZE 1024U
 #endif
 
 #ifndef EM_FOPS_FILE_SYNC_TASK_LOG
-#define EM_FOPS_FILE_SYNC_TASK_LOG 0
+#define EM_FOPS_FILE_SYNC_TASK_LOG 0U
 #endif
 
 /*
@@ -51,7 +51,7 @@ typedef DIR EM_fops_object_handle;
  * EM_FOPS_FILE_OBJ_SYNC_TIMEOUT (unit ms)
  */
 #ifndef EM_FOPS_FILE_OBJ_SYNC_TIMEOUT
-#define EM_FOPS_FILE_OBJ_SYNC_TIMEOUT (3000)
+#define EM_FOPS_FILE_OBJ_SYNC_TIMEOUT (3000U)
 #endif
 
 #ifndef EM_FOPS_FILE_OBJ_BUFFER_SIZE
@@ -59,58 +59,58 @@ typedef DIR EM_fops_object_handle;
 #endif
 
 #ifndef EM_FOPS_FILE_OBJ_BUFFER_COUNT
-#define EM_FOPS_FILE_OBJ_BUFFER_COUNT (8)
+#define EM_FOPS_FILE_OBJ_BUFFER_COUNT (8U)
 #endif
 
 #endif
 
 /** Bitmap mask for File Attributes */
-#define EM_FOPS_MASK_READONLY                 0x00000001
-#define EM_FOPS_MASK_HIDDEN                   0x00000002
-#define EM_FOPS_MASK_SYSTEM                   0x00000004
-#define EM_FOPS_MASK_FOLDER                   0x00000010
-#define EM_FOPS_MASK_ARCHIVE                  0x00000020
+#define EM_FOPS_MASK_READONLY                 0x00000001U
+#define EM_FOPS_MASK_HIDDEN                   0x00000002U
+#define EM_FOPS_MASK_SYSTEM                   0x00000004U
+#define EM_FOPS_MASK_FOLDER                   0x00000010U
+#define EM_FOPS_MASK_ARCHIVE                  0x00000020U
 
 /** File Seek Positions */
-#define EM_FOPS_SEEK_SET                      0
-#define EM_FOPS_SEEK_CUR                      1
-#define EM_FOPS_SEEK_END                      2
+#define EM_FOPS_SEEK_SET                      0U
+#define EM_FOPS_SEEK_CUR                      1U
+#define EM_FOPS_SEEK_END                      2U
 
 #define EM_FOPS_BASE                          "1:"
 #define EM_FOPS_PATH_SEP                      "/"
-#define EM_FOPS_MAX_DIRECTORY_SIZE            256
-#define EM_FOPS_MAX_FN_SIZE                   256
+#define EM_FOPS_MAX_DIRECTORY_SIZE            256U
+#define EM_FOPS_MAX_FN_SIZE                   256U
 
 /** FOPS Error */
-#define EM_FOPS_ERR_ID                          0xF000
+#define EM_FOPS_ERR_ID                          0xF000U
 
 #define EM_FOPS_MUTEX_INIT_FAILED               \
-        (0x0001 | EM_FOPS_ERR_ID)
+        (0x0001U | EM_FOPS_ERR_ID)
 #define EM_FOPS_COND_INIT_FAILED                \
-        (0x0002 | EM_FOPS_ERR_ID)
+        (0x0002U | EM_FOPS_ERR_ID)
 #define EM_FOPS_MUTEX_LOCK_FAILED               \
-        (0x0003 | EM_FOPS_ERR_ID)
+        (0x0003U | EM_FOPS_ERR_ID)
 #define EM_FOPS_MUTEX_UNLOCK_FAILED             \
-        (0x0004 | EM_FOPS_ERR_ID)
+        (0x0004U | EM_FOPS_ERR_ID)
 #define EM_FOPS_MEMORY_ALLOCATION_FAILED        \
-        (0x0005 | EM_FOPS_ERR_ID)
+        (0x0005U | EM_FOPS_ERR_ID)
 
-#define EM_FOPS_ERR_GET_CURRECT_DIRECTORY       (0x0011 | EM_FOPS_ERR_ID)
-#define EM_FOPS_ERR_GET_FILE_ATTRIBUTES         (0x0012 | EM_FOPS_ERR_ID)
-#define EM_FOPS_ERR_SET_PATH_FORWARD            (0x0013 | EM_FOPS_ERR_ID)
-#define EM_FOPS_ERR_SET_PATH_BACKWARD           (0x0014 | EM_FOPS_ERR_ID)
-#define EM_FOPS_ERR_CREATE_FOLDER               (0x0015 | EM_FOPS_ERR_ID)
-#define EM_FOPS_ERR_FILE_OPEN                   (0x0016 | EM_FOPS_ERR_ID)
-#define EM_FOPS_ERR_FILE_WRITE                  (0x0017 | EM_FOPS_ERR_ID)
-#define EM_FOPS_ERR_FILE_READ                   (0x0018 | EM_FOPS_ERR_ID)
-#define EM_FOPS_ERR_FOLDER_DELETE               (0x0019 | EM_FOPS_ERR_ID)
-#define EM_FOPS_ERR_FILE_DELETE                 (0x001A | EM_FOPS_ERR_ID)
-#define EM_FOPS_ERR_FILE_NOT_FOUND              (0x001B | EM_FOPS_ERR_ID)
-#define EM_FOPS_INVALID_PARAMETER_VALUE         (0x001C | EM_FOPS_ERR_ID)
-#define EM_FOPS_ERR_FILE_SEEK_FAILED            (0x001D | EM_FOPS_ERR_ID)
-#define EM_FOPS_ERR_FILE_COPY                   (0x001E | EM_FOPS_ERR_ID)
-#define EM_FOPS_ERR_FILE_MOVE                   (0x001F | EM_FOPS_ERR_ID)
-#define EM_FOPS_ERR_SET_FILE_ATTRIBUTES         (0x0020 | EM_FOPS_ERR_ID)
+#define EM_FOPS_ERR_GET_CURRECT_DIRECTORY       (0x0011U | EM_FOPS_ERR_ID)
+#define EM_FOPS_ERR_GET_FILE_ATTRIBUTES         (0x0012U | EM_FOPS_ERR_ID)
+#define EM_FOPS_ERR_SET_PATH_FORWARD            (0x0013U | EM_FOPS_ERR_ID)
+#define EM_FOPS_ERR_SET_PATH_BACKWARD           (0x0014U | EM_FOPS_ERR_ID)
+#define EM_FOPS_ERR_CREATE_FOLDER               (0x0015U | EM_FOPS_ERR_ID)
+#define EM_FOPS_ERR_FILE_OPEN                   (0x0016U | EM_FOPS_ERR_ID)
+#define EM_FOPS_ERR_FILE_WRITE                  (0x0017U | EM_FOPS_ERR_ID)
+#define EM_FOPS_ERR_FILE_READ                   (0x0018U | EM_FOPS_ERR_ID)
+#define EM_FOPS_ERR_FOLDER_DELETE               (0x0019U | EM_FOPS_ERR_ID)
+#define EM_FOPS_ERR_FILE_DELETE                 (0x001AU | EM_FOPS_ERR_ID)
+#define EM_FOPS_ERR_FILE_NOT_FOUND              (0x001BU | EM_FOPS_ERR_ID)
+#define EM_FOPS_INVALID_PARAMETER_VALUE         (0x001CU | EM_FOPS_ERR_ID)
+#define EM_FOPS_ERR_FILE_SEEK_FAILED            (0x001DU | EM_FOPS_ERR_ID)
+#define EM_FOPS_ERR_FILE_COPY                   (0x001EU | EM_FOPS_ERR_ID)
+#define EM_FOPS_ERR_FILE_MOVE                   (0x001FU | EM_FOPS_ERR_ID)
+#define EM_FOPS_ERR_SET_FILE_ATTRIBUTES         (0x0020U | EM_FOPS_ERR_ID)
 
 /* ------------------------- Macros */
 /** Create File path with seperator */
@@ -121,7 +121,7 @@ typedef DIR EM_fops_object_handle;
 #define EM_FOPS_GET_BIT(bitmap, mask)         (((bitmap) & (mask)) == (mask))
 #define EM_FOPS_RESET_BIT(bitmap, mask)       (bitmap) ^= (mask)
 
-#define EM_fops_file_print(fd,...)            f_printf((fd), __VA_ARGS__)
+#define EM_fops_file_print(fd,...)            (void)f_printf((fd), __VA_ARGS__)
 
 /* -------------------------------------------- Data Structures */
 typedef struct _EM_FOPS_FILINFO

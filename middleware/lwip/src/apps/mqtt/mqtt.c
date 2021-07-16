@@ -770,7 +770,9 @@ mqtt_message_received(mqtt_client_t *client, u8_t fixed_hdr_len, u16_t length, u
         LWIP_DEBUGF(MQTT_DEBUG_WARN,( "mqtt_message_received: Received short packet (payload)\n"));
         goto out_disconnect;
       }
-      client->data_cb(client->inpub_arg, var_hdr_payload + payload_offset, payload_length, remaining_length == 0 ? MQTT_DATA_FLAG_LAST : 0);
+      if (client->data_cb != NULL) {
+        client->data_cb(client->inpub_arg, var_hdr_payload + payload_offset, payload_length, remaining_length == 0 ? MQTT_DATA_FLAG_LAST : 0);
+      }
       /* Reply if QoS > 0 */
       if (remaining_length == 0 && qos > 0) {
         /* Send PUBACK for QoS 1 or PUBREC for QoS 2 */
@@ -1295,6 +1297,9 @@ mqtt_client_connect(mqtt_client_t *client, const ip_addr_t *ip_addr, u16_t port,
   u16_t remaining_length = 2 + 4 + 1 + 1 + 2;
   u8_t flags = 0, will_topic_len = 0, will_msg_len = 0;
   u16_t client_user_len = 0, client_pass_len = 0;
+  mqtt_incoming_data_cb_t data_cb;
+  mqtt_incoming_publish_cb_t pub_cb;
+  void *inpub_arg;
 
   LWIP_ASSERT_CORE_LOCKED();
   LWIP_ASSERT("mqtt_client_connect: client != NULL", client != NULL);
@@ -1307,8 +1312,15 @@ mqtt_client_connect(mqtt_client_t *client, const ip_addr_t *ip_addr, u16_t port,
     return ERR_ISCONN;
   }
 
-  /* Wipe clean */
+  /* Wipe clean, but keep callbacks */
+  data_cb = client->data_cb;
+  pub_cb = client->pub_cb;
+  inpub_arg = client->inpub_arg;
   memset(client, 0, sizeof(mqtt_client_t));
+  client->data_cb = data_cb;
+  client->pub_cb = pub_cb;
+  client->inpub_arg = inpub_arg;
+
   client->connect_arg = arg;
   client->connect_cb = cb;
   client->keep_alive = client_info->keep_alive;

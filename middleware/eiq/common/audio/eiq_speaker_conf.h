@@ -13,15 +13,22 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
+
 #define SAI_TxIRQHandler SAI1_IRQHandler
+
 /*******************************************************************************
  * API
  ******************************************************************************/
+
 #if defined(__cplusplus)
 extern "C" {
 #endif /* __cplusplus */
 
-static inline void BOARD_ClearTxInterruptFlags(void){
+/*!
+ * @brief Clears Tx interrupt flags - FRIE, FEIE
+ */
+static inline void BOARD_ClearTxInterruptFlags(void)
+{
     /* Clear RCSR interrupt flags. */
     DEMO_SAI->RCSR &= ~(I2S_RCSR_FRIE_MASK | I2S_RCSR_FEIE_MASK);
 }

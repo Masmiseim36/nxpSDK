@@ -159,6 +159,7 @@ static FMSTR_U8 _FMSTR_SetScope_CFGVAR(FMSTR_BPTR msgBuffIO, FMSTR_SCOPE *scope,
  *
  * @brief    Handling SETUPSCOPE command
  *
+ * @param    session - transport session
  * @param    msgBuffIO - original command (in) and response buffer (out)
  * @param    inputLen - Count of received bytes in input buffer
  * @param    retStatus   - pointer to return status variable
@@ -168,7 +169,7 @@ static FMSTR_U8 _FMSTR_SetScope_CFGVAR(FMSTR_BPTR msgBuffIO, FMSTR_SCOPE *scope,
  *
  ******************************************************************************/
 
-FMSTR_BPTR FMSTR_SetScope(FMSTR_BPTR msgBuffIO, FMSTR_SIZE inputLen, FMSTR_U8 *retStatus)
+FMSTR_BPTR FMSTR_SetScope(FMSTR_SESSION *session, FMSTR_BPTR msgBuffIO, FMSTR_SIZE inputLen, FMSTR_U8 *retStatus)
 {
     FMSTR_SCOPE *scope;
     FMSTR_BPTR response   = msgBuffIO;
@@ -184,6 +185,15 @@ FMSTR_BPTR FMSTR_SetScope(FMSTR_BPTR msgBuffIO, FMSTR_SIZE inputLen, FMSTR_U8 *r
         *retStatus = FMSTR_STC_INSTERR;
         return response;
     }
+
+#if FMSTR_SESSION_COUNT > 1
+    /* Is feature locked by me */
+    if (FMSTR_IsFeatureOwned(session, FMSTR_FEATURE_SCOPE, scopeIndex) == FMSTR_FALSE)
+    {
+        *retStatus = FMSTR_STC_SERVBUSY;
+        return response;
+    }
+#endif
 
     scope = &fmstr_scopeCfg[scopeIndex];
 
@@ -230,6 +240,7 @@ FMSTR_BPTR FMSTR_SetScope(FMSTR_BPTR msgBuffIO, FMSTR_SIZE inputLen, FMSTR_U8 *r
  *
  * @brief    Handling READSCOPE command
  *
+ * @param    session - transport session
  * @param    msgBuffIO - original command (in) and response buffer (out)
  * @param    retStatus   - pointer to return status variable
  * @param    maxOutSize - Maximal size of output data
@@ -239,7 +250,7 @@ FMSTR_BPTR FMSTR_SetScope(FMSTR_BPTR msgBuffIO, FMSTR_SIZE inputLen, FMSTR_U8 *r
  *
  ******************************************************************************/
 
-FMSTR_BPTR FMSTR_ReadScope(FMSTR_BPTR msgBuffIO, FMSTR_U8 *retStatus, FMSTR_SIZE maxOutSize)
+FMSTR_BPTR FMSTR_ReadScope(FMSTR_SESSION *session, FMSTR_BPTR msgBuffIO, FMSTR_U8 *retStatus, FMSTR_SIZE maxOutSize)
 {
     FMSTR_U8 i;
     FMSTR_U8 scopeIndex;
@@ -255,6 +266,15 @@ FMSTR_BPTR FMSTR_ReadScope(FMSTR_BPTR msgBuffIO, FMSTR_U8 *retStatus, FMSTR_SIZE
         *retStatus = FMSTR_STC_INSTERR;
         return msgBuffIO;
     }
+
+#if FMSTR_SESSION_COUNT > 1
+    /* Is feature locked by me */
+    if (FMSTR_IsFeatureOwned(session, FMSTR_FEATURE_SCOPE, scopeIndex) == FMSTR_FALSE)
+    {
+        *retStatus = FMSTR_STC_SERVBUSY;
+        return msgBuffIO;
+    }
+#endif
 
     /* Get the scope */
     scope = &fmstr_scopeCfg[scopeIndex];

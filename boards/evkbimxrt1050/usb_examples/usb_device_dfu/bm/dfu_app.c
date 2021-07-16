@@ -159,7 +159,7 @@ void USB_DeviceTaskFn(void *deviceHandle)
  */
 static usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *param)
 {
-    usb_status_t error = kStatus_USB_Error;
+    usb_status_t error = kStatus_USB_InvalidRequest;
     uint16_t *temp16   = (uint16_t *)param;
     uint8_t *temp8     = (uint8_t *)param;
 
@@ -187,6 +187,7 @@ static usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event,
             {
                 g_UsbDeviceDfu.attach               = 0U;
                 g_UsbDeviceDfu.currentConfiguration = 0U;
+                error                               = kStatus_USB_Success;
             }
             else if (USB_DFU_CONFIGURE_INDEX == (*temp8))
             {
@@ -197,7 +198,7 @@ static usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event,
             }
             else
             {
-                error = kStatus_USB_InvalidRequest;
+                /* no action required, the default return value is kStatus_USB_InvalidRequest. */
             }
             break;
         case kUSB_DeviceEventSetInterface:
@@ -208,8 +209,11 @@ static usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event,
                 uint8_t alternateSetting = (uint8_t)(*temp16 & 0x00FFU);
                 if (interface < USB_DFU_INTERFACE_COUNT)
                 {
-                    g_UsbDeviceDfu.currentInterfaceAlternateSetting[interface] = alternateSetting;
-                    error                                                      = kStatus_USB_Success;
+                    if (alternateSetting < USB_DFU_INTERFACE_ALTERNATE_COUNT)
+                    {
+                        g_UsbDeviceDfu.currentInterfaceAlternateSetting[interface] = alternateSetting;
+                        error                                                      = kStatus_USB_Success;
+                    }
                 }
             }
             break;
@@ -230,10 +234,6 @@ static usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event,
                 {
                     *temp16 = (*temp16 & 0xFF00U) | g_UsbDeviceDfu.currentInterfaceAlternateSetting[interface];
                     error   = kStatus_USB_Success;
-                }
-                else
-                {
-                    error = kStatus_USB_InvalidRequest;
                 }
             }
             break;
@@ -261,10 +261,11 @@ static usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event,
             break;
         case kUSB_DeviceEventVendorRequest:
         {
-            USB_DeviceGetVerdorDescriptor(handle, param);
+            error = USB_DeviceGetVerdorDescriptor(handle, param);
         }
         break;
         default:
+            /* no action required, the default return value is kStatus_USB_InvalidRequest. */
             break;
     }
     return error;
@@ -325,8 +326,8 @@ void main(void)
 {
     BOARD_ConfigMPU();
 
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
+    BOARD_InitBootPins();
+    BOARD_InitBootClocks();
     BOARD_InitDebugConsole();
 
     USB_DeviceApplicationInit();

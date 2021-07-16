@@ -101,7 +101,7 @@
 #endif // BL_FEATURE_FLEXSPI_NOR_MODULE
 
 #if defined(BL_TARGET_RAM)
-#define BL_FEATURE_SEMC_NOR_MODULE (1)
+#define BL_FEATURE_SEMC_NOR_MODULE (0)
 #else
 #define BL_FEATURE_SEMC_NOR_MODULE (0)
 #endif

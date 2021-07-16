@@ -41,6 +41,11 @@ DECL_STATIC volatile UCHAR sm_local_io_cap = SM_IO_CAPABILITY_DEFAULT;
 DECL_STATIC SM_OOB_INFO sm_oob_info;
 #endif /* BT_SSP_OOB */
 
+#ifdef SM_AUTHREQ_DYNAMIC
+/** Local Authentication Requirements and validity */
+DECL_STATIC UCHAR sm_local_authreq;
+DECL_STATIC UCHAR sm_local_authreq_valid;
+#endif /* SM_AUTHREQ_DYNAMIC */
 
 /* ----------------------------------------- API Functions */
 #ifdef SM_IO_CAP_DYNAMIC
@@ -58,7 +63,7 @@ API_RESULT BT_sm_set_local_io_cap
            )
 {
     /* Check parameters */
-    if (io_cap > SM_IO_CAPABILITY_NO_INPUT_NO_OUTPUT)
+    if (SM_IO_CAPABILITY_NO_INPUT_NO_OUTPUT < io_cap)
     {
         SM_ERR(
         "[SM] Invalid Device IO Capability = 0x%02X\n",
@@ -107,11 +112,11 @@ API_RESULT BT_sm_set_device_oob_data
 #ifdef SEC_DEBUG
     SM_TRC(
     "[SM] Device Simple Pairing Hash 'C':\n");
-    SM_debug_dump_bytes (sm_oob_info.ssp_c, 16);
+    SM_debug_dump_bytes (sm_oob_info.ssp_c, 16U);
 
     SM_TRC(
     "[SM] Device Simple Pairing Randomizer 'R':\n");
-    SM_debug_dump_bytes (sm_oob_info.ssp_r, 16);
+    SM_debug_dump_bytes (sm_oob_info.ssp_r, 16U);
 #endif /* SEC_DEBUG */
 
     /* Unlock SM */
@@ -166,6 +171,41 @@ API_RESULT BT_sm_get_remote_io_cap
 
     return API_SUCCESS;
 }
+
+#ifdef SM_AUTHREQ_DYNAMIC
+API_RESULT BT_sm_set_local_authreq
+           (
+               /* IN */  UCHAR    valid,
+               /* IN */  UCHAR    authreq
+           )
+{
+    /* Lock SM */
+    sm_lock();
+
+    /* Store Authreq if valid */
+    if (0x01U != valid)
+    {
+        sm_local_authreq = 0x00U;
+    }
+    else
+    {
+        sm_local_authreq = authreq;
+    }
+
+    /* Update the validity */
+    sm_local_authreq_valid = valid;
+
+    SM_TRC(
+        "[SM] Updated Local AuthReq = 0x%02X\n", sm_local_authreq);
+
+    /* Unlock SM */
+    sm_unlock();
+
+    return API_SUCCESS;
+}
+#endif /* SM_AUTHREQ_DYNAMIC */
+
+
 /* ----------------------------------------- Internal Functions */
 /** To return IO Capability to SM Core */
 API_RESULT sm_get_io_capability_pl
@@ -182,7 +222,7 @@ API_RESULT sm_get_io_capability_pl
     UCHAR sc_only_mode;
 #endif /* BT_BRSC */
 
-    device_queue_get_remote_addr (&sm_devices[di].device_handle,&device_addr);
+    (BT_IGNORE_RETURN_VALUE) device_queue_get_remote_addr (&sm_devices[di].device_handle,&device_addr);
 
 #ifdef SM_IO_CAP_DYNAMIC
     /* Set Local IO Cap */
@@ -194,16 +234,16 @@ API_RESULT sm_get_io_capability_pl
 
 #ifdef BT_SSP_OOB
     /* Set Local OOB */
-    if (0 == BT_mem_cmp(sm_oob_info.bd_addr, BT_BD_ADDR(&device_addr), BT_BD_ADDR_SIZE))
+    if (0U == BT_mem_cmp(sm_oob_info.bd_addr, BT_BD_ADDR(&device_addr), BT_BD_ADDR_SIZE))
     {
-        io_cap->oob_present = 0x1;
+        io_cap->oob_present = 0x1U;
     }
     else
     {
-        io_cap->oob_present = 0x0;
+        io_cap->oob_present = 0x0U;
     }
 #else  /* BT_SSP_OOB */
-    io_cap->oob_present = 0x0;
+    io_cap->oob_present = 0x0U;
 #endif /* BT_SSP_OOB */
 
     /*
@@ -213,17 +253,20 @@ API_RESULT sm_get_io_capability_pl
      *  IO Capability already with us, then this is remotely initiated
      *  Authentication.
      */
-    mitm_reqd = 0x2;
+    mitm_reqd = 0x2U;
 
 #ifdef BT_BRSC
     /* Unlock SM */
     sm_unlock();
 
-    BT_sm_get_secure_connections_only_mode(&sc_only_mode);
+    (BT_IGNORE_RETURN_VALUE) BT_sm_get_secure_connections_only_mode(&sc_only_mode);
 
     /* Lock SM */
     sm_lock();
 #endif /* BT_BRSC */
+
+    /* Initialize service index */
+    si = SM_MAX_SERVICES;
 
     if (SM_TRUE == sm_devices[di].remote_io_cap.valid)
     {
@@ -252,7 +295,7 @@ API_RESULT sm_get_io_capability_pl
          *              01 - Dedicated Bonding
          *              10 - General Bonding
          */
-        bonding = (sm_devices[di].remote_io_cap.auth_reqs & 0x06);
+        bonding = (sm_devices[di].remote_io_cap.auth_reqs & 0x06U);
     }
     else
     {
@@ -267,7 +310,7 @@ API_RESULT sm_get_io_capability_pl
             "[SM] Authentication Initiated for Dedicated Bonding\n");
 
             /* Set Dedicated Bonding */
-            bonding = 0x02;
+            bonding = 0x02U;
         }
         else
         {
@@ -275,16 +318,19 @@ API_RESULT sm_get_io_capability_pl
             "[SM] Authentication Initiated for General Bonding\n");
 
             /* Set General Bonding, or No Bonding */
-            if (0x01 == SM_GET_SERVICE_NO_BONDING(sm_authentication_service))
+            if (0x01U == SM_GET_SERVICE_NO_BONDING(sm_authentication_service))
             {
                 /* Set No Bonding */
-                bonding = 0x0;
+                bonding = 0x0U;
             }
             else
             {
                 /* Set General Bonding */
-                bonding = 0x04;
+                bonding = 0x04U;
             }
+
+            /* Update the service index */
+            si = sm_authentication_service;
 
 #ifndef BT_BRSC
             /* Set if MITM Required */
@@ -295,25 +341,25 @@ API_RESULT sm_get_io_capability_pl
                 (SM_SERVICE_SECURITY_LEVEL_4 == SM_GET_SERVICE_AUTHENTICATION(sm_authentication_service)) ||
                 (SM_SERVICE_SECURITY_LEVEL_3 == SM_GET_SERVICE_AUTHENTICATION(sm_authentication_service)))
             {
-                mitm_reqd = 0x01;
+                mitm_reqd = 0x01U;
             }
             else
             {
-                mitm_reqd = 0x00;
+                mitm_reqd = 0x00U;
             }
 #endif /* BT_BRSC */
         }
     }
 
-    if (0x02 == mitm_reqd)
+    if (0x02U == mitm_reqd)
     {
         /*
          *  If Locally or Remotely initiated Dedicated Bonding,
          *  decide whether MITM required or not, based upon whether
          *  there exists a service requiring MITM protection.
          */
-        mitm_reqd = 0x0;
-        for (si = 0; si < SM_MAX_SERVICES; si ++)
+        mitm_reqd = 0x0U;
+        for (si = 0U; si < SM_MAX_SERVICES; si ++)
         {
 #ifndef BT_BRSC
             if (SM_SERVICE_SECURITY_LEVEL_3 == SM_GET_SERVICE_AUTHENTICATION(si))
@@ -323,13 +369,13 @@ API_RESULT sm_get_io_capability_pl
                 (SM_SERVICE_SECURITY_LEVEL_3 == SM_GET_SERVICE_AUTHENTICATION(si)))
 #endif /* BT_BRSC */
             {
-                mitm_reqd = 0x1;
+                mitm_reqd = 0x1U;
                 break;
             }
         }
 
     #ifdef SEC_DEBUG
-        if (0x1 == mitm_reqd)
+        if (0x1U == mitm_reqd)
         {
             SM_INF(
             "[SM] Found MITM Protection Required for Service 0x%02X\n",
@@ -342,6 +388,36 @@ API_RESULT sm_get_io_capability_pl
      *  Set Local Authentication Requirements.
      */
     io_cap->auth_reqs = mitm_reqd | bonding;
+
+#ifdef SM_AUTHREQ_DYNAMIC
+    /* Check if dynamic overriding is enabled. Used mostly during testing */
+    if (0x01U == sm_local_authreq_valid)
+    {
+        UCHAR sl, nb;
+
+        /* Update the dynamically configured AuthReq */
+        io_cap->auth_reqs = sm_local_authreq;
+
+        if (SM_MAX_SERVICES != si)
+        {
+            /* Get the bonding and service level requirement */
+            nb = (sm_local_authreq & 0x06U)? 0x00U: 0x01U;
+            sl = (sm_local_authreq & 0x01U) ?
+                 ((SM_SERVICE_SECURITY_LEVEL_4 == SM_GET_SERVICE_AUTHENTICATION(si))?
+                  SM_SERVICE_SECURITY_LEVEL_4: SM_SERVICE_SECURITY_LEVEL_3):
+                  SM_SERVICE_SECURITY_LEVEL_2;
+
+            /* Update the authentication/bonding setting in a service */
+            SM_SET_SERVICE_NO_BONDING(si, nb);
+    #ifdef BT_BRSC
+            if (BT_TRUE != sc_only_mode)
+    #endif /* BT_BRSC */
+            {
+                SM_SET_SERVICE_AUTHENTICATION(si, sl);
+            }
+        }
+    }
+#endif /* SM_AUTHREQ_DYNAMIC */
 
     SM_INF(
     "[SM] Local IO Cap Generated: IO Cap %02X, OOB %02X, AuthReqs %02X\n",
@@ -362,7 +438,10 @@ API_RESULT sm_get_remote_oob_data_pl
     API_RESULT retval;
     DEVICE_HANDLE handle;
 
-    sm_get_device_handle (sm_oob_info.bd_addr,&handle);
+    /* MISRA C-2012 Rule 9.1 | Coverity UNINIT */
+    handle = 0U;
+
+    (BT_IGNORE_RETURN_VALUE) sm_get_device_handle (sm_oob_info.bd_addr,&handle);
 
     /*
      *  It is expected that the application would have set

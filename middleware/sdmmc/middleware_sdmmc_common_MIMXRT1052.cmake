@@ -1,15 +1,13 @@
-if(NOT MIDDLEWARE_SDMMC_COMMON_MIMXRT1052_INCLUDED)
-    
-    set(MIDDLEWARE_SDMMC_COMMON_MIMXRT1052_INCLUDED true CACHE BOOL "middleware_sdmmc_common component is included.")
+include_guard(GLOBAL)
+message("middleware_sdmmc_common component is included.")
 
-    target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
-        ${CMAKE_CURRENT_LIST_DIR}/common/fsl_sdmmc_common.c
-    )
-
-
-    target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
-        ${CMAKE_CURRENT_LIST_DIR}/common
-    )
+target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
+    ${CMAKE_CURRENT_LIST_DIR}/common/fsl_sdmmc_common.c
+)
 
 
-endif()
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
+    ${CMAKE_CURRENT_LIST_DIR}/common
+)
+
+

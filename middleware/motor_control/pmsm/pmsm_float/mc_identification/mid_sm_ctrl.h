@@ -103,9 +103,6 @@ typedef struct
 /*! @brief Pointer to function with a pointer to state machine control structure */
 typedef void (*mid_pfcn_void_pms)(mid_sm_app_ctrl_t *sAppCtrl);
 
-/* external variables */
-extern mid_struct_t g_sMID;
-
 /*! @brief State machine function table */
 extern const mid_pfcn_void_pms g_MID_SM_STATE_TABLE[10];
 

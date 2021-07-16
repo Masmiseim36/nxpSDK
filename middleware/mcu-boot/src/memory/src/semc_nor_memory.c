@@ -5,18 +5,19 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-#include "fsl_device_registers.h"
-#include "bootloader_common.h"
-#include "bootloader.h"
-#include "memory.h"
-#include "normal_memory.h"
-#include "semc_nor_memory.h"
-#include "semc_nor_flash.h"
-#include "bl_context.h"
-#include "microseconds.h"
-#include "fsl_rtos_abstraction.h"
-#include "fsl_assert.h"
 #include <string.h>
+
+#include "bl_context.h"
+#include "bootloader.h"
+#include "bootloader_common.h"
+#include "fsl_assert.h"
+#include "fsl_device_registers.h"
+#include "fsl_rtos_abstraction.h"
+#include "memory.h"
+#include "microseconds.h"
+#include "normal_memory.h"
+#include "semc_nor_flash.h"
+#include "semc_nor_memory.h"
 #if BL_FEATURE_GEN_KEYBLOB
 #include "bl_keyblob.h"
 #endif // BL_FEATURE_GEN_KEYBLOB
@@ -79,6 +80,7 @@ const memory_region_interface_t g_semcNorMemoryInterface = {
 #endif // #if !BL_MIN_PROFILE
     .flush = semc_nor_mem_flush,
     .erase = semc_nor_mem_erase,
+    .config = semc_nor_mem_config,
 };
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -273,7 +275,8 @@ status_t semc_nor_mem_config(uint32_t *config)
 
         // Default config block shouldn't depend on eFUSE setting
         s_semcNorContext.norConfig.memConfig.asyncClkFreq = SEMC_2ND_MAX_CLK_FREQ;
-        s_semcNorContext.norConfig.memConfig.norMemConfig.addressPortWidth = kSemcMiscProperty_NOR_BaseFlashAddressPortWidth;
+        s_semcNorContext.norConfig.memConfig.norMemConfig.addressPortWidth =
+            kSemcMiscProperty_NOR_BaseFlashAddressPortWidth;
 
         // Configure nor memory according to Option
         s_semcNorContext.norConfig.deviceCommandSet = norOption->option.B.commandSet;
@@ -305,7 +308,7 @@ status_t semc_nor_mem_config(uint32_t *config)
                 &s_semcNorContext.norConfig, kNorAcCycleSetOption_Min, norOption->acTable.min_tWEL_ns);
             pMemConfig->norMemConfig.asyncWeHighTime = semc_nor_get_specific_ac_cycles(
                 &s_semcNorContext.norConfig, kNorAcCycleSetOption_Min, norOption->acTable.min_tWEH_ns);
-            pMemConfig->norMemConfig.asyncAddressToDataHoldTime = semc_nor_get_specific_ac_cycles(
+            pMemConfig->norMemConfig.asyncAddressTocsHoldTime = semc_nor_get_specific_ac_cycles(
                 &s_semcNorContext.norConfig, kNorAcCycleSetOption_Min, norOption->acTable.min_tAWDH_ns);
         }
     }
@@ -516,7 +519,8 @@ status_t semc_nor_mem_flush(void)
         s_semcNorContext.cachedBytesInProgBuf = 0;
 
         // Program data into SEMC NOR memory
-        status = semc_nor_flash_page_program(&s_semcNorContext.norConfig, address, s_semcNorContext.programBuffer, length);
+        status =
+            semc_nor_flash_page_program(&s_semcNorContext.norConfig, address, s_semcNorContext.programBuffer, length);
         if (status != kStatus_Success)
         {
             return status;

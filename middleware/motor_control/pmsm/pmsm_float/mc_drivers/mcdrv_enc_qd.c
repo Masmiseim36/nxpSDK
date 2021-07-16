@@ -11,7 +11,6 @@
 /*******************************************************************************
  * Variables
  ******************************************************************************/
-static bool_t s_statusPass;
 
 /*******************************************************************************
  * Code
@@ -22,11 +21,10 @@ static bool_t s_statusPass;
  *
  * @param this   Pointer to the current object
  *
- * @return boot_t true on success
+ * @return none
  */
-bool_t MCDRV_QdEncGet(mcdrv_qd_enc_t *this)
+void MCDRV_QdEncGet(mcdrv_qd_enc_t *this)
 {
-    s_statusPass = TRUE;
 
     /* read number of pulses and get mechanical position */
     this->f16PosMe = (frac16_t)(MLIB_Mul_F16as(this->a32PosMeGain, (frac16_t)(this->pui32QdBase->LPOS)));
@@ -63,7 +61,6 @@ bool_t MCDRV_QdEncGet(mcdrv_qd_enc_t *this)
     *this->pf16PosElEst = (frac16_t)(this->f16PosMeEst * this->ui16Pp);
     *this->pfltSpdMeEst = (this->fltSpdMeEst);
 
-    return (s_statusPass);
 }
 
 /*!
@@ -71,11 +68,10 @@ bool_t MCDRV_QdEncGet(mcdrv_qd_enc_t *this)
  *
  * @param this   Pointer to the current object
  *
- * @return boot_t true on success
+ * @return none
  */
-bool_t MCDRV_QdEncClear(mcdrv_qd_enc_t *this)
+void MCDRV_QdEncClear(mcdrv_qd_enc_t *this)
 {
-    s_statusPass = TRUE;
 
     this->f16PosMe    = 0;
     this->f16PosMeEst = 0;
@@ -92,7 +88,6 @@ bool_t MCDRV_QdEncClear(mcdrv_qd_enc_t *this)
     this->pui32QdBase->LPOS = 0;
     this->pui32QdBase->UPOS = 0;
 
-    return (s_statusPass);
 }
 
 /*!
@@ -101,13 +96,12 @@ bool_t MCDRV_QdEncClear(mcdrv_qd_enc_t *this)
  * @param this     Pointer to the current object
  *        f16PosMe Mechanical position
  *
- * @return boot_t true on success
+ * @return none
  */
-bool_t MCDRV_QdEncSetPosMe(mcdrv_qd_enc_t *this, frac16_t f16PosMe)
+void MCDRV_QdEncSetPosMe(mcdrv_qd_enc_t *this, frac16_t f16PosMe)
 {
     frac16_t f16CntMod;
 
-    s_statusPass = TRUE;
     f16CntMod    = (frac16_t)(this->pui32QdBase->LMOD >> 1);
 
     /* set mechnical position */
@@ -115,7 +109,6 @@ bool_t MCDRV_QdEncSetPosMe(mcdrv_qd_enc_t *this, frac16_t f16PosMe)
     this->sTo.f32Theta      = MLIB_Conv_F32s(f16PosMe);
     this->pui32QdBase->LPOS = (uint16_t)(MLIB_Mul_F16(f16PosMe, f16CntMod) + (uint16_t)f16CntMod);
 
-    return (s_statusPass);
 }
 
 /*!
@@ -124,11 +117,10 @@ bool_t MCDRV_QdEncSetPosMe(mcdrv_qd_enc_t *this, frac16_t f16PosMe)
  * @param this       Pointer to the current object
  *        bDirection Encoder direction
  *
- * @return boot_t true on success
+ * @return none
  */
-bool_t MCDRV_QdEncSetDirection(mcdrv_qd_enc_t *this)
+void MCDRV_QdEncSetDirection(mcdrv_qd_enc_t *this)
 {
-    s_statusPass = TRUE;
 
     /* forward/reverse */
     if (this->bDirection)
@@ -136,5 +128,4 @@ bool_t MCDRV_QdEncSetDirection(mcdrv_qd_enc_t *this)
     else
         this->pui32QdBase->CTRL &= ~ENC_CTRL_REV_MASK;
 
-    return (s_statusPass);
 }

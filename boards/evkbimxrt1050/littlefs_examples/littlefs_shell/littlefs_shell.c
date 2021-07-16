@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2018 NXP
+ * Copyright 2016-2021 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -10,12 +10,12 @@
 #include "fsl_debug_console.h"
 #include "fsl_component_serial_manager.h"
 #include "fsl_shell.h"
-#include "lfs_support.h"
+#include "lfs.h"
+#include "lfs_mflash.h"
 
 #include "pin_mux.h"
 #include "clock_config.h"
 #include "board.h"
-#include "fsl_flexspi.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -54,7 +54,11 @@ SHELL_COMMAND_DEFINE(mount, "\r\n\"mount\": Mounts the filesystem\r\n", lfs_moun
 SHELL_COMMAND_DEFINE(unmount, "\r\n\"unmount\": Unmounts the filesystem\r\n", lfs_unmount_handler, 0);
 SHELL_COMMAND_DEFINE(umount, "", lfs_unmount_handler, 0); // unmount alias
 SHELL_COMMAND_DEFINE(cd, "", lfs_cd_handler, SHELL_IGNORE_PARAMETER_COUNT);
-SHELL_COMMAND_DEFINE(ls, "\r\n\"ls <path>\": Lists directory content\r\n", lfs_ls_handler, 1);
+SHELL_COMMAND_DEFINE(ls,
+                     "\r\n\"ls <path>\": Lists directory content\r\n",
+                     lfs_ls_handler,
+                     SHELL_IGNORE_PARAMETER_COUNT);
+SHELL_COMMAND_DEFINE(dir, "", lfs_ls_handler, SHELL_IGNORE_PARAMETER_COUNT); // ls alias
 SHELL_COMMAND_DEFINE(rm, "\r\n\"rm <path>\": Removes file or directory\r\n", lfs_rm_handler, 1);
 SHELL_COMMAND_DEFINE(mkdir, "\r\n\"mkdir <path>\": Creates a new directory\r\n", lfs_mkdir_handler, 1);
 SHELL_COMMAND_DEFINE(write, "\r\n\"write <path> <text>\": Writes/appends text to a file\r\n", lfs_write_handler, 2);
@@ -68,118 +72,6 @@ extern serial_handle_t g_serialHandle;
 /*******************************************************************************
  * Code
  ******************************************************************************/
-flexspi_device_config_t deviceconfig = {
-    .flexspiRootClk       = 42000000, /* 42MHZ SPI serial clock */
-    .isSck2Enabled        = false,
-    .flashSize            = FLASH_SIZE,
-    .CSIntervalUnit       = kFLEXSPI_CsIntervalUnit1SckCycle,
-    .CSInterval           = 2,
-    .CSHoldTime           = 0,
-    .CSSetupTime          = 3,
-    .dataValidTime        = 1,
-    .columnspace          = 3,
-    .enableWordAddress    = true,
-    .AWRSeqIndex          = HYPERFLASH_CMD_LUT_SEQ_IDX_WRITEDATA,
-    .AWRSeqNumber         = 1,
-    .ARDSeqIndex          = HYPERFLASH_CMD_LUT_SEQ_IDX_READDATA,
-    .ARDSeqNumber         = 1,
-    .AHBWriteWaitUnit     = kFLEXSPI_AhbWriteWaitUnit2AhbCycle,
-    .AHBWriteWaitInterval = 20,
-};
-
-const uint32_t customLUT[CUSTOM_LUT_LENGTH] = {
-    /* Read Data */
-    [4 * HYPERFLASH_CMD_LUT_SEQ_IDX_READDATA] =
-        FLEXSPI_LUT_SEQ(kFLEXSPI_Command_DDR, kFLEXSPI_8PAD, 0xA0, kFLEXSPI_Command_RADDR_DDR, kFLEXSPI_8PAD, 0x18),
-    [4 * HYPERFLASH_CMD_LUT_SEQ_IDX_READDATA + 1] = FLEXSPI_LUT_SEQ(
-        kFLEXSPI_Command_CADDR_DDR, kFLEXSPI_8PAD, 0x10, kFLEXSPI_Command_READ_DDR, kFLEXSPI_8PAD, 0x04),
-
-    /* Write Data */
-    [4 * HYPERFLASH_CMD_LUT_SEQ_IDX_WRITEDATA] =
-        FLEXSPI_LUT_SEQ(kFLEXSPI_Command_DDR, kFLEXSPI_8PAD, 0x20, kFLEXSPI_Command_RADDR_DDR, kFLEXSPI_8PAD, 0x18),
-    [4 * HYPERFLASH_CMD_LUT_SEQ_IDX_WRITEDATA + 1] = FLEXSPI_LUT_SEQ(
-        kFLEXSPI_Command_CADDR_DDR, kFLEXSPI_8PAD, 0x10, kFLEXSPI_Command_WRITE_DDR, kFLEXSPI_8PAD, 0x02),
-    /* Read Status */
-    [4 * HYPERFLASH_CMD_LUT_SEQ_IDX_READSTATUS] =
-        FLEXSPI_LUT_SEQ(kFLEXSPI_Command_DDR, kFLEXSPI_8PAD, 0x00, kFLEXSPI_Command_DDR, kFLEXSPI_8PAD, 0x00),
-    [4 * HYPERFLASH_CMD_LUT_SEQ_IDX_READSTATUS + 1] = FLEXSPI_LUT_SEQ(
-        kFLEXSPI_Command_DDR, kFLEXSPI_8PAD, 0x00, kFLEXSPI_Command_DDR, kFLEXSPI_8PAD, 0xAA), // ADDR 0x555
-    [4 * HYPERFLASH_CMD_LUT_SEQ_IDX_READSTATUS + 2] =
-        FLEXSPI_LUT_SEQ(kFLEXSPI_Command_DDR, kFLEXSPI_8PAD, 0x00, kFLEXSPI_Command_DDR, kFLEXSPI_8PAD, 0x05),
-    [4 * HYPERFLASH_CMD_LUT_SEQ_IDX_READSTATUS + 3] = FLEXSPI_LUT_SEQ(
-        kFLEXSPI_Command_DDR, kFLEXSPI_8PAD, 0x00, kFLEXSPI_Command_DDR, kFLEXSPI_8PAD, 0x70), // DATA 0x70
-    [4 * HYPERFLASH_CMD_LUT_SEQ_IDX_READSTATUS + 4] =
-        FLEXSPI_LUT_SEQ(kFLEXSPI_Command_DDR, kFLEXSPI_8PAD, 0xA0, kFLEXSPI_Command_RADDR_DDR, kFLEXSPI_8PAD, 0x18),
-    [4 * HYPERFLASH_CMD_LUT_SEQ_IDX_READSTATUS + 5] = FLEXSPI_LUT_SEQ(
-        kFLEXSPI_Command_CADDR_DDR, kFLEXSPI_8PAD, 0x10, kFLEXSPI_Command_DUMMY_RWDS_DDR, kFLEXSPI_8PAD, 0x0B),
-    [4 * HYPERFLASH_CMD_LUT_SEQ_IDX_READSTATUS + 6] =
-        FLEXSPI_LUT_SEQ(kFLEXSPI_Command_READ_DDR, kFLEXSPI_8PAD, 0x04, kFLEXSPI_Command_STOP, kFLEXSPI_1PAD, 0x0),
-
-    /* Write Enable */
-    [4 * HYPERFLASH_CMD_LUT_SEQ_IDX_WRITEENABLE] =
-        FLEXSPI_LUT_SEQ(kFLEXSPI_Command_DDR, kFLEXSPI_8PAD, 0x00, kFLEXSPI_Command_DDR, kFLEXSPI_8PAD, 0x00),
-    [4 * HYPERFLASH_CMD_LUT_SEQ_IDX_WRITEENABLE + 1] = FLEXSPI_LUT_SEQ(
-        kFLEXSPI_Command_DDR, kFLEXSPI_8PAD, 0x00, kFLEXSPI_Command_DDR, kFLEXSPI_8PAD, 0xAA), // ADDR 0x555
-    [4 * HYPERFLASH_CMD_LUT_SEQ_IDX_WRITEENABLE + 2] =
-        FLEXSPI_LUT_SEQ(kFLEXSPI_Command_DDR, kFLEXSPI_8PAD, 0x00, kFLEXSPI_Command_DDR, kFLEXSPI_8PAD, 0x05),
-    [4 * HYPERFLASH_CMD_LUT_SEQ_IDX_WRITEENABLE + 3] = FLEXSPI_LUT_SEQ(
-        kFLEXSPI_Command_DDR, kFLEXSPI_8PAD, 0x00, kFLEXSPI_Command_DDR, kFLEXSPI_8PAD, 0xAA), // DATA 0xAA
-    [4 * HYPERFLASH_CMD_LUT_SEQ_IDX_WRITEENABLE + 4] =
-        FLEXSPI_LUT_SEQ(kFLEXSPI_Command_DDR, kFLEXSPI_8PAD, 0x00, kFLEXSPI_Command_DDR, kFLEXSPI_8PAD, 0x00),
-    [4 * HYPERFLASH_CMD_LUT_SEQ_IDX_WRITEENABLE + 5] =
-        FLEXSPI_LUT_SEQ(kFLEXSPI_Command_DDR, kFLEXSPI_8PAD, 0x00, kFLEXSPI_Command_DDR, kFLEXSPI_8PAD, 0x55),
-    [4 * HYPERFLASH_CMD_LUT_SEQ_IDX_WRITEENABLE + 6] =
-        FLEXSPI_LUT_SEQ(kFLEXSPI_Command_DDR, kFLEXSPI_8PAD, 0x00, kFLEXSPI_Command_DDR, kFLEXSPI_8PAD, 0x02),
-    [4 * HYPERFLASH_CMD_LUT_SEQ_IDX_WRITEENABLE + 7] =
-        FLEXSPI_LUT_SEQ(kFLEXSPI_Command_DDR, kFLEXSPI_8PAD, 0x00, kFLEXSPI_Command_DDR, kFLEXSPI_8PAD, 0x55),
-
-    /* Erase Sector  */
-    [4 * HYPERFLASH_CMD_LUT_SEQ_IDX_ERASESECTOR] =
-        FLEXSPI_LUT_SEQ(kFLEXSPI_Command_DDR, kFLEXSPI_8PAD, 0x00, kFLEXSPI_Command_DDR, kFLEXSPI_8PAD, 0x00),
-    [4 * HYPERFLASH_CMD_LUT_SEQ_IDX_ERASESECTOR + 1] = FLEXSPI_LUT_SEQ(
-        kFLEXSPI_Command_DDR, kFLEXSPI_8PAD, 0x00, kFLEXSPI_Command_DDR, kFLEXSPI_8PAD, 0xAA), // ADDR 0x555
-    [4 * HYPERFLASH_CMD_LUT_SEQ_IDX_ERASESECTOR + 2] =
-        FLEXSPI_LUT_SEQ(kFLEXSPI_Command_DDR, kFLEXSPI_8PAD, 0x00, kFLEXSPI_Command_DDR, kFLEXSPI_8PAD, 0x05),
-    [4 * HYPERFLASH_CMD_LUT_SEQ_IDX_ERASESECTOR + 3] = FLEXSPI_LUT_SEQ(
-        kFLEXSPI_Command_DDR, kFLEXSPI_8PAD, 0x00, kFLEXSPI_Command_DDR, kFLEXSPI_8PAD, 0x80), // DATA 0x80
-    [4 * HYPERFLASH_CMD_LUT_SEQ_IDX_ERASESECTOR + 4] =
-        FLEXSPI_LUT_SEQ(kFLEXSPI_Command_DDR, kFLEXSPI_8PAD, 0x00, kFLEXSPI_Command_DDR, kFLEXSPI_8PAD, 0x00),
-    [4 * HYPERFLASH_CMD_LUT_SEQ_IDX_ERASESECTOR + 5] =
-        FLEXSPI_LUT_SEQ(kFLEXSPI_Command_DDR, kFLEXSPI_8PAD, 0x00, kFLEXSPI_Command_DDR, kFLEXSPI_8PAD, 0xAA),
-    [4 * HYPERFLASH_CMD_LUT_SEQ_IDX_ERASESECTOR + 6] =
-        FLEXSPI_LUT_SEQ(kFLEXSPI_Command_DDR, kFLEXSPI_8PAD, 0x00, kFLEXSPI_Command_DDR, kFLEXSPI_8PAD, 0x05),
-    [4 * HYPERFLASH_CMD_LUT_SEQ_IDX_ERASESECTOR + 7] = FLEXSPI_LUT_SEQ(
-        kFLEXSPI_Command_DDR, kFLEXSPI_8PAD, 0x00, kFLEXSPI_Command_DDR, kFLEXSPI_8PAD, 0xAA), // ADDR 0x555
-    [4 * HYPERFLASH_CMD_LUT_SEQ_IDX_ERASESECTOR + 8] =
-        FLEXSPI_LUT_SEQ(kFLEXSPI_Command_DDR, kFLEXSPI_8PAD, 0x00, kFLEXSPI_Command_DDR, kFLEXSPI_8PAD, 0x00),
-    [4 * HYPERFLASH_CMD_LUT_SEQ_IDX_ERASESECTOR + 9] =
-        FLEXSPI_LUT_SEQ(kFLEXSPI_Command_DDR, kFLEXSPI_8PAD, 0x00, kFLEXSPI_Command_DDR, kFLEXSPI_8PAD, 0x55),
-    [4 * HYPERFLASH_CMD_LUT_SEQ_IDX_ERASESECTOR + 10] =
-        FLEXSPI_LUT_SEQ(kFLEXSPI_Command_DDR, kFLEXSPI_8PAD, 0x00, kFLEXSPI_Command_DDR, kFLEXSPI_8PAD, 0x02),
-    [4 * HYPERFLASH_CMD_LUT_SEQ_IDX_ERASESECTOR + 11] =
-        FLEXSPI_LUT_SEQ(kFLEXSPI_Command_DDR, kFLEXSPI_8PAD, 0x00, kFLEXSPI_Command_DDR, kFLEXSPI_8PAD, 0x55),
-    [4 * HYPERFLASH_CMD_LUT_SEQ_IDX_ERASESECTOR + 12] =
-        FLEXSPI_LUT_SEQ(kFLEXSPI_Command_DDR, kFLEXSPI_8PAD, 0x00, kFLEXSPI_Command_RADDR_DDR, kFLEXSPI_8PAD, 0x18),
-    [4 * HYPERFLASH_CMD_LUT_SEQ_IDX_ERASESECTOR + 13] =
-        FLEXSPI_LUT_SEQ(kFLEXSPI_Command_CADDR_DDR, kFLEXSPI_8PAD, 0x10, kFLEXSPI_Command_DDR, kFLEXSPI_8PAD, 0x00),
-    [4 * HYPERFLASH_CMD_LUT_SEQ_IDX_ERASESECTOR + 14] =
-        FLEXSPI_LUT_SEQ(kFLEXSPI_Command_DDR, kFLEXSPI_8PAD, 0x30, kFLEXSPI_Command_STOP, kFLEXSPI_1PAD, 0x00),
-
-    /* program page */
-    [4 * HYPERFLASH_CMD_LUT_SEQ_IDX_PAGEPROGRAM] =
-        FLEXSPI_LUT_SEQ(kFLEXSPI_Command_DDR, kFLEXSPI_8PAD, 0x00, kFLEXSPI_Command_DDR, kFLEXSPI_8PAD, 0x00),
-    [4 * HYPERFLASH_CMD_LUT_SEQ_IDX_PAGEPROGRAM + 1] = FLEXSPI_LUT_SEQ(
-        kFLEXSPI_Command_DDR, kFLEXSPI_8PAD, 0x00, kFLEXSPI_Command_DDR, kFLEXSPI_8PAD, 0xAA), // ADDR 0x555
-    [4 * HYPERFLASH_CMD_LUT_SEQ_IDX_PAGEPROGRAM + 2] =
-        FLEXSPI_LUT_SEQ(kFLEXSPI_Command_DDR, kFLEXSPI_8PAD, 0x00, kFLEXSPI_Command_DDR, kFLEXSPI_8PAD, 0x05),
-    [4 * HYPERFLASH_CMD_LUT_SEQ_IDX_PAGEPROGRAM + 3] = FLEXSPI_LUT_SEQ(
-        kFLEXSPI_Command_DDR, kFLEXSPI_8PAD, 0x00, kFLEXSPI_Command_DDR, kFLEXSPI_8PAD, 0xA0), // DATA 0xA0
-    [4 * HYPERFLASH_CMD_LUT_SEQ_IDX_PAGEPROGRAM + 4] =
-        FLEXSPI_LUT_SEQ(kFLEXSPI_Command_DDR, kFLEXSPI_8PAD, 0x00, kFLEXSPI_Command_RADDR_DDR, kFLEXSPI_8PAD, 0x18),
-    [4 * HYPERFLASH_CMD_LUT_SEQ_IDX_PAGEPROGRAM + 5] = FLEXSPI_LUT_SEQ(
-        kFLEXSPI_Command_CADDR_DDR, kFLEXSPI_8PAD, 0x10, kFLEXSPI_Command_WRITE_DDR, kFLEXSPI_8PAD, 0x80),
-};
-
 
 
 static shell_status_t lfs_format_handler(shell_handle_t shellHandle, int32_t argc, char **argv)
@@ -201,7 +93,7 @@ static shell_status_t lfs_format_handler(shell_handle_t shellHandle, int32_t arg
     res = lfs_format(&lfs, &cfg);
     if (res)
     {
-        PRINTF("Error formatting LFS: %d\r\n", res);
+        PRINTF("\rError formatting LFS: %d\r\n", res);
     }
 
     return kStatus_SHELL_Success;
@@ -220,7 +112,7 @@ static shell_status_t lfs_mount_handler(shell_handle_t shellHandle, int32_t argc
     res = lfs_mount(&lfs, &cfg);
     if (res)
     {
-        PRINTF("Error mounting LFS\r\n");
+        PRINTF("\rError mounting LFS\r\n");
     }
     else
     {
@@ -243,7 +135,7 @@ static shell_status_t lfs_unmount_handler(shell_handle_t shellHandle, int32_t ar
     res = lfs_unmount(&lfs);
     if (res)
     {
-        PRINTF("Error unmounting LFS: %i\r\n", res);
+        PRINTF("\rError unmounting LFS: %i\r\n", res);
     }
 
     lfs_mounted = 0;
@@ -260,8 +152,11 @@ static shell_status_t lfs_cd_handler(shell_handle_t shellHandle, int32_t argc, c
 static shell_status_t lfs_ls_handler(shell_handle_t shellHandle, int32_t argc, char **argv)
 {
     int res;
+    char *path;
     lfs_dir_t dir;
     struct lfs_info info;
+    int files;
+    int dirs;
 
     if (!lfs_mounted)
     {
@@ -269,12 +164,32 @@ static shell_status_t lfs_ls_handler(shell_handle_t shellHandle, int32_t argc, c
         return kStatus_SHELL_Success;
     }
 
-    res = lfs_dir_open(&lfs, &dir, argv[1]);
-    if (res)
+    if (argc > 2)
     {
-        PRINTF("Error opening directory: %i\r\n", res);
+        SHELL_Printf("Invalid number of parameters\r\n");
         return kStatus_SHELL_Success;
     }
+
+    if (argc < 2)
+    {
+        path = "/";
+    }
+    else
+    {
+        path = argv[1];
+    }
+
+    /* open the directory */
+    res = lfs_dir_open(&lfs, &dir, path);
+    if (res)
+    {
+        PRINTF("\rError opening directory: %i\r\n", res);
+        return kStatus_SHELL_Success;
+    }
+
+    PRINTF(" Directory of %s\r\n", path);
+    files = 0;
+    dirs  = 0;
 
     /* iterate until end of directory */
     while ((res = lfs_dir_read(&lfs, &dir, &info)) != 0)
@@ -282,17 +197,19 @@ static shell_status_t lfs_ls_handler(shell_handle_t shellHandle, int32_t argc, c
         if (res < 0)
         {
             /* break the loop in case of an error */
-            PRINTF("Error reading directory: %i\r\n", res);
+            PRINTF("\rError reading directory: %i\r\n", res);
             break;
         }
 
         if (info.type == LFS_TYPE_REG)
         {
             SHELL_Printf("%8d %s\r\n", info.size, info.name);
+            files++;
         }
         else if (info.type == LFS_TYPE_DIR)
         {
             SHELL_Printf("%     DIR %s\r\n", info.name);
+            dirs++;
         }
         else
         {
@@ -303,9 +220,11 @@ static shell_status_t lfs_ls_handler(shell_handle_t shellHandle, int32_t argc, c
     res = lfs_dir_close(&lfs, &dir);
     if (res)
     {
-        PRINTF("Error closing directory: %i\r\n", res);
+        PRINTF("\rError closing directory: %i\r\n", res);
         return kStatus_SHELL_Success;
     }
+
+    PRINTF(" %d File(s), %d Dir(s)\r\n", files, dirs);
 
     return kStatus_SHELL_Success;
 }
@@ -324,7 +243,7 @@ static shell_status_t lfs_rm_handler(shell_handle_t shellHandle, int32_t argc, c
 
     if (res)
     {
-        PRINTF("Error while removing: %i\r\n", res);
+        PRINTF("\rError while removing: %i\r\n", res);
     }
 
     return kStatus_SHELL_Success;
@@ -344,7 +263,7 @@ static shell_status_t lfs_mkdir_handler(shell_handle_t shellHandle, int32_t argc
 
     if (res)
     {
-        PRINTF("Error creating directory: %i\r\n", res);
+        PRINTF("\rError creating directory: %i\r\n", res);
     }
 
     return kStatus_SHELL_Success;
@@ -361,10 +280,10 @@ static shell_status_t lfs_write_handler(shell_handle_t shellHandle, int32_t argc
         return kStatus_SHELL_Success;
     }
 
-    res = lfs_file_open(&lfs, &file, argv[1], LFS_O_APPEND | LFS_O_CREAT);
+    res = lfs_file_open(&lfs, &file, argv[1], LFS_O_WRONLY | LFS_O_APPEND | LFS_O_CREAT);
     if (res)
     {
-        PRINTF("Error opening file: %i\r\n", res);
+        PRINTF("\rError opening file: %i\r\n", res);
         return kStatus_SHELL_Success;
     }
 
@@ -374,13 +293,13 @@ static shell_status_t lfs_write_handler(shell_handle_t shellHandle, int32_t argc
 
     if (res < 0)
     {
-        PRINTF("Error writing file: %i\r\n", res);
+        PRINTF("\rError writing file: %i\r\n", res);
     }
 
     res = lfs_file_close(&lfs, &file);
     if (res)
     {
-        PRINTF("Error closing file: %i\r\n", res);
+        PRINTF("\rError closing file: %i\r\n", res);
     }
 
     return kStatus_SHELL_Success;
@@ -401,7 +320,7 @@ static shell_status_t lfs_cat_handler(shell_handle_t shellHandle, int32_t argc, 
     res = lfs_file_open(&lfs, &file, argv[1], LFS_O_RDONLY);
     if (res)
     {
-        PRINTF("Error opening file: %i\r\n", res);
+        PRINTF("\rError opening file: %i\r\n", res);
         return kStatus_SHELL_Success;
     }
 
@@ -410,7 +329,7 @@ static shell_status_t lfs_cat_handler(shell_handle_t shellHandle, int32_t argc, 
         res = lfs_file_read(&lfs, &file, buf, sizeof(buf));
         if (res < 0)
         {
-            PRINTF("Error reading file: %i\r\n", res);
+            PRINTF("\rError reading file: %i\r\n", res);
             break;
         }
         SHELL_Write(s_shellHandle, (char *)buf, res);
@@ -419,7 +338,7 @@ static shell_status_t lfs_cat_handler(shell_handle_t shellHandle, int32_t argc, 
     res = lfs_file_close(&lfs, &file);
     if (res)
     {
-        PRINTF("Error closing file: %i\r\n", res);
+        PRINTF("\rError closing file: %i\r\n", res);
     }
 
     return kStatus_SHELL_Success;
@@ -461,6 +380,7 @@ int main(void)
     SHELL_RegisterCommand(s_shellHandle, SHELL_COMMAND(umount));
     SHELL_RegisterCommand(s_shellHandle, SHELL_COMMAND(cd));
     SHELL_RegisterCommand(s_shellHandle, SHELL_COMMAND(ls));
+    SHELL_RegisterCommand(s_shellHandle, SHELL_COMMAND(dir));
     SHELL_RegisterCommand(s_shellHandle, SHELL_COMMAND(rm));
     SHELL_RegisterCommand(s_shellHandle, SHELL_COMMAND(mkdir));
     SHELL_RegisterCommand(s_shellHandle, SHELL_COMMAND(write));

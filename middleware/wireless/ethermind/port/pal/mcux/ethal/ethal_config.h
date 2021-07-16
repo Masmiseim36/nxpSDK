@@ -18,7 +18,7 @@
 
 /* ------------------------------------------ Type Definitions */
 /** Maximum Characters per line in Config File */
-#define EM_CONFIG_MAX_CHARS_PER_LINE            128
+#define EM_CONFIG_MAX_CHARS_PER_LINE            128U
 
 
 /* ------------------------------------------ API/Function Declarations */

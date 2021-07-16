@@ -12,6 +12,7 @@
 #include "nghttp2client.h"
 #include "pin_mux.h"
 #include "clock_config.h"
+#include "peripherals.h"
 #include "board.h"
 #include "ksdk_mbedtls.h"
 
@@ -19,37 +20,13 @@
 
 #include "fsl_gpio.h"
 #include "fsl_iomuxc.h"
-#include "lwip/netifapi.h"
-#include "lwip/opt.h"
-#include "lwip/tcpip.h"
+#include "lwip/netif.h"
 #include "lwip/dhcp.h"
 #include "lwip/prot/dhcp.h"
-#include "netif/ethernet.h"
-#include "enet_ethernetif.h"
 #include "fsl_phy.h"
-#include "fsl_phyksz8081.h"
-#include "fsl_enet_mdio.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-
-/* MAC address configuration. */
-#define configMAC_ADDR                     \
-    {                                      \
-        0x02, 0x12, 0x13, 0x10, 0x15, 0x25 \
-    }
-
-/* Address of PHY interface. */
-#define EXAMPLE_PHY_ADDRESS BOARD_ENET0_PHY_ADDRESS
-
-/* MDIO operations. */
-#define EXAMPLE_MDIO_OPS enet_ops
-
-/* PHY operations. */
-#define EXAMPLE_PHY_OPS phyksz8081_ops
-
-/* ENET clock frequency. */
-#define EXAMPLE_CLOCK_FREQ CLOCK_GetFreq(kCLOCK_IpgClk)
 
 /*******************************************************************************
  * Prototypes
@@ -59,9 +36,6 @@ void BOARD_InitNetwork(void);
 /*******************************************************************************
  * Variables
  ******************************************************************************/
-static struct netif netif;
-static mdio_handle_t mdioHandle = {.ops = &EXAMPLE_MDIO_OPS};
-static phy_handle_t phyHandle   = {.phyAddr = EXAMPLE_PHY_ADDRESS, .mdioHandle = &mdioHandle, .ops = &EXAMPLE_PHY_OPS};
 
 /*******************************************************************************
  * Code
@@ -84,29 +58,13 @@ void delay(void)
 
 void BOARD_InitNetwork(void)
 {
-    ip4_addr_t netif_ipaddr, netif_netmask, netif_gw;
-    ethernetif_config_t enet_config = {
-        .phyHandle  = &phyHandle,
-        .macAddress = configMAC_ADDR,
-    };
+    struct dhcp *dhcp;
 
-    mdioHandle.resource.csrClock_Hz = EXAMPLE_CLOCK_FREQ;
-
-    IP4_ADDR(&netif_ipaddr, 0, 0, 0, 0);
-    IP4_ADDR(&netif_netmask, 0, 0, 0, 0);
-    IP4_ADDR(&netif_gw, 0, 0, 0, 0);
-
-    tcpip_init(NULL, NULL);
-
-    netifapi_netif_add(&netif, &netif_ipaddr, &netif_netmask, &netif_gw, &enet_config, ethernetif0_init, tcpip_input);
-    netifapi_netif_set_default(&netif);
-    netifapi_netif_set_up(&netif);
+    BOARD_InitLwip();
 
     PRINTF("Getting IP address from DHCP ...\n");
-    netifapi_dhcp_start(&netif);
 
-    struct dhcp *dhcp;
-    dhcp = (struct dhcp *)netif_get_client_data(&netif, LWIP_NETIF_CLIENT_DATA_INDEX_DHCP);
+    dhcp = (struct dhcp *)netif_get_client_data(&lwIP_netif0, LWIP_NETIF_CLIENT_DATA_INDEX_DHCP);
 
     while (dhcp->state != DHCP_STATE_BOUND)
     {
@@ -115,9 +73,11 @@ void BOARD_InitNetwork(void)
 
     if (dhcp->state == DHCP_STATE_BOUND)
     {
-        PRINTF("\r\n IPv4 Address     : %u.%u.%u.%u\r\n", ((u8_t *)&netif.ip_addr.addr)[0],
-               ((u8_t *)&netif.ip_addr.addr)[1], ((u8_t *)&netif.ip_addr.addr)[2], ((u8_t *)&netif.ip_addr.addr)[3]);
+        PRINTF("\r\n IPv4 Address     : %u.%u.%u.%u\r\n", ((u8_t *)&lwIP_netif0.ip_addr.addr)[0],
+               ((u8_t *)&lwIP_netif0.ip_addr.addr)[1], ((u8_t *)&lwIP_netif0.ip_addr.addr)[2],
+               ((u8_t *)&lwIP_netif0.ip_addr.addr)[3]);
     }
+
     PRINTF("DHCP OK");
 }
 

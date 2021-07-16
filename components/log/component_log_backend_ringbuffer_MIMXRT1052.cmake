@@ -1,19 +1,17 @@
-if(NOT COMPONENT_LOG_BACKEND_RINGBUFFER_MIMXRT1052_INCLUDED)
-    
-    set(COMPONENT_LOG_BACKEND_RINGBUFFER_MIMXRT1052_INCLUDED true CACHE BOOL "component_log_backend_ringbuffer component is included.")
+include_guard(GLOBAL)
+message("component_log_backend_ringbuffer component is included.")
 
-    target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
-        ${CMAKE_CURRENT_LIST_DIR}/fsl_component_log_backend_ringbuffer.c
-    )
-
-
-    target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
-        ${CMAKE_CURRENT_LIST_DIR}/.
-    )
+target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
+    ${CMAKE_CURRENT_LIST_DIR}/fsl_component_log_backend_ringbuffer.c
+)
 
 
-    include(driver_common_MIMXRT1052)
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
+    ${CMAKE_CURRENT_LIST_DIR}/.
+)
 
-    include(component_log_MIMXRT1052)
 
-endif()
+include(driver_common_MIMXRT1052)
+
+include(component_log_MIMXRT1052)
+

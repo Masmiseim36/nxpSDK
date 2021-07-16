@@ -24,7 +24,7 @@
  *  to identify one concerned Protocol Entity. The following defines the
  *  Maximum number of supported Remote Devices in all the modules except HCI.
  */
-#define BT_MAX_REMOTE_DEVICES                           3
+#define BT_MAX_REMOTE_DEVICES                           3U
 
 /*
  *  Static Data Size used in EtherMind Modules.
@@ -56,7 +56,7 @@
  *  Maximum Value: anything
  */
 #ifndef BT_NO_STATIC_DATA_SIZE
-#define BT_STATIC_DATA_SIZE                             32
+#define BT_STATIC_DATA_SIZE                             32U
 #endif /* BT_NO_STATIC_DATA_SIZE */
 
 /*
@@ -66,7 +66,7 @@
  *  Minimum Value: 16
  *  Maximum Value: 16
  */
-#define BT_LINK_KEY_SIZE                                16
+#define BT_LINK_KEY_SIZE                                16U
 
 /*
  *  This parameter defines the upper limit for the size of Bluetooth
@@ -76,7 +76,7 @@
  *  Minimum Value: 1
  *  Maximum Value: 16
  */
-#define BT_PIN_CODE_SIZE                                8
+#define BT_PIN_CODE_SIZE                                8U
 
 /*
  *  This parameter defines the upper limit for the size of Bluetooth
@@ -86,7 +86,7 @@
  *  Minimum Value: 1
  *  Maximum Value: 248
  */
-#define BT_LOCAL_NAME_SIZE                              248
+#define BT_LOCAL_NAME_SIZE                              248U
 
 
 /* ----------------------------------------------------------------------- */
@@ -98,7 +98,7 @@
  *  Minimum Value: 1
  *  Maximum Value: anything
  */
-#define TIMER_MAX_ENTITIES                              20
+#define TIMER_MAX_ENTITIES                              20U
 
 
 /* ----------------------------------------------------------------------- */
@@ -111,9 +111,9 @@
  *  User API Queue is a matter of judgement - depends on the application
  *  or profile again - depends on how many simultaneous APIs may be issued
  */
-#define WT_INTERNAL_QUEUE_SIZE                          50
-#define WT_USER_API_QUEUE_SIZE                          20
-#define WT_USER_DATA_QUEUE_SIZE                         100
+#define WT_INTERNAL_QUEUE_SIZE                          50U
+#define WT_USER_API_QUEUE_SIZE                          20U
+#define WT_USER_DATA_QUEUE_SIZE                         100U
 
 
 /* ----------------------------------------------------------------------- */
@@ -132,7 +132,7 @@
  *  Minimum Value: depends on requirement.
  *  Maximum Value: depends on requirement.
  */
-#define HCI_TRANSPORT_MAX_BUFFER_SIZE                   8192
+#define HCI_TRANSPORT_MAX_BUFFER_SIZE                   8192U
 
 #if (((HCI_TRANSPORT_MAX_BUFFER_SIZE) == 0)        \
     ||(((HCI_TRANSPORT_MAX_BUFFER_SIZE) &          \
@@ -159,7 +159,7 @@
  *  Minimum Value: depends on the host controller.
  *  Maximum Value: depends on the host controller.
  */
-#define HCI_TRANSPORT_MAX_PACKET_SIZE                   1026
+#define HCI_TRANSPORT_MAX_PACKET_SIZE                   1026U
 
 /*
  *  Low & High Water Marks for the HCI Transport's circular buffer.
@@ -177,8 +177,8 @@
  *  Minimum Value: depends on requirement.
  *  Maximum Value: depends on requirement.
  */
-#define HCI_TRANSPORT_BUFFER_THRESHOLD_LOW              512
-#define HCI_TRANSPORT_BUFFER_THRESHOLD_HIGH             128
+#define HCI_TRANSPORT_BUFFER_THRESHOLD_LOW              512U
+#define HCI_TRANSPORT_BUFFER_THRESHOLD_HIGH             128U
 
 
 /* ----------------------------------------------------------------------- */
@@ -193,7 +193,7 @@
  *                 whichever is more.
  *  Maximum Value: depends on requirement.
  */
-#define HCI_UART_WR_BUF_SIZE                            2048
+#define HCI_UART_WR_BUF_SIZE                            2048U
 
 
 /* ----------------------------------------------------------------------- */
@@ -206,7 +206,7 @@
  *  value larger than the largest of the Host Controller reported buffer
  *  sizes for ACL & SCO packets.
  */
-#define BCSP_MAX_PAYLOAD_LENGTH                         4096
+#define BCSP_MAX_PAYLOAD_LENGTH                         4096U
 
 /*
  *  BCSP SLIP Layer transmits packet with SLIP byte stuffing algorithm.
@@ -228,16 +228,16 @@
  *  the maximum size that SLIP encoding routine can be asked to write, which
  *  in turn depends on the Host Controller's buffer sizes.
  */
-#define BCSP_SLIP_TX_SIZE                               1500
+#define BCSP_SLIP_TX_SIZE                               1500U
 
 /*
  *   BCSP Link Establishment Timeout values and counters. There are two
  *   timers involved in the BCSP Link establishment - Tshy & Tconf. And
  *   one counter - Number of times CONF message has been retransmitted.
  */
-#define BCSP_T_SHY_TIMEOUT                              1
-#define BCSP_T_CONF_TIMEOUT                             1
-#define BCSP_MAX_CONF_TIMEOUT_LIMIT                     20
+#define BCSP_T_SHY_TIMEOUT                              1U
+#define BCSP_T_CONF_TIMEOUT                             1U
+#define BCSP_MAX_CONF_TIMEOUT_LIMIT                     20U
 
 /*
  *  BCSP Sequencing Layer provides reliable data transfer with the help
@@ -252,18 +252,18 @@
  *  would be (number of HC buffers + 10), assuming HCI, in the meantime,
  *  will not send more than 10 commands.
  */
-#define BCSP_MAX_SEQUENCE_TX_BUFFERS                    100
+#define BCSP_MAX_SEQUENCE_TX_BUFFERS                    100U
 
 /*
  *  BCSP Sequencing - Packet Retransmission Timeout and Retransmission Limit.
  */
-#define BCSP_SEQUENCE_RTX_TIMEOUT                       1
-#define BCSP_SEQUENCE_RTX_LIMIT                         20
+#define BCSP_SEQUENCE_RTX_TIMEOUT                       1U
+#define BCSP_SEQUENCE_RTX_LIMIT                         20U
 
 /*
  *  BCSP Sequencing - Transmit Window Size
  */
-#define BCSP_WINDOW_SIZE                                4
+#define BCSP_WINDOW_SIZE                                4U
 
 
 /* ----------------------------------------------------------------------- */
@@ -284,7 +284,7 @@
  *  Minimum Value: 2
  *  Maximum Value: can be anything.
  */
-#define HCI_COMMAND_QUEUE_SIZE                          20
+#define HCI_COMMAND_QUEUE_SIZE                          20U
 
 /*
  *  Length of the buffer packet used to enqueue HCI Events/Data received
@@ -297,7 +297,7 @@
  *  Minimum Value: (31+1+1)
  *  Maximum Value: can be anything >= 'Minimum Value'.
  */
-#define HCI_RPA_BUFFER_LEN                              (31+1+1)
+#define HCI_RPA_BUFFER_LEN                              (31U + 1U + 1U)
 
 /*
  *  Number of buffers of size HCI_RPA_BUFFER_LEN to be used as queue
@@ -308,7 +308,7 @@
  *  Minimum Value: 2
  *  Maximum Value: can be anything.
  */
-#define HCI_NUM_RPA_BUFFERS                             4
+#define HCI_NUM_RPA_BUFFERS                             4U
 
 /*
  *  Maximum number of supported SCO Channels per Remote Bluetooth Device.
@@ -320,7 +320,7 @@
  *  Minimum: 1
  *  Maximum: 3
  */
-#define HCI_MAX_SCO_CHANNELS                            3
+#define HCI_MAX_SCO_CHANNELS                            3U
 
 #define HCI_MAX_DEVICE_ATTRIBUTES                       HCI_MAX_REMOTE_DEVICES
 
@@ -333,7 +333,7 @@
  *  Minimum: 1
  *  Maximum: can be anything.
  */
-#define HCI_MAX_SUPPORTED_EXT_ADV_SETS                  4
+#define HCI_MAX_SUPPORTED_EXT_ADV_SETS                  4U
 #endif /* HCI_LE_EXT_ADV_SETS_LOCAL_ADDR_SUPPORT */
 
 
@@ -356,7 +356,7 @@
  *  Minimum Value: BT_MAX_REMOTE_DEVICES
  *  Maximum Value: depends on requirement.
  */
-#define BT_MAX_DEVICE_QUEUE_SIZE                        (SM_MAX_DEVICES + 1)
+#define BT_MAX_DEVICE_QUEUE_SIZE                        (SM_MAX_DEVICES + 1U)
 
 
 /* ----------------------------------------------------------------------- */
@@ -369,7 +369,7 @@
  *  Minimum Value: 1
  *  Maximum Value: depends on requirement.
  */
-#define FSM_MAX_MODULES                                 5
+#define FSM_MAX_MODULES                                 5U
 
 
 /* ----------------------------------------------------------------------- */
@@ -386,7 +386,7 @@
  *  Minimum Value: 1
  *  Maximum Value: depends on requirement.
  */
-#define SM_MAX_SERVICES                                 10
+#define SM_MAX_SERVICES                                 10U
 
 /*
  *  This constant defines the number of elements Security Manager's
@@ -404,7 +404,7 @@
  *  Minimum Value: BT_MAX_REMOTE_DEVICES
  *  Maximum Value: depends on requirement.
  */
-#define SM_MAX_DEVICES                  (BT_MAX_REMOTE_DEVICES + 10)
+#define SM_MAX_DEVICES                  (BT_MAX_REMOTE_DEVICES + 10U)
 
 /*
  *  This constant defines the number of elements Security Manager's
@@ -414,7 +414,7 @@
  *  Minimum Value: 1
  *  Maximum Value: depends on requirement.
  */
-#define SM_MAX_CONTEXTS                                 10
+#define SM_MAX_CONTEXTS                                 10U
 
 /*
  *  This constant defines the Default Security Mode that the Security
@@ -444,7 +444,7 @@
  *  Valid values:
  *  - 0x00, 0x01
  */
-#define SM_DEFAULT_ENCRYPTION_MODE                      0x00
+#define SM_DEFAULT_ENCRYPTION_MODE                      0x00U
 
 /*
  *  Default PIN Code for Security Manager Module.
@@ -456,7 +456,7 @@
  *  Maximum Value: BT_PIN_CODE_SIZE
  */
 #define SM_DEFAULT_PIN_CODE                             "1234"
-#define SM_DEFAULT_PIN_CODE_LENGTH                      4
+#define SM_DEFAULT_PIN_CODE_LENGTH                      4U
 
 #if (SM_DEFAULT_PIN_CODE_LENGTH > BT_PIN_CODE_SIZE)
     #error "SM_DEFAULT_PIN_CODE_LENGTH value Out-of-Range"
@@ -470,7 +470,7 @@
  *  Minimum Value: 1
  *  Maximum Value: 16
  */
-#define SM_DEVICE_NAME_SIZE                             16
+#define SM_DEVICE_NAME_SIZE                             16U
 
 /*
  *  This constant defines the symbolic name of the device used for
@@ -489,7 +489,7 @@
  *  Minimum Value: As required
  *  Maximum Value: 16
  */
-#define SM_MIN_ENCRYPTION_KEY_SIZE                      7
+#define SM_MIN_ENCRYPTION_KEY_SIZE                      7U
 
 /* ----------------------------------------------------------------------- */
 /* =======================  Attribute Protocol  ========================== */
@@ -504,7 +504,7 @@
  * Minimum Value: 30 Seconds.
  * Maximum Value: 30 Seconds.
  */
-#define ATT_RESPONSE_TIMEOUT                             30
+#define ATT_RESPONSE_TIMEOUT                             30U
 
 /**
  * ATT_MAX_CONNECTION_INSTANCES
@@ -515,7 +515,7 @@
  * Minimum Value:   1.
  * Maximum Value: 255.
  */
-#define ATT_MAX_CONNECTION_INSTANCES                      2
+#define ATT_MAX_CONNECTION_INSTANCES                      2U
 
 /**
  * ATT_MAX_MTU
@@ -529,7 +529,7 @@
  * Minimum Value:  23
  * Maximum Value: L2CAP_MAX_MTU for Classic Link. As per requirement for LE Link
  */
-#define ATT_MAX_MTU                                    1024
+#define ATT_MAX_MTU                                    1024U
 
 
 /* ----------------------------------------------------------------------- */
@@ -544,7 +544,7 @@
  * Minimum Value: 1
  * Maximum Value: anything
  */
-#define GATT_DB_DYN_MAX_SERVICE_COUNT                  20
+#define GATT_DB_DYN_MAX_SERVICE_COUNT                  20U
 
 /**
  * GATT_DB_DYN_CHARACTERISTIC_COUNT
@@ -554,7 +554,7 @@
  * Minimum Value: 1
  * Maximum Value: anything
  */
-#define GATT_DB_DYN_CHARACTERISTIC_COUNT               40
+#define GATT_DB_DYN_CHARACTERISTIC_COUNT               40U
 
 /**
  * GATT_DB_DYN_MAX_ATTRIBUTES
@@ -564,7 +564,7 @@
  * Minimum Value: 1
  * Maximum Value: anything
  */
-#define GATT_DB_DYN_MAX_ATTRIBUTES                     80
+#define GATT_DB_DYN_MAX_ATTRIBUTES                     80U
 
 /**
  * GATT_DB_DYN_MAX_TYPE_COUNT
@@ -574,7 +574,7 @@
  * Minimum Value: 1
  * Maximum Value: anything
  */
-#define GATT_DB_DYN_MAX_TYPE_COUNT                     80
+#define GATT_DB_DYN_MAX_TYPE_COUNT                     80U
 
 /**
  * GATT_DB_DYN_PEER_VALUE_ARRAY_SIZE
@@ -585,7 +585,7 @@
  * Minimum Value: 1
  * Maximum Value: anything
  */
-#define GATT_DB_DYN_PEER_VALUE_ARRAY_SIZE              160
+#define GATT_DB_DYN_PEER_VALUE_ARRAY_SIZE              160U
 
 /**
  * GATT_DB_DYN_VALUE_ARRAY_SIZE
@@ -596,7 +596,7 @@
  * Minimum Value: 1
  * Maximum Value: anything
  */
-#define GATT_DB_DYN_VALUE_ARRAY_SIZE                   512
+#define GATT_DB_DYN_VALUE_ARRAY_SIZE                   512U
 
 /**
  * GATT_DB_DYN_UUID_ARRAY_SIZE
@@ -606,7 +606,7 @@
  * Minimum Value: 2
  * Maximum Value: anything
  */
-#define GATT_DB_DYN_UUID_ARRAY_SIZE                    512
+#define GATT_DB_DYN_UUID_ARRAY_SIZE                    512U
 
 /**
  * GATT_DB_DYN_MAX_PEER_CONFIGURATION
@@ -630,7 +630,7 @@
  * Minimum Value: 1
  * Maximum Value: anything
  */
-#define GATT_VALUE_ARRAY_SIZE                          256
+#define GATT_VALUE_ARRAY_SIZE                          256U
 #endif /* GATT_DB_DYNAMIC */
 
 
@@ -654,7 +654,7 @@
  *  Minimum Value: BT_MAX_REMOTE_DEVICES + 1
  *  Maximum Value: depends on requirement.
  */
-#define SMP_MAX_DEVICES                                (BT_MAX_REMOTE_DEVICES + 1)
+#define SMP_MAX_DEVICES                                (BT_MAX_REMOTE_DEVICES + 1U)
 
 /*
  *  This constant defines the number of elements Security Manager's
@@ -663,7 +663,7 @@
  *  Minimum Value: 1
  *  Maximum Value: depends on requirement.
  */
-#define SMP_MAX_CONTEXTS                                2
+#define SMP_MAX_CONTEXTS                                2U
 
 /*
  *  This constant defines the Security Manager pairing procedure timeout
@@ -672,7 +672,7 @@
  *  Minimum Value: depends on requirement
  *  Maximum Value: 30
  */
-#define SMP_MAX_AUTHENTICATION_TIMEOUT                  30
+#define SMP_MAX_AUTHENTICATION_TIMEOUT                  30U
 
 
 /* ----------------------------------------------------------------------- */
@@ -685,7 +685,7 @@
  *  Minimum Value: 1
  *  Maximum Value: 255
  */
-#define L2CAP_MAX_PSM                                   10
+#define L2CAP_MAX_PSM                                   10U
 
 /*
  *  Maximum number of connection-oriented logical channels that L2CAP needs
@@ -695,7 +695,7 @@
  *  Minimum Value: 1
  *  Maximum Value: as required.
  */
-#define L2CAP_MAX_CE                                    10
+#define L2CAP_MAX_CE                                    10U
 
 /*
  *  Maximum number of connection-less channels (groups) that L2CAP needs
@@ -704,7 +704,7 @@
  *  Minimum Value: 1
  *  Maximum Value: as required.
  */
-#define L2CAP_MAX_GROUPS_CE                             1
+#define L2CAP_MAX_GROUPS_CE                             1U
 
 /*
  *  In L2CAP, pre-allocated static buffers are used for transmission of
@@ -713,7 +713,7 @@
  *  Minimum Value: 52
  *  Maximum Value: as required.
  */
-#define L2CAP_MAX_PACKET_LENGTH                         52
+#define L2CAP_MAX_PACKET_LENGTH                         52U
 
 /*
  *  There could be multiple outstanding commands for an L2CAP Connection
@@ -724,7 +724,7 @@
  *  Minimum Value: 2
  *  Maximum Value: 255
  */
-#define L2CAP_MAX_COMMANDS                              8
+#define L2CAP_MAX_COMMANDS                              8U
 
 /*
  *  Maximum MTU size that L2CAP will allow advertising to the peer.
@@ -732,7 +732,7 @@
  *  Minimum Value: 48
  *  Maximum Value: as required.
  */
-#define L2CAP_MAX_MTU                                   1800
+#define L2CAP_MAX_MTU                                   1800U
 
 /*
  *  The timeout period, in seconds, within which configuration for a
@@ -741,7 +741,7 @@
  *  Minimum Value: 30
  *  Maximum Value: 120
  */
-#define L2CAP_DEFAULT_CONFIG_TIMEOUT                    60
+#define L2CAP_DEFAULT_CONFIG_TIMEOUT                    60U
 
 /*
  *  Pool of Flow Specifications used for non-default settings
@@ -750,7 +750,7 @@
  *  Minimum Value: 3
  *  Maximum Value: 254
  */
-#define L2CAP_MAX_FLOW_SPEC_BLOCKS                      10
+#define L2CAP_MAX_FLOW_SPEC_BLOCKS                      10U
 
 /*
  *  Maximum number of L2CAP Buffers. This is maximum number of upper
@@ -762,7 +762,7 @@
  *  Minimum Value: 1
  *  Maximum Value: 254
  */
-#define L2CAP_MAX_BUFFER_ELEMENTS                       50
+#define L2CAP_MAX_BUFFER_ELEMENTS                       50U
 
 /*
  *  L2CAP employs a Flow Control mechanism in which it is possible to
@@ -787,8 +787,8 @@
  *  Minimum Value: 1 (LWM), 2 (HWM)
  *  Maximum Value: 252 (LWM), 253 (HWM)
  */
-#define L2CAP_NUM_BUFFER_ELEMENTS_LWM                   5
-#define L2CAP_NUM_BUFFER_ELEMENTS_HWM                   45
+#define L2CAP_NUM_BUFFER_ELEMENTS_LWM                   5U
+#define L2CAP_NUM_BUFFER_ELEMENTS_HWM                   45U
 
 /*
  *  Maximum number of credit based logical channels that L2CAP needs
@@ -804,7 +804,7 @@
  *  Minimum Value: 1
  *  Maximum Value: as required.
  */
-#define L2CAP_MAX_CHANNELS                              2
+#define L2CAP_MAX_CHANNELS                              2U
 
 /*
  *  Maximum number of credit based Flow Control PSM that L2CAP needs
@@ -813,7 +813,7 @@
  *  Minimum Value: 1
  *  Maximum Value: as required.
  */
-#define L2CAP_MAX_CBFC_PSM                              2
+#define L2CAP_MAX_CBFC_PSM                              2U
 
 /*
  *  After receiving L2CAP data/payload from peer device for a CBFC Channel,
@@ -825,7 +825,7 @@
  *  Minimum Value: 0
  *  Maximum Value: Less than allowed maximum value L2CAP_MAX_CREDITS (0xFFFF)
  */
-#define L2CAP_CBFC_RX_CREDITS_LWM                       0x0001
+#define L2CAP_CBFC_RX_CREDITS_LWM                       0x0001U
 
 /*
  *  A L2CAP Channel in 1.2 Stack can either be configured in Basic (1.1)
@@ -852,7 +852,7 @@
  *  Minimum Value: 1
  *  Maximum Value: 60
  */
-#define L2CAP_FEATURE_INFO_REQ_TIMEOUT                  1
+#define L2CAP_FEATURE_INFO_REQ_TIMEOUT                  1U
 
 /**
  *  Max Retransmission Count for the L2CAP_InfoREQ which is transmitted
@@ -861,7 +861,7 @@
  *  Minimum Value: 1
  *  Maximum Value: 255
  */
-#define L2CAP_FEATURE_INFO_REQ_RTX_MAX                  1
+#define L2CAP_FEATURE_INFO_REQ_RTX_MAX                  1U
 
 /**
  *  Maximum number of I-frames to store in Enhanced L2CAP.
@@ -869,7 +869,7 @@
  *  Minimum Value: as required
  *  Maximum Value: 254
  */
-#define L2CAP_MAX_I_FRAMES_RX                           50
+#define L2CAP_MAX_I_FRAMES_RX                           50U
 
 /*
  *  Maximum MPS size that L2CAP will allow advertising to the peer,
@@ -890,7 +890,7 @@
  *  Minimum Value: 2000
  *  Maximum Value: as required
  */
-#define L2CAP_FEC_DEFAULT_RETX_TO                       2000
+#define L2CAP_FEC_DEFAULT_RETX_TO                       2000U
 
 /*
  *  Default value of the Monitor Timer in Milliseconds for an L2CAP
@@ -900,7 +900,7 @@
  *  Minimum Value: 12000
  *  Maximum Value: as required
  */
-#define L2CAP_FEC_DEFAULT_MONITOR_TO                    12000
+#define L2CAP_FEC_DEFAULT_MONITOR_TO                    12000U
 
 
 /* ----------------------------------------------------------------------- */
@@ -920,7 +920,7 @@
  *  Minimum Value: 48
  *  Maximum Value: L2CAP_MAX_MTU
  */
-#define RFCOMM_L2CAP_DEFAULT_MTU                        672
+#define RFCOMM_L2CAP_DEFAULT_MTU                        672U
 
 #if ((RFCOMM_L2CAP_DEFAULT_MTU < 48) \
     || (RFCOMM_L2CAP_DEFAULT_MTU > L2CAP_MAX_MTU))
@@ -935,8 +935,11 @@
  *  Minimum Value: 2
  *  Maximum Value: 255
  */
-#define RFCOMM_MAX_USER_CONTEXTS                        10
-
+#ifdef SPP_ENABLE_MAX_CONN_RANGE
+#define RFCOMM_MAX_USER_CONTEXTS                        30U
+#else
+#define RFCOMM_MAX_USER_CONTEXTS                        10U
+#endif
 /*
  *  The following value specifies the supported number of simultaneous
  *  RFCOMM connections. These connections can be between two devices or
@@ -946,8 +949,11 @@
  *  Minimum Value: 1
  *  Maximum Value: 255
  */
-#define RFCOMM_MAX_CONNECTION                           10
-
+#ifdef SPP_ENABLE_MAX_CONN_RANGE
+#define RFCOMM_MAX_CONNECTION                           30U
+#else
+#define RFCOMM_MAX_CONNECTION                           10U
+#endif
 /*
  *  When Credit Based Flow Control is in use, PN Frame is used to convey that
  *  Local RFCOMM supports the same, along with initial value for Local
@@ -957,7 +963,7 @@
  *  Minimum Value: 1
  *  Maximum Value: 255
  */
-#define RFCOMM_NUM_CREDITS_PER_DLCI                     15
+#define RFCOMM_NUM_CREDITS_PER_DLCI                     15U
 
 /*
  *  Low Water Mark decider for transmission of Local Credit to Peer.
@@ -969,7 +975,7 @@
  *  Maximum Value: RFCOMM_NUM_CREDITS_PER_DLCI - 2
  */
 #define RFCOMM_CBFC_LOW_WATER_MARK \
-        (RFCOMM_NUM_CREDITS_PER_DLCI - 5)
+        (RFCOMM_NUM_CREDITS_PER_DLCI - 5U)
 
 /*
  *  Buffer Pointers from User in RFCOMM Write API are stored in the
@@ -979,7 +985,7 @@
  *  Minimum Value: (Number of DLCIs being Supported)
  *  Maximum Value: 65534 (0xFFFE)
  */
-#define RFCOMM_TRANSMIT_QUEUE_SIZE                      30
+#define RFCOMM_TRANSMIT_QUEUE_SIZE                      30U
 
 /*
  *  All the RFCOMM connections may not configure the RPN values other than
@@ -990,7 +996,7 @@
  *  Minimum Value: 1
  *  Maximum Value: Number of supported DLCIs (RFCOMM_MAX_CONNECTION)
  */
-#define RFCOMM_NUM_PORT_PARAMS                          2
+#define RFCOMM_NUM_PORT_PARAMS                          2U
 
 /*
  *  The TxWindow value to use when RFCOMM is enabled to use the Enhanced
@@ -1000,7 +1006,7 @@
  *  Minimum Value: 1
  *  Maximum Value: 63
  */
-#define RFCOMM_ERTM_TX_WINDOW                           63
+#define RFCOMM_ERTM_TX_WINDOW                           63U
 
 /*
  *  The MaxTransmit value to use when RFCOMM is enabled to use the Enhanced
@@ -1016,7 +1022,7 @@
  *  Minimum Value: 1
  *  Maximum Value: 255 or 0 (0 = infinite retransmissions)
  */
-#define RFCOMM_ERTM_MAX_TRANSMIT                        10
+#define RFCOMM_ERTM_MAX_TRANSMIT                        10U
 
 /*
  *  The maximum L2CAP PDU size to use when RFCOMM is enabled to use the
@@ -1042,7 +1048,7 @@
  *  The Maximum Dynamic memory allocated for the SDP packet =
  *  SDP_L2CAP_DEFAULT_MTU + L2CAP_HDR_LEN (4) + 17 (Continaution State Info)
  */
-#define SDP_L2CAP_DEFAULT_MTU                           672
+#define SDP_L2CAP_DEFAULT_MTU                           672U
 
 #if ((SDP_L2CAP_DEFAULT_MTU < 48) || (SDP_L2CAP_DEFAULT_MTU > L2CAP_MAX_MTU))
     #error "SDP_L2CAP_DEFAULT_MTU value Out-of-Range"
@@ -1061,8 +1067,8 @@
  *                  (SDP_MAX_ATTR_RANGE * 5) < (SDP_DEFAULT_L2CAP_MTU - 33)
  *
  */
-#define SDP_MAX_ATTR_ID                                 10
-#define SDP_MAX_ATTR_RANGE                              5
+#define SDP_MAX_ATTR_ID                                 10U
+#define SDP_MAX_ATTR_RANGE                              5U
 
 /*
  *  The maximum number of simultaneously allowed client connections
@@ -1081,7 +1087,7 @@
  *  Minimum Value: 1
  *  Maximum Value: 12 (As per Bluetooth Specification v1.1)
  */
-#define SDP_CLIENT_MAX_NUM_UUIDS                        12
+#define SDP_CLIENT_MAX_NUM_UUIDS                        12U
 
 
 /* ----------------------------------------------------------------------- */
@@ -1098,7 +1104,7 @@
  *  Minimum Value: The number of Record Handles the Server device has
  *  Maximum Value (Default): Depends on stack memory
  */
-#define SDP_MAX_REC_HANDLES                             8
+#define SDP_MAX_REC_HANDLES                             8U
 
 /*
  *  Maximum Number of UUIDS SDP server can extract from a single request
@@ -1110,7 +1116,7 @@
  *  Minimum Value: 1
  *  Maximum Value: 12 (As per Bluetooth Specification v1.1)
  */
-#define SDP_SERVER_MAX_NUM_UUIDS                        12
+#define SDP_SERVER_MAX_NUM_UUIDS                        12U
 
 /*
  *  The maximum number of active client connections the server will
@@ -1133,7 +1139,7 @@
  *  Minimum Value:  1
  *  Maximum Value:  N/A
  */
-#define DB_MAX_UUID_SERVICE_SEARCH                      (12)
+#define DB_MAX_UUID_SERVICE_SEARCH                      (12U)
 
 
 /* ----------------------------------------------------------------------- */
@@ -1145,7 +1151,7 @@
  *  Minimum Value:  1
  *  Maximum Value:  254
  */
-#define BNEP_MAX_ENTITIES                               3
+#define BNEP_MAX_ENTITIES                               3U
 
 
 /*
@@ -1156,8 +1162,8 @@
  *  Minimum Value:  BNEP_MAX_ENTITIES
  *  Maximum Value:  As required
  */
-#define BNEP_MAX_NW_TYPE_FILTERS                        10
-#define BNEP_MAX_MC_ADDR_FILTERS                        10
+#define BNEP_MAX_NW_TYPE_FILTERS                        10U
+#define BNEP_MAX_MC_ADDR_FILTERS                        10U
 
 
 /* ----------------------------------------------------------------------- */
@@ -1179,7 +1185,7 @@
  *  Minimum Value: 1
  *  Maximum Value: 62
  */
-#define AVDTP_MAX_STREAM_CONTEXTS                       3
+#define AVDTP_MAX_STREAM_CONTEXTS                       3U
 
 /*
  *  Maximum number of Signaling Commands that can be outstanding at any
@@ -1188,7 +1194,7 @@
  *  Minimum Value: 1
  *  Maximum Value: 16
  */
-#define AVDTP_MAX_USER_CONTEXTS                         5
+#define AVDTP_MAX_USER_CONTEXTS                         5U
 
 /*
  *  Maximum number of Logical L2CAP channels supported by AVDTP at any point
@@ -1197,7 +1203,7 @@
  *  Minimum Value: 2
  *  Maximum Value: AVDTP_MAX_STREAM_CONTEXTS * 4
  */
-#define AVDTP_MAX_LOGICAL_CHANNELS      AVDTP_MAX_STREAM_CONTEXTS * 4
+#define AVDTP_MAX_LOGICAL_CHANNELS      AVDTP_MAX_STREAM_CONTEXTS * 4U
 
 /*
  *  Maximum number of Transport Sessions supported by AVDTP at any point
@@ -1206,7 +1212,7 @@
  *  Minimum Value: 1
  *  Maximum Value: AVDTP_MAX_STREAM_CONTEXTS * 3
  */
-#define AVDTP_MAX_TRANSPORT_SESSIONS    AVDTP_MAX_STREAM_CONTEXTS * 3
+#define AVDTP_MAX_TRANSPORT_SESSIONS    AVDTP_MAX_STREAM_CONTEXTS * 3U
 
 /*
  *  Maximum number of bytes in packed Codec capability information
@@ -1225,7 +1231,7 @@
  *  Minimum Value: 4
  *  Maximum Value: depends on type of codec
  */
-#define AVDTP_MAX_CODEC_IE_LEN                          4
+#define AVDTP_MAX_CODEC_IE_LEN                          4U
 
 /*
  *  Maximum number of bytes in packed Content Protection capability
@@ -1234,7 +1240,7 @@
  *  Minimum Value: 4
  *  Maximum Value: depends on type of content protection
  */
-#define AVDTP_MAX_CP_IE_LEN                             4
+#define AVDTP_MAX_CP_IE_LEN                             4U
 
 /*
  *  Maximum number of Content Protection methods supported by AVDTP.
@@ -1242,7 +1248,7 @@
  *  Minimum Value: 1
  *  Maximum Value: depends on type of content protection
  */
-#define AVDTP_MAX_CP_IE                                 1
+#define AVDTP_MAX_CP_IE                                 1U
 /*
  *  Maximum number of Media Transport Sessions (TSIDs) that can be
  *  multiplexed on a Transport Channel (TCID).
@@ -1250,7 +1256,7 @@
  *  Minimum Value: 2
  *  Maximum Value: 3
  */
-#define AVDTP_MAX_NUM_MEDIA_MUX                         2
+#define AVDTP_MAX_NUM_MEDIA_MUX                         2U
 
 /*
  *  Maximum number of Reporting Transport Sessions (TSIDs) that can be
@@ -1259,7 +1265,7 @@
  *  Minimum Value: 2
  *  Maximum Value: 3
  */
-#define AVDTP_MAX_NUM_REPORTING_MUX                     2
+#define AVDTP_MAX_NUM_REPORTING_MUX                     2U
 
 /*
  *  Maximum number of Recovery Transport Sessions (TSIDs) that can be
@@ -1268,7 +1274,7 @@
  *  Minimum Value: 2
  *  Maximum Value: 3
  */
-#define AVDTP_MAX_NUM_RECOVERY_MUX                      2
+#define AVDTP_MAX_NUM_RECOVERY_MUX                      2U
 
 /*
  *  Maximum L2CAP InMTU size for AVDTP Signalling Channel.
@@ -1282,7 +1288,7 @@
  *  Minimum Value: 335
  *  Maximum Value: L2CAP_MAX_MTU
  */
-#define AVDTP_DEFAULT_SIG_L2CAP_MTU                     672
+#define AVDTP_DEFAULT_SIG_L2CAP_MTU                     672U
 
 #if ((AVDTP_DEFAULT_SIG_L2CAP_MTU < 335) \
     || (AVDTP_DEFAULT_SIG_L2CAP_MTU > L2CAP_MAX_MTU))
@@ -1300,7 +1306,7 @@
  *  Minimum Value: 335
  *  Maximum Value: L2CAP_MAX_MTU
  */
-#define AVDTP_DEFAULT_TRANSPORT_L2CAP_MTU_SOURCE        335
+#define AVDTP_DEFAULT_TRANSPORT_L2CAP_MTU_SOURCE        335U
 
 #if ((AVDTP_DEFAULT_TRANSPORT_L2CAP_MTU_SOURCE < 335) \
     || (AVDTP_DEFAULT_TRANSPORT_L2CAP_MTU_SOURCE > L2CAP_MAX_MTU))
@@ -1321,7 +1327,7 @@
  *  Minimum Value: 335
  *  Maximum Value: L2CAP_MAX_MTU
  */
-#define AVDTP_DEFAULT_TRANSPORT_L2CAP_MTU_SINK          620
+#define AVDTP_DEFAULT_TRANSPORT_L2CAP_MTU_SINK          620U
 
 #if ((AVDTP_DEFAULT_TRANSPORT_L2CAP_MTU_SINK < 335) \
     || (AVDTP_DEFAULT_TRANSPORT_L2CAP_MTU_SINK > L2CAP_MAX_MTU))
@@ -1336,7 +1342,7 @@
  *  Minimum Value: 335
  *  Maximum Value: L2CAP_MAX_MTU
  */
-#define AVDTP_DEFAULT_TRANSPORT_L2CAP_MTU_REPORTING     335
+#define AVDTP_DEFAULT_TRANSPORT_L2CAP_MTU_REPORTING     335U
 
 #if ((AVDTP_DEFAULT_TRANSPORT_L2CAP_MTU_REPORTING < 335) \
     || (AVDTP_DEFAULT_TRANSPORT_L2CAP_MTU_REPORTING > L2CAP_MAX_MTU))
@@ -1350,7 +1356,7 @@
  *  Minimum Value: 2
  *  Maximum Value: As required
  */
-#define AVDTP_MIN_UAREA_LEN                             2
+#define AVDTP_MIN_UAREA_LEN                             2U
 
 
 /* ----------------------------------------------------------------------- */
@@ -1363,7 +1369,7 @@
  *  Maximum Value: It depends upon the maximum number of profiles using AVCTP.
  *  With support for AVRCP as only profile, the maximum number is also 1.
  */
-#define AVCTP_MAX_PROFILES                              1
+#define AVCTP_MAX_PROFILES                              1U
 
 /*
  *  Maximum Number of Remote AVCTP Entities supported.
@@ -1385,7 +1391,7 @@
  *                                           Channels Support
  *
  */
-#define AVCTP_MAX_SIG_CHANNELS                     (AVCTP_MAX_REMOTE_DEVICES * 2)
+#define AVCTP_MAX_SIG_CHANNELS                     (AVCTP_MAX_REMOTE_DEVICES * 2U)
 
 /*
  *  Maximum L2CAP InMTU size for AVCTP Signaling Channel.
@@ -1393,7 +1399,7 @@
  *  Minimum Value: 48
  *  Maximum Value: L2CAP_MAX_MTU
  */
-#define AVCTP_DEFAULT_L2CAP_MTU                         48
+#define AVCTP_DEFAULT_L2CAP_MTU                         48U
 
 #if ((AVCTP_DEFAULT_L2CAP_MTU < 48) \
     || (AVCTP_DEFAULT_L2CAP_MTU > L2CAP_MAX_MTU))
@@ -1406,7 +1412,7 @@
  *  Minimum Value: 335
  *  Maximum Value: L2CAP_MAX_MTU
  */
-#define AVCTP_DEFAULT_BROW_CH_L2CAP_MTU                  335
+#define AVCTP_DEFAULT_BROW_CH_L2CAP_MTU                  335U
 
 #if ((AVCTP_DEFAULT_BROW_CH_L2CAP_MTU < 335) \
     || (AVCTP_DEFAULT_BROW_CH_L2CAP_MTU > L2CAP_MAX_MTU))
@@ -1426,7 +1432,7 @@
  *  Minimum Value: 1
  *  Maximum Value: 0xFF and Infinite (0)
  */
-#define AVCTP_BROWSING_CH_DEFAULT_MAX_TRANSMIT          0xFF
+#define AVCTP_BROWSING_CH_DEFAULT_MAX_TRANSMIT          0xFFU
 
 /*
  *  Default value of the Retransmission Timer in Milliseconds for AVCTP
@@ -1442,7 +1448,7 @@
  *  Minimum Value: 300
  *  Maximum Value: 2000
  */
-#define AVCTP_BROWSING_CH_DEFAULT_RETX_TO               2000
+#define AVCTP_BROWSING_CH_DEFAULT_RETX_TO               2000U
 
 /*
  *  Default value of the Monitor Timer in Milliseconds for AVCTP Browsing
@@ -1458,7 +1464,7 @@
  *  Minimum Value: 300
  *  Maximum Value: 2000
  */
-#define AVCTP_BROWSING_CH_DEFAULT_MONITOR_TO            2000
+#define AVCTP_BROWSING_CH_DEFAULT_MONITOR_TO            2000U
 
 /*
  *  Default value of the Tx Window for AVCTP Browsing Channel in
@@ -1467,7 +1473,7 @@
  *  Minimum Value: 1
  *  Maximum Value: 63
  */
-#define AVCTP_BROWSING_CH_DEFAULT_TX_WINDOW             30
+#define AVCTP_BROWSING_CH_DEFAULT_TX_WINDOW             30U
 
 
 /* ----------------------------------------------------------------------- */
@@ -1480,7 +1486,7 @@
  *  Minimum Value: 1
  *  Maximum Value: 10
  */
-#define OBEX_MAX_INSTANCES                              4
+#define OBEX_MAX_INSTANCES                              4U
 
 /*
  *  This is the maximum L2CAP payload that OBEX can receive when
@@ -1499,7 +1505,7 @@
  *  Minimum Value: 1
  *  Maximum Value:
  */
-#define OBEX_ERTM_TX_WINDOW                             63
+#define OBEX_ERTM_TX_WINDOW                             63U
 
 /*
  *  Maximum transmit parameter for Enhanced Retransmission Mode
@@ -1508,7 +1514,7 @@
  *  Minimum Value: 1
  *  Maximum Value:
  */
-#define OBEX_ERTM_MAX_TRANSMIT                          32
+#define OBEX_ERTM_MAX_TRANSMIT                          32U
 
 /*
  *  Maximum Payload size that can be received over L2CAP transport
@@ -1529,7 +1535,7 @@
  *  Reduced by '10' octets to account for RFCOMM Protocol Header which resides
  *  between L2CAP & OBEX Layers.
  */
-#define OBEX_MAX_PACKET_LENGTH                          (OBEX_L2CAP_DEFAULT_MTU - 10) /* 1536 */
+#define OBEX_MAX_PACKET_LENGTH                          (OBEX_L2CAP_DEFAULT_MTU - 10U) /* 1536 */
 
 #if (OBEX_MAX_PACKET_LENGTH > OBEX_L2CAP_DEFAULT_MTU)
     #error "OBEX_MAX_PACKET_LENGTH value Out-of-Range"
@@ -1543,7 +1549,7 @@
  *  Minimum Value: 255
  *  Maximum Value: 4096
  */
-#define OBEX_DEFAULT_PACKET_LENGTH                      512
+#define OBEX_DEFAULT_PACKET_LENGTH                      512U
 
 #if ((OBEX_DEFAULT_PACKET_LENGTH < 255) \
     || (OBEX_DEFAULT_PACKET_LENGTH > OBEX_MAX_PACKET_LENGTH))
@@ -1556,7 +1562,7 @@
  *  Minimum Value: 1
  *  Maximum Value: Depends on the OBEX_MAX_PACKET_LENGTH
  */
-#define OBEX_MAX_OBJECTS                                12
+#define OBEX_MAX_OBJECTS                                12U
 
 /*
  *  Size of Nonce Length to be used for local device
@@ -1564,7 +1570,7 @@
  *  Minimum Value: 4
  *  Maximum Value: 16
  */
-#define OBEX_RELIABLE_SSN_NONCE_LEN                     4
+#define OBEX_RELIABLE_SSN_NONCE_LEN                     4U
 
 
 /* ----------------------------------------------------------------------- */
@@ -1576,7 +1582,7 @@
  *  Minimum value: 1
  *  Maximum value: 255
  */
-#define MCAP_MAX_MEP_INSTANCES                          2
+#define MCAP_MAX_MEP_INSTANCES                          2U
 
 /*
  *  Maximum number of control channels MCAP can manage.
@@ -1584,7 +1590,7 @@
  *  Minimum value: 1
  *  Maximum value: 65535
  */
-#define MCAP_MAX_CONTROL_CHANNELS                       2
+#define MCAP_MAX_CONTROL_CHANNELS                       2U
 
 /*
  *  Maximum number of data channels MCAP can manage.
@@ -1593,7 +1599,7 @@
  *  Maximum value: Sum of MCAP_MAX_CONTROL_CHANNELS & MCAP_MAX_DATA_CHANNELS
  *                 must be less than 65535
  */
-#define MCAP_MAX_DATA_CHANNELS                          2
+#define MCAP_MAX_DATA_CHANNELS                          2U
 
 /*
  *  TODO
@@ -1601,7 +1607,7 @@
  *  Minimum value: TODO
  *  Maximum value: TODO
  */
-#define MCAP_RESPONSE_TIMEOUT                           30
+#define MCAP_RESPONSE_TIMEOUT                           30U
 
 
 /* ----------------------------------------------------------------------- */
@@ -1614,7 +1620,7 @@
  *  Minimum Value: 1
  *  Maximum Value: OBEX_MAX_INSTANCES
  */
-#define OPP_NUM_CLIENT_ENTITIES                                 1
+#define OPP_NUM_CLIENT_ENTITIES                                 1U
 
 
 /*
@@ -1623,7 +1629,7 @@
  *  Minimum Value: 1
  *  Maximum Value: ???
  */
-#define OPP_NUM_SERVER_ENTITIES                                 1
+#define OPP_NUM_SERVER_ENTITIES                                 1U
 
 
 /* ----------------------------------------------------------------------- */
@@ -1636,7 +1642,7 @@
  *  Minimum Value: 1
  *  Maximum Value: OBEX_MAX_INSTANCES
  */
-#define FTP_NUM_CLIENT_ENTITIES                             1
+#define FTP_NUM_CLIENT_ENTITIES                             1U
 
 /*
  *  Maximum number of FTP Server.
@@ -1644,7 +1650,7 @@
  *  Minimum Value: 1
  *  Maximum Value: ???
  */
-#define FTP_NUM_SERVER_ENTITIES                             1
+#define FTP_NUM_SERVER_ENTITIES                             1U
 
 
 /* ----------------------------------------------------------------------- */
@@ -1656,7 +1662,7 @@
  *  Minimum Value: 1
  *  Maximum Value: OBEX_MAX_INSTANCES
  */
-#define BIP_NUM_INITIATOR_PRI_ENTITIES                      1
+#define BIP_NUM_INITIATOR_PRI_ENTITIES                      1U
 
 /*
  *  Maximum Number of BIP Initiator Secondary Entities.
@@ -1664,7 +1670,7 @@
  *  Minimum Value: 1
  *  Maximum Value: OBEX_MAX_INSTANCES
  */
-#define BIP_NUM_INITIATOR_SEC_ENTITIES                      1
+#define BIP_NUM_INITIATOR_SEC_ENTITIES                      1U
 
 /*
  *  Maximum Number of BIP Responder Primary Entities
@@ -1672,7 +1678,7 @@
  *  Minimum Value: 1
  *  Maximum Value: OBEX_MAX_INSTANCES
  */
-#define BIP_NUM_RESPONDER_PRI_ENTITIES                      1
+#define BIP_NUM_RESPONDER_PRI_ENTITIES                      1U
 
 /*
  *  Maximum Number of BIP Responder Secondary Entities
@@ -1680,7 +1686,7 @@
  *  Minimum Value: 1
  *  Maximum Value: OBEX_MAX_INSTANCES
  */
-#define BIP_NUM_RESPONDER_SEC_ENTITIES                      1
+#define BIP_NUM_RESPONDER_SEC_ENTITIES                      1U
 
 
 /* ----------------------------------------------------------------------- */
@@ -1692,7 +1698,7 @@
  *  Minimum Value: 1
  *  Maximum Value: OBEX_MAX_INSTANCES
  */
-#define BPP_NUM_PRINTER_ENTITIES                      1
+#define BPP_NUM_PRINTER_ENTITIES                      1U
 
 /*
  *  Maximum Number of BIP Sender Entities.
@@ -1701,7 +1707,7 @@
 
  *  Maximum Value: OBEX_MAX_INSTANCES
  */
-#define BPP_NUM_SENDER_ENTITIES                      1
+#define BPP_NUM_SENDER_ENTITIES                      1U
 
 /* ----------------------------------------------------------------------- */
 /* =============================  XML Parser Encoder  ==================== */
@@ -1712,20 +1718,20 @@
  *  The current max value has been set based on the current requirements of
  *  profiles such as ftp and bpp.
  */
-#define XML_MAX_DOC_SIZE                                2000
+#define XML_MAX_DOC_SIZE                                2000U
 
 /*
  *  This  is the maximum no. of attributes any element of the xml string
  *  can have. Based on this value an aarray of structures is declared to
  *  hold the attribute name and its value
  */
-#define XML_MAX_NO_OF_ATTRIBUTES                        5
+#define XML_MAX_NO_OF_ATTRIBUTES                        5U
 
 /*
  *  This is the maximum number of levels of element nesting allowed
  *  within each element of the xml string sent to the parser
  */
-#define XML_MAX_SUB_ELEMENTS                            200
+#define XML_MAX_SUB_ELEMENTS                            200U
 
 /*
  *  This the Maximum length of each xml token that can be parsed by the
@@ -1733,14 +1739,14 @@
  *  can be tuned to lower values after proper analysis and testing of the
  *  profiles using the parser
  */
-#define XML_MAX_TOKEN_SIZE                              500
+#define XML_MAX_TOKEN_SIZE                              500U
 
 /*
  *  This is the maximum number of commands that can be embedded in an
  *  xml document to be parsed. These commands are returned to the appl
  *  calling the parser as an array of this size
  */
-#define XML_MAX_COMMANDS                                2
+#define XML_MAX_COMMANDS                                2U
 
 
 /* ----------------------------------------------------------------------- */
@@ -1752,34 +1758,34 @@
  *  Minimum Value: 1200 (HCRP_DEFAULT_MTU_SIZE)
  *  maximum Value: Depends on the Memory constraints
  */
-#define HCRP_MAX_BUFFER_SIZE                            3000
+#define HCRP_MAX_BUFFER_SIZE                            3000U
 
 /*
  *  Maximum number of allowed connections per device
  *  Minimum Value: 1
  *  Maximum Value: 8
  */
-#define HCRP_MAX_REMOTE_CONNECTION                      2
+#define HCRP_MAX_REMOTE_CONNECTION                      2U
 
 
 /* ----------------------------------------------------------------------- */
 /* =============================  HID Host  ============================== */
 /* ----------------------------------------------------------------------- */
-#define BT_HID_HOST_INQUIRY_PAUSE_LENGTH                30
-#define BT_HID_HOST_INQUIRY_LENGTH                      10
-#define BT_HID_HOST_NUM_INQ_RESPS                       10
+#define BT_HID_HOST_INQUIRY_PAUSE_LENGTH                30U
+#define BT_HID_HOST_INQUIRY_LENGTH                      10U
+#define BT_HID_HOST_NUM_INQ_RESPS                       10U
 
 /**
  *  Maximum number of devices that the HID host supports simultaneously.
  *  Minimum Value: 1
  *  Maximum Value: Depends on the Memory constraints
  */
-#define BT_HID_HOST_MAX_DEVS                            5
+#define BT_HID_HOST_MAX_DEVS                            5U
 
 /*
  *  This is maximum length of report accepted by the HID Host.
  */
-#define BT_HID_HOST_MAX_REPORT_LEN                      25
+#define BT_HID_HOST_MAX_REPORT_LEN                      25U
 
 
 /* ----------------------------------------------------------------------- */
@@ -1791,7 +1797,7 @@
  *  Minimum Value: 1
  *  Maximum Value: 62
  */
-#define A2DP_MAX_CODECS                                 3
+#define A2DP_MAX_CODECS                                 3U
 
 /*
  *  Maximum buffer size required to store AVDTP Discover Response in each
@@ -1800,7 +1806,7 @@
  *  Minimum Value: 2
  *  Maximum Value: 124
  */
-#define A2DP_MAX_DISCOVER_RESPONSE_LEN                  40
+#define A2DP_MAX_DISCOVER_RESPONSE_LEN                  40U
 
 /*
  *  Maximum buffer size required to store AVDTP Get Capabilities Response.
@@ -1808,7 +1814,7 @@
  *  Minimum Value: 10
  *  Maximum Value: As required.
  */
-#define A2DP_GET_CAPABILITIES_RESPONSE_LEN              40
+#define A2DP_GET_CAPABILITIES_RESPONSE_LEN              40U
 
 
 /* ----------------------------------------------------------------------- */
@@ -1829,7 +1835,7 @@
  *  Minimum Value: 1
  *  Maximum Value: 16
  */
-#define AVRCP_MAX_USER_CONTEXTS                         3
+#define AVRCP_MAX_USER_CONTEXTS                         3U
 
 /*
  *  AVRCP Command Timeout in number of seconds
@@ -1837,7 +1843,7 @@
  *  Minimum Value: 1
  *  Maximum Value: as desired
  */
-#define AVRCP_COMMAND_TIMEOUT_VALUE                     10
+#define AVRCP_COMMAND_TIMEOUT_VALUE                     10U
 
 
 /* ----------------------------------------------------------------------- */
@@ -1849,7 +1855,7 @@
  *  Minimum Value: 1
  *  Maximum Value: AVRCP_MAX_PROFILES.
  */
-#define AVRCP_CAI_NUM_ENTITIES                               1
+#define AVRCP_CAI_NUM_ENTITIES                               1U
 
 /*
  *  Maximum Number of Cover Art Responder Instances
@@ -1857,7 +1863,7 @@
  *  Minimum Value: 1
  *  Maximum Value: AVRCP_MAX_PROFILES.
  */
-#define AVRCP_CAR_NUM_ENTITIES                               1
+#define AVRCP_CAR_NUM_ENTITIES                               1U
 
 
 /* ----------------------------------------------------------------------- */
@@ -1869,7 +1875,7 @@
  *  Minimum Value: 1
  *  Maximum Value: RFCOMM_MAX_CONNECTION
  */
-#define HFP_UNIT_MAX_CONNECTIONS                        1
+#define HFP_UNIT_MAX_CONNECTIONS                        1U
 
 /*
  *  Maximum size of AT Command.
@@ -1887,7 +1893,7 @@
  *  Minimum Value: 1
  *  Maximum Value: As required.
  */
-#define HFP_UNIT_BRSF_RSP_TIMEOUT                       1
+#define HFP_UNIT_BRSF_RSP_TIMEOUT                       1U
 
 /*
  *  Default timeout values in seconds for protecting HFP Unit
@@ -1897,7 +1903,7 @@
  *  Minimum Value: 1
  *  Maximum Value: As required.
  */
-#define HFP_UNIT_SLC_PRC_TIMEOUT                        5
+#define HFP_UNIT_SLC_PRC_TIMEOUT                        5U
 
 /*
  *  Maximum number of octets used to represent the supported features.
@@ -1905,7 +1911,7 @@
  *  Minimum Value: 4
  *  Maximum Value: As required.
  */
-#define HFP_UNIT_MAX_SUPP_FEATURE_LEN                   6
+#define HFP_UNIT_MAX_SUPP_FEATURE_LEN                   6U
 
 /*
  *  Maximum number of CIND indicators that can be stored locally, upon
@@ -1914,7 +1920,7 @@
  *  Minimum Value: 3
  *  Maximum Value: As required.
  */
-#define HFP_UNIT_MAX_INDICATOR_COUNT                    20
+#define HFP_UNIT_MAX_INDICATOR_COUNT                    20U
 
 
 /*
@@ -1924,7 +1930,7 @@
  *  Minimum Value: 1
  *  Maximum Value: 20.
  */
-#define HFP_UNIT_MAX_HF_INDICATOR_COUNT                 2
+#define HFP_UNIT_MAX_HF_INDICATOR_COUNT                 2U
 
 /*
  *  Size of array to store phone number digits sent or received
@@ -1933,7 +1939,7 @@
  *  Minimum Value: 13
  *  Maximum Value: As required.
  */
-#define HFP_UNIT_DIGIT_ARRAY_SIZE                       32
+#define HFP_UNIT_DIGIT_ARRAY_SIZE                       32U
 
 /*
  *  Size of the Operator name that can be stored by the HFP Unit,
@@ -1942,7 +1948,7 @@
  *  Minimum Value: 1
  *  Maximum Value: As required.
  */
-#define HFP_UNIT_MAX_OPERATOR_NAME_LEN                  16
+#define HFP_UNIT_MAX_OPERATOR_NAME_LEN                  16U
 
 /*
  *  The Maximum number of Call hold Types supported by HFP Audio Gateway.
@@ -1950,7 +1956,7 @@
  *  Minimum Value: 20
  *  Maximum Value: As required.
  */
-#define HFP_UNIT_MAX_HOLD_TYPES                         20
+#define HFP_UNIT_MAX_HOLD_TYPES                         20U
 
 /*
  *  The Maximum number of available Codecs.
@@ -1958,7 +1964,7 @@
  *  Minimum Value: 1
  *  Maximum Value: As required.
  */
-#define HFP_UNIT_MAX_NUM_AVL_CODECS                     10
+#define HFP_UNIT_MAX_NUM_AVL_CODECS                     10U
 
 /*
  *  The Maximum length of string in Voice Recognition Text Feature.
@@ -1966,7 +1972,7 @@
  *  Minimum Value: 1
  *  Maximum Value: As required.
  */
-#define HFP_UNIT_MAX_ENH_VREC_TEXT_LEN                   64
+#define HFP_UNIT_MAX_ENH_VREC_TEXT_LEN                   64U
 
 
 /* ----------------------------------------------------------------------- */
@@ -1978,7 +1984,7 @@
  *  Minimum Value: 1
  *  Maximum Value: RFCOMM_MAX_CONNECTION
  */
-#define HSP_UNIT_MAX_ENTITY                             1
+#define HSP_UNIT_MAX_ENTITY                             1U
 
 
 /* ----------------------------------------------------------------------- */
@@ -1990,16 +1996,19 @@
  *  Minimum Value: 1
  *  Maximum Value: RFCOMM_MAX_CONNECTION
  */
-#define SPP_MAX_ENTITY                                  2
-
+#ifdef SPP_ENABLE_MAX_CONN_RANGE
+#define SPP_MAX_ENTITY                                  21U
+#else
+#define SPP_MAX_ENTITY                                  2U
+#endif
 
 /* ----------------------------------------------------------------------- */
 /* =============================  DUNP DT ================================ */
 /* ----------------------------------------------------------------------- */
-#define DUNP_DT_MAX_AT_COMMAND_LENGTH                   20
-#define DUNP_DT_MAX_MODEM_RSP_LEN                       20
-#define DUNP_DT_MAX_SDP_DATA_LEN                        50
-#define DUNP_DT_MAX_RFCOMM_DATA                         10
+#define DUNP_DT_MAX_AT_COMMAND_LENGTH                   20U
+#define DUNP_DT_MAX_MODEM_RSP_LEN                       20U
+#define DUNP_DT_MAX_SDP_DATA_LEN                        50U
+#define DUNP_DT_MAX_RFCOMM_DATA                         10U
 
 
 /* ----------------------------------------------------------------------- */
@@ -2013,7 +2022,7 @@
  *  Minimum Value: 1
  *  Maximum Value: as required (to be tuned based on requirements)
  */
-#define DUNP_GW_MAX_DT_CONNECTED                        1
+#define DUNP_GW_MAX_DT_CONNECTED                        1U
 
 
 /* ----------------------------------------------------------------------- */
@@ -2025,7 +2034,7 @@
  *  Minimum Value: 1
  *  Maximum Value: 255
  */
-#define BPP_SENDER_MAX_ENTITY                           1
+#define BPP_SENDER_MAX_ENTITY                           1U
 
 /*
  *  Maximum number of BPP Printer entities
@@ -2033,7 +2042,7 @@
  *  Minimum Value: 1
  *  Maximum Value: 255
  */
-#define BPP_PRINTER_MAX_ENTITY                          1
+#define BPP_PRINTER_MAX_ENTITY                          1U
 
 /*
  *  Number of channels in BPP
@@ -2041,7 +2050,7 @@
  *  Minimum Value: 1
  *  Maximum Value: 255
  */
-#define BPP_MAX_CHANNELS                                4
+#define BPP_MAX_CHANNELS                                4U
 
 
 /* ----------------------------------------------------------------------- */
@@ -2053,7 +2062,7 @@
  *  Minimum Value: 1
  *  Maximum Value: BT_MAX_REMOTE_DEVICES
  */
-#define PBAP_PCE_MAX_ENTITY                             1
+#define PBAP_PCE_MAX_ENTITY                             1U
 
 /*
  *  Maximum number of PBAP PSE entities
@@ -2061,7 +2070,7 @@
  *  Minimum Value: 1
  *  Maximum Value: BT_MAX_REMOTE_DEVICES
  */
-#define PBAP_PSE_MAX_ENTITY                             1
+#define PBAP_PSE_MAX_ENTITY                             1U
 
 /*
  *  Maximum Idle State Time Out Value in Seconds
@@ -2069,7 +2078,7 @@
  *  Minimum Value: 1
  *  Maximum Value: 65535
  */
-#define PBAP_IDLE_TIMEOUT                               120
+#define PBAP_IDLE_TIMEOUT                               120U
 
 
 /* ----------------------------------------------------------------------- */
@@ -2081,7 +2090,7 @@
  *  Minimum Value: 1
  *  Maximum Value: As required.
  */
-#define SAP_MAX_NO_OF_PARAMS                            2
+#define SAP_MAX_NO_OF_PARAMS                            2U
 
 /*
  *  Maximum L2CAP InMTU size for SAP.
@@ -2089,7 +2098,7 @@
  *  Minimum Value: 48
  *  Maximum Value: As required.
  */
-#define SAP_MAX_MTU                                     512
+#define SAP_MAX_MTU                                     512U
 
 
 /* ----------------------------------------------------------------------- */
@@ -2102,7 +2111,7 @@
  * Minimum Value: 1
  * Maximum Value: As required
  */
-#define MAP_MCE_NUM_ENTITIES                            2
+#define MAP_MCE_NUM_ENTITIES                            2U
 
 /*
  * Maximum number of MAP Server Entities. Defines the number of distinct MAP
@@ -2111,7 +2120,7 @@
  * Minimum Value: 1
  * Maximum Value: As required
  */
-#define MAP_MSE_NUM_ENTITIES                            2
+#define MAP_MSE_NUM_ENTITIES                            2U
 
 /*
  * Maximum number of Message Access Service (MAS) Instances per MAP Client/Server
@@ -2120,7 +2129,7 @@
  * Minimum Value: 1
  * Maximum Value: As required
  */
-#define MAP_NUM_MAS_INSTANCE                            2
+#define MAP_NUM_MAS_INSTANCE                            2U
 
 /*
  * Number of Message Access Service (MAS) Entities in Pool.
@@ -2129,7 +2138,7 @@
  *                (MAP_MSE_NUM_ENTITIES * MAP_NUM_MAS_INSTANCE)
  * Maximum Value: As required
  */
-#define MAP_MAS_NUM_ENTITIES                            2
+#define MAP_MAS_NUM_ENTITIES                            2U
 
 /*
  * Number of Message Notification Service (MNS) Entities in Pool
@@ -2137,7 +2146,7 @@
  * Minimum Value: Larger of MAP_MCE_NUM_ENTITIES/MAP_MSE_NUM_ENTITIES
  * Maximum Value: As required
  */
-#define MAP_MNS_NUM_ENTITIES                            1
+#define MAP_MNS_NUM_ENTITIES                            1U
 
 
 /* ----------------------------------------------------------------------- */
@@ -2150,7 +2159,7 @@
  * Minimum Value: 1
  * Maximum Value: As required
  */
-#define GNSS_CLIENT_MAX_CONNECTION_ENTITIES             1
+#define GNSS_CLIENT_MAX_CONNECTION_ENTITIES             1U
 
 /*
  * Maximum number of GNSS Server Entities. Defines the number of distinct GNSS
@@ -2159,7 +2168,7 @@
  * Minimum Value: 1
  * Maximum Value: As required
  */
-#define GNSS_SERVER_MAX_CONNECTION_ENTITIES             1
+#define GNSS_SERVER_MAX_CONNECTION_ENTITIES             1U
 
 
 /* ----------------------------------------------------------------------- */
@@ -2172,7 +2181,7 @@
  * Minimum Value: 1
  * Maximum Value: As required
  */
-#define CTN_CCE_NUM_ENTITIES                            1
+#define CTN_CCE_NUM_ENTITIES                            1U
 
 /*
  * Maximum number of CTN Server Entities. Defines the number of distinct CTN
@@ -2181,7 +2190,7 @@
  * Minimum Value: 1
  * Maximum Value: As required
  */
-#define CTN_CSE_NUM_ENTITIES                            2
+#define CTN_CSE_NUM_ENTITIES                            2U
 
 /*
  * Maximum number of CTN Access Service (CAS) Instances per CTN Client/Server
@@ -2190,7 +2199,7 @@
  * Minimum Value: 1
  * Maximum Value: As required
  */
-#define CTN_NUM_CAS_INSTANCE                            2
+#define CTN_NUM_CAS_INSTANCE                            2U
 
 /*
  * Number of CTN Access Service (CAS) Entities in Pool.
@@ -2199,7 +2208,7 @@
  *                (CTN_CSE_NUM_ENTITIES * CTN_NUM_CAS_INSTANCE)
  * Maximum Value: As required
  */
-#define CTN_CAS_NUM_ENTITIES                            2
+#define CTN_CAS_NUM_ENTITIES                            2U
 
 /*
  * Number of CTN Notification Service (CNS) Entities in Pool
@@ -2207,7 +2216,7 @@
  * Minimum Value: Larger of CTN_CCE_NUM_ENTITIES/CTN_CSE_NUM_ENTITIES
  * Maximum Value: As required
  */
-#define CTN_CNS_NUM_ENTITIES                            1
+#define CTN_CNS_NUM_ENTITIES                            1U
 
 
 /* ----------------------------------------------------------------------- */
@@ -2220,7 +2229,7 @@
  *  Minimum Value: 60
  *  Maximum Value: As required.
  */
-#define AT_PARSER_PARTIAL_RSP_BUF_SIZE                  60
+#define AT_PARSER_PARTIAL_RSP_BUF_SIZE                  60U
 
 
 /* ----------------------------------------------------------------------- */
@@ -2235,7 +2244,7 @@
  *  Minimum Value: Block Size
  *  Maximum Value: As required
  */
-#define JPL_PCM_BLOCK_SIZE                              8192
+#define JPL_PCM_BLOCK_SIZE                              8192U
 
 /*
  *  Number of PCM data blocks to be used for PCM frame buffering.
@@ -2243,7 +2252,7 @@
  *  Minimum Value: 1
  *  Maximum Value: 255
  */
-#define JPL_PCM_NUM_BLOCKS                              6
+#define JPL_PCM_NUM_BLOCKS                              6U
 
 /*
  *  Maximum amount of data, in number of octets, for any SBC frame that
@@ -2252,7 +2261,7 @@
  *  Minimum Value: Does not matter
  *  Maximum Value: 255
  */
-#define JPL_SBC_FRAME_SIZE                              120
+#define JPL_SBC_FRAME_SIZE                              120U
 
 /*
  *  Number of SBC frame blocks to be used for SBC frame buffering.
@@ -2260,7 +2269,7 @@
  *  Minimum Value: 1
  *  Maximum Value: 255
  */
-#define JPL_SBC_NUM_FRAMES                              100
+#define JPL_SBC_NUM_FRAMES                              100U
 
 /*
  *  Initial Number of Data Read IND Callback to call to load the DAC
@@ -2269,7 +2278,7 @@
  *  Minimum Value: 1
  *  Maximum Value: (JPL_PCM_NUM_BLOCKS - 1)
  */
-#define JPL_INITIAL_NUM_DATA_READ_IND                   5
+#define JPL_INITIAL_NUM_DATA_READ_IND                   5U
 
 
 /* ----------------------------------------------------------------------- */
@@ -2281,7 +2290,7 @@
  *  Minimum Value: 1
  *  Maximum Value: 255
  */
-#define RACP_MAX_MODULES                                5
+#define RACP_MAX_MODULES                                5U
 
 #endif /* _H_BT_LIMITS_ */
 

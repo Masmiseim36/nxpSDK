@@ -20,26 +20,6 @@
  * Variables
  ******************************************************************************/
 
-/* global control variables */
-#ifdef PMSM_SNSLESS_ENC
-extern bool_t bDemoModePosition;
-#endif
-extern bool_t bDemoModeSpeed;
-
-/* global used misc variables */
-extern uint32_t g_ui32NumberOfCycles;
-extern uint32_t g_ui32MaxNumberOfCycles;
-
-/* Application and board ID  */
-extern app_ver_t g_sAppIdFM;
-
-extern bool_t g_bM1SwitchAppOnOff;
-extern mcdef_pmsm_t g_sM1Drive;
-extern sm_app_ctrl_t g_sM1Ctrl;
-
-#ifdef PMSM_SNSLESS_ENC
-extern mcdrv_qd_enc_t g_sM1Enc;
-#endif
 /*******************************************************************************
  * Code
  ******************************************************************************/
@@ -215,19 +195,19 @@ FMSTR_TSA_TABLE_END()
 FMSTR_TSA_TABLE_BEGIN(sMID_table)
 
 /* sMIDAlignment structure definition */
-FMSTR_TSA_RW_VAR(g_sMID.sMIDAlignment.ui16Active, FMSTR_TSA_UINT16)        /* MID Align Active */
+FMSTR_TSA_RW_VAR(g_sMID.sMIDAlignment.bActive, FMSTR_TSA_UINT16)        /* MID Align Active */
 FMSTR_TSA_RW_VAR(g_sMID.sMIDAlignment.ui16AlignDuration, FMSTR_TSA_UINT16) /* MID Align AlignDuration */
 FMSTR_TSA_RW_VAR(g_sMID.sMIDAlignment.fltCurrentAlign, FMSTR_TSA_FLOAT)    /* MID Align CurrentAlign */
 
 /* sMIDKe structure definition */
-FMSTR_TSA_RW_VAR(g_sMID.sMIDKe.ui16Active, FMSTR_TSA_UINT16)        /* MID Ke Active */
+FMSTR_TSA_RW_VAR(g_sMID.sMIDKe.bActive, FMSTR_TSA_UINT16)        /* MID Ke Active */
 FMSTR_TSA_RW_VAR(g_sMID.sMIDKe.fltIdReqOpenLoop, FMSTR_TSA_FLOAT)   /* MID Ke IdReqOpenLoop */
 FMSTR_TSA_RW_VAR(g_sMID.sMIDKe.fltKe, FMSTR_TSA_FLOAT)              /* MID Ke Ke */
 FMSTR_TSA_RW_VAR(g_sMID.sMIDKe.ui16MCATObsrvDone, FMSTR_TSA_UINT16) /* MID Ke MCATObsrvDone */
 FMSTR_TSA_RW_VAR(g_sMID.sMIDKe.fltFreqElReq, FMSTR_TSA_FLOAT)       /* MID Ke SpeedElReq */
 
 /* sMIDLs structure definition */
-FMSTR_TSA_RW_VAR(g_sMID.sMIDLs.ui16Active, FMSTR_TSA_UINT16)       /* MID Ke Active */
+FMSTR_TSA_RW_VAR(g_sMID.sMIDLs.bActive, FMSTR_TSA_UINT16)       /* MID Ke Active */
 FMSTR_TSA_RW_VAR(g_sMID.sMIDLs.fltFreqMax, FMSTR_TSA_FLOAT)        /* MID Ls FreqMax */
 FMSTR_TSA_RW_VAR(g_sMID.sMIDLs.fltFreqDecrement, FMSTR_TSA_FLOAT)  /* MID Ls FreqDecrement */
 FMSTR_TSA_RW_VAR(g_sMID.sMIDLs.fltFreqMin, FMSTR_TSA_FLOAT)        /* MID Ls FreqMin */
@@ -240,19 +220,19 @@ FMSTR_TSA_RW_VAR(g_sMID.sMIDLs.fltRs, FMSTR_TSA_FLOAT)             /* MID Ls Rs 
 FMSTR_TSA_RW_VAR(g_sMID.sMIDLs.fltUdIncrement, FMSTR_TSA_FLOAT)    /* MID Ls UdIncrement */
 
 /* sMIDPp structure definition */
-FMSTR_TSA_RW_VAR(g_sMID.sMIDPp.ui16Active, FMSTR_TSA_UINT16)       /* MID Pp Active */
+FMSTR_TSA_RW_VAR(g_sMID.sMIDPp.bActive, FMSTR_TSA_UINT16)       /* MID Pp Active */
 FMSTR_TSA_RW_VAR(g_sMID.sMIDPp.fltIdReqOpenLoop, FMSTR_TSA_FLOAT)  /* MID Pp IdReqOpenLoop */
 FMSTR_TSA_RW_VAR(g_sMID.sMIDPp.ui16PpDetermined, FMSTR_TSA_UINT16) /* MID Pp PpDetermined */
 FMSTR_TSA_RW_VAR(g_sMID.sMIDPp.fltFreqElReq, FMSTR_TSA_FLOAT)      /* MID Pp FreqElReq */
 FMSTR_TSA_RW_VAR(g_sMID.sMIDPp.fltFreqMax, FMSTR_TSA_FLOAT)        /* MID Pp FreqMax */
 
 /* sMIDRs structure definition */
-FMSTR_TSA_RW_VAR(g_sMID.sMIDRs.ui16Active, FMSTR_TSA_UINT16) /* MID Rs Active */
+FMSTR_TSA_RW_VAR(g_sMID.sMIDRs.bActive, FMSTR_TSA_UINT16) /* MID Rs Active */
 FMSTR_TSA_RW_VAR(g_sMID.sMIDRs.fltIdMeas, FMSTR_TSA_FLOAT)   /* MID Rs IdMeas */
 FMSTR_TSA_RW_VAR(g_sMID.sMIDRs.fltRs, FMSTR_TSA_FLOAT)       /* MID Rs Rs */
 
 /* sMIDKe structure definition */
-FMSTR_TSA_RW_VAR(g_sMID.sMIDPwrStgChar.ui16Active, FMSTR_TSA_UINT16)      /* MID PwrStg Active */
+FMSTR_TSA_RW_VAR(g_sMID.sMIDPwrStgChar.bActive, FMSTR_TSA_UINT16)      /* MID PwrStg Active */
 FMSTR_TSA_RW_VAR(g_sMID.sMIDPwrStgChar.fltIdCalib, FMSTR_TSA_FLOAT)       /* MID PwrStg IdCalib */
 FMSTR_TSA_RW_VAR(g_sMID.sMIDPwrStgChar.fltIdIncrement, FMSTR_TSA_FLOAT)   /* MID PwrStg IdIncrement */
 FMSTR_TSA_RW_VAR(g_sMID.sMIDPwrStgChar.fltRs, FMSTR_TSA_FLOAT)            /* MID PwrStg Rs */
@@ -263,7 +243,7 @@ FMSTR_TSA_RW_VAR(g_sM1Drive.sFocPMSM.fltPwrStgCharLinCoeff, FMSTR_TSA_FLOAT) /* 
 FMSTR_TSA_RW_VAR(g_sM1Drive.sFocPMSM.fltPwrStgCharIRange, FMSTR_TSA_FLOAT)   /* MID PwrStg Char Range */
 
 /* sMIDMech structure definition */
-FMSTR_TSA_RW_VAR(g_sMID.sMIDMech.ui16Active, FMSTR_TSA_UINT16)       /* MID Mech Active */
+FMSTR_TSA_RW_VAR(g_sMID.sMIDMech.bActive, FMSTR_TSA_UINT16)       /* MID Mech Active */
 FMSTR_TSA_RW_VAR(g_sMID.sMIDMech.fltB, FMSTR_TSA_FLOAT)              /* MID Mech B */
 FMSTR_TSA_RW_VAR(g_sMID.sMIDMech.fltIqAccelerate, FMSTR_TSA_FLOAT)   /* MID Mech IqAccelerate */
 FMSTR_TSA_RW_VAR(g_sMID.sMIDMech.fltIqStartup, FMSTR_TSA_FLOAT)      /* MID Mech IqStartup */
@@ -358,7 +338,7 @@ FMSTR_TSA_RW_VAR(g_eM1StateRun, FMSTR_TSA_UINT16) /* M1 State Run */
 
 /* global MCAT variables */
 FMSTR_TSA_RW_VAR(g_sMID.eMeasurementType, FMSTR_TSA_UINT16)      /* MID Calibration */
-FMSTR_TSA_RW_VAR(g_sMID.ui16EnableMeasurement, FMSTR_TSA_UINT16) /* MID EnableMeasurement */
+FMSTR_TSA_RW_VAR(g_sMID.bEnableMeasurement, FMSTR_TSA_UINT16) /* MID EnableMeasurement */
 FMSTR_TSA_RW_VAR(g_sMID.ui16FaultMID, FMSTR_TSA_UINT16)          /* MID FaultMID */
 FMSTR_TSA_RW_VAR(g_sMID.ui16WarnMID, FMSTR_TSA_UINT16)           /* MID WarnMID */
 

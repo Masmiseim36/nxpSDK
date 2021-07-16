@@ -17,10 +17,11 @@
 #define FSL_XIP_DEVICE_DRIVER_VERSION (MAKE_VERSION(2, 0, 0))
 /*@}*/
 
-/************************************* 
- *  IVT Data 
+/*************************************
+ *  IVT Data
  *************************************/
-typedef struct _ivt_ {
+typedef struct _ivt_
+{
     /** @ref hdr with tag #HAB_TAG_IVT, length and HAB version fields
      *  (see @ref data)
      */
@@ -45,66 +46,67 @@ typedef struct _ivt_ {
     uint32_t reserved2;
 } ivt;
 
-#define IVT_MAJOR_VERSION           0x4
-#define IVT_MAJOR_VERSION_SHIFT     0x4
-#define IVT_MAJOR_VERSION_MASK      0xF
-#define IVT_MINOR_VERSION           0x1
-#define IVT_MINOR_VERSION_SHIFT     0x0
-#define IVT_MINOR_VERSION_MASK      0xF
+#define IVT_MAJOR_VERSION       0x4
+#define IVT_MAJOR_VERSION_SHIFT 0x4
+#define IVT_MAJOR_VERSION_MASK  0xF
+#define IVT_MINOR_VERSION       0x1
+#define IVT_MINOR_VERSION_SHIFT 0x0
+#define IVT_MINOR_VERSION_MASK  0xF
 
-#define IVT_VERSION(major, minor)   \
-  ((((major) & IVT_MAJOR_VERSION_MASK) << IVT_MAJOR_VERSION_SHIFT) |  \
-  (((minor) & IVT_MINOR_VERSION_MASK) << IVT_MINOR_VERSION_SHIFT))
+#define IVT_VERSION(major, minor)                                    \
+    ((((major)&IVT_MAJOR_VERSION_MASK) << IVT_MAJOR_VERSION_SHIFT) | \
+     (((minor)&IVT_MINOR_VERSION_MASK) << IVT_MINOR_VERSION_SHIFT))
 
-/* IVT header */  
-#define IVT_TAG_HEADER        0xD1       /**< Image Vector Table */
-#define IVT_SIZE              0x2000
-#define IVT_PAR               IVT_VERSION(IVT_MAJOR_VERSION, IVT_MINOR_VERSION)
-#define IVT_HEADER           (IVT_TAG_HEADER | (IVT_SIZE << 8) | (IVT_PAR << 24))
+/* IVT header */
+#define IVT_TAG_HEADER 0xD1 /**< Image Vector Table */
+#define IVT_SIZE       0x2000
+#define IVT_PAR        IVT_VERSION(IVT_MAJOR_VERSION, IVT_MINOR_VERSION)
+#define IVT_HEADER     (IVT_TAG_HEADER | (IVT_SIZE << 8) | (IVT_PAR << 24))
 
 /* Set resume entry */
 #if defined(__ARMCC_VERSION)
 #include "linker_config.h"
-#define IMAGE_ENTRY_ADDRESS ((uint32_t)ROM_interrupts_start) 
-#define FLASH_BASE ((uint32_t)m_flash_config_start)   
+#define IMAGE_ENTRY_ADDRESS ((uint32_t)ROM_interrupts_start)
+#define FLASH_BASE          ((uint32_t)m_flash_config_start)
 #elif defined(__MCUXPRESSO)
-    extern uint32_t m_intvec_table_start[];
-    extern uint32_t __boot_hdr_start__[];
+extern uint32_t m_intvec_table_start[];
+extern uint32_t __boot_hdr_start__[];
 #define IMAGE_ENTRY_ADDRESS ((uint32_t)m_intvec_table_start)
 #define FLASH_BASE          ((uint32_t)__boot_hdr_start__)
 #elif defined(__ICCARM__)
-    extern uint32_t __VECTOR_TABLE[];
-    extern uint32_t m_boot_hdr_conf_start[];
-#define IMAGE_ENTRY_ADDRESS ((uint32_t)__VECTOR_TABLE)    
-#define FLASH_BASE ((uint32_t)m_boot_hdr_conf_start)   
+extern uint32_t __VECTOR_TABLE[];
+extern uint32_t m_boot_hdr_conf_start[];
+#define IMAGE_ENTRY_ADDRESS ((uint32_t)__VECTOR_TABLE)
+#define FLASH_BASE          ((uint32_t)m_boot_hdr_conf_start)
 #elif defined(__GNUC__)
-    extern uint32_t __VECTOR_TABLE[];
-    extern uint32_t __FLASH_BASE[];
-#define IMAGE_ENTRY_ADDRESS ((uint32_t)__VECTOR_TABLE)     
-#define FLASH_BASE ((uint32_t)__VECTOR_TABLE)   
+extern uint32_t __VECTOR_TABLE[];
+extern uint32_t __FLASH_BASE[];
+#define IMAGE_ENTRY_ADDRESS ((uint32_t)__VECTOR_TABLE)
+#define FLASH_BASE          ((uint32_t)__VECTOR_TABLE)
 #endif
 
-#define DCD_ADDRESS           dcd_data
-#define BOOT_DATA_ADDRESS     &boot_data
-#define CSF_ADDRESS           0
-#define IVT_RSVD             (uint32_t)(0x00000000)
+#define DCD_ADDRESS       dcd_data
+#define BOOT_DATA_ADDRESS &boot_data
+#define CSF_ADDRESS       0
+#define IVT_RSVD          (uint32_t)(0x00000000)
 
-/************************************* 
- *  Boot Data 
+/*************************************
+ *  Boot Data
  *************************************/
-typedef struct _boot_data_ {
-  uint32_t start;           /* boot start location */
-  uint32_t size;            /* size */
-  uint32_t plugin;          /* plugin flag - 1 if downloaded application is plugin */
-  uint32_t placeholder;		/* placehoder to make even 0x10 size */
-}BOOT_DATA_T;
+typedef struct _boot_data_
+{
+    uint32_t start;       /* boot start location */
+    uint32_t size;        /* size */
+    uint32_t plugin;      /* plugin flag - 1 if downloaded application is plugin */
+    uint32_t placeholder; /* placehoder to make even 0x10 size */
+} BOOT_DATA_T;
 
 #if defined(BOARD_FLASH_SIZE)
-#define FLASH_SIZE            BOARD_FLASH_SIZE
+#define FLASH_SIZE BOARD_FLASH_SIZE
 #else
 #error "Please define macro BOARD_FLASH_SIZE"
 #endif
-#define PLUGIN_FLAG           (uint32_t)0
+#define PLUGIN_FLAG (uint32_t)0
 
 /* External Variables */
 const BOOT_DATA_T boot_data;

@@ -46,27 +46,27 @@ extern "C" {
  *
  * @param this   Pointer to the current object
  *
- * @return boot_t true on success
+ * @return none
  */
-bool_t MCDRV_eFlexPwm3PhSet(mcdrv_pwm3ph_pwma_t *this);
+void MCDRV_eFlexPwm3PhSet(mcdrv_pwm3ph_pwma_t *this);
 
 /*!
  * @brief Function enables PWM outputs
  *
  * @param this   Pointer to the current object
  *
- * @return boot_t true on success
+ * @return none
  */
-bool_t MCDRV_eFlexPwm3PhOutEn(mcdrv_pwm3ph_pwma_t *this);
+void MCDRV_eFlexPwm3PhOutEn(mcdrv_pwm3ph_pwma_t *this);
 
 /*!
  * @brief Function disables PWM outputs
  *
  * @param this   Pointer to the current object
  *
- * @return boot_t true on success
+ * @return none
  */
-bool_t MCDRV_eFlexPwm3PhOutDis(mcdrv_pwm3ph_pwma_t *this);
+void MCDRV_eFlexPwm3PhOutDis(mcdrv_pwm3ph_pwma_t *this);
 
 /*!
  * @brief Function return actual value of over current flag

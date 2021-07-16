@@ -155,9 +155,11 @@
 #define N                       (AT_START_TOKEN_ID + 0x52)
 #define MPEG                    (AT_START_TOKEN_ID + 0x53)
 
+#if 0
 /* Status Codes */
 #define API_SUCCESS    0x0000
 #define API_FAILURE    0xFFFF
+#endif /* 0 */
 
 /* Error Redirection */
 #ifndef OBJECT_PARSER_NO_DEBUG
@@ -302,6 +304,7 @@ UINT16 object_parser_init
 
 UINT16 object_parser_parse (OBJECT_PARSER_CONTEXT * parser_context);
 
+#if 0
 /**
  *  \fn object_parser_unfold
  *
@@ -324,7 +327,7 @@ UINT16 object_parser_unfold
            UCHAR  * out_buffer,
            UINT16 * out_buffer_len
        );
-
+#endif /* 0 */
 
 UCHAR get_next_delimiter
       (

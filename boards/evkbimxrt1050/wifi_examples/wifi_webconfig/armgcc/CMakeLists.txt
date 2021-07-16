@@ -1,6 +1,6 @@
 # CROSS COMPILER SETTING
 SET(CMAKE_SYSTEM_NAME Generic)
-CMAKE_MINIMUM_REQUIRED (VERSION 3.1.1)
+CMAKE_MINIMUM_REQUIRED (VERSION 3.10.0)
 
 # THE VERSION NUMBER
 SET (Tutorial_VERSION_MAJOR 1)
@@ -35,6 +35,7 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../pin_mux.h"
 "${ProjDirPath}/../lwipopts.h"
 "${ProjDirPath}/../lwippools.h"
+"${ProjDirPath}/../wifi_config.h"
 "${ProjDirPath}/../webconfig.c"
 "${ProjDirPath}/../webconfig.h"
 "${ProjDirPath}/../httpsrv_fs_data.c"
@@ -45,9 +46,9 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../wpl.h"
 "${ProjDirPath}/../wpl_nxp.c"
 "${ProjDirPath}/../FreeRTOSConfig.h"
-"${ProjDirPath}/../../../sdmmc_config.c"
-"${ProjDirPath}/../../../sdmmc_config.h"
-"${ProjDirPath}/../wifi_config.h"
+"${ProjDirPath}/../sdmmc_config.c"
+"${ProjDirPath}/../sdmmc_config.h"
+"${ProjDirPath}/../app_config.h"
 "${ProjDirPath}/../board.c"
 "${ProjDirPath}/../board.h"
 "${ProjDirPath}/../clock_config.c"
@@ -57,18 +58,12 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 )
 
 target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
-    ${ProjDirPath}/../../../../src/wifi_common/webconfig/nxp flexspi_nor_debug
-    ${ProjDirPath}/../../../../src/wifi_common/webconfig flexspi_nor_debug
-    ${ProjDirPath}/.. flexspi_nor_debug
-    ${ProjDirPath}/../../.. flexspi_nor_debug
-    ${ProjDirPath}/../../common flexspi_nor_debug
-    ${ProjDirPath}/.. flexspi_nor_debug
+    ${ProjDirPath}/../../../../src/wifi_common/webconfig/nxp
+    ${ProjDirPath}/../../../../src/wifi_common/webconfig
     ${ProjDirPath}/..
-    ${ProjDirPath}/../../../../../middleware/lwip/src/apps/httpsrv
     ${ProjDirPath}/../../..
-    ${ProjDirPath}/../../../../src/wifi_common/webconfig/nxp flexspi_nor_release
-    ${ProjDirPath}/../../../../src/wifi_common/webconfig flexspi_nor_release
-    ${ProjDirPath}/../../common flexspi_nor_release
+    ${ProjDirPath}/../../common
+    ${ProjDirPath}/../../../../../middleware/lwip/src/apps/httpsrv
 )
 
 set(CMAKE_MODULE_PATH
@@ -86,7 +81,7 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../components/lists
     ${ProjDirPath}/../../../../../devices/MIMXRT1052/xip
     ${ProjDirPath}/../../../xip
-    ${ProjDirPath}/../../../../../CMSIS/Include
+    ${ProjDirPath}/../../../../../CMSIS/Core/Include
     ${ProjDirPath}/../../../../../components/osa
 )
 
@@ -145,19 +140,17 @@ include(driver_igpio_MIMXRT1052)
 
 include(driver_xip_device_MIMXRT1052)
 
-include(driver_xip_board_MIMXRT1052)
+include(driver_xip_board_evkbimxrt1050_MIMXRT1052)
 
-include(CMSIS_Include_core_cm7_MIMXRT1052)
-
-include(CMSIS_Include_common_MIMXRT1052)
-
-include(CMSIS_Include_dsp_MIMXRT1052)
+include(CMSIS_Include_core_cm_MIMXRT1052)
 
 include(component_mflash_common_MIMXRT1052)
 
 include(middleware_freertos-kernel_MIMXRT1052)
 
 include(middleware_freertos-kernel_extension_MIMXRT1052)
+
+include(middleware_wifi_wifidriver_MIMXRT1052)
 
 include(middleware_sdmmc_osa_freertos_MIMXRT1052)
 

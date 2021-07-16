@@ -1,8 +1,6 @@
 /*
  * Copyright 2018,2019 NXP
- * All rights reserved.
- *
- * SPDX-License-Identifier: BSD-3-Clause
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 #ifndef FSL_SSS_TYPES_H
@@ -32,6 +30,28 @@
 
 #define STRNICMP strncasecmp
 
+/* doc:start:sss-heap_mgmt */
+#if defined(USE_RTOS) && USE_RTOS == 1
+#include "FreeRTOS.h"
+
+void *pvPortCalloc(size_t num, size_t size); /*Calloc for Heap3/Heap4.*/
+
+#ifndef SSS_MALLOC
+#define SSS_MALLOC pvPortMalloc
+#endif // SSS_MALLOC
+
+#ifndef SSS_FREE
+#define SSS_FREE vPortFree
+#endif // SSS_FREE
+
+#ifndef SSS_CALLOC
+#define SSS_CALLOC pvPortCalloc
+#endif // SSS_CALLOC
+
+#else // !USE_RTOS
+
+#include <stdlib.h>
+
 #ifndef SSS_MALLOC
 #define SSS_MALLOC malloc
 #endif // SSS_MALLOC
@@ -43,5 +63,8 @@
 #ifndef SSS_CALLOC
 #define SSS_CALLOC calloc
 #endif // SSS_CALLOC
+
+#endif // USE_RTOS
+/* doc:end:sss-heap_mgmt */
 
 #endif /* FSL_SSS_TYPES_H */

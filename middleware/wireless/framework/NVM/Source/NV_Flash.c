@@ -1,6 +1,6 @@
 /*! *********************************************************************************
 * Copyright (c) 2015, Freescale Semiconductor, Inc.
-* Copyright 2016-2017, 2019-2020 NXP
+* Copyright 2016-2017, 2019-2021 NXP
 * All rights reserved.
 *
 * \file
@@ -11,14 +11,13 @@
 
 #include "EmbeddedTypes.h"
 #include "NV_Flash.h"
-#if ((defined(USE_COMPONNET)) && (USE_COMPONNET > 0U))
+#if (!defined(NVM_NO_COMPONNET) || (NVM_NO_COMPONNET == 0))
 #include "fsl_component_timer_manager.h"
 #include "fsl_component_mem_manager.h"
 #include "fsl_component_messaging.h"
 #include "RNG_Interface.h"
 #endif
 #include "fsl_adapter_flash.h"
-#include "fsl_debug_console.h"
 #if (gNvUseFlexNVM_d == TRUE)
 #include "fsl_adapter_reset.h"
 #endif /* gNvUseFlexNVM_d == TRUE */
@@ -133,7 +132,6 @@ __attribute__((weak))  void RNG_GetRandomNo(uint32_t *random)
  * Private prototypes
  *****************************************************************************
  *****************************************************************************/
-
 #if gNvStorageIncluded_d
 #if gNvUseExtendedFeatureSet_d && gNvTableKeptInRam_d
 /******************************************************************************
@@ -1131,11 +1129,7 @@ extern uint32_t Image$$NVM_region$$Length;
 #define NV_STORAGE_START_ADDRESS (Image$$NVM_region$$ZI$$Base)
 #define NV_STORAGE_END_ADDRESS (Image$$NVM_region$$ZI$$Limit)
 #define NVM_LENGTH ((uint32_t)((uint8_t*)NV_STORAGE_END_ADDRESS)-(uint32_t)((uint8_t*)NV_STORAGE_START_ADDRESS))
-#ifdef FSL_FEATURE_FLASH_PAGE_SIZE_BYTES
 #define NV_STORAGE_SECTOR_SIZE FSL_FEATURE_FLASH_PAGE_SIZE_BYTES
-#else
-#define NV_STORAGE_SECTOR_SIZE 0x1000
-#endif
 #define NV_STORAGE_MAX_SECTORS (NVM_LENGTH/NV_STORAGE_SECTOR_SIZE)
 #endif /* __CC_ARM */
 #endif /* no FlexNVM */
@@ -2539,7 +2533,10 @@ NVM_STATIC NVM_Status_t __NvModuleInit
     uint16_t loopCnt;
     NVM_Status_t status = gNVM_OK_c;
     #if (gNvUseFlexNVM_d == FALSE) /* no FlexNVM */
-
+    uint32_t flashEstimateSize = 0U;
+    uint32_t pageFreeSpace = 0;
+    uint32_t tableEndAddr = (uint32_t)gNVM_TABLE_endAddr_c;
+    uint32_t tableStartAddr = (uint32_t)gNVM_TABLE_startAddr_c;
     #if gNvUseExtendedFeatureSet_d
     bool_t ret = FALSE;
     #endif
@@ -2712,6 +2709,17 @@ NVM_STATIC NVM_Status_t __NvModuleInit
                 {
                     mNvActivePageId = gFirstVirtualPage_c;
                     status = NvInternalFormat(0);
+                    (void)NvGetPageFreeSpace(&pageFreeSpace);
+                    for (loopCnt = 0; loopCnt < (uint16_t)((tableEndAddr - tableStartAddr)/sizeof(NVM_DataEntry_t)); loopCnt++)
+                    {
+                        flashEstimateSize +=  (NvUpdateSize(pNVM_DataTable[loopCnt].ElementSize) + sizeof(NVM_RecordMetaInfo_t)) * pNVM_DataTable[loopCnt].ElementsCount;
+                    }
+                    if (pageFreeSpace < (flashEstimateSize + gNvMinimumFreeBytesCountStart_c))
+                    {
+                        assert(0);
+                        /* Estimated Flash buffer is too small, Need increase the gNVMSectorCountLink_d */
+                        status =  gNVM_ReservedFlashTooSmall_c;
+                    }
                 }
                 if(gNVM_OK_c == status)
                 {
@@ -5609,7 +5617,9 @@ NVM_STATIC NVM_Status_t NvWriteRecord
         }
 #endif /* gNvUseFlexNVM_d */
     }
+
     return status;
+
 }
 
 /******************************************************************************
@@ -6367,13 +6377,11 @@ NVM_Status_t NvModuleInit
     if(gNVM_OK_c == status)
     {
       (void)OSA_MutexCreate(mNVMMutexId);
-#if 0
       if( NULL == mNVMMutexId)
-        {
-            mNvModuleInitialized = FALSE;
-            status = gNVM_CannotCreateMutex_c;
-        }
-#endif
+      {
+          mNvModuleInitialized = FALSE;
+          status = gNVM_CannotCreateMutex_c;
+      }
     }
     return status;
 #else
@@ -6670,11 +6678,7 @@ void NvIdle
 #if gNvStorageIncluded_d
     if(mNvIdleTaskId == NULL)
     {
-#if (defined(FSL_OSA_TASK_ENABLE) && (FSL_OSA_TASK_ENABLE > 0U))
         mNvIdleTaskId = OSA_TaskGetCurrentHandle();
-#else
-        mNvIdleTaskId = 0;
-#endif
     }
     (void)OSA_MutexLock(mNVMMutexId, osaWaitForever_c);
     __NvIdle();
@@ -6761,6 +6765,32 @@ void NvGetPagesStatistics
 #else
     ptrStat=ptrStat;
 #endif
+}
+
+/******************************************************************************
+ * Name: NvGetPagesSize
+ * Description: Retrieves the NV Virtual Page size
+ * Parameter(s): [OUT] pPageSize - pointer to a memory location where the page
+ *                                 size will be stored
+ * Return: -
+ *****************************************************************************/
+void NvGetPagesSize
+(
+    uint32_t* pPageSize
+)
+{
+    if(NULL != pPageSize)
+    {
+#if gNvStorageIncluded_d
+    #if (gNvUseFlexNVM_d == FALSE) /* no FlexNVM */
+        *pPageSize = mNvVirtualPageProperty[mNvActivePageId].NvTotalPageSize;
+    #else /* FlexNVM */
+        *pPageSize = 0U;
+    #endif
+#else
+        *pPageSize = 0U;
+#endif
+    }
 }
 
 /******************************************************************************

@@ -673,9 +673,9 @@ dhcp_handle_ack(struct netif *netif, struct dhcp_msg *msg_in)
   if (dhcp_option_given(dhcp, DHCP_OPTION_IDX_SUBNET_MASK)) {
     /* remember given subnet mask */
     ip4_addr_set_u32(&dhcp->offered_sn_mask, lwip_htonl(dhcp_get_option_value(dhcp, DHCP_OPTION_IDX_SUBNET_MASK)));
-    dhcp->subnet_mask_given = 1;
+    dhcp->flags |= DHCP_FLAG_SUBNET_MASK_GIVEN;
   } else {
-    dhcp->subnet_mask_given = 0;
+    dhcp->flags &= ~DHCP_FLAG_SUBNET_MASK_GIVEN;
   }
 
   /* gateway router */
@@ -719,6 +719,8 @@ dhcp_set_struct(struct netif *netif, struct dhcp *dhcp)
 
   /* clear data structure */
   memset(dhcp, 0, sizeof(struct dhcp));
+  /* mark this as externally allocated */
+  dhcp->flags |= DHCP_FLAG_EXTERNAL_MEM;
   /* dhcp_set_state(&dhcp, DHCP_STATE_OFF); */
   netif_set_client_data(netif, LWIP_NETIF_CLIENT_DATA_INDEX_DHCP, dhcp);
 }
@@ -734,11 +736,15 @@ dhcp_set_struct(struct netif *netif, struct dhcp *dhcp)
  */
 void dhcp_cleanup(struct netif *netif)
 {
+  struct dhcp *dhcp;
   LWIP_ASSERT_CORE_LOCKED();
   LWIP_ASSERT("netif != NULL", netif != NULL);
 
-  if (netif_dhcp_data(netif) != NULL) {
-    mem_free(netif_dhcp_data(netif));
+  dhcp = netif_dhcp_data(netif);
+  if (dhcp != NULL) {
+    if (!(dhcp->flags & DHCP_FLAG_EXTERNAL_MEM)) {
+      mem_free(dhcp);
+    }
     netif_set_client_data(netif, LWIP_NETIF_CLIENT_DATA_INDEX_DHCP, NULL);
   }
 }
@@ -1088,7 +1094,7 @@ dhcp_bind(struct netif *netif)
     dhcp->t1_timeout = 0;
   }
 
-  if (dhcp->subnet_mask_given) {
+  if (dhcp->flags & DHCP_FLAG_SUBNET_MASK_GIVEN) {
     /* copy offered network mask */
     ip4_addr_copy(sn_mask, dhcp->offered_sn_mask);
   } else {
@@ -1331,6 +1337,7 @@ dhcp_release_and_stop(struct netif *netif)
     /* create and initialize the DHCP message header */
     struct pbuf *p_out;
     u16_t options_out_len;
+    dhcp_set_state(dhcp, DHCP_STATE_OFF);
     p_out = dhcp_create_msg(netif, dhcp, DHCP_RELEASE, &options_out_len);
     if (p_out != NULL) {
       struct dhcp_msg *msg_out = (struct dhcp_msg *)p_out->payload;
@@ -1350,9 +1357,9 @@ dhcp_release_and_stop(struct netif *netif)
 
     /* remove IP address from interface (prevents routing from selecting this interface) */
     netif_set_addr(netif, IP4_ADDR_ANY4, IP4_ADDR_ANY4, IP4_ADDR_ANY4);
+  } else {
+     dhcp_set_state(dhcp, DHCP_STATE_OFF);
   }
-
-  dhcp_set_state(dhcp, DHCP_STATE_OFF);
 
   if (dhcp->pcb_allocated != 0) {
     dhcp_dec_pcb_refcount(); /* free DHCP PCB if not needed any more */

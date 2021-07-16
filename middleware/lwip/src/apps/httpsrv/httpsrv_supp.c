@@ -210,7 +210,7 @@ int httpsrv_wait_for_conn(HTTPSRV_STRUCT *server)
     FD_ZERO(&readset);
     FD_SET(server->sock, &readset);
 
-    if (lwip_select(1, (fd_set *)&readset, 0, 0, 0) == 1)
+    if (lwip_select(server->sock + 1, (fd_set *)&readset, 0, 0, 0) == 1)
     {
         if (FD_ISSET(server->sock, &readset))
         {

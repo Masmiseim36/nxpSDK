@@ -18,7 +18,7 @@
 #define DEMO_PANEL_RK055IQH091 2
 
 #ifndef DEMO_PANEL
-#if defined(CPU_MIMXRT1052DVL6B) || defined(CPU_MIMXRT1062DVL6A)
+#if defined(CPU_MIMXRT1052DVL6B) || defined(CPU_MIMXRT1062DVL6A) || defined(CPU_MIMXRT1064DVL6A)
 
 #define DEMO_PANEL DEMO_PANEL_RK043FN02HC
 
@@ -26,6 +26,7 @@
 #define APP_CSC1_MODE kPXP_Csc1YUV2RGB
 #define APP_CSC1_MODE_ENABLE false
 #define APP_ROTATE_DISPLAY kPXP_Rotate180
+#define APP_ROTATE_DISPLAY_NUM 180
 #define APP_FLIP_DISPLAY kPXP_FlipDisable
 /* Frame buffer data alignment, for better performance, the LCDIF frame buffer should be 64B align. */
 #define DEMO_FRAME_BUFFER_ALIGN 64
@@ -39,6 +40,7 @@
 #define APP_CSC1_MODE kPXP_Csc1YCbCr2RGB
 #define APP_CSC1_MODE_ENABLE true
 #define APP_ROTATE_DISPLAY kPXP_Rotate90
+#define APP_ROTATE_DISPLAY_NUM 90
 #define APP_FLIP_DISPLAY kPXP_FlipBoth
 /* Frame buffer data alignment, for better performance, the LCD frame buffer should be 32B align. */
 #define DEMO_FRAME_BUFFER_ALIGN 32
@@ -62,13 +64,6 @@
 #define DEMO_PANEL_HEIGHT (272)
 #endif
 
-#define DEMO_BUFFER_FIXED_ADDRESS 0
-
-#if DEMO_BUFFER_FIXED_ADDRESS
-//TODO check other devices
-#define DEMO_BUFFER0_ADDR 0x80000000
-#define DEMO_BUFFER1_ADDR 0x80200000
-#endif
 /* Definitions for the frame buffer. */
 #define DEMO_LCD_BUFFER_COUNT 2
 #define DEMO_BUFFER_PIXEL_FORMAT   kVIDEO_PixelFormatRGB565
@@ -83,13 +78,15 @@
  * 32 byte.
  */
 
-
-
-
 /* Where the frame buffer is shown in the screen. */
 #define DEMO_BUFFER_START_X 0U
 #define DEMO_BUFFER_START_Y 0U
 
+/*******************************************************************************
+ * Variables
+ ******************************************************************************/
+
+/*! @brief Display controller. */
 extern const dc_fb_t g_dc;
 
 /*******************************************************************************
@@ -99,7 +96,16 @@ extern const dc_fb_t g_dc;
 extern "C" {
 #endif /* __cplusplus*/
 
+/*!
+ * @brief Initializes display controler.
+ * 
+ * @return status code
+ */
 status_t BOARD_PrepareDisplayController(void);
+
+/*!
+ * @brief Resets display controler.
+ */
 void BOARD_ResetDisplayMix(void);
 
 #if defined(__cplusplus)

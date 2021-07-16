@@ -50,7 +50,7 @@
 #include "lwip/igmp.h"
 #include "lwip/mld6.h"
 
-#if USE_RTOS && defined(FSL_RTOS_FREE_RTOS)
+#if USE_RTOS && defined(SDK_OS_FREE_RTOS)
 #include "FreeRTOS.h"
 #include "event_groups.h"
 #endif

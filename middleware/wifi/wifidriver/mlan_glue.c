@@ -587,14 +587,28 @@ static t_u8 wlan_is_ampdu_allowed(mlan_private *priv, int tid)
 }
 
 // Only Enable AMPDU for station interface
-int wrapper_wlan_sta_ampdu_enable()
+int wrapper_wlan_sta_ampdu_enable(
+#ifdef CONFIG_WMM
+    t_u8 tid
+#endif
+)
 {
     int ret;
+#ifdef CONFIG_WMM
+    static t_u8 ampdu_set_tid[MAX_NUM_TID];
+#endif
     mlan_private *pmpriv = (mlan_private *)mlan_adap->priv[0];
     t_u8 cur_mac[MLAN_MAC_ADDR_LENGTH];
 
+#ifdef CONFIG_WMM
+    if (!ampdu_status_flag || (!ampdu_set_tid[tid] && wlan_is_ampdu_allowed(mlan_adap->priv[0], tid)))
+#else
     if (!ampdu_status_flag && wlan_is_ampdu_allowed(mlan_adap->priv[0], 0))
+#endif
     {
+#ifdef CONFIG_WMM
+        ampdu_set_tid[tid] = true;
+#endif
         if (pmpriv->media_connected == MTRUE)
         {
             (void)memcpy(cur_mac, pmpriv->curr_bss_params.bss_descriptor.mac_address, MLAN_MAC_ADDR_LENGTH);
@@ -605,7 +619,13 @@ int wrapper_wlan_sta_ampdu_enable()
             return MLAN_STATUS_FAILURE;
         }
 
-        ret = wlan_send_addba(mlan_adap->priv[0], 0, (t_u8 *)cur_mac);
+        ret = wlan_send_addba(mlan_adap->priv[0],
+#ifdef CONFIG_WMM
+                              tid,
+#else
+                              0,
+#endif
+                              (t_u8 *)cur_mac);
         if (ret != 0)
         {
             wifi_d("sta: failed to send addba req");
@@ -2348,7 +2368,8 @@ static void wrapper_wlan_check_uap_capability(pmlan_private priv, Event_Ext_t *p
 
 int wifi_handle_fw_event(struct bus_message *msg)
 {
-    mlan_private *pmpriv = (mlan_private *)mlan_adap->priv[0];
+    mlan_private *pmpriv     = (mlan_private *)mlan_adap->priv[0];
+    mlan_private *pmpriv_uap = (mlan_private *)mlan_adap->priv[1];
 
     Event_Ext_t *evt = ((Event_Ext_t *)msg->data);
     t_u8 *sta_addr = NULL, *event_sta_addr = NULL, *new_channel = NULL;
@@ -2524,6 +2545,14 @@ int wifi_handle_fw_event(struct bus_message *msg)
              */
             wrapper_wlan_check_uap_capability((mlan_private *)mlan_adap->priv[1], msg->data);
             pmpriv->uap_bss_started = MTRUE;
+            break;
+        case EVENT_MICRO_AP_BSS_ACTIVE:
+            PRINTM(MEVENT, "EVENT: MICRO_AP_BSS_ACTIVE\n");
+            pmpriv_uap->media_connected = MTRUE;
+            break;
+        case EVENT_MICRO_AP_BSS_IDLE:
+            PRINTM(MEVENT, "EVENT: MICRO_AP_BSS_IDLE\n");
+            pmpriv_uap->media_connected = MFALSE;
             break;
 #ifdef CONFIG_WIFI_FW_DEBUG
         case EVENT_FW_DEBUG_INFO:
@@ -2923,8 +2952,19 @@ void wifi_get_firmware_ver_ext_from_cmdresp(const HostCmd_DS_COMMAND *resp, uint
 
     if (!resp->params.verext.version_str_sel)
     {
-        (void)memcpy(fw_ver_ext, &resp->params.verext.version_str,
-                     strlen((const char *)(&resp->params.verext.version_str)));
+        /* TODO: Below change is added to change 8978 firmware name to IW416.
+         * This change is temporary and can be removed once firmware changes are in place */
+        if (strstr((const char *)&resp->params.verext.version_str, "w8978o") != NULL)
+        {
+            (void)memcpy(fw_ver_ext, "IW416", 6);
+            (void)memcpy(fw_ver_ext + strlen((const char *)fw_ver_ext), &resp->params.verext.version_str[6],
+                         strlen((const char *)(&resp->params.verext.version_str)) - strlen((const char *)fw_ver_ext));
+        }
+        else
+        {
+            (void)memcpy(fw_ver_ext, &resp->params.verext.version_str,
+                         strlen((const char *)(&resp->params.verext.version_str)));
+        }
     }
     else if (resp->params.verext.version_str_sel == 3 && strlen((const char *)(&resp->params.verext.version_str)))
     {
@@ -2974,6 +3014,17 @@ void wifi_prepare_get_hw_spec_cmd(HostCmd_DS_COMMAND *cmd, int seq_number)
     cmd->size    = sizeof(HostCmd_DS_GET_HW_SPEC) + S_DS_GEN;
     cmd->seq_num = seq_number;
     cmd->result  = 0;
+}
+
+void wifi_prepare_reconfigure_tx_buf_cmd(HostCmd_DS_COMMAND *cmd, int seq_number)
+{
+    cmd->command = HostCmd_CMD_RECONFIGURE_TX_BUFF;
+    /* TODO: Replace hardcoded size with logical implementation */
+    cmd->size                    = 16;
+    cmd->seq_num                 = seq_number;
+    cmd->result                  = 0;
+    cmd->params.tx_buf.action    = HostCmd_ACT_GEN_SET;
+    cmd->params.tx_buf.buff_size = 2048;
 }
 
 /*

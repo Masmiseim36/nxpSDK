@@ -25,18 +25,18 @@ void MID_getLs(mid_get_ls_t *sLsMeasFcn)
     float_t fltZtotal, fltRs_square, fltZtotal_square, fltXLd;
 
     /* Initialisation */
-    if (sLsMeasFcn->ui16Active == FALSE)
+    if (sLsMeasFcn->bActive == FALSE)
     {
-        sLsMeasFcn->ui16Active                 = TRUE;
-        sLsMeasFcn->ui16LoopCounter            = 0;
+        sLsMeasFcn->bActive                 = TRUE;
+        sLsMeasFcn->ui16LoopCounter            = 0U;
         sLsMeasFcn->i16AmplitudeOK             = FALSE;
         sLsMeasFcn->i16FrequencyOK             = FALSE;
         sLsMeasFcn->f16Angle                   = FRAC16(0.0);
-        sLsMeasFcn->fltIdAmplitude             = 0.0;
-        sLsMeasFcn->fltUdAmplitude             = 0.0;
-        sLsMeasFcn->fltLs                      = 0.0;
+        sLsMeasFcn->fltIdAmplitude             = 0.0F;
+        sLsMeasFcn->fltUdAmplitude             = 0.0F;
+        sLsMeasFcn->fltLs                      = 0.0F;
         sLsMeasFcn->fltFreqActual              = sLsMeasFcn->fltFreqStart;
-        sLsMeasFcn->sFreqIntegrator.a32Gain    = ACC32(1.0 * sLsMeasFcn->fltFreqMax / 10000.0 * 2.0);
+        sLsMeasFcn->sFreqIntegrator.a32Gain    = ACC32(1.0F * sLsMeasFcn->fltFreqMax / 10000.0F * 2.0F);
         sLsMeasFcn->sFreqIntegrator.f32IAccK_1 = FRAC32(0.0);
         GFLIB_IntegratorInit_F16(0, &sLsMeasFcn->sFreqIntegrator);
     }
@@ -63,8 +63,8 @@ void MID_getLs(mid_get_ls_t *sLsMeasFcn)
             (*(sLsMeasFcn->pfltIdfbck) > sLsMeasFcn->fltIdAmplitudeReq))
         {
             sLsMeasFcn->i16AmplitudeOK  = TRUE;
-            *(sLsMeasFcn->pfltUdReq)    = 0.0;
-            sLsMeasFcn->ui16LoopCounter = 0;
+            *(sLsMeasFcn->pfltUdReq)    = 0.0F;
+            sLsMeasFcn->ui16LoopCounter = 0U;
         }
 
         /* After 300ms */
@@ -78,10 +78,10 @@ void MID_getLs(mid_get_ls_t *sLsMeasFcn)
             {
                 sLsMeasFcn->fltUdAmplitude = sLsMeasFcn->fltUdMax;
                 sLsMeasFcn->i16AmplitudeOK = TRUE;
-                *(sLsMeasFcn->pfltUdReq)   = 0.0;
+                *(sLsMeasFcn->pfltUdReq)   = 0.0F;
             }
 
-            sLsMeasFcn->ui16LoopCounter = 0;
+            sLsMeasFcn->ui16LoopCounter = 0U;
         }
     }
 
@@ -100,8 +100,8 @@ void MID_getLs(mid_get_ls_t *sLsMeasFcn)
             (*(sLsMeasFcn->pfltIdfbck) > sLsMeasFcn->fltIdAmplitudeReq))
         {
             sLsMeasFcn->i16FrequencyOK  = TRUE;
-            *(sLsMeasFcn->pfltUdReq)    = 0.0;
-            sLsMeasFcn->ui16LoopCounter = 0;
+            *(sLsMeasFcn->pfltUdReq)    = 0.0F;
+            sLsMeasFcn->ui16LoopCounter = 0U;
         }
 
         /* After 300ms */
@@ -115,10 +115,10 @@ void MID_getLs(mid_get_ls_t *sLsMeasFcn)
             {
                 sLsMeasFcn->fltFreqActual  = sLsMeasFcn->fltFreqMin;
                 sLsMeasFcn->i16FrequencyOK = TRUE;
-                *(sLsMeasFcn->pfltUdReq)   = 0.0;
+                *(sLsMeasFcn->pfltUdReq)   = 0.0F;
             }
 
-            sLsMeasFcn->ui16LoopCounter = 0;
+            sLsMeasFcn->ui16LoopCounter = 0U;
         }
     }
 
@@ -156,10 +156,10 @@ void MID_getLs(mid_get_ls_t *sLsMeasFcn)
             /* Inductance */
             /* float eq. L = XL / (2*pi*f) */
             sLsMeasFcn->fltLs =
-                MLIB_Div_FLT(fltXLd, MLIB_Mul_FLT(2.0, MLIB_Mul_FLT(FLOAT_PI, sLsMeasFcn->fltFreqActual)));
+                MLIB_Div_FLT(fltXLd, MLIB_Mul_FLT(2.0F, MLIB_Mul_FLT(FLOAT_PI, sLsMeasFcn->fltFreqActual)));
 
-            sLsMeasFcn->ui16Active   = FALSE;
-            *(sLsMeasFcn->pfltUdReq) = 0.0;
+            sLsMeasFcn->bActive   = FALSE;
+            *(sLsMeasFcn->pfltUdReq) = 0.0F;
 
             /* Check Faults */
             /* Check if f16MeasCurrentAmp was reached (95% of the f16MeasCurrentAmp) */
@@ -169,13 +169,13 @@ void MID_getLs(mid_get_ls_t *sLsMeasFcn)
             }
 
             /* Check negative result or saturation of Z*/
-            if (fltZtotal < 0.0)
+            if (fltZtotal < 0.0F)
             {
                 g_sMID.ui16WarnMID |= MID_WARN_LS_OUT_OF_RANGE;
             }
 
             /* Check negative result or saturation of Ls*/
-            if (sLsMeasFcn->fltLs < 0.0)
+            if (sLsMeasFcn->fltLs < 0.0F)
             {
                 g_sMID.ui16WarnMID |= MID_WARN_LS_OUT_OF_RANGE;
             }

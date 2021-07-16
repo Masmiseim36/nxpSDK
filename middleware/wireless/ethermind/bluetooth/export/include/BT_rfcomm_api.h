@@ -49,9 +49,9 @@
  */
 /*@{*/
 /** RFCOMM RPN "Request" Types */
-#define RFCOMM_RPN_REQUEST_OPTION               0x01
-#define RFCOMM_RPN_COMMAND_OPTION               0x02
-#define RFCOMM_RPN_RESPONSE_OPTION              0x03
+#define RFCOMM_RPN_REQUEST_OPTION               0x01U
+#define RFCOMM_RPN_COMMAND_OPTION               0x02U
+#define RFCOMM_RPN_RESPONSE_OPTION              0x03U
 /*@}*/
 /** RFCOMM Port Parameters - Baud Rates */
 /**
@@ -60,15 +60,15 @@
  * Constant Definitions for RFCOMM Port Parameters - Baud Rates
  */
 /*@{*/
-#define RFCOMM_PORT_BAUD_RATE_2400              0x00
-#define RFCOMM_PORT_BAUD_RATE_4800              0x01
-#define RFCOMM_PORT_BAUD_RATE_7200              0x02
-#define RFCOMM_PORT_BAUD_RATE_9600              0x03
-#define RFCOMM_PORT_BAUD_RATE_19200             0x04
-#define RFCOMM_PORT_BAUD_RATE_38400             0x05
-#define RFCOMM_PORT_BAUD_RATE_57600             0x06
-#define RFCOMM_PORT_BAUD_RATE_115200            0x07
-#define RFCOMM_PORT_BAUD_RATE_230400            0x08
+#define RFCOMM_PORT_BAUD_RATE_2400              0x00U
+#define RFCOMM_PORT_BAUD_RATE_4800              0x01U
+#define RFCOMM_PORT_BAUD_RATE_7200              0x02U
+#define RFCOMM_PORT_BAUD_RATE_9600              0x03U
+#define RFCOMM_PORT_BAUD_RATE_19200             0x04U
+#define RFCOMM_PORT_BAUD_RATE_38400             0x05U
+#define RFCOMM_PORT_BAUD_RATE_57600             0x06U
+#define RFCOMM_PORT_BAUD_RATE_115200            0x07U
+#define RFCOMM_PORT_BAUD_RATE_230400            0x08U
 /*@}*/
 /** RFCOMM Port Parameters - Data Bits */
 /**
@@ -77,10 +77,10 @@
  * Constant Definitions for RFCOMM Port Parameters - Data Bits
  */
 /*@{*/
-#define RFCOMM_PORT_DATA_BITS_5                 0x00
-#define RFCOMM_PORT_DATA_BITS_6                 0x02
-#define RFCOMM_PORT_DATA_BITS_7                 0x01
-#define RFCOMM_PORT_DATA_BITS_8                 0x03
+#define RFCOMM_PORT_DATA_BITS_5                 0x00U
+#define RFCOMM_PORT_DATA_BITS_6                 0x02U
+#define RFCOMM_PORT_DATA_BITS_7                 0x01U
+#define RFCOMM_PORT_DATA_BITS_8                 0x03U
 /*@}*/
 /** RFCOMM Port Parameters - Stop Bit */
 /**
@@ -89,8 +89,8 @@
  * Constant Definitions for RFCOMM Port Parameters - Stop Bit
  */
 /*@{*/
-#define RFCOMM_PORT_STOP_BIT_1                  0x00
-#define RFCOMM_PORT_STOP_BIT_1_5                0x01
+#define RFCOMM_PORT_STOP_BIT_1                  0x00U
+#define RFCOMM_PORT_STOP_BIT_1_5                0x01U
 /*@}*/
 /** RFCOMM Port Parameters - Parity */
 /**
@@ -99,8 +99,8 @@
  * Constant Definitions for RFCOMM Port Parameters - Parity
  */
 /*@{*/
-#define RFCOMM_PORT_PARITY_NONE                 0x00
-#define RFCOMM_PORT_PARITY_SET                  0x01
+#define RFCOMM_PORT_PARITY_NONE                 0x00U
+#define RFCOMM_PORT_PARITY_SET                  0x01U
 /*@}*/
 /** RFCOMM Port Parameters - Parity Type */
 /**
@@ -109,10 +109,10 @@
  * Constant Definitions for RFCOMM Port Parameters - Parity Type
  */
 /*@{*/
-#define RFCOMM_PORT_PARITY_TYPE_ODD             0x00
-#define RFCOMM_PORT_PARITY_TYPE_EVEN            0x02
-#define RFCOMM_PORT_PARITY_TYPE_MARK            0x01
-#define RFCOMM_PORT_PARITY_TYPE_SPACE           0x03
+#define RFCOMM_PORT_PARITY_TYPE_ODD             0x00U
+#define RFCOMM_PORT_PARITY_TYPE_EVEN            0x02U
+#define RFCOMM_PORT_PARITY_TYPE_MARK            0x01U
+#define RFCOMM_PORT_PARITY_TYPE_SPACE           0x03U
 /*@}*/
 /** RFCOMM Port Parameters - Flow Control */
 /**
@@ -121,12 +121,12 @@
  * Constant Definitions for RFCOMM Port Parameters - Flow Control
  */
 /*@{*/
-#define RFCOMM_PORT_FLC_X_ON_X_OFF_INPUT        0x01
-#define RFCOMM_PORT_FLC_X_ON_X_OFF_OUTPUT       0x02
-#define RFCOMM_PORT_FLC_RTR_INPUT               0x04
-#define RFCOMM_PORT_FLC_RTR_OUTPUT              0x08
-#define RFCOMM_PORT_FLC_RTC_INPUT               0x10
-#define RFCOMM_PORT_FLC_RTC_OUTPUT              0x20
+#define RFCOMM_PORT_FLC_X_ON_X_OFF_INPUT        0x01U
+#define RFCOMM_PORT_FLC_X_ON_X_OFF_OUTPUT       0x02U
+#define RFCOMM_PORT_FLC_RTR_INPUT               0x04U
+#define RFCOMM_PORT_FLC_RTR_OUTPUT              0x08U
+#define RFCOMM_PORT_FLC_RTC_INPUT               0x10U
+#define RFCOMM_PORT_FLC_RTC_OUTPUT              0x20U
 /*@}*/
 /** RFCOMM Port Parameters - Default Port Settings */
 /**
@@ -139,10 +139,10 @@
 #define RFCOMM_DEFAULT_PORT_DATA_BITS           RFCOMM_PORT_DATA_BITS_8
 #define RFCOMM_DEFAULT_PORT_STOP_BIT            RFCOMM_PORT_STOP_BIT_1
 #define RFCOMM_DEFAULT_PORT_PARITY              RFCOMM_PORT_PARITY_NONE
-#define RFCOMM_DEFAULT_PORT_PARITY_TYPE         0x00
-#define RFCOMM_DEFAULT_PORT_FLOW_CONTROL        0x00
-#define RFCOMM_DEFAULT_PORT_XON_CHAR            0x11
-#define RFCOMM_DEFAULT_PORT_XOFF_CHAR           0x13
+#define RFCOMM_DEFAULT_PORT_PARITY_TYPE         0x00U
+#define RFCOMM_DEFAULT_PORT_FLOW_CONTROL        0x00U
+#define RFCOMM_DEFAULT_PORT_XON_CHAR            0x11U
+#define RFCOMM_DEFAULT_PORT_XOFF_CHAR           0x13U
 /*@}*/
 /**
  *  RFCOMM API Contexts or RFCOMM Command Owners.
@@ -151,38 +151,44 @@
  *  - Identify the User API (Non-Blocking & Blocking Modes)
  *  - Event Identifiers for RFCOMM Notification Callback (Non-Blocking Mode)
  */
-#define RFCOMM_NO_OPERATION                     0x00
-#define RFCOMM_OPEN                             0x01
-#define RFCOMM_CLOSE                            0x02
-#define RFCOMM_ACCEPT                           0x03
-#define RFCOMM_READ                             0x04
-#define RFCOMM_WRITE                            0x05
+#define RFCOMM_NO_OPERATION                     0x00U
+#define RFCOMM_OPEN                             0x01U
+#define RFCOMM_CLOSE                            0x02U
+#define RFCOMM_ACCEPT                           0x03U
+#define RFCOMM_READ                             0x04U
+#define RFCOMM_WRITE                            0x05U
 
-#define RFCOMM_SEND_PN                          0x11
-#define RFCOMM_SEND_MSC                         0x12
-#define RFCOMM_SEND_RPN                         0x13
-#define RFCOMM_SEND_RLS                         0x14
+#define RFCOMM_SEND_PN                          0x11U
+#define RFCOMM_SEND_MSC                         0x12U
+#define RFCOMM_SEND_RPN                         0x13U
+#define RFCOMM_SEND_RLS                         0x14U
 
-#define RFCOMM_SEND_FC_OFF                      0x21
-#define RFCOMM_SEND_FC_ON                       0x22
-#define RFCOMM_SEND_TEST                        0x23
+#define RFCOMM_SEND_FC_OFF                      0x21U
+#define RFCOMM_SEND_FC_ON                       0x22U
+#define RFCOMM_SEND_TEST                        0x23U
 
 /* Asynchronous Events for Non-Blocking Mode */
-#define RFCOMM_RESET                            0x41
-#define RFCOMM_RECVD_MSC                        0x51
-#define RFCOMM_RECVD_RLS                        0x52
+#define RFCOMM_RESET                            0x41U
+#define RFCOMM_RECVD_MSC                        0x51U
+#define RFCOMM_RECVD_RLS                        0x52U
 
 /** RFCOMM Credit Transmission Enable & Disable - Internal Flags */
-#define RFCOMM_CREDIT_TX_ENABLED                0x01
-#define RFCOMM_CREDIT_TX_DISABLED               0x00
+#define RFCOMM_CREDIT_TX_ENABLED                0x01U
+#define RFCOMM_CREDIT_TX_DISABLED               0x00U
 
 /** RFCOMM Reading Local & Remote Credit Information - Internal Flags */
-#define RFCOMM_CREDIT_LOCAL                     0x01
-#define RFCOMM_CREDIT_REMOTE                    0x00
+#define RFCOMM_CREDIT_LOCAL                     0x01U
+#define RFCOMM_CREDIT_REMOTE                    0x00U
 
+/** \} */
 /** \} */
 
 /* --------------------------------------------- Structures/Data Types */
+/**
+ *  \addtogroup rfcomm_defines Defines
+ *  \{
+ */
+
 /**
  * \defgroup  rfcomm_structures Structures
  * \{
@@ -196,11 +202,11 @@ typedef struct rfcomm_handle
     /** RFCOMM Event Notification Callback (Non-Blocking Mode) */
     API_RESULT (* notify_cb)
                (
-                   UCHAR                      /* Event Identifier */,
-                   struct rfcomm_handle *     /* RFCOMM Handle */,
-                   UINT16                     /* Result/Response */,
-                   UCHAR *                    /* Returned Data */,
-                   UINT16                     /* Returned Data Length */
+                   UCHAR                     event_type,  /* Event Identifier */
+                   struct rfcomm_handle *    handle,      /* RFCOMM Handle */
+                   UINT16                    result,      /* Result/Response */
+                   UCHAR *                   data,        /* Returned Data */
+                   UINT16                    datalen      /* Returned Data Length */
                );
 
 #ifdef RFCOMM_ENABLE_USER_CXT_IN_HANDLE
@@ -221,23 +227,39 @@ typedef struct rfcomm_handle
     UCHAR bd_addr [BT_BD_ADDR_SIZE];
 
 } RFCOMM_HANDLE;
-
+/** \} */
+/** \} */
 
 
 /**
- *  The RFCOMM Event Notification Callback Data Type (Non-Blocking Mode)
+ *  \defgroup rfcomm_cb Application Callback
+ *  \{
+ *  This Section Describes the module Notification Callback interface offered
+ *  to the application
+ */
+
+/**
+ *  The RFCOMM Event Notification Callback Data Type
  */
 typedef API_RESULT (* RFCOMM_NOTIFY_CB)
                    (
-                       UCHAR                /* Event Identifier */,
-                       RFCOMM_HANDLE *      /* RFCOMM Handle */,
-                       UINT16               /* Result/Response */,
-                       UCHAR *              /* Returned Data */,
-                       UINT16               /* Returned Data Length */
+                       UCHAR              event_type,  /* Event Identifier */
+                       RFCOMM_HANDLE *    handle,      /* RFCOMM Handle */
+                       UINT16             result,      /* Result/Response */
+                       UCHAR *            data,        /* Returned Data */
+                       UINT16             datalen      /* Returned Data Length */
                    );
+/** \} */
 
+/**
+ *  \addtogroup rfcomm_defines Defines
+ *  \{
+ */
 
-
+/**
+ *  \addtogroup  rfcomm_structures Structures
+ *  \{
+ */
 /**
  *  The RFCOMM Parameter Negotiation (PN) Data Type
  */
@@ -269,8 +291,6 @@ typedef struct
     UCHAR window_size;
 
 } RFCOMM_PN;
-
-
 
 /**
  *  The RFCOMM Remote Port Negotiation (RPN) Data Type
@@ -339,11 +359,9 @@ typedef struct
      *      Bit 6 -> (Reserved)
      *      Bit 7 -> (Reserved)
      */
-    UCHAR mask [2];
+    UCHAR mask [2U];
 
 } RFCOMM_RPN;
-
-
 
 /**
  *  The RFCOMM Modem Status Command (MSC) Data Type
@@ -379,8 +397,6 @@ typedef struct
 
 } RFCOMM_MSC;
 
-
-
 /**
  *  The RFCOMM Remote Line Status (RLS) Data Type
  */
@@ -404,8 +420,6 @@ typedef struct
 
 } RFCOMM_RLS;
 
-
-
 /**
  *  The RFCOMM Non Supported Command (NSC) Data Type
  */
@@ -418,8 +432,6 @@ typedef struct
     UCHAR command_type;
 
 } RFCOMM_NSC;
-
-
 
 /**
  *  The RFCOMM Test (TEST) Data Type
@@ -452,18 +464,17 @@ typedef struct
 #define RFCOMM_RESET_HANDLE(hdl) \
         (hdl)->notify_cb = NULL; \
         (hdl)->blob = NULL; \
-        (hdl)->dlci = 0x0; \
-        (hdl)->server_channel = 0x0; \
-        BT_mem_set((hdl)->bd_addr, 0x0, BT_BD_ADDR_SIZE);
+        (hdl)->dlci = 0x0U; \
+        (hdl)->server_channel = 0x0U; \
+        BT_mem_set((hdl)->bd_addr, 0x0U, BT_BD_ADDR_SIZE);
 
 #else
 #define RFCOMM_RESET_HANDLE(hdl) \
         (hdl)->notify_cb = NULL; \
-        (hdl)->dlci = 0x0; \
-        (hdl)->server_channel = 0x0; \
-        BT_mem_set((hdl)->bd_addr, 0x0, BT_BD_ADDR_SIZE);
+        (hdl)->dlci = 0x0U; \
+        (hdl)->server_channel = 0x0U; \
+        BT_mem_set((hdl)->bd_addr, 0x0U, BT_BD_ADDR_SIZE);
 #endif /* RFCOMM_ENABLE_USER_CXT_IN_HANDLE */
-
 
 /**
  *  This utility macro populates required field of a RFCOMM handle,
@@ -483,7 +494,6 @@ typedef struct
         (hdl)->server_channel = (ch); \
         BT_COPY_BD_ADDR((hdl)->bd_addr, (bd));
 
-
 /**
  *  This utility macro populates required field of a RFCOMM handle,
  *  for calling RFCOMM Accept
@@ -497,7 +507,6 @@ typedef struct
         (hdl)->notify_cb = (cb); \
         (hdl)->server_channel = (ch);
 
-
 /**
  *  This utility macro compares two RFCOMM Handles.
  *
@@ -508,8 +517,7 @@ typedef struct
 #define BT_rfcomm_compare_handles(hdl_1, hdl_2) \
         (((hdl_1)->dlci == (hdl_2)->dlci) && \
          ((hdl_1)->server_channel == (hdl_2)->server_channel) && \
-         (0 == BT_mem_cmp((hdl_1)->bd_addr, (hdl_2)->bd_addr, BT_BD_ADDR_SIZE)))
-
+         (0U == BT_mem_cmp((hdl_1)->bd_addr, (hdl_2)->bd_addr, BT_BD_ADDR_SIZE)))
 
 /**
  *  This utility macro sets the Notification Callback in a RFCOMM Handle
@@ -522,36 +530,29 @@ typedef struct
 #define RFCOMM_SET_HANDLE_NOTIFY_CB(hdl, cb) \
         (hdl)->notify_cb = (cb);
 
-
 /** RFCOMM Credit Transmission Enable */
 #define BT_rfcomm_credit_tx_enable(hdl) \
         BT_rfcomm_credit_tx((hdl), RFCOMM_CREDIT_TX_ENABLED)
-
 
 /** RFCOMM Credit Transmission Disable */
 #define BT_rfcomm_credit_tx_disable(hdl) \
         BT_rfcomm_credit_tx((hdl), RFCOMM_CREDIT_TX_DISABLED)
 
-
 /** RFCOMM Read Local Credit */
 #define BT_rfcomm_read_local_credit(hdl, cr) \
         BT_rfcomm_read_credit((hdl), (cr), RFCOMM_CREDIT_LOCAL)
-
 
 /** RFCOMM Read Remote Credit */
 #define BT_rfcomm_read_remote_credit(hdl, cr) \
         BT_rfcomm_read_credit((hdl), (cr), RFCOMM_CREDIT_REMOTE)
 
-
 /** To Send Session Flow ON */
 #define BT_rfcomm_send_fc_on(hdl) \
         BT_rfcomm_send_fc(hdl, RFCOMM_SEND_FC_ON)
 
-
 /** To Send Session Flow OFF */
 #define BT_rfcomm_send_fc_off(hdl) \
         BT_rfcomm_send_fc(hdl, RFCOMM_SEND_FC_OFF)
-
 /** \} */
 
 #ifdef __cplusplus
@@ -584,14 +585,12 @@ API_RESULT BT_rfcomm_send_fc
            );
 /** \endcond */
 
-
 /* --------------------------------------------- API Declarations */
 /**
  * \defgroup  rfcomm_api API Definations
  * \{
  * Describes API definations for RFCOMM  module.
  */
-/** To Accept Connection on a RFCOMM Server Channel */
 /**
  *  \brief To accept Data Link Connection for a RFCOMM Server Channel from a
  *         remote device.
@@ -633,7 +632,6 @@ API_RESULT BT_rfcomm_accept
                /* IN */     UCHAR              server_channel
            );
 
-/** To Cancel accepting Connection on a RFCOMM Server Channel */
 /**
  *  \brief To stop waiting for connection on a RFCOMM Server Channel.
  *
@@ -653,7 +651,6 @@ API_RESULT BT_rfcomm_accept_cancel
                /* IN */  UCHAR    server_channel
            );
 
-/** To Open a RFCOMM Connection for a Server Channel */
 /**
  *  \brief To open an RFCOMM Data Link Connection.
  *
@@ -704,7 +701,6 @@ API_RESULT BT_rfcomm_open
                /* INOUT */  RFCOMM_HANDLE *    handle
            );
 
-/** To Close a RFCOMM Connection for a Server Channel */
 /**
  *  \brief To close an existing RFCOMM Data Link Connection.
  *
@@ -735,7 +731,6 @@ API_RESULT BT_rfcomm_close
                /* IN */  RFCOMM_HANDLE *    handle
            );
 
-/** To Query State of a RFCOMM Connection for a Server Channel */
 /**
  *  \brief To query validity of an RFCOMM Channel.
  *
@@ -756,7 +751,6 @@ API_RESULT BT_rfcomm_query_state
                /* IN */  RFCOMM_HANDLE *    handle
            );
 
-/** To Write Data on a RFCOMM Connection */
 /**
  *  \brief To Write to an RFCOMM Data Link Connection.
  *
@@ -806,7 +800,6 @@ API_RESULT BT_rfcomm_write
                /* OUT */ UINT16 *           actual
            );
 
-/** To Test a RFCOMM Session */
 /**
  *  \brief To Test RFCOMM Session by sending Test Command.
  *
@@ -849,7 +842,6 @@ API_RESULT BT_rfcomm_send_test
                /* IN */  RFCOMM_TEST *      test
            );
 
-/** To initiate Parameter Negotiation for a RFCOMM Connection */
 /**
  *  \brief To send Parameter Negotiation Frame to the Peer.
  *
@@ -895,7 +887,6 @@ API_RESULT BT_rfcomm_send_pn
                /* IN */  RFCOMM_PN *        pn
            );
 
-/** To initiate Remote Port Negotiation for a RFCOMM Connection */
 /**
  *  \brief To initiate RFCOMM Remote Port Negotiation.
  *
@@ -945,7 +936,6 @@ API_RESULT BT_rfcomm_send_rpn
                /* INOUT */  RFCOMM_RPN *       rpn
            );
 
-/** To Send Modem Status Command for a RFCOMM Connection */
 /**
  *  \brief To transmit Modem Status Command.
  *
@@ -977,12 +967,11 @@ API_RESULT BT_rfcomm_send_msc
                /* IN */  RFCOMM_MSC *       msc
            );
 
-/** To Send Remote Line Status for a RFCOMM Connection */
 /**
- *  \brief To send Line Status.
+ *  \brief To send Remote Line Status.
  *
  *  \par Description:
- *       This API enables the application to transmit Line Status (RFCOMM_RLS)
+ *       This API enables the application to transmit Remote Line Status (RFCOMM_RLS)
  *       command to the peer RFCOMM entity.
  *
  *  \param [in] handle
@@ -1009,7 +998,6 @@ API_RESULT BT_rfcomm_send_rls
                /* IN */  RFCOMM_RLS *       rls
            );
 
-/** To Get Local Port Settings for a RFCOMM Connection */
 /**
  *  \brief To get/retrieve local port settings for a DLC
  *
@@ -1041,7 +1029,6 @@ API_RESULT BT_rfcomm_get_local_rpn
                /* OUT */ RFCOMM_RPN *       rpn
            );
 
-/** To Set Local Port Settings for a RFCOMM Connection */
 /**
  *  \brief To set/update local port settings for a DLC
  *
@@ -1078,7 +1065,6 @@ API_RESULT BT_rfcomm_set_local_rpn
                /* IN */  RFCOMM_RPN *       rpn
            );
 
-/** To Get PN Parameters for a RFCOMM Connection */
 /**
  *  \brief To get parameter negotiation (PN) values for a DLC
  *
@@ -1106,7 +1092,6 @@ API_RESULT BT_rfcomm_get_local_pn
                /* OUT */ RFCOMM_PN *        pn
            );
 
-/** To Get Local MSC Parameters for a RFCOMM Connection */
 /**
  *  \brief To get local modem status command values for a DLC
  *
@@ -1138,7 +1123,6 @@ API_RESULT BT_rfcomm_get_local_msc
                /* OUT */ RFCOMM_MSC *       msc
            );
 
-/** To Register L2CAP In-MTU for RFCOMM */
 /**
  *  \brief To set Incoming Data MTU value for L2CAP channel establishment.
  *
@@ -1172,7 +1156,6 @@ API_RESULT BT_rfcomm_register_mtu
                /* IN */  UINT16    mtu
            );
 
-/** To Set Packets as Flushable for RFCOMM Connection */
 /**
  *  \brief To mark the RFCOMM ACL data as flushable PDU.
  *
@@ -1198,7 +1181,6 @@ API_RESULT BT_rfcomm_set_flushable
                /* IN */ RFCOMM_HANDLE *    handle
            );
 
-/** To Set Operation Mode of L2CAP Channels for RFCOMM */
 /**
  *  \brief To set the L2CAP operation mode for RFCOMM channel at runtime.
  *

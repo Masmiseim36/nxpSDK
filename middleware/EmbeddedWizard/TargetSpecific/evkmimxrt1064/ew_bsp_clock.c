@@ -31,6 +31,8 @@
 
 #include "fsl_clock.h"
 #include "fsl_snvs_hp.h"
+
+#include "ewconfig.h"
 #include "ew_bsp_clock.h"
 
 #include <string.h>
@@ -62,13 +64,15 @@ const unsigned long DaysToMonthInLeapYear[] =
 
 
 /* timer tick for Embedded Wizard UI applications */
-unsigned int                  EmWiSystemTicks = 0;
+static volatile unsigned long EmWiSystemTicks = 0;
 
 /* variables for cycle counter / CPU load measurement  */
 #if EW_CPU_LOAD_MEASURING == 1
-static unsigned long          WorkingTime  = 0;
-static unsigned long          SleepingTime = 0;
-static unsigned long          PrevCycCnt   = 0;
+
+  static unsigned long          WorkingTime  = 0;
+  static unsigned long          SleepingTime = 0;
+  static unsigned long          PrevCycCnt   = 0;
+
 #endif
 
 /* helper function to initialize measuring unit (cycle counter) */
@@ -89,14 +93,17 @@ static void CycleCounterInit( void )
 
   /* initialize counters */
   #if EW_CPU_LOAD_MEASURING == 1
-  WorkingTime   = 0;
-  SleepingTime  = 0;
-  PrevCycCnt    = 0;
+
+    WorkingTime   = 0;
+    SleepingTime  = 0;
+    PrevCycCnt    = 0;
+
   #endif
 }
 
 
 #if EW_CPU_LOAD_MEASURING == 1
+
 /* helper function to get cycle counter value since last call */
 static unsigned long GetCycleCounterDelta( void )
 {
@@ -112,55 +119,6 @@ static unsigned long GetCycleCounterDelta( void )
 }
 
 #endif
-
-
-/*******************************************************************************
-* FUNCTION:
-*   EwBspConfigSystemTick
-*
-* DESCRIPTION:
-*   Configure the system tick counter.
-*
-* ARGUMENTS:
-*   None
-*
-* RETURN VALUE:
-*   None
-*
-*******************************************************************************/
-void EwBspConfigSystemTick( void )
-{
-  EmWiSystemTicks = 0;
-
-  /* set systick reload value to generate 1ms interrupt */
-  SysTick_Config( CLOCK_GetFreq(kCLOCK_CoreSysClk) / 1000U );
-
-  /* initialize system cycle counter (also used for display synchronisation) */
-  CycleCounterInit();
-}
-
-
-/*******************************************************************************
-* FUNCTION:
-*   EwBspSystemTickIncrement
-*
-* DESCRIPTION:
-*   The function EwBspSystemTickIncrement increments the millisecond counter,
-*   which is used by the Runtime Environment (RTE) to trigger timer events.
-*
-* ARGUMENTS:
-*   None
-*
-* RETURN VALUE:
-*   None
-*
-*******************************************************************************/
-void EwBspSystemTickIncrement( void )
-{
-  EmWiSystemTicks++;
-}
-
-
 /*******************************************************************************
 * FUNCTION:
 *   SysTick_Handler
@@ -177,12 +135,12 @@ void EwBspSystemTickIncrement( void )
 *******************************************************************************/
 void SysTick_Handler(void)
 {
-  EwBspSystemTickIncrement();
+  EwBspClockTickIncrement();
 
   #if EW_USE_FREE_RTOS == 1
 
-  if ( xTaskGetSchedulerState() != taskSCHEDULER_NOT_STARTED )
-    xPortSysTickHandler();
+    if ( xTaskGetSchedulerState() != taskSCHEDULER_NOT_STARTED )
+      xPortSysTickHandler();
 
   #endif
 }
@@ -190,10 +148,10 @@ void SysTick_Handler(void)
 
 /*******************************************************************************
 * FUNCTION:
-*   EwBspConfigRealTimeClock
+*   EwBspClockInit
 *
 * DESCRIPTION:
-*   Configures the Real Time Clock.
+*   Initialises the system clock and the real time clock.
 *
 * ARGUMENTS:
 *   None
@@ -202,19 +160,70 @@ void SysTick_Handler(void)
 *   None
 *
 *******************************************************************************/
-void EwBspConfigRealTimeClock( void )
+void EwBspClockInit( void )
 {
   snvs_hp_rtc_config_t snvsRtcConfig;
 
+  EmWiSystemTicks = 0;
+
+  /* set systick reload value to generate 1ms interrupt */
+  SysTick_Config( CLOCK_GetFreq(kCLOCK_CoreSysClk) / 1000U );
+
+  /* initialize system cycle counter (also used for display synchronisation) */
+  CycleCounterInit();
+
+
+  /* Init RTC */
   SNVS_HP_RTC_GetDefaultConfig( &snvsRtcConfig );
   SNVS_HP_RTC_Init( SNVS, &snvsRtcConfig );
-  SNVS_HP_RTC_StartTimer(SNVS);
+  SNVS_HP_RTC_StartTimer( SNVS );
 }
 
 
 /*******************************************************************************
 * FUNCTION:
-*   EwBspGetTime
+*   EwBspClockTickIncrement
+*
+* DESCRIPTION:
+*   The function EwBspClockTickIncrement increments the millisecond counter,
+*   which is used by the Runtime Environment (RTE) to trigger timer events.
+*
+* ARGUMENTS:
+*   None
+*
+* RETURN VALUE:
+*   None
+*
+*******************************************************************************/
+void EwBspClockTickIncrement( void )
+{
+  EmWiSystemTicks++;
+}
+
+
+/*******************************************************************************
+* FUNCTION:
+*   EwBspClockGetTicks
+*
+* DESCRIPTION:
+*   The function EwBspClockGetTicks returns the current ticks counter value.
+*
+* ARGUMENTS:
+*   None
+*
+* RETURN VALUE:
+*   The current ticks counter value.
+*
+*******************************************************************************/
+unsigned long EwBspClockGetTicks( void )
+{
+  return EmWiSystemTicks;
+}
+
+
+/*******************************************************************************
+* FUNCTION:
+*   EwBspClockGetTime
 *
 * DESCRIPTION:
 *   Returns the current time in seconds since 01.01.1970.
@@ -226,7 +235,7 @@ void EwBspConfigRealTimeClock( void )
 *   The current time in seconds since 01.01.1970.
 *
 *******************************************************************************/
-unsigned long EwBspGetTime( void )
+unsigned long EwBspClockGetTime( void )
 {
   snvs_hp_rtc_datetime_t rtcDateTime;
 
@@ -270,13 +279,19 @@ unsigned long EwBspGetTime( void )
 
 /*******************************************************************************
 * FUNCTION:
-*   EwBspSetTime
+*   EwBspClockSetTime
 *
 * DESCRIPTION:
-*   Sets the given time in seconds since 01.01.1970 at real time clock.
+*   Sets the given time in seconds since 01.01.1970 at real time clock (RTC).
+*
+* ARGUMENTS:
+*   aTime - the time in seconds since 01.01.1970 to set in real time clock.
+*
+* RETURN VALUE:
+*   None.
 *
 *******************************************************************************/
-void EwBspSetTime( unsigned long aTime )
+void EwBspClockSetTime( unsigned long aTime )
 {
   #define LeapYearsFromBeginToNext400Year   7
   #define DaysPer4Years       ( 4 * 365 + 1 )
@@ -354,7 +369,7 @@ void EwBspSetTime( unsigned long aTime )
 
 /*******************************************************************************
 * FUNCTION:
-*   EwBspGetCpuLoad
+*   EwBspClockGetCpuLoad
 *
 * DESCRIPTION:
 *   Returns the current CPU load as percent value.
@@ -366,7 +381,7 @@ void EwBspSetTime( unsigned long aTime )
 *   The current CPU load.
 *
 *******************************************************************************/
- int EwBspGetCpuLoad( void )
+ int EwBspClockGetCpuLoad( void )
 {
   int cpuLoad = 0;
 
@@ -390,7 +405,7 @@ void EwBspSetTime( unsigned long aTime )
 
 /*******************************************************************************
 * FUNCTION:
-*   EwBspCpuLoadSetActive
+*   EwBspClockCpuLoadSetActive
 *
 * DESCRIPTION:
 *   Starts the CPU load counting. Call this function whenever CPU processing
@@ -402,7 +417,7 @@ void EwBspSetTime( unsigned long aTime )
 *   None
 *
 *******************************************************************************/
-void EwBspCpuLoadSetActive( void )
+void EwBspClockCpuLoadSetActive( void )
 {
   #if EW_CPU_LOAD_MEASURING == 1
 
@@ -414,7 +429,7 @@ void EwBspCpuLoadSetActive( void )
 
 /*******************************************************************************
 * FUNCTION:
-*   EwBspCpuLoadSetIdle
+*   EwBspClockCpuLoadSetIdle
 *
 * DESCRIPTION:
 *   Stops the CPU load counting. Call this function whenever CPU processing is
@@ -428,7 +443,7 @@ void EwBspCpuLoadSetActive( void )
 *   None
 *
 *******************************************************************************/
-void EwBspCpuLoadSetIdle( void )
+void EwBspClockCpuLoadSetIdle( void )
 {
   #if EW_CPU_LOAD_MEASURING == 1
 

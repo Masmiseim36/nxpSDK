@@ -32,41 +32,41 @@
 /* ----------------------------------------------- Debug Macros */
 /* Define Debug Message Types */
 /* Message Type - ERR */
-#define EM_DEBUG_MSG_ERR              1
+#define EM_DEBUG_MSG_ERR              1U
 
 /* Message Type - TRC */
-#define EM_DEBUG_MSG_TRC              2
+#define EM_DEBUG_MSG_TRC              2U
 
 /* Message Type - INF */
-#define EM_DEBUG_MSG_INF              3
+#define EM_DEBUG_MSG_INF              3U
 
 /* Define Debug Levels */
 /* No runtime error logging */
-#define EM_DEBUG_LEVEL_NONE           0
+#define EM_DEBUG_LEVEL_NONE           0U
 
 /* Log only ERR messages */
-#define EM_DEBUG_LEVEL_ERR            1
+#define EM_DEBUG_LEVEL_ERR            1U
 
 /* Log ERR and TRC messages */
-#define EM_DEBUG_LEVEL_TRC            2
+#define EM_DEBUG_LEVEL_TRC            2U
 
 /* Log ERR, TRC and INF messages */
-#define EM_DEBUG_LEVEL_INF            3
-#define EM_DEBUG_LEVEL_ALL            3
+#define EM_DEBUG_LEVEL_INF            3U
+#define EM_DEBUG_LEVEL_ALL            3U
 
 /* Maximum number of module pages */
-#define EM_MODULE_PAGE_BITS_COUNT     4
+#define EM_MODULE_PAGE_BITS_COUNT     4U
 #define EM_MAX_MODULE_PAGE_COUNT      (1 << EM_MODULE_PAGE_BITS_COUNT)
 
 /* Debug Enable/Disable flag */
-#define EM_DEBUG_ENABLE               0x01
-#define EM_DEBUG_DISABLE              0x00
+#define EM_DEBUG_ENABLE               0x01U
+#define EM_DEBUG_DISABLE              0x00U
 
 /**
  * Special wildcard define to represent all modules.
  * Used to enable/disable all module at once.
  */
-#define EM_MODULE_ALL                 0xFFFFFFFF
+#define EM_MODULE_ALL                 0xFFFFFFFFU
 
 #define EM_GET_PAGE_IDX_MODULE_BIT_MASK(module_id, page_idx, m_bit_mask) \
         { \
@@ -104,22 +104,22 @@
 
 #ifdef EM_LOG_TIMESTAMP
 #define EM_debug_error(module_id, ...) \
-    EM_debug_printf_err((module_id), (const CHAR *)"\n[** ERR **]:[%s]:[%s]:[%d]: [<%s>] ", \
+    EM_debug_printf_err((module_id), (const CHAR *)"\n[** ERR **]:[%s]:[%s]:[%d]: ", \
     EM_debug_get_current_timestamp(), EM_FILE_NAME, __LINE__); \
     EM_debug_printf_err((module_id), __VA_ARGS__)
 
 #define EM_debug_trace(module_id, ...) \
-    EM_debug_printf_trc((module_id), (const CHAR *)"\n[-- TRC --]:[%s]:[%s]:[%d]: [<%s>] ", \
+    EM_debug_printf_trc((module_id), (const CHAR *)"\n[-- TRC --]:[%s]:[%s]:[%d]: ", \
     EM_debug_get_current_timestamp(), EM_FILE_NAME, __LINE__); \
     EM_debug_printf_trc((module_id), __VA_ARGS__)
 
 #define EM_debug_info(module_id, ...) \
-    EM_debug_printf_inf((module_id), (const CHAR *)"\n[== INF ==]:[%s]:[%s]:[%d]: [<%s>] ", \
+    EM_debug_printf_inf((module_id), (const CHAR *)"\n[== INF ==]:[%s]:[%s]:[%d]: ", \
     EM_debug_get_current_timestamp(), EM_FILE_NAME, __LINE__); \
     EM_debug_printf_inf((module_id), __VA_ARGS__)
 
 #define EM_debug_dump(module_id, ...) \
-    EM_debug_printf_inf((module_id), (const CHAR *)"\n[++ HEX ++]:[%s]:[%s]:[%d]: [<%s>] ", \
+    EM_debug_printf_inf((module_id), (const CHAR *)"\n[++ HEX ++]:[%s]:[%s]:[%d]: ", \
     EM_debug_get_current_timestamp(), EM_FILE_NAME, __LINE__); \
     EM_debug_printf_inf((module_id), __VA_ARGS__)
 

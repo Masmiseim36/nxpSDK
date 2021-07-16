@@ -9,7 +9,7 @@
 *                                                                    *
 **********************************************************************
 
-** emWin V6.14 - Graphical user interface for embedded applications **
+** emWin V6.16 - Graphical user interface for embedded applications **
 All  Intellectual Property rights  in the Software belongs to  SEGGER.
 emWin is protected by  international copyright laws.  Knowledge of the
 source code may not be used to write a similar product.  This file may
@@ -34,7 +34,7 @@ License model:            emWin License Agreement, dated August 20th 2011 and Am
 Licensed platform:        NXP's ARM 7/9, Cortex-M0, M3, M4, M7, A7, M33
 ----------------------------------------------------------------------
 Support and Update Agreement (SUA)
-SUA period:               2011-08-19 - 2020-09-02
+SUA period:               2011-08-19 - 2021-09-02
 Contact to extend SUA:    sales@segger.com
 ----------------------------------------------------------------------
 File        : WM_Intern.h
@@ -177,6 +177,7 @@ GUI_EXTERN U32 WM__DrawSprite;  // Required when using sprites in combination wi
 void    WM__ActivateClipRect        (void);
 int     WM__ClipAtParentBorders     (GUI_RECT * pRect, WM_HWIN hWin);
 void    WM__Client2Screen           (const WM_Obj * pWin, GUI_RECT * pRect);
+void    WM__DeactivateEx            (void);
 void    WM__DeleteAssocTimer        (WM_HWIN hWin);
 void    WM__DeleteSecure            (WM_HWIN hWin);
 void    WM__DetachWindow            (WM_HWIN hChild);

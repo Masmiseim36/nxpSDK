@@ -1,6 +1,6 @@
 # CROSS COMPILER SETTING
 SET(CMAKE_SYSTEM_NAME Generic)
-CMAKE_MINIMUM_REQUIRED (VERSION 3.1.1)
+CMAKE_MINIMUM_REQUIRED (VERSION 3.10.0)
 
 # THE VERSION NUMBER
 SET (Tutorial_VERSION_MAJOR 1)
@@ -55,7 +55,7 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../../../components/lists
     ${ProjDirPath}/../../../../../../../devices/MIMXRT1015/xip
     ${ProjDirPath}/../../../../../xip
-    ${ProjDirPath}/../../../../../../../CMSIS/Include
+    ${ProjDirPath}/../../../../../../../CMSIS/Core/Include
 )
 
 # include modules
@@ -91,15 +91,11 @@ include(driver_igpio_MIMXRT1015)
 
 include(driver_xip_device_MIMXRT1015)
 
-include(driver_xip_board_MIMXRT1015)
+include(driver_xip_board_evkmimxrt1015_MIMXRT1015)
 
 include(driver_flexspi_MIMXRT1015)
 
-include(CMSIS_Include_core_cm7_MIMXRT1015)
-
-include(CMSIS_Include_common_MIMXRT1015)
-
-include(CMSIS_Include_dsp_MIMXRT1015)
+include(CMSIS_Include_core_cm_MIMXRT1015)
 
 include(driver_edma_MIMXRT1015)
 

@@ -45,98 +45,98 @@
  * This value is the default Transmit MTU used in the Connection API when
  * it is set to 0 by the application.
  */
-#define BT_HID_DEFAULT_TRANS_MTU                48
+#define BT_HID_DEFAULT_TRANS_MTU                48U
 
 /**
  * This value is the default Receive MTU used in the Connection API when
  * it is set to 0 by the application.
  */
-#define BT_HID_DEFAULT_RECV_MTU                 48
+#define BT_HID_DEFAULT_RECV_MTU                 48U
 
 /**
  * This is the invalid or error value of the HID Host Handle. All handles
  * declared must be initialised to this value.
  */
-#define BT_HID_INVALID_HANDLE                   0xFF
+#define BT_HID_INVALID_HANDLE                   0xFFU
 
 /* ----------------------------------- Data Type/Structures/Typedefs */
 
 /**
  * The list of HIDP Message Types
  */
-#define    HID_HOST_HANDSHAKE                   0x00
-#define    HID_HOST_CONTROL                     0x01
+#define    HID_HOST_HANDSHAKE                   0x00U
+#define    HID_HOST_CONTROL                     0x01U
 
-#define    HID_HOST_GET_REPORT                  0x04
-#define    HID_HOST_SET_REPORT                  0x05
-#define    HID_HOST_GET_PROTOCOL                0x06
-#define    HID_HOST_SET_PROTOCOL                0x07
-#define    HID_HOST_GET_IDLE                    0x08
-#define    HID_HOST_SET_IDLE                    0x09
-#define    HID_HOST_DATA                        0x0A
-#define    HID_HOST_DATC                        0x0B
+#define    HID_HOST_GET_REPORT                  0x04U
+#define    HID_HOST_SET_REPORT                  0x05U
+#define    HID_HOST_GET_PROTOCOL                0x06U
+#define    HID_HOST_SET_PROTOCOL                0x07U
+#define    HID_HOST_GET_IDLE                    0x08U
+#define    HID_HOST_SET_IDLE                    0x09U
+#define    HID_HOST_DATA                        0x0AU
+#define    HID_HOST_DATC                        0x0BU
 
 /**
  * The list of opcodes sent as part of the HID_CONTROL operation from the
  * host to the device.
  */
-#define     HID_HOST_NOP                        0x00
-#define     HID_HOST_HARD_RESET                 0x01
-#define     HID_HOST_SOFT_RESET                 0x02
-#define     HID_HOST_SUSPEND                    0x03
-#define     HID_HOST_EXIT_SUSPEND               0x04
-#define     HID_HOST_VIRTUAL_CABLE_UNPLUG       0x05
+#define     HID_HOST_NOP                        0x00U
+#define     HID_HOST_HARD_RESET                 0x01U
+#define     HID_HOST_SOFT_RESET                 0x02U
+#define     HID_HOST_SUSPEND                    0x03U
+#define     HID_HOST_EXIT_SUSPEND               0x04U
+#define     HID_HOST_VIRTUAL_CABLE_UNPLUG       0x05U
 
 /**
  * The various types of reports requested by the host as part of the GET_REPORT
  * operation.
  */
-#define     HID_HOST_REPORT_OTHER               0x00
-#define     HID_HOST_INPUT_REPORT               0x01
-#define     HID_HOST_OUTPUT_REPORT              0x02
-#define     HID_HOST_FEATURE_REPORT             0x03
+#define     HID_HOST_REPORT_OTHER               0x00U
+#define     HID_HOST_INPUT_REPORT               0x01U
+#define     HID_HOST_OUTPUT_REPORT              0x02U
+#define     HID_HOST_FEATURE_REPORT             0x03U
 
 /**
  * The various protocols in which the device can operate.
  */
-#define     HID_HOST_BOOT_PROTOCOL              0x00
-#define     HID_HOST_REPORT_PROTOCOL            0x01
+#define     HID_HOST_BOOT_PROTOCOL              0x00U
+#define     HID_HOST_REPORT_PROTOCOL            0x01U
 
 /**
  * List of result codes sent by HID device for Handshake Message.
  */
-#define     HID_HOST_SUCCESS                    0x00
-#define     HID_HOST_NOT_READY                  0x01
-#define     HID_HOST_ERR_INVALID_REPORT_ID      0x02
-#define     HID_HOST_ERR_UNSUPPORTED_REQ        0x03
-#define     HID_HOST_ERR_INVALID_PARAM          0x04
-#define     HID_HOST_ERR_UNKNOWN                0x0E
-#define     HID_HOST_ERR_FATAL                  0x0F
+#define     HID_HOST_SUCCESS                    0x00U
+#define     HID_HOST_NOT_READY                  0x01U
+#define     HID_HOST_ERR_INVALID_REPORT_ID      0x02U
+#define     HID_HOST_ERR_UNSUPPORTED_REQ        0x03U
+#define     HID_HOST_ERR_INVALID_PARAM          0x04U
+#define     HID_HOST_ERR_UNKNOWN                0x0EU
+#define     HID_HOST_ERR_FATAL                  0x0FU
 
 /**
  * The various events that occur in the HID HOST module that are
  * indicated to the upper layer.
  */
-#define     HID_HOST_CTRL_CONNECTION            0x00
+#define     HID_HOST_CTRL_CONNECTION            0x00U
 /**
  * Control and Interrupt Disconnection values
  * are used as bit mask
  */
-#define     HID_HOST_CTRL_DISCONNECTION         0x01
-#define     HID_HOST_INTR_DISCONNECTION         0x02
-#define     HID_HOST_INTR_CONNECTION            0x03
+#define     HID_HOST_CTRL_DISCONNECTION         0x01U
+#define     HID_HOST_INTR_DISCONNECTION         0x02U
+#define     HID_HOST_INTR_CONNECTION            0x03U
 /**
  * GET/SET Report/Protocol/Idle Response
  * Types has same value as their corresponding
  * Transaction Types.
  */
-#define     HID_HOST_GET_REPORT_RSP             0x04
-#define     HID_HOST_SET_REPORT_RSP             0x05
-#define     HID_HOST_GET_PROTOCOL_RSP           0x06
-#define     HID_HOST_SET_PROTOCOL_RSP           0x07
-#define     HID_HOST_GET_IDLE_RSP               0x08
-#define     HID_HOST_SET_IDLE_RSP               0x09
-#define     HID_HOST_VIRTUAL_CABLE_UNPLUG_IND   0x0A
+#define     HID_HOST_GET_REPORT_RSP             0x04U
+#define     HID_HOST_SET_REPORT_RSP             0x05U
+#define     HID_HOST_GET_PROTOCOL_RSP           0x06U
+#define     HID_HOST_SET_PROTOCOL_RSP           0x07U
+#define     HID_HOST_GET_IDLE_RSP               0x08U
+#define     HID_HOST_SET_IDLE_RSP               0x09U
+#define     HID_HOST_VIRTUAL_CABLE_UNPLUG_IND   0x0AU
 /** \} */
 /**
  * \defgroup hid_host_structures Structures
@@ -195,15 +195,21 @@ typedef struct
     HID_REPORT_TYPE  report_type;
 
 } HID_HOST_REPORT;
-
+/** \} */
+/** \} */
+/**
+ * \defgroup hid_host_appl_callback Application Callback
+ * \{
+ * Describes Application Callback definitions of the module.
+ */
 /**
  * The callback function which returns all the incoming input reports from the
  * device to the upper layer application.
  */
 typedef void ( *HID_INPUT_REP_IND_CALLBACK )
              (
-                 HID_HOST_DEV_HANDLE,
-                 HID_HOST_REPORT*
+                 HID_HOST_DEV_HANDLE   handle,
+                 HID_HOST_REPORT     * report
              );
 
 /**
@@ -212,15 +218,14 @@ typedef void ( *HID_INPUT_REP_IND_CALLBACK )
  */
 typedef void ( *HID_HOST_EVENT_IND_CALLBACK )
              (
-                 HID_HOST_EVT_TYPE,
-                 HID_HOST_DEV_HANDLE,
-                 API_RESULT,
-                 UCHAR *,
-                 UINT16
+                 HID_HOST_EVT_TYPE      event_type,
+                 HID_HOST_DEV_HANDLE    handle,
+                 API_RESULT             result,
+                 UCHAR               *  event_data,
+                 UINT16                 event_datalen
              );
+/** \} */
 
-/** \} */
-/** \} */
 /*  --------------------------------------------- HID Host APIs */
 #ifdef __cplusplus
 extern "C"
@@ -232,176 +237,413 @@ extern "C"
  * Describes HID Host API definitions of the module.
  */
 /**
- * This API is used to initialise the HID host module. This must be done
- * before using any other APIs of this module.
+ *  \brief To initialize HID Host module
+ *
+ *  \par Description:
+ *  This API is used to initialize the HID Host module.
+ *  This must be done before using any other API of this module.
+ *
+ *  \param None
+ *
+ *  \return API_RESULT:
+ *          - API_SUCCESS, on successful initiation of the procedure.
+ *          - Error Code, describing the cause of failure.
  */
 API_RESULT BT_hid_host_init( void );
 
 /**
- * This API is used to start the HID host module. This must be preceeded by
- * the initialisation. It starts the various threads of the HID host module.
- * the module is now ready to perform HID services.
+ *  \brief To start HID Host module
+ *
+ *  \par Description:
+ *  This API is used to start the HID host module. This must be preceded by
+ *  the initialization. The module is now ready to provide HID Host services.
+ *
+ *  \param None
+ *
+ *  \return API_RESULT:
+ *          - API_SUCCESS, on successful initiation of the procedure.
+ *          - Error Code, describing the cause of failure.
  */
 API_RESULT BT_hid_host_start( void );
 
 /**
- * This API is used to register the default callback functions with the
- * HID host module. This must be preceeded by the HID Host start.
+ *  \brief To register with HID Host module
+ *
+ *  \par Description:
+ *  This API is used to register callbacks for the HID host module.
+ *  This must be preceded by the HID host start.
+ *
+ *  The application can specify the MTUs required. If not specified ( 0 ), the
+ *  Receive MTU is configured to BT_HID_DEFAULT_RECV_MTU and Transmit MTU is
+ *  configured to BT_HID_DEFAULT_TRANS_MTU. Both of these are currently set to
+ *  48 bytes. The report_ind callback function is called every time there is an
+ *  input report from the device and the event_ind callback function is called
+ *  to deliver events like disconnection, etc.
+ *
+ *  \param [in] transmitMTU
+ *         Transmit MTU
+ *
+ *  \param [in] recvMTU
+ *         Receive MTU
+ *
+ *  \param [in] report_ind
+ *         Callback function for input reports received from the device
+ *
+ *  \param [in] event_ind
+ *         Callback function for events like, disconnection, etc
+ *
+ *  \return API_RESULT:
+ *          - API_SUCCESS, on successful initiation of the procedure.
+ *          - Error Code, describing the cause of failure.
  */
-API_RESULT BT_hid_host_register
-           (
-               /* IN */  UINT16 transmitMTU,
-               /* IN */  UINT16 recvMTU,
-               /* IN */  HID_INPUT_REP_IND_CALLBACK report_ind,
-               /* IN */  HID_HOST_EVENT_IND_CALLBACK event_ind
-           );
+API_RESULT  BT_hid_host_register
+            (
+                /* IN */  UINT16                       transmitMTU,
+                /* IN */  UINT16                       recvMTU,
+                /* IN */  HID_INPUT_REP_IND_CALLBACK   report_ind,
+                /* IN */  HID_HOST_EVENT_IND_CALLBACK  event_ind
+            );
 
 /**
- * This API is used to indicate to the HID host module the Bluetooth
- * Device Address of the HID device who's services are to be used. This API
- * returns a HANDLE which is to be used as parameter for all the APIs.
+ *  \brief To add a HID Device with relevant information and callbacks
+ *
+ *  \par Description:
+ *  This API is used to indicate to the HID host module the Bluetooth
+ *  Device Address of the HID device whose services are to be used.This
+ *  API returns a HANDLE which is to be used as parameter to all APIs.
+ *
+ *  The application can specify the MTUs required. If not specified ( 0 ), the
+ *  Receive MTU is configured to BT_HID_DEFAULT_RECV_MTU and Transmit MTU is
+ *  configured to BT_HID_DEFAULT_TRANS_MTU. Both of these are currently set to
+ *  48 bytes. The report_ind callback function is called every time there is an
+ *  input report from the device and the event_ind callback function is called
+ *  to deliver events like disconnection, etc.
+ *
+ *  \param [in] bdaddr
+ *         Bluetooth Device Address of peer
+ *
+ *  \param [in] transmitMTU
+ *         Transmit MTU
+ *
+ *  \param [in] recvMTU
+ *         Receive MTU
+ *
+ *  \param [in] report_ind
+ *         Callback function for input reports received from the device
+ *
+ *  \param [in] event_ind
+ *         Callback function for events like, disconnection, etc
+ *
+ *  \param [out] handle
+ *         Pointer to a caller provided HID_HOST_DEV_HANDLE variable,
+ *         which will contain the HID Device Handle on return.
+ *
+ *  \return API_RESULT:
+ *          - API_SUCCESS, on successful initiation of the procedure.
+ *          - Error Code, describing the cause of failure.
  */
 API_RESULT BT_hid_host_add_device
            (
-               /* IN */  UCHAR *bdaddr,
-               /* IN */  UINT16 transmitMTU,
-               /* IN */  UINT16 recvMTU,
-               /* IN */  HID_INPUT_REP_IND_CALLBACK report_ind,
-               /* IN */  HID_HOST_EVENT_IND_CALLBACK event_ind,
-               /* OUT */ HID_HOST_DEV_HANDLE*
+               /* IN */  UCHAR                         * bdaddr,
+               /* IN */  UINT16                          transmitMTU,
+               /* IN */  UINT16                          recvMTU,
+               /* IN */  HID_INPUT_REP_IND_CALLBACK      report_ind,
+               /* IN */  HID_HOST_EVENT_IND_CALLBACK     event_ind,
+               /* OUT */ HID_HOST_DEV_HANDLE           * handle
            );
 
 /**
- * This API is used to get the handle of the added device
- * for given BD address.
+ *  \brief To get the handle for the added device
+ *
+ *  \par Description:
+ *  This API is used to get the handle of the added device given its
+ *  BD address.
+ *
+ *  \param [in] bdaddr
+ *         Bluetooth Device Address of the added device
+ *
+ *  \param [out] handle
+ *         Pointer to a caller provided HID_HOST_DEV_HANDLE variable,
+ *         which will contain the HID Device Handle on return.
+ *
+ *  \return API_RESULT:
+ *          - API_SUCCESS, on successful initiation of the procedure.
+ *          - Error Code, describing the cause of failure.
  */
 API_RESULT BT_hid_host_get_handle_from_addr
            (
-               /* IN */  UCHAR *dev_addr,
-               /* OUT */ HID_HOST_DEV_HANDLE *handle
+               /* IN */ UCHAR                 * bdaddr,
+               /* OUT */ HID_HOST_DEV_HANDLE  * handle
            );
 
 /**
- * This API is used to get the BD address of the added device
- * for given handle.
+ *  \brief To get the address of the added device
+ *
+ *  \par Description:
+ *  This API is used to get the BD address of the added device
+ *  given its handle.
+ *
+ *  \param [in] handle
+ *         HID Device Handle of the added device
+ *
+ *  \param [out] bdaddr
+ *         Pointer to a caller provided UCHAR array,
+ *         which will contain the Bluetooth Device Address on return.
+ *
+ *  \return API_RESULT:
+ *          - API_SUCCESS, on successful initiation of the procedure.
+ *          - Error Code, describing the cause of failure.
  */
 API_RESULT BT_hid_host_get_addr_from_handle
            (
-               /* IN */ HID_HOST_DEV_HANDLE handle,
-               /* OUT */ UCHAR *dev_addr
+               /* IN */ HID_HOST_DEV_HANDLE    handle,
+               /* OUT */ UCHAR               * bdaddr
            );
 
 /**
- * This API establishes the Control Channel with the specified device.
- * The device is specified by the Device handle.
- * After the connection is established, the channel is configured.
- * The application can specify the MTUs required. If not specified ( 0 ), the
- * Receive MTU is configured to BT_HID_DEFAULT_RECV_MTU and Transmit MTU is
- * configured to BT_HID_DEFAULT_TRANS_MTU. Both of these are currently set to
- * 48 bytes. The API returns success when control channel is successfully
- * configured.
+ *  \brief To connect control channel to a HID Device
+ *
+ *  \par Description:
+ *  This API initiates the control channel connection establishment procedure
+ *  with the specified device.
+ *  The peer HID Device is specified by the Device handle.
+ *  Using the registered callback the result of connection operation will
+ *  be indicated to the caller.
+ *
+ *  \param [in] handle
+ *         HID Device Handle
+ *
+ *  \return API_RESULT:
+ *          - API_SUCCESS, on successful initiation of the procedure.
+ *          - Error Code, describing the cause of failure.
  */
 API_RESULT BT_hid_host_connect_ctrl_ch_to_device
            (
-               /* IN */ HID_HOST_DEV_HANDLE
+               /* IN */ HID_HOST_DEV_HANDLE handle
            );
 
 /**
- * This API establishes the Interrupt channel with the specified device.
- * The device is specified by the Device  handle.
- * After the connection is established, the channel is configured.
- * The application can specify the MTUs required. If not specified ( 0 ), the
- * Receive MTU is configured to BT_HID_DEFAULT_RECV_MTU and Transmit MTU is
- * configured to BT_HID_DEFAULT_TRANS_MTU. Both of these are currently set to
- * 48 bytes. The API returns success when interrupt channel is successfully
- * configured.
+ *  \brief To connect interrupt channel to a HID Device
+ *
+ *  \par Description:
+ *  This API initiates the interrupt channel connection establishment procedure
+ *  with the specified device.
+ *  The peer HID Device is specified by the Device handle.
+ *  Using the registered callback the result of connection operation will
+ *  be indicated to the caller.
+ *
+ *  \param [in] handle
+ *         HID Device Handle
+ *
+ *  \return API_RESULT:
+ *          - API_SUCCESS, on successful initiation of the procedure.
+ *          - Error Code, describing the cause of failure.
  */
 API_RESULT BT_hid_host_connect_intr_ch_to_device
            (
-               /* IN */ HID_HOST_DEV_HANDLE
+               /* IN */ HID_HOST_DEV_HANDLE handle
            );
 
 /**
- * This API is used to send the HID_CONTROL packet to the Device. The control
- * opcode to be sent is also specified. The device to which the opcode
- * is to be sent is specified by the device handle.
+ *  \brief To send HID Control packet
+ *
+ *  \par Description:
+ *  This API is used to send the HID_CONTROL packet to the device. The
+ *  control opcode to be sent is also specified. The device to which the
+ *  opcode is to be sent is specified by the device handle.
+ *
+ *  \param [in] handle
+ *         HID Device Handle
+ *
+ *  \param [in] op_code
+ *         OpCode for the HID_CONTROL packet
+ *
+ *  \return API_RESULT:
+ *          - API_SUCCESS, on successful initiation of the procedure.
+ *          - Error Code, describing the cause of failure.
+ *
+ *  \note
+ *  A HID_CONTROL request does not generate a HANDSHAKE response.
  */
 API_RESULT BT_hid_host_send_hid_control
            (
-               /* IN */ HID_HOST_DEV_HANDLE,
-               /* IN */ HID_CONTROL_OP_CODE
+               /* IN */ HID_HOST_DEV_HANDLE handle,
+               /* IN */ HID_CONTROL_OP_CODE op_code
            );
 
 /**
- * This API is used to perform the GET_REPORT operation. The report type
- * requested is specified. The report received from the Device is returned
- * in the HID_HOST_REPORT structure. A report id can be optionally sent. If
- * the report id value is a non zero value then it is sent.
+ *  \brief To send Get Report Data request
+ *
+ *  \par Description:
+ *  This API is used to perform the GET_REPORT operation. The report type
+ *  requested is specified. The report received from the device is indicated
+ *  to the application using the registered callback.
+ *
+ *  \param [in] handle
+ *         HID Device Handle
+ *
+ *  \param [in] rep_type
+ *         Type of report to be obtained from the device.
+ *
+ *  \param [out] report
+ *         Report received from device
+ *
+ *  \param [in] report_id
+ *         The identifier for the report to be obtained
+ *
+ *  \return API_RESULT:
+ *          - API_SUCCESS, on successful initiation of the procedure.
+ *          - Error Code, describing the cause of failure.
+ *
+ *  \note
+ *  Upon receipt of GET_REPORT request, the device will return
+ *  a DATA payload on the Control channel containing the requested report.
  */
 API_RESULT BT_hid_host_get_report
            (
-               /* IN */  HID_HOST_DEV_HANDLE,
-               /* IN */  HID_REPORT_TYPE,
-               /* OUT */ HID_HOST_REPORT*,
-               /* IN */  UCHAR   report_id
+               /* IN */  HID_HOST_DEV_HANDLE  handle,
+               /* IN */  HID_REPORT_TYPE      rep_type,
+               /* OUT */ HID_HOST_REPORT*     report,
+               /* IN */  UCHAR                report_id
            );
 
 /**
- * This API is used to perform the SET_REPORT operation. The report to be
- * sent along with its type is specified as input. The API returns success
- * if a succesful HANDSHAKE was received else returns the appropriate error
- * codes.
+ *  \brief To send Set Report Data request
+ *
+ *  \par Description:
+ *  This API is used to perform the SET_REPORT operation. The report to be
+ *  sent along with its type is specified as input. The API returns success
+ *  if a succesful HANDSHAKE was received else returns the appropriate error
+ *  codes.
+ *
+ *  \param [in] handle
+ *         HID Device Handle
+ *
+ *  \param [in] report
+ *         Pointer to the Report being sent to device
+ *
+ *  \return API_RESULT:
+ *          - API_SUCCESS, on successful initiation of the procedure.
+ *          - Error Code, describing the cause of failure.
  */
 API_RESULT BT_hid_host_set_report
            (
-               /* IN */ HID_HOST_DEV_HANDLE,
-               /* IN */ HID_HOST_REPORT *
+               /* IN */ HID_HOST_DEV_HANDLE    handle,
+               /* IN */ HID_HOST_REPORT      * report
            );
 
 /**
- * This API is used to get the current protocol mode of the device specified by the
- * handle.
+ *  \brief To send Get Current Protocol request
+ *
+ *  \par Description:
+ *  This API is used to get the Current Protocol of the HID Device
+ *  specified by the handle.
+ *
+ *  \param [in] handle
+ *         HID Device Handle
+ *
+ *  \return API_RESULT:
+ *          - API_SUCCESS, on successful initiation of the procedure.
+ *          - Error Code, describing the cause of failure.
+ *
+ *  \note
+ *  The HID Device responds GET_PROTOCOL request with a single byte
+ *  DATA payload that indicates the current protocol.
  */
 API_RESULT BT_hid_host_get_protocol
            (
-               /* IN */  HID_HOST_DEV_HANDLE
+               /* IN */  HID_HOST_DEV_HANDLE handle
            );
 
 /**
- * This API is used to put the specified device on a particular protocol mode.
+ *  \brief To send Change Current Protocol request
+ *
+ *  \par Description:
+ *  This API is used to put the specified device on a particular protocol.
+ *
+ *  \param [in] handle
+ *         HID Device Handle
+ *
+ *  \param [in] protocol
+ *         The protocol mode to be set on the device.
+ *
+ *  \return API_RESULT:
+ *          - API_SUCCESS, on successful initiation of the procedure.
+ *          - Error Code, describing the cause of failure.
+ *
+ *  \note
+ *  If a HID Device does not support SET_PROTOCOL it shall return a HANDSHAKE
+ *  packet indicating an unsupported request.
  */
 API_RESULT BT_hid_host_set_protocol
            (
-               /* IN */ HID_HOST_DEV_HANDLE,
-               /* IN */ HID_PROTOCOL_TYPE
+               /* IN */ HID_HOST_DEV_HANDLE  handle,
+               /* IN */ HID_PROTOCOL_TYPE    protocol
            );
 
 #ifdef HID_SUPPORT_GET_IDLE
 /**
- * This API is used to retrieve the idle rate of the specified Device.
+ *  \brief To send Get Current Idle Rate request
+ *
+ *  \par Description:
+ *  This API is used to retrieve the idle rate of the specified Device.
+ *
+ *  \param [in] handle
+ *         HID Device Handle
+ *
+ *  \return API_RESULT:
+ *          - API_SUCCESS, on successful initiation of the procedure.
+ *          - Error Code, describing the cause of failure.
+ *
+ *  \note
+ *  HID Device responds GET_IDLE request with a single byte DATA payload
+ *  that indicates the current Idle setting.
  */
 API_RESULT BT_hid_host_get_idle_rate
            (
-               /* IN */  HID_HOST_DEV_HANDLE
+               /* IN */  HID_HOST_DEV_HANDLE handle
            );
 #endif /* HID_SUPPORT_GET_IDLE */
 
 #ifdef HID_SUPPORT_SET_IDLE
 /**
- * This API is used to set the idle rate of the specified device.
+ *  \brief To send Change Current Idle Rate request
+ *
+ *  \par Description:
+ *  This API is used to set the idle rate of the specified device.
+ *
+ *  \param [in] handle
+ *         HID Device Handle
+ *
+ *  \param [in] new_idle_rate
+ *         Idle Rate to which the device has to be set.
+ *
+ *  \return API_RESULT:
+ *          - API_SUCCESS, on successful initiation of the procedure.
+ *          - Error Code, describing the cause of failure.
  */
 API_RESULT BT_hid_host_set_idle_rate
            (
-               /* IN */ HID_HOST_DEV_HANDLE,
-               /* IN */ UCHAR new_idle_rate
+               /* IN */ HID_HOST_DEV_HANDLE  handle,
+               /* IN */ UCHAR                new_idle_rate
            );
 #endif /* HID_SUPPORT_SET_IDLE */
 
 /**
+ *  \brief To send Virtual Cable Unplug request
+ *
+ *  \par Description:
  *  This API is used to initiate disconnection with remote device by sending
  *  the virtual cable unplug request to remote device. On receiving this
  *  request, the remote device will disconnect the control and interrupt
  *  channels.
+ *
+ *  \param [in] handle
+ *         HID Device Handle
+ *
+ *  \return API_RESULT:
+ *          - API_SUCCESS, on successful initiation of the procedure.
+ *          - Error Code, describing the cause of failure.
  */
 API_RESULT BT_hid_host_virtual_cable_unplug
            (
@@ -409,41 +651,89 @@ API_RESULT BT_hid_host_virtual_cable_unplug
            );
 
 /**
- * This API is used to disconnect the Interrupt and Control Channels with
- * the specified device. However the device details, such as PIN are available
- * with the HID Host Module and the handle to the device is still valid. The
- * application can conect again using the same Handle.
+ *  \brief To initiate disconnection with a HID Device
+ *
+ *  \par Description:
+ *  This API is used to disconnect the interrupt and control channels to
+ *  the specified device. However the device details, such as PIN are available
+ *  with the HID host and the handle to the device is still valid. The
+ *  application can connect again using the same Handle.
+ *
+ *  \param [in] handle
+ *         HID Device Handle
+ *
+ *  \param [in] disconn_type
+ *         Disconnection Type - HID_HOST_CTRL_DISCONNECTION or HID_HOST_INTR_DISCONNECTION
+ *
+ *  \return API_RESULT:
+ *          - API_SUCCESS, on successful initiation of the procedure.
+ *          - Error Code, describing the cause of failure.
  */
-API_RESULT BT_hid_host_disconnect_device
-           (
-               /* IN */ HID_HOST_DEV_HANDLE handle,
-               /* IN */ UCHAR               disconn_type
-           );
+API_RESULT  BT_hid_host_disconnect_device
+            (
+                /* IN */ HID_HOST_DEV_HANDLE handle,
+                /* IN */ UCHAR               disconn_type
+            );
 
 /**
- * This API is used to remove a device from the HID Host module list. The
- * handle hereafter is invalid. This can be done when the application will
- * no longer connect to this device.
+ *  \brief To remove a HID Device from HID Host module list
+ *
+ *  \par Description:
+ *  This API is used to remove a device from the HID host list. The handle
+ *  hereafter is invalid. This can be done when the application will no longer
+ *  connect to this device.
+ *
+ *  \param [in] handle
+ *         HID Device Handle
+ *
+ *  \return API_RESULT:
+ *          - API_SUCCESS, on successful initiation of the procedure.
+ *          - Error Code, describing the cause of failure.
  */
 API_RESULT BT_hid_host_remove_device
            (
-               /* IN */ HID_HOST_DEV_HANDLE
+               /* IN */ HID_HOST_DEV_HANDLE  handle
            );
 
 /**
- * This API is used to stop all operations of the HID Host Module. All
- * existing connections will be closed. The Module needs to be restarted using
- * the start API to use again.
+ *  \brief To stop HID Host module
+ *
+ *  \par Description:
+ *  This API is used to stop all operations of the HID host. All existing
+ *  connections are closed. Host needs to be restarted using the start API
+ *  to be used again.
+ *
+ *  \param None
+ *
+ *  \return API_RESULT:
+ *          - API_SUCCESS, on successful initiation of the procedure.
+ *          - Error Code, describing the cause of failure.
  */
 API_RESULT BT_hid_host_stop( void );
 
 /**
- *  This API is used to send report data on interrupt channel
+ *  \brief To send report on an Interrupt Channel
+ *
+ *  \par Description:
+ *  This API is used to send the reports to device on interrupt channel. The
+ *  report to be sent along with its type is specified as input. The API
+ *  returns success if a succesful HANDSHAKE was received else returns the
+ *  appropriate error codes.
+ *
+ *  \param [in] handle
+ *         HID Device Handle
+ *
+ *  \param [in] report
+ *         Pointer to the Report being sent to device
+ *
+ *  \return API_RESULT:
+ *          - API_SUCCESS, on successful initiation of the procedure.
+ *          - Error Code, describing the cause of failure.
  */
 API_RESULT BT_hid_host_send_report_on_interrupt
            (
-               /* IN */ HID_HOST_DEV_HANDLE handle,
-               /* IN */ HID_HOST_REPORT *report
+               /* IN */ HID_HOST_DEV_HANDLE    handle,
+               /* IN */ HID_HOST_REPORT      * report
            );
 
 #ifdef __cplusplus

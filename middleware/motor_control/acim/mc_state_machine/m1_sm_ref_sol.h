@@ -148,7 +148,7 @@ uint16_t M1_GetAppState(void);
  *
  * @return None
  */
-void M1_SetSpeed(float_t fltSpeedCmd);
+void M1_SetSpeed(float_t fltSpdMeReq);
 
 /*!
  * @brief Get spin speed of the motor in fractional value

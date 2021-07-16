@@ -6,14 +6,14 @@
     <definition extID="platform.drivers.trng.MIMXRT1052"/>
     <definition extID="platform.drivers.dcp.MIMXRT1052"/>
     <definition extID="platform.drivers.cache_armv7_m7.MIMXRT1052"/>
+    <definition extID="middleware.mbedtls.MIMXRT1052"/>
     <definition extID="middleware.mbedtls.port.ksdk.MIMXRT1052"/>
     <definition extID="middleware.mbedtls.rt.MIMXRT1052"/>
     <definition extID="platform.drivers.clock.MIMXRT1052"/>
     <definition extID="middleware.freertos-kernel.heap_3.MIMXRT1052"/>
-    <definition extID="middleware.mbedtls.MIMXRT1052"/>
-    <definition extID="utility.debug_console.MIMXRT1052"/>
     <definition extID="middleware.lwip.apps.sntp.MIMXRT1052"/>
     <definition extID="middleware.lwip.MIMXRT1052"/>
+    <definition extID="utility.debug_console.MIMXRT1052"/>
     <definition extID="middleware.lwip.enet_ethernetif.MIMXRT1052"/>
     <definition extID="driver.phy-common.MIMXRT1052"/>
     <definition extID="platform.drivers.enet.MIMXRT1052"/>
@@ -30,11 +30,9 @@
     <definition extID="platform.utilities.assert.MIMXRT1052"/>
     <definition extID="platform.drivers.igpio.MIMXRT1052"/>
     <definition extID="platform.drivers.xip_device.MIMXRT1052"/>
-    <definition extID="platform.drivers.xip_board.MIMXRT1052"/>
+    <definition extID="platform.drivers.xip_board.evkbimxrt1050.MIMXRT1052"/>
     <definition extID="driver.mdio-common.MIMXRT1052"/>
-    <definition extID="platform.Include_core_cm7.MIMXRT1052"/>
-    <definition extID="platform.Include_common.MIMXRT1052"/>
-    <definition extID="platform.Include_dsp.MIMXRT1052"/>
+    <definition extID="CMSIS_Include_core_cm.MIMXRT1052"/>
     <definition extID="middleware.freertos-kernel.MIMXRT1052"/>
     <definition extID="middleware.freertos-kernel.extension.MIMXRT1052"/>
     <definition extID="middleware.azure_iot.MIMXRT1052"/>
@@ -57,7 +55,7 @@
     <definition extID="com.crt.advproject.config.exe.release"/>
     <definition extID="mdk"/>
   </externalDefinitions>
-  <example id="evkbimxrt1050_azure_mqtt" name="azure_mqtt" dependency="driver.mdio-enet.MIMXRT1052 driver.phy-device-ksz8081.MIMXRT1052 platform.drivers.trng.MIMXRT1052 platform.drivers.dcp.MIMXRT1052 platform.drivers.cache_armv7_m7.MIMXRT1052 middleware.mbedtls.port.ksdk.MIMXRT1052 middleware.mbedtls.rt.MIMXRT1052 platform.drivers.clock.MIMXRT1052 middleware.freertos-kernel.heap_3.MIMXRT1052 middleware.mbedtls.MIMXRT1052 utility.debug_console.MIMXRT1052 middleware.lwip.apps.sntp.MIMXRT1052 middleware.lwip.MIMXRT1052 middleware.lwip.enet_ethernetif.MIMXRT1052 driver.phy-common.MIMXRT1052 platform.drivers.enet.MIMXRT1052 middleware.azure_iot.iothub_client.mqtt.MIMXRT1052 platform.drivers.common.MIMXRT1052 device.MIMXRT1052_CMSIS.MIMXRT1052 component.lpuart_adapter.MIMXRT1052 component.serial_manager.MIMXRT1052 component.lists.MIMXRT1052 component.serial_manager_uart.MIMXRT1052 platform.drivers.lpuart.MIMXRT1052 device.MIMXRT1052_startup.MIMXRT1052 platform.drivers.iomuxc.MIMXRT1052 platform.utilities.assert.MIMXRT1052 platform.drivers.igpio.MIMXRT1052 platform.drivers.xip_device.MIMXRT1052 platform.drivers.xip_board.MIMXRT1052 driver.mdio-common.MIMXRT1052 platform.Include_core_cm7.MIMXRT1052 platform.Include_common.MIMXRT1052 platform.Include_dsp.MIMXRT1052 middleware.freertos-kernel.MIMXRT1052 middleware.freertos-kernel.extension.MIMXRT1052 middleware.azure_iot.MIMXRT1052 middleware.azure_iot.mqtt.MIMXRT1052 middleware.azure_iot.adapters.MIMXRT1052 middleware.azure_iot.adapters.freertos.MIMXRT1052 middleware.azure_iot.iothub_client.MIMXRT1052 middleware.azure_iot.certs.MIMXRT1052 middleware.azure_iot.parson.MIMXRT1052 middleware.azure_iot.umock_c.MIMXRT1052 middleware.azure_iot.azure_macro_utils.MIMXRT1052 middleware.azure_iot.mbedtls.MIMXRT1052 platform.utilities.misc_utilities.MIMXRT1052 device.MIMXRT1052_system.MIMXRT1052" category="azure_examples">
+  <example id="evkbimxrt1050_azure_mqtt" name="azure_mqtt" dependency="driver.mdio-enet.MIMXRT1052 driver.phy-device-ksz8081.MIMXRT1052 platform.drivers.trng.MIMXRT1052 platform.drivers.dcp.MIMXRT1052 platform.drivers.cache_armv7_m7.MIMXRT1052 middleware.mbedtls.MIMXRT1052 middleware.mbedtls.port.ksdk.MIMXRT1052 middleware.mbedtls.rt.MIMXRT1052 platform.drivers.clock.MIMXRT1052 middleware.freertos-kernel.heap_3.MIMXRT1052 middleware.lwip.apps.sntp.MIMXRT1052 middleware.lwip.MIMXRT1052 utility.debug_console.MIMXRT1052 middleware.lwip.enet_ethernetif.MIMXRT1052 driver.phy-common.MIMXRT1052 platform.drivers.enet.MIMXRT1052 middleware.azure_iot.iothub_client.mqtt.MIMXRT1052 platform.drivers.common.MIMXRT1052 device.MIMXRT1052_CMSIS.MIMXRT1052 component.lpuart_adapter.MIMXRT1052 component.serial_manager.MIMXRT1052 component.lists.MIMXRT1052 component.serial_manager_uart.MIMXRT1052 platform.drivers.lpuart.MIMXRT1052 device.MIMXRT1052_startup.MIMXRT1052 platform.drivers.iomuxc.MIMXRT1052 platform.utilities.assert.MIMXRT1052 platform.drivers.igpio.MIMXRT1052 platform.drivers.xip_device.MIMXRT1052 platform.drivers.xip_board.evkbimxrt1050.MIMXRT1052 driver.mdio-common.MIMXRT1052 CMSIS_Include_core_cm.MIMXRT1052 middleware.freertos-kernel.MIMXRT1052 middleware.freertos-kernel.extension.MIMXRT1052 middleware.azure_iot.MIMXRT1052 middleware.azure_iot.mqtt.MIMXRT1052 middleware.azure_iot.adapters.MIMXRT1052 middleware.azure_iot.adapters.freertos.MIMXRT1052 middleware.azure_iot.iothub_client.MIMXRT1052 middleware.azure_iot.certs.MIMXRT1052 middleware.azure_iot.parson.MIMXRT1052 middleware.azure_iot.umock_c.MIMXRT1052 middleware.azure_iot.azure_macro_utils.MIMXRT1052 middleware.azure_iot.mbedtls.MIMXRT1052 platform.utilities.misc_utilities.MIMXRT1052 device.MIMXRT1052_system.MIMXRT1052" category="azure_examples">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -88,8 +86,10 @@
           <value>LWIP_NETIF_LINK_CALLBACK=1</value>
           <value>LWIP_NETIF_STATUS_CALLBACK=1</value>
           <value>MBEDTLS_CONFIG_FILE='"azure_mbedtls_config.h"'</value>
+          <value>LWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1</value>
           <value>SERIAL_PORT_TYPE_UART=1</value>
-          <value>FSL_RTOS_FREE_RTOS</value>
+          <value>SDK_OS_FREE_RTOS</value>
+          <value>MCUXPRESSO_SDK</value>
         </option>
         <option id="com.crt.advproject.gcc.fpu" type="enum">
           <value>com.crt.advproject.gcc.fpu.fpv5dp.hard</value>

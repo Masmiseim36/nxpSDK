@@ -33,7 +33,7 @@
  *  permissible number, a change resulting in increment in minor version
  *  number will result in increment in major number.
  */
-#define BT_MAJOR_VERSION_NUMBER       16
+#define BT_MAJOR_VERSION_NUMBER       16U
 
 /**
  *  An increment in the minor number of the stack implies an update to fix
@@ -51,7 +51,7 @@
  *  number, a change resulting in increment in sub-minor number will result in
  *  increment in minor number.
  */
-#define BT_MINOR_VERSION_NUMBER       4
+#define BT_MINOR_VERSION_NUMBER       5U
 
 /**
  *  An increment in this number implies a trivial change, changes such as
@@ -59,7 +59,7 @@
  *  internal function/variable names etc are viewed as changes that result in
  *  increment in this number.
  */
-#define BT_SUB_MINOR_VERSION_NUMBER   7
+#define BT_SUB_MINOR_VERSION_NUMBER   9U
 
 /* -------------------------------------------- Macros */
 

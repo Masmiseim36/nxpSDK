@@ -15,21 +15,20 @@
  * @brief   Header for streamer element properties
  */
 
-/*! Structure for APP post process */
 typedef struct {
     int (*init_func) (void *);
     int (*proc_func) (void *, short *, int);
     int (*deinit_func) (void);
     void *arg_ptr;
     uint8_t  bl_enabled;
-} POST_PROCESS_DESC_T;
+} EXT_PROCESS_DESC_T;
 
 /*! Structure for arguments of post processing */
 typedef struct {
-	char preset_num;
+	int preset_num;
 	int num_channels;
 	int sample_rate;
-} post_proc_args;
+} ext_proc_args;
 
 /*! Structure for Set Buffer */
 typedef struct {
@@ -60,19 +59,14 @@ typedef struct {
 #define PROP_AUDIOSRC_GET_CHUNK_SIZE                0x203
 #define PROP_AUDIOSRC_SET_DEVICE_NAME               0x204
 #define PROP_AUDIOSRC_SET_CONTINUOUS_READ           0x205
+#define PROP_AUDIOSRC_SET_DUMMY_TX_ENABLE           0x206
+#define PROP_AUDIOSRC_SET_NUM_CHANNELS              0x207
 
 /* MEMORY SOURCE */
 #define PROP_MEMSRC_MASK                            0x300
 #define PROP_MEMSRC_SET_BUFF                        0x300
 #define PROP_MEMSRC_SET_CHUNK_SIZE                  0x301
 #define PROP_MEMSRC_GET_CHUNK_SIZE                  0x302
-
-/* NETBUF SOURCE */
-#define PROP_NETBUFSRC_MASK                         0xa00
-#define PROP_NETBUFSRC_SET_BUFF                     0xa00
-#define PROP_NETBUFSRC_SET_CHUNK_SIZE               0xa01
-#define PROP_NETBUFSRC_GET_CHUNK_SIZE               0xa02
-#define PROP_NETBUFSRC_SET_CALLBACK                 0xa03
 
 /* DECODER */
 #define PROP_DECODER_MASK                           0x400
@@ -107,6 +101,23 @@ typedef struct {
 #define PROP_MEMSINK_MASK                           0x900
 #define PROP_MEMSINK_BUFFER_DESC                    0x900
 #define PROP_MEMSINK_RAW_WRITE_MODE                 0x901
+
+/* NETBUF SOURCE */
+#define PROP_NETBUFSRC_MASK                         0xa00
+#define PROP_NETBUFSRC_SET_BUFF                     0xa00
+#define PROP_NETBUFSRC_SET_CHUNK_SIZE               0xa01
+#define PROP_NETBUFSRC_GET_CHUNK_SIZE               0xa02
+#define PROP_NETBUFSRC_SET_CALLBACK                 0xa03
+
+/* VIT SINK */
+#define PROP_VITSINK_MASK                           0xb00
+#define PROP_VITSINK_FPOINT                         0xb00
+#define PROP_VITSINK_BUFFER_DESC                    0xb01
+#define PROP_VITSINK_TODO                           0xb02
+
+/* EAP */
+#define PROP_EAP_MASK                               0xc00
+#define PROP_EAP_FPOINT                             0xc00
 
 typedef struct {
     int8_t    *location;

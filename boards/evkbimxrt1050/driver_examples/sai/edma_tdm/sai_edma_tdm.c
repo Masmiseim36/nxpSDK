@@ -17,14 +17,14 @@
 #include "ff.h"
 #include "diskio.h"
 #include "ffconf.h"
-#include "fsl_cs42888.h"
 #include "fsl_sd_disk.h"
 #include "fsl_codec_common.h"
 #include "sdmmc_config.h"
-#include "fsl_common.h"
 #include "fsl_gpio.h"
+#include "fsl_cs42888.h"
 #include "fsl_codec_adapter.h"
 
+#include "fsl_common.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -62,19 +62,13 @@
 
 #define DEMO_CODEC_RESET_GPIO     GPIO1
 #define DEMO_CODEC_RESET_GPIO_PIN 19
-#define OVER_SAMPLE_RATE (384U)
-#define BUFFER_SIZE      (2048U)
-#define BUFFER_NUM       (4U)
+#define BOARD_MASTER_CLOCK_CONFIG()
+#define BUFFER_SIZE (2048U)
+#define BUFFER_NUM  (4U)
 
 /* demo audio sample rate */
-#define DEMO_AUDIO_SAMPLE_RATE (kSAI_SampleRate48KHz)
-/* demo audio master clock */
-#if (defined FSL_FEATURE_SAI_HAS_MCLKDIV_REGISTER && FSL_FEATURE_SAI_HAS_MCLKDIV_REGISTER) || \
-    (defined FSL_FEATURE_PCC_HAS_SAI_DIVIDER && FSL_FEATURE_PCC_HAS_SAI_DIVIDER)
-#define DEMO_AUDIO_MASTER_CLOCK OVER_SAMPLE_RATE *DEMO_AUDIO_SAMPLE_RATE
-#else
+#define DEMO_AUDIO_SAMPLE_RATE  (kSAI_SampleRate48KHz)
 #define DEMO_AUDIO_MASTER_CLOCK DEMO_SAI_CLK_FREQ
-#endif
 /* demo audio data channel */
 #define DEMO_AUDIO_DATA_CHANNEL (8U)
 /* demo audio bitwidth */
@@ -88,7 +82,7 @@ void BORAD_CodecReset(bool state);
 static void callback(I2S_Type *base, sai_edma_handle_t *handle, status_t status, void *userData);
 static status_t DEMO_MountFileSystem(void);
 extern void BORAD_CodecReset(bool state);
-static void DEMO_InitCS42888(void);
+static void DEMO_InitCodec(void);
 /*******************************************************************************
  * Variables
  ******************************************************************************/
@@ -124,17 +118,6 @@ AT_NONCACHEABLE_SECTION_ALIGN(static uint8_t s_buffer[BUFFER_NUM * BUFFER_SIZE],
 volatile bool isFinished      = false;
 volatile uint32_t finishIndex = 0U;
 volatile uint32_t emptyBlock  = BUFFER_NUM;
-#if (defined(FSL_FEATURE_SAI_HAS_MCR) && (FSL_FEATURE_SAI_HAS_MCR)) || \
-    (defined(FSL_FEATURE_SAI_HAS_MCLKDIV_REGISTER) && (FSL_FEATURE_SAI_HAS_MCLKDIV_REGISTER))
-sai_master_clock_t mclkConfig = {
-#if defined(FSL_FEATURE_SAI_HAS_MCR) && (FSL_FEATURE_SAI_HAS_MCR)
-    mclkOutputEnable = true,
-#if !(defined(FSL_FEATURE_SAI_HAS_NO_MCR_MICS) && (FSL_FEATURE_SAI_HAS_NO_MCR_MICS))
-    mclkSource = kSAI_MclkSourceSysclk,
-#endif
-#endif
-};
-#endif
 /*! @brief Card descriptor. */
 extern sd_card_t g_sd;
 static uint32_t volatile s_writeIndex = 0U;
@@ -210,8 +193,8 @@ int main(void)
     uint32_t leftWAVData = 0U;
 
     BOARD_ConfigMPU();
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
+    BOARD_InitBootPins();
+    BOARD_InitBootClocks();
     CLOCK_InitAudioPll(&audioPllConfig);
     BOARD_InitDebugConsole();
     gpio_pin_config_t gpio_config = {kGPIO_DigitalOutput, 0, kGPIO_NoIntmode};
@@ -231,6 +214,7 @@ int main(void)
 
     /*Enable MCLK clock*/
     BOARD_EnableSaiMclkOutput(true);
+    BOARD_SD_Config(&g_sd, NULL, BOARD_SDMMC_SD_HOST_IRQ, NULL);
 
     PRINTF("\r\nSAI edma TDM example started.\n\r");
 
@@ -263,6 +247,7 @@ int main(void)
 
     /* TDM mode configurations */
     SAI_GetTDMConfig(&saiConfig, DEMO_FRMAE_SYNC_LEN, DEMO_AUDIO_BIT_WIDTH, DEMO_AUDIO_DATA_CHANNEL, DEMO_SAI_CHANNEL);
+    saiConfig.frameSync.frameSyncEarly = true;
     SAI_TransferTxSetConfigEDMA(DEMO_SAI, &txHandle, &saiConfig);
 
     /* set bit clock divider */
@@ -270,17 +255,10 @@ int main(void)
                           DEMO_AUDIO_DATA_CHANNEL);
 
     /* master clock configurations */
-#if (defined(FSL_FEATURE_SAI_HAS_MCR) && (FSL_FEATURE_SAI_HAS_MCR)) || \
-    (defined(FSL_FEATURE_SAI_HAS_MCLKDIV_REGISTER) && (FSL_FEATURE_SAI_HAS_MCLKDIV_REGISTER))
-#if defined(FSL_FEATURE_SAI_HAS_MCLKDIV_REGISTER) && (FSL_FEATURE_SAI_HAS_MCLKDIV_REGISTER)
-    mclkConfig.mclkHz          = DEMO_AUDIO_MASTER_CLOCK;
-    mclkConfig.mclkSourceClkHz = DEMO_SAI_CLK_FREQ,
-#endif
-    SAI_SetMasterClockConfig(DEMO_SAI, &mclkConfig);
-#endif
+    BOARD_MASTER_CLOCK_CONFIG();
 
     /* CS42888 initialization */
-    DEMO_InitCS42888();
+    DEMO_InitCodec();
 
     /* The 8_TDM.wav file process flow:
      * 1.Full fill the transfer buffer firstly, it is important to make sure the audio data is transferred continuously.
@@ -374,48 +352,10 @@ void SAI_ErrorIRQHandler(void)
 }
 #endif
 
-static status_t sdcardWaitCardInsert(void)
-{
-    BOARD_SD_Config(&g_sd, NULL, BOARD_SDMMC_SD_HOST_IRQ_PRIORITY, NULL);
-
-    /* SD host init function */
-    if (SD_HostInit(&g_sd) != kStatus_Success)
-    {
-        PRINTF("\r\nSD host init fail\r\n");
-        return kStatus_Fail;
-    }
-    /* power off card */
-    SD_SetCardPower(&g_sd, false);
-
-    PRINTF(
-        "\r\nPlease insert a SDCARD into board, make sure the sdcard is format to FAT32 format and put the 8_TDM.wav "
-        "file into the sdcard.\r\n");
-
-    /* wait card insert */
-    if (SD_PollingCardInsert(&g_sd, kSD_Inserted) == kStatus_Success)
-    {
-        PRINTF("\r\nCard inserted.\r\n");
-        /* power on the card */
-        SD_SetCardPower(&g_sd, true);
-    }
-    else
-    {
-        PRINTF("\r\nCard detect fail.\r\n");
-        return kStatus_Fail;
-    }
-
-    return kStatus_Success;
-}
-
 static status_t DEMO_MountFileSystem(void)
 {
     const TCHAR driverNumberBuffer[3U] = {SDDISK + '0', ':', '/'};
     FRESULT error;
-
-    if (sdcardWaitCardInsert() != kStatus_Success)
-    {
-        return kStatus_Fail;
-    }
 
     if (f_mount(&s_fileSystem, driverNumberBuffer, 0U))
     {
@@ -458,7 +398,7 @@ static status_t DEMO_MountFileSystem(void)
     return kStatus_Success;
 }
 
-static void DEMO_InitCS42888(void)
+static void DEMO_InitCodec(void)
 {
     if (CODEC_Init(&codecHandle, &boardCodecConfig) != kStatus_Success)
     {
@@ -466,5 +406,5 @@ static void DEMO_InitCS42888(void)
         assert(false);
     }
 
-    PRINTF("\r\nCS42888 codec Init Done.\r\n");
+    PRINTF("\r\nCodec Init Done.\r\n");
 }

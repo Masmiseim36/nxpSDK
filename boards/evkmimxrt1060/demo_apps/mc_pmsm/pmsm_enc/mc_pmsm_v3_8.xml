@@ -6,7 +6,8 @@
     <definition extID="platform.drivers.clock.MIMXRT1062"/>
     <definition extID="platform.drivers.adc_etc.MIMXRT1062"/>
     <definition extID="middleware.rtcesl.cm7f.MIMXRT1062"/>
-    <definition extID="middleware.motor_control.pmsm.MIMXRT1062"/>
+    <definition extID="middleware.mc_pmsm_enc.float.MIMXRT1062"/>
+    <definition extID="middleware.motor_control_pmsm_float.tsa.MIMXRT1062"/>
     <definition extID="platform.drivers.common.MIMXRT1062"/>
     <definition extID="device.MIMXRT1062_CMSIS.MIMXRT1062"/>
     <definition extID="utility.debug_console.MIMXRT1062"/>
@@ -20,23 +21,21 @@
     <definition extID="platform.utilities.assert.MIMXRT1062"/>
     <definition extID="platform.drivers.igpio.MIMXRT1062"/>
     <definition extID="platform.drivers.xip_device.MIMXRT1062"/>
-    <definition extID="platform.drivers.xip_board.MIMXRT1062"/>
+    <definition extID="platform.drivers.xip_board.evkmimxrt1060.MIMXRT1062"/>
     <definition extID="middleware.fmstr.MIMXRT1062"/>
     <definition extID="middleware.fmstr.platform_gen32le.MIMXRT1062"/>
-    <definition extID="platform.Include_core_cm7.MIMXRT1062"/>
-    <definition extID="platform.Include_common.MIMXRT1062"/>
-    <definition extID="platform.Include_dsp.MIMXRT1062"/>
+    <definition extID="CMSIS_Include_core_cm.MIMXRT1062"/>
     <definition extID="platform.utilities.misc_utilities.MIMXRT1062"/>
     <definition extID="device.MIMXRT1062_system.MIMXRT1062"/>
     <definition extID="iar"/>
-    <definition extID="armgcc"/>
     <definition extID="mdk"/>
+    <definition extID="armgcc"/>
     <definition extID="mcuxpresso"/>
     <definition extID="com.nxp.mcuxpresso"/>
     <definition extID="com.crt.advproject.config.exe.debug"/>
     <definition extID="com.crt.advproject.config.exe.release"/>
   </externalDefinitions>
-  <example id="evkmimxrt1060_mc_pmsm" name="mc_pmsm" dependency="platform.drivers.dmamux.MIMXRT1062 platform.drivers.xbara.MIMXRT1062 platform.drivers.clock.MIMXRT1062 platform.drivers.adc_etc.MIMXRT1062 middleware.rtcesl.cm7f.MIMXRT1062 middleware.motor_control.pmsm.MIMXRT1062 platform.drivers.common.MIMXRT1062 device.MIMXRT1062_CMSIS.MIMXRT1062 utility.debug_console.MIMXRT1062 component.lpuart_adapter.MIMXRT1062 component.serial_manager.MIMXRT1062 component.lists.MIMXRT1062 component.serial_manager_uart.MIMXRT1062 platform.drivers.lpuart.MIMXRT1062 device.MIMXRT1062_startup.MIMXRT1062 platform.drivers.iomuxc.MIMXRT1062 platform.utilities.assert.MIMXRT1062 platform.drivers.igpio.MIMXRT1062 platform.drivers.xip_device.MIMXRT1062 platform.drivers.xip_board.MIMXRT1062 middleware.fmstr.MIMXRT1062 middleware.fmstr.platform_gen32le.MIMXRT1062 platform.Include_core_cm7.MIMXRT1062 platform.Include_common.MIMXRT1062 platform.Include_dsp.MIMXRT1062 platform.utilities.misc_utilities.MIMXRT1062 device.MIMXRT1062_system.MIMXRT1062" category="demo_apps">
+  <example id="evkmimxrt1060_mc_pmsm" name="mc_pmsm" dependency="platform.drivers.dmamux.MIMXRT1062 platform.drivers.xbara.MIMXRT1062 platform.drivers.clock.MIMXRT1062 platform.drivers.adc_etc.MIMXRT1062 middleware.rtcesl.cm7f.MIMXRT1062 middleware.mc_pmsm_enc.float.MIMXRT1062 middleware.motor_control_pmsm_float.tsa.MIMXRT1062 platform.drivers.common.MIMXRT1062 device.MIMXRT1062_CMSIS.MIMXRT1062 utility.debug_console.MIMXRT1062 component.lpuart_adapter.MIMXRT1062 component.serial_manager.MIMXRT1062 component.lists.MIMXRT1062 component.serial_manager_uart.MIMXRT1062 platform.drivers.lpuart.MIMXRT1062 device.MIMXRT1062_startup.MIMXRT1062 platform.drivers.iomuxc.MIMXRT1062 platform.utilities.assert.MIMXRT1062 platform.drivers.igpio.MIMXRT1062 platform.drivers.xip_device.MIMXRT1062 platform.drivers.xip_board.evkmimxrt1060.MIMXRT1062 middleware.fmstr.MIMXRT1062 middleware.fmstr.platform_gen32le.MIMXRT1062 CMSIS_Include_core_cm.MIMXRT1062 platform.utilities.misc_utilities.MIMXRT1062 device.MIMXRT1062_system.MIMXRT1062" category="demo_apps">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -55,6 +54,7 @@
           <value>XIP_EXTERNAL_FLASH=1</value>
           <value>XIP_BOOT_HEADER_ENABLE=1</value>
           <value>SERIAL_PORT_TYPE_UART=1</value>
+          <value>MCUXPRESSO_SDK</value>
         </option>
         <option id="com.crt.advproject.gas.fpu" type="enum">
           <value>com.crt.advproject.gas.fpu.fpv5dp.hard</value>
@@ -99,7 +99,6 @@
     </debug_configurations>
     <include_paths>
       <include_path path="middleware/motor_control/pmsm/pmsm_float/mc_drivers" project_relative_path="mc_drivers" type="c_include"/>
-      <include_path path="middleware/motor_control/pmsm/pmsm_float/mc_state_machine" project_relative_path="mc_state_machine" type="c_include"/>
       <include_path path="boards/evkmimxrt1060/demo_apps/mc_pmsm/pmsm_enc" project_relative_path="source" type="c_include"/>
       <include_path path="boards/evkmimxrt1060/demo_apps/mc_pmsm/pmsm_enc" project_relative_path="board" type="c_include"/>
     </include_paths>
@@ -107,6 +106,11 @@
       <files mask="mc_pmsm.ewd"/>
       <files mask="mc_pmsm.ewp"/>
       <files mask="mc_pmsm.eww"/>
+    </source>
+    <source path="boards/evkmimxrt1060/demo_apps/mc_pmsm/pmsm_enc/mdk" project_relative_path="./" type="workspace" toolchain="mdk">
+      <files mask="mc_pmsm.uvprojx"/>
+      <files mask="mc_pmsm.uvoptx"/>
+      <files mask="mc_pmsm.uvmpw"/>
     </source>
     <source path="boards/evkmimxrt1060/demo_apps/mc_pmsm/pmsm_enc/armgcc" project_relative_path="./" type="workspace" toolchain="armgcc">
       <files mask="build_all.bat"/>
@@ -129,11 +133,6 @@
       <files mask="build_flexspi_nor_release.bat"/>
       <files mask="build_flexspi_nor_release.sh"/>
     </source>
-    <source path="boards/evkmimxrt1060/demo_apps/mc_pmsm/pmsm_enc/mdk" project_relative_path="./" type="workspace" toolchain="mdk">
-      <files mask="mc_pmsm.uvprojx"/>
-      <files mask="mc_pmsm.uvoptx"/>
-      <files mask="mc_pmsm.uvmpw"/>
-    </source>
     <source path="middleware/motor_control/pmsm/pmsm_float/mc_drivers" project_relative_path="mc_drivers" type="c_include">
       <files mask="mcdrv_adc_imxrt.h"/>
       <files mask="mcdrv_pwm3ph_pwma.h"/>
@@ -143,13 +142,6 @@
       <files mask="mcdrv_adc_imxrt.c"/>
       <files mask="mcdrv_pwm3ph_pwma.c"/>
       <files mask="mcdrv_enc_qd.c"/>
-    </source>
-    <source path="middleware/motor_control/pmsm/pmsm_float/mc_state_machine" project_relative_path="mc_state_machine" type="src">
-      <files mask="m1_sm_snsless_enc.c"/>
-    </source>
-    <source path="middleware/motor_control/pmsm/pmsm_float/mc_state_machine" project_relative_path="mc_state_machine" type="c_include">
-      <files mask="m1_sm_snsless_enc.h"/>
-      <files mask="sm_common_enc.h"/>
     </source>
     <source path="middleware/motor_control/freemaster/pmsm_float_enc/fm_control" project_relative_path="motor_control/freemaster/pmsm_float_enc/fm_control" type="src">
       <files mask="control_page_config.js" hidden="true"/>
@@ -399,13 +391,10 @@
     </source>
     <source path="boards/evkmimxrt1060/demo_apps/mc_pmsm/pmsm_enc" project_relative_path="source" type="src">
       <files mask="main.c"/>
-      <files mask="mcdrv_evkmimxrt1060.c"/>
+      <files mask="mc_periph_init.c"/>
     </source>
     <source path="boards/evkmimxrt1060/demo_apps/mc_pmsm/pmsm_enc" project_relative_path="source" type="c_include">
-      <files mask="main.h"/>
       <files mask="m1_pmsm_appconfig.h"/>
-      <files mask="mcdrv_evkmimxrt1060.h"/>
-      <files mask="mcdrv.h"/>
       <files mask="char_pwrstg.h"/>
     </source>
     <source path="boards/evkmimxrt1060/demo_apps/mc_pmsm/pmsm_enc" project_relative_path="board" type="src">
@@ -420,6 +409,7 @@
     </source>
     <source path="boards/evkmimxrt1060/demo_apps/mc_pmsm/pmsm_enc" project_relative_path="source" type="c_include">
       <files mask="freemaster_cfg.h"/>
+      <files mask="mc_periph_init.h"/>
     </source>
     <source path="boards/evkmimxrt1060/demo_apps/mc_pmsm/pmsm_enc" project_relative_path="doc" type="doc">
       <files mask="readme.txt"/>

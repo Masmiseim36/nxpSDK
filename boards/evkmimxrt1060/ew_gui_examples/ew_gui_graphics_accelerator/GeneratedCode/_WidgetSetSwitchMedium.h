@@ -21,14 +21,14 @@
 * Please do not make any modifications of this file! The modifications are lost
 * when the file is generated again by Embedded Wizard Studio!
 *
-* Version  : 9.30
-* Date     : 14.02.2020  8:00:50
+* Version  : 10.0
+* Date     : 17.02.2021  8:00:50
 * Profile  : iMX_RT
 * Platform : NXP.iMX_RT.RGB565
 *
 *******************************************************************************/
 
-/* Bitmap resource : 'WidgetSet::SwitchMedium' */
+/* Bitmap resource used per default by the Widgets customized for the medium size. */
 EW_DEFINE_BITMAP_RES( WidgetSetSwitchMedium )
   EW_BITMAP_FRAMES( WidgetSetSwitchMedium, Default, EW_DRIVER_VARIANT_RGBA8888, 69, 39, 0 )
     EW_BITMAP_FRAME( 9, 6, 50, 27, 0x00000000, 0x00000000 ),

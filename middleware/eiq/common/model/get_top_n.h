@@ -18,8 +18,13 @@ limitations under the License.
 
 #include "model.h"
 
+typedef struct
+{
+  float score;
+  int index;
+} result_t;
+
 void MODEL_GetTopN(const uint8_t* tensorData, int tensorSize, tensor_type_t tensorType,
-                   size_t numResults, float threshold,
-                   std::vector<std::pair<float, int>>* topResults);
+                   size_t numResults, float threshold, result_t* topResults);
 
 #endif // _GET_TOP_N_H_

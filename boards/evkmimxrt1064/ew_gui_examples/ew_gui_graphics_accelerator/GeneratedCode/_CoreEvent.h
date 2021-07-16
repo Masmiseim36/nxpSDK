@@ -21,8 +21,8 @@
 * Please do not make any modifications of this file! The modifications are lost
 * when the file is generated again by Embedded Wizard Studio!
 *
-* Version  : 9.30
-* Date     : 14.02.2020  8:00:50
+* Version  : 10.0
+* Date     : 17.02.2021  8:00:50
 * Profile  : iMX_RT
 * Platform : NXP.iMX_RT.RGB565
 *
@@ -37,12 +37,12 @@
 #endif
 
 #include "ewrte.h"
-#if EW_RTE_VERSION != 0x0009001E
+#if EW_RTE_VERSION != 0x000A0000
   #error Wrong version of Embedded Wizard Runtime Environment.
 #endif
 
 #include "ewgfx.h"
-#if EW_GFX_VERSION != 0x0009001E
+#if EW_GFX_VERSION != 0x000A0000
   #error Wrong version of Embedded Wizard Graphics Engine.
 #endif
 
@@ -69,13 +69,13 @@ EW_END_OF_FIELDS( CoreEvent )
 EW_DEFINE_METHODS( CoreEvent, XObject )
 EW_END_OF_METHODS( CoreEvent )
 
+/* 'C' function for method : 'Core::Event.Init()' */
+void CoreEvent_Init( CoreEvent _this, XHandle aArg );
+
 /* The method 'GetCurrentTime()' returns the current time expressed in milliseconds. 
    The value can be used e.g. to calculate the time span elapsed since the event 
    was generated (see @Time). */
 XUInt32 CoreEvent_GetCurrentTime( CoreEvent _this );
-
-/* 'C' function for method : 'Core::Event.Init()' */
-void CoreEvent_Init( CoreEvent _this, XHandle aArg );
 
 #ifdef __cplusplus
   }

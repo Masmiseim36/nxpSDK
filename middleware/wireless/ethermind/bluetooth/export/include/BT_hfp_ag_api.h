@@ -38,13 +38,13 @@
  * Constant Definitions for HFP Audio Gateway Notification Callback Event Types
  */
 /*@{*/
-#define HFP_AG_CONNECT_CNF                      0x01
-#define HFP_AG_CONNECT_IND                      0x02
-#define HFP_AG_DISCONNECT_CNF                   0x03
-#define HFP_AG_DISCONNECT_IND                   0x04
-#define HFP_AG_STOP_CNF                         0x05
-#define HFP_AG_SEND_DATA_CNF                    0x06
-#define HFP_AG_RECVD_DATA_IND                   0x07
+#define HFP_AG_CONNECT_CNF                      0x01U
+#define HFP_AG_CONNECT_IND                      0x02U
+#define HFP_AG_DISCONNECT_CNF                   0x03U
+#define HFP_AG_DISCONNECT_IND                   0x04U
+#define HFP_AG_STOP_CNF                         0x05U
+#define HFP_AG_SEND_DATA_CNF                    0x06U
+#define HFP_AG_RECVD_DATA_IND                   0x07U
 /*@}*/
 /* ----------------------------------------------- Structures/Data Types */
 /**
@@ -100,7 +100,6 @@ typedef API_RESULT (* HFP_AG_EVENT_NOTIFY_CB)
 extern "C" {
 #endif
 
-/** To initialize HFP Audio Gateway */
 /**
  *  \brief  To initialize HFP Audio Gateway
  *
@@ -119,7 +118,6 @@ API_RESULT BT_hfp_ag_init
                /* IN */  HFP_AG_EVENT_NOTIFY_CB    appl_cb
            );
 
-/** To start HFP Audio Gateway */
 /**
  *  \brief To start HFP Audio Gateway
  *
@@ -140,7 +138,6 @@ API_RESULT BT_hfp_ag_start
                /* IN */  UINT8    server_channel
            );
 
-/** To stop HFP Audio Gateway */
 /**
  *  \brief To stop HFP Audio Gateway
  *
@@ -153,7 +150,6 @@ API_RESULT BT_hfp_ag_start
  */
 API_RESULT BT_hfp_ag_stop ( void );
 
-/** To establish connection with remote HFP Unit */
 /**
  *  \brief  To establish connection with remote HFP Unit.
  *
@@ -183,7 +179,6 @@ API_RESULT BT_hfp_ag_connect
                /* IN */  UCHAR *    bd_addr
            );
 
-/** To disconnect from remote HFP Unit */
 /**
  *  \brief To disconnect from remote HFP Unit.
  *
@@ -210,7 +205,6 @@ API_RESULT BT_hfp_ag_disconnect
                /* IN */  UCHAR *    bd_addr
            );
 
-/** To send Data/Response/Result Code to HFP Unit */
 /**
  *  \brief To send Data/Response/Result Code to HFP Unit.
  *

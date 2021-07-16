@@ -39,8 +39,8 @@
 #include "FreeRTOS.h"
 
 /* PKCS#11 includes. */
-#include "iot_pkcs11_config.h"
-#include "iot_pkcs11.h"
+#include "core_pkcs11_config.h"
+#include "core_pkcs11.h"
 #include "iot_pkcs11_psa_object_management.h"
 #include "iot_pkcs11_psa_input_format.h"
 
@@ -52,7 +52,7 @@
 #include "mbedtls/pk_internal.h"
 
 #define PKCS11_PRINT( X )            vLoggingPrintf X
-#define PKCS11_WARNING_PRINT( X )    vLoggingPrintf  X
+#define PKCS11_WARNING_PRINT( X )    /* vLoggingPrintf  X */
 #define pkcs11NO_OPERATION           ( ( CK_MECHANISM_TYPE ) 0xFFFFFFFFUL )
 
 /*
@@ -1244,6 +1244,7 @@ CK_DEFINE_FUNCTION( CK_RV, C_Finalize )( CK_VOID_PTR pvReserved )
             /* Close device private key which is a persistent key. Note that here we only close it other than
              * destroying it so that the key can be activated by calling psa_open_key then next time it is used.
              */
+#ifndef pkcs11configTFM_VERSION_1_0
             xResult = PKCS11PSARemoveObject( (uint8_t *)pkcs11configLABEL_DEVICE_PRIVATE_KEY_FOR_TLS,
                                              sizeof( pkcs11configLABEL_DEVICE_PRIVATE_KEY_FOR_TLS ),
                                              FALSE );
@@ -1257,6 +1258,7 @@ CK_DEFINE_FUNCTION( CK_RV, C_Finalize )( CK_VOID_PTR pvReserved )
                                                  sizeof( pkcs11configLABEL_DEVICE_PUBLIC_KEY_FOR_TLS ),
                                                  FALSE );
             }
+#endif
         }
     }
     return xResult;
@@ -1475,28 +1477,28 @@ CK_DEFINE_FUNCTION( CK_RV, C_OpenSession )( CK_SLOT_ID xSlotID,
         if( CKR_OK == xResult )
         {
             memset( pxSessionObj, 0, sizeof( P11Session_t ) );
-        }
 
-        pxSessionObj->xSignMutex = xSemaphoreCreateMutex();
+            pxSessionObj->xSignMutex = xSemaphoreCreateMutex();
 
-        if( NULL == pxSessionObj->xSignMutex )
-        {
-            xResult = CKR_HOST_MEMORY;
-        }
-        else
-        {
-            xSignMutexCreated = CK_TRUE;
-        }
+            if( NULL == pxSessionObj->xSignMutex )
+            {
+                xResult = CKR_HOST_MEMORY;
+            }
+            else
+            {
+                xSignMutexCreated = CK_TRUE;
+            }
 
-        pxSessionObj->xVerifyMutex = xSemaphoreCreateMutex();
+            pxSessionObj->xVerifyMutex = xSemaphoreCreateMutex();
 
-        if( NULL == pxSessionObj->xVerifyMutex )
-        {
-            xResult = CKR_HOST_MEMORY;
-        }
-        else
-        {
-            xVerifyMutexCreated = CK_TRUE;
+            if( NULL == pxSessionObj->xVerifyMutex )
+            {
+                xResult = CKR_HOST_MEMORY;
+            }
+            else
+            {
+                xVerifyMutexCreated = CK_TRUE;
+            }
         }
     }
 
@@ -1559,12 +1561,12 @@ CK_DEFINE_FUNCTION( CK_RV, C_CloseSession )( CK_SESSION_HANDLE xSession )
         /*
          * Tear down the session.
          */
-        pxSession->uxSignKey = NULL;
+        pxSession->uxSignKey = 0;
         if( NULL != pxSession->xSignMutex )
         {
             vSemaphoreDelete( pxSession->xSignMutex );
         }
-        pxSession->uxVerifyKey = NULL;
+        pxSession->uxVerifyKey = 0;
         if( NULL != pxSession->xVerifyMutex )
         {
             vSemaphoreDelete( pxSession->xVerifyMutex );
@@ -1804,7 +1806,7 @@ CK_DEFINE_FUNCTION( CK_RV, C_GetAttributeValue )( CK_SESSION_HANDLE xSession,
     mbedtls_ecp_point ecp_point;
     unsigned char ucGetData[pkcs11OBJECT_MAX_SIZE];
     uint8_t * pcLabel = NULL;
-    uint32_t ulLength = pkcs11OBJECT_MAX_SIZE;
+    size_t ulLength = pkcs11OBJECT_MAX_SIZE;
     psa_algorithm_t key_algorithm;
 
     if( xResult == CKR_OK )
@@ -1858,7 +1860,7 @@ CK_DEFINE_FUNCTION( CK_RV, C_GetAttributeValue )( CK_SESSION_HANDLE xSession,
                                     break;
 
                                 case eAwsDevicePublicKey:
-                                case eAwsCodeSigningKey:
+                                case eAwsCodeVerifyingKey:
                                     xClass = CKO_PUBLIC_KEY;
                                     break;
 
@@ -1919,49 +1921,43 @@ CK_DEFINE_FUNCTION( CK_RV, C_GetAttributeValue )( CK_SESSION_HANDLE xSession,
                     }
                     else
                     {
-                        if( 0 != xResult )
-                        {
-                            xResult = CKR_FUNCTION_FAILED;
-                        }
-                        else
-                        {
-                            psa_key_handle_t ulKeyHandle = 0;
-                            xResult = PKCS11PSAGetKeyHandle( pcLabel, xSize, &ulKeyHandle );
+                        psa_key_handle_t ulKeyHandle = 0;
+                        xResult = PKCS11PSAGetKeyHandle( pcLabel, xSize, &ulKeyHandle );
 
-                            /* Get the key policy from which the key type can be derived. */
-                            if( xResult == CKR_OK )
+                        /* Get the key policy from which the key type can be derived. */
+                        if( xResult == CKR_OK )
+                        {
+                            psa_key_attributes_t key_attributes = PSA_KEY_ATTRIBUTES_INIT;
+                            uxStatus = psa_get_key_attributes( ulKeyHandle, &key_attributes );
+                            if ( uxStatus != PSA_SUCCESS )
                             {
-                                psa_key_attributes_t key_attributes = PSA_KEY_ATTRIBUTES_INIT;
-                                uxStatus = psa_get_key_attributes( ulKeyHandle, &key_attributes );
-                                if ( uxStatus != PSA_SUCCESS )
-                                {
-                                    xResult = CKR_FUNCTION_FAILED;
-                                }
-                                else
-                                {
-                                    key_algorithm = psa_get_key_algorithm( &key_attributes );
-                                }
+                                xResult = CKR_FUNCTION_FAILED;
                             }
-                            if( xResult == CKR_OK )
+                            else
                             {
-                                if( PSA_ALG_IS_ECDSA( key_algorithm ) )
-                                {
-                                    xPkcsKeyType = CKK_EC;
-                                }
-                                else if( PSA_ALG_IS_RSA_PKCS1V15_SIGN( key_algorithm ) ||
-                                        PSA_ALG_IS_RSA_PSS( key_algorithm ) )
-                                {
-                                    xPkcsKeyType = CKK_RSA;
-                                }
-                                else
-                                {
-                                    xResult = CKR_ATTRIBUTE_VALUE_INVALID;
-                                }
+                                key_algorithm = psa_get_key_algorithm( &key_attributes );
+                                psa_reset_key_attributes( &key_attributes );
                             }
-                            if( xResult == CKR_OK )
+                        }
+                        if( xResult == CKR_OK )
+                        {
+                            if( PSA_ALG_IS_ECDSA( key_algorithm ) )
                             {
-                                memcpy( pxTemplate[ iAttrib ].pValue, &xPkcsKeyType, sizeof( CK_KEY_TYPE ) );
+                                xPkcsKeyType = CKK_EC;
                             }
+                            else if( PSA_ALG_IS_RSA_PKCS1V15_SIGN( key_algorithm ) ||
+                                    PSA_ALG_IS_RSA_PSS( key_algorithm ) )
+                            {
+                                xPkcsKeyType = CKK_RSA;
+                            }
+                            else
+                            {
+                                xResult = CKR_ATTRIBUTE_VALUE_INVALID;
+                            }
+                        }
+                        if( xResult == CKR_OK )
+                        {
+                            memcpy( pxTemplate[ iAttrib ].pValue, &xPkcsKeyType, sizeof( CK_KEY_TYPE ) );
                         }
                     }
 
@@ -2134,6 +2130,84 @@ CK_DECLARE_FUNCTION( CK_RV, C_FindObjectsInit )( CK_SESSION_HANDLE xSession,
 }
 
 /**
+ * @brief Helper function - Find a key object.
+ *
+ * @param[in]  pxSession                    Points to PKCS #11 session.
+ *
+ * @param[in]  xKeyId                       PSA persistent key ID.
+ *
+ * @param[in]  xPalHandle                   PSA pkcs#11 key handle.
+ *
+ * @param[out] pxObject                     Points to the handle of the object to
+ *                                          be found.
+ * @param[out] pulObjectCount               The actual number of objects that are
+ *                                          found. In this port, if an object is found
+ *                                          this value will be 1, otherwise if the
+ *                                          object is not found, it will be set to 0.
+ *
+ * @return CKR_OK if successful.
+ * Else, see <a href="https://tiny.amazon.com/wtscrttv">PKCS #11 specification</a>
+ * for more information.
+ */
+static CK_RV  FindKeyObjects ( P11SessionPtr_t pxSession,
+                               psa_key_id_t xKeyId,
+                               CK_OBJECT_HANDLE xPalHandle,
+                               CK_OBJECT_HANDLE_PTR pxObject,
+                               CK_ULONG_PTR pulObjectCount )
+{
+    CK_RV xResult;
+    psa_key_handle_t uxPsaDeviceKeyHandle = 0;
+    CK_OBJECT_HANDLE uxObjectHandle = 0;
+    psa_status_t uxStatus = PSA_SUCCESS;
+
+    /* Check with PKCS#11 context if the object was previously stored */
+    xResult = PKCS11PSAGetKeyHandle( pxSession->pxFindObjectLabel,
+                                     strlen( ( const char * ) pxSession->pxFindObjectLabel ),
+                                     &uxPsaDeviceKeyHandle );
+    if ( xResult != CKR_OK )
+    {
+        xResult = CKR_OK;
+
+        /* Check with PSA if the object is stored as persistent key. */
+        uxStatus = psa_open_key( xKeyId, &uxPsaDeviceKeyHandle );
+
+        if ( uxStatus == PSA_SUCCESS )
+        {
+            /* Import the key into the PKCS#11 context. */
+            PKCS11PSAContextImportObject( pxSession->pxFindObjectLabel,
+                                          strlen( ( const char * ) pxSession->pxFindObjectLabel ),
+                                          uxPsaDeviceKeyHandle );
+        }
+#ifndef pkcs11configTFM_VERSION_1_0
+        else if ( uxStatus != PSA_ERROR_DOES_NOT_EXIST )
+#else
+        else if ( uxStatus != PSA_ERROR_DOES_NOT_EXIST && uxStatus != PSA_ERROR_NOT_SUPPORTED )
+#endif
+
+        {
+            PKCS11_WARNING_PRINT( ( "WARNING: Opening key (0x%x) fails (0x%x). \n", xKeyId, uxStatus ) );
+            xResult = CKR_FUNCTION_FAILED;
+        }
+    }
+
+    if ( xResult == CKR_OK && uxStatus == PSA_SUCCESS )
+    {
+        /* Add key handle to application object list. */
+        xResult = prvAddObjectToList( xPalHandle,
+                                      &uxObjectHandle,
+                                      pxSession->pxFindObjectLabel,
+                                      strlen( ( const char * ) pxSession->pxFindObjectLabel ) );
+        if ( xResult == CKR_OK )
+        {
+            *pxObject = uxObjectHandle;
+            *pulObjectCount = 1;
+        }
+    }
+    return xResult;
+}
+
+
+/**
  * @brief Find an object.
  *
  * \sa C_FindObjectsInit() which must be called before calling C_FindObjects()
@@ -2174,11 +2248,9 @@ CK_DECLARE_FUNCTION( CK_RV, C_FindObjects )( CK_SESSION_HANDLE xSession,
 
     CK_BYTE_PTR pcObjectValue = NULL;
     uint32_t xObjectLength = 0;
-    CK_BBOOL xIsPrivate = CK_TRUE;
     CK_BYTE xByte = 0;
     CK_OBJECT_HANDLE xPalHandle = CK_INVALID_HANDLE;
     uint32_t ulIndex;
-    psa_key_handle_t uxPsaDeviceKeyHandle = 0;
     CK_OBJECT_HANDLE uxObjectHandle = 0;
     psa_status_t uxStatus;
 
@@ -2223,78 +2295,32 @@ CK_DECLARE_FUNCTION( CK_RV, C_FindObjects )( CK_SESSION_HANDLE xSession,
         }
         else
         {
-            /* Open the existing persistent key and import it into the pkcs11 context. */
             if( strcmp( ( const char * )pxSession->pxFindObjectLabel,
                         pkcs11configLABEL_DEVICE_PRIVATE_KEY_FOR_TLS ) == 0 )
             {
-                uxStatus = psa_open_key( PSA_DEVICE_PRIVATE_KEY_ID,
-                                         &uxPsaDeviceKeyHandle );
-
-                if( uxStatus == PSA_SUCCESS )
-                {
-                    /* Add the opened key to xP11Context. */
-                    xResult = prvAddObjectToList( eAwsDevicePrivateKey,
-                                                  &uxObjectHandle,
-                                                  pxSession->pxFindObjectLabel,
-                                                  strlen( ( const char * ) pxSession->pxFindObjectLabel ) );
-
-                    if( xResult == CKR_OK )
-                    {
-                        /* Import the key into the pkcs#11 PSA context. */
-                        PKCS11PSAContextImportObject( pxSession->pxFindObjectLabel,
-                                                      strlen( ( const char * ) pxSession->pxFindObjectLabel ),
-                                                      uxPsaDeviceKeyHandle );
-
-                        /* The device private key is found. */
-                        *pxObject = uxObjectHandle;
-                        *pulObjectCount = 1;
-                    }
-                }
-                else if( uxStatus != PSA_ERROR_DOES_NOT_EXIST )
-                {
-                    /* If not succeed, possible errors are:
-                     *     1. The key is not privisioned(PSA_ERROR_DOES_NOT_EXIST).
-                     *     2. The function error.
-                     */
-                    PKCS11_WARNING_PRINT( ( "Opening device private key fails. \r\n" ) );
-                    xResult = CKR_FUNCTION_FAILED;
-                }
+                xResult = FindKeyObjects( pxSession,
+                                          PSA_DEVICE_PRIVATE_KEY_ID,
+                                          eAwsDevicePrivateKey,
+                                          pxObject,
+                                          pulObjectCount );
             }
             else if( strcmp( ( const char * )pxSession->pxFindObjectLabel,
                              pkcs11configLABEL_DEVICE_PUBLIC_KEY_FOR_TLS ) == 0 )
             {
-                uxStatus = psa_open_key( PSA_DEVICE_PUBLIC_KEY_ID,
-                                         &uxPsaDeviceKeyHandle );
-
-                if( uxStatus == PSA_SUCCESS )
-                {
-                    /* Add the opened key to xP11Context. */
-                    xResult = prvAddObjectToList( eAwsDevicePublicKey,
-                                                  &uxObjectHandle,
-                                                  pxSession->pxFindObjectLabel,
-                                                  strlen( ( const char * ) pxSession->pxFindObjectLabel ) );
-
-                    if( xResult == CKR_OK )
-                    {
-                        /* Import the key into the pkcs#11 PSA configure context. */
-                        PKCS11PSAContextImportObject( pxSession->pxFindObjectLabel,
-                                                      strlen( ( const char * ) pxSession->pxFindObjectLabel ),
-                                                      uxPsaDeviceKeyHandle );
-
-                        /* The device public key is found. */
-                        *pxObject = uxObjectHandle;
-                        *pulObjectCount = 1;
-                    }
-                }
-                else if( uxStatus != PSA_ERROR_DOES_NOT_EXIST )
-                {
-                    /* If not succeed, possible errors are:
-                     *     1. The key is not privisioned(PSA_ERROR_DOES_NOT_EXIST).
-                     *     2. The function error.
-                     */
-                    PKCS11_WARNING_PRINT( ( "Opening device public key fails. \r\n" ) );
-                    xResult = CKR_FUNCTION_FAILED;
-                }
+                xResult = FindKeyObjects( pxSession,
+                                          PSA_DEVICE_PUBLIC_KEY_ID,
+                                          eAwsDevicePublicKey,
+                                          pxObject,
+                                          pulObjectCount );
+            }
+            else if( strcmp( ( const char * )pxSession->pxFindObjectLabel,
+                             pkcs11configLABEL_CODE_VERIFICATION_KEY ) == 0 )
+            {
+                xResult = FindKeyObjects( pxSession,
+                                          PSA_CODE_VERIFICATION_KEY_ID,
+                                          eAwsCodeVerifyingKey,
+                                          pxObject,
+                                          pulObjectCount );
             }
             else if( strcmp( ( const char * )pxSession->pxFindObjectLabel,
                              pkcs11configLABEL_DEVICE_CERTIFICATE_FOR_TLS ) == 0 )
@@ -2328,7 +2354,7 @@ CK_DECLARE_FUNCTION( CK_RV, C_FindObjects )( CK_SESSION_HANDLE xSession,
                 }
                 else if( uxStatus != PSA_ERROR_DOES_NOT_EXIST )
                 {
-                    PKCS11_WARNING_PRINT( ( "psa ps getting device certificate key fails. \r\n" ) );
+                    PKCS11_WARNING_PRINT( ( "psa ps getting device certificate fails. \r\n" ) );
                     xResult = CKR_FUNCTION_FAILED;
                 }
             }
@@ -2364,7 +2390,7 @@ CK_DECLARE_FUNCTION( CK_RV, C_FindObjects )( CK_SESSION_HANDLE xSession,
                 }
                 else if( uxStatus != PSA_ERROR_DOES_NOT_EXIST )
                 {
-                    PKCS11_WARNING_PRINT( ( "psa ps getting device certificate key fails. \r\n" ) );
+                    PKCS11_WARNING_PRINT( ( "psa ps getting root certificate fails. \r\n" ) );
                     xResult = CKR_FUNCTION_FAILED;
                 }
             }
@@ -2400,22 +2426,21 @@ CK_DECLARE_FUNCTION( CK_RV, C_FindObjects )( CK_SESSION_HANDLE xSession,
                 }
                 else if( uxStatus != PSA_ERROR_DOES_NOT_EXIST )
                 {
-                    PKCS11_WARNING_PRINT( ( "psa ps getting device certificate key fails. \r\n" ) );
+                    PKCS11_WARNING_PRINT( ( "psa ps getting JITP certificate fails. \r\n" ) );
                     xResult = CKR_FUNCTION_FAILED;
                 }
             }
             else
             {
-                xResult = CKR_ARGUMENTS_BAD;
+                PKCS11_WARNING_PRINT( ( "WARNING: Object not supported (%s). \r\n", pxSession->pxFindObjectLabel ) );
             }
         }
 
-        if( *pulObjectCount == 0 )
+        if ( *pulObjectCount == 0 )
         {
             PKCS11_WARNING_PRINT( ( "WARN: Object with label '%s' not found. \r\n", ( char * ) pxSession->pxFindObjectLabel ) );
         }
     }
-
     return xResult;
 }
 
@@ -2710,6 +2735,7 @@ CK_DEFINE_FUNCTION( CK_RV, C_SignInit )( CK_SESSION_HANDLE xSession,
                     {
                         key_algorithm = psa_get_key_algorithm( &key_attributes );
                         pxSession->xSignAlgorithm = key_algorithm;
+                        psa_reset_key_attributes( &key_attributes );
                     }
                     else
                     {
@@ -2723,7 +2749,7 @@ CK_DEFINE_FUNCTION( CK_RV, C_SignInit )( CK_SESSION_HANDLE xSession,
             }
             else
             {
-                pxSession->uxSignKey = NULL;
+                pxSession->uxSignKey = 0;
                 xResult = CKR_KEY_HANDLE_INVALID;
             }
             xSemaphoreGive( pxSession->xSignMutex );
@@ -2873,19 +2899,19 @@ CK_DEFINE_FUNCTION( CK_RV, C_Sign )( CK_SESSION_HANDLE xSession,
             {
                 if( pdTRUE == xSemaphoreTake( pxSessionObj->xSignMutex, portMAX_DELAY ) )
                 {
-                    if ( pxSessionObj->uxSignKey == NULL )
+                    if ( pxSessionObj->uxSignKey == 0 )
                     {
                         xResult = CKR_KEY_HANDLE_INVALID;
                     }
                     else
                     {
-                        uxStatus = psa_asymmetric_sign( pxSessionObj->uxSignKey,
-                                                        pxSessionObj->xSignAlgorithm,
-                                                        ( const uint8_t * )pucDataToBeSigned,
-                                                        ( size_t )ulDataLengthToBeSigned,
-                                                        ( uint8_t * )pucSignature,
-                                                        ( size_t )*pulSignatureLen,
-                                                        ( size_t * )pulSignatureLen );
+                        uxStatus = psa_sign_hash( pxSessionObj->uxSignKey,
+                                                  pxSessionObj->xSignAlgorithm,
+                                                  ( const uint8_t * )pucDataToBeSigned,
+                                                  ( size_t )ulDataLengthToBeSigned,
+                                                  ( uint8_t * )pucSignature,
+                                                  ( size_t )*pulSignatureLen,
+                                                  ( size_t * )pulSignatureLen );
 
                         if( uxStatus != PSA_SUCCESS )
                         {
@@ -2970,7 +2996,7 @@ CK_DEFINE_FUNCTION( CK_RV, C_VerifyInit )( CK_SESSION_HANDLE xSession,
 
         if( xPalHandle == CK_INVALID_HANDLE )
         {
-            pxSession->uxSignKey = NULL;
+            pxSession->uxSignKey = 0;
             xResult = CKR_KEY_HANDLE_INVALID;
         }
     }
@@ -2994,11 +3020,12 @@ CK_DEFINE_FUNCTION( CK_RV, C_VerifyInit )( CK_SESSION_HANDLE xSession,
                 {
                     key_algorithm = psa_get_key_algorithm( &key_attributes );
                     pxSession->xVerifyAlgorithm = key_algorithm;
+                    psa_reset_key_attributes( &key_attributes );
                 }
             }
             else
             {
-                pxSession->uxVerifyKey = NULL;
+                pxSession->uxVerifyKey = 0;
                 xResult = CKR_KEY_HANDLE_INVALID;
             }
 
@@ -3129,18 +3156,18 @@ CK_DEFINE_FUNCTION( CK_RV, C_Verify )( CK_SESSION_HANDLE xSession,
         if( pdTRUE == xSemaphoreTake( pxSessionObj->xVerifyMutex, portMAX_DELAY ) )
         {
             /* Verify the signature. If a public key is present, use it. */
-            if ( pxSessionObj->uxVerifyKey == NULL )
+            if ( pxSessionObj->uxVerifyKey == 0 )
             {
                 xResult = CKR_KEY_HANDLE_INVALID;
             }
             else
             {
-                uxStatus = psa_asymmetric_verify( pxSessionObj->uxVerifyKey,
-                                                  pxSessionObj->xVerifyAlgorithm,
-                                                  ( const uint8_t * )pucData,
-                                                  ( size_t )ulDataLen,
-                                                  ( const uint8_t * )pucSignature,
-                                                  ( size_t )ulSignatureLen );
+                uxStatus = psa_verify_hash( pxSessionObj->uxVerifyKey,
+                                            pxSessionObj->xVerifyAlgorithm,
+                                            ( const uint8_t * )pucData,
+                                            ( size_t )ulDataLen,
+                                            ( const uint8_t * )pucSignature,
+                                            ( size_t )ulSignatureLen );
 
                 if( uxStatus == PSA_SUCCESS )
                 {
@@ -3482,7 +3509,9 @@ CK_DEFINE_FUNCTION( CK_RV, C_GenerateKeyPair )( CK_SESSION_HANDLE xSession,
                     pkcs11configLABEL_DEVICE_PRIVATE_KEY_FOR_TLS ) == 0 )
         {
             /* If this is the device private key, then create it as a persistent key. */
+#ifndef pkcs11configTFM_VERSION_1_0
             psa_set_key_id( &private_key_attributes, PSA_DEVICE_PRIVATE_KEY_ID );
+#endif
         }
         psa_set_key_usage_flags( &private_key_attributes, PSA_KEY_USAGE_SIGN_HASH );
         psa_set_key_algorithm( &private_key_attributes, uxAlgorithm );
@@ -3518,7 +3547,9 @@ CK_DEFINE_FUNCTION( CK_RV, C_GenerateKeyPair )( CK_SESSION_HANDLE xSession,
                         pkcs11configLABEL_DEVICE_PUBLIC_KEY_FOR_TLS ) == 0 )
             {
                 /* If this is the device public key, then create it as a persistent key. */
+#ifndef pkcs11configTFM_VERSION_1_0
                 psa_set_key_id( &public_key_attributes, PSA_DEVICE_PUBLIC_KEY_ID );
+#endif
             }
             psa_set_key_usage_flags( &public_key_attributes, PSA_KEY_USAGE_VERIFY_HASH );
             psa_set_key_algorithm( &public_key_attributes, uxAlgorithm );

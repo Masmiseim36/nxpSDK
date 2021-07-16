@@ -68,11 +68,11 @@ mid_sm_app_ctrl_t g_g_sMIDCtrl = {
 static void MID_StateStart(void)
 {
     /* type the code to do when in the START state */
-    g_sMID.sRs.ui16Active       = FALSE;
-    g_sMID.sNoLoad.ui16Active   = FALSE;
-    g_sMID.sBlocked.ui16Active  = FALSE;
-    g_sMID.sPwrStgCh.ui16Active = FALSE;
-    g_sMID.sMech.ui16Active     = FALSE;
+    g_sMID.sRs.bActive       = FALSE;
+    g_sMID.sNoLoad.bActive   = FALSE;
+    g_sMID.sBlocked.bActive  = FALSE;
+    g_sMID.sPwrStgCh.bActive = FALSE;
+    g_sMID.sMech.bActive     = FALSE;
 
     g_sMID.bAbort        = FALSE;
     g_sMID.bRotBlocked   = FALSE;
@@ -101,7 +101,7 @@ static void MID_StatePwrStgCharact(void)
     MID_GetTrfChar();
 
     /* when charcterization ends, go to STOP state */
-    if (g_sMID.sPwrStgCh.ui16Active == FALSE)
+    if (g_sMID.sPwrStgCh.bActive == FALSE)
     {
         /* set _DONE to switch to following transition state */
         g_g_sMIDCtrl.uiCtrl |= MID_SM_CTRL_PWR_STG_CHARACT_DONE;
@@ -121,7 +121,7 @@ static void MID_StateRs(void)
     MID_getRs();
 
     /* When Rs measurement done, go to NOLOAD state */
-    if (g_sMID.sRs.ui16Active == FALSE)
+    if (g_sMID.sRs.bActive == FALSE)
     {
         /* set _DONE to switch to following transition state */
         g_g_sMIDCtrl.uiCtrl |= MID_SM_CTRL_RS_DONE;
@@ -141,7 +141,7 @@ static void MID_StateNoLoad(void)
     MID_testNoLoad();
 
     /* when No Load test done, go to NOLOAD state */
-    if (g_sMID.sNoLoad.ui16Active == FALSE)
+    if (g_sMID.sNoLoad.bActive == FALSE)
     {
         /* set _DONE to switch to following transition state */
         g_g_sMIDCtrl.uiCtrl |= MID_SM_CTRL_NOLOAD_DONE;
@@ -165,7 +165,7 @@ static void MID_StateBlocked(void)
 
     /* when blocked-rotor test  and parameter calculation done,
        go to STOP state */
-    if ((g_sMID.sBlocked.ui16Active == FALSE) && (g_sMID.eCalcElPar == kMID_CalcDone))
+    if ((g_sMID.sBlocked.bActive == FALSE) && (g_sMID.eCalcElPar == kMID_CalcDone))
     {
         /* set _DONE to switch to following transition state */
         g_g_sMIDCtrl.uiCtrl |= MID_SM_CTRL_BLOCKED_DONE;
@@ -185,7 +185,7 @@ static void MID_StateBlocked(void)
 
             Escape the state:
             when the MECH measurement is done, which indicated by
-            g_sMIDMech.ui16Active == FALSE
+            g_sMIDMech.bActive == FALSE
  *
  * @param None
  *
@@ -202,7 +202,7 @@ static void MID_StateMech(void)
     }
 
     /* when the MECH measurement is finished, set the MECH_DONE flag */
-    if ((g_sMID.sMech.ui16Active == FALSE) && (g_sMID.eCalcMechPar == kMID_CalcDone))
+    if ((g_sMID.sMech.bActive == FALSE) && (g_sMID.eCalcMechPar == kMID_CalcDone))
     {
         /* set MECH_DONE to switch to following transition state */
         g_g_sMIDCtrl.uiCtrl |= MID_SM_CTRL_MECH_DONE;
@@ -359,8 +359,8 @@ static void MID_TransBlocked2Mech(void)
 
     g_sMID.sMech.fltSpdElStart     = (MID_MECH_SPDEL_MIN_PCT * 2.0F * FLOAT_PI) * g_sMID.sPar.fltFreqN;
     g_sMID.sMech.fltSpdElEnd       = (MID_MECH_SPDEL_MAX_PCT * 2.0F * FLOAT_PI) * g_sMID.sPar.fltFreqN;
-    g_sMID.sMech.ui32TimeMeasMax   = MID_MECH_TIME_MEASMAX * M1_MID_TIME_ONESEC;
-    g_sMID.sMech.ui32TimeSettleMax = MID_MECH_TIME_SETTLEMAX * M1_MID_TIME_ONESEC;
+    g_sMID.sMech.ui32TimeMeasMax   = (uint32_t)(MID_MECH_TIME_MEASMAX * M1_MID_TIME_ONESEC);
+    g_sMID.sMech.ui32TimeSettleMax = (uint32_t)(MID_MECH_TIME_SETTLEMAX * M1_MID_TIME_ONESEC);
 
     /* acknowledge that the state machine can proceed into STOP state */
     g_g_sMIDCtrl.uiCtrl |= MID_SM_CTRL_MECH_ACK;

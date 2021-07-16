@@ -1,5 +1,5 @@
 /*
- * Copyright 2016-2020 NXP
+ * Copyright 2016-2021 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -19,18 +19,18 @@
 //! @note Do not change the index of Flash, SRAM, or QSPI (see memory.h).
 memory_map_entry_t g_memoryMap[] = {
     // ITCM SRAM(128KB)
-    { 0x00000000, 0x0001ffff, kMemoryIsExecutable | kMemoryType_RAM, &g_normalMemoryInterface },
+    { 0x00000000, 0x0001ffff, kMemoryIsExecutable | kMemoryType_RAM, kMemoryInternal, &g_normalMemoryInterface },
     // DTCM SRAM(128KB)
-    { 0x20000000, 0x2001ffff, kMemoryIsExecutable | kMemoryType_RAM, &g_normalMemoryInterface },
+    { 0x20000000, 0x2001ffff, kMemoryIsExecutable | kMemoryType_RAM, kMemoryInternal, &g_normalMemoryInterface },
     // OCRAM (256KB)
-    { 0x20200000, 0x2023ffff, kMemoryIsExecutable | kMemoryType_RAM, &g_normalMemoryInterface },
+    { 0x20200000, 0x2023ffff, kMemoryIsExecutable | kMemoryType_RAM, kMemoryInternal, &g_normalMemoryInterface },
 #if BL_FEATURE_FLEXSPI_NOR_MODULE
     // FlexSPI1 AMBA memory
-    { 0x60000000, 0x6fffffff, kMemoryNotExecutable | kMemoryType_FLASH, &g_flexspiMemoryInterface },
+    { 0x60000000, 0x6fffffff, kMemoryNotExecutable | kMemoryType_FLASH, kMemoryFlexSpiNor, &g_flexspiMemoryInterface },
 #endif // #if BL_FEATURE_FLEXSPI_NOR_MODULE
 #if BL_FEATURE_SEMC_NOR_MODULE
     // SEMC memory
-    { 0x90000000, 0x1000000, kMemoryNotExecutable | kMemoryType_FLASH, &g_semcNorMemoryInterface },
+    { 0x90000000, 0x1000000, kMemoryNotExecutable | kMemoryType_FLASH, kMemorySemcNor, &g_semcNorMemoryInterface },
 #endif // #if BL_FEATURE_SEMC_NOR_MODULE
     // Terminator
     { 0 }

@@ -4,13 +4,13 @@
     <definition extID="platform.drivers.dcp.MIMXRT1011"/>
     <definition extID="platform.drivers.trng.MIMXRT1011"/>
     <definition extID="platform.drivers.cache_armv7_m7.MIMXRT1011"/>
+    <definition extID="middleware.mbedtls.MIMXRT1011"/>
     <definition extID="middleware.mbedtls.port.ksdk.MIMXRT1011"/>
     <definition extID="middleware.mbedtls.rt.MIMXRT1011"/>
-    <definition extID="middleware.mbedtls.MIMXRT1011"/>
-    <definition extID="utility.debug_console.MIMXRT1011"/>
     <definition extID="platform.drivers.clock.MIMXRT1011"/>
     <definition extID="platform.drivers.common.MIMXRT1011"/>
     <definition extID="device.MIMXRT1011_CMSIS.MIMXRT1011"/>
+    <definition extID="utility.debug_console.MIMXRT1011"/>
     <definition extID="component.lpuart_adapter.MIMXRT1011"/>
     <definition extID="component.serial_manager.MIMXRT1011"/>
     <definition extID="component.lists.MIMXRT1011"/>
@@ -21,10 +21,8 @@
     <definition extID="platform.utilities.assert.MIMXRT1011"/>
     <definition extID="platform.drivers.igpio.MIMXRT1011"/>
     <definition extID="platform.drivers.xip_device.MIMXRT1011"/>
-    <definition extID="platform.drivers.xip_board.MIMXRT1011"/>
-    <definition extID="platform.Include_core_cm7.MIMXRT1011"/>
-    <definition extID="platform.Include_common.MIMXRT1011"/>
-    <definition extID="platform.Include_dsp.MIMXRT1011"/>
+    <definition extID="platform.drivers.xip_board.evkmimxrt1010.MIMXRT1011"/>
+    <definition extID="CMSIS_Include_core_cm.MIMXRT1011"/>
     <definition extID="platform.utilities.misc_utilities.MIMXRT1011"/>
     <definition extID="device.MIMXRT1011_system.MIMXRT1011"/>
     <definition extID="iar"/>
@@ -35,16 +33,16 @@
     <definition extID="com.crt.advproject.config.exe.debug"/>
     <definition extID="com.crt.advproject.config.exe.release"/>
   </externalDefinitions>
-  <example id="evkmimxrt1010_mbedtls_selftest" name="mbedtls_selftest" dependency="platform.drivers.dcp.MIMXRT1011 platform.drivers.trng.MIMXRT1011 platform.drivers.cache_armv7_m7.MIMXRT1011 middleware.mbedtls.port.ksdk.MIMXRT1011 middleware.mbedtls.rt.MIMXRT1011 middleware.mbedtls.MIMXRT1011 utility.debug_console.MIMXRT1011 platform.drivers.clock.MIMXRT1011 platform.drivers.common.MIMXRT1011 device.MIMXRT1011_CMSIS.MIMXRT1011 component.lpuart_adapter.MIMXRT1011 component.serial_manager.MIMXRT1011 component.lists.MIMXRT1011 component.serial_manager_uart.MIMXRT1011 platform.drivers.lpuart.MIMXRT1011 device.MIMXRT1011_startup.MIMXRT1011 platform.drivers.iomuxc.MIMXRT1011 platform.utilities.assert.MIMXRT1011 platform.drivers.igpio.MIMXRT1011 platform.drivers.xip_device.MIMXRT1011 platform.drivers.xip_board.MIMXRT1011 platform.Include_core_cm7.MIMXRT1011 platform.Include_common.MIMXRT1011 platform.Include_dsp.MIMXRT1011 platform.utilities.misc_utilities.MIMXRT1011 device.MIMXRT1011_system.MIMXRT1011" category="mbedtls_examples">
+  <example id="evkmimxrt1010_mbedtls_selftest" name="mbedtls_selftest" dependency="platform.drivers.dcp.MIMXRT1011 platform.drivers.trng.MIMXRT1011 platform.drivers.cache_armv7_m7.MIMXRT1011 middleware.mbedtls.MIMXRT1011 middleware.mbedtls.port.ksdk.MIMXRT1011 middleware.mbedtls.rt.MIMXRT1011 platform.drivers.clock.MIMXRT1011 platform.drivers.common.MIMXRT1011 device.MIMXRT1011_CMSIS.MIMXRT1011 utility.debug_console.MIMXRT1011 component.lpuart_adapter.MIMXRT1011 component.serial_manager.MIMXRT1011 component.lists.MIMXRT1011 component.serial_manager_uart.MIMXRT1011 platform.drivers.lpuart.MIMXRT1011 device.MIMXRT1011_startup.MIMXRT1011 platform.drivers.iomuxc.MIMXRT1011 platform.utilities.assert.MIMXRT1011 platform.drivers.igpio.MIMXRT1011 platform.drivers.xip_device.MIMXRT1011 platform.drivers.xip_board.evkmimxrt1010.MIMXRT1011 CMSIS_Include_core_cm.MIMXRT1011 platform.utilities.misc_utilities.MIMXRT1011 device.MIMXRT1011_system.MIMXRT1011" category="mbedtls_examples">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
     <memory>
       <memoryBlock id="BOARD_FLASH_evkmimxrt1010" name="BOARD_FLASH" addr="60000000" size="01000000" type="ExtFlash" access="RO"/>
-      <memoryBlock id="SRAM_OC_evkmimxrt1010" name="SRAM_OC" addr="20200000" size="00010000" type="RAM" access="RW"/>
-      <memoryBlock id="NCACHE_REGION_evkmimxrt1010" name="NCACHE_REGION" addr="20210000" size="00000000" type="RAM" access="RW"/>
       <memoryBlock id="SRAM_DTC_evkmimxrt1010" name="SRAM_DTC" addr="20000000" size="00008000" type="RAM" access="RW"/>
       <memoryBlock id="SRAM_ITC_evkmimxrt1010" name="SRAM_ITC" addr="00000000" size="00008000" type="RAM" access="RW"/>
+      <memoryBlock id="SRAM_OC_evkmimxrt1010" name="SRAM_OC" addr="20200000" size="00010000" type="RAM" access="RW"/>
+      <memoryBlock id="NCACHE_REGION_evkmimxrt1010" name="NCACHE_REGION" addr="20210000" size="00000000" type="RAM" access="RW"/>
     </memory>
     <toolchainSettings>
       <toolchainSetting id_refs="com.nxp.mcuxpresso">
@@ -56,6 +54,7 @@
           <value>FREESCALE_KSDK_BM</value>
           <value>MBEDTLS_CONFIG_FILE='"ksdk_mbedtls_config.h"'</value>
           <value>SERIAL_PORT_TYPE_UART=1</value>
+          <value>MCUXPRESSO_SDK</value>
         </option>
         <option id="com.crt.advproject.gcc.fpu" type="enum">
           <value>com.crt.advproject.gcc.fpu.fpv5sp.hard</value>
@@ -81,8 +80,12 @@
         <option id="gnu.c.link.option.nostdlibs" type="boolean">
           <value>true</value>
         </option>
+        <option id="com.crt.advproject.link.memory.sections" type="stringList">
+          <value>isd=*(NonCacheable.init);region=SRAM_DTC;type=.data</value>
+          <value>isd=*(NonCacheable);region=SRAM_DTC;type=.bss</value>
+        </option>
         <option id="com.crt.advproject.link.memory.heapAndStack" type="string">
-          <value>&amp;Heap:Default;Default;0x8000&amp;Stack:Default;Default;0x2000</value>
+          <value>&amp;Heap:Default;Default;0x4000&amp;Stack:Default;Default;0x2000</value>
         </option>
       </toolchainSetting>
     </toolchainSettings>
@@ -124,15 +127,6 @@
       <files mask="build_flexspi_nor_release.bat"/>
       <files mask="build_flexspi_nor_release.sh"/>
     </source>
-    <source path="boards/evkmimxrt1010/mbedtls_examples/mbedtls_selftest/iar" project_relative_path="MIMXRT1011/iar" type="linker" toolchain="iar">
-      <files mask="MIMXRT1011xxxxx_flexspi_nor_ocram_noncacheable.icf"/>
-    </source>
-    <source path="boards/evkmimxrt1010/mbedtls_examples/mbedtls_selftest/mdk" project_relative_path="MIMXRT1011/arm" type="linker" toolchain="mdk">
-      <files mask="MIMXRT1011xxxxx_flexspi_nor_ocram_noncacheable.scf"/>
-    </source>
-    <source path="boards/evkmimxrt1010/mbedtls_examples/mbedtls_selftest/armgcc" project_relative_path="MIMXRT1011/gcc" type="linker" toolchain="armgcc">
-      <files mask="MIMXRT1011xxxxx_flexspi_nor_ocram_noncacheable.ld"/>
-    </source>
     <source path="boards/evkmimxrt1010/mbedtls_examples/mbedtls_selftest" project_relative_path="source" type="src">
       <files mask="selftest.c"/>
     </source>
@@ -152,6 +146,15 @@
     </source>
     <source path="boards/evkmimxrt1010/mbedtls_examples/mbedtls_selftest" project_relative_path="doc" type="doc" toolchain="iar mdk mcuxpresso armgcc">
       <files mask="readme.txt"/>
+    </source>
+    <source path="boards/evkmimxrt1010/mbedtls_examples/mbedtls_selftest/iar" project_relative_path="MIMXRT1011/iar" type="linker" toolchain="iar">
+      <files mask="MIMXRT1011xxxxx_flexspi_nor.icf"/>
+    </source>
+    <source path="boards/evkmimxrt1010/mbedtls_examples/mbedtls_selftest/mdk" project_relative_path="MIMXRT1011/arm" type="linker" toolchain="mdk">
+      <files mask="MIMXRT1011xxxxx_flexspi_nor.scf"/>
+    </source>
+    <source path="boards/evkmimxrt1010/mbedtls_examples/mbedtls_selftest/armgcc" project_relative_path="MIMXRT1011/gcc" type="linker" toolchain="armgcc">
+      <files mask="MIMXRT1011xxxxx_flexspi_nor.ld"/>
     </source>
     <source path="boards/evkmimxrt1010/mbedtls_examples/mbedtls_selftest/mdk" project_relative_path="evkmimxrt1010" type="configuration" toolchain="mdk">
       <files mask="evkmimxrt1010_flexspi_nor.ini"/>

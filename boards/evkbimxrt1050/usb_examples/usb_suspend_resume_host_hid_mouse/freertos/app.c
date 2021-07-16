@@ -98,6 +98,9 @@ extern usb_host_mouse_instance_t g_HostHidMouse;
 extern usb_host_handle g_HostHandle;
 static uint32_t systemTickControl;
 uint32_t g_halTimerHandle[(HAL_TIMER_HANDLE_SIZE + 3) / 4];
+#if ((defined(FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE)) && (FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE > 0U))
+static uint32_t g_savedPrimask;
+#endif
 /* Allocate the memory for the heap. */
 #if defined(configAPPLICATION_ALLOCATED_HEAP) && (configAPPLICATION_ALLOCATED_HEAP)
 USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) uint8_t ucHeap[configTOTAL_HEAP_SIZE];
@@ -194,10 +197,25 @@ void USB_PreLowpowerMode(void)
 /*
  * Execute the instrument to enter low power.
  */
-static void stop(void)
+#if ((defined(FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE)) && (FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE > 0U))
+AT_QUICKACCESS_SECTION_CODE(void stop(void));
+#endif
+void stop(void)
 {
     SCB->SCR |= SCB_SCR_SLEEPDEEP_Msk;
+#if ((defined(FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE)) && (FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE > 0U))
+    g_savedPrimask = DisableGlobalIRQ();
+    __DSB();
+    __ISB();
+#endif
     __asm("WFI");
+#if ((defined(FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE)) && (FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE > 0U))
+    CCM_ANALOG->PFD_480 |= CCM_ANALOG_PFD_480_PFD0_CLKGATE_MASK;
+    CCM_ANALOG->PFD_480 &= ~CCM_ANALOG_PFD_480_PFD0_CLKGATE_MASK;
+    EnableGlobalIRQ(g_savedPrimask);
+    __DSB();
+    __ISB();
+#endif
 }
 
 /*
@@ -205,12 +223,7 @@ static void stop(void)
  */
 void APP_LowPower_EnterLowPower(void)
 {
-#if (((defined USB_SUSPEND_RESUME_WAKEUP_SYSTEM_RESET) && (USB_SUSPEND_RESUME_WAKEUP_SYSTEM_RESET)) && \
-     (CONTROLLER_ID == kUSB_ControllerEhci1))
-    CLOCK_SetMode(kCLOCK_ModeWait);
-#else
     CLOCK_SetMode(kCLOCK_ModeStop);
-#endif
     stop();
 }
 uint8_t USB_EnterLowpowerMode(void)
@@ -744,8 +757,8 @@ int main(void)
 {
     BOARD_ConfigMPU();
 
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
+    BOARD_InitBootPins();
+    BOARD_InitBootClocks();
     BOARD_InitDebugConsole();
 
     /* Set PERCLK_CLK source to OSC_CLK*/

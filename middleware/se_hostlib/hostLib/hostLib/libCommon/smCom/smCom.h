@@ -1,8 +1,7 @@
 /*
- * Copyright 2016-2020 NXP
- * All rights reserved.
  *
- * SPDX-License-Identifier: BSD-3-Clause
+ * Copyright 2016-2020 NXP
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 /**
@@ -39,6 +38,10 @@ U16 smCom_Init(ApduTransceiveFunction_t pTransceive, ApduTransceiveRawFunction_t
 void smCom_DeInit(void);
 U32 smCom_Transceive(void *conn_ctx, apdu_t *pApdu);
 U32 smCom_TransceiveRaw(void *conn_ctx, U8 *pTx, U16 txLen, U8 *pRx, U32 *pRxLen);
+
+#if defined(SMCOM_JRCP_V2)
+void smCom_Echo(void *conn_ctx, const char *comp, const char *level, const char *buffer);
+#endif
 
 #ifdef __cplusplus
 }

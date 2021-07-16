@@ -90,18 +90,52 @@ FMSTR_INLINE void *FMSTR_CAST_ADDR_TO_PTR_Func(FMSTR_ADDR addr)
 #ifdef __cplusplus
 extern "C" {
 #endif
+    
+/******************************************************************************
+ * SHA calculation
+ ******************************************************************************/
+
+
 /******************************************************************************
  * Internal data types used
  ******************************************************************************/
 
-/* Transport protocol interface between the Protocol layer and communication subsystem */
+#define SHA1_BLOCK_SIZE 20
+    
+typedef struct fmstr_sha1_ctx
+{
+    FMSTR_U8 data[64];
+    FMSTR_U32 datalen;
+    FMSTR_U64 bitlen;
+    FMSTR_U32 state[5];
+    FMSTR_U32 k[4];
+} FMSTR_SHA1_CTX;
 
+/* Transport protocol interface between the Protocol layer and communication subsystem */
 typedef struct FMSTR_TRANSPORT_INTF_S
 {
     FMSTR_BOOL (*Init)(void);
     void (*Poll)(void);
-    void (*SendResponse)(FMSTR_BPTR pResponse, FMSTR_SIZE nLength, FMSTR_U8 statusCode);
+    void (*SendResponse)(FMSTR_BPTR pResponse, FMSTR_SIZE nLength, FMSTR_U8 statusCode, void * identification);
 } FMSTR_TRANSPORT_INTF;
+
+typedef struct FMSTR_SESSION_S
+{
+    void * identification;      /* Identification for transport (address/socket/...) */
+    
+#if FMSTR_CFG_F1_RESTRICTED_ACCESS != 0
+    struct
+    {
+        /* Salt challenge value used between AUTH1 and AUTH2 steps of password authentication. */
+        FMSTR_U8 authSalt[FMSTR_AUTHENT_PRTCL_SHA1_SALT_LEN];
+        /* Currently granted access (one of FMSTR_RESTRICTED_ACCESS_xxx). */
+        FMSTR_U8 grantedAccess;
+        FMSTR_U8 accessKey[SHA1_BLOCK_SIZE];
+        FMSTR_U8 localKey[SHA1_BLOCK_SIZE];
+    } restr; /* Restricted access */
+#endif/* FMSTR_CFG_F1_RESTRICTED_ACCESS */
+    
+} FMSTR_SESSION;
 
 /* There are multiple global instances of different transports. User selects one in
    the application configuration file (or defines it indirectly by macros like
@@ -110,30 +144,40 @@ typedef struct FMSTR_TRANSPORT_INTF_S
 extern const FMSTR_TRANSPORT_INTF FMSTR_TRANSPORT;
 
 /******************************************************************************
+ * Feature locking API
+ ******************************************************************************/
+
+#if FMSTR_SESSION_COUNT > 1 
+FMSTR_BOOL FMSTR_IsFeatureOwned(FMSTR_SESSION * session, FMSTR_U8 featureType, FMSTR_U8 instance);
+#endif
+
+/******************************************************************************
  * Global non-API functions (used internally in FreeMASTER driver)
  ******************************************************************************/
 
-void FMSTR_SendResponse(FMSTR_BPTR response, FMSTR_SIZE length, FMSTR_U8 statusCode);
-FMSTR_BOOL FMSTR_ProtocolDecoder(FMSTR_BPTR msgBuffIO, FMSTR_SIZE msgSize, FMSTR_U8 cmdCode);
-FMSTR_BOOL FMSTR_SendTestFrame(FMSTR_BPTR msgBuffIO);
+void FMSTR_FreeSession(void * identification);
+     
+void FMSTR_SendResponse(FMSTR_BPTR response, FMSTR_SIZE length, FMSTR_U8 statusCode, FMSTR_SESSION * session);
+FMSTR_BOOL FMSTR_ProtocolDecoder(FMSTR_BPTR msgBuffIO, FMSTR_SIZE msgSize, FMSTR_U8 cmdCode, void * identification);
+FMSTR_BOOL FMSTR_SendTestFrame(FMSTR_BPTR msgBuffIO, FMSTR_SESSION * session);
 
 #if FMSTR_USE_APPCMD > 0
 FMSTR_BOOL FMSTR_InitAppCmds(void);
-FMSTR_BPTR FMSTR_StoreAppCmd(FMSTR_BPTR msgBuffIO, FMSTR_SIZE msgSize, FMSTR_U8 *retStatus);
-FMSTR_BPTR FMSTR_GetAppCmdStatus(FMSTR_BPTR msgBuffIO, FMSTR_U8 *retStatus);
-FMSTR_BPTR FMSTR_GetAppCmdRespData(FMSTR_BPTR msgBuffIO, FMSTR_U8 *retStatus);
+FMSTR_BPTR FMSTR_StoreAppCmd(FMSTR_SESSION * session, FMSTR_BPTR msgBuffIO, FMSTR_SIZE msgSize, FMSTR_U8 *retStatus);
+FMSTR_BPTR FMSTR_GetAppCmdStatus(FMSTR_SESSION * session, FMSTR_BPTR msgBuffIO, FMSTR_U8 *retStatus);
+FMSTR_BPTR FMSTR_GetAppCmdRespData(FMSTR_SESSION * session, FMSTR_BPTR msgBuffIO, FMSTR_U8 *retStatus);
 #endif
 
 #if FMSTR_USE_SCOPE > 0
 FMSTR_BOOL FMSTR_InitScope(void);
-FMSTR_BPTR FMSTR_SetScope(FMSTR_BPTR msgBuffIO, FMSTR_SIZE inputLen, FMSTR_U8 *retStatus);
-FMSTR_BPTR FMSTR_ReadScope(FMSTR_BPTR msgBuffIO, FMSTR_U8 *retStatus, FMSTR_SIZE maxOutSize);
+FMSTR_BPTR FMSTR_SetScope(FMSTR_SESSION * session, FMSTR_BPTR msgBuffIO, FMSTR_SIZE inputLen, FMSTR_U8 *retStatus);
+FMSTR_BPTR FMSTR_ReadScope(FMSTR_SESSION * session, FMSTR_BPTR msgBuffIO, FMSTR_U8 *retStatus, FMSTR_SIZE maxOutSize);
 #endif
 
 #if FMSTR_USE_RECORDER > 0
 FMSTR_BOOL FMSTR_InitRec(void);
-FMSTR_BPTR FMSTR_SetRecCmd(FMSTR_BPTR msgBuffIO, FMSTR_SIZE inputLen, FMSTR_U8 *retStatus);
-FMSTR_BPTR FMSTR_GetRecCmd(FMSTR_BPTR msgBuffIO, FMSTR_U8 *retStatus);
+FMSTR_BPTR FMSTR_SetRecCmd(FMSTR_SESSION * session, FMSTR_BPTR msgBuffIO, FMSTR_SIZE inputLen, FMSTR_U8 *retStatus);
+FMSTR_BPTR FMSTR_GetRecCmd(FMSTR_SESSION * session, FMSTR_BPTR msgBuffIO, FMSTR_U8 *retStatus);
 FMSTR_BOOL FMSTR_IsInRecBuffer(FMSTR_ADDR addr, FMSTR_SIZE size);
 #endif
 
@@ -147,9 +191,14 @@ FMSTR_BPTR FMSTR_UresControl(FMSTR_BPTR msgBuffIO, FMSTR_SIZE msgSize, FMSTR_U8 
 
 #if FMSTR_USE_PIPES > 0
 FMSTR_BOOL FMSTR_InitPipes(void);
-FMSTR_BPTR FMSTR_PipeFrame(FMSTR_BPTR msgBuffIO, FMSTR_SIZE msgSize, FMSTR_U8 *retStatus);
-FMSTR_BPTR FMSTR_GetPipe(FMSTR_BPTR msgBuffIO, FMSTR_SIZE msgSize, FMSTR_U8 *retStatus);
+FMSTR_BPTR FMSTR_PipeFrame(FMSTR_SESSION * session, FMSTR_BPTR msgBuffIO, FMSTR_SIZE msgSize, FMSTR_U8 *retStatus);
+FMSTR_BPTR FMSTR_GetPipe(FMSTR_SESSION * session, FMSTR_BPTR msgBuffIO, FMSTR_SIZE msgSize, FMSTR_U8 *retStatus);
+FMSTR_INDEX FMSTR_FindPipeIndex(FMSTR_PIPE_PORT pipePort);
 #endif
+
+void FMSTR_Sha1Init(FMSTR_SHA1_CTX *ctx);
+void FMSTR_Sha1Update(FMSTR_SHA1_CTX *ctx, const FMSTR_U8 *data, FMSTR_SIZE len);
+void FMSTR_Sha1Final(FMSTR_SHA1_CTX *ctx, FMSTR_U8 *hash);
 
 /******************************************************************************
  * aligned memory and buffer memory operations
@@ -171,6 +220,8 @@ void FMSTR_CopyFromBufferWithMask(FMSTR_ADDR destAddr, FMSTR_BPTR srcBuff, FMSTR
 
 #define FMSTR_SkipInBuffer(dest, size) ((FMSTR_BPTR)(((FMSTR_BPTR)(dest)) + (size)))
 
+FMSTR_BPTR FMSTR_ValueFromBuffer16BE(FMSTR_U16 *pnum, FMSTR_BPTR src);
+FMSTR_BPTR FMSTR_ValueToBuffer16BE(FMSTR_BPTR dest, FMSTR_U16 num);        
 FMSTR_BPTR FMSTR_AddressFromBuffer(FMSTR_ADDR *paddr, FMSTR_BPTR src);
 FMSTR_BPTR FMSTR_AddressToBuffer(FMSTR_BPTR dest, FMSTR_ADDR addr);
 FMSTR_BPTR FMSTR_SizeFromBuffer(FMSTR_SIZE *psize, FMSTR_BPTR src);
@@ -197,23 +248,6 @@ FMSTR_SIZE FMSTR_GetAlignmentCorrection(FMSTR_ADDR addr, FMSTR_SIZE size);
 #define FMSTR_GetFloat(addr)  (*(FMSTR_FLOAT *)(addr))
 #define FMSTR_GetDouble(addr) (*(FMSTR_DOUBLE *)(addr))
 #endif
-
-/******************************************************************************
- * SHA calculation
- ******************************************************************************/
-
-typedef struct fmstr_sha1_ctx
-{
-    FMSTR_U8 data[64];
-    FMSTR_U32 datalen;
-    FMSTR_U64 bitlen;
-    FMSTR_U32 state[5];
-    FMSTR_U32 k[4];
-} FMSTR_SHA1_CTX;
-
-void FMSTR_Sha1Init(FMSTR_SHA1_CTX *ctx);
-void FMSTR_Sha1Update(FMSTR_SHA1_CTX *ctx, const FMSTR_U8 *data, FMSTR_SIZE len);
-void FMSTR_Sha1Final(FMSTR_SHA1_CTX *ctx, FMSTR_U8 *hash);
 
 #ifdef __cplusplus
 }

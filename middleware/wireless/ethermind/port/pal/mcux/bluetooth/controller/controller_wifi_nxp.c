@@ -7,12 +7,12 @@
 
 #include "fsl_common.h"
 
-#if defined(WIFI_BOARD_AW_AM457) || defined(WIFI_BOARD_AW_CM358MA)
+#if defined(WIFI_BOARD_AW_AM457) || defined(WIFI_BOARD_AW_CM358)
 
 #ifndef CONTROLLER_INIT_ESCAPE
 #if defined(WIFI_BOARD_AW_AM457)
-#include "sduart8978_wlan_bt.h"
-#elif defined(WIFI_BOARD_AW_CM358MA)
+#include "sduartIW416_wlan_bt.h"
+#elif defined(WIFI_BOARD_AW_CM358)
 #include "sduart8987_wlan_bt.h"
 #else
 #error The Wi-Fi module is unsupported
@@ -32,20 +32,10 @@
 #define BT_OP(ogf, ocf)                         ((ocf) | ((ogf) << 10))
 #define BT_OGF_VS                               0x3f
 
-/* Weak function. */
-#if defined(__GNUC__)
-#define __WEAK_FUNC __attribute__((weak))
-#elif defined(__ICCARM__)
-#define __WEAK_FUNC __weak
-#elif defined(__CC_ARM) || defined(__ARMCC_VERSION)
-#define __WEAK_FUNC __attribute__((weak))
-#endif
-
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
 static void controller_hci_uart_init(void);
-__WEAK_FUNC int controller_hci_uart_get_configuration(controller_hci_uart_config_t *config);
 
 /*******************************************************************************
  * Variables
@@ -137,9 +127,4 @@ static void controller_hci_uart_init(void)
     (void)error;
 }
 
-__WEAK_FUNC int controller_hci_uart_get_configuration(controller_hci_uart_config_t *config)
-{
-    return -1;
-}
-
-#endif /* defined(WIFI_BOARD_AW_AM457) || defined(WIFI_BOARD_AW_CM358MA) */
+#endif /* defined(WIFI_BOARD_AW_AM457) || defined(WIFI_BOARD_AW_CM358) */

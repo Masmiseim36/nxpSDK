@@ -118,7 +118,9 @@ void FLib_MemCpyAligned32bit (void* to_ptr,
     uint8_t*    to8_ptr = (uint8_t*)to_ptr;
     const uint16_t*   from16_ptr = (const uint16_t*)from_ptr;
     uint16_t*   to16_ptr = (uint16_t*)to_ptr;
-    const register uint32_t* from32_ptr = (const uint32_t*)from_ptr;
+
+    register const  uint32_t* from32_ptr = (const uint32_t*)from_ptr;
+
     register    uint32_t* to32_ptr = (uint32_t*)to_ptr;
 
     register    uint32_t loops;

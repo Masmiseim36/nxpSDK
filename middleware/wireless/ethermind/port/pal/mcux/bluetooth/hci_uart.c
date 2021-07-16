@@ -17,14 +17,15 @@
 
 /* IMX RT1060 SDK Includes */
 #include "fsl_common.h"
-#include "board.h"
-#include "pin_mux.h"
 #include "fsl_debug_console.h"
+
 /* #include "fsl_lpuart.h" */
 #include "FreeRTOS.h"
 #include "queue.h"
 #include "task.h"
 #include "fsl_adapter_uart.h"
+
+#include "controller.h"
 
 #ifdef BT_UART
 
@@ -50,15 +51,6 @@ typedef struct _hci_uart_meta_data_
 } hci_uart_meta_data;
 
 /* ----------------------------------------- Static Global Variables */
-
-/*
- * UART related platform/Board defines.
- * This is supposed to come from the Application/Project.
- */
-#define HCI_INTERNAL_UART             BOARD_BT_UART_BASEADDR
-#define HCI_INTERNAL_UART_INSTANCE    BOARD_BT_UART_INSTANCE
-#define HCI_INTERNAL_UART_BAUDRATE    BOARD_BT_UART_BAUDRATE
-#define HCI_INTERNAL_UART_CLK_FREQ    BOARD_BT_UART_CLK_FREQ
 
 /* UART Read Task State */
 DECL_STATIC UCHAR hci_uart_state;
@@ -97,7 +89,7 @@ DECL_STATIC UINT32 hci_uart_rx_byte_count;
 DECL_STATIC HT_PARSE ht;
 
 /* TODO: Check if we need to use any other common define */
-#define HCI_RX_QUEUE_SIZE (1024)
+#define HCI_RX_QUEUE_SIZE (1024U)
 
 UART_HANDLE_DEFINE(hci_uart_handle);
 
@@ -107,6 +99,8 @@ hci_uart_meta_data hci_uart_rx;
 UCHAR  hci_uart_rx_data_buff[HCI_RX_QUEUE_SIZE];
 UCHAR  hci_uart_rx_state;
 UINT16 hci_uart_rx_bytes;
+
+UCHAR  hci_uart_instance;
 
 static UCHAR assert;
 
@@ -119,7 +113,7 @@ void hci_uart_set_serial_settings(CHAR *device, UINT32 baud)
 void hci_uart_init (void)
 {
     BT_thread_type tid;
-	BT_thread_attr_type hci_uart_task_attr;
+    BT_thread_attr_type hci_uart_task_attr;
 
     BT_MUTEX_INIT_VOID (hci_uart_mutex, TRANSPORT);
     BT_COND_INIT_VOID(hci_uart_cond, TRANSPORT);
@@ -132,10 +126,10 @@ void hci_uart_init (void)
     hci_uart_task_attr.thread_name       = (DECL_CONST CHAR  *)"EtherMind UART Task";
     hci_uart_task_attr.thread_stack_size = BT_TASK_STACK_DEPTH;
     /* Setting the Priority 1 Higher than the Default EtherMind Tasks */
-    hci_uart_task_attr.thread_priority   = (BT_TASK_PRIORITY - 1);
+    hci_uart_task_attr.thread_priority   = (BT_TASK_PRIORITY - 1U);
 
     /* Create a thread to receive data From Serial PORT and BUFFER it */
-    if (0 != BT_thread_create(&tid, &hci_uart_task_attr, hci_uart_read_task, NULL))
+    if (0U != BT_thread_create(&tid, &hci_uart_task_attr, hci_uart_read_task, NULL))
     {
         HCI_UART_ERR(
         "[HCI-UART] Could NOT Create UART Read Thread\n");
@@ -145,12 +139,12 @@ void hci_uart_init (void)
 
     BT_mem_set(hci_uart_rx_data_buff, 0x0, sizeof(hci_uart_rx_data_buff));
     hci_uart_rx.data     = NULL;
-    hci_uart_rx.dataSize = 0;
+    hci_uart_rx.dataSize = 0U;
     hci_uart_rx_state    = BT_FALSE;
-    hci_uart_rx_bytes    = 0;
+    hci_uart_rx_bytes    = 0U;
 
     /* Initialize UART State */
-    hci_uart_state = 0x0;
+    hci_uart_state = 0x0U;
 
     HCI_UART_TRC(
     "[HCI-UART] UART Power On Initialization Complete\n");
@@ -169,7 +163,7 @@ void hci_uart_transmit_cb
     BaseType_t xHigherPriorityTaskWoken = pdFALSE;
     BaseType_t ret;
 #else /* EM_ENABLE_PAL_OS */
-	INT32      ret;
+    INT32      ret;
 #endif /* EM_ENABLE_PAL_OS */
     API_RESULT retval;
 
@@ -186,11 +180,11 @@ void hci_uart_transmit_cb
 
             if (API_SUCCESS != retval)
             {
-            	/* BT_assert(0); */
-            	assert = 1;
+                /* BT_assert(0); */
+                assert = 1U;
             }
 
-            if (1 == ht.packet_expected_len)
+            if (1U == ht.packet_expected_len)
             {
                 /**
                  * Set the RX Receive State to be "BT_TRUE".
@@ -223,7 +217,7 @@ void hci_uart_transmit_cb
 #else /* EM_ENABLE_PAL_OS */
                 ret = BT_thread_cond_signal (&hci_uart_cond);
 
-                if (0 != ret)
+                if (0U != ret)
                 {
                     HCI_UART_ERR(
                     "[HCI-UART] SIGNAL from ISR failed with RET%d\r\n", ret);
@@ -238,7 +232,7 @@ void hci_uart_transmit_cb
                 hci_uart_rx.dataSize = ht.packet_expected_len;
 
                 /* Invoke Receive Non-Blocking over UART again for expected length */
-                HAL_UartReceiveNonBlocking
+                (BT_IGNORE_RETURN_VALUE) HAL_UartReceiveNonBlocking
                 (
                     (hal_uart_handle_t)hci_uart_handle,
                     hci_uart_rx.data,
@@ -251,7 +245,7 @@ void hci_uart_transmit_cb
 #if HCI_UART_TX_NONBLOCKING
             ret = BT_thread_cond_signal (&hci_uart_tx_cond);
 
-            if (0 != ret)
+            if (0U != ret)
             {
                 HCI_UART_ERR(
                 "[HCI-UART] SIGNAL from ISR failed with RET%d\r\n", ret);
@@ -262,9 +256,9 @@ void hci_uart_transmit_cb
         {
         }
 #ifndef EM_ENABLE_PAL_OS
-        if (xHigherPriorityTaskWoken)
+        if (0 != xHigherPriorityTaskWoken)
         {
-            portYIELD_FROM_ISR(0);
+            portYIELD_FROM_ISR(0U);
         }
 #endif
     }
@@ -278,26 +272,41 @@ void hci_uart_bt_init(void)
 #if HCI_UART_TX_NONBLOCKING
     INT32 retVal;
 #endif
+    int error;
+    controller_hci_uart_config_t getConfig;
+
+    error = controller_hci_uart_get_configuration(&getConfig);
+    assert(0 == error);
+    if (0 != error)
+    {
+        /* TODO: To Be Removed! */
+        while (true)
+        {
+        }
+    }
 
     /* Set the HCI-UART Configuration parameters */
-    config.srcClock_Hz  = HCI_INTERNAL_UART_CLK_FREQ;
-    config.baudRate_Bps = HCI_INTERNAL_UART_BAUDRATE;
+    config.srcClock_Hz  = getConfig.clockSrc;
+    config.baudRate_Bps = getConfig.runningBaudrate;
     config.parityMode   = kHAL_UartParityDisabled;
     config.stopBitCount = kHAL_UartOneStopBit;
-    config.enableRx     = 1;
-    config.enableTx     = 1;
-    config.instance     = HCI_INTERNAL_UART_INSTANCE;
-    config.enableRxRTS  = 1;
-    config.enableTxCTS  = 1;
+    config.enableRx     = 1U;
+    config.enableTx     = 1U;
+    config.instance     = getConfig.instance;
+    config.enableRxRTS  = getConfig.enableRxRTS;
+    config.enableTxCTS  = getConfig.enableTxCTS;
     config.mode         = kHAL_UartNonBlockMode;
 #if (defined(HAL_UART_ADAPTER_FIFO) && (HAL_UART_ADAPTER_FIFO > 0u))
     config.txFifoWatermark = 0U;
     config.rxFifoWatermark = 0U;
 #endif
+    hci_uart_instance = getConfig.instance;
+
+    (void)hci_uart_instance;
 
     HCI_UART_TRC(
     "[HCI-UART] Configuring Host Controller on Device(UART Inst) : %d\n",
-    HCI_INTERNAL_UART_INSTANCE);
+    hci_uart_instance);
 
     /* Initialize UART with Adapter */
     ret = HAL_UartInit
@@ -312,7 +321,7 @@ void hci_uart_bt_init(void)
 
         HCI_UART_ERR(
         "[HCI-UART] FAILED to Open UART Device(UART Inst) : %d\n",
-        HCI_INTERNAL_UART_INSTANCE);
+        hci_uart_instance);
 
         /* TODO: To Be Removed! */
         while (true)
@@ -334,7 +343,7 @@ void hci_uart_bt_init(void)
 
         HCI_UART_ERR(
         "[HCI-UART] FAILED to register RX-TX Callback for UART Inst: %d\n",
-        HCI_INTERNAL_UART_INSTANCE);
+        hci_uart_instance);
 
         /* TODO: To Be Removed! */
         while (true)
@@ -346,9 +355,9 @@ void hci_uart_bt_init(void)
     /* Initialize the HCI-Transport Parser Structure */
     ht_parse_packet_init (&ht);
     /* Initialize the RX Byte Count for the current read session */
-    hci_uart_rx_bytes    = 0;
+    hci_uart_rx_bytes    = 0U;
     /* Point the HCI-Transport Parser Databuffer to the Global RX buffer */
-    ht.packet            = &hci_uart_rx_data_buff[0];
+    ht.packet            = &hci_uart_rx_data_buff[0U];
 
     /* Initialize the UART RX DS to be used in the Platform API */
     hci_uart_rx.data     = hci_uart_rx_data_buff + hci_uart_rx_bytes;
@@ -364,7 +373,7 @@ void hci_uart_bt_init(void)
     {
         HCI_UART_ERR(
         "[HCI-UART] First UART Receive Non-Blocking Failed for Inst: %d\n",
-        HCI_INTERNAL_UART_INSTANCE);
+        hci_uart_instance);
 
         /* TODO: To Be Removed! */
         while (true)
@@ -376,26 +385,26 @@ void hci_uart_bt_init(void)
     do
     {
         /* Clear the UART Send signal */
-        BT_thread_mutex_lock (&hci_uart_tx_mutex);
-        retVal = BT_thread_cond_wait_timeout (&hci_uart_tx_cond, &hci_uart_tx_mutex, 0);
-        BT_thread_mutex_unlock (&hci_uart_tx_mutex);
-    } while (0 == retVal);
+        (BT_IGNORE_RETURN_VALUE) BT_thread_mutex_lock (&hci_uart_tx_mutex);
+        retVal = BT_thread_cond_wait_timeout (&hci_uart_tx_cond, &hci_uart_tx_mutex, 0U);
+        (BT_IGNORE_RETURN_VALUE) BT_thread_mutex_unlock (&hci_uart_tx_mutex);
+    } while (0U == retVal);
 #endif
 
     /* Signal UART Read Task */
-    BT_thread_mutex_lock (&hci_uart_mutex);
-    hci_uart_state = 0x1;
-    BT_thread_cond_signal (&hci_uart_cond);
-    BT_thread_mutex_unlock (&hci_uart_mutex);
+    (BT_IGNORE_RETURN_VALUE) BT_thread_mutex_lock (&hci_uart_mutex);
+    hci_uart_state = 0x1U;
+    (BT_IGNORE_RETURN_VALUE) BT_thread_cond_signal (&hci_uart_cond);
+    (BT_IGNORE_RETURN_VALUE) BT_thread_mutex_unlock (&hci_uart_mutex);
 
 #if HCI_UART_TX_NONBLOCKING
     /* Signal UART Send */
-    BT_thread_mutex_lock (&hci_uart_tx_mutex);
-    BT_thread_cond_signal (&hci_uart_tx_cond);
-    BT_thread_mutex_unlock (&hci_uart_tx_mutex);
+    (BT_IGNORE_RETURN_VALUE) BT_thread_mutex_lock (&hci_uart_tx_mutex);
+    (BT_IGNORE_RETURN_VALUE) BT_thread_cond_signal (&hci_uart_tx_cond);
+    (BT_IGNORE_RETURN_VALUE) BT_thread_mutex_unlock (&hci_uart_tx_mutex);
 #endif
 
-    assert = 0;
+    assert = 0U;
 
     HCI_UART_TRC(
     "[HCI-UART] UART Bluetooth-ON Initialization Complete\n");
@@ -406,23 +415,23 @@ void hci_uart_bt_init(void)
 /** HCI-UART Bluetooth-OFF Shutdown */
 void hci_uart_bt_shutdown (void)
 {
-	hal_uart_status_t ret;
+    hal_uart_status_t ret;
 
 #if HCI_UART_TX_NONBLOCKING
     /* Lock */
-    BT_thread_mutex_lock (&hci_uart_tx_mutex);
+    (BT_IGNORE_RETURN_VALUE) BT_thread_mutex_lock (&hci_uart_tx_mutex);
 #endif
     /* Signal UART Read Task */
-    BT_thread_mutex_lock (&hci_uart_mutex);
+    (BT_IGNORE_RETURN_VALUE) BT_thread_mutex_lock (&hci_uart_mutex);
 
-    hci_uart_state = 0x0;
+    hci_uart_state = 0x0U;
 
     ret = HAL_UartAbortReceive((hal_uart_handle_t)hci_uart_handle);
     if (ret != kStatus_HAL_UartSuccess)
 	{
 		HCI_UART_ERR(
 		"[HCI-UART] UART Abort Receive Failed for UART Instance: %d\n",
-		HCI_INTERNAL_UART_INSTANCE);
+		hci_uart_instance);
 
 		/* TODO: To Be Removed! */
 		while (true)
@@ -435,7 +444,7 @@ void hci_uart_bt_shutdown (void)
 	{
 		HCI_UART_ERR(
 		"[HCI-UART] UART Abort Send Failed for UART Instance: %d\n",
-		HCI_INTERNAL_UART_INSTANCE);
+		hci_uart_instance);
 
 		/* TODO: To Be Removed! */
 		while (true)
@@ -448,7 +457,7 @@ void hci_uart_bt_shutdown (void)
 	{
 		HCI_UART_ERR(
 		"[HCI-UART] UART De-Init Failed for UART Instance: %d\n",
-		HCI_INTERNAL_UART_INSTANCE);
+		hci_uart_instance);
 
 		/* TODO: To Be Removed! */
 		while (true)
@@ -456,9 +465,9 @@ void hci_uart_bt_shutdown (void)
 		}
 	}
 
-    BT_thread_mutex_unlock (&hci_uart_mutex);
+    (BT_IGNORE_RETURN_VALUE) BT_thread_mutex_unlock (&hci_uart_mutex);
 #if HCI_UART_TX_NONBLOCKING
-    BT_thread_mutex_unlock (&hci_uart_tx_mutex);
+    (BT_IGNORE_RETURN_VALUE) BT_thread_mutex_unlock (&hci_uart_tx_mutex);
 #endif
 }
 
@@ -472,45 +481,46 @@ DECL_STATIC BT_THREAD_RETURN_TYPE hci_uart_read_task (BT_THREAD_ARGS args)
 
     BT_LOOP_FOREVER()
     {
-        BT_thread_mutex_lock (&hci_uart_mutex);
+        (BT_IGNORE_RETURN_VALUE) BT_thread_mutex_lock (&hci_uart_mutex);
 
         HCI_UART_TRC(
         "[HCI-UART] UART Read Task: Waiting to Service ..\n");
 
-        BT_thread_cond_wait (&hci_uart_cond, &hci_uart_mutex);
+        (BT_IGNORE_RETURN_VALUE) BT_thread_cond_wait (&hci_uart_cond, &hci_uart_mutex);
 
         HCI_UART_TRC(
         "[HCI-UART] UART Read Task: Ready to Service ..\n");
 
-        BT_thread_mutex_unlock (&hci_uart_mutex);
+        (BT_IGNORE_RETURN_VALUE) BT_thread_mutex_unlock (&hci_uart_mutex);
 
-        if (0x1 == hci_uart_state)
+        if (0x1U == hci_uart_state)
         {
             /* Check if the RX State of UART is set to BT_TRUE */
             if (BT_TRUE == hci_uart_rx_state)
             {
-            	if (assert == 1)
+            	if (assert == 1U)
             	{
             		printf("*%d*: %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x\r\n", hci_uart_rx_bytes,
-            				hci_uart_rx_data_buff[0], hci_uart_rx_data_buff[1],
-							hci_uart_rx_data_buff[2], hci_uart_rx_data_buff[3],
-							hci_uart_rx_data_buff[4], hci_uart_rx_data_buff[5],
-							hci_uart_rx_data_buff[6], hci_uart_rx_data_buff[7],
-							hci_uart_rx_data_buff[8], hci_uart_rx_data_buff[9]);
+                            hci_uart_rx_data_buff[0U], hci_uart_rx_data_buff[1U],
+                            hci_uart_rx_data_buff[2U], hci_uart_rx_data_buff[3U],
+                            hci_uart_rx_data_buff[4U], hci_uart_rx_data_buff[5U],
+                            hci_uart_rx_data_buff[6U], hci_uart_rx_data_buff[7U],
+                            hci_uart_rx_data_buff[8U], hci_uart_rx_data_buff[9U]);
 
-            		assert = 0;
+            		assert = 0U;
             	}
             	else
             	{
             		/*printf("*%d*: %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x\r\n", hci_uart_rx_bytes,
-            				hci_uart_rx_data_buff[0], hci_uart_rx_data_buff[1],
-							hci_uart_rx_data_buff[2], hci_uart_rx_data_buff[3],
-							hci_uart_rx_data_buff[4], hci_uart_rx_data_buff[5],
-							hci_uart_rx_data_buff[6], hci_uart_rx_data_buff[7],
-							hci_uart_rx_data_buff[8], hci_uart_rx_data_buff[9]);*/
+                            hci_uart_rx_data_buff[0], hci_uart_rx_data_buff[1],
+                            hci_uart_rx_data_buff[2], hci_uart_rx_data_buff[3],
+                            hci_uart_rx_data_buff[4], hci_uart_rx_data_buff[5],
+                            hci_uart_rx_data_buff[6], hci_uart_rx_data_buff[7],
+                            hci_uart_rx_data_buff[8], hci_uart_rx_data_buff[9]);*/
 
 #ifdef HT_ENQUEUE_WITH_RETURN
-                    nqd = tnqd = 0;
+                    nqd = 0U;
+                    tnqd = 0U;
                     BT_LOOP_FOREVER()
                     {
                         tnqd += nqd;
@@ -522,7 +532,7 @@ DECL_STATIC BT_THREAD_RETURN_TYPE hci_uart_read_task (BT_THREAD_ARGS args)
                             break;
                         }
 
-                        BT_usleep(1);
+                        BT_usleep(1U);
                     }
 
                     BT_IGNORE_UNUSED_PARAM(retval);
@@ -534,7 +544,7 @@ DECL_STATIC BT_THREAD_RETURN_TYPE hci_uart_read_task (BT_THREAD_ARGS args)
             	}
 
                 /* Reset the Rx Bytes marker */
-                hci_uart_rx_bytes = 0;
+                hci_uart_rx_bytes = 0U;
                 /* BT_mem_set(hci_uart_rx_data_buff, 0x77, sizeof(hci_uart_rx_data_buff)); */
 
                 /**
@@ -553,13 +563,19 @@ DECL_STATIC BT_THREAD_RETURN_TYPE hci_uart_read_task (BT_THREAD_ARGS args)
                 /* Reset  the HCI UART Receive State */
                 hci_uart_rx_state = BT_FALSE;
 
-                /* Invoke Receive Non-Blocking over UART again for expected length */
-                HAL_UartReceiveNonBlocking
-                (
-                    (hal_uart_handle_t)hci_uart_handle,
-                    hci_uart_rx.data,
-                    hci_uart_rx.dataSize
-                );
+                (BT_IGNORE_RETURN_VALUE) BT_thread_mutex_lock (&hci_uart_mutex);
+
+                if (0x1U == hci_uart_state)
+                {
+                    /* Invoke Receive Non-Blocking over UART again for expected length */
+                    (BT_IGNORE_RETURN_VALUE) HAL_UartReceiveNonBlocking
+                    (
+                        (hal_uart_handle_t)hci_uart_handle,
+                        hci_uart_rx.data,
+                        hci_uart_rx.dataSize
+                    );
+                }
+                (BT_IGNORE_RETURN_VALUE) BT_thread_mutex_unlock (&hci_uart_mutex);
 
                 /**
                  * TODO: Check what needs to be done if rx_bytes is returned by this
@@ -580,11 +596,11 @@ DECL_STATIC BT_THREAD_RETURN_TYPE hci_uart_read_task (BT_THREAD_ARGS args)
 API_RESULT hci_uart_send_data
            (UCHAR type, UCHAR * buf, UINT16 length, UCHAR flag)
 {
-    static INT32 total_len = 0;
-    static INT32 cur_len = 0;
+    static INT32 total_len = 0U;
+    static INT32 cur_len = 0U;
     static UCHAR acl_data_pkt = BT_FALSE;
 
-    if (0x1 != hci_uart_state)
+    if (0x1U != hci_uart_state)
     {
         HCI_UART_ERR(
         "[HCI-UART] Incorrect UART State(%d)\n",
@@ -593,19 +609,19 @@ API_RESULT hci_uart_send_data
         return API_FAILURE;
     }
 
-    if (flag)
+    if (0 != flag)
     {
         if (HCI_ACL_DATA_PACKET == type)
         {
             acl_data_pkt = BT_TRUE;
-            total_len = ((buf[3] << 8) | buf[2]) + 5;
+            total_len = ((buf[3U] << 8U) | buf[2U]) + 5U;
         }
         else
         {
-            total_len = length + 1;
+            total_len = length + 1U;
         }
 
-        if (total_len > HCI_UART_WR_BUF_SIZE)
+        if (HCI_UART_WR_BUF_SIZE < total_len)
         {
             HCI_UART_ERR(
             "[HCI-UART] HCI Packet Size %d exceeds Configuration %d bytes\n",
@@ -615,12 +631,12 @@ API_RESULT hci_uart_send_data
         }
     }
 
-    if (acl_data_pkt)
+    if (0U != acl_data_pkt)
     {
-        if (0 == cur_len)
+        if (0U == cur_len)
         {
-            hci_uart_wr_buf[0] = type;
-            cur_len = 1;
+            hci_uart_wr_buf[0U] = type;
+            cur_len = 1U;
         }
 
         BT_mem_copy (hci_uart_wr_buf + cur_len, buf, length);
@@ -633,19 +649,20 @@ API_RESULT hci_uart_send_data
     }
     else
     {
-        hci_uart_wr_buf[0] = type;
-        BT_mem_copy (hci_uart_wr_buf + 1, buf, length);
-        total_len = length + 1;
+        hci_uart_wr_buf[0U] = type;
+        BT_mem_copy (hci_uart_wr_buf + 1U, buf, length);
+        total_len = length + 1U;
     }
 
     /* Write HCI Packet */
     hci_uart_write_data (hci_uart_wr_buf, total_len);
 
     /* Transmitted packet logging in btsnoop format */
-    BT_snoop_write_packet(hci_uart_wr_buf[0], 0, (hci_uart_wr_buf + 1), (total_len - 1));
+    BT_snoop_write_packet(hci_uart_wr_buf[0U], 0U, (hci_uart_wr_buf + 1U), (total_len - 1U));
 
     /* Re-initialize */
-    cur_len = total_len = 0;
+    cur_len = 0U;
+    total_len = 0U;
     if (BT_FALSE != acl_data_pkt)
     {
         acl_data_pkt = BT_FALSE;
@@ -658,7 +675,7 @@ API_RESULT hci_uart_send_data
 API_RESULT hci_uart_send_data
            (UCHAR type, UCHAR * buf, UINT16 length, UCHAR flag)
 {
-    if (0x1 != hci_uart_state)
+    if (0x1U != hci_uart_state)
     {
         HCI_UART_ERR(
         "[HCI-UART] Incorrect UART State(%d)\n",
@@ -668,9 +685,9 @@ API_RESULT hci_uart_send_data
     }
 
     /* Write Packet Identifier */
-    if (0x1 == flag)
+    if (0x1U == flag)
     {
-        hci_uart_write_data (&type, 1);
+        hci_uart_write_data (&type, 1U);
     }
 
     /* Write HCI Packet */
@@ -688,14 +705,13 @@ void hci_uart_write_data (UCHAR * buf, UINT16 length)
     "[HCI-UART] Attempting to write HCI Packet of Length %d\n",
     length);
 
-	/*printf("*%d*: %02x %02x %02x %02x\r\n", length,
-			buf[0], buf[1],	buf[2], buf[3]);*/
+    /*printf("*%d*: %02x %02x %02x %02x\r\n", length, buf[0], buf[1], buf[2], buf[3]);*/
 
 #if HCI_UART_TX_NONBLOCKING
-    BT_thread_mutex_lock (&hci_uart_tx_mutex);
+    (BT_IGNORE_RETURN_VALUE) BT_thread_mutex_lock (&hci_uart_tx_mutex);
     HCI_UART_TRC(
     "[HCI-UART] HCI write: Waiting to Service ..\n");
-    BT_thread_cond_wait (&hci_uart_tx_cond, &hci_uart_tx_mutex);
+    (BT_IGNORE_RETURN_VALUE) BT_thread_cond_wait (&hci_uart_tx_cond, &hci_uart_tx_mutex);
     HCI_UART_TRC(
     "[HCI-UART] HCI write: Ready to Service ..\n");
 
@@ -712,7 +728,7 @@ void hci_uart_write_data (UCHAR * buf, UINT16 length)
     BT_thread_mutex_unlock (&hci_uart_tx_mutex);
 #else
     /* Write HCI Packet */
-    HAL_UartSendBlocking
+    (BT_IGNORE_RETURN_VALUE) HAL_UartSendBlocking
     (
         (hal_uart_handle_t)hci_uart_handle,
         buf,

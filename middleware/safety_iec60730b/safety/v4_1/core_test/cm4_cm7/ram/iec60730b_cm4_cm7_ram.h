@@ -22,7 +22,7 @@
 #define IEC60730B_CM4_CM7_RAM_H_
 
 /*
- * List of devices and supported functions can be found in library user guide, 
+ * List of devices and supported functions can be found in library user guide,
  * section Core self test library - source code version.
  */
 
@@ -30,7 +30,7 @@
  * Macros
  ******************************************************************************/
 /* Return values */
-#define FS_FAIL_RAM  (FS_RAM_CODE + 0x01)
+#define FS_FAIL_RAM (FS_RAM_CODE + 0x01)
 
 /* Assembler skips following section */
 #ifndef __ASM__
@@ -57,7 +57,8 @@ typedef FS_RESULT (*tFcn)(uint32_t, uint32_t);
  *           FS_FAIL_RAM
  *
  ******************************************************************************/
-FS_RESULT FS_CM4_CM7_RAM_AfterReset(uint32_t startAddress, uint32_t endAddress, uint32_t blockSize, uint32_t backupAddress, tFcn pMarchType);
+FS_RESULT FS_CM4_CM7_RAM_AfterReset(
+    uint32_t startAddress, uint32_t endAddress, uint32_t blockSize, uint32_t backupAddress, tFcn pMarchType);
 
 /*******************************************************************************
  *
@@ -74,7 +75,12 @@ FS_RESULT FS_CM4_CM7_RAM_AfterReset(uint32_t startAddress, uint32_t endAddress, 
  *           FS_FAIL_RAM
  *
  ******************************************************************************/
-FS_RESULT FS_CM4_CM7_RAM_Runtime(uint32_t startAddress, uint32_t endAddress, uint32_t *pActualAddress, uint32_t blockSize, uint32_t backupAddress, tFcn pMarchType);
+FS_RESULT FS_CM4_CM7_RAM_Runtime(uint32_t startAddress,
+                                 uint32_t endAddress,
+                                 uint32_t *pActualAddress,
+                                 uint32_t blockSize,
+                                 uint32_t backupAddress,
+                                 tFcn pMarchType);
 
 /*******************************************************************************
  *

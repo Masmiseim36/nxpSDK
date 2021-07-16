@@ -24,7 +24,7 @@
 #define EM_TIMER_MAX_ENTITIES                       10
 
 /* Mask to indicate millisecond timeout */
-#define EM_TIMEOUT_MILLISEC                         0x80000000
+#define EM_TIMEOUT_MILLISEC                         0x80000000U
 
 /* Timer Handles must be initialized to this value */
 #define EM_TIMER_HANDLE_INIT_VAL                    NULL

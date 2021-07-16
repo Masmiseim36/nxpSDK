@@ -1,5 +1,5 @@
 /*
- * Copyright  2019 - 2020 NXP
+ * Copyright  2019-2021 NXP
  * All rights reserved.
  *
  *
@@ -76,6 +76,12 @@ status_t HAL_CODEC_Init(void *handle, void *config)
             break;
 #endif
 
+#ifdef CODEC_CS42448_ENABLE
+        case kCODEC_CS42448:
+            retVal = HAL_CODEC_CS42448_Init(handle, config);
+            break;
+#endif
+
 #ifdef CODEC_AK4497_ENABLE
         case kCODEC_AK4497:
             retVal = HAL_CODEC_AK4497_Init(handle, config);
@@ -101,7 +107,6 @@ status_t HAL_CODEC_Init(void *handle, void *config)
 #endif
         default:
             retVal = kStatus_InvalidArgument;
-            break;
     }
 
     return retVal;
@@ -156,6 +161,12 @@ status_t HAL_CODEC_Deinit(void *handle)
             break;
 #endif
 
+#ifdef CODEC_CS42448_ENABLE
+        case kCODEC_CS42448:
+            retVal = HAL_CODEC_CS42448_Deinit(handle);
+            break;
+#endif
+
 #ifdef CODEC_AK4497_ENABLE
         case kCODEC_AK4497:
             retVal = HAL_CODEC_AK4497_Deinit(handle);
@@ -175,7 +186,6 @@ status_t HAL_CODEC_Deinit(void *handle)
 #endif
         default:
             retVal = kStatus_InvalidArgument;
-            break;
     }
 
     return retVal;
@@ -233,6 +243,12 @@ status_t HAL_CODEC_SetFormat(void *handle, uint32_t mclk, uint32_t sampleRate, u
             break;
 #endif
 
+#ifdef CODEC_CS42448_ENABLE
+        case kCODEC_CS42448:
+            retVal = HAL_CODEC_CS42448_SetFormat(handle, mclk, sampleRate, bitWidth);
+            break;
+#endif
+
 #ifdef CODEC_AK4497_ENABLE
         case kCODEC_AK4497:
             retVal = HAL_CODEC_AK4497_SetFormat(handle, mclk, sampleRate, bitWidth);
@@ -252,7 +268,6 @@ status_t HAL_CODEC_SetFormat(void *handle, uint32_t mclk, uint32_t sampleRate, u
 #endif
         default:
             retVal = kStatus_InvalidArgument;
-            break;
     }
 
     return retVal;
@@ -309,6 +324,12 @@ status_t HAL_CODEC_SetVolume(void *handle, uint32_t playChannel, uint32_t volume
             break;
 #endif
 
+#ifdef CODEC_CS42448_ENABLE
+        case kCODEC_CS42448:
+            retVal = HAL_CODEC_CS42448_SetVolume(handle, playChannel, volume);
+            break;
+#endif
+
 #ifdef CODEC_AK4497_ENABLE
         case kCODEC_AK4497:
             retVal = HAL_CODEC_AK4497_SetVolume(handle, playChannel, volume);
@@ -328,7 +349,6 @@ status_t HAL_CODEC_SetVolume(void *handle, uint32_t playChannel, uint32_t volume
 #endif
         default:
             retVal = kStatus_InvalidArgument;
-            break;
     }
 
     return retVal;
@@ -385,6 +405,12 @@ status_t HAL_CODEC_SetMute(void *handle, uint32_t playChannel, bool isMute)
             break;
 #endif
 
+#ifdef CODEC_CS42448_ENABLE
+        case kCODEC_CS42448:
+            retVal = HAL_CODEC_CS42448_SetMute(handle, playChannel, isMute);
+            break;
+#endif
+
 #ifdef CODEC_AK4497_ENABLE
         case kCODEC_AK4497:
             retVal = HAL_CODEC_AK4497_SetMute(handle, playChannel, isMute);
@@ -404,7 +430,6 @@ status_t HAL_CODEC_SetMute(void *handle, uint32_t playChannel, bool isMute)
 #endif
         default:
             retVal = kStatus_InvalidArgument;
-            break;
     }
 
     return retVal;
@@ -461,6 +486,12 @@ status_t HAL_CODEC_SetPower(void *handle, uint32_t module, bool powerOn)
             break;
 #endif
 
+#ifdef CODEC_CS42448_ENABLE
+        case kCODEC_CS42448:
+            retVal = HAL_CODEC_CS42448_SetPower(handle, module, powerOn);
+            break;
+#endif
+
 #ifdef CODEC_AK4497_ENABLE
         case kCODEC_AK4497:
             retVal = HAL_CODEC_AK4497_SetPower(handle, module, powerOn);
@@ -480,7 +511,6 @@ status_t HAL_CODEC_SetPower(void *handle, uint32_t module, bool powerOn)
 #endif
         default:
             retVal = kStatus_InvalidArgument;
-            break;
     }
 
     return retVal;
@@ -537,6 +567,12 @@ status_t HAL_CODEC_SetRecord(void *handle, uint32_t recordSource)
             break;
 #endif
 
+#ifdef CODEC_CS42448_ENABLE
+        case kCODEC_CS42448:
+            retVal = HAL_CODEC_CS42448_SetRecord(handle, recordSource);
+            break;
+#endif
+
 #ifdef CODEC_AK4497_ENABLE
         case kCODEC_AK4497:
             retVal = HAL_CODEC_AK4497_SetRecord(handle, recordSource);
@@ -556,7 +592,6 @@ status_t HAL_CODEC_SetRecord(void *handle, uint32_t recordSource)
 #endif
         default:
             retVal = kStatus_InvalidArgument;
-            break;
     }
 
     return retVal;
@@ -616,6 +651,12 @@ status_t HAL_CODEC_SetRecordChannel(void *handle, uint32_t leftRecordChannel, ui
             break;
 #endif
 
+#ifdef CODEC_CS42448_ENABLE
+        case kCODEC_CS42448:
+            retVal = HAL_CODEC_CS42448_SetRecordChannel(handle, leftRecordChannel, rightRecordChannel);
+            break;
+#endif
+
 #ifdef CODEC_AK4497_ENABLE
         case kCODEC_AK4497:
             retVal = HAL_CODEC_AK4497_SetRecordChannel(handle, leftRecordChannel, rightRecordChannel);
@@ -635,7 +676,6 @@ status_t HAL_CODEC_SetRecordChannel(void *handle, uint32_t leftRecordChannel, ui
 #endif
         default:
             retVal = kStatus_InvalidArgument;
-            break;
     }
 
     return retVal;
@@ -692,6 +732,12 @@ status_t HAL_CODEC_SetPlay(void *handle, uint32_t playSource)
             break;
 #endif
 
+#ifdef CODEC_CS42448_ENABLE
+        case kCODEC_CS42448:
+            retVal = HAL_CODEC_CS42448_SetPlay(handle, playSource);
+            break;
+#endif
+
 #ifdef CODEC_AK4497_ENABLE
         case kCODEC_AK4497:
             retVal = HAL_CODEC_AK4497_SetPlay(handle, playSource);
@@ -711,7 +757,6 @@ status_t HAL_CODEC_SetPlay(void *handle, uint32_t playSource)
 #endif
         default:
             retVal = kStatus_InvalidArgument;
-            break;
     }
 
     return retVal;
@@ -773,6 +818,12 @@ status_t HAL_CODEC_ModuleControl(void *handle, uint32_t cmd, uint32_t data)
             break;
 #endif
 
+#ifdef CODEC_CS42448_ENABLE
+        case kCODEC_CS42448:
+            retVal = HAL_CODEC_CS42448_ModuleControl(handle, cmd, data);
+            break;
+#endif
+
 #ifdef CODEC_AK4497_ENABLE
         case kCODEC_AK4497:
             retVal = HAL_CODEC_AK4497_ModuleControl(handle, cmd, data);
@@ -787,7 +838,6 @@ status_t HAL_CODEC_ModuleControl(void *handle, uint32_t cmd, uint32_t data)
 
         default:
             retVal = kStatus_InvalidArgument;
-            break;
     }
 
     return retVal;

@@ -35,6 +35,9 @@
 #include "iot_pkcs11_psa_object_management.h"
 #include "iot_pkcs11_psa_input_format.h"
 
+extern int convert_pem_to_der( const unsigned char * pucInput, size_t xLen,
+                               unsigned char * pucOutput, size_t * pxOlen );
+
 /*
  * This is the context of the PKCS#11 PSA object. It is placed in a section.
  * named "tasks_share". If MPU is enabled, tasks that call PKCS#11 APIs should
@@ -92,7 +95,6 @@ CK_OBJECT_HANDLE PKCS11PSASaveObject( CK_ATTRIBUTE_PTR pxClass,
                                    ulDataSize,
                                    pucData,
                                    ( psa_storage_create_flags_t ) PSA_STORAGE_FLAG_NONE );
-
             if( uxStatus == PSA_SUCCESS )
             {
                 xHandle = eAwsDeviceCertificate;
@@ -212,8 +214,10 @@ CK_OBJECT_HANDLE PKCS11PSASaveObject( CK_ATTRIBUTE_PTR pxClass,
             if ( uxStatus == PSA_SUCCESS )
             {
                 /* Device private key is saved as persistent key. */
+#ifndef pkcs11configTFM_VERSION_1_0
                 psa_set_key_id( &key_attributes, PSA_DEVICE_PRIVATE_KEY_ID );
-                psa_set_key_usage_flags( &key_attributes, PSA_KEY_USAGE_SIGN );
+#endif
+                psa_set_key_usage_flags( &key_attributes, PSA_KEY_USAGE_SIGN_HASH );
                 psa_set_key_algorithm( &key_attributes, uxAlgorithm );
                 psa_set_key_type( &key_attributes, uxKeyType );
                 uxStatus = psa_import_key( &key_attributes,
@@ -272,7 +276,7 @@ CK_OBJECT_HANDLE PKCS11PSASaveObject( CK_ATTRIBUTE_PTR pxClass,
             }
             if ( uxStatus == PSA_SUCCESS )
             {
-                psa_set_key_usage_flags( &key_attributes, PSA_KEY_USAGE_VERIFY );
+                psa_set_key_usage_flags( &key_attributes, PSA_KEY_USAGE_VERIFY_HASH );
                 psa_set_key_algorithm( &key_attributes, uxAlgorithm );
                 psa_set_key_type( &key_attributes, uxKeyType );
                 uxStatus = psa_import_key( &key_attributes,
@@ -282,7 +286,7 @@ CK_OBJECT_HANDLE PKCS11PSASaveObject( CK_ATTRIBUTE_PTR pxClass,
             }
             if ( uxStatus == PSA_SUCCESS )
             {
-                xHandle = eAwsCodeSigningKey;
+                xHandle = eAwsCodeVerifyingKey;
 
                 /* Import the object into P11KeyConfig context. */
                 PKCS11PSAContextImportObject( pxLabel->pValue,
@@ -328,8 +332,10 @@ CK_OBJECT_HANDLE PKCS11PSASaveObject( CK_ATTRIBUTE_PTR pxClass,
             if( uxStatus == PSA_SUCCESS )
             {
                 /* Device public key is saved as persistent key. */
+#ifndef pkcs11configTFM_VERSION_1_0
                 psa_set_key_id( &key_attributes, PSA_DEVICE_PUBLIC_KEY_ID );
-                psa_set_key_usage_flags( &key_attributes, PSA_KEY_USAGE_VERIFY );
+#endif
+                psa_set_key_usage_flags( &key_attributes, PSA_KEY_USAGE_VERIFY_HASH );
                 psa_set_key_algorithm( &key_attributes, uxAlgorithm );
                 psa_set_key_type( &key_attributes, uxKeyType );
                 uxStatus = psa_import_key( &key_attributes,
@@ -351,6 +357,72 @@ CK_OBJECT_HANDLE PKCS11PSASaveObject( CK_ATTRIBUTE_PTR pxClass,
     }
 
     return xHandle;
+}
+
+/**
+* @brief Helper function to get value of a certificate from PSA secure storage
+*
+* @param[in]  uid          The uid value.
+* @param[out] pucData      Pointer to buffer for file data.
+* @param[out] pulDataSize  Size (in bytes) of data located in file.
+* @param[out] pIsPrivate   Boolean indicating if value is private (CK_TRUE)
+*                          or exportable (CK_FALSE)
+*
+* @return CKR_OK if operation was successful.  CKR_KEY_HANDLE_INVALID if
+* no such object handle was found, CKR_DEVICE_MEMORY if memory for
+* buffer could not be allocated, CKR_FUNCTION_FAILED for device driver
+* error.
+*/
+static CK_RV PSAGetCertificateValue( psa_storage_uid_t uid,
+    uint8_t * pucData,
+    size_t * pulDataSize,
+    CK_BBOOL * pIsPrivate )
+{
+    CK_RV ulReturn = CKR_OBJECT_HANDLE_INVALID;
+    size_t ulDataSize = *pulDataSize;
+    psa_status_t uxStatus;
+    uint8_t * pucBuffer;
+    size_t ulReadDataLen = 0;
+    struct psa_storage_info_t info = {0};
+
+    /* Get the size of the data associated with the certificate UID firstly. */
+    uxStatus = psa_ps_get_info( uid, &info );
+
+    if ( uxStatus == PSA_SUCCESS )
+    {
+        /* Allocate buffer for object value */
+        pucBuffer = pvPortMalloc( info.size );
+
+        if ( pucBuffer != NULL )
+        {
+            /* Get the object value */
+            uxStatus = psa_ps_get( uid, 0, info.size, pucBuffer, &ulReadDataLen );
+            if ( uxStatus == PSA_SUCCESS )
+            {
+                /* Convert the certificate from PEM to DER format */
+                if ( convert_pem_to_der( pucBuffer, ulReadDataLen, pucData, &ulDataSize ) != 0 )
+                {
+                    /* Not PEM format, use as it is. */
+                    ulDataSize = ulReadDataLen;
+                    memcpy( pucData, pucBuffer, ulDataSize );
+                }
+
+                *pulDataSize = ulDataSize;
+                *pIsPrivate = CK_FALSE;
+                ulReturn = CKR_OK;
+            }
+            else
+            {
+                ulReturn = CKR_FUNCTION_FAILED;
+            }
+            vPortFree( pucBuffer );
+        }
+        else
+        {
+             ulReturn = CKR_DEVICE_MEMORY;
+        }
+    }
+    return ulReturn;
 }
 
 /**
@@ -378,13 +450,11 @@ CK_OBJECT_HANDLE PKCS11PSASaveObject( CK_ATTRIBUTE_PTR pxClass,
 */
 CK_RV PKCS11PSAGetObjectValue( CK_OBJECT_HANDLE xHandle,
     uint8_t * pucData,
-    uint32_t * pulDataSize,
+    size_t * pulDataSize,
     CK_BBOOL * pIsPrivate )
 {
     CK_RV ulReturn = CKR_OBJECT_HANDLE_INVALID;
-    uint32_t ulDataSize = 0;
     psa_status_t uxStatus;
-    struct psa_storage_info_t info = {0};
     psa_key_type_t key_type;
     size_t key_bits;
     size_t buffer_size;
@@ -400,26 +470,7 @@ CK_RV PKCS11PSAGetObjectValue( CK_OBJECT_HANDLE xHandle,
          */
         if( P11KeyConfig.xDeviceCertificateMark == pdTRUE )
         {
-            /* Get the size of the data associated with the certificate UID firstly. */
-            uxStatus = psa_ps_get_info( PSA_DEVICE_CERTIFICATE_UID, &info );
-            if( uxStatus == PSA_SUCCESS )
-            {
-                uxStatus = psa_ps_get( PSA_DEVICE_CERTIFICATE_UID, 0, info.size, pucData, &ulDataSize );
-                if( uxStatus == PSA_SUCCESS )
-                {
-                    *pulDataSize = ulDataSize;
-                    *pIsPrivate = CK_FALSE;
-                    ulReturn = CKR_OK;
-                }
-                else
-                {
-                    ulReturn = CKR_FUNCTION_FAILED;
-                }
-            }
-            else
-            {
-                ulReturn = CKR_FUNCTION_FAILED;
-            }
+            ulReturn = PSAGetCertificateValue(PSA_DEVICE_CERTIFICATE_UID, pucData, pulDataSize, pIsPrivate);
         }
     }
 
@@ -433,26 +484,7 @@ CK_RV PKCS11PSAGetObjectValue( CK_OBJECT_HANDLE xHandle,
          */
         if( P11KeyConfig.xJitpCertificateMark == pdTRUE )
         {
-            /* Get the size of the data associated with the certificate UID firstly. */
-            uxStatus = psa_ps_get_info( PSA_JITP_CERTIFICATE_UID, &info );
-            if( uxStatus == PSA_SUCCESS )
-            {
-                uxStatus = psa_ps_get( PSA_JITP_CERTIFICATE_UID, 0, info.size, pucData, &ulDataSize );
-                if( uxStatus == PSA_SUCCESS )
-                {
-                    *pulDataSize = ulDataSize;
-                    *pIsPrivate = CK_FALSE;
-                    ulReturn = CKR_OK;
-                }
-                else
-                {
-                    ulReturn = CKR_FUNCTION_FAILED;
-                }
-            }
-            else
-            {
-                ulReturn = CKR_FUNCTION_FAILED;
-            }
+            ulReturn = PSAGetCertificateValue(PSA_JITP_CERTIFICATE_UID, pucData, pulDataSize, pIsPrivate);
         }
     }
 
@@ -466,26 +498,7 @@ CK_RV PKCS11PSAGetObjectValue( CK_OBJECT_HANDLE xHandle,
          */
         if( P11KeyConfig.xRootCertificateMark  == pdTRUE )
         {
-            /* Get the size of the data associated with the certificate UID firstly. */
-            uxStatus = psa_ps_get_info( PSA_ROOT_CERTIFICATE_UID, &info );
-            if( uxStatus == PSA_SUCCESS )
-            {
-                uxStatus = psa_ps_get( PSA_ROOT_CERTIFICATE_UID, 0, info.size, pucData, &ulDataSize );
-                if( uxStatus == PSA_SUCCESS )
-                {
-                    *pulDataSize = ulDataSize;
-                    *pIsPrivate = CK_FALSE;
-                    ulReturn = CKR_OK;
-                }
-                else
-                {
-                    ulReturn = CKR_FUNCTION_FAILED;
-                }
-            }
-            else
-            {
-                ulReturn = CKR_FUNCTION_FAILED;
-            }
+            ulReturn = PSAGetCertificateValue(PSA_ROOT_CERTIFICATE_UID, pucData, pulDataSize, pIsPrivate);
         }
     }
 
@@ -564,7 +577,7 @@ CK_RV PKCS11PSAGetObjectValue( CK_OBJECT_HANDLE xHandle,
         }
     }
 
-    else if( xHandle == eAwsCodeSigningKey )
+    else if( xHandle == eAwsCodeVerifyingKey )
     {
         /*
          * return reference and size only if key is present in the device and is not private

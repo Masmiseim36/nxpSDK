@@ -1,7 +1,7 @@
 var searchData=
 [
-  ['file_5fexists_63',['file_exists',['../file__utils_8h.html#a0038df898c35b6a483fa874b3671735b',1,'file_utils.h']]],
-  ['file_5fgetsize_64',['file_getsize',['../file__utils_8h.html#af7dd8b92137eb7a752703c55d92faa74',1,'file_utils.h']]],
-  ['file_5futils_2eh_65',['file_utils.h',['../file__utils_8h.html',1,'']]],
-  ['format_66',['format',['../structAlbumArt.html#a2544e566c5ebb5a281970c15fb626708',1,'AlbumArt']]]
+  ['file_5fexists_67',['file_exists',['../file__utils_8h.html#a0038df898c35b6a483fa874b3671735b',1,'file_utils.h']]],
+  ['file_5fgetsize_68',['file_getsize',['../file__utils_8h.html#af7dd8b92137eb7a752703c55d92faa74',1,'file_utils.h']]],
+  ['file_5futils_2eh_69',['file_utils.h',['../file__utils_8h.html',1,'']]],
+  ['format_70',['format',['../structAlbumArt.html#a2544e566c5ebb5a281970c15fb626708',1,'AlbumArt']]]
 ];

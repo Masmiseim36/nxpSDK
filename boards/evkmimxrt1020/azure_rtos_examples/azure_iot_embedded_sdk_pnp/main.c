@@ -104,7 +104,7 @@ extern VOID sample_entry(NX_IP* ip_ptr, NX_PACKET_POOL* pool_ptr, NX_DNS* dns_pt
 #endif /* SAMPLE_SNTP_SERVER_NAME */
 
 #ifndef SAMPLE_SNTP_SYNC_MAX
-#define SAMPLE_SNTP_SYNC_MAX              3
+#define SAMPLE_SNTP_SYNC_MAX              2
 #endif /* SAMPLE_SNTP_SYNC_MAX */
 
 #ifndef SAMPLE_SNTP_UPDATE_MAX
@@ -115,9 +115,9 @@ extern VOID sample_entry(NX_IP* ip_ptr, NX_PACKET_POOL* pool_ptr, NX_DNS* dns_pt
 #define SAMPLE_SNTP_UPDATE_INTERVAL       (NX_IP_PERIODIC_RATE / 2)
 #endif /* SAMPLE_SNTP_UPDATE_INTERVAL */
 
-/* Default time. GMT: Friday, Jan 1, 2021 12:00:00 AM. Epoch timestamp: 1609459200.  */
+/* Default time. GMT: Mon Mar 22 03:15:42 2021.  */
 #ifndef SAMPLE_SYSTEM_TIME 
-#define SAMPLE_SYSTEM_TIME                1609459200
+#define SAMPLE_SYSTEM_TIME                1616354142
 #endif /* SAMPLE_SYSTEM_TIME  */
 
 /* Seconds between Unix Epoch (1/1/1970) and NTP Epoch (1/1/1999) */
@@ -150,9 +150,6 @@ extern ULONG sample_pool_stack_size;
 #endif
 static ULONG sample_arp_cache_area[SAMPLE_ARP_CACHE_SIZE / sizeof(ULONG)];
 static ULONG sample_helper_thread_stack[SAMPLE_HELPER_STACK_SIZE / sizeof(ULONG)];
-
-/* Define the SysTick cycles which will be loaded on tx_initialize_low_level.s */
-int systick_cycles;
 
 /*******************************************************************************
  * Prototypes
@@ -193,6 +190,12 @@ void delay(void)
     }
 }
 
+/* return the ENET MDIO interface clock frequency */
+uint32_t BOARD_GetMDIOClock(void)
+{
+    return CLOCK_GetFreq(kCLOCK_IpgClk);
+}
+
 
 
 /* Define main entry point.  */
@@ -218,9 +221,6 @@ void main(void)
     GPIO_WritePinOutput(GPIO1, 4, 1);
 
     PRINTF("Start the azure_iot_embedded_sdk_pnp example...\r\n");
-
-    /* systick_cycles must be initialized before tx_kernel_enter(). */
-    systick_cycles = (SystemCoreClock / TX_TIMER_TICKS_PER_SECOND) - 1;
 
     /* Enter the ThreadX kernel.  */
     tx_kernel_enter();

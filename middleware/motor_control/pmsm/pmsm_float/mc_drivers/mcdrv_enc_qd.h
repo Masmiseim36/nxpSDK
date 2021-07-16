@@ -53,18 +53,18 @@ extern "C" {
  *
  * @param this   Pointer to the current object
  *
- * @return boot_t true on success
+ * @return none
  */
-bool_t MCDRV_QdEncGet(mcdrv_qd_enc_t *this);
+void MCDRV_QdEncGet(mcdrv_qd_enc_t *this);
 
 /*!
  * @brief Function clears internal variables and decoder counter
  *
  * @param this   Pointer to the current object
  *
- * @return boot_t true on success
+ * @return none
  */
-bool_t MCDRV_QdEncClear(mcdrv_qd_enc_t *this);
+void MCDRV_QdEncClear(mcdrv_qd_enc_t *this);
 
 /*!
  * @brief Function se mechanical position of quadrature encoder
@@ -72,9 +72,9 @@ bool_t MCDRV_QdEncClear(mcdrv_qd_enc_t *this);
  * @param this     Pointer to the current object
  *        f16PosMe Mechanical position
  *
- * @return boot_t true on success
+ * @return none
  */
-bool_t MCDRV_QdEncSetPosMe(mcdrv_qd_enc_t *this, frac16_t f16PosMe);
+void MCDRV_QdEncSetPosMe(mcdrv_qd_enc_t *this, frac16_t f16PosMe);
 
 /*!
  * @brief Function set direction of quadrature encoder
@@ -82,9 +82,9 @@ bool_t MCDRV_QdEncSetPosMe(mcdrv_qd_enc_t *this, frac16_t f16PosMe);
  * @param this       Pointer to the current object
  *        bDirection Encoder direction
  *
- * @return boot_t true on success
+ * @return none
  */
-bool_t MCDRV_QdEncSetDirection(mcdrv_qd_enc_t *this);
+void MCDRV_QdEncSetDirection(mcdrv_qd_enc_t *this);
 
 #ifdef __cplusplus
 }

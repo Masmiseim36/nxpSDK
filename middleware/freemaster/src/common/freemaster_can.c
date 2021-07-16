@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2007-2015 Freescale Semiconductor, Inc.
- * Copyright 2018-2020 NXP
+ * Copyright 2018-2021 NXP
  *
  * License: NXP LA_OPT_NXP_Software_License
  *
@@ -26,6 +26,11 @@
 #define FMSTR_CAN_ID 1
 
 #if (FMSTR_MK_IDSTR(FMSTR_TRANSPORT) == FMSTR_CAN_ID) && FMSTR_DISABLE == 0
+
+#if FMSTR_SESSION_COUNT != 1
+/* CAN transport only supports a single session */
+#warning Please set FMSTR_SESSION_COUNT to 1.
+#endif
 
 #include "freemaster_protocol.h"
 #include "freemaster_can.h"
@@ -108,7 +113,7 @@ static FMSTR_S32 fmstr_nDebugTxPollCount;
 
 static FMSTR_BOOL _FMSTR_InitCan(void);
 static void _FMSTR_Poll(void);
-static void _FMSTR_SendResponse(FMSTR_BPTR pResponse, FMSTR_SIZE nLength, FMSTR_U8 statusCode);
+static void _FMSTR_SendResponse(FMSTR_BPTR pResponse, FMSTR_SIZE nLength, FMSTR_U8 statusCode, void *identification);
 
 const FMSTR_TRANSPORT_INTF FMSTR_CAN = {
     FMSTR_C99_INIT(Init) _FMSTR_InitCan,
@@ -239,7 +244,7 @@ static void _FMSTR_Listen(void)
 static void _FMSTR_SendError(FMSTR_BCHR nErrCode)
 {
     /* fill & send single-byte response */
-    _FMSTR_SendResponse(&fmstr_pCommBuffer[2], 0U, nErrCode);
+    _FMSTR_SendResponse(&fmstr_pCommBuffer[2], 0U, nErrCode, NULL);
 }
 
 /*
@@ -252,7 +257,7 @@ static void _FMSTR_SendError(FMSTR_BCHR nErrCode)
  *
  */
 
-static void _FMSTR_SendResponse(FMSTR_BPTR pResponse, FMSTR_SIZE nLength, FMSTR_U8 statusCode)
+static void _FMSTR_SendResponse(FMSTR_BPTR pResponse, FMSTR_SIZE nLength, FMSTR_U8 statusCode, void *identification)
 {
     FMSTR_BCHR chSum = 0U;
     FMSTR_U8 i, c;
@@ -599,8 +604,9 @@ static void _FMSTR_RxDone(void)
         /* standard FreeMASTER command to be passed above */
         else
         {
-            /* decode and handle frame by SCI classic driver */
-            if (FMSTR_ProtocolDecoder(pFrame, len, cmd) == FMSTR_FALSE)
+            /* Decode and handle frame by SCI classic driver. Use "can" as a globally unique pointer value as our
+             * identifier */
+            if (FMSTR_ProtocolDecoder(pFrame, len, cmd, (void *)"can") == FMSTR_FALSE)
             {
                 /* if no response was generated, start listening again, otherwise,
                    the receive will be initiated after transmission  is complete in
@@ -655,7 +661,7 @@ void FMSTR_ProcessCanRx(void)
             fmstr_nDebugTxPollCount = -1;
 
             /* Send it now */
-            if (FMSTR_SendTestFrame(&fmstr_pCommBuffer[2]) == FMSTR_FALSE)
+            if (FMSTR_SendTestFrame(&fmstr_pCommBuffer[2], NULL) == FMSTR_FALSE)
             {
                 /* failed to send, try again next time */
                 fmstr_nDebugTxPollCount = 0;

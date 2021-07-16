@@ -40,31 +40,31 @@
  */
 /* --------------------------------------------- Global Definitions */
 /* Device link types mask */
-#define BT_LINK_CLASSIC                     0x00
-#define BT_LINK_LE                          0x01
+#define BT_LINK_CLASSIC                     0x00U
+#define BT_LINK_LE                          0x01U
 
 /* Status Bitmasks for security informations */
-#define BT_SEC_BONDED                       0x02
-#define BT_SEC_AUTHENTICATED                0x04
-#define BT_SEC_ENCRYPTED                    0x08
+#define BT_SEC_BONDED                       0x02U
+#define BT_SEC_AUTHENTICATED                0x04U
+#define BT_SEC_ENCRYPTED                    0x08U
 
 /* Security Mode BitMasks */
-#define BT_SEC_SM_MASK                      0xF0
+#define BT_SEC_SM_MASK                      0xF0U
 /* Security Mode 1 - No Security Requirement for device link */
-#define BT_SEC_SM_1                         0x10
+#define BT_SEC_SM_1                         0x10U
 /* Security Mode 2 - Security Required for device link */
-#define BT_SEC_SM_2                         0x20
+#define BT_SEC_SM_2                         0x20U
 
 /* Security Level BitMasks */
-#define BT_SEC_SL_MASK                      0x0F
+#define BT_SEC_SL_MASK                      0x0FU
 /* Security Level 1 - No Security Requirement */
-#define BT_SEC_SL_0                         0x00
+#define BT_SEC_SL_0                         0x00U
 /* Security Level 2 - Unauthenticated Security Requirement */
-#define BT_SEC_SL_1                         0x01
+#define BT_SEC_SL_1                         0x01U
 /* Security Level 3 - Authenticated Security Requirement */
-#define BT_SEC_SL_2                         0x02
+#define BT_SEC_SL_2                         0x02U
 /* Security Level 4 - Secure Connection Requirement */
-#define BT_SEC_SL_3                         0x03
+#define BT_SEC_SL_3                         0x04U
 /** \} */
 /* --------------------------------------------- Structures/Data Types */
 /**

@@ -1,5 +1,5 @@
 /*
- *  Copyright 2008-2020 NXP
+ *  Copyright 2008-2021 NXP
  *
  *  NXP CONFIDENTIAL
  *  The source code contained or described herein and all documents related to
@@ -173,7 +173,15 @@ void wifi_deregister_wrapper_net_is_ip_or_ipv6_callback();
  *  or -WM_E_BUSY if SDIO is busy.
  *
  */
-int wifi_low_level_output(const uint8_t interface, const uint8_t *buffer, const uint16_t len);
+int wifi_low_level_output(const uint8_t interface,
+                          const uint8_t *buffer,
+                          const uint16_t len
+#ifdef CONFIG_WMM
+                          ,
+                          uint8_t pkt_prio,
+                          uint8_t tid
+#endif
+);
 
 /**
  * API to enable packet retries at wifi driver level.
@@ -718,7 +726,11 @@ char *wifi_get_country_str(int country);
 
 int wrapper_wlan_ecsa_enable();
 
-int wrapper_wlan_sta_ampdu_enable();
+int wrapper_wlan_sta_ampdu_enable(
+#ifdef CONFIG_WMM
+    t_u8 tid
+#endif
+);
 
 int wrapper_wlan_upa_ampdu_enable(uint8_t *addr);
 
@@ -910,5 +922,17 @@ void wifi_register_fw_dump_cb(int (*wifi_usb_mount_cb)(),
                               int (*wifi_usb_file_open_cb)(char *test_file_name),
                               int (*wifi_usb_file_write_cb)(uint8_t *data, size_t data_len),
                               int (*wifi_usb_file_close_cb)());
+#endif
+#ifdef CONFIG_WMM
+#define BK_MAX_BUF 4
+#define BE_MAX_BUF 4
+#define VI_MAX_BUF 4
+#define VO_MAX_BUF 4
+
+bool is_wifi_wmm_queue_full(mlan_wmm_ac_e queue);
+
+int wifi_wmm_get_pkt_prio(t_u8 *buf, t_u8 *tid, bool *is_udp_frame);
+
+uint8_t *wifi_wmm_get_outbuf(uint32_t *outbuf_len, mlan_wmm_ac_e queue);
 #endif
 #endif

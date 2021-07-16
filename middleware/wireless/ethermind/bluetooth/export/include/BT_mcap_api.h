@@ -42,51 +42,50 @@
  * Describes Constants defined by the module.
  */
 /** MCAP Event Notification Callback Event Types */
-#define MCAP_MD_CREATE_IND              0x01
-#define MCAP_MD_CREATE_CNF              0x02
-#define MCAP_MD_RECONNECT_IND           0x03
-#define MCAP_MD_RECONNECT_CNF           0x04
-#define MCAP_MD_ABORT_IND               0x05
-#define MCAP_MD_ABORT_CNF               0x06
-#define MCAP_MD_DELETE_IND              0x07
-#define MCAP_MD_DELETE_CNF              0x08
-#define MCAP_MD_DELETE_ALL_IND          (MCAP_MD_DELETE_IND | 0x80)
-#define MCAP_MD_DELETE_ALL_CNF          (MCAP_MD_DELETE_CNF | 0x80)
-#define MCAP_MD_DISCONNECT_IND          0x09
-#define MCAP_MD_DISCONNECT_CNF          0x0A
-#define MCAP_MC_CREATE_IND              0x0B
-#define MCAP_MC_CREATE_CNF              0x0C
-#define MCAP_MC_DISCONNECT_IND          0x0D
-#define MCAP_MC_DISCONNECT_CNF          0x0E
-#define MCAP_DATA_IND                   0x0F
-#define MCAP_DATA_WRITE_CNF             0x10
+#define MCAP_MD_CREATE_IND              0x01U
+#define MCAP_MD_CREATE_CNF              0x02U
+#define MCAP_MD_RECONNECT_IND           0x03U
+#define MCAP_MD_RECONNECT_CNF           0x04U
+#define MCAP_MD_ABORT_IND               0x05U
+#define MCAP_MD_ABORT_CNF               0x06U
+#define MCAP_MD_DELETE_IND              0x07U
+#define MCAP_MD_DELETE_CNF              0x08U
+#define MCAP_MD_DELETE_ALL_IND          (MCAP_MD_DELETE_IND | 0x80U)
+#define MCAP_MD_DELETE_ALL_CNF          (MCAP_MD_DELETE_CNF | 0x80U)
+#define MCAP_MD_DISCONNECT_IND          0x09U
+#define MCAP_MD_DISCONNECT_CNF          0x0AU
+#define MCAP_MC_CREATE_IND              0x0BU
+#define MCAP_MC_CREATE_CNF              0x0CU
+#define MCAP_MC_DISCONNECT_IND          0x0DU
+#define MCAP_MC_DISCONNECT_CNF          0x0EU
+#define MCAP_DATA_IND                   0x0FU
+#define MCAP_DATA_WRITE_CNF             0x10U
 
-#define MCAP_SYNC_CAP_REQ               0x11
-#define MCAP_SYNC_CAP_RSP               0x12
-#define MCAP_SYNC_SET_REQ               0x13
-#define MCAP_SYNC_SET_RSP               0x14
-#define MCAP_SYNC_INFO_IND              0x15
+#define MCAP_SYNC_CAP_REQ               0x11U
+#define MCAP_SYNC_CAP_RSP               0x12U
+#define MCAP_SYNC_SET_REQ               0x13U
+#define MCAP_SYNC_SET_RSP               0x14U
+#define MCAP_SYNC_INFO_IND              0x15U
+
+/** TODO: Comment */
+#define MCAP_SYNC_CAP_REQ_PARAM_LENGTH      (2U)
+#define MCAP_SYNC_CAP_RSP_PARAM_LENGTH      (7U)
+#define MCAP_SYNC_SET_REQ_PARAM_LENGTH      (13U)
+#define MCAP_SYNC_SET_RSP_PARAM_LENGTH      (14U)
+#define MCAP_SYNC_INFO_IND_PARAM_LENGTH     (14U)
 
 
 /** TODO: Comment */
-#define MCAP_SYNC_CAP_REQ_PARAM_LENGTH      (2)
-#define MCAP_SYNC_CAP_RSP_PARAM_LENGTH      (7)
-#define MCAP_SYNC_SET_REQ_PARAM_LENGTH      (13)
-#define MCAP_SYNC_SET_RSP_PARAM_LENGTH      (14)
-#define MCAP_SYNC_INFO_IND_PARAM_LENGTH     (14)
+#define MCAP_INVALID_PSM                    0x0000U
+#define MCAP_HDP_RELIABLE                   0x01U
+#define MCAP_HDP_STREAMING                  0x02U
 
 
 /** TODO: Comment */
-#define MCAP_INVALID_PSM                    0x0000
-#define MCAP_HDP_RELIABLE                   0x01
-#define MCAP_HDP_STREAMING                  0x02
-
-
-/** TODO: Comment */
-#define MCAP_INVALID_MCL_ID                 0xFFFF
-#define MCAP_INVALID_MDL_ID                 0x0000
-#define MCAP_INVALID_MDEP_ID                0xFF
-#define MCAP_ALL_MDL_ID                     0xFFFF
+#define MCAP_INVALID_MCL_ID                 0xFFFFU
+#define MCAP_INVALID_MDL_ID                 0x0000U
+#define MCAP_INVALID_MDEP_ID                0xFFU
+#define MCAP_ALL_MDL_ID                     0xFFFFU
 /** \} */
 /** \} */
 
@@ -152,19 +151,19 @@ typedef struct
 /** The MCAP Asynchronous Event Notification Callback */
 typedef API_RESULT (* MCAP_EVENT_NTF_CB)
                    (
-                       MCAP_HANDLE *,
-                       UCHAR,
-                       UINT16,
-                       void *,
-                       UINT16
+                       MCAP_HANDLE * handle,
+                       UCHAR         mcap_event,
+                       UINT16        response,
+                       void        * event_param,
+                       UINT16        event_paramlen
                    );
 
 /** TODO: Comment */
 typedef void (* MCAP_L2CAP_CONFIG_CB)
              (
-                 MCAP_HANDLE *,
-                 UCHAR,
-                 L2CAP_CONFIG_OPTION **
+                 MCAP_HANDLE          * handle,
+                 UCHAR                  channel_prf,
+                 L2CAP_CONFIG_OPTION ** config_option
              );
 /** \} */
 
@@ -334,7 +333,7 @@ typedef struct
 
 #define MCAP_INIT_MD_PARAMS(params)                          \
         params.rem_data_ch_psm = MCAP_INVALID_PSM;           \
-        params.channel_preference = 0x00;                    \
+        params.channel_preference = 0x00U;                   \
         params.rem_mdep_id = MCAP_INVALID_MDEP_ID;
 
 #define MCAP_SET_MD_PARAM_RMT_PSM(params,psm)                \
@@ -352,58 +351,58 @@ typedef struct
         * (dst) = (UCHAR)val;
 
 #define MCAP_PACK_2_BYTES(dst,val)                           \
-        * ((dst)+1) = (UCHAR)val;                            \
-        * ((dst)+0) = (UCHAR)(val >>8);
+        * ((dst)+1U) = (UCHAR)val;                           \
+        * ((dst)+0U) = (UCHAR)(val >>8U);
 
 #define MCAP_PACK_4_BYTES(dst,val)                           \
-        *((dst) + 3) = (UCHAR)(val);                         \
-        *((dst) + 2) = (UCHAR)((val) >>  8);                 \
-        *((dst) + 1) = (UCHAR)((val) >> 16);                 \
-        *((dst) + 0) = (UCHAR)((val) >> 24);
+        *((dst) + 3U) = (UCHAR)(val);                        \
+        *((dst) + 2U) = (UCHAR)((val) >>  8U);               \
+        *((dst) + 1U) = (UCHAR)((val) >> 16U);               \
+        *((dst) + 0U) = (UCHAR)((val) >> 24U);
 
 #define MCAP_PACK_8_BYTES(dst,val)                           \
-        *((dst) + 7) = (UCHAR)(val);                         \
-        *((dst) + 6) = (UCHAR)((val) >>  8);                 \
-        *((dst) + 5) = (UCHAR)((val) >> 16);                 \
-        *((dst) + 4) = (UCHAR)((val) >> 24);                 \
-        *((dst) + 3) = (UCHAR)((val) >> 32);                 \
-        *((dst) + 2) = (UCHAR)((val) >> 40);                 \
-        *((dst) + 1) = (UCHAR)((val) >> 48);                 \
-        *((dst) + 0) = (UCHAR)((val) >> 56);
+        *((dst) + 7U) = (UCHAR)(val);                        \
+        *((dst) + 6U) = (UCHAR)((val) >>  8U);               \
+        *((dst) + 5U) = (UCHAR)((val) >> 16U);               \
+        *((dst) + 4U) = (UCHAR)((val) >> 24U);               \
+        *((dst) + 3U) = (UCHAR)((val) >> 32U);               \
+        *((dst) + 2U) = (UCHAR)((val) >> 40U);               \
+        *((dst) + 1U) = (UCHAR)((val) >> 48U);               \
+        *((dst) + 0U) = (UCHAR)((val) >> 56U);
 
 #define MCAP_UNPACK_1_BYTE(dst,src)                          \
         *((UCHAR *)(dst)) = (UCHAR)(*(src));
 
 #define MCAP_UNPACK_2_BYTES(dst,src)                         \
-        *((UINT16 *)(dst)) = (UINT16)*((src) + 0);           \
-        *((UINT16 *)(dst)) = ((*((UINT16 *)(dst))) << 8);    \
-        *((UINT16 *)(dst)) |= (UINT16)*((src) + 1);
+        *((UINT16 *)(dst)) = (UINT16)*((src) + 0U);          \
+        *((UINT16 *)(dst)) = ((*((UINT16 *)(dst))) << 8U);   \
+        *((UINT16 *)(dst)) |= (UINT16)*((src) + 1U);
 
 #define MCAP_UNPACK_4_BYTES(dst,src)                         \
-        *((UINT32 *)(dst)) = (UINT32)*((src) + 0);           \
-        *((UINT32 *)(dst)) = ((*((UINT32 *)(dst))) << 8);    \
-        *((UINT32 *)(dst)) |= (UINT32)*((src) + 1);          \
-        *((UINT32 *)(dst)) = ((*((UINT32 *)(dst))) << 8);    \
-        *((UINT32 *)(dst)) |= (UINT32)*((src) + 2);          \
-        *((UINT32 *)(dst)) = ((*((UINT32 *)(dst))) << 8);    \
-        *((UINT32 *)(dst)) |= (UINT32)*((src) + 3);
+        *((UINT32 *)(dst)) = (UINT32)*((src) + 0U);          \
+        *((UINT32 *)(dst)) = ((*((UINT32 *)(dst))) << 8U);   \
+        *((UINT32 *)(dst)) |= (UINT32)*((src) + 1U);         \
+        *((UINT32 *)(dst)) = ((*((UINT32 *)(dst))) << 8U);   \
+        *((UINT32 *)(dst)) |= (UINT32)*((src) + 2U);         \
+        *((UINT32 *)(dst)) = ((*((UINT32 *)(dst))) << 8U);   \
+        *((UINT32 *)(dst)) |= (UINT32)*((src) + 3U);
 
 #define MCAP_UNPACK_8_BYTES(dst,src)                         \
-        *((UINT64 *)(dst)) = (UINT64)*((src) + 0);           \
-        *((UINT64 *)(dst)) = ((*((UINT64 *)(dst))) << 8);    \
-        *((UINT64 *)(dst)) |= (UINT64)*((src) + 1);          \
-        *((UINT64 *)(dst)) = ((*((UINT64 *)(dst))) << 8);    \
-        *((UINT64 *)(dst)) |= (UINT64)*((src) + 2);          \
-        *((UINT64 *)(dst)) = ((*((UINT64 *)(dst))) << 8);    \
-        *((UINT64 *)(dst)) |= (UINT64)*((src) + 3);          \
-        *((UINT64 *)(dst)) = ((*((UINT64 *)(dst))) << 8);    \
-        *((UINT64 *)(dst)) |= (UINT64)*((src) + 4);          \
-        *((UINT64 *)(dst)) = ((*((UINT64 *)(dst))) << 8);    \
-        *((UINT64 *)(dst)) |= (UINT64)*((src) + 5);          \
-        *((UINT64 *)(dst)) = ((*((UINT64 *)(dst))) << 8);    \
-        *((UINT64 *)(dst)) |= (UINT64)*((src) + 6);          \
-        *((UINT64 *)(dst)) = ((*((UINT64 *)(dst))) << 8);    \
-        *((UINT64 *)(dst)) |= (UINT64)*((src) + 7);
+        *((UINT64 *)(dst)) = (UINT64)*((src) + 0U);          \
+        *((UINT64 *)(dst)) = ((*((UINT64 *)(dst))) << 8U);   \
+        *((UINT64 *)(dst)) |= (UINT64)*((src) + 1U);         \
+        *((UINT64 *)(dst)) = ((*((UINT64 *)(dst))) << 8U);   \
+        *((UINT64 *)(dst)) |= (UINT64)*((src) + 2U);         \
+        *((UINT64 *)(dst)) = ((*((UINT64 *)(dst))) << 8U);   \
+        *((UINT64 *)(dst)) |= (UINT64)*((src) + 3U);         \
+        *((UINT64 *)(dst)) = ((*((UINT64 *)(dst))) << 8U);   \
+        *((UINT64 *)(dst)) |= (UINT64)*((src) + 4U);         \
+        *((UINT64 *)(dst)) = ((*((UINT64 *)(dst))) << 8U);   \
+        *((UINT64 *)(dst)) |= (UINT64)*((src) + 5U);         \
+        *((UINT64 *)(dst)) = ((*((UINT64 *)(dst))) << 8U);   \
+        *((UINT64 *)(dst)) |= (UINT64)*((src) + 6U);         \
+        *((UINT64 *)(dst)) = ((*((UINT64 *)(dst))) << 8U);   \
+        *((UINT64 *)(dst)) |= (UINT64)*((src) + 7U);
 
 #define MCAP_WRITE_TIMESTAMP_CLOCK_INSTANT(dst,val)          \
         MCAP_PACK_8_BYTES((dst),(val));
@@ -490,7 +489,8 @@ API_RESULT BT_mcap_common_api_handler
                 /* IN */ MCAP_HANDLE    * handle,
                 /* IN */ UCHAR            op_code,
                 /* IN */ UINT16           rsp_code,
-                /* IN */ void           * params
+                /* IN */ void           * params,
+                /* IN */ UINT16           size
            );
 
 
@@ -520,7 +520,8 @@ API_RESULT BT_mcap_common_api_handler
             handle,                                          \
             MCAP_MC_CREATE_IND,                              \
             API_SUCCESS,                                     \
-            mc_params                                        \
+            mc_params,                                       \
+            sizeof(MCAP_MC_CONNECT_PARAMS)                   \
         );
 
 
@@ -546,7 +547,8 @@ API_RESULT BT_mcap_common_api_handler
             handle,                                          \
             MCAP_MC_DISCONNECT_IND,                          \
             API_SUCCESS,                                     \
-            NULL                                             \
+            NULL,                                            \
+            0                                                \
         );
 
 /**
@@ -573,7 +575,8 @@ API_RESULT BT_mcap_common_api_handler
             handle,                                          \
             MCAP_MD_CREATE_IND,                              \
             API_SUCCESS,                                     \
-            md_params                                        \
+            md_params,                                       \
+            sizeof(MCAP_MD_PARAMS)                           \
         );
 
 /**
@@ -600,7 +603,8 @@ API_RESULT BT_mcap_common_api_handler
             handle,                                          \
             MCAP_MD_RECONNECT_IND,                           \
             API_SUCCESS,                                     \
-            rem_data_ch_psm                                  \
+            rem_data_ch_psm,                                 \
+            sizeof(UINT16)                                   \
         );
 
 /**
@@ -624,7 +628,8 @@ API_RESULT BT_mcap_common_api_handler
             handle,                                          \
             MCAP_MD_ABORT_IND,                               \
             API_SUCCESS,                                     \
-            NULL                                             \
+            NULL,                                            \
+            0                                                \
         );
 
 /**
@@ -648,7 +653,8 @@ API_RESULT BT_mcap_common_api_handler
             handle,                                          \
             MCAP_MD_DELETE_IND,                              \
             API_SUCCESS,                                     \
-            NULL                                             \
+            NULL,                                            \
+            0                                                \
         );
 
 /**
@@ -674,7 +680,8 @@ API_RESULT BT_mcap_common_api_handler
             mcap_handle,                                     \
             MCAP_MD_DELETE_ALL_IND,                          \
             API_SUCCESS,                                     \
-            NULL                                             \
+            NULL,                                            \
+            0                                                \
         ));
 
 /**
@@ -698,7 +705,8 @@ API_RESULT BT_mcap_common_api_handler
             handle,                                          \
             MCAP_MD_DISCONNECT_IND,                          \
             API_SUCCESS,                                     \
-            NULL                                             \
+            NULL,                                            \
+            0                                                \
         );
 
 /**
@@ -754,13 +762,14 @@ API_RESULT BT_mcap_md_write
  *  \return API_SUCCESS or an error code indicating reason for
  *          failure
  */
-#define BT_mcap_md_create_rsp(handle,rsp_code,rsp_params)    \
+#define BT_mcap_md_create_rsp(handle,rsp_code,rsp_params,size)    \
         BT_mcap_common_api_handler                           \
         (                                                    \
             handle,                                          \
             MCAP_MD_CREATE_CNF,                              \
             rsp_code,                                        \
-            rsp_params                                       \
+            rsp_params,                                           \
+            size                                                  \
         );
 
 /**
@@ -785,7 +794,8 @@ API_RESULT BT_mcap_md_write
             handle,                                          \
             MCAP_MD_RECONNECT_CNF,                           \
             rsp_code,                                        \
-            NULL                                             \
+            NULL,                                            \
+            0                                                \
         );
 
 /**
@@ -814,7 +824,8 @@ API_RESULT BT_mcap_md_write
             handle,                                          \
             MCAP_MC_CREATE_CNF,                              \
             rsp_code,                                        \
-            NULL                                             \
+            NULL,                                            \
+            0                                                \
         );
 
 #ifdef MCAP_CLOCK_SYNC

@@ -2,7 +2,7 @@
  *
  *  @brief  This file provides network porting code
  *
- *  Copyright 2008-2020 NXP
+ *  Copyright 2008-2021 NXP
  *
  *  NXP CONFIDENTIAL
  *  The source code contained or described herein and all documents related to
@@ -34,6 +34,7 @@
 #include <lwip/tcpip.h>
 #include <lwip/dns.h>
 #include <lwip/dhcp.h>
+#include <lwip/prot/dhcp.h>
 #include <lwip/ip_addr.h>
 #include <lwip/prot/autoip.h>
 #include <lwip/stats.h>
@@ -140,6 +141,8 @@ static void wm_netif_status_callback(struct netif *n)
      *                          interface is the same as INADDR_ANY
      */
     bool is_default_dhcp_address = (ip_2_ip4(&(n->ip_addr))->addr == INADDR_ANY);
+    /* is_dhcp_off: true if dhcp is switched off*/
+    bool is_dhcp_off = (netif_dhcp_data(n)->state == DHCP_STATE_OFF);
     /* State variables to be assigned to the event flag
      * a value of -1 represents failed state while the value of
      * 1 represents a successful connection event
@@ -147,33 +150,37 @@ static void wm_netif_status_callback(struct netif *n)
      */
     enum connection_states
     {
-        DHCP_STATE_FAILED  = -1,
-        DHCP_STATE_RUNNING = 0,
-        DHCP_STATE_SUCCESS = 1
+        DHCP_FAILED  = -1,
+        DHCP_IGNORE  = 0,
+        DHCP_SUCCESS = 1
     } event_flag_dhcp_connection;
     /* A flag to keep the status of dhcp connection
      * This flag is in state 1, if the connection has succeeded
      * This flag is in state -1, if the connection has failed
      * The flag value is zero, if we are still in process of connection
-     * establishment
+     * establishment or dhcp is off
      */
     int wifi_event_reason;
-    event_flag_dhcp_connection = DHCP_STATE_RUNNING;
+    event_flag_dhcp_connection = DHCP_IGNORE;
 
-    if (is_dhcp_address && !(is_default_dhcp_address))
+    if (is_dhcp_off)
+    {
+        /* Do Nothing */
+    }
+    else if (is_dhcp_address && !(is_default_dhcp_address))
     {
         /* If a valid non-default dhcp address is provided */
-        event_flag_dhcp_connection = DHCP_STATE_SUCCESS;
+        event_flag_dhcp_connection = DHCP_SUCCESS;
     }
     else if (is_dhcp_address && (is_default_dhcp_address))
     {
         /* If the supplied dhcp address is the default address */
-        event_flag_dhcp_connection = DHCP_STATE_FAILED;
+        event_flag_dhcp_connection = DHCP_FAILED;
     }
     else if (!dhcp_supplied_address(n))
     {
         /* If no ip address is supplied */
-        event_flag_dhcp_connection = DHCP_STATE_FAILED;
+        event_flag_dhcp_connection = DHCP_FAILED;
     }
     else
     { /* Do Nothing */
@@ -184,16 +191,16 @@ static void wm_netif_status_callback(struct netif *n)
      */
     switch (event_flag_dhcp_connection)
     {
-        case DHCP_STATE_SUCCESS:
+        case DHCP_SUCCESS:
             wifi_event_reason = WIFI_EVENT_REASON_SUCCESS;
             break;
-        case DHCP_STATE_FAILED:
+        case DHCP_FAILED:
             wifi_event_reason = WIFI_EVENT_REASON_FAILURE;
             break;
         default:
             break;
     }
-    if (event_flag_dhcp_connection != DHCP_STATE_RUNNING)
+    if (event_flag_dhcp_connection != DHCP_IGNORE)
         wlan_wlcmgr_send_msg(WIFI_EVENT_NET_DHCP_CONFIG, wifi_event_reason, NULL);
 }
 
@@ -269,7 +276,7 @@ void net_interface_down(void *intrfc_handle)
 void net_interface_dhcp_stop(void *intrfc_handle)
 {
     interface_t *if_handle = (interface_t *)intrfc_handle;
-    netifapi_dhcp_stop(&if_handle->netif);
+    netifapi_dhcp_release_and_stop(&if_handle->netif);
     netif_set_status_callback(&if_handle->netif, NULL);
 }
 

@@ -1,8 +1,7 @@
 /*
-* Copyright 2019,2020 NXP
-* All rights reserved.
 *
-* SPDX-License-Identifier: BSD-3-Clause
+* Copyright 2019,2020 NXP
+* SPDX-License-Identifier: Apache-2.0
 */
 
 #ifndef FSL_SSS_SE05X_CONST_H
@@ -63,6 +62,7 @@
 #endif
 
 #define CIPHER_BLOCK_SIZE 16
+#define CIPHER_UPDATE_DATA_SIZE 256
 #define AEAD_BLOCK_SIZE 16
 #define BINARY_WRITE_MAX_LEN 500
 

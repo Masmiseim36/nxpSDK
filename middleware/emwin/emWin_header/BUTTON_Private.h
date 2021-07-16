@@ -9,7 +9,7 @@
 *                                                                    *
 **********************************************************************
 
-** emWin V6.14 - Graphical user interface for embedded applications **
+** emWin V6.16 - Graphical user interface for embedded applications **
 All  Intellectual Property rights  in the Software belongs to  SEGGER.
 emWin is protected by  international copyright laws.  Knowledge of the
 source code may not be used to write a similar product.  This file may
@@ -34,7 +34,7 @@ License model:            emWin License Agreement, dated August 20th 2011 and Am
 Licensed platform:        NXP's ARM 7/9, Cortex-M0, M3, M4, M7, A7, M33
 ----------------------------------------------------------------------
 Support and Update Agreement (SUA)
-SUA period:               2011-08-19 - 2020-09-02
+SUA period:               2011-08-19 - 2021-09-02
 Contact to extend SUA:    sales@segger.com
 ----------------------------------------------------------------------
 File        : BUTTON_Private.h
@@ -74,22 +74,22 @@ typedef struct {
 } BUTTON_SKIN_PRIVATE;
 
 typedef struct {
-  GUI_COLOR aBkColor[3];
-  GUI_COLOR aTextColor[3];
-  GUI_COLOR FocusColor;
-  GUI_COLOR FrameColor;
-  const GUI_FONT * pFont;
+  GUI_COLOR           aBkColor[3];
+  GUI_COLOR           aTextColor[3];
+  GUI_COLOR           FocusColor;
+  GUI_COLOR           FrameColor;
+  const GUI_FONT    * pFont;
   BUTTON_SKIN_PRIVATE SkinPrivate;
-  I16 Align;
-  I16 xPosText, yPosText;
+  I16                 Align;
+  I16                 xPosText, yPosText;
 } BUTTON_PROPS;
 
 typedef struct {
-  WIDGET Widget;
-  BUTTON_PROPS Props;
+  WIDGET              Widget;
+  BUTTON_PROPS        Props;
   WIDGET_SKIN const * pWidgetSkin;
-  WM_HMEM hpText;
-  WM_HMEM ahDrawObj[3];
+  WM_HMEM             hpText;
+  WM_HMEM             ahDrawObj[3];
 } BUTTON_Obj;
 
 /*********************************************************************

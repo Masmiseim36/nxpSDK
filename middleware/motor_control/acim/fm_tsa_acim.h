@@ -11,14 +11,17 @@
 #include "freemaster.h"
 #include "freemaster_tsa.h"
 
-#include "mcdrv.h"
-
-/* DEMO is defined in preprocessor */
-#if (DEMO == 1)
-#include "m1_sm_demo.h"
-#else
 #include "m1_sm_ref_sol.h"
 #include "mid_sm_states.h"
-#endif
+
+/* global control variables */
+extern bool_t bDemoMode;
+
+/* global used misc variables */
+extern uint32_t g_ui32NumberOfCycles;
+extern uint32_t g_ui32MaxNumberOfCycles;
+
+/* Application and board ID */
+extern app_ver_t g_sAppIdFM;
 
 #endif

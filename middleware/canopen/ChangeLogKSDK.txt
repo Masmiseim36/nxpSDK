@@ -1,0 +1,14 @@
+/**
+@page middleware_log CANopen Change Log
+
+@section CANopen CANopen for KSDK
+
+  - 7.10_rev1
+      - update version
+  - 7.01_rev1
+      - update version
+  - 7.00_rev1
+
+    - Integrate CANopen 7.00 to SDK.
+
+*/

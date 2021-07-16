@@ -390,19 +390,20 @@ _Pragma("diag_suppress=Pm120")
 #define USB_CACHE_LINESIZE 4U
 #endif
 
-#if (((defined(USB_DEVICE_CONFIG_LPCIP3511FS)) && (USB_DEVICE_CONFIG_LPCIP3511FS > 0U)) || \
-     ((defined(USB_DEVICE_CONFIG_LPCIP3511HS)) && (USB_DEVICE_CONFIG_LPCIP3511HS > 0U)))
-#define USB_DATA_ALIGN 64U
-#else
-#define USB_DATA_ALIGN 4U
-#endif
-
-#if (USB_CACHE_LINESIZE > USB_DATA_ALIGN)
+#if (USB_CACHE_LINESIZE > 4U)
 #define USB_DATA_ALIGN_SIZE USB_CACHE_LINESIZE
 #else
-#define USB_DATA_ALIGN_SIZE USB_DATA_ALIGN
+/* Change the USB_DATA_ALIGN_SIZE to 4, For the lpcip3511 driver, the lpcip3511 driver will do the memcpy for the
+   transfer buffer that is not in the USB dedicated RAM or not aligned to 64-byte boundaries. Hence the changes do not
+   bring the risk and improve the RAM usage rate but cause the lower perfromance. If requiring a higher performance on
+   the lpcip3511 platform, please change the macro to 64 and put the transfer buffer into the USB dedicated RAM. */
+#define USB_DATA_ALIGN_SIZE 4U
 #endif
 
+/* Due to the change of USB_DATA_ALIGN_SIZE from 64 to 4 on the lpcip3511 platform, the size of variables defined by
+   using this marco may be smaller on the lpcip3511 platform. If users don't want the lpcip3511 driver to do memcpy,
+   please use the macro to define the transfer buffer and change the USB_DATA_ALIGN_SIZE to 64 and put the transfer
+   buffer into the USB dedicated RAM. */
 #define USB_DATA_ALIGN_SIZE_MULTIPLE(n) (((n) + USB_DATA_ALIGN_SIZE - 1U) & (~(USB_DATA_ALIGN_SIZE - 1U)))
 
 #if defined(USB_STACK_USE_DEDICATED_RAM) && (USB_STACK_USE_DEDICATED_RAM == USB_STACK_DEDICATED_RAM_TYPE_BDT_GLOBAL)

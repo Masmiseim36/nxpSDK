@@ -9,6 +9,8 @@
 #include "../../lv_examples.h"
 #include "lv_demo_widgets.h"
 
+#include LV_THEME_DEFAULT_INCLUDE
+
 #if LV_USE_DEMO_WIDGETS
 
 /*********************
@@ -471,7 +473,7 @@ static void selectors_create(lv_obj_t * parent)
     lv_obj_set_size(list, grid_w, grid_h);
 
     const char * txts[] = {LV_SYMBOL_SAVE, "Save", LV_SYMBOL_CUT, "Cut", LV_SYMBOL_COPY, "Copy",
-            LV_SYMBOL_OK, "This is a quite long text to scroll on the list", LV_SYMBOL_EDIT, "Edit", LV_SYMBOL_WIFI, "Wifi",
+            LV_SYMBOL_OK, "This is a substantially long text to scroll on the list", LV_SYMBOL_EDIT, "Edit", LV_SYMBOL_WIFI, "Wifi",
             LV_SYMBOL_BLUETOOTH, "Bluetooth",  LV_SYMBOL_GPS, "GPS", LV_SYMBOL_USB, "USB",
             LV_SYMBOL_SD_CARD, "SD card", LV_SYMBOL_CLOSE, "Close", NULL};
 
@@ -563,8 +565,11 @@ static void ta_event_cb(lv_obj_t * ta, lv_event_t e)
 {
     if(e == LV_EVENT_RELEASED) {
         if(kb == NULL) {
-            lv_obj_set_height(tv, LV_VER_RES / 2);
+            lv_coord_t kb_height = LV_MATH_MIN(LV_VER_RES / 2, LV_DPI * 4 / 3);
+            lv_obj_set_height(tv, LV_VER_RES - kb_height);
             kb = lv_keyboard_create(lv_scr_act(), NULL);
+            lv_obj_set_height(kb, kb_height);
+            lv_obj_align(kb, NULL, LV_ALIGN_IN_BOTTOM_MID, 0, 0);
             lv_obj_set_event_cb(kb, kb_event_cb);
 
             lv_indev_wait_release(lv_indev_get_act());

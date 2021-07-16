@@ -1,17 +1,15 @@
-if(NOT DRIVER_SNVS_LP_MIMXRT1064_INCLUDED)
-    
-    set(DRIVER_SNVS_LP_MIMXRT1064_INCLUDED true CACHE BOOL "driver_snvs_lp component is included.")
+include_guard(GLOBAL)
+message("driver_snvs_lp component is included.")
 
-    target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
-        ${CMAKE_CURRENT_LIST_DIR}/fsl_snvs_lp.c
-    )
-
-
-    target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
-        ${CMAKE_CURRENT_LIST_DIR}/.
-    )
+target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
+    ${CMAKE_CURRENT_LIST_DIR}/fsl_snvs_lp.c
+)
 
 
-    include(driver_common_MIMXRT1064)
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
+    ${CMAKE_CURRENT_LIST_DIR}/.
+)
 
-endif()
+
+include(driver_common_MIMXRT1064)
+

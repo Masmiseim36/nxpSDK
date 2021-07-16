@@ -1,12 +1,6 @@
 /* Copyright 2019 NXP
  *
- * This software is owned or controlled by NXP and may only be used
- * strictly in accordance with the applicable license terms.  By expressly
- * accepting such terms or by downloading, installing, activating and/or
- * otherwise using the software, you are agreeing that you have read, and
- * that you agree to comply with and are bound by, such license terms.  If
- * you do not agree to be bound by the applicable license terms, then you
- * may not retain, install, activate or otherwise use the software.
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 #ifndef SSS_MBEDTLS_EVKB_H
@@ -18,14 +12,6 @@
 /* We need this for mbedTLS sw crypto counterpart */
 #define MBEDTLS_CTR_DRBG_C
 #endif
-
-#if USE_RTOS && defined(FSL_RTOS_FREE_RTOS)
-
-#undef MBEDTLS_PLATFORM_MEMORY
-#undef MBEDTLS_PLATFORM_STD_CALLOC
-#undef MBEDTLS_PLATFORM_STD_FREE
-
-#endif /* USE_RTOS*/
 
 /* IF We use ALT from the EVKB, anything that is related to
  * AES256 would get skipped and because of this TLS Handshake

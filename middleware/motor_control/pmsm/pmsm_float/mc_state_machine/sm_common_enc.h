@@ -91,19 +91,19 @@ typedef struct _mcdef_pmsm_t
 #define FAULT_ROTOR_BLOCKED 5 /* Blocked rotor fault flag */
 
 /* Sets the fault bit defined by faultid in the faults variable */
-#define FAULT_SET(faults, faultid) (faults |= ((mcdef_fault_t)1 << faultid))
+#define FAULT_SET(faults, faultid) ((faults) |= ((mcdef_fault_t)1 << (faultid)))
 
 /* Clears the fault bit defined by faultid in the faults variable */
-#define FAULT_CLEAR(faults, faultid) (faults &= ~((mcdef_fault_t)1 << faultid))
+#define FAULT_CLEAR(faults, faultid) ((faults) &= ~((mcdef_fault_t)1 << (faultid)))
 
 /* Check the fault bit defined by faultid in the faults variable, returns 1 or 0 */
-#define FAULT_CHECK(faults, faultid) ((faults & ((mcdef_fault_t)1 << faultid)) >> faultid)
+#define FAULT_CHECK(faults, faultid) (((faults) & ((mcdef_fault_t)1 << (faultid))) >> (faultid))
 
 /* Clears all fault bits in the faults variable */
-#define FAULT_CLEAR_ALL(faults) (faults = 0)
+#define FAULT_CLEAR_ALL(faults) ((faults) = 0U)
 
 /* Check if a fault bit is set in the faults variable, 0 = no fault */
-#define FAULT_ANY(faults) (faults > 0)
+#define FAULT_ANY(faults) ((faults) > 0U)
 
 /*******************************************************************************
  * Variables

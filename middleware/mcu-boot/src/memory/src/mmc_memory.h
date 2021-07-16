@@ -7,7 +7,7 @@
 #ifndef _MMC_MEMORY_H_
 #define _MMC_MEMORY_H_
 
-#include "memory/memory.h"
+#include "memory.h"
 #include "fsl_mmc.h"
 #include "fsl_sdmmc_host.h"
 

@@ -6,9 +6,9 @@
  *
  * Authorization to use this header is provided through a DeepViewRT license.
  *
- * @file deepview_rt.h DeepView RT core library header.
+ * @file deepview_rt.h DeepViewRT core library header.
  *
- * DeepView RT-M is distributed as a pair of header files and a platform
+ * DeepViewRT-M is distributed as a pair of header files and a platform
  * specific library file, plus documentation.  The library file comes in a
  * number of flavours for the various supported platforms.  All public DeepView
  * structures and functions use the NN and nn_ prefix to denote our namespace.
@@ -26,7 +26,7 @@
 
 /*
  * Header API Macros from Hedly - https://nemequ.github.io/hedley
- * NN namespace has been updated to NN for DeepView RT Namespace and
+ * NN namespace has been updated to NN for DeepViewRT Namespace and
  * functionality stripped down to reduce size of headers.
  */
 #define NN_VERSION_ENCODE(major, minor, revision) \
@@ -282,10 +282,10 @@ typedef enum {
     NN_ERROR_INVALID_QUANT,
 } NNError;
 
-    
+
 /**
  * Enumeration of all quantization type provided by DeepViewRT.
- */ 
+ */
 typedef enum {
   NN_Quantization_None = 0,
   NN_Quantization_Affine_PerTensor = 1,
@@ -294,7 +294,7 @@ typedef enum {
   NN_Quantization_Unknown
 } NNQuantizationType;
 
-    
+
 /**
  * This option tells nn_init to load a license file from the path provided in
  * the next option element which MUST be provided.
@@ -377,7 +377,7 @@ typedef enum {
 typedef intptr_t NNOptions;
 
 /**
- * DeepView RT-M library version.
+ * DeepViewRT-M library version.
  *
  * @return library version string
  *
@@ -424,7 +424,7 @@ nn_init(const NNOptions* options);
  * @struct NNEngine
  *
  * Engine structure provides the means to implement custom tensor and kernel
- * implementations which implement the DeepView RT inference backend. As an
+ * implementations which implement the DeepViewRT inference backend. As an
  * example the OpenCL backend is provided as a plugin which exposes an NNEngine
  * which maps NNTensors to cl_mem objects and kernels as OpenCL kernels.
  */
@@ -600,10 +600,10 @@ typedef struct nn_quant_param {
 	size_t element_size;
 
 	NNTensorType buffer_type;
-	
+
 }NNQuantParam_t;
 
-	
+
 /**
  * Returns the size of the tensor object for preparing memory allocations.
  */
@@ -707,7 +707,7 @@ nn_tensor_set_aux_object(NNTensor*           tensor,
                          void*               aux_object,
                          nn_aux_object_free* aux_object_free);
 
-    
+
 /**
  * Returns the auxiliary object for the tensor, or NULL if none is attached.
  *
@@ -740,17 +740,17 @@ nn_tensor_set_aux_object_by_name(NNTensor* tensor,
                                  bool buffer_ownership,
                                  bool name_ownership);
 
-    
+
 void*
 nn_tensor_aux_object_by_name(NNTensor* tensor,
                              const char* name);
-    
+
 
 nn_aux_object_free*
 nn_tensor_aux_free_by_name(NNTensor* tensor,
                            const char* name);
-    
-    
+
+
 /**
  * Private API - read panel size of the tensor.
  */
@@ -1091,7 +1091,7 @@ NN_API
 void
 nn_tensor_set_axis(NNTensor*      tensor,
 				   int32_t         axis);
-	
+
 /**
  * Returns the scales array for the tensor and optionally the number of scales.
  */
@@ -1105,7 +1105,7 @@ NN_AVAILABLE_SINCE_2_4
 NN_API
 void
 nn_tensor_quant_params(const NNTensor* tensor, NNQuantParam_t *quant_params);
-	
+
 /**
  * Sets the quantization scales for the tensor.  If n_scales>1 it should match
  * the channel dimension (axis) of the tensor.
@@ -1253,7 +1253,7 @@ NN_WARN_UNUSED_RESULT
 NN_API
 NNError
 nn_tensor_randomize(NNTensor* tensor);
-	
+
 /**
  * Copies the contents of source tensor into destination tensor.
  *
@@ -1282,7 +1282,7 @@ nn_tensor_copy(NNTensor* dest, NNTensor* source);
 NN_API
 NNError
 nn_tensor_requantize(NNTensor* dest, NNTensor* source);
-	
+
 /**
  * Quantizes the source tensor into the destination tensor.
  *
@@ -1302,7 +1302,7 @@ NN_WARN_UNUSED_RESULT
 NN_API
 NNError
 nn_tensor_quantize(NNTensor* dest, NNTensor* source, int axis);
-	
+
 /**
  * Quantizes the source buffer into the destination tensor.
  *
@@ -1490,7 +1490,6 @@ nn_tensor_load_file_ex(NNTensor* tensor, const char* filename, uint32_t proc);
  * @since 2.0
  */
 NN_AVAILABLE_SINCE_2_0
-NN_DEPRECATED_SINCE_2_3
 NN_WARN_UNUSED_RESULT
 NN_API
 NNError
@@ -1514,7 +1513,6 @@ nn_tensor_load_image(NNTensor* tensor, const void* image, size_t image_size);
  * @since 2.1
  */
 NN_AVAILABLE_SINCE_2_1
-NN_DEPRECATED_SINCE_2_3
 NN_WARN_UNUSED_RESULT
 NN_API
 NNError

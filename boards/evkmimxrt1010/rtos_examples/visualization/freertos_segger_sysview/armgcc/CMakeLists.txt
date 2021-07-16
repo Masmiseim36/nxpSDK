@@ -1,6 +1,6 @@
 # CROSS COMPILER SETTING
 SET(CMAKE_SYSTEM_NAME Generic)
-CMAKE_MINIMUM_REQUIRED (VERSION 3.1.1)
+CMAKE_MINIMUM_REQUIRED (VERSION 3.10.0)
 
 # THE VERSION NUMBER
 SET (Tutorial_VERSION_MAJOR 1)
@@ -38,15 +38,16 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../SEGGER/SEGGER_RTT.h"
 "${ProjDirPath}/../SEGGER/SEGGER_SYSVIEW.c"
 "${ProjDirPath}/../SEGGER/SEGGER_SYSVIEW.h"
+"${ProjDirPath}/../SEGGER/SEGGER_RTT_ASM_ARMv7M.S"
 "${ProjDirPath}/../SEGGER/SEGGER_SYSVIEW_ConfDefaults.h"
 "${ProjDirPath}/../SEGGER/SEGGER_SYSVIEW_Int.h"
 "${ProjDirPath}/../Config/Global.h"
 "${ProjDirPath}/../Config/SEGGER_RTT_Conf.h"
 "${ProjDirPath}/../Config/SEGGER_SYSVIEW_Conf.h"
-"${ProjDirPath}/../Sample/OS/SEGGER_SYSVIEW_FreeRTOS.c"
-"${ProjDirPath}/../Sample/OS/SEGGER_SYSVIEW_FreeRTOS.h"
-"${ProjDirPath}/../Sample/OS/pin_mux.c"
-"${ProjDirPath}/../Sample/OS/pin_mux.h"
+"${ProjDirPath}/../Sample/FreeRTOSV10/SEGGER_SYSVIEW_FreeRTOS.c"
+"${ProjDirPath}/../Sample/FreeRTOSV10/SEGGER_SYSVIEW_FreeRTOS.h"
+"${ProjDirPath}/../pin_mux.c"
+"${ProjDirPath}/../pin_mux.h"
 "${ProjDirPath}/../board.c"
 "${ProjDirPath}/../board.h"
 "${ProjDirPath}/../clock_config.c"
@@ -54,11 +55,10 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 )
 
 target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
-    ${ProjDirPath}/.. release
     ${ProjDirPath}/..
     ${ProjDirPath}/../SEGGER
     ${ProjDirPath}/../Config
-    ${ProjDirPath}/../Sample/OS
+    ${ProjDirPath}/../Sample/FreeRTOSV10
 )
 
 set(CMAKE_MODULE_PATH
@@ -71,7 +71,7 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../../components/lists
     ${ProjDirPath}/../../../../../../devices/MIMXRT1011/xip
     ${ProjDirPath}/../../../../xip
-    ${ProjDirPath}/../../../../../../CMSIS/Include
+    ${ProjDirPath}/../../../../../../CMSIS/Core/Include
 )
 
 # include modules
@@ -105,7 +105,7 @@ include(driver_igpio_MIMXRT1011)
 
 include(driver_xip_device_MIMXRT1011)
 
-include(driver_xip_board_MIMXRT1011)
+include(driver_xip_board_evkmimxrt1010_MIMXRT1011)
 
 include(middleware_freertos-kernel_MIMXRT1011)
 
@@ -113,11 +113,7 @@ include(middleware_freertos-kernel_extension_MIMXRT1011)
 
 include(utilities_misc_utilities_MIMXRT1011)
 
-include(CMSIS_Include_core_cm7_MIMXRT1011)
-
-include(CMSIS_Include_common_MIMXRT1011)
-
-include(CMSIS_Include_dsp_MIMXRT1011)
+include(CMSIS_Include_core_cm_MIMXRT1011)
 
 include(device_MIMXRT1011_system_MIMXRT1011)
 

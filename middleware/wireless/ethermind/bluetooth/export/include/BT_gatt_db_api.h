@@ -52,50 +52,50 @@
  */
 
 /** Read operation for Attribute  */
-#define GATT_DB_READ                            0x01
+#define GATT_DB_READ                            0x01U
 
 /** Write operation for Attribute */
-#define GATT_DB_WRITE                           0x02
+#define GATT_DB_WRITE                           0x02U
 
 /** Read blob operation for Attribute */
-#define GATT_DB_READ_BLOB                       0x03
+#define GATT_DB_READ_BLOB                       0x03U
 
 /** Write Without Response operation for Attribute */
-#define GATT_DB_WRITE_WITHOUT_RSP               0x04
+#define GATT_DB_WRITE_WITHOUT_RSP               0x04U
 
 /** Read by UUID/Type operation for Attribute */
-#define GATT_DB_READ_BY_TYPE                    0x05
+#define GATT_DB_READ_BY_TYPE                    0x05U
 
 /** Signed Write operation for Attribute */
-#define GATT_DB_SIGNED_WRITE                    0x06
+#define GATT_DB_SIGNED_WRITE                    0x06U
 
 /** Execute Write operation for Attribute */
-#define GATT_DB_EXECUTE                         0x07
+#define GATT_DB_EXECUTE                         0x07U
 
 /** Prepare Write operation for Attribute */
-#define GATT_DB_PREPARE                         0x08
+#define GATT_DB_PREPARE                         0x08U
 
 /**
  *  Local update of a Readable Attribute Value using \ref GATT_DB_HANDLE instead
  *  of Attribute Handle. See \ref BT_gatt_db_set_char_val for more details.
  */
-#define GATT_DB_UPDATE                          0x10
+#define GATT_DB_UPDATE                          0x10U
 
 /* 128 Bit Attribute UUID  */
-#define GATT_DB_128_BIT_UUID_FORMAT             0x20
+#define GATT_DB_128_BIT_UUID_FORMAT             0x20U
 
 /**
  *  Peer initiated operation, needed when Peer is Reading or Writing Values
  *  either using GATT Read Procedures for Value and Descriptors.
  */
-#define GATT_DB_PEER_INITIATED                  0x80
+#define GATT_DB_PEER_INITIATED                  0x80U
 
 /**
  *  Locally initiated operation, needed for local updates based on Attribute
  *  Handles. In case \ref GATT_DB_HANDLE is known, use of access through
  *  \ref GATT_DB_UPDATE is recommended.
  */
-#define GATT_DB_LOCALLY_INITIATED               0x00
+#define GATT_DB_LOCALLY_INITIATED               0x00U
 
 /** \} */
 
@@ -107,25 +107,25 @@
  */
 
 /** Characteristic Value Local Read Operation */
-#define GATT_DB_CHAR_VALUE_READ_REQ             0x01
+#define GATT_DB_CHAR_VALUE_READ_REQ             0x01U
 
 /** Characteristic Value Local Write Operation */
-#define GATT_DB_CHAR_VALUE_WRITE_REQ            0x02
+#define GATT_DB_CHAR_VALUE_WRITE_REQ            0x02U
 
 /** Characteristic Value Local Write Without Response Operation */
-#define GATT_DB_CHAR_VALUE_WRITE_WITHOUT_REQ    0x03
+#define GATT_DB_CHAR_VALUE_WRITE_WITHOUT_REQ    0x03U
 
 /** Characteristic Client Configuration Local Read Operation */
-#define GATT_DB_CHAR_CLI_CNFG_READ_REQ          0x11
+#define GATT_DB_CHAR_CLI_CNFG_READ_REQ          0x11U
 
 /** Characteristic Client Configuration Local Write Operation */
-#define GATT_DB_CHAR_CLI_CNFG_WRITE_REQ         0x12
+#define GATT_DB_CHAR_CLI_CNFG_WRITE_REQ         0x12U
 
 /** Characteristic Server Configuration Local Read Operation */
-#define GATT_DB_CHAR_SER_CNFG_READ_REQ          0x21
+#define GATT_DB_CHAR_SER_CNFG_READ_REQ          0x21U
 
 /** Characteristic Server Configuration Local Write Operation */
-#define GATT_DB_CHAR_SER_CNFG_WRITE_REQ         0x22
+#define GATT_DB_CHAR_SER_CNFG_WRITE_REQ         0x22U
 
 /** Characteristic Value Peer Read Operation */
 #define GATT_DB_CHAR_PEER_READ_REQ              (GATT_DB_PEER_INITIATED | GATT_DB_READ)
@@ -152,28 +152,28 @@
 #define GATT_DB_CHAR_PEER_PREPARE_WRITE_REQ     (GATT_DB_PEER_INITIATED | GATT_DB_PREPARE)
 
 /** Characteristic Client Configuration Peer Read Operation */
-#define GATT_DB_CHAR_PEER_CLI_CNFG_READ_REQ     0x91
+#define GATT_DB_CHAR_PEER_CLI_CNFG_READ_REQ     0x91U
 
 /** Characteristic Client Configuration Peer Write Operation */
-#define GATT_DB_CHAR_PEER_CLI_CNFG_WRITE_REQ    0x92
+#define GATT_DB_CHAR_PEER_CLI_CNFG_WRITE_REQ    0x92U
 
 /** Characteristic Server Configuration Peer Read Operation */
-#define GATT_DB_CHAR_PEER_SER_CNFG_READ_REQ     0xA1
+#define GATT_DB_CHAR_PEER_SER_CNFG_READ_REQ     0xA1U
 
 /** Characteristic Server Configuration Peer Write Operation */
-#define GATT_DB_CHAR_PEER_SER_CNFG_WRITE_REQ    0xA2
+#define GATT_DB_CHAR_PEER_SER_CNFG_WRITE_REQ    0xA2U
 
 /** Characteristic User Description Peer Read Operation */
-#define GATT_DB_CHAR_PEER_USR_DESC_READ_REQ     0xB1
+#define GATT_DB_CHAR_PEER_USR_DESC_READ_REQ     0xB1U
 
 /** Characteristic User Description Peer Write Operation */
-#define GATT_DB_CHAR_PEER_USR_DESC_WRITE_REQ    0xB2
+#define GATT_DB_CHAR_PEER_USR_DESC_WRITE_REQ    0xB2U
 
 /** Characteristic Higher Layer Defined Descriptor Peer Read Operation */
-#define GATT_DB_CHAR_PEER_HLD_DESC_READ_REQ     0xF1
+#define GATT_DB_CHAR_PEER_HLD_DESC_READ_REQ     0xF1U
 
 /** Characteristic Higher Layer Defined Descriptor Peer Write Operation */
-#define GATT_DB_CHAR_PEER_HLD_DESC_WRITE_REQ    0xF2
+#define GATT_DB_CHAR_PEER_HLD_DESC_WRITE_REQ    0xF2U
 
 /** \} */
 
@@ -190,44 +190,44 @@
  *  Setting this property automatically includes Characteristic Server
  *  Configuration Descriptor to the Characteristic
  */
-#define GATT_DB_CHAR_BROADCAST_PROPERTY                0x00000001
+#define GATT_DB_CHAR_BROADCAST_PROPERTY                0x00000001U
 
 /** Characteristc support Reading its value by peer */
-#define GATT_DB_CHAR_READ_PROPERTY                     0x00000002
+#define GATT_DB_CHAR_READ_PROPERTY                     0x00000002U
 
 /** Characteristc support Writing its value by peer Without Response  */
-#define GATT_DB_CHAR_WRITE_WITHOUT_RSP_PROPERTY        0x00000004
+#define GATT_DB_CHAR_WRITE_WITHOUT_RSP_PROPERTY        0x00000004U
 
 /** Characteristic supports Writing its value by peer */
-#define GATT_DB_CHAR_WRITE_PROPERTY                    0x00000008
+#define GATT_DB_CHAR_WRITE_PROPERTY                    0x00000008U
 
 /**
  *  Characteristic supports Notifying its value to the peer.
  *  Setting this property automatically includes Characteristic Server
  *  Configuration Descriptor to the Characteristic
  */
-#define GATT_DB_CHAR_NOTIFY_PROPERTY                   0x00000010
+#define GATT_DB_CHAR_NOTIFY_PROPERTY                   0x00000010U
 
 /** Characteristic supports Indicating its value to the peer */
-#define GATT_DB_CHAR_INDICATE_PROPERTY                 0x00000020
+#define GATT_DB_CHAR_INDICATE_PROPERTY                 0x00000020U
 
 /** Characteristic supports Signed Write on its value */
-#define GATT_DB_CHAR_SIGNED_WRITE_PROPERTY             0x00000040
+#define GATT_DB_CHAR_SIGNED_WRITE_PROPERTY             0x00000040U
 
 /** Characteristic supports write on its User Description Descriptor */
-#define GATT_DB_CHAR_WRIEABLE_AUX_PROPERTY             0x00000200
+#define GATT_DB_CHAR_WRIEABLE_AUX_PROPERTY             0x00000200U
 
 /** No Auxillary Property */
-#define GATT_DB_NO_AUXILLARY_PROPERTY                  0x00
+#define GATT_DB_NO_AUXILLARY_PROPERTY                  0x00U
 
 /** Characteristic Value is Fixed Length */
-#define GATT_DB_FIXED_LENGTH_PROPERTY                  0x01
+#define GATT_DB_FIXED_LENGTH_PROPERTY                  0x01U
 
-#define GATT_DB_AUTHORIZATION_PROPERTY                 0x02
+#define GATT_DB_AUTHORIZATION_PROPERTY                 0x02U
 
-#define GATT_DB_PEER_SPECIFIC_VAL_PROPERTY             0x40
+#define GATT_DB_PEER_SPECIFIC_VAL_PROPERTY             0x40U
 
-#define GATT_DB_CONST_ATTR_VAL_PROPERTY                0x80
+#define GATT_DB_CONST_ATTR_VAL_PROPERTY                0x80U
 
 /** \} */
 
@@ -244,109 +244,112 @@
  *  (if applicable) describes complete security needs
  */
 /** Service employs Level 0 */
-#define GATT_DB_SER_SECURITY_LEVEL0                    0x00000000
+#define GATT_DB_SER_SECURITY_LEVEL0                    0x00000000U
 
 /** Service employs Level 1 */
-#define GATT_DB_SER_SECURITY_LEVEL1                    0x00000001
+#define GATT_DB_SER_SECURITY_LEVEL1                    0x00000001U
 
 /** Service employs Level 2 */
-#define GATT_DB_SER_SECURITY_LEVEL2                    0x00000002
+#define GATT_DB_SER_SECURITY_LEVEL2                    0x00000002U
+
+/** Service employs Level 3 */
+#define GATT_DB_SER_SECURITY_LEVEL3                    0x00000004U
 
 /** Service employs Mode 1 */
-#define GATT_DB_SER_SECURITY_MODE1                     0x00000010
+#define GATT_DB_SER_SECURITY_MODE1                     0x00000010U
 
 /** Service employs Mode 2 */
-#define GATT_DB_SER_SECURITY_MODE2                     0x00000020
+#define GATT_DB_SER_SECURITY_MODE2                     0x00000020U
 
 /** \cond ignore_this Unused right now */
-#define GATT_DB_SER_MULTIPLE_CLIENTS_SUPPORT           0x00000040
+#define GATT_DB_SER_MULTIPLE_CLIENTS_SUPPORT           0x00000040U
 /** \endcond */
 
 /**
  *  Service is a Secondary Service. If this not used, Service is by default
  *  considered to be Primary
  */
-#define GATT_DB_SER_SECONDARY_SERVICE_PROPERTY         0x00000080
+#define GATT_DB_SER_SECONDARY_SERVICE_PROPERTY         0x00000080U
 
 #ifdef GATT_DB_SUPPORT_128_BIT_UUID
 
 /** Service UUID is 128-bit */
-#define GATT_DB_SER_128_BIT_UUID_FORMAT                0x00008000
+#define GATT_DB_SER_128_BIT_UUID_FORMAT                0x00008000U
 
 #endif /* GATT_DB_SUPPORT_128_BIT_UUID */
 
 /** Set this property to relax all Security on the Service */
-#define GATT_DB_SER_NO_SECURITY_PROPERTY               0x00000000
+#define GATT_DB_SER_NO_SECURITY_PROPERTY               0x00000000U
 
 /**
  *  This is employed to describe Service is not rigid on any Encryption
  *  Key Size. Any Size used by other Services or on the whole by the device
  *  will do
  */
-#define GATT_DB_SER_ENC_KEY_SIZE_DONT_CARE             0x00000000
+#define GATT_DB_SER_ENC_KEY_SIZE_DONT_CARE             0x00000000U
 
 /** Encyrption Key Size 7 Needed for the Service */
-#define GATT_DB_SER_ENCRYPT_KEY_SIZE_7                 0x01000000
+#define GATT_DB_SER_ENCRYPT_KEY_SIZE_7                 0x01000000U
 
 /** Encyrption Key Size 8 Needed for the Service */
-#define GATT_DB_SER_ENCRYPT_KEY_SIZE_8                 0x02000000
+#define GATT_DB_SER_ENCRYPT_KEY_SIZE_8                 0x02000000U
 
 /** Encyrption Key Size 9 Needed for the Service */
-#define GATT_DB_SER_ENCRYPT_KEY_SIZE_9                 0x03000000
+#define GATT_DB_SER_ENCRYPT_KEY_SIZE_9                 0x03000000U
 
 /** Encyrption Key Size 10 Needed for the Service */
-#define GATT_DB_SER_ENCRYPT_KEY_SIZE_10                0x04000000
+#define GATT_DB_SER_ENCRYPT_KEY_SIZE_10                0x04000000U
 
 /** Encyrption Key Size 11 Needed for the Service */
-#define GATT_DB_SER_ENCRYPT_KEY_SIZE_11                0x05000000
+#define GATT_DB_SER_ENCRYPT_KEY_SIZE_11                0x05000000U
 
 /** Encyrption Key Size 12 Needed for the Service */
-#define GATT_DB_SER_ENCRYPT_KEY_SIZE_12                0x06000000
+#define GATT_DB_SER_ENCRYPT_KEY_SIZE_12                0x06000000U
 
 /** Encyrption Key Size 13 Needed for the Service */
-#define GATT_DB_SER_ENCRYPT_KEY_SIZE_13                0x07000000
+#define GATT_DB_SER_ENCRYPT_KEY_SIZE_13                0x07000000U
 
 /** Encyrption Key Size 14 Needed for the Service */
-#define GATT_DB_SER_ENCRYPT_KEY_SIZE_14                0x08000000
+#define GATT_DB_SER_ENCRYPT_KEY_SIZE_14                0x08000000U
 
 /** Encyrption Key Size 15 Needed for the Service */
-#define GATT_DB_SER_ENCRYPT_KEY_SIZE_15                0x09000000
+#define GATT_DB_SER_ENCRYPT_KEY_SIZE_15                0x09000000U
 
 /** Encyrption Key Size 16 Needed for the Service */
-#define GATT_DB_SER_ENCRYPT_KEY_SIZE_16                0x0A000000
+#define GATT_DB_SER_ENCRYPT_KEY_SIZE_16                0x0A000000U
 
 /** \cond ignore_this unused */
-#define GATT_DB_SER_NO_ENCRYPT_PROPERTY                0x00000000
+#define GATT_DB_SER_NO_ENCRYPT_PROPERTY                0x00000000U
 
 /**
  *  Macros to describe the Transport access of the Service over BR/EDR only,
  *  LE only or Any Tranport.
  */
 /** Service accessible over BR/EDR Link Only */
-#define GATT_DB_SER_SUPPORT_BR_LINK_TYPE               0x10000000
+#define GATT_DB_SER_SUPPORT_BR_LINK_TYPE               0x10000000U
 
 /** Service accessble over LE Link Only */
-#define GATT_DB_SER_SUPPORT_LE_LINK_TYPE               0x20000000
+#define GATT_DB_SER_SUPPORT_LE_LINK_TYPE               0x20000000U
 
 /** Service accessible over Any Link */
-#define GATT_DB_SER_SUPPORT_ANY_LINK_TYPE              0xF0000000
+#define GATT_DB_SER_SUPPORT_ANY_LINK_TYPE              0xF0000000U
 /** \endcond */
 
 /** \} */
 
 /** \cond ignore_this This Block is for internal use */
 
-#define GATT_DB_SECURITY_MASK                          0x00000033
-#define GATT_DB_ENC_KEY_SIZE_MASK                      0x0F000000
-#define GATT_DB_SER_ENC_KEY_SIZE_LAG                   6
+#define GATT_DB_SECURITY_MASK                          0x00000037U
+#define GATT_DB_ENC_KEY_SIZE_MASK                      0x0F000000U
+#define GATT_DB_SER_ENC_KEY_SIZE_LAG                   6U
 
-#define GATT_PRIMARY_SERVICE_TYPE_OFFSET      0
-#define GATT_SECONDARY_SERVICE_TYPE_OFFSET    2
-#define GATT_INCLUDE_TYPE_OFFSET              4
-#define GATT_CHARACTERISTIC_TYPE_OFFSET       6
+#define GATT_PRIMARY_SERVICE_TYPE_OFFSET      0U
+#define GATT_SECONDARY_SERVICE_TYPE_OFFSET    2U
+#define GATT_INCLUDE_TYPE_OFFSET              4U
+#define GATT_CHARACTERISTIC_TYPE_OFFSET       6U
 
 #define GATT_VERIFY_UUID_VALUE(v,o,l)\
-        ((0 == BT_mem_cmp((v),GATT_GET_UUID_VALUE(o),(l)))? BT_TRUE : BT_FALSE)
+        ((0U == BT_mem_cmp((v),GATT_GET_UUID_VALUE(o),(l)))? BT_TRUE : BT_FALSE)
 
 #define GATT_GET_UUID_VALUE(o)\
         &gatt_const_uuid_arr_g[(o)]
@@ -358,20 +361,20 @@
         GATT_GET_UUID_VALUE(GATT_DB_GET_UUID_OFFSET(i))
 
 #define GATT_CHK_ATTR_HNDL_AUTHORIZATION(hndl) \
-        (GATT_DB_AUTHORIZATION_PROPERTY == \
-        (gatt_db_attr_table_g[( hndl )].aux_property & GATT_DB_AUTHORIZATION_PROPERTY)) ? BT_TRUE : BT_FALSE
+        ((GATT_DB_AUTHORIZATION_PROPERTY == \
+        (gatt_db_attr_table_g[( hndl )].aux_property & GATT_DB_AUTHORIZATION_PROPERTY)) ? BT_TRUE : BT_FALSE)
 
 #ifdef GATT_DB_DYNAMIC
 /** GATT Characteristic and Descriptor permissions */
-#define    GATT_DB_PERM_NONE                    0x0000
-#define    GATT_DB_PERM_READ                    0x0001
-#define    GATT_DB_PERM_READ_ENCRYPTED          0x0002
-#define    GATT_DB_PERM_READ_ENCRYPTED_MITM     0x0004
-#define    GATT_DB_PERM_WRITE                   0x0010
-#define    GATT_DB_PERM_WRITE_ENCRYPTED         0x0020
-#define    GATT_DB_PERM_WRITE_ENCRYPTED_MIMT    0x0040
-#define    GATT_DB_PERM_WRITE_SIGNED            0x0080
-#define    GATT_DB_PERM_WRITE_SIGNED_MITM       0x0100
+#define    GATT_DB_PERM_NONE                    0x0000U
+#define    GATT_DB_PERM_READ                    0x0001U
+#define    GATT_DB_PERM_READ_ENCRYPTED          0x0002U
+#define    GATT_DB_PERM_READ_ENCRYPTED_MITM     0x0004U
+#define    GATT_DB_PERM_WRITE                   0x0010U
+#define    GATT_DB_PERM_WRITE_ENCRYPTED         0x0020U
+#define    GATT_DB_PERM_WRITE_ENCRYPTED_MIMT    0x0040U
+#define    GATT_DB_PERM_WRITE_SIGNED            0x0080U
+#define    GATT_DB_PERM_WRITE_SIGNED_MITM       0x0100U
 
 #endif /* GATT_DB_DYNAMIC */
 
@@ -381,7 +384,7 @@
  *  This is dummy macro for Characteristic Value UUID used to locally
  *  read or update Characteristic Value using \ref GATT_DB_HANDLE.
  */
-#define GATT_DUMMY_CHAR_VALUE_UUID                           0x0000
+#define GATT_DUMMY_CHAR_VALUE_UUID                           0x0000U
 
 #ifdef GATT_DB_HASH_SUPPORT
  /**
@@ -392,7 +395,7 @@
  */
 
 /** GATT Database Hash Calculation Complete Event Indication */
-#define GATT_DB_HASH_IND          0x01
+#define GATT_DB_HASH_IND          0x01U
 
 /** \} */
 #endif /* GATT_DB_HASH_SUPPORT */
@@ -732,7 +735,7 @@ typedef struct _GATT_DB_DYNAMIC_CONFIG
 /** Macro to fetch needed Encryption Key Size for a Service */
 #define GATT_DB_GET_NEEDED_ENC_KEY_SIZE(sid)\
         (UCHAR)((GATT_DB_SER_ENC_KEY_SIZE_DONT_CARE == \
-        ((gatt_service_g[(sid)].desc & GATT_DB_ENC_KEY_SIZE_MASK) >> 24)) ? \
+        ((gatt_service_g[(sid)].desc & GATT_DB_ENC_KEY_SIZE_MASK) >> 24U)) ? \
         GATT_DB_SER_ENC_KEY_SIZE_DONT_CARE : (((gatt_service_g[(sid)].desc & \
         GATT_DB_ENC_KEY_SIZE_MASK) >> 24) + GATT_DB_SER_ENC_KEY_SIZE_LAG))
 
@@ -774,14 +777,14 @@ typedef struct _GATT_DB_DYNAMIC_CONFIG
 
 /* TODO: Check if the allocation is success */
 #define BT_INIT_GLOBAL_ARRAY(type, var, s, i)   \
-        var = BT_alloc_mem((s) * sizeof(type)); \
-        COMMON_TRC(BT_MODULE_ID_GATT_DB, "Allocated %lu bytes for %s. Ptr: %p\n", ((s) * sizeof(type)), #var, var); \
-        BT_mem_set(var, (i), ((s) * sizeof(type)))
+        (var) = BT_alloc_mem((s) * sizeof(type)); \
+        COMMON_TRC(BT_MODULE_ID_GATT_DB, "Allocated %lu bytes for %s. Ptr: %p\n", ((s) * sizeof(type)), #var, (var)); \
+        BT_mem_set((var), (i), ((s) * sizeof(type)))
 
 #define BT_DEINIT_GLOBAL_ARRAY(var) \
-        if (NULL != var)            \
+        if (NULL != (var))            \
         {                           \
-            COMMON_TRC(BT_MODULE_ID_GATT_DB, "Freeing %s with Allocated Ptr: %p\n", #var, var);\
+            COMMON_TRC(BT_MODULE_ID_GATT_DB, "Freeing %s with Allocated Ptr: %p\n", #var, (var));\
             BT_free_mem((var));     \
         }
 
@@ -842,6 +845,51 @@ typedef struct _GATT_DB_SERVICE_INFO
 
     /** If this service is primary or not */
     UCHAR                is_primary;
+
+    /**
+     * Security Requrirements for the Service
+     * Logical OR of desired combinations of
+     * 1. Security Mode
+     * 2. Security Level
+     * 3. Encryption Key Size
+     *
+     * Acceptable values for Security Mode are:
+     * \ref GATT_DB_SER_SECURITY_MODE1
+     * \ref GATT_DB_SER_SECURITY_MODE2
+     *
+     * Acceptable values for Security Level are:
+     * \ref GATT_DB_SER_SECURITY_LEVEL1
+     * \ref GATT_DB_SER_SECURITY_LEVEL2
+     * \ref GATT_DB_SER_SECURITY_LEVEL3
+     *
+     * Acceptable values for Encryption Key Size are:
+     * \ref GATT_DB_SER_ENCRYPT_KEY_SIZE_7
+     * \ref GATT_DB_SER_ENCRYPT_KEY_SIZE_8
+     * \ref GATT_DB_SER_ENCRYPT_KEY_SIZE_9
+     * \ref GATT_DB_SER_ENCRYPT_KEY_SIZE_10
+     * \ref GATT_DB_SER_ENCRYPT_KEY_SIZE_11
+     * \ref GATT_DB_SER_ENCRYPT_KEY_SIZE_12
+     * \ref GATT_DB_SER_ENCRYPT_KEY_SIZE_13
+     * \ref GATT_DB_SER_ENCRYPT_KEY_SIZE_14
+     * \ref GATT_DB_SER_ENCRYPT_KEY_SIZE_15
+     * \ref GATT_DB_SER_ENCRYPT_KEY_SIZE_16
+     * When the Service does not mandate any specific Key size
+     * \ref GATT_DB_SER_ENC_KEY_SIZE_DONT_CARE shall be used.
+     *
+     * When No Security is mandated for the service
+     * Value \ref GATT_DB_SER_NO_SECURITY_PROPERTY shall be used.
+     */
+    GATT_DB_SERVICE_DESC sec_req;
+
+    /**
+     * Transport Requrirements for the Service.
+     * This describes the Transport on which this required
+     * to be operational.
+     * \ref GATT_DB_SER_SUPPORT_ANY_LINK_TYPE
+     * \ref GATT_DB_SER_SUPPORT_LE_LINK_TYPE
+     * \ref GATT_DB_SER_SUPPORT_BR_LINK_TYPE
+     */
+    GATT_DB_SERVICE_DESC link_req;
 
 } GATT_DB_SERVICE_INFO;
 #endif /* GATT_DB_DYNAMIC */
@@ -1487,6 +1535,24 @@ API_RESULT BT_gatt_db_peer_session_shutdown_handler
  */
 API_RESULT BT_gatt_db_calculate_db_hash(GATT_DB_NTF_CB hash_cb);
 #endif /* GATT_DB_HASH_SUPPORT */
+
+
+/**
+ *  \brief To verify the if the security is satified for a given service and
+ *  the remote device corresponding to the \ref GATT_DB_HANDLE
+ *
+ *  \par Description:
+ *  This API checks if the Security permissions corresponding to a given service
+ *  is satisfied w.r.t to the corresponding remote device.
+ *
+ *  \param [in] handle
+ *              \ref GATT_DB_HANDLE, identifs the Service and Remote Device
+ *
+ *  \return API_RESULT
+ *          - API_SUCCESS: If successful.
+ *          - Error Codes: Error code describing cause of failure.
+ */
+API_RESULT BT_gatt_db_assert_security(GATT_DB_HANDLE * handle);
 
 #ifdef GATT_DB_DYNAMIC
 /**

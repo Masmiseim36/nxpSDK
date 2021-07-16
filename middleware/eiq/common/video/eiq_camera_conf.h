@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 NXP
+ * Copyright 2020-2021 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -16,16 +16,18 @@ extern "C" {
 #include "fsl_camera_receiver.h"
 #include "fsl_camera_device.h"
 #include "eiq_display_conf.h"
+
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
+
 #define DEMO_CAMERA_MT9M114 0
 #define DEMO_CAMERA_OV7725 1
 #define DEMO_CAMERA_RM68191 2
 #define DEMO_CAMERA_RM68200 3
 
 #ifndef DEMO_CAMERA
-#if defined(CPU_MIMXRT1052DVL6B) || defined(CPU_MIMXRT1062DVL6A)
+#if defined(CPU_MIMXRT1052DVL6B) || defined(CPU_MIMXRT1062DVL6A) || defined(CPU_MIMXRT1064DVL6A)
 
 #ifndef DEMO_CAMERA
 #define DEMO_CAMERA DEMO_CAMERA_MT9M114
@@ -66,6 +68,10 @@ extern "C" {
 #define DEMO_ROTATE_FRAME 0
 #endif
 
+/*******************************************************************************
+ * Variables
+ ******************************************************************************/
+
 extern camera_device_handle_t cameraDevice;
 extern camera_receiver_handle_t cameraReceiver;
 
@@ -73,11 +79,19 @@ extern camera_receiver_handle_t cameraReceiver;
  * API
  ******************************************************************************/
 
-/* This function should be called before camera pins initialization */
+/*!
+ * @brief Prepares camera for initialization.
+ */
 void BOARD_EarlyPrepareCamera(void);
 
+/*!
+ * @brief Initializes camera controler.
+ */
 void BOARD_InitCameraResource(void);
 
+/*!
+ * @brief Initializes Mipi Csi Clock.
+ */
 void BOARD_InitMipiCsi(void);
 
 #if defined(__cplusplus)

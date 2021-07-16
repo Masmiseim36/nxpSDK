@@ -3,7 +3,7 @@
  *  @brief This file contains IEEE information element related
  *  definitions used in MLAN and MOAL module.
  *
- *  Copyright 2008-2020 NXP
+ *  Copyright 2008-2021 NXP
  *
  *  NXP CONFIDENTIAL
  *  The source code contained or described herein and all documents related to
@@ -781,6 +781,47 @@ typedef MLAN_PACK_START struct _ExtCap_t
     t_u8 TDLSSupport : 1;          /* bit 37 */
     t_u8 TDLSProhibited : 1;       /* bit 38 */
     t_u8 TDLSChlSwitchProhib : 1;  /* bit 39 */
+    t_u8 rsvdBit40 : 1;            /* bit 40 */
+    t_u8 rsvdBit41 : 1;            /* bit 41 */
+    t_u8 rsvdBit42 : 1;            /* bit 42 */
+    t_u8 rsvdBit43 : 1;            /* bit 43 */
+    t_u8 rsvdBit44 : 1;            /* bit 44 */
+    t_u8 rsvdBit45 : 1;            /* bit 45 */
+    t_u8 rsvdBit46 : 1;            /* bit 46 */
+    t_u8 rsvdBit47 : 1;            /* bit 47 */
+    t_u8 rsvdBit48 : 1;            /* bit 48 */
+    t_u8 rsvdBit49 : 1;            /* bit 49 */
+    t_u8 rsvdBit50 : 1;            /* bit 50 */
+    t_u8 rsvdBit51 : 1;            /* bit 51 */
+    t_u8 rsvdBit52 : 1;            /* bit 52 */
+    t_u8 rsvdBit53 : 1;            /* bit 53 */
+    t_u8 rsvdBit54 : 1;            /* bit 54 */
+    t_u8 rsvdBit55 : 1;            /* bit 55 */
+    t_u8 rsvdBit56 : 1;            /* bit 56 */
+    t_u8 rsvdBit57 : 1;            /* bit 57 */
+    t_u8 rsvdBit58 : 1;            /* bit 58 */
+    t_u8 rsvdBit59 : 1;            /* bit 59 */
+    t_u8 rsvdBit60 : 1;            /* bit 60 */
+    t_u8 TDLSWildBandwidth : 1;    /* bit 61 */
+    t_u8 OperModeNtf : 1;          /* bit 62 */
+    t_u8 MaxAMSDU0 : 1;            /* bit 63 */
+    t_u8 MaxAMSDU1 : 1;            /* bit 64 */
+    t_u8 chanSchedMgnt : 1;        /* bit 65 */
+    t_u8 rsvdBit66 : 1;            /* bit 66 */
+    t_u8 NCC : 1;                  /* bit 67 */
+    t_u8 rsvdBit68 : 1;            /* bit 68 */
+    t_u8 CAQ : 1;                  /* bit 69 */
+    t_u8 FTMR : 1;                 /* bit 70 */
+    t_u8 FTMI : 1;                 /* bit 71 */
+    t_u8 FILS : 1;                 /* bit 72 */
+    t_u8 rsvdBit73 : 1;            /* bit 73 */
+    t_u8 rsvdBit74 : 1;            /* bit 74 */
+    t_u8 rsvdBit75 : 1;            /* bit 75 */
+    t_u8 rsvdBit76 : 1;            /* bit 76 */
+    t_u8 rsvdBit77 : 1;            /* bit 77 */
+    t_u8 rsvdBit78 : 1;            /* bit 78 */
+    t_u8 rsvdBit79 : 1;            /* bit 79 */
+
 } MLAN_PACK_END ExtCap_t, *pExtCap_t;
 
 /** Overlapping BSS Scan Parameters Data */
@@ -1479,6 +1520,7 @@ typedef struct _BSSDescriptor_t
     IEEEtypes_VHTOprat_t vht_oprat_saved;
     IEEEtypes_VHTtxpower_t vht_txpower_saved;
     IEEEtypes_OperModeNtf_t poper_mode_saved;
+    IEEEtypes_ExtCap_t ext_cap_saved;
     /*
       fixme: The legacy code used IEEEtypes_RSN_IE_t which is of 24
       bytes. There seems to be confusion about the exact structure to

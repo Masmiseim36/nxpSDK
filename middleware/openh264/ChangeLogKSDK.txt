@@ -1,0 +1,12 @@
+/**
+@page middleware_log Middleware Change Log
+
+@section OpenH264 OpenH264 for KSDK
+
+Current version is OpenH264 v2.1.1.
+
+  - 2.1.1_rev0
+    - Initial version. Changes when integrate with SDK are marked using the
+	  macro __NXP_MSDK__.
+
+*/

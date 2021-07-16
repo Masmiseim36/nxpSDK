@@ -206,7 +206,7 @@
  * You can comment this macro if you provide your own alternate implementation.
  *
  */
-#if USE_RTOS && defined(FSL_RTOS_FREE_RTOS)
+#if USE_RTOS && (defined(FSL_RTOS_FREE_RTOS) || defined(SDK_OS_FREE_RTOS))
 #define MBEDTLS_FREESCALE_FREERTOS_CALLOC_ALT
 #endif
 
@@ -346,17 +346,11 @@
 #define MBEDTLS_SHA256_PROCESS_ALT
 #endif
 
-#if USE_RTOS && defined(FSL_RTOS_FREE_RTOS)
-#include "FreeRTOS.h"
-
-void * pvCalloc( size_t xNumElements, size_t xSize );
+#include <fsl_sss_types.h>
 
 #define MBEDTLS_PLATFORM_MEMORY
-#define MBEDTLS_PLATFORM_STD_CALLOC pvCalloc
-#define MBEDTLS_PLATFORM_STD_FREE vPortFree
-#define CONFIG_MEDTLS_USE_AFR_MEMORY
-
-#endif /* USE_RTOS*/
+#define MBEDTLS_PLATFORM_STD_CALLOC SSS_CALLOC
+#define MBEDTLS_PLATFORM_STD_FREE SSS_FREE
 
 /* Reduce RAM usage.*/
 /* More info: https://tls.mbed.org/kb/how-to/reduce-mbedtls-memory-and-storage-footprint */
@@ -1847,7 +1841,9 @@ void * pvCalloc( size_t xNumElements, size_t xSize );
  *
  * Uncomment this to allow your own alternate threading implementation.
  */
-//#define MBEDTLS_THREADING_ALT
+#if defined(USE_RTOS) && USE_RTOS == 1
+#define MBEDTLS_THREADING_ALT
+#endif
 
 /**
  * \def MBEDTLS_THREADING_PTHREAD
@@ -2948,7 +2944,9 @@ void * pvCalloc( size_t xNumElements, size_t xSize );
  *
  * Enable this layer to allow use of mutexes within mbed TLS
  */
-//#define MBEDTLS_THREADING_C
+#if defined(USE_RTOS) && USE_RTOS == 1
+#define MBEDTLS_THREADING_C
+#endif
 
 /**
  * \def MBEDTLS_TIMING_C

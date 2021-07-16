@@ -64,15 +64,6 @@ enum
     kSerialNorQpiMode_Cmd_0x61 = 5,
 };
 
-enum
-{
-    kSerialNorType_StandardSPI, //!< Device that support Standard SPI and Extended SPI mode
-    kSerialNorType_HyperBus,    //!< Device that supports HyperBus only
-    kSerialNorType_XPI,         //!< Device that works under DPI, QPI or OPI mode
-    kSerialNorType_NoCmd, //!< Device that works under No command mode (XIP mode/Performance Enhance mode/continous read
-    //! mode)
-};
-
 typedef struct _lut_seq
 {
     uint32_t lut[4];
@@ -3450,7 +3441,7 @@ status_t flexspi_nor_flash_erase(uint32_t instance, flexspi_nor_config_t *config
         {
             while (aligned_start < aligned_end)
             {
-                bool is_addr_block_aligned = !(aligned_start & ~(config->blockSize));
+                bool is_addr_block_aligned = !(aligned_start & (config->blockSize - 1u));
                 uint32_t remaining_size = (aligned_end - aligned_start);
                 if (is_addr_block_aligned && (remaining_size >= config->blockSize))
                 {

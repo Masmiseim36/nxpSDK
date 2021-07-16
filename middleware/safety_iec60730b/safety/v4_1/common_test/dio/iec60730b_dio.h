@@ -22,7 +22,7 @@
 #define IEC60730B_DIO_H_
 
 /*
- * List of devices and supported functions can be found in library user guide, 
+ * List of devices and supported functions can be found in library user guide,
  * section Core self test library - source code version.
  */
 
@@ -30,11 +30,11 @@
  * Macros
  ******************************************************************************/
 /* Return values */
-#define FS_FAIL_DIO  (FS_DIO_CODE + 0x1U)
+#define FS_FAIL_DIO (FS_DIO_CODE + 0x1U)
 
 /******************************************************************************
  * Macros for GPIO pins
-******************************************************************************/
+ ******************************************************************************/
 /* LPC */
 #define FS_IOCON_PIO_2BIT_MASK 0x3UL
 #define FS_IOCON_PIO_PULL_DOWN 0x1UL
@@ -67,7 +67,7 @@ typedef struct
 /* LPC */
 typedef struct
 {
-    uint8_t byte_backup;   /* Port state register */ 
+    uint8_t byte_backup;   /* Port state register */
     uint32_t dir_backup;   /* Port direction register */
     uint32_t iocon_backup; /* IOCON settings register */
 } fs_dio_backup_lpc_t;
@@ -77,9 +77,9 @@ typedef struct
 {
     uint32_t gpio;
     uint32_t pcr;
-    uint8_t  pinNum;
-    uint8_t  pinDir;
-    uint8_t  pinMux;
+    uint8_t pinNum;
+    uint8_t pinDir;
+    uint8_t pinMux;
     fs_dio_backup_t sTestedPinBackup;
 } fs_dio_test_t;
 
@@ -101,12 +101,12 @@ typedef struct
 /* Safety DIO test item LPC */
 typedef struct
 {
-    uint8_t  *pPort_byte;  /* Adress of byte register in GPIO */
+    uint8_t *pPort_byte;   /* Adress of byte register in GPIO */
     uint32_t *pPort_dir;   /* Adress of dir register in GPIO */
     uint32_t *pPort_Iocon; /* Adress of concrete IOCON register */
     uint32_t iocon_mode_shift;
-    uint8_t  pinNum;
-    uint8_t  pinDir;
+    uint8_t pinNum;
+    uint8_t pinDir;
     uint32_t gpio_clkc_shift;
     fs_dio_backup_lpc_t sTestedPinBackup;
 } fs_dio_test_lpc_t;
@@ -129,7 +129,7 @@ FS_RESULT FS_DIO_Input(fs_dio_test_t *pTestedPin, bool_t expectedValue);
 
 /*******************************************************************************
  *
- * @brief    This function executes the digital output test. 
+ * @brief    This function executes the digital output test.
  *           The test is focused only to test one digital pin.
  *
  * @param    *pTestedPin - pointer to tested pin struct.
@@ -143,7 +143,7 @@ FS_RESULT FS_DIO_Output(fs_dio_test_t *pTestedPin, uint32_t delay);
 
 /*******************************************************************************
  *
- * @brief    This function executes the digital output test. 
+ * @brief    This function executes the digital output test.
  *           The test is focused only to test one digital pin.
  *
  * @param    *pTestedPin - pointer to tested pin struct.
@@ -157,7 +157,7 @@ FS_RESULT FS_DIO_Output_IMXRT(fs_dio_test_imx_t *pTestedPin, uint32_t delay);
 
 /*******************************************************************************
  *
- * @brief    This function executes the digital output test. 
+ * @brief    This function executes the digital output test.
  *           The test is focused only to test one digital pin.
  *
  * @param    *pTestedPin - pointer to tested pin struct.
@@ -171,7 +171,7 @@ FS_RESULT FS_DIO_Output_IMX8M(fs_dio_test_imx_t *pTestedPin, uint32_t delay);
 
 /*******************************************************************************
  *
- * @brief    This function executes the digital output test. 
+ * @brief    This function executes the digital output test.
  *           The test is focused only to test one digital pin.
  *
  * @param    *pTestedPin - pointer to tested pin struct.

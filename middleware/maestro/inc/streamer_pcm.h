@@ -177,7 +177,8 @@ int streamer_pcm_setparams(pcm_rtos_t *pcm,
                            uint32_t sample_rate,
                            uint32_t bit_width,
                            uint8_t num_channels,
-						   bool transfer);
+						   bool transfer,
+                           bool dummy_tx);
 
 /*!
  * @brief Get PCM interface parameters

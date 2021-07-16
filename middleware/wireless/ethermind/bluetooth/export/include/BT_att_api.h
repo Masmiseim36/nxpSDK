@@ -46,43 +46,43 @@
  */
 
 /** ATT Default MTU */
-#define ATT_DEFAULT_MTU                   23
+#define ATT_DEFAULT_MTU                   23U
 
 /** ATT Signature Size in Signed Write */
-#define ATT_AUTH_SIGNATURE_SIZE           12
+#define ATT_AUTH_SIGNATURE_SIZE           12U
 
 /** ATT Execute Write Cancel Flag */
-#define ATT_EXECUTE_WRITE_CANCEL_FLAG   0x00
+#define ATT_EXECUTE_WRITE_CANCEL_FLAG   0x00U
 
 /** ATT Execute Write Execute Flag */
-#define ATT_EXECUTE_WRITE_EXEC_FLAG     0x01
+#define ATT_EXECUTE_WRITE_EXEC_FLAG     0x01U
 
 /** ATT Identification for 16-bit UUID Format */
-#define ATT_16_BIT_UUID_FORMAT          0x01
+#define ATT_16_BIT_UUID_FORMAT          0x01U
 
 /** ATT Identification for 128-bit UUID Format */
-#define ATT_128_BIT_UUID_FORMAT         0x02
+#define ATT_128_BIT_UUID_FORMAT         0x02U
 
 /** ATT 16-bit UUID Size */
-#define ATT_16_BIT_UUID_SIZE               2
+#define ATT_16_BIT_UUID_SIZE               2U
 
 /** ATT 128-bit UUID Size */
-#define ATT_128_BIT_UUID_SIZE             16
+#define ATT_128_BIT_UUID_SIZE             16U
 
 /** ATT Connection Instance Initialization Value. */
-#define ATT_CON_ID_INIT_VAL             0xFF
+#define ATT_CON_ID_INIT_VAL             0xFFU
 
 /** ATT Application Callback Initialization Value. */
 #define ATT_APPL_CB_INIT_VAL               NULL
 
 /** ATT Invalid Attribute Handle Value */
-#define ATT_INVALID_ATTR_HANDLE_VAL      0x0000
+#define ATT_INVALID_ATTR_HANDLE_VAL      0x0000U
 
 /** ATT Attribute Handle Start Range */
-#define ATT_ATTR_HANDLE_START_RANGE      0x0001
+#define ATT_ATTR_HANDLE_START_RANGE      0x0001U
 
 /** ATT Attribute Handle End Range */
-#define ATT_ATTR_HANDLE_END_RANGE        0xFFFF
+#define ATT_ATTR_HANDLE_END_RANGE        0xFFFFU
 
 /** \} */
 
@@ -100,25 +100,25 @@
  * Invalid Handle error code is used in the case when the ATT handle in the
  * ATT request PDU is invalid.
  */
-#define ATT_INVALID_HANDLE                          0x01
+#define ATT_INVALID_HANDLE                          0x01U
 
 /**
  * Read Not Permitted error code is used in the case when the permission to
  * read the value of an ATT handle is not permitted on the ATT server.
  */
-#define ATT_READ_NOT_PERMITTED                      0x02
+#define ATT_READ_NOT_PERMITTED                      0x02U
 
 /**
  * write Not Permitted error code is used in the case when the permission to
  * write the value of an ATT handle is not permitted on the ATT server.
  */
-#define ATT_WRITE_NOT_PERMITTED                     0x03
+#define ATT_WRITE_NOT_PERMITTED                     0x03U
 
 /**
  * Invalid PDU error code is used in the case when the format of the PDU sent
  * from the ATT Client is incorrect.
  */
-#define ATT_INVALID_PDU                             0x04
+#define ATT_INVALID_PDU                             0x04U
 
 /**
  * Insufficient Authentication error code is used in the case when
@@ -126,35 +126,35 @@
  * attribute requires that the link be authenticated before any client can access
  * it.
  */
-#define ATT_INSUFFICIENT_AUTHENTICATION             0x05
+#define ATT_INSUFFICIENT_AUTHENTICATION             0x05U
 
 /**
  * Request not supported error code is used in the case when
  * the server does not support the processing of an ATT request sent from the
  * client.
  */
-#define ATT_REQUEST_NOT_SUPPORTED                   0x06
+#define ATT_REQUEST_NOT_SUPPORTED                   0x06U
 
 /**
  * Invalid Offset error code is used in the case when
  * the offset sent by the client in the Read blob/Prepare Write Request is
  * invalid with respect to the length of the value in the server.
  */
-#define ATT_INVALID_OFFSET                          0x07
+#define ATT_INVALID_OFFSET                          0x07U
 
 /**
  * Insufficient Authorization error code is used in the case when
  * the ATT server does not Authorize the client and hence prohibiting the
  * client from reading the handle value.
  */
-#define ATT_INSUFFICIENT_AUTHORIZATION              0x08
+#define ATT_INSUFFICIENT_AUTHORIZATION              0x08U
 
 /**
  * Write queue full error code is used when there is no more space left in the
  * prepare write queue on the server to entertain any more prepare writes from a
  * client.
  */
-#define ATT_PREPARE_WRITE_QUEUE_FULL                0x09
+#define ATT_PREPARE_WRITE_QUEUE_FULL                0x09U
 
 /**
  * Attribute not found error is used when the ATT server cannot find any handles
@@ -163,14 +163,14 @@
  * response to the following request PDUs - Find Information, Find by Type Value,
  * Read by Type, Read by Group Type requests.
  */
-#define ATT_ATTRIBUTE_NOT_FOUND                     0x0A
+#define ATT_ATTRIBUTE_NOT_FOUND                     0x0AU
 
 /**
  * Attribute Not Long error code is used when the client tries to read or write
  * a Attribute handle's value which cannot be read or written through Read Blob
  * or multiple prepare write requests.
  */
-#define ATT_ATTRIBUTE_NOT_LONG                      0x0B
+#define ATT_ATTRIBUTE_NOT_LONG                      0x0BU
 
 /**
  * Insufficient encryption key size error code is used when the client tries to
@@ -178,19 +178,19 @@
  * with a key of certain minimum key size and the current link is encrypted
  * with a key of lesser size than the minimum required.
  */
-#define ATT_INSUFFICIENT_ENC_KEY_SIZE               0x0C
+#define ATT_INSUFFICIENT_ENC_KEY_SIZE               0x0CU
 
 /**
  * Invalid Attribute length error code is used when the Attribute value's
  * length is not correct to process the request containing the value.
  */
-#define ATT_INVALID_ATTRIBUTE_LEN                   0x0D
+#define ATT_INVALID_ATTRIBUTE_LEN                   0x0DU
 
 /**
  * Unlikely error is used when the processing of the Attribute request has
  * encountered an error that is not covered by any other error code.
  */
-#define ATT_UNLIKELY_ERROR                          0x0E
+#define ATT_UNLIKELY_ERROR                          0x0EU
 
 /**
  * Insufficient encryption error code is used when the client tries to read or
@@ -198,53 +198,53 @@
  * link is currently not encrypted.
  *
  */
-#define ATT_INSUFFICIENT_ENCRYPTION                 0x0F
+#define ATT_INSUFFICIENT_ENCRYPTION                 0x0FU
 
 /**
  * Unsupported Group Type error code is used when the Attribute type requested
  * in the Read by Group Type request is not a valid grouping attribute on the
  * server.
  */
-#define ATT_UNSUPPORTED_GROUP_TYPE                  0x10
+#define ATT_UNSUPPORTED_GROUP_TYPE                  0x10U
 
 /**
  * Insufficient Resources error code is used when the ATT server does not have
  * enough resources such as memory etc. to process the request from the client.
  */
-#define ATT_INSUFFICIENT_RESOURCES                  0x11
+#define ATT_INSUFFICIENT_RESOURCES                  0x11U
 
 /**
  * Database Out of Sync error code is used when the ATT server has updated/changed
  * or modified its Attribute Database which the Peer Client is unaware of.
  */
-#define ATT_DB_OUT_OF_SYNC                          0x12
+#define ATT_DB_OUT_OF_SYNC                          0x12U
 
 /**
  * Attribute parameter value not allowed error code is used when the ATT client
  * attempts to set an attribute value that is not allowed in the current
  * circumstances.
  */
-#define ATT_PARAM_VAL_NOT_ALLOWED                   0x13
+#define ATT_PARAM_VAL_NOT_ALLOWED                   0x13U
 
 /**
  * Client Characteristic Configuration Descriptor Improperly Configured error
  * code is used when a Client Characteristic Configuration descriptor is not
  * configured according to the requirements of the profile or service.
  */
-#define ATT_CCD_IMPROPERLY_CONFIGURED               0xFD
+#define ATT_CCD_IMPROPERLY_CONFIGURED               0xFDU
 
 /**
  * Procedure Already in Progress error code is used when a profile or service
  * request cannot be serviced because an operation that has been previously
  * triggered is still in progress.
  */
-#define ATT_PROCEDURE_ALREADY_IN_PROGRESS           0xFE
+#define ATT_PROCEDURE_ALREADY_IN_PROGRESS           0xFEU
 
 /**
  * Out of Range error code is used when an attribute value is out of range as
  * defined by a profile or service specification.
  */
-#define ATT_OUT_OF_RANGE                            0xFF
+#define ATT_OUT_OF_RANGE                            0xFFU
 
 /** \} */
 
@@ -263,16 +263,16 @@
  *  registered using \ref BT_att_register.
  */
 /** Request from Peer to estalish Connection Oriented Channel for ATT */
-#define ATT_CONNECT_REQ           0x80
+#define ATT_CONNECT_REQ           0x80U
 
 /** Transport Connection Event */
-#define ATT_CONNECTION_IND        0x81
+#define ATT_CONNECTION_IND        0x81U
 
 /** Transport Disconnection Event */
-#define ATT_DISCONNECTION_IND     0x82
+#define ATT_DISCONNECTION_IND     0x82U
 
 /** Transport Flow Control Indication (On or Off) for Transmission */
-#define ATT_TX_FLOW_IND           0x90
+#define ATT_TX_FLOW_IND           0x90U
 /** \} */
 
 /**
@@ -294,64 +294,64 @@
  */
 
 /** ATT Error Response PDU */
-#define ATT_ERROR_RSP              0x01
+#define ATT_ERROR_RSP              0x01U
 
 /** ATT Exchange MTU Request PDU */
-#define ATT_XCHNG_MTU_REQ          0x02
+#define ATT_XCHNG_MTU_REQ          0x02U
 
 /** ATT Exchange MTU Response PDU */
-#define ATT_XCHNG_MTU_RSP          0x03
+#define ATT_XCHNG_MTU_RSP          0x03U
 
 /** ATT Find Information Request PDU */
-#define ATT_FIND_INFO_REQ          0x04
+#define ATT_FIND_INFO_REQ          0x04U
 
 /** ATT Find Information Response PDU */
-#define ATT_FIND_INFO_RSP          0x05
+#define ATT_FIND_INFO_RSP          0x05U
 
 /** ATT Find By Type Value Request PDU */
-#define ATT_FIND_BY_TYPE_VAL_REQ   0x06
+#define ATT_FIND_BY_TYPE_VAL_REQ   0x06U
 
 /** ATT Find By Type Value Response PDU */
-#define ATT_FIND_BY_TYPE_VAL_RSP   0x07
+#define ATT_FIND_BY_TYPE_VAL_RSP   0x07U
 
 /** ATT Read By Type Request PDU */
-#define ATT_READ_BY_TYPE_REQ       0x08
+#define ATT_READ_BY_TYPE_REQ       0x08U
 
 /** ATT Read By Type Response PDU */
-#define ATT_READ_BY_TYPE_RSP       0x09
+#define ATT_READ_BY_TYPE_RSP       0x09U
 
 /** ATT Read Request PDU */
-#define ATT_READ_REQ               0x0A
+#define ATT_READ_REQ               0x0AU
 
 /** ATT Read Response PDU */
-#define ATT_READ_RSP               0x0B
+#define ATT_READ_RSP               0x0BU
 
 /** ATT Read Blob Request PDU */
-#define ATT_READ_BLOB_REQ          0x0C
+#define ATT_READ_BLOB_REQ          0x0CU
 
 /** ATT Read Blob Response PDU */
-#define ATT_READ_BLOB_RSP          0x0D
+#define ATT_READ_BLOB_RSP          0x0DU
 
 /** ATT Read Multiple Request PDU */
-#define ATT_READ_MULTIPLE_REQ      0x0E
+#define ATT_READ_MULTIPLE_REQ      0x0EU
 
 /** ATT Read Multiple Response PDU */
-#define ATT_READ_MULTIPLE_RSP      0x0F
+#define ATT_READ_MULTIPLE_RSP      0x0FU
 
 /** ATT Read Group Type Request PDU */
-#define ATT_READ_BY_GROUP_REQ      0x10
+#define ATT_READ_BY_GROUP_REQ      0x10U
 
 /** ATT Read Group Type Response PDU */
-#define ATT_READ_BY_GROUP_RSP      0x11
+#define ATT_READ_BY_GROUP_RSP      0x11U
 
 /** ATT Write Request PDU */
-#define ATT_WRITE_REQ              0x12
+#define ATT_WRITE_REQ              0x12U
 
 /** ATT Write Response PDU */
-#define ATT_WRITE_RSP              0x13
+#define ATT_WRITE_RSP              0x13U
 
 /** ATT Write Command PDU */
-#define ATT_WRITE_CMD              0x52
+#define ATT_WRITE_CMD              0x52U
 
 /**
  * ATT Write Command - Transmission Complete - Locally generated event.
@@ -360,10 +360,10 @@
  * as described in 'ATTRIBUTE PROTOCL PDUS' sub-section 'Write Command'
  * in the ATT specification.
  */
-#define ATT_WRITE_CMD_TX_COMPLETE  0x53
+#define ATT_WRITE_CMD_TX_COMPLETE  0x53U
 
 /** ATT Signed Write Command PDU */
-#define ATT_SIGNED_WRITE_CMD       0xD2
+#define ATT_SIGNED_WRITE_CMD       0xD2U
 
 /**
  * ATT Signed Write Command - Transmission Complete - Locally generated event.
@@ -373,22 +373,22 @@
  * sub-section 'Signed Write Command' in the ATT specification.
  */
 #define ATT_SIGNED_WRITE_CMD_TX_COMPLETE \
-                                   0xD3
+                                   0xD3U
 
 /** ATT Prepare Write Request PDU */
-#define ATT_PREPARE_WRITE_REQ      0x16
+#define ATT_PREPARE_WRITE_REQ      0x16U
 
 /** ATT Prepare Write Response PDU */
-#define ATT_PREPARE_WRITE_RSP      0x17
+#define ATT_PREPARE_WRITE_RSP      0x17U
 
 /** ATT Execute Write Request PDU */
-#define ATT_EXECUTE_WRITE_REQ      0x18
+#define ATT_EXECUTE_WRITE_REQ      0x18U
 
 /** ATT Execute Write Response PDU */
-#define ATT_EXECUTE_WRITE_RSP      0x19
+#define ATT_EXECUTE_WRITE_RSP      0x19U
 
 /** ATT Handle Value Notification PDU */
-#define ATT_HANDLE_VALUE_NTF       0x1B
+#define ATT_HANDLE_VALUE_NTF       0x1BU
 
 /**
  * ATT Handle Value Notification - Transmission Complete - Locally generated
@@ -399,21 +399,21 @@
  * Notification' in the ATT specification.
  */
 #define ATT_HANDLE_VALUE_NTF_TX_COMPLETE \
-                                   0x1C
+                                   0x1CU
 
 /** ATT Handle Value Indication PDU */
-#define ATT_HANDLE_VALUE_IND       0x1D
+#define ATT_HANDLE_VALUE_IND       0x1DU
 
 /** ATT Handle Value Confirmation PDU */
-#define ATT_HANDLE_VALUE_CNF       0x1E
+#define ATT_HANDLE_VALUE_CNF       0x1EU
 
 /** Unknown or Unhandled PDU */
-#define ATT_UNKNOWN_PDU_IND        0xFF
+#define ATT_UNKNOWN_PDU_IND        0xFFU
 
 /** \} */
 
-#define ATT_ACCEPT_CONNECTION       0x00
-#define ATT_REJECT_CONNECTION       0x01
+#define ATT_ACCEPT_CONNECTION       0x00U
+#define ATT_REJECT_CONNECTION       0x01U
 
 /** \} */
 
@@ -465,6 +465,10 @@
         else if (ATT_16_BIT_UUID_SIZE == (size)) \
         { \
             BT_UNPACK_LE_2_BYTE((uuid_out), (buffer)); \
+        }                                               \
+        else                                            \
+        {                                               \
+            /* MISRA C-2012 Rule 15.7 */                \
         }
 
 /** \} */
@@ -512,7 +516,7 @@ typedef struct
  * ATT calls the registered callback to indicate events occurred to the
  * application.
  *
- * \param handle Reference indentifying ATT Instance on which event occurred.
+ * \param handle Reference identifying ATT Instance on which event occurred.
  * \param att_event Any of the Event occurred from the list at \ref att_events.
  * \param event_result \ref API_SUCCESS or an error code in
  * \ref att_error_codes or any other internal error code from the stack.

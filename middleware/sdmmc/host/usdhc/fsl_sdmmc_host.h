@@ -14,7 +14,8 @@
 #include "fsl_usdhc.h"
 
 /*!
- * @addtogroup SDMMCHOST_USDHC
+ * @addtogroup sdmmchost_usdhc
+ * @ingroup sdmmchost
  * @{
  */
 
@@ -22,7 +23,7 @@
  * Definitions
  ******************************************************************************/
 /*! @brief Middleware adapter version. */
-#define FSL_SDMMC_HOST_ADAPTER_VERSION (MAKE_VERSION(2U, 5U, 2U)) /*2.5.2*/
+#define FSL_SDMMC_HOST_ADAPTER_VERSION (MAKE_VERSION(2U, 6U, 0U)) /*2.6.0*/
 
 #if ((defined __DCACHE_PRESENT) && __DCACHE_PRESENT) || (defined FSL_FEATURE_HAS_L1CACHE && FSL_FEATURE_HAS_L1CACHE)
 #define SDMMCHOST_ENABLE_CACHE_LINE_ALIGN_TRANSFER 0
@@ -32,6 +33,27 @@
 #endif
 #endif
 #endif
+
+/*! @brief sdmmc host capability */
+enum
+{
+    kSDMMCHOST_SupportHighSpeed         = 1U << 0U,  /*!< high speed capability */
+    kSDMMCHOST_SupportSuspendResume     = 1U << 1U,  /*!< suspend resume capability */
+    kSDMMCHOST_SupportVoltage3v3        = 1U << 2U,  /*!< 3V3 capability */
+    kSDMMCHOST_SupportVoltage3v0        = 1U << 3U,  /*!< 3V0 capability */
+    kSDMMCHOST_SupportVoltage1v8        = 1U << 4U,  /*!< 1V8 capability */
+    kSDMMCHOST_SupportVoltage1v2        = 1U << 5U,  /*!< 1V2 capability */
+    kSDMMCHOST_Support4BitDataWidth     = 1U << 6U,  /*!< 4 bit data width capability */
+    kSDMMCHOST_Support8BitDataWidth     = 1U << 7U,  /*!< 8 bit data width capability */
+    kSDMMCHOST_SupportDDRMode           = 1U << 8U,  /*!< DDR mode capability */
+    kSDMMCHOST_SupportDetectCardByData3 = 1U << 9U,  /*!< data3 detect card capability */
+    kSDMMCHOST_SupportDetectCardByCD    = 1U << 10U, /*!< CD detect card capability */
+    kSDMMCHOST_SupportAutoCmd12         = 1U << 11U, /*!< auto command 12 capability */
+    kSDMMCHOST_SupportSDR104            = 1U << 12U, /*!< SDR104 capability */
+    kSDMMCHOST_SupportSDR50             = 1U << 13U, /*!< SDR50 capability */
+    kSDMMCHOST_SupportHS200             = 1U << 14U, /*!< HS200 capability */
+    kSDMMCHOST_SupportHS400             = 1U << 15U, /*!< HS400 capability */
+};
 
 /*!@brief sdmmc host misc capability */
 #define SDMMCHOST_SUPPORT_HIGH_SPEED           (1U)
@@ -48,17 +70,14 @@
 #define SDMMCHOST_SUPPORT_AUTO_CMD12           (1U)
 #define SDMMCHOST_SUPPORT_MAX_BLOCK_LENGTH     (4096U)
 #define SDMMCHOST_SUPPORT_MAX_BLOCK_COUNT      (USDHC_MAX_BLOCK_COUNT)
-
 /*! @brief sdmmc host sdcard DDR50 mode capability*/
 #define SDMMCHOST_SUPPORT_DDR50 (SDMMCHOST_SUPPORT_DDR_MODE)
-
 /*! @brief sdmmc host sdcard SDR50 mode capability*/
 #if (defined(FSL_FEATURE_USDHC_HAS_SDR104_MODE) && (FSL_FEATURE_USDHC_HAS_SDR104_MODE))
 #define SDMMCHOST_SUPPORT_SDR104 (1U)
 #else
 #define SDMMCHOST_SUPPORT_SDR104 (0U)
 #endif
-
 /*! @brief sdmmc host sdcard SDR104/mmccard HS200 mode capability*/
 #if (defined(FSL_FEATURE_USDHC_HAS_SDR50_MODE) && (FSL_FEATURE_USDHC_HAS_SDR50_MODE))
 #define SDMMCHOST_SUPPORT_SDR50 (1U)
@@ -67,14 +86,12 @@
 #define SDMMCHOST_SUPPORT_HS200 (0U)
 #define SDMMCHOST_SUPPORT_SDR50 (0U)
 #endif
-
 /*! @brief sdmmc host mmccard HS400 mode capability*/
 #if (defined(FSL_FEATURE_USDHC_HAS_HS400_MODE) && (FSL_FEATURE_USDHC_HAS_HS400_MODE))
 #define SDMMCHOST_SUPPORT_HS400 (1U)
 #else
 #define SDMMCHOST_SUPPORT_HS400 (0U)
 #endif
-
 /*! @brief sdmmc host instance capability */
 #if defined FSL_FEATURE_USDHC_INSTANCE_SUPPORT_8_BIT_WIDTHn
 #define SDMMCHOST_INSTANCE_SUPPORT_8_BIT_WIDTH(host) \
@@ -102,6 +119,9 @@
 #define SDMMCHOST_INSTANCE_SUPPORT_DDR50(host)      0
 #endif
 
+#ifndef SDMMCHOST_DMA_MODE
+#define SDMMCHOST_DMA_MODE kUSDHC_DmaModeAdma2
+#endif
 /*!@brief SDMMC host dma descriptor buffer address align size */
 #define SDMMCHOST_DMA_DESCRIPTOR_BUFFER_ALIGN_SIZE (4U)
 /*!@brief tuning configuration */
@@ -130,7 +150,6 @@ enum
     kSDMMCHOST_EndianModeLittle      = 2U, /*!< Little endian mode */
 };
 
-#if SDMMCHOST_SUPPORT_SDR104 || SDMMCHOST_SUPPORT_SDR50 || SDMMCHOST_SUPPORT_HS200 || SDMMCHOST_SUPPORT_HS400
 /*! @brief sdmmc host tuning type
  * @anchor _sdmmchost_tuning_type
  */
@@ -139,7 +158,6 @@ enum
     kSDMMCHOST_StandardTuning = 0U, /*!< standard tuning type */
     kSDMMCHOST_ManualTuning   = 1U, /*!< manual tuning type */
 };
-#endif
 
 /*! @brief sdmmc host maintain cache flag
  * @anchor _sdmmc_host_cache_control
@@ -150,21 +168,6 @@ enum
     kSDMMCHOST_CacheControlRWBuffer = 1U, /*!< sdmmc host cache control read/write buffer */
 };
 
-/*! @brief card power control function pointer */
-typedef void (*sdmmchost_pwr_t)(void);
-
-/*! @brief card power control
- * @deprecated Do not use this structure anymore.
- */
-typedef struct _sdmmchost_pwr_card
-{
-    sdmmchost_pwr_t powerOn;  /*!< power on function pointer */
-    uint32_t powerOnDelay_ms; /*!< power on delay */
-
-    sdmmchost_pwr_t powerOff;  /*!< power off function pointer */
-    uint32_t powerOffDelay_ms; /*!< power off delay */
-} sdmmchost_pwr_card_t;
-
 /*!@brief sdmmc host handler  */
 typedef struct _sdmmchost_
 {
@@ -172,10 +175,12 @@ typedef struct _sdmmchost_
     void *dmaDesBuffer;            /*!< DMA descriptor buffer address */
     uint32_t dmaDesBufferWordsNum; /*!< DMA descriptor buffer size in byte */
     usdhc_handle_t handle;         /*!< host controller handler */
+    uint32_t capability;           /*!< host controller capability */
+    uint32_t maxBlockCount;        /*!< host controller maximum block count */
+    uint32_t maxBlockSize;         /*!< host controller maximum block size */
 
-#if SDMMCHOST_SUPPORT_SDR104 || SDMMCHOST_SUPPORT_SDR50 || SDMMCHOST_SUPPORT_HS200 || SDMMCHOST_SUPPORT_HS400
     uint8_t tuningType; /*!< host tuning type */
-#endif
+
     sdmmc_osa_event_t hostEvent; /*!< host event handler */
     void *cd;                    /*!< card detect */
     void *cardInt;               /*!< call back function for card interrupt */
@@ -190,8 +195,9 @@ typedef struct _sdmmchost_
     uint32_t cacheAlignBufferSize; /*!< cache line size align buffer size, the size must be not smaller than 2 * cache
                                       line size */
 #endif
-
 #endif
+
+    sdmmc_osa_mutex_t lock; /*!< host access lock */
 } sdmmchost_t;
 
 /*******************************************************************************
@@ -219,7 +225,7 @@ void SDMMCHOST_SetCardBusWidth(sdmmchost_t *host, uint32_t dataBusWidth);
  */
 static inline void SDMMCHOST_SendCardActive(sdmmchost_t *host)
 {
-    USDHC_SetCardActive(host->hostController.base, 100U);
+    (void)USDHC_SetCardActive(host->hostController.base, 100U);
 }
 
 /*!
@@ -240,8 +246,8 @@ static inline uint32_t SDMMCHOST_SetCardClock(sdmmchost_t *host, uint32_t target
  */
 static inline bool SDMMCHOST_IsCardBusy(sdmmchost_t *host)
 {
-    return (USDHC_GetPresentStatusFlags(host->hostController.base) & kUSDHC_Data0LineLevelFlag) ==
-                   kUSDHC_Data0LineLevelFlag ?
+    return (USDHC_GetPresentStatusFlags(host->hostController.base) & (uint32_t)kUSDHC_Data0LineLevelFlag) ==
+                   (uint32_t)kUSDHC_Data0LineLevelFlag ?
                false :
                true;
 }
@@ -287,7 +293,6 @@ static inline void SDMMCHOST_EnableDDRMode(sdmmchost_t *host, bool enable, uint3
     USDHC_EnableDDRMode(host->hostController.base, enable, nibblePos);
 }
 
-#if FSL_FEATURE_USDHC_HAS_HS400_MODE
 /*!
  * @brief enable HS400 mode.
  * @param host host handler
@@ -295,9 +300,11 @@ static inline void SDMMCHOST_EnableDDRMode(sdmmchost_t *host, bool enable, uint3
  */
 static inline void SDMMCHOST_EnableHS400Mode(sdmmchost_t *host, bool enable)
 {
-    assert(SDMMCHOST_INSTANCE_SUPPORT_HS400(host) != 0U);
+#if FSL_FEATURE_USDHC_HAS_HS400_MODE
+    assert(SDMMCHOST_INSTANCE_SUPPORT_HS400(host) != 0);
 
     USDHC_EnableHS400Mode(host->hostController.base, enable);
+#endif
 }
 
 /*!
@@ -307,6 +314,7 @@ static inline void SDMMCHOST_EnableHS400Mode(sdmmchost_t *host, bool enable)
  */
 static inline void SDMMCHOST_EnableStrobeDll(sdmmchost_t *host, bool enable)
 {
+#if FSL_FEATURE_USDHC_HAS_HS400_MODE
     if (enable)
     {
         USDHC_ConfigStrobeDLL(host->hostController.base, SDMMCHOST_STROBE_DLL_DELAY_TARGET,
@@ -317,8 +325,8 @@ static inline void SDMMCHOST_EnableStrobeDll(sdmmchost_t *host, bool enable)
     {
         USDHC_EnableStrobeDLL(host->hostController.base, enable);
     }
-}
 #endif
+}
 
 /*!
  * @brief start read boot data.
@@ -400,6 +408,14 @@ uint32_t SDMMCHOST_CardDetectStatus(sdmmchost_t *host);
 
 /*!
  * @brief Init host controller.
+ *
+ * Thread safe function, please note that the function will create the mutex lock dynamically by default,
+ * so to avoid the mutex create redundantly, application must follow bellow sequence for card re-initialization
+ * @code
+ * SDMMCHOST_Deinit(host);
+ * SDMMCHOST_Init(host);
+ * @endcode
+ *
  * @param host host handler
  * @retval kStatus_Success host init success
  * @retval kStatus_Fail event fail
@@ -408,6 +424,8 @@ status_t SDMMCHOST_Init(sdmmchost_t *host);
 
 /*!
  * @brief Deinit host controller.
+ * Please note it is a thread safe function.
+ *
  * @param host host handler
  */
 void SDMMCHOST_Deinit(sdmmchost_t *host);
@@ -419,7 +437,7 @@ void SDMMCHOST_Deinit(sdmmchost_t *host);
  */
 void SDMMCHOST_SetCardPower(sdmmchost_t *host, bool enable);
 
-#if SDMMCHOST_ENABLE_CACHE_LINE_ALIGN_TRANSFER
+#if defined SDMMCHOST_ENABLE_CACHE_LINE_ALIGN_TRANSFER && SDMMCHOST_ENABLE_CACHE_LINE_ALIGN_TRANSFER
 /*!
  * @brief Install cache line size align buffer for the transfer require cache line size align.
  * @param host host handler
@@ -431,6 +449,8 @@ void SDMMCHOST_InstallCacheAlignBuffer(sdmmchost_t *host, void *cacheAlignBuffer
 
 /*!
  * @brief host transfer function.
+ *
+ * Please note it is a thread safe function.
  *
  * @note the host transfer function support below functionality,
  * 1. Non-cache line size alignment check on the data buffer, it is means that no matter the data buffer used for data
@@ -448,7 +468,6 @@ void SDMMCHOST_InstallCacheAlignBuffer(sdmmchost_t *host, void *cacheAlignBuffer
  */
 status_t SDMMCHOST_TransferFunction(sdmmchost_t *host, sdmmchost_transfer_t *content);
 
-#if SDMMCHOST_SUPPORT_SDR104 || SDMMCHOST_SUPPORT_SDR50 || SDMMCHOST_SUPPORT_HS200 || SDMMCHOST_SUPPORT_HS400
 /*!
  * @brief sdmmc host excute tuning.
  *
@@ -458,45 +477,23 @@ status_t SDMMCHOST_TransferFunction(sdmmchost_t *host, sdmmchost_transfer_t *con
  * @param blockSize tuning data block size.
  */
 status_t SDMMCHOST_ExecuteTuning(sdmmchost_t *host, uint32_t tuningCmd, uint32_t *revBuf, uint32_t blockSize);
-#endif
 
 /*!
  * @brief host reset function.
- * @deprecated Do not use this function. Application should not call this function, driver is responsible for the host
- reset..
  *
  * @param host host handler
  */
 void SDMMCHOST_Reset(sdmmchost_t *host);
 
 /*!
- * @brief wait card detect status
- * @deprecated Do not use this function.It has been superceded by @ref SDMMCHOST_PollingCardDetectStatus..
+ * @brief sdmmc host convert data sequence to little endian sequence
  *
- * @param hostBase host handler
- * @param cd card detect configuration.
- * @param waitCardStatus status to wait.
+ * @param host host handler.
+ * @param data data buffer address.
+ * @param wordSize data buffer size in word.
+ * @param format data packet format.
  */
-status_t SDMMCHOST_WaitCardDetectStatus(SDMMCHOST_TYPE *hostBase,
-                                        const sdmmchost_detect_card_t *cd,
-                                        bool waitCardStatus);
-
-/*!
- * @brief host power off card function.
- * @deprecated Do not use this function.It has been superceded by @ref SDMMCHOST_SetCardPower..
- *
- * @param base host base address.
- * @param pwr depend on user define power configuration.
- */
-void SDMMCHOST_PowerOffCard(SDMMCHOST_TYPE *base, const sdmmchost_pwr_card_t *pwr);
-
-/*!
- * @brief host power on card function.
- * @deprecated Do not use this function.It has been superceded by @ref SDMMCHOST_SetCardPower..
- * @param base host base address.
- * @param pwr depend on user define power configuration.
- */
-void SDMMCHOST_PowerOnCard(SDMMCHOST_TYPE *base, const sdmmchost_pwr_card_t *pwr);
+void SDMMCHOST_ConvertDataToLittleEndian(sdmmchost_t *host, uint32_t *data, uint32_t wordSize, uint32_t format);
 /* @} */
 
 #if defined(__cplusplus)

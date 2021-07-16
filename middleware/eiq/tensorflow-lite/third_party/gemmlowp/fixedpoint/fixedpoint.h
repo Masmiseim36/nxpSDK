@@ -95,13 +95,12 @@ tIntegerType Add(tIntegerType a, tIntegerType b) {
   return a + b;
 }
 
-// Integer multiplication. Not saturating. Overflow is undefined behavior.
+// Integer subtraction. Not saturating. Overflow is undefined behavior.
 template <typename tIntegerType>
 tIntegerType Mul(tIntegerType a, tIntegerType b) {
   return a * b;
 }
 
-// Integer subtraction. Not saturating. Overflow is undefined behavior.
 template <typename tIntegerType>
 tIntegerType Sub(tIntegerType a, tIntegerType b) {
   return a - b;
@@ -122,8 +121,8 @@ tIntegerType Neg(tIntegerType a) {
 // in the overflow case, we just want to avoid undefined behavior.
 //
 // tIntegerType may be int32 or any narrower signed type.
-template <typename tIntegerType, typename OffsetType>
-tIntegerType ShiftLeft(tIntegerType a, OffsetType offset) {
+template <typename tIntegerType>
+tIntegerType ShiftLeft(tIntegerType a, int offset) {
   const std::int64_t wide_a = static_cast<std::int64_t>(a);
   const std::int64_t wide_shifted = wide_a * (1 << offset);
   const auto min = std::numeric_limits<tIntegerType>::min();
@@ -269,16 +268,6 @@ inline std::int16_t SaturatingAdd(std::int16_t a, std::int16_t b) {
                std::max(static_cast<std::int32_t>(-32768), sum)));
 }
 
-template <>
-inline std::int8_t SaturatingAdd(std::int8_t a, std::int8_t b) {
-  std::int16_t a16 = a;
-  std::int16_t b16 = b;
-  std::int16_t sum = a16 + b16;
-  return static_cast<std::int8_t>(std::min(
-      static_cast<int16_t>(std::numeric_limits<int8_t>::max()),
-      std::max(static_cast<int16_t>(std::numeric_limits<int8_t>::min()), sum)));
-}
-
 // Returns a+b, saturating if the integers are 16bit or narrower,
 // otherwise just a plain addition.
 template <typename IntegerType, bool Is16Bit>
@@ -364,8 +353,8 @@ inline std::int16_t SaturatingRoundingDoublingHighMul(std::int16_t a,
 
 // Correctly-rounded-to-nearest division by a power-of-two.
 // Also known as a rounding arithmetic right shift.
-template <typename IntegerType, typename ExponentType>
-inline IntegerType RoundingDivideByPOT(IntegerType x, ExponentType exponent) {
+template <typename IntegerType>
+inline IntegerType RoundingDivideByPOT(IntegerType x, int exponent) {
   assert(exponent >= 0);
   assert(exponent <= 31);
   const IntegerType mask = Dup<IntegerType>((1ll << exponent) - 1);
@@ -778,14 +767,13 @@ FixedPoint<tRawType, 0> exp_on_negative_values(
         result * kMultiplier, result);                                      \
   }
 
-  // Constants below are Q0 representations of negative exp fractionals:
-  GEMMLOWP_EXP_BARREL_SHIFTER(-2, 1672461947);  // exp(-1/4)
-  GEMMLOWP_EXP_BARREL_SHIFTER(-1, 1302514674);  // exp(-1/2)
-  GEMMLOWP_EXP_BARREL_SHIFTER(+0, 790015084);   // exp(-1)
-  GEMMLOWP_EXP_BARREL_SHIFTER(+1, 290630308);   // exp(-2)
-  GEMMLOWP_EXP_BARREL_SHIFTER(+2, 39332535);    // exp(-4)
-  GEMMLOWP_EXP_BARREL_SHIFTER(+3, 720401);      // exp(-8)
-  GEMMLOWP_EXP_BARREL_SHIFTER(+4, 242);         // exp(-16)
+  GEMMLOWP_EXP_BARREL_SHIFTER(-2, 1672461947);
+  GEMMLOWP_EXP_BARREL_SHIFTER(-1, 1302514674);
+  GEMMLOWP_EXP_BARREL_SHIFTER(+0, 790015084);
+  GEMMLOWP_EXP_BARREL_SHIFTER(+1, 290630308);
+  GEMMLOWP_EXP_BARREL_SHIFTER(+2, 39332535);
+  GEMMLOWP_EXP_BARREL_SHIFTER(+3, 720401);
+  GEMMLOWP_EXP_BARREL_SHIFTER(+4, 242);
 
 #undef GEMMLOWP_EXP_BARREL_SHIFTER
 

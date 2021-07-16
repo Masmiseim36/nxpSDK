@@ -26,16 +26,20 @@ var NAVTREE =
 [
   [ "Maestro Audio Framework", "index.html", [
     [ "Getting started with Maestro framework", "index.html", [
-      [ "Introduction", "index.html#autotoc_md0", null ],
-      [ "Streamer setup", "index.html#autotoc_md1", [
-        [ "File command", "index.html#autotoc_md2", null ],
-        [ "Record_mic command", "index.html#autotoc_md3", null ]
+      [ "Introduction", "index.html#autotoc_md1", null ],
+      [ "Supported examples", "index.html#autotoc_md2", null ],
+      [ "Streamer setup", "index.html#autotoc_md3", null ],
+      [ "Commands", "index.html#autotoc_md4", [
+        [ "file", "index.html#autotoc_md5", null ],
+        [ "record_mic", "index.html#autotoc_md6", null ],
+        [ "usb_mic", "index.html#autotoc_md7", null ],
+        [ "usb_speaker", "index.html#autotoc_md8", null ]
       ] ],
-      [ "Configuration options", "index.html#autotoc_md4", null ],
-      [ "Supported features", "index.html#autotoc_md5", [
-        [ "Codecs", "index.html#autotoc_md6", null ],
-        [ "VIT", "index.html#autotoc_md7", null ],
-        [ "EAP", "index.html#autotoc_md8", null ]
+      [ "Configuration options", "index.html#autotoc_md9", null ],
+      [ "Supported features", "index.html#autotoc_md10", [
+        [ "Codecs", "index.html#autotoc_md11", null ],
+        [ "VIT", "index.html#autotoc_md12", null ],
+        [ "EAP", "index.html#autotoc_md13", null ]
       ] ]
     ] ],
     [ "Data Structures", "annotated.html", [
@@ -63,8 +67,8 @@ var NAVTREEINDEX =
 [
 "af__error_8h.html",
 "memtypes_8h.html#afa375fa79568f9f2be4a3a044361f50e",
-"streamer__api_8h.html#a7420bd1fd03172c467cc24548e61978aa0ed57851f619b7125c75b113ae1115ba",
-"structOsaDirMount.html"
+"streamer__api_8h.html#a7420bd1fd03172c467cc24548e61978aa03de4e2df5beb97a49a34aa54018a9e4",
+"structAlbumArt.html#a96cdfff72f9cda573941127b0ffe5756"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

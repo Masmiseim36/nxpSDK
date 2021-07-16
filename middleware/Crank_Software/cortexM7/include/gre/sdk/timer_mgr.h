@@ -103,6 +103,7 @@ DLLExport void			gr_timer_set(gr_timer_t *timer, uint32_t ms, uint32_t rep_ms);
  */
 DLLExport void *		gr_timer_get_args(gr_timer_t *timer);
 
+
 /**
  * Snapshot the current time in ms
  * @return The system relative time (ie since EPOCH) in ms
@@ -110,10 +111,60 @@ DLLExport void *		gr_timer_get_args(gr_timer_t *timer);
 DLLExport int64_t		gr_snapshot_time(void);
 
 /**
+ * Snapshot the current time in us
+ * @return The system relative time (ie since EPOCH) in us
+ **/
+DLLExport int64_t		gr_snapshot_time_us(void);
+
+/**
  * Snapshot the current time relative to application start in ms
  * @return The time relative to application start in ms
  **/
 DLLExport int64_t		gr_snapshot_app_time(gr_application_t *app);
+
+/**
+ * Snapshot the current time relative to application start in us
+ * @return The time relative to application start in us
+ **/
+DLLExport int64_t		gr_snapshot_app_time_us(gr_application_t *app);
+
+/**
+ * Snapshot the current time into a timespec structure. If a starting
+ * timestamp is provided then subtract the time represented by the starting
+ * timestamp before returning the value.
+ * 
+ * @param timestamp The structure to store the current timestamp into
+ * @param start_timestamp If non-null the start time to remove after taking the current timestamp
+ **/
+DLLExport void gr_snapshot_time_and_diff(greal_timespec_t *timestamp, greal_timespec_t *start_timestamp);
+
+/**
+ * Convert a ms value to a timespec value
+ * 
+ * @param ms The time in milliseconds to convert
+ * @param ts The structure to store the ms time in
+ **/
+DLLExport void gr_ms_to_timespec(int64_t ms, greal_timespec_t *ts);
+
+/**
+ * Convert a us value to a timespec value
+ * 
+ * @param us The time in microseconds to convert
+ * @param ts The structure to store the ms time in
+ **/
+DLLExport void gr_us_to_timespec(int64_t us, greal_timespec_t *ts);
+
+#define TS_TO_MS(_ts) (((int64_t)(_ts)->tv_sec * 1000LL) + ((int64_t)(_ts)->tv_nsec / 1000000LL))
+#define TS_TO_US(_ts) (((int64_t)(_ts)->tv_sec * 1000000LL) + ((int64_t)(_ts)->tv_nsec / 1000LL))
+
+#define MS_TO_TS(_ms, _ts) 												\
+	(_ts)->tv_sec = (_ms) / 1000LL;										\
+	(_ts)->tv_nsec = ((_ms) - ((_ts)->tv_sec * 1000LL)) * 1000000LL;	\
+
+#define US_TO_TS(_us, _ts) 												\
+	(_ts)->tv_sec = (_us) / 1000000LL;									\
+	(_ts)->tv_nsec = ((_us) - ((_ts)->tv_sec * 1000000LL)) * 1000LL;	\
+
 
 #if defined(__cplusplus)
 }

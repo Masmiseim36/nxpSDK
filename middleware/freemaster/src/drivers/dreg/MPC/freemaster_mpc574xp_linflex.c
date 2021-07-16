@@ -204,16 +204,16 @@ static void _FMSTR_MPC574XP_EnableTransmitInterrupt(FMSTR_BOOL enable)
 //
 //static void _FMSTR_S12zSci_EnableTransmitCompleteInterrupt(FMSTR_BOOL enable)
 //{
-//	if(enable)
-//	{
-//		/* Enable interrupt */
-//		FMSTR_SETBIT(fmstr_sciBaseAddr, FMSTR_SCICR2_OFFSET, FMSTR_SCICR2_TCIE);
-//	}
-//	else
-//	{
-//		/* Disable interrupt */
-//		FMSTR_CLRBIT(fmstr_sciBaseAddr, FMSTR_SCICR2_OFFSET, FMSTR_SCICR2_TCIE);
-//	}
+//    if(enable)
+//    {
+//        /* Enable interrupt */
+//        FMSTR_SETBIT(fmstr_sciBaseAddr, FMSTR_SCICR2_OFFSET, FMSTR_SCICR2_TCIE);
+//    }
+//    else
+//    {
+//        /* Disable interrupt */
+//        FMSTR_CLRBIT(fmstr_sciBaseAddr, FMSTR_SCICR2_OFFSET, FMSTR_SCICR2_TCIE);
+//    }
 //}
 
 /******************************************************************************

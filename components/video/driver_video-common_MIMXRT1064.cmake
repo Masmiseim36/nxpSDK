@@ -1,17 +1,15 @@
-if(NOT DRIVER_VIDEO-COMMON_MIMXRT1064_INCLUDED)
-    
-    set(DRIVER_VIDEO-COMMON_MIMXRT1064_INCLUDED true CACHE BOOL "driver_video-common component is included.")
+include_guard(GLOBAL)
+message("driver_video-common component is included.")
 
-    target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
-        ${CMAKE_CURRENT_LIST_DIR}/fsl_video_common.c
-    )
-
-
-    target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
-        ${CMAKE_CURRENT_LIST_DIR}/.
-    )
+target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
+    ${CMAKE_CURRENT_LIST_DIR}/fsl_video_common.c
+)
 
 
-    include(driver_common_MIMXRT1064)
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
+    ${CMAKE_CURRENT_LIST_DIR}/.
+)
 
-endif()
+
+include(driver_common_MIMXRT1064)
+

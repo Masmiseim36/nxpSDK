@@ -79,6 +79,17 @@ extern const peripheral_control_interface_t g_flexcanControlInterface;
 extern const peripheral_byte_inteface_t g_flexcanByteInterface;
 //@}
 
+#if ((defined(FSL_FEATURE_SOC_MSCAN_COUNT)) && (FSL_FEATURE_SOC_MSCAN_COUNT > 0U))
+//! @name MSCAN Peripheral Interfaces
+//@{
+//! @brief Control interface for the MSCAN peripheral driver.
+extern const peripheral_control_interface_t g_mscanControlInterface;
+
+//! @brief Byte I/O interface for the MSCAN peripheral driver.
+extern const peripheral_byte_inteface_t g_mscanByteInterface;
+//@}	
+#endif
+
 //! @name LPSPI Peripheral Interfaces
 //@{
 //! @brief Control interface for the LPSPI peripheral driver.

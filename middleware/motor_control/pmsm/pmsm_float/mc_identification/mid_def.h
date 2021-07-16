@@ -10,7 +10,7 @@
 #define _MID_DEF_H_
 
 #include "m1_pmsm_appconfig.h"
-#include "mcdrv.h"
+#include "mc_periph_init.h"
 
 /* RTCESL fix libraries */
 #include "mlib.h"
@@ -46,18 +46,18 @@
 #define MID_KI_GAIN (0.0119161655697F)
 
 /* Frequency ramp time */
-#define MID_SPEED_RAMP_TIME (1.0)
+#define MID_SPEED_RAMP_TIME (1.0F)
 
 /* MID characteristic parameters */
 #define MID_CHAR_CURRENT_POINT_NUMBERS (65U)
 
 /* Time quantities in units of fast loop ticks */
-#define MID_TIME_50MS (0.050 * M1_PWM_FREQ / M1_FOC_FREQ_VS_PWM_FREQ)
-#define MID_TIME_100MS (0.100 * M1_PWM_FREQ / M1_FOC_FREQ_VS_PWM_FREQ)
-#define MID_TIME_300MS (0.300 * M1_PWM_FREQ / M1_FOC_FREQ_VS_PWM_FREQ)
-#define MID_TIME_600MS (0.600 * M1_PWM_FREQ / M1_FOC_FREQ_VS_PWM_FREQ)
-#define MID_TIME_1200MS (1.200 * M1_PWM_FREQ / M1_FOC_FREQ_VS_PWM_FREQ)
-#define MID_TIME_2400MS (2.400 * M1_PWM_FREQ / M1_FOC_FREQ_VS_PWM_FREQ)
+#define MID_TIME_50MS (uint32_t)(0.05F * (float_t)(M1_PWM_FREQ / M1_FOC_FREQ_VS_PWM_FREQ))
+#define MID_TIME_100MS (uint32_t)(0.1F * (float_t)(M1_PWM_FREQ / M1_FOC_FREQ_VS_PWM_FREQ))
+#define MID_TIME_300MS (uint32_t)(0.3F * (float_t)(M1_PWM_FREQ / M1_FOC_FREQ_VS_PWM_FREQ))
+#define MID_TIME_600MS (uint32_t)(0.6F * (float_t)(M1_PWM_FREQ / M1_FOC_FREQ_VS_PWM_FREQ))
+#define MID_TIME_1200MS (uint32_t)(1.2F * (float_t)(M1_PWM_FREQ / M1_FOC_FREQ_VS_PWM_FREQ))
+#define MID_TIME_2400MS (uint32_t)(2.4F * (float_t)(M1_PWM_FREQ / M1_FOC_FREQ_VS_PWM_FREQ))
 
 /* Maximum phase voltage value from available DCbus */
 #define MID_K_MODULATION_RATIO (0.5773503)
@@ -87,7 +87,7 @@ typedef struct
 /* MID Alignment structure */
 typedef struct
 {
-    uint16_t ui16Active;        /* Inidicates whether Rs is being measured (true) or not (false) */
+    bool_t bActive;        /* Inidicates whether Rs is being measured (true) or not (false) */
     uint16_t ui16LoopCounter;   /* Serves for timing to determine e.g. 600ms */
     float_t *pfltIdReq;         /* Pointer to required current Id (input to controllers) */
     float_t fltCurrentAlign;    /* Alignment current */
@@ -99,7 +99,7 @@ typedef struct
 {
     GDFLIB_FILTER_MA_T_FLT sUdReqMA32Filter;  /* Ud required filter */
     GDFLIB_FILTER_MA_T_FLT sIdfbckMA32Filter; /* Id feedback filter */
-    uint16_t ui16Active;      /* Inidicates whether Transfer characteristic is being measured (true) or not (false) */
+    bool_t bActive;      /* Inidicates whether Transfer characteristic is being measured (true) or not (false) */
     uint16_t ui16LoopCounter; /* Serves for timing to determine e.g. 600ms */
     float_t fltRs;            /* Stator resistance of connected motor */
     float_t *pfltIdReq;       /* Pointer to required current Id (PI current controller's input) */
@@ -120,7 +120,7 @@ typedef struct
     GDFLIB_FILTER_MA_T_FLT sUdReqMA32Filter;  /* Ud required filter */
     GDFLIB_FILTER_MA_T_FLT sIdfbckMA32Filter; /* Id feedback filter */
     GFLIB_LUT1D_T_FLT sUerrLUTparams;         /* Uerr LUT parameters */
-    uint16_t ui16Active;                      /* Inidicates whether Rs is being measured (true) or not (false) */
+    bool_t bActive;                           /* Inidicates whether Rs is being measured (true) or not (false) */
     uint16_t ui16LoopCounter;                 /* Serves for timing to determine e.g. 600ms */
     float_t *pfltIdReq;                       /* Pointer to required current Id (PI current controller's input) */
     float_t fltIdMeas;                        /* User defined measuring DC current */
@@ -135,7 +135,7 @@ typedef struct
 typedef struct
 {
     GFLIB_INTEGRATOR_T_A32 sFreqIntegrator; /* Speed integrator coefficients */
-    uint16_t ui16Active;                    /* Inidicates whether Ls is being measured (true) or not (false) */
+    bool_t bActive;                         /* Inidicates whether Ls is being measured (true) or not (false) */
     uint16_t ui16LoopCounter;               /* Serves for timing to determine e.g. 300ms */
     int16_t i16AmplitudeOK;                 /* Indicates that amplitude of the measuring signal was set */
     int16_t i16FrequencyOK;                 /* Indicates that frequency of the measuring signal was set */
@@ -161,7 +161,7 @@ typedef struct
 /* MID Ke measurement structure */
 typedef struct
 {
-    uint16_t ui16Active;        /* Inidicates whether Ke is being measured (true) or not (false) */
+    bool_t bActive;             /* Inidicates whether Ke is being measured (true) or not (false) */
     uint16_t ui16MCATObsrvDone; /* Inidicates whether MCAT has calculated Befm observer (true) or not yet (false) */
     uint16_t ui16LoopCounter;   /* Serves for timing to determine e.g. 300ms */
     frac16_t *pf16PosEl;        /* Pointer to electrical position for Park transformations */
@@ -184,7 +184,7 @@ typedef struct
 /* MID Pp assistant structure */
 typedef struct
 {
-    uint16_t ui16Active;        /* Indicates whether Ke is being measured (true) or not (false) */
+    bool_t bActive;             /* Indicates whether Ke is being measured (true) or not (false) */
     uint16_t ui16PpDetermined;  /* Indicates whether the user already set pp in MCAT (true) or not yet (false) */
     uint16_t ui16WaitingSteady; /* Indicates that motor is waiting in steady state (when electrical position is zero) */
     uint16_t ui16LoopCounter;   /* Serves for timing to determine e.g. 300ms */
@@ -233,7 +233,7 @@ typedef struct
 
     mid_ol_startup_t sStartup; /* Open-loop startup structure */
 
-    uint16_t ui16Active;           /* Indicates whether Mech parameters are being measured (true) or not (false) */
+    bool_t bActive;                /* Indicates whether Mech parameters are being measured (true) or not (false) */
     uint16_t ui16MeasNr;           /* Measurement number (there are several tries and the results are averaged) */
     uint32_t ui32LoopCounter;      /* Serves for timing to determine e.g. 300ms */
     uint32_t ui32AccelLoopCounter; /* Acceleration time */
@@ -272,7 +272,7 @@ typedef struct
 typedef struct
 {
     bool_t *bCalibrationStartStop; /* Start/stop the calibration to calibrate at stable speed */
-    uint16_t ui16Active; /* Indicates whether Hall sensors' placement is being calibrated (true) or not (false) */
+    bool_t bActive;                /* Indicates whether Hall sensors' placement is being calibrated (true) or not (false) */
     uint32_t ui32CalibrationTime;    /* Calibration time */
     uint32_t ui32CalibrationCounter; /* Calibration time counter */
     float_t *pfltSpeedReq;           /* Pointer to required speed */
@@ -293,7 +293,7 @@ typedef struct
     mid_get_mech_t sMIDMech;       /* Structure for MID_getMech() */
     mid_calib_hall_t sMIDHall;     /* Structure for MID_calibHall() */
 
-    uint16_t ui16EnableMeasurement; /* Enables measurement in superior machine */
+    bool_t bEnableMeasurement; /* Enables measurement in superior machine */
 
     enum
     {
@@ -306,8 +306,6 @@ typedef struct
 
     uint16_t ui16FaultMID;
     uint16_t ui16WarnMID;
-
-    float_t fltFreqMIDLoop;
 
 } mid_struct_t;
 

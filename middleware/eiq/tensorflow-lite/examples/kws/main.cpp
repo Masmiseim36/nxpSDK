@@ -1,11 +1,11 @@
 /*
- * Copyright 2020 NXP
+ * Copyright 2020-2021 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-#include <iostream>
+#include <stdio.h>
 
 #include "board_init.h"
 #include "demo_config.h"
@@ -15,7 +15,7 @@
 #include "output_postproc.h"
 #include "timer.h"
 
-int main()
+int main(void)
 {
     BOARD_Init();
     TIMER_Init();
@@ -24,7 +24,7 @@ int main()
 
     if (MODEL_Init() != kStatus_Success)
     {
-        std::cerr << "Failed initializing model" << EOL;
+        printf("Failed initializing model" EOL);
         for (;;) {}
     }
 
@@ -41,7 +41,7 @@ int main()
         /* Expected tensor dimensions: [batches, frames, mfcc, channels] */
         if (AUDIO_GetSpectralSample(inputData, inputDims.data[1] * inputDims.data[2]) != kStatus_Success)
         {
-            std::cerr << "Failed retrieving input audio" << EOL;
+            printf("Failed retrieving input audio" EOL);
             for (;;) {}
         }
 

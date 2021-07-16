@@ -1,6 +1,8 @@
+#!/usr/bin/env python3
+
 # Greentea host test script for Mbed TLS on-target test suite testing.
 #
-# Copyright (C) 2018, Arm Limited, All Rights Reserved
+# Copyright The Mbed TLS Contributors
 # SPDX-License-Identifier: Apache-2.0
 #
 # Licensed under the Apache License, Version 2.0 (the "License"); you may
@@ -14,8 +16,6 @@
 # WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-#
-# This file is part of Mbed TLS (https://tls.mbed.org)
 
 
 """
@@ -38,7 +38,7 @@ import re
 import os
 import binascii
 
-from mbed_host_tests import BaseHostTest, event_callback # pylint: disable=import-error
+from mbed_host_tests import BaseHostTest, event_callback # type: ignore # pylint: disable=import-error
 
 
 class TestDataParserError(Exception):
@@ -46,7 +46,7 @@ class TestDataParserError(Exception):
     pass
 
 
-class TestDataParser(object):
+class TestDataParser:
     """
     Parses test name, dependencies, test function name and test parameters
     from the data file.
@@ -260,7 +260,7 @@ class MbedTlsTest(BaseHostTest):
             data_bytes += bytearray(dependencies)
         data_bytes += bytearray([function_id, len(parameters)])
         for typ, param in parameters:
-            if typ == 'int' or typ == 'exp':
+            if typ in ('int', 'exp'):
                 i = int(param, 0)
                 data_bytes += b'I' if typ == 'int' else b'E'
                 self.align_32bit(data_bytes)

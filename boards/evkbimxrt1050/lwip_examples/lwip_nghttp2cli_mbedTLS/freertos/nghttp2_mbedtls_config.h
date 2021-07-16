@@ -315,7 +315,7 @@
 #define MBEDTLS_SHA256_PROCESS_ALT
 #endif
 
-#if USE_RTOS && defined(FSL_RTOS_FREE_RTOS)
+#if USE_RTOS && defined(SDK_OS_FREE_RTOS)
 #include "FreeRTOS.h"
 
 #if defined(configTOTAL_HEAP_SIZE)

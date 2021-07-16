@@ -8,29 +8,8 @@
 
 /*
  *  Copyright (C) 2014. Mindtree Ltd.
+ *  Copyright 2021 NXP
  *  All rights reserved.
- */
-
-/*   Copyright 2008-2020 NXP
- *
- *  NXP CONFIDENTIAL
- *  The source code contained or described herein and all documents related to
- *  the source code ("Materials") are owned by NXP, its
- *  suppliers and/or its licensors. Title to the Materials remains with NXP,
- *  its suppliers and/or its licensors. The Materials contain
- *  trade secrets and proprietary and confidential information of NXP, its
- *  suppliers and/or its licensors. The Materials are protected by worldwide copyright
- *  and trade secret laws and treaty provisions. No part of the Materials may be
- *  used, copied, reproduced, modified, published, uploaded, posted,
- *  transmitted, distributed, or disclosed in any way without NXP's prior
- *  express written permission.
- *
- *  No license under any patent, copyright, trade secret or other intellectual
- *  property right is granted to or conferred upon you by disclosure or delivery
- *  of the Materials, either expressly, by implication, inducement, estoppel or
- *  otherwise. Any license under such intellectual property rights must be
- *  express and approved by NXP in writing.
- *
  */
 
 #ifndef _H_BT_HCI_API_
@@ -64,97 +43,97 @@
 /* =================================================== Constants/Definitions */
 /** HCI Device Role - Master/Slave */
 /** Device Role Master */
-#define BT_DEVICE_ROLE_MASTER                            0x00
+#define BT_DEVICE_ROLE_MASTER                            0x00U
 /** Device Role Slave */
-#define BT_DEVICE_ROLE_SLAVE                             0x01
+#define BT_DEVICE_ROLE_SLAVE                             0x01U
 
 /* HCI Link Types ACL/SCO/eSCO */
-#define HCI_SCO_LINK                            0x00
-#define HCI_ACL_LINK                            0x01
+#define HCI_SCO_LINK                            0x00U
+#define HCI_ACL_LINK                            0x01U
 #ifdef BT_HCI_1_2
-#define HCI_ESCO_LINK                           0x02
+#define HCI_ESCO_LINK                           0x02U
 #endif /* BT_HCI_1_2 */
 #ifdef BT_4_0
-#define HCI_LE_LINK                             0x03
+#define HCI_LE_LINK                             0x03U
 #endif /* BT_4_0 */
 
 /* LMP Packet Types - ACL Connection */
-#define LMP_ACL_DM1                             0x0008
-#define LMP_ACL_DH1                             0x0010
-#define LMP_ACL_DM3                             0x0400
-#define LMP_ACL_DH3                             0x0800
-#define LMP_ACL_DM5                             0x4000
-#define LMP_ACL_DH5                             0x8000
+#define LMP_ACL_DM1                             0x0008U
+#define LMP_ACL_DH1                             0x0010U
+#define LMP_ACL_DM3                             0x0400U
+#define LMP_ACL_DH3                             0x0800U
+#define LMP_ACL_DM5                             0x4000U
+#define LMP_ACL_DH5                             0x8000U
 
 #ifdef BT_2_0_EDR
-#define LMP_ACL_2_DH1                           0x0002
-#define LMP_ACL_3_DH1                           0x0004
-#define LMP_ACL_2_DH3                           0x0100
-#define LMP_ACL_3_DH3                           0x0200
-#define LMP_ACL_2_DH5                           0x1000
-#define LMP_ACL_3_DH5                           0x2000
+#define LMP_ACL_2_DH1                           0x0002U
+#define LMP_ACL_3_DH1                           0x0004U
+#define LMP_ACL_2_DH3                           0x0100U
+#define LMP_ACL_3_DH3                           0x0200U
+#define LMP_ACL_2_DH5                           0x1000U
+#define LMP_ACL_3_DH5                           0x2000U
 #endif /* BT_2_0_EDR */
 
 /* LMP Packet Types - SCO Connection */
-#define LMP_SCO_HV1                             0x0020
-#define LMP_SCO_HV2                             0x0040
-#define LMP_SCO_HV3                             0x0080
+#define LMP_SCO_HV1                             0x0020U
+#define LMP_SCO_HV2                             0x0040U
+#define LMP_SCO_HV3                             0x0080U
 
 /* LMP Packet Types - eSCO Connection */
-#define LMP_ESCO_HV1                            0x0001
-#define LMP_ESCO_HV2                            0x0002
-#define LMP_ESCO_HV3                            0x0004
-#define LMP_ESCO_EV3                            0x0008
-#define LMP_ESCO_EV4                            0x0010
-#define LMP_ESCO_EV5                            0x0020
+#define LMP_ESCO_HV1                            0x0001U
+#define LMP_ESCO_HV2                            0x0002U
+#define LMP_ESCO_HV3                            0x0004U
+#define LMP_ESCO_EV3                            0x0008U
+#define LMP_ESCO_EV4                            0x0010U
+#define LMP_ESCO_EV5                            0x0020U
 
 #ifdef BT_2_0_EDR
-#define LMP_ESCO_2_EV3                          0x0040
-#define LMP_ESCO_3_EV3                          0x0080
-#define LMP_ESCO_2_EV5                          0x0100
-#define LMP_ESCO_3_EV5                          0x0200
+#define LMP_ESCO_2_EV3                          0x0040U
+#define LMP_ESCO_3_EV3                          0x0080U
+#define LMP_ESCO_2_EV5                          0x0100U
+#define LMP_ESCO_3_EV5                          0x0200U
 #endif /* BT_2_0_EDR */
 
 /* Synchronous Connections Parameters - Max Latency */
-#define LMP_MAX_LATENCY_DONT_CARE               0xFFFF
+#define LMP_MAX_LATENCY_DONT_CARE               0xFFFFU
 
 /* Synchronous Connections Parameters - Retransmission Effort */
-#define LMP_RETX_EFFORT_NONE                    0x00
-#define LMP_RETX_EFFORT_POWER                   0x01
-#define LMP_RETX_EFFORT_QUALITY                 0x02
-#define LMP_RETX_EFFORT_DONT_CARE               0xFF
+#define LMP_RETX_EFFORT_NONE                    0x00U
+#define LMP_RETX_EFFORT_POWER                   0x01U
+#define LMP_RETX_EFFORT_QUALITY                 0x02U
+#define LMP_RETX_EFFORT_DONT_CARE               0xFFU
 
 /* Synchronous Connections Parameters - Voice Settings */
 /* Input Coding */
-#define LMP_VOICE_INPUT_CODING_LINEAR           0x0000
-#define LMP_VOICE_INPUT_CODING_U_LAW            0x0100
-#define LMP_VOICE_INPUT_CODING_A_LAW            0x0200
+#define LMP_VOICE_INPUT_CODING_LINEAR           0x0000U
+#define LMP_VOICE_INPUT_CODING_U_LAW            0x0100U
+#define LMP_VOICE_INPUT_CODING_A_LAW            0x0200U
 
 /* Input Data Format */
-#define LMP_VOICE_INPUT_FORMAT_1S_COMPLEMENT    0x0000
-#define LMP_VOICE_INPUT_FORMAT_2S_COMPLEMENT    0x0040
-#define LMP_VOICE_INPUT_FORMAT_SIGN_MAGNITUDE   0x0080
-#define LMP_VOICE_INPUT_FORMAT_UNSIGNED         0x00C0
+#define LMP_VOICE_INPUT_FORMAT_1S_COMPLEMENT    0x0000U
+#define LMP_VOICE_INPUT_FORMAT_2S_COMPLEMENT    0x0040U
+#define LMP_VOICE_INPUT_FORMAT_SIGN_MAGNITUDE   0x0080U
+#define LMP_VOICE_INPUT_FORMAT_UNSIGNED         0x00C0U
 
 /* Input Sample Size */
-#define LMP_VOICE_INPUT_SAMPLE_8_BIT            0x0000
-#define LMP_VOICE_INPUT_SAMPLE_16_BIT           0x0020
+#define LMP_VOICE_INPUT_SAMPLE_8_BIT            0x0000U
+#define LMP_VOICE_INPUT_SAMPLE_16_BIT           0x0020U
 
 /* Linear PCM Bit Position */
-#define LMP_VOICE_LINEAR_BIT_POS_0              0x0000
-#define LMP_VOICE_LINEAR_BIT_POS_1              0x0004
-#define LMP_VOICE_LINEAR_BIT_POS_2              0x0008
-#define LMP_VOICE_LINEAR_BIT_POS_3              0x000C
-#define LMP_VOICE_LINEAR_BIT_POS_4              0x0010
-#define LMP_VOICE_LINEAR_BIT_POS_5              0x0014
-#define LMP_VOICE_LINEAR_BIT_POS_6              0x0018
-#define LMP_VOICE_LINEAR_BIT_POS_7              0x001C
+#define LMP_VOICE_LINEAR_BIT_POS_0              0x0000U
+#define LMP_VOICE_LINEAR_BIT_POS_1              0x0004U
+#define LMP_VOICE_LINEAR_BIT_POS_2              0x0008U
+#define LMP_VOICE_LINEAR_BIT_POS_3              0x000CU
+#define LMP_VOICE_LINEAR_BIT_POS_4              0x0010U
+#define LMP_VOICE_LINEAR_BIT_POS_5              0x0014U
+#define LMP_VOICE_LINEAR_BIT_POS_6              0x0018U
+#define LMP_VOICE_LINEAR_BIT_POS_7              0x001CU
 
 /* Air Coding Format */
-#define LMP_VOICE_AIR_CODING_CVSD               0x0000
-#define LMP_VOICE_AIR_CODING_U_LAW              0x0001
-#define LMP_VOICE_AIR_CODING_A_LAW              0x0002
-#define LMP_VOICE_AIR_CODING_TRANSPARENT        0x0003
+#define LMP_VOICE_AIR_CODING_CVSD               0x0000U
+#define LMP_VOICE_AIR_CODING_U_LAW              0x0001U
+#define LMP_VOICE_AIR_CODING_A_LAW              0x0002U
+#define LMP_VOICE_AIR_CODING_TRANSPARENT        0x0003U
 
 /*
  *  Default Voice Settings to be used for Synchronous Connections:
@@ -173,31 +152,31 @@
 
 /* Default eSCO Channel Parameters */
 /* Transmit & Receive Bandwidth - 8000 octets/sec */
-#define LMP_ESCO_TX_BANDWIDTH_DEFAULT           8000
-#define LMP_ESCO_RX_BANDWIDTH_DEFAULT           8000
+#define LMP_ESCO_TX_BANDWIDTH_DEFAULT           8000U
+#define LMP_ESCO_RX_BANDWIDTH_DEFAULT           8000U
 
 #ifdef HCI_ENH_SCO
 /* Parameters related to Enhaced SCO Configuration */
 
 /* Coding Format */
-#define LMP_CODING_FRMT_U_LAW                       0x00
-#define LMP_CODING_FRMT_A_LAW                       0x01
-#define LMP_CODING_FRMT_CVSD                        0x02
-#define LMP_CODING_FRMT_TRANSPARENT                 0x03
-#define LMP_CODING_FRMT_LINEAR_PCM                  0x04
-#define LMP_CODING_FRMT_MSBC                        0x05
-#define LMP_CODING_FRMT_VS                          0xFF
+#define LMP_CODING_FRMT_U_LAW                       0x00U
+#define LMP_CODING_FRMT_A_LAW                       0x01U
+#define LMP_CODING_FRMT_CVSD                        0x02U
+#define LMP_CODING_FRMT_TRANSPARENT                 0x03U
+#define LMP_CODING_FRMT_LINEAR_PCM                  0x04U
+#define LMP_CODING_FRMT_MSBC                        0x05U
+#define LMP_CODING_FRMT_VS                          0xFFU
 
 /* Transmit and Receive Bandwidth */
-#define LMP_ENH_SCO_TX_BANDWIDTH_DEFAULT            16000
-#define LMP_ENH_SCO_RX_BANDWIDTH_DEFAULT            16000
+#define LMP_ENH_SCO_TX_BANDWIDTH_DEFAULT            16000U
+#define LMP_ENH_SCO_RX_BANDWIDTH_DEFAULT            16000U
 
 /* Input and Output Data Path */
-#define ENH_SCO_DATA_PATH_HCI                       0x00
-#define ENH_SCO_DATA_PATH_AUDIO_TEST_MODE           0xFF
+#define ENH_SCO_DATA_PATH_HCI                       0x00U
+#define ENH_SCO_DATA_PATH_AUDIO_TEST_MODE           0xFFU
 
 /* MSBC Default Frame length */
-#define MSBC_FRAME_SIZE                             60
+#define MSBC_FRAME_SIZE                             60U
 #endif /* HCI_ENH_SCO */
 
 /* Default eSCO Max Latency */
@@ -212,90 +191,90 @@
          LMP_ESCO_EV3|LMP_ESCO_EV4|LMP_ESCO_EV5)
 
 /* Type of PIN Codes */
-#define HCI_VARIABLE_PIN_CODE                   0x00
-#define HCI_FIXED_PIN_CODE                      0x01
+#define HCI_VARIABLE_PIN_CODE                   0x00U
+#define HCI_FIXED_PIN_CODE                      0x01U
 
 /** Invalid HCI Connection Handle */
-#define HCI_INVALID_CONNECTION_HANDLE           0xFFFF
+#define HCI_INVALID_CONNECTION_HANDLE           0xFFFFU
 
 /* Type of Link Keys */
-#define HCI_LINK_KEY_COMBINATION                0x00
-#define HCI_LINK_KEY_LOCAL_UNIT                 0x01
-#define HCI_LINK_KEY_REMOTE_UNIT                0x02
-#define HCI_LINK_KEY_DEBUG_COMBINATION          0x03
-#define HCI_LINK_KEY_UNAUTHENTICATED            0x04
-#define HCI_LINK_KEY_AUTHENTICATED              0x05
-#define HCI_LINK_KEY_CHANGED_COMBINATION        0x06
+#define HCI_LINK_KEY_COMBINATION                0x00U
+#define HCI_LINK_KEY_LOCAL_UNIT                 0x01U
+#define HCI_LINK_KEY_REMOTE_UNIT                0x02U
+#define HCI_LINK_KEY_DEBUG_COMBINATION          0x03U
+#define HCI_LINK_KEY_UNAUTHENTICATED            0x04U
+#define HCI_LINK_KEY_AUTHENTICATED              0x05U
+#define HCI_LINK_KEY_CHANGED_COMBINATION        0x06U
 
 #ifdef BT_BRSC
-#define HCI_LINK_KEY_UNAUTHENTICATED_P_256      0x07
-#define HCI_LINK_KEY_AUTHENTICATED_P_256        0x08
+#define HCI_LINK_KEY_UNAUTHENTICATED_P_256      0x07U
+#define HCI_LINK_KEY_AUTHENTICATED_P_256        0x08U
 #endif /* BT_BRSC */
 
 #ifdef BT_EIR
-#define HCI_EIR_MAX_DATA_LEN                    240
+#define HCI_EIR_MAX_DATA_LEN                    240U
 #endif /* BT_EIR */
 
 /** Maximum Advertising Data Length */
-#define HCI_MAX_ADVERTISING_DATA_LENGTH                  0x1F
+#define HCI_MAX_ADVERTISING_DATA_LENGTH                  0x1FU
 
 /** Advertising Enable/Disable */
 /** Advertising disabled */
-#define HCI_ADVERTISING_DISABLE                          0x00
+#define HCI_ADVERTISING_DISABLE                          0x00U
 /** Advertising enabled */
-#define HCI_ADVERTISING_ENABLE                           0x01
+#define HCI_ADVERTISING_ENABLE                           0x01U
 
 /** Advertising Type */
 /** Connectable undirected advertising */
-#define HCI_ADV_IND                                      0x00
+#define HCI_ADV_IND                                      0x00U
 /** Connectable directed advertising - High Duty Cycle */
-#define HCI_ADV_DIRECT_IND                               0x01
+#define HCI_ADV_DIRECT_IND                               0x01U
 /** Scannable undirected advertising */
-#define HCI_ADV_SCAN_IND                                 0x02
+#define HCI_ADV_SCAN_IND                                 0x02U
 /** Non connectable undirected advertising */
-#define HCI_ADV_NONCONN_IND                              0x03
+#define HCI_ADV_NONCONN_IND                              0x03U
 /** Connectable directed advertising - Low Duty Cycle */
-#define HCI_ADV_DIRECT_LDC_IND                           0x04
+#define HCI_ADV_DIRECT_LDC_IND                           0x04U
 
 /** Scan Respond Event Type */
-#define HCI_SCAN_RSP                                     0x04
+#define HCI_SCAN_RSP                                     0x04U
 
 /** Address Type */
 /** Public Device Address */
-#define BD_ADDR_TYPE_PUBLIC                              0x00
+#define BD_ADDR_TYPE_PUBLIC                              0x00U
 /** Random Device Address */
-#define BD_ADDR_TYPE_RANDOM                              0x01
+#define BD_ADDR_TYPE_RANDOM                              0x01U
 
 /** Advertising Filter Policy */
 /** Allow Scan Request from Any, Allow Connect Request from Any */
-#define HCI_ADV_FLTR_SCAN_REQ_ANY_CON_REQ_ANY            0x00
+#define HCI_ADV_FLTR_SCAN_REQ_ANY_CON_REQ_ANY            0x00U
 /** Allow Scan Request from White List Only, Allow Connect Request from Any */
-#define HCI_ADV_FLTR_SCAN_REQ_WH_LIST_CON_REQ_ANY        0x01
+#define HCI_ADV_FLTR_SCAN_REQ_WH_LIST_CON_REQ_ANY        0x01U
 /** Allow Scan Request from Any, Allow Connect Request from White List Only */
-#define HCI_ADV_FLTR_SCAN_REQ_ANY_CON_REQ_WH_LIST        0x02
+#define HCI_ADV_FLTR_SCAN_REQ_ANY_CON_REQ_WH_LIST        0x02U
 /**
  * Allow Scan Request from White List Only, Allow Connect Request
  * from White List Only.
  */
-#define HCI_ADV_FLTR_SCAN_REQ_WH_LIST_CON_REQ_WH_LIST    0x03
+#define HCI_ADV_FLTR_SCAN_REQ_WH_LIST_CON_REQ_WH_LIST    0x03U
 
 /** LE Scan Enable/Disable */
 /** Scanning disabled */
-#define HCI_LE_SCAN_DISABLE                              0x00
+#define HCI_LE_SCAN_DISABLE                              0x00U
 /** Scanning enabled */
-#define HCI_LE_SCAN_ENABLE                               0x01
+#define HCI_LE_SCAN_ENABLE                               0x01U
 
 /** LE Scan Filter Duplicates Enable/Disable */
 /** Duplicate filtering disabled */
-#define HCI_LE_SCAN_DUP_FLTR_DISABLE                     0x00
+#define HCI_LE_SCAN_DUP_FLTR_DISABLE                     0x00U
 /** Duplicate filtering enabled */
-#define HCI_LE_SCAN_DUP_FLTR_ENABLE                      0x01
+#define HCI_LE_SCAN_DUP_FLTR_ENABLE                      0x01U
 
 /** LE Scan Type */
 /** Passive Scanning. No SCAN_REQ packets shall be sent */
-#define HCI_LE_SCAN_TYPE_PASSIVE                         0x00
+#define HCI_LE_SCAN_TYPE_PASSIVE                         0x00U
 /** Active scanning. SCAN_REQ packets may be sent */
-#define HCI_LE_SCAN_TYPE_ACTIVE                          0x01
+#define HCI_LE_SCAN_TYPE_ACTIVE                          0x01U
 
 /** LE Scanning Filter Policy */
 /**
@@ -303,76 +282,76 @@
  * Directed advertising packets which are not addressed for this device
  * shall be ignored.
  */
-#define HCI_LE_SCAN_FLTR_ACCEPT_ALL                      0x00
+#define HCI_LE_SCAN_FLTR_ACCEPT_ALL                      0x00U
 
 /**
  * Ignore advertisement packets from devices not in the White List Only.
  * Directed advertising packets which are not addressed for this device
  * shall be ignored.
  */
-#define HCI_LE_SCAN_FLTR_USE_WH_LIST                     0x01
+#define HCI_LE_SCAN_FLTR_USE_WH_LIST                     0x01U
 
 /** LE Initiator Filter Policy */
 /**
  * White list is not used to determine which advertiser to connect to.
  * Peer_Address_Type and Peer_Address shall be used.
  */
-#define HCI_INIT_FLTR_DONOT_USE_WH_LIST                  0x00
+#define HCI_INIT_FLTR_DONOT_USE_WH_LIST                  0x00U
 /**
  * White list is used to determine which advertiser to connect to.
  * Peer_Address_Type and Peer_Address shall be ignored.
  */
-#define HCI_INIT_FLTR_USE_WH_LIST                        0x01
+#define HCI_INIT_FLTR_USE_WH_LIST                        0x01U
 
 /** LE Transmitter Test Packet Payload */
 /** Pseudo-Random bit sequence 9 */
-#define HCI_LE_TX_TEST_PKT_TYPE_00                       0x00
+#define HCI_LE_TX_TEST_PKT_TYPE_00                       0x00U
 /** Pattern of alternating bits '11110000' */
-#define HCI_LE_TX_TEST_PKT_TYPE_01                       0x01
+#define HCI_LE_TX_TEST_PKT_TYPE_01                       0x01U
 /** Pattern of alternating bits '10101010' */
-#define HCI_LE_TX_TEST_PKT_TYPE_02                       0x02
+#define HCI_LE_TX_TEST_PKT_TYPE_02                       0x02U
 /** Pseudo-Random bit sequence 15 */
-#define HCI_LE_TX_TEST_PKT_TYPE_03                       0x03
+#define HCI_LE_TX_TEST_PKT_TYPE_03                       0x03U
 /** Pattern of All '1' bits */
-#define HCI_LE_TX_TEST_PKT_TYPE_04                       0x04
+#define HCI_LE_TX_TEST_PKT_TYPE_04                       0x04U
 /** Pattern of All '0' bits */
-#define HCI_LE_TX_TEST_PKT_TYPE_05                       0x05
+#define HCI_LE_TX_TEST_PKT_TYPE_05                       0x05U
 /** Pattern of alternating bits '00001111' */
-#define HCI_LE_TX_TEST_PKT_TYPE_06                       0x06
+#define HCI_LE_TX_TEST_PKT_TYPE_06                       0x06U
 /** Pattern of alternating bits '0101' */
-#define HCI_LE_TX_TEST_PKT_TYPE_07                       0x07
+#define HCI_LE_TX_TEST_PKT_TYPE_07                       0x07U
 
 /** Transmit Power Level Type */
 /** Read Current Transmit Power Level */
-#define HCI_READ_CUR_TX_POWER_LEVEL                      0x00
+#define HCI_READ_CUR_TX_POWER_LEVEL                      0x00U
 /** Read Maximum Transmit Power Level */
-#define HCI_READ_MAX_TX_POWER_LEVEL                      0x01
+#define HCI_READ_MAX_TX_POWER_LEVEL                      0x01U
 
 /** Connection Parameter Range */
 /** Connection Interval Minimum - 0x0006 to 0x0C80 */
-#define HCI_LE_MIN_CONN_INTRVL_MIN_RANGE                 0x0006
-#define HCI_LE_MIN_CONN_INTRVL_MAX_RANGE                 0x0C80
+#define HCI_LE_MIN_CONN_INTRVL_MIN_RANGE                 0x0006U
+#define HCI_LE_MIN_CONN_INTRVL_MAX_RANGE                 0x0C80U
 
 /** Connection Interval Maximum - 0x0006 to 0x0C80 */
-#define HCI_LE_MAX_CONN_INTRVL_MIN_RANGE                 0x0006
-#define HCI_LE_MAX_CONN_INTRVL_MAX_RANGE                 0x0C80
+#define HCI_LE_MAX_CONN_INTRVL_MIN_RANGE                 0x0006U
+#define HCI_LE_MAX_CONN_INTRVL_MAX_RANGE                 0x0C80U
 
 /** Connection Latency - 0x0000 to 0x01F4 */
-#define HCI_LE_CONN_LATENCY_MIN_RANGE                    0x0000
-#define HCI_LE_CONN_LATENCY_MAX_RANGE                    0x01F4
+#define HCI_LE_CONN_LATENCY_MIN_RANGE                    0x0000U
+#define HCI_LE_CONN_LATENCY_MAX_RANGE                    0x01F4U
 
 /** Supervision Timeout - 0x000A to 0x0C80 */
-#define HCI_LE_SUPERVISION_TO_MIN_RANGE                  0x000A
-#define HCI_LE_SUPERVISION_TO_MAX_RANGE                  0x0C80
+#define HCI_LE_SUPERVISION_TO_MIN_RANGE                  0x000AU
+#define HCI_LE_SUPERVISION_TO_MAX_RANGE                  0x0C80U
 
 /**
  *  HCI Packet Types - exchanged between
  *  the HCI & HCI-Transport Layers.
  */
-#define HCI_COMMAND_PACKET                               0x01
-#define HCI_ACL_DATA_PACKET                              0x02
-#define HCI_SCO_DATA_PACKET                              0x03
-#define HCI_EVENT_PACKET                                 0x04
+#define HCI_COMMAND_PACKET                               0x01U
+#define HCI_ACL_DATA_PACKET                              0x02U
+#define HCI_SCO_DATA_PACKET                              0x03U
+#define HCI_EVENT_PACKET                                 0x04U
 
 /**
  * \defgroup hci_command_opcodes Command Opcodes
@@ -519,419 +498,419 @@
  */
 
 /* No Operation Opcode */
-#define HCI_NO_OPERATION_OPCODE                                 0x0000
+#define HCI_NO_OPERATION_OPCODE                                 0x0000U
 
 /* Link Control Commands - OGF : 0x01 */
-#define HCI_INQUIRY_OPCODE                                      0x0401
-#define HCI_INQUIRY_CANCEL_OPCODE                               0x0402
-#define HCI_PERIODIC_INQUIRY_MODE_OPCODE                        0x0403
-#define HCI_EXIT_PERIODIC_INQUIRY_MODE_OPCODE                   0x0404
-#define HCI_CREATE_CONNECTION_OPCODE                            0x0405
-#define HCI_DISCONNECT_OPCODE                                   0x0406
-#define HCI_ADD_SCO_CONNECTION_OPCODE                           0x0407
-#define HCI_ACCEPT_CONNECTION_REQUEST_OPCODE                    0x0409
-#define HCI_REJECT_CONNECTION_REQUEST_OPCODE                    0x040A
-#define HCI_LINK_KEY_REQUEST_REPLY_OPCODE                       0x040B
-#define HCI_LINK_KEY_REQUEST_NEGATIVE_REPLY_OPCODE              0x040C
-#define HCI_PIN_CODE_REQUEST_REPLY_OPCODE                       0x040D
-#define HCI_PIN_CODE_REQUEST_NEGATIVE_REPLY_OPCODE              0x040E
-#define HCI_CHANGE_CONNECTION_PACKET_TYPE_OPCODE                0x040F
-#define HCI_AUTHENTICATION_REQUESTED_OPCODE                     0x0411
-#define HCI_SET_CONNECTION_ENCRYPTION_OPCODE                    0x0413
-#define HCI_CHANGE_CONNECTION_LINK_KEY_OPCODE                   0x0415
-#define HCI_MASTER_LINK_KEY_OPCODE                              0x0417
-#define HCI_REMOTE_NAME_REQUEST_OPCODE                          0x0419
-#define HCI_READ_REMOTE_SUPPORTED_FEATURES_OPCODE               0x041B
-#define HCI_READ_REMOTE_VERSION_INFORMATION_OPCODE              0x041D
-#define HCI_READ_CLOCK_OFFSET_OPCODE                            0x041F
+#define HCI_INQUIRY_OPCODE                                      0x0401U
+#define HCI_INQUIRY_CANCEL_OPCODE                               0x0402U
+#define HCI_PERIODIC_INQUIRY_MODE_OPCODE                        0x0403U
+#define HCI_EXIT_PERIODIC_INQUIRY_MODE_OPCODE                   0x0404U
+#define HCI_CREATE_CONNECTION_OPCODE                            0x0405U
+#define HCI_DISCONNECT_OPCODE                                   0x0406U
+#define HCI_ADD_SCO_CONNECTION_OPCODE                           0x0407U
+#define HCI_ACCEPT_CONNECTION_REQUEST_OPCODE                    0x0409U
+#define HCI_REJECT_CONNECTION_REQUEST_OPCODE                    0x040AU
+#define HCI_LINK_KEY_REQUEST_REPLY_OPCODE                       0x040BU
+#define HCI_LINK_KEY_REQUEST_NEGATIVE_REPLY_OPCODE              0x040CU
+#define HCI_PIN_CODE_REQUEST_REPLY_OPCODE                       0x040DU
+#define HCI_PIN_CODE_REQUEST_NEGATIVE_REPLY_OPCODE              0x040EU
+#define HCI_CHANGE_CONNECTION_PACKET_TYPE_OPCODE                0x040FU
+#define HCI_AUTHENTICATION_REQUESTED_OPCODE                     0x0411U
+#define HCI_SET_CONNECTION_ENCRYPTION_OPCODE                    0x0413U
+#define HCI_CHANGE_CONNECTION_LINK_KEY_OPCODE                   0x0415U
+#define HCI_MASTER_LINK_KEY_OPCODE                              0x0417U
+#define HCI_REMOTE_NAME_REQUEST_OPCODE                          0x0419U
+#define HCI_READ_REMOTE_SUPPORTED_FEATURES_OPCODE               0x041BU
+#define HCI_READ_REMOTE_VERSION_INFORMATION_OPCODE              0x041DU
+#define HCI_READ_CLOCK_OFFSET_OPCODE                            0x041FU
 
 #ifdef BT_HCI_1_2
-#define HCI_CREATE_CONNECTION_CANCEL_OPCODE                     0x0408
-#define HCI_REMOTE_NAME_REQUEST_CANCEL_OPCODE                   0x041A
-#define HCI_READ_REMOTE_EXTENDED_FEATURES_OPCODE                0x041C
-#define HCI_READ_LMP_HANDLE_OPCODE                              0x0420
-#define HCI_SETUP_SYNCHRONOUS_CONNECTION_OPCODE                 0x0428
-#define HCI_ACCEPT_SYNCHRONOUS_CONNECTION_REQUEST_OPCODE        0x0429
-#define HCI_REJECT_SYNCHRONOUS_CONNECTION_REQUEST_OPCODE        0x042A
+#define HCI_CREATE_CONNECTION_CANCEL_OPCODE                     0x0408U
+#define HCI_REMOTE_NAME_REQUEST_CANCEL_OPCODE                   0x041AU
+#define HCI_READ_REMOTE_EXTENDED_FEATURES_OPCODE                0x041CU
+#define HCI_READ_LMP_HANDLE_OPCODE                              0x0420U
+#define HCI_SETUP_SYNCHRONOUS_CONNECTION_OPCODE                 0x0428U
+#define HCI_ACCEPT_SYNCHRONOUS_CONNECTION_REQUEST_OPCODE        0x0429U
+#define HCI_REJECT_SYNCHRONOUS_CONNECTION_REQUEST_OPCODE        0x042AU
 #endif /* BT_HCI_1_2 */
 
 #ifdef BT_SSP
-#define HCI_IO_CAP_REQUEST_REPLY_OPCODE                         0x042B
-#define HCI_IO_CAP_REQUEST_NEGATIVE_REPLY_OPCODE                0x0434
+#define HCI_IO_CAP_REQUEST_REPLY_OPCODE                         0x042BU
+#define HCI_IO_CAP_REQUEST_NEGATIVE_REPLY_OPCODE                0x0434U
 #endif /* BT_SSP */
 
 #ifdef BT_SSP_UC
-#define HCI_USER_CONF_REQUEST_REPLY_OPCODE                      0x042C
-#define HCI_USER_CONF_REQUEST_NEGATIVE_REPLY_OPCODE             0x042D
+#define HCI_USER_CONF_REQUEST_REPLY_OPCODE                      0x042CU
+#define HCI_USER_CONF_REQUEST_NEGATIVE_REPLY_OPCODE             0x042DU
 #endif /* BT_SSP_UC */
 
 #ifdef BT_SSP_PE
-#define HCI_USER_PASSKEY_REQUEST_REPLY_OPCODE                   0x042E
-#define HCI_USER_PASSKEY_REQUEST_NEGATIVE_REPLY_OPCODE          0x042F
+#define HCI_USER_PASSKEY_REQUEST_REPLY_OPCODE                   0x042EU
+#define HCI_USER_PASSKEY_REQUEST_NEGATIVE_REPLY_OPCODE          0x042FU
 #endif /* BT_SSP_PE */
 
 #ifdef BT_SSP_OOB
-#define HCI_REMOTE_OOB_DATA_REQUEST_REPLY_OPCODE                0x0430
-#define HCI_REMOTE_OOB_DATA_REQUEST_NEGATIVE_REPLY_OPCODE       0x0433
+#define HCI_REMOTE_OOB_DATA_REQUEST_REPLY_OPCODE                0x0430U
+#define HCI_REMOTE_OOB_DATA_REQUEST_NEGATIVE_REPLY_OPCODE       0x0433U
 #endif /* BT_SSP_OOB */
 
 #ifdef HCI_ENH_SCO
-#define HCI_SETUP_ENHANCED_SYNCHRONOUS_CONNECTION_OPCODE        0x043D
-#define HCI_ACCEPT_ENHANCED_SYNCHRONOUS_CONNECTION_OPCODE       0x043E
+#define HCI_SETUP_ENHANCED_SYNCHRONOUS_CONNECTION_OPCODE        0x043DU
+#define HCI_ACCEPT_ENHANCED_SYNCHRONOUS_CONNECTION_OPCODE       0x043EU
 #endif /* HCI_ENH_SCO */
 
 /* Link Policy Commands - OGF : 0x02 */
-#define HCI_HOLD_MODE_OPCODE                                    0x0801
-#define HCI_SNIFF_MODE_OPCODE                                   0x0803
-#define HCI_EXIT_SNIFF_MODE_OPCODE                              0x0804
-#define HCI_PARK_MODE_OPCODE                                    0x0805
-#define HCI_EXIT_PARK_MODE_OPCODE                               0x0806
-#define HCI_QOS_SETUP_OPCODE                                    0x0807
-#define HCI_ROLE_DISCOVERY_OPCODE                               0x0809
-#define HCI_SWITCH_ROLE_OPCODE                                  0x080B
-#define HCI_READ_LINK_POLICY_SETTINGS_OPCODE                    0x080C
-#define HCI_WRITE_LINK_POLICY_SETTINGS_OPCODE                   0x080D
+#define HCI_HOLD_MODE_OPCODE                                    0x0801U
+#define HCI_SNIFF_MODE_OPCODE                                   0x0803U
+#define HCI_EXIT_SNIFF_MODE_OPCODE                              0x0804U
+#define HCI_PARK_MODE_OPCODE                                    0x0805U
+#define HCI_EXIT_PARK_MODE_OPCODE                               0x0806U
+#define HCI_QOS_SETUP_OPCODE                                    0x0807U
+#define HCI_ROLE_DISCOVERY_OPCODE                               0x0809U
+#define HCI_SWITCH_ROLE_OPCODE                                  0x080BU
+#define HCI_READ_LINK_POLICY_SETTINGS_OPCODE                    0x080CU
+#define HCI_WRITE_LINK_POLICY_SETTINGS_OPCODE                   0x080DU
 
 #ifdef BT_HCI_1_2
-#define HCI_READ_DEFAULT_LINK_POLICY_SETTINGS_OPCODE            0x080E
-#define HCI_WRITE_DEFAULT_LINK_POLICY_SETTINGS_OPCODE           0x080F
-#define HCI_FLOW_SPECIFICATION_OPCODE                           0x0810
+#define HCI_READ_DEFAULT_LINK_POLICY_SETTINGS_OPCODE            0x080EU
+#define HCI_WRITE_DEFAULT_LINK_POLICY_SETTINGS_OPCODE           0x080FU
+#define HCI_FLOW_SPECIFICATION_OPCODE                           0x0810U
 #endif /* BT_HCI_1_2 */
 
 #ifdef BT_SSR
-#define HCI_SNIFF_SUBRATING_OPCODE                              0x0811
+#define HCI_SNIFF_SUBRATING_OPCODE                              0x0811U
 #endif /* BT_SSR */
 
 /* Host Controller & BaseBand Commands - OGF : 0x03 */
-#define HCI_SET_EVENT_MASK_OPCODE                               0x0C01
-#define HCI_RESET_OPCODE                                        0x0C03
-#define HCI_SET_EVENT_FILTER_OPCODE                             0x0C05
-#define HCI_FLUSH_OPCODE                                        0x0C08
-#define HCI_READ_PIN_TYPE_OPCODE                                0x0C09
-#define HCI_WRITE_PIN_TYPE_OPCODE                               0x0C0A
-#define HCI_CREATE_NEW_UNIT_KEY_OPCODE                          0x0C0B
-#define HCI_READ_STORED_LINK_KEY_OPCODE                         0x0C0D
-#define HCI_WRITE_STORED_LINK_KEY_OPCODE                        0x0C11
-#define HCI_DELETE_STORED_LINK_KEY_OPCODE                       0x0C12
-#define HCI_CHANGE_LOCAL_NAME_OPCODE                            0x0C13
-#define HCI_READ_LOCAL_NAME_OPCODE                              0x0C14
-#define HCI_READ_CONNECTION_ACCEPT_TIMEOUT_OPCODE               0x0C15
-#define HCI_WRITE_CONNECTION_ACCEPT_TIMEOUT_OPCODE              0x0C16
-#define HCI_READ_PAGE_TIMEOUT_OPCODE                            0x0C17
-#define HCI_WRITE_PAGE_TIMEOUT_OPCODE                           0x0C18
-#define HCI_READ_SCAN_ENABLE_OPCODE                             0x0C19
-#define HCI_WRITE_SCAN_ENABLE_OPCODE                            0x0C1A
-#define HCI_READ_PAGE_SCAN_ACTIVITY_OPCODE                      0x0C1B
-#define HCI_WRITE_PAGE_SCAN_ACTIVITY_OPCODE                     0x0C1C
-#define HCI_READ_INQUIRY_SCAN_ACTIVITY_OPCODE                   0x0C1D
-#define HCI_WRITE_INQUIRY_SCAN_ACTIVITY_OPCODE                  0x0C1E
-#define HCI_READ_AUTHENTICATION_ENABLE_OPCODE                   0x0C1F
-#define HCI_WRITE_AUTHENTICATION_ENABLE_OPCODE                  0x0C20
-#define HCI_READ_ENCRYPTION_MODE_OPCODE                         0x0C21
-#define HCI_WRITE_ENCRYPTION_MODE_OPCODE                        0x0C22
-#define HCI_READ_CLASS_OF_DEVICE_OPCODE                         0x0C23
-#define HCI_WRITE_CLASS_OF_DEVICE_OPCODE                        0x0C24
-#define HCI_READ_VOICE_SETTING_OPCODE                           0x0C25
-#define HCI_WRITE_VOICE_SETTING_OPCODE                          0x0C26
-#define HCI_READ_AUTOMATIC_FLUSH_TIMEOUT_OPCODE                 0x0C27
-#define HCI_WRITE_AUTOMATIC_FLUSH_TIMEOUT_OPCODE                0x0C28
-#define HCI_READ_NUM_BROADCAST_RETRANSMISSIONS_OPCODE           0x0C29
-#define HCI_WRITE_NUM_BROADCAST_RETRANSMISSIONS_OPCODE          0x0C2A
-#define HCI_READ_HOLD_MODE_ACTIVITY_OPCODE                      0x0C2B
-#define HCI_WRITE_HOLD_MODE_ACTIVITY_OPCODE                     0x0C2C
-#define HCI_READ_TRANSMIT_POWER_LEVEL_OPCODE                    0x0C2D
-#define HCI_READ_SCO_FLOW_CONTROL_ENABLE_OPCODE                 0x0C2E
-#define HCI_WRITE_SCO_FLOW_CONTROL_ENABLE_OPCODE                0x0C2F
-#define HCI_SET_HOST_CONTROLLER_TO_HOST_FLOW_CONTROL_OPCODE     0x0C31
-#define HCI_HOST_BUFFER_SIZE_OPCODE                             0x0C33
-#define HCI_HOST_NUMBER_OF_COMPLETED_PACKETS_OPCODE             0x0C35
-#define HCI_READ_LINK_SUPERVISION_TIMEOUT_OPCODE                0x0C36
-#define HCI_WRITE_LINK_SUPERVISION_TIMEOUT_OPCODE               0x0C37
-#define HCI_READ_NUMBER_OF_SUPPORTED_IAC_OPCODE                 0x0C38
-#define HCI_READ_CURRENT_IAC_LAP_OPCODE                         0x0C39
-#define HCI_WRITE_CURRENT_IAC_LAP_OPCODE                        0x0C3A
-#define HCI_READ_PAGE_SCAN_PERIOD_MODE_OPCODE                   0x0C3B
-#define HCI_WRITE_PAGE_SCAN_PERIOD_MODE_OPCODE                  0x0C3C
-#define HCI_READ_PAGE_SCAN_MODE_OPCODE                          0x0C3D
-#define HCI_WRITE_PAGE_SCAN_MODE_OPCODE                         0x0C3E
+#define HCI_SET_EVENT_MASK_OPCODE                               0x0C01U
+#define HCI_RESET_OPCODE                                        0x0C03U
+#define HCI_SET_EVENT_FILTER_OPCODE                             0x0C05U
+#define HCI_FLUSH_OPCODE                                        0x0C08U
+#define HCI_READ_PIN_TYPE_OPCODE                                0x0C09U
+#define HCI_WRITE_PIN_TYPE_OPCODE                               0x0C0AU
+#define HCI_CREATE_NEW_UNIT_KEY_OPCODE                          0x0C0BU
+#define HCI_READ_STORED_LINK_KEY_OPCODE                         0x0C0DU
+#define HCI_WRITE_STORED_LINK_KEY_OPCODE                        0x0C11U
+#define HCI_DELETE_STORED_LINK_KEY_OPCODE                       0x0C12U
+#define HCI_CHANGE_LOCAL_NAME_OPCODE                            0x0C13U
+#define HCI_READ_LOCAL_NAME_OPCODE                              0x0C14U
+#define HCI_READ_CONNECTION_ACCEPT_TIMEOUT_OPCODE               0x0C15U
+#define HCI_WRITE_CONNECTION_ACCEPT_TIMEOUT_OPCODE              0x0C16U
+#define HCI_READ_PAGE_TIMEOUT_OPCODE                            0x0C17U
+#define HCI_WRITE_PAGE_TIMEOUT_OPCODE                           0x0C18U
+#define HCI_READ_SCAN_ENABLE_OPCODE                             0x0C19U
+#define HCI_WRITE_SCAN_ENABLE_OPCODE                            0x0C1AU
+#define HCI_READ_PAGE_SCAN_ACTIVITY_OPCODE                      0x0C1BU
+#define HCI_WRITE_PAGE_SCAN_ACTIVITY_OPCODE                     0x0C1CU
+#define HCI_READ_INQUIRY_SCAN_ACTIVITY_OPCODE                   0x0C1DU
+#define HCI_WRITE_INQUIRY_SCAN_ACTIVITY_OPCODE                  0x0C1EU
+#define HCI_READ_AUTHENTICATION_ENABLE_OPCODE                   0x0C1FU
+#define HCI_WRITE_AUTHENTICATION_ENABLE_OPCODE                  0x0C20U
+#define HCI_READ_ENCRYPTION_MODE_OPCODE                         0x0C21U
+#define HCI_WRITE_ENCRYPTION_MODE_OPCODE                        0x0C22U
+#define HCI_READ_CLASS_OF_DEVICE_OPCODE                         0x0C23U
+#define HCI_WRITE_CLASS_OF_DEVICE_OPCODE                        0x0C24U
+#define HCI_READ_VOICE_SETTING_OPCODE                           0x0C25U
+#define HCI_WRITE_VOICE_SETTING_OPCODE                          0x0C26U
+#define HCI_READ_AUTOMATIC_FLUSH_TIMEOUT_OPCODE                 0x0C27U
+#define HCI_WRITE_AUTOMATIC_FLUSH_TIMEOUT_OPCODE                0x0C28U
+#define HCI_READ_NUM_BROADCAST_RETRANSMISSIONS_OPCODE           0x0C29U
+#define HCI_WRITE_NUM_BROADCAST_RETRANSMISSIONS_OPCODE          0x0C2AU
+#define HCI_READ_HOLD_MODE_ACTIVITY_OPCODE                      0x0C2BU
+#define HCI_WRITE_HOLD_MODE_ACTIVITY_OPCODE                     0x0C2CU
+#define HCI_READ_TRANSMIT_POWER_LEVEL_OPCODE                    0x0C2DU
+#define HCI_READ_SCO_FLOW_CONTROL_ENABLE_OPCODE                 0x0C2EU
+#define HCI_WRITE_SCO_FLOW_CONTROL_ENABLE_OPCODE                0x0C2FU
+#define HCI_SET_HOST_CONTROLLER_TO_HOST_FLOW_CONTROL_OPCODE     0x0C31U
+#define HCI_HOST_BUFFER_SIZE_OPCODE                             0x0C33U
+#define HCI_HOST_NUMBER_OF_COMPLETED_PACKETS_OPCODE             0x0C35U
+#define HCI_READ_LINK_SUPERVISION_TIMEOUT_OPCODE                0x0C36U
+#define HCI_WRITE_LINK_SUPERVISION_TIMEOUT_OPCODE               0x0C37U
+#define HCI_READ_NUMBER_OF_SUPPORTED_IAC_OPCODE                 0x0C38U
+#define HCI_READ_CURRENT_IAC_LAP_OPCODE                         0x0C39U
+#define HCI_WRITE_CURRENT_IAC_LAP_OPCODE                        0x0C3AU
+#define HCI_READ_PAGE_SCAN_PERIOD_MODE_OPCODE                   0x0C3BU
+#define HCI_WRITE_PAGE_SCAN_PERIOD_MODE_OPCODE                  0x0C3CU
+#define HCI_READ_PAGE_SCAN_MODE_OPCODE                          0x0C3DU
+#define HCI_WRITE_PAGE_SCAN_MODE_OPCODE                         0x0C3EU
 
 #ifdef BT_HCI_1_2
-#define HCI_SET_AFH_HOST_CHANNEL_CLASSIFICATION_OPCODE          0x0C3F
-#define HCI_READ_INQUIRY_SCAN_TYPE_OPCODE                       0x0C42
-#define HCI_WRITE_INQUIRY_SCAN_TYPE_OPCODE                      0x0C43
-#define HCI_READ_INQUIRY_MODE_OPCODE                            0x0C44
-#define HCI_WRITE_INQUIRY_MODE_OPCODE                           0x0C45
-#define HCI_READ_PAGE_SCAN_TYPE_OPCODE                          0x0C46
-#define HCI_WRITE_PAGE_SCAN_TYPE_OPCODE                         0x0C47
-#define HCI_READ_AFH_CHANNEL_ASSESSMENT_MODE_OPCODE             0x0C48
-#define HCI_WRITE_AFH_CHANNEL_ASSESSMENT_MODE_OPCODE            0x0C49
+#define HCI_SET_AFH_HOST_CHANNEL_CLASSIFICATION_OPCODE          0x0C3FU
+#define HCI_READ_INQUIRY_SCAN_TYPE_OPCODE                       0x0C42U
+#define HCI_WRITE_INQUIRY_SCAN_TYPE_OPCODE                      0x0C43U
+#define HCI_READ_INQUIRY_MODE_OPCODE                            0x0C44U
+#define HCI_WRITE_INQUIRY_MODE_OPCODE                           0x0C45U
+#define HCI_READ_PAGE_SCAN_TYPE_OPCODE                          0x0C46U
+#define HCI_WRITE_PAGE_SCAN_TYPE_OPCODE                         0x0C47U
+#define HCI_READ_AFH_CHANNEL_ASSESSMENT_MODE_OPCODE             0x0C48U
+#define HCI_WRITE_AFH_CHANNEL_ASSESSMENT_MODE_OPCODE            0x0C49U
 #endif /* BT_HCI_1_2 */
 
 #ifdef BT_EIR
-#define HCI_READ_EXTENDED_INQUIRY_RESPONSE_OPCODE               0x0C51
-#define HCI_WRITE_EXTENDED_INQUIRY_RESPONSE_OPCODE              0x0C52
-#define HCI_READ_INQUIRY_RESP_TX_POWER_LEVEL_OPCODE             0x0C58
-#define HCI_WRITE_INQUIRY_RESP_TX_POWER_LEVEL_OPCODE            0x0C59
+#define HCI_READ_EXTENDED_INQUIRY_RESPONSE_OPCODE               0x0C51U
+#define HCI_WRITE_EXTENDED_INQUIRY_RESPONSE_OPCODE              0x0C52U
+#define HCI_READ_INQUIRY_RESP_TX_POWER_LEVEL_OPCODE             0x0C58U
+#define HCI_WRITE_INQUIRY_RESP_TX_POWER_LEVEL_OPCODE            0x0C59U
 #endif /* BT_EIR */
 
 #ifdef BT_EPR
-#define HCI_REFRESH_ENCRYPTION_KEY_OPCODE                       0x0C53
+#define HCI_REFRESH_ENCRYPTION_KEY_OPCODE                       0x0C53U
 #endif /* BT_EPR */
 
 #ifdef BT_EDR
-#define HCI_READ_DEFAULT_ERR_DATA_REPORTING_OPCODE              0x0C5A
-#define HCI_WRITE_DEFAULT_ERR_DATA_REPORTING_OPCODE             0x0C5B
+#define HCI_READ_DEFAULT_ERR_DATA_REPORTING_OPCODE              0x0C5AU
+#define HCI_WRITE_DEFAULT_ERR_DATA_REPORTING_OPCODE             0x0C5BU
 #endif /* BT_EDR */
 
 #ifdef BT_SSP
-#define HCI_READ_SIMPLE_PAIRING_MODE_OPCODE                     0x0C55
-#define HCI_WRITE_SIMPLE_PAIRING_MODE_OPCODE                    0x0C56
+#define HCI_READ_SIMPLE_PAIRING_MODE_OPCODE                     0x0C55U
+#define HCI_WRITE_SIMPLE_PAIRING_MODE_OPCODE                    0x0C56U
 #endif /* BT_SSP */
 
 #ifdef BT_SSP_PE
-#define HCI_SEND_KEY_PRESS_NOTIFICATION_OPCODE                  0x0C60
+#define HCI_SEND_KEY_PRESS_NOTIFICATION_OPCODE                  0x0C60U
 #endif /* BT_SSP_PE */
 
 #ifdef BT_SSP_OOB
-#define HCI_READ_LOCAL_OOB_DATA_OPCODE                          0x0C57
+#define HCI_READ_LOCAL_OOB_DATA_OPCODE                          0x0C57U
 #endif /* BT_SSP_OOB */
 
 #ifdef BT_ENHANCED_FLUSH
-#define HCI_ENHANCED_FLUSH_OPCODE                               0x0C5F
+#define HCI_ENHANCED_FLUSH_OPCODE                               0x0C5FU
 #endif /* BT_ENHANCED_FLUSH */
 
 #ifdef BT_3_0
 
 #ifdef HCI_FLOW_CONTROL_COMMANDS
-#define HCI_READ_FLOW_CONTROL_MODE_OPCODE                       0x0C66
-#define HCI_WRITE_FLOW_CONTROL_MODE_OPCODE                      0x0C67
+#define HCI_READ_FLOW_CONTROL_MODE_OPCODE                       0x0C66U
+#define HCI_WRITE_FLOW_CONTROL_MODE_OPCODE                      0x0C67U
 #endif /* HCI_FLOW_CONTROL_COMMANDS */
 
-#define HCI_READ_ENHANCED_TRANSMIT_POWER_LEVEL_OPCODE           0x0C68
+#define HCI_READ_ENHANCED_TRANSMIT_POWER_LEVEL_OPCODE           0x0C68U
 #endif /* BT_3_0 */
 
 #ifdef HCI_READ_LE_HOST_SUPPORT
-#define HCI_READ_LE_HOST_SUPPORT_OPCODE                         0x0C6C
+#define HCI_READ_LE_HOST_SUPPORT_OPCODE                         0x0C6CU
 #endif /* HCI_READ_LE_HOST_SUPPORT */
 
 #ifdef HCI_WRITE_LE_HOST_SUPPORT
-#define HCI_WRITE_LE_HOST_SUPPORT_OPCODE                        0x0C6D
+#define HCI_WRITE_LE_HOST_SUPPORT_OPCODE                        0x0C6DU
 #endif /* HCI_WRITE_LE_HOST_SUPPORT */
 
 #ifdef BT_BRSC
-#define HCI_READ_SECURE_CONNECTIONS_HOST_SUPPORT_OPCODE         0x0C79
-#define HCI_WRITE_SECURE_CONNECTIONS_HOST_SUPPORT_OPCODE        0x0C7A
+#define HCI_READ_SECURE_CONNECTIONS_HOST_SUPPORT_OPCODE         0x0C79U
+#define HCI_WRITE_SECURE_CONNECTIONS_HOST_SUPPORT_OPCODE        0x0C7AU
 #endif /* BT_BRSC */
 
 #ifdef HCI_SET_EVENT_MASK_PAGE_2_SUPPORT
-#define HCI_SET_EVENT_MASK_PAGE_2_OPCODE                        0x0C63
+#define HCI_SET_EVENT_MASK_PAGE_2_OPCODE                        0x0C63U
 #endif /* HCI_SET_EVENT_MASK_PAGE_2_SUPPORT */
 
 #ifdef HCI_READ_AUTHENTICATED_PAYLOAD_TIMEOUT_SUPPORT
-#define HCI_READ_AUTHENTICATED_PAYLOAD_TIMEOUT_OPCODE           0x0C7B
+#define HCI_READ_AUTHENTICATED_PAYLOAD_TIMEOUT_OPCODE           0x0C7BU
 #endif /* HCI_READ_AUTHENTICATED_PAYLOAD_TIMEOUT_SUPPORT */
 
 #ifdef HCI_WRITE_AUTHENTICATED_PAYLOAD_TIMEOUT_SUPPORT
-#define HCI_WRITE_AUTHENTICATED_PAYLOAD_TIMEOUT_OPCODE          0x0C7C
+#define HCI_WRITE_AUTHENTICATED_PAYLOAD_TIMEOUT_OPCODE          0x0C7CU
 #endif /* HCI_WRITE_AUTHENTICATED_PAYLOAD_TIMEOUT_SUPPORT */
 
 /* Informational Parameters - OGF : 0x04 */
-#define HCI_READ_LOCAL_VERSION_INFORMATION_OPCODE               0x1001
-#define HCI_READ_LOCAL_SUPPORTED_COMMANDS_OPCODE                0x1002
-#define HCI_READ_LOCAL_SUPPORTED_FEATURES_OPCODE                0x1003
-#define HCI_READ_BUFFER_SIZE_OPCODE                             0x1005
-#define HCI_READ_COUNTRY_CODE_OPCODE                            0x1007
-#define HCI_READ_BD_ADDR_OPCODE                                 0x1009
+#define HCI_READ_LOCAL_VERSION_INFORMATION_OPCODE               0x1001U
+#define HCI_READ_LOCAL_SUPPORTED_COMMANDS_OPCODE                0x1002U
+#define HCI_READ_LOCAL_SUPPORTED_FEATURES_OPCODE                0x1003U
+#define HCI_READ_BUFFER_SIZE_OPCODE                             0x1005U
+#define HCI_READ_COUNTRY_CODE_OPCODE                            0x1007U
+#define HCI_READ_BD_ADDR_OPCODE                                 0x1009U
 
 #ifdef BT_HCI_1_2
-#define HCI_READ_LOCAL_SUPPORTED_COMMANDS_OPCODE                0x1002
-#define HCI_READ_LOCAL_EXTENDED_FEATURES_OPCODE                 0x1004
+#define HCI_READ_LOCAL_SUPPORTED_COMMANDS_OPCODE                0x1002U
+#define HCI_READ_LOCAL_EXTENDED_FEATURES_OPCODE                 0x1004U
 #endif /* BT_HCI_1_2 */
 
 #ifdef BT_3_0
-#define HCI_READ_DATA_BLOCK_SIZE_OPCODE                         0x100A
+#define HCI_READ_DATA_BLOCK_SIZE_OPCODE                         0x100AU
 #endif /* BT_3_0 */
 
 #ifdef HCI_ENH_SCO
-#define HCI_READ_LOCAL_SUPPORTED_CODECS_OPCODE                  0x100B
+#define HCI_READ_LOCAL_SUPPORTED_CODECS_OPCODE                  0x100BU
 #endif /* HCI_ENH_SCO */
 
 /* Status Parameters - OGF : 0x05 */
-#define HCI_READ_FAILED_CONTACT_COUNTER_OPCODE                  0x1401
-#define HCI_RESET_FAILED_CONTACT_COUNTER_OPCODE                 0x1402
-#define HCI_GET_LINK_QUALITY_OPCODE                             0x1403
-#define HCI_READ_RSSI_OPCODE                                    0x1405
+#define HCI_READ_FAILED_CONTACT_COUNTER_OPCODE                  0x1401U
+#define HCI_RESET_FAILED_CONTACT_COUNTER_OPCODE                 0x1402U
+#define HCI_GET_LINK_QUALITY_OPCODE                             0x1403U
+#define HCI_READ_RSSI_OPCODE                                    0x1405U
 
 #ifdef BT_HCI_1_2
-#define HCI_READ_AFH_CHANNEL_MAP_OPCODE                         0x1406
-#define HCI_READ_CLOCK_OPCODE                                   0x1407
+#define HCI_READ_AFH_CHANNEL_MAP_OPCODE                         0x1406U
+#define HCI_READ_CLOCK_OPCODE                                   0x1407U
 #endif /* BT_HCI_1_2 */
 
 #ifdef BT_3_0
-#define HCI_READ_ENCRYPTION_KEY_SIZE_OPCODE                     0x1408
+#define HCI_READ_ENCRYPTION_KEY_SIZE_OPCODE                     0x1408U
 #endif /* BT_3_0 */
 
 /* Testing Commands - OGF : 0x06 */
 #ifdef HCI_TESTING_COMMANDS
-#define HCI_READ_LOOPBACK_MODE_OPCODE                           0x1801
-#define HCI_WRITE_LOOPBACK_MODE_OPCODE                          0x1802
-#define HCI_ENABLE_DEVICE_UNDER_TEST_MODE_OPCODE                0x1803
+#define HCI_READ_LOOPBACK_MODE_OPCODE                           0x1801U
+#define HCI_WRITE_LOOPBACK_MODE_OPCODE                          0x1802U
+#define HCI_ENABLE_DEVICE_UNDER_TEST_MODE_OPCODE                0x1803U
 #endif /* HCI_TESTING_COMMANDS */
 
 #ifdef BT_SSP_DEBUG
-#define HCI_WRITE_SIMPLE_PAIRING_DEBUG_MODE_OPCODE              0x1804
+#define HCI_WRITE_SIMPLE_PAIRING_DEBUG_MODE_OPCODE              0x1804U
 #endif /* BT_SSP_DEBUG */
 
 #ifdef BT_BRSC_TEST
-#define HCI_WRITE_SECURE_CONNECTIONS_TEST_MODE_OPCODE           0x180A
+#define HCI_WRITE_SECURE_CONNECTIONS_TEST_MODE_OPCODE           0x180AU
 #endif /* BT_BRSC_TEST */
 
 /* Bluetooth Low Energy Commands */
 #ifdef BT_4_0
-#define HCI_LE_SET_EVENT_MASK_OPCODE                            0x2001
-#define HCI_LE_READ_BUFFER_SIZE_OPCODE                          0x2002
-#define HCI_LE_READ_LOCAL_SUPPORTED_FEATURES_OPCODE             0x2003
-#define HCI_LE_SET_RANDOM_ADDRESS_OPCODE                        0x2005
-#define HCI_LE_SET_ADVERTISING_PARAMETERS_OPCODE                0x2006
-#define HCI_LE_READ_ADVERTISING_CHANNEL_TX_POWER_OPCODE         0x2007
-#define HCI_LE_SET_ADVERTISING_DATA_OPCODE                      0x2008
-#define HCI_LE_SET_SCAN_RESPONSE_DATA_OPCODE                    0x2009
-#define HCI_LE_SET_ADVERTISING_ENABLE_OPCODE                    0x200A
-#define HCI_LE_SET_SCAN_PARAMETERS_OPCODE                       0x200B
-#define HCI_LE_SET_SCAN_ENABLE_OPCODE                           0x200C
-#define HCI_LE_CREATE_CONNECTION_OPCODE                         0x200D
-#define HCI_LE_CREATE_CONNECTION_CANCEL_OPCODE                  0x200E
-#define HCI_LE_READ_WHITE_LIST_SIZE_OPCODE                      0x200F
-#define HCI_LE_CLEAR_WHITE_LIST_OPCODE                          0x2010
-#define HCI_LE_ADD_DEVICE_TO_WHITE_LIST_OPCODE                  0x2011
-#define HCI_LE_REMOVE_DEVICE_FROM_WHITE_LIST_OPCODE             0x2012
-#define HCI_LE_CONNECTION_UPDATE_OPCODE                         0x2013
-#define HCI_LE_SET_HOST_CHANNEL_CLASSIFICATION_OPCODE           0x2014
-#define HCI_LE_READ_CHANNEL_MAP_OPCODE                          0x2015
-#define HCI_LE_READ_REMOTE_USED_FEATURES_OPCODE                 0x2016
-#define HCI_LE_ENCRYPT_OPCODE                                   0x2017
-#define HCI_LE_RAND_OPCODE                                      0x2018
-#define HCI_LE_START_ENCRYPTION_OPCODE                          0x2019
-#define HCI_LE_LONG_TERM_KEY_REQUESTED_REPLY_OPCODE             0x201A
-#define HCI_LE_LONG_TERM_KEY_REQUESTED_NEGATIVE_REPLY_OPCODE    0x201B
-#define HCI_LE_READ_SUPPORTED_STATES_OPCODE                     0x201C
-#define HCI_LE_RECEIVER_TEST_COMMAND_OPCODE                     0x201D
-#define HCI_LE_TRANSMITTER_TEST_COMMAND_OPCODE                  0x201E
-#define HCI_LE_TEST_END_OPCODE                                  0x201F
+#define HCI_LE_SET_EVENT_MASK_OPCODE                            0x2001U
+#define HCI_LE_READ_BUFFER_SIZE_OPCODE                          0x2002U
+#define HCI_LE_READ_LOCAL_SUPPORTED_FEATURES_OPCODE             0x2003U
+#define HCI_LE_SET_RANDOM_ADDRESS_OPCODE                        0x2005U
+#define HCI_LE_SET_ADVERTISING_PARAMETERS_OPCODE                0x2006U
+#define HCI_LE_READ_ADVERTISING_CHANNEL_TX_POWER_OPCODE         0x2007U
+#define HCI_LE_SET_ADVERTISING_DATA_OPCODE                      0x2008U
+#define HCI_LE_SET_SCAN_RESPONSE_DATA_OPCODE                    0x2009U
+#define HCI_LE_SET_ADVERTISING_ENABLE_OPCODE                    0x200AU
+#define HCI_LE_SET_SCAN_PARAMETERS_OPCODE                       0x200BU
+#define HCI_LE_SET_SCAN_ENABLE_OPCODE                           0x200CU
+#define HCI_LE_CREATE_CONNECTION_OPCODE                         0x200DU
+#define HCI_LE_CREATE_CONNECTION_CANCEL_OPCODE                  0x200EU
+#define HCI_LE_READ_WHITE_LIST_SIZE_OPCODE                      0x200FU
+#define HCI_LE_CLEAR_WHITE_LIST_OPCODE                          0x2010U
+#define HCI_LE_ADD_DEVICE_TO_WHITE_LIST_OPCODE                  0x2011U
+#define HCI_LE_REMOVE_DEVICE_FROM_WHITE_LIST_OPCODE             0x2012U
+#define HCI_LE_CONNECTION_UPDATE_OPCODE                         0x2013U
+#define HCI_LE_SET_HOST_CHANNEL_CLASSIFICATION_OPCODE           0x2014U
+#define HCI_LE_READ_CHANNEL_MAP_OPCODE                          0x2015U
+#define HCI_LE_READ_REMOTE_USED_FEATURES_OPCODE                 0x2016U
+#define HCI_LE_ENCRYPT_OPCODE                                   0x2017U
+#define HCI_LE_RAND_OPCODE                                      0x2018U
+#define HCI_LE_START_ENCRYPTION_OPCODE                          0x2019U
+#define HCI_LE_LONG_TERM_KEY_REQUESTED_REPLY_OPCODE             0x201AU
+#define HCI_LE_LONG_TERM_KEY_REQUESTED_NEGATIVE_REPLY_OPCODE    0x201BU
+#define HCI_LE_READ_SUPPORTED_STATES_OPCODE                     0x201CU
+#define HCI_LE_RECEIVER_TEST_COMMAND_OPCODE                     0x201DU
+#define HCI_LE_TRANSMITTER_TEST_COMMAND_OPCODE                  0x201EU
+#define HCI_LE_TEST_END_OPCODE                                  0x201FU
 #endif /* BT_4_0 */
 
 #ifdef HCI_LL_TOPOLOGY_CONN_UPDATE_SUPPORT
-#define HCI_LE_REMOTE_CONN_PARAM_REQ_RPLY_OPCODE                0x2020
-#define HCI_LE_REMOTE_CONN_PARAM_REQ_NEG_RPLY_OPCODE            0x2021
+#define HCI_LE_REMOTE_CONN_PARAM_REQ_RPLY_OPCODE                0x2020U
+#define HCI_LE_REMOTE_CONN_PARAM_REQ_NEG_RPLY_OPCODE            0x2021U
 #endif /* HCI_LL_TOPOLOGY_CONN_UPDATE_SUPPORT */
 
 /* BT 4.1 Specification */
 #ifdef BT_4_1
-#define HCI_TRUNCATED_PAGE_OPCODE                                       0x043F
-#define HCI_TRUNCATED_PAGE_CANCEL_OPCODE                                0x0440
-#define HCI_SET_CONNECTIONLESS_SLAVE_BROADCAST_OPCODE                   0x0441
-#define HCI_SET_CONNECTIONLESS_SLAVE_BROADCAST_RECEIVE_OPCODE           0x0442
-#define HCI_START_SYNCHRONIZATION_TRAIN_OPCODE                          0x0443
-#define HCI_RECEIVE_SYNCHRONIZATION_TRAIN_OPCODE                        0x0444
-#define HCI_REMOTE_OOB_EXTENDED_DATA_REQUEST_REPLY_OPCODE               0x0445
-#define HCI_SET_MWS_CHANNEL_PARAMETERS_OPCODE                           0x0C6E
-#define HCI_SET_EXTERNAL_FRAME_CONFIGURATION_OPCODE                     0x0C6F
-#define HCI_SET_MWS_SIGNALING_OPCODE                                    0x0C70
-#define HCI_SET_MWS_TRANSPORT_LAYER_OPCODE                              0x0C71
-#define HCI_SET_MWS_SCAN_FREQUENCY_TABLE_OPCODE                         0x0C72
-#define HCI_SET_MWS_PATTERN_CONFIGURATION_OPCODE                        0x0C73
-#define HCI_SET_RESERVED_LT_ADDR_OPCODE                                 0x0C74
-#define HCI_DELETE_RESERVED_LT_ADDR_OPCODE                              0x0C75
-#define HCI_SET_CONNECTIONLESS_SLAVE_BROADCAST_DATA_OPCODE              0x0C76
-#define HCI_READ_SYNCHRONIZATION_TRAIN_PARAMETERS_OPCODE                0x0C77
-#define HCI_WRITE_SYNCHRONIZATION_TRAIN_PARAMETERS_OPCODE               0x0C78
-#define HCI_READ_LOCAL_OOB_EXTENDED_DATA_OPCODE                         0x0C7D
-#define HCI_READ_EXTENDED_PAGE_TIMEOUT_OPCODE                           0x0C7E
-#define HCI_WRITE_EXTENDED_PAGE_TIMEOUT_OPCODE                          0x0C7F
-#define HCI_READ_EXTENDED_INQUIRY_LENGTH_OPCODE                         0x0C80
-#define HCI_WRITE_EXTENDED_INQUIRY_LENGTH_OPCODE                        0x0C81
-#define HCI_GET_MWS_TRANSPORT_LAYER_CONFIGURATION_OPCODE                0x140C
-#define HCI_SET_TRIGGERED_CLOCK_CAPTURE_OPCODE                          0x140D
+#define HCI_TRUNCATED_PAGE_OPCODE                               0x043FU
+#define HCI_TRUNCATED_PAGE_CANCEL_OPCODE                        0x0440U
+#define HCI_SET_CONNECTIONLESS_SLAVE_BROADCAST_OPCODE           0x0441U
+#define HCI_SET_CONNECTIONLESS_SLAVE_BROADCAST_RECEIVE_OPCODE   0x0442U
+#define HCI_START_SYNCHRONIZATION_TRAIN_OPCODE                  0x0443U
+#define HCI_RECEIVE_SYNCHRONIZATION_TRAIN_OPCODE                0x0444U
+#define HCI_REMOTE_OOB_EXTENDED_DATA_REQUEST_REPLY_OPCODE       0x0445U
+#define HCI_SET_MWS_CHANNEL_PARAMETERS_OPCODE                   0x0C6EU
+#define HCI_SET_EXTERNAL_FRAME_CONFIGURATION_OPCODE             0x0C6FU
+#define HCI_SET_MWS_SIGNALING_OPCODE                            0x0C70U
+#define HCI_SET_MWS_TRANSPORT_LAYER_OPCODE                      0x0C71U
+#define HCI_SET_MWS_SCAN_FREQUENCY_TABLE_OPCODE                 0x0C72U
+#define HCI_SET_MWS_PATTERN_CONFIGURATION_OPCODE                0x0C73U
+#define HCI_SET_RESERVED_LT_ADDR_OPCODE                         0x0C74U
+#define HCI_DELETE_RESERVED_LT_ADDR_OPCODE                      0x0C75U
+#define HCI_SET_CONNECTIONLESS_SLAVE_BROADCAST_DATA_OPCODE      0x0C76U
+#define HCI_READ_SYNCHRONIZATION_TRAIN_PARAMETERS_OPCODE        0x0C77U
+#define HCI_WRITE_SYNCHRONIZATION_TRAIN_PARAMETERS_OPCODE       0x0C78U
+#define HCI_READ_LOCAL_OOB_EXTENDED_DATA_OPCODE                 0x0C7DU
+#define HCI_READ_EXTENDED_PAGE_TIMEOUT_OPCODE                   0x0C7EU
+#define HCI_WRITE_EXTENDED_PAGE_TIMEOUT_OPCODE                  0x0C7FU
+#define HCI_READ_EXTENDED_INQUIRY_LENGTH_OPCODE                 0x0C80U
+#define HCI_WRITE_EXTENDED_INQUIRY_LENGTH_OPCODE                0x0C81U
+#define HCI_GET_MWS_TRANSPORT_LAYER_CONFIGURATION_OPCODE        0x140CU
+#define HCI_SET_TRIGGERED_CLOCK_CAPTURE_OPCODE                  0x140DU
 #endif /* BT_4_1 */
 
 /* BT 4.2 Specification */
 #ifdef BT_4_2
-#define HCI_LE_SET_DATA_LENGTH_OPCODE                           0x2022
-#define HCI_LE_READ_SUGGESTED_DEFAULT_DATA_LEN_OPCODE           0x2023
-#define HCI_LE_WRITE_SUGGESTED_DEFAULT_DATA_LEN_OPCODE          0x2024
-#define HCI_LE_READ_LOCAL_P_256_PUBLIC_KEY_OPCODE               0x2025
-#define HCI_LE_GENERATE_DHKEY_OPCODE                            0x2026
-#define HCI_LE_ADD_DEV_TO_RESOLVING_LIST_OPCODE                 0x2027
-#define HCI_LE_REMOVE_DEV_FROM_RESOLVING_LIST_OPCODE            0x2028
-#define HCI_LE_CLR_RESOLVING_LIST_OPCODE                        0x2029
-#define HCI_LE_READ_RESOLVING_LIST_SIZE_OPCODE                  0x202A
-#define HCI_LE_READ_PEER_RESOLVABLE_ADDR_OPCODE                 0x202B
-#define HCI_LE_READ_LOCAL_RESOLVABLE_ADDR_OPCODE                0x202C
-#define HCI_LE_SET_ADDR_RESOLUTION_ENABLE_OPCODE                0x202D
-#define HCI_LE_SET_RESOLVABLE_PRIVATE_ADDR_TIMEOUT_OPCODE       0x202E
-#define HCI_LE_READ_MAXIMUM_DATA_LENGTH_OPCODE                  0x202F
+#define HCI_LE_SET_DATA_LENGTH_OPCODE                           0x2022U
+#define HCI_LE_READ_SUGGESTED_DEFAULT_DATA_LEN_OPCODE           0x2023U
+#define HCI_LE_WRITE_SUGGESTED_DEFAULT_DATA_LEN_OPCODE          0x2024U
+#define HCI_LE_READ_LOCAL_P_256_PUBLIC_KEY_OPCODE               0x2025U
+#define HCI_LE_GENERATE_DHKEY_OPCODE                            0x2026U
+#define HCI_LE_ADD_DEV_TO_RESOLVING_LIST_OPCODE                 0x2027U
+#define HCI_LE_REMOVE_DEV_FROM_RESOLVING_LIST_OPCODE            0x2028U
+#define HCI_LE_CLR_RESOLVING_LIST_OPCODE                        0x2029U
+#define HCI_LE_READ_RESOLVING_LIST_SIZE_OPCODE                  0x202AU
+#define HCI_LE_READ_PEER_RESOLVABLE_ADDR_OPCODE                 0x202BU
+#define HCI_LE_READ_LOCAL_RESOLVABLE_ADDR_OPCODE                0x202CU
+#define HCI_LE_SET_ADDR_RESOLUTION_ENABLE_OPCODE                0x202DU
+#define HCI_LE_SET_RESOLVABLE_PRIVATE_ADDR_TIMEOUT_OPCODE       0x202EU
+#define HCI_LE_READ_MAXIMUM_DATA_LENGTH_OPCODE                  0x202FU
 #endif /* BT_4_2 */
 
 #ifdef BT_5_0
 /* BT 5.0 Specification */
-#define HCI_LE_READ_PHY_OPCODE                                  0x2030
-#define HCI_LE_SET_DEFAULT_PHY_OPCODE                           0x2031
-#define HCI_LE_SET_PHY_OPCODE                                   0x2032
-#define HCI_LE_ENHANCED_RECEIVER_TEST_OPCODE                    0x2033
-#define HCI_LE_ENHANCED_TRANSMITTER_TEST_OPCODE                 0x2034
+#define HCI_LE_READ_PHY_OPCODE                                  0x2030U
+#define HCI_LE_SET_DEFAULT_PHY_OPCODE                           0x2031U
+#define HCI_LE_SET_PHY_OPCODE                                   0x2032U
+#define HCI_LE_ENHANCED_RECEIVER_TEST_OPCODE                    0x2033U
+#define HCI_LE_ENHANCED_TRANSMITTER_TEST_OPCODE                 0x2034U
 
 /* HCI LE Advertising Extension support related defines */
-#define HCI_LE_SET_ADVERTISING_SET_RANDOM_ADDRESS_OPCODE        0x2035
-#define HCI_LE_SET_EXTENDED_ADV_PARAMS_OPCODE                   0x2036
-#define HCI_LE_SET_EXTENDED_ADVERTISING_DATA_OPCODE             0x2037
-#define HCI_LE_SET_EXTENDED_SCAN_RESPONSE_DATA_OPCODE           0x2038
-#define HCI_LE_SET_EXTENDED_ADVERTISE_ENABLE_OPCODE             0x2039
-#define HCI_LE_READ_MAX_ADV_DATA_LENGTH_OPCODE                  0x203A
-#define HCI_LE_READ_NUM_SUPPORTED_ADV_SETS_OPCODE               0x203B
-#define HCI_LE_REMOVE_ADVERTISING_SET_OPCODE                    0x203C
-#define HCI_LE_CLEAR_ADVERTISING_SETS_OPCODE                    0x203D
-#define HCI_LE_SET_PERIODIC_ADV_PARAMS_OPCODE                   0x203E
-#define HCI_LE_SET_PERIODIC_ADVERTISING_DATA_OPCODE             0x203F
-#define HCI_LE_SET_PERIODIC_ADVERTISING_ENABLE_OPCODE           0x2040
-#define HCI_LE_SET_EXTENDED_SCAN_PARAMETERS_OPCODE              0x2041
-#define HCI_LE_SET_EXTENDED_SCAN_ENABLE_OPCODE                  0x2042
-#define HCI_LE_EXTENDED_CREATE_CONNECTION_OPCODE                0x2043
-#define HCI_LE_PERIODIC_ADVERTISING_CREATE_SYNC_OPCODE          0x2044
-#define HCI_LE_PERIODIC_ADVERTISING_CREATE_SYNC_CANCEL_OPCODE   0x2045
-#define HCI_LE_PERIODIC_ADVERTISING_TERMINATE_SYNC_OPCODE       0x2046
-#define HCI_LE_ADD_DEV_TO_PERIODIC_ADVSER_LIST_OPCODE           0x2047
-#define HCI_LE_RM_DEV_FRM_PERIODIC_ADVSER_LIST_OPCODE           0x2048
-#define HCI_LE_CLEAR_PERIODIC_ADVERTISER_LIST_OPCODE            0x2049
-#define HCI_LE_READ_PERIODIC_ADVERTISER_LIST_SIZE_OPCODE        0x204A
+#define HCI_LE_SET_ADVERTISING_SET_RANDOM_ADDRESS_OPCODE        0x2035U
+#define HCI_LE_SET_EXTENDED_ADV_PARAMS_OPCODE                   0x2036U
+#define HCI_LE_SET_EXTENDED_ADVERTISING_DATA_OPCODE             0x2037U
+#define HCI_LE_SET_EXTENDED_SCAN_RESPONSE_DATA_OPCODE           0x2038U
+#define HCI_LE_SET_EXTENDED_ADVERTISE_ENABLE_OPCODE             0x2039U
+#define HCI_LE_READ_MAX_ADV_DATA_LENGTH_OPCODE                  0x203AU
+#define HCI_LE_READ_NUM_SUPPORTED_ADV_SETS_OPCODE               0x203BU
+#define HCI_LE_REMOVE_ADVERTISING_SET_OPCODE                    0x203CU
+#define HCI_LE_CLEAR_ADVERTISING_SETS_OPCODE                    0x203DU
+#define HCI_LE_SET_PERIODIC_ADV_PARAMS_OPCODE                   0x203EU
+#define HCI_LE_SET_PERIODIC_ADVERTISING_DATA_OPCODE             0x203FU
+#define HCI_LE_SET_PERIODIC_ADVERTISING_ENABLE_OPCODE           0x2040U
+#define HCI_LE_SET_EXTENDED_SCAN_PARAMETERS_OPCODE              0x2041U
+#define HCI_LE_SET_EXTENDED_SCAN_ENABLE_OPCODE                  0x2042U
+#define HCI_LE_EXTENDED_CREATE_CONNECTION_OPCODE                0x2043U
+#define HCI_LE_PERIODIC_ADVERTISING_CREATE_SYNC_OPCODE          0x2044U
+#define HCI_LE_PERIODIC_ADVERTISING_CREATE_SYNC_CANCEL_OPCODE   0x2045U
+#define HCI_LE_PERIODIC_ADVERTISING_TERMINATE_SYNC_OPCODE       0x2046U
+#define HCI_LE_ADD_DEV_TO_PERIODIC_ADVSER_LIST_OPCODE           0x2047U
+#define HCI_LE_RM_DEV_FRM_PERIODIC_ADVSER_LIST_OPCODE           0x2048U
+#define HCI_LE_CLEAR_PERIODIC_ADVERTISER_LIST_OPCODE            0x2049U
+#define HCI_LE_READ_PERIODIC_ADVERTISER_LIST_SIZE_OPCODE        0x204AU
 
-#define HCI_LE_READ_TRANSMIT_POWER_OPCODE                       0x204B
-#define HCI_LE_READ_RF_PATH_COMPENSATION_OPCODE                 0x204C
-#define HCI_LE_WRITE_RF_PATH_COMPENSATION_OPCODE                0x204D
-#define HCI_LE_SET_PRIVACY_MODE_OPCODE                          0x204E
+#define HCI_LE_READ_TRANSMIT_POWER_OPCODE                       0x204BU
+#define HCI_LE_READ_RF_PATH_COMPENSATION_OPCODE                 0x204CU
+#define HCI_LE_WRITE_RF_PATH_COMPENSATION_OPCODE                0x204DU
+#define HCI_LE_SET_PRIVACY_MODE_OPCODE                          0x204EU
 #endif /* BT_5_0 */
 
 #ifdef BT_5_1
-#define HCI_READ_LOCAL_SIMPLE_PAIRING_OPTIONS_OPCODE                    0x100C
+#define HCI_READ_LOCAL_SIMPLE_PAIRING_OPTIONS_OPCODE                    0x100CU
 /* HCI LE Connection Oriented AOA and Connectionless AOD related defines */
-#define HCI_LE_RECEIVER_TEST_V3_OPCODE                                  0x204F
-#define HCI_LE_TRANSMITTER_TEST_V3_OPCODE                               0x2050
-#define HCI_LE_SET_CONNECTIONLESS_CTE_TRANSMIT_PARAMETERS_OPCODE        0x2051
-#define HCI_LE_SET_CONNECTIONLESS_CTE_TRANSMIT_ENABLE_OPCODE            0x2052
-#define HCI_LE_SET_CONNECTIONLESS_IQ_SAMPLING_ENABLE_OPCODE             0x2053
-#define HCI_LE_SET_CONNECTION_CTE_RECEIVE_PARAMETERS_OPCODE             0x2054
-#define HCI_LE_SET_CONNECTION_CTE_TRANSMIT_PARAMETERS_OPCODE            0x2055
-#define HCI_LE_SET_CONNECTION_CTE_REQUEST_ENABLE_OPCODE                 0x2056
-#define HCI_LE_SET_CONNECTION_CTE_RESPONSE_ENABLE_OPCODE                0x2057
-#define HCI_LE_READ_ANTENNA_INFORMATION_OPCODE                          0x2058
+#define HCI_LE_RECEIVER_TEST_V3_OPCODE                                  0x204FU
+#define HCI_LE_TRANSMITTER_TEST_V3_OPCODE                               0x2050U
+#define HCI_LE_SET_CONNECTIONLESS_CTE_TRANSMIT_PARAMETERS_OPCODE        0x2051U
+#define HCI_LE_SET_CONNECTIONLESS_CTE_TRANSMIT_ENABLE_OPCODE            0x2052U
+#define HCI_LE_SET_CONNECTIONLESS_IQ_SAMPLING_ENABLE_OPCODE             0x2053U
+#define HCI_LE_SET_CONNECTION_CTE_RECEIVE_PARAMETERS_OPCODE             0x2054U
+#define HCI_LE_SET_CONNECTION_CTE_TRANSMIT_PARAMETERS_OPCODE            0x2055U
+#define HCI_LE_SET_CONNECTION_CTE_REQUEST_ENABLE_OPCODE                 0x2056U
+#define HCI_LE_SET_CONNECTION_CTE_RESPONSE_ENABLE_OPCODE                0x2057U
+#define HCI_LE_READ_ANTENNA_INFORMATION_OPCODE                          0x2058U
 
 /* HCI LE Periodic Advertising Sync Transfer related defines */
-#define HCI_LE_SET_PERIODIC_ADVERTISING_RECEIVE_ENABLE_OPCODE           0x2059
-#define HCI_LE_PERIODIC_ADVERTISING_SYNC_TRANSFER_OPCODE                0x205A
-#define HCI_LE_PERIODIC_ADVERTISING_SET_INFO_TRANSFER_OPCODE            0x205B
-#define HCI_LE_SET_PERIODIC_ADVERTISING_SYNC_TRANSFER_PARAMETERS_OPCODE 0x205C
-#define HCI_LE_SET_DEFAULT_PERIODIC_ADVERTISING_SYNC_TRANSFER_PARAMETERS_OPCODE 0x205D
-#define HCI_LE_GENERATE_DHKEY_V2_OPCODE                                 0x205E
-#define HCI_LE_MODIFY_SLEEP_CLOCK_ACCURACY_OPCODE                       0x205F
+#define HCI_LE_SET_PERIODIC_ADVERTISING_RECEIVE_ENABLE_OPCODE           0x2059U
+#define HCI_LE_PERIODIC_ADVERTISING_SYNC_TRANSFER_OPCODE                0x205AU
+#define HCI_LE_PERIODIC_ADVERTISING_SET_INFO_TRANSFER_OPCODE            0x205BU
+#define HCI_LE_SET_PERIODIC_ADVERTISING_SYNC_TRANSFER_PARAMETERS_OPCODE 0x205CU
+#define HCI_LE_SET_DEFAULT_PERIODIC_ADVERTISING_SYNC_TRANSFER_PARAMETERS_OPCODE 0x205DU
+#define HCI_LE_GENERATE_DHKEY_V2_OPCODE                                 0x205EU
+#define HCI_LE_MODIFY_SLEEP_CLOCK_ACCURACY_OPCODE                       0x205FU
 #endif /* BT_5_1 */
 
 /* Vendor Specific Parameters - OGF : 0x3F */
@@ -948,80 +927,80 @@
  */
 
 /* +++ HCI Event Codes ++++++++++++++++++++++++++++++++++++++++++++ */
-#define HCI_INQUIRY_COMPLETE_EVENT                              0x01
-#define HCI_INQUIRY_RESULT_EVENT                                0x02
-#define HCI_CONNECTION_COMPLETE_EVENT                           0x03
-#define HCI_CONNECTION_REQUEST_EVENT                            0x04
-#define HCI_DISCONNECTION_COMPLETE_EVENT                        0x05
-#define HCI_AUTHENTICATION_COMPLETE_EVENT                       0x06
-#define HCI_REMOTE_NAME_REQUEST_COMPLETE_EVENT                  0x07
-#define HCI_ENCRYPTION_CHANGE_EVENT                             0x08
-#define HCI_CHANGE_CONNECTION_LINK_KEY_COMPLETE_EVENT           0x09
-#define HCI_MASTER_LINK_KEY_COMPLETE_EVENT                      0x0A
-#define HCI_READ_REMOTE_SUPPORTED_FEATURES_COMPLETE_EVENT       0x0B
-#define HCI_READ_REMOTE_VERSION_INFORMATION_COMPLETE_EVENT      0x0C
-#define HCI_QOS_SETUP_COMPLETE_EVENT                            0x0D
-#define HCI_COMMAND_COMPLETE_EVENT                              0x0E
-#define HCI_COMMAND_STATUS_EVENT                                0x0F
-#define HCI_HARDWARE_ERROR_EVENT                                0x10
-#define HCI_FLUSH_OCCURRED_EVENT                                0x11
-#define HCI_ROLE_CHANGE_EVENT                                   0x12
-#define HCI_NUMBER_OF_COMPLETED_PACKETS_EVENT                   0x13
-#define HCI_MODE_CHANGE_EVENT                                   0x14
-#define HCI_RETURN_LINK_KEYS_EVENT                              0x15
-#define HCI_PIN_CODE_REQUEST_EVENT                              0x16
-#define HCI_LINK_KEY_REQUEST_EVENT                              0x17
-#define HCI_LINK_KEY_NOTIFICATION_EVENT                         0x18
-#define HCI_LOOPBACK_COMMAND_EVENT                              0x19
-#define HCI_DATA_BUFFER_OVERFLOW_EVENT                          0x1A
-#define HCI_MAX_SLOTS_CHANGE_EVENT                              0x1B
-#define HCI_READ_CLOCK_OFFSET_COMPLETE_EVENT                    0x1C
-#define HCI_CONNECTION_PACKET_TYPE_CHANGED_EVENT                0x1D
-#define HCI_QOS_VIOLATION_EVENT                                 0x1E
-#define HCI_PAGE_SCAN_MODE_CHANGE_EVENT                         0x1F
-#define HCI_PAGE_SCAN_REPETITION_MODE_CHANGE_EVENT              0x20
+#define HCI_INQUIRY_COMPLETE_EVENT                              0x01U
+#define HCI_INQUIRY_RESULT_EVENT                                0x02U
+#define HCI_CONNECTION_COMPLETE_EVENT                           0x03U
+#define HCI_CONNECTION_REQUEST_EVENT                            0x04U
+#define HCI_DISCONNECTION_COMPLETE_EVENT                        0x05U
+#define HCI_AUTHENTICATION_COMPLETE_EVENT                       0x06U
+#define HCI_REMOTE_NAME_REQUEST_COMPLETE_EVENT                  0x07U
+#define HCI_ENCRYPTION_CHANGE_EVENT                             0x08U
+#define HCI_CHANGE_CONNECTION_LINK_KEY_COMPLETE_EVENT           0x09U
+#define HCI_MASTER_LINK_KEY_COMPLETE_EVENT                      0x0AU
+#define HCI_READ_REMOTE_SUPPORTED_FEATURES_COMPLETE_EVENT       0x0BU
+#define HCI_READ_REMOTE_VERSION_INFORMATION_COMPLETE_EVENT      0x0CU
+#define HCI_QOS_SETUP_COMPLETE_EVENT                            0x0DU
+#define HCI_COMMAND_COMPLETE_EVENT                              0x0EU
+#define HCI_COMMAND_STATUS_EVENT                                0x0FU
+#define HCI_HARDWARE_ERROR_EVENT                                0x10U
+#define HCI_FLUSH_OCCURRED_EVENT                                0x11U
+#define HCI_ROLE_CHANGE_EVENT                                   0x12U
+#define HCI_NUMBER_OF_COMPLETED_PACKETS_EVENT                   0x13U
+#define HCI_MODE_CHANGE_EVENT                                   0x14U
+#define HCI_RETURN_LINK_KEYS_EVENT                              0x15U
+#define HCI_PIN_CODE_REQUEST_EVENT                              0x16U
+#define HCI_LINK_KEY_REQUEST_EVENT                              0x17U
+#define HCI_LINK_KEY_NOTIFICATION_EVENT                         0x18U
+#define HCI_LOOPBACK_COMMAND_EVENT                              0x19U
+#define HCI_DATA_BUFFER_OVERFLOW_EVENT                          0x1AU
+#define HCI_MAX_SLOTS_CHANGE_EVENT                              0x1BU
+#define HCI_READ_CLOCK_OFFSET_COMPLETE_EVENT                    0x1CU
+#define HCI_CONNECTION_PACKET_TYPE_CHANGED_EVENT                0x1DU
+#define HCI_QOS_VIOLATION_EVENT                                 0x1EU
+#define HCI_PAGE_SCAN_MODE_CHANGE_EVENT                         0x1FU
+#define HCI_PAGE_SCAN_REPETITION_MODE_CHANGE_EVENT              0x20U
 
 #ifdef BT_HCI_1_2
-#define HCI_FLOW_SPECIFICATION_COMPLETE_EVENT                   0x21
-#define HCI_INQUIRY_RESULT_WITH_RSSI_EVENT                      0x22
-#define HCI_REMOTE_EXTENDED_FEATURES_COMPLETE_EVENT             0x23
-#define HCI_SYNCHRONOUS_CONNECTION_COMPLETE_EVENT               0x2C
-#define HCI_SYNCHRONOUS_CONNECTION_CHANGED_EVENT                0x2D
+#define HCI_FLOW_SPECIFICATION_COMPLETE_EVENT                   0x21U
+#define HCI_INQUIRY_RESULT_WITH_RSSI_EVENT                      0x22U
+#define HCI_REMOTE_EXTENDED_FEATURES_COMPLETE_EVENT             0x23U
+#define HCI_SYNCHRONOUS_CONNECTION_COMPLETE_EVENT               0x2CU
+#define HCI_SYNCHRONOUS_CONNECTION_CHANGED_EVENT                0x2DU
 #endif /* BT_HCI_1_2 */
 
 #ifdef BT_2_1_EDR
-#define HCI_SNIFF_SUBRATING_EVENT                               0x2E
-#define HCI_EXTENDED_INQUIRY_RESULT_EVENT                       0x2F
-#define HCI_IO_CAPABILITY_REQUEST_EVENT                         0x31
-#define HCI_IO_CAPABILITY_RESPONSE_EVENT                        0x32
-#define HCI_USER_CONFIRMATION_REQUEST_EVENT                     0x33
-#define HCI_USER_PASSKEY_REQUEST_EVENT                          0x34
-#define HCI_REMOTE_OOB_DATA_REQUEST_EVENT                       0x35
-#define HCI_SIMPLE_PAIRING_COMPLETE_EVENT                       0x36
-#define HCI_LINK_SUPERVISION_TIMEOUT_CHANGED_EVENT              0x38
-#define HCI_ENHANCED_FLUSH_COMPLETE_EVENT                       0x39
-#define HCI_USER_PASSKEY_NOTIFICATION_EVENT                     0x3B
-#define HCI_KEY_PRESS_NOTIFICATION_EVENT                        0x3C
-#define HCI_REMOTE_HOST_SUPPORTED_FEATURES_NOTIFICATION_EVENT   0x3D
+#define HCI_SNIFF_SUBRATING_EVENT                               0x2EU
+#define HCI_EXTENDED_INQUIRY_RESULT_EVENT                       0x2FU
+#define HCI_IO_CAPABILITY_REQUEST_EVENT                         0x31U
+#define HCI_IO_CAPABILITY_RESPONSE_EVENT                        0x32U
+#define HCI_USER_CONFIRMATION_REQUEST_EVENT                     0x33U
+#define HCI_USER_PASSKEY_REQUEST_EVENT                          0x34U
+#define HCI_REMOTE_OOB_DATA_REQUEST_EVENT                       0x35U
+#define HCI_SIMPLE_PAIRING_COMPLETE_EVENT                       0x36U
+#define HCI_LINK_SUPERVISION_TIMEOUT_CHANGED_EVENT              0x38U
+#define HCI_ENHANCED_FLUSH_COMPLETE_EVENT                       0x39U
+#define HCI_USER_PASSKEY_NOTIFICATION_EVENT                     0x3BU
+#define HCI_KEY_PRESS_NOTIFICATION_EVENT                        0x3CU
+#define HCI_REMOTE_HOST_SUPPORTED_FEATURES_NOTIFICATION_EVENT   0x3DU
 #endif /* BT_2_1_EDR */
 
 #if ((defined BT_2_1_EDR) || (defined BT_4_0))
-#define HCI_ENCRYPTION_KEY_REFRESH_COMPLETE_EVENT               0x30
+#define HCI_ENCRYPTION_KEY_REFRESH_COMPLETE_EVENT               0x30U
 #endif /* ((defined BT_2_1_EDR) || (defined BT_4_0)) */
 
 #ifdef BT_4_1
-#define HCI_SYNCHRONIZATION_TRAIN_COMPLETE_EVENT                0x4F
-#define HCI_SYNCHRONIZATION_TRAIN_RECEIVED_EVENT                0x50
-#define HCI_CONNECTIONLESS_SLAVE_BROADCAST_RECEIVE_EVENT        0x51
-#define HCI_CONNECTIONLESS_SLAVE_BROADCAST_TIMEOUT_EVENT        0x52
-#define HCI_TRUNCATED_PAGE_COMPLETE_EVENT                       0x53
+#define HCI_SYNCHRONIZATION_TRAIN_COMPLETE_EVENT                0x4FU
+#define HCI_SYNCHRONIZATION_TRAIN_RECEIVED_EVENT                0x50U
+#define HCI_CONNECTIONLESS_SLAVE_BROADCAST_RECEIVE_EVENT        0x51U
+#define HCI_CONNECTIONLESS_SLAVE_BROADCAST_TIMEOUT_EVENT        0x52U
+#define HCI_TRUNCATED_PAGE_COMPLETE_EVENT                       0x53U
 #define HCI_CONNECTIONLESS_SLAVE_BROADCAST_CHANNEL_MAP_CHANGE_EVENT \
-                                                                0x55
-#define HCI_AUTHENTICATED_PAYLOAD_TIMEOUT_EXPIRED_EVENT         0x57
+                                                                0x55U
+#define HCI_AUTHENTICATED_PAYLOAD_TIMEOUT_EXPIRED_EVENT         0x57U
 #endif /* BT_4_1 */
 
 /* HCI Vendor Specific Debug Event */
-#define HCI_VENDOR_SPECIFIC_DEBUG_EVENT                         0xFF
+#define HCI_VENDOR_SPECIFIC_DEBUG_EVENT                         0xFFU
 
 #ifdef BT_4_0
 /**
@@ -1049,41 +1028,41 @@
  *   - \ref HCI_LE_SCAN_REQUEST_RECEIVED_SUBEVENT
  *   - \ref HCI_LE_CHANNEL_SELECTION_ALGORITHM_SUBEVENT
  */
-#define HCI_LE_META_EVENT                                       0x3E
+#define HCI_LE_META_EVENT                                       0x3EU
 
 /* Bluetooth Low Energy Subevents */
 /**
  *  The LE Connection Complete subevent indicates to both of the devices
  *  forming the connection that a new connection has been created.
  */
-#define HCI_LE_CONNECTION_COMPLETE_SUBEVENT                     0x01
+#define HCI_LE_CONNECTION_COMPLETE_SUBEVENT                     0x01U
 
 /**
  *  The LE Advertising Report subevent indicates that a Bluetooth device or
  *  multiple Bluetooth devices have responded to an active scan or received
  *  some information during a passive scan.
  */
-#define HCI_LE_ADVERTISING_REPORT_SUBEVENT                      0x02
+#define HCI_LE_ADVERTISING_REPORT_SUBEVENT                      0x02U
 
 /**
  *  The LE Connection Update Complete subevent is used to indicate that the
  *  Controller process to update the connection has completed.
  */
-#define HCI_LE_CONNECTION_UPDATE_COMPLETE_SUBEVENT              0x03
+#define HCI_LE_CONNECTION_UPDATE_COMPLETE_SUBEVENT              0x03U
 
 /**
  *  The LE Read Remote Used Features Complete subevent is used to indicate the
  *  completion of the process of the Controller obtaining the used features
  *  of the remote Bluetooth device.
  */
-#define HCI_LE_READ_REMOTE_USED_FEATURES_COMPLETE_SUBEVENT      0x04
+#define HCI_LE_READ_REMOTE_USED_FEATURES_COMPLETE_SUBEVENT      0x04U
 
 /**
  *  The LE Long Term Key Requested subevent indicates that the master device is
  *  attempting to encrypt or re-encrypt the link and is requesting the Long Term
  *  key.
  */
-#define HCI_LE_LONG_TERM_KEY_REQUESTED_SUBEVENT                 0x05
+#define HCI_LE_LONG_TERM_KEY_REQUESTED_SUBEVENT                 0x05U
 #endif /* BT_4_0 */
 
 #ifdef HCI_LL_TOPOLOGY_CONN_UPDATE_SUPPORT
@@ -1092,7 +1071,7 @@
  *  device or the slave device has received a change in connection paramters
  *  request from its peer.
  */
-#define HCI_LE_REMOTE_CONN_PARAM_REQ_SUBEVENT                   0x06
+#define HCI_LE_REMOTE_CONN_PARAM_REQ_SUBEVENT                   0x06U
 #endif /* HCI_LL_TOPOLOGY_CONN_UPDATE_SUPPORT */
 
 #ifdef BT_4_2
@@ -1102,32 +1081,32 @@
  *  PDUs in either direction. The values reported are the maximum that will
  *  actually be used on the connection following the change.
  */
-#define HCI_LE_DATA_LENGTH_CHANGE_SUBEVENT                      0x07
+#define HCI_LE_DATA_LENGTH_CHANGE_SUBEVENT                      0x07U
 
 /**
  *  The LE Read Local P-256 Public Key Complete subevent is generated when
  *  local P-256 key generation is complete.
  */
-#define HCI_LE_READ_LOCAL_P256_PUBLIC_KEY_COMPLETE_SUBEVENT     0x08
+#define HCI_LE_READ_LOCAL_P256_PUBLIC_KEY_COMPLETE_SUBEVENT     0x08U
 
 /**
  *  The LE Generate DHKey Complete subevent indicates that LE Diffie Hellman
  *  key generation has been completed by the Controller.
  */
-#define HCI_LE_GENERATE_DHKEY_COMPLETE_SUBEVENT                 0x09
+#define HCI_LE_GENERATE_DHKEY_COMPLETE_SUBEVENT                 0x09U
 
 /**
  *  The LE Enhanced Connection Complete subevent indicates to both of the Hosts
  *  forming the connection that a new connection has been created.
  */
-#define HCI_LE_ENHANCED_CONNECTION_COMPLETE_SUBEVENT            0x0A
+#define HCI_LE_ENHANCED_CONNECTION_COMPLETE_SUBEVENT            0x0AU
 
 /**
  *  The LE Direct Advertising Report subevent indicates that directed advertisements
  *  have been received where the advertiser is using a resolvable private address
  *  and the Scan_Filter_Policy is equal to 0x02 or 0x03.
  */
-#define HCI_LE_DIRECT_ADVERTISING_REPORT_SUBEVENT               0x0B
+#define HCI_LE_DIRECT_ADVERTISING_REPORT_SUBEVENT               0x0BU
 #endif /* BT_4_2 */
 
 #ifdef BT_5_0
@@ -1135,12 +1114,12 @@
  *  The LE PHY Update Complete subevent indicates that the Controller has changed the
  *  transmitter PHY or receiver PHY in use.
  */
-#define HCI_LE_PHY_UPDATE_COMPLETE_SUBEVENT                     0x0C
+#define HCI_LE_PHY_UPDATE_COMPLETE_SUBEVENT                     0x0CU
 
 /**
  *  The LE Extended Scan Ended subevent indicates that scanning has finished.
  */
-#define HCI_LE_EXTENDED_ADVERTISING_REPORT_SUBEVENT             0x0D
+#define HCI_LE_EXTENDED_ADVERTISING_REPORT_SUBEVENT             0x0DU
 
 /**
  *  The LE Periodic Advertising Sync Established Event indicates that the
@@ -1148,49 +1127,49 @@
  *  advertiser after the LE_Periodic_Advertising_Create_Sync Command has
  *  been sent to the Controller.
  */
-#define HCI_LE_PERIODIC_ADVERTISING_SYNC_ESTABLISHED_SUBEVENT   0x0E
+#define HCI_LE_PERIODIC_ADVERTISING_SYNC_ESTABLISHED_SUBEVENT   0x0EU
 
 /**
  *  The LE Periodic Advertising Data Receive subevent provides the Host with
  *  the data received from a Periodic Advertising packet.
  */
-#define HCI_LE_PERIODIC_ADVERTISING_REPORT_SUBEVENT             0x0F
+#define HCI_LE_PERIODIC_ADVERTISING_REPORT_SUBEVENT             0x0FU
 
 /**
  *  The LE Periodic Advertising Receive Ended subevent indicates when the
  *  Controller has lost synchronization with the Periodic Advertiser
  */
-#define HCI_LE_PERIODIC_ADVERTISING_SYNC_LOST_SUBEVENT          0x10
+#define HCI_LE_PERIODIC_ADVERTISING_SYNC_LOST_SUBEVENT          0x10U
 
 /**
  *  The LE Extended Advertising Ended subevent indicates that advertising in
  *  a given advertising set has finished
  */
-#define HCI_LE_SCAN_TIMEOUT_SUBEVENT                            0x11
+#define HCI_LE_SCAN_TIMEOUT_SUBEVENT                            0x11U
 
 /**
  *  The LE Extended Advertising Ended subevent indicates that advertising in
  *  a given advertising set has finished
  */
-#define HCI_LE_ADVERTISING_SET_TERMINATED_SUBEVENT              0x12
+#define HCI_LE_ADVERTISING_SET_TERMINATED_SUBEVENT              0x12U
 
 /**
  *  The LE Scan Request Received subevent indicates that a SCAN_REQ PDU or an
  *  AUX_SCAN_REQ PDU has been received by the advertiser.
  */
-#define HCI_LE_SCAN_REQUEST_RECEIVED_SUBEVENT                   0x13
+#define HCI_LE_SCAN_REQUEST_RECEIVED_SUBEVENT                   0x13U
 
 /**
  *  The LE Channel Selection Algorithm subevent indicates which channel selection
  *  algorithm is used on a data channel connection.
  */
-#define HCI_LE_CHANNEL_SELECTION_ALGORITHM_SUBEVENT             0x14
+#define HCI_LE_CHANNEL_SELECTION_ALGORITHM_SUBEVENT             0x14U
 
 #ifdef HCI_LE_SET_EXTENDED_SCAN_PARAMETERS_SUPPORT
 /* HCI Extended Scan Parameters related Mask Values */
-#define HCI_LE_SET_EXT_SCAN_PARAM_1M_PHY_MASK                   0x01
-#define HCI_LE_SET_EXT_SCAN_PARAM_2M_PHY_MASK                   0x02
-#define HCI_LE_SET_EXT_SCAN_PARAM_CODED_PHY_MASK                0x04
+#define HCI_LE_SET_EXT_SCAN_PARAM_1M_PHY_MASK                   0x01U
+#define HCI_LE_SET_EXT_SCAN_PARAM_2M_PHY_MASK                   0x02U
+#define HCI_LE_SET_EXT_SCAN_PARAM_CODED_PHY_MASK                0x04U
 #endif /* HCI_LE_SET_EXTENDED_SCAN_PARAMETERS_SUPPORT */
 #endif /* BT_5_0 */
 
@@ -1201,20 +1180,20 @@
  *  advertising packet forming part of the periodic advertising identified by
  *  Sync_Handle.
  */
-#define HCI_LE_CONNECTIONLESS_IQ_REPORT_SUBEVENT                0x15
+#define HCI_LE_CONNECTIONLESS_IQ_REPORT_SUBEVENT                0x15U
 
 /**
  *  The HCI_LE_Connection_IQ_Report event is used by the Controller to report
  *  the IQ samples from the Constant Tone Extension of a received packet
  */
-#define HCI_LE_CONNECTION_IQ_REPORT_SUBEVENT                    0x16
+#define HCI_LE_CONNECTION_IQ_REPORT_SUBEVENT                    0x16U
 
 /**
  *  This event is used by the Controller to report an issue following a request
  *  to a peer device to reply with a packet containing an LL_CTE_RSP PDU and a
  *  Constant Tone Extension.
  */
-#define HCI_LE_CTE_REQUEST_FAILED_SUBEVENT                      0x17
+#define HCI_LE_CTE_REQUEST_FAILED_SUBEVENT                      0x17U
 
 /**
  * The HCI_LE_Periodic_Advertising_Sync_Transfer_Received event is used by
@@ -1223,17 +1202,17 @@
  * and either successfully synchronized to the periodic advertising train or timed
  * out while attempting to synchronize.
  */
-#define HCI_LE_PERIODIC_ADV_SYNC_TX_RECEIVED_SUBEVENT           0x18
+#define HCI_LE_PERIODIC_ADV_SYNC_TX_RECEIVED_SUBEVENT           0x18U
 #endif /* BT_5_1 */
 
 /*
  * Defines for Link status (current mode) returned by
  * BT_hci_get_connection_details()
  */
-#define BT_HCI_ACTIVE_MODE           0x00
-#define BT_HCI_HOLD_MODE             0x01
-#define BT_HCI_SNIFF_MODE            0x02
-#define BT_HCI_PARK_MODE             0x03
+#define BT_HCI_ACTIVE_MODE           0x00U
+#define BT_HCI_HOLD_MODE             0x01U
+#define BT_HCI_SNIFF_MODE            0x02U
+#define BT_HCI_PARK_MODE             0x03U
 
 /* \} */
 
@@ -1244,22 +1223,22 @@
 
 /* =================================================== Macros */
 #define hci_pack_1_byte_param(dest, src) \
-    *((dest) + 0) = (UCHAR)(*((UCHAR *)(src)));
+    *((dest) + 0U) = (UCHAR)(*((UCHAR *)(src)));
 
 #define hci_pack_2_byte_param(dest, src) \
-    *((dest) + 0) = (UCHAR)(*((UINT16 *)(src))); \
-    *((dest) + 1) = (UCHAR)(*((UINT16 *)(src)) >> 8);
+    *((dest) + 0U) = (UCHAR)(*((UINT16 *)(src))); \
+    *((dest) + 1U) = (UCHAR)(*((UINT16 *)(src)) >> 8U);
 
 #define hci_pack_3_byte_param(dest, src) \
-    *((dest) + 0) = (UCHAR)(*((UINT32 *)(src)));\
-    *((dest) + 1) = (UCHAR)(*((UINT32 *)(src)) >> 8);\
-    *((dest) + 2) = (UCHAR)(*((UINT32 *)(src)) >> 16);
+    *((dest) + 0U) = (UCHAR)(*((UINT32 *)(src)));\
+    *((dest) + 1U) = (UCHAR)(*((UINT32 *)(src)) >> 8U);\
+    *((dest) + 2U) = (UCHAR)(*((UINT32 *)(src)) >> 16U);
 
 #define hci_pack_4_byte_param(dest, src) \
-    *((dest) + 0) = (UCHAR)(*((UINT32 *)(src)));\
-    *((dest) + 1) = (UCHAR)(*((UINT32 *)(src)) >> 8);\
-    *((dest) + 2) = (UCHAR)(*((UINT32 *)(src)) >> 16);\
-    *((dest) + 3) = (UCHAR)(*((UINT32 *)(src)) >> 24);
+    *((dest) + 0U) = (UCHAR)(*((UINT32 *)(src)));\
+    *((dest) + 1U) = (UCHAR)(*((UINT32 *)(src)) >> 8U);\
+    *((dest) + 2U) = (UCHAR)(*((UINT32 *)(src)) >> 16U);\
+    *((dest) + 3U) = (UCHAR)(*((UINT32 *)(src)) >> 24U);
 
 #define hci_unpack_1_byte_param BT_UNPACK_LE_1_BYTE
 
@@ -1286,7 +1265,7 @@
 typedef struct
 {
     UCHAR  bd_addr[BT_BD_ADDR_SIZE];
-    UCHAR  link_key[16];
+    UCHAR  link_key[16U];
 
 } HCI_H_LINK_KEY;
 
@@ -2505,7 +2484,7 @@ void BT_hci_esco_connection_response
  *                  \ref BLE_ERROR_CODES.
  */
 #define BT_hci_accept_esco_connection_request(addr) \
-        BT_hci_esco_connection_response ((addr), 0x00)
+        BT_hci_esco_connection_response ((addr), 0x00U)
 /**
  *  \brief To reject a Synchronous Connection (eSCO).
  *
@@ -2554,7 +2533,7 @@ void BT_hci_enh_sco_connection_response
  *                  \ref BLE_ERROR_CODES.
  */
 #define BT_hci_accept_enh_sco_connection_request(addr) \
-        BT_hci_enh_sco_connection_response ((addr), 0x00)
+        BT_hci_enh_sco_connection_response ((addr), 0x00U)
 /**
  *  \brief To reject an Enhanced Synchronous Connection (eSCO).
  *
@@ -2950,7 +2929,7 @@ API_RESULT BT_hci_read_link_policy_settings
  */
 #define BT_hci_set_event_mask_page_2(event_mask) \
         hci_write_command_UCHAR_array \
-        (HCI_SET_EVENT_MASK_PAGE_2_OPCODE, (event_mask), 8)
+        (HCI_SET_EVENT_MASK_PAGE_2_OPCODE, (event_mask), 8U)
 #endif /* HCI_SET_EVENT_MASK_PAGE_2_SUPPORT */
 
 #ifdef HCI_RESET_SUPPORT
@@ -4355,7 +4334,7 @@ API_RESULT BT_hci_read_transmit_power_level
  */
 #define BT_hci_le_set_event_mask(p1)  \
         hci_write_command_UCHAR_array \
-        (HCI_LE_SET_EVENT_MASK_OPCODE, (p1), 8)
+        (HCI_LE_SET_EVENT_MASK_OPCODE, (p1), 8U)
 #endif /* HCI_LE_SET_EVENT_MASK_SUPPORT */
 
 #ifdef HCI_LE_READ_BUFFER_SIZE_SUPPORT
@@ -9875,7 +9854,7 @@ API_RESULT BT_hci_write_extended_inquiry_response
  */
 API_RESULT BT_hci_write_inquiry_response_transmit_power_level
            (
-               /* IN */ CHAR    tx_power
+               /* IN */ INT8    tx_power
            );
 #endif /* BT_EIR */
 
@@ -10160,6 +10139,39 @@ API_RESULT BT_hci_vendor_specific_command
                UCHAR    params_length
            );
 
+/* ------------------------------------------------------------------------- */
+
+
+/* ------------------------------------------------------------------------- */
+
+/* HCI Generic Command API --------------------------------------- */
+
+/**
+ *  \brief To send a generic HCI command to the local Bluetooth device.
+ *
+ *  \par Description:
+ *       This API can be used to send vendor specific HCI commands to the local
+ *       Bluetooth device. The HCI Opcode and parameters are specific to
+ *       the vendor specific command. Refer to the documentation of
+ *       the Bluetooth device to find out the details of available vendor
+ *       specific commands.
+ *
+ *
+ *  \param [in] ogf
+ *         Opcode Group Field.
+ *  \param [in] ocf
+ *         Opcode Command Field.
+ *
+ *  \param [in] params
+ *         Parameters to be framed for the vendor specific HCI command.
+ *
+ *  \param [in] params_length
+ *         Total length of the parameters passed.
+ *
+ *  \return
+ *      API_RESULT: API_SUCCESS or one of the error codes as defined in
+ *                  BT_error.h or Host Controller Error Codes section.
+ */
 API_RESULT BT_hci_generic_command
            (
                UCHAR    ogf,
@@ -10167,9 +10179,6 @@ API_RESULT BT_hci_generic_command
                UCHAR *  params,
                UCHAR    params_length
            );
-
-/* ------------------------------------------------------------------------- */
-
 
 /* APIs for EtherMind Security Manager ------------------------------------- */
 /**

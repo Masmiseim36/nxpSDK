@@ -531,7 +531,11 @@ usb_status_t USB_DeviceDeleteDir(uint8_t *path)
 
     (void)USB_DeviceMtpCloseDir(dir);
 
-    result = USB_DeviceMtpUnlink((const uint16_t *)path); /* delete self */
+    /* kStatus_USB_InvalidRequest means end of dir, so delete the current directory. */
+    if (result == kStatus_USB_InvalidRequest)
+    {
+        result = USB_DeviceMtpUnlink((const uint16_t *)path); /* delete self */
+    }
 
     nestedDepth--;
     return result;
@@ -2166,6 +2170,7 @@ void USB_DeviceCmdDeleteObj(void *param)
     }
     else
     {
+        result = kStatus_USB_Error;
         /* root path */
         for (i = 0; i < g_mtp.storageList->storageCount; i++)
         {

@@ -301,12 +301,12 @@ static usb_status_t USB_DeviceCdcVcomCallback(class_handle_t handle, uint32_t ev
     usb_device_endpoint_callback_message_struct_t *epCbParam;
     usb_cdc_acm_info_t *acmInfo = &s_usbCdcAcmInfo;
     serial_manager_callback_message_t msg;
-    usb_status_t error = kStatus_USB_Error;
+    usb_status_t error = kStatus_USB_InvalidRequest;
 
     serialUsbCdc = USB_DeviceGetInstanceFromClassHandle(s_UsbCdcHead, handle);
     if (NULL == serialUsbCdc)
     {
-        return kStatus_USB_Error;
+        return kStatus_USB_InvalidRequest;
     }
     acmReqParam = (usb_device_cdc_acm_request_param_struct_t *)param;
     epCbParam   = (usb_device_endpoint_callback_message_struct_t *)param;
@@ -323,7 +323,7 @@ static usb_status_t USB_DeviceCdcVcomCallback(class_handle_t handle, uint32_t ev
                      ** meaning that we want to inform the host that we do not have any additional
                      ** data, so it can flush the output.
                      */
-                    (void)USB_DeviceCdcAcmSend(handle, (uint8_t)USB_CDC_VCOM_BULK_IN_ENDPOINT, NULL, 0U);
+                    error = USB_DeviceCdcAcmSend(handle, (uint8_t)USB_CDC_VCOM_BULK_IN_ENDPOINT, NULL, 0U);
                 }
                 else
                 {
@@ -334,6 +334,7 @@ static usb_status_t USB_DeviceCdcVcomCallback(class_handle_t handle, uint32_t ev
                         serial_manager_status_t serialManagerStatus = kStatus_SerialManager_Success;
                         msg.buffer                                  = serialUsbCdc->tx.buffer;
                         msg.length                                  = serialUsbCdc->tx.length;
+                        error                                       = kStatus_USB_Success;
                         if (USB_UNINITIALIZED_VAL_32 == epCbParam->length)
                         {
                             serialManagerStatus = kStatus_SerialManager_Canceled;
@@ -355,6 +356,7 @@ static usb_status_t USB_DeviceCdcVcomCallback(class_handle_t handle, uint32_t ev
                 {
                     msg.buffer = epCbParam->buffer;
                     msg.length = epCbParam->length;
+                    error      = kStatus_USB_Success;
                     if (USB_UNINITIALIZED_VAL_32 == msg.length)
                     {
                         msg.length     = 0U;
@@ -390,45 +392,49 @@ static usb_status_t USB_DeviceCdcVcomCallback(class_handle_t handle, uint32_t ev
                 if (1U == acmReqParam->isSetup)
                 {
                     *(acmReqParam->buffer) = s_abstractState;
+                    *(acmReqParam->length) = sizeof(s_abstractState);
                 }
                 else
                 {
-                    *(acmReqParam->length) = 0U;
+                    /* no action, data phase, s_abstractState has been assigned */
                 }
+                error = kStatus_USB_Success;
             }
             else if ((uint16_t)USB_DEVICE_CDC_FEATURE_COUNTRY_SETTING == acmReqParam->setupValue)
             {
                 if (1U == acmReqParam->isSetup)
                 {
                     *(acmReqParam->buffer) = s_countryCode;
+                    *(acmReqParam->length) = sizeof(s_countryCode);
                 }
                 else
                 {
-                    *(acmReqParam->length) = 0U;
+                    /* no action, data phase, s_countryCode has been assigned */
                 }
+                error = kStatus_USB_Success;
             }
             else
             {
                 /* MISRA C-2012 Rule 15.7 */
             }
-            error = kStatus_USB_Success;
             break;
         case kUSB_DeviceCdcEventGetCommFeature:
             if ((uint16_t)USB_DEVICE_CDC_FEATURE_ABSTRACT_STATE == acmReqParam->setupValue)
             {
                 *(acmReqParam->buffer) = s_abstractState;
                 *(acmReqParam->length) = COMM_FEATURE_DATA_SIZE;
+                error                  = kStatus_USB_Success;
             }
             else if ((uint16_t)USB_DEVICE_CDC_FEATURE_COUNTRY_SETTING == acmReqParam->setupValue)
             {
                 *(acmReqParam->buffer) = s_countryCode;
                 *(acmReqParam->length) = COMM_FEATURE_DATA_SIZE;
+                error                  = kStatus_USB_Success;
             }
             else
             {
                 /* MISRA C-2012 Rule 15.7 */
             }
-            error = kStatus_USB_Success;
             break;
         case kUSB_DeviceCdcEventClearCommFeature:
             break;
@@ -442,16 +448,18 @@ static usb_status_t USB_DeviceCdcVcomCallback(class_handle_t handle, uint32_t ev
             if (1U == acmReqParam->isSetup)
             {
                 *(acmReqParam->buffer) = s_lineCoding;
+                *(acmReqParam->length) = sizeof(s_lineCoding);
             }
             else
             {
-                *(acmReqParam->length) = 0;
+                /* no action, data phase, s_lineCoding has been assigned */
             }
         }
             error = kStatus_USB_Success;
             break;
         case kUSB_DeviceCdcEventSetControlLineState:
         {
+            error                     = kStatus_USB_Success;
             s_usbCdcAcmInfo.dteStatus = (uint8_t)acmReqParam->setupValue;
             /* activate/deactivate Tx carrier */
             if (0U != (acmInfo->dteStatus & (uint8_t)USB_DEVICE_CDC_CONTROL_SIG_BITMAP_CARRIER_ACTIVATION))
@@ -554,7 +562,7 @@ static usb_status_t USB_DeviceCdcVcomCallback(class_handle_t handle, uint32_t ev
 static usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *param)
 {
     serial_usb_cdc_state_t *serialUsbCdc;
-    usb_status_t error = kStatus_USB_Error;
+    usb_status_t error = kStatus_USB_InvalidRequest;
     uint16_t *temp16   = (uint16_t *)param;
     uint8_t *temp8     = (uint8_t *)param;
 #if (defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0U)) || \
@@ -565,7 +573,7 @@ static usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event,
     serialUsbCdc = USB_DeviceGetInstanceFromDeviceHandle(s_UsbCdcHead, handle);
     if (NULL == serialUsbCdc)
     {
-        return kStatus_USB_Error;
+        return kStatus_USB_InvalidRequest;
     }
 
     switch ((usb_device_event_t)event)
@@ -574,6 +582,7 @@ static usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event,
         {
             serialUsbCdc->attach            = 0U;
             serialUsbCdc->startTransactions = 0U;
+            error                           = kStatus_USB_Success;
 #if (defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0U)) || \
     (defined(USB_DEVICE_CONFIG_LPCIP3511HS) && (USB_DEVICE_CONFIG_LPCIP3511HS > 0U))
             /* Get USB speed to configure the device, including max packet size and interval of the endpoints. */
@@ -596,6 +605,7 @@ static usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event,
                     /* Schedule buffer for receive */
                     (void)Serial_UsbCdcRead(serialUsbCdc, s_currRecvBuf,
                                             g_UsbDeviceCdcVcomDicEndpoints[0].maxPacketSize);
+                    error = kStatus_USB_Success;
                 }
             }
             break;
@@ -607,6 +617,7 @@ static usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event,
                 if (interface < (uint8_t)USB_CDC_VCOM_INTERFACE_COUNT)
                 {
                     serialUsbCdc->currentInterfaceAlternateSetting[interface] = alternateSetting;
+                    error                                                     = kStatus_USB_Success;
                 }
             }
             break;

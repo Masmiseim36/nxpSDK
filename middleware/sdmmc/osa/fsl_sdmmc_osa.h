@@ -12,7 +12,8 @@
 #include "fsl_os_abstraction.h"
 
 /*!
- * @addtogroup SDMMC_OSA
+ * @addtogroup sdmmc_osa SDMMC OSA
+ * @ingroup card
  * @{
  */
 /*******************************************************************************
@@ -44,6 +45,12 @@ typedef struct _sdmmc_osa_event
     OSA_EVENT_HANDLE_DEFINE(handle);
 #endif
 } sdmmc_osa_event_t;
+
+/*!@brief sdmmc osa mutex */
+typedef struct _sdmmc_osa_mutex
+{
+    OSA_MUTEX_HANDLE_DEFINE(handle);
+} sdmmc_osa_mutex_t;
 /*******************************************************************************
  * API
  ******************************************************************************/
@@ -111,10 +118,48 @@ status_t SDMMC_OSAEventClear(void *eventHandle, uint32_t eventType);
 status_t SDMMC_OSAEventDestroy(void *eventHandle);
 
 /*!
+ * @brief Create a mutex.
+ * @param mutexHandle mutex handle.
+ * @retval kStatus_Fail or kStatus_Success.
+ */
+status_t SDMMC_OSAMutexCreate(void *mutexHandle);
+
+/*!
+ * @brief set event.
+ * @param mutexHandle mutex handle.
+ * @param millisec The maximum number of milliseconds to wait for the mutex.
+ *                 If the mutex is locked, Pass the value osaWaitForever_c will
+ *                 wait indefinitely, pass 0 will return KOSA_StatusTimeout
+ *                 immediately.
+ * @retval kStatus_Fail or kStatus_Success.
+ */
+status_t SDMMC_OSAMutexLock(void *mutexHandle, uint32_t millisec);
+
+/*!
+ * @brief Get event flag.
+ * @param mutexHandle mutex handle.
+ * @retval kStatus_Fail or kStatus_Success.
+ */
+status_t SDMMC_OSAMutexUnlock(void *mutexHandle);
+
+/*!
+ * @brief Delete mutex.
+ * @param mutexHandle The mutex handle.
+ */
+status_t SDMMC_OSAMutexDestroy(void *mutexHandle);
+
+/*!
  * @brief sdmmc delay.
  * @param milliseconds time to delay
  */
 void SDMMC_OSADelay(uint32_t milliseconds);
+
+/*!
+ * @brief sdmmc delay us.
+ * @param microseconds time to delay
+ * @return actual delayed microseconds
+ */
+uint32_t SDMMC_OSADelayUs(uint32_t microseconds);
 
 /* @} */
 

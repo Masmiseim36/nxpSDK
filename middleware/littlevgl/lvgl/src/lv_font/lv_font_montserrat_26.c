@@ -3806,7 +3806,6 @@ static LV_ATTRIBUTE_LARGE_CONST const uint8_t gylph_bitmap[] = {
     0x0, 0x0, 0x0
 };
 
-
 /*---------------------
  *  GLYPH DESCRIPTION
  *--------------------*/
@@ -4000,7 +3999,6 @@ static const lv_font_fmt_txt_cmap_t cmaps[] =
 /*-----------------
  *    KERNING
  *----------------*/
-
 
 /*Map glyph_ids to kern left classes*/
 static const uint8_t kern_left_class_mapping[] =
@@ -4431,7 +4429,6 @@ static const int8_t kern_class_values[] =
     0, 0, 0, 0, 0
 };
 
-
 /*Collect the kern class' data in one place*/
 static const lv_font_fmt_txt_kern_classes_t kern_classes =
 {
@@ -4459,7 +4456,6 @@ static lv_font_fmt_txt_dsc_t font_dsc = {
     .bitmap_format = 0
 };
 
-
 /*-----------------
  *  PUBLIC FONT
  *----------------*/
@@ -4473,8 +4469,11 @@ lv_font_t lv_font_montserrat_26 = {
 #if !(LVGL_VERSION_MAJOR == 6 && LVGL_VERSION_MINOR == 0)
     .subpx = LV_FONT_SUBPX_NONE,
 #endif
+#if LV_VERSION_CHECK(7, 4, 0)
+    .underline_position = -2,
+    .underline_thickness = 1,
+#endif
     .dsc = &font_dsc           /*The custom font data. Will be accessed by `get_glyph_bitmap/dsc` */
 };
 
 #endif /*#if LV_FONT_MONTSERRAT_26*/
-

@@ -1,12 +1,12 @@
 /*
- * Copyright (c) 2015 Freescale Semiconductor, Inc.
- * Copyright 2016-2018 NXP
+ * Copyright 2016-2021 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-#ifndef _FSL_USDHC_H_
-#define _FSL_USDHC_H_
+
+#ifndef _BL_USDHC_H_
+#define _BL_USDHC_H_
 
 #include "fsl_common.h"
 
@@ -19,10 +19,42 @@
  * Definitions.
  *****************************************************************************/
 
+/*! @name Feature macros */
+/*@{*/
+#ifndef USDHC_HOST_CTRL_CAP_TIME_COUNT_RETUNING
+#define USDHC_HOST_CTRL_CAP_TIME_COUNT_RETUNING_MASK (0xF00U)
+#define USDHC_HOST_CTRL_CAP_TIME_COUNT_RETUNING_SHIFT (8U)
+#define USDHC_HOST_CTRL_CAP_TIME_COUNT_RETUNING(x)                                    \
+    (((uint32_t)(((uint32_t)(x)) << USDHC_HOST_CTRL_CAP_TIME_COUNT_RETUNING_SHIFT)) & \
+     USDHC_HOST_CTRL_CAP_TIME_COUNT_RETUNING_MASK)
+#endif
+
+#ifndef USDHC_WTMK_LVL_RD_BRST_LEN
+#define USDHC_WTMK_LVL_RD_BRST_LEN_MASK (0x1F00U)
+#define USDHC_WTMK_LVL_RD_BRST_LEN_SHIFT (8U)
+#define USDHC_WTMK_LVL_RD_BRST_LEN(x) \
+    (((uint32_t)(((uint32_t)(x)) << USDHC_WTMK_LVL_RD_BRST_LEN_SHIFT)) & USDHC_WTMK_LVL_RD_BRST_LEN_MASK)
+#endif
+
+#ifndef USDHC_WTMK_LVL_WR_BRST_LEN
+#define USDHC_WTMK_LVL_WR_BRST_LEN_MASK (0x1F000000U)
+#define USDHC_WTMK_LVL_WR_BRST_LEN_SHIFT (24U)
+#define USDHC_WTMK_LVL_WR_BRST_LEN(x) \
+    (((uint32_t)(((uint32_t)(x)) << USDHC_WTMK_LVL_WR_BRST_LEN_SHIFT)) & USDHC_WTMK_LVL_WR_BRST_LEN_MASK)
+#endif
+
+#ifndef USDHC_PROT_CTRL_BURST_LEN_EN
+#define USDHC_PROT_CTRL_BURST_LEN_EN_MASK (0x38000000U)
+#define USDHC_PROT_CTRL_BURST_LEN_EN_SHIFT (27U)
+#define USDHC_PROT_CTRL_BURST_LEN_EN(x) \
+    (((uint32_t)(((uint32_t)(x)) << USDHC_PROT_CTRL_BURST_LEN_EN_SHIFT)) & USDHC_PROT_CTRL_BURST_LEN_EN_MASK)
+#endif
+/*@}*/
+
 /*! @name Driver version */
 /*@{*/
-/*! @brief Driver version 2.1.1. */
-#define FSL_USDHC_DRIVER_VERSION (MAKE_VERSION(2U, 1U, 1U))
+/*! @brief Driver version 2.2.3. */
+#define FSL_USDHC_DRIVER_VERSION (MAKE_VERSION(2U, 2U, 3U))
 /*@}*/
 
 /*! @brief Maximum block count can be set one time */
@@ -38,7 +70,6 @@ enum _usdhc_status
     kStatus_USDHC_DMADataAddrNotAlign = MAKE_STATUS(kStatusGroup_USDHC, 4U),         /*!< data address not align */
     kStatus_USDHC_ReTuningRequest = MAKE_STATUS(kStatusGroup_USDHC, 5U),             /*!< re-tuning request */
     kStatus_USDHC_TuningError = MAKE_STATUS(kStatusGroup_USDHC, 6U),                 /*!< tuning error */
-
 };
 
 /*! @brief Host controller capabilities flag mask */
@@ -54,9 +85,12 @@ enum _usdhc_capability_flag
     /* Put additional two flags in HTCAPBLT_MBL's position. */
     kUSDHC_Support4BitFlag = (USDHC_HOST_CTRL_CAP_MBL_SHIFT << 0U), /*!< Support 4 bit mode */
     kUSDHC_Support8BitFlag = (USDHC_HOST_CTRL_CAP_MBL_SHIFT << 1U), /*!< Support 8 bit mode */
-    /* sd version 3.0 new feature */
+/* sd version 3.0 new feature */
+#if defined(USDHC_HOST_CTRL_CAP_DDR50_SUPPORT_MASK)
     kUSDHC_SupportDDR50Flag = USDHC_HOST_CTRL_CAP_DDR50_SUPPORT_MASK, /*!< support DDR50 mode */
-
+#else
+    kUSDHC_SupportDDR50Flag = 0,
+#endif
 #if defined(FSL_FEATURE_USDHC_HAS_SDR104_MODE) && (!FSL_FEATURE_USDHC_HAS_SDR104_MODE)
     kUSDHC_SupportSDR104Flag = 0, /*!< not support SDR104 mode */
 #else
@@ -238,13 +272,21 @@ enum _usdhc_adma_error_status_flag
  *
  * This state is the detail state when ADMA error has occurred.
  */
-typedef enum _usdhc_adma_error_state
+enum _usdhc_adma_error_state
 {
-    kUSDHC_AdmaErrorStateStopDma = 0x00U,         /*!< Stop DMA */
-    kUSDHC_AdmaErrorStateFetchDescriptor = 0x01U, /*!< Fetch descriptor */
-    kUSDHC_AdmaErrorStateChangeAddress = 0x02U,   /*!< Change address */
-    kUSDHC_AdmaErrorStateTransferData = 0x03U,    /*!< Transfer data */
-} usdhc_adma_error_state_t;
+    kUSDHC_AdmaErrorStateStopDma =
+        0x00U, /*!< Stop DMA, previous location set in the ADMA system address is error address */
+    kUSDHC_AdmaErrorStateFetchDescriptor =
+        0x01U, /*!< Fetch descriptor, current location set in the ADMA system address is error address */
+    kUSDHC_AdmaErrorStateChangeAddress = 0x02U, /*!< Change address, no DMA error is occured */
+    kUSDHC_AdmaErrorStateTransferData =
+        0x03U, /*!< Transfer data, previous location set in the ADMA system address is error address */
+    kUSDHC_AdmaErrorStateInvalidLength = 0x04U,     /*!< Invalid length in ADMA descriptor */
+    kUSDHC_AdmaErrorStateInvalidDescriptor = 0x08U, /*!< Invalid descriptor fetched by ADMA */
+
+    kUSDHC_AdmaErrorState = kUSDHC_AdmaErrorStateInvalidLength | kUSDHC_AdmaErrorStateInvalidDescriptor |
+                            kUSDHC_AdmaErrorStateFetchDescriptor, /*!< ADMA error state */
+};
 
 /*! @brief Force event mask */
 enum _usdhc_force_event
@@ -329,6 +371,7 @@ typedef enum _usdhc_card_command_type
     kCARD_CommandTypeSuspend = 1U, /*!< Suspend command */
     kCARD_CommandTypeResume = 2U,  /*!< Resume command */
     kCARD_CommandTypeAbort = 3U,   /*!< Abort command */
+    kCARD_CommandTypeEmpty = 4U,   /*!< Empty command */
 } usdhc_card_command_type_t;
 
 /*!
@@ -455,6 +498,20 @@ enum _usdhc_adma2_descriptor_flag
                                       kUSDHC_Adma2DescriptorValidFlag), /*!< Link type */
 };
 
+/*! @brief ADMA descriptor configuration flag */
+enum _usdhc_adma_flag
+{
+    kUSDHC_AdmaDescriptorSingleFlag =
+        0U, /*!< try to finish the transfer in a single ADMA descriptor, if transfer size is bigger than one
+            ADMA descriptor's ability, new another descriptor for data transfer */
+    kUSDHC_AdmaDescriptorMultipleFlag = 1U, /*!< create multiple ADMA descriptor within the ADMA table, this is used for
+                                             mmc boot mode specifically, which need
+                                             to modify the ADMA descriptor on the fly, so the flag should be used
+                                             combine with stop at block gap feature */
+    kUSDHC_AdmaDescriptorContinuousFlag =
+        2U, /*!< create an ADMA descriptor with dummy, but not start from the first. */
+};
+
 /*! @brief dma transfer burst len config. */
 typedef enum _usdhc_burst_len
 {
@@ -462,6 +519,15 @@ typedef enum _usdhc_burst_len
     kUSDHC_EnBurstLenForINCR4816 = 0x02U,     /*!< enable burst len for INCR4/INCR8/INCR16 */
     kUSDHC_EnBurstLenForINCR4816WRAP = 0x04U, /*!< enable burst len for INCR4/8/16 WRAP */
 } usdhc_burst_len_t;
+
+/*! @brief transfer data type definition. */
+enum _usdhc_transfer_data_type
+{
+    kUSDHC_TransferDataNormal = 0U,        /*!< transfer normal read/write data */
+    kUSDHC_TransferDataTuning = 1U,        /*!< transfer tuning data */
+    kUSDHC_TransferDataBoot = 2U,          /*!< transfer boot data */
+    kUSDHC_TransferDataBootcontinous = 3U, /*!< transfer boot data continous */
+};
 
 /*! @brief Defines the adma1 descriptor structure. */
 typedef uint32_t usdhc_adma1_descriptor_t;
@@ -484,6 +550,7 @@ typedef struct _usdhc_capability
     uint32_t mmcVersion;     /*!< support emmc card version */
     uint32_t maxBlockLength; /*!< Maximum block length united as byte */
     uint32_t maxBlockCount;  /*!< Maximum block count can be set one time */
+    uint32_t flags;          /*!< Capability flags to indicate the support information(_usdhc_capability_flag) */
 } usdhc_capability_t;
 
 /*! @brief Data structure to configure the MMC boot feature */
@@ -492,8 +559,8 @@ typedef struct _usdhc_boot_config
     uint32_t ackTimeoutCount;      /*!< Timeout value for the boot ACK. The available range is 0 ~ 15. */
     usdhc_boot_mode_t bootMode;    /*!< Boot mode selection. */
     uint32_t blockCount;           /*!< Stop at block gap value of automatic mode. Available range is 0 ~ 65535. */
+    size_t blockSize;              /*!< Block size */
     bool enableBootAck;            /*!< Enable or disable boot ACK */
-    bool enableBoot;               /*!< Enable or disable fast boot */
     bool enableAutoStopAtBlockGap; /*!< Enable or disable auto stop at block gap function in boot period */
 } usdhc_boot_config_t;
 
@@ -521,12 +588,11 @@ typedef struct _usdhc_data
     bool enableAutoCommand12; /*!< Enable auto CMD12 */
     bool enableAutoCommand23; /*!< Enable auto CMD23 */
     bool enableIgnoreError;   /*!< Enable to ignore error event to read/write all the data */
-    bool executeTuning;       /*!< execute tuning flag */
-
-    size_t blockSize;       /*!< Block size */
-    uint32_t blockCount;    /*!< Block count */
-    uint32_t *rxData;       /*!< Buffer to save data read */
-    const uint32_t *txData; /*!< Data buffer to write */
+    uint8_t dataType;         /*!< this is used to distinguish the normal/tuning/boot data */
+    size_t blockSize;         /*!< Block size */
+    uint32_t blockCount;      /*!< Block count */
+    uint32_t *rxData;         /*!< Buffer to save data read */
+    const uint32_t *txData;   /*!< Data buffer to write */
 } usdhc_data_t;
 
 /*!
@@ -570,15 +636,16 @@ typedef struct _usdhc_handle usdhc_handle_t;
 /*! @brief USDHC callback functions. */
 typedef struct _usdhc_transfer_callback
 {
-    void (*CardInserted)(void);  /*!< Card inserted occurs when DAT3/CD pin is for card detect */
-    void (*CardRemoved)(void);   /*!< Card removed occurs */
-    void (*SdioInterrupt)(void); /*!< SDIO card interrupt occurs */
-    void (*SdioBlockGap)(void);  /*!< SDIO card stopped at block gap occurs */
+    void (*CardInserted)(USDHC_Type *base,
+                         void *userData); /*!< Card inserted occurs when DAT3/CD pin is for card detect */
+    void (*CardRemoved)(USDHC_Type *base, void *userData);   /*!< Card removed occurs */
+    void (*SdioInterrupt)(USDHC_Type *base, void *userData); /*!< SDIO card interrupt occurs */
+    void (*BlockGap)(USDHC_Type *base, void *userData);      /*!< stopped at block gap event */
     void (*TransferComplete)(USDHC_Type *base,
                              usdhc_handle_t *handle,
                              status_t status,
-                             void *userData); /*!< Transfer complete callback */
-    void (*ReTuning)(void);                   /*!< handle the re-tuning */
+                             void *userData);           /*!< Transfer complete callback */
+    void (*ReTuning)(USDHC_Type *base, void *userData); /*!< handle the re-tuning */
 } usdhc_transfer_callback_t;
 
 /*!
@@ -679,12 +746,13 @@ extern "C"
      */
 
     /*!
-     * @brief Sets the ADMA descriptor table configuration.
-     *
+     * @brief Sets the DMA descriptor table configuration.
+     * A high level DMA descriptor configuration function.
      * @param base USDHC peripheral base address.
      * @param adma configuration
      * @param data Data descriptor
-     * @param command flags
+     * @param flags ADAM descriptor flag, used to indicate to create multiple or single descriptor, please
+     *  reference _usdhc_adma_flag
      * @retval kStatus_OutOfRange ADMA descriptor table length isn't enough to describe data.
      * @retval kStatus_Success Operate successfully.
      */
@@ -692,6 +760,77 @@ extern "C"
                                       usdhc_adma_config_t *dmaConfig,
                                       usdhc_data_t *dataConfig,
                                       uint32_t flags);
+
+    /*!
+     * @brief Internal DMA configuration.
+     * This function is used to config the USDHC DMA related registers.
+     * @param base USDHC peripheral base address.
+     * @param adma configuration
+     * @param dataAddr tranfer data address, a simple DMA parameter, if ADMA is used, leave it to NULL.
+     * @param enAutoCmd23 flag to indicate Auto CMD23 is enable or not, a simple DMA parameter,if ADMA is used, leave it
+     * to false.
+     * @retval kStatus_OutOfRange ADMA descriptor table length isn't enough to describe data.
+     * @retval kStatus_Success Operate successfully.
+     */
+    status_t USDHC_SetInternalDmaConfig(USDHC_Type *base,
+                                        usdhc_adma_config_t *dmaConfig,
+                                        const uint32_t *dataAddr,
+                                        bool enAutoCmd23);
+
+    /*!
+     * @brief Sets the ADMA2 descriptor table configuration.
+     *
+     * @param admaTable Adma table address.
+     * @param admaTableWords Adma table length.
+     * @param dataBufferAddr Data buffer address.
+     * @param dataBytes Data Data length.
+     * @param flags ADAM descriptor flag, used to indicate to create multiple or single descriptor, please
+     *  reference _usdhc_adma_flag.
+     * @retval kStatus_OutOfRange ADMA descriptor table length isn't enough to describe data.
+     * @retval kStatus_Success Operate successfully.
+     */
+    status_t USDHC_SetADMA2Descriptor(uint32_t *admaTable,
+                                      uint32_t admaTableWords,
+                                      const uint32_t *dataBufferAddr,
+                                      uint32_t dataBytes,
+                                      uint32_t flags);
+
+    /*!
+     * @brief Sets the ADMA1 descriptor table configuration.
+     *
+     * @param admaTable Adma table address.
+     * @param admaTableWords Adma table length.
+     * @param dataBufferAddr Data buffer address.
+     * @param dataBytes Data length.
+     * @param flags ADAM descriptor flag, used to indicate to create multiple or single descriptor, please
+     *  reference _usdhc_adma_flag.
+     * @retval kStatus_OutOfRange ADMA descriptor table length isn't enough to describe data.
+     * @retval kStatus_Success Operate successfully.
+     */
+    status_t USDHC_SetADMA1Descriptor(uint32_t *admaTable,
+                                      uint32_t admaTableWords,
+                                      const uint32_t *dataBufferAddr,
+                                      uint32_t dataBytes,
+                                      uint32_t flags);
+
+    /*!
+     * @brief enable internal DMA.
+     *
+     * @param base USDHC peripheral base address.
+     * @param enable enable or disable flag
+     */
+    static inline void USDHC_EnableInternalDMA(USDHC_Type *base, bool enable)
+    {
+        if (enable)
+        {
+            base->MIX_CTRL |= USDHC_MIX_CTRL_DMAEN_MASK;
+        }
+        else
+        {
+            base->MIX_CTRL &= ~USDHC_MIX_CTRL_DMAEN_MASK;
+            base->PROT_CTRL &= ~USDHC_PROT_CTRL_DMASEL_MASK;
+        }
+    }
 
     /* @} */
 
@@ -772,7 +911,7 @@ extern "C"
      * @param base USDHC peripheral base address.
      * @return ADMA error status flags mask(_usdhc_adma_error_status_flag).
      */
-    static inline uint32_t USDHC_GetAdmaErrorStatusFlags(USDHC_Type *base) { return base->ADMA_ERR_STATUS; }
+    static inline uint32_t USDHC_GetAdmaErrorStatusFlags(USDHC_Type *base) { return base->ADMA_ERR_STATUS & 0xFU; }
 
     /*!
      * @brief Gets a present status.
@@ -963,12 +1102,31 @@ extern "C"
             base->PROT_CTRL &= ~mask;
         }
     }
+
     /*!
      * @brief Restarts a transaction which has stopped at the block GAP for the SDIO card.
      *
      * @param base USDHC peripheral base address.
      */
     static inline void USDHC_SetContinueRequest(USDHC_Type *base) { base->PROT_CTRL |= USDHC_PROT_CTRL_CREQ_MASK; }
+
+    /*!
+     * @brief Request stop at block gap function.
+     *
+     * @param base USDHC peripheral base address.
+     * @param enable true to stop at block gap, false to normal transfer
+     */
+    static inline void USDHC_RequestStopAtBlockGap(USDHC_Type *base, bool enable)
+    {
+        if (enable)
+        {
+            base->PROT_CTRL |= USDHC_PROT_CTRL_SABGREQ_MASK;
+        }
+        else
+        {
+            base->PROT_CTRL &= ~USDHC_PROT_CTRL_SABGREQ_MASK;
+        }
+    }
 
     /*!
      * @brief Configures the MMC boot feature.
@@ -989,6 +1147,24 @@ extern "C"
      * @param config The MMC boot configuration information.
      */
     void USDHC_SetMmcBootConfig(USDHC_Type *base, const usdhc_boot_config_t *config);
+
+    /*!
+     * @brief Enables or disables the mmc boot mode.
+     *
+     * @param base USDHC peripheral base address.
+     * @param enable True to enable, false to disable.
+     */
+    static inline void USDHC_EnableMmcBoot(USDHC_Type *base, bool enable)
+    {
+        if (enable)
+        {
+            base->MMC_BOOT |= USDHC_MMC_BOOT_BOOT_EN_MASK;
+        }
+        else
+        {
+            base->MMC_BOOT &= ~USDHC_MMC_BOOT_BOOT_EN_MASK;
+        }
+    }
 
     /*!
      * @brief Forces generating events according to the given mask.
@@ -1016,128 +1192,127 @@ extern "C"
         }
     }
 
-#if defined(FSL_FEATURE_USDHC_HAS_SDR50_MODE) && (!FSL_FEATURE_USDHC_HAS_SDR50_MODE)
-#else
-                                                                               /*!
-                                                                                * @brief check the SDR50 mode request tuning bit
-                                                                                * When this bit set, user should call USDHC_StandardTuning function
-                                                                                * @param base USDHC peripheral base address.
-                                                                                */
-static inline bool USDHC_RequestTuningForSDR50(USDHC_Type *base)
-{
-    return base->HOST_CTRL_CAP & USDHC_HOST_CTRL_CAP_USE_TUNING_SDR50_MASK ? true : false;
-}
-
-/*!
- * @brief check the request re-tuning bit
- * When this bit is set, user should do manual tuning or standard tuning function
- * @param base USDHC peripheral base address.
- */
-static inline bool USDHC_RequestReTuning(USDHC_Type *base)
-{
-    return base->PRES_STATE & USDHC_PRES_STATE_RTR_MASK ? true : false;
-}
-
-/*!
- * @brief the SDR104 mode auto tuning enable and disable
- * This function should call after tuning function execute pass, auto tuning will handle
- * by hardware
- * @param base USDHC peripheral base address.
- * @param enable/disable flag
- */
-static inline void USDHC_EnableAutoTuning(USDHC_Type *base, bool enable)
-{
-    if (enable)
+#if defined(FSL_FEATURE_USDHC_HAS_SDR50_MODE) && (FSL_FEATURE_USDHC_HAS_SDR50_MODE)
+    /*!
+     * @brief check the SDR50 mode request tuning bit
+     * When this bit set, user should call USDHC_StandardTuning function
+     * @param base USDHC peripheral base address.
+     */
+    static inline bool USDHC_RequestTuningForSDR50(USDHC_Type *base)
     {
-        base->MIX_CTRL |= USDHC_MIX_CTRL_AUTO_TUNE_EN_MASK;
+        return base->HOST_CTRL_CAP & USDHC_HOST_CTRL_CAP_USE_TUNING_SDR50_MASK ? true : false;
     }
-    else
+
+    /*!
+     * @brief check the request re-tuning bit
+     * When this bit is set, user should do manual tuning or standard tuning function
+     * @param base USDHC peripheral base address.
+     */
+    static inline bool USDHC_RequestReTuning(USDHC_Type *base)
     {
-        base->MIX_CTRL &= ~USDHC_MIX_CTRL_AUTO_TUNE_EN_MASK;
+        return base->PRES_STATE & USDHC_PRES_STATE_RTR_MASK ? true : false;
     }
-}
 
-/*!
- * @brief the config the re-tuning timer for mode 1 and mode 3
- * This timer is used for standard tuning auto re-tuning,
- * @param base USDHC peripheral base address.
- * @param timer counter value
- */
-static inline void USDHC_SetRetuningTimer(USDHC_Type *base, uint32_t counter)
-{
-    base->HOST_CTRL_CAP &= ~USDHC_HOST_CTRL_CAP_TIME_COUNT_RETUNING_MASK;
-    base->HOST_CTRL_CAP |= USDHC_HOST_CTRL_CAP_TIME_COUNT_RETUNING(counter);
-}
+    /*!
+     * @brief the SDR104 mode auto tuning enable and disable
+     * This function should call after tuning function execute pass, auto tuning will handle
+     * by hardware
+     * @param base USDHC peripheral base address.
+     * @param enable/disable flag
+     */
+    static inline void USDHC_EnableAutoTuning(USDHC_Type *base, bool enable)
+    {
+        if (enable)
+        {
+            base->MIX_CTRL |= USDHC_MIX_CTRL_AUTO_TUNE_EN_MASK;
+        }
+        else
+        {
+            base->MIX_CTRL &= ~USDHC_MIX_CTRL_AUTO_TUNE_EN_MASK;
+        }
+    }
 
-/*!
- * @brief the auto tuning enbale for CMD/DATA line
- *
- * @param base USDHC peripheral base address.
- */
-void USDHC_EnableAutoTuningForCmdAndData(USDHC_Type *base);
+    /*!
+     * @brief the config the re-tuning timer for mode 1 and mode 3
+     * This timer is used for standard tuning auto re-tuning,
+     * @param base USDHC peripheral base address.
+     * @param timer counter value
+     */
+    static inline void USDHC_SetRetuningTimer(USDHC_Type *base, uint32_t counter)
+    {
+        base->HOST_CTRL_CAP &= ~USDHC_HOST_CTRL_CAP_TIME_COUNT_RETUNING_MASK;
+        base->HOST_CTRL_CAP |= USDHC_HOST_CTRL_CAP_TIME_COUNT_RETUNING(counter);
+    }
 
-/*!
- * @brief manual tuning trigger or abort
- * User should handle the tuning cmd and find the boundary of the delay
- * then calucate a average value which will be config to the CLK_TUNE_CTRL_STATUS
- * This function should called before USDHC_AdjustDelayforSDR104 function
- * @param base USDHC peripheral base address.
- * @param tuning enable flag
- */
-void USDHC_EnableManualTuning(USDHC_Type *base, bool enable);
+    /*!
+     * @brief the auto tuning enbale for CMD/DATA line
+     *
+     * @param base USDHC peripheral base address.
+     */
+    void USDHC_EnableAutoTuningForCmdAndData(USDHC_Type *base);
 
-/*!
- * @brief the SDR104 mode delay setting adjust
- * This function should called after USDHC_ManualTuningForSDR104
- * @param base USDHC peripheral base address.
- * @param delay setting configuration
- * @retval kStatus_Fail config the delay setting fail
- * @retval kStatus_Success config the delay setting success
- */
-status_t USDHC_AdjustDelayForManualTuning(USDHC_Type *base, uint32_t delay);
+    /*!
+     * @brief manual tuning trigger or abort
+     * User should handle the tuning cmd and find the boundary of the delay
+     * then calucate a average value which will be config to the CLK_TUNE_CTRL_STATUS
+     * This function should called before USDHC_AdjustDelayforSDR104 function
+     * @param base USDHC peripheral base address.
+     * @param tuning enable flag
+     */
+    void USDHC_EnableManualTuning(USDHC_Type *base, bool enable);
 
-/*!
- * @brief the enable standard tuning function
- * The standard tuning window and tuning counter use the default config
- * tuning cmd is send by the software, user need to check the tuning result
- * can be used for SDR50,SDR104,HS200 mode tuning
- * @param base USDHC peripheral base address.
- * @param tuning start tap
- * @param tuning step
- * @param enable/disable flag
- */
-void USDHC_EnableStandardTuning(USDHC_Type *base, uint32_t tuningStartTap, uint32_t step, bool enable);
+    /*!
+     * @brief the SDR104 mode delay setting adjust
+     * This function should called after USDHC_ManualTuningForSDR104
+     * @param base USDHC peripheral base address.
+     * @param delay setting configuration
+     * @retval kStatus_Fail config the delay setting fail
+     * @retval kStatus_Success config the delay setting success
+     */
+    status_t USDHC_AdjustDelayForManualTuning(USDHC_Type *base, uint32_t delay);
 
-/*!
- * @brief Get execute std tuning status
- *
- * @param base USDHC peripheral base address.
- */
-static inline uint32_t USDHC_GetExecuteStdTuningStatus(USDHC_Type *base)
-{
-    return (base->AUTOCMD12_ERR_STATUS & USDHC_AUTOCMD12_ERR_STATUS_EXECUTE_TUNING_MASK);
-}
+    /*!
+     * @brief the enable standard tuning function
+     * The standard tuning window and tuning counter use the default config
+     * tuning cmd is send by the software, user need to check the tuning result
+     * can be used for SDR50,SDR104,HS200 mode tuning
+     * @param base USDHC peripheral base address.
+     * @param tuning start tap
+     * @param tuning step
+     * @param enable/disable flag
+     */
+    void USDHC_EnableStandardTuning(USDHC_Type *base, uint32_t tuningStartTap, uint32_t step, bool enable);
 
-/*!
- * @brief check std tuning result
- *
- * @param base USDHC peripheral base address.
- */
-static inline uint32_t USDHC_CheckStdTuningResult(USDHC_Type *base)
-{
-    return (base->AUTOCMD12_ERR_STATUS & USDHC_AUTOCMD12_ERR_STATUS_SMP_CLK_SEL_MASK);
-}
+    /*!
+     * @brief Get execute std tuning status
+     *
+     * @param base USDHC peripheral base address.
+     */
+    static inline uint32_t USDHC_GetExecuteStdTuningStatus(USDHC_Type *base)
+    {
+        return (base->AUTOCMD12_ERR_STATUS & USDHC_AUTOCMD12_ERR_STATUS_EXECUTE_TUNING_MASK);
+    }
 
-/*!
- * @brief check tuning error
- *
- * @param base USDHC peripheral base address.
- */
-static inline uint32_t USDHC_CheckTuningError(USDHC_Type *base)
-{
-    return (base->CLK_TUNE_CTRL_STATUS &
-            (USDHC_CLK_TUNE_CTRL_STATUS_NXT_ERR_MASK | USDHC_CLK_TUNE_CTRL_STATUS_PRE_ERR_MASK));
-}
+    /*!
+     * @brief check std tuning result
+     *
+     * @param base USDHC peripheral base address.
+     */
+    static inline uint32_t USDHC_CheckStdTuningResult(USDHC_Type *base)
+    {
+        return (base->AUTOCMD12_ERR_STATUS & USDHC_AUTOCMD12_ERR_STATUS_SMP_CLK_SEL_MASK);
+    }
+
+    /*!
+     * @brief check tuning error
+     *
+     * @param base USDHC peripheral base address.
+     */
+    static inline uint32_t USDHC_CheckTuningError(USDHC_Type *base)
+    {
+        return (base->CLK_TUNE_CTRL_STATUS &
+                (USDHC_CLK_TUNE_CTRL_STATUS_NXT_ERR_MASK | USDHC_CLK_TUNE_CTRL_STATUS_PRE_ERR_MASK));
+    }
 
 #endif
     /*!
@@ -1314,4 +1489,4 @@ static inline uint32_t USDHC_CheckTuningError(USDHC_Type *base)
 #endif
 /*! @} */
 
-#endif /* _FSL_USDHC_H_*/
+#endif /* _BL_USDHC_H_*/

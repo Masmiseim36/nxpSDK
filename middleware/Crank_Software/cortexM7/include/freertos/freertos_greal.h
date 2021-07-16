@@ -24,8 +24,6 @@ typedef struct _greal_timespec_t {
 	unsigned int 	tv_nsec;
 } greal_timespec_t;
 
-#define _GREAL_PLATFORM_TIMER
-
 #define GREAL_CLOCK_REALTIME	0
 #define GREAL_CLOCK_MONOTONIC	1
 
@@ -66,6 +64,26 @@ int getsubopt(char **_optionp, char * const *_keylistp, char **_valuep);
 
 char *getcwd(char *buf, int size);
 
+
+#if(GR_TOOLCHAIN(dassgcc))
+
+#include <stdio.h>
+#include <time.h>
+#include <string.h>
+
+#include "custom_config_oqspi.h"
+#include "bsp_defaults.h"
+#include "bsp_debug.h"
+
+#include "cmsis_gcc.h"
+#include "hw_gpio.h"
+#include "hw_cpm.h"
+#include "hw_watchdog.h"
+#include "hw_clk.h"
+#include "ad_flash.h"
+#include <FreeRTOS.h>
+
+#endif //dassgcc
 
 /**
  * Platform specific values
@@ -122,8 +140,12 @@ void taskYield(void);
 #include <FreeRTOS.h>
 #include <timers.h>
 void vCallbackFunction(TimerHandle_t xTimer);
-#endif
+#endif //iar
 
-
+/**
+ * Metrics prototypes
+ */
+void greal_task_switched_in(void);
+void greal_task_switched_out(void);
 
 #endif /* GR_FREERTOS_GREAL_H_ */

@@ -1,0 +1,27 @@
+/**
+* Copyright 2018 Au-Zone Technologies
+* All rights reserved.
+*
+* Software that is described herein is for illustrative purposes only which
+* provides customers with programming information regarding the DeepViewRT
+* library. This software is supplied "AS IS" without any warranties of any
+* kind, and Au-Zone Technologies and its licensor disclaim any and all
+* warranties, express or implied, including all implied warranties of
+* merchantability, fitness for a particular purpose and non-infringement of
+* intellectual property rights.  Au-Zone Technologies assumes no responsibility
+* or liability for the use of the software, conveys no license or rights under
+* any patent, copyright, mask work right, or any other intellectual property
+* rights in or to any products. Au-Zone Technologies reserves the right to make
+* changes in the software without notification. Au-Zone Technologies also makes
+* no representation or warranty that such application will be suitable for the
+* specified use without further testing or modification.
+*
+* Permission to use, copy, modify, and distribute this software and its
+* documentation is hereby granted, under Au-Zone Technologies' and its
+* licensor's relevant copyrights in the software, without fee, provided that it
+* is used in conjunction within an “Authorized System" which means either 
+* (i) Licensee's hardware product incorporates an NXP Product or (ii) Licensee's
+* software program which is used exclusively in connection with an NXP Product
+* and with which the Licensed Software will be integrated.  This copyright, 
+* permission, and disclaimer notice must appear in all copies of this code.
+*/

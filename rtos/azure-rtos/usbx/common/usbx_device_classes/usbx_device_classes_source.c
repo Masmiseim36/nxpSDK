@@ -51,6 +51,8 @@
 #include "src/ux_device_class_dfu_entry.c"
 #include "src/ux_device_class_dfu_initialize.c"
 #include "src/ux_device_class_dfu_thread.c"
+#include "src/ux_device_class_dfu_state_get.c"
+#include "src/ux_device_class_dfu_state_sync.c"
 #include "src/ux_device_class_hid_activate.c"
 #include "src/ux_device_class_hid_control_request.c"
 #include "src/ux_device_class_hid_deactivate.c"

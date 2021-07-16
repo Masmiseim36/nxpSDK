@@ -9,7 +9,7 @@
 *                                                                    *
 **********************************************************************
 
-** emWin V6.14 - Graphical user interface for embedded applications **
+** emWin V6.16 - Graphical user interface for embedded applications **
 All  Intellectual Property rights  in the Software belongs to  SEGGER.
 emWin is protected by  international copyright laws.  Knowledge of the
 source code may not be used to write a similar product.  This file may
@@ -34,7 +34,7 @@ License model:            emWin License Agreement, dated August 20th 2011 and Am
 Licensed platform:        NXP's ARM 7/9, Cortex-M0, M3, M4, M7, A7, M33
 ----------------------------------------------------------------------
 Support and Update Agreement (SUA)
-SUA period:               2011-08-19 - 2020-09-02
+SUA period:               2011-08-19 - 2021-09-02
 Contact to extend SUA:    sales@segger.com
 ----------------------------------------------------------------------
 File        : WIDGET.h
@@ -175,6 +175,7 @@ typedef struct {
 #define WIDGET_STATE_FOCUS              (1 << 0)
 #define WIDGET_STATE_VERTICAL           (1 << 3)
 #define WIDGET_STATE_FOCUSABLE          (1 << 4)
+#define WIDGET_STATE_INVISIBLEFOCUS     (1 << 5)
 
 #define WIDGET_STATE_USER0              (1 << 8)    /* Freely available for derived widget */
 #define WIDGET_STATE_USER1              (1 << 9)    /* Freely available for derived widget */

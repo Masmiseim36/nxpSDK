@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ksdk:examples xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd manifest.xsd">
   <externalDefinitions>
+    <definition extID="middleware.mcu-boot.mem_spi_nand.MIMXRT1062"/>
+    <definition extID="middleware.mcu-boot.mem_semc_nor.MIMXRT1062"/>
+    <definition extID="middleware.mcu-boot.MIMXRT1062_sources.MIMXRT1062"/>
+    <definition extID="middleware.mcu-boot.mem_semc_nand.MIMXRT1062"/>
+    <definition extID="middleware.mcu-boot.mem_sdmmc.MIMXRT1062"/>
+    <definition extID="middleware.mcu-boot.mem_spi_nor_eeprom.MIMXRT1062"/>
     <definition extID="device.MIMXRT1062_CMSIS.MIMXRT1062"/>
     <definition extID="platform.drivers.clock.MIMXRT1062"/>
     <definition extID="platform.drivers.igpio.MIMXRT1062"/>
@@ -11,7 +17,6 @@
     <definition extID="middleware.mcu-boot.bootsources.MIMXRT1062"/>
     <definition extID="middleware.mcu-boot.bootsources_imxrt.MIMXRT1062"/>
     <definition extID="middleware.mcu-boot.MIMXRT1062_drivers.MIMXRT1062"/>
-    <definition extID="middleware.mcu-boot.MIMXRT1062_sources.MIMXRT1062"/>
     <definition extID="middleware.baremetal.MIMXRT1062"/>
     <definition extID="middleware.usb.device.controller.driver.MIMXRT1062"/>
     <definition extID="component.osa.MIMXRT1062"/>
@@ -20,33 +25,26 @@
     <definition extID="middleware.mcu-boot.drv_microseconds_pit.MIMXRT1062"/>
     <definition extID="middleware.mcu-boot.mem_flexspi_nor.MIMXRT1062"/>
     <definition extID="middleware.mcu-boot.drv_flexspi_nand.MIMXRT1062"/>
-    <definition extID="middleware.mcu-boot.mem_spi_nand.MIMXRT1062"/>
-    <definition extID="middleware.mcu-boot.mem_semc_nor.MIMXRT1062"/>
-    <definition extID="middleware.mcu-boot.mem_semc_nand.MIMXRT1062"/>
-    <definition extID="middleware.mcu-boot.mem_sdmmc.MIMXRT1062"/>
-    <definition extID="middleware.mcu-boot.mem_spi_nor_eeprom.MIMXRT1062"/>
     <definition extID="middleware.mcu-boot.drv_ocotp.MIMXRT1062"/>
-    <definition extID="platform.Include_core_cm7.MIMXRT1062"/>
-    <definition extID="platform.Include_common.MIMXRT1062"/>
-    <definition extID="platform.Include_dsp.MIMXRT1062"/>
-    <definition extID="platform.drivers.common.MIMXRT1062"/>
-    <definition extID="component.lists.MIMXRT1062"/>
-    <definition extID="middleware.usb.phy.MIMXRT1062"/>
-    <definition extID="middleware.usb.common_header.MIMXRT1062"/>
-    <definition extID="middleware.usb.device.common_header.MIMXRT1062"/>
-    <definition extID="middleware.mcu-boot.drv_flexspi_nor.MIMXRT1062"/>
     <definition extID="middleware.mcu-boot.drv_semc_nor.MIMXRT1062"/>
     <definition extID="middleware.mcu-boot.drv_semc_nand.MIMXRT1062"/>
     <definition extID="middleware.mcu-boot.drv_sdmmc.MIMXRT1062"/>
     <definition extID="middleware.mcu-boot.drv_serial_nor_eeprom.MIMXRT1062"/>
     <definition extID="platform.drivers.lpspi.MIMXRT1062"/>
+    <definition extID="platform.drivers.common.MIMXRT1062"/>
+    <definition extID="CMSIS_Include_core_cm.MIMXRT1062"/>
+    <definition extID="component.lists.MIMXRT1062"/>
+    <definition extID="middleware.usb.phy.MIMXRT1062"/>
+    <definition extID="middleware.usb.common_header.MIMXRT1062"/>
+    <definition extID="middleware.usb.device.common_header.MIMXRT1062"/>
+    <definition extID="middleware.mcu-boot.drv_flexspi_nor.MIMXRT1062"/>
     <definition extID="iar"/>
     <definition extID="mdk"/>
     <definition extID="armgcc"/>
     <definition extID="mcuxpresso"/>
     <definition extID="com.nxp.mcuxpresso"/>
   </externalDefinitions>
-  <example id="evkmimxrt1060_flashloader" name="flashloader" dependency="device.MIMXRT1062_CMSIS.MIMXRT1062 platform.drivers.clock.MIMXRT1062 platform.drivers.igpio.MIMXRT1062 platform.drivers.lpuart.MIMXRT1062 platform.drivers.iomuxc.MIMXRT1062 middleware.mcu-boot.MIMXRT1062_startup.MIMXRT1062 middleware.mcu-boot.src_bm_usb_hid.MIMXRT1062 middleware.mcu-boot.bootsources.MIMXRT1062 middleware.mcu-boot.bootsources_imxrt.MIMXRT1062 middleware.mcu-boot.MIMXRT1062_drivers.MIMXRT1062 middleware.mcu-boot.MIMXRT1062_sources.MIMXRT1062 middleware.baremetal.MIMXRT1062 middleware.usb.device.controller.driver.MIMXRT1062 component.osa.MIMXRT1062 middleware.usb.device_controller_ehci.MIMXRT1062 middleware.mcu-boot.src_startup.MIMXRT1062 middleware.mcu-boot.drv_microseconds_pit.MIMXRT1062 middleware.mcu-boot.mem_flexspi_nor.MIMXRT1062 middleware.mcu-boot.drv_flexspi_nand.MIMXRT1062 middleware.mcu-boot.mem_spi_nand.MIMXRT1062 middleware.mcu-boot.mem_semc_nor.MIMXRT1062 middleware.mcu-boot.mem_semc_nand.MIMXRT1062 middleware.mcu-boot.mem_sdmmc.MIMXRT1062 middleware.mcu-boot.mem_spi_nor_eeprom.MIMXRT1062 middleware.mcu-boot.drv_ocotp.MIMXRT1062 platform.Include_core_cm7.MIMXRT1062 platform.Include_common.MIMXRT1062 platform.Include_dsp.MIMXRT1062 platform.drivers.common.MIMXRT1062 component.lists.MIMXRT1062 middleware.usb.phy.MIMXRT1062 middleware.usb.common_header.MIMXRT1062 middleware.usb.device.common_header.MIMXRT1062 middleware.mcu-boot.drv_flexspi_nor.MIMXRT1062 middleware.mcu-boot.drv_semc_nor.MIMXRT1062 middleware.mcu-boot.drv_semc_nand.MIMXRT1062 middleware.mcu-boot.drv_sdmmc.MIMXRT1062 middleware.mcu-boot.drv_serial_nor_eeprom.MIMXRT1062 platform.drivers.lpspi.MIMXRT1062" category="bootloader_examples">
+  <example id="evkmimxrt1060_flashloader" name="flashloader" dependency="middleware.mcu-boot.mem_spi_nand.MIMXRT1062 middleware.mcu-boot.mem_semc_nor.MIMXRT1062 middleware.mcu-boot.MIMXRT1062_sources.MIMXRT1062 middleware.mcu-boot.mem_semc_nand.MIMXRT1062 middleware.mcu-boot.mem_sdmmc.MIMXRT1062 middleware.mcu-boot.mem_spi_nor_eeprom.MIMXRT1062 device.MIMXRT1062_CMSIS.MIMXRT1062 platform.drivers.clock.MIMXRT1062 platform.drivers.igpio.MIMXRT1062 platform.drivers.lpuart.MIMXRT1062 platform.drivers.iomuxc.MIMXRT1062 middleware.mcu-boot.MIMXRT1062_startup.MIMXRT1062 middleware.mcu-boot.src_bm_usb_hid.MIMXRT1062 middleware.mcu-boot.bootsources.MIMXRT1062 middleware.mcu-boot.bootsources_imxrt.MIMXRT1062 middleware.mcu-boot.MIMXRT1062_drivers.MIMXRT1062 middleware.baremetal.MIMXRT1062 middleware.usb.device.controller.driver.MIMXRT1062 component.osa.MIMXRT1062 middleware.usb.device_controller_ehci.MIMXRT1062 middleware.mcu-boot.src_startup.MIMXRT1062 middleware.mcu-boot.drv_microseconds_pit.MIMXRT1062 middleware.mcu-boot.mem_flexspi_nor.MIMXRT1062 middleware.mcu-boot.drv_flexspi_nand.MIMXRT1062 middleware.mcu-boot.drv_ocotp.MIMXRT1062 middleware.mcu-boot.drv_semc_nor.MIMXRT1062 middleware.mcu-boot.drv_semc_nand.MIMXRT1062 middleware.mcu-boot.drv_sdmmc.MIMXRT1062 middleware.mcu-boot.drv_serial_nor_eeprom.MIMXRT1062 platform.drivers.lpspi.MIMXRT1062 platform.drivers.common.MIMXRT1062 CMSIS_Include_core_cm.MIMXRT1062 component.lists.MIMXRT1062 middleware.usb.phy.MIMXRT1062 middleware.usb.common_header.MIMXRT1062 middleware.usb.device.common_header.MIMXRT1062 middleware.mcu-boot.drv_flexspi_nor.MIMXRT1062" category="bootloader_examples">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>

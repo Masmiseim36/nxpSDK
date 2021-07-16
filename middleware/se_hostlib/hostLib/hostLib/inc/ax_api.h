@@ -3,15 +3,9 @@
 * @author NXP Semiconductors
 * @version 1.0
 * @par License
-* Copyright 2016,2020 NXP
 *
-* This software is owned or controlled by NXP and may only be used
-* strictly in accordance with the applicable license terms.  By expressly
-* accepting such terms or by downloading, installing, activating and/or
-* otherwise using the software, you are agreeing that you have read, and
-* that you agree to comply with and are bound by, such license terms.  If
-* you do not agree to be bound by the applicable license terms, then you
-* may not retain, install, activate or otherwise use the software.
+* Copyright 2016,2020 NXP
+* SPDX-License-Identifier: Apache-2.0
 *
 * @par Description
 * This file is the communication specific Host API of the A70CM/CI and A71CH secure module.
@@ -74,19 +68,6 @@ typedef enum SST_Item
 #if (SSS_HAVE_A71CH || SSS_HAVE_A71CL || SSS_HAVE_A71CH_SIM || SSS_HAVE_SE050_L)
 U16 SM_ResumeConnection(SmCommState_t *commState, Scp03SessionState_t *scp03State);
 #endif
-
-#if defined(TGT_A71CH)
-#if defined(IPC)
-U16 SM_LockChannel(void);
-U16 SM_UnlockChannel(void);
-
-#define SM_LOCK_CHANNEL() SM_LockChannel()
-#define SM_UNLOCK_CHANNEL() SM_UnlockChannel()
-#else
-#define SM_LOCK_CHANNEL()
-#define SM_UNLOCK_CHANNEL()
-#endif // TGT_A71CH
-#endif // IPC
 
 #ifdef __cplusplus
 }

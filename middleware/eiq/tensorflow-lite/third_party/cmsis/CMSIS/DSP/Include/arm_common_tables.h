@@ -29,7 +29,8 @@
 #ifndef _ARM_COMMON_TABLES_H
 #define _ARM_COMMON_TABLES_H
 
-#include "cmsis/CMSIS/DSP/Include/arm_math.h"
+#include "cmsis/CMSIS/DSP/Include/arm_math_types.h"
+#include "cmsis/CMSIS/DSP/Include/dsp/fast_math_functions.h"
 
 #ifdef   __cplusplus
 extern "C"

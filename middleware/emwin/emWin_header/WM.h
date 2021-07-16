@@ -9,7 +9,7 @@
 *                                                                    *
 **********************************************************************
 
-** emWin V6.14 - Graphical user interface for embedded applications **
+** emWin V6.16 - Graphical user interface for embedded applications **
 All  Intellectual Property rights  in the Software belongs to  SEGGER.
 emWin is protected by  international copyright laws.  Knowledge of the
 source code may not be used to write a similar product.  This file may
@@ -34,7 +34,7 @@ License model:            emWin License Agreement, dated August 20th 2011 and Am
 Licensed platform:        NXP's ARM 7/9, Cortex-M0, M3, M4, M7, A7, M33
 ----------------------------------------------------------------------
 Support and Update Agreement (SUA)
-SUA period:               2011-08-19 - 2020-09-02
+SUA period:               2011-08-19 - 2021-09-02
 Contact to extend SUA:    sales@segger.com
 ----------------------------------------------------------------------
 File        : WM.h
@@ -357,6 +357,8 @@ typedef struct {
 
 #define WM_USER_DATA                52      /* Send immediately after setting user data */
 #define WM_SET_CALLBACK             53      /* Send immediately after setting user data */
+
+#define WM_GET_OFFSET               54      /* Return alignment offset */
 
 #define WM_GESTURE                  0x0119  /* Gesture message */
 
@@ -800,7 +802,8 @@ GUI_COLOR WM_GetBkColor              (WM_HWIN hObj);
 
 /* Change Z-Order of windows */
 void WM_BringToBottom(WM_HWIN hWin);
-void WM_BringToTop(WM_HWIN hWin);
+void WM_BringToTop   (WM_HWIN hWin);
+void WM_BringBehind  (WM_HWIN hWinFore, WM_HWIN hWinBack);
 
 GUI_COLOR WM_SetDesktopColor  (GUI_COLOR Color);
 GUI_COLOR WM_SetDesktopColorEx(GUI_COLOR Color, unsigned int LayerIndex);

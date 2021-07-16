@@ -225,4 +225,10 @@ int sbvfs_fscanf(SBFILE * stream, const char * format, ... );
  */
 int sbvfs_vfscanf(SBFILE * stream, const char * format, va_list args);
 
+/**
+ * Matching functionality to OpenGroup/ANSI feof() 
+ * See: http://pubs.opengroup.org/onlinepubs/9699919799/functions/feof.html
+ */
+int sbvfs_feof(SBFILE *stream);
+
 #endif

@@ -22,6 +22,7 @@
 #include "fsl_os_abstraction.h"
 #include "fsl_debug_console.h"
 #include "ff.h"
+
 /* --------------------------------------------- Global Definitions */
 #define EM_ENABLE_PAL_OS
 #define EM_PLATFORM_MAIN
@@ -32,12 +33,12 @@
 #ifdef printf
 #undef printf
 #endif /* printf */
-#define printf PRINTF
+#define printf(...) (void)PRINTF(__VA_ARGS__)
 
 #ifdef scanf
 #undef scanf
 #endif /* scanf */
-#define scanf SCANF
+#define scanf(...) (void)SCANF((char *)__VA_ARGS__)
 
 #ifdef getchar
 #undef getchar
@@ -76,15 +77,21 @@
 void EM_enter_sleep_pl(void);
 void EM_exit_sleep_pl(void);
 
-int _write (int fd, char *ptr, int len);
-int _read (int fd, char *ptr, int len);
-int _close (int fd);
-int _fstat (int fd);
-int _isatty (int fd);
-int _lseek (int fd);
-
-void HardFault_Handler(void);
-void debugHardfault(uint32_t *sp);
-
+int EM_str_to_num_pl
+       (
+           /* IN */  char * str,
+           /* IN */  int    len
+       );
+int EM_str_to_hexnum_pl
+       (
+           /* IN */ char * str,
+           /* IN */ int    len
+       );
+void EM_num_to_str_pl
+     (
+         /* IN  */ int num,
+         /* OUT */ char * str,
+         /* OUT */ int  * len
+     );
 #endif /* _H_EM_PLATFORM_ */
 

@@ -2,7 +2,28 @@
 @page middleware_log Middleware Change Log
 
 @section lwip lwIP for MCUXpresso SDK
-  The current version of lwIP is based on lwIP 2.2.0.dev.
+  Lightweight IP (lwIP) is a small independent implementation of the TCP/IP protocol suite.
+  Source code included in this SDK is based on development version 2.2.0.dev taken from 3rd party lwIP GIT repository.
+  The webpage https://git.savannah.nongnu.org/cgit/lwip.git allows to browse the repository and also contains URLs for its cloning.
+  The development versions (X.Y.Z.dev) do not refer to a single source code snapshots. To avoid ambiguity,
+  change log below contains SHA-1 hashes of GIT commits used when importing the code into the SDK.
+
+  - 2.2.0_rev4
+    - New features:
+      - Ported lwIP 2.2.0.dev (2021-03-05, branch: master, SHA-1: 0056522cc974d2be2005c324f37187b5b3695765) to KSDK 2.0.0.
+      - LWIP_DHCP_DOES_ACD_CHECK option default changed to 0 (disabled):
+        - Although the ACD check makes getting IP address from DHCP more robust, it added several seconds delay at startup of all applications which use DHCP.
+        - This feature was not present in earlier versions of lwIP.
+      - ENET QOS adaptation layer - implemented zero-copy on receive.
+      - Kinetis ENET and ENET QOS adaptation layers allocate more buffers for frame reception now.
+        Previously the number of receive buffers was determined by ENET_RXBD_NUM, which defaults to 5.
+        It is determined by ENET_RXBUFF_NUM now, which is 2 * ENET_RXBD_NUM by default.
+        Increase was needed because the actual version of Kinetis ENET and ENET QOS drivers always hold ENET_RXBD_NUM number of buffers
+        and few additional buffers are needed for passing zero-copy frame data to lwIP.
+        If this takes too much memory in your application, you can counteract by decreasing PBUF_POOL_SIZE,
+        since PBUF_POOL is used only for transmission when Kinetis ENET or ENET QOS is used.
+      - Removed ethernetif_config_t.non_dma_memory field which was required to configure memory ranges unusable by ENET DMA on LPC devices.
+        The setting has been replaced by BOARD_ENET_NON_DMA_MEMORY_ARRAY macro.
 
   - 2.2.0_rev3
     - New features:

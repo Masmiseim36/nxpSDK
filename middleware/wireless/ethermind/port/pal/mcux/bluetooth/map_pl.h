@@ -19,25 +19,25 @@
 
 /* --------------------------------------------- Global Definitions */
 /* Max Folder Name length */
-#define MAP_FOLDER_NAME_LEN              64
+#define MAP_FOLDER_NAME_LEN              64U
 
 /* File object name including path */
-#define MAPC_MAX_FILE_OBJ_NAME_LEN       128
+#define MAPC_MAX_FILE_OBJ_NAME_LEN       128U
 
 /* MAP Conversation Listing file name */
-#define APPL_MAPC_CONV_LISTING_FILE                           "MAP_rx_conv_listing.xml"
+#define APPL_MAPC_CONV_LISTING_FILE      "MAP_rx_conv_listing.xml"
 
 /* MAP Folder Listing file name */
-#define APPL_MAPC_FOLDER_LISTING_FILE                         "MAP_rx_folder_listing.xml"
+#define APPL_MAPC_FOLDER_LISTING_FILE    "MAP_rx_folder_listing.xml"
 
 /* MAP Message Listing file name */
-#define APPL_MAPC_MSG_LISTING_FILE                            "MAP_rx_msg_listing.xml"
+#define APPL_MAPC_MSG_LISTING_FILE       "MAP_rx_msg_listing.xml"
 
 /* MAP Rx. Message file name */
-#define APPL_MAPC_MSG_FILE                                    "map_rx_raw.msg"
+#define APPL_MAPC_MSG_FILE               "map_rx_raw.msg"
 
 /* MAP Rx. Message file name */
-#define APPL_MAPC_EVENT_RPRT_FILE                             "map_tx_event.txt"
+#define APPL_MAPC_EVENT_RPRT_FILE        "map_tx_event.txt"
 
 /* Base folder for MAP objects */
 #define MAP_ROOT_FOLDER_BASE \
@@ -60,6 +60,11 @@ typedef struct _MAP_MSG_ATTR_PL
     CHAR read[4];
     CHAR priority[4];
 
+    /* Message Type: Bit mask */
+    UCHAR m_type;
+
+    /* Read Status */
+    UCHAR rd_status;
 } MAP_MSG_ATTR_PL;
 
 /* --------------------------------------------- Macros */
@@ -89,6 +94,7 @@ API_RESULT BT_map_create_xml_messages_listing_pl
            (
                /* IN */  UCHAR   *dir_entry,
                /* IN */  UCHAR   *listingfile,
+               /* IN */  MAP_APPL_PARAMS * appl_params,
                /* OUT */ UINT16  *num_entity
            );
 

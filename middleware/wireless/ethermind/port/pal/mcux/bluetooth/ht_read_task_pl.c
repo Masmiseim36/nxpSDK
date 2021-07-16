@@ -87,7 +87,7 @@ void ht_read_task_create_pl (BT_THREAD_START_ROUTINE routine)
  */
 UCHAR ht_read_task_shutdown_pl ( void )
 {
-    return 0;
+    return 0U;
 }
 
 #endif /* BT_TRANSPORT_SINGLE_TASK */

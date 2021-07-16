@@ -21,8 +21,8 @@
 * Please do not make any modifications of this file! The modifications are lost
 * when the file is generated again by Embedded Wizard Studio!
 *
-* Version  : 9.30
-* Date     : 14.02.2020  8:00:50
+* Version  : 10.0
+* Date     : 17.02.2021  8:00:50
 * Profile  : iMX_RT
 * Platform : NXP.iMX_RT.RGB565
 *
@@ -82,7 +82,10 @@ EW_DEFINE_CLASS( EffectsEffectTimerClass, CoreTimer, _None, _None, _None, _None,
   EffectsEffectTimerClass_Trigger,
 EW_END_OF_CLASS( EffectsEffectTimerClass )
 
-/* User defined auto object: 'Effects::EffectTimer' */
+/* The global autoobject Effects::EffectTimer triggers all actually active animation 
+   effects. In this way all effects will run simultanously. Per default the timer 
+   is configured with 15 ms period (~60 FPS). By overriding the Effects::EffectTimer 
+   autoobject by a variant you can specify another resolution to drive the animations. */
 EW_DEFINE_AUTOOBJECT( EffectsEffectTimer, EffectsEffectTimerClass )
 
 /* Initializer for the auto object 'Effects::EffectTimer' */

@@ -144,13 +144,13 @@ typedef enum _SAP_PARAM_ID
     SAP_PID_CARD_READER_STATUS,
 
     /** StatusChange. Param Length: 1 */
-    SAP_PID_STATUS_CHANGE = 0x08,
+    SAP_PID_STATUS_CHANGE = 0x08U,
 
     /** Transport Protocol. Param Length: 1 */
     SAP_PID_TRANSPORT_PROTOCOL,
 
     /** CommandAPDU7816. Param Length: Varies */
-    SAP_PID_COMMAND_APDU7816 = 0x10
+    SAP_PID_COMMAND_APDU7816 = 0x10U
 
 }SAP_PARAM_ID;
 
@@ -194,7 +194,6 @@ typedef enum _SAP_STATUS_CHANGE
     /** Card recovered */
     SAP_STATUS_CHANGE_CARD_RECOVERED
 }SAP_STATUS_CHANGE;
-
 
 /** SAP Disconnection Type */
 typedef enum _SAP_DISCONNECTION_TYPE
@@ -284,6 +283,15 @@ typedef enum _SAP_EVENT_TYPE
     SAP_CONNECT
 }SAP_EVENT_TYPE;
 
+/** \} */
+/** \} */
+
+/**
+ *  \defgroup sap_cb Application Callback
+ *  \{
+ *  This Section Describes the module Notification Callback interface offered
+ *  to the application
+ */
 /**
  * SAP Client Application Asynchronous Notification Callback.
  *
@@ -322,7 +330,7 @@ typedef API_RESULT (* SAP_SERVER_APPL_CALLBACK)
                        UINT16   event_datalen
                    );
 /** \} */
-/** \} */
+
 /* --------------------------------------------------- APIs Declarations */
 /**
  * \defgroup sap_api API Definitions
@@ -481,7 +489,6 @@ API_RESULT BT_sap_client_disconnect(void);
 API_RESULT BT_sap_client_trasfer_atr(void);
 
 /**
- *
  *  \brief To request the Server to power on the SIM.
  *
  *  \par Description:

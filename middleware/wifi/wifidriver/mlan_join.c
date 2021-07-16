@@ -509,7 +509,9 @@ mlan_status wlan_cmd_802_11_associate(IN mlan_private *pmpriv, IN HostCmd_DS_COM
         wlan_11ac_bandconfig_allowed(pmpriv, pbss_desc->bss_band))
         wlan_cmd_append_11ac_tlv(pmpriv, pbss_desc, &pos);
 
+#ifdef CONFIG_WMM
     wlan_wmm_process_association_req(pmpriv, &pos, &pbss_desc->wmm_ie, pbss_desc->pht_cap);
+#endif /* CONFIG_WMM */
 
     /* fixme: Currently not required */
 

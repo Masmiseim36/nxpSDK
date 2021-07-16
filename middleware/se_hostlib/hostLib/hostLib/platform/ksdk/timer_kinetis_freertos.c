@@ -1,13 +1,7 @@
 /*
- * Copyright 2016-2018 NXP
  *
- * This software is owned or controlled by NXP and may only be used
- * strictly in accordance with the applicable license terms.  By expressly
- * accepting such terms or by downloading, installing, activating and/or
- * otherwise using the software, you are agreeing that you have read, and
- * that you agree to comply with and are bound by, such license terms.  If
- * you do not agree to be bound by the applicable license terms, then you
- * may not retain, install, activate or otherwise use the software.
+ * Copyright 2016-2018 NXP
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 #include <sm_timer.h>
@@ -16,7 +10,7 @@
 #include "board.h"
 
 
-#if defined(SDK_OS_FREE_RTOS) || defined(FSL_RTOS_FREE_RTOS)
+#if defined(SDK_OS_FREE_RTOS) || defined(SDK_OS_FREE_RTOS)
 
 #include "FreeRTOS.h"
 #include "task.h"
@@ -46,6 +40,11 @@ uint32_t sm_initSleep() {
 #endif /* MSEC_TO_TICK */
 
 void sm_sleep(uint32_t msec) {
+/*as configTICK_RATE_HZ for qn9090 is 200Hz 1 tick will happen after 5msec*/
+#ifdef QN9090DK6
+	if(msec < 5)
+		msec = 5;
+#endif
     vTaskDelay(1 >= pdMS_TO_TICKS(msec) ? 1 : pdMS_TO_TICKS(msec));
 }
 
@@ -57,4 +56,4 @@ void vApplicationTickHook() {
 #pragma GCC pop_options
 #endif
 
-#endif /* SDK_OS_FREE_RTOS || FSL_RTOS_FREE_RTOS */
+#endif /* SDK_OS_FREE_RTOS || SDK_OS_FREE_RTOS */

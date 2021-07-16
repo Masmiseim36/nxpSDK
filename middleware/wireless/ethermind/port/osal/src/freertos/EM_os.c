@@ -417,7 +417,7 @@ void EM_sleep( /* IN */ UINT32 tm )
      * 1ms = portTICK_RATE_MS Ticks
      */
     /* The number of ticks for which the calling task should be held in the Blocked state. */
-    vTaskDelay ((TickType_t)((tm * 1000) / (portTICK_PERIOD_MS)));
+    vTaskDelay ((TickType_t)((tm * 1000U) / (portTICK_PERIOD_MS)));
 }
 
 
@@ -442,7 +442,7 @@ void EM_usleep( /* IN */ UINT32 tm )
      * 1ms = portTICK_RATE_MS Ticks
      */
     /* The number of ticks for which the calling task should be held in the Blocked state. */
-    vTaskDelay ((TickType_t)(tm / (1000 * portTICK_PERIOD_MS)));
+    vTaskDelay ((TickType_t)(tm / (1000U * portTICK_PERIOD_MS)));
 }
 
 
@@ -466,7 +466,7 @@ void EM_get_current_time (/* OUT */ EM_time_type * curtime)
      * Port this section to fetch the current system time.
      * By default this value is set to 0.
      */
-    (* curtime) = 0;
+    (* curtime) = 0U;
 
     return;
 }
@@ -588,7 +588,7 @@ void _exit( int status )
 
 extern caddr_t _sbrk(int incr)
 {
-    return (caddr_t) 0;
+    return (caddr_t) 0U;
 }
 
 extern int _close(int file)

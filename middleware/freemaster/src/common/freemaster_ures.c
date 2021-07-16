@@ -158,9 +158,9 @@ static FMSTR_BPTR _FMSTR_UresControlRead(
     uresBuffRWI.ioctlCode  = 0;
 
     /* Check max size */
-    if (uresBuffRWI.sizeOutMax > FMSTR_COMM_BUFFER_SIZE)
+    if (uresBuffRWI.sizeOutMax > (FMSTR_U16)FMSTR_COMM_BUFFER_SIZE)
     {
-        uresBuffRWI.sizeOutMax = FMSTR_COMM_BUFFER_SIZE;
+        uresBuffRWI.sizeOutMax = (FMSTR_U16)FMSTR_COMM_BUFFER_SIZE;
     }
 
     /* User function */

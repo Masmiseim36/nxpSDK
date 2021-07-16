@@ -44,12 +44,12 @@
  */
 /** L2CAP Header Sizes */
 /** Basic L2CAP Header Length */
-#define L2CAP_HDR_LEN                                   4
-#define L2CAP_GROUP_HDR_LEN                             6
+#define L2CAP_HDR_LEN                                   4U
+#define L2CAP_GROUP_HDR_LEN                             6U
 
 #ifdef L2CAP_SUPPORT_CBFC_MODE
 /** L2CAP SDU Header Length for LE Information Frame used in CBFC Mode */
-#define L2CAP_CREDIT_MODE_SDU_HDR_LEN                   2
+#define L2CAP_CREDIT_MODE_SDU_HDR_LEN                   2U
 
 /** L2CAP Header Length for LE Informaton Frame used in CBFC Mode */
 #define L2CAP_CREDIT_MODE_HDR_LEN                       \
@@ -57,38 +57,38 @@
 #endif /* L2CAP_SUPPORT_CBFC_MODE */
 
 /** L2CAP Connect Results */
-#define L2CAP_CONNECTION_SUCCESSFUL                               0x0000
-#define L2CAP_CONNECTION_PENDING                                  0x0001
-#define L2CAP_CONNECTION_REFUSED_PSM_UNSUPPORTED                  0x0002
-#define L2CAP_CONNECTION_REFUSED_SECURITY_BLOCK                   0x0003
-#define L2CAP_CONNECTION_REFUSED_NO_RESOURCE                      0x0004
-#define L2CAP_CONNECTION_REFUSED_AUTHENTICATION_INSUFFICIENT      0x0005
-#define L2CAP_CONNECTION_REFUSED_AUTHORIZATION_INSUFFICIENT       0x0006
-#define L2CAP_CONNECTION_REFUSED_ENC_KEY_SIZE_INSUFFICIENT        0x0007
-#define L2CAP_CONNECTION_REFUSED_ENC_INSUFFICIENT                 0x0008
-#define L2CAP_CONNECTION_REFUSED_INVALID_SRC_CID                  0x0009
-#define L2CAP_CONNECTION_REFUSED_SRC_CID_ALREADY_ALLOCATED        0x000A
-#define L2CAP_CONNECTION_REFUSED_UNACCEPTABLE_PARAMETERS          0x000B
+#define L2CAP_CONNECTION_SUCCESSFUL                               0x0000U
+#define L2CAP_CONNECTION_PENDING                                  0x0001U
+#define L2CAP_CONNECTION_REFUSED_PSM_UNSUPPORTED                  0x0002U
+#define L2CAP_CONNECTION_REFUSED_SECURITY_BLOCK                   0x0003U
+#define L2CAP_CONNECTION_REFUSED_NO_RESOURCE                      0x0004U
+#define L2CAP_CONNECTION_REFUSED_AUTHENTICATION_INSUFFICIENT      0x0005U
+#define L2CAP_CONNECTION_REFUSED_AUTHORIZATION_INSUFFICIENT       0x0006U
+#define L2CAP_CONNECTION_REFUSED_ENC_KEY_SIZE_INSUFFICIENT        0x0007U
+#define L2CAP_CONNECTION_REFUSED_ENC_INSUFFICIENT                 0x0008U
+#define L2CAP_CONNECTION_REFUSED_INVALID_SRC_CID                  0x0009U
+#define L2CAP_CONNECTION_REFUSED_SRC_CID_ALREADY_ALLOCATED        0x000AU
+#define L2CAP_CONNECTION_REFUSED_UNACCEPTABLE_PARAMETERS          0x000BU
 
 /** L2CAP Connect Status */
-#define L2CAP_CONNECTION_NO_FURTHER_INFORMATION         0x0000
-#define L2CAP_CONNECTION_AUTHENTICATION_PENDING         0x0001
-#define L2CAP_CONNECTION_AUTHORIZATION_PENDING          0x0002
+#define L2CAP_CONNECTION_NO_FURTHER_INFORMATION         0x0000U
+#define L2CAP_CONNECTION_AUTHENTICATION_PENDING         0x0001U
+#define L2CAP_CONNECTION_AUTHORIZATION_PENDING          0x0002U
 
 /** L2CAP Configuration Results */
-#define L2CAP_CONFIG_SUCCESSFUL                         0x0000
-#define L2CAP_CONFIG_UNACCEPTABLE_PARAMETERS            0x0001
-#define L2CAP_CONFIG_REJECTED                           0x0002
-#define L2CAP_CONFIG_UNKNOWN_OPTION                     0x0003
-#define L2CAP_CONFIG_PENDING                            0x0004
-#define L2CAP_CONFIG_FLOW_SPEC_REJECTED                 0x0005
+#define L2CAP_CONFIG_SUCCESSFUL                         0x0000U
+#define L2CAP_CONFIG_UNACCEPTABLE_PARAMETERS            0x0001U
+#define L2CAP_CONFIG_REJECTED                           0x0002U
+#define L2CAP_CONFIG_UNKNOWN_OPTION                     0x0003U
+#define L2CAP_CONFIG_PENDING                            0x0004U
+#define L2CAP_CONFIG_FLOW_SPEC_REJECTED                 0x0005U
 
 /** L2CAP Information Request Results */
-#define L2CAP_INFO_REQ_SUCCESSFUL                       0x0000
-#define L2CAP_INFO_REQ_NOT_SUPPORTED                    0x0001
+#define L2CAP_INFO_REQ_SUCCESSFUL                       0x0000U
+#define L2CAP_INFO_REQ_NOT_SUPPORTED                    0x0001U
 
 /** L2CAP Parameter Default Values */
-#define L2CAP_MIN_MTU                                   48
+#define L2CAP_MIN_MTU                                   48U
 
 /*
  * L2CAP Minimum Signaling MTU for ACL-U.
@@ -98,7 +98,7 @@
 #ifndef L2CAP_EXTENDED_FLOW_SPEC
 #define L2CAP_SIG_MTU                                   L2CAP_MIN_MTU
 #else
-#define L2CAP_SIG_MTU                                   672
+#define L2CAP_SIG_MTU                                   672U
 #endif /* L2CAP_EXTENDED_FLOW_SPEC */
 
 #define L2CAP_CONNECTIONLESS_MTU                        L2CAP_MIN_MTU
@@ -106,110 +106,110 @@
 #ifdef BT_LE
 /** L2CAP MTU for Fixed channel 0x0006 (used for SMP) */
 #ifdef SMP_LESC
-#define L2CAP_SMP_MTU                                   65
+#define L2CAP_SMP_MTU                                   65U
 #else /* SMP_LESC */
-#define L2CAP_SMP_MTU                                   23
+#define L2CAP_SMP_MTU                                   23U
 #endif /* SMP_LESC */
 
 /**
  * L2CAP MTU for Fixed channel 0x0005 (Used for LE specific
  * L2CAP commands)
  */
-#define L2CAP_LE_MTU                                    23
+#define L2CAP_LE_MTU                                    23U
 #endif /* BT_LE */
 
 /**
  * L2CAP Service Types.
  * Used in Flow Specification Options and Extended Flow Specification Options.
  */
-#define L2CAP_SERVICE_TYPE_NO_TRAFFIC                   0x00
-#define L2CAP_SERVICE_TYPE_BEST_EFFORT                  0x01
-#define L2CAP_SERVICE_TYPE_GUARANTEED                   0x02
+#define L2CAP_SERVICE_TYPE_NO_TRAFFIC                   0x00U
+#define L2CAP_SERVICE_TYPE_BEST_EFFORT                  0x01U
+#define L2CAP_SERVICE_TYPE_GUARANTEED                   0x02U
 
-#define L2CAP_MTU_DEFAULT                               672
-#define L2CAP_FLUSH_TO_DEFAULT                          0xFFFF
+#define L2CAP_MTU_DEFAULT                               672U
+#define L2CAP_FLUSH_TO_DEFAULT                          0xFFFFU
 #define L2CAP_FLOW_SPEC_SERVICE_TYPE_DEFAULT            L2CAP_SERVICE_TYPE_BEST_EFFORT
-#define L2CAP_FLOW_SPEC_TOKEN_RATE_DEFAULT              0x00000000
-#define L2CAP_FLOW_SPEC_TOKEN_BKT_SIZE_DEFAULT          0x00000000
-#define L2CAP_FLOW_SPEC_PEAK_BANDWIDTH_DEFAULT          0x00000000
-#define L2CAP_FLOW_SPEC_LATENCY_DEFAULT                 0xFFFFFFFF
-#define L2CAP_FLOW_SPEC_DELAY_VARIATION_DEFAULT         0xFFFFFFFF
+#define L2CAP_FLOW_SPEC_TOKEN_RATE_DEFAULT              0x00000000U
+#define L2CAP_FLOW_SPEC_TOKEN_BKT_SIZE_DEFAULT          0x00000000U
+#define L2CAP_FLOW_SPEC_PEAK_BANDWIDTH_DEFAULT          0x00000000U
+#define L2CAP_FLOW_SPEC_LATENCY_DEFAULT                 0xFFFFFFFFU
+#define L2CAP_FLOW_SPEC_DELAY_VARIATION_DEFAULT         0xFFFFFFFFU
 
 /* Extended Flow Specification (default values) */
-#define L2CAP_EFS_IDENTIFIER_DEFAULT                    0x01
+#define L2CAP_EFS_IDENTIFIER_DEFAULT                    0x01U
 #define L2CAP_EFS_SERVICE_TYPE_DEFAULT                  L2CAP_SERVICE_TYPE_BEST_EFFORT
-#define L2CAP_EFS_MAX_SDU_SIZE_DEFAULT                  0xFFFF
-#define L2CAP_EFS_SDU_IA_TIME_DEFAULT                   0xFFFFFFFF
-#define L2CAP_EFS_ACCESS_LATENCY_DEFAULT                0xFFFFFFFF
-#define L2CAP_EFS_FLUSH_TO_DEFAULT                      0xFFFFFFFF
+#define L2CAP_EFS_MAX_SDU_SIZE_DEFAULT                  0xFFFFU
+#define L2CAP_EFS_SDU_IA_TIME_DEFAULT                   0xFFFFFFFFU
+#define L2CAP_EFS_ACCESS_LATENCY_DEFAULT                0xFFFFFFFFU
+#define L2CAP_EFS_FLUSH_TO_DEFAULT                      0xFFFFFFFFU
 
 #ifdef BT_ENH_L2CAP
 /* L2CAP FCS Options in non-Basic mode */
-#define L2CAP_FCS_OPTION_DEFAULT                        0x01
-#define L2CAP_FCS_OPTION_NO_FCS                         0x00
+#define L2CAP_FCS_OPTION_DEFAULT                        0x01U
+#define L2CAP_FCS_OPTION_NO_FCS                         0x00U
 #endif /* BT_ENH_L2CAP */
 
 /* L2CAP Information Request Type Definitions */
-#define L2CAP_INFO_REQ_CONNECTIONLESS_MTU               0x0001
-#define L2CAP_INFO_REQ_EXTENDED_FEATURES                0x0002
-#define L2CAP_INFO_REQ_FIXED_CHANNELS                   0x0003
+#define L2CAP_INFO_REQ_CONNECTIONLESS_MTU               0x0001U
+#define L2CAP_INFO_REQ_EXTENDED_FEATURES                0x0002U
+#define L2CAP_INFO_REQ_FIXED_CHANNELS                   0x0003U
 
 #ifdef BT_ENH_L2CAP
 /** L2CAP Operation Modes */
-#define L2CAP_MODE_BASIC                                0x00
-#define L2CAP_MODE_RTM                                  0x01
-#define L2CAP_MODE_FC                                   0x02
-#define L2CAP_MODE_ERTM                                 0x03
-#define L2CAP_MODE_SM                                   0x04
+#define L2CAP_MODE_BASIC                                0x00U
+#define L2CAP_MODE_RTM                                  0x01U
+#define L2CAP_MODE_FC                                   0x02U
+#define L2CAP_MODE_ERTM                                 0x03U
+#define L2CAP_MODE_SM                                   0x04U
 
 /* TODO: Temporary: this should not be required long term */
 #define L2CAP_MODE_MAX                         L2CAP_MODE_SM
 
 /** L2CAP FEC Mode - Transmission Flow Control */
-#define L2CAP_FEC_TX_FLOW_OFF                           0x01
-#define L2CAP_FEC_TX_FLOW_ON                            0x00
+#define L2CAP_FEC_TX_FLOW_OFF                           0x01U
+#define L2CAP_FEC_TX_FLOW_ON                            0x00U
 
 /** L2CAP FEC Mode - Reception Flow Control */
-#define L2CAP_FEC_RX_FLOW_OFF                           0x01
-#define L2CAP_FEC_RX_FLOW_ON                            0x00
+#define L2CAP_FEC_RX_FLOW_OFF                           0x01U
+#define L2CAP_FEC_RX_FLOW_ON                            0x00U
 #endif /* BT_ENH_L2CAP */
 
 
 /** L2CAP ACL Transmission Queue Flow Control */
-#define L2CAP_TX_QUEUE_FLOW_OFF                         0x01
-#define L2CAP_TX_QUEUE_FLOW_ON                          0x00
+#define L2CAP_TX_QUEUE_FLOW_OFF                         0x01U
+#define L2CAP_TX_QUEUE_FLOW_ON                          0x00U
 
 #ifdef BT_PBF
 /** L2CAP ACL Flushable or Non-Flushable Identifier */
-#define L2CAP_USE_NON_FLUSHABLE_ACL_PACKET              0x00
-#define L2CAP_USE_FLUSHABLE_ACL_PACKET                  0x02
+#define L2CAP_USE_NON_FLUSHABLE_ACL_PACKET              0x00U
+#define L2CAP_USE_FLUSHABLE_ACL_PACKET                  0x02U
 #endif /* BT_PBF */
 
 /** L2CAP Extended Feature Mask values */
-#define L2CAP_FEATURE_FC                                0x00000001
-#define L2CAP_FEATURE_RTM                               0x00000002
-#define L2CAP_FEATURE_QOS                               0x00000004
-#define L2CAP_FEATURE_ERTM                              0x00000008
-#define L2CAP_FEATURE_SM                                0x00000010
-#define L2CAP_FEATURE_FCS                               0x00000020
+#define L2CAP_FEATURE_FC                                0x00000001U
+#define L2CAP_FEATURE_RTM                               0x00000002U
+#define L2CAP_FEATURE_QOS                               0x00000004U
+#define L2CAP_FEATURE_ERTM                              0x00000008U
+#define L2CAP_FEATURE_SM                                0x00000010U
+#define L2CAP_FEATURE_FCS                               0x00000020U
 /* Extended Flow Specification for BR/EDR */
-#define L2CAP_FEATURE_EFS_BR_EDR                        0x00000040
+#define L2CAP_FEATURE_EFS_BR_EDR                        0x00000040U
 /* Fixed Channels */
-#define L2CAP_FEATURE_FIXED_CHANNELS                    0x00000080
+#define L2CAP_FEATURE_FIXED_CHANNELS                    0x00000080U
 /* Extended Window Size */
-#define L2CAP_FEATURE_EXTENDED_WINDOW_SIZE              0x00000100
+#define L2CAP_FEATURE_EXTENDED_WINDOW_SIZE              0x00000100U
 /* Unicast Connectionless Data Reception */
-#define L2CAP_FEATURE_UCD                               0x00000200
+#define L2CAP_FEATURE_UCD                               0x00000200U
 
-#define L2CAP_FEATURE_NONE                              0x00000000
-#define L2CAP_FEATURE_ALL                               0x0000003F
+#define L2CAP_FEATURE_NONE                              0x00000000U
+#define L2CAP_FEATURE_ALL                               0x0000003FU
 
 /** Enhanced L2CAP Configuration Mode Preference */
-#define L2CAP_CONFIG_PREF_BASIC                         0x00
-#define L2CAP_CONFIG_PREF_ERTM_ONLY                     0x01
-#define L2CAP_CONFIG_PREF_ERTM_OPTIONAL                 0x02
-#define L2CAP_CONFIG_PREF_SM_ONLY                       0x03
-#define L2CAP_CONFIG_PREF_SM_OPTIONAL                   0x04
+#define L2CAP_CONFIG_PREF_BASIC                         0x00U
+#define L2CAP_CONFIG_PREF_ERTM_ONLY                     0x01U
+#define L2CAP_CONFIG_PREF_ERTM_OPTIONAL                 0x02U
+#define L2CAP_CONFIG_PREF_SM_ONLY                       0x03U
+#define L2CAP_CONFIG_PREF_SM_OPTIONAL                   0x04U
 
 /** L2CAP Fixed channel max and min Connection Identifiers (CID) */
 #define L2CAP_MIN_FIXED_CHANNEL_CID             L2CAP_ATT_CID
@@ -223,39 +223,39 @@
 /** L2CAP Maximum number of fixed channels */
 #define L2CAP_MAX_FIXED_CHANNELS                \
                 L2CAP_MAX_FIXED_CHANNEL_CID -   \
-                L2CAP_MIN_FIXED_CHANNEL_CID + 1
+                L2CAP_MIN_FIXED_CHANNEL_CID + 1U
 
 #define L2CAP_MAX_LE_FIXED_CHANNELS                \
                 L2CAP_MAX_LE_FIXED_CHANNEL_CID -   \
-                L2CAP_MIN_FIXED_CHANNEL_CID + 1
+                L2CAP_MIN_FIXED_CHANNEL_CID + 1U
 
 #ifdef L2CAP_SUPPORT_CBFC_MODE
 /** Maximum number of credits allowed for each L2CAP CBFC channel */
-#define L2CAP_MAX_CREDITS                               0xFFFF
+#define L2CAP_MAX_CREDITS                               0xFFFFU
 #endif /* L2CAP_SUPPORT_CBFC_MODE */
 
 /* LMP Link types */
 /** BR/EDR LMP Link type */
-#define L2CAP_LINK_TYPE_BR_EDR                  0x01
+#define L2CAP_LINK_TYPE_BR_EDR                  0x01U
 /** LE LMP Link type */
-#define L2CAP_LINK_TYPE_LE                      0x03
+#define L2CAP_LINK_TYPE_LE                      0x03U
 
 /* Response codes for Connection parameter update request */
 /** Connection Parameters accepted */
-#define L2CAP_CONNECTION_PARAMETERS_ACCEPTED   0x0000
+#define L2CAP_CONNECTION_PARAMETERS_ACCEPTED   0x0000U
 
 /** Connection Parameters rejected */
-#define L2CAP_CONNECTION_PARAMETERS_REJECTED   0x0001
+#define L2CAP_CONNECTION_PARAMETERS_REJECTED   0x0001U
 
 /* Response Codes for Invalid Command Packets */
 /** Command Not Understood */
-#define L2CAP_COMMAND_NOT_UNDERSTOOD           0x0000
+#define L2CAP_COMMAND_NOT_UNDERSTOOD           0x0000U
 
 /** Signaling MTU exceeded */
-#define L2CAP_SIGNALLING_MTU_EXCEEDED          0x0001
+#define L2CAP_SIGNALLING_MTU_EXCEEDED          0x0001U
 
 /** Invalid Connection Identifier in request */
-#define L2CAP_INVALID_CID_IN_REQUEST           0x0002
+#define L2CAP_INVALID_CID_IN_REQUEST           0x0002U
 
 #ifdef BT_L2CAP_FIXED_CHANNEL
 
@@ -266,7 +266,7 @@
  * will receive this event, when the underlying ACL link is established,
  * as there is no separate connection procedure for L2CAP Fixed Channel.
  */
-#define L2CAP_FIXED_CH_CONNECTED_EVENT         0x01
+#define L2CAP_FIXED_CH_CONNECTED_EVENT         0x01U
 
 /**
  * This event indicates L2CAP Fixed Channel disconnection from remote device.
@@ -274,21 +274,21 @@
  * will receive this event, when the underlying ACL link is disconnected,
  * as there is no separate disconnection procedure for L2CAP Fixed Channel.
  */
-#define L2CAP_FIXED_CH_DISCONNECTED_EVENT      0x02
+#define L2CAP_FIXED_CH_DISCONNECTED_EVENT      0x02U
 
 /**
  * This event indicates data received on L2CAP Fixed Channel from remote device.
  * Fixed Channel Event handler registered with L2CAP for specific fixed channel
  * will receive this event.
  */
-#define L2CAP_FIXED_CH_DATA_RX_EVENT           0x03
+#define L2CAP_FIXED_CH_DATA_RX_EVENT           0x03U
 
 /**
  * This event indicates data transmitted to L2CAP Fixed Channel from remote device.
  * Fixed Channel Event handler registered with L2CAP for specific fixed channel
  * will receive this event.
  */
-#define L2CAP_FIXED_CH_DATA_TX_EVENT           0x04
+#define L2CAP_FIXED_CH_DATA_TX_EVENT           0x04U
 
 #ifdef BT_L2CAP_FIXED_CHANNEL_TX_COMPLETE
 #define L2CAP_FIXED_CH_MAX_EVENT           L2CAP_FIXED_CH_DATA_TX_EVENT
@@ -310,7 +310,7 @@
  * expected to perform physical link connection parameter update using
  * \ref BT_hci_le_connection_update.
  */
-#define L2CAP_CONNECTION_UPDATE_REQUEST_EVENT  0x01
+#define L2CAP_CONNECTION_UPDATE_REQUEST_EVENT  0x01U
 
 /**
  * This event indicates the connection parameter update request response
@@ -318,7 +318,7 @@
  * responses are \ref L2CAP_CONNECTION_PARAMETERS_ACCEPTED and \ref
  * L2CAP_CONNECTION_PARAMETERS_REJECTED.
  */
-#define L2CAP_CONNECTION_UPDATE_RESPONSE_EVENT 0x02
+#define L2CAP_CONNECTION_UPDATE_RESPONSE_EVENT 0x02U
 
 /**
  * This event indicates the connection parameter update request is rejected.
@@ -328,10 +328,10 @@
  * - \ref L2CAP_SIGNALLING_MTU_EXCEEDED
  * - \ref L2CAP_INVALID_CID_IN_REQUEST
  */
-#define L2CAP_COMMAND_REJECTED_EVENT           0x03
+#define L2CAP_COMMAND_REJECTED_EVENT           0x03U
 
 /* L2CAP connection update error code */
-#define L2CAP_CONNECTION_PARAM_REJECTED        0x0001
+#define L2CAP_CONNECTION_PARAM_REJECTED        0x0001U
 #endif /* BT_LE */
 /** \} */
 /** \} */
@@ -476,35 +476,35 @@ typedef struct
 typedef struct
 {
     /** Callback for l2ca_connect_ind (Device Queue Handle, CID, PSM) */
-    API_RESULT (* l2ca_connect_ind_cb)(DEVICE_HANDLE *, UINT16, UINT16);
+    API_RESULT (* l2ca_connect_ind_cb)(DEVICE_HANDLE *handle, UINT16 lcid, UINT16 psm);
 
     /** Callback for l2ca_connect_cnf (Device Queue Handle, CID, Result, Status) */
-    API_RESULT (* l2ca_connect_cnf_cb)(DEVICE_HANDLE *, UINT16, UINT16, UINT16);
+    API_RESULT (* l2ca_connect_cnf_cb)(DEVICE_HANDLE *handle, UINT16 lcid, UINT16 result, UINT16 status);
 
     /** Callback for l2ca_config_ind (CID, L2CAP_CONFIG_OPTION) */
-    API_RESULT (* l2ca_config_ind_cb)(UINT16, L2CAP_CONFIG_OPTION *);
+    API_RESULT (* l2ca_config_ind_cb)(UINT16 lcid, L2CAP_CONFIG_OPTION *config_option);
 
     /** Callback for l2ca_config_cnf (CID, Result, L2CAP_CONFIG_OPTION) */
-    API_RESULT (* l2ca_config_cnf_cb)(UINT16, UINT16, L2CAP_CONFIG_OPTION *);
+    API_RESULT (* l2ca_config_cnf_cb)(UINT16 lcid, UINT16 result, L2CAP_CONFIG_OPTION *config_option);
 
     /** Callback for l2ca_disconnect_ind (CID) */
-    API_RESULT (* l2ca_disconnect_ind_cb)(UINT16);
+    API_RESULT (* l2ca_disconnect_ind_cb)(UINT16 lcid);
 
     /** Callback for l2ca_disconnect_cnf (CID, Result) */
-    API_RESULT (* l2ca_disconnect_cnf_cb)(UINT16, UINT16);
+    API_RESULT (* l2ca_disconnect_cnf_cb)(UINT16 lcid, UINT16 result);
 
     /** Callback function for l2ca_data_read (CID, Buffer, Length) */
-    API_RESULT (* l2ca_data_read_cb)(UINT16, UCHAR *, UINT16);
+    API_RESULT (* l2ca_data_read_cb)(UINT16 lcid, UCHAR *data, UINT16 datalen);
 
     /** Callback for l2ca_qos_violation_ind (Device Queue Handle) */
-    API_RESULT (* l2ca_qos_violation_ind_cb)(DEVICE_HANDLE *);
+    API_RESULT (* l2ca_qos_violation_ind_cb)(DEVICE_HANDLE * handle);
 
 #ifdef BT_ENH_L2CAP
     /** Callback for l2ca_tx_flow_ind (CID, Flow On/Off) */
-    API_RESULT (* l2ca_tx_flow_ind_cb)(UINT16, UCHAR);
+    API_RESULT (* l2ca_tx_flow_ind_cb)(UINT16 lcid, UCHAR flow_ctrl);
 
     /** Callback for l2ca_get_fec_params (CID, FEC) */
-    API_RESULT (* l2ca_get_fec_params_cb) (UINT16, L2CAP_FEC_OPTION *);
+    API_RESULT (* l2ca_get_fec_params_cb) (UINT16 lcid, L2CAP_FEC_OPTION *fec_option);
 #endif /* BT_ENH_L2CAP */
 
 #ifdef BT_ENH_L2CAP
@@ -525,20 +525,19 @@ typedef struct
 
 } PSM_STRUCT, L2CAP_PSM;
 
-
 /** Common Callback structure for Ping and Info */
 typedef struct
 {
 #ifdef L2CAP_HAVE_PING_INFO_SUPPORT
 
     /** Callback for Ping, called on reception of L2CAP ECHO RSP */
-    API_RESULT (* l2ca_ping_cnf)(DEVICE_HANDLE *, UINT16, UCHAR*, UINT16);
-    API_RESULT (* l2ca_getinfo_cnf)(DEVICE_HANDLE *, UINT16, UCHAR*, UINT16);
+    API_RESULT (* l2ca_ping_cnf)(DEVICE_HANDLE *handle, UINT16 result, UCHAR *data, UINT16 datalen);
+    API_RESULT (* l2ca_getinfo_cnf)(DEVICE_HANDLE *handle, UINT16 result, UCHAR *info_data, UINT16 info_datalen);
 #endif /* L2CAP_HAVE_PING_INFO_SUPPORT */
 
 #ifdef L2CAP_TX_COMPLETE_CALLBACK
     /** Callback for TX, called on transmission of L2CAP PDU */
-    API_RESULT (* l2ca_tx_cnf)(DEVICE_HANDLE *);
+    API_RESULT (* l2ca_tx_cnf)(DEVICE_HANDLE *handle);
 #endif /* L2CAP_TX_COMPLETE_CALLBACK */
 
 #if (!(defined L2CAP_HAVE_PING_INFO_SUPPORT) && !(defined L2CAP_TX_COMPLETE_CALLBACK))
@@ -591,6 +590,17 @@ typedef struct l2cap_cbfc_connect_param
      */
     UINT16   credit;
 
+#ifdef L2CAP_CBFC_CONNECT_WITH_CID_CONTEXT
+    /**
+     * Local/Remote Channel Identifier
+     *
+     * - Local CID when l2ca_cbfc_connect_req() returns
+     * - Remote CID when l2ca_connect_ind_cb()/l2ca_connect_cnf_cb()
+     *   for CBFC PSM is invoked
+     */
+    UINT16   cid;
+#endif /* L2CAP_CBFC_CONNECT_WITH_CID_CONTEXT */
+
 }L2CAP_CBFC_CONNECT_PARAM;
 
 /**
@@ -609,7 +619,7 @@ typedef struct psm_struct_cbfc
      *     3. PSM: LE Protocol/Service Multiplexer.
      *     4. CBFC connect Request Parameters (MTU, MPS and Initial Credits)
      */
-    API_RESULT (* l2ca_connect_ind_cb)(DEVICE_HANDLE *, UINT16, UINT16, L2CAP_CBFC_CONNECT_PARAM *);
+    API_RESULT (* l2ca_connect_ind_cb)(DEVICE_HANDLE *handle, UINT16 lcid, UINT16 psm, L2CAP_CBFC_CONNECT_PARAM *param);
 
     /**
      * Callback to inform application of the L2CAP CBFC Connection Response/Confirmation.
@@ -621,7 +631,7 @@ typedef struct psm_struct_cbfc
      *                indicates the connection request was refused.
      *     4. CBFC connect Response Parameters (MTU, MPS and Initial Credits)
      */
-    API_RESULT (* l2ca_connect_cnf_cb)(DEVICE_HANDLE *, UINT16, UINT16, L2CAP_CBFC_CONNECT_PARAM *);
+    API_RESULT (* l2ca_connect_cnf_cb)(DEVICE_HANDLE *handle, UINT16 lcid, UINT16 result, L2CAP_CBFC_CONNECT_PARAM *param);
 
     /**
      * Callback to inform application of the L2CAP CBFC Disconnection Request
@@ -634,7 +644,7 @@ typedef struct psm_struct_cbfc
      * Note: On receiving this callback, previously connected channel for which
      * disconnection is initiated by the peer device will be considered closed.
      */
-    API_RESULT (* l2ca_disconnect_ind_cb)(UINT16);
+    API_RESULT (* l2ca_disconnect_ind_cb)(UINT16 lcid);
 
     /**
      * Callback to inform application of the L2CAP CBFC Disconnection
@@ -652,7 +662,7 @@ typedef struct psm_struct_cbfc
      * device has initiated L2CAP Disconnection, the channel will be
      * considered closed.
      */
-    API_RESULT (* l2ca_disconnect_cnf_cb)(UINT16, UINT16);
+    API_RESULT (* l2ca_disconnect_cnf_cb)(UINT16 lcid, UINT16 result);
 
     /**
      * Callback to inform application of data received over L2CAP CBFC channel.
@@ -665,7 +675,7 @@ typedef struct psm_struct_cbfc
      *     3. Buffer Pointer: Data/payload received from the peer device.
      *     4. Buffer Length: Receieved data/payload length.
      */
-    API_RESULT (* l2ca_data_read_cb)(UINT16, UINT16, UCHAR *, UINT16);
+    API_RESULT (* l2ca_data_read_cb)(UINT16 lcid, UINT16 result, UCHAR *data, UINT16 datalen);
 
     /**
      * Callback to inform application of receive credits reached low water mark or below.
@@ -678,7 +688,7 @@ typedef struct psm_struct_cbfc
      *     1. CID: Channel Identifier of a previously connected channel.
      *     2. Receive Credits: The current received credits count.
      */
-    API_RESULT (* l2ca_rx_credit_ind) (UINT16, UINT16);
+    API_RESULT (* l2ca_rx_credit_ind) (UINT16 lcid, UINT16 credit);
 
     /**
      * Callback to inform application of having received transmit credits.
@@ -693,7 +703,7 @@ typedef struct psm_struct_cbfc
      *                          that can be sent to the peer device sending the LE Flow Control
      *                          Credit packet.
      */
-    API_RESULT (* l2ca_tx_credit_ind) (UINT16, UINT16, UINT16);
+    API_RESULT (* l2ca_tx_credit_ind) (UINT16 lcid, UINT16 result, UINT16 credit);
 
     /** The LE Protocol/Service Multiplexer */
     UINT16 psm;
@@ -714,7 +724,7 @@ typedef struct psm_struct_cbfc
      *     3. Buffer Pointer: Currently NULL. For future usage.
      *     4. Buffer Length: Currently 0. For future usage.
      */
-    API_RESULT (* l2ca_data_write_cb)(UINT16, UINT16, UCHAR *, UINT16);
+    API_RESULT (* l2ca_data_write_cb)(UINT16 lcid, UINT16 result, UCHAR *data, UINT16 datalen);
 
 } PSM_STRUCT_CBFC, L2CAP_PSM_CBFC;
 
@@ -740,10 +750,10 @@ typedef struct psm_struct_cbfc
 typedef void (* L2CAP_FIXED_CHANNEL_EVENT_HANDLER)
              (
                  /* Device Handle */
-                 /* IN */ DEVICE_HANDLE *,
+                 /* IN */ DEVICE_HANDLE *handle,
 
                  /* Event Type - Connect/Disconnect/Data Rx/Tx */
-                 /* IN */ UCHAR,
+                 /* IN */ UCHAR event_type,
 
                  /**
                   *  Event -> Parameter
@@ -753,18 +763,18 @@ typedef void (* L2CAP_FIXED_CHANNEL_EVENT_HANDLER)
                   *  Data RX -> PDU received
                   *  Data TX -> PDU transmitted
                   */
-                 /* IN */ void *,
+                 /* IN */ void *param,
 
                  /**
-                  *  Event -> Parameter
-                  *  ------------------
+                  *  Event -> Parameter Length
+                  *  -------------------------
                   *  Connected -> Size of structure storing
                   *               Peer Address, Connection Identifier
                   *  Disconnected -> Size of Connection Identifier
                   *  Data RX -> Length of received PDU
                   *  Data TX -> Length of transmitted PDU
                   */
-                 /* IN */ UINT16
+                 /* IN */ UINT16 param_length
              ) DECL_REENTRANT;
 #endif /* BT_L2CAP_FIXED_CHANNEL */
 
@@ -782,10 +792,10 @@ typedef void (* L2CAP_FIXED_CHANNEL_EVENT_HANDLER)
  */
 typedef void (* L2CAP_LE_EVENT_HANDLER)
              (
-                 /* IN */ DEVICE_HANDLE *,        /* BD_ADDR and Type */
-                 /* IN */ UCHAR,                  /* Event */
-                 /* IN */ UCHAR *,                /* PDU received */
-                 /* IN */ UINT16                  /* length of PDU received */
+                 /* IN */ DEVICE_HANDLE * handle,        /* BD_ADDR and Type */
+                 /* IN */ UCHAR           event_type,    /* Event */
+                 /* IN */ UCHAR         * param,         /* PDU received */
+                 /* IN */ UINT16          param_length   /* length of PDU received */
              ) DECL_REENTRANT;
 #endif /* BT_LE */
 /** \} */
@@ -1157,7 +1167,6 @@ void l2cap_lp_acl_buffer_size
          /* IN */ UINT16  lmp_max_packets
      );
 
-
 /**
  *  \brief To inform L2CAP about ACL Number of Completed Packets event.
  *
@@ -1461,7 +1470,7 @@ API_RESULT l2cap_get_remote_cid
  *         This parameter specifies the local channel end-point for the L2CAP
  *         channel.
  *
- *  \param [in] buffer_length
+ *  \param [in] buffer_len
  *         This parameter specifies the size of the requested SDU to be
  *         transmitted over the L2CAP channel, inclusive of 4 octets of
  *         L2CAP Header size.
@@ -1478,12 +1487,14 @@ API_RESULT l2cap_get_remote_cid
  *  \return API_RESULT:
  *          API_SUCCESS on success, or, an Error Code (see BT_error.h)
  *          describing the cause of failure.
- *
  */
-API_RESULT l2ca_data_write ( /* IN */ UINT16,
-                             /* IN */ UINT16,
-                             /* IN */ UCHAR *,
-                             /* IN */ UINT16 * );
+API_RESULT l2ca_data_write
+           (
+               /* IN */  UINT16    local_cid,
+               /* IN */  UINT16    buffer_len,
+               /* IN */  UCHAR  *  buffer,
+               /* OUT */ UINT16 *  actual
+           );
 
 /** L2CA Ping/Echo Request - BD_ADDR, Echo Data, Data Length */
 /**
@@ -1499,37 +1510,50 @@ API_RESULT l2ca_data_write ( /* IN */ UINT16,
  *  \param [in] bd_addr
  *         The Bluetooth Device Address, BD_ADDR, of the remote Bluetooth device.
  *
- *  \param [in]echo_data
+ *  \param [in] echo_data
  *         This parameter specifies a pointer holding the data to be sent to
- *          the remote device with the echo request.
+ *         the remote device with the echo request.
  *
- *  \param [in]echo_datalen
+ *  \param [in] echo_datalen
  *         This parameter specifies the size of the echo data.
  *
  *  \return API_RESULT:
  *          API_SUCCESS on success, or, an Error Code (see BT_error.h)
  *          describing the cause of failure.
- *
  */
-API_RESULT l2ca_ping_req ( /* IN */ UCHAR *,
-                           /* IN */ UCHAR *,
-                           /* IN */ UINT16 );
+API_RESULT l2ca_ping_req
+           (
+               /* IN */  UCHAR *  bd_addr,
+               /* IN */  UCHAR *  echo_data,
+               /* IN */  UINT16   echo_datalen
+           );
 
 /** L2CA Get Information Request - BD_ADDR, Info Type */
 /**
- *  \brief
+ *  \brief To send Get Information Request.
  *
  *  \par Description:
+ *  This API implements the L2CA_GetInfoREQ service to the L2CAP's
+ *  upper layers. This service primitive is offered to enable upper
+ *  layers to request transmission of L2CAP_InfoREQ to peer Bluetooth
+ *  device, and get response for it.
  *
- *  \param None
+ *  \param [in] bd_addr
+ *         The BD_ADDR of the Remote device to which a channel needs to
+ *         be established
  *
- *  \return None
+ *  \param [in] info_type
+ *         The Information Type for which L2CAP_InfoREQ is to be sent.
  *
- *  \note
- *
+ *  \return API_RESULT:
+ *          API_SUCCESS on success, or, an Error Code (see BT_error.h)
+ *          describing the cause of failure.
  */
-API_RESULT l2ca_getinfo_req ( /* IN */ UCHAR *,
-                              /* IN */ UINT16 );
+API_RESULT l2ca_getinfo_req
+           (
+               /* IN */ UCHAR   * bd_addr,
+               /* IN */ UINT16    info_type
+           );
 
 #ifdef BT_ENH_L2CAP
 /** L2CA Rx Flow REQ */
@@ -1555,11 +1579,10 @@ API_RESULT l2ca_getinfo_req ( /* IN */ UCHAR *,
  *  \return API_RESULT:
  *          API_SUCCESS on success, or, an Error Code (see BT_error.h)
  *          describing the cause of failure.
- *
  */
 API_RESULT l2ca_rx_flow_req
            (
-               /* IN */  UINT16   lcid,
+               /* IN */ UINT16   lcid,
                /* IN */ UCHAR    flow
            );
 #endif /* BT_ENH_L2CAP */
@@ -1587,17 +1610,19 @@ API_RESULT l2cap_set_flushability
  *  \param [in] psm
  *         Indicates the PSM for which the group is being created.
  *
- *  \param [in] cid
+ *  \param [out] cid
  *         Pointer to an UINT16 upper layer allocated UINT16 variable onto which
  *         L2CAP copies the new channel identifier for the created group.
  *
  *  \return API_RESULT:
  *          API_SUCCESS on success, or, an Error Code (see BT_error.h)
  *          describing the cause of failure.
- *
  */
-API_RESULT l2ca_group_create ( /* IN */  UINT16,
-                               /* OUT */ UINT16 * );
+API_RESULT l2ca_group_create
+           (
+               /* IN */  UINT16   psm,
+               /* OUT */ UINT16 * cid
+           );
 
 /** L2CA Group Add Member - CID, BD_ADDR */
 /**
@@ -1611,17 +1636,19 @@ API_RESULT l2ca_group_create ( /* IN */  UINT16,
  *  \param [in] cid
  *         Local channel end-point for the L2CAP group channel.
  *
- *  \param [in] bd_addr
- *         Pointer to the buffer holding the remote address of the device to be
+ *  \param [in] handle
+ *         Pointer to a DEVICE_HANDLE holding the remote address of the device to be
  *         added to the group.
  *
  *  \return API_RESULT:
  *          API_SUCCESS on success, or, an Error Code (see BT_error.h)
  *          describing the cause of failure.
- *
  */
-API_RESULT l2ca_group_add_member ( /* IN */ UINT16,
-                                   /* IN */ UCHAR * );
+API_RESULT l2ca_group_add_member 
+           (
+                /* IN */ UINT16           cid,
+                /* IN */ DEVICE_HANDLE  * handle
+           );
 
 /** L2CA Group Remove Member  - CID, BD_ADDR */
 /**
@@ -1634,17 +1661,19 @@ API_RESULT l2ca_group_add_member ( /* IN */ UINT16,
  *  \param [in] cid
  *         Local channel end-point for the L2CAP group channel.
  *
- *  \param [in] bd_addr
- *         Pointer to the buffer holding the remote address of the device to be
- *         removed from the group.
+ *  \param [in] handle
+ *         Pointer to a DEVICE_HANDLE holding the remote address of the device to be
+ *         removed to the group.
  *
  *  \return API_RESULT:
  *          API_SUCCESS on success, or, an Error Code (see BT_error.h)
  *          describing the cause of failure.
- *
  */
-API_RESULT l2ca_group_remove_member ( /* IN */ UINT16,
-                                      /* IN */ UCHAR * );
+API_RESULT l2ca_group_remove_member
+           (
+               /* IN */ UINT16          cid,
+               /* IN */ DEVICE_HANDLE * handle
+           );
 
 /** L2CA Group Destroy - CID */
 /**
@@ -1659,9 +1688,8 @@ API_RESULT l2ca_group_remove_member ( /* IN */ UINT16,
  *  \return API_RESULT:
  *          API_SUCCESS on success, or, an Error Code (see BT_error.h)
  *          describing the cause of failure.
- *
  */
-API_RESULT l2ca_group_destroy ( /* IN */ UINT16 );
+API_RESULT l2ca_group_destroy ( /* IN */ UINT16 cid);
 
 /** L2CA Group Get Membership - CID, Buffer_len, Buffer */
 /**
@@ -1690,11 +1718,13 @@ API_RESULT l2ca_group_destroy ( /* IN */ UINT16 );
  *  \return API_RESULT:
  *          API_SUCCESS on success, or, an Error Code (see BT_error.h)
  *          describing the cause of failure.
- *
  */
-API_RESULT l2ca_group_get_membership ( /* IN */    UINT16,
-                                       /* INOUT */ UINT16 *,
-                                       /* IN */    UCHAR * );
+API_RESULT l2ca_group_get_membership
+           (
+                /* IN */    UINT16   cid,
+                /* INOUT */ UINT16 * num_bd_addr,
+                /* IN */    UCHAR  * buffer
+           );
 
 /** L2CA Group Enable CLT - PSM */
 /**
@@ -1711,9 +1741,8 @@ API_RESULT l2ca_group_get_membership ( /* IN */    UINT16,
  *  \return API_RESULT:
  *          API_SUCCESS on success, or, an Error Code (see BT_error.h)
  *          describing the cause of failure.
- *
  */
-API_RESULT l2ca_group_enable_clt ( /* IN */ UINT16 );
+API_RESULT l2ca_group_enable_clt ( /* IN */ UINT16 psm);
 
 /** L2CA Group Disable CLT - PSM */
 /**
@@ -1730,9 +1759,8 @@ API_RESULT l2ca_group_enable_clt ( /* IN */ UINT16 );
  *  \return API_RESULT:
  *          API_SUCCESS on success, or, an Error Code (see BT_error.h)
  *          describing the cause of failure.
- *
  */
-API_RESULT l2ca_group_disable_clt ( /* IN */ UINT16 );
+API_RESULT l2ca_group_disable_clt ( /* IN */ UINT16 psm);
 
 #endif /* L2CAP_HAVE_GROUP_SUPPORT */
 
@@ -1768,9 +1796,9 @@ API_RESULT l2cap_set_config_timeout (/* IN */ UINT16 seconds);
  *  \param [out] ptr
  *         Pointer to an upper layer protocol allocated L2CAP_CONFIG_OPTION
  *         variable, which needs to be initialized.
- *
  */
 void l2cap_init_config_option (/* OUT */ L2CAP_CONFIG_OPTION * ptr);
+
 /**
  *  \brief To initialize a FLOW_SPEC variable.
  *
@@ -1783,10 +1811,8 @@ void l2cap_init_config_option (/* OUT */ L2CAP_CONFIG_OPTION * ptr);
  *  \param [out] flow_spec
  *         Pointer to an upper layer protocol allocated FLOW_SPEC variable,
  *         which needs to be initialized to default parameter values.
- *
- *
  */
-void l2cap_init_flow_spec_default (/* OUT */ FLOW_SPEC *);
+void l2cap_init_flow_spec_default (/* OUT */ FLOW_SPEC * flow_spec);
 
 #ifdef L2CAP_EXTENDED_FLOW_SPEC
 /**
@@ -1828,7 +1854,7 @@ void l2cap_init_ext_flow_spec_default
  *    - TxWindow      : 0
  *    - MPS           : 0
  *
- *  \param [out] flow_spec
+ *  \param [out] fec
  *         Pointer to the FEC Option to be initialized.
  *
  *  \return None
@@ -1927,10 +1953,13 @@ API_RESULT BT_l2cap_le_connection_param_update_response
  *
  *  \param [in] device_handle
  *         Device handle of the peer device.
+ *
  *  \param [in] cid
  *         Fixed channel identifier
+ *
  *  \param [in] buffer
  *         Buffer containing packet to be sent. See note below.
+ *
  *  \param [in] buffer_len
  *         Packet length
  *
@@ -1956,8 +1985,10 @@ API_RESULT l2cap_fixed_channel_data_write
  *
  *  \param [in] cid
  *         Fixed Channel Identifier
+ *
  *  \param [in] mtu
  *         Maximum size of the packet callback function can handle
+ *
  *  \param [in] callback
  *         Pointer to callback function
  *
@@ -1984,8 +2015,10 @@ API_RESULT l2cap_register_fixed_channel_cb
  *
  *  \param [in] device_handle
  *         Device handle of the peer device.
+ *
  *  \param [in] cid
  *         Fixed Channel Identifier
+ *
  *  \param [in] mtu
  *         Maximum size of the packet can be received on the associated fixed
  *         channel
@@ -2066,10 +2099,13 @@ API_RESULT l2cap_cbfc_unregister_psm
  *
  *  \param [in] handle
  *         Device handle of the peer device.
+ *
  *  \param [in] remote_psm
  *         Remote PSM, representing the upper layer protocol above L2CAP.
+ *
  *  \param [in] local_psm
  *         Local PSM, representing the upper layer protocol above L2CAP.
+ *
  *  \param [in] param
  *         This parameter must be a pointer to the L2CAP_CBFC_CONNECT_PARAM
  *         variable containing the connection parameters for the L2CAP channel.

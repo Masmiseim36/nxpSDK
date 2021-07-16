@@ -7,7 +7,7 @@
 
 #include "littlevgl_support.h"
 #include "lvgl.h"
-#if defined(FSL_RTOS_FREE_RTOS)
+#if defined(SDK_OS_FREE_RTOS)
 #include "FreeRTOS.h"
 #include "semphr.h"
 #endif
@@ -55,7 +55,7 @@ static ft6x06_handle_t touch_handle;
 static volatile uint32_t spi_event;
 static volatile bool spi_event_received;
 static ft6x06_handle_t touch_handle;
-#if defined(FSL_RTOS_FREE_RTOS)
+#if defined(SDK_OS_FREE_RTOS)
 static SemaphoreHandle_t s_transferDone;
 #else
 static volatile bool s_transferDone;
@@ -80,7 +80,7 @@ uint32_t BOARD_TOUCH_I2C_FREQ_FUNC(void)
 
 static void SPI_MasterSignalEvent(uint32_t event)
 {
-#if defined(FSL_RTOS_FREE_RTOS)
+#if defined(SDK_OS_FREE_RTOS)
     BaseType_t taskAwake = pdFALSE;
 
     xSemaphoreGiveFromISR(s_transferDone, &taskAwake);
@@ -93,7 +93,7 @@ static void SPI_MasterSignalEvent(uint32_t event)
 
 static void SPI_WaitEvent(void)
 {
-#if defined(FSL_RTOS_FREE_RTOS)
+#if defined(SDK_OS_FREE_RTOS)
     if (xSemaphoreTake(s_transferDone, portMAX_DELAY) != pdTRUE)
     {
         PRINTF("LCD SPI transfer error\r\n");
@@ -149,7 +149,7 @@ static void DEMO_InitLcd(void)
     /* Init data/command GPIO output . */
     GPIO_PinInit(BOARD_LCD_DC_GPIO, BOARD_LCD_DC_GPIO_PIN, &dc_config);
 
-#if defined(FSL_RTOS_FREE_RTOS)
+#if defined(SDK_OS_FREE_RTOS)
     s_transferDone = xSemaphoreCreateBinary();
     if (NULL == s_transferDone)
     {
@@ -160,7 +160,7 @@ static void DEMO_InitLcd(void)
     s_transferDone = false;
 #endif
 
-#if defined(FSL_RTOS_FREE_RTOS)
+#if defined(SDK_OS_FREE_RTOS)
     /* FreeRTOS kernel API is used in SPI ISR, so need to set proper IRQ priority. */
     NVIC_SetPriority(BOARD_LCD_SPI_IRQ, configLIBRARY_MAX_SYSCALL_INTERRUPT_PRIORITY + 1);
     NVIC_SetPriority(BOARD_LCD_SPI_DMA_TX_IRQ, configLIBRARY_MAX_SYSCALL_INTERRUPT_PRIORITY + 1);

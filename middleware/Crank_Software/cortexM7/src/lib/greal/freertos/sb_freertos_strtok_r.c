@@ -2,7 +2,7 @@
 
 #include <gre/sdk/greal.h>
 
-#if (GR_OS(freertos) && !(GR_TOOLCHAIN(rowley) || GR_TOOLCHAIN(kpit_gcc) || GR_TOOLCHAIN(mcuxpresso) || GR_TOOLCHAIN(sw4stm32)))
+#if (GR_OS(freertos) && !(GR_TOOLCHAIN(cube) || GR_TOOLCHAIN(dassgcc) || GR_TOOLCHAIN(kpit_gcc) || GR_TOOLCHAIN(mcuxpresso) || GR_TOOLCHAIN(rowley) || GR_TOOLCHAIN(sw4stm32)))
 /*
  * Copyright (c) 1988 Regents of the University of California.
  * All rights reserved.

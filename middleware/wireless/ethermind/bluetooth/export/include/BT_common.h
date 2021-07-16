@@ -47,22 +47,11 @@
 /* For BT_assert() macro */
 #include "BT_assert.h"
 
-/* For Status Flag APIs */
-#include "BT_status.h"
-
-#ifdef BT_RACP
-/* For RACP APIs */
-#include "BT_racp.h"
-#endif /* BT_RACP */
-
 /* For btsnoop APIs */
 #include "BT_snoop.h"
 
 /* The EtherMind Timer Library */
 #include "BT_timer.h"
-
-/* The EtherMind Write Task */
-#include "write_task.h"
 
 /* The EtherMind SDP Database APIs */
 #include "BT_dbase_api.h"
@@ -123,37 +112,37 @@
  * \{
  */
 
-#define STACK_INIT_UNDEFINED                0x00
-#define STACK_INIT_ETHERMIND_INIT           0x01
-#define STACK_INIT_BT_ON_STARTED            0x02
-#define STACK_INIT_BT_ON_COMPLETE           0x03
+#define STACK_INIT_UNDEFINED                0x00U
+#define STACK_INIT_ETHERMIND_INIT           0x01U
+#define STACK_INIT_BT_ON_STARTED            0x02U
+#define STACK_INIT_BT_ON_COMPLETE           0x03U
 
 /** \} */
 
 /* Definition for True/False */
 #ifndef BT_FALSE
-#define BT_FALSE                                   0
+#define BT_FALSE                            (UINT8)0U
 #endif /* BT_FALSE */
 
 #ifndef BT_TRUE
-#define BT_TRUE                                    1
+#define BT_TRUE                             (UINT8)1U
 #endif /* BT_TRUE */
 
 /* Size of Bluetooth Device Address (BD_ADDR) in number of Octets */
-#define BT_BD_ADDR_SIZE                         6
-#define BT_BD_ADDR_TYPE_SIZE                    1
+#define BT_BD_ADDR_SIZE                         6U
+#define BT_BD_ADDR_TYPE_SIZE                    1U
 #define BT_BD_DEV_ADDR_SIZE                     (BT_BD_ADDR_SIZE + BT_BD_ADDR_TYPE_SIZE)
 
 /* Type Definitions for 16, 32 & 128-bit UUIDs */
-#define UUID_16                                 1
-#define UUID_32                                 2
-#define UUID_128                                4
+#define UUID_16                                 1U
+#define UUID_32                                 2U
+#define UUID_128                                4U
 
 /* Bluetooth Device Address type masks */
-#define BT_RANDOM_ADDR_TYPE_MASK                0xC0
-#define BT_STATIC_ADDR_BIT_MASK                 0xC0
-#define BT_NON_RESOLV_PVT_ADDR_BIT_MASK         0x00
-#define BT_RESOLV_PVT_ADDR_BIT_MASK             0x40
+#define BT_RANDOM_ADDR_TYPE_MASK                0xC0U
+#define BT_STATIC_ADDR_BIT_MASK                 0xC0U
+#define BT_NON_RESOLV_PVT_ADDR_BIT_MASK         0x00U
+#define BT_RESOLV_PVT_ADDR_BIT_MASK             0x40U
 
 /** \} */
 
@@ -197,7 +186,7 @@
     }
 
 #define BT_PACK_LE_1_BYTE_VAL(dst, src) \
-    *((UCHAR *)(dst) + 0) = (src);
+    *((UCHAR *)(dst) + 0U) = (src);
 
 #define BT_PACK_LE_2_BYTE(dst, src) \
     { \
@@ -207,8 +196,8 @@
     }
 
 #define BT_PACK_LE_2_BYTE_VAL(dst, src) \
-    *((UCHAR *)(dst) + 0) = (UCHAR)(src); \
-    *((UCHAR *)(dst) + 1) = (UCHAR)((src) >> 8);
+    *((UCHAR *)(dst) + 0U) = (UCHAR)(src); \
+    *((UCHAR *)(dst) + 1U) = (UCHAR)((src) >> 8U);
 
 #define BT_PACK_LE_3_BYTE(dst, src) \
     { \
@@ -218,9 +207,9 @@
     }
 
 #define BT_PACK_LE_3_BYTE_VAL(dst, src) \
-    *((UCHAR *)(dst) + 0) = (UCHAR)(src);\
-    *((UCHAR *)(dst) + 1) = (UCHAR)((src) >> 8);\
-    *((UCHAR *)(dst) + 2) = (UCHAR)((src) >> 16);
+    *((UCHAR *)(dst) + 0U) = (UCHAR)(src);\
+    *((UCHAR *)(dst) + 1U) = (UCHAR)((src) >> 8U);\
+    *((UCHAR *)(dst) + 2U) = (UCHAR)((src) >> 16U);
 
 #define BT_PACK_LE_4_BYTE(dst, src) \
     { \
@@ -230,17 +219,17 @@
     }
 
 #define BT_PACK_LE_4_BYTE_VAL(dst, src) \
-    *((UCHAR *)(dst) + 0) = (UCHAR)(src);\
-    *((UCHAR *)(dst) + 1) = (UCHAR)((src) >> 8);\
-    *((UCHAR *)(dst) + 2) = (UCHAR)((src) >> 16);\
-    *((UCHAR *)(dst) + 3) = (UCHAR)((src) >> 24);
+    *((UCHAR *)(dst) + 0U) = (UCHAR)(src);\
+    *((UCHAR *)(dst) + 1U) = (UCHAR)((src) >> 8U);\
+    *((UCHAR *)(dst) + 2U) = (UCHAR)((src) >> 16U);\
+    *((UCHAR *)(dst) + 3U) = (UCHAR)((src) >> 24U);
 
 /* TBD: Update based on 64 Bit, 128 Bit Data Types */
 #define BT_PACK_LE_8_BYTE(dst,val)\
-        BT_mem_copy ((dst), (val), 8)
+        BT_mem_copy ((dst), (val), 8U)
 
 #define BT_PACK_LE_16_BYTE(dst,val)\
-        BT_mem_copy ((dst), (val), 16)
+        BT_mem_copy ((dst), (val), 16U)
 
 #define BT_PACK_LE_N_BYTE(dst,val,n)\
         BT_mem_copy ((dst), (val), (n))
@@ -254,7 +243,7 @@
     }
 
 #define BT_PACK_BE_1_BYTE_VAL(dst, src) \
-    *((UCHAR *)(dst) + 0) = (src);
+    *((UCHAR *)(dst) + 0U) = (src);
 
 #define BT_PACK_BE_2_BYTE(dst, src) \
     { \
@@ -264,8 +253,8 @@
     }
 
 #define BT_PACK_BE_2_BYTE_VAL(dst, src) \
-    *((UCHAR *)(dst) + 1) = (UCHAR)(src); \
-    *((UCHAR *)(dst) + 0) = (UCHAR)((src) >> 8);
+    *((UCHAR *)(dst) + 1U) = (UCHAR)(src); \
+    *((UCHAR *)(dst) + 0U) = (UCHAR)((src) >> 8U);
 
 #define BT_PACK_BE_3_BYTE(dst, src) \
     { \
@@ -275,9 +264,9 @@
     }
 
 #define BT_PACK_BE_3_BYTE_VAL(dst, src) \
-    *((UCHAR *)(dst) + 2) = (UCHAR)(src);\
-    *((UCHAR *)(dst) + 1) = (UCHAR)((src) >> 8);\
-    *((UCHAR *)(dst) + 0) = (UCHAR)((src) >> 16);
+    *((UCHAR *)(dst) + 2U) = (UCHAR)(src);\
+    *((UCHAR *)(dst) + 1U) = (UCHAR)((src) >> 8U);\
+    *((UCHAR *)(dst) + 0U) = (UCHAR)((src) >> 16U);
 
 #define BT_PACK_BE_4_BYTE(dst, src) \
     { \
@@ -287,17 +276,17 @@
     }
 
 #define BT_PACK_BE_4_BYTE_VAL(dst, src) \
-    *((UCHAR *)(dst) + 3) = (UCHAR)(src);\
-    *((UCHAR *)(dst) + 2) = (UCHAR)((src) >> 8);\
-    *((UCHAR *)(dst) + 1) = (UCHAR)((src) >> 16);\
-    *((UCHAR *)(dst) + 0) = (UCHAR)((src) >> 24);
+    *((UCHAR *)(dst) + 3U) = (UCHAR)(src);\
+    *((UCHAR *)(dst) + 2U) = (UCHAR)((src) >> 8U);\
+    *((UCHAR *)(dst) + 1U) = (UCHAR)((src) >> 16U);\
+    *((UCHAR *)(dst) + 0U) = (UCHAR)((src) >> 24U);
 
 /* TBD: Update based on 64 Bit, 128 Bit Data Types */
 #define BT_PACK_BE_8_BYTE(dst,val)\
-        BT_mem_copy ((dst), (val), 8)
+        BT_mem_copy ((dst), (val), 8U)
 
 #define BT_PACK_BE_16_BYTE(dst,val)\
-        BT_mem_copy ((dst), (val), 16)
+        BT_mem_copy ((dst), (val), 16U)
 
 #define BT_PACK_BE_N_BYTE(dst,val,n)\
         BT_mem_copy ((dst), (val), (n))
@@ -321,32 +310,32 @@
     *((UCHAR *)(dst)) = (UCHAR)(*((UCHAR *)(src)));
 
 #define BT_UNPACK_LE_2_BYTE(dst,src)\
-        *((UINT16 *)(dst))  = *((src) + 1); \
-        *((UINT16 *)(dst))  = *((UINT16 *)(dst)) << 8; \
-        *((UINT16 *)(dst)) |= *((src) + 0);
+        *((UINT16 *)(dst))  = *((src) + 1U); \
+        *((UINT16 *)(dst))  = *((UINT16 *)(dst)) << 8U; \
+        *((UINT16 *)(dst)) |= *((src) + 0U);
 
 #define BT_UNPACK_LE_3_BYTE(dst,src)\
-        *((UINT32 *)(dst))  = *((src) + 2);\
-        *((UINT32 *)(dst))  = (*((UINT32 *)(dst))) << 8;\
-        *((UINT32 *)(dst)) |= *((src) + 1);\
-        *((UINT32 *)(dst))  = (*((UINT32 *)(dst))) << 8;\
-        *((UINT32 *)(dst)) |= *((src) + 0);
+        *((UINT32 *)(dst))  = *((src) + 2U);\
+        *((UINT32 *)(dst))  = (*((UINT32 *)(dst))) << 8U;\
+        *((UINT32 *)(dst)) |= *((src) + 1U);\
+        *((UINT32 *)(dst))  = (*((UINT32 *)(dst))) << 8U;\
+        *((UINT32 *)(dst)) |= *((src) + 0U);
 
 #define BT_UNPACK_LE_4_BYTE(dst,src)\
-        *((UINT32 *)(dst))  = *((src) + 3);\
-        *((UINT32 *)(dst))  = (*((UINT32 *)(dst))) << 8;\
-        *((UINT32 *)(dst)) |= *((src) + 2);\
-        *((UINT32 *)(dst))  = (*((UINT32 *)(dst))) << 8;\
-        *((UINT32 *)(dst)) |= *((src) + 1);\
-        *((UINT32 *)(dst))  = (*((UINT32 *)(dst))) << 8;\
-        *((UINT32 *)(dst)) |= *((src) + 0);
+        *((UINT32 *)(dst))  = *((src) + 3U);\
+        *((UINT32 *)(dst))  = (*((UINT32 *)(dst))) << 8U;\
+        *((UINT32 *)(dst)) |= *((src) + 2U);\
+        *((UINT32 *)(dst))  = (*((UINT32 *)(dst))) << 8U;\
+        *((UINT32 *)(dst)) |= *((src) + 1U);\
+        *((UINT32 *)(dst))  = (*((UINT32 *)(dst))) << 8U;\
+        *((UINT32 *)(dst)) |= *((src) + 0U);
 
 /* TBD: Update based on 64 Bit, 128 Bit Data Types */
 #define BT_UNPACK_LE_8_BYTE(dst,src)\
-        BT_mem_copy ((dst), (src), 8)
+        BT_mem_copy ((dst), (src), 8U)
 
 #define BT_UNPACK_LE_16_BYTE(dst,src)\
-        BT_mem_copy ((dst), (src), 16)
+        BT_mem_copy ((dst), (src), 16U)
 
 #define BT_UNPACK_LE_N_BYTE(dst,src,n)\
         BT_mem_copy ((dst), (src), (n))
@@ -356,32 +345,32 @@
     *((UCHAR *)(dst)) = (UCHAR)(*((UCHAR *)(src)));
 
 #define BT_UNPACK_BE_2_BYTE(dst,src)\
-        *((UINT16 *)(dst))  = *((src) + 0); \
-        *((UINT16 *)(dst))  = *((UINT16 *)(dst)) << 8; \
-        *((UINT16 *)(dst)) |= *((src) + 1);
+        *((UINT16 *)(dst))  = *((src) + 0U); \
+        *((UINT16 *)(dst))  = *((UINT16 *)(dst)) << 8U; \
+        *((UINT16 *)(dst)) |= *((src) + 1U);
 
 #define BT_UNPACK_BE_3_BYTE(dst,src)\
-        *((UINT32 *)(dst))  = *((src) + 0);\
-        *((UINT32 *)(dst))  = (*((UINT32 *)(dst))) << 8;\
-        *((UINT32 *)(dst)) |= *((src) + 1);\
-        *((UINT32 *)(dst))  = (*((UINT32 *)(dst))) << 8;\
-        *((UINT32 *)(dst)) |= *((src) + 2);
+        *((UINT32 *)(dst))  = *((src) + 0U);\
+        *((UINT32 *)(dst))  = (*((UINT32 *)(dst))) << 8U;\
+        *((UINT32 *)(dst)) |= *((src) + 1U);\
+        *((UINT32 *)(dst))  = (*((UINT32 *)(dst))) << 8U;\
+        *((UINT32 *)(dst)) |= *((src) + 2U);
 
 #define BT_UNPACK_BE_4_BYTE(dst,src)\
-        *((UINT32 *)(dst))  = *((src) + 0);\
-        *((UINT32 *)(dst))  = (*((UINT32 *)(dst))) << 8;\
-        *((UINT32 *)(dst)) |= *((src) + 1);\
-        *((UINT32 *)(dst))  = (*((UINT32 *)(dst))) << 8;\
-        *((UINT32 *)(dst)) |= *((src) + 2);\
-        *((UINT32 *)(dst))  = (*((UINT32 *)(dst))) << 8;\
-        *((UINT32 *)(dst)) |= *((src) + 3);
+        *((UINT32 *)(dst))  = *((src) + 0U);\
+        *((UINT32 *)(dst))  = (*((UINT32 *)(dst))) << 8U;\
+        *((UINT32 *)(dst)) |= *((src) + 1U);\
+        *((UINT32 *)(dst))  = (*((UINT32 *)(dst))) << 8U;\
+        *((UINT32 *)(dst)) |= *((src) + 2U);\
+        *((UINT32 *)(dst))  = (*((UINT32 *)(dst))) << 8U;\
+        *((UINT32 *)(dst)) |= *((src) + 3U);
 
 /* TBD: Update based on 64 Bit, 128 Bit Data Types */
 #define BT_UNPACK_BE_8_BYTE(dst,src)\
-        BT_mem_copy ((dst), (src), 8)
+        BT_mem_copy ((dst), (src), 8U)
 
 #define BT_UNPACK_BE_16_BYTE(dst,src)\
-        BT_mem_copy ((dst), (src), 16)
+        BT_mem_copy ((dst), (src), 16U)
 
 #define BT_UNPACK_BE_N_BYTE(dst,src,n)\
         BT_mem_copy ((dst), (src), (n))
@@ -393,7 +382,7 @@
        "ADDR: %02X %02X %02X %02X %02X %02X"
 
 #define BT_DEVICE_ADDR_ONLY_PRINT_STR(ref)\
-        (ref)[0],(ref)[1],(ref)[2],(ref)[3],(ref)[4],(ref)[5]
+        (ref)[0U],(ref)[1U],(ref)[2U],(ref)[3U],(ref)[4U],(ref)[5U]
 
 #define BT_DEVICE_ADDR_FRMT_SPECIFIER\
         "ADDR: %02X:%02X:%02X:%02X:%02X:%02X, TYPE: %02X"
@@ -402,8 +391,8 @@
         "ADDR: %02X %02X %02X %02X %02X %02X, TYPE: %02X"
 
 #define BT_DEVICE_ADDR_PRINT_STR(ref)\
-        (ref)->addr[0],(ref)->addr[1],(ref)->addr[2],\
-        (ref)->addr[3],(ref)->addr[4],(ref)->addr[5],\
+        (ref)->addr[0U],(ref)->addr[1U],(ref)->addr[2U],\
+        (ref)->addr[3U],(ref)->addr[4U],(ref)->addr[5U],\
         (ref)->type
 
 /* Macro to Copy a BD_ADDR from a Source to Destination */
@@ -422,10 +411,10 @@
         (((type_a) == (type_b))?BT_TRUE:BT_FALSE)
 
 #define BT_COMPARE_ADDR(addr_a,addr_b)\
-        ((0 == BT_mem_cmp((addr_a), (addr_b), BT_BD_ADDR_SIZE))?BT_TRUE:BT_FALSE)
+        ((0U == BT_mem_cmp((addr_a), (addr_b), BT_BD_ADDR_SIZE))?BT_TRUE:BT_FALSE)
 
 #define BT_INIT_BD_ADDR(bd_addr) \
-        BT_mem_set ((bd_addr)->addr, 0, BT_BD_ADDR_SIZE); \
+        BT_mem_set ((bd_addr)->addr, 0U, BT_BD_ADDR_SIZE); \
         (bd_addr)->type = BT_BD_PUBLIC_ADDRESS_TYPE
 
 #define BT_BD_ADDR(bd_addr) (bd_addr)->addr
@@ -435,7 +424,7 @@
         BT_mem_copy ((dest), (src), BT_BD_ADDR_SIZE);
 
 #define BT_BD_ADDR_IS_NON_ZERO(addr)\
-        ((0x00 == (*((addr) + 0) | *((addr) + 1) | *((addr) + 2) | *((addr) + 3) | *((addr) + 4) | *((addr) + 5)))?\
+        ((0x00U == (*((addr) + 0U) | *((addr) + 1U) | *((addr) + 2U) | *((addr) + 3U) | *((addr) + 4U) | *((addr) + 5U)))?\
         BT_FALSE:BT_TRUE)
 
 /* Macros to check Bluetooth Device Address type */
@@ -451,14 +440,14 @@
 
 #define BT_IS_BD_ADDR_NON_RESOLV_PRIVATE(bd_addr) \
     ((BT_IS_BD_ADDR_RANDOM(bd_addr)) && \
-     (BT_NON_RESOLV_PVT_ADDR_BIT_MASK == (BT_RANDOM_ADDR_TYPE_MASK & (bd_addr)->addr[5])))
+     (BT_NON_RESOLV_PVT_ADDR_BIT_MASK == (BT_RANDOM_ADDR_TYPE_MASK & (bd_addr)->addr[5U])))
 
 #define BT_IS_BD_ADDR_RESOLV_PRIVATE(bd_addr) \
     ((BT_IS_BD_ADDR_RANDOM(bd_addr)) && \
-     (BT_RESOLV_PVT_ADDR_BIT_MASK == (BT_RANDOM_ADDR_TYPE_MASK & (bd_addr)->addr[5])))
+     (BT_RESOLV_PVT_ADDR_BIT_MASK == (BT_RANDOM_ADDR_TYPE_MASK & (bd_addr)->addr[5U])))
 
 #define BT_IS_ARRAY_EMPTY(buffer, buffer_size) \
-        (((0 == (buffer)[0]) && (0 == BT_mem_cmp((buffer), (buffer)+1, ((buffer_size) - 1)))) ? BT_TRUE : BT_FALSE)
+        (((0U == (buffer)[0U]) && (0U == BT_mem_cmp((buffer), (buffer)+1, ((buffer_size) - 1U)))) ? BT_TRUE : BT_FALSE)
 
 #ifndef BT_DISABLE_MUTEX
 
@@ -741,9 +730,9 @@
 #endif /* BT_NO_STATIC_DATA_SIZE */
 
 /* Abstractions for bit-wise operation */
-#define BT_EXTRACT_BITNUM(val, bitnum)        (((val) >> (bitnum)) & 1)
-#define BT_SET_BITNUM(val, bitnum)            ((val) |= (1 << (bitnum)))
-#define BT_CLR_BITNUM(val, bitnum)            ((val) &= (~(1 << (bitnum))))
+#define BT_EXTRACT_BITNUM(val, bitnum)        (((val) >> (bitnum)) & 1U)
+#define BT_SET_BITNUM(val, bitnum)            ((val) |= (1U << (bitnum)))
+#define BT_CLR_BITNUM(val, bitnum)            ((val) &= (~(1U << (bitnum))))
 
 /* Macro to find Minimum and Maximum value */
 #define BT_GET_MIN(a, b) \
@@ -758,6 +747,9 @@
 /* Loop for ever */
 #define BT_LOOP_FOREVER() for(;;)
 
+/* Unused return value to avoid compilation warning - MISRA C-2012 Rule 17.7 */
+#define BT_IGNORE_RETURN_VALUE    void
+
 /** \} */
 
 /*
@@ -767,31 +759,31 @@
  * hence these defines are placed under common header file.
  */
 /* Page 0 - Bluetooth Protocol Modules */
-#define BT_MODULE_PAGE_0                      0x00000000
+#define BT_MODULE_PAGE_0                      0x00000000U
 
 /* Module - Bit Mask */
-#define BT_MODULE_BIT_MASK_HCI                0x00000001
-#define BT_MODULE_BIT_MASK_L2CAP              0x00000002
-#define BT_MODULE_BIT_MASK_SDP                0x00000004
-#define BT_MODULE_BIT_MASK_RFCOMM             0x00000008
-#define BT_MODULE_BIT_MASK_AVCTP              0x00000010
-#define BT_MODULE_BIT_MASK_AVDTP              0x00000020
-#define BT_MODULE_BIT_MASK_BNEP               0x00000040
-#define BT_MODULE_BIT_MASK_COMMON             0x00000080
+#define BT_MODULE_BIT_MASK_HCI                0x00000001U
+#define BT_MODULE_BIT_MASK_L2CAP              0x00000002U
+#define BT_MODULE_BIT_MASK_SDP                0x00000004U
+#define BT_MODULE_BIT_MASK_RFCOMM             0x00000008U
+#define BT_MODULE_BIT_MASK_AVCTP              0x00000010U
+#define BT_MODULE_BIT_MASK_AVDTP              0x00000020U
+#define BT_MODULE_BIT_MASK_BNEP               0x00000040U
+#define BT_MODULE_BIT_MASK_COMMON             0x00000080U
 /* DB SDP */
-#define BT_MODULE_BIT_MASK_DB                 0x00000100
-#define BT_MODULE_BIT_MASK_DQ                 0x00000200
-#define BT_MODULE_BIT_MASK_MCAP               0x00000400
-#define BT_MODULE_BIT_MASK_OBEX               0x00000800
-#define BT_MODULE_BIT_MASK_SM                 0x00001000
-#define BT_MODULE_BIT_MASK_ATT                0x00002000
-#define BT_MODULE_BIT_MASK_SMP                0x00004000
-#define BT_MODULE_BIT_MASK_WT                 0x00008000
-#define BT_MODULE_BIT_MASK_GATT               0x00010000
-#define BT_MODULE_BIT_MASK_GATT_DB            0x00020000
-#define BT_MODULE_BIT_MASK_FSM                0x00040000
-#define BT_MODULE_BIT_MASK_BCSP               0x00080000
-#define BT_MODULE_BIT_MASK_RACP               0x00100000
+#define BT_MODULE_BIT_MASK_DB                 0x00000100U
+#define BT_MODULE_BIT_MASK_DQ                 0x00000200U
+#define BT_MODULE_BIT_MASK_MCAP               0x00000400U
+#define BT_MODULE_BIT_MASK_OBEX               0x00000800U
+#define BT_MODULE_BIT_MASK_SM                 0x00001000U
+#define BT_MODULE_BIT_MASK_ATT                0x00002000U
+#define BT_MODULE_BIT_MASK_SMP                0x00004000U
+#define BT_MODULE_BIT_MASK_WT                 0x00008000U
+#define BT_MODULE_BIT_MASK_GATT               0x00010000U
+#define BT_MODULE_BIT_MASK_GATT_DB            0x00020000U
+#define BT_MODULE_BIT_MASK_FSM                0x00040000U
+#define BT_MODULE_BIT_MASK_BCSP               0x00080000U
+#define BT_MODULE_BIT_MASK_RACP               0x00100000U
 
 /* Module ID */
 #define BT_MODULE_ID_HCI                      (BT_MODULE_PAGE_0 | BT_MODULE_BIT_MASK_HCI)
@@ -817,32 +809,32 @@
 #define BT_MODULE_ID_RACP                     (BT_MODULE_PAGE_0 | BT_MODULE_BIT_MASK_RACP)
 
 /* Page 1 - Classic Profile Modules */
-#define BT_MODULE_PAGE_1                      0x10000000
+#define BT_MODULE_PAGE_1                      0x10000000U
 
 /* Module - Bit Mask */
-#define BT_MODULE_BIT_MASK_A2DP               0x00000001
-#define BT_MODULE_BIT_MASK_AVRCP              0x00000002
-#define BT_MODULE_BIT_MASK_BIP                0x00000004
-#define BT_MODULE_BIT_MASK_BPP                0x00000008
-#define BT_MODULE_BIT_MASK_CTN                0x00000010
-#define BT_MODULE_BIT_MASK_DUNP_DT            0x00000020
-#define BT_MODULE_BIT_MASK_DUNP_GW            0x00000040
-#define BT_MODULE_BIT_MASK_FTP                0x00000080
-#define BT_MODULE_BIT_MASK_GNSS               0x00000100
-#define BT_MODULE_BIT_MASK_HFP_AG             0x00000200
-#define BT_MODULE_BIT_MASK_HFP_UNIT           0x00000400
-#define BT_MODULE_BIT_MASK_HID                0x00000800
-#define BT_MODULE_BIT_MASK_HID_HOST           0x00001000
-#define BT_MODULE_BIT_MASK_HSP_AG             0x00002000
-#define BT_MODULE_BIT_MASK_HSP_UNIT           0x00004000
-#define BT_MODULE_BIT_MASK_MAP                0x00008000
-#define BT_MODULE_BIT_MASK_OPP                0x00010000
-#define BT_MODULE_BIT_MASK_PAN                0x00020000
-#define BT_MODULE_BIT_MASK_PBAP               0x00040000
-#define BT_MODULE_BIT_MASK_SAP                0x00080000
-#define BT_MODULE_BIT_MASK_SPP                0x00100000
-#define BT_MODULE_BIT_MASK_SYNCP              0x00200000
-#define BT_MODULE_BIT_MASK_DID                0x00400000
+#define BT_MODULE_BIT_MASK_A2DP               0x00000001U
+#define BT_MODULE_BIT_MASK_AVRCP              0x00000002U
+#define BT_MODULE_BIT_MASK_BIP                0x00000004U
+#define BT_MODULE_BIT_MASK_BPP                0x00000008U
+#define BT_MODULE_BIT_MASK_CTN                0x00000010U
+#define BT_MODULE_BIT_MASK_DUNP_DT            0x00000020U
+#define BT_MODULE_BIT_MASK_DUNP_GW            0x00000040U
+#define BT_MODULE_BIT_MASK_FTP                0x00000080U
+#define BT_MODULE_BIT_MASK_GNSS               0x00000100U
+#define BT_MODULE_BIT_MASK_HFP_AG             0x00000200U
+#define BT_MODULE_BIT_MASK_HFP_UNIT           0x00000400U
+#define BT_MODULE_BIT_MASK_HID                0x00000800U
+#define BT_MODULE_BIT_MASK_HID_HOST           0x00001000U
+#define BT_MODULE_BIT_MASK_HSP_AG             0x00002000U
+#define BT_MODULE_BIT_MASK_HSP_UNIT           0x00004000U
+#define BT_MODULE_BIT_MASK_MAP                0x00008000U
+#define BT_MODULE_BIT_MASK_OPP                0x00010000U
+#define BT_MODULE_BIT_MASK_PAN                0x00020000U
+#define BT_MODULE_BIT_MASK_PBAP               0x00040000U
+#define BT_MODULE_BIT_MASK_SAP                0x00080000U
+#define BT_MODULE_BIT_MASK_SPP                0x00100000U
+#define BT_MODULE_BIT_MASK_SYNCP              0x00200000U
+#define BT_MODULE_BIT_MASK_DID                0x00400000U
 
 /* Module ID */
 #define BT_MODULE_ID_A2DP                     (BT_MODULE_PAGE_1 | BT_MODULE_BIT_MASK_A2DP)
@@ -869,36 +861,36 @@
 #define BT_MODULE_ID_SYNCP                    (BT_MODULE_PAGE_1 | BT_MODULE_BIT_MASK_SYNCP)
 
 /* Page 2 - GATT based Profile Modules */
-#define BT_MODULE_PAGE_2                      0x20000000
+#define BT_MODULE_PAGE_2                      0x20000000U
 
 /* Page 3 - Utilities Modules */
-#define BT_MODULE_PAGE_3                      0x30000000
+#define BT_MODULE_PAGE_3                      0x30000000U
 
 /* Module - Bit Mask */
-#define BT_MODULE_BIT_MASK_STORAGE            0x00000001
-#define BT_MODULE_BIT_MASK_STATUS             0x00000002
-#define BT_MODULE_BIT_MASK_SNOOP              0x00000004
-#define BT_MODULE_BIT_MASK_BPPA               0x00000008
-#define BT_MODULE_BIT_MASK_OBEX_AL            0x00000010
-#define BT_MODULE_BIT_MASK_COVER_ART          0x00000020
-#define BT_MODULE_BIT_MASK_HT                 0x00000040
-#define BT_MODULE_BIT_MASK_OBJECT_PARSER      0x00000080
-#define BT_MODULE_BIT_MASK_AT_PARSER          0x00000100
-#define BT_MODULE_BIT_MASK_AES_CMAC           0x00000200
-#define BT_MODULE_BIT_MASK_TRANSPORT          0x00000400
-#define BT_MODULE_BIT_MASK_JPL                0x00000800
-#define BT_MODULE_BIT_MASK_SBC                0x00001000
-#define BT_MODULE_BIT_MASK_XML                0x00002000
-#define BT_MODULE_BIT_MASK_VCOM               0x00004000
-#define BT_MODULE_BIT_MASK_NIFACE             0x00008000
-#define BT_MODULE_BIT_MASK_TIMER              0x00010000
-#define BT_MODULE_BIT_MASK_FOPS               0x00020000
-#define BT_MODULE_BIT_MASK_ASSERT             0x00040000
-#define BT_MODULE_BIT_MASK_A2DP_PL            0x00080000
-#define BT_MODULE_BIT_MASK_CTN_PL             0x00100000
-#define BT_MODULE_BIT_MASK_MAP_PL             0x00200000
-#define BT_MODULE_BIT_MASK_HFP_PL             0x00400000
-#define BT_MODULE_BIT_MASK_GEN_PL             0x00800000
+#define BT_MODULE_BIT_MASK_STORAGE            0x00000001U
+#define BT_MODULE_BIT_MASK_STATUS             0x00000002U
+#define BT_MODULE_BIT_MASK_SNOOP              0x00000004U
+#define BT_MODULE_BIT_MASK_BPPA               0x00000008U
+#define BT_MODULE_BIT_MASK_OBEX_AL            0x00000010U
+#define BT_MODULE_BIT_MASK_COVER_ART          0x00000020U
+#define BT_MODULE_BIT_MASK_HT                 0x00000040U
+#define BT_MODULE_BIT_MASK_OBJECT_PARSER      0x00000080U
+#define BT_MODULE_BIT_MASK_AT_PARSER          0x00000100U
+#define BT_MODULE_BIT_MASK_AES_CMAC           0x00000200U
+#define BT_MODULE_BIT_MASK_TRANSPORT          0x00000400U
+#define BT_MODULE_BIT_MASK_JPL                0x00000800U
+#define BT_MODULE_BIT_MASK_SBC                0x00001000U
+#define BT_MODULE_BIT_MASK_XML                0x00002000U
+#define BT_MODULE_BIT_MASK_VCOM               0x00004000U
+#define BT_MODULE_BIT_MASK_NIFACE             0x00008000U
+#define BT_MODULE_BIT_MASK_TIMER              0x00010000U
+#define BT_MODULE_BIT_MASK_FOPS               0x00020000U
+#define BT_MODULE_BIT_MASK_ASSERT             0x00040000U
+#define BT_MODULE_BIT_MASK_A2DP_PL            0x00080000U
+#define BT_MODULE_BIT_MASK_CTN_PL             0x00100000U
+#define BT_MODULE_BIT_MASK_MAP_PL             0x00200000U
+#define BT_MODULE_BIT_MASK_HFP_PL             0x00400000U
+#define BT_MODULE_BIT_MASK_GEN_PL             0x00800000U
 
 /* Module ID */
 #define BT_MODULE_ID_STORAGE                  (BT_MODULE_PAGE_3 | BT_MODULE_BIT_MASK_STORAGE)
@@ -941,7 +933,7 @@
 /* 128-Bit UUID */
 typedef struct
 {
-    UCHAR byte[16];
+    UCHAR byte[16U];
 
 } UINT128_ID;
 

@@ -3,15 +3,9 @@
 * @author NXP Semiconductors
 * @version 1.0
 * @par License
-* Copyright 2017,2018,2020 NXP
 *
-* This software is owned or controlled by NXP and may only be used
-* strictly in accordance with the applicable license terms.  By expressly
-* accepting such terms or by downloading, installing, activating and/or
-* otherwise using the software, you are agreeing that you have read, and
-* that you agree to comply with and are bound by, such license terms.  If
-* you do not agree to be bound by the applicable license terms, then you
-* may not retain, install, activate or otherwise use the software.
+* Copyright 2017,2018,2020 NXP
+* SPDX-License-Identifier: Apache-2.0
 *
 * @par Description
 * gcp jwt task for lwip. From PC Windows testing
@@ -46,7 +40,6 @@
 #include "sm_printf.h"
 #endif
 
-
 #if SSS_HAVE_ALT_SSS
 #include <fsl_sss_api.h>
 #include <fsl_sss_sscp.h>
@@ -60,7 +53,7 @@ sscp_context_t sscp;
 extern ex_sss_cloud_ctx_t *pex_sss_demo_tls_ctx;
 void gcp_jwt_task_lwip(void *ctx)
 {
-    ex_sss_boot_ctx_t *pCtx = (ex_sss_boot_ctx_t*)ctx;
+    ex_sss_boot_ctx_t *pCtx = (ex_sss_boot_ctx_t *)ctx;
     mbedtls_pk_context pk;
     int ret;
 
@@ -94,10 +87,9 @@ void gcp_jwt_task_lwip(void *ctx)
         goto exit;
     }
 
-
 #endif //SSS_HAVE_ALT
 
-    gcpPubSub((void *) &pk);
+    gcpPubSub((void *)&pk);
 
 exit:
     while (1) {

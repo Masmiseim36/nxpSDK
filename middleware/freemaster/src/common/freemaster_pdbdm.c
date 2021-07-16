@@ -27,6 +27,11 @@
 
 #if (FMSTR_MK_IDSTR(FMSTR_TRANSPORT) == FMSTR_PDBDM_ID) && FMSTR_DISABLE == 0
 
+#if FMSTR_SESSION_COUNT != 1
+/* Packet Driven BDM transport only supports a single session */
+#warning Please set FMSTR_SESSION_COUNT to 1.
+#endif
+
 /* Packet Driven BDM communication does not support any interrupt mode */
 #if FMSTR_SHORT_INTR > 0 || FMSTR_LONG_INTR > 0
      #warning "FreeMASTER Packet Driven BDM driver doesn't support any Interrupt mode. Call the FMSTR_Poll() function in the Timer ISR routine instead."
@@ -77,7 +82,7 @@ static FMSTR_BOOL _FMSTR_PdBdmInit(void);
 /* Interface function - Poll function of packet driven BDM transport */
 static void _FMSTR_PdBdmPoll(void);
 /* Interface function - Send Response function of packet driven BDM transport */
-static void _FMSTR_PdBdmSendResponse(FMSTR_BPTR pResponse, FMSTR_SIZE nLength, FMSTR_U8 statusCode);
+static void _FMSTR_PdBdmSendResponse(FMSTR_BPTR pResponse, FMSTR_SIZE nLength, FMSTR_U8 statusCode, void * identification);
 
 /***********************************
 *  global variables
@@ -159,8 +164,8 @@ static void _FMSTR_PdBdmPoll(void)
             _pdbdm.bdmState = FMSTR_PDBDM_DECODING_FRAME;
             /* Destroy the last CRC in memory */
             _pdbdm.commBuffer[i] = ~crc;
-            /* Decode received packet */
-            (void)FMSTR_ProtocolDecoder(_pdbdm.commBuffer, _pdbdm.pcktSize, _pdbdm.cmdStatus);
+            /* Decode received packet. Use "pdbdm" as a globally unique pointer value as our identifier */
+            (void)FMSTR_ProtocolDecoder(_pdbdm.commBuffer, _pdbdm.pcktSize, _pdbdm.cmdStatus, (void*)"pdbdm");
         }
 #if FMSTR_DEBUG_LEVEL >= 2
         else
@@ -184,7 +189,7 @@ static void _FMSTR_PdBdmPoll(void)
 *
 ******************************************************************************/
 
-static void _FMSTR_PdBdmSendResponse(FMSTR_BPTR pResponse, FMSTR_SIZE nLength, FMSTR_U8 statusCode)
+static void _FMSTR_PdBdmSendResponse(FMSTR_BPTR pResponse, FMSTR_SIZE nLength, FMSTR_U8 statusCode, void * identification)
 {
     FMSTR_U8   crc;
     FMSTR_SIZE i;

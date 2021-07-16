@@ -17,10 +17,6 @@
 #include "lv_math.h"
 #include "lv_gc.h"
 
-#if defined(LV_GC_INCLUDE)
-    #include LV_GC_INCLUDE
-#endif /* LV_ENABLE_GC */
-
 /*********************
  *      DEFINES
  *********************/
@@ -92,7 +88,7 @@ void lv_anim_init(lv_anim_t * a)
 void lv_anim_start(lv_anim_t * a)
 {
     LV_LOG_TRACE("animation create started")
-    /* Do not let two animations for the  same 'var' with the same 'fp'*/
+    /* Do not let two animations for the same 'var' with the same 'fp'*/
     if(a->exec_cb != NULL) lv_anim_del(a->var, a->exec_cb); /*fp == NULL would delete all animations of var*/
 
     /*If the list is empty the anim task was suspended and it's last run measure is invalid*/
@@ -341,7 +337,7 @@ lv_anim_value_t lv_anim_path_overshoot(const lv_anim_path_t * path, const lv_ani
     else
         t = (uint32_t)((uint32_t)a->act_time * 1024) / a->time;
 
-    int32_t step = _lv_bezier3(t, 0, 1000, 2000, 1024);
+    int32_t step = _lv_bezier3(t, 0, 1000, 1300, 1024);
 
     int32_t new_value;
     new_value = (int32_t)step * (a->end - a->start);
@@ -350,7 +346,6 @@ lv_anim_value_t lv_anim_path_overshoot(const lv_anim_path_t * path, const lv_ani
 
     return (lv_anim_value_t)new_value;
 }
-
 
 /**
  * Calculate the current value of an animation with 3 bounces
@@ -362,7 +357,7 @@ lv_anim_value_t lv_anim_path_bounce(const lv_anim_path_t * path, const lv_anim_t
     LV_UNUSED(path);
 
     /*Calculate the current step*/
-    uint32_t t;
+    int32_t t;
     if(a->time == a->act_time)
         t = 1024;
     else
@@ -381,31 +376,32 @@ lv_anim_value_t lv_anim_path_bounce(const lv_anim_path_t * path, const lv_anim_t
         t -= 408;
         t    = t * 5; /*to [0..1024] range*/
         t    = 1024 - t;
-        diff = diff / 6;
+        diff = diff / 20;
     }
     else if(t >= 614 && t < 819) {
         /*Fall back*/
         t -= 614;
         t    = t * 5; /*to [0..1024] range*/
-        diff = diff / 6;
+        diff = diff / 20;
     }
     else if(t >= 819 && t < 921) {
         /*Second bounce back*/
         t -= 819;
         t    = t * 10; /*to [0..1024] range*/
         t    = 1024 - t;
-        diff = diff / 16;
+        diff = diff / 40;
     }
     else if(t >= 921 && t <= 1024) {
         /*Fall back*/
         t -= 921;
         t    = t * 10; /*to [0..1024] range*/
-        diff = diff / 16;
+        diff = diff / 40;
     }
 
     if(t > 1024) t = 1024;
+    if(t < 0) t = 0;
 
-    int32_t step = _lv_bezier3(t, 1024, 1024, 800, 0);
+    int32_t step = _lv_bezier3(t, 1024, 800, 500, 0);
 
     int32_t new_value;
     new_value = (int32_t)step * diff;
@@ -460,7 +456,7 @@ static void anim_task(lv_task_t * param)
         anim_list_changed = false;
 
         if(!a->has_run) {
-            a->has_run = 1; /*The list readying might be reseted so need to know which anim has run already*/
+            a->has_run = 1; /*The list readying might be reset so need to know which anim has run already*/
 
             /*The animation will run now for the first time. Call `start_cb`*/
             int32_t new_act_time = a->act_time + elaps;

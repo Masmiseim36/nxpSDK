@@ -1,6 +1,6 @@
 # CROSS COMPILER SETTING
 SET(CMAKE_SYSTEM_NAME Generic)
-CMAKE_MINIMUM_REQUIRED (VERSION 3.1.1)
+CMAKE_MINIMUM_REQUIRED (VERSION 3.10.0)
 
 # THE VERSION NUMBER
 SET (Tutorial_VERSION_MAJOR 1)
@@ -297,7 +297,8 @@ target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
 
 set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../rtos/azure-rtos
-    ${ProjDirPath}/../../../../../components/phyksz8081
+    ${ProjDirPath}/../../../../../components/phy/mdio/enet
+    ${ProjDirPath}/../../../../../components/phy/device/phyksz8081
     ${ProjDirPath}/../../../../../devices/MIMXRT1064/drivers
     ${ProjDirPath}/../../../../../devices/MIMXRT1064
     ${ProjDirPath}/../../../../../devices/MIMXRT1064/utilities
@@ -306,13 +307,18 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../components/lists
     ${ProjDirPath}/../../../../../devices/MIMXRT1064/xip
     ${ProjDirPath}/../../../xip
-    ${ProjDirPath}/../../../../../CMSIS/Include
+    ${ProjDirPath}/../../../../../components/phy
+    ${ProjDirPath}/../../../../../CMSIS/Core/Include
 )
 
 # include modules
 include(middleware_azure_rtos_azure_iot_MIMXRT1064)
 
-include(driver_phyksz8081_MIMXRT1064)
+include(middleware_azure_rtos_nxd_MIMXRT1064)
+
+include(driver_mdio-enet_MIMXRT1064)
+
+include(driver_phy-device-ksz8081_MIMXRT1064)
 
 include(driver_trng_MIMXRT1064)
 
@@ -344,9 +350,7 @@ include(driver_igpio_MIMXRT1064)
 
 include(driver_xip_device_MIMXRT1064)
 
-include(driver_xip_board_MIMXRT1064)
-
-include(middleware_azure_rtos_nxd_MIMXRT1064)
+include(driver_xip_board_evkmimxrt1064_MIMXRT1064)
 
 include(middleware_azure_rtos_nxd_template_MIMXRT1064)
 
@@ -358,13 +362,13 @@ include(middleware_azure_rtos_tx_MIMXRT1064)
 
 include(middleware_azure_rtos_tx_template_MIMXRT1064)
 
+include(driver_mdio-common_MIMXRT1064)
+
+include(CMSIS_Include_core_cm_MIMXRT1064)
+
 include(driver_enet_MIMXRT1064)
 
-include(CMSIS_Include_core_cm7_MIMXRT1064)
-
-include(CMSIS_Include_common_MIMXRT1064)
-
-include(CMSIS_Include_dsp_MIMXRT1064)
+include(driver_phy-common_MIMXRT1064)
 
 include(utilities_misc_utilities_MIMXRT1064)
 

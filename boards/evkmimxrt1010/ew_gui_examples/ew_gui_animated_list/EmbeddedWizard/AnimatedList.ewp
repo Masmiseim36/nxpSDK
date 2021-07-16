@@ -1,0 +1,120 @@
+$version 10.00
+
+// This unit is a part of the Embedded Wizard class library 'Mosaic20'
+$rect <40,70,240,110>
+unit Core
+{
+  attr Directory = $Mosaic;
+}
+
+// This unit is a part of the Embedded Wizard class library 'Mosaic20'
+$rect <40,110,240,150>
+unit Resources
+{
+  attr Directory = $Mosaic;
+}
+
+// This unit is a part of the Embedded Wizard class library 'Mosaic20'
+$rect <40,150,240,190>
+unit Graphics
+{
+  attr Directory = $Mosaic;
+}
+
+// This unit is a part of the Embedded Wizard class library 'Mosaic20'
+$rect <40,190,240,230>
+unit Effects
+{
+  attr Directory = $Mosaic;
+}
+
+// This unit is a part of the Embedded Wizard class library 'Mosaic20'
+$rect <40,230,240,270>
+unit Views
+{
+  attr Directory = $Mosaic;
+}
+
+// This unit contains the implementation and resources of all widgets of the package.
+$rect <40,270,240,310>
+unit Flat
+{
+  attr Directory = $Mosaic\Flat;
+}
+
+// The 'default' Language. Each project has to contain at least one language brick \
+// called 'Default'
+$rect <540,70,740,110>
+language Default;
+
+// The unit of the application class
+$rect <40,380,240,420>
+unit Application
+{
+  attr Directory = .\;
+}
+
+$rect <40,420,240,460>
+unit AnimatedList
+{
+  attr Directory = .\;
+}
+
+// Mosaic Framework
+note group Note1
+{
+  attr Bounds = <20,20,260,330>;
+}
+
+// Profile Configuration
+note group Note2
+{
+  attr Bounds = <270,20,510,130>;
+}
+
+// Languages
+note group Note3
+{
+  attr Bounds = <520,20,760,130>;
+}
+
+// Project Units
+note group Note5
+{
+  attr Bounds = <20,340,260,480>;
+}
+
+// This is the project of the UI application example 'AnimatedList'.
+//
+// This sample shows the implementation of some fancy scrollable list widgets to \
+// set a time and a day of the week.
+//
+// The speciality of this sample application is the magnification effect of the centered \
+// list items and the soft fade-in/fade-out effects.
+//
+// You can double-click on the 'AnimatedList' brick to open the unit within the Composer \
+// and to analyze the implementation.
+//
+// To start the application within the Prototyper, press 'Ctrl'+'F5'.
+note legend Note6
+{
+  attr Bounds = <270,140,760,410>;
+}
+
+// This is a profile member for the project. This profile controls the code generation \
+// for the target system.
+$rect <290,70,490,110>
+profile NxpRt : NXP.iMX_RT.RGB565
+{
+  attr ScreenOrientation = Normal;
+  attr ScreenSize = <320,240>;
+  attr Optimization = High;
+  attr ApplicationClass = Application::Application;
+  attr ModeOfBitmapResources = DirectAccess;
+  attr ModeOfStringConstants = DirectAccess;
+  attr OutputDirectory = ..\GeneratedCode;
+  attr CleanOutputDirectories = true;
+
+  $rect <10,10,154,50>
+  macro Author = "Dipl. Ing. Paul Banach and Dipl. Ing. Manfred Schweyer, Copyright (C) TARA Systems GmbH";
+}

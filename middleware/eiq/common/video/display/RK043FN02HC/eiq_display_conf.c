@@ -30,12 +30,21 @@
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
+
+/*!
+ * @brief Initialize the LCD_DISP.
+ */
 static void BOARD_InitLcdifPixelClock(void);
+
+/*!
+ * @brief Initialize LCD device.
+ */
 static void BOARD_InitLcd(void);
 
 /*******************************************************************************
  * Variables
  ******************************************************************************/
+
 dc_fb_elcdif_handle_t s_dcFbElcdifHandle = {0}; /* The handle must be initialized to 0. */
 
 const dc_fb_elcdif_config_t s_dcFbElcdifConfig = {
@@ -61,7 +70,7 @@ const dc_fb_t g_dc = {
 /*******************************************************************************
  * Code
  ******************************************************************************/
-/* Initialize the LCD_DISP. */
+
 static void BOARD_InitLcdifPixelClock(void)
 {
     uint32_t videoPllFreq;
@@ -128,12 +137,20 @@ static void BOARD_InitLcd(void)
     EnableIRQ(LCDIF_IRQn);
 }
 
+/*!
+ * @brief Handles LCDIF IRQ.
+ */
 void LCDIF_IRQHandler(void)
 {
     DC_FB_ELCDIF_IRQHandler(&g_dc);
     __DSB();
 }
 
+/*!
+ * @brief Initializes display controler.
+ * 
+ * @return status code
+ */
 status_t BOARD_PrepareDisplayController(void)
 {
     BOARD_InitLcdifPixelClock();
@@ -142,6 +159,9 @@ status_t BOARD_PrepareDisplayController(void)
     return kStatus_Success;
 }
 
+/*!
+ * @brief Resets display controler.
+ */
 void BOARD_ResetDisplayMix(void)
 {
     /*

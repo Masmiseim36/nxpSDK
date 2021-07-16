@@ -29,6 +29,7 @@
  *  Human Interface Device Profile module to the Application and other upper
  *  layers of the stack.
  */
+
 /**
  * \defgroup  hid_device_defines Defines
  * \{
@@ -39,7 +40,6 @@
  * \{
  * Describes Constants defined by the module.
  */
-
 /**
  * Data Type/Structures/Typedefs
  */
@@ -51,54 +51,54 @@
 
 /** ------------------------------------  Type Definition */
 /** BT-HID Protocol HANDSHAKE Parameter Definitions */
-#define HID_HANDSHAKE_SUCCESSFUL                     0
-#define HID_HANDSHAKE_NOT_READY                      1
-#define HID_HANDSHAKE_ERR_INVALID_REPORT_ID          2
-#define HID_HANDSHAKE_ERR_UNSUPPORTED_REQUEST        3
-#define HID_HANDSHAKE_ERR_INVALID_PARAMETER          4
-#define HID_HANDSHAKE_ERR_UNKNOWN                    14
-#define HID_HANDSHAKE_ERR_FATAL                      15
+#define HID_HANDSHAKE_SUCCESSFUL                     0U
+#define HID_HANDSHAKE_NOT_READY                      1U
+#define HID_HANDSHAKE_ERR_INVALID_REPORT_ID          2U
+#define HID_HANDSHAKE_ERR_UNSUPPORTED_REQUEST        3U
+#define HID_HANDSHAKE_ERR_INVALID_PARAMETER          4U
+#define HID_HANDSHAKE_ERR_UNKNOWN                    14U
+#define HID_HANDSHAKE_ERR_FATAL                      15U
 
 /** BT-HID Protocol HID_CONTROL Parameter Definitions */
-#define HID_CONTROL_NOP                              0
-#define HID_CONTROL_HARD_RESET                       1
-#define HID_CONTROL_SOFT_RESET                       2
-#define HID_CONTROL_SUSPEND                          3
-#define HID_CONTROL_EXIT_SUSPEND                     4
-#define HID_CONTROL_VIRTUAL_CABLE_UNPLUG             5
+#define HID_CONTROL_NOP                              0U
+#define HID_CONTROL_HARD_RESET                       1U
+#define HID_CONTROL_SOFT_RESET                       2U
+#define HID_CONTROL_SUSPEND                          3U
+#define HID_CONTROL_EXIT_SUSPEND                     4U
+#define HID_CONTROL_VIRTUAL_CABLE_UNPLUG             5U
 
 /** HID Protocol Report Types */
-#define HID_INPUT_REPORT                             0x01
-#define HID_OUTPUT_REPORT                            0x02
-#define HID_FEATURE_REPORT                           0x03
+#define HID_INPUT_REPORT                             0x01U
+#define HID_OUTPUT_REPORT                            0x02U
+#define HID_FEATURE_REPORT                           0x03U
 
 /** BT-HID Protocol Types */
-#define HID_BOOT_PROTOCOL                            0
-#define HID_REPORT_PROTOCOL                          1
+#define HID_BOOT_PROTOCOL                            0U
+#define HID_REPORT_PROTOCOL                          1U
 
 /** HID Device Profile GET_ Request Types */
-#define HID_DEVICE_GET_REPORT                        6
-#define HID_DEVICE_GET_PROTOCOL                      7
-#define HID_DEVICE_GET_IDLE_RATE                     8
+#define HID_DEVICE_GET_REPORT                        6U
+#define HID_DEVICE_GET_PROTOCOL                      7U
+#define HID_DEVICE_GET_IDLE_RATE                     8U
 
 /** HID Device Profile SET_, OUT, CONTROL Request Types */
-#define HID_DEVICE_SET_REPORT                        9
-#define HID_DEVICE_SET_PROTOCOL                      10
-#define HID_DEVICE_SET_IDLE_RATE                     11
-#define HID_DEVICE_CONTROL                           12
-#define HID_DEVICE_OUT_REPORT                        13
+#define HID_DEVICE_SET_REPORT                        9U
+#define HID_DEVICE_SET_PROTOCOL                      10U
+#define HID_DEVICE_SET_IDLE_RATE                     11U
+#define HID_DEVICE_CONTROL                           12U
+#define HID_DEVICE_OUT_REPORT                        13U
 
 /** HID Device Profile Specific Event Types */
-#define HID_DEVICE_CTRL_CH_CONNECTION                0x01
-#define HID_DEVICE_CTRL_CH_CONNECTION_FAIL           0x02
-#define HID_DEVICE_INTR_CH_CONNECTION                0x03
-#define HID_DEVICE_INTR_CH_CONNECT_FAIL              0x04
+#define HID_DEVICE_CTRL_CH_CONNECTION                0x01U
+#define HID_DEVICE_CTRL_CH_CONNECTION_FAIL           0x02U
+#define HID_DEVICE_INTR_CH_CONNECTION                0x03U
+#define HID_DEVICE_INTR_CH_CONNECT_FAIL              0x04U
 
-#define HID_DEVICE_CTRL_CH_DISCONNECTION             0x05
-#define HID_DEVICE_CTRL_CH_DISCONNECTION_FAIL        0x06
-#define HID_DEVICE_INTR_CH_DISCONNECTION             0x07
-#define HID_DEVICE_INTR_CH_DISCONNECTION_FAIL        0x08
-#define HID_DEVICE_VIRTUAL_CABLE_UNPLUG_IND          0x09
+#define HID_DEVICE_CTRL_CH_DISCONNECTION             0x05U
+#define HID_DEVICE_CTRL_CH_DISCONNECTION_FAIL        0x06U
+#define HID_DEVICE_INTR_CH_DISCONNECTION             0x07U
+#define HID_DEVICE_INTR_CH_DISCONNECTION_FAIL        0x08U
+#define HID_DEVICE_VIRTUAL_CABLE_UNPLUG_IND          0x09U
 
 /* #define HID_DEVICE_CONNECTED                      0x10 */
 /* #define HID_DEVICE_VIRTUALLY_CABLED               0x11 */
@@ -115,52 +115,52 @@
 /* #define HID_DEVICE_SUPERVISION_TIMEOUT_SUCCESS    0x1F */
 /* #define HID_DEVICE_EXIT_PARK_FAIL                 0x20 */
 
-#define HID_DEVICE_SEND_REPORT                       0x44
-#define HID_DEVICE_INVALID_EVENT                     0xFF
+#define HID_DEVICE_SEND_REPORT                       0x44U
+#define HID_DEVICE_INVALID_EVENT                     0xFFU
 
 /** Min Max Beacon Intervals for Park Mode */
-#define HID_DEVICE_BEACON_MAX_INTERVAL               50
-#define HID_DEVICE_BEACON_MIN_INTERVAL               30
+#define HID_DEVICE_BEACON_MAX_INTERVAL               50U
+#define HID_DEVICE_BEACON_MIN_INTERVAL               30U
 
 /** MTU Size of the underlying L2cap Channels */
-#define  HID_DEVICE_CONTROL_IN_MTU                   48
-#define  HID_DEVICE_INTERRUPT_IN_MTU                 48
+#define  HID_DEVICE_CONTROL_IN_MTU                   48U
+#define  HID_DEVICE_INTERRUPT_IN_MTU                 48U
 
 /* Maximum size(bytes) of the report the profile shall expect */
-#define HID_DEVICE_MAX_REPORT_SIZE                   100
+#define HID_DEVICE_MAX_REPORT_SIZE                   100U
 
 /** Default supervision timeout period for the device ( 1 second ) */
-#define HID_DEVICE_SUPERVISION_TIMEOUT               0x666
+#define HID_DEVICE_SUPERVISION_TIMEOUT               0x666U
 
 /** Time profile shall wait for disconnecting 2nd l2cap channel */
-#define HID_DEVICE_L2CAP_DISONNECT_TIMEOUT           1
+#define HID_DEVICE_L2CAP_DISONNECT_TIMEOUT           1U
 
 /** Time profile shall wait for disconnecting 2nd l2cap channel */
-#define HID_DEVICE_INTERRUPT_TIMEOUT                 0x8020
+#define HID_DEVICE_INTERRUPT_TIMEOUT                 0x8020U
 
 /** Default class of device for the profile (KBD ) */
-#define HID_DEVICE_DEFAULT_CLASS_OF_DEVICE           0x00002540
+#define HID_DEVICE_DEFAULT_CLASS_OF_DEVICE           0x00002540U
 
 /** Encryption mode type settings */
-#define HID_DEVICE_ENCRYPTION_MODE_DISABLED          0x00
-#define HID_DEVICE_ENCRYPTION_MODE_ENABLED_PTP       0x01
-#define HID_DEVICE_ENCRYPTION_MODE_ENABLED_ALL       0x02
+#define HID_DEVICE_ENCRYPTION_MODE_DISABLED          0x00U
+#define HID_DEVICE_ENCRYPTION_MODE_ENABLED_PTP       0x01U
+#define HID_DEVICE_ENCRYPTION_MODE_ENABLED_ALL       0x02U
 
 /** Default encryption mode for device */
 #define HID_DEVICE_DEFAULT_ENCRYPTION_MODE  \
                             HID_DEVICE_ENCRYPTION_MODE_ENABLED_PTP
 
 /** Authentication tupport type settings */
-#define HID_DEVICE_AUTHENTICATION_DISABLED           0x00
-#define HID_DEVICE_AUTHENTICATION_ENABLED            0x01
+#define HID_DEVICE_AUTHENTICATION_DISABLED           0x00U
+#define HID_DEVICE_AUTHENTICATION_ENABLED            0x01U
 
 /** Default authentication setting for device */
 #define HID_DEVICE_DEFAULT_AUTHENTICATION_TYPE   \
                                 HID_DEVICE_AUTHENTICATION_DISABLED
 
 /** PIN type settings */
-#define HID_DEVICE_PIN_TYPE_VARIABLE                 0x00
-#define HID_DEVICE_PIN_TYPE_FIXED                    0x01
+#define HID_DEVICE_PIN_TYPE_VARIABLE                 0x00U
+#define HID_DEVICE_PIN_TYPE_FIXED                    0x01U
 
 /** Default pin type for the device */
 #define HID_DEVICE_DEFAULT_PIN_TYPE   HID_DEVICE_PIN_TYPE_VARIABLE
@@ -169,13 +169,13 @@
 #define HID_DEVICE_DEFAULT_NEW_LINK_KEY              0
 
 /** Status of underlying host controller */
-#define HID_DEVICE_HOST_CONTROLLER_UNINITIALIZED     0x00
-#define HID_DEVICE_HOST_CONTROLLER_INITIALIZED       0x01
+#define HID_DEVICE_HOST_CONTROLLER_UNINITIALIZED     0x00U
+#define HID_DEVICE_HOST_CONTROLLER_INITIALIZED       0x01U
 
 /* HID Channel types */
-#define HID_CH_TYPE_CTRL                             0x01
-#define HID_CH_TYPE_INTR                             0x02
-#define HID_CH_TYPE_INVALID                          0xFF
+#define HID_CH_TYPE_CTRL                             0x01U
+#define HID_CH_TYPE_INTR                             0x02U
+#define HID_CH_TYPE_INVALID                          0xFFU
 
 /**
  *  Flag to allow role switch for the device at the time of
@@ -183,19 +183,19 @@
  *  0x1  -  Role Switch Allowed
  *  0x0  -  Role Switch Not Allowed
  */
-#define HID_DEVICE_ROLE_SWITCH                       0x01
+#define HID_DEVICE_ROLE_SWITCH                       0x01U
 
 /** link policy settings */
-#define HID_DEVICE_HOLD_MODE_ENABLE                  0x0002
-#define HID_DEVICE_HOLD_MODE_DISABLE                 0x0000
+#define HID_DEVICE_HOLD_MODE_ENABLE                  0x0002U
+#define HID_DEVICE_HOLD_MODE_DISABLE                 0x0000U
 
-#define HID_DEVICE_SNIFF_MODE_ENABLE                 0x0004
-#define HID_DEVICE_HOLD_MODE_DISABLE                 0x0000
+#define HID_DEVICE_SNIFF_MODE_ENABLE                 0x0004U
+#define HID_DEVICE_HOLD_MODE_DISABLE                 0x0000U
 
-#define HID_DEVICE_PARK_MODE_ENABLE                  0x0008
-#define HID_DEVICE_PARK_MODE_DISABLE                 0x0000
+#define HID_DEVICE_PARK_MODE_ENABLE                  0x0008U
+#define HID_DEVICE_PARK_MODE_DISABLE                 0x0000U
 
-#define HID_DEVICE_ROLE_SWITCH_ENABLE                0x0001
+#define HID_DEVICE_ROLE_SWITCH_ENABLE                0x0001U
 
 /** Packet Types LMP shall use for the ACL connection */
 #define HID_DEVICE_PACKET_TYPES  LMP_ACL_DM1 | LMP_ACL_DM3 | LMP_ACL_DM5 | \
@@ -602,7 +602,6 @@ API_RESULT BT_hid_device_start
                /* IN */ HID_DEVICE_INIT_PARAMS *init_params
            );
 
-/** The API is used to stop the HID Device Profile */
 /**
  *  \brief To stop the HID device profile
  *
@@ -643,7 +642,6 @@ API_RESULT BT_hid_device_set_active_host
                /* IN */ UCHAR *hid_host_bd_addr
            );
 
-/** The API is used to register callbacks with the HID Device Profile */
 /**
  *  \brief To register callbacks with the HID Device Profile.
  *
@@ -674,7 +672,6 @@ API_RESULT BT_hid_device_register
                /* IN */ HID_DEVICE_CALLBACK_STRUCT *hid_device_cb_stuct
            );
 
-/** The API is used to initiate connection from the HID device */
 /**
  *  \brief To initiate connection from the HID device.
  *
@@ -700,7 +697,6 @@ API_RESULT BT_hid_device_connect
                /* IN */ UCHAR ch_type
            );
 
-/** The API is used to send INTERRUPT reports to the remote host */
 /**
  *  \brief To send INTERRUPT reports to the remote host.
  *
@@ -727,7 +723,6 @@ API_RESULT BT_hid_device_send_report
                /* IN */ UINT16 report_size
            );
 
-/** The API is used to initiate reconnection to the last known HID host. */
 /**
  *  \brief To initiate reconnection to the last known HID host
  *
@@ -739,7 +734,6 @@ API_RESULT BT_hid_device_send_report
  */
 API_RESULT BT_hid_device_initiate_reconnection(void);
 
-/** The API is used to send responses to the HID Host */
 /**
  *  \brief To send responses to the HID Host
  *
@@ -774,7 +768,6 @@ API_RESULT BT_hid_device_send_response
                /* IN */ UCHAR *response_data
            );
 
-/** The API is used to initiate disconnect from the remote HID Host */
 /**
  *  \brief To initiate disconnect from the remote HID Host.
  *
@@ -807,7 +800,6 @@ API_RESULT BT_hid_device_disconnect
  */
 API_RESULT BT_hid_device_vc_unplug(void);
 
-/** Function to determine the current active host */
 /**
  *  \brief To determine the current active host.
  *
@@ -834,3 +826,4 @@ API_RESULT BT_hid_device_get_active_host
 /** \} */
 /** \} */
 #endif /* _H_BT_HID_DEVICE_API_ */
+

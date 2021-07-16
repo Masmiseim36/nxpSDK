@@ -27,18 +27,18 @@ void MID_getKe(mid_get_ke_t *sKeMeasFcn)
     float_t fltEtotal;
 
     /* Initialisation */
-    if (sKeMeasFcn->ui16Active == FALSE)
+    if (sKeMeasFcn->bActive == FALSE)
     {
-        sKeMeasFcn->ui16Active                   = TRUE;
-        sKeMeasFcn->ui16LoopCounter              = 0;
-        sKeMeasFcn->fltFreqElRamp                = 0.0;
+        sKeMeasFcn->bActive                   = TRUE;
+        sKeMeasFcn->ui16LoopCounter              = 0U;
+        sKeMeasFcn->fltFreqElRamp                = 0.0F;
         sKeMeasFcn->sFreqElRampParam.fltRampUp   = sKeMeasFcn->fltFreqElReq / MID_SPEED_RAMP_TIME / 10000.0F;
         sKeMeasFcn->sFreqElRampParam.fltRampDown = sKeMeasFcn->fltFreqElReq / MID_SPEED_RAMP_TIME / 10000.0F;
-        sKeMeasFcn->sEdMA32Filter.fltLambda      = 1.0 / 10.0;
+        sKeMeasFcn->sEdMA32Filter.fltLambda      = 1.0F / 10.0F;
         GDFLIB_FilterMAInit_FLT(0.0, &sKeMeasFcn->sEdMA32Filter);
-        sKeMeasFcn->sEqMA32Filter.fltLambda = 1.0 / 10.0;
+        sKeMeasFcn->sEqMA32Filter.fltLambda = 1.0F / 10.0F;
         GDFLIB_FilterMAInit_FLT(0.0, &sKeMeasFcn->sEqMA32Filter);
-        sKeMeasFcn->sFreqIntegrator.a32Gain = ACC32(1.0 * sKeMeasFcn->fltFreqMax / 10000.0 * 2.0);
+        sKeMeasFcn->sFreqIntegrator.a32Gain = ACC32(1.0F * sKeMeasFcn->fltFreqMax / 10000.0F * 2.0F);
         GFLIB_IntegratorInit_F16(0, &sKeMeasFcn->sFreqIntegrator);
         GFLIB_RampInit_FLT(0.0, &sKeMeasFcn->sFreqElRampParam);
     }
@@ -70,13 +70,13 @@ void MID_getKe(mid_get_ke_t *sKeMeasFcn)
 
             /* Check Faults */
             /* Check if Ke is negative or saturated*/
-            if (sKeMeasFcn->fltKe < 0.0)
+            if (sKeMeasFcn->fltKe < 0.0F)
             {
                 g_sMID.ui16WarnMID |= MID_WARN_KE_OUT_OF_RANGE;
             }
 
             /* When finished exit the function */
-            sKeMeasFcn->ui16Active = FALSE;
+            sKeMeasFcn->bActive = FALSE;
         }
     }
 }

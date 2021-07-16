@@ -2,7 +2,7 @@
  *
  *  @brief  This file provides the support for network utility iperf
  *
- *  Copyright 2008-2020 NXP
+ *  Copyright 2008-2021 NXP
  *
  *  NXP CONFIDENTIAL
  *  The source code contained or described herein and all documents related to
@@ -58,6 +58,9 @@ ip4_addr_t server_address;
 ip4_addr_t multicast_address;
 bool multicast;
 int amount = IPERF_CLIENT_AMOUNT;
+#ifdef CONFIG_WMM
+uint8_t qos = 0;
+#endif
 uint8_t mcast_mac[6];
 bool mcast_mac_valid;
 
@@ -180,9 +183,16 @@ static void iperf_test_start(void *arg)
                     wifi_add_mcast_filter(mcast_mac);
                     mcast_mac_valid = true;
                 }
-                ctx->iperf_session = lwiperf_start_udp_client(
-                    netif_ip_addr4(netif_default), LWIPERF_TCP_PORT_DEFAULT, &server_address, LWIPERF_TCP_PORT_DEFAULT,
-                    ctx->client_type, amount, IPERF_UDP_CLIENT_RATE, 0, lwiperf_report, NULL);
+                ctx->iperf_session =
+                    lwiperf_start_udp_client(netif_ip_addr4(netif_default), LWIPERF_TCP_PORT_DEFAULT, &server_address,
+                                             LWIPERF_TCP_PORT_DEFAULT, ctx->client_type, amount, IPERF_UDP_CLIENT_RATE,
+#ifdef CONFIG_WMM
+                                             qos,
+#else
+                                             0,
+#endif
+
+                                             lwiperf_report, NULL);
             }
         }
         else
@@ -332,6 +342,9 @@ static void display_iperf_usage()
     (void)PRINTF("\t   -d             Do a bidirectional test simultaneously\r\n");
     (void)PRINTF("\t   -r             Do a bidirectional test individually\r\n");
     (void)PRINTF("\t   -t    #        time in seconds to transmit for (default 10 secs)\r\n");
+#ifdef CONFIG_WMM
+    (void)PRINTF("\t   -S    #        QoS for udp traffic (default 0(Best Effort))\r\n");
+#endif
 }
 
 void cmd_iperf(int argc, char **argv)
@@ -351,9 +364,15 @@ void cmd_iperf(int argc, char **argv)
         unsigned dual : 1;
         unsigned tradeoff : 1;
         unsigned time : 1;
+#ifdef CONFIG_WMM
+        unsigned tos : 1;
+#endif
     } info;
 
-    amount    = IPERF_CLIENT_AMOUNT;
+    amount = IPERF_CLIENT_AMOUNT;
+#ifdef CONFIG_WMM
+    qos = 0;
+#endif
     multicast = false;
 
     if (mcast_mac_valid)
@@ -436,6 +455,18 @@ void cmd_iperf(int argc, char **argv)
                 (void)PRINTF("Error during strtoul errno:%d", errno);
             arg += 1;
         }
+#ifdef CONFIG_WMM
+        else if (!info.tos && string_equal("-S", argv[arg]))
+        {
+            arg += 1;
+            info.tos = 1;
+            errno    = 0;
+            qos      = strtoul(argv[arg], NULL, 10);
+            if (errno != 0)
+                (void)PRINTF("Error during strtoul errno:%d", errno);
+            arg += 1;
+        }
+#endif
         else if (!info.dual && string_equal("-d", argv[arg]))
         {
             arg += 1;

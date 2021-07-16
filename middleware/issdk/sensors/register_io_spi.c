@@ -120,6 +120,7 @@ void SPI6_SignalEvent_t(uint32_t event)
 }
 #endif
 
+#ifndef CPU_LPC55S06JBD64
 #if defined(SPI7)
 /* The SPI7 Signal Event Handler function. */
 void SPI7_SignalEvent_t(uint32_t event)
@@ -130,6 +131,7 @@ void SPI7_SignalEvent_t(uint32_t event)
     }
     b_SPI_CompletionFlag[7] = true;
 }
+#endif
 #endif
 
 /* Control Slave Select based on inactive/active and active low/high. */

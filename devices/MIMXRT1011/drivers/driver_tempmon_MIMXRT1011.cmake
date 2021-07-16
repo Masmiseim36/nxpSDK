@@ -1,17 +1,15 @@
-if(NOT DRIVER_TEMPMON_MIMXRT1011_INCLUDED)
-    
-    set(DRIVER_TEMPMON_MIMXRT1011_INCLUDED true CACHE BOOL "driver_tempmon component is included.")
+include_guard(GLOBAL)
+message("driver_tempmon component is included.")
 
-    target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
-        ${CMAKE_CURRENT_LIST_DIR}/fsl_tempmon.c
-    )
-
-
-    target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
-        ${CMAKE_CURRENT_LIST_DIR}/.
-    )
+target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
+    ${CMAKE_CURRENT_LIST_DIR}/fsl_tempmon.c
+)
 
 
-    include(driver_common_MIMXRT1011)
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
+    ${CMAKE_CURRENT_LIST_DIR}/.
+)
 
-endif()
+
+include(driver_common_MIMXRT1011)
+

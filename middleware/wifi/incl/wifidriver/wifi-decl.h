@@ -139,7 +139,7 @@ typedef PACK_START struct _wifi_scan_chan_list_t
     /** Number of channels */
     uint8_t num_of_chan;
     /** Channel number */
-    uint8_t chan_number[MLAN_WWSM_MAX_CHANNEL];
+    uint8_t chan_number[MLAN_MAX_CHANNEL];
 } PACK_END wifi_scan_chan_list_t;
 
 /**

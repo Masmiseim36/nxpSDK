@@ -42,6 +42,12 @@
 #include "fsl_common.h"
 #include "fsl_enet.h"
 #include "fsl_phy.h"
+#ifdef EXAMPLE_USE_1G_ENET_PORT
+#include "fsl_phyrtl8211f.h"
+#else
+#include "fsl_phyksz8081.h"
+#endif
+#include "fsl_enet_mdio.h"
 #include "fsl_debug_console.h"
 #include "board.h"
 
@@ -51,6 +57,37 @@
 
 /****** DRIVER SPECIFIC ****** End of part/vendor specific include file area!  */
 
+#ifdef EXAMPLE_USE_1G_ENET_PORT
+#if !defined(FSL_FEATURE_ENET_HAS_AVB) || FSL_FEATURE_ENET_HAS_AVB < 1
+#error "This board has no 1G Ethernet port."
+#endif
+
+#define EXAMPLE_PHY_ADDRESS BOARD_ENET1_PHY_ADDRESS
+#define EXAMPLE_ENET        ENET_1G
+/* PHY operations. */
+#define EXAMPLE_PHY_OPS     phyrtl8211f_ops
+#define EXAMPLE_INT         ENET_1G_IRQn
+
+#else
+
+#define EXAMPLE_PHY_ADDRESS BOARD_ENET0_PHY_ADDRESS
+#define EXAMPLE_ENET        ENET
+/* PHY operations. */
+#define EXAMPLE_PHY_OPS     phyksz8081_ops
+#define EXAMPLE_INT         ENET_IRQn
+#endif
+
+/* MDIO operations. */
+#define EXAMPLE_MDIO_OPS enet_ops
+
+#define EXAMPLE_CLOCK_FREQ      BOARD_GetMDIOClock()
+
+#ifndef PHY_AUTONEGO_TIMEOUT_COUNT
+#define PHY_AUTONEGO_TIMEOUT_COUNT (100000)
+#endif
+#ifndef PHY_STABILITY_DELAY_US
+#define PHY_STABILITY_DELAY_US (0U)
+#endif
 
 /* Define the driver information structure that is only available within this file.  */
 
@@ -66,6 +103,13 @@ UCHAR   _nx_driver_hardware_address[] = {0x00, 0x11, 0x22, 0x33, 0x44, 0x56};
 #else
 UCHAR   _nx_driver_hardware_address[] = NX_DRIVER_ETHERNET_MAC;
 #endif
+
+/*! @brief Enet PHY and MDIO interface handler. */
+static mdio_handle_t mdioHandle = {.ops = &EXAMPLE_MDIO_OPS};
+static phy_handle_t phyHandle   = {
+                .phyAddr = EXAMPLE_PHY_ADDRESS,
+                .mdioHandle = &mdioHandle,
+                .ops = &EXAMPLE_PHY_OPS };
 
 
 /****** DRIVER SPECIFIC ****** End of part/vendor specific data area!  */
@@ -1508,95 +1552,127 @@ VOID nx_driver_imx_ethernet_isr(VOID);
 
 void enet_init_imx(ENET_CONFIG_IMX *config)
 {
+    volatile uint32_t rcr = 0;
+    volatile uint32_t ecr = 0;
+    volatile uint32_t tcr = 0;
+
     /* Clear the Individual and Group Address Hash registers */
-    ENET->IALR/*(ch)*/ = 0;
-    ENET->IAUR/*(ch)*/ = 0;
-    ENET->GALR/*(ch)*/ = 0;
-    ENET->GAUR/*(ch)*/ = 0;
+    EXAMPLE_ENET->IALR/*(ch)*/ = 0;
+    EXAMPLE_ENET->IAUR/*(ch)*/ = 0;
+    EXAMPLE_ENET->GALR/*(ch)*/ = 0;
+    EXAMPLE_ENET->GAUR/*(ch)*/ = 0;
 
     /* Set the Physical Address for the selected FEC */
     /*enet_set_address(config->ch, config->mac);*/
-    ENET_SetMacAddr(ENET,config->mac);
+    ENET_SetMacAddr(EXAMPLE_ENET,config->mac);
 
     /* Mask all FEC interrupts */
-    ENET->EIMR/*(ch)*/ = 0;/*FSL:ENET_EIMR_MASK_ALL_MASK;*/
+    EXAMPLE_ENET->EIMR/*(ch)*/ = 0;/*FSL:ENET_EIMR_MASK_ALL_MASK;*/
 
     /* Clear all FEC interrupt events */
-    ENET->EIR/*(ch)*/ = 0xFFFFFFFF;/*FSL:ENET_EIR_CLEAR_ALL_MASK;*/
+    EXAMPLE_ENET->EIR/*(ch)*/ = 0xFFFFFFFF;/*FSL:ENET_EIR_CLEAR_ALL_MASK;*/
 
     /* Initialize the Receive Control Register */
-    ENET->RCR/*(ch)*/ = 0
-        | ENET_RCR_MAX_FL(14+1500+4) /*ethernet frame head + max data+crc*/
+    rcr = ENET_RCR_MAX_FL(14+1500+4) /*ethernet frame head + max data+crc*/
         | ENET_RCR_MII_MODE_MASK /*always*/
         | ENET_RCR_CRCFWD_MASK;  /*no CRC pad required*/
 
+#if defined(FSL_FEATURE_ENET_HAS_AVB) && FSL_FEATURE_ENET_HAS_AVB
+    if (FSL_FEATURE_ENET_INSTANCE_HAS_AVBn(EXAMPLE_ENET) == 1)
+    {
+        if ( config->interface == kENET_RgmiiMode )
+        {
+            rcr |= ENET_RCR_RGMII_EN_MASK;
+        }
+        else
+        {
+            rcr &= ~ENET_RCR_RGMII_EN_MASK;
+        }
+
+        if( config->speed == kPHY_Speed1000M )
+        {
+            ecr |= ENET_ECR_SPEED_MASK;
+        }
+        else
+        {
+            ecr &= ~ENET_ECR_SPEED_MASK;
+        }
+
+        /* use Round-robin scheme for legacy buffer descriptor mode */
+        EXAMPLE_ENET->QOS |= ENET_QOS_TX_SCHEME(1);
+    }
+#endif
+
     if ( config->interface == kENET_RmiiMode )
     {
-      ENET->RCR/*(ch)*/ |= ENET_RCR_RMII_MODE_MASK;
+        rcr |= ENET_RCR_RMII_MODE_MASK;
 
-      /*only set speed in RMII mode*/
-      if( config->speed == kPHY_Speed10M )
-      {
-         ENET->RCR/*(ch)*/ |= ENET_RCR_RMII_10T_MASK;
-      }
+        /*only set speed in RMII mode*/
+        if( config->speed == kPHY_Speed10M )
+        {
+            rcr |= ENET_RCR_RMII_10T_MASK;
+        }
     }/*no need to configure MAC MII interface*/
-
-    ENET->TCR/*(ch)*/ = 0;
 
     /* Set the duplex */
     switch (config->duplex)
     {
         case kENET_MiiHalfDuplex:
-            ENET->RCR/*(ch)*/ |= ENET_RCR_DRT_MASK;
-            ENET->TCR/*(ch)*/ &= (uint32_t)~ENET_TCR_FDEN_MASK;
+            rcr |= ENET_RCR_DRT_MASK;
+            tcr &= (uint32_t)~ENET_TCR_FDEN_MASK;
             break;
         case kENET_MiiFullDuplex:
         default:
-            ENET->RCR/*(ch)*/ &= ~ENET_RCR_DRT_MASK;
-            ENET->TCR/*(ch)*/ |= ENET_TCR_FDEN_MASK;
+            rcr &= ~ENET_RCR_DRT_MASK;
+            tcr |= ENET_TCR_FDEN_MASK;
             break;
     }
 
 #ifdef ENET_ENHANCEDBUFFERDESCRIPTOR_MODE
-    ENET->ECR/*(ch)*/ = ENET_ECR_EN1588_MASK;
-#else
-    ENET->ECR/*(ch)*/ = 0;
+    ecr |= ENET_ECR_EN1588_MASK;
 #endif
 
-
 #ifdef IMX_CHECKSUM_OFFLOAD
-    ENET->TACC = ENET_TACC_SHIFT16_MASK |
+    EXAMPLE_ENET->TACC = ENET_TACC_SHIFT16_MASK |
                 ENET_TACC_IPCHK_MASK   |
                 ENET_TACC_PROCHK_MASK;
 
-    ENET->TFWR = ENET_TFWR_STRFWD_MASK;
+    EXAMPLE_ENET->TFWR = ENET_TFWR_STRFWD_MASK;
 
-    ENET->RACC = ENET_RACC_SHIFT16_MASK |
+    EXAMPLE_ENET->RACC = ENET_RACC_SHIFT16_MASK |
                 ENET_RACC_LINEDIS_MASK |
                 ENET_RACC_PRODIS_MASK  |
                 ENET_RACC_IPDIS_MASK;
 #else
-    ENET->TACC = ENET_TACC_SHIFT16_MASK;
+    EXAMPLE_ENET->TACC = ENET_TACC_SHIFT16_MASK;
 
-    ENET->RACC = ENET_RACC_SHIFT16_MASK |
+    EXAMPLE_ENET->RACC = ENET_RACC_SHIFT16_MASK |
                 ENET_RACC_LINEDIS_MASK;
 #endif
 
+    EXAMPLE_ENET->RCR = rcr;
+    EXAMPLE_ENET->ECR = ecr;
+    EXAMPLE_ENET->TCR = tcr;
 }
 
 void enet_init()
 {
-    bool link = false;
+    phy_config_t phyConfig = {0};
+    bool link              = false;
+    bool autonego          = false;
+    uint32_t count         = 0;
+    status_t status;
     phy_speed_t speed;
     phy_duplex_t duplex;
-    uint32_t sysClock;
-    int32_t    status;
-    ENET_CONFIG_IMX     econf;
+    ENET_CONFIG_IMX econf;
 
+#ifdef EXAMPLE_USE_1G_ENET_PORT
+    econf.interface = kENET_RgmiiMode;
+#else
     econf.interface = kENET_RmiiMode;
+#endif
+
     econf.neg = 0; /*autoneg on */
-    econf.speed = kPHY_Speed100M;
-    econf.duplex = kPHY_FullDuplex;
     econf.mac[0] = _nx_driver_hardware_address[0];
     econf.mac[1] = _nx_driver_hardware_address[1];
     econf.mac[2] = _nx_driver_hardware_address[2];
@@ -1604,34 +1680,43 @@ void enet_init()
     econf.mac[4] = _nx_driver_hardware_address[4];
     econf.mac[5] = _nx_driver_hardware_address[5];
 
+    phyConfig.phyAddr               = EXAMPLE_PHY_ADDRESS;
+    phyConfig.autoNeg               = true;
+    mdioHandle.resource.base        = EXAMPLE_ENET;
+    mdioHandle.resource.csrClock_Hz = EXAMPLE_CLOCK_FREQ;
 
-    /* Get default configuration. */
-    /*
-     * config.miiMode = kENET_RmiiMode;
-     * config.miiSpeed = kENET_MiiSpeed100M;
-     * config.miiDuplex = kENET_MiiFullDuplex;
-     * config.rxMaxFrameLen = ENET_FRAME_MAX_FRAMELEN;
-     */
-   // ENET_GetDefaultConfig(&config);
-
-    /* Set SMI to get PHY link status. */
-    sysClock = CLOCK_GetFreq(kCLOCK_AhbClk);
-    status = PHY_Init(EXAMPLE_ENET, EXAMPLE_PHY, sysClock);
-    while (status != kStatus_Success)
+    /* Initialize PHY and wait auto-negotiation over. */
+    do
     {
-        PRINTF("\r\nPHY Auto-negotiation failed. Please check the cable connection and link partner setting.\r\n");
-        status = PHY_Init(EXAMPLE_ENET, EXAMPLE_PHY, sysClock);
-    }
+        status = PHY_Init(&phyHandle, &phyConfig);
+        if (status == kStatus_Success)
+        {
+            /* Wait for auto-negotiation success and link up */
+            count = PHY_AUTONEGO_TIMEOUT_COUNT;
+            do
+            {
+                PHY_GetAutoNegotiationStatus(&phyHandle, &autonego);
+                PHY_GetLinkStatus(&phyHandle, &link);
+                if (autonego && link)
+                {
+                    break;
+                }
+            } while (--count);
+            if (!autonego)
+            {
+                PRINTF("PHY Auto-negotiation failed. Please check the cable connection and link partner setting.\r\n");
+            }
+        }
+    } while (!(link && autonego));
 
-    PHY_GetLinkStatus(EXAMPLE_ENET, EXAMPLE_PHY, &link);
-    if (link)
-    {
-        /* Get the actual PHY link speed. */
-        PHY_GetLinkSpeedDuplex(EXAMPLE_ENET, EXAMPLE_PHY, &speed, &duplex);
-        /* Change the MII speed and duplex for actual link status. */
-        econf.speed = (phy_speed_t)speed;
-        econf.duplex = (phy_duplex_t)duplex;
-    }
+#if PHY_STABILITY_DELAY_US
+    /* Wait a moment for PHY status to be stable. */
+    SDK_DelayAtLeastUs(PHY_STABILITY_DELAY_US, SDK_DEVICE_MAXIMUM_CPU_CLOCK_FREQUENCY);
+#endif
+
+    PHY_GetLinkSpeedDuplex(&phyHandle, &speed, &duplex);
+    econf.speed = speed;
+    econf.duplex = duplex;
 
    enet_init_imx(&econf);
 }
@@ -1742,7 +1827,7 @@ UINT                i;
     nx_driver_information.nx_driver_information_dma_tx_descriptors[NX_DRIVER_TX_DESCRIPTORS - 1].control |= ENET_BUFFDESCRIPTOR_TX_WRAP_MASK;
 
     /* Set Transmit Descriptor List Address Register */
-    ENET->TDSR = (ULONG) nx_driver_information.nx_driver_information_dma_tx_descriptors;
+    EXAMPLE_ENET->TDSR = (ULONG) nx_driver_information.nx_driver_information_dma_tx_descriptors;
 
     /* Initialize RX Descriptors list: Ring Mode  */
 
@@ -1790,10 +1875,10 @@ UINT                i;
     nx_driver_information.nx_driver_information_rx_buffer_size = packet_ptr -> nx_packet_data_end - packet_ptr -> nx_packet_data_start;
 
     /* Configure the Receive Buffer Size Register.  */
-    ENET->MRBR = nx_driver_information.nx_driver_information_rx_buffer_size;
+    EXAMPLE_ENET->MRBR = nx_driver_information.nx_driver_information_rx_buffer_size;
 
     /* Set Receive Descriptor List Address Register.  */
-    ENET->RDSR = (ULONG) nx_driver_information.nx_driver_information_dma_rx_descriptors;
+    EXAMPLE_ENET->RDSR = (ULONG) nx_driver_information.nx_driver_information_dma_rx_descriptors;
 
     for (i = 0; i < 64; i++)
     {
@@ -1846,18 +1931,17 @@ static UINT  _nx_driver_hardware_enable(NX_IP_DRIVER *driver_req_ptr)
 {
 
     /* Enable Ethernet interrupt.  */
-    ENET->EIMR = ENET_EIMR_RXF_MASK | ENET_EIMR_TXF_MASK;
+    EXAMPLE_ENET->EIMR |= ENET_EIMR_RXF_MASK | ENET_EIMR_TXF_MASK;
+
     /* Start Ethernet.  */
-    ENET->ECR |= ENET_ECR_ETHEREN_MASK;
-
     /*The buffer descriptor bytes are swapped to support little-endian devices.*/
-    /*This field must be written to 1 after reset*/
-    ENET->ECR|= ENET_ECR_DBSWP_MASK;
+    /* The DBSWP field must be written to 1 after reset*/
+    EXAMPLE_ENET->ECR |= ENET_ECR_ETHEREN_MASK | ENET_ECR_DBSWP_MASK;
 
+    EnableIRQ(EXAMPLE_INT);
 
-    EnableIRQ(ENET_IRQn);
     /*active rx descriptor*/
-    ENET->RDAR = ENET_RDAR_RDAR_MASK;
+    EXAMPLE_ENET->RDAR = ENET_RDAR_RDAR_MASK;
     /* Return success!  */
     return(NX_SUCCESS);
 }
@@ -1903,9 +1987,10 @@ static UINT  _nx_driver_hardware_enable(NX_IP_DRIVER *driver_req_ptr)
 static UINT  _nx_driver_hardware_disable(NX_IP_DRIVER *driver_req_ptr)
 {
 
-    /* Stop the Ethernet.  */
-    ENET->ECR &= ~ENET_ECR_ETHEREN_MASK;
+    DisableIRQ(EXAMPLE_INT);
 
+    /* Stop the Ethernet.  */
+    EXAMPLE_ENET->ECR &= ~ENET_ECR_ETHEREN_MASK;
 
     /* Return success!  */
     return(NX_SUCCESS);
@@ -2045,11 +2130,11 @@ UCHAR*         src_addr;
     }
 
     /* If the DMA transmission is suspended, resume transmission.  */
-    if (!ENET->TDAR)
+    if (!EXAMPLE_ENET->TDAR)
     {
 
         /* Resume DMA transmission. */
-        ENET->TDAR = ENET_TDAR_TDAR_MASK;
+        EXAMPLE_ENET->TDAR = ENET_TDAR_TDAR_MASK;
     }
 
     return(NX_SUCCESS);
@@ -2193,9 +2278,9 @@ ULONG           crc_val;
     nx_driver_information.nx_driver_information_multicast_count[h_val]++;
 
     if (h_val < 32)
-        ENET->GALR |= 1 <<  h_val;
+        EXAMPLE_ENET->GALR |= 1 <<  h_val;
     else
-        ENET->GAUR |= 1 << (h_val - 32);
+        EXAMPLE_ENET->GAUR |= 1 << (h_val - 32);
 
     /* Return success.  */
     return(NX_SUCCESS);
@@ -2267,9 +2352,9 @@ ULONG           crc_val;
     {
 
         if (h_val < 32)
-            ENET->GALR &= ~(1 <<  h_val);
+            EXAMPLE_ENET->GALR &= ~(1 <<  h_val);
         else
-            ENET->GAUR &= ~(1 << (h_val - 32));
+            EXAMPLE_ENET->GAUR &= ~(1 << (h_val - 32));
     }
     else if(nx_driver_information.nx_driver_information_multicast_count[h_val] == 0)
     {
@@ -2569,11 +2654,11 @@ NX_PACKET     *received_packet_ptr = nx_driver_information.nx_driver_information
     }
 
     /* If Rx DMA is in suspended state, resume it.  */
-    if (!ENET->RDAR)
+    if (!EXAMPLE_ENET->RDAR)
     {
 
         /* Resume DMA reception */
-        ENET->RDAR = ENET_RDAR_RDAR_MASK;
+        EXAMPLE_ENET->RDAR = ENET_RDAR_RDAR_MASK;
     }
 
 }
@@ -2624,18 +2709,18 @@ ULONG idx;
 
 
     /* Stop the Ethernet.  */
-    ENET->ECR &= ~ENET_ECR_ETHEREN_MASK;
+    EXAMPLE_ENET->ECR &= ~ENET_ECR_ETHEREN_MASK;
 
     /* Set speed for RMII mode.  */
     if (nx_driver_information.nx_driver_information_link_speed == kENET_MiiSpeed10M)
     {
 
-        ENET->RCR |= ENET_RCR_RMII_10T_MASK;
+        EXAMPLE_ENET->RCR |= ENET_RCR_RMII_10T_MASK;
     }
     else
     {
 
-        ENET->RCR &= ~ENET_RCR_RMII_10T_MASK;
+        EXAMPLE_ENET->RCR &= ~ENET_RCR_RMII_10T_MASK;
     }
 
     /* Set duplex mode.  */
@@ -2643,13 +2728,13 @@ ULONG idx;
     switch (nx_driver_information.nx_driver_information_link_duplex)
     {
         case kENET_MiiHalfDuplex:
-            ENET->RCR/*(ch)*/ |= ENET_RCR_DRT_MASK;
-            ENET->TCR/*(ch)*/ &= (uint32_t)~ENET_TCR_FDEN_MASK;
+            EXAMPLE_ENET->RCR/*(ch)*/ |= ENET_RCR_DRT_MASK;
+            EXAMPLE_ENET->TCR/*(ch)*/ &= (uint32_t)~ENET_TCR_FDEN_MASK;
             break;
         case kENET_MiiFullDuplex:
         default:
-            ENET->RCR/*(ch)*/ &= ~ENET_RCR_DRT_MASK;
-            ENET->TCR/*(ch)*/ |= ENET_TCR_FDEN_MASK;
+            EXAMPLE_ENET->RCR/*(ch)*/ &= ~ENET_RCR_DRT_MASK;
+            EXAMPLE_ENET->TCR/*(ch)*/ |= ENET_TCR_FDEN_MASK;
             break;
     }
 
@@ -2694,20 +2779,20 @@ ULONG idx;
     }
 
     /* Set Transmit Descriptor List Address Register */
-    ENET->TDSR = (ULONG) nx_driver_information.nx_driver_information_dma_tx_descriptors;
+    EXAMPLE_ENET->TDSR = (ULONG) nx_driver_information.nx_driver_information_dma_tx_descriptors;
 
     /* Configure the Receive Buffer Size Register.  */
-    ENET->MRBR = nx_driver_information.nx_driver_information_rx_buffer_size;
+    EXAMPLE_ENET->MRBR = nx_driver_information.nx_driver_information_rx_buffer_size;
 
     /* Set Receive Descriptor List Address Register.  */
-    ENET->RDSR = (ULONG) nx_driver_information.nx_driver_information_dma_rx_descriptors;
+    EXAMPLE_ENET->RDSR = (ULONG) nx_driver_information.nx_driver_information_dma_rx_descriptors;
 
     if (nx_driver_information.nx_driver_information_state >= NX_DRIVER_STATE_LINK_ENABLED)
     {
 
         /* Enable ethernet & start packet receiving.  */
-        ENET->ECR |= ENET_ECR_ETHEREN_MASK;
-        ENET->RDAR = ENET_RDAR_RDAR_MASK;
+        EXAMPLE_ENET->ECR |= ENET_ECR_ETHEREN_MASK;
+        EXAMPLE_ENET->RDAR = ENET_RDAR_RDAR_MASK;
     }
 }
 
@@ -2752,8 +2837,8 @@ ULONG idx;
 /**************************************************************************/
 VOID  nx_driver_imx_ethernet_isr(VOID)
 {
-UINT status;
-  status = ENET->EIR;
+  UINT status;
+  status = EXAMPLE_ENET->EIR;
 
   if(status & ENET_EIR_RXF_MASK )
   {
@@ -2776,12 +2861,12 @@ UINT status;
 #endif
 
     /* Clear the Ethernet DMA Rx IT pending bits */
-    ENET->EIR = ENET_EIR_RXF_MASK;
+    EXAMPLE_ENET->EIR = ENET_EIR_RXF_MASK;
   }
   if(status & ENET_EIR_TXF_MASK)
   {
 
-     ENET->TDAR = ENET_TDAR_TDAR_MASK;
+     EXAMPLE_ENET->TDAR = ENET_TDAR_TDAR_MASK;
 
 #ifdef NX_DRIVER_ENABLE_DEFERRED
 
@@ -2800,7 +2885,7 @@ UINT status;
 #endif
 
     /* Clear the Eth DMA Tx IT pending bit.  */
-    ENET->EIR = ENET_EIR_TXF_MASK;
+    EXAMPLE_ENET->EIR = ENET_EIR_TXF_MASK;
   }
 }
 

@@ -2,7 +2,16 @@
 @page middleware_log Middleware Change Log
 
 @section mmc MMC Card driver for MCUXpresso SDK
-  The current driver version is 2.4.1.
+  The current driver version is 2.5.0.
+
+  - 2.5.0
+    - Improvements
+      - Added api MMC_SetSleepAwake to support enter/exit sleep state.
+      - Added new api MMC_PollingCardStatusBusy for application polling card status.
+      - Removed deprecated api in mmc driver and mark MMC_HostReset as deprecated.
+      - Improved the read/write/erase function flow.
+      - Added mutual exclusive access for init/deinit/read/write/erase function.
+      - Fixed violations of MISRA C-2012 rule 4.7, 17.7, 10.7, 10.4, 13.5, 14.4, 10.6.
 
   - 2.4.1
     - Improvements

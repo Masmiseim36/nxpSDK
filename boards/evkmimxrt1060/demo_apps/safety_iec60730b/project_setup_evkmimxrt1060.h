@@ -45,4 +45,4 @@ void DCPInit(uint32_t *buffer);
 }
 #endif
 
-#endif /* _PROJECT_SETUP_IMXRT_H_ */ 
+#endif /* _PROJECT_SETUP_IMXRT_H_ */

@@ -2,15 +2,9 @@
  * @author NXP Semiconductors
  * @version 1.0
  * @par License
- * Copyright 2016,2020 NXP
  *
- * This software is owned or controlled by NXP and may only be used
- * strictly in accordance with the applicable license terms.  By expressly
- * accepting such terms or by downloading, installing, activating and/or
- * otherwise using the software, you are agreeing that you have read, and
- * that you agree to comply with and are bound by, such license terms.  If
- * you do not agree to be bound by the applicable license terms, then you
- * may not retain, install, activate or otherwise use the software.
+ * Copyright 2016,2020 NXP
+ * SPDX-License-Identifier: Apache-2.0
  *
  * @par History
  *
@@ -50,7 +44,7 @@
 #include <assert.h>
 #ifdef LINUX
 #if !defined(__APPLE__)
-#include <malloc.h>
+#include <fsl_sss_types.h>
 #endif
 #endif // LINUX
 
@@ -103,6 +97,9 @@ U16 SCP_Subscribe(SCP_SignalFunction callback, void *context)
 U32 scp_Transceive(void *conn_ctx, apdu_t * pApdu, scp_CommandType_t type)
 {
     U32 rv = SMCOM_OK;
+#if defined(SMCOM_JRCP_V1_AM)
+    scp_CommandType_t type_temp = type;
+#endif
 
 #ifdef SECURE_CHANNEL_SUPPORTED
     scp_CommandType_t channelCommandType;
@@ -131,10 +128,18 @@ U32 scp_Transceive(void *conn_ctx, apdu_t * pApdu, scp_CommandType_t type)
     }
     else
     {
+#if defined(SMCOM_JRCP_V1_AM)
+#else
         // scp_TransformCommand (if branch) already invokes smApduAdaptLc
         smApduAdaptLc(pApdu, pApdu->lc);
+#endif
     }
+
+#if defined(SMCOM_JRCP_V1_AM)
+#else
     smApduAdaptLe(pApdu, 0);
+#endif
+
 #ifdef TGT_EDEV
     // EDEV Specific: Conditionally adapt CLA byte to label the command as a HOST channel command (as opposed to ADMIN channel)
     if (channelId == AX_HOST_CHANNEL)
@@ -145,6 +150,21 @@ U32 scp_Transceive(void *conn_ctx, apdu_t * pApdu, scp_CommandType_t type)
 #else //SECURE_CHANNEL_SUPPORTED
     smApduAdaptLcLe(pApdu, pApdu->lc, 0);
 #endif //SECURE_CHANNEL_SUPPORTED
+
+#if defined(SMCOM_JRCP_V1_AM)
+    pApdu->pBuf[pApdu->buflen++] = pApdu->extendedLength;
+    pApdu->pBuf[pApdu->buflen++] = pApdu->hasData;
+    pApdu->pBuf[pApdu->buflen++] = (pApdu->lc & 0xFF);
+    pApdu->pBuf[pApdu->buflen++] = ((pApdu->lc >> 8) & 0xFF);
+    pApdu->pBuf[pApdu->buflen++] = pApdu->lcLength;
+    pApdu->pBuf[pApdu->buflen++] = pApdu->hasLe;    
+    pApdu->pBuf[pApdu->buflen++] = (pApdu->le & 0xFF);
+    pApdu->pBuf[pApdu->buflen++] = ((pApdu->le >> 8) & 0xFF);
+    pApdu->pBuf[pApdu->buflen++] = pApdu->leLength;
+    pApdu->pBuf[pApdu->buflen++] = (pApdu->offset & 0xFF);
+    pApdu->pBuf[pApdu->buflen++] = ((pApdu->offset >> 8) & 0xFF);
+    pApdu->pBuf[pApdu->buflen++] = (U8)type_temp;
+#endif
 
     rv = smCom_Transceive(conn_ctx, pApdu);
 

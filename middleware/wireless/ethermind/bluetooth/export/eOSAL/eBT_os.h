@@ -70,6 +70,7 @@
 #define BT_str_cat(d, s)                EM_str_cat((d), (s))
 #define BT_str_n_cat(d, s, sz)          EM_str_n_cat((d), (s), (sz))
 #define BT_str_str(s, ss)               EM_str_str((s), (ss))
+#define BT_str_print(...)               EM_str_print(__VA_ARGS__)
 
 /* Abstractions for memory functions */
 #define BT_mem_move(d, s, n)            EM_mem_move((d), (s), (n))

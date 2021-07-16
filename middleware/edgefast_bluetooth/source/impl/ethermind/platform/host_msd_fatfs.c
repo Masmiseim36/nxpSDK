@@ -172,9 +172,8 @@ static void USB_HostMsdFatfsMount(usb_host_msd_fatfs_instance_t *msdFatfsInstanc
 extern usb_status_t USB_HostTestModeInit(usb_device_handle deviceHandle);
 #endif
 
-__WEAK_FUNC int USB_HostGetConfiguration(usb_host_config_t *config);
-
-__WEAK_FUNC int USB_HostPhyGetConfiguration(usb_host_instance_t instance, usb_host_phy_config_t *config);
+__WEAK_FUNC void USB_HostClockInit(void);
+__WEAK_FUNC void USB_HostIsrEnable(void);
 
 /*******************************************************************************
  * Variables
@@ -205,9 +204,6 @@ USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE)
 static uint8_t testBuffer[(FF_MAX_SS > 256) ? FF_MAX_SS : 256]; /* normal test buffer */
 #endif
 #endif /* MSD_FATFS_THROUGHPUT_TEST_ENABLE */
-
-static usb_controller_index_t s_UsbHostMsdIntance;
-static usb_host_instance_t s_UsbHostMsdConfiguredIntance;
 
 /*******************************************************************************
  * Code
@@ -463,12 +459,12 @@ static void USB_HostMsdFatfsDisplayFileInfo(FILINFO *fileInfo)
              ((fileInfo->fattrib & (uint8_t)AM_SYS) != 0U) ? 'S' : '_',
              fileName,
              (fileInfo->fsize),
-             (uint32_t)((uint32_t)(fileInfo->fdate >> 9U) + (uint32_t)1980U) /* year */,
-             (uint32_t)((uint32_t)(fileInfo->fdate >> 5U) & (uint32_t)0x000Fu) /* month */,
-             (uint32_t)((uint32_t)fileInfo->fdate & (uint32_t)0x001Fu) /* day */,
-             (uint32_t)((uint32_t)(fileInfo->ftime >> 11U) & (uint32_t)0x0000001Fu) /* hour */,
-             (uint32_t)((uint32_t)(fileInfo->ftime >> 5U) & (uint32_t)0x0000003Fu) /* minute */,
-             (uint32_t)((uint32_t)fileInfo->ftime & (uint32_t)0x0000001Fu) /* second */
+             (((uint32_t)fileInfo->fdate >> 9U) + (uint32_t)1980U) /* year */,
+             (((uint32_t)fileInfo->fdate >> 5U) & (uint32_t)0x000Fu) /* month */,
+             ((uint32_t)fileInfo->fdate & (uint32_t)0x001Fu) /* day */,
+             (((uint32_t)fileInfo->ftime >> 11U) & (uint32_t)0x0000001Fu) /* hour */,
+             (((uint32_t)fileInfo->ftime >> 5U) & (uint32_t)0x0000003Fu) /* minute */,
+             ((uint32_t)fileInfo->ftime & (uint32_t)0x0000001Fu) /* second */
              );
 }
 
@@ -493,7 +489,7 @@ static FRESULT USB_HostMsdFatfsListDirectory(const TCHAR *path)
     while (true)
     {
         fatfsCode = f_readdir(&dir, &fileInfo);
-        if ((fatfsCode != FR_OK ) || ( 0 == fileInfo.fname[0]))
+        if ((fatfsCode != FR_OK ) || ( (char)0 == fileInfo.fname[0]))
         {
             break;
         }
@@ -557,7 +553,7 @@ static void USB_HostMsdFatfsMount(usb_host_msd_fatfs_instance_t *msdFatfsInstanc
     (void)PRINTF("fatfs mount as logiacal driver %d......", USBDISK);
     (void)sprintf((char *)&driver_number_buffer[0], "%c:", USBDISK + '0');
     fatfsCode = f_mount(&fatfs, (char const *)&driver_number_buffer[0], 0);
-    if (fatfsCode)
+    if (fatfsCode != FR_OK)
     {
         (void)PRINTF("Mount error\r\n");
         return;
@@ -566,7 +562,7 @@ static void USB_HostMsdFatfsMount(usb_host_msd_fatfs_instance_t *msdFatfsInstanc
 
 #if (FF_FS_RPATH >= 2)
     fatfsCode = f_chdrive((char const *)&driver_number_buffer[0]);
-    if (fatfsCode)
+    if (fatfsCode != FR_OK)
     {
         (void)PRINTF("Change current drive error\r\n");
         return;
@@ -579,7 +575,7 @@ static void USB_HostMsdFatfsMount(usb_host_msd_fatfs_instance_t *msdFatfsInstanc
     formatOptions.fmt = FM_SFD | FM_ANY;
     (void)PRINTF("test f_mkfs......");
     fatfsCode = f_mkfs((char const *)&driver_number_buffer[0], &formatOptions, testBuffer, FF_MAX_SS);
-    if (fatfsCode != 0)
+    if (fatfsCode != FR_OK)
     {
         (void)PRINTF("Make directory error\r\n");
         return;
@@ -590,7 +586,7 @@ static void USB_HostMsdFatfsMount(usb_host_msd_fatfs_instance_t *msdFatfsInstanc
 
     (void)PRINTF("Get Disk information,\r\n");
     fatfsCode = f_getfree((char const *)&driver_number_buffer[0], (DWORD *)&freeClusterNumber, &fs);
-    if (fatfsCode)
+    if (fatfsCode != FR_OK)
     {
         (void)PRINTF("Get free info error\r\n");
         return;
@@ -614,7 +610,7 @@ static void USB_HostMsdFatfsMount(usb_host_msd_fatfs_instance_t *msdFatfsInstanc
     (void)PRINTF("directory operation:\r\n");
     (void)PRINTF("list root directory:\r\n");
     fatfsCode = USB_HostMsdFatfsListDirectory((char const *)&driver_number_buffer[0]);
-    if (fatfsCode != 0)
+    if (fatfsCode != FR_OK)
     {
         return;
     }
@@ -705,9 +701,9 @@ usb_status_t USB_HostMsdEvent(usb_device_handle deviceHandle,
     usb_host_configuration_t *configuration;
     uint8_t interfaceIndex;
     usb_host_interface_t *interface;
-    uint32_t pid;
-    uint32_t vid;
-    uint32_t address;
+    uint32_t pid = 0U;
+    uint32_t vid = 0U;
+    uint32_t address = 0U;
     uint8_t id;
     usb_host_event_t usb_event = (usb_host_event_t)(uint8_t)((uint8_t)eventCode & 0xFFU);
 
@@ -767,9 +763,9 @@ usb_status_t USB_HostMsdEvent(usb_device_handle deviceHandle,
                     {
                         g_MsdFatfsInstance.deviceState = kStatus_DEV_Attached;
 
-                        (void)USB_HostHelperGetPeripheralInformation(deviceHandle, kUSB_HostGetDevicePID, &pid);
-                        (void)USB_HostHelperGetPeripheralInformation(deviceHandle, kUSB_HostGetDeviceVID, &vid);
-                        (void)USB_HostHelperGetPeripheralInformation(deviceHandle, kUSB_HostGetDeviceAddress, &address);
+                        (void)USB_HostHelperGetPeripheralInformation(deviceHandle, (uint32_t)kUSB_HostGetDevicePID, &pid);
+                        (void)USB_HostHelperGetPeripheralInformation(deviceHandle, (uint32_t)kUSB_HostGetDeviceVID, &vid);
+                        (void)USB_HostHelperGetPeripheralInformation(deviceHandle, (uint32_t)kUSB_HostGetDeviceAddress, &address);
                         (void)PRINTF("The USB MSD disk is attached (pid=0x%x ,vid=0x%x) with assigned address=%d", pid, vid,
                                address);
                     }
@@ -875,6 +871,8 @@ static void USB_HostTask(void *param)
     {
 #if (defined(USB_HOST_CONFIG_EHCI) && (USB_HOST_CONFIG_EHCI > 0U))
         USB_HostEhciTaskFunction(param);
+#elif (defined(USB_HOST_CONFIG_IP3516HS) && (USB_HOST_CONFIG_IP3516HS > 0U))
+        USB_HostIp3516HsTaskFunction(param);
 #else
 #error The controller is not supported!
 #endif
@@ -889,64 +887,6 @@ static void USB_HostApplicationTask(void *param)
     }
 }
 
-static void USB_HostClockInit(void)
-{
-#if ((defined FSL_FEATURE_SOC_USBPHY_COUNT) && (FSL_FEATURE_SOC_USBPHY_COUNT > 0U))
-    usb_phy_config_struct_t phyConfig;
-    usb_host_phy_config_t config;
-    int error;
-
-    error = USB_HostPhyGetConfiguration(s_UsbHostMsdConfiguredIntance, &config);
-    assert(0 == error);
-    if (0 != error)
-    {
-        return;
-    }
-    phyConfig.D_CAL = config.D_CAL;
-    phyConfig.TXCAL45DM = config.TXCAL45DM;
-    phyConfig.TXCAL45DP = config.TXCAL45DP;
-#endif /* FSL_FEATURE_SOC_USBPHY_COUNT */
-#if (defined(USB_HOST_CONFIG_EHCI) && (USB_HOST_CONFIG_EHCI > 0U))
-    if (s_UsbHostMsdIntance == kUSB_ControllerEhci0)
-    {
-        (void)CLOCK_EnableUsbhs0PhyPllClock(kCLOCK_Usbphy480M, 480000000U);
-        (void)CLOCK_EnableUsbhs0Clock(kCLOCK_Usb480M, 480000000U);
-    }
-    else if (s_UsbHostMsdIntance == kUSB_ControllerEhci1)
-    {
-        (void)CLOCK_EnableUsbhs1PhyPllClock(kCLOCK_Usbphy480M, 480000000U);
-        (void)CLOCK_EnableUsbhs1Clock(kCLOCK_Usb480M, 480000000U);
-    }
-    else
-#endif /* USB_HOST_CONFIG_EHCI */
-    {
-        assert(false);
-    }
-#if ((defined FSL_FEATURE_SOC_USBPHY_COUNT) && (FSL_FEATURE_SOC_USBPHY_COUNT > 0U))
-    (void)USB_EhciPhyInit((uint8_t)s_UsbHostMsdIntance, config.inputClockfreq, &phyConfig);
-#endif /* FSL_FEATURE_SOC_USBPHY_COUNT */
-}
-
-static void USB_HostIsrEnable(void)
-{
-    IRQn_Type irqNumber = (IRQn_Type)0U;
-
-#if (defined(USB_HOST_CONFIG_EHCI) && (USB_HOST_CONFIG_EHCI > 0U))
-    IRQn_Type usbHOSTEhciIrq[] = USBHS_IRQS;
-    irqNumber                = usbHOSTEhciIrq[(uint8_t)s_UsbHostMsdIntance - (uint8_t)kUSB_ControllerEhci0];
-#else
-#error The controller is not supported!
-#endif /* USB_HOST_CONFIG_EHCI */
-
-/* Install isr, set priority, and enable IRQ. */
-#if defined(__GIC_PRIO_BITS)
-    GIC_SetPriority((IRQn_Type)irqNumber, USB_HOST_INTERRUPT_PRIORITY);
-#else
-    NVIC_SetPriority((IRQn_Type)irqNumber, USB_HOST_INTERRUPT_PRIORITY);
-#endif
-    (void)EnableIRQ((IRQn_Type)irqNumber);
-}
-
 #if (defined(USB_HOST_CONFIG_EHCI) && (USB_HOST_CONFIG_EHCI > 0U))
 void USB_OTG1_IRQHandler(void)
 {
@@ -959,28 +899,13 @@ void USB_OTG2_IRQHandler(void)
     USB_HostEhciIsrFunction(g_HostMsdFatfsHandle);
     SDK_ISR_EXIT_BARRIER;
 }
-#endif
-
-static int USB_HostMsdInstanceVerify(usb_host_instance_t config)
+#elif (defined(USB_HOST_CONFIG_IP3516HS) && (USB_HOST_CONFIG_IP3516HS > 0U))
+void USB_IRQHandler(void)
 {
-    int error;
-    s_UsbHostMsdConfiguredIntance = config;
-    switch (config)
-    {
-    case kUSB_HostInstanceEhci0:
-        error = 0;
-        s_UsbHostMsdIntance = kUSB_ControllerEhci0;
-        break;
-    case kUSB_HostInstanceEhci1:
-        s_UsbHostMsdIntance = kUSB_ControllerEhci1;
-        error = 0;
-        break;
-    default:
-        error = -1;
-        break;
-    }
-    return error;
+    USB_HostIp3516HsIsrFunction(g_HostMsdFatfsHandle);
+    SDK_ISR_EXIT_BARRIER;
 }
+#endif
 
 int USB_HostMsdFatfsInit(void)
 {
@@ -988,26 +913,10 @@ int USB_HostMsdFatfsInit(void)
     usb_status_t status = kStatus_USB_Success;
     EventBits_t uxBits;
     TickType_t xTicksToWait;
-    int error;
-    usb_host_config_t config;
 
     s_msdAttachedEvent = xEventGroupCreate();
 
     if (NULL == s_msdAttachedEvent)
-    {
-        return -1;
-    }
-
-    error = USB_HostGetConfiguration(&config);
-    assert(0 == error);
-    if (0 != error)
-    {
-        return -1;
-    }
-
-    error = USB_HostMsdInstanceVerify(config.controllerId);
-    assert(0 == error);
-    if (0 != error)
     {
         return -1;
     }
@@ -1018,7 +927,7 @@ int USB_HostMsdFatfsInit(void)
     SYSMPU_Enable(SYSMPU, 0);
 #endif /* FSL_FEATURE_SOC_SYSMPU_COUNT */
 
-    status = USB_HostInit((uint8_t)s_UsbHostMsdIntance, &g_HostMsdFatfsHandle, USB_HostEvent);
+    status = USB_HostInit((uint8_t)CONTROLLER_ID, &g_HostMsdFatfsHandle, USB_HostEvent);
     if (status != kStatus_USB_Success)
     {
         (void)PRINTF("host init error\r\n");
@@ -1028,13 +937,13 @@ int USB_HostMsdFatfsInit(void)
 
     (void)PRINTF("USB Host stack successfully initialized\r\n");
 
-    if (xTaskCreate(USB_HostTask, "usb host task", (int)(2000UL / sizeof(portSTACK_TYPE)), g_HostMsdFatfsHandle,
+    if (xTaskCreate(USB_HostTask, "usb host task", ((int)2000UL / (int)sizeof(portSTACK_TYPE)), g_HostMsdFatfsHandle,
                     configMAX_PRIORITIES - 2, NULL) != pdPASS)
     {
         (void)PRINTF("create host task error\r\n");
         return -2;
     }
-    if (xTaskCreate(USB_HostApplicationTask, "app task", (int)(2300UL / sizeof(portSTACK_TYPE)), &g_MsdFatfsInstance, 1,
+    if (xTaskCreate(USB_HostApplicationTask, "app task", ((int)2300UL / (int)sizeof(portSTACK_TYPE)), &g_MsdFatfsInstance, 1,
                     NULL) != pdPASS)
     {
         (void)PRINTF("create mouse task error\r\n");
@@ -1070,12 +979,12 @@ int USB_HostMsdFatfsInit(void)
     return 0;
 }
 
-__WEAK_FUNC int USB_HostGetConfiguration(usb_host_config_t *config)
+__WEAK_FUNC void USB_HostClockInit(void)
 {
-    return -1;
+    assert(0);
 }
 
-__WEAK_FUNC int USB_HostPhyGetConfiguration(usb_host_instance_t instance, usb_host_phy_config_t *config)
+__WEAK_FUNC void USB_HostIsrEnable(void)
 {
-    return -1;
+    assert(0);
 }

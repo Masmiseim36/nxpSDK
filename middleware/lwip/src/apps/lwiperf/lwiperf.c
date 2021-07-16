@@ -92,14 +92,14 @@
 #define CLOCK_MONOTONIC 1
 
 /** The resolution of the clock in microseconds */
-#ifdef FSL_RTOS_FREE_RTOS
+#ifdef SDK_OS_FREE_RTOS
 #include "portmacro.h"
 #define CLOCK_RESOLUTION_US (portTICK_PERIOD_MS * 1000u)
 #else
 #define CLOCK_RESOLUTION_US 1000u
 #endif
 
-#ifndef LWIP_TIMEVAL_PRIVATE
+#if (!defined(LWIP_TIMEVAL_PRIVATE)) || (LWIP_TIMEVAL_PRIVATE != 0)
 /** Added for compatibility */
 struct timespec {
   long tv_sec;
@@ -384,8 +384,7 @@ lwiperf_tcp_close(lwiperf_state_tcp_t *conn, enum lwiperf_report_type report_typ
       /* don't want to wait for free memory here... */
       tcp_abort(conn->conn_pcb);
     }
-  }
-  else if (conn->server_pcb) {
+  } else if (conn->server_pcb != NULL) {
     /* no conn pcb, this is the listener pcb */
     err = tcp_close(conn->server_pcb);
     LWIP_ASSERT("error", err == ERR_OK);
@@ -690,8 +689,11 @@ lwiperf_tcp_err(void *arg, err_t err)
 {
   lwiperf_state_tcp_t *conn = (lwiperf_state_tcp_t *)arg;
   LWIP_UNUSED_ARG(err);
-  /* lwiperf_tcp_close MUST not close itself conn_pcb */
+
+  /* pcb is already deallocated, prevent double-free */
   conn->conn_pcb = NULL;
+  conn->server_pcb = NULL;
+
   lwiperf_tcp_close(conn, LWIPERF_TCP_ABORTED_REMOTE);
 }
 

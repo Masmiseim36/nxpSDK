@@ -37,7 +37,7 @@
 #include "sm_internal.h"
 #include "sm_extern.h"
 
-
+#ifdef CLASSIC_SEC_MANAGER
 /* ----------------------------------------- External Global Variables */
 
 
@@ -75,7 +75,7 @@ API_RESULT BT_sm_get_device_attr_pl
     "[SM-PL] Searching for Device with Rank = %u\n",
     (unsigned int) attr);
 
-    for (di = 0; di < SM_MAX_DEVICES; di ++)
+    for (di = 0U; di < SM_MAX_DEVICES; di ++)
     {
         if ((SM_DEVICE_USED == sm_devices[di].valid) &&
             (attr == sm_devices[di].device_attr_pl))
@@ -157,12 +157,12 @@ void sm_init_device_attr_pl (void)
     UINT32 di;
 
     /* Initialize Rank Count */
-    sm_rank_count = 0;
+    sm_rank_count = 0U;
 
     /* Initialize Ranks for Devices */
-    for (di = 0; di < SM_MAX_DEVICES; di ++)
+    for (di = 0U; di < SM_MAX_DEVICES; di ++)
     {
-        sm_devices[di].device_attr_pl = 0;
+        sm_devices[di].device_attr_pl = 0U;
     }
 }
 
@@ -246,16 +246,16 @@ API_RESULT sm_update_device_attr_pl
          *  Deletion of Rank is handled only if the Device has
          *  been provided with a valid Rank before.
          */
-        if (0 != sm_devices[di].device_attr_pl)
+        if (0U != sm_devices[di].device_attr_pl)
         {
             /* Save current Rank of the Device */
             rank = sm_devices[di].device_attr_pl;
 
             /* Reset Device's Rank */
-            sm_devices[di].device_attr_pl = 0;
+            sm_devices[di].device_attr_pl = 0U;
 
             /* Decrement Ranks of Devices holding Ranks above this Device */
-            for (i = 0; i < SM_MAX_DEVICES; i ++)
+            for (i = 0U; i < SM_MAX_DEVICES; i ++)
             {
                 if ((i == di) ||
                     (SM_DEVICE_USED != sm_devices[i].valid))
@@ -278,7 +278,7 @@ API_RESULT sm_update_device_attr_pl
         sm_unlock();
 
         /* Update Persistent Storage */
-        BT_storage_store_db(STORAGE_TYPE_PERSISTENT, STORAGE_EVENT_OTHERS);
+        (BT_IGNORE_RETURN_VALUE) BT_storage_store_db(STORAGE_TYPE_PERSISTENT, STORAGE_EVENT_OTHERS);
 
         /* Lock */
         sm_lock();
@@ -294,7 +294,7 @@ API_RESULT sm_update_device_attr_pl
          *  it a Rank provisionally so that it is put in the end
          *  of the Rank list.
          */
-        if (0 == sm_devices[di].device_attr_pl)
+        if (0U == sm_devices[di].device_attr_pl)
         {
             /* Increment Rank Count offered so far */
             sm_rank_count ++;
@@ -332,17 +332,17 @@ API_RESULT sm_update_device_attr_pl
          *  then nothing needs to be done - the Device continues to
          *  hold Rank 1.
          */
-        rank = 1;
-        if (1 != sm_devices[di].device_attr_pl)
+        rank = 1U;
+        if (1U != sm_devices[di].device_attr_pl)
         {
             /* Save current Rank of the Device */
             rank = sm_devices[di].device_attr_pl;
 
             /* Move the Device at the top of Rank List */
-            sm_devices[di].device_attr_pl = 1;
+            sm_devices[di].device_attr_pl = 1U;
 
             /* Update Rank of Devices appearing below by 1 */
-            for (i = 0; i < SM_MAX_DEVICES; i ++)
+            for (i = 0U; i < SM_MAX_DEVICES; i ++)
             {
                 if ((i == di) ||
                     (SM_DEVICE_USED != sm_devices[i].valid))
@@ -378,7 +378,7 @@ API_RESULT sm_update_device_attr_pl
          */
     #ifdef SM_STORAGE
         if ((SM_DEVICE_ATTR_PL_PAIRING_COMPLETE == event) ||
-            ((1 != rank) && (SM_DEVICE_ATTR_PL_ACL_COMPLETE == event)))
+            ((1U != rank) && (SM_DEVICE_ATTR_PL_ACL_COMPLETE == event)))
         {
             UINT16            storage_type;
 
@@ -395,13 +395,17 @@ API_RESULT sm_update_device_attr_pl
             }
 
             /* Update Persistent Storage */
-            BT_storage_store_db(STORAGE_TYPE_PERSISTENT, storage_type);
+            (BT_IGNORE_RETURN_VALUE) BT_storage_store_db(STORAGE_TYPE_PERSISTENT, storage_type);
 
             /* Lock */
             sm_lock();
         }
     #endif /* SM_STORAGE */
 
+        break;
+
+    default:
+        SM_TRC("Invalid Event Type: 0x%02X\n", event);
         break;
     }
 
@@ -437,7 +441,7 @@ API_RESULT sm_purge_device_list_pl
     SM_DEVICE_ATTR_PL rank;
     API_RESULT retval;
 
-    rank = 0;
+    rank = 0U;
     rank_di = SM_MAX_DEVICES;
 
     /*
@@ -449,7 +453,7 @@ API_RESULT sm_purge_device_list_pl
      *  list is ascertained to have no free entry (either INVALID or
      *  CAN_BE_FREED).
      */
-    for (i = 0; i < SM_MAX_DEVICES; i ++)
+    for (i = 0U; i < SM_MAX_DEVICES; i ++)
     {
         if ((sm_devices[i].device_attr_pl > rank) &&
             (SM_FALSE == SM_IS_DEVICE_ACL_INITIATED(i)) &&
@@ -533,7 +537,7 @@ void sm_dump_device_rank_pl (void)
     SM_TRC(
     "[SM-PL] ------------------------------------------------\n");
 
-    for (di = 0; di < SM_MAX_DEVICES; di ++)
+    for (di = 0U; di < SM_MAX_DEVICES; di ++)
     {
         if (SM_DEVICE_USED == sm_devices[di].valid)
         {
@@ -548,5 +552,5 @@ void sm_dump_device_rank_pl (void)
     "[SM-PL] ------------------------------------------------\n");
 }
 #endif /* SEC_DEBUG */
-
+#endif /* CLASSIC_SEC_MANAGER */
 

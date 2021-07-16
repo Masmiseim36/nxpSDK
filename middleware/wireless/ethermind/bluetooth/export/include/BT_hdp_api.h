@@ -87,7 +87,7 @@
 /*@}*/
 
 /* HDP error codes to be moved to BT_error.h */
-#define HDP_ERR_ID                                0x2E00
+#define HDP_ERR_ID                                0x2E00U
 #define HDP_INVALID_MDEP                          MCAP_INVALID_MDEP
 #define HDP_CONFIG_REJECTED                       MCAP_CONFIGURATION_REJECTED
 
@@ -98,7 +98,7 @@
  * Constant Definitions for HDP Data Channel Configuration Preferences
  */
 /*@{*/
-#define HDP_NO_PREFERENCE                         0x00
+#define HDP_NO_PREFERENCE                         0x00U
 #define HDP_RELIABLE_CHNL                         MCAP_HDP_RELIABLE
 #define HDP_STREAMING_CHNL                        MCAP_HDP_STREAMING
 /*@}*/
@@ -109,9 +109,9 @@
  * Constant Definitions for HDP mcl_role
  */
 /*@{*/
-#define HDP_SOURCE                                0x00
-#define HDP_SINK                                  0x01
-#define HDP_INVALID_ROLE                          0xFF
+#define HDP_SOURCE                                0x00U
+#define HDP_SINK                                  0x01U
+#define HDP_INVALID_ROLE                          0xFFU
 /*@}*/
 /** \} */
 /* --------------------------------------------- Structures/Data Types */
@@ -355,8 +355,8 @@ typedef MCAP_MC_CONNECT_PARAMS  HDP_MC_CONNECT_PARAMS ;
 /**
  *  \brief To send the response to remote device data chnl create request
  */
-#define BT_hdp_md_create_rsp(mcap_handle,rsp_code,rsp_params)  \
-        BT_mcap_md_create_rsp(mcap_handle,rsp_code,rsp_params);
+#define BT_hdp_md_create_rsp(mcap_handle,rsp_code,rsp_params,rsp_len)  \
+        BT_mcap_md_create_rsp(mcap_handle,rsp_code,rsp_params,rsp_len);
 
 
 /**

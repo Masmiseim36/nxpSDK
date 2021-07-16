@@ -1,8 +1,7 @@
 /*
- * Copyright 2019-2020 NXP
- * All rights reserved.
  *
- * SPDX-License-Identifier: BSD-3-Clause
+ * Copyright 2019-2020 NXP
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 /**
@@ -257,11 +256,13 @@ static void AddLe(apdu_t * pApdu, U16 le)
 
     if (pApdu->extendedLength) {
         if (pApdu->hasData) {
+            ENSURE_OR_GO_EXIT( (pApdu->offset + 1) < MAX_APDU_BUF_LENGTH);
             pApdu->pBuf[pApdu->offset] = (U8)(le >> 8);
             pApdu->pBuf[pApdu->offset + 1] = (U8)(le & 0xFF);
             pApdu->leLength = 2;
         }
         else {
+            ENSURE_OR_GO_EXIT( (pApdu->offset + 2) < MAX_APDU_BUF_LENGTH);
             pApdu->pBuf[pApdu->offset] = 0x00;
             pApdu->pBuf[pApdu->offset + 1] = (U8)(le >> 8);
             pApdu->pBuf[pApdu->offset + 2] = (U8)(le & 0xFF);
@@ -270,6 +271,7 @@ static void AddLe(apdu_t * pApdu, U16 le)
     }
     else {
         // regular length
+        ENSURE_OR_GO_EXIT(pApdu->offset < MAX_APDU_BUF_LENGTH);
         pApdu->pBuf[pApdu->offset] = (U8)(le & 0xFF);
         pApdu->leLength = 1;
     }
@@ -854,7 +856,7 @@ bool smApduGetTxRxCase(uint8_t *apdu, size_t apduLen, size_t* data_offset, size_
         }
         else
         {
-            size_t len = ((apdu[5] & 0xFF) << 8) | (apdu[6] & 0xFF);
+            size_t len = ((apdu[5] << (1 * 8)) & 0xFF00) + ((apdu[6] << (0 * 8)) & 0x00FF);
             if (apduLen == 7 + len) {
                 //case 3E
                 *apdu_case = APDU_TXRX_CASE_3E;

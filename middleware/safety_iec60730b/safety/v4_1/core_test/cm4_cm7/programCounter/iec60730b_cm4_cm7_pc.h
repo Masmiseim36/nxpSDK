@@ -22,7 +22,7 @@
 #define IEC60730B_CM4_CM7_PC_H_
 
 /*
- * List of devices and supported functions can be found in library user guide, 
+ * List of devices and supported functions can be found in library user guide,
  * section Core self test library - source code version.
  */
 
@@ -30,7 +30,7 @@
  * Macros
  ******************************************************************************/
 /* Return values */
-#define FS_FAIL_PC  (FS_PC_CODE + 0x01)
+#define FS_FAIL_PC (FS_PC_CODE + 0x01)
 
 /* Assembler skips following section */
 #ifndef __ASM__
@@ -46,15 +46,15 @@ typedef void (*tFcn_pc)(void);
  ******************************************************************************/
 /*******************************************************************************
  *
- * @brief    This function executes the PC test. It is universal and can be 
+ * @brief    This function executes the PC test. It is universal and can be
  *           implemented with various memory addresses.
- *           Flag is set to 1 before some pattern is written into PC. 
- *           After successful execution, flag is cleared. It is usefull for 
- *           validating the test, or when finding the error after reset. 
+ *           Flag is set to 1 before some pattern is written into PC.
+ *           After successful execution, flag is cleared. It is usefull for
+ *           validating the test, or when finding the error after reset.
  *
  * @param    pattern1        - address from RAM memory, adequate as a pattern for PC.
  * @param    pObjectFunction - address of FS_PC_Object() function.
- * @param    *pFlag          - address of variable/place in memory used as a flag. 
+ * @param    *pFlag          - address of variable/place in memory used as a flag.
  *                             If flag is 0 test was successful, if 1 test failed.
  *
  * @return   FS_PASS
@@ -66,7 +66,7 @@ FS_RESULT FS_CM4_CM7_PC_Test(uint32_t pattern1, tFcn_pc pObjectFunction, uint32_
 /*******************************************************************************
  *
  * @brief    This function is internally used by the FS_CM4_CM7_PC_Test() function.
- *           Function is used for performing PC test, it should be called only 
+ *           Function is used for performing PC test, it should be called only
  *           by FS_CM4_CM7_PC_Test() function.
  *           It should be placed in reliable address - by editing the linker file.
  *

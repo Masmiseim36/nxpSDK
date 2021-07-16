@@ -1,6 +1,6 @@
 # CROSS COMPILER SETTING
 SET(CMAKE_SYSTEM_NAME Generic)
-CMAKE_MINIMUM_REQUIRED (VERSION 3.1.1)
+CMAKE_MINIMUM_REQUIRED (VERSION 3.10.0)
 
 # THE VERSION NUMBER
 SET (Tutorial_VERSION_MAJOR 1)
@@ -47,7 +47,6 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 )
 
 target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
-    ${ProjDirPath}/.. sdram_debug
     ${ProjDirPath}/..
 )
 
@@ -73,8 +72,8 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../devices/MIMXRT1052/drivers
     ${ProjDirPath}/../../../../../middleware/mbedtls
     ${ProjDirPath}/../../../../../rtos/freertos
-    ${ProjDirPath}/../../../../../devices/MIMXRT1052/utilities
     ${ProjDirPath}/../../../../../middleware/lwip
+    ${ProjDirPath}/../../../../../devices/MIMXRT1052/utilities
     ${ProjDirPath}/../../../../../components/phy
     ${ProjDirPath}/../../../../../middleware/azure_iot
     ${ProjDirPath}/../..
@@ -84,7 +83,7 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../components/lists
     ${ProjDirPath}/../../../../../devices/MIMXRT1052/xip
     ${ProjDirPath}/../../../xip
-    ${ProjDirPath}/../../../../../CMSIS/Include
+    ${ProjDirPath}/../../../../../CMSIS/Core/Include
 )
 
 # include modules
@@ -98,6 +97,8 @@ include(driver_dcp_MIMXRT1052)
 
 include(driver_cache_armv7_m7_MIMXRT1052)
 
+include(middleware_mbedtls_MIMXRT1052)
+
 include(middleware_mbedtls_port_ksdk_MIMXRT1052)
 
 include(middleware_mbedtls_rt_MIMXRT1052)
@@ -106,13 +107,11 @@ include(driver_clock_MIMXRT1052)
 
 include(middleware_freertos-kernel_heap_3_MIMXRT1052)
 
-include(middleware_mbedtls_MIMXRT1052)
-
-include(utility_debug_console_MIMXRT1052)
-
 include(middleware_lwip_apps_sntp_MIMXRT1052)
 
 include(middleware_lwip_MIMXRT1052)
+
+include(utility_debug_console_MIMXRT1052)
 
 include(middleware_lwip_enet_ethernetif_MIMXRT1052)
 
@@ -148,15 +147,11 @@ include(driver_igpio_MIMXRT1052)
 
 include(driver_xip_device_MIMXRT1052)
 
-include(driver_xip_board_MIMXRT1052)
+include(driver_xip_board_evkbimxrt1050_MIMXRT1052)
 
 include(driver_mdio-common_MIMXRT1052)
 
-include(CMSIS_Include_core_cm7_MIMXRT1052)
-
-include(CMSIS_Include_common_MIMXRT1052)
-
-include(CMSIS_Include_dsp_MIMXRT1052)
+include(CMSIS_Include_core_cm_MIMXRT1052)
 
 include(middleware_freertos-kernel_MIMXRT1052)
 

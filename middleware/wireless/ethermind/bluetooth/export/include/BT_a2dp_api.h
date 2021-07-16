@@ -51,19 +51,19 @@
 
 /*@{*/
 
-#define A2DP_CONNECT_CNF                             0x01
-#define A2DP_DISCONNECT_CNF                          0x02
-#define A2DP_START_CNF                               0x03
-#define A2DP_SUSPEND_CNF                             0x04
-#define A2DP_RECONFIGURE_CNF                         0x05
-#define A2DP_CONNECT_IND                             0x06
-#define A2DP_DISCONNECT_IND                          0x07
-#define A2DP_START_IND                               0x08
-#define A2DP_CONFIGURE_IND                           0x09
-#define A2DP_SUSPEND_IND                             0x0A
-#define A2DP_MEDIA_FRAME_IND                         0x0B
-#define A2DP_DELAY_REPORT_IND                        0x0C
-#define A2DP_DELAY_REPORT_CNF                        0x0D
+#define A2DP_CONNECT_CNF                             0x01U
+#define A2DP_DISCONNECT_CNF                          0x02U
+#define A2DP_START_CNF                               0x03U
+#define A2DP_SUSPEND_CNF                             0x04U
+#define A2DP_RECONFIGURE_CNF                         0x05U
+#define A2DP_CONNECT_IND                             0x06U
+#define A2DP_DISCONNECT_IND                          0x07U
+#define A2DP_START_IND                               0x08U
+#define A2DP_CONFIGURE_IND                           0x09U
+#define A2DP_SUSPEND_IND                             0x0AU
+#define A2DP_MEDIA_FRAME_IND                         0x0BU
+#define A2DP_DELAY_REPORT_IND                        0x0CU
+#define A2DP_DELAY_REPORT_CNF                        0x0DU
 
 /*@}*/
 
@@ -76,10 +76,10 @@
  */
 /*@{*/
 
-#define A2DP_SBC_SAMPLING_FREQUENCY_16000            0x80
-#define A2DP_SBC_SAMPLING_FREQUENCY_32000            0x40
-#define A2DP_SBC_SAMPLING_FREQUENCY_44100            0x20
-#define A2DP_SBC_SAMPLING_FREQUENCY_48000            0x10
+#define A2DP_SBC_SAMPLING_FREQUENCY_16000            0x80U
+#define A2DP_SBC_SAMPLING_FREQUENCY_32000            0x40U
+#define A2DP_SBC_SAMPLING_FREQUENCY_44100            0x20U
+#define A2DP_SBC_SAMPLING_FREQUENCY_48000            0x10U
 
 /*@}*/
 
@@ -92,10 +92,10 @@
  */
 /*@{*/
 
-#define A2DP_SBC_CHANNEL_MONO                        0x08
-#define A2DP_SBC_CHANNEL_DUAL                        0x04
-#define A2DP_SBC_CHANNEL_STEREO                      0x02
-#define A2DP_SBC_CHANNEL_JOINT_STEREO                0x01
+#define A2DP_SBC_CHANNEL_MONO                        0x08U
+#define A2DP_SBC_CHANNEL_DUAL                        0x04U
+#define A2DP_SBC_CHANNEL_STEREO                      0x02U
+#define A2DP_SBC_CHANNEL_JOINT_STEREO                0x01U
 
 /*@}*/
 
@@ -108,10 +108,10 @@
  */
 /*@{*/
 
-#define A2DP_SBC_BLOCK_LENGTH_4                      0x80
-#define A2DP_SBC_BLOCK_LENGTH_8                      0x40
-#define A2DP_SBC_BLOCK_LENGTH_12                     0x20
-#define A2DP_SBC_BLOCK_LENGTH_16                     0x10
+#define A2DP_SBC_BLOCK_LENGTH_4                      0x80U
+#define A2DP_SBC_BLOCK_LENGTH_8                      0x40U
+#define A2DP_SBC_BLOCK_LENGTH_12                     0x20U
+#define A2DP_SBC_BLOCK_LENGTH_16                     0x10U
 
 /*@}*/
 
@@ -124,8 +124,8 @@
  */
 /*@{*/
 
-#define A2DP_SBC_SUBBANDS_4                          0x08
-#define A2DP_SBC_SUBBANDS_8                          0x04
+#define A2DP_SBC_SUBBANDS_4                          0x08U
+#define A2DP_SBC_SUBBANDS_8                          0x04U
 
 /*@}*/
 
@@ -137,8 +137,8 @@
  */
 /*@{*/
 
-#define A2DP_SBC_ALLOCATION_METHOD_SNR               0x02
-#define A2DP_SBC_ALLOCATION_METHOD_LOUDNESS          0x01
+#define A2DP_SBC_ALLOCATION_METHOD_SNR               0x02U
+#define A2DP_SBC_ALLOCATION_METHOD_LOUDNESS          0x01U
 
 /*@}*/
 
@@ -151,8 +151,8 @@
  */
 /*@{*/
 
-#define A2DP_SBC_BITPOOL_MIN                         2
-#define A2DP_SBC_BITPOOL_MAX                         250
+#define A2DP_SBC_BITPOOL_MIN                         2U
+#define A2DP_SBC_BITPOOL_MAX                         250U
 
 /*@}*/
 
@@ -164,7 +164,7 @@
  */
 /*@{*/
 
-#define A2DP_SBC_CODEC_CAP_IE_LEN                    4
+#define A2DP_SBC_CODEC_CAP_IE_LEN                    4U
 
 /*@}*/
 
@@ -176,7 +176,7 @@
  */
 /*@{*/
 
-#define A2DP_MPEG_1_2_CODEC_CAP_IE_LEN               4
+#define A2DP_MPEG_1_2_CODEC_CAP_IE_LEN               4U
 
 /*@}*/
 
@@ -188,7 +188,7 @@
  */
 /*@{*/
 
-#define A2DP_MPEG_2_4_CODEC_CAP_IE_LEN               6
+#define A2DP_MPEG_2_4_CODEC_CAP_IE_LEN               6U
 
 /*@}*/
 
@@ -200,12 +200,12 @@
  */
 /*@{*/
 
-#define A2DP_MPEG_1_2_SAMPLING_FREQUENCY_16000       0x20
-#define A2DP_MPEG_1_2_SAMPLING_FREQUENCY_22050       0x10
-#define A2DP_MPEG_1_2_SAMPLING_FREQUENCY_24000       0x08
-#define A2DP_MPEG_1_2_SAMPLING_FREQUENCY_32000       0x04
-#define A2DP_MPEG_1_2_SAMPLING_FREQUENCY_44100       0x02
-#define A2DP_MPEG_1_2_SAMPLING_FREQUENCY_48000       0x01
+#define A2DP_MPEG_1_2_SAMPLING_FREQUENCY_16000       0x20U
+#define A2DP_MPEG_1_2_SAMPLING_FREQUENCY_22050       0x10U
+#define A2DP_MPEG_1_2_SAMPLING_FREQUENCY_24000       0x08U
+#define A2DP_MPEG_1_2_SAMPLING_FREQUENCY_32000       0x04U
+#define A2DP_MPEG_1_2_SAMPLING_FREQUENCY_44100       0x02U
+#define A2DP_MPEG_1_2_SAMPLING_FREQUENCY_48000       0x01U
 
 
 /*@}*/
@@ -218,10 +218,10 @@
  */
 /*@{*/
 
-#define A2DP_MPEG_1_2_CHANNEL_MONO                   0x08
-#define A2DP_MPEG_1_2_CHANNEL_DUAL                   0x04
-#define A2DP_MPEG_1_2_CHANNEL_STEREO                 0x02
-#define A2DP_MPEG_1_2_CHANNEL_JOINT_STEREO           0x01
+#define A2DP_MPEG_1_2_CHANNEL_MONO                   0x08U
+#define A2DP_MPEG_1_2_CHANNEL_DUAL                   0x04U
+#define A2DP_MPEG_1_2_CHANNEL_STEREO                 0x02U
+#define A2DP_MPEG_1_2_CHANNEL_JOINT_STEREO           0x01U
 
 /*@}*/
 
@@ -233,9 +233,9 @@
  */
 /*@{*/
 
-#define A2DP_MPEG_1_2_LAYER_I                        0x80
-#define A2DP_MPEG_1_2_LAYER_II                       0x40
-#define A2DP_MPEG_1_2_LAYER_III                      0x20
+#define A2DP_MPEG_1_2_LAYER_I                        0x80U
+#define A2DP_MPEG_1_2_LAYER_II                       0x40U
+#define A2DP_MPEG_1_2_LAYER_III                      0x20U
 
 /*@}*/
 
@@ -248,8 +248,8 @@
  */
 /*@{*/
 
-#define A2DP_MPEG_1_2_CRC_OFF                         0x00
-#define A2DP_MPEG_1_2_CRC_ON                          0x10
+#define A2DP_MPEG_1_2_CRC_OFF                         0x00U
+#define A2DP_MPEG_1_2_CRC_ON                          0x10U
 
 /*@}*/
 
@@ -262,8 +262,8 @@
  */
 /*@{*/
 
-#define A2DP_MPEG_1_2_MPF_1                          0x00
-#define A2DP_MPEG_1_2_MPF_2                          0x40
+#define A2DP_MPEG_1_2_MPF_1                          0x00U
+#define A2DP_MPEG_1_2_MPF_2                          0x40U
 
 /*@}*/
 
@@ -276,8 +276,8 @@
  */
 /*@{*/
 
-#define A2DP_MPEG_1_2_VBR_ON                         0x80
-#define A2DP_MPEG_1_2_VBR_OFF                        0x00
+#define A2DP_MPEG_1_2_VBR_ON                         0x80U
+#define A2DP_MPEG_1_2_VBR_OFF                        0x00U
 
 /*@}*/
 
@@ -289,8 +289,8 @@
  */
 /*@{*/
 
-#define A2DP_MPEG_1_2_SAMPLES_PER_FRAME_LSF          576
-#define A2DP_MPEG_1_2_SAMPLES_PER_FRAME              1152
+#define A2DP_MPEG_1_2_SAMPLES_PER_FRAME_LSF          576U
+#define A2DP_MPEG_1_2_SAMPLES_PER_FRAME              1152U
 
 /*@}*/
 
@@ -303,36 +303,36 @@
  */
 /*@{*/
 
-#define A2DP_MPEG_1_2_LAYER_III_BITRATE_32           0x0002
-#define A2DP_MPEG_1_2_LAYER_III_BITRATE_40           0x0004
-#define A2DP_MPEG_1_2_LAYER_III_BITRATE_48           0x0008
-#define A2DP_MPEG_1_2_LAYER_III_BITRATE_56           0x0010
-#define A2DP_MPEG_1_2_LAYER_III_BITRATE_64           0x0020
-#define A2DP_MPEG_1_2_LAYER_III_BITRATE_80           0x0040
-#define A2DP_MPEG_1_2_LAYER_III_BITRATE_96           0x0080
-#define A2DP_MPEG_1_2_LAYER_III_BITRATE_112          0x0100
-#define A2DP_MPEG_1_2_LAYER_III_BITRATE_128          0x0200
-#define A2DP_MPEG_1_2_LAYER_III_BITRATE_160          0x0400
-#define A2DP_MPEG_1_2_LAYER_III_BITRATE_192          0x0800
-#define A2DP_MPEG_1_2_LAYER_III_BITRATE_224          0x1000
-#define A2DP_MPEG_1_2_LAYER_III_BITRATE_256          0x2000
-#define A2DP_MPEG_1_2_LAYER_III_BITRATE_320          0x4000
+#define A2DP_MPEG_1_2_LAYER_III_BITRATE_32           0x0002U
+#define A2DP_MPEG_1_2_LAYER_III_BITRATE_40           0x0004U
+#define A2DP_MPEG_1_2_LAYER_III_BITRATE_48           0x0008U
+#define A2DP_MPEG_1_2_LAYER_III_BITRATE_56           0x0010U
+#define A2DP_MPEG_1_2_LAYER_III_BITRATE_64           0x0020U
+#define A2DP_MPEG_1_2_LAYER_III_BITRATE_80           0x0040U
+#define A2DP_MPEG_1_2_LAYER_III_BITRATE_96           0x0080U
+#define A2DP_MPEG_1_2_LAYER_III_BITRATE_112          0x0100U
+#define A2DP_MPEG_1_2_LAYER_III_BITRATE_128          0x0200U
+#define A2DP_MPEG_1_2_LAYER_III_BITRATE_160          0x0400U
+#define A2DP_MPEG_1_2_LAYER_III_BITRATE_192          0x0800U
+#define A2DP_MPEG_1_2_LAYER_III_BITRATE_224          0x1000U
+#define A2DP_MPEG_1_2_LAYER_III_BITRATE_256          0x2000U
+#define A2DP_MPEG_1_2_LAYER_III_BITRATE_320          0x4000U
 
-#define A2DP_MPEG_1_2_BITRATE_INDEX_0                0x0001
-#define A2DP_MPEG_1_2_BITRATE_INDEX_1                0x0002
-#define A2DP_MPEG_1_2_BITRATE_INDEX_2                0x0004
-#define A2DP_MPEG_1_2_BITRATE_INDEX_3                0x0008
-#define A2DP_MPEG_1_2_BITRATE_INDEX_4                0x0010
-#define A2DP_MPEG_1_2_BITRATE_INDEX_5                0x0020
-#define A2DP_MPEG_1_2_BITRATE_INDEX_6                0x0040
-#define A2DP_MPEG_1_2_BITRATE_INDEX_7                0x0080
-#define A2DP_MPEG_1_2_BITRATE_INDEX_8                0x0100
-#define A2DP_MPEG_1_2_BITRATE_INDEX_9                0x0200
-#define A2DP_MPEG_1_2_BITRATE_INDEX_10               0x0400
-#define A2DP_MPEG_1_2_BITRATE_INDEX_11               0x0800
-#define A2DP_MPEG_1_2_BITRATE_INDEX_12               0x1000
-#define A2DP_MPEG_1_2_BITRATE_INDEX_13               0x2000
-#define A2DP_MPEG_1_2_BITRATE_INDEX_14               0x4000
+#define A2DP_MPEG_1_2_BITRATE_INDEX_0                0x0001U
+#define A2DP_MPEG_1_2_BITRATE_INDEX_1                0x0002U
+#define A2DP_MPEG_1_2_BITRATE_INDEX_2                0x0004U
+#define A2DP_MPEG_1_2_BITRATE_INDEX_3                0x0008U
+#define A2DP_MPEG_1_2_BITRATE_INDEX_4                0x0010U
+#define A2DP_MPEG_1_2_BITRATE_INDEX_5                0x0020U
+#define A2DP_MPEG_1_2_BITRATE_INDEX_6                0x0040U
+#define A2DP_MPEG_1_2_BITRATE_INDEX_7                0x0080U
+#define A2DP_MPEG_1_2_BITRATE_INDEX_8                0x0100U
+#define A2DP_MPEG_1_2_BITRATE_INDEX_9                0x0200U
+#define A2DP_MPEG_1_2_BITRATE_INDEX_10               0x0400U
+#define A2DP_MPEG_1_2_BITRATE_INDEX_11               0x0800U
+#define A2DP_MPEG_1_2_BITRATE_INDEX_12               0x1000U
+#define A2DP_MPEG_1_2_BITRATE_INDEX_13               0x2000U
+#define A2DP_MPEG_1_2_BITRATE_INDEX_14               0x4000U
 
 /*@}*/
 
@@ -344,10 +344,10 @@
  */
 /*@{*/
 
-#define A2DP_MPEG_2_4_OBJ_TYPE_MPEG2_AAC_LC          0x80
-#define A2DP_MPEG_2_4_OBJ_TYPE_MPEG4_AAC_LC          0x40
-#define A2DP_MPEG_2_4_OBJ_TYPE_MPEG4_AAC_LTP         0x20
-#define A2DP_MPEG_2_4_OBJ_TYPE_MPEG4_AAC_SCALABLE    0x10
+#define A2DP_MPEG_2_4_OBJ_TYPE_MPEG2_AAC_LC          0x80U
+#define A2DP_MPEG_2_4_OBJ_TYPE_MPEG4_AAC_LC          0x40U
+#define A2DP_MPEG_2_4_OBJ_TYPE_MPEG4_AAC_LTP         0x20U
+#define A2DP_MPEG_2_4_OBJ_TYPE_MPEG4_AAC_SCALABLE    0x10U
 /*@}*/
 
 /**
@@ -357,18 +357,18 @@
  *  Constant Definitions for A2DP MPEG-2,4 Sampling Frequency values.
  */
 /*@{*/
-#define A2DP_MPEG_2_4_SAMPLING_FREQUENCY_8000        0x8000
-#define A2DP_MPEG_2_4_SAMPLING_FREQUENCY_11025       0x4000
-#define A2DP_MPEG_2_4_SAMPLING_FREQUENCY_12000       0x2000
-#define A2DP_MPEG_2_4_SAMPLING_FREQUENCY_16000       0x1000
-#define A2DP_MPEG_2_4_SAMPLING_FREQUENCY_22050       0x0800
-#define A2DP_MPEG_2_4_SAMPLING_FREQUENCY_24000       0x0400
-#define A2DP_MPEG_2_4_SAMPLING_FREQUENCY_32000       0x0200
-#define A2DP_MPEG_2_4_SAMPLING_FREQUENCY_44100       0x0100
-#define A2DP_MPEG_2_4_SAMPLING_FREQUENCY_48000       0x0080
-#define A2DP_MPEG_2_4_SAMPLING_FREQUENCY_64000       0x0040
-#define A2DP_MPEG_2_4_SAMPLING_FREQUENCY_88200       0x0020
-#define A2DP_MPEG_2_4_SAMPLING_FREQUENCY_96000       0x0010
+#define A2DP_MPEG_2_4_SAMPLING_FREQUENCY_8000        0x8000U
+#define A2DP_MPEG_2_4_SAMPLING_FREQUENCY_11025       0x4000U
+#define A2DP_MPEG_2_4_SAMPLING_FREQUENCY_12000       0x2000U
+#define A2DP_MPEG_2_4_SAMPLING_FREQUENCY_16000       0x1000U
+#define A2DP_MPEG_2_4_SAMPLING_FREQUENCY_22050       0x0800U
+#define A2DP_MPEG_2_4_SAMPLING_FREQUENCY_24000       0x0400U
+#define A2DP_MPEG_2_4_SAMPLING_FREQUENCY_32000       0x0200U
+#define A2DP_MPEG_2_4_SAMPLING_FREQUENCY_44100       0x0100U
+#define A2DP_MPEG_2_4_SAMPLING_FREQUENCY_48000       0x0080U
+#define A2DP_MPEG_2_4_SAMPLING_FREQUENCY_64000       0x0040U
+#define A2DP_MPEG_2_4_SAMPLING_FREQUENCY_88200       0x0020U
+#define A2DP_MPEG_2_4_SAMPLING_FREQUENCY_96000       0x0010U
 
 /*@}*/
 
@@ -381,8 +381,8 @@
  */
 /*@{*/
 
-#define A2DP_MPEG_2_4_CHANNELS_1                     0x08
-#define A2DP_MPEG_2_4_CHANNELS_2                     0x04
+#define A2DP_MPEG_2_4_CHANNELS_1                     0x08U
+#define A2DP_MPEG_2_4_CHANNELS_2                     0x04U
 
 /*@}*/
 
@@ -394,8 +394,8 @@
  */
 /*@{*/
 
-#define A2DP_MPEG_2_4_VBR_ON                         0x80
-#define A2DP_MPEG_2_4_VBR_OFF                        0x00
+#define A2DP_MPEG_2_4_VBR_ON                         0x80U
+#define A2DP_MPEG_2_4_VBR_OFF                        0x00U
 
 /*@}*/
 
@@ -408,7 +408,7 @@
  *  It is 23-bit value.
  */
 /*@{*/
-#define A2DP_MPEG_2_4_BITRATE_UNKNOWN               0x0000
+#define A2DP_MPEG_2_4_BITRATE_UNKNOWN               0x0000U
 
 /*@}*/
 /** \} */
@@ -446,6 +446,15 @@ typedef struct _A2DP_DEVICE_INFO
 
 }A2DP_DEVICE_INFO;
 
+/** \} */
+/** \} */
+
+/**
+ *  \defgroup a2dp_cb Application Callback
+ *  \{
+ *  This Section Describes the module Notification Callback interface offered
+ *  to the application
+ */
 
 /**
  *  \typedef A2DP_EVENT_NTF_CB
@@ -492,7 +501,6 @@ typedef API_RESULT (* A2DP_EVENT_NTF_CB)
                        UINT16   event_datalen
                    );
 /** \} */
-/** \} */
 
 /**
  * \cond ignore_this
@@ -514,7 +522,6 @@ typedef API_RESULT (* A2DP_EVENT_NTF_CB)
  *  The sections below describe how A2DP Event Notfication is called for
  *  asynchronous events and also gives a guidelines on how they should be
  *  handled.
- *
  *
  *
  *  \section Section_1 A2DP Connection Indication
@@ -625,7 +632,6 @@ typedef API_RESULT (* A2DP_EVENT_NTF_CB)
  *                      for failure.
  *
  *
- *
  *  \section Section_6 A2DP Media Frame Indication
  *  The A2DP will call the Event Notification Callback for this event
  *  whenever it receives Media Frames over the streaming connection with a
@@ -661,7 +667,6 @@ typedef API_RESULT (* A2DP_EVENT_NTF_CB)
  *  The sections below describe how A2DP Event Notfication is called for
  *  synchronous events and also gives a guidelines on how they should be
  *  handled.
- *
  *
  *
  *  \section Section_1 A2DP Connection Confirmation
@@ -750,8 +755,6 @@ typedef API_RESULT (* A2DP_EVENT_NTF_CB)
  *
  *  \return API_RESULT: API_SUCCESS, or an Error Code describing the reason
  *                      for failure.
- *
- *
  */
 
 /** \endcond */
@@ -785,12 +788,11 @@ typedef AVDTP_MEDIA_CHANNEL_PARAMS A2DP_MEDIA_CHANNEL_PARAMS;
  *
  *  \hideinitializer
  */
-#define A2DP_SBC_INIT_CODEC_CAP( conf )       \
-        (conf).codec_cap.codec_ie[0] = 0x00;  \
-        (conf).codec_cap.codec_ie[1] = 0x00;  \
-        (conf).codec_cap.codec_ie[2] = 0x00;  \
-        (conf).codec_cap.codec_ie[3] = 0x00;
-
+#define A2DP_SBC_INIT_CODEC_CAP( conf )         \
+        (conf).codec_cap.codec_ie[0U] = 0x00U;  \
+        (conf).codec_cap.codec_ie[1U] = 0x00U;  \
+        (conf).codec_cap.codec_ie[2U] = 0x00U;  \
+        (conf).codec_cap.codec_ie[3U] = 0x00U;
 
 /**
  *  This utility macro initializes Sampling Frequency field in
@@ -805,8 +807,7 @@ typedef AVDTP_MEDIA_CHANNEL_PARAMS A2DP_MEDIA_CHANNEL_PARAMS;
  *  \hideinitializer
  */
 #define A2DP_SBC_SET_SAMPLING_FREQUENCY( conf, freqn ) \
-        (conf).codec_cap.codec_ie[0] |= (freqn);
-
+        (conf).codec_cap.codec_ie[0U] |= (freqn);
 
 /**
  *  This utility macro initializes Channel Mode field in
@@ -821,8 +822,7 @@ typedef AVDTP_MEDIA_CHANNEL_PARAMS A2DP_MEDIA_CHANNEL_PARAMS;
  *  \hideinitializer
  */
 #define A2DP_SBC_SET_CHANNEL_MODE( conf, cm )   \
-        (conf).codec_cap.codec_ie[0] |= (cm);
-
+        (conf).codec_cap.codec_ie[0U] |= (cm);
 
 /**
  *  This utility macro initializes Block Length field in
@@ -837,8 +837,7 @@ typedef AVDTP_MEDIA_CHANNEL_PARAMS A2DP_MEDIA_CHANNEL_PARAMS;
  *  \hideinitializer
  */
 #define A2DP_SBC_SET_BLOCK_LENGTH( conf, bl )   \
-        (conf).codec_cap.codec_ie[1] |= (bl);
-
+        (conf).codec_cap.codec_ie[1U] |= (bl);
 
 /**
  *  This utility macro initializes Number of A2DP SBC Sub Bands field
@@ -853,8 +852,7 @@ typedef AVDTP_MEDIA_CHANNEL_PARAMS A2DP_MEDIA_CHANNEL_PARAMS;
  *  \hideinitializer
  */
 #define A2DP_SBC_SET_SUBBANDS( conf, sb )       \
-        (conf).codec_cap.codec_ie[1] |= (sb);
-
+        (conf).codec_cap.codec_ie[1U] |= (sb);
 
 /**
  *  This utility macro initializes A2DP SBC Allocation Method field
@@ -869,8 +867,7 @@ typedef AVDTP_MEDIA_CHANNEL_PARAMS A2DP_MEDIA_CHANNEL_PARAMS;
  *  \hideinitializer
  */
 #define A2DP_SBC_SET_ALLOCATION_METHOD( conf, am ) \
-        (conf).codec_cap.codec_ie[1] |= (am);
-
+        (conf).codec_cap.codec_ie[1U] |= (am);
 
 /**
  *  This utility macro initializes Minimum and Maximum Bitpool Value fields
@@ -887,9 +884,8 @@ typedef AVDTP_MEDIA_CHANNEL_PARAMS A2DP_MEDIA_CHANNEL_PARAMS;
  *  \hideinitializer
  */
 #define A2DP_SBC_SET_BITPOOL( conf,  min_bp,   max_bp ) \
-        (conf).codec_cap.codec_ie[2] = (min_bp); \
-        (conf).codec_cap.codec_ie[3] = (max_bp);
-
+        (conf).codec_cap.codec_ie[2U] = (min_bp); \
+        (conf).codec_cap.codec_ie[3U] = (max_bp);
 
 /**
  *  This utility macro is used to obtain Sampling Frequency value stored in
@@ -904,8 +900,7 @@ typedef AVDTP_MEDIA_CHANNEL_PARAMS A2DP_MEDIA_CHANNEL_PARAMS;
  *  \hideinitializer
  */
 #define A2DP_SBC_GET_SAMPLING_FREQUENCY( conf, freqn ) \
-        (freqn) = (conf).codec_cap.codec_ie[0] & 0xF0;
-
+        (freqn) = (conf).codec_cap.codec_ie[0U] & 0xF0U;
 
 /**
  *  This utility macro is used to obtain Channel Mode value stored in
@@ -920,8 +915,7 @@ typedef AVDTP_MEDIA_CHANNEL_PARAMS A2DP_MEDIA_CHANNEL_PARAMS;
  *  \hideinitializer
  */
 #define A2DP_SBC_GET_CHANNEL_MODE( conf, cm )   \
-         (cm) = (conf).codec_cap.codec_ie[0] & 0x0F;
-
+         (cm) = (conf).codec_cap.codec_ie[0U] & 0x0FU;
 
 /**
  *  This utility macro is used to obtain Block Length value stored in
@@ -936,8 +930,7 @@ typedef AVDTP_MEDIA_CHANNEL_PARAMS A2DP_MEDIA_CHANNEL_PARAMS;
  *  \hideinitializer
  */
 #define A2DP_SBC_GET_BLOCK_LENGTH( conf, bl )   \
-        (bl) = (conf).codec_cap.codec_ie[1] & 0xF0;
-
+        (bl) = (conf).codec_cap.codec_ie[1U] & 0xF0U;
 
 /**
  *  This utility macro is used to obtain Number of A2DP SBC Sub Bands value
@@ -952,8 +945,7 @@ typedef AVDTP_MEDIA_CHANNEL_PARAMS A2DP_MEDIA_CHANNEL_PARAMS;
  *  \hideinitializer
  */
 #define A2DP_SBC_GET_SUBBANDS( conf, sb ) \
-        (sb) = (conf).codec_cap.codec_ie[1] & 0x0C;
-
+        (sb) = (conf).codec_cap.codec_ie[1U] & 0x0CU;
 
 /**
  *  This utility macro obtains value of A2DP SBC Allocation Method
@@ -968,8 +960,7 @@ typedef AVDTP_MEDIA_CHANNEL_PARAMS A2DP_MEDIA_CHANNEL_PARAMS;
  *  \hideinitializer
  */
 #define A2DP_SBC_GET_ALLOCATION_METHOD( conf, am ) \
-        (am) = (conf).codec_cap.codec_ie[1] & 0x03;
-
+        (am) = (conf).codec_cap.codec_ie[1U] & 0x03U;
 
 /**
  *  This utility macro is used to obtain value of Minimum and Maximum Bitpool
@@ -986,9 +977,8 @@ typedef AVDTP_MEDIA_CHANNEL_PARAMS A2DP_MEDIA_CHANNEL_PARAMS;
  *  \hideinitializer
  */
 #define A2DP_SBC_GET_BITPOOL( conf, min_bp, max_bp ) \
-        (min_bp) = (conf).codec_cap.codec_ie[2]; \
-        (max_bp) = (conf).codec_cap.codec_ie[3];
-
+        (min_bp) = (conf).codec_cap.codec_ie[2U]; \
+        (max_bp) = (conf).codec_cap.codec_ie[3U];
 
 /**
  *  This utility macro is used to to set role of Codec as Player in
@@ -1000,8 +990,7 @@ typedef AVDTP_MEDIA_CHANNEL_PARAMS A2DP_MEDIA_CHANNEL_PARAMS;
  *  \hideinitializer
  */
 #define A2DP_SET_SERVICE_RECORD_PLAYER( rec ) \
-        (rec) |= 0x01;
-
+        (rec) |= 0x01U;
 
 /**
  *  This utility macro is used to set role of Codec as Microphone in
@@ -1013,8 +1002,7 @@ typedef AVDTP_MEDIA_CHANNEL_PARAMS A2DP_MEDIA_CHANNEL_PARAMS;
  *  \hideinitializer
  */
 #define A2DP_SET_SERVICE_RECORD_MICROPHONE( rec ) \
-        (rec) |= 0x02;
-
+        (rec) |= 0x02U;
 
 /**
  *  This utility macro is used to set role of Codec as Tuner in
@@ -1026,7 +1014,7 @@ typedef AVDTP_MEDIA_CHANNEL_PARAMS A2DP_MEDIA_CHANNEL_PARAMS;
  *  \hideinitializer
  */
 #define A2DP_SET_SERVICE_RECORD_TUNER( rec ) \
-        (rec) |= 0x04;
+        (rec) |= 0x04U;
 
 /**
  *  This utility macro is used to set role of Codec as Mixer in
@@ -1038,8 +1026,7 @@ typedef AVDTP_MEDIA_CHANNEL_PARAMS A2DP_MEDIA_CHANNEL_PARAMS;
  *  \hideinitializer
  */
 #define A2DP_SET_SERVICE_RECORD_MIXER( rec ) \
-        (rec) |= 0x08;
-
+        (rec) |= 0x08U;
 
 /**
  *  This utility macro is used to set role of Codec as Headphone in
@@ -1051,8 +1038,7 @@ typedef AVDTP_MEDIA_CHANNEL_PARAMS A2DP_MEDIA_CHANNEL_PARAMS;
  *  \hideinitializer
  */
 #define A2DP_SET_SERVICE_RECORD_HEADPHONE( rec ) \
-        (rec) |= 0x01;
-
+        (rec) |= 0x01U;
 
 /**
  *  This utility macro is used to set role of Codec as Speaker in
@@ -1064,8 +1050,7 @@ typedef AVDTP_MEDIA_CHANNEL_PARAMS A2DP_MEDIA_CHANNEL_PARAMS;
  *  \hideinitializer
  */
 #define A2DP_SET_SERVICE_RECORD_SPEAKER( rec ) \
-        (rec) |= 0x02;
-
+        (rec) |= 0x02U;
 
 /**
  *  This utility macro is used to set role of Codec as Recorder in
@@ -1077,8 +1062,7 @@ typedef AVDTP_MEDIA_CHANNEL_PARAMS A2DP_MEDIA_CHANNEL_PARAMS;
  *  \hideinitializer
  */
 #define A2DP_SET_SERVICE_RECORD_RECORDER( rec ) \
-        (rec) |= 0x04;
-
+        (rec) |= 0x04U;
 
 /**
  *  This utility macro is used to set role of Codec as Amplifier in
@@ -1090,8 +1074,7 @@ typedef AVDTP_MEDIA_CHANNEL_PARAMS A2DP_MEDIA_CHANNEL_PARAMS;
  *  \hideinitializer
  */
 #define A2DP_SET_SERVICE_RECORD_AMPLIFIER( rec ) \
-        (rec) |= 0x08;
-
+        (rec) |= 0x08U;
 
 /**
  *  This utility macro initializes the MPEG-1,2 Codec specific Information
@@ -1102,12 +1085,11 @@ typedef AVDTP_MEDIA_CHANNEL_PARAMS A2DP_MEDIA_CHANNEL_PARAMS;
  *
  *  \hideinitializer
  */
-#define A2DP_MPEG_1_2_INIT_CODEC_CAP( conf )  \
-        (conf).codec_cap.codec_ie[0] = 0x00;  \
-        (conf).codec_cap.codec_ie[1] = 0x00;  \
-        (conf).codec_cap.codec_ie[2] = 0x00;  \
-        (conf).codec_cap.codec_ie[3] = 0x00;
-
+#define A2DP_MPEG_1_2_INIT_CODEC_CAP( conf )    \
+        (conf).codec_cap.codec_ie[0U] = 0x00U;  \
+        (conf).codec_cap.codec_ie[1U] = 0x00U;  \
+        (conf).codec_cap.codec_ie[2U] = 0x00U;  \
+        (conf).codec_cap.codec_ie[3U] = 0x00U;
 
 /**
  *  This utility macro initializes layer field in the MPEG-1,2 Codec
@@ -1122,8 +1104,7 @@ typedef AVDTP_MEDIA_CHANNEL_PARAMS A2DP_MEDIA_CHANNEL_PARAMS;
  *  \hideinitializer
  */
 #define A2DP_MPEG_1_2_SET_LAYER( conf, layer ) \
-        (conf).codec_cap.codec_ie[0] |= (layer);
-
+        (conf).codec_cap.codec_ie[0U] |= (layer);
 
 /**
  *  This utility macro initializes CRC field in the MPEG-1,2 Codec
@@ -1138,8 +1119,7 @@ typedef AVDTP_MEDIA_CHANNEL_PARAMS A2DP_MEDIA_CHANNEL_PARAMS;
  *  \hideinitializer
  */
 #define A2DP_MPEG_1_2_SET_CRC( conf, crc ) \
-        (conf).codec_cap.codec_ie[0] |= (crc);
-
+        (conf).codec_cap.codec_ie[0U] |= (crc);
 
 /**
  *  This utility macro initializes Channel Mode field in the MPEG-1,2 Codec
@@ -1154,8 +1134,7 @@ typedef AVDTP_MEDIA_CHANNEL_PARAMS A2DP_MEDIA_CHANNEL_PARAMS;
  *  \hideinitializer
  */
 #define A2DP_MPEG_1_2_SET_CHANNEL_MODE( conf, cm )   \
-        (conf).codec_cap.codec_ie[0] |= (cm);
-
+        (conf).codec_cap.codec_ie[0U] |= (cm);
 
 /**
  *  This utility macro initializes Media Payload Format (MPF) field in the
@@ -1170,8 +1149,7 @@ typedef AVDTP_MEDIA_CHANNEL_PARAMS A2DP_MEDIA_CHANNEL_PARAMS;
  *  \hideinitializer
  */
 #define A2DP_MPEG_1_2_SET_MPF( conf, mpf )  \
-        (conf).codec_cap.codec_ie[1] |= (mpf);
-
+        (conf).codec_cap.codec_ie[1U] |= (mpf);
 
 /**
  *  This utility macro initializes Sampling Frequency field in
@@ -1186,8 +1164,7 @@ typedef AVDTP_MEDIA_CHANNEL_PARAMS A2DP_MEDIA_CHANNEL_PARAMS;
  *  \hideinitializer
  */
 #define A2DP_MPEG_1_2_SET_SAMPLING_FREQUENCY( conf, freqn ) \
-        (conf).codec_cap.codec_ie[1] |= (freqn);
-
+        (conf).codec_cap.codec_ie[1U] |= (freqn);
 
 /**
  *  This utility macro initializes Variable Bit Rate field in
@@ -1202,8 +1179,7 @@ typedef AVDTP_MEDIA_CHANNEL_PARAMS A2DP_MEDIA_CHANNEL_PARAMS;
  *  \hideinitializer
  */
 #define A2DP_MPEG_1_2_SET_VBR( conf, vbr ) \
-        (conf).codec_cap.codec_ie[2] |= (vbr);
-
+        (conf).codec_cap.codec_ie[2U] |= (vbr);
 
 /**
  *  This utility macro obtains value of Layer in the MPEG_1_2
@@ -1218,8 +1194,7 @@ typedef AVDTP_MEDIA_CHANNEL_PARAMS A2DP_MEDIA_CHANNEL_PARAMS;
  *  \hideinitializer
  */
 #define A2DP_MPEG_1_2_GET_LAYER( conf, layer ) \
-        (layer) = ((conf).codec_cap.codec_ie[0] & 0xE0);
-
+        (layer) = ((conf).codec_cap.codec_ie[0U] & 0xE0U);
 
 /**
  *  This utility macro obtains value of CRC Protection bit in
@@ -1234,8 +1209,7 @@ typedef AVDTP_MEDIA_CHANNEL_PARAMS A2DP_MEDIA_CHANNEL_PARAMS;
  *  \hideinitializer
  */
 #define A2DP_MPEG_1_2_GET_CRC( conf, crc ) \
-        (crc) = ((conf).codec_cap.codec_ie[0] & 0x10);
-
+        (crc) = ((conf).codec_cap.codec_ie[0U] & 0x10U);
 
 /**
  *  This utility macro obtains value of Channel Mode in
@@ -1250,8 +1224,7 @@ typedef AVDTP_MEDIA_CHANNEL_PARAMS A2DP_MEDIA_CHANNEL_PARAMS;
  *  \hideinitializer
  */
 #define A2DP_MPEG_1_2_GET_CHANNEL_MODE( conf, cm )   \
-        (cm) = ((conf).codec_cap.codec_ie[0] & 0x0F);
-
+        (cm) = ((conf).codec_cap.codec_ie[0U] & 0x0FU);
 
 /**
  *  This utility macro obtains value of Media Payload
@@ -1266,8 +1239,7 @@ typedef AVDTP_MEDIA_CHANNEL_PARAMS A2DP_MEDIA_CHANNEL_PARAMS;
  *  \hideinitializer
  */
 #define A2DP_MPEG_1_2_GET_MPF( conf, mpf )  \
-        (mpf) = ((conf).codec_cap.codec_ie[1] & 0x40);
-
+        (mpf) = ((conf).codec_cap.codec_ie[1U] & 0x40U);
 
 /**
  *  This utility macro obtains value of Sampling Frequency
@@ -1282,8 +1254,7 @@ typedef AVDTP_MEDIA_CHANNEL_PARAMS A2DP_MEDIA_CHANNEL_PARAMS;
  *  \hideinitializer
  */
 #define A2DP_MPEG_1_2_GET_SAMPLING_FREQUENCY( conf, freqn ) \
-        (freq) = ((conf).codec_cap.codec_ie[1] & 0x3F);
-
+        (freq) = ((conf).codec_cap.codec_ie[1U] & 0x3FU);
 
 /**
  *  This utility macro obtains value of Variable Bit Rate
@@ -1298,8 +1269,7 @@ typedef AVDTP_MEDIA_CHANNEL_PARAMS A2DP_MEDIA_CHANNEL_PARAMS;
  *  \hideinitializer
  */
 #define A2DP_MPEG_1_2_GET_VBR( conf, vbr ) \
-        (vbr) = ((conf).codec_cap.codec_ie[2] & 0x80);
-
+        (vbr) = ((conf).codec_cap.codec_ie[2U] & 0x80U);
 
 /**
  *  This utility macro initializes the MPEG-2,4 Codec specific Information
@@ -1310,13 +1280,13 @@ typedef AVDTP_MEDIA_CHANNEL_PARAMS A2DP_MEDIA_CHANNEL_PARAMS;
  *
  *  \hideinitializer
  */
-#define A2DP_MPEG_2_4_INIT_CODEC_CAP( conf )  \
-        (conf).codec_cap.codec_ie[0] = 0x00;  \
-        (conf).codec_cap.codec_ie[1] = 0x00;  \
-        (conf).codec_cap.codec_ie[2] = 0x00;  \
-        (conf).codec_cap.codec_ie[3] = 0x00;  \
-        (conf).codec_cap.codec_ie[4] = 0x00;  \
-        (conf).codec_cap.codec_ie[5] = 0x00;
+#define A2DP_MPEG_2_4_INIT_CODEC_CAP( conf )    \
+        (conf).codec_cap.codec_ie[0U] = 0x00U;  \
+        (conf).codec_cap.codec_ie[1U] = 0x00U;  \
+        (conf).codec_cap.codec_ie[2U] = 0x00U;  \
+        (conf).codec_cap.codec_ie[3U] = 0x00U;  \
+        (conf).codec_cap.codec_ie[4U] = 0x00U;  \
+        (conf).codec_cap.codec_ie[5U] = 0x00U;
 
 /**
  *  This utility macro initializes object type field in the MPEG-2,4 Codec
@@ -1331,7 +1301,7 @@ typedef AVDTP_MEDIA_CHANNEL_PARAMS A2DP_MEDIA_CHANNEL_PARAMS;
  *  \hideinitializer
  */
 #define A2DP_MPEG_2_4_SET_OBJECT_TYPE( conf, obj_type ) \
-        (conf).codec_cap.codec_ie[0] = (obj_type);
+        (conf).codec_cap.codec_ie[0U] = (obj_type);
 
 /**
  *  This utility macro initializes channels field in the MPEG-2,4 Codec
@@ -1346,67 +1316,63 @@ typedef AVDTP_MEDIA_CHANNEL_PARAMS A2DP_MEDIA_CHANNEL_PARAMS;
  *  \hideinitializer
  */
 #define A2DP_MPEG_2_4_SET_CHANNELS( conf, channels ) \
-        (conf).codec_cap.codec_ie[2] |= (channels);
+        (conf).codec_cap.codec_ie[2U] |= (channels);
 
  /**
- *  This utility macro initializes variable bit rate(VBR) bit in the MPEG-2,4 Codec
- *  specific Information Elements which are stored in AVDTP_SEP_CONF structure.
- *
- *  \param [in,out] conf
- *         Placeholder for SEP Configuration Information.
- *  \param [in] vbr
- *         A2DP MPEG-2,4 Variable Bit Rate(VBR).
- *
- *  \hideinitializer
- */
+  *  This utility macro initializes variable bit rate(VBR) bit in the MPEG-2,4 Codec
+  *  specific Information Elements which are stored in AVDTP_SEP_CONF structure.
+  *
+  *  \param [in,out] conf
+  *         Placeholder for SEP Configuration Information.
+  *  \param [in] vbr
+  *         A2DP MPEG-2,4 Variable Bit Rate(VBR).
+  *
+  *  \hideinitializer
+  */
 #define A2DP_MPEG_2_4_SET_VBR(conf, vbr) \
-        (conf).codec_cap.codec_ie[3] |= (vbr);
-
+        (conf).codec_cap.codec_ie[3U] |= (vbr);
 
  /**
- *  This utility macro obtains value of object type field in the MPEG_2_4 Codec
- *  specific Information Elements which are stored in AVDTP_SEP_CONF structure.
- *
- *  \param [in] conf
- *         Placeholder for SEP Configuration Information.
- *  \param [out] obj_type
- *         A2DP MPEG_2_4 Obect Type value.
- *
- *  \hideinitializer
- */
+  *  This utility macro obtains value of object type field in the MPEG_2_4 Codec
+  *  specific Information Elements which are stored in AVDTP_SEP_CONF structure.
+  *
+  *  \param [in] conf
+  *         Placeholder for SEP Configuration Information.
+  *  \param [out] obj_type
+  *         A2DP MPEG_2_4 Obect Type value.
+  *
+  *  \hideinitializer
+  */
 #define A2DP_MPEG_2_4_GET_OBJECT_TYPE( conf, obj_type ) \
-        (obj_type) = (conf).codec_cap.codec_ie[0];
-
+        (obj_type) = (conf).codec_cap.codec_ie[0U];
 
  /**
- *  This utility macro obtains value of channels field in the MPEG_2_4 Codec
- *  specific Information Elements which are stored in AVDTP_SEP_CONF structure.
- *
- *  \param [in] conf
- *         Placeholder for SEP Configuration Information.
- *  \param [out] channels
- *         A2DP MPEG_2_4 Channels.
- *
- *  \hideinitializer
- */
+  *  This utility macro obtains value of channels field in the MPEG_2_4 Codec
+  *  specific Information Elements which are stored in AVDTP_SEP_CONF structure.
+  *
+  *  \param [in] conf
+  *         Placeholder for SEP Configuration Information.
+  *  \param [out] channels
+  *         A2DP MPEG_2_4 Channels.
+  *
+  *  \hideinitializer
+  */
 #define A2DP_MPEG_2_4_GET_CHANNELS( conf, channels ) \
-        (channels) = ((conf).codec_cap.codec_ie[2] & 0x0C);
-
+        (channels) = ((conf).codec_cap.codec_ie[2U] & 0x0CU);
 
  /**
- *  This utility macro obtains value of Variable Bit Rate bit in the MPEG_2_4
- *  Codec specific Information Elements which are stored in AVDTP_SEP_CONF structure.
- *
- *  \param [in] conf
- *         Placeholder for SEP Configuration Information.
- *  \param [out] vbr
- *         A2DP MPEG_2_4 Codec VBR support value.
- *
- *  \hideinitializer
- */
+  *  This utility macro obtains value of Variable Bit Rate bit in the MPEG_2_4
+  *  Codec specific Information Elements which are stored in AVDTP_SEP_CONF structure.
+  *
+  *  \param [in] conf
+  *         Placeholder for SEP Configuration Information.
+  *  \param [out] vbr
+  *         A2DP MPEG_2_4 Codec VBR support value.
+  *
+  *  \hideinitializer
+  */
 #define A2DP_MPEG_2_4_GET_VBR( conf, vbr ) \
-        (vbr) = ((conf).codec_cap.codec_ie[3] & 0x80);
-
+        (vbr) = ((conf).codec_cap.codec_ie[3U] & 0x80U);
 
 /**
  *  This utility macro activates SDP Database Service Record for
@@ -1417,7 +1383,7 @@ typedef AVDTP_MEDIA_CHANNEL_PARAMS A2DP_MEDIA_CHANNEL_PARAMS;
  *  \hideinitializer
  */
 #define BT_a2dp_activate_sdp_record_source() \
-        a2dp_update_sdp_record(DB_RECORD_A2DP_SOURCE, 0x1);
+        a2dp_update_sdp_record(DB_RECORD_A2DP_SOURCE, 0x1U);
 
 /**
  *  This utility macro inactivates SDP Database Service Record for
@@ -1428,7 +1394,7 @@ typedef AVDTP_MEDIA_CHANNEL_PARAMS A2DP_MEDIA_CHANNEL_PARAMS;
  *  \hideinitializer
  */
 #define BT_a2dp_inactivate_sdp_record_source() \
-        a2dp_update_sdp_record(DB_RECORD_A2DP_SOURCE, 0x0);
+        a2dp_update_sdp_record(DB_RECORD_A2DP_SOURCE, 0x0U);
 
 /**
  *  This utility macro activates SDP Database Service Record for
@@ -1439,7 +1405,7 @@ typedef AVDTP_MEDIA_CHANNEL_PARAMS A2DP_MEDIA_CHANNEL_PARAMS;
  *  \hideinitializer
  */
 #define BT_a2dp_activate_sdp_record_sink() \
-        a2dp_update_sdp_record(DB_RECORD_A2DP_SINK, 0x1);
+        a2dp_update_sdp_record(DB_RECORD_A2DP_SINK, 0x1U);
 
 /**
  *  This utility macro inactivates SDP Database Service Record for
@@ -1450,7 +1416,7 @@ typedef AVDTP_MEDIA_CHANNEL_PARAMS A2DP_MEDIA_CHANNEL_PARAMS;
  *  \hideinitializer
  */
 #define BT_a2dp_inactivate_sdp_record_sink() \
-        a2dp_update_sdp_record(DB_RECORD_A2DP_SINK, 0x0);
+        a2dp_update_sdp_record(DB_RECORD_A2DP_SINK, 0x0U);
 
 /*@}*/
 /** \} */
@@ -1486,7 +1452,6 @@ extern "C"{
  */
 API_RESULT BT_a2dp_init ( void );
 
-
 /**
  *  \brief To shutdown A2DP module.
  *
@@ -1507,10 +1472,7 @@ API_RESULT BT_a2dp_init ( void );
  */
 API_RESULT BT_a2dp_shutdown ( void );
 
-
 /**
- *  \fn BT_a2dp_register_codec
- *
  *  \brief To register an Audio Codec with A2DP module.
  *
  *  \par Description:
@@ -1528,7 +1490,6 @@ API_RESULT BT_a2dp_shutdown ( void );
  *
  *  \return API_RESULT: API_SUCCESS on success otherwise an error code
  *                      describing the cause of failure.
- *
  */
 API_RESULT BT_a2dp_register_codec
            (
@@ -1537,10 +1498,7 @@ API_RESULT BT_a2dp_register_codec
                /* IN */   A2DP_EVENT_NTF_CB  ntf_cb
            );
 
-
 /**
- *  \fn BT_a2dp_deregister_codec
- *
  *  \brief To deregister an Audio Codec with A2DP module.
  *
  *  \par Description:
@@ -1559,9 +1517,7 @@ API_RESULT BT_a2dp_deregister_codec
                /* IN */ UCHAR inst
            );
 
-
 /**
- *
  *  \brief To Configure and Establish Stream.
  *
  *  \par Description:
@@ -1606,7 +1562,6 @@ API_RESULT BT_a2dp_connect
                /* IN */  AVDTP_SEP_CONF  *  conf
            );
 
-
 /**
  *  \brief To Disconnect an Established Stream.
  *
@@ -1629,7 +1584,6 @@ API_RESULT BT_a2dp_disconnect
            (
                /* IN */  UCHAR  codec_instance
            );
-
 
 /**
  *  \brief To Start Media Streaming.
@@ -1716,7 +1670,6 @@ API_RESULT BT_a2dp_suspend
               /* IN */  UCHAR codec_instance
            );
 
-
 /**
  *  \brief To send Media Frames.
  *
@@ -1790,7 +1743,6 @@ API_RESULT BT_a2dp_media_flush
                /* IN */  UCHAR  codec_instance
            );
 
-
 /**
  *  \brief To calculate SBC frame size
  *
@@ -1823,7 +1775,6 @@ UINT16 BT_a2dp_get_sbc_frame_size
            /* IN */  UCHAR  bitpool
        );
 
-
 /**
  *  \brief To calculate MPEG-1,2 frame size
  *
@@ -1849,7 +1800,6 @@ UINT16 BT_a2dp_get_mpeg_1_2_frame_size
            /* IN */  UINT16  sampling_frequency,
            /* IN */  UINT16  bit_rate
        );
-
 
 /**
  *  \brief To set Media MTU
@@ -1879,8 +1829,6 @@ API_RESULT BT_a2dp_set_media_mtu
 
 #ifdef AVDTP_ASSISTIVE_MODE
 /**
- *  \fn BT_a2dp_get_media_channel_params
- *
  *  \brief To Get Media Channel params.
  *
  *  \par Description:
@@ -1911,9 +1859,7 @@ API_RESULT BT_a2dp_get_media_channel_params
 #endif /* AVDTP_ASSISTIVE_MODE */
 
 #ifdef AVDTP_HAVE_CONTENT_PROTECTION
-/* To get the CP type configured for the SEP */
 /**
- *
  *  \brief To read the Content Protection Type.
  *
  *  \par Description:
@@ -1937,9 +1883,7 @@ API_RESULT BT_a2dp_get_configured_cp_type
                /* OUT */ UINT16 * cp_type
            );
 
-/* API to set the content protection header information */
 /**
- *
  *  \brief To set the content protection header
  *
  *  \par Description :
@@ -1963,10 +1907,9 @@ API_RESULT BT_a2dp_set_cp_header
                /* IN */  UINT16    header_len
            );
 
-/* API to get CP type Configured for the SEP */
 /**
  *
- *  \brief To Get the CP Type in set during A2DP connectino.
+ *  \brief To Get the CP Type is set during A2DP connection.
  *
  *  \par Description:
  *       This function is used to get the Content Protection Type set durring

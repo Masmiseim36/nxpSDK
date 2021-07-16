@@ -1,22 +1,20 @@
-if(NOT MIDDLEWARE_ISSDK_SENSOR_INTERFACE_COMMON_MIMXRT1052_INCLUDED)
-    
-    set(MIDDLEWARE_ISSDK_SENSOR_INTERFACE_COMMON_MIMXRT1052_INCLUDED true CACHE BOOL "middleware_issdk_sensor_interface_common component is included.")
+include_guard(GLOBAL)
+message("middleware_issdk_sensor_interface_common component is included.")
 
-    target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
-        ${CMAKE_CURRENT_LIST_DIR}/sensors/register_io_i2c.c
-        ${CMAKE_CURRENT_LIST_DIR}/sensors/register_io_spi.c
-        ${CMAKE_CURRENT_LIST_DIR}/sensors/sensor_io_spi.c
-        ${CMAKE_CURRENT_LIST_DIR}/sensors/sensor_io_i2c.c
-    )
-
-
-    target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
-        ${CMAKE_CURRENT_LIST_DIR}/sensors
-    )
+target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
+    ${CMAKE_CURRENT_LIST_DIR}/sensors/register_io_i2c.c
+    ${CMAKE_CURRENT_LIST_DIR}/sensors/register_io_spi.c
+    ${CMAKE_CURRENT_LIST_DIR}/sensors/sensor_io_spi.c
+    ${CMAKE_CURRENT_LIST_DIR}/sensors/sensor_io_i2c.c
+)
 
 
-    include(CMSIS_Driver_Include_I2C_MIMXRT1052)
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
+    ${CMAKE_CURRENT_LIST_DIR}/sensors
+)
 
-    include(CMSIS_Driver_Include_SPI_MIMXRT1052)
 
-endif()
+include(CMSIS_Driver_Include_I2C_MIMXRT1052)
+
+include(CMSIS_Driver_Include_SPI_MIMXRT1052)
+

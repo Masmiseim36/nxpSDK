@@ -15,7 +15,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 // Definitions
 ////////////////////////////////////////////////////////////////////////////////
-
 enum _sync_constants
 {
     kSyncUnlocked = 0,
@@ -92,6 +91,132 @@ void lock_acquire(void)
 void lock_release(void)
 {
     OSA_EXIT_CRITICAL();
+}
+
+/*FUNCTION**********************************************************************
+ *
+ * Function Name : OSA_SemaCreate
+ * Description   : This function is used to create a semaphore. Return
+ * kStatus_OSA_Success if create successfully, otherwise return kStatus_OSA_Error.
+ *
+ *END**************************************************************************/
+bt_osa_status_t OSA_SemaCreate(bt_semaphore_t *pSem, uint8_t initValue)
+{
+    assert(pSem);
+
+    if (!s_ticksPerMs)
+    {
+        s_ticksPerMs = microseconds_convert_to_ticks(1000);
+    }
+
+    pSem->semCount = initValue;
+    pSem->isWaiting = false;
+    pSem->tickStart = 0u;
+    pSem->timeout = 0u;
+
+    return kStatus_OSA_Success;
+}
+
+/*FUNCTION**********************************************************************
+ *
+ * Function Name : OSA_SemaWait
+ * Description   : This function checks the semaphore's counting value, if it is
+ * positive, decreases it and returns kStatus_OSA_Success, otherwise, timeout
+ * will be used for wait. The parameter timeout indicates how long should wait
+ * in milliseconds. Pass kSyncWaitForever to wait indefinitely, pass 0 will
+ * return kStatus_OSA_Timeout immediately if semaphore is not positive.
+ * This function returns kStatus_OSA_Success if the semaphore is received, returns
+ * kStatus_OSA_Timeout if the semaphore is not received within the specified
+ * 'timeout', returns kStatus_OSA_Error if any errors occur during waiting,
+ * returns kStatus_OSA_Idle if the semaphore is not available and 'timeout' is
+ * not exhausted, because wait functions should not block with bare metal.
+ *
+ *END**************************************************************************/
+bt_osa_status_t OSA_SemaWait(bt_semaphore_t *pSem, uint32_t timeout)
+{
+    uint64_t currentTicks;
+
+    assert(pSem);
+
+    /* Check the sem count first. Deal with timeout only if not already set */
+    if (pSem->semCount)
+    {
+        __disable_irq();
+        pSem->semCount--;
+        pSem->isWaiting = false;
+        __enable_irq();
+        return kStatus_OSA_Success;
+    }
+    else
+    {
+        if (timeout == 0)
+        {
+            /* If timeout is 0 and semaphore is not available, return kStatus_OSA_Timeout. */
+            return kStatus_OSA_Timeout;
+        }
+        else if (pSem->isWaiting)
+        {
+            /* Check for timeout */
+            currentTicks = microseconds_get_ticks();
+            if (pSem->timeout < ms_diff(pSem->tickStart, currentTicks))
+            {
+                __disable_irq();
+                pSem->isWaiting = false;
+                __enable_irq();
+                return kStatus_OSA_Timeout;
+            }
+        }
+        else if (timeout != kSyncWaitForever) /* If don't wait forever, start the timer */
+        {
+            /* Start the timeout counter */
+            __disable_irq();
+            pSem->isWaiting = true;
+            __enable_irq();
+            pSem->tickStart = microseconds_get_ticks();
+            pSem->timeout = timeout;
+        }
+    }
+
+    return kStatus_OSA_Idle;
+}
+
+/*FUNCTION**********************************************************************
+ *
+ * Function Name : OSA_SemaPost
+ * Description   : This function is used to wake up one task that wating on the
+ * semaphore. If no task is waiting, increase the semaphore. The function returns
+ * kStatus_OSA_Success if the semaphre is post successfully, otherwise returns
+ * kStatus_OSA_Error.
+ *
+ *END**************************************************************************/
+bt_osa_status_t OSA_SemaPost(bt_semaphore_t *pSem)
+{
+    assert(pSem);
+    /* The max value is 0xFF */
+    if (pSem->semCount == 0xFF)
+    {
+        return kStatus_OSA_Error;
+    }
+    __disable_irq();
+    ++pSem->semCount;
+    __enable_irq();
+
+    return kStatus_OSA_Success;
+}
+
+/*FUNCTION**********************************************************************
+ *
+ * Function Name : OSA_SemaDestroy
+ * Description   : This function is used to destroy a semaphore.
+ * Return kStatus_OSA_Success if the semaphore is destroyed successfully, otherwise
+ * return kStatus_OSA_Error.
+ *
+ *END**************************************************************************/
+bt_osa_status_t OSA_SemaDestroy(bt_semaphore_t *pSem)
+{
+    assert(pSem);
+
+    return kStatus_OSA_Success;
 }
 
 ////////////////////////////////////////////////////////////////////////////////

@@ -10,7 +10,7 @@
  *
  */
 /*
- *  Copyright (C) 2006-2018, Arm Limited (or its affiliates), All Rights Reserved
+ *  Copyright The Mbed TLS Contributors
  *  SPDX-License-Identifier: Apache-2.0
  *
  *  Licensed under the Apache License, Version 2.0 (the "License"); you may
@@ -24,23 +24,21 @@
  *  WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
- *
- *  This file is part of Mbed TLS (https://tls.mbed.org)
  */
 #ifndef MBEDTLS_RSA_H
 #define MBEDTLS_RSA_H
 
 #if !defined(MBEDTLS_CONFIG_FILE)
-#include "config.h"
+#include "mbedtls/config.h"
 #else
 #include MBEDTLS_CONFIG_FILE
 #endif
 
-#include "bignum.h"
-#include "md.h"
+#include "mbedtls/bignum.h"
+#include "mbedtls/md.h"
 
 #if defined(MBEDTLS_THREADING_C)
-#include "threading.h"
+#include "mbedtls/threading.h"
 #endif
 
 /*
@@ -99,7 +97,10 @@ extern "C" {
  */
 typedef struct mbedtls_rsa_context
 {
-    int ver;                    /*!<  Always 0.*/
+    int ver;                    /*!<  Reserved for internal purposes.
+                                 *    Do not set this field in application
+                                 *    code. Its meaning might change without
+                                 *    notice. */
     size_t len;                 /*!<  The size of \p N in Bytes. */
 
     mbedtls_mpi N;              /*!<  The public modulus. */
@@ -129,6 +130,7 @@ typedef struct mbedtls_rsa_context
                                      mask generating function used in the
                                      EME-OAEP and EMSA-PSS encodings. */
 #if defined(MBEDTLS_THREADING_C)
+    /* Invariant: the mutex is initialized iff ver != 0. */
     mbedtls_threading_mutex_t mutex;    /*!<  Thread-safety mutex. */
 #endif
 }
@@ -601,7 +603,8 @@ int mbedtls_rsa_private( mbedtls_rsa_context *ctx,
  *                 #MBEDTLS_RSA_PUBLIC or #MBEDTLS_RSA_PRIVATE (deprecated).
  * \param ilen     The length of the plaintext in Bytes.
  * \param input    The input data to encrypt. This must be a readable
- *                 buffer of size \p ilen Bytes. This must not be \c NULL.
+ *                 buffer of size \p ilen Bytes. It may be \c NULL if
+ *                 `ilen == 0`.
  * \param output   The output buffer. This must be a writable buffer
  *                 of length \c ctx->len Bytes. For example, \c 256 Bytes
  *                 for an 2048-bit RSA modulus.
@@ -641,7 +644,8 @@ int mbedtls_rsa_pkcs1_encrypt( mbedtls_rsa_context *ctx,
  *                 #MBEDTLS_RSA_PUBLIC or #MBEDTLS_RSA_PRIVATE (deprecated).
  * \param ilen     The length of the plaintext in Bytes.
  * \param input    The input data to encrypt. This must be a readable
- *                 buffer of size \p ilen Bytes. This must not be \c NULL.
+ *                 buffer of size \p ilen Bytes. It may be \c NULL if
+ *                 `ilen == 0`.
  * \param output   The output buffer. This must be a writable buffer
  *                 of length \c ctx->len Bytes. For example, \c 256 Bytes
  *                 for an 2048-bit RSA modulus.
@@ -685,7 +689,8 @@ int mbedtls_rsa_rsaes_pkcs1_v15_encrypt( mbedtls_rsa_context *ctx,
  * \param label_len  The length of the label in Bytes.
  * \param ilen       The length of the plaintext buffer \p input in Bytes.
  * \param input      The input data to encrypt. This must be a readable
- *                   buffer of size \p ilen Bytes. This must not be \c NULL.
+ *                   buffer of size \p ilen Bytes. It may be \c NULL if
+ *                   `ilen == 0`.
  * \param output     The output buffer. This must be a writable buffer
  *                   of length \c ctx->len Bytes. For example, \c 256 Bytes
  *                   for an 2048-bit RSA modulus.
@@ -980,8 +985,8 @@ int mbedtls_rsa_rsassa_pkcs1_v15_sign( mbedtls_rsa_context *ctx,
  *
  * \note           This function always uses the maximum possible salt size,
  *                 up to the length of the payload hash. This choice of salt
- *                 size complies with FIPS 186-4 ง5.5 (e) and RFC 8017 (PKCS#1
- *                 v2.2) ง9.1.1 step 3. Furthermore this function enforces a
+ *                 size complies with FIPS 186-4 ยง5.5 (e) and RFC 8017 (PKCS#1
+ *                 v2.2) ยง9.1.1 step 3. Furthermore this function enforces a
  *                 minimum salt size which is the hash size minus 2 bytes. If
  *                 this minimum size is too large given the key size (the salt
  *                 size, plus the hash size, plus 2 bytes must be no more than

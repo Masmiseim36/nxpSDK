@@ -35,7 +35,7 @@
  *
  *  @brief  This file provides network interface initialization code
  *
- *  Copyright 2008-2020 NXP
+ *  Copyright 2008-2021 NXP
  *
  */
 
@@ -248,7 +248,7 @@ void low_level_init(struct netif *netif)
     /* don't set NETIF_FLAG_ETHARP if this device is not an ethernet one */
     netif->flags = NETIF_FLAG_BROADCAST | NETIF_FLAG_ETHARP | NETIF_FLAG_LINK_UP | NETIF_FLAG_IGMP;
 }
-
+extern int retry_attempts;
 /**
  * This function should do the actual transmission of the packet. The packet is
  * contained in the pbuf that is passed to the function. This pbuf
@@ -271,7 +271,32 @@ static err_t low_level_output(struct netif *netif, struct pbuf *p)
     struct pbuf *q;
     struct ethernetif *ethernetif = netif->state;
     u32_t pkt_len, outbuf_len;
+#ifdef CONFIG_WMM
+    t_u8 tid;
+    int retry         = retry_attempts;
+    bool is_udp_frame = false;
+    int pkt_prio      = wifi_wmm_get_pkt_prio(p->payload, &tid, &is_udp_frame);
+    if (pkt_prio == -WM_FAIL)
+    {
+        return ERR_MEM;
+    }
+    ret = is_wifi_wmm_queue_full(pkt_prio);
+    while (ret == true && !is_udp_frame && retry > 0)
+    {
+        taskYIELD();
+        ret = is_wifi_wmm_queue_full(pkt_prio);
+        retry--;
+    }
+    if (ret == true)
+    {
+        return ERR_MEM;
+    }
+    uint8_t *outbuf = wifi_wmm_get_outbuf(&outbuf_len, pkt_prio);
+#else
     uint8_t *outbuf = wifi_get_outbuf(&outbuf_len);
+#endif
+    if (!outbuf)
+        return ERR_MEM;
 
     pkt_len = sizeof(TxPD) + INTF_HEADER_LEN;
 
@@ -293,7 +318,12 @@ static err_t low_level_output(struct netif *netif, struct pbuf *p)
     }
 
     ret = wifi_low_level_output(ethernetif->interface, outbuf + sizeof(TxPD) + INTF_HEADER_LEN,
-                                pkt_len - sizeof(TxPD) - INTF_HEADER_LEN);
+                                pkt_len - sizeof(TxPD) - INTF_HEADER_LEN
+#ifdef CONFIG_WMM
+                                ,
+                                pkt_prio, tid
+#endif
+    );
 
     if (ret == -WM_E_NOMEM)
     {

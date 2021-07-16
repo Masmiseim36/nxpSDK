@@ -2,8 +2,10 @@
 @page middleware_log Middleware Change Log
 
 @section crank Crank Storyboard Software
-  The currently supported version is 6.2
+  The currently supported version is 7.0
 
+  - 7.0
+    - support cortext M7 and M33 with vglite
   - 6.2
     - new runtime libraries, plugins
   - 6.0

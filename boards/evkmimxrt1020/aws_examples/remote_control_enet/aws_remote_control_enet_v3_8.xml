@@ -6,6 +6,7 @@
     <definition extID="platform.drivers.trng.MIMXRT1021"/>
     <definition extID="platform.drivers.dcp.MIMXRT1021"/>
     <definition extID="platform.drivers.cache_armv7_m7.MIMXRT1021"/>
+    <definition extID="middleware.mbedtls.MIMXRT1021"/>
     <definition extID="middleware.mbedtls.port.ksdk.MIMXRT1021"/>
     <definition extID="middleware.mbedtls.rt.MIMXRT1021"/>
     <definition extID="platform.drivers.flexspi.MIMXRT1021"/>
@@ -21,15 +22,19 @@
     <definition extID="middleware.freertos-aws_iot.vendor.nxp.secure_sockets.lwip.MIMXRT1021"/>
     <definition extID="middleware.freertos-aws_iot.demos.MIMXRT1021"/>
     <definition extID="middleware.freertos-aws_iot.demos.dev_mode_key_provisioning.MIMXRT1021"/>
-    <definition extID="middleware.freertos-aws_iot.libraries.3rdparty.jsmn.MIMXRT1021"/>
+    <definition extID="middleware.freertos-aws_iot.libraries.device_shadow_for_aws.MIMXRT1021"/>
+    <definition extID="middleware.freertos-aws_iot.libraries.corejason.MIMXRT1021"/>
+    <definition extID="middleware.freertos-aws_iot.mqtt_demo_helpers.MIMXRT1021"/>
     <definition extID="middleware.freertos-kernel.MIMXRT1021"/>
     <definition extID="middleware.freertos-kernel.heap_4.MIMXRT1021"/>
-    <definition extID="middleware.freertos-aws_iot.c_sdk.standard.shadow.MIMXRT1021"/>
-    <definition extID="middleware.freertos-aws_iot.c_sdk.standard.serializer.MIMXRT1021"/>
+    <definition extID="middleware.freertos-aws_iot.libraries.c_sdk.standard.shadow.MIMXRT1021"/>
+    <definition extID="middleware.freertos-aws_iot.libraries.c_sdk.standard.serializer.MIMXRT1021"/>
     <definition extID="middleware.freertos-aws_iot.libraries.3rdparty.pkcs11.MIMXRT1021"/>
     <definition extID="middleware.freertos-aws_iot.vendor.nxp.pkcs11.MIMXRT1021"/>
     <definition extID="middleware.freertos-aws_iot.libraries.abstractions.pkcs11.MIMXRT1021"/>
-    <definition extID="middleware.mbedtls.MIMXRT1021"/>
+    <definition extID="middleware.freertos-aws_iot.libraries.abstractions.pkcs11_mbedtls.MIMXRT1021"/>
+    <definition extID="middleware.freertos-aws_iot.libraries.logging.MIMXRT1021"/>
+    <definition extID="middleware.freertos-aws_iot.libraries.3rdparty.mbedtls_config.MIMXRT1021"/>
     <definition extID="platform.drivers.clock.MIMXRT1021"/>
     <definition extID="platform.drivers.common.MIMXRT1021"/>
     <definition extID="device.MIMXRT1021_CMSIS.MIMXRT1021"/>
@@ -43,25 +48,25 @@
     <definition extID="platform.utilities.assert.MIMXRT1021"/>
     <definition extID="platform.drivers.igpio.MIMXRT1021"/>
     <definition extID="platform.drivers.xip_device.MIMXRT1021"/>
-    <definition extID="platform.drivers.xip_board.MIMXRT1021"/>
+    <definition extID="platform.drivers.xip_board.evkmimxrt1020.MIMXRT1021"/>
     <definition extID="driver.mdio-common.MIMXRT1021"/>
-    <definition extID="platform.Include_core_cm7.MIMXRT1021"/>
-    <definition extID="platform.Include_common.MIMXRT1021"/>
-    <definition extID="platform.Include_dsp.MIMXRT1021"/>
+    <definition extID="CMSIS_Include_core_cm.MIMXRT1021"/>
     <definition extID="component.mflash.common.MIMXRT1021"/>
     <definition extID="middleware.freertos-aws_iot.libraries.abstractions.secure_sockets.MIMXRT1021"/>
-    <definition extID="middleware.freertos-aws_iot.common.MIMXRT1021"/>
+    <definition extID="middleware.freertos-aws_iot.libraries.c_sdk.standard.common.MIMXRT1021"/>
     <definition extID="middleware.freertos-kernel.extension.MIMXRT1021"/>
     <definition extID="middleware.freertos-aws_iot.libraries.abstractions.platform.MIMXRT1021"/>
     <definition extID="middleware.freertos-aws_iot.libraries.freertos_plus.standard.tls.MIMXRT1021"/>
     <definition extID="middleware.freertos-aws_iot.libraries.3rdparty.mbedtls_utils.MIMXRT1021"/>
     <definition extID="middleware.freertos-aws_iot.libraries.freertos_plus.standard.crypto.MIMXRT1021"/>
-    <definition extID="middleware.freertos-aws_iot.libraries.abstractions.threading_alt.MIMXRT1021"/>
-    <definition extID="middleware.freertos-aws_iot.libraries.freertos_plus.standard.pkcs11.MIMXRT1021"/>
     <definition extID="middleware.freertos-aws_iot.libraries.freertos_plus.standard.utils.MIMXRT1021"/>
     <definition extID="middleware.freertos-aws_iot.network_manager.MIMXRT1021"/>
     <definition extID="middleware.freertos-aws_iot.mqtt.MIMXRT1021"/>
+    <definition extID="middleware.freertos-aws_iot.libraries.coremqtt.MIMXRT1021"/>
     <definition extID="middleware.freertos-aws_iot.libraries.abstractions.wifi.MIMXRT1021"/>
+    <definition extID="middleware.freertos-aws_iot.libraries.abstractions.transport.MIMXRT1021"/>
+    <definition extID="middleware.freertos-aws_iot.libraries.abstractions.backoff_algorithm.MIMXRT1021"/>
+    <definition extID="middleware.freertos-aws_iot.pkcs11_helpers.MIMXRT1021"/>
     <definition extID="platform.utilities.misc_utilities.MIMXRT1021"/>
     <definition extID="device.MIMXRT1021_system.MIMXRT1021"/>
     <definition extID="iar"/>
@@ -74,7 +79,7 @@
     <definition extID="com.crt.advproject.config.exe.debug"/>
     <definition extID="com.crt.advproject.config.exe.release"/>
   </externalDefinitions>
-  <example id="evkmimxrt1020_aws_remote_control_enet" name="aws_remote_control_enet" dependency="driver.mdio-enet.MIMXRT1021 driver.phy-device-ksz8081.MIMXRT1021 platform.drivers.trng.MIMXRT1021 platform.drivers.dcp.MIMXRT1021 platform.drivers.cache_armv7_m7.MIMXRT1021 middleware.mbedtls.port.ksdk.MIMXRT1021 middleware.mbedtls.rt.MIMXRT1021 platform.drivers.flexspi.MIMXRT1021 middleware.lwip.enet_ethernetif.MIMXRT1021 middleware.lwip.MIMXRT1021 driver.phy-common.MIMXRT1021 platform.drivers.enet.MIMXRT1021 utility.debug_console.MIMXRT1021 component.mflash_file.MIMXRT1021 component.mflash.rt1020.MIMXRT1021 platform.drivers.lpi2c.MIMXRT1021 driver.fxos8700cq.MIMXRT1021 middleware.freertos-aws_iot.vendor.nxp.secure_sockets.lwip.MIMXRT1021 middleware.freertos-aws_iot.demos.MIMXRT1021 middleware.freertos-aws_iot.demos.dev_mode_key_provisioning.MIMXRT1021 middleware.freertos-aws_iot.libraries.3rdparty.jsmn.MIMXRT1021 middleware.freertos-kernel.MIMXRT1021 middleware.freertos-kernel.heap_4.MIMXRT1021 middleware.freertos-aws_iot.c_sdk.standard.shadow.MIMXRT1021 middleware.freertos-aws_iot.c_sdk.standard.serializer.MIMXRT1021 middleware.freertos-aws_iot.libraries.3rdparty.pkcs11.MIMXRT1021 middleware.freertos-aws_iot.vendor.nxp.pkcs11.MIMXRT1021 middleware.freertos-aws_iot.libraries.abstractions.pkcs11.MIMXRT1021 middleware.mbedtls.MIMXRT1021 platform.drivers.clock.MIMXRT1021 platform.drivers.common.MIMXRT1021 device.MIMXRT1021_CMSIS.MIMXRT1021 component.lpuart_adapter.MIMXRT1021 component.serial_manager.MIMXRT1021 component.lists.MIMXRT1021 component.serial_manager_uart.MIMXRT1021 platform.drivers.lpuart.MIMXRT1021 device.MIMXRT1021_startup.MIMXRT1021 platform.drivers.iomuxc.MIMXRT1021 platform.utilities.assert.MIMXRT1021 platform.drivers.igpio.MIMXRT1021 platform.drivers.xip_device.MIMXRT1021 platform.drivers.xip_board.MIMXRT1021 driver.mdio-common.MIMXRT1021 platform.Include_core_cm7.MIMXRT1021 platform.Include_common.MIMXRT1021 platform.Include_dsp.MIMXRT1021 component.mflash.common.MIMXRT1021 middleware.freertos-aws_iot.libraries.abstractions.secure_sockets.MIMXRT1021 middleware.freertos-aws_iot.common.MIMXRT1021 middleware.freertos-kernel.extension.MIMXRT1021 middleware.freertos-aws_iot.libraries.abstractions.platform.MIMXRT1021 middleware.freertos-aws_iot.libraries.freertos_plus.standard.tls.MIMXRT1021 middleware.freertos-aws_iot.libraries.3rdparty.mbedtls_utils.MIMXRT1021 middleware.freertos-aws_iot.libraries.freertos_plus.standard.crypto.MIMXRT1021 middleware.freertos-aws_iot.libraries.abstractions.threading_alt.MIMXRT1021 middleware.freertos-aws_iot.libraries.freertos_plus.standard.pkcs11.MIMXRT1021 middleware.freertos-aws_iot.libraries.freertos_plus.standard.utils.MIMXRT1021 middleware.freertos-aws_iot.network_manager.MIMXRT1021 middleware.freertos-aws_iot.mqtt.MIMXRT1021 middleware.freertos-aws_iot.libraries.abstractions.wifi.MIMXRT1021 platform.utilities.misc_utilities.MIMXRT1021 device.MIMXRT1021_system.MIMXRT1021" category="aws_examples">
+  <example id="evkmimxrt1020_aws_remote_control_enet" name="aws_remote_control_enet" dependency="driver.mdio-enet.MIMXRT1021 driver.phy-device-ksz8081.MIMXRT1021 platform.drivers.trng.MIMXRT1021 platform.drivers.dcp.MIMXRT1021 platform.drivers.cache_armv7_m7.MIMXRT1021 middleware.mbedtls.MIMXRT1021 middleware.mbedtls.port.ksdk.MIMXRT1021 middleware.mbedtls.rt.MIMXRT1021 platform.drivers.flexspi.MIMXRT1021 middleware.lwip.enet_ethernetif.MIMXRT1021 middleware.lwip.MIMXRT1021 driver.phy-common.MIMXRT1021 platform.drivers.enet.MIMXRT1021 utility.debug_console.MIMXRT1021 component.mflash_file.MIMXRT1021 component.mflash.rt1020.MIMXRT1021 platform.drivers.lpi2c.MIMXRT1021 driver.fxos8700cq.MIMXRT1021 middleware.freertos-aws_iot.vendor.nxp.secure_sockets.lwip.MIMXRT1021 middleware.freertos-aws_iot.demos.MIMXRT1021 middleware.freertos-aws_iot.demos.dev_mode_key_provisioning.MIMXRT1021 middleware.freertos-aws_iot.libraries.device_shadow_for_aws.MIMXRT1021 middleware.freertos-aws_iot.libraries.corejason.MIMXRT1021 middleware.freertos-aws_iot.mqtt_demo_helpers.MIMXRT1021 middleware.freertos-kernel.MIMXRT1021 middleware.freertos-kernel.heap_4.MIMXRT1021 middleware.freertos-aws_iot.libraries.c_sdk.standard.shadow.MIMXRT1021 middleware.freertos-aws_iot.libraries.c_sdk.standard.serializer.MIMXRT1021 middleware.freertos-aws_iot.libraries.3rdparty.pkcs11.MIMXRT1021 middleware.freertos-aws_iot.vendor.nxp.pkcs11.MIMXRT1021 middleware.freertos-aws_iot.libraries.abstractions.pkcs11.MIMXRT1021 middleware.freertos-aws_iot.libraries.abstractions.pkcs11_mbedtls.MIMXRT1021 middleware.freertos-aws_iot.libraries.logging.MIMXRT1021 middleware.freertos-aws_iot.libraries.3rdparty.mbedtls_config.MIMXRT1021 platform.drivers.clock.MIMXRT1021 platform.drivers.common.MIMXRT1021 device.MIMXRT1021_CMSIS.MIMXRT1021 component.lpuart_adapter.MIMXRT1021 component.serial_manager.MIMXRT1021 component.lists.MIMXRT1021 component.serial_manager_uart.MIMXRT1021 platform.drivers.lpuart.MIMXRT1021 device.MIMXRT1021_startup.MIMXRT1021 platform.drivers.iomuxc.MIMXRT1021 platform.utilities.assert.MIMXRT1021 platform.drivers.igpio.MIMXRT1021 platform.drivers.xip_device.MIMXRT1021 platform.drivers.xip_board.evkmimxrt1020.MIMXRT1021 driver.mdio-common.MIMXRT1021 CMSIS_Include_core_cm.MIMXRT1021 component.mflash.common.MIMXRT1021 middleware.freertos-aws_iot.libraries.abstractions.secure_sockets.MIMXRT1021 middleware.freertos-aws_iot.libraries.c_sdk.standard.common.MIMXRT1021 middleware.freertos-kernel.extension.MIMXRT1021 middleware.freertos-aws_iot.libraries.abstractions.platform.MIMXRT1021 middleware.freertos-aws_iot.libraries.freertos_plus.standard.tls.MIMXRT1021 middleware.freertos-aws_iot.libraries.3rdparty.mbedtls_utils.MIMXRT1021 middleware.freertos-aws_iot.libraries.freertos_plus.standard.crypto.MIMXRT1021 middleware.freertos-aws_iot.libraries.freertos_plus.standard.utils.MIMXRT1021 middleware.freertos-aws_iot.network_manager.MIMXRT1021 middleware.freertos-aws_iot.mqtt.MIMXRT1021 middleware.freertos-aws_iot.libraries.coremqtt.MIMXRT1021 middleware.freertos-aws_iot.libraries.abstractions.wifi.MIMXRT1021 middleware.freertos-aws_iot.libraries.abstractions.transport.MIMXRT1021 middleware.freertos-aws_iot.libraries.abstractions.backoff_algorithm.MIMXRT1021 middleware.freertos-aws_iot.pkcs11_helpers.MIMXRT1021 platform.utilities.misc_utilities.MIMXRT1021 device.MIMXRT1021_system.MIMXRT1021" category="aws_examples">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -119,9 +124,11 @@
           <value>SDK_I2C_BASED_COMPONENT_USED</value>
           <value>USE_RTOS=1</value>
           <value>MBEDTLS_CONFIG_FILE='"aws_mbedtls_config.h"'</value>
+          <value>LWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1</value>
           <value>MFLASH_FILE_BASEADDR=5767168</value>
-          <value>FSL_RTOS_FREE_RTOS</value>
+          <value>SDK_OS_FREE_RTOS</value>
           <value>SERIAL_PORT_TYPE_UART=1</value>
+          <value>MCUXPRESSO_SDK</value>
         </option>
         <option id="com.crt.advproject.gas.fpu" type="enum">
           <value>com.crt.advproject.gas.fpu.fpv5dp.hard</value>
@@ -213,7 +220,7 @@
     </source>
     <source path="boards/evkmimxrt1020/aws_examples/remote_control_enet" project_relative_path="source" type="src">
       <files mask="remote_control.c"/>
-      <files mask="main.c"/>
+      <files mask="main_enet.c"/>
     </source>
     <source path="boards/evkmimxrt1020/aws_examples/remote_control_enet" project_relative_path="board" type="src">
       <files mask="pin_mux.c"/>
@@ -248,7 +255,10 @@
       <files mask="FreeRTOSIPConfig.h"/>
       <files mask="iot_config.h"/>
       <files mask="iot_mqtt_agent_config.h"/>
-      <files mask="iot_pkcs11_config.h"/>
+      <files mask="core_mqtt_config.h"/>
+      <files mask="core_pkcs11_config.h"/>
+      <files mask="shadow_config.h"/>
+      <files mask="shadow_demo_config.h"/>
     </source>
     <source path="boards/evkmimxrt1020/aws_examples/remote_control_android/.idea" project_relative_path="source" type="xml">
       <files mask="gradle.xml" hidden="true"/>

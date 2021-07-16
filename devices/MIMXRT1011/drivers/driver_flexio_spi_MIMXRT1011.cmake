@@ -1,17 +1,15 @@
-if(NOT DRIVER_FLEXIO_SPI_MIMXRT1011_INCLUDED)
-    
-    set(DRIVER_FLEXIO_SPI_MIMXRT1011_INCLUDED true CACHE BOOL "driver_flexio_spi component is included.")
+include_guard(GLOBAL)
+message("driver_flexio_spi component is included.")
 
-    target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
-        ${CMAKE_CURRENT_LIST_DIR}/fsl_flexio_spi.c
-    )
-
-
-    target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
-        ${CMAKE_CURRENT_LIST_DIR}/.
-    )
+target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
+    ${CMAKE_CURRENT_LIST_DIR}/fsl_flexio_spi.c
+)
 
 
-    include(driver_flexio_MIMXRT1011)
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
+    ${CMAKE_CURRENT_LIST_DIR}/.
+)
 
-endif()
+
+include(driver_flexio_MIMXRT1011)
+

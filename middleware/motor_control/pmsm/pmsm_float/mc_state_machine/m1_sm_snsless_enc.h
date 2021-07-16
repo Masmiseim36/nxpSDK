@@ -17,9 +17,16 @@
  ******************************************************************************/
 #define M1_SPEED_CONV_SCALE 628.06F /* Speed conversion scale */
 
-#define MCAT_SENSORLESS_CTRL 0 /* Sensorless control flag */
-#define MCAT_ENC_CTRL 1        /* Position quadrature encoder control flag */
+#define MCAT_SENSORLESS_CTRL 0U /* Sensorless control flag */
+#define MCAT_ENC_CTRL 1U        /* Position quadrature encoder control flag */
 
+/* Application info */
+typedef struct _app_ver
+{
+    char cBoardID[15];
+    char cMotorType[4];
+    char cAppVer[5];
+} app_ver_t;
 /*******************************************************************************
  * Variables
  ******************************************************************************/

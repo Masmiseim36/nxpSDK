@@ -2,7 +2,18 @@
 @page middleware_log Middleware Change Log
 
 @section sd SD Card driver for MCUXpresso SDK
-  The current driver version is 2.3.3.
+  The current driver version is 2.4.0.
+
+  - 2.4.0
+    - Improvements
+      - Removed deprecated api in sd driver.
+      - Added new api SD_PollingCardStatusBusy for application polling card status.
+      - Improved the read/write/erase function flow.
+      - Improved the signal line voltage switch flow.
+      - Added powerOnDelayMS/powerOffDelayMS in sd_usr_param_t to allow redefine the default power on/off delay.
+      - Added mutual exclusive access for init/deinit/read/write/erase function.
+      - Fixed the driver strength configurations missed when timing mode switch to non SDR50/SDR104 mode.
+      - Fixed violations of MISRA C-2012 rule 4.7, 17.7, 10.7, 10.4, 13.5, 14.4.
 
   - 2.3.3
     - Improvements

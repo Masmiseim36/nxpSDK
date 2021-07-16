@@ -122,7 +122,7 @@ typedef int16_t lv_coord_t;
 #define LV_INDEV_DEF_DRAG_THROW           100
 
 /* Long press time in milliseconds.
- * Time to send `LV_EVENT_LONG_PRESSSED`) */
+ * Time to send `LV_EVENT_LONG_PRESSED`) */
 #define LV_INDEV_DEF_LONG_PRESS_TIME      400
 
 /* Repeated trigger period in long press [ms]
@@ -222,7 +222,7 @@ typedef void * lv_fs_drv_user_data_t;
  * (I.e. no new image decoder is added)
  * With complex image decoders (e.g. PNG or JPG) caching can save the continuous open/decode of images.
  * However the opened images might consume additional RAM.
- * LV_IMG_CACHE_DEF_SIZE must be >= 1 */
+ * Set it to 0 to disable caching */
 #define LV_IMG_CACHE_DEF_SIZE       1
 
 /*Declare the type of the user data of image decoder (can be e.g. `void *`, `int`, `struct`)*/
@@ -244,9 +244,14 @@ typedef void * lv_img_decoder_user_data_t;
 /* Define a custom attribute to `lv_disp_flush_ready` function */
 #define LV_ATTRIBUTE_FLUSH_READY
 
+/* Required alignment size for buffers */
+#define LV_ATTRIBUTE_MEM_ALIGN_SIZE
+
 /* With size optimization (-Os) the compiler might not align data to
- * 4 or 8 byte boundary. This alignment will be explicitly applied where needed.
- * E.g. __attribute__((aligned(4))) */
+ * 4 or 8 byte boundary. Some HW may need even 32 or 64 bytes.
+ * This alignment will be explicitly applied where needed.
+ * LV_ATTRIBUTE_MEM_ALIGN_SIZE should be used to specify required align size.
+ * E.g. __attribute__((aligned(LV_ATTRIBUTE_MEM_ALIGN_SIZE))) */
 #define LV_ATTRIBUTE_MEM_ALIGN
 
 /* Attribute to mark large constant arrays for example
@@ -356,6 +361,8 @@ typedef void * lv_indev_drv_user_data_t;            /*Type of user data in the i
 
 /* Montserrat fonts with bpp = 4
  * https://fonts.google.com/specimen/Montserrat  */
+#define LV_FONT_MONTSERRAT_8     0
+#define LV_FONT_MONTSERRAT_10    0
 #define LV_FONT_MONTSERRAT_12    1
 #define LV_FONT_MONTSERRAT_14    0
 #define LV_FONT_MONTSERRAT_16    0
@@ -385,6 +392,7 @@ typedef void * lv_indev_drv_user_data_t;            /*Type of user data in the i
 /*Pixel perfect monospace font
  * http://pelulamu.net/unscii/ */
 #define LV_FONT_UNSCII_8     0
+#define LV_FONT_UNSCII_16    0
 
 /* Optionally declare your custom fonts here.
  * You can use these fonts as default font too
@@ -682,9 +690,6 @@ typedef void * lv_obj_user_data_t;
 #  define LV_ROLLER_INF_PAGES         7
 #endif
 
-/*Rotary (dependencies: lv_arc, lv_btn)*/
-#define LV_USE_ROTARY     1
-
 /*Slider (dependencies: lv_bar)*/
 #define LV_USE_SLIDER    1
 
@@ -705,6 +710,7 @@ typedef void * lv_obj_user_data_t;
 #define LV_USE_TABLE    1
 #if LV_USE_TABLE
 #  define LV_TABLE_COL_MAX    12
+#  define LV_TABLE_CELL_STYLE_CNT  4
 #endif
 
 /*Tab (dependencies: lv_page, lv_btnm)*/
@@ -734,4 +740,5 @@ typedef void * lv_obj_user_data_t;
 
 /*--END OF LV_CONF_H--*/
 
+/* clang-format on */
 #endif /*LV_CONF_H*/

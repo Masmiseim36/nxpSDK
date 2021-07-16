@@ -353,7 +353,7 @@ extern "C" {
     const FMSTR_TSA_ENTRY *FMSTR_TsaGetTable(FMSTR_SIZE tableIndex, FMSTR_SIZE *tableSize) \
     {
 #define FMSTR_TSA_TABLE(id)                   \
-    if (tableIndex-- == 0)                    \
+    if (tableIndex-- == 0U)                    \
     {                                         \
         FMSTR_TSA_FUNC_PROTO(id);             \
         return FMSTR_TSA_FUNC(id)(tableSize); \
@@ -363,7 +363,7 @@ extern "C" {
 #if FMSTR_USE_TSA_DYNAMIC > 0
 #define FMSTR_TSA_TABLE_LIST_END()                         \
     {                                                      \
-        if (tableIndex-- == 0)                             \
+        if (tableIndex-- == 0U)                             \
         {                                                  \
             FMSTR_TSA_FUNC_PROTO(dynamic_tsa);             \
             return FMSTR_TSA_FUNC(dynamic_tsa)(tableSize); \

@@ -280,7 +280,7 @@ usb_status_t USB_DeviceMscProcessUfiCommand(usb_device_msc_struct_t *mscHandle)
     /*The first byte of all ufi command blocks shall contain an Operation Code, refer to ufi spec*/
     switch (mscHandle->mscCbw->cbwcb[0])
     {
-        /* ufi commmand operation code*/
+        /* ufi command operation code*/
         case USB_DEVICE_MSC_INQUIRY_COMMAND: /*operation code : 0x12*/
             error = USB_DeviceMscUfiInquiryCommand(mscHandle);
             break;
@@ -363,7 +363,7 @@ usb_status_t USB_DeviceMscBulkIn(usb_device_handle deviceHandle,
                                  usb_device_endpoint_callback_message_struct_t *event,
                                  void *arg)
 {
-    usb_device_msc_csw_t *csw;
+    usb_device_msc_csw_t *csw          = NULL;
     usb_status_t error                 = kStatus_USB_Error;
     usb_device_msc_struct_t *mscHandle = (usb_device_msc_struct_t *)arg;
 
@@ -665,7 +665,7 @@ usb_status_t USB_DeviceMscEndpointsDeinit(void)
  */
 usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *param)
 {
-    usb_status_t error = kStatus_USB_Error;
+    usb_status_t error = kStatus_USB_InvalidRequest;
     uint8_t *temp8     = (uint8_t *)param;
     switch (event)
     {
@@ -674,6 +674,7 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
             g_mscHandle->configuration = 0;
             USB_DeviceControlPipeInit(g_msc.deviceHandle);
             g_msc.attach = 0;
+            error        = kStatus_USB_Success;
 #if (defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0U)) || \
     (defined(USB_DEVICE_CONFIG_LPCIP3511HS) && (USB_DEVICE_CONFIG_LPCIP3511HS > 0U))
             /* Get USB speed to configure the device, including max packet size and interval of the endpoints. */
@@ -694,6 +695,7 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
                 USB_DeviceMscEndpointsDeinit();
             }
             g_mscHandle->configuration = *temp8;
+            error                      = kStatus_USB_Success;
             if (USB_MSC_CONFIGURE_INDEX == (*temp8))
             {
                 /*USB_DeviceMscEndpointsDeinit();*/
@@ -705,6 +707,7 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
             }
             break;
         case kUSB_DeviceEventSetInterface:
+            error = kStatus_USB_Success;
             break;
         default:
             break;
@@ -852,7 +855,7 @@ usb_status_t USB_DeviceProcessClassRequest(usb_device_handle handle,
                                            uint32_t *length,
                                            uint8_t **buffer)
 {
-    usb_status_t error = kStatus_USB_Error;
+    usb_status_t error = kStatus_USB_InvalidRequest;
 
     if ((setup->bmRequestType & USB_REQUEST_TYPE_RECIPIENT_MASK) != USB_REQUEST_TYPE_RECIPIENT_INTERFACE)
     {
@@ -866,11 +869,8 @@ usb_status_t USB_DeviceProcessClassRequest(usb_device_handle handle,
                 ((setup->bmRequestType & USB_REQUEST_TYPE_DIR_MASK) == USB_REQUEST_TYPE_DIR_IN))
             {
                 *buffer = (uint8_t *)&g_mscHandle->logicalUnitNumber;
-                *length = setup->wLength;
-            }
-            else
-            {
-                error = kStatus_USB_InvalidRequest;
+                *length = sizeof(g_mscHandle->logicalUnitNumber);
+                error   = kStatus_USB_Success;
             }
             break;
         case USB_DEVICE_MSC_BULK_ONLY_MASS_STORAGE_RESET:
@@ -884,10 +884,7 @@ usb_status_t USB_DeviceProcessClassRequest(usb_device_handle handle,
                 g_mscHandle->inEndpointStallFlag  = 1;
                 g_mscHandle->performResetRecover  = 0;
                 g_mscHandle->performResetDoneFlag = 1;
-            }
-            else
-            {
-                error = kStatus_USB_InvalidRequest;
+                error                             = kStatus_USB_Success;
             }
             break;
         default:
@@ -967,8 +964,8 @@ void main(void)
 {
     BOARD_ConfigMPU();
 
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
+    BOARD_InitBootPins();
+    BOARD_InitBootClocks();
     BOARD_InitDebugConsole();
 
     USB_DeviceApplicationInit();

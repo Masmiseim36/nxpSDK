@@ -37,6 +37,11 @@ LWIPDIR=../../../../src
 # The include path to sys_arch.h and lwipopts.h must be first, so this must be before Common.mk
 CFLAGS=-DLWIP_NOASSERT_ON_ERROR -I/usr/include/check -I$(LWIPDIR)/../test/unit
 
+# Ignore 'too many arguments for format' warnings which happen with GCCs
+# from check 0.15.2 on fail_if/fail_unless macros with text.
+# See https://github.com/libcheck/check/pull/298/commits/82540c5428d3818b64d
+CFLAGS+=-Wno-error=format-extra-args
+
 ifeq (clang,$(findstring clang,$(CC)))
 # check.h causes 'error: token pasting of ',' and __VA_ARGS__ is a GNU extension' with clang 9.0.0
 CFLAGS+=-Wno-gnu-zero-variadic-macro-arguments
@@ -57,22 +62,31 @@ TESTDIR=$(LWIPDIR)/../test/unit
 include $(TESTDIR)/Filelists.mk
 TESTOBJS=$(notdir $(TESTFILES:.c=.o))
 
+DEPFILES=.depend_test .depend_lwip .depend_app
+
 clean:
-	@rm -f *.o $(LWIPLIBCOMMON) $(APPLIB) lwip_unittests *.s .depend* *.core core lwip_unittests.xml
+	@rm -f *.o $(LWIPLIBCOMMON) $(APPLIB) lwip_unittests *.s $(DEPFILES) *.core core lwip_unittests.xml
 
-depend dep: .depend
+depend dep: $(DEPFILES)
+	@true
 
-include .depend
+ifneq ($(MAKECMDGOALS),clean)
+include $(DEPFILES)
+endif
 
-.depend: $(LWIPFILES) $(APPFILES) $(TESTFILES)
-	$(CCDEP) $(CFLAGS) -MM $^ > .depend || rm -f .depend
+.depend_test: $(TESTFILES)
+	$(CCDEP) $(CFLAGS) -MM $^ > .depend_test || rm -f .depend_test
+.depend_lwip: $(LWIPFILES)
+	$(CCDEP) $(CFLAGS) -MM $^ > .depend_lwip || rm -f .depend_lwip
+.depend_app: $(APPFILES)
+	$(CCDEP) $(CFLAGS) -MM $^ > .depend_app || rm -f .depend_app
 
 ifneq ($(UNAME_S),Darwin)
 # clang on Darwin doesn't support --start-group
-lwip_unittests: .depend $(TESTOBJS) $(LWIPLIBCOMMON) $(APPLIB)
+lwip_unittests: $(DEPFILES) $(TESTOBJS) $(LWIPLIBCOMMON) $(APPLIB)
 	$(CC) $(CFLAGS) -o lwip_unittests $(TESTOBJS)  -Wl,--start-group $(LWIPLIBCOMMON) $(APPLIB) $(LDFLAGS) -Wl,--end-group
 else
-lwip_unittests: .depend $(TESTOBJS) $(LWIPLIBCOMMON) $(APPLIB)
+lwip_unittests: $(DEPFILES) $(TESTOBJS) $(LWIPLIBCOMMON) $(APPLIB)
 	$(CC) $(CFLAGS) -o lwip_unittests $(TESTOBJS) $(LWIPLIBCOMMON) $(APPLIB) $(LDFLAGS)
 endif
 

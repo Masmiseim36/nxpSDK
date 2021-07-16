@@ -13,16 +13,18 @@ analysis tool
 how to run the proofs on your local clone of a:FR.
 
 
-Prerequisites
--------------
+Bulding and running proofs
+--------------------------
+
+
+### Prerequisites
 
 You will need Python 3. On Windows, you will need Visual Studio 2015 or later
 (in particular, you will need the Developer Command Prompt and NMake). On macOS
 and Linux, you will need Make.
 
 
-Installing CBMC
----------------
+### Installing CBMC
 
 - Clone the [CBMC repository](https://github.com/diffblue/cbmc).
 
@@ -52,8 +54,7 @@ Installing CBMC
   `src/goto-cc`, and `src/goto-instrument` directories respectively.
 
 
-Setting up the proofs
----------------------
+### Setting up the proofs
 
 Change into the `proofs` directory. On Windows, run
 ```
@@ -68,8 +69,7 @@ versa), you can pass the `--system linux` or `--system windows` options to those
 programs.
 
 
-Running the proofs
-------------------
+### Running the proofs
 
 Each of the leaf directories under `proofs` is a proof of the memory
 safety of a single entry point in a:FR. The scripts that you ran in the
@@ -80,8 +80,7 @@ run; they eventually write their output to `cbmc.txt`, which should have
 the text `VERIFICATION SUCCESSFUL` at the end.
 
 
-Proof directory structure
--------------------------
+### Proof directory structure
 
 This directory contains the following subdirectories:
 

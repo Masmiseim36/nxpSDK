@@ -19,7 +19,7 @@
 
 #ifdef BT_STORAGE
 
-#define CONFIG_NVM_SIZE (2 * 1024)
+#define CONFIG_NVM_SIZE (2U * 1024U)
 
 /* --------------------------------------------- External Global Variables */
 
@@ -52,7 +52,7 @@ static NVM_ADAPTER_TABLE(nvm_adapter_table_t NvAdapterDataTable[]) =
 {
     {
         &NvDataTable,
-        1,
+        1U,
         BT_StorageNvmBackendInit
     }
 };
@@ -62,7 +62,7 @@ static NVM_ADAPTER_TABLE(nvm_adapter_table_t NvAdapterDataTable[]) =
 {
     {
         &NvDataTable,
-        1,
+        1U,
         BT_StorageNvmBackendInit
     }
 };
@@ -78,41 +78,39 @@ DECL_STATIC UINT16 nv_offset;
 static OSA_TASK_HANDLE_DEFINE(s_nvmIdleTask);
 static osa_task_handle_t s_nvmIdleTaskHandle;
 static void storage_idle_task(osa_task_param_t arg);
-static OSA_TASK_DEFINE(storage_idle_task, STORAGE_IDLE_TASK_PRIORITY, 1, STORAGE_IDLE_TASK_STACK_SIZE, 0);
+static OSA_TASK_DEFINE(storage_idle_task, STORAGE_IDLE_TASK_PRIORITY, 1U, STORAGE_IDLE_TASK_STACK_SIZE, 0U);
 #endif
 /* --------------------------------------------- Functions */
 
 static int BT_StorageNvmBackendInit(void)
 {
     NvDataTable.pData = NvmSaveBuf;
-    NvDataTable.ElementSize = 1;
-    NvDataTable.ElementsCount = CONFIG_NVM_SIZE;
-    NvDataTable.DataEntryID = 0xf101;
+    NvDataTable.ElementSize = CONFIG_NVM_SIZE;
+    NvDataTable.ElementsCount = 1U;
+    NvDataTable.DataEntryID = 0xf101U;
     NvDataTable.DataEntryType = gNVM_MirroredInRam_c;
-    return 0;
+    return 0U;
 }
 
 #if ((defined STORAGE_IDLE_TASK_SYNC_ENABLE) && (STORAGE_IDLE_TASK_SYNC_ENABLE))
-void storage_idle_task(osa_task_param_t arg)
+static void storage_idle_task(osa_task_param_t arg)
 {
-    while (1)
+    BT_LOOP_FOREVER()
     {
-#if (gAppUseNvm_d)
         NvIdle();
-#endif
     }
 }
 #endif
 
 void storage_bt_init_pl (void)
 {
-    NVM_AdapterInit();
+    (BT_IGNORE_RETURN_VALUE) NVM_AdapterInit();
 #if defined(__IAR_SYSTEMS_ICC__)
-    (void)BtNvAdapterDataTable[0];
+    (void)BtNvAdapterDataTable[0U];
 #elif (defined(__CC_ARM) || defined(__ARMCC_VERSION))
-    (void)NvAdapterDataTable[0];
+    (void)NvAdapterDataTable[0U];
 #elif defined(__GNUC__)
-    (void)NvAdapterDataTable[0];
+    (void)NvAdapterDataTable[0U];
 #endif
 #if ((defined STORAGE_IDLE_TASK_SYNC_ENABLE) && (STORAGE_IDLE_TASK_SYNC_ENABLE))
     if (s_nvmIdleTaskHandle == NULL)
@@ -136,12 +134,12 @@ void storage_bt_shutdown_pl (void)
 API_RESULT storage_open_pl (UCHAR type, UCHAR mode)
 {
 	/* Initialize the offset */
-	nv_offset = 0;
+	nv_offset = 0U;
 
 	/* If mode is read, load from the NVRAM */
 	if (STORAGE_OPEN_MODE_READ == mode)
 	{
-		NvRestoreDataSet(NvmSaveBuf, false);
+        (BT_IGNORE_RETURN_VALUE) NvRestoreDataSet(NvmSaveBuf, false);
 	}
 
 	return API_SUCCESS;
@@ -153,7 +151,7 @@ API_RESULT storage_close_pl (UCHAR type, UCHAR mode)
 	if (STORAGE_OPEN_MODE_WRITE == mode)
 	{
 #if ((defined STORAGE_IDLE_TASK_SYNC_ENABLE) && (STORAGE_IDLE_TASK_SYNC_ENABLE))
-		NvSaveOnIdle(NvmSaveBuf,  false);
+        (BT_IGNORE_RETURN_VALUE) NvSaveOnIdle(NvmSaveBuf,  false);
 #else
 		NvSyncSave(NvmSaveBuf,  false);
 #endif
@@ -199,7 +197,7 @@ INT16 storage_write_signature_pl (UCHAR type)
 #else /* (STORAGE_SKEY_SIZE != 0) */
     BT_IGNORE_UNUSED_PARAM(type);
 
-    return 0;
+    return 0U;
 #endif /* (STORAGE_SKEY_SIZE != 0) */
 }
 
@@ -214,7 +212,7 @@ INT16 storage_read_signature_pl (UCHAR type)
     }
 
 	ret = STORAGE_SKEY_SIZE;
-	if (BT_mem_cmp (ssign[type], NvmSaveBuf, STORAGE_SKEY_SIZE))
+	if (0U != BT_mem_cmp(ssign[type], NvmSaveBuf, STORAGE_SKEY_SIZE))
 	{
 		ret = -1;
 	}
@@ -225,7 +223,7 @@ INT16 storage_read_signature_pl (UCHAR type)
 #else /* (STORAGE_SKEY_SIZE != 0) */
     BT_IGNORE_UNUSED_PARAM(type);
 
-    return 0;
+    return 0U;
 #endif /* (STORAGE_SKEY_SIZE != 0) */
 }
 

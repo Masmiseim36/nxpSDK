@@ -1,11 +1,13 @@
 /*
- * Copyright 2016-2019 NXP
+ * Copyright 2016-2017 NXP
  * All rights reserved.
+ *
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #include "bl_semc.h"
+#include "bootloader_common.h"
 
 ////////////////////////////////////////////////////////////////////////////////
 // Definitions
@@ -213,16 +215,6 @@ status_t semc_ipg_command_device_write(uint32_t slaveAddress,
     status_t status;
     SEMC_Type *base = SEMC;
 
-    // Configure data size if necessary
-    if (semc_ipg_command_get_data_size() != lengthInBytes)
-    {
-        status = semc_ipg_command_set_data_size(lengthInBytes);
-        if (status != kStatus_Success)
-        {
-            return status;
-        }
-    }
-
     // Clear status bit
     base->INTR |= SEMC_INTR_IPCMDDONE_MASK;
     // Set tx data
@@ -239,21 +231,14 @@ status_t semc_ipg_command_device_write(uint32_t slaveAddress,
 status_t semc_ipg_command_device_read(uint32_t slaveAddress,
                                       uint16_t commandCode,
                                       uint8_t *readoutData,
-                                      uint8_t lengthInBytes)
+                                      uint8_t lengthInBytes,
+                                      uint8_t ioPort,
+                                      uint8_t readType)
 {
     status_t status;
     SEMC_Type *base = SEMC;
     uint32_t rxdat;
-
-    // Configure data size if necessary
-    if (semc_ipg_command_get_data_size() != lengthInBytes)
-    {
-        status = semc_ipg_command_set_data_size(lengthInBytes);
-        if (status != kStatus_Success)
-        {
-            return status;
-        }
-    }
+    uint8_t offset;
 
     // Clear status bit
     base->INTR |= SEMC_INTR_IPCMDDONE_MASK;
@@ -269,10 +254,13 @@ status_t semc_ipg_command_device_read(uint32_t slaveAddress,
     }
     // Get rx data
     rxdat = base->IPRXDAT;
+
+    offset = (readType && (ioPort == 16)) ? 16 : 8;
+
     for (uint32_t i = 0; i < lengthInBytes; i++)
     {
         *readoutData = (uint8_t)(rxdat & 0xFFu);
-        rxdat >>= 8u;
+        rxdat >>= offset;
         readoutData++;
     }
 
@@ -280,30 +268,45 @@ status_t semc_ipg_command_device_read(uint32_t slaveAddress,
 }
 
 //!@brief Read memory data via SEMC IPG commmand
-status_t semc_ipg_memory_read(semc_mem_config_t *config, uint8_t *readoutData, uint32_t lengthInBytes)
+status_t semc_ipg_memory_read(semc_mem_config_t *config, uint8_t *readoutData, uint32_t lengthInBytes, uint8_t readType)
 {
-    status_t status = kStatus_Success;
+    status_t status = kStatus_Fail;
 
     if (config->deviceMemType == kSemcDeviceMemType_NAND)
     {
         // Only commandMode is necessary for Read only Command
         uint16_t commandCode = semc_ipg_command_get_nand_code(0, 0, SEMC_IPCMD_NAND_CM_IPG_READ_ONLY); // Read Only
 
-        while (lengthInBytes >= kSemcMiscProperty_MaxIpCommandDataSizeInBytes)
+        // Configure data size if necessary
+        if (semc_ipg_command_get_data_size() != kSemcMiscProperty_MaxIpCommandDataSizeInBytes)
         {
+            status = semc_ipg_command_set_data_size(kSemcMiscProperty_MaxIpCommandDataSizeInBytes);
+            if (status != kStatus_Success)
+            {
+                return status;
+            }
+        }
+
+        while (lengthInBytes)
+        {
+            // read parameter page and ID via IO[15:0] - data read from IO[15:0] but only IO[7:0] are valid
+            uint8_t dataSizeInBytes = (readType && (config->nandMemConfig.ioPortWidth == 16)) ?
+                                          (kSemcMiscProperty_MaxIpCommandDataSizeInBytes / 2) :
+                                          kSemcMiscProperty_MaxIpCommandDataSizeInBytes; // each device read
+            if (dataSizeInBytes > lengthInBytes)
+            {
+                dataSizeInBytes = lengthInBytes;
+            }
+
             status = semc_ipg_command_device_read(config->nandMemConfig.ipgMemBaseAddress, commandCode, readoutData,
-                                                  kSemcMiscProperty_MaxIpCommandDataSizeInBytes);
+                                                  dataSizeInBytes, config->nandMemConfig.ioPortWidth, readType);
             if (status != kStatus_Success)
             {
                 break;
             }
-            lengthInBytes -= kSemcMiscProperty_MaxIpCommandDataSizeInBytes;
-            readoutData += kSemcMiscProperty_MaxIpCommandDataSizeInBytes;
-        }
-        if (lengthInBytes && (status == kStatus_Success))
-        {
-            status = semc_ipg_command_device_read(config->nandMemConfig.ipgMemBaseAddress, commandCode, readoutData,
-                                                  (uint8_t)lengthInBytes);
+
+            lengthInBytes -= dataSizeInBytes;
+            readoutData += dataSizeInBytes;
         }
 
         // Re-cover port size
@@ -314,42 +317,51 @@ status_t semc_ipg_memory_read(semc_mem_config_t *config, uint8_t *readoutData, u
 }
 
 //!@brief Write memory data via SEMC IPG commmand
-status_t semc_ipg_memory_write(semc_mem_config_t *config, uint8_t *writeData, uint32_t lengthInBytes)
+status_t semc_ipg_memory_write(semc_mem_config_t *config, uint8_t *writeData, uint32_t lengthInBytes, uint8_t writeType)
 {
-    status_t status = kStatus_Success;
+    status_t status = kStatus_Fail;
 
     if (config->deviceMemType == kSemcDeviceMemType_NAND)
     {
         // Only commandMode is necessary for Write only Command
         uint16_t commandCode = semc_ipg_command_get_nand_code(0, 0, SEMC_IPCMD_NAND_CM_IPG_WRITE_ONLY); // Write Only
-        uint32_t writeDataWord;
+        uint8_t offset = (writeType && (config->nandMemConfig.ioPortWidth == 16)) ? 16 : 8;
 
-        while (lengthInBytes >= kSemcMiscProperty_MaxIpCommandDataSizeInBytes)
+        // Configure data size if necessary
+        if (semc_ipg_command_get_data_size() != kSemcMiscProperty_MaxIpCommandDataSizeInBytes)
         {
-            writeDataWord = 0;
-            for (uint32_t i = 0; i < kSemcMiscProperty_MaxIpCommandDataSizeInBytes; i++)
+            status = semc_ipg_command_set_data_size(kSemcMiscProperty_MaxIpCommandDataSizeInBytes);
+            if (status != kStatus_Success)
             {
-                writeDataWord |= (uint32_t)(*(uint8_t *)(writeData + i)) << (8 * i);
+                return status;
+            }
+        }
+
+        while (lengthInBytes)
+        {
+            uint8_t dataSizeInBytes = (writeType && (config->nandMemConfig.ioPortWidth == 16)) ?
+                                          (kSemcMiscProperty_MaxIpCommandDataSizeInBytes / 2) :
+                                          kSemcMiscProperty_MaxIpCommandDataSizeInBytes; // each device write
+            if (dataSizeInBytes > lengthInBytes)
+            {
+                dataSizeInBytes = lengthInBytes;
+            }
+
+            uint32_t writeDataWord = 0;
+            for (uint32_t i = 0; i < dataSizeInBytes; i++)
+            {
+                writeDataWord |= (uint32_t)(*(uint8_t *)(writeData + i)) << (offset * i);
             }
 
             status = semc_ipg_command_device_write(config->nandMemConfig.ipgMemBaseAddress, commandCode, writeDataWord,
-                                                   kSemcMiscProperty_MaxIpCommandDataSizeInBytes);
+                                                   dataSizeInBytes);
             if (status != kStatus_Success)
             {
                 break;
             }
-            lengthInBytes -= kSemcMiscProperty_MaxIpCommandDataSizeInBytes;
-            writeData += kSemcMiscProperty_MaxIpCommandDataSizeInBytes;
-        }
-        if (lengthInBytes && (status == kStatus_Success))
-        {
-            writeDataWord = 0;
-            for (uint32_t i = 0; i < lengthInBytes; i++)
-            {
-                writeDataWord |= (uint32_t)(*(uint8_t *)(writeData + i)) << (8 * i);
-            }
-            status = semc_ipg_command_device_write(config->nandMemConfig.ipgMemBaseAddress, commandCode, writeDataWord,
-                                                   (uint8_t)lengthInBytes);
+
+            lengthInBytes -= dataSizeInBytes;
+            writeData += dataSizeInBytes;
         }
 
         // Re-cover port size
@@ -365,7 +377,7 @@ status_t semc_axi_memory_read(uint32_t axiAddress, uint8_t *readoutData, uint32_
     status_t status = kStatus_Success;
 
     memcpy(readoutData, (uint8_t *)axiAddress, lengthInBytes);
-    status = semc_wait_for_idle();
+    // status = semc_wait_for_idle();
 
     return status;
 }
@@ -525,6 +537,8 @@ static void semc_axi_queue_config(uint32_t instance, semc_axi_queue_weigth_confi
                       SEMC_BMCR1_WPH(queueConfig->pageHit) | SEMC_BMCR1_WRWS(queueConfig->slaveHit_switch) |
                       SEMC_BMCR1_WBR(queueConfig->bankRotation);
     }
+    debug_printf("base->BMCR0 = %x\n", base->BMCR0);
+    debug_printf("base->BMCR1 = %x\n", base->BMCR1);
     // Note: BMCR2/3 registers are used for debugging only, User shouldn't be able to see it.
 }
 
@@ -732,16 +746,15 @@ static status_t semc_config_nor_flash_control_registers(semc_mem_config_t *confi
     base->NORCR2 = SEMC_NORCR2_CEITV(config->norMemConfig.ceMinIntervalTime) |
                    SEMC_NORCR2_RD(config->norMemConfig.syncReadCycleTime) |
                    SEMC_NORCR2_LC(config->norMemConfig.syncLatencyCount) |
-                   SEMC_NORCR2_AWDH(config->norMemConfig.asyncAddressToDataHoldTime) |
+                   SEMC_NORCR2_AWDH(config->norMemConfig.asyncAddressTocsHoldTime) |
                    SEMC_NORCR2_TA(config->norMemConfig.asyncTurnaroundTime);
 #else
-    base->NORCR2 = SEMC_NORCR2_CEITV(config->norMemConfig.ceMinIntervalTime) |
-                   SEMC_NORCR2_RD(config->norMemConfig.syncReadCycleTime) |
-                   SEMC_NORCR2_LC(config->norMemConfig.syncLatencyCount) |
-                   SEMC_NORCR2_AWDH(config->norMemConfig.asyncAddressToDataHoldTime) |
-                   SEMC_NORCR2_TA(config->norMemConfig.asyncTurnaroundTime) |
-                   SEMC_NORCR2_WDH(config->norMemConfig.syncDataHoldTime) |
-                   SEMC_NORCR2_WDS(config->norMemConfig.syncDataSetupTime);
+    base->NORCR2 =
+        SEMC_NORCR2_CEITV(config->norMemConfig.ceMinIntervalTime) |
+        SEMC_NORCR2_RD(config->norMemConfig.syncReadCycleTime) | SEMC_NORCR2_LC(config->norMemConfig.syncLatencyCount) |
+        SEMC_NORCR2_AWDH(config->norMemConfig.asyncAddressTocsHoldTime) |
+        SEMC_NORCR2_TA(config->norMemConfig.asyncTurnaroundTime) |
+        SEMC_NORCR2_WDH(config->norMemConfig.synccsHoldTime) | SEMC_NORCR2_WDS(config->norMemConfig.synccsSetupTime);
 #endif
 
     return status;
@@ -762,6 +775,7 @@ static status_t semc_config_nand_flash_control_registers(semc_mem_config_t *conf
     base->BR[4] &= ((uint32_t) ~(SEMC_BR_BA_MASK | SEMC_BR_MS_MASK | SEMC_BR_VLD_MASK));
     /* Note: Available SEMC memory region is defined in chip system memory map. */
     base->BR[4] |= SEMC_BR_BA((config->nandMemConfig.axiMemBaseAddress & SEMC_BR_BA_MASK) >> SEMC_BR_BA_SHIFT);
+
     status = semc_convert_memory_size_to_ms(config->nandMemConfig.axiMemSizeInByte, &ms);
     if (status == kStatus_Success)
     {
@@ -788,6 +802,9 @@ static status_t semc_config_nand_flash_control_registers(semc_mem_config_t *conf
     }
     base->BR[8] |= SEMC_BR_VLD_MASK;
 
+    debug_printf("BR[4]: %x\n", base->BR[4]);
+    debug_printf("BR[8]: %x\n", base->BR[8]);
+
     /////////////////////////////////////////////
     // 2. Set IOCR register: (CE# port pinmux)
     // Set NAND flash CE# port pinmux (SW pinmux)
@@ -796,7 +813,7 @@ static status_t semc_config_nand_flash_control_registers(semc_mem_config_t *conf
     switch (config->nandMemConfig.cePortOutputSelection)
     {
         case kSemcCeOutputSelection_MUX_A8:
-            base->IOCR |= SEMC_IOCR_MUX_A8(1);
+            base->IOCR |= SEMC_IOCR_MUX_A8(4);
             break;
         case kSemcCeOutputSelection_MUX_CSX0:
             base->IOCR |= SEMC_IOCR_MUX_CSX0(4);
@@ -811,16 +828,12 @@ static status_t semc_config_nand_flash_control_registers(semc_mem_config_t *conf
             base->IOCR |= SEMC_IOCR_MUX_CSX3(4);
             break;
         default:
-            status = kStatus_SEMC_InvalidSwPinmuxSelection;
+            return kStatus_SEMC_InvalidSwPinmuxSelection;
             break;
     }
-    if (status != kStatus_Success)
-    {
-        return status;
-    }
-
     // Set NAND RDY port pinmux
     base->IOCR |= SEMC_IOCR_MUX_RDY(0);
+    debug_printf("IOCR: %x\n", base->IOCR);
 
     /////////////////////////////////////////////
     // 3. Set MCR register: WAIT/RDY# polarity
@@ -831,6 +844,8 @@ static status_t semc_config_nand_flash_control_registers(semc_mem_config_t *conf
     // 4. Set NANDCR0 register: Data port size, Burst Length
     base->NANDCR0 &=
         ((uint32_t) ~(SEMC_NANDCR0_EDO_MASK | SEMC_NANDCR0_BL_MASK | SEMC_NANDCR0_PS_MASK | SEMC_NANDCR0_COL_MASK));
+
+    // Set EDO mode
     base->NANDCR0 |= SEMC_NANDCR0_EDO(config->nandMemConfig.edoMode);
     // Set NAND flash burst data length
     status = semc_convert_burst_length_to_bl(config->nandMemConfig.burstLengthInBytes, &bl);
@@ -855,6 +870,7 @@ static status_t semc_config_nand_flash_control_registers(semc_mem_config_t *conf
     {
         return kStatus_SEMC_InvalidDataPortWidth;
     }
+
     // Set NAND flash column address bit width
     // Note NA4.0: Actual one page area of NAND device usually contains main area and spare area,
     //  main area stores page data, spare area stores bad block info and ECC data.
@@ -895,15 +911,20 @@ static status_t semc_config_nand_flash_control_registers(semc_mem_config_t *conf
                     SEMC_NANDCR2_TADL(config->nandMemConfig.aleToDataStartTime) |
                     SEMC_NANDCR2_TRHW(config->nandMemConfig.reHighToWeLowTime) |
                     SEMC_NANDCR2_TWHR(config->nandMemConfig.weHighToReLowTime);
+
     // 6. Set NANDCR3 register: Addressing option
     base->NANDCR3 = SEMC_NANDCR3_NDOPT3((config->nandMemConfig.arrayAddressOption >> 2) & 0x1u) |
                     SEMC_NANDCR3_NDOPT2((config->nandMemConfig.arrayAddressOption >> 1) & 0x1u) |
                     SEMC_NANDCR3_NDOPT1(config->nandMemConfig.arrayAddressOption & 0x1u);
 
+    debug_printf("NANDCR0: %x\n", base->NANDCR0);
+    debug_printf("NANDCR1: %x\n", base->NANDCR1);
+    debug_printf("NANDCR2: %x\n", base->NANDCR2);
+    debug_printf("NANDCR3: %x\n", base->NANDCR3);
+
     return status;
 }
 
-#if BL_FEATURE_SEMC_NAND_MODULE || BL_FEATURE_SEMC_NOR_MODULE
 //!@brief Initialize SEMC module
 status_t semc_init(semc_mem_config_t *config)
 {
@@ -944,25 +965,24 @@ status_t semc_init(semc_mem_config_t *config)
     // Disable SEMC module during configuring control registers.
     base->MCR |= SEMC_MCR_MDIS_MASK;
 
-    // Configure device control register
-    switch (config->deviceMemType)
-    {
 #if BL_FEATURE_SEMC_NOR_MODULE
-    case kSemcDeviceMemType_NOR:
+    // Configure device control register
+    if (config->deviceMemType == kSemcDeviceMemType_NOR)
+    {
         portWidth = config->norMemConfig.dataPortWidth;
         status = semc_config_nor_flash_control_registers(config);
-        break;
+    }
+    else
 #endif // BL_FEATURE_SEMC_NOR_MODULE
-#if BL_FEATURE_SEMC_NAND_MODULE
-    case kSemcDeviceMemType_NAND:
+        if (config->deviceMemType == kSemcDeviceMemType_NAND)
+    {
         portWidth = config->nandMemConfig.ioPortWidth;
         status = semc_config_nand_flash_control_registers(config);
-        break;
-#endif // BL_FEATURE_SEMC_NAND_MODULE
-    default:
-        status = kStatus_SEMC_InvalidDeviceType;
     }
-
+    else
+    {
+        return kStatus_SEMC_InvalidDeviceType;
+    }
     if (status != kStatus_Success)
     {
         return status;
@@ -987,10 +1007,10 @@ status_t semc_init(semc_mem_config_t *config)
 
     // Enable SEMC module
     base->MCR &= ~SEMC_MCR_MDIS_MASK;
+    debug_printf("base->MCR: %x\n", base->MCR);
 
     return status;
 }
-#endif // BL_FEATURE_SEMC_NAND_MODULE || BL_FEATURE_SEMC_NOR_MODULE
 
 ////////////////////////////////////////////////////////////////////////////////
 // EOF

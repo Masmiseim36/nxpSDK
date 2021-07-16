@@ -7,7 +7,7 @@
 
 #include "littlevgl_support.h"
 #include "lvgl.h"
-#if defined(FSL_RTOS_FREE_RTOS)
+#if defined(SDK_OS_FREE_RTOS)
 #include "FreeRTOS.h"
 #include "semphr.h"
 #endif
@@ -68,14 +68,19 @@
 #define DEMO_CACHE_LINE_SIZE FSL_FEATURE_L1DCACHE_LINESIZE_BYTE
 #endif
 
-#if (DEMO_CACHE_LINE_SIZE > 0)
+#if (DEMO_CACHE_LINE_SIZE > FRAME_BUFFER_ALIGN)
 #define DEMO_FB_ALIGN DEMO_CACHE_LINE_SIZE
 #else
-#define DEMO_FB_ALIGN 4U
+#define DEMO_FB_ALIGN FRAME_BUFFER_ALIGN
+#endif
+
+#if (LV_ATTRIBUTE_MEM_ALIGN_SIZE > DEMO_FB_ALIGN)
+#undef DEMO_FB_ALIGN
+#define DEMO_FB_ALIGN LV_ATTRIBUTE_MEM_ALIGN_SIZE
 #endif
 
 #define DEMO_FB_SIZE \
-    (((LCD_WIDTH * LCD_HEIGHT * LCD_FB_BYTE_PER_PIXEL) + DEMO_CACHE_LINE_SIZE - 1) & ~(DEMO_CACHE_LINE_SIZE - 1))
+    (((LCD_WIDTH * LCD_HEIGHT * LCD_FB_BYTE_PER_PIXEL) + DEMO_FB_ALIGN - 1) & ~(DEMO_FB_ALIGN - 1))
 
 /*******************************************************************************
  * Prototypes
@@ -88,6 +93,10 @@ static void DEMO_InitLcdBackLight(void);
 
 static void DEMO_FlushDisplay(lv_disp_drv_t *disp_drv, const lv_area_t *area, lv_color_t *color_p);
 
+#if LV_USE_GPU
+static void DEMO_CleanInvalidateCache(lv_disp_drv_t *disp_drv);
+#endif
+
 static void DEMO_InitTouch(void);
 
 static bool DEMO_ReadTouch(lv_indev_drv_t *drv, lv_indev_data_t *data);
@@ -96,7 +105,7 @@ static bool DEMO_ReadTouch(lv_indev_drv_t *drv, lv_indev_data_t *data);
  * Variables
  ******************************************************************************/
 static volatile bool s_framePending;
-#if defined(FSL_RTOS_FREE_RTOS)
+#if defined(SDK_OS_FREE_RTOS)
 static SemaphoreHandle_t s_frameSema;
 #endif
 static ft5406_rt_handle_t touchHandle;
@@ -138,6 +147,10 @@ void lv_port_disp_init(void)
     /*Used to copy the buffer's content to the display*/
     disp_drv.flush_cb = DEMO_FlushDisplay;
 
+#if LV_USE_GPU
+    disp_drv.clean_dcache_cb = DEMO_CleanInvalidateCache;
+#endif
+
     /*Set a display buffer*/
     disp_drv.buffer = &disp_buf;
 
@@ -151,7 +164,7 @@ void lv_port_disp_init(void)
 
 void LCDIF_IRQHandler(void)
 {
-#if defined(FSL_RTOS_FREE_RTOS)
+#if defined(SDK_OS_FREE_RTOS)
     BaseType_t taskAwake = pdFALSE;
 #endif
 
@@ -165,7 +178,7 @@ void LCDIF_IRQHandler(void)
         {
             s_framePending = false;
 
-#if defined(FSL_RTOS_FREE_RTOS)
+#if defined(SDK_OS_FREE_RTOS)
             xSemaphoreGiveFromISR(s_frameSema, &taskAwake);
 
             portYIELD_FROM_ISR(taskAwake);
@@ -245,7 +258,7 @@ static void DEMO_InitLcd(void)
     /* Clear frame buffer. */
     memset((void *)s_frameBuffer, 0, sizeof(s_frameBuffer));
 
-#if defined(FSL_RTOS_FREE_RTOS)
+#if defined(SDK_OS_FREE_RTOS)
     s_frameSema = xSemaphoreCreateBinary();
     if (NULL == s_frameSema)
     {
@@ -256,7 +269,7 @@ static void DEMO_InitLcd(void)
 
     /* No frame pending. */
     s_framePending = false;
-#if defined(FSL_RTOS_FREE_RTOS)
+#if defined(SDK_OS_FREE_RTOS)
     NVIC_SetPriority(LCDIF_IRQn, configLIBRARY_MAX_SYSCALL_INTERRUPT_PRIORITY + 1);
 #endif
 
@@ -271,6 +284,13 @@ static void DEMO_InitLcd(void)
     DEMO_InitLcdBackLight();
 }
 
+#if LV_USE_GPU
+static void DEMO_CleanInvalidateCache(lv_disp_drv_t *disp_drv)
+{
+    SCB_CleanInvalidateDCache();
+}
+#endif
+
 static void DEMO_FlushDisplay(lv_disp_drv_t *disp_drv, const lv_area_t *area, lv_color_t *color_p)
 {
     DCACHE_CleanInvalidateByRange((uint32_t)color_p, DEMO_FB_SIZE);
@@ -279,7 +299,7 @@ static void DEMO_FlushDisplay(lv_disp_drv_t *disp_drv, const lv_area_t *area, lv
 
     s_framePending = true;
 
-#if defined(FSL_RTOS_FREE_RTOS)
+#if defined(SDK_OS_FREE_RTOS)
     if (xSemaphoreTake(s_frameSema, portMAX_DELAY) == pdTRUE)
     {
         /* IMPORTANT!!!

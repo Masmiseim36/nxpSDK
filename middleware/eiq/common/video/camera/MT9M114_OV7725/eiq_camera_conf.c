@@ -18,20 +18,30 @@
 #include "board.h"
 
 /*******************************************************************************
- * Definitions
- ******************************************************************************/
-
-/*******************************************************************************
  * Prototypes
  ******************************************************************************/
+
 #if (DEMO_CAMERA == DEMO_CAMERA_OV7725)
+
+/*!
+ * @brief Resets camera power down pin.
+ * 
+ * @param pullUp sets true pin
+ */
 static void BOARD_PullCameraPowerDownPin(bool pullUp);
 #endif
+
+/*!
+ * @brief Resets camera using reset pin.
+ * 
+ * @param pullUp sets true pin
+ */
 static void BOARD_PullCameraResetPin(bool pullUp);
 
 /*******************************************************************************
  * Variables
  ******************************************************************************/
+
 /* Camera connect to CSI. */
 static csi_resource_t csiResource = {
     .csiBase = CSI,
@@ -80,8 +90,12 @@ camera_device_handle_t cameraDevice = {
 /*******************************************************************************
  * Code
  ******************************************************************************/
+
 extern void CSI_DriverIRQHandler(void);
 
+/*!
+ * @brief Handles CSI IRQ.
+ */
 void CSI_IRQHandler(void)
 {
     CSI_DriverIRQHandler();
@@ -115,11 +129,18 @@ static void BOARD_PullCameraPowerDownPin(bool pullUp)
  * not be reseted, so at the begining, use GPIO to let camera
  * release the I2C bus.
  */
+
+/*!
+ * @brief Delays for releasing bus.
+ */
 static void i2c_release_bus_delay(void)
 {
     SDK_DelayAtLeastUs(5, SDK_DEVICE_MAXIMUM_CPU_CLOCK_FREQUENCY);
 }
 
+/*!
+ * @brief Releases bus.
+ */
 static void BOARD_I2C_ReleaseBus(void)
 {
     uint8_t i                          = 0;
@@ -171,6 +192,11 @@ static void BOARD_I2C_ReleaseBus(void)
 
 #endif
 
+/*!
+ * @brief Prepares camera for initialization.
+ * 
+ * @return status code
+ */
 void BOARD_EarlyPrepareCamera(void)
 {
 #if (DEMO_CAMERA != DEMO_CAMERA_OV7725)
@@ -178,6 +204,9 @@ void BOARD_EarlyPrepareCamera(void)
 #endif
 }
 
+/*!
+ * @brief Initializes camera controler.
+ */
 void BOARD_InitCameraResource(void)
 {
     BOARD_Camera_I2C_Init();

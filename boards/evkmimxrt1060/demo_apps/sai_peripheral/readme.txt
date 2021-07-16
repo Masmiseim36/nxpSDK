@@ -7,10 +7,10 @@ The SAI Demo application demonstrates complicated digital audio playback and rec
 
 Toolchain supported
 ===================
-- Keil MDK  5.33
-- GCC ARM Embedded  9.3.1
-- MCUXpresso  11.3.0
-- IAR embedded Workbench  8.50.9
+- Keil MDK  5.34
+- GCC ARM Embedded  10.2.1
+- MCUXpresso  11.4.0
+- IAR embedded Workbench  9.10.2
 
 Hardware requirements
 =====================
@@ -49,6 +49,8 @@ Before you run this demo, please check the txHandle and rxHandle variable in per
 
 This following section shows how to run the demo:
 
+Please note that the log print out may be different according to the different card,
+If the card doesn't been formatted ,the case will making new file system and below log will be printed,
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 SAI Peripheral Demo started!
 Please insert a card into board.
@@ -63,3 +65,21 @@ Please choose the option :
 2. Playback sine wave
 3. Record to SDcard, after record playback it
 4. Quit
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If the card is formatted already, the case will mount the file system only, the case will print below log,
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+SAI Peripheral Demo started!
+Please insert a card into board.
+
+Card inserted.
+
+Mount volume Successfully.
+
+Create directory......
+Please choose the option :
+1. Record and playback at same time
+2. Playback sine wave
+3. Record to SDcard, after record playback it
+4. Quit
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

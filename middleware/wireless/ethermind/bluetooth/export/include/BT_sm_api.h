@@ -29,7 +29,7 @@
 /** ----------------------------------------- Global Definitions */
 /** Security Manager Default Configuration Constants */
 #ifndef BT_SSP
-#define SM_SET_SECURITY_MODE                    0x01
+#define SM_SET_SECURITY_MODE                    0x01U
 #endif  /* BT_SSP */
 
 /** Security Mode Definitions */
@@ -40,9 +40,9 @@
  */
 /*@{*/
 #ifndef BT_SSP
-#define SM_SECURITY_MODE_1                      0x01
-#define SM_SECURITY_MODE_2                      0x02
-#define SM_SECURITY_MODE_3                      0x03
+#define SM_SECURITY_MODE_1                      0x01U
+#define SM_SECURITY_MODE_2                      0x02U
+#define SM_SECURITY_MODE_3                      0x03U
 #endif  /* BT_SSP */
 /*@}*/
 /** Security Manager Generic Operation Types */
@@ -52,9 +52,9 @@
  * Constant Definitions for Security Manager Generic Operation Types
  */
 /*@{*/
-#define SM_OPERATION_SET                        0x01
-#define SM_OPERATION_RESET                      0x02
-#define SM_OPERATION_GET                        0x03
+#define SM_OPERATION_SET                        0x01U
+#define SM_OPERATION_RESET                      0x02U
+#define SM_OPERATION_GET                        0x03U
 /*@}*/
 /**
  *  Pairable & Bondable mode values.
@@ -68,9 +68,9 @@
  *  Hence, if the device needs to be Bondable, it must also be Pairable.
  *  If the device is set to Non-Pairable, then it is also Non-Bondable.
  */
-#define SM_NON_PAIRABLE                         0x00
-#define SM_PAIRABLE_AND_NON_BONDABLE            0x01
-#define SM_PAIRABLE_AND_BONDABLE                0x03
+#define SM_NON_PAIRABLE                         0x00U
+#define SM_PAIRABLE_AND_NON_BONDABLE            0x01U
+#define SM_PAIRABLE_AND_BONDABLE                0x03U
 
 /** Security Manager UI Notification Callback Event Types */
 /**
@@ -79,22 +79,22 @@
  * Constant Definitions for Security Manager UI Notification Callback Event Types
  */
 /*@{*/
-#define SM_ACL_CONNECT_REQUEST_NTF              0x01
-#define SM_AUTHORIZATION_REQUEST_NTF            0x02
-#define SM_PIN_CODE_REQUEST_NTF                 0x03
-#define SM_LINK_KEY_REQUEST_NTF                 0x04
+#define SM_ACL_CONNECT_REQUEST_NTF              0x01U
+#define SM_AUTHORIZATION_REQUEST_NTF            0x02U
+#define SM_PIN_CODE_REQUEST_NTF                 0x03U
+#define SM_LINK_KEY_REQUEST_NTF                 0x04U
 
 #ifndef BT_SSP
-#define SM_AUTHORIZATION_REQUEST_NTF_MODE_1_3   0x05
+#define SM_AUTHORIZATION_REQUEST_NTF_MODE_1_3   0x05U
 #endif  /* BT_SSP */
 
 #ifdef BT_SSP_NC
-#define SM_USER_CONF_REQUEST_NTF                0x06
+#define SM_USER_CONF_REQUEST_NTF                0x06U
 #endif /* BT_SSP_NC */
 
 #ifdef BT_SSP_PE
-#define SM_USER_PASSKEY_REQUEST_NTF             0x07
-#define SM_USER_PASSKEY_NTF                     0x08
+#define SM_USER_PASSKEY_REQUEST_NTF             0x07U
+#define SM_USER_PASSKEY_NTF                     0x08U
 #endif /* BT_SSP_PE */
 /*@}*/
 /** Filtering Codes for Searching Device List */
@@ -104,9 +104,9 @@
  * Constant Definitions for Filtering Codes for Searching Device List
  */
 /*@{*/
-#define SM_ANY_LIST                             0x01
-#define SM_PAIR_LIST                            0x02
-#define SM_TRUSTED_LIST                         0x03
+#define SM_ANY_LIST                             0x01U
+#define SM_PAIR_LIST                            0x02U
+#define SM_TRUSTED_LIST                         0x03U
 /*@}*/
 /** Flag values for 'authenticate' parameter of SM_SERVICE */
 /**
@@ -115,10 +115,10 @@
  * Constant Definitions for Flag values for 'authenticate' parameter of SM_SERVICE
  */
 /*@{*/
-#define SM_SERVICE_SECURITY_LEVEL_0             0x00
-#define SM_SERVICE_SECURITY_LEVEL_1             0x01
-#define SM_SERVICE_SECURITY_LEVEL_2             0x02
-#define SM_SERVICE_SECURITY_LEVEL_3             0x03
+#define SM_SERVICE_SECURITY_LEVEL_0             0x00U
+#define SM_SERVICE_SECURITY_LEVEL_1             0x01U
+#define SM_SERVICE_SECURITY_LEVEL_2             0x02U
+#define SM_SERVICE_SECURITY_LEVEL_3             0x03U
 /*@}*/
 #ifdef BT_BRSC
 /**
@@ -128,21 +128,21 @@
  * - MITM is required
  * - SSP (P-256) is required
  */
-#define SM_SERVICE_SECURITY_LEVEL_4             0x04
+#define SM_SERVICE_SECURITY_LEVEL_4             0x04U
 #endif /* BT_BRSC */
 
 /** Flag values for 'authorize' parameter of SM_SERVICE */
-#define SM_SERVICE_AUTHORIZATION_NONE           0x00
+#define SM_SERVICE_AUTHORIZATION_NONE           0x00U
 #ifdef BT_SSP
-#define SM_SERVICE_AUTHORIZATION_REQUIRED       0x01
+#define SM_SERVICE_AUTHORIZATION_REQUIRED       0x01U
 #else  /* BT_SSP */
-#define SM_SERVICE_AUTHORIZATION_MODE_2         0x01
-#define SM_SERVICE_AUTHORIZATION_MODE_1_3       0x02
+#define SM_SERVICE_AUTHORIZATION_MODE_2         0x01U
+#define SM_SERVICE_AUTHORIZATION_MODE_1_3       0x02U
 #endif /* BT_SSP */
 
 /** Codes for Setting Variable PIN and Fixed PIN */
-#define SM_FIXED_PIN                            1
-#define SM_VARIABLE_PIN                         0
+#define SM_FIXED_PIN                            1U
+#define SM_VARIABLE_PIN                         0U
 
 
 /** ----------------------------------------- Structures/Data Types */
@@ -967,7 +967,7 @@ API_RESULT BT_sm_register_user_interface
  */
 #define BT_sm_authorization_request_reply(bd_addr, accept) \
         sm_ui_notification_request_reply \
-        ((bd_addr), (accept), 0x0, SM_AUTHORIZATION_REQUEST_NTF)
+        ((bd_addr), (accept), 0x0U, SM_AUTHORIZATION_REQUEST_NTF)
 
 /** To reply to a Authorisation Request (Mode 1/3) event callback from the SM */
 /**
@@ -997,7 +997,7 @@ API_RESULT BT_sm_register_user_interface
  */
 #define BT_sm_authorization_request_reply_mode_1_3(bd_addr, accept) \
         sm_ui_notification_request_reply \
-        ((bd_addr), (accept), 0x0, SM_AUTHORIZATION_REQUEST_NTF_MODE_1_3)
+        ((bd_addr), (accept), 0x0U, SM_AUTHORIZATION_REQUEST_NTF_MODE_1_3)
 #endif /* SM_HAVE_MODE_2 */
 
 /** To reply to a Bluetooth PIN Code Request event callback from the SM */

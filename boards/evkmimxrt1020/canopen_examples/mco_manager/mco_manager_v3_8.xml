@@ -15,10 +15,8 @@
     <definition extID="platform.drivers.iomuxc.MIMXRT1021"/>
     <definition extID="platform.drivers.igpio.MIMXRT1021"/>
     <definition extID="platform.drivers.xip_device.MIMXRT1021"/>
-    <definition extID="platform.drivers.xip_board.MIMXRT1021"/>
-    <definition extID="platform.Include_core_cm7.MIMXRT1021"/>
-    <definition extID="platform.Include_common.MIMXRT1021"/>
-    <definition extID="platform.Include_dsp.MIMXRT1021"/>
+    <definition extID="platform.drivers.xip_board.evkmimxrt1020.MIMXRT1021"/>
+    <definition extID="CMSIS_Include_core_cm.MIMXRT1021"/>
     <definition extID="platform.utilities.misc_utilities.MIMXRT1021"/>
     <definition extID="device.MIMXRT1021_system.MIMXRT1021"/>
     <definition extID="iar"/>
@@ -29,7 +27,7 @@
     <definition extID="com.crt.advproject.config.exe.debug"/>
     <definition extID="com.crt.advproject.config.exe.release"/>
   </externalDefinitions>
-  <example id="evkmimxrt1020_mco_manager" name="mco_manager" dependency="platform.drivers.lpuart.MIMXRT1021 utility.debug_console_lite.MIMXRT1021 platform.utilities.assert_lite.MIMXRT1021 platform.drivers.common.MIMXRT1021 platform.drivers.clock.MIMXRT1021 platform.drivers.flexcan.MIMXRT1021 middleware.canopen.MIMXRT1021 device.MIMXRT1021_CMSIS.MIMXRT1021 component.lpuart_adapter.MIMXRT1021 component.lists.MIMXRT1021 device.MIMXRT1021_startup.MIMXRT1021 platform.drivers.iomuxc.MIMXRT1021 platform.drivers.igpio.MIMXRT1021 platform.drivers.xip_device.MIMXRT1021 platform.drivers.xip_board.MIMXRT1021 platform.Include_core_cm7.MIMXRT1021 platform.Include_common.MIMXRT1021 platform.Include_dsp.MIMXRT1021 platform.utilities.misc_utilities.MIMXRT1021 device.MIMXRT1021_system.MIMXRT1021" category="canopen_examples">
+  <example id="evkmimxrt1020_mco_manager" name="mco_manager" dependency="platform.drivers.lpuart.MIMXRT1021 utility.debug_console_lite.MIMXRT1021 platform.utilities.assert_lite.MIMXRT1021 platform.drivers.common.MIMXRT1021 platform.drivers.clock.MIMXRT1021 platform.drivers.flexcan.MIMXRT1021 middleware.canopen.MIMXRT1021 device.MIMXRT1021_CMSIS.MIMXRT1021 component.lpuart_adapter.MIMXRT1021 component.lists.MIMXRT1021 device.MIMXRT1021_startup.MIMXRT1021 platform.drivers.iomuxc.MIMXRT1021 platform.drivers.igpio.MIMXRT1021 platform.drivers.xip_device.MIMXRT1021 platform.drivers.xip_board.evkmimxrt1020.MIMXRT1021 CMSIS_Include_core_cm.MIMXRT1021 platform.utilities.misc_utilities.MIMXRT1021 device.MIMXRT1021_system.MIMXRT1021" category="canopen_examples">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -49,6 +47,7 @@
           <value>XIP_EXTERNAL_FLASH=1</value>
           <value>XIP_BOOT_HEADER_ENABLE=1</value>
           <value>FLEXCAN_WAIT_TIMEOUT=1000</value>
+          <value>MCUXPRESSO_SDK</value>
         </option>
         <option id="com.crt.advproject.gas.fpu" type="enum">
           <value>com.crt.advproject.gas.fpu.fpv5dp.hard</value>
@@ -94,8 +93,7 @@
     <include_paths>
       <include_path path="boards/evkmimxrt1020/canopen_examples/mco_manager/mco_config/EDS" project_relative_path="MCO-Config/EDS" type="c_include"/>
       <include_path path="boards/evkmimxrt1020/canopen_examples/mco_manager/mco_config" project_relative_path="MCO-Config" type="c_include"/>
-      <include_path path="boards/evkmimxrt1020/canopen_examples/mco_config" project_relative_path="MCO-Config" type="c_include"/>
-      <include_path path="boards/evkmimxrt1020/canopen_examples" project_relative_path="source" type="c_include"/>
+      <include_path path="boards/evkmimxrt1020/canopen_examples/mco_manager" project_relative_path="source" type="c_include"/>
       <include_path path="boards/evkmimxrt1020/canopen_examples/mco_manager" project_relative_path="board" type="c_include"/>
       <include_path path="boards/evkmimxrt1020/canopen_examples" project_relative_path="board" type="c_include"/>
     </include_paths>
@@ -130,10 +128,10 @@
       <files mask="build_flexspi_nor_release.bat"/>
       <files mask="build_flexspi_nor_release.sh"/>
     </source>
-    <source path="middleware/canopen/mcolibs/imxrt/mco_manager" project_relative_path="mcolibs" type="lib" toolchain="iar mcuxpresso armgcc">
+    <source path="middleware/canopen/mcolibs/imxrt/mco_manager" project_relative_path="mcolibs" method="copy" type="lib" toolchain="iar mcuxpresso armgcc">
       <files mask="libMCO_MGR_IMXRT10xx_SDK_1.a"/>
     </source>
-    <source path="middleware/canopen/mcolibs/imxrt/mco_manager" project_relative_path="mcolibs" type="lib" toolchain="mdk">
+    <source path="middleware/canopen/mcolibs/imxrt/mco_manager" project_relative_path="mcolibs" method="copy" type="lib" toolchain="mdk">
       <files mask="libMCO_MGR_IMXRT10xx_KSDK_1.a"/>
     </source>
     <source path="boards/evkmimxrt1020/canopen_examples/mco_manager" project_relative_path="source" type="src">
@@ -142,6 +140,8 @@
     </source>
     <source path="boards/evkmimxrt1020/canopen_examples/mco_manager/mco_config" project_relative_path="MCO-Config" type="src">
       <files mask="user_mgr_401.c"/>
+      <files mask="user_cbdata.c"/>
+      <files mask="user_od.c"/>
     </source>
     <source path="boards/evkmimxrt1020/canopen_examples/mco_manager/mco_config/EDS" project_relative_path="MCO-Config/EDS" type="other" exclude="true">
       <files mask="CANopenNXPSDK_Mgr.eds"/>
@@ -160,25 +160,19 @@
     <source path="boards/evkmimxrt1020/canopen_examples/mco_manager/mco_config" project_relative_path="MCO-Config" type="c_include">
       <files mask="nodecfg.h"/>
     </source>
-    <source path="boards/evkmimxrt1020/canopen_examples/mco_config" project_relative_path="MCO-Config" type="c_include">
+    <source path="boards/evkmimxrt1020/canopen_examples/mco_manager/mco_config" project_relative_path="MCO-Config" type="c_include">
       <files mask="procimg.h"/>
     </source>
-    <source path="boards/evkmimxrt1020/canopen_examples/mco_config" project_relative_path="MCO-Config" type="src">
-      <files mask="user_cbdata.c"/>
-      <files mask="user_od.c"/>
-    </source>
-    <source path="boards/evkmimxrt1020/canopen_examples" project_relative_path="source" type="c_include">
+    <source path="boards/evkmimxrt1020/canopen_examples/mco_manager" project_relative_path="source" type="c_include">
       <files mask="mco_types.h"/>
       <files mask="mcohw_cfg.h"/>
       <files mask="mcohw_LEDs.h"/>
     </source>
-    <source path="boards/evkmimxrt1020/canopen_examples" project_relative_path="source" type="src">
+    <source path="boards/evkmimxrt1020/canopen_examples/mco_manager" project_relative_path="source" type="src">
       <files mask="mcohw_com_generic.c"/>
-    </source>
-    <source path="boards/evkmimxrt1020/canopen_examples/mco_config" project_relative_path="source" type="src">
       <files mask="mcohw_nvol_sim.c"/>
     </source>
-    <source path="boards/evkmimxrt1020/canopen_examples" project_relative_path="source" type="src">
+    <source path="boards/evkmimxrt1020/canopen_examples/mco_manager" project_relative_path="source" type="src">
       <files mask="mco_libcb.c"/>
     </source>
     <source path="boards/evkmimxrt1020/canopen_examples/mco_manager" project_relative_path="board" type="src">

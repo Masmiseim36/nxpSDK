@@ -43,7 +43,7 @@
  * Describes Constants defined by the module.
  */
 /** Invalid Connection Identifier */
-#define BNEP_CONNECTION_ID_INVALID              0xFF
+#define BNEP_CONNECTION_ID_INVALID              0xFFU
 
 
 /** BNEP - PAN Profile Service Bitmap Values */
@@ -51,14 +51,13 @@
  *  \name BNEP - PAN Profile Service Bitmap Values
  *
  *  Constant Defines for BNEP - PAN Profile Service Bitmap Values
- *
  */
 /*@{*/
-#define BNEP_SERVICE_PANU                       0x01
-#define BNEP_SERVICE_NAP                        0x02
-#define BNEP_SERVICE_GN                         0x04
-#define BNEP_SERVICE_NONE                       0x00
-#define BNEP_SERVICE_ALL                        0x07
+#define BNEP_SERVICE_PANU                       0x01U
+#define BNEP_SERVICE_NAP                        0x02U
+#define BNEP_SERVICE_GN                         0x04U
+#define BNEP_SERVICE_NONE                       0x00U
+#define BNEP_SERVICE_ALL                        0x07U
 /*@}*/
 
 /** BNEP Event Indication Callback Event Types */
@@ -66,18 +65,17 @@
  *  \name BNEP Event Indication Callback Event Types
  *
  *  Constant Defines for BNEP Event Indication Callback Event Types
- *
  */
 /*@{*/
-#define BNEP_CONNECT_IND                        0x01
-#define BNEP_CONNECT_CNF                        0x02
-#define BNEP_SETUP_IND                          0x03
-#define BNEP_SETUP_CNF                          0x04
-#define BNEP_DISCONNECT_IND                     0x05
-#define BNEP_DISCONNECT_CNF                     0x06
-#define BNEP_FILTER_IND                         0x07
-#define BNEP_FILTER_CNF                         0x08
-#define BNEP_WRITE_CNF                          0x09
+#define BNEP_CONNECT_IND                        0x01U
+#define BNEP_CONNECT_CNF                        0x02U
+#define BNEP_SETUP_IND                          0x03U
+#define BNEP_SETUP_CNF                          0x04U
+#define BNEP_DISCONNECT_IND                     0x05U
+#define BNEP_DISCONNECT_CNF                     0x06U
+#define BNEP_FILTER_IND                         0x07U
+#define BNEP_FILTER_CNF                         0x08U
+#define BNEP_WRITE_CNF                          0x09U
 /*@}*/
 
 /* BNEP Setup Connection Response Codes */
@@ -85,14 +83,13 @@
  *  \name BNEP Event Indication Callback Event Types
  *
  *  Constant Defines for BNEP Event Indication Callback Event Types
- *
  */
 /*@{*/
-#define BNEP_SETUP_SUCCESSFUL                   0x0000
-#define BNEP_SETUP_INVALID_DEST_UUID            0x0001
-#define BNEP_SETUP_INVALID_SRC_UUID             0x0002
-#define BNEP_SETUP_INVALID_UUID_SIZE            0x0003
-#define BNEP_SETUP_NOT_ALLOWED                  0x0004
+#define BNEP_SETUP_SUCCESSFUL                   0x0000U
+#define BNEP_SETUP_INVALID_DEST_UUID            0x0001U
+#define BNEP_SETUP_INVALID_SRC_UUID             0x0002U
+#define BNEP_SETUP_INVALID_UUID_SIZE            0x0003U
+#define BNEP_SETUP_NOT_ALLOWED                  0x0004U
 /*@}*/
 
 /* BNEP Network Protocol Type Filter Response Codes */
@@ -100,14 +97,13 @@
  *  \name BNEP Network Protocol Type Filter Response Codes
  *
  *  Constant Defines for BNEP Network Protocol Type Filter Response Codes
- *
  */
 /*@{*/
-#define BNEP_FILTER_NW_TYPE_SUCCESSFUL          0x0000
-#define BNEP_FILTER_NW_TYPE_UNSUPPORTED         0x0001
-#define BNEP_FILTER_NW_TYPE_INVALID_RANGE       0x0002
-#define BNEP_FILTER_NW_TYPE_LIMIT_REACHED       0x0003
-#define BNEP_FILTER_NW_TYPE_SECURITY_BLOCK      0x0004
+#define BNEP_FILTER_NW_TYPE_SUCCESSFUL          0x0000U
+#define BNEP_FILTER_NW_TYPE_UNSUPPORTED         0x0001U
+#define BNEP_FILTER_NW_TYPE_INVALID_RANGE       0x0002U
+#define BNEP_FILTER_NW_TYPE_LIMIT_REACHED       0x0003U
+#define BNEP_FILTER_NW_TYPE_SECURITY_BLOCK      0x0004U
 /*@}*/
 
 /* BNEP Multicast Address Filter Response Codes */
@@ -115,14 +111,13 @@
  *  \name BNEP Multicast Address Filter Response Codes
  *
  *  Constant Defines for BNEP Multicast Address Filter Response Codes
- *
  */
 /*@{*/
-#define BNEP_FILTER_MC_ADDR_SUCCESSFUL          0x0000
-#define BNEP_FILTER_MC_ADDR_UNSUPPORTED         0x0001
-#define BNEP_FILTER_MC_ADDR_INVALID_RANGE       0x0002
-#define BNEP_FILTER_MC_ADDR_LIMIT_REACHED       0x0003
-#define BNEP_FILTER_MC_ADDR_SECURITY_BLOCK      0x0004
+#define BNEP_FILTER_MC_ADDR_SUCCESSFUL          0x0000U
+#define BNEP_FILTER_MC_ADDR_UNSUPPORTED         0x0001U
+#define BNEP_FILTER_MC_ADDR_INVALID_RANGE       0x0002U
+#define BNEP_FILTER_MC_ADDR_LIMIT_REACHED       0x0003U
+#define BNEP_FILTER_MC_ADDR_SECURITY_BLOCK      0x0004U
 /*@}*/
 
 /** BNEP Filtering Type - NW Type or MC Address */
@@ -130,11 +125,10 @@
  *  \name BNEP Filtering Type - NW Type or MC Address
  *
  *  Constant Defines for BNEP Filtering Type - NW Type or MC Address
- *
  */
 /*@{*/
-#define BNEP_FILTER_TYPE_NW_TYPE                0x01
-#define BNEP_FILTER_TYPE_MC_ADDR                0x02
+#define BNEP_FILTER_TYPE_NW_TYPE                0x01U
+#define BNEP_FILTER_TYPE_MC_ADDR                0x02U
 /*@}*/
 
 /** BNEP Filtering Type - Local or Remote */
@@ -142,55 +136,46 @@
  *  \name BNEP Filtering Type - Local or Remote
  *
  *  Constant Defines for BNEP Filtering Type - Local or Remote
- *
  */
 /*@{*/
-#define BNEP_FILTER_TYPE_INVALID                0x00
-#define BNEP_FILTER_TYPE_LOCAL                  0x01
-#define BNEP_FILTER_TYPE_REMOTE                 0x02
+#define BNEP_FILTER_TYPE_INVALID                0x00U
+#define BNEP_FILTER_TYPE_LOCAL                  0x01U
+#define BNEP_FILTER_TYPE_REMOTE                 0x02U
 /*@}*/
 
 /** Size of BNEP Network Type Filter Range */
-#define BNEP_NW_TYPE_RANGE_SIZE                 4
-
+#define BNEP_NW_TYPE_RANGE_SIZE                 4U
 
 /** Size of BNEP Multicast Address Filter Range */
-#define BNEP_MC_ADDR_RANGE_SIZE                 12
-
+#define BNEP_MC_ADDR_RANGE_SIZE                 12U
 
 /** The Ethernet 802.1Q (also known as IEEE 802.1p) Protocol Type Value */
-#define BNEP_ETH_PROTO_TYPE_802_1Q              0x8100
-
+#define BNEP_ETH_PROTO_TYPE_802_1Q              0x8100U
 
 /** Ethernet Source & Destination Address Size */
 #define BNEP_ETH_ADDR_SIZE                      BT_BD_ADDR_SIZE
 
-
 /** Ethernet Protocol Type/Length Field Size */
-#define BNEP_ETH_PROTO_LEN_SIZE                 2
-
+#define BNEP_ETH_PROTO_LEN_SIZE                 2U
 
 /** Ethernet Header Size */
 #define BNEP_ETH_HEADER_SIZE \
-        ((2 * BNEP_ETH_ADDR_SIZE) + BNEP_ETH_PROTO_LEN_SIZE)
-
+        ((2U * BNEP_ETH_ADDR_SIZE) + BNEP_ETH_PROTO_LEN_SIZE)
 
 /** Number of Octets occupied by Ethernet 802.1Q Tag */
-#define BNEP_ETH_PROTO_802_1Q_HEADER_LEN        4
-
+#define BNEP_ETH_PROTO_802_1Q_HEADER_LEN        4U
 
 /** BNEP Policy Settings for handling 'Setup' Requests */
 /**
  *  \name BNEP Policy Settings for handling 'Setup' Requests
  *
  *  Constant Defines for BNEP Policy Settings for handling 'Setup' Requests
- *
  */
 /*@{*/
-#define BNEP_SETUP_POLICY_ACCEPT                0x00
-#define BNEP_SETUP_POLICY_REJECT                0x01
-#define BNEP_SETUP_POLICY_ASK                   0x02
-#define BNEP_SETUP_POLICY_IGNORE                0x03
+#define BNEP_SETUP_POLICY_ACCEPT                0x00U
+#define BNEP_SETUP_POLICY_REJECT                0x01U
+#define BNEP_SETUP_POLICY_ASK                   0x02U
+#define BNEP_SETUP_POLICY_IGNORE                0x03U
 #define BNEP_SETUP_POLICY_DEFAULT               BNEP_SETUP_POLICY_ACCEPT
 /*@}*/
 
@@ -200,9 +185,10 @@
 /** \} */
 
 /* --------------------------------------------- Structures/Data Types */
+
 /**
  *  \defgroup bnep_cb Application Callback
- * \{
+ *  \{
  *  This Section Describes the module Notification Callback interface offered
  *  to the application
  */
@@ -221,11 +207,11 @@
  */
 typedef API_RESULT (* BNEP_EVENT_IND_CB)
                    (
-                       UCHAR      /* Event Identifier */,
-                       UCHAR *    /* Remote BD_ADDR */,
-                       UINT16     /* Result/Response */,
-                       void *     /* Event Data */,
-                       UINT16     /* Event Data Length */
+                       UCHAR      event_type,     /* Event Identifier */
+                       UCHAR *    bd_addr,        /* Remote BD_ADDR */
+                       UINT16     event_result,   /* Result/Response */
+                       void *     event_data,     /* Event Data */
+                       UINT16     event_data_len  /* Event Data Length */
                    );
 
 /**
@@ -240,13 +226,17 @@ typedef API_RESULT (* BNEP_EVENT_IND_CB)
  */
 typedef API_RESULT (* BNEP_DATA_IND_CB)
                    (
-                       UCHAR *    /* Remote BD_ADDR */,
-                       UCHAR *    /* Ethernet Header (14 Octets) */,
-                       UCHAR *    /* Ethernet Payload */,
-                       UINT16     /* Ethernet Payload Length */
+                       UCHAR *    bd_addr,         /* Remote BD_ADDR */
+                       UCHAR *    eth_header,      /* Ethernet Header (14 Octets) */
+                       UCHAR *    eth_payload,     /* Ethernet Payload */
+                       UINT16     eth_payload_len  /* Ethernet Payload Length */
                    );
 /** \} */
 
+/**
+ *  \addtogroup bnep_defines Defines
+ *  \{
+ */
 /**
  * \defgroup bnep_structures Structures
  * \{
@@ -255,58 +245,60 @@ typedef API_RESULT (* BNEP_DATA_IND_CB)
 /** BNEP Callbacks for Registration */
 typedef struct
 {
-    /* BNEP Event Indication/Confirmation Callback */
+    /** BNEP Event Indication/Confirmation Callback */
     BNEP_EVENT_IND_CB    bnep_event_ind;
 
-    /* BNEP Data Received Indication */
+    /** BNEP Data Received Indication */
     BNEP_DATA_IND_CB     bnep_read_ind;
 
 } BNEP_CALLBACKS;
 
-
 /** BNEP Filter - Network Type */
 typedef struct
 {
-    /* Ethernet Network Type Start & End */
+    /** Ethernet Network Type Start */
     UINT16    start;
+
+    /** Ethernet Network Type End */
     UINT16    end;
 
 } BNEP_FILTER_NW_TYPE;
 
-
 /** BNEP Filter - Multicast Address */
 typedef struct
 {
-    /* Ethernet Multicast Address Start & End */
+    /** Ethernet Multicast Address Start */
     UCHAR    start [BNEP_ETH_ADDR_SIZE];
+
+    /** Ethernet Multicast Address End */
     UCHAR    end [BNEP_ETH_ADDR_SIZE];
 
 } BNEP_FILTER_MC_ADDR;
 
-
 /** BNEP Filter Parameters (delivered with BNEP_EVENT_IND_CB) */
 typedef struct
 {
-    /* Type of BNEP Filter - Network Type or Multicast Address */
+    /** Type of BNEP Filter - Network Type or Multicast Address */
     UCHAR      type;
 
-    /* Number of Filter Ranges */
+    /** Number of Filter Ranges */
     UINT16     num_range;
 
-    /* Data Buffer containing the Filtering Ranges */
+    /** Data Buffer containing the Filtering Ranges */
     void *     filter;
 
 } BNEP_FILTER;
 
-
 /** BNEP Setup Parameters (delivered with BNEP_SETUP_IND/BNEP_SETUP_CNF) */
 typedef struct
 {
-    /* Configured Local/Remote PAN Services */
+    /** Configured Local PAN Service */
     UCHAR    local_service;
+
+    /** Configured Remote PAN Service */
     UCHAR    remote_service;
 
-    /*
+    /**
      *  Flag to indicate what action needs to be taken. Flag is valid
      *  only when the Event Type is 'BNEP_SETUP_IND'.
      *
@@ -317,20 +309,20 @@ typedef struct
 
 } BNEP_SETUP;
 
-
 /** BNEP Extension header structure */
 typedef struct
 {
-    /* Extension Type */
+    /** Extension Type */
     UCHAR type;
 
-    /* Extension Length */
+    /** Extension Length */
     UCHAR length;
 
-    /* Extension Value */
+    /** Extension Value */
     UCHAR * value;
 
 } BNEP_EXT_HEADER;
+/** \} */
 /** \} */
 
 /* --------------------------------------------- Unions */
@@ -347,13 +339,12 @@ typedef struct
  *  EtherMind Protocol Stack) to Ethernet Address, and vice-versa
  */
 #define bnep_convert_address(addr_to, addr_from) \
-        (addr_to)[5] = (addr_from)[0]; \
-        (addr_to)[4] = (addr_from)[1]; \
-        (addr_to)[3] = (addr_from)[2]; \
-        (addr_to)[2] = (addr_from)[3]; \
-        (addr_to)[1] = (addr_from)[4]; \
-        (addr_to)[0] = (addr_from)[5];
-
+        (addr_to)[5U] = (addr_from)[0U]; \
+        (addr_to)[4U] = (addr_from)[1U]; \
+        (addr_to)[3U] = (addr_from)[2U]; \
+        (addr_to)[2U] = (addr_from)[3U]; \
+        (addr_to)[1U] = (addr_from)[4U]; \
+        (addr_to)[0U] = (addr_from)[5U];
 
 /**
  *  To Copy Ethernet Addresses from one place to other.
@@ -364,6 +355,7 @@ typedef struct
 #define BNEP_COPY_ETH_ADDR              BT_COPY_BD_ADDR
 
 /** \} */
+
 /* --------------------------------------------- API Declarations */
 /**
  * \defgroup bnep_api API Definitions
@@ -374,7 +366,6 @@ typedef struct
 #ifdef __cplusplus
 extern "C" {
 #endif
-/** Registration of Callbacks to BNEP */
 /**
  *  \brief To register BNEP profile/application Callbacks
  *
@@ -383,22 +374,20 @@ extern "C" {
  *       Event Indication and Data Indication Callbacks to the BNEP Protocol.
  *       These callbacks are described in detail in the BNEP Protocol Callbacks section.
  *
- *  \param [in] Callbacks
+ *  \param [in] callbacks
  *         This parameter must be a pointer to a caller allocated BNEP_CALLBACKS
            data type, containing the required callback function information.
  *
  *  \return
  *       API_SUCCESS or one of the error codes as defined in \ref BLE_ERROR_CODES.
- *
  */
 API_RESULT BT_bnep_register
            (
-               BNEP_CALLBACKS *    /* BNEP Callbacks */
+               BNEP_CALLBACKS *    callbacks
            );
 
-/** Start Accepting Connection for BNEP (PAN) Services */
 /**
- *  \brief To accept BNEP connections
+ *  \brief To start accept BNEP connections
  *
  *  \par Description:
  *       This API enables application to register BNEP services that the local device will allow any remote device to connect.
@@ -414,14 +403,12 @@ API_RESULT BT_bnep_register
  *
  *  \return
  *       API_SUCCESS or one of the error codes as defined in \ref BLE_ERROR_CODES.
- *
  */
 API_RESULT BT_bnep_accept
            (
-               UCHAR      /* Local Service Bitmap */
+               UCHAR  services
            );
 
-/** To Open a BNEP (L2CAP) Connection to a BD_ADDR */
 /**
  *  \brief To initiate a BNEP connection
  *
@@ -446,14 +433,12 @@ API_RESULT BT_bnep_accept
  *
  *  \return
  *       API_SUCCESS or one of the error codes as defined in \ref BLE_ERROR_CODES.
- *
  */
 API_RESULT BT_bnep_connect
            (
-               UCHAR *    /* Remote BD_ADDR */
+               UCHAR  * bd_addr
            );
 
-/** To Setup a BNEP Connection */
 /**
  *  \brief To initiate Setup of a BNEP connection
  *
@@ -483,17 +468,14 @@ API_RESULT BT_bnep_connect
  *
  *  \return
  *       API_SUCCESS or one of the error codes as defined in \ref BLE_ERROR_CODES.
- *
- *
  */
 API_RESULT BT_bnep_setup
            (
-               UCHAR *    /* Remote BD_ADDR */,
-               UCHAR      /* Local Service */,
-               UCHAR      /* Remote Service */
+               UCHAR  * bd_addr,
+               UCHAR    local_service,
+               UCHAR    remote_service
            );
 
-/** To Close a BNEP (L2CAP) Connection to a BD_ADDR */
 /**
  *  \brief To disconnect a BNEP connection
  *
@@ -515,14 +497,12 @@ API_RESULT BT_bnep_setup
  *
  *  \return
  *       API_SUCCESS or one of the error codes as defined in \ref BLE_ERROR_CODES.
- *
  */
 API_RESULT BT_bnep_disconnect
            (
-               UCHAR *    /* Remote BD_ADDR */
+               UCHAR * bd_addr
            );
 
-/** To Set a Filter, Local or Remote, for a BNEP Connection */
 /**
  *  \brief To set/reset local/remote BNEP Network Type or Multicast Address
  *         Filters for a BNEP connection
@@ -547,6 +527,7 @@ API_RESULT BT_bnep_disconnect
  *         The Bluetooth Device Address (BD_ADDR) of the remote Bluetooth device
  *         supporting BNEP. This parameter must be a pointer to a caller
  *         allocated UCHAR array of 6 octets containing the BD_ADDR.
+ *
  *  \param [in] local
  *         This parameter is a Boolean flag, which denotes whether the specified
  *         filters to be set locally or remotely.
@@ -583,18 +564,16 @@ API_RESULT BT_bnep_disconnect
  *
  *  \return
  *       API_SUCCESS or one of the error codes as defined in \ref BLE_ERROR_CODES.
- *
  */
 API_RESULT BT_bnep_filter
            (
-               UCHAR *    /* Remote BD_ADDR */,
-               UCHAR      /* Local or Remote Filter */,
-               UCHAR      /* Filter Type - NW Type or MC Address */,
-               UINT16     /* Number of Filter Ranges */,
-               void *     /* Filter Ranges */
+               UCHAR *    bd_addr,
+               UCHAR      local,
+               UCHAR      filter_type,
+               UINT16     num_range,
+               void *     filter
            );
 
-/** To Write Data for Transmission on a BNEP Connection */
 /**
  *  \brief To transmit Ethernet packets over a BNEP connection.
  *
@@ -645,19 +624,17 @@ API_RESULT BT_bnep_filter
  *         the BNEP_WRITE_CNF is called to notify the application of such errors.
  *         The BNEP_WRITE_CNF is not called every time when the transmission is
  *         successful.
- *
  */
 API_RESULT BT_bnep_write
            (
-               UCHAR *              /* Remote BD_ADDR */,
-               UCHAR *              /* Ethernet Header (14 Octets) */,
-               BNEP_EXT_HEADER *    /* Extension Header */,
-               UINT16               /* Number of Extension headers */,
-               UCHAR *              /* Ethernet Payload */,
-               UINT16               /* Ethernet Payload Length */
+               UCHAR            * bd_addr,
+               UCHAR            * eth_header,
+               BNEP_EXT_HEADER  * ext_header,
+               UINT16             ext_header_count,
+               UCHAR            * eth_payload,
+               UINT16             eth_payload_len
            );
 
-/** To Respond to BNEP_SETUP_IND for 'Setup' Request from Peer */
 /**
  *  \brief To respond a Setup Connection request for a BNEP connection
  *
@@ -688,12 +665,11 @@ API_RESULT BT_bnep_write
  *
  *  \return
  *       API_SUCCESS or one of the error codes as defined in \ref BLE_ERROR_CODES.
- *
  */
 API_RESULT BT_bnep_setup_rsp
            (
-               UCHAR *    /* Remote BD_ADDR */,
-               UINT16     /* Result/Response */
+               UCHAR  * bd_addr,
+               UINT16   response
            );
 
 /**
@@ -725,7 +701,7 @@ API_RESULT BT_bnep_setup_rsp
  *         supporting BNEP. This parameter must be a pointer to a caller
  *         allocated UCHAR array of 6 octets containing the BD_ADDR.
  *
- *  \param [in] flag
+ *  \param [in] policy
  *         This parameter is a bitmap, as defined below:
  *         Bit 0-1 : How remotely initiated Setup Connection needs to be handled
  *         00 - Always accept (default)
@@ -736,26 +712,26 @@ API_RESULT BT_bnep_setup_rsp
  *
  *  \return
  *       API_SUCCESS or one of the error codes as defined in \ref BLE_ERROR_CODES.
- *
  */
 API_RESULT BT_bnep_set_policy
            (
-               UCHAR *    /* Remote BD_ADDR */,
-               UCHAR      /* Flag */
+               UCHAR  * bd_addr,
+               UCHAR    policy
            );
 
-/** To enable or disable header compression during transmission */
 /**
- *  \brief
+ *  \brief To enable/disable header compression during transmission
  *
  *  \par Description:
+ *       This API enables or disables header compression during transmission
  *
- *  \param None
+ *  \param [in] state
+ *         BT_TRUE  :  Enable compression
+ *         BT_FALSE :  Disable compression 
  *
  *  \return None
- *
  */
-void BT_bnep_set_compression_state (UCHAR state);
+void BT_bnep_set_compression_state (/* IN */ UCHAR state);
 
 #ifdef __cplusplus
 };

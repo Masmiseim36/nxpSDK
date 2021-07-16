@@ -1,6 +1,6 @@
 # CROSS COMPILER SETTING
 SET(CMAKE_SYSTEM_NAME Generic)
-CMAKE_MINIMUM_REQUIRED (VERSION 3.1.1)
+CMAKE_MINIMUM_REQUIRED (VERSION 3.10.0)
 
 # THE VERSION NUMBER
 SET (Tutorial_VERSION_MAJOR 1)
@@ -59,7 +59,7 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../../components/uart
     ${ProjDirPath}/../../../../../../components/lists
     ${ProjDirPath}/../../../../../../components/osa
-    ${ProjDirPath}/../../../../../../CMSIS/Include
+    ${ProjDirPath}/../../../../../../CMSIS/Core/Include
     ${ProjDirPath}/../../../../../../devices/MIMXRT1011/utilities
 )
 
@@ -94,7 +94,7 @@ include(driver_igpio_MIMXRT1011)
 
 include(driver_xip_device_MIMXRT1011)
 
-include(driver_xip_board_MIMXRT1011)
+include(driver_xip_board_evkmimxrt1010_MIMXRT1011)
 
 include(component_lpuart_adapter_MIMXRT1011)
 
@@ -106,11 +106,7 @@ include(component_osa_MIMXRT1011)
 
 include(middleware_usb_common_header_MIMXRT1011)
 
-include(CMSIS_Include_core_cm7_MIMXRT1011)
-
-include(CMSIS_Include_common_MIMXRT1011)
-
-include(CMSIS_Include_dsp_MIMXRT1011)
+include(CMSIS_Include_core_cm_MIMXRT1011)
 
 include(middleware_usb_host_common_header_MIMXRT1011)
 

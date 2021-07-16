@@ -80,7 +80,12 @@ pthread_equal(pthread_t t1, pthread_t t2) {
 	struct _private_thread *pt1 = t1;
 	struct _private_thread *pt2 = t2;
 
-	return (pt1->task_handle == pt2->task_handle);
+	//Invalid thread id's are undefined, define them as unequal
+	if(!pt1 || !pt2) {
+		return 0;
+	}
+
+	return (pt1->task_handle == pt2->task_handle) ? 1 : 0;
 }
 
 /**
@@ -169,8 +174,12 @@ pthread_detach(pthread_t thread) {
 int
 pthread_join(pthread_t thread, void **_value_ptr) {
 	/**
-	 * Not implemented.
+	 * yield with a non blocking delay for thread to delete itself
 	 */
+
+	while (eTaskGetState( ((struct _private_thread*)thread)->task_handle) != eDeleted ) {
+		vTaskDelay( 10 );
+	}
 	return 0;
 }
 

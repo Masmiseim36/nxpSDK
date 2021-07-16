@@ -6,7 +6,7 @@
  */
 
 #include "m1_sm_ref_sol.h"
-#include "mcdrv.h"
+#include "mc_periph_init.h"
 #include "mid_sm_states.h"
 
 /*******************************************************************************
@@ -318,7 +318,7 @@ static void M1_StateInitFast(void)
     g_sMID.sPar.fltIphN   = M1_I_NOM;
     g_sMID.sPar.fltUphN   = M1_U_NOM;
     g_sMID.sPar.fltFreqN  = M1_F_NOM;
-    g_sMID.sPar.fltPp     = M1_MOTOR_PP;
+    g_sMID.sPar.fltPp     = (float_t)M1_MOTOR_PP;
     g_sMID.bAbort         = FALSE;
     g_sMID.bMeasSuccDone  = FALSE;
     g_sMID.bCalib         = FALSE;
@@ -362,7 +362,7 @@ static void M1_StateInitFast(void)
 static void M1_StateStopFast(void)
 {
     /* read 3-phase motor currents, DC-bus voltage and raw IPM temperature */
-	M1_MCDRV_ADC_GET(&g_sM1AdcSensor);
+    M1_MCDRV_ADC_GET(&g_sM1AdcSensor);
 
     /* convert voltages from fractional measured values to float */
     g_sM1Drive.sFocACIM.fltUDcBus = MLIB_ConvSc_FLTsf(g_sM1Drive.sFocACIM.f16UDcBus, g_fltM1DCBvoltageScale);
@@ -372,7 +372,7 @@ static void M1_StateStopFast(void)
         GDFLIB_FilterIIR1_FLT(g_sM1Drive.sFocACIM.fltUDcBus, &g_sM1Drive.sFocACIM.sFiltParUDcBus);
 
     /* If the user switches on  or set non-zero speed*/
-    if ((g_bM1SwitchAppOnOff != (bool_t)0) || (g_sM1Drive.sSpdFlux.fltSpdMeReq != 0.0F))
+    if ((g_bM1SwitchAppOnOff != FALSE) || (g_sM1Drive.sSpdFlux.fltSpdMeReq != 0.0F))
     {
         /* Set the switch on */
         g_bM1SwitchAppOnOff = TRUE;
@@ -406,7 +406,7 @@ static void M1_StateStopFast(void)
         }
         else
         {
-        	;
+        	; /* no action */
         }
     }
 
@@ -735,7 +735,7 @@ static void M1_StateRunMeasureFast(void)
     {
         /* keep position at zero */
         g_sM1Drive.sFocACIM.bFlagSpdStart      = TRUE;
-        g_sM1Drive.sFocACIM.sRFO.a32RotFluxPos = ACC32(0.0);
+        g_sM1Drive.sFocACIM.sRFO.a32RotFluxPos = ACC32(0.0F);
         g_sM1Drive.sFocACIM.sSCFOC.fltSin      = 0.0F;
         g_sM1Drive.sFocACIM.sSCFOC.fltCos      = 1.0F;
 
@@ -777,7 +777,7 @@ static void M1_StateRunMeasureFast(void)
     {
         /* if the measurement was unsuccessful set flag, otherwise revoke
            previous parameters */
-        if (!g_sMID.ui16FaultMID)
+        if (!(bool_t)g_sMID.ui16FaultMID)
         {
             g_sMID.bMeasSuccDone = TRUE;
         }
@@ -1557,7 +1557,7 @@ void M1_SetSpeed(float_t fltSpdMeReq)
     else
     {
         /* Set zero speed */
-        g_sM1Drive.sSpdFlux.fltSpdMeRamp = 0;
+        g_sM1Drive.sSpdFlux.fltSpdMeRamp = 0.0F;
     }
 }
 

@@ -29,9 +29,9 @@ void MID_getMech(mid_get_mech_t *sMechMeasFcn)
     float_t fltInertiaConsttemp = 0.0F;
 
     /* Initialization */
-    if (sMechMeasFcn->ui16Active == FALSE)
+    if (sMechMeasFcn->bActive == FALSE)
     {
-        sMechMeasFcn->ui16Active           = TRUE;
+        sMechMeasFcn->bActive           = TRUE;
         sMechMeasFcn->ui16MeasNr           = MID_MECH_MEAS_NR;
         sMechMeasFcn->ui32LoopCounter      = 0;
         sMechMeasFcn->ui32AccelLoopCounter = 0;
@@ -57,9 +57,9 @@ void MID_getMech(mid_get_mech_t *sMechMeasFcn)
         sMechMeasFcn->sStartup.fltCurrentStartup = sMechMeasFcn->fltIqAccelerate;
         sMechMeasFcn->sStartup.bOpenLoop         = TRUE;
         GFLIB_RampInit_FLT(0.0F, &sMechMeasFcn->sStartup.sSpeedRampOpenLoopParams);
-        sMechMeasFcn->sStartup.f16PosGen            = 0.0F;
-        sMechMeasFcn->sStartup.f16PosMerged         = 0.0F;
-        sMechMeasFcn->sStartup.f16RatioMerging      = 0.0F;
+        sMechMeasFcn->sStartup.f16PosGen            = FRAC16(0.0);
+        sMechMeasFcn->sStartup.f16PosMerged         = FRAC16(0.0);
+        sMechMeasFcn->sStartup.f16RatioMerging      = FRAC16(0.0);
         sMechMeasFcn->sStartup.fltSpeedRampOpenLoop = 0.0F;
     }
 
@@ -158,7 +158,7 @@ void MID_getMech(mid_get_mech_t *sMechMeasFcn)
             sMechMeasFcn->ui32DecelLoopCounter++;
 
             /* check the timer */
-            if (sMechMeasFcn->ui32DecelLoopCounter < (0.05F * M1_TIME_ONESEC_COUNT))
+            if (sMechMeasFcn->ui32DecelLoopCounter < ((uint32_t)(0.05F * M1_FAST_LOOP_FREQ)))
             {
                 sMechMeasFcn->fltSpeedMax = sMechMeasFcn->fltSpeedFilt;
                 break;
@@ -168,7 +168,7 @@ void MID_getMech(mid_get_mech_t *sMechMeasFcn)
             if (sMechMeasFcn->fltSpeedFilt < (sMechMeasFcn->fltSpeedMax * 0.3678794412F))
             {
                 fltTautemp =
-                    ((float_t)(sMechMeasFcn->ui32DecelLoopCounter - (0.05F * M1_TIME_ONESEC_COUNT))) * M1_FAST_LOOP_TS;
+                    ((float_t)(sMechMeasFcn->ui32DecelLoopCounter - (0.05F * M1_FAST_LOOP_FREQ))) * M1_FAST_LOOP_TS;
 
                 /* calculate moment of inertia  */
                 fltJtemp = sMechMeasFcn->fltPp * sMechMeasFcn->fltTorqueInteg * fltTautemp /
@@ -178,7 +178,7 @@ void MID_getMech(mid_get_mech_t *sMechMeasFcn)
                 /* calculate inertia constant */
                 fltInertiaConsttemp = sMechMeasFcn->fltIqAccelerate /
                                       (sMechMeasFcn->fltSpeedThrsDecel - sMechMeasFcn->fltSpeedThrsAccel) *
-                                      ((float_t)sMechMeasFcn->ui32AccelLoopCounter / (float_t)M1_TIME_ONESEC_COUNT);
+                                      ((float_t)sMechMeasFcn->ui32AccelLoopCounter / (float_t)M1_FAST_LOOP_FREQ);
 
                 /* Accumulate Tau, J and Jconst for average calculation */
                 if (sMechMeasFcn->ui16MeasNr < MID_MECH_MEAS_NR)
@@ -226,7 +226,7 @@ void MID_getMech(mid_get_mech_t *sMechMeasFcn)
             *g_sMID.sIO.pfltIqReq = 0.0F;
 
             /* When finished exit the function */
-            sMechMeasFcn->ui16Active = FALSE;
+            sMechMeasFcn->bActive = FALSE;
             break;
     }
 }

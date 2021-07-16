@@ -52,30 +52,30 @@
 
 /*@{*/
 
-#define AVRCP_CONNECT_IND                               0x01
-#define AVRCP_CONNECT_CNF                               0x02
-#define AVRCP_DISCONNECT_IND                            0x03
-#define AVRCP_DISCONNECT_CNF                            0x04
-#define AVRCP_MESSAGE_IND                               0x05
-#define AVRCP_MESSAGE_CNF                               0x06
-#define AVRCP_MESSAGE_SEND_CNF                          0x07
+#define AVRCP_CONNECT_IND                               0x01U
+#define AVRCP_CONNECT_CNF                               0x02U
+#define AVRCP_DISCONNECT_IND                            0x03U
+#define AVRCP_DISCONNECT_CNF                            0x04U
+#define AVRCP_MESSAGE_IND                               0x05U
+#define AVRCP_MESSAGE_CNF                               0x06U
+#define AVRCP_MESSAGE_SEND_CNF                          0x07U
 
 #ifdef AVRCP_1_3
 
-#define AVRCP_METADATA_CMD                              0x10
-#define AVRCP_METADATA_RSP                              0x11
-#define AVRCP_METADATA_INTERIM_RSP                      0x12
+#define AVRCP_METADATA_CMD                              0x10U
+#define AVRCP_METADATA_RSP                              0x11U
+#define AVRCP_METADATA_INTERIM_RSP                      0x12U
 
 #endif /* AVRCP_1_3 */
 
 #ifdef AVRCP_1_4
 
-#define AVRCP_BOW_CONNECT_IND                           0x20
-#define AVRCP_BOW_CONNECT_CNF                           0x21
-#define AVRCP_BOW_DISCONNECT_IND                        0x22
-#define AVRCP_BOW_DISCONNECT_CNF                        0x23
-#define AVRCP_BOW_MESSAGE_IND                           0x24
-#define AVRCP_BOW_MESSAGE_RSP                           0x25
+#define AVRCP_BOW_CONNECT_IND                           0x20U
+#define AVRCP_BOW_CONNECT_CNF                           0x21U
+#define AVRCP_BOW_DISCONNECT_IND                        0x22U
+#define AVRCP_BOW_DISCONNECT_CNF                        0x23U
+#define AVRCP_BOW_MESSAGE_IND                           0x24U
+#define AVRCP_BOW_MESSAGE_RSP                           0x25U
 
 #endif /* AVRCP_1_4 */
 
@@ -89,7 +89,7 @@
 
 /*@{*/
 
-#define AVRCP_MAX_PACKET_SIZE                           512
+#define AVRCP_MAX_PACKET_SIZE                           512U
 
 /*@}*/
 
@@ -101,7 +101,7 @@
 
 /*@{*/
 
-#define BT_SIG_REGISTERED_COMPANY_ID    0x001958
+#define BT_SIG_REGISTERED_COMPANY_ID    0x001958U
 
 /* #define BT_SIG_REG_COMPANY_ID BT_SIG_REGISTERED_COMPANY_ID */
 
@@ -114,7 +114,7 @@
  */
 
 /*@{*/
-#define AVRCP_COMMAND_HDR_LEN                                   3
+#define AVRCP_COMMAND_HDR_LEN                                   3U
 
 /*@}*/
 
@@ -124,7 +124,7 @@
  */
 
 /*@{*/
-#define AVRCP_METADATA_PDU_HDR_LEN                              7
+#define AVRCP_METADATA_PDU_HDR_LEN                              7U
 
 /*@}*/
 
@@ -139,13 +139,13 @@
 
 /*@{*/
 
-#define AVRCP_OPCODE_UNIT_INFO                          0x30
-#define AVRCP_OPCODE_SUBUNIT_INFO                       0x31
-#define AVRCP_OPCODE_PASS_THROUGH                       0x7C
+#define AVRCP_OPCODE_UNIT_INFO                          0x30U
+#define AVRCP_OPCODE_SUBUNIT_INFO                       0x31U
+#define AVRCP_OPCODE_PASS_THROUGH                       0x7CU
 
 #ifdef AVRCP_1_3
 
-#define AVRCP_OPCODE_VENDOR_DEPENDENT                   0x00
+#define AVRCP_OPCODE_VENDOR_DEPENDENT                   0x00U
 
 #endif /* AVRCP_1_3 */
 /*@}*/
@@ -157,8 +157,8 @@
 
 /*@{*/
 
-#define AVRCP_SUBUNIT_TYPE_UNIT                         0x1F
-#define AVRCP_SUBUNIT_TYPE_PANEL                        0x09
+#define AVRCP_SUBUNIT_TYPE_UNIT                         0x1FU
+#define AVRCP_SUBUNIT_TYPE_PANEL                        0x09U
 
 /*@}*/
 
@@ -169,14 +169,14 @@
 
 /*@{*/
 
-#define AVRCP_RESPONSE_TYPE_NOT_IMPLEMENTED             0x08
-#define AVRCP_RESPONSE_TYPE_ACCEPTED                    0x09
-#define AVRCP_RESPONSE_TYPE_REJECTED                    0x0A
-#define AVRCP_RESPONSE_TYPE_INTERIM                     0x0F
-#define AVRCP_RESPONSE_TYPE_STABLE                      0x0C
+#define AVRCP_RESPONSE_TYPE_NOT_IMPLEMENTED             0x08U
+#define AVRCP_RESPONSE_TYPE_ACCEPTED                    0x09U
+#define AVRCP_RESPONSE_TYPE_REJECTED                    0x0AU
+#define AVRCP_RESPONSE_TYPE_INTERIM                     0x0FU
+#define AVRCP_RESPONSE_TYPE_STABLE                      0x0CU
 
 #ifdef AVRCP_1_3
-#define AVRCP_RESPONSE_TYPE_CHANGED                     0x0D
+#define AVRCP_RESPONSE_TYPE_CHANGED                     0x0DU
 #endif /* AVRCP_1_3 */
 
 /*@}*/
@@ -188,11 +188,11 @@
 
 /*@{*/
 
-#define AVRCP_COMMAND_TYPE_CONTROL                      0x00
-#define AVRCP_COMMAND_TYPE_STATUS                       0x01
+#define AVRCP_COMMAND_TYPE_CONTROL                      0x00U
+#define AVRCP_COMMAND_TYPE_STATUS                       0x01U
 
 #ifdef AVRCP_1_3
-#define AVRCP_COMMAND_TYPE_NOTIFY                       0x03
+#define AVRCP_COMMAND_TYPE_NOTIFY                       0x03U
 #endif /* AVRCP_1_3 */
 
 /*@}*/
@@ -203,63 +203,63 @@
  */
 
 /*@{*/
-#define AVRCP_OPERATION_ID_SELECT                       0x00
-#define AVRCP_OPERATION_ID_UP                           0x01
-#define AVRCP_OPERATION_ID_DOWN                         0x02
-#define AVRCP_OPERATION_ID_LEFT                         0x03
-#define AVRCP_OPERATION_ID_RIGHT                        0x04
-#define AVRCP_OPERATION_ID_RIGHT_UP                     0x05
-#define AVRCP_OPERATION_ID_RIGHT_DOWN                   0x06
-#define AVRCP_OPERATION_ID_LEFT_UP                      0x07
-#define AVRCP_OPERATION_ID_LEFT_DOWN                    0x08
-#define AVRCP_OPERATION_ID_ROOT_MENU                    0x09
-#define AVRCP_OPERATION_ID_SETUP_MENU                   0x0A
-#define AVRCP_OPERATION_ID_CONTENTS_MENU                0x0B
-#define AVRCP_OPERATION_ID_FAVORITE_MENU                0x0C
-#define AVRCP_OPERATION_ID_EXIT                         0x0D
-#define AVRCP_OPERATION_ID_0                            0x20
-#define AVRCP_OPERATION_ID_1                            0x21
-#define AVRCP_OPERATION_ID_2                            0x22
-#define AVRCP_OPERATION_ID_3                            0x23
-#define AVRCP_OPERATION_ID_4                            0x24
-#define AVRCP_OPERATION_ID_5                            0x25
-#define AVRCP_OPERATION_ID_6                            0x26
-#define AVRCP_OPERATION_ID_7                            0x27
-#define AVRCP_OPERATION_ID_8                            0x28
-#define AVRCP_OPERATION_ID_9                            0x29
-#define AVRCP_OPERATION_ID_DOT                          0x2A
-#define AVRCP_OPERATION_ID_ENTER                        0x2B
-#define AVRCP_OPERATION_ID_CLEAR                        0x2C
-#define AVRCP_OPERATION_ID_CHANNEL_UP                   0x30
-#define AVRCP_OPERATION_ID_CHANNEL_DOWN                 0x31
-#define AVRCP_OPERATION_ID_PREVIOUS_CHANNEL             0x32
-#define AVRCP_OPERATION_ID_SOUND_SELECT                 0x33
-#define AVRCP_OPERATION_ID_INPUT_SELECT                 0x34
-#define AVRCP_OPERATION_ID_DISPLAY_INFORMATION          0x35
-#define AVRCP_OPERATION_ID_HELP                         0x36
-#define AVRCP_OPERATION_ID_PAGE_UP                      0x37
-#define AVRCP_OPERATION_ID_PAGE_DOWN                    0x38
-#define AVRCP_OPERATION_ID_POWER                        0x40
-#define AVRCP_OPERATION_ID_VOLUME_UP                    0x41
-#define AVRCP_OPERATION_ID_VOLUME_DOWN                  0x42
-#define AVRCP_OPERATION_ID_MUTE                         0x43
-#define AVRCP_OPERATION_ID_PLAY                         0x44
-#define AVRCP_OPERATION_ID_STOP                         0x45
-#define AVRCP_OPERATION_ID_PAUSE                        0x46
-#define AVRCP_OPERATION_ID_RECORD                       0x47
-#define AVRCP_OPERATION_ID_REWIND                       0x48
-#define AVRCP_OPERATION_ID_FAST_FORWARD                 0x49
-#define AVRCP_OPERATION_ID_EJECT                        0x4A
-#define AVRCP_OPERATION_ID_FORWARD                      0x4B
-#define AVRCP_OPERATION_ID_BACKWARD                     0x4C
-#define AVRCP_OPERATION_ID_ANGLE                        0x50
-#define AVRCP_OPERATION_ID_SUBPICTURE                   0x51
-#define AVRCP_OPERATION_ID_F1                           0x71
-#define AVRCP_OPERATION_ID_F2                           0x72
-#define AVRCP_OPERATION_ID_F3                           0x73
-#define AVRCP_OPERATION_ID_F4                           0x74
-#define AVRCP_OPERATION_ID_F5                           0x75
-#define AVRCP_OPERATION_ID_VENDOR_UNIQUE                0x7E
+#define AVRCP_OPERATION_ID_SELECT                       0x00U
+#define AVRCP_OPERATION_ID_UP                           0x01U
+#define AVRCP_OPERATION_ID_DOWN                         0x02U
+#define AVRCP_OPERATION_ID_LEFT                         0x03U
+#define AVRCP_OPERATION_ID_RIGHT                        0x04U
+#define AVRCP_OPERATION_ID_RIGHT_UP                     0x05U
+#define AVRCP_OPERATION_ID_RIGHT_DOWN                   0x06U
+#define AVRCP_OPERATION_ID_LEFT_UP                      0x07U
+#define AVRCP_OPERATION_ID_LEFT_DOWN                    0x08U
+#define AVRCP_OPERATION_ID_ROOT_MENU                    0x09U
+#define AVRCP_OPERATION_ID_SETUP_MENU                   0x0AU
+#define AVRCP_OPERATION_ID_CONTENTS_MENU                0x0BU
+#define AVRCP_OPERATION_ID_FAVORITE_MENU                0x0CU
+#define AVRCP_OPERATION_ID_EXIT                         0x0DU
+#define AVRCP_OPERATION_ID_0                            0x20U
+#define AVRCP_OPERATION_ID_1                            0x21U
+#define AVRCP_OPERATION_ID_2                            0x22U
+#define AVRCP_OPERATION_ID_3                            0x23U
+#define AVRCP_OPERATION_ID_4                            0x24U
+#define AVRCP_OPERATION_ID_5                            0x25U
+#define AVRCP_OPERATION_ID_6                            0x26U
+#define AVRCP_OPERATION_ID_7                            0x27U
+#define AVRCP_OPERATION_ID_8                            0x28U
+#define AVRCP_OPERATION_ID_9                            0x29U
+#define AVRCP_OPERATION_ID_DOT                          0x2AU
+#define AVRCP_OPERATION_ID_ENTER                        0x2BU
+#define AVRCP_OPERATION_ID_CLEAR                        0x2CU
+#define AVRCP_OPERATION_ID_CHANNEL_UP                   0x30U
+#define AVRCP_OPERATION_ID_CHANNEL_DOWN                 0x31U
+#define AVRCP_OPERATION_ID_PREVIOUS_CHANNEL             0x32U
+#define AVRCP_OPERATION_ID_SOUND_SELECT                 0x33U
+#define AVRCP_OPERATION_ID_INPUT_SELECT                 0x34U
+#define AVRCP_OPERATION_ID_DISPLAY_INFORMATION          0x35U
+#define AVRCP_OPERATION_ID_HELP                         0x36U
+#define AVRCP_OPERATION_ID_PAGE_UP                      0x37U
+#define AVRCP_OPERATION_ID_PAGE_DOWN                    0x38U
+#define AVRCP_OPERATION_ID_POWER                        0x40U
+#define AVRCP_OPERATION_ID_VOLUME_UP                    0x41U
+#define AVRCP_OPERATION_ID_VOLUME_DOWN                  0x42U
+#define AVRCP_OPERATION_ID_MUTE                         0x43U
+#define AVRCP_OPERATION_ID_PLAY                         0x44U
+#define AVRCP_OPERATION_ID_STOP                         0x45U
+#define AVRCP_OPERATION_ID_PAUSE                        0x46U
+#define AVRCP_OPERATION_ID_RECORD                       0x47U
+#define AVRCP_OPERATION_ID_REWIND                       0x48U
+#define AVRCP_OPERATION_ID_FAST_FORWARD                 0x49U
+#define AVRCP_OPERATION_ID_EJECT                        0x4AU
+#define AVRCP_OPERATION_ID_FORWARD                      0x4BU
+#define AVRCP_OPERATION_ID_BACKWARD                     0x4CU
+#define AVRCP_OPERATION_ID_ANGLE                        0x50U
+#define AVRCP_OPERATION_ID_SUBPICTURE                   0x51U
+#define AVRCP_OPERATION_ID_F1                           0x71U
+#define AVRCP_OPERATION_ID_F2                           0x72U
+#define AVRCP_OPERATION_ID_F3                           0x73U
+#define AVRCP_OPERATION_ID_F4                           0x74U
+#define AVRCP_OPERATION_ID_F5                           0x75U
+#define AVRCP_OPERATION_ID_VENDOR_UNIQUE                0x7EU
 
 /*@}*/
 
@@ -280,10 +280,10 @@
 /*@{*/
 
 /** AVRCP State_Flag: Pressed */
-#define AVRCP_STATE_FLAG_PRESSED                        0x00
+#define AVRCP_STATE_FLAG_PRESSED                        0x00U
 
 /** AVRCP State_Flag: Released */
-#define AVRCP_STATE_FLAG_RELEASED                       0x80
+#define AVRCP_STATE_FLAG_RELEASED                       0x80U
 
 /*@}*/
 
@@ -296,10 +296,10 @@
 /*@{*/
 
 /** AVRCP PASSTHROUGH Control Command length */
-#define AVRCP_PASSTHROUGH_CT_CMD_LEN                    0x05
+#define AVRCP_PASSTHROUGH_CT_CMD_LEN                    0x05U
 
 /** AVRCP PASSTHROUGH Vendor Unique Control Command length */
-#define AVRCP_PASSTHROUGH_VU_CT_CMD_LEN                 0x0A
+#define AVRCP_PASSTHROUGH_VU_CT_CMD_LEN                 0x0AU
 
 /*@}*/
 
@@ -341,24 +341,24 @@
 
 /*@{*/
 
-#define AVRCP_METADATA_PDU_ID_GET_CAPABILITY                    0x10
-#define AVRCP_METADATA_PDU_ID_LIST_PLAYER_APP_SETTING_ATTR      0x11
-#define AVRCP_METADATA_PDU_ID_LIST_PLAYER_APP_SETTING_VAL       0x12
-#define AVRCP_METADATA_PDU_ID_GET_CUR_PLAYER_APP_SETTING_VAL    0x13
-#define AVRCP_METADATA_PDU_ID_SET_PLAYER_APP_SETTING_VAL        0x14
-#define AVRCP_METADATA_PDU_ID_GET_PLAYER_APP_SETTING_ATTR_TXT   0x15
-#define AVRCP_METADATA_PDU_ID_GET_PLAYER_APP_SETTING_VAL_TXT    0x16
+#define AVRCP_METADATA_PDU_ID_GET_CAPABILITY                    0x10U
+#define AVRCP_METADATA_PDU_ID_LIST_PLAYER_APP_SETTING_ATTR      0x11U
+#define AVRCP_METADATA_PDU_ID_LIST_PLAYER_APP_SETTING_VAL       0x12U
+#define AVRCP_METADATA_PDU_ID_GET_CUR_PLAYER_APP_SETTING_VAL    0x13U
+#define AVRCP_METADATA_PDU_ID_SET_PLAYER_APP_SETTING_VAL        0x14U
+#define AVRCP_METADATA_PDU_ID_GET_PLAYER_APP_SETTING_ATTR_TXT   0x15U
+#define AVRCP_METADATA_PDU_ID_GET_PLAYER_APP_SETTING_VAL_TXT    0x16U
 
-#define AVRCP_METADATA_PDU_ID_INFORM_DISPLAYABLE_CHAR_SET       0x17
-#define AVRCP_METADATA_PDU_ID_INFORM_BATTERY_STATUS             0x18
+#define AVRCP_METADATA_PDU_ID_INFORM_DISPLAYABLE_CHAR_SET       0x17U
+#define AVRCP_METADATA_PDU_ID_INFORM_BATTERY_STATUS             0x18U
 
-#define AVRCP_METADATA_PDU_ID_GET_ELEMENT_ATTRIBUTE             0x20
+#define AVRCP_METADATA_PDU_ID_GET_ELEMENT_ATTRIBUTE             0x20U
 
-#define AVRCP_METADATA_PDU_ID_GET_PLAY_STATUS                   0x30
-#define AVRCP_METADATA_PDU_ID_REGISTER_NOTIFICATION             0x31
+#define AVRCP_METADATA_PDU_ID_GET_PLAY_STATUS                   0x30U
+#define AVRCP_METADATA_PDU_ID_REGISTER_NOTIFICATION             0x31U
 
-#define AVRCP_METADATA_PDU_ID_REQUEST_CONTINUING_RESPONSE       0x40
-#define AVRCP_METADATA_PDU_ID_ABORT_CONTINUING_RESPONSE         0x41
+#define AVRCP_METADATA_PDU_ID_REQUEST_CONTINUING_RESPONSE       0x40U
+#define AVRCP_METADATA_PDU_ID_ABORT_CONTINUING_RESPONSE         0x41U
 
 
 
@@ -367,34 +367,34 @@
  *
  */
 
-#define AVRCP_GROUP_NAVIGATION_VENDOR_UNIQUE_ID_NEXT            0x00
-#define AVRCP_GROUP_NAVIGATION_VENDOR_UNIQUE_ID_PREV            0x01
+#define AVRCP_GROUP_NAVIGATION_VENDOR_UNIQUE_ID_NEXT            0x00U
+#define AVRCP_GROUP_NAVIGATION_VENDOR_UNIQUE_ID_PREV            0x01U
 
 
 /* AVRCP 1.4 Specific PDU IDs */
 #ifdef AVRCP_1_4
 
-#define AVRCP_PDU_ID_SET_ABSOLUTE_VOLUME                        0x50
+#define AVRCP_PDU_ID_SET_ABSOLUTE_VOLUME                        0x50U
 
-#define AVRCP_PDU_ID_SET_ADDRESSED_PLAYER                       0x60
+#define AVRCP_PDU_ID_SET_ADDRESSED_PLAYER                       0x60U
 
-#define AVRCP_PDU_ID_SET_BROWSED_PLAYER                         0x70
-#define AVRCP_PDU_ID_GET_FOLDER_ITEMS                           0x71
-#define AVRCP_PDU_ID_CHANGE_PATH                                0x72
-#define AVRCP_PDU_ID_GET_ITEM_ATTRIBUTES                        0x73
-#define AVRCP_PDU_ID_PLAY_ITEMS                                 0x74
+#define AVRCP_PDU_ID_SET_BROWSED_PLAYER                         0x70U
+#define AVRCP_PDU_ID_GET_FOLDER_ITEMS                           0x71U
+#define AVRCP_PDU_ID_CHANGE_PATH                                0x72U
+#define AVRCP_PDU_ID_GET_ITEM_ATTRIBUTES                        0x73U
+#define AVRCP_PDU_ID_PLAY_ITEMS                                 0x74U
 
-#define AVRCP_PDU_ID_SEARCH                                     0x80
+#define AVRCP_PDU_ID_SEARCH                                     0x80U
 
-#define AVRCP_PDU_ID_ADD_TO_NOW_PLAYING                         0x90
+#define AVRCP_PDU_ID_ADD_TO_NOW_PLAYING                         0x90U
 
-#define AVRCP_PDU_ID_GENERAL_REJECT                             0xA0
+#define AVRCP_PDU_ID_GENERAL_REJECT                             0xA0U
 
 #endif /* AVRCP_1_4 */
 
 /* AVRCP 1.6 Specific PDU IDs */
 #ifdef AVRCP_GET_NUM_OF_ITEMS
-#define AVRCP_PDU_ID_GET_TOTAL_NUM_ITEMS                        0x75
+#define AVRCP_PDU_ID_GET_TOTAL_NUM_ITEMS                        0x75U
 #endif /* AVRCP_GET_NUM_OF_ITEMS */
 
 /*@}*/
@@ -406,8 +406,8 @@
 
 /*@{*/
 
-#define AVRCP_CAP_ID_COMPANY_ID                                 0x02
-#define AVRCP_CAP_ID_EVENTS_SUPPORTED                           0x03
+#define AVRCP_CAP_ID_COMPANY_ID                                 0x02U
+#define AVRCP_CAP_ID_EVENTS_SUPPORTED                           0x03U
 /*@}*/
 
 #ifdef AVRCP_1_4
@@ -419,10 +419,10 @@
 
 /*@{*/
 
-#define AVRCP_SCOPE_MEDIA_PLAYER_LIST                           0x00
-#define AVRCP_SCOPE_VIRTUAL_FILESYSTEM                          0x01
-#define AVRCP_SCOPE_SEARCH                                      0x02
-#define AVRCP_SCOPE_NOW_PLAYING                                 0x03
+#define AVRCP_SCOPE_MEDIA_PLAYER_LIST                           0x00U
+#define AVRCP_SCOPE_VIRTUAL_FILESYSTEM                          0x01U
+#define AVRCP_SCOPE_SEARCH                                      0x02U
+#define AVRCP_SCOPE_NOW_PLAYING                                 0x03U
 /*@}*/
 
 /**
@@ -432,9 +432,9 @@
 
 /*@{*/
 
-#define AVRCP_ITEM_MEDIA_PLAYER                         0x01
-#define AVRCP_ITEM_FOLDER                               0x02
-#define AVRCP_ITEM_MEDIA_ELEMENT                        0x03
+#define AVRCP_ITEM_MEDIA_PLAYER                         0x01U
+#define AVRCP_ITEM_FOLDER                               0x02U
+#define AVRCP_ITEM_MEDIA_ELEMENT                        0x03U
 /*@}*/
 
 /**
@@ -444,10 +444,10 @@
 
 /*@{*/
 
-#define AVRCP_MP_MAJOR_PLAYER_TYPE_AUDIO                        0x01
-#define AVRCP_MP_MAJOR_PLAYER_TYPE_VIDEO                        0x02
-#define AVRCP_MP_MAJOR_PLAYER_TYPE_BROADCASTING_AUDIO           0x04
-#define AVRCP_MP_MAJOR_PLAYER_TYPE_BROADCASTING_VIDEO           0x08
+#define AVRCP_MP_MAJOR_PLAYER_TYPE_AUDIO                        0x01U
+#define AVRCP_MP_MAJOR_PLAYER_TYPE_VIDEO                        0x02U
+#define AVRCP_MP_MAJOR_PLAYER_TYPE_BROADCASTING_AUDIO           0x04U
+#define AVRCP_MP_MAJOR_PLAYER_TYPE_BROADCASTING_VIDEO           0x08U
 /*@}*/
 
 /**
@@ -457,8 +457,8 @@
 
 /*@{*/
 
-#define AVRCP_MP_PLAYER_SUBTYPE_AUDIO_BOOK                      0x00000001
-#define AVRCP_MP_PLAYER_SUBTYPE_PODCAST                         0x00000002
+#define AVRCP_MP_PLAYER_SUBTYPE_AUDIO_BOOK                      0x00000001U
+#define AVRCP_MP_PLAYER_SUBTYPE_PODCAST                         0x00000002U
 /*@}*/
 
 /**
@@ -468,12 +468,12 @@
 
 /*@{*/
 
-#define AVRCP_MP_PLAY_STATUS_STOPPED            0x00
-#define AVRCP_MP_PLAY_STATUS_PLAYING            0x01
-#define AVRCP_MP_PLAY_STATUS_PAUSED             0x02
-#define AVRCP_MP_PLAY_STATUS_FWD_SEEK           0x03
-#define AVRCP_MP_PLAY_STATUS_REV_SEEK           0x04
-#define AVRCP_MP_PLAY_STATUS_ERROR              0xff
+#define AVRCP_MP_PLAY_STATUS_STOPPED            0x00U
+#define AVRCP_MP_PLAY_STATUS_PLAYING            0x01U
+#define AVRCP_MP_PLAY_STATUS_PAUSED             0x02U
+#define AVRCP_MP_PLAY_STATUS_FWD_SEEK           0x03U
+#define AVRCP_MP_PLAY_STATUS_REV_SEEK           0x04U
+#define AVRCP_MP_PLAY_STATUS_ERROR              0xffU
 /*@}*/
 
 
@@ -484,17 +484,17 @@
 
 /*@{*/
 
-#define AVRCP_VFS_FOLDER_TYPE_MIXED             0x00
-#define AVRCP_VFS_FOLDER_TYPE_TITLES            0x01
-#define AVRCP_VFS_FOLDER_TYPE_ALBUMS            0x02
-#define AVRCP_VFS_FOLDER_TYPE_ARTISTS           0x03
-#define AVRCP_VFS_FOLDER_TYPE_GENRES            0x04
-#define AVRCP_VFS_FOLDER_TYPE_PLAYLISTS         0x05
-#define AVRCP_VFS_FOLDER_TYPE_YEARS             0x06
+#define AVRCP_VFS_FOLDER_TYPE_MIXED             0x00U
+#define AVRCP_VFS_FOLDER_TYPE_TITLES            0x01U
+#define AVRCP_VFS_FOLDER_TYPE_ALBUMS            0x02U
+#define AVRCP_VFS_FOLDER_TYPE_ARTISTS           0x03U
+#define AVRCP_VFS_FOLDER_TYPE_GENRES            0x04U
+#define AVRCP_VFS_FOLDER_TYPE_PLAYLISTS         0x05U
+#define AVRCP_VFS_FOLDER_TYPE_YEARS             0x06U
 
 /* Folder is playable or not */
-#define AVRCP_VFS_FOLDER_PLAYABLE               0x00
-#define AVRCP_VFS_FOLDER_NOT_PLAYABLE           0x01
+#define AVRCP_VFS_FOLDER_PLAYABLE               0x00U
+#define AVRCP_VFS_FOLDER_NOT_PLAYABLE           0x01U
 /*@}*/
 
 /**
@@ -504,8 +504,8 @@
 
 /*@{*/
 
-#define AVRCP_MEDIA_ELEMENT_TYPE_AUDIO          0x00
-#define AVRCP_MEDIA_ELEMENT_TYPE_VIDEO          0x01
+#define AVRCP_MEDIA_ELEMENT_TYPE_AUDIO          0x00U
+#define AVRCP_MEDIA_ELEMENT_TYPE_VIDEO          0x01U
 /*@}*/
 
 /**
@@ -515,8 +515,8 @@
 
 /*@{*/
 
-#define AVRCP_VFS_CHANGE_PATH_UP                0x00
-#define AVRCP_VFS_CHANGE_PATH_DOWN              0x01
+#define AVRCP_VFS_CHANGE_PATH_UP                0x00U
+#define AVRCP_VFS_CHANGE_PATH_DOWN              0x01U
 /*@}*/
 
 
@@ -529,10 +529,10 @@
 
 /*@{*/
 
-#define AVRCP_METADATA_PACKET_TYPE_SINGLE      0x00
-#define AVRCP_METADATA_PACKET_TYPE_START       0x01
-#define AVRCP_METADATA_PACKET_TYPE_CONTINUE    0x02
-#define AVRCP_METADATA_PACKET_TYPE_END         0x03
+#define AVRCP_METADATA_PACKET_TYPE_SINGLE      0x00U
+#define AVRCP_METADATA_PACKET_TYPE_START       0x01U
+#define AVRCP_METADATA_PACKET_TYPE_CONTINUE    0x02U
+#define AVRCP_METADATA_PACKET_TYPE_END         0x03U
 /*@}*/
 
 /**
@@ -542,17 +542,17 @@
 
 /*@{*/
 
-#define AVRCP_MEDIA_ATTR_ID_MEDIA_TITLE           0x01
-#define AVRCP_MEDIA_ATTR_ID_ARTIST_NAME           0x02
-#define AVRCP_MEDIA_ATTR_ID_ALBUM_NAME            0x03
-#define AVRCP_MEDIA_ATTR_ID_MEDIA_NUMBER          0x04
-#define AVRCP_MEDIA_ATTR_ID_TOTAL_MEDIA_NUMBER    0x05
-#define AVRCP_MEDIA_ATTR_ID_GENRE                 0x06
-#define AVRCP_MEDIA_ATTR_ID_PLAYING_TIME          0x07
+#define AVRCP_MEDIA_ATTR_ID_MEDIA_TITLE           0x01U
+#define AVRCP_MEDIA_ATTR_ID_ARTIST_NAME           0x02U
+#define AVRCP_MEDIA_ATTR_ID_ALBUM_NAME            0x03U
+#define AVRCP_MEDIA_ATTR_ID_MEDIA_NUMBER          0x04U
+#define AVRCP_MEDIA_ATTR_ID_TOTAL_MEDIA_NUMBER    0x05U
+#define AVRCP_MEDIA_ATTR_ID_GENRE                 0x06U
+#define AVRCP_MEDIA_ATTR_ID_PLAYING_TIME          0x07U
 
 /* AVRCP_1_6 related Attirbute ID */
 #ifdef AVRCP_COVER_ART
-#define AVRCP_MEDIA_ATTR_ID_DEFAULT_COVER_ART     0x08
+#define AVRCP_MEDIA_ATTR_ID_DEFAULT_COVER_ART     0x08U
 #endif /* AVRCP_COVER_ART */
 
 
@@ -567,10 +567,10 @@
 
 /*@{*/
 
-#define AVRCP_PLAYER_APP_ATTR_ID_EQUALIZER    0x01
-#define AVRCP_PLAYER_APP_ATTR_ID_REPEAT       0x02
-#define AVRCP_PLAYER_APP_ATTR_ID_SHUFFLE      0x03
-#define AVRCP_PLAYER_APP_ATTR_ID_SCAN         0x04
+#define AVRCP_PLAYER_APP_ATTR_ID_EQUALIZER    0x01U
+#define AVRCP_PLAYER_APP_ATTR_ID_REPEAT       0x02U
+#define AVRCP_PLAYER_APP_ATTR_ID_SHUFFLE      0x03U
+#define AVRCP_PLAYER_APP_ATTR_ID_SCAN         0x04U
 
 /*@}*/
 
@@ -583,21 +583,21 @@
 
 /*@{*/
 
-#define AVRCP_PLAYER_APP_VALUE_ID_EQUALIZER_OFF    0x01
-#define AVRCP_PLAYER_APP_VALUE_ID_EQUALIZER_ON     0x02
+#define AVRCP_PLAYER_APP_VALUE_ID_EQUALIZER_OFF    0x01U
+#define AVRCP_PLAYER_APP_VALUE_ID_EQUALIZER_ON     0x02U
 
-#define AVRCP_PLAYER_APP_VALUE_ID_REPEAT_OFF       0x01
-#define AVRCP_PLAYER_APP_VALUE_ID_REPEAT_SINGLE    0x02
-#define AVRCP_PLAYER_APP_VALUE_ID_REPEAT_ALL       0x03
-#define AVRCP_PLAYER_APP_VALUE_ID_REPEAT_GROUP     0x04
+#define AVRCP_PLAYER_APP_VALUE_ID_REPEAT_OFF       0x01U
+#define AVRCP_PLAYER_APP_VALUE_ID_REPEAT_SINGLE    0x02U
+#define AVRCP_PLAYER_APP_VALUE_ID_REPEAT_ALL       0x03U
+#define AVRCP_PLAYER_APP_VALUE_ID_REPEAT_GROUP     0x04U
 
-#define AVRCP_PLAYER_APP_VALUE_ID_SHUFFLE_OFF      0x01
-#define AVRCP_PLAYER_APP_VALUE_ID_SHUFFLE_ALL      0x02
-#define AVRCP_PLAYER_APP_VALUE_ID_SHUFFLE_GROUP    0x03
+#define AVRCP_PLAYER_APP_VALUE_ID_SHUFFLE_OFF      0x01U
+#define AVRCP_PLAYER_APP_VALUE_ID_SHUFFLE_ALL      0x02U
+#define AVRCP_PLAYER_APP_VALUE_ID_SHUFFLE_GROUP    0x03U
 
-#define AVRCP_PLAYER_APP_VALUE_ID_SCAN_OFF         0x01
-#define AVRCP_PLAYER_APP_VALUE_ID_SCAN_ALL         0x02
-#define AVRCP_PLAYER_APP_VALUE_ID_SCAN_GROUP       0x03
+#define AVRCP_PLAYER_APP_VALUE_ID_SCAN_OFF         0x01U
+#define AVRCP_PLAYER_APP_VALUE_ID_SCAN_ALL         0x02U
+#define AVRCP_PLAYER_APP_VALUE_ID_SCAN_GROUP       0x03U
 
 /*@}*/
 
@@ -609,22 +609,22 @@
 
 /*@{*/
 
-#define AVRCP_EVENT_PLAYBACK_STATUS_CHANGED       0x01
-#define AVRCP_EVENT_TRACK_CHANGED                 0x02
-#define AVRCP_EVENT_TRACK_REACHED_END             0x03
-#define AVRCP_EVENT_TRACK_REACHED_START           0x04
-#define AVRCP_EVENT_PLAYBACK_POS_CHANGED          0x05
-#define AVRCP_EVENT_BATT_STATUS_CHANGED           0x06
-#define AVRCP_EVENT_SYSTEM_STATUS_CHANGED         0x07
-#define AVRCP_EVENT_PLAYER_APP_SETTING_CHANGED    0x08
+#define AVRCP_EVENT_PLAYBACK_STATUS_CHANGED       0x01U
+#define AVRCP_EVENT_TRACK_CHANGED                 0x02U
+#define AVRCP_EVENT_TRACK_REACHED_END             0x03U
+#define AVRCP_EVENT_TRACK_REACHED_START           0x04U
+#define AVRCP_EVENT_PLAYBACK_POS_CHANGED          0x05U
+#define AVRCP_EVENT_BATT_STATUS_CHANGED           0x06U
+#define AVRCP_EVENT_SYSTEM_STATUS_CHANGED         0x07U
+#define AVRCP_EVENT_PLAYER_APP_SETTING_CHANGED    0x08U
 
 #ifdef AVRCP_1_4
 
-#define AVRCP_EVENT_NOW_PLAYING_CONTENT_CHANGED   0x09
-#define AVRCP_EVENT_AVAILABLE_PLAYER_CHANGED      0x0A
-#define AVRCP_EVENT_ADDRESSED_PLAYER_CHANGED      0x0B
-#define AVRCP_EVENT_UIDS_CHANGED                  0x0C
-#define AVRCP_EVENT_VOLUME_CHANGED                0x0D
+#define AVRCP_EVENT_NOW_PLAYING_CONTENT_CHANGED   0x09U
+#define AVRCP_EVENT_AVAILABLE_PLAYER_CHANGED      0x0AU
+#define AVRCP_EVENT_ADDRESSED_PLAYER_CHANGED      0x0BU
+#define AVRCP_EVENT_UIDS_CHANGED                  0x0CU
+#define AVRCP_EVENT_VOLUME_CHANGED                0x0DU
 
 /* The usage of following define is deprecated */
 #define AVRCP_EVENT_NOW_PLAYING_CHANGED \
@@ -639,11 +639,11 @@
 
 /*@{*/
 
-#define AVRCP_BATTERY_STATUS_NORMAL    0x00
-#define AVRCP_BATTERY_STATUS_WARNING   0x01
-#define AVRCP_BATTERY_STATUS_CRITICAL  0x02
-#define AVRCP_BATTERY_STATUS_EXTERNAL  0x03
-#define AVRCP_BATTERY_STATUS_FULL      0x04
+#define AVRCP_BATTERY_STATUS_NORMAL    0x00U
+#define AVRCP_BATTERY_STATUS_WARNING   0x01U
+#define AVRCP_BATTERY_STATUS_CRITICAL  0x02U
+#define AVRCP_BATTERY_STATUS_EXTERNAL  0x03U
+#define AVRCP_BATTERY_STATUS_FULL      0x04U
 
 /*@}*/
 
@@ -654,9 +654,9 @@
 
 /*@{*/
 
-#define AVRCP_SYSTEM_STATUS_POWER_ON   0x00
-#define AVRCP_SYSTEM_STATUS_POWER_OFF  0x01
-#define AVRCP_SYSTEM_STATUS_UNPLUGED   0x02
+#define AVRCP_SYSTEM_STATUS_POWER_ON   0x00U
+#define AVRCP_SYSTEM_STATUS_POWER_OFF  0x01U
+#define AVRCP_SYSTEM_STATUS_UNPLUGED   0x02U
 
 /*@}*/
 
@@ -668,12 +668,12 @@
 
 /*@{*/
 
-#define AVRCP_METADATA_ERROR_INVALID_COMMAND        0x00
-#define AVRCP_METADATA_ERROR_INVALID_PARAMETER      0x01
-#define AVRCP_METADATA_ERROR_PARAMETER_NOT_FOUND    0x02
-#define AVRCP_METADATA_ERROR_INTERNAL               0x03
-#define AVRCP_METADATA_ERROR_OPERATION_SUCCESSFUL   0x04
-#define AVRCP_METADATA_ERROR_UID_CHANGED            0x05
+#define AVRCP_METADATA_ERROR_INVALID_COMMAND        0x00U
+#define AVRCP_METADATA_ERROR_INVALID_PARAMETER      0x01U
+#define AVRCP_METADATA_ERROR_PARAMETER_NOT_FOUND    0x02U
+#define AVRCP_METADATA_ERROR_INTERNAL               0x03U
+#define AVRCP_METADATA_ERROR_OPERATION_SUCCESSFUL   0x04U
+#define AVRCP_METADATA_ERROR_UID_CHANGED            0x05U
 
 /* Deprecated in the current version of the specification */
 /* #define AVRCP_METADATA_ERROR_UNKNOWN             0x06 */
@@ -687,22 +687,22 @@
 
 /*@{*/
 
-#define AVRCP_BOW_ERROR_INVALID_DIRECTION           0x07
-#define AVRCP_BOW_ERROR_NOT_A_DIRECTORY             0x08
-#define AVRCP_BOW_ERROR_DOES_NOT_EXIST              0x09
-#define AVRCP_BOW_ERROR_INVALID_SCOPE               0x0A
-#define AVRCP_BOW_ERROR_RANGE_OUT_OF_BOUNDS         0x0B
-#define AVRCP_BOW_ERROR_DIRECTORY_NOT_HANDLED       0x0C
-#define AVRCP_BOW_ERROR_MEDIA_IN_USE                0x0D
-#define AVRCP_BOW_ERROR_NOW_PLAYING_LIST_FULL       0x0E
-#define AVRCP_BOW_ERROR_SEARCH_NOT_SUPPORTED        0x0F
-#define AVRCP_BOW_ERROR_SEARCH_IN_PROGRESS          0x10
-#define AVRCP_BOW_ERROR_INVALID_PLAYER_ID           0x11
-#define AVRCP_BOW_ERROR_PLAYER_NOT_BROWSABLE        0x12
-#define AVRCP_BOW_ERROR_PLAYER_NOT_ADDRESSED        0x13
-#define AVRCP_BOW_ERROR_NO_VALID_SEARCH_RESULTS     0x14
-#define AVRCP_BOW_ERROR_NO_AVAILABLE_PLAYERS        0x15
-#define AVRCP_BOW_ERROR_ADDR_PLAYER_CHANGED         0x16
+#define AVRCP_BOW_ERROR_INVALID_DIRECTION           0x07U
+#define AVRCP_BOW_ERROR_NOT_A_DIRECTORY             0x08U
+#define AVRCP_BOW_ERROR_DOES_NOT_EXIST              0x09U
+#define AVRCP_BOW_ERROR_INVALID_SCOPE               0x0AU
+#define AVRCP_BOW_ERROR_RANGE_OUT_OF_BOUNDS         0x0BU
+#define AVRCP_BOW_ERROR_DIRECTORY_NOT_HANDLED       0x0CU
+#define AVRCP_BOW_ERROR_MEDIA_IN_USE                0x0DU
+#define AVRCP_BOW_ERROR_NOW_PLAYING_LIST_FULL       0x0EU
+#define AVRCP_BOW_ERROR_SEARCH_NOT_SUPPORTED        0x0FU
+#define AVRCP_BOW_ERROR_SEARCH_IN_PROGRESS          0x10U
+#define AVRCP_BOW_ERROR_INVALID_PLAYER_ID           0x11U
+#define AVRCP_BOW_ERROR_PLAYER_NOT_BROWSABLE        0x12U
+#define AVRCP_BOW_ERROR_PLAYER_NOT_ADDRESSED        0x13U
+#define AVRCP_BOW_ERROR_NO_VALID_SEARCH_RESULTS     0x14U
+#define AVRCP_BOW_ERROR_NO_AVAILABLE_PLAYERS        0x15U
+#define AVRCP_BOW_ERROR_ADDR_PLAYER_CHANGED         0x16U
 /*@}*/
 #endif /* AVRCP_1_3 */
 /** \} */
@@ -961,6 +961,7 @@ typedef API_RESULT (* AVRCP_EVENT_NTF_CB)
 /** \endcond */
 
 /* ----------------------------------------- Macros */
+
 /**
  *  \defgroup avrcp_marcos Utility Macros
  *  \{
@@ -976,8 +977,8 @@ typedef API_RESULT (* AVRCP_EVENT_NTF_CB)
  *  \hideinitializer
  */
 #define AVRCP_INIT_HANDLE(hdl)        \
-        ((hdl).profile_inst) = 0xFF; \
-        BT_mem_set ((hdl).bd_addr, 0x00, BT_BD_ADDR_SIZE)
+        ((hdl).profile_inst) = 0xFFU; \
+        BT_mem_set ((hdl).bd_addr, 0x00U, BT_BD_ADDR_SIZE)
 
 
 /**
@@ -1003,7 +1004,7 @@ typedef API_RESULT (* AVRCP_EVENT_NTF_CB)
  *  \hideinitializer
  */
 #define AVRCP_RESET_HANDLE_BD_ADDR(hdl) \
-        BT_mem_set ((hdl).bd_addr, 0x00, BT_BD_ADDR_SIZE)
+        BT_mem_set ((hdl).bd_addr, 0x00U, BT_BD_ADDR_SIZE)
 
 
 /**
@@ -1038,10 +1039,10 @@ typedef API_RESULT (* AVRCP_EVENT_NTF_CB)
  *  \hideinitializer
  */
 #define AVRCP_UPDATE_PASSTHROUGH_HDR(buffer, ct, su_type, su_id, op_id) \
-        ((buffer)[0]) = (ct);                                           \
-        ((buffer)[1]) = (((su_type) << 3) | (su_id));                   \
-        ((buffer)[2]) = (AVRCP_OPCODE_PASS_THROUGH);                    \
-        ((buffer)[3]) = (op_id)
+        ((buffer)[0U]) = (ct);                                          \
+        ((buffer)[1U]) = (((su_type) << 3U) | (su_id));                 \
+        ((buffer)[2U]) = (AVRCP_OPCODE_PASS_THROUGH);                   \
+        ((buffer)[3U]) = (op_id)
 
 
 /**
@@ -1063,16 +1064,16 @@ typedef API_RESULT (* AVRCP_EVENT_NTF_CB)
  *  \hideinitializer
  */
 #define AVRCP_UPDATE_PASSTHROUGH_VU_PKT(buffer, ct, su_type, su_id, s_f, op_id) \
-        ((buffer)[0]) = (ct);                                                   \
-        ((buffer)[1]) = (((su_type) << 3) | (su_id));                           \
-        ((buffer)[2]) = (AVRCP_OPCODE_PASS_THROUGH);                            \
-        ((buffer)[3]) = (((s_f) << 7) | AVRCP_OPERATION_ID_VENDOR_UNIQUE);      \
-        ((buffer)[4]) = (0x05);                                                 \
-        ((buffer)[5]) = (UCHAR)((BT_SIG_REGISTERED_COMPANY_ID) >> 16);          \
-        ((buffer)[6]) = (UCHAR)((BT_SIG_REGISTERED_COMPANY_ID) >> 8);           \
-        ((buffer)[7]) = (UCHAR)(BT_SIG_REGISTERED_COMPANY_ID);                  \
-        ((buffer)[8]) = (UCHAR)((op_id) >> 8);                                  \
-        ((buffer)[9]) = (UCHAR)(op_id);
+        ((buffer)[0U]) = (ct);                                                  \
+        ((buffer)[1U]) = (((su_type) << 3U) | (su_id));                         \
+        ((buffer)[2U]) = (AVRCP_OPCODE_PASS_THROUGH);                           \
+        ((buffer)[3U]) = (((s_f) << 7U) | AVRCP_OPERATION_ID_VENDOR_UNIQUE);    \
+        ((buffer)[4U]) = (0x05U);                                               \
+        ((buffer)[5U]) = (UCHAR)((BT_SIG_REGISTERED_COMPANY_ID) >> 16U);        \
+        ((buffer)[6U]) = (UCHAR)((BT_SIG_REGISTERED_COMPANY_ID) >> 8U);         \
+        ((buffer)[7U]) = (UCHAR)(BT_SIG_REGISTERED_COMPANY_ID);                 \
+        ((buffer)[8U]) = (UCHAR)((op_id) >> 8U);                                \
+        ((buffer)[9U]) = (UCHAR)(op_id);
 
 
 /**
@@ -1091,9 +1092,9 @@ typedef API_RESULT (* AVRCP_EVENT_NTF_CB)
  *  \hideinitializer
  */
 #define AVRCP_UPDATE_SUBUNIT_HDR(buffer, ct, su_type, su_id) \
-        ((buffer)[0]) = (ct);                                \
-        ((buffer)[1]) = (((su_type) << 3) | (su_id));        \
-        ((buffer)[2]) = (AVRCP_OPCODE_SUBUNIT_INFO)
+        ((buffer)[0U]) = (ct);                               \
+        ((buffer)[1U]) = (((su_type) << 3U) | (su_id));      \
+        ((buffer)[2U]) = (AVRCP_OPCODE_SUBUNIT_INFO)
 
 
 /**
@@ -1112,9 +1113,9 @@ typedef API_RESULT (* AVRCP_EVENT_NTF_CB)
  *  \hideinitializer
  */
 #define AVRCP_UPDATE_UNIT_HDR(buffer, ct, su_type, su_id)    \
-        ((buffer)[0]) = (ct);                                \
-        ((buffer)[1]) = (((su_type) << 3) | (su_id));        \
-        ((buffer)[2]) = (AVRCP_OPCODE_UNIT_INFO)
+        ((buffer)[0U]) = (ct);                               \
+        ((buffer)[1U]) = (((su_type) << 3U) | (su_id));      \
+        ((buffer)[2U]) = (AVRCP_OPCODE_UNIT_INFO)
 
 
 /**
@@ -1129,7 +1130,7 @@ typedef API_RESULT (* AVRCP_EVENT_NTF_CB)
  *  \hideinitializer
  */
 #define AVRCP_UPDATE_COMMAND_TYPE(buffer, ctype)             \
-        ((buffer)[0]) = (ctype)
+        ((buffer)[0U]) = (ctype)
 
 
 /**
@@ -1144,7 +1145,7 @@ typedef API_RESULT (* AVRCP_EVENT_NTF_CB)
  *  \hideinitializer
  */
 #define AVRCP_UPDATE_RESPONSE_TYPE(buffer, rtype)             \
-        ((buffer)[0]) = (rtype)
+        ((buffer)[0U]) = (rtype)
 
 
 /**
@@ -1159,7 +1160,7 @@ typedef API_RESULT (* AVRCP_EVENT_NTF_CB)
  *  \hideinitializer
  */
 #define AVRCP_GET_MSG_COMMAND_TYPE(buffer, ctype)            \
-        (ctype) = ((buffer)[1] & 0x0F)
+        (ctype) = ((buffer)[1U] & 0x0FU)
 
 
 /**
@@ -1174,7 +1175,7 @@ typedef API_RESULT (* AVRCP_EVENT_NTF_CB)
  *  \hideinitializer
  */
 #define AVRCP_GET_MSG_RESPONSE_TYPE(buffer, rtype)           \
-        (rtype) = ((buffer)[1] & 0x0F)
+        (rtype) = ((buffer)[1U] & 0x0FU)
 
 
 /**
@@ -1189,7 +1190,7 @@ typedef API_RESULT (* AVRCP_EVENT_NTF_CB)
  *  \hideinitializer
  */
 #define AVRCP_GET_MSG_SUBUNIT_TYPE(buffer, su_type)          \
-        (su_type) = (((buffer)[2]) >> 3)
+        (su_type) = (((buffer)[2U]) >> 3U)
 
 
 /**
@@ -1204,7 +1205,7 @@ typedef API_RESULT (* AVRCP_EVENT_NTF_CB)
  *  \hideinitializer
  */
 #define AVRCP_GET_MSG_SUBUNIT_ID(buffer, su_id)              \
-        (su_id) = ((buffer)[2] & 0x07)
+        (su_id) = ((buffer)[2U] & 0x07U)
 
 
 /**
@@ -1219,7 +1220,7 @@ typedef API_RESULT (* AVRCP_EVENT_NTF_CB)
  *  \hideinitializer
  */
 #define AVRCP_GET_MSG_OPCODE(buffer, opcode)                 \
-        (opcode) = ((buffer)[3])
+        (opcode) = ((buffer)[3U])
 
 
 /**
@@ -1234,7 +1235,7 @@ typedef API_RESULT (* AVRCP_EVENT_NTF_CB)
  *  \hideinitializer
  */
 #define AVRCP_GET_MSG_OPERATION_ID(buffer, op_id)            \
-        (op_id) = ((buffer)[4] & 0x7F)
+        (op_id) = ((buffer)[4U] & 0x7FU)
 
 
 /**
@@ -1251,8 +1252,8 @@ typedef API_RESULT (* AVRCP_EVENT_NTF_CB)
  *  \hideinitializer
  */
 #define AVRCP_GET_MSG_OPERATION_INFO(buffer, op_id, state_flag)   \
-        (op_id)      = (((buffer)[4]) & (0x7F));                  \
-        (state_flag) = (((buffer)[4]) & (0x80))
+        (op_id)      = (((buffer)[4U]) & (0x7FU));                \
+        (state_flag) = (((buffer)[4U]) & (0x80U))
 
 
 
@@ -1264,7 +1265,7 @@ typedef API_RESULT (* AVRCP_EVENT_NTF_CB)
 #ifdef AVRCP_1_3
 
 /**
- * This Utility macro updates the VENDOR DEPENDENT HDR for AVRCP metadata   \
+ * This Utility macro updates the VENDOR DEPENDENT HDR for AVRCP metadata
  *
  * \param [in] buffer
  *        The AVRCP metadata Command/Response Packet.
@@ -1277,13 +1278,13 @@ typedef API_RESULT (* AVRCP_EVENT_NTF_CB)
  *
  *  \hideinitializer
  */
-#define AVRCP_UPDATE_VD_METADATA_HDR(buffer, ct, su_type, su_id)       \
-        ((buffer)[0]) = (ct);                                          \
-        ((buffer)[1]) = (((su_type) << 3) | (su_id));                  \
-        ((buffer)[2]) = (AVRCP_OPCODE_VENDOR_DEPENDENT);               \
-        ((buffer)[3]) = (UCHAR)((BT_SIG_REGISTERED_COMPANY_ID) >> 16); \
-        ((buffer)[4]) = (UCHAR)((BT_SIG_REGISTERED_COMPANY_ID) >> 8);  \
-        ((buffer)[5]) = (UCHAR)(BT_SIG_REGISTERED_COMPANY_ID);
+#define AVRCP_UPDATE_VD_METADATA_HDR(buffer, ct, su_type, su_id)         \
+        ((buffer)[0U]) = (ct);                                           \
+        ((buffer)[1U]) = (((su_type) << 3U) | (su_id));                  \
+        ((buffer)[2U]) = (AVRCP_OPCODE_VENDOR_DEPENDENT);                \
+        ((buffer)[3U]) = (UCHAR)((BT_SIG_REGISTERED_COMPANY_ID) >> 16U); \
+        ((buffer)[4U]) = (UCHAR)((BT_SIG_REGISTERED_COMPANY_ID) >> 8U);  \
+        ((buffer)[5U]) = (UCHAR)(BT_SIG_REGISTERED_COMPANY_ID);
 
 /**
  * This Utility macro updates the metadata info for the
@@ -1301,13 +1302,13 @@ typedef API_RESULT (* AVRCP_EVENT_NTF_CB)
  *  \hideinitializer
  */
 #define AVRCP_UPDATE_METADATA_INFO(buffer, pdu_id, packet_type, param_len)  \
-        ((buffer)[6]) = (pdu_id);                                           \
-        ((buffer)[7]) = (packet_type);                                      \
-        ((buffer)[8]) = (UCHAR)(((UINT16)(param_len)) >> 8);                \
-        ((buffer)[9]) = (UCHAR)((UINT16)(param_len));
+        ((buffer)[6U]) = (pdu_id);                                          \
+        ((buffer)[7U]) = (packet_type);                                     \
+        ((buffer)[8U]) = (UCHAR)(((UINT16)(param_len)) >> 8U);              \
+        ((buffer)[9U]) = (UCHAR)((UINT16)(param_len));
 
 
- /**
+/**
  * This Utility macro packs a 2 byte metadata parameter.
  *
  * \param [in] buffer
@@ -1316,9 +1317,9 @@ typedef API_RESULT (* AVRCP_EVENT_NTF_CB)
  *        The metadata parameter that has to be packed.
  *
  */
-#define avrcp_pack_2_byte_metadata_param(buffer, metadata)     \
-        ((buffer)[0]) = (UCHAR)(*((UINT16*)(metadata)) >> 8);  \
-        ((buffer)[1]) = (UCHAR)(*((UINT16*)(metadata)));
+#define avrcp_pack_2_byte_metadata_param(buffer, metadata)      \
+        ((buffer)[0U]) = (UCHAR)(*((UINT16*)(metadata)) >> 8U); \
+        ((buffer)[1U]) = (UCHAR)(*((UINT16*)(metadata)));
 
 
 /**
@@ -1330,10 +1331,10 @@ typedef API_RESULT (* AVRCP_EVENT_NTF_CB)
  *        The metadata parameter that has to be packed.
  *
  */
-#define avrcp_pack_3_byte_metadata_param(buffer, metadata)     \
-        ((buffer)[0]) = (UCHAR)(*((UINT32*)(metadata)) >> 16); \
-        ((buffer)[1]) = (UCHAR)(*((UINT32*)(metadata)) >> 8);  \
-        ((buffer)[2]) = (UCHAR)(*((UINT32*)(metadata)));
+#define avrcp_pack_3_byte_metadata_param(buffer, metadata)       \
+        ((buffer)[0U]) = (UCHAR)(*((UINT32*)(metadata)) >> 16U); \
+        ((buffer)[1U]) = (UCHAR)(*((UINT32*)(metadata)) >> 8U);  \
+        ((buffer)[2U]) = (UCHAR)(*((UINT32*)(metadata)));
 
 
 /**
@@ -1345,11 +1346,11 @@ typedef API_RESULT (* AVRCP_EVENT_NTF_CB)
  *        The metadata parameter that has to be packed.
  *
  */
-#define avrcp_pack_4_byte_metadata_param(buffer, metadata)     \
-        ((buffer)[0]) = (UCHAR)(*((UINT32*)(metadata)) >> 24); \
-        ((buffer)[1]) = (UCHAR)(*((UINT32*)(metadata)) >> 16); \
-        ((buffer)[2]) = (UCHAR)(*((UINT32*)(metadata)) >> 8);  \
-        ((buffer)[3]) = (UCHAR)(*((UINT32*)(metadata)));
+#define avrcp_pack_4_byte_metadata_param(buffer, metadata)       \
+        ((buffer)[0U]) = (UCHAR)(*((UINT32*)(metadata)) >> 24U); \
+        ((buffer)[1U]) = (UCHAR)(*((UINT32*)(metadata)) >> 16U); \
+        ((buffer)[2U]) = (UCHAR)(*((UINT32*)(metadata)) >> 8U);  \
+        ((buffer)[3U]) = (UCHAR)(*((UINT32*)(metadata)));
 
 /**
  * This Utility macro extracts the PDU ID from AVRCP VENDOR DEPENDENT
@@ -1363,7 +1364,7 @@ typedef API_RESULT (* AVRCP_EVENT_NTF_CB)
  *  \hideinitializer
  */
 #define AVRCP_GET_METADATA_PDU_ID(buffer, pdu_id)  \
-        *((UCHAR *)(pdu_id)) = ((buffer)[7]);
+        *((UCHAR *)(pdu_id)) = ((buffer)[7U]);
 
 /**
  * This Utility macro extracts the Packet Type from AVRCP VENDOR DEPENDENT
@@ -1377,7 +1378,7 @@ typedef API_RESULT (* AVRCP_EVENT_NTF_CB)
  *  \hideinitializer
  */
 #define AVRCP_GET_METADATA_PACKET_TYPE(buffer, packet_type)  \
-        *((UCHAR *)(packet_type)) = ((buffer)[8] & 0x03);
+        *((UCHAR *)(packet_type)) = ((buffer)[8U] & 0x03U);
 
 
 /**
@@ -1391,10 +1392,10 @@ typedef API_RESULT (* AVRCP_EVENT_NTF_CB)
  *
  *  \hideinitializer
  */
-#define AVRCP_GET_METADATA_PARAM_LEN(buffer, param_len)            \
-        *((UINT16 *)(param_len))  = ((buffer)[9]);                 \
-        *((UINT16 *)(param_len))  = *((UINT16 *)(param_len)) << 8; \
-        *((UINT16 *)(param_len)) |= ((buffer)[10]);
+#define AVRCP_GET_METADATA_PARAM_LEN(buffer, param_len)             \
+        *((UINT16 *)(param_len))  = ((buffer)[9U]);                 \
+        *((UINT16 *)(param_len))  = *((UINT16 *)(param_len)) << 8U; \
+        *((UINT16 *)(param_len)) |= ((buffer)[10U]);
 
 
 /**
@@ -1407,10 +1408,10 @@ typedef API_RESULT (* AVRCP_EVENT_NTF_CB)
  *
  *  \hideinitializer
  */
-#define avrcp_extract_2_byte_metadata_param(buffer, metadata)    \
-        *((UINT16 *)(metadata))  = ((buffer)[0]);                \
-        *((UINT16 *)(metadata))  = *((UINT16 *)(metadata)) << 8; \
-        *((UINT16 *)(metadata)) |= ((buffer)[1]);
+#define avrcp_extract_2_byte_metadata_param(buffer, metadata)     \
+        *((UINT16 *)(metadata))  = ((buffer)[0U]);                \
+        *((UINT16 *)(metadata))  = *((UINT16 *)(metadata)) << 8U; \
+        *((UINT16 *)(metadata)) |= ((buffer)[1U]);
 
 
 /**
@@ -1423,12 +1424,12 @@ typedef API_RESULT (* AVRCP_EVENT_NTF_CB)
  *
  *  \hideinitializer
  */
-#define avrcp_extract_3_byte_metadata_param(buffer, metadata)    \
-        *((UINT32 *)(metadata))  = ((buffer)[0]);                \
-        *((UINT32 *)(metadata))  = *((UINT32 *)(metadata)) << 8; \
-        *((UINT32 *)(metadata)) |= ((buffer)[1]);                \
-        *((UINT32 *)(metadata))  = *((UINT32 *)(metadata)) << 8; \
-        *((UINT32 *)(metadata)) |= ((buffer)[2]);
+#define avrcp_extract_3_byte_metadata_param(buffer, metadata)     \
+        *((UINT32 *)(metadata))  = ((buffer)[0U]);                \
+        *((UINT32 *)(metadata))  = *((UINT32 *)(metadata)) << 8U; \
+        *((UINT32 *)(metadata)) |= ((buffer)[1U]);                \
+        *((UINT32 *)(metadata))  = *((UINT32 *)(metadata)) << 8U; \
+        *((UINT32 *)(metadata)) |= ((buffer)[2U]);
 
 /**
  * This Utility macro extracts 4 Byte metadata parameter.
@@ -1440,14 +1441,14 @@ typedef API_RESULT (* AVRCP_EVENT_NTF_CB)
  *
  *  \hideinitializer
  */
-#define avrcp_extract_4_byte_metadata_param(buffer, metadata)    \
-        *((UINT32 *)(metadata))  = ((buffer)[0]);                \
-        *((UINT32 *)(metadata))  = *((UINT32 *)(metadata)) << 8; \
-        *((UINT32 *)(metadata)) |= ((buffer)[1]);                \
-        *((UINT32 *)(metadata))  = *((UINT32 *)(metadata)) << 8; \
-        *((UINT32 *)(metadata)) |= ((buffer)[2]);                \
-        *((UINT32 *)(metadata))  = *((UINT32 *)(metadata)) << 8; \
-        *((UINT32 *)(metadata)) |= ((buffer)[3]);
+#define avrcp_extract_4_byte_metadata_param(buffer, metadata)     \
+        *((UINT32 *)(metadata))  = ((buffer)[0U]);                \
+        *((UINT32 *)(metadata))  = *((UINT32 *)(metadata)) << 8U; \
+        *((UINT32 *)(metadata)) |= ((buffer)[1U]);                \
+        *((UINT32 *)(metadata))  = *((UINT32 *)(metadata)) << 8U; \
+        *((UINT32 *)(metadata)) |= ((buffer)[2U]);                \
+        *((UINT32 *)(metadata))  = *((UINT32 *)(metadata)) << 8U; \
+        *((UINT32 *)(metadata)) |= ((buffer)[3U]);
 
 
 #ifdef AVRCP_1_4
@@ -1459,14 +1460,14 @@ typedef API_RESULT (* AVRCP_EVENT_NTF_CB)
  *        The buffer from which the feature bit is extracted
  */
 #define AVRCP_MP_GET_FEATURE_BIT_UID_PERSISTENT(buffer) \
-        (((buffer)[8])&(0x04))
+        (((buffer)[8U])&(0x04U))
 
 /**
  * \param [out] buffer
  *        The buffer in which the fearture bit is set
  */
 #define AVRCP_MP_SET_FEATURE_BIT_UID_PERSISTENT(buffer) \
-        (((buffer)[8])|=(0x04))
+        (((buffer)[8U])|=(0x04U))
 
 /**
  * This utility macros extracts the now playing  bit
@@ -1476,26 +1477,26 @@ typedef API_RESULT (* AVRCP_EVENT_NTF_CB)
  *        The buffer from which the feature bit is extracted
  */
 #define AVRCP_MP_GET_FEATURE_BIT_NOW_PLAYING(buffer) \
-        (((buffer)[8])&(0x02))
+        (((buffer)[8U])&(0x02U))
 
 /**
  * \param [out] buffer
  *        The buffer in which the fearture bit is set
  */
 #define AVRCP_MP_SET_FEATURE_BIT_NOW_PLAYING(buffer) \
-        (((buffer)[8])|=(0x02))
+        (((buffer)[8U])|=(0x02U))
 
 #define AVRCP_MP_GET_FEATURE_BIT_ONLY_SEARCHABLE_WHEN_ADDR(buffer) \
-        (((buffer)[8])&(0x01))
+        (((buffer)[8U])&(0x01U))
 
 #define AVRCP_MP_SET_FEATURE_BIT_ONLY_SEARCHABLE_WHEN_ADDR(buffer) \
-        (((buffer)[8])|=(0x01))
+        (((buffer)[8U])|=(0x01U))
 
 #define AVRCP_MP_GET_FEATURE_BIT_ONLY_BROWSABLE_WHEN_ADDR(buffer) \
-        (((buffer)[7])&(0x80))
+        (((buffer)[7U])&(0x80U))
 
 #define AVRCP_MP_SET_FEATURE_BIT_ONLY_BROWSABLE_WHEN_ADDR(buffer) \
-        (((buffer)[7])|=(0x80))
+        (((buffer)[7U])|=(0x80U))
 /**
  * This utility macros extracts the unique UID over FS bit
  * in the Feature Bit Mask.
@@ -1504,14 +1505,14 @@ typedef API_RESULT (* AVRCP_EVENT_NTF_CB)
  *        The buffer from which the feature bit is extracted
  */
 #define AVRCP_MP_GET_FEATURE_BIT_UUID(buffer) \
-        (((buffer)[7])&(0x40))
+        (((buffer)[7U])&(0x40U))
 
 /**
  * \param [out] buffer
  *        The buffer in which the fearture bit is set
  */
 #define AVRCP_MP_SET_FEATURE_BIT_UUID(buffer) \
-        (((buffer)[7])|=(0x40))
+        (((buffer)[7U])|=(0x40U))
 
 /**
  * This utility macros extracts the add to now playing bit
@@ -1521,14 +1522,14 @@ typedef API_RESULT (* AVRCP_EVENT_NTF_CB)
  *        The buffer from which the feature bit is extracted
  */
 #define AVRCP_MP_GET_FEATURE_BIT_A2NP(buffer) \
-        (((buffer)[7])&(0x20))
+        (((buffer)[7U])&(0x20U))
 
 /**
  * \param [out] buffer
  *        The buffer in which the fearture bit is set
  */
 #define AVRCP_MP_SET_FEATURE_BIT_A2NP(buffer) \
-        (((buffer)[7])|=(0x20))
+        (((buffer)[7U])|=(0x20U))
 
 /**
  * This utility macros extracts the searching bit
@@ -1538,14 +1539,14 @@ typedef API_RESULT (* AVRCP_EVENT_NTF_CB)
  *        The buffer from which the feature bit is extracted
  */
 #define AVRCP_MP_GET_FEATURE_BIT_SEARCHING(buffer) \
-        (((buffer)[7])&(0x10))
+        (((buffer)[7U])&(0x10U))
 
 /**
  * \param [out] buffer
  *        The buffer in which the fearture bit is set
  */
 #define AVRCP_MP_SET_FEATURE_BIT_SEARCHING(buffer) \
-        (((buffer)[7])|=(0x10))
+        (((buffer)[7U])|=(0x10U))
 
 /**
  * This utility macros extracts the browsing bit
@@ -1555,14 +1556,14 @@ typedef API_RESULT (* AVRCP_EVENT_NTF_CB)
  *        The buffer from which the feature bit is extracted
  */
 #define AVRCP_MP_GET_FEATURE_BIT_BROWSING(buffer) \
-        (((buffer)[7])&(0x08))
+        (((buffer)[7U])&(0x08U))
 
 /**
  * \param [out] buffer
  *        The buffer in which the fearture bit is set
  */
 #define AVRCP_MP_SET_FEATURE_BIT_BROWSING(buffer) \
-        (((buffer)[7])|=(0x08))
+        (((buffer)[7U])|=(0x08U))
 
 /**
  * This utility macros extracts the avrcp 1.4 bit
@@ -1572,20 +1573,20 @@ typedef API_RESULT (* AVRCP_EVENT_NTF_CB)
  *        The buffer from which the feature bit is extracted
  */
 #define AVRCP_MP_GET_FEATURE_BIT_AVRCP_1_4(buffer) \
-        (((buffer)[7])&(0x04))
+        (((buffer)[7U])&(0x04U))
 
 /**
  * \param [out] buffer
  *        The buffer in which the fearture bit is set
  */
 #define AVRCP_MP_SET_FEATURE_BIT_AVRCP_1_4(buffer) \
-        (((buffer)[7])&(0x04))
+        (((buffer)[7U])&(0x04U))
 
 #define AVRCP_MP_GET_FEATURE_BIT_VENDOR_UNIQUE(buffer) \
-        (((buffer)[7])&(0x01))
+        (((buffer)[7U])&(0x01U))
 
 #define AVRCP_MP_SET_FEATURE_BIT_VENDOR_UNIQUE(buffer) \
-        (((buffer)[7])|=(0x01))
+        (((buffer)[7U])|=(0x01U))
 
 /**
  * This utility macros extracts the backward bit
@@ -1595,14 +1596,14 @@ typedef API_RESULT (* AVRCP_EVENT_NTF_CB)
  *        The buffer from which the feature bit is extracted
  */
 #define AVRCP_MP_GET_FEATURE_BIT_BACKWARD(buffer) \
-        (((buffer)[6])&(0x01))
+        (((buffer)[6U])&(0x01U))
 
 /**
  * \param [out] buffer
  *        The buffer in which the fearture bit is set
  */
 #define AVRCP_MP_SET_FEATURE_BIT_BACKWARD(buffer) \
-        (((buffer)[6])|=(0x01))
+        (((buffer)[6U])|=(0x01U))
 
 /**
  * This utility macros extracts the forward bit
@@ -1612,14 +1613,14 @@ typedef API_RESULT (* AVRCP_EVENT_NTF_CB)
  *        The buffer from which the feature bit is extracted
  */
 #define AVRCP_MP_GET_FEATURE_BIT_FORWARD(buffer) \
-        (((buffer)[5])&(0x80))
+        (((buffer)[5U])&(0x80U))
 
 /**
  * \param [out] buffer
  *        The buffer in which the fearture bit is set
  */
 #define AVRCP_MP_SET_FEATURE_BIT_FORWARD(buffer) \
-        (((buffer)[5])|=(0x80))
+        (((buffer)[5U])|=(0x80U))
 
 /**
  * This utility macros extracts the eject bit
@@ -1629,14 +1630,14 @@ typedef API_RESULT (* AVRCP_EVENT_NTF_CB)
  *        The buffer from which the feature bit is extracted
  */
 #define AVRCP_MP_GET_FEATURE_BIT_EJECT(buffer) \
-        (((buffer)[5])&(0x40))
+        (((buffer)[5U])&(0x40U))
 
 /**
  * \param [out] buffer
  *        The buffer in which the fearture bit is set
  */
 #define AVRCP_MP_SET_FEATURE_BIT_EJECT(buffer) \
-        (((buffer)[5])|=(0x40))
+        (((buffer)[5U])|=(0x40U))
 
 /**
  * This utility macros extracts the fast forward bit
@@ -1646,14 +1647,14 @@ typedef API_RESULT (* AVRCP_EVENT_NTF_CB)
  *        The buffer from which the feature bit is extracted
  */
 #define AVRCP_MP_GET_FEATURE_BIT_FAST_FWD(buffer) \
-        (((buffer)[5])&(0x20))
+        (((buffer)[5U])&(0x20U))
 
 /**
  * \param [out] buffer
  *        The buffer in which the fearture bit is set
  */
 #define AVRCP_MP_SET_FEATURE_BIT_FAST_FWD(buffer) \
-        (((buffer)[5])|=(0x20))
+        (((buffer)[5U])|=(0x20U))
 
 /**
  * This utility macros extracts the rewind bit
@@ -1663,14 +1664,14 @@ typedef API_RESULT (* AVRCP_EVENT_NTF_CB)
  *        The buffer from which the feature bit is extracted
  */
 #define AVRCP_MP_GET_FEATURE_BIT_REW(buffer) \
-        (((buffer)[5])&(0x10))
+        (((buffer)[5U])&(0x10U))
 
 /**
  * \param [out] buffer
  *        The buffer in which the fearture bit is set
  */
 #define AVRCP_MP_SET_FEATURE_BIT_REW(buffer) \
-        (((buffer)[5])|=(0x10))
+        (((buffer)[5U])|=(0x10U))
 
 /**
  * This utility macros extracts the pause bit
@@ -1680,14 +1681,14 @@ typedef API_RESULT (* AVRCP_EVENT_NTF_CB)
  *        The buffer from which the feature bit is extracted
  */
 #define AVRCP_MP_GET_FEATURE_BIT_PAUSE(buffer) \
-        (((buffer)[5])&(0x04))
+        (((buffer)[5U])&(0x04U))
 
 /**
  * \param [out] buffer
  *        The buffer in which the fearture bit is set
  */
 #define AVRCP_MP_SET_FEATURE_BIT_PAUSE(buffer) \
-        (((buffer)[5])|=(0x04))
+        (((buffer)[5U])|=(0x04U))
 
 /**
  * This utility macros extracts the stop bit
@@ -1697,14 +1698,14 @@ typedef API_RESULT (* AVRCP_EVENT_NTF_CB)
  *        The buffer from which the feature bit is extracted
  */
 #define AVRCP_MP_GET_FEATURE_BIT_STOP(buffer) \
-        (((buffer)[5])&(0x02))
+        (((buffer)[5U])&(0x02U))
 
 /**
  * \param [out] buffer
  *        The buffer in which the fearture bit is set
  */
 #define AVRCP_MP_SET_FEATURE_BIT_STOP(buffer) \
-        (((buffer)[5])|=(0x02))
+        (((buffer)[5U])|=(0x02U))
 
 /**
  * This utility macros extracts the play bit
@@ -1714,14 +1715,14 @@ typedef API_RESULT (* AVRCP_EVENT_NTF_CB)
  *        The buffer from which the feature bit is extracted
  */
 #define AVRCP_MP_GET_FEATURE_BIT_PLAY(buffer) \
-        (((buffer)[5])&(0x01))
+        (((buffer)[5U])&(0x01U))
 
 /**
  * \param [out] buffer
  *        The buffer in which the fearture bit is set
  */
 #define AVRCP_MP_SET_FEATURE_BIT_PLAY(buffer) \
-        (((buffer)[5])|=(0x01))
+        (((buffer)[5U])|=(0x01U))
 
 
 /**
@@ -1732,14 +1733,14 @@ typedef API_RESULT (* AVRCP_EVENT_NTF_CB)
  *        The buffer from which the feature bit is extracted
  */
 #define AVRCP_MP_GET_FEATURE_BIT_MUTE(buffer) \
-        (((buffer)[4])&(0x80))
+        (((buffer)[4U])&(0x80U))
 
 /**
  * \param [out] buffer
  *        The buffer in which the fearture bit is set
  */
 #define AVRCP_MP_SET_FEATURE_BIT_MUTE(buffer) \
-        (((buffer)[4])|=(0x80))
+        (((buffer)[4U])|=(0x80U))
 
 /**
  * This utility macros extracts the volume down bit
@@ -1749,14 +1750,14 @@ typedef API_RESULT (* AVRCP_EVENT_NTF_CB)
  *        The buffer from which the feature bit is extracted
  */
 #define AVRCP_MP_GET_FEATURE_BIT_VOL_DOWN(buffer) \
-        (((buffer)[4])&(0x40))
+        (((buffer)[4U])&(0x40U))
 
 /**
  * \param [out] buffer
  *        The buffer in which the fearture bit is set
  */
 #define AVRCP_MP_SET_FEATURE_BIT_VOL_DOWN(buffer) \
-        (((buffer)[4])|=(0x40))
+        (((buffer)[4U])|=(0x40U))
 
 /**
  * This utility macros extracts the volume up  bit
@@ -1766,14 +1767,14 @@ typedef API_RESULT (* AVRCP_EVENT_NTF_CB)
  *        The buffer from which the feature bit is extracted
  */
 #define AVRCP_MP_GET_FEATURE_BIT_VOL_UP(buffer) \
-        (((buffer)[4])&(0x20))
+        (((buffer)[4U])&(0x20U))
 
 /**
  * \param [out] buffer
  *        The buffer in which the fearture bit is set
  */
 #define AVRCP_MP_SET_FEATURE_BIT_VOL_UP(buffer) \
-        (((buffer)[4])|=(0x20))
+        (((buffer)[4U])|=(0x20U))
 
 #endif /* AVRCP_1_4 */
 

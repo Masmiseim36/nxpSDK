@@ -21,6 +21,9 @@ extern int gre_plugin_timer(gr_plugin_state_t *);
 extern int gre_plugin_circle(gr_plugin_state_t *);
 extern int gre_plugin_poly(gr_plugin_state_t *);
 
+// Image loading plugins
+extern int gre_plugin_sbimage_soil(gr_plugin_state_t *);
+
 const gr_plugin_create_func_t sb_plugins[] = {
 		gre_plugin_animate,
 		gre_plugin_c_callback,
@@ -28,5 +31,6 @@ const gr_plugin_create_func_t sb_plugins[] = {
 		gre_plugin_logger,
 		gre_plugin_poly,
 		gre_plugin_timer,
+		gre_plugin_sbimage_soil,
 		NULL,
 };

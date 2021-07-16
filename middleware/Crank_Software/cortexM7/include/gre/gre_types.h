@@ -47,7 +47,7 @@ typedef union _gre_data_union {
 	int64_t     i64;	
 	uint64_t    u64;
 	double		f64;
-	gr_float_t  f32;
+	gr_float_t  f32;			///< Placeholder only, not currently supported in all cases.
 	int32_t     i32;
 	uint32_t    u32;
 	int16_t     i16;
@@ -79,6 +79,16 @@ typedef struct _gre_wrapped_data_t {
 } gr_wrapped_data_t;
 
 typedef void (*gr_event_listener_t)(gr_application_t *app, gr_event_t *event, void *arg);
+
+/**
+ * Function to log trace messages
+ *
+ * @param app A handle to the application
+ * @param level Debug logging level, see gre.h
+ * @param logmsg The debug message
+ * @param udata Userdata to be passed to the callback function
+ */
+typedef void (*gr_log_writer_cb_t)(gr_application_t *app, int level, const char *logmsg, void *udata);
 
 typedef struct _sb_ccallback {
     const char *name;

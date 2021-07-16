@@ -22,7 +22,7 @@
 #define IEC60730B_CM4_CM7_REG_H_
 
 /*
- * List of devices and supported functions can be found in library user guide, 
+ * List of devices and supported functions can be found in library user guide,
  * section Core self test library - source code version.
  */
 
@@ -30,15 +30,15 @@
  * Macros
  ******************************************************************************/
 /* Return values */
-#define FS_FAIL_CPU_REGISTER             (FS_CPU_CODE + 0x01)
-#define FS_FAIL_CPU_NONSTACKED_REGISTER  (FS_CPU_CODE + 0x02)
-#define FS_FAIL_CPU_PRIMASK              (FS_CPU_CODE + 0x03)
-#define FS_FAIL_CPU_CONTROL              (FS_CPU_CODE + 0x04)
-#define FS_FAIL_CPU_SPECIAL              (FS_CPU_CODE + 0x05)
-#define FS_FAIL_CPU_FLOAT_1              (FS_CPU_CODE + 0x06)
-#define FS_FAIL_CPU_FLOAT_2              (FS_CPU_CODE + 0x07)
+#define FS_FAIL_CPU_REGISTER            (FS_CPU_CODE + 0x01)
+#define FS_FAIL_CPU_NONSTACKED_REGISTER (FS_CPU_CODE + 0x02)
+#define FS_FAIL_CPU_PRIMASK             (FS_CPU_CODE + 0x03)
+#define FS_FAIL_CPU_CONTROL             (FS_CPU_CODE + 0x04)
+#define FS_FAIL_CPU_SPECIAL             (FS_CPU_CODE + 0x05)
+#define FS_FAIL_CPU_FLOAT_1             (FS_CPU_CODE + 0x06)
+#define FS_FAIL_CPU_FLOAT_2             (FS_CPU_CODE + 0x07)
 
-#define CPACR_CP10_CP11_MASK   (0xF << 20)
+#define CPACR_CP10_CP11_MASK (0xF << 20)
 
 /* Assembler skips following section */
 #ifndef __ASM__
@@ -54,7 +54,7 @@
  *
  * @return   FS_PASS
  *           FS_FAIL_CPU_REGISTER
- *           Function will not return in case that at least one of 
+ *           Function will not return in case that at least one of
  *           R0, R1, APSR, LR is corrupted. Then it will stay in endless loop.
  *
  ******************************************************************************/
@@ -70,8 +70,8 @@ FS_RESULT FS_CM4_CM7_CPU_Register(void);
  *           FS_FAIL_CPU_NONSTACKED_REGISTER
  *
  ******************************************************************************/
-FS_RESULT FS_CM4_CM7_CPU_NonStackedRegister(void);  
-     
+FS_RESULT FS_CM4_CM7_CPU_NonStackedRegister(void);
+
 /*******************************************************************************
  *
  * @brief    This function tests the PRIMASK register.
@@ -83,7 +83,7 @@ FS_RESULT FS_CM4_CM7_CPU_NonStackedRegister(void);
  *
  ******************************************************************************/
 FS_RESULT FS_CM4_CM7_CPU_Primask(void);
-     
+
 /*******************************************************************************
  *
  * @brief    This function tests the SP_main register.
@@ -91,12 +91,12 @@ FS_RESULT FS_CM4_CM7_CPU_Primask(void);
  * @param    void
  *
  * @return   FS_PASS
- *           Function will not return in case that SP_main is corrupted. 
+ *           Function will not return in case that SP_main is corrupted.
  *           Then it will stay in endless loop.
  *
  ******************************************************************************/
-FS_RESULT FS_CM4_CM7_CPU_SPmain(void); 
-     
+FS_RESULT FS_CM4_CM7_CPU_SPmain(void);
+
 /*******************************************************************************
  *
  * @brief    This function tests the SP_process register.
@@ -104,12 +104,12 @@ FS_RESULT FS_CM4_CM7_CPU_SPmain(void);
  * @param    void
  *
  * @return   FS_PASS
- *           Function will not return in case that SP_process is corrupted. 
+ *           Function will not return in case that SP_process is corrupted.
  *           Then it will stay in endless loop.
  *
  ******************************************************************************/
 FS_RESULT FS_CM4_CM7_CPU_SPprocess(void);
-     
+
 /*******************************************************************************
  *
  * @brief    This function tests the CONTROL register.
@@ -132,13 +132,13 @@ FS_RESULT FS_CM4_CM7_CPU_Control(void);
  * @return   FS_PASS
  *           FS_FAIL_CPU_CONTROL
  *
- ******************************************************************************/   
+ ******************************************************************************/
 FS_RESULT FS_CM4_CM7_CPU_ControlFpu(void);
 
 /*******************************************************************************
  *
  * @brief    This function tests the BASEPRI and FAULTMASK registers.
- *           This function tests others of the M4 and M7 CPU register, 
+ *           This function tests others of the M4 and M7 CPU register,
  *           which are not included in M0+.
  *
  * @param    void
@@ -146,7 +146,7 @@ FS_RESULT FS_CM4_CM7_CPU_ControlFpu(void);
  * @return   FS_PASS
  *           FS_FAIL_CPU_SPECIAL
  *
- ******************************************************************************/      
+ ******************************************************************************/
 FS_RESULT FS_CM4_CM7_CPU_Special(void);
 
 /*******************************************************************************
@@ -172,7 +172,7 @@ FS_RESULT FS_CM4_CM7_CPU_Special8PriorityLevels(void);
  * @return   FS_PASS
  *           FS_FAIL_CPU_FLOAT_1
  *
- ******************************************************************************/    
+ ******************************************************************************/
 FS_RESULT FS_CM4_CM7_CPU_Float1(void);
 
 /*******************************************************************************
@@ -186,7 +186,7 @@ FS_RESULT FS_CM4_CM7_CPU_Float1(void);
  * @return   FS_PASS
  *           FS_FAIL_CPU_FLOAT_2
  *
- ******************************************************************************/  
+ ******************************************************************************/
 FS_RESULT FS_CM4_CM7_CPU_Float2(void);
 
 #endif /* __ASM__ */

@@ -21,10 +21,10 @@
 void MID_testNoLoad(void)
 {
     /* initialization */
-    if (g_sMID.sNoLoad.ui16Active == FALSE)
+    if (g_sMID.sNoLoad.bActive == FALSE)
     {
-        g_sMID.sNoLoad.ui16Active            = TRUE;
-        g_sMID.ui32LoopCntr                  = 0;
+        g_sMID.sNoLoad.bActive               = TRUE;
+        g_sMID.ui32LoopCntr                  = 0U;
         g_sMID.sNoLoad.fltFMeas              = g_sMID.sPar.fltFreqN;
         g_sMID.sNoLoad.sUMeasRmpPar.fltState = 0.0F;
 
@@ -72,9 +72,9 @@ void MID_testNoLoad(void)
     /* let the motor stop */
     if (g_sMID.ui32LoopCntr >= g_sMID.sNoLoad.ui32TimeSettle)
     {
-        g_sMID.sNoLoad.ui16Active = FALSE;
+        g_sMID.sNoLoad.bActive    = FALSE;
         g_sMID.sCalcPwr.bCalcPwr  = FALSE;
-        g_sMID.ui32LoopCntr       = 0;
+        g_sMID.ui32LoopCntr       = 0U;
 
         /* check if 90% of nominal voltage was reached */
         if (g_sMID.sNoLoad.fltUrms < (0.9F * g_sMID.sNoLoad.fltUMeas * 1.414213562F))

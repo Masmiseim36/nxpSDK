@@ -19,20 +19,20 @@
 
 /* --------------------------------------------- Global Definitions */
 /* Max Folder Name length */
-#define     MAX_CTN_FOLDER_NAME_LEN                     128
+#define     MAX_CTN_FOLDER_NAME_LEN                     128U
 
 /* Max CTN object name including path */
-#define     MAX_CTN_OBJECT_NAME_LEN                     256
+#define     MAX_CTN_OBJECT_NAME_LEN                     256U
 
 
 /* Max CTN handle length */
-#define     MAX_CTN_OBJ_HANDLE_LEN                      34
+#define     MAX_CTN_OBJ_HANDLE_LEN                      34U
 
 /* Max. CTN object name length */
-#define     MAX_CTN_OBJ_NAME_LEN                        40
+#define     MAX_CTN_OBJ_NAME_LEN                        40U
 
 /* Max. no. of objects in given folder */
-#define     MAX_CTN_OBJ_COUNT                           10
+#define     MAX_CTN_OBJ_COUNT                           10U
 
 /* Reference folder for CTN objects */
 #define     APPL_CTN_ROOT_FOLDER_REFERENCE \
@@ -83,31 +83,31 @@
 #define     APPL_CTN_CSE_EMAIL_URL_NAME                 "mindtree.com"
 
 /* CTN object type constants */
-#define     APPL_CTN_OBJ_TYPE_VEVENT                    0x00
-#define     APPL_CTN_OBJ_TYPE_VTODO                     0x01
-#define     APPL_CTN_OBJ_TYPE_VNOTE                     0x02
+#define     APPL_CTN_OBJ_TYPE_VEVENT                    0x00U
+#define     APPL_CTN_OBJ_TYPE_VTODO                     0x01U
+#define     APPL_CTN_OBJ_TYPE_VNOTE                     0x02U
 
-#define     APPL_CTN_OBJ_TYPE_INVALIDE                  0xFF
+#define     APPL_CTN_OBJ_TYPE_INVALIDE                  0xFFU
 
 /* Bit mask for parameters for filtering */
-#define     CTN_OBJ_PROP_MASK_ATTACHMENT                0x00000001
-#define     CTN_OBJ_PROP_MASK_SUMMARY                   0x00000002
-#define     CTN_OBJ_PROP_MASK_ENDTIME                   0x00000004
-#define     CTN_OBJ_PROP_MASK_ORIGINATOR_NAME           0x00000008
-#define     CTN_OBJ_PROP_MASK_ORIGINATOR_ADDRS          0x00000010
-#define     CTN_OBJ_PROP_MASK_PRIORITY                  0x00000020
-#define     CTN_OBJ_PROP_MASK_PSTATUS                   0x00000040
-#define     CTN_OBJ_PROP_MASK_ALARMSTATUS               0x00000080
-#define     CTN_OBJ_PROP_MASK_SENDSTATUS                0x00000100
-#define     CTN_OBJ_PROP_MASK_RECURRENT                 0x00000200
+#define     CTN_OBJ_PROP_MASK_ATTACHMENT                0x00000001U
+#define     CTN_OBJ_PROP_MASK_SUMMARY                   0x00000002U
+#define     CTN_OBJ_PROP_MASK_ENDTIME                   0x00000004U
+#define     CTN_OBJ_PROP_MASK_ORIGINATOR_NAME           0x00000008U
+#define     CTN_OBJ_PROP_MASK_ORIGINATOR_ADDRS          0x00000010U
+#define     CTN_OBJ_PROP_MASK_PRIORITY                  0x00000020U
+#define     CTN_OBJ_PROP_MASK_PSTATUS                   0x00000040U
+#define     CTN_OBJ_PROP_MASK_ALARMSTATUS               0x00000080U
+#define     CTN_OBJ_PROP_MASK_SENDSTATUS                0x00000100U
+#define     CTN_OBJ_PROP_MASK_RECURRENT                 0x00000200U
 
-#define     CTN_OBJ_PROP_MASK_UPDATE                    0x00000400
-#define     CTN_OBJ_PROP_MASK_CALTYPE                   0x00000800
-#define     CTN_OBJ_PROP_MASK_STARTTIME                 0x00001000
-#define     CTN_OBJ_PROP_MASK_SIZE                      0x00002000
-#define     CTN_OBJ_PROP_MASK_HANDLE                    0x00004000
+#define     CTN_OBJ_PROP_MASK_UPDATE                    0x00000400U
+#define     CTN_OBJ_PROP_MASK_CALTYPE                   0x00000800U
+#define     CTN_OBJ_PROP_MASK_STARTTIME                 0x00001000U
+#define     CTN_OBJ_PROP_MASK_SIZE                      0x00002000U
+#define     CTN_OBJ_PROP_MASK_HANDLE                    0x00004000U
 
-#define     MAX_CTN_ATTR_SIZE                           1024
+#define     MAX_CTN_ATTR_SIZE                           1024U
 
 /* --------------------------------------------- Structures/Data Types */
 typedef struct _CTN_OBJ_ATTR_PL
@@ -365,11 +365,5 @@ API_RESULT BT_ctn_build_event_file_pl
                /* IN */  UCHAR   *handle,
                /* IN */  UCHAR   *cal_type
            );
-
-UINT32 str_to_num_pl
-       (
-           /* IN */  UCHAR  * str,
-           /* IN */  UINT16 len
-       );
 
 #endif /* _H_CTN_PL_ */

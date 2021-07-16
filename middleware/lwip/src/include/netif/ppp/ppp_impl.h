@@ -60,16 +60,10 @@ extern "C" {
 /*
  * Memory used for control packets.
  *
- * PPP_CTRL_PBUF_MAX_SIZE is the amount of memory we allocate when we
+ * PPP_CTRL_PBUF_UNKNOWN_SIZE is the amount of memory we allocate when we
  * cannot figure out how much we are going to use before filling the buffer.
  */
-#if PPP_USE_PBUF_RAM
-#define PPP_CTRL_PBUF_TYPE       PBUF_RAM
-#define PPP_CTRL_PBUF_MAX_SIZE   512
-#else /* PPP_USE_PBUF_RAM */
-#define PPP_CTRL_PBUF_TYPE       PBUF_POOL
-#define PPP_CTRL_PBUF_MAX_SIZE   PBUF_POOL_BUFSIZE
-#endif /* PPP_USE_PBUF_RAM */
+#define PPP_CTRL_PBUF_UNKNOWN_SIZE   512
 
 /*
  * The basic PPP frame.
@@ -88,9 +82,17 @@ extern "C" {
 #define	PPP_TRANS	0x20	/* Asynchronous transparency modifier */
 
 /*
+ * PPP_DEFMRU: MRU value used prior negotiation and unless negotiated later.
+ * Must be 1500.
+ */
+#define PPP_DEFMRU      1500
+
+/*
  * Protocol field values.
  */
+#if PPP_IPV4_SUPPORT
 #define PPP_IP		0x21	/* Internet Protocol */
+#endif /* PPP_IPV4_SUPPORT */
 #if 0 /* UNUSED */
 #define PPP_AT		0x29	/* AppleTalk Protocol */
 #define PPP_IPX		0x2b	/* IPX protocol */
@@ -456,8 +458,8 @@ int sif6down (ppp_pcb *pcb);
 int sifnpmode(ppp_pcb *pcb, int proto, enum NPmode mode);
 #endif /* DEMAND_SUPPORt */
 
-void netif_set_mtu(ppp_pcb *pcb, int mtu);
-int netif_get_mtu(ppp_pcb *pcb);
+void ppp_netif_set_mtu(ppp_pcb *pcb, int mtu);
+int ppp_netif_get_mtu(ppp_pcb *pcb);
 
 #if CCP_SUPPORT
 #if 0 /* unused */
@@ -559,7 +561,7 @@ void start_networks(ppp_pcb *pcb);    /* start all the network control protos */
 void continue_networks(ppp_pcb *pcb); /* start network [ip, etc] control protos */
 #if PPP_AUTH_SUPPORT
 #if PPP_SERVER
-int auth_check_passwd(ppp_pcb *pcb, char *auser, int userlen, char *apasswd, int passwdlen, const char **msg, int *msglen);
+int auth_check_passwd(ppp_pcb *pcb, char *auser, unsigned int userlen, char *apasswd, unsigned int passwdlen, const char **msg, int *msglen);
                                 /* check the user name and passwd against configuration */
 void auth_peer_fail(ppp_pcb *pcb, int protocol);
 				/* peer failed to authenticate itself */
@@ -672,11 +674,10 @@ void ppp_dump_packet(ppp_pcb *pcb, const char *tag, unsigned char *p, int len);
  *    |.    .    .
  *     |    .    .
  * PPP_PHASE_AUTHENTICATE
- *     |    .    .
  *     ||   .    .
  * PPP_PHASE_NETWORK
- *     | || .    .
- *     |   |||   .
+ *     |||| .    .
+ *     ||  |||   .
  * PPP_PHASE_RUNNING
  *     |    .|||||
  *     |    . ||||
@@ -692,33 +693,39 @@ void ppp_dump_packet(ppp_pcb *pcb, const char *tag, unsigned char *p, int len);
  *  1
  *
  * If authentication is enabled one timer is necessary during authentication.
+ * This timer might still be running up to network phase for any necessary
+ * rechallenge, mostly for PPP server support.
  *  1 + PPP_AUTH_SUPPORT
  *
  * If ECP is enabled one timer is necessary before IPCP and/or IP6CP, one more
  * is necessary if CCP is enabled (only with MPPE support but we don't care much
  * up to this detail level).
- *  1 + ECP_SUPPORT + CCP_SUPPORT
+ *  1 + PPP_AUTH_SUPPORT + ECP_SUPPORT + CCP_SUPPORT
  *
  * If CCP is enabled it might consume a timer during IPCP or IP6CP, thus
- * we might use IPCP, IP6CP and CCP timers simultaneously.
- *  1 + PPP_IPV4_SUPPORT + PPP_IPV6_SUPPORT + CCP_SUPPORT
+ * we might use AUTH, IPCP, IP6CP and CCP timers simultaneously.
+ *  1 + PPP_AUTH_SUPPORT + PPP_IPV4_SUPPORT + PPP_IPV6_SUPPORT + CCP_SUPPORT
  *
  * When entering running phase, IPCP or IP6CP is still running. If idle time limit
  * is enabled one more timer is necessary. Same for max connect time and max
  * octets features. Furthermore CCP RACK might be used past this point.
  *  1 + PPP_IPV4_SUPPORT + PPP_IPV6_SUPPORT -1 + PPP_IDLETIMELIMIT + PPP_MAXCONNECT + MAXOCTETS + CCP_SUPPORT
  *
- * IPv4 or IPv6 must be enabled, therefore we don't need to take care the authentication
- * and the CCP + ECP case, thus reducing overall complexity.
- * 1 + LWIP_MAX(PPP_IPV4_SUPPORT + PPP_IPV6_SUPPORT + CCP_SUPPORT, PPP_IPV4_SUPPORT + PPP_IPV6_SUPPORT -1 + PPP_IDLETIMELIMIT + PPP_MAXCONNECT + MAXOCTETS + CCP_SUPPORT)
+ * Then the maximum number of simultaneously running timers is given by:
+ *  1 + MAX(PPP_AUTH_SUPPORT + PPP_IPV4_SUPPORT + PPP_IPV6_SUPPORT + CCP_SUPPORT,
+ *          PPP_IPV4_SUPPORT + PPP_IPV6_SUPPORT -1 + PPP_IDLETIMELIMIT + PPP_MAXCONNECT + MAXOCTETS + CCP_SUPPORT)
  *
- * We don't support PPP_IDLETIMELIMIT + PPP_MAXCONNECT + MAXOCTETS features
- * and adding those defines to ppp_opts.h just for having the value always
- * defined to 0 isn't worth it.
- * 1 + LWIP_MAX(PPP_IPV4_SUPPORT + PPP_IPV6_SUPPORT + CCP_SUPPORT, PPP_IPV4_SUPPORT + PPP_IPV6_SUPPORT -1 + CCP_SUPPORT)
+ * We don't support ECP_SUPPORT + PPP_IDLETIMELIMIT + PPP_MAXCONNECT + MAXOCTETS features
+ * and adding those defines to ppp_opts.h just for having the value always defined to 0
+ * is not worth it, thus reducing the overall complexity.
+ *  1 + MAX(PPP_AUTH_SUPPORT + PPP_IPV4_SUPPORT + PPP_IPV6_SUPPORT + CCP_SUPPORT,
+ *          PPP_IPV4_SUPPORT + PPP_IPV6_SUPPORT -1 + CCP_SUPPORT)
  *
- * Thus, the following is enough for now.
- * 1 + PPP_IPV4_SUPPORT + PPP_IPV6_SUPPORT + CCP_SUPPORT
+ * PPP_AUTH_SUPPORT is not available in ppp_opts.h because it is defined later in ppp.h,
+ * but we do not need to be that picky about the real number of simultaneously running
+ * timers so we just set the base number of timeouts to 2, thus the following is enough
+ * for now.
+ *  2 + PPP_IPV4_SUPPORT + PPP_IPV6_SUPPORT + CCP_SUPPORT
  */
 
 #ifdef __cplusplus

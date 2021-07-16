@@ -1541,6 +1541,31 @@ static FMSTR_PIPE *_FMSTR_FindPipe(FMSTR_PIPE_PORT pipePort)
 
 /******************************************************************************
  *
+ * @brief  Find pipe index by port number
+ *
+ ******************************************************************************/
+
+FMSTR_INDEX FMSTR_FindPipeIndex(FMSTR_PIPE_PORT pipePort)
+{
+    FMSTR_PIPE *pp;
+    FMSTR_INDEX i;
+
+    for (i = 0; i < (FMSTR_INDEX)FMSTR_USE_PIPES; i++)
+    {
+        pp = &pcm_pipes[i];
+
+        /* look for existing pipe with the same port */
+        if (pp->pipePort == pipePort)
+        {
+            return i;
+        }
+    }
+
+    return -1;
+}
+
+/******************************************************************************
+ *
  * @brief  Get number of bytes free in the buffer
  *
  ******************************************************************************/
@@ -1700,6 +1725,7 @@ static FMSTR_BPTR _FMSTR_PipeTransmit(FMSTR_BPTR msgBuffIO, FMSTR_PIPE *pp, FMST
  *
  * @brief  Get PIPE info
  *
+ * @param    session - transport session
  * @param    msgBuffIO - original command (in) and response buffer (out)
  * @param    msgSize   - size of data in buffer
  * @param    retStatus - response status
@@ -1708,7 +1734,7 @@ static FMSTR_BPTR _FMSTR_PipeTransmit(FMSTR_BPTR msgBuffIO, FMSTR_PIPE *pp, FMST
  *
  ******************************************************************************/
 
-FMSTR_BPTR FMSTR_GetPipe(FMSTR_BPTR msgBuffIO, FMSTR_SIZE msgSize, FMSTR_U8 *retStatus)
+FMSTR_BPTR FMSTR_GetPipe(FMSTR_SESSION *session, FMSTR_BPTR msgBuffIO, FMSTR_SIZE msgSize, FMSTR_U8 *retStatus)
 {
     FMSTR_BPTR response = msgBuffIO;
     FMSTR_U8 cfgCode, pipeIndex, pipeFlags;
@@ -1798,6 +1824,7 @@ FMSTR_BPTR FMSTR_GetPipe(FMSTR_BPTR msgBuffIO, FMSTR_SIZE msgSize, FMSTR_U8 *ret
  *
  * @brief  Handling PIPE commands
  *
+ * @param    session - transport session
  * @param    msgBuffIO - original command (in) and response buffer (out)
  * @param    msgSize   - size of data in buffer
  * @param    retStatus - response status
@@ -1806,7 +1833,7 @@ FMSTR_BPTR FMSTR_GetPipe(FMSTR_BPTR msgBuffIO, FMSTR_SIZE msgSize, FMSTR_U8 *ret
  *
  ******************************************************************************/
 
-FMSTR_BPTR FMSTR_PipeFrame(FMSTR_BPTR msgBuffIO, FMSTR_SIZE msgSize, FMSTR_U8 *retStatus)
+FMSTR_BPTR FMSTR_PipeFrame(FMSTR_SESSION *session, FMSTR_BPTR msgBuffIO, FMSTR_SIZE msgSize, FMSTR_U8 *retStatus)
 {
     FMSTR_BPTR response = msgBuffIO;
     FMSTR_U8 skipLen, pipePort;
@@ -1826,8 +1853,17 @@ FMSTR_BPTR FMSTR_PipeFrame(FMSTR_BPTR msgBuffIO, FMSTR_SIZE msgSize, FMSTR_U8 *r
     /* get port number and even/odd flag */
     msgBuffIO = FMSTR_ValueFromBuffer8(&pipePort, msgBuffIO);
 
+#if FMSTR_SESSION_COUNT > 1
+    /* Is feature locked by me */
+    if (FMSTR_IsFeatureOwned(session, FMSTR_FEATURE_PIPE, (FMSTR_PIPE_PORT)(pipePort & 0x7fU)) == FMSTR_FALSE)
+    {
+        *retStatus = FMSTR_STC_SERVBUSY;
+        return response;
+    }
+#endif
+
     /* get pipe by port */
-    pp = _FMSTR_FindPipe((FMSTR_PIPE_PORT)(pipePort & 0x7fUL));
+    pp = _FMSTR_FindPipe((FMSTR_PIPE_PORT)(pipePort & 0x7fU));
 
     /* pipe port must exist (i.e. be open) */
     if (pp == NULL)
@@ -1921,7 +1957,7 @@ FMSTR_BPTR FMSTR_PipeFrame(FMSTR_BPTR msgBuffIO, FMSTR_SIZE msgSize, FMSTR_U8 *r
         /* how many bytes are waiting to be sent? */
         FMSTR_PIPE_SIZE txAvail = _FMSTR_PipeGetBytesReady(&pp->tx);
         /* how many bytes I can safely put? */
-        FMSTR_U8 txToSend = FMSTR_COMM_BUFFER_SIZE - 3U;
+        FMSTR_U8 txToSend = (FMSTR_U8)FMSTR_COMM_BUFFER_SIZE - 3U;
 
         /* round to bus width */
         txToSend /= FMSTR_CFG_BUS_WIDTH;

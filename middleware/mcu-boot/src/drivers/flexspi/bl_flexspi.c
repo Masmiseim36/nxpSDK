@@ -1,6 +1,6 @@
 /*
  * Copyright 2014-2015 Freescale Semiconductor, Inc.
- * Copyright 2016-2019 NXP
+ * Copyright 2016-2021 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -825,12 +825,18 @@ status_t flexspi_init(uint32_t instance, flexspi_mem_config_t *config)
         base->MCR0 |= FLEXSPI_MCR0_MDIS_MASK;
 
         // Set Clock divider and sample clock source
-        mcr0 = base->MCR0 & (uint32_t) ~(FLEXSPI_MCR0_RXCLKSRC_MASK | FLEXSPI_MCR0_IPGRANTWAIT_MASK |
-                                         FLEXSPI_MCR0_AHBGRANTWAIT_MASK | FLEXSPI_MCR0_COMBINATIONEN_MASK
-#if !defined(MIMXRT685S_cm33_SERIES)
-                                         | FLEXSPI_MCR0_ATDFEN_MASK | FLEXSPI_MCR0_ARDFEN_MASK
+        mcr0 = base->MCR0 &
+               (uint32_t) ~(FLEXSPI_MCR0_RXCLKSRC_MASK | FLEXSPI_MCR0_IPGRANTWAIT_MASK | FLEXSPI_MCR0_AHBGRANTWAIT_MASK
+#if !defined(FSL_FEATURE_FLEXSPI_HAS_NO_MCR0_COMBINATIONEN) || (FSL_FEATURE_FLEXSPI_HAS_NO_MCR0_COMBINATIONEN == 0)
+                            | FLEXSPI_MCR0_COMBINATIONEN_MASK
 #endif
-                            );
+#if !defined(FSL_FEATURE_FLEXSPI_HAS_NO_MCR0_ATDFEN) || (FSL_FEATURE_FLEXSPI_HAS_NO_MCR0_ATDFEN == 0)
+                            | FLEXSPI_MCR0_ATDFEN_MASK
+#endif
+#if !defined(FSL_FEATURE_FLEXSPI_HAS_NO_MCR0_ARDFEN) || (FSL_FEATURE_FLEXSPI_HAS_NO_MCR0_ARDFEN == 0)
+                            | FLEXSPI_MCR0_ARDFEN_MASK
+#endif
+               );
 
 #if FLEXSPI_ENABLE_NO_CMD_MODE_SUPPORT
         // If this condition meets, it means FlexSPI PORT B exists, the the 8 bit is supported by combining PORTA[3:0]
@@ -840,7 +846,9 @@ status_t flexspi_init(uint32_t instance, flexspi_mem_config_t *config)
             // Enable Combined mode if Serial FLASH works using Octal pad instructions.
             if (config->sflashPadType == kSerialFlash_8Pads)
             {
+#if !defined(FSL_FEATURE_FLEXSPI_HAS_NO_MCR0_COMBINATIONEN) || (FSL_FEATURE_FLEXSPI_HAS_NO_MCR0_COMBINATIONEN == 0)
                 mcr0 |= FLEXSPI_MCR0_COMBINATIONEN_MASK;
+#endif
             }
         }
 #endif

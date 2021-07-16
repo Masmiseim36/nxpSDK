@@ -35,15 +35,15 @@
  * \{
  * Describes Constants defined by the module.
  */
-#define DEVICE_HANDLE_INIT_VAL     0xFF
+#define DEVICE_HANDLE_INIT_VAL     0xFFU
 
 #define DEVICE_HANDLE_INIT(hndl)\
         (hndl) = DEVICE_HANDLE_INIT_VAL
 
-#define DQ_LINK_NONE                    0x00
-#define DQ_BR_LINK                      0x01
-#define DQ_LE_LINK                      0x02
-#define DQ_LINK_ANY                     0xFF
+#define DQ_LINK_NONE                    0x00U
+#define DQ_BR_LINK                      0x01U
+#define DQ_LE_LINK                      0x02U
+#define DQ_LINK_ANY                     0xFFU
 
 /** \} */
 /**
@@ -101,8 +101,6 @@ void device_queue_bt_init ( void );
  */
 void device_queue_bt_shutdown ( void );
 
-#ifdef BT_DUAL_MODE
-
 /**
  *  \brief
  *
@@ -144,28 +142,6 @@ API_RESULT device_queue_get_link_type
                /* OUT */ DEVICE_LINK_TYPE    * link_type,
                /* IN */  DEVICE_HANDLE       * hndl
            );
-#else /* BT_DUAL_MODE */
-
-/**
- *  \brief
- *
- *  \par Description:
- *
- *
- *  \param [in]
- *
- *
- *  \return
- *      API_RESULT: API_SUCCESS or one of the error codes as defined in
- *                  \ref BLE_ERROR_CODES.
- */
-/** Enqueue routine */
-API_RESULT device_queue_alloc
-           (
-               /* OUT */ DEVICE_HANDLE     * hndl, /* Device Handle */
-               /* IN */  BT_DEVICE_ADDR    * addr /* Remote Device to be added*/
-           );
-#endif /* BT_DUAL_MODE */
 
 /**
  *  \brief
@@ -185,8 +161,6 @@ API_RESULT device_queue_free
            (
                /* IN */ DEVICE_HANDLE    * hndl /* Device to be removed */
            );
-
-#ifdef BT_DUAL_MODE
 
 #define device_queue_search_br_edr_remote_addr(h,a)\
         device_queue_search_remote_addr ((h),(a),DQ_BR_LINK)
@@ -217,37 +191,7 @@ API_RESULT device_queue_search_remote_addr
                /* IN */  BT_DEVICE_ADDR      * addr, /* Remote Device to be searched*/
                /* IN */  DEVICE_LINK_TYPE    link_type
            );
-#else /* BT_DUAL_MODE */
 
-#define device_queue_search_br_edr_remote_addr(h,a)\
-        device_queue_search_remote_addr ((h),(a))
-
-#define device_queue_search_le_remote_addr(h,a)\
-        device_queue_search_remote_addr ((h),(a))
-
-#define device_queue_search_any_remote_addr(h,a)\
-        device_queue_search_remote_addr ((h),(a))
-
-/**
- *  \brief
- *
- *  \par Description:
- *
- *
- *  \param [in]
- *
- *
- *  \return
- *      API_RESULT: API_SUCCESS or one of the error codes as defined in
- *                  \ref BLE_ERROR_CODES.
- */
-/* Search routine */
-API_RESULT device_queue_search_remote_addr
-           (
-               /* OUT */ DEVICE_HANDLE     * hndl,/* Device Reference */
-               /* IN */  BT_DEVICE_ADDR    * addr /* Remote Device to be searched*/
-           );
-#endif /* BT_DUAL_MODE */
 /**
  *  \brief
  *

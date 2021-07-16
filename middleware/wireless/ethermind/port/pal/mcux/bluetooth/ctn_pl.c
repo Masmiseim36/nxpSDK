@@ -13,6 +13,8 @@
 /* --------------------------------------------- Header File Inclusion */
 #include "ctn_pl.h"
 
+#if ((defined CTN_CCE) || (defined CTN_CSE))
+
 /* --------------------------------------------- External Global Variables */
 
 /* --------------------------------------------- Exported Global Variables */
@@ -72,12 +74,15 @@ API_RESULT BT_ctn_build_object_listing_pl
     }
 
     /* init */
-    object_count                    = 0x00;
-    ctn_obj_param_mask              = 0xFFFFFF;
-    listing_obj_info->listing_count = 0x00;
+    object_count                    = 0x00U;
+    ctn_obj_param_mask              = 0xFFFFFFU;
+    listing_obj_info->listing_count = 0x00U;
+
+    /* MISRA C-2012 Rule 9.1 | Coverity UNINIT */
+    xml_fd                          = NULL;
 
     /* open the listing file */
-    BT_fops_file_open(listingfile, (UCHAR *)"wb", &xml_fd);
+    (BT_IGNORE_RETURN_VALUE) BT_fops_file_open(listingfile, (UCHAR *)"wb", &xml_fd);
     if (NULL == xml_fd)
     {
         CTN_PL_ERR(
@@ -86,8 +91,7 @@ API_RESULT BT_ctn_build_object_listing_pl
         return CTN_INVALID_PARAMETERS;
     }
 
-    BT_str_copy(dir, dir_entry);
-    /* BT_str_cat(dir, BT_FOPS_PATH_SEP"*.*"); */
+    BT_str_n_copy(dir, dir_entry, (sizeof(dir) - 1));
 
     CTN_PL_TRC(
     "[CTN_PL] Path = %s\n", dir_entry);
@@ -101,7 +105,8 @@ API_RESULT BT_ctn_build_object_listing_pl
         CTN_PL_ERR(
         "[CTN_PL] Invalid File Handle. Get Last Error reports  %d\n");
 
-        BT_fops_file_close(xml_fd);
+        /* MISRA C-2012 Rule 17.7 | Coverity CHECKED_RETURN */
+        (void)BT_fops_file_close(xml_fd);
 
         return API_FAILURE;
     }
@@ -138,11 +143,11 @@ API_RESULT BT_ctn_build_object_listing_pl
 #endif /* 0 */
 
     /* check for application param mask*/
-    if (CTN_GET_APPL_PARAM_FLAG
+    if (0U != (CTN_GET_APPL_PARAM_FLAG
         (
         appl_param->appl_param_flag,
         CTN_FLAG_PARMETERMASK
-        ))
+        )))
     {
         ctn_obj_param_mask = appl_param->parameter_mask;
     }
@@ -150,19 +155,19 @@ API_RESULT BT_ctn_build_object_listing_pl
     /* Listing object Header start */
     BT_fops_file_print(xml_fd ,"<%s %s>\n", parent, version);
 
-    start_offset = 0x00;
-    if (CTN_GET_APPL_PARAM_FLAG
+    start_offset = 0x00U;
+    if (0U != (CTN_GET_APPL_PARAM_FLAG
         (
         appl_param->appl_param_flag,
         CTN_FLAG_LISTSTARTOFFSET
-        ))
+        )))
     {
         start_offset = appl_param->list_start_offset;
     }
 
     retval = API_SUCCESS;
 
-    while (1)
+    BT_LOOP_FOREVER()
     {
         if (BT_FALSE == first)
         {
@@ -184,7 +189,7 @@ API_RESULT BT_ctn_build_object_listing_pl
         {
             continue;
         }
-        if(info.fattrib & BT_FOPS_MASK_FOLDER)
+        if(0U != (info.fattrib & BT_FOPS_MASK_FOLDER))
         {
             CTN_PL_INF(
             "[CTN_PL] It is a directory\n");
@@ -201,9 +206,9 @@ API_RESULT BT_ctn_build_object_listing_pl
                 continue;
             }
 
-            if (start_offset > 0)
+            if (0U < start_offset)
             {
-                start_offset -= 1;
+                start_offset -= 1U;
                 continue;
             }
 
@@ -245,7 +250,7 @@ API_RESULT BT_ctn_build_object_listing_pl
                                (UCHAR *)ctn_obj_attr.update,
                                (UCHAR )BT_str_len(ctn_obj_attr.update)
                             );
-                if (time_cmp == 1)
+                if (time_cmp == 1U)
                 {
                     /**
                      * period_begin > update_time, ignore
@@ -260,7 +265,7 @@ API_RESULT BT_ctn_build_object_listing_pl
                                appl_param->filter_period_end.value,
                                (UCHAR)appl_param->filter_period_end.length
                             );
-                if (time_cmp == 1)
+                if (time_cmp == 1U)
                 {
                     /**
                      *  update time > period_end, ignore
@@ -351,7 +356,7 @@ API_RESULT BT_ctn_build_object_listing_pl
 
                 BT_fops_file_print(xml_fd, "/>\n");
 
-                object_count += 1;
+                object_count += 1U;
             }
         }
     }
@@ -361,7 +366,7 @@ API_RESULT BT_ctn_build_object_listing_pl
         BT_get_local_time(&local_time);
 
         /* CSE offet */
-        sprintf((CHAR *)listing_obj_info->cse_time_offset, "%d%02d%02dT%02d%02d%02d",
+        BT_str_print((CHAR *)listing_obj_info->cse_time_offset, "%d%02d%02dT%02d%02d%02d",
                 local_time.dyear, local_time.dmonth, local_time.dday,
                 local_time.thour, local_time.tmin, local_time.tsec);
 
@@ -372,8 +377,10 @@ API_RESULT BT_ctn_build_object_listing_pl
         BT_fops_file_print(xml_fd ,"</%s>\n",parent);
     }
 
-    BT_fops_access_close(&h);
-    BT_fops_file_close (xml_fd);
+    (BT_IGNORE_RETURN_VALUE) BT_fops_access_close(&h);
+
+    /* MISRA C-2012 Rule 17.7 | Coverity CHECKED_RETURN */
+    (void)BT_fops_file_close (xml_fd);
 
     return retval;
 }
@@ -406,8 +413,7 @@ API_RESULT BT_ctn_get_object_list
     UCHAR first;
 
     /* param check */
-    if ((NULL == dir_entry) ||
-        (NULL == obj_list_info))
+    if ((NULL == dir_entry) || (NULL == obj_list_info))
     {
         CTN_PL_ERR(
         "[CTN_PL] Invalid Parameter\n");
@@ -416,10 +422,9 @@ API_RESULT BT_ctn_get_object_list
     }
 
     /* init */
-    object_count = 0x00;
+    object_count = 0x00U;
 
-    BT_str_copy(dir, dir_entry);
-    /* BT_str_cat(dir, BT_FOPS_PATH_SEP"*.*"); */
+    BT_str_n_copy(dir, dir_entry, (sizeof(dir) - 1));
 
     CTN_PL_TRC(
     "[CTN_PL] Path = %s\n", dir_entry);
@@ -467,7 +472,7 @@ API_RESULT BT_ctn_get_object_list
     }
 #endif /* 0 */
 
-    while (1)
+    BT_LOOP_FOREVER()
     {
         if (BT_FALSE == first)
         {
@@ -489,7 +494,7 @@ API_RESULT BT_ctn_get_object_list
         {
             continue;
         }
-        if(info.fattrib & BT_FOPS_MASK_FOLDER)
+        if(0U != (info.fattrib & BT_FOPS_MASK_FOLDER))
         {
             CTN_PL_INF(
             "[CTN_PL] It is a directory\n");
@@ -507,7 +512,7 @@ API_RESULT BT_ctn_get_object_list
             }
 
             /* copy object name */
-            BT_str_copy (obj_list_info->obj_details[object_count].name, info.fname);
+            BT_str_n_copy (obj_list_info->obj_details[object_count].name, info.fname, (sizeof(obj_list_info->obj_details[object_count].name) - 1));
             obj_list_info->obj_details[object_count].name_len = (UCHAR)BT_str_len (info.fname);
 
             BT_mem_set (&ctn_obj_attr, 0x00, sizeof(CTN_OBJ_ATTR_PL));
@@ -515,18 +520,21 @@ API_RESULT BT_ctn_get_object_list
             /* Get the object attributes data */
             retval = ctn_get_object_attributes_pl (dir_entry, info.fname, &ctn_obj_attr);
 
-            /* copy object handle */
-            BT_str_copy (obj_list_info->obj_details[object_count].handle, ctn_obj_attr.handle);
-            obj_list_info->obj_details[object_count].handle_len = (UCHAR)BT_str_len(ctn_obj_attr.handle);
+            if (API_SUCCESS == retval)
+            {
+                /* copy object handle */
+                BT_str_copy (obj_list_info->obj_details[object_count].handle, ctn_obj_attr.handle);
+                obj_list_info->obj_details[object_count].handle_len = (UCHAR)BT_str_len(ctn_obj_attr.handle);
 
-            object_count += 1;
+                object_count += 1U;
+            }
         }
     }
 
     /* Update number of objects in the folder */
     obj_list_info->num_objects = (UCHAR )object_count;
 
-    BT_fops_access_close(&h);
+    (BT_IGNORE_RETURN_VALUE) BT_fops_access_close(&h);
     return API_SUCCESS;
 }
 
@@ -561,7 +569,12 @@ API_RESULT ctn_get_object_attributes_pl
     UINT32                  fsize, offset;
     UINT16                  count;
 
-    BT_vfops_create_object_name
+    /* MISRA C-2012 Rule 9.1 | Coverity UNINIT */
+    fd = NULL;
+    fsize = 0U;
+
+    /* MISRA C-2012 Rule 17.7 | Coverity CHECKED_RETURN */
+    (void)BT_vfops_create_object_name
     (
         idir,
         (UCHAR *)object_name,
@@ -576,32 +589,32 @@ API_RESULT ctn_get_object_attributes_pl
     }
 
     /* Get the file size */
-    BT_fops_file_size(fd, &fsize);
+    (BT_IGNORE_RETURN_VALUE) BT_fops_file_size(fd, &fsize);
 
     readstr = ctn_msg_readline;
     count = sizeof(ctn_msg_readline);
 
     /* Get Priority */
-    sprintf(attr->priority, "%s", "low");
+    BT_str_print(attr->priority, "%s", "low");
     attr->obj_param_mask |= CTN_OBJ_PROP_MASK_PRIORITY;
 
     /* set alarm status */
-    sprintf(attr->alarm_status, "%s", "no");
+    BT_str_print(attr->alarm_status, "%s", "no");
     attr->obj_param_mask |= CTN_OBJ_PROP_MASK_ALARMSTATUS;
 
     /* set recurrent status */
-    sprintf(attr->recurrent, "%s", "no");
+    BT_str_print(attr->recurrent, "%s", "no");
     attr->obj_param_mask |= CTN_OBJ_PROP_MASK_RECURRENT;
 
     /* set sent status */
-    sprintf(attr->sentstatus, "%s", "no");
+    BT_str_print(attr->sentstatus, "%s", "no");
     attr->obj_param_mask |= CTN_OBJ_PROP_MASK_SENDSTATUS;
 
     /* Get Attachment Size */
     attr->size = (UINT16)fsize;
     attr->obj_param_mask |= CTN_OBJ_PROP_MASK_SIZE;
 
-    do
+    BT_LOOP_FOREVER()
     {
         /* using fgets instead fscanf to read white spaces also */
         BT_mem_set(readstr, 0, count);
@@ -612,7 +625,7 @@ API_RESULT ctn_get_object_attributes_pl
 
         len = BT_str_len(readstr);
 
-        for (i = 0; i < len; i++)
+        for (i = 0U; i < len; i++)
         {
             if (('\r' == readstr[i]) || ('\n' == readstr[i]))
             {
@@ -622,25 +635,25 @@ API_RESULT ctn_get_object_attributes_pl
         }
 
         /* Handle */
-        if (0 == BT_mem_cmp("HANDLE:", readstr, 7))
+        if (0 == BT_mem_cmp("HANDLE:", readstr, 7U))
         {
-            sprintf(attr->handle, "%s", &readstr[7]);
+            BT_str_print(attr->handle, "%s", &readstr[7U]);
             attr->obj_param_mask |= CTN_OBJ_PROP_MASK_HANDLE;
             continue;
         }
 
         /* update field */
-        if (0 == BT_mem_cmp("UPDATE", readstr, 6))
+        if (0 == BT_mem_cmp("UPDATE", readstr, 6U))
         {
-            offset = 6;
+            offset = 6U;
 
             if (':' == readstr[offset])
             {
-                offset += 1;
+                offset += 1U;
             }
             else
             {
-                offset += 1;
+                offset += 1U;
 
                 /**
                  * Note: Timezone field also present
@@ -649,65 +662,65 @@ API_RESULT ctn_get_object_attributes_pl
                 {
                     if(':' == readstr[offset])
                     {
-                        offset += 1;
+                        offset += 1U;
                         break;
                     }
                 }
             }
 
-            sprintf(attr->update, "%s", &readstr[offset]);
+            BT_str_print(attr->update, "%s", &readstr[offset]);
             attr->obj_param_mask |= CTN_OBJ_PROP_MASK_UPDATE;
             continue;
         }
 
         /* cal-type */
-        if (0 == BT_mem_cmp("BEGIN:VEVENT", readstr, 12))
+        if (0 == BT_mem_cmp("BEGIN:VEVENT", readstr, 12U))
         {
             /* sprintf(attr->cal_type, "%s", "VEVENT"); */
-            sprintf(attr->cal_type, "%s", "event");
+            BT_str_print(attr->cal_type, "%s", "event");
             attr->obj_param_mask |= CTN_OBJ_PROP_MASK_CALTYPE;
             attr->obj_type = APPL_CTN_OBJ_TYPE_VEVENT;
             continue;
         }
 
-        if (0 == BT_mem_cmp("BEGIN:VTODO", readstr, 11))
+        if (0 == BT_mem_cmp("BEGIN:VTODO", readstr, 11U))
         {
             /* sprintf(attr->cal_type, "%s", "VTODO"); */
-            sprintf(attr->cal_type, "%s", "task");
+            BT_str_print(attr->cal_type, "%s", "task");
             attr->obj_param_mask |= CTN_OBJ_PROP_MASK_CALTYPE;
             attr->obj_type = APPL_CTN_OBJ_TYPE_VTODO;
             continue;
         }
 
-        if (0 == BT_mem_cmp("BEGIN:VJOURNAL", readstr, 14))
+        if (0 == BT_mem_cmp("BEGIN:VJOURNAL", readstr, 14U))
         {
             /* sprintf(attr->cal_type, "%s", "VJOURNAL"); */
-            sprintf(attr->cal_type, "%s", "note");
+            BT_str_print(attr->cal_type, "%s", "note");
             attr->obj_param_mask |= CTN_OBJ_PROP_MASK_CALTYPE;
             attr->obj_type = APPL_CTN_OBJ_TYPE_VNOTE;
             continue;
         }
 
         /* summary */
-        if (0 == BT_mem_cmp("SUMMARY:", readstr, 8))
+        if (0 == BT_mem_cmp("SUMMARY:", readstr, 8U))
         {
-            sprintf(attr->summary, "%s", &readstr[8]);
+            BT_str_print(attr->summary, "%s", &readstr[8U]);
             attr->obj_param_mask |= CTN_OBJ_PROP_MASK_SUMMARY;
             continue;
         }
 
         /* alarm */
-        if (0 == BT_mem_cmp("BEGIN:VALARM:", readstr, 8))
+        if (0 == BT_mem_cmp("BEGIN:VALARM:", readstr, 8U))
         {
-            sprintf(attr->alarm_status, "%s", "yes");
+            BT_str_print(attr->alarm_status, "%s", "yes");
             attr->obj_param_mask |= CTN_OBJ_PROP_MASK_ALARMSTATUS;
             continue;
         }
 
-        if (0 == BT_mem_cmp("ORGANIZER;", readstr, 10))
+        if (0 == BT_mem_cmp("ORGANIZER;", readstr, 10U))
         {
             str_ptr = BT_str_str(readstr, "CN=\"");
-            str_ptr += 4;
+            str_ptr += 4U;
 
             str_ptr1 = BT_str_str(str_ptr, "\"");
 
@@ -718,77 +731,77 @@ API_RESULT ctn_get_object_attributes_pl
             attr->obj_param_mask |= CTN_OBJ_PROP_MASK_ORIGINATOR_NAME;
 
             str_ptr = BT_str_str(readstr, "MAILTO");
-            str_ptr += 7; /* 6 + 1(for :)*/
+            str_ptr += 7U; /* 6 + 1(for :)*/
 
-            sprintf(attr->org_addr, "%s", str_ptr);
+            BT_str_print(attr->org_addr, "%s", str_ptr);
             attr->obj_param_mask |= CTN_OBJ_PROP_MASK_ORIGINATOR_ADDRS;
             continue;
         }
 
         /* start time */
-        if (0 == BT_mem_cmp("DTSTART", readstr, 7))
+        if (0 == BT_mem_cmp("DTSTART", readstr, 7U))
         {
-            offset = 7;
+            offset = 7U;
             if (':' == readstr[offset])
             {
-                offset += 1;
+                offset += 1U;
             }
             else
             {
                 /**
                  * Note: Timezone field also present in the string
                  */
-                offset += 1;
+                offset += 1U;
 
                 for (; offset < BT_str_len(readstr); offset++)
                 {
                     if(':' == readstr[offset])
                     {
-                        offset += 1;
+                        offset += 1U;
                         break;
                     }
                 }
             }
 
-            sprintf(attr->start_time, "%s", &readstr[offset]);
+            BT_str_print(attr->start_time, "%s", &readstr[offset]);
             attr->obj_param_mask |= CTN_OBJ_PROP_MASK_STARTTIME;
             continue;
         }
 
         /* end time */
-        if (0 == BT_mem_cmp("DTEND", readstr, 5))
+        if (0 == BT_mem_cmp("DTEND", readstr, 5U))
         {
-            offset = 5;
+            offset = 5U;
             if (':' == readstr[offset])
             {
-                offset += 1;
+                offset += 1U;
             }
             else
             {
                 /**
                  * Note: Timezone field also present in the string
                  */
-                offset += 1;
+                offset += 1U;
                 for (; offset < BT_str_len(readstr); offset++)
                 {
                     if(':' == readstr[offset])
                     {
-                        offset += 1;
+                        offset += 1U;
                         break;
                     }
                 }
             }
 
-            sprintf(attr->end_time, "%s", &readstr[offset]);
+            BT_str_print(attr->end_time, "%s", &readstr[offset]);
             attr->obj_param_mask |= CTN_OBJ_PROP_MASK_ENDTIME;
             continue;
         }
 
         /* pstatus */
-        if (0 == BT_mem_cmp("ATTENDEE", readstr, 8))
+        if (0 == BT_mem_cmp("ATTENDEE", readstr, 8U))
         {
             str_ptr = BT_str_str(readstr, "PARTSTAT=");
-            str_ptr += 9;
+            str_ptr += 9U;
 
             str_ptr1 = BT_str_str(str_ptr, ";");
 
@@ -801,9 +814,10 @@ API_RESULT ctn_get_object_attributes_pl
             continue;
         }
 
-    } while (1);
+    }
 
-    BT_fops_file_close(fd);
+    /* MISRA C-2012 Rule 17.7 | Coverity CHECKED_RETURN */
+    (void)BT_fops_file_close(fd);
     fd = NULL;
 
     return API_SUCCESS;
@@ -818,190 +832,157 @@ INT16 ctn_compare_timestamp_pl
           UCHAR  t2_len
     )
 {
-    CHAR    src_year[6], src_month[4], src_day[4];
-    CHAR    dst_year[6], dst_month[4], dst_day[4];
+    CHAR    src_year[6U], src_month[4U], src_day[4U];
+    CHAR    dst_year[6U], dst_month[4U], dst_day[4U];
     UCHAR   offset;
     UINT32   src_val, dst_val;
 
     /* param check */
     if ((NULL == t1) || (NULL == t2) ||
-        (0x00 == t1_len) || (0x00 == t2_len))
+        (0x00U == t1_len) || (0x00U == t2_len))
     {
         return API_FAILURE;
     }
 
-    offset = 0x00;
-    BT_mem_copy(src_year, &t1[offset], 4);
-    BT_mem_copy(dst_year, &t2[offset], 4);
-    src_year[4] = '\0';
-    dst_year[4] = '\0';
-    offset += 4;
+    offset = 0x00U;
+    BT_mem_copy(src_year, &t1[offset], 4U);
+    BT_mem_copy(dst_year, &t2[offset], 4U);
+    src_year[4U] = '\0';
+    dst_year[4U] = '\0';
+    offset += 4U;
 
-#if 0
-    /* TODO: abract atoi */
-    src_val = atoi(src_year);
-    dst_val = atoi(dst_year);
-#else
-    src_val = str_to_num_pl((UCHAR  *)src_year, BT_str_len(src_year));
-    dst_val = str_to_num_pl((UCHAR  *)dst_year, BT_str_len(dst_year));
-#endif /* 0 */
+    src_val = EM_str_to_num_pl(src_year, (UINT16)BT_str_len(src_year));
+    dst_val = EM_str_to_num_pl(dst_year, (UINT16)BT_str_len(dst_year));
 
     /* comaparing years */
     if (src_val > dst_val)
     {
-        return 1;
+        return 1U;
     }
     else if (src_val < dst_val)
     {
         return -1;
     }
+    else
+    {
+        /* MISRA C-2012 Rule 15.7 */
+    }
 
-    BT_mem_copy(src_month, &t1[offset], 2);
-    BT_mem_copy(dst_month, &t2[offset], 2);
-    src_month[2] = '\0';
-    dst_month[2] = '\0';
+    BT_mem_copy(src_month, &t1[offset], 2U);
+    BT_mem_copy(dst_month, &t2[offset], 2U);
+    src_month[2U] = '\0';
+    dst_month[2U] = '\0';
 
-    offset += 2;
+    offset += 2U;
 
-#if 0
-    src_val = atoi(src_month);
-    dst_val = atoi(dst_month);
-#else
-    src_val = str_to_num_pl((UCHAR  *)src_month, BT_str_len(src_month));
-    dst_val = str_to_num_pl((UCHAR  *)dst_month, BT_str_len(dst_month));
-#endif /* 0 */
+    src_val = EM_str_to_num_pl(src_month, (UINT16)BT_str_len(src_month));
+    dst_val = EM_str_to_num_pl(dst_month, (UINT16)BT_str_len(dst_month));
 
     /* comparing months */
     if (src_val > dst_val)
     {
-        return 1;
+        return 1U;
     }
     else if (src_val < dst_val)
     {
         return -1;
     }
+    else
+    {
+        /* MISRA C-2012 Rule 15.7 */
+    }
 
-    BT_mem_copy(src_day, &t1[offset], 2);
-    BT_mem_copy(dst_day, &t2[offset], 2);
-    src_day[2] = '\0';
-    dst_day[2] = '\0';
+    BT_mem_copy(src_day, &t1[offset], 2U);
+    BT_mem_copy(dst_day, &t2[offset], 2U);
+    src_day[2U] = '\0';
+    dst_day[2U] = '\0';
 
-#if 0
-    src_val = atoi(src_day);
-    dst_val = atoi(dst_day);
-#else
-    src_val = str_to_num_pl((UCHAR  *)src_day, BT_str_len(src_day));
-    dst_val = str_to_num_pl((UCHAR  *)dst_day, BT_str_len(dst_day));
-#endif /* 0 */
+    src_val = EM_str_to_num_pl(src_day, (UINT16)BT_str_len(src_day));
+    dst_val = EM_str_to_num_pl(dst_day, (UINT16)BT_str_len(dst_day));
 
     /* comparing days */
     if (src_val > dst_val)
     {
-        return 1;
+        return 1U;
     }
     else if (src_val < dst_val)
     {
         return -1;
     }
+    else
+    {
+        /* MISRA C-2012 Rule 15.7 */
+    }
 
-    offset += 3;
+    offset += 3U;
 
     /* ==== */
-    BT_mem_copy(src_day, &t1[offset], 2);
-    BT_mem_copy(dst_day, &t2[offset], 2);
-    src_day[2] = '\0';
-    dst_day[2] = '\0';
+    BT_mem_copy(src_day, &t1[offset], 2U);
+    BT_mem_copy(dst_day, &t2[offset], 2U);
+    src_day[2U] = '\0';
+    dst_day[2U] = '\0';
 
-#if 0
-    src_val = atoi(src_day);
-    dst_val = atoi(dst_day);
-#else
-    src_val = str_to_num_pl((UCHAR  *)src_day, BT_str_len(src_day));
-    dst_val = str_to_num_pl((UCHAR  *)dst_day, BT_str_len(dst_day));
-#endif /* 0 */
+    src_val = EM_str_to_num_pl(src_day, (UINT16)BT_str_len(src_day));
+    dst_val = EM_str_to_num_pl(dst_day, (UINT16)BT_str_len(dst_day));
 
     /* compare hours */
     if (src_val > dst_val)
     {
-        return 1;
+        return 1U;
     }
     else if (src_val < dst_val)
     {
         return -1;
     }
+    else
+    {
+        /* MISRA C-2012 Rule 15.7 */
+    }
 
-    BT_mem_copy(src_day, &t1[offset], 2);
-    BT_mem_copy(dst_day, &t2[offset], 2);
-    src_day[2] = '\0';
-    dst_day[2] = '\0';
+    BT_mem_copy(src_day, &t1[offset], 2U);
+    BT_mem_copy(dst_day, &t2[offset], 2U);
+    src_day[2U] = '\0';
+    dst_day[2U] = '\0';
 
-#if 0
     /* compare minutes */
-    src_val = atoi(src_day);
-    dst_val = atoi(dst_day);
-#else
-    /* compare minutes */
-    src_val = str_to_num_pl((UCHAR  *)src_day, BT_str_len(src_day));
-    dst_val = str_to_num_pl((UCHAR  *)dst_day, BT_str_len(dst_day));
-#endif /* 0 */
+    src_val = EM_str_to_num_pl(src_day, (UINT16)BT_str_len(src_day));
+    dst_val = EM_str_to_num_pl(dst_day, (UINT16)BT_str_len(dst_day));
 
     if (src_val > dst_val)
     {
-        return 1;
+        return 1U;
     }
     else if (src_val < dst_val)
     {
         return -1;
     }
+    else
+    {
+        /* MISRA C-2012 Rule 15.7 */
+    }
 
-    BT_mem_copy(src_day, &t1[offset], 2);
-    BT_mem_copy(dst_day, &t2[offset], 2);
-    src_day[2] = '\0';
-    dst_day[2] = '\0';
+    BT_mem_copy(src_day, &t1[offset], 2U);
+    BT_mem_copy(dst_day, &t2[offset], 2U);
+    src_day[2U] = '\0';
+    dst_day[2U] = '\0';
 
-#if 0
-    /* comapre seconds */
-    src_val = atoi(src_day);
-    dst_val = atoi(dst_day);
-#else
-    src_val = str_to_num_pl((UCHAR  *)src_day, BT_str_len(src_day));
-    dst_val = str_to_num_pl((UCHAR  *)dst_day, BT_str_len(dst_day));
-#endif /* 0 */
+    src_val = EM_str_to_num_pl(src_day, (UINT16)BT_str_len(src_day));
+    dst_val = EM_str_to_num_pl(dst_day, (UINT16)BT_str_len(dst_day));
 
     if (src_val > dst_val)
     {
-        return 1;
+        return 1U;
     }
     else if (src_val < dst_val)
     {
         return -1;
     }
-
-    return 0;
-}
-
-UINT32 str_to_num_pl
-       (
-           /* IN */  UCHAR  * str,
-           /* IN */  UINT16 len
-       )
-{
-    UINT32 num = 0;
-    UINT8 index;
-
-    for(index = 0; index < len; index++)
+    else
     {
-        if(str[index] >= '0' && str[index] <= '9')
-        {
-            num = (num * 10) + (str[index] - '0');
-        }
-        else
-        {
-            /* :TODO: What error value is to be returned? */
-        }
+        /* MISRA C-2012 Rule 15.7 */
     }
 
-    return num;
+    return 0U;
 }
 
 /**
@@ -1034,19 +1015,19 @@ API_RESULT BT_ctn_convert_bytes_to_chars
 
     if ((NULL == byte_stream) ||
         (NULL == chrs) ||
-        (0x00 == byte_stream_len))
+        (0x00U == byte_stream_len))
     {
         retval = API_FAILURE;
     }
     else
     {
-        j = 0;
-        for (i = 0; i < byte_stream_len; i++)
+        j = 0U;
+        for (i = 0U; i < byte_stream_len; i++)
         {
-            chrs[j] = ctn_nibble_to_char(byte_stream[i] >> 4);
-            chrs[j+1] = ctn_nibble_to_char(byte_stream[i] & 0x0F);
+            chrs[j] = ctn_nibble_to_char(byte_stream[i] >> 4U);
+            chrs[j+1U] = ctn_nibble_to_char(byte_stream[i] & 0x0FU);
 
-            j += 2;
+            j += 2U;
         }
 
         *chrs_len = j;
@@ -1106,24 +1087,27 @@ CHAR  ctn_nibble_to_char(UCHAR nibble)
     UCHAR   src_obj_full_name[MAX_CTN_FOLDER_NAME_LEN];
     UCHAR   dst_obj_full_name[MAX_CTN_FOLDER_NAME_LEN];
     CHAR    *readstr;
-    CHAR    handle_field[64];
-    UCHAR   dst_file_name[64];
+    CHAR    handle_field[64U];
+    UCHAR   dst_file_name[64U];
     CHAR   *tmp_ptr;
     UCHAR   flag;
     UINT16  count;
 
     retval = API_SUCCESS;
+    /* MISRA C-2012 Rule 9.1 | Coverity UNINIT */
+    src_fd = NULL;
+    dst_fd = NULL;
 
     /* param check */
     if ((NULL == dir_entry) ||
         (NULL == src_file_name) ||
-        (NULL == dst_file_name) ||
         (NULL == ctn_handle))
     {
         return API_FAILURE;
     }
 
-    BT_vfops_create_object_name
+    /* MISRA C-2012 Rule 17.7 | Coverity CHECKED_RETURN */
+    (void)BT_vfops_create_object_name
     (
         dir_entry,
         src_file_name,
@@ -1137,10 +1121,11 @@ CHAR  ctn_nibble_to_char(UCHAR nibble)
         return API_FAILURE;
     }
 
-    BT_str_copy
+    BT_str_n_copy
     (
         dst_file_name,
-        ctn_handle
+        ctn_handle,
+        (sizeof(dst_file_name) - 1)
     );
 
     BT_str_cat
@@ -1149,7 +1134,8 @@ CHAR  ctn_nibble_to_char(UCHAR nibble)
         ".ics"
     );
 
-    BT_vfops_create_object_name
+    /* MISRA C-2012 Rule 17.7 | Coverity CHECKED_RETURN */
+    (void)BT_vfops_create_object_name
     (
         dir_entry,
         dst_file_name,
@@ -1159,7 +1145,8 @@ CHAR  ctn_nibble_to_char(UCHAR nibble)
     retval = BT_fops_file_open(dst_obj_full_name, (UCHAR *)"wb", &dst_fd);
     if (NULL == dst_fd)
     {
-        BT_fops_file_close(src_fd);
+        /* MISRA C-2012 Rule 17.7 | Coverity CHECKED_RETURN */
+        (void)BT_fops_file_close(src_fd);
 
         return API_FAILURE;
     }
@@ -1167,8 +1154,9 @@ CHAR  ctn_nibble_to_char(UCHAR nibble)
     readstr = ctn_msg_readline;
     count = sizeof(ctn_msg_readline);
 
-    flag = 0x00;
-    do
+    flag = 0x00U;
+
+    BT_LOOP_FOREVER()
     {
         /* Read one line */
         BT_mem_set(readstr, 0, count);
@@ -1177,7 +1165,7 @@ CHAR  ctn_nibble_to_char(UCHAR nibble)
             break;
         }
 
-        if (0x00 == flag)
+        if (0x00U == flag)
         {
             /* Search for VERSION property */
             tmp_ptr = BT_str_str(readstr, "VERSION");
@@ -1199,11 +1187,11 @@ CHAR  ctn_nibble_to_char(UCHAR nibble)
                     ctn_handle
                 );
 
-               handle_field[7+ctn_handle_len] = '\r';
-               handle_field[7+ctn_handle_len+1] = '\n';
-               handle_field[7+ctn_handle_len+2] = '\0';
+               handle_field[7U+ctn_handle_len] = '\r';
+               handle_field[7U+ctn_handle_len+1U] = '\n';
+               handle_field[7U+ctn_handle_len+2U] = '\0';
 
-                flag = 0x01;
+                flag = 0x01U;
             }
         }
 
@@ -1217,24 +1205,26 @@ CHAR  ctn_nibble_to_char(UCHAR nibble)
         }
 
         count = (UINT16)BT_str_len(readstr);
-        BT_fops_file_put (dst_fd, (UCHAR *)readstr, &count);
+        (BT_IGNORE_RETURN_VALUE) BT_fops_file_put (dst_fd, (UCHAR *)readstr, &count);
 
-        if (0x01 == flag)
+        if (0x01U == flag)
         {
             /* reset */
-            flag = 0x02;
+            flag = 0x02U;
 
             /* write the constructed 'HANDLE' */
             count = (UINT16)BT_str_len(handle_field);
-            BT_fops_file_put(dst_fd, (UCHAR *)handle_field, &count);
+            (BT_IGNORE_RETURN_VALUE) BT_fops_file_put(dst_fd, (UCHAR *)handle_field, &count);
         }
 
-    }while(1);
+    }
 
-    BT_fops_file_close(src_fd);
+    /* MISRA C-2012 Rule 17.7 | Coverity CHECKED_RETURN */
+    (void)BT_fops_file_close(src_fd);
     src_fd = NULL;
 
-    BT_fops_file_close(dst_fd);
+    /* MISRA C-2012 Rule 17.7 | Coverity CHECKED_RETURN */
+    (void)BT_fops_file_close(dst_fd);
     dst_fd = NULL;
 
     return retval;
@@ -1273,6 +1263,8 @@ API_RESULT BT_ctn_build_event_file_pl
     BT_fops_file_handle  event_fd;
 
     retval = API_SUCCESS;
+    /* MISRA C-2012 Rule 9.1 | Coverity UNINIT */
+    event_fd = NULL;
 
     /* param check */
     if ((NULL == dir_entry) ||
@@ -1285,7 +1277,8 @@ API_RESULT BT_ctn_build_event_file_pl
     }
     else
     {
-        BT_vfops_create_object_name
+        /* MISRA C-2012 Rule 17.7 | Coverity CHECKED_RETURN */
+        (void)BT_vfops_create_object_name
         (
             dir_entry,
             (UCHAR *)event_file,
@@ -1317,9 +1310,11 @@ API_RESULT BT_ctn_build_event_file_pl
             BT_fops_file_print(event_fd, "originator_name=\"Ruediger\" originator_address=\"ruediger@bms.com\" />\n");
             BT_fops_file_print(event_fd,"</%s>\n",parent);
 
-            BT_fops_file_close(event_fd);
+            /* MISRA C-2012 Rule 17.7 | Coverity CHECKED_RETURN */
+            (void)BT_fops_file_close(event_fd);
             event_fd = NULL;
         }
     }
     return retval;
 }
+#endif /* ((defined CTN_CCE) || (defined CTN_CSE)) */

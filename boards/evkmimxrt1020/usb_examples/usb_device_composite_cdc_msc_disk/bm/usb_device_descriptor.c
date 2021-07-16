@@ -36,7 +36,7 @@ usb_device_endpoint_struct_t g_mscDiskEndpoints[USB_MSC_DISK_ENDPOINT_COUNT] = {
     }};
 
 /* Define interface for MSC class */
-usb_device_interface_struct_t g_mscDiskInterface[] = {{0,
+usb_device_interface_struct_t g_mscDiskInterface[] = {{USB_MSC_DISK_INTERFACE_ALTERNATE_0,
                                                        {
                                                            USB_MSC_DISK_ENDPOINT_COUNT,
                                                            g_mscDiskEndpoints,
@@ -96,7 +96,7 @@ usb_device_endpoint_struct_t g_cdcVcomDicEndpoints[USB_CDC_VCOM_DIC_ENDPOINT_COU
 };
 
 /* Define interface for communication class */
-usb_device_interface_struct_t g_cdcVcomCicInterface[] = {{0,
+usb_device_interface_struct_t g_cdcVcomCicInterface[] = {{USB_CDC_VCOM_CIC_INTERFACE_ALTERNATE_0,
                                                           {
                                                               USB_CDC_VCOM_CIC_ENDPOINT_COUNT,
                                                               g_cdcVcomCicEndpoints,
@@ -104,7 +104,7 @@ usb_device_interface_struct_t g_cdcVcomCicInterface[] = {{0,
                                                           NULL}};
 
 /* Define interface for data class */
-usb_device_interface_struct_t g_cdcVcomDicInterface[] = {{0,
+usb_device_interface_struct_t g_cdcVcomDicInterface[] = {{USB_CDC_VCOM_DIC_INTERFACE_ALTERNATE_0,
                                                           {
                                                               USB_CDC_VCOM_DIC_ENDPOINT_COUNT,
                                                               g_cdcVcomDicEndpoints,
@@ -221,7 +221,7 @@ uint8_t g_UsbDeviceConfigurationDescriptor[] = {
     0x02,
 
     /* Interface Descriptor */
-    USB_DESCRIPTOR_LENGTH_INTERFACE, USB_DESCRIPTOR_TYPE_INTERFACE, USB_CDC_VCOM_CIC_INTERFACE_INDEX, 0x00,
+    USB_DESCRIPTOR_LENGTH_INTERFACE, USB_DESCRIPTOR_TYPE_INTERFACE, USB_CDC_VCOM_CIC_INTERFACE_INDEX, USB_CDC_VCOM_CIC_INTERFACE_ALTERNATE_0,
     USB_CDC_VCOM_CIC_ENDPOINT_COUNT, USB_CDC_VCOM_CIC_CLASS, USB_CDC_VCOM_CIC_SUBCLASS, USB_CDC_VCOM_CIC_PROTOCOL, 0x00,
 
     /* CDC Class-Specific descriptor */
@@ -256,7 +256,7 @@ uint8_t g_UsbDeviceConfigurationDescriptor[] = {
     FS_CDC_VCOM_INTERRUPT_IN_INTERVAL,
 
     /* Data Interface Descriptor */
-    USB_DESCRIPTOR_LENGTH_INTERFACE, USB_DESCRIPTOR_TYPE_INTERFACE, USB_CDC_VCOM_DIC_INTERFACE_INDEX, 0x00,
+    USB_DESCRIPTOR_LENGTH_INTERFACE, USB_DESCRIPTOR_TYPE_INTERFACE, USB_CDC_VCOM_DIC_INTERFACE_INDEX, USB_CDC_VCOM_DIC_INTERFACE_ALTERNATE_0,
     USB_CDC_VCOM_DIC_ENDPOINT_COUNT, USB_CDC_VCOM_DIC_CLASS, USB_CDC_VCOM_DIC_SUBCLASS, USB_CDC_VCOM_DIC_PROTOCOL,
     0x00, /* Interface Description String Index*/
 
@@ -271,7 +271,7 @@ uint8_t g_UsbDeviceConfigurationDescriptor[] = {
     USB_SHORT_GET_HIGH(FS_CDC_VCOM_BULK_OUT_PACKET_SIZE), 0x00, /* The polling interval value is every 0 Frames */
 
     /* MSC Interface Descriptor */
-    USB_DESCRIPTOR_LENGTH_INTERFACE, USB_DESCRIPTOR_TYPE_INTERFACE, USB_MSC_DISK_INTERFACE_INDEX, 0x00,
+    USB_DESCRIPTOR_LENGTH_INTERFACE, USB_DESCRIPTOR_TYPE_INTERFACE, USB_MSC_DISK_INTERFACE_INDEX, USB_MSC_DISK_INTERFACE_ALTERNATE_0,
     USB_MSC_DISK_ENDPOINT_COUNT, USB_MSC_DISK_CLASS, USB_MSC_DISK_SUBCLASS, USB_MSC_DISK_PROTOCOL,
     0x00, /* Interface Description String Index*/
 

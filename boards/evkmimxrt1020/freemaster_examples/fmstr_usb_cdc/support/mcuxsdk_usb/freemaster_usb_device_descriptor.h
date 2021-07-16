@@ -1,14 +1,14 @@
 /*
  * Copyright (c) 2007-2015 Freescale Semiconductor, Inc.
- * Copyright 2018-2020 NXP
+ * Copyright 2018-2021 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  *
  * FreeMASTER Communication Driver - USB Example Implementation
  */
 
-#ifndef _USB_DEVICE_DESCRIPTOR_H_
-#define _USB_DEVICE_DESCRIPTOR_H_ 1
+#ifndef __FREEMASTER_USB_DEVICE_DESCRIPTOR_H_
+#define __FREEMASTER_USB_DEVICE_DESCRIPTOR_H_ 1
 
 /*******************************************************************************
  * Definitions
@@ -202,4 +202,4 @@ usb_status_t USB_DeviceGetStringDescriptor(usb_device_handle handle,
  */
 extern usb_status_t USB_DeviceGetConfigurationDescriptor(
     usb_device_handle handle, usb_device_get_configuration_descriptor_struct_t *configurationDescriptor);
-#endif /* _USB_DEVICE_DESCRIPTOR_H_ */
+#endif /* __FREEMASTER_USB_DEVICE_DESCRIPTOR_H_ */

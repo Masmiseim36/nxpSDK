@@ -1,6 +1,6 @@
 # CROSS COMPILER SETTING
 SET(CMAKE_SYSTEM_NAME Generic)
-CMAKE_MINIMUM_REQUIRED (VERSION 3.1.1)
+CMAKE_MINIMUM_REQUIRED (VERSION 3.10.0)
 
 # THE VERSION NUMBER
 SET (Tutorial_VERSION_MAJOR 1)
@@ -32,10 +32,10 @@ include(${ProjDirPath}/config.cmake)
 
 add_executable(${MCUX_SDK_PROJECT_NAME} 
 "${ProjDirPath}/../littlefs_shell.c"
+"${ProjDirPath}/../lfs_mflash.c"
+"${ProjDirPath}/../lfs_mflash.h"
 "${ProjDirPath}/../pin_mux.c"
 "${ProjDirPath}/../pin_mux.h"
-"${ProjDirPath}/../lfs_support.c"
-"${ProjDirPath}/../lfs_support.h"
 "${ProjDirPath}/../peripherals.c"
 "${ProjDirPath}/../peripherals.h"
 "${ProjDirPath}/../board.c"
@@ -51,6 +51,7 @@ target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
 )
 
 set(CMAKE_MODULE_PATH
+    ${ProjDirPath}/../../../../../components/flash/mflash/mimxrt1052
     ${ProjDirPath}/../../../../../devices/MIMXRT1052/drivers
     ${ProjDirPath}/../../../../../middleware/littlefs
     ${ProjDirPath}/../../../../../devices/MIMXRT1052/utilities
@@ -58,11 +59,12 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../components/uart
     ${ProjDirPath}/../../../../../components/serial_manager
     ${ProjDirPath}/../../../../../components/lists
-    ${ProjDirPath}/../../../../../CMSIS/Include
+    ${ProjDirPath}/../../../../../components/flash/mflash
+    ${ProjDirPath}/../../../../../CMSIS/Core/Include
 )
 
 # include modules
-include(driver_cache_armv7_m7_MIMXRT1052)
+include(component_mflash_rt1050_MIMXRT1052)
 
 include(driver_flexspi_MIMXRT1052)
 
@@ -96,11 +98,11 @@ include(utility_assert_MIMXRT1052)
 
 include(driver_igpio_MIMXRT1052)
 
-include(CMSIS_Include_core_cm7_MIMXRT1052)
+include(component_mflash_common_MIMXRT1052)
 
-include(CMSIS_Include_common_MIMXRT1052)
+include(CMSIS_Include_core_cm_MIMXRT1052)
 
-include(CMSIS_Include_dsp_MIMXRT1052)
+include(driver_cache_armv7_m7_MIMXRT1052)
 
 include(utilities_misc_utilities_MIMXRT1052)
 

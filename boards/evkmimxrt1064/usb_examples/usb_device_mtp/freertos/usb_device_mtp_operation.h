@@ -9,11 +9,15 @@
 #define __USB_DEVICE_MTP_OPERATION_H__
 
 /*!
- * @addtogroup mtp_spec
+ * @addtogroup usb_device_mtp_drv
  * @{
  */
 
-/*!< @brief MTP data type code*/
+/*!
+ * @name USB MTP data type code
+ * @{
+ */
+
 #define MTP_TYPE_UNDEFINED 0x0000U /*!< Undefined                          */
 #define MTP_TYPE_INT8      0x0001U /*!< Signed 8-bit integer               */
 #define MTP_TYPE_UINT8     0x0002U /*!< Unsigned 8-bit integer             */
@@ -37,13 +41,25 @@
 #define MTP_TYPE_AUINT128  0x400AU /*!< Array of unsigned 128-bit integers */
 #define MTP_TYPE_STR       0xFFFFU /*!< Variable-length Unicode string     */
 
-/*!< @brief MTP functional mode */
+/*! @}*/
+
+/*!
+ * @name USB MTP functional mode
+ * @{
+ */
+
 #define MTP_FUNCTIONAL_MODE_STANDARD_MODE           0x0000U
 #define MTP_FUNCTIONAL_MODE_SLEEP_MODE              0x0001U
 #define MTP_FUNCTIONAL_MODE_NON_RESPONSIVE_PLAYBACK 0xC001U
 #define MTP_FUNCTIONAL_MODE_RESPONSIVE_PLAYBACK     0xC002U
 
-/*! @brief MTP format code */
+/*! @}*/
+
+/*!
+ * @name USB MTP format code
+ * @{
+ */
+
 #define MTP_FORMAT_UNDEFINED                         0x3000U
 #define MTP_FORMAT_ASSOCIATION                       0x3001U
 #define MTP_FORMAT_SCRIPT                            0x3002U
@@ -134,7 +150,13 @@
 #define MTP_FORMAT_VCARD_2                           0xBB82U
 #define MTP_FORMAT_VCARD_3                           0xBB83U
 
-/*! @brief MTP object property code */
+/*! @}*/
+
+/*!
+ * @name USB MTP object property code
+ * @{
+ */
+
 #define MTP_OBJECT_PROPERTY_STORAGE_ID                          0xDC01U
 #define MTP_OBJECT_PROPERTY_OBJECT_FORMAT                       0xDC02U
 #define MTP_OBJECT_PROPERTY_PROTECTION_STATUS                   0xDC03U
@@ -307,7 +329,13 @@
 #define MTP_OBJECT_PROPERTY_TIME_TO_LIVE                        0xDD71U
 #define MTP_OBJECT_PROPERTY_MEDIA_GUID                          0xDD72U
 
-/*! @brief MTP device property code */
+/*! @}*/
+
+/*!
+ * @name USB MTP device property code
+ * @{
+ */
+
 #define MTP_DEVICE_PROPERTY_UNDEFINED                      0x5000U
 #define MTP_DEVICE_PROPERTY_BATTERY_LEVEL                  0x5001U
 #define MTP_DEVICE_PROPERTY_FUNCTIONAL_MODE                0x5002U
@@ -351,7 +379,13 @@
 #define MTP_DEVICE_PROPERTY_SESSION_INITIATOR_VERSION_INFO 0xD406U
 #define MTP_DEVICE_PROPERTY_PERCEIVED_DEVICE_TYPE          0xD407U
 
-/*! @brief MTP operation code */
+/*! @}*/
+
+/*!
+ * @name USB MTP operation code
+ * @{
+ */
+
 #define MTP_OPERATION_GET_DEVICE_INFO              0x1001U
 #define MTP_OPERATION_OPEN_SESSION                 0x1002U
 #define MTP_OPERATION_CLOSE_SESSION                0x1003U
@@ -392,7 +426,13 @@
 #define MTP_OPERATION_SET_OBJECT_REFERENCES        0x9811U
 #define MTP_OPERATION_SKIP                         0x9820U
 
-/*! @brief MTP response code */
+/*! @}*/
+
+/*!
+ * @name USB MTP response code
+ * @{
+ */
+
 #define MTP_RESPONSE_UNDEFINED                                0x2000U
 #define MTP_RESPONSE_OK                                       0x2001U
 #define MTP_RESPONSE_GENERAL_ERROR                            0x2002U
@@ -437,7 +477,13 @@
 #define MTP_RESPONSE_OBJECT_TOO_LARGE                         0xA809U
 #define MTP_RESPONSE_OBJECT_PROP_NOT_SUPPORTED                0xA80AU
 
-/*! @brief MTP event code */
+/*! @}*/
+
+/*!
+ * @name USB MTP event code
+ * @{
+ */
+
 #define MTP_EVENT_UNDEFINED                 0x4000U
 #define MTP_EVENT_CANCEL_TRANSACTION        0x4001U
 #define MTP_EVENT_OBJECT_ADDED              0x4002U
@@ -457,7 +503,13 @@
 #define MTP_EVENT_OBJECT_PROP_DESC_CHANGED  0xC802U
 #define MTP_EVENT_OBJECT_REFERENCES_CHANGED 0xC803U
 
-/*! @brief MTP property form flag */
+/*! @}*/
+
+/*!
+ * @name USB MTP property form flag
+ * @{
+ */
+
 #define MTP_FORM_FLAG_NONE               0x00U
 #define MTP_FORM_FLAG_RANGE              0x01U
 #define MTP_FORM_FLAG_ENUMERATION        0x02U
@@ -467,23 +519,43 @@
 #define MTP_FORM_FLAG_BYTE_ARRAY         0x06U
 #define MTP_FORM_FLAG_LONG_STRING        0xFFU
 
-/*! @brief MTP storage type */
+/*! @}*/
+
+/*!
+ * @name USB MTP storage type
+ * @{
+ */
+
 #define MTP_STORAGE_FIXED_ROM     0x0001U
 #define MTP_STORAGE_REMOVABLE_ROM 0x0002U
 #define MTP_STORAGE_FIXED_RAM     0x0003U
 #define MTP_STORAGE_REMOVABLE_RAM 0x0004U
 
-/*! @brief MTP file system */
+/*! @}*/
+
+/*!
+ * @name USB MTP file system
+ * @{
+ */
+
 #define MTP_STORAGE_UNDEFINED                       0x0000U
 #define MTP_STORAGE_FILESYSTEM_GENERIC_FLAT         0x0001U
 #define MTP_STORAGE_FILESYSTEM_GENERIC_HIERARCHICAL 0x0002U
 #define MTP_STORAGE_FILESYSTEM_DCF                  0x0003U
 
-/*! @brief MTP access capbility */
+/*! @}*/
+
+/*!
+ * @name USB MTP access capability
+ * @{
+ */
+
 #define MTP_STORAGE_READ_WRITE               0x0000U
 #define MTP_STORAGE_READ_ONLY_WITHOUT_DELETE 0x0001U
 #define MTP_STORAGE_READ_ONLY_WITH_DELETE    0x0002U
 
 /*! @}*/
 
-#endif
+/*! @}*/
+
+#endif /* __USB_DEVICE_MTP_OPERATION_H__ */

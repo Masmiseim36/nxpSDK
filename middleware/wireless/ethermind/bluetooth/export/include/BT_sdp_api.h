@@ -41,58 +41,58 @@
 /* -------------------------------- Global Definitions */
 /* ----------------- SDP API/PDU Identifiers */
 /** PDU ID for SDP Error response */
-#define SDP_ErrorResponse                  0x01
+#define SDP_ErrorResponse                  0x01U
 
 /** PDU ID for Service Search Request */
-#define SDP_ServiceSearchRequest           0x02
+#define SDP_ServiceSearchRequest           0x02U
 
 /** PDU ID for Service Search Response */
-#define SDP_ServiceSearchResponse          0x03
+#define SDP_ServiceSearchResponse          0x03U
 
 /** PDU ID for Service Attribute Request */
-#define SDP_ServiceAttributeRequest        0x04
+#define SDP_ServiceAttributeRequest        0x04U
 
 /** PDU ID for Service Attribute Response */
-#define SDP_ServiceAttributeResponse       0x05
+#define SDP_ServiceAttributeResponse       0x05U
 
 /** PDU ID for Service Search Attribute Request */
-#define SDP_ServiceSearchAttributeRequest  0x06
+#define SDP_ServiceSearchAttributeRequest  0x06U
 
 /** PDU ID for Service Search Attribute Response */
-#define SDP_ServiceSearchAttributeResponse 0x07
+#define SDP_ServiceSearchAttributeResponse 0x07U
 
 /* ----------------- Other APIs */
 /** Identifer for SDP open operation */
-#define SDP_Open                           0x08
+#define SDP_Open                           0x08U
 
 /** Identifier for SDP Close operation */
-#define SDP_Close                          0x09
+#define SDP_Close                          0x09U
 
 /* ---------------- SDP Response Error code Values */
 /** SDP error response code : Reserved */
-#define SDP_INVALID_ERR                    0x0000
+#define SDP_INVALID_ERR                    0x0000U
 
 /** SDP error response code : Invalid version */
-#define SDP_INVALID_VERSION                0x0001
+#define SDP_INVALID_VERSION                0x0001U
 
 /** SDP error response code : Invalid record handle */
-#define SDP_INVALID_RECORD_HANDLE          0x0002
+#define SDP_INVALID_RECORD_HANDLE          0x0002U
 
 /** SDP error response code : Invalid request syntax */
-#define SDP_INVALID_REQUEST_SYNTAX         0x0003
+#define SDP_INVALID_REQUEST_SYNTAX         0x0003U
 
 /** SDP error response : invalid  PDU size */
-#define SDP_INVALID_PDU_SIZE               0x0004
+#define SDP_INVALID_PDU_SIZE               0x0004U
 
 /** SDP error response : Invalid continuation state */
-#define SDP_INVALID_CONT_STATE             0x0005
+#define SDP_INVALID_CONT_STATE             0x0005U
 
 /** SDP error response : Insufficient resources */
-#define SDP_INSUFFICIENT_RESOURCE          0x0006
+#define SDP_INSUFFICIENT_RESOURCE          0x0006U
 
 /** SDP Server Events */
-#define SDP_SERVER_CONNECT_IND             0x11
-#define SDP_SERVER_DISCONNECT_IND          0x12
+#define SDP_SERVER_CONNECT_IND             0x11U
+#define SDP_SERVER_DISCONNECT_IND          0x12U
 
 /** \} */
 /** \} */
@@ -201,7 +201,7 @@ typedef struct sdp_handle
         (handle).fn_ptr = (callback)
 
 #define SDP_RESET_HANDLE(handle) \
-        BT_mem_set (&handle, 0, sizeof (SDP_HANDLE))
+        BT_mem_set (&(handle), 0U, sizeof (SDP_HANDLE))
 
 /** Macros for UUID Conversion API */
 #define BT_uuid_16_to_128       BT_uuid_32_to_128
@@ -218,9 +218,8 @@ extern "C" {
  * This section describes the EtherMind Service Discovery Profile APIs.
  */
 /* ---------------- Request APIs */
-/* Opening/Closing RFCOMM Server Channels */
 /**
- *  \brief To establishe a SDP connection with a Bluetooth device.
+ *  \brief To establish a SDP connection with a Bluetooth device.
  *
  *  \par Description:
  *       This API establishes the SDP connection with a remote Bluetooth device,
@@ -240,11 +239,10 @@ extern "C" {
  *        prior to calling this API.
  *        The SDP Response Callback is called on connection establishment or
  *        error with 'type' set to SDP_Open.
- *
  */
 API_RESULT BT_sdp_open
            (
-               /* IN */   SDP_HANDLE *  /* handle */
+               /* IN */   SDP_HANDLE *  handle
            );
 
 /**
@@ -262,15 +260,13 @@ API_RESULT BT_sdp_open
  *
  *  \note The SDP Response Callback is called on connection establishment or
  *        error with 'type' set to SDP_Close.
- *
  */
 API_RESULT BT_sdp_close
            (
-               /* IN */    SDP_HANDLE * /* handle */
+               /* IN */    SDP_HANDLE * handle
            );
 
 
-/* SDP Service/Attribute Searches */
 /**
  *  \brief To perform a SDP Service Search Request on another Bluetooth device
  *         to find the services provided by that device.
@@ -292,14 +288,17 @@ API_RESULT BT_sdp_close
  *
  *  \param [in] num_uuids
  *         Number of UUIDs present in the uuids parameter.
- *  \param [in] num_rec_handles
- *         This parameter specifies the maximum number of SDP Record Handles
- *         that the remote Bluetooth device is required to return when sending
- *         its response for the Service Search Request.
- *  \param [in] rec_handles
+ *
+ *  \param [out] rec_handles
  *         Buffer allocated by the application for storing the record handles.
  *         The allocated buffer size should be sufficient to store num_rec_handles
  *         handles.
+ *
+ *  \param [in,out] num_rec_handles
+ *         This parameter specifies the maximum number of SDP Record Handles
+ *         that the remote Bluetooth device is required to return when sending
+ *         its response for the Service Search Request.
+ *
  *  \return
  *       API_SUCCESS or one of the error codes as defined in \ref BLE_ERROR_CODES.
  *
@@ -316,11 +315,11 @@ API_RESULT BT_sdp_close
  */
 API_RESULT BT_sdp_servicesearchrequest
            (
-               /* IN */    SDP_HANDLE * /* handle */,
-               /* IN */    S_UUID *     /* uuids  */,
-               /* IN */    UINT16       /* num_uuids */,
-               /* OUT */   UINT32 *     /* rec_handles */,
-               /* INOUT */ UINT16 *     /* num_rec_handles */
+               /* IN */    SDP_HANDLE *    handle,
+               /* IN */    S_UUID *        uuids,
+               /* IN */    UINT16          num_uuids,
+               /* OUT */   UINT32 *        rec_handles,
+               /* INOUT */ UINT16 *        num_rec_handles
            );
 
 /**
@@ -365,7 +364,7 @@ API_RESULT BT_sdp_servicesearchrequest
  *         Number of attribute ID range in the  attribute Id range list.
  *         If this is greater than SDP_MAX_ATTR_RANGE, SDP returns failure.
  *
- *  \param [in] attribute_data
+ *  \param [out] attribute_data
  *         This contains the list of attribute IDs and attribute values
  *         returned for this request.
  *
@@ -380,19 +379,18 @@ API_RESULT BT_sdp_servicesearchrequest
  */
 API_RESULT BT_sdp_serviceattributerequest
            (
-               /* IN */    SDP_HANDLE * /* handle */,
-               /* IN */    UINT32       /* rec_handle */,
-               /* IN */    UINT16 *     /* attribute_ids */,
-               /* IN */    UINT16       /* num_attribute_ids */,
-               /* IN */    UINT32 *     /* attribute_id_range */,
-               /* IN */    UINT16       /* num_attribute_id_range */,
-               /* OUT */   UCHAR *      /* attribute_data */,
-               /* INOUT */ UINT16 *     /* len_attribute_data */
+               /* IN */    SDP_HANDLE *    handle,
+               /* IN */    UINT32          rec_handle,
+               /* IN */    UINT16 *        attribute_ids,
+               /* IN */    UINT16          num_attribute_ids,
+               /* IN */    UINT32 *        attribute_id_range,
+               /* IN */    UINT16          num_attribute_id_range,
+               /* OUT */   UCHAR *         attribute_data,
+               /* INOUT */ UINT16 *        len_attribute_data
            );
 
 /**
- *
- * \brief To perform a  SDP Service Search Attribute Request to find the
+ * \brief To perform a SDP Service Search Attribute Request to find the
  * services available and the characteristics of the available service.
  *
  *  \par Description:
@@ -449,15 +447,15 @@ API_RESULT BT_sdp_serviceattributerequest
  */
 API_RESULT BT_sdp_servicesearchattributerequest
            (
-               /* IN */    SDP_HANDLE *   /* handle */,
-               /* IN */    S_UUID *       /* uuids */,
-               /* IN */    UINT16         /* num_uuids */,
-               /* IN */    UINT16 *       /* attribute_ids */,
-               /* IN */    UINT16         /* num_attribute_ids */,
-               /* IN */    UINT32 *       /* attribute_id_range */,
-               /* IN */    UINT16         /* num_attribute_id_range */,
-               /* OUT */   UCHAR *        /* attribute_data */,
-               /* INOUT */ UINT16 *       /* len_attribute_data */
+               /* IN */    SDP_HANDLE *    handle,
+               /* IN */    S_UUID *        uuids,
+               /* IN */    UINT16          num_uuids,
+               /* IN */    UINT16 *        attribute_ids,
+               /* IN */    UINT16          num_attribute_ids,
+               /* IN */    UINT32 *        attribute_id_range,
+               /* IN */    UINT16          num_attribute_id_range,
+               /* OUT */   UCHAR *         attribute_data,
+               /* INOUT */ UINT16 *        len_attribute_data
            );
 
 
@@ -472,10 +470,11 @@ API_RESULT BT_sdp_servicesearchattributerequest
  *  \param [in] buffer
  *         The buffer containing the SDP Record Handles, as returned by the SDP
  *         Service Search Request API.
+ *
  *  \param [in] buffer_length
  *         Size of the buffer containing the SDP Record Handles.
  *
- *  \param [out] record_handles
+ *  \param [out] rec_handles
  *         Caller allocated UINT32 Array of size num_handles, which will contain
  *         the extracted Record Handles on return.
  *
@@ -490,10 +489,10 @@ API_RESULT BT_sdp_servicesearchattributerequest
  */
 API_RESULT BT_sdp_get_RecordHandle
            (
-               /* IN */    UCHAR *       /* buffer */,
-               /* IN */    UINT16        /* length */,
-               /* IN */    UINT32 *      /* rec_handles */,
-               /* INOUT */ UINT16 *      /* num_handles */
+               /* IN */    UCHAR *     buffer,
+               /* IN */    UINT16      length,
+               /* OUT */   UINT32 *    rec_handles,
+               /* INOUT */ UINT16 *    num_handles
            );
 
 /**
@@ -509,8 +508,7 @@ API_RESULT BT_sdp_get_RecordHandle
  *         data, as received as a result of the SDP Service Attribute Request
  *         and/or SDP Service Search Attribute Request APIs.
  *
- *
- *  \param [out] record_handle
+ *  \param [out] handle
  *         Application allocated UINT32 Array, where the list of Record Handles
  *         will be populated.
  *
@@ -519,8 +517,8 @@ API_RESULT BT_sdp_get_RecordHandle
  */
 API_RESULT BT_sdp_get_ServiceRecordHandle
            (
-               /* IN */    UCHAR * attribute_data,
-               /* OUT */   UINT32 * handle
+               /* IN */  UCHAR * attribute_data,
+               /* OUT */ UINT32 * handle
            );
 
 /**
@@ -569,7 +567,7 @@ API_RESULT BT_sdp_get_ServiceClassIDList
  *          data, as received as a result of the SDP Service Attribute Request
  *          and/or SDP Service Search Attribute Request APIs.
  *
- *  \param [out] service_record_state
+ *  \param [out] record_state
  *         Pointer to an application allocated UINT32 variable containing the
  *         Service Record State attribute value.
  *
@@ -578,8 +576,8 @@ API_RESULT BT_sdp_get_ServiceClassIDList
  */
 API_RESULT BT_sdp_get_ServiceRecordState
            (
-               /* IN */    UCHAR *  attribute_data,
-               /* OUT */   UINT32 * record_state
+               /* IN */  UCHAR *  attribute_data,
+               /* OUT */ UINT32 * record_state
            );
 
 /**
@@ -595,12 +593,12 @@ API_RESULT BT_sdp_get_ServiceRecordState
  *         data, as received as a result of the SDP Service Attribute Request
  *         and/or SDP Service Search Attribute Request APIs.
  *
- *  \param [out] language_base_id_list
+ *  \param [out] lang_base_id_list
  *         Application allocated UINT16 array of size 'lang_count * 3', which
  *         will contain the Language ID List providing the Language Identifier,
  *         Character Encoding Identifier, Base Attribute ID.
  *
- *  \param [in,out]
+ *  \param [in,out] lang_count
  *         Number of natural languages supported. The Application must specify a
  *         pointer to a UINT16 variable, containing the allocated size of
  *         language_base_id_list. On return, this parameter contains the actual
@@ -641,8 +639,8 @@ API_RESULT BT_sdp_get_LanguageBaseAttributeIDList
  */
 API_RESULT BT_sdp_get_ServiceID
            (
-               /* IN */    UCHAR *  attribute_data,
-               /* OUT */   S_UUID * service_id
+               /* IN */  UCHAR *  attribute_data,
+               /* OUT */ S_UUID * service_id
            );
 
 /**
@@ -691,7 +689,7 @@ API_RESULT BT_sdp_get_BrowseGroupList
  *         data, as received as a result of the SDP Service Attribute Request
  *         and/or SDP Service Search Attribute Request APIs.
  *
- *  \param [out] time_to_live
+ *  \param [out] ttl
  *         Pointer to a caller allocated UINT32 variable, which will contain the
  *         Time to Live extracted attribute value on return.
  *
@@ -789,9 +787,9 @@ API_RESULT BT_sdp_get_BluetoothProfileDescriptorList
  */
 API_RESULT BT_sdp_get_DocumentationURL
            (
-               /* IN */    UCHAR * attribute_data,
-               /* OUT */   UCHAR * url,
-               /* IN */    UINT16  length
+               /* IN */  UCHAR * attribute_data,
+               /* OUT */ UCHAR * url,
+               /* IN */  UINT16  length
            );
 
 /**
@@ -820,9 +818,9 @@ API_RESULT BT_sdp_get_DocumentationURL
  */
 API_RESULT BT_sdp_get_ClientExecutableURL
            (
-               /* IN */    UCHAR * attribute_data,
-               /* OUT */   UCHAR * url,
-               /* IN */    UINT16  length
+               /* IN */  UCHAR * attribute_data,
+               /* OUT */ UCHAR * url,
+               /* IN */  UINT16  length
            );
 
 /**
@@ -851,16 +849,11 @@ API_RESULT BT_sdp_get_ClientExecutableURL
  */
 API_RESULT BT_sdp_get_IconURL
            (
-               /* IN */    UCHAR * attribute_data,
-               /* OUT */   UCHAR * url,
-               /* IN */    UINT16  length
+               /* IN */  UCHAR * attribute_data,
+               /* OUT */ UCHAR * url,
+               /* IN */  UINT16  length
            );
 
-/*
- * Language base Attribute ID should required to get
- * the human readable string of that language.
- * Ex: 0x0100 for English
- */
 /**
  *  \brief To extract Service Name attribute value.
  *
@@ -881,7 +874,7 @@ API_RESULT BT_sdp_get_IconURL
  *         Caller allocated UCHAR Array of size name_length, where the Service
  *         Name will be available on return.
  *
- *  \param [in] str_len
+ *  \param [in] str_buf_len
  *         This parameter provides the size of the UCHAR Array, service_name,
  *         allocated by the caller, to store the Service Name attribute value.
  *
@@ -890,31 +883,10 @@ API_RESULT BT_sdp_get_IconURL
  */
 API_RESULT BT_sdp_get_ServiceName
            (
-               /* IN */    UCHAR * attribute_data,
-               /* IN */    UINT16  lang_base_attr_id,
-               /* OUT */   UCHAR * string,
-               /* IN */    UINT16  str_len
-           );
-
-/**
- *  \brief
- *
- *  \par Description:
- *
- *  \param None
- *
- *  \return
- *       API_SUCCESS or one of the error codes as defined in \ref BLE_ERROR_CODES.
- *
- *  \note
- *
- */
-API_RESULT BT_sdp_get_ServiceDescription
-           (
-               /* IN */    UCHAR * attribute_data,
-               /* IN */    UINT16  lang_base_attr_id,
-               /* OUT */   UCHAR * string,
-               /* IN */    UINT16  str_len
+               /* IN */  UCHAR * attribute_data,
+               /* IN */  UINT16  lang_base_attr_id,
+               /* OUT */ UCHAR * string,
+               /* IN */  UINT16  str_buf_len
            );
 
 /**
@@ -938,19 +910,54 @@ API_RESULT BT_sdp_get_ServiceDescription
  *         Caller allocated UCHAR Array of size desc_length, where the Service
  *         Description will be available on return.
  *
- *  \param [in] str_len
+ *  \param [in] str_buf_len
  *         This parameter provides the size of the UCHAR Array, service_desc,
  *         allocated by the caller, to store the Service Description attribute value.
  *
  *  \return
  *       API_SUCCESS or one of the error codes as defined in \ref BLE_ERROR_CODES.
  */
+API_RESULT BT_sdp_get_ServiceDescription
+           (
+               /* IN */  UCHAR * attribute_data,
+               /* IN */  UINT16  lang_base_attr_id,
+               /* OUT */ UCHAR * string,
+               /* IN */  UINT16  str_buf_len
+           );
+
+/**
+ *  \brief To extract Provider Name attribute value.
+ *
+ *  \par Description:
+ *       This API can be used to extract the Provider Name attribute value from
+ *       the attribute data returned by the SDP Service Attribute Request and/or
+ *       SDP Service Search Attribute Request APIs.
+ *
+ *  \param [in] attribute_data
+ *         Application allocated UCHAR buffer containing the Service Attribute
+ *         data, as received as a result of the SDP Service Attribute Request
+ *         and/or SDP Service Search Attribute Request APIs.
+ *
+ *  \param [in] lang_base_attr_id
+ *         Language Base Attribute ID for the language in which the name is specified.
+ *
+ *  \param [out] string
+ *         Caller allocated UCHAR Array of size name_length, where the Provider
+ *         Name will be available on return.
+ *
+ *  \param [in] str_buf_len
+ *         This parameter provides the size of the UCHAR Array, provider_name,
+ *         allocated by the caller, to store the Provider Name attribute value.
+ *
+ *  \return
+ *       API_SUCCESS or one of the error codes as defined in \ref BLE_ERROR_CODES.
+ */
 API_RESULT BT_sdp_get_ProviderName
            (
-               /* IN */    UCHAR * attribute_data,
-               /* IN */    UINT16  lang_base_attr_id,
-               /* OUT */   UCHAR * string,
-               /* IN */    UINT16  str_len
+               /* IN */  UCHAR * attribute_data,
+               /* IN */  UINT16  lang_base_attr_id,
+               /* OUT */ UCHAR * string,
+               /* IN */  UINT16  str_buf_len
            );
 
 /**
@@ -975,8 +982,8 @@ API_RESULT BT_sdp_get_ProviderName
  */
 API_RESULT BT_sdp_get_VersionNumberList
            (
-               /* IN */    UCHAR *  attribute_data,
-               /* OUT */   UINT16 * version_number
+               /* IN */  UCHAR *  attribute_data,
+               /* OUT */ UINT16 * version_number
            );
 
 /**
@@ -1001,8 +1008,8 @@ API_RESULT BT_sdp_get_VersionNumberList
  */
 API_RESULT BT_sdp_get_ServiceDatabaseState
            (
-               /* IN */    UCHAR *  attribute_data,
-               /* OUT */   UINT32 * database_state
+               /* IN */  UCHAR *  attribute_data,
+               /* OUT */ UINT32 * database_state
            );
 
 /**
@@ -1064,12 +1071,12 @@ API_RESULT BT_sdp_get_GroupID
  */
 API_RESULT BT_sdp_get_channel_number
            (
-               /* IN */    UCHAR * attribute_data,
-               /* OUT */   UCHAR * channel_number
+               /* IN */  UCHAR * attribute_data,
+               /* OUT */ UCHAR * channel_number
            );
 
 /**
- *  \brief To extract RFCOMM Server Channel attribute value.
+ *  \brief To extract additional RFCOMM Server Channel attribute value.
  *
  *  \par Description:
  *       This API can be used to extract the RFCOMM Server Channel attribute
@@ -1081,16 +1088,18 @@ API_RESULT BT_sdp_get_channel_number
  *         Application allocated UCHAR buffer containing the Service Attribute
  *         data, as received as a result of the SDP Service Attribute Request
  *         and/or SDP Service Search Attribute Request APIs.
+ *
  *  \param [out] channel_number
  *         Pointer to a caller allocated UCHAR variable, which will contain the
  *         RFCOMM Server Channel attribute value on return.
+ *
  *  \return
  *       API_SUCCESS or one of the error codes as defined in \ref BLE_ERROR_CODES.
  */
 API_RESULT BT_sdp_get_additional_channel
            (
-               /* IN */    UCHAR * attribute_data,
-               /* OUT */   UCHAR * channel_number
+               /* IN */  UCHAR * attribute_data,
+               /* OUT */ UCHAR * channel_number
            );
 
 /**
@@ -1115,8 +1124,8 @@ API_RESULT BT_sdp_get_additional_channel
  */
 API_RESULT BT_sdp_get_psm
            (
-               /* IN */    UCHAR *  attribute_data,
-               /* OUT */   UINT16 * psm
+               /* IN */  UCHAR  * attribute_data,
+               /* OUT */ UINT16 * psm
            );
 
 /**
@@ -1126,14 +1135,14 @@ API_RESULT BT_sdp_get_psm
  *  This routine extract the L2CAP psm value from the additional protocol
  *  descriptor list in the attribute data of the response.
  *
- *  \param  [in]  attribute_data
- *                Attribute data used to extract the L2CAP psm.
+ *  \param  [in] attribute_data
+ *          Attribute data used to extract the L2CAP psm.
  *
  *  \param  [out] psm
- *                Extracted L2CAP PSM value.
+ *          Extracted L2CAP PSM value.
  *
- *  \param  [in]  psm_index
- *                Index of psm in additional protocol list.
+ *  \param  [in] psm_index
+ *          Index of psm in additional protocol list.
  *
  *  \result
  *     API_RESULT : API_SUCCESS or Error code
@@ -1158,38 +1167,67 @@ API_RESULT BT_sdp_get_additional_psm_with_index
  * To Get First L2CAP psm from additional protocol descriptor list.
  */
 #define BT_sdp_get_additional_psm(attr_data, psm)        \
-        BT_sdp_get_additional_psm_with_index((attr_data), (psm), 0x00)
+        BT_sdp_get_additional_psm_with_index((attr_data), (psm), 0x00U)
+
 /**
- *  \brief
+ *  \brief To extract Start and End handle attribute values of a GATT Service.
  *
  *  \par Description:
+ *       This API can be used to extract the start and end handle attribute values
+ *       for a GATT Service from the attribute data (Protocol Descriptor List)
+ *       returned by the SDP Service Attribute Request and/or SDP Service Search
+ *       Attribute Request APIs.
  *
- *  \param None
+ *  \param [in] attribute_data
+ *         Application allocated UCHAR buffer containing the Service Attribute
+ *         data, as received as a result of the SDP Service Attribute Request
+ *         and/or SDP Service Search Attribute Request APIs.
+ *
+ *  \param [out] start_handle
+ *         Pointer to a caller allocated UINT16 variable, which will contain the
+ *         Start Handle attribute value on return.
+ *
+ *  \param [out] end_handle
+ *         Pointer to a caller allocated UINT16 variable, which will contain the
+ *         End Handle attribute value on return.
  *
  *  \return
  *       API_SUCCESS or one of the error codes as defined in \ref BLE_ERROR_CODES.
- *
- *  \note
- *
  */
 API_RESULT BT_sdp_get_gatt_handle_range
            (
-               /* IN */ UCHAR   *  attribute_data,
+               /* IN */  UCHAR  *  attribute_data,
                /* OUT */ UINT16 *  start_handle,
                /* OUT */ UINT16 *  end_handle
            );
+
 /**
- *  \brief
+ *  \brief To extract attribute value for a given attribute ID.
  *
  *  \par Description:
+ *       This API can be used to extract the attribute value corresponding to a
+ *       given attribute ID from the attribute data returned by the SDP Service
+ *       Attribute Request and/or SDP Service Search Attribute Request APIs.
  *
- *  \param None
+ *  \param [in] attrib_id
+ *         Attribute ID for which the attribute value to be extracted.
+ *
+ *  \param [in] attribute_data
+ *         Application allocated UCHAR buffer containing the Service Attribute
+ *         data, as received as a result of the SDP Service Attribute Request
+ *         and/or SDP Service Search Attribute Request APIs.
+ *
+ *  \param [out] attribute_value
+ *         Caller allocated UCHAR Array, where the attribute value will be
+ *         available on return.
+ *
+ *  \param [in,out] attribute_len
+ *         This parameter provides the size of the UCHAR Array, allocated by
+ *         the caller, to store the attribute value. 
+ *         The actual attribute length will be available on return.
  *
  *  \return
  *       API_SUCCESS or one of the error codes as defined in \ref BLE_ERROR_CODES.
- *
- *  \note
- *
  */
 API_RESULT BT_sdp_get_DataSequence_attr_val
            (
@@ -1198,18 +1236,33 @@ API_RESULT BT_sdp_get_DataSequence_attr_val
                /* OUT */   UCHAR *  attribute_value,
                /* INOUT */ UINT16 * attribute_len
            );
+
 /**
- *  \brief
+ *  \brief To extract Data Element.
  *
  *  \par Description:
+ *       This API can be used to extract the attribute value corresponding to a
+ *       given attribute ID from the attribute data returned by the SDP Service
+ *       Attribute Request and/or SDP Service Search Attribute Request APIs.
  *
- *  \param None
+ *  \param [in] pdu
+ *         Attribute value from which the Data Element to be extracted.
+ *
+ *  \param [in] pdu_length
+ *         Application allocated UCHAR buffer containing the Service Attribute
+ *         data, as received as a result of the SDP Service Attribute Request
+ *         and/or SDP Service Search Attribute Request APIs.
+ *
+ *  \param [out] value_offset
+ *         Caller provided UCHAR pointer, where the start of Data Element value
+ *         offset will be available on return.
+ *
+ *  \param [out] value_length
+ *         Caller provided UINT32 pointer, where the length of Data Element
+ *         will be available on return.
  *
  *  \return
  *       API_SUCCESS or one of the error codes as defined in \ref BLE_ERROR_CODES.
- *
- *  \note
- *
  */
 API_RESULT BT_sdp_get_data_element
            (
@@ -1218,18 +1271,26 @@ API_RESULT BT_sdp_get_data_element
                /* OUT */ UCHAR   * value_offset,
                /* OUT */ UINT32  * value_length
            );
+
 /**
- *  \brief
+ *  \brief To extract attribute value for a given attribute ID.
  *
  *  \par Description:
+ *       This API can be used to get the pointer to the attribute value
+ *       of the next record. Use this API to extract the portion of 
+ *       Attribute list for the next record and it is relevent only to the
+ *       attribute list return by the SDP_servicesearchattributerequest API.
+
+ *  \param [in] attribute_data
+ *         Application allocated UCHAR buffer containing the Service Attribute
+ *         data, as received as a result of the SDP Service Search Attribute
+ *         Request APIs.
  *
- *  \param None
+ *  \param [in] record_no
+ *         SDP record number for which the Atribute List to be returned.
  *
  *  \return
- *       API_SUCCESS or one of the error codes as defined in \ref BLE_ERROR_CODES.
- *
- *  \note
- *
+ *        UCHAR*: Pointer to the next attribute list
  */
 UCHAR * BT_sdp_get_Pointer_to_next_AttributeList
         (
@@ -1239,61 +1300,57 @@ UCHAR * BT_sdp_get_Pointer_to_next_AttributeList
 
 #define BT_sdp_get_attr_value BT_sdp_get_DataSequence_attr_val
 
-/* APIs to convert 2/4 bit UUID to 128 bit & 2 bit UUID to 4 bit */
+/**
+ *  \brief To convert 16/32-bit UUID to a 128-bit UUID.
+ *
+ *  \par Description:
+ *       This API can be used to convert a 16/32-bit UUID to a 128-bit UUID.
+ *       A 16/32-bit UUID is converted to 128-bit UUID format using following
+ *       operation.
+ *       <*> 128_bit_value = 16_bit_value * 2^96 + Bluetooth_Base_UUID
+ *       <*> 128_bit_value = 32_bit_value * 2^96 + Bluetooth_Base_UUID
+ *       Note: Bluetooth_Base_UUID = 00000000-0000-1000-8000-00805F9B34FB
+ *
+ *  \param [in] source_uuid
+ *         16/32-bit UUID to be converted
+ *
+ *  \param [out] dest_uuid
+ *         Pointer to a caller allocated UINT128_ID variable, which will contain the
+ *         converted 128-bit UUID value on return.
+ *
+ *  \return
+ *       API_SUCCESS or one of the error codes as defined in \ref BLE_ERROR_CODES.
+ */
 void BT_uuid_32_to_128
      (
-         /* IN */   UINT32       source_uuid,
-         /* OUT */  UINT128_ID * dest_uuid
+         /* IN */  UINT32       source_uuid,
+         /* OUT */ UINT128_ID * dest_uuid
      );
 
+/**
+ *  \brief To convert 16-bit UUID to a 32-bit UUID.
+ *
+ *  \par Description:
+ *       This API can be used to convert a 16-bit UUID to a 32-bit UUID.
+ *       A 16-bit UUID is converted to 32-bit UUID format by zero-extending
+ *       the 16-bit value to 32-bits.
+ *
+ *  \param [in] source_uuid
+ *         16-bit UUID to be converted
+ *
+ *  \param [out] dest_uuid
+ *         Pointer to a caller allocated UINT32 variable, which will contain the
+ *         converted 32-bit UUID value on return.
+ *
+ *  \return
+ *       API_SUCCESS or one of the error codes as defined in \ref BLE_ERROR_CODES.
+ */
 void BT_uuid_16_to_32
      (
          /* IN */  UINT16   source_uuid,
          /* OUT */ UINT32 * dest_uuid
      );
 
-
-#ifdef SDP_TEST_MODE
-/**
- *  \brief
- *
- *  \par Description:
- *
- *  \param None
- *
- *  \return
- *       API_SUCCESS or one of the error codes as defined in \ref BLE_ERROR_CODES.
- *
- *  \note
- *
- */
-API_RESULT BT_sdp_invalid_servicesearchattribute
-           (
-               SDP_HANDLE *    handle,
-               UCHAR *         attribute_data,
-               UINT16 *        len_attribute_data
-           );
-/**
- *  \brief
- *
- *  \par Description:
- *
- *  \param None
- *
- *  \return
- *       API_SUCCESS or one of the error codes as defined in \ref BLE_ERROR_CODES.
- *
- *  \note
- *
- */
-API_RESULT BT_sdp_invalid_serviceattribute
-           (
-               SDP_HANDLE *    handle,
-               UINT32          record_handle,
-               UCHAR *         attribute_data,
-               UINT16 *        len_attribute_data
-           );
-#endif /* SDP_TEST_MODE */
 
 /* ---------------- SDP Server Callback Registration API */
 #ifdef SDP_SERVER_HAVE_CB_IND_SUPPORT
@@ -1321,7 +1378,6 @@ API_RESULT BT_sdp_invalid_serviceattribute
  *        SDP disconnection.
  *        The compilation flag "SDP_SERVER_HAVE_CB_IND_SUPPORT" shall be defined
  *        to use SDP Server Callback feature.
- *
  */
 API_RESULT BT_sdp_server_register_ind_cb
            (
@@ -1337,6 +1393,7 @@ API_RESULT BT_sdp_server_register_ind_cb
 #ifdef __cplusplus
 };
 #endif  /* __cplusplus */
+/** \} */
 /** \} */
 /** \} */
 #endif /* _H_BT_SDP_API_ */

@@ -1,10 +1,10 @@
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.9
-- Keil MDK  5.33
-- GCC ARM Embedded  9.3.1
-- MCUXpresso  11.3.0
+- MCUXpresso  11.4.0
+- IAR embedded Workbench  9.10.2
+- Keil MDK  5.34
+- GCC ARM Embedded  10.2.1
 
 Hardware requirements
 =====================
@@ -15,9 +15,7 @@ Hardware requirements
 
 Board settings
 ==============
-- for OM- SE050ARD
-- SDA J15 Only Pin 1 & 2 connected using jumper
-- SCL J17 Only Pin 1 & 2 connected using jumper
+- for OM- SE050ARD & OM- SE051ARD use default jumper settings
 
 
 For SE050

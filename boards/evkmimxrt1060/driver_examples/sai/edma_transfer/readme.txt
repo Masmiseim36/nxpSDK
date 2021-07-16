@@ -6,10 +6,10 @@ In this example, one sai instance playbacks the audio data stored in flash/SRAM 
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.9
-- Keil MDK  5.33
-- GCC ARM Embedded  9.3.1
-- MCUXpresso  11.3.0
+- IAR embedded Workbench  9.10.2
+- Keil MDK  5.34
+- GCC ARM Embedded  10.2.1
+- MCUXpresso  11.4.0
 
 Hardware requirements
 =====================
@@ -37,9 +37,11 @@ Prepare the Demo
 
 Running the demo
 ================
+note:This demo uses codec master mode(internal pll mode).
+
 When the demo runs successfully, you can hear the tone and the log would be seen on the OpenSDA terminal like:
 
 ~~~~~~~~~~~~~~~~~~~
-SAI example started!
+SAI EDMA example started!
 SAI EDMA example finished!
- ~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~

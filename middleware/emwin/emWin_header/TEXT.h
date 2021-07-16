@@ -9,7 +9,7 @@
 *                                                                    *
 **********************************************************************
 
-** emWin V6.14 - Graphical user interface for embedded applications **
+** emWin V6.16 - Graphical user interface for embedded applications **
 All  Intellectual Property rights  in the Software belongs to  SEGGER.
 emWin is protected by  international copyright laws.  Knowledge of the
 source code may not be used to write a similar product.  This file may
@@ -34,7 +34,7 @@ License model:            emWin License Agreement, dated August 20th 2011 and Am
 Licensed platform:        NXP's ARM 7/9, Cortex-M0, M3, M4, M7, A7, M33
 ----------------------------------------------------------------------
 Support and Update Agreement (SUA)
-SUA period:               2011-08-19 - 2020-09-02
+SUA period:               2011-08-19 - 2021-09-02
 Contact to extend SUA:    sales@segger.com
 ----------------------------------------------------------------------
 File        : TEXT.h
@@ -130,6 +130,7 @@ GUI_WRAPMODE         TEXT_GetWrapMode  (TEXT_Handle hObj);
 void                 TEXT_SetBkColor   (TEXT_Handle hObj, GUI_COLOR Color);
 void                 TEXT_SetFont      (TEXT_Handle hObj, const GUI_FONT * pFont);
 int                  TEXT_SetDec       (TEXT_Handle hObj, I32 v, U8 Len, U8 Shift, U8 Signed, U8 Space);
+int                  TEXT_SetHex       (TEXT_Handle hObj, I32 v, U8 Len);
 #if GUI_SUPPORT_ROTATION
 void                 TEXT_SetRotation  (TEXT_Handle hObj, const GUI_ROTATION * pLCD_Api);
 #endif

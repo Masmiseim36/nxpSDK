@@ -23,17 +23,17 @@
 void MID_getPp(mid_get_pp_t *sPpMeasFcn)
 {
     /* Initialisation */
-    if (sPpMeasFcn->ui16Active == FALSE)
+    if (sPpMeasFcn->bActive == FALSE)
     {
-        sPpMeasFcn->ui16Active                   = TRUE;
-        sPpMeasFcn->fltFreqElRamp                = 0.0;
-        sPpMeasFcn->ui16PpDetermined             = 0;
+        sPpMeasFcn->bActive                   = TRUE;
+        sPpMeasFcn->fltFreqElRamp                = 0.0F;
+        sPpMeasFcn->ui16PpDetermined             = 0U;
         sPpMeasFcn->sFreqElRampParam.fltRampUp   = sPpMeasFcn->fltFreqElReq / MID_SPEED_RAMP_TIME / 10000.0F;
         sPpMeasFcn->sFreqElRampParam.fltRampDown = sPpMeasFcn->fltFreqElReq / MID_SPEED_RAMP_TIME / 10000.0F;
-        sPpMeasFcn->sFreqIntegrator.a32Gain      = ACC32(1.0 * sPpMeasFcn->fltFreqMax / 10000.0F);
+        sPpMeasFcn->sFreqIntegrator.a32Gain      = ACC32(1.0F * sPpMeasFcn->fltFreqMax / 10000.0F);
         sPpMeasFcn->sFreqIntegrator.f32IAccK_1   = FRAC32(0.0);
-        GFLIB_IntegratorInit_F16(0, &sPpMeasFcn->sFreqIntegrator);
-        GFLIB_RampInit_FLT(0, &sPpMeasFcn->sFreqElRampParam);
+        GFLIB_IntegratorInit_F16(FRAC16(0.0), &sPpMeasFcn->sFreqIntegrator);
+        GFLIB_RampInit_FLT(0.0F, &sPpMeasFcn->sFreqElRampParam);
     }
 
     /* Set Id required */
@@ -56,10 +56,10 @@ void MID_getPp(mid_get_pp_t *sPpMeasFcn)
         *sPpMeasFcn->pf16PosEl = FRAC16(-1.0);
 
         /* Initialise waiting */
-        if (sPpMeasFcn->ui16WaitingSteady == 0)
+        if (sPpMeasFcn->ui16WaitingSteady == 0U)
         {
-            sPpMeasFcn->ui16LoopCounter   = 0;
-            sPpMeasFcn->ui16WaitingSteady = 1;
+            sPpMeasFcn->ui16LoopCounter   = 0U;
+            sPpMeasFcn->ui16WaitingSteady = 1U;
         }
 
         sPpMeasFcn->ui16LoopCounter++;
@@ -69,7 +69,7 @@ void MID_getPp(mid_get_pp_t *sPpMeasFcn)
         {
             *sPpMeasFcn->pf16PosEl        = FRAC16(0.0);
             sPpMeasFcn->f16PosElLast      = FRAC16(0.0);
-            sPpMeasFcn->ui16WaitingSteady = 0;
+            sPpMeasFcn->ui16WaitingSteady = 0U;
         }
     }
 
@@ -80,6 +80,6 @@ void MID_getPp(mid_get_pp_t *sPpMeasFcn)
     if (sPpMeasFcn->ui16PpDetermined > 0U)
     {
         /* When finished exit the function */
-        sPpMeasFcn->ui16Active = FALSE;
+        sPpMeasFcn->bActive = FALSE;
     }
 }

@@ -51,7 +51,7 @@ constexpr uint32_t kFractionRoundingThreshold = 0x00200000;
 }  // namespace
 
 void QuantizeMultiplier(double double_multiplier, int32_t* quantized_multiplier,
-                        int32_t* shift) {
+                        int* shift) {
   if (double_multiplier == 0.) {
     *quantized_multiplier = 0;
     *shift = 0;
@@ -64,11 +64,7 @@ void QuantizeMultiplier(double double_multiplier, int32_t* quantized_multiplier,
   // need to set the define during the build process for your platform.
   int64_t q_fixed = IntegerFrExp(double_multiplier, shift);
 #else   // TFLITE_EMULATE_FLOAT
-#ifdef TFLITE_MCU
-  const double q = std::frexp(double_multiplier, reinterpret_cast<int*>(shift));
-#else
   const double q = std::frexp(double_multiplier, shift);
-#endif
   auto q_fixed = static_cast<int64_t>(TfLiteRound(q * (1ll << 31)));
 #endif  // TFLITE_EMULATE_FLOAT
   TFLITE_CHECK(q_fixed <= (1ll << 31));
@@ -96,7 +92,7 @@ void QuantizeMultiplier(double double_multiplier, int32_t* quantized_multiplier,
 
 void QuantizeMultiplierGreaterThanOne(double double_multiplier,
                                       int32_t* quantized_multiplier,
-                                      int32_t* left_shift) {
+                                      int* left_shift) {
   TFLITE_CHECK_GT(double_multiplier, 1.);
   QuantizeMultiplier(double_multiplier, quantized_multiplier, left_shift);
   TFLITE_CHECK_GE(*left_shift, 0);
@@ -104,10 +100,10 @@ void QuantizeMultiplierGreaterThanOne(double double_multiplier,
 
 void QuantizeMultiplierSmallerThanOneExp(double double_multiplier,
                                          int32_t* quantized_multiplier,
-                                         int32_t* left_shift) {
+                                         int* left_shift) {
   TFLITE_CHECK_LT(double_multiplier, 1.);
   TFLITE_CHECK_GT(double_multiplier, 0.);
-  int32_t shift;
+  int shift;
   QuantizeMultiplier(double_multiplier, quantized_multiplier, &shift);
   TFLITE_CHECK_LE(shift, 0);
   *left_shift = shift;
@@ -272,7 +268,7 @@ int IntegerDoubleCompare(double a, double b) {
 
 void PreprocessSoftmaxScaling(double beta, double input_scale,
                               int input_integer_bits,
-                              int32_t* quantized_multiplier, int32_t* left_shift) {
+                              int32_t* quantized_multiplier, int* left_shift) {
   // If the overall multiplier (input and beta) is large, then exp() of an
   // input difference of 1 scaled by this will be large.  In other words, we
   // can cap the multiplier and know that, when it is used, the output will be
@@ -304,9 +300,9 @@ void PreprocessSoftmaxScaling(double beta, double input_scale,
 void PreprocessLogSoftmaxScalingExp(double beta, double input_scale,
                                     int input_integer_bits,
                                     int32_t* quantized_multiplier,
-                                    int32_t* left_shift,
+                                    int* left_shift,
                                     int32_t* reverse_scaling_divisor,
-                                    int32_t* reverse_scaling_left_shift) {
+                                    int* reverse_scaling_left_shift) {
   PreprocessSoftmaxScaling(beta, input_scale, input_integer_bits,
                            quantized_multiplier, left_shift);
 
@@ -346,13 +342,13 @@ void NudgeQuantizationRange(const float min, const float max,
   const float quant_max_float = static_cast<float>(quant_max);
   *nudged_scale = (max - min) / (quant_max_float - quant_min_float);
   const float zero_point_from_min = quant_min_float - min / *nudged_scale;
-  uint16 nudged_zero_point;
+  uint16_t nudged_zero_point;
   if (zero_point_from_min < quant_min_float) {
-    nudged_zero_point = static_cast<uint16>(quant_min);
+    nudged_zero_point = static_cast<uint16_t>(quant_min);
   } else if (zero_point_from_min > quant_max_float) {
-    nudged_zero_point = static_cast<uint16>(quant_max);
+    nudged_zero_point = static_cast<uint16_t>(quant_max);
   } else {
-    nudged_zero_point = static_cast<uint16>(TfLiteRound(zero_point_from_min));
+    nudged_zero_point = static_cast<uint16_t>(TfLiteRound(zero_point_from_min));
   }
   *nudged_min = (quant_min_float - nudged_zero_point) * (*nudged_scale);
   *nudged_max = (quant_max_float - nudged_zero_point) * (*nudged_scale);
@@ -389,7 +385,7 @@ bool CheckedLog2(const float x, int* log2_result) {
 
 void QuantizeMultiplierArray(const double* effective_scales, size_t size,
                              int32_t* effective_scale_significand,
-                             int32_t* effective_shift) {
+                             int* effective_shift) {
   for (size_t i = 0; i < size; ++i) {
     QuantizeMultiplier(effective_scales[i], &effective_scale_significand[i],
                        &effective_shift[i]);

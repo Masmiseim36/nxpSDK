@@ -31,6 +31,7 @@ status_t SDMMC_SelectCard(sdmmchost_t *host, uint32_t relativeAddress, bool isSe
 {
     sdmmchost_transfer_t content = {0};
     sdmmchost_cmd_t command      = {0};
+    status_t error               = kStatus_Success;
 
     command.index = (uint32_t)kSDMMC_SelectCard;
     if (isSelected)
@@ -46,8 +47,8 @@ status_t SDMMC_SelectCard(sdmmchost_t *host, uint32_t relativeAddress, bool isSe
 
     content.command = &command;
     content.data    = NULL;
-    if ((kStatus_Success != SDMMCHOST_TransferFunction(host, &content)) ||
-        ((command.response[0U] & SDMMC_R1_ALL_ERROR_FLAG) != 0U))
+    error           = SDMMCHOST_TransferFunction(host, &content);
+    if ((kStatus_Success != error) || ((command.response[0U] & SDMMC_R1_ALL_ERROR_FLAG) != 0U))
     {
         return kStatus_SDMMC_TransferFailed;
     }
@@ -60,6 +61,7 @@ status_t SDMMC_SendApplicationCommand(sdmmchost_t *host, uint32_t relativeAddres
 {
     sdmmchost_transfer_t content = {0};
     sdmmchost_cmd_t command      = {0};
+    status_t error               = kStatus_Success;
 
     command.index        = (uint32_t)kSDMMC_ApplicationCommand;
     command.argument     = (relativeAddress << 16U);
@@ -67,8 +69,8 @@ status_t SDMMC_SendApplicationCommand(sdmmchost_t *host, uint32_t relativeAddres
 
     content.command = &command;
     content.data    = NULL;
-    if ((kStatus_Success != SDMMCHOST_TransferFunction(host, &content)) ||
-        ((command.response[0U] & SDMMC_R1_ALL_ERROR_FLAG) != 0U))
+    error           = SDMMCHOST_TransferFunction(host, &content);
+    if ((kStatus_Success != error) || ((command.response[0U] & SDMMC_R1_ALL_ERROR_FLAG) != 0U))
     {
         return kStatus_SDMMC_TransferFailed;
     }
@@ -85,6 +87,7 @@ status_t SDMMC_SetBlockCount(sdmmchost_t *host, uint32_t blockCount)
 {
     sdmmchost_transfer_t content = {0};
     sdmmchost_cmd_t command      = {0};
+    status_t error               = kStatus_Success;
 
     command.index        = (uint32_t)kSDMMC_SetBlockCount;
     command.argument     = blockCount;
@@ -92,8 +95,8 @@ status_t SDMMC_SetBlockCount(sdmmchost_t *host, uint32_t blockCount)
 
     content.command = &command;
     content.data    = NULL;
-    if ((kStatus_Success != SDMMCHOST_TransferFunction(host, &content)) ||
-        ((command.response[0U] & SDMMC_R1_ALL_ERROR_FLAG) != 0U))
+    error           = SDMMCHOST_TransferFunction(host, &content);
+    if ((kStatus_Success != error) || ((command.response[0U] & SDMMC_R1_ALL_ERROR_FLAG) != 0U))
     {
         return kStatus_SDMMC_TransferFailed;
     }
@@ -105,12 +108,14 @@ status_t SDMMC_GoIdle(sdmmchost_t *host)
 {
     sdmmchost_transfer_t content = {0};
     sdmmchost_cmd_t command      = {0};
+    status_t error               = kStatus_Success;
 
     command.index = (uint32_t)kSDMMC_GoIdleState;
 
     content.command = &command;
     content.data    = NULL;
-    if (kStatus_Success != SDMMCHOST_TransferFunction(host, &content))
+    error           = SDMMCHOST_TransferFunction(host, &content);
+    if (kStatus_Success != error)
     {
         return kStatus_SDMMC_TransferFailed;
     }
@@ -122,6 +127,7 @@ status_t SDMMC_SetBlockSize(sdmmchost_t *host, uint32_t blockSize)
 {
     sdmmchost_transfer_t content = {0};
     sdmmchost_cmd_t command      = {0};
+    status_t error               = kStatus_Success;
 
     command.index        = (uint32_t)kSDMMC_SetBlockLength;
     command.argument     = blockSize;
@@ -129,8 +135,8 @@ status_t SDMMC_SetBlockSize(sdmmchost_t *host, uint32_t blockSize)
 
     content.command = &command;
     content.data    = NULL;
-    if ((kStatus_Success != SDMMCHOST_TransferFunction(host, &content)) ||
-        ((command.response[0U] & SDMMC_R1_ALL_ERROR_FLAG) != 0U))
+    error           = SDMMCHOST_TransferFunction(host, &content);
+    if ((kStatus_Success != error) || ((command.response[0U] & SDMMC_R1_ALL_ERROR_FLAG) != 0U))
     {
         return kStatus_SDMMC_TransferFailed;
     }
@@ -142,6 +148,7 @@ status_t SDMMC_SetCardInactive(sdmmchost_t *host)
 {
     sdmmchost_transfer_t content = {0};
     sdmmchost_cmd_t command      = {0};
+    status_t error               = kStatus_Success;
 
     command.index        = (uint32_t)kSDMMC_GoInactiveState;
     command.argument     = 0U;
@@ -149,7 +156,8 @@ status_t SDMMC_SetCardInactive(sdmmchost_t *host)
 
     content.command = &command;
     content.data    = NULL;
-    if ((kStatus_Success != SDMMCHOST_TransferFunction(host, &content)))
+    error           = SDMMCHOST_TransferFunction(host, &content);
+    if ((kStatus_Success != error))
     {
         return kStatus_SDMMC_TransferFailed;
     }

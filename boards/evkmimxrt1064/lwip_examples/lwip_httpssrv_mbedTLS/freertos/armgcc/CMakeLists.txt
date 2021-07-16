@@ -1,6 +1,6 @@
 # CROSS COMPILER SETTING
 SET(CMAKE_SYSTEM_NAME Generic)
-CMAKE_MINIMUM_REQUIRED (VERSION 3.1.1)
+CMAKE_MINIMUM_REQUIRED (VERSION 3.10.0)
 
 # THE VERSION NUMBER
 SET (Tutorial_VERSION_MAJOR 1)
@@ -46,10 +46,8 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 )
 
 target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
-    ${ProjDirPath}/.. flexspi_nor_sdram_debug
-    ${ProjDirPath}/../../../.. flexspi_nor_sdram_debug
     ${ProjDirPath}/..
-    ${ProjDirPath}/../../../.. flexspi_nor_sdram_release
+    ${ProjDirPath}/../../../..
 )
 
 if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_sdram_debug)
@@ -66,8 +64,8 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../../devices/MIMXRT1064/drivers
     ${ProjDirPath}/../../../../../../middleware/mbedtls
     ${ProjDirPath}/../../../../../../middleware/lwip
-    ${ProjDirPath}/../../../../../../devices/MIMXRT1064/utilities
     ${ProjDirPath}/../../../../../../components/phy
+    ${ProjDirPath}/../../../../../../devices/MIMXRT1064/utilities
     ${ProjDirPath}/../../../../../../rtos/freertos
     ${ProjDirPath}/../../../../../../devices/MIMXRT1064
     ${ProjDirPath}/../../../../../../components/uart
@@ -75,7 +73,7 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../../components/lists
     ${ProjDirPath}/../../../../../../devices/MIMXRT1064/xip
     ${ProjDirPath}/../../../../xip
-    ${ProjDirPath}/../../../../../../CMSIS/Include
+    ${ProjDirPath}/../../../../../../CMSIS/Core/Include
 )
 
 # include modules
@@ -89,15 +87,13 @@ include(driver_dcp_MIMXRT1064)
 
 include(driver_cache_armv7_m7_MIMXRT1064)
 
+include(middleware_mbedtls_MIMXRT1064)
+
 include(middleware_mbedtls_port_ksdk_MIMXRT1064)
 
 include(middleware_mbedtls_rt_MIMXRT1064)
 
 include(middleware_lwip_apps_httpssrv_MIMXRT1064)
-
-include(middleware_mbedtls_MIMXRT1064)
-
-include(utility_debug_console_MIMXRT1064)
 
 include(middleware_lwip_enet_ethernetif_MIMXRT1064)
 
@@ -106,6 +102,8 @@ include(middleware_lwip_MIMXRT1064)
 include(driver_phy-common_MIMXRT1064)
 
 include(driver_enet_MIMXRT1064)
+
+include(utility_debug_console_MIMXRT1064)
 
 include(driver_clock_MIMXRT1064)
 
@@ -135,15 +133,11 @@ include(driver_igpio_MIMXRT1064)
 
 include(driver_xip_device_MIMXRT1064)
 
-include(driver_xip_board_MIMXRT1064)
+include(driver_xip_board_evkmimxrt1064_MIMXRT1064)
 
 include(driver_mdio-common_MIMXRT1064)
 
-include(CMSIS_Include_core_cm7_MIMXRT1064)
-
-include(CMSIS_Include_common_MIMXRT1064)
-
-include(CMSIS_Include_dsp_MIMXRT1064)
+include(CMSIS_Include_core_cm_MIMXRT1064)
 
 include(middleware_lwip_apps_httpsrv_MIMXRT1064)
 

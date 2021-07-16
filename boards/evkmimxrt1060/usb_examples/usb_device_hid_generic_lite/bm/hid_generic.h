@@ -35,6 +35,11 @@ typedef struct _usb_hid_generic_struct
     uint8_t idleRate;
     uint8_t speed;
     uint8_t attach;
+#if (defined(USB_DEVICE_CONFIG_ROOT2_TEST) && (USB_DEVICE_CONFIG_ROOT2_TEST > 0U))
+#if ((defined(USB_DEVICE_CONFIG_REMOTE_WAKEUP)) && (USB_DEVICE_CONFIG_REMOTE_WAKEUP > 0U))
+    volatile uint8_t remoteWakeup;
+#endif
+#endif
 } usb_hid_generic_struct_t;
 
 /*******************************************************************************

@@ -26,14 +26,12 @@ static bool_t s_statusPass;
  *
  * @param this   Pointer to the current object
  *
- * @return boot_t true on success
+ * @return none
  */
-bool_t MCDRV_eFlexPwm3PhSet(mcdrv_pwm3ph_pwma_t *this)
+void MCDRV_eFlexPwm3PhSet(mcdrv_pwm3ph_pwma_t *this)
 {
     frac16_t f16DutyCycle, f16DutyCycleTemp, f16ModuloTemp;
     GMCLIB_3COOR_T_F16 sUABCtemp;
-
-    s_statusPass = TRUE;
 
     /* pointer to duty cycle structure */
     sUABCtemp = *this->psUABC;
@@ -62,7 +60,6 @@ bool_t MCDRV_eFlexPwm3PhSet(mcdrv_pwm3ph_pwma_t *this)
     /* set LDOK bits */
     this->pui32PwmBaseAddress->MCTRL |= PWM_MCTRL_LDOK_MASK;
 
-    return (s_statusPass);
 }
 
 /*!
@@ -70,11 +67,10 @@ bool_t MCDRV_eFlexPwm3PhSet(mcdrv_pwm3ph_pwma_t *this)
  *
  * @param this   Pointer to the current object
  *
- * @return boot_t true on success
+ * @return none
  */
-bool_t MCDRV_eFlexPwm3PhOutEn(mcdrv_pwm3ph_pwma_t *this)
+void MCDRV_eFlexPwm3PhOutEn(mcdrv_pwm3ph_pwma_t *this)
 {
-    s_statusPass = TRUE;
 
     uint8_t ui8MaskTemp = 0U;
 
@@ -89,7 +85,6 @@ bool_t MCDRV_eFlexPwm3PhOutEn(mcdrv_pwm3ph_pwma_t *this)
     this->pui32PwmBaseAddress->OUTEN = (this->pui32PwmBaseAddress->OUTEN & ~(uint16_t)PWM_OUTEN_PWMB_EN_MASK) |
                                        PWM_OUTEN_PWMB_EN(ui8MaskTemp) | (this->pui32PwmBaseAddress->OUTEN);
 
-    return (s_statusPass);
 }
 
 /*!
@@ -97,11 +92,10 @@ bool_t MCDRV_eFlexPwm3PhOutEn(mcdrv_pwm3ph_pwma_t *this)
  *
  * @param this   Pointer to the current object
  *
- * @return boot_t true on success
+ * @return none
  */
-bool_t MCDRV_eFlexPwm3PhOutDis(mcdrv_pwm3ph_pwma_t *this)
+void MCDRV_eFlexPwm3PhOutDis(mcdrv_pwm3ph_pwma_t *this)
 {
-    s_statusPass = TRUE;
 
     uint32_t ui32MaskTemp  = 0U;
     uint16_t ui16PhSubTemp = 0U;
@@ -123,7 +117,6 @@ bool_t MCDRV_eFlexPwm3PhOutDis(mcdrv_pwm3ph_pwma_t *this)
     this->pui32PwmBaseAddress->OUTEN =
         (this->pui32PwmBaseAddress->OUTEN & ~(uint16_t)PWM_OUTEN_PWMB_EN_MASK) | PWM_OUTEN_PWMB_EN(ui32MaskTemp);
 
-    return (s_statusPass);
 }
 
 /*!

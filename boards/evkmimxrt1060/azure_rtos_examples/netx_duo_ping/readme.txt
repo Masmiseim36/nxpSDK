@@ -5,10 +5,10 @@ This is a small ping demo of the high-performance NetX Duo TCP/IP stack.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.9
-- Keil MDK  5.33
-- GCC ARM Embedded  9.3.1
-- MCUXpresso  11.3.0
+- IAR embedded Workbench  9.10.2
+- Keil MDK  5.34
+- GCC ARM Embedded  10.2.1
+- MCUXpresso  11.4.0
 
 Hardware requirements
 =====================
@@ -32,6 +32,8 @@ Prepare the Demo
     - No flow control
 3.  Insert Cable to Ethernet RJ45 port and connect it to a ethernet switch.
 4.  Write the program to the flash of the target board.
+5.  Press the reset button on your board to start the demo.
+
 Running the demo
 ================
 When the demo is running, the serial port will output:

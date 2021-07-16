@@ -348,9 +348,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>DEBUG, CPU_MIMXRT1062DVL6A, TX_INCLUDE_USER_DEFINE_FILE, GX_INCLUDE_USER_DEFINE_FILE</Define>
+              <Define>DEBUG, CPU_MIMXRT1062DVL6A, TX_INCLUDE_USER_DEFINE_FILE, GX_INCLUDE_USER_DEFINE_FILE, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>../../../../../rtos/azure-rtos/binary/threadx;../../../../../rtos/azure-rtos/binary/guix;../../../../../rtos/azure-rtos/threadx/common/inc;../../../../../rtos/azure-rtos/guix/common/inc;../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/inc;../../../../../rtos/azure-rtos/guix/ports/cortex_m7/ac6/inc</IncludePath>
+              <IncludePath>..;../../../../../rtos/azure-rtos/threadx/common/inc;../../../../../rtos/azure-rtos/guix/common/inc;../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/inc;../../../../../rtos/azure-rtos/guix/ports/cortex_m7/ac6/inc</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -401,17 +401,17 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>azure-rtos/user</GroupName>
+          <GroupName>azure-rtos/config</GroupName>
           <Files>
             <File>
               <FileName>tx_user.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/binary/threadx/tx_user.h</FilePath>
+              <FilePath>../tx_user.h</FilePath>
             </File>
             <File>
               <FileName>gx_user.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/binary/guix/gx_user.h</FilePath>
+              <FilePath>../gx_user.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -419,49 +419,19 @@
           <GroupName>azure-rtos/guix/common/inc</GroupName>
           <Files>
             <File>
-              <FileName>gx_utility.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/guix/common/inc/gx_utility.h</FilePath>
-            </File>
-            <File>
-              <FileName>gx_multi_line_text_input.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/guix/common/inc/gx_multi_line_text_input.h</FilePath>
-            </File>
-            <File>
-              <FileName>gx_sprite.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/guix/common/inc/gx_sprite.h</FilePath>
-            </File>
-            <File>
-              <FileName>gx_radial_slider.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/guix/common/inc/gx_radial_slider.h</FilePath>
-            </File>
-            <File>
-              <FileName>gx_menu.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/guix/common/inc/gx_menu.h</FilePath>
-            </File>
-            <File>
               <FileName>gx_animation.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../rtos/azure-rtos/guix/common/inc/gx_animation.h</FilePath>
             </File>
             <File>
-              <FileName>gx_text_input_cursor.h</FileName>
+              <FileName>gx_api.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/guix/common/inc/gx_text_input_cursor.h</FilePath>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/inc/gx_api.h</FilePath>
             </File>
             <File>
-              <FileName>gx_canvas.h</FileName>
+              <FileName>gx_binres_loader.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/guix/common/inc/gx_canvas.h</FilePath>
-            </File>
-            <File>
-              <FileName>gx_line_chart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/guix/common/inc/gx_line_chart.h</FilePath>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/inc/gx_binres_loader.h</FilePath>
             </File>
             <File>
               <FileName>gx_button.h</FileName>
@@ -469,19 +439,14 @@
               <FilePath>../../../../../rtos/azure-rtos/guix/common/inc/gx_button.h</FilePath>
             </File>
             <File>
-              <FileName>gx_radial_progress_bar.h</FileName>
+              <FileName>gx_canvas.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/guix/common/inc/gx_radial_progress_bar.h</FilePath>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/inc/gx_canvas.h</FilePath>
             </File>
             <File>
-              <FileName>gx_numeric_prompt.h</FileName>
+              <FileName>gx_circular_gauge.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/guix/common/inc/gx_numeric_prompt.h</FilePath>
-            </File>
-            <File>
-              <FileName>gx_scroll_wheel.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/guix/common/inc/gx_scroll_wheel.h</FilePath>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/inc/gx_circular_gauge.h</FilePath>
             </File>
             <File>
               <FileName>gx_context.h</FileName>
@@ -489,24 +454,19 @@
               <FilePath>../../../../../rtos/azure-rtos/guix/common/inc/gx_context.h</FilePath>
             </File>
             <File>
+              <FileName>gx_display.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/inc/gx_display.h</FilePath>
+            </File>
+            <File>
+              <FileName>gx_drop_list.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/inc/gx_drop_list.h</FilePath>
+            </File>
+            <File>
               <FileName>gx_icon.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../rtos/azure-rtos/guix/common/inc/gx_icon.h</FilePath>
-            </File>
-            <File>
-              <FileName>gx_window.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/guix/common/inc/gx_window.h</FilePath>
-            </File>
-            <File>
-              <FileName>gx_system.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/guix/common/inc/gx_system.h</FilePath>
-            </File>
-            <File>
-              <FileName>gx_numeric_pixelmap_prompt.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/guix/common/inc/gx_numeric_pixelmap_prompt.h</FilePath>
             </File>
             <File>
               <FileName>gx_image_reader.h</FileName>
@@ -514,9 +474,109 @@
               <FilePath>../../../../../rtos/azure-rtos/guix/common/inc/gx_image_reader.h</FilePath>
             </File>
             <File>
+              <FileName>gx_line_chart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/inc/gx_line_chart.h</FilePath>
+            </File>
+            <File>
+              <FileName>gx_menu.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/inc/gx_menu.h</FilePath>
+            </File>
+            <File>
+              <FileName>gx_multi_line_text_input.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/inc/gx_multi_line_text_input.h</FilePath>
+            </File>
+            <File>
+              <FileName>gx_multi_line_text_view.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/inc/gx_multi_line_text_view.h</FilePath>
+            </File>
+            <File>
+              <FileName>gx_numeric_pixelmap_prompt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/inc/gx_numeric_pixelmap_prompt.h</FilePath>
+            </File>
+            <File>
+              <FileName>gx_numeric_prompt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/inc/gx_numeric_prompt.h</FilePath>
+            </File>
+            <File>
+              <FileName>gx_pixelmap_prompt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/inc/gx_pixelmap_prompt.h</FilePath>
+            </File>
+            <File>
               <FileName>gx_progress_bar.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../rtos/azure-rtos/guix/common/inc/gx_progress_bar.h</FilePath>
+            </File>
+            <File>
+              <FileName>gx_prompt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/inc/gx_prompt.h</FilePath>
+            </File>
+            <File>
+              <FileName>gx_radial_progress_bar.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/inc/gx_radial_progress_bar.h</FilePath>
+            </File>
+            <File>
+              <FileName>gx_radial_slider.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/inc/gx_radial_slider.h</FilePath>
+            </File>
+            <File>
+              <FileName>gx_rich_text_view.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/inc/gx_rich_text_view.h</FilePath>
+            </File>
+            <File>
+              <FileName>gx_screen_stack.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/inc/gx_screen_stack.h</FilePath>
+            </File>
+            <File>
+              <FileName>gx_scroll_wheel.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/inc/gx_scroll_wheel.h</FilePath>
+            </File>
+            <File>
+              <FileName>gx_scrollbar.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/inc/gx_scrollbar.h</FilePath>
+            </File>
+            <File>
+              <FileName>gx_single_line_text_input.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/inc/gx_single_line_text_input.h</FilePath>
+            </File>
+            <File>
+              <FileName>gx_slider.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/inc/gx_slider.h</FilePath>
+            </File>
+            <File>
+              <FileName>gx_sprite.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/inc/gx_sprite.h</FilePath>
+            </File>
+            <File>
+              <FileName>gx_system.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/inc/gx_system.h</FilePath>
+            </File>
+            <File>
+              <FileName>gx_system_rtos_bind.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/inc/gx_system_rtos_bind.h</FilePath>
+            </File>
+            <File>
+              <FileName>gx_text_input_cursor.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/inc/gx_text_input_cursor.h</FilePath>
             </File>
             <File>
               <FileName>gx_tree_view.h</FileName>
@@ -529,44 +589,9 @@
               <FilePath>../../../../../rtos/azure-rtos/guix/common/inc/gx_user_sample.h</FilePath>
             </File>
             <File>
-              <FileName>gx_prompt.h</FileName>
+              <FileName>gx_utility.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/guix/common/inc/gx_prompt.h</FilePath>
-            </File>
-            <File>
-              <FileName>gx_api.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/guix/common/inc/gx_api.h</FilePath>
-            </File>
-            <File>
-              <FileName>gx_rich_text_view.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/guix/common/inc/gx_rich_text_view.h</FilePath>
-            </File>
-            <File>
-              <FileName>gx_slider.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/guix/common/inc/gx_slider.h</FilePath>
-            </File>
-            <File>
-              <FileName>gx_display.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/guix/common/inc/gx_display.h</FilePath>
-            </File>
-            <File>
-              <FileName>gx_single_line_text_input.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/guix/common/inc/gx_single_line_text_input.h</FilePath>
-            </File>
-            <File>
-              <FileName>gx_binres_loader.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/guix/common/inc/gx_binres_loader.h</FilePath>
-            </File>
-            <File>
-              <FileName>gx_pixelmap_prompt.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/guix/common/inc/gx_pixelmap_prompt.h</FilePath>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/inc/gx_utility.h</FilePath>
             </File>
             <File>
               <FileName>gx_widget.h</FileName>
@@ -574,39 +599,14 @@
               <FilePath>../../../../../rtos/azure-rtos/guix/common/inc/gx_widget.h</FilePath>
             </File>
             <File>
-              <FileName>gx_scrollbar.h</FileName>
+              <FileName>gx_window.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/guix/common/inc/gx_scrollbar.h</FilePath>
-            </File>
-            <File>
-              <FileName>gx_screen_stack.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/guix/common/inc/gx_screen_stack.h</FilePath>
-            </File>
-            <File>
-              <FileName>gx_system_rtos_bind.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/guix/common/inc/gx_system_rtos_bind.h</FilePath>
-            </File>
-            <File>
-              <FileName>gx_multi_line_text_view.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/guix/common/inc/gx_multi_line_text_view.h</FilePath>
-            </File>
-            <File>
-              <FileName>gx_circular_gauge.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/guix/common/inc/gx_circular_gauge.h</FilePath>
-            </File>
-            <File>
-              <FileName>gx_drop_list.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/guix/common/inc/gx_drop_list.h</FilePath>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/inc/gx_window.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>azure-rtos/source</GroupName>
+          <GroupName>azure-rtos/guix/common/src</GroupName>
           <Files>
             <File>
               <FileName>gx_display_driver_1555xrgb_canvas_blend.c</FileName>
@@ -674,6 +674,11 @@
               <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_16bpp_mouse_restore.c</FilePath>
             </File>
             <File>
+              <FileName>gx_display_driver_16bpp_pixel_write.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_16bpp_pixel_write.c</FilePath>
+            </File>
+            <File>
               <FileName>gx_display_driver_16bpp_pixelmap_blend.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_16bpp_pixelmap_blend.c</FilePath>
@@ -687,11 +692,6 @@
               <FileName>gx_display_driver_16bpp_pixelmap_rotate.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_16bpp_pixelmap_rotate.c</FilePath>
-            </File>
-            <File>
-              <FileName>gx_display_driver_16bpp_pixel_write.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_16bpp_pixel_write.c</FilePath>
             </File>
             <File>
               <FileName>gx_display_driver_16bpp_row_pitch_get.c</FileName>
@@ -759,6 +759,11 @@
               <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_1bpp_native_color_get.c</FilePath>
             </File>
             <File>
+              <FileName>gx_display_driver_1bpp_pixel_write.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_1bpp_pixel_write.c</FilePath>
+            </File>
+            <File>
               <FileName>gx_display_driver_1bpp_pixelmap_draw.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_1bpp_pixelmap_draw.c</FilePath>
@@ -767,11 +772,6 @@
               <FileName>gx_display_driver_1bpp_pixelmap_rotate.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_1bpp_pixelmap_rotate.c</FilePath>
-            </File>
-            <File>
-              <FileName>gx_display_driver_1bpp_pixel_write.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_1bpp_pixel_write.c</FilePath>
             </File>
             <File>
               <FileName>gx_display_driver_1bpp_row_pitch_get.c</FileName>
@@ -894,6 +894,11 @@
               <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_32bpp_horizontal_pixelmap_line_draw.c</FilePath>
             </File>
             <File>
+              <FileName>gx_display_driver_32bpp_pixel_write.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_32bpp_pixel_write.c</FilePath>
+            </File>
+            <File>
               <FileName>gx_display_driver_32bpp_pixelmap_draw.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_32bpp_pixelmap_draw.c</FilePath>
@@ -902,11 +907,6 @@
               <FileName>gx_display_driver_32bpp_pixelmap_rotate.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_32bpp_pixelmap_rotate.c</FilePath>
-            </File>
-            <File>
-              <FileName>gx_display_driver_32bpp_pixel_write.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_32bpp_pixel_write.c</FilePath>
             </File>
             <File>
               <FileName>gx_display_driver_32bpp_row_pitch_get.c</FileName>
@@ -1044,6 +1044,11 @@
               <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_4bpp_native_color_get.c</FilePath>
             </File>
             <File>
+              <FileName>gx_display_driver_4bpp_pixel_write.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_4bpp_pixel_write.c</FilePath>
+            </File>
+            <File>
               <FileName>gx_display_driver_4bpp_pixelmap_draw.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_4bpp_pixelmap_draw.c</FilePath>
@@ -1052,11 +1057,6 @@
               <FileName>gx_display_driver_4bpp_pixelmap_rotate.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_4bpp_pixelmap_rotate.c</FilePath>
-            </File>
-            <File>
-              <FileName>gx_display_driver_4bpp_pixel_write.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_4bpp_pixel_write.c</FilePath>
             </File>
             <File>
               <FileName>gx_display_driver_4bpp_row_pitch_get.c</FileName>
@@ -1179,6 +1179,11 @@
               <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_8bpp_mouse_restore.c</FilePath>
             </File>
             <File>
+              <FileName>gx_display_driver_8bpp_pixel_write.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_8bpp_pixel_write.c</FilePath>
+            </File>
+            <File>
               <FileName>gx_display_driver_8bpp_pixelmap_blend.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_8bpp_pixelmap_blend.c</FilePath>
@@ -1192,11 +1197,6 @@
               <FileName>gx_display_driver_8bpp_pixelmap_rotate.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_8bpp_pixelmap_rotate.c</FilePath>
-            </File>
-            <File>
-              <FileName>gx_display_driver_8bpp_pixel_write.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_8bpp_pixel_write.c</FilePath>
             </File>
             <File>
               <FileName>gx_display_driver_8bpp_row_pitch_get.c</FileName>
@@ -1219,6 +1219,11 @@
               <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_8bpp_vertical_pattern_line_draw.c</FilePath>
             </File>
             <File>
+              <FileName>gx_system_font_mono.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_system_font_mono.c</FilePath>
+            </File>
+            <File>
               <FileName>gx_system_font_4bpp.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_system_font_4bpp.c</FilePath>
@@ -1227,11 +1232,6 @@
               <FileName>gx_system_font_8bpp.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_system_font_8bpp.c</FilePath>
-            </File>
-            <File>
-              <FileName>gx_system_initialize.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_system_initialize.c</FilePath>
             </File>
             <File>
               <FileName>gx_utility_1555xrgb_pixelmap_resize.c</FileName>
@@ -1309,145 +1309,40 @@
               <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_utility_8bpp_pixelmap_rotate.c</FilePath>
             </File>
             <File>
-              <FileName>gx_prompt_event_process.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_prompt_event_process.c</FilePath>
-            </File>
-            <File>
-              <FileName>gx_string_scroll_wheel_event_process.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_string_scroll_wheel_event_process.c</FilePath>
-            </File>
-            <File>
-              <FileName>gx_text_button_event_process.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_text_button_event_process.c</FilePath>
-            </File>
-            <File>
-              <FileName>gxe_prompt_event_process.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gxe_prompt_event_process.c</FilePath>
-            </File>
-            <File>
-              <FileName>gxe_string_scroll_wheel_event_process.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gxe_string_scroll_wheel_event_process.c</FilePath>
-            </File>
-            <File>
-              <FileName>gxe_text_button_event_process.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gxe_text_button_event_process.c</FilePath>
-            </File>
-            <File>
-              <FileName>gx_rich_text_view_context_peek.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_rich_text_view_context_peek.c</FilePath>
-            </File>
-            <File>
-              <FileName>gx_rich_text_view_context_pop.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_rich_text_view_context_pop.c</FilePath>
-            </File>
-            <File>
-              <FileName>gx_rich_text_view_context_push.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_rich_text_view_context_push.c</FilePath>
-            </File>
-            <File>
-              <FileName>gx_rich_text_view_context_reset.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_rich_text_view_context_reset.c</FilePath>
-            </File>
-            <File>
-              <FileName>gx_rich_text_view_context_restore.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_rich_text_view_context_restore.c</FilePath>
-            </File>
-            <File>
-              <FileName>gx_rich_text_view_context_save.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_rich_text_view_context_save.c</FilePath>
-            </File>
-            <File>
-              <FileName>gx_rich_text_view_create.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_rich_text_view_create.c</FilePath>
-            </File>
-            <File>
-              <FileName>gx_rich_text_view_draw.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_rich_text_view_draw.c</FilePath>
-            </File>
-            <File>
-              <FileName>gx_rich_text_view_fonts_set.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_rich_text_view_fonts_set.c</FilePath>
-            </File>
-            <File>
-              <FileName>gx_rich_text_view_line_info_get.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_rich_text_view_line_info_get.c</FilePath>
-            </File>
-            <File>
-              <FileName>gx_rich_text_view_scroll_info_get.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_rich_text_view_scroll_info_get.c</FilePath>
-            </File>
-            <File>
-              <FileName>gx_rich_text_view_tag_enter.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_rich_text_view_tag_enter.c</FilePath>
-            </File>
-            <File>
-              <FileName>gx_rich_text_view_text_draw.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_rich_text_view_text_draw.c</FilePath>
-            </File>
-            <File>
-              <FileName>gx_rich_text_view_text_total_height_calculate.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_rich_text_view_text_total_height_calculate.c</FilePath>
-            </File>
-            <File>
-              <FileName>gx_text_scroll_wheel_dynamic_bidi_text_delete.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_text_scroll_wheel_dynamic_bidi_text_delete.c</FilePath>
-            </File>
-            <File>
-              <FileName>gx_text_scroll_wheel_event_process.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_text_scroll_wheel_event_process.c</FilePath>
-            </File>
-            <File>
               <FileName>gx_utility_string_compare.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_utility_string_compare.c</FilePath>
             </File>
             <File>
-              <FileName>gxe_rich_text_view_create.c</FileName>
+              <FileName>gx_system_initialize.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gxe_rich_text_view_create.c</FilePath>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_system_initialize.c</FilePath>
             </File>
-            <File>
-              <FileName>gxe_rich_text_view_fonts_set.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gxe_rich_text_view_fonts_set.c</FilePath>
-            </File>
-            <File>
-              <FileName>gxe_text_scroll_wheel_event_process.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gxe_text_scroll_wheel_event_process.c</FilePath>
-            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>azure-rtos/guix/common</GroupName>
+          <Files>
             <File>
               <FileName>gx_source.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_source.c</FilePath>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/gx_source.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
           <GroupName>azure-rtos/threadx/common/inc</GroupName>
           <Files>
+            <File>
+              <FileName>tx_api.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/threadx/common/inc/tx_api.h</FilePath>
+            </File>
+            <File>
+              <FileName>tx_block_pool.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/threadx/common/inc/tx_block_pool.h</FilePath>
+            </File>
             <File>
               <FileName>tx_byte_pool.h</FileName>
               <FileType>5</FileType>
@@ -1459,19 +1354,9 @@
               <FilePath>../../../../../rtos/azure-rtos/threadx/common/inc/tx_event_flags.h</FilePath>
             </File>
             <File>
-              <FileName>tx_timer.h</FileName>
+              <FileName>tx_initialize.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/threadx/common/inc/tx_timer.h</FilePath>
-            </File>
-            <File>
-              <FileName>tx_queue.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/threadx/common/inc/tx_queue.h</FilePath>
-            </File>
-            <File>
-              <FileName>tx_thread.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/threadx/common/inc/tx_thread.h</FilePath>
+              <FilePath>../../../../../rtos/azure-rtos/threadx/common/inc/tx_initialize.h</FilePath>
             </File>
             <File>
               <FileName>tx_mutex.h</FileName>
@@ -1479,34 +1364,34 @@
               <FilePath>../../../../../rtos/azure-rtos/threadx/common/inc/tx_mutex.h</FilePath>
             </File>
             <File>
-              <FileName>tx_trace.h</FileName>
+              <FileName>tx_queue.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/threadx/common/inc/tx_trace.h</FilePath>
-            </File>
-            <File>
-              <FileName>tx_initialize.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/threadx/common/inc/tx_initialize.h</FilePath>
-            </File>
-            <File>
-              <FileName>tx_api.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/threadx/common/inc/tx_api.h</FilePath>
-            </File>
-            <File>
-              <FileName>tx_user_sample.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/threadx/common/inc/tx_user_sample.h</FilePath>
-            </File>
-            <File>
-              <FileName>tx_block_pool.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/threadx/common/inc/tx_block_pool.h</FilePath>
+              <FilePath>../../../../../rtos/azure-rtos/threadx/common/inc/tx_queue.h</FilePath>
             </File>
             <File>
               <FileName>tx_semaphore.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../rtos/azure-rtos/threadx/common/inc/tx_semaphore.h</FilePath>
+            </File>
+            <File>
+              <FileName>tx_thread.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/threadx/common/inc/tx_thread.h</FilePath>
+            </File>
+            <File>
+              <FileName>tx_timer.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/threadx/common/inc/tx_timer.h</FilePath>
+            </File>
+            <File>
+              <FileName>tx_trace.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/threadx/common/inc/tx_trace.h</FilePath>
+            </File>
+            <File>
+              <FileName>tx_user_sample.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/threadx/common/inc/tx_user_sample.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1877,9 +1762,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>NDEBUG, CPU_MIMXRT1062DVL6A, TX_INCLUDE_USER_DEFINE_FILE, GX_INCLUDE_USER_DEFINE_FILE</Define>
+              <Define>NDEBUG, CPU_MIMXRT1062DVL6A, TX_INCLUDE_USER_DEFINE_FILE, GX_INCLUDE_USER_DEFINE_FILE, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>../../../../../rtos/azure-rtos/binary/threadx;../../../../../rtos/azure-rtos/binary/guix;../../../../../rtos/azure-rtos/threadx/common/inc;../../../../../rtos/azure-rtos/guix/common/inc;../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/inc;../../../../../rtos/azure-rtos/guix/ports/cortex_m7/ac6/inc</IncludePath>
+              <IncludePath>..;../../../../../rtos/azure-rtos/threadx/common/inc;../../../../../rtos/azure-rtos/guix/common/inc;../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/inc;../../../../../rtos/azure-rtos/guix/ports/cortex_m7/ac6/inc</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1930,17 +1815,17 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>azure-rtos/user</GroupName>
+          <GroupName>azure-rtos/config</GroupName>
           <Files>
             <File>
               <FileName>tx_user.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/binary/threadx/tx_user.h</FilePath>
+              <FilePath>../tx_user.h</FilePath>
             </File>
             <File>
               <FileName>gx_user.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/binary/guix/gx_user.h</FilePath>
+              <FilePath>../gx_user.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1948,49 +1833,19 @@
           <GroupName>azure-rtos/guix/common/inc</GroupName>
           <Files>
             <File>
-              <FileName>gx_utility.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/guix/common/inc/gx_utility.h</FilePath>
-            </File>
-            <File>
-              <FileName>gx_multi_line_text_input.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/guix/common/inc/gx_multi_line_text_input.h</FilePath>
-            </File>
-            <File>
-              <FileName>gx_sprite.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/guix/common/inc/gx_sprite.h</FilePath>
-            </File>
-            <File>
-              <FileName>gx_radial_slider.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/guix/common/inc/gx_radial_slider.h</FilePath>
-            </File>
-            <File>
-              <FileName>gx_menu.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/guix/common/inc/gx_menu.h</FilePath>
-            </File>
-            <File>
               <FileName>gx_animation.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../rtos/azure-rtos/guix/common/inc/gx_animation.h</FilePath>
             </File>
             <File>
-              <FileName>gx_text_input_cursor.h</FileName>
+              <FileName>gx_api.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/guix/common/inc/gx_text_input_cursor.h</FilePath>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/inc/gx_api.h</FilePath>
             </File>
             <File>
-              <FileName>gx_canvas.h</FileName>
+              <FileName>gx_binres_loader.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/guix/common/inc/gx_canvas.h</FilePath>
-            </File>
-            <File>
-              <FileName>gx_line_chart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/guix/common/inc/gx_line_chart.h</FilePath>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/inc/gx_binres_loader.h</FilePath>
             </File>
             <File>
               <FileName>gx_button.h</FileName>
@@ -1998,19 +1853,14 @@
               <FilePath>../../../../../rtos/azure-rtos/guix/common/inc/gx_button.h</FilePath>
             </File>
             <File>
-              <FileName>gx_radial_progress_bar.h</FileName>
+              <FileName>gx_canvas.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/guix/common/inc/gx_radial_progress_bar.h</FilePath>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/inc/gx_canvas.h</FilePath>
             </File>
             <File>
-              <FileName>gx_numeric_prompt.h</FileName>
+              <FileName>gx_circular_gauge.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/guix/common/inc/gx_numeric_prompt.h</FilePath>
-            </File>
-            <File>
-              <FileName>gx_scroll_wheel.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/guix/common/inc/gx_scroll_wheel.h</FilePath>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/inc/gx_circular_gauge.h</FilePath>
             </File>
             <File>
               <FileName>gx_context.h</FileName>
@@ -2018,24 +1868,19 @@
               <FilePath>../../../../../rtos/azure-rtos/guix/common/inc/gx_context.h</FilePath>
             </File>
             <File>
+              <FileName>gx_display.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/inc/gx_display.h</FilePath>
+            </File>
+            <File>
+              <FileName>gx_drop_list.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/inc/gx_drop_list.h</FilePath>
+            </File>
+            <File>
               <FileName>gx_icon.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../rtos/azure-rtos/guix/common/inc/gx_icon.h</FilePath>
-            </File>
-            <File>
-              <FileName>gx_window.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/guix/common/inc/gx_window.h</FilePath>
-            </File>
-            <File>
-              <FileName>gx_system.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/guix/common/inc/gx_system.h</FilePath>
-            </File>
-            <File>
-              <FileName>gx_numeric_pixelmap_prompt.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/guix/common/inc/gx_numeric_pixelmap_prompt.h</FilePath>
             </File>
             <File>
               <FileName>gx_image_reader.h</FileName>
@@ -2043,9 +1888,109 @@
               <FilePath>../../../../../rtos/azure-rtos/guix/common/inc/gx_image_reader.h</FilePath>
             </File>
             <File>
+              <FileName>gx_line_chart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/inc/gx_line_chart.h</FilePath>
+            </File>
+            <File>
+              <FileName>gx_menu.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/inc/gx_menu.h</FilePath>
+            </File>
+            <File>
+              <FileName>gx_multi_line_text_input.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/inc/gx_multi_line_text_input.h</FilePath>
+            </File>
+            <File>
+              <FileName>gx_multi_line_text_view.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/inc/gx_multi_line_text_view.h</FilePath>
+            </File>
+            <File>
+              <FileName>gx_numeric_pixelmap_prompt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/inc/gx_numeric_pixelmap_prompt.h</FilePath>
+            </File>
+            <File>
+              <FileName>gx_numeric_prompt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/inc/gx_numeric_prompt.h</FilePath>
+            </File>
+            <File>
+              <FileName>gx_pixelmap_prompt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/inc/gx_pixelmap_prompt.h</FilePath>
+            </File>
+            <File>
               <FileName>gx_progress_bar.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../rtos/azure-rtos/guix/common/inc/gx_progress_bar.h</FilePath>
+            </File>
+            <File>
+              <FileName>gx_prompt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/inc/gx_prompt.h</FilePath>
+            </File>
+            <File>
+              <FileName>gx_radial_progress_bar.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/inc/gx_radial_progress_bar.h</FilePath>
+            </File>
+            <File>
+              <FileName>gx_radial_slider.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/inc/gx_radial_slider.h</FilePath>
+            </File>
+            <File>
+              <FileName>gx_rich_text_view.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/inc/gx_rich_text_view.h</FilePath>
+            </File>
+            <File>
+              <FileName>gx_screen_stack.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/inc/gx_screen_stack.h</FilePath>
+            </File>
+            <File>
+              <FileName>gx_scroll_wheel.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/inc/gx_scroll_wheel.h</FilePath>
+            </File>
+            <File>
+              <FileName>gx_scrollbar.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/inc/gx_scrollbar.h</FilePath>
+            </File>
+            <File>
+              <FileName>gx_single_line_text_input.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/inc/gx_single_line_text_input.h</FilePath>
+            </File>
+            <File>
+              <FileName>gx_slider.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/inc/gx_slider.h</FilePath>
+            </File>
+            <File>
+              <FileName>gx_sprite.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/inc/gx_sprite.h</FilePath>
+            </File>
+            <File>
+              <FileName>gx_system.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/inc/gx_system.h</FilePath>
+            </File>
+            <File>
+              <FileName>gx_system_rtos_bind.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/inc/gx_system_rtos_bind.h</FilePath>
+            </File>
+            <File>
+              <FileName>gx_text_input_cursor.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/inc/gx_text_input_cursor.h</FilePath>
             </File>
             <File>
               <FileName>gx_tree_view.h</FileName>
@@ -2058,44 +2003,9 @@
               <FilePath>../../../../../rtos/azure-rtos/guix/common/inc/gx_user_sample.h</FilePath>
             </File>
             <File>
-              <FileName>gx_prompt.h</FileName>
+              <FileName>gx_utility.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/guix/common/inc/gx_prompt.h</FilePath>
-            </File>
-            <File>
-              <FileName>gx_api.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/guix/common/inc/gx_api.h</FilePath>
-            </File>
-            <File>
-              <FileName>gx_rich_text_view.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/guix/common/inc/gx_rich_text_view.h</FilePath>
-            </File>
-            <File>
-              <FileName>gx_slider.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/guix/common/inc/gx_slider.h</FilePath>
-            </File>
-            <File>
-              <FileName>gx_display.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/guix/common/inc/gx_display.h</FilePath>
-            </File>
-            <File>
-              <FileName>gx_single_line_text_input.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/guix/common/inc/gx_single_line_text_input.h</FilePath>
-            </File>
-            <File>
-              <FileName>gx_binres_loader.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/guix/common/inc/gx_binres_loader.h</FilePath>
-            </File>
-            <File>
-              <FileName>gx_pixelmap_prompt.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/guix/common/inc/gx_pixelmap_prompt.h</FilePath>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/inc/gx_utility.h</FilePath>
             </File>
             <File>
               <FileName>gx_widget.h</FileName>
@@ -2103,39 +2013,14 @@
               <FilePath>../../../../../rtos/azure-rtos/guix/common/inc/gx_widget.h</FilePath>
             </File>
             <File>
-              <FileName>gx_scrollbar.h</FileName>
+              <FileName>gx_window.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/guix/common/inc/gx_scrollbar.h</FilePath>
-            </File>
-            <File>
-              <FileName>gx_screen_stack.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/guix/common/inc/gx_screen_stack.h</FilePath>
-            </File>
-            <File>
-              <FileName>gx_system_rtos_bind.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/guix/common/inc/gx_system_rtos_bind.h</FilePath>
-            </File>
-            <File>
-              <FileName>gx_multi_line_text_view.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/guix/common/inc/gx_multi_line_text_view.h</FilePath>
-            </File>
-            <File>
-              <FileName>gx_circular_gauge.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/guix/common/inc/gx_circular_gauge.h</FilePath>
-            </File>
-            <File>
-              <FileName>gx_drop_list.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/guix/common/inc/gx_drop_list.h</FilePath>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/inc/gx_window.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>azure-rtos/source</GroupName>
+          <GroupName>azure-rtos/guix/common/src</GroupName>
           <Files>
             <File>
               <FileName>gx_display_driver_1555xrgb_canvas_blend.c</FileName>
@@ -2203,6 +2088,11 @@
               <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_16bpp_mouse_restore.c</FilePath>
             </File>
             <File>
+              <FileName>gx_display_driver_16bpp_pixel_write.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_16bpp_pixel_write.c</FilePath>
+            </File>
+            <File>
               <FileName>gx_display_driver_16bpp_pixelmap_blend.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_16bpp_pixelmap_blend.c</FilePath>
@@ -2216,11 +2106,6 @@
               <FileName>gx_display_driver_16bpp_pixelmap_rotate.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_16bpp_pixelmap_rotate.c</FilePath>
-            </File>
-            <File>
-              <FileName>gx_display_driver_16bpp_pixel_write.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_16bpp_pixel_write.c</FilePath>
             </File>
             <File>
               <FileName>gx_display_driver_16bpp_row_pitch_get.c</FileName>
@@ -2288,6 +2173,11 @@
               <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_1bpp_native_color_get.c</FilePath>
             </File>
             <File>
+              <FileName>gx_display_driver_1bpp_pixel_write.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_1bpp_pixel_write.c</FilePath>
+            </File>
+            <File>
               <FileName>gx_display_driver_1bpp_pixelmap_draw.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_1bpp_pixelmap_draw.c</FilePath>
@@ -2296,11 +2186,6 @@
               <FileName>gx_display_driver_1bpp_pixelmap_rotate.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_1bpp_pixelmap_rotate.c</FilePath>
-            </File>
-            <File>
-              <FileName>gx_display_driver_1bpp_pixel_write.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_1bpp_pixel_write.c</FilePath>
             </File>
             <File>
               <FileName>gx_display_driver_1bpp_row_pitch_get.c</FileName>
@@ -2423,6 +2308,11 @@
               <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_32bpp_horizontal_pixelmap_line_draw.c</FilePath>
             </File>
             <File>
+              <FileName>gx_display_driver_32bpp_pixel_write.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_32bpp_pixel_write.c</FilePath>
+            </File>
+            <File>
               <FileName>gx_display_driver_32bpp_pixelmap_draw.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_32bpp_pixelmap_draw.c</FilePath>
@@ -2431,11 +2321,6 @@
               <FileName>gx_display_driver_32bpp_pixelmap_rotate.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_32bpp_pixelmap_rotate.c</FilePath>
-            </File>
-            <File>
-              <FileName>gx_display_driver_32bpp_pixel_write.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_32bpp_pixel_write.c</FilePath>
             </File>
             <File>
               <FileName>gx_display_driver_32bpp_row_pitch_get.c</FileName>
@@ -2573,6 +2458,11 @@
               <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_4bpp_native_color_get.c</FilePath>
             </File>
             <File>
+              <FileName>gx_display_driver_4bpp_pixel_write.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_4bpp_pixel_write.c</FilePath>
+            </File>
+            <File>
               <FileName>gx_display_driver_4bpp_pixelmap_draw.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_4bpp_pixelmap_draw.c</FilePath>
@@ -2581,11 +2471,6 @@
               <FileName>gx_display_driver_4bpp_pixelmap_rotate.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_4bpp_pixelmap_rotate.c</FilePath>
-            </File>
-            <File>
-              <FileName>gx_display_driver_4bpp_pixel_write.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_4bpp_pixel_write.c</FilePath>
             </File>
             <File>
               <FileName>gx_display_driver_4bpp_row_pitch_get.c</FileName>
@@ -2708,6 +2593,11 @@
               <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_8bpp_mouse_restore.c</FilePath>
             </File>
             <File>
+              <FileName>gx_display_driver_8bpp_pixel_write.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_8bpp_pixel_write.c</FilePath>
+            </File>
+            <File>
               <FileName>gx_display_driver_8bpp_pixelmap_blend.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_8bpp_pixelmap_blend.c</FilePath>
@@ -2721,11 +2611,6 @@
               <FileName>gx_display_driver_8bpp_pixelmap_rotate.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_8bpp_pixelmap_rotate.c</FilePath>
-            </File>
-            <File>
-              <FileName>gx_display_driver_8bpp_pixel_write.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_8bpp_pixel_write.c</FilePath>
             </File>
             <File>
               <FileName>gx_display_driver_8bpp_row_pitch_get.c</FileName>
@@ -2748,6 +2633,11 @@
               <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_8bpp_vertical_pattern_line_draw.c</FilePath>
             </File>
             <File>
+              <FileName>gx_system_font_mono.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_system_font_mono.c</FilePath>
+            </File>
+            <File>
               <FileName>gx_system_font_4bpp.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_system_font_4bpp.c</FilePath>
@@ -2756,11 +2646,6 @@
               <FileName>gx_system_font_8bpp.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_system_font_8bpp.c</FilePath>
-            </File>
-            <File>
-              <FileName>gx_system_initialize.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_system_initialize.c</FilePath>
             </File>
             <File>
               <FileName>gx_utility_1555xrgb_pixelmap_resize.c</FileName>
@@ -2838,145 +2723,40 @@
               <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_utility_8bpp_pixelmap_rotate.c</FilePath>
             </File>
             <File>
-              <FileName>gx_prompt_event_process.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_prompt_event_process.c</FilePath>
-            </File>
-            <File>
-              <FileName>gx_string_scroll_wheel_event_process.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_string_scroll_wheel_event_process.c</FilePath>
-            </File>
-            <File>
-              <FileName>gx_text_button_event_process.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_text_button_event_process.c</FilePath>
-            </File>
-            <File>
-              <FileName>gxe_prompt_event_process.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gxe_prompt_event_process.c</FilePath>
-            </File>
-            <File>
-              <FileName>gxe_string_scroll_wheel_event_process.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gxe_string_scroll_wheel_event_process.c</FilePath>
-            </File>
-            <File>
-              <FileName>gxe_text_button_event_process.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gxe_text_button_event_process.c</FilePath>
-            </File>
-            <File>
-              <FileName>gx_rich_text_view_context_peek.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_rich_text_view_context_peek.c</FilePath>
-            </File>
-            <File>
-              <FileName>gx_rich_text_view_context_pop.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_rich_text_view_context_pop.c</FilePath>
-            </File>
-            <File>
-              <FileName>gx_rich_text_view_context_push.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_rich_text_view_context_push.c</FilePath>
-            </File>
-            <File>
-              <FileName>gx_rich_text_view_context_reset.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_rich_text_view_context_reset.c</FilePath>
-            </File>
-            <File>
-              <FileName>gx_rich_text_view_context_restore.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_rich_text_view_context_restore.c</FilePath>
-            </File>
-            <File>
-              <FileName>gx_rich_text_view_context_save.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_rich_text_view_context_save.c</FilePath>
-            </File>
-            <File>
-              <FileName>gx_rich_text_view_create.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_rich_text_view_create.c</FilePath>
-            </File>
-            <File>
-              <FileName>gx_rich_text_view_draw.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_rich_text_view_draw.c</FilePath>
-            </File>
-            <File>
-              <FileName>gx_rich_text_view_fonts_set.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_rich_text_view_fonts_set.c</FilePath>
-            </File>
-            <File>
-              <FileName>gx_rich_text_view_line_info_get.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_rich_text_view_line_info_get.c</FilePath>
-            </File>
-            <File>
-              <FileName>gx_rich_text_view_scroll_info_get.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_rich_text_view_scroll_info_get.c</FilePath>
-            </File>
-            <File>
-              <FileName>gx_rich_text_view_tag_enter.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_rich_text_view_tag_enter.c</FilePath>
-            </File>
-            <File>
-              <FileName>gx_rich_text_view_text_draw.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_rich_text_view_text_draw.c</FilePath>
-            </File>
-            <File>
-              <FileName>gx_rich_text_view_text_total_height_calculate.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_rich_text_view_text_total_height_calculate.c</FilePath>
-            </File>
-            <File>
-              <FileName>gx_text_scroll_wheel_dynamic_bidi_text_delete.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_text_scroll_wheel_dynamic_bidi_text_delete.c</FilePath>
-            </File>
-            <File>
-              <FileName>gx_text_scroll_wheel_event_process.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_text_scroll_wheel_event_process.c</FilePath>
-            </File>
-            <File>
               <FileName>gx_utility_string_compare.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_utility_string_compare.c</FilePath>
             </File>
             <File>
-              <FileName>gxe_rich_text_view_create.c</FileName>
+              <FileName>gx_system_initialize.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gxe_rich_text_view_create.c</FilePath>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_system_initialize.c</FilePath>
             </File>
-            <File>
-              <FileName>gxe_rich_text_view_fonts_set.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gxe_rich_text_view_fonts_set.c</FilePath>
-            </File>
-            <File>
-              <FileName>gxe_text_scroll_wheel_event_process.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gxe_text_scroll_wheel_event_process.c</FilePath>
-            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>azure-rtos/guix/common</GroupName>
+          <Files>
             <File>
               <FileName>gx_source.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_source.c</FilePath>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/gx_source.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
           <GroupName>azure-rtos/threadx/common/inc</GroupName>
           <Files>
+            <File>
+              <FileName>tx_api.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/threadx/common/inc/tx_api.h</FilePath>
+            </File>
+            <File>
+              <FileName>tx_block_pool.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/threadx/common/inc/tx_block_pool.h</FilePath>
+            </File>
             <File>
               <FileName>tx_byte_pool.h</FileName>
               <FileType>5</FileType>
@@ -2988,19 +2768,9 @@
               <FilePath>../../../../../rtos/azure-rtos/threadx/common/inc/tx_event_flags.h</FilePath>
             </File>
             <File>
-              <FileName>tx_timer.h</FileName>
+              <FileName>tx_initialize.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/threadx/common/inc/tx_timer.h</FilePath>
-            </File>
-            <File>
-              <FileName>tx_queue.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/threadx/common/inc/tx_queue.h</FilePath>
-            </File>
-            <File>
-              <FileName>tx_thread.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/threadx/common/inc/tx_thread.h</FilePath>
+              <FilePath>../../../../../rtos/azure-rtos/threadx/common/inc/tx_initialize.h</FilePath>
             </File>
             <File>
               <FileName>tx_mutex.h</FileName>
@@ -3008,34 +2778,34 @@
               <FilePath>../../../../../rtos/azure-rtos/threadx/common/inc/tx_mutex.h</FilePath>
             </File>
             <File>
-              <FileName>tx_trace.h</FileName>
+              <FileName>tx_queue.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/threadx/common/inc/tx_trace.h</FilePath>
-            </File>
-            <File>
-              <FileName>tx_initialize.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/threadx/common/inc/tx_initialize.h</FilePath>
-            </File>
-            <File>
-              <FileName>tx_api.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/threadx/common/inc/tx_api.h</FilePath>
-            </File>
-            <File>
-              <FileName>tx_user_sample.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/threadx/common/inc/tx_user_sample.h</FilePath>
-            </File>
-            <File>
-              <FileName>tx_block_pool.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/threadx/common/inc/tx_block_pool.h</FilePath>
+              <FilePath>../../../../../rtos/azure-rtos/threadx/common/inc/tx_queue.h</FilePath>
             </File>
             <File>
               <FileName>tx_semaphore.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../rtos/azure-rtos/threadx/common/inc/tx_semaphore.h</FilePath>
+            </File>
+            <File>
+              <FileName>tx_thread.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/threadx/common/inc/tx_thread.h</FilePath>
+            </File>
+            <File>
+              <FileName>tx_timer.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/threadx/common/inc/tx_timer.h</FilePath>
+            </File>
+            <File>
+              <FileName>tx_trace.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/threadx/common/inc/tx_trace.h</FilePath>
+            </File>
+            <File>
+              <FileName>tx_user_sample.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/threadx/common/inc/tx_user_sample.h</FilePath>
             </File>
           </Files>
         </Group>

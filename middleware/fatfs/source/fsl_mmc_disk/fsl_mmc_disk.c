@@ -129,9 +129,17 @@ DSTATUS mmc_disk_status(BYTE pdrv)
 
 DSTATUS mmc_disk_initialize(BYTE pdrv)
 {
+    static bool isCardInitialized = false;
+
     if (pdrv != MMCDISK)
     {
         return STA_NOINIT;
+    }
+
+    /* demostrate the normal flow of card re-initialization. If re-initialization is not neccessary, return RES_OK directly will be fine */
+    if(isCardInitialized)
+    {
+        MMC_Deinit(&g_mmc);
     }
 
     if (kStatus_Success != MMC_Init(&g_mmc))
@@ -140,6 +148,8 @@ DSTATUS mmc_disk_initialize(BYTE pdrv)
         memset(&g_mmc, 0U, sizeof(g_mmc));
         return STA_NOINIT;
     }
+    
+    isCardInitialized = true;
 
     return RES_OK;
 }

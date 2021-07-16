@@ -374,38 +374,49 @@ usb_status_t USB_DeviceGetVerdorDescriptor(usb_device_handle handle,
                                            uint32_t *length,
                                            uint8_t **buffer)
 {
-    usb_status_t errorReturn = kStatus_USB_Error;
+    usb_status_t errorReturn = kStatus_USB_InvalidRequest;
 
-    if (g_UsbDeviceOSString[16] != setup->bRequest)
+    if ((g_UsbDeviceOSString[16] != setup->bRequest) ||
+        ((setup->bmRequestType & USB_REQUEST_TYPE_DIR_MASK) != USB_REQUEST_TYPE_DIR_IN))
     {
         /*only handle request to its own verdor*/
         return errorReturn;
     }
+
     if ((setup->bmRequestType & USB_REQUEST_TYPE_RECIPIENT_MASK) == USB_REQUEST_TYPE_RECIPIENT_DEVICE)
     {
         if (USB_MICROSOFT_EXTENDED_COMPAT_ID == setup->wIndex)
         {
-            *buffer = g_UsbDeviceCompatibleIDDescriptor;
-            *length = USB_DESCRIPTOR_LENGTH_COMPAT;
+            *buffer     = g_UsbDeviceCompatibleIDDescriptor;
+            *length     = USB_DESCRIPTOR_LENGTH_COMPAT;
+            errorReturn = kStatus_USB_Success;
         }
         if (USB_MICROSOFT_EXTENDED_PROPERTIES_ID == setup->wIndex)
         {
-            *buffer = g_UsbDeviceOSExendedDescriptor;
-            *length = USB_DESCRIPTOR_LENGTH_OSExended;
+            *buffer     = g_UsbDeviceOSExendedDescriptor;
+            *length     = USB_DESCRIPTOR_LENGTH_OSExended;
+            errorReturn = kStatus_USB_Success;
         }
-        errorReturn = kStatus_USB_Success;
+        else
+        {
+            /* no action */
+        }
     }
-    if ((setup->bmRequestType & USB_REQUEST_TYPE_RECIPIENT_MASK) == USB_REQUEST_TYPE_RECIPIENT_INTERFACE)
+    else if ((setup->bmRequestType & USB_REQUEST_TYPE_RECIPIENT_MASK) == USB_REQUEST_TYPE_RECIPIENT_INTERFACE)
     {
         /*add this based on wiki.*/
         /*https://github.com/pbatard/libwdi/wiki/WCID-Devices, Defining a Device Interface GUID or other device specific
          * properties IMPORTANT NOTE 1*/
         if (USB_MICROSOFT_EXTENDED_PROPERTIES_ID == setup->wIndex)
         {
-            *buffer = g_UsbDeviceOSExendedDescriptor;
-            *length = USB_DESCRIPTOR_LENGTH_OSExended;
+            *buffer     = g_UsbDeviceOSExendedDescriptor;
+            *length     = USB_DESCRIPTOR_LENGTH_OSExended;
+            errorReturn = kStatus_USB_Success;
         }
-        errorReturn = kStatus_USB_Success;
+    }
+    else
+    {
+        /* no action */
     }
 
     return errorReturn;
@@ -429,6 +440,7 @@ usb_status_t USB_DeviceGetDescriptor(usb_device_handle handle,
         case USB_DESCRIPTOR_TYPE_HID_REPORT:
         {
             /* Get HID report descriptor */
+            error = kStatus_USB_InvalidRequest;
         }
         break;
         case USB_DESCRIPTOR_TYPE_STRING:
@@ -510,15 +522,23 @@ usb_status_t USB_DeviceGetConfigure(usb_device_handle handle, uint8_t *configure
 /* Set current alternate settting of the interface request */
 usb_status_t USB_DeviceSetInterface(usb_device_handle handle, uint8_t interface, uint8_t alternateSetting)
 {
-    g_UsbDeviceInterface[interface] = alternateSetting;
-    return USB_DeviceCallback(handle, kUSB_DeviceEventSetInterface, &interface);
+    if (interface < USB_DFU_INTERFACE_COUNT)
+    {
+        g_UsbDeviceInterface[interface] = alternateSetting;
+        return USB_DeviceCallback(handle, kUSB_DeviceEventSetInterface, &interface);
+    }
+    return kStatus_USB_InvalidRequest;
 }
 
 /* Get current alternate settting of the interface request */
 usb_status_t USB_DeviceGetInterface(usb_device_handle handle, uint8_t interface, uint8_t *alternateSetting)
 {
-    *alternateSetting = g_UsbDeviceInterface[interface];
-    return kStatus_USB_Success;
+    if (interface < USB_DFU_INTERFACE_COUNT)
+    {
+        *alternateSetting = g_UsbDeviceInterface[interface];
+        return kStatus_USB_Success;
+    }
+    return kStatus_USB_InvalidRequest;
 }
 /* Due to the difference of HS and FS descriptors, the device descriptors and configurations need to be updated to match
  * current speed.

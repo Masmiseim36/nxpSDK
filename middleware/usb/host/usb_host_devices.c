@@ -405,6 +405,9 @@ static usb_status_t USB_HostProcessCallback(usb_host_device_instance_t *deviceIn
     usb_host_instance_t *hostInstance = (usb_host_instance_t *)deviceInstance->hostHandle;
     void *temp;
     usb_host_device_enumeration_status_t state;
+#if (defined(USB_HOST_CONFIG_COMPLIANCE_TEST) && (USB_HOST_CONFIG_COMPLIANCE_TEST))
+    usb_host_hub_instance_t *hubInstance4Device = NULL;
+#endif
 
     state = (usb_host_device_enumeration_status_t)deviceInstance->state;
     switch (state)
@@ -492,8 +495,27 @@ static usb_status_t USB_HostProcessCallback(usb_host_device_instance_t *deviceIn
         case kStatus_DEV_GetCfg: /* process get configuration result */
             if (dataLength != deviceInstance->configurationLen)
             {
+#if (defined(USB_HOST_CONFIG_COMPLIANCE_TEST) && (USB_HOST_CONFIG_COMPLIANCE_TEST))
+                usb_echo("Host can only provide a maximum of 500mA current\r\n");
+#endif
                 return kStatus_USB_Error;
             }
+
+#if (defined(USB_HOST_CONFIG_COMPLIANCE_TEST) && (USB_HOST_CONFIG_COMPLIANCE_TEST))
+            hubInstance4Device = USB_HostHubGetHubDeviceHandle(hostInstance, deviceInstance->hubNumber);
+            if ((!(((usb_descriptor_configuration_t *)deviceInstance->configurationDesc)->bmAttributes &
+                   USB_DESCRIPTOR_CONFIGURE_ATTRIBUTE_SELF_POWERED_MASK)) &&
+                (((usb_descriptor_configuration_t *)deviceInstance->configurationDesc)->bMaxPower > 50) &&
+                (hubInstance4Device != NULL) &&
+                (!(((usb_descriptor_configuration_t *)((usb_host_device_instance_t *)hubInstance4Device->deviceHandle)
+                        ->configurationDesc)
+                       ->bmAttributes &
+                   USB_DESCRIPTOR_CONFIGURE_ATTRIBUTE_SELF_POWERED_MASK)))
+            {
+                usb_echo("The device power exceeded\r\n");
+                return kStatus_USB_Error;
+            }
+#endif
             temp = (void *)deviceInstance->configurationDesc;
             if (((usb_descriptor_configuration_t *)temp)->bMaxPower > USB_HOST_CONFIG_MAX_POWER)
             {
@@ -784,8 +806,7 @@ static usb_status_t USB_HostParseDeviceConfigurationDescriptor(usb_device_handle
     unionDes = (usb_descriptor_union_t *)temp;
     endPos   = (uint32_t)(deviceInstance->configurationDesc + deviceInstance->configurationLen);
 
-    if (((((uint32_t)unionDes) + 1U) < endPos) &&
-        (unionDes->common.bLength == USB_DESCRIPTOR_LENGTH_CONFIGURE) &&
+    if (((((uint32_t)unionDes) + 1U) < endPos) && (unionDes->common.bLength == USB_DESCRIPTOR_LENGTH_CONFIGURE) &&
         (unionDes->common.bDescriptorType == USB_DESCRIPTOR_TYPE_CONFIGURE))
     {
         /* configuration descriptor */
@@ -1291,7 +1312,7 @@ usb_status_t USB_HostOpenDeviceInterface(usb_device_handle deviceHandle, usb_hos
     hostInstance = (usb_host_instance_t *)deviceInstance->hostHandle;
     (void)USB_HostLock();
     /* check host_instance valid? */
-    for (; index < USB_HOST_CONFIG_MAX_HOST; ++index)
+    for (; index < (uint8_t)USB_HOST_CONFIG_MAX_HOST; ++index)
     {
         if ((g_UsbHostInstance[index].occupied == 1U) &&
             ((usb_host_instance_t *)(&g_UsbHostInstance[index]) == (hostInstance)))
@@ -1299,7 +1320,7 @@ usb_status_t USB_HostOpenDeviceInterface(usb_device_handle deviceHandle, usb_hos
             break;
         }
     }
-    if (index >= USB_HOST_CONFIG_MAX_HOST)
+    if (index >= (uint8_t)USB_HOST_CONFIG_MAX_HOST)
     {
         (void)USB_HostUnlock();
         return kStatus_USB_Error;
@@ -1342,7 +1363,7 @@ usb_status_t USB_HostCloseDeviceInterface(usb_device_handle deviceHandle, usb_ho
     hostInstance = (usb_host_instance_t *)deviceInstance->hostHandle;
     (void)USB_HostLock();
     /* check host_instance valid? */
-    for (; index < USB_HOST_CONFIG_MAX_HOST; ++index)
+    for (; index < (uint8_t)USB_HOST_CONFIG_MAX_HOST; ++index)
     {
         if ((g_UsbHostInstance[index].occupied == 1U) &&
             ((usb_host_instance_t *)(&g_UsbHostInstance[index]) == (hostInstance)))
@@ -1350,7 +1371,7 @@ usb_status_t USB_HostCloseDeviceInterface(usb_device_handle deviceHandle, usb_ho
             break;
         }
     }
-    if (index >= USB_HOST_CONFIG_MAX_HOST)
+    if (index >= (uint8_t)USB_HOST_CONFIG_MAX_HOST)
     {
         (void)USB_HostUnlock();
         return kStatus_USB_Error;

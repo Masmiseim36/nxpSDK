@@ -51,8 +51,10 @@
 /*! @brief Type for an semaphore */
 typedef struct Semaphore
 {
-    uint32_t time_start;        /*!< The time to start timeout                        */
-    uint32_t timeout;           /*!< Timeout to wait in milliseconds                  */
+#if (defined(FSL_OSA_BM_TIMEOUT_ENABLE) && (FSL_OSA_BM_TIMEOUT_ENABLE > 0U))
+    uint32_t time_start; /*!< The time to start timeout                        */
+    uint32_t timeout;    /*!< Timeout to wait in milliseconds                  */
+#endif
     volatile uint8_t isWaiting; /*!< Is any task waiting for a timeout on this object */
     volatile uint8_t semCount;  /*!< The count value of the object                    */
 
@@ -61,8 +63,10 @@ typedef struct Semaphore
 /*! @brief Type for a mutex */
 typedef struct Mutex
 {
-    uint32_t time_start;        /*!< The time to start timeout                       */
-    uint32_t timeout;           /*!< Timeout to wait in milliseconds                 */
+#if (defined(FSL_OSA_BM_TIMEOUT_ENABLE) && (FSL_OSA_BM_TIMEOUT_ENABLE > 0U))
+    uint32_t time_start; /*!< The time to start timeout                       */
+    uint32_t timeout;    /*!< Timeout to wait in milliseconds                 */
+#endif
     volatile uint8_t isWaiting; /*!< Is any task waiting for a timeout on this mutex */
     volatile uint8_t isLocked;  /*!< Is the object locked or not                     */
 } mutex_t;
@@ -525,13 +529,18 @@ __WEAK_FUNC uint32_t OSA_TimeGetMsec(void)
 osa_status_t OSA_SemaphoreCreate(osa_semaphore_handle_t semaphoreHandle, uint32_t initValue)
 {
     semaphore_t *pSemStruct = (semaphore_t *)semaphoreHandle;
-    assert(sizeof(semaphore_t) == OSA_SEM_HANDLE_SIZE);
+    assert(sizeof(semaphore_t) <= OSA_SEM_HANDLE_SIZE);
     assert(semaphoreHandle);
 
-    pSemStruct->semCount   = (uint8_t)initValue;
-    pSemStruct->isWaiting  = 0U;
+    pSemStruct->semCount  = (uint8_t)initValue;
+    pSemStruct->isWaiting = 0U;
+#if (defined(FSL_OSA_BM_TIMEOUT_ENABLE) && (FSL_OSA_BM_TIMEOUT_ENABLE > 0U))
+#if (FSL_OSA_BM_TIMER_CONFIG != FSL_OSA_BM_TIMER_NONE)
+
     pSemStruct->time_start = 0U;
     pSemStruct->timeout    = 0U;
+#endif
+#endif
     return KOSA_StatusSuccess;
 }
 /*FUNCTION**********************************************************************
@@ -569,8 +578,10 @@ osa_status_t OSA_SemaphoreWait(osa_semaphore_handle_t semaphoreHandle, uint32_t 
     semaphore_t *pSemStruct = (semaphore_t *)semaphoreHandle;
     uint32_t regPrimask;
     assert(semaphoreHandle);
+#if (defined(FSL_OSA_BM_TIMEOUT_ENABLE) && (FSL_OSA_BM_TIMEOUT_ENABLE > 0U))
 #if (FSL_OSA_BM_TIMER_CONFIG != FSL_OSA_BM_TIMER_NONE)
     uint32_t currentTime;
+#endif
 #endif
     /* Check the sem count first. Deal with timeout only if not already set */
 
@@ -589,6 +600,7 @@ osa_status_t OSA_SemaphoreWait(osa_semaphore_handle_t semaphoreHandle, uint32_t 
             /* If timeout is 0 and semaphore is not available, return kStatus_OSA_Timeout. */
             return KOSA_StatusTimeout;
         }
+#if (defined(FSL_OSA_BM_TIMEOUT_ENABLE) && (FSL_OSA_BM_TIMEOUT_ENABLE > 0U))
 #if (FSL_OSA_BM_TIMER_CONFIG != FSL_OSA_BM_TIMER_NONE)
         else if (0U != pSemStruct->isWaiting)
         {
@@ -611,6 +623,7 @@ osa_status_t OSA_SemaphoreWait(osa_semaphore_handle_t semaphoreHandle, uint32_t 
             pSemStruct->time_start = OSA_TimeGetMsec();
             pSemStruct->timeout    = millisec;
         }
+#endif
 #endif
         else
         {
@@ -657,13 +670,18 @@ osa_status_t OSA_SemaphorePost(osa_semaphore_handle_t semaphoreHandle)
 osa_status_t OSA_MutexCreate(osa_mutex_handle_t mutexHandle)
 {
     mutex_t *pMutexStruct = (mutex_t *)mutexHandle;
-    assert(sizeof(mutex_t) == OSA_MUTEX_HANDLE_SIZE);
+    assert(sizeof(mutex_t) <= OSA_MUTEX_HANDLE_SIZE);
     assert(mutexHandle);
 
-    pMutexStruct->isLocked   = 0U;
-    pMutexStruct->isWaiting  = 0U;
+    pMutexStruct->isLocked  = 0U;
+    pMutexStruct->isWaiting = 0U;
+#if (defined(FSL_OSA_BM_TIMEOUT_ENABLE) && (FSL_OSA_BM_TIMEOUT_ENABLE > 0U))
+#if (FSL_OSA_BM_TIMER_CONFIG != FSL_OSA_BM_TIMER_NONE)
+
     pMutexStruct->time_start = 0u;
     pMutexStruct->timeout    = 0u;
+#endif
+#endif
     return KOSA_StatusSuccess;
 }
 
@@ -680,8 +698,10 @@ osa_status_t OSA_MutexCreate(osa_mutex_handle_t mutexHandle)
  *END**************************************************************************/
 osa_status_t OSA_MutexLock(osa_mutex_handle_t mutexHandle, uint32_t millisec)
 {
+#if (defined(FSL_OSA_BM_TIMEOUT_ENABLE) && (FSL_OSA_BM_TIMEOUT_ENABLE > 0U))
 #if (FSL_OSA_BM_TIMER_CONFIG != FSL_OSA_BM_TIMER_NONE)
     uint32_t currentTime;
+#endif
 #endif
     mutex_t *pMutexStruct = (mutex_t *)mutexHandle;
     uint32_t regPrimask;
@@ -703,6 +723,7 @@ osa_status_t OSA_MutexLock(osa_mutex_handle_t mutexHandle, uint32_t millisec)
             /* If timeout is 0 and mutex is not available, return kStatus_OSA_Timeout. */
             return KOSA_StatusTimeout;
         }
+#if (defined(FSL_OSA_BM_TIMEOUT_ENABLE) && (FSL_OSA_BM_TIMEOUT_ENABLE > 0U))
 #if (FSL_OSA_BM_TIMER_CONFIG != FSL_OSA_BM_TIMER_NONE)
         else if (pMutexStruct->isWaiting != 0U)
         {
@@ -725,6 +746,7 @@ osa_status_t OSA_MutexLock(osa_mutex_handle_t mutexHandle, uint32_t millisec)
             pMutexStruct->time_start = OSA_TimeGetMsec();
             pMutexStruct->timeout    = millisec;
         }
+#endif
 #endif
         else
         {
@@ -1284,25 +1306,29 @@ void OSA_Start(void)
     OSA_TimeInit();
 #endif
 
-    list_element = LIST_GetHead(&s_osaState.taskList);
-    while (1)
+    while (true)
     {
-        tcb                       = (task_control_block_t *)(void *)list_element;
-        s_osaState.curTaskHandler = (osa_task_handle_t)tcb;
-        if (0U != tcb->haveToRun)
+        list_element = LIST_GetHead(&s_osaState.taskList);
+        while (NULL != list_element)
         {
-            if (NULL != tcb->p_func)
+            tcb                       = (task_control_block_t *)(void *)list_element;
+            s_osaState.curTaskHandler = (osa_task_handle_t)tcb;
+            if (0U != tcb->haveToRun)
             {
-                tcb->p_func(tcb->param);
+                if (NULL != tcb->p_func)
+                {
+                    tcb->p_func(tcb->param);
+                }
+                list_element = LIST_GetHead(&s_osaState.taskList);
             }
-            list_element = LIST_GetHead(&s_osaState.taskList);
-        }
-        else
-        {
-            list_element = LIST_GetNext(list_element);
+            else
+            {
+                list_element = LIST_GetNext(list_element);
+            }
         }
     }
 }
+
 #endif
 
 /*FUNCTION**********************************************************************

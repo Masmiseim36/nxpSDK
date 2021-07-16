@@ -5,9 +5,9 @@ Application demonstrating how to use the SPP feature.
 
 Toolchain supported
 ===================
-- MCUXpresso  11.3.0
-- IAR embedded Workbench  8.50.9
-- GCC ARM Embedded  9.3.1
+- MCUXpresso  11.4.0
+- IAR embedded Workbench  9.10.2
+- GCC ARM Embedded  10.2.1
 
 Hardware requirements
 =====================
@@ -16,6 +16,7 @@ Hardware requirements
 - Personal Computer
 - One of the following WiFi modules:
   - AzureWave AW-AM457-uSD
+  - AzureWave AW-CM358-uSD
 
 Board settings
 ==============
@@ -25,7 +26,7 @@ Jumper settings for AzureWave AW-AM457-uSD Module:
   - J2  1-2: 3.3V VIO_uSD (Power Supply from uSD connector)
   - J4  2-3: 3.3V VIO
 
-The hardware should be reworked according to the hardware rework guide for evkmimxrt1060 and AW-AM457-uSD.
+The hardware should be reworked according to the hardware rework guide for evkmimxrt1060 and AW-AM457-uSD in document Hardware Rework Guide for EdgeFast BT PAL.
 The pin connect for UART HCI as the following table,
 ------------------------------------------------------------------------------------
 PIN NAME | AW-AM457-USD |   I.MXRT1060   | PIN NAME OF RT1060 | GPIO NAME OF RT1060
@@ -36,6 +37,23 @@ UART_RTS |  J10(pin 6)  |   J23(pin 3)   |    LPUART3_CTS     | GPIO_AD_B1_04
 UART_CTS |  J10(pin 8)  |   J23(pin 4)   |    LPUART3_RTS     | GPIO_AD_B1_05
 GND      |  J6(pin 7)   |   J25(pin 7)   |    GND             | GND
 ------------------------------------------------------------------------------------
+
+Jumper settings for AzureWave AW-CM358-uSD Module:
+  - J2 1-2: 3.3V VIO_uSD (Power Supply from uSD connector)
+  - J4 1-2: VIO 1.8V (Voltage level of SDIO pins is 1.8V)
+
+The hardware should be reworked according to the hardware rework guide for evkmimxrt1060 and AW-CM358-uSD in document Hardware Rework Guide for EdgeFast BT PAL.
+The pin connect for UART HCI as the following table,
+------------------------------------------------------------------------------------
+PIN NAME | AW-CM358-USD |   I.MXRT1060   | PIN NAME OF RT1060 | GPIO NAME OF RT1060
+------------------------------------------------------------------------------------
+UART_TXD |  J10(pin 4)  |   J22(pin 1)   |    LPUART3_RXD     | GPIO_AD_B1_07
+UART_RXD |  J10(pin 2)  |   J22(pin 2)   |    LPUART3_TXD     | GPIO_AD_B1_06
+UART_RTS |  J10(pin 6)  |   J23(pin 3)   |    LPUART3_CTS     | GPIO_AD_B1_04
+UART_CTS |  J10(pin 8)  |   J23(pin 4)   |    LPUART3_RTS     | GPIO_AD_B1_05
+GND      |  J6(pin 7)   |   J25(pin 7)   |    GND             | GND
+------------------------------------------------------------------------------------
+
 Note:
 After downloaded binary into qspiflash and boot from qspiflash directly, 
 please reset the board by pressing SW9 or power off and on the board to run the application.

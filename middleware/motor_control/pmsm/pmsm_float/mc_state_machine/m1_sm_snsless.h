@@ -17,8 +17,15 @@
  ******************************************************************************/
 #define M1_SPEED_CONV_SCALE 628.06F /* Speed conversion scale */
 
-#define MCAT_SENSORLESS_CTRL 0 /* Sensorless control flag */
+#define MCAT_SENSORLESS_CTRL 0U /* Sensorless control flag */
 
+/* Application info */
+typedef struct _app_ver
+{
+    char cBoardID[15];
+    char cMotorType[4];
+    char cAppVer[5];
+} app_ver_t;
 /*******************************************************************************
  * Variables
  ******************************************************************************/
@@ -77,15 +84,6 @@ uint16_t M1_GetAppState(void);
  * @return None
  */
 void M1_SetSpeed(float_t fltSpeedCmd);
-
-/*!
- * @brief Set position of the motor in acc value
- *
- * @param a32PositionCmd  Position command - set position
- *
- * @return None
- */
-void M1_SetPosition(acc32_t a32PositionCmdDemo);
 
 /*!
  * @brief Get spin speed of the motor in float value

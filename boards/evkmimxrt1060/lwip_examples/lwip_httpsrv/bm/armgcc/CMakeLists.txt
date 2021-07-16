@@ -1,6 +1,6 @@
 # CROSS COMPILER SETTING
 SET(CMAKE_SYSTEM_NAME Generic)
-CMAKE_MINIMUM_REQUIRED (VERSION 3.1.1)
+CMAKE_MINIMUM_REQUIRED (VERSION 3.10.0)
 
 # THE VERSION NUMBER
 SET (Tutorial_VERSION_MAJOR 1)
@@ -60,7 +60,7 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../../components/lists
     ${ProjDirPath}/../../../../../../devices/MIMXRT1062/xip
     ${ProjDirPath}/../../../../xip
-    ${ProjDirPath}/../../../../../../CMSIS/Include
+    ${ProjDirPath}/../../../../../../CMSIS/Core/Include
 )
 
 # include modules
@@ -108,15 +108,11 @@ include(driver_igpio_MIMXRT1062)
 
 include(driver_xip_device_MIMXRT1062)
 
-include(driver_xip_board_MIMXRT1062)
+include(driver_xip_board_evkmimxrt1060_MIMXRT1062)
 
 include(driver_mdio-common_MIMXRT1062)
 
-include(CMSIS_Include_core_cm7_MIMXRT1062)
-
-include(CMSIS_Include_common_MIMXRT1062)
-
-include(CMSIS_Include_dsp_MIMXRT1062)
+include(CMSIS_Include_core_cm_MIMXRT1062)
 
 include(middleware_lwip_apps_httpd_support_MIMXRT1062)
 

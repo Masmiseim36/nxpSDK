@@ -31,7 +31,7 @@ TX_THREAD thread_0;
 NX_PACKET_POOL pool_0;
 NX_IP ip_0;
 #ifdef NX_ENABLE_DHCP
-AT_NONCACHEABLE_SECTION(NX_DHCP dhcp_client);
+AT_NONCACHEABLE_SECTION_ALIGN(NX_DHCP dhcp_client, 64);
 UCHAR ip_address[4];
 UCHAR network_mask[4];
 #endif
@@ -46,16 +46,13 @@ NXD_ADDRESS ipv6_address;
 ULONG ip_thread_stack[2 * 1024 / sizeof(ULONG)];
 
 /* Define packet pool for the demonstration.  */
-AT_NONCACHEABLE_SECTION(ULONG packet_pool_area[NX_PACKET_POOL_SIZE / 4 + 4]);
+AT_NONCACHEABLE_SECTION_ALIGN(ULONG packet_pool_area[NX_PACKET_POOL_SIZE / 4 + 4], 64);
 
 /* Define the ARP cache area.  */
 ULONG arp_space_area[1024 / sizeof(ULONG)];
 
 /* Define the counters used in the demo application...  */
 ULONG error_counter;
-
-/* Define the SysTick cycles which will be loaded on tx_initialize_low_level.s */
-int systick_cycles;
 
 /*******************************************************************************
  * Prototypes
@@ -82,6 +79,12 @@ static void delay(void)
     {
         __asm("NOP"); /* delay */
     }
+}
+
+/* return the ENET MDIO interface clock frequency */
+uint32_t BOARD_GetMDIOClock(void)
+{
+    return CLOCK_GetFreq(kCLOCK_IpgClk);
 }
 
 void main(void)
@@ -118,9 +121,6 @@ void main(void)
     GPIO_WritePinOutput(GPIO1, 9, 1);
 
     PRINTF("Start the iperf example...\r\n");
-
-    /* systick_cycles must be initialized before tx_kernel_enter(). */
-    systick_cycles = (SystemCoreClock / TX_TIMER_TICKS_PER_SECOND) - 1;
 
     /* Enter the ThreadX kernel.  */
     tx_kernel_enter();

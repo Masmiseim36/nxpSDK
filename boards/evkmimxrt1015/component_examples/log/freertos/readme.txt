@@ -10,10 +10,10 @@ work with semihosting.
 
 Toolchain supported
 ===================
-- Keil MDK  5.33
-- GCC ARM Embedded  9.3.1
-- IAR embedded Workbench  8.50.9
-- MCUXpresso  11.3.0
+- Keil MDK  5.34
+- GCC ARM Embedded  10.2.1
+- IAR embedded Workbench  9.10.2
+- MCUXpresso  11.4.0
 
 Hardware requirements
 =====================

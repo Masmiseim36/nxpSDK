@@ -22,7 +22,7 @@
 #define IEC60730B_CM4_CM7_STACK_H_
 
 /*
- * List of devices and supported functions can be found in library user guide, 
+ * List of devices and supported functions can be found in library user guide,
  * section Core self test library - source code version.
  */
 
@@ -30,7 +30,7 @@
  * Macros
  ******************************************************************************/
 /* Return values */
-#define FS_FAIL_STACK  (FS_STACK_CODE + 0x01)
+#define FS_FAIL_STACK (FS_STACK_CODE + 0x01)
 
 /* Assembler skips following section */
 #ifndef __ASM__
@@ -52,7 +52,10 @@
  * @return   void
  *
  ******************************************************************************/
-void FS_CM4_CM7_STACK_Init(uint32_t stackTestPattern, uint32_t firstAddress, uint32_t secondAddress, uint32_t blockSize);
+void FS_CM4_CM7_STACK_Init(uint32_t stackTestPattern,
+                           uint32_t firstAddress,
+                           uint32_t secondAddress,
+                           uint32_t blockSize);
 
 /*******************************************************************************
  *
@@ -69,7 +72,10 @@ void FS_CM4_CM7_STACK_Init(uint32_t stackTestPattern, uint32_t firstAddress, uin
  *           FS_FAIL_STACK
  *
  ******************************************************************************/
-FS_RESULT FS_CM4_CM7_STACK_Test(uint32_t stackTestPattern, uint32_t firstAddress, uint32_t secondAddress, uint32_t blockSize);
+FS_RESULT FS_CM4_CM7_STACK_Test(uint32_t stackTestPattern,
+                                uint32_t firstAddress,
+                                uint32_t secondAddress,
+                                uint32_t blockSize);
 
 #endif /* __ASM__ */
 #endif /* IEC60730B_CM4_CM7_STACK_H_ */

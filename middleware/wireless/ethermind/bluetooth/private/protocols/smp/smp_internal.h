@@ -18,6 +18,7 @@
 #include "BT_smp_api.h"
 #include "BT_bottom_half.h"
 #include "BT_hci_api.h"
+#include "BT_status.h"
 
 #include "smp.h"
 #include "smp_pl.h"
@@ -72,20 +73,20 @@
 
 /* ----------------------------------------- Global Definitions */
 /** SMP Commands size */
-#define SMP_PAIRING_REQUEST_CMD_SIZE                7
-#define SMP_PAIRING_RESPONSE_CMD_SIZE               7
-#define SMP_PAIRING_CONFIRM_CMD_SIZE                17
-#define SMP_PAIRING_FAILED_CMD_SIZE                 2
-#define SMP_ENCRYPTION_INFORMATION_CMD_SIZE         17
-#define SMP_MASTER_IDENTIFICATION_CMD_SIZE          11
-#define SMP_IDENTITY_INFORMATION_CMD_SIZE           17
-#define SMP_IDENTITY_ADDRESS_INFORMATION_CMD_SIZE   8
-#define SMP_SIGNATURE_INFORMATION_CMD_SIZE          17
-#define SMP_SECURITY_REQUEST_CMD_SIZE               2
+#define SMP_PAIRING_REQUEST_CMD_SIZE                7U
+#define SMP_PAIRING_RESPONSE_CMD_SIZE               7U
+#define SMP_PAIRING_CONFIRM_CMD_SIZE                17U
+#define SMP_PAIRING_FAILED_CMD_SIZE                 2U
+#define SMP_ENCRYPTION_INFORMATION_CMD_SIZE         17U
+#define SMP_MASTER_IDENTIFICATION_CMD_SIZE          11U
+#define SMP_IDENTITY_INFORMATION_CMD_SIZE           17U
+#define SMP_IDENTITY_ADDRESS_INFORMATION_CMD_SIZE   8U
+#define SMP_SIGNATURE_INFORMATION_CMD_SIZE          17U
+#define SMP_SECURITY_REQUEST_CMD_SIZE               2U
 #ifdef SMP_LESC
-#define SMP_PAIRING_PUBLIC_KEY_CMD_SIZE             65
-#define SMP_PAIRING_DHKEY_CHECK_CMD_SIZE            17
-#define SMP_KEYPRESS_NOTIFICATION_CMD_SIZE          2
+#define SMP_PAIRING_PUBLIC_KEY_CMD_SIZE             65U
+#define SMP_PAIRING_DHKEY_CHECK_CMD_SIZE            17U
+#define SMP_KEYPRESS_NOTIFICATION_CMD_SIZE          2U
 #endif /* SMP_LESC */
 
 /** Minimum and Maximum SMP PDU size */
@@ -96,92 +97,92 @@
 #define SMP_MAXIMUM_PDU_SIZE   SMP_PAIRING_PUBLIC_KEY_CMD_SIZE
 #endif /* SMP_LESC */
 /** SMP Invalid State */
-#define SMP_STATE_INVALID                       0xFF
+#define SMP_STATE_INVALID                       0xFFU
 
 /* SMP Validity values */
-#define SMP_ENTITY_INVALID                      0x00
-#define SMP_ENTITY_VALID_TRUSTED                0x01
-#define SMP_ENTITY_VALID_UNTRUSTED              0x02
-#define SMP_ENTITY_VALIDITY_MASK                0xFC
+#define SMP_ENTITY_INVALID                      0x00U
+#define SMP_ENTITY_VALID_TRUSTED                0x01U
+#define SMP_ENTITY_VALID_UNTRUSTED              0x02U
+#define SMP_ENTITY_VALIDITY_MASK                0xFCU
 
 /* SMP Entity States */
-#define SMP_ENTITY_IDLE                         0x00
-#define SMP_ENTITY_CONNECTED                    0x04
-#define SMP_ENTITY_CONNECTION_MASK              0xF3
+#define SMP_ENTITY_IDLE                         0x00U
+#define SMP_ENTITY_CONNECTED                    0x04U
+#define SMP_ENTITY_CONNECTION_MASK              0xF3U
 
 /* SMP Device Role */
-#define SMP_ENTITY_MASTER                       0x00
-#define SMP_ENTITY_SLAVE                        0x10
-#define SMP_ENTITY_ROLE_MASK                    0xEF
+#define SMP_ENTITY_MASTER                       0x00U
+#define SMP_ENTITY_SLAVE                        0x10U
+#define SMP_ENTITY_ROLE_MASK                    0xEFU
 
 /* SMP Connected over BR/EDR */
-#define SMP_LINK_BREDR_ACTIVE                   0x80
-#define SMP_LINK_BLE_ACTIVE                     0x40
-#define SMP_LINK_MASK                           0x3F
+#define SMP_LINK_BREDR_ACTIVE                   0x80U
+#define SMP_LINK_BLE_ACTIVE                     0x40U
+#define SMP_LINK_MASK                           0x3FU
 
 /* SMP Entity Encryption state masks for security attribute */
-#define SMP_ENTITY_ENC_OFF                      0x00
-#define SMP_ENTITY_ENC_IN_PROGRESS              0x04
-#define SMP_ENTITY_ENC_ON                       0x08
-#define SMP_ENTITY_ENC_MASK                     0xF3
+#define SMP_ENTITY_ENC_OFF                      0x00U
+#define SMP_ENTITY_ENC_IN_PROGRESS              0x04U
+#define SMP_ENTITY_ENC_ON                       0x08U
+#define SMP_ENTITY_ENC_MASK                     0xF3U
 
 /* SMP Entity Bonding state masks for security attribute */
-#define SMP_ENTITY_BOND_OFF                     0x00
-#define SMP_ENTITY_BOND_ON                      0x10
-#define SMP_ENTITY_BOND_MASK                    0xEF
+#define SMP_ENTITY_BOND_OFF                     0x00U
+#define SMP_ENTITY_BOND_ON                      0x10U
+#define SMP_ENTITY_BOND_MASK                    0xEFU
 
 #ifdef SMP_LESC
 /** SMP LE Secure Connections state masks for security attribute */
-#define SMP_ENTITY_LESC_PAIRING_OFF             0x00
-#define SMP_ENTITY_LESC_PAIRING_ON              0x20
-#define SMP_ENTITY_LESC_PAIRING_MASK            0xDF
+#define SMP_ENTITY_LESC_PAIRING_OFF             0x00U
+#define SMP_ENTITY_LESC_PAIRING_ON              0x20U
+#define SMP_ENTITY_LESC_PAIRING_MASK            0xDFU
 #endif /* SMP_LESC */
 
 /* Local Key Exchange Bit Masks */
-#define SMP_LOCAL_ENCKEY                        0x01
-#define SMP_LOCAL_IDKEY                         0x02
-#define SMP_LOCAL_SIGNKEY                       0x04
-#define SMP_LOCAL_KEY_MASK                      0xF8
+#define SMP_LOCAL_ENCKEY                        0x01U
+#define SMP_LOCAL_IDKEY                         0x02U
+#define SMP_LOCAL_SIGNKEY                       0x04U
+#define SMP_LOCAL_KEY_MASK                      0xF8U
 
 #ifdef SMP_LESC_CROSS_TXP_KEY_GEN
-#define SMP_LOCAL_LINK_KEY                      0x08
+#define SMP_LOCAL_LINK_KEY                      0x08U
 #endif /* SMP_LESC_CROSS_TXP_KEY_GEN */
 
 #ifdef SMP_LESC_CROSS_TXP_KEY_GEN
-#define SMP_SUPPORTED_KEY_MASK                  0x0F
+#define SMP_SUPPORTED_KEY_MASK                  0x0FU
 #else
-#define SMP_SUPPORTED_KEY_MASK                  0x07
+#define SMP_SUPPORTED_KEY_MASK                  0x07U
 #endif /* SMP_LESC_CROSS_TXP_KEY_GEN */
 
 /* Remote Key Exchange Bit Masks */
-#define SMP_REMOTE_ENCKEY                       0x10
-#define SMP_REMOTE_IDKEY                        0x20
-#define SMP_REMOTE_SIGNKEY                      0x40
-#define SMP_REMOTE_KEY_MASK                     0x8F
+#define SMP_REMOTE_ENCKEY                       0x10U
+#define SMP_REMOTE_IDKEY                        0x20U
+#define SMP_REMOTE_SIGNKEY                      0x40U
+#define SMP_REMOTE_KEY_MASK                     0x8FU
 
 #ifdef SMP_LESC_CROSS_TXP_KEY_GEN
-#define SMP_REMOTE_LINK_KEY                     0x80
+#define SMP_REMOTE_LINK_KEY                     0x80U
 #endif /* SMP_LESC_CROSS_TXP_KEY_GEN */
 
 /* SMP Private Address states */
-#define SMP_W4_RAND_COMPLETE                    0x01
-#define SMP_PVT_ADDR_CREATE_W4_AH_EVAL_COMPLETE 0x02
-#define SMP_PVT_ADDR_RESOLV_W4_AH_EVAL_COMPLETE 0x03
+#define SMP_W4_RAND_COMPLETE                    0x01U
+#define SMP_PVT_ADDR_CREATE_W4_AH_EVAL_COMPLETE 0x02U
+#define SMP_PVT_ADDR_RESOLV_W4_AH_EVAL_COMPLETE 0x03U
 
 /** Key value size defines */
-#define SMP_CONFIRM_VALUE_SIZE                  16
-#define SMP_TEMP_KEY_SIZE                       16
-#define SMP_PVT_ADDR_HASH_SIZE                  3
-#define SMP_PVT_ADDR_RAND_SIZE                  3
+#define SMP_CONFIRM_VALUE_SIZE                  16U
+#define SMP_TEMP_KEY_SIZE                       16U
+#define SMP_PVT_ADDR_HASH_SIZE                  3U
+#define SMP_PVT_ADDR_RAND_SIZE                  3U
 #ifdef SMP_LESC
-#define SMP_LESC_KEY_SIZE                       16
-#define SMP_LESC_DHKEY_CHECK_VALUE_SIZE         16
-#define SMP_LESC_IOCAPB_SIZE                    3
-#define SMP_LESC_KEYID_SALT_SIZE                16
-#define SMP_LESC_KEYID_SIZE                     4
+#define SMP_LESC_KEY_SIZE                       16U
+#define SMP_LESC_DHKEY_CHECK_VALUE_SIZE         16U
+#define SMP_LESC_IOCAPB_SIZE                    3U
+#define SMP_LESC_KEYID_SALT_SIZE                16U
+#define SMP_LESC_KEYID_SIZE                     4U
 
 #ifdef SMP_LESC_CROSS_TXP_KEY_GEN
-#define SMP_LESC_KEYID_TMP_SIZE                 16
+#define SMP_LESC_KEYID_TMP_SIZE                 16U
 #endif /* SMP_LESC_CROSS_TXP_KEY_GEN */
 #endif /* SMP_LESC */
 
@@ -217,84 +218,84 @@
 #endif /* SMP_LESC */
 
 /** Invalid Index Values */
-#define SMP_INVALID_DEVICE_INDEX                0xFF
-#define SMP_L2CAP_INVALID_SIG_ID                0xFFFFFFFF
+#define SMP_INVALID_DEVICE_INDEX                0xFFU
+#define SMP_L2CAP_INVALID_SIG_ID                0xFFFFFFFFU
 
 /* SMP Association Models */
-#define SMP_JW                                   0x00
-#define SMP_PK_0                                 0x01
-#define SMP_PK_1                                 0x02
-#define SMP_PK_2                                 0x03
-#define SMP_OOB                                  0x04
+#define SMP_JW                                   0x00U
+#define SMP_PK_0                                 0x01U
+#define SMP_PK_1                                 0x02U
+#define SMP_PK_2                                 0x03U
+#define SMP_OOB                                  0x04U
 #ifdef SMP_LESC
-#define SMP_NC                                   0x05
+#define SMP_NC                                   0x05U
 #endif /* SMP_LESC */
 
 /* SMP Security property bitmasks */
-#define SMP_AUTHREQ_BOND_BITMASK                 0x03
-#define SMP_AUTHREQ_MITM_BITMASK                 0x04
-#define SMP_AUTHREQ_LESC_BITMASK                 0x08
-#define SMP_AUTHREQ_KEY_PRESS_BITMASK            0x10
-#define SMP_AUTHREQ_CT2_BITMASK                  0x20
+#define SMP_AUTHREQ_BOND_BITMASK                 0x03U
+#define SMP_AUTHREQ_MITM_BITMASK                 0x04U
+#define SMP_AUTHREQ_LESC_BITMASK                 0x08U
+#define SMP_AUTHREQ_KEY_PRESS_BITMASK            0x10U
+#define SMP_AUTHREQ_CT2_BITMASK                  0x20U
 
 /* SMP Toolbox state defines */
-#define SMP_TBX_AH_W4_ENCRYPTION_COMPLETE        0x00
-#define SMP_TBX_C11_W4_ENCRYPTION_COMPLETE       0x01
-#define SMP_TBX_C12_W4_ENCRYPTION_COMPLETE       0x02
-#define SMP_TBX_S1_W4_ENCRYPTION_COMPLETE        0x03
-#define SMP_TBX_W4_RAND                          0x04
+#define SMP_TBX_AH_W4_ENCRYPTION_COMPLETE        0x00U
+#define SMP_TBX_C11_W4_ENCRYPTION_COMPLETE       0x01U
+#define SMP_TBX_C12_W4_ENCRYPTION_COMPLETE       0x02U
+#define SMP_TBX_S1_W4_ENCRYPTION_COMPLETE        0x03U
+#define SMP_TBX_W4_RAND                          0x04U
 #ifdef SMP_LESC
-#define SMP_TBX_W4_READ_PUB_KEY_COMPLETE         0x05
-#define SMP_TBX_W4_DHKEY_GEN_COMPLETE            0x06
+#define SMP_TBX_W4_READ_PUB_KEY_COMPLETE         0x05U
+#define SMP_TBX_W4_DHKEY_GEN_COMPLETE            0x06U
 /* TODO: Define TBX states for f4, f5, f6, g2 & h6 */
-#define SMP_TBX_F4_W4_ENCRYPTION_COMPLETE        0x07
-#define SMP_TBX_F51_W4_ENCRYPTION_COMPLETE       0x08
-#define SMP_TBX_F52_W4_ENCRYPTION_COMPLETE       0x09
-#define SMP_TBX_F53_W4_ENCRYPTION_COMPLETE       0x0A
-#define SMP_TBX_F6_W4_ENCRYPTION_COMPLETE        0x0B
-#define SMP_TBX_G2_W4_ENCRYPTION_COMPLETE        0x0C
-#define SMP_TBX_H6_W4_ENCRYPTION_COMPLETE        0x0D
+#define SMP_TBX_F4_W4_ENCRYPTION_COMPLETE        0x07U
+#define SMP_TBX_F51_W4_ENCRYPTION_COMPLETE       0x08U
+#define SMP_TBX_F52_W4_ENCRYPTION_COMPLETE       0x09U
+#define SMP_TBX_F53_W4_ENCRYPTION_COMPLETE       0x0AU
+#define SMP_TBX_F6_W4_ENCRYPTION_COMPLETE        0x0BU
+#define SMP_TBX_G2_W4_ENCRYPTION_COMPLETE        0x0CU
+#define SMP_TBX_H6_W4_ENCRYPTION_COMPLETE        0x0DU
 #endif /* SMP_LESC */
 
 #ifdef SMP_LESC
-#define SMP_TBX_F5_T_KEY_GEN_MODE                0x01
-#define SMP_TBX_F5_LTK_GEN_MODE                  0x02
-#define SMP_TBX_F5_MACKEY_GEN_MODE               0x03
+#define SMP_TBX_F5_T_KEY_GEN_MODE                0x01U
+#define SMP_TBX_F5_LTK_GEN_MODE                  0x02U
+#define SMP_TBX_F5_MACKEY_GEN_MODE               0x03U
 #endif /* SMP_LESC */
 
 /* SMP Toolbox Command defines */
-#define SMP_TBX_ENCRYPT_CMD                      0x81
-#define SMP_TBX_RAND_CMD                         0x82
-#define SMP_TBX_READ_L_P256_PUB_KEY_CMD          0x83
-#define SMP_TBX_GEN_DHKEY_CMD                    0x84
+#define SMP_TBX_ENCRYPT_CMD                      0x81U
+#define SMP_TBX_RAND_CMD                         0x82U
+#define SMP_TBX_READ_L_P256_PUB_KEY_CMD          0x83U
+#define SMP_TBX_GEN_DHKEY_CMD                    0x84U
 
 /* SMP Toolbox Command states */
-#define SMP_TBX_COMMAND_IN_USE                   0x01
-#define SMP_TBX_COMMAND_IS_FREE                  0x00
+#define SMP_TBX_COMMAND_IN_USE                   0x01U
+#define SMP_TBX_COMMAND_IS_FREE                  0x00U
 
 /* SMP Passkey Types */
-#define SMP_PASSKEY_USER                         0x00
-#define SMP_PASSKEY_GEN                          0x01
+#define SMP_PASSKEY_USER                         0x00U
+#define SMP_PASSKEY_GEN                          0x01U
 
 #ifdef SMP_LESC
 /* SMP Numeric Key Comparison Types */
-#define SMP_NUM_COMP_CNF                         0x00
-#define SMP_NUM_COMP_GEN                         0x01
+#define SMP_NUM_COMP_CNF                         0x00U
+#define SMP_NUM_COMP_GEN                         0x01U
 #endif /* SMP_LESC */
 
 /* Number of key exchange commands */
-#define SMP_NUM_KEY_INFO_EXCHANGE                5
+#define SMP_NUM_KEY_INFO_EXCHANGE                5U
 
 #if (defined SMP_LESC) && (defined SMP_HAVE_OOB_SUPPORT)
 /** SMP Unavailability of OOB Data */
-#define SMP_LESC_OOB_DATA_UNAVAILABLE               0x00
+#define SMP_LESC_OOB_DATA_UNAVAILABLE               0x00U
 
 /** SMP LESC Availability of OOB Data */
-#define SMP_LESC_OOB_DATA_AVAILABLE                 0x01
+#define SMP_LESC_OOB_DATA_AVAILABLE                 0x01U
 
-#define SMP_LESC_L_OOB_DATA_SET                     0x01
+#define SMP_LESC_L_OOB_DATA_SET                     0x01U
 
-#define SMP_LESC_R_OOB_DATA_SET                     0x01
+#define SMP_LESC_R_OOB_DATA_SET                     0x01U
 #endif /* (defined SMP_LESC) && (defined SMP_HAVE_OOB_SUPPORT) */
 
 #ifdef SMP_LESC
@@ -305,7 +306,7 @@
                                                      0xDB, 0x0B, 0x37, 0x60, \
                                                      0x38, 0xA5, 0xF5, 0xAA, \
                                                      0x91, 0x83, 0x88, 0x6C}
-#define SMP_CODE_LESC_TBX_F5_KEY_LENGTH_PARAM        0x0100
+#define SMP_CODE_LESC_TBX_F5_KEY_LENGTH_PARAM        0x0100U
 #endif /* SMP_LESC */
 
 /* ----------------------------------------- Macros */
@@ -473,13 +474,6 @@
 #endif /* SMP_LESC_CROSS_TXP_KEY_GEN */
 
 #define SMP_MIN(x, y) (((x) < (y))? ((x)): ((y)))
-
-#if (0 != BT_MAX_BONDED_LE_DEVICES)
-#define SMP_GET_BONDED_DEVICE_COUNT()     smp_num_bonded_device
-#define SMP_SET_BONDED_DEVICE_COUNT(n)    smp_num_bonded_device = (n)
-#define SMP_INC_BONDED_DEVICE_COUNT()     smp_num_bonded_device ++
-#define SMP_DEC_BONDED_DEVICE_COUNT()     smp_num_bonded_device --
-#endif /* (0 != BT_MAX_BONDED_LE_DEVICES) */
 
 #define SMP_COMPARE_ID_ADDR(id_addr_a,id_addr_b)\
         ((0 == BT_mem_cmp((id_addr_a), (id_addr_b), SMP_IDADDR_SIZE)) ? SMP_TRUE : SMP_FALSE)
@@ -868,6 +862,7 @@ API_RESULT smp_tbx_g2_eval (SMP_CONTEXT * context);
 API_RESULT smp_tbx_read_p256_pub_key (SMP_CONTEXT * context);
 API_RESULT smp_tbx_dhkey_generate (SMP_CONTEXT * context);
 API_RESULT smp_is_valid_dh_key(UCHAR *key);
+API_RESULT smp_validate_pubkeys(UCHAR * local, UCHAR * remote);
 #endif /* SMP_LESC */
 
 #ifdef SMP_HAVE_TBX_PL_ENC

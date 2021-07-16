@@ -4,10 +4,10 @@ The FLEXRAM project is a simple demonstration program of the SDK FLEXRAM driver.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.9
-- Keil MDK  5.33
-- GCC ARM Embedded  9.3.1
-- MCUXpresso  11.3.0
+- IAR embedded Workbench  9.10.2
+- Keil MDK  5.34
+- GCC ARM Embedded  10.2.1
+- MCUXpresso  11.4.0
 
 Hardware requirements
 =====================
@@ -51,6 +51,10 @@ Allocate on-chip ram:
 Allocate on-chip ram success
 
 OCRAM access to 0x20210000 boundary.
+
+DTCM access to nearly 0x20010000 boundary.
+
+ITCM access to nearly 0x20000 boundary.
 
 FLEXRAM ram allocate example finish.
 

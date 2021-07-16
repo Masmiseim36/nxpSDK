@@ -1,8 +1,7 @@
 /*
- * Copyright 2019-2020 NXP
- * All rights reserved.
  *
- * SPDX-License-Identifier: BSD-3-Clause
+ * Copyright 2019-2020 NXP
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 /** @file
@@ -38,9 +37,9 @@ extern "C" {
 #include "ex_sss_boot_int.h"
 #include "nxLog_App.h"
 #include "stdio.h"
-
+#if defined(SECURE_WORLD)
 #include "fsl_sss_lpc55s_apis.h"
-
+#endif
 #if SSS_HAVE_APPLET_SE05X_IOT
 #include "se05x_APDU.h"
 #endif
@@ -82,6 +81,16 @@ sss_status_t ex_sss_boot_open(ex_sss_boot_ctx_t *pCtx, const char *portName)
     status = ex_sss_boot_mbedtls_open(pCtx, portName);
 #elif SSS_HAVE_OPENSSL
     status = ex_sss_boot_openssl_open(pCtx, portName);
+#endif
+    return status;
+}
+
+sss_status_t ex_sss_boot_open_on_id(ex_sss_boot_ctx_t *pCtx, const char *portName, const int32_t authId)
+{
+    sss_status_t status = kStatus_SSS_Fail;
+
+#if SSS_HAVE_APPLET_SE05X_IOT
+    status = ex_sss_boot_se05x_open_on_Id(pCtx, portName, authId);
 #endif
     return status;
 }
@@ -186,6 +195,7 @@ void ex_sss_session_close(ex_sss_boot_ctx_t *pCtx)
     if (pCtx->pTunnel_ctx && pCtx->pTunnel_ctx->session) {
         if (pCtx->pTunnel_ctx->session->subsystem != kType_SSS_SubSystem_NONE) {
             sss_session_close(pCtx->pTunnel_ctx->session);
+            sss_tunnel_context_free(pCtx->pTunnel_ctx);
         }
     }
 

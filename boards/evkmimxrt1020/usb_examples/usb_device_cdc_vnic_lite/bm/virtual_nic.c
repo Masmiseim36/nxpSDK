@@ -103,7 +103,7 @@ ENET_Type *BOARD_GetExampleEnetBase(void)
 
 uint32_t BOARD_GetPhySysClock(void)
 {
-    return CLOCK_GetFreq(kCLOCK_AhbClk);
+    return CLOCK_GetFreq(kCLOCK_IpgClk);
 }
 
 void BOARD_InitModuleClock(void)
@@ -380,14 +380,20 @@ usb_status_t USB_DeviceProcessClassRequest(usb_device_handle handle,
     switch (setup->bRequest)
     {
         case USB_DEVICE_CDC_REQUEST_SEND_ENCAPSULATED_COMMAND:
-            USB_DeviceCdcRndisMessageSet(g_cdcVnic.rndisHandle, buffer, length);
-            *length = 0;
-            error   = kStatus_USB_Success;
+            if (((setup->bmRequestType & USB_REQUEST_TYPE_DIR_MASK) == USB_REQUEST_TYPE_DIR_OUT) &&
+                (setup->wLength != 0U))
+            {
+                USB_DeviceCdcRndisMessageSet(g_cdcVnic.rndisHandle, buffer, length);
+                error   = kStatus_USB_Success;
+            }
             break;
         case USB_DEVICE_CDC_REQUEST_GET_ENCAPSULATED_RESPONSE:
-            *length = setup->wLength;
-            USB_DeviceCdcRndisMessageGet(g_cdcVnic.rndisHandle, buffer, length);
-            error = kStatus_USB_Success;
+            if (((setup->bmRequestType & USB_REQUEST_TYPE_DIR_MASK) == USB_REQUEST_TYPE_DIR_IN) &&
+                (setup->wLength != 0U))
+            {
+                *length = setup->wLength;
+                error = USB_DeviceCdcRndisMessageGet(g_cdcVnic.rndisHandle, buffer, length);
+            }
             break;
         default:
             break;
@@ -756,7 +762,7 @@ usb_status_t USB_DeviceCdcRndisCallback(usb_device_cdc_rndis_struct_t *handle, u
  */
 usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *param)
 {
-    usb_status_t error = kStatus_USB_Error;
+    usb_status_t error = kStatus_USB_InvalidRequest;
     uint8_t *temp8     = (uint8_t *)param;
 
     switch (event)
@@ -768,6 +774,7 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
             USB_DeviceControlPipeInit(g_cdcVnic.deviceHandle);
             g_cdcVnic.attach               = 0;
             g_cdcVnic.currentConfiguration = 0U;
+            error                          = kStatus_USB_Success;
 #if (defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0U)) || \
     (defined(USB_DEVICE_CONFIG_LPCIP3511HS) && (USB_DEVICE_CONFIG_LPCIP3511HS > 0U))
             /* Get USB speed to configure the device, including max packet size and interval of the endpoints. */
@@ -793,6 +800,7 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
             {
                 g_cdcVnic.attach               = 0;
                 g_cdcVnic.currentConfiguration = 0U;
+                error                          = kStatus_USB_Success;
             }
             else if (USB_CDC_VNIC_CONFIGURE_INDEX == (*temp8))
             {
@@ -871,13 +879,18 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
                     s_usbBulkMaxPacketSize = FS_CDC_VNIC_BULK_OUT_PACKET_SIZE;
                 }
                 /* Schedule buffer for receive */
-                USB_DeviceRecvRequest(handle, USB_CDC_VNIC_BULK_OUT_ENDPOINT, s_currRecvBuf, s_usbBulkMaxPacketSize);
+                error = USB_DeviceRecvRequest(handle, USB_CDC_VNIC_BULK_OUT_ENDPOINT, s_currRecvBuf, s_usbBulkMaxPacketSize);
             }
             else
             {
-                error = kStatus_USB_InvalidRequest;
+                /* no action, return kStatus_USB_InvalidRequest */
             }
             break;
+
+        case kUSB_DeviceEventSetInterface:
+            error = kStatus_USB_Success;
+            break;
+
         default:
             break;
     }
@@ -986,8 +999,8 @@ void main(void)
     gpio_pin_config_t gpio_config = {kGPIO_DigitalOutput, 0, kGPIO_NoIntmode};
 
     BOARD_ConfigMPU();
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
+    BOARD_InitBootPins();
+    BOARD_InitBootClocks();
     BOARD_InitDebugConsole();
     BOARD_InitModuleClock();
 

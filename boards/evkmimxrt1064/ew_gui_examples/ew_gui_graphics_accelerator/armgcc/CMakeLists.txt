@@ -1,6 +1,6 @@
 # CROSS COMPILER SETTING
 SET(CMAKE_SYSTEM_NAME Generic)
-CMAKE_MINIMUM_REQUIRED (VERSION 3.1.1)
+CMAKE_MINIMUM_REQUIRED (VERSION 3.10.0)
 
 # THE VERSION NUMBER
 SET (Tutorial_VERSION_MAJOR 1)
@@ -46,86 +46,86 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../DeviceDriver.h"
 "${ProjDirPath}/../pin_mux.c"
 "${ProjDirPath}/../pin_mux.h"
-"${ProjDirPath}/../GeneratedCode/Effects.c"
-"${ProjDirPath}/../GeneratedCode/Application.c"
-"${ProjDirPath}/../GeneratedCode/Resources.c"
-"${ProjDirPath}/../GeneratedCode/Core.c"
-"${ProjDirPath}/../GeneratedCode/Templates.c"
-"${ProjDirPath}/../GeneratedCode/WidgetSet.c"
-"${ProjDirPath}/../GeneratedCode/Graphics.c"
-"${ProjDirPath}/../GeneratedCode/Views.c"
-"${ProjDirPath}/../GeneratedCode/GraphicsSystem.c"
 "${ProjDirPath}/../GeneratedCode/Accelerator.c"
-"${ProjDirPath}/../GeneratedCode/_CoreQuadView.h"
-"${ProjDirPath}/../GeneratedCode/_ApplicationApplication.h"
-"${ProjDirPath}/../GeneratedCode/_AcceleratorImgCopy3.h"
-"${ProjDirPath}/../GeneratedCode/_ViewsText.h"
-"${ProjDirPath}/../GeneratedCode/_AcceleratorImgCopy1.h"
-"${ProjDirPath}/../GeneratedCode/_AcceleratorImgBlend4.h"
-"${ProjDirPath}/../GeneratedCode/_ResourcesFont.h"
-"${ProjDirPath}/../GeneratedCode/_AcceleratorImgBlend6.h"
-"${ProjDirPath}/../GeneratedCode/_AcceleratorGraphicsFactory.h"
+"${ProjDirPath}/../GeneratedCode/Application.c"
+"${ProjDirPath}/../GeneratedCode/Core.c"
+"${ProjDirPath}/../GeneratedCode/Effects.c"
+"${ProjDirPath}/../GeneratedCode/Graphics.c"
+"${ProjDirPath}/../GeneratedCode/GraphicsSystem.c"
+"${ProjDirPath}/../GeneratedCode/Resources.c"
+"${ProjDirPath}/../GeneratedCode/Templates.c"
+"${ProjDirPath}/../GeneratedCode/Views.c"
+"${ProjDirPath}/../GeneratedCode/WidgetSet.c"
+"${ProjDirPath}/../GeneratedCode/Accelerator.h"
+"${ProjDirPath}/../GeneratedCode/Application.h"
+"${ProjDirPath}/../GeneratedCode/Core.h"
+"${ProjDirPath}/../GeneratedCode/Effects.h"
+"${ProjDirPath}/../GeneratedCode/Graphics.h"
+"${ProjDirPath}/../GeneratedCode/GraphicsSystem.h"
 "${ProjDirPath}/../GeneratedCode/Resources.h"
+"${ProjDirPath}/../GeneratedCode/Templates.h"
+"${ProjDirPath}/../GeneratedCode/Views.h"
+"${ProjDirPath}/../GeneratedCode/WidgetSet.h"
+"${ProjDirPath}/../GeneratedCode/_AcceleratorAccelerator.h"
+"${ProjDirPath}/../GeneratedCode/_AcceleratorFontLarge.h"
+"${ProjDirPath}/../GeneratedCode/_AcceleratorFontMedium.h"
+"${ProjDirPath}/../GeneratedCode/_AcceleratorFontSmall.h"
+"${ProjDirPath}/../GeneratedCode/_AcceleratorGraphicsFactory.h"
+"${ProjDirPath}/../GeneratedCode/_AcceleratorImgBlend1.h"
+"${ProjDirPath}/../GeneratedCode/_AcceleratorImgBlend2.h"
+"${ProjDirPath}/../GeneratedCode/_AcceleratorImgBlend3.h"
+"${ProjDirPath}/../GeneratedCode/_AcceleratorImgBlend4.h"
+"${ProjDirPath}/../GeneratedCode/_AcceleratorImgBlend5.h"
+"${ProjDirPath}/../GeneratedCode/_AcceleratorImgBlend6.h"
+"${ProjDirPath}/../GeneratedCode/_AcceleratorImgBlend7.h"
+"${ProjDirPath}/../GeneratedCode/_AcceleratorImgCopy1.h"
+"${ProjDirPath}/../GeneratedCode/_AcceleratorImgCopy2.h"
+"${ProjDirPath}/../GeneratedCode/_AcceleratorImgCopy3.h"
+"${ProjDirPath}/../GeneratedCode/_AcceleratorImgCopy4.h"
 "${ProjDirPath}/../GeneratedCode/_AcceleratorImgCopy5.h"
-"${ProjDirPath}/../GeneratedCode/_WidgetSetPushButton.h"
+"${ProjDirPath}/../GeneratedCode/_AcceleratorLogo.h"
+"${ProjDirPath}/../GeneratedCode/_ApplicationApplication.h"
+"${ProjDirPath}/../GeneratedCode/_CoreCursorEvent.h"
+"${ProjDirPath}/../GeneratedCode/_CoreCursorGrabEvent.h"
+"${ProjDirPath}/../GeneratedCode/_CoreCursorHit.h"
+"${ProjDirPath}/../GeneratedCode/_CoreDialogContext.h"
+"${ProjDirPath}/../GeneratedCode/_CoreDragEvent.h"
+"${ProjDirPath}/../GeneratedCode/_CoreEvent.h"
+"${ProjDirPath}/../GeneratedCode/_CoreGroup.h"
 "${ProjDirPath}/../GeneratedCode/_CoreKeyEvent.h"
-"${ProjDirPath}/../GeneratedCode/_ViewsRectangle.h"
+"${ProjDirPath}/../GeneratedCode/_CoreKeyPressHandler.h"
+"${ProjDirPath}/../GeneratedCode/_CoreLayoutContext.h"
+"${ProjDirPath}/../GeneratedCode/_CoreLayoutQuadContext.h"
+"${ProjDirPath}/../GeneratedCode/_CoreModalContext.h"
+"${ProjDirPath}/../GeneratedCode/_CoreOutline.h"
+"${ProjDirPath}/../GeneratedCode/_CoreQuadView.h"
+"${ProjDirPath}/../GeneratedCode/_CoreRectView.h"
+"${ProjDirPath}/../GeneratedCode/_CoreResource.h"
+"${ProjDirPath}/../GeneratedCode/_CoreRoot.h"
+"${ProjDirPath}/../GeneratedCode/_CoreSimpleTouchHandler.h"
 "${ProjDirPath}/../GeneratedCode/_CoreTask.h"
-"${ProjDirPath}/../GeneratedCode/_WidgetSetPushButtonConfig.h"
-"${ProjDirPath}/../GeneratedCode/_WidgetSetPushButtonMedium.h"
 "${ProjDirPath}/../GeneratedCode/_CoreTaskQueue.h"
 "${ProjDirPath}/../GeneratedCode/_CoreTimer.h"
-"${ProjDirPath}/../GeneratedCode/_CoreGroup.h"
-"${ProjDirPath}/../GeneratedCode/_ResourcesFontMedium.h"
-"${ProjDirPath}/../GeneratedCode/_CoreOutline.h"
-"${ProjDirPath}/../GeneratedCode/_AcceleratorLogo.h"
-"${ProjDirPath}/../GeneratedCode/_CoreCursorEvent.h"
-"${ProjDirPath}/../GeneratedCode/Core.h"
-"${ProjDirPath}/../GeneratedCode/_AcceleratorImgBlend3.h"
-"${ProjDirPath}/../GeneratedCode/_WidgetSetToggleButtonConfig.h"
-"${ProjDirPath}/../GeneratedCode/_AcceleratorFontMedium.h"
-"${ProjDirPath}/../GeneratedCode/_CoreRoot.h"
-"${ProjDirPath}/../GeneratedCode/_AcceleratorImgCopy4.h"
-"${ProjDirPath}/../GeneratedCode/_TemplatesDeviceClass.h"
-"${ProjDirPath}/../GeneratedCode/_CoreLayoutContext.h"
-"${ProjDirPath}/../GeneratedCode/_AcceleratorFontSmall.h"
-"${ProjDirPath}/../GeneratedCode/_CoreEvent.h"
-"${ProjDirPath}/../GeneratedCode/_EffectsEffectTimerClass.h"
-"${ProjDirPath}/../GeneratedCode/_CoreModalContext.h"
-"${ProjDirPath}/../GeneratedCode/_AcceleratorImgBlend7.h"
-"${ProjDirPath}/../GeneratedCode/_CoreResource.h"
-"${ProjDirPath}/../GeneratedCode/_CoreCursorGrabEvent.h"
-"${ProjDirPath}/../GeneratedCode/_ResourcesBitmap.h"
-"${ProjDirPath}/../GeneratedCode/_GraphicsSystemDeviceClass.h"
-"${ProjDirPath}/../GeneratedCode/_CoreCursorHit.h"
-"${ProjDirPath}/../GeneratedCode/Application.h"
-"${ProjDirPath}/../GeneratedCode/_AcceleratorAccelerator.h"
-"${ProjDirPath}/../GeneratedCode/Accelerator.h"
-"${ProjDirPath}/../GeneratedCode/Effects.h"
-"${ProjDirPath}/../GeneratedCode/_WidgetSetToggleButton.h"
-"${ProjDirPath}/../GeneratedCode/Templates.h"
-"${ProjDirPath}/../GeneratedCode/_CoreRectView.h"
-"${ProjDirPath}/../GeneratedCode/_AcceleratorImgBlend2.h"
-"${ProjDirPath}/../GeneratedCode/GraphicsSystem.h"
-"${ProjDirPath}/../GeneratedCode/_WidgetSetSwitchMedium.h"
-"${ProjDirPath}/../GeneratedCode/_AcceleratorFontLarge.h"
-"${ProjDirPath}/../GeneratedCode/_AcceleratorImgBlend1.h"
-"${ProjDirPath}/../GeneratedCode/_AcceleratorImgCopy2.h"
-"${ProjDirPath}/../GeneratedCode/WidgetSet.h"
-"${ProjDirPath}/../GeneratedCode/_ViewsImage.h"
-"${ProjDirPath}/../GeneratedCode/ewlocale.h"
-"${ProjDirPath}/../GeneratedCode/_CoreDialogContext.h"
-"${ProjDirPath}/../GeneratedCode/_GraphicsCanvas.h"
-"${ProjDirPath}/../GeneratedCode/_CoreDragEvent.h"
-"${ProjDirPath}/../GeneratedCode/Graphics.h"
-"${ProjDirPath}/../GeneratedCode/Views.h"
-"${ProjDirPath}/../GeneratedCode/_CoreKeyPressHandler.h"
 "${ProjDirPath}/../GeneratedCode/_CoreView.h"
+"${ProjDirPath}/../GeneratedCode/_EffectsEffectTimerClass.h"
+"${ProjDirPath}/../GeneratedCode/_GraphicsCanvas.h"
+"${ProjDirPath}/../GeneratedCode/_GraphicsSystemDeviceClass.h"
+"${ProjDirPath}/../GeneratedCode/_ResourcesBitmap.h"
+"${ProjDirPath}/../GeneratedCode/_ResourcesFont.h"
+"${ProjDirPath}/../GeneratedCode/_ResourcesFontMedium.h"
+"${ProjDirPath}/../GeneratedCode/_TemplatesDeviceClass.h"
 "${ProjDirPath}/../GeneratedCode/_ViewsFrame.h"
+"${ProjDirPath}/../GeneratedCode/_ViewsImage.h"
+"${ProjDirPath}/../GeneratedCode/_ViewsRectangle.h"
+"${ProjDirPath}/../GeneratedCode/_ViewsText.h"
+"${ProjDirPath}/../GeneratedCode/_WidgetSetPushButton.h"
+"${ProjDirPath}/../GeneratedCode/_WidgetSetPushButtonConfig.h"
+"${ProjDirPath}/../GeneratedCode/_WidgetSetPushButtonMedium.h"
+"${ProjDirPath}/../GeneratedCode/_WidgetSetSwitchMedium.h"
+"${ProjDirPath}/../GeneratedCode/_WidgetSetToggleButton.h"
+"${ProjDirPath}/../GeneratedCode/_WidgetSetToggleButtonConfig.h"
 "${ProjDirPath}/../GeneratedCode/_WidgetSetWidgetConfig.h"
-"${ProjDirPath}/../GeneratedCode/_CoreSimpleTouchHandler.h"
-"${ProjDirPath}/../GeneratedCode/_AcceleratorImgBlend5.h"
-"${ProjDirPath}/../GeneratedCode/_CoreLayoutQuadContext.h"
+"${ProjDirPath}/../GeneratedCode/ewlocale.h"
 )
 
 target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
@@ -143,7 +143,7 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../components/lists
     ${ProjDirPath}/../../../../../devices/MIMXRT1064/xip
     ${ProjDirPath}/../../../xip
-    ${ProjDirPath}/../../../../../CMSIS/Include
+    ${ProjDirPath}/../../../../../CMSIS/Core/Include
     ${ProjDirPath}/../../../../../devices/MIMXRT1064/utilities
 )
 
@@ -164,11 +164,13 @@ include(utility_debug_console_lite_MIMXRT1064)
 
 include(utility_assert_lite_MIMXRT1064)
 
+include(middleware_embedded_wizard_lib_evkmimxrt10xx_MIMXRT1064)
+
 include(driver_common_MIMXRT1064)
 
 include(driver_clock_MIMXRT1064)
 
-include(middleware_embedded_wizard_MIMXRT1064)
+include(middleware_embedded_wizard_evkmimxrt1064_MIMXRT1064)
 
 include(device_MIMXRT1064_CMSIS_MIMXRT1064)
 
@@ -186,13 +188,9 @@ include(driver_igpio_MIMXRT1064)
 
 include(driver_xip_device_MIMXRT1064)
 
-include(driver_xip_board_MIMXRT1064)
+include(driver_xip_board_evkmimxrt1064_MIMXRT1064)
 
-include(CMSIS_Include_core_cm7_MIMXRT1064)
-
-include(CMSIS_Include_common_MIMXRT1064)
-
-include(CMSIS_Include_dsp_MIMXRT1064)
+include(CMSIS_Include_core_cm_MIMXRT1064)
 
 include(utilities_misc_utilities_MIMXRT1064)
 
@@ -210,20 +208,20 @@ target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE gcc)
 target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE nosys)
 
 if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RTE/libewrte-m7-gcc.a)
-endif()
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/EmbeddedWizard/PlatformPackage/evkmimxrt1010/RTE/libewrte-m7-gcc.a)
+endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
 
 if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/libewgfx-m7-gcc.a)
-endif()
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/EmbeddedWizard/PlatformPackage/evkmimxrt1010/RGB565/libewgfx-m7-gcc.a)
+endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
 
 if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RTE/libewrte-m7-gcc.a)
-endif()
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/EmbeddedWizard/PlatformPackage/evkmimxrt1010/RTE/libewrte-m7-gcc.a)
+endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
 
 if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/libewgfx-m7-gcc.a)
-endif()
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/EmbeddedWizard/PlatformPackage/evkmimxrt1010/RGB565/libewgfx-m7-gcc.a)
+endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
 
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--end-group)
 

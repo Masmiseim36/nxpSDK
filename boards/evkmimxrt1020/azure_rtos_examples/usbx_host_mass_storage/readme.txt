@@ -5,10 +5,10 @@ This example illustrates USBX Host Mass Storage.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.9
-- Keil MDK  5.33
-- GCC ARM Embedded  9.3.1
-- MCUXpresso  11.3.0
+- IAR embedded Workbench  9.10.2
+- Keil MDK  5.34
+- GCC ARM Embedded  10.2.1
+- MCUXpresso  11.4.0
 
 Hardware requirements
 =====================
@@ -45,10 +45,15 @@ The serial port will output:
 USBX host mass storage example
 
 Then, connect a U-disk to the USB device port of the board.
-The example will scan the disk and dump the file name to
-the serial port and read the file contents.
+The example will display the vendor ID and the product ID of
+the attached USB device, then scan the disk and dump the file
+name to the serial port.
 
 For example:
 
+USB device: vid=0x2ce3, pid=0x6487
+Find Dir: DIR_1
+Find Dir: DIR_2
 Find File: 1234.text
 Find File: test.text
+

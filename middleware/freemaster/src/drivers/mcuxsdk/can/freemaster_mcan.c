@@ -235,7 +235,7 @@ static FMSTR_SIZE8 _FMSTR_MCAN_GetRxFrameLen(void)
 {
 #if FMSTR_POLL_DRIVEN > 0
     /* Is any data received? */
-    if (MCAN_GetStatusFlag(fmstr_canBaseAddr, CAN_IR_RF0N_MASK) == FMSTR_FALSE)
+    if (MCAN_GetStatusFlag(fmstr_canBaseAddr, CAN_IR_RF0N_MASK) == 0U)
     {
         return 0;
     }
@@ -275,24 +275,18 @@ static void _FMSTR_MCAN_AckRxFrame(void)
 
 static FMSTR_BOOL _FMSTR_MCAN_PrepareTxFrame(void)
 {
-#if FMSTR_POLL_DRIVEN > 0
-    /* Was all data sent? */
-    if (fmstr_txmsg.dlc != 0U && MCAN_IsTransmitOccurred(fmstr_canBaseAddr, 0) == 0)
+    if (MCAN_IsTransmitOccurred(fmstr_canBaseAddr, 0) != 0U)
+    {
+        /* Acknowledge frame was transmitted */
+        fmstr_txmsg.dlc = 0U;
+    }
+
+    if (fmstr_txmsg.dlc != 0U)
     {
         return FMSTR_FALSE;
     }
 
-    /* Acknowledge frame was transmitted */
-    fmstr_txmsg.dlc = 0U;
-#else
-    if (fmstr_txmsg.dlc)
-    {
-        return FMSTR_FALSE;
-    }
-#endif /* FMSTR_POLL_DRIVEN */
-
-    fmstr_txmsg.size = 0;
-
+    fmstr_txmsg.size = 0U;
     return FMSTR_TRUE;
 }
 
@@ -326,21 +320,26 @@ void FMSTR_CanSetBaseAddress(CAN_Type *base)
 void FMSTR_CanIsr(void)
 {
 #if FMSTR_LONG_INTR > 0 || FMSTR_SHORT_INTR > 0
+    uint32_t status = MCAN_GetStatusFlag(fmstr_canBaseAddr, CAN_IR_RF0N_MASK | CAN_IR_TC_MASK);
+
     /* Rx interrupt */
-    if (MCAN_GetStatusFlag(fmstr_canBaseAddr, CAN_IR_RF0N_MASK))
+    if ((status & CAN_IR_RF0N_MASK) != 0U)
     {
         FMSTR_ProcessCanRx();
-        MCAN_ClearStatusFlag(fmstr_canBaseAddr, CAN_IR_RF0N_MASK);
     }
+
     /* Tx done interrupt */
-    if (MCAN_GetStatusFlag(fmstr_canBaseAddr, CAN_IE_TCE_MASK))
+    if ((status & CAN_IR_TC_MASK) != 0U)
     {
         /* Acknowledge frame transmission */
         fmstr_txmsg.dlc = 0U;
         /* Send next frame, if needed */
         FMSTR_ProcessCanTx();
+    }
 
-        MCAN_ClearStatusFlag(fmstr_canBaseAddr, CAN_IE_TCE_MASK);
+    if (status != 0U)
+    {
+        MCAN_ClearStatusFlag(fmstr_canBaseAddr, status);
     }
 #endif
 }

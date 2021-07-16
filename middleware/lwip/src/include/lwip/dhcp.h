@@ -62,6 +62,9 @@ extern "C" {
 
 #define DHCP_BOOT_FILE_LEN      128U
 
+#define DHCP_FLAG_SUBNET_MASK_GIVEN 0x01
+#define DHCP_FLAG_EXTERNAL_MEM      0x02
+
 /* AutoIP cooperation flags (struct dhcp.autoip_coop_state) */
 typedef enum {
   DHCP_AUTOIP_COOP_STATE_OFF  = 0,
@@ -78,8 +81,8 @@ struct dhcp
   u8_t state;
   /** retries of current request */
   u8_t tries;
-
-  u8_t subnet_mask_given;
+  /** see DHCP_FLAG_* */
+  u8_t flags;
 
   u16_t request_timeout; /* #ticks with period DHCP_FINE_TIMER_SECS for request timeout */
   u16_t t1_timeout;  /* #ticks with period DHCP_COARSE_TIMER_SECS for renewal time */

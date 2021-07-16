@@ -34,10 +34,10 @@
 #include "ctype.h"
 #include "stdio.h"
 
-#include "fsl_gpio.h"
-#include "fsl_iomuxc.h"
 #include "fsl_phyksz8081.h"
 #include "fsl_enet_mdio.h"
+#include "fsl_gpio.h"
+#include "fsl_iomuxc.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -89,9 +89,15 @@
 #define EXAMPLE_MQTT_SERVER_PORT 1883
 
 /*! @brief Stack size of the temporary lwIP initialization thread. */
-#define APP_THREAD_STACKSIZE 1024
+#define INIT_THREAD_STACKSIZE 1024
 
 /*! @brief Priority of the temporary lwIP initialization thread. */
+#define INIT_THREAD_PRIO DEFAULT_THREAD_PRIO
+
+/*! @brief Stack size of the temporary initialization thread. */
+#define APP_THREAD_STACKSIZE 1024
+
+/*! @brief Priority of the temporary initialization thread. */
 #define APP_THREAD_PRIO DEFAULT_THREAD_PRIO
 
 /*******************************************************************************
@@ -430,40 +436,20 @@ static void generate_client_id(void)
 }
 
 /*!
- * @brief Main function
+ * @brief Initializes lwIP stack.
+ *
+ * @param arg unused
  */
-int main(void)
+static void stack_init(void *arg)
 {
     static struct netif netif;
-#if defined(FSL_FEATURE_SOC_LPC_ENET_COUNT) && (FSL_FEATURE_SOC_LPC_ENET_COUNT > 0)
-    static mem_range_t non_dma_memory[] = NON_DMA_MEMORY_ARRAY;
-#endif /* FSL_FEATURE_SOC_LPC_ENET_COUNT */
     ip4_addr_t netif_ipaddr, netif_netmask, netif_gw;
     ethernetif_config_t enet_config = {
         .phyHandle  = &phyHandle,
         .macAddress = configMAC_ADDR,
-#if defined(FSL_FEATURE_SOC_LPC_ENET_COUNT) && (FSL_FEATURE_SOC_LPC_ENET_COUNT > 0)
-        .non_dma_memory = non_dma_memory,
-#endif /* FSL_FEATURE_SOC_LPC_ENET_COUNT */
     };
 
-    gpio_pin_config_t gpio_config = {kGPIO_DigitalOutput, 0, kGPIO_NoIntmode};
-
-    BOARD_ConfigMPU();
-    BOARD_InitBootPins();
-    BOARD_InitBootClocks();
-    BOARD_InitDebugConsole();
-    BOARD_InitModuleClock();
-
-    IOMUXC_EnableMode(IOMUXC_GPR, kIOMUXC_GPR_ENET1TxClkOutputDir, true);
-
-    GPIO_PinInit(GPIO1, 4, &gpio_config);
-    GPIO_PinInit(GPIO1, 22, &gpio_config);
-    /* pull up the ENET_INT before RESET. */
-    GPIO_WritePinOutput(GPIO1, 22, 1);
-    GPIO_WritePinOutput(GPIO1, 4, 0);
-    delay();
-    GPIO_WritePinOutput(GPIO1, 4, 1);
+    LWIP_UNUSED_ARG(arg);
     generate_client_id();
 
     mdioHandle.resource.csrClock_Hz = EXAMPLE_CLOCK_FREQ;
@@ -474,7 +460,9 @@ int main(void)
 
     tcpip_init(NULL, NULL);
 
+    LOCK_TCPIP_CORE();
     mqtt_client = mqtt_client_new();
+    UNLOCK_TCPIP_CORE();
     if (mqtt_client == NULL)
     {
         PRINTF("mqtt_client_new() failed.\r\n");
@@ -495,6 +483,38 @@ int main(void)
     PRINTF("************************************************\r\n");
 
     if (sys_thread_new("app_task", app_thread, &netif, APP_THREAD_STACKSIZE, APP_THREAD_PRIO) == NULL)
+    {
+        LWIP_ASSERT("stack_init(): Task creation failed.", 0);
+    }
+
+    vTaskDelete(NULL);
+}
+
+/*!
+ * @brief Main function
+ */
+int main(void)
+{
+    gpio_pin_config_t gpio_config = {kGPIO_DigitalOutput, 0, kGPIO_NoIntmode};
+
+    BOARD_ConfigMPU();
+    BOARD_InitBootPins();
+    BOARD_InitBootClocks();
+    BOARD_InitDebugConsole();
+    BOARD_InitModuleClock();
+
+    IOMUXC_EnableMode(IOMUXC_GPR, kIOMUXC_GPR_ENET1TxClkOutputDir, true);
+
+    GPIO_PinInit(GPIO1, 4, &gpio_config);
+    GPIO_PinInit(GPIO1, 22, &gpio_config);
+    /* pull up the ENET_INT before RESET. */
+    GPIO_WritePinOutput(GPIO1, 22, 1);
+    GPIO_WritePinOutput(GPIO1, 4, 0);
+    delay();
+    GPIO_WritePinOutput(GPIO1, 4, 1);
+
+    /* Initialize lwIP from thread */
+    if (sys_thread_new("main", stack_init, NULL, INIT_THREAD_STACKSIZE, INIT_THREAD_PRIO) == NULL)
     {
         LWIP_ASSERT("main(): Task creation failed.", 0);
     }

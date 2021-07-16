@@ -21,8 +21,8 @@
 * Please do not make any modifications of this file! The modifications are lost
 * when the file is generated again by Embedded Wizard Studio!
 *
-* Version  : 9.30
-* Date     : 14.02.2020  8:00:50
+* Version  : 10.0
+* Date     : 17.02.2021  8:00:50
 * Profile  : iMX_RT
 * Platform : NXP.iMX_RT.RGB565
 *
@@ -58,11 +58,12 @@ static const unsigned int _StringsDefault0[] =
 /* Constant values used in this 'C' module only. */
 static const XPoint _Const0000 = { 0, 0 };
 static const XStringRes _Const0001 = { _StringsDefault0, 0x0002 };
-static const XRect _Const0002 = {{ 0, 0 }, { 0, 0 }};
-static const XStringRes _Const0003 = { _StringsDefault0, 0x003F };
-static const XStringRes _Const0004 = { _StringsDefault0, 0x0073 };
-static const XStringRes _Const0005 = { _StringsDefault0, 0x00B5 };
-static const XStringRes _Const0006 = { _StringsDefault0, 0x0120 };
+static const XColor _Const0002 = { 0x00, 0x00, 0x00, 0x00 };
+static const XRect _Const0003 = {{ 0, 0 }, { 0, 0 }};
+static const XStringRes _Const0004 = { _StringsDefault0, 0x003F };
+static const XStringRes _Const0005 = { _StringsDefault0, 0x0073 };
+static const XStringRes _Const0006 = { _StringsDefault0, 0x00B5 };
+static const XStringRes _Const0007 = { _StringsDefault0, 0x0120 };
 
 /* Initializer for the class 'Graphics::Canvas' */
 void GraphicsCanvas__Init( GraphicsCanvas _this, XObject aLink, XHandle aArg )
@@ -169,6 +170,18 @@ void GraphicsCanvas_Update( GraphicsCanvas _this )
     }
 
     _this->InvalidArea = EwNewRect2Point( _Const0000, _this->Super1.FrameSize );
+
+    if ( !!_this->Super1.bitmap )
+    {
+      XInt32 dstFrameNr = _this->DstFrameNr;
+
+      for ( _this->DstFrameNr = _this->Super1.NoOfFrames - 1; _this->DstFrameNr 
+           >= 0; _this->DstFrameNr-- )
+        GraphicsCanvas_FillRectangle( _this, _this->InvalidArea, _this->InvalidArea, 
+        _Const0002, _Const0002, _Const0002, _Const0002, 0 );
+
+      _this->DstFrameNr = dstFrameNr;
+    }
   }
 
   if ( !EwIsRectEmpty( _this->InvalidArea ))
@@ -176,7 +189,7 @@ void GraphicsCanvas_Update( GraphicsCanvas _this )
     if (( _this->Super1.FrameSize.X > 0 ) && ( _this->Super1.FrameSize.Y > 0 ))
       EwSignal( _this->OnDraw, ((XObject)_this ));
 
-    _this->InvalidArea = _Const0002;
+    _this->InvalidArea = _Const0003;
   }
 }
 
@@ -188,7 +201,7 @@ GraphicsCanvas GraphicsCanvas_DetachBitmap( GraphicsCanvas _this )
 {
   if ( !_this->attached )
   {
-    EwThrow( EwLoadString( &_Const0003 ));
+    EwThrow( EwLoadString( &_Const0004 ));
     return 0;
   }
 
@@ -219,7 +232,7 @@ GraphicsCanvas GraphicsCanvas_AttachBitmap( GraphicsCanvas _this, XHandle aBitma
 
   if ( _this->Super1.bitmap != 0 )
   {
-    EwThrow( EwLoadString( &_Const0004 ));
+    EwThrow( EwLoadString( &_Const0005 ));
     return 0;
   }
 
@@ -388,11 +401,13 @@ void GraphicsCanvas_DrawBitmapFrame( GraphicsCanvas _this, XRect aClip, Resource
    The coefficients aW1 .. aW4 are responsible for the perspective distortion. The 
    parameters aColor1, aColor2, aColor3, aColor4 determine the colors or opacities 
    at the corresponding corners of the polygon area. The parameter aClip limits 
-   the drawing operation. Pixel lying outside this area remain unchanged. The last 
-   aBlend parameter controls the mode how drawn pixel are combined with the pixel 
-   already existing in the destination bitmap. If aBlend is 'true', the drawn pixel 
-   are alpha-blended with the background, otherwise the drawn pixel will overwrite 
-   the old content. */
+   the drawing operation. Pixel lying outside this area remain unchanged. The aBlend 
+   parameter controls the mode how drawn pixel are combined with the pixel already 
+   existing in the destination bitmap. If aBlend is 'true', the drawn pixel are 
+   alpha-blended with the background, otherwise the drawn pixel will overwrite the 
+   old content. The last parameter aFilter controls the bi-linear filter. If aFilter 
+   is 'true', the source bitmap pixel will be bi-linear filtered in order to get 
+   better output. */
 void GraphicsCanvas_WarpBitmap( GraphicsCanvas _this, XRect aClip, ResourcesBitmap 
   aBitmap, XInt32 aFrameNr, XFloat aDstX1, XFloat aDstY1, XFloat aDstW1, XFloat 
   aDstX2, XFloat aDstY2, XFloat aDstW2, XFloat aDstX3, XFloat aDstY3, XFloat aDstW3, 
@@ -461,7 +476,7 @@ void GraphicsCanvas_WarpBitmap( GraphicsCanvas _this, XRect aClip, ResourcesBitm
   if ((((( x2 - x1 ) > 4096.000000f ) || (( x2 - x1 ) < -4096.000000f )) || (( y2 
       - y1 ) > 4096.000000f )) || (( y2 - y1 ) < -4096.000000f ))
   {
-    EwTrace( "%s", EwLoadString( &_Const0005 ));
+    EwTrace( "%s", EwLoadString( &_Const0006 ));
     return;
   }
 
@@ -484,10 +499,12 @@ void GraphicsCanvas_WarpBitmap( GraphicsCanvas _this, XRect aClip, ResourcesBitm
    aColorTL, aColorTR, aColorBL, aColorBR determine the colors or opacities at the 
    corresponding corners of the aDstRect area.
    The parameter aClip limits the drawing operation. Pixel lying outside this area 
-   remain unchanged. The last aBlend parameter controls the mode how drawn pixel 
-   are combined with the pixel already existing in the destination bitmap. If aBlend 
+   remain unchanged. The aBlend parameter controls the mode how drawn pixel are 
+   combined with the pixel already existing in the destination bitmap. If aBlend 
    is 'true', the drawn pixel are alpha-blended with the background, otherwise the 
-   drawn pixel will overwrite the old content. */
+   drawn pixel will overwrite the old content. The last parameter aFilter controls 
+   the bi-linear filter. If aFilter is 'true', the source bitmap pixel will be bi-linear 
+   filtered in order to get better output. */
 void GraphicsCanvas_ScaleBitmap( GraphicsCanvas _this, XRect aClip, ResourcesBitmap 
   aBitmap, XInt32 aFrameNr, XRect aDstRect, XRect aSrcRect, XColor aColorTL, XColor 
   aColorTR, XColor aColorBR, XColor aColorBL, XBool aBlend, XBool aFilter )
@@ -518,7 +535,7 @@ void GraphicsCanvas_ScaleBitmap( GraphicsCanvas _this, XRect aClip, ResourcesBit
   if ((((( right - left ) > 4096.000000f ) || (( right - left ) < -4096.000000f )) 
       || (( bottom - top ) > 4096.000000f )) || (( bottom - top ) < -4096.000000f ))
   {
-    EwTrace( "%s", EwLoadString( &_Const0006 ));
+    EwTrace( "%s", EwLoadString( &_Const0007 ));
     return;
   }
 

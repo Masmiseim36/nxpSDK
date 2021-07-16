@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2020 NXP
+ * Copyright 2019-2021 NXP
  * All rights reserved.
  *
  *
@@ -163,7 +163,6 @@ typedef struct _flexspi_memory_config
     bool halfClkForNonReadCmd;  /*!< Half the Serial Clock for non-read command: true/false*/
     uint8_t needRestoreNoCmdMode; /*!< Need to Restore NoCmd mode after IP commmand execution*/
     bool deviceModeCfgEnable;     /*!< Device Mode Configure enable flag, true - Enable, false - Disable*/
-    uint32_t manufacturerId;      /*!< Manufacturer ID that each vendor has a unique ID depend on JESD216 spec*/
 } flexspi_mem_config_t;
 
 /*! @brief NOR Flash handle info */

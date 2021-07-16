@@ -8,7 +8,7 @@
 #ifndef _LABELS_H_
 #define _LABELS_H_
 
-const char* labels[] = {
+static const char* labels[] = {
     "Silence",
     "Unknown",
     "yes",

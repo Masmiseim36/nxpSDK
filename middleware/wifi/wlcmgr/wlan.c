@@ -2,7 +2,7 @@
  *
  *  @brief  This file provides Core WLAN definition
  *
- *  Copyright 2008-2020 NXP
+ *  Copyright 2008-2021 NXP
  *
  *  NXP CONFIDENTIAL
  *  The source code contained or described herein and all documents related to
@@ -33,7 +33,9 @@
 #include <wifi-debug.h>
 #include <stdint.h>
 #include <mlan_sdio_api.h>
-
+#if defined(SD8978)
+#include <wifi_cal_data_ext.h>
+#endif
 #include <fsl_common.h>
 
 #define DELAYED_SLP_CFM_DUR 10
@@ -1848,12 +1850,12 @@ static void wlcm_process_authentication_event(struct wifi_message *msg,
 
             if (if_handle != NULL)
             {
-                net_interface_down(if_handle);
                 /* Forcefully stop dhcp on given interface.
                  * net_interface_dhcp_stop internally does nothing
                  * if dhcp client is not started.
                  */
                 net_interface_dhcp_stop(if_handle);
+                net_interface_down(if_handle);
             }
         }
 
@@ -1894,12 +1896,12 @@ static void wlcm_process_link_loss_event(struct wifi_message *msg,
 
     if (if_handle != NULL)
     {
-        net_interface_down(if_handle);
         /* Forcefully stop dhcp on given interface.
          * net_interface_dhcp_stop internally does nothing
          * if dhcp client is not started.
          */
         net_interface_dhcp_stop(if_handle);
+        net_interface_down(if_handle);
     }
 
     /* If we were connected and lost the link, we must report that now and
@@ -2341,12 +2343,12 @@ static void wlcm_request_disconnect(enum cm_sta_state *next, struct wlan_network
         wlcm_w("No interface is up\r\n");
         return;
     }
-    net_interface_down(if_handle);
     /* Forcefully stop dhcp on given interface.
      * net_interface_dhcp_stop internally does nothing
      * if dhcp client is not started.
      */
     net_interface_dhcp_stop(if_handle);
+    net_interface_down(if_handle);
 
     if ((wlan.sta_state < CM_STA_IDLE || is_state(CM_STA_IDLE) || is_state(CM_STA_DEEP_SLEEP)))
     {
@@ -2820,6 +2822,10 @@ int wlan_init(const uint8_t *fw_ram_start_addr, const size_t size)
 
     if (wlan.status != WLCMGR_INACTIVE)
         return WM_SUCCESS;
+
+#ifdef SD8978
+    wlan_set_cal_data(cal_data_qfn_1A, sizeof(cal_data_qfn_1A));
+#endif
 
     ret = os_rwlock_create_with_cb(&ps_rwlock, "ps_mutex", "ps_lock", ps_wakeup_card_cb);
     ret = wifi_init(fw_ram_start_addr, size);

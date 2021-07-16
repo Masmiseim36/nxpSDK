@@ -63,7 +63,7 @@ uint32_t HTTPSRV_init(HTTPSRV_PARAM_STRUCT *params)
 **      none
 **
 ** Return Value:
-**      uint32_t      error code. HTTPSRV_OK if everything went right, positive number otherwise
+**      none
 */
 void HTTPSRV_release(uint32_t server_h)
 {

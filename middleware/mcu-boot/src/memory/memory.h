@@ -364,7 +364,10 @@ extern "C"
 
     //! @brief Read memory.
     status_t mem_read(uint32_t address, uint32_t length, uint8_t *buffer, uint32_t memoryId);
-
+    
+    //! @brief Check address, length and memory id prior to do write memory.
+    status_t mem_write_check(uint32_t address, uint32_t length, uint32_t memoryId);
+    
     //! @brief Write memory.
     status_t mem_write(uint32_t address, uint32_t length, const uint8_t *buffer, uint32_t memoryId);
 

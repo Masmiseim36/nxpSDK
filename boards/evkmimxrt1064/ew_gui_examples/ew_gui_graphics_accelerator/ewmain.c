@@ -79,17 +79,17 @@
 
 
 /* memory pool */
-#ifdef MEMORY_POOL_SECTION
-  MEMORY_POOL_SECTION static unsigned long
-    EwMemory[ MEMORY_POOL_SIZE / sizeof( unsigned long )];
-  #define MEMORY_POOL_ADDR EwMemory
+#ifdef EW_MEMORY_POOL_SECTION
+  EW_MEMORY_POOL_SECTION static unsigned long
+    EwMemory[ EW_MEMORY_POOL_SIZE / sizeof( unsigned long )];
+  #define EW_MEMORY_POOL_ADDR EwMemory
 #endif
 
 /* optional second memory pool */
-#ifdef EXTRA_POOL_SECTION
-  EXTRA_POOL_SECTION static unsigned long
-    EwExtraMemory[ EXTRA_POOL_SIZE / sizeof( unsigned long )];
-  #define EXTRA_POOL_ADDR EwExtraMemory
+#ifdef EW_EXTRA_POOL_SECTION
+  EW_EXTRA_POOL_SECTION static unsigned long
+    EwExtraMemory[ EW_EXTRA_POOL_SIZE / sizeof( unsigned long )];
+  #define EW_EXTRA_POOL_ADDR EwExtraMemory
 #endif
 
 #define CHECK_HANDLE( handle ) \
@@ -139,24 +139,25 @@ int EwInit( void )
 
   /* initialize display */
   EwPrint( "Initialize Display...                        " );
-  EwBspDisplayInit( &DisplayInfo );
-  EwPrint( "[OK]\n" );
+  CHECK_HANDLE( EwBspDisplayInit( &DisplayInfo ));
 
   /* initialize touchscreen */
   EwPrint( "Initialize Touch Driver...                   " );
   EwBspTouchInit( DisplayInfo.DisplayWidth, DisplayInfo.DisplayHeight );
   EwPrint( "[OK]\n" );
 
-  /* initialize heap manager */
-  EwPrint( "Initialize Memory Manager...                 " );
-  EwInitHeap( 0 );
-  EwAddHeapMemoryPool( (void*)MEMORY_POOL_ADDR, MEMORY_POOL_SIZE );
+  #if EW_MEMORY_POOL_SIZE > 0
+    /* initialize heap manager */
+    EwPrint( "Initialize Memory Manager...                 " );
+    EwInitHeap( 0 );
+    EwAddHeapMemoryPool( (void*)EW_MEMORY_POOL_ADDR, EW_MEMORY_POOL_SIZE );
 
-  #if EXTRA_POOL_SIZE > 0
-    EwAddHeapMemoryPool( (void*)EXTRA_POOL_ADDR, EXTRA_POOL_SIZE );
+    #if EW_EXTRA_POOL_SIZE > 0
+      EwAddHeapMemoryPool( (void*)EW_EXTRA_POOL_ADDR, EW_EXTRA_POOL_SIZE );
+    #endif
+
+    EwPrint( "[OK]\n" );
   #endif
-
-  EwPrint( "[OK]\n" );
 
   /* initialize the Graphics Engine and Runtime Environment */
   EwPrint( "Initialize Graphics Engine...                " );
@@ -215,11 +216,14 @@ void EwDone( void )
   EwDoneGraphicsEngine();
   EwPrint( "[OK]\n" );
 
-  /* deinitialize heap manager */
-  EwDoneHeap();
+  #if EW_MEMORY_POOL_SIZE > 0
+    /* deinitialize heap manager */
+    EwDoneHeap();
+  #endif
 
-  /* deinitialize touch */
+  EwPrint( "Deinitialize Touch Driver...                 " );
   EwBspTouchDone();
+  EwPrint( "[OK]\n" );
 
   /* deinitialize display */
   EwBspDisplayDone();
@@ -376,7 +380,7 @@ static void EwUpdate( XViewport* aViewport, CoreRoot aApplication )
     /* redraw the dirty area of the screen */
     if ( bitmap  )
     {
-      GraphicsCanvas__AttachBitmap( canvas, (XUInt32)bitmap );
+      GraphicsCanvas__AttachBitmap( canvas, (XHandle)bitmap );
       updateRect = CoreRoot__UpdateGE20( aApplication, canvas );
       GraphicsCanvas__DetachBitmap( canvas );
       EwEndUpdate( aViewport, updateRect );
@@ -397,7 +401,7 @@ static void EwUpdate( XViewport* aViewport, CoreRoot aApplication )
       {
         /* update the current subarea */
         bitmap = EwBeginUpdateArea( aViewport, updateRect );
-        GraphicsCanvas__AttachBitmap( canvas, (XUInt32)bitmap );
+        GraphicsCanvas__AttachBitmap( canvas, (XHandle)bitmap );
         CoreRoot__UpdateCanvas( aApplication, canvas, updateRect.Point1 );
         GraphicsCanvas__DetachBitmap( canvas );
         EwEndUpdate( aViewport, updateRect );
@@ -467,13 +471,13 @@ void EwPrintSystemInfo( void )
   EwPrint( "---------------------------------------------\n" );
   EwPrint( "Target system                                %s      \n", PLATFORM_STRING );
   EwPrint( "Color format                                 %s      \n", EW_FRAME_BUFFER_COLOR_FORMAT_STRING );
-  #if MEMORY_POOL_SIZE > 0
-  EwPrint( "MemoryPool address                           0x%08X  \n", MEMORY_POOL_ADDR );
-  EwPrint( "MemoryPool size                              %u bytes\n", MEMORY_POOL_SIZE );
+  #if EW_MEMORY_POOL_SIZE > 0
+  EwPrint( "MemoryPool address                           0x%08X  \n", EW_MEMORY_POOL_ADDR );
+  EwPrint( "MemoryPool size                              %u bytes\n", EW_MEMORY_POOL_SIZE );
   #endif
-  #if EXTRA_POOL_SIZE > 0
-  EwPrint( "ExtraPool address                            0x%08X  \n", EXTRA_POOL_ADDR );
-  EwPrint( "ExtraPool size                               %u bytes\n", EXTRA_POOL_SIZE );
+  #if EW_EXTRA_POOL_SIZE > 0
+  EwPrint( "ExtraPool address                            0x%08X  \n", EW_EXTRA_POOL_ADDR );
+  EwPrint( "ExtraPool size                               %u bytes\n", EW_EXTRA_POOL_SIZE );
   #endif
   #if EW_USE_SCRATCHPAD_BUFFER == 1
   EwPrint( "Scratch-pad buffer address                   0x%08X  \n", DisplayInfo.FrameBuffer );
@@ -488,7 +492,7 @@ void EwPrintSystemInfo( void )
   EwPrint( "Off-screen buffer                            used    \n" );
   #endif
   EwPrint( "Framebuffer size                             %u x %u \n", DisplayInfo.BufferWidth, DisplayInfo.BufferHeight );
-  EwPrint( "EwScreeenSize                                %d x %d \n", EwScreenSize.X, EwScreenSize.Y );
+  EwPrint( "EwScreenSize                                 %d x %d \n", EwScreenSize.X, EwScreenSize.Y );
   EwPrint( "Graphics accelerator                         %s      \n", GRAPHICS_ACCELERATOR_STRING );
   EwPrint( "Vector graphics support                      %s      \n", VECTOR_GRAPHICS_SUPPORT_STRING );
   EwPrint( "Warp function support                        %s      \n", WARP_FUNCTION_SUPPORT_STRING );
@@ -507,7 +511,7 @@ void EwPrintSystemInfo( void )
   #ifdef COMPILER_VERSION_STRING
   EwPrint( "C-Compiler version                           %s      \n", COMPILER_VERSION_STRING );
   #endif
-  EwPrint( "Build date and time                          %s, %s  \n", __DATE__, __TIME__ );
+  // EwPrint( "Build date and time                          %s, %s  \n", __DATE__, __TIME__ );  //Removed to improve testing automation using binary comparison
   EwPrint( "Runtime Environment (RTE) version            %u.%02u \n", EW_RTE_VERSION >> 16, EW_RTE_VERSION & 0xFF );
   EwPrint( "Graphics Engine (GFX) version                %u.%02u \n", EW_GFX_VERSION >> 16, EW_GFX_VERSION & 0xFF );
   EwPrint( "Max surface cache size                       %u bytes\n", EW_MAX_SURFACE_CACHE_SIZE );

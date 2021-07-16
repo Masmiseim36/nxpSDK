@@ -1,6 +1,6 @@
 # CROSS COMPILER SETTING
 SET(CMAKE_SYSTEM_NAME Generic)
-CMAKE_MINIMUM_REQUIRED (VERSION 3.1.1)
+CMAKE_MINIMUM_REQUIRED (VERSION 3.10.0)
 
 # THE VERSION NUMBER
 SET (Tutorial_VERSION_MAJOR 1)
@@ -32,7 +32,6 @@ include(${ProjDirPath}/config.cmake)
 
 add_executable(${MCUX_SDK_PROJECT_NAME} 
 "${ProjDirPath}/../config_files/aws_mbedtls_config.h"
-"${ProjDirPath}/../config_files/FreeRTOSConfig.h"
 "${ProjDirPath}/../config_files/aws_bufferpool_config.h"
 "${ProjDirPath}/../config_files/aws_demo_config.h"
 "${ProjDirPath}/../config_files/aws_ggd_config.h"
@@ -44,16 +43,19 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../config_files/FreeRTOSIPConfig.h"
 "${ProjDirPath}/../config_files/iot_config.h"
 "${ProjDirPath}/../config_files/iot_mqtt_agent_config.h"
-"${ProjDirPath}/../config_files/iot_pkcs11_config.h"
+"${ProjDirPath}/../config_files/core_pkcs11_config.h"
+"${ProjDirPath}/../config_files/core_http_config.h"
+"${ProjDirPath}/../config_files/core_mqtt_config.h"
+"${ProjDirPath}/../config_files/FreeRTOSConfig.h"
 "${ProjDirPath}/../config_files/aws_iot_network_config.h"
 "${ProjDirPath}/../main_enet.c"
+"${ProjDirPath}/../lwipopts.h"
+"${ProjDirPath}/../pin_mux.c"
+"${ProjDirPath}/../pin_mux.h"
 "${ProjDirPath}/../ota_bootloader_supp.c"
 "${ProjDirPath}/../ota_bootloader_supp.h"
 "${ProjDirPath}/../ota_bootloader_hdr.c"
 "${ProjDirPath}/../ota_bootloader_board.h"
-"${ProjDirPath}/../pin_mux.c"
-"${ProjDirPath}/../pin_mux.h"
-"${ProjDirPath}/../lwipopts.h"
 "${ProjDirPath}/../board.c"
 "${ProjDirPath}/../board.h"
 "${ProjDirPath}/../clock_config.c"
@@ -63,10 +65,8 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 )
 
 target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
-    ${ProjDirPath}/../config_files flexspi_nor_debug
-    ${ProjDirPath}/../../.. flexspi_nor_debug
-    ${ProjDirPath}/../config_files
     ${ProjDirPath}/../../..
+    ${ProjDirPath}/../config_files
     ${ProjDirPath}/..
 )
 
@@ -87,13 +87,13 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../devices/MIMXRT1062/utilities
     ${ProjDirPath}/../../../../../components/flash/mflash
     ${ProjDirPath}/../../../../../components/flash/mflash/mimxrt1062
-    ${ProjDirPath}/../../../../../rtos/freertos
     ${ProjDirPath}/../../../../../middleware/mbedtls
+    ${ProjDirPath}/../../../../../rtos/freertos
     ${ProjDirPath}/../../../../../devices/MIMXRT1062
     ${ProjDirPath}/../../../../../components/uart
     ${ProjDirPath}/../../../../../components/serial_manager
     ${ProjDirPath}/../../../../../components/lists
-    ${ProjDirPath}/../../../../../CMSIS/Include
+    ${ProjDirPath}/../../../../../CMSIS/Core/Include
 )
 
 # include modules
@@ -123,7 +123,7 @@ include(component_mflash_file_MIMXRT1062)
 
 include(component_mflash_rt1060_MIMXRT1062)
 
-include(middleware_freertos-aws_iot_vendor_nxp_ota_evkmimxrt1060_MIMXRT1062)
+include(middleware_mbedtls_MIMXRT1062)
 
 include(middleware_mbedtls_port_ksdk_MIMXRT1062)
 
@@ -139,13 +139,15 @@ include(middleware_freertos-aws_iot_libraries_freertos_plus_aws_ota_MIMXRT1062)
 
 include(middleware_freertos-aws_iot_demos_dev_mode_key_provisioning_MIMXRT1062)
 
+include(middleware_freertos-aws_iot_vendor_nxp_ota_MIMXRT1062)
+
 include(middleware_freertos-kernel_MIMXRT1062)
 
 include(middleware_freertos-kernel_heap_4_MIMXRT1062)
 
-include(middleware_freertos-aws_iot_c_sdk_standard_shadow_MIMXRT1062)
+include(middleware_freertos-aws_iot_libraries_c_sdk_standard_shadow_MIMXRT1062)
 
-include(middleware_freertos-aws_iot_c_sdk_standard_serializer_MIMXRT1062)
+include(middleware_freertos-aws_iot_libraries_c_sdk_standard_serializer_MIMXRT1062)
 
 include(middleware_freertos-aws_iot_libraries_3rdparty_pkcs11_MIMXRT1062)
 
@@ -153,7 +155,11 @@ include(middleware_freertos-aws_iot_vendor_nxp_pkcs11_MIMXRT1062)
 
 include(middleware_freertos-aws_iot_libraries_abstractions_pkcs11_MIMXRT1062)
 
-include(middleware_mbedtls_MIMXRT1062)
+include(middleware_freertos-aws_iot_libraries_abstractions_pkcs11_mbedtls_MIMXRT1062)
+
+include(middleware_freertos-aws_iot_libraries_logging_MIMXRT1062)
+
+include(middleware_freertos-aws_iot_libraries_3rdparty_mbedtls_config_MIMXRT1062)
 
 include(driver_clock_MIMXRT1062)
 
@@ -181,27 +187,33 @@ include(driver_igpio_MIMXRT1062)
 
 include(driver_mdio-common_MIMXRT1062)
 
-include(CMSIS_Include_core_cm7_MIMXRT1062)
-
-include(CMSIS_Include_common_MIMXRT1062)
-
-include(CMSIS_Include_dsp_MIMXRT1062)
+include(CMSIS_Include_core_cm_MIMXRT1062)
 
 include(component_mflash_common_MIMXRT1062)
 
-include(middleware_freertos-aws_iot_common_MIMXRT1062)
+include(middleware_freertos-aws_iot_libraries_abstractions_secure_sockets_MIMXRT1062)
+
+include(middleware_freertos-aws_iot_libraries_c_sdk_standard_common_MIMXRT1062)
 
 include(middleware_freertos-kernel_extension_MIMXRT1062)
 
 include(middleware_freertos-aws_iot_libraries_abstractions_platform_MIMXRT1062)
 
-include(middleware_freertos-aws_iot_libraries_abstractions_secure_sockets_MIMXRT1062)
+include(middleware_freertos-aws_iot_libraries_freertos_plus_standard_tls_MIMXRT1062)
+
+include(middleware_freertos-aws_iot_libraries_3rdparty_mbedtls_utils_MIMXRT1062)
+
+include(middleware_freertos-aws_iot_libraries_freertos_plus_standard_crypto_MIMXRT1062)
+
+include(middleware_freertos-aws_iot_libraries_freertos_plus_standard_utils_MIMXRT1062)
 
 include(middleware_freertos-aws_iot_network_manager_MIMXRT1062)
 
-include(middleware_freertos-aws_iot_libraries_abstractions_wifi_MIMXRT1062)
-
 include(middleware_freertos-aws_iot_mqtt_MIMXRT1062)
+
+include(middleware_freertos-aws_iot_libraries_coremqtt_MIMXRT1062)
+
+include(middleware_freertos-aws_iot_libraries_abstractions_wifi_MIMXRT1062)
 
 include(middleware_freertos-aws_iot_libraries_3rdparty_jsmn_MIMXRT1062)
 
@@ -211,17 +223,7 @@ include(middleware_freertos-aws_iot_libraries_c_sdk_standard_https_MIMXRT1062)
 
 include(middleware_freertos-aws_iot_libraries_3rdparty_http_parser_MIMXRT1062)
 
-include(middleware_freertos-aws_iot_libraries_freertos_plus_standard_crypto_MIMXRT1062)
-
-include(middleware_freertos-aws_iot_libraries_abstractions_threading_alt_MIMXRT1062)
-
-include(middleware_freertos-aws_iot_libraries_freertos_plus_standard_tls_MIMXRT1062)
-
-include(middleware_freertos-aws_iot_libraries_3rdparty_mbedtls_utils_MIMXRT1062)
-
-include(middleware_freertos-aws_iot_libraries_freertos_plus_standard_pkcs11_MIMXRT1062)
-
-include(middleware_freertos-aws_iot_libraries_freertos_plus_standard_utils_MIMXRT1062)
+include(middleware_freertos-aws_iot_libraries_corehttp_MIMXRT1062)
 
 include(utilities_misc_utilities_MIMXRT1062)
 
@@ -241,5 +243,5 @@ target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE nosys)
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--end-group)
 
 ADD_CUSTOM_COMMAND(TARGET ${MCUX_SDK_PROJECT_NAME} POST_BUILD COMMAND ${CMAKE_OBJCOPY}
--Obinary ${EXECUTABLE_OUTPUT_PATH}/${MCUX_SDK_PROJECT_NAME} ${EXECUTABLE_OUTPUT_PATH}/ota_demo_enet.bin)
+-Obinary ${EXECUTABLE_OUTPUT_PATH}/${MCUX_SDK_PROJECT_NAME} ${EXECUTABLE_OUTPUT_PATH}/ota_demo.bin)
 

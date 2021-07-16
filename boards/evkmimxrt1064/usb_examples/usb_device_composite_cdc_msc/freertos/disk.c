@@ -68,7 +68,7 @@ usb_device_mode_parameters_header_struct_t g_ModeParametersHeader = {
  */
 usb_status_t USB_DeviceMscCallback(class_handle_t handle, uint32_t event, void *param)
 {
-    usb_status_t error = kStatus_USB_Error;
+    usb_status_t error = kStatus_USB_Success;
     usb_device_lba_information_struct_t *lbaInformationStructure;
     usb_device_lba_app_struct_t *lbaData;
     usb_device_ufi_app_struct_t *ufi;
@@ -116,16 +116,14 @@ usb_status_t USB_DeviceMscCallback(class_handle_t handle, uint32_t event, void *
             ufi->size   = sizeof(usb_device_mode_parameters_header_struct_t);
             ufi->buffer = (uint8_t *)&g_ModeParametersHeader;
             break;
-        case kUSB_DeviceMscEventModeSelect:
-            break;
         case kUSB_DeviceMscEventModeSelectResponse:
             ufi = (usb_device_ufi_app_struct_t *)param;
             break;
+        case kUSB_DeviceMscEventModeSelect:
         case kUSB_DeviceMscEventFormatComplete:
-            break;
         case kUSB_DeviceMscEventRemovalRequest:
-            break;
         case kUSB_DeviceMscEventRequestSense:
+            error = kStatus_USB_InvalidRequest;
             break;
         case kUSB_DeviceMscEventReadCapacity:
             capacityInformation                         = (usb_device_capacity_information_struct_t *)param;
@@ -138,6 +136,7 @@ usb_status_t USB_DeviceMscCallback(class_handle_t handle, uint32_t event, void *
             capacityInformation->totalLbaNumberSupports = TOTAL_LOGICAL_ADDRESS_BLOCKS_NORMAL;
             break;
         default:
+            error = kStatus_USB_InvalidRequest;
             break;
     }
     return error;

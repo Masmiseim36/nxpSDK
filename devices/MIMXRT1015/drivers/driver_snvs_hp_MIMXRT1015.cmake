@@ -1,17 +1,15 @@
-if(NOT DRIVER_SNVS_HP_MIMXRT1015_INCLUDED)
-    
-    set(DRIVER_SNVS_HP_MIMXRT1015_INCLUDED true CACHE BOOL "driver_snvs_hp component is included.")
+include_guard(GLOBAL)
+message("driver_snvs_hp component is included.")
 
-    target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
-        ${CMAKE_CURRENT_LIST_DIR}/fsl_snvs_hp.c
-    )
-
-
-    target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
-        ${CMAKE_CURRENT_LIST_DIR}/.
-    )
+target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
+    ${CMAKE_CURRENT_LIST_DIR}/fsl_snvs_hp.c
+)
 
 
-    include(driver_common_MIMXRT1015)
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
+    ${CMAKE_CURRENT_LIST_DIR}/.
+)
 
-endif()
+
+include(driver_common_MIMXRT1015)
+

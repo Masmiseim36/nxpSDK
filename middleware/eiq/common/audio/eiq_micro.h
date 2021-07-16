@@ -16,18 +16,36 @@ extern "C" {
 #include "eiq_micro_conf.h"
 #include "stdbool.h"
 
+/*!
+ * @addtogroup eiq_micro
+ * @{
+ */
+
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
 
+/*! @brief Microphone structure */
 typedef struct
 {
-  EIQ_IUi_t base;
-  void (*setReadyCallback)(EIQ_IBufferAddrUpdater_t updater);
-  uint8_t* (*getReadyBuff)(void);
+    EIQ_IUi_t base;
+    void (*setReadyCallback)(EIQ_IBufferAddrUpdater_t updater);
+    uint8_t* (*getReadyBuff)(void);
+    bool (*isReady)(void);
 } EIQ_Micro_t;
 
-EIQ_Micro_t* EIQ_MicroInit();
+/*******************************************************************************
+ * API
+ ******************************************************************************/
+
+/*!
+ * @brief Initializes microphone.
+ *
+ * This function initializes microphone.
+ *
+ * @return pointer to initialized microphone instance
+ */
+EIQ_Micro_t* EIQ_MicroInit(void);
 
 #if defined(__cplusplus)
 }

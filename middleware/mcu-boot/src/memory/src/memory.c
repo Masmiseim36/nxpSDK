@@ -99,6 +99,38 @@ status_t mem_read(uint32_t address, uint32_t length, uint8_t *buffer, uint32_t m
 }
 
 // See memory.h for documentation on this function.
+status_t mem_write_check(uint32_t address, uint32_t length, uint32_t memoryId)
+{
+    status_t status = kStatusMemoryRangeInvalid;
+    
+    if (length == 0)
+    {
+        status = kStatus_Success;
+    }
+    else if (GROUPID(memoryId) == kGroup_Internal)
+    {
+        if (mem_is_block_reserved(address, length) == false)
+        {
+            const memory_map_entry_t *mapEntry;
+            status = find_map_entry(address, length, &mapEntry);
+        }
+    }
+#if BL_FEATURE_EXPAND_MEMORY
+    else if (GROUPID(memoryId) == kGroup_External)
+    {
+        const external_memory_map_entry_t *mapEntry;
+        status = find_external_map_entry(address, length, memoryId, &mapEntry);
+    }
+#endif // BL_FEATURE_EXPAND_MEMORY
+    else
+    {
+        ;
+    }
+    
+    return status;
+}
+
+// See memory.h for documentation on this function.
 status_t mem_write(uint32_t address, uint32_t length, const uint8_t *buffer, uint32_t memoryId)
 {
     if (length == 0)

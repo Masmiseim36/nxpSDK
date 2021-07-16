@@ -2,7 +2,7 @@
  *
  *  @brief  This file provides WiFi Core API
  *
- *  Copyright 2008-2020 NXP
+ *  Copyright 2008-2021 NXP
  *
  *  NXP CONFIDENTIAL
  *  The source code contained or described herein and all documents related to
@@ -36,6 +36,10 @@
 #include "wifi-sdio.h"
 #include "mlan_sdio.h"
 
+#ifdef CONFIG_WMM
+#include "sdmmc_config.h"
+#endif
+
 #define WIFI_COMMAND_RESPONSE_WAIT_MS 20000
 #define WIFI_CORE_STACK_SIZE          (350)
 /* We don't see events coming in quick succession,
@@ -48,6 +52,22 @@
 #define _T(x) x
 #endif
 
+#ifdef CONFIG_WMM
+/* @brief decription about the read/write buffer
+ * The size of the read/write buffer should be a multiple of 512, since SDHC/SDXC card uses 512-byte fixed
+ * block length and this driver example is enabled with a SDHC/SDXC card.If you are using a SDSC card, you
+ * can define the block length by yourself if the card supports partial access.
+ * The address of the read/write buffer should align to the specific DMA data buffer address align value if
+ * DMA transfer is used, otherwise the buffer address is not important.
+ * At the same time buffer address/size should be aligned to the cache line size if cache is supported.
+ */
+/*! @brief Data written to the card */
+SDK_ALIGN(uint8_t outbuf_bk[BK_MAX_BUF][DATA_BUFFER_SIZE], BOARD_SDMMC_DATA_BUFFER_ALIGN_SIZE);
+SDK_ALIGN(uint8_t outbuf_vi[VI_MAX_BUF][DATA_BUFFER_SIZE], BOARD_SDMMC_DATA_BUFFER_ALIGN_SIZE);
+SDK_ALIGN(uint8_t outbuf_vo[VO_MAX_BUF][DATA_BUFFER_SIZE], BOARD_SDMMC_DATA_BUFFER_ALIGN_SIZE);
+SDK_ALIGN(uint8_t outbuf_be[BE_MAX_BUF][DATA_BUFFER_SIZE], BOARD_SDMMC_DATA_BUFFER_ALIGN_SIZE);
+#endif
+
 static t_u8 wifi_init_done;
 static t_u8 wifi_core_init_done;
 
@@ -55,7 +75,7 @@ bool sta_ampdu_tx_enable = true;
 
 bool sta_ampdu_rx_enable = true;
 
-static int retry_attempts;
+int retry_attempts;
 wm_wifi_t wm_wifi;
 static bool xfer_pending;
 
@@ -71,13 +91,17 @@ typedef enum __mlan_status
 static os_thread_stack_define(wifi_core_stack, WIFI_CORE_STACK_SIZE * sizeof(portSTACK_TYPE));
 static os_thread_stack_define(wifi_drv_stack, 1024);
 static os_queue_pool_define(g_io_events_queue_data, sizeof(struct bus_message) * MAX_EVENTS);
-
+#ifdef CONFIG_WMM
+static os_queue_pool_define(g_tx_data_queue_data, sizeof(struct bus_message) * MAX_EVENTS);
+#endif
 int wifi_set_mac_multicast_addr(const char *mlist, uint32_t num_of_addr);
 int wrapper_get_wpa_ie_in_assoc(uint8_t *wpa_ie);
 KEY_TYPE_ID get_sec_info();
 mlan_status wlan_process_int_status(void *pmadapter);
 void handle_data_packet(t_u8 interface, t_u8 *rcvdata, t_u16 datalen);
-
+#ifdef CONFIG_WMM
+static void wifi_driver_tx(void *data);
+#endif
 unsigned wifi_get_last_cmd_sent_ms()
 {
     return wm_wifi.last_sent_cmd_msec;
@@ -1294,7 +1318,29 @@ static int wifi_core_init(void)
 
     wifi_core_thread    = wm_wifi.wm_wifi_core_thread;
     wifi_core_init_done = 1;
-
+#ifdef CONFIG_WMM
+    wm_wifi.tx_data_queue_data = g_tx_data_queue_data;
+    ret = os_queue_create(&wm_wifi.tx_data, "tx_data", sizeof(struct bus_message), &wm_wifi.tx_data_queue_data);
+    if (ret != WM_SUCCESS)
+    {
+        PRINTF("Create tx data queue failed");
+        goto fail;
+    }
+    /* Semaphore to protect wmm data parameters */
+    ret = os_semaphore_create(&wm_wifi.tx_data_sem, "tx data sem");
+    if (ret != WM_SUCCESS)
+    {
+        PRINTF("Create tx data sem failed");
+        goto fail;
+    }
+    ret = os_thread_create(&wm_wifi.wm_wifi_driver_tx, "wifi_driver_tx", wifi_driver_tx, NULL, &wifi_drv_stack,
+                           OS_PRIO_2);
+    if (ret != WM_SUCCESS)
+    {
+        PRINTF("Create tx data thread failed");
+        goto fail;
+    }
+#endif
     return WM_SUCCESS;
 
 fail:
@@ -1316,6 +1362,12 @@ static void wifi_core_deinit()
         os_queue_delete(&wm_wifi.io_events);
         wm_wifi.io_events = NULL;
     }
+#ifdef CONFIG_WMM
+    if (wm_wifi.tx_data != NULL)
+    {
+        os_queue_delete(&wm_wifi.tx_data);
+    }
+#endif
     if (wm_wifi.mcastf_mutex != NULL)
     {
         os_mutex_delete(&wm_wifi.mcastf_mutex);
@@ -1326,6 +1378,13 @@ static void wifi_core_deinit()
         os_semaphore_delete(&wm_wifi.command_resp_sem);
         wm_wifi.command_resp_sem = NULL;
     }
+#ifdef CONFIG_WMM
+    if (wm_wifi.tx_data_sem != NULL)
+    {
+        os_semaphore_delete(&wm_wifi.tx_data_sem);
+        wm_wifi.tx_data_sem = NULL;
+    }
+#endif
     if (wm_wifi.command_lock != NULL)
     {
         os_mutex_delete(&wm_wifi.command_lock);
@@ -1342,6 +1401,13 @@ static void wifi_core_deinit()
         wm_wifi.wm_wifi_core_thread = NULL;
         wifi_core_thread            = NULL;
     }
+#ifdef CONFIG_WMM
+    if (wm_wifi.wm_wifi_driver_tx)
+    {
+        os_thread_delete(&wm_wifi.wm_wifi_driver_tx);
+        wm_wifi.wm_wifi_driver_tx = NULL;
+    }
+#endif
 }
 
 int wifi_init(const uint8_t *fw_ram_start_addr, const size_t size)
@@ -1497,11 +1563,191 @@ static int wifi_low_level_input(const uint8_t interface, const uint8_t *buffer, 
 
 #define WL_ID_LL_OUTPUT "wifi_low_level_output"
 
-int wifi_low_level_output(const uint8_t interface, const uint8_t *buffer, const uint16_t len)
-{
-    int i, ret, retry = retry_attempts;
-    unsigned long pkt_len;
+#ifdef CONFIG_WMM
+#define ETHER_TYPE_IPV4_01       0xc
+#define ETHER_TYPE_IPV4_02       0xd
+#define ETHER_TYPE_IPV4_VALUE_01 0x8
+#define ETHER_TYPE_IPV4_VALUE_02 0x0
+#define WMM_PACKET_TOS           0xf
+#define PRIORITY_COMPENSATOR     0x20
+#define UDP_IDENTIFIER_POS       0x11
+#define UDP_IDENTIFIER_VAL       0xda
 
+/* Packet priority is 16th byte of payload.
+ * Provided that the packet is IPV4 type
+ * Since value comes between the range of 0-255, coversion is expected between 0-7 to map to TIDs.
+ * */
+int wifi_wmm_get_pkt_prio(t_u8 *buf, t_u8 *tid, bool *is_udp_frame)
+{
+    if (buf == NULL)
+        return -WM_FAIL;
+    if (buf[ETHER_TYPE_IPV4_01] == ETHER_TYPE_IPV4_VALUE_01 && buf[ETHER_TYPE_IPV4_02] == ETHER_TYPE_IPV4_VALUE_02)
+    {
+        if (buf[UDP_IDENTIFIER_POS] == UDP_IDENTIFIER_VAL)
+            *is_udp_frame = true;
+        *tid = (buf[WMM_PACKET_TOS] / PRIORITY_COMPENSATOR);
+        switch (*tid)
+        {
+            case 0:
+                return WMM_AC_BE;
+            case 1:
+            case 2:
+                return WMM_AC_BK;
+            case 3:
+                return WMM_AC_BE;
+            case 4:
+            case 5:
+                return WMM_AC_VI;
+            case 6:
+            case 7:
+                return WMM_AC_VO;
+            default:
+                return WMM_AC_BK;
+        }
+    }
+    else
+        return WMM_AC_BK;
+}
+
+bool is_wifi_wmm_queue_full(mlan_wmm_ac_e queue)
+{
+    bool ret = false;
+    switch (queue)
+    {
+        case WMM_AC_BK:
+            if (wm_wifi.pkt_cnt[WMM_AC_BK] >= BK_MAX_BUF)
+                ret = true;
+            break;
+        case WMM_AC_BE:
+            if (wm_wifi.pkt_cnt[WMM_AC_BE] >= BE_MAX_BUF)
+                ret = true;
+            break;
+        case WMM_AC_VI:
+            if (wm_wifi.pkt_cnt[WMM_AC_VI] >= VI_MAX_BUF)
+                ret = true;
+            break;
+        case WMM_AC_VO:
+            if (wm_wifi.pkt_cnt[WMM_AC_VO] >= VO_MAX_BUF)
+                ret = true;
+            break;
+        default:
+            ret = true;
+            break;
+    }
+    return ret;
+}
+
+static void wifi_driver_tx(void *data)
+{
+    int err = WM_SUCCESS;
+    int ret;
+    struct bus_message msg;
+    while (1)
+    {
+    get_msg:
+        ret = os_queue_recv(&wm_wifi.tx_data, &msg, OS_WAIT_FOREVER);
+        if (ret == WM_SUCCESS)
+        {
+            if (msg.event == MLAN_TYPE_DATA)
+            {
+                ret = os_rwlock_read_lock(&ps_rwlock, MAX_WAIT_TIME);
+                if (ret != WM_SUCCESS)
+                {
+                    wifi_e("Error in getting readlock");
+                    goto get_msg;
+                }
+                if (wm_wifi.pkt_cnt[WMM_AC_VO] > 0)
+                {
+                    err = wlan_xmit_wmm_pkt(msg.reason, wm_wifi.vo_pkt_len[wm_wifi.send_index[WMM_AC_VO]],
+                                            outbuf_vo[wm_wifi.send_index[WMM_AC_VO]]);
+                    if (err != MLAN_STATUS_SUCCESS)
+                    {
+                        wifi_e("Error in sending Voice traffic");
+                    }
+                    os_semaphore_get(&wm_wifi.tx_data_sem, OS_WAIT_FOREVER);
+                    wm_wifi.pkt_cnt[WMM_AC_VO]--;
+                    os_semaphore_put(&wm_wifi.tx_data_sem);
+                    wm_wifi.send_index[WMM_AC_VO]++;
+                    if (wm_wifi.send_index[WMM_AC_VO] >= VO_MAX_BUF)
+                        wm_wifi.send_index[WMM_AC_VO] = 0;
+                }
+                else if (wm_wifi.pkt_cnt[WMM_AC_VI] > 0)
+                {
+                    err = wlan_xmit_wmm_pkt(msg.reason, wm_wifi.vi_pkt_len[wm_wifi.send_index[WMM_AC_VI]],
+                                            outbuf_vi[wm_wifi.send_index[WMM_AC_VI]]);
+                    if (err != MLAN_STATUS_SUCCESS)
+                    {
+                        wifi_e("Error in sending Video traffic");
+                    }
+                    os_semaphore_get(&wm_wifi.tx_data_sem, OS_WAIT_FOREVER);
+                    wm_wifi.pkt_cnt[WMM_AC_VI]--;
+                    os_semaphore_put(&wm_wifi.tx_data_sem);
+                    wm_wifi.send_index[WMM_AC_VI]++;
+                    if (wm_wifi.send_index[WMM_AC_VI] >= VI_MAX_BUF)
+                        wm_wifi.send_index[WMM_AC_VI] = 0;
+                }
+                else if (wm_wifi.pkt_cnt[WMM_AC_BE] > 0)
+                {
+                    err = wlan_xmit_wmm_pkt(msg.reason, wm_wifi.be_pkt_len[wm_wifi.send_index[WMM_AC_BE]],
+                                            outbuf_be[wm_wifi.send_index[WMM_AC_BE]]);
+                    if (err != MLAN_STATUS_SUCCESS)
+                    {
+                        wifi_e("Error in sending Best Effort traffic");
+                    }
+                    os_semaphore_get(&wm_wifi.tx_data_sem, OS_WAIT_FOREVER);
+                    wm_wifi.pkt_cnt[WMM_AC_BE]--;
+                    os_semaphore_put(&wm_wifi.tx_data_sem);
+                    wm_wifi.send_index[WMM_AC_BE]++;
+                    if (wm_wifi.send_index[WMM_AC_BE] >= BE_MAX_BUF)
+                        wm_wifi.send_index[WMM_AC_BE] = 0;
+                }
+                else if (wm_wifi.pkt_cnt[WMM_AC_BK] > 0)
+                {
+                    err = wlan_xmit_wmm_pkt(msg.reason, wm_wifi.bk_pkt_len[wm_wifi.send_index[WMM_AC_BK]],
+                                            outbuf_bk[wm_wifi.send_index[WMM_AC_BK]]);
+                    if (err != MLAN_STATUS_SUCCESS)
+                    {
+                        wifi_e("Error in sending Background traffic");
+                    }
+                    os_semaphore_get(&wm_wifi.tx_data_sem, OS_WAIT_FOREVER);
+                    wm_wifi.pkt_cnt[WMM_AC_BK]--;
+                    os_semaphore_put(&wm_wifi.tx_data_sem);
+                    wm_wifi.send_index[WMM_AC_BK]++;
+                    if (wm_wifi.send_index[WMM_AC_BK] >= BK_MAX_BUF)
+                        wm_wifi.send_index[WMM_AC_BK] = 0;
+                }
+                else
+                {
+                    /* Do nothing */
+                }
+
+                os_rwlock_read_unlock(&ps_rwlock);
+                wifi_set_xfer_pending(false);
+            }
+        }
+    }
+}
+#endif /* CONFIG_WMM */
+int wifi_low_level_output(const uint8_t interface,
+                          const uint8_t *buffer,
+                          const uint16_t len
+#ifdef CONFIG_WMM
+                          ,
+                          uint8_t pkt_prio,
+                          uint8_t tid
+#endif
+)
+{
+    int ret;
+    unsigned long pkt_len;
+#ifdef CONFIG_WMM
+    struct bus_message msg;
+#else
+    int retry = retry_attempts;
+    int i;
+#endif
+    mlan_private *pmpriv     = (mlan_private *)mlan_adap->priv[0];
+    mlan_private *pmpriv_uap = (mlan_private *)mlan_adap->priv[1];
     // wakelock_get(WL_ID_LL_OUTPUT);
     ret = os_rwlock_read_lock(&ps_rwlock, MAX_WAIT_TIME);
     if (ret != WM_SUCCESS)
@@ -1509,10 +1755,64 @@ int wifi_low_level_output(const uint8_t interface, const uint8_t *buffer, const 
         // wakelock_put(WL_ID_LL_OUTPUT);
         return ERR_INPROGRESS;
     }
-
-    wifi_sdio_lock();
+    /* Following condition is added to check if device is not connected and data packet is being transmitted */
+    if (!pmpriv->media_connected && !pmpriv_uap->media_connected)
+    {
+        ret = -WM_E_BUSY;
+        goto exit_fn;
+    }
 
     pkt_len = sizeof(TxPD) + INTF_HEADER_LEN;
+#ifdef CONFIG_WMM
+    if (pkt_prio == WMM_AC_VO)
+    {
+        os_semaphore_get(&wm_wifi.tx_data_sem, OS_WAIT_FOREVER);
+        wm_wifi.vo_pkt_len[wm_wifi.pkt_index[WMM_AC_VO]] = pkt_len + len;
+        wm_wifi.pkt_cnt[WMM_AC_VO]++;
+        os_semaphore_put(&wm_wifi.tx_data_sem);
+        wm_wifi.pkt_index[WMM_AC_VO]++;
+        if (wm_wifi.pkt_index[WMM_AC_VO] >= VO_MAX_BUF)
+            wm_wifi.pkt_index[WMM_AC_VO] = 0;
+    }
+    else if (pkt_prio == WMM_AC_VI)
+    {
+        os_semaphore_get(&wm_wifi.tx_data_sem, OS_WAIT_FOREVER);
+        wm_wifi.vi_pkt_len[wm_wifi.pkt_index[WMM_AC_VI]] = pkt_len + len;
+        wm_wifi.pkt_cnt[WMM_AC_VI]++;
+        os_semaphore_put(&wm_wifi.tx_data_sem);
+        wm_wifi.pkt_index[WMM_AC_VI]++;
+        if (wm_wifi.pkt_index[WMM_AC_VI] >= VI_MAX_BUF)
+            wm_wifi.pkt_index[WMM_AC_VI] = 0;
+    }
+    else if (pkt_prio == WMM_AC_BE)
+    {
+        os_semaphore_get(&wm_wifi.tx_data_sem, OS_WAIT_FOREVER);
+        wm_wifi.be_pkt_len[wm_wifi.pkt_index[WMM_AC_BE]] = pkt_len + len;
+        wm_wifi.pkt_cnt[WMM_AC_BE]++;
+        os_semaphore_put(&wm_wifi.tx_data_sem);
+        wm_wifi.pkt_index[WMM_AC_BE]++;
+        if (wm_wifi.pkt_index[WMM_AC_BE] >= BE_MAX_BUF)
+            wm_wifi.pkt_index[WMM_AC_BE] = 0;
+    }
+    else if (pkt_prio == WMM_AC_BK)
+    {
+        os_semaphore_get(&wm_wifi.tx_data_sem, OS_WAIT_FOREVER);
+        wm_wifi.bk_pkt_len[wm_wifi.pkt_index[WMM_AC_BK]] = pkt_len + len;
+        wm_wifi.pkt_cnt[WMM_AC_BK]++;
+        os_semaphore_put(&wm_wifi.tx_data_sem);
+        wm_wifi.pkt_index[WMM_AC_BK]++;
+        if (wm_wifi.pkt_index[WMM_AC_BK] >= BK_MAX_BUF)
+            wm_wifi.pkt_index[WMM_AC_BK] = 0;
+    }
+    else
+    {
+        /* Do nothing */
+    }
+    msg.event  = MLAN_TYPE_DATA;
+    msg.reason = interface;
+    ret        = os_queue_send(&wm_wifi.tx_data, &msg, OS_NO_WAIT);
+#else
+    wifi_sdio_lock();
 
 retry_xmit:
     i = wlan_xmit_pkt(pkt_len + len, interface);
@@ -1546,11 +1846,17 @@ retry_xmit:
         { /* Do Nothing */
         }
     }
-
+#endif
     if (interface == BSS_TYPE_STA && sta_ampdu_tx_enable)
     {
         if (wm_wifi.wrapper_net_is_ip_or_ipv6_callback(buffer))
-            wrapper_wlan_sta_ampdu_enable();
+        {
+            wrapper_wlan_sta_ampdu_enable(
+#ifdef CONFIG_WMM
+                tid
+#endif
+            );
+        }
     }
 
     if (interface == BSS_TYPE_UAP)
@@ -1573,3 +1879,35 @@ uint8_t *wifi_get_outbuf(uint32_t *outbuf_len)
 {
     return wifi_get_sdio_outbuf(outbuf_len);
 }
+#ifdef CONFIG_WMM
+uint8_t *wifi_wmm_get_sdio_outbuf(uint32_t *outbuf_len, mlan_wmm_ac_e queue)
+{
+    switch (queue)
+    {
+        case WMM_AC_BK:
+            *outbuf_len = sizeof(outbuf_bk[0]);
+            return outbuf_bk[wm_wifi.pkt_index[WMM_AC_BK]];
+        case WMM_AC_BE:
+            *outbuf_len = sizeof(outbuf_be[0]);
+            return outbuf_be[wm_wifi.pkt_index[WMM_AC_BE]];
+        case WMM_AC_VI:
+            *outbuf_len = sizeof(outbuf_vi[0]);
+            return outbuf_vi[wm_wifi.pkt_index[WMM_AC_VI]];
+        case WMM_AC_VO:
+            *outbuf_len = sizeof(outbuf_vo[0]);
+            return outbuf_vo[wm_wifi.pkt_index[WMM_AC_VO]];
+        default:
+            *outbuf_len = sizeof(outbuf_bk[0]);
+            return outbuf_bk[wm_wifi.pkt_index[WMM_AC_BK]];
+    }
+    return outbuf_bk[0];
+}
+
+uint8_t *wifi_wmm_get_outbuf(uint32_t *outbuf_len, mlan_wmm_ac_e queue)
+{
+    uint8_t *outbuf = NULL;
+    outbuf          = wifi_wmm_get_sdio_outbuf(outbuf_len, queue);
+
+    return outbuf;
+}
+#endif

@@ -1,12 +1,10 @@
-if(NOT MIDDLEWARE_USB_COMMON_HEADER_MIMXRT1015_INCLUDED)
-    
-    set(MIDDLEWARE_USB_COMMON_HEADER_MIMXRT1015_INCLUDED true CACHE BOOL "middleware_usb_common_header component is included.")
+include_guard(GLOBAL)
+message("middleware_usb_common_header component is included.")
 
 
-    target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
-        ${CMAKE_CURRENT_LIST_DIR}/include
-    )
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
+    ${CMAKE_CURRENT_LIST_DIR}/include
+)
 
-    include(component_osa_MIMXRT1015)
+include(component_osa_MIMXRT1015)
 
-endif()

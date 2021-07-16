@@ -5,6 +5,10 @@
       <name>all</name>
       <member>
         <project>dev_composite_hid_audio_unified_freertos</project>
+        <configuration>debug</configuration>
+      </member>
+      <member>
+        <project>dev_composite_hid_audio_unified_freertos</project>
         <configuration>flexspi_nor_debug</configuration>
       </member>
       <member>
@@ -21,11 +25,14 @@
       </member>
       <member>
         <project>dev_composite_hid_audio_unified_freertos</project>
-        <configuration>debug</configuration>
+        <configuration>release</configuration>
       </member>
+    </batchDefinition>
+    <batchDefinition>
+      <name>debug</name>
       <member>
         <project>dev_composite_hid_audio_unified_freertos</project>
-        <configuration>release</configuration>
+        <configuration>debug</configuration>
       </member>
     </batchDefinition>
     <batchDefinition>
@@ -54,13 +61,6 @@
       <member>
         <project>dev_composite_hid_audio_unified_freertos</project>
         <configuration>sdram_release</configuration>
-      </member>
-    </batchDefinition>
-    <batchDefinition>
-      <name>debug</name>
-      <member>
-        <project>dev_composite_hid_audio_unified_freertos</project>
-        <configuration>debug</configuration>
       </member>
     </batchDefinition>
     <batchDefinition>

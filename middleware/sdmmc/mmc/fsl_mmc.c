@@ -40,15 +40,6 @@
 static inline status_t MMC_SelectCard(mmc_card_t *card, bool isSelected);
 
 /*!
- * @brief Wait write process complete.
- *
- * @param card Card descriptor.
- * @retval kStatus_Timeout Operation timeout.
- * @retval kStatus_Success Operate successfully.
- */
-static status_t MMC_WaitWriteComplete(mmc_card_t *card);
-
-/*!
  * @brief Send SET_BLOCK_COUNT command.
  *
  * @param card Card descriptor.
@@ -145,14 +136,12 @@ static status_t MMC_SetMaxEraseUnitSize(mmc_card_t *card);
  *
  * @param card Card descriptor.
  * @param config Configuration for Extended CSD.
- * @param sendStatusOnly true is use CMD13 polling status only, otherewise polling DAT0 firstly.
+ * @param timeout switch command timeout value.
  * @retval kStatus_SDMMC_TransferFailed Transfer failed.
  * @retval kStatus_SDMMC_WaitWriteCompleteFailed Wait write complete failed.
  * @retval kStatus_Success Operate successfully.
  */
-static status_t MMC_SetExtendedCsdConfig(mmc_card_t *card,
-                                         const mmc_extended_csd_config_t *config,
-                                         bool sendStatusOnly);
+static status_t MMC_SetExtendedCsdConfig(mmc_card_t *card, const mmc_extended_csd_config_t *config, uint32_t timeout);
 
 /*!
  * @brief Decode the Extended CSD register
@@ -256,7 +245,6 @@ static status_t MMC_SelectBusTiming(mmc_card_t *card);
  */
 static status_t MMC_SwitchHSTiming(mmc_card_t *card, uint8_t timing, uint8_t driverStrength);
 
-#if SDMMCHOST_SUPPORT_HS400
 /*!
  * @brief switch to HS400 mode.
  *
@@ -267,9 +255,7 @@ static status_t MMC_SwitchHSTiming(mmc_card_t *card, uint8_t timing, uint8_t dri
  * @retval kStatus_Success Operate successfully.
  */
 static status_t MMC_SwitchToHS400(mmc_card_t *card);
-#endif
 
-#if SDMMCHOST_SUPPORT_HS200
 /*!
  * @brief switch to HS200 mode.
  *
@@ -281,7 +267,6 @@ static status_t MMC_SwitchToHS400(mmc_card_t *card);
  * @retval kStatus_Success Operate successfully.
  */
 static status_t MMC_SwitchToHS200(mmc_card_t *card, uint32_t freq);
-#endif
 
 /*!
  * @brief switch to HS400 mode.
@@ -341,7 +326,6 @@ static status_t MMC_CheckBlockRange(mmc_card_t *card, uint32_t startBlock, uint3
  */
 static status_t MMC_CheckEraseGroupRange(mmc_card_t *card, uint32_t startGroup, uint32_t endGroup);
 
-#if SDMMCHOST_SUPPORT_HS200 || SDMMCHOST_SUPPORT_HS400
 /*!
  * @brief MMC excute tuning function.
  *
@@ -351,7 +335,6 @@ static status_t MMC_CheckEraseGroupRange(mmc_card_t *card, uint32_t startGroup, 
  * @retval kStatus_SDMMC_TransferFailed transfer fail
  */
 static inline status_t MMC_ExecuteTuning(mmc_card_t *card);
-#endif
 /*!
  * @brief Read data from specific MMC card
  *
@@ -386,6 +369,17 @@ static status_t MMC_Read(
  */
 static status_t MMC_Write(
     mmc_card_t *card, const uint8_t *buffer, uint32_t startBlock, uint32_t blockSize, uint32_t blockCount);
+
+/*!
+ * @brief MMC card erase function
+ *
+ * @param card Card descriptor.
+ * @param startGroupAddress start erase group address.
+ * @param endGroupAddress end erase group address.
+ * @retval kStatus_SDMMC_TransferFailed Transfer failed.
+ * @retval kStatus_Success Operate successfully.
+ */
+static status_t MMC_Erase(mmc_card_t *card, uint32_t startGroupAddress, uint32_t endGroupAddress);
 
 /*!
  * @brief card transfer function wrapper
@@ -451,7 +445,6 @@ static inline status_t MMC_SetBlockSize(mmc_card_t *card, uint32_t blockSize)
     return SDMMC_SetBlockSize(card->host, blockSize);
 }
 
-#if SDMMCHOST_SUPPORT_HS200 || SDMMCHOST_SUPPORT_HS400
 static status_t MMC_ExecuteTuning(mmc_card_t *card)
 {
     assert(card != NULL);
@@ -476,15 +469,12 @@ static status_t MMC_ExecuteTuning(mmc_card_t *card)
                                    (uint32_t *)FSL_SDMMC_CARD_INTERNAL_BUFFER_ALIGN_ADDR(card->internalBuffer),
                                    blockSize);
 }
-#endif
 
 static status_t MMC_Transfer(mmc_card_t *card, sdmmchost_transfer_t *content, uint32_t retry)
 {
     assert(content != NULL);
     status_t error;
-#if SDMMCHOST_SUPPORT_HS200
     uint32_t retuningCount = 3U;
-#endif
 
     do
     {
@@ -495,16 +485,11 @@ static status_t MMC_Transfer(mmc_card_t *card, sdmmchost_transfer_t *content, ui
             break;
         }
 
-        if (((retry == 0U) && (content->data != NULL))
-#if SDMMCHOST_SUPPORT_HS200
-            || (error == kStatus_SDMMC_ReTuningRequest)
-#endif
-        )
+        if (((retry == 0U) && (content->data != NULL)) || (error == kStatus_SDMMC_ReTuningRequest))
         {
             /* abort previous transfer firstly */
             (void)MMC_StopTransmission(card);
 
-#if SDMMCHOST_SUPPORT_HS200
             if (card->busTiming == kMMC_HighSpeed200Timing)
             {
                 if (--retuningCount == 0U)
@@ -524,7 +509,6 @@ static status_t MMC_Transfer(mmc_card_t *card, sdmmchost_transfer_t *content, ui
                     continue;
                 }
             }
-#endif
         }
 
         if (retry != 0U)
@@ -547,6 +531,7 @@ static status_t MMC_SendStatus(mmc_card_t *card, uint32_t *status)
     status_t error               = kStatus_Success;
     sdmmchost_transfer_t content = {0};
     sdmmchost_cmd_t command      = {0};
+    uint32_t retry               = 10;
 
     command.index        = (uint32_t)kSDMMC_SendStatus;
     command.argument     = card->relativeAddress << 16U;
@@ -555,86 +540,86 @@ static status_t MMC_SendStatus(mmc_card_t *card, uint32_t *status)
     content.command = &command;
     content.data    = NULL;
 
-    error = MMC_Transfer(card, &content, 2U);
-    if (kStatus_Success != error)
+    while (retry != 0U)
     {
-        return kStatus_SDMMC_TransferFailed;
-    }
-
-    *status = command.response[0U];
-
-    return kStatus_Success;
-}
-
-static status_t MMC_WaitWriteComplete(mmc_card_t *card)
-{
-    assert(card != NULL);
-
-    uint32_t status = 0U;
-    uint32_t retry  = MMC_CMD13_RETRY_TIMES;
-
-    do
-    {
-        if (kStatus_Success != MMC_SendStatus(card, &status))
+        error = MMC_Transfer(card, &content, 2U);
+        if ((--retry == 0U) && (error != kStatus_Success))
         {
             return kStatus_SDMMC_TransferFailed;
         }
 
-        /* check the response error */
-        if (0U != (status & (SDMMC_R1_ALL_ERROR_FLAG | SDMMC_MASK(kSDMMC_R1SwitchErrorFlag))))
+        if (kStatus_Success == error)
         {
-            return kStatus_SDMMC_WaitWriteCompleteFailed;
+            break;
         }
+    }
 
-        if ((0U != (status & SDMMC_MASK(kSDMMC_R1ReadyForDataFlag))) &&
-            (SDMMC_R1_CURRENT_STATE(status) != (uint32_t)kSDMMC_R1StateProgram))
-        {
-            return kStatus_Success;
-        }
+    *status = command.response[0U];
 
-        retry--;
-
-    } while (retry != 0U);
-
-    SDMMC_LOG("\r\nError: CMD13 retry timeout.");
-
-    return kStatus_SDMMC_WaitWriteCompleteFailed;
+    return error;
 }
 
-static status_t MMC_PollingCardStatusBusy(mmc_card_t *card, bool sendStatusOnly, uint32_t timeout)
+status_t MMC_PollingCardStatusBusy(mmc_card_t *card, bool checkStatus, uint32_t timeoutMs)
 {
     assert(card != NULL);
 
-    uint32_t statusTimeout = timeout;
-    bool dat0Busy          = false;
+    uint32_t statusTimeoutUs = timeoutMs * 1000U;
+    bool cardBusy            = false;
+    status_t error           = kStatus_SDMMC_CardStatusBusy;
+    uint32_t status          = 0U;
 
-    /* Wait for the card write process complete because of that card read process and write process use one buffer. */
-    if (kStatus_Success != MMC_WaitWriteComplete(card))
+    do
     {
-        return kStatus_SDMMC_WaitWriteCompleteFailed;
-    }
+        cardBusy = SDMMCHOST_IsCardBusy(card->host);
 
-    if (!sendStatusOnly)
-    {
-        do
+        if (cardBusy == false)
         {
-            dat0Busy = SDMMCHOST_IsCardBusy(card->host);
-            if (dat0Busy)
+            if (checkStatus)
             {
-                if (statusTimeout == 0U)
+                error = MMC_SendStatus(card, &status);
+                if (kStatus_Success == error)
                 {
-                    return kStatus_SDMMC_PollingCardIdleFailed;
+                    /* check the response error */
+                    if (0U != (status & (SDMMC_R1_ALL_ERROR_FLAG | SDMMC_MASK(kSDMMC_R1SwitchErrorFlag))))
+                    {
+                        SDMMC_LOG("\r\nError: CMD13 report switch error %x.", status);
+
+                        error = kStatus_SDMMC_SwitchFailed;
+                    }
+                    else if ((0U != (status & SDMMC_MASK(kSDMMC_R1ReadyForDataFlag))) &&
+                             (SDMMC_R1_CURRENT_STATE(status) != (uint32_t)kSDMMC_R1StateProgram))
+                    {
+                        error = kStatus_SDMMC_CardStatusIdle;
+                        break;
+                    }
+                    else
+                    {
+                        SDMMC_LOG("\r\nWarning: CMD13 report busy %x.", status);
+                        error = kStatus_SDMMC_CardStatusBusy;
+                    }
                 }
                 else
                 {
-                    SDMMC_OSADelay(1U);
-                    statusTimeout--;
+                    error = kStatus_SDMMC_TransferFailed;
+                    break;
                 }
             }
-        } while (dat0Busy);
-    }
+            else
+            {
+                error = kStatus_SDMMC_CardStatusIdle;
+                break;
+            }
+        }
 
-    return kStatus_Success;
+        if (statusTimeoutUs != 0U)
+        {
+            /* Delay 125us to throttle the polling rate */
+            statusTimeoutUs -= SDMMC_OSADelayUs(125U);
+        }
+
+    } while (statusTimeoutUs != 0U);
+
+    return error;
 }
 
 static status_t MMC_StopTransmission(mmc_card_t *card)
@@ -643,6 +628,7 @@ static status_t MMC_StopTransmission(mmc_card_t *card)
 
     sdmmchost_transfer_t content = {0};
     sdmmchost_cmd_t command      = {0};
+    status_t error               = kStatus_Success;
 
     command.index              = (uint32_t)kSDMMC_StopTransmission;
     command.argument           = 0U;
@@ -652,7 +638,8 @@ static status_t MMC_StopTransmission(mmc_card_t *card)
 
     content.command = &command;
     content.data    = NULL;
-    if (kStatus_Success != SDMMCHOST_TransferFunction(card->host, &content))
+    error           = SDMMCHOST_TransferFunction(card->host, &content);
+    if (kStatus_Success != error)
     {
         return kStatus_SDMMC_TransferFailed;
     }
@@ -718,6 +705,7 @@ static status_t MMC_SetRelativeAddress(mmc_card_t *card)
 
     sdmmchost_cmd_t command      = {0};
     sdmmchost_transfer_t content = {0};
+    status_t error               = kStatus_Success;
 
     /* Send CMD3 with a chosen relative address, with value greater than 1 */
     command.index        = (uint32_t)kMMC_SetRelativeAddress;
@@ -726,8 +714,8 @@ static status_t MMC_SetRelativeAddress(mmc_card_t *card)
 
     content.command = &command;
     content.data    = NULL;
-    if ((kStatus_Success == SDMMCHOST_TransferFunction(card->host, &content)) ||
-        (0U == ((command.response[0U]) & SDMMC_R1_ALL_ERROR_FLAG)))
+    error           = SDMMCHOST_TransferFunction(card->host, &content);
+    if ((kStatus_Success == error) || (0U == ((command.response[0U]) & SDMMC_R1_ALL_ERROR_FLAG)))
     {
         card->relativeAddress = MMC_DEFAULT_RELATIVE_ADDRESS;
         return kStatus_Success;
@@ -875,7 +863,7 @@ static status_t MMC_SetMaxEraseUnitSize(mmc_card_t *card)
         extendedCsdconfig.ByteIndex  = (uint8_t)kMMC_ExtendedCsdIndexEraseGroupDefinition;
         extendedCsdconfig.ByteValue  = 0x01U; /* The high capacity erase unit size enable bit is bit 0 */
         extendedCsdconfig.commandSet = kMMC_CommandSetStandard;
-        if (kStatus_Success != MMC_SetExtendedCsdConfig(card, &extendedCsdconfig, true))
+        if (kStatus_Success != MMC_SetExtendedCsdConfig(card, &extendedCsdconfig, 0U))
         {
             return kStatus_SDMMC_ConfigureExtendedCsdFailed;
         }
@@ -884,7 +872,7 @@ static status_t MMC_SetMaxEraseUnitSize(mmc_card_t *card)
     return kStatus_Success;
 }
 
-static status_t MMC_SetExtendedCsdConfig(mmc_card_t *card, const mmc_extended_csd_config_t *config, bool sendStatusOnly)
+static status_t MMC_SetExtendedCsdConfig(mmc_card_t *card, const mmc_extended_csd_config_t *config, uint32_t timeout)
 {
     assert(card != NULL);
     assert(config != NULL);
@@ -893,12 +881,12 @@ static status_t MMC_SetExtendedCsdConfig(mmc_card_t *card, const mmc_extended_cs
     uint32_t parameter           = 0U;
     sdmmchost_cmd_t command      = {0};
     sdmmchost_transfer_t content = {0};
+    uint32_t timeoutMS           = timeout == 0U ? card->extendedCsd.genericCMD6Timeout : timeout;
 
     parameter |= ((uint32_t)(config->commandSet) << MMC_SWITCH_COMMAND_SET_SHIFT);
     parameter |= ((uint32_t)(config->ByteValue) << MMC_SWITCH_VALUE_SHIFT);
     parameter |= ((uint32_t)(config->ByteIndex) << MMC_SWITCH_BYTE_INDEX_SHIFT);
     parameter |= ((uint32_t)(config->accessMode) << MMC_SWITCH_ACCESS_MODE_SHIFT);
-
     command.index        = (uint32_t)kMMC_Switch;
     command.argument     = parameter;
     command.responseType = kCARD_ResponseTypeR1b; /* Send switch command to set the pointed byte in Extended CSD. */
@@ -913,7 +901,8 @@ static status_t MMC_SetExtendedCsdConfig(mmc_card_t *card, const mmc_extended_cs
     }
 
     /* Wait for the card write process complete because of that card read process and write process use one buffer. */
-    if (kStatus_Success != MMC_PollingCardStatusBusy(card, sendStatusOnly, card->extendedCsd.genericCMD6Timeout))
+    error = MMC_PollingCardStatusBusy(card, true, timeoutMS == 0U ? MMC_CARD_ACCESS_WAIT_IDLE_TIMEOUT : timeoutMS);
+    if (kStatus_SDMMC_CardStatusIdle != error)
     {
         return kStatus_SDMMC_PollingCardIdleFailed;
     }
@@ -952,6 +941,7 @@ static void MMC_DecodeExtendedCsd(mmc_card_t *card, uint32_t *rawExtendedCsd)
 
     extendedCsd->ioDriverStrength = buffer[197U];
 
+    extendedCsd->partitionSwitchTimeout                    = buffer[199U];
     extendedCsd->powerClass52MHz195V                       = buffer[200U];
     extendedCsd->powerClass26MHz195V                       = buffer[201U];
     extendedCsd->powerClass52MHz360V                       = buffer[202U];
@@ -1027,8 +1017,8 @@ static status_t MMC_SendExtendedCsd(mmc_card_t *card, uint8_t *targetAddr, uint3
     sdmmchost_cmd_t command      = {0};
     sdmmchost_transfer_t content = {0};
     sdmmchost_data_t data        = {0};
-    uint32_t i;
-    uint32_t *alignBuffer = (uint32_t *)FSL_SDMMC_CARD_INTERNAL_BUFFER_ALIGN_ADDR(card->internalBuffer);
+    uint32_t *alignBuffer        = (uint32_t *)FSL_SDMMC_CARD_INTERNAL_BUFFER_ALIGN_ADDR(card->internalBuffer);
+    status_t error               = kStatus_Success;
 
     /* Legacy mmc card , do not support the command */
     if ((card->csd.systemSpecificationVersion == (uint32_t)kMMC_SpecificationVersion3) &&
@@ -1049,37 +1039,11 @@ static status_t MMC_SendExtendedCsd(mmc_card_t *card, uint8_t *targetAddr, uint3
 
     content.command = &command;
     content.data    = &data;
-    if ((kStatus_Success == SDMMCHOST_TransferFunction(card->host, &content)) &&
-        (0U == (command.response[0U] & SDMMC_R1_ALL_ERROR_FLAG)))
+    error           = SDMMCHOST_TransferFunction(card->host, &content);
+    if ((kStatus_Success == error) && (0U == (command.response[0U] & SDMMC_R1_ALL_ERROR_FLAG)))
     {
-        /* The response is from bit 127:8 in R2, corresponding to command.response[3][31:0] to
-        command.response[0U][31:8] */
-        if ((uint32_t)card->host->hostController.config.endianMode == (uint32_t)kSDMMCHOST_EndianModeLittle)
-        {
-            /* Doesn't need to switch byte sequence when decode bytes as little endian sequence. */
-        }
-        else if ((uint32_t)card->host->hostController.config.endianMode == (uint32_t)kSDMMCHOST_EndianModeBig)
-        {
-            /* In big endian mode, the SD bus byte transferred first is the byte stored in highest position
-            in a word which cause 4 byte's sequence in a word is not consistent with their original sequence
-            from card. */
-            for (i = 0U; i < MMC_EXTENDED_CSD_BYTES / 4U; i++)
-            {
-                alignBuffer[i] = SWAP_WORD_BYTE_SEQUENCE(alignBuffer[i]);
-            }
-        }
-        else if ((uint32_t)card->host->hostController.config.endianMode == (uint32_t)kSDMMCHOST_EndianModeHalfWordBig)
-        {
-            for (i = 0U; i < MMC_EXTENDED_CSD_BYTES / 4U; i++)
-            {
-                alignBuffer[i] = SWAP_HALF_WROD_BYTE_SEQUENCE(alignBuffer[i]);
-            }
-        }
-        else
-        {
-            return kStatus_SDMMC_NotSupportYet;
-        }
-
+        SDMMCHOST_ConvertDataToLittleEndian(card->host, alignBuffer, MMC_EXTENDED_CSD_BYTES / 4U,
+                                            kSDMMC_DataPacketFormatLSBFirst);
         if (targetAddr != NULL)
         {
             *targetAddr = (uint8_t)alignBuffer[byteIndex];
@@ -1201,7 +1165,7 @@ static status_t MMC_SetPowerClass(mmc_card_t *card)
         extendedCsdconfig.ByteIndex  = (uint8_t)kMMC_ExtendedCsdIndexPowerClass;
         extendedCsdconfig.ByteValue  = powerClass;
         extendedCsdconfig.commandSet = kMMC_CommandSetStandard;
-        if (kStatus_Success != MMC_SetExtendedCsdConfig(card, &extendedCsdconfig, true))
+        if (kStatus_Success != MMC_SetExtendedCsdConfig(card, &extendedCsdconfig, 0U))
         {
             return kStatus_SDMMC_ConfigureExtendedCsdFailed;
         }
@@ -1221,6 +1185,7 @@ static status_t MMC_SendTestPattern(mmc_card_t *card, uint32_t blockSize, uint32
     sdmmchost_transfer_t content = {0};
     sdmmchost_cmd_t command      = {0};
     sdmmchost_data_t data        = {0};
+    status_t error               = kStatus_Success;
 
     command.index        = (uint32_t)kMMC_SendingBusTest;
     command.argument     = 0U;
@@ -1234,8 +1199,8 @@ static status_t MMC_SendTestPattern(mmc_card_t *card, uint32_t blockSize, uint32
 
     content.command = &command;
     content.data    = &data;
-    if ((kStatus_Success != SDMMCHOST_TransferFunction(card->host, &content)) ||
-        ((command.response[0U] & SDMMC_R1_ALL_ERROR_FLAG) != 0U))
+    error           = SDMMCHOST_TransferFunction(card->host, &content);
+    if ((kStatus_Success != error) || ((command.response[0U] & SDMMC_R1_ALL_ERROR_FLAG) != 0U))
     {
         return kStatus_SDMMC_TransferFailed;
     }
@@ -1252,6 +1217,7 @@ static status_t MMC_ReceiveTestPattern(mmc_card_t *card, uint32_t blockSize, uin
     sdmmchost_transfer_t content = {0};
     sdmmchost_cmd_t command      = {0};
     sdmmchost_data_t data        = {0};
+    status_t error               = kStatus_Success;
 
     command.index        = (uint32_t)kMMC_BusTestRead;
     command.responseType = kCARD_ResponseTypeR1;
@@ -1264,8 +1230,8 @@ static status_t MMC_ReceiveTestPattern(mmc_card_t *card, uint32_t blockSize, uin
 
     content.command = &command;
     content.data    = &data;
-    if ((kStatus_Success != SDMMCHOST_TransferFunction(card->host, &content)) ||
-        (((command.response[0U]) & SDMMC_R1_ALL_ERROR_FLAG) != 0U))
+    error           = SDMMCHOST_TransferFunction(card->host, &content);
+    if ((kStatus_Success != error) || (((command.response[0U]) & SDMMC_R1_ALL_ERROR_FLAG) != 0U))
     {
         return kStatus_SDMMC_TransferFailed;
     }
@@ -1310,34 +1276,9 @@ static status_t MMC_TestDataBusWidth(mmc_card_t *card, mmc_data_bus_width_t widt
             break;
     }
 
-    if ((uint32_t)card->host->hostController.config.endianMode == (uint32_t)kSDMMCHOST_EndianModeLittle)
-    {
-        /* Doesn't need to switch byte sequence when decodes bytes as little endian sequence. */
-    }
-    else if ((uint32_t)card->host->hostController.config.endianMode == (uint32_t)kSDMMCHOST_EndianModeBig)
-    {
-        /* In big endian mode, the byte transferred first is the byte stored in highest byte position in a word
-        which will cause the card receive the inverted byte sequence in a word in bus test procedure. So the
-        sequence of 4 bytes stored in a word should be converted. */
-        tempPattern[0] = SWAP_WORD_BYTE_SEQUENCE(tempPattern[0]);
-        xorMask        = SWAP_WORD_BYTE_SEQUENCE(xorMask);
-        xorResult      = SWAP_WORD_BYTE_SEQUENCE(xorResult);
-    }
-    else if ((uint32_t)card->host->hostController.config.endianMode == (uint32_t)kSDMMCHOST_EndianModeHalfWordBig)
-    {
-        /* In half word big endian mode, the byte transferred first is the lower byte in the higher half word.
-        0xAA55U should be converted to 0xAA550000U to set the 0x55 to be the first byte to transfer. */
-        tempPattern[0] = SWAP_HALF_WROD_BYTE_SEQUENCE(tempPattern[0]);
-        xorMask        = SWAP_HALF_WROD_BYTE_SEQUENCE(xorMask);
-        xorResult      = SWAP_HALF_WROD_BYTE_SEQUENCE(xorResult);
-        tempPattern[0] = SWAP_WORD_BYTE_SEQUENCE(tempPattern[0]);
-        xorMask        = SWAP_WORD_BYTE_SEQUENCE(xorMask);
-        xorResult      = SWAP_WORD_BYTE_SEQUENCE(xorResult);
-    }
-    else
-    {
-        return kStatus_SDMMC_NotSupportYet;
-    }
+    SDMMCHOST_ConvertDataToLittleEndian(card->host, &tempPattern[0], 1U, kSDMMC_DataPacketFormatLSBFirst);
+    SDMMCHOST_ConvertDataToLittleEndian(card->host, &xorMask, 1U, kSDMMC_DataPacketFormatLSBFirst);
+    SDMMCHOST_ConvertDataToLittleEndian(card->host, &xorResult, 1U, kSDMMC_DataPacketFormatLSBFirst);
 
     (void)MMC_SendTestPattern(card, blockSize, tempPattern);
     /* restore the send pattern */
@@ -1367,7 +1308,7 @@ static status_t MMC_SetDataBusWidth(mmc_card_t *card, mmc_data_bus_width_t width
     extendedCsdconfig.ByteIndex  = (uint8_t)kMMC_ExtendedCsdIndexBusWidth;
     extendedCsdconfig.ByteValue  = (uint8_t)width;
     extendedCsdconfig.commandSet = kMMC_CommandSetStandard;
-    if (kStatus_Success != MMC_SetExtendedCsdConfig(card, &extendedCsdconfig, true))
+    if (kStatus_Success != MMC_SetExtendedCsdConfig(card, &extendedCsdconfig, 0U))
     {
         return kStatus_SDMMC_ConfigureExtendedCsdFailed;
     }
@@ -1383,14 +1324,18 @@ static status_t MMC_SetMaxDataBusWidth(mmc_card_t *card, mmc_high_speed_timing_t
 
     status_t error = kStatus_Fail;
 
-    switch (card->busWidth)
+    do
     {
-        case kMMC_DataBusWidth1bit:
-#if SDMMCHOST_SUPPORT_DDR_MODE || SDMMCHOST_SUPPORT_HS400
-#if SDMMCHOST_SUPPORT_8_BIT_WIDTH
-        case kMMC_DataBusWidth8bitDDR:
-            /* Test and set the data bus width for card. */
-            if ((SDMMCHOST_INSTANCE_SUPPORT_8_BIT_WIDTH(card->host) != 0) &&
+        if (card->busWidth == kMMC_DataBusWidth1bit)
+        {
+            card->busWidth = kMMC_DataBusWidth8bitDDR;
+        }
+
+        if (card->busWidth == kMMC_DataBusWidth8bitDDR)
+        {
+            if (((card->host->capability &
+                  ((uint32_t)kSDMMCHOST_Support8BitDataWidth | (uint32_t)kSDMMCHOST_SupportDDRMode)) ==
+                 ((uint32_t)kSDMMCHOST_Support8BitDataWidth | (uint32_t)kSDMMCHOST_SupportDDRMode)) &&
                 (0U != (card->flags & ((uint32_t)kMMC_SupportHighSpeedDDR52MHZ180V300VFlag |
                                        (uint32_t)kMMC_SupportHighSpeedDDR52MHZ120VFlag))) &&
                 ((targetTiming == kMMC_HighSpeedTiming) || (targetTiming == kMMC_HighSpeed400Timing)) &&
@@ -1413,10 +1358,15 @@ static status_t MMC_SetMaxDataBusWidth(mmc_card_t *card, mmc_high_speed_timing_t
                     return kStatus_SDMMC_SetDataBusWidthFailed;
                 }
             }
-            SUPPRESS_FALL_THROUGH_WARNING();
-#endif
-        case kMMC_DataBusWidth4bitDDR:
-            if ((0U != (card->flags & ((uint32_t)kMMC_SupportHighSpeedDDR52MHZ180V300VFlag |
+            card->busWidth = kMMC_DataBusWidth4bitDDR;
+        }
+
+        if (card->busWidth == kMMC_DataBusWidth4bitDDR)
+        {
+            if (((card->host->capability &
+                  ((uint32_t)kSDMMCHOST_Support4BitDataWidth | (uint32_t)kSDMMCHOST_SupportDDRMode)) ==
+                 ((uint32_t)kSDMMCHOST_Support4BitDataWidth | (uint32_t)kSDMMCHOST_SupportDDRMode)) &&
+                (0U != (card->flags & ((uint32_t)kMMC_SupportHighSpeedDDR52MHZ180V300VFlag |
                                        (uint32_t)kMMC_SupportHighSpeedDDR52MHZ120VFlag))) &&
                 ((targetTiming == kMMC_HighSpeedTiming) || (targetTiming == kMMC_HighSpeed400Timing)))
             {
@@ -1431,12 +1381,12 @@ static status_t MMC_SetMaxDataBusWidth(mmc_card_t *card, mmc_high_speed_timing_t
                     }
                 }
             }
-            SUPPRESS_FALL_THROUGH_WARNING();
-#endif
+            card->busWidth = kMMC_DataBusWidth8bit;
+        }
 
-#if SDMMCHOST_SUPPORT_8_BIT_WIDTH
-        case kMMC_DataBusWidth8bit:
-            if ((SDMMCHOST_INSTANCE_SUPPORT_8_BIT_WIDTH(card->host) != 0) &&
+        if (card->busWidth == kMMC_DataBusWidth8bit)
+        {
+            if (((card->host->capability & (uint32_t)kSDMMCHOST_Support8BitDataWidth) != 0U) &&
                 ((targetTiming == kMMC_HighSpeedTiming) || (targetTiming == kMMC_HighSpeed200Timing)) &&
                 ((card->usrParam.capability & (uint32_t)kSDMMC_Support8BitWidth) != 0U))
             {
@@ -1451,11 +1401,13 @@ static status_t MMC_SetMaxDataBusWidth(mmc_card_t *card, mmc_high_speed_timing_t
                     }
                 }
             }
-            SUPPRESS_FALL_THROUGH_WARNING();
-#endif
+            card->busWidth = kMMC_DataBusWidth4bit;
+        }
 
-        case kMMC_DataBusWidth4bit:
-            if (((targetTiming == kMMC_HighSpeedTiming) || (targetTiming == kMMC_HighSpeed200Timing)))
+        if (card->busWidth == kMMC_DataBusWidth4bit)
+        {
+            if (((card->host->capability & (uint32_t)kSDMMCHOST_Support8BitDataWidth) != 0U) &&
+                ((targetTiming == kMMC_HighSpeedTiming) || (targetTiming == kMMC_HighSpeed200Timing)))
             {
                 SDMMCHOST_SetCardBusWidth(card->host, kSDMMC_BusWdith4Bit);
                 if (kStatus_Success == MMC_TestDataBusWidth(card, kMMC_DataBusWidth4bit))
@@ -1473,17 +1425,15 @@ static status_t MMC_SetMaxDataBusWidth(mmc_card_t *card, mmc_high_speed_timing_t
                     return kStatus_SDMMC_SetDataBusWidthFailed;
                 }
             }
-            SUPPRESS_FALL_THROUGH_WARNING();
+        }
 
-        default:
-            assert(false);
-            break;
-    }
+    } while (false);
 
     if (error == kStatus_Fail)
     {
         /* Card's data bus width will be default 1 bit mode. */
         SDMMCHOST_SetCardBusWidth(card->host, kSDMMC_BusWdith1Bit);
+        card->busWidth = kMMC_DataBusWidth1bit;
     }
 
     return kStatus_Success;
@@ -1511,7 +1461,7 @@ static status_t MMC_SwitchHSTiming(mmc_card_t *card, uint8_t timing, uint8_t dri
     extendedCsdconfig.ByteIndex  = (uint8_t)kMMC_ExtendedCsdIndexHighSpeedTiming;
     extendedCsdconfig.ByteValue  = hsTiming;
     extendedCsdconfig.commandSet = kMMC_CommandSetStandard;
-    if (kStatus_Success != MMC_SetExtendedCsdConfig(card, &extendedCsdconfig, false))
+    if (kStatus_Success != MMC_SetExtendedCsdConfig(card, &extendedCsdconfig, 0U))
     {
         return kStatus_SDMMC_ConfigureExtendedCsdFailed;
     }
@@ -1559,22 +1509,21 @@ static status_t MMC_SwitchToHighSpeed(mmc_card_t *card)
         return kStatus_SDMMC_SetDataBusWidthFailed;
     }
 
-#if SDMMCHOST_SUPPORT_DDR_MODE
     if ((card->busWidth == kMMC_DataBusWidth4bitDDR) || (card->busWidth == kMMC_DataBusWidth8bitDDR))
     {
         SDMMCHOST_EnableDDRMode(card->host, true, 0U);
     }
-#endif
 
     card->busTiming = kMMC_HighSpeedTiming;
 
     return kStatus_Success;
 }
 
-#if SDMMCHOST_SUPPORT_HS200
 static status_t MMC_SwitchToHS200(mmc_card_t *card, uint32_t freq)
 {
     assert(card != NULL);
+
+    status_t error = kStatus_Fail;
 
     if ((card->hostVoltageWindowVCCQ != kMMC_VoltageWindow170to195) &&
         (card->hostVoltageWindowVCCQ != kMMC_VoltageWindow120))
@@ -1609,22 +1558,22 @@ static status_t MMC_SwitchToHS200(mmc_card_t *card, uint32_t freq)
 
     card->busTiming = kMMC_HighSpeed200Timing;
 
-    if (kStatus_Success != MMC_WaitWriteComplete(card))
+    error = MMC_PollingCardStatusBusy(card, true, MMC_CARD_ACCESS_WAIT_IDLE_TIMEOUT);
+    if (kStatus_SDMMC_CardStatusIdle != error)
     {
-        return kStatus_SDMMC_WaitWriteCompleteFailed;
+        return kStatus_SDMMC_PollingCardIdleFailed;
     }
 
     return kStatus_Success;
 }
-#endif
 
-#if SDMMCHOST_SUPPORT_HS400
 static status_t MMC_SwitchToHS400(mmc_card_t *card)
 {
     assert(card != NULL);
 
     uint32_t status    = 0U;
     uint32_t hs400Freq = FSL_SDMMC_CARD_MAX_BUS_FREQ(card->usrParam.maxFreq, MMC_CLOCK_HS400);
+    status_t error     = kStatus_Fail;
 
     if ((card->hostVoltageWindowVCCQ != kMMC_VoltageWindow170to195) &&
         (card->hostVoltageWindowVCCQ != kMMC_VoltageWindow120))
@@ -1641,9 +1590,10 @@ static status_t MMC_SwitchToHS400(mmc_card_t *card)
         (card->host->hostController.sourceClock_Hz % MMC_CLOCK_HS400 != 0U))
     {
         hs400Freq = card->host->hostController.sourceClock_Hz /
-                    (card->host->hostController.sourceClock_Hz / MMC_CLOCK_HS400 + 1);
+                    (card->host->hostController.sourceClock_Hz / MMC_CLOCK_HS400 + 1U);
     }
-
+    /* HS400 mode support 8 bit data bus only */
+    card->busWidth = kMMC_DataBusWidth8bit;
     /* switch to HS200 perform tuning */
     if (kStatus_Success != MMC_SwitchToHS200(card, hs400Freq / 2U))
     {
@@ -1662,20 +1612,21 @@ static status_t MMC_SwitchToHS400(mmc_card_t *card)
      * emmc status is in DATA state which will cause switch to High speed failed. when such issue happen, software will
      * try to use CMD12 to reset the emmc status to TRAN before switch to high speed for HS400.
      */
-    if (MMC_SendStatus(card, &status) != kStatus_Success)
+    error = MMC_SendStatus(card, &status);
+    if (error != kStatus_Success)
     {
         return kStatus_SDMMC_SwitchBusTimingFailed;
     }
 
-    if (SDMMC_R1_CURRENT_STATE(status) == kSDMMC_R1StateSendData)
+    if (SDMMC_R1_CURRENT_STATE(status) == (uint32_t)kSDMMC_R1StateSendData)
     {
         SDMMC_LOG("status uncorrect for switching to High speed timing, try use CMD12 to get back to TRAN state\r\n");
         /* try to get back to transfer state before switch to High speed */
-        MMC_StopTransmission(card);
+        (void)MMC_StopTransmission(card);
     }
 
     /*switch to high speed*/
-    if (kStatus_Success != MMC_SwitchHSTiming(card, kMMC_HighSpeedTiming, kMMC_DriverStrength0))
+    if (kStatus_Success != MMC_SwitchHSTiming(card, (uint8_t)kMMC_HighSpeedTiming, kMMC_DriverStrength0))
     {
         return kStatus_SDMMC_ConfigureExtendedCsdFailed;
     }
@@ -1695,7 +1646,7 @@ static status_t MMC_SwitchToHS400(mmc_card_t *card)
         return kStatus_SDMMC_SetDataBusWidthFailed;
     }
     /* switch to HS400 */
-    if (kStatus_Success != MMC_SwitchHSTiming(card, kMMC_HighSpeed400Timing, kMMC_DriverStrength0))
+    if (kStatus_Success != MMC_SwitchHSTiming(card, (uint8_t)kMMC_HighSpeed400Timing, kMMC_DriverStrength0))
     {
         return kStatus_SDMMC_SwitchBusTimingFailed;
     }
@@ -1715,13 +1666,10 @@ static status_t MMC_SwitchToHS400(mmc_card_t *card)
 
     return kStatus_Success;
 }
-#endif
 
 static status_t MMC_SelectBusTiming(mmc_card_t *card)
 {
     assert(card != NULL);
-
-    mmc_high_speed_timing_t targetTiming = card->busTiming;
 
     /* Legacy mmc card , do not support the command */
     if ((card->csd.systemSpecificationVersion == (uint8_t)kMMC_SpecificationVersion3) &&
@@ -1730,15 +1678,26 @@ static status_t MMC_SelectBusTiming(mmc_card_t *card)
         return kStatus_Success;
     }
 
-    switch (targetTiming)
+    do
     {
-        case kMMC_HighSpeedTimingNone:
-#if SDMMCHOST_SUPPORT_HS400
-        case kMMC_HighSpeed400Timing:
-            if ((SDMMCHOST_INSTANCE_SUPPORT_HS400(card->host) != 0) &&
+        if (card->busTiming == kMMC_HighSpeedTimingNone)
+        {
+            /* if timing not specified, probe card capability from HS400 mode */
+            card->busTiming = kMMC_HighSpeed400Timing;
+        }
+
+        if (card->busTiming == kMMC_EnhanceHighSpeed400Timing)
+        {
+            return kStatus_SDMMC_NotSupportYet;
+        }
+
+        if (card->busTiming == kMMC_HighSpeed400Timing)
+        {
+            if (((card->host->capability & (uint32_t)kSDMMCHOST_SupportHS400) != 0U) &&
                 ((card->hostVoltageWindowVCCQ == kMMC_VoltageWindow170to195) ||
                  (card->hostVoltageWindowVCCQ == kMMC_VoltageWindow120)) &&
-                (card->flags & (kMMC_SupportHS400DDR200MHZ180VFlag | kMMC_SupportHS400DDR200MHZ120VFlag)))
+                ((card->flags &
+                  ((uint32_t)kMMC_SupportHS400DDR200MHZ180VFlag | (uint32_t)kMMC_SupportHS400DDR200MHZ120VFlag)) != 0U))
             {
                 /* switch to HS400 */
                 if (kStatus_Success != MMC_SwitchToHS400(card))
@@ -1747,11 +1706,13 @@ static status_t MMC_SelectBusTiming(mmc_card_t *card)
                 }
                 break;
             }
-            SUPPRESS_FALL_THROUGH_WARNING();
-#endif
-#if SDMMCHOST_SUPPORT_HS200
-        case kMMC_HighSpeed200Timing:
-            if ((SDMMCHOST_INSTANCE_SUPPORT_HS200(card->host) != 0) &&
+
+            card->busTiming = kMMC_HighSpeed200Timing;
+        }
+
+        if (card->busTiming == kMMC_HighSpeed200Timing)
+        {
+            if (((card->host->capability & (uint32_t)kSDMMCHOST_SupportHS200) != 0U) &&
                 ((card->hostVoltageWindowVCCQ == kMMC_VoltageWindow170to195) ||
                  (card->hostVoltageWindowVCCQ == kMMC_VoltageWindow120)) &&
                 (0U != (card->flags &
@@ -1764,19 +1725,19 @@ static status_t MMC_SelectBusTiming(mmc_card_t *card)
                 }
                 break;
             }
-            SUPPRESS_FALL_THROUGH_WARNING();
-#endif
-        case kMMC_HighSpeedTiming:
+
+            card->busTiming = kMMC_HighSpeedTiming;
+        }
+
+        if (card->busTiming == kMMC_HighSpeedTiming)
+        {
             if (kStatus_Success != MMC_SwitchToHighSpeed(card))
             {
                 return kStatus_SDMMC_SwitchBusTimingFailed;
             }
             break;
-
-        default:
-            card->busTiming = kMMC_HighSpeedTimingNone;
-            break;
-    }
+        }
+    } while (false);
 
     return kStatus_Success;
 }
@@ -1812,6 +1773,7 @@ static status_t MMC_AllSendCid(mmc_card_t *card)
 
     sdmmchost_transfer_t content = {0};
     sdmmchost_cmd_t command      = {0};
+    status_t error               = kStatus_Success;
 
     command.index        = (uint32_t)kSDMMC_AllSendCid;
     command.argument     = 0U;
@@ -1819,7 +1781,8 @@ static status_t MMC_AllSendCid(mmc_card_t *card)
 
     content.command = &command;
     content.data    = NULL;
-    if (kStatus_Success == SDMMCHOST_TransferFunction(card->host, &content))
+    error           = SDMMCHOST_TransferFunction(card->host, &content);
+    if (kStatus_Success == error)
     {
         (void)memcpy(card->internalBuffer, (uint8_t *)command.response, 16U);
         MMC_DecodeCid(card, command.response);
@@ -1836,6 +1799,7 @@ static status_t MMC_SendCsd(mmc_card_t *card)
 
     sdmmchost_cmd_t command      = {0};
     sdmmchost_transfer_t content = {0};
+    status_t error               = kStatus_Success;
 
     command.index        = (uint32_t)kSDMMC_SendCsd;
     command.argument     = (card->relativeAddress << 16U);
@@ -1843,7 +1807,8 @@ static status_t MMC_SendCsd(mmc_card_t *card)
 
     content.command = &command;
     content.data    = NULL;
-    if (kStatus_Success == SDMMCHOST_TransferFunction(card->host, &content))
+    error           = SDMMCHOST_TransferFunction(card->host, &content);
+    if (kStatus_Success == error)
     {
         (void)memcpy(card->internalBuffer, (uint8_t *)command.response, 16U);
         /* The response is from bit 127:8 in R2, corresponding to command.response[3][31:0] to
@@ -1956,13 +1921,15 @@ static status_t MMC_Read(
     status_t error;
 
     if ((((card->flags & (uint32_t)kMMC_SupportHighCapacityFlag) != 0U) && (blockSize != 512U)) ||
-        (blockSize > card->blockSize) || (blockSize > SDMMCHOST_SUPPORT_MAX_BLOCK_LENGTH) || (0U != (blockSize % 4U)))
+        (blockSize > card->blockSize) || (blockSize > card->host->maxBlockSize) || (0U != (blockSize % 4U)))
     {
         return kStatus_SDMMC_CardNotSupport;
     }
 
-    if (kStatus_Success != MMC_PollingCardStatusBusy(card, true, MMC_CARD_ACCESS_WAIT_IDLE_TIMEOUT))
+    error = MMC_PollingCardStatusBusy(card, true, MMC_CARD_ACCESS_WAIT_IDLE_TIMEOUT);
+    if (kStatus_SDMMC_CardStatusIdle != error)
     {
+        SDMMC_LOG("Error : read failed with wrong card status\r\n");
         return kStatus_SDMMC_PollingCardIdleFailed;
     }
 
@@ -1977,8 +1944,9 @@ static status_t MMC_Read(
     }
     else
     {
-        if ((!(data.enableAutoCommand12)) && (card->enablePreDefinedBlockCount))
+        if (card->enablePreDefinedBlockCount)
         {
+            data.enableAutoCommand12 = false;
             /* If enabled the pre-define count read/write feature of the card, need to set block count firstly. */
             if (kStatus_Success != MMC_SetBlockCount(card, blockCount))
             {
@@ -2033,14 +2001,16 @@ static status_t MMC_Write(
 
     /* Check address range */
     if ((((card->flags & (uint32_t)kMMC_SupportHighCapacityFlag) != 0U) && (blockSize != 512U)) ||
-        (blockSize > card->blockSize) || (blockSize > SDMMCHOST_SUPPORT_MAX_BLOCK_LENGTH) || (0U != (blockSize % 4U)))
+        (blockSize > card->blockSize) || (blockSize > card->host->maxBlockSize) || (0U != (blockSize % 4U)))
     {
         return kStatus_SDMMC_CardNotSupport;
     }
 
-    /* Wait for the card write process complete */
-    if (kStatus_Success != MMC_PollingCardStatusBusy(card, false, MMC_CARD_ACCESS_WAIT_IDLE_TIMEOUT))
+    /* send CMD13 to make sure card is ready for data */
+    error = MMC_PollingCardStatusBusy(card, true, MMC_CARD_ACCESS_WAIT_IDLE_TIMEOUT);
+    if (kStatus_SDMMC_CardStatusIdle != error)
     {
+        SDMMC_LOG("Error : write card busy with wrong card status\r\n");
         return kStatus_SDMMC_PollingCardIdleFailed;
     }
 
@@ -2056,8 +2026,9 @@ static status_t MMC_Write(
     }
     else
     {
-        if ((!(data.enableAutoCommand12)) && (card->enablePreDefinedBlockCount))
+        if (card->enablePreDefinedBlockCount)
         {
+            data.enableAutoCommand12 = false;
             /* If enabled the pre-define count read/write featue of the card, need to set block count firstly */
             if (kStatus_Success != MMC_SetBlockCount(card, blockCount))
             {
@@ -2124,7 +2095,7 @@ static status_t MMC_ValidateOperationVoltage(mmc_card_t *card, uint32_t *opcode)
     return status;
 }
 
-status_t MMC_CardInit(mmc_card_t *card)
+static status_t mmccard_init(mmc_card_t *card)
 {
     assert(card != NULL);
     assert((card->hostVoltageWindowVCC != kMMC_VoltageWindowNone) &&
@@ -2165,7 +2136,7 @@ status_t MMC_CardInit(mmc_card_t *card)
     }
 
     /* Get host's access mode. */
-    opcode |= (SDMMCHOST_SUPPORT_MAX_BLOCK_LENGTH >= FSL_SDMMC_DEFAULT_BLOCK_SIZE ?
+    opcode |= (card->host->maxBlockSize >= FSL_SDMMC_DEFAULT_BLOCK_SIZE ?
                    (uint32_t)kMMC_AccessModeSector << MMC_OCR_ACCESS_MODE_SHIFT :
                    (uint32_t)kMMC_AccessModeByte << MMC_OCR_ACCESS_MODE_SHIFT);
 
@@ -2251,20 +2222,43 @@ status_t MMC_CardInit(mmc_card_t *card)
     return kStatus_Success;
 }
 
+status_t MMC_CardInit(mmc_card_t *card)
+{
+    assert(card != NULL);
+
+    status_t error = kStatus_Success;
+    /* create mutex lock */
+    (void)SDMMC_OSAMutexCreate(&card->lock);
+    (void)SDMMC_OSAMutexLock(&card->lock, osaWaitForever_c);
+
+    error = mmccard_init(card);
+
+    (void)SDMMC_OSAMutexUnlock(&card->lock);
+
+    return error;
+}
+
 void MMC_CardDeinit(mmc_card_t *card)
 {
     assert(card != NULL);
 
+    (void)SDMMC_OSAMutexLock(&card->lock, osaWaitForever_c);
+
     (void)MMC_SelectCard(card, false);
+
+    (void)SDMMC_OSAMutexDestroy(&card->lock);
 }
 
 status_t MMC_HostInit(mmc_card_t *card)
 {
     assert(card != NULL);
 
-    if ((!card->isHostReady) && SDMMCHOST_Init(card->host) != kStatus_Success)
+    if (!card->isHostReady)
     {
-        return kStatus_Fail;
+        if (SDMMCHOST_Init(card->host) != kStatus_Success)
+        {
+            return kStatus_Fail;
+        }
     }
 
     /* set the host status flag, after the card re-plug in, don't need init host again */
@@ -2287,14 +2281,9 @@ void MMC_HostReset(SDMMCHOST_CONFIG *host)
     SDMMCHOST_Reset(host);
 }
 
-void MMC_PowerOnCard(SDMMCHOST_TYPE *base, const sdmmchost_pwr_card_t *pwr)
+void MMC_HostDoReset(mmc_card_t *card)
 {
-    SDMMCHOST_PowerOnCard(base, pwr);
-}
-
-void MMC_PowerOffCard(SDMMCHOST_TYPE *base, const sdmmchost_pwr_card_t *pwr)
-{
-    SDMMCHOST_PowerOffCard(base, pwr);
+    SDMMCHOST_Reset(card->host);
 }
 
 void MMC_SetCardPower(mmc_card_t *card, bool enable)
@@ -2307,24 +2296,35 @@ status_t MMC_Init(mmc_card_t *card)
 {
     assert(card != NULL);
 
+    status_t error = kStatus_Success;
+
     if (!card->isHostReady)
     {
         if (MMC_HostInit(card) != kStatus_Success)
         {
-            return kStatus_SDMMC_HostNotReady;
+            error = kStatus_SDMMC_HostNotReady;
         }
     }
     else
     {
         /* reset the host */
-        MMC_HostReset(card->host);
+        MMC_HostDoReset(card);
     }
 
-    /* reset card power */
-    MMC_SetCardPower(card, false);
-    MMC_SetCardPower(card, true);
+    if (error == kStatus_Success)
+    {
+        /* reset card power */
+        MMC_SetCardPower(card, false);
+        MMC_SetCardPower(card, true);
 
-    return MMC_CardInit(card);
+        error = MMC_CardInit(card);
+        if (error != kStatus_Success)
+        {
+            error = kStatus_SDMMC_CardInitFailed;
+        }
+    }
+
+    return error;
 }
 
 void MMC_Deinit(mmc_card_t *card)
@@ -2349,6 +2349,9 @@ status_t MMC_SelectPartition(mmc_card_t *card, mmc_access_partition_t partitionN
 
     uint8_t bootConfig;
     mmc_extended_csd_config_t extendedCsdconfig;
+    status_t error = kStatus_Success;
+
+    (void)SDMMC_OSAMutexLock(&card->lock, osaWaitForever_c);
 
     bootConfig = card->extendedCsd.partitionConfig;
     bootConfig &= ~(uint8_t)MMC_PARTITION_CONFIG_PARTITION_ACCESS_MASK;
@@ -2358,16 +2361,21 @@ status_t MMC_SelectPartition(mmc_card_t *card, mmc_access_partition_t partitionN
     extendedCsdconfig.ByteIndex  = (uint8_t)kMMC_ExtendedCsdIndexPartitionConfig;
     extendedCsdconfig.ByteValue  = bootConfig;
     extendedCsdconfig.commandSet = kMMC_CommandSetStandard;
-    if (kStatus_Success != MMC_SetExtendedCsdConfig(card, &extendedCsdconfig, true))
+    if (kStatus_Success !=
+        MMC_SetExtendedCsdConfig(card, &extendedCsdconfig, (uint32_t)card->extendedCsd.partitionSwitchTimeout * 10U))
     {
-        return kStatus_SDMMC_ConfigureExtendedCsdFailed;
+        error = kStatus_SDMMC_ConfigureExtendedCsdFailed;
+    }
+    else
+    {
+        /* Save current configuration. */
+        card->extendedCsd.partitionConfig = bootConfig;
+        card->currentPartition            = partitionNumber;
     }
 
-    /* Save current configuration. */
-    card->extendedCsd.partitionConfig = bootConfig;
-    card->currentPartition            = partitionNumber;
+    (void)SDMMC_OSAMutexUnlock(&card->lock);
 
-    return kStatus_Success;
+    return error;
 }
 
 status_t MMC_ReadBlocks(mmc_card_t *card, uint8_t *buffer, uint32_t startBlock, uint32_t blockCount)
@@ -2384,54 +2392,61 @@ status_t MMC_ReadBlocks(mmc_card_t *card, uint8_t *buffer, uint32_t startBlock, 
     uint8_t *alignBuffer = (uint8_t *)FSL_SDMMC_CARD_INTERNAL_BUFFER_ALIGN_ADDR(card->internalBuffer);
     status_t error       = kStatus_Success;
 
+    (void)SDMMC_OSAMutexLock(&card->lock, osaWaitForever_c);
+
     blockLeft = blockCount;
     blockDone = 0U;
     error     = MMC_CheckBlockRange(card, startBlock, blockCount);
     if (kStatus_Success != error)
     {
-        return kStatus_InvalidArgument;
+        error = kStatus_InvalidArgument;
     }
-
-    while (blockLeft != 0U)
+    else
     {
-        nextBuffer = (uint8_t *)((uint32_t)buffer + blockDone * FSL_SDMMC_DEFAULT_BLOCK_SIZE);
-        if (!card->noInteralAlign && (!dataAddrAlign || ((((uint32_t)nextBuffer) & (sizeof(uint32_t) - 1U)) != 0U)))
+        while (blockLeft != 0U)
         {
-            blockLeft--;
-            blockCountOneTime = 1U;
-            (void)memset(alignBuffer, 0, FSL_SDMMC_DEFAULT_BLOCK_SIZE);
-            dataAddrAlign = false;
-        }
-        else
-        {
-            if (blockLeft > SDMMCHOST_SUPPORT_MAX_BLOCK_COUNT)
+            nextBuffer = (uint8_t *)((uint32_t)buffer + blockDone * FSL_SDMMC_DEFAULT_BLOCK_SIZE);
+            if (!card->noInteralAlign && (!dataAddrAlign || ((((uint32_t)nextBuffer) & (sizeof(uint32_t) - 1U)) != 0U)))
             {
-                blockLeft         = (blockLeft - SDMMCHOST_SUPPORT_MAX_BLOCK_COUNT);
-                blockCountOneTime = SDMMCHOST_SUPPORT_MAX_BLOCK_COUNT;
+                blockLeft--;
+                blockCountOneTime = 1U;
+                (void)memset(alignBuffer, 0, FSL_SDMMC_DEFAULT_BLOCK_SIZE);
+                dataAddrAlign = false;
             }
             else
             {
-                blockCountOneTime = blockLeft;
-                blockLeft         = 0U;
+                if (blockLeft > card->host->maxBlockCount)
+                {
+                    blockLeft         = (blockLeft - card->host->maxBlockCount);
+                    blockCountOneTime = card->host->maxBlockCount;
+                }
+                else
+                {
+                    blockCountOneTime = blockLeft;
+                    blockLeft         = 0U;
+                }
             }
-        }
 
-        error = MMC_Read(card, dataAddrAlign ? nextBuffer : (uint8_t *)alignBuffer, (startBlock + blockDone),
-                         FSL_SDMMC_DEFAULT_BLOCK_SIZE, blockCountOneTime);
-        if (kStatus_Success != error)
-        {
-            return kStatus_SDMMC_TransferFailed;
-        }
+            error = MMC_Read(card, dataAddrAlign ? nextBuffer : (uint8_t *)alignBuffer, (startBlock + blockDone),
+                             FSL_SDMMC_DEFAULT_BLOCK_SIZE, blockCountOneTime);
+            if (kStatus_Success != error)
+            {
+                error = kStatus_SDMMC_TransferFailed;
+                break;
+            }
 
-        blockDone += blockCountOneTime;
+            blockDone += blockCountOneTime;
 
-        if (!card->noInteralAlign && (!dataAddrAlign))
-        {
-            (void)memcpy(nextBuffer, alignBuffer, FSL_SDMMC_DEFAULT_BLOCK_SIZE);
+            if (!card->noInteralAlign && (!dataAddrAlign))
+            {
+                (void)memcpy(nextBuffer, alignBuffer, FSL_SDMMC_DEFAULT_BLOCK_SIZE);
+            }
         }
     }
 
-    return kStatus_Success;
+    (void)SDMMC_OSAMutexUnlock(&card->lock);
+
+    return error;
 }
 
 status_t MMC_WriteBlocks(mmc_card_t *card, const uint8_t *buffer, uint32_t startBlock, uint32_t blockCount)
@@ -2448,53 +2463,60 @@ status_t MMC_WriteBlocks(mmc_card_t *card, const uint8_t *buffer, uint32_t start
     uint8_t *alignBuffer = (uint8_t *)FSL_SDMMC_CARD_INTERNAL_BUFFER_ALIGN_ADDR(card->internalBuffer);
     status_t error       = kStatus_Success;
 
+    (void)SDMMC_OSAMutexLock(&card->lock, osaWaitForever_c);
+
     blockLeft = blockCount;
     blockDone = 0U;
 
     error = MMC_CheckBlockRange(card, startBlock, blockCount);
     if (kStatus_Success != error)
     {
-        return kStatus_InvalidArgument;
+        error = kStatus_InvalidArgument;
     }
-
-    while (blockLeft != 0U)
+    else
     {
-        nextBuffer = (uint8_t *)((uint32_t)buffer + blockDone * FSL_SDMMC_DEFAULT_BLOCK_SIZE);
-        if (!card->noInteralAlign && (!dataAddrAlign || (0U != (((uint32_t)nextBuffer) & (sizeof(uint32_t) - 1U)))))
+        while (blockLeft != 0U)
         {
-            blockLeft--;
-            blockCountOneTime = 1U;
-            (void)memcpy(alignBuffer, nextBuffer, FSL_SDMMC_DEFAULT_BLOCK_SIZE);
-            dataAddrAlign = false;
-        }
-        else
-        {
-            if (blockLeft > SDMMCHOST_SUPPORT_MAX_BLOCK_COUNT)
+            nextBuffer = (uint8_t *)((uint32_t)buffer + blockDone * FSL_SDMMC_DEFAULT_BLOCK_SIZE);
+            if (!card->noInteralAlign && (!dataAddrAlign || (0U != (((uint32_t)nextBuffer) & (sizeof(uint32_t) - 1U)))))
             {
-                blockLeft         = (blockLeft - SDMMCHOST_SUPPORT_MAX_BLOCK_COUNT);
-                blockCountOneTime = SDMMCHOST_SUPPORT_MAX_BLOCK_COUNT;
+                blockLeft--;
+                blockCountOneTime = 1U;
+                (void)memcpy(alignBuffer, nextBuffer, FSL_SDMMC_DEFAULT_BLOCK_SIZE);
+                dataAddrAlign = false;
             }
             else
             {
-                blockCountOneTime = blockLeft;
-                blockLeft         = 0U;
+                if (blockLeft > card->host->maxBlockCount)
+                {
+                    blockLeft         = (blockLeft - card->host->maxBlockCount);
+                    blockCountOneTime = card->host->maxBlockCount;
+                }
+                else
+                {
+                    blockCountOneTime = blockLeft;
+                    blockLeft         = 0U;
+                }
             }
-        }
-        error = MMC_Write(card, dataAddrAlign ? nextBuffer : (uint8_t *)alignBuffer, (startBlock + blockDone),
-                          FSL_SDMMC_DEFAULT_BLOCK_SIZE, blockCountOneTime);
-        if (kStatus_Success != error)
-        {
-            return kStatus_SDMMC_TransferFailed;
-        }
+            error = MMC_Write(card, dataAddrAlign ? nextBuffer : (uint8_t *)alignBuffer, (startBlock + blockDone),
+                              FSL_SDMMC_DEFAULT_BLOCK_SIZE, blockCountOneTime);
+            if (kStatus_Success != error)
+            {
+                error = kStatus_SDMMC_TransferFailed;
+                break;
+            }
 
-        blockDone += blockCountOneTime;
-        if (!card->noInteralAlign && (!dataAddrAlign))
-        {
-            (void)memset(alignBuffer, 0, FSL_SDMMC_DEFAULT_BLOCK_SIZE);
+            blockDone += blockCountOneTime;
+            if (!card->noInteralAlign && (!dataAddrAlign))
+            {
+                (void)memset(alignBuffer, 0, FSL_SDMMC_DEFAULT_BLOCK_SIZE);
+            }
         }
     }
 
-    return kStatus_Success;
+    (void)SDMMC_OSAMutexUnlock(&card->lock);
+
+    return error;
 }
 
 status_t MMC_EnableCacheControl(mmc_card_t *card, bool enable)
@@ -2522,7 +2544,7 @@ status_t MMC_EnableCacheControl(mmc_card_t *card, bool enable)
     extendedCsdconfig.ByteIndex  = (uint8_t)kMMC_ExtendedCsdIndexCacheControl;
     extendedCsdconfig.ByteValue  = cacheCtrl;
     extendedCsdconfig.commandSet = kMMC_CommandSetStandard;
-    if (kStatus_Success != MMC_SetExtendedCsdConfig(card, &extendedCsdconfig, false))
+    if (kStatus_Success != MMC_SetExtendedCsdConfig(card, &extendedCsdconfig, 0U))
     {
         SDMMC_LOG("cache enabled failed\r\n");
         return kStatus_SDMMC_ConfigureExtendedCsdFailed;
@@ -2538,66 +2560,97 @@ status_t MMC_FlushCache(mmc_card_t *card)
     assert(card != NULL);
 
     mmc_extended_csd_config_t extendedCsdconfig;
+    status_t error = kStatus_Success;
 
     /* check the target driver strength support or not */
     if ((card->extendedCsd.cacheSize == 0U) || (card->extendedCsd.cacheCtrl != MMC_CACHE_CONTROL_ENABLE))
     {
         SDMMC_LOG("The cache is not supported or not enabled, please check\r\n");
+        error = kStatus_SDMMC_NotSupportYet;
+    }
+    else
+    {
+        /* Switch to high speed timing. */
+        extendedCsdconfig.accessMode = kMMC_ExtendedCsdAccessModeWriteBits;
+        extendedCsdconfig.ByteIndex  = (uint8_t)kMMC_ExtendedCsdIndexFlushCache;
+        extendedCsdconfig.ByteValue  = MMC_CACHE_TRIGGER_FLUSH;
+        extendedCsdconfig.commandSet = kMMC_CommandSetStandard;
+        if (kStatus_Success != MMC_SetExtendedCsdConfig(card, &extendedCsdconfig, 0U))
+        {
+            SDMMC_LOG("cache flush failed\r\n");
+            error = kStatus_SDMMC_ConfigureExtendedCsdFailed;
+        }
+    }
+
+    return error;
+}
+
+status_t MMC_SetSleepAwake(mmc_card_t *card, mmc_sleep_awake_t state)
+{
+    assert(card != NULL);
+    status_t error = kStatus_Success;
+
+    sdmmchost_cmd_t command      = {0};
+    sdmmchost_transfer_t content = {0};
+
+    if (card->extendedCsd.extendecCsdVersion <=
+        (uint32_t)kMMC_ExtendedCsdRevision13) /* V4.3 or above version card support boot mode */
+    {
         return kStatus_SDMMC_NotSupportYet;
     }
 
-    /* Switch to high speed timing. */
-    extendedCsdconfig.accessMode = kMMC_ExtendedCsdAccessModeWriteBits;
-    extendedCsdconfig.ByteIndex  = (uint8_t)kMMC_ExtendedCsdIndexFlushCache;
-    extendedCsdconfig.ByteValue  = MMC_CACHE_TRIGGER_FLUSH;
-    extendedCsdconfig.commandSet = kMMC_CommandSetStandard;
-    if (kStatus_Success != MMC_SetExtendedCsdConfig(card, &extendedCsdconfig, false))
+    error = MMC_PollingCardStatusBusy(card, false, MMC_CARD_ACCESS_WAIT_IDLE_TIMEOUT);
+    if (kStatus_SDMMC_CardStatusIdle != error)
     {
-        SDMMC_LOG("cache flush failed\r\n");
-        return kStatus_SDMMC_ConfigureExtendedCsdFailed;
+        return kStatus_SDMMC_PollingCardIdleFailed;
+    }
+
+    /* deselect the card before enter into sleep state */
+    if (state == kMMC_Sleep)
+    {
+        if (MMC_SelectCard(card, false) != kStatus_Success)
+        {
+            return kStatus_SDMMC_DeselectCardFailed;
+        }
+    }
+
+    command.index        = (uint32_t)kMMC_SleepAwake;
+    command.argument     = ((uint32_t)state << 15U) | (card->relativeAddress << 16U);
+    command.responseType = kCARD_ResponseTypeR1b;
+
+    content.command = &command;
+    content.data    = NULL;
+
+    error = MMC_Transfer(card, &content, 0U);
+    if (kStatus_Success != error)
+    {
+        return kStatus_SDMMC_TransferFailed;
+    }
+
+    /* Sleep awake timeout value 100ns * 2^sleepAwakeTimeout */
+    error = MMC_PollingCardStatusBusy(card, false, (1UL << card->extendedCsd.sleepAwakeTimeout) / 10000U);
+    if (kStatus_SDMMC_CardStatusIdle != error)
+    {
+        return kStatus_SDMMC_PollingCardIdleFailed;
+    }
+
+    /* select the card after wake up */
+    if (state == kMMC_Awake)
+    {
+        if (MMC_SelectCard(card, true) != kStatus_Success)
+        {
+            return kStatus_SDMMC_SelectCardFailed;
+        }
     }
 
     return kStatus_Success;
 }
 
-status_t MMC_EraseGroups(mmc_card_t *card, uint32_t startGroup, uint32_t endGroup)
+static status_t MMC_Erase(mmc_card_t *card, uint32_t startGroupAddress, uint32_t endGroupAddress)
 {
-    assert(card != NULL);
-
-    uint32_t startGroupAddress;
-    uint32_t endGroupAddress;
     sdmmchost_cmd_t command      = {0};
     sdmmchost_transfer_t content = {0};
     status_t error               = kStatus_Success;
-
-    error = MMC_CheckEraseGroupRange(card, startGroup, endGroup);
-    if (kStatus_Success != error)
-    {
-        return kStatus_InvalidArgument;
-    }
-
-    if (kStatus_Success != MMC_PollingCardStatusBusy(card, false, MMC_CARD_ACCESS_WAIT_IDLE_TIMEOUT))
-    {
-        return kStatus_SDMMC_PollingCardIdleFailed;
-    }
-
-    /* Calculate the start group address and end group address */
-    startGroupAddress = startGroup;
-    endGroupAddress   = endGroup;
-    if ((card->flags & (uint32_t)kMMC_SupportHighCapacityFlag) != 0U)
-    {
-        /* The implementation of a higher than 2GB of density of memory will not be backwards compatible with the
-        lower densities.First of all the address argument for higher than 2GB of density of memory is changed to
-        be sector address (512B sectors) instead of byte address */
-        startGroupAddress = (startGroupAddress * (card->eraseGroupBlocks));
-        endGroupAddress   = (endGroupAddress * (card->eraseGroupBlocks));
-    }
-    else
-    {
-        /* The address unit is byte when card capacity is lower than 2GB */
-        startGroupAddress = (startGroupAddress * (card->eraseGroupBlocks) * FSL_SDMMC_DEFAULT_BLOCK_SIZE);
-        endGroupAddress   = (endGroupAddress * (card->eraseGroupBlocks) * FSL_SDMMC_DEFAULT_BLOCK_SIZE);
-    }
 
     /* Set the start erase group address */
     command.index              = (uint32_t)kMMC_EraseGroupStart;
@@ -2642,6 +2695,78 @@ status_t MMC_EraseGroups(mmc_card_t *card, uint32_t startGroup, uint32_t endGrou
     return kStatus_Success;
 }
 
+status_t MMC_EraseGroups(mmc_card_t *card, uint32_t startGroup, uint32_t endGroup)
+{
+    assert(card != NULL);
+
+    uint32_t startGroupAddress;
+    uint32_t endGroupAddress;
+    status_t error        = kStatus_Success;
+    uint32_t eraseTimeout = MMC_CARD_ACCESS_WAIT_IDLE_TIMEOUT;
+
+    (void)SDMMC_OSAMutexLock(&card->lock, osaWaitForever_c);
+
+    error = MMC_CheckEraseGroupRange(card, startGroup, endGroup);
+    if (kStatus_Success != error)
+    {
+        error = kStatus_InvalidArgument;
+    }
+    else
+    {
+        error = MMC_PollingCardStatusBusy(card, true, 0U);
+        if (error != kStatus_SDMMC_CardStatusIdle)
+        {
+            error = kStatus_SDMMC_PollingCardIdleFailed;
+        }
+    }
+
+    if (error == kStatus_SDMMC_CardStatusIdle)
+    {
+        /* Calculate the start group address and end group address */
+        startGroupAddress = startGroup;
+        endGroupAddress   = endGroup;
+        if ((card->flags & (uint32_t)kMMC_SupportHighCapacityFlag) != 0U)
+        {
+            /* The implementation of a higher than 2GB of density of memory will not be backwards compatible with the
+            lower densities.First of all the address argument for higher than 2GB of density of memory is changed to
+            be sector address (512B sectors) instead of byte address */
+            startGroupAddress = (startGroupAddress * (card->eraseGroupBlocks));
+            endGroupAddress   = (endGroupAddress * (card->eraseGroupBlocks));
+        }
+        else
+        {
+            /* The address unit is byte when card capacity is lower than 2GB */
+            startGroupAddress = (startGroupAddress * (card->eraseGroupBlocks) * FSL_SDMMC_DEFAULT_BLOCK_SIZE);
+            endGroupAddress   = (endGroupAddress * (card->eraseGroupBlocks) * FSL_SDMMC_DEFAULT_BLOCK_SIZE);
+        }
+
+        error = MMC_Erase(card, startGroupAddress, endGroupAddress);
+        if (error == kStatus_Success)
+        {
+            if ((0U != (card->flags & (uint32_t)kMMC_SupportHighCapacityFlag)) &&
+                (card->extendedCsd.highCapacityEraseTimeout != 0U))
+            {
+                eraseTimeout =
+                    (uint32_t)card->extendedCsd.highCapacityEraseTimeout * 300U * (endGroup - startGroup + 1U);
+            }
+
+            error = MMC_PollingCardStatusBusy(card, true, eraseTimeout);
+            if (kStatus_SDMMC_CardStatusIdle != error)
+            {
+                error = kStatus_SDMMC_PollingCardIdleFailed;
+            }
+            else
+            {
+                error = kStatus_Success;
+            }
+        }
+    }
+
+    (void)SDMMC_OSAMutexUnlock(&card->lock);
+
+    return error;
+}
+
 status_t MMC_SetBootConfigWP(mmc_card_t *card, uint8_t wp)
 {
     assert(card != NULL);
@@ -2651,7 +2776,7 @@ status_t MMC_SetBootConfigWP(mmc_card_t *card, uint8_t wp)
     extendedCsdconfig.ByteIndex  = (uint8_t)kMMC_ExtendedCsdIndexBootConfigWP;
     extendedCsdconfig.ByteValue  = wp;
     extendedCsdconfig.commandSet = kMMC_CommandSetStandard;
-    if (kStatus_Success != MMC_SetExtendedCsdConfig(card, &extendedCsdconfig, true))
+    if (kStatus_Success != MMC_SetExtendedCsdConfig(card, &extendedCsdconfig, 0U))
     {
         return kStatus_SDMMC_ConfigureExtendedCsdFailed;
     }
@@ -2670,7 +2795,7 @@ status_t MMC_SetBootPartitionWP(mmc_card_t *card, mmc_boot_partition_wp_t bootPa
     extendedCsdconfig.ByteIndex  = (uint8_t)kMMC_ExtendedCsdIndexBootPartitionWP;
     extendedCsdconfig.ByteValue  = (uint8_t)bootPartitionWP;
     extendedCsdconfig.commandSet = kMMC_CommandSetStandard;
-    if (kStatus_Success != MMC_SetExtendedCsdConfig(card, &extendedCsdconfig, true))
+    if (kStatus_Success != MMC_SetExtendedCsdConfig(card, &extendedCsdconfig, 0U))
     {
         return kStatus_SDMMC_ConfigureExtendedCsdFailed;
     }
@@ -2706,7 +2831,7 @@ status_t MMC_SetBootConfig(mmc_card_t *card, const mmc_boot_config_t *config)
     extendedCsdconfig.ByteIndex  = (uint8_t)kMMC_ExtendedCsdIndexPartitionConfig;
     extendedCsdconfig.ByteValue  = bootParameter;
     extendedCsdconfig.commandSet = kMMC_CommandSetStandard;
-    if (kStatus_Success != MMC_SetExtendedCsdConfig(card, &extendedCsdconfig, true))
+    if (kStatus_Success != MMC_SetExtendedCsdConfig(card, &extendedCsdconfig, 0U))
     {
         return kStatus_SDMMC_ConfigureExtendedCsdFailed;
     }
@@ -2740,7 +2865,7 @@ status_t MMC_SetBootConfig(mmc_card_t *card, const mmc_boot_config_t *config)
     extendedCsdconfig.accessMode = kMMC_ExtendedCsdAccessModeWriteBits;
     extendedCsdconfig.ByteIndex  = (uint8_t)kMMC_ExtendedCsdIndexBootBusConditions;
     extendedCsdconfig.ByteValue  = bootParameter;
-    if (kStatus_Success != MMC_SetExtendedCsdConfig(card, &extendedCsdconfig, true))
+    if (kStatus_Success != MMC_SetExtendedCsdConfig(card, &extendedCsdconfig, 0U))
     {
         return kStatus_SDMMC_ConfigureBootFailed;
     }
@@ -2801,13 +2926,12 @@ status_t MMC_StartBoot(mmc_card_t *card,
     }
     (void)SDMMCHOST_SetCardClock(card->host, tempClock);
 
-#if SDMMCHOST_SUPPORT_DDR_MODE
-    if (mmcConfig->bootTimingMode == kMMC_BootModeDDRTiming)
+    if (((card->host->capability & (uint32_t)kSDMMCHOST_SupportDDRMode) != 0U) &&
+        (mmcConfig->bootTimingMode == kMMC_BootModeDDRTiming))
     {
         /* enable DDR mode */
         SDMMCHOST_EnableDDRMode(card->host, true, 0U);
     }
-#endif
 
     /* data bus remapping */
     if (mmcConfig->bootDataBusWidth == kMMC_DataBusWidth1bit)

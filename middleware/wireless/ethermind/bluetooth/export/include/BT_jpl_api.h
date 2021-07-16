@@ -19,6 +19,7 @@
 /* -------------------------------------------- Header File Inclusion */
 #include "BT_common.h"
 #include "sbc_api.h"
+
 /**
  * \addtogroup bt_utils Utilities
  * \{
@@ -30,6 +31,26 @@
  *  module to the Application
  *  and other upper layers of the stack.
  */
+/* -------------------------------------------- Global Definitions */
+/**
+ * \defgroup jpl_events Events
+ * \{
+ * Describes Events for the module.
+ */
+/** JPL Event Codes */
+/**
+ * @name JPL Event Codes
+ *
+ * Constant Definitions for JPL Event Codes
+ */
+/*@{*/
+#define JPL_DATA_IND                            0x01U
+#define JPL_OVERFLOW_IND                        0x02U
+#define JPL_UNDERFLOW_IND                       0x03U
+#define JPL_STALE_PACKET_IND                    0x04U
+#define JPL_SILENCE_DATA_IND                    0x05U
+/*@}*/
+/** \} */
 /**
  * \defgroup jpl_defines Defines
  * \{
@@ -40,30 +61,15 @@
  * \{
  * Describes constants defined by the module.
  */
-
-/* -------------------------------------------- Global Definitions */
-/** JPL Event Codes */
-/**
- * @name JPL Event Codes
- *
- * Constant Definitions for JPL Event Codes
- */
-/*@{*/
-#define JPL_DATA_IND                            0x01
-#define JPL_OVERFLOW_IND                        0x02
-#define JPL_UNDERFLOW_IND                       0x03
-#define JPL_STALE_PACKET_IND                    0x04
-#define JPL_SILENCE_DATA_IND                    0x05
-/*@}*/
 /** Tolerance limit for switching from Silence to actual PCM data */
 #define JPL_TOLERANCE                           375
 /** \} */
-
+/** \} */
 /* -------------------------------------------- Structures/Data Types */
 /**
- * \defgroup jpl_structures Structures
+ * \defgroup jpl_appl_callback Application Callback
  * \{
- * Describes Structures defined by the module.
+ * Describes Application Callback defined by the module.
  */
 /**
  *  JPL_CB
@@ -90,8 +96,16 @@ typedef API_RESULT (* JPL_CB)
             /* IN */  UCHAR *    event_data,
             /* IN */  UINT16     event_datalen
         );
-
-
+/** \} */
+/**
+ * \addtogroup jpl_defines Defines
+ * \{
+ */
+/**
+ * \defgroup jpl_structures Structures
+ * \{
+ * Describes Structures defined by the module.
+ */
 /**
  *  JPL_PARAM
  *

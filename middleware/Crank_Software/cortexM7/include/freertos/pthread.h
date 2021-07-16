@@ -8,7 +8,7 @@
 #define GR_PTHREAD_H
 #include <time.h> 
 
-#if !defined(GRE_TARGET_TOOLCHAIN_mcuxpresso) && !defined(GRE_TARGET_TOOLCHAIN_sw4stm32)
+#if !(defined(GRE_TARGET_TOOLCHAIN_cube) || defined(GRE_TARGET_TOOLCHAIN_dassgcc) || defined(GRE_TARGET_TOOLCHAIN_mcuxpresso) || defined(GRE_TARGET_TOOLCHAIN_sw4stm32))
 
 struct _private_mutex;
 struct _private_mutex_attr;

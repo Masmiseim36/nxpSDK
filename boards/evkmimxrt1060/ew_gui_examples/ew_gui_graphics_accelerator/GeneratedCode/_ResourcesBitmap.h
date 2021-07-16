@@ -21,8 +21,8 @@
 * Please do not make any modifications of this file! The modifications are lost
 * when the file is generated again by Embedded Wizard Studio!
 *
-* Version  : 9.30
-* Date     : 14.02.2020  8:00:50
+* Version  : 10.0
+* Date     : 17.02.2021  8:00:50
 * Profile  : iMX_RT
 * Platform : NXP.iMX_RT.RGB565
 *
@@ -37,12 +37,12 @@
 #endif
 
 #include "ewrte.h"
-#if EW_RTE_VERSION != 0x0009001E
+#if EW_RTE_VERSION != 0x000A0000
   #error Wrong version of Embedded Wizard Runtime Environment.
 #endif
 
 #include "ewgfx.h"
-#if EW_GFX_VERSION != 0x0009001E
+#if EW_GFX_VERSION != 0x000A0000
   #error Wrong version of Embedded Wizard Graphics Engine.
 #endif
 
@@ -71,8 +71,8 @@ EW_DEFINE_FIELDS( ResourcesBitmap, CoreResource )
   EW_PROPERTY( FrameDelay,      XInt32 )
   EW_PROPERTY( NoOfFrames,      XInt32 )
   EW_PROPERTY( FrameSize,       XPoint )
-  EW_PROPERTY( Animated,        XBool )
-  EW_PROPERTY( Mutable,         XBool )
+  EW_VARIABLE( Mutable,         XBool )
+  EW_VARIABLE( Animated,        XBool )
 EW_END_OF_FIELDS( ResourcesBitmap )
 
 /* Virtual Method Table (VMT) for the class : 'Resources::Bitmap' */

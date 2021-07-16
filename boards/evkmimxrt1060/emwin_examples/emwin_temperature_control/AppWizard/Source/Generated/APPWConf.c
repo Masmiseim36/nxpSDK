@@ -3,7 +3,7 @@
 *        Solutions for real time microcontroller applications        *
 **********************************************************************
 *                                                                    *
-*        (c) 1996 - 2020  SEGGER Microcontroller GmbH                *
+*        (c) 1996 - 2021  SEGGER Microcontroller GmbH                *
 *                                                                    *
 *        Internet: www.segger.com    Support:  support@segger.com    *
 *                                                                    *
@@ -56,10 +56,24 @@ static unsigned _NumScreens = GUI_COUNTOF(_apRootList);
 */
 static unsigned _NumVars = 0;
 
+/*********************************************************************
+*
+*       Multibuffering
+*/
+static U8 _MultibufEnable = 1;
+
+/*********************************************************************
+*
+*       _apLang
+*/
 static const char * _apLang[] = {
   (const char *)acAPPW_Language_0,
 };
 
+/*********************************************************************
+*
+*       _TextInit
+*/
 static const APPW_TEXT_INIT _TextInit = {
   _apLang,
   GUI_COUNTOF(_apLang),
@@ -92,6 +106,7 @@ static void _InitText(void) {
 void APPW_X_Setup(void) {
   APPW_SetpfInitText(_InitText);
   APPW_X_FS_Init();
+  APPW_MULTIBUF_Enable(_MultibufEnable);
   APPW_SetData(_apRootList, _NumScreens, _aVarList, _NumVars);
 }
 

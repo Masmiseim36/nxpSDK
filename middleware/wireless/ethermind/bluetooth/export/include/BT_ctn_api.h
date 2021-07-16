@@ -40,7 +40,7 @@
  * Describes Constants defined by the module.
  */
 /* OBEX L2CAP PSM for local entities */
-#define CTN_OBEX_L2CAP_PSM                       0x8001
+#define CTN_OBEX_L2CAP_PSM                       0x8001U
 
 /* CTN Notification Callback Event types */
 /**
@@ -50,57 +50,57 @@
 /*@{*/
 #ifdef CTN_CCE
 
-#define CTN_CCE_CONNECT_CNF                      0x01
-#define CTN_CCE_DISCONNECT_CNF                   0x02
-#define CTN_CCE_TRANSPORT_CLOSE_CNF              0x03
-#define CTN_CCE_TRANSPORT_CLOSE_IND              0x04
-#define CTN_CCE_GET_LISTING_CNF                  0x05
-#define CTN_CCE_GET_OBJECT_CNF                   0x06
-#define CTN_CCE_SET_OBJECT_STATUS_CNF            0x07
-#define CTN_CCE_PUSH_OBJECT_CNF                  0x08
-#define CTN_CCE_FORWARD_OBJECT_CNF               0x09
-#define CTN_CCE_SET_NTF_REGISTRATION_CNF         0x0A
-#define CTN_CCE_GET_ACCOUNT_INFO_CNF             0x0B
-#define CTN_CCE_SYNC_ACCOUNT_CNF                 0x0C
-#define CTN_CCE_ABORT_CNF                        0x0D
-#define CTN_CCE_SYNC_INSTANCE_CNF                0x0E
+#define CTN_CCE_CONNECT_CNF                      0x01U
+#define CTN_CCE_DISCONNECT_CNF                   0x02U
+#define CTN_CCE_TRANSPORT_CLOSE_CNF              0x03U
+#define CTN_CCE_TRANSPORT_CLOSE_IND              0x04U
+#define CTN_CCE_GET_LISTING_CNF                  0x05U
+#define CTN_CCE_GET_OBJECT_CNF                   0x06U
+#define CTN_CCE_SET_OBJECT_STATUS_CNF            0x07U
+#define CTN_CCE_PUSH_OBJECT_CNF                  0x08U
+#define CTN_CCE_FORWARD_OBJECT_CNF               0x09U
+#define CTN_CCE_SET_NTF_REGISTRATION_CNF         0x0AU
+#define CTN_CCE_GET_ACCOUNT_INFO_CNF             0x0BU
+#define CTN_CCE_SYNC_ACCOUNT_CNF                 0x0CU
+#define CTN_CCE_ABORT_CNF                        0x0DU
+#define CTN_CCE_SYNC_INSTANCE_CNF                0x0EU
 
-#define CTN_CCE_NS_CONNECT_IND                   0x20
-#define CTN_CCE_NS_DISCONNECT_IND                0x21
-#define CTN_CCE_NS_TRANSPORT_CLOSE_IND           0x22
-#define CTN_CCE_NS_TRANSPORT_CLOSE_CNF           0x23
-#define CTN_CCE_NS_EVENT_REPORT_IND              0x24
+#define CTN_CCE_NS_CONNECT_IND                   0x20U
+#define CTN_CCE_NS_DISCONNECT_IND                0x21U
+#define CTN_CCE_NS_TRANSPORT_CLOSE_IND           0x22U
+#define CTN_CCE_NS_TRANSPORT_CLOSE_CNF           0x23U
+#define CTN_CCE_NS_EVENT_REPORT_IND              0x24U
 
 #endif /* CTN_CCE */
 
 #ifdef CTN_CSE
 
-#define CTN_CSE_CONNECT_IND                      0x31
-#define CTN_CSE_DISCONNECT_IND                   0x32
-#define CTN_CSE_TRANSPORT_CLOSE_IND              0x33
-#define CTN_CSE_TRANSPORT_CLOSE_CNF              0x34
-#define CTN_CSE_GET_LISTING_IND                  0x35
-#define CTN_CSE_GET_OBJECT_IND                   0x36
-#define CTN_CSE_SET_OBJECT_STATUS_IND            0x37
-#define CTN_CSE_PUSH_OBJECT_IND                  0x38
-#define CTN_CSE_SET_NTF_REGISTRATION_IND         0x39
-#define CTN_CSE_FORWARD_OBJECT_IND               0x3A
-#define CTN_CSE_GET_ACCOUNT_INFO_IND             0x3B
-#define CTN_CSE_SYNC_ACCOUNT_IND                 0x3C
-#define CTN_CSE_ABORT_IND                        0x3D
-#define CTN_CCE_SYNC_INSTANCE_IND                0x3E
+#define CTN_CSE_CONNECT_IND                      0x31U
+#define CTN_CSE_DISCONNECT_IND                   0x32U
+#define CTN_CSE_TRANSPORT_CLOSE_IND              0x33U
+#define CTN_CSE_TRANSPORT_CLOSE_CNF              0x34U
+#define CTN_CSE_GET_LISTING_IND                  0x35U
+#define CTN_CSE_GET_OBJECT_IND                   0x36U
+#define CTN_CSE_SET_OBJECT_STATUS_IND            0x37U
+#define CTN_CSE_PUSH_OBJECT_IND                  0x38U
+#define CTN_CSE_SET_NTF_REGISTRATION_IND         0x39U
+#define CTN_CSE_FORWARD_OBJECT_IND               0x3AU
+#define CTN_CSE_GET_ACCOUNT_INFO_IND             0x3BU
+#define CTN_CSE_SYNC_ACCOUNT_IND                 0x3CU
+#define CTN_CSE_ABORT_IND                        0x3DU
+#define CTN_CCE_SYNC_INSTANCE_IND                0x3EU
 
-#define CTN_CSE_NS_CONNECT_CNF                   0x50
-#define CTN_CSE_NS_DISCONNECT_CNF                0x51
-#define CTN_CSE_NS_TRANSPORT_CLOSE_CNF           0x52
-#define CTN_CSE_NS_TRANSPORT_CLOSE_IND           0x53
-#define CTN_CSE_NS_SEND_EVENT_CNF                0x54
+#define CTN_CSE_NS_CONNECT_CNF                   0x50U
+#define CTN_CSE_NS_DISCONNECT_CNF                0x51U
+#define CTN_CSE_NS_TRANSPORT_CLOSE_CNF           0x52U
+#define CTN_CSE_NS_TRANSPORT_CLOSE_IND           0x53U
+#define CTN_CSE_NS_SEND_EVENT_CNF                0x54U
 
 #endif /* CTN_CSE */
 /*@}*/
-#define CTN_EVENT_INVALID                        0xFF
-#define CTN_ENTITY_INVALID                       0xFF
-#define CTN_INVALID_OBEX_CONNECTION_ID           0xFFFFFFFF
+#define CTN_EVENT_INVALID                        0xFFU
+#define CTN_ENTITY_INVALID                       0xFFU
+#define CTN_INVALID_OBEX_CONNECTION_ID           0xFFFFFFFFU
 
 /* CTN OBEX Response Codes */
 /**
@@ -124,13 +124,13 @@
 /*@}*/
 /* CTN Services OBEX Target header UUID values */
 #define CTN_CAS_OBEX_TARGET_HDR_UUID            \
-        0x115F1EC2292211E4B65DA6C5E4D22FB7
+        0x115F1EC2292211E4B65DA6C5E4D22FB7U
 
 #define CTN_CNS_OBEX_TARGET_HDR_UUID            \
-        0x4FD68D34292211E4B65DA6C5E4D22FB7
+        0x4FD68D34292211E4B65DA6C5E4D22FB7U
 
 /** CTN Target Header Size */
-#define CTN_TARGET_HDR_SIZE                      0x10 /* 16 */
+#define CTN_TARGET_HDR_SIZE                      0x10U /* 16 */
 
 /* CTN Application Parameters header Tag IDs */
 /**
@@ -139,28 +139,28 @@
  *  Constant Definitions for CTN Application Parameters header Tag IDs
  */
 /*@{*/
-#define CTN_TAG_ID_MAXLISTCOUNT                  0x41  /* 2  Byte Length  */
-#define CTN_TAG_ID_LISTSTARTOFFSET               0x42  /* 2  Byte Length  */
-#define CTN_TAG_ID_NOTIFICATIONSTATUS            0x43  /* 1  Byte Length  */
-#define CTN_TAG_ID_INSTANCEID                    0x44  /* 1  Byte Length  */
-#define CTN_TAG_ID_LISTINGSIZE                   0x46  /* 2  Byte Length  */
-#define CTN_TAG_ID_ACOUSTICALARMSTATUS           0x01  /* 1  Byte Length  */
-#define CTN_TAG_ID_ATTACHMENT                    0x02  /* 1  Byte Length  */
-#define CTN_TAG_ID_SEND                          0x03  /* 1  Byte Length  */
-#define CTN_TAG_ID_FILTERPERIODBEGIN             0x04  /* Variable Length */
-#define CTN_TAG_ID_FILTERPERIODEND               0x05  /* Variable Length */
-#define CTN_TAG_ID_PARMETERMASK                  0x06  /* 4  Byte Length  */
-#define CTN_TAG_ID_STATUSINDICATOR               0x07  /* 1  Byte Length  */
-#define CTN_TAG_ID_STATUSVALUE                   0x08  /* 1  Byte Length  */
-#define CTN_TAG_ID_POSTPONEVAL                   0x09  /* 4  Byte Length  */
-#define CTN_TAG_ID_EMAILURI                      0x0A  /* Variable Length */
-#define CTN_TAG_ID_CSETIME                       0x0B  /* Variable Length */
-#define CTN_TAG_ID_RECURRENT                     0x0C  /* 1  Byte Length  */
-#define CTN_TAG_ID_ATTACHID                      0x0D  /* 1  Byte Length  */
-#define CTN_TAG_ID_LASTUPDATE                    0x0E  /* Variable Length */
+#define CTN_TAG_ID_MAXLISTCOUNT                  0x41U  /* 2  Byte Length  */
+#define CTN_TAG_ID_LISTSTARTOFFSET               0x42U  /* 2  Byte Length  */
+#define CTN_TAG_ID_NOTIFICATIONSTATUS            0x43U  /* 1  Byte Length  */
+#define CTN_TAG_ID_INSTANCEID                    0x44U  /* 1  Byte Length  */
+#define CTN_TAG_ID_LISTINGSIZE                   0x46U  /* 2  Byte Length  */
+#define CTN_TAG_ID_ACOUSTICALARMSTATUS           0x01U  /* 1  Byte Length  */
+#define CTN_TAG_ID_ATTACHMENT                    0x02U  /* 1  Byte Length  */
+#define CTN_TAG_ID_SEND                          0x03U  /* 1  Byte Length  */
+#define CTN_TAG_ID_FILTERPERIODBEGIN             0x04U  /* Variable Length */
+#define CTN_TAG_ID_FILTERPERIODEND               0x05U  /* Variable Length */
+#define CTN_TAG_ID_PARMETERMASK                  0x06U  /* 4  Byte Length  */
+#define CTN_TAG_ID_STATUSINDICATOR               0x07U  /* 1  Byte Length  */
+#define CTN_TAG_ID_STATUSVALUE                   0x08U  /* 1  Byte Length  */
+#define CTN_TAG_ID_POSTPONEVAL                   0x09U  /* 4  Byte Length  */
+#define CTN_TAG_ID_EMAILURI                      0x0AU  /* Variable Length */
+#define CTN_TAG_ID_CSETIME                       0x0BU  /* Variable Length */
+#define CTN_TAG_ID_RECURRENT                     0x0CU  /* 1  Byte Length  */
+#define CTN_TAG_ID_ATTACHID                      0x0DU  /* 1  Byte Length  */
+#define CTN_TAG_ID_LASTUPDATE                    0x0EU  /* Variable Length */
 /*@}*/
 /** Maximum number of Application Headers */
-#define CTN_NUM_APPL_HEADERS                     0x13 /* 19 */
+#define CTN_NUM_APPL_HEADERS                     0x13U /* 19 */
 
 /* CTN Application parameters flag corresponding to each Tag */
 /**
@@ -169,25 +169,25 @@
  *  Constant Definitions for CTN Application parameters flag corresponding to each Tag
  */
 /*@{*/
-#define CTN_FLAG_MAXLISTCOUNT                    0x00000001
-#define CTN_FLAG_LISTSTARTOFFSET                 0x00000002
-#define CTN_FLAG_NOTIFICATIONSTATUS              0x00000004
-#define CTN_FLAG_INSTANCEID                      0x00000008
-#define CTN_FLAG_LISTINGSIZE                     0x00000010
-#define CTN_FLAG_ACOUSTICALARMSTATUS             0x00000020
-#define CTN_FLAG_ATTACHMENT                      0x00000040
-#define CTN_FLAG_SEND                            0x00000080
-#define CTN_FLAG_FILTERPERIODBEGIN               0x00000100
-#define CTN_FLAG_FILTERPERIODEND                 0x00000200
-#define CTN_FLAG_PARMETERMASK                    0x00000400
-#define CTN_FLAG_STATUSINDICATOR                 0x00000800
-#define CTN_FLAG_STATUSVALUE                     0x00001000
-#define CTN_FLAG_POSTPONEVAL                     0x00002000
-#define CTN_FLAG_EMAILURI                        0x00004000
-#define CTN_FLAG_CSETIME                         0x00008000
-#define CTN_FLAG_RECURRENT                       0x00010000
-#define CTN_FLAG_ATTACHID                        0x00020000
-#define CTN_FLAG_LASTUPDATE                      0x00040000
+#define CTN_FLAG_MAXLISTCOUNT                    0x00000001U
+#define CTN_FLAG_LISTSTARTOFFSET                 0x00000002U
+#define CTN_FLAG_NOTIFICATIONSTATUS              0x00000004U
+#define CTN_FLAG_INSTANCEID                      0x00000008U
+#define CTN_FLAG_LISTINGSIZE                     0x00000010U
+#define CTN_FLAG_ACOUSTICALARMSTATUS             0x00000020U
+#define CTN_FLAG_ATTACHMENT                      0x00000040U
+#define CTN_FLAG_SEND                            0x00000080U
+#define CTN_FLAG_FILTERPERIODBEGIN               0x00000100U
+#define CTN_FLAG_FILTERPERIODEND                 0x00000200U
+#define CTN_FLAG_PARMETERMASK                    0x00000400U
+#define CTN_FLAG_STATUSINDICATOR                 0x00000800U
+#define CTN_FLAG_STATUSVALUE                     0x00001000U
+#define CTN_FLAG_POSTPONEVAL                     0x00002000U
+#define CTN_FLAG_EMAILURI                        0x00004000U
+#define CTN_FLAG_CSETIME                         0x00008000U
+#define CTN_FLAG_RECURRENT                       0x00010000U
+#define CTN_FLAG_ATTACHID                        0x00020000U
+#define CTN_FLAG_LASTUPDATE                      0x00040000U
 /*@}*/
 /* Application Header Parameters Value Range Definitions */
 /* ----------------------------------------------------- */
@@ -205,61 +205,61 @@
  * @name CTN Application Parameter values
  */
 /*@{*/
-#define CTN_NOTIFICATIONSTATUS_OFF               0x00
-#define CTN_NOTIFICATIONSTATUS_ON                0x01
+#define CTN_NOTIFICATIONSTATUS_OFF               0x00U
+#define CTN_NOTIFICATIONSTATUS_ON                0x01U
 /*@}*/
 /**
  * @name
  */
 /*@{*/
-#define CTN_ACOUSTICALARM_OFF                    0x00
-#define CTN_ACOUSTICALARM_ON                     0x01
+#define CTN_ACOUSTICALARM_OFF                    0x00U
+#define CTN_ACOUSTICALARM_ON                     0x01U
 /*@}*/
 /**
  * @name
  */
 /*@{*/
-#define CTN_ATTACHMENT_ON                        0x00
-#define CTN_ATTACHMENT_OFF                       0x01
-#define CTN_ATTACHMENT_SELECT                    0x02
+#define CTN_ATTACHMENT_ON                        0x00U
+#define CTN_ATTACHMENT_OFF                       0x01U
+#define CTN_ATTACHMENT_SELECT                    0x02U
 /*@}*/
 /**
  * @name
  */
 /*@{*/
-#define CTN_SEND_NO                              0x00
-#define CTN_SEND_YES                             0x01
+#define CTN_SEND_NO                              0x00U
+#define CTN_SEND_YES                             0x01U
 /*@}*/
 /**
  * @name
  */
 /*@{*/
-#define CTN_STATUSINDICATOR_PSTATUS              0x00
-#define CTN_STATUSINDICATOR_ALARMSTATUS          0x01
-#define CTN_STATUSINDICATOR_SENDSTATUS           0x02
-#define CTN_STATUSINDICATOR_DELETEDSTATUS        0x03
+#define CTN_STATUSINDICATOR_PSTATUS              0x00U
+#define CTN_STATUSINDICATOR_ALARMSTATUS          0x01U
+#define CTN_STATUSINDICATOR_SENDSTATUS           0x02U
+#define CTN_STATUSINDICATOR_DELETEDSTATUS        0x03U
 /*@}*/
 /**
  * @name
  */
 /*@{*/
-#define CTN_STATUSVALUE_NO                       0x00
-#define CTN_STATUSVALUE_YES                      0x01
-#define CTN_STATUSVALUE_POSTPONE                 0x02
-#define CTN_STATUSVALUE_TENTATIVE                0x03
-#define CTN_STATUSVALUE_NEED_ACTION              0x04
-#define CTN_STATUSVALUE_ACCEPTED                 0x05
-#define CTN_STATUSVALUE_DECLINED                 0x06
-#define CTN_STATUSVALUE_DELEGATED                0x07
-#define CTN_STATUSVALUE_COMPLETED                0x08
-#define CTN_STATUSVALUE_IN_PROGRESS              0x09
+#define CTN_STATUSVALUE_NO                       0x00U
+#define CTN_STATUSVALUE_YES                      0x01U
+#define CTN_STATUSVALUE_POSTPONE                 0x02U
+#define CTN_STATUSVALUE_TENTATIVE                0x03U
+#define CTN_STATUSVALUE_NEED_ACTION              0x04U
+#define CTN_STATUSVALUE_ACCEPTED                 0x05U
+#define CTN_STATUSVALUE_DECLINED                 0x06U
+#define CTN_STATUSVALUE_DELEGATED                0x07U
+#define CTN_STATUSVALUE_COMPLETED                0x08U
+#define CTN_STATUSVALUE_IN_PROGRESS              0x09U
 /*@}*/
 /**
  * @name
  */
 /*@{*/
-#define CTN_RECURRENT_NO                         0x00
-#define CTN_RECURRENT_YES                        0x01
+#define CTN_RECURRENT_NO                         0x00U
+#define CTN_RECURRENT_YES                        0x01U
 /*@}*/
 /**
  */
@@ -267,16 +267,16 @@
 /**
  * @name CTN parameter mask for Get Listing Request
  */
-#define CTN_PARAM_MASK_ATTACHMENT                0x00000001
-#define CTN_PARAM_MASK_SUMMARY                   0x00000002
-#define CTN_PARAM_MASK_ENDTIME                   0x00000004
-#define CTN_PARAM_MASK_ORIGINATOR_NAME           0x00000008
-#define CTN_PARAM_MASK_ORIGINATOR_ADDRESS        0x00000010
-#define CTN_PARAM_MASK_PRIORITY                  0x00000020
-#define CTN_PARAM_MASK_PSTATUS                   0x00000040
-#define CTN_PARAM_MASK_ALARMSTATUS               0x00000080
-#define CTN_PARAM_MASK_SENDSTATUS                0x00000100
-#define CTN_PARAM_MASK_RECURRENT                 0x00000200
+#define CTN_PARAM_MASK_ATTACHMENT                0x00000001U
+#define CTN_PARAM_MASK_SUMMARY                   0x00000002U
+#define CTN_PARAM_MASK_ENDTIME                   0x00000004U
+#define CTN_PARAM_MASK_ORIGINATOR_NAME           0x00000008U
+#define CTN_PARAM_MASK_ORIGINATOR_ADDRESS        0x00000010U
+#define CTN_PARAM_MASK_PRIORITY                  0x00000020U
+#define CTN_PARAM_MASK_PSTATUS                   0x00000040U
+#define CTN_PARAM_MASK_ALARMSTATUS               0x00000080U
+#define CTN_PARAM_MASK_SENDSTATUS                0x00000100U
+#define CTN_PARAM_MASK_RECURRENT                 0x00000200U
 /*@}*/
 
 /**\}*/
@@ -295,8 +295,8 @@ typedef UINT8 CTN_HANDLE;
 /* CTN Service Types */
 typedef enum
 {
-    CTN_ACCESS_SERVICE = 0x01,
-    CTN_NTF_SERVICE = 0x02
+    CTN_ACCESS_SERVICE = 0x01U,
+    CTN_NTF_SERVICE = 0x02U
 
 } CTN_SERVICE_TYPE;
 
@@ -505,6 +505,7 @@ typedef API_RESULT (* CTN_EVENT_NTF_CB)
                         UINT16            num_headers
                    );
 /**\}*/
+
 /* --------------------------------------------- Macros */
 /**
  * \defgroup ctn_utility_macros Utility Macros
@@ -514,7 +515,7 @@ typedef API_RESULT (* CTN_EVENT_NTF_CB)
 /* To initialize a Header Structure */
 #define CTN_INIT_HEADER_STRUCT(hs)                                          \
         (hs).value = NULL;                                                  \
-        (hs).length = 0;
+        (hs).length = 0U;
 
 /* To set application parameter flag */
 #define CTN_SET_APPL_PARAM_FLAG(flag, set_field)                            \
@@ -526,7 +527,7 @@ typedef API_RESULT (* CTN_EVENT_NTF_CB)
 
 /* Resets all the fields of the application parameter flag */
 #define CTN_RESET_APPL_PARAM_FLAG(flag)                                     \
-        (flag) = 0x00000000
+        (flag) = 0x00000000U
 
 /* Extract header structure value */
 #define CTN_COPY_HEADER_STRUCT(hdr, len, val)                               \
@@ -537,8 +538,8 @@ typedef API_RESULT (* CTN_EVENT_NTF_CB)
 /* Extract application parameters */
 #define CTN_COPY_APPL_PARAMS(to_params, from_params, search_value_out)      \
         BT_mem_copy((to_params), (from_params), sizeof(CTN_APPL_PARAMS));   \
-        if((from_params)->search_value.length != 0 &&                       \
-           (from_params)->search_value.value != NULL)                       \
+        if(((from_params)->search_value.length != 0U) &&                    \
+           ((from_params)->search_value.value != NULL))                     \
         {                                                                   \
             BT_mem_copy((search_value_out),                                 \
                    (from_params)->search_value.value,                       \

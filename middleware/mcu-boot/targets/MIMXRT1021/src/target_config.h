@@ -28,6 +28,17 @@ enum _target_version_constants
     kTarget_Version_Bugfix = 0
 };
 
+//! @brief Memory Map index constants
+enum
+{
+    kIndexSRAM = 0,
+    kIndexDTCM = 1,
+    kIndexOCRAM = 2,
+    kIndexFlexSpiNor = 3,
+    kIndexSemcNor = 4,
+    kSRAMSeparatrix = (uint32_t)0x20000000 //!< This value is the start address of SRAM_U
+};
+
 //! @brief FlexSPI supported speed defintions
 enum
 {
@@ -41,6 +52,9 @@ enum
     kFlexSpiSerialClk_166MHz = 8,
     kFlexSpiSerialClk_200MHz = 9,
 };
+
+#define SEMC_MAX_CLK_FREQ kSemcClkFreq_133MHz
+#define SEMC_2ND_MAX_CLK_FREQ kSemcClkFreq_108MHz
 
 #define ROM_API_HAS_FLEXSPI_NOR_INIT (1)
 #define ROM_API_HAS_FELXSPI_NOR_PROGRAM (1)

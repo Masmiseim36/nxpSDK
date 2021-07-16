@@ -1,20 +1,20 @@
 Overview
 ========
 This demo demonstrates the follow function:
-1. There are five parts working in the demo: AWS cloud, Android app, audio demo (running on RT1060), U-disk and BlueTooth headset.
-2. With an app running on the smart phone (Android phone), the end users could connect to AWS cloud and control the audio demo running on the RT1060 EVK board through AWS cloud. Some operations like play, play next, pause, etc., could be used to control the media play functionalities. 
-3. Audio demo running on the RT1060 EVK board connects to the AWS through Wifi, also a connection could be established between the RT1060 EVK board and a Bluetooth headset. To get the media resource (mp3 files) from the U-disk, a HS USB host is enabled, and a U-disk with mp3 files should be connected to RT1060 EVK board via the USB port. After that, the audio demo will search the root directory of U-disk for the music files (now only mp3 files are supported), and upload the song file list to AWS, then the song list would be shown in the app running on the smart phone. Finally, the music could be played out via the Bluetooth headset once end user controls the app to play the mp3 file.
+1. There are five parts working in the demo: AWS cloud, Android app, audio demo (running on target board), U-disk and BlueTooth headset.
+2. With an app running on the smart phone (Android phone), the end users could connect to AWS cloud and control the audio demo running on the target board EVK board through AWS cloud. Some operations like play, play next, pause, etc., could be used to control the media play functionalities. 
+3. Audio demo running on the target board EVK board connects to the AWS through Wifi, also a connection could be established between the target board EVK board and a Bluetooth headset. To get the media resource (mp3 files) from the U-disk, a HS USB host is enabled, and a U-disk with mp3 files should be connected to target board EVK board via the USB port. After that, the audio demo will search the root directory of U-disk for the music files (now only mp3 files are supported), and upload the song file list to AWS, then the song list would be shown in the app running on the smart phone. Finally, the music could be played out via the Bluetooth headset once end user controls the app to play the mp3 file.
 Note:
-1. This demo could NOT function with the default setting provided in SDK package because a AWS account is mandatory to run to the demo, the end users must create their owner AWS account and configure the IoT Thing before the functionality of the demo could be used. Also some information specified by the end customers, like Thing name, Wifi SSID Wifi password, etc., must be updated accordingly before the demo would work. Check ¡°Prepare the Demo¡° to get the detailed guidance of the configuration steps.
+1. This demo could NOT function with the default setting provided in SDK package because a AWS account is mandatory to run to the demo, the end users must create their owner AWS account and configure the IoT Thing before the functionality of the demo could be used. Also some information specified by the end customers, like Thing name, Wifi SSID Wifi password, etc., must be updated accordingly before the demo would work. Check (Prepare the Demo) to get the detailed guidance of the configuration steps.
 2. The music files names in U-disk need be english.
 3. The volume of audio adjustment is not supported.
 
 
 Toolchain supported
 ===================
-- MCUXpresso  11.3.0
-- IAR embedded Workbench  8.50.9
-- GCC ARM Embedded  9.3.1
+- MCUXpresso  11.4.0
+- IAR embedded Workbench  9.10.2
+- GCC ARM Embedded  10.2.1
 
 Hardware requirements
 =====================
@@ -23,6 +23,7 @@ Hardware requirements
 - Personal Computer
 - One of the following WiFi modules:
   - AzureWave AW-AM457-uSD
+  - AzureWave AW-CM358-uSD
 - U-disk and usb otg cable
 - BlueTooth headset
 - Android cellphone
@@ -30,12 +31,14 @@ Hardware requirements
 Board settings
 ==============
 
+USB port: J9
+
 Jumper settings for AzureWave AW-AM457-uSD Module:
   - J11 2-3: VIO_SD 3.3V (Voltage level of SDIO pins is 3.3V)
   - J2  1-2: 3.3V VIO_uSD (Power Supply from uSD connector)
   - J4  2-3: 3.3V VIO
 
-The hardware should be reworked according to the hardware rework guide for evkmimxrt1060 and AW-AM457-uSD.
+The hardware should be reworked according to the hardware rework guide for evkmimxrt1060 and AW-AM457-uSD in document Hardware Rework Guide for EdgeFast BT PAL.
 The pin connect for UART HCI as the following table,
 ------------------------------------------------------------------------------------
 PIN NAME | AW-AM457-USD |   I.MXRT1060   | PIN NAME OF RT1060 | GPIO NAME OF RT1060
@@ -46,6 +49,23 @@ UART_RTS |  J10(pin 6)  |   J23(pin 3)   |    LPUART3_CTS     | GPIO_AD_B1_04
 UART_CTS |  J10(pin 8)  |   J23(pin 4)   |    LPUART3_RTS     | GPIO_AD_B1_05
 GND      |  J6(pin 7)   |   J25(pin 7)   |    GND             | GND
 ------------------------------------------------------------------------------------
+
+Jumper settings for AzureWave AW-CM358-uSD Module:
+  - J2 1-2: 3.3V VIO_uSD (Power Supply from uSD connector)
+  - J4 1-2: VIO 1.8V (Voltage level of SDIO pins is 1.8V)
+
+The hardware should be reworked according to the hardware rework guide for evkmimxrt1060 and AW-CM358-uSD in document Hardware Rework Guide for EdgeFast BT PAL.
+The pin connect for UART HCI as the following table,
+------------------------------------------------------------------------------------
+PIN NAME | AW-CM358-USD |   I.MXRT1060   | PIN NAME OF RT1060 | GPIO NAME OF RT1060
+------------------------------------------------------------------------------------
+UART_TXD |  J10(pin 4)  |   J22(pin 1)   |    LPUART3_RXD     | GPIO_AD_B1_07
+UART_RXD |  J10(pin 2)  |   J22(pin 2)   |    LPUART3_TXD     | GPIO_AD_B1_06
+UART_RTS |  J10(pin 6)  |   J23(pin 3)   |    LPUART3_CTS     | GPIO_AD_B1_04
+UART_CTS |  J10(pin 8)  |   J23(pin 4)   |    LPUART3_RTS     | GPIO_AD_B1_05
+GND      |  J6(pin 7)   |   J25(pin 7)   |    GND             | GND
+------------------------------------------------------------------------------------
+
 Note:
 After downloaded binary into qspiflash and boot from qspiflash directly, 
 please reset the board by pressing SW9 or power off and on the board to run the application.
@@ -112,7 +132,7 @@ Note, The certificate and private key are hard-coded for demonstration purposes 
 
 7. Connect a USB cable between the PC host and the OpenSDA USB port on the target board.
 
-8. Connect U-disk to J9 on the target board through the USB OTG cable.
+8. Connect U-disk to USB port on the target board through the USB OTG cable.
 
 9. Open a serial terminal on PC for OpenSDA serial device with these settings:
     - 115200 baud rate
@@ -188,7 +208,7 @@ e. Copy the Identity pool ID in the next page.
   region=us-west-2
 
 3. To run Android application, do either:
-   a) Install and run pre-build apk on Android device (<MCUXpresso SDK>\boards\evkmimxrt1060\ethermind_examples\ethermind_audio_android\AwsMusicControl.apk)
+   a) Install and run pre-build apk on Android device (<MCUXpresso SDK>\boards\<board name>\edgefast_bluetooth_examples\audio_pofile\android_app\AwsMusicControl.apk)
    b) Open project in Android Studio, build it, attach Android device and Run application
 
    Application requires at least Android version 5.1 (Android SDK 22).
@@ -241,88 +261,159 @@ e. Use "deletedevice"
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 usb host init done
+0 154 [main_task] Write certificate...
 
-**********************************
-Maestro audio solutions demo start
-**********************************
+ 
+
+1 221 [iot_thread] [INFO ][DEMO][539114128] ---------STARTING DEMO---------
+
+ 
 
 
-SHELL build: 0 1 [main_task] Starting WiFi...
-Sep 28 2020
-Copyright  2020  NXP
->> MAC Address: D8:C0:A6:C0:B0:F1 
+2 222 [iot_thread] [INFO ][INIT][539114128] SDK successfully initialized.
+
+ 
+
+MAC Address: 80:D2:1D:E8:2F:67 
 [net] Initialized TCP/IP networking stack
-[wm_wlan] WLAN_REASON_INITIALIZED
+3 3571 [iot_thread] Connecting to nxp .....
 
-[wm_wlan] Connecting to NXPOPEN .....
+ 
 
-1 3641 [main_task] WiFi module initialized.
-[wm_wlan] Connected to with IP = [192.168.0.234]
+4 15602 [wlcmgr] Connected to with IP = [192.168.199.68]
 
-2 15943 [main_task] WiFi connected to AP NXPOPEN.
-3 15943 [main_task] IP Address acquired 192.168.0.234
-4 15944 [AWS-RemoteCtrl] [INFO ][INIT][lu] SDK successfully initialized.
-5 15944 [AWS-RemoteCtrl] [INFO ][Shadow][lu] Shadow library successfully initialized.
+ 
 
-###################################################################
-###
-### EtherMind Bluetooth Evaluation Application
-###
-### Profiles    : A2DP/SPP/PAN (Selected from EtherMind.conf)
-###################################################################
+5 15622 [iot_thread] [INFO ][DEMO][0] Successfully initialized the demo. Network type for the demo: 1
 
-Reading the configuration ...
-Failed to read BT_UART_PORT from the Config
-Failed to read BT_UART_BAUDRATE from the Config
-Failed to read BD_ADDRESS from the Config
+ 
 
-Initializing EtherMind ...
+6 15622 [iot_thread] [INFO] Create a TCP connection to a2nxzv2h17k05v.ats.iot.cn-north-1.amazonaws.com.cn:8883.
+7 22785 [iot_thread] [INFO] Packet received. ReceivedBytes=2.
+8 22785 [iot_thread] [INFO] CONNACK session present bit not set.
+9 22785 [iot_thread] [INFO] Connection accepted.
+10 22785 [iot_thread] [INFO] Received MQTT CONNACK successfully from broker.
+11 22785 [iot_thread] [INFO] MQTT connection established with the broker.
+12 22785 [iot_thread] [INFO] MQTT connection successfully established with broker.
 
-Performing Bluetooth ON ...
-Initializing A2DP ... 
-OK
+ 
 
-Bluetooth ON Initialization Completed.
-Local Device Addr: D8:C0:A6:C0:B0:F0
 
-Starting A2DP ...
-A2DP Register Codec ... OK
-6 29862 [AWS-RemoteCtrl] [INFO ][MQTT][lu] Establishing new MQTT connection.
-7 29868 [AWS-RemoteCtrl] [INFO ][MQTT][lu] Anonymous metrics (SDK language, SDK version) will be provided to AWS IoT. Recompile with AWS_IOT_MQTT_ENABLE_METRICS set to 0 to disable.
-8 29871 [AWS-RemoteCtrl] [INFO ][MQTT][lu] (MQTT connection 0x2023e868, CONNECT operation 0x2023f7e0) Waiting for operation completion.
-9 30209 [AWS-RemoteCtrl] [INFO ][MQTT][lu] (MQTT connection 0x2023e868, CONNECT operation 0x2023f7e0) Wait complete with result SUCCESS.
-10 30209 [AWS-RemoteCtrl] [INFO ][MQTT][lu] New MQTT connection 0x20237c90 established.
-11 30210 [AWS-RemoteCtrl] [INFO ][MQTT][lu] (MQTT connection 0x2023e868) SUBSCRIBE operation scheduled.
-12 30210 [AWS-RemoteCtrl] [INFO ][MQTT][lu] (MQTT connection 0x2023e868, SUBSCRIBE operation 0x2023fc48) Waiting for operation completion.
-13 30491 [AWS-RemoteCtrl] [INFO ][MQTT][lu] (MQTT connection 0x2023e868, SUBSCRIBE operation 0x2023fc48) Wait complete with result SUCCESS.
-14 30492 [AWS-RemoteCtrl] [INFO ][MQTT][lu] (MQTT connection 0x2023e868) SUBSCRIBE operation scheduled.
-15 30492 [AWS-RemoteCtrl] [INFO ][MQTT][lu] (MQTT connection 0x2023e868, SUBSCRIBE operation 0x2023f7e0) Waiting for operation completion.
-16 30806 [AWS-RemoteCtrl] [INFO ][MQTT][lu] (MQTT connection 0x2023e868, SUBSCRIBE operation 0x2023f7e0) Wait complete with result SUCCESS.
-17 30809 [AWS-RemoteCtrl] [INFO ][MQTT][lu] (MQTT connection 0x2023e868) MQTT PUBLISH operation queued.
-18 31151 [iot_thread] [INFO ][Shadow][lu] Shadow DELETE of MusicPlayer was ACCEPTED.
-19 31152 [AWS-RemoteCtrl] [INFO ][MQTT][lu] (MQTT connection 0x2023e868) UNSUBSCRIBE operation scheduled.
-20 31152 [AWS-RemoteCtrl] [INFO ][MQTT][lu] (MQTT connection 0x2023e868, UNSUBSCRIBE operation 0x2023f7e0) Waiting for operation completion.
-21 31677 [AWS-RemoteCtrl] [INFO ][MQTT][lu] (MQTT connection 0x2023e868, UNSUBSCRIBE operation 0x2023f7e0) Wait complete with result SUCCESS.
-22 31677 [AWS-RemoteCtrl] [INFO ][MQTT][lu] (MQTT connection 0x2023e868) UNSUBSCRIBE operation scheduled.
-23 31678 [AWS-RemoteCtrl] [INFO ][MQTT][lu] (MQTT connection 0x2023e868, UNSUBSCRIBE operation 0x2023f7e0) Waiting for operation completion.
-24 31961 [AWS-RemoteCtrl] [INFO ][MQTT][lu] (MQTT connection 0x2023e868, UNSUBSCRIBE operation 0x2023f7e0) Wait complete with result SUCCESS.
-25 31962 [AWS-RemoteCtrl] [INFO ][Shadow][lu] (MusicPlayer) Modifying Shadow DELTA callback.
-26 31962 [AWS-RemoteCtrl] [INFO ][Shadow][lu] (MusicPlayer) Adding new DELTA callback.
-27 31963 [AWS-RemoteCtrl] [INFO ][MQTT][lu] (MQTT connection 0x2023e868) SUBSCRIBE operation scheduled.
-28 31963 [AWS-RemoteCtrl] [INFO ][MQTT][lu] (MQTT connection 0x2023e868, SUBSCRIBE operation 0x2023fde8) Waiting for operation completion.
-29 32263 [AWS-RemoteCtrl] [INFO ][MQTT][lu] (MQTT connection 0x2023e868, SUBSCRIBE operation 0x2023fde8) Wait complete with result SUCCESS.
-30 32263 [AWS-RemoteCtrl] [INFO ][Shadow][lu] (MusicPlayer) Shadow DELTA callback operation complete with result SUCCESS.
-31 32263 [AWS-RemoteCtrl] [INFO ][Shadow][lu] (MusicPlayer) Modifying Shadow UPDATED callback.
-32 32264 [AWS-RemoteCtrl] [INFO ][Shadow][lu] (MusicPlayer) Shadow UPDATED callback operation complete with result SUCCESS.
-33 32265 [AWS-RemoteCtrl] [INFO ][MQTT][lu] (MQTT connection 0x2023e868) SUBSCRIBE operation scheduled.
-34 32265 [AWS-RemoteCtrl] [INFO ][MQTT][lu] (MQTT connection 0x2023e868, SUBSCRIBE operation 0x2023f898) Waiting for operation completion.
-35 32557 [AWS-RemoteCtrl] [INFO ][MQTT][lu] (MQTT connection 0x2023e868, SUBSCRIBE operation 0x2023f898) Wait complete with result SUCCESS.
-36 32558 [AWS-RemoteCtrl] [INFO ][MQTT][lu] (MQTT connection 0x2023e868) SUBSCRIBE operation scheduled.
-37 32558 [AWS-RemoteCtrl] [INFO ][MQTT][lu] (MQTT connection 0x2023e868, SUBSCRIBE operation 0x2023f898) Waiting for operation completion.
-38 32849 [AWS-RemoteCtrl] [INFO ][MQTT][lu] (MQTT connection 0x2023e868, SUBSCRIBE operation 0x2023f898) Wait complete with result SUCCESS.
-39 32853 [AWS-RemoteCtrl] [INFO ][MQTT][lu] (MQTT connection 0x2023e868) MQTT PUBLISH operation queued.
-40 33170 [iot_thread] [INFO ][Shadow][lu] Shadow UPDATE of MusicPlayer was ACCEPTED.
-41 33170 [AWS-RemoteCtrl] AWS Remote Control Demo initialized.
-42 33170 [AWS-RemoteCtrl] Use mobile application to control the remote device.
+13 22785 [iot_thread] [INFO] A clean MQTT connection is established. Cleaning up all the stored outgoing publishes.
+
+ 
+
+
+14 22786 [iot_thread] [INFO] SUBSCRIBE topic $aws/things/aws_wifi_provisioning/shadow/delete/accepted to broker.
+
+ 
+
+
+15 22938 [iot_thread] [INFO] Packet received. ReceivedBytes=3.
+16 22938 [iot_thread] [INFO] MQTT_PACKET_TYPE_SUBACK.
+
+ 
+
+
+17 23341 [iot_thread] [INFO] SUBSCRIBE topic $aws/things/aws_wifi_provisioning/shadow/delete/rejected to broker.
+
+ 
+
+
+18 23501 [iot_thread] [INFO] Packet received. ReceivedBytes=3.
+19 23502 [iot_thread] [INFO] MQTT_PACKET_TYPE_SUBACK.
+
+ 
+
+
+20 23904 [iot_thread] [INFO] the published payload: 
+ 
+21 23905 [iot_thread] [INFO] PUBLISH sent for topic $aws/things/aws_wifi_provisioning/shadow/delete to broker with packet ID 3.
+
+ 
+
+
+22 24027 [iot_thread] [INFO] Packet received. ReceivedBytes=2.
+23 24027 [iot_thread] [INFO] Ack packet deserialized with result: MQTTSuccess.
+24 24027 [iot_thread] [INFO] State record updated. New state=MQTTPublishDone.
+25 24028 [iot_thread] [INFO] PUBACK received for packet id 3.
+
+ 
+
+
+26 24028 [iot_thread] [INFO] Cleaned up outgoing publish packet with packet id 3.
+
+ 
+
+
+27 24095 [iot_thread] [INFO] Packet received. ReceivedBytes=99.
+28 24095 [iot_thread] [INFO] De-serialized incoming PUBLISH packet: DeserializerResult=MQTTSuccess.
+29 24095 [iot_thread] [INFO] State record updated. New state=MQTTPubAckSend.
+30 24095 [iot_thread] [INFO] pPublishInfo->pTopicName:$aws/things/aws_wifi_provisioning/shadow/delete/accepted.
+31 24095 [iot_thread] [INFO] Received an MQTT incoming publish on /delete/accepted topic.
+32 24499 [iot_thread] [INFO] UNSUBSCRIBE sent topic $aws/things/aws_wifi_provisioning/shadow/delete/accepted to broker.
+
+ 
+
+
+33 24671 [iot_thread] [INFO] Packet received. ReceivedBytes=2.
+34 24671 [iot_thread] [INFO] MQTT_PACKET_TYPE_UNSUBACK.
+
+ 
+
+
+35 25075 [iot_thread] [INFO] UNSUBSCRIBE sent topic $aws/things/aws_wifi_provisioning/shadow/delete/rejected to broker.
+
+ 
+
+
+36 25243 [iot_thread] [INFO] Packet received. ReceivedBytes=2.
+37 25243 [iot_thread] [INFO] MQTT_PACKET_TYPE_UNSUBACK.
+
+ 
+
+
+38 25646 [iot_thread] [INFO] SUBSCRIBE topic $aws/things/aws_wifi_provisioning/shadow/update/delta to broker.
+
+ 
+
+
+39 25780 [iot_thread] [INFO] Packet received. ReceivedBytes=3.
+40 25780 [iot_thread] [INFO] MQTT_PACKET_TYPE_SUBACK.
+
+ 
+
+
+41 26182 [iot_thread] [INFO] the published payload:{"state":{"desired":{"playState":false,"playIndex":0},"reported":{"playState":false,"playIndex":0,"playerReady":false,"musicList":[]}},"clientToken": "token-26182"} 
+ 
+42 26184 [iot_thread] [INFO] PUBLISH sent for topic $aws/things/aws_wifi_provisioning/shadow/update to broker with packet ID 7.
+
+ 
+
+
+43 26445 [iot_thread] [INFO] Packet received. ReceivedBytes=2.
+44 26445 [iot_thread] [INFO] Ack packet deserialized with result: MQTTSuccess.
+45 26445 [iot_thread] [INFO] State record updated. New state=MQTTPublishDone.
+46 26445 [iot_thread] [INFO] PUBACK received for packet id 7.
+
+ 
+
+
+47 26445 [iot_thread] [INFO] Cleaned up outgoing publish packet with packet id 7.
+
+ 
+
+
+48 26848 [iot_thread] [INFO] AWS Remote Control Demo initialized.
+49 26848 [iot_thread] [INFO] Use mobile application to control the remote device.
+Bluetooth initialized
+
+ 
+
+Copyright  2020  NXP
+
+ 
+
+>> 
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

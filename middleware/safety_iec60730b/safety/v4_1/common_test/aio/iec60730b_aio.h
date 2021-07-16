@@ -24,7 +24,7 @@
 #include "iec60730b_types.h"
 
 /*
- * List of devices and supported functions can be found in library user guide, 
+ * List of devices and supported functions can be found in library user guide,
  * section Core self test library - source code version.
  */
 
@@ -32,10 +32,10 @@
  * Macros
  ******************************************************************************/
 /* Return values */
-#define FS_FAIL_AIO      (FS_AIO_CODE + 0x1U)
-#define FS_AIO_PROGRESS  (FS_AIO_CODE + 0x2U)
-#define FS_AIO_INIT      (FS_AIO_CODE + 0x3U)
-#define FS_AIO_START     (FS_AIO_CODE + 0x4U)
+#define FS_FAIL_AIO     (FS_AIO_CODE + 0x1U)
+#define FS_AIO_PROGRESS (FS_AIO_CODE + 0x2U)
+#define FS_AIO_INIT     (FS_AIO_CODE + 0x3U)
+#define FS_AIO_START    (FS_AIO_CODE + 0x4U)
 
 /* Assembler skips following section */
 #ifndef __ASM__
@@ -95,7 +95,8 @@ void FS_AIO_InputInit(fs_aio_test_t *pObj, fs_aio_limits_t *pLimits, uint8_t *pI
  * @return   void
  *
  ******************************************************************************/
-void FS_AIO_InputInit_K3S(fs_aio_test_t *pObj, fs_aio_limits_t *pLimits, uint8_t *pInputs, uint8_t cntMax, uint8_t cmdBuffer);
+void FS_AIO_InputInit_K3S(
+    fs_aio_test_t *pObj, fs_aio_limits_t *pLimits, uint8_t *pInputs, uint8_t cntMax, uint8_t cmdBuffer);
 
 /*******************************************************************************
  *
@@ -110,7 +111,8 @@ void FS_AIO_InputInit_K3S(fs_aio_test_t *pObj, fs_aio_limits_t *pLimits, uint8_t
  * @return   void
  *
  ******************************************************************************/
-void FS_AIO_InputInit_CYCLIC(fs_aio_test_t *pObj, fs_aio_limits_t *pLimits, uint8_t *pInputs, uint8_t *pSamples, uint8_t cntMax);
+void FS_AIO_InputInit_CYCLIC(
+    fs_aio_test_t *pObj, fs_aio_limits_t *pLimits, uint8_t *pInputs, uint8_t *pSamples, uint8_t cntMax);
 
 /*******************************************************************************
  *
@@ -126,7 +128,8 @@ void FS_AIO_InputInit_CYCLIC(fs_aio_test_t *pObj, fs_aio_limits_t *pLimits, uint
  * @return   void
  *
  ******************************************************************************/
-void FS_AIO_InputInit_LPC_ADC16(fs_aio_test_t *pObj, fs_aio_limits_t *pLimits, uint8_t *pInputs, uint8_t cntMax, uint8_t sequence, uint8_t fifo);
+void FS_AIO_InputInit_LPC_ADC16(
+    fs_aio_test_t *pObj, fs_aio_limits_t *pLimits, uint8_t *pInputs, uint8_t cntMax, uint8_t sequence, uint8_t fifo);
 
 /*******************************************************************************
  *
@@ -141,7 +144,8 @@ void FS_AIO_InputInit_LPC_ADC16(fs_aio_test_t *pObj, fs_aio_limits_t *pLimits, u
  * @return   void
  *
  ******************************************************************************/
-void FS_AIO_InputInit_LPC_ADC12(fs_aio_test_t *pObj, fs_aio_limits_t *pLimits, uint8_t *pInputs, uint8_t cntMax, uint8_t sequence);
+void FS_AIO_InputInit_LPC_ADC12(
+    fs_aio_test_t *pObj, fs_aio_limits_t *pLimits, uint8_t *pInputs, uint8_t cntMax, uint8_t sequence);
 
 /*******************************************************************************
  *
@@ -151,18 +155,24 @@ void FS_AIO_InputInit_LPC_ADC12(fs_aio_test_t *pObj, fs_aio_limits_t *pLimits, u
  * @param    *pLimits - the input argument is a pointer to the array of limits used in the test.
  * @param    *pInputs - the input argument is a pointer to the array of input numbers used in the test.
  * @param    cntMax   - the input argument is the size of the input and the limits arrays.
- * @param    commandBuffer - the input argument is number of command  
+ * @param    commandBuffer - the input argument is number of command
  * @param    fifoNumber - the input argument is number of trigger register
  * @param    sequence - the input argument is index of used sequence - trigger source.
  *
  * @return   void
  *
  ******************************************************************************/
-void FS_AIO_InputInit_IMXRT117X(fs_aio_test_t *pObj, fs_aio_limits_t *pLimits, uint8_t *pInputs, uint8_t cntMax, uint16_t commandBuffer, uint8_t fifo, uint8_t sequence);
+void FS_AIO_InputInit_IMXRT117X(fs_aio_test_t *pObj,
+                                fs_aio_limits_t *pLimits,
+                                uint8_t *pInputs,
+                                uint8_t cntMax,
+                                uint16_t commandBuffer,
+                                uint8_t fifo,
+                                uint8_t sequence);
 
 /*******************************************************************************
  *
- * @brief    This function sets up the analog input test to start the 
+ * @brief    This function sets up the analog input test to start the
  *           execution of the test (sets state FS_AIO_START for pObj).
  *
  * @param    *pObj - input argument is pointer to analog test instance.
@@ -174,7 +184,7 @@ void FS_AIO_InputTrigger(fs_aio_test_t *pObj);
 
 /*******************************************************************************
  *
- * @brief    The function sets up the ADC input channel and triggers the conversion. 
+ * @brief    The function sets up the ADC input channel and triggers the conversion.
  *           Then state is changed to FS_AIO_PROGRESS.
  *
  *           This function sets input only if pObj->state == FS_AIO_START.
@@ -190,7 +200,7 @@ FS_RESULT FS_AIO_InputSet(fs_aio_test_t *pObj, fs_aio_t *pAdc);
 
 /*******************************************************************************
  *
- * @brief    The function sets up the ADC input channel and triggers the conversion. 
+ * @brief    The function sets up the ADC input channel and triggers the conversion.
  *           Then state is changed to FS_AIO_PROGRESS.
  *
  *           This function sets input only if pObj->state == FS_AIO_START.
@@ -206,7 +216,7 @@ FS_RESULT FS_AIO_InputSet_KE(fs_aio_test_t *pObj, fs_aio_ke_t *pAdc);
 
 /*******************************************************************************
  *
- * @brief    The function sets up the ADC input channel and triggers the conversion. 
+ * @brief    The function sets up the ADC input channel and triggers the conversion.
  *           Then state is changed to FS_AIO_PROGRESS.
  *
  *           This function sets input only if pObj->state == FS_AIO_START.
@@ -222,7 +232,7 @@ FS_RESULT FS_AIO_InputSet_K3S(fs_aio_test_t *pObj, fs_aio_k3s_t *pAdc);
 
 /*******************************************************************************
  *
- * @brief    The function sets up the ADC input channel and triggers the conversion. 
+ * @brief    The function sets up the ADC input channel and triggers the conversion.
  *           Then state is changed to FS_AIO_PROGRESS.
  *
  *           This function sets input only if pObj->state == FS_AIO_START.
@@ -238,7 +248,7 @@ FS_RESULT FS_AIO_InputSet_CYCLIC(fs_aio_test_t *pObj, fs_aio_cyclic_t *pAdc);
 
 /*******************************************************************************
  *
- * @brief    The function sets up the ADC input channel and triggers the conversion. 
+ * @brief    The function sets up the ADC input channel and triggers the conversion.
  *           Then state is changed to FS_AIO_PROGRESS.
  *
  *           This function sets input only if pObj->state == FS_AIO_START.
@@ -254,7 +264,7 @@ FS_RESULT FS_AIO_InputSet_LPC8XX(fs_aio_test_t *pObj, fs_aio_lpc8xx_t *pAdc);
 
 /*******************************************************************************
  *
- * @brief    The function sets up the ADC input channel and triggers the conversion. 
+ * @brief    The function sets up the ADC input channel and triggers the conversion.
  *           Then state is changed to FS_AIO_PROGRESS.
  *
  *           This function sets input only if pObj->state == FS_AIO_START.
@@ -270,7 +280,7 @@ FS_RESULT FS_AIO_InputSet_LPC55SXX(fs_aio_test_t *pObj, fs_aio_lpc55sxx_t *pAdc)
 
 /*******************************************************************************
  *
- * @brief    The function sets up the ADC input channel and triggers the conversion. 
+ * @brief    The function sets up the ADC input channel and triggers the conversion.
  *           Then state is changed to FS_AIO_PROGRESS.
  *
  *           This function sets input only if pObj->state == FS_AIO_START.
@@ -284,10 +294,9 @@ FS_RESULT FS_AIO_InputSet_LPC55SXX(fs_aio_test_t *pObj, fs_aio_lpc55sxx_t *pAdc)
  ******************************************************************************/
 FS_RESULT FS_AIO_InputSet_IMXRT10XX_SWTRIG(fs_aio_test_t *pObj, fs_aio_imxrt10xx_t *pAdc);
 
-
 /*******************************************************************************
  *
- * @brief    The function sets up the ADC input channel and triggers the conversion. 
+ * @brief    The function sets up the ADC input channel and triggers the conversion.
  *           Then state is changed to FS_AIO_PROGRESS.
  *
  *           This function sets input only if pObj->state == FS_AIO_START.
@@ -299,11 +308,11 @@ FS_RESULT FS_AIO_InputSet_IMXRT10XX_SWTRIG(fs_aio_test_t *pObj, fs_aio_imxrt10xx
  *           Any other value - the function had no effect.
  *
  ******************************************************************************/
-FS_RESULT FS_AIO_InputSet_IMXRT117X_SWTRIG(fs_aio_test_t *pObj, fs_aio_imxrt117x_t * pAdc);
+FS_RESULT FS_AIO_InputSet_IMXRT117X_SWTRIG(fs_aio_test_t *pObj, fs_aio_imxrt117x_t *pAdc);
 
 /*******************************************************************************
-*
- * @brief    The function reads converted analog value and 
+ *
+ * @brief    The function reads converted analog value and
  *           check if the value fits into predefined limits.
  *
  *           This function reads converted value only
@@ -322,7 +331,7 @@ FS_RESULT FS_AIO_InputSet_IMXRT117X_SWTRIG(fs_aio_test_t *pObj, fs_aio_imxrt117x
 FS_RESULT FS_AIO_InputCheck(fs_aio_test_t *pObj, fs_aio_t *pAdc);
 /*******************************************************************************
  *
- * @brief    The function reads converted analog value and 
+ * @brief    The function reads converted analog value and
  *           check if the value fits into predefined limits.
  *
  *           This function reads converted value only
@@ -342,7 +351,7 @@ FS_RESULT FS_AIO_InputCheck_KE(fs_aio_test_t *pObj, fs_aio_ke_t *pAdc);
 
 /*******************************************************************************
  *
- * @brief    The function reads converted analog value and 
+ * @brief    The function reads converted analog value and
  *           check if the value fits into predefined limits.
  *           Dedicated for 12bit Low Power ADC.
  *
@@ -364,7 +373,7 @@ FS_RESULT FS_AIO_InputCheck_K3S(fs_aio_test_t *pObj, uint32_t pAdc, uint32_t res
 
 /*******************************************************************************
  *
- * @brief    The function reads converted analog value and 
+ * @brief    The function reads converted analog value and
  *           check if the value fits into predefined limits.
  *
  *           This function reads converted value only
@@ -380,11 +389,11 @@ FS_RESULT FS_AIO_InputCheck_K3S(fs_aio_test_t *pObj, uint32_t pAdc, uint32_t res
  *           FS_AIO_INIT     - the function had no effect.
  *
  ******************************************************************************/
-FS_RESULT FS_AIO_InputCheck_CYCLIC(fs_aio_test_t *pObj, fs_aio_cyclic_t * pAdc);
+FS_RESULT FS_AIO_InputCheck_CYCLIC(fs_aio_test_t *pObj, fs_aio_cyclic_t *pAdc);
 
 /*******************************************************************************
  *
- * @brief    The function reads converted analog value and 
+ * @brief    The function reads converted analog value and
  *           check if the value fits into predefined limits.
  *
  *           This function reads converted value only
@@ -400,11 +409,11 @@ FS_RESULT FS_AIO_InputCheck_CYCLIC(fs_aio_test_t *pObj, fs_aio_cyclic_t * pAdc);
  *           FS_AIO_INIT     - the function had no effect.
  *
  ******************************************************************************/
-FS_RESULT FS_AIO_InputCheck_LPC8XX(fs_aio_test_t* pObj, fs_aio_lpc8xx_t *pAdc);
+FS_RESULT FS_AIO_InputCheck_LPC8XX(fs_aio_test_t *pObj, fs_aio_lpc8xx_t *pAdc);
 
 /*******************************************************************************
  *
- * @brief    The function reads converted analog value and 
+ * @brief    The function reads converted analog value and
  *           check if the value fits into predefined limits.
  *
  *           This function reads converted value only
@@ -420,11 +429,11 @@ FS_RESULT FS_AIO_InputCheck_LPC8XX(fs_aio_test_t* pObj, fs_aio_lpc8xx_t *pAdc);
  *           FS_AIO_INIT     - the function had no effect.
  *
  ******************************************************************************/
-FS_RESULT FS_AIO_InputCheck_LPC55SXX(fs_aio_test_t* pObj, fs_aio_lpc55sxx_t *pAdc);
+FS_RESULT FS_AIO_InputCheck_LPC55SXX(fs_aio_test_t *pObj, fs_aio_lpc55sxx_t *pAdc);
 
 /*******************************************************************************
  *
- * @brief    The function reads converted analog value and 
+ * @brief    The function reads converted analog value and
  *           check if the value fits into predefined limits.
  *
  *           This function should be used with software
@@ -440,11 +449,11 @@ FS_RESULT FS_AIO_InputCheck_LPC55SXX(fs_aio_test_t* pObj, fs_aio_lpc55sxx_t *pAd
  *           FS_AIO_INIT     - the function had no effect.
  *
  ******************************************************************************/
-FS_RESULT FS_AIO_InputCheck_IMXRT10XX_SWTRIG(fs_aio_test_t* pObj, fs_aio_imxrt10xx_t *pAdc);
+FS_RESULT FS_AIO_InputCheck_IMXRT10XX_SWTRIG(fs_aio_test_t *pObj, fs_aio_imxrt10xx_t *pAdc);
 
 /*******************************************************************************
  *
- * @brief    The function reads converted analog value and 
+ * @brief    The function reads converted analog value and
  *           check if the value fits into predefined limits.
  *
  *           This function should be used with software
@@ -460,7 +469,7 @@ FS_RESULT FS_AIO_InputCheck_IMXRT10XX_SWTRIG(fs_aio_test_t* pObj, fs_aio_imxrt10
  *           FS_AIO_INIT     - the function had no effect.
  *
  ******************************************************************************/
-FS_RESULT FS_AIO_InputCheck_IMXRT117X(fs_aio_test_t* pObj, fs_aio_imxrt117x_t * pAdc);
+FS_RESULT FS_AIO_InputCheck_IMXRT117X(fs_aio_test_t *pObj, fs_aio_imxrt117x_t *pAdc);
 
 #endif /* __ASM__ */
 #endif /* IEC60730B_AIO_H_ */

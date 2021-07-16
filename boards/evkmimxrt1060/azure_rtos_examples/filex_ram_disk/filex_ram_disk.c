@@ -55,9 +55,6 @@ CHAR ram_disk_memory[DEMO_RAM_DISK_SIZE];
 TX_THREAD thread_0;
 ULONG thread_0_counter;
 
-/* Define the SysTick cycles which will be loaded on tx_initialize_low_level.s */
-int systick_cycles;
-
 /*******************************************************************************
  * Code
  ******************************************************************************/
@@ -70,9 +67,6 @@ void main(void)
     BOARD_InitDebugConsole();
 
     PRINTF("FILEX example.....\r\n");
-
-    /* This sentence must be called before tx_kernel_enter(). */
-    systick_cycles = (SystemCoreClock / TX_TIMER_TICKS_PER_SECOND) - 1;
 
     /* Enter the ThreadX kernel.  */
     tx_kernel_enter();

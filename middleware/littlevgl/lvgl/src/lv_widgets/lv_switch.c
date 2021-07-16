@@ -12,7 +12,7 @@
 
 /*Testing of dependencies*/
 #if LV_USE_SLIDER == 0
-    #error "lv_sw: lv_slider is required. Enable it in lv_conf.h (LV_USE_SLIDER  1) "
+    #error "lv_sw: lv_slider is required. Enable it in lv_conf.h (LV_USE_SLIDER 1)"
 #endif
 
 #include "../lv_misc/lv_debug.h"
@@ -36,7 +36,6 @@
  **********************/
 static lv_res_t lv_switch_signal(lv_obj_t * sw, lv_signal_t sign, void * param);
 static lv_design_res_t lv_switch_design(lv_obj_t * sw, const lv_area_t * clip_area, lv_design_mode_t mode);
-static lv_style_list_t * lv_switch_get_style(lv_obj_t * sw, uint8_t part);
 static lv_style_list_t * lv_switch_get_style(lv_obj_t * sw, uint8_t part);
 
 /**********************
@@ -117,7 +116,7 @@ lv_obj_t * lv_switch_create(lv_obj_t * par, const lv_obj_t * copy)
 /**
  * Turn ON the switch
  * @param sw pointer to a switch object
- * @param anim LV_ANOM_ON: set the value with an animation; LV_ANIM_OFF: change the value immediately
+ * @param anim LV_ANIM_ON: set the value with an animation; LV_ANIM_OFF: change the value immediately
  */
 void lv_switch_on(lv_obj_t * sw, lv_anim_enable_t anim)
 {
@@ -126,8 +125,8 @@ void lv_switch_on(lv_obj_t * sw, lv_anim_enable_t anim)
 #if LV_USE_ANIMATION == 0
     anim = LV_ANIM_OFF;
 #endif
-    lv_switch_ext_t * ext = lv_obj_get_ext_attr(sw);
-    ext->state = 1;
+    if(lv_bar_get_value(sw) == 1)
+        return;
     lv_bar_set_value(sw, 1, anim);
     lv_obj_add_state(sw, LV_STATE_CHECKED);
 }
@@ -144,8 +143,8 @@ void lv_switch_off(lv_obj_t * sw, lv_anim_enable_t anim)
 #if LV_USE_ANIMATION == 0
     anim = LV_ANIM_OFF;
 #endif
-    lv_switch_ext_t * ext = lv_obj_get_ext_attr(sw);
-    ext->state = 0;
+    if(lv_bar_get_value(sw) == 0)
+        return;
     lv_bar_set_value(sw, 0, anim);
     lv_obj_clear_state(sw, LV_STATE_CHECKED);
 }
@@ -254,7 +253,6 @@ static lv_design_res_t lv_switch_design(lv_obj_t * sw, const lv_area_t * clip_ar
 
     return LV_DESIGN_RES_OK;
 }
-
 
 /**
  * Signal function of the switch

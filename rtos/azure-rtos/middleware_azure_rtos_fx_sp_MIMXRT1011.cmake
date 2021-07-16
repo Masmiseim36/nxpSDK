@@ -1,5 +1,3 @@
-if(NOT MIDDLEWARE_AZURE_RTOS_FX_SP_MIMXRT1011_INCLUDED)
-    
-    set(MIDDLEWARE_AZURE_RTOS_FX_SP_MIMXRT1011_INCLUDED true CACHE BOOL "middleware_azure_rtos_fx_sp component is included.")
+include_guard(GLOBAL)
+message("middleware_azure_rtos_fx_sp component is included.")
 
-endif()

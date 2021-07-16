@@ -26,10 +26,10 @@
 
 #include "fsl_debug_console.h"
 
-#include "fsl_gpio.h"
-#include "fsl_iomuxc.h"
 #include "fsl_phyksz8081.h"
 #include "fsl_enet_mdio.h"
+#include "fsl_gpio.h"
+#include "fsl_iomuxc.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/

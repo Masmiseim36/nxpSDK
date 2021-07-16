@@ -7,6 +7,12 @@
 #define _PERIPHERALS_H_
 
 /***********************************************************************************************************************
+ * User includes
+ **********************************************************************************************************************/
+#include "lfs_mflash.h"
+
+
+/***********************************************************************************************************************
  * Included files
  **********************************************************************************************************************/
 #include "fsl_common.h"
@@ -15,6 +21,12 @@
 #if defined(__cplusplus)
 extern "C" {
 #endif /* __cplusplus */
+
+/***********************************************************************************************************************
+ * User definitions
+ **********************************************************************************************************************/
+#define LITTLEFS_START_ADDR 0x2000000
+
 
 /***********************************************************************************************************************
  * Definitions
@@ -34,6 +46,8 @@ extern "C" {
 /***********************************************************************************************************************
  * Global variables
  **********************************************************************************************************************/
+/* LittleFS context */
+extern struct lfs_mflash_ctx LittleFS_ctx;
 /* LittleFS configuration */
 extern const struct lfs_config LittleFS_config;
 
@@ -41,17 +55,18 @@ extern const struct lfs_config LittleFS_config;
  * Callback functions
  **********************************************************************************************************************/
 /* LittleFS read a block region callback*/
-extern int lfs_hyperflash_read(const struct lfs_config*, lfs_block_t, lfs_off_t, void*, lfs_size_t);
+extern int lfs_mflash_read(const struct lfs_config*, lfs_block_t, lfs_off_t, void*, lfs_size_t);
 /* LittleFS program a block region callback*/
-extern int lfs_hyperflash_prog(const struct lfs_config*, lfs_block_t, lfs_off_t, const void*, lfs_size_t);
+extern int lfs_mflash_prog(const struct lfs_config*, lfs_block_t, lfs_off_t, const void*, lfs_size_t);
 /* LittleFS erase a block callback*/
-extern int lfs_hyperflash_erase(const struct lfs_config*, lfs_block_t);
+extern int lfs_mflash_erase(const struct lfs_config*, lfs_block_t);
 /* LittleFS state sync callback*/
-extern int lfs_hyperflash_sync(const struct lfs_config*);
+extern int lfs_mflash_sync(const struct lfs_config*);
 
 /***********************************************************************************************************************
  * Initialization functions
  **********************************************************************************************************************/
+
 void BOARD_InitPeripherals(void);
 
 /***********************************************************************************************************************

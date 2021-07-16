@@ -12,7 +12,8 @@
 #include <stdint.h>
 
 /*!
- * @addtogroup SDMMC_COMMON
+ * @addtogroup sdmmc_common SDMMC Common
+ * @ingroup card
  * @{
  */
 
@@ -41,7 +42,7 @@
 #define MMC_CLOCK_HS400 (400000000U)
 
 /*!@brief mask convert  */
-#define SDMMC_MASK(bit) (1U << (bit))
+#define SDMMC_MASK(bit) (1UL << (bit))
 
 /*! @brief Card status bit in R1
  * @anchor _sdmmc_r1_card_status_flag
@@ -496,26 +497,26 @@ enum
  */
 enum
 {
-    kSDIO_CCCRSupportDirectCmdDuringDataTrans = (1U << 0U),  /*!< support direct cmd during data transfer */
-    kSDIO_CCCRSupportMultiBlock               = (1U << 1U),  /*!< support multi block mode */
-    kSDIO_CCCRSupportReadWait                 = (1U << 2U),  /*!< support read wait */
-    kSDIO_CCCRSupportSuspendResume            = (1U << 3U),  /*!< support suspend resume */
-    kSDIO_CCCRSupportIntDuring4BitDataTrans   = (1U << 4U),  /*!< support interrupt during 4-bit data transfer */
-    kSDIO_CCCRSupportLowSpeed1Bit             = (1U << 6U),  /*!< support low speed 1bit mode */
-    kSDIO_CCCRSupportLowSpeed4Bit             = (1U << 7U),  /*!< support low speed 4bit mode */
-    kSDIO_CCCRSupportMasterPowerControl       = (1U << 8U),  /*!< support master power control */
-    kSDIO_CCCRSupportHighSpeed                = (1U << 9U),  /*!< support high speed */
-    kSDIO_CCCRSupportContinuousSPIInt         = (1U << 10U), /*!< support continuous SPI interrupt */
+    kSDIO_CCCRSupportDirectCmdDuringDataTrans = (1UL << 0U),  /*!< support direct cmd during data transfer */
+    kSDIO_CCCRSupportMultiBlock               = (1UL << 1U),  /*!< support multi block mode */
+    kSDIO_CCCRSupportReadWait                 = (1UL << 2U),  /*!< support read wait */
+    kSDIO_CCCRSupportSuspendResume            = (1UL << 3U),  /*!< support suspend resume */
+    kSDIO_CCCRSupportIntDuring4BitDataTrans   = (1UL << 4U),  /*!< support interrupt during 4-bit data transfer */
+    kSDIO_CCCRSupportLowSpeed1Bit             = (1UL << 6U),  /*!< support low speed 1bit mode */
+    kSDIO_CCCRSupportLowSpeed4Bit             = (1UL << 7U),  /*!< support low speed 4bit mode */
+    kSDIO_CCCRSupportMasterPowerControl       = (1UL << 8U),  /*!< support master power control */
+    kSDIO_CCCRSupportHighSpeed                = (1UL << 9U),  /*!< support high speed */
+    kSDIO_CCCRSupportContinuousSPIInt         = (1UL << 10U), /*!< support continuous SPI interrupt */
 };
 /*! @brief UHS timing mode flag */
-#define SDIO_CCCR_SUPPORT_HIGHSPEED     (1u << 9U)
-#define SDIO_CCCR_SUPPORT_SDR50         (1U << 11U)
-#define SDIO_CCCR_SUPPORT_SDR104        (1U << 12U)
-#define SDIO_CCCR_SUPPORT_DDR50         (1U << 13U)
-#define SDIO_CCCR_SUPPORT_DRIVER_TYPE_A (1U << 14U)
-#define SDIO_CCCR_SUPPORT_DRIVER_TYPE_C (1U << 15U)
-#define SDIO_CCCR_SUPPORT_DRIVER_TYPE_D (1U << 16U)
-#define SDIO_CCCR_SUPPORT_ASYNC_INT     (1U << 17U)
+#define SDIO_CCCR_SUPPORT_HIGHSPEED     (1UL << 9U)
+#define SDIO_CCCR_SUPPORT_SDR50         (1UL << 11U)
+#define SDIO_CCCR_SUPPORT_SDR104        (1UL << 12U)
+#define SDIO_CCCR_SUPPORT_DDR50         (1UL << 13U)
+#define SDIO_CCCR_SUPPORT_DRIVER_TYPE_A (1UL << 14U)
+#define SDIO_CCCR_SUPPORT_DRIVER_TYPE_C (1UL << 15U)
+#define SDIO_CCCR_SUPPORT_DRIVER_TYPE_D (1UL << 16U)
+#define SDIO_CCCR_SUPPORT_ASYNC_INT     (1UL << 17U)
 
 #define SDIO_CCCR_BUS_SPEED_MASK        (7U << 1U)
 #define SDIO_CCCR_ENABLE_HIGHSPEED_MODE (1U << 1U)
@@ -899,7 +900,7 @@ typedef enum _mmc_boot_mode
 #define MMC_EXTENDED_CSD_BYTES (512U)
 
 /*! @brief MMC card default relative address */
-#define MMC_DEFAULT_RELATIVE_ADDRESS (2U)
+#define MMC_DEFAULT_RELATIVE_ADDRESS (2UL)
 
 /*! @brief SD card product name length united as bytes. */
 #define SD_PRODUCT_NAME_BYTES (5U)
@@ -1146,7 +1147,7 @@ typedef struct _mmc_extended_csd
     uint8_t cardType;                         /*!< Card Type [196] */
     uint8_t ioDriverStrength;                 /*!< IO driver strength [197] */
     /*uint8_t OutofInterruptBusyTiming;*/     /*!< out of interrupt busy timing [198] */
-    /*uint8_t partitionSwitchTiming;*/        /*!< partition switch timing [199] */
+    uint8_t partitionSwitchTimeout;           /*!< partition switch timing [199] */
     uint8_t powerClass52MHz195V;              /*!< Power Class for 52MHz @ 1.95V [200] */
     uint8_t powerClass26MHz195V;              /*!< Power Class for 26MHz @ 1.95V [201] */
     uint8_t powerClass52MHz360V;              /*!< Power Class for 52MHz @ 3.6V [202] */

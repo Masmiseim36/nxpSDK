@@ -310,6 +310,12 @@ static usb_status_t USB_DeviceCh9GetStatus(usb_device_handle handle,
     usb_status_t error = kStatus_USB_InvalidRequest;
     uint8_t state;
 
+    if (((setup->bmRequestType & USB_REQUEST_TYPE_DIR_MASK) != USB_REQUEST_TYPE_DIR_IN) || (setup->wValue != 0U) ||
+        (setup->wLength != 2U))
+    {
+        return error;
+    }
+
     USB_DeviceGetStatus(handle, kUSB_DeviceStatusDeviceState, &state);
 
     if ((kUSB_DeviceStateAddress != state) && (kUSB_DeviceStateConfigured != state))
@@ -377,6 +383,11 @@ static usb_status_t USB_DeviceCh9SetClearFeature(usb_device_handle handle,
     uint8_t state;
     uint8_t isSet = 0U;
 
+    if (((setup->bmRequestType & USB_REQUEST_TYPE_DIR_MASK) != USB_REQUEST_TYPE_DIR_OUT) || (setup->wLength != 0U))
+    {
+        return error;
+    }
+
     USB_DeviceGetStatus(handle, kUSB_DeviceStatusDeviceState, &state);
 
     if ((kUSB_DeviceStateAddress != state) && (kUSB_DeviceStateConfigured != state))
@@ -403,7 +414,7 @@ static usb_status_t USB_DeviceCh9SetClearFeature(usb_device_handle handle,
         else if (USB_REQUEST_STANDARD_FEATURE_SELECTOR_DEVICE_TEST_MODE == setup->wValue)
         {
             state = kUSB_DeviceStateTestMode;
-            error = USB_DeviceSetStatus(classHandle->handle, kUSB_DeviceStatusDeviceState, &state);
+            error = USB_DeviceSetStatus(handle, kUSB_DeviceStatusDeviceState, &state);
         }
 #endif
         else
@@ -463,6 +474,13 @@ static usb_status_t USB_DeviceCh9SetAddress(usb_device_handle handle,
     usb_status_t error = kStatus_USB_InvalidRequest;
     uint8_t state;
 
+    if (((setup->bmRequestType & USB_REQUEST_TYPE_DIR_MASK) != USB_REQUEST_TYPE_DIR_OUT) ||
+        ((setup->bmRequestType & USB_REQUEST_TYPE_RECIPIENT_MASK) != USB_REQUEST_TYPE_RECIPIENT_DEVICE) ||
+        (setup->wIndex != 0U) || (setup->wLength != 0U))
+    {
+        return error;
+    }
+
     USB_DeviceGetStatus(handle, kUSB_DeviceStatusDeviceState, &state);
 
     if ((kUSB_DeviceStateAddressing != state) && (kUSB_DeviceStateAddress != state) &&
@@ -515,6 +533,11 @@ static usb_status_t USB_DeviceCh9GetDescriptor(usb_device_handle handle,
 {
     uint8_t state;
 
+    if ((setup->bmRequestType & USB_REQUEST_TYPE_DIR_MASK) != USB_REQUEST_TYPE_DIR_IN)
+    {
+        return kStatus_USB_InvalidRequest;
+    }
+
     USB_DeviceGetStatus(handle, kUSB_DeviceStatusDeviceState, &state);
 
     if ((kUSB_DeviceStateAddress != state) && (kUSB_DeviceStateConfigured != state) &&
@@ -546,6 +569,13 @@ static usb_status_t USB_DeviceCh9GetConfiguration(usb_device_handle handle,
                                                   uint32_t *length)
 {
     uint8_t state;
+
+    if (((setup->bmRequestType & USB_REQUEST_TYPE_DIR_MASK) != USB_REQUEST_TYPE_DIR_IN) ||
+        ((setup->bmRequestType & USB_REQUEST_TYPE_RECIPIENT_MASK) != USB_REQUEST_TYPE_RECIPIENT_DEVICE) ||
+        (setup->wValue != 0U) || (setup->wIndex != 0U) || (setup->wLength != 1U))
+    {
+        return kStatus_USB_InvalidRequest;
+    }
 
     USB_DeviceGetStatus(handle, kUSB_DeviceStatusDeviceState, &state);
 
@@ -579,6 +609,13 @@ static usb_status_t USB_DeviceCh9SetConfiguration(usb_device_handle handle,
                                                   uint32_t *length)
 {
     uint8_t state;
+
+    if (((setup->bmRequestType & USB_REQUEST_TYPE_DIR_MASK) != USB_REQUEST_TYPE_DIR_OUT) ||
+        ((setup->bmRequestType & USB_REQUEST_TYPE_RECIPIENT_MASK) != USB_REQUEST_TYPE_RECIPIENT_DEVICE) ||
+        (setup->wIndex != 0U) || (setup->wLength != 0U))
+    {
+        return kStatus_USB_InvalidRequest;
+    }
 
     USB_DeviceGetStatus(handle, kUSB_DeviceStatusDeviceState, &state);
 
@@ -622,6 +659,13 @@ static usb_status_t USB_DeviceCh9GetInterface(usb_device_handle handle,
     usb_status_t error = kStatus_USB_InvalidRequest;
     uint8_t state;
 
+    if (((setup->bmRequestType & USB_REQUEST_TYPE_DIR_MASK) != USB_REQUEST_TYPE_DIR_IN) ||
+        ((setup->bmRequestType & USB_REQUEST_TYPE_RECIPIENT_MASK) != USB_REQUEST_TYPE_RECIPIENT_INTERFACE) ||
+        (setup->wValue != 0U) || (setup->wLength != 1U))
+    {
+        return error;
+    }
+
     USB_DeviceGetStatus(handle, kUSB_DeviceStatusDeviceState, &state);
 
     if (state != kUSB_DeviceStateConfigured)
@@ -655,6 +699,13 @@ static usb_status_t USB_DeviceCh9SetInterface(usb_device_handle handle,
 {
     uint8_t state;
 
+    if (((setup->bmRequestType & USB_REQUEST_TYPE_DIR_MASK) != USB_REQUEST_TYPE_DIR_OUT) ||
+        ((setup->bmRequestType & USB_REQUEST_TYPE_RECIPIENT_MASK) != USB_REQUEST_TYPE_RECIPIENT_INTERFACE) ||
+        (setup->wLength != 0U))
+    {
+        return kStatus_USB_InvalidRequest;
+    }
+
     USB_DeviceGetStatus(handle, kUSB_DeviceStatusDeviceState, &state);
 
     if (state != kUSB_DeviceStateConfigured)
@@ -686,6 +737,13 @@ static usb_status_t USB_DeviceCh9SynchFrame(usb_device_handle handle,
 {
     usb_status_t error = kStatus_USB_InvalidRequest;
     uint8_t state;
+
+    if (((setup->bmRequestType & USB_REQUEST_TYPE_DIR_MASK) != USB_REQUEST_TYPE_DIR_IN) ||
+        ((setup->bmRequestType & USB_REQUEST_TYPE_RECIPIENT_MASK) != USB_REQUEST_TYPE_RECIPIENT_ENDPOINT) ||
+        (setup->wValue != 0U) || (setup->wLength != 2U))
+    {
+        return error;
+    }
 
     USB_DeviceGetStatus(handle, kUSB_DeviceStatusDeviceState, &state);
 
@@ -737,20 +795,10 @@ static usb_status_t USB_DeviceControlCallbackFeedback(usb_device_handle handle,
                                                       uint32_t *length)
 {
     usb_status_t errorCode = kStatus_USB_Error;
-    uint8_t direction      = USB_IN;
 
     if (kStatus_USB_InvalidRequest == error)
     {
-        /* Stall the control pipe when the request is unsupported. */
-        if ((!((setup->bmRequestType & USB_REQUEST_TYPE_TYPE_MASK) == USB_REQUEST_TYPE_TYPE_STANDARD)) &&
-            ((setup->bmRequestType & USB_REQUEST_TYPE_DIR_MASK) == USB_REQUEST_TYPE_DIR_OUT) && (setup->wLength) &&
-            (kUSB_DeviceControlPipeSetupStage == stage))
-        {
-            direction = USB_OUT;
-        }
-        errorCode = USB_DeviceStallEndpoint(
-            handle,
-            (USB_CONTROL_ENDPOINT) | (uint8_t)((uint32_t)direction << USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_SHIFT));
+        errorCode = USB_DeviceStallEndpoint(handle, (uint8_t)USB_CONTROL_ENDPOINT);
     }
     else
     {
@@ -758,7 +806,15 @@ static usb_status_t USB_DeviceControlCallbackFeedback(usb_device_handle handle,
         {
             *length = setup->wLength;
         }
-        errorCode = USB_DeviceSendRequest(handle, (USB_CONTROL_ENDPOINT), *buffer, *length);
+
+        if (kStatus_USB_Success == error)
+        {
+            errorCode = USB_DeviceSendRequest(handle, (USB_CONTROL_ENDPOINT), *buffer, *length);
+        }
+        else
+        {
+            errorCode = USB_DeviceSendRequest(handle, (USB_CONTROL_ENDPOINT), (uint8_t *)NULL, 0U);
+        }
 
         if ((kStatus_USB_Success == errorCode) &&
             (USB_REQUEST_TYPE_DIR_IN == (setup->bmRequestType & USB_REQUEST_TYPE_DIR_MASK)))
@@ -788,11 +844,12 @@ usb_status_t USB_DeviceControlCallback(usb_device_handle handle,
                                        void *callbackParam)
 {
     usb_setup_struct_t *deviceSetup;
-    uint8_t *setupOutBuffer;
-    uint8_t *buffer    = (uint8_t *)NULL;
-    uint32_t length    = 0U;
-    usb_status_t error = kStatus_USB_InvalidRequest;
+    uint8_t *setupOutBuffer = (uint8_t *)NULL;
+    uint8_t *buffer         = (uint8_t *)NULL;
+    uint32_t length         = 0U;
+    usb_status_t error      = kStatus_USB_InvalidRequest;
     uint8_t state;
+
     /* endpoint callback length is USB_CANCELLED_TRANSFER_LENGTH (0xFFFFFFFFU) when transfer is canceled */
     if (USB_CANCELLED_TRANSFER_LENGTH == message->length)
     {
@@ -807,7 +864,7 @@ usb_status_t USB_DeviceControlCallback(usb_device_handle handle,
         if ((USB_SETUP_PACKET_SIZE != message->length) || (NULL == message->buffer))
         {
             /* If a invalid setup is received, the control pipes should be de-init and init again.
-             * Due to the IP can not meet this require, it is reversed for feature.
+             * Due to the IP can not meet this require, it is reserved for feature.
              */
             /*
             USB_DeviceDeinitEndpoint(handle,
@@ -827,12 +884,24 @@ usb_status_t USB_DeviceControlCallback(usb_device_handle handle,
         deviceSetup->bRequest      = setup->bRequest;
         deviceSetup->bmRequestType = setup->bmRequestType;
 
+        /* Check the invalid value */
+        if ((deviceSetup->bmRequestType & USB_REQUEST_TYPE_RECIPIENT_MASK) > USB_REQUEST_TYPE_RECIPIENT_OTHER)
+        {
+            USB_DeviceControlCallbackFeedback(handle, deviceSetup, kStatus_USB_InvalidRequest,
+                                              kUSB_DeviceControlPipeSetupStage, NULL, 0U);
+            return error;
+        }
+
         if ((deviceSetup->bmRequestType & USB_REQUEST_TYPE_TYPE_MASK) == USB_REQUEST_TYPE_TYPE_STANDARD)
         {
             /* Handle the standard request */
-            if (s_UsbDeviceStandardRequest[deviceSetup->bRequest] != (usb_standard_request_callback_t)NULL)
+            /* Handle the standard request, only handle the request in request array. */
+            if (deviceSetup->bRequest < (sizeof(s_UsbDeviceStandardRequest) / 4U))
             {
-                error = s_UsbDeviceStandardRequest[deviceSetup->bRequest](handle, deviceSetup, &buffer, &length);
+                if (s_UsbDeviceStandardRequest[deviceSetup->bRequest] != (usb_standard_request_callback_t)NULL)
+                {
+                    error = s_UsbDeviceStandardRequest[deviceSetup->bRequest](handle, deviceSetup, &buffer, &length);
+                }
             }
         }
         else
@@ -842,20 +911,18 @@ usb_status_t USB_DeviceControlCallback(usb_device_handle handle,
             {
                 /* Class or vendor request with the OUT data phase. */
                 if ((deviceSetup->wLength) &&
-                    ((deviceSetup->bmRequestType & USB_REQUEST_TYPE_TYPE_CLASS) == USB_REQUEST_TYPE_TYPE_CLASS))
+                    ((deviceSetup->bmRequestType & USB_REQUEST_TYPE_TYPE_MASK) == USB_REQUEST_TYPE_TYPE_CLASS))
                 {
                     /* Get data buffer to receive the data from the host. */
                     length = deviceSetup->wLength;
                     error  = USB_DeviceGetClassReceiveBuffer(handle, deviceSetup, &length, &setupOutBuffer);
-                    length = 0U;
                 }
                 else if ((deviceSetup->wLength) &&
-                         ((deviceSetup->bmRequestType & USB_REQUEST_TYPE_TYPE_VENDOR) == USB_REQUEST_TYPE_TYPE_VENDOR))
+                         ((deviceSetup->bmRequestType & USB_REQUEST_TYPE_TYPE_MASK) == USB_REQUEST_TYPE_TYPE_VENDOR))
                 {
                     /* Get data buffer to receive the data from the host. */
                     length = deviceSetup->wLength;
                     error  = USB_DeviceGetVendorReceiveBuffer(handle, deviceSetup, &length, &setupOutBuffer);
-                    length = 0U;
                 }
                 else
                 {
@@ -863,19 +930,28 @@ usb_status_t USB_DeviceControlCallback(usb_device_handle handle,
                 if (kStatus_USB_Success == error)
                 {
                     /* Prime an OUT transfer */
-                    error = USB_DeviceRecvRequest(handle, USB_CONTROL_ENDPOINT, setupOutBuffer, deviceSetup->wLength);
+                    if (length > deviceSetup->wLength)
+                    {
+                        length = deviceSetup->wLength;
+                    }
+                    error = USB_DeviceRecvRequest(handle, USB_CONTROL_ENDPOINT, setupOutBuffer, length);
                     return error;
+                }
+                else
+                {
+                    /* Other error codes, will stall control endpoint */
+                    error = kStatus_USB_InvalidRequest;
                 }
             }
             else
             {
                 /* Class or vendor request with the IN data phase. */
-                if (((deviceSetup->bmRequestType & USB_REQUEST_TYPE_TYPE_CLASS) == USB_REQUEST_TYPE_TYPE_CLASS))
+                if (((deviceSetup->bmRequestType & USB_REQUEST_TYPE_TYPE_MASK) == USB_REQUEST_TYPE_TYPE_CLASS))
                 {
                     /* Get data buffer to response the host. */
                     error = USB_DeviceProcessClassRequest(handle, deviceSetup, &length, &buffer);
                 }
-                else if (((deviceSetup->bmRequestType & USB_REQUEST_TYPE_TYPE_VENDOR) == USB_REQUEST_TYPE_TYPE_VENDOR))
+                else if (((deviceSetup->bmRequestType & USB_REQUEST_TYPE_TYPE_MASK) == USB_REQUEST_TYPE_TYPE_VENDOR))
                 {
                     /* Get data buffer to response the host. */
                     error = USB_DeviceProcessVendorRequest(handle, deviceSetup, &length, &buffer);
@@ -885,6 +961,12 @@ usb_status_t USB_DeviceControlCallback(usb_device_handle handle,
                 }
             }
         }
+        /* Buffer that is equal to NULL means the application or classs driver does not prepare a buffer for
+           sending or receiving the data, so control endpoint will be stalled here. */
+        if ((0U != length) && (NULL == buffer))
+        {
+            error = kStatus_USB_InvalidRequest;
+        }
         /* Send the response to the host. */
         error = USB_DeviceControlCallbackFeedback(handle, deviceSetup, error, kUSB_DeviceControlPipeSetupStage, &buffer,
                                                   &length);
@@ -892,7 +974,10 @@ usb_status_t USB_DeviceControlCallback(usb_device_handle handle,
     else if (kUSB_DeviceStateAddressing == state)
     {
         /* Set the device address to controller. */
-        error = s_UsbDeviceStandardRequest[deviceSetup->bRequest](handle, deviceSetup, &buffer, &length);
+        if (USB_REQUEST_STANDARD_SET_ADDRESS == deviceSetup->bRequest)
+        {
+            error = s_UsbDeviceStandardRequest[deviceSetup->bRequest](handle, deviceSetup, &buffer, &length);
+        }
     }
 #if (defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0U)) && \
     (defined(USB_DEVICE_CONFIG_USB20_TEST_MODE) && (USB_DEVICE_CONFIG_USB20_TEST_MODE > 0U))
@@ -906,12 +991,12 @@ usb_status_t USB_DeviceControlCallback(usb_device_handle handle,
     else if ((message->length) && (deviceSetup->wLength) &&
              ((deviceSetup->bmRequestType & USB_REQUEST_TYPE_DIR_MASK) == USB_REQUEST_TYPE_DIR_OUT))
     {
-        if (((deviceSetup->bmRequestType & USB_REQUEST_TYPE_TYPE_CLASS) == USB_REQUEST_TYPE_TYPE_CLASS))
+        if (((deviceSetup->bmRequestType & USB_REQUEST_TYPE_TYPE_MASK) == USB_REQUEST_TYPE_TYPE_CLASS))
         {
             /* Data received in OUT phase, and notify the class driver. */
             error = USB_DeviceProcessClassRequest(handle, deviceSetup, &message->length, &message->buffer);
         }
-        else if (((deviceSetup->bmRequestType & USB_REQUEST_TYPE_TYPE_VENDOR) == USB_REQUEST_TYPE_TYPE_VENDOR))
+        else if (((deviceSetup->bmRequestType & USB_REQUEST_TYPE_TYPE_MASK) == USB_REQUEST_TYPE_TYPE_VENDOR))
         {
             /* Data received in OUT phase, and notify the application. */
             error = USB_DeviceProcessVendorRequest(handle, deviceSetup, &message->length, &message->buffer);

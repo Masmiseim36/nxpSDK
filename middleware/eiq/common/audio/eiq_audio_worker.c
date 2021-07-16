@@ -5,92 +5,137 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-#include <stdio.h>
 #include "eiq_audio_worker.h"
 #include "eiq_speaker.h"
 #include "eiq_micro.h"
-#include "stdbool.h"
-#include "fsl_debug_console.h"
 
-EIQ_AudioWorker_t worker;
+/*******************************************************************************
+ * Variables
+ ******************************************************************************/
 
-EIQ_IWorkerUpdater_t handler;
+/*! @brief AudioWorker instance. */
+static EIQ_AudioWorker_t s_worker;
 
-uint8_t* pExtract = NULL;
-bool ready = false;
+/*! @brief AudioWorker s_workerHandler. It can be called when data are ready.*/
+static EIQ_IWorkerUpdater_t s_workerHandler;
 
-static status_t start()
+/*!
+ * @brief Starts data transfer.
+ *
+ * This function starts microphone and speaker audio transfer. It is not blocking function.
+ */
+static void start(void)
 {
-  worker.receiver->base.start();
-  worker.sender->base.start();
-  return kStatus_Success;
+    s_worker.receiver->base.start();
+    s_worker.sender->base.start();
 }
 
-static bool isReady()
+/*!
+ * @brief Checks if data is ready.
+ *
+ * This function returns ready flag.
+ *
+ * @return True in case data is ready
+ */
+static bool isReady(void)
 {
-  return ready;
+    return s_worker.receiver->isReady();
 }
 
-static void notify()
+/*!
+ * @brief Notifies s_worker.
+ *
+ * This function notifies s_worker to start new data transfer.
+ *
+ */
+static void notify(void)
 {
-  worker.receiver->base.notify();
+    s_worker.receiver->base.notify();
 }
 
-static Dims_t getResolution(){
-  return worker.receiver->base.getResolution();
-}
-
-static uint8_t* getData()
+/*!
+ * @brief Gets rectangle dimensions.
+ *
+ * This function returns dimensions of the captured data.
+ *
+ * @return Dimensions of the captured data
+ */
+static Dims_t getResolution(void)
 {
-  if(pExtract == NULL){
-    printf("Internal buffer is not allocated.\r\n");
-    return NULL;
-  }
-  ready = false;
-  return (uint8_t*)pExtract;
+    return s_worker.receiver->base.getResolution();
 }
 
+/*!
+ * @brief Gets extracted data from microphone.
+ *
+ * This function returns extracted data from microphone.
+ *
+ * @return extracted data from microphone
+ */
+static uint8_t* getData(void)
+{
+    return s_worker.receiver->getReadyBuff();
+}
+
+/*!
+ * @brief Refreshes data in the speaker.
+ *
+ * This function sets speaker buffer address and it notifies
+ * audio speaker immediately. It also checks received buffer
+ * from microphone and calls registrated callback.
+ *
+ * @param bufferAddr speaker buffer address with stored data
+ *
+ */
 static void refresh(uint32_t bufferAddr)
 {
-  ready = false;
+    s_worker.sender->setBuffer(bufferAddr);
+    s_worker.sender->base.notify();
 
-  worker.sender->setBuffer(bufferAddr);
-  worker.sender->base.notify();
-
-  uint8_t* p = worker.receiver->getReadyBuff();
-  if( p != NULL){
-      pExtract = p;
-      if(handler != NULL)
-      {
-        handler((EIQ_IWorker_t*)&worker);
-      }
-      ready = true;
-  }
-
+    if (s_workerHandler != NULL && s_worker.receiver->isReady())
+    {
+        s_workerHandler((EIQ_IWorker_t*)&s_worker);
+    }
 }
 
+/*!
+ * @brief Sets ready Callback
+ *
+ * This function stores address of external function which
+ * is called when data are ready.
+ *
+ * @param iworker address of external s_workerHandler.
+ *
+ */
 static void setReadyCallback(EIQ_IWorkerUpdater_t iworker)
 {
-  if(iworker != NULL)
-  {
-      handler = iworker;
-  }
+    if (iworker != NULL)
+    {
+        s_workerHandler = iworker;
+    }
 }
 
-EIQ_AudioWorker_t* EIQ_AudioWorkerInit()
+/*!
+ * @brief Initializes the AudioWorker.
+ *
+ * This function initializes microphone and speaker.
+ *
+ * @return Pointer to initialized AudioWorker.
+ */
+EIQ_AudioWorker_t* EIQ_AudioWorkerInit(void)
 {
-  worker.base.start = start;
-  worker.base.isReady = isReady;
-  worker.base.getResolution = getResolution;
-  worker.base.notify = notify;
-  worker.base.getData = getData;
-  worker.base.refresh = refresh;
-  worker.base.setReadyCallback = setReadyCallback;
-  worker.receiver = EIQ_MicroInit();
-  worker.sender = EIQ_SpeakerInit();
+    s_worker.base.start = start;
+    s_worker.base.isReady = isReady;
+    s_worker.base.getResolution = getResolution;
+    s_worker.base.notify = notify;
+    s_worker.base.getData = getData;
+    s_worker.base.refresh = refresh;
+    s_worker.base.setReadyCallback = setReadyCallback;
+    s_worker.receiver = EIQ_MicroInit();
+    s_worker.sender = EIQ_SpeakerInit();
 
-  worker.receiver->setReadyCallback(worker.base.refresh);
+    s_worker.receiver->setReadyCallback(s_worker.base.refresh);
 
-  return &worker;
+    return &s_worker;
 }
 

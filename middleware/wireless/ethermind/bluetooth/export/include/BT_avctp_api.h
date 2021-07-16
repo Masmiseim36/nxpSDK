@@ -50,18 +50,18 @@
 
 /*@{*/
 
-#define AVCTP_CONNECT_IND                               0x01
-#define AVCTP_CONNECT_CNF                               0x02
-#define AVCTP_DISCONNECT_IND                            0x03
-#define AVCTP_DISCONNECT_CNF                            0x04
-#define AVCTP_MESSAGE_IND                               0x05
-#define AVCTP_MESSAGE_SEND_CNF                          0x06
+#define AVCTP_CONNECT_IND                               0x01U
+#define AVCTP_CONNECT_CNF                               0x02U
+#define AVCTP_DISCONNECT_IND                            0x03U
+#define AVCTP_DISCONNECT_CNF                            0x04U
+#define AVCTP_MESSAGE_IND                               0x05U
+#define AVCTP_MESSAGE_SEND_CNF                          0x06U
 
-#define AVCTP_BOW_MESSAGE_IND                           0x07
-#define AVCTP_BOW_CONNECT_IND                           0x08
-#define AVCTP_BOW_DISCONNECT_IND                        0x09
-#define AVCTP_BOW_CONNECT_CNF                           0x0A
-#define AVCTP_BOW_DISCONNECT_CNF                        0x0B
+#define AVCTP_BOW_MESSAGE_IND                           0x07U
+#define AVCTP_BOW_CONNECT_IND                           0x08U
+#define AVCTP_BOW_DISCONNECT_IND                        0x09U
+#define AVCTP_BOW_CONNECT_CNF                           0x0AU
+#define AVCTP_BOW_DISCONNECT_CNF                        0x0BU
 /*@}*/
 
 
@@ -71,16 +71,16 @@
  */
 
 /*@{*/
-#define AVCTP_CTR_MSG_COMMAND                           0x00
-#define AVCTP_CTR_MSG_RESPONSE                          0x02
+#define AVCTP_CTR_MSG_COMMAND                           0x00U
+#define AVCTP_CTR_MSG_RESPONSE                          0x02U
 
 /*@}*/
 
 
 /** AVCTP Channel type */
-#define AVCTP_CHANNEL_TYPE_COMMAND                    0x01
-#define AVCTP_CHANNEL_TYPE_BROWSING                   0x02
-#define AVCTP_CHANNEL_TYPE_INVALID                    0xFF
+#define AVCTP_CHANNEL_TYPE_COMMAND                    0x01U
+#define AVCTP_CHANNEL_TYPE_BROWSING                   0x02U
+#define AVCTP_CHANNEL_TYPE_INVALID                    0xFFU
 
 /**
  *  @name AVCTP Control Message Header Length
@@ -147,9 +147,10 @@ typedef struct avctp_handle
 
 /** \} */
 /** \} */
+
 /**
  *  \defgroup avctp_cb Application Callback
- * \{
+ *  \{
  *  This Section Describes the module Notification Callback interface offered
  *  to the application
  */
@@ -392,10 +393,10 @@ typedef API_RESULT (* AVCTP_EVENT_NTF_CB)
  *  \hideinitializer
  */
 #define AVCTP_INIT_HANDLE(hdl)                           \
-        ((hdl).profile_index) = 0xFF;                    \
+        ((hdl).profile_index) = 0xFFU;                   \
         ((hdl).ctrl_ch_index) = AVCTP_MAX_SIG_CHANNELS;  \
         ((hdl).brow_ch_index) = AVCTP_MAX_SIG_CHANNELS;  \
-        BT_mem_set ((hdl).bd_addr, 0x00, BT_BD_ADDR_SIZE)
+        BT_mem_set ((hdl).bd_addr, 0x00U, BT_BD_ADDR_SIZE)
 
 /**
  *  This utility macro sets BD_ADDR in an AVCTP Handle.
@@ -420,8 +421,7 @@ typedef API_RESULT (* AVCTP_EVENT_NTF_CB)
  *  \hideinitializer
  */
 #define AVCTP_RESET_HANDLE_BD_ADDR(hdl) \
-        BT_mem_set ((hdl).bd_addr, 0x00, BT_BD_ADDR_SIZE)
-
+        BT_mem_set ((hdl).bd_addr, 0x00U, BT_BD_ADDR_SIZE)
 
 /**
  *  This utility macro gets BD_ADDR from an AVCTP Handle.
@@ -436,7 +436,6 @@ typedef API_RESULT (* AVCTP_EVENT_NTF_CB)
 #define AVCTP_GET_HANDLE_BD_ADDR(hdl, bd) \
         BT_COPY_BD_ADDR((bd), (hdl).bd_addr)
 
-
 /**
  *  This utility macro updates the AVCTP Control Message Packet Header.
  *
@@ -450,9 +449,8 @@ typedef API_RESULT (* AVCTP_EVENT_NTF_CB)
  *  \hideinitializer
  */
 #define AVCTP_UPDATE_MSG_HDR(buffer, tl, mt)  \
-        (*(buffer))  = (UCHAR) ((tl) << 4);   \
+        (*(buffer))  = (UCHAR) ((tl) << 4U);   \
         (*(buffer)) |= (UCHAR) (mt)
-
 
 /**
  *  This utility macro retrieves the AVCTP Control Message Packet Header.
@@ -467,9 +465,8 @@ typedef API_RESULT (* AVCTP_EVENT_NTF_CB)
  *  \hideinitializer
  */
 #define AVCTP_GET_MSG_HDR(buffer, tl, mt) \
-        (tl) = (*(buffer) >> 4);        \
-        (mt) = (*(buffer) & 0x02)
-
+        (tl) = (*(buffer) >> 4U);        \
+        (mt) = (*(buffer) & 0x02U)
 
 /**
  *  This utility macro is used to compare two AVCTP handles
@@ -484,7 +481,7 @@ typedef API_RESULT (* AVCTP_EVENT_NTF_CB)
  */
 #define AVCTP_COMPARE_HANDLE(h1, h2) \
         (((h1)->profile_index == (h2).profile_index) && \
-        (0 == BT_mem_cmp((h1)->bd_addr, (h2).bd_addr, BT_BD_ADDR_SIZE)))
+        (0U == BT_mem_cmp((h1)->bd_addr, (h2).bd_addr, BT_BD_ADDR_SIZE)))
 
 /**
  *  This utility macro is used to copy the AVCTP handle
@@ -561,7 +558,6 @@ API_RESULT BT_avctp_profile_register
                /* OUT */  AVCTP_HANDLE *     handle
            );
 
-
 /**
  *  \brief To deregister a Profile form AVCTP.
  *
@@ -587,13 +583,11 @@ API_RESULT BT_avctp_profile_deregister
 
 /*@}*/
 
-
 /**
  *  @name AVCTP APIs - Signaling Connection Management
  */
 
 /*@{*/
-
 /**
  *  \brief To establish an AVCTP Signaling Connection with a remote AVCTP
  *         Entity.
@@ -674,9 +668,6 @@ API_RESULT BT_avctp_channel_disconnect_req
                /* IN */ UCHAR          channel_type
            );
 
-
-
-
 /**
  *  \brief To request transfer of AVCTP Control Message Packets.
  *
@@ -721,7 +712,6 @@ API_RESULT BT_avctp_channel_disconnect_req
  *  \sa
  *  AVCTP_HANDLE
  */
-
 API_RESULT BT_avctp_channel_send_message
            (
                /* IN */ AVCTP_HANDLE * handle,
@@ -729,9 +719,7 @@ API_RESULT BT_avctp_channel_send_message
                /* IN */ UINT16         packet_len,
                /* IN */ UCHAR          channel_type
            );
-
 /*@}*/
-
 
 /**
  *  @name AVCTP APIs - Utility Functions
@@ -764,7 +752,6 @@ API_RESULT BT_avctp_set_mtu
                /* IN */  UINT16         in_mtu
            );
 
-
 /**
  *  \brief To set Flush Time Out for AVCTP Signaling Channel.
  *
@@ -789,7 +776,6 @@ API_RESULT BT_avctp_set_flush_to
                /* IN */  AVCTP_HANDLE * handle,
                /* IN */  UINT16         flush_to
            );
-
 /*@}*/
 
 /* Abstraction for AVCTP 1.0 APIs */
@@ -824,5 +810,4 @@ API_RESULT BT_avctp_set_flush_to
 /** \} */
 /** \} */
 #endif /* _H_BT_AVCTP_API_ */
-
 

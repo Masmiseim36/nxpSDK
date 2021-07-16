@@ -1,6 +1,6 @@
 /*! *********************************************************************************
 * Copyright (c) 2015, Freescale Semiconductor, Inc.
-* Copyright 2016-2017, 2020 NXP
+* Copyright 2016-2017, 2020-2021 NXP
 * All rights reserved.
 *
 * \file
@@ -430,6 +430,7 @@ typedef enum NVM_Status_tag
     gNVM_NoMemory_c,
     gNVM_IsMirroredDataSet_c,
     gNVM_DefragBufferTooSmall_c,
+    gNVM_ReservedFlashTooSmall_c,
     gNVM_FragmentatedEntry_c,
     gNVM_AlignamentError_c,
     gNVM_InvalidTableEntriesCount_c,
@@ -808,6 +809,19 @@ extern bool_t NvIsDataSetDirty
 extern void NvGetPagesStatistics
 (
     NVM_Statistics_t* ptrStat
+);
+
+
+/******************************************************************************
+ * Name: NvGetPagesSize
+ * Description: Retrieves the NV Virtual Page size
+ * Parameter(s): [OUT] pPageSize - pointer to a memory location where the page
+ *                                 size will be stored
+ * Return: -
+ *****************************************************************************/
+void NvGetPagesSize
+(
+    uint32_t* pPageSize
 );
 
 

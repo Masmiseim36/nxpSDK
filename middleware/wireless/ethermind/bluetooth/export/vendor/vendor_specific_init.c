@@ -53,10 +53,10 @@ void app_vendor_specific_init(void ((*callback) (void)))
         VS_INIT_TRC(
         "[VS INIT] Started vendor specific init procedure.\n");
 
-        vs_command_index = 0;
+        vs_command_index = 0U;
         vs_max_commands = sizeof(vs_commands);
 
-        hci_opcode = 0x0000;
+        hci_opcode = 0x0000U;
 
         if (NULL != callback)
         {
@@ -75,11 +75,11 @@ void app_vendor_specific_init(void ((*callback) (void)))
             hci_uart_set_serial_settings (NULL, br_value);
 #endif /* BT_UART */
 
-            BT_sleep(1);
+            BT_sleep(1U);
         }
 
         /* Skip command type */
-        vs_command_index += 1;
+        vs_command_index += 1U;
 
         /* Unpack the command opcode */
         hci_unpack_2_byte_param
@@ -89,7 +89,7 @@ void app_vendor_specific_init(void ((*callback) (void)))
         );
 
         /* Skip command opcode */
-        vs_command_index += 2;
+        vs_command_index += 2U;
 
         /* Update global current opcode */
         hci_opcode = hci_command;
@@ -100,7 +100,7 @@ void app_vendor_specific_init(void ((*callback) (void)))
             hci_unpack_4_byte_param
             (
                 &br_value,
-                &vs_commands[vs_command_index + 1]
+                &vs_commands[vs_command_index + 1U]
             );
         }
 
@@ -108,7 +108,7 @@ void app_vendor_specific_init(void ((*callback) (void)))
         retval = BT_hci_vendor_specific_command
                  (
                      hci_command,
-                     (UCHAR *) &vs_commands[vs_command_index + 1],
+                     (UCHAR *) &vs_commands[vs_command_index + 1U],
                      vs_commands[vs_command_index]
                  );
 
@@ -120,7 +120,7 @@ void app_vendor_specific_init(void ((*callback) (void)))
         }
 
         /* Skip command param and param length */
-        vs_command_index += vs_commands[vs_command_index] + 1;
+        vs_command_index += vs_commands[vs_command_index] + 1U;
 
         /* Change the state on last vendor specific init command */
         if (vs_max_commands <= vs_command_index)
@@ -140,6 +140,10 @@ void app_vendor_specific_init(void ((*callback) (void)))
         {
             vs_init_callback();
         }
+    }
+    else
+    {
+        /* MISRA C-2012 Rule 15.7 */
     }
 
     return;

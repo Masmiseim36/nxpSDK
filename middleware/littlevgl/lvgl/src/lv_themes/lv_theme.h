@@ -1,10 +1,10 @@
 /**
- *@file lv_themes.h
+ *@file lv_theme.h
  *
  */
 
-#ifndef LV_THEMES_H
-#define LV_THEMES_H
+#ifndef LV_THEME_H
+#define LV_THEME_H
 
 #ifdef __cplusplus
 extern "C" {
@@ -108,9 +108,6 @@ typedef enum {
 #endif
 #if LV_USE_ROLLER
     LV_THEME_ROLLER,
-#endif
-#if LV_USE_ROTARY
-    LV_THEME_ROTARY,
 #endif
 #if LV_USE_SLIDER
     LV_THEME_SLIDER,
@@ -275,4 +272,4 @@ uint32_t lv_theme_get_flags(void);
 } /* extern "C" */
 #endif
 
-#endif /*LV_THEMES_H*/
+#endif /*LV_THEME_H*/

@@ -22,7 +22,7 @@
 #define IEC60730B_CM4_CM7_FLASH_H_
 
 /*
- * List of devices and supported functions can be found in library user guide, 
+ * List of devices and supported functions can be found in library user guide,
  * section Core self test library - source code version.
  */
 
@@ -30,7 +30,7 @@
  * Macros
  ******************************************************************************/
 /* WAS (Write As Seed) bit mask used in HW CRC module */
-#define FS_FLASH_CRC_CTRL_WAS_MASK  0x2000000
+#define FS_FLASH_CRC_CTRL_WAS_MASK 0x2000000
 
 /* Channel state */
 #define FS_FAIL_FLASH_DCP      (FS_FLASH_CODE + 0x1U) /* DCP calculation error */
@@ -62,7 +62,7 @@ typedef struct
 
 /* DCP channels */
 typedef enum
-{ 
+{
     DCP_CH0 = (uint32_t)(1U << 16U),
     DCP_CH1 = (uint32_t)(1U << 17U),
     DCP_CH2 = (uint32_t)(1U << 18U),
@@ -102,7 +102,7 @@ uint16_t FS_CM4_CM7_FLASH_HW16(uint32_t startAddress, uint32_t size, uint32_t mo
  * @return   16-bit crc value of the memory range (CRC-16-CCITT - normal 0x1021).
  *
  ******************************************************************************/
-uint16_t FS_CM4_CM7_FLASH_SW16(uint32_t startAddress, uint32_t size, uint32_t moduleAddress, uint16_t crcVal);          
+uint16_t FS_CM4_CM7_FLASH_SW16(uint32_t startAddress, uint32_t size, uint32_t moduleAddress, uint16_t crcVal);
 
 /*******************************************************************************
  *
@@ -118,7 +118,7 @@ uint16_t FS_CM4_CM7_FLASH_SW16(uint32_t startAddress, uint32_t size, uint32_t mo
  * @return   32-bit crc value of the memory range (CRC-32/MPEG-2 - 0x04C11DB7).
  *
  ******************************************************************************/
-uint32_t FS_CM4_CM7_FLASH_SW32(uint32_t startAddress, uint32_t size, uint32_t moduleAddress, uint32_t crcVal); 
+uint32_t FS_CM4_CM7_FLASH_SW32(uint32_t startAddress, uint32_t size, uint32_t moduleAddress, uint32_t crcVal);
 
 /*******************************************************************************
  *
@@ -137,8 +137,13 @@ uint32_t FS_CM4_CM7_FLASH_SW32(uint32_t startAddress, uint32_t size, uint32_t mo
  * @return   32-bit crc value of the memory range (CRC-32/MPEG-2 - 0x04C11DB7).
  *
  ******************************************************************************/
-void FS_CM4_CM7_FLASH_HW32_DCP(uint32_t startAddress, uint32_t size, uint32_t moduleAddress, uint32_t crcVal,
-                               fs_flash_dcp_channels_t channel, fs_flash_dcp_state_t *psDCPState, uint32_t tag);
+void FS_CM4_CM7_FLASH_HW32_DCP(uint32_t startAddress,
+                               uint32_t size,
+                               uint32_t moduleAddress,
+                               uint32_t crcVal,
+                               fs_flash_dcp_channels_t channel,
+                               fs_flash_dcp_state_t *psDCPState,
+                               uint32_t tag);
 
 #endif /* __ASM__ */
 #endif /* IEC60730B_CM4_CM7_FLASH_H_ */

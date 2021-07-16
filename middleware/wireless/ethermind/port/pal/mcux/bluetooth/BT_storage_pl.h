@@ -18,29 +18,29 @@
 
 /* --------------------------------------------- Global Definitions */
 /* Platform/Appl module persistent storage IDs */
-#define STORAGE_GATT_PID                         (STORAGE_NUM_PIDS + 0)
+#define STORAGE_GATT_PID                         (STORAGE_NUM_PIDS + 0U)
 
 /* Number of platform/appl module persistent storage IDs */
-#define STORAGE_NUM_PIDS_PL                      1
+#define STORAGE_NUM_PIDS_PL                      1U
 
 /* Platform/Appl module retention storage IDs */
 
 /* Number of platform/appl module retention storage IDs */
-#define STORAGE_NUM_RIDS_PL                      0
+#define STORAGE_NUM_RIDS_PL                      0U
 
 /* Persistent and Retention Array sizes */
 #define STORAGE_PERSISTENT_ARRAY_SIZE            (STORAGE_NUM_PIDS + STORAGE_NUM_PIDS_PL)
 #define STORAGE_RETENTION_ARRAY_SIZE             (STORAGE_NUM_RIDS + STORAGE_NUM_RIDS_PL)
 
 /* Storage signature size */
-#define STORAGE_SKEY_SIZE                        11
+#define STORAGE_SKEY_SIZE                        11U
 
 /* Storage access modes */
-#define STORAGE_OPEN_MODE_WRITE                  0x00
-#define STORAGE_OPEN_MODE_READ                   0x01
+#define STORAGE_OPEN_MODE_WRITE                  0x00U
+#define STORAGE_OPEN_MODE_READ                   0x01U
 
 #ifndef STORAGE_IDLE_TASK_SYNC_ENABLE
-#define STORAGE_IDLE_TASK_SYNC_ENABLE            (0U)
+#define STORAGE_IDLE_TASK_SYNC_ENABLE            (1U)
 #endif
 
 #if ((defined STORAGE_IDLE_TASK_SYNC_ENABLE) && (STORAGE_IDLE_TASK_SYNC_ENABLE))

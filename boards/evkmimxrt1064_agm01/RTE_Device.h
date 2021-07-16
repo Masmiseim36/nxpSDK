@@ -15,8 +15,6 @@ extern void LPSPI1_InitPins();
 extern void LPSPI1_DeinitPins();
 extern void LPUART1_InitPins();
 extern void LPUART1_DeinitPins();
-extern void LPUART8_InitPins();
-extern void LPUART8_DeinitPins();
 
 /* Driver name mapping. */
 /* User needs to provide the implementation of LPI2CX_GetFreq/LPI2CX_InitPins/LPI2CX_DeinitPins for the enabled LPI2C
@@ -33,8 +31,6 @@ extern void LPUART8_DeinitPins();
  * LPUART instance. */
 #define RTE_USART1        1
 #define RTE_USART1_DMA_EN 0
-#define RTE_USART8        1
-#define RTE_USART8_DMA_EN 0
 
 /* LPI2C configuration. */
 #define RTE_I2C1_PIN_INIT           LPI2C1_InitPins
@@ -76,16 +72,5 @@ extern void LPUART8_DeinitPins();
 #define RTE_USART1_DMA_RX_PERI_SEL    (uint8_t) kDmaRequestMuxLPUART1Rx
 #define RTE_USART1_DMA_RX_DMAMUX_BASE DMAMUX
 #define RTE_USART1_DMA_RX_DMA_BASE    DMA0
-
-#define RTE_USART8_PIN_INIT           LPUART8_InitPins
-#define RTE_USART8_PIN_DEINIT         LPUART8_DeinitPins
-#define RTE_USART8_DMA_TX_CH          0
-#define RTE_USART8_DMA_TX_PERI_SEL    (uint8_t) kDmaRequestMuxLPUART8Tx
-#define RTE_USART8_DMA_TX_DMAMUX_BASE DMAMUX
-#define RTE_USART8_DMA_TX_DMA_BASE    DMA0
-#define RTE_USART8_DMA_RX_CH          1
-#define RTE_USART8_DMA_RX_PERI_SEL    (uint8_t) kDmaRequestMuxLPUART8Rx
-#define RTE_USART8_DMA_RX_DMAMUX_BASE DMAMUX
-#define RTE_USART8_DMA_RX_DMA_BASE    DMA0
 
 #endif /* _RTE_DEVICE_H */

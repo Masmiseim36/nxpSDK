@@ -1,6 +1,6 @@
 # CROSS COMPILER SETTING
 SET(CMAKE_SYSTEM_NAME Generic)
-CMAKE_MINIMUM_REQUIRED (VERSION 3.1.1)
+CMAKE_MINIMUM_REQUIRED (VERSION 3.10.0)
 
 # THE VERSION NUMBER
 SET (Tutorial_VERSION_MAJOR 1)
@@ -51,9 +51,8 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 )
 
 target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
-    ${ProjDirPath}/.. flexspi_nor_debug
-    ${ProjDirPath}/../../..
     ${ProjDirPath}/..
+    ${ProjDirPath}/../../..
 )
 
 if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
@@ -79,7 +78,7 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../components/lists
     ${ProjDirPath}/../../../../../devices/MIMXRT1062/xip
     ${ProjDirPath}/../../../xip
-    ${ProjDirPath}/../../../../../CMSIS/Include
+    ${ProjDirPath}/../../../../../CMSIS/Core/Include
     ${ProjDirPath}/../../../../../rtos/freertos
 )
 
@@ -114,11 +113,11 @@ include(utility_debug_console_MIMXRT1062)
 
 include(middleware_mbedtls_port_ksdk_MIMXRT1062)
 
+include(middleware_mbedtls_MIMXRT1062)
+
 include(middleware_mbedtls_rt_MIMXRT1062)
 
 include(middleware_se_hostlib_commonSe050CloudDemos_MIMXRT1062)
-
-include(middleware_mbedtls_MIMXRT1062)
 
 include(driver_common_MIMXRT1062)
 
@@ -146,13 +145,9 @@ include(driver_igpio_MIMXRT1062)
 
 include(driver_xip_device_MIMXRT1062)
 
-include(driver_xip_board_MIMXRT1062)
+include(driver_xip_board_evkmimxrt1060_MIMXRT1062)
 
-include(CMSIS_Include_core_cm7_MIMXRT1062)
-
-include(CMSIS_Include_common_MIMXRT1062)
-
-include(CMSIS_Include_dsp_MIMXRT1062)
+include(CMSIS_Include_core_cm_MIMXRT1062)
 
 include(driver_lpi2c_MIMXRT1062)
 
@@ -166,7 +161,7 @@ include(middleware_freertos-aws_iot_vendor_nxp_secure_sockets_lwip_MIMXRT1062)
 
 include(middleware_freertos-aws_iot_libraries_abstractions_secure_sockets_MIMXRT1062)
 
-include(middleware_freertos-aws_iot_common_MIMXRT1062)
+include(middleware_freertos-aws_iot_libraries_c_sdk_standard_common_MIMXRT1062)
 
 include(middleware_freertos-aws_iot_libraries_abstractions_platform_MIMXRT1062)
 
@@ -176,11 +171,9 @@ include(middleware_freertos-aws_iot_libraries_3rdparty_mbedtls_utils_MIMXRT1062)
 
 include(middleware_freertos-aws_iot_libraries_freertos_plus_standard_crypto_MIMXRT1062)
 
-include(middleware_freertos-aws_iot_libraries_abstractions_threading_alt_MIMXRT1062)
+include(middleware_freertos-aws_iot_libraries_3rdparty_mbedtls_config_MIMXRT1062)
 
-include(middleware_freertos-aws_iot_libraries_freertos_plus_standard_pkcs11_MIMXRT1062)
-
-include(middleware_freertos-aws_iot_libraries_3rdparty_pkcs11_MIMXRT1062)
+include(middleware_freertos-aws_iot_libraries_abstractions_pkcs11_MIMXRT1062)
 
 include(middleware_freertos-aws_iot_libraries_freertos_plus_standard_utils_MIMXRT1062)
 
@@ -198,13 +191,21 @@ include(middleware_se_hostlib_commonSe050_CurrentApplet_MIMXRT1062)
 
 include(middleware_se_hostlib_commonSe050_Scp03_MIMXRT1062)
 
+include(middleware_se_hostlib_mwlog_MIMXRT1062)
+
 include(middleware_se_hostlib_commonCloudDemos_MIMXRT1062)
 
 include(middleware_freertos-kernel_heap_4_MIMXRT1062)
 
 include(middleware_freertos-aws_iot_mqtt_MIMXRT1062)
 
+include(middleware_freertos-aws_iot_libraries_coremqtt_MIMXRT1062)
+
+include(middleware_freertos-aws_iot_libraries_3rdparty_pkcs11_MIMXRT1062)
+
 include(middleware_freertos-aws_iot_libraries_3rdparty_jsmn_MIMXRT1062)
+
+include(middleware_freertos-aws_iot_libraries_logging_MIMXRT1062)
 
 include(middleware_se_hostlib_mbedtls_sss_MIMXRT1062)
 

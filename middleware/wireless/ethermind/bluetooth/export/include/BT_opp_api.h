@@ -47,7 +47,7 @@
 
 #ifdef OPP_1_2
 /* OBEX L2CAP PSM for local client entities */
-#define OPP_OBEX_L2CAP_PSM    0x8401
+#define OPP_OBEX_L2CAP_PSM    0x8401U
 #endif /* OPP_1_2 */
 
 /**
@@ -62,10 +62,10 @@
  */
 
 /* OPP Operations */
-#define OPP_OP_NONE                                 0x01
-#define OPP_OP_PUSH_OBJECT                          0x02
-#define OPP_OP_PULL_BUSINESS_CARD                   0x03
-#define OPP_OP_EXCH_BUSINESS_CARD                   0x04
+#define OPP_OP_NONE                                 0x01U
+#define OPP_OP_PUSH_OBJECT                          0x02U
+#define OPP_OP_PULL_BUSINESS_CARD                   0x03U
+#define OPP_OP_EXCH_BUSINESS_CARD                   0x04U
 
 #define OPP_TYPE_HDR_VCARD                          "text/x-vcard"
 
@@ -81,14 +81,14 @@
  * Constant Defines for Connection belonging to \ref OPP_CLIENT_EVENTS
  */
 /*@{*/
-#define OPP_CLIENT_CONNECT_CNF                   0x01
-#define OPP_CLIENT_DISCONNECT_CNF                0x02
-#define OPP_CLIENT_TRANSPORT_CLOSE_CNF           0x03
-#define OPP_CLIENT_TRANSPORT_CLOSE_IND           0x04
-#define OPP_CLIENT_PUSH_OBJECT_CNF               0x05
-#define OPP_CLIENT_PULL_BUSINESS_CARD_CNF        0x06
-#define OPP_CLIENT_EXCH_BUSINESS_CARD_CNF        0x07
-#define OPP_CLIENT_ABORT_CNF                     0x08
+#define OPP_CLIENT_CONNECT_CNF                   0x01U
+#define OPP_CLIENT_DISCONNECT_CNF                0x02U
+#define OPP_CLIENT_TRANSPORT_CLOSE_CNF           0x03U
+#define OPP_CLIENT_TRANSPORT_CLOSE_IND           0x04U
+#define OPP_CLIENT_PUSH_OBJECT_CNF               0x05U
+#define OPP_CLIENT_PULL_BUSINESS_CARD_CNF        0x06U
+#define OPP_CLIENT_EXCH_BUSINESS_CARD_CNF        0x07U
+#define OPP_CLIENT_ABORT_CNF                     0x08U
 /*@}*/
 /** \} */
 
@@ -103,16 +103,16 @@
  * Constant Defines for Connection belonging to \ref OPP_SERVER_EVENTS
  */
 /*@{*/
-#define OPP_SERVER_CONNECT_IND                   0x01
-#define OPP_SERVER_DISCONNECT_IND                0x02
-#define OPP_SERVER_TRANSPORT_CLOSE_CNF           0x03
-#define OPP_SERVER_TRANSPORT_CLOSE_IND           0x04
-#define OPP_SERVER_PUSH_OBJECT_IND               0x05
-#define OPP_SERVER_PULL_BUSINESS_CARD_IND        0x06
-#define OPP_SERVER_ABORT_IND                     0x07
+#define OPP_SERVER_CONNECT_IND                   0x01U
+#define OPP_SERVER_DISCONNECT_IND                0x02U
+#define OPP_SERVER_TRANSPORT_CLOSE_CNF           0x03U
+#define OPP_SERVER_TRANSPORT_CLOSE_IND           0x04U
+#define OPP_SERVER_PUSH_OBJECT_IND               0x05U
+#define OPP_SERVER_PULL_BUSINESS_CARD_IND        0x06U
+#define OPP_SERVER_ABORT_IND                     0x07U
 /** \} */
-#define OPP_EVENT_INVALID                        0xFF
-#define OPP_ENTITY_INVALID                       0xFF
+#define OPP_EVENT_INVALID                        0xFFU
+#define OPP_ENTITY_INVALID                       0xFFU
 /** \} */
 
 /* OPP OBEX Response Codes */
@@ -387,7 +387,7 @@ typedef API_RESULT (* OPP_EVENT_NTF_CB)
 /** To initialize a Header Structure */
 #define OPP_INIT_HEADER_STRUCT(hs)    \
         (hs).value = NULL;    \
-        (hs).length = 0;
+        (hs).length = 0U;
 /** \} */
 
 

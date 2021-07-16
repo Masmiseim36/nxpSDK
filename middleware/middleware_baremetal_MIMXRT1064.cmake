@@ -1,5 +1,3 @@
-if(NOT MIDDLEWARE_BAREMETAL_MIMXRT1064_INCLUDED)
-    
-    set(MIDDLEWARE_BAREMETAL_MIMXRT1064_INCLUDED true CACHE BOOL "middleware_baremetal component is included.")
+include_guard(GLOBAL)
+message("middleware_baremetal component is included.")
 
-endif()

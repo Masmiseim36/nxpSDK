@@ -15,9 +15,6 @@
 // detect_platform.h: Sets up macros that control architecture-specific
 // features of gemmlowp's implementation.
 
-// File modified by NXP. Changes are described in file
-// /middleware/eiq/tensorflow-lite/readme.txt in section "Release notes"
-
 #ifndef GEMMLOWP_INTERNAL_DETECT_PLATFORM_H_
 #define GEMMLOWP_INTERNAL_DETECT_PLATFORM_H_
 
@@ -33,11 +30,6 @@
 #define GEMMLOWP_NOINLINE __attribute__((noinline))
 #else
 #define GEMMLOWP_NOINLINE
-#endif
-
-// Detect DSP
-#if defined(__ARM_ARCH_PROFILE) && (__ARM_ARCH_PROFILE == 'M') && defined(__ARM_FEATURE_DSP) && __ARM_FEATURE_DSP
-#define GEMMLOWP_DSP
 #endif
 
 // Detect ARM, 32-bit or 64-bit

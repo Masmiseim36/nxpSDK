@@ -144,7 +144,7 @@
 Select this for LE Peripheral role support.
  */
 #ifndef CONFIG_BT_PERIPHERAL
-    #define CONFIG_BT_PERIPHERAL 1
+    #define CONFIG_BT_PERIPHERAL 0
 #endif
 
 #if CONFIG_BT_PERIPHERAL
@@ -433,7 +433,7 @@ Select this for LE Peripheral role support.
  * This option enables support for the Security Manager Protocol
  * (SMP), making it possible to pair devices over LE.
  */
-#if CONFIG_BT_SMP
+#if ((defined(CONFIG_BT_SMP)) && (CONFIG_BT_SMP))
 
 /*! @brief Secure Connections Only Mode.
  * This option enables support for Secure Connection Only Mode. In this
@@ -694,7 +694,7 @@ Select this for LE Peripheral role support.
  */
 #ifndef CONFIG_BT_L2CAP_RX_MTU
 
-#if CONFIG_BT_BREDR
+#if ((defined(CONFIG_BT_BREDR)) && (CONFIG_BT_BREDR))
 #define CONFIG_BT_L2CAP_RX_MTU 200
 #elif ((defined(CONFIG_BT_SMP)) && (CONFIG_BT_SMP > 0))
 #define CONFIG_BT_L2CAP_RX_MTU 65
@@ -738,7 +738,7 @@ Select this for LE Peripheral role support.
     #endif
 #endif
 
-#if CONFIG_BT_SMP
+#if ((defined(CONFIG_BT_SMP)) && (CONFIG_BT_SMP > 0))
 /*! @brief L2CAP Dynamic Channel support.
  * This option enables support for LE Connection oriented Channels,
  * allowing the creation of dynamic L2CAP Channels.
@@ -1085,7 +1085,7 @@ Select this for LE Peripheral role support.
  * This option enables Bluetooth RFCOMM support
  */
 #ifndef CONFIG_BT_RFCOMM
-    #define CONFIG_BT_RFCOMM 1
+    #define CONFIG_BT_RFCOMM 0
 #endif
 
 /*! @brief L2CAP MTU for RFCOMM frames.
@@ -1105,21 +1105,28 @@ Select this for LE Peripheral role support.
  * This option enables Bluetooth HF support
  */
 #ifndef CONFIG_BT_HFP_HF
-    #define CONFIG_BT_HFP_HF 1
+    #define CONFIG_BT_HFP_HF 0
+#endif
+
+/*! @brief Bluetooth Handsfree profile AG Role support [EXPERIMENTAL], if the macro is set to 0, feature is disabled, if 1, feature is enabled.
+ * This option enables Bluetooth HFP AG support
+ */
+#ifndef CONFIG_BT_HFP_AG
+    #define CONFIG_BT_HFP_AG 0
 #endif
 
 /*! @brief Bluetooth AVDTP protocol support [EXPERIMENTAL], if the macro is set to 0, feature is disabled, if 1, feature is enabled.
  * This option enables Bluetooth AVDTP support
  */
 #ifndef CONFIG_BT_AVDTP
-    #define CONFIG_BT_AVDTP 1
+    #define CONFIG_BT_AVDTP 0
 #endif
 
 /*! @brief Bluetooth A2DP Profile.
  * This option enables the A2DP profile
  */
 #ifndef CONFIG_BT_A2DP
-    #define CONFIG_BT_A2DP 1
+    #define CONFIG_BT_A2DP 0
 #endif
 
 #ifdef CONFIG_BT_A2DP
@@ -1128,14 +1135,14 @@ Select this for LE Peripheral role support.
  * This option enables the A2DP profile Source function
  */
 #ifndef CONFIG_BT_A2DP_SOURCE
-    #define CONFIG_BT_A2DP_SOURCE 1
+    #define CONFIG_BT_A2DP_SOURCE 0
 #endif
 
 /*! @brief Bluetooth A2DP Profile Sink function.
  * This option enables the A2DP profile Sink function
  */
 #ifndef CONFIG_BT_A2DP_SINK
-    #define CONFIG_BT_A2DP_SINK 1
+    #define CONFIG_BT_A2DP_SINK 0
 #endif
 
 /*! @brief Bluetooth A2DP Profile task priority.

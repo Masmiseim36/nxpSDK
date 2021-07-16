@@ -2,7 +2,7 @@
  *
  *  @brief  This file provides wlan scan IOCTL and firmware command APIs
  *
- *  Copyright 2008-2020 NXP
+ *  Copyright 2008-2021 NXP
  *
  *  NXP CONFIDENTIAL
  *  The source code contained or described herein and all documents related to
@@ -1452,6 +1452,10 @@ static mlan_status wlan_interpret_bss_desc_with_ie(IN pmlan_adapter pmadapter,
                 pbss_entry->ppoper_mode = &pbss_entry->poper_mode_saved;
                 break;
             case EXT_CAPABILITY:
+                /* Save it here since we do not have beacon buffer */
+                (void)memcpy(NULL, &pbss_entry->ext_cap_saved, pcurrent_ptr, sizeof(IEEEtypes_ExtCap_t));
+                pbss_entry->pext_cap = &pbss_entry->ext_cap_saved;
+                break;
                 break;
         }
 

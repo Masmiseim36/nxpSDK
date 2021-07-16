@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2020 NXP
+ * Copyright 2019-2021 NXP
  * All rights reserved.
  *
  *
@@ -265,13 +265,13 @@ typedef struct _sfdp_parameter_header
     (((uint32_t)(p).parameter_table_pointer[2] << 16) | ((uint32_t)(p).parameter_table_pointer[1] << 8) | \
      ((uint32_t)(p).parameter_table_pointer[0] << 0))
 
-/*! @brief Basic Flash Parameter Table. */
+/*! @brief Basic Flash Parameter Table, JSED216 has 9 DWORDs, JESD216A/B has 16 DWORD, JESD216C/D/D-01 has 20 DWORDS. */
 typedef struct _jedec_basic_flash_param_table
 {
     /* 1st DWORD */
     struct
     {
-        uint32_t erase_size : 2;
+        uint32_t support_uniform_4K_erase : 2;
         uint32_t write_granularity : 1;
         uint32_t vsr_block_protect : 1;
         uint32_t vsr_write_enable : 1;
@@ -994,6 +994,7 @@ typedef struct _jedec_octal_ddr_mode_inst_table
 
 typedef struct _jdec_query_table
 {
+    uint32_t manufacturerId;
     uint32_t standard_version;
     uint32_t basic_flash_param_tbl_size;
     jedec_basic_flash_param_table_t basic_flash_param_tbl;
@@ -1356,6 +1357,7 @@ static status_t FLEXSPI_NOR_GetPageSectorBlockSizeFromSFDP(nor_handle_t *handle,
     uint32_t flashDensity    = tbl->basic_flash_param_tbl.flash_density;
     uint32_t sectorSize      = 0xFFFFU;
     uint32_t blockSize       = 0x00U;
+    uint32_t sectorEraseCmd  = 0U;
     uint32_t sectorEraseType = 0U;
     uint32_t blockEraseType  = 0U;
     uint32_t i;
@@ -1391,19 +1393,38 @@ static status_t FLEXSPI_NOR_GetPageSectorBlockSizeFromSFDP(nor_handle_t *handle,
         }
 
         /* Calculate Sector Size */
+        if (param_tbl->misc.support_uniform_4K_erase == 0x01U)
+        {
+            sectorSize     = 4096U;
+            sectorEraseCmd = param_tbl->misc.erase4k_inst;
+        }
+        else
+        {
+            for (i = 0U; i < 4U; i++)
+            {
+                if (param_tbl->erase_info[i].size != 0UL)
+                {
+                    uint32_t current_erase_size = 1UL << param_tbl->erase_info[i].size;
+                    /* Calculate min non-zero sector size */
+                    if ((current_erase_size < sectorSize) && (current_erase_size < (1024U * 1024U)))
+                    {
+                        sectorSize      = current_erase_size;
+                        sectorEraseType = i;
+                    }
+                }
+            }
+
+            sectorEraseCmd = param_tbl->erase_info[sectorEraseType].inst;
+        }
+
+        /* Calculate Block Size */
         for (i = 0U; i < 4U; i++)
         {
             if (param_tbl->erase_info[i].size != 0UL)
             {
                 uint32_t current_erase_size = 1UL << param_tbl->erase_info[i].size;
-                /* Calculate min non-zero sector size */
-                if ((current_erase_size < sectorSize) && (current_erase_size < (1024U * 1024U)))
-                {
-                    sectorSize      = current_erase_size;
-                    sectorEraseType = i;
-                }
 
-                /* Calculate max non-zero sector size */
+                /* Calculate max non-zero block size */
                 if ((current_erase_size > blockSize) && (current_erase_size < (1024U * 1024U)))
                 {
                     blockEraseType = i;
@@ -1421,7 +1442,7 @@ static status_t FLEXSPI_NOR_GetPageSectorBlockSizeFromSFDP(nor_handle_t *handle,
         }
         else
         {
-            *sector_erase_cmd = param_tbl->erase_info[sectorEraseType].inst;
+            *sector_erase_cmd = sectorEraseCmd;
             *block_erase_cmd  = param_tbl->erase_info[blockEraseType].inst;
         }
     }
@@ -1724,13 +1745,6 @@ static status_t FLEXSPI_NOR_ParseSFDP(nor_handle_t *handle, flexspi_mem_config_t
             /* read fast(8-8-8) command from SFDP information */
             uint8_t readCmd = (uint8_t)xspi_profile_1_tb1->cmd_8d_8d_8d_mode_info.read_fast_cmd;
 
-            /* Set read manufacturer ID LUT table in single mode */
-            config->lookupTable[NOR_CMD_LUT_SEQ_IDX_READID * 4U] =
-                FLEXSPI_LUT_SEQ(kFLEXSPI_Command_SDR, kFLEXSPI_1PAD, kSerialFlash_ReadJEDECId,
-                                kFLEXSPI_Command_READ_SDR, kFLEXSPI_1PAD, 0x04);
-            FLEXSPI_UpdateLUT((FLEXSPI_Type *)handle->driverBaseAddr, NOR_CMD_LUT_SEQ_IDX_READID * 4UL,
-                              &config->lookupTable[4U * NOR_CMD_LUT_SEQ_IDX_READID], 4);
-
             /* Set write enable LUT table in single mode */
             config->lookupTable[4U * NOR_CMD_LUT_SEQ_IDX_WRITEENABLE] =
                 FLEXSPI_LUT_SEQ(kFLEXSPI_Command_SDR, kFLEXSPI_1PAD, 0x06, kFLEXSPI_Command_STOP, kFLEXSPI_1PAD, 0);
@@ -1893,7 +1907,7 @@ static status_t FLEXSPI_NOR_PrepareQuadModeEnableSequence(nor_handle_t *handle,
 
     status_t status = kStatus_InvalidArgument;
 
-    /* See JESD216B/C/D 6.4.18(JEDEC Basic Flash Parameter Table: 15th DWORD) for more details. */
+    /* See JESD216A/B/C/D/D-01 6.4.18(JEDEC Basic Flash Parameter Table: 15th DWORD) for more details. */
     do
     {
         bool isQuadMode = false;
@@ -1902,7 +1916,34 @@ static status_t FLEXSPI_NOR_PrepareQuadModeEnableSequence(nor_handle_t *handle,
         uint32_t lut_seq[4];
         FLEXSPI_NOR_Memset(lut_seq, 0, sizeof(lut_seq));
 
-        if (tbl->basic_flash_param_tbl_size >= 64U)
+        /* JESD216 doesn't has 15th DWORD in basic parameters table, which records quad mode enable requirements, it
+         * needs to be configured based on its datasheet. */
+        if (tbl->standard_version == 0x00U)
+        {
+            /* GigaDevice(0xC8U)/Winbond(0xEFU)/Adesto(0x1FU), QE is bit 1 of the status register 2. */
+            if ((tbl->manufacturerId == 0xC8U) || (tbl->manufacturerId == 0xEFU) || (tbl->manufacturerId == 0x1FU))
+            {
+                tbl->basic_flash_param_tbl.mode_4_4_info.quad_enable_requirement = 0x04U;
+            }
+            /* ISSI(0x9DU)/MXIC(0xC2U), QE is bit 6 of status register 1. */
+            else if ((tbl->manufacturerId == 0x9DU) || (tbl->manufacturerId == 0xC2U))
+            {
+                tbl->basic_flash_param_tbl.mode_4_4_info.quad_enable_requirement = 0x02U;
+            }
+            /* Cypress(0x34U), QE is bit 1 of the status register 2. */
+            else if (tbl->manufacturerId == 0x34U)
+            {
+                tbl->basic_flash_param_tbl.mode_4_4_info.quad_enable_requirement = 0x05U;
+            }
+            else
+            {
+                /* TODO*/
+            }
+        }
+
+        /* JESD216 has 9 DWORDS(size: 36), JESD216A/B has 16 DWORDS(size: 64) AND JESD216/C/D/D-01 has 20 DWORDS(size:
+         * 80). */
+        if (tbl->basic_flash_param_tbl_size >= 36U)
         {
             config->deviceModeCfgEnable = true;
 
@@ -1913,8 +1954,15 @@ static status_t FLEXSPI_NOR_PrepareQuadModeEnableSequence(nor_handle_t *handle,
                    second byte is one. It is cleared via Write Status with two data bytes where bit 1 of the second byte
                    is zero. Writing only one byte to the status register has the side-effect of clearing status register
                    2, including the QE bit. The 100b code is used if writing one byte to the status register does not
-                   modify status register 2. */
+                   modify status register 2.
+                   Based on above information, choose write 1 byte where bit 1 is one to the status register 2 directly.
+                 */
                 case 1:
+                    enter_quad_mode_option = (uint32_t)kSerialNorQuadMode_StatusReg2_Bit1_0x31;
+                    lut_seq[0] = FLEXSPI_LUT_SEQ(kFLEXSPI_Command_SDR, kFLEXSPI_1PAD, kSerialNorCmd_ReadStatusReg2Bit1,
+                                                 kFLEXSPI_Command_READ_SDR, kFLEXSPI_1PAD, 1);
+                    runContext.lengthInByte = 0x01U;
+                    break;
                 /* QE is bit 6 of status register 1. It is set via Write Status with one data byte where bit 6 is one.
                    It is cleared via Write Status with one data byte where bit 6 is zero */
                 case 2:
@@ -2216,24 +2264,8 @@ static status_t FLEXSPI_NOR_PreEnterOctalMode(nor_handle_t *handle,
     assert(config != NULL);
     assert(tbl != NULL);
 
-    status_t status                     = kStatus_Success;
-    flexspi_mem_nor_handle_t *memHandle = (flexspi_mem_nor_handle_t *)handle->deviceSpecific;
-    flexspi_port_t port                 = memHandle->port;
-    flexspi_transfer_t flashXfer;
-    uint32_t manufacturerId;
-
-    /* ID */
-    flashXfer.deviceAddress = 0;
-    flashXfer.port          = port;
-    flashXfer.cmdType       = kFLEXSPI_Read;
-    flashXfer.SeqNumber     = 1;
-    flashXfer.seqIndex      = NOR_CMD_LUT_SEQ_IDX_READID;
-    flashXfer.data          = &manufacturerId;
-    flashXfer.dataSize      = 1;
-
-    status = FLEXSPI_TransferBlocking((FLEXSPI_Type *)handle->driverBaseAddr, &flashXfer);
-
-    config->manufacturerId = manufacturerId;
+    status_t status         = kStatus_Success;
+    uint32_t manufacturerId = tbl->manufacturerId;
 
     /* Enter octal mode based on manufacture ID */
     switch (manufacturerId)
@@ -2684,7 +2716,7 @@ static status_t FLEXSPI_NOR_CheckCommandModeAvailability(nor_handle_t *handle,
     uint8_t readValue[4]                = {0x55U, 0x55U, 0x55U, 0x55U};
     uint8_t currentCommandMode          = (uint8_t)config->CurrentCommandMode;
     uint32_t readConfigRegCmd           = tbl->xspi_profile_1_tb1.cmd_8d_8d_8d_inst.read_volatile_reg_cmd;
-    uint32_t manufacturerId             = config->manufacturerId;
+    uint32_t manufacturerId             = tbl->manufacturerId;
     flexspi_transfer_t flashXfer;
 
     FLEXSPI_NOR_Memset(&config->lookupTable[NOR_CMD_LUT_SEQ_IDX_READCONFIG * 4U], 0, 4U * 4U);
@@ -3200,7 +3232,7 @@ static status_t FLEXSPI_NOR_ProbeCommandMode(nor_handle_t *handle, flexspi_mem_c
             status = kStatus_FLEXSPINOR_Unsupported_SFDP_Version;
         }
 
-        if (sfdp_header.signature != SFDP_JESD216_SIGNATURE || sfdp_header.major_rev != SFDP_JESD216_MAJOR)
+        if ((sfdp_header.signature != SFDP_JESD216_SIGNATURE) || (sfdp_header.major_rev != SFDP_JESD216_MAJOR))
         {
             /* Exit from quad command mode into standard SPI command mode */
             if ((i == (uint8_t)kSerialNorCommandMode_4s_4s_4s) || (i == (uint8_t)kSerialNorCommandMode_4d_4d_4d))
@@ -3345,7 +3377,11 @@ static status_t FLEXSPI_NOR_GenerateConfigBlockUsingSFDP(nor_handle_t *handle, f
     assert(handle != NULL);
     assert(config != NULL);
 
-    status_t status = kStatus_InvalidArgument;
+    status_t status                     = kStatus_InvalidArgument;
+    flexspi_mem_nor_handle_t *memHandle = (flexspi_mem_nor_handle_t *)handle->deviceSpecific;
+    flexspi_port_t port                 = memHandle->port;
+    flexspi_transfer_t flashXfer;
+    jedec_info_table_t jedec_info_tbl;
 
     /*
      * Read SFDP command protocol based on JESD216C/D
@@ -3371,6 +3407,15 @@ static status_t FLEXSPI_NOR_GenerateConfigBlockUsingSFDP(nor_handle_t *handle, f
           0, 0}},
         /* Reserved */
         {{0, 0, 0, 0}}};
+
+    /* Read manufacturer ID */
+    const lut_seq_t manufacturerIdLut =
+        /* Read SFDP LUT sequence in 1-1-1 mode. */
+        {{FLEXSPI_LUT_SEQ(kFLEXSPI_Command_SDR, kFLEXSPI_1PAD, kSerialFlash_ReadJEDECId, kFLEXSPI_Command_READ_SDR,
+                          kFLEXSPI_1PAD, 0x04),
+          0, 0, 0}};
+    /* Initialize JEDEC information table. */
+    FLEXSPI_NOR_Memset(&jedec_info_tbl, 0x00, sizeof(jedec_info_tbl));
 
     do
     {
@@ -3405,13 +3450,26 @@ static status_t FLEXSPI_NOR_GenerateConfigBlockUsingSFDP(nor_handle_t *handle, f
             }
         }
 
-        /* Read SFDP, probe whether the Flash device is present or not. */
-        jedec_info_table_t jedec_info_tbl;
+        /* Read manufacturer ID */
+        FLEXSPI_UpdateLUT((FLEXSPI_Type *)handle->driverBaseAddr, NOR_CMD_LUT_SEQ_IDX_READID * 4UL,
+                          (const uint32_t *)(const void *)&manufacturerIdLut, 4);
 
-        FLEXSPI_NOR_Memset(&jedec_info_tbl, 0x00, sizeof(jedec_info_tbl));
+        flashXfer.deviceAddress = 0U;
+        flashXfer.port          = port;
+        flashXfer.cmdType       = kFLEXSPI_Read;
+        flashXfer.SeqNumber     = 1U;
+        flashXfer.seqIndex      = NOR_CMD_LUT_SEQ_IDX_READID;
+        flashXfer.data          = &jedec_info_tbl.manufacturerId;
+        flashXfer.dataSize      = 1U;
+        status                  = FLEXSPI_TransferBlocking((FLEXSPI_Type *)handle->driverBaseAddr, &flashXfer);
+        if (status != kStatus_Success)
+        {
+            break;
+        }
+
+        /* Read SFDP information, probe whether the Flash device is present or not. */
         FLEXSPI_UpdateLUT((FLEXSPI_Type *)handle->driverBaseAddr, NOR_CMD_LUT_SEQ_IDX_READ_SFDP * 4U,
                           (const uint32_t *)(const void *)&k_sdfp_lut[config->queryPads], 4);
-
         status = FLEXSPI_NOR_ReadSFDPInfo((FLEXSPI_Type *)handle->driverBaseAddr, &jedec_info_tbl);
         if (status != kStatus_Success)
         {

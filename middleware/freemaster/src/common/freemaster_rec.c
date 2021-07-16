@@ -219,7 +219,7 @@ FMSTR_BOOL FMSTR_InitRec(void)
     recBuffCfg.name          = "Default Recorder";
     recBuffCfg.basePeriod_ns = FMSTR_REC_TIMEBASE;
 
-	/* and create the recorder #0 automatically */
+    /* and create the recorder #0 automatically */
     ok = FMSTR_RecorderCreate(0, &recBuffCfg);
 #endif
 
@@ -668,6 +668,7 @@ static FMSTR_BOOL _FMSTR_RecIsValidVarSize(FMSTR_SIZE size)
  *
  * @brief    Handling SETREC command
  *
+ * @param    session - transport session
  * @param    msgBuffIO   - original command (in) and response buffer (out)
  * @param    inputLen    - data length of input data
  * @param    retStatus   - pointer to return status variable
@@ -677,7 +678,7 @@ static FMSTR_BOOL _FMSTR_RecIsValidVarSize(FMSTR_SIZE size)
  *
  ******************************************************************************/
 
-FMSTR_BPTR FMSTR_SetRecCmd(FMSTR_BPTR msgBuffIO, FMSTR_SIZE inputLen, FMSTR_U8 *retStatus)
+FMSTR_BPTR FMSTR_SetRecCmd(FMSTR_SESSION * session, FMSTR_BPTR msgBuffIO, FMSTR_SIZE inputLen, FMSTR_U8 *retStatus)
 {
     FMSTR_REC *recorder   = NULL;
     FMSTR_BPTR response   = msgBuffIO;
@@ -698,6 +699,15 @@ FMSTR_BPTR FMSTR_SetRecCmd(FMSTR_BPTR msgBuffIO, FMSTR_SIZE inputLen, FMSTR_U8 *
     while (inputLen != 0U && (responseCode == FMSTR_STS_OK))
     {
         FMSTR_U8 opCode, opLen;
+
+#if FMSTR_SESSION_COUNT > 1
+        /* Is feature locked by me */
+        if(FMSTR_IsFeatureOwned(session, FMSTR_FEATURE_REC, recIndex) == FMSTR_FALSE)
+        {
+            *retStatus = FMSTR_STC_SERVBUSY;
+            return response;
+        }
+#endif
 
         /* Get Operation Code and data length */
         msgBuffIO = FMSTR_ValueFromBuffer8(&opCode, msgBuffIO);
@@ -788,6 +798,7 @@ static FMSTR_U8 _FMSTR_CalcRecStatus(FMSTR_REC_FLAGS recFlags)
  *
  * @brief    Handling GETREC command
  *
+ * @param    session - transport session
  * @param    msgBuffIO   - original command (in) and response buffer (out)
  * @param    retStatus   - pointer to return status variable
  *
@@ -796,7 +807,7 @@ static FMSTR_U8 _FMSTR_CalcRecStatus(FMSTR_REC_FLAGS recFlags)
  *
  ******************************************************************************/
 
-FMSTR_BPTR FMSTR_GetRecCmd(FMSTR_BPTR msgBuffIO, FMSTR_U8 *retStatus)
+FMSTR_BPTR FMSTR_GetRecCmd(FMSTR_SESSION * session, FMSTR_BPTR msgBuffIO, FMSTR_U8 *retStatus)
 {
     FMSTR_U8 responseCode = (FMSTR_STS_OK | FMSTR_STSF_VARLEN);
     FMSTR_BPTR response   = msgBuffIO;

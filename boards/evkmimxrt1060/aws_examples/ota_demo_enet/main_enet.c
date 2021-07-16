@@ -45,12 +45,12 @@
 #include "platform/iot_threads.h"
 #include "types/iot_network_types.h"
 #include "aws_demo.h"
-#include "iot_appversion32.h"
+#include "aws_application_version.h"
 
-#include "fsl_gpio.h"
-#include "fsl_iomuxc.h"
 #include "fsl_phyksz8081.h"
 #include "fsl_enet_mdio.h"
+#include "fsl_gpio.h"
+#include "fsl_iomuxc.h"
 #include "fsl_phy.h"
 /* lwIP Includes */
 #include "lwip/tcpip.h"
@@ -91,10 +91,6 @@
 #define LOGGING_TASK_STACK_SIZE (200)
 #define LOGGING_QUEUE_LENGTH    (16)
 
-#define APP_VERSION_MAJOR 0
-#define APP_VERSION_MINOR 9
-#define APP_VERSION_BUILD 2
-
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
@@ -115,9 +111,6 @@ static mdio_handle_t mdioHandle = {.ops = &EXAMPLE_MDIO_OPS};
 static phy_handle_t phyHandle   = {.phyAddr = EXAMPLE_PHY_ADDRESS, .mdioHandle = &mdioHandle, .ops = &EXAMPLE_PHY_OPS};
 
 struct netif netif;
-#if defined(FSL_FEATURE_SOC_LPC_ENET_COUNT) && (FSL_FEATURE_SOC_LPC_ENET_COUNT > 0)
-mem_range_t non_dma_memory[] = NON_DMA_MEMORY_ARRAY;
-#endif /* FSL_FEATURE_SOC_LPC_ENET_COUNT */
 
 /*******************************************************************************
  * Code
@@ -143,9 +136,6 @@ int initNetwork(void)
     ethernetif_config_t enet_config = {
         .phyHandle  = &phyHandle,
         .macAddress = configMAC_ADDR,
-#if defined(FSL_FEATURE_SOC_LPC_ENET_COUNT) && (FSL_FEATURE_SOC_LPC_ENET_COUNT > 0)
-        .non_dma_memory = non_dma_memory,
-#endif /* FSL_FEATURE_SOC_LPC_ENET_COUNT */
     };
 
     mdioHandle.resource.csrClock_Hz = EXAMPLE_CLOCK_FREQ;

@@ -1,14 +1,14 @@
 /*
- * Copyright 2017-2020 NXP
+ * Copyright 2017-2021 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-#include "bl_card.h"
 #include "bootloader_common.h"
 #include "fsl_assert.h"
 #include "fsl_device_registers.h"
+#include "fsl_sdmmc_common.h"
 #include "fusemap.h"
 #include "sdmmc_init.h"
 #if BL_FEATURE_MMC_MODULE
@@ -52,8 +52,67 @@
 #endif // #if BL_FEATURE_SD_MODULE
 
 /*******************************************************************************
+ * Variable
+ ******************************************************************************/
+
+const uint32_t usdhc_vselect_pin_settings = IOMUXC_SW_PAD_CTL_PAD_SRE_MASK | IOMUXC_SW_PAD_CTL_PAD_PKE_MASK |
+                                            IOMUXC_SW_PAD_CTL_PAD_PUE_MASK | IOMUXC_SW_PAD_CTL_PAD_HYS_MASK |
+                                            IOMUXC_SW_PAD_CTL_PAD_SPEED(2) | IOMUXC_SW_PAD_CTL_PAD_PUS(1) |
+                                            IOMUXC_SW_PAD_CTL_PAD_DSE(1);
+
+/*******************************************************************************
  * Code
  ******************************************************************************/
+void usdhc_power_control_init(USDHC_Type *base)
+{
+    if (base == BOARD_USDHC1_BASEADDR)
+    {
+        IOMUXC_SetPinMux(BOARD_USDHC1_RESET_B_GPIO_IOMUXC, false);
+        gpio_pin_config_t sw_config = {
+            kGPIO_DigitalOutput,
+            0,
+            kGPIO_NoIntmode,
+        };
+        GPIO_PinInit(BOARD_USDHC1_RESET_B_GPIO_BASE, BOARD_USDHC1_RESET_B_GPIO_PIN, &sw_config);
+    }
+    else if (base == BOARD_USDHC2_BASEADDR)
+    {
+        IOMUXC_SetPinMux(BOARD_USDHC2_RESET_B_GPIO_IOMUXC, false);
+        gpio_pin_config_t sw_config = {
+            kGPIO_DigitalOutput,
+            0,
+            kGPIO_NoIntmode,
+        };
+        GPIO_PinInit(BOARD_USDHC2_RESET_B_GPIO_BASE, BOARD_USDHC2_RESET_B_GPIO_PIN, &sw_config);
+    }
+}
+
+void usdhc_power_control(USDHC_Type *base, bool state)
+{
+    if (base == BOARD_USDHC1_BASEADDR)
+    {
+        GPIO_WritePinOutput(BOARD_USDHC1_RESET_B_GPIO_BASE, BOARD_USDHC1_RESET_B_GPIO_PIN, state);
+    }
+    else if (base == BOARD_USDHC2_BASEADDR)
+    {
+        GPIO_WritePinOutput(BOARD_USDHC2_RESET_B_GPIO_BASE, BOARD_USDHC2_RESET_B_GPIO_PIN, state);
+    }
+}
+
+void usdhc_vselect_init(USDHC_Type *base)
+{
+    if (base == BOARD_USDHC1_BASEADDR)
+    {
+        IOMUXC_SetPinMux(BOARD_USDHC1_VSELECT_IOMUXC, false);
+        IOMUXC_SetPinConfig(BOARD_USDHC1_VSELECT_IOMUXC, usdhc_vselect_pin_settings);
+    }
+    else if (base == BOARD_USDHC2_BASEADDR)
+    {
+        IOMUXC_SetPinMux(BOARD_USDHC2_VSELECT_IOMUXC, false);
+        IOMUXC_SetPinConfig(BOARD_USDHC2_VSELECT_IOMUXC, usdhc_vselect_pin_settings);
+    }
+}
+
 #if BL_FEATURE_MMC_MODULE
 status_t get_mmc_default_configuration(mmc_card_t *card)
 {

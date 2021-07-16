@@ -1,5 +1,3 @@
-if(NOT MIDDLEWARE_AZURE_RTOS_NXD_MIMXRT1062_INCLUDED)
-    
-    set(MIDDLEWARE_AZURE_RTOS_NXD_MIMXRT1062_INCLUDED true CACHE BOOL "middleware_azure_rtos_nxd component is included.")
+include_guard(GLOBAL)
+message("middleware_azure_rtos_nxd component is included.")
 
-endif()

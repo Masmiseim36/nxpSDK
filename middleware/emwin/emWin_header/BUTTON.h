@@ -9,7 +9,7 @@
 *                                                                    *
 **********************************************************************
 
-** emWin V6.14 - Graphical user interface for embedded applications **
+** emWin V6.16 - Graphical user interface for embedded applications **
 All  Intellectual Property rights  in the Software belongs to  SEGGER.
 emWin is protected by  international copyright laws.  Knowledge of the
 source code may not be used to write a similar product.  This file may
@@ -34,7 +34,7 @@ License model:            emWin License Agreement, dated August 20th 2011 and Am
 Licensed platform:        NXP's ARM 7/9, Cortex-M0, M3, M4, M7, A7, M33
 ----------------------------------------------------------------------
 Support and Update Agreement (SUA)
-SUA period:               2011-08-19 - 2020-09-02
+SUA period:               2011-08-19 - 2021-09-02
 Contact to extend SUA:    sales@segger.com
 ----------------------------------------------------------------------
 File        : BUTTON.h
@@ -92,6 +92,8 @@ Purpose     : BUTTON public header file (API)
 */
 #define BUTTON_STATE_FOCUS      WIDGET_STATE_FOCUS
 #define BUTTON_STATE_PRESSED    WIDGET_STATE_USER0
+#define BUTTON_STATE_TOGGLEMODE WIDGET_STATE_USER1
+#define BUTTON_STATE_TOGGLED    WIDGET_STATE_USER2
 
 /*********************************************************************
 *
@@ -190,11 +192,13 @@ int                BUTTON_SetText            (BUTTON_Handle hObj, const char* s)
 void               BUTTON_SetTextAlign       (BUTTON_Handle hObj, int Align);
 void               BUTTON_SetTextColor       (BUTTON_Handle hObj, unsigned int Index, GUI_COLOR Color);
 void               BUTTON_SetTextOffset      (BUTTON_Handle hObj, int xPos, int yPos);
+void               BUTTON_SetToggleMode      (BUTTON_Handle hObj, int OnOff);
 void               BUTTON_SetSelfDrawEx      (BUTTON_Handle hObj, unsigned int Index, GUI_DRAW_SELF_CB * pDraw, int x, int y); /* Not to be doc. */
 void               BUTTON_SetSelfDraw        (BUTTON_Handle hObj, unsigned int Index, GUI_DRAW_SELF_CB * pDraw);               /* Not to be doc. */
 void               BUTTON_SetReactOnLevel    (void);
 void               BUTTON_SetReactOnTouch    (void);
 int                BUTTON_SetUserData        (BUTTON_Handle hObj, const void * pSrc, int NumBytes);
+int                BUTTON_Toggle             (BUTTON_Handle hObj);
 
 #define BUTTON_SetFocussable BUTTON_SetFocusable
 #define BUTTON_SetFocusable  WIDGET_SetFocusable

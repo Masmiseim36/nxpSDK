@@ -1,12 +1,5 @@
 /* Copyright 2019,2020 NXP
-*
-* This software is owned or controlled by NXP and may only be used
-* strictly in accordance with the applicable license terms.  By expressly
-* accepting such terms or by downloading, installing, activating and/or
-* otherwise using the software, you are agreeing that you have read, and
-* that you agree to comply with and are bound by, such license terms.  If
-* you do not agree to be bound by the applicable license terms, then you
-* may not retain, install, activate or otherwise use the software.
+* SPDX-License-Identifier: Apache-2.0
 */
 
 #include <ex_sss.h>
@@ -32,7 +25,6 @@ static ex_sss_boot_ctx_t gex_sss_get_info_ctx;
 #define EX_SSS_BOOT_EXPOSE_ARGC_ARGV 1
 #define EX_SSS_BOOT_SKIP_SELECT_APPLET 1
 
-#define SEMS_LITE_AGENT_CHANNEL_1 0x01
 #define SEMS_LITE_GETDATA_UUID_TAG 0xFE
 
 #include <ex_sss_main_inc.h>
@@ -66,7 +58,7 @@ sss_status_t ex_sss_entry(ex_sss_boot_ctx_t *pCtx)
             /* Get applet version and config details */
             status = Iot_Applet_Identify(pSession, 0);
             if (status != kStatus_SSS_Success) {
-                goto cleanup;
+                LOG_I("Error in Iot_Applet_Identify");
             }
         }
     }
@@ -75,14 +67,14 @@ sss_status_t ex_sss_entry(ex_sss_boot_ctx_t *pCtx)
         /* Try connecting to iot applet */
         status = iot_applet_session_open(pCtx);
         if (status != kStatus_SSS_Success) {
-            LOG_I("Error in iot applet session open");
-            goto cleanup;
+            LOG_I("No IoT applet found");
         }
-
-        /* Get UID, applet version and config details */
-        status = Iot_Applet_Identify(pSession, 1);
-        if (status != kStatus_SSS_Success) {
-            goto cleanup;
+        else {
+            /* Get UID, applet version and config details */
+            status = Iot_Applet_Identify(pSession, 1);
+            if (status != kStatus_SSS_Success) {
+                LOG_I("Error in Iot_Applet_Identify");
+            }
         }
     }
 

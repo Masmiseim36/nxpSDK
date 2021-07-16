@@ -3,15 +3,9 @@
  * @author NXP Semiconductors
  * @version 1.0
  * @par License
- * Copyright 2017-2020 NXP
  *
- * This software is owned or controlled by NXP and may only be used
- * strictly in accordance with the applicable license terms.  By expressly
- * accepting such terms or by downloading, installing, activating and/or
- * otherwise using the software, you are agreeing that you have read, and
- * that you agree to comply with and are bound by, such license terms.  If
- * you do not agree to be bound by the applicable license terms, then you
- * may not retain, install, activate or otherwise use the software.
+ * Copyright 2017-2020 NXP
+ * SPDX-License-Identifier: Apache-2.0
  *
  * @par Description
  * Implementation of the App booting time initilization functions
@@ -29,6 +23,10 @@
 #include "PlugAndTrust_HostLib_Ver.h"
 #include "nxLog_App.h"
 #include "inttypes.h"
+
+#if defined(_MSC_VER)
+#include <Crtdbg.h>
+#endif
 
 #if AX_EMBEDDED
 #include <ax_reset.h>
@@ -107,19 +105,17 @@ int app_boot_Init()
     LED_RED_INIT(1);
 #endif
 
-#ifdef CPU_MIMXRT1062DVL6A
-    dcp_config_t dcpConfig;
-    trng_config_t trngConfig;
-
+#ifdef IMX_RT
     BOARD_ConfigMPU();
     BOARD_InitBootPins();
     BOARD_BootClockRUN();
     BOARD_InitDebugConsole();
 
-#if defined(IMX_RT)
+#if defined(CPU_MIMXRT1062DVL6A)
+    dcp_config_t dcpConfig;
+    trng_config_t trngConfig;
     /* Data cache must be temporarily disabled to be able to use sdram */
     SCB_DisableDCache();
-#endif
 
     /* Initialize DCP */
     DCP_GetDefaultConfig(&dcpConfig);
@@ -133,7 +129,8 @@ int app_boot_Init()
 
     /* Initialize TRNG */
     TRNG_Init(TRNG0, &trngConfig);
-#endif
+#endif // CPU_MIMXRT1062DVL6A
+#endif // IMX_RT
 
 #if defined(CPU_LPC54018)
 
@@ -190,7 +187,11 @@ int app_boot_Init_RTOS()
     CRYPTO_InitHardware();
 #if defined(FSL_FEATURE_SOC_SHA_COUNT) && (FSL_FEATURE_SOC_SHA_COUNT > 0)
     CLOCK_EnableClock(kCLOCK_Sha0);
+#if defined(CPU_JN518X)
+    RESET_PeripheralReset(kHASH_RST_SHIFT_RSTn);
+#else
     RESET_PeripheralReset(kSHA_RST_SHIFT_RSTn);
+#endif
 #endif /* SHA */
 #endif /* (AX_EMBEDDED) && defined(MBEDTLS) */
 
@@ -379,5 +380,10 @@ void app_test_status(U8 result)
         LED_GREEN_ON();
     }
 #endif
+
+#if AX_EMBEDDED
+    PRINTF("END. Status %s \r\n", ((result == 1) ? "OK" : "FAILED"));
+#else
     PRINTF("END. Status %s (Compiled on %s %s)\r\n", ((result == 1) ? "OK" : "FAILED"), __DATE__, __TIME__);
+#endif
 }

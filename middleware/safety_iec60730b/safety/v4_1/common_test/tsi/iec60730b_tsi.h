@@ -22,7 +22,7 @@
 #define IEC60730B_TSI_H_
 
 /*
- * List of devices and supported functions can be found in library user guide, 
+ * List of devices and supported functions can be found in library user guide,
  * section Core self test library - source code version.
  */
 
@@ -30,14 +30,14 @@
  * Macros
  ******************************************************************************/
 /* Return values */
-#define FS_FAIL_TSI              (FS_TSI_CODE + 0x1U)
-#define FS_TSI_PROGRESS_NONSTIM  (FS_TSI_CODE + 0x2U)
-#define FS_TSI_PASS_NONSTIM      (FS_TSI_CODE + 0x3U)
-#define FS_TSI_PROGRESS_STIM     (FS_TSI_CODE + 0x4U)
-#define FS_TSI_PASS_STIM         (FS_TSI_CODE + 0x5U)
-#define FS_TSI_INPROGRESS        (FS_TSI_CODE + 0x6U)
-#define FS_TSI_INIT              (FS_TSI_CODE + 0x7U)
-#define FS_TSI_INCORRECT_CALL    (FS_TSI_CODE + 0x8U)
+#define FS_FAIL_TSI             (FS_TSI_CODE + 0x1U)
+#define FS_TSI_PROGRESS_NONSTIM (FS_TSI_CODE + 0x2U)
+#define FS_TSI_PASS_NONSTIM     (FS_TSI_CODE + 0x3U)
+#define FS_TSI_PROGRESS_STIM    (FS_TSI_CODE + 0x4U)
+#define FS_TSI_PASS_STIM        (FS_TSI_CODE + 0x5U)
+#define FS_TSI_INPROGRESS       (FS_TSI_CODE + 0x6U)
+#define FS_TSI_INIT             (FS_TSI_CODE + 0x7U)
+#define FS_TSI_INCORRECT_CALL   (FS_TSI_CODE + 0x8U)
 
 #define SAFETY_SELFCAP_MODE 0xFFU
 
@@ -51,16 +51,16 @@ typedef struct
 {
     uint32_t low;
     uint32_t high;
-    int32_t  delta;
-    int32_t  deltaDev;
-    int32_t  deltaPer;  
+    int32_t delta;
+    int32_t deltaDev;
+    int32_t deltaPer;
 } fs_tsi_limits_t;
 
 typedef struct
 {
     uint16_t tsicnt;
     uint16_t tsicntStim;
-    int32_t  tsicntDelta;
+    int32_t tsicntDelta;
 } fs_tsi_data_t;
 
 typedef struct
@@ -74,7 +74,7 @@ typedef struct
     uint32_t rxGpio;
     uint32_t rxPcr;
     uint16_t rxPinNum;
-    uint32_t txGpio; 
+    uint32_t txGpio;
     uint16_t txPinNum;
 } fs_tsi_gpio_input_t;
 
@@ -95,12 +95,12 @@ typedef struct
 typedef struct
 {
     fs_tsi_limits_t limits;
-    fs_tsi_input_t  input;
+    fs_tsi_input_t input;
     fs_tsi_gpio_input_t gpioInput;
     fs_tsi_data_t data;
     fs_tsi_backup_t inputRegBackup;
     fs_tsi_counter_t tsiCounter;
-    FS_RESULT state; 
+    FS_RESULT state;
     uint8_t stimPolarity;
     uint32_t pPcrBase;
 } fs_tsi_t;
@@ -111,7 +111,7 @@ typedef struct
 /*******************************************************************************
  *
  * @brief    The function initializes respective items in the defined
- *           fs_tsi_tstructure and sets state to FS_TSI_INIT. 
+ *           fs_tsi_tstructure and sets state to FS_TSI_INIT.
  *           It should be called prior to non-stimulated input test.
  *
  * @param    *pObj - input argument is pointer to tsi test instance.
@@ -123,9 +123,9 @@ void FS_TSI_InputInit(fs_tsi_t *pObj);
 
 /*******************************************************************************
  *
- * @brief    The function stimulates the appropriate TSI pin by pull-resistor 
+ * @brief    The function stimulates the appropriate TSI pin by pull-resistor
  *           on the current TSI channel.
- *           The pull-up/down polarity is given by parameter "stim_polarity" 
+ *           The pull-up/down polarity is given by parameter "stim_polarity"
  *           in structure fs_tsi.
  *
  * @param    *pObj - input argument is pointer to tsi test instance.
@@ -150,7 +150,7 @@ FS_RESULT FS_TSI_InputRelease(fs_tsi_t *pObj);
 
 /*******************************************************************************
  *
- * @brief    Function performs the TSI test with non-stimulated input, 
+ * @brief    Function performs the TSI test with non-stimulated input,
  *           check if the TSI counter value stays in the predefined tolerance range,
  *           gets the reference TSI counter data for the non-stimulated test.
  *
@@ -166,7 +166,7 @@ FS_RESULT FS_TSI_InputCheckNONStimulated(fs_tsi_t *pObj, uint32_t pTsi);
 
 /*******************************************************************************
  *
- * @brief    Function performs the TSI test with stimulated input, 
+ * @brief    Function performs the TSI test with stimulated input,
  *           checks if the TSI input stimulated counter delta is in the expected range.
  *           The test function can be called only after the non-stimulated test is passed.
  *           Otherwise FS_TSI_INCORRECT_CALL will be returned.

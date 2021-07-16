@@ -11,8 +11,8 @@
  ******************************************************************************/
 #define USB_DCD_DATA_PIN_MAX_DETECTION_COUNT (100U)
 /*time settting in ms*/
-#define USB_DCD_DATA_PIN_DETECTION_TIME (10U)
-#define USB_DCD_PRIMIARY_DETECTION_TIME (100U)
+#define USB_DCD_DATA_PIN_DETECTION_TIME  (10U)
+#define USB_DCD_PRIMIARY_DETECTION_TIME  (100U)
 #define USB_DCD_SECONDARY_DETECTION_TIME (80U)
 typedef enum _usb_phydcd_dev_status
 {

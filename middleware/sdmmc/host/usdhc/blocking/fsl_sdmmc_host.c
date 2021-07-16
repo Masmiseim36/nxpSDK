@@ -26,6 +26,20 @@
  * @param base host base address.
  */
 static void SDMMCHOST_ErrorRecovery(USDHC_Type *base);
+
+#if SDMMCHOST_SUPPORT_SDR104 || SDMMCHOST_SUPPORT_SDR50 || SDMMCHOST_SUPPORT_HS200 || SDMMCHOST_SUPPORT_HS400
+/*!
+ * @brief SDMMCHOST execute manual tuning.
+ * @param host host handler.
+ * @param tuningCmd tuning command
+ * @param revBuf receive buffer pointer
+ * @param blockSize receive block size
+ */
+static status_t SDMMCHOST_ExecuteManualTuning(sdmmchost_t *host,
+                                              uint32_t tuningCmd,
+                                              uint32_t *revBuf,
+                                              uint32_t blockSize);
+#endif
 /*******************************************************************************
  * Variables
  ******************************************************************************/
@@ -121,25 +135,12 @@ status_t SDMMCHOST_PollingCardDetectStatus(sdmmchost_t *host, uint32_t waitCardS
         {
             break;
         }
-    } while (1U);
+    } while (true);
 
     return kStatus_Success;
 }
 
-status_t SDMMCHOST_WaitCardDetectStatus(SDMMCHOST_TYPE *hostBase,
-                                        const sdmmchost_detect_card_t *cd,
-                                        bool waitCardStatus)
-{
-    assert(cd != NULL);
-
-    while ((USDHC_GetInterruptStatusFlags(hostBase) & (uint32_t)kUSDHC_CardInsertionFlag) != (uint32_t)waitCardStatus)
-    {
-    }
-
-    return kStatus_Success;
-}
-
-#if SDMMCHOST_ENABLE_CACHE_LINE_ALIGN_TRANSFER
+#if defined SDMMCHOST_ENABLE_CACHE_LINE_ALIGN_TRANSFER && SDMMCHOST_ENABLE_CACHE_LINE_ALIGN_TRANSFER
 
 void SDMMCHOST_InstallCacheAlignBuffer(sdmmchost_t *host, void *cacheAlignBuffer, uint32_t cacheAlignBufferSize)
 {
@@ -158,7 +159,7 @@ status_t SDMMCHOST_TransferFunction(sdmmchost_t *host, sdmmchost_transfer_t *con
     {
         (void)memset(&dmaConfig, 0, sizeof(usdhc_adma_config_t));
         /* config adma */
-        dmaConfig.dmaMode = kUSDHC_DmaModeAdma2;
+        dmaConfig.dmaMode = SDMMCHOST_DMA_MODE;
 #if !(defined(FSL_FEATURE_USDHC_HAS_NO_RW_BURST_LEN) && FSL_FEATURE_USDHC_HAS_NO_RW_BURST_LEN)
         dmaConfig.burstLen = kUSDHC_EnBurstLenForINCR;
 #endif
@@ -215,7 +216,7 @@ static void SDMMCHOST_ErrorRecovery(USDHC_Type *base)
         (void)USDHC_Reset(base, kUSDHC_ResetCommand, 100U);
     }
     /* check data inhibit status flag */
-    if ((status & (uint32_t)kUSDHC_DataInhibitFlag) != 0U)
+    if (((status & (uint32_t)kUSDHC_DataInhibitFlag) != 0U) || (USDHC_GetAdmaErrorStatusFlags(base) != 0U))
     {
         /* reset data line */
         (void)USDHC_Reset(base, kUSDHC_ResetData, 100U);
@@ -229,9 +230,6 @@ void SDMMCHOST_SetCardPower(sdmmchost_t *host, bool enable)
 
 void SDMMCHOST_SetCardBusWidth(sdmmchost_t *host, uint32_t dataBusWidth)
 {
-    assert((dataBusWidth != (uint32_t)kUSDHC_DataBusWidth8Bit) ||
-           ((dataBusWidth == (uint32_t)kUSDHC_DataBusWidth8Bit) && SDMMCHOST_INSTANCE_SUPPORT_8_BIT_WIDTH(host) != 0U));
-
     USDHC_SetDataBusWidth(host->hostController.base, dataBusWidth == (uint32_t)kSDMMC_BusWdith1Bit ?
                                                          kUSDHC_DataBusWidth1Bit :
                                                          dataBusWidth == (uint32_t)kSDMMC_BusWdith4Bit ?
@@ -239,27 +237,39 @@ void SDMMCHOST_SetCardBusWidth(sdmmchost_t *host, uint32_t dataBusWidth)
                                                          kUSDHC_DataBusWidth8Bit);
 }
 
-void SDMMCHOST_PowerOffCard(SDMMCHOST_TYPE *base, const sdmmchost_pwr_card_t *pwr)
+void SDMMCHOST_ConvertDataToLittleEndian(sdmmchost_t *host, uint32_t *data, uint32_t wordSize, uint32_t format)
 {
-    if (pwr != NULL)
-    {
-        pwr->powerOff();
-        SDMMC_OSADelay(pwr->powerOffDelay_ms);
-    }
-}
+    uint32_t temp = 0U;
 
-void SDMMCHOST_PowerOnCard(SDMMCHOST_TYPE *base, const sdmmchost_pwr_card_t *pwr)
-{
-    /* use user define the power on function  */
-    if (pwr != NULL)
+    if (((uint32_t)host->hostController.config.endianMode == (uint32_t)kSDMMCHOST_EndianModeLittle) &&
+        (format == (uint32_t)kSDMMC_DataPacketFormatMSBFirst))
     {
-        pwr->powerOn();
-        SDMMC_OSADelay(pwr->powerOnDelay_ms);
+        for (uint32_t i = 0U; i < wordSize; i++)
+        {
+            temp    = data[i];
+            data[i] = SWAP_WORD_BYTE_SEQUENCE(temp);
+        }
+    }
+    else if ((uint32_t)host->hostController.config.endianMode == (uint32_t)kSDMMCHOST_EndianModeHalfWordBig)
+    {
+        for (uint32_t i = 0U; i < wordSize; i++)
+        {
+            temp    = data[i];
+            data[i] = SWAP_HALF_WROD_BYTE_SEQUENCE(temp);
+        }
+    }
+    else if (((uint32_t)host->hostController.config.endianMode == (uint32_t)kSDMMCHOST_EndianModeBig) &&
+             (format == (uint32_t)kSDMMC_DataPacketFormatLSBFirst))
+    {
+        for (uint32_t i = 0U; i < wordSize; i++)
+        {
+            temp    = data[i];
+            data[i] = SWAP_WORD_BYTE_SEQUENCE(temp);
+        }
     }
     else
     {
-        /* Delay several milliseconds to make card stable. */
-        SDMMC_OSADelay(1000U);
+        /* nothing to do */
     }
 }
 
@@ -268,6 +278,58 @@ status_t SDMMCHOST_Init(sdmmchost_t *host)
     assert(host != NULL);
 
     usdhc_host_t *usdhcHost = &(host->hostController);
+
+#if defined FSL_FEATURE_USDHC_INSTANCE_SUPPORT_8_BIT_WIDTHn
+    uint32_t bus8bitCapability = (uint32_t)FSL_FEATURE_USDHC_INSTANCE_SUPPORT_8_BIT_WIDTHn(host->hostController.base);
+#else
+    uint32_t bus8bitCapability    = 0U;
+#endif
+
+#if (defined(FSL_FEATURE_USDHC_HAS_HS400_MODE) && (FSL_FEATURE_USDHC_HAS_HS400_MODE))
+#if defined FSL_FEATURE_USDHC_INSTANCE_SUPPORT_HS400_MODEn
+    uint32_t hs400Capability = (uint32_t)FSL_FEATURE_USDHC_INSTANCE_SUPPORT_HS400_MODEn(host->hostController.base);
+#else
+    uint32_t hs400Capability = 0U;
+#endif
+#endif
+
+#if defined FSL_FEATURE_USDHC_INSTANCE_SUPPORT_1V8_SIGNALn
+    uint32_t voltage1v8Capability = (uint32_t)FSL_FEATURE_USDHC_INSTANCE_SUPPORT_1V8_SIGNALn(host->hostController.base);
+#else
+    uint32_t voltage1v8Capability = 0U;
+#endif
+    /* sdmmc osa init */
+
+    host->capability = (uint32_t)kSDMMCHOST_SupportHighSpeed | (uint32_t)kSDMMCHOST_SupportSuspendResume |
+                       (uint32_t)kSDMMCHOST_SupportVoltage3v3 | (uint32_t)kSDMMCHOST_SupportVoltage1v8 |
+                       (uint32_t)kSDMMCHOST_SupportVoltage1v2 | (uint32_t)kSDMMCHOST_Support4BitDataWidth |
+                       (uint32_t)kSDMMCHOST_SupportDDRMode | (uint32_t)kSDMMCHOST_SupportDetectCardByData3 |
+                       (uint32_t)kSDMMCHOST_SupportDetectCardByCD | (uint32_t)kSDMMCHOST_SupportAutoCmd12;
+
+    if (bus8bitCapability != 0U)
+    {
+        host->capability |= (uint32_t)kSDMMCHOST_Support8BitDataWidth;
+    }
+
+    if (voltage1v8Capability != 0U)
+    {
+#if (defined(FSL_FEATURE_USDHC_HAS_SDR104_MODE) && (FSL_FEATURE_USDHC_HAS_SDR104_MODE))
+        host->capability |= (uint32_t)kSDMMCHOST_SupportSDR104;
+#endif
+#if (defined(FSL_FEATURE_USDHC_HAS_SDR50_MODE) && (FSL_FEATURE_USDHC_HAS_SDR50_MODE))
+        host->capability |= (uint32_t)kSDMMCHOST_SupportSDR50 | (uint32_t)kSDMMCHOST_SupportHS200;
+#endif
+    }
+
+#if (defined(FSL_FEATURE_USDHC_HAS_HS400_MODE) && (FSL_FEATURE_USDHC_HAS_HS400_MODE))
+    if (hs400Capability != 0U)
+    {
+        host->capability |= (uint32_t)kSDMMCHOST_SupportHS400;
+    }
+#endif
+
+    host->maxBlockCount = SDMMCHOST_SUPPORT_MAX_BLOCK_COUNT;
+    host->maxBlockSize  = SDMMCHOST_SUPPORT_MAX_BLOCK_LENGTH;
 
     /* Initializes USDHC. */
     usdhcHost->config.endianMode          = kUSDHC_EndianModeLittle;
@@ -322,7 +384,6 @@ void SDMMCHOST_SwitchToVoltage(sdmmchost_t *host, uint32_t voltage)
         UDSHC_SelectVoltage(host->hostController.base, false);
     }
 }
-
 #if SDMMCHOST_SUPPORT_SDR104 || SDMMCHOST_SUPPORT_SDR50 || SDMMCHOST_SUPPORT_HS200 || SDMMCHOST_SUPPORT_HS400
 
 static status_t SDMMCHOST_ExecuteStdTuning(sdmmchost_t *host, uint32_t tuningCmd, uint32_t *revBuf, uint32_t blockSize)
@@ -403,112 +464,90 @@ static status_t SDMMCHOST_ExecuteStdTuning(sdmmchost_t *host, uint32_t tuningCmd
     return kStatus_Success;
 }
 
-static status_t SDMMCHOST_ReceiveTuningBlock(sdmmchost_t *host, uint32_t tuningCmd, uint32_t *revBuf, uint32_t size)
+static status_t SDMMC_CheckTuningResult(uint32_t *tuningWindow, uint32_t *validWindowStart, uint32_t *validWindowEnd)
 {
-    assert(revBuf != NULL);
+    uint32_t tempValidWindowLen = 0U, tempValidWindowStart = 0U, tempValidWindowEnd = 0U;
+    uint32_t validWindowLenMax = 0U, ValidWindowStartMax = 0U, validWindowEndMax = 0U;
 
-    usdhc_command_t command   = {0U};
-    uint32_t interruptStatus  = 0U;
-    uint32_t transferredWords = 0U;
-    uint32_t wordSize         = size / sizeof(uint32_t);
-    USDHC_Type *base          = host->hostController.base;
+    for (uint32_t i = 0U; i < SDMMCHOST_MAX_TUNING_DELAY_CELL; i++)
+    {
+        if ((tuningWindow[i / 32U] & (1UL << (i % 32U))) != 0U)
+        {
+            if (tempValidWindowLen == 0U)
+            {
+                tempValidWindowStart = i;
+            }
+            tempValidWindowLen++;
+        }
+        else
+        {
+            if (tempValidWindowLen != 0U)
+            {
+                tempValidWindowEnd = i - 1U;
+
+#if defined SDMMC_ENABLE_LOG_PRINT
+                SDMMC_LOG("valid tuning window start: %d, end: %d\r\n", tempValidWindowStart, tempValidWindowEnd);
+#endif
+                if (tempValidWindowLen > validWindowLenMax)
+                {
+                    validWindowLenMax   = tempValidWindowLen;
+                    ValidWindowStartMax = tempValidWindowStart;
+                    validWindowEndMax   = tempValidWindowEnd;
+                }
+                tempValidWindowLen = 0U;
+            }
+        }
+    }
+
+    if (validWindowLenMax == 0U)
+    {
+        return kStatus_Fail;
+    }
+
+    *validWindowStart = ValidWindowStartMax;
+    *validWindowEnd   = validWindowEndMax;
+
+    return kStatus_Success;
+}
+
+static status_t SDMMCHOST_ExecuteManualTuning(sdmmchost_t *host,
+                                              uint32_t tuningCmd,
+                                              uint32_t *revBuf,
+                                              uint32_t blockSize)
+{
+    uint32_t *buffer         = revBuf;
+    status_t ret             = kStatus_Success;
+    uint32_t tuningDelayCell = 0U;
+    uint32_t tuningWindow[4] = {0U}, tuningWindowStart = 0U, tuningWindowEnd = 0U;
+
+    sdmmchost_transfer_t content = {0U};
+    sdmmchost_cmd_t command      = {0U};
+    sdmmchost_data_t data        = {0U};
 
     command.index        = tuningCmd;
     command.argument     = 0U;
     command.responseType = kCARD_ResponseTypeR1;
-    command.flags        = kUSDHC_DataPresentFlag;
 
-    /* disable DMA first */
-    USDHC_EnableInternalDMA(base, false);
-    /* set data configurations */
-    USDHC_SetDataConfig(base, kUSDHC_TransferDirectionReceive, 1U, size);
-    /* enable status */
-    USDHC_EnableInterruptStatus(base, (uint32_t)kUSDHC_CommandCompleteFlag | (uint32_t)kUSDHC_CommandErrorFlag |
-                                          (uint32_t)kUSDHC_BufferReadReadyFlag);
-    /* polling cmd done */
-    USDHC_SendCommand(base, &command);
-    while (0U == (interruptStatus & ((uint32_t)kUSDHC_CommandCompleteFlag | (uint32_t)kUSDHC_CommandErrorFlag)))
-    {
-        interruptStatus = USDHC_GetInterruptStatusFlags(base);
-    }
-    /* clear interrupt status */
-    USDHC_ClearInterruptStatusFlags(base, interruptStatus);
-    /* check command inhibit status flag */
-    if ((USDHC_GetPresentStatusFlags(base) & (uint32_t)kUSDHC_CommandInhibitFlag) != 0U)
-    {
-        /* reset command line */
-        (void)USDHC_Reset(base, kUSDHC_ResetCommand, 100U);
-    }
+    data.blockSize  = blockSize;
+    data.blockCount = 1U;
+    data.rxData     = revBuf;
 
-    while (0U == (interruptStatus & (uint32_t)kUSDHC_BufferReadReadyFlag))
-    {
-        interruptStatus = USDHC_GetInterruptStatusFlags(base);
-    }
+    content.command = &command;
+    content.data    = &data;
 
-    while (transferredWords < wordSize)
-    {
-        revBuf[transferredWords++] = USDHC_ReadData(base);
-    }
-
-    USDHC_ClearInterruptStatusFlags(
-        base, interruptStatus | (uint32_t)kUSDHC_DataCompleteFlag | (uint32_t)kUSDHC_DataErrorFlag);
-
-    return kStatus_Success;
-}
-
-static status_t SDMMC_CheckTuningResult(uint32_t *buffer, uint32_t size)
-{
-    uint32_t i = 0U;
-
-    for (i = 0U; i < size / sizeof(uint32_t); i++)
-    {
-        if (SDMMC_TuningBlockPattern4Bit[i] != SWAP_WORD_BYTE_SEQUENCE(buffer[i]))
-        {
-#if defined SDMMC_ENABLE_LOG_PRINT
-            SDMMC_LOG("tuning unmatch target: %x, read :%x\r\n", SDMMC_TuningBlockPattern4Bit[i],
-                      SWAP_WORD_BYTE_SEQUENCE(buffer[i]));
-#endif
-            return kStatus_SDMMC_TuningFail;
-        }
-    }
-
-    return kStatus_Success;
-}
-
-status_t SDMMCHOST_ExecuteManualTuning(sdmmchost_t *host, uint32_t tuningCmd, uint32_t *revBuf, uint32_t blockSize)
-{
-    uint32_t *buffer             = revBuf;
-    uint32_t tuningDelayCell     = 0U;
-    uint32_t validDelayCellStart = 0U;
-    bool validWindowFound        = false;
-    uint32_t validWindowCounter  = 0U;
-    status_t ret                 = kStatus_Success;
-    USDHC_Type *base             = host->hostController.base;
-
-    (void)USDHC_Reset(base, kUSDHC_ResetTuning, 100U);
-    USDHC_EnableManualTuning(base, true);
+    (void)USDHC_Reset(host->hostController.base, kUSDHC_ResetAll, 100U);
+    USDHC_EnableManualTuning(host->hostController.base, true);
+    USDHC_ForceClockOn(host->hostController.base, true);
 
     while (true)
     {
-        (void)USDHC_AdjustDelayForManualTuning(base, tuningDelayCell);
+        (void)USDHC_AdjustDelayForManualTuning(host->hostController.base, tuningDelayCell);
 
-        (void)SDMMCHOST_ReceiveTuningBlock(host, tuningCmd, buffer, blockSize);
-
-        if (kStatus_Success == SDMMC_CheckTuningResult(buffer, blockSize))
+        if ((SDMMCHOST_TransferFunction(host, &content) == kStatus_Success) &&
+            (((uint32_t)kUSDHC_TuningPassFlag & USDHC_GetInterruptStatusFlags(host->hostController.base)) != 0U))
         {
-            if (validWindowFound == false)
-            {
-                validDelayCellStart = tuningDelayCell;
-                validWindowFound    = true;
-            }
-
-            if ((validWindowCounter + validDelayCellStart) != tuningDelayCell)
-            {
-                validWindowFound   = false;
-                validWindowCounter = 0U;
-            }
-
-            validWindowCounter++;
+            USDHC_ClearInterruptStatusFlags(host->hostController.base, kUSDHC_TuningPassFlag);
+            tuningWindow[tuningDelayCell / 32U] |= 1UL << (tuningDelayCell % 32U);
 
 #if defined SDMMC_ENABLE_LOG_PRINT
             SDMMC_LOG("tuning pass point: %d\r\n", tuningDelayCell);
@@ -516,10 +555,9 @@ status_t SDMMCHOST_ExecuteManualTuning(sdmmchost_t *host, uint32_t tuningCmd, ui
         }
         else
         {
-            if ((validWindowFound) && (validWindowCounter > 2U))
-            {
-                break;
-            }
+#if defined SDMMC_ENABLE_LOG_PRINT
+            SDMMC_LOG("tuning fail point: %d\r\n", tuningDelayCell);
+#endif
         }
 
         if (++tuningDelayCell >= SDMMCHOST_MAX_TUNING_DELAY_CELL)
@@ -531,37 +569,46 @@ status_t SDMMCHOST_ExecuteManualTuning(sdmmchost_t *host, uint32_t tuningCmd, ui
 
         SDMMC_OSADelay(2U);
     }
-    (void)memset(buffer, 0, blockSize);
 
-    SDMMC_OSADelay(2U);
+    /* After the whole 0-128 delay cell validated, tuning result information stored in tuningWindow, this function will
+    check the valid winddow and will select a longest window as the final tuning delay setting */
+    if (SDMMC_CheckTuningResult(tuningWindow, &tuningWindowStart, &tuningWindowEnd) == kStatus_Fail)
+    {
+        return kStatus_Fail;
+    }
+
+    /* abort tuning */
+    USDHC_EnableManualTuning(host->hostController.base, false);
+    USDHC_ForceClockOn(host->hostController.base, false);
+    (void)USDHC_Reset(host->hostController.base, kUSDHC_ResetAll, 100U);
 
     /* select middle position of the window */
-    (void)USDHC_AdjustDelayForManualTuning(base, validDelayCellStart + validWindowCounter / 2U);
-    /* send tuning block with the average delay cell */
-    (void)SDMMCHOST_ReceiveTuningBlock(host, tuningCmd, buffer, blockSize);
-    ret = SDMMC_CheckTuningResult(buffer, blockSize);
-    /* abort tuning */
-    USDHC_EnableManualTuning(base, false);
-
+    (void)USDHC_SetTuningDelay(host->hostController.base, (tuningWindowStart + tuningWindowEnd) / 2U - 3U, 3U, 3U);
+    tuningDelayCell = ((tuningWindowStart + tuningWindowEnd) / 2U - 3U) << 8U | 0x33U;
+    /* wait the tuning delay value write successfully */
+    while ((USDHC_GetTuningDelayStatus(host->hostController.base) & tuningDelayCell) != tuningDelayCell)
+    {
+    }
     /* enable auto tuning */
-    USDHC_EnableAutoTuning(base, true);
-    /* do not handle tuning error status, since the tuning error detect circuit is very sensetive which may drop down
-     * the transfer performance */
-    USDHC_DisableInterruptStatus(base, kUSDHC_TuningErrorFlag);
+    USDHC_EnableAutoTuning(host->hostController.base, true);
 
     return ret;
 }
+#endif
 
 status_t SDMMCHOST_ExecuteTuning(sdmmchost_t *host, uint32_t tuningCmd, uint32_t *revBuf, uint32_t blockSize)
 {
+#if SDMMCHOST_SUPPORT_SDR104 || SDMMCHOST_SUPPORT_SDR50 || SDMMCHOST_SUPPORT_HS200 || SDMMCHOST_SUPPORT_HS400
     if (host->tuningType == (uint32_t)kSDMMCHOST_StandardTuning)
     {
         return SDMMCHOST_ExecuteStdTuning(host, tuningCmd, revBuf, blockSize);
     }
 
     return SDMMCHOST_ExecuteManualTuning(host, tuningCmd, revBuf, blockSize);
-}
+#else
+    return kStatus_SDMMC_NotSupportYet;
 #endif
+}
 
 status_t SDMMCHOST_StartBoot(sdmmchost_t *host,
                              sdmmchost_boot_config_t *hostConfig,

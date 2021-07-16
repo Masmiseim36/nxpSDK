@@ -81,19 +81,19 @@ ULONG    value = 0;
         case UX_DCD_MCIMX6_32BIT_REG        :
 
             /* 32 bit value.  */
-            value =  *((ULONG *) (dcd_mcimx6 -> ux_dcd_mcimx6_base + mcimx6_register));
+            value =  *((volatile ULONG *) (dcd_mcimx6 -> ux_dcd_mcimx6_base + mcimx6_register));
             break;
 
         case UX_DCD_MCIMX6_16BIT_REG        :
 
             /* 16 bit value.  */
-            value = (ULONG) (*((USHORT *) (dcd_mcimx6 -> ux_dcd_mcimx6_base + mcimx6_register))) ;
+            value = (ULONG) (*((volatile USHORT *) (dcd_mcimx6 -> ux_dcd_mcimx6_base + mcimx6_register))) ;
             break;
 
         case UX_DCD_MCIMX6_8BIT_REG        :
 
             /* 8 bit value.  */
-            value =  (ULONG) (*((UCHAR *) (dcd_mcimx6 -> ux_dcd_mcimx6_base + mcimx6_register)));
+            value =  (ULONG) (*((volatile UCHAR *) (dcd_mcimx6 -> ux_dcd_mcimx6_base + mcimx6_register)));
             break;
 
     }

@@ -2,7 +2,12 @@
 @page rtos_log RTOS Change Log
 
 @section FreeRTOS FreeRTOS for MCUXpresso SDK.
-The current version is Amazon-FreeRTOS 202007.00 Original package is available at <a href="https://github.com/aws/amazon-freertos">github.com/aws/amazon-freertos</a>.
+The current version is Amazon-FreeRTOS 202012.00 Original package is available at <a href="https://github.com/aws/amazon-freertos">github.com/aws/amazon-freertos</a>.
+
+  - 202012.00_rev0
+      - update amazon freertos version.
+      - update libraries/logging from github.com/aws/amazon-freertos (commit fc1d0e3c72ca791624477474bc7b5e5c15f9429d)
+      - increase mqttexamplePROCESS_LOOP_TIMEOUT_MS to fix the assert error that is caused by time out.
 
   - 202007.00_rev0
       - update amazon freertos version.
@@ -12,7 +17,7 @@ The current version is Amazon-FreeRTOS 202007.00 Original package is available a
 
   - 202002.00_rev1
       - updated iot_tls.c as per latest SSS stack v2.14. All SSS/SE05x code under conditional compilation.
-      - fix "#pragma weak"" issue caused by IAR update to version 8.50.5. Use __weak definition of vPortSetupTimerInterrupt instead of "#pragma weak" declaration.
+      - fix "\#pragma weak"" issue caused by IAR update to version 8.50.5. Use __weak definition of vPortSetupTimerInterrupt instead of "\#pragma weak" declaration.
 
   - 202002.00_rev0
       - update aws_iot_network_manager

@@ -30,6 +30,7 @@
 #include "board.h"
 #include "pin_mux.h"
 
+#include "ewconfig.h"
 #include "ew_bsp_system.h"
 #include "ew_bsp_clock.h"
 #include "fsl_debug_console.h"
@@ -37,10 +38,11 @@
 
 /*******************************************************************************
 * FUNCTION:
-*   EwBspConfigSystem
+*   EwBspSystemInit
 *
 * DESCRIPTION:
-*   Configuration of system components (CPU clock, memory, qspi, ...)
+*   The function EwBspSystemInit initializes the system components.
+*   (CPU clock, memory, qspi, ...)
 *
 * ARGUMENTS:
 *   None
@@ -49,7 +51,7 @@
 *   None
 *
 *******************************************************************************/
-void EwBspConfigSystem( void )
+void EwBspSystemInit( void )
 {
   BOARD_ConfigMPU();
   BOARD_InitPins();
@@ -58,10 +60,45 @@ void EwBspConfigSystem( void )
   BOARD_BootClockRUN();
   BOARD_InitDebugConsole();
 
-#if 0
-  EwBspConfigRealTimeClock();
-  setDefaultTime();
-#endif
+  /* Workaround for SEMC queue:
+     The SEMC queue allows for reordering of SDRAM operations. In some conditions,
+     the reodering can cause problems that appear as reading incorrect/stale data
+     from the SDRAM. Changing the BMCRn values to increase the WAGE weighting
+     prevents the reordering of operations and avoids the issue. */
+  {
+    uint32_t* SEMC_BMCR0 = (uint32_t*)0x402F0008;
+    *SEMC_BMCR0 = 0x80;
+    uint32_t* SEMC_BMCR1 = (uint32_t*)0x402F000C;
+    *SEMC_BMCR1 = 0x80;
+  }
+
+  /* Workaround to support direct access of PXP to flash memory - splitting the
+     FlexSPI AHB buffer into two parts to share between core and PXP */
+  // FLEXSPI->AHBCR          = 0x0;        /* Temporarily disable prefetching while changing the buffer settings */
+  // FLEXSPI->AHBRXBUFCR0[0] = 0x80000040; /* Allocate half of the prefetch buffer to the core */
+  // FLEXSPI->AHBRXBUFCR0[3] = 0x80030040; /* Other half of the buffer for other masters incl. PXP */
+  // FLEXSPI->AHBCR          = 0x78;       /* Set AHBCR back to the original value */
+
 }
+
+
+/*******************************************************************************
+* FUNCTION:
+*   EwBspSystemDone
+*
+* DESCRIPTION:
+*   The function EwBspSystemDone terminates the system components.
+*
+* ARGUMENTS:
+*   None
+*
+* RETURN VALUE:
+*   None
+*
+*******************************************************************************/
+void EwBspSystemDone( void )
+{
+}
+
 
 /* msy, mli */

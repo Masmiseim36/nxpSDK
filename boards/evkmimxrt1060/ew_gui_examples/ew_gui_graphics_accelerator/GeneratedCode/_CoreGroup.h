@@ -21,8 +21,8 @@
 * Please do not make any modifications of this file! The modifications are lost
 * when the file is generated again by Embedded Wizard Studio!
 *
-* Version  : 9.30
-* Date     : 14.02.2020  8:00:50
+* Version  : 10.0
+* Date     : 17.02.2021  8:00:50
 * Profile  : iMX_RT
 * Platform : NXP.iMX_RT.RGB565
 *
@@ -37,12 +37,12 @@
 #endif
 
 #include "ewrte.h"
-#if EW_RTE_VERSION != 0x0009001E
+#if EW_RTE_VERSION != 0x000A0000
   #error Wrong version of Embedded Wizard Runtime Environment.
 #endif
 
 #include "ewgfx.h"
-#if EW_GFX_VERSION != 0x0009001E
+#if EW_GFX_VERSION != 0x000A0000
   #error Wrong version of Embedded Wizard Graphics Engine.
 #endif
 
@@ -230,6 +230,11 @@ EW_DEFINE_METHODS( CoreGroup, CoreRectView )
   EW_METHOD( UpdateViewState,   void )( CoreGroup _this, XSet aState )
   EW_METHOD( InvalidateArea,    void )( CoreGroup _this, XRect aArea )
 EW_END_OF_METHODS( CoreGroup )
+
+/* The method Init() is invoked automatically after the component has been created. 
+   This method can be overridden and filled with logic containing additional initialization 
+   statements. */
+void CoreGroup_Init( CoreGroup _this, XHandle aArg );
 
 /* The method Draw() is invoked automatically if parts of the view should be redrawn 
    on the screen. This can occur when e.g. the view has been moved or the appearance 
@@ -444,11 +449,6 @@ void CoreGroup_InvalidateArea( CoreGroup _this, XRect aArea );
 
 /* Wrapper function for the virtual method : 'Core::Group.InvalidateArea()' */
 void CoreGroup__InvalidateArea( void* _this, XRect aArea );
-
-/* The method Init() is invoked automatically after the component has been created. 
-   This method can be overridden and filled with logic containing additional initialization 
-   statements. */
-void CoreGroup_Init( CoreGroup _this, XHandle aArg );
 
 /* The method FindSiblingView() searches for a sibling view of the view specified 
    in the parameter aView - aView itself will be excluded from the search operation.

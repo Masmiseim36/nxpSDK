@@ -171,7 +171,7 @@ static usb_host_instance_t *USB_HostGetInstance(void)
     void *temp;
     OSA_SR_ALLOC();
     OSA_ENTER_CRITICAL();
-    for (; i < USB_HOST_CONFIG_MAX_HOST; i++)
+    for (; i < (uint8_t)USB_HOST_CONFIG_MAX_HOST; i++)
     {
         if (g_UsbHostInstance[i].occupied != 1U)
         {
@@ -182,7 +182,7 @@ static usb_host_instance_t *USB_HostGetInstance(void)
             }
             g_UsbHostInstance[i].occupied = 1;
             OSA_EXIT_CRITICAL();
-            for (index = 0; index < USB_HOST_CONFIG_MAX_TRANSFERS; ++index)
+            for (index = 0; index < (uint32_t)USB_HOST_CONFIG_MAX_TRANSFERS; ++index)
             {
                 temp                                                 = (void *)&(s_Setupbuffer[i][index][0]);
                 g_UsbHostInstance[i].transferList[index].setupPacket = (usb_setup_struct_t *)temp;

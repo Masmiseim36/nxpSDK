@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['osadir_711',['OsaDir',['../osa__dir_8h.html#a6e49c59fb4b98eb6e24a2844017d2f20',1,'osa_dir.h']]],
-  ['osatime_712',['OsaTime',['../osa__time_8h.html#a55a093eb49584a82f40fcf7f71d7a668',1,'osa_time.h']]]
+  ['osadir_716',['OsaDir',['../osa__dir_8h.html#a6e49c59fb4b98eb6e24a2844017d2f20',1,'osa_dir.h']]],
+  ['osatime_717',['OsaTime',['../osa__time_8h.html#a55a093eb49584a82f40fcf7f71d7a668',1,'osa_time.h']]]
 ];

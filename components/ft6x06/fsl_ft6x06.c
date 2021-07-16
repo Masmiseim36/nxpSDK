@@ -177,6 +177,11 @@ status_t FT6X06_GetMultiTouch(ft6x06_handle_t *handle, int *touch_count, touch_p
         ft6x06_touch_data_t *touch_data = (ft6x06_touch_data_t *)(void *)(handle->touch_buf);
         int i;
 
+        /* check for valid number of touches - otherwise ignore touch information...
+           workaround added msy */
+        if (touch_data->TD_STATUS > FT6X06_MAX_TOUCHES)
+            touch_data->TD_STATUS = 0;
+
         /* Decode number of touches */
         if (touch_count)
         {

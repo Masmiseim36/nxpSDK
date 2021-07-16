@@ -19,8 +19,8 @@
 /* --------------------------------- Global Definitions */
 
 /* ===============================================  Inquiry Access Codes */
-#define BT_GIAC                      0x9E8B33
-#define BT_LIAC                      0x9E8B00
+#define BT_GIAC                      0x9E8B33U
+#define BT_LIAC                      0x9E8B00U
 
 
 /* ===============================================  Class of Device (CoD) */
@@ -79,15 +79,15 @@
  *     |_________ Information (WEB-server, WAP-server, ...)
  *
  */
-#define BT_MSC_LIMITED_DISCOVERABLE  0x00002000
-#define BT_MSC_POSITIONING           0x00010000
-#define BT_MSC_NETWORKING            0x00020000
-#define BT_MSC_RENDERING             0x00040000
-#define BT_MSC_CAPTURING             0x00080000
-#define BT_MSC_OBJECT_TRANSFER       0x00100000
-#define BT_MSC_AUDIO                 0x00200000
-#define BT_MSC_TELEPHONY             0x00400000
-#define BT_MSC_INFORMATION           0x00800000
+#define BT_MSC_LIMITED_DISCOVERABLE  0x00002000U
+#define BT_MSC_POSITIONING           0x00010000U
+#define BT_MSC_NETWORKING            0x00020000U
+#define BT_MSC_RENDERING             0x00040000U
+#define BT_MSC_CAPTURING             0x00080000U
+#define BT_MSC_OBJECT_TRANSFER       0x00100000U
+#define BT_MSC_AUDIO                 0x00200000U
+#define BT_MSC_TELEPHONY             0x00400000U
+#define BT_MSC_INFORMATION           0x00800000U
 
 
 /*
@@ -123,21 +123,21 @@
  *      X  X  X  X  X -> All other values reserved
  *
  */
-#define BT_MDC_MISCELLANEOUS                 0x00000000
-#define BT_MDC_COMPUTER                      0x00000100
-#define BT_MDC_PHONE                         0x00000200
-#define BT_MDC_LAN_NETWORK_ACCESS_POINT      0x00000300
-#define BT_MDC_LAN_ACCESS_POINT              0x00000300
-#define BT_MDC_NETWORK_ACCESS_POINT          0x00000300
-#define BT_MDC_AUDIO_VIDEO                   0x00000400
-#define BT_MDC_AUDIO                         0x00000400
-#define BT_MDC_VIDEO                         0x00000400
-#define BT_MDC_PERIPHERAL                    0x00000500
-#define BT_MDC_IMAGING                       0x00000600
-#define BT_MDC_WEARABLE                      0x00000700
-#define BT_MDC_TOY                           0x00000800
-#define BT_MDC_HEALTH                        0x00000900
-#define BT_MDC_UNCLASSIFIED                  0x00001F00
+#define BT_MDC_MISCELLANEOUS                 0x00000000U
+#define BT_MDC_COMPUTER                      0x00000100U
+#define BT_MDC_PHONE                         0x00000200U
+#define BT_MDC_LAN_NETWORK_ACCESS_POINT      0x00000300U
+#define BT_MDC_LAN_ACCESS_POINT              0x00000300U
+#define BT_MDC_NETWORK_ACCESS_POINT          0x00000300U
+#define BT_MDC_AUDIO_VIDEO                   0x00000400U
+#define BT_MDC_AUDIO                         0x00000400U
+#define BT_MDC_VIDEO                         0x00000400U
+#define BT_MDC_PERIPHERAL                    0x00000500U
+#define BT_MDC_IMAGING                       0x00000600U
+#define BT_MDC_WEARABLE                      0x00000700U
+#define BT_MDC_TOY                           0x00000800U
+#define BT_MDC_HEALTH                        0x00000900U
+#define BT_MDC_UNCLASSIFIED                  0x00001F00U
 
 
 /*
@@ -164,13 +164,13 @@
  *
  *      X  X  X  X  X  X -> All other values reserved
  */
-#define BT_CMC_UNCLASSIFIED                0x00000000
-#define BT_CMC_DESKTOP_WORKSTATION         0x00000004
-#define BT_CMC_SERVER_CLASS_COMPUTER       0x00000008
-#define BT_CMC_LAPTOP                      0x0000000C
-#define BT_CMC_HANDHELD_PC_PDA             0x00000010
-#define BT_CMC_PALM_SIZED_PC_PDA           0x00000014
-#define BT_CMC_WEARABLE_COMPUTER           0x00000018
+#define BT_CMC_UNCLASSIFIED                0x00000000U
+#define BT_CMC_DESKTOP_WORKSTATION         0x00000004U
+#define BT_CMC_SERVER_CLASS_COMPUTER       0x00000008U
+#define BT_CMC_LAPTOP                      0x0000000CU
+#define BT_CMC_HANDHELD_PC_PDA             0x00000010U
+#define BT_CMC_PALM_SIZED_PC_PDA           0x00000014U
+#define BT_CMC_WEARABLE_COMPUTER           0x00000018U
 
 
 /*
@@ -195,14 +195,14 @@
  *
  *     X  X  X  X  X  X -> All other values reserved
  */
-#define BT_PMC_UNCLASSIFIED                           0x00000000
-#define BT_PMC_CELLULAR                               0x00000004
-#define BT_PMC_CORDLESS                               0x00000008
-#define BT_PMC_SMART_PHONE                            0x0000000C
-#define BT_PMC_WIRED_MODEM_OR_VOICE_GATEWAY           0x00000010
-#define BT_PMC_WIRED_MODEM                            0x00000010
-#define BT_PMC_VOICE_GATEWAY                          0x00000010
-#define BT_PMC_COMMON_ISDN_ACCESS                     0x00000014
+#define BT_PMC_UNCLASSIFIED                           0x00000000U
+#define BT_PMC_CELLULAR                               0x00000004U
+#define BT_PMC_CORDLESS                               0x00000008U
+#define BT_PMC_SMART_PHONE                            0x0000000CU
+#define BT_PMC_WIRED_MODEM_OR_VOICE_GATEWAY           0x00000010U
+#define BT_PMC_WIRED_MODEM                            0x00000010U
+#define BT_PMC_VOICE_GATEWAY                          0x00000010U
+#define BT_PMC_COMMON_ISDN_ACCESS                     0x00000014U
 
 
 /*
@@ -240,14 +240,14 @@
  *    X  X  X -> other values reserved
  *
  */
-#define BT_LMC_FULLY_AVAILABLE                0x00000000
-#define BT_LMC_01_TO_17_PERCENT_UTILIZED      0x00000020
-#define BT_LMC_17_TO_33_PERCENT_UTILIZED      0x00000040
-#define BT_LMC_33_TO_50_PERCENT_UTILIZED      0x00000060
-#define BT_LMC_50_TO_67_PERCENT_UTILIZED      0x00000080
-#define BT_LMC_67_TO_83_PERCENT_UTILIZED      0x000000A0
-#define BT_LMC_83_TO_99_PERCENT_UTILIZED      0x000000C0
-#define BT_LMC_NO_SERVICE_AVAILABLE           0x000000E0
+#define BT_LMC_FULLY_AVAILABLE                0x00000000U
+#define BT_LMC_01_TO_17_PERCENT_UTILIZED      0x00000020U
+#define BT_LMC_17_TO_33_PERCENT_UTILIZED      0x00000040U
+#define BT_LMC_33_TO_50_PERCENT_UTILIZED      0x00000060U
+#define BT_LMC_50_TO_67_PERCENT_UTILIZED      0x00000080U
+#define BT_LMC_67_TO_83_PERCENT_UTILIZED      0x000000A0U
+#define BT_LMC_83_TO_99_PERCENT_UTILIZED      0x000000C0U
+#define BT_LMC_NO_SERVICE_AVAILABLE           0x000000E0U
 
 
 /*
@@ -299,23 +299,23 @@
  *      X  X  X  X  X  X -> All other values reserved
  *
  */
-#define BT_AMC_UNCLASSIFIED                        0x00000000
-#define BT_AMC_HEADSET_PROFILE                     0x00000004
-#define BT_AMC_HANDS_FREE                          0x00000008
-#define BT_AMC_MICROPHONE                          0x00000010
-#define BT_AMC_LOUDSPEAKER                         0x00000014
-#define BT_AMC_HEADPHONE                           0x00000018
-#define BT_AMC_PORTABLE_AUDIO                      0x0000001C
-#define BT_AMC_CAR_AUDIO                           0x00000020
-#define BT_AMC_SET_TOP_BOX                         0x00000024
-#define BT_AMC_HI_FI_AUDIO_DEVICE                  0x00000028
-#define BT_AMC_VCR                                 0x0000002C
-#define BT_AMC_VIDEO_CAMERA                        0x00000030
-#define BT_AMC_CAMCORDER                           0x00000034
-#define BT_AMC_VIDEO_MONITOR                       0x00000038
-#define BT_AMC_VIDEO_DISPLAY_AND_LOUDSPEAKER       0x0000003C
-#define BT_AMC_VIDEO_CONFERENCING                  0x00000040
-#define BT_AMC_GAMING_TOY                          0x00000048
+#define BT_AMC_UNCLASSIFIED                        0x00000000U
+#define BT_AMC_HEADSET_PROFILE                     0x00000004U
+#define BT_AMC_HANDS_FREE                          0x00000008U
+#define BT_AMC_MICROPHONE                          0x00000010U
+#define BT_AMC_LOUDSPEAKER                         0x00000014U
+#define BT_AMC_HEADPHONE                           0x00000018U
+#define BT_AMC_PORTABLE_AUDIO                      0x0000001CU
+#define BT_AMC_CAR_AUDIO                           0x00000020U
+#define BT_AMC_SET_TOP_BOX                         0x00000024U
+#define BT_AMC_HI_FI_AUDIO_DEVICE                  0x00000028U
+#define BT_AMC_VCR                                 0x0000002CU
+#define BT_AMC_VIDEO_CAMERA                        0x00000030U
+#define BT_AMC_CAMCORDER                           0x00000034U
+#define BT_AMC_VIDEO_MONITOR                       0x00000038U
+#define BT_AMC_VIDEO_DISPLAY_AND_LOUDSPEAKER       0x0000003CU
+#define BT_AMC_VIDEO_CONFERENCING                  0x00000040U
+#define BT_AMC_GAMING_TOY                          0x00000048U
 
 
 /*
@@ -358,18 +358,18 @@
  *     X  X  X  X -> All other values reserved
  *
  */
-#define BT_PPMC_NOT_KEYBOARD                   0x00000000
-#define BT_PPMC_NOT_POINTING_DEVICE            0x00000000
-#define BT_PPMC_KEYBOARD                       0x00000040
-#define BT_PPMC_POINTING_DEVICE                0x00000080
-#define BT_PPMC_COMBO_KEYBOARD_POINTING_DEVICE 0x000000C0
+#define BT_PPMC_NOT_KEYBOARD                   0x00000000U
+#define BT_PPMC_NOT_POINTING_DEVICE            0x00000000U
+#define BT_PPMC_KEYBOARD                       0x00000040U
+#define BT_PPMC_POINTING_DEVICE                0x00000080U
+#define BT_PPMC_COMBO_KEYBOARD_POINTING_DEVICE 0x000000C0U
 
-#define BT_PPMC_JOYSTICK                       0x00000004
-#define BT_PPMC_GAMEPAD                        0x00000008
-#define BT_PPMC_REMOTE_CONTROL                 0x0000000C
-#define BT_PPMC_SENSING_DEVICE                 0x00000010
-#define BT_PPMC_DIGITIZER_TABLET               0x00000014
-#define BT_PPMC_CARD_READER                    0x00000018
+#define BT_PPMC_JOYSTICK                       0x00000004U
+#define BT_PPMC_GAMEPAD                        0x00000008U
+#define BT_PPMC_REMOTE_CONTROL                 0x0000000CU
+#define BT_PPMC_SENSING_DEVICE                 0x00000010U
+#define BT_PPMC_DIGITIZER_TABLET               0x00000014U
+#define BT_PPMC_CARD_READER                    0x00000018U
 
 
 /*
@@ -401,10 +401,10 @@
  *     X  X -> All other values reserved
  *
  */
-#define BT_IMC_DISPLAY               0x00000010
-#define BT_IMC_CAMERA                0x00000020
-#define BT_IMC_SCANNER               0x00000040
-#define BT_IMC_PRINTER               0x00000080
+#define BT_IMC_DISPLAY               0x00000010U
+#define BT_IMC_CAMERA                0x00000020U
+#define BT_IMC_SCANNER               0x00000040U
+#define BT_IMC_PRINTER               0x00000080U
 
 
 /*
@@ -428,11 +428,11 @@
  *      X  X  X  X  X  X -> All other values reserved
  *
  */
-#define BT_WMC_WRIST_WATCH           0x00000004
-#define BT_WMC_PAGER                 0x00000008
-#define BT_WMC_JACKET                0x0000000C
-#define BT_WMC_HELMET                0x00000010
-#define BT_WMC_GLASSES               0x00000014
+#define BT_WMC_WRIST_WATCH           0x00000004U
+#define BT_WMC_PAGER                 0x00000008U
+#define BT_WMC_JACKET                0x0000000CU
+#define BT_WMC_HELMET                0x00000010U
+#define BT_WMC_GLASSES               0x00000014U
 
 
 /*
@@ -456,12 +456,12 @@
  *      X  X  X  X  X  X -> All other values reserved
  *
  */
-#define BT_TMC_ROBOT           0x00000004
-#define BT_TMC_VEHICLE         0x00000008
-#define BT_TMC_DOLL            0x0000000C
-#define BT_TMC_ACTION_FIGURE   0x0000000C
-#define BT_TMC_CONTROLLER      0x00000010
-#define BT_TMC_GAME            0x00000014
+#define BT_TMC_ROBOT           0x00000004U
+#define BT_TMC_VEHICLE         0x00000008U
+#define BT_TMC_DOLL            0x0000000CU
+#define BT_TMC_ACTION_FIGURE   0x0000000CU
+#define BT_TMC_CONTROLLER      0x00000010U
+#define BT_TMC_GAME            0x00000014U
 
 
 /*
@@ -493,15 +493,15 @@
  *      X  X  X  X  X  X -> All other values reserved
  *
  */
-#define BT_HMC_UNDEFINED                           0x00000000
-#define BT_HMC_BLOOD_PRESSURE_MONITOR              0x00000004
-#define BT_HMC_THERMOMETER                         0x00000008
-#define BT_HMC_WEIGHING_SCALE                      0x0000000C
-#define BT_HMC_GLUCOSE_METER                       0x00000010
-#define BT_HMC_PULSE_OXIMETER                      0x00000014
-#define BT_HMC_HEART_PULSE_RATE_MONITOR            0x00000018
-#define BT_HMC_HEALTH_DATA_DISPLAY                 0x0000001C
-#define BT_HMC_STEP_COUNTER                        0x00000020
+#define BT_HMC_UNDEFINED                           0x00000000U
+#define BT_HMC_BLOOD_PRESSURE_MONITOR              0x00000004U
+#define BT_HMC_THERMOMETER                         0x00000008U
+#define BT_HMC_WEIGHING_SCALE                      0x0000000CU
+#define BT_HMC_GLUCOSE_METER                       0x00000010U
+#define BT_HMC_PULSE_OXIMETER                      0x00000014U
+#define BT_HMC_HEART_PULSE_RATE_MONITOR            0x00000018U
+#define BT_HMC_HEALTH_DATA_DISPLAY                 0x0000001CU
+#define BT_HMC_STEP_COUNTER                        0x00000020U
 
 
 /* =============================================  AD Type 'Flags' Definitions */
@@ -530,11 +530,11 @@
  *
  *   X  X  X  X  X  X  X  X -> All other values reserved
  */
-#define BT_AD_FLAGS_LE_LIMITED_DISC_MODE          0x01
-#define BT_AD_FLAGS_LE_GENERAL_DISC_MODE          0x02
-#define BT_AD_FLAGS_BR_EDR_NOT_SUPPORTED          0x04
-#define BT_AD_FLAGS_LE_BR_EDR_CONTROLLER          0x08
-#define BT_AD_FLAGS_LE_BR_EDR_HOST                0x10
+#define BT_AD_FLAGS_LE_LIMITED_DISC_MODE          0x01U
+#define BT_AD_FLAGS_LE_GENERAL_DISC_MODE          0x02U
+#define BT_AD_FLAGS_BR_EDR_NOT_SUPPORTED          0x04U
+#define BT_AD_FLAGS_LE_BR_EDR_CONTROLLER          0x08U
+#define BT_AD_FLAGS_LE_BR_EDR_HOST                0x10U
 
 
 /* =============================================  Link Layer Definitions */
@@ -567,17 +567,17 @@
  *                  10         Bluetooth Core Specification 5.1
  *                  11 - 255   Reserved
  */
-#define BT_LMP_VERSION_1_0_B                       0
-#define BT_LMP_VERSION_1_1                         1
-#define BT_LMP_VERSION_1_2                         2
-#define BT_LMP_VERSION_2_0_EDR                     3
-#define BT_LMP_VERSION_2_1_EDR                     4
-#define BT_LMP_VERSION_3_0_HS                      5
-#define BT_LMP_VERSION_4_0                         6
-#define BT_LMP_VERSION_4_1                         7
-#define BT_LMP_VERSION_4_2                         8
-#define BT_LMP_VERSION_5_0                         9
-#define BT_LMP_VERSION_5_1                         10
+#define BT_LMP_VERSION_1_0_B                       0U
+#define BT_LMP_VERSION_1_1                         1U
+#define BT_LMP_VERSION_1_2                         2U
+#define BT_LMP_VERSION_2_0_EDR                     3U
+#define BT_LMP_VERSION_2_1_EDR                     4U
+#define BT_LMP_VERSION_3_0_HS                      5U
+#define BT_LMP_VERSION_4_0                         6U
+#define BT_LMP_VERSION_4_1                         7U
+#define BT_LMP_VERSION_4_2                         8U
+#define BT_LMP_VERSION_5_0                         9U
+#define BT_LMP_VERSION_5_1                         10U
 
 
 /* ===============================  HCI Controller Interface Definitions */
@@ -618,7 +618,7 @@
  *                   1         Bluetooth Core Specification 3.0 + HS
  *                   2 - 255   Reserved
  */
-#define BT_PAL_VERSION_3_0_HS                      1
+#define BT_PAL_VERSION_3_0_HS                      1U
 
 /* ==========================================  BD_ADDR type Definitions */
 /* Types of Bluetooth device Addresses */
@@ -632,7 +632,7 @@
  * (http://standards.ieee.org/regauth/oui/forms/ and sections 9 and 9.1
  * of the IEEE 802-2001 specification).
  */
-#define BT_BD_PUBLIC_ADDRESS_TYPE               0
+#define BT_BD_PUBLIC_ADDRESS_TYPE               0U
 
 /**
  * The random device address may be of either of two type:
@@ -683,7 +683,7 @@
  *   </li>
  *   </ol>
  */
-#define BT_BD_RANDOM_ADDRESS_TYPE               1
+#define BT_BD_RANDOM_ADDRESS_TYPE               1U
 
 /**
  *  Random Address Type can be
@@ -702,99 +702,99 @@
  *  - In future, the assigned number might define them, if required
  *    # In that case corresponding defined values might vary
  */
-#define BT_BD_STATIC_ADDRESS_TYPE              1
-#define BT_BD_RESOLVALE_PVT_ADDRESS_TYPE       2
-#define BT_BD_NON_RESOLVALE_PVT_ADDRESS_TYPE   3
+#define BT_BD_STATIC_ADDRESS_TYPE              1U
+#define BT_BD_RESOLVALE_PVT_ADDRESS_TYPE       2U
+#define BT_BD_NON_RESOLVALE_PVT_ADDRESS_TYPE   3U
 
 /* ==========================================  EIR Data Type Definitions */
 /* Flags */
-#define HCI_EIR_DATA_TYPE_FLAGS                       0x01
+#define HCI_EIR_DATA_TYPE_FLAGS                       0x01U
 
 /* Service Class UUIDs */
-#define HCI_EIR_DATA_TYPE_INCOMPLETE_16_BIT_UUIDS     0x02
-#define HCI_EIR_DATA_TYPE_COMPLETE_16_BIT_UUIDS       0x03
-#define HCI_EIR_DATA_TYPE_INCOMPLETE_32_BIT_UUIDS     0x04
-#define HCI_EIR_DATA_TYPE_COMPLETE_32_BIT_UUIDS       0x05
-#define HCI_EIR_DATA_TYPE_INCOMPLETE_128_BIT_UUIDS    0x06
-#define HCI_EIR_DATA_TYPE_COMPLETE_128_BIT_UUIDS      0x07
+#define HCI_EIR_DATA_TYPE_INCOMPLETE_16_BIT_UUIDS     0x02U
+#define HCI_EIR_DATA_TYPE_COMPLETE_16_BIT_UUIDS       0x03U
+#define HCI_EIR_DATA_TYPE_INCOMPLETE_32_BIT_UUIDS     0x04U
+#define HCI_EIR_DATA_TYPE_COMPLETE_32_BIT_UUIDS       0x05U
+#define HCI_EIR_DATA_TYPE_INCOMPLETE_128_BIT_UUIDS    0x06U
+#define HCI_EIR_DATA_TYPE_COMPLETE_128_BIT_UUIDS      0x07U
 
 /* Local Name */
-#define HCI_EIR_DATA_TYPE_SHORTENED_LOCAL_NAME        0x08
-#define HCI_EIR_DATA_TYPE_COMPLETE_LOCAL_NAME         0x09
+#define HCI_EIR_DATA_TYPE_SHORTENED_LOCAL_NAME        0x08U
+#define HCI_EIR_DATA_TYPE_COMPLETE_LOCAL_NAME         0x09U
 
 /* TX Power Level */
-#define HCI_EIR_DATA_TYPE_TX_POWER_LEVEL              0x0A
+#define HCI_EIR_DATA_TYPE_TX_POWER_LEVEL              0x0AU
 
 /* Secure Simple Pairing Out of Band (OOB) */
-#define HCI_EIR_DATA_TYPE_CLASS_OF_DEVICE             0x0D
-#define HCI_EIR_DATA_TYPE_SIMPLE_PAIRING_HASH_C       0x0E
-#define HCI_EIR_DATA_TYPE_SIMPLE_PAIRING_RANDOMIZER_R 0x0F
+#define HCI_EIR_DATA_TYPE_CLASS_OF_DEVICE             0x0DU
+#define HCI_EIR_DATA_TYPE_SIMPLE_PAIRING_HASH_C       0x0EU
+#define HCI_EIR_DATA_TYPE_SIMPLE_PAIRING_RANDOMIZER_R 0x0FU
 
 /* Device ID */
-#define HCI_EIR_DATA_TYPE_DEVICE_ID                   0x10
+#define HCI_EIR_DATA_TYPE_DEVICE_ID                   0x10U
 
 /* Advertising Data Type - Target Address */
-#define HCI_AD_TYPE_PUBLIC_TARGET_ADDRESS             0x17
-#define HCI_AD_TYPE_RANDOM_TARGET_ADDRESS             0x18
+#define HCI_AD_TYPE_PUBLIC_TARGET_ADDRESS             0x17U
+#define HCI_AD_TYPE_RANDOM_TARGET_ADDRESS             0x18U
 
 /* Advertising Data Type - Appearance */
-#define HCI_AD_TYPE_APPEARANCE                        0x19
+#define HCI_AD_TYPE_APPEARANCE                        0x19U
 
 /* Advertising Data Type - Indoor Positioning */
-#define HCI_AD_TYPE_INDOOR_POSITIONING                0x25
+#define HCI_AD_TYPE_INDOOR_POSITIONING                0x25U
 
 /* Advertising Data Type - Transport Discovery */
-#define HCI_AD_TYPE_TRANSPORT_DISCOVERY               0x26
+#define HCI_AD_TYPE_TRANSPORT_DISCOVERY               0x26U
 
 /* Manufacturer Specific Data */
-#define HCI_EIR_DATA_TYPE_MANUFACTURER_SPECIFIC_DATA  0xFF
+#define HCI_EIR_DATA_TYPE_MANUFACTURER_SPECIFIC_DATA  0xFFU
 
 
 /* ==========================================  Device Data Specializations */
 /* Pulse oximeter IEEE 11073-10404 */
-#define HDP_MDEP_TYPE_PULSE_OXIMETER                  0x1004
+#define HDP_MDEP_TYPE_PULSE_OXIMETER                  0x1004U
 
 /* Blood pressure monitor IEEE 11073-10407 */
-#define HDP_MDEP_TYPE_BP_MONITOR                      0x1007
+#define HDP_MDEP_TYPE_BP_MONITOR                      0x1007U
 
 /* Body thermometer IEEE 11073-10408 */
-#define HDP_MDEP_TYPE_THERMOMETER                     0x1008
+#define HDP_MDEP_TYPE_THERMOMETER                     0x1008U
 
 /* Body weight scale IEEE 11073-10415 */
-#define HDP_MDEP_TYPE_WEIGHT_SCALE                    0x100F
+#define HDP_MDEP_TYPE_WEIGHT_SCALE                    0x100FU
 
 /* Glucose meter IEEE 11073-10417 */
-#define HDP_MDEP_TYPE_GLUCOSE_METER                   0x1011
+#define HDP_MDEP_TYPE_GLUCOSE_METER                   0x1011U
 
 /* Step Counter based on 10441 IEEE 11073-10441 */
 /* Device specialization - Cardiovascular fitness and activity monitor */
-#define HDP_MDEP_TYPE_STEP_COUNTER                    0x1068
+#define HDP_MDEP_TYPE_STEP_COUNTER                    0x1068U
 
 /* ==========================================  L2CAP Definitions */
 
 /* L2CAP PSM Values */
-#define SDP_PSM                                 0x0001
-#define RFCOMM_PSM                              0x0003
-#define TCS_BIN_PSM                             0x0005
-#define BNEP_PSM                                0x000F
-#define HID_CONTROL_PSM                         0x0011
-#define HID_INTERRUPT_PSM                       0x0013
-#define AVCTP_PSM                               0x0017
-#define AVDTP_PSM                               0x0019
-#define AVCTP_BOW_PSM                           0x001B
-#define ATT_PSM                                 0x001F
+#define SDP_PSM                                 0x0001U
+#define RFCOMM_PSM                              0x0003U
+#define TCS_BIN_PSM                             0x0005U
+#define BNEP_PSM                                0x000FU
+#define HID_CONTROL_PSM                         0x0011U
+#define HID_INTERRUPT_PSM                       0x0013U
+#define AVCTP_PSM                               0x0017U
+#define AVDTP_PSM                               0x0019U
+#define AVCTP_BOW_PSM                           0x001BU
+#define ATT_PSM                                 0x001FU
 
 /** L2CAP Fixed channel Connection Identifiers (CID) */
-#define L2CAP_NULL_CID                          0x0000
-#define L2CAP_SIG_CID                           0x0001
-#define L2CAP_CNL_CID                           0x0002
-#define L2CAP_ATT_CID                           0x0004
-#define L2CAP_LE_CID                            0x0005
-#define L2CAP_SMP_CID                           0x0006
-#define L2CAP_SMP_BREDR_CID                     0x0007
+#define L2CAP_NULL_CID                          0x0000U
+#define L2CAP_SIG_CID                           0x0001U
+#define L2CAP_CNL_CID                           0x0002U
+#define L2CAP_ATT_CID                           0x0004U
+#define L2CAP_LE_CID                            0x0005U
+#define L2CAP_SMP_CID                           0x0006U
+#define L2CAP_SMP_BREDR_CID                     0x0007U
 
 /** L2CAP PSM for LE Profiles */
-#define LE_PSM_IPSP                             0x0023
+#define LE_PSM_IPSP                             0x0023U
 
 #endif /* _H_BT_ASSIGNED_NUMBERS_ */
 

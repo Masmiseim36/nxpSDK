@@ -63,11 +63,15 @@ extern "C" {
 #include "src/lv_demo_printer/lv_demo_printer.h"
 #endif
 
+#if LV_USE_DEMO_MUSIC != 0
+#include "src/lv_demo_music/lv_demo_music.h"
+#endif
+
 /*********************
  *      DEFINES
  *********************/
 /*Test  lvgl version*/
-#if LV_VERSION_CHECK(7, 4, 0) == 0
+#if LV_VERSION_CHECK(7, 10, 1) == 0
 #error "lv_examples: Wrong lvgl version"
 #endif
 

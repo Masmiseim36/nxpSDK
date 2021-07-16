@@ -25,7 +25,7 @@
 
 /* -------------------------------------------- Static Global Variables */
 /* Application signal notification handler */
-static void(*em_process_term_handler)(void);
+/* static void(*em_process_term_handler)(void); */
 
 /* -------------------------------------------- Functions */
 
@@ -74,66 +74,64 @@ INT32 EM_thread_create
     osa_status_t   retval;
     osa_task_def_t l_task_attr_defs;
 
-    (void) start_routine;
-
     /* Allocate memory for Task Handle */
     (*thread) = EM_alloc_mem(EM_THREAD_HANDLE_SIZE);
 
     if (NULL == (*thread))
     {
-    	/* Task Handle Allocation Failed! */
-    	return -1;
+        /* Task Handle Allocation Failed! */
+        return -1;
     }
 
     /* Assign values to OSA's task def parameter from Thread Attribute */
     if (NULL != attr)
     {
-    	/* Thread Start Routine */
-    	l_task_attr_defs.pthread   = start_routine;
-    	/* Thread Priority */
-    	l_task_attr_defs.tpriority = PRIORITY_RTOS_TO_OSA (attr->thread_priority);
-    	/* Num of Thread Instances */
-    	l_task_attr_defs.instances = 1;
-    	/* Thread Stack Size */
-    	l_task_attr_defs.stacksize = attr->thread_stack_size;
-    	/* Thread Stack Pointer */
-    	l_task_attr_defs.tstack    = NULL;
-    	/* Thread Link Pointer */
-    	l_task_attr_defs.tlink     = NULL;
-    	/* Thread Name */
-    	l_task_attr_defs.tname     = (uint8_t *)attr->thread_name;
-    	/* Thread Use Float Flag */
-    	l_task_attr_defs.useFloat  = 0;
+        /* Thread Start Routine */
+        l_task_attr_defs.pthread   = start_routine;
+        /* Thread Priority */
+        l_task_attr_defs.tpriority = PRIORITY_RTOS_TO_OSA (attr->thread_priority);
+        /* Num of Thread Instances */
+        l_task_attr_defs.instances = 1U;
+        /* Thread Stack Size */
+        l_task_attr_defs.stacksize = attr->thread_stack_size;
+        /* Thread Stack Pointer */
+        l_task_attr_defs.tstack    = NULL;
+        /* Thread Link Pointer */
+        l_task_attr_defs.tlink     = NULL;
+        /* Thread Name */
+        l_task_attr_defs.tname     = (uint8_t *)attr->thread_name;
+        /* Thread Use Float Flag */
+        l_task_attr_defs.useFloat  = 0U;
     }
     else
     {
-    	/**
-    	 * TODO:
-    	 * Assign some default values if the Thread Attribute is not Passed!
-    	 */
-    	/* Thread Start Routine */
-    	l_task_attr_defs.pthread   = start_routine;
-    	/* Thread Priority */
-    	l_task_attr_defs.tpriority = PRIORITY_RTOS_TO_OSA (EM_OS_TASK_PRIORITY);
-    	/* Num of Thread Instances */
-    	l_task_attr_defs.instances = 1;
-    	/* Thread Stack Size */
-    	l_task_attr_defs.stacksize = EM_OS_TASK_STACKDEPTH;
-    	/* Thread Stack Pointer */
-    	l_task_attr_defs.tstack    = NULL;
-    	/* Thread Link Pointer */
-    	l_task_attr_defs.tlink     = NULL;
-    	/* Thread Name */
-    	l_task_attr_defs.tname     = (uint8_t *)EM_OS_DEFAULT_TASK_NAME(start_routine);
-    	/* Thread Use Float Flag */
-    	l_task_attr_defs.useFloat  = 0;
+        /**
+         * TODO:
+         * Assign some default values if the Thread Attribute is not Passed!
+         */
+        /* Thread Start Routine */
+        l_task_attr_defs.pthread   = start_routine;
+        /* Thread Priority */
+        l_task_attr_defs.tpriority = PRIORITY_RTOS_TO_OSA (EM_OS_TASK_PRIORITY);
+        /* Num of Thread Instances */
+        l_task_attr_defs.instances = 1U;
+        /* Thread Stack Size */
+        l_task_attr_defs.stacksize = EM_OS_TASK_STACKDEPTH;
+        /* Thread Stack Pointer */
+        l_task_attr_defs.tstack    = NULL;
+        /* Thread Link Pointer */
+        l_task_attr_defs.tlink     = NULL;
+        /* Thread Name */
+        l_task_attr_defs.tname     = (uint8_t *)EM_OS_DEFAULT_TASK_NAME(start_routine);
+        /* Thread Use Float Flag */
+        l_task_attr_defs.useFloat  = 0U;
     }
 
     /* Call to OSA task creation */
     retval = OSA_TaskCreate
-	         (
+             (
                  (osa_task_handle_t)(*thread),
-				 &l_task_attr_defs,
+                 &l_task_attr_defs,
                  thread_args
              );
 
@@ -162,7 +160,7 @@ INT32 EM_thread_attr_init
       )
 {
     (void) attr;
-    return 0;
+    return 0U;
 }
 
 
@@ -190,21 +188,27 @@ INT32 EM_thread_mutex_init
       )
 
 {
+    osa_status_t ret;
+
     (void) mutex_attr;
 
-    /* Allocate memory for Mutex */
-	(*mutex) = EM_alloc_mem(EM_THREAD_MUTEX_SIZE);
-
-    if (NULL != (*mutex))
+    if (NULL != mutex)
     {
-        OSA_MutexCreate((*mutex));
+        /* Allocate memory for Mutex */
+        (*mutex) = EM_alloc_mem(EM_THREAD_MUTEX_SIZE);
 
-        return 0;
+        if (NULL != (*mutex))
+        {
+            ret = OSA_MutexCreate((*mutex));
+
+            if (KOSA_StatusSuccess == ret)
+            {
+                return 0;
+            }
+        }
     }
-    else
-    {
-    	return -1;
-    }
+
+    return -1;
 }
 
 
@@ -231,8 +235,18 @@ INT32 EM_thread_mutex_lock
           /* INOUT */ EM_thread_mutex_type *    mutex
       )
 {
-    OSA_MutexLock((*mutex), osaWaitForever_c);
-    return 0;
+    osa_status_t ret;
+
+    if (NULL != mutex)
+    {
+        ret = OSA_MutexLock((*mutex), osaWaitForever_c);
+        if (KOSA_StatusSuccess == ret)
+        {
+            return 0;
+        }
+    }
+
+    return -1;
 }
 
 
@@ -256,8 +270,18 @@ INT32 EM_thread_mutex_unlock
           /* INOUT */ EM_thread_mutex_type *    mutex
       )
 {
-    OSA_MutexUnlock((*mutex));
-    return 0;
+    osa_status_t ret;
+
+    if (NULL != mutex)
+    {
+        ret = OSA_MutexUnlock((*mutex));
+        if (KOSA_StatusSuccess == ret)
+        {
+            return 0;
+        }
+    }
+
+    return -1;
 }
 
 
@@ -288,21 +312,26 @@ INT32 EM_thread_cond_init
           /* IN */  EM_thread_cond_attr_type *    cond_attr
       )
 {
+    osa_status_t ret;
+
     (void) cond_attr;
 
-    /* Allocate memory for Conditional Variable */
-    (*cond) = EM_alloc_mem(EM_THREAD_COND_SIZE);
-
-    if (NULL != (*cond))
+    if (NULL != cond)
     {
-    	OSA_SemaphoreCreate ((*cond), 0x01);
+        /* Allocate memory for Conditional Variable */
+        (*cond) = EM_alloc_mem(EM_THREAD_COND_SIZE);
 
-        return 0;
+        if (NULL != (*cond))
+        {
+            ret = OSA_SemaphoreCreate ((*cond), 0x01U);
+            if (KOSA_StatusSuccess == ret)
+            {
+                return 0;
+            }
+        }
     }
-    else
-    {
-    	return -1;
-    }
+
+    return -1;
 }
 
 
@@ -335,13 +364,22 @@ INT32 EM_thread_cond_wait
           /* INOUT */ EM_thread_mutex_type *    cond_mutex
       )
 {
-    osa_status_t retval;
+    osa_status_t ret;
 
-    EM_thread_mutex_unlock (cond_mutex);
-    retval = OSA_SemaphoreWait((*cond), osaWaitForever_c);
-    EM_thread_mutex_lock (cond_mutex);
+    if ((NULL != cond) &&
+        (NULL != cond_mutex))
+    {
+        (void)EM_thread_mutex_unlock (cond_mutex);
+        ret = OSA_SemaphoreWait((*cond), osaWaitForever_c);
+        (void)EM_thread_mutex_lock (cond_mutex);
 
-    return retval;
+        if (KOSA_StatusSuccess == ret)
+        {
+            return 0;
+        }
+    }
+
+    return -1;
 }
 
 /**
@@ -376,13 +414,22 @@ INT32 EM_thread_cond_wait_timeout
           /* IN */    UINT32 timeout
       )
 {
-    osa_status_t retval;
+    osa_status_t ret;
 
-    EM_thread_mutex_unlock (cond_mutex);
-    retval = OSA_SemaphoreWait((*cond), timeout);
-    EM_thread_mutex_lock (cond_mutex);
+    if ((NULL != cond) &&
+        (NULL != cond_mutex))
+    {
+        (void)EM_thread_mutex_unlock (cond_mutex);
+        ret = OSA_SemaphoreWait((*cond), timeout);
+        (void)EM_thread_mutex_lock (cond_mutex);
 
-    return retval;
+        if (KOSA_StatusSuccess == ret)
+        {
+            return 0;
+        }
+    }
+
+    return -1;
 }
 
 /**
@@ -406,8 +453,18 @@ INT32 EM_thread_cond_signal
           /* INOUT */ EM_thread_cond_type *    cond
       )
 {
-    OSA_SemaphorePost((*cond));
-    return 0;
+    osa_status_t ret;
+
+    if (NULL != cond)
+    {
+        ret = OSA_SemaphorePost((*cond));
+        if (KOSA_StatusSuccess == ret)
+        {
+            return 0;
+        }
+    }
+
+    return -1;
 }
 
 
@@ -474,7 +531,7 @@ void EM_free_mem ( /* IN */ void * ptr )
  */
 void EM_sleep( /* IN */ UINT32 tm )
 {
-    OSA_TimeDelay(tm * 1000);
+    OSA_TimeDelay(tm * 1000U);
 }
 
 
@@ -495,7 +552,7 @@ void EM_sleep( /* IN */ UINT32 tm )
 void EM_usleep( /* IN */ UINT32 tm )
 {
     /* TODO: Check API if available for Microsecond */
-    OSA_TimeDelay((tm + 999)/1000);
+    OSA_TimeDelay((tm + 999U)/1000U);
 }
 
 
@@ -519,7 +576,7 @@ void EM_get_current_time (/* OUT */ EM_time_type * curtime)
      * Port this section to fetch the current system time.
      * By default this value is set to 0.
      */
-    (* curtime) = 0;
+    (* curtime) = 0U;
 
     return;
 }
@@ -546,14 +603,14 @@ void EM_get_local_time
 {
     /* Get Local time. */
 
-    local->dyear = 0;
-    local->dmonth = 0;
-    local->dday = 0;
-    local->dwday = 0;
-    local->thour = 0;
-    local->tmin = 0;
-    local->tsec = 0;
-    local->tmsec = 0;
+    local->dyear = 0U;
+    local->dmonth = 0U;
+    local->dday = 0U;
+    local->dwday = 0U;
+    local->thour = 0U;
+    local->tmin = 0U;
+    local->tsec = 0U;
+    local->tmsec = 0U;
 
     return;
 }
@@ -575,7 +632,8 @@ INT32 EM_get_time_ms(void)
 
 /* Microseconds from 01-Jan-0000 till epoch(in ISO 8601: 1970 - 01 - 01T00 : 00 : 00Z). */
 #define EM_uS_TILL_EPOCH           0x00DCDDB30F2F8000ULL
-
+/* Microseconds from 01-Jan-0000 till epoch(in ISO 8601: 2021 - 04 - 30T00 : 00 : 00Z). */
+#define EM_uS_TIMESTAMP_PSUEDO     0x00E29EE5C36CE000ULL
 /**
  *  \fn EM_get_us_timestamp
  *
@@ -589,6 +647,7 @@ INT32 EM_get_time_ms(void)
 UINT64 EM_get_us_timestamp(void)
 {
     UINT64 timestamp;
+    timestamp = OSA_TimeGetMsec() * (UINT64)1000UL;
 
 #if 0
     /* FILETIME till epoch in 100 nano seconds */
@@ -601,7 +660,7 @@ UINT64 EM_get_us_timestamp(void)
     timestamp += EM_uS_TILL_EPOCH;
 #endif
 
-    timestamp = 0;
+    timestamp = timestamp + EM_uS_TIMESTAMP_PSUEDO;
 
     return timestamp;
 }
@@ -622,10 +681,10 @@ UINT64 EM_get_us_timestamp(void)
  */
 void EM_process_term_notify (void(*handler)(void))
 {
-    /* Register the callback */
-    em_process_term_handler = handler;
-
-    (void)em_process_term_handler; /* fix build warning: set but never used. */
+    if (NULL == handler)
+    {
+        return;
+    }
 }
 
 #endif /* EM_ENABLE_PAL_OS */

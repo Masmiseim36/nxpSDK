@@ -21,8 +21,8 @@ extern uint32_t Load$$ER_NVM_ADAPTER_TABLE$$Limit[];
 #elif defined(__GNUC__)
 extern uint32_t __start_NVM_ADAPTER_TABLE[];
 extern uint32_t __stop_NVM_ADAPTER_TABLE[];
-#define gNVM_ADAPTER_TABLE_startAddr_c ((nvm_adapter_table_t *)__start_NVM_ADAPTER_TABLE)
-#define gNVM_ADAPTER_TABLE_endAddr_c   ((nvm_adapter_table_t *)__stop_NVM_ADAPTER_TABLE)
+#define gNVM_ADAPTER_TABLE_startAddr_c ((nvm_adapter_table_t *)(void *)__start_NVM_ADAPTER_TABLE)
+#define gNVM_ADAPTER_TABLE_endAddr_c   ((nvm_adapter_table_t *)(void *)__stop_NVM_ADAPTER_TABLE)
 #elif (defined(__IAR_SYSTEMS_ICC__))
 #define gNVM_ADAPTER_TABLE_startAddr_c ((nvm_adapter_table_t *)__section_begin("NVM_ADAPTER_TABLE"))
 #define gNVM_ADAPTER_TABLE_endAddr_c   ((nvm_adapter_table_t *)__section_end("NVM_ADAPTER_TABLE"))
@@ -40,7 +40,7 @@ int NVM_AdapterInit(void)
     uint32_t endAddress   = (uint32_t)gNVM_ADAPTER_TABLE_endAddr_c;
     int err               = 0;
 
-    if (0 == initialized)
+    if (0U == initialized)
     {
         initialized = 1;
         start       = (nvm_adapter_table_t *)startAddress;

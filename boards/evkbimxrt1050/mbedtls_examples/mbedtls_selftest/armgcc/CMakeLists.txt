@@ -1,6 +1,6 @@
 # CROSS COMPILER SETTING
 SET(CMAKE_SYSTEM_NAME Generic)
-CMAKE_MINIMUM_REQUIRED (VERSION 3.1.1)
+CMAKE_MINIMUM_REQUIRED (VERSION 3.10.0)
 
 # THE VERSION NUMBER
 SET (Tutorial_VERSION_MAJOR 1)
@@ -73,14 +73,14 @@ endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
 set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../devices/MIMXRT1052/drivers
     ${ProjDirPath}/../../../../../middleware/mbedtls
-    ${ProjDirPath}/../../../../../devices/MIMXRT1052/utilities
     ${ProjDirPath}/../../../../../devices/MIMXRT1052
+    ${ProjDirPath}/../../../../../devices/MIMXRT1052/utilities
     ${ProjDirPath}/../../../../../components/uart
     ${ProjDirPath}/../../../../../components/serial_manager
     ${ProjDirPath}/../../../../../components/lists
     ${ProjDirPath}/../../../../../devices/MIMXRT1052/xip
     ${ProjDirPath}/../../../xip
-    ${ProjDirPath}/../../../../../CMSIS/Include
+    ${ProjDirPath}/../../../../../CMSIS/Core/Include
 )
 
 # include modules
@@ -90,19 +90,19 @@ include(driver_trng_MIMXRT1052)
 
 include(driver_cache_armv7_m7_MIMXRT1052)
 
+include(middleware_mbedtls_MIMXRT1052)
+
 include(middleware_mbedtls_port_ksdk_MIMXRT1052)
 
 include(middleware_mbedtls_rt_MIMXRT1052)
-
-include(middleware_mbedtls_MIMXRT1052)
-
-include(utility_debug_console_MIMXRT1052)
 
 include(driver_clock_MIMXRT1052)
 
 include(driver_common_MIMXRT1052)
 
 include(device_MIMXRT1052_CMSIS_MIMXRT1052)
+
+include(utility_debug_console_MIMXRT1052)
 
 include(component_lpuart_adapter_MIMXRT1052)
 
@@ -124,13 +124,9 @@ include(driver_igpio_MIMXRT1052)
 
 include(driver_xip_device_MIMXRT1052)
 
-include(driver_xip_board_MIMXRT1052)
+include(driver_xip_board_evkbimxrt1050_MIMXRT1052)
 
-include(CMSIS_Include_core_cm7_MIMXRT1052)
-
-include(CMSIS_Include_common_MIMXRT1052)
-
-include(CMSIS_Include_dsp_MIMXRT1052)
+include(CMSIS_Include_core_cm_MIMXRT1052)
 
 include(utilities_misc_utilities_MIMXRT1052)
 

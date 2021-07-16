@@ -25,6 +25,16 @@
 #define DEMO_AUDIO_DATA_CHANNEL (2U)
 /* demo audio bit width */
 #define DEMO_AUDIO_BIT_WIDTH (kSAI_WordWidth16bits)
+/* file system aboslutely path */
+#define DEMO_RECORD_PATH                                           \
+    {                                                              \
+        SDDISK + '0', ':', '/', 'r', 'e', 'c', 'o', 'r', 'd', '\0' \
+    }
+#define DEMO_RECORD_WAV_PATH                                                                                         \
+    {                                                                                                                \
+        SDDISK + '0', ':', '/', 'r', 'e', 'c', 'o', 'r', 'd', '/', 'm', 'u', 's', 'i', 'c', '1', '.', 'w', 'a', 'v', \
+            '\0'                                                                                                     \
+    }
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/

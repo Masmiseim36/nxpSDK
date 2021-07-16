@@ -1,35 +1,33 @@
 /*
  * Copyright (c) 2013-2015 Freescale Semiconductor, Inc.
- * Copyright 2016-2020 NXP
+ * Copyright 2016-2021 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
 #include "bl_context.h"
 #include "bootloader.h"
 #include "bootloader_common.h"
-#include "fsl_device_registers.h"
-#include "bootloader_core.h"
-#include "sbloader.h"
-#include "sb_file_format.h"
-#include "fsl_rtos_abstraction.h"
-#include <string.h>
-#include "property.h"
-
 #include "usb_device_config.h"
-#include "usb.h"
-#include "usb_device.h"
-
-#include "usb_device_class.h"
-#include "usb_device_hid.h"
-#include "usb_device_ch9.h"
-#include "usb_descriptor.h"
+#include "bootloader_core.h"
 #include "bootloader_hid_report_ids.h"
 #include "composite.h"
-
-#include <stdio.h>
-#include <stdlib.h>
+#include "fsl_device_registers.h"
+#include "fsl_rtos_abstraction.h"
+#include "property.h"
+#include "sb_file_format.h"
+#include "sbloader.h"
+#include "usb.h"
+#include "usb_descriptor.h"
+#include "usb_device.h"
+#include "usb_device_ch9.h"
+#include "usb_device_class.h"
+#include "usb_device_hid.h"
 
 #if defined(K65F18_SERIES)
 #include "MK65F18_INV.h"
@@ -73,24 +71,24 @@ static uint32_t usb_hid_packet_get_max_packet_size(const peripheral_descriptor_t
 // static bool s_dHidMscActivity[USB_COMPOSITE_INTERFACE_COUNT] = {false};
 static bool s_dHidMscActivity[2] = { false };
 
-static IRQn_Type s_usbIRQs[] = USBHS_IRQS;
+static IRQn_Type s_usbIRQs[] = USB_IRQS;
 
 ////////////////////////////////////////////////////////////////////////////////
 // Variables
 ////////////////////////////////////////////////////////////////////////////////
 
-const peripheral_control_interface_t g_usbHidControlInterface = {.pollForActivity = usb_hid_poll_for_activity,
-                                                                 .init = usb_device_full_init,
-                                                                 .shutdown = usb_device_full_shutdown,
-                                                                 .pump = usb_msc_pump };
+const peripheral_control_interface_t g_usbHidControlInterface = { .pollForActivity = usb_hid_poll_for_activity,
+                                                                  .init = usb_device_full_init,
+                                                                  .shutdown = usb_device_full_shutdown,
+                                                                  .pump = usb_msc_pump };
 
-const peripheral_packet_interface_t g_usbHidPacketInterface = {.init = usb_hid_packet_init,
-                                                               .readPacket = usb_hid_packet_read,
-                                                               .writePacket = usb_hid_packet_write,
-                                                               .abortDataPhase = usb_hid_packet_abort_data_phase,
-                                                               .finalize = usb_hid_packet_finalize,
-                                                               .getMaxPacketSize = usb_hid_packet_get_max_packet_size,
-                                                               .byteReceivedCallback = 0 };
+const peripheral_packet_interface_t g_usbHidPacketInterface = { .init = usb_hid_packet_init,
+                                                                .readPacket = usb_hid_packet_read,
+                                                                .writePacket = usb_hid_packet_write,
+                                                                .abortDataPhase = usb_hid_packet_abort_data_phase,
+                                                                .finalize = usb_hid_packet_finalize,
+                                                                .getMaxPacketSize = usb_hid_packet_get_max_packet_size,
+                                                                .byteReceivedCallback = 0 };
 
 static usb_device_composite_struct_t g_device_composite;
 
@@ -121,7 +119,7 @@ bool usb_hid_poll_for_activity(const peripheral_descriptor_t *self)
 
 usb_status_t usb_device_callback(usb_device_handle handle, uint32_t event, void *param)
 {
-    usb_status_t error = kStatus_USB_Success;
+    usb_status_t error = kStatus_USB_InvalidRequest;
     uint16_t *temp16 = (uint16_t *)param;
     uint8_t *temp8 = (uint8_t *)param;
 
@@ -130,6 +128,7 @@ usb_status_t usb_device_callback(usb_device_handle handle, uint32_t event, void 
         case kUSB_DeviceEventBusReset:
         {
             g_device_composite.attach = 0;
+            error = kStatus_USB_Success;
 #if (defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0)) || \
     (defined(USB_DEVICE_CONFIG_LPCIP3511HS) && (USB_DEVICE_CONFIG_LPCIP3511HS > 0))
             if (kStatus_USB_Success == USB_DeviceClassGetSpeed(CONTROLLER_ID, &g_device_composite.speed))
@@ -185,10 +184,6 @@ usb_status_t usb_device_callback(usb_device_handle handle, uint32_t event, void 
                     *temp16 = (*temp16 & 0xFF00) | g_device_composite.current_interface_alternate_setting[interface];
                     error = kStatus_USB_Success;
                 }
-                else
-                {
-                    error = kStatus_USB_InvalidRequest;
-                }
             }
             break;
         case kUSB_DeviceEventGetDeviceDescriptor:
@@ -230,6 +225,9 @@ usb_status_t usb_device_callback(usb_device_handle handle, uint32_t event, void 
                     handle, (usb_device_get_hid_physical_descriptor_struct_t *)param);
             }
             break;
+        default:
+            /* no action, return kStatus_USB_InvalidRequest */
+            break;
     }
 
     return error;
@@ -247,11 +245,11 @@ status_t usb_device_full_init(const peripheral_descriptor_t *self, serial_byte_r
     irqNumber = usbDeviceEhciIrq[CONTROLLER_ID - kUSB_ControllerEhci0];
 #endif
 #if defined(USB_DEVICE_CONFIG_KHCI) && (USB_DEVICE_CONFIG_KHCI > 0U)
-    uint8_t usbDeviceKhciIrq[] = USBHS_IRQS;
+    uint8_t usbDeviceKhciIrq[] = USB_IRQS;
     irqNumber = usbDeviceKhciIrq[CONTROLLER_ID - kUSB_ControllerKhci0];
 #endif
 #if defined(USB_DEVICE_CONFIG_LPCIP3511FS) && (USB_DEVICE_CONFIG_LPCIP3511FS > 0U)
-    uint8_t usbDeviceLpcip3511Irq[] = USBHS_IRQS;
+    uint8_t usbDeviceLpcip3511Irq[] = USB_IRQS;
     irqNumber = usbDeviceLpcip3511Irq[CONTROLLER_ID - kUSB_ControllerLpcIp3511Fs0];
 #endif
 #if defined(USB_DEVICE_CONFIG_LPCIP3511HS) && (USB_DEVICE_CONFIG_LPCIP3511HS > 0U)

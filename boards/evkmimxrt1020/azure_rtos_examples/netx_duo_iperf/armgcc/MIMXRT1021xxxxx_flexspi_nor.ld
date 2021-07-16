@@ -250,6 +250,8 @@ SECTIONS
   __StackTop   = ORIGIN(m_data) + LENGTH(m_data);
   __StackLimit = __StackTop - STACK_SIZE;
   PROVIDE(__stack = __StackTop);
+  PROVIDE(_pvHeapStart = __HeapBase);
+  PROVIDE(_pvHeapLimit = __HeapLimit);
 
   .ARM.attributes 0 : { *(.ARM.attributes) }
 

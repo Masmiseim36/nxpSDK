@@ -28,14 +28,14 @@ static tENERGY_CNT wh_cnt, varh_cnt;
  *
  * @return None
  */
-void MID_CalcPwr(mid_calc_power_a1_t *sCalcPower)
+void MID_CalcPwr(mid_calc_power_a1_t *sCalcPwr)
 {
     /* data processing */
 	(void)METERLIBLP3PH_ProcSamples(
-        &mlib, FRAC24(sCalcPower->fltUphA * (1.0F / (float)U_MAX)),
-        FRAC24(*sCalcPower->pfltIphA * (1.0F / (float)I_MAX)), FRAC24(sCalcPower->fltUphB * (1.0F / (float)U_MAX)),
-        FRAC24(*sCalcPower->pfltIphB * (1.0F / (float)I_MAX)), FRAC24(sCalcPower->fltUphC * (1.0F / (float)U_MAX)),
-        FRAC24(*sCalcPower->pfltIphC * (1.0F / (float)I_MAX)), NULL);
+        &mlib, FRAC24(sCalcPwr->fltUphA * (1.0F / (float)U_MAX)),
+        FRAC24(*sCalcPwr->pfltIphA * (1.0F / (float)I_MAX)), FRAC24(sCalcPwr->fltUphB * (1.0F / (float)U_MAX)),
+        FRAC24(*sCalcPwr->pfltIphB * (1.0F / (float)I_MAX)), FRAC24(sCalcPwr->fltUphC * (1.0F / (float)U_MAX)),
+        FRAC24(*sCalcPwr->pfltIphC * (1.0F / (float)I_MAX)), NULL);
 
     /* calculate watt hours */
     METERLIBLP3PH_CalcWattHours(&mlib, &wh_cnt, METERLIBLP_KWH_PR(IMP_PER_KWH));
@@ -54,7 +54,7 @@ void MID_CalcPwr(mid_calc_power_a1_t *sCalcPower)
  *
  * @return None
  */
-void MID_ReadPwr(mid_calc_power_a1_t *sCalcPower)
+void MID_ReadPwr(mid_calc_power_a1_t *sCalcPwr)
 {
     struct
     {
@@ -101,9 +101,9 @@ void MID_ReadPwr(mid_calc_power_a1_t *sCalcPower)
     METERLIBLP3PH_ReadResultsPh1(&mlib, &sUrms.dblC, &sIrms.dblC, &sP.dblC, &sQ.dblC, &sS.dblC);
 
     /* calculate average values */
-    sCalcPower->fltUrmsAvg = (float)((sUrms.dblA + sUrms.dblB + sUrms.dblC) * MID_ONETHIRD);
-    sCalcPower->fltIrmsAvg = (float)((sIrms.dblA + sIrms.dblB + sIrms.dblC) * MID_ONETHIRD);
-    sCalcPower->fltPAvg    = (float)((sP.dblA + sP.dblB + sP.dblC) * MID_ONETHIRD);
-    sCalcPower->fltQAvg    = (float)((sQ.dblA + sQ.dblB + sQ.dblC) * MID_ONETHIRD);
-    sCalcPower->fltSAvg    = (float)((sS.dblA + sS.dblB + sS.dblC) * MID_ONETHIRD);
+    sCalcPwr->fltUrmsAvg = (float)((sUrms.dblA + sUrms.dblB + sUrms.dblC) * MID_ONETHIRD);
+    sCalcPwr->fltIrmsAvg = (float)((sIrms.dblA + sIrms.dblB + sIrms.dblC) * MID_ONETHIRD);
+    sCalcPwr->fltPAvg    = (float)((sP.dblA + sP.dblB + sP.dblC) * MID_ONETHIRD);
+    sCalcPwr->fltQAvg    = (float)((sQ.dblA + sQ.dblB + sQ.dblC) * MID_ONETHIRD);
+    sCalcPwr->fltSAvg    = (float)((sS.dblA + sS.dblB + sS.dblC) * MID_ONETHIRD);
 }

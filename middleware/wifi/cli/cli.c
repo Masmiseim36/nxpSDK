@@ -2,7 +2,7 @@
  *
  *  @brief This file provides  CLI: command-line interface
  *
- *  Copyright 2008-2020 NXP
+ *  Copyright 2008-2021 NXP
  *
  *  NXP CONFIDENTIAL
  *  The source code contained or described herein and all documents related to
@@ -125,7 +125,7 @@ static int handle_input(char *inbuf)
         unsigned inQuote : 1;
         unsigned done : 1;
     } stat;
-    static char *argv[16];
+    static char *argv[32];
     int argc                          = 0;
     int i                             = 0;
     int j                             = 0;

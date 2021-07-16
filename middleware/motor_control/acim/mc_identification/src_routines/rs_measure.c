@@ -21,9 +21,9 @@
 void MID_getRs(void)
 {
     /* initialization */
-    if (g_sMID.sRs.ui16Active == FALSE)
+    if (g_sMID.sRs.bActive == FALSE)
     {
-        g_sMID.sRs.ui16Active = TRUE;
+        g_sMID.sRs.bActive    = TRUE;
         g_sMID.ui32LoopCntr   = 0;
         g_sMID.sPar.fltRs     = 0.0F;
         g_sMID.sRs.fltILPF    = 0.0F;
@@ -71,6 +71,6 @@ void MID_getRs(void)
     /* wait additional time to settle d-axis current at zero and exit */
     if (g_sMID.ui32LoopCntr > g_sMID.sRs.ui32TimeSettle)
     {
-        g_sMID.sRs.ui16Active = FALSE;
+        g_sMID.sRs.bActive = FALSE;
     }
 }

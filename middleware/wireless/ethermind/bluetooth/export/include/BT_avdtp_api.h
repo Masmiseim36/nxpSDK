@@ -49,41 +49,41 @@
 
 /*@{*/
 
-#define AVDTP_CONNECT_IND                               0x01
-#define AVDTP_CONNECT_CNF                               0x02
-#define AVDTP_DISCONNECT_IND                            0x03
-#define AVDTP_DISCONNECT_CNF                            0x04
-#define AVDTP_DISCOVER_IND                              0x05
-#define AVDTP_DISCOVER_CNF                              0x06
-#define AVDTP_GET_CAPABILITIES_IND                      0x07
-#define AVDTP_GET_CAPABILITIES_CNF                      0x08
-#define AVDTP_SET_CONFIGURATION_IND                     0x09
-#define AVDTP_SET_CONFIGURATION_CNF                     0x0A
-#define AVDTP_GET_CONFIGURATION_IND                     0x0B
-#define AVDTP_GET_CONFIGURATION_CNF                     0x0C
-#define AVDTP_OPEN_IND                                  0x0D
-#define AVDTP_OPEN_CNF                                  0x0E
-#define AVDTP_CLOSE_IND                                 0x0F
-#define AVDTP_CLOSE_CNF                                 0x10
-#define AVDTP_START_IND                                 0x11
-#define AVDTP_START_CNF                                 0x12
-#define AVDTP_SUSPEND_IND                               0x13
-#define AVDTP_SUSPEND_CNF                               0x14
-#define AVDTP_RECONFIGURE_IND                           0x15
-#define AVDTP_RECONFIGURE_CNF                           0x16
-#define AVDTP_SECURITY_CONTROL_IND                      0x17
-#define AVDTP_SECURITY_CONTROL_CNF                      0x18
-#define AVDTP_ABORT_IND                                 0x19
-#define AVDTP_ABORT_CNF                                 0x1A
+#define AVDTP_CONNECT_IND                               0x01U
+#define AVDTP_CONNECT_CNF                               0x02U
+#define AVDTP_DISCONNECT_IND                            0x03U
+#define AVDTP_DISCONNECT_CNF                            0x04U
+#define AVDTP_DISCOVER_IND                              0x05U
+#define AVDTP_DISCOVER_CNF                              0x06U
+#define AVDTP_GET_CAPABILITIES_IND                      0x07U
+#define AVDTP_GET_CAPABILITIES_CNF                      0x08U
+#define AVDTP_SET_CONFIGURATION_IND                     0x09U
+#define AVDTP_SET_CONFIGURATION_CNF                     0x0AU
+#define AVDTP_GET_CONFIGURATION_IND                     0x0BU
+#define AVDTP_GET_CONFIGURATION_CNF                     0x0CU
+#define AVDTP_OPEN_IND                                  0x0DU
+#define AVDTP_OPEN_CNF                                  0x0EU
+#define AVDTP_CLOSE_IND                                 0x0FU
+#define AVDTP_CLOSE_CNF                                 0x10U
+#define AVDTP_START_IND                                 0x11U
+#define AVDTP_START_CNF                                 0x12U
+#define AVDTP_SUSPEND_IND                               0x13U
+#define AVDTP_SUSPEND_CNF                               0x14U
+#define AVDTP_RECONFIGURE_IND                           0x15U
+#define AVDTP_RECONFIGURE_CNF                           0x16U
+#define AVDTP_SECURITY_CONTROL_IND                      0x17U
+#define AVDTP_SECURITY_CONTROL_CNF                      0x18U
+#define AVDTP_ABORT_IND                                 0x19U
+#define AVDTP_ABORT_CNF                                 0x1AU
 
 /* AVDTP 1.3 Feature */
-#define AVDTP_GET_ALL_CAPABILITIES_IND                  0x1B
-#define AVDTP_GET_ALL_CAPABILITIES_CNF                  0x1C
-#define AVDTP_DELAY_REPORT_IND                          0x1D
-#define AVDTP_DELAY_REPORT_CNF                          0x1E
+#define AVDTP_GET_ALL_CAPABILITIES_IND                  0x1BU
+#define AVDTP_GET_ALL_CAPABILITIES_CNF                  0x1CU
+#define AVDTP_DELAY_REPORT_IND                          0x1DU
+#define AVDTP_DELAY_REPORT_CNF                          0x1EU
 
-#define AVDTP_MEDIA_DATA_IND                            0xF1
-#define AVDTP_RESET_IND                                 0xF2
+#define AVDTP_MEDIA_DATA_IND                            0xF1U
+#define AVDTP_RESET_IND                                 0xF2U
 
 /*@}*/
 
@@ -94,9 +94,9 @@
  */
 /*@{*/
 
-#define AVDTP_MEDIA_AUDIO                               0x00
-#define AVDTP_MEDIA_VIDEO                               0x01
-#define AVDTP_MEDIA_MULTIMEDIA                          0x02
+#define AVDTP_MEDIA_AUDIO                               0x00U
+#define AVDTP_MEDIA_VIDEO                               0x01U
+#define AVDTP_MEDIA_MULTIMEDIA                          0x02U
 
 /*@}*/
 
@@ -107,8 +107,8 @@
  */
 /*@{*/
 
-#define AVDTP_SEP_SOURCE                                0x00
-#define AVDTP_SEP_SINK                                  0x01
+#define AVDTP_SEP_SOURCE                                0x00U
+#define AVDTP_SEP_SINK                                  0x01U
 
 /*@}*/
 
@@ -119,11 +119,11 @@
  */
 /*@{*/
 
-#define AVDTP_CODEC_AUDIO_SBC                           0x00
-#define AVDTP_CODEC_AUDIO_MPEG_1_2                      0x01
-#define AVDTP_CODEC_AUDIO_MPEG_2_4                      0x02
-#define AVDTP_CODEC_AUDIO_ATRAC                         0x04
-#define AVDTP_CODEC_AUDIO_VENDOR_SPECIFIC               0xFF
+#define AVDTP_CODEC_AUDIO_SBC                           0x00U
+#define AVDTP_CODEC_AUDIO_MPEG_1_2                      0x01U
+#define AVDTP_CODEC_AUDIO_MPEG_2_4                      0x02U
+#define AVDTP_CODEC_AUDIO_ATRAC                         0x04U
+#define AVDTP_CODEC_AUDIO_VENDOR_SPECIFIC               0xFFU
 
 /*@}*/
 
@@ -134,9 +134,9 @@
  */
 /*@{*/
 
-#define AVDTP_INVALID_CP_TYPE                           0x0000
-#define AVDTP_CONTENT_PROTECTION_TYPE_DTCP              0x0001
-#define AVDTP_CONTENT_PROTECTION_TYPE_SCMS_T            0x0002
+#define AVDTP_INVALID_CP_TYPE                           0x0000U
+#define AVDTP_CONTENT_PROTECTION_TYPE_DTCP              0x0001U
+#define AVDTP_CONTENT_PROTECTION_TYPE_SCMS_T            0x0002U
 
 /*@}*/
 
@@ -146,10 +146,10 @@
  */
 /*@{*/
 
-#define AVDTP_SCMS_T_COPY_UNLIMITED                     0x00
-#define AVDTP_SCMS_T_COPY_NOT_USED                      0x01
-#define AVDTP_SCMS_T_COPY_ONCE_ONLY                     0x02
-#define AVDTP_SCMS_T_COPY_NOT_ALLOWED                   0x03
+#define AVDTP_SCMS_T_COPY_UNLIMITED                     0x00U
+#define AVDTP_SCMS_T_COPY_NOT_USED                      0x01U
+#define AVDTP_SCMS_T_COPY_ONCE_ONLY                     0x02U
+#define AVDTP_SCMS_T_COPY_NOT_ALLOWED                   0x03U
 
 /*@}*/
 
@@ -159,32 +159,34 @@
  */
 /*@{*/
 
-#define AVDTP_INVALID_RECOVERY_TYPE                     0x00
-#define AVDTP_RECOVERY_TYPE_RFC2733                     0x01
+#define AVDTP_INVALID_RECOVERY_TYPE                     0x00U
+#define AVDTP_RECOVERY_TYPE_RFC2733                     0x01U
 
-#define AVDTP_MIN_MRWS                                  0x01
-#define AVDTP_MAX_MRWS                                  0x18
+#define AVDTP_MIN_MRWS                                  0x01U
+#define AVDTP_MAX_MRWS                                  0x18U
 
-#define AVDTP_MIN_MNMP                                  0x01
-#define AVDTP_MAX_MNMP                                  0x18
+#define AVDTP_MIN_MNMP                                  0x01U
+#define AVDTP_MAX_MNMP                                  0x18U
 
 /*@}*/
 
 /* ----------------------------------------- Internal Macros */
 
 /*@{*/
-/** \if INTERNAL_MACROS */
-
+/**
+ * \cond ignore_this
+ * \{
+ */
 /* Bitmap masks for Service Catagories */
-#define AVDTP_MASK_SERVICE_MEDIA                        0x01
-#define AVDTP_MASK_SERVICE_REPORTING                    0x02
-#define AVDTP_MASK_SERVICE_RECOVERY                     0x04
-#define AVDTP_MASK_SERVICE_MULTIPLEXING                 0x08
-#define AVDTP_MASK_SERVICE_FRAGMENTATION                0x10
-#define AVDTP_MASK_SERVICE_ROHC                         0x20
-#define AVDTP_MASK_SERVICE_DELAY_REPORTING              0x40
+#define AVDTP_MASK_SERVICE_MEDIA                        0x01U
+#define AVDTP_MASK_SERVICE_REPORTING                    0x02U
+#define AVDTP_MASK_SERVICE_RECOVERY                     0x04U
+#define AVDTP_MASK_SERVICE_MULTIPLEXING                 0x08U
+#define AVDTP_MASK_SERVICE_FRAGMENTATION                0x10U
+#define AVDTP_MASK_SERVICE_ROHC                         0x20U
+#define AVDTP_MASK_SERVICE_DELAY_REPORTING              0x40U
 
-/** \endif */
+/** \endcond */
 /*@}*/
 /** \} */
 /* ----------------------------------------- Structures/Data Types */
@@ -224,11 +226,11 @@ typedef struct avdtp_handle
      */
      API_RESULT (* ntf_cb)
                 (
-                    UCHAR                    /* Event Type */,
-                    UINT16                   /* Result/Response */,
-                    struct avdtp_handle *    /* AVDTP Handle */,
-                    void  *                  /* Returned Data */,
-                    UINT16                   /* Returned Data Length */
+                    UCHAR                    event_type,    /* Event Type */
+                    UINT16                   event_result,  /* Result/Response */
+                    struct avdtp_handle *    avdtp_handle,  /* AVDTP Handle */
+                    void  *                  event_data,    /* Returned Data */
+                    UINT16                   event_datalen  /* Returned Data Length */
                 );
 
     /** The Local Stream End Point Identifier */
@@ -321,11 +323,11 @@ typedef struct avdtp_sig_msg_reject_rsp_params
  */
 typedef API_RESULT (* AVDTP_EVENT_NTF_CB)
                    (
-                       UCHAR  event_type,
-                       UINT16 event_result,
-                       AVDTP_HANDLE *avdtp_handle,
-                       void  *event_data,
-                       UINT16 event_datalen
+                       UCHAR           event_type,
+                       UINT16          event_result,
+                       AVDTP_HANDLE  * avdtp_handle,
+                       void          * event_data,
+                       UINT16          event_datalen
                    );
 /** \} */
 /**
@@ -567,7 +569,6 @@ typedef API_RESULT (* AVDTP_EVENT_NTF_CB)
  *
  *  \return API_RESULT: API_SUCCESS, or an Error Code describing the reason
  *                      for failure.
- *
  */
 
 /** \endcond */
@@ -679,7 +680,6 @@ typedef struct
 
 } AVDTP_RECOVERY_CAP;
 
-
 /**
  *  \struct AVDTP_SEP_CAP BT_avdtp_api.h
  *  \brief  AVDTP Stream End Point Capability information
@@ -720,7 +720,6 @@ typedef struct
 
 } AVDTP_SEP_CAP;
 
-
 /**
  *  \struct AVDTP_SEP_CONF BT_avdtp_api.h
  *  \brief  AVDTP Stream End Point Configuration information
@@ -738,7 +737,7 @@ typedef struct
  */
 typedef struct
 {
-     /** Codec Capability information */
+    /** Codec Capability information */
     AVDTP_CODEC_CAP codec_cap;
 
     /** Content Protection Capability information */
@@ -774,10 +773,12 @@ typedef struct
      */
     UCHAR rohc_conf;
 
-    /* Pointer to the Multiplexing Service Capability information element */
+    /**
+     *  Pointer to the Multiplexing Service Capability information element
+     */
     UCHAR mux_offset;
 
-    /*
+    /**
      *  First Service Category to fail in case of
      *  Set Configuration/Reconfigure Command. This will be included in
      *  Reject Response.
@@ -810,17 +811,16 @@ typedef struct
  *
  *  \hideinitializer
  */
-#define AVDTP_INIT_HANDLE(handle)    \
-        (handle).local_seid  = 0x00; \
-        (handle).remote_seid = 0x00; \
-        (handle).bd_addr[0]  = 0x00; \
-        (handle).bd_addr[1]  = 0x00; \
-        (handle).bd_addr[2]  = 0x00; \
-        (handle).bd_addr[3]  = 0x00; \
-        (handle).bd_addr[4]  = 0x00; \
-        (handle).bd_addr[5]  = 0x00; \
-        (handle).ntf_cb      = NULL;
-
+#define AVDTP_INIT_HANDLE(handle)      \
+        (handle).local_seid   = 0x00U; \
+        (handle).remote_seid  = 0x00U; \
+        (handle).bd_addr[0U]  = 0x00U; \
+        (handle).bd_addr[1U]  = 0x00U; \
+        (handle).bd_addr[2U]  = 0x00U; \
+        (handle).bd_addr[3U]  = 0x00U; \
+        (handle).bd_addr[4U]  = 0x00U; \
+        (handle).bd_addr[5U]  = 0x00U; \
+        (handle).ntf_cb       = NULL;
 
 /**
  *  This utility macro initializes the Event Notification Callback in an
@@ -838,7 +838,6 @@ typedef struct
 #define AVDTP_SET_HANDLE_CALLBACK(handle, callback)    \
         (handle).ntf_cb = (callback);
 
-
 /**
  *  This utility macro sets remote Bluetooth Device Address in an
  *  AVDTP Handle.
@@ -851,13 +850,12 @@ typedef struct
  *  \hideinitializer
  */
 #define AVDTP_SET_HANDLE_BD_ADDR(handle, bd)      \
-        (handle).bd_addr[0] = (bd)[0];            \
-        (handle).bd_addr[1] = (bd)[1];            \
-        (handle).bd_addr[2] = (bd)[2];            \
-        (handle).bd_addr[3] = (bd)[3];            \
-        (handle).bd_addr[4] = (bd)[4];            \
-        (handle).bd_addr[5] = (bd)[5];
-
+        (handle).bd_addr[0U] = (bd)[0U];          \
+        (handle).bd_addr[1U] = (bd)[1U];          \
+        (handle).bd_addr[2U] = (bd)[2U];          \
+        (handle).bd_addr[3U] = (bd)[3U];          \
+        (handle).bd_addr[4U] = (bd)[4U];          \
+        (handle).bd_addr[5U] = (bd)[5U];
 
 /**
  *  This utility macro sets the local Stream End Point Identifier (SEID)
@@ -873,7 +871,6 @@ typedef struct
 #define AVDTP_SET_HANDLE_LOCAL_SEID(handle, seid)    \
         (handle).local_seid = (seid);
 
-
 /**
  *  This utility macro sets the remote Stream End Point Identifier (SEID)
  *  in an AVDTP Handle.
@@ -888,7 +885,6 @@ typedef struct
 #define AVDTP_SET_HANDLE_REMOTE_SEID(handle, seid)    \
         (handle).remote_seid = (seid);
 
-
 /**
  *  This utility macro retrieves remote Bluetooth Device Address
  *  from an AVDTP Handle.
@@ -901,13 +897,12 @@ typedef struct
  *  \hideinitializer
  */
 #define AVDTP_GET_HANDLE_BD_ADDR(handle, bd)    \
-        (bd)[0] = (handle).bd_addr[0]; \
-        (bd)[1] = (handle).bd_addr[1]; \
-        (bd)[2] = (handle).bd_addr[2]; \
-        (bd)[3] = (handle).bd_addr[3]; \
-        (bd)[4] = (handle).bd_addr[4]; \
-        (bd)[5] = (handle).bd_addr[5];
-
+        (bd)[0U] = (handle).bd_addr[0U]; \
+        (bd)[1U] = (handle).bd_addr[1U]; \
+        (bd)[2U] = (handle).bd_addr[2U]; \
+        (bd)[3U] = (handle).bd_addr[3U]; \
+        (bd)[4U] = (handle).bd_addr[4U]; \
+        (bd)[5U] = (handle).bd_addr[5U];
 
 /**
  *  This utility macro retrieves the local Stream End Point Identifier
@@ -922,7 +917,6 @@ typedef struct
  */
 #define AVDTP_GET_HANDLE_LOCAL_SEID(handle, seid)    \
         (seid) = (handle).local_seid;
-
 
 /**
  *  This utility macro retrieves the remote Stream End Point Identifier
@@ -1064,7 +1058,7 @@ typedef struct
  *  \hideinitializer
  */
 #define AVDTP_GET_SEP_CONFIGURATION_CP_TYPE(conf, cp_t) \
-        (cp_t)  = (conf).cp_cap[0].cp_type;
+        (cp_t)  = (conf).cp_cap[0U].cp_type;
 
 /**
  *  This utility macro is used to retrieve AVDTP Delay Reporting
@@ -1120,7 +1114,6 @@ typedef struct
  *  AVDTP Media Types, AVDTP Stream End Point Types, AVDTP Media Codec Types
  *
  *  \hideinitializer
- *
  */
 #define AVDTP_SET_SEP_CAPABILITY(sep_cap, s_t, m_t, c_t, ie_l, ie) \
         (sep_cap).sep_type               = (s_t);                  \
@@ -1184,7 +1177,7 @@ typedef struct
  *  \hideinitializer
  */
 #define AVDTP_INIT_SEP_CONFIGURATION(sep_conf) \
-        (sep_conf).service_flag           = 0x00;
+        (sep_conf).service_flag           = 0x00U;
 
 /**
  *  This utility macro is used to set Media Transport Service during
@@ -1287,7 +1280,6 @@ typedef struct
 #define AVDTP_SET_SEP_CONFIGURATION_DELAY_REPORTING(sep_conf) \
         (sep_conf).service_flag |= AVDTP_MASK_SERVICE_DELAY_REPORTING;
 
-
 /**
  *  This utility macro is used to initialize important elements of the SEP
  *  Configuration Structure (AVDTP_SEP_CONF).
@@ -1326,7 +1318,6 @@ typedef struct
         (sep_conf).codec_cap.codec_type   = (c_t);    \
         (sep_conf).codec_cap.codec_ie_len = (ie_l);   \
         (sep_conf).codec_cap.codec_ie     = (ie);
-
 
 /*
  *  Construct Media Packet Header
@@ -1376,8 +1367,8 @@ typedef struct
  *  \hideinitializer
  */
 #define AVDTP_INIT_MEDIA_PACKET_HEADER(ptr, v, p, x, m, pt) \
-        (ptr)[0]  = (((v) & 0x03) | ((p & 0x01) << 2) | ((x & 0x01) << 3)); \
-        (ptr)[1]  = (((m) & 0x01) | (((pt) & 0x7F) << 1));
+        (ptr)[0U]  = (((v) & 0x03U) | (((p) & 0x01U) << 2U) | (((x) & 0x01U) << 3U)); \
+        (ptr)[1U]  = (((m) & 0x01U) | (((pt) & 0x7FU) << 1U));
 
 /**
  *  This utility macro is used to initialize a Media Packet Header with
@@ -1391,8 +1382,8 @@ typedef struct
  *  \hideinitializer
  */
 #define AVDTP_SET_MEDIA_PACKET_HEADER_SEQ(ptr, seq) \
-        (ptr)[2]  = (UCHAR) ((seq) >> 8); \
-        (ptr)[3]  = (UCHAR) (seq);
+        (ptr)[2U]  = (UCHAR) ((seq) >> 8U); \
+        (ptr)[3U]  = (UCHAR) (seq);
 
 /**
  *  This utility macro is used to initialize a Media Packet Header with
@@ -1406,10 +1397,10 @@ typedef struct
  *  \hideinitializer
  */
 #define AVDTP_SET_MEDIA_PACKET_HEADER_TS(ptr, ts) \
-        (ptr)[4]  = (UCHAR) ((ts) >> 24); \
-        (ptr)[5]  = (UCHAR) ((ts) >> 16); \
-        (ptr)[6]  = (UCHAR) ((ts) >> 8); \
-        (ptr)[7]  = (UCHAR) (ts);
+        (ptr)[4U]  = (UCHAR) ((ts) >> 24U); \
+        (ptr)[5U]  = (UCHAR) ((ts) >> 16U); \
+        (ptr)[6U]  = (UCHAR) ((ts) >> 8U); \
+        (ptr)[7U]  = (UCHAR) (ts);
 
 /**
  *  This utility macro is used to initialize a Media Packet Header with
@@ -1423,10 +1414,10 @@ typedef struct
  *  \hideinitializer
  */
 #define AVDTP_SET_MEDIA_PACKET_HEADER_SSRC(ptr, ssrc) \
-        (ptr)[8]  = (UCHAR) ((ssrc) >> 24); \
-        (ptr)[9]  = (UCHAR) ((ssrc) >> 16); \
-        (ptr)[10] = (UCHAR) ((ssrc) >> 8); \
-        (ptr)[11] = (UCHAR) (ssrc);
+        (ptr)[8U]  = (UCHAR) ((ssrc) >> 24U); \
+        (ptr)[9U]  = (UCHAR) ((ssrc) >> 16U); \
+        (ptr)[10U] = (UCHAR) ((ssrc) >> 8U); \
+        (ptr)[11U] = (UCHAR) (ssrc);
 
 /**
  *  This utility macro is used to initialize a Media Packet Header with
@@ -1458,10 +1449,9 @@ typedef struct
  *  \hideinitializer
  */
 #define AVDTP_SET_MEDIA_PACKET_HEADER(ptr, v, p, x, m, pt, ts, ssrc) \
-        AVDTP_INIT_MEDIA_PACKET_HEADER(ptr, v, p, x, m, pt); \
-        AVDTP_SET_MEDIA_PACKET_HEADER_TS(ptr, ts); \
-        AVDTP_SET_MEDIA_PACKET_HEADER_SSRC(ptr, ssrc);
-
+        AVDTP_INIT_MEDIA_PACKET_HEADER((ptr), (v), (p), (x), (m), (pt)); \
+        AVDTP_SET_MEDIA_PACKET_HEADER_TS((ptr), (ts)); \
+        AVDTP_SET_MEDIA_PACKET_HEADER_SSRC((ptr), (ssrc));
 
 /*@}*/
 
@@ -1478,8 +1468,10 @@ extern "C" {
 #endif
 
 /*@{*/
-/** \if INTERNAL_FUNCTIONS */
-
+/**
+ * \cond ignore_this
+ * \{
+ */
 /*
  *  Common API Handler for the following AVDTP APIs:
  *  - BT_avdtp_connect_req
@@ -1537,7 +1529,7 @@ API_RESULT avdtp_decode_sep_configuration
                /* OUT */ AVDTP_SEP_CONF  *sep_conf
            );
 
-/** \endif */
+/** \endcond */
 /*@}*/
 
 
@@ -1573,8 +1565,6 @@ API_RESULT BT_avdtp_callback_register
            );
 
 /*@}*/
-
-
 
 /**
  *  @name AVDTP APIs - Stream Registration
@@ -1616,7 +1606,6 @@ API_RESULT BT_avdtp_sep_register
                /* INOUT */ AVDTP_HANDLE        *handle
            );
 
-
 /**
  *  \brief To deregister a Stream End Point to AVDTP.
  *
@@ -1654,7 +1643,7 @@ API_RESULT BT_avdtp_sep_deregister
 /*@{*/
 
 /**
- *  To establish a Signalling Connection with a remote AVDTP entity.
+ *  \brief To establish a Signalling Connection with a remote AVDTP entity.
  *
  *  \par Synopsis:
  *  API_RESULT BT_avdtp_connect_req
@@ -1737,7 +1726,7 @@ API_RESULT BT_avdtp_sep_deregister
 
 
 /**
- *  To disconnect a Signalling Connection with a remote AVDTP entity.
+ *  \brief To disconnect a Signalling Connection with a remote AVDTP entity.
  *
  *  \par Synopsis:
  *  API_RESULT BT_avdtp_disconnect_req
@@ -1833,7 +1822,7 @@ API_RESULT BT_avdtp_sep_deregister
 /*@{*/
 
 /**
- *  To discover Stream End Points on a remote AVDTP entity.
+ *  \brief To discover Stream End Points on a remote AVDTP entity.
  *
  *  \par Synopsis:
  *  API_RESULT BT_avdtp_discover_req
@@ -1939,7 +1928,7 @@ API_RESULT BT_avdtp_sep_deregister
 
 
 /**
- *  To get capabilities of a remote Stream End Point.
+ *  \brief To get capabilities of a remote Stream End Point.
  *
  *  \par Synopsis:
  *  API_RESULT BT_avdtp_get_capabilities_req
@@ -2043,7 +2032,7 @@ API_RESULT BT_avdtp_sep_deregister
 #endif /* BT_DRIVER_MODE */
 
 /**
- *  To get all capabilities of a remote Stream End Point.
+ *  \brief To get all capabilities of a remote Stream End Point.
  *
  *  \par Synopsis:
  *  API_RESULT BT_avdtp_get_all_capabilities_req
@@ -2084,7 +2073,7 @@ API_RESULT BT_avdtp_sep_deregister
 #endif /* AVDTP_HAVE_GET_ALL_CAPABILITIES */
 
 /**
- *  To get send delay report value.
+ *  \brief To get send delay report value.
  *
  *  \par Synopsis:
  *  API_RESULT BT_avdtp_send_delay_report
@@ -2136,7 +2125,7 @@ API_RESULT BT_avdtp_sep_deregister
 /*@{*/
 
 /**
- *  To configure local (& remote) Stream End Point(s).
+ *  \brief To configure local (& remote) Stream End Point(s).
  *
  *  \par Synopsis:
  *  API_RESULT BT_avdtp_set_configuration_req
@@ -2250,7 +2239,7 @@ API_RESULT BT_avdtp_sep_deregister
 
 
 /**
- *  To get configuration of remote Stream End Point.
+ *  \brief To get configuration of remote Stream End Point.
  *
  *  \par Synopsis:
  *  API_RESULT BT_avdtp_get_configuration_req
@@ -2358,7 +2347,7 @@ API_RESULT BT_avdtp_sep_deregister
 
 
 /**
- *  To reconfigure a Stream Context.
+ *  \brief To reconfigure a Stream Context.
  *
  *  \par Synopsis:
  *  API_RESULT BT_avdtp_reconfigure_req
@@ -2460,7 +2449,7 @@ API_RESULT BT_avdtp_sep_deregister
 
 
 /**
- *  To establish a Streaming connection.
+ *  \brief To establish a Streaming connection.
  *
  *  \par Synopsis:
  *  API_RESULT BT_avdtp_open_req
@@ -2554,7 +2543,7 @@ API_RESULT BT_avdtp_sep_deregister
 
 
 /**
- *  To release a Streaming connection.
+ *  \brief To release a Streaming connection.
  *
  *  \par Synopsis:
  *  API_RESULT BT_avdtp_close_req
@@ -2644,7 +2633,7 @@ API_RESULT BT_avdtp_sep_deregister
 
 
 /**
- *  To start streaming for a Stream Context.
+ *  \brief To start streaming for a Stream Context.
  *
  *  \par Synopsis:
  *  API_RESULT BT_avdtp_start_req
@@ -2733,7 +2722,7 @@ API_RESULT BT_avdtp_sep_deregister
 
 
 /**
- *  To suspend streaming for a Stream Context.
+ *  \brief To suspend streaming for a Stream Context.
  *
  *  \par Synopsis:
  *  API_RESULT BT_avdtp_suspend_req
@@ -2820,7 +2809,7 @@ API_RESULT BT_avdtp_sep_deregister
 
 
 /**
- *  To abort & disconnect a Stream Context.
+ *  \brief To abort & disconnect a Stream Context.
  *
  *  \par Synopsis:
  *  API_RESULT BT_avdtp_abort_req
@@ -2966,8 +2955,6 @@ API_RESULT BT_avdtp_media_write
 
 #ifdef AVDTP_ASSISTIVE_MODE
 /**
- *  \fn BT_avdtp_get_media_channel_params
- *
  *  \brief Get the Media Channel Parameters for the given AVDTP handle
  *
  *  \Description
@@ -3078,7 +3065,7 @@ API_RESULT BT_avdtp_decode_sep_capabilities
 
 
 /**
- *  To decode Stream End Point Configuration.
+ *  \brief To decode Stream End Point Configuration.
  *
  *  \par Synopsis:
  *  API_RESULT BT_avdtp_decode_sep_configuration
@@ -3115,7 +3102,7 @@ API_RESULT BT_avdtp_decode_sep_capabilities
 
 #define BT_avdtp_decode_sep_configuration(buffer, buffer_len, sep_conf) \
         avdtp_decode_sep_configuration                                  \
-        (0x00, (buffer), (buffer_len), (sep_conf))
+        (0x00U, (buffer), (buffer_len), (sep_conf))
 
 /**
  *  \brief To set In MTU for Media transport channel.
@@ -3153,8 +3140,6 @@ API_RESULT BT_avdtp_set_media_mtu
 
 #ifdef HAVE_AVDTP_TEST_MODE
 /**
- *  \fn BT_avdtp_set_sig_msg_reject_rsp_params
- *
  *  \brief To update reject response parameters for a valid AVDTP SIG ID message.
  *
  *  \par Description:
@@ -3183,8 +3168,6 @@ API_RESULT  BT_avdtp_set_sig_msg_reject_rsp_params
 
 #ifdef HAVE_AVDTP_MEDIA_PKT_FLUSHABLE
 /**
- *  \fn BT_avdtp_set_flushable
- *
  *  \brief To Set Packets as Flushable for AVDTP Media Transport Connection.
  *
  *  \par Description:
@@ -3215,6 +3198,6 @@ API_RESULT BT_avdtp_set_flushable
 /** \} */
 /** \} */
 /** \} */
+/** \} */
 #endif /* _H_BT_AVDTP_API_ */
-
 

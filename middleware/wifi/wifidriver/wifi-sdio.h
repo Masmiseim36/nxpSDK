@@ -77,6 +77,11 @@
 #error "Please keep buffer length aligned to SDIO block size"
 #endif /* Sanity check */
 
+/*! @brief Data block count accessed in card */
+#define DATA_BLOCK_COUNT (4U)
+/*! @brief Data buffer size. */
+#define DATA_BUFFER_SIZE (FSL_SDMMC_DEFAULT_BLOCK_SIZE * DATA_BLOCK_COUNT)
+
 // extern uint8_t outbuf[SDIO_OUTBUF_LEN];
 
 typedef struct wlanfw_hdr
@@ -146,7 +151,14 @@ uint32_t wifi_get_device_value1();
 
 uint8_t *wifi_get_sdio_outbuf(uint32_t *outbuf_len);
 
+#ifdef CONFIG_WMM
+uint8_t *wifi_wmm_get_sdio_outbuf(uint32_t *outbuf_len, mlan_wmm_ac_e queue);
+mlan_status wlan_xmit_wmm_pkt(t_u8 interface, t_u32 txlen, t_u8 *tx_buf);
+#endif
+
 void sdio_enable_interrupt();
+
+void process_pkt_hdrs(void *pbuf, t_u32 payloadlen, t_u8 interface);
 
 #ifdef CONFIG_WIFI_FW_DEBUG
 extern void wifi_dump_firmware_info();

@@ -70,6 +70,9 @@ void USB_WaitClockLocked(void);
 #define TIMER_SOURCE_CLOCK CLOCK_GetFreq(kCLOCK_OscClk)
 extern usb_hid_mouse_struct_t g_UsbDeviceHidMouse;
 uint32_t g_halTimerHandle[(HAL_TIMER_HANDLE_SIZE + 3) / 4];
+#if ((defined(FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE)) && (FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE > 0U))
+static uint32_t g_savedPrimask;
+#endif
 
 USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) static uint8_t s_SetupOutBuffer[8];
 USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) static uint8_t s_MouseBuffer[USB_HID_MOUSE_REPORT_LENGTH];
@@ -154,10 +157,25 @@ void USB_PreLowpowerMode(void)
 /*
  * Execute the instrument to enter low power.
  */
-static void stop(void)
+#if ((defined(FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE)) && (FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE > 0U))
+AT_QUICKACCESS_SECTION_CODE(void stop(void));
+#endif
+void stop(void)
 {
     SCB->SCR |= SCB_SCR_SLEEPDEEP_Msk;
+#if ((defined(FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE)) && (FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE > 0U))
+    g_savedPrimask = DisableGlobalIRQ();
+    __DSB();
+    __ISB();
+#endif
     __asm("WFI");
+#if ((defined(FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE)) && (FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE > 0U))
+    CCM_ANALOG->PFD_480 |= CCM_ANALOG_PFD_480_PFD0_CLKGATE_MASK;
+    CCM_ANALOG->PFD_480 &= ~CCM_ANALOG_PFD_480_PFD0_CLKGATE_MASK;
+    EnableGlobalIRQ(g_savedPrimask);
+    __DSB();
+    __ISB();
+#endif
 }
 /*
  * Enter the LowPower mode.
@@ -317,7 +335,7 @@ static usb_status_t USB_DeviceHidInterruptIn(usb_device_handle deviceHandle,
 
 usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *param)
 {
-    usb_status_t error = kStatus_USB_Success;
+    usb_status_t error = kStatus_USB_InvalidRequest;
     uint8_t *temp8     = (uint8_t *)param;
 
     switch (event)
@@ -346,6 +364,7 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
 #if (defined(USB_DEVICE_CONFIG_DETACH_ENABLE) && (USB_DEVICE_CONFIG_DETACH_ENABLE > 0U))
         case kUSB_DeviceEventAttach:
         {
+            error = kStatus_USB_Success;
 #if (defined(USB_DEVICE_CONFIG_LPCIP3511HS) && (USB_DEVICE_CONFIG_LPCIP3511HS > 0U)) || \
     (defined(USB_DEVICE_CONFIG_LPCIP3511FS) && (USB_DEVICE_CONFIG_LPCIP3511FS > 0U))
 #else
@@ -359,6 +378,7 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
         case kUSB_DeviceEventDetach:
         {
             g_UsbDeviceHidMouse.attach = 0;
+            error                      = kStatus_USB_Success;
 #if (defined(USB_DEVICE_CONFIG_LPCIP3511HS) && (USB_DEVICE_CONFIG_LPCIP3511HS > 0U)) || \
     (defined(USB_DEVICE_CONFIG_LPCIP3511FS) && (USB_DEVICE_CONFIG_LPCIP3511FS > 0U))
 
@@ -422,6 +442,9 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
                 g_UsbDeviceHidMouse.attach = 1U;
                 error                      = USB_DeviceHidMouseAction(); /* run the cursor movement code */
             }
+            break;
+        case kUSB_DeviceEventSetInterface:
+            error = kStatus_USB_Success;
             break;
         default:
             break;
@@ -698,8 +721,8 @@ void main(void)
 {
     BOARD_ConfigMPU();
 
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
+    BOARD_InitBootPins();
+    BOARD_InitBootClocks();
     BOARD_InitDebugConsole();
 
     /* Set PERCLK_CLK source to OSC_CLK*/

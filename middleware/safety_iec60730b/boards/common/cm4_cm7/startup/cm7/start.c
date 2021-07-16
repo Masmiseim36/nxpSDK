@@ -8,29 +8,28 @@
 #include "safety_config.h"
 
 /*******************************************************************************
-* Prototypes
-******************************************************************************/
-void start(void);
+ * Prototypes
+ ******************************************************************************/
 extern void common_startup(void);
 extern int32_t main(void);
 extern void WatchdogEnable(void);
 extern void WatchdogDisable(void);
 
 /*******************************************************************************
-* Code
-******************************************************************************/
+ * Code
+ ******************************************************************************/
 /*!
-* @brief Device Start
-*
-* @param void
-*
-* @return None
-*
-* This function sets up watchdog, calls all of the needed starup routines and then
-* branches to the main process.
-*/
+ * @brief Start
+ *
+ * @param void
+ *
+ * @return None
+ *
+ * This function sets up watchdog, calls all of the needed starup routines and then
+ * branches to the main process.
+ */
 void start(void)
-{  
+{
     /* Update of watchdog configuration */
 #if WATCHDOG_ENABLED
     WatchdogEnable();
@@ -45,5 +44,6 @@ void start(void)
     main();
 
     /* No actions to perform after this so wait forever */
-    while(1);
+    while (TRUE)
+        ;
 }

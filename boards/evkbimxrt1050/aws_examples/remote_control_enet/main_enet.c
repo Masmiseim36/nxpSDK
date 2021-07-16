@@ -1,8 +1,8 @@
 /*
- * Amazon FreeRTOS V1.0.0
+ * FreeRTOS V1.0.0
  * Copyright (C) 2017 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
  * Copyright (c) 2013 - 2014, Freescale Semiconductor, Inc.
- * Copyright 2016-2018 NXP
+ * Copyright 2016-2019 NXP
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
  * this software and associated documentation files (the "Software"), to deal in
@@ -26,31 +26,25 @@
  * http://www.FreeRTOS.org
  */
 
-///////////////////////////////////////////////////////////////////////////////
-//  Includes
-///////////////////////////////////////////////////////////////////////////////
-
+/*******************************************************************************
+ * Includes
+ ******************************************************************************/
 /* SDK Included Files */
-#include "board.h"
 #include "fsl_debug_console.h"
 #include "ksdk_mbedtls.h"
 
 #include "pin_mux.h"
-
-/* Amazon FreeRTOS Demo Includes */
+#include "clock_config.h"
+#include "board.h"
+/* FreeRTOS Demo Includes */
 #include "FreeRTOS.h"
 #include "task.h"
-#include "aws_clientcredential.h"
-#include "aws_logging_task.h"
-#include "aws_system_init.h"
+#include "iot_logging_task.h"
+#include "iot_system_init.h"
 #include "aws_dev_mode_key_provisioning.h"
-
-/* lwIP Includes */
-#include "lwip/tcpip.h"
-#include "lwip/dhcp.h"
-#include "lwip/prot/dhcp.h"
-#include "netif/ethernet.h"
-#include "ethernetif.h"
+#include "platform/iot_threads.h"
+#include "types/iot_network_types.h"
+#include "aws_demo.h"
 
 /* Board specific accelerometer driver include */
 #if defined(BOARD_ACCEL_FXOS)
@@ -59,12 +53,28 @@
 #include "fsl_mma.h"
 #endif
 
-#include "clock_config.h"
+#include "fsl_phy.h"
+/* lwIP Includes */
+#include "lwip/tcpip.h"
+#include "lwip/dhcp.h"
+#include "lwip/prot/dhcp.h"
+#include "netif/ethernet.h"
+#include "enet_ethernetif.h"
+#include "lwip/netifapi.h"
+#include "fsl_phyksz8081.h"
+#include "fsl_enet_mdio.h"
 #include "fsl_gpio.h"
 #include "fsl_iomuxc.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
+#ifndef EXAMPLE_NETIF_INIT_FN
+/*! @brief Network interface initialization function. */
+#define EXAMPLE_NETIF_INIT_FN ethernetif0_init
+#endif /* EXAMPLE_NETIF_INIT_FN */
+
+#define INIT_SUCCESS 0
+#define INIT_FAIL    1
 
 /* MAC address configuration. */
 #define configMAC_ADDR                     \
@@ -75,43 +85,52 @@
 /* Address of PHY interface. */
 #define EXAMPLE_PHY_ADDRESS BOARD_ENET0_PHY_ADDRESS
 
-/* System clock name. */
-#define EXAMPLE_CLOCK_NAME kCLOCK_CoreSysClk
+/* MDIO operations. */
+#define EXAMPLE_MDIO_OPS enet_ops
+
+/* PHY operations. */
+#define EXAMPLE_PHY_OPS phyksz8081_ops
+
+/* ENET clock frequency. */
+#define EXAMPLE_CLOCK_FREQ CLOCK_GetFreq(kCLOCK_IpgClk)
 
 /* LPI2C */
 /* Select USB1 PLL (480 MHz) as LPI2C's clock source */
 #define BOARD_ACCEL_I2C_CLOCK_SOURCE_SELECT (0U)
 /* Clock divider for LPI2C clock source */
 #define BOARD_ACCEL_I2C_CLOCK_SOURCE_DIVIDER (5U)
-#define BOARD_ACCEL_I2C_CLOCK_FREQ (CLOCK_GetFreq(kCLOCK_Usb1PllClk) / 8 / (BOARD_ACCEL_I2C_CLOCK_SOURCE_DIVIDER + 1U))
-#define LOGGING_TASK_PRIORITY (tskIDLE_PRIORITY + 1)
+#define BOARD_ACCEL_I2C_CLOCK_FREQ           (CLOCK_GetFreq(kCLOCK_Usb1PllClk) / 8 / (BOARD_ACCEL_I2C_CLOCK_SOURCE_DIVIDER + 1U))
+#define LOGGING_TASK_PRIORITY   (tskIDLE_PRIORITY + 1)
 #define LOGGING_TASK_STACK_SIZE (200)
-#define LOGGING_QUEUE_LENGTH (16)
+#define LOGGING_QUEUE_LENGTH    (16)
+
+#define DEMO_TASK_STACK_SIZE (configMINIMAL_STACK_SIZE * 15)
+#define DEMO_TASK_PRIORITY   (tskIDLE_PRIORITY + 1)
 
 /* Accelerometer driver specific defines */
 #if defined(BOARD_ACCEL_FXOS)
-#define XYZ_DATA_CFG XYZ_DATA_CFG_REG
-#define ACCEL_INIT(handle, config) FXOS_Init(handle, config)
-#define ACCEL_READ_REG(handle, reg, val) FXOS_ReadReg(handle, reg, val, 1)
+#define XYZ_DATA_CFG                          XYZ_DATA_CFG_REG
+#define ACCEL_INIT(handle, config)            FXOS_Init(handle, config)
+#define ACCEL_READ_REG(handle, reg, val)      FXOS_ReadReg(handle, reg, val, 1)
 #define ACCELL_READ_SENSOR_DATA(handle, data) FXOS_ReadSensorData(handle, data)
-#define ACCEL_GET_RESOLUTION() FXOS_GetResolutionBits()
+#define ACCEL_GET_RESOLUTION()                FXOS_GetResolutionBits()
 #elif defined(BOARD_ACCEL_MMA)
-#define XYZ_DATA_CFG kMMA8652_XYZ_DATA_CFG
-#define ACCEL_INIT(handle, config) MMA_Init(handle, config)
-#define ACCEL_READ_REG(handle, reg, val) MMA_ReadReg(handle, reg, val)
+#define XYZ_DATA_CFG                          kMMA8652_XYZ_DATA_CFG
+#define ACCEL_INIT(handle, config)            MMA_Init(handle, config)
+#define ACCEL_READ_REG(handle, reg, val)      MMA_ReadReg(handle, reg, val)
 #define ACCELL_READ_SENSOR_DATA(handle, data) MMA_ReadSensorData(handle, data)
-#define ACCEL_GET_RESOLUTION() MMA_GetResolutionBits()
+#define ACCEL_GET_RESOLUTION()                MMA_GetResolutionBits()
 #endif
 
 /* Accelerometer and magnetometer */
 #if defined(BOARD_ACCEL_FXOS)
-fxos_handle_t accelHandle = {0};
+fxos_handle_t accelHandle           = {0};
 static const uint8_t accelAddress[] = {0x1CU, 0x1EU, 0x1DU, 0x1FU};
-fxos_config_t config = {0};
+fxos_config_t config                = {0};
 #elif defined(BOARD_ACCEL_MMA)
-mma_handle_t accelHandle = {0};
+mma_handle_t accelHandle            = {0};
 static const uint8_t accelAddress[] = {0x1CU, 0x1DU, 0x1EU, 0x1FU};
-mma_config_t config = {0};
+mma_config_t config                 = {0};
 #endif
 
 /* Accelerometer data scale */
@@ -119,17 +138,26 @@ uint8_t g_accelDataScale = 0;
 /* Resolution of accelerometer (14 bit or 12 bit) */
 uint8_t g_accelResolution = 0;
 
-static struct netif fsl_netif0;
-
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
 void BOARD_InitLEDs(void);
-extern void vStartLedDemoTask(void);
+/* Declaration of demo function. */
+extern int RunRemoteControlDemo(bool awsIotMqttMode,
+                                const char *pIdentifier,
+                                void *pNetworkServerInfo,
+                                void *pNetworkCredentialInfo,
+                                const IotNetworkInterface_t *pNetworkInterface);
+
+extern int initNetwork(void);
 
 /*******************************************************************************
  * Variables
  ******************************************************************************/
+static mdio_handle_t mdioHandle = {.ops = &EXAMPLE_MDIO_OPS};
+static phy_handle_t phyHandle   = {.phyAddr = EXAMPLE_PHY_ADDRESS, .mdioHandle = &mdioHandle, .ops = &EXAMPLE_PHY_OPS};
+
+struct netif netif;
 /* Count of LED */
 uint8_t ledCount = 0;
 /* Array of LED names */
@@ -140,6 +168,48 @@ char ledColors[] = "[]";
 /*******************************************************************************
  * Code
  ******************************************************************************/
+int initNetwork(void)
+{
+    ip4_addr_t netif_ipaddr, netif_netmask, netif_gw;
+    ethernetif_config_t enet_config = {
+        .phyHandle  = &phyHandle,
+        .macAddress = configMAC_ADDR,
+    };
+
+    mdioHandle.resource.csrClock_Hz = EXAMPLE_CLOCK_FREQ;
+
+    IP4_ADDR(&netif_ipaddr, 0, 0, 0, 0);
+    IP4_ADDR(&netif_netmask, 0, 0, 0, 0);
+    IP4_ADDR(&netif_gw, 0, 0, 0, 0);
+
+    tcpip_init(NULL, NULL);
+
+    netifapi_netif_add(&netif, &netif_ipaddr, &netif_netmask, &netif_gw, &enet_config, EXAMPLE_NETIF_INIT_FN,
+                       tcpip_input);
+    netifapi_netif_set_default(&netif);
+    netifapi_netif_set_up(&netif);
+
+    configPRINTF(("Getting IP address from DHCP ...\r\n"));
+    netifapi_dhcp_start(&netif);
+
+    struct dhcp *dhcp;
+    dhcp = (struct dhcp *)netif_get_client_data(&netif, LWIP_NETIF_CLIENT_DATA_INDEX_DHCP);
+
+    while (dhcp->state != DHCP_STATE_BOUND)
+    {
+        vTaskDelay(1000);
+    }
+
+    if (dhcp->state == DHCP_STATE_BOUND)
+    {
+        configPRINTF(("IPv4 Address: %u.%u.%u.%u\r\n", ((u8_t *)&netif.ip_addr.addr)[0],
+                      ((u8_t *)&netif.ip_addr.addr)[1], ((u8_t *)&netif.ip_addr.addr)[2],
+                      ((u8_t *)&netif.ip_addr.addr)[3]));
+    }
+    configPRINTF(("DHCP OK\r\n"));
+
+    return INIT_SUCCESS;
+}
 void turnOnLed(uint8_t id)
 {
 }
@@ -170,42 +240,9 @@ void delay(void)
     }
 }
 
-void BOARD_InitNetwork(void)
+void print_string(const char *string)
 {
-    ip4_addr_t fsl_netif0_ipaddr, fsl_netif0_netmask, fsl_netif0_gw;
-    ethernetif_config_t fsl_enet_config0 = {
-        .phyAddress = EXAMPLE_PHY_ADDRESS, .clockName = EXAMPLE_CLOCK_NAME, .macAddress = configMAC_ADDR,
-    };
-
-    IP4_ADDR(&fsl_netif0_ipaddr, 0, 0, 0, 0);
-    IP4_ADDR(&fsl_netif0_netmask, 0, 0, 0, 0);
-    IP4_ADDR(&fsl_netif0_gw, 0, 0, 0, 0);
-
-    tcpip_init(NULL, NULL);
-
-    netif_add(&fsl_netif0, &fsl_netif0_ipaddr, &fsl_netif0_netmask, &fsl_netif0_gw, &fsl_enet_config0, ethernetif0_init,
-              tcpip_input);
-    netif_set_default(&fsl_netif0);
-    netif_set_up(&fsl_netif0);
-
-    configPRINTF(("Getting IP address from DHCP ...\r\n"));
-    dhcp_start(&fsl_netif0);
-
-    struct dhcp *dhcp;
-    dhcp = (struct dhcp *)netif_get_client_data(&fsl_netif0, LWIP_NETIF_CLIENT_DATA_INDEX_DHCP);
-
-    while (dhcp->state != DHCP_STATE_BOUND)
-    {
-        vTaskDelay(1000);
-    }
-
-    if (dhcp->state == DHCP_STATE_BOUND)
-    {
-        configPRINTF(("IPv4 Address: %u.%u.%u.%u\r\n", ((u8_t *)&fsl_netif0.ip_addr.addr)[0],
-                      ((u8_t *)&fsl_netif0.ip_addr.addr)[1], ((u8_t *)&fsl_netif0.ip_addr.addr)[2],
-                      ((u8_t *)&fsl_netif0.ip_addr.addr)[3]));
-    }
-    configPRINTF(("DHCP OK\n"));
+    PRINTF(string);
 }
 
 #if defined(BOARD_ACCEL_FXOS) || defined(BOARD_ACCEL_MMA)
@@ -215,12 +252,12 @@ void BOARD_InitNetwork(void)
 status_t init_mag_accel(uint8_t *accelDataScale, uint8_t *accelResolution)
 {
     uint8_t arrayAddrSize = 0;
-    uint8_t sensorRange = 0;
-    uint16_t i = 0;
-    status_t result = kStatus_Fail;
+    uint8_t sensorRange   = 0;
+    uint16_t i            = 0;
+    status_t result       = kStatus_Fail;
 
     /* Configure the I2C function */
-    config.I2C_SendFunc = BOARD_Accel_I2C_Send;
+    config.I2C_SendFunc    = BOARD_Accel_I2C_Send;
     config.I2C_ReceiveFunc = BOARD_Accel_I2C_Receive;
 
     /* Initialize sensor devices */
@@ -276,8 +313,20 @@ void vApplicationDaemonTaskStartupHook(void)
 
     if (SYSTEM_Init() == pdPASS)
     {
-        BOARD_InitNetwork();
-        vStartLedDemoTask();
+        if (initNetwork() != 0)
+        {
+            configPRINTF(("Network init failed, stopping demo.\r\n"));
+            vTaskDelete(NULL);
+        }
+        else
+        {
+            static demoContext_t mqttDemoContext = {.networkTypes                = AWSIOT_NETWORK_TYPE_ETH,
+                                                    .demoFunction                = RunRemoteControlDemo,
+                                                    .networkConnectedCallback    = NULL,
+                                                    .networkDisconnectedCallback = NULL};
+
+            Iot_CreateDetachedThread(runDemoTask, &mqttDemoContext, DEMO_TASK_PRIORITY, DEMO_TASK_STACK_SIZE);
+        }
     }
 }
 
@@ -286,8 +335,8 @@ int main(void)
     gpio_pin_config_t gpio_config = {kGPIO_DigitalOutput, 0, kGPIO_NoIntmode};
 
     BOARD_ConfigMPU();
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
+    BOARD_InitBootPins();
+    BOARD_InitBootClocks();
     BOARD_I2C_ConfigurePins();
     BOARD_InitDebugConsole();
     BOARD_InitModuleClock();
@@ -307,8 +356,6 @@ int main(void)
     /* Clock setting for LPI2C */
     CLOCK_SetMux(kCLOCK_Lpi2cMux, BOARD_ACCEL_I2C_CLOCK_SOURCE_SELECT);
     CLOCK_SetDiv(kCLOCK_Lpi2cDiv, BOARD_ACCEL_I2C_CLOCK_SOURCE_DIVIDER);
-
-    SCB_DisableDCache();
     CRYPTO_InitHardware();
 
 #if defined(BOARD_ACCEL_FXOS) || defined(BOARD_ACCEL_MMA)
@@ -327,92 +374,6 @@ int main(void)
     xLoggingTaskInitialize(LOGGING_TASK_STACK_SIZE, LOGGING_TASK_PRIORITY, LOGGING_QUEUE_LENGTH);
 
     vTaskStartScheduler();
-    for (;;)
-        ;
-}
-
-/* configUSE_STATIC_ALLOCATION is set to 1, so the application must provide an
- * implementation of vApplicationGetIdleTaskMemory() to provide the memory that is
- * used by the Idle task. */
-void vApplicationGetIdleTaskMemory(StaticTask_t **ppxIdleTaskTCBBuffer,
-                                   StackType_t **ppxIdleTaskStackBuffer,
-                                   uint32_t *pulIdleTaskStackSize)
-{
-    /* If the buffers to be provided to the Idle task are declared inside this
-     * function then they must be declared static - otherwise they will be allocated on
-     * the stack and so not exists after this function exits. */
-    static StaticTask_t xIdleTaskTCB;
-    static StackType_t uxIdleTaskStack[configMINIMAL_STACK_SIZE];
-
-    /* Pass out a pointer to the StaticTask_t structure in which the Idle
-     * task's state will be stored. */
-    *ppxIdleTaskTCBBuffer = &xIdleTaskTCB;
-
-    /* Pass out the array that will be used as the Idle task's stack. */
-    *ppxIdleTaskStackBuffer = uxIdleTaskStack;
-
-    /* Pass out the size of the array pointed to by *ppxIdleTaskStackBuffer.
-     * Note that, as the array is necessarily of type StackType_t,
-     * configMINIMAL_STACK_SIZE is specified in words, not bytes. */
-    *pulIdleTaskStackSize = configMINIMAL_STACK_SIZE;
-}
-
-/* configUSE_STATIC_ALLOCATION and configUSE_TIMERS are both set to 1, so the
- * application must provide an implementation of vApplicationGetTimerTaskMemory()
- * to provide the memory that is used by the Timer service task. */
-void vApplicationGetTimerTaskMemory(StaticTask_t **ppxTimerTaskTCBBuffer,
-                                    StackType_t **ppxTimerTaskStackBuffer,
-                                    uint32_t *pulTimerTaskStackSize)
-{
-    /* If the buffers to be provided to the Timer task are declared inside this
-     * function then they must be declared static - otherwise they will be allocated on
-     * the stack and so not exists after this function exits. */
-    static StaticTask_t xTimerTaskTCB;
-    static StackType_t uxTimerTaskStack[configTIMER_TASK_STACK_DEPTH];
-
-    /* Pass out a pointer to the StaticTask_t structure in which the Timer
-     * task's state will be stored. */
-    *ppxTimerTaskTCBBuffer = &xTimerTaskTCB;
-
-    /* Pass out the array that will be used as the Timer task's stack. */
-    *ppxTimerTaskStackBuffer = uxTimerTaskStack;
-
-    /* Pass out the size of the array pointed to by *ppxTimerTaskStackBuffer.
-     * Note that, as the array is necessarily of type StackType_t,
-     * configTIMER_TASK_STACK_DEPTH is specified in words, not bytes. */
-    *pulTimerTaskStackSize = configTIMER_TASK_STACK_DEPTH;
-}
-/**
- * @brief Warn user if pvPortMalloc fails.
- *
- * Called if a call to pvPortMalloc() fails because there is insufficient
- * free memory available in the FreeRTOS heap.  pvPortMalloc() is called
- * internally by FreeRTOS API functions that create tasks, queues, software
- * timers, and semaphores.  The size of the FreeRTOS heap is set by the
- * configTOTAL_HEAP_SIZE configuration constant in FreeRTOSConfig.h.
- *
- */
-void vApplicationMallocFailedHook()
-{
-    configPRINTF(("ERROR: Malloc failed to allocate memory\r\n"));
-}
-
-/**
- * @brief Loop forever if stack overflow is detected.
- *
- * If configCHECK_FOR_STACK_OVERFLOW is set to 1,
- * this hook provides a location for applications to
- * define a response to a stack overflow.
- *
- * Use this hook to help identify that a stack overflow
- * has occurred.
- *
- */
-void vApplicationStackOverflowHook(TaskHandle_t xTask, char *pcTaskName)
-{
-    portDISABLE_INTERRUPTS();
-
-    /* Loop forever */
     for (;;)
         ;
 }

@@ -2,7 +2,8 @@
 <ksdk:examples xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd manifest.xsd">
   <externalDefinitions>
     <definition extID="middleware.azure_rtos.nxd.MIMXRT1052"/>
-    <definition extID="driver.phyksz8081.MIMXRT1052"/>
+    <definition extID="driver.mdio-enet.MIMXRT1052"/>
+    <definition extID="driver.phy-device-ksz8081.MIMXRT1052"/>
     <definition extID="platform.drivers.clock.MIMXRT1052"/>
     <definition extID="platform.drivers.common.MIMXRT1052"/>
     <definition extID="device.MIMXRT1052_CMSIS.MIMXRT1052"/>
@@ -17,16 +18,16 @@
     <definition extID="platform.utilities.assert.MIMXRT1052"/>
     <definition extID="platform.drivers.igpio.MIMXRT1052"/>
     <definition extID="platform.drivers.xip_device.MIMXRT1052"/>
-    <definition extID="platform.drivers.xip_board.MIMXRT1052"/>
+    <definition extID="platform.drivers.xip_board.evkbimxrt1050.MIMXRT1052"/>
     <definition extID="middleware.azure_rtos.nxd.template.MIMXRT1052"/>
     <definition extID="middleware.azure_rtos.fx.MIMXRT1052"/>
     <definition extID="middleware.azure_rtos.fx.template.MIMXRT1052"/>
     <definition extID="middleware.azure_rtos.tx.MIMXRT1052"/>
     <definition extID="middleware.azure_rtos.tx.template.MIMXRT1052"/>
+    <definition extID="driver.mdio-common.MIMXRT1052"/>
+    <definition extID="CMSIS_Include_core_cm.MIMXRT1052"/>
     <definition extID="platform.drivers.enet.MIMXRT1052"/>
-    <definition extID="platform.Include_core_cm7.MIMXRT1052"/>
-    <definition extID="platform.Include_common.MIMXRT1052"/>
-    <definition extID="platform.Include_dsp.MIMXRT1052"/>
+    <definition extID="driver.phy-common.MIMXRT1052"/>
     <definition extID="platform.utilities.misc_utilities.MIMXRT1052"/>
     <definition extID="device.MIMXRT1052_system.MIMXRT1052"/>
     <definition extID="iar"/>
@@ -37,7 +38,7 @@
     <definition extID="com.crt.advproject.config.exe.debug"/>
     <definition extID="com.crt.advproject.config.exe.release"/>
   </externalDefinitions>
-  <example id="evkbimxrt1050_netx_duo_iperf" name="netx_duo_iperf" dependency="middleware.azure_rtos.nxd.MIMXRT1052 driver.phyksz8081.MIMXRT1052 platform.drivers.clock.MIMXRT1052 platform.drivers.common.MIMXRT1052 device.MIMXRT1052_CMSIS.MIMXRT1052 utility.debug_console.MIMXRT1052 component.lpuart_adapter.MIMXRT1052 component.serial_manager.MIMXRT1052 component.lists.MIMXRT1052 component.serial_manager_uart.MIMXRT1052 platform.drivers.lpuart.MIMXRT1052 device.MIMXRT1052_startup.MIMXRT1052 platform.drivers.iomuxc.MIMXRT1052 platform.utilities.assert.MIMXRT1052 platform.drivers.igpio.MIMXRT1052 platform.drivers.xip_device.MIMXRT1052 platform.drivers.xip_board.MIMXRT1052 middleware.azure_rtos.nxd.template.MIMXRT1052 middleware.azure_rtos.fx.MIMXRT1052 middleware.azure_rtos.fx.template.MIMXRT1052 middleware.azure_rtos.tx.MIMXRT1052 middleware.azure_rtos.tx.template.MIMXRT1052 platform.drivers.enet.MIMXRT1052 platform.Include_core_cm7.MIMXRT1052 platform.Include_common.MIMXRT1052 platform.Include_dsp.MIMXRT1052 platform.utilities.misc_utilities.MIMXRT1052 device.MIMXRT1052_system.MIMXRT1052" category="azure_rtos_examples">
+  <example id="evkbimxrt1050_netx_duo_iperf" name="netx_duo_iperf" dependency="middleware.azure_rtos.nxd.MIMXRT1052 driver.mdio-enet.MIMXRT1052 driver.phy-device-ksz8081.MIMXRT1052 platform.drivers.clock.MIMXRT1052 platform.drivers.common.MIMXRT1052 device.MIMXRT1052_CMSIS.MIMXRT1052 utility.debug_console.MIMXRT1052 component.lpuart_adapter.MIMXRT1052 component.serial_manager.MIMXRT1052 component.lists.MIMXRT1052 component.serial_manager_uart.MIMXRT1052 platform.drivers.lpuart.MIMXRT1052 device.MIMXRT1052_startup.MIMXRT1052 platform.drivers.iomuxc.MIMXRT1052 platform.utilities.assert.MIMXRT1052 platform.drivers.igpio.MIMXRT1052 platform.drivers.xip_device.MIMXRT1052 platform.drivers.xip_board.evkbimxrt1050.MIMXRT1052 middleware.azure_rtos.nxd.template.MIMXRT1052 middleware.azure_rtos.fx.MIMXRT1052 middleware.azure_rtos.fx.template.MIMXRT1052 middleware.azure_rtos.tx.MIMXRT1052 middleware.azure_rtos.tx.template.MIMXRT1052 driver.mdio-common.MIMXRT1052 CMSIS_Include_core_cm.MIMXRT1052 platform.drivers.enet.MIMXRT1052 driver.phy-common.MIMXRT1052 platform.utilities.misc_utilities.MIMXRT1052 device.MIMXRT1052_system.MIMXRT1052" category="azure_rtos_examples">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -65,6 +66,7 @@
           <value>NX_INCLUDE_USER_DEFINE_FILE</value>
           <value>FX_INCLUDE_USER_DEFINE_FILE</value>
           <value>TX_INCLUDE_USER_DEFINE_FILE</value>
+          <value>MCUXPRESSO_SDK</value>
         </option>
         <option id="com.crt.advproject.gas.fpu" type="enum">
           <value>com.crt.advproject.gas.fpu.fpv5dp.hard</value>
@@ -109,7 +111,7 @@
     </debug_configurations>
     <include_paths>
       <include_path path="boards/evkbimxrt1050/azure_rtos_examples/netx_duo_iperf" project_relative_path="board" type="c_include"/>
-      <include_path path="boards/evkbimxrt1050/azure_rtos_examples/netx_duo_iperf" project_relative_path="ports" type="c_include"/>
+      <include_path path="boards/evkbimxrt1050/azure_rtos_examples/netx_duo_iperf" project_relative_path="azure-rtos/config" type="c_include"/>
     </include_paths>
     <source path="boards/evkbimxrt1050/azure_rtos_examples/netx_duo_iperf/iar" project_relative_path="./" type="workspace" toolchain="iar">
       <files mask="netx_duo_iperf.ewd"/>
@@ -160,10 +162,10 @@
     <source path="boards/evkbimxrt1050/azure_rtos_examples/netx_duo_iperf" project_relative_path="source" type="c_include">
       <files mask="nx_iperf.h"/>
     </source>
-    <source path="boards/evkbimxrt1050/azure_rtos_examples/netx_duo_iperf" project_relative_path="ports" type="c_include">
+    <source path="boards/evkbimxrt1050/azure_rtos_examples/netx_duo_iperf" project_relative_path="azure-rtos/config" type="c_include">
       <files mask="tx_user.h"/>
     </source>
-    <source path="boards/evkbimxrt1050/azure_rtos_examples/netx_duo_iperf" project_relative_path="ports" type="c_include">
+    <source path="boards/evkbimxrt1050/azure_rtos_examples/netx_duo_iperf" project_relative_path="azure-rtos/config" type="c_include">
       <files mask="fx_user.h"/>
     </source>
     <source path="boards/evkbimxrt1050/azure_rtos_examples/netx_duo_iperf" project_relative_path="ports" type="src">
@@ -173,7 +175,7 @@
     <source path="boards/evkbimxrt1050/azure_rtos_examples/netx_duo_iperf" project_relative_path="ports" type="c_include">
       <files mask="nx_driver_imxrt.h"/>
     </source>
-    <source path="boards/evkbimxrt1050/azure_rtos_examples/netx_duo_iperf" project_relative_path="ports" type="c_include">
+    <source path="boards/evkbimxrt1050/azure_rtos_examples/netx_duo_iperf" project_relative_path="azure-rtos/config" type="c_include">
       <files mask="nx_user.h"/>
     </source>
     <source path="boards/evkbimxrt1050/azure_rtos_examples/netx_duo_iperf" project_relative_path="board" type="src">

@@ -1,8 +1,7 @@
 /*
- * Copyright 2019-2020 NXP
- * All rights reserved.
  *
- * SPDX-License-Identifier: BSD-3-Clause
+ * Copyright 2019-2020 NXP
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 #if defined(NONSECURE_WORLD)
@@ -105,11 +104,26 @@ smStatus_t Se05x_API_CloseSession(pSe05xSession_t session_ctx)
     tlvHeader_t hdr      = {{kSE05x_CLA, kSE05x_INS_MGMT, kSE05x_P1_DEFAULT, kSE05x_P2_SESSION_CLOSE}};
     uint8_t cmdbuf[SE05X_MAX_BUF_SIZE_CMD];
     size_t cmdbufLen = 0;
+    uint8_t iCnt     = 0;
+
 #if VERBOSE_APDU_LOGS
     NEWLINE();
     nLog("APDU", NX_LEVEL_DEBUG, "CloseSession []");
 #endif /* VERBOSE_APDU_LOGS */
-    retStatus = DoAPDUTx_s_Case3(session_ctx, &hdr, cmdbuf, cmdbufLen);
+    if (((session_ctx->value[0] || session_ctx->value[1] || session_ctx->value[2] || session_ctx->value[3] ||
+            session_ctx->value[4] || session_ctx->value[5] || session_ctx->value[6] || session_ctx->value[7])) &&
+        (session_ctx->hasSession == 1)) {
+        retStatus = DoAPDUTx_s_Case3(session_ctx, &hdr, cmdbuf, cmdbufLen);
+        if (retStatus == SM_OK) {
+            for (iCnt = 0; iCnt < 8; iCnt++) {
+                session_ctx->value[iCnt] = 0;
+            }
+            session_ctx->hasSession = 0;
+        }
+    }
+    else {
+        LOG_D("CloseSession command is sent only if valid Session exists!!!");
+    }
     return retStatus;
 }
 
@@ -598,6 +612,7 @@ cleanup:
     return retStatus;
 }
 
+#if ENABLE_DEPRECATED_API_WritePCR
 smStatus_t Se05x_API_WritePCR(pSe05xSession_t session_ctx,
     pSe05xPolicy_t policy,
     uint32_t pcrID,
@@ -606,8 +621,22 @@ smStatus_t Se05x_API_WritePCR(pSe05xSession_t session_ctx,
     const uint8_t *inputData,
     size_t inputDataLen)
 {
+    return Se05x_API_WritePCR_WithType(
+        session_ctx, kSE05x_INS_NA, policy, pcrID, initialValue, initialValueLen, inputData, inputDataLen);
+}
+#endif // ENABLE_DEPRECATED_API_WritePCR
+
+smStatus_t Se05x_API_WritePCR_WithType(pSe05xSession_t session_ctx,
+    const SE05x_INS_t ins_type,
+    pSe05xPolicy_t policy,
+    uint32_t pcrID,
+    const uint8_t *initialValue,
+    size_t initialValueLen,
+    const uint8_t *inputData,
+    size_t inputDataLen)
+{
     smStatus_t retStatus = SM_NOT_OK;
-    tlvHeader_t hdr      = {{kSE05x_CLA, kSE05x_INS_WRITE, kSE05x_P1_PCR, kSE05x_P2_DEFAULT}};
+    tlvHeader_t hdr      = {{kSE05x_CLA, kSE05x_INS_WRITE | ins_type, kSE05x_P1_PCR, kSE05x_P2_DEFAULT}};
     uint8_t cmdbuf[SE05X_MAX_BUF_SIZE_CMD];
     size_t cmdbufLen = 0;
     uint8_t *pCmdbuf = &cmdbuf[0];
@@ -758,6 +787,9 @@ smStatus_t Se05x_API_ReadObject(
         }
     }
 
+    if (retStatus == SM_ERR_ACCESS_DENIED_BASED_ON_POLICY)
+        LOG_W("Denied to read object %08X bases on policy.", objectID);
+
 cleanup:
     return retStatus;
 }
@@ -825,7 +857,8 @@ smStatus_t Se05x_API_ReadObject_W_Attst(pSe05xSession_t session_ctx,
         size_t rspIndex = 0;
         tlvRet          = tlvGet_u8buf(pRspbuf, &rspIndex, rspbufLen, kSE05x_TAG_1, data, pdataLen); /*  */
         if (0 != tlvRet) {
-            goto cleanup;
+            /* Keys with no read policy will not return TAG1 */
+            //goto cleanup;
         }
         tlvRet = tlvGet_u8buf(pRspbuf, &rspIndex, rspbufLen, kSE05x_TAG_2, attribute, pattributeLen); /*  */
         if (0 != tlvRet) {
@@ -1177,7 +1210,7 @@ smStatus_t Se05x_API_ReadIDList(pSe05xSession_t session_ctx,
             goto cleanup;
         }
         if ((rspIndex + 2) == rspbufLen) {
-            retStatus = (pRspbuf[rspIndex] << 8) | (pRspbuf[rspIndex + 1]);
+            retStatus = (smStatus_t)((pRspbuf[rspIndex] << 8) | (pRspbuf[rspIndex + 1]));
         }
     }
 

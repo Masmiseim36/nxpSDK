@@ -99,14 +99,14 @@
  * Constant Definitions for Status Bit Definitions
  */
 /*@{*/
-#define STATUS_BIT_MEM_ALLOC_FAILED             0
-#define STATUS_BIT_DATA_BUFFER_FULL             1
-#define STATUS_BIT_HCI_COMMAND_Q_FULL           2
-#define STATUS_BIT_TIMER_ENTITY_FULL            3
-#define STATUS_BIT_WT_ENTITY_FULL               4
-#define STATUS_ATT_INVALID_PEER_RSP             5
-#define STATUS_ATT_INVALID_PEER_PDU             6
-#define STATUS_ATT_NO_FREE_INSTANCE             7
+#define STATUS_BIT_MEM_ALLOC_FAILED             0U
+#define STATUS_BIT_DATA_BUFFER_FULL             1U
+#define STATUS_BIT_HCI_COMMAND_Q_FULL           2U
+#define STATUS_BIT_TIMER_ENTITY_FULL            3U
+#define STATUS_BIT_WT_ENTITY_FULL               4U
+#define STATUS_ATT_INVALID_PEER_RSP             5U
+#define STATUS_ATT_INVALID_PEER_PDU             6U
+#define STATUS_ATT_NO_FREE_INSTANCE             7U
 /*@}*/
 /* Stack Activity Bit Definitions */
 /**
@@ -115,13 +115,13 @@
  * Constant Definitions for Stack Activity Bit Definitions
  */
 /*@{*/
-#define STATUS_BIT_ATT_BUSY                     8
-#define STATUS_BIT_SMP_BUSY                     9
-#define STATUS_BIT_L2CAP_BUSY                   10
-#define STATUS_BIT_HCI_BUSY                     11
+#define STATUS_BIT_ATT_BUSY                     8U
+#define STATUS_BIT_SMP_BUSY                     9U
+#define STATUS_BIT_L2CAP_BUSY                   10U
+#define STATUS_BIT_HCI_BUSY                     11U
 /*@}*/
 /** Count of maximum defined bit in Status Flag */
-#define STATUS_NUM_DEFINED_BITS                 12
+#define STATUS_NUM_DEFINED_BITS                 12U
 
 /** Set/Reset Status Flag Bits */
 /**
@@ -130,8 +130,8 @@
  * Constant Definitions for Stack Activity Bit Definitions
  */
 /*@{*/
-#define STATUS_BIT_SET                          0x01
-#define STATUS_BIT_RESET                        0x00
+#define STATUS_BIT_SET                          0x01U
+#define STATUS_BIT_RESET                        0x00U
 /*@}*/
 
 /** \} */

@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2020 NXP
+ * Copyright 2019-2020 ,2021 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -45,45 +45,54 @@ extern "C" {
 void BOARD_InitBootPins(void);
 
 /* GPIO_09 (number 3), LPUART1_RXD */
-#define BOARD_LPUART1_RXD_PERIPHERAL                                     LPUART1   /*!< Device name: LPUART1 */
-#define BOARD_LPUART1_RXD_SIGNAL                                             RXD   /*!< LPUART1 signal: RXD */
+/* Routed pin properties */
+#define BOARD_LPUART1_RXD_PERIPHERAL                                     LPUART1   /*!< Peripheral name */
+#define BOARD_LPUART1_RXD_SIGNAL                                             RXD   /*!< Signal name */
 
 /* GPIO_10 (number 2), LPUART1_XD */
-#define BOARD_LPUART1_TXD_PERIPHERAL                                     LPUART1   /*!< Device name: LPUART1 */
-#define BOARD_LPUART1_TXD_SIGNAL                                             TXD   /*!< LPUART1 signal: TXD */
+/* Routed pin properties */
+#define BOARD_LPUART1_TXD_PERIPHERAL                                     LPUART1   /*!< Peripheral name */
+#define BOARD_LPUART1_TXD_SIGNAL                                             TXD   /*!< Signal name */
 
 /* GPIO_08 (number 4), SAI1_MCLK */
-#define BOARD_SAI1_MCLK_PERIPHERAL                                          SAI1   /*!< Device name: SAI1 */
-#define BOARD_SAI1_MCLK_SIGNAL                                          sai_mclk   /*!< SAI1 signal: sai_mclk */
+/* Routed pin properties */
+#define BOARD_SAI1_MCLK_PERIPHERAL                                          SAI1   /*!< Peripheral name */
+#define BOARD_SAI1_MCLK_SIGNAL                                          sai_mclk   /*!< Signal name */
 
 /* GPIO_06 (number 6), SAI1_TX_BCLK */
-#define BOARD_SAI1_TX_BCLK_PERIPHERAL                                       SAI1   /*!< Device name: SAI1 */
-#define BOARD_SAI1_TX_BCLK_SIGNAL                                    sai_tx_bclk   /*!< SAI1 signal: sai_tx_bclk */
+/* Routed pin properties */
+#define BOARD_SAI1_TX_BCLK_PERIPHERAL                                       SAI1   /*!< Peripheral name */
+#define BOARD_SAI1_TX_BCLK_SIGNAL                                    sai_tx_bclk   /*!< Signal name */
 
 /* GPIO_07 (number 5), SAI1_TX_SYNC */
-#define BOARD_SAI1_TX_SYNC_PERIPHERAL                                       SAI1   /*!< Device name: SAI1 */
-#define BOARD_SAI1_TX_SYNC_SIGNAL                                    sai_tx_sync   /*!< SAI1 signal: sai_tx_sync */
+/* Routed pin properties */
+#define BOARD_SAI1_TX_SYNC_PERIPHERAL                                       SAI1   /*!< Peripheral name */
+#define BOARD_SAI1_TX_SYNC_SIGNAL                                    sai_tx_sync   /*!< Signal name */
 
 /* GPIO_04 (number 9), SAI1_TXD0 */
-#define BOARD_SAI1_TXD0_PERIPHERAL                                          SAI1   /*!< Device name: SAI1 */
-#define BOARD_SAI1_TXD0_SIGNAL                                      sai_tx_data0   /*!< SAI1 signal: sai_tx_data0 */
+/* Routed pin properties */
+#define BOARD_SAI1_TXD0_PERIPHERAL                                          SAI1   /*!< Peripheral name */
+#define BOARD_SAI1_TXD0_SIGNAL                                      sai_tx_data0   /*!< Signal name */
 
 /* GPIO_03 (number 10), SAI1_RXD0 */
-#define BOARD_SAI1_RXD0_PERIPHERAL                                          SAI1   /*!< Device name: SAI1 */
-#define BOARD_SAI1_RXD0_SIGNAL                                      sai_rx_data0   /*!< SAI1 signal: sai_rx_data0 */
+/* Routed pin properties */
+#define BOARD_SAI1_RXD0_PERIPHERAL                                          SAI1   /*!< Peripheral name */
+#define BOARD_SAI1_RXD0_SIGNAL                                      sai_rx_data0   /*!< Signal name */
 
 /* GPIO_02 (number 11), I2C1_SCL */
-#define BOARD_I2C1_SCL_PERIPHERAL                                         LPI2C1   /*!< Device name: LPI2C1 */
-#define BOARD_I2C1_SCL_SIGNAL                                                SCL   /*!< LPI2C1 signal: SCL */
+/* Routed pin properties */
+#define BOARD_I2C1_SCL_PERIPHERAL                                         LPI2C1   /*!< Peripheral name */
+#define BOARD_I2C1_SCL_SIGNAL                                                SCL   /*!< Signal name */
 
 /* GPIO_01 (number 12), I2C1_SDA */
-#define BOARD_I2C1_SDA_PERIPHERAL                                         LPI2C1   /*!< Device name: LPI2C1 */
-#define BOARD_I2C1_SDA_SIGNAL                                                SDA   /*!< LPI2C1 signal: SDA */
+/* Routed pin properties */
+#define BOARD_I2C1_SDA_PERIPHERAL                                         LPI2C1   /*!< Peripheral name */
+#define BOARD_I2C1_SDA_SIGNAL                                                SDA   /*!< Signal name */
 
 /* GPIO_AD_09 (number 48), ADC12_4/JTAG_TDO/J55[6]/J26[4] */
-#define BOARD_ADC12_4_PERIPHERAL                                             ARM   /*!< Device name: ARM */
-#define BOARD_ADC12_4_SIGNAL                                       arm_trace_swo   /*!< ARM signal: arm_trace_swo */
-
+/* Routed pin properties */
+#define BOARD_ADC12_4_PERIPHERAL                                             ARM   /*!< Peripheral name */
+#define BOARD_ADC12_4_SIGNAL                                       arm_trace_swo   /*!< Signal name */
 
 /*!
  * @brief Configures pin routing and optionally pin electrical features.

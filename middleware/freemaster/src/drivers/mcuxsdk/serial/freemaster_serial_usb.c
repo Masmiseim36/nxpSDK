@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2007-2015 Freescale Semiconductor, Inc.
- * Copyright 2018-2020 NXP
+ * Copyright 2018-2021 NXP
  *
  * License: NXP LA_OPT_NXP_Software_License
  *
@@ -16,7 +16,7 @@
  * supplied directly or indirectly from NXP.  See the full NXP Software
  * License Agreement in license/LA_OPT_NXP_Software_License.pdf
  *
- * FreeMASTER Communication Driver - low-level driver hooking the CDC class driver in USB stack
+ * FreeMASTER Communication Driver - low-level driver for CDC class of the USB stack
  */
 
 #include "freemaster.h"
@@ -35,12 +35,14 @@
 #include "freemaster_protocol.h"
 #include "freemaster_serial.h"
 
-/* Include all those USB header files to get proper size of the USB buffer */
+/* Include USB stack header files */
 #include "usb_device_config.h"
 #include "usb.h"
 #include "usb_device.h"
 #include "usb_device_class.h"
-#include "freemaster_usb_device_descriptor.h"
+#include "usb_device_descriptor.h"
+
+/* FreeMASTER-specific USB-CDC constants and init function */
 #include "freemaster_usb.h"
 
 /******************************************************************************
@@ -241,9 +243,12 @@ static FMSTR_BOOL _FMSTR_SerialUsbIsTransmitRegEmpty(void)
 
 static FMSTR_BOOL _FMSTR_SerialUsbIsReceiveRegFull(void)
 {
-    if (fmstr_usbCtx.rxEnabled != FMSTR_FALSE && _FMSTR_RingBuffHasData(&fmstr_usbCtx.rxQueue) != FMSTR_FALSE)
+    if (fmstr_usbCtx.rxEnabled != FMSTR_FALSE)
     {
-        return FMSTR_TRUE;
+        if(_FMSTR_RingBuffHasData(&fmstr_usbCtx.rxQueue) != FMSTR_FALSE)
+        {
+            return FMSTR_TRUE;
+        }
     }
 
     return FMSTR_FALSE;

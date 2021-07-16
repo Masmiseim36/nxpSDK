@@ -37,7 +37,7 @@ static usb_device_composite_struct_t *g_device_composite;
 /* The hid class callback */
 usb_status_t usb_device_hid_generic_callback(class_handle_t handle, uint32_t event, void *param)
 {
-    usb_status_t error = kStatus_USB_Error;
+    usb_status_t error = kStatus_USB_InvalidRequest;
 
     usb_device_hid_report_struct_t *hid_report_param;
 
@@ -80,15 +80,19 @@ usb_status_t usb_device_hid_generic_callback(class_handle_t handle, uint32_t eve
         case kUSB_DeviceHidEventGetReport:
         case kUSB_DeviceHidEventSetReport:
         case kUSB_DeviceHidEventRequestReportBuffer:
-            error = kStatus_USB_InvalidRequest;
             break;
         case kUSB_DeviceHidEventGetIdle:
         case kUSB_DeviceHidEventGetProtocol:
         case kUSB_DeviceHidEventSetIdle:
             sync_init(&g_device_composite->hid_generic.hid_packet.receiveSync, false);
             sync_init(&g_device_composite->hid_generic.hid_packet.sendSync, false);
+            error = kStatus_USB_Success;
             break;
         case kUSB_DeviceHidEventSetProtocol:
+            error = kStatus_USB_Success;
+            break;
+        default:
+            /* no action, return kStatus_USB_InvalidRequest */
             break;
     }
 

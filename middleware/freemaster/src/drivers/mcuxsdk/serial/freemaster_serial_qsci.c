@@ -186,7 +186,12 @@ static void _FMSTR_QSCIEnableReceiveInterrupt(FMSTR_BOOL enable)
     {
         QSCI_DisableInterrupts(
             fmstr_serialBaseAddr,
-            (uint32_t)(kQSCI_RxFullInterruptEnable | kQSCI_RxErrorInterruptEnable | kQSCI_RxIdleLineInterruptEnable));
+            (uint32_t)(kQSCI_RxFullInterruptEnable 
+            		| kQSCI_RxErrorInterruptEnable 
+#if defined(FSL_FEATURE_QSCI_HAS_RX_IDLE_INTERRUPT) && FSL_FEATURE_QSCI_HAS_RX_IDLE_INTERRUPT
+            		| kQSCI_RxIdleLineInterruptEnable
+#endif
+            		));
     }
 }
 

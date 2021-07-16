@@ -27,7 +27,7 @@
 #define FRAME_SHIFT ((int16_t)(SAMP_FREQ * 0.001 * FRAME_SHIFT_MS))
 #define NUM_FRAMES 49
 #define NUM_MFCC_COEFFS 10
-#define MFCC_BUFFER_SIZE (NUM_FRAMES*NUM_MFCC_COEFFS)
+#define MFCC_BUFFER_SIZE (NUM_FRAMES * NUM_MFCC_COEFFS)
 #define FRAME_LEN_MS 40
 #define FRAME_LEN ((int16_t)(SAMP_FREQ * 0.001 * FRAME_LEN_MS))
 
@@ -37,7 +37,23 @@ public:
   KWS_MFCC(const int16_t* audio_data_buffer);
   KWS_MFCC(int record_win);
   ~KWS_MFCC();
+
+  /*!
+ * @brief Extracts the MFCC features from the audio_buffer based on the recording_win size
+ * and moves the mfcc_buffer_head accordingly
+ */
   void extract_features();
+
+  /*!
+ * @brief Loads the data from the MFCC buffer, quantizes them and stores them into the inference buffer.
+ * 
+ * The process starts at the buffer head, traverses the end of the buffer and continues
+ * from the beginning till the mfcc_buffer_head is reached again (circular buffer processing).
+ *
+ * @param out_data output buffer pointer
+ */
+  void store_features(uint8_t* out_data);
+
   const int16_t* audio_buffer;
   float *mfcc_buffer;
   int num_frames;
@@ -52,6 +68,7 @@ protected:
   MFCC *mfcc;
   int mfcc_buffer_size;
   int recording_win;
+  int mfcc_buffer_head;
 };
 
 #endif

@@ -50,7 +50,7 @@
 
 
 /* PAN Network Interface Name Length */
-#define PAN_IFNAME_SIZE                         8
+#define PAN_IFNAME_SIZE                         8U
 
 
 /** PAN Profile Service Bitmap Values */
@@ -196,35 +196,34 @@
 #define PAN_POLICY_DEFAULTS                     BNEP_POLICY_DEFAULTS
 
 /** \} */
+/** \} */
 /* --------------------------------------------- Structures/Data Types */
 
 /**
- * \defgroup pan_structures Structures
+ * \defgroup pan_appl_callback Application Callback
  * \{
- * Describes Structures defined by the module.
+ * Describes Application Callback defined by the module.
  */
 
 /* PAN Event Indication Callback */
 typedef API_RESULT (* PAN_EVENT_IND_CB)
                    (
-                       UCHAR      /* Event Identifier */,
-                       UCHAR *    /* Remote BD_ADDR */,
-                       UINT16     /* Result/Response */,
-                       void *     /* Event Data */,
-                       UINT16     /* Event Data Length */
+                       UCHAR      event_type,    /* Event Identifier */
+                       UCHAR *    bd_addr,       /* Remote BD_ADDR */
+                       UINT16     event_result,  /* Result/Response */
+                       void *     event_data,    /* Event Data */
+                       UINT16     event_datalen  /* Event Data Length */
                    );
-
 
 /* PAN Data Read Indication Callback */
 typedef API_RESULT (* PAN_DATA_IND_CB)
                    (
-                       UCHAR      /* Local Service */,
-                       UCHAR *    /* Remote BD_ADDR */,
-                       UCHAR *    /* Ethernet Header (14 Octets) */,
-                       UCHAR *    /* Ethernet Payload */,
-                       UINT16     /* Ethernet Payload Length */
+                       UCHAR      local_service,   /* Local Service */
+                       UCHAR *    bd_addr,         /* Remote BD_ADDR */
+                       UCHAR *    eth_header,      /* Ethernet Header (14 Octets) */
+                       UCHAR *    eth_payload,     /* Ethernet Payload */
+                       UINT16     eth_payload_len  /* Ethernet Payload Length */
                    );
-
 
 /** PAN Callbacks for Registration */
 typedef struct
@@ -236,7 +235,16 @@ typedef struct
     PAN_DATA_IND_CB     pan_read_ind;
 
 } PAN_CALLBACKS;
-
+/** \} */
+/**
+ * \addtogroup pan_defines Defines
+ * \{
+ */
+/**
+ * \defgroup pan_structures Structures
+ * \{
+ * Describes Structures defined by the module.
+ */
 
 /** PAN Filter - Network Type */
 typedef BNEP_FILTER_NW_TYPE     PAN_FILTER_NW_TYPE;
@@ -256,11 +264,17 @@ typedef BNEP_SETUP              PAN_SETUP;
 /** BNEP Extension Headers */
 typedef BNEP_EXT_HEADER         PAN_EXT_HEADER;
 
-
+/** \} */
+/** \} */
 /* --------------------------------------------- Unions */
 
 
 /* --------------------------------------------- Macros */
+/**
+ * \defgroup pan_utility_macros Utility Macros
+ * \{
+ * Describes Utility Macros defined by the module.
+ */
 /**
  *  To convert a Bluetooth Device Address (BD_ADDR, as represented within
  *  EtherMind Protocol Stack) to Ethernet Address, and vice-versa
@@ -275,9 +289,8 @@ typedef BNEP_EXT_HEADER         PAN_EXT_HEADER;
  *  BT_COPY_BD_ADDR macro can be used.
  */
 #define PAN_COPY_ETH_ADDR                       BNEP_COPY_ETH_ADDR
+/** \} */
 
-/** \} */
-/** \} */
 /* --------------------------------------------- API Declarations */
 #ifdef __cplusplus
 extern "C" {
@@ -287,7 +300,6 @@ extern "C" {
  * \{
  * Describes API definitions defined by the module.
  */
-/* PAN Profile Initialization */
 /**
  *  \brief To initialize PAN Profile
  *
@@ -305,9 +317,8 @@ extern "C" {
  */
 API_RESULT BT_pan_init ( void );
 
-/* PAN Profile Shutdown */
 /**
- *  \brief To initialize PAN Profile
+ *  \brief To shutdown PAN Profile
  *
  *  \par Description:
  *       This API shuts down the PAN profile.
@@ -324,7 +335,6 @@ API_RESULT BT_pan_init ( void );
  */
 API_RESULT BT_pan_shutdown ( void );
 
-/* Registration of PAN Callbacks */
 /**
  *  \brief To register PAN Profile Callbacks
  *
@@ -345,7 +355,7 @@ API_RESULT BT_pan_shutdown ( void );
  */
 API_RESULT BT_pan_register
            (
-               PAN_CALLBACKS *    /* PAN Callbacks */
+               PAN_CALLBACKS  * callbacks
            );
 
 /** Start Accepting Connection for PAN Services */
@@ -357,7 +367,6 @@ API_RESULT BT_pan_register
 /** To Setup a BNEP Connection */
 #define BT_pan_setup            BT_bnep_setup
 
-/** To Respond to PAN_SETUP_IND for 'Setup' Request from Peer */
 /**
  *  \brief To respond a Setup Connection request for a PAN Profile connection
  *
@@ -390,8 +399,8 @@ API_RESULT BT_pan_register
  */
 API_RESULT BT_pan_setup_rsp
            (
-               UCHAR *    /* Remote BD_ADDR */,
-               UINT16     /* Result/Response */
+               UCHAR   * bd_addr,
+               UINT16    response
            );
 
 /** To Close a PAN (BNEP/L2CAP) Connection to a BD_ADDR */
@@ -400,7 +409,6 @@ API_RESULT BT_pan_setup_rsp
 /** To Set a Filter, Local or Remote, for a PAN Connection */
 #define BT_pan_filter           BT_bnep_filter
 
-/** To Write Data for Transmission with Local Service as PANU */
 /**
  *  \brief To transmit Ethernet packets over a PAN Profile connection, when the
  *         local service is PANU
@@ -418,7 +426,6 @@ API_RESULT BT_pan_setup_rsp
  *       of the Ethernet header BNEP decides what BNEP Packet Type to use for
  *       transmitting the Ethernet Payload over the BNEP connection to remote
  *       Bluetooth device.
- *
  *
  *  \param [in] bd_addr
  *         The Bluetooth Device Address (BD_ADDR) of the remote Bluetooth device
@@ -459,7 +466,6 @@ API_RESULT BT_pan_setup_rsp
  *        (such as, abrupt disconnection etc.), the PAN_WRITE_CNF is called to
  *        notify the application of such errors. The PAN_WRITE_CNF is not called
  *        every time when the transmission is successful.
- *
  */
 API_RESULT BT_pan_write_panu
            (
@@ -471,7 +477,6 @@ API_RESULT BT_pan_write_panu
                UINT16              eth_payload_len
            );
 
-/** To Write Data for Transmission with Local Service as NAP/GN */
 /**
  *  \brief To transmit Ethernet packets over a PAN Profile connection, when the
  *         local service is NAP/GN
@@ -525,14 +530,13 @@ API_RESULT BT_pan_write_panu
  *        (such as, abrupt disconnection etc.), the PAN_WRITE_CNF is called to
  *        notify the application of such errors. The PAN_WRITE_CNF is not called
  *        every time when the transmission is successful.
- *
  */
 API_RESULT BT_pan_write_nap_gn
            (
-               UCHAR               /* Local PAN Service */,
-               UCHAR *             /* Ethernet Header (14 Octets) */,
-               UCHAR *             /* Ethernet Payload */,
-               UINT16              /* Ethernet Payload Length */
+               UCHAR      local_service,
+               UCHAR *    eth_header,
+               UCHAR *    eth_payload,
+               UINT16     eth_payload_len
            );
 
 /**
@@ -560,5 +564,4 @@ API_RESULT BT_pan_write_nap_gn
 /** \} */
 /** \} */
 #endif /* _H_BT_PAN_API_ */
-
 

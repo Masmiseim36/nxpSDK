@@ -89,11 +89,11 @@ void MCS_ACIMOpenLoopScalarCtrlA2(mcs_acim_foc_a1_t *psFocACIM, mcs_scalar_a1_t 
     /* limit angle to -pi to pi range */
     if (psScalarACIM->fltPosEl > FLOAT_PI)
     {
-        psScalarACIM->fltPosEl -= ((float_t)2 * FLOAT_PI);
+        psScalarACIM->fltPosEl -= (2.0F * FLOAT_PI);
     }
     if (psScalarACIM->fltPosEl < -FLOAT_PI)
     {
-        psScalarACIM->fltPosEl += (2 * FLOAT_PI);
+        psScalarACIM->fltPosEl += (2.0F * FLOAT_PI);
     }
 
     /* limit required voltage */
@@ -369,8 +369,8 @@ static void MCS_DTComp(GMCLIB_2COOR_ALBE_T_FLT *sUAlBeDTComp, GMCLIB_3COOR_T_FLT
     fltUerrMax = *pfltUDtComp;
 
     /* compensate phase A */
-    i16CurrSign = (sIABC->fltA > DTCOMP_I_RANGE) - (sIABC->fltA < -DTCOMP_I_RANGE);
-    if (!i16CurrSign)
+    i16CurrSign = (int16_t)(sIABC->fltA > DTCOMP_I_RANGE) - (int16_t)(sIABC->fltA < -DTCOMP_I_RANGE);
+    if (!(bool_t)i16CurrSign)
     {
         sUABCErr.fltA = GFLIB_Lut1D_FLT(sIABC->fltA, pfltUDtComp, &sLUTUDtComp);
     }
@@ -380,8 +380,8 @@ static void MCS_DTComp(GMCLIB_2COOR_ALBE_T_FLT *sUAlBeDTComp, GMCLIB_3COOR_T_FLT
     }
 
     /* compensate phase B */
-    i16CurrSign = (sIABC->fltB > DTCOMP_I_RANGE) - (sIABC->fltB < -DTCOMP_I_RANGE);
-    if (!i16CurrSign)
+    i16CurrSign = (int16_t)(sIABC->fltB > DTCOMP_I_RANGE) - (int16_t)(sIABC->fltB < -DTCOMP_I_RANGE);
+    if (!(bool_t)i16CurrSign)
     {
         sUABCErr.fltB = GFLIB_Lut1D_FLT(sIABC->fltB, pfltUDtComp, &sLUTUDtComp);
     }
@@ -391,8 +391,8 @@ static void MCS_DTComp(GMCLIB_2COOR_ALBE_T_FLT *sUAlBeDTComp, GMCLIB_3COOR_T_FLT
     }
 
     /* compensate phase C */
-    i16CurrSign = (sIABC->fltC > DTCOMP_I_RANGE) - (sIABC->fltC < -DTCOMP_I_RANGE);
-    if (!i16CurrSign)
+    i16CurrSign = (int16_t)(sIABC->fltC > DTCOMP_I_RANGE) - (int16_t)(sIABC->fltC < -DTCOMP_I_RANGE);
+    if (!(bool_t)i16CurrSign)
     {
         sUABCErr.fltC = GFLIB_Lut1D_FLT(sIABC->fltC, pfltUDtComp, &sLUTUDtComp);
     }

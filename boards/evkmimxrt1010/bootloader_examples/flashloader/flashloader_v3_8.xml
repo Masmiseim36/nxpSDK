@@ -17,9 +17,7 @@
     <definition extID="platform.drivers.common.MIMXRT1011"/>
     <definition extID="platform.drivers.clock.MIMXRT1011"/>
     <definition extID="device.MIMXRT1011_CMSIS.MIMXRT1011"/>
-    <definition extID="platform.Include_core_cm7.MIMXRT1011"/>
-    <definition extID="platform.Include_common.MIMXRT1011"/>
-    <definition extID="platform.Include_dsp.MIMXRT1011"/>
+    <definition extID="CMSIS_Include_core_cm.MIMXRT1011"/>
     <definition extID="component.lists.MIMXRT1011"/>
     <definition extID="middleware.usb.phy.MIMXRT1011"/>
     <definition extID="middleware.usb.common_header.MIMXRT1011"/>
@@ -30,7 +28,7 @@
     <definition extID="armgcc"/>
     <definition extID="com.nxp.mcuxpresso"/>
   </externalDefinitions>
-  <example id="evkmimxrt1010_flashloader" name="flashloader" dependency="middleware.mcu-boot.MIMXRT1011_startup.MIMXRT1011 middleware.mcu-boot.bootsources.MIMXRT1011 middleware.mcu-boot.MIMXRT1011_drivers.MIMXRT1011 middleware.mcu-boot.MIMXRT1011_sources.MIMXRT1011 middleware.baremetal.MIMXRT1011 middleware.mcu-boot.src_bm_usb_hid.MIMXRT1011 middleware.usb.device.controller.driver.MIMXRT1011 component.osa.MIMXRT1011 middleware.usb.device_controller_ehci.MIMXRT1011 middleware.mcu-boot.CMSIS_cm7_headers.MIMXRT1011 middleware.mcu-boot.src_startup.MIMXRT1011 middleware.mcu-boot.drv_microseconds_pit.MIMXRT1011 middleware.mcu-boot.drv_ocotp.MIMXRT1011 platform.drivers.common.MIMXRT1011 platform.drivers.clock.MIMXRT1011 device.MIMXRT1011_CMSIS.MIMXRT1011 platform.Include_core_cm7.MIMXRT1011 platform.Include_common.MIMXRT1011 platform.Include_dsp.MIMXRT1011 component.lists.MIMXRT1011 middleware.usb.phy.MIMXRT1011 middleware.usb.common_header.MIMXRT1011 middleware.usb.device.common_header.MIMXRT1011" category="bootloader_examples">
+  <example id="evkmimxrt1010_flashloader" name="flashloader" dependency="middleware.mcu-boot.MIMXRT1011_startup.MIMXRT1011 middleware.mcu-boot.bootsources.MIMXRT1011 middleware.mcu-boot.MIMXRT1011_drivers.MIMXRT1011 middleware.mcu-boot.MIMXRT1011_sources.MIMXRT1011 middleware.baremetal.MIMXRT1011 middleware.mcu-boot.src_bm_usb_hid.MIMXRT1011 middleware.usb.device.controller.driver.MIMXRT1011 component.osa.MIMXRT1011 middleware.usb.device_controller_ehci.MIMXRT1011 middleware.mcu-boot.CMSIS_cm7_headers.MIMXRT1011 middleware.mcu-boot.src_startup.MIMXRT1011 middleware.mcu-boot.drv_microseconds_pit.MIMXRT1011 middleware.mcu-boot.drv_ocotp.MIMXRT1011 platform.drivers.common.MIMXRT1011 platform.drivers.clock.MIMXRT1011 device.MIMXRT1011_CMSIS.MIMXRT1011 CMSIS_Include_core_cm.MIMXRT1011 component.lists.MIMXRT1011 middleware.usb.phy.MIMXRT1011 middleware.usb.common_header.MIMXRT1011 middleware.usb.device.common_header.MIMXRT1011" category="bootloader_examples">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>

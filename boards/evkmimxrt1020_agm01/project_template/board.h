@@ -165,22 +165,6 @@
 
 #define BOARD_SD_HOST_SUPPORT_SDR104_FREQ (100000000U)
 #define BOARD_SD_HOST_SUPPORT_HS200_FREQ  (180000000U)
-/*! @brief The WIFI-QCA shield pin. */
-#define BOARD_INITGT202SHIELD_PWRON_GPIO      GPIO1               /*!< GPIO device name: GPIO */
-#define BOARD_INITGT202SHIELD_PWRON_PORT      1U                  /*!< PORT device index: 1 */
-#define BOARD_INITGT202SHIELD_PWRON_GPIO_PIN  23U                 /*!< PIO4 pin index: 23 */
-#define BOARD_INITGT202SHIELD_PWRON_PIN_NAME  GPIO1_23            /*!< Pin name */
-#define BOARD_INITGT202SHIELD_PWRON_LABEL     "PWRON"             /*!< Label */
-#define BOARD_INITGT202SHIELD_PWRON_NAME      "PWRON"             /*!< Identifier name */
-#define BOARD_INITGT202SHIELD_PWRON_DIRECTION kGPIO_DigitalOutput /*!< Direction */
-
-#define BOARD_INITGT202SHIELD_IRQ_GPIO      GPIO1              /*!< GPIO device name: GPIO */
-#define BOARD_INITGT202SHIELD_IRQ_PORT      1U                 /*!< PORT device index: 1 */
-#define BOARD_INITGT202SHIELD_IRQ_GPIO_PIN  22U                /*!< PIO1 pin index: 22 */
-#define BOARD_INITGT202SHIELD_IRQ_PIN_NAME  GPIO1_22           /*!< Pin name */
-#define BOARD_INITGT202SHIELD_IRQ_LABEL     "IRQ"              /*!< Label */
-#define BOARD_INITGT202SHIELD_IRQ_NAME      "IRQ"              /*!< Identifier name */
-#define BOARD_INITGT202SHIELD_IRQ_DIRECTION kGPIO_DigitalInput /*!< Direction */
 
 #if defined(__cplusplus)
 extern "C" {

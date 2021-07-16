@@ -85,24 +85,23 @@ static uint8_t g_UsbDeviceEhciStateStatus[USB_DEVICE_CONFIG_EHCI] = {0};
  * Code
  ******************************************************************************/
 /*!
- * @brief EHCI NC get USB NC bass address.
+ * @brief EHCI get USB base address.
  *
- * This function is used to get USB NC bass address.
+ * This function is used to get USB base address according to EHCI controller ID.
  *
  * @param[in] controllerId    EHCI controller ID; See the #usb_controller_index_t.
+ * @param[in] baseArray       USB base address array.
+ * @param[in] baseCount       The number of elements of baseArray.
  *
- * @retval USB NC bass address.
+ * @retval USB base address.
  */
-#if (defined(USB_DEVICE_CONFIG_LOW_POWER_MODE) && (USB_DEVICE_CONFIG_LOW_POWER_MODE > 0U))
-#if (defined(FSL_FEATURE_SOC_USBNC_COUNT) && (FSL_FEATURE_SOC_USBNC_COUNT > 0U))
-static void *USB_EhciNCGetBase(uint8_t controllerId)
+#if ((defined(USB_DEVICE_CONFIG_LOW_POWER_MODE) && (USB_DEVICE_CONFIG_LOW_POWER_MODE > 0U)) && \
+     (defined(FSL_FEATURE_SOC_USBNC_COUNT) && (FSL_FEATURE_SOC_USBNC_COUNT > 0U))) ||          \
+    ((defined(USB_DEVICE_CONFIG_CHARGER_DETECT) && (USB_DEVICE_CONFIG_CHARGER_DETECT > 0U)) && \
+     (defined(FSL_FEATURE_SOC_USBHSDCD_COUNT) && (FSL_FEATURE_SOC_USBHSDCD_COUNT > 0U)))
+static void *USB_EhciGetBase(uint8_t controllerId, uint32_t *baseArray, uint8_t baseCount)
 {
-    void *usbNCBase = NULL;
-#if ((defined FSL_FEATURE_SOC_USBNC_COUNT) && (FSL_FEATURE_SOC_USBNC_COUNT > 0U))
-    uint32_t instance;
-    uint32_t newinstance       = 0;
-    uint32_t usbnc_base_temp[] = USBNC_BASE_ADDRS;
-    uint32_t usbnc_base[]      = USBNC_BASE_ADDRS;
+    uint8_t instance;
 
     if (controllerId < (uint8_t)kUSB_ControllerEhci0)
     {
@@ -111,23 +110,24 @@ static void *USB_EhciNCGetBase(uint8_t controllerId)
 
     controllerId = controllerId - (uint8_t)kUSB_ControllerEhci0;
 
-    for (instance = 0; instance < (sizeof(usbnc_base_temp) / sizeof(usbnc_base_temp[0])); instance++)
+    for (instance = 0; instance < baseCount; instance++)
     {
-        if (usbnc_base_temp[instance] != 0U)
+        if (0U == baseArray[instance])
         {
-            usbnc_base[newinstance++] = usbnc_base_temp[instance];
+            controllerId++;
+        }
+        else
+        {
+            break;
         }
     }
-    if (controllerId > newinstance)
+    if (controllerId >= baseCount)
     {
         return NULL;
     }
 
-    usbNCBase = (void *)(uint8_t *)usbnc_base[controllerId];
-#endif
-    return usbNCBase;
+    return (void *)(uint8_t *)baseArray[controllerId];
 }
-#endif
 #endif
 
 /*!
@@ -350,34 +350,20 @@ static usb_status_t USB_DeviceEhciEndpointStall(usb_device_ehci_state_struct_t *
     uint8_t endpoint = ep & USB_ENDPOINT_NUMBER_MASK;
     uint8_t direction =
         (ep & USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_MASK) >> USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_SHIFT;
-    uint8_t index = ((uint8_t)((uint32_t)endpoint << 1U)) | direction;
 
-    /* Cancel the transfer of the endpoint */
-    (void)USB_DeviceEhciCancel(ehciState, ep);
-
-    /* Set endpoint stall flag. */
-    if (0U != ehciState->qh[index].capabilttiesCharacteristicsUnion.capabilttiesCharacteristicsBitmap.ios)
+    if (0U == endpoint)
     {
-        if (0U == endpoint)
-        {
-            ehciState->registerBase->EPCR0 |= (USBHS_EPCR_TXS_MASK | USBHS_EPCR_RXS_MASK);
-        }
-        else
-        {
-            ehciState->registerBase->EPCR[endpoint - 1U] |= (USBHS_EPCR_TXS_MASK | USBHS_EPCR_RXS_MASK);
-        }
+        /* Cancel the transfer of the endpoint */
+        (void)USB_DeviceEhciCancel(ehciState, 0x00);
+        (void)USB_DeviceEhciCancel(ehciState, 0x80);
+        ehciState->registerBase->EPCR0 |= (USBHS_EPCR_TXS_MASK | USBHS_EPCR_RXS_MASK);
     }
     else
     {
-        if (0U == endpoint)
-        {
-            ehciState->registerBase->EPCR0 |= ((0U != direction) ? USBHS_EPCR_TXS_MASK : USBHS_EPCR_RXS_MASK);
-        }
-        else
-        {
-            ehciState->registerBase->EPCR[endpoint - 1U] |=
-                ((0U != direction) ? USBHS_EPCR_TXS_MASK : USBHS_EPCR_RXS_MASK);
-        }
+        /* Cancel the transfer of the endpoint */
+        (void)USB_DeviceEhciCancel(ehciState, ep);
+
+        ehciState->registerBase->EPCR[endpoint - 1U] |= ((0U != direction) ? USBHS_EPCR_TXS_MASK : USBHS_EPCR_RXS_MASK);
     }
 
     return kStatus_USB_Success;
@@ -1195,6 +1181,11 @@ usb_status_t USB_DeviceEhciInit(uint8_t controllerId,
 {
     usb_device_ehci_state_struct_t *ehciState = NULL;
     uint32_t ehci_base[]                      = USBHS_BASE_ADDRS;
+#if (defined(USB_DEVICE_CONFIG_LOW_POWER_MODE) && (USB_DEVICE_CONFIG_LOW_POWER_MODE > 0U))
+#if (defined(FSL_FEATURE_SOC_USBNC_COUNT) && (FSL_FEATURE_SOC_USBNC_COUNT > 0U))
+    uint32_t usbnc_base[] = USBNC_BASE_ADDRS;
+#endif
+#endif
     uint8_t intanceIndex;
     void *temp;
 #if (defined(USB_DEVICE_CONFIG_CHARGER_DETECT) && (USB_DEVICE_CONFIG_CHARGER_DETECT > 0U)) && \
@@ -1240,7 +1231,8 @@ usb_status_t USB_DeviceEhciInit(uint8_t controllerId,
     ehciState->registerPhyBase = (USBPHY_Type *)USB_EhciPhyGetBase(controllerId);
 
 #if (defined(FSL_FEATURE_SOC_USBNC_COUNT) && (FSL_FEATURE_SOC_USBNC_COUNT > 0U))
-    ehciState->registerNcBase = (USBNC_Type *)USB_EhciNCGetBase(controllerId);
+    ehciState->registerNcBase =
+        (USBNC_Type *)USB_EhciGetBase(controllerId, &usbnc_base[0], sizeof(usbnc_base) / sizeof(uint32_t));
 #endif
 
 #endif
@@ -1269,7 +1261,7 @@ usb_status_t USB_DeviceEhciInit(uint8_t controllerId,
     *ehciHandle = (usb_device_controller_handle)ehciState;
 #if (defined(USB_DEVICE_CONFIG_CHARGER_DETECT) && (USB_DEVICE_CONFIG_CHARGER_DETECT > 0U)) && \
     (defined(FSL_FEATURE_SOC_USBHSDCD_COUNT) && (FSL_FEATURE_SOC_USBHSDCD_COUNT > 0U))
-    base                            = (USBHSDCD_Type *)hsdcd_base[controllerId - (uint8_t)kUSB_ControllerEhci0];
+    base = (USBHSDCD_Type *)USB_EhciGetBase(controllerId, &hsdcd_base[0], sizeof(hsdcd_base) / sizeof(uint32_t));
     dcdParamConfig.dcdCallback      = USB_DeviceEhciIsrHSDCDCallback;
     dcdParamConfig.dcdCallbackParam = (void *)ehciState;
     dcdError                        = USB_HSDCD_Init(base, &dcdParamConfig, &ehciState->dcdHandle);
@@ -1574,10 +1566,13 @@ usb_status_t USB_DeviceEhciControl(usb_device_controller_handle ehciHandle, usb_
 #endif
     uint16_t *temp16;
     uint8_t *temp8;
-
 #if ((defined(USB_DEVICE_CONFIG_REMOTE_WAKEUP)) && (USB_DEVICE_CONFIG_REMOTE_WAKEUP > 0U))
     usb_device_struct_t *deviceHandle;
+#endif
+#if (defined(USB_DEVICE_CONFIG_LOW_POWER_MODE) && (USB_DEVICE_CONFIG_LOW_POWER_MODE > 0U))
+#if ((defined(USB_DEVICE_CONFIG_REMOTE_WAKEUP)) && (USB_DEVICE_CONFIG_REMOTE_WAKEUP > 0U))
     uint64_t startTick;
+#endif
 #endif
 
     if (NULL == ehciHandle)

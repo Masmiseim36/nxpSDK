@@ -2,7 +2,16 @@
 @page middleware_log Middleware Change Log
 
 @section USB USB stack for MCUXpresso SDK  
-  The current version of USB stack is 2.7.0.
+  The current version of USB stack is 2.8.0.
+  - 2.8.0
+    - Improvement:
+      - Fix the USB device stack vulnerability issues.
+      - Update the audio PLL and FRO adjustment codes for audio examples in RTxxx, LPC54xxx and LPC55xxx.
+      - Improve the USB PD AMS collision avoidance.
+      - Improve IP3511 controller driver's dedicated ram allocation.
+      - Change the USB_DATA_ALIGN_SIZE to 4 because the controller driver uses the dedicated RAM to do memcpy.
+    - New features:
+      - Enable USB host audio recorder demo for mutilple boards.
   - 2.7.0
     - Improvement:
       - Use new feeback solution and low latency playback for usb device speaker demo and unified demos. Add underflow and overflow protection.

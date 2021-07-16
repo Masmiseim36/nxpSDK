@@ -1,45 +1,67 @@
 Overview
 ========
-This sample showcases the usability of AZRTOS API to connect to Azure IoT and start interacting with Azure IoT services like IoTHub.
-All the output of sample is redirect to stdout. To start the sample, the user needs to provide user configuration in sample_config.h.
-The device will periodically report the temperature value to IoTHub.
+This example showcases the usability of Azure RTOS API to connect to Azure IoT Hub and start interacting with Azure IoT services.
+When the example is running, it will periodically report the temperature value to the IoT Hub.
 
 Prerequisites
-1. Register an Azure account. (https://azure.microsoft.com/)
-   Note that the name used in the manual can be changed accordingly.
+Before running the example, need to set up a device in Azure IoT Hub, and write the device parameters in the example code.
 
-2. Install Azure CLI. Refer to https://docs.microsoft.com/en-us/cli/azure/install-azure-cli?view=azure-cli-latest
+Here, we demonstrate how to setup a device in Azure IoT Hub. If you are not familiar with Azure CLI, please refer to
+the document for the details. (https://docs.microsoft.com/en-us/azure/iot-hub/)
 
-3. Create an IoT hub called "imxrthub" in the resource group "imxrthub-test".
-   > az login
-   > az extension add --name azure-iot
-   > az iot hub create --resource-group imxrthub-test --name imxrthub
+Note that these steps assume you use the Azure IoT Hub for the first time.
 
-3. Register a device with the device ID "MyCDevice" in the IoT hub "imxrthub".
-   > az extension add --name azure-cli-iot-ext
-   > az iot hub device-identity create --hub-name imxrthub --device-id MyCDevice
+1. Register an Azure account.
 
-4. Retrieve your Device Connection String using the Azure CLI.
-   Get these parameters from the connectionString:
-     HostName (HOST_NAME): imxrthub.azure-devices.net
-     DeviceId (DEVICE_ID): MyCDevice
-   > az iot hub device-identity show-connection-string --device-id MyCDevice --hub-name imxrthub
+2. Install Azure CLI locally, or use Azure CLoud Shell.
 
-5. Make a note of the device connection string, which looks like:
-   HostName=imxrthub.azure-devices.net;DeviceId=MyCDevice;SharedAccessKey={YourSharedAccessKey}
+3. Before using any CLI commands locally, you need to sign in:
+     > az login
 
-6. Write the above device parameters into the source code, rtos/azure-rtos/boards/examples/azure_iot_embedded_sdk/sample_config.h.
-   Fill these three macros, HOST_NAME, DEVICE_ID, DEVICE_SYMMETRIC_KEY(={YourSharedAccessKey}).
+4. Add the Microsoft Azure IoT Extension for Azure CLI.
+     > az extension add --name azure-iot
 
-7. Build the code and write it into the on-board Flash.
+5: Create a new resource group which is a logical container into which Azure IoT Hub are deployed and managed.
+   {MyResourceGroupName}: Name of the new resource group
+   {MyResourceLocation}: Location, for example, westus. Select a location from: az account list-locations -o table.
+     > az group create --name {MyResourceGroupName} --location {MyResourceLocation}
+
+6: Create a new IoT Hub in the resource group.
+   {MyResourceGroupName}: The name of the resource group you just created.
+   {MyIoTHubName}: Name of the new IoT Hub. This name must be globally unique. If failed, please try another name.
+     > az iot hub create --resource-group {MyResourceGroupName} --name {MyIoTHubName}
+
+7: Create a new device identity in the Hub IoT.
+   {MyIoTHubName}: Name of the IoT Hub just created
+   {MyDeviceId}: ID of the new device
+     > az iot hub device-identity create --hub-name {MyIoTHubName} --device-id {MyDeviceId}
+
+8: Get the primary key of the device.
+     > az iot hub device-identity show --hub-name {MyIoTHubName} --device-id {MyDeviceId}
+   Find the primaryKey in the command result. It's the primary symmetric key, {MySymmetricKey}. Like:
+     "authentication": {
+         "symmetricKey": {
+             "primaryKey": {MySymmetricKey},
+
+9. Write the above device parameters into the source code, sample_config.h, in your project. Fill these three macros,
+   HOST_NAME, DEVICE_ID, DEVICE_SAS.
+     HOST_NAME: {MyIoTHubName}.azure-devices.net
+     DEVICE_ID: {MyDeviceId}
+     DEVICE_SYMMETRIC_KEY: {MySymmetricKey}
+   For example:
+     #define HOST_NAME "test-hub.azure-devices.net"
+     #define DEVICE_ID "test-dev"
+     #define DEVICE_SYMMETRIC_KEY "d/UdrshSDtn+WtcCHlaZyDcqIlUj5FpN8xqewCp2XYk="
+
+10. Build the code and write it into the on-board Flash.
 
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.9
-- Keil MDK  5.33
-- GCC ARM Embedded  9.3.1
-- MCUXpresso  11.3.0
+- IAR embedded Workbench  9.10.2
+- Keil MDK  5.34
+- GCC ARM Embedded  10.2.1
+- MCUXpresso  11.4.0
 
 Hardware requirements
 =====================
@@ -67,7 +89,7 @@ Prepare the Demo
 
 Running the demo
 ================
-1. When the demo is running, the serial port will output:
+When the demo is running, the serial port will output, for example:
 
 Start the azure_iot_embedded_sdk example...
 DHCP In Progress...
@@ -83,7 +105,7 @@ SNTP Time Sync successfully.
 IoTHub Host Name: imxrthub.azure-devices.net; Device ID: MyCDevice.
 Connected to IoTHub.
 Telemetry message send: {"Message ID":0}.
-Receive twin properties :{"desired":{"GridPowerLimit2":31,"TariffCost":1.28,"$version":62},"reported":{"GridPowerLimit2":33,"TariffCost":2.25,"sample_report":"OK","$version":98}}
+Receive twin properties: {"desired": {"$version":1} ,"reported":{"$version":1}}
 Telemetry message send: {"Message ID":1}.
 Telemetry message send: {"Message ID":2}.
 Telemetry message send: {"Message ID":3}.
@@ -94,6 +116,18 @@ Telemetry message send: {"Message ID":7}.
 Telemetry message send: {"Message ID":8}.
 Telemetry message send: {"Message ID":9}.
 Telemetry message send: {"Message ID":10}.
+
+To read telemetry message from Azure IoT Hub, execute the command:
+
+> az iot hub monitor-events --hub-name {MyIoTHubName} --device-id {MyDeviceId}
+
+To read the device twin definition:
+
+> az iot hub device-twin show --hub-name {MyIoTHubName} --device-id {MyDeviceId}
+
+To invoke direct method on the device from the cloud: (note that the device just outputs the method detail)
+
+> az iot hub invoke-device-method --hub-name {MyIoTHubName} --device-id {MyDeviceId} --method-name reboot --method-payload '{"time":"now"}'
 
 Result
 1. If the serial port outputs a message which is similar to the following message, it confirms that the Azure Device Twin function is OK.

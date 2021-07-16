@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015 Freescale Semiconductor, Inc.
- * Copyright 2016-2018 NXP
+ * Copyright 2016-2021 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -250,9 +250,7 @@ status_t ocotp_read_once(OCOTP_Type *base, uint32_t index, uint32_t *dst, uint32
     }
 
 // Read the result data.
-#if (OCOTP_READ_FUSE_DATA_COUNT == 1U)
-    *dst = base->READ_FUSE_DATA;
-#else
+#if defined(OCOTP_READ_FUSE_DATA_COUNT) && (OCOTP_READ_FUSE_DATA_COUNT == 4U)
     switch (lengthInBytes / 4)
     {
         case 4:
@@ -269,6 +267,8 @@ status_t ocotp_read_once(OCOTP_Type *base, uint32_t index, uint32_t *dst, uint32
             // No break
         default:;
     }
+#else
+    *dst = base->READ_FUSE_DATA;
 #endif
 
     return kStatus_Success;

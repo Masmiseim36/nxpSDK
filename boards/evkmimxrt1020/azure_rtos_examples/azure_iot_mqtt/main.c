@@ -11,7 +11,6 @@
 
 #include "fsl_common.h"
 #include "fsl_debug_console.h"
-#include "fsl_trng.h"
 #include "pin_mux.h"
 #include "clock_config.h"
 #include "board.h"
@@ -110,9 +109,6 @@ extern ULONG sample_pool_stack_size;
 static ULONG sample_arp_cache_area[SAMPLE_ARP_CACHE_SIZE / sizeof(ULONG)];
 static ULONG sample_helper_thread_stack[SAMPLE_HELPER_STACK_SIZE / sizeof(ULONG)];
 
-/* Define the SysTick cycles which will be loaded on tx_initialize_low_level.s */
-int systick_cycles;
-
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
@@ -131,7 +127,7 @@ extern VOID sample_entry(NX_IP *ip_ptr, NX_PACKET_POOL *pool_ptr, NX_DNS *dns_pt
 /* Include the platform IP driver. */
 extern VOID nx_driver_imx(NX_IP_DRIVER *driver_req_ptr);
 
-uint32_t get_seed(void);
+extern uint32_t get_seed(void);
 
 /*******************************************************************************
  * Code
@@ -150,6 +146,12 @@ void delay(void)
     {
         __asm("NOP"); /* delay */
     }
+}
+
+/* return the ENET MDIO interface clock frequency */
+uint32_t BOARD_GetMDIOClock(void)
+{
+    return CLOCK_GetFreq(kCLOCK_IpgClk);
 }
 
 
@@ -177,9 +179,6 @@ int main(void)
     GPIO_WritePinOutput(GPIO1, 4, 1);
 
     PRINTF("Start the azure_iot_mqtt example...\r\n");
-
-    /* systick_cycles must be initialized before tx_kernel_enter(). */
-    systick_cycles = (SystemCoreClock / TX_TIMER_TICKS_PER_SECOND) - 1;
 
     /* Enter the ThreadX kernel.  */
     tx_kernel_enter();
@@ -383,20 +382,4 @@ static UINT dns_create()
            (dns_server_address[0] >> 16 & 0xFF), (dns_server_address[0] >> 8 & 0xFF), (dns_server_address[0] & 0xFF));
 
     return (NX_SUCCESS);
-}
-
-uint32_t get_seed(void)
-{
-    uint32_t random_val;
-    trng_config_t trngConfig;
-
-    TRNG_GetDefaultConfig(&trngConfig);
-    trngConfig.sampleMode = kTRNG_SampleModeVonNeumann;
-    TRNG_Init(TRNG, &trngConfig);
-
-    delay();
-
-    TRNG_GetRandomData(TRNG, (void *)&random_val, sizeof(random_val));
-
-    return random_val;
 }

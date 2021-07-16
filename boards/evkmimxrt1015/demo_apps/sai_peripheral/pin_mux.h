@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 NXP
+ * Copyright 2019 ,2021 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -45,20 +45,24 @@ extern "C" {
 void BOARD_InitBootPins(void);
 
 /* GPIO_AD_B0_07 (number 68), LPUART1_RXD */
-#define BOARD_UART1_RXD_PERIPHERAL                                       LPUART1   /*!< Device name: LPUART1 */
-#define BOARD_UART1_RXD_SIGNAL                                                RX   /*!< LPUART1 signal: RX */
+/* Routed pin properties */
+#define BOARD_UART1_RXD_PERIPHERAL                                       LPUART1   /*!< Peripheral name */
+#define BOARD_UART1_RXD_SIGNAL                                                RX   /*!< Signal name */
 
 /* GPIO_AD_B0_06 (number 72), LPUART1_TXD */
-#define BOARD_UART1_TXD_PERIPHERAL                                       LPUART1   /*!< Device name: LPUART1 */
-#define BOARD_UART1_TXD_SIGNAL                                                TX   /*!< LPUART1 signal: TX */
+/* Routed pin properties */
+#define BOARD_UART1_TXD_PERIPHERAL                                       LPUART1   /*!< Peripheral name */
+#define BOARD_UART1_TXD_SIGNAL                                                TX   /*!< Signal name */
 
 /* GPIO_AD_B1_14 (number 53), I2C1_SCL/U10[17]/J18[6]/U26[4] */
-#define BOARD_I2C1_SCL_PERIPHERAL                                         LPI2C1   /*!< Device name: LPI2C1 */
-#define BOARD_I2C1_SCL_SIGNAL                                                SCL   /*!< LPI2C1 signal: SCL */
+/* Routed pin properties */
+#define BOARD_I2C1_SCL_PERIPHERAL                                         LPI2C1   /*!< Peripheral name */
+#define BOARD_I2C1_SCL_SIGNAL                                                SCL   /*!< Signal name */
 
 /* GPIO_AD_B1_15 (number 52), I2C1_SDA/U10[18]/J18[5]/J19[9]/U26[6] */
-#define BOARD_I2C1_SDA_PERIPHERAL                                         LPI2C1   /*!< Device name: LPI2C1 */
-#define BOARD_I2C1_SDA_SIGNAL                                                SDA   /*!< LPI2C1 signal: SDA */
+/* Routed pin properties */
+#define BOARD_I2C1_SDA_PERIPHERAL                                         LPI2C1   /*!< Peripheral name */
+#define BOARD_I2C1_SDA_SIGNAL                                                SDA   /*!< Signal name */
 
 
 /*!

@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2007-2015 Freescale Semiconductor, Inc.
- * Copyright 2018-2020 NXP
+ * Copyright 2018-2021 NXP
  *
  * License: NXP LA_OPT_NXP_Software_License
  *
@@ -26,6 +26,11 @@
 #define FMSTR_SERIAL_ID 1
 
 #if (FMSTR_MK_IDSTR(FMSTR_TRANSPORT) == FMSTR_SERIAL_ID) && FMSTR_DISABLE == 0
+
+#if FMSTR_SESSION_COUNT != 1
+/* Serial transport only supports a single session */
+#warning Please set FMSTR_SESSION_COUNT to 1.
+#endif
 
 #include "freemaster_protocol.h"
 #include "freemaster_serial.h"
@@ -108,7 +113,10 @@ static FMSTR_BOOL _FMSTR_SerialInit(void);
 /* Interface function - Poll function of serial transport */
 static void _FMSTR_SerialPoll(void);
 /* Interface function - Send Response function of serial transport */
-static void _FMSTR_SerialSendResponse(FMSTR_BPTR pResponse, FMSTR_SIZE nLength, FMSTR_U8 statusCode);
+static void _FMSTR_SerialSendResponse(FMSTR_BPTR pResponse,
+                                      FMSTR_SIZE nLength,
+                                      FMSTR_U8 statusCode,
+                                      void *identification);
 
 /***********************************
  *  global variables
@@ -148,12 +156,12 @@ static void _FMSTR_RxDequeue(void)
     FMSTR_BCHR nChar = 0U;
 
     /* get all queued characters */
-    while (_FMSTR_RingBuffHasData(&fmstr_rxQueue))
+    while (_FMSTR_RingBuffHasData(&fmstr_rxQueue) != FMSTR_FALSE)
     {
         nChar = _FMSTR_RingBuffGet(&fmstr_rxQueue);
 
         /* emulate the SCI receive event */
-        if (!_fmstr_wFlags.flg.bTxActive)
+        if (_fmstr_wFlags.flg.bTxActive == 0U)
         {
             (void)_FMSTR_Rx(nChar);
         }
@@ -249,7 +257,7 @@ void FMSTR_ProcessSerial(void)
         if (fmstr_doDebugTx != 0U && fmstr_nDebugTxPollCount == 0)
         {
             /* yes, start sending it now */
-            if (FMSTR_SendTestFrame(&fmstr_pCommBuffer[2]) != FMSTR_FALSE)
+            if (FMSTR_SendTestFrame(&fmstr_pCommBuffer[2], NULL) != FMSTR_FALSE)
             {
                 /* measure how long it takes to transmit it */
                 fmstr_nDebugTxPollCount = -1;
@@ -315,7 +323,7 @@ static void _FMSTR_SendError(FMSTR_BCHR nErrCode)
 #endif
 
     /* fill & send single-byte response */
-    _FMSTR_SerialSendResponse(&fmstr_pCommBuffer[2], 0U, nErrCode);
+    _FMSTR_SerialSendResponse(&fmstr_pCommBuffer[2], 0U, nErrCode, NULL);
 }
 
 /******************************************************************************
@@ -330,10 +338,15 @@ static void _FMSTR_SendError(FMSTR_BCHR nErrCode)
  *
  ******************************************************************************/
 
-static void _FMSTR_SerialSendResponse(FMSTR_BPTR pResponse, FMSTR_SIZE nLength, FMSTR_U8 statusCode)
+static void _FMSTR_SerialSendResponse(FMSTR_BPTR pResponse,
+                                      FMSTR_SIZE nLength,
+                                      FMSTR_U8 statusCode,
+                                      void *identification)
 {
     FMSTR_SIZE8 i;
     FMSTR_U8 c;
+
+    FMSTR_UNUSED(identification);
 
     if (nLength > 254U || pResponse != &fmstr_pCommBuffer[2])
     {
@@ -546,8 +559,8 @@ static FMSTR_BOOL _FMSTR_Rx(FMSTR_BCHR rxChar)
                 /*lint -e{534} return value is not used */
                 pMessageIO = FMSTR_ValueFromBuffer8(&size, pMessageIO);
 
-                /* do decode now! */
-                processed = FMSTR_ProtocolDecoder(pMessageIO, size, cmd);
+                /* do decode now! use "serial" as a globally unique pointer value as our identifier */
+                processed = FMSTR_ProtocolDecoder(pMessageIO, size, cmd, (void *)"serial");
                 FMSTR_UNUSED(processed);
             }
 

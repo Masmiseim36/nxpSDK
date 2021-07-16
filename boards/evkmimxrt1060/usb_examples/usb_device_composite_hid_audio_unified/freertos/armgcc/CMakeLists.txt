@@ -1,6 +1,6 @@
 # CROSS COMPILER SETTING
 SET(CMAKE_SYSTEM_NAME Generic)
-CMAKE_MINIMUM_REQUIRED (VERSION 3.1.1)
+CMAKE_MINIMUM_REQUIRED (VERSION 3.10.0)
 
 # THE VERSION NUMBER
 SET (Tutorial_VERSION_MAJOR 1)
@@ -31,6 +31,7 @@ include(${ProjDirPath}/flags.cmake)
 include(${ProjDirPath}/config.cmake)
 
 add_executable(${MCUX_SDK_PROJECT_NAME} 
+"${ProjDirPath}/../usb_audio_config.h"
 "${ProjDirPath}/../audio_unified.c"
 "${ProjDirPath}/../audio_unified.h"
 "${ProjDirPath}/../composite.c"
@@ -60,8 +61,6 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 )
 
 target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
-    ${ProjDirPath}/.. sdram_debug
-    ${ProjDirPath}/../../../.. sdram_debug
     ${ProjDirPath}/..
     ${ProjDirPath}/../../../..
 )
@@ -71,7 +70,6 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../../devices/MIMXRT1062/drivers
     ${ProjDirPath}/../../../../../../components/codec/wm8960
     ${ProjDirPath}/../../../../../../components/codec
-    ${ProjDirPath}/../../../../../../components/codec/port/wm8960
     ${ProjDirPath}/../../../../../../components/codec/i2c
     ${ProjDirPath}/../../../../../../components/i2c
     ${ProjDirPath}/../../../../../../rtos/freertos
@@ -83,7 +81,7 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../../components/serial_manager
     ${ProjDirPath}/../../../../../../components/lists
     ${ProjDirPath}/../../../../../../components/osa
-    ${ProjDirPath}/../../../../../../CMSIS/Include
+    ${ProjDirPath}/../../../../../../CMSIS/Core/Include
 )
 
 # include modules
@@ -135,7 +133,7 @@ include(driver_igpio_MIMXRT1062)
 
 include(driver_xip_device_MIMXRT1062)
 
-include(driver_xip_board_MIMXRT1062)
+include(driver_xip_board_evkmimxrt1060_MIMXRT1062)
 
 include(utility_debug_console_MIMXRT1062)
 
@@ -153,11 +151,7 @@ include(component_osa_MIMXRT1062)
 
 include(middleware_usb_common_header_MIMXRT1062)
 
-include(CMSIS_Include_core_cm7_MIMXRT1062)
-
-include(CMSIS_Include_common_MIMXRT1062)
-
-include(CMSIS_Include_dsp_MIMXRT1062)
+include(CMSIS_Include_core_cm_MIMXRT1062)
 
 include(middleware_usb_device_common_header_MIMXRT1062)
 

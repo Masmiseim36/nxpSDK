@@ -32,8 +32,16 @@
 #define     CLEAN_UP_MASK       0x01
 
 #ifdef      IPERF_TEST
+
+/* @TEST_ANCHOR */
+
+#ifndef     TCP_RX_PORT
 #define     TCP_RX_PORT         5001
+#endif
+#ifndef     UDP_RX_PORT
 #define     UDP_RX_PORT         5001
+#endif
+
 #else
 #define     TCP_RX_PORT          77
 #define     UDP_RX_PORT          79

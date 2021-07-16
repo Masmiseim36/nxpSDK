@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['trackinfo_480',['TrackInfo',['../structTrackInfo.html',1,'']]]
+  ['vector_484',['Vector',['../structVector.html',1,'']]],
+  ['vectoriter_485',['VectorIter',['../structVectorIter.html',1,'']]]
 ];

@@ -86,9 +86,9 @@ static void _FMSTR_FlexCAN_SendTxFrame(FMSTR_SIZE8 len);             /* Send the
 
 /* Serial instance */
 #ifdef FMSTR_CAN_INSTANCE
-	static can_instance_t *fmstr_canInstance = FMSTR_CAN_INSTANCE;
+    static can_instance_t *fmstr_canInstance = FMSTR_CAN_INSTANCE;
 #else
-	static can_instance_t *fmstr_canInstance = NULL;
+    static can_instance_t *fmstr_canInstance = NULL;
 #endif
 
 static can_buff_config_t fmstr_rxcfg; /* MB configuration with Raw ID */
@@ -120,23 +120,23 @@ const FMSTR_CAN_DRV_INTF FMSTR_CAN_S32K1x_FLEXCAN =
 #if FMSTR_LONG_INTR || FMSTR_SHORT_INTR
 void can_pal_callback(uint32_t instance, can_event_t eventType, uint32_t buffIdx, void *driverState)
 {
-	(void)driverState;
-	(void)instance;
-	switch(eventType)
-	{
-	case CAN_EVENT_RX_COMPLETE:
-	    FMSTR_ProcessCanRx();
-	    CAN_Receive(fmstr_canInstance, FMSTR_FLEXCAN_RXMB, &fmstr_rxmsg);
-		break;
-	case CAN_EVENT_TX_COMPLETE:
+    (void)driverState;
+    (void)instance;
+    switch(eventType)
+    {
+    case CAN_EVENT_RX_COMPLETE:
+        FMSTR_ProcessCanRx();
+        CAN_Receive(fmstr_canInstance, FMSTR_FLEXCAN_RXMB, &fmstr_rxmsg);
+        break;
+    case CAN_EVENT_TX_COMPLETE:
         /* Acknowledge frame transmission */
         fmstr_txmsg.length = 0;
         /* Send next frame, if needed */
         FMSTR_ProcessCanTx();
-		break;
-	default:
-		break;
-	}
+        break;
+    default:
+        break;
+    }
 }
 #endif
 
@@ -159,7 +159,7 @@ static FMSTR_BOOL _FMSTR_FlexCAN_Init(FMSTR_U32 idRx, FMSTR_U32 idTx)
     CAN_ConfigTxBuff(fmstr_canInstance, FMSTR_FLEXCAN_TXMB, &fmstr_txcfg);
    
 #if FMSTR_LONG_INTR || FMSTR_SHORT_INTR
-	CAN_InstallEventCallback(fmstr_canInstance, can_pal_callback, NULL);
+    CAN_InstallEventCallback(fmstr_canInstance, can_pal_callback, NULL);
 #endif
 
     return FMSTR_TRUE;
@@ -173,13 +173,13 @@ static void _FMSTR_FlexCAN_EnableRxInterrupt(FMSTR_BOOL enable)
 {
     if (enable)
     {
-		CAN_Receive(fmstr_canInstance, FMSTR_FLEXCAN_RXMB, &fmstr_rxmsg);
+        CAN_Receive(fmstr_canInstance, FMSTR_FLEXCAN_RXMB, &fmstr_rxmsg);
     }
 }
 
 static void _FMSTR_FlexCAN_EnableRx(void)
 {
-	CAN_ConfigRxBuff(fmstr_canInstance, FMSTR_FLEXCAN_RXMB, &fmstr_rxcfg, fmstr_rxmsg.id);
+    CAN_ConfigRxBuff(fmstr_canInstance, FMSTR_FLEXCAN_RXMB, &fmstr_rxcfg, fmstr_rxmsg.id);
 }
 
 static FMSTR_SIZE8 _FMSTR_FlexCAN_GetRxFrameLen(void)
@@ -187,7 +187,7 @@ static FMSTR_SIZE8 _FMSTR_FlexCAN_GetRxFrameLen(void)
     if(!fmstr_rxmsg.length)
     {
         /* Try to read, when successfull, the MB is acknowledged and set for next receive */
-    	CAN_Receive(fmstr_canInstance, FMSTR_FLEXCAN_RXMB, &fmstr_rxmsg);
+        CAN_Receive(fmstr_canInstance, FMSTR_FLEXCAN_RXMB, &fmstr_rxmsg);
     }
     /* we have got some frame, return its length */
     return fmstr_rxmsg.length;
@@ -211,7 +211,7 @@ static FMSTR_BOOL _FMSTR_FlexCAN_PrepareTxFrame(void)
 {
 #if FMSTR_POLL_DRIVEN
     /* Acknowledge frame was transmitted */
-	fmstr_txmsg.length = 0;
+    fmstr_txmsg.length = 0;
 #else
     if(fmstr_txmsg.length)
         return FMSTR_FALSE;
@@ -225,15 +225,15 @@ static FMSTR_BOOL _FMSTR_FlexCAN_PrepareTxFrame(void)
 static void _FMSTR_FlexCAN_PutTxFrameByte(FMSTR_SIZE8 index, FMSTR_BCHR data)
 {
     /* need switch as data bytes are not necessarily ordered in the frame */
-	fmstr_txmsg.data[index] = data;
+    fmstr_txmsg.data[index] = data;
 }
 
 static void _FMSTR_FlexCAN_SendTxFrame(FMSTR_SIZE8 len)
 {
-	fmstr_txmsg.length = len;
-	CAN_Send(fmstr_canInstance, FMSTR_FLEXCAN_TXMB, &fmstr_txmsg);
+    fmstr_txmsg.length = len;
+    CAN_Send(fmstr_canInstance, FMSTR_FLEXCAN_TXMB, &fmstr_txmsg);
 #if FMSTR_POLL_DRIVEN
-	while(CAN_GetTransferStatus(fmstr_canInstance, FMSTR_FLEXCAN_TXMB) != STATUS_SUCCESS);
+    while(CAN_GetTransferStatus(fmstr_canInstance, FMSTR_FLEXCAN_TXMB) != STATUS_SUCCESS);
 #endif
 }
 
@@ -244,9 +244,9 @@ static void _FMSTR_FlexCAN_SendTxFrame(FMSTR_SIZE8 len)
 ******************************************************************************/
 void FMSTR_CanSetBaseAddress(CAN_Type *base)
 {
-	/*this function has not been used due to use of PAL functions for Freemaster comunication,
-	and has been replaced with FMSTR_CanSetInstance(can_instance_t *instance) */
-	FMSTR_ASSERT(FMSTR_FALSE);
+    /*this function has not been used due to use of PAL functions for Freemaster comunication,
+    and has been replaced with FMSTR_CanSetInstance(can_instance_t *instance) */
+    FMSTR_ASSERT(FMSTR_FALSE);
     fmstr_canBaseAddr = base;
 }
 
@@ -257,8 +257,8 @@ void FMSTR_CanSetBaseAddress(CAN_Type *base)
 ******************************************************************************/
 void FMSTR_CanSetInstance(can_instance_t *instance)
 {
-	/*this function replaces FMSTR_CanSetBaseAddress(CAN_Type *base) */
-	fmstr_canInstance = instance;
+    /*this function replaces FMSTR_CanSetBaseAddress(CAN_Type *base) */
+    fmstr_canInstance = instance;
 }
 
 #else /* (!(FMSTR_DISABLE)) */

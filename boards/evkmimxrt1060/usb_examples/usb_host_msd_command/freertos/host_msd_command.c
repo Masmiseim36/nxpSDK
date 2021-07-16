@@ -19,8 +19,9 @@
 #if MSD_THROUGHPUT_TEST_ENABLE
 #include "fsl_device_registers.h"
 #define THROUGHPUT_BUFFER_SIZE (64 * 1024) /* throughput test buffer */
-#define MCU_CORE_CLOCK (120000000)         /* mcu core clock, user need to configure it. */
-#endif                                     /* MSD_THROUGHPUT_TEST_ENABLE */
+#define MCU_CORE_CLOCK         (120000000) /* mcu core clock, user need to configure it. */
+#warning "Please check the value of MCU_CORE_CLOCK to make sure it is the right CPU clock!"
+#endif /* MSD_THROUGHPUT_TEST_ENABLE */
 
 /*******************************************************************************
  * Prototypes

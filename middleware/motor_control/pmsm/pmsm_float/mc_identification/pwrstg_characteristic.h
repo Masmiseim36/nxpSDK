@@ -15,6 +15,10 @@
 extern "C" {
 #endif
 
+extern float_t fltRs_voltage_drop; /* Auxiliary variable for Rs voltage drop calculation */
+extern float_t fltUdReqFilt;       /* Filtered Ud required value */
+extern float_t fltIdfbckFilt;      /* Filtered Id feedback value */
+
 /*******************************************************************************
  * API
  ******************************************************************************/

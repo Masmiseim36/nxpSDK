@@ -63,9 +63,6 @@ GX_WIDGET *main_screen_enable_disable_widgets[] = {(GX_WIDGET *)&main_screen.mai
                                                    (GX_WIDGET *)&main_screen.main_screen_button_temperature,
                                                    GX_NULL};
 
-/* Define the SysTick cycles which will be loaded on tx_initialize_low_level.s */
-int systick_cycles;
-
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
@@ -97,9 +94,6 @@ int main(VOID)
     gx_lcd_board_setup();
 
     PRINTF("Start the GUIX washing machine example...\r\n");
-
-    /* systick_cycles must be initialized before tx_kernel_enter(). */
-    systick_cycles = (SystemCoreClock / TX_TIMER_TICKS_PER_SECOND) - 1;
 
     /* Enter the ThreadX kernel.  */
     tx_kernel_enter();

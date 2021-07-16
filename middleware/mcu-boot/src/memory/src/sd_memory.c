@@ -7,13 +7,13 @@
  *
  */
 
-#include "bootloader/bootloader.h"
+#include "bootloader.h"
 #include "bootloader_common.h"
 #include "fsl_clock.h"
 #include "fsl_device_registers.h"
-#include "memory/memory.h"
+#include "memory.h"
 #include "mmc_memory.h"
-#include "property/property.h"
+#include "property.h"
 #include "sd_memory.h"
 
 #if BL_FEATURE_GEN_KEYBLOB

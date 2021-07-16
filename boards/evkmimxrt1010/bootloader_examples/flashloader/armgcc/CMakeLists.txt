@@ -1,6 +1,6 @@
 # CROSS COMPILER SETTING
 SET(CMAKE_SYSTEM_NAME Generic)
-CMAKE_MINIMUM_REQUIRED (VERSION 3.1.1)
+CMAKE_MINIMUM_REQUIRED (VERSION 3.10.0)
 
 # THE VERSION NUMBER
 SET (Tutorial_VERSION_MAJOR 1)
@@ -51,7 +51,7 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../middleware
     ${ProjDirPath}/../../../../../middleware/usb
     ${ProjDirPath}/../../../../../components/osa
-    ${ProjDirPath}/../../../../../CMSIS/Include
+    ${ProjDirPath}/../../../../../CMSIS/Core/Include
     ${ProjDirPath}/../../../../../devices/MIMXRT1011/drivers
     ${ProjDirPath}/../../../../../devices/MIMXRT1011
     ${ProjDirPath}/../../../../../components/lists
@@ -90,11 +90,7 @@ include(driver_clock_MIMXRT1011)
 
 include(device_MIMXRT1011_CMSIS_MIMXRT1011)
 
-include(CMSIS_Include_core_cm7_MIMXRT1011)
-
-include(CMSIS_Include_common_MIMXRT1011)
-
-include(CMSIS_Include_dsp_MIMXRT1011)
+include(CMSIS_Include_core_cm_MIMXRT1011)
 
 include(component_lists_MIMXRT1011)
 

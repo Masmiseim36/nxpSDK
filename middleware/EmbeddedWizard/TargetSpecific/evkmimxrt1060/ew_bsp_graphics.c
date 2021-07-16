@@ -36,6 +36,7 @@
 
 #include <string.h>
 
+#include "ewconfig.h"
 #include "ew_bsp_graphics.h"
 #include "ew_bsp_clock.h"
 
@@ -147,6 +148,7 @@ void EwBspGraphicsWaitForCompletion()
     return;
 
   CPU_LOAD_SET_IDLE();
+
 
 #ifdef EW_USE_PXP_INTERRUPT_MODE
 

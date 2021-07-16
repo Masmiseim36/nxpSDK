@@ -1,6 +1,6 @@
 # CROSS COMPILER SETTING
 SET(CMAKE_SYSTEM_NAME Generic)
-CMAKE_MINIMUM_REQUIRED (VERSION 3.1.1)
+CMAKE_MINIMUM_REQUIRED (VERSION 3.10.0)
 
 # THE VERSION NUMBER
 SET (Tutorial_VERSION_MAJOR 1)
@@ -44,6 +44,7 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../support/mcuxsdk_usb/freemaster_usb_device_descriptor.c"
 "${ProjDirPath}/../support/mcuxsdk_usb/freemaster_usb_device_descriptor.h"
 "${ProjDirPath}/../support/mcuxsdk_usb/usb_device_config.h"
+"${ProjDirPath}/../support/mcuxsdk_usb/usb_device_descriptor.h"
 "${ProjDirPath}/../../common/fmstr_example/data_example_pmp.h"
 "${ProjDirPath}/../../common/fmstr_example/data_img_logo.h"
 "${ProjDirPath}/../../common/fmstr_example/data_img_file.h"
@@ -75,10 +76,11 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../devices/MIMXRT1015/drivers
     ${ProjDirPath}/../../../../../devices/MIMXRT1015
     ${ProjDirPath}/../../../../../components/uart
+    ${ProjDirPath}/../../../../../components/serial_manager
     ${ProjDirPath}/../../../../../components/lists
     ${ProjDirPath}/../../../../../devices/MIMXRT1015/xip
     ${ProjDirPath}/../../../xip
-    ${ProjDirPath}/../../../../../CMSIS/Include
+    ${ProjDirPath}/../../../../../CMSIS/Core/Include
     ${ProjDirPath}/../../../../../devices/MIMXRT1015/utilities
 )
 
@@ -105,7 +107,11 @@ include(device_MIMXRT1015_CMSIS_MIMXRT1015)
 
 include(component_lpuart_adapter_MIMXRT1015)
 
+include(component_serial_manager_MIMXRT1015)
+
 include(component_lists_MIMXRT1015)
+
+include(component_serial_manager_uart_MIMXRT1015)
 
 include(driver_lpuart_MIMXRT1015)
 
@@ -117,15 +123,11 @@ include(driver_igpio_MIMXRT1015)
 
 include(driver_xip_device_MIMXRT1015)
 
-include(driver_xip_board_MIMXRT1015)
+include(driver_xip_board_evkmimxrt1015_MIMXRT1015)
 
 include(middleware_fmstr_platform_gen32le_MIMXRT1015)
 
-include(CMSIS_Include_core_cm7_MIMXRT1015)
-
-include(CMSIS_Include_common_MIMXRT1015)
-
-include(CMSIS_Include_dsp_MIMXRT1015)
+include(CMSIS_Include_core_cm_MIMXRT1015)
 
 include(middleware_usb_phy_MIMXRT1015)
 

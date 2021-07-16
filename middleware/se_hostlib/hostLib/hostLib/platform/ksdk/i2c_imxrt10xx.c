@@ -1,13 +1,7 @@
 /*
- * Copyright 2018,2020 NXP
  *
- * This software is owned or controlled by NXP and may only be used
- * strictly in accordance with the applicable license terms.  By expressly
- * accepting such terms or by downloading, installing, activating and/or
- * otherwise using the software, you are agreeing that you have read, and
- * that you agree to comply with and are bound by, such license terms.  If
- * you do not agree to be bound by the applicable license terms, then you
- * may not retain, install, activate or otherwise use the software.
+ * Copyright 2018,2020 NXP
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 /*
@@ -44,7 +38,7 @@
 
 #define LPI2C_LOG_PRINTF(...) do { printf("\r\n[%04d] ",__LINE__); printf(__VA_ARGS__); } while (0)
 
-#ifdef CPU_MIMXRT1062DVL6A /* TODO: Should be board specific */
+#if defined(CPU_MIMXRT1062DVL6A) /* TODO: Should be board specific */
 /* Select USB1 PLL (480 MHz) as master lpi2c clock source */
 #   define LPI2C_CLOCK_SOURCE_SELECT (0U)
 /* Clock divider for master lpi2c clock source */
@@ -53,6 +47,19 @@
 #   define LPI2C_CLOCK_FREQUENCY ((CLOCK_GetFreq(kCLOCK_Usb1PllClk) / 8) / (LPI2C_CLOCK_SOURCE_DIVIDER + 1U))
 
 #   define AX_I2CM              LPI2C1
+#   define AX_LPI2C_CLK_SRC       LPI2C_CLOCK_FREQUENCY
+#   define AX_I2CM_IRQN         LPI2C1_IRQn
+#   define USE_LIP2C            1
+#elif defined(CPU_MIMXRT1176DVMAA_cm7) /* TODO: Should be board specific */
+/* Select USB1 PLL (480 MHz) as master lpi2c clock source */
+#   define LPI2C_CLOCK_SOURCE_SELECT (0U)
+/* Clock divider for master lpi2c clock source */
+#   define LPI2C_CLOCK_SOURCE_DIVIDER (5U)
+/* Get frequency of lpi2c clock */
+#   define LPI2C_CLOCK_FREQUENCY (CLOCK_GetFreq(kCLOCK_OscRc48MDiv2))
+// #   define LPI2C_CLOCK_FREQUENCY ((CLOCK_GetFreq(kCLOCK_Usb1PllClk) / 8) / (LPI2C_CLOCK_SOURCE_DIVIDER + 1U))
+
+#   define AX_I2CM              (LPI2C_Type *)LPI2C1_BASE
 #   define AX_LPI2C_CLK_SRC       LPI2C_CLOCK_FREQUENCY
 #   define AX_I2CM_IRQN         LPI2C1_IRQn
 #   define USE_LIP2C            1
@@ -85,7 +92,6 @@ uint32_t LPI2C1_GetFreq(void)
 {
     return LPI2C_CLOCK_FREQUENCY;
 }
-
 
 #if 0
 #   define baudRate_Bps                   baudRate_Hz
@@ -313,7 +319,9 @@ unsigned int axI2CRead(void* conn_ctx, unsigned char bus, unsigned char addr, un
 }
 
 
-
+#if defined (__ICCARM__) || (__CC_ARM__)
+_Pragma ("optimize=none")
+#endif
 // this function calls LPI2C_MasterTransferBlocking() for writing then actually blocks waiting for the address word to be sent
 static status_t LPI2C_MasterTransferBlocking_Send_MODIFIED(LPI2C_Type *base, uint16_t slaveAddress, void *data, size_t dataSize)
 {
@@ -422,6 +430,9 @@ static status_t LPI2C_MasterTransferBlocking_Receive_MODIFIED(LPI2C_Type *base, 
     return kStatus_Success;
 }
 
+#if defined (__ICCARM__) || (__CC_ARM__)
+_Pragma ("optimize=none")
+#endif
 // modified version of LPI2C_MasterReceive() to allow smbus block read
 static status_t LPI2C_MasterReceive_MODIFIED(LPI2C_Type *base, void *rxBuff)
 {
@@ -542,6 +553,9 @@ value = base->MRDR;
  * @retval #kStatus_LPI2C_Nak
  * @retval #kStatus_LPI2C_FifoError
  */
+#if defined (__ICCARM__) || (__CC_ARM__)
+_Pragma ("optimize=none")
+#endif
 static status_t LPI2C_MasterWaitForTxReady(LPI2C_Type *base)
 {
     volatile uint32_t status;

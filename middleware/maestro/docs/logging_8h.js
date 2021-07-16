@@ -38,5 +38,6 @@ var logging_8h =
     [ "add_error_name", "logging_8h.html#a2c76f9ba686ab8f83175ba24dd253140", null ],
     [ "error_name", "logging_8h.html#abf50bea290dca8b65b9f01a9cefbdc47", null ],
     [ "init_logging", "logging_8h.html#a4ad59250062d281206227fa18685e489", null ],
+    [ "deinit_logging", "logging_8h.html#a18cf06c449ae37327b3644f681690a87", null ],
     [ "get_debug_state", "logging_8h.html#a03a5a7adb8cd75a6a81ac5e664904b3c", null ]
 ];

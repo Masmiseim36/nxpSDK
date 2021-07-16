@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2020 NXP
+ * Copyright 2016-2021 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -183,7 +183,7 @@ status_t FXOS_ReadSensorData(fxos_handle_t *fxos_handle, fxos_data_t *sensorData
         status = kStatus_Fail;
     }
 
-    for (i = 0; i < 6; i++)
+    for (i = 0U; i < 6U; i++)
     {
         ((uint8_t *)sensorData)[i] = tmp_buff[i];
     }
@@ -193,9 +193,9 @@ status_t FXOS_ReadSensorData(fxos_handle_t *fxos_handle, fxos_data_t *sensorData
         status = kStatus_Fail;
     }
 
-    for (i = 0; i < 6; i++)
+    for (i = 0U; i < 6U; i++)
     {
-        ((uint8_t *)sensorData)[i + 6] = tmp_buff[i];
+        ((uint8_t *)sensorData)[i + 6U] = tmp_buff[i];
     }
 
     return status;

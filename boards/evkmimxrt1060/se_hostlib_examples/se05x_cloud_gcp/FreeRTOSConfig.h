@@ -78,6 +78,7 @@
 
     /* Clock manager provides in this variable system core clock frequency */
     extern uint32_t SystemCoreClock;
+    extern void vLoggingPrintf( const char *pcFormatString, ... );
 #endif
 
 /*-----------------------------------------------------------
@@ -123,7 +124,7 @@
 /* Memory allocation related definitions. */
 #define configSUPPORT_STATIC_ALLOCATION         1
 #define configSUPPORT_DYNAMIC_ALLOCATION        1
-#define configTOTAL_HEAP_SIZE                   ((size_t)(115 * 1024))
+#define configTOTAL_HEAP_SIZE                   ((size_t)(120 * 1024))
 #define configAPPLICATION_ALLOCATED_HEAP        0
 
 /* Hook function related definitions. */
@@ -151,6 +152,7 @@
 #define configTIMER_QUEUE_LENGTH                10
 #define configTIMER_TASK_STACK_DEPTH            (configMINIMAL_STACK_SIZE * 2)
 
+#define configPRINTF( X ) vLoggingPrintf X
 
 /* Map the logging task's printf to the board specific output function. */
 #define configPRINT_STRING          printf
@@ -162,7 +164,6 @@
 /* Set to 1 to prepend each log message with a message number, the task name,
  * and a time stamp. */
 #define configLOGGING_INCLUDE_TIME_AND_TASK_NAME    0
-
 
 /* Define to trap errors during development. */
 #define configASSERT(x) if(( x) == 0) {taskDISABLE_INTERRUPTS(); printf("ASSERT " #x "\n"); for (;;);}

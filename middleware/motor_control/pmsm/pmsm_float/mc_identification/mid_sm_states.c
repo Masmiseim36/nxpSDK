@@ -105,7 +105,7 @@ static void MID_StateStart(void)
     MID_alignment(&g_sMID.sMIDAlignment);
 
     /* When MID_alignment is done */
-    if (g_sMID.sMIDAlignment.ui16Active == FALSE)
+    if (g_sMID.sMIDAlignment.bActive == FALSE)
     {
         /* set _DONE to switch to following transition state */
         g_sMIDCtrl.uiCtrl |= MID_SM_CTRL_START_DONE;
@@ -125,7 +125,7 @@ static void MID_StatePwrStgCharact(void)
     MID_GetTransferCharacteristic(&g_sMID.sMIDPwrStgChar);
 
     /* If characteristic for the last current was measured (f16TransferCharIndex == number of ) */
-    if (g_sMID.sMIDPwrStgChar.ui16Active == FALSE)
+    if (g_sMID.sMIDPwrStgChar.bActive == FALSE)
     {
         /* set _DONE to switch to following transition state */
         g_sMIDCtrl.uiCtrl |= MID_SM_CTRL_PWR_STG_CHARACT_DONE;
@@ -146,13 +146,13 @@ static void MID_StateRs(void)
     MID_getRs(&g_sMID.sMIDRs);
 
     /* when the R_s measurement is finished, set the RS_DONE flag */
-    if (g_sMID.sMIDRs.ui16Active == FALSE)
+    if (g_sMID.sMIDRs.bActive == FALSE)
     {
         /* Set dq required currents and voltages to zero */
-        *(g_sMID.sIO.pfltUdReq) = 0.0;
-        *(g_sMID.sIO.pfltIdReq) = 0.0;
-        *(g_sMID.sIO.pfltUqReq) = 0.0;
-        *(g_sMID.sIO.pfltIqReq) = 0.0;
+        *(g_sMID.sIO.pfltUdReq) = 0.0F;
+        *(g_sMID.sIO.pfltIdReq) = 0.0F;
+        *(g_sMID.sIO.pfltUqReq) = 0.0F;
+        *(g_sMID.sIO.pfltIqReq) = 0.0F;
 
         /* set _DONE to switch to following transition state */
         g_sMIDCtrl.uiCtrl |= MID_SM_CTRL_RS_DONE;
@@ -174,13 +174,13 @@ static void MID_StateLd(void)
     MID_getLs(&g_sMID.sMIDLs);
 
     /* when the L_s measurement is finished, set the LS_DONE flag */
-    if (g_sMID.sMIDLs.ui16Active == FALSE)
+    if (g_sMID.sMIDLs.bActive == FALSE)
     {
         /* Set dq required currents and voltages to zero */
-        *(g_sMID.sIO.pfltUdReq) = 0.0;
-        *(g_sMID.sIO.pfltIdReq) = 0.0;
-        *(g_sMID.sIO.pfltUqReq) = 0.0;
-        *(g_sMID.sIO.pfltIqReq) = 0.0;
+        *(g_sMID.sIO.pfltUdReq) = 0.0F;
+        *(g_sMID.sIO.pfltIdReq) = 0.0F;
+        *(g_sMID.sIO.pfltUqReq) = 0.0F;
+        *(g_sMID.sIO.pfltIqReq) = 0.0F;
 
         /* Store measured Ls to Ld */
         g_sMID.sMIDLs.fltLd = g_sMID.sMIDLs.fltLs;
@@ -205,13 +205,13 @@ static void MID_StateLq(void)
     MID_getLs(&g_sMID.sMIDLs);
 
     /* when the L_s measurement is finished, set the LS_DONE flag */
-    if (g_sMID.sMIDLs.ui16Active == FALSE)
+    if (g_sMID.sMIDLs.bActive == FALSE)
     {
         /* Set dq required currents and voltages to zero */
-        *(g_sMID.sIO.pfltUdReq) = 0.0;
-        *(g_sMID.sIO.pfltIdReq) = 0.0;
-        *(g_sMID.sIO.pfltUqReq) = 0.0;
-        *(g_sMID.sIO.pfltIqReq) = 0.0;
+        *(g_sMID.sIO.pfltUdReq) = 0.0F;
+        *(g_sMID.sIO.pfltIdReq) = 0.0F;
+        *(g_sMID.sIO.pfltUqReq) = 0.0F;
+        *(g_sMID.sIO.pfltIqReq) = 0.0F;
 
         /* Store measured Ls to Lq */
         g_sMID.sMIDLs.fltLq = g_sMID.sMIDLs.fltLs;
@@ -236,13 +236,13 @@ static void MID_StatePp(void)
     MID_getPp(&g_sMID.sMIDPp);
 
     /* Escape MID_StateKe when measurement ends */
-    if (g_sMID.sMIDPp.ui16Active == FALSE)
+    if (g_sMID.sMIDPp.bActive == FALSE)
     {
         /* Set dq required currents and voltages to zero */
-        *(g_sMID.sIO.pfltUdReq) = 0.0;
-        *(g_sMID.sIO.pfltIdReq) = 0.0;
-        *(g_sMID.sIO.pfltUqReq) = 0.0;
-        *(g_sMID.sIO.pfltIqReq) = 0.0;
+        *(g_sMID.sIO.pfltUdReq) = 0.0F;
+        *(g_sMID.sIO.pfltIdReq) = 0.0F;
+        *(g_sMID.sIO.pfltUqReq) = 0.0F;
+        *(g_sMID.sIO.pfltIqReq) = 0.0F;
 
         /* set _DONE to switch to following transition state */
         g_sMIDCtrl.uiCtrl |= MID_SM_CTRL_PP_DONE;
@@ -267,13 +267,13 @@ static void MID_StateKe(void)
         MID_getKe(&g_sMID.sMIDKe);
 
         /* Escape MID_StateKe when measurement ends */
-        if (g_sMID.sMIDKe.ui16Active == FALSE)
+        if (g_sMID.sMIDKe.bActive == FALSE)
         {
             /* Set dq required currents and voltages to zero */
-            *(g_sMID.sIO.pfltUdReq) = 0.0;
-            *(g_sMID.sIO.pfltIdReq) = 0.0;
-            *(g_sMID.sIO.pfltUqReq) = 0.0;
-            *(g_sMID.sIO.pfltIqReq) = 0.0;
+            *(g_sMID.sIO.pfltUdReq) = 0.0F;
+            *(g_sMID.sIO.pfltIdReq) = 0.0F;
+            *(g_sMID.sIO.pfltUqReq) = 0.0F;
+            *(g_sMID.sIO.pfltIqReq) = 0.0F;
 
             /* set _DONE to switch to following transition state */
             g_sMIDCtrl.uiCtrl |= MID_SM_CTRL_KE_DONE;
@@ -296,13 +296,13 @@ static void MID_StateMech(void)
     MID_getMech(&g_sMID.sMIDMech);
 
     /* Escape MID_StateKe when measurement ends */
-    if (g_sMID.sMIDMech.ui16Active == FALSE)
+    if (g_sMID.sMIDMech.bActive == FALSE)
     {
         /* Set dq required currents and voltages to zero */
-        *(g_sMID.sIO.pfltUdReq) = 0.0;
-        *(g_sMID.sIO.pfltIdReq) = 0.0;
-        *(g_sMID.sIO.pfltUqReq) = 0.0;
-        *(g_sMID.sIO.pfltIqReq) = 0.0;
+        *(g_sMID.sIO.pfltUdReq) = 0.0F;
+        *(g_sMID.sIO.pfltIdReq) = 0.0F;
+        *(g_sMID.sIO.pfltUqReq) = 0.0F;
+        *(g_sMID.sIO.pfltIqReq) = 0.0F;
 
         /* set _DONE to switch to following transition state */
         g_sMIDCtrl.uiCtrl |= MID_SM_CTRL_MECH_DONE;
@@ -354,7 +354,7 @@ static void MID_TransStart2PwrStgCharact(void)
     /* Type the code to do when going from the START to the PWR_STG_CHARACT state */
 
     /* enable start of characterisation */
-    g_sMID.sMIDPwrStgChar.ui16Active = FALSE;
+    g_sMID.sMIDPwrStgChar.bActive = FALSE;
 
     /* Init pointers */
     g_sMID.sMIDPwrStgChar.pfltIdReq  = g_sMID.sIO.pfltIdReq;
@@ -378,7 +378,7 @@ static void MID_TransStart2Rs(void)
     /* Type the code to do when going from the PWR_STG_CHARACT to the RS state */
 
     /* enable start of Rs measurement */
-    g_sMID.sMIDRs.ui16Active = FALSE;
+    g_sMID.sMIDRs.bActive = FALSE;
 
     /* Init pointers */
     g_sMID.sMIDRs.pfltIdReq  = g_sMID.sIO.pfltIdReq;
@@ -399,7 +399,7 @@ static void MID_TransStart2Rs(void)
 static void MID_TransStart2Pp(void)
 {
     /* Type the code to do when going from the LS to the STOP state */
-    g_sMID.sMIDPp.ui16Active       = FALSE;
+    g_sMID.sMIDPp.bActive       = FALSE;
     g_sMID.sMIDPp.ui16PpDetermined = FALSE;
 
     /* Init pointers */
@@ -430,7 +430,7 @@ static void MID_TransStart2Mech(void)
     g_sMID.sMIDMech.pf16PosElEst = g_sMID.sIO.pf16PosElEst;
     g_sMID.sMIDMech.pf16PosElExt = g_sMID.sIO.pf16PosElExt;
 
-    g_sMID.sMIDMech.ui16Active = FALSE;
+    g_sMID.sMIDMech.bActive = FALSE;
 
     /* Acknowledge that the system can proceed into the STOP state */
     g_sMIDCtrl.uiCtrl |= MID_SM_CTRL_MECH_ACK;
@@ -451,7 +451,7 @@ static void MID_TransStart2Hall(void)
     g_sMID.sMIDHall.pfltSpeedReq = g_sMID.sIO.pfltSpeedReq;
     g_sMID.sMIDHall.pfltSpeedEst = g_sMID.sIO.pfltSpeedEst;
 
-    g_sMID.sMIDHall.ui16Active = FALSE;
+    g_sMID.sMIDHall.bActive = FALSE;
 
     /* Acknowledge that the system can proceed into the STOP state */
     g_sMIDCtrl.uiCtrl |= MID_SM_CTRL_HALL_ACK;
@@ -488,7 +488,7 @@ static void MID_TransRs2Ld(void)
     g_sMID.sMIDLs.pfltIdfbck = g_sMID.sIO.pfltId;
 
     /* enable start of Ls measurement */
-    g_sMID.sMIDLs.ui16Active = FALSE;
+    g_sMID.sMIDLs.bActive = FALSE;
 
     /* Pass value of Rs to Ls strucutre */
     g_sMID.sMIDLs.fltRs = g_sMID.sMIDRs.fltRs;
@@ -513,7 +513,7 @@ static void MID_TransLd2Lq(void)
     g_sMID.sMIDLs.pfltIdfbck = g_sMID.sIO.pfltIq;
 
     /* enable start of Ls measurement */
-    g_sMID.sMIDLs.ui16Active = FALSE;
+    g_sMID.sMIDLs.bActive = FALSE;
 
     /* Pass value of Rs to Ls strucutre */
     g_sMID.sMIDLs.fltRs = g_sMID.sMIDRs.fltRs;
@@ -542,7 +542,7 @@ static void MID_TransLq2Ke(void)
     g_sMID.sMIDKe.pfltEq     = g_sMID.sIO.pfltEq;
 
     g_sMID.sMIDKe.ui16MCATObsrvDone = FALSE;
-    g_sMID.sMIDKe.ui16Active        = FALSE;
+    g_sMID.sMIDKe.bActive        = FALSE;
 
     /* Acknowledge that the system can proceed into the STOP state */
     g_sMIDCtrl.uiCtrl |= MID_SM_CTRL_KE_ACK;
@@ -605,7 +605,7 @@ static void MID_TransAll2Stop(void)
     /* type the code to do when going to the STOP state */
 
     /* Zero all output pointers */
-    *g_sMID.sIO.pf16PosElExt = 0;
+    *g_sMID.sIO.pf16PosElExt = FRAC16(0.0);
     *g_sMID.sIO.pfltIdReq    = 0.0F;
     *g_sMID.sIO.pfltIqReq    = 0.0F;
     *g_sMID.sIO.pfltUdReq    = 0.0F;
@@ -613,16 +613,16 @@ static void MID_TransAll2Stop(void)
 
     /* Reset control flags */
     g_sMID.sMIDKe.ui16MCATObsrvDone = FALSE;
-    g_sMID.ui16EnableMeasurement    = FALSE;
+    g_sMID.bEnableMeasurement    = FALSE;
 
     /* Reset active flags */
-    g_sMID.sMIDAlignment.ui16Active  = FALSE;
-    g_sMID.sMIDPwrStgChar.ui16Active = FALSE;
-    g_sMID.sMIDRs.ui16Active         = FALSE;
-    g_sMID.sMIDLs.ui16Active         = FALSE;
-    g_sMID.sMIDKe.ui16Active         = FALSE;
-    g_sMID.sMIDPp.ui16Active         = FALSE;
-    g_sMID.sMIDMech.ui16Active       = FALSE;
+    g_sMID.sMIDAlignment.bActive  = FALSE;
+    g_sMID.sMIDPwrStgChar.bActive = FALSE;
+    g_sMID.sMIDRs.bActive         = FALSE;
+    g_sMID.sMIDLs.bActive         = FALSE;
+    g_sMID.sMIDKe.bActive         = FALSE;
+    g_sMID.sMIDPp.bActive         = FALSE;
+    g_sMID.sMIDMech.bActive       = FALSE;
 
     /* acknowledge that the state machine can proceed into STOP state */
     g_sMIDCtrl.uiCtrl |= MID_SM_CTRL_STOP_ACK;

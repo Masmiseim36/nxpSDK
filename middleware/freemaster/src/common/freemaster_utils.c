@@ -713,6 +713,33 @@ FMSTR_BPTR FMSTR_ULebFromBuffer(FMSTR_U32 *pnum, FMSTR_BPTR src)
 
 /******************************************************************************
  *
+ * @brief  Fetch generic U16 value from communication buffer
+ *
+ ******************************************************************************/
+
+FMSTR_BPTR FMSTR_ValueFromBuffer16BE(FMSTR_U16 *pnum, FMSTR_BPTR src)
+{
+    *pnum = (FMSTR_U16)((((FMSTR_U16)(src[0])) << 8) | (src[1]));
+    return (src+2);
+}
+
+/******************************************************************************
+ *
+ * @brief  Store generic U16 number to communication buffer
+ *
+ ******************************************************************************/
+
+FMSTR_BPTR FMSTR_ValueToBuffer16BE(FMSTR_BPTR dest, FMSTR_U16 num)
+{
+    dest[0] = (FMSTR_BCHR)((num>>8) & 0xffU);
+    dest[1] = (FMSTR_BCHR)(num & 0xffU);
+    
+    return (dest+2);
+}
+
+
+/******************************************************************************
+ *
  * @brief  Return number of bytes that given address needs to add in order to
  *         get properly aligned.
  *

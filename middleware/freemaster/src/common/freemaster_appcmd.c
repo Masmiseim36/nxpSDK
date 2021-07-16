@@ -75,6 +75,7 @@ FMSTR_BOOL FMSTR_InitAppCmds(void)
  *
  * @brief    Handling SANDAPPCMD command
  *
+ * @param    session - transport session
  * @param    msgBuffIO - original command (in) and response buffer (out)
  *
  * @return   As all command handlers, the return value should be the buffer
@@ -82,7 +83,7 @@ FMSTR_BOOL FMSTR_InitAppCmds(void)
  *
  ******************************************************************************/
 
-FMSTR_BPTR FMSTR_StoreAppCmd(FMSTR_BPTR msgBuffIO, FMSTR_SIZE msgSize, FMSTR_U8 *retStatus)
+FMSTR_BPTR FMSTR_StoreAppCmd(FMSTR_SESSION *session, FMSTR_BPTR msgBuffIO, FMSTR_SIZE msgSize, FMSTR_U8 *retStatus)
 {
     FMSTR_BPTR response = msgBuffIO;
     FMSTR_SIZE argsLen  = msgSize - 1U; /* args len is datalen minus one */
@@ -90,6 +91,15 @@ FMSTR_BPTR FMSTR_StoreAppCmd(FMSTR_BPTR msgBuffIO, FMSTR_SIZE msgSize, FMSTR_U8 
 
     FMSTR_ASSERT(msgBuffIO != NULL);
     FMSTR_ASSERT(retStatus != NULL);
+
+#if FMSTR_SESSION_COUNT > 1
+    /* Is feature locked by me */
+    if (FMSTR_IsFeatureOwned(session, FMSTR_FEATURE_APPCMD, 0) == FMSTR_FALSE)
+    {
+        *retStatus = FMSTR_STC_SERVBUSY;
+        return response;
+    }
+#endif
 
     /* the previous command not yet processed */
     if (fmstr_appCmd != ((FMSTR_APPCMD_CODE)FMSTR_APPCMDRESULT_NOCMD))
@@ -134,6 +144,7 @@ FMSTR_BPTR FMSTR_StoreAppCmd(FMSTR_BPTR msgBuffIO, FMSTR_SIZE msgSize, FMSTR_U8 
  *
  * @brief    Handling GETAPPCMDSTS command
  *
+ * @param    session - transport session
  * @param    msgBuffIO - original command (in) and response buffer (out)
  *
  * @return   As all command handlers, the return value should be the buffer
@@ -145,7 +156,7 @@ FMSTR_BPTR FMSTR_StoreAppCmd(FMSTR_BPTR msgBuffIO, FMSTR_SIZE msgSize, FMSTR_U8 
  *
  ******************************************************************************/
 
-FMSTR_BPTR FMSTR_GetAppCmdStatus(FMSTR_BPTR msgBuffIO, FMSTR_U8 *retStatus)
+FMSTR_BPTR FMSTR_GetAppCmdStatus(FMSTR_SESSION *session, FMSTR_BPTR msgBuffIO, FMSTR_U8 *retStatus)
 {
 #if FMSTR_MAX_APPCMD_CALLS > 0
     FMSTR_PAPPCMDFUNC func = NULL;
@@ -153,6 +164,15 @@ FMSTR_BPTR FMSTR_GetAppCmdStatus(FMSTR_BPTR msgBuffIO, FMSTR_U8 *retStatus)
 
     FMSTR_ASSERT(msgBuffIO != NULL);
     FMSTR_ASSERT(retStatus != NULL);
+
+#if FMSTR_SESSION_COUNT > 1
+    /* Is feature locked by me */
+    if (FMSTR_IsFeatureOwned(session, FMSTR_FEATURE_APPCMD, 0) == FMSTR_FALSE)
+    {
+        *retStatus = FMSTR_STC_SERVBUSY;
+        return msgBuffIO;
+    }
+#endif
 
     /* time to execute the command's callback */
     if ((index = FMSTR_FindAppCmdCallIndex(fmstr_appCmd)) >= 0)
@@ -180,6 +200,7 @@ FMSTR_BPTR FMSTR_GetAppCmdStatus(FMSTR_BPTR msgBuffIO, FMSTR_U8 *retStatus)
  *
  * @brief    Handling GETAPPCMDDATA command
  *
+ * @param    session - transport session
  * @param    msgBuffIO - original command (in) and response buffer (out)
  *
  * @return   As all command handlers, the return value should be the buffer
@@ -187,7 +208,7 @@ FMSTR_BPTR FMSTR_GetAppCmdStatus(FMSTR_BPTR msgBuffIO, FMSTR_U8 *retStatus)
  *
  ******************************************************************************/
 
-FMSTR_BPTR FMSTR_GetAppCmdRespData(FMSTR_BPTR msgBuffIO, FMSTR_U8 *retStatus)
+FMSTR_BPTR FMSTR_GetAppCmdRespData(FMSTR_SESSION *session, FMSTR_BPTR msgBuffIO, FMSTR_U8 *retStatus)
 {
     FMSTR_BPTR response = msgBuffIO;
     FMSTR_SIZE dataLen;
@@ -195,6 +216,15 @@ FMSTR_BPTR FMSTR_GetAppCmdRespData(FMSTR_BPTR msgBuffIO, FMSTR_U8 *retStatus)
 
     FMSTR_ASSERT(msgBuffIO != NULL);
     FMSTR_ASSERT(retStatus != NULL);
+
+#if FMSTR_SESSION_COUNT > 1
+    /* Is feature locked by me */
+    if (FMSTR_IsFeatureOwned(session, FMSTR_FEATURE_APPCMD, 0) == FMSTR_FALSE)
+    {
+        *retStatus = FMSTR_STC_SERVBUSY;
+        return response;
+    }
+#endif
 
     /* the previous command not yet processed */
     if (fmstr_appCmd != ((FMSTR_APPCMD_CODE)FMSTR_APPCMDRESULT_NOCMD))

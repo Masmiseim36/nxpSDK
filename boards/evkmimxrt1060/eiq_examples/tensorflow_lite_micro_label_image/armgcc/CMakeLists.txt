@@ -1,6 +1,6 @@
 # CROSS COMPILER SETTING
 SET(CMAKE_SYSTEM_NAME Generic)
-CMAKE_MINIMUM_REQUIRED (VERSION 3.1.1)
+CMAKE_MINIMUM_REQUIRED (VERSION 3.10.0)
 
 # THE VERSION NUMBER
 SET (Tutorial_VERSION_MAJOR 1)
@@ -32,34 +32,34 @@ include(${ProjDirPath}/config.cmake)
 
 add_executable(${MCUX_SDK_PROJECT_NAME} 
 "${ProjDirPath}/../../../../../middleware/eiq/common/image/image_conv.c"
-"${ProjDirPath}/../../../../../middleware/eiq/common/board_init.h"
 "${ProjDirPath}/../../../../../middleware/eiq/common/demo_info.h"
-"${ProjDirPath}/../../../../../middleware/eiq/common/timer.h"
-"${ProjDirPath}/../../../../../middleware/eiq/common/timer.c"
 "${ProjDirPath}/../../../../../middleware/eiq/common/image/image.h"
-"${ProjDirPath}/../../../../../middleware/eiq/common/image/image_capture.c"
 "${ProjDirPath}/../../../../../middleware/eiq/common/image/image_decode_raw.c"
-"${ProjDirPath}/../../../../../middleware/eiq/common/image/image_resize_nearest.c"
-"${ProjDirPath}/../../../../../middleware/eiq/common/image/image_draw.c"
 "${ProjDirPath}/../../../../../middleware/eiq/common/image/image_utils.h"
 "${ProjDirPath}/../../../../../middleware/eiq/common/model/get_top_n.cpp"
 "${ProjDirPath}/../../../../../middleware/eiq/common/model/get_top_n.h"
 "${ProjDirPath}/../../../../../middleware/eiq/common/model/model.h"
 "${ProjDirPath}/../../../../../middleware/eiq/common/model/output_postproc.h"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/examples/common/model/output_postproc.cpp"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/examples/micro/label_image/demo_config.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/examples/micro/label_image/demo_info.cpp"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/examples/micro/label_image/image_data.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/examples/image/label_image/labels.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/examples/micro/label_image/model.cpp"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/examples/image/label_image/model_data.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/examples/micro/label_image/model_mobilenet_ops_micro.cpp"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/examples/label_image/demo_config.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/examples/common/demo_info.cpp"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/examples/label_image/image_data.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/examples/label_image/labels.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/examples/label_image/model_mobilenet_ops_micro.cpp"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/examples/model.cpp"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/examples/image/main.cpp"
 "${ProjDirPath}/../pin_mux.c"
 "${ProjDirPath}/../pin_mux.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/examples/label_image/pcq/model_data.h"
+"${ProjDirPath}/../../../../../middleware/eiq/common/image/image_capture.c"
+"${ProjDirPath}/../../../../../middleware/eiq/common/image/image_draw.c"
+"${ProjDirPath}/../../../../../middleware/eiq/common/image/image_resize_nearest.c"
+"${ProjDirPath}/../../../../../middleware/eiq/common/timer.h"
+"${ProjDirPath}/../../../../../middleware/eiq/common/timer.c"
+"${ProjDirPath}/../board_init.c"
+"${ProjDirPath}/../board_init.h"
 "${ProjDirPath}/../board.c"
 "${ProjDirPath}/../board.h"
-"${ProjDirPath}/../board_init.c"
 "${ProjDirPath}/../clock_config.c"
 "${ProjDirPath}/../clock_config.h"
 "${ProjDirPath}/../dcd.c"
@@ -67,11 +67,12 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 )
 
 target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
-    ${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/examples/micro/label_image
-    ${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/examples/image/label_image
+    ${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/examples/label_image
+    ${ProjDirPath}/../../../../../middleware/eiq/common
     ${ProjDirPath}/../../../../../middleware/eiq/common/image
     ${ProjDirPath}/../../../../../middleware/eiq/common/model
     ${ProjDirPath}/..
+    ${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/examples/label_image/pcq
 )
 
 set(CMAKE_MODULE_PATH
@@ -94,8 +95,9 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../devices/MIMXRT1062
     ${ProjDirPath}/../../../../../devices/MIMXRT1062/xip
     ${ProjDirPath}/../../../xip
-    ${ProjDirPath}/../../../../../CMSIS/Include
+    ${ProjDirPath}/../../../../../CMSIS/Core/Include
     ${ProjDirPath}/../../../../../devices/MIMXRT1062/utilities
+    ${ProjDirPath}/../../../../../CMSIS/DSP
 )
 
 # include modules
@@ -133,9 +135,11 @@ include(utility_debug_console_lite_MIMXRT1062)
 
 include(utility_assert_lite_MIMXRT1062)
 
-include(middleware_eiq_tensorflow_lite_micro_MIMXRT1062)
-
 include(middleware_eiq_worker_video_MIMXRT1062)
+
+include(middleware_eiq_gui_printf_MIMXRT1062)
+
+include(middleware_eiq_tensorflow_lite_micro_MIMXRT1062)
 
 include(component_lists_MIMXRT1062)
 
@@ -157,27 +161,27 @@ include(driver_lpi2c_MIMXRT1062)
 
 include(driver_xip_device_MIMXRT1062)
 
-include(driver_xip_board_MIMXRT1062)
+include(driver_xip_board_evkmimxrt1060_MIMXRT1062)
 
-include(CMSIS_Include_core_cm7_MIMXRT1062)
+include(middleware_eiq_tensorflow_lite_micro_cmsis_nn_MIMXRT1062)
 
-include(CMSIS_Include_common_MIMXRT1062)
-
-include(CMSIS_Include_dsp_MIMXRT1062)
-
-include(middleware_eiq_tensorflow_lite_third_party_cmsis_MIMXRT1062)
-
-include(middleware_eiq_tensorflow_lite_third_party_flatbuffers_MIMXRT1062)
-
-include(middleware_eiq_tensorflow_lite_third_party_gemmlowp_MIMXRT1062)
-
-include(middleware_eiq_tensorflow_lite_third_party_ruy_MIMXRT1062)
+include(CMSIS_Include_core_cm_MIMXRT1062)
 
 include(middleware_eiq_worker_MIMXRT1062)
+
+include(middleware_eiq_tensorflow_lite_micro_third_party_flatbuffers_MIMXRT1062)
+
+include(middleware_eiq_tensorflow_lite_micro_third_party_gemmlowp_MIMXRT1062)
+
+include(middleware_eiq_tensorflow_lite_micro_third_party_ruy_MIMXRT1062)
 
 include(utilities_misc_utilities_MIMXRT1062)
 
 include(device_MIMXRT1062_system_MIMXRT1062)
+
+include(middleware_eiq_tensorflow_lite_micro_third_party_cmsis_nn_MIMXRT1062)
+
+include(CMSIS_DSP_Library_MIMXRT1062)
 
 
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--start-group)
@@ -189,6 +193,14 @@ target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE c)
 target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE gcc)
 
 target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE nosys)
+
+if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_sdram_release)
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../CMSIS/DSP/Lib/GCC/libarm_cortexM7lfdp_math.a)
+endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_sdram_release)
+
+if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_sdram_debug)
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../CMSIS/DSP/Lib/GCC/libarm_cortexM7lfdp_math.a)
+endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_sdram_debug)
 
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--end-group)
 

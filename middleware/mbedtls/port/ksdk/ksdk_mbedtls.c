@@ -1,6 +1,6 @@
 /*
  * Copyright 2015-2016, Freescale Semiconductor, Inc.
- * Copyright 2017 NXP
+ * Copyright 2017, 2021 NXP
  * All rights reserved.
  *
  *
@@ -13,7 +13,20 @@
 #include MBEDTLS_CONFIG_FILE
 #endif
 
+#include "mbedtls/platform.h"
+
+#if defined(MBEDTLS_THREADING_C)
+/* Threading mutex implementations for mbedTLS. */
+#include "mbedtls/threading.h"
+#include "threading_alt.h"
+#endif
+
+#if !defined(MBEDTLS_MCUX_FREERTOS_THREADING_ALT) && defined(MBEDTLS_THREADING_C) && defined(MBEDTLS_THREADING_ALT)
+extern void CRYPTO_ConfigureThreading(void);
+#endif
+
 #include "fsl_common.h"
+#include "ksdk_mbedtls.h"
 
 #if defined(FSL_FEATURE_SOC_LTC_COUNT) && (FSL_FEATURE_SOC_LTC_COUNT > 0)
 #include "fsl_ltc.h"
@@ -43,7 +56,7 @@
 
 #define CLEAN_RETURN(value) \
     {                       \
-        ret = (value);        \
+        ret = (value);      \
         goto cleanup;       \
     }
 
@@ -53,7 +66,7 @@
 SDK_L1DCACHE_ALIGN(uint8_t input_buff[FSL_FEATURE_L1DCACHE_LINESIZE_BYTE]);
 SDK_L1DCACHE_ALIGN(uint8_t output_buff[FSL_FEATURE_L1DCACHE_LINESIZE_BYTE]);
 
-#define DTCM_START  0x20000000U /* Start of  DTCM memory */
+#define DTCM_START 0x20000000U /* Start of  DTCM memory */
 
 /* Get NONCACHED region info from linker files */
 #if defined(__CC_ARM) || defined(__ARMCC_VERSION)
@@ -62,14 +75,14 @@ extern uint32_t Image$$RW_m_ncache$$Base[];
 extern uint32_t Image$$RW_m_ncache_unused$$Base[];
 extern uint32_t Image$$RW_m_ncache_unused$$ZI$$Limit[];
 uint32_t nonCacheStart = (uint32_t)Image$$RW_m_ncache$$Base;
-uint32_t nonCacheEnd  =  (uint32_t)Image$$RW_m_ncache_unused$$Base;
-#define nonCacheSize  nonCacheEnd- nonCacheStart		
+uint32_t nonCacheEnd   = (uint32_t)Image$$RW_m_ncache_unused$$Base;
+#define nonCacheSize nonCacheEnd - nonCacheStart
 #elif defined(__MCUXPRESSO)
 extern uint32_t __base_NCACHE_REGION;
 extern uint32_t __top_NCACHE_REGION;
 uint32_t nonCacheStart = (uint32_t)(&__base_NCACHE_REGION);
-uint32_t nonCacheEnd = (uint32_t)(&__top_NCACHE_REGION);
-#define nonCacheSize  nonCacheEnd- nonCacheStart
+uint32_t nonCacheEnd   = (uint32_t)(&__top_NCACHE_REGION);
+#define nonCacheSize nonCacheEnd - nonCacheStart
 #elif defined(__ICCARM__) || defined(__GNUC__)
 extern uint32_t __NCACHE_REGION_START[];
 extern uint32_t __NCACHE_REGION_SIZE[];
@@ -78,15 +91,16 @@ uint32_t nonCacheSize  = (uint32_t)__NCACHE_REGION_SIZE;
 #endif
 
 /* Returns TRUE if in noncached, FALSE otherwise */
-bool static IS_IN_NONCACHED(uint32_t addr, uint32_t size)
+static bool IS_IN_NONCACHED(uint32_t addr, uint32_t size)
 {
     /* Check if data are in DTCM (non-cached) memory */
 #if defined(__DTCM_PRESENT) && (__DTCM_PRESENT == 1U)
-    uint8_t DTCMSZ = 0U;
+    uint8_t DTCMSZ     = 0U;
     uint32_t DTCM_SIZE = 0, DTCM_END = 0U;
     /* Get DTCM size configuration from GPR14 */
-    DTCMSZ = (uint8_t)((IOMUXC_GPR_GPR14_CM7_CFGDTCMSZ_MASK & IOMUXC_GPR->GPR14) >> IOMUXC_GPR_GPR14_CM7_CFGDTCMSZ_SHIFT);
-    
+    DTCMSZ =
+        (uint8_t)((IOMUXC_GPR_GPR14_CM7_CFGDTCMSZ_MASK & IOMUXC_GPR->GPR14) >> IOMUXC_GPR_GPR14_CM7_CFGDTCMSZ_SHIFT);
+
     switch (DTCMSZ)
     {
         case 0x0: /* no DTCM */
@@ -118,18 +132,18 @@ bool static IS_IN_NONCACHED(uint32_t addr, uint32_t size)
             break;
         default:
             /* All the cases have been listed above, the default clause should not be reached. */
-            break;    
+            break;
     }
-    
+
     DTCM_END = DTCM_START + DTCM_SIZE;
-    
-    if((addr >= DTCM_START) && (addr+size < DTCM_END))
+
+    if ((addr >= DTCM_START) && (addr + size < DTCM_END))
     {
         return true;
     }
 #endif /* __DTCM_PRESENT */
     /* If not in DTCM, check non-cached section based linker file */
-    if((addr >= nonCacheStart) && ((addr+size) < (nonCacheStart + nonCacheSize)))
+    if ((addr >= nonCacheStart) && ((addr + size) < (nonCacheStart + nonCacheSize)))
     {
         return true;
     }
@@ -140,9 +154,50 @@ bool static IS_IN_NONCACHED(uint32_t addr, uint32_t size)
 /* Returns 1 if aligned, 0 otherwise */
 #define IS_CACHE_ALIGNED(addr) (!((uint32_t)(addr) & ((uint32_t)FSL_FEATURE_L1DCACHE_LINESIZE_BYTE - 1U)))
 
-#define MBEDTLS_ERR_DCACHE_ALIGMENT_FAILED  MBEDTLS_ERR_AES_HW_ACCEL_FAILED
+#define MBEDTLS_ERR_DCACHE_ALIGMENT_FAILED MBEDTLS_ERR_AES_HW_ACCEL_FAILED
+#define MBEDTLS_ERR_CRYPTO_HW_FAILED       MBEDTLS_ERR_AES_HW_ACCEL_FAILED
 
 #endif /* __DCACHE_PRESENT */
+
+/******************************************************************************/
+/*************************** Mutex ********************************************/
+/******************************************************************************/
+#if defined(MBEDTLS_THREADING_C)
+
+/**
+ * \def MBEDTLS_MCUX_FREERTOS_THREADING_ALT
+ * You can comment this macro if you provide your own alternate implementation.
+ *
+ */
+#if defined(SDK_OS_FREE_RTOS)
+#define MBEDTLS_MCUX_FREERTOS_THREADING_ALT
+#endif
+
+/*
+ * Define global mutexes for HW accelerator
+ */
+#if defined(FSL_FEATURE_SOC_HASHCRYPT_COUNT) && (FSL_FEATURE_SOC_HASHCRYPT_COUNT > 0)
+/* MUTEX for HW Hashcrypt crypto module */
+mbedtls_threading_mutex_t mbedtls_threading_hwcrypto_hashcrypt_mutex;
+#endif /* (FSL_FEATURE_SOC_HASHCRYPT_COUNT) && (FSL_FEATURE_SOC_HASHCRYPT_COUNT > 0) */
+
+#if defined(FSL_FEATURE_SOC_CASPER_COUNT) && (FSL_FEATURE_SOC_CASPER_COUNT > 0)
+/* MUTEX for HW CASPER crypto module */
+mbedtls_threading_mutex_t mbedtls_threading_hwcrypto_casper_mutex;
+#endif /* (FSL_FEATURE_SOC_CASPER_COUNT) && (FSL_FEATURE_SOC_CASPER_COUNT > 0) */
+
+#if defined(MBEDTLS_MCUX_FREERTOS_THREADING_ALT)
+/**
+ * @brief Initializes the mbedTLS mutex functions.
+ *
+ * Provides mbedTLS access to mutex create, destroy, take and free.
+ *
+ * @see MBEDTLS_THREADING_ALT
+ */
+static void CRYPTO_ConfigureThreadingMcux(void);
+#endif /* defined(MBEDTLS_MCUX_FREERTOS_THREADING_ALT) */
+
+#endif /* defined(MBEDTLS_THREADING_C) */
 
 /******************************************************************************/
 /*************************** CAAM *********************************************/
@@ -150,17 +205,25 @@ bool static IS_IN_NONCACHED(uint32_t addr, uint32_t size)
 #if defined(FSL_FEATURE_SOC_CAAM_COUNT) && (FSL_FEATURE_SOC_CAAM_COUNT > 0) && defined(CRYPTO_USE_DRIVER_CAAM)
 static caam_handle_t s_caamHandle = {.jobRing = kCAAM_JobRing0};
 
+#if defined(FSL_FEATURE_HAS_L1CACHE) || defined(__DCACHE_PRESENT)
+/*! @brief CAAM job ring interface 0 in system memory. */
+AT_NONCACHEABLE_SECTION(static caam_job_ring_interface_t s_jrif0);
+/*! @brief CAAM job ring interface 1 in system memory. */
+AT_NONCACHEABLE_SECTION(static caam_job_ring_interface_t s_jrif1);
+/*! @brief CAAM job ring interface 2 in system memory. */
+AT_NONCACHEABLE_SECTION(static caam_job_ring_interface_t s_jrif2);
+/*! @brief CAAM job ring interface 3 in system memory. */
+AT_NONCACHEABLE_SECTION(static caam_job_ring_interface_t s_jrif3);
+#else
 /*! @brief CAAM job ring interface 0 in system memory. */
 static caam_job_ring_interface_t s_jrif0;
-
 /*! @brief CAAM job ring interface 1 in system memory. */
 static caam_job_ring_interface_t s_jrif1;
-
 /*! @brief CAAM job ring interface 2 in system memory. */
 static caam_job_ring_interface_t s_jrif2;
-
 /*! @brief CAAM job ring interface 3 in system memory. */
 static caam_job_ring_interface_t s_jrif3;
+#endif /* __DCACHE_PRESENT || FSL_FEATURE_HAS_L1CACHE */
 
 #endif
 
@@ -175,7 +238,8 @@ static cau3_handle_t s_cau3Handle = {.taskDone = MBEDTLS_CAU3_COMPLETION_SIGNAL,
 /**************************** DCP *********************************************/
 /******************************************************************************/
 #if defined(FSL_FEATURE_SOC_DCP_COUNT) && (FSL_FEATURE_SOC_DCP_COUNT > 0)
-static dcp_handle_t s_dcpHandle = {.channel = kDCP_Channel0, .keySlot = kDCP_KeySlot0, .swapConfig = (uint32_t)kDCP_NoSwap};
+static dcp_handle_t s_dcpHandle = {
+    .channel = kDCP_Channel0, .keySlot = kDCP_KeySlot0, .swapConfig = (uint32_t)kDCP_NoSwap};
 #endif
 
 /******************************************************************************/
@@ -224,7 +288,7 @@ static void mbedtls_zeroize(void *v, size_t n)
     while (0U != n--)
     {
         *p++ = 0;
-    }    
+    }
 }
 #endif /* MBEDTLS_SHA1_ALT || MBEDTLS_SHA256_ALT */
 
@@ -237,8 +301,13 @@ static void mbedtls_zeroize(void *v, size_t n)
  * This function is provided to be called by MCUXpresso SDK applications.
  * It calls basic init for Crypto Hw acceleration and Hw entropy modules.
  */
-void CRYPTO_InitHardware(void)
+status_t CRYPTO_InitHardware(void)
 {
+#if defined(MBEDTLS_THREADING_C) && defined(MBEDTLS_THREADING_ALT)
+
+    CRYPTO_ConfigureThreadingMcux();
+
+#endif /* (MBEDTLS_THREADING_C) && defined(MBEDTLS_THREADING_ALT) */
 #if defined(FSL_FEATURE_SOC_LTC_COUNT) && (FSL_FEATURE_SOC_LTC_COUNT > 0)
     /* Initialize LTC driver.
      * This enables clocking and resets the module to a known state. */
@@ -254,7 +323,10 @@ void CRYPTO_InitHardware(void)
     caamConfig.jobRingInterface[2] = &s_jrif2;
     caamConfig.jobRingInterface[3] = &s_jrif3;
 
-    CAAM_Init(CAAM, &caamConfig);
+    if (CAAM_Init(CAAM, &caamConfig) != kStatus_Success)
+    {
+        return (kStatus_Fail);
+    }
 #endif
 #if defined(FSL_FEATURE_SOC_CAU3_COUNT) && (FSL_FEATURE_SOC_CAU3_COUNT > 0)
     /* Initialize CAU3 */
@@ -270,27 +342,42 @@ void CRYPTO_InitHardware(void)
 #if defined(FSL_FEATURE_SOC_CASPER_COUNT) && (FSL_FEATURE_SOC_CASPER_COUNT > 0)
     /* Initialize CASPER */
     CASPER_Init(CASPER);
-#endif
+#if defined(MBEDTLS_THREADING_C)
+    mbedtls_mutex_init(&mbedtls_threading_hwcrypto_casper_mutex);
+#endif /* (MBEDTLS_THREADING_C) */
+#endif /* (FSL_FEATURE_SOC_CASPER_COUNT) && (FSL_FEATURE_SOC_CASPER_COUNT > 0) */
 #if defined(FSL_FEATURE_SOC_HASHCRYPT_COUNT) && (FSL_FEATURE_SOC_HASHCRYPT_COUNT > 0)
     /* Initialize HASHCRYPT */
     HASHCRYPT_Init(HASHCRYPT);
-#endif
-    { /* Init RNG module.*/
+#if defined(MBEDTLS_THREADING_C)
+    mbedtls_mutex_init(&mbedtls_threading_hwcrypto_hashcrypt_mutex);
+#endif /* (MBEDTLS_THREADING_C) */
+#endif /* (FSL_FEATURE_SOC_HASHCRYPT_COUNT) && (FSL_FEATURE_SOC_HASHCRYPT_COUNT > 0) */
+    {  /* Init RNG module.*/
 #if defined(FSL_FEATURE_SOC_TRNG_COUNT) && (FSL_FEATURE_SOC_TRNG_COUNT > 0)
 #if defined(TRNG)
 #define TRNG0 TRNG
 #endif
         trng_config_t trngConfig;
 
-        (void)TRNG_GetDefaultConfig(&trngConfig);
-        /* Set sample mode of the TRNG ring oscillator to Von Neumann, for better random data.*/
+        if (TRNG_GetDefaultConfig(&trngConfig) != kStatus_Success)
+        {
+            return (kStatus_Fail);
+        }
+
         /* Initialize TRNG */
-        (void)TRNG_Init(TRNG0, &trngConfig);
+        if (TRNG_Init(TRNG0, &trngConfig) != kStatus_Success)
+        {
+            return (kStatus_Fail);
+        }
+
 #elif defined(FSL_FEATURE_SOC_RNG_COUNT) && (FSL_FEATURE_SOC_RNG_COUNT > 0)
         RNGA_Init(RNG);
         RNGA_Seed(RNG, SIM->UIDL);
 #endif
     }
+
+    return (0);
 }
 
 /******************************************************************************/
@@ -319,7 +406,7 @@ const unsigned char parityLookup[128] = {1, 0, 0, 1, 0, 1, 1, 0, 0, 1, 1, 0, 1, 
 int mbedtls_des_setkey_enc(mbedtls_des_context *ctx, const unsigned char key[MBEDTLS_DES_KEY_SIZE])
 {
 #if defined(MBEDTLS_FREESCALE_LTC_DES) || defined(MBEDTLS_FREESCALE_CAAM_DES)
-    memcpy(ctx->sk, key, MBEDTLS_DES_KEY_SIZE);
+    (void)memcpy(ctx->sk, (const uint32_t *)(uintptr_t)key, MBEDTLS_DES_KEY_SIZE);
 #elif defined(MBEDTLS_FREESCALE_MMCAU_DES)
     int i;
     unsigned char *sk_b = (unsigned char *)ctx->sk;
@@ -341,7 +428,7 @@ int mbedtls_des_setkey_enc(mbedtls_des_context *ctx, const unsigned char key[MBE
 int mbedtls_des_setkey_dec(mbedtls_des_context *ctx, const unsigned char key[MBEDTLS_DES_KEY_SIZE])
 {
 #if defined(MBEDTLS_FREESCALE_LTC_DES) || defined(MBEDTLS_FREESCALE_CAAM_DES)
-    memcpy(ctx->sk, key, MBEDTLS_DES_KEY_SIZE);
+    (void)memcpy(ctx->sk, (const uint32_t *)(uintptr_t)key, MBEDTLS_DES_KEY_SIZE);
 #elif defined(MBEDTLS_FREESCALE_MMCAU_DES)
     int i;
     unsigned char *sk_b = (unsigned char *)ctx->sk;
@@ -364,8 +451,8 @@ int mbedtls_des_setkey_dec(mbedtls_des_context *ctx, const unsigned char key[MBE
 int mbedtls_des3_set2key_enc(mbedtls_des3_context *ctx, const unsigned char key[MBEDTLS_DES_KEY_SIZE * 2])
 {
 #if defined(MBEDTLS_FREESCALE_LTC_DES) || defined(MBEDTLS_FREESCALE_CAAM_DES) || defined(MBEDTLS_FREESCALE_CAU3_DES)
-    memcpy(ctx->sk, key, MBEDTLS_DES_KEY_SIZE * 2);
-    memcpy(&ctx->sk[4], key, MBEDTLS_DES_KEY_SIZE); /* K3 = K1 */
+    (void)memcpy(ctx->sk, (const uint32_t *)(uintptr_t)key, MBEDTLS_DES_KEY_SIZE * 2);
+    (void)memcpy(&ctx->sk[4], (const uint32_t *)(uintptr_t)key, MBEDTLS_DES_KEY_SIZE); /* K3 = K1 */
 #if defined(MBEDTLS_FREESCALE_CAU3_DES)
     crypto_detach_ctx_from_key_slot(ctx);
 #endif
@@ -394,8 +481,8 @@ int mbedtls_des3_set2key_enc(mbedtls_des3_context *ctx, const unsigned char key[
 int mbedtls_des3_set2key_dec(mbedtls_des3_context *ctx, const unsigned char key[MBEDTLS_DES_KEY_SIZE * 2])
 {
 #if defined(MBEDTLS_FREESCALE_LTC_DES) || defined(MBEDTLS_FREESCALE_CAAM_DES) || defined(MBEDTLS_FREESCALE_CAU3_DES)
-    memcpy(ctx->sk, key, MBEDTLS_DES_KEY_SIZE * 2);
-    memcpy(&ctx->sk[4], key, MBEDTLS_DES_KEY_SIZE); /* K3 = K1 */
+    (void)memcpy(ctx->sk, (const uint32_t *)(uintptr_t)key, MBEDTLS_DES_KEY_SIZE * 2);
+    (void)memcpy(&ctx->sk[4], (const uint32_t *)(uintptr_t)key, MBEDTLS_DES_KEY_SIZE); /* K3 = K1 */
 #if defined(MBEDTLS_FREESCALE_CAU3_DES)
     crypto_detach_ctx_from_key_slot(ctx);
 #endif
@@ -424,7 +511,7 @@ int mbedtls_des3_set2key_dec(mbedtls_des3_context *ctx, const unsigned char key[
 int mbedtls_des3_set3key_enc(mbedtls_des3_context *ctx, const unsigned char key[MBEDTLS_DES_KEY_SIZE * 3])
 {
 #if defined(MBEDTLS_FREESCALE_LTC_DES) || defined(MBEDTLS_FREESCALE_CAAM_DES) || defined(MBEDTLS_FREESCALE_CAU3_DES)
-    memcpy(ctx->sk, key, MBEDTLS_DES_KEY_SIZE * 3);
+    (void)memcpy(ctx->sk, (const uint32_t *)(uintptr_t)key, MBEDTLS_DES_KEY_SIZE * 3);
 #if defined(MBEDTLS_FREESCALE_CAU3_DES)
     crypto_detach_ctx_from_key_slot(ctx);
 #endif
@@ -449,7 +536,7 @@ int mbedtls_des3_set3key_enc(mbedtls_des3_context *ctx, const unsigned char key[
 int mbedtls_des3_set3key_dec(mbedtls_des3_context *ctx, const unsigned char key[MBEDTLS_DES_KEY_SIZE * 3])
 {
 #if defined(MBEDTLS_FREESCALE_LTC_DES) || defined(MBEDTLS_FREESCALE_CAAM_DES) || defined(MBEDTLS_FREESCALE_CAU3_DES)
-    memcpy(ctx->sk, key, MBEDTLS_DES_KEY_SIZE * 3);
+    (void)memcpy(ctx->sk, (const uint32_t *)(uintptr_t)key, MBEDTLS_DES_KEY_SIZE * 3);
 #if defined(MBEDTLS_FREESCALE_CAU3_DES)
     crypto_detach_ctx_from_key_slot(ctx);
 #endif
@@ -473,36 +560,38 @@ int mbedtls_des3_set3key_dec(mbedtls_des3_context *ctx, const unsigned char key[
  */
 int mbedtls_des_crypt_ecb(mbedtls_des_context *ctx, const unsigned char input[8], unsigned char output[8])
 {
+    status_t status = kStatus_Fail;
+
     uint8_t *key = (uint8_t *)ctx->sk;
 #if defined(MBEDTLS_FREESCALE_LTC_DES)
     if (ctx->mode == MBEDTLS_DES_ENCRYPT)
     {
-        LTC_DES_EncryptEcb(LTC_INSTANCE, input, output, 8, key);
+        status = LTC_DES_EncryptEcb(LTC_INSTANCE, input, output, 8, key);
     }
     else
     {
-        LTC_DES_DecryptEcb(LTC_INSTANCE, input, output, 8, key);
+        status = LTC_DES_DecryptEcb(LTC_INSTANCE, input, output, 8, key);
     }
 #elif defined(MBEDTLS_FREESCALE_MMCAU_DES)
     if (ctx->mode == MBEDTLS_DES_ENCRYPT)
     {
-        (void)MMCAU_DES_EncryptEcb(input, key, output);
+        status = MMCAU_DES_EncryptEcb(input, key, output);
     }
     else
     {
-        (void)MMCAU_DES_DecryptEcb(input, key, output);
+        status = MMCAU_DES_DecryptEcb(input, key, output);
     }
 #elif defined(MBEDTLS_FREESCALE_CAAM_DES)
     if (ctx->mode == MBEDTLS_DES_ENCRYPT)
     {
-        CAAM_DES_EncryptEcb(CAAM_INSTANCE, &s_caamHandle, input, output, 8, key);
+        status = CAAM_DES_EncryptEcb(CAAM_INSTANCE, &s_caamHandle, input, output, 8, key);
     }
     else
     {
-        CAAM_DES_DecryptEcb(CAAM_INSTANCE, &s_caamHandle, input, output, 8, key);
+        status = CAAM_DES_DecryptEcb(CAAM_INSTANCE, &s_caamHandle, input, output, 8, key);
     }
 #endif
-    return (0);
+    return (kStatus_Success == status) ? 0 : MBEDTLS_ERR_DES_HW_ACCEL_FAILED;
 }
 #endif /* MBEDTLS_FREESCALE_LTC_DES || MBEDTLS_FREESCALE_MMCAU_DES || MBEDTLS_FREESCALE_CAAM_DES */
 
@@ -511,55 +600,57 @@ int mbedtls_des_crypt_ecb(mbedtls_des_context *ctx, const unsigned char input[8]
  */
 int mbedtls_des3_crypt_ecb(mbedtls_des3_context *ctx, const unsigned char input[8], unsigned char output[8])
 {
+    status_t status = kStatus_Fail;
+
     uint8_t *key = (uint8_t *)ctx->sk;
 #if defined(MBEDTLS_FREESCALE_LTC_DES)
     if (ctx->mode == MBEDTLS_DES_ENCRYPT)
     {
-        LTC_DES3_EncryptEcb(LTC_INSTANCE, input, output, 8, key, key + 8, key + 16);
+        status = LTC_DES3_EncryptEcb(LTC_INSTANCE, input, output, 8, key, key + 8, key + 16);
     }
     else
     {
-        LTC_DES3_DecryptEcb(LTC_INSTANCE, input, output, 8, key, key + 8, key + 16);
+        status = LTC_DES3_DecryptEcb(LTC_INSTANCE, input, output, 8, key, key + 8, key + 16);
     }
 #elif defined(MBEDTLS_FREESCALE_MMCAU_DES)
     if (ctx->mode == MBEDTLS_DES_ENCRYPT)
     {
-        (void)MMCAU_DES_EncryptEcb(input, key, output);
-        (void)MMCAU_DES_DecryptEcb(output, key + 8, output);
-        (void)MMCAU_DES_EncryptEcb(output, key + 16, output);
+        status = MMCAU_DES_EncryptEcb(input, key, output);
+        status = MMCAU_DES_DecryptEcb(output, key + 8, output);
+        status = MMCAU_DES_EncryptEcb(output, key + 16, output);
     }
     else
     {
-        (void)MMCAU_DES_DecryptEcb(input, key + 16, output);
-        (void)MMCAU_DES_EncryptEcb(output, key + 8, output);
-        (void)MMCAU_DES_DecryptEcb(output, key, output);
+        status = MMCAU_DES_DecryptEcb(input, key + 16, output);
+        status = MMCAU_DES_EncryptEcb(output, key + 8, output);
+        status = MMCAU_DES_DecryptEcb(output, key, output);
     }
 #elif defined(MBEDTLS_FREESCALE_CAAM_DES)
     if (ctx->mode == MBEDTLS_DES_ENCRYPT)
     {
-        CAAM_DES3_EncryptEcb(CAAM_INSTANCE, &s_caamHandle, input, output, 8, key, key + 8, key + 16);
+        status = CAAM_DES3_EncryptEcb(CAAM_INSTANCE, &s_caamHandle, input, output, 8, key, key + 8, key + 16);
     }
     else
     {
-        CAAM_DES3_DecryptEcb(CAAM_INSTANCE, &s_caamHandle, input, output, 8, key, key + 8, key + 16);
+        status = CAAM_DES3_DecryptEcb(CAAM_INSTANCE, &s_caamHandle, input, output, 8, key, key + 8, key + 16);
     }
 #elif defined(MBEDTLS_FREESCALE_CAU3_DES)
     if (!crypto_key_is_loaded(ctx))
     {
-        CAU3_TDES_SetKey(CAU3, &s_cau3Handle, key, 24);
+        status = CAU3_TDES_SetKey(CAU3, &s_cau3Handle, key, 24);
         crypto_attach_ctx_to_key_slot(ctx, s_cau3Handle.keySlot);
     }
 
     if (ctx->mode == MBEDTLS_DES_ENCRYPT)
     {
-        CAU3_TDES_Encrypt(CAU3, &s_cau3Handle, input, output);
+        status = CAU3_TDES_Encrypt(CAU3, &s_cau3Handle, input, output);
     }
     else
     {
-        CAU3_TDES_Decrypt(CAU3, &s_cau3Handle, input, output);
+        status = CAU3_TDES_Decrypt(CAU3, &s_cau3Handle, input, output);
     }
 #endif
-    return (0);
+    return (kStatus_Success == status) ? 0 : MBEDTLS_ERR_DES_HW_ACCEL_FAILED;
 }
 
 #if defined(MBEDTLS_CIPHER_MODE_CBC)
@@ -575,23 +666,24 @@ int mbedtls_des_crypt_cbc(mbedtls_des_context *ctx,
                           unsigned char *output)
 {
     unsigned char temp[8];
-    uint8_t *key = (uint8_t *)ctx->sk;
+    status_t status = kStatus_Fail;
+    uint8_t *key    = (uint8_t *)ctx->sk;
 
     if (length % 8)
         return (MBEDTLS_ERR_DES_INVALID_INPUT_LENGTH);
 
     if (mode == MBEDTLS_DES_ENCRYPT)
     {
-        LTC_DES_EncryptCbc(LTC_INSTANCE, input, output, length, iv, key);
+        status = LTC_DES_EncryptCbc(LTC_INSTANCE, input, output, length, iv, key);
         memcpy(iv, output + length - 8, 8);
     }
     else /* MBEDTLS_DES_DECRYPT */
     {
         memcpy(temp, input + length - 8, 8);
-        LTC_DES_DecryptCbc(LTC_INSTANCE, input, output, length, iv, key);
+        status = LTC_DES_DecryptCbc(LTC_INSTANCE, input, output, length, iv, key);
         memcpy(iv, temp, 8);
     }
-    return (0);
+    return (kStatus_Success == status) ? 0 : MBEDTLS_ERR_DES_HW_ACCEL_FAILED;
 }
 
 /*
@@ -605,24 +697,25 @@ int mbedtls_des3_crypt_cbc(mbedtls_des3_context *ctx,
                            unsigned char *output)
 {
     unsigned char temp[8];
-    uint8_t *key = (uint8_t *)ctx->sk;
+    status_t status = kStatus_Fail;
+    uint8_t *key    = (uint8_t *)ctx->sk;
 
     if (length % 8)
         return (MBEDTLS_ERR_DES_INVALID_INPUT_LENGTH);
 
     if (mode == MBEDTLS_DES_ENCRYPT)
     {
-        LTC_DES3_EncryptCbc(LTC_INSTANCE, input, output, length, iv, key, key + 8, key + 16);
+        status = LTC_DES3_EncryptCbc(LTC_INSTANCE, input, output, length, iv, key, key + 8, key + 16);
         memcpy(iv, output + length - 8, 8);
     }
     else /* MBEDTLS_DES_DECRYPT */
     {
         memcpy(temp, input + length - 8, 8);
-        LTC_DES3_DecryptCbc(LTC_INSTANCE, input, output, length, iv, key, key + 8, key + 16);
+        status = LTC_DES3_DecryptCbc(LTC_INSTANCE, input, output, length, iv, key, key + 8, key + 16);
         memcpy(iv, temp, 8);
     }
 
-    return (0);
+    return (kStatus_Success == status) ? 0 : MBEDTLS_ERR_DES_HW_ACCEL_FAILED;
 }
 #elif defined(MBEDTLS_FREESCALE_CAAM_DES)
 int mbedtls_des_crypt_cbc(mbedtls_des_context *ctx,
@@ -633,23 +726,24 @@ int mbedtls_des_crypt_cbc(mbedtls_des_context *ctx,
                           unsigned char *output)
 {
     unsigned char temp[8];
+    status_t status = kStatus_Fail;
     uint8_t *key = (uint8_t *)ctx->sk;
 
-    if (length % 8)
+    if ((length % 8U) != 0U)
         return (MBEDTLS_ERR_DES_INVALID_INPUT_LENGTH);
 
     if (mode == MBEDTLS_DES_ENCRYPT)
     {
-        CAAM_DES_EncryptCbc(CAAM_INSTANCE, &s_caamHandle, input, output, length, iv, key);
-        memcpy(iv, output + length - 8, 8);
+        status = CAAM_DES_EncryptCbc(CAAM_INSTANCE, &s_caamHandle, input, output, length, iv, key);
+        (void)memcpy(iv, output + length - 8, 8);
     }
     else /* MBEDTLS_DES_DECRYPT */
     {
-        memcpy(temp, input + length - 8, 8);
-        CAAM_DES_DecryptCbc(CAAM_INSTANCE, &s_caamHandle, input, output, length, iv, key);
-        memcpy(iv, temp, 8);
+        (void)memcpy(temp, input + length - 8, 8);
+        status = CAAM_DES_DecryptCbc(CAAM_INSTANCE, &s_caamHandle, input, output, length, iv, key);
+        (void)memcpy(iv, temp, 8);
     }
-    return (0);
+    return (kStatus_Success == status) ? 0 : MBEDTLS_ERR_DES_HW_ACCEL_FAILED;
 }
 
 /*
@@ -663,24 +757,25 @@ int mbedtls_des3_crypt_cbc(mbedtls_des3_context *ctx,
                            unsigned char *output)
 {
     unsigned char temp[8];
+    status_t status = kStatus_Fail;
     uint8_t *key = (uint8_t *)ctx->sk;
 
-    if (length % 8)
+    if ((length % 8U) != 0U)
         return (MBEDTLS_ERR_DES_INVALID_INPUT_LENGTH);
 
     if (mode == MBEDTLS_DES_ENCRYPT)
     {
-        CAAM_DES3_EncryptCbc(CAAM_INSTANCE, &s_caamHandle, input, output, length, iv, key, key + 8, key + 16);
-        memcpy(iv, output + length - 8, 8);
+        status = CAAM_DES3_EncryptCbc(CAAM_INSTANCE, &s_caamHandle, input, output, length, iv, key, key + 8, key + 16);
+        (void)memcpy(iv, output + length - 8, 8);
     }
     else /* MBEDTLS_DES_DECRYPT */
     {
-        memcpy(temp, input + length - 8, 8);
-        CAAM_DES3_DecryptCbc(CAAM_INSTANCE, &s_caamHandle, input, output, length, iv, key, key + 8, key + 16);
-        memcpy(iv, temp, 8);
+        (void)memcpy(temp, input + length - 8, 8);
+        status = CAAM_DES3_DecryptCbc(CAAM_INSTANCE, &s_caamHandle, input, output, length, iv, key, key + 8, key + 16);
+        (void)memcpy(iv, temp, 8);
     }
 
-    return (0);
+    return (kStatus_Success == status) ? 0 : MBEDTLS_ERR_DES_HW_ACCEL_FAILED;
 }
 
 #endif /* MBEDTLS_FREESCALE_LTC_DES */
@@ -708,14 +803,14 @@ int mbedtls_des3_crypt_cbc(mbedtls_des3_context *ctx,
 int mbedtls_aes_setkey_enc(mbedtls_aes_context *ctx, const unsigned char *key, unsigned int keybits)
 {
     uint32_t *RK;
-    
+
 #ifdef MBEDTLS_AES_ALT_NO_192
     if (keybits == 192u)
     {
 #if defined(MBEDTLS_AES192_ALT_SW)
         return mbedtls_aes_setkey_enc_sw(ctx, key, keybits);
 #else
-        return (MBEDTLS_ERR_AES_FEATURE_UNAVAILABLE);
+        return (MBEDTLS_ERR_PLATFORM_FEATURE_UNSUPPORTED);
 #endif /* MBEDTLS_AES_ALT_SW */
     }
 #endif /* MBEDTLS_AES_ALT_NO_192 */
@@ -726,24 +821,24 @@ int mbedtls_aes_setkey_enc(mbedtls_aes_context *ctx, const unsigned char *key, u
 #if defined(MBEDTLS_AES256_ALT_SW)
         return mbedtls_aes_setkey_enc_sw(ctx, key, keybits);
 #else
-        return (MBEDTLS_ERR_AES_FEATURE_UNAVAILABLE);
+        return (MBEDTLS_ERR_PLATFORM_FEATURE_UNSUPPORTED);
 #endif /* MBEDTLS_AES_ALT_SW */
     }
 #endif /* MBEDTLS_AES_ALT_NO_256 */
 
 #if defined(MBEDTLS_FREESCALE_LTC_AES) || defined(MBEDTLS_FREESCALE_LPC_AES) || defined(MBEDTLS_FREESCALE_CAU3_AES) || \
     defined(MBEDTLS_FREESCALE_CAAM_AES) || defined(MBEDTLS_FREESCALE_DCP_AES)
-    const unsigned char *key_tmp = key;    
+    const unsigned char *key_tmp = key;
     ctx->rk = RK = ctx->buf;
     (void)memcpy(RK, (const uint32_t *)(uintptr_t)key_tmp, keybits / 8U);
 
 #if defined(MBEDTLS_FREESCALE_CAU3_AES) || defined(MBEDTLS_FREESCALE_DCP_AES)
     crypto_detach_ctx_from_key_slot(ctx);
 #endif /* MBEDTLS_FREESCALE_CAU3_AES || MBEDTLS_FREESCALE_DCP_AES */
-    
+
     /* Set keysize in bytes.*/
     switch (keybits)
-    { 
+    {
         case 128:
             ctx->nr = 16;
             break;
@@ -774,7 +869,10 @@ int mbedtls_aes_setkey_enc(mbedtls_aes_context *ctx, const unsigned char *key, u
             return (MBEDTLS_ERR_AES_INVALID_KEY_LENGTH);
     }
 
-    MMCAU_AES_SetKey(key, keybits / 8, (uint8_t *)RK);
+    if (MMCAU_AES_SetKey(key, keybits / 8U, (uint8_t *)RK) != kStatus_Success)
+    {
+        return (MBEDTLS_ERR_AES_INVALID_KEY_LENGTH);
+    }
 #endif
 
     return (0);
@@ -786,14 +884,14 @@ int mbedtls_aes_setkey_enc(mbedtls_aes_context *ctx, const unsigned char *key, u
 int mbedtls_aes_setkey_dec(mbedtls_aes_context *ctx, const unsigned char *key, unsigned int keybits)
 {
     uint32_t *RK;
-    
+
 #ifdef MBEDTLS_AES_ALT_NO_192
     if (keybits == 192u)
     {
 #if defined(MBEDTLS_AES192_ALT_SW) && defined(MBEDTLS_FREESCALE_DCP_AES)
         return mbedtls_aes_setkey_dec_sw(ctx, key, keybits);
 #else
-        return (MBEDTLS_ERR_AES_FEATURE_UNAVAILABLE);
+        return (MBEDTLS_ERR_PLATFORM_FEATURE_UNSUPPORTED);
 #endif /* defined(MBEDTLS_AES_ALT_SW) && defined(MBEDTLS_FREESCALE_DCP_AES) */
     }
 #endif
@@ -804,7 +902,7 @@ int mbedtls_aes_setkey_dec(mbedtls_aes_context *ctx, const unsigned char *key, u
 #if defined(MBEDTLS_AES256_ALT_SW) && defined(MBEDTLS_FREESCALE_DCP_AES)
         return mbedtls_aes_setkey_dec_sw(ctx, key, keybits);
 #else
-        return (MBEDTLS_ERR_AES_FEATURE_UNAVAILABLE);
+        return (MBEDTLS_ERR_PLATFORM_FEATURE_UNSUPPORTED);
 #endif /* defined(MBEDTLS_AES_ALT_SW) && defined(MBEDTLS_FREESCALE_DCP_AES) */
     }
 #endif
@@ -852,7 +950,10 @@ int mbedtls_aes_setkey_dec(mbedtls_aes_context *ctx, const unsigned char *key, u
             return (MBEDTLS_ERR_AES_INVALID_KEY_LENGTH);
     }
 
-    MMCAU_AES_SetKey(key, keybits / 8, (uint8_t *)RK);
+    if (MMCAU_AES_SetKey(key, keybits / 8U, (uint8_t *)RK) != kStatus_Success)
+    {
+        return (MBEDTLS_ERR_AES_INVALID_KEY_LENGTH);
+    }
 #endif
 
     return 0;
@@ -863,88 +964,105 @@ int mbedtls_aes_setkey_dec(mbedtls_aes_context *ctx, const unsigned char *key, u
  */
 int mbedtls_internal_aes_encrypt(mbedtls_aes_context *ctx, const unsigned char input[16], unsigned char output[16])
 {
+    status_t ret = kStatus_Fail;
     uint8_t *key;
     key = (uint8_t *)ctx->rk;
 
 #if defined(MBEDTLS_FREESCALE_DCP_AES) && (defined(MBEDTLS_AES192_ALT_SW) || defined(MBEDTLS_AES256_ALT_SW))
-    if(ctx->nr == 12 || ctx->nr == 14)
+    if (ctx->nr == 12 || ctx->nr == 14)
     {
+        ret = kStatus_Success;
         return mbedtls_internal_aes_encrypt_sw(ctx, input, output);
     }
 #endif /* defined(MBEDTLS_FREESCALE_DCP_AES) && defined(MBEDTLS_AES_ALT_SW) */
-    
+
 #if defined(MBEDTLS_FREESCALE_LTC_AES)
-    LTC_AES_EncryptEcb(LTC_INSTANCE, input, output, 16, key, ctx->nr);
+    ret = LTC_AES_EncryptEcb(LTC_INSTANCE, input, output, 16, key, ctx->nr);
 #elif defined(MBEDTLS_FREESCALE_MMCAU_AES)
-    MMCAU_AES_EncryptEcb(input, key, ctx->nr, output);
+    ret = MMCAU_AES_EncryptEcb(input, key, (uint32_t)ctx->nr, output);
 #elif defined(MBEDTLS_FREESCALE_CAU3_AES)
     if (!crypto_key_is_loaded(ctx))
     {
-        CAU3_AES_SetKey(CAU3, &s_cau3Handle, key, ctx->nr);
+        ret = CAU3_AES_SetKey(CAU3, &s_cau3Handle, key, ctx->nr);
+        if (ret != kStatus_Success)
+        {
+            return MBEDTLS_ERR_AES_HW_ACCEL_FAILED;
+        }
         crypto_attach_ctx_to_key_slot(ctx, s_cau3Handle.keySlot);
     }
-    CAU3_AES_Encrypt(CAU3, &s_cau3Handle, input, output);
+    ret = CAU3_AES_Encrypt(CAU3, &s_cau3Handle, input, output);
 #elif defined(MBEDTLS_FREESCALE_LPC_AES)
-    AES_SetKey(AES_INSTANCE, key, ctx->nr);
-    AES_EncryptEcb(AES_INSTANCE, input, output, 16);
+    ret = AES_SetKey(AES_INSTANCE, key, ctx->nr);
+    if (ret != kStatus_Success)
+    {
+        return MBEDTLS_ERR_AES_HW_ACCEL_FAILED;
+    }
+    ret = AES_EncryptEcb(AES_INSTANCE, input, output, 16);
 #elif defined(MBEDTLS_FREESCALE_CAAM_AES)
-    CAAM_AES_EncryptEcb(CAAM_INSTANCE, &s_caamHandle, input, output, 16, key, ctx->nr);
+    ret = CAAM_AES_EncryptEcb(CAAM_INSTANCE, &s_caamHandle, input, output, 16, key, (uint32_t)ctx->nr);
 #elif defined(MBEDTLS_FREESCALE_DCP_AES)
     if (!crypto_key_is_loaded(ctx))
     {
-        (void)DCP_AES_SetKey(DCP, &s_dcpHandle, key, (uint32_t)ctx->nr);
+        ret = DCP_AES_SetKey(DCP, &s_dcpHandle, key, (uint32_t)ctx->nr);
+        if (ret != kStatus_Success)
+        {
+            return MBEDTLS_ERR_AES_HW_ACCEL_FAILED;
+        }
         crypto_attach_ctx_to_key_slot(ctx, (uint8_t)s_dcpHandle.keySlot);
     }
 #if defined(__DCACHE_PRESENT) && (__DCACHE_PRESENT == 1U) && defined(DCP_USE_DCACHE) && (DCP_USE_DCACHE == 1U)
-    uint32_t *inputPtr = NULL;
+    uint32_t *inputPtr  = NULL;
     uint32_t *outputPtr = NULL;
-    
-    
+
     /* If input is not cache line aligned, use internal aligned buffer */
-    if(IS_CACHE_ALIGNED(input))
+    if (IS_CACHE_ALIGNED(input))
     {
-        inputPtr = (uint32_t*)(uintptr_t)input;
+        inputPtr = (uint32_t *)(uintptr_t)input;
         DCACHE_CleanByRange((uint32_t)inputPtr, 16); /* will clean 32 bytes granularity */
     }
     else
     {
-        inputPtr = (uint32_t*)(uintptr_t)input_buff;
+        inputPtr = (uint32_t *)(uintptr_t)input_buff;
         (void)memcpy(input_buff, input, 16);
         DCACHE_CleanByRange((uint32_t)inputPtr, 16);
     }
- 
+
     /* If output buffer is same as input, use it. Otherwise check if aligned. */
     /* If not use also internal aligned output buffer */
     if (input == output)
     {
         outputPtr = inputPtr;
     }
-    else if(IS_CACHE_ALIGNED(output))
+    else if (IS_CACHE_ALIGNED(output))
     {
-        outputPtr = (uint32_t*)(uintptr_t)output;
+        outputPtr = (uint32_t *)(uintptr_t)output;
         DCACHE_CleanByRange((uint32_t)outputPtr, 16); /* will clean 32 bytes granularity */
     }
     else
     {
-        outputPtr = (uint32_t*)(uintptr_t)output_buff;
+        outputPtr = (uint32_t *)(uintptr_t)output_buff;
     }
-    
-    
-    (void)DCP_AES_EncryptEcb(DCP, &s_dcpHandle, (uint8_t*)inputPtr ,(uint8_t*) outputPtr, 16);
-    
+
+    ret = DCP_AES_EncryptEcb(DCP, &s_dcpHandle, (uint8_t *)inputPtr, (uint8_t *)outputPtr, 16);
+
     /* Ivalidate output */
     DCACHE_InvalidateByRange((uint32_t)outputPtr, 16);
-    
+
     /* If output is not aligned we used internal buffer, so we have to copy data to output */
-    if(!IS_CACHE_ALIGNED(output))
+    if (!IS_CACHE_ALIGNED(output))
     {
         (void)memmove(output, (uint8_t *)outputPtr, 16);
     }
-    
-#else /* __DCACHE_PRESENT && DCP_USE_DCACHE */
-    DCP_AES_EncryptEcb(DCP, &s_dcpHandle, input, output, 16);
+
+#else  /* __DCACHE_PRESENT && DCP_USE_DCACHE */
+    ret = DCP_AES_EncryptEcb(DCP, &s_dcpHandle, input, output, 16);
 #endif /* __DCACHE_PRESENT && DCP_USE_DCACHE */
 #endif
+
+    if (ret != kStatus_Success)
+    {
+        return MBEDTLS_ERR_AES_HW_ACCEL_FAILED;
+    }
 
     return (0);
 }
@@ -954,86 +1072,105 @@ int mbedtls_internal_aes_encrypt(mbedtls_aes_context *ctx, const unsigned char i
  */
 int mbedtls_internal_aes_decrypt(mbedtls_aes_context *ctx, const unsigned char input[16], unsigned char output[16])
 {
+    status_t ret = kStatus_Fail;
     uint8_t *key;
     key = (uint8_t *)ctx->rk;
 
 #if defined(MBEDTLS_FREESCALE_DCP_AES) && (defined(MBEDTLS_AES192_ALT_SW) || defined(MBEDTLS_AES256_ALT_SW))
-    if(ctx->nr == 12 || ctx->nr == 14)
+    if (ctx->nr == 12 || ctx->nr == 14)
     {
+        ret = kStatus_Success;
         return mbedtls_internal_aes_decrypt_sw(ctx, input, output);
     }
 #endif /* defined(MBEDTLS_FREESCALE_DCP_AES) && defined(MBEDTLS_AES_ALT_SW) */
 
 #if defined(MBEDTLS_FREESCALE_LTC_AES)
-    LTC_AES_DecryptEcb(LTC_INSTANCE, input, output, 16, key, ctx->nr, kLTC_EncryptKey);
+    ret = LTC_AES_DecryptEcb(LTC_INSTANCE, input, output, 16, key, ctx->nr, kLTC_EncryptKey);
 #elif defined(MBEDTLS_FREESCALE_MMCAU_AES)
-    MMCAU_AES_DecryptEcb(input, key, ctx->nr, output);
+    ret = MMCAU_AES_DecryptEcb(input, key, ctx->nr, output);
 #elif defined(MBEDTLS_FREESCALE_CAU3_AES)
     if (!crypto_key_is_loaded(ctx))
     {
-        CAU3_AES_SetKey(CAU3, &s_cau3Handle, key, ctx->nr);
+        ret = CAU3_AES_SetKey(CAU3, &s_cau3Handle, key, ctx->nr);
         crypto_attach_ctx_to_key_slot(ctx, s_cau3Handle.keySlot);
+        if (ret != kStatus_Success)
+        {
+            return MBEDTLS_ERR_AES_HW_ACCEL_FAILED;
+        }
     }
-    CAU3_AES_Decrypt(CAU3, &s_cau3Handle, input, output);
+
+    ret = CAU3_AES_Decrypt(CAU3, &s_cau3Handle, input, output);
 #elif defined(MBEDTLS_FREESCALE_LPC_AES)
-    AES_SetKey(AES_INSTANCE, key, ctx->nr);
-    AES_DecryptEcb(AES_INSTANCE, input, output, 16);
+    ret = AES_SetKey(AES_INSTANCE, key, ctx->nr);
+    if (ret != kStatus_Success)
+    {
+        return MBEDTLS_ERR_AES_HW_ACCEL_FAILED;
+    }
+    ret = AES_DecryptEcb(AES_INSTANCE, input, output, 16);
 #elif defined(MBEDTLS_FREESCALE_CAAM_AES)
-    CAAM_AES_DecryptEcb(CAAM_INSTANCE, &s_caamHandle, input, output, 16, key, ctx->nr);
+    ret = CAAM_AES_DecryptEcb(CAAM_INSTANCE, &s_caamHandle, input, output, 16, key, (uint32_t)ctx->nr);
 #elif defined(MBEDTLS_FREESCALE_DCP_AES)
     if (!crypto_key_is_loaded(ctx))
     {
-        (void)DCP_AES_SetKey(DCP, &s_dcpHandle, key, (uint32_t)ctx->nr);
+        ret = DCP_AES_SetKey(DCP, &s_dcpHandle, key, (uint32_t)ctx->nr);
         crypto_attach_ctx_to_key_slot(ctx, (uint8_t)s_dcpHandle.keySlot);
+        if (ret != kStatus_Success)
+        {
+            return MBEDTLS_ERR_AES_HW_ACCEL_FAILED;
+        }
     }
 #if defined(__DCACHE_PRESENT) && (__DCACHE_PRESENT == 1U) && defined(DCP_USE_DCACHE) && (DCP_USE_DCACHE == 1U)
-    uint32_t *inputPtr = NULL;
+    uint32_t *inputPtr  = NULL;
     uint32_t *outputPtr = NULL;
-    
+
     /* If input is not cache line aligned, use internal aligned buffer */
-    if(IS_CACHE_ALIGNED(input))
+    if (IS_CACHE_ALIGNED(input))
     {
-        inputPtr = (uint32_t*)(uintptr_t)input;
+        inputPtr = (uint32_t *)(uintptr_t)input;
         DCACHE_CleanByRange((uint32_t)inputPtr, 16); /* will clean 32 bytes granularity */
     }
     else
     {
-        inputPtr = (uint32_t*)(uintptr_t)input_buff;
+        inputPtr = (uint32_t *)(uintptr_t)input_buff;
         (void)memcpy(input_buff, input, 16);
         DCACHE_CleanByRange((uint32_t)inputPtr, 16);
     }
-    
+
     /* If output buffer is same as input, use it. Otherwise check if aligned. */
     /* If not use also internal aligned output buffer */
     if (input == output)
     {
         outputPtr = inputPtr;
     }
-    else if(IS_CACHE_ALIGNED(output))
+    else if (IS_CACHE_ALIGNED(output))
     {
-        outputPtr = (uint32_t*)(uintptr_t)output;
+        outputPtr = (uint32_t *)(uintptr_t)output;
         DCACHE_CleanByRange((uint32_t)outputPtr, 16); /* will clean 32 bytes granularity */
     }
     else
     {
-        outputPtr = (uint32_t*)(uintptr_t)output_buff;
+        outputPtr = (uint32_t *)(uintptr_t)output_buff;
     }
-    
-    
-    (void)DCP_AES_DecryptEcb(DCP, &s_dcpHandle, (uint8_t*)inputPtr , (uint8_t*) outputPtr, 16);
+
+    ret = DCP_AES_DecryptEcb(DCP, &s_dcpHandle, (uint8_t *)inputPtr, (uint8_t *)outputPtr, 16);
 
     /* Ivalidate output */
     DCACHE_InvalidateByRange((uint32_t)outputPtr, 16);
     /* If output is not aligned we used internal buffer, so we have to copy data to output */
-    if(!IS_CACHE_ALIGNED(output))
+    if (!IS_CACHE_ALIGNED(output))
     {
         (void)memmove(output, (uint8_t *)outputPtr, 16);
     }
-    
-#else /* __DCACHE_PRESENT && DCP_USE_DCACHE */
-    DCP_AES_DecryptEcb(DCP, &s_dcpHandle, input, output, 16);
+
+#else  /* __DCACHE_PRESENT && DCP_USE_DCACHE */
+    ret = DCP_AES_DecryptEcb(DCP, &s_dcpHandle, input, output, 16);
 #endif /* __DCACHE_PRESENT && DCP_USE_DCACHE */
 #endif
+
+    if (ret != kStatus_Success)
+    {
+        return MBEDTLS_ERR_AES_HW_ACCEL_FAILED;
+    }
 
     return (0);
 }
@@ -1050,7 +1187,8 @@ int mbedtls_aes_crypt_cbc(mbedtls_aes_context *ctx,
                           const unsigned char *input,
                           unsigned char *output)
 {
-    uint8_t *key = (uint8_t *)ctx->rk;
+    uint8_t *key     = (uint8_t *)ctx->rk;
+    status_t status  = kStatus_Fail;
     uint32_t keySize = ctx->nr;
 
     if (length % 16)
@@ -1060,16 +1198,16 @@ int mbedtls_aes_crypt_cbc(mbedtls_aes_context *ctx,
     {
         uint8_t tmp[16];
         memcpy(tmp, input + length - 16, 16);
-        LTC_AES_DecryptCbc(LTC_INSTANCE, input, output, length, iv, key, keySize, kLTC_EncryptKey);
+        status = LTC_AES_DecryptCbc(LTC_INSTANCE, input, output, length, iv, key, keySize, kLTC_EncryptKey);
         memcpy(iv, tmp, 16);
     }
     else
     {
-        LTC_AES_EncryptCbc(LTC_INSTANCE, input, output, length, iv, key, keySize);
+        status = LTC_AES_EncryptCbc(LTC_INSTANCE, input, output, length, iv, key, keySize);
         memcpy(iv, output + length - 16, 16);
     }
 
-    return (0);
+    return (kStatus_Success == status) ? 0 : MBEDTLS_ERR_AES_HW_ACCEL_FAILED;
 }
 #elif defined(MBEDTLS_FREESCALE_LPC_AES)
 int mbedtls_aes_crypt_cbc(mbedtls_aes_context *ctx,
@@ -1080,29 +1218,34 @@ int mbedtls_aes_crypt_cbc(mbedtls_aes_context *ctx,
                           unsigned char *output)
 {
     uint8_t *key;
+    status_t status = kStatus_Fail;
     size_t keySize;
 
     if (length % 16)
+    {
         return (MBEDTLS_ERR_AES_INVALID_INPUT_LENGTH);
-
+    }
     key = (uint8_t *)ctx->rk;
     keySize = (size_t)ctx->nr;
-    AES_SetKey(AES_INSTANCE, key, keySize);
+    if (AES_SetKey(AES_INSTANCE, key, keySize) != kStatus_Success)
+    {
+        return (MBEDTLS_ERR_AES_INVALID_KEY_LENGTH);
+    }
 
     if (mode == MBEDTLS_AES_DECRYPT)
     {
         uint8_t tmp[16];
         memcpy(tmp, input + length - 16, 16);
-        AES_DecryptCbc(AES_INSTANCE, tmp, output, length, iv);
+        status = AES_DecryptCbc(AES_INSTANCE, tmp, output, length, iv);
         memcpy(iv, tmp, 16);
     }
     else
     {
-        AES_EncryptCbc(AES_INSTANCE, input, output, length, iv);
+        status = AES_EncryptCbc(AES_INSTANCE, input, output, length, iv);
         memcpy(iv, output + length - 16, 16);
     }
 
-    return (0);
+    return (kStatus_Success == status) ? 0 : MBEDTLS_ERR_AES_HW_ACCEL_FAILED;
 }
 #elif defined(MBEDTLS_FREESCALE_CAAM_AES)
 int mbedtls_aes_crypt_cbc(mbedtls_aes_context *ctx,
@@ -1113,25 +1256,26 @@ int mbedtls_aes_crypt_cbc(mbedtls_aes_context *ctx,
                           unsigned char *output)
 {
     uint8_t *key = (uint8_t *)ctx->rk;
-    uint32_t keySize = ctx->nr;
+    status_t status = kStatus_Fail;
+    uint32_t keySize = (uint32_t)ctx->nr;
 
-    if (length % 16)
+    if ((length % 16U) != 0U)
         return (MBEDTLS_ERR_AES_INVALID_INPUT_LENGTH);
 
     if (mode == MBEDTLS_AES_DECRYPT)
     {
         uint8_t tmp[16];
-        memcpy(tmp, input + length - 16, 16);
-        CAAM_AES_DecryptCbc(CAAM_INSTANCE, &s_caamHandle, input, output, length, iv, key, keySize);
-        memcpy(iv, tmp, 16);
+        (void)memcpy(tmp, input + length - 16, 16);
+        status = CAAM_AES_DecryptCbc(CAAM_INSTANCE, &s_caamHandle, input, output, length, iv, key, keySize);
+        (void)memcpy(iv, tmp, 16);
     }
     else
     {
-        CAAM_AES_EncryptCbc(CAAM_INSTANCE, &s_caamHandle, input, output, length, iv, key, keySize);
-        memcpy(iv, output + length - 16, 16);
+        status = CAAM_AES_EncryptCbc(CAAM_INSTANCE, &s_caamHandle, input, output, length, iv, key, keySize);
+        (void)memcpy(iv, output + length - 16, 16);
     }
 
-    return (0);
+    return (kStatus_Success == status) ? 0 : MBEDTLS_ERR_AES_HW_ACCEL_FAILED;
 }
 #elif defined(MBEDTLS_FREESCALE_DCP_AES)
 int mbedtls_aes_crypt_cbc(mbedtls_aes_context *ctx,
@@ -1142,33 +1286,36 @@ int mbedtls_aes_crypt_cbc(mbedtls_aes_context *ctx,
                           unsigned char *output)
 {
     uint8_t *key;
-
-    if (0U !=(length % 16U))
+    status_t status = kStatus_Fail;
+    if (0U != (length % 16U))
         return (MBEDTLS_ERR_AES_INVALID_INPUT_LENGTH);
 
 #if defined(MBEDTLS_AES_CBC_ALT_SW)
-    if(ctx->nr == 12 || ctx->nr == 14)
+    if (ctx->nr == 12 || ctx->nr == 14)
     {
         return mbedtls_aes_crypt_cbc_sw(ctx, mode, length, iv, input, output);
     }
 #endif /* MBEDTLS_AES_CBC_ALT_SW */
 
 #if defined(__DCACHE_PRESENT) && (__DCACHE_PRESENT == 1U) && defined(DCP_USE_DCACHE) && (DCP_USE_DCACHE == 1U)
-    if((!IS_IN_NONCACHED((uint32_t)input, length)) && (!IS_CACHE_ALIGNED((uint32_t)input)))
+    if ((!IS_IN_NONCACHED((uint32_t)input, length)) && (!IS_CACHE_ALIGNED((uint32_t)input)))
     {
         return MBEDTLS_ERR_DCACHE_ALIGMENT_FAILED;
     }
-    
-    if((!IS_IN_NONCACHED((uint32_t)output, length)) && (!IS_CACHE_ALIGNED((uint32_t)output)))
+
+    if ((!IS_IN_NONCACHED((uint32_t)output, length)) && (!IS_CACHE_ALIGNED((uint32_t)output)))
     {
         return MBEDTLS_ERR_DCACHE_ALIGMENT_FAILED;
     }
 #endif /* __DCACHE_PRESENT && DCP_USE_DCACHE */
-    
+
     key = (uint8_t *)ctx->rk;
     if (!crypto_key_is_loaded(ctx))
     {
-        (void)DCP_AES_SetKey(DCP, &s_dcpHandle, key, (uint32_t)ctx->nr);
+        if (DCP_AES_SetKey(DCP, &s_dcpHandle, key, (uint32_t)ctx->nr) != kStatus_Success)
+        {
+            return (MBEDTLS_ERR_AES_INVALID_KEY_LENGTH);
+        }
         crypto_attach_ctx_to_key_slot(ctx, (uint8_t)s_dcpHandle.keySlot);
     }
 
@@ -1180,7 +1327,7 @@ int mbedtls_aes_crypt_cbc(mbedtls_aes_context *ctx,
         DCACHE_CleanByRange((uint32_t)input, length);
         DCACHE_CleanByRange((uint32_t)iv, 16);
 #endif /* __DCACHE_PRESENT && DCP_USE_DCACHE */
-        (void)DCP_AES_DecryptCbc(DCP, &s_dcpHandle, input, output, length, iv);
+        status = DCP_AES_DecryptCbc(DCP, &s_dcpHandle, input, output, length, iv);
 #if defined(__DCACHE_PRESENT) && (__DCACHE_PRESENT == 1U) && defined(DCP_USE_DCACHE) && (DCP_USE_DCACHE == 1U)
         DCACHE_InvalidateByRange((uint32_t)output, length);
 #endif /* __DCACHE_PRESENT && DCP_USE_DCACHE */
@@ -1192,14 +1339,14 @@ int mbedtls_aes_crypt_cbc(mbedtls_aes_context *ctx,
         DCACHE_CleanByRange((uint32_t)input, length);
         DCACHE_CleanByRange((uint32_t)iv, 16);
 #endif /* __DCACHE_PRESENT && DCP_USE_DCACHE */
-        (void)DCP_AES_EncryptCbc(DCP, &s_dcpHandle, input, output, length, iv);
+        status = DCP_AES_EncryptCbc(DCP, &s_dcpHandle, input, output, length, iv);
 #if defined(__DCACHE_PRESENT) && (__DCACHE_PRESENT == 1U) && defined(DCP_USE_DCACHE) && (DCP_USE_DCACHE == 1U)
         DCACHE_InvalidateByRange((uint32_t)output, length);
 #endif /* __DCACHE_PRESENT && DCP_USE_DCACHE */
         (void)memcpy(iv, output + length - 16, 16);
     }
 
-    return (0);
+    return (kStatus_Success == status) ? 0 : MBEDTLS_ERR_AES_HW_ACCEL_FAILED;
 }
 #endif
 #endif /* MBEDTLS_CIPHER_MODE_CBC */
@@ -1219,21 +1366,22 @@ int mbedtls_aes_crypt_cfb128(mbedtls_aes_context *ctx,
 {
     uint8_t *key;
     size_t keySize;
+    status_t status = kStatus_Fail;
 
-    key = (uint8_t *)ctx->rk;
+    key     = (uint8_t *)ctx->rk;
     keySize = (size_t)ctx->nr;
     AES_SetKey(AES_INSTANCE, key, keySize);
 
     if (mode == MBEDTLS_AES_DECRYPT)
     {
-        AES_DecryptCfb(AES_INSTANCE, input, output, length, iv);
+        status = AES_DecryptCfb(AES_INSTANCE, input, output, length, iv);
     }
     else
     {
-        AES_EncryptCfb(AES_INSTANCE, input, output, length, iv);
+        status = AES_EncryptCfb(AES_INSTANCE, input, output, length, iv);
     }
 
-    return (0);
+    return (kStatus_Success == status) ? 0 : MBEDTLS_ERR_AES_HW_ACCEL_FAILED;
 }
 
 /*
@@ -1289,14 +1437,15 @@ int mbedtls_aes_crypt_ctr(mbedtls_aes_context *ctx,
                           unsigned char *output)
 {
     uint8_t *key;
+    status_t status = kStatus_Fail;
     uint32_t keySize;
 
-    key = (uint8_t *)ctx->rk;
+    key     = (uint8_t *)ctx->rk;
     keySize = ctx->nr;
-    LTC_AES_CryptCtr(LTC_INSTANCE, input, output, length, nonce_counter, key, keySize, stream_block,
-                     (uint32_t *)nc_off);
+    status  = LTC_AES_CryptCtr(LTC_INSTANCE, input, output, length, nonce_counter, key, keySize, stream_block,
+                              (uint32_t *)nc_off);
 
-    return (0);
+    return (kStatus_Success == status) ? 0 : MBEDTLS_ERR_AES_HW_ACCEL_FAILED;
 }
 #elif defined(MBEDTLS_FREESCALE_LPC_AES)
 int mbedtls_aes_crypt_ctr(mbedtls_aes_context *ctx,
@@ -1308,15 +1457,20 @@ int mbedtls_aes_crypt_ctr(mbedtls_aes_context *ctx,
                           unsigned char *output)
 {
     uint8_t *key;
+    status_t status = kStatus_Fail;
     size_t keySize;
 
     key = (uint8_t *)ctx->rk;
     keySize = (size_t)ctx->nr;
 
-    AES_SetKey(AES_INSTANCE, key, keySize);
-    AES_CryptCtr(AES_INSTANCE, input, output, length, nonce_counter, stream_block, nc_off);
+    if (AES_SetKey(AES_INSTANCE, key, keySize) != kStatus_Success)
+    {
+        return (MBEDTLS_ERR_AES_INVALID_KEY_LENGTH);
+    }
 
-    return (0);
+    status = AES_CryptCtr(AES_INSTANCE, input, output, length, nonce_counter, stream_block, nc_off);
+
+    return (kStatus_Success == status) ? 0 : MBEDTLS_ERR_AES_HW_ACCEL_FAILED;
 }
 #elif defined(MBEDTLS_FREESCALE_CAAM_AES)
 int mbedtls_aes_crypt_ctr(mbedtls_aes_context *ctx,
@@ -1329,14 +1483,15 @@ int mbedtls_aes_crypt_ctr(mbedtls_aes_context *ctx,
 {
     uint8_t *key;
     uint32_t keySize;
+    status_t status = kStatus_Fail;
 
     key = (uint8_t *)ctx->rk;
-    keySize = ctx->nr;
+    keySize = (uint32_t)ctx->nr;
 
-    CAAM_AES_CryptCtr(CAAM_INSTANCE, &s_caamHandle, input, output, length, nonce_counter, key, keySize, stream_block,
-                      nc_off);
+    status = CAAM_AES_CryptCtr(CAAM_INSTANCE, &s_caamHandle, input, output, length, nonce_counter, key, keySize,
+                               stream_block, nc_off);
 
-    return (0);
+    return (kStatus_Success == status) ? 0 : MBEDTLS_ERR_AES_HW_ACCEL_FAILED;
 }
 #endif
 #endif /* MBEDTLS_CIPHER_MODE_CTR */
@@ -1453,7 +1608,7 @@ static int ccm_auth_crypt(mbedtls_ccm_context *ctx,
     mbedtls_aes_context *aes_ctx;
 
     aes_ctx = (mbedtls_aes_context *)ctx->cipher_ctx.cipher_ctx;
-    key = (uint8_t *)aes_ctx->rk;
+    key     = (uint8_t *)aes_ctx->rk;
     keySize = aes_ctx->nr;
     if (mode == CCM_ENCRYPT)
     {
@@ -1497,7 +1652,7 @@ static int ccm_auth_crypt(mbedtls_ccm_context *ctx,
 
     aes_ctx = (mbedtls_aes_context *)ctx->cipher_ctx.cipher_ctx;
     key = (uint8_t *)aes_ctx->rk;
-    keySize = aes_ctx->nr;
+    keySize = (uint32_t)aes_ctx->nr;
     if (mode == CCM_ENCRYPT)
     {
         status = CAAM_AES_EncryptTagCcm(CAAM_INSTANCE, &s_caamHandle, input, output, length, iv, iv_len, add, add_len,
@@ -1517,8 +1672,10 @@ static int ccm_auth_crypt(mbedtls_ccm_context *ctx,
     {
         return MBEDTLS_ERR_CCM_AUTH_FAILED;
     }
-
-    return (0);
+    else
+    {
+        return (0);
+    }
 }
 #endif /* MBEDTLS_FREESCALE_LTC_AES */
 
@@ -1556,9 +1713,9 @@ int mbedtls_ccm_auth_decrypt(mbedtls_ccm_context *ctx,
 {
     unsigned char tagCopy[16];
     unsigned char *actTag = NULL;
-    if (tag)
+    if (tag != NULL)
     {
-        memcpy(tagCopy, tag, tag_len);
+        (void)memcpy(tagCopy, tag, tag_len);
         actTag = tagCopy;
     }
     return (ccm_auth_crypt(ctx, CCM_DECRYPT, length, iv, iv_len, add, add_len, input, output, actTag, tag_len));
@@ -1588,11 +1745,11 @@ int mbedtls_gcm_crypt_and_tag(mbedtls_gcm_context *ctx,
     uint32_t keySize;
     mbedtls_aes_context *aes_ctx;
 
-    ctx->len = length;
+    ctx->len     = length;
     ctx->add_len = add_len;
-    aes_ctx = (mbedtls_aes_context *)ctx->cipher_ctx.cipher_ctx;
-    key = (uint8_t *)aes_ctx->rk;
-    keySize = aes_ctx->nr;
+    aes_ctx      = (mbedtls_aes_context *)ctx->cipher_ctx.cipher_ctx;
+    key          = (uint8_t *)aes_ctx->rk;
+    keySize      = aes_ctx->nr;
     if (mode == MBEDTLS_GCM_ENCRYPT)
     {
         status = LTC_AES_EncryptTagGcm(LTC_INSTANCE, input, output, length, iv, iv_len, add, add_len, key, keySize, tag,
@@ -1735,7 +1892,7 @@ int mbedtls_gcm_crypt_and_tag(mbedtls_gcm_context *ctx,
     ctx->add_len = add_len;
     aes_ctx = (mbedtls_aes_context *)ctx->cipher_ctx.cipher_ctx;
     key = (uint8_t *)aes_ctx->rk;
-    keySize = aes_ctx->nr;
+    keySize = (uint32_t)aes_ctx->nr;
     if (mode == MBEDTLS_GCM_ENCRYPT)
     {
         status = CAAM_AES_EncryptTagGcm(CAAM_INSTANCE, &s_caamHandle, input, output, length, iv, iv_len, add, add_len,
@@ -1755,8 +1912,10 @@ int mbedtls_gcm_crypt_and_tag(mbedtls_gcm_context *ctx,
     {
         return MBEDTLS_ERR_GCM_AUTH_FAILED;
     }
-
-    return 0;
+    else
+    {
+        return 0;
+    }
 }
 
 int mbedtls_gcm_auth_decrypt(mbedtls_gcm_context *ctx,
@@ -1772,9 +1931,9 @@ int mbedtls_gcm_auth_decrypt(mbedtls_gcm_context *ctx,
 {
     unsigned char tag_copy[16];
     unsigned char *actTag = NULL;
-    if (tag)
+    if (tag != NULL)
     {
-        memcpy(tag_copy, tag, tag_len);
+        (void)memcpy(tag_copy, tag, tag_len);
         actTag = tag_copy;
     }
     return (mbedtls_gcm_crypt_and_tag(ctx, MBEDTLS_GCM_DECRYPT, length, iv, iv_len, add, add_len, input, output,
@@ -1798,20 +1957,20 @@ int mbedtls_gcm_auth_decrypt(mbedtls_gcm_context *ctx,
 #else
 #include <stdio.h>
 #define mbedtls_calloc calloc
-#define mbedtls_free free
+#define mbedtls_free   free
 #endif
 
 static void ltc_reverse_array(uint8_t *src, size_t src_len)
 {
-    int i;
+    uint32_t i;
 
-    for (i = 0; i < src_len / 2; i++)
+    for (i = 0; i < src_len / 2U; i++)
     {
         uint8_t tmp;
 
-        tmp = src[i];
-        src[i] = src[src_len - 1 - i];
-        src[src_len - 1 - i] = tmp;
+        tmp                   = src[i];
+        src[i]                = src[src_len - 1U - i];
+        src[src_len - 1U - i] = tmp;
     }
 }
 
@@ -1820,21 +1979,21 @@ static void ltc_reverse_array(uint8_t *src, size_t src_len)
 #include "mbedtls/bignum.h"
 
 #if defined(MBEDTLS_FREESCALE_CAU3_PKHA)
-#define LTC_PKHA_ModAdd CAU3_PKHA_ModAdd
-#define LTC_PKHA_ModSub1 CAU3_PKHA_ModSub1
-#define LTC_PKHA_ModMul CAU3_PKHA_ModMul
-#define LTC_PKHA_ModRed CAU3_PKHA_ModRed
-#define LTC_PKHA_ModExp CAU3_PKHA_ModExp
-#define LTC_PKHA_GCD CAU3_PKHA_ModGcd
-#define LTC_PKHA_ModInv CAU3_PKHA_ModInv
+#define LTC_PKHA_ModAdd        CAU3_PKHA_ModAdd
+#define LTC_PKHA_ModSub1       CAU3_PKHA_ModSub1
+#define LTC_PKHA_ModMul        CAU3_PKHA_ModMul
+#define LTC_PKHA_ModRed        CAU3_PKHA_ModRed
+#define LTC_PKHA_ModExp        CAU3_PKHA_ModExp
+#define LTC_PKHA_GCD           CAU3_PKHA_ModGcd
+#define LTC_PKHA_ModInv        CAU3_PKHA_ModInv
 #define LTC_PKHA_PrimalityTest CAU3_PKHA_PrimalityTest
-#define LTC_INSTANCE ((CAU3_Type *)CAU3_BASE)
+#define LTC_INSTANCE           ((CAU3_Type *)CAU3_BASE)
 
-#define kLTC_PKHA_IntegerArith kCAU3_PKHA_IntegerArith
-#define kLTC_PKHA_NormalValue kCAU3_PKHA_NormalValue
+#define kLTC_PKHA_IntegerArith    kCAU3_PKHA_IntegerArith
+#define kLTC_PKHA_NormalValue     kCAU3_PKHA_NormalValue
 #define kLTC_PKHA_TimingEqualized kCAU3_PKHA_TimingEqualized
 
-#define cau3_reverse_array ltc_reverse_array
+#define cau3_reverse_array        ltc_reverse_array
 #define cau3_get_from_mbedtls_mpi ltc_get_from_mbedtls_mpi
 #endif
 
@@ -1870,7 +2029,7 @@ int mbedtls_mpi_add_abs(mbedtls_mpi *X, const mbedtls_mpi *A, const mbedtls_mpi 
 #endif /* FREESCALE_PKHA_LONG_OPERANDS_ENABLE */
         int ret;
         pkha_size_t sizeC;
-        uint8_t *N = mbedtls_calloc(4, FREESCALE_PKHA_INT_MAX_BYTES);
+        uint8_t *N    = mbedtls_calloc(4, FREESCALE_PKHA_INT_MAX_BYTES);
         uint8_t *ptrA = N + FREESCALE_PKHA_INT_MAX_BYTES;
         uint8_t *ptrB = ptrA + FREESCALE_PKHA_INT_MAX_BYTES;
         uint8_t *ptrC = ptrB + FREESCALE_PKHA_INT_MAX_BYTES;
@@ -1938,10 +2097,10 @@ int mbedtls_mpi_add_abs(mbedtls_mpi *X, const mbedtls_mpi *A, const mbedtls_mpi 
             CLEAN_RETURN(MBEDTLS_ERR_MPI_ALLOC_FAILED);
         }
 
-        memset(N, 0xFF, sizeN);
+        (void)memset(N, 0xFF, sizeN);
 
-        mbedtls_mpi_write_binary(A, ptrA, sizeA);
-        mbedtls_mpi_write_binary(B, ptrB, sizeB);
+        (void)mbedtls_mpi_write_binary(A, ptrA, sizeA);
+        (void)mbedtls_mpi_write_binary(B, ptrB, sizeB);
 
         ret = (int)CAAM_PKHA_ModAdd(CAAM_INSTANCE, &s_caamHandle, ptrA, sizeA, ptrB, sizeB, N, sizeN, ptrC, &sizeC,
                                     kCAAM_PKHA_IntegerArith);
@@ -1949,10 +2108,10 @@ int mbedtls_mpi_add_abs(mbedtls_mpi *X, const mbedtls_mpi *A, const mbedtls_mpi 
         if (ret != kStatus_Success)
             CLEAN_RETURN(MBEDTLS_ERR_MPI_NOT_ACCEPTABLE);
 
-        mbedtls_mpi_read_binary(X, ptrC, sizeC);
+        (void)mbedtls_mpi_read_binary(X, ptrC, sizeC);
         X->s = 1;
     cleanup:
-        if (N)
+        if (N != NULL)
         {
             mbedtls_free(N);
         }
@@ -1993,7 +2152,7 @@ int mbedtls_mpi_sub_abs(mbedtls_mpi *X, const mbedtls_mpi *A, const mbedtls_mpi 
 #endif /* FREESCALE_PKHA_LONG_OPERANDS_ENABLE */
         int ret;
         pkha_size_t sizeC;
-        uint8_t *N = mbedtls_calloc(4, FREESCALE_PKHA_INT_MAX_BYTES);
+        uint8_t *N    = mbedtls_calloc(4, FREESCALE_PKHA_INT_MAX_BYTES);
         uint8_t *ptrA = N + FREESCALE_PKHA_INT_MAX_BYTES;
         uint8_t *ptrB = ptrA + FREESCALE_PKHA_INT_MAX_BYTES;
         uint8_t *ptrC = ptrB + FREESCALE_PKHA_INT_MAX_BYTES;
@@ -2059,20 +2218,20 @@ int mbedtls_mpi_sub_abs(mbedtls_mpi *X, const mbedtls_mpi *A, const mbedtls_mpi 
             CLEAN_RETURN(MBEDTLS_ERR_MPI_ALLOC_FAILED);
         }
 
-        memset(N, 0xFF, sizeN);
+        (void)memset(N, 0xFF, sizeN);
 
-        mbedtls_mpi_write_binary(A, ptrA, sizeA);
-        mbedtls_mpi_write_binary(B, ptrB, sizeB);
+        (void)mbedtls_mpi_write_binary(A, ptrA, sizeA);
+        (void)mbedtls_mpi_write_binary(B, ptrB, sizeB);
 
         ret = (int)CAAM_PKHA_ModSub1(CAAM_INSTANCE, &s_caamHandle, ptrA, sizeA, ptrB, sizeB, N, sizeN, ptrC, &sizeC);
 
         if (ret != kStatus_Success)
             CLEAN_RETURN(MBEDTLS_ERR_MPI_NOT_ACCEPTABLE);
 
-        mbedtls_mpi_read_binary(X, ptrC, sizeC);
+        (void)mbedtls_mpi_read_binary(X, ptrC, sizeC);
         X->s = 1;
     cleanup:
-        if (N)
+        if (N != NULL)
         {
             mbedtls_free(N);
         }
@@ -2116,7 +2275,7 @@ int mbedtls_mpi_mul_mpi(mbedtls_mpi *X, const mbedtls_mpi *A, const mbedtls_mpi 
         pkha_size_t sizeC;
         int sign = A->s * B->s;
 
-        uint8_t *N = mbedtls_calloc(4, FREESCALE_PKHA_INT_MAX_BYTES);
+        uint8_t *N    = mbedtls_calloc(4, FREESCALE_PKHA_INT_MAX_BYTES);
         uint8_t *ptrA = N + FREESCALE_PKHA_INT_MAX_BYTES;
         uint8_t *ptrB = ptrA + FREESCALE_PKHA_INT_MAX_BYTES;
         uint8_t *ptrC = ptrB + FREESCALE_PKHA_INT_MAX_BYTES;
@@ -2192,10 +2351,10 @@ int mbedtls_mpi_mul_mpi(mbedtls_mpi *X, const mbedtls_mpi *A, const mbedtls_mpi 
             CLEAN_RETURN(MBEDTLS_ERR_MPI_ALLOC_FAILED);
         }
 
-        memset(N, 0xFF, sizeN);
+        (void)memset(N, 0xFF, sizeN);
 
-        mbedtls_mpi_write_binary(A, ptrA, sizeA);
-        mbedtls_mpi_write_binary(B, ptrB, sizeB);
+        (void)mbedtls_mpi_write_binary(A, ptrA, sizeA);
+        (void)mbedtls_mpi_write_binary(B, ptrB, sizeB);
 
         /*
          * Modular multiplication operation is used here. Since the modulus N is larger
@@ -2209,10 +2368,10 @@ int mbedtls_mpi_mul_mpi(mbedtls_mpi *X, const mbedtls_mpi *A, const mbedtls_mpi 
         if (ret != kStatus_Success)
             CLEAN_RETURN(MBEDTLS_ERR_MPI_NOT_ACCEPTABLE);
 
-        mbedtls_mpi_read_binary(X, ptrC, sizeC);
+        (void)mbedtls_mpi_read_binary(X, ptrC, sizeC);
         X->s = sign;
     cleanup:
-        if (N)
+        if (N != NULL)
         {
             mbedtls_free(N);
         }
@@ -2248,7 +2407,7 @@ int mbedtls_mpi_mod_mpi(mbedtls_mpi *R, const mbedtls_mpi *A, const mbedtls_mpi 
 #endif /* FREESCALE_PKHA_LONG_OPERANDS_ENABLE */
         int ret;
         pkha_size_t sizeC;
-        int sign = A->s;
+        int sign      = A->s;
         uint8_t *ptrA = mbedtls_calloc(3, FREESCALE_PKHA_INT_MAX_BYTES);
         uint8_t *ptrB = ptrA + FREESCALE_PKHA_INT_MAX_BYTES;
         uint8_t *ptrC = ptrB + FREESCALE_PKHA_INT_MAX_BYTES;
@@ -2302,7 +2461,7 @@ int mbedtls_mpi_mod_mpi(mbedtls_mpi *R, const mbedtls_mpi *A, const mbedtls_mpi 
     if ((sizeA <= FREESCALE_PKHA_INT_MAX_BYTES) && (sizeB <= FREESCALE_PKHA_INT_MAX_BYTES))
     {
 #endif /* FREESCALE_PKHA_LONG_OPERANDS_ENABLE */
-        int ret;
+        int ret = -1;
         pkha_size_t sizeC;
         int sign = A->s;
         uint8_t *ptrA = mbedtls_calloc(3, FREESCALE_PKHA_INT_MAX_BYTES);
@@ -2313,8 +2472,8 @@ int mbedtls_mpi_mod_mpi(mbedtls_mpi *R, const mbedtls_mpi *A, const mbedtls_mpi 
             CLEAN_RETURN(MBEDTLS_ERR_MPI_ALLOC_FAILED);
         }
 
-        mbedtls_mpi_write_binary(A, ptrA, sizeA);
-        mbedtls_mpi_write_binary(B, ptrB, sizeB);
+        (void)mbedtls_mpi_write_binary(A, ptrA, sizeA);
+        (void)mbedtls_mpi_write_binary(B, ptrB, sizeB);
 
         ret = (int)CAAM_PKHA_ModRed(CAAM_INSTANCE, &s_caamHandle, ptrA, sizeA, ptrB, sizeB, ptrC, &sizeC,
                                     kCAAM_PKHA_IntegerArith);
@@ -2322,16 +2481,19 @@ int mbedtls_mpi_mod_mpi(mbedtls_mpi *R, const mbedtls_mpi *A, const mbedtls_mpi 
         if (ret != kStatus_Success)
             CLEAN_RETURN(MBEDTLS_ERR_MPI_NOT_ACCEPTABLE);
 
-        mbedtls_mpi_read_binary(R, ptrC, sizeC);
+        (void)mbedtls_mpi_read_binary(R, ptrC, sizeC);
         R->s = sign;
 
         while (mbedtls_mpi_cmp_int(R, 0) < 0)
-            mbedtls_mpi_add_mpi(R, R, B); /* MBEDTLS_MPI_CHK( mbedtls_mpi_add_mpi( R, R, B ) ); */
-
+        {
+            (void)mbedtls_mpi_add_mpi(R, R, B); /* MBEDTLS_MPI_CHK( mbedtls_mpi_add_mpi( R, R, B ) ); */
+        }
         while (mbedtls_mpi_cmp_mpi(R, B) >= 0)
-            mbedtls_mpi_sub_mpi(R, R, B); /* MBEDTLS_MPI_CHK( mbedtls_mpi_sub_mpi( R, R, B ) ); cleanup:*/
+        {
+            (void)mbedtls_mpi_sub_mpi(R, R, B); /* MBEDTLS_MPI_CHK( mbedtls_mpi_sub_mpi( R, R, B ) ); cleanup:*/
+        }
     cleanup:
-        if (ptrA)
+        if (ptrA != NULL)
         {
             mbedtls_free(ptrA);
         }
@@ -2397,9 +2559,9 @@ int mbedtls_mpi_exp_mod(
         }
 
         pkha_size_t sizeA = mbedtls_mpi_size(AA);
-        uint8_t *ptrA = mbedtls_calloc(3, FREESCALE_PKHA_INT_MAX_BYTES);
-        uint8_t *ptrE = ptrA + FREESCALE_PKHA_INT_MAX_BYTES;
-        uint8_t *ptrN = ptrE + FREESCALE_PKHA_INT_MAX_BYTES;
+        uint8_t *ptrA     = mbedtls_calloc(3, FREESCALE_PKHA_INT_MAX_BYTES);
+        uint8_t *ptrE     = ptrA + FREESCALE_PKHA_INT_MAX_BYTES;
+        uint8_t *ptrN     = ptrE + FREESCALE_PKHA_INT_MAX_BYTES;
         if (NULL == ptrA)
         {
             CLEAN_RETURN(MBEDTLS_ERR_MPI_ALLOC_FAILED);
@@ -2466,8 +2628,9 @@ int mbedtls_mpi_exp_mod(
             ret = mbedtls_mpi_mod_mpi(X, A, N);
 
             if (ret != kStatus_Success)
+            {
                 return (MBEDTLS_ERR_MPI_NOT_ACCEPTABLE);
-
+            }
             /* Exponenciation will be performed with X. */
             AA = X;
         }
@@ -2486,9 +2649,9 @@ int mbedtls_mpi_exp_mod(
             CLEAN_RETURN(MBEDTLS_ERR_MPI_ALLOC_FAILED);
         }
 
-        mbedtls_mpi_write_binary(AA, ptrA, sizeA);
-        mbedtls_mpi_write_binary(E, ptrE, sizeE);
-        mbedtls_mpi_write_binary(N, ptrN, sizeN);
+        (void)mbedtls_mpi_write_binary(AA, ptrA, sizeA);
+        (void)mbedtls_mpi_write_binary(E, ptrE, sizeE);
+        (void)mbedtls_mpi_write_binary(N, ptrN, sizeN);
 
         ret = (int)CAAM_PKHA_ModExp(CAAM_INSTANCE, &s_caamHandle, ptrA, sizeA, ptrN, sizeN, ptrE, sizeE, ptrN, &sizeN,
                                     kCAAM_PKHA_IntegerArith, kCAAM_PKHA_NormalValue, kCAAM_PKHA_TimingEqualized);
@@ -2496,9 +2659,9 @@ int mbedtls_mpi_exp_mod(
         if (ret != kStatus_Success)
             CLEAN_RETURN(MBEDTLS_ERR_MPI_NOT_ACCEPTABLE);
 
-        mbedtls_mpi_read_binary(X, ptrN, sizeN);
+        (void)mbedtls_mpi_read_binary(X, ptrN, sizeN);
     cleanup:
-        if (ptrA)
+        if (ptrA != NULL)
         {
             mbedtls_free(ptrA);
         }
@@ -2598,8 +2761,8 @@ int mbedtls_mpi_gcd(mbedtls_mpi *G, const mbedtls_mpi *A, const mbedtls_mpi *B)
             CLEAN_RETURN(MBEDTLS_ERR_MPI_ALLOC_FAILED);
         }
 
-        mbedtls_mpi_write_binary(A, ptrA, sizeA);
-        mbedtls_mpi_write_binary(B, ptrB, sizeB);
+        (void)mbedtls_mpi_write_binary(A, ptrA, sizeA);
+        (void)mbedtls_mpi_write_binary(B, ptrB, sizeB);
 
         if (mbedtls_mpi_cmp_mpi(A, B) >= 0)
         {
@@ -2616,9 +2779,9 @@ int mbedtls_mpi_gcd(mbedtls_mpi *G, const mbedtls_mpi *A, const mbedtls_mpi *B)
         if (ret != kStatus_Success)
             CLEAN_RETURN(MBEDTLS_ERR_MPI_NOT_ACCEPTABLE);
 
-        mbedtls_mpi_read_binary(G, ptrC, sizeC);
+        (void)mbedtls_mpi_read_binary(G, ptrC, sizeC);
     cleanup:
-        if (ptrA)
+        if (ptrA != NULL)
         {
             mbedtls_free(ptrA);
         }
@@ -2730,8 +2893,8 @@ int mbedtls_mpi_inv_mod(mbedtls_mpi *X, const mbedtls_mpi *A, const mbedtls_mpi 
             CLEAN_RETURN(MBEDTLS_ERR_MPI_BAD_INPUT_DATA);
         }
 
-        mbedtls_mpi_write_binary(A, ptrA, sizeA);
-        mbedtls_mpi_write_binary(N, ptrN, sizeN);
+        (void)mbedtls_mpi_write_binary(A, ptrA, sizeA);
+        (void)mbedtls_mpi_write_binary(N, ptrN, sizeN);
 
         if (mbedtls_mpi_cmp_mpi(A, N) >= 0)
         {
@@ -2748,9 +2911,9 @@ int mbedtls_mpi_inv_mod(mbedtls_mpi *X, const mbedtls_mpi *A, const mbedtls_mpi 
         if (ret != kStatus_Success)
             CLEAN_RETURN(MBEDTLS_ERR_MPI_NOT_ACCEPTABLE);
 
-        mbedtls_mpi_read_binary(X, ptrC, sizeC);
+        (void)mbedtls_mpi_read_binary(X, ptrC, sizeC);
     cleanup:
-        if (ptrA)
+        if (ptrA != NULL)
         {
             mbedtls_free(ptrA);
         }
@@ -2785,7 +2948,7 @@ int mbedtls_mpi_is_prime(const mbedtls_mpi *X, int (*f_rng)(void *, unsigned cha
 #endif /* FREESCALE_PKHA_LONG_OPERANDS_ENABLE */
         int ret;
         int random;
-        bool result = false;
+        bool result   = false;
         uint8_t *ptrX = mbedtls_calloc(1, FREESCALE_PKHA_INT_MAX_BYTES);
         if (NULL == ptrX)
         {
@@ -2843,10 +3006,10 @@ int mbedtls_mpi_is_prime(const mbedtls_mpi *X, int (*f_rng)(void *, unsigned cha
             CLEAN_RETURN(MBEDTLS_ERR_MPI_ALLOC_FAILED);
         }
 
-        mbedtls_mpi_write_binary(X, ptrX, FREESCALE_PKHA_INT_MAX_BYTES);
+        (void)mbedtls_mpi_write_binary(X, ptrX, FREESCALE_PKHA_INT_MAX_BYTES);
 
         // Get the random seed number
-        f_rng(p_rng, (unsigned char *)(&random), sizeof(random));
+        (void)f_rng(p_rng, (unsigned char *)(&random), sizeof(random));
 
         ret = (int)CAAM_PKHA_PrimalityTest(CAAM_INSTANCE, &s_caamHandle, (unsigned char *)&random, sizeof(random),
                                            (const uint8_t *)"1", 1u, ptrX, sizeX, &result);
@@ -2861,7 +3024,7 @@ int mbedtls_mpi_is_prime(const mbedtls_mpi *X, int (*f_rng)(void *, unsigned cha
             CLEAN_RETURN(MBEDTLS_ERR_MPI_NOT_ACCEPTABLE);
         }
     cleanup:
-        if (ptrX)
+        if (ptrX != NULL)
         {
             mbedtls_free(ptrX);
         }
@@ -2883,13 +3046,13 @@ int mbedtls_mpi_is_prime(const mbedtls_mpi *X, int (*f_rng)(void *, unsigned cha
 
 #include "mbedtls/ecp.h"
 
-#define LTC_MAX_ECC (512)
+#define LTC_MAX_ECC  (512)
 #define CAAM_MAX_ECC (528)
 #define CAU3_MAX_ECC (512)
 
 typedef enum
 {
-    kBigEndian = 0U,
+    kBigEndian    = 0U,
     kLittleEndian = 1U
 } endian_t;
 
@@ -2910,22 +3073,28 @@ static int get_and_extend_mbedtls_mpi(uint8_t *dst, const mbedtls_mpi *a, size_t
     szbin = mbedtls_mpi_size(a);
 
     /* compute offset from dst */
-    offset = sz - szbin;
+    offset = (int)sz - (int)szbin;
     if (offset < 0)
+    {
         offset = 0;
-    if (offset > sz)
-        offset = sz;
-
+    }
+    if (offset > (int)sz)
+    {
+        offset = (int)sz;
+    }
     /* add leading zeroes */
-    if (offset)
-        memset(dst, 0, offset);
-
+    if (offset != 0)
+    {
+        (void)memset(dst, 0, (size_t)offset);
+    }
     /* convert mbedtls_mpi to array of bytes */
     MBEDTLS_MPI_CHK(mbedtls_mpi_write_binary(a, dst + offset, szbin));
 
     /* reverse array for LTC direct use */
     if (endian == kLittleEndian)
+    {
         ltc_reverse_array(dst, sz);
+    }
 cleanup:
     return (ret);
 }
@@ -2958,6 +3127,7 @@ int ecp_mul_comb(mbedtls_ecp_group *grp,
                  void *p_rng)
 {
     int ret;
+    status_t status = kStatus_Fail;
     bool is_inf;
     size_t size;
     size_t size_bin;
@@ -2967,24 +3137,24 @@ int ecp_mul_comb(mbedtls_ecp_group *grp,
     ltc_pkha_ecc_point_t result;
 
     /* Allocate 7 elements with size of (LTC_MAX_ECC / 8) plus ptrE with size of FREESCALE_PKHA_INT_MAX_BYTES */
-    uint8_t *ptrAX = mbedtls_calloc((7 * (LTC_MAX_ECC / 8)) + FREESCALE_PKHA_INT_MAX_BYTES, 1);
-    uint8_t *ptrAY = ptrAX + (LTC_MAX_ECC / 8);
-    uint8_t *ptrRX = ptrAY + (LTC_MAX_ECC / 8);
-    uint8_t *ptrRY = ptrRX + (LTC_MAX_ECC / 8);
-    uint8_t *ptrN = ptrRY + (LTC_MAX_ECC / 8);
+    uint8_t *ptrAX     = mbedtls_calloc((7 * (LTC_MAX_ECC / 8)) + FREESCALE_PKHA_INT_MAX_BYTES, 1);
+    uint8_t *ptrAY     = ptrAX + (LTC_MAX_ECC / 8);
+    uint8_t *ptrRX     = ptrAY + (LTC_MAX_ECC / 8);
+    uint8_t *ptrRY     = ptrRX + (LTC_MAX_ECC / 8);
+    uint8_t *ptrN      = ptrRY + (LTC_MAX_ECC / 8);
     uint8_t *ptrParamA = ptrN + (LTC_MAX_ECC / 8);
     uint8_t *ptrParamB = ptrParamA + (LTC_MAX_ECC / 8);
-    uint8_t *ptrE = ptrParamB + (LTC_MAX_ECC / 8);
+    uint8_t *ptrE      = ptrParamB + (LTC_MAX_ECC / 8);
     if (NULL == ptrAX)
     {
         CLEAN_RETURN(MBEDTLS_ERR_MPI_ALLOC_FAILED);
     }
 
-    A.X = ptrAX;
-    A.Y = ptrAY;
+    A.X      = ptrAX;
+    A.Y      = ptrAY;
     result.X = ptrRX;
     result.Y = ptrRY;
-    size = mbedtls_mpi_size(&grp->P);
+    size     = mbedtls_mpi_size(&grp->P);
     if (mbedtls_mpi_size(&P->X) > (LTC_MAX_ECC / 8) || (mbedtls_mpi_get_bit(&grp->N, 0) != 1))
     {
         CLEAN_RETURN(MBEDTLS_ERR_ECP_BAD_INPUT_DATA);
@@ -3006,8 +3176,13 @@ int ecp_mul_comb(mbedtls_ecp_group *grp,
     ltc_reverse_array(ptrN, size);
 
     /* Multiply */
-    LTC_PKHA_ECC_PointMul(LTC_INSTANCE, &A, ptrE, size_bin, ptrN, NULL, ptrParamA, ptrParamB, size,
-                          kLTC_PKHA_TimingEqualized, kLTC_PKHA_IntegerArith, &result, &is_inf);
+    status = LTC_PKHA_ECC_PointMul(LTC_INSTANCE, &A, ptrE, size_bin, ptrN, NULL, ptrParamA, ptrParamB, size,
+                                   kLTC_PKHA_TimingEqualized, kLTC_PKHA_IntegerArith, &result, &is_inf);
+
+    if (status != kStatus_Success)
+    {
+        CLEAN_RETURN(MBEDTLS_ERR_ECP_BAD_INPUT_DATA);
+    }
     /* Convert result */
     ltc_reverse_array(ptrRX, size);
     MBEDTLS_MPI_CHK(mbedtls_mpi_read_binary(&R->X, ptrRX, size));
@@ -3036,6 +3211,7 @@ int ecp_mul_comb(mbedtls_ecp_group *grp,
                  void *p_rng)
 {
     int ret;
+    status_t status = kStatus_Fail;
     size_t size;
     size_t size_bin;
     int sign = m->s;
@@ -3062,7 +3238,7 @@ int ecp_mul_comb(mbedtls_ecp_group *grp,
     result.X = ptrRX;
     result.Y = ptrRY;
     size = mbedtls_mpi_size(&grp->P);
-    if (mbedtls_mpi_size(&P->X) > (CAAM_MAX_ECC / 8) || (mbedtls_mpi_get_bit(&grp->N, 0) != 1))
+    if (mbedtls_mpi_size(&P->X) > (CAAM_MAX_ECC / 8U) || (mbedtls_mpi_get_bit(&grp->N, 0U) != 1))
     {
         CLEAN_RETURN(MBEDTLS_ERR_ECP_BAD_INPUT_DATA);
     }
@@ -3081,8 +3257,13 @@ int ecp_mul_comb(mbedtls_ecp_group *grp,
     MBEDTLS_MPI_CHK(mbedtls_mpi_write_binary(&grp->P, ptrN, size));
 
     /* Multiply */
-    CAAM_PKHA_ECC_PointMul(CAAM_INSTANCE, &s_caamHandle, &A, ptrE, size_bin, ptrN, NULL, ptrParamA, ptrParamB, size,
-                           kCAAM_PKHA_TimingEqualized, kCAAM_PKHA_IntegerArith, &result);
+    status = CAAM_PKHA_ECC_PointMul(CAAM_INSTANCE, &s_caamHandle, &A, ptrE, size_bin, ptrN, NULL, ptrParamA, ptrParamB,
+                                    size, kCAAM_PKHA_TimingEqualized, kCAAM_PKHA_IntegerArith, &result);
+
+    if (status != kStatus_Success)
+    {
+        CLEAN_RETURN(MBEDTLS_ERR_ECP_BAD_INPUT_DATA);
+    }
     /* Convert result */
     MBEDTLS_MPI_CHK(mbedtls_mpi_read_binary(&R->X, ptrRX, size));
     MBEDTLS_MPI_CHK(mbedtls_mpi_read_binary(&R->Y, ptrRY, size));
@@ -3093,7 +3274,7 @@ int ecp_mul_comb(mbedtls_ecp_group *grp,
     MBEDTLS_MPI_CHK(mbedtls_mpi_lset(&R->Z, 1));
 
 cleanup:
-    if (ptrAX)
+    if (ptrAX != NULL)
     {
         mbedtls_free(ptrAX);
     }
@@ -3109,7 +3290,7 @@ int ecp_mul_comb(mbedtls_ecp_group *grp,
                  void *p_rng)
 {
     int ret;
-    status_t status;
+    status_t status = kStatus_Fail;
     size_t size;
     size_t size_bin;
     int sign = m->s;
@@ -3188,29 +3369,6 @@ cleanup:
 #endif /* MBEDTLS_ECP_MUL_COMB_ALT */
 
 /*
- * Curve types: internal for now, might be exposed later
- */
-typedef enum
-{
-    ECP_TYPE_NONE = 0,
-    ECP_TYPE_SHORT_WEIERSTRASS, /* y^2 = x^3 + a x + b      */
-    ECP_TYPE_MONTGOMERY,        /* y^2 = x^3 + a x^2 + x    */
-} ecp_curve_type;
-/*
- * Get the type of a curve
- */
-static inline ecp_curve_type ecp_get_type(const mbedtls_ecp_group *grp)
-{
-    if (grp->G.X.p == NULL)
-        return (ECP_TYPE_NONE);
-
-    if (grp->G.Y.p == NULL)
-        return (ECP_TYPE_MONTGOMERY);
-    else
-        return (ECP_TYPE_SHORT_WEIERSTRASS);
-}
-
-/*
  * Addition: R = P + Q, result's coordinates normalized
  */
 #if defined(MBEDTLS_ECP_ADD_ALT)
@@ -3218,18 +3376,19 @@ static inline ecp_curve_type ecp_get_type(const mbedtls_ecp_group *grp)
 int ecp_add(const mbedtls_ecp_group *grp, mbedtls_ecp_point *R, const mbedtls_ecp_point *P, const mbedtls_ecp_point *Q)
 {
     int ret;
+    status_t status = kStatus_Fail;
     size_t size;
     ltc_pkha_ecc_point_t A;
     ltc_pkha_ecc_point_t B;
     ltc_pkha_ecc_point_t result;
 
-    uint8_t *ptrAX = mbedtls_calloc(9, (LTC_MAX_ECC / 8));
-    uint8_t *ptrAY = ptrAX + (LTC_MAX_ECC / 8);
-    uint8_t *ptrBX = ptrAY + (LTC_MAX_ECC / 8);
-    uint8_t *ptrBY = ptrBX + (LTC_MAX_ECC / 8);
-    uint8_t *ptrRX = ptrBY + (LTC_MAX_ECC / 8);
-    uint8_t *ptrRY = ptrRX + (LTC_MAX_ECC / 8);
-    uint8_t *ptrN = ptrRY + (LTC_MAX_ECC / 8);
+    uint8_t *ptrAX     = mbedtls_calloc(9, (LTC_MAX_ECC / 8));
+    uint8_t *ptrAY     = ptrAX + (LTC_MAX_ECC / 8);
+    uint8_t *ptrBX     = ptrAY + (LTC_MAX_ECC / 8);
+    uint8_t *ptrBY     = ptrBX + (LTC_MAX_ECC / 8);
+    uint8_t *ptrRX     = ptrBY + (LTC_MAX_ECC / 8);
+    uint8_t *ptrRY     = ptrRX + (LTC_MAX_ECC / 8);
+    uint8_t *ptrN      = ptrRY + (LTC_MAX_ECC / 8);
     uint8_t *ptrParamA = ptrN + (LTC_MAX_ECC / 8);
     uint8_t *ptrParamB = ptrParamA + (LTC_MAX_ECC / 8);
     if (NULL == ptrAX)
@@ -3237,16 +3396,16 @@ int ecp_add(const mbedtls_ecp_group *grp, mbedtls_ecp_point *R, const mbedtls_ec
         CLEAN_RETURN(MBEDTLS_ERR_MPI_ALLOC_FAILED);
     }
 
-    if (ecp_get_type(grp) != ECP_TYPE_SHORT_WEIERSTRASS)
+    if (mbedtls_ecp_get_type(grp) != MBEDTLS_ECP_TYPE_SHORT_WEIERSTRASS)
         CLEAN_RETURN(MBEDTLS_ERR_ECP_FEATURE_UNAVAILABLE);
 
-    A.X = ptrAX;
-    A.Y = ptrAY;
-    B.X = ptrBX;
-    B.Y = ptrBY;
+    A.X      = ptrAX;
+    A.Y      = ptrAY;
+    B.X      = ptrBX;
+    B.Y      = ptrBY;
     result.X = ptrRX;
     result.Y = ptrRY;
-    size = mbedtls_mpi_size(&grp->P);
+    size     = mbedtls_mpi_size(&grp->P);
     if (mbedtls_mpi_size(&P->X) > (LTC_MAX_ECC / 8) || (mbedtls_mpi_get_bit(&grp->P, 0) != 1))
     {
         CLEAN_RETURN(MBEDTLS_ERR_ECP_BAD_INPUT_DATA);
@@ -3260,8 +3419,12 @@ int ecp_add(const mbedtls_ecp_group *grp, mbedtls_ecp_point *R, const mbedtls_ec
     MBEDTLS_MPI_CHK(mbedtls_mpi_write_binary(&grp->P, ptrN, size));
     ltc_reverse_array(ptrN, size);
     /* Multiply */
-    LTC_PKHA_ECC_PointAdd(LTC_INSTANCE, &A, &B, ptrN, NULL, ptrParamA, ptrParamB, size, kLTC_PKHA_IntegerArith,
-                          &result);
+    status = LTC_PKHA_ECC_PointAdd(LTC_INSTANCE, &A, &B, ptrN, NULL, ptrParamA, ptrParamB, size, kLTC_PKHA_IntegerArith,
+                                   &result);
+    if (status != kStatus_Success)
+    {
+        CLEAN_RETURN(MBEDTLS_ERR_ECP_BAD_INPUT_DATA);
+    }
     /* Convert result */
     ltc_reverse_array(ptrRX, size);
     MBEDTLS_MPI_CHK(mbedtls_mpi_read_binary(&R->X, ptrRX, size));
@@ -3283,6 +3446,7 @@ cleanup:
 int ecp_add(const mbedtls_ecp_group *grp, mbedtls_ecp_point *R, const mbedtls_ecp_point *P, const mbedtls_ecp_point *Q)
 {
     int ret;
+    status_t status = kStatus_Fail;
     size_t size;
     caam_pkha_ecc_point_t A;
     caam_pkha_ecc_point_t B;
@@ -3302,7 +3466,7 @@ int ecp_add(const mbedtls_ecp_group *grp, mbedtls_ecp_point *R, const mbedtls_ec
         CLEAN_RETURN(MBEDTLS_ERR_MPI_ALLOC_FAILED);
     }
 
-    if (ecp_get_type(grp) != ECP_TYPE_SHORT_WEIERSTRASS)
+    if (mbedtls_ecp_get_type(grp) != MBEDTLS_ECP_TYPE_SHORT_WEIERSTRASS)
         CLEAN_RETURN(MBEDTLS_ERR_ECP_FEATURE_UNAVAILABLE);
 
     A.X = ptrAX;
@@ -3312,7 +3476,7 @@ int ecp_add(const mbedtls_ecp_group *grp, mbedtls_ecp_point *R, const mbedtls_ec
     result.X = ptrRX;
     result.Y = ptrRY;
     size = mbedtls_mpi_size(&grp->P);
-    if (mbedtls_mpi_size(&P->X) > (CAAM_MAX_ECC / 8) || (mbedtls_mpi_get_bit(&grp->P, 0) != 1))
+    if (mbedtls_mpi_size(&P->X) > (CAAM_MAX_ECC / 8U) || (mbedtls_mpi_get_bit(&grp->P, 0) != 1))
     {
         CLEAN_RETURN(MBEDTLS_ERR_ECP_BAD_INPUT_DATA);
     }
@@ -3325,8 +3489,13 @@ int ecp_add(const mbedtls_ecp_group *grp, mbedtls_ecp_point *R, const mbedtls_ec
     MBEDTLS_MPI_CHK(mbedtls_mpi_write_binary(&grp->P, ptrN, size));
 
     /* Multiply */
-    CAAM_PKHA_ECC_PointAdd(CAAM_INSTANCE, &s_caamHandle, &A, &B, ptrN, NULL, ptrParamA, ptrParamB, size,
-                           kCAAM_PKHA_IntegerArith, &result);
+    status = CAAM_PKHA_ECC_PointAdd(CAAM_INSTANCE, &s_caamHandle, &A, &B, ptrN, NULL, ptrParamA, ptrParamB, size,
+                                    kCAAM_PKHA_IntegerArith, &result);
+
+    if (status != kStatus_Success)
+    {
+        CLEAN_RETURN(MBEDTLS_ERR_ECP_BAD_INPUT_DATA);
+    }
     /* Convert result */
     MBEDTLS_MPI_CHK(mbedtls_mpi_read_binary(&R->X, ptrRX, size));
     MBEDTLS_MPI_CHK(mbedtls_mpi_read_binary(&R->Y, ptrRY, size));
@@ -3335,7 +3504,7 @@ int ecp_add(const mbedtls_ecp_group *grp, mbedtls_ecp_point *R, const mbedtls_ec
     MBEDTLS_MPI_CHK(mbedtls_mpi_lset(&R->Z, 1));
 
 cleanup:
-    if (ptrAX)
+    if (ptrAX != NULL)
     {
         mbedtls_free(ptrAX);
     }
@@ -3366,7 +3535,7 @@ int ecp_add(const mbedtls_ecp_group *grp, mbedtls_ecp_point *R, const mbedtls_ec
         CLEAN_RETURN(MBEDTLS_ERR_MPI_ALLOC_FAILED);
     }
 
-    if (ecp_get_type(grp) != ECP_TYPE_SHORT_WEIERSTRASS)
+    if (mbedtls_ecp_get_type(grp) != MBEDTLS_ECP_TYPE_SHORT_WEIERSTRASS)
         CLEAN_RETURN(MBEDTLS_ERR_ECP_FEATURE_UNAVAILABLE);
 
     A.X = ptrAX;
@@ -3452,15 +3621,15 @@ int ecp_mul_mxz(mbedtls_ecp_group *grp,
     /* Allocate 2 elements with size of (CAU3_MAX_ECC / 8) plus ptrE with size of FREESCALE_PKHA_INT_MAX_BYTES */
     uint8_t *ptrAX = mbedtls_calloc((2 * (CAU3_MAX_ECC / 8)) + FREESCALE_PKHA_INT_MAX_BYTES, 1);
     uint8_t *ptrRX = ptrAX + (CAU3_MAX_ECC / 8);
-    uint8_t *ptrE = ptrRX + (CAU3_MAX_ECC / 8);
+    uint8_t *ptrE  = ptrRX + (CAU3_MAX_ECC / 8);
     if (NULL == ptrAX)
     {
         CLEAN_RETURN(MBEDTLS_ERR_MPI_ALLOC_FAILED);
     }
 
-    A.X = ptrAX;
+    A.X      = ptrAX;
     result.X = ptrRX;
-    size = mbedtls_mpi_size(&grp->P);
+    size     = mbedtls_mpi_size(&grp->P);
     if (mbedtls_mpi_size(&P->X) > (CAAM_MAX_ECC / 8))
     {
         CLEAN_RETURN(MBEDTLS_ERR_ECP_BAD_INPUT_DATA);
@@ -3511,7 +3680,7 @@ cleanup:
 #else
 #include <stdio.h>
 #define mbedtls_calloc calloc
-#define mbedtls_free free
+#define mbedtls_free   free
 #endif
 
 #include "mbedtls/bignum.h"
@@ -3525,8 +3694,8 @@ static void reverse_array(uint8_t *src, size_t src_len)
     {
         uint8_t tmp;
 
-        tmp = src[i];
-        src[i] = src[src_len - 1 - i];
+        tmp                  = src[i];
+        src[i]               = src[src_len - 1 - i];
         src[src_len - 1 - i] = tmp;
     }
 }
@@ -3538,9 +3707,9 @@ static int mbedtls_mpi_exp_mod_shim(mbedtls_mpi *X,
                                     const mbedtls_mpi *E,
                                     const mbedtls_mpi *N /*, mbedtls_mpi *_RR */)
 {
-    int ret = MBEDTLS_ERR_MPI_ALLOC_FAILED;
-    size_t sizeA = mbedtls_mpi_size(A);
-    size_t sizeN = mbedtls_mpi_size(N);
+    int ret       = MBEDTLS_ERR_MPI_ALLOC_FAILED;
+    size_t sizeA  = mbedtls_mpi_size(A);
+    size_t sizeN  = mbedtls_mpi_size(N);
     uint8_t *ptrX = mbedtls_calloc(3, FREESCALE_PKHA_INT_MAX_BYTES);
     uint8_t *ptrA = ptrX + FREESCALE_PKHA_INT_MAX_BYTES;
     uint8_t *ptrN = ptrA + FREESCALE_PKHA_INT_MAX_BYTES;
@@ -3549,6 +3718,12 @@ static int mbedtls_mpi_exp_mod_shim(mbedtls_mpi *X,
     {
         CLEAN_RETURN(MBEDTLS_ERR_MPI_ALLOC_FAILED);
     }
+
+#if defined(MBEDTLS_THREADING_C)
+    int _ret;
+    if ((_ret = mbedtls_mutex_lock(&mbedtls_threading_hwcrypto_casper_mutex)) != 0)
+        return (_ret);
+#endif
 
     MBEDTLS_MPI_CHK(mbedtls_mpi_write_binary(A, ptrA, sizeA));
     reverse_array(ptrA, sizeA);
@@ -3566,6 +3741,10 @@ cleanup:
         mbedtls_free(ptrX);
     }
 
+#if defined(MBEDTLS_THREADING_C)
+    if ((_ret = mbedtls_mutex_unlock(&mbedtls_threading_hwcrypto_casper_mutex)) != 0)
+        return (_ret);
+#endif
     return ret;
 }
 
@@ -3579,9 +3758,9 @@ int mbedtls_rsa_public(mbedtls_rsa_context *ctx, const unsigned char *input, uns
 
 #if defined(MBEDTLS_THREADING_C)
     if ((ret = mbedtls_mutex_lock(&ctx->mutex)) != 0)
-      {
+    {
         return (ret);
-      }  
+    }
 #endif
 
     MBEDTLS_MPI_CHK(mbedtls_mpi_read_binary(&T, input, ctx->len));
@@ -3601,9 +3780,9 @@ int mbedtls_rsa_public(mbedtls_rsa_context *ctx, const unsigned char *input, uns
 cleanup:
 #if defined(MBEDTLS_THREADING_C)
     if (mbedtls_mutex_unlock(&ctx->mutex) != 0)
-      {
+    {
         return (MBEDTLS_ERR_THREADING_MUTEX_ERROR);
-       } 
+    }
 #endif
 
     mbedtls_mpi_free(&T);
@@ -3630,7 +3809,7 @@ cleanup:
 int mbedtls_internal_md5_process(mbedtls_md5_context *ctx, const unsigned char data[64])
 {
     status_t ret = kStatus_Fail;
-    ret = MMCAU_MD5_HashN(data, 1, ctx->state);
+    ret          = MMCAU_MD5_HashN(data, 1, ctx->state);
     if (ret != kStatus_Success)
     {
         return MBEDTLS_ERR_MD5_HW_ACCEL_FAILED;
@@ -3675,7 +3854,7 @@ void mbedtls_sha1_clone(mbedtls_sha1_context *dst, const mbedtls_sha1_context *s
 int mbedtls_sha1_starts_ret(mbedtls_sha1_context *ctx)
 {
     status_t ret = kStatus_Fail;
-    ret = LTC_HASH_Init(LTC_INSTANCE, ctx, kLTC_Sha1, NULL, 0);
+    ret          = LTC_HASH_Init(LTC_INSTANCE, ctx, kLTC_Sha1, NULL, 0);
     if (ret != kStatus_Success)
     {
         return MBEDTLS_ERR_SHA1_HW_ACCEL_FAILED;
@@ -3686,7 +3865,7 @@ int mbedtls_sha1_starts_ret(mbedtls_sha1_context *ctx)
 int mbedtls_internal_sha1_process(mbedtls_sha1_context *ctx, const unsigned char data[64])
 {
     status_t ret = kStatus_Fail;
-    ret = LTC_HASH_Update(ctx, data, 64);
+    ret          = LTC_HASH_Update(ctx, data, 64);
     if (ret != kStatus_Success)
     {
         return MBEDTLS_ERR_SHA1_HW_ACCEL_FAILED;
@@ -3700,7 +3879,7 @@ int mbedtls_internal_sha1_process(mbedtls_sha1_context *ctx, const unsigned char
 int mbedtls_sha1_update_ret(mbedtls_sha1_context *ctx, const unsigned char *input, size_t ilen)
 {
     status_t ret = kStatus_Fail;
-    ret = LTC_HASH_Update(ctx, input, ilen);
+    ret          = LTC_HASH_Update(ctx, input, ilen);
     if (ret != kStatus_Success)
     {
         return MBEDTLS_ERR_SHA1_HW_ACCEL_FAILED;
@@ -3714,7 +3893,7 @@ int mbedtls_sha1_update_ret(mbedtls_sha1_context *ctx, const unsigned char *inpu
 int mbedtls_sha1_finish_ret(mbedtls_sha1_context *ctx, unsigned char output[20])
 {
     status_t ret = kStatus_Fail;
-    ret = LTC_HASH_Finish(ctx, output, 0);
+    ret          = LTC_HASH_Finish(ctx, output, 0);
     if (ret != kStatus_Success)
     {
         return MBEDTLS_ERR_SHA1_HW_ACCEL_FAILED;
@@ -3729,7 +3908,7 @@ int mbedtls_sha1_finish_ret(mbedtls_sha1_context *ctx, unsigned char output[20])
 int mbedtls_internal_sha1_process(mbedtls_sha1_context *ctx, const unsigned char data[64])
 {
     status_t ret = kStatus_Fail;
-    ret = MMCAU_SHA1_HashN(data, 1, ctx->state);
+    ret          = MMCAU_SHA1_HashN(data, 1, ctx->state);
     if (ret != kStatus_Success)
     {
         return MBEDTLS_ERR_SHA1_HW_ACCEL_FAILED;
@@ -3764,7 +3943,7 @@ void mbedtls_sha1_clone(mbedtls_sha1_context *dst, const mbedtls_sha1_context *s
 int mbedtls_sha1_starts_ret(mbedtls_sha1_context *ctx)
 {
     status_t ret = kStatus_Fail;
-    ret = SHA_Init(SHA_INSTANCE, ctx, kSHA_Sha1);
+    ret          = SHA_Init(SHA_INSTANCE, ctx, kSHA_Sha1);
     if (ret != kStatus_Success)
     {
         return MBEDTLS_ERR_SHA1_HW_ACCEL_FAILED;
@@ -3775,7 +3954,7 @@ int mbedtls_sha1_starts_ret(mbedtls_sha1_context *ctx)
 int mbedtls_internal_sha1_process(mbedtls_sha1_context *ctx, const unsigned char data[64])
 {
     status_t ret = kStatus_Fail;
-    ret = SHA_Update(SHA_INSTANCE, ctx, data, 64, MANUAL_LOAD_SHA_INPUT);
+    ret          = SHA_Update(SHA_INSTANCE, ctx, data, 64, MANUAL_LOAD_SHA_INPUT);
     if (ret != kStatus_Success)
     {
         return MBEDTLS_ERR_SHA1_HW_ACCEL_FAILED;
@@ -3789,7 +3968,7 @@ int mbedtls_internal_sha1_process(mbedtls_sha1_context *ctx, const unsigned char
 int mbedtls_sha1_update_ret(mbedtls_sha1_context *ctx, const unsigned char *input, size_t ilen)
 {
     status_t ret = kStatus_Fail;
-    ret = SHA_Update(SHA_INSTANCE, ctx, input, ilen, MANUAL_LOAD_SHA_INPUT);
+    ret          = SHA_Update(SHA_INSTANCE, ctx, input, ilen, MANUAL_LOAD_SHA_INPUT);
     if (ret != kStatus_Success)
     {
         return MBEDTLS_ERR_SHA1_HW_ACCEL_FAILED;
@@ -3803,8 +3982,8 @@ int mbedtls_sha1_update_ret(mbedtls_sha1_context *ctx, const unsigned char *inpu
 int mbedtls_sha1_finish_ret(mbedtls_sha1_context *ctx, unsigned char output[20])
 {
     size_t outputSize = 20u;
-    status_t ret = kStatus_Fail;
-    ret = SHA_Finish(SHA_INSTANCE, ctx, output, &outputSize);
+    status_t ret      = kStatus_Fail;
+    ret               = SHA_Finish(SHA_INSTANCE, ctx, output, &outputSize);
     if (ret != kStatus_Success)
     {
         return MBEDTLS_ERR_SHA1_HW_ACCEL_FAILED;
@@ -3816,20 +3995,22 @@ int mbedtls_sha1_finish_ret(mbedtls_sha1_context *ctx, unsigned char output[20])
 
 void mbedtls_sha1_init(mbedtls_sha1_context *ctx)
 {
-    memset(ctx, 0, sizeof(mbedtls_sha1_context));
+    (void)memset(ctx, 0, sizeof(mbedtls_sha1_context));
 }
 
 void mbedtls_sha1_free(mbedtls_sha1_context *ctx)
 {
     if (ctx == NULL)
+    {
         return;
+    }
 
     mbedtls_zeroize(ctx, sizeof(mbedtls_sha1_context));
 }
 
 void mbedtls_sha1_clone(mbedtls_sha1_context *dst, const mbedtls_sha1_context *src)
 {
-    memcpy(dst, src, sizeof(mbedtls_sha1_context));
+    (void)memcpy(dst, src, sizeof(mbedtls_sha1_context));
 }
 
 /*
@@ -3838,7 +4019,7 @@ void mbedtls_sha1_clone(mbedtls_sha1_context *dst, const mbedtls_sha1_context *s
 int mbedtls_sha1_starts_ret(mbedtls_sha1_context *ctx)
 {
     status_t ret = kStatus_Fail;
-    ret = CAAM_HASH_Init(CAAM_INSTANCE, &s_caamHandle, ctx, kCAAM_Sha1, NULL, 0);
+    ret          = CAAM_HASH_Init(CAAM_INSTANCE, &s_caamHandle, ctx, kCAAM_Sha1, NULL, 0);
     if (ret != kStatus_Success)
     {
         return MBEDTLS_ERR_SHA1_HW_ACCEL_FAILED;
@@ -3849,7 +4030,7 @@ int mbedtls_sha1_starts_ret(mbedtls_sha1_context *ctx)
 int mbedtls_internal_sha1_process(mbedtls_sha1_context *ctx, const unsigned char data[64])
 {
     status_t ret = kStatus_Fail;
-    ret = CAAM_HASH_Update(ctx, data, 64);
+    ret          = CAAM_HASH_Update(ctx, data, 64);
     if (ret != kStatus_Success)
     {
         return MBEDTLS_ERR_SHA1_HW_ACCEL_FAILED;
@@ -3863,7 +4044,7 @@ int mbedtls_internal_sha1_process(mbedtls_sha1_context *ctx, const unsigned char
 int mbedtls_sha1_update_ret(mbedtls_sha1_context *ctx, const unsigned char *input, size_t ilen)
 {
     status_t ret = kStatus_Fail;
-    ret = CAAM_HASH_Update(ctx, input, ilen);
+    ret          = CAAM_HASH_Update(ctx, input, ilen);
     if (ret != kStatus_Success)
     {
         return MBEDTLS_ERR_SHA1_HW_ACCEL_FAILED;
@@ -3877,7 +4058,7 @@ int mbedtls_sha1_update_ret(mbedtls_sha1_context *ctx, const unsigned char *inpu
 int mbedtls_sha1_finish_ret(mbedtls_sha1_context *ctx, unsigned char output[20])
 {
     status_t ret = kStatus_Fail;
-    ret = CAAM_HASH_Finish(ctx, output, 0);
+    ret          = CAAM_HASH_Finish(ctx, output, NULL);
     if (ret != kStatus_Success)
     {
         return MBEDTLS_ERR_SHA1_HW_ACCEL_FAILED;
@@ -3912,7 +4093,7 @@ void mbedtls_sha1_clone(mbedtls_sha1_context *dst, const mbedtls_sha1_context *s
 int mbedtls_sha1_starts_ret(mbedtls_sha1_context *ctx)
 {
     status_t ret = kStatus_Fail;
-    ret = CAU3_HASH_Init(CAU3, ctx, kCAU3_Sha1);
+    ret          = CAU3_HASH_Init(CAU3, ctx, kCAU3_Sha1);
     if (ret != kStatus_Success)
     {
         return MBEDTLS_ERR_SHA1_HW_ACCEL_FAILED;
@@ -3923,7 +4104,7 @@ int mbedtls_sha1_starts_ret(mbedtls_sha1_context *ctx)
 int mbedtls_internal_sha1_process(mbedtls_sha1_context *ctx, const unsigned char data[64])
 {
     status_t ret = kStatus_Fail;
-    ret = CAU3_HASH_Update(CAU3, ctx, data, 64);
+    ret          = CAU3_HASH_Update(CAU3, ctx, data, 64);
     if (ret != kStatus_Success)
     {
         return MBEDTLS_ERR_SHA1_HW_ACCEL_FAILED;
@@ -3937,7 +4118,7 @@ int mbedtls_internal_sha1_process(mbedtls_sha1_context *ctx, const unsigned char
 int mbedtls_sha1_update_ret(mbedtls_sha1_context *ctx, const unsigned char *input, size_t ilen)
 {
     status_t ret = kStatus_Fail;
-    ret = CAU3_HASH_Update(CAU3, ctx, input, ilen);
+    ret          = CAU3_HASH_Update(CAU3, ctx, input, ilen);
     if (ret != kStatus_Success)
     {
         return MBEDTLS_ERR_SHA1_HW_ACCEL_FAILED;
@@ -3951,7 +4132,7 @@ int mbedtls_sha1_update_ret(mbedtls_sha1_context *ctx, const unsigned char *inpu
 int mbedtls_sha1_finish_ret(mbedtls_sha1_context *ctx, unsigned char output[20])
 {
     status_t ret = kStatus_Fail;
-    ret = CAU3_HASH_Finish(CAU3, ctx, output, 0);
+    ret          = CAU3_HASH_Finish(CAU3, ctx, output, 0);
     if (ret != kStatus_Success)
     {
         return MBEDTLS_ERR_SHA1_HW_ACCEL_FAILED;
@@ -3986,7 +4167,7 @@ void mbedtls_sha1_clone(mbedtls_sha1_context *dst, const mbedtls_sha1_context *s
 int mbedtls_sha1_starts_ret(mbedtls_sha1_context *ctx)
 {
     status_t ret = kStatus_Fail;
-    ret = DCP_HASH_Init(DCP, &s_dcpHandle, ctx, kDCP_Sha1);
+    ret          = DCP_HASH_Init(DCP, &s_dcpHandle, ctx, kDCP_Sha1);
     if (ret != kStatus_Success)
     {
         return MBEDTLS_ERR_SHA1_HW_ACCEL_FAILED;
@@ -3999,7 +4180,7 @@ int mbedtls_internal_sha1_process(mbedtls_sha1_context *ctx, const unsigned char
     status_t ret = kStatus_Fail;
 #if defined(__DCACHE_PRESENT) && (__DCACHE_PRESENT == 1U) && defined(DCP_USE_DCACHE) && (DCP_USE_DCACHE == 1U)
     DCACHE_CleanByRange((uint32_t)data, 64u);
-#endif /* __DCACHE_PRESENT & DCP_USE_DCACHE */ 
+#endif /* __DCACHE_PRESENT & DCP_USE_DCACHE */
     ret = DCP_HASH_Update(DCP, ctx, data, 64);
     if (ret != kStatus_Success)
     {
@@ -4016,7 +4197,7 @@ int mbedtls_sha1_update_ret(mbedtls_sha1_context *ctx, const unsigned char *inpu
     status_t ret = kStatus_Fail;
 #if defined(__DCACHE_PRESENT) && (__DCACHE_PRESENT == 1U) && defined(DCP_USE_DCACHE) && (DCP_USE_DCACHE == 1U)
     DCACHE_CleanByRange((uint32_t)input, ilen);
-#endif /* __DCACHE_PRESENT & DCP_USE_DCACHE */ 
+#endif /* __DCACHE_PRESENT & DCP_USE_DCACHE */
     ret = DCP_HASH_Update(DCP, ctx, input, ilen);
     if (ret != kStatus_Success)
     {
@@ -4031,7 +4212,7 @@ int mbedtls_sha1_update_ret(mbedtls_sha1_context *ctx, const unsigned char *inpu
 int mbedtls_sha1_finish_ret(mbedtls_sha1_context *ctx, unsigned char output[20])
 {
     status_t ret = kStatus_Fail;
-    ret = DCP_HASH_Finish(DCP, ctx, output, NULL);
+    ret          = DCP_HASH_Finish(DCP, ctx, output, NULL);
     if (ret != kStatus_Success)
     {
         return MBEDTLS_ERR_SHA1_HW_ACCEL_FAILED;
@@ -4066,7 +4247,7 @@ void mbedtls_sha1_clone(mbedtls_sha1_context *dst, const mbedtls_sha1_context *s
 int mbedtls_sha1_starts_ret(mbedtls_sha1_context *ctx)
 {
     status_t ret = kStatus_Fail;
-    ret = HASHCRYPT_SHA_Init(HASHCRYPT, ctx, kHASHCRYPT_Sha1);
+    ret          = HASHCRYPT_SHA_Init(HASHCRYPT, ctx, kHASHCRYPT_Sha1);
     if (ret != kStatus_Success)
     {
         return MBEDTLS_ERR_SHA1_HW_ACCEL_FAILED;
@@ -4077,7 +4258,7 @@ int mbedtls_sha1_starts_ret(mbedtls_sha1_context *ctx)
 int mbedtls_internal_sha1_process(mbedtls_sha1_context *ctx, const unsigned char data[64])
 {
     status_t ret = kStatus_Fail;
-    ret = HASHCRYPT_SHA_Update(HASHCRYPT, ctx, data, 64);
+    ret          = HASHCRYPT_SHA_Update(HASHCRYPT, ctx, data, 64);
     if (ret != kStatus_Success)
     {
         return MBEDTLS_ERR_SHA1_HW_ACCEL_FAILED;
@@ -4091,7 +4272,7 @@ int mbedtls_internal_sha1_process(mbedtls_sha1_context *ctx, const unsigned char
 int mbedtls_sha1_update_ret(mbedtls_sha1_context *ctx, const unsigned char *input, size_t ilen)
 {
     status_t ret = kStatus_Fail;
-    ret = HASHCRYPT_SHA_Update(HASHCRYPT, ctx, input, ilen);
+    ret          = HASHCRYPT_SHA_Update(HASHCRYPT, ctx, input, ilen);
     if (ret != kStatus_Success)
     {
         return MBEDTLS_ERR_SHA1_HW_ACCEL_FAILED;
@@ -4104,9 +4285,9 @@ int mbedtls_sha1_update_ret(mbedtls_sha1_context *ctx, const unsigned char *inpu
  */
 int mbedtls_sha1_finish_ret(mbedtls_sha1_context *ctx, unsigned char output[20])
 {
-    status_t ret = kStatus_Fail;
+    status_t ret      = kStatus_Fail;
     size_t outputSize = 20;
-    ret = HASHCRYPT_SHA_Finish(HASHCRYPT, ctx, output, &outputSize);
+    ret               = HASHCRYPT_SHA_Finish(HASHCRYPT, ctx, output, &outputSize);
     if (ret != kStatus_Success)
     {
         return MBEDTLS_ERR_SHA1_HW_ACCEL_FAILED;
@@ -4191,7 +4372,7 @@ int mbedtls_sha256_starts_ret(mbedtls_sha256_context *ctx, int is224)
 int mbedtls_internal_sha256_process(mbedtls_sha256_context *ctx, const unsigned char data[64])
 {
     status_t ret = kStatus_Fail;
-    ret = LTC_HASH_Update(ctx, data, 64);
+    ret          = LTC_HASH_Update(ctx, data, 64);
     if (ret != kStatus_Success)
     {
         return MBEDTLS_ERR_SHA256_HW_ACCEL_FAILED;
@@ -4205,7 +4386,7 @@ int mbedtls_internal_sha256_process(mbedtls_sha256_context *ctx, const unsigned 
 int mbedtls_sha256_update_ret(mbedtls_sha256_context *ctx, const unsigned char *input, size_t ilen)
 {
     status_t ret = kStatus_Fail;
-    ret = LTC_HASH_Update(ctx, input, ilen);
+    ret          = LTC_HASH_Update(ctx, input, ilen);
     if (ret != kStatus_Success)
     {
         return MBEDTLS_ERR_SHA256_HW_ACCEL_FAILED;
@@ -4219,7 +4400,7 @@ int mbedtls_sha256_update_ret(mbedtls_sha256_context *ctx, const unsigned char *
 int mbedtls_sha256_finish_ret(mbedtls_sha256_context *ctx, unsigned char output[32])
 {
     status_t ret = kStatus_Fail;
-    ret = LTC_HASH_Finish(ctx, output, 0);
+    ret          = LTC_HASH_Finish(ctx, output, 0);
     if (ret != kStatus_Success)
     {
         return MBEDTLS_ERR_SHA256_HW_ACCEL_FAILED;
@@ -4234,7 +4415,7 @@ int mbedtls_sha256_finish_ret(mbedtls_sha256_context *ctx, unsigned char output[
 int mbedtls_internal_sha256_process(mbedtls_sha256_context *ctx, const unsigned char data[64])
 {
     status_t ret = kStatus_Fail;
-    ret = MMCAU_SHA256_HashN(data, 1, ctx->state);
+    ret          = MMCAU_SHA256_HashN(data, 1, ctx->state);
     if (ret != kStatus_Success)
     {
         return MBEDTLS_ERR_SHA256_HW_ACCEL_FAILED;
@@ -4284,7 +4465,7 @@ int mbedtls_sha256_starts_ret(mbedtls_sha256_context *ctx, int is224)
 int mbedtls_internal_sha256_process(mbedtls_sha256_context *ctx, const unsigned char data[64])
 {
     status_t ret = kStatus_Fail;
-    ret = CAU3_HASH_Update(CAU3, ctx, data, 64);
+    ret          = CAU3_HASH_Update(CAU3, ctx, data, 64);
     if (ret != kStatus_Success)
     {
         return MBEDTLS_ERR_SHA256_HW_ACCEL_FAILED;
@@ -4298,7 +4479,7 @@ int mbedtls_internal_sha256_process(mbedtls_sha256_context *ctx, const unsigned 
 int mbedtls_sha256_update_ret(mbedtls_sha256_context *ctx, const unsigned char *input, size_t ilen)
 {
     status_t ret = kStatus_Fail;
-    ret = CAU3_HASH_Update(CAU3, ctx, input, ilen);
+    ret          = CAU3_HASH_Update(CAU3, ctx, input, ilen);
     if (ret != kStatus_Success)
     {
         return MBEDTLS_ERR_SHA256_HW_ACCEL_FAILED;
@@ -4312,7 +4493,7 @@ int mbedtls_sha256_update_ret(mbedtls_sha256_context *ctx, const unsigned char *
 int mbedtls_sha256_finish_ret(mbedtls_sha256_context *ctx, unsigned char output[32])
 {
     status_t ret = kStatus_Fail;
-    ret = CAU3_HASH_Finish(CAU3, ctx, output, 0);
+    ret          = CAU3_HASH_Finish(CAU3, ctx, output, 0);
     if (ret != kStatus_Success)
     {
         return MBEDTLS_ERR_SHA256_HW_ACCEL_FAILED;
@@ -4361,7 +4542,7 @@ int mbedtls_sha256_starts_ret(mbedtls_sha256_context *ctx, int is224)
 int mbedtls_internal_sha256_process(mbedtls_sha256_context *ctx, const unsigned char data[64])
 {
     status_t ret = kStatus_Fail;
-    ret = SHA_Update(SHA_INSTANCE, ctx, data, 64, MANUAL_LOAD_SHA_INPUT);
+    ret          = SHA_Update(SHA_INSTANCE, ctx, data, 64, MANUAL_LOAD_SHA_INPUT);
     if (ret != kStatus_Success)
     {
         return MBEDTLS_ERR_SHA256_HW_ACCEL_FAILED;
@@ -4375,7 +4556,7 @@ int mbedtls_internal_sha256_process(mbedtls_sha256_context *ctx, const unsigned 
 int mbedtls_sha256_update_ret(mbedtls_sha256_context *ctx, const unsigned char *input, size_t ilen)
 {
     status_t ret = kStatus_Fail;
-    ret = SHA_Update(SHA_INSTANCE, ctx, input, ilen, MANUAL_LOAD_SHA_INPUT);
+    ret          = SHA_Update(SHA_INSTANCE, ctx, input, ilen, MANUAL_LOAD_SHA_INPUT);
     if (ret != kStatus_Success)
     {
         return MBEDTLS_ERR_SHA256_HW_ACCEL_FAILED;
@@ -4389,8 +4570,8 @@ int mbedtls_sha256_update_ret(mbedtls_sha256_context *ctx, const unsigned char *
 int mbedtls_sha256_finish_ret(mbedtls_sha256_context *ctx, unsigned char output[32])
 {
     size_t outputSize = 32u;
-    status_t ret = kStatus_Fail;
-    ret = SHA_Finish(SHA_INSTANCE, ctx, output, &outputSize);
+    status_t ret      = kStatus_Fail;
+    ret               = SHA_Finish(SHA_INSTANCE, ctx, output, &outputSize);
     if (ret != kStatus_Success)
     {
         return MBEDTLS_ERR_SHA256_HW_ACCEL_FAILED;
@@ -4403,7 +4584,7 @@ int mbedtls_sha256_finish_ret(mbedtls_sha256_context *ctx, unsigned char output[
 
 void mbedtls_sha256_init(mbedtls_sha256_context *ctx)
 {
-    memset(ctx, 0, sizeof(mbedtls_sha256_context));
+    (void)memset(ctx, 0, sizeof(mbedtls_sha256_context));
 }
 
 void mbedtls_sha256_free(mbedtls_sha256_context *ctx)
@@ -4416,7 +4597,7 @@ void mbedtls_sha256_free(mbedtls_sha256_context *ctx)
 
 void mbedtls_sha256_clone(mbedtls_sha256_context *dst, const mbedtls_sha256_context *src)
 {
-    memcpy(dst, src, sizeof(*dst));
+    (void)memcpy(dst, src, sizeof(*dst));
 }
 
 /*
@@ -4443,7 +4624,7 @@ int mbedtls_sha256_starts_ret(mbedtls_sha256_context *ctx, int is224)
 int mbedtls_internal_sha256_process(mbedtls_sha256_context *ctx, const unsigned char data[64])
 {
     status_t ret = kStatus_Fail;
-    ret = CAAM_HASH_Update(ctx, data, 64);
+    ret          = CAAM_HASH_Update(ctx, data, 64);
     if (ret != kStatus_Success)
     {
         return MBEDTLS_ERR_SHA256_HW_ACCEL_FAILED;
@@ -4457,7 +4638,7 @@ int mbedtls_internal_sha256_process(mbedtls_sha256_context *ctx, const unsigned 
 int mbedtls_sha256_update_ret(mbedtls_sha256_context *ctx, const unsigned char *input, size_t ilen)
 {
     status_t ret = kStatus_Fail;
-    ret = CAAM_HASH_Update(ctx, input, ilen);
+    ret          = CAAM_HASH_Update(ctx, input, ilen);
     if (ret != kStatus_Success)
     {
         return MBEDTLS_ERR_SHA256_HW_ACCEL_FAILED;
@@ -4471,7 +4652,7 @@ int mbedtls_sha256_update_ret(mbedtls_sha256_context *ctx, const unsigned char *
 int mbedtls_sha256_finish_ret(mbedtls_sha256_context *ctx, unsigned char output[32])
 {
     status_t ret = kStatus_Fail;
-    ret = CAAM_HASH_Finish(ctx, output, 0);
+    ret          = CAAM_HASH_Finish(ctx, output, NULL);
     if (ret != kStatus_Success)
     {
         return MBEDTLS_ERR_SHA256_HW_ACCEL_FAILED;
@@ -4539,7 +4720,7 @@ int mbedtls_sha256_update_ret(mbedtls_sha256_context *ctx, const unsigned char *
     status_t ret = kStatus_Fail;
 #if defined(__DCACHE_PRESENT) && (__DCACHE_PRESENT == 1U) && defined(DCP_USE_DCACHE) && (DCP_USE_DCACHE == 1U)
     DCACHE_CleanByRange((uint32_t)input, ilen);
-#endif /* __DCACHE_PRESENT & DCP_USE_DCACHE */ 
+#endif /* __DCACHE_PRESENT & DCP_USE_DCACHE */
     ret = DCP_HASH_Update(DCP, ctx, input, ilen);
     if (ret != kStatus_Success)
     {
@@ -4554,7 +4735,7 @@ int mbedtls_sha256_update_ret(mbedtls_sha256_context *ctx, const unsigned char *
 int mbedtls_sha256_finish_ret(mbedtls_sha256_context *ctx, unsigned char output[32])
 {
     status_t ret = kStatus_Fail;
-    ret = DCP_HASH_Finish(DCP, ctx, output, NULL);
+    ret          = DCP_HASH_Finish(DCP, ctx, output, NULL);
     if (ret != kStatus_Success)
     {
         return MBEDTLS_ERR_SHA256_HW_ACCEL_FAILED;
@@ -4603,7 +4784,7 @@ int mbedtls_sha256_starts_ret(mbedtls_sha256_context *ctx, int is224)
 int mbedtls_internal_sha256_process(mbedtls_sha256_context *ctx, const unsigned char data[64])
 {
     status_t ret = kStatus_Fail;
-    ret = HASHCRYPT_SHA_Update(HASHCRYPT, ctx, data, 64);
+    ret          = HASHCRYPT_SHA_Update(HASHCRYPT, ctx, data, 64);
     if (ret != kStatus_Success)
     {
         return MBEDTLS_ERR_SHA256_HW_ACCEL_FAILED;
@@ -4617,7 +4798,7 @@ int mbedtls_internal_sha256_process(mbedtls_sha256_context *ctx, const unsigned 
 int mbedtls_sha256_update_ret(mbedtls_sha256_context *ctx, const unsigned char *input, size_t ilen)
 {
     status_t ret = kStatus_Fail;
-    ret = HASHCRYPT_SHA_Update(HASHCRYPT, ctx, input, ilen);
+    ret          = HASHCRYPT_SHA_Update(HASHCRYPT, ctx, input, ilen);
     if (ret != kStatus_Success)
     {
         return MBEDTLS_ERR_SHA256_HW_ACCEL_FAILED;
@@ -4630,9 +4811,9 @@ int mbedtls_sha256_update_ret(mbedtls_sha256_context *ctx, const unsigned char *
  */
 int mbedtls_sha256_finish_ret(mbedtls_sha256_context *ctx, unsigned char output[32])
 {
-    status_t ret = kStatus_Fail;
+    status_t ret      = kStatus_Fail;
     size_t outputSize = 32;
-    ret = HASHCRYPT_SHA_Finish(HASHCRYPT, ctx, output, &outputSize);
+    ret               = HASHCRYPT_SHA_Finish(HASHCRYPT, ctx, output, &outputSize);
     if (ret != kStatus_Success)
     {
         return MBEDTLS_ERR_SHA256_HW_ACCEL_FAILED;
@@ -4680,7 +4861,7 @@ void mbedtls_sha256_process(mbedtls_sha256_context *ctx, const unsigned char dat
 
 int mbedtls_hardware_poll(void *data, unsigned char *output, size_t len, size_t *olen)
 {
-    status_t result = kStatus_Success;
+    status_t result = kStatus_Fail;
 
 #if defined(FSL_FEATURE_SOC_TRNG_COUNT) && (FSL_FEATURE_SOC_TRNG_COUNT > 0)
 #ifndef TRNG0
@@ -4727,11 +4908,11 @@ int mbedtls_hardware_poll(void *data, unsigned char *output, size_t len, size_t 
 #elif defined(FSL_FEATURE_SOC_LPC_RNG1_COUNT) && (FSL_FEATURE_SOC_LPC_RNG1_COUNT > 0)
     status_t status = kStatus_Fail;
 
-    while(status != kStatus_Success)
+    while (status != kStatus_Success)
     {
         status = RNG_GetRandomData(RNG, output, len);
 
-        if(status == kStatus_Fail)
+        if (status == kStatus_Fail)
         {
             RNG_Init(RNG);
         }
@@ -4755,13 +4936,30 @@ int mbedtls_hardware_poll(void *data, unsigned char *output, size_t len, size_t 
 /******************************************************************************/
 /*************************** FreeRTOS ********************************************/
 /******************************************************************************/
-#if defined(USE_RTOS) && defined(FSL_RTOS_FREE_RTOS) && defined(MBEDTLS_FREESCALE_FREERTOS_CALLOC_ALT)
+#if defined(USE_RTOS) && defined(SDK_OS_FREE_RTOS) && defined(MBEDTLS_FREESCALE_FREERTOS_CALLOC_ALT)
 #include <stdlib.h>
 #include "FreeRTOS.h"
 #include "task.h"
 
-/*---------HEAP_3 calloc --------------------------------------------------*/
+/*---------HEAP_4 calloc --------------------------------------------------*/
+#if defined(configFRTOS_MEMORY_SCHEME) && (configFRTOS_MEMORY_SCHEME == 4)
+void *pvPortCalloc(size_t num, size_t size)
+{
+    void *ptr;
 
+    ptr = pvPortMalloc(num * size);
+    if (!ptr)
+    {
+        extern void vApplicationMallocFailedHook(void);
+        vApplicationMallocFailedHook();
+    }
+    else
+    {
+        memset(ptr, 0, num * size);
+    }
+    return ptr;
+}
+#else // HEAP_3
 void *pvPortCalloc(size_t num, size_t size)
 {
     void *pvReturn;
@@ -4785,4 +4983,103 @@ void *pvPortCalloc(size_t num, size_t size)
 
     return pvReturn;
 }
-#endif /* USE_RTOS && defined(FSL_RTOS_FREE_RTOS) && defined(MBEDTLS_FREESCALE_FREERTOS_CALLOC_ALT) */
+#endif // configFRTOS_MEMORY_SCHEME
+#endif /* USE_RTOS && defined(SDK_OS_FREE_RTOS) && defined(MBEDTLS_FREESCALE_FREERTOS_CALLOC_ALT) */
+
+/*-----------------------------------------------------------*/
+/*--------- mbedTLS threading functions for FreeRTOS --------*/
+/*--------------- See MBEDTLS_THREADING_ALT -----------------*/
+/*-----------------------------------------------------------*/
+#if defined(MBEDTLS_MCUX_FREERTOS_THREADING_ALT)
+/* Threading mutex implementations for mbedTLS. */
+#include "mbedtls/threading.h"
+#include "threading_alt.h"
+
+/**
+ * @brief Implementation of mbedtls_mutex_init for thread-safety.
+ *
+ */
+void mcux_mbedtls_mutex_init(mbedtls_threading_mutex_t *mutex)
+{
+    mutex->mutex = xSemaphoreCreateMutex();
+
+    if (mutex->mutex != NULL)
+    {
+        mutex->is_valid = 1;
+    }
+    else
+    {
+        mutex->is_valid = 0;
+    }
+}
+
+/**
+ * @brief Implementation of mbedtls_mutex_free for thread-safety.
+ *
+ */
+void mcux_mbedtls_mutex_free(mbedtls_threading_mutex_t *mutex)
+{
+    if (mutex->is_valid == 1)
+    {
+        vSemaphoreDelete(mutex->mutex);
+        mutex->is_valid = 0;
+    }
+}
+
+/**
+ * @brief Implementation of mbedtls_mutex_lock for thread-safety.
+ *
+ * @return 0 if successful, MBEDTLS_ERR_THREADING_MUTEX_ERROR if timeout,
+ * MBEDTLS_ERR_THREADING_BAD_INPUT_DATA if the mutex is not valid.
+ */
+int mcux_mbedtls_mutex_lock(mbedtls_threading_mutex_t *mutex)
+{
+    int ret = MBEDTLS_ERR_THREADING_BAD_INPUT_DATA;
+
+    if (mutex->is_valid == 1)
+    {
+        if (xSemaphoreTake(mutex->mutex, portMAX_DELAY))
+        {
+            ret = 0;
+        }
+        else
+        {
+            ret = MBEDTLS_ERR_THREADING_MUTEX_ERROR;
+        }
+    }
+
+    return ret;
+}
+
+/**
+ * @brief Implementation of mbedtls_mutex_unlock for thread-safety.
+ *
+ * @return 0 if successful, MBEDTLS_ERR_THREADING_MUTEX_ERROR if timeout,
+ * MBEDTLS_ERR_THREADING_BAD_INPUT_DATA if the mutex is not valid.
+ */
+int mcux_mbedtls_mutex_unlock(mbedtls_threading_mutex_t *mutex)
+{
+    int ret = MBEDTLS_ERR_THREADING_BAD_INPUT_DATA;
+
+    if (mutex->is_valid == 1)
+    {
+        if (xSemaphoreGive(mutex->mutex))
+        {
+            ret = 0;
+        }
+        else
+        {
+            ret = MBEDTLS_ERR_THREADING_MUTEX_ERROR;
+        }
+    }
+
+    return ret;
+}
+
+static void CRYPTO_ConfigureThreadingMcux(void)
+{
+    /* Configure mbedtls to use FreeRTOS mutexes. */
+    mbedtls_threading_set_alt(mcux_mbedtls_mutex_init, mcux_mbedtls_mutex_free, mcux_mbedtls_mutex_lock,
+                              mcux_mbedtls_mutex_unlock);
+}
+#endif /* defined(MBEDTLS_MCUX_FREERTOS_THREADING_ALT) */

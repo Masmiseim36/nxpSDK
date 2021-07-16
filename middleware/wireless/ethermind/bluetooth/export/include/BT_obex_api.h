@@ -44,14 +44,14 @@
  *  OBEX Roles
  *  Constant Definitions for OBEX Roles.
  */
-#define OBEX_SERVER_ROLE                    1
-#define OBEX_CLIENT_ROLE                    2
+#define OBEX_SERVER_ROLE                    1U
+#define OBEX_CLIENT_ROLE                    2U
 
 /**
  *  OBEX Minimum Packet Size
  *  Constant Definitions for Minimum OBEX Packet Length.
  */
-#define OBEX_MIN_PACKET_LENGTH              255
+#define OBEX_MIN_PACKET_LENGTH              255U
 
 /**
  *  OBEX Asynchronous Events
@@ -59,215 +59,215 @@
  */
 
 /* OBEX Client/Server Common Events */
-#define OBEX_EVENT_OP_ERROR                 0xFF
-#define OBEX_EVENT_RFCOMM_ACCEPT_CANCEL     0x02
+#define OBEX_EVENT_OP_ERROR                 0xFFU
+#define OBEX_EVENT_RFCOMM_ACCEPT_CANCEL     0x02U
 
 #ifdef OBEX_SUPPORT_RELIABLE_SSN
-#define OBEX_EVENT_SSN_SUSPEND_IND          0x03
-#define OBEX_EVENT_SSN_RESUME_IND           0x04
+#define OBEX_EVENT_SSN_SUSPEND_IND          0x03U
+#define OBEX_EVENT_SSN_RESUME_IND           0x04U
 #endif /* OBEX_SUPPORT_RELIABLE_SSN */
 
 /**
  * OBEX Client Events
  */
-#define OBEX_EVENT_TRANS_CONNECT_CFM        0x05
-#define OBEX_EVENT_TRANS_DISCONNECT_CFM     0x06
+#define OBEX_EVENT_TRANS_CONNECT_CFM        0x05U
+#define OBEX_EVENT_TRANS_DISCONNECT_CFM     0x06U
 
-#define OBEX_EVENT_OBEX_CONNECT_CFM         0x07
-#define OBEX_EVENT_OBEX_DISCONNECT_CFM      0x08
-#define OBEX_EVENT_GET_CFM                  0x09
-#define OBEX_EVENT_GET_FINAL_CONTINUE_CFM   0x0A
-#define OBEX_EVENT_GET_FINAL_SUCCESS_CFM    0x0B
-#define OBEX_EVENT_PUT_CFM                  0x0C
-#define OBEX_EVENT_PUT_FINAL_CFM            0x0D
-#define OBEX_EVENT_SETPATH_CFM              0x0E
-#define OBEX_EVENT_GET_ABORT_CFM            0x0F
-#define OBEX_EVENT_PUT_ABORT_CFM            0x10
+#define OBEX_EVENT_OBEX_CONNECT_CFM         0x07U
+#define OBEX_EVENT_OBEX_DISCONNECT_CFM      0x08U
+#define OBEX_EVENT_GET_CFM                  0x09U
+#define OBEX_EVENT_GET_FINAL_CONTINUE_CFM   0x0AU
+#define OBEX_EVENT_GET_FINAL_SUCCESS_CFM    0x0BU
+#define OBEX_EVENT_PUT_CFM                  0x0CU
+#define OBEX_EVENT_PUT_FINAL_CFM            0x0DU
+#define OBEX_EVENT_SETPATH_CFM              0x0EU
+#define OBEX_EVENT_GET_ABORT_CFM            0x0FU
+#define OBEX_EVENT_PUT_ABORT_CFM            0x10U
 
 #ifdef OBEX_ENH_SUPPORT
-#define OBEX_EVENT_ACTION_CFM               0x11
-#define OBEX_EVENT_ACTION_FINAL_CFM         0x12
+#define OBEX_EVENT_ACTION_CFM               0x11U
+#define OBEX_EVENT_ACTION_FINAL_CFM         0x12U
 #endif /* OBEX_ENH_SUPPORT */
 
 #ifdef OBEX_SUPPORT_RELIABLE_SSN
-#define OBEX_EVENT_SSN_SUSPEND_CFM          0x13
-#define OBEX_EVENT_SSN_RESUME_CFM           0x14
+#define OBEX_EVENT_SSN_SUSPEND_CFM          0x13U
+#define OBEX_EVENT_SSN_RESUME_CFM           0x14U
 #endif /* OBEX_SUPPORT_RELIABLE_SSN */
 
 /**
  * OBEX Server Events
  */
-#define OBEX_EVENT_TRANS_CONNECT_IND        0x15
-#define OBEX_EVENT_TRANS_DISCONNECT_IND     0x16
+#define OBEX_EVENT_TRANS_CONNECT_IND        0x15U
+#define OBEX_EVENT_TRANS_DISCONNECT_IND     0x16U
 
-#define OBEX_EVENT_OBEX_CONNECT_IND         0x17
-#define OBEX_EVENT_OBEX_DISCONNECT_IND      0x18
-#define OBEX_EVENT_GET_IND                  0x19
-#define OBEX_EVENT_GET_FINAL_IND            0x1A
-#define OBEX_EVENT_PUT_IND                  0x1B
-#define OBEX_EVENT_PUT_FINAL_IND            0x1C
-#define OBEX_EVENT_SETPATH_IND              0x1D
-#define OBEX_EVENT_GET_ABORT_IND            0x1E
-#define OBEX_EVENT_PUT_ABORT_IND            0x1F
+#define OBEX_EVENT_OBEX_CONNECT_IND         0x17U
+#define OBEX_EVENT_OBEX_DISCONNECT_IND      0x18U
+#define OBEX_EVENT_GET_IND                  0x19U
+#define OBEX_EVENT_GET_FINAL_IND            0x1AU
+#define OBEX_EVENT_PUT_IND                  0x1BU
+#define OBEX_EVENT_PUT_FINAL_IND            0x1CU
+#define OBEX_EVENT_SETPATH_IND              0x1DU
+#define OBEX_EVENT_GET_ABORT_IND            0x1EU
+#define OBEX_EVENT_PUT_ABORT_IND            0x1FU
 
 #ifdef OBEX_ENH_SUPPORT
-#define OBEX_EVENT_ACTION_IND               0x20
-#define OBEX_EVENT_ACTION_FINAL_IND         0x21
+#define OBEX_EVENT_ACTION_IND               0x20U
+#define OBEX_EVENT_ACTION_FINAL_IND         0x21U
 #endif /* OBEX_ENH_SUPPORT */
 
 /**
  *  Header identifiers for OBEX objects
  */
-#define OBEX_HDR_COUNT                      0xC0
-#define OBEX_HDR_NAME                       0x01
-#define OBEX_HDR_TYPE                       0x42
-#define OBEX_HDR_LENGTH                     0xC3
-#define OBEX_HDR_TIME_ISO                   0x44
-#define OBEX_HDR_TIME_4BYTE                 0xC4
-#define OBEX_HDR_DESCRIPTION                0x05
-#define OBEX_HDR_TARGET                     0x46
-#define OBEX_HDR_HTTP                       0x47
-#define OBEX_HDR_BODY                       0x48
-#define OBEX_HDR_END_OF_BODY                0x49
-#define OBEX_HDR_WHO                        0x4A
-#define OBEX_HDR_CONNECTION_ID              0xCB
-#define OBEX_HDR_APP_PARAM                  0x4C
-#define OBEX_HDR_AUTH_CHALLENGE             0x4D
-#define OBEX_HDR_AUTH_RESPONSE              0x4E
-#define OBEX_HDR_OBJECT_CLASS               0x51
+#define OBEX_HDR_COUNT                      0xC0U
+#define OBEX_HDR_NAME                       0x01U
+#define OBEX_HDR_TYPE                       0x42U
+#define OBEX_HDR_LENGTH                     0xC3U
+#define OBEX_HDR_TIME_ISO                   0x44U
+#define OBEX_HDR_TIME_4BYTE                 0xC4U
+#define OBEX_HDR_DESCRIPTION                0x05U
+#define OBEX_HDR_TARGET                     0x46U
+#define OBEX_HDR_HTTP                       0x47U
+#define OBEX_HDR_BODY                       0x48U
+#define OBEX_HDR_END_OF_BODY                0x49U
+#define OBEX_HDR_WHO                        0x4AU
+#define OBEX_HDR_CONNECTION_ID              0xCBU
+#define OBEX_HDR_APP_PARAM                  0x4CU
+#define OBEX_HDR_AUTH_CHALLENGE             0x4DU
+#define OBEX_HDR_AUTH_RESPONSE              0x4EU
+#define OBEX_HDR_OBJECT_CLASS               0x51U
 
 #ifdef OBEX_SUPPORT_RELIABLE_SSN
-#define OBEX_HDR_SSN_PARAMS                 0x52
-#define OBEX_HDR_SSN_SEQN                   0x93
+#define OBEX_HDR_SSN_PARAMS                 0x52U
+#define OBEX_HDR_SSN_SEQN                   0x93U
 #endif /* OBEX_SUPPORT_RELIABLE_SSN */
 
 #ifdef OBEX_ENH_SUPPORT
-#define OBEX_HDR_ACTION_ID                  0x94
-#define OBEX_HDR_DESTNAME                   0x15
-#define OBEX_HDR_PERMISSIONS                0xD6
+#define OBEX_HDR_ACTION_ID                  0x94U
+#define OBEX_HDR_DESTNAME                   0x15U
+#define OBEX_HDR_PERMISSIONS                0xD6U
 #endif /* OBEX_ENH_SUPPORT */
 
 #ifdef OBEX_OVER_L2CAP
-#define OBEX_HDR_SRM                        0x97
-#define OBEX_HDR_SRMP                       0x98
+#define OBEX_HDR_SRM                        0x97U
+#define OBEX_HDR_SRMP                       0x98U
 #endif /* OBEX_OVER_L2CAP */
 
 /**
  * OBEX Action Operation Identifiers
  */
 #ifdef OBEX_ENH_SUPPORT
-#define OBEX_ACTION_COPY_ID                 0x00
-#define OBEX_ACTION_MOVE_ID                 0x01
-#define OBEX_ACTION_SET_OBJ_PER_ID          0x02
+#define OBEX_ACTION_COPY_ID                 0x00U
+#define OBEX_ACTION_MOVE_ID                 0x01U
+#define OBEX_ACTION_SET_OBJ_PER_ID          0x02U
 #endif /* OBEX_ENH_SUPPORT */
 
 /**
  * Tag and Length Ids used in TLV scheme
  */
-#define OBEX_TAG_NONCE_4DIG_CHALLENGE       0x00
+#define OBEX_TAG_NONCE_4DIG_CHALLENGE       0x00U
 #define OBEX_TAG_DIGEST_4RESPONSE           OBEX_TAG_NONCE_4DIG_CHALLENGE
 
-#define OBEX_TAG_LENGTH_NONCE               0x10
+#define OBEX_TAG_LENGTH_NONCE               0x10U
 #define OBEX_TAG_LENGTH_REQ_DIGEST          OBEX_TAG_LENGTH_NONCE
 
 /**
  *  OBEX Operation Codes
  */
-#define OBEX_CONNECT_OP                     0x80
-#define OBEX_DISCONNECT_OP                  0x81
-#define OBEX_PUT_OP                         0x02
-#define OBEX_PUT_FINAL_OP                   0x82
-#define OBEX_GET_OP                         0x03
-#define OBEX_GET_FINAL_OP                   0x83
-#define OBEX_SETPATH_OP                     0x85
+#define OBEX_CONNECT_OP                     0x80U
+#define OBEX_DISCONNECT_OP                  0x81U
+#define OBEX_PUT_OP                         0x02U
+#define OBEX_PUT_FINAL_OP                   0x82U
+#define OBEX_GET_OP                         0x03U
+#define OBEX_GET_FINAL_OP                   0x83U
+#define OBEX_SETPATH_OP                     0x85U
 
 #ifdef OBEX_ENH_SUPPORT
-#define OBEX_ACTION_OP                      0x06
-#define OBEX_ACTION_FINAL_OP                0x86
+#define OBEX_ACTION_OP                      0x06U
+#define OBEX_ACTION_FINAL_OP                0x86U
 #endif /* OBEX_ENH_SUPPORT */
 
 #ifdef OBEX_SUPPORT_RELIABLE_SSN
-#define OBEX_SESSION_OP                     0x87
+#define OBEX_SESSION_OP                     0x87U
 #endif /* OBEX_SUPPORT_RELIABLE_SSN */
 
-#define OBEX_ABORT_OP                       0xFF
+#define OBEX_ABORT_OP                       0xFFU
 
 /**
  *  OBEX Response Codes
  */
-#define OBEX_CONTINUE_RSP                   0x90 /**< Continue response code */
-#define OBEX_SUCCESS_RSP                    0xA0 /**< OK, Success */
-#define OBEX_CREATED_RSP                    0xA1 /**< Created */
-#define OBEX_ACCEPTED_RSP                   0xA2 /**< Accepted */
-#define OBEX_NON_AUTH_RSP                   0xA3 /**< Non Authoritative Info */
-#define OBEX_NO_CONTENT_RSP                 0xA4 /**< No content */
-#define OBEX_RESET_CONTENT_RSP              0xA5 /**< Reset Content */
-#define OBEX_PART_CONTENT_RSP               0xA6 /**< Partial Content */
-#define OBEX_MULTI_CHOICE_RSP               0xB0 /**< Multiple Choices */
-#define OBEX_MOVED_PERM_RSP                 0xB1 /**< Moved Permanently */
-#define OBEX_MOVED_TEMP_RSP                 0xB2 /**< Moved Temporarily */
-#define OBEX_SEE_OTHER_RSP                  0xB3 /**< See Other */
-#define OBEX_NOT_MODIFIED_RSP               0xB4 /**< Not Modified */
-#define OBEX_USE_PROXY_RSP                  0xB5 /**< Use Proxy */
-#define OBEX_REQ_IS_BAD_RSP                 0xC0 /**< Bad Req server can't */
-#define OBEX_UNAUTHORIZED_RSP               0xC1 /**< Unauthorized */
-#define OBEX_PAYMENT_REQUIRED_RSP           0xC2 /**< Payment Required */
-#define OBEX_FORBIDDEN_RSP                  0xC3 /**< op understood but refused */
-#define OBEX_NOT_FOUND_RSP                  0xC4 /**< Not Found */
-#define OBEX_METHOD_NA_RSP                  0xC5 /**< Method Not Allowed */
-#define OBEX_NOT_ACCEPTABLE_RSP             0xC6 /**< Not Acceptable */
-#define OBEX_PROXY_AUTH_REQD_RSP            0xC7 /**< Proxy Authentication Required */
-#define OBEX_TIMEOUT_RSP                    0xC8 /**< Request Time out */
-#define OBEX_CONFLICT_RSP                   0xC9 /**< Conflict */
-#define OBEX_GONE_RSP                       0xCA /**< Gone */
-#define OBEX_LENGTH_REQUIRED_RSP            0xCB /**< Length Required */
-#define OBEX_PRECOND_FAIL_RSP               0xCC /**< Precondition Failed */
-#define OBEX_REQ_ENTITY_LARGE_RSP           0xCD /**< Requested Entity too large */
-#define OBEX_REQ_URL_LARGE_RSP              0xCE /**< Requested URL too large */
-#define OBEX_UNSUPP_MEDIA_RSP               0xCF /**< Unsupported Media type */
-#define OBEX_SERVER_ERR_RSP                 0xD0 /**< Internal Server error */
-#define OBEX_NOT_IMP_RSP                    0xD1 /**< Not implemented */
-#define OBEX_BAD_GATEWAY_RSP                0xD2 /**< Bad Gateway */
-#define OBEX_NO_SERVICE_RSP                 0xD3 /**< Service Unavailable */
-#define OBEX_GATEWAY_TIMEOUT_RSP            0xD4 /**< Gateway Timeout */
-#define OBEX_HTTP_VER_RSP                   0xD5 /**< HTTP version not supported */
-#define OBEX_DATABASE_FULL_RSP              0xE0 /**< Database Full */
-#define OBEX_DATABASE_LOCKED_RSP            0xE1 /**< Database Locked */
+#define OBEX_CONTINUE_RSP                   0x90U /**< Continue response code */
+#define OBEX_SUCCESS_RSP                    0xA0U /**< OK, Success */
+#define OBEX_CREATED_RSP                    0xA1U /**< Created */
+#define OBEX_ACCEPTED_RSP                   0xA2U /**< Accepted */
+#define OBEX_NON_AUTH_RSP                   0xA3U /**< Non Authoritative Info */
+#define OBEX_NO_CONTENT_RSP                 0xA4U /**< No content */
+#define OBEX_RESET_CONTENT_RSP              0xA5U /**< Reset Content */
+#define OBEX_PART_CONTENT_RSP               0xA6U /**< Partial Content */
+#define OBEX_MULTI_CHOICE_RSP               0xB0U /**< Multiple Choices */
+#define OBEX_MOVED_PERM_RSP                 0xB1U /**< Moved Permanently */
+#define OBEX_MOVED_TEMP_RSP                 0xB2U /**< Moved Temporarily */
+#define OBEX_SEE_OTHER_RSP                  0xB3U /**< See Other */
+#define OBEX_NOT_MODIFIED_RSP               0xB4U /**< Not Modified */
+#define OBEX_USE_PROXY_RSP                  0xB5U /**< Use Proxy */
+#define OBEX_REQ_IS_BAD_RSP                 0xC0U /**< Bad Req server can't */
+#define OBEX_UNAUTHORIZED_RSP               0xC1U /**< Unauthorized */
+#define OBEX_PAYMENT_REQUIRED_RSP           0xC2U /**< Payment Required */
+#define OBEX_FORBIDDEN_RSP                  0xC3U /**< op understood but refused */
+#define OBEX_NOT_FOUND_RSP                  0xC4U /**< Not Found */
+#define OBEX_METHOD_NA_RSP                  0xC5U /**< Method Not Allowed */
+#define OBEX_NOT_ACCEPTABLE_RSP             0xC6U /**< Not Acceptable */
+#define OBEX_PROXY_AUTH_REQD_RSP            0xC7U /**< Proxy Authentication Required */
+#define OBEX_TIMEOUT_RSP                    0xC8U /**< Request Time out */
+#define OBEX_CONFLICT_RSP                   0xC9U /**< Conflict */
+#define OBEX_GONE_RSP                       0xCAU /**< Gone */
+#define OBEX_LENGTH_REQUIRED_RSP            0xCBU /**< Length Required */
+#define OBEX_PRECOND_FAIL_RSP               0xCCU /**< Precondition Failed */
+#define OBEX_REQ_ENTITY_LARGE_RSP           0xCDU /**< Requested Entity too large */
+#define OBEX_REQ_URL_LARGE_RSP              0xCEU /**< Requested URL too large */
+#define OBEX_UNSUPP_MEDIA_RSP               0xCFU /**< Unsupported Media type */
+#define OBEX_SERVER_ERR_RSP                 0xD0U /**< Internal Server error */
+#define OBEX_NOT_IMP_RSP                    0xD1U /**< Not implemented */
+#define OBEX_BAD_GATEWAY_RSP                0xD2U /**< Bad Gateway */
+#define OBEX_NO_SERVICE_RSP                 0xD3U /**< Service Unavailable */
+#define OBEX_GATEWAY_TIMEOUT_RSP            0xD4U /**< Gateway Timeout */
+#define OBEX_HTTP_VER_RSP                   0xD5U /**< HTTP version not supported */
+#define OBEX_DATABASE_FULL_RSP              0xE0U /**< Database Full */
+#define OBEX_DATABASE_LOCKED_RSP            0xE1U /**< Database Locked */
 
 
-#define OBEX_SSN_CREATE                     0x00
-#define OBEX_SSN_CLOSE                      0x01
-#define OBEX_SSN_SUSPEND                    0x02
-#define OBEX_SSN_RESUME                     0x03
-#define OBEX_SSN_SETTIMEOUT                 0x04
-#define OBEX_SSN_INVALID                    0xFF
+#define OBEX_SSN_CREATE                     0x00U
+#define OBEX_SSN_CLOSE                      0x01U
+#define OBEX_SSN_SUSPEND                    0x02U
+#define OBEX_SSN_RESUME                     0x03U
+#define OBEX_SSN_SETTIMEOUT                 0x04U
+#define OBEX_SSN_INVALID                    0xFFU
 
-#define OBEX_SSN_TAG_DEVICEADDR             0x00
-#define OBEX_SSN_TAG_NONCE                  0x01
-#define OBEX_SSN_TAG_SESSIONID              0x02
-#define OBEX_SSN_TAG_NEXTSEQN               0x03
-#define OBEX_SSN_TAG_TIMEOUT                0x04
-#define OBEX_SSN_TAG_OPCODE                 0x05
+#define OBEX_SSN_TAG_DEVICEADDR             0x00U
+#define OBEX_SSN_TAG_NONCE                  0x01U
+#define OBEX_SSN_TAG_SESSIONID              0x02U
+#define OBEX_SSN_TAG_NEXTSEQN               0x03U
+#define OBEX_SSN_TAG_TIMEOUT                0x04U
+#define OBEX_SSN_TAG_OPCODE                 0x05U
 
-#define OBEX_SSN_NON_RELIABLE               0x00
-#define OBEX_SSN_PREF_RELIABLE              0x01
-#define OBEX_SSN_STRICT_RELIABLE            0x02
+#define OBEX_SSN_NON_RELIABLE               0x00U
+#define OBEX_SSN_PREF_RELIABLE              0x01U
+#define OBEX_SSN_STRICT_RELIABLE            0x02U
 
-#define OBEX_RELIABLE_SSN_ID_LEN            16
-#define OBEX_RELIABLE_SSN_NONCE_MAXLEN      16
-#define OBEX_SSN_TIMEOUT_DEFAULT            0xFFFFFFFF
+#define OBEX_RELIABLE_SSN_ID_LEN            16U
+#define OBEX_RELIABLE_SSN_NONCE_MAXLEN      16U
+#define OBEX_SSN_TIMEOUT_DEFAULT            0xFFFFFFFFU
 
 /**
  * Flags used for OBEX SRM enable/disable
  */
-#define OBEX_SRM_ENABLE                     0x01
-#define OBEX_SRM_DISABLE                    0x00
+#define OBEX_SRM_ENABLE                     0x01U
+#define OBEX_SRM_DISABLE                    0x00U
 
 /**
  * Flags used for OBEX SRMP Wait
  */
-#define OBEX_SRMP_WAIT                      0x01
-#define OBEX_WAIT_MASK                      0x08
+#define OBEX_SRMP_WAIT                      0x01U
+#define OBEX_WAIT_MASK                      0x08U
 /** \} */
 /** \} */
 
@@ -322,6 +322,15 @@ typedef struct
     UCHAR hi;
 
 }OBEX_OBJ_HEADER;
+/** \} */
+/** \} */
+
+/**
+ *  \defgroup obex_cb Application Callback
+ *  \{
+ *  This Section Describes the module Notification Callback interface offered
+ *  to the application
+ */
 
 /**
  *  \typedef OBEX_NOTIFY_CB
@@ -374,7 +383,17 @@ typedef API_RESULT (* OBEX_NOTIFY_CB)
                        /* IN */ void * event_data,
                        /* IN */ UINT16 event_datalen
                    );
+/** \} */
 
+/**
+ *  \addtogroup obex_defines Defines
+ *  \{
+ */
+
+/**
+ *  \addtogroup obex_structures Structures
+ *  \{
+ */
 /**
  *  \typedef OBEX_INIT_PARAMS
  *
@@ -543,7 +562,7 @@ API_RESULT BT_obex_transport_connect
  *        is established using BT_obex_transport_connect () API.
  */
 #define BT_obex_connect_req(obex_handle, obj_hdr, num_of_hdrs) \
-        BT_obex_reqrsp ((obex_handle), OBEX_CONNECT_OP, (obj_hdr), (num_of_hdrs), 0x00, 0x00)
+        BT_obex_reqrsp ((obex_handle), OBEX_CONNECT_OP, (obj_hdr), (num_of_hdrs), 0x00U, 0x00U)
 
 /**
  *  \brief To terminate the OBEX connection with remote OBEX server.
@@ -569,7 +588,7 @@ API_RESULT BT_obex_transport_connect
  *      None
  */
 #define BT_obex_disconnect_req(obex_handle, obj_hdr, num_of_hdrs) \
-        BT_obex_reqrsp ((obex_handle), OBEX_DISCONNECT_OP, (obj_hdr), (num_of_hdrs), 0x00, 0x00)
+        BT_obex_reqrsp ((obex_handle), OBEX_DISCONNECT_OP, (obj_hdr), (num_of_hdrs), 0x00U, 0x00U)
 
 /**
  *  \brief To retrieve an object from an OBEX server.
@@ -600,7 +619,7 @@ API_RESULT BT_obex_transport_connect
  */
 #define BT_obex_get_req(obex_handle, obj_hdr, num_of_hdrs, flags) \
         BT_obex_reqrsp ((obex_handle), ((flags)? OBEX_GET_FINAL_OP: OBEX_GET_OP), \
-                        (obj_hdr), (num_of_hdrs), 0x00, (flags))
+                        (obj_hdr), (num_of_hdrs), 0x00U, (flags))
 
 /**
  *  \brief To transfer an object to an OBEX server.
@@ -632,7 +651,7 @@ API_RESULT BT_obex_transport_connect
  */
 #define BT_obex_put_req(obex_handle, obj_hdr, num_of_hdrs, flags) \
         BT_obex_reqrsp ((obex_handle), ((flags)? OBEX_PUT_FINAL_OP: OBEX_PUT_OP), \
-                        (obj_hdr), (num_of_hdrs), 0x00, (flags))
+                        (obj_hdr), (num_of_hdrs), 0x00U, (flags))
 
 /**
  *  \brief To set the current folder in an OBEX server.
@@ -662,7 +681,7 @@ API_RESULT BT_obex_transport_connect
  *      None
  */
 #define BT_obex_setpath_req(obex_handle, obj_hdr, num_of_hdrs, flags) \
-        BT_obex_reqrsp ((obex_handle), OBEX_SETPATH_OP, (obj_hdr), (num_of_hdrs), 0x00, (flags))
+        BT_obex_reqrsp ((obex_handle), OBEX_SETPATH_OP, (obj_hdr), (num_of_hdrs), 0x00U, (flags))
 
 /**
  *  \brief To terminate an ongoing OBEX operation.
@@ -688,7 +707,7 @@ API_RESULT BT_obex_transport_connect
  *      None
  */
 #define BT_obex_abort_req(obex_handle, obj_hdr, num_of_hdrs) \
-        BT_obex_reqrsp ((obex_handle), OBEX_ABORT_OP, (obj_hdr), (num_of_hdrs), 0x00, 0x00)
+        BT_obex_reqrsp ((obex_handle), OBEX_ABORT_OP, (obj_hdr), (num_of_hdrs), 0x00U, 0x00U)
 
 #ifdef OBEX_ENH_SUPPORT
 /**
@@ -721,7 +740,7 @@ API_RESULT BT_obex_transport_connect
  */
 #define BT_obex_action_req(obex_handle, obj_hdr, num_of_hdrs, flags) \
         BT_obex_reqrsp ((obex_handle), ((flags)? OBEX_ACTION_FINAL_OP: OBEX_ACTION_OP), \
-                        (obj_hdr), (num_of_hdrs), 0x00, (flags))
+                        (obj_hdr), (num_of_hdrs), 0x00U, (flags))
 #endif /* OBEX_ENH_SUPPORT */
 
 /**
@@ -741,7 +760,7 @@ API_RESULT BT_obex_transport_connect
  *      None
  */
 #define BT_obex_ssn_suspend_req(obex_handle) \
-        BT_obex_ssn_reqrsp ((obex_handle), OBEX_SSN_SUSPEND, OBEX_SSN_TIMEOUT_DEFAULT, NULL, 0, 0x00)
+        BT_obex_ssn_reqrsp ((obex_handle), OBEX_SSN_SUSPEND, OBEX_SSN_TIMEOUT_DEFAULT, NULL, 0U, 0x00U)
 
 /**
  *  \brief To resume the OBEX reliable session.
@@ -760,7 +779,7 @@ API_RESULT BT_obex_transport_connect
  *      None
  */
 #define BT_obex_ssn_resume_req(obex_handle, obj_hdr, num_of_hdrs) \
-        BT_obex_ssn_reqrsp ((obex_handle), OBEX_SSN_RESUME, OBEX_SSN_TIMEOUT_DEFAULT, obj_hdr, num_of_hdrs, 0x00)
+        BT_obex_ssn_reqrsp ((obex_handle), OBEX_SSN_RESUME, OBEX_SSN_TIMEOUT_DEFAULT, obj_hdr, num_of_hdrs, 0x00U)
 #endif /* OBEX_CLIENT */
 
 /* =============== OBEX SERVER related APIs ========= */
@@ -843,7 +862,7 @@ API_RESULT BT_obex_transport_connect
  *      None
  */
 #define BT_obex_connect_rsp(obex_handle, obj_hdr, num_of_hdrs, rsp_code)  \
-        BT_obex_reqrsp ((obex_handle), OBEX_CONNECT_OP, (obj_hdr), (num_of_hdrs), (rsp_code), 0x00)
+        BT_obex_reqrsp ((obex_handle), OBEX_CONNECT_OP, (obj_hdr), (num_of_hdrs), (rsp_code), 0x00U)
 
 /**
  *  \brief To respond to an OBEX disconnect request.
@@ -874,7 +893,7 @@ API_RESULT BT_obex_transport_connect
  *      None
  */
 #define BT_obex_disconnect_rsp(obex_handle, obj_hdr, num_of_hdrs, rsp_code)  \
-        BT_obex_reqrsp ((obex_handle), OBEX_DISCONNECT_OP, (obj_hdr), (num_of_hdrs), (rsp_code), 0x00)
+        BT_obex_reqrsp ((obex_handle), OBEX_DISCONNECT_OP, (obj_hdr), (num_of_hdrs), (rsp_code), 0x00U)
 
 /**
  *  \brief To respond to an OBEX get request.
@@ -977,7 +996,7 @@ API_RESULT BT_obex_transport_connect
  *      None
  */
 #define BT_obex_setpath_rsp(obex_handle, obj_hdr, num_of_hdrs, rsp_code)  \
-        BT_obex_reqrsp ((obex_handle), OBEX_SETPATH_OP, (obj_hdr), (num_of_hdrs), (rsp_code), 0x00)
+        BT_obex_reqrsp ((obex_handle), OBEX_SETPATH_OP, (obj_hdr), (num_of_hdrs), (rsp_code), 0x00U)
 
 /**
  *  \brief To respond to an OBEX abort request.
@@ -1008,7 +1027,7 @@ API_RESULT BT_obex_transport_connect
  *      None
  */
 #define BT_obex_abort_rsp(obex_handle, obj_hdr, num_of_hdrs, rsp_code) \
-        BT_obex_reqrsp ((obex_handle), OBEX_ABORT_OP, (obj_hdr), (num_of_hdrs), (rsp_code), 0x00)
+        BT_obex_reqrsp ((obex_handle), OBEX_ABORT_OP, (obj_hdr), (num_of_hdrs), (rsp_code), 0x00U)
 
 #ifdef OBEX_ENH_SUPPORT
 /**
@@ -1069,7 +1088,7 @@ API_RESULT BT_obex_transport_connect
  *      None
  */
 #define BT_obex_ssn_suspend_rsp(obex_handle, rsp_code) \
-        BT_obex_ssn_reqrsp ((obex_handle), OBEX_SSN_SUSPEND, OBEX_SSN_TIMEOUT_DEFAULT, NULL, 0, (rsp_code))
+        BT_obex_ssn_reqrsp ((obex_handle), OBEX_SSN_SUSPEND, OBEX_SSN_TIMEOUT_DEFAULT, NULL, 0U, (rsp_code))
 
 /**
  *  \brief To response to OBEX reliable session resume request.
@@ -1632,7 +1651,7 @@ API_RESULT BT_obex_get_srm_status
  *      None
  */
 #define BT_obex_get_local_srm_status(handle, value) \
-        BT_obex_get_srm_status ((handle), 0x01, (value))
+        BT_obex_get_srm_status ((handle), 0x01U, (value))
 
 /**
  *  \brief Utility to get the OBEX SRM status of peer device.
@@ -1654,7 +1673,7 @@ API_RESULT BT_obex_get_srm_status
  *      None
  */
 #define BT_obex_get_peer_srm_status(handle, value) \
-        BT_obex_get_srm_status((handle), 0x02, (value))
+        BT_obex_get_srm_status((handle), 0x02U, (value))
 #else /* OBEX_OVER_L2CAP */
 #define BT_obex_get_local_srm_status(handle, value) API_FAILURE
 #define BT_obex_get_peer_srm_status(handle, value)  API_FAILURE

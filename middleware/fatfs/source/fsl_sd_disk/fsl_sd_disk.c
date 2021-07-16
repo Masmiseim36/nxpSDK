@@ -129,9 +129,17 @@ DSTATUS sd_disk_status(BYTE pdrv)
 
 DSTATUS sd_disk_initialize(BYTE pdrv)
 {
+    static bool isCardInitialized = false;
+
     if (pdrv != SDDISK)
     {
         return STA_NOINIT;
+    }
+
+    /* demostrate the normal flow of card re-initialization. If re-initialization is not neccessary, return RES_OK directly will be fine */
+    if(isCardInitialized)
+    {
+        SD_Deinit(&g_sd);
     }
 
     if (kStatus_Success != SD_Init(&g_sd))
@@ -140,6 +148,8 @@ DSTATUS sd_disk_initialize(BYTE pdrv)
         memset(&g_sd, 0U, sizeof(g_sd));
         return STA_NOINIT;
     }
+
+    isCardInitialized = true;
 
     return RES_OK;
 }

@@ -16,34 +16,59 @@ extern "C" {
 #include "eiq_camera.h"
 #include "eiq_display.h"
 #include "eiq_pxp.h"
+
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
+
 #ifndef EIQ_DEFAULT_CAPTURE_RATE
 #define EIQ_DEFAULT_CAPTURE_RATE 50
 #endif
 
-typedef struct{
-  uint16_t x;
-  uint16_t y;
-  uint16_t width;
-  uint16_t height;
-} Rect_t;
+/*!
+ * @addtogroup video_worker
+ * @{
+ */
 
-/*! @brief Image structure */
+/*******************************************************************************
+ * Definitions
+ ******************************************************************************/
+
+/*!
+ * @brief The Structure for storing rectangle dimension.
+ */
 typedef struct
 {
-  EIQ_IWorker_t base;
-#ifdef EIQ_CAPTURE_RECT
-  status_t (*setCaptureWindowRectRate)(int heightRate, int widthRate);
-#else
-  status_t (*setCaptureWindowHeightRate)(int heightRate);
-#endif
-  EIQ_Camera_t *receiver;
-  EIQ_Display_t *sender;
+    uint16_t x;
+    uint16_t y;
+    uint16_t width;
+    uint16_t height;
+} Rect_t;
+
+
+/*!
+ * @brief VideoWorker data structure.
+ */
+typedef struct
+{
+    EIQ_IWorker_t base;
+    status_t (*setCaptureWindowHeightRate)(int heightRate);
+    EIQ_Camera_t *receiver;
+    EIQ_Display_t *sender;
 } EIQ_VideoWorker_t;
 
-EIQ_VideoWorker_t* EIQ_VideoWorkerInit();
+/*******************************************************************************
+ * API
+ ******************************************************************************/
+
+/*!
+ * @brief Initializes the VideoWorker.
+ *
+ * This function initializes camera and display.
+ *
+ * @return pointer to initialized VideoWorker
+ */
+EIQ_VideoWorker_t* EIQ_InitVideoWorker(void);
 
 #if defined(__cplusplus)
 }

@@ -64,14 +64,14 @@ static void BOARD_PrintBanner(void)
 int main(void)
 {
 	/* Init board hardware. */
-	BOARD_ConfigMPU();
-	BOARD_InitPins();
-	BOARD_InitSemcPins();
-	BOARD_InitBootPeripherals();
-	BOARD_BootClockRUN();
-	BOARD_InitDebugConsole();
+    BOARD_ConfigMPU();
+    BOARD_InitPins();
+    BOARD_InitSemcPins();
+    BOARD_BootClockRUN();
+    BOARD_InitDebugConsole();
+    BOARD_InitBootPeripherals();
 
-	if (xTaskCreate(sbengine_main_task, "sbengine", 4096, NULL, configMAX_PRIORITIES / 2, NULL) != pdPASS)
+	if (xTaskCreate(sbengine_main_task, "sbengine", 8196, NULL, configMAX_PRIORITIES / 2, NULL) != pdPASS)
 	{
 		PRINTF("Task creation failed!.\r\n");
 		while (1)

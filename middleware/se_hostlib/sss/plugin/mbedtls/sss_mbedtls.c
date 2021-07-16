@@ -1,8 +1,7 @@
 /*
- * Copyright 2018-2019 NXP
- * All rights reserved.
  *
- * SPDX-License-Identifier: BSD-3-Clause
+ * Copyright 2018-2019 NXP
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 /**
@@ -395,7 +394,7 @@ static int sss_eckey_verify(void *ctx,
         return 1;
     }
 
-    LOG_D("Using ECC key-pair '0x%08X'", pax_ctx->grp.pSSSObject->keyId);
+    LOG_D("%s: Verify using key '0x%08X'", __FUNCTION__, pax_ctx->grp.pSSSObject->keyId);
 
     status = sss_asymmetric_context_init(
         &asymVerifyCtx, sssObject->keyStore->session, sssObject, algorithm, kMode_SSS_Verify);
@@ -403,6 +402,7 @@ static int sss_eckey_verify(void *ctx,
         LOG_E(" sss_asymmetric_context_init verify context Failed...\n");
         return 1;
     }
+
     status = sss_asymmetric_verify_digest(&asymVerifyCtx, (uint8_t *)hash, hash_len, (uint8_t *)sig, sig_len);
     if (status != kStatus_SSS_Success) {
         LOG_E(" sss_asymmetric_verify_digest Failed...\n");
@@ -457,7 +457,7 @@ static int sss_eckey_sign(void *ctx,
         return 1;
     }
 
-    LOG_D("Signing using key %08lX\r\n", pax_ctx->grp.pSSSObject->keyId);
+    LOG_D("%s: Signing using key '0x%08lX'", __FUNCTION__, pax_ctx->grp.pSSSObject->keyId);
 
     status = sss_asymmetric_sign_digest(&asymVerifyCtx, (uint8_t *)hash, hash_len, sig, &u16_sig_len);
     if (status != kStatus_SSS_Success) {

@@ -291,7 +291,6 @@ __Vectors:
 
     .thumb_func
     .align 2
-    .globl   Reset_Handler
     .weak    Reset_Handler
     .type    Reset_Handler, %function
 Reset_Handler:

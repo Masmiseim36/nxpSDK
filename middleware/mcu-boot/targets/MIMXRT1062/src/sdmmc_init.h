@@ -1,9 +1,10 @@
 /*
- * Copyright 2017-2020 NXP
+ * Copyright 2017-2021 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
+
 #if !defined(__SDMMC_INIT_H__)
 #define __SDMMC_INIT_H__
 
@@ -80,6 +81,29 @@ enum
 #define BOARD_TIMEOUT_CARD_DETECT 0
 #endif
 #endif
+
+/*******************************************************************************
+ * Prototypes
+ ******************************************************************************/
+void usdhc_power_control_init(USDHC_Type *base);
+void usdhc_power_control(USDHC_Type *base, bool state);
+void usdhc_vselect_init(USDHC_Type *base);
+
+/*! @brief Power control init function. */
+#define BOARD_USDHC_POWER_CONTROL_INIT(base) usdhc_power_control_init(base)
+/*! @brief Power control enable/disable function. */
+#define BOARD_USDHC_POWER_CONTROL(base, state) usdhc_power_control(base, state)
+/*! @brief vselect function. */
+#define BOARD_USDHC_VSELECT_INIT(base) usdhc_vselect_init(base)
+/*! @brief CD pin init function. */
+#define BOARD_USDHC_CD_INIT(base, cdType)
+/*! @brief Get CD GPIO levle. */
+#define BOARD_USDHC_CD_GPIO_STATUS(base) (0)
+/*! @brief SD card detection pin config fucntion for KSDK, not really used */
+#define BOARD_USDHC_CD_GPIO_INIT()
+/*! @brief SD card detection status fucntion for KSDK, not really used */
+#define BOARD_USDHC_CD_STATUS() (0)
+
 ////////////////////////////////////////////////////////////////////////////////
 // Board Definitions
 ////////////////////////////////////////////////////////////////////////////////
@@ -191,44 +215,19 @@ enum
 ////////////////////////////////////////////////////////////////////////////////
 // Board FUNC Definitions
 ////////////////////////////////////////////////////////////////////////////////
-#if BL_FEATURE_SD_MODULE_HAS_CARD_DETECT
-#define BOARD_USDHC_CD_GPIO_INIT()                                             \
-    {                                                                          \
-        IOMUXC_SetPinMux(BOARD_SD_CD_GPIO_IOMUXC, false);                      \
-        gpio_pin_config_t sw_config = { kGPIO_DigitalInput, 0 };               \
-        GPIO_PinInit(BOARD_SD_CD_GPIO_BASE, BOARD_SD_CD_GPIO_PIN, &sw_config); \
-    }
-#define BOARD_USDHC_CD_STATUS() (GPIO_ReadPinInput(BOARD_SD_CD_GPIO_BASE, BOARD_SD_CD_GPIO_PIN))
-#else // #if BL_FEATURE_SD_MODULE_HAS_CARD_DETECT
-#define BOARD_USDHC_CD_GPIO_INIT()
-#define BOARD_USDHC_CD_STATUS() (0)
-#endif // #if BL_FEATURE_SD_MODULE_HAS_CARD_DETECT
 
 #if BL_FEATURE_SD_MODULE
-/*! @brief SD power control function. */
-#define BOARD_USDHC_SDCARD_POWER_CONTROL_INIT()                                          \
-    {                                                                                    \
-        IOMUXC_SetPinMux(BOARD_SD_RESET_B_GPIO_IOMUXC, false);                           \
-        gpio_pin_config_t sw_config = {                                                  \
-            kGPIO_DigitalOutput,                                                         \
-            0,                                                                           \
-            kGPIO_NoIntmode,                                                             \
-        };                                                                               \
-        GPIO_PinInit(BOARD_SD_RESET_B_GPIO_BASE, BOARD_SD_RESET_B_GPIO_PIN, &sw_config); \
-    }
-#define BOARD_USDHC_SDCARD_POWER_CONTROL(state) \
-    (GPIO_WritePinOutput(BOARD_SD_RESET_B_GPIO_BASE, BOARD_SD_RESET_B_GPIO_PIN, state))
 
-/*! @brief SD vselect function. */
-#define BOARD_USDHC_SDCARD_VSELECT_INIT()                                                                              \
-    {                                                                                                                  \
-        IOMUXC_SetPinMux(BOARD_SD_VSELECT_IOMUXC, false);                                                              \
-        IOMUXC_SetPinConfig(BOARD_SD_VSELECT_IOMUXC, IOMUXC_SW_PAD_CTL_PAD_SRE_MASK | IOMUXC_SW_PAD_CTL_PAD_PKE_MASK | \
-                                                         IOMUXC_SW_PAD_CTL_PAD_PUE_MASK |                              \
-                                                         IOMUXC_SW_PAD_CTL_PAD_HYS_MASK |                              \
-                                                         IOMUXC_SW_PAD_CTL_PAD_SPEED(2) |                              \
-                                                         IOMUXC_SW_PAD_CTL_PAD_PUS(1) | IOMUXC_SW_PAD_CTL_PAD_DSE(1)); \
-    }
+/*! @brief SD power control init function. */
+#define BOARD_USDHC_SDCARD_RESET_CONTROL_INIT(base) BOARD_USDHC_POWER_CONTROL_INIT(base)
+/*! @brief SD power enable/disable function. */
+#define BOARD_USDHC_SDCARD_RESET_CONTROL(base, state) BOARD_USDHC_POWER_CONTROL(base, state)
+/*! @brief SD vselect init function. */
+#define BOARD_USDHC_SDCARD_VSELECT_INIT(base) BOARD_USDHC_VSELECT_INIT(base)
+/*! @brief SD power control init function. */
+#define BOARD_USDHC_SDCARD_POWER_CONTROL_INIT()
+/*! @brief SD power enable/disable function. */
+#define BOARD_USDHC_SDCARD_POWER_CONTROL(state)
 
 #define BOARD_SD_MUX_CONFIG(base, busWidth)                                                               \
     {                                                                                                     \
@@ -324,31 +323,17 @@ enum
 #endif
 
 #if BL_FEATURE_MMC_MODULE
-/*! @brief MMC power control function. */
-#define BOARD_USDHC_MMCCARD_POWER_CONTROL_INIT()                                            \
-    {                                                                                       \
-        IOMUXC_SetPinMux(BOARD_MMC_RESET_B_GPIO_IOMUXC, false);                             \
-        gpio_pin_config_t sw_config = {                                                     \
-            kGPIO_DigitalOutput,                                                            \
-            0,                                                                              \
-            kGPIO_NoIntmode,                                                                \
-        };                                                                                  \
-        GPIO_PinInit(BOARD_MMC_RESET_B_GPIO_BASE, BOARD_MMC_RESET_B_GPIO_PIN, &sw_config);  \
-        GPIO_WritePinOutput(BOARD_MMC_RESET_B_GPIO_BASE, BOARD_MMC_RESET_B_GPIO_PIN, true); \
-    }
-#define BOARD_USDHC_MMCCARD_POWER_CONTROL(state) \
-    (GPIO_WritePinOutput(BOARD_MMC_RESET_B_GPIO_BASE, BOARD_MMC_RESET_B_GPIO_PIN, state))
 
-/*! @brief MMC vselect function. */
-#define BOARD_USDHC_MMCCARD_VSELECT_INIT()                                                        \
-    {                                                                                             \
-        IOMUXC_SetPinMux(BOARD_MMC_VSELECT_IOMUXC, false);                                        \
-        IOMUXC_SetPinConfig(BOARD_MMC_VSELECT_IOMUXC,                                             \
-                            IOMUXC_SW_PAD_CTL_PAD_SRE_MASK | IOMUXC_SW_PAD_CTL_PAD_PKE_MASK |     \
-                                IOMUXC_SW_PAD_CTL_PAD_PUE_MASK | IOMUXC_SW_PAD_CTL_PAD_HYS_MASK | \
-                                IOMUXC_SW_PAD_CTL_PAD_SPEED(2) | IOMUXC_SW_PAD_CTL_PAD_PUS(1) |   \
-                                IOMUXC_SW_PAD_CTL_PAD_DSE(1));                                    \
-    }
+/*! @brief MMC power control init function. */
+#define BOARD_USDHC_MMCCARD_RESET_CONTROL_INIT(base) BOARD_USDHC_POWER_CONTROL_INIT(base)
+/*! @brief MMC power enable/disable function. */
+#define BOARD_USDHC_MMCCARD_RESET_CONTROL(base, state) BOARD_USDHC_POWER_CONTROL(base, state)
+/*! @brief MMC vselect init function. */
+#define BOARD_USDHC_MMCCARD_VSELECT_INIT(base) BOARD_USDHC_VSELECT_INIT(base)
+/*! @brief MMC power control init function. */
+#define BOARD_USDHC_MMCCARD_POWER_CONTROL_INIT()
+/*! @brief MMC power enable/disable function. */
+#define BOARD_USDHC_MMCCARD_POWER_CONTROL(state)
 
 #define BOARD_MMC_MUX_CONFIG(base, busWidth)                                                              \
     {                                                                                                     \

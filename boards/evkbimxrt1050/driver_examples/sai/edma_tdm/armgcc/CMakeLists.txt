@@ -1,6 +1,6 @@
 # CROSS COMPILER SETTING
 SET(CMAKE_SYSTEM_NAME Generic)
-CMAKE_MINIMUM_REQUIRED (VERSION 3.1.1)
+CMAKE_MINIMUM_REQUIRED (VERSION 3.10.0)
 
 # THE VERSION NUMBER
 SET (Tutorial_VERSION_MAJOR 1)
@@ -55,17 +55,16 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../../components/codec/i2c
     ${ProjDirPath}/../../../../../../components/i2c
     ${ProjDirPath}/../../../../../../components/codec
-    ${ProjDirPath}/../../../../../../components/codec/port/cs42888
     ${ProjDirPath}/../../../../../../devices/MIMXRT1052/utilities/debug_console_lite
-    ${ProjDirPath}/../../../../../../components/codec/cs42888
     ${ProjDirPath}/../../../../../../middleware/fatfs
     ${ProjDirPath}/../../../../../../devices/MIMXRT1052
     ${ProjDirPath}/../../../../../../components/uart
     ${ProjDirPath}/../../../../../../components/lists
     ${ProjDirPath}/../../../../../../devices/MIMXRT1052/xip
     ${ProjDirPath}/../../../../xip
-    ${ProjDirPath}/../../../../../../CMSIS/Include
+    ${ProjDirPath}/../../../../../../CMSIS/Core/Include
     ${ProjDirPath}/../../../../../../components/osa
+    ${ProjDirPath}/../../../../../../components/codec/cs42888
     ${ProjDirPath}/../../../../../../devices/MIMXRT1052/utilities
 )
 
@@ -106,8 +105,6 @@ include(driver_dmamux_MIMXRT1052)
 
 include(driver_edma_MIMXRT1052)
 
-include(driver_cs42888_MIMXRT1052)
-
 include(middleware_fatfs_MIMXRT1052)
 
 include(middleware_fatfs_sd_MIMXRT1052)
@@ -128,19 +125,17 @@ include(driver_igpio_MIMXRT1052)
 
 include(driver_xip_device_MIMXRT1052)
 
-include(driver_xip_board_MIMXRT1052)
+include(driver_xip_board_evkbimxrt1050_MIMXRT1052)
 
-include(CMSIS_Include_core_cm7_MIMXRT1052)
-
-include(CMSIS_Include_common_MIMXRT1052)
-
-include(CMSIS_Include_dsp_MIMXRT1052)
+include(CMSIS_Include_core_cm_MIMXRT1052)
 
 include(middleware_sdmmc_osa_bm_MIMXRT1052)
 
 include(component_osa_bm_MIMXRT1052)
 
 include(driver_usdhc_MIMXRT1052)
+
+include(driver_cs42888_MIMXRT1052)
 
 include(utilities_misc_utilities_MIMXRT1052)
 

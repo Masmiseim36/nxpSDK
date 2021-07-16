@@ -1,0 +1,5220 @@
+$version 10.00
+
+// Device class
+note group Note3
+{
+  attr Bounds = <670,550,1310,650>;
+}
+
+// Main class of pulse oximeter
+note group Note
+{
+  attr Bounds = <20,20,660,130>;
+}
+
+// Window and dialog classes
+note group Note1
+{
+  attr Bounds = <20,140,660,340>;
+}
+
+// Pulse oximeter widgets
+note group Note2
+{
+  attr Bounds = <20,350,660,960>;
+}
+
+// Timing and color constants
+note group Note4
+{
+  attr Bounds = <670,20,1310,220>;
+}
+
+// Resources
+note group Note5
+{
+  attr Bounds = <670,230,1310,540>;
+}
+
+$rect <40,390,240,430>
+$output false
+class AnalogDisplay : Core::Group
+{
+  $rect <210,0,410,40>
+  inherited property Bounds = <0,0,160,160>;
+
+  $rect <0,390,200,430>
+  inherited method UpdateLayout()
+  {
+    /* always invoke the inherited method */
+    super( aSize );
+
+    /* ensure a circular appearance of the widget */
+    if ( aSize.x < aSize.y )
+      radius = aSize.x / 2;
+    else
+      radius = aSize.y / 2;
+
+    /* determine center point */
+    var int32 cX = aSize.x / 2;
+    var int32 cY = aSize.y / 2;
+
+    /* arrange the background circle */
+    BackView.Bounds = rect( <0,0>, aSize );
+    BackView.Offset = point( cX, cY );
+    BackPath.RadiusX = radius - (int32)(BackView.Width) / 2 - 1;
+    BackPath.RadiusY = BackPath.RadiusX;
+
+    /* arrange the indicator */
+    IndicatorView.Bounds = rect( <0,0>, aSize );
+    IndicatorView.Offset = point( cX, cY );
+    IndicatorPath.RadiusX = BackPath.RadiusX;
+    IndicatorPath.RadiusY = BackPath.RadiusY;
+
+    /* arrange the minmax indicator */
+    MinMaxView.Bounds = rect( <0,0>, aSize );
+    MinMaxView.Offset = point( cX, cY );
+    updateMinMaxPath();
+
+    $if $composer
+    /* calculate angle of needle in the range from 0 to +340 degrees */
+    var float angle = 350.0;
+
+    /* ensure that the current set value and the given minimum and maximum values are valid */
+    if (( MaxRange > MinRange ) && ( CurrentValue >= MinRange ) && ( CurrentValue <= MaxRange ))
+    {
+      /* calculate the new rotation angle of the needle */
+      angle = 350.0 * (float)( CurrentValue - MinRange ) / (float)( MaxRange - MinRange );
+    }
+
+    RotateEffect.Value = angle;
+    postsignal rotateSlot;
+
+    $endif
+
+
+
+  }
+
+  $rect <0,350,200,390>
+  inherited method UpdateViewState()
+  {
+    aState;
+
+    /* calculate angle of needle in the range from 0 to +350 degrees */
+    var float angle = 350.0;
+
+    /* ensure that the current set value and the given minimum and maximum values are valid */
+    if (( MaxRange > MinRange ) && ( CurrentValue >= MinRange ) && ( CurrentValue <= MaxRange ))
+    {
+      /* calculate the new rotation angle of the needle */
+      angle = 350.0 * (float)( CurrentValue - MinRange ) / (float)( MaxRange - MinRange );
+    }
+
+    /* if calculated angle is different from the current angle, let's start an animation to move the needle smooth */
+    if ( angle != RotateEffect.Value )
+    {
+      /* stop currently running animation */
+      RotateEffect.Enabled = false;
+
+      /* calculate a start value that is 1/10 into the final direction */
+      RotateEffect.Value = ( RotateEffect.Value * 9.0 + angle ) / 10.0;
+
+      /* start animation of needle */
+      RotateEffect.Value1  = RotateEffect.Value;
+      RotateEffect.Value2  = angle;
+      RotateEffect.Enabled = Enabled;
+    }
+
+
+  }
+
+  // The property 'MinRange' defines the lower boundary of the widgets value range.
+  $rect <420,0,620,40>
+  property int32 MinRange = 0;
+
+  $rect <420,40,620,80>
+  onset MinRange
+  {
+    /* check if the given value differs from the current value */
+    if ( pure MinRange == value )
+      return;
+
+    /* store the new value */
+    pure MinRange = value;
+
+    /* ...and finally, force an update */
+    updateMinMaxPath();
+    InvalidateViewState();
+  }
+
+  // The property 'MaxRange' defines the upper boundary of the widgets value range.
+  $rect <620,0,820,40>
+  property int32 MaxRange = 100;
+
+  $rect <620,40,820,80>
+  onset MaxRange
+  {
+    /* check if the given value differs from the current value */
+    if ( pure MaxRange == value )
+      return;
+
+    /* store the new value */
+    pure MaxRange = value;
+
+    /* ...and finally, force an update */
+    updateMinMaxPath();
+    InvalidateViewState();
+  }
+
+  // The property 'CurrentValue' stores the momentary value of the widget. The value \
+  // is limited automatically to the range from @MinRange to @MaxRange.
+  $rect <210,90,410,130>
+  property int32 CurrentValue = 50;
+
+  $rect <210,130,410,170>
+  onset CurrentValue
+  {
+    /* limit the given value to the allowed range */
+    if ( value < MinRange )
+      value = MinRange;
+    if ( value > MaxRange )
+      value = MaxRange;
+
+    /* check if the given value differs from the current value */
+    if ( pure CurrentValue == value )
+      return;
+
+    /* store the new value */
+    pure CurrentValue = value;
+
+    /* ...and finally, force an update */
+    if ( Enabled )
+      InvalidateViewState();
+  }
+
+  // This slot method will receive a signal, if the value of the property assigned \
+  // to @Outlet has been changed by another widget or by the application logic. In \
+  // response to this notification, the widget will update itself.
+  $rect <210,270,410,310>
+  slot outletSlot
+  {
+    /* update the current state of the widget */
+    if ( Outlet != null )
+      CurrentValue = Outlet^;
+  }
+
+  $rect <210,220,410,260>
+  onset Outlet
+  {
+    /* check if the new outlet differs from the currently used outlet */
+    if ( pure Outlet == value )
+      return;
+
+    /* detach from the previous outlet */
+    if ( pure Outlet != null )
+      detachobserver outletSlot, pure Outlet;
+
+    /* store the new outlet */
+    pure Outlet = value;
+
+    /* ... and attach to the new one */
+    if ( value != null )
+      attachobserver outletSlot, value;
+
+    /* finally, update the current state of the widget by posting a signal to the outlet slot */
+    if ( value != null )
+      postsignal outletSlot;
+  }
+
+  // The property 'Outlet' provides an interface for the Controller-View model. In \
+  // the Controller-View model, the widgets (views) and the application logic (controllers) \
+  // are always kept apart. An automatism behind this model ensures, that widgets \
+  // are notified automatically as soon as the affected controller has changed its \
+  // state. On the other hand, user interactions on a widget cause the affected controller \
+  // to execute the application logic. Usually, a controller is a simple Chora object \
+  // containing several properties and the implementation of onget/onset method.
+  // By assigning a property reference, Outlet establishes a connection between the \
+  // widget and the controller object, the affected property belongs to. After this, \
+  // the widget is able to read and modify the referred property in response to the \
+  // user interactions. It is also able to adapt the widget appearance, if the value \
+  // of the referred property has been modified by another widget or by the application \
+  // logic itself.
+  $rect <210,180,410,220>
+  property ^int32 Outlet = null;
+
+  $rect <210,350,410,390>
+  object Effects::FloatEffect RotateEffect
+  {
+    preset OnAnimate = rotateSlot;
+    preset Timing = Effects::Timing.FastIn_EaseOut;
+    preset NoOfCycles = 1;
+    preset CycleDuration = 200;
+  }
+
+  // Slot method to rotate the needle according calculated value from float effect.
+  $rect <210,390,410,430>
+  slot rotateSlot
+  {
+    var float angle = RotateEffect.Value;
+
+    if ( Enabled == false )
+      return;
+
+    /* limit the given value to the allowed range */
+    if ( angle > 350.0 )
+      angle = 350.0;
+    if ( angle < 0.0 )
+      angle = 0.0;
+
+    /* rotate the needle to the given angle */
+    IndicatorPath.StartAngle = -85.0;
+    IndicatorPath.EndAngle = -85.0 + angle;
+
+    /* rotate the glow effect */
+    var point p = Bounds.center - Bounds.origin;
+    var float scale = BackPath.RadiusX / (float)Glow.Bitmap.FrameSize.x; 
+
+    Glow.RotateAndScale( p, -8.0 - angle, scale, scale );
+                             
+    var int32 brightness = (int32)(255.0 * ( angle - 60.0 ) / 150.0);
+
+    if ( brightness < 0 )
+      brightness = 0;
+    if ( brightness > 255 )
+      brightness = 255;
+      
+    Glow.Opacity = brightness;
+
+  }
+
+  $rect <420,350,620,390>
+  object Graphics::ArcPath BackPath
+  {
+    preset EndAngle = 360.0;
+    preset StartAngle = 0.0;
+    preset RadiusY = 100;
+    preset RadiusX = 100;
+    preset Style = Graphics::ArcStyle.Arc;
+  }
+
+  $rect <20,20,160,60>
+  object Views::StrokePath BackView
+  {
+    preset Bounds = <0,0,120,120>;
+    preset Color = #FFFFFF80;
+    preset Width = 20.0;
+    preset Path = BackPath;
+  }
+
+  $rect <420,390,620,430>
+  object Graphics::ArcPath IndicatorPath
+  {
+    preset EndAngle = 0.0;
+    preset StartAngle = -80.0;
+    preset RadiusY = 50;
+    preset RadiusX = 50;
+    preset Style = Graphics::ArcStyle.Arc;
+  }
+
+  $rect <20,20,160,60>
+  object Views::StrokePath IndicatorView
+  {
+    preset Bounds = <0,0,120,120>;
+    preset Color = #FFFFFFFF;
+    preset MiterLimit = 13.0;
+    preset EndCap = Graphics::PathCap.Round;
+    preset StartCap = Graphics::PathCap.Round;
+    preset Width = 11.0;
+    preset Path = IndicatorPath;
+  }
+
+  $rect <20,20,160,60>
+  object Views::WarpImage Glow
+  {
+    preset Point4 = <-60,120>;
+    preset Point3 = <0,120>;
+    preset Point2 = <0,0>;
+    preset Point1 = <-60,0>;
+    preset SourceAnchor = <60,60>;
+    preset Color = #FFFFFFFF;
+    preset Bitmap = Oximeter::Glow;
+  }
+
+  $rect <420,430,620,470>
+  object Graphics::Path MinMaxPath;
+
+  $rect <20,20,160,60>
+  object Views::StrokePath MinMaxView
+  {
+    preset Bounds = <0,0,260,260>;
+    preset Width = 3;
+    preset Path = MinMaxPath;
+  }
+
+  // The property 'MinValue' stores the value of the minimum indicator. The value \
+  // is limited automatically to the range from @MinRange to @MaxRange.
+  $rect <420,90,620,130>
+  property int32 MinValue = 25;
+
+  $rect <420,130,620,170>
+  onset MinValue
+  {
+    /* limit the given value to the allowed range */
+    if ( value < MinRange )
+      value = MinRange;
+    if ( value > MaxRange )
+      value = MaxRange;
+
+    /* check if the given value differs from the current value */
+    if ( pure MinValue == value )
+      return;
+
+    /* store the new value */
+    pure MinValue = value;
+
+    /* ...and finally, force an update */
+    updateMinMaxPath();
+    InvalidateViewState();
+  }
+
+  // This slot method will receive a signal, if the value of the property assigned \
+  // to @OutletMin has been changed by another widget or by the application logic. \
+  // In response to this notification, the widget will update itself.
+  $rect <420,270,620,310>
+  slot outletMinSlot
+  {
+    /* update the current state of the widget */
+    if ( OutletMin != null )
+      MinValue = OutletMin^;
+  }
+
+  $rect <420,220,620,260>
+  onset OutletMin
+  {
+    /* check if the new outlet differs from the currently used outlet */
+    if ( pure OutletMin == value )
+      return;
+
+    /* detach from the previous outlet */
+    if ( pure OutletMin != null )
+      detachobserver outletMinSlot, pure OutletMin;
+
+    /* store the new outlet */
+    pure OutletMin = value;
+
+    /* ... and attach to the new one */
+    if ( value != null )
+      attachobserver outletMinSlot, value;
+
+    /* finally, update the current state of the widget by posting a signal to the outlet slot */
+    if ( value != null )
+      postsignal outletMinSlot;
+  }
+
+  // The property 'OutletMin' provides an interface for the Controller-View model. \
+  // In the Controller-View model, the widgets (views) and the application logic \
+  // (controllers) are always kept apart. An automatism behind this model ensures, \
+  // that widgets are notified automatically as soon as the affected controller has \
+  // changed its state. On the other hand, user interactions on a widget cause the \
+  // affected controller to execute the application logic. Usually, a controller \
+  // is a simple Chora object containing several properties and the implementation \
+  // of onget/onset method.
+  // By assigning a property reference, Outlet establishes a connection between the \
+  // widget and the controller object, the affected property belongs to. After this, \
+  // the widget is able to read and modify the referred property in response to the \
+  // user interactions. It is also able to adapt the widget appearance, if the value \
+  // of the referred property has been modified by another widget or by the application \
+  // logic itself.
+  $rect <420,180,620,220>
+  property ^int32 OutletMin = null;
+
+  // The property 'MaxValue' stores the value of the maximum indicator. The value \
+  // is limited automatically to the range from @MinRange to @MaxRange.
+  $rect <620,90,820,130>
+  property int32 MaxValue = 70;
+
+  $rect <620,130,820,170>
+  onset MaxValue
+  {
+    /* limit the given value to the allowed range */
+    if ( value < MinRange )
+      value = MinRange;
+    if ( value > MaxRange )
+      value = MaxRange;
+
+    /* check if the given value differs from the current value */
+    if ( pure MaxValue == value )
+      return;
+
+    /* store the new value */
+    pure MaxValue = value;
+
+    /* ...and finally, force an update */
+    updateMinMaxPath();
+    InvalidateViewState();
+  }
+
+  // This slot method will receive a signal, if the value of the property assigned \
+  // to @OutletMax has been changed by another widget or by the application logic. \
+  // In response to this notification, the widget will update itself.
+  $rect <620,270,820,310>
+  slot outletMaxSlot
+  {
+    /* update the current state of the widget */
+    if ( OutletMax != null )
+      MaxValue = OutletMax^;
+  }
+
+  $rect <620,220,820,260>
+  onset OutletMax
+  {
+    /* check if the new outlet differs from the currently used outlet */
+    if ( pure OutletMax == value )
+      return;
+
+    /* detach from the previous outlet */
+    if ( pure OutletMax != null )
+      detachobserver outletMaxSlot, pure OutletMax;
+
+    /* store the new outlet */
+    pure OutletMax = value;
+
+    /* ... and attach to the new one */
+    if ( value != null )
+      attachobserver outletMaxSlot, value;
+
+    /* finally, update the current state of the widget by posting a signal to the outlet slot */
+    if ( value != null )
+      postsignal outletMaxSlot;
+  }
+
+  // The property 'OutletMax' provides an interface for the Controller-View model. \
+  // In the Controller-View model, the widgets (views) and the application logic \
+  // (controllers) are always kept apart. An automatism behind this model ensures, \
+  // that widgets are notified automatically as soon as the affected controller has \
+  // changed its state. On the other hand, user interactions on a widget cause the \
+  // affected controller to execute the application logic. Usually, a controller \
+  // is a simple Chora object containing several properties and the implementation \
+  // of onget/onset method.
+  // By assigning a property reference, Outlet establishes a connection between the \
+  // widget and the controller object, the affected property belongs to. After this, \
+  // the widget is able to read and modify the referred property in response to the \
+  // user interactions. It is also able to adapt the widget appearance, if the value \
+  // of the referred property has been modified by another widget or by the application \
+  // logic itself.
+  $rect <620,180,820,220>
+  property ^int32 OutletMax = null;
+
+  $rect <0,440,200,480>
+  var int32 radius = 0;
+
+  $rect <620,430,820,470>
+  method void updateMinMaxPath()
+  {
+    var int32 inner = radius - 31;
+    var int32 outer = radius - 21;
+    if ( inner < 0 ) inner = 0;
+
+    /* ensure that the current min indicator and max indicator values are in the given minimum and maximum range */
+    if (( MaxRange > MinRange ) && ( MaxValue > MinValue ) && ( MinValue >= MinRange ) && ( MaxValue <= MaxRange ) && ( outer > 0))
+    {
+      /* calculate angle of min / max indicators in the range from 2 to +358 degrees */
+      var float minAngle = 356.0 * (float)( MinValue - MinRange ) / (float)( MaxRange - MinRange ) + 2.0;
+      var float maxAngle = 356.0 * (float)( MaxValue - MinRange ) / (float)( MaxRange - MinRange ) + 2.0;
+
+      /* draw line for min, an arc between min and max and a line for max */
+      MinMaxPath.InitSubPath( 0, 84 );
+      MinMaxPath.Rotate( minAngle - 90.0 );
+      MinMaxPath.Begin( 0, inner, 0 );
+      MinMaxPath.AddLine( 0, outer, 0 );
+      MinMaxPath.AddArc( 0, 0, 0, outer, outer, 0, maxAngle - minAngle, 80 );
+      MinMaxPath.Rotate( maxAngle - minAngle );
+      MinMaxPath.AddLine( 0, inner, 0 );
+      MinMaxPath.Rotate( 90.0 - maxAngle );
+    }
+    else
+    {
+      /* clear the path */
+      MinMaxPath.InitSubPath( 0, 54 );
+    }
+
+
+  }
+
+  // The class 'AnalogDisplay' implements a circular gauge with an additional min/max \
+  // indicator. The entire widget is created by using vector graphics.
+  // 
+  // For that purpose, 'Graphics::Path' objects are used to describe the circle or \
+  // arcs of the widget. The 'Views::StrokePath' object are drawing the paths.
+  note legend Note
+  {
+    attr Bounds = <10,490,820,620>;
+  }
+}
+
+$rect <690,280,890,320>
+$output false
+resource Resources::Bitmap Glow
+{
+  attr bitmapfile FileName = .\Res\Glow.png;
+  attr framesize FrameSize;
+  attr framedelay FrameDelay;
+  attr bitmapformat Format = Alpha8;
+  attr bitmapdithering Dithering = Auto;
+  attr bitmapmode Mode = Default;
+}
+
+$rect <40,440,240,480>
+$output false
+class ValueDisplay : Core::Group
+{
+  $rect <10,230,210,270>
+  inherited property Bounds = <0,0,100,100>;
+
+  $rect <10,270,210,310>
+  inherited method UpdateViewState()
+  {
+    // Always invoke the inherited method.
+    super( aState );
+
+    /* arrange the position of icon and caption */
+    var int32 x = Separator.Bounds.center.x;
+
+    RangeText.String = string( MinValue, 2 ) + " / " + string( MaxValue, 2 ); 
+
+    /* build numeric values by using up to three bitmap digits */ 
+    var int32 noOfDigits = 1;
+    var int32 number = pure CurrentValue;
+    DigitOnes.FrameNumber = number % 10;
+    number = number / 10;
+    if ( number > 0 )
+    {
+      noOfDigits = 2;
+      DigitTens.FrameNumber = number % 10;
+    }
+    number = number / 10;
+    if ( number > 0 )
+    {
+      noOfDigits = 3;
+      DigitHuns.FrameNumber = number % 10;
+    }
+
+    /* deside between value or percent display */
+    DigitPercent.Visible = Percent;
+
+    /* now arrange the digits */
+    if ( Percent )
+      noOfDigits = 2;
+    x = ( Bounds.w - noOfDigits * DigitOnes.Bounds.w ) / 2;
+
+    if ( Percent )
+     x = x - 10;
+
+    if ( noOfDigits > 2 )
+    {
+      DigitHuns.Bounds.origin.x = x;
+      DigitHuns.Visible = true;
+      x = x + DigitOnes.Bounds.w;
+    }
+    else
+      DigitHuns.Visible = false;
+    if ( noOfDigits > 1 )
+    {
+      DigitTens.Bounds.origin.x = x;
+      DigitTens.Visible = true;
+      x = x + DigitOnes.Bounds.w;
+    }
+    else
+      DigitTens.Visible = false;
+    DigitOnes.Bounds.origin.x = x;
+    x = x + DigitOnes.Bounds.w;
+    if ( Percent )
+      DigitPercent.Bounds.origin.x = x;
+
+  }
+
+  // The property 'CurrentValue' stores the momentary value of the widget. The value \
+  // is limited automatically to the range from @MinValue to @MaxValue.
+  $rect <210,0,410,40>
+  property int32 CurrentValue = 50;
+
+  $rect <210,40,410,80>
+  onset CurrentValue
+  {
+    /* only positive values are accepted here - and onyl 3 digits are supported */
+    if ( value < 0 )
+      value = 0;
+    if ( value > 999 )
+      value = 999;
+
+    /* check if the given value differs from the current value */
+    if ( pure CurrentValue == value )
+      return;
+
+    /* store the new value */
+    pure CurrentValue = value;
+
+    /* ...and finally, force an update */
+    InvalidateViewState();
+  }
+
+  // This slot method will receive a signal, if the value of the property assigned \
+  // to @Outlet has been changed by another widget or by the application logic. In \
+  // response to this notification, the widget will update itself.
+  $rect <210,180,410,220>
+  slot outletSlot
+  {
+    /* update the current state of the widget */
+    if ( Outlet != null )
+      CurrentValue = Outlet^;
+  }
+
+  $rect <210,130,410,170>
+  onset Outlet
+  {
+    /* check if the new outlet differs from the currently used outlet */
+    if ( pure Outlet == value )
+      return;
+
+    /* detach from the previous outlet */
+    if ( pure Outlet != null )
+      detachobserver outletSlot, pure Outlet;
+
+    /* store the new outlet */
+    pure Outlet = value;
+
+    /* ... and attach to the new one */
+    if ( value != null )
+      attachobserver outletSlot, value;
+
+    /* finally, update the current state of the widget by posting a signal to the outlet slot */
+    if ( value != null )
+      postsignal outletSlot;
+  }
+
+  // The property 'Outlet' provides an interface for the Controller-View model. In \
+  // the Controller-View model, the widgets (views) and the application logic (controllers) \
+  // are always kept apart. An automatism behind this model ensures, that widgets \
+  // are notified automatically as soon as the affected controller has changed its \
+  // state. On the other hand, user interactions on a widget cause the affected controller \
+  // to execute the application logic. Usually, a controller is a simple Chora object \
+  // containing several properties and the implementation of onget/onset method.
+  // By assigning a property reference, Outlet establishes a connection between the \
+  // widget and the controller object, the affected property belongs to. After this, \
+  // the widget is able to read and modify the referred property in response to the \
+  // user interactions. It is also able to adapt the widget appearance, if the value \
+  // of the referred property has been modified by another widget or by the application \
+  // logic itself.
+  $rect <210,90,410,130>
+  property ^int32 Outlet = null;
+
+  $rect <20,20,160,60>
+  object Views::Text CaptionText
+  {
+    preset Layout = Core::Layout[AlignToBottom, AlignToLeft, AlignToRight, AlignToTop];
+    preset Bounds = <0,0,100,20>;
+    preset AutoSize = false;
+    preset Alignment = Views::TextAlignment[AlignHorzCenter, AlignVertCenter];
+    preset String = "Caption";
+    preset Font = Oximeter::FontM;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Rectangle Separator
+  {
+    preset Layout = Core::Layout[AlignToBottom, AlignToLeft, AlignToRight, AlignToTop];
+    preset Bounds = <30,20,70,21>;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Rectangle Separator1
+  {
+    preset Layout = Core::Layout[AlignToBottom, AlignToLeft, AlignToRight, AlignToTop];
+    preset Bounds = <30,80,70,81>;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Text RangeText
+  {
+    preset Layout = Core::Layout[AlignToBottom, AlignToLeft, AlignToRight, AlignToTop];
+    preset Bounds = <0,80,100,100>;
+    preset Font = Oximeter::FontM;
+  }
+
+  // The property 'MinValue' stores the minimum value of the widgets value range.
+  $rect <410,0,610,40>
+  property int32 MinValue = 25;
+
+  $rect <410,40,610,80>
+  onset MinValue
+  {
+    /* check if the given value differs from the current value */
+    if ( pure MinValue == value )
+      return;
+
+    /* store the new value */
+    pure MinValue = value;
+
+    /* ...and finally, force an update */
+    InvalidateViewState();
+  }
+
+  // This slot method will receive a signal, if the value of the property assigned \
+  // to @OutletMin has been changed by another widget or by the application logic. \
+  // In response to this notification, the widget will update itself.
+  $rect <410,180,610,220>
+  slot outletMinSlot
+  {
+    /* update the current state of the widget */
+    if ( OutletMin != null )
+      MinValue = OutletMin^;
+  }
+
+  $rect <410,130,610,170>
+  onset OutletMin
+  {
+    /* check if the new outlet differs from the currently used outlet */
+    if ( pure OutletMin == value )
+      return;
+
+    /* detach from the previous outlet */
+    if ( pure OutletMin != null )
+      detachobserver outletMinSlot, pure OutletMin;
+
+    /* store the new outlet */
+    pure OutletMin = value;
+
+    /* ... and attach to the new one */
+    if ( value != null )
+      attachobserver outletMinSlot, value;
+
+    /* finally, update the current state of the widget by posting a signal to the outlet slot */
+    if ( value != null )
+      postsignal outletMinSlot;
+  }
+
+  // The property 'OutletMin' provides an interface for the Controller-View model. \
+  // In the Controller-View model, the widgets (views) and the application logic \
+  // (controllers) are always kept apart. An automatism behind this model ensures, \
+  // that widgets are notified automatically as soon as the affected controller has \
+  // changed its state. On the other hand, user interactions on a widget cause the \
+  // affected controller to execute the application logic. Usually, a controller \
+  // is a simple Chora object containing several properties and the implementation \
+  // of onget/onset method.
+  // By assigning a property reference, Outlet establishes a connection between the \
+  // widget and the controller object, the affected property belongs to. After this, \
+  // the widget is able to read and modify the referred property in response to the \
+  // user interactions. It is also able to adapt the widget appearance, if the value \
+  // of the referred property has been modified by another widget or by the application \
+  // logic itself.
+  $rect <410,90,610,130>
+  property ^int32 OutletMin = null;
+
+  // The property 'MaxValue' stores the maximum value of the widgets value range.
+  $rect <610,0,810,40>
+  property int32 MaxValue = 70;
+
+  $rect <610,40,810,80>
+  onset MaxValue
+  {
+    /* check if the given value differs from the current value */
+    if ( pure MaxValue == value )
+      return;
+
+    /* store the new value */
+    pure MaxValue = value;
+
+    /* ...and finally, force an update */
+    InvalidateViewState();
+  }
+
+  // This slot method will receive a signal, if the value of the property assigned \
+  // to @OutletMax has been changed by another widget or by the application logic. \
+  // In response to this notification, the widget will update itself.
+  $rect <610,180,810,220>
+  slot outletMaxSlot
+  {
+    /* update the current state of the widget */
+    if ( OutletMax != null )
+      MaxValue = OutletMax^;
+  }
+
+  $rect <610,130,810,170>
+  onset OutletMax
+  {
+    /* check if the new outlet differs from the currently used outlet */
+    if ( pure OutletMax == value )
+      return;
+
+    /* detach from the previous outlet */
+    if ( pure OutletMax != null )
+      detachobserver outletMaxSlot, pure OutletMax;
+
+    /* store the new outlet */
+    pure OutletMax = value;
+
+    /* ... and attach to the new one */
+    if ( value != null )
+      attachobserver outletMaxSlot, value;
+
+    /* finally, update the current state of the widget by posting a signal to the outlet slot */
+    if ( value != null )
+      postsignal outletMaxSlot;
+  }
+
+  // The property 'OutletMax' provides an interface for the Controller-View model. \
+  // In the Controller-View model, the widgets (views) and the application logic \
+  // (controllers) are always kept apart. An automatism behind this model ensures, \
+  // that widgets are notified automatically as soon as the affected controller has \
+  // changed its state. On the other hand, user interactions on a widget cause the \
+  // affected controller to execute the application logic. Usually, a controller \
+  // is a simple Chora object containing several properties and the implementation \
+  // of onget/onset method.
+  // By assigning a property reference, Outlet establishes a connection between the \
+  // widget and the controller object, the affected property belongs to. After this, \
+  // the widget is able to read and modify the referred property in response to the \
+  // user interactions. It is also able to adapt the widget appearance, if the value \
+  // of the referred property has been modified by another widget or by the application \
+  // logic itself.
+  $rect <610,90,810,130>
+  property ^int32 OutletMax = null;
+
+  $rect <410,300,610,340>
+  onset Caption
+  {
+    pure Caption = value;
+    CaptionText.String  = value;
+
+    // force an update to arrange the header
+    InvalidateViewState();
+
+  }
+
+  // The property 'Caption' stores the caption text to display within the item.
+  $rect <410,260,610,300>
+  property string Caption = "Button";
+
+  $rect <610,260,810,300>
+  property int32 HeaderOpacity = 255;
+
+  $rect <610,300,810,340>
+  onset HeaderOpacity
+  {
+    /* limit value */
+    if ( value < 0 )
+      value = 0;
+    if ( value > 255 )
+      value = 255;
+
+    // The value doesn't change - nothing to do.
+    if ( pure HeaderOpacity == value )
+      return;
+
+    // Remember the property's new value.
+    pure HeaderOpacity = value;
+
+    /* change the opacity of all header members */
+    Separator.Color.alpha = (uint8)value;
+    CaptionText.Opacity   = value;
+
+  }
+
+  $rect <20,20,160,60>
+  object Views::Image DigitOnes
+  {
+    preset Layout = Core::Layout[AlignToBottom, AlignToTop];
+    preset Bounds = <32,25,64,75>;
+    preset Bitmap = Oximeter::DigitsLarge;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Image DigitTens
+  {
+    preset Layout = Core::Layout[AlignToBottom, AlignToTop];
+    preset Bounds = <18,25,50,75>;
+    preset Bitmap = Oximeter::DigitsLarge;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Image DigitHuns
+  {
+    preset Layout = Core::Layout[AlignToBottom, AlignToTop];
+    preset Bounds = <44,25,76,75>;
+    preset Bitmap = Oximeter::DigitsLarge;
+  }
+
+  // Property to select between numeric display or percent display.
+  $rect <210,260,410,300>
+  property bool Percent = false;
+
+  $rect <210,300,410,340>
+  onset Percent
+  {
+    // The value doesn't change - nothing to do.
+    if ( pure Percent == value )
+      return;
+
+    // Remember the property's new value.
+    pure Percent = value;
+
+    /* just update the component */
+    InvalidateViewState();
+  }
+
+  $rect <20,20,160,60>
+  object Views::Image DigitPercent
+  {
+    preset Layout = Core::Layout[AlignToBottom, AlignToTop];
+    preset Bounds = <82,25,114,75>;
+    preset FrameNumber = 10;
+    preset Bitmap = Oximeter::DigitsLarge;
+  }
+}
+
+$rect <1091,280,1291,320>
+$output false
+resource Resources::Font FontNumbersL
+{
+  attr fontname FontName = Asap Condensed Medium;
+  attr fontheight Height = 28;
+  attr fontquality Quality = High;
+  attr fontranges Ranges = '0'-'9';
+  attr fontaspectratio AspectRatio = 1.0;
+  attr fontbold Bold = false;
+  attr fontitalic Italic = false;
+}
+
+$rect <1091,360,1291,400>
+$output false
+resource Resources::Font FontCaption
+{
+  attr fontname FontName = Asap Condensed;
+  attr fontheight Height = 28;
+  attr fontquality Quality = High;
+  attr fontranges Ranges = 0x20-0xFF;
+  attr fontaspectratio AspectRatio = 1.0;
+  attr fontbold Bold = false;
+  attr fontitalic Italic = false;
+}
+
+$rect <1091,440,1291,480>
+$output false
+resource Resources::Font FontM
+{
+  attr fontname FontName = Asap Condensed;
+  attr fontheight Height = 14;
+  attr fontquality Quality = High;
+  attr fontranges Ranges = 0x20-0x7F;
+  attr fontaspectratio AspectRatio = 1.0;
+  attr fontbold Bold = false;
+  attr fontitalic Italic = false;
+}
+
+$rect <1091,320,1291,360>
+$output false
+resource Resources::Font FontPercent
+{
+  attr fontname FontName = Asap Condensed Medium;
+  attr fontheight Height = 36;
+  attr fontquality Quality = High;
+  attr fontranges Ranges = '%';
+  attr fontaspectratio AspectRatio = 1.0;
+  attr fontbold Bold = false;
+  attr fontitalic Italic = false;
+}
+
+$rect <890,280,1090,320>
+$output false
+resource Resources::Bitmap HeartLarge
+{
+  attr bitmapfile FileName = .\Res\HeartLarge.png;
+  attr framesize FrameSize;
+  attr framedelay FrameDelay;
+  attr bitmapformat Format = Alpha8;
+  attr bitmapdithering Dithering = Auto;
+  attr bitmapmode Mode = Default;
+}
+
+$rect <890,360,1090,400>
+$output false
+resource Resources::Bitmap LungLarge
+{
+  attr bitmapfile FileName = .\Res\LungLarge.png;
+  attr framesize FrameSize;
+  attr framedelay FrameDelay;
+  attr bitmapformat Format = Alpha8;
+  attr bitmapdithering Dithering = Auto;
+  attr bitmapmode Mode = Default;
+}
+
+// Animation time for all fade effects.
+$rect <690,70,890,110>
+$output false
+const int32 FadeOutTime = 200;
+
+// This is an enumeration definition for indicating the current opeation mode of \
+// the oximeter.
+$rect <240,70,440,110>
+$output false
+enum OperationMode
+{
+  $rect <10,10,210,50>
+  item Overview;
+
+  $rect <210,10,410,50>
+  item PulseSettings;
+
+  $rect <410,10,610,50>
+  item OxygenSettings;
+
+  $rect <10,60,210,100>
+  item Graphs;
+
+  $rect <210,60,410,100>
+  item Menus;
+}
+
+$rect <40,280,240,320>
+$output false
+class PulsePanel : Core::Group
+{
+  $rect <890,10,1090,50>
+  inherited property Bounds = <0,0,240,272>;
+
+  $rect <680,10,880,50>
+  inherited method Init()
+  {
+    $if !$composer
+      
+      /* make all items invisible by setting opacity to 0x00 */
+      IconLeft.Opacity = 0x00;
+      IconTop.Opacity = 0x00;
+      TextLeft.Opacity = 0x00;
+      TextTop.Opacity = 0x00;
+      AnalogDisplay.Opacity = 0x00;
+      ValueDisplay.Opacity = 0x00;
+      Plotter.Opacity = 0x00; 
+
+      ChangeMode( Oximeter::OperationMode.Overview );
+    $endif
+
+  }
+
+  $rect <20,20,160,60>
+  object Core::SimpleTouchHandler SimpleTouchHandlerChart
+  {
+    preset Point4 = <10,200>;
+    preset Point3 = <230,200>;
+    preset Point2 = <230,270>;
+    preset Point1 = <10,270>;
+  }
+
+  $rect <20,20,160,60>
+  object Core::SimpleTouchHandler SimpleTouchHandlerAdjust
+  {
+    preset Point4 = <40,40>;
+    preset Point3 = <200,40>;
+    preset Point2 = <200,200>;
+    preset Point1 = <40,200>;
+  }
+
+  $rect <20,20,160,60>
+  object Core::SimpleTouchHandler SimpleTouchHandlerOverviewTop
+  {
+    preset Point4 = <10,10>;
+    preset Point3 = <220,10>;
+    preset Point2 = <220,100>;
+    preset Point1 = <10,100>;
+  }
+
+  $rect <20,20,160,60>
+  object Core::SimpleTouchHandler SimpleTouchHandlerOverviewSide
+  {
+    preset Point4 = <150,30>;
+    preset Point3 = <230,30>;
+    preset Point2 = <230,270>;
+    preset Point1 = <150,270>;
+  }
+
+  // The function 'ChangeMode' is responsible to make the transission between the \
+  // different modes of the window and to start the corresponding animations.
+  $rect <260,10,460,50>
+  method void ChangeMode( arg Oximeter::OperationMode aMode )
+  {
+    Mode = aMode;
+
+    /* stop all running effects */
+    FadeOutEffect.Enabled = false;
+    RectEffect.Enabled    = false;
+    FadeInEffect.Enabled  = false;
+
+    /* use current bounds as start value */
+    RectEffect.Value1 = ValueDisplay.Bounds;
+
+    /* use given position as end value */
+    var int32 x = AnalogDisplay.Bounds.x1;
+    var int32 y = AnalogDisplay.Bounds.y1;
+    var int32 w = AnalogDisplay.Bounds.w;
+    var int32 h = AnalogDisplay.Bounds.h;
+
+    /* arrange the value display centered below the top icon */
+    if (( aMode == Oximeter::OperationMode.Menus ) || ( aMode == Oximeter::OperationMode.OxygenSettings ))
+    {
+      x = IconTop.Bounds.center.x - w / 2;
+    }
+
+    /* arrange the value display centered right of the left icon */
+    if ( aMode == Oximeter::OperationMode.Graphs )
+    {
+      y = IconLeft.Bounds.center.y - h / 2;
+    }
+
+    RectEffect.Value2 = rect( x, y, x + w, y + h );
+
+    /* set the analog display to buffered and disabled during animation */
+    AnalogDisplay.Enabled = false;
+    AnalogDisplay.Buffered = true;
+    Plotter.Enabled = false;
+
+    /* disable touch handlers */
+    SimpleTouchHandlerOverviewSide.Enabled = false;
+    SimpleTouchHandlerOverviewTop.Enabled  = false;
+    SimpleTouchHandlerAdjust.Enabled       = false;
+    SimpleTouchHandlerChart.Enabled        = false;
+
+    /* start fade out effect */
+    FadeOutEffect.Enabled = true;
+
+
+
+
+
+  }
+
+  // This is a move and resize rectangle effect.
+  $rect <470,70,670,110>
+  object Effects::RectEffect RectEffect
+  {
+    preset OnFinished = FadeInEffect.StartEffect;
+    preset Timing = Effects::Timing.FastIn_EaseOut;
+    preset NoOfCycles = 1;
+    preset CycleDuration = Oximeter::MoveTime;
+    preset Outlet = ^ValueDisplay.Bounds;
+  }
+
+  // The variable 'Mode' stores the next acitve mode during animation - or the currently \
+  // active mode, if animation is finished.
+  $rect <470,10,670,50>
+  var Oximeter::OperationMode Mode = Oximeter::OperationMode.Overview;
+
+  $rect <20,20,160,60>
+  object Oximeter::AnalogDisplay AnalogDisplay
+  {
+    preset Bounds = <40,40,200,200>;
+    preset Buffered = true;
+    preset MaxRange = 200;
+    preset CurrentValue = 90;
+    preset Outlet = ^Oximeter::Device.CurrentPulse;
+    preset OutletMin = ^Oximeter::Device.MinPulse;
+    preset OutletMax = ^Oximeter::Device.MaxPulse;
+  }
+
+  $rect <20,20,160,60>
+  object Oximeter::ValueDisplay ValueDisplay
+  {
+    preset Bounds = <40,40,200,200>;
+    preset Outlet = ^Oximeter::Device.CurrentPulse;
+    preset OutletMin = ^Oximeter::Device.MinPulse;
+    preset OutletMax = ^Oximeter::Device.MaxPulse;
+    preset Caption = "bpm";
+  }
+
+  $rect <260,70,460,110>
+  object Effects::Int32Effect FadeOutEffect
+  {
+    preset OnFinished = RectEffect.StartEffect;
+    preset OnAnimate = fadeOut;
+    preset Timing = Effects::Timing.FastIn_EaseOut;
+    preset NoOfCycles = 1;
+    preset CycleDuration = Oximeter::FadeOutTime;
+    preset Value2 = 0;
+    preset Value1 = 255;
+  }
+
+  $rect <680,70,880,110>
+  object Effects::Int32Effect FadeInEffect
+  {
+    preset OnFinished = finished;
+    preset OnAnimate = fadeIn;
+    preset Timing = Effects::Timing.FastIn_EaseOut;
+    preset NoOfCycles = 1;
+    preset CycleDuration = Oximeter::FadeInTime;
+  }
+
+  $rect <260,120,460,160>
+  slot fadeOut
+  {
+    sender; /* the method is called from the sender object */
+
+    /* fade out graph */
+    if (( Mode != Oximeter::OperationMode.Overview ) && ( Plotter.Opacity > FadeOutEffect.Value ))
+      Plotter.Opacity = FadeOutEffect.Value;
+
+    /* fade out value display caption */
+    if ( ValueDisplay.HeaderOpacity > FadeOutEffect.Value )
+      ValueDisplay.HeaderOpacity = FadeOutEffect.Value;
+
+    /* fade out analog display to 50% or completely */
+    if ( Mode == Oximeter::OperationMode.PulseSettings )
+    {
+      if ( AnalogDisplay.Opacity > FadeOutEffect.Value + 128 )
+        AnalogDisplay.Opacity = FadeOutEffect.Value + 128;
+    }
+    else if (( Mode != Oximeter::OperationMode.Overview ) && ( AnalogDisplay.Opacity > FadeOutEffect.Value ))
+      AnalogDisplay.Opacity = FadeOutEffect.Value;
+
+    /* fade out value display to 50% */
+    if (( Mode == Oximeter::OperationMode.PulseSettings ) && ( ValueDisplay.Opacity > FadeOutEffect.Value + 128 ))
+      ValueDisplay.Opacity = FadeOutEffect.Value + 128;
+
+    /* fade out caption and icons */
+    if ( IconTop.Opacity > FadeOutEffect.Value )
+      IconTop.Opacity = FadeOutEffect.Value;
+    if ( IconLeft.Opacity > FadeOutEffect.Value )
+      IconLeft.Opacity = FadeOutEffect.Value;
+    if ( TextTop.Opacity > FadeOutEffect.Value )
+      TextTop.Opacity = FadeOutEffect.Value;
+    if ( TextLeft.Opacity > FadeOutEffect.Value )
+      TextLeft.Opacity = FadeOutEffect.Value;
+
+
+  }
+
+  $rect <20,20,160,60>
+  object Views::Image IconTop
+  {
+    preset Bounds = <150,170,210,230>;
+    preset Bitmap = Oximeter::HeartLarge;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Image IconLeft
+  {
+    preset Bounds = <15,10,75,70>;
+    preset Bitmap = Oximeter::HeartLarge;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Text TextTop
+  {
+    preset Bounds = <50,0,190,30>;
+    preset String = "PULSE";
+    preset Font = Oximeter::FontCaption;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Text TextLeft
+  {
+    preset Bounds = <10,0,140,30>;
+    preset Alignment = Views::TextAlignment[AlignHorzLeft, AlignVertCenter];
+    preset String = "PULSE";
+    preset Font = Oximeter::FontCaption;
+  }
+
+  $rect <680,120,880,160>
+  slot fadeIn
+  {
+    sender; /* the method is called from the sender object */
+
+    /* fade in graph */
+    if (( Mode == Oximeter::OperationMode.Overview ) && ( Plotter.Opacity < FadeInEffect.Value ))
+      Plotter.Opacity = FadeInEffect.Value;
+
+    /* fade in value display caption */
+    if (( Mode == Oximeter::OperationMode.PulseSettings ) || ( Mode == Oximeter::OperationMode.Overview ))
+    {
+      if ( ValueDisplay.HeaderOpacity < FadeInEffect.Value )
+        ValueDisplay.HeaderOpacity = FadeInEffect.Value;
+    }
+    else if (( Mode == Oximeter::OperationMode.Menus ) || ( Mode == Oximeter::OperationMode.OxygenSettings ))
+    {
+      if ( ValueDisplay.HeaderOpacity < FadeInEffect.Value )
+        ValueDisplay.HeaderOpacity = FadeInEffect.Value;
+    }
+
+    /* fade in analog display */
+    if (( Mode == Oximeter::OperationMode.Overview ) && ( AnalogDisplay.Opacity < FadeInEffect.Value ))
+        AnalogDisplay.Opacity = FadeInEffect.Value;
+    if (( Mode == Oximeter::OperationMode.PulseSettings ) && ( AnalogDisplay.Opacity < FadeInEffect.Value - 128 ))
+        AnalogDisplay.Opacity = FadeInEffect.Value - 128;
+
+    /* fade in value display */
+    if (( Mode != Oximeter::OperationMode.PulseSettings ) && ( ValueDisplay.Opacity < FadeInEffect.Value ))
+      ValueDisplay.Opacity = FadeInEffect.Value;
+
+    /* fade in caption and icons */
+    if (( Mode == Oximeter::OperationMode.Overview ) && ( TextLeft.Opacity < FadeInEffect.Value ))
+      TextLeft.Opacity = FadeInEffect.Value;
+    if (( Mode == Oximeter::OperationMode.PulseSettings ) && ( TextTop.Opacity < FadeInEffect.Value - 128 ))
+      TextTop.Opacity = FadeInEffect.Value - 128;
+    if ((( Mode == Oximeter::OperationMode.Menus ) || ( Mode == Oximeter::OperationMode.OxygenSettings ))
+      && ( IconTop.Opacity < FadeInEffect.Value ))
+      IconTop.Opacity = FadeInEffect.Value;
+    if (( Mode == Oximeter::OperationMode.Graphs ) && ( IconLeft.Opacity < FadeInEffect.Value ))
+      IconLeft.Opacity = FadeInEffect.Value;
+
+    /* enable touch handlers */
+    if ( Mode == Oximeter::OperationMode.Overview )
+    {
+      SimpleTouchHandlerAdjust.Enabled = true;
+      SimpleTouchHandlerChart.Enabled  = true;
+    }
+    if ( Mode == Oximeter::OperationMode.Graphs )
+      SimpleTouchHandlerOverviewTop.Enabled = true;
+    if (( Mode == Oximeter::OperationMode.Menus ) || ( Mode == Oximeter::OperationMode.OxygenSettings ))
+      SimpleTouchHandlerOverviewSide.Enabled = true;
+
+  }
+
+  $rect <890,70,1090,110>
+  slot finished
+  {
+    sender; /* the method is called from the sender object */
+
+    /* set the analog display to enabled when animation is finished */
+    if (( Mode == Oximeter::OperationMode.Overview ) || ( Mode == Oximeter::OperationMode.PulseSettings ))
+      AnalogDisplay.Enabled = true;
+
+    if ( Mode == Oximeter::OperationMode.Overview )
+      Plotter.Enabled = true;
+
+  }
+
+  $rect <20,20,160,60>
+  object Oximeter::Plotter Plotter
+  {
+    preset Bounds = <10,200,230,270>;
+    preset OutletMin = ^Oximeter::Device.MinPulse;
+    preset OutletMax = ^Oximeter::Device.MaxPulse;
+    preset MinRange = 30;
+    preset MaxRange = 150;
+    preset DataStorage = Oximeter::Device.PulseStorage;
+  }
+
+  // Slot property to get notified when the user as tapped on the chart.
+  $rect <260,370,460,410>
+  property slot OnChart = null;
+
+  $rect <260,410,460,450>
+  onset OnChart
+  {
+    // The value doesn't change - nothing to do.
+    if ( pure OnChart == value )
+      return;
+
+    // Remember the property's new value.
+    pure OnChart = value;
+
+    /* connect the touch handler with the provided slot method */
+    SimpleTouchHandlerChart.OnPress = value;
+
+  }
+
+  // Slot property to get notified when the user as tapped on the gauge.
+  $rect <260,280,460,320>
+  property slot OnAdjust = null;
+
+  $rect <260,320,460,360>
+  onset OnAdjust
+  {
+    // The value doesn't change - nothing to do.
+    if ( pure OnAdjust == value )
+      return;
+
+    // Remember the property's new value.
+    pure OnAdjust = value;
+
+    /* connect the touch handler with the provided slot method */
+    SimpleTouchHandlerAdjust.OnPress = value;
+
+  }
+
+  // Slot property to get notified when the user as tapped on the numeric value area.
+  $rect <260,190,460,230>
+  property slot OnOverview = null;
+
+  $rect <260,230,460,270>
+  onset OnOverview
+  {
+    // The value doesn't change - nothing to do.
+    if ( pure OnOverview == value )
+      return;
+
+    // Remember the property's new value.
+    pure OnOverview = value;
+
+    /* connect the touch handler with the provided slot method */
+    SimpleTouchHandlerOverviewTop.OnPress = value;
+    SimpleTouchHandlerOverviewSide.OnPress = value;
+
+  }
+
+  // This is the pulse panel of the pulse oximeter. It shows the current heart beat \
+  // rate in beats per minute (bpm) as a numeric value, as a gauge and as a graph.
+  // 
+  // The appearance and the arrangement of the screen depends on the current operation \
+  // mode of the pulse oximeter. In order to make smooth animations between the different \
+  // modes a sequence of effects is used: First, a fade-out effect to hide all unused \
+  // items, then a rect effect to arrange the numeric display and finally a fade-in \
+  // effect to show all needed items.
+  note legend Note
+  {
+    attr Bounds = <490,190,1090,390>;
+  }
+}
+
+$rect <40,180,240,220>
+$output false
+class Background : Core::Group
+{
+  $rect <0,300,200,340>
+  inherited property Bounds = <0,0,480,272>;
+
+  // The function 'ChangeMode' is responsible to make the transission between the \
+  // different modes of the window and to start the corresponding animations.
+  $rect <500,10,700,50>
+  method void ChangeMode( arg Oximeter::OperationMode aMode )
+  {
+    /* stop all running effects */
+    RectEffectOxygen.Enabled = false;
+    RectEffectPulse.Enabled  = false;
+
+    /* use current bounds as start value */
+    RectEffectOxygen.Value1 = OxygenGradient.Bounds;
+    RectEffectPulse.Value1  = PulseGradient.Bounds;
+
+    /* determine end value according given operation mode */
+    switch ( aMode )
+    {
+      case Oximeter::OperationMode.Overview:
+      {
+        RectEffectOxygen.Value2 = rect( 0, 0, Bounds.w / 2, Bounds.h );
+        RectEffectPulse.Value2  = rect( Bounds.w / 2, 0, Bounds.w, Bounds.h );
+      }
+      case Oximeter::OperationMode.Graphs:
+      {
+        RectEffectOxygen.Value2 = rect( 0, -Bounds.h / 3, Bounds.w / 2, Bounds.h / 3 );
+        RectEffectPulse.Value2  = rect( Bounds.w / 2, -Bounds.h / 3, Bounds.w, Bounds.h / 3 );
+      }
+      case Oximeter::OperationMode.Menus:
+      {
+        RectEffectOxygen.Value2 = rect( 0, 0, Bounds.w / 4, Bounds.h );
+        RectEffectPulse.Value2  = rect( 3 * Bounds.w / 4, 0, Bounds.w, Bounds.h );
+      }
+      case Oximeter::OperationMode.OxygenSettings:
+      {
+        RectEffectOxygen.Value2 = rect( 0, 0, 3 * Bounds.w / 4, Bounds.h );
+        RectEffectPulse.Value2  = rect( 3 * Bounds.w / 4, 0, Bounds.w, Bounds.h );
+      }
+      case Oximeter::OperationMode.PulseSettings:
+      {
+        RectEffectOxygen.Value2 = rect( 0, 0, Bounds.w / 4, Bounds.h );
+        RectEffectPulse.Value2  = rect( Bounds.w / 4, 0, Bounds.w, Bounds.h );
+      }
+      default:
+        ;
+    }
+
+    /* start all effects */
+    RectEffectOxygen.Enabled = true;
+    RectEffectPulse.Enabled  = true;
+
+
+
+  }
+
+  // This is a move and resize rectangle effect.
+  $rect <500,80,700,120>
+  object Effects::RectEffect RectEffectOxygen
+  {
+    preset Timing = Effects::Timing.FastIn_EaseOut;
+    preset NoOfCycles = 1;
+    preset CycleDuration = Oximeter::MoveTime + Oximeter::FadeOutTime;
+    preset InitialDelay = Oximeter::FadeOutTime / 2;
+    preset Outlet = ^OxygenGradient.Bounds;
+  }
+
+  // This is a move and resize rectangle effect.
+  $rect <500,130,700,170>
+  object Effects::RectEffect RectEffectPulse
+  {
+    preset Timing = Effects::Timing.FastIn_EaseOut;
+    preset NoOfCycles = 1;
+    preset CycleDuration = Oximeter::MoveTime + Oximeter::FadeOutTime;
+    preset InitialDelay = Oximeter::FadeOutTime / 2;
+    preset Outlet = ^PulseGradient.Bounds;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Rectangle Rectangle
+  {
+    preset Bounds = <0,0,480,272>;
+    preset Color = #3C3C3CFF;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Wallpaper OxygenGradient
+  {
+    preset Layout = Core::Layout[AlignToBottom, AlignToLeft, AlignToTop];
+    preset Bounds = <0,0,240,272>;
+    preset Bitmap = Oximeter::OxygenGradient;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Wallpaper PulseGradient
+  {
+    preset Layout = Core::Layout[AlignToBottom, AlignToLeft, AlignToTop];
+    preset Bounds = <240,0,480,272>;
+    preset Bitmap = Oximeter::PulseGradient;
+  }
+}
+
+// Animation time for all move effects.
+$rect <890,70,1090,110>
+$output false
+const int32 MoveTime = 500;
+
+$rect <40,230,240,270>
+$output false
+class OxygenPanel : Core::Group
+{
+  $rect <890,10,1090,50>
+  inherited property Bounds = <0,0,240,272>;
+
+  $rect <680,10,880,50>
+  inherited method Init()
+  {
+    $if !$composer
+      
+      /* make all items invisible by setting opacity to 0x00 */
+      IconLeft.Opacity = 0x00;
+      IconTop.Opacity = 0x00;
+      TextRight.Opacity = 0x00;
+      TextTop.Opacity = 0x00;
+      AnalogDisplay.Opacity = 0x00;
+      PercentDisplay.Opacity = 0x00;
+      Plotter.Opacity = 0x00; 
+
+      ChangeMode( Oximeter::OperationMode.Overview );
+    $endif
+
+  }
+
+  $rect <20,20,160,60>
+  object Core::SimpleTouchHandler SimpleTouchHandlerChart
+  {
+    preset Point4 = <10,200>;
+    preset Point3 = <230,200>;
+    preset Point2 = <230,270>;
+    preset Point1 = <10,270>;
+  }
+
+  $rect <20,20,160,60>
+  object Core::SimpleTouchHandler SimpleTouchHandlerAdjust
+  {
+    preset Point4 = <40,40>;
+    preset Point3 = <200,40>;
+    preset Point2 = <200,200>;
+    preset Point1 = <40,200>;
+  }
+
+  $rect <20,20,160,60>
+  object Core::SimpleTouchHandler SimpleTouchHandlerOverviewTop
+  {
+    preset Point4 = <10,10>;
+    preset Point3 = <240,10>;
+    preset Point2 = <240,90>;
+    preset Point1 = <10,90>;
+  }
+
+  $rect <20,20,160,60>
+  object Core::SimpleTouchHandler SimpleTouchHandlerOverviewSide
+  {
+    preset Point4 = <10,10>;
+    preset Point3 = <110,10>;
+    preset Point2 = <110,280>;
+    preset Point1 = <10,280>;
+  }
+
+  // The function 'ChangeMode' is responsible to make the transission between the \
+  // different modes of the window and to start the corresponding animations.
+  $rect <260,10,460,50>
+  method void ChangeMode( arg Oximeter::OperationMode aMode )
+  {
+    Mode = aMode;
+
+    /* stop all running effects */
+    FadeOutEffect.Enabled = false;
+    RectEffect.Enabled    = false;
+    FadeInEffect.Enabled  = false;
+
+    /* use current bounds as start value */
+    RectEffect.Value1 = PercentDisplay.Bounds;
+
+    /* use given position as end value */
+    var int32 x = AnalogDisplay.Bounds.x1;
+    var int32 y = AnalogDisplay.Bounds.y1;
+    var int32 w = AnalogDisplay.Bounds.w;
+    var int32 h = AnalogDisplay.Bounds.h;
+
+    /* arrange the value display centered below the top icon */
+    if (( aMode == Oximeter::OperationMode.Menus ) || ( aMode == Oximeter::OperationMode.PulseSettings ))
+    {
+      x = IconTop.Bounds.center.x - w / 2;
+    }
+
+    /* arrange the value display centered right of the left icon */
+    if ( aMode == Oximeter::OperationMode.Graphs )
+    {
+      y = IconLeft.Bounds.center.y - h / 2;
+    }
+
+    RectEffect.Value2 = rect( x, y, x + w, y + h );
+
+    /* set the analog display to buffered and disabled during animation */
+    AnalogDisplay.Enabled = false;
+    AnalogDisplay.Buffered = true;
+    Plotter.Enabled = false;
+
+    /* disable touch handlers */
+    SimpleTouchHandlerOverviewSide.Enabled = false;
+    SimpleTouchHandlerOverviewTop.Enabled  = false;
+    SimpleTouchHandlerAdjust.Enabled       = false;
+    SimpleTouchHandlerChart.Enabled        = false;
+
+    /* start fade out effect */
+    FadeOutEffect.Enabled = true;
+
+
+
+
+
+  }
+
+  // This is a move and resize rectangle effect.
+  $rect <470,70,670,110>
+  object Effects::RectEffect RectEffect
+  {
+    preset OnFinished = FadeInEffect.StartEffect;
+    preset Timing = Effects::Timing.FastIn_EaseOut;
+    preset NoOfCycles = 1;
+    preset CycleDuration = Oximeter::MoveTime;
+    preset Outlet = ^PercentDisplay.Bounds;
+  }
+
+  // The variable 'Mode' stores the next acitve mode during animation - or the currently \
+  // active mode, if animation is finished.
+  $rect <470,10,670,50>
+  var Oximeter::OperationMode Mode = Oximeter::OperationMode.Overview;
+
+  $rect <20,20,160,60>
+  object Oximeter::AnalogDisplay AnalogDisplay
+  {
+    preset Bounds = <40,40,200,200>;
+    preset Buffered = true;
+    preset CurrentValue = 90;
+    preset Outlet = ^Oximeter::Device.CurrentOxygen;
+    preset OutletMin = ^Oximeter::Device.MinOxygen;
+    preset OutletMax = ^Oximeter::Device.MaxOxygen;
+  }
+
+  $rect <20,20,160,60>
+  object Oximeter::ValueDisplay PercentDisplay
+  {
+    preset Bounds = <40,40,200,200>;
+    preset Outlet = ^Oximeter::Device.CurrentOxygen;
+    preset OutletMin = ^Oximeter::Device.MinOxygen;
+    preset OutletMax = ^Oximeter::Device.MaxOxygen;
+    preset Caption = "SpO2";
+    preset Percent = true;
+  }
+
+  $rect <260,70,460,110>
+  object Effects::Int32Effect FadeOutEffect
+  {
+    preset OnFinished = RectEffect.StartEffect;
+    preset OnAnimate = fadeOut;
+    preset Timing = Effects::Timing.FastIn_EaseOut;
+    preset NoOfCycles = 1;
+    preset CycleDuration = Oximeter::FadeOutTime;
+    preset Value2 = 0;
+    preset Value1 = 255;
+  }
+
+  $rect <680,70,880,110>
+  object Effects::Int32Effect FadeInEffect
+  {
+    preset OnFinished = finished;
+    preset OnAnimate = fadeIn;
+    preset Timing = Effects::Timing.FastIn_EaseOut;
+    preset NoOfCycles = 1;
+    preset CycleDuration = Oximeter::FadeInTime;
+  }
+
+  $rect <260,120,460,160>
+  slot fadeOut
+  {
+    sender; /* the method is called from the sender object */
+
+    /* fade out graph */
+    if (( Mode != Oximeter::OperationMode.Overview ) && ( Plotter.Opacity > FadeOutEffect.Value ))
+      Plotter.Opacity = (uint8)FadeOutEffect.Value;
+
+    /* fade out value display caption */
+    if ( PercentDisplay.HeaderOpacity > FadeOutEffect.Value )
+      PercentDisplay.HeaderOpacity = FadeOutEffect.Value;
+
+    /* fade out analog display to 50% or completely */
+    if ( Mode == Oximeter::OperationMode.OxygenSettings )
+    {
+      if ( AnalogDisplay.Opacity > FadeOutEffect.Value + 128 )
+        AnalogDisplay.Opacity = FadeOutEffect.Value + 128;
+    }
+    else if (( Mode != Oximeter::OperationMode.Overview ) && ( AnalogDisplay.Opacity > FadeOutEffect.Value ))
+      AnalogDisplay.Opacity = FadeOutEffect.Value;
+
+    /* fade out value display to 50% */
+    if (( Mode == Oximeter::OperationMode.OxygenSettings ) && ( PercentDisplay.Opacity > FadeOutEffect.Value + 128 ))
+      PercentDisplay.Opacity = FadeOutEffect.Value + 128;
+
+    /* fade out caption and icons */
+    if ( IconLeft.Opacity > FadeOutEffect.Value )
+      IconLeft.Opacity = FadeOutEffect.Value;
+    if ( IconTop.Opacity > FadeOutEffect.Value )
+      IconTop.Opacity = FadeOutEffect.Value;
+    if ( TextTop.Opacity > FadeOutEffect.Value )
+      TextTop.Opacity = FadeOutEffect.Value;
+    if ( TextRight.Opacity > FadeOutEffect.Value )
+      TextRight.Opacity = FadeOutEffect.Value;
+
+
+  }
+
+  $rect <20,20,160,60>
+  object Oximeter::Plotter Plotter
+  {
+    preset Bounds = <10,200,230,270>;
+    preset MinValue = 70;
+    preset OutletMin = ^Oximeter::Device.MinOxygen;
+    preset OutletMax = ^Oximeter::Device.MaxOxygen;
+    preset MinRange = 70;
+    preset MaxRange = 100;
+    preset DataStorage = Oximeter::Device.OxygenStorage;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Image IconTop
+  {
+    preset Bounds = <30,170,90,230>;
+    preset Bitmap = Oximeter::LungLarge;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Image IconLeft
+  {
+    preset Bounds = <15,10,75,70>;
+    preset Bitmap = Oximeter::LungLarge;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Text TextTop
+  {
+    preset Bounds = <50,0,190,30>;
+    preset String = "OXYGEN";
+    preset Font = Oximeter::FontCaption;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Text TextRight
+  {
+    preset Bounds = <120,0,230,30>;
+    preset Alignment = Views::TextAlignment[AlignHorzRight, AlignVertCenter];
+    preset String = "OXYGEN";
+    preset Font = Oximeter::FontCaption;
+  }
+
+  $rect <680,120,880,160>
+  slot fadeIn
+  {
+    sender; /* the method is called from the sender object */
+
+    /* fade in graph */
+    if (( Mode == Oximeter::OperationMode.Overview ) && ( Plotter.Opacity < FadeInEffect.Value ))
+      Plotter.Opacity = (uint8)FadeInEffect.Value;
+
+    /* fade in value display caption */
+    if (( Mode == Oximeter::OperationMode.OxygenSettings ) || ( Mode == Oximeter::OperationMode.Overview ))
+    {
+      if ( PercentDisplay.HeaderOpacity < FadeInEffect.Value )
+        PercentDisplay.HeaderOpacity = FadeInEffect.Value;
+    }
+    else if (( Mode == Oximeter::OperationMode.Menus ) || ( Mode == Oximeter::OperationMode.PulseSettings ))
+    {
+      if ( PercentDisplay.HeaderOpacity < FadeInEffect.Value )
+        PercentDisplay.HeaderOpacity = FadeInEffect.Value;
+    }
+
+    /* fade in analog display */
+    if (( Mode == Oximeter::OperationMode.Overview ) && ( AnalogDisplay.Opacity < FadeInEffect.Value ))
+        AnalogDisplay.Opacity = FadeInEffect.Value;
+    if (( Mode == Oximeter::OperationMode.OxygenSettings ) && ( AnalogDisplay.Opacity < FadeInEffect.Value - 128 ))
+        AnalogDisplay.Opacity = FadeInEffect.Value - 128;
+
+    /* fade in value display */
+    if (( Mode != Oximeter::OperationMode.OxygenSettings ) && ( PercentDisplay.Opacity < FadeInEffect.Value ))
+      PercentDisplay.Opacity = FadeInEffect.Value;
+
+    /* fade in caption and icons */
+    if (( Mode == Oximeter::OperationMode.Overview ) && ( TextRight.Opacity < FadeInEffect.Value ))
+      TextRight.Opacity = FadeInEffect.Value;
+    if (( Mode == Oximeter::OperationMode.OxygenSettings ) && ( TextTop.Opacity < FadeInEffect.Value - 128 ))
+      TextTop.Opacity = FadeInEffect.Value - 128;
+    if ((( Mode == Oximeter::OperationMode.Menus ) || ( Mode == Oximeter::OperationMode.PulseSettings ))
+      && ( IconTop.Opacity < FadeInEffect.Value ))
+      IconTop.Opacity = FadeInEffect.Value;
+    if (( Mode == Oximeter::OperationMode.Graphs ) && ( IconLeft.Opacity < FadeInEffect.Value ))
+      IconLeft.Opacity = FadeInEffect.Value;
+
+    /* enable touch handlers */
+    if ( Mode == Oximeter::OperationMode.Overview )
+    {
+      SimpleTouchHandlerAdjust.Enabled = true;
+      SimpleTouchHandlerChart.Enabled  = true;
+    }
+
+    if ( Mode == Oximeter::OperationMode.Graphs )
+      SimpleTouchHandlerOverviewTop.Enabled = true;
+
+    if (( Mode == Oximeter::OperationMode.Menus ) || ( Mode == Oximeter::OperationMode.PulseSettings ))
+      SimpleTouchHandlerOverviewSide.Enabled = true;
+  }
+
+  $rect <890,70,1090,110>
+  slot finished
+  {
+    sender; /* the method is called from the sender object */
+
+    /* set the analog display to enabled when animation is finished */
+    if (( Mode == Oximeter::OperationMode.Overview ) || ( Mode == Oximeter::OperationMode.OxygenSettings ))
+      AnalogDisplay.Enabled = true;
+
+    if ( Mode == Oximeter::OperationMode.Overview )
+      Plotter.Enabled = true;
+
+  }
+
+  // Slot property to get notified when the user as tapped on the chart.
+  $rect <260,370,460,410>
+  property slot OnChart = null;
+
+  $rect <260,410,460,450>
+  onset OnChart
+  {
+    // The value doesn't change - nothing to do.
+    if ( pure OnChart == value )
+      return;
+
+    // Remember the property's new value.
+    pure OnChart = value;
+
+    /* connect the touch handler with the provided slot method */
+    SimpleTouchHandlerChart.OnPress = value;
+
+  }
+
+  // Slot property to get notified when the user as tapped on the gauge.
+  $rect <260,280,460,320>
+  property slot OnAdjust = null;
+
+  $rect <260,320,460,360>
+  onset OnAdjust
+  {
+    // The value doesn't change - nothing to do.
+    if ( pure OnAdjust == value )
+      return;
+
+    // Remember the property's new value.
+    pure OnAdjust = value;
+
+    /* connect the touch handler with the provided slot method */
+    SimpleTouchHandlerAdjust.OnPress = value;
+
+  }
+
+  // Slot property to get notified when the user as tapped on the numeric value area.
+  $rect <260,190,460,230>
+  property slot OnOverview = null;
+
+  $rect <260,230,460,270>
+  onset OnOverview
+  {
+    // The value doesn't change - nothing to do.
+    if ( pure OnOverview == value )
+      return;
+
+    // Remember the property's new value.
+    pure OnOverview = value;
+
+    /* connect the touch handler with the provided slot method */
+    SimpleTouchHandlerOverviewSide.OnPress = value;
+    SimpleTouchHandlerOverviewTop.OnPress = value;
+
+  }
+
+  // This is the oxygen panel of the pulse oximeter. It shows the current oxygen \
+  // saturation in percent as a numeric value, as a gauge and as a graph.
+  // 
+  // The appearance and the arrangement of the screen depends on the current operation \
+  // mode of the pulse oximeter. In order to make smooth animations between the different \
+  // modes a sequence of effects is used: First, a fade-out effect to hide all unused \
+  // items, then a rect effect to arrange the numeric display and finally a fade-in \
+  // effect to show all needed items.
+  note legend Note
+  {
+    attr Bounds = <490,190,1090,390>;
+  }
+}
+
+$rect <690,590,890,630>
+$output false
+class DeviceClass : Templates::DeviceClass
+{
+  // Current measured pulse in bpm.
+  $rect <240,80,440,120>
+  property int32 CurrentPulse = 0;
+
+  // This method is intended to be called by the device to notify the GUI application \
+  // about an alternation of its setting or state value.
+  $rect <40,80,240,120>
+  $output true
+  method void UpdatePulse( arg int32 aNewValue )
+  {
+    if ( aNewValue > 250 )
+      aNewValue = 250;
+    if ( aNewValue < 0 )
+      aNewValue = 0;
+
+    PulseStorage.AddData( aNewValue );
+
+    // Only if the reported value does differ from the one stored currently in the property.
+    if ( aNewValue != pure CurrentPulse )
+    {
+      // Remember the new value in the internal memory of the property.
+      pure CurrentPulse = aNewValue;
+
+      // Notify all associated property observers.
+      notifyobservers ^CurrentPulse;
+    }
+  }
+
+  // Measurement values from the medical device
+  note group Note1
+  {
+    attr Bounds = <20,10,670,220>;
+  }
+
+  // Current measured oxygen in percent
+  $rect <240,130,440,170>
+  property int32 CurrentOxygen = 0;
+
+  // This method is intended to be called by the device to notify the GUI application \
+  // about an alternation of its setting or state value.
+  $rect <40,130,240,170>
+  $output true
+  method void UpdateOxygen( arg int32 aNewValue )
+  {
+    if ( aNewValue > 99 )
+      aNewValue = 99;
+    if ( aNewValue < 0 )
+      aNewValue = 0;
+
+    OxygenStorage.AddData( aNewValue );
+
+    // Only if the reported value does differ from the one stored currently in the property.
+    if ( aNewValue != pure CurrentOxygen )
+    {
+      // Remember the new value in the internal memory of the property.
+      pure CurrentOxygen = aNewValue;
+
+      // Notify all associated property observers.
+      notifyobservers ^CurrentOxygen;
+    }
+  }
+
+  $rect <40,280,240,320>
+  property int32 MaxPulse = 130;
+
+  $rect <240,280,440,320>
+  onset MaxPulse
+  {
+    // The property doesn't change -> nothing to do.
+    if ( pure MaxPulse == value )
+      return;
+
+    // Remember the new value in the internal memory of the property.
+    pure MaxPulse = value;
+
+    // For target code generation you will use your specific device API 
+    // to change the affected value.
+    $if !$prototyper
+      native ( value )
+      {
+        /*
+           TO DO:
+
+           You can call a function of your own device API or you simply
+           modify a variable existing in your middleware to reflect the
+           new value:
+
+           YourDevice_SetSomeValue( value );
+
+           or
+
+           YourDevice_SomeVariable = value;
+        */
+      }
+    $endif
+
+    // Notify all associated property observers.
+    notifyobservers ^MaxPulse;
+  }
+
+  $rect <40,330,240,370>
+  property int32 MinPulse = 50;
+
+  $rect <240,330,440,370>
+  onset MinPulse
+  {
+    // The property doesn't change -> nothing to do.
+    if ( pure MinPulse == value )
+      return;
+
+    // Remember the new value in the internal memory of the property.
+    pure MinPulse = value;
+
+    // For target code generation you will use your specific device API 
+    // to change the affected value.
+    $if !$prototyper
+      native ( value )
+      {
+        /*
+           TO DO:
+
+           You can call a function of your own device API or you simply
+           modify a variable existing in your middleware to reflect the
+           new value:
+
+           YourDevice_SetSomeValue( value );
+
+           or
+
+           YourDevice_SomeVariable = value;
+        */
+      }
+    $endif
+
+    // Notify all associated property observers.
+    notifyobservers ^MinPulse;
+  }
+
+  $rect <40,380,240,420>
+  property int32 MaxOxygen = 99;
+
+  $rect <240,380,440,420>
+  onset MaxOxygen
+  {
+    // The property doesn't change -> nothing to do.
+    if ( pure MaxOxygen == value )
+      return;
+
+    // Remember the new value in the internal memory of the property.
+    pure MaxOxygen = value;
+
+    // For target code generation you will use your specific device API 
+    // to change the affected value.
+    $if !$prototyper
+      native ( value )
+      {
+        /*
+           TO DO:
+
+           You can call a function of your own device API or you simply
+           modify a variable existing in your middleware to reflect the
+           new value:
+
+           YourDevice_SetSomeValue( value );
+
+           or
+
+           YourDevice_SomeVariable = value;
+        */
+      }
+    $endif
+
+    // Notify all associated property observers.
+    notifyobservers ^MaxOxygen;
+  }
+
+  $rect <40,430,240,470>
+  property int32 MinOxygen = 85;
+
+  $rect <240,430,440,470>
+  onset MinOxygen
+  {
+    // The property doesn't change -> nothing to do.
+    if ( pure MinOxygen == value )
+      return;
+
+    // Remember the new value in the internal memory of the property.
+    pure MinOxygen = value;
+
+    // For target code generation you will use your specific device API 
+    // to change the affected value.
+    $if !$prototyper
+      native ( value )
+      {
+        /*
+           TO DO:
+
+           You can call a function of your own device API or you simply
+           modify a variable existing in your middleware to reflect the
+           new value:
+
+           YourDevice_SetSomeValue( value );
+
+           or
+
+           YourDevice_SomeVariable = value;
+        */
+      }
+    $endif
+
+    // Notify all associated property observers.
+    notifyobservers ^MinOxygen;
+  }
+
+  $rect <40,620,240,660>
+  object Core::Timer Timer
+  {
+    preset OnTrigger = Simulation;
+    preset Period = 1000;
+    preset Enabled = true;
+  }
+
+  $rect <240,620,440,660>
+  slot Simulation
+  {
+    sender; /* the method is called from the sender object */
+
+    var int32 up = simulationPulse + ( 120 - simulationPulse ) / 2;
+    var int32 dn = simulationPulse - ( simulationPulse - 60 ) / 2;
+
+    simulationPulse = math_rand( dn, up );
+
+    UpdatePulse( simulationPulse );
+
+    up = simulationOxygen + ( 99 - simulationOxygen ) / 2;
+    dn = simulationOxygen - ( simulationOxygen - 85 ) / 2;
+
+    simulationOxygen = math_rand( dn, up );
+
+    UpdateOxygen( simulationOxygen );
+
+  }
+
+  $rect <240,660,440,700>
+  var int32 simulationPulse = 75;
+
+  $rect <240,700,440,740>
+  var int32 simulationOxygen = 95;
+
+  $rect <450,80,650,120>
+  object Oximeter::DataStorage PulseStorage;
+
+  $rect <450,130,650,170>
+  object Oximeter::DataStorage OxygenStorage;
+
+  // The method Init() is invoked automatically after the component has been created. \
+  // This method can be overridden and filled with logic containing additional initialization \
+  // statements.
+  $rect <440,620,640,660>
+  method void Init()
+  {
+    /* just fill the storage with some random values */
+    var int32 i;
+    for ( i = 0; i < 1000; i = i + 1 )
+    {
+      signal Simulation;
+    }
+  }
+
+  // Alarm time in seconds.
+  $rect <40,480,240,520>
+  property int32 AlarmTime = 60;
+
+  $rect <240,480,440,520>
+  onset AlarmTime
+  {
+    // The property doesn't change -> nothing to do.
+    if ( pure AlarmTime == value )
+      return;
+
+    // Remember the new value in the internal memory of the property.
+    pure AlarmTime = value;
+
+    // For target code generation you will use your specific device API 
+    // to change the affected value.
+    $if !$prototyper
+      native ( value )
+      {
+        /*
+           TO DO:
+
+           You can call a function of your own device API or you simply
+           modify a variable existing in your middleware to reflect the
+           new value:
+
+           YourDevice_SetSomeValue( value );
+
+           or
+
+           YourDevice_SomeVariable = value;
+        */
+      }
+    $endif
+
+    // Notify all associated property observers.
+    notifyobservers ^AlarmTime;
+  }
+
+  // Oxygene flow in ml/sec.
+  $rect <40,530,240,570>
+  property int32 OxygenFlow = 60;
+
+  $rect <240,530,440,570>
+  onset OxygenFlow
+  {
+    // The property doesn't change -> nothing to do.
+    if ( pure OxygenFlow == value )
+      return;
+
+    // Remember the new value in the internal memory of the property.
+    pure OxygenFlow = value;
+
+    // For target code generation you will use your specific device API 
+    // to change the affected value.
+    $if !$prototyper
+      native ( value )
+      {
+        /*
+           TO DO:
+
+           You can call a function of your own device API or you simply
+           modify a variable existing in your middleware to reflect the
+           new value:
+
+           YourDevice_SetSomeValue( value );
+
+           or
+
+           YourDevice_SomeVariable = value;
+        */
+      }
+    $endif
+
+    // Notify all associated property observers.
+    notifyobservers ^OxygenFlow;
+  }
+
+  // User settings for the medical device
+  note group Note2
+  {
+    attr Bounds = <20,230,670,590>;
+  }
+}
+
+$rect <890,590,1090,630>
+autoobject Oximeter::DeviceClass Device;
+
+$rect <690,320,890,360>
+$output false
+resource Resources::Bitmap OxygenGradient
+{
+  attr bitmapfile FileName = .\Res\OxygenGradient.png;
+  attr framesize FrameSize;
+  attr framedelay FrameDelay;
+  attr bitmapformat Format = Native;
+  attr bitmapdithering Dithering = Auto;
+  attr bitmapmode Mode = Default;
+}
+
+$rect <690,360,890,400>
+$output false
+resource Resources::Bitmap PulseGradient
+{
+  attr bitmapfile FileName = .\Res\PulseGradient.png;
+  attr framesize FrameSize;
+  attr framedelay FrameDelay;
+  attr bitmapformat Format = Native;
+  attr bitmapdithering Dithering = Auto;
+  attr bitmapmode Mode = Default;
+}
+
+// Animation time for all fade effects.
+$rect <1090,70,1290,110>
+$output false
+const int32 FadeInTime = 1000;
+
+$rect <250,390,450,430>
+$output false
+class Plotter : Core::Group
+{
+  $rect <10,140,210,180>
+  inherited property Bounds = <0,0,220,70>;
+
+  $rect <10,190,210,230>
+  inherited method UpdateLayout()
+  {
+    // Always invoke the inherited method.
+    super( aSize );
+
+    /* arrange the min/max lines and text items */
+    arrangeMinMax();
+
+
+  }
+
+  $rect <10,240,210,280>
+  inherited method UpdateViewState()
+  {
+    // Always invoke the inherited method.
+    super( aState );
+
+    /* check if there are any data to draw */
+    if (( DataStorage == null ) ||( DataStorage.NoOfData < 2 ))
+      return;
+
+    var int32 inx;
+    var int32 x;
+    var bool firstRun = true;
+    var int32 noOfEdges = PixelPerValue / 4 + 1;
+    var int32 current = DataStorage.Current;
+    var int32 noOfData = DataStorage.NoOfData;
+
+    /* search for index and horizontal position of the first coordinate that is left of the views origin */
+    inx = ( StrokePath.Bounds.w ) / PixelPerValue + 1; 
+    x = ( StrokePath.Bounds.w ) % PixelPerValue - PixelPerValue; 
+
+    /* clear the path */
+    Path.InitSubPath( 0, noOfEdges * inx + 4 );
+
+      var float data;
+      var float slope;
+      var float lastData = 0.0;
+      var float lastSlope = 0.0;
+      var int32 dx = PixelPerValue / 2;
+
+      var float ratio = 0.25;
+      
+
+    /* iterate through all visible data entries of the data storage */
+    while (( x < StrokePath.Bounds.w + PixelPerValue ) && ( inx >= 0 ))
+    {
+      if ( inx < noOfData )
+      {
+        data = DataStorage.GetData( current - inx );
+        slope = DataStorage.GetSlope( current - inx );
+
+        data = (float)StrokePath.Bounds.h * ( data - (float)MinRange ) / (float)( MaxRange - MinRange );
+
+        if ( firstRun == true )
+        {
+          Path.Begin( 0, x - (int32)LineWidth, StrokePath.Bounds.h / 2 /* 0 */ );
+          Path.AddLine( 0, x, data );
+          firstRun = false;
+        }
+        else                                                  
+        {
+          Path.AddBezier3( 0, x - dx, lastData + lastSlope * ratio, x - dx, data - slope * ratio, x, data, noOfEdges );
+        }
+
+        lastSlope = slope;
+        lastData = data;
+      }  
+      x = x + PixelPerValue;
+      inx = inx - 1;
+    }
+    Path.AddLine( 0, x + (int32)LineWidth, StrokePath.Bounds.h / 2 /* 0 */ );
+
+
+
+  }
+
+  $rect <20,20,160,60>
+  object Views::StrokePath StrokePath
+  {
+    preset Layout = Core::Layout[AlignToBottom, AlignToLeft, AlignToRight, AlignToTop, ResizeHorz, ResizeVert];
+    preset Bounds = <0,6,220,64>;
+    preset ColorBL = #FFFFFF00;
+    preset ColorTL = #FFFFFF00;
+    preset FlipY = true;
+    preset Width = 3.02;
+    preset Path = Path;
+  }
+
+  $rect <220,140,420,180>
+  object Graphics::Path Path;
+
+  $rect <220,380,420,420>
+  onset LineColor
+  {
+    /* check for any news... */
+    if ( value == pure LineColor )
+      return;
+
+    /* store the new color value... */
+    pure LineColor = value;
+
+    /* set the color of the stroke path */
+    StrokePath.Color = value;
+
+  }
+
+  // The property 'LineColor' stores the color of the graph.
+  $rect <220,340,420,380>
+  property color LineColor = #FFFFFFFF;
+
+  // The property 'LineWidth' stores the width of the graphs line.
+  $rect <420,340,620,380>
+  property float LineWidth = 3.0;
+
+  $rect <420,380,620,420>
+  onset LineWidth
+  {
+    /* check limits */
+    if ( value < 0.5 )
+      value = 0.5;
+    if ( value > 10.0 )
+      value = 10.0;
+
+    /* store the new value */
+    pure LineWidth = value;
+
+    StrokePath.Width = value;
+  }
+
+  // The property 'MinValue' stores the minimum value of the widgets value range.
+  $rect <420,100,620,140>
+  property int32 MinValue = 25;
+
+  $rect <420,140,620,180>
+  onset MinValue
+  {
+    /* check if the given value differs from the current value */
+    if ( pure MinValue == value )
+      return;
+
+    /* store the new value */
+    pure MinValue = value;
+
+    /* ...adjust the min/max lines and text items */
+    arrangeMinMax();
+
+  }
+
+  // The property 'MaxValue' stores the maximum value of the widgets value range.
+  $rect <620,100,820,140>
+  property int32 MaxValue = 120;
+
+  $rect <620,140,820,180>
+  onset MaxValue
+  {
+    /* check if the given value differs from the current value */
+    if ( pure MaxValue == value )
+      return;
+
+    /* store the new value */
+    pure MaxValue = value;
+
+    /* ...adjust the min/max lines and text items */
+    arrangeMinMax();
+
+  }
+
+  $rect <20,20,160,60>
+  object Views::Line MaxRangeLine
+  {
+    preset Point2 = <219,6>;
+    preset Point1 = <15,6>;
+    preset Color = #FFFFFF80;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Line MaxValueLine
+  {
+    preset Point2 = <219,36>;
+    preset Point1 = <15,36>;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Line MinValueLine
+  {
+    preset Point2 = <219,58>;
+    preset Point1 = <15,58>;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Line MinRangeLine
+  {
+    preset Point2 = <219,63>;
+    preset Point1 = <15,63>;
+    preset Color = #FFFFFF80;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Text MaxValueText
+  {
+    preset Layout = Core::Layout[AlignToLeft, AlignToTop];
+    preset Bounds = <0,30,18,42>;
+    preset Alignment = Views::TextAlignment[AlignHorzLeft, AlignVertCenter];
+    preset String = "max";
+    preset Font = Oximeter::FontM;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Text MinValueText
+  {
+    preset Layout = Core::Layout[AlignToLeft, AlignToTop];
+    preset Bounds = <0,29,18,40>;
+    preset Alignment = Views::TextAlignment[AlignHorzLeft, AlignVertCenter];
+    preset String = "min";
+    preset Font = Oximeter::FontM;
+  }
+
+  // This slot method will receive a signal, if the value of the property assigned \
+  // to @OutletMin has been changed by another widget or by the application logic. \
+  // In response to this notification, the widget will update itself.
+  $rect <420,280,620,320>
+  slot outletMinSlot
+  {
+    /* update the current state of the widget */
+    if ( OutletMin != null )
+      MinValue = OutletMin^;
+  }
+
+  $rect <420,230,620,270>
+  onset OutletMin
+  {
+    /* check if the new outlet differs from the currently used outlet */
+    if ( pure OutletMin == value )
+      return;
+
+    /* detach from the previous outlet */
+    if ( pure OutletMin != null )
+      detachobserver outletMinSlot, pure OutletMin;
+
+    /* store the new outlet */
+    pure OutletMin = value;
+
+    /* ... and attach to the new one */
+    if ( value != null )
+      attachobserver outletMinSlot, value;
+
+    /* finally, update the current state of the widget by posting a signal to the outlet slot */
+    if ( value != null )
+      postsignal outletMinSlot;
+  }
+
+  // The property 'OutletMin' provides an interface for the Controller-View model. \
+  // In the Controller-View model, the widgets (views) and the application logic \
+  // (controllers) are always kept apart. An automatism behind this model ensures, \
+  // that widgets are notified automatically as soon as the affected controller has \
+  // changed its state. On the other hand, user interactions on a widget cause the \
+  // affected controller to execute the application logic. Usually, a controller \
+  // is a simple Chora object containing several properties and the implementation \
+  // of onget/onset method.
+  // By assigning a property reference, Outlet establishes a connection between the \
+  // widget and the controller object, the affected property belongs to. After this, \
+  // the widget is able to read and modify the referred property in response to the \
+  // user interactions. It is also able to adapt the widget appearance, if the value \
+  // of the referred property has been modified by another widget or by the application \
+  // logic itself.
+  $rect <420,190,620,230>
+  property ^int32 OutletMin = null;
+
+  // This slot method will receive a signal, if the value of the property assigned \
+  // to @OutletMax has been changed by another widget or by the application logic. \
+  // In response to this notification, the widget will update itself.
+  $rect <620,280,820,320>
+  slot outletMaxSlot
+  {
+    /* update the current state of the widget */
+    if ( OutletMax != null )
+      MaxValue = OutletMax^;
+  }
+
+  $rect <620,230,820,270>
+  onset OutletMax
+  {
+    /* check if the new outlet differs from the currently used outlet */
+    if ( pure OutletMax == value )
+      return;
+
+    /* detach from the previous outlet */
+    if ( pure OutletMax != null )
+      detachobserver outletMaxSlot, pure OutletMax;
+
+    /* store the new outlet */
+    pure OutletMax = value;
+
+    /* ... and attach to the new one */
+    if ( value != null )
+      attachobserver outletMaxSlot, value;
+
+    /* finally, update the current state of the widget by posting a signal to the outlet slot */
+    if ( value != null )
+      postsignal outletMaxSlot;
+  }
+
+  // The property 'OutletMax' provides an interface for the Controller-View model. \
+  // In the Controller-View model, the widgets (views) and the application logic \
+  // (controllers) are always kept apart. An automatism behind this model ensures, \
+  // that widgets are notified automatically as soon as the affected controller has \
+  // changed its state. On the other hand, user interactions on a widget cause the \
+  // affected controller to execute the application logic. Usually, a controller \
+  // is a simple Chora object containing several properties and the implementation \
+  // of onget/onset method.
+  // By assigning a property reference, Outlet establishes a connection between the \
+  // widget and the controller object, the affected property belongs to. After this, \
+  // the widget is able to read and modify the referred property in response to the \
+  // user interactions. It is also able to adapt the widget appearance, if the value \
+  // of the referred property has been modified by another widget or by the application \
+  // logic itself.
+  $rect <620,190,820,230>
+  property ^int32 OutletMax = null;
+
+  // The property 'MinRange' defines the lower boundary of the widgets value range.
+  $rect <420,0,620,40>
+  property int32 MinRange = 0;
+
+  $rect <420,40,620,80>
+  onset MinRange
+  {
+    /* check if the given value differs from the current value */
+    if ( pure MinRange == value )
+      return;
+
+    /* store the new value */
+    pure MinRange = value;
+
+    /* ...adjust the min/max lines and text items */
+    arrangeMinMax();
+
+  }
+
+  // The property 'MaxRange' defines the upper boundary of the widgets value range.
+  $rect <620,0,820,40>
+  property int32 MaxRange = 250;
+
+  $rect <620,40,820,80>
+  onset MaxRange
+  {
+    /* check if the given value differs from the current value */
+    if ( pure MaxRange == value )
+      return;
+
+    /* store the new value */
+    pure MaxRange = value;
+
+    /* ...adjust the min/max lines and text items */
+    arrangeMinMax();
+
+  }
+
+  $rect <220,220,420,260>
+  method void arrangeMinMax()
+  {
+    var int32 y;
+
+    /* ensure that the current min indicator and max indicator values are in the given minimum and maximum range */
+    if (( MaxRange > MinRange ) && ( MaxValue > MinValue ) && ( MinValue >= MinRange ) && ( MaxValue <= MaxRange ))
+    {
+      /* calculate position of max value and adjust line */
+      y = StrokePath.Bounds.y2 - StrokePath.Bounds.h * ( MaxValue - MinRange ) / ( MaxRange - MinRange );
+      MaxValueLine.Point1.y = y;
+      MaxValueLine.Point2.y = y;
+
+      /* adjust and init text item */
+      y = y - MaxValueText.Bounds.h / 2;
+      if ( y < 0 ) 
+        y = 0;
+      MaxValueText.Bounds.origin.y = y;
+      MaxValueText.String = string( MaxValue );
+
+      /* calculate position of min value and adjust line */
+      y = StrokePath.Bounds.y2 - StrokePath.Bounds.h * ( MinValue - MinRange ) / ( MaxRange - MinRange );
+      MinValueLine.Point1.y = y;
+      MinValueLine.Point2.y = y;
+
+      /* adjust and init text item */
+      y = y + MinValueText.Bounds.h / 2;
+      if ( y > Bounds.h ) 
+        y = Bounds.h;
+      MinValueText.Bounds.origin.y = y - MinValueText.Bounds.h;
+      MinValueText.String = string( MinValue );
+    }
+    else
+    {
+      MinValueText.String = "";
+      MaxValueText.String = "";
+      MinValueLine.Point1.y = MinRangeLine.Point1.y;
+      MinValueLine.Point2.y = MinRangeLine.Point2.y;
+      MaxValueLine.Point1.y = MaxRangeLine.Point1.y;
+      MaxValueLine.Point2.y = MaxRangeLine.Point2.y;
+    }
+
+  }
+
+  // The property 'DataStorage' refers to the data pool containg the history of measured \
+  // values.
+  $rect <830,0,1030,40>
+  property Oximeter::DataStorage DataStorage = null;
+
+  $rect <830,40,1030,80>
+  onset DataStorage
+  {
+    // The value doesn't change - nothing to do.
+    if ( pure DataStorage == value )
+      return;
+
+    // Remember the property's new value.
+    pure DataStorage = value;
+
+    /* connect the property observer with the Current property of the data pool -
+       as a result, the observer gets notified every time a new data value is added to the pool */ 
+    DataObserver.Outlet = ^value.Current;
+
+    /* ...and force an update of the component */
+    InvalidateViewState();
+
+  }
+
+  // The property 'PixelPerUnit' determines the number of pixel in x direction between \
+  // two data values.
+  $rect <620,340,820,380>
+  property int32 PixelPerValue = 20;
+
+  $rect <620,380,820,420>
+  onset PixelPerValue
+  {
+    /* check for valid values */
+    if ( value < 1 )
+      value = 1;
+
+    /* check for any news... */
+    if ( value == pure PixelPerValue )
+      return;
+
+    /* store the new value... */
+    pure PixelPerValue = value;
+
+    /* ...and force an update of the component */
+    InvalidateViewState();
+
+
+  }
+
+  // Observer to get notified when a new data was added to the @DataStorage.
+  $rect <10,340,210,380>
+  object Core::PropertyObserver DataObserver
+  {
+    preset OnEvent = onDataAdded;
+    preset Outlet = null;
+  }
+
+  // This slot method is executed when the associated property observer 'DataObserver' \
+  // is notified.
+  $rect <10,380,210,420>
+  slot onDataAdded
+  {
+    InvalidateViewState();
+  }
+
+  $rect <20,20,160,60>
+  object Views::Line Line1
+  {
+    preset Point2 = <18,69>;
+    preset Point1 = <18,0>;
+    preset Color = #FFFFFF80;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Line Line2
+  {
+    preset Point2 = <67,69>;
+    preset Point1 = <67,0>;
+    preset Color = #FFFFFF80;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Line Line3
+  {
+    preset Point2 = <116,69>;
+    preset Point1 = <116,0>;
+    preset Color = #FFFFFF80;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Line Line4
+  {
+    preset Point2 = <165,69>;
+    preset Point1 = <165,0>;
+    preset Color = #FFFFFF80;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Line Line5
+  {
+    preset Point2 = <214,69>;
+    preset Point1 = <214,0>;
+    preset Color = #FFFFFF80;
+  }
+
+  // The class 'Plotter' draws the latest measured data values out of the 'DataStorage' \
+  // as a graph - by using vector graphics.
+  // 
+  // For that purpose, a 'Path' object is used to describe the path of the graph. \
+  // The single line segments between two data values are added to the 'Path' object \
+  // by adding a bézier line.
+  // The 'StrokePath' object is drawing the path with the given line width and line \
+  // color.
+  note legend Note
+  {
+    attr Bounds = <10,450,910,580>;
+  }
+}
+
+$rect <1090,590,1290,630>
+$output false
+class DataStorage
+{
+  $rect <20,10,220,50>
+  array float Data[ 1000 ];
+
+  $rect <20,70,220,110>
+  property int32 NoOfData = 0;
+
+  $rect <220,70,420,110>
+  onset NoOfData
+  {
+    trace "The property NoOfData is read only!";
+  }
+
+  $rect <20,120,220,160>
+  property int32 Current = -1;
+
+  $rect <220,120,420,160>
+  onset Current
+  {
+    trace "The property Current is read only!";
+  }
+
+  $rect <20,170,220,210>
+  method void AddData( arg float aData )
+  {
+    var int32 last = pure Current;
+
+    /* adjust current index */
+    pure Current = pure Current + 1;
+    if ( pure Current >= Data.size )
+      pure Current = 0;
+
+    /* store the given value in the array */
+    Data[ pure Current ] = aData;
+    Slope[ pure Current ] = 0.0;
+
+    /* adjust data counter */
+    if ( pure NoOfData < Data.size )
+      pure NoOfData = pure NoOfData + 1;
+
+    /* calculate the slope of the last data set as average of his neighbours */
+    var int32 prelast = last - 1;
+    if ( prelast < 0 )
+      prelast = NoOfData - 1;
+    if ( NoOfData > 2 )
+      Slope[ last ] = ( aData - Data[ prelast ]) / 2.0;
+
+    // Notify all associated property observers.
+    notifyobservers ^Current;
+
+  }
+
+  $rect <220,10,420,50>
+  array float Slope[ 1000 ];
+
+  $rect <20,220,220,260>
+  method float GetData( arg int32 aIndex )
+  {
+    var int32 i = aIndex;
+
+    if ( i < 0 )
+      i = i + Data.size;
+
+    if (( i < 0 ) || ( i >= NoOfData ))
+      return 0.0;
+    else
+      return Data[ i ];
+
+  }
+
+  $rect <20,270,220,310>
+  method float GetSlope( arg int32 aIndex )
+  {
+    if (( aIndex < 0 ) || ( aIndex > NoOfData - 1 ))
+      return 0.0;
+    else
+      return Slope[ aIndex ];
+
+  }
+}
+
+$rect <250,440,450,480>
+$output false
+class Graph : Core::Group
+{
+  $rect <10,280,210,320>
+  inherited property Bounds = <0,0,288,162>;
+
+  $rect <10,390,210,430>
+  inherited method UpdateLayout()
+  {
+    // Always invoke the inherited method.
+    super( aSize );
+
+    if ( DataStorage != null )
+    {
+      current = DataStorage.Current;
+      noOfData = DataStorage.NoOfData;
+    }
+
+  }
+
+  $rect <10,350,210,390>
+  inherited method UpdateViewState()
+  {
+    // Always invoke the inherited method.
+    super( aState );
+
+    /* check if there are any data to draw */
+    if (( noOfData < 2 ) || ( ScrollOffset < -Bounds.w ) || ( DataStorage == null ))
+      return;
+
+    var int32 inx;
+    var int32 x;
+    var bool firstRun = true;
+    var int32 noOfEdges = PixelPerValue / 4 + 1;
+
+    /* search for index and horizontal position of the first coordinate that is left of the views origin */
+    inx = ( ScrollOffset + Bounds.w ) / PixelPerValue + 1; 
+    x = ( ScrollOffset + Bounds.w ) % PixelPerValue - PixelPerValue; 
+
+    /* clear the path */
+    Path.InitSubPath( 0, noOfEdges * inx + 4 );
+
+      var float data;
+      var float slope;
+      var float lastData = 0.0;
+      var float lastSlope = 0.0;
+       var int32 dx = PixelPerValue / 2;
+
+      var float ratio = 0.25;
+      
+
+    /* iterate through all visible data entries of the data storage */
+    while (( x < Bounds.w + PixelPerValue ) && ( inx >= 0 ))
+    {
+      if ( inx < noOfData )
+      {
+        data = DataStorage.GetData( current - inx );
+        slope = DataStorage.GetSlope( current - inx );
+
+        data = (float)StrokePath.Bounds.h * ( data - (float)MinRange ) / (float)( MaxRange - MinRange );
+
+        if ( firstRun == true )
+        {
+          Path.Begin( 0, x - (int32)LineWidth, /*StrokePath.Bounds.h / 2 */ 0 );
+          Path.AddLine( 0, x, data );
+          firstRun = false;
+        }
+        else                                                  
+        {
+          if ( Bezier )
+            Path.AddBezier3( 0, x - dx, lastData + lastSlope * ratio, x - dx, data - slope * ratio, x, data, noOfEdges );
+          else
+            Path.AddLine( 0, x, data );
+        }
+
+        lastSlope = slope;
+        lastData = data;
+      }  
+      x = x + PixelPerValue;
+      inx = inx - 1;
+    }
+    Path.AddLine( 0, x + (int32)LineWidth, /* StrokePath.Bounds.h / 2 */ 0 );
+
+
+
+  }
+
+  $rect <720,360,920,400>
+  var int32 current = 999;
+
+  $rect <720,400,920,440>
+  var int32 noOfData = 1000;
+
+  $rect <20,20,160,60>
+  object Views::FillPath FillPath
+  {
+    preset Layout = Core::Layout[AlignToBottom, AlignToLeft, AlignToRight, AlignToTop, ResizeHorz, ResizeVert];
+    preset Bounds = <0,0,288,162>;
+    preset Color = #FFFFFF80;
+    preset FlipY = true;
+    preset Path = Path;
+  }
+
+  $rect <20,20,160,60>
+  object Views::StrokePath StrokePath
+  {
+    preset Layout = Core::Layout[AlignToBottom, AlignToLeft, AlignToRight, AlignToTop, ResizeHorz, ResizeVert];
+    preset Bounds = <0,0,288,162>;
+    preset FlipY = true;
+    preset Width = 3.0;
+    preset Path = Path;
+  }
+
+  $rect <10,230,210,270>
+  object Graphics::Path Path;
+
+  $rect <510,130,710,170>
+  onset LineColorLeft
+  {
+    /* check for any news... */
+    if ( value == pure LineColorLeft )
+      return;
+
+    /* store the new color value... */
+    pure LineColorLeft = value;
+
+    /* set the color of the stroke path */
+    StrokePath.ColorTL = value;
+    StrokePath.ColorBL = value;
+
+  }
+
+  // The property 'LineColorLeft' stores the color of the graph.
+  $rect <510,90,710,130>
+  property color LineColorLeft = #FFFFFFFF;
+
+  // The property 'LineWidth' stores the width of the graphs line.
+  $rect <300,90,500,130>
+  property float LineWidth = 3.0;
+
+  $rect <300,130,500,170>
+  onset LineWidth
+  {
+    /* check limits */
+    if ( value < 0.5 )
+      value = 0.5;
+    if ( value > 10.0 )
+      value = 10.0;
+
+    /* store the new value */
+    pure LineWidth = value;
+
+    /* set the line width of the stroke path */
+    StrokePath.Width = value;
+
+  }
+
+  // The property 'PixelPerUnit' determines the number of pixel in x direction between \
+  // two data values.
+  $rect <300,180,500,220>
+  property int32 PixelPerValue = 50;
+
+  $rect <300,220,500,260>
+  onset PixelPerValue
+  {
+    /* check for valid values */
+    if ( value < 1 )
+      value = 1;
+
+    /* check for any news... */
+    if ( value == pure PixelPerValue )
+      return;
+
+    /* store the new value... */
+    pure PixelPerValue = value;
+
+    pure GraphWidth = noOfData * PixelPerValue;
+
+    /* ...and force an update of the component */
+    InvalidateViewState();
+
+
+  }
+
+  // The property 'DataStorage' refers to the data pool containg the history of measured \
+  // values.
+  $rect <720,0,920,40>
+  property Oximeter::DataStorage DataStorage = null;
+
+  $rect <720,40,920,80>
+  onset DataStorage
+  {
+    // The value doesn't change - nothing to do.
+    if ( pure DataStorage == value )
+      return;
+
+    // Remember the property's new value.
+    pure DataStorage = value;
+
+    current = DataStorage.Current;
+    noOfData = DataStorage.NoOfData;
+
+    /* ...and force an update of the component */
+    InvalidateViewState();
+
+  }
+
+  // The property 'ScrollOffset' stores the offset between the origin of the graph \
+  // and the visible area of the graph.
+  $rect <510,180,710,220>
+  property int32 ScrollOffset = 0;
+
+  $rect <510,220,710,260>
+  onset ScrollOffset
+  {
+    // The value doesn't change - nothing to do.
+    if ( pure ScrollOffset == value )
+      return;
+
+    // Remember the property's new value.
+    pure ScrollOffset = value;
+
+    /* ...and force an update of the component */
+    InvalidateViewState();
+
+  }
+
+  // The property 'MinRange' defines the lower boundary of the widgets value range.
+  $rect <300,0,500,40>
+  property int32 MinRange = 0;
+
+  $rect <300,40,500,80>
+  onset MinRange
+  {
+    /* check if the given value differs from the current value */
+    if ( pure MinRange == value )
+      return;
+
+    /* store the new value */
+    pure MinRange = value;
+
+    /* ...and force an update of the component */
+    InvalidateViewState();
+
+  }
+
+  // The property 'MaxRange' defines the upper boundary of the widgets value range.
+  $rect <510,0,710,40>
+  property int32 MaxRange = 250;
+
+  $rect <510,40,710,80>
+  onset MaxRange
+  {
+    /* check if the given value differs from the current value */
+    if ( pure MaxRange == value )
+      return;
+
+    /* store the new value */
+    pure MaxRange = value;
+
+    /* ...and force an update of the component */
+    InvalidateViewState();
+
+  }
+
+  // Flag to activate grading of the graph.
+  $rect <510,270,710,310>
+  property bool Bezier = true;
+
+  $rect <510,310,710,350>
+  onset Bezier
+  {
+    // The value doesn't change - nothing to do.
+    if ( pure Bezier == value )
+      return;
+
+    // Remember the property's new value.
+    pure Bezier = value;
+
+    /* ...and force an update of the component */
+    InvalidateViewState();
+
+  }
+
+  $rect <721,130,921,170>
+  onset LineColorRight
+  {
+    /* check for any news... */
+    if ( value == pure LineColorRight )
+      return;
+
+    /* store the new color value... */
+    pure LineColorRight = value;
+
+    /* set the color of the stroke path */
+    StrokePath.ColorTR = value;
+    StrokePath.ColorBR = value;
+
+  }
+
+  // The property 'LineColorRight' stores the color of the graph.
+  $rect <721,90,921,130>
+  property color LineColorRight = #FFFFFFFF;
+
+  $rect <720,220,920,260>
+  onset FillColorTop
+  {
+    /* check for any news... */
+    if ( value == pure FillColorTop )
+      return;
+
+    /* store the new color value... */
+    pure FillColorTop = value;
+
+    /* set the color of the stroke path */
+    FillPath.ColorTL = value;
+    FillPath.ColorTR = value;
+
+  }
+
+  // The property 'FillColorTop' stores the fill color of the graph.
+  $rect <720,180,920,220>
+  property color FillColorTop = #FFFFFFFF;
+
+  $rect <720,310,920,350>
+  onset FillColorBottom
+  {
+    /* check for any news... */
+    if ( value == pure FillColorBottom )
+      return;
+
+    /* store the new color value... */
+    pure FillColorBottom = value;
+
+    /* set the color of the stroke path */
+    FillPath.ColorBL = value;
+    FillPath.ColorBR = value;
+
+  }
+
+  // The property 'FillColorBottom' stores the fill color of the graph.
+  $rect <720,270,920,310>
+  property color FillColorBottom = #FFFFFFFF;
+
+  // Flag to activate filling of the graph.
+  $rect <510,360,710,400>
+  property bool Filled = true;
+
+  $rect <510,400,710,440>
+  onset Filled
+  {
+    // The value doesn't change - nothing to do.
+    if ( pure Filled == value )
+      return;
+
+    // Remember the property's new value.
+    pure Filled = value;
+
+    /* ...and force an update of the component */
+    FillPath.Visible = value;
+    InvalidateViewState();
+
+  }
+
+  // Read-only property to get the width of the entire graph in pixel.
+  $rect <300,270,500,310>
+  property int32 GraphWidth = 0;
+
+  $rect <300,310,500,350>
+  onset GraphWidth
+  {
+    trace "The property GraphWidth is read only!";
+  }
+
+  $rect <300,350,500,390>
+  onget GraphWidth
+  {
+    return noOfData * PixelPerValue;
+  }
+
+  // The class 'Graph' draws the measured data values out of the 'DataStorage' as \
+  // a graph - by using vector graphics.
+  // 
+  // For that purpose, a 'Path' object is used to describe the path of the graph. \
+  // The single line segments between two data values are added to the 'Path' object \
+  // either by simply adding a line or by adding a bézier line.
+  // The 'StrokePath' object is drawing the path with the given line width and line \
+  // color. The 'FillPath' object is drawing the gradient below the graph.
+  note legend Note
+  {
+    attr Bounds = <10,450,910,580>;
+  }
+}
+
+$rect <40,550,240,590>
+$output false
+autoobject WidgetSet::PushButtonConfig IconButtonConfig
+{
+  preset IconTintActive = #FFFFFFFF;
+  preset IconTintDefault = #FFFFFF80;
+  preset WidgetMaxSize = <30,30>;
+  preset WidgetMinSize = <30,30>;
+}
+
+$rect <240,550,440,590>
+$output false
+resource Resources::Bitmap IconButton
+{
+  attr bitmapfile FileName = .\Res\IconButton.png;
+  attr framesize FrameSize = <30,30>;
+  attr framedelay FrameDelay;
+  attr bitmapformat Format = Alpha8;
+  attr bitmapdithering Dithering = Auto;
+  attr bitmapmode Mode = Default;
+}
+
+$rect <240,750,440,790>
+$output false
+resource Resources::Bitmap RotaryBackground
+{
+  attr bitmapfile FileName = .\Res\RotaryBackground.png;
+  attr framesize FrameSize;
+  attr framedelay FrameDelay;
+  attr bitmapformat Format = Alpha8;
+  attr bitmapdithering Dithering = Auto;
+  attr bitmapmode Mode = Default;
+}
+
+$rect <440,730,640,770>
+$output false
+resource Resources::Bitmap RotaryThumbMax
+{
+  attr bitmapfile FileName = .\Res\RotaryThumbMax.png;
+  attr framesize FrameSize;
+  attr framedelay FrameDelay;
+  attr bitmapformat Format = Alpha8;
+  attr bitmapdithering Dithering = Auto;
+  attr bitmapmode Mode = Default;
+}
+
+$rect <40,730,240,770>
+$output false
+autoobject WidgetSet::RotaryKnobConfig RotaryMaxConfig
+{
+  preset ThumbMaxAngle = 2;
+  preset ThumbMinAngle = 270;
+  preset ThumbPivot = <48,48>;
+  preset ThumbActive = Oximeter::RotaryThumbMax;
+  preset ThumbFocused = Oximeter::RotaryThumbMax;
+  preset ThumbDefault = Oximeter::RotaryThumbMax;
+  preset ScaleActive = Oximeter::RotaryBackground;
+  preset ScaleFocused = Oximeter::RotaryBackground;
+  preset ScaleDisabled = Oximeter::RotaryBackground;
+  preset ScaleDefault = Oximeter::RotaryBackground;
+  preset WidgetMaxSize = <100,100>;
+  preset WidgetMinSize = <100,100>;
+}
+
+$rect <440,770,640,810>
+$output false
+resource Resources::Bitmap RotaryThumbMin
+{
+  attr bitmapfile FileName = .\Res\RotaryThumbMin.png;
+  attr framesize FrameSize;
+  attr framedelay FrameDelay;
+  attr bitmapformat Format = Alpha8;
+  attr bitmapdithering Dithering = Auto;
+  attr bitmapmode Mode = Default;
+}
+
+$rect <40,770,240,810>
+$output false
+autoobject WidgetSet::RotaryKnobConfig RotaryMinConfig
+{
+  preset ThumbMaxAngle = 90;
+  preset ThumbMinAngle = 358;
+  preset ThumbPivot = <0,48>;
+  preset ThumbActive = Oximeter::RotaryThumbMin;
+  preset ThumbFocused = Oximeter::RotaryThumbMin;
+  preset ThumbDefault = Oximeter::RotaryThumbMin;
+  preset ScaleActive = Oximeter::RotaryBackground;
+  preset ScaleFocused = Oximeter::RotaryBackground;
+  preset ScaleDisabled = Oximeter::RotaryBackground;
+  preset ScaleDefault = Oximeter::RotaryBackground;
+  preset WidgetMaxSize = <100,100>;
+  preset WidgetMinSize = <100,100>;
+}
+
+$rect <240,180,440,220>
+$output false
+class GraphPanel : Core::Group
+{
+  $rect <10,240,210,280>
+  inherited property Bounds = <0,0,480,181>;
+
+  $rect <10,330,210,370>
+  inherited method UpdateLayout()
+  {
+    // Always invoke the inherited method.
+    super( aSize );
+
+    postsignal zoom;
+  }
+
+  $rect <10,290,210,330>
+  inherited method UpdateViewState()
+  {
+    // Always invoke the inherited method.
+    super( aState );
+
+    var bool oxygen    = true;
+    var bool pulse     = true;
+    var bool bezier    = ToggleBezier.Checked;
+    var bool gradient  = ToggleGradient.Checked;
+
+    /* configure graphs */
+    OxygenGraph.Visible = oxygen;
+    PulseGraph.Visible  = pulse;
+    OxygenGraph.Bezier  = bezier;
+    PulseGraph.Bezier   = bezier;
+    OxygenGraph.Filled  = gradient;
+    PulseGraph.Filled   = gradient;
+    OxygenGraph.LineWidth = (float)LineSlider.CurrentValue / 10.0;
+    PulseGraph.LineWidth = (float)LineSlider.CurrentValue / 10.0;
+
+    /* configure text items */
+    TextCaptionOxygen.Visible = oxygen;
+    TextOxygenMin.Visible = oxygen;
+    TextOxygenMax.Visible = oxygen;
+    TextOxygenMin.String = string( OxygenGraph.MinRange, 2 );
+    TextOxygenMax.String = string( OxygenGraph.MaxRange, 2 );
+
+    TextCaptionPulse.Visible = pulse;
+    TextPulseMin.Visible = pulse;
+    TextPulseMax.Visible = pulse;
+    TextPulseMin.String = string( PulseGraph.MinRange, 2 );
+    TextPulseMax.String = string( PulseGraph.MaxRange, 2 );
+
+    /* choose colors */
+    if ( gradient )
+    {
+      OxygenGraph.LineColorLeft = #FFFFFFFF;
+      OxygenGraph.LineColorRight = #FFFFFFFF;
+      PulseGraph.LineColorLeft = #FFFFFFFF;
+      PulseGraph.LineColorRight = #FFFFFFFF;
+    }
+    else
+    {
+      OxygenGraph.LineColorLeft = Oximeter::ColorOxygenLight;
+      OxygenGraph.LineColorRight = Oximeter::ColorOxygenDark;
+      PulseGraph.LineColorLeft = Oximeter::ColorPulseLight;
+      PulseGraph.LineColorRight = Oximeter::ColorPulseDark;
+    }
+
+
+
+  }
+
+  $rect <20,20,160,60>
+  object Views::Text TextBezier
+  {
+    preset Bounds = <343,40,403,70>;
+    preset Alignment = Views::TextAlignment[AlignHorzLeft, AlignVertCenter];
+    preset String = "Bézier";
+    preset Font = Oximeter::FontL;
+  }
+
+  $rect <20,20,160,60>
+  object WidgetSet::ToggleButton ToggleBezier
+  {
+    preset Bounds = <410,40,475,70>;
+    preset Checked = true;
+    preset OnSwitchOn = update;
+    preset OnSwitchOff = update;
+    preset Appearance = Oximeter::ToggleButtonConfig;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Text TextGradient
+  {
+    preset Bounds = <343,75,413,105>;
+    preset Alignment = Views::TextAlignment[AlignHorzLeft, AlignVertCenter];
+    preset String = "Gradient";
+    preset Font = Oximeter::FontL;
+  }
+
+  $rect <20,20,160,60>
+  object WidgetSet::ToggleButton ToggleGradient
+  {
+    preset Bounds = <410,75,475,105>;
+    preset OnSwitchOn = update;
+    preset OnSwitchOff = update;
+    preset Appearance = Oximeter::ToggleButtonConfig;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Text TextZoom
+  {
+    preset Bounds = <343,110,403,140>;
+    preset Alignment = Views::TextAlignment[AlignHorzLeft, AlignVertCenter];
+    preset String = "Zoom";
+    preset Font = Oximeter::FontL;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Text TextCaptionOxygen
+  {
+    preset Bounds = <25,0,148,20>;
+    preset Alignment = Views::TextAlignment[AlignHorzLeft, AlignVertCenter];
+    preset String = "Oxygen in %SpO2";
+    preset Font = Oximeter::FontL;
+    preset Color = Oximeter::ColorOxygenDark;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Line L1
+  {
+    preset Point2 = <327,24>;
+    preset Point1 = <25,24>;
+    preset Color = #808080FF;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Line L2
+  {
+    preset Point2 = <327,73>;
+    preset Point1 = <25,73>;
+    preset Color = #808080FF;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Line L3
+  {
+    preset Point2 = <327,122>;
+    preset Point1 = <25,122>;
+    preset Color = #808080FF;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Line L4
+  {
+    preset Point2 = <327,171>;
+    preset Point1 = <25,171>;
+    preset Color = #808080FF;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Line L5
+  {
+    preset Point2 = <33,177>;
+    preset Point1 = <33,18>;
+    preset Color = #808080FF;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Line L6
+  {
+    preset Point2 = <104,177>;
+    preset Point1 = <104,18>;
+    preset Color = #808080FF;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Line L7
+  {
+    preset Point2 = <176,177>;
+    preset Point1 = <176,18>;
+    preset Color = #808080FF;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Line L8
+  {
+    preset Point2 = <248,177>;
+    preset Point1 = <248,18>;
+    preset Color = #808080FF;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Line L9
+  {
+    preset Point2 = <319,177>;
+    preset Point1 = <319,18>;
+    preset Color = #808080FF;
+  }
+
+  $rect <20,20,160,60>
+  object Oximeter::Graph OxygenGraph
+  {
+    preset Bounds = <25,24,327,171>;
+    preset PixelPerValue = 30;
+    preset DataStorage = Oximeter::Device.OxygenStorage;
+    preset MinRange = 85;
+    preset MaxRange = 100;
+    preset FillColorTop = Oximeter::ColorOxygenDark;
+    preset FillColorBottom = #80808000;
+  }
+
+  $rect <20,20,160,60>
+  object Oximeter::Graph PulseGraph
+  {
+    preset Bounds = <25,24,327,171>;
+    preset PixelPerValue = 30;
+    preset DataStorage = Oximeter::Device.PulseStorage;
+    preset MinRange = 60;
+    preset MaxRange = 120;
+    preset FillColorTop = Oximeter::ColorPulseDark;
+    preset FillColorBottom = #80808000;
+  }
+
+  $rect <20,20,160,60>
+  object Core::SlideTouchHandler SlideTouchHandler
+  {
+    preset Layout = Core::Layout[AlignToBottom, AlignToLeft, AlignToRight, AlignToTop, ResizeHorz, ResizeVert];
+    preset Bounds = <25,24,327,171>;
+    preset OnSlide = onSlide;
+    preset SlideVert = false;
+    preset RubberBandEffectDuration = 200;
+    preset Friction = 0.1;
+  }
+
+  $rect <510,190,710,230>
+  slot onSlide
+  {
+    sender; /* the method is called from the sender object */
+
+    OxygenGraph.ScrollOffset = SlideTouchHandler.Offset.x;
+    PulseGraph.ScrollOffset = SlideTouchHandler.Offset.x;
+
+
+
+  }
+
+  $rect <20,20,160,60>
+  object Views::Text TextCaptionPulse
+  {
+    preset Bounds = <205,0,328,20>;
+    preset Alignment = Views::TextAlignment[AlignHorzRight, AlignVertCenter];
+    preset String = "Pulse in bpm";
+    preset Font = Oximeter::FontL;
+    preset Color = Oximeter::ColorPulseDark;
+  }
+
+  $rect <510,90,710,130>
+  slot update
+  {
+    sender; /* the method is called from the sender object */
+
+    InvalidateViewState();
+
+
+  }
+
+  $rect <20,20,160,60>
+  object WidgetSet::HorizontalSlider ZoomSlider
+  {
+    preset Bounds = <375,110,475,140>;
+    preset OnChange = zoom;
+    preset MaxValue = 80;
+    preset MinValue = 10;
+    preset CurrentValue = 50;
+    preset Appearance = Oximeter::HorizontalSliderConfig;
+  }
+
+  $rect <510,140,710,180>
+  slot zoom
+  {
+    sender; /* the method is called from the sender object */
+
+    /* adjust zoom of graphs */
+    OxygenGraph.PixelPerValue = ZoomSlider.CurrentValue;
+    PulseGraph.PixelPerValue = ZoomSlider.CurrentValue;
+
+    /* determine the size of the scroll area */
+    var int32 w = OxygenGraph.GraphWidth - OxygenGraph.Bounds.w;
+    if ( OxygenGraph.GraphWidth > PulseGraph.GraphWidth )
+      w = PulseGraph.GraphWidth - PulseGraph.Bounds.w;
+
+    SlideTouchHandler.MaxOffset = point( w, 0 );
+    SlideTouchHandler.Offset = point( 0, 0 );
+    OxygenGraph.ScrollOffset = SlideTouchHandler.Offset.x;
+    PulseGraph.ScrollOffset = SlideTouchHandler.Offset.x;
+
+  }
+
+  $rect <20,20,160,60>
+  object Views::Text TextOxygenMax
+  {
+    preset Bounds = <0,18,20,33>;
+    preset Alignment = Views::TextAlignment[AlignHorzRight, AlignVertCenter];
+    preset String = "000";
+    preset Font = Oximeter::FontM;
+    preset Color = Oximeter::ColorOxygenDark;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Text TextOxygenMin
+  {
+    preset Bounds = <0,163,20,178>;
+    preset Alignment = Views::TextAlignment[AlignHorzRight, AlignVertCenter];
+    preset String = "000";
+    preset Font = Oximeter::FontM;
+    preset Color = Oximeter::ColorOxygenDark;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Text TextPulseMax
+  {
+    preset Bounds = <331,18,351,33>;
+    preset Alignment = Views::TextAlignment[AlignHorzLeft, AlignVertCenter];
+    preset String = "000";
+    preset Font = Oximeter::FontM;
+    preset Color = Oximeter::ColorPulseDark;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Text TextPulseMin
+  {
+    preset Bounds = <331,163,351,178>;
+    preset Alignment = Views::TextAlignment[AlignHorzLeft, AlignVertCenter];
+    preset String = "000";
+    preset Font = Oximeter::FontM;
+    preset Color = Oximeter::ColorPulseDark;
+  }
+
+  $rect <20,20,160,60>
+  object WidgetSet::PushButton CloseButton
+  {
+    preset Bounds = <445,5,475,35>;
+    preset IconFrameActive = 1;
+    preset IconFrameFocused = 1;
+    preset IconFrameDisabled = 1;
+    preset IconFrameDefault = 1;
+    preset Icon = Oximeter::IconButton;
+    preset Appearance = Oximeter::IconButtonConfig;
+  }
+
+  $rect <510,0,710,40>
+  property slot OnClose = null;
+
+  $rect <510,40,710,80>
+  onset OnClose
+  {
+    // The value doesn't change - nothing to do.
+    if ( pure OnClose == value )
+      return;
+
+    // Remember the property's new value.
+    pure OnClose = value;
+
+    /* forward the event of the close button */
+    CloseButton.OnActivate = value;
+
+  }
+
+  $rect <20,20,160,60>
+  object Views::Text TextLine
+  {
+    preset Bounds = <343,145,393,175>;
+    preset Alignment = Views::TextAlignment[AlignHorzLeft, AlignVertCenter];
+    preset String = "Line";
+    preset Font = Oximeter::FontL;
+  }
+
+  $rect <20,20,160,60>
+  object WidgetSet::HorizontalSlider LineSlider
+  {
+    preset Bounds = <375,145,475,175>;
+    preset OnChange = update;
+    preset MaxValue = 100;
+    preset MinValue = 10;
+    preset CurrentValue = 30;
+    preset Appearance = Oximeter::HorizontalSliderConfig;
+  }
+
+  // The class 'GraphPanel' contains two graph objects - one for oxygen one for pulse \
+  // data.
+  // The graph objects are lying over another so that two data graphs appear within \
+  // one diagramm. A slide touch handler is placed over the graphs so that the user \
+  // can shift the visible area of the graphs.
+  // The current display settings can be controlled by a couple of widgets.
+  note legend Note
+  {
+    attr Bounds = <220,240,850,370>;
+  }
+}
+
+// Color constants for panels, text items and graphs
+$rect <690,120,890,160>
+$output false
+const color ColorOxygenLight = #00E3F1FF;
+
+// Color constants for panels, text items and graphs
+$rect <890,120,1090,160>
+$output false
+const color ColorOxygenDark = #009EE2FF;
+
+// Color constants for panels, text items and graphs
+$rect <690,160,890,200>
+$output false
+const color ColorPulseLight = #FF7339FF;
+
+// Color constants for panels, text items and graphs
+$rect <890,160,1090,200>
+$output false
+const color ColorPulseDark = #FF1A53FF;
+
+$rect <40,630,240,670>
+$output false
+autoobject WidgetSet::ToggleButtonConfig ToggleButtonConfig
+{
+  preset FaceOnFrameActive = 1;
+  preset FaceOnFrameFocused = 1;
+  preset FaceOnFrameDefault = 1;
+  preset FaceOnActive = Oximeter::ToggleButton;
+  preset FaceOnFocused = Oximeter::ToggleButton;
+  preset FaceOnDefault = Oximeter::ToggleButton;
+  preset FaceOffFrameActive = 0;
+  preset FaceOffFrameFocused = 0;
+  preset FaceOffFrameDefault = 0;
+  preset FaceOffActive = Oximeter::ToggleButton;
+  preset FaceOffFocused = Oximeter::ToggleButton;
+  preset FaceOffDefault = Oximeter::ToggleButton;
+  preset WidgetMaxSize = <65,30>;
+  preset WidgetMinSize = <65,30>;
+}
+
+$rect <240,630,440,670>
+$output false
+resource Resources::Bitmap ToggleButton
+{
+  attr bitmapfile FileName = .\Res\ToggleButton.png;
+  attr framesize FrameSize = <65,30>;
+  attr framedelay FrameDelay;
+  attr bitmapformat Format = Alpha8;
+  attr bitmapdithering Dithering = Auto;
+  attr bitmapmode Mode = Default;
+}
+
+$rect <1090,400,1290,440>
+$output false
+resource Resources::Font FontL
+{
+  attr fontname FontName = Asap Condensed;
+  attr fontheight Height = 16;
+  attr fontquality Quality = High;
+  attr fontranges Ranges = 0x20-0xFF;
+  attr fontaspectratio AspectRatio = 1.0;
+  attr fontbold Bold = false;
+  attr fontitalic Italic = false;
+}
+
+$rect <40,680,240,720>
+$output false
+autoobject WidgetSet::HorizontalSliderConfig HorizontalSliderConfig
+{
+  preset ThumbActive = Oximeter::Thumb;
+  preset ThumbFocused = Oximeter::Thumb;
+  preset ThumbDefault = Oximeter::Thumb;
+  preset TrackRightFrameActive = 1;
+  preset TrackRightFrameFocused = 1;
+  preset TrackRightFrameDisabled = 1;
+  preset TrackRightFrameDefault = 1;
+  preset TrackRightActive = Oximeter::Track;
+  preset TrackRightFocused = Oximeter::Track;
+  preset TrackRightDisabled = Oximeter::Track;
+  preset TrackRightDefault = Oximeter::Track;
+  preset TrackLeftFrameActive = 0;
+  preset TrackLeftFrameFocused = 0;
+  preset TrackLeftFrameDisabled = 0;
+  preset TrackLeftFrameDefault = 0;
+  preset TrackLeftActive = Oximeter::Track;
+  preset TrackLeftFocused = Oximeter::Track;
+  preset TrackLeftDisabled = Oximeter::Track;
+  preset TrackLeftDefault = Oximeter::Track;
+  preset WidgetMaxSize = <1000,30>;
+  preset WidgetMinSize = <60,30>;
+}
+
+$rect <440,680,640,720>
+$output false
+resource Resources::Bitmap Thumb
+{
+  attr bitmapfile FileName = .\Res\Thumb.png;
+  attr framesize FrameSize;
+  attr framedelay FrameDelay;
+  attr bitmapformat Format = Alpha8;
+  attr bitmapdithering Dithering = Auto;
+  attr bitmapmode Mode = Default;
+}
+
+$rect <240,680,440,720>
+$output false
+resource Resources::Bitmap Track
+{
+  attr bitmapfile FileName = .\Res\Track.png;
+  attr framesize FrameSize = <45,30>;
+  attr framedelay FrameDelay;
+  attr bitmapformat Format = Alpha8;
+  attr bitmapdithering Dithering = Auto;
+  attr bitmapmode Mode = Default;
+}
+
+$rect <40,70,240,110>
+$output false
+class Oximeter : Core::Group
+{
+  $rect <930,0,1130,40>
+  inherited property Bounds = <0,0,480,272>;
+
+  $rect <20,20,160,60>
+  object Oximeter::Background Background
+  {
+    preset Layout = Core::Layout[AlignToBottom, AlignToLeft, AlignToRight, AlignToTop, ResizeHorz, ResizeVert];
+    preset Bounds = <0,0,480,272>;
+  }
+
+  $rect <20,20,160,60>
+  object Oximeter::PulsePanel PulsePanel
+  {
+    preset Layout = Core::Layout[AlignToBottom, AlignToRight, AlignToTop, ResizeHorz, ResizeVert];
+    preset Bounds = <240,0,480,272>;
+    preset OnChart = slotGraphs;
+    preset OnAdjust = slotPulseSettings;
+    preset OnOverview = slotOverview;
+  }
+
+  $rect <500,60,700,100>
+  slot slotOverview
+  {
+    sender; /* the method is called from the sender object */
+
+    /* check if the state really changes */
+    if ( Mode == Oximeter::OperationMode.Overview )
+      return;
+
+    /* change current operation mode */
+    Mode = Oximeter::OperationMode.Overview;
+
+    PulsePanel.ChangeMode( Mode );
+    OxygenPanel.ChangeMode( Mode );
+    Background.ChangeMode( Mode );
+
+    /* remove any temporary panel */
+    postsignal RemovePanelEffect.StartEffect;
+
+
+  }
+
+  $rect <500,100,700,140>
+  slot slotGraphs
+  {
+    sender; /* the method is called from the sender object */
+
+    /* check if the state really changes */
+    if ( Mode == Oximeter::OperationMode.Graphs )
+      return;
+
+    /* change current operation mode */
+    Mode = Oximeter::OperationMode.Graphs;
+
+    PulsePanel.ChangeMode( Mode );
+    OxygenPanel.ChangeMode( Mode );
+    Background.ChangeMode( Mode );
+
+    /* remove any temporary panel */
+    postsignal RemovePanelEffect.StartEffect;
+
+    graphPanel = new Oximeter::GraphPanel;
+    graphPanel.Bounds = rect( 0, Bounds.h / 3, Bounds.w, Bounds.h );
+    graphPanel.Opacity = 0x00;
+    graphPanel.OnClose = slotOverview;
+    Add( graphPanel, 0 );
+    ShowPanelEffect.Enabled = false;
+    ShowPanelEffect.Outlet = ^graphPanel.Opacity;
+    ShowPanelEffect.Enabled = true;
+
+
+  }
+
+  $rect <500,140,700,180>
+  slot slotMenus
+  {
+    sender; /* the method is called from the sender object */
+
+    /* check if the state really changes */
+    if ( Mode == Oximeter::OperationMode.Menus )
+      return;
+
+    /* change current operation mode */
+    Mode = Oximeter::OperationMode.Menus;
+
+    PulsePanel.ChangeMode( Mode );
+    OxygenPanel.ChangeMode( Mode );
+    Background.ChangeMode( Mode );
+
+    /* remove any temporary panel */
+    postsignal RemovePanelEffect.StartEffect;
+
+    /* create a new menus panel and fade it in */
+    mainMenu = new Oximeter::MainMenu;
+    mainMenu.Bounds = rect( Bounds.w * 1 / 4, 0, Bounds.w * 3 / 4, Bounds.h );
+    mainMenu.Opacity = 0x00;
+    mainMenu.OnClose = slotOverview;
+    Add( mainMenu, 0 );
+    ShowPanelEffect.Enabled = false;
+    ShowPanelEffect.Outlet = ^mainMenu.Opacity;
+    ShowPanelEffect.Enabled = true;
+
+
+  }
+
+  $rect <500,180,700,220>
+  slot slotOxiSettings
+  {
+    sender; /* the method is called from the sender object */
+
+    /* check if the state really changes */
+    if ( Mode == Oximeter::OperationMode.OxygenSettings )
+      return;
+
+    /* change current operation mode */
+    Mode = Oximeter::OperationMode.OxygenSettings;
+
+    PulsePanel.ChangeMode( Mode );
+    OxygenPanel.ChangeMode( Mode );
+    Background.ChangeMode( Mode );
+
+    /* remove any temporary panel */
+    postsignal RemovePanelEffect.StartEffect;
+
+    /* create a new oxygen settings panel and fade it in */
+    oxygenSettings = new Oximeter::OxygenSettings;
+    oxygenSettings.Bounds = rect( 0, 0, Bounds.w * 3 / 4, Bounds.h );
+    oxygenSettings.Opacity = 0x00;
+    oxygenSettings.OnClose = slotOverview;
+    Add( oxygenSettings, 0 );
+    ShowPanelEffect.Enabled = false;
+    ShowPanelEffect.Outlet = ^oxygenSettings.Opacity;
+    ShowPanelEffect.Enabled = true;
+
+  }
+
+  $rect <500,220,700,260>
+  slot slotPulseSettings
+  {
+    sender; /* the method is called from the sender object */
+
+    /* check if the state really changes */
+    if ( Mode == Oximeter::OperationMode.PulseSettings )
+      return;
+
+    /* change current operation mode */
+    Mode = Oximeter::OperationMode.PulseSettings;
+
+    PulsePanel.ChangeMode( Mode );
+    OxygenPanel.ChangeMode( Mode );
+    Background.ChangeMode( Mode );
+
+    /* remove any temporary panel */
+    postsignal RemovePanelEffect.StartEffect;
+
+    /* create a new pulse settings panel and fade it in */
+    pulseSettings = new Oximeter::PulseSettings;
+    pulseSettings.Bounds = rect( Bounds.w / 4, 0, Bounds.w, Bounds.h );
+    pulseSettings.Opacity = 0x00;
+    pulseSettings.OnClose = slotOverview;
+    Add( pulseSettings, 0 );
+    ShowPanelEffect.Enabled = false;
+    ShowPanelEffect.Outlet = ^pulseSettings.Opacity;
+    ShowPanelEffect.Enabled = true;
+
+
+  }
+
+  $rect <20,20,160,60>
+  object Oximeter::OxygenPanel OxygenPanel
+  {
+    preset Layout = Core::Layout[AlignToBottom, AlignToLeft, AlignToTop, ResizeHorz, ResizeVert];
+    preset Bounds = <0,0,240,272>;
+    preset OnChart = slotGraphs;
+    preset OnAdjust = slotOxiSettings;
+    preset OnOverview = slotOverview;
+  }
+
+  // Variable to keep the device autoobject in the memory.
+  $rect <720,0,920,40>
+  var Oximeter::DeviceClass Device = Oximeter::Device;
+
+  $rect <20,20,160,60>
+  object WidgetSet::PushButton PushButton
+  {
+    preset Bounds = <420,5,450,35>;
+    preset OnActivate = slotMenus;
+    preset Icon = Oximeter::IconButton;
+    preset Appearance = Oximeter::IconButtonConfig;
+  }
+
+  $rect <720,100,920,140>
+  var Oximeter::GraphPanel graphPanel = null;
+
+  $rect <930,100,1130,140>
+  object Effects::Int32Effect ShowPanelEffect
+  {
+    preset Timing = Effects::Timing.FastIn_EaseOut;
+    preset NoOfCycles = 1;
+    preset CycleDuration = Oximeter::FadeInTime;
+    preset InitialDelay = Oximeter::FadeOutTime + Oximeter::MoveTime;
+  }
+
+  $rect <930,140,1130,180>
+  object Effects::Int32Effect RemovePanelEffect
+  {
+    preset OnAnimate = removePanel;
+    preset Timing = Effects::Timing.FastIn_EaseOut;
+    preset NoOfCycles = 1;
+    preset CycleDuration = Oximeter::FadeOutTime;
+    preset Value2 = 0;
+    preset Value1 = 255;
+  }
+
+  $rect <930,180,1130,220>
+  slot removePanel
+  {
+    sender; /* the method is called from the sender object */
+
+    if (( graphPanel != null ) && ( Mode != Oximeter::OperationMode.Graphs ))
+    {
+      graphPanel.Opacity = RemovePanelEffect.Value;
+      if ( graphPanel.Opacity == 0 )
+      {
+        Remove( graphPanel );
+        graphPanel = null;
+      }
+    }
+    if (( mainMenu != null ) && ( Mode != Oximeter::OperationMode.Menus ))
+    {
+      mainMenu.Opacity = RemovePanelEffect.Value;
+      if ( mainMenu.Opacity == 0 )
+      {
+        Remove( mainMenu );
+        mainMenu = null;
+      }
+    }
+    if (( pulseSettings != null ) && ( Mode != Oximeter::OperationMode.PulseSettings ))
+    {
+      pulseSettings.Opacity = RemovePanelEffect.Value;
+      if ( pulseSettings.Opacity == 0 )
+      {
+        Remove( pulseSettings );
+        pulseSettings = null;
+      }
+    }
+    if (( oxygenSettings != null ) && ( Mode != Oximeter::OperationMode.OxygenSettings ))
+    {
+      oxygenSettings.Opacity = RemovePanelEffect.Value;
+      if ( oxygenSettings.Opacity == 0 )
+      {
+        Remove( oxygenSettings );
+        oxygenSettings = null;
+      }
+    }
+
+
+  }
+
+  $rect <720,220,920,260>
+  var Oximeter::PulseSettings pulseSettings = null;
+
+  // The variable 'Mode' stores the next acitve mode during animation - or the currently \
+  // active mode, if animation is finished.
+  $rect <500,0,700,40>
+  var Oximeter::OperationMode Mode = Oximeter::OperationMode.Overview;
+
+  $rect <720,180,920,220>
+  var Oximeter::OxygenSettings oxygenSettings = null;
+
+  $rect <20,20,160,60>
+  object Views::Image Battery
+  {
+    preset Bounds = <455,5,475,35>;
+    preset Color = #FFFFFF80;
+    preset Animated = true;
+    preset Bitmap = Oximeter::Battery;
+  }
+
+  $rect <720,140,920,180>
+  var Oximeter::MainMenu mainMenu = null;
+
+  // The class 'Oximeter' combines the oxygen panel and the pulse panel to one application \
+  // and changes the current operation mode of the pulse oximeter.
+  // All temporarily used panels, like the main menu, the graph panel or the settings \
+  // panels are created dynamically. A fade-in/fade-out effect is used to show/hide \
+  // these panels.
+  note legend Note
+  {
+    attr Bounds = <500,290,940,460>;
+  }
+
+  // Slot method to trigger the next phase of the auto demo.
+  $rect <10,300,210,340>
+  slot AutoDemoSlot
+  {
+    sender; /* the method is called from the sender object */
+
+    switch ( AutoState )
+    {
+      case  0: postsignal slotOverview;
+      case  1: postsignal slotGraphs;
+      case  2: postsignal slotOverview;
+      case  3: postsignal slotOxiSettings;
+      case  4: postsignal slotPulseSettings;
+      case  5: postsignal slotGraphs;
+      case  6: postsignal slotMenus;
+      default:
+       ;
+    }
+
+    AutoState = AutoState + 1;
+    if ( AutoState > 6 )
+      AutoState = 0;
+  }
+
+  // Variable to store the current phase of the auto demo.
+  $rect <220,300,420,340>
+  var int32 AutoState = 0;
+
+  // Timer object to drive the auto demo mode.
+  $rect <10,340,210,380>
+  object Core::Timer AutoDemoTimer
+  {
+    preset OnTrigger = AutoDemoSlot;
+    preset Period = 4000;
+    preset Begin = 0;
+  }
+}
+
+$rect <240,280,440,320>
+$output false
+class PulseSettings : Core::Group
+{
+  $rect <390,120,590,160>
+  inherited property Bounds = <0,0,360,272>;
+
+  $rect <390,160,590,200>
+  inherited method UpdateLayout()
+  {
+    // Always invoke the inherited method.
+    super( aSize );
+
+    /* store old values for cancel operation */
+    oldMin = Oximeter::Device.MinPulse;
+    oldMax = Oximeter::Device.MaxPulse;
+    oldAlarm = Oximeter::Device.AlarmTime;
+
+  }
+
+  $rect <20,20,160,60>
+  object WidgetSet::RotaryKnob RotaryKnobMax
+  {
+    preset Bounds = <30,15,130,115>;
+    preset Outlet = ^Oximeter::Device.MaxPulse;
+    preset MaxValue = 150;
+    preset MinValue = 90;
+    preset Appearance = Oximeter::RotaryMaxConfig;
+  }
+
+  $rect <20,20,160,60>
+  object WidgetSet::RotaryKnob RotaryKnobMin
+  {
+    preset Bounds = <30,130,130,230>;
+    preset Outlet = ^Oximeter::Device.MinPulse;
+    preset MaxValue = 75;
+    preset MinValue = 30;
+    preset Appearance = Oximeter::RotaryMinConfig;
+  }
+
+  $rect <20,20,160,60>
+  object WidgetSet::HorizontalSlider HorizontalSlider
+  {
+    preset Bounds = <160,235,320,265>;
+    preset Outlet = ^Oximeter::Device.AlarmTime;
+    preset MaxValue = 180;
+    preset Appearance = Oximeter::HorizontalSliderConfig;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Text TextAlarm
+  {
+    preset Bounds = <235,210,320,230>;
+    preset Alignment = Views::TextAlignment[AlignHorzRight, AlignVertCenter];
+    preset String = "Alarm in sec";
+    preset Font = Oximeter::FontL;
+  }
+
+  $rect <20,20,160,60>
+  object WidgetSet::PushButton PushButtonCancel
+  {
+    preset Bounds = <85,235,150,265>;
+    preset OnActivate = onCancel;
+    preset Label = "CANCEL";
+    preset Appearance = Oximeter::PushButtonConfig;
+  }
+
+  $rect <20,20,160,60>
+  object WidgetSet::PushButton PushButtonSave
+  {
+    preset Bounds = <10,235,75,265>;
+    preset Label = "SAVE";
+    preset Appearance = Oximeter::PushButtonConfig;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Text TextMax
+  {
+    preset Bounds = <30,0,130,20>;
+    preset Alignment = Views::TextAlignment[AlignHorzCenter, AlignVertCenter];
+    preset String = "Pulse max bpm";
+    preset Font = Oximeter::FontL;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Text TextMin
+  {
+    preset Bounds = <30,115,130,135>;
+    preset Alignment = Views::TextAlignment[AlignHorzCenter, AlignVertCenter];
+    preset String = "Pulse min bpm";
+    preset Font = Oximeter::FontL;
+  }
+
+  $rect <390,230,590,270>
+  slot onCancel
+  {
+    sender; /* the method is called from the sender object */
+
+    /* restore old values after cancel operation */
+    Oximeter::Device.MinPulse = oldMin;
+    Oximeter::Device.MaxPulse = oldMax;
+    Oximeter::Device.AlarmTime = oldAlarm;
+
+    signal OnClose;
+  }
+
+  $rect <20,20,160,60>
+  object Oximeter::NumberDisplay NumberDisplayMax
+  {
+    preset Bounds = <40,35,120,95>;
+    preset Outlet = ^Oximeter::Device.MaxPulse;
+  }
+
+  $rect <20,20,160,60>
+  object Oximeter::NumberDisplay NumberDisplayMin
+  {
+    preset Bounds = <40,150,120,210>;
+    preset Outlet = ^Oximeter::Device.MinPulse;
+  }
+
+  $rect <20,20,160,60>
+  object Oximeter::NumberDisplay NumberDisplayAlarm
+  {
+    preset Bounds = <190,200,290,240>;
+    preset Outlet = ^Oximeter::Device.AlarmTime;
+  }
+
+  $rect <390,300,590,340>
+  var int32 oldMin = 0;
+
+  $rect <390,340,590,380>
+  var int32 oldMax = 0;
+
+  // Slot property to get notified when the user has pressed save or cancel.
+  $rect <390,10,590,50>
+  property slot OnClose = null;
+
+  $rect <390,50,590,90>
+  onset OnClose
+  {
+    // The value doesn't change - nothing to do.
+    if ( pure OnClose == value )
+      return;
+
+    // Remember the property's new value.
+    pure OnClose = value;
+
+    /* forward the event of the save button */
+    PushButtonSave.OnActivate = value;
+
+  }
+
+  $rect <390,380,590,420>
+  var int32 oldAlarm = 0;
+}
+
+$rect <40,590,240,630>
+$output false
+autoobject WidgetSet::PushButtonConfig PushButtonConfig
+{
+  preset LabelColorActive = #00000080;
+  preset LabelColorFocused = #FFFFFFFF;
+  preset LabelColorDefault = #FFFFFFFF;
+  preset LabelFont = Oximeter::FontL;
+  preset FaceTintActive = #FFFFFFFF;
+  preset FaceTintFocused = #FFFFFFFF;
+  preset FaceTintDisabled = #FFFFFF80;
+  preset FaceTintDefault = #FFFFFFFF;
+  preset FaceFrameActive = 1;
+  preset FaceFrameDisabled = 0;
+  preset FaceFrameDefault = 0;
+  preset FaceActive = Oximeter::PushButton;
+  preset FaceFocused = Oximeter::PushButton;
+  preset FaceDisabled = Oximeter::PushButton;
+  preset FaceDefault = Oximeter::PushButton;
+  preset WidgetMaxSize = <650,30>;
+  preset WidgetMinSize = <65,30>;
+}
+
+$rect <240,590,440,630>
+$output false
+resource Resources::Bitmap PushButton
+{
+  attr bitmapfile FileName = .\Res\PushButton.png;
+  attr framesize FrameSize = <65,30>;
+  attr framedelay FrameDelay;
+  attr bitmapformat Format = Alpha8;
+  attr bitmapdithering Dithering = Auto;
+  attr bitmapmode Mode = Default;
+}
+
+$rect <40,490,240,530>
+$output false
+class NumberDisplay : Core::Group
+{
+  $rect <10,230,210,270>
+  inherited property Bounds = <0,0,60,40>;
+
+  $rect <10,270,210,310>
+  inherited method UpdateViewState()
+  {
+    // Always invoke the inherited method.
+    super( aState );
+
+    /* build numeric values by using up to three bitmap digits */ 
+    var int32 noOfDigits = 1;
+    var int32 number = pure CurrentValue;
+    DigitOnes.FrameNumber = number % 10;
+    number = number / 10;
+    if ( number > 0 )
+    {
+      noOfDigits = 2;
+      DigitTens.FrameNumber = number % 10;
+    }
+    number = number / 10;
+    if ( number > 0 )
+    {
+      noOfDigits = 3;
+      DigitHuns.FrameNumber = number % 10;
+    }
+
+    /* now arrange the digits */
+    var int32 x = ( Bounds.w - noOfDigits * DigitOnes.Bounds.w ) / 2;
+
+    if ( noOfDigits > 2 )
+    {
+      DigitHuns.Bounds.origin.x = x;
+      DigitHuns.Visible = true;
+      x = x + DigitOnes.Bounds.w;
+    }
+    else
+      DigitHuns.Visible = false;
+    if ( noOfDigits > 1 )
+    {
+      DigitTens.Bounds.origin.x = x;
+      DigitTens.Visible = true;
+      x = x + DigitOnes.Bounds.w;
+    }
+    else
+      DigitTens.Visible = false;
+    DigitOnes.Bounds.origin.x = x;
+
+
+  }
+
+  // The property 'CurrentValue' stores the momentary value of the widget. The value \
+  // is limited automatically to the range from @MinValue to @MaxValue.
+  $rect <120,0,320,40>
+  property int32 CurrentValue = 50;
+
+  $rect <120,40,320,80>
+  onset CurrentValue
+  {
+    /* only positive values are accepted here - and onyl 3 digits are supported */
+    if ( value < 0 )
+      value = 0;
+    if ( value > 999 )
+      value = 999;
+
+    /* check if the given value differs from the current value */
+    if ( pure CurrentValue == value )
+      return;
+
+    /* store the new value */
+    pure CurrentValue = value;
+
+    /* ...and finally, force an update */
+    InvalidateViewState();
+  }
+
+  // This slot method will receive a signal, if the value of the property assigned \
+  // to @Outlet has been changed by another widget or by the application logic. In \
+  // response to this notification, the widget will update itself.
+  $rect <120,180,320,220>
+  slot outletSlot
+  {
+    /* update the current state of the widget */
+    if ( Outlet != null )
+      CurrentValue = Outlet^;
+  }
+
+  $rect <120,130,320,170>
+  onset Outlet
+  {
+    /* check if the new outlet differs from the currently used outlet */
+    if ( pure Outlet == value )
+      return;
+
+    /* detach from the previous outlet */
+    if ( pure Outlet != null )
+      detachobserver outletSlot, pure Outlet;
+
+    /* store the new outlet */
+    pure Outlet = value;
+
+    /* ... and attach to the new one */
+    if ( value != null )
+      attachobserver outletSlot, value;
+
+    /* finally, update the current state of the widget by posting a signal to the outlet slot */
+    if ( value != null )
+      postsignal outletSlot;
+  }
+
+  // The property 'Outlet' provides an interface for the Controller-View model. In \
+  // the Controller-View model, the widgets (views) and the application logic (controllers) \
+  // are always kept apart. An automatism behind this model ensures, that widgets \
+  // are notified automatically as soon as the affected controller has changed its \
+  // state. On the other hand, user interactions on a widget cause the affected controller \
+  // to execute the application logic. Usually, a controller is a simple Chora object \
+  // containing several properties and the implementation of onget/onset method.
+  // By assigning a property reference, Outlet establishes a connection between the \
+  // widget and the controller object, the affected property belongs to. After this, \
+  // the widget is able to read and modify the referred property in response to the \
+  // user interactions. It is also able to adapt the widget appearance, if the value \
+  // of the referred property has been modified by another widget or by the application \
+  // logic itself.
+  $rect <120,90,320,130>
+  property ^int32 Outlet = null;
+
+  $rect <20,20,160,60>
+  object Views::Image DigitOnes
+  {
+    preset Layout = Core::Layout[AlignToBottom, AlignToTop];
+    preset Bounds = <25,8,40,32>;
+    preset Bitmap = Oximeter::DigitsSmall;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Image DigitTens
+  {
+    preset Layout = Core::Layout[AlignToBottom, AlignToTop];
+    preset Bounds = <10,8,25,32>;
+    preset Bitmap = Oximeter::DigitsSmall;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Image DigitHuns
+  {
+    preset Layout = Core::Layout[AlignToBottom, AlignToTop];
+    preset Bounds = <35,8,50,32>;
+    preset Bitmap = Oximeter::DigitsSmall;
+  }
+}
+
+$rect <240,230,440,270>
+$output false
+class OxygenSettings : Core::Group
+{
+  $rect <390,120,590,160>
+  inherited property Bounds = <0,0,360,272>;
+
+  $rect <390,160,590,200>
+  inherited method UpdateLayout()
+  {
+    // Always invoke the inherited method.
+    super( aSize );
+
+    /* store old values for cancel operation */
+    oldMin = Oximeter::Device.MinPulse;
+    oldMax = Oximeter::Device.MaxPulse;
+    oldAlarm = Oximeter::Device.AlarmTime;
+
+  }
+
+  $rect <20,20,160,60>
+  object WidgetSet::RotaryKnob RotaryKnobMax
+  {
+    preset Bounds = <230,15,330,115>;
+    preset Outlet = ^Oximeter::Device.OxygenFlow;
+    preset MaxValue = 80;
+    preset MinValue = 0;
+    preset Appearance = Oximeter::RotaryFlowConfig;
+  }
+
+  $rect <20,20,160,60>
+  object WidgetSet::RotaryKnob RotaryKnobMin
+  {
+    preset Bounds = <230,130,330,230>;
+    preset Outlet = ^Oximeter::Device.MinOxygen;
+    preset MaxValue = 95;
+    preset MinValue = 75;
+    preset Appearance = Oximeter::RotaryOxiConfig;
+  }
+
+  $rect <20,20,160,60>
+  object WidgetSet::HorizontalSlider HorizontalSlider
+  {
+    preset Bounds = <40,234,200,264>;
+    preset Outlet = ^Oximeter::Device.AlarmTime;
+    preset MaxValue = 180;
+    preset Appearance = Oximeter::HorizontalSliderConfig;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Text TextAlarm
+  {
+    preset Bounds = <40,214,145,234>;
+    preset Alignment = Views::TextAlignment[AlignHorzLeft, AlignVertCenter];
+    preset String = "Alarm in sec";
+    preset Font = Oximeter::FontL;
+  }
+
+  $rect <20,20,160,60>
+  object WidgetSet::PushButton PushButtonCancel
+  {
+    preset Bounds = <285,235,350,265>;
+    preset OnActivate = onCancel;
+    preset Label = "CANCEL";
+    preset Appearance = Oximeter::PushButtonConfig;
+  }
+
+  $rect <20,20,160,60>
+  object WidgetSet::PushButton PushButtonSave
+  {
+    preset Bounds = <210,235,275,265>;
+    preset Label = "SAVE";
+    preset Appearance = Oximeter::PushButtonConfig;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Text TextMax
+  {
+    preset Bounds = <230,0,330,20>;
+    preset Alignment = Views::TextAlignment[AlignHorzCenter, AlignVertCenter];
+    preset String = "Oxygen Flow ml/sec";
+    preset Font = Oximeter::FontL;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Text TextMin
+  {
+    preset Bounds = <230,115,330,135>;
+    preset Alignment = Views::TextAlignment[AlignHorzCenter, AlignVertCenter];
+    preset String = "Oxygen min %%SpO2";
+    preset Font = Oximeter::FontL;
+  }
+
+  $rect <390,230,590,270>
+  slot onCancel
+  {
+    sender; /* the method is called from the sender object */
+
+    /* restore old values after cancel operation */
+    Oximeter::Device.MinPulse = oldMin;
+    Oximeter::Device.MaxPulse = oldMax;
+    Oximeter::Device.AlarmTime = oldAlarm;
+
+    signal OnClose;
+  }
+
+  $rect <20,20,160,60>
+  object Oximeter::NumberDisplay NumberDisplayMax
+  {
+    preset Bounds = <240,45,320,85>;
+    preset Outlet = ^Oximeter::Device.OxygenFlow;
+  }
+
+  $rect <20,20,160,60>
+  object Oximeter::NumberDisplay NumberDisplayMin
+  {
+    preset Bounds = <240,160,320,200>;
+    preset Outlet = ^Oximeter::Device.MinOxygen;
+  }
+
+  $rect <20,20,160,60>
+  object Oximeter::NumberDisplay NumberDisplayAlarm
+  {
+    preset Bounds = <50,204,190,234>;
+    preset Outlet = ^Oximeter::Device.AlarmTime;
+  }
+
+  $rect <390,300,590,340>
+  var int32 oldMin = 0;
+
+  $rect <390,340,590,380>
+  var int32 oldMax = 0;
+
+  // Slot property to get notified when the user has pressed save or cancel.
+  $rect <390,10,590,50>
+  property slot OnClose = null;
+
+  $rect <390,50,590,90>
+  onset OnClose
+  {
+    // The value doesn't change - nothing to do.
+    if ( pure OnClose == value )
+      return;
+
+    // Remember the property's new value.
+    pure OnClose = value;
+
+    /* forward the event of the save button */
+    PushButtonSave.OnActivate = value;
+
+  }
+
+  $rect <390,380,590,420>
+  var int32 oldAlarm = 0;
+}
+
+$rect <690,400,890,440>
+$output false
+resource Resources::Bitmap Battery
+{
+  attr bitmapfile FileName = .\Res\Battery.png;
+  attr framesize FrameSize = <16,30>;
+  attr framedelay FrameDelay = 750;
+  attr bitmapformat Format = Alpha8;
+  attr bitmapdithering Dithering = Auto;
+  attr bitmapmode Mode = Default;
+}
+
+$rect <440,900,640,940>
+$output false
+resource Resources::Bitmap MenuIcons
+{
+  attr bitmapfile FileName = .\Res\MenuIcons.png;
+  attr framesize FrameSize = <35,35>;
+  attr framedelay FrameDelay;
+  attr bitmapformat Format = Alpha8;
+  attr bitmapdithering Dithering = Auto;
+  attr bitmapmode Mode = Default;
+}
+
+$rect <40,900,240,940>
+$output false
+autoobject WidgetSet::PushButtonConfig MenuItemConfig
+{
+  preset LabelColorActive = #FFFFFFFF;
+  preset LabelColorFocused = #FFFFFF80;
+  preset LabelColorDefault = #FFFFFF80;
+  preset LabelMarginTop = 30;
+  preset IconMarginBottom = 30;
+  preset LabelAlignment = Views::TextAlignment[AlignHorzCenter, AlignVertCenter];
+  preset LabelFont = Oximeter::FontM;
+  preset IconAlignment = Views::ImageAlignment[AlignHorzCenter, AlignVertCenter];
+  preset FaceTintFocused = #FFFFFF40;
+  preset FaceTintDefault = #FFFFFF40;
+  preset FaceActive = Oximeter::MenuButton;
+  preset FaceFocused = Oximeter::MenuButton;
+  preset FaceDefault = Oximeter::MenuButton;
+  preset WidgetMaxSize = <60,60>;
+  preset WidgetMinSize = <60,60>;
+}
+
+$rect <240,900,440,940>
+$output false
+resource Resources::Bitmap MenuButton
+{
+  attr bitmapfile FileName = .\Res\MenuButton.png;
+  attr framesize FrameSize;
+  attr framedelay FrameDelay;
+  attr bitmapformat Format = Alpha8;
+  attr bitmapdithering Dithering = Auto;
+  attr bitmapmode Mode = Default;
+}
+
+$rect <440,180,640,220>
+$output false
+class MainMenu : Core::Group
+{
+  $rect <10,500,210,540>
+  inherited property Bounds = <0,0,240,272>;
+
+  $rect <20,20,160,60>
+  object WidgetSet::PushButton CloseButton
+  {
+    preset Bounds = <190,5,220,35>;
+    preset IconFrameActive = 1;
+    preset IconFrameFocused = 1;
+    preset IconFrameDisabled = 1;
+    preset IconFrameDefault = 1;
+    preset Icon = Oximeter::IconButton;
+    preset Appearance = Oximeter::IconButtonConfig;
+  }
+
+  $rect <430,10,630,50>
+  property slot OnClose = null;
+
+  $rect <430,50,630,90>
+  onset OnClose
+  {
+    // The value doesn't change - nothing to do.
+    if ( pure OnClose == value )
+      return;
+
+    // Remember the property's new value.
+    pure OnClose = value;
+
+    /* forward the event of the close button */
+    CloseButton.OnActivate = value;
+
+  }
+
+  $rect <20,20,160,60>
+  object Views::Text TextMax
+  {
+    preset Bounds = <20,5,150,25>;
+    preset Alignment = Views::TextAlignment[AlignHorzLeft, AlignVertCenter];
+    preset String = "Jane Doe";
+    preset Font = Oximeter::FontL;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Text AlertText
+  {
+    preset Bounds = <20,240,220,270>;
+    preset WrapText = true;
+    preset Alignment = Views::TextAlignment[AlignHorzCenter, AlignVertCenter];
+    preset String = "Access denied!\nOnly for authorized medical personnel!";
+    preset Font = Oximeter::FontL;
+    preset Visible = false;
+  }
+
+  $rect <430,170,630,210>
+  slot menuClick
+  {
+    sender; /* the method is called from the sender object */
+
+    AlertText.Visible = true;
+    AlertText.Opacity = 0x00;
+    postsignal AlertEffect.StartEffect;
+
+  }
+
+  $rect <20,20,160,60>
+  object WidgetSet::PushButton MenuItem1
+  {
+    preset Bounds = <20,45,80,105>;
+    preset OnActivate = menuClick;
+    preset IconFrameActive = 10;
+    preset IconFrameFocused = 0;
+    preset IconFrameDisabled = 0;
+    preset IconFrameDefault = 0;
+    preset Icon = Oximeter::MenuIcons;
+    preset Label = "Mental State";
+    preset Appearance = Oximeter::MenuItemConfig;
+  }
+
+  $rect <20,20,160,60>
+  object WidgetSet::PushButton MenuItem2
+  {
+    preset Bounds = <90,45,150,105>;
+    preset OnActivate = menuClick;
+    preset IconFrameActive = 11;
+    preset IconFrameFocused = 1;
+    preset IconFrameDisabled = 1;
+    preset IconFrameDefault = 1;
+    preset Icon = Oximeter::MenuIcons;
+    preset Label = "SpO2/bpm";
+    preset Appearance = Oximeter::MenuItemConfig;
+  }
+
+  $rect <20,20,160,60>
+  object WidgetSet::PushButton MenuItem3
+  {
+    preset Bounds = <160,45,220,105>;
+    preset OnActivate = menuClick;
+    preset IconFrameActive = 12;
+    preset IconFrameFocused = 2;
+    preset IconFrameDisabled = 2;
+    preset IconFrameDefault = 2;
+    preset Icon = Oximeter::MenuIcons;
+    preset Label = "Blood Pressure";
+    preset Appearance = Oximeter::MenuItemConfig;
+  }
+
+  $rect <20,20,160,60>
+  object WidgetSet::PushButton MenuItem4
+  {
+    preset Bounds = <20,110,80,170>;
+    preset OnActivate = menuClick;
+    preset IconFrameActive = 13;
+    preset IconFrameFocused = 3;
+    preset IconFrameDisabled = 3;
+    preset IconFrameDefault = 3;
+    preset Icon = Oximeter::MenuIcons;
+    preset Label = "Temperature";
+    preset Appearance = Oximeter::MenuItemConfig;
+  }
+
+  $rect <20,20,160,60>
+  object WidgetSet::PushButton MenuItem5
+  {
+    preset Bounds = <90,110,150,170>;
+    preset OnActivate = menuClick;
+    preset IconFrameActive = 14;
+    preset IconFrameFocused = 4;
+    preset IconFrameDisabled = 4;
+    preset IconFrameDefault = 4;
+    preset Icon = Oximeter::MenuIcons;
+    preset Label = "Calendar";
+    preset Appearance = Oximeter::MenuItemConfig;
+  }
+
+  $rect <20,20,160,60>
+  object WidgetSet::PushButton MenuItem6
+  {
+    preset Bounds = <160,110,220,170>;
+    preset OnActivate = menuClick;
+    preset IconFrameActive = 15;
+    preset IconFrameFocused = 5;
+    preset IconFrameDisabled = 5;
+    preset IconFrameDefault = 5;
+    preset Icon = Oximeter::MenuIcons;
+    preset Label = "Medical Record";
+    preset Appearance = Oximeter::MenuItemConfig;
+  }
+
+  $rect <20,20,160,60>
+  object WidgetSet::PushButton MenuItem7
+  {
+    preset Bounds = <20,175,80,235>;
+    preset OnActivate = menuClick;
+    preset IconFrameActive = 16;
+    preset IconFrameFocused = 6;
+    preset IconFrameDisabled = 6;
+    preset IconFrameDefault = 6;
+    preset Icon = Oximeter::MenuIcons;
+    preset Label = "Statisics";
+    preset Appearance = Oximeter::MenuItemConfig;
+  }
+
+  $rect <20,20,160,60>
+  object WidgetSet::PushButton MenuItem8
+  {
+    preset Bounds = <90,175,150,235>;
+    preset OnActivate = menuClick;
+    preset IconFrameActive = 17;
+    preset IconFrameFocused = 7;
+    preset IconFrameDisabled = 7;
+    preset IconFrameDefault = 7;
+    preset Icon = Oximeter::MenuIcons;
+    preset Label = "Search";
+    preset Appearance = Oximeter::MenuItemConfig;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Text TextMax1
+  {
+    preset Bounds = <90,5,190,25>;
+    preset Alignment = Views::TextAlignment[AlignHorzLeft, AlignVertCenter];
+    preset String = "1957-04-23";
+    preset Font = Oximeter::FontL;
+  }
+
+  $rect <20,20,160,60>
+  object WidgetSet::PushButton MenuItem9
+  {
+    preset Bounds = <160,175,220,235>;
+    preset OnActivate = menuClick;
+    preset IconFrameActive = 18;
+    preset IconFrameFocused = 8;
+    preset IconFrameDisabled = 8;
+    preset IconFrameDefault = 8;
+    preset Icon = Oximeter::MenuIcons;
+    preset Label = "Print";
+    preset Appearance = Oximeter::MenuItemConfig;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Text TextMax2
+  {
+    preset Bounds = <20,20,130,40>;
+    preset Alignment = Views::TextAlignment[AlignHorzLeft, AlignVertCenter];
+    preset String = "ID: 9287293JD";
+    preset Font = Oximeter::FontL;
+  }
+
+  $rect <430,220,630,260>
+  object Effects::Int32Effect AlertEffect
+  {
+    preset Symmetric = true;
+    preset Timing = Effects::Timing.FastIn_EaseOut;
+    preset NoOfCycles = 5;
+    preset CycleDuration = 1000;
+    preset Outlet = ^AlertText.Opacity;
+  }
+
+  // The main menu is just a dummy menu, without a real selection possibilty for \
+  // the user.
+  // It always shows the same message... ;-)
+  note legend Note
+  {
+    attr Bounds = <430,380,790,480>;
+  }
+}
+
+$rect <240,790,440,830>
+$output false
+resource Resources::Bitmap RotaryBackgroundOxygen
+{
+  attr bitmapfile FileName = .\Res\RotaryBackgroundOxygen.png;
+  attr framesize FrameSize;
+  attr framedelay FrameDelay;
+  attr bitmapformat Format = Alpha8;
+  attr bitmapdithering Dithering = Auto;
+  attr bitmapmode Mode = Default;
+}
+
+$rect <40,810,240,850>
+$output false
+autoobject WidgetSet::RotaryKnobConfig RotaryOxiConfig
+{
+  preset ThumbMaxAngle = 0;
+  preset ThumbMinAngle = 90;
+  preset ThumbPivot = <0,48>;
+  preset ThumbActive = Oximeter::RotaryThumbMin;
+  preset ThumbFocused = Oximeter::RotaryThumbMin;
+  preset ThumbDefault = Oximeter::RotaryThumbMin;
+  preset ScaleActive = Oximeter::RotaryBackgroundOxygen;
+  preset ScaleFocused = Oximeter::RotaryBackgroundOxygen;
+  preset ScaleDisabled = Oximeter::RotaryBackgroundOxygen;
+  preset ScaleDefault = Oximeter::RotaryBackgroundOxygen;
+  preset WidgetMaxSize = <100,100>;
+  preset WidgetMinSize = <100,100>;
+}
+
+$rect <41,850,241,890>
+$output false
+autoobject WidgetSet::RotaryKnobConfig RotaryFlowConfig
+{
+  preset ThumbMaxAngle = 90;
+  preset ThumbMinAngle = 358;
+  preset ThumbPivot = <0,48>;
+  preset ThumbActive = Oximeter::RotaryThumbMin;
+  preset ThumbFocused = Oximeter::RotaryThumbMin;
+  preset ThumbDefault = Oximeter::RotaryThumbMin;
+  preset ScaleActive = Oximeter::RotaryBackgroundFlow;
+  preset ScaleFocused = Oximeter::RotaryBackgroundFlow;
+  preset ScaleDisabled = Oximeter::RotaryBackgroundFlow;
+  preset ScaleDefault = Oximeter::RotaryBackgroundFlow;
+  preset WidgetMaxSize = <100,100>;
+  preset WidgetMinSize = <100,100>;
+}
+
+$rect <240,830,440,870>
+$output false
+resource Resources::Bitmap RotaryBackgroundFlow
+{
+  attr bitmapfile FileName = .\Res\RotaryBackgroundFlow.png;
+  attr framesize FrameSize;
+  attr framedelay FrameDelay;
+  attr bitmapformat Format = Alpha8;
+  attr bitmapdithering Dithering = Auto;
+  attr bitmapmode Mode = Default;
+}
+
+$rect <690,440,890,480>
+$output false
+resource Resources::Bitmap DigitsLarge
+{
+  attr bitmapfile FileName = .\Res\DigitsLarge.png;
+  attr framesize FrameSize = <30,48>;
+  attr framedelay FrameDelay;
+  attr bitmapformat Format = Alpha8;
+  attr bitmapdithering Dithering = Auto;
+  attr bitmapmode Mode = Default;
+}
+
+$rect <690,480,890,520>
+$output false
+resource Resources::Bitmap DigitsSmall
+{
+  attr bitmapfile FileName = .\Res\DigitsSmall.png;
+  attr framesize FrameSize = <15,24>;
+  attr framedelay FrameDelay;
+  attr bitmapformat Format = Alpha8;
+  attr bitmapdithering Dithering = Auto;
+  attr bitmapmode Mode = Default;
+}
+
+// The sample application 'PulseOximeter' shows the implementation of a medical device \
+// for monitoring a person's pulse frequency and peripheral oxygen saturation.
+// 
+// The application demonstrates the usage of vector graphics within graphs and circular \
+// gauges.
+// 
+// The application provides the following screens / operation modes:
+// A main screen shows the current pulse frequency in bpm and the current peripheral \
+// oxygen saturation in %SpO2. The values are shown with a circular gauge, a numerical \
+// display and a small graph.
+// A graph screen presents the history of measured values as graphs with bézier lines \
+// and let the user slide through.
+// A settings screen for oxygen and pulse let the user configure the device. A menu \
+// screen is prepared for additional settings.
+note legend Note6
+{
+  attr Bounds = <670,660,1310,960>;
+}

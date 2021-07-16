@@ -53,6 +53,18 @@
 /* USB audio1.0 MASK*/
 #define AUDIO_SAMPLING_FREQ_MASK (0x01)
 #define AUDIO_PITCH_MASK         (0x02)
+
+/*! @brief Audio device Format Type Codes */
+#define USB_AUDIO_FORMAT_TYPE_UNDEFINED (0x00)
+#define USB_AUDIO_FORMAT_TYPE_I         (0x01)
+#define USB_AUDIO_FORMAT_TYPE_II        (0x02)
+#define USB_AUDIO_FORMAT_TYPE_III       (0x03)
+/* USB audio2.0 format type */
+#define USB_AUDIO_FORMAT_TYPE_IV             (0x04)
+#define USB_AUDIO_FORMAT_EXT_FORMAT_TYPE_I   (0x81)
+#define USB_AUDIO_FORMAT_EXT_FORMAT_TYPE_II  (0x82)
+#define USB_AUDIO_FORMAT_EXT_FORMAT_TYPE_III (0x83)
+
 typedef enum _fu_request_code
 {
     kUSB_AudioCurMute = 0,

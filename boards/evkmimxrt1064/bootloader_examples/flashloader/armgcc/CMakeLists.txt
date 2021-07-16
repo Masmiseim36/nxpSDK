@@ -1,6 +1,6 @@
 # CROSS COMPILER SETTING
 SET(CMAKE_SYSTEM_NAME Generic)
-CMAKE_MINIMUM_REQUIRED (VERSION 3.1.1)
+CMAKE_MINIMUM_REQUIRED (VERSION 3.10.0)
 
 # THE VERSION NUMBER
 SET (Tutorial_VERSION_MAJOR 1)
@@ -52,7 +52,7 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../middleware
     ${ProjDirPath}/../../../../../middleware/usb
     ${ProjDirPath}/../../../../../components/osa
-    ${ProjDirPath}/../../../../../CMSIS/Include
+    ${ProjDirPath}/../../../../../CMSIS/Core/Include
     ${ProjDirPath}/../../../../../components/lists
 )
 
@@ -107,11 +107,7 @@ include(middleware_mcu-boot_mem_spi_nor_eeprom_MIMXRT1064)
 
 include(middleware_mcu-boot_drv_ocotp_MIMXRT1064)
 
-include(CMSIS_Include_core_cm7_MIMXRT1064)
-
-include(CMSIS_Include_common_MIMXRT1064)
-
-include(CMSIS_Include_dsp_MIMXRT1064)
+include(CMSIS_Include_core_cm_MIMXRT1064)
 
 include(driver_common_MIMXRT1064)
 

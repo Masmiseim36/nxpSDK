@@ -217,8 +217,8 @@ static FMSTR_SIZE8 _FMSTR_S12zCan_GetRxFrameLen(void)
         {
             /* ext id compare */
             if((fmstr_canRxIDR[0] == FMSTR_GETREG(fmstr_canBaseAddr, FMSTR_MSCANRXFG_OFFSET+FMSTR_MSCMBIDR0)) &&
-               (fmstr_canRxIDR[1] == FMSTR_GETREG(fmstr_canBaseAddr, FMSTR_MSCANRXFG_OFFSET+FMSTR_MSCMBIDR1)) &&					
-               (fmstr_canRxIDR[2] == FMSTR_GETREG(fmstr_canBaseAddr, FMSTR_MSCANRXFG_OFFSET+FMSTR_MSCMBIDR2)) &&					
+               (fmstr_canRxIDR[1] == FMSTR_GETREG(fmstr_canBaseAddr, FMSTR_MSCANRXFG_OFFSET+FMSTR_MSCMBIDR1)) &&                    
+               (fmstr_canRxIDR[2] == FMSTR_GETREG(fmstr_canBaseAddr, FMSTR_MSCANRXFG_OFFSET+FMSTR_MSCMBIDR2)) &&                    
                (fmstr_canRxIDR[3] == FMSTR_GETREG(fmstr_canBaseAddr, FMSTR_MSCANRXFG_OFFSET+FMSTR_MSCMBIDR3)))
             {
                 /* matches! */

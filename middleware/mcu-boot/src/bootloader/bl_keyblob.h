@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2012-2015 Freescale Semiconductor, Inc.
- * Copyright 2016-2018 NXP
+ * Copyright 2016-2021 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -11,17 +10,10 @@
 
 #include "fsl_device_registers.h"
 
-#if defined(MIMXRT1021_SERIES) || \
-    defined(MIMXRT1024_SERIES) || \
-    defined(MIMXRT1051_SERIES) || \
-    defined(MIMXRT1052_SERIES) || \
-    defined(MIMXRT1061_SERIES) || \
-    defined(MIMXRT1062_SERIES) || \
-    defined(MIMXRT1064_SERIES) || \
-    defined(MIMXRT106A_SERIES) || \
-    defined(MIMXRT106C_SERIES) || \
-    defined(MIMXRT106F_SERIES) || \
-    defined(MIMXRT106L_SERIES)
+#if defined(MIMXRT1021_SERIES) || defined(MIMXRT1024_SERIES) || defined(MIMXRT1051_SERIES) || \
+    defined(MIMXRT1052_SERIES) || defined(MIMXRT1061_SERIES) || defined(MIMXRT1062_SERIES) || \
+    defined(MIMXRT1064_SERIES) || defined(MIMXRT106A_SERIES) || defined(MIMXRT106C_SERIES) || \
+    defined(MIMXRT106F_SERIES) || defined(MIMXRT106L_SERIES) || defined(MIMXRT1015_SERIES)
 
 #define LEGACY_KEYBLOB_SUPPORT
 

@@ -38,23 +38,23 @@
  * Constant Definitions for Standard header identifiers for irobex objects
  */
 /*@{*/
-#define         IROBEX_HDR_COUNT                   0xc0
-#define         IROBEX_HDR_NAME                    0x01
-#define         IROBEX_HDR_TYPE                    0x42
-#define         IROBEX_HDR_LENGTH                  0xc3
-#define         IROBEX_HDR_TIME_ISO                0x44
-#define         IROBEX_HDR_TIME                    0xc4
-#define         IROBEX_HDR_DESCRIPTION             0x05
-#define         IROBEX_HDR_TARGET                  0x46
-#define         IROBEX_HDR_HTTP                    0x47
-#define         IROBEX_HDR_BODY                    0x48
-#define         IROBEX_HDR_END_BODY                0x49
-#define         IROBEX_HDR_WHO                     0x4A
-#define         IROBEX_HDR_CONNECT_ID              0xCB
-#define         IROBEX_HDR_APP_PARAM               0x4C
-#define         IROBEX_HDR_AUTH_CHALLENGE          0x4D
-#define         IROBEX_HDR_AUTH_RESPONSE           0x4E
-#define         IROBEX_HDR_OBJECT_CLASS            0x4F
+#define         IROBEX_HDR_COUNT                   0xc0U
+#define         IROBEX_HDR_NAME                    0x01U
+#define         IROBEX_HDR_TYPE                    0x42U
+#define         IROBEX_HDR_LENGTH                  0xc3U
+#define         IROBEX_HDR_TIME_ISO                0x44U
+#define         IROBEX_HDR_TIME                    0xc4U
+#define         IROBEX_HDR_DESCRIPTION             0x05U
+#define         IROBEX_HDR_TARGET                  0x46U
+#define         IROBEX_HDR_HTTP                    0x47U
+#define         IROBEX_HDR_BODY                    0x48U
+#define         IROBEX_HDR_END_BODY                0x49U
+#define         IROBEX_HDR_WHO                     0x4AU
+#define         IROBEX_HDR_CONNECT_ID              0xCBU
+#define         IROBEX_HDR_APP_PARAM               0x4CU
+#define         IROBEX_HDR_AUTH_CHALLENGE          0x4DU
+#define         IROBEX_HDR_AUTH_RESPONSE           0x4EU
+#define         IROBEX_HDR_OBJECT_CLASS            0x4FU
 /*@}*/
 
 
@@ -68,8 +68,8 @@
  * Constant Definitions for Event IDs of callback functions
  */
 /*@{*/
-#define         IROBEX_OPEN             0x60
-#define         IROBEX_CLOSE            0x61
+#define         IROBEX_OPEN             0x60U
+#define         IROBEX_CLOSE            0x61U
 /*@}*/
 /*
  *  Irobex request opcodes, which is also used in the
@@ -82,15 +82,15 @@
  * Constant Definitions for Irobex request opcodes
  */
 /*@{*/
-#define         IROBEX_CONNECT          0x80
-#define         IROBEX_DISCONNECT       0x81
-#define         IROBEX_PUT              0x02
-#define         IROBEX_PUT_EOF          0x82
-#define         IROBEX_GET              0x03
-#define         IROBEX_GET_FINAL        0x83
-#define         IROBEX_RESERVED         0x04
-#define         IROBEX_SETPATH          0x85
-#define         IROBEX_ABORT            0xFF
+#define         IROBEX_CONNECT          0x80U
+#define         IROBEX_DISCONNECT       0x81U
+#define         IROBEX_PUT              0x02U
+#define         IROBEX_PUT_EOF          0x82U
+#define         IROBEX_GET              0x03U
+#define         IROBEX_GET_FINAL        0x83U
+#define         IROBEX_RESERVED         0x04U
+#define         IROBEX_SETPATH          0x85U
+#define         IROBEX_ABORT            0xFFU
 /*@}*/
 /*
  * Irobex response code
@@ -102,46 +102,46 @@
  */
 /*@{*/
 
-#define         IROBEX_CONTINUE_RSP     0x90  /**< Continue */
-#define         IROBEX_SUCCESS_RSP      0xA0  /**< OK, Success */
-#define         IROBEX_CREATED_RSP      0xA1  /**< Created */
-#define         IROBEX_ACCEPTED_RSP     0xA2  /**< Accepted */
-#define         IROBEX_NON_AUTH_RSP     0xA3  /**< Non Authorative information */
-#define         IROBEX_NO_CONTENT_RSP   0xA4  /**< No content */
-#define         IROBEX_RESET_CONT_RSP   0xA5  /**< Reset Content */
-#define         IROBEX_PART_CONT_RSP    0xA6  /**< Partial Content */
-#define         IROBEX_MULTI_CHOICE_RSP 0xB0  /**< Multiple Choices */
-#define         IROBEX_MOVE_P_RSP       0xB1  /**< Moved Permenently */
-#define         IROBEX_MOVE_T_RSP       0xB2  /**< Moved temporarily  */
-#define         IROBEX_SEE_OTHER_RSP    0xB3  /**< See Other */
-#define         IROBEX_NOT_MODI_RSP     0xB4  /**< Not Modified */
-#define         IROBEX_USE_PROXY        0xB5  /**< Use proxy */
-#define         IROBEX_BAD_REQ_RSP      0xC0  /**< Bad Request */
-#define         IROBEX_UNAUTH_RSP       0xC1  /**< Unathorized */
-#define         IROBEX_PAY_RSP          0xC2  /**< Payment required */
-#define         IROBEX_FORBIDDEN_RSP    0xC3  /**< Forbidden ; operation refused*/
-#define         IROBEX_NO_FOUND_RSP     0xC4  /**< Not found */
-#define         IROBEX_METHOD_RSP       0xC5  /**< Method Not allowed */
-#define         IROBEX_NOT_ACCEPT_RSP   0xC6  /**< Not Acceptable */
-#define         IROBEX_PROXY_AUTH_RSP   0xC7  /**< Proxy Authentication Required */
-#define         IROBEX_TIME_OUT_RSP     0xC8  /**< Request Time out */
-#define         IROBEX_CONFLICT_RSP     0xC9  /**< Conflict */
-#define         IROBEX_GONE_RSP         0xCA  /**< Gone */
-#define         IROBEX_LENGTH_RSP       0xCB  /**< Length required */
-#define         IROBEX_PRECOND_RSP      0xCC  /**< Precondition Failed */
-#define         IROBEX_REQ_ENTITY_RSP   0xCD  /**< Requested entity too large */
-#define         IROBEX_REQ_URL_RSP      0xCE  /**< Requested URL too large */
-#define         IROBEX_MEDIA_RSP        0xCF  /**< Unsupported media type */
-#define         IROBEX_SERVER_ERR_RSP   0xD0  /**< Internal Server error */
-#define         IROBEX_NOT_IMP_RSP      0xD1  /**< Not implemented */
-#define         IROBEX_BAD_GATE_RSP     0xD2  /**< Bad Gateway */
-#define         IROBEX_NO_SERVICE_RSP   0xD3  /**< Service Unavailable */
-#define         IROBEX_GATE_TIME_RSP    0xD4  /**< Gateway Timeout */
-#define         IROBEX_HTTP_RSP         0xD5  /**< HTTP version not supported */
-#define         IROBEX_DATA_FULL_RSP    0xE0  /**< Database Full */
-#define         IROBEX_DATA_LOCK_RSP    0xE1  /**< Database Locked */
-#define         IROBEX_FINAL_BIT_SET    0x80
-#define         IROBEX_CONTINUE_FINAL   0x91
+#define         IROBEX_CONTINUE_RSP     0x90U  /**< Continue */
+#define         IROBEX_SUCCESS_RSP      0xA0U  /**< OK, Success */
+#define         IROBEX_CREATED_RSP      0xA1U  /**< Created */
+#define         IROBEX_ACCEPTED_RSP     0xA2U  /**< Accepted */
+#define         IROBEX_NON_AUTH_RSP     0xA3U  /**< Non Authorative information */
+#define         IROBEX_NO_CONTENT_RSP   0xA4U  /**< No content */
+#define         IROBEX_RESET_CONT_RSP   0xA5U  /**< Reset Content */
+#define         IROBEX_PART_CONT_RSP    0xA6U  /**< Partial Content */
+#define         IROBEX_MULTI_CHOICE_RSP 0xB0U  /**< Multiple Choices */
+#define         IROBEX_MOVE_P_RSP       0xB1U  /**< Moved Permenently */
+#define         IROBEX_MOVE_T_RSP       0xB2U  /**< Moved temporarily  */
+#define         IROBEX_SEE_OTHER_RSP    0xB3U  /**< See Other */
+#define         IROBEX_NOT_MODI_RSP     0xB4U  /**< Not Modified */
+#define         IROBEX_USE_PROXY        0xB5U  /**< Use proxy */
+#define         IROBEX_BAD_REQ_RSP      0xC0U  /**< Bad Request */
+#define         IROBEX_UNAUTH_RSP       0xC1U  /**< Unathorized */
+#define         IROBEX_PAY_RSP          0xC2U  /**< Payment required */
+#define         IROBEX_FORBIDDEN_RSP    0xC3U  /**< Forbidden ; operation refused*/
+#define         IROBEX_NO_FOUND_RSP     0xC4U  /**< Not found */
+#define         IROBEX_METHOD_RSP       0xC5U  /**< Method Not allowed */
+#define         IROBEX_NOT_ACCEPT_RSP   0xC6U  /**< Not Acceptable */
+#define         IROBEX_PROXY_AUTH_RSP   0xC7U  /**< Proxy Authentication Required */
+#define         IROBEX_TIME_OUT_RSP     0xC8U  /**< Request Time out */
+#define         IROBEX_CONFLICT_RSP     0xC9U  /**< Conflict */
+#define         IROBEX_GONE_RSP         0xCAU  /**< Gone */
+#define         IROBEX_LENGTH_RSP       0xCBU  /**< Length required */
+#define         IROBEX_PRECOND_RSP      0xCCU  /**< Precondition Failed */
+#define         IROBEX_REQ_ENTITY_RSP   0xCDU  /**< Requested entity too large */
+#define         IROBEX_REQ_URL_RSP      0xCEU  /**< Requested URL too large */
+#define         IROBEX_MEDIA_RSP        0xCFU  /**< Unsupported media type */
+#define         IROBEX_SERVER_ERR_RSP   0xD0U  /**< Internal Server error */
+#define         IROBEX_NOT_IMP_RSP      0xD1U  /**< Not implemented */
+#define         IROBEX_BAD_GATE_RSP     0xD2U  /**< Bad Gateway */
+#define         IROBEX_NO_SERVICE_RSP   0xD3U  /**< Service Unavailable */
+#define         IROBEX_GATE_TIME_RSP    0xD4U  /**< Gateway Timeout */
+#define         IROBEX_HTTP_RSP         0xD5U  /**< HTTP version not supported */
+#define         IROBEX_DATA_FULL_RSP    0xE0U  /**< Database Full */
+#define         IROBEX_DATA_LOCK_RSP    0xE1U  /**< Database Locked */
+#define         IROBEX_FINAL_BIT_SET    0x80U
+#define         IROBEX_CONTINUE_FINAL   0x91U
 /*@}*/
 
  /* Internal errors defined for IROBEX */
@@ -151,9 +151,9 @@
  * Constant Definitions for Internal errors defined for IROBEX
  */
 /*@{*/
-#define       IROBEX_WHO_MISMATCH        0xF1
-#define       IROBEX_CONNECTID_MISMATCH  0xF2
-#define       IROBEX_BAD_HEADER          0xF3
+#define       IROBEX_WHO_MISMATCH        0xF1U
+#define       IROBEX_CONNECTID_MISMATCH  0xF2U
+#define       IROBEX_BAD_HEADER          0xF3U
 /*@}*/
 
 /* define the operation mode */
@@ -163,8 +163,8 @@
  * Constant Definitions for Operation mode
  */
 /*@{*/
-#define        IROBEX_SERVER           1
-#define        IROBEX_CLIENT           2
+#define        IROBEX_SERVER           1U
+#define        IROBEX_CLIENT           2U
 /*@}*/
 
 /* Macro to set the IROBEX CB. This is only for NON_BLOCKING */

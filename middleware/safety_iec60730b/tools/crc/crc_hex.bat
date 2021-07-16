@@ -2,7 +2,7 @@
 Pushd "%~dp0"
 
 rem
-rem Copyright 2020 NXP.
+rem Copyright 2021 NXP.
 rem All rights reserved.
 rem
 rem SPDX-License-Identifier: BSD-3-Clause
@@ -10,7 +10,7 @@ rem
 
 echo #     
 echo #----------------------------------
-echo #      CRC CALCULATOR V1.2
+echo #      CRC CALCULATOR V1.3
 echo #----------------------------------
 
 rem Get the arguments
@@ -32,7 +32,7 @@ if not exist %hex_file% (
 )
 
 rem Check the input srec_cat.exe path argument
-set srec_cat_file=%srec_cat_loc%.exe
+set srec_cat_file=%srec_cat_loc%
 if not exist %srec_cat_file% (
     echo # ERROR: Invalid srec_cat.exe file path "%srec_cat_file%"! Please fix the third argument.
     echo #        CRC NOT updated.

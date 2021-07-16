@@ -99,8 +99,8 @@ void FLib_MemCpyReverseOrder (void* pDst,
 
 
 /*! *********************************************************************************
-* \brief  Compare two memory blocks. The number of bytes to compare must be specified. 
-*         If the blocks are equal byte by byte, the function returns TRUE, 
+* \brief  Compare two memory blocks. The number of bytes to compare must be specified.
+*         If the blocks are equal byte by byte, the function returns TRUE,
 *         and FALSE otherwise.
 *
 * \param[in] pData1  First memory block to compare
@@ -117,8 +117,8 @@ bool_t FLib_MemCmp (const void* pData1,
 
 /*! *********************************************************************************
 * \brief  Compare each byte of a memory block to a given value. The number of bytes to compare
-          must be specified. 
-*         If all the bytes are equal to the given value, the function returns TRUE, 
+          must be specified.
+*         If all the bytes are equal to the given value, the function returns TRUE,
 *         and FALSE otherwise.
 *
 * \param[in] pAddr   Location to be compared
@@ -169,7 +169,7 @@ void FLib_MemInPlaceCpy (void* pDst,
 * \param[in] val16   The 16-bit value to be copied
 *
 ********************************************************************************** */
-void FLib_MemCopy16Unaligned (void* pDst, 
+void FLib_MemCopy16Unaligned (void* pDst,
                               uint16_t val16
                              );
 

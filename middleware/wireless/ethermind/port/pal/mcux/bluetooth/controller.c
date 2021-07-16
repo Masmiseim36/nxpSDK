@@ -8,7 +8,7 @@
 #include "fsl_common.h"
 
 #include "controller.h"
-#if defined(WIFI_BOARD_AW_AM457) || defined(WIFI_BOARD_AW_CM358MA)
+#if defined(WIFI_BOARD_AW_AM457) || defined(WIFI_BOARD_AW_CM358)
 #include "controller_wifi_nxp.h"
 #endif
 
@@ -16,9 +16,19 @@
  * Definitions
  ******************************************************************************/
 
+/* Weak function. */
+#if defined(__GNUC__)
+#define __WEAK_FUNC __attribute__((weak))
+#elif defined(__ICCARM__)
+#define __WEAK_FUNC __weak
+#elif defined(__CC_ARM) || defined(__ARMCC_VERSION)
+#define __WEAK_FUNC __attribute__((weak))
+#endif
+
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
+__WEAK_FUNC int controller_hci_uart_get_configuration(controller_hci_uart_config_t *config);
 
 /*******************************************************************************
  * Variables
@@ -31,8 +41,12 @@
 /* Initialize the platform */
 void controller_init(void)
 {
-#if defined(WIFI_BOARD_AW_AM457) || defined(WIFI_BOARD_AW_CM358MA)
+#if defined(WIFI_BOARD_AW_AM457) || defined(WIFI_BOARD_AW_CM358)
     controller_wifi_nxp_init();
 #endif
 }
 
+__WEAK_FUNC int controller_hci_uart_get_configuration(controller_hci_uart_config_t *config)
+{
+    return -1;
+}

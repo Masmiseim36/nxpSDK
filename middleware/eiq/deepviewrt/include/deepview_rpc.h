@@ -6,7 +6,7 @@
  *
  * Authorization to use this header is provided through a DeepViewRT license.
  *
- * @file deepview_rpc.h DeepView RT ModelRunner UNIX RPC
+ * @file deepview_rpc.h DeepViewRT ModelRunner UNIX RPC
  *
  * Low-level RPC Request for UNIX Domain Sockets.  These are defined assuming
  * DGRAM framing and the payload is simply appended after the request/response

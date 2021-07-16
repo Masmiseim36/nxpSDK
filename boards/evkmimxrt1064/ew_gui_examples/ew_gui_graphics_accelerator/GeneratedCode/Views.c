@@ -21,8 +21,8 @@
 * Please do not make any modifications of this file! The modifications are lost
 * when the file is generated again by Embedded Wizard Studio!
 *
-* Version  : 9.30
-* Date     : 14.02.2020  8:00:50
+* Version  : 10.0
+* Date     : 17.02.2021  8:00:50
 * Profile  : iMX_RT
 * Platform : NXP.iMX_RT.RGB565
 *
@@ -913,57 +913,51 @@ XRect ViewsImage_GetContentArea( ViewsImage _this )
 
   if ((( align & ViewsImageAlignmentScaleToFill ) == ViewsImageAlignmentScaleToFill ))
   {
-    XInt32 scaleX = (( EwGetRectSize( rd ).X << 16 ) + ( size.X / 2 )) / size.X;
-    XInt32 scaleY = (( EwGetRectSize( rd ).Y << 16 ) + ( size.Y / 2 )) / size.Y;
+    XInt32 scaleX = (( EwGetRectW( rd ) << 16 ) + ( size.X / 2 )) / size.X;
+    XInt32 scaleY = (( EwGetRectH( rd ) << 16 ) + ( size.Y / 2 )) / size.Y;
     XInt32 scale = scaleX;
 
     if ( scaleY > scale )
       scale = scaleY;
 
-    rs = EwSetRectSize( rs, EwSetPointX( EwGetRectSize( rs ), (( size.X * scale ) 
-    + 32768 ) >> 16 ));
-    rs = EwSetRectSize( rs, EwSetPointY( EwGetRectSize( rs ), (( size.Y * scale ) 
-    + 32768 ) >> 16 ));
+    rs = EwSetRectW( rs, (( size.X * scale ) + 32768 ) >> 16 );
+    rs = EwSetRectH( rs, (( size.Y * scale ) + 32768 ) >> 16 );
   }
   else
     if ((( align & ViewsImageAlignmentScaleToFit ) == ViewsImageAlignmentScaleToFit ))
     {
-      XInt32 scaleX = (( EwGetRectSize( rd ).X << 16 ) + ( size.X / 2 )) / size.X;
-      XInt32 scaleY = (( EwGetRectSize( rd ).Y << 16 ) + ( size.Y / 2 )) / size.Y;
+      XInt32 scaleX = (( EwGetRectW( rd ) << 16 ) + ( size.X / 2 )) / size.X;
+      XInt32 scaleY = (( EwGetRectH( rd ) << 16 ) + ( size.Y / 2 )) / size.Y;
       XInt32 scale = scaleX;
 
       if ( scaleY < scale )
         scale = scaleY;
 
-      rs = EwSetRectSize( rs, EwSetPointX( EwGetRectSize( rs ), (( size.X * scale ) 
-      + 32768 ) >> 16 ));
-      rs = EwSetRectSize( rs, EwSetPointY( EwGetRectSize( rs ), (( size.Y * scale ) 
-      + 32768 ) >> 16 ));
+      rs = EwSetRectW( rs, (( size.X * scale ) + 32768 ) >> 16 );
+      rs = EwSetRectH( rs, (( size.Y * scale ) + 32768 ) >> 16 );
     }
     else
       if ( !(( align & ViewsImageAlignmentStretchToFill ) == ViewsImageAlignmentStretchToFill ))
         rs = EwSetRectSize( rs, size );
 
-  if ( EwGetRectSize( rs ).X != EwGetRectSize( rd ).X )
+  if ( EwGetRectW( rs ) != EwGetRectW( rd ))
   {
     if ((( align & ViewsImageAlignmentAlignHorzRight ) == ViewsImageAlignmentAlignHorzRight ))
-      rs = EwSetRectOrigin( rs, EwSetPointX( rs.Point1, rd.Point2.X - EwGetRectSize( 
-      rs ).X ));
+      rs = EwSetRectX( rs, rd.Point2.X - EwGetRectW( rs ));
     else
       if ((( align & ViewsImageAlignmentAlignHorzCenter ) == ViewsImageAlignmentAlignHorzCenter ))
-        rs = EwSetRectOrigin( rs, EwSetPointX( rs.Point1, ( rd.Point1.X + ( EwGetRectSize( 
-        rd ).X / 2 )) - ( EwGetRectSize( rs ).X / 2 )));
+        rs = EwSetRectX( rs, ( rd.Point1.X + ( EwGetRectW( rd ) / 2 )) - ( EwGetRectW( 
+        rs ) / 2 ));
   }
 
-  if ( EwGetRectSize( rs ).Y != EwGetRectSize( rd ).Y )
+  if ( EwGetRectH( rs ) != EwGetRectH( rd ))
   {
     if ((( align & ViewsImageAlignmentAlignVertBottom ) == ViewsImageAlignmentAlignVertBottom ))
-      rs = EwSetRectOrigin( rs, EwSetPointY( rs.Point1, rd.Point2.Y - EwGetRectSize( 
-      rs ).Y ));
+      rs = EwSetRectY( rs, rd.Point2.Y - EwGetRectH( rs ));
     else
       if ((( align & ViewsImageAlignmentAlignVertCenter ) == ViewsImageAlignmentAlignVertCenter ))
-        rs = EwSetRectOrigin( rs, EwSetPointY( rs.Point1, ( rd.Point1.Y + ( EwGetRectSize( 
-        rd ).Y / 2 )) - ( EwGetRectSize( rs ).Y / 2 )));
+        rs = EwSetRectY( rs, ( rd.Point1.Y + ( EwGetRectH( rd ) / 2 )) - ( EwGetRectH( 
+        rs ) / 2 ));
   }
 
   if ( orient == ViewsOrientationNormal )
@@ -1054,6 +1048,16 @@ void ViewsText__Done( ViewsText _this )
 
   /* Don't forget to deinitialize the super class ... */
   CoreRectView__Done( &_this->_Super );
+}
+
+/* 'C' function for method : 'Views::Text.Done()' */
+void ViewsText_Done( ViewsText _this )
+{
+  if ( _this->bidiContext != 0 )
+  {
+    ViewsText_freeBidi( _this, _this->bidiContext );
+    _this->bidiContext = 0;
+  }
 }
 
 /* The method Draw() is invoked automatically if parts of the view should be redrawn 
@@ -1248,8 +1252,6 @@ void ViewsText_OnSetBounds( ViewsText _this, XRect value )
   if ( !EwCompRect( value, _this->Super1.Bounds ))
     return;
 
-  resized = 0;
-
   if (( _this->Orientation == ViewsOrientationNormal ) || ( _this->Orientation == 
       ViewsOrientationRotated_180 ))
     resized = (XBool)( EwGetRectW( _this->Super1.Bounds ) != EwGetRectW( value ));
@@ -1275,16 +1277,6 @@ void ViewsText_OnSetBounds( ViewsText _this, XRect value )
 
   CoreRectView_OnSetBounds((CoreRectView)_this, value );
   EwPostSignal( EwNewSlot( _this, ViewsText_preOnUpdateSlot ), ((XObject)_this ));
-}
-
-/* 'C' function for method : 'Views::Text.Done()' */
-void ViewsText_Done( ViewsText _this )
-{
-  if ( _this->bidiContext != 0 )
-  {
-    ViewsText_freeBidi( _this, _this->bidiContext );
-    _this->bidiContext = 0;
-  }
 }
 
 /* 'C' function for method : 'Views::Text.freeBidi()' */
@@ -1528,7 +1520,7 @@ void ViewsText_reparseSlot( ViewsText _this, XObject sender )
 
     noOfRows = EwGetStringChar( res, 0 );
 
-    for (; row < noOfRows; row = row + 1 )
+    for ( ; row < noOfRows; row = row + 1 )
     {
       XBool rowEllipF = (XBool)( clipF && ( row == 0 ));
       XBool rowEllipL = (XBool)( clipL && ( row == ( noOfRows - 1 )));
@@ -1909,23 +1901,21 @@ XRect ViewsText_GetContentArea( ViewsText _this )
   if ( EwGetRectW( rs ) != EwGetRectW( rd ))
   {
     if ((( align & ViewsTextAlignmentAlignHorzRight ) == ViewsTextAlignmentAlignHorzRight ))
-      rs = EwSetRectOrigin( rs, EwSetPointX( rs.Point1, rd.Point2.X - EwGetRectW( 
-      rs )));
+      rs = EwSetRectX( rs, rd.Point2.X - EwGetRectW( rs ));
     else
       if ((( align & ViewsTextAlignmentAlignHorzCenter ) == ViewsTextAlignmentAlignHorzCenter ))
-        rs = EwSetRectOrigin( rs, EwSetPointX( rs.Point1, ( rd.Point1.X + ( EwGetRectW( 
-        rd ) / 2 )) - ( EwGetRectW( rs ) / 2 )));
+        rs = EwSetRectX( rs, ( rd.Point1.X + ( EwGetRectW( rd ) / 2 )) - ( EwGetRectW( 
+        rs ) / 2 ));
   }
 
   if ( EwGetRectH( rs ) != EwGetRectH( rd ))
   {
     if ((( align & ViewsTextAlignmentAlignVertBottom ) == ViewsTextAlignmentAlignVertBottom ))
-      rs = EwSetRectOrigin( rs, EwSetPointY( rs.Point1, rd.Point2.Y - EwGetRectH( 
-      rs )));
+      rs = EwSetRectY( rs, rd.Point2.Y - EwGetRectH( rs ));
     else
       if ((( align & ViewsTextAlignmentAlignVertCenter ) == ViewsTextAlignmentAlignVertCenter ))
-        rs = EwSetRectOrigin( rs, EwSetPointY( rs.Point1, ( rd.Point1.Y + ( EwGetRectH( 
-        rd ) / 2 )) - ( EwGetRectH( rs ) / 2 )));
+        rs = EwSetRectY( rs, ( rd.Point1.Y + ( EwGetRectH( rd ) / 2 )) - ( EwGetRectH( 
+        rs ) / 2 ));
   }
 
   if ( orient == ViewsOrientationNormal )

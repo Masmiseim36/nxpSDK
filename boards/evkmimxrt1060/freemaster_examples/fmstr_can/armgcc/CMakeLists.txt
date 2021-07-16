@@ -1,6 +1,6 @@
 # CROSS COMPILER SETTING
 SET(CMAKE_SYSTEM_NAME Generic)
-CMAKE_MINIMUM_REQUIRED (VERSION 3.1.1)
+CMAKE_MINIMUM_REQUIRED (VERSION 3.10.0)
 
 # THE VERSION NUMBER
 SET (Tutorial_VERSION_MAJOR 1)
@@ -62,10 +62,11 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../devices/MIMXRT1062/utilities/debug_console_lite
     ${ProjDirPath}/../../../../../devices/MIMXRT1062
     ${ProjDirPath}/../../../../../components/uart
+    ${ProjDirPath}/../../../../../components/serial_manager
     ${ProjDirPath}/../../../../../components/lists
     ${ProjDirPath}/../../../../../devices/MIMXRT1062/xip
     ${ProjDirPath}/../../../xip
-    ${ProjDirPath}/../../../../../CMSIS/Include
+    ${ProjDirPath}/../../../../../CMSIS/Core/Include
     ${ProjDirPath}/../../../../../devices/MIMXRT1062/utilities
 )
 
@@ -86,7 +87,11 @@ include(device_MIMXRT1062_CMSIS_MIMXRT1062)
 
 include(component_lpuart_adapter_MIMXRT1062)
 
+include(component_serial_manager_MIMXRT1062)
+
 include(component_lists_MIMXRT1062)
+
+include(component_serial_manager_uart_MIMXRT1062)
 
 include(driver_lpuart_MIMXRT1062)
 
@@ -98,15 +103,11 @@ include(driver_igpio_MIMXRT1062)
 
 include(driver_xip_device_MIMXRT1062)
 
-include(driver_xip_board_MIMXRT1062)
+include(driver_xip_board_evkmimxrt1060_MIMXRT1062)
 
 include(middleware_fmstr_platform_gen32le_MIMXRT1062)
 
-include(CMSIS_Include_core_cm7_MIMXRT1062)
-
-include(CMSIS_Include_common_MIMXRT1062)
-
-include(CMSIS_Include_dsp_MIMXRT1062)
+include(CMSIS_Include_core_cm_MIMXRT1062)
 
 include(utilities_misc_utilities_MIMXRT1062)
 

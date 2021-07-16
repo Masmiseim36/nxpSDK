@@ -28,12 +28,13 @@
 
 #include "board.h"
 #include "fsl_gpio.h"
+
+#include "ewconfig.h"
 #include "ew_bsp_inout.h"
 
 #define EwBspGGpioIrqHandler BOARD_USER_BUTTON_IRQ_HANDLER
 
 static TButtonCallback        UserButtonCallback = NULL;
-
 
 
 /*******************************************************************************
@@ -52,19 +53,18 @@ static TButtonCallback        UserButtonCallback = NULL;
 *******************************************************************************/
   uint32_t  portState;
 void EwBspGGpioIrqHandler(void)
-{ 
+{
   int       pinState = 1;
-  
+
   /* clear the interrupt status */
   GPIO_PortClearInterruptFlags( BOARD_USER_BUTTON_GPIO, 1U << BOARD_USER_BUTTON_GPIO_PIN );
-    
+
   if ( GPIO_PinRead( BOARD_USER_BUTTON_GPIO, BOARD_USER_BUTTON_GPIO_PIN ) )
     pinState = 0;
 
   if ( UserButtonCallback )
     UserButtonCallback( pinState );
 
-    
 #if defined __CORTEX_M && (__CORTEX_M == 4U)
     /* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
       exception return operation might vector to incorrect interrupt */
@@ -75,7 +75,7 @@ void EwBspGGpioIrqHandler(void)
 
 /*******************************************************************************
 * FUNCTION:
-*   EwBspConfigButton
+*   EwBspInOutInitButton
 *
 * DESCRIPTION:
 *   Configures one hardware button of the board used for demo applications.
@@ -87,25 +87,25 @@ void EwBspGGpioIrqHandler(void)
 *   None
 *
 *******************************************************************************/
-void EwBspConfigButton( TButtonCallback aButtonCallback )
+void EwBspInOutInitButton( TButtonCallback aButtonCallback )
 {
   /* Define the init structure for the input switch pin */
-  gpio_pin_config_t sw_config = { kGPIO_DigitalInput, 0, kGPIO_IntRisingOrFallingEdge };  
-  
+  gpio_pin_config_t sw_config = { kGPIO_DigitalInput, 0, kGPIO_IntRisingOrFallingEdge };
+
   /* Init input switch GPIO. */
   EnableIRQ( BOARD_USER_BUTTON_IRQ );
   GPIO_PinInit( BOARD_USER_BUTTON_GPIO, BOARD_USER_BUTTON_GPIO_PIN, &sw_config );
 
-  /* Enable GPIO pin interrupt */  
+  /* Enable GPIO pin interrupt */
   GPIO_PortEnableInterrupts( BOARD_USER_BUTTON_GPIO, 1U << BOARD_USER_BUTTON_GPIO_PIN );
-  
+
   UserButtonCallback = aButtonCallback;
 }
 
 
 /*******************************************************************************
 * FUNCTION:
-*   EwBspConfigLed
+*   EwBspInOutInitLed
 *
 * DESCRIPTION:
 *   Configures one LED of the board used for demo applications.
@@ -117,19 +117,19 @@ void EwBspConfigButton( TButtonCallback aButtonCallback )
 *   None
 *
 *******************************************************************************/
-void EwBspConfigLed( void )
+void EwBspInOutInitLed( void )
 {
   /* Define the init structure for the output LED pin */
   gpio_pin_config_t led_config = {kGPIO_DigitalOutput, 0, kGPIO_NoIntmode};
 
   /* Init output LED GPIO. */
-  GPIO_PinInit( BOARD_USER_LED_GPIO, BOARD_USER_LED_GPIO_PIN, &led_config );  
+  GPIO_PinInit( BOARD_USER_LED_GPIO, BOARD_USER_LED_GPIO_PIN, &led_config );
 }
 
 
 /*******************************************************************************
 * FUNCTION:
-*   EwBspLedOn
+*   EwBspInOutLedOn
 *
 * DESCRIPTION:
 *   Switch LED on (used for demo applications).
@@ -141,7 +141,7 @@ void EwBspConfigLed( void )
 *   None
 *
 *******************************************************************************/
-void EwBspLedOn( void )
+void EwBspInOutLedOn( void )
 {
   GPIO_PinWrite( BOARD_USER_LED_GPIO, BOARD_USER_LED_GPIO_PIN, 0U );
 }
@@ -149,7 +149,7 @@ void EwBspLedOn( void )
 
 /*******************************************************************************
 * FUNCTION:
-*   EwBspLedOff
+*   EwBspInOutLedOff
 *
 * DESCRIPTION:
 *   Switch LED off (used for demo applications).
@@ -161,9 +161,10 @@ void EwBspLedOn( void )
 *   None
 *
 *******************************************************************************/
-void EwBspLedOff( void )
+void EwBspInOutLedOff( void )
 {
   GPIO_PinWrite( BOARD_USER_LED_GPIO, BOARD_USER_LED_GPIO_PIN, 1U );
 }
+
 
 /* mli */

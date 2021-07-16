@@ -54,8 +54,8 @@
 #define timer_free              EM_free_mem
 
 /* Lock/Unlock Timer Library */
-#define timer_lock()            EM_thread_mutex_lock(&timer_mutex)
-#define timer_unlock()          EM_thread_mutex_unlock(&timer_mutex)
+#define timer_lock()            (void) EM_thread_mutex_lock(&timer_mutex)
+#define timer_unlock()          (void) EM_thread_mutex_unlock(&timer_mutex)
 
 /* Null Check for Timer Handles */
 #define timer_null_check(p)     if (NULL == (p)) return -1;

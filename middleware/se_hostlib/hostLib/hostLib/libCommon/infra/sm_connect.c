@@ -1,8 +1,7 @@
 /*
- * Copyright 2016-2020 NXP
- * All rights reserved.
  *
- * SPDX-License-Identifier: BSD-3-Clause
+ * Copyright 2016-2020 NXP
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 /*
@@ -57,9 +56,6 @@
 #endif
 #if defined(PCSC)
 #include "smComPCSC.h"
-#endif
-#if defined(IPC)
-#include "smComIpc.h"
 #endif
 #if defined(SMCOM_JRCP_V1)
 #include "smComSocket.h"
@@ -222,8 +218,11 @@ U16 SM_RjctConnectVCOM(void **conn_ctx, const char *connectString, SmCommState_t
 #endif
 
     status = smComVCom_Open(conn_ctx, connectString);
-
+#if SSS_HAVE_APPLET_SE051_UWB
+    if (status == 0 || status == SMCOM_COM_ALREADY_OPEN) {
+#else
     if (status == 0) {
+#endif
         if (conn_ctx == NULL) {
             status = smComVCom_GetATR(NULL, atr, atrLen);
             if (status == 0) {
@@ -455,8 +454,6 @@ U16 SM_Connect(void *conn_ctx, SmCommState_t *commState, U8 *atr, U16 *atrLen)
     sw = smComSCI2C_Open(conn_ctx, ESTABLISH_SCI2C, 0x00, atr, atrLen);
 #elif defined(SPI)
     smComSCSPI_Init(ESTABLISH_SCI2C, 0x00, atr, atrLen);
-#elif defined(IPC)
-    sw = smComIpc_Open(atr, atrLen, &(commState->hostLibVersion), &(commState->appletVersion), &(commState->sbVersion));
 #elif defined(T1oI2C)
     sw = smComT1oI2C_Open(conn_ctx, ESE_MODE_NORMAL, 0x00, atr, atrLen);
 #elif defined(SMCOM_JRCP_V1) || defined(SMCOM_JRCP_V2) || defined(PCSC) || defined(SMCOM_PCSC)
@@ -587,10 +584,6 @@ U16 SM_Close(void *conn_ctx, U8 mode)
 #if defined(PCSC)
     sw = smComPCSC_Close(mode);
 #endif
-#if defined(IPC)
-    AX_UNUSED_ARG(mode);
-    sw = smComIpc_Close();
-#endif
 #if defined(T1oI2C)
     sw = smComT1oI2C_Close(conn_ctx, mode);
 #endif
@@ -651,14 +644,15 @@ U16 SM_SendAPDU(U8 *cmd, U16 cmdLen, U8 *resp, U16 *respLen)
     return (U16)status;
 }
 
-#if defined(IPC)
+
+#if defined(SMCOM_JRCP_V1_AM)
 U16 SM_LockChannel()
 {
-    return smComIpc_LockChannel();
+    return smComSocket_LockChannel();
 }
 
 U16 SM_UnlockChannel()
 {
-    return smComIpc_UnlockChannel();
+    return smComSocket_UnlockChannel();
 }
 #endif

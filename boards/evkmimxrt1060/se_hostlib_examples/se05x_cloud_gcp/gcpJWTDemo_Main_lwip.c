@@ -3,15 +3,9 @@
  * @author NXP Semiconductors
  * @version 1.0
  * @par License
- * Copyright 2017,2018,2020 NXP
  *
- * This software is owned or controlled by NXP and may only be used
- * strictly in accordance with the applicable license terms.  By expressly
- * accepting such terms or by downloading, installing, activating and/or
- * otherwise using the software, you are agreeing that you have read, and
- * that you agree to comply with and are bound by, such license terms.  If
- * you do not agree to be bound by the applicable license terms, then you
- * may not retain, install, activate or otherwise use the software.
+ * Copyright 2017,2018,2020 NXP
+ * SPDX-License-Identifier: Apache-2.0
  *
  * @par Description
  * Demo to connect to GCP (Google Cloud Platform) over internet on embedded platform
@@ -26,6 +20,7 @@
 #include "gcpJWTDemo.h"
 #include "ksdk_mbedtls.h"
 #include "task.h"
+#include "iot_logging_task.h"
 
 #include "ax_api.h"
 #if SSS_HAVE_ALT_A71CH
@@ -55,6 +50,10 @@
 *******************************************************************/
 #define GCP_TASK_PRIORITY (tskIDLE_PRIORITY)
 #define GCP_TASK_STACK_SIZE 11000
+
+#define LOGGING_TASK_PRIORITY   (tskIDLE_PRIORITY + 1)
+#define LOGGING_TASK_STACK_SIZE (250)
+#define LOGGING_QUEUE_LENGTH    (16)
 
 extern const unsigned char privKey[];
 extern const size_t lenPrivKey;
@@ -89,12 +88,11 @@ sss_status_t ex_sss_entry(ex_sss_boot_ctx_t *pCtx)
     pex_sss_demo_tls_ctx->client_keyPair_index = SSS_KEYPAIR_INDEX_CLIENT_PRIVATE;
     pex_sss_demo_tls_ctx->client_cert_index = SSS_CERTIFICATE_INDEX;
 
-    gcp_jwt_task((void*)pCtx);
+    gcp_jwt_task((void *)pCtx);
 
     /* Should not reach this statement */
     for (;;)
         ;
-
 }
 
 void gcp_jwt_task(void *ctx)
@@ -103,7 +101,7 @@ void gcp_jwt_task(void *ctx)
     mbedtls_pk_context pk;
     int ret = 0;
     // U8 AxUID[A71CH_MODULE_UNIQUE_ID_LEN];
-    ex_sss_boot_ctx_t *pCtx = (ex_sss_boot_ctx_t*)ctx;
+    ex_sss_boot_ctx_t *pCtx = (ex_sss_boot_ctx_t *)ctx;
 
     LOG_I("GCP JWT NXP Secure Element example");
 

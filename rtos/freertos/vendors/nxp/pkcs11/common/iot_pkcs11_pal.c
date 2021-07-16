@@ -1,7 +1,7 @@
 /*
  * FreeRTOS PKCS #11 PAL for LPC54018 IoT Module V1.0.3
  * Copyright (C) 2020 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
- * Copyright 2018-2020 NXP
+ * Copyright 2018-2021 NXP
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
  * this software and associated documentation files (the "Software"), to deal in
@@ -38,8 +38,8 @@
 #include "FreeRTOSIPConfig.h"
 #include "iot_crypto.h"
 #include "task.h"
-#include "iot_pkcs11.h"
-#include "iot_pkcs11_config.h"
+#include "core_pkcs11.h"
+#include "core_pkcs11_config.h"
 
 /* Flash write */
 #include "mflash_file.h"
@@ -302,6 +302,7 @@ CK_RV PKCS11_PAL_Initialize( void )
 {
 
     CK_RV xResult = CKR_OK;
+    CRYPTO_Init();
 
     if( !mflash_is_initialized() )
     {

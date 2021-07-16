@@ -69,7 +69,7 @@ void device_queue_full_pl(DEVICE_LINK_TYPE    link_type)
 #ifdef BT_LE
         if (API_SUCCESS != retval)
         {
-            smp_purge_device_list_pl(&smp_index);
+            (BT_IGNORE_RETURN_VALUE) smp_purge_device_list_pl(&smp_index);
         }
 #endif /* BT_LE */
     }
@@ -80,8 +80,12 @@ void device_queue_full_pl(DEVICE_LINK_TYPE    link_type)
 
         if (API_SUCCESS != retval)
         {
-            sm_purge_device_list_pl(&sm_index);
+            (BT_IGNORE_RETURN_VALUE) sm_purge_device_list_pl(&sm_index);
         }
+    }
+    else
+    {
+        /* MISRA C-2012 Rule 15.7 */
     }
 #endif /* BT_LE */
 
@@ -101,8 +105,10 @@ void device_queue_full_pl(DEVICE_LINK_TYPE    link_type)
     * incoming connections will be disconnected from the stack.
     */
 
+#ifdef CLASSIC_SEC_MANAGER
     /* Call to free a device and make space through SM purge  */
     sm_purge_device_list_pl(&sm_index);
+#endif /* CLASSIC_SEC_MANAGER */
 #endif /* BT_DUAL_MODE */
 }
 
@@ -140,7 +146,7 @@ void device_queue_cleanup_pl
     "[DQ PL] Valid DQ entries bit field 0x%08X.\n", dq_valid_entries);
 
 #if (1 != BT_MAX_DEVICE_QUEUE_SIZE)
-    for (index = 0; index < BT_MAX_DEVICE_QUEUE_SIZE; index++)
+    for (index = 0U; index < BT_MAX_DEVICE_QUEUE_SIZE; index++)
 #else
     index = 0;
 #endif /* (1 != BT_MAX_DEVICE_QUEUE_SIZE) */
@@ -149,7 +155,7 @@ void device_queue_cleanup_pl
          * Check if the associated device queue handle is valid or not.
          * If not valid, free the device queue element.
          */
-        if (0 == (dq_valid_entries & (1 << index)))
+        if (0U == (dq_valid_entries & (1U << index)))
         {
             device_queue_free(&index);
         }

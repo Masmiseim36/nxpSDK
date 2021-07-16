@@ -46,12 +46,11 @@ typedef struct xml_doc_component
 } XML_DOC_COMPONENT, *PXML_DOC_COMPONENT;
 
 
-
 typedef struct xml_object
 {
     CHAR                 *xml_doc_bfr;
 
-    CHAR                 file [32];
+    CHAR                 file [256U];
 
     BOOLEAN              use_buffer;
 

@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 NXP
+ * Copyright 2018-2021 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -7,18 +7,22 @@
 
 // This is a pre-trained TensorFlow Lite ds_cnn_s.tflite
 // model file that has been converted into a C data array, so it can be easily
-// compiled into a binary for devices that don't have a file system. 
+// compiled into a binary for devices that don't have a file system.
 // It was created using the command
 // (with additional modification for alignment specification):
 // xxd -i ds_cnn_s.tflite > model_data.h
 
+#ifndef __XCC__
 #include <cmsis_compiler.h>
+#else
+#define __ALIGNED(x) __attribute__((aligned(x)))
+#endif
 
 #define MODEL_NAME "ds_cnn_s"
 #define MODEL_INPUT_MEAN -99.5f
 #define MODEL_INPUT_STD 127.5f
 
-const char model_data[] __ALIGNED(16) = {
+static const uint8_t model_data[] __ALIGNED(16) = {
     0x1c, 0x00, 0x00, 0x00, 0x54, 0x46, 0x4c, 0x33, 0x00, 0x00, 0x00, 0x00,
     0x00, 0x00, 0x0e, 0x00, 0x18, 0x00, 0x04, 0x00, 0x08, 0x00, 0x0c, 0x00,
     0x10, 0x00, 0x14, 0x00, 0x0e, 0x00, 0x00, 0x00, 0x03, 0x00, 0x00, 0x00,
@@ -2577,4 +2581,4 @@ const char model_data[] __ALIGNED(16) = {
     0x06, 0x00, 0x00, 0x00, 0x00, 0x04, 0x06, 0x00, 0x08, 0x00, 0x07, 0x00,
     0x06, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x04
 };
-unsigned int model_data_len = 30680;
+static const unsigned int model_data_len = 30680;

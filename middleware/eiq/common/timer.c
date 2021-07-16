@@ -6,9 +6,9 @@
  */
 
 #include "board.h"
-#include "stdbool.h"
 #include "timer.h"
 
+#include <stdint.h>
 #if defined(__ICCARM__) || defined(__ARMCC_VERSION) || defined(__REDLIB__)
 #include <time.h>
 #else
@@ -38,14 +38,14 @@ void SysTick_Handler(void)
     msTicks++;
 }
 
-void TIMER_Init()
+void TIMER_Init(void)
 {
     uint32_t priorityGroup = NVIC_GetPriorityGrouping();
     SysTick_Config(CLOCK_GetFreq(kCLOCK_CoreSysClk) / (SYSTICK_PRESCALE * 1000U));
     NVIC_SetPriority(SysTick_IRQn, NVIC_EncodePriority(priorityGroup, TICK_PRIORITY, 0U));
 }
 
-int TIMER_GetTimeInUS()
+int TIMER_GetTimeInUS(void)
 {
     int us = ((SystemCoreClock / 1000) - SysTick->VAL) / (SystemCoreClock / 1000000);
     us += msTicks * 1000;
@@ -71,7 +71,7 @@ int timespec_get(struct timespec* ts, int base)
 
 #else
 
-int gettimeofday (struct timeval *__restrict __p,void *__restrict __tz){
+int gettimeofday(struct timeval *__restrict __p,void *__restrict __tz){
     int us = TIMER_GetTimeInUS();
     __p->tv_sec = us / 1000000;
     __p->tv_usec = us % 1000000;

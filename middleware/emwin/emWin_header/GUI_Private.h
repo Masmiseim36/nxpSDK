@@ -9,7 +9,7 @@
 *                                                                    *
 **********************************************************************
 
-** emWin V6.14 - Graphical user interface for embedded applications **
+** emWin V6.16 - Graphical user interface for embedded applications **
 All  Intellectual Property rights  in the Software belongs to  SEGGER.
 emWin is protected by  international copyright laws.  Knowledge of the
 source code may not be used to write a similar product.  This file may
@@ -34,7 +34,7 @@ License model:            emWin License Agreement, dated August 20th 2011 and Am
 Licensed platform:        NXP's ARM 7/9, Cortex-M0, M3, M4, M7, A7, M33
 ----------------------------------------------------------------------
 Support and Update Agreement (SUA)
-SUA period:               2011-08-19 - 2020-09-02
+SUA period:               2011-08-19 - 2021-09-02
 Contact to extend SUA:    sales@segger.com
 ----------------------------------------------------------------------
 File        : GUI_Private.h
@@ -479,6 +479,7 @@ int GUI_GetBitsPerPixelEx(int LayerIndex);
 *   THEY HAVE TO CORRESPOND TO THE DEFINITIONS WITHIN THE CODE OF THE BITMAPCONVERTER!
 */
 #define GUI_STREAM_FORMAT_INDEXED    100 /* DO NOT CHANGE */
+#define GUI_STREAM_FORMAT_RLE1       32  /* DO NOT CHANGE */
 #define GUI_STREAM_FORMAT_RLE4       6   /* DO NOT CHANGE */
 #define GUI_STREAM_FORMAT_RLE8       7   /* DO NOT CHANGE */
 #define GUI_STREAM_FORMAT_565        8   /* DO NOT CHANGE */

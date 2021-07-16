@@ -5,9 +5,9 @@ Azure_amqp_remote_control demo shows basic communication with iot-hub via amqp p
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.9
-- GCC ARM Embedded  9.3.1
-- MCUXpresso  11.3.0
+- IAR embedded Workbench  9.10.2
+- GCC ARM Embedded  10.2.1
+- MCUXpresso  11.4.0
 
 Hardware requirements
 =====================

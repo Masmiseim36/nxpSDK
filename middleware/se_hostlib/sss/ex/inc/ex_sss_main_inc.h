@@ -1,8 +1,7 @@
 /*
- * Copyright 2019-2020 NXP
- * All rights reserved.
  *
- * SPDX-License-Identifier: BSD-3-Clause
+ * Copyright 2019-2020 NXP
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 /* Common, Re-Usable main implementation */
@@ -47,7 +46,7 @@
  *
  */
 
-#if defined(FRDM_KW41Z) || defined(FRDM_K64F) || defined(IMX_RT) || defined(LPC_55x)
+#if defined(FRDM_KW41Z) || defined(FRDM_K64F) || defined(IMX_RT) || defined(LPC_55x) || defined(QN9090DK6)
 #define HAVE_KSDK
 #endif
 
@@ -65,12 +64,24 @@
 #include "PlugAndTrust_Pkg_Ver.h"
 #include "string.h" /* memset */
 
-#if AX_EMBEDDED && defined(USE_RTOS) && USE_RTOS == 1
+#if defined(USE_RTOS) && USE_RTOS == 1
 #ifndef INC_FREERTOS_H /* Header guard of FreeRTOS */
 #include "FreeRTOS.h"
 #include "FreeRTOSConfig.h"
 #endif /* INC_FREERTOS_H */
 #include "task.h"
+#if !SSS_HAVE_APPLET_SE051_UWB
+#include "iot_logging_task.h"
+#ifndef LOGGING_TASK_PRIORITY
+#define LOGGING_TASK_PRIORITY   (tskIDLE_PRIORITY + 1)
+#endif // LOGGING_TASK_PRIORITY
+#ifndef LOGGING_TASK_STACK_SIZE
+#define LOGGING_TASK_STACK_SIZE (200)
+#endif // LOGGING_TASK_STACK_SIZE
+#ifndef LOGGING_QUEUE_LENGTH
+#define LOGGING_QUEUE_LENGTH    (16)
+#endif // LOGGING_QUEUE_LENGTH
+#endif // SSS_HAVE_APPLET_SE051_UWB
 #endif
 
 #if SSS_HAVE_A71CH || SSS_HAVE_A71CH_SIM
@@ -104,13 +115,21 @@ static const char **gex_sss_argv;
 #define EX_SSS_BOOT_RTOS_STACK_SIZE 8500
 #endif
 
-#if AX_EMBEDDED && defined(USE_RTOS) && USE_RTOS == 1
+#if defined(USE_RTOS) && USE_RTOS == 1
 static TaskHandle_t gSSSExRtosTaskHandle = NULL;
 static void sss_ex_rtos_task(void *ctx);
 #if INCLUDE_uxTaskGetStackHighWaterMark
 void sss_ex_rtos_stack_size(const char *when);
 #endif // INCLUDE_uxTaskGetStackHighWaterMark
-#endif /* No RTOS, No Embedded */
+#if (!AX_EMBEDDED)
+extern void prvMiscInitialisation(void);
+#endif
+#endif /* RTOS */
+
+#if defined(CPU_JN518X)
+/* Allocate the memory for the heap. */
+uint8_t __attribute__((section(".bss.$SRAM1"))) ucHeap[configTOTAL_HEAP_SIZE];
+#endif
 
 int main(int argc, const char *argv[])
 {
@@ -147,11 +166,21 @@ int main(int argc, const char *argv[])
     }
 #endif // AX_EMBEDDED
 
+#if defined(USE_RTOS) && USE_RTOS == 1
+#if (!AX_EMBEDDED) && ENABLE_CLOUD_DEMOS
+    prvMiscInitialisation();
+#endif
+#endif
+
+    /* Initialise Logging locks */
+    if (nLog_Init() != 0) {
+        LOG_E("Lock initialisation failed");
+    }
 #if defined(EX_SSS_BOOT_SKIP_SELECT_APPLET) && (EX_SSS_BOOT_SKIP_SELECT_APPLET == 1)
     (PCONTEXT)->se05x_open_ctx.skip_select_applet = 1;
 #endif
 
-#if AX_EMBEDDED && defined(USE_RTOS) && USE_RTOS == 1
+#if defined(USE_RTOS) && USE_RTOS == 1
     if (xTaskCreate(&sss_ex_rtos_task,
             "sss_ex_rtos_task",
             EX_SSS_BOOT_RTOS_STACK_SIZE,
@@ -247,7 +276,8 @@ before_ex_sss_entry:
         goto cleanup;
     }
 #endif /* No RTOS, No Embedded */
-
+    // Delete locks for pthreads
+    nLog_DeInit();
     goto cleanup;
 
 cleanup:
@@ -273,7 +303,7 @@ cleanup:
     return ret;
 }
 
-#if AX_EMBEDDED && defined(USE_RTOS) && USE_RTOS == 1
+#if defined(USE_RTOS) && USE_RTOS == 1
 static void sss_ex_rtos_task(void *ctx)
 {
     sss_status_t status;
@@ -282,8 +312,9 @@ static void sss_ex_rtos_task(void *ctx)
     sss_ex_rtos_stack_size("Boot");
 #endif // INCLUDE_uxTaskGetStackHighWaterMark
 
+#if AX_EMBEDDED
     ex_sss_main_ksdk_boot_rtos_task();
-
+#endif
     status = ex_sss_boot_open(PCONTEXT, (const char *)ctx);
 
     if (kStatus_SSS_Success != status) {
@@ -318,6 +349,12 @@ static void sss_ex_rtos_task(void *ctx)
 #endif
 #endif
 
+#if SSS_HAVE_APPLET_SE051_UWB
+    /* Not available in UWB Branch for time being */
+#else
+    xLoggingTaskInitialize(LOGGING_TASK_STACK_SIZE, LOGGING_TASK_PRIORITY, LOGGING_QUEUE_LENGTH);
+#endif
+
     status = ex_sss_entry((PCONTEXT));
 
     LOG_I("ex_sss Finished");
@@ -325,12 +362,23 @@ static void sss_ex_rtos_task(void *ctx)
         LOG_E("ex_sss_entry Failed");
     }
 
+    ex_sss_session_close(PCONTEXT);
+    /* Delete locks for FreeRtos*/
+    nLog_DeInit();
 #if INCLUDE_uxTaskGetStackHighWaterMark
     sss_ex_rtos_stack_size("After:ex_sss_entry");
 #endif // INCLUDE_uxTaskGetStackHighWaterMark
-
 exit:
+#if defined(_MSC_VER) || defined(__linux__) || defined(__MINGW32__) || defined(__MINGW64__)
+    if (kStatus_SSS_Success == status) {
+        exit(0);
+    }
+    else {
+        exit(1);
+    }
+#else
     vTaskDelete(NULL);
+#endif
 }
 
 #if INCLUDE_uxTaskGetStackHighWaterMark

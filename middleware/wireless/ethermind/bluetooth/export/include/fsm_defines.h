@@ -40,7 +40,7 @@ typedef UINT32 STATE_T;
 
 typedef UCHAR EVENT_T;
 
-typedef API_RESULT (*SE_HNDLR_T)(void *);
+typedef API_RESULT (*SE_HNDLR_T)(void * param);
 
 typedef API_RESULT RETVAL_T;
 

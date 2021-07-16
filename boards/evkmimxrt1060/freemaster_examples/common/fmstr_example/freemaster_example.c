@@ -475,6 +475,11 @@ static char *sz_pipe_other  = "Send me numbers 0-9 and I will echo it back to yo
 
 void FMSTR_Example_Init(void)
 {
+    FMSTR_Example_Init_Ex(FMSTR_TRUE);
+}
+
+void FMSTR_Example_Init_Ex(FMSTR_BOOL callFmstrInit)
+{
     static FMSTR_U8 recBuffer[512]; /* Recorder #1 sampling buffer */
     FMSTR_REC_BUFF recBuffCfg;
     FMSTR_HPIPE hpipe;
@@ -511,7 +516,7 @@ void FMSTR_Example_Init(void)
     varFLT    = 0;
     varFLTrw  = 0;
     varFLTinc = 1.0;
-    arrFLT_size = ARR_SIZE_FLT;	
+    arrFLT_size = ARR_SIZE_FLT;    
 #endif
 
 #if FMSTR_DEMO_SUPPORT_DBL
@@ -545,8 +550,9 @@ void FMSTR_Example_Init(void)
 #endif
 
     /* FreeMASTER driver initialization */
-    FMSTR_Init();
-
+    if(callFmstrInit)
+        FMSTR_Init();
+    
     /* Registering the App.Command handler */
     FMSTR_RegisterAppCmdCall(10, my_appcmd_handler);
 
@@ -600,8 +606,12 @@ void FMSTR_Example_Init(void)
  * in Variable Watch or graphs displayed in the FreeMASTER tool.
  *
  */
-
 void FMSTR_Example_Poll(void)
+{
+    FMSTR_Example_Poll_Ex(FMSTR_TRUE);
+}
+
+void FMSTR_Example_Poll_Ex(FMSTR_BOOL callFmstrPoll)
 {
     static unsigned short div;
     unsigned short nAppCmdCode;
@@ -670,5 +680,6 @@ void FMSTR_Example_Poll(void)
 
     /* The FreeMASTER poll call must be called in the main application loop
        to handle the communication interface and protocol. */
-    FMSTR_Poll();
+    if(callFmstrPoll)
+        FMSTR_Poll();
 }

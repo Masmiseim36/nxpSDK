@@ -23,7 +23,7 @@
 uint32_t g_ovf_stamp;
 volatile uint32_t g_ovf_counter = 0;
 
-#ifndef FSL_RTOS_FREE_RTOS
+#ifndef SDK_OS_FREE_RTOS
 // SDK specific SysTick Interrupt Handler
 void SysTick_Handler(void)
 {

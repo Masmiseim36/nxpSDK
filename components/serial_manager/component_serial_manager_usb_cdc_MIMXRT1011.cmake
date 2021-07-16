@@ -1,23 +1,21 @@
-if(NOT COMPONENT_SERIAL_MANAGER_USB_CDC_MIMXRT1011_INCLUDED)
-    
-    set(COMPONENT_SERIAL_MANAGER_USB_CDC_MIMXRT1011_INCLUDED true CACHE BOOL "component_serial_manager_usb_cdc component is included.")
+include_guard(GLOBAL)
+message("component_serial_manager_usb_cdc component is included.")
 
-    target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
-        ${CMAKE_CURRENT_LIST_DIR}/fsl_component_serial_port_usb.c
-        ${CMAKE_CURRENT_LIST_DIR}/usb_cdc_adapter/usb_device_descriptor.c
-    )
-
-
-    target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
-        ${CMAKE_CURRENT_LIST_DIR}/.
-        ${CMAKE_CURRENT_LIST_DIR}/usb_cdc_adapter
-    )
+target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
+    ${CMAKE_CURRENT_LIST_DIR}/fsl_component_serial_port_usb.c
+    ${CMAKE_CURRENT_LIST_DIR}/usb_cdc_adapter/usb_device_descriptor.c
+)
 
 
-    include(component_serial_manager_MIMXRT1011)
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
+    ${CMAKE_CURRENT_LIST_DIR}/.
+    ${CMAKE_CURRENT_LIST_DIR}/usb_cdc_adapter
+)
 
-    include(middleware_usb_device_cdc_external_MIMXRT1011)
 
-    include(driver_common_MIMXRT1011)
+include(component_serial_manager_MIMXRT1011)
 
-endif()
+include(middleware_usb_device_cdc_external_MIMXRT1011)
+
+include(driver_common_MIMXRT1011)
+

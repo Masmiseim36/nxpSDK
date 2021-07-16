@@ -47,7 +47,6 @@
 #include "iot_mqtt_agent_config_defaults.h"
 
 #if AX_EMBEDDED
-#include "board.h"
 #include "clock_config.h"
 #include "fsl_device_registers.h"
 #include "ksdk_mbedtls.h"
@@ -70,6 +69,7 @@
 #endif
 #include "a71_debug.h"
 #include "sm_demo_utils.h"
+#include "board.h"
 #endif
 
 #include "nxLog_App.h"
@@ -78,7 +78,7 @@
 * Definitions
 ******************************************************************************/
 
-#define ENABLE_TIME_PROFILING    0
+#define ENABLE_TIME_PROFILING 0
 /*******************************************************************************
 * Prototypes
 ******************************************************************************/
@@ -211,7 +211,7 @@ void gcpPubSub(void *ctx)
     char cPayload[100];
     unsigned char b64token[JWT_PASSWORLD_BUFFER_LEN] = {0};
     size_t b64tokenLen = sizeof(b64token);
-    char *gcpJWToken = (char *) &b64token[0];
+    char *gcpJWToken = (char *)&b64token[0];
     mbedtls_pk_context *pk = (mbedtls_pk_context *)ctx;
 #if AX_EMBEDDED
     U8 AxUID[A71CH_MODULE_UNIQUE_ID_LEN] = {0};
@@ -222,21 +222,23 @@ void gcpPubSub(void *ctx)
     volatile uint32_t previousTime, currentTime;
 #endif
     MQTTAgentConnectParams_t xConnectParameters = {
-        .pcURL = GCP_IOT_MQTT_HOST,                                /* The URL of the MQTT broker to connect to. */
-        .xFlags = mqttagentREQUIRE_TLS,                            /* Connection flags. */
-        .xURLIsIPAddress = pdFALSE,                                /* Deprecated. */
-        .usPort = GCP_IOT_MQTT_PORT,                               /* Port number on which the MQTT broker is listening. */
-        .pucClientId = GCP_IOT_MQTT_CLIENT_ID,                     /* Client Identifier of the MQTT client. It should be unique per broker. */
-        .usClientIdLength = 0,                                     /* The length of the client Id, filled in later as not const. */
-        .xSecuredConnection = pdFALSE,                             /* Deprecated. */
-        .pvUserData = NULL,                                        /* User data supplied to the callback. Can be NULL. */
-        .pxCallback = NULL,                                        /* Callback used to report various events. Can be NULL. */
-        .pcCertificate = (char *)tlsVERISIGN_ROOT_CERTIFICATE_PEM, /* Certificate used for secure connection. Can be NULL. */
-        .ulCertificateSize = tlsVERISIGN_ROOT_CERTIFICATE_LENGTH,  /* Size of certificate used for secure connection. */
-        .cUserName = "NA",                                         /* User name for MQTT connect. Filled later*/
-        .uUsernamelength = sizeof("NA") - 1,                       /* Length of user name. Filled later*/
-        .p_password = NULL,                                  /* Password for MQTT connect params*/
-        .passwordlength = 0,                      /* Length of the password */
+        .pcURL = GCP_IOT_MQTT_HOST,     /* The URL of the MQTT broker to connect to. */
+        .xFlags = mqttagentREQUIRE_TLS, /* Connection flags. */
+        .xURLIsIPAddress = pdFALSE,     /* Deprecated. */
+        .usPort = GCP_IOT_MQTT_PORT,    /* Port number on which the MQTT broker is listening. */
+        .pucClientId =
+            GCP_IOT_MQTT_CLIENT_ID,    /* Client Identifier of the MQTT client. It should be unique per broker. */
+        .usClientIdLength = 0,         /* The length of the client Id, filled in later as not const. */
+        .xSecuredConnection = pdFALSE, /* Deprecated. */
+        .pvUserData = NULL,            /* User data supplied to the callback. Can be NULL. */
+        .pxCallback = NULL,            /* Callback used to report various events. Can be NULL. */
+        .pcCertificate =
+            (char *)tlsVERISIGN_ROOT_CERTIFICATE_PEM, /* Certificate used for secure connection. Can be NULL. */
+        .ulCertificateSize = tlsVERISIGN_ROOT_CERTIFICATE_LENGTH, /* Size of certificate used for secure connection. */
+        .cUserName = "NA",                                        /* User name for MQTT connect. Filled later*/
+        .uUsernamelength = sizeof("NA") - 1,                      /* Length of user name. Filled later*/
+        .p_password = NULL,                                       /* Password for MQTT connect params*/
+        .passwordlength = 0,                                      /* Length of the password */
     };
 
     MQTTAgentReturnCode_t xReturned;
@@ -248,11 +250,10 @@ void gcpPubSub(void *ctx)
     BOARD_InitNetwork_MAC(AxUID);
 #endif
     xResult = IotSdk_Init();
-    if (xResult != pdPASS)
-    {
-         //PRINTF("ERROR:  IotSdk_Init() failed \r\n");
-         while(1)
-                ;
+    if (xResult != pdPASS) {
+        LOG_E("IotSdk_Init() failed");
+        LED_RED_ON();
+        goto exit;
     }
     xResult = MQTT_AGENT_Init();
     if (xResult == pdPASS) {
@@ -298,19 +299,19 @@ void gcpPubSub(void *ctx)
         xConnectParameters.passwordlength = strlen(gcpJWToken);
         LOG_I("MQTT attempting to connect to\n  '%s'...", xConnectParameters.pucClientId);
 #if ENABLE_TIME_PROFILING
-        previousTime  =  gtimer_kinetis_msticks;
+        previousTime = gtimer_kinetis_msticks;
 #endif
 
         do {
             LOG_I("MQTT attempting to connect to '%s'... \n\n", xConnectParameters.pucClientId);
-            xReturned = MQTT_AGENT_Connect(xMQTTHandle, &xConnectParameters, (mqttconfigKEEP_ALIVE_ACTUAL_INTERVAL_TICKS * (1 + 2*retryCount)));
+            xReturned = MQTT_AGENT_Connect(
+                xMQTTHandle, &xConnectParameters, (mqttconfigKEEP_ALIVE_ACTUAL_INTERVAL_TICKS * (1 + 2 * retryCount)));
             if (xReturned == eMQTTAgentSuccess) {
                 break;
             }
-            else
-            {
+            else {
                 LOG_E(("Connect failed: Retrying \r\n"));
-                retryCount ++;
+                retryCount++;
             }
         } while (retryCount <= 5);
 
@@ -322,8 +323,8 @@ void gcpPubSub(void *ctx)
         }
 
 #if ENABLE_TIME_PROFILING
-        currentTime =  gtimer_kinetis_msticks;
-        LOG_I("MQTT Connection Time is \n  '%d'...", (currentTime -previousTime ));
+        currentTime = gtimer_kinetis_msticks;
+        LOG_I("MQTT Connection Time is \n  '%d'...", (currentTime - previousTime));
 #endif
         xSubscribeParams.pucTopic = (const uint8_t *)GCP_IOT_MQTT_SUB_TOPIC;
         xSubscribeParams.pvPublishCallbackContext = NULL;
@@ -332,13 +333,13 @@ void gcpPubSub(void *ctx)
         xSubscribeParams.xQoS = eMQTTQoS1;
 
 #if ENABLE_TIME_PROFILING
-        previousTime  =  gtimer_kinetis_msticks;
+        previousTime = gtimer_kinetis_msticks;
 #endif
         xReturned = MQTT_AGENT_Subscribe(xMQTTHandle, &xSubscribeParams, pdMS_TO_TICKS(10000));
 
 #if ENABLE_TIME_PROFILING
-        currentTime =  gtimer_kinetis_msticks;
-        LOG_I("MQTT Subscribe Time is \n  '%d'...", (currentTime -previousTime ));
+        currentTime = gtimer_kinetis_msticks;
+        LOG_I("MQTT Subscribe Time is \n  '%d'...", (currentTime - previousTime));
 #endif
         if (xReturned == eMQTTAgentSuccess) {
             LOG_I("MQTT Echo demo subscribed to %s\r\n", GCP_IOT_MQTT_SUB_TOPIC);
@@ -361,13 +362,13 @@ void gcpPubSub(void *ctx)
             xPublishParameters_QOS0.xQoS = eMQTTQoS0;
 
 #if ENABLE_TIME_PROFILING
-            previousTime  =  gtimer_kinetis_msticks;
+            previousTime = gtimer_kinetis_msticks;
 #endif
             xReturned = MQTT_AGENT_Publish(xMQTTHandle, &xPublishParameters_QOS0, pdMS_TO_TICKS(10000));
 
 #if ENABLE_TIME_PROFILING
-            currentTime =  gtimer_kinetis_msticks;
-            LOG_I("MQTT Publish Time is \n  '%d'...", (currentTime -previousTime ));
+            currentTime = gtimer_kinetis_msticks;
+            LOG_I("MQTT Publish Time is \n  '%d'...", (currentTime - previousTime));
 #endif
             if (publishCount > 0) {
                 publishCount--;

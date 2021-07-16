@@ -21,8 +21,8 @@
  * Title:        arm_convolve_s8.c
  * Description:  s8 version of convolution using symmetric quantization.
  *
- * $Date:        May 18, 2020
- * $Revision:    V.2.0.0
+ * $Date:        July 27, 2020
+ * $Revision:    V.2.0.2
  *
  * Target Processor:  Cortex-M cores
  *
@@ -89,6 +89,7 @@ arm_status arm_convolve_s8(const cmsis_nn_context* ctx,
     for (i_batch = 0; i_batch < input_batches; i_batch++)
     {
 #if defined(ARM_MATH_MVEI)
+        (void)bias_dims;
         /* Generate upto four columns from the input tensor a GEMM computation */
         q7_t *im2col_buf = (q7_t *)buffer_a;
         q7_t *out = output_data;
@@ -139,8 +140,10 @@ arm_status arm_convolve_s8(const cmsis_nn_context* ctx,
 
                         int32x4_t res = vldrwq_s32(acc);
                         s_offset = vmulq_n_s32(s_offset, input_offset);
-
-                        res = vaddq_n_s32(res, bias_data[i_out_ch]);
+                        if (bias_data)
+                        {
+                            res = vaddq_n_s32(res, bias_data[i_out_ch]);
+                        }
                         res = vaddq_s32(res, s_offset);
                         res = arm_requantize_mve(res, output_mult[i_out_ch], output_shift[i_out_ch]);
                         res = vaddq_n_s32(res, out_offset);
@@ -198,6 +201,7 @@ arm_status arm_convolve_s8(const cmsis_nn_context* ctx,
         }
 
 #elif defined(ARM_MATH_DSP)
+        (void)bias_dims;
         int32_t i_out_y, i_out_x, i_ker_y, i_ker_x;
 
         /* Generate two columns from the input tensor a GEMM computation */
@@ -258,7 +262,11 @@ arm_status arm_convolve_s8(const cmsis_nn_context* ctx,
             for (i = 0; i < output_ch; i++)
             {
                 /* Load the accumulator with bias first */
-                q31_t sum = bias_data[i];
+                q31_t sum = 0;
+                if (bias_data)
+                {
+                    sum = bias_data[i];
+                }
 
                 /* Point to the beginning of the im2col buffer where the input is available as a rearranged column */
                 const q15_t *ip_as_col = buffer_a;
@@ -309,7 +317,7 @@ arm_status arm_convolve_s8(const cmsis_nn_context* ctx,
             {
                 for (i_out_x = 0; i_out_x < output_x; i_out_x++)
                 {
-                    conv_out = bias_data[i_out_ch];
+                    conv_out = 0;
 
                     const int32_t base_idx_y = stride_y * i_out_y - pad_y;
                     const int32_t base_idx_x = stride_x * i_out_x - pad_x;
@@ -335,6 +343,10 @@ arm_status arm_convolve_s8(const cmsis_nn_context* ctx,
                             }
                         }
                     }
+                    if (bias_data)
+                    {
+                        conv_out += bias_data[i_out_ch];
+                    }
                     conv_out = arm_nn_requantize(conv_out, output_mult[i_out_ch], output_shift[i_out_ch]);
                     conv_out += out_offset;
                     conv_out = MAX(conv_out, out_activation_min);
@@ -357,7 +369,7 @@ int32_t arm_convolve_s8_get_buffer_size(const cmsis_nn_dims* input_dims,
                                         const cmsis_nn_dims* filter_dims)
 {
 #if defined(ARM_MATH_DSP)
-    return (2 * input_dims->c * filter_dims->w * filter_dims->h) * sizeof(int16_t);
+    return (2 * input_dims->c * filter_dims->w * filter_dims->h) * (int32_t)sizeof(int16_t);
 #else
     (void)input_dims;
     (void)filter_dims;

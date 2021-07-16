@@ -82,7 +82,7 @@ usb_device_audio_entities_struct_t g_UsbDeviceAudioEntities = {
 
 /* Audio generator control interface information */
 usb_device_interface_struct_t g_UsbDeviceAudioControInterface[] = {{
-    0U,
+    USB_AUDIO_GENERATOR_CONTROL_INTERFACE_ALTERNATE_0,
     {
         USB_AUDIO_CONTROL_ENDPOINT_COUNT,
         g_UsbDeviceAudioControlEndpoints,
@@ -93,7 +93,7 @@ usb_device_interface_struct_t g_UsbDeviceAudioControInterface[] = {{
 /* Audio generator stream interface information */
 usb_device_interface_struct_t g_UsbDeviceAudioStreamInterface[] = {
     {
-        0U,
+        USB_AUDIO_GENERATOR_STREAM_INTERFACE_ALTERNATE_0,
         {
             0U,
             NULL,
@@ -101,7 +101,7 @@ usb_device_interface_struct_t g_UsbDeviceAudioStreamInterface[] = {
         NULL,
     },
     {
-        1U,
+        USB_AUDIO_GENERATOR_STREAM_INTERFACE_ALTERNATE_1,
         {
             USB_AUDIO_STREAM_ENDPOINT_COUNT,
             g_UsbDeviceAudioGeneratorEndpoints,
@@ -217,8 +217,8 @@ uint8_t g_UsbDeviceConfigurationDescriptor[] = {
 
     USB_DESCRIPTOR_LENGTH_INTERFACE, /* Size of the descriptor, in bytes  */
     USB_DESCRIPTOR_TYPE_INTERFACE,   /* INTERFACE Descriptor Type   */
-    0x00U,                           /* The number of this interface is 0 */
-    0x00U,                           /* The value used to select the alternate setting for this interface is 0   */
+    USB_AUDIO_CONTROL_INTERFACE_INDEX, /* The number of this interface is 0 */
+    USB_AUDIO_GENERATOR_CONTROL_INTERFACE_ALTERNATE_0, /* The value used to select the alternate setting for this interface is 0   */
     0x00U,                     /* The number of endpoints used by this interface is 0 (excluding endpoint zero)   */
     USB_AUDIO_CLASS,           /* The interface implements the Audio Interface class   */
     USB_SUBCLASS_AUDIOCONTROL, /* The interface implements the AUDIOCONTROL Subclass  */
@@ -327,7 +327,7 @@ uint8_t g_UsbDeviceConfigurationDescriptor[] = {
     USB_DESCRIPTOR_LENGTH_INTERFACE,  /* Descriptor size is 9 bytes  */
     USB_DESCRIPTOR_TYPE_INTERFACE,    /* INTERFACE Descriptor Type   */
     USB_AUDIO_STREAM_INTERFACE_INDEX, /* The number of this interface is 1.  */
-    0x00U,                            /* The value used to select the alternate setting for this interface is 0   */
+    USB_AUDIO_GENERATOR_STREAM_INTERFACE_ALTERNATE_0, /* The value used to select the alternate setting for this interface is 0   */
     0x00U,                    /* The number of endpoints used by this interface is 0 (excluding endpoint zero)   */
     USB_AUDIO_CLASS,          /* The interface implements the Audio Interface class  */
     USB_SUBCLASS_AUDIOSTREAM, /* The interface implements the AUDIOSTREAMING Subclass  */
@@ -338,7 +338,7 @@ uint8_t g_UsbDeviceConfigurationDescriptor[] = {
     USB_DESCRIPTOR_LENGTH_INTERFACE,  /* Descriptor size is 9 bytes  */
     USB_DESCRIPTOR_TYPE_INTERFACE,    /* INTERFACE Descriptor Type  */
     USB_AUDIO_STREAM_INTERFACE_INDEX, /*The number of this interface is 1.  */
-    0x01U,                            /* The value used to select the alternate setting for this interface is 1  */
+    USB_AUDIO_GENERATOR_STREAM_INTERFACE_ALTERNATE_1, /* The value used to select the alternate setting for this interface is 1  */
     0x01U,                    /* The number of endpoints used by this interface is 1 (excluding endpoint zero)    */
     USB_AUDIO_CLASS,          /* The interface implements the Audio Interface class  */
     USB_SUBCLASS_AUDIOSTREAM, /* The interface implements the AUDIOSTREAMING Subclass  */
@@ -438,7 +438,7 @@ uint8_t g_UsbDeviceConfigurationDescriptor[] = {
     USB_DESCRIPTOR_LENGTH_INTERFACE,   /* Size of this descriptor in bytes */
     USB_DESCRIPTOR_TYPE_INTERFACE,     /* INTERFACE Descriptor Type */
     USB_AUDIO_CONTROL_INTERFACE_INDEX, /* Number of this interface. */
-    0x00U,                             /* Value used to select this alternate setting
+    USB_AUDIO_GENERATOR_CONTROL_INTERFACE_ALTERNATE_0, /* Value used to select this alternate setting
                                           for the interface identified in the prior field */
     0x01U,                             /* Number of endpoints used by this
                                           interface (excluding endpoint zero). */
@@ -511,7 +511,7 @@ uint8_t g_UsbDeviceConfigurationDescriptor[] = {
     USB_DESCRIPTOR_LENGTH_INTERFACE,  /* Descriptor size is 9 bytes  */
     USB_DESCRIPTOR_TYPE_INTERFACE,    /* INTERFACE Descriptor Type   */
     USB_AUDIO_STREAM_INTERFACE_INDEX, /* The number of this interface is 1.  */
-    0x00U,                            /* The value used to select the alternate setting for this interface is 0   */
+    USB_AUDIO_GENERATOR_STREAM_INTERFACE_ALTERNATE_0, /* The value used to select the alternate setting for this interface is 0   */
     0x00U,                    /* The number of endpoints used by this interface is 0 (excluding endpoint zero)   */
     USB_AUDIO_CLASS,          /* The interface implements the Audio Interface class   */
     USB_SUBCLASS_AUDIOSTREAM, /* The interface implements the AUDIOSTREAMING Subclass   */
@@ -522,7 +522,7 @@ uint8_t g_UsbDeviceConfigurationDescriptor[] = {
     USB_DESCRIPTOR_LENGTH_INTERFACE,  /* Descriptor size is 9 bytes  */
     USB_DESCRIPTOR_TYPE_INTERFACE,    /* INTERFACE Descriptor Type  */
     USB_AUDIO_STREAM_INTERFACE_INDEX, /*The number of this interface is 1.  */
-    0x01U,                            /* The value used to select the alternate setting for this interface is 1  */
+    USB_AUDIO_GENERATOR_STREAM_INTERFACE_ALTERNATE_1, /* The value used to select the alternate setting for this interface is 1  */
     0x01U,                    /* The number of endpoints used by this interface is 1 (excluding endpoint zero)    */
     USB_AUDIO_CLASS,          /* The interface implements the Audio Interface class   */
     USB_SUBCLASS_AUDIOSTREAM, /* The interface implements the AUDIOSTREAMING Subclass   */

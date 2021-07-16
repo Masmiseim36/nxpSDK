@@ -116,6 +116,14 @@ var pmsm_evk_imxrt1060 = {
     title   :   "PMSM  Control using evk-imxrt1060",
 }
 
+var pmsm_evkb_imxrt1060 = {
+    title   :   "PMSM  Control using evkb-imxrt1060",
+}
+
+var pmsm_evk_imxrt1064 = {
+    title   :   "PMSM  Control using evk-imxrt1064",
+}
+
 var pmsm_evk_imxrt1024 = {
     title   :   "PMSM  Control using evk-imxrt1024",
 }
@@ -241,6 +249,12 @@ function AppIdenInit()
         break;
 	case "pmsm_evk-imxrt1060":
         document.getElementById("title").innerHTML = pmsm_evk_imxrt1060.title;
+        break;
+	case "pmsm_evkb-imxrt1060":
+        document.getElementById("title").innerHTML = pmsm_evkb_imxrt1060.title;
+        break;
+	case "pmsm_evk-imxrt1064":
+        document.getElementById("title").innerHTML = pmsm_evk_imxrt1064.title;
         break;
 	case "pmsm_evk-lpc55s69":
         document.getElementById("title").innerHTML = pmsm_evk_lpc55s69.title;

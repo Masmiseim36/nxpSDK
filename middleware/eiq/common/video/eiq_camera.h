@@ -16,18 +16,35 @@ extern "C" {
 #include "eiq_camera_conf.h"
 #include "eiq_display_conf.h"
 #include "stdbool.h"
+
+/*!
+ * @addtogroup eiq_camera
+ * @{
+ */
+
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
 
-/*! @brief Image structure */
+/*! @brief Camera structure. */
 typedef struct
 {
-  EIQ_IUi_t base;
-  void (*setReadyCallback)(EIQ_IBufferAddrUpdater_t updater);
+    EIQ_IUi_t base;
+    void (*setReadyCallback)(EIQ_IBufferAddrUpdater_t updater);
 } EIQ_Camera_t;
 
-EIQ_Camera_t* EIQ_CameraInit();
+/*******************************************************************************
+ * API
+ ******************************************************************************/
+
+/*!
+ * @brief Initializes camera.
+ *
+ * This function initializes camera.
+ *
+ * @return pointer to initialized camera instance.
+ */
+EIQ_Camera_t* EIQ_InitCamera(void);
 
 #if defined(__cplusplus)
 }

@@ -10,33 +10,28 @@
  *  All rights reserved.
  */
 
+#ifndef _H_SCO_AUDIO_PL_
+#define _H_SCO_AUDIO_PL_
+
 /* --------------------------------------------- Header File Inclusion */
 #include "BT_common.h"
 #include "BT_hci_api.h"
 
-#ifndef _H_SCO_AUDIO_PL_
-#define _H_SCO_AUDIO_PL_
-
 /* --------------------------------------------- Global Definitions */
 /* mSBC defines */
-#define MSBC_ENCODER_INPUT_FRAME_LEN     240
-#define MSBC_ENCODER_OUTPUT_FRAME_LEN    57
+#define MSBC_ENCODER_INPUT_FRAME_LEN     240U
+#define MSBC_ENCODER_OUTPUT_FRAME_LEN    57U
 
 #define MSBC_DECODER_INPUT_FRAME_LEN     MSBC_ENCODER_OUTPUT_FRAME_LEN
 #define MSBC_DECODER_OUTPUT_FRAME_LEN    MSBC_ENCODER_INPUT_FRAME_LEN
 
 /* SCO H2 SYNC Header */
-#define SCO_H2_SYNC_HDR              0x0801
+#define SCO_H2_SYNC_HDR                  0x0801U
 
 /* --------------------------------------------- Structures/Data Types */
 /* SCO Audio EndPoint information information structure */
 typedef struct _SCO_AUDIO_EP_INFO
 {
-    /**
-     * Vendor Configuration
-     */
-    UCHAR vendor_config;
-
     /**
      * No. of channels
      */
@@ -94,6 +89,7 @@ API_RESULT sco_audio_stop_pl (void);
 void sco_audio_set_wideband_pl (UCHAR enable);
 
 void sco_audio_play_ringtone_pl (void);
+void sco_audio_play_outgoing_ringtone_pl (void);
 void sco_audio_set_speaker_volume_pl (UCHAR value);
 void sco_audio_set_microphone_gain_pl (UCHAR value);
 void sco_audio_play_ringtone_exit_pl (void);

@@ -29,8 +29,8 @@ extern "C" {
 #define LV_RADIUS_CIRCLE (0x7FFF) /**< A very big radius to always draw as circle*/
 LV_EXPORT_CONST_INT(LV_RADIUS_CIRCLE);
 
-#define LV_DEBUG_STYLE_SENTINEL_VALUE       0x2288AAEE
-#define LV_DEBUG_STYLE_LIST_SENTINEL_VALUE  0x9977CCBB
+#define LV_DEBUG_STYLE_SENTINEL_VALUE      0x2288AAEE
+#define LV_DEBUG_STYLE_LIST_SENTINEL_VALUE 0x9977CCBB
 
 #define LV_STYLE_PROP_INIT(name, group, id, attr)  name = (((group << 4) + id) | ((attr) << 8))
 
@@ -39,7 +39,7 @@ LV_EXPORT_CONST_INT(LV_RADIUS_CIRCLE);
 #define LV_STYLE_ATTR_NONE          0
 #define LV_STYLE_ATTR_INHERIT       (1 << 7)
 
-#define _LV_STYLE_CLOSEING_PROP     0xFF
+#define _LV_STYLE_CLOSING_PROP     0xFF
 
 #define LV_STYLE_TRANS_NUM_MAX      6
 
@@ -159,14 +159,15 @@ enum {
     LV_STYLE_PROP_INIT(LV_STYLE_VALUE_FONT,          0x7, LV_STYLE_ID_PTR   + 0, LV_STYLE_ATTR_NONE),
     LV_STYLE_PROP_INIT(LV_STYLE_VALUE_STR,           0x7, LV_STYLE_ID_PTR   + 1, LV_STYLE_ATTR_NONE),
 
-    LV_STYLE_PROP_INIT(LV_STYLE_TEXT_LETTER_SPACE,  0x8, LV_STYLE_ID_VALUE + 0, LV_STYLE_ATTR_INHERIT),
-    LV_STYLE_PROP_INIT(LV_STYLE_TEXT_LINE_SPACE,    0x8, LV_STYLE_ID_VALUE + 1, LV_STYLE_ATTR_INHERIT),
-    LV_STYLE_PROP_INIT(LV_STYLE_TEXT_DECOR,         0x8, LV_STYLE_ID_VALUE + 2, LV_STYLE_ATTR_INHERIT),
-    LV_STYLE_PROP_INIT(LV_STYLE_TEXT_BLEND_MODE,    0x8, LV_STYLE_ID_VALUE + 3, LV_STYLE_ATTR_INHERIT),
-    LV_STYLE_PROP_INIT(LV_STYLE_TEXT_COLOR,         0x8, LV_STYLE_ID_COLOR + 0, LV_STYLE_ATTR_INHERIT),
-    LV_STYLE_PROP_INIT(LV_STYLE_TEXT_SEL_COLOR,     0x8, LV_STYLE_ID_COLOR + 1, LV_STYLE_ATTR_INHERIT),
-    LV_STYLE_PROP_INIT(LV_STYLE_TEXT_OPA,           0x8, LV_STYLE_ID_OPA   + 0, LV_STYLE_ATTR_INHERIT),
-    LV_STYLE_PROP_INIT(LV_STYLE_TEXT_FONT,          0x8, LV_STYLE_ID_PTR   + 0, LV_STYLE_ATTR_INHERIT),
+    LV_STYLE_PROP_INIT(LV_STYLE_TEXT_LETTER_SPACE,   0x8, LV_STYLE_ID_VALUE + 0, LV_STYLE_ATTR_INHERIT),
+    LV_STYLE_PROP_INIT(LV_STYLE_TEXT_LINE_SPACE,     0x8, LV_STYLE_ID_VALUE + 1, LV_STYLE_ATTR_INHERIT),
+    LV_STYLE_PROP_INIT(LV_STYLE_TEXT_DECOR,          0x8, LV_STYLE_ID_VALUE + 2, LV_STYLE_ATTR_INHERIT),
+    LV_STYLE_PROP_INIT(LV_STYLE_TEXT_BLEND_MODE,     0x8, LV_STYLE_ID_VALUE + 3, LV_STYLE_ATTR_INHERIT),
+    LV_STYLE_PROP_INIT(LV_STYLE_TEXT_COLOR,          0x8, LV_STYLE_ID_COLOR + 0, LV_STYLE_ATTR_INHERIT),
+    LV_STYLE_PROP_INIT(LV_STYLE_TEXT_SEL_COLOR,      0x8, LV_STYLE_ID_COLOR + 1, LV_STYLE_ATTR_INHERIT),
+    LV_STYLE_PROP_INIT(LV_STYLE_TEXT_SEL_BG_COLOR,   0x8, LV_STYLE_ID_COLOR + 2, LV_STYLE_ATTR_INHERIT),
+    LV_STYLE_PROP_INIT(LV_STYLE_TEXT_OPA,            0x8, LV_STYLE_ID_OPA   + 0, LV_STYLE_ATTR_INHERIT),
+    LV_STYLE_PROP_INIT(LV_STYLE_TEXT_FONT,           0x8, LV_STYLE_ID_PTR   + 0, LV_STYLE_ATTR_INHERIT),
 
     LV_STYLE_PROP_INIT(LV_STYLE_LINE_WIDTH,         0x9, LV_STYLE_ID_VALUE + 0, LV_STYLE_ATTR_NONE),
     LV_STYLE_PROP_INIT(LV_STYLE_LINE_BLEND_MODE,    0x9, LV_STYLE_ID_VALUE + 1, LV_STYLE_ATTR_NONE),
@@ -234,10 +235,10 @@ typedef struct {
     uint32_t clip_corner_off       : 1;
     uint32_t transform_all_zero  : 1;
     uint32_t pad_all_zero : 1;
+    uint32_t margin_all_zero : 1;
     uint32_t blend_mode_all_normal : 1;
     uint32_t bg_opa_transp : 1;
     uint32_t bg_opa_cover : 1;
-    uint32_t bg_grad_dir_none : 1;
 
     uint32_t border_width_zero : 1;
     uint32_t border_side_full : 1;
@@ -286,7 +287,7 @@ void lv_style_list_copy(lv_style_list_t * list_dest, const lv_style_list_t * lis
 
 /**
  * Add a style to a style list.
- * Only the the style pointer will be saved so the shouldn't be a local variable.
+ * Only the style pointer will be saved so the shouldn't be a local variable.
  * (It should be static, global or dynamically allocated)
  * @param list pointer to a style list
  * @param style pointer to a style to add
@@ -337,7 +338,7 @@ void lv_style_copy(lv_style_t * dest, const lv_style_t * src);
 /**
  * Remove a property from a style
  * @param style pointer to a style
- * @param prop  a style property ORed with a state.
+ * @param prop a style property ORed with a state.
  * E.g. `LV_STYLE_BORDER_WIDTH | (LV_STATE_PRESSED << LV_STYLE_STATE_POS)`
  * @return true: the property was found and removed; false: the property wasn't found
  */
@@ -538,7 +539,6 @@ lv_res_t _lv_style_list_get_int(lv_style_list_t * list, lv_style_property_t prop
  */
 lv_res_t _lv_style_list_get_color(lv_style_list_t * list, lv_style_property_t prop, lv_color_t * res);
 
-
 /**
  * Get an opacity typed property from a style list.
  * It will return the property which match best with given state.
@@ -598,8 +598,6 @@ bool lv_debug_check_style_list(const lv_style_list_t * list);
  */
 #define LV_STYLE_CREATE(name, copy_p) static lv_style_t name; lv_style_init(&name); lv_style_copy(&name, copy_p);
 
-
-
 #if LV_USE_DEBUG
 
 # ifndef LV_DEBUG_IS_STYLE
@@ -618,13 +616,13 @@ bool lv_debug_check_style_list(const lv_style_list_t * list);
 #   define LV_ASSERT_STYLE_LIST(list_p) LV_DEBUG_ASSERT(LV_DEBUG_IS_STYLE_LIST(list_p), "Invalid style list", list_p);
 #  endif
 # else
-#   define LV_ASSERT_STYLE(style_p) true
-#   define LV_ASSERT_STYLE_LIST(list_p) true
+#   define LV_ASSERT_STYLE(style_p)
+#   define LV_ASSERT_STYLE_LIST(list_p)
 # endif
 
 #else
-# define LV_ASSERT_STYLE(p) true
-# define LV_ASSERT_STYLE_LIST(p) true
+# define LV_ASSERT_STYLE(p)
+# define LV_ASSERT_STYLE_LIST(p)
 #endif
 
 #ifdef __cplusplus

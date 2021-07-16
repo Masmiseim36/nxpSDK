@@ -1,0 +1,133 @@
+#!/usr/bin/env python3
+#
+# Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+#
+# Licensed under the Apache License, Version 2.0 (the "License").
+# You may not use this file except in compliance with the License.
+# A copy of the License is located at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# or in the "license" file accompanying this file. This file is distributed
+# on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+# express or implied. See the License for the specific language governing
+# permissions and limitations under the License.
+
+
+import asyncio
+import datetime
+import logging
+import os
+import math
+import pathlib
+import shutil
+import sys
+import uuid
+
+
+TEST_DIR = "tests"
+
+
+def print_result(counter):
+    print(
+        "\rpass: {succ:{width}}, fail: {fail:{width}}, "
+        "complete: {complete:{width}}, "
+        "total: {total:{width}}".format(**counter), end="")
+    sys.stdout.flush()
+
+
+def evaluate_result(test, proc, counter):
+    def success(counter):
+        counter["succ"] += 1
+        counter["succs"].append(test)
+    def fail(counter):
+        counter["fail"] += 1
+        counter["fails"].append(test)
+    if proc.returncode:
+        return fail(counter)
+
+    return success(counter)
+
+
+async def run_test(test, timestamp, counter):
+    print_result(counter)
+    (test / "logs").mkdir(exist_ok=True)
+
+    out_dir = test / "output"
+    litani = pathlib.Path(__file__).resolve().parent.parent / "litani"
+
+    try:
+        shutil.rmtree(out_dir)
+    except FileNotFoundError:
+        pass
+
+    env = dict(os.environ)
+    env.update({
+        "OUT_DIR": str(out_dir.resolve()),
+        "LITANI": str(litani),
+    })
+
+    proc = await asyncio.create_subprocess_exec(
+        "./litani-test.sh", cwd=test, stdout=asyncio.subprocess.PIPE,
+        stderr=asyncio.subprocess.STDOUT, env=env)
+    stdout, _ = await proc.communicate()
+    stdout = stdout.decode("utf-8")
+
+    log_file = (test / "logs" / ("%s.txt" % timestamp)).resolve()
+    with open(log_file, "w") as handle:
+        print(stdout, file=handle)
+    tmp_link = test / "logs" / ("latest-%s" % uuid.uuid4())
+    os.symlink(log_file, tmp_link)
+    os.rename(tmp_link, test / "logs" / "latest")
+    counter["complete"] += 1
+    print_result(counter)
+    evaluate_result(test, proc, counter)
+
+
+async def main():
+    logging.basicConfig(
+        level=logging.INFO, format="litani-test: %(message)s")
+
+    try:
+        # pylint: disable=unused-import
+        import voluptuous
+    except ImportError:
+        logging.error(
+            "The 'voluptuous' module is required for validating test "
+            "results; please install it using pip or your system package "
+            "manager.")
+        sys.exit(1)
+
+    stamp = datetime.datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%SZ")
+
+    n_tests = len(os.listdir(TEST_DIR))
+    if not n_tests:
+        logging.error("No tests found inside %s", TEST_DIR)
+        sys.exit(1)
+
+    counter = {
+        "total": n_tests,
+        "complete": 0,
+        "succ": 0,
+        "fail": 0,
+        "succs": [],
+        "fails": [],
+        "width": int(math.log10(n_tests)) + 1,
+    }
+    tests = [
+        run_test(pathlib.Path(TEST_DIR) / test, stamp, counter)
+        for test in os.listdir(TEST_DIR)
+    ]
+    await asyncio.gather(*tests)
+    print_result(counter)
+    print()
+
+    if counter["fail"]:
+        logging.error("Fails: %s", ", ".join(
+            [str(f) for f in counter["fails"]]))
+
+    sys.exit(1 if counter["fail"] else 0)
+
+
+if __name__ == "__main__":
+    asyncio.run(main())

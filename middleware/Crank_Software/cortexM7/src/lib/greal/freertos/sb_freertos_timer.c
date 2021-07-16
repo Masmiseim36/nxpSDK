@@ -9,6 +9,8 @@
 #include <FreeRTOS.h>
 #include <timers.h>
 
+#ifdef _GREAL_PLATFORM_TIMER
+
 struct _greal_timer_struct {
 	TimerHandle_t 	timerID;					///< Timer ID of the system timer 
 	void 			(*callback)(void *data);	///< Callback to fire when the timer fires 
@@ -71,11 +73,11 @@ greal_timer_set_timeout(greal_timer_struct_t *handle, greal_timespec_t fire_time
 	fire_ms = greal_timespec_to_ms(&fire_time);
 	
     /* limit wait_ms to positive numbers */
-    if(fire_ms < current_ms) { 
-         wait_ms = 1;
-    } else {
-         wait_ms = fire_ms - current_ms; 
-    }	
+	if(fire_ms < current_ms) { 
+	    wait_ms = 1;
+	} else {
+		wait_ms = fire_ms - current_ms; 
+	}	
 	
 	/**
 	 * The FreeRTOS port can't accept a wait time of 0 ticks, so a value has to be passed in.  The callback can't be called from here because the 
@@ -110,3 +112,5 @@ greal_timer_destroy(greal_timer_struct_t *handle) {
 	handle->data = NULL; 
 	greal_free(handle);
 }
+
+#endif //_GREAL_PLATFORM_TIMER

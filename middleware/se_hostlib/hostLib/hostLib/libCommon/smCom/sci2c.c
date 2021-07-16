@@ -3,15 +3,9 @@
  * @author NXP Semiconductors
  * @version 1.0
  * @par License
- * Copyright 2016,2020 NXP
  *
- * This software is owned or controlled by NXP and may only be used
- * strictly in accordance with the applicable license terms.  By expressly
- * accepting such terms or by downloading, installing, activating and/or
- * otherwise using the software, you are agreeing that you have read, and
- * that you agree to comply with and are bound by, such license terms.  If
- * you do not agree to be bound by the applicable license terms, then you
- * may not retain, install, activate or otherwise use the software.
+ * Copyright 2016,2020 NXP
+ * SPDX-License-Identifier: Apache-2.0
  *
  * @par Description
  * This file implements the SCI2C Protocol Specification.
@@ -343,10 +337,10 @@ static eSci2c_Error_t sci2c_ReadAnswerToReset(void* conn_ctx, U8 * pAtrResponse,
       return eSci2c_Error;
    }
 
-   /* strip the 1st (=length) and 2nd (=PCB) byte */
-   nrRead -= 2;
-   if (nrRead > 0)
+   if (nrRead > 2)
    {
+      /* strip the 1st (=length) and 2nd (=PCB) byte */
+      nrRead -= 2;
       memmove(pAtrResponse, pAtrResponse + 2, nrRead);
       memset(&pAtrResponse[nrRead + 1], 0x00, 2); // clear the data in memory after copying
    }
@@ -569,7 +563,7 @@ static U16 sci2c_SlaveToMasterDataTx(void* conn_ctx, tSCI2C_Data_t * pSCI2C)
                    /* The slave is not busy, check the more bit */
                   nack_count = 0;
                   moreBitSet = (pRx[1] & (0x1 << 7)) >> 7;
-                  if (nrRead -2  > 0)
+                  if (nrRead > 2)
                   {
                     memcpy(&pSCI2C->pBuf[alreadyParsed], &pRx[2], nrRead-2 );
                     alreadyParsed += (nrRead -2);

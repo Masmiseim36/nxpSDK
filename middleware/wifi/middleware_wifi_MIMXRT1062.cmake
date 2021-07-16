@@ -1,31 +1,29 @@
-if(NOT MIDDLEWARE_WIFI_MIMXRT1062_INCLUDED)
-    
-    set(MIDDLEWARE_WIFI_MIMXRT1062_INCLUDED true CACHE BOOL "middleware_wifi component is included.")
+include_guard(GLOBAL)
+message("middleware_wifi component is included.")
 
-    target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
-        ${CMAKE_CURRENT_LIST_DIR}/dhcpd/dhcp-server-main.c
-        ${CMAKE_CURRENT_LIST_DIR}/dhcpd/dhcp-server.c
-        ${CMAKE_CURRENT_LIST_DIR}/dhcpd/dns-server.c
-        ${CMAKE_CURRENT_LIST_DIR}/port/lwip/net.c
-        ${CMAKE_CURRENT_LIST_DIR}/port/lwip/wifi_netif.c
-        ${CMAKE_CURRENT_LIST_DIR}/wlcmgr/wlan.c
-        ${CMAKE_CURRENT_LIST_DIR}/wlcmgr/wlan_txpwrlimit_cfg.c
-    )
-
-
-    target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
-        ${CMAKE_CURRENT_LIST_DIR}/dhcpd
-        ${CMAKE_CURRENT_LIST_DIR}/incl/port/lwip
-        ${CMAKE_CURRENT_LIST_DIR}/port/lwip
-    )
+target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
+    ${CMAKE_CURRENT_LIST_DIR}/dhcpd/dhcp-server-main.c
+    ${CMAKE_CURRENT_LIST_DIR}/dhcpd/dhcp-server.c
+    ${CMAKE_CURRENT_LIST_DIR}/dhcpd/dns-server.c
+    ${CMAKE_CURRENT_LIST_DIR}/port/lwip/net.c
+    ${CMAKE_CURRENT_LIST_DIR}/port/lwip/wifi_netif.c
+    ${CMAKE_CURRENT_LIST_DIR}/wlcmgr/wlan.c
+    ${CMAKE_CURRENT_LIST_DIR}/wlcmgr/wlan_txpwrlimit_cfg.c
+)
 
 
-    include(middleware_freertos-kernel_MIMXRT1062)
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
+    ${CMAKE_CURRENT_LIST_DIR}/dhcpd
+    ${CMAKE_CURRENT_LIST_DIR}/incl/port/lwip
+    ${CMAKE_CURRENT_LIST_DIR}/port/lwip
+)
 
-    include(middleware_sdmmc_sdio_MIMXRT1062)
 
-    include(utility_debug_console_MIMXRT1062)
+include(middleware_freertos-kernel_MIMXRT1062)
 
-    include(middleware_wifi_wifidriver_MIMXRT1062)
+include(middleware_sdmmc_sdio_MIMXRT1062)
 
-endif()
+include(utility_debug_console_MIMXRT1062)
+
+include(middleware_wifi_wifidriver_MIMXRT1062)
+

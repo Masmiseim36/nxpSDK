@@ -68,6 +68,15 @@ typedef enum
  *  SPP Handle
  */
 typedef UINT32 SPP_HANDLE;
+/** \} */
+/** \} */
+
+/**
+ *  \defgroup spp_cb Application Callback
+ *  \{
+ *  This Section Describes the module Notification Callback interface offered
+ *  to the application
+ */
 
 /**
  * \brief Application should register a callback through the API BT_spp_init.
@@ -93,9 +102,8 @@ typedef API_RESULT (* SPP_APPL_EVENT_NOTIFY_CB)
                        /* IN */  void     * data,          /* Event Data */
                        /* IN */  UINT16     len            /* Event Data Size */
                    );
+/** \} */
 
-/** \} */
-/** \} */
 /* ----------------------------------------------- Macros */
 
 

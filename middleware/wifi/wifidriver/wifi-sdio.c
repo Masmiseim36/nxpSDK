@@ -2,7 +2,7 @@
  *
  *  @brief  This file provides WLAN Card related API
  *
- *  Copyright 2008-2020 NXP
+ *  Copyright 2008-2021 NXP
  *
  *  NXP CONFIDENTIAL
  *  The source code contained or described herein and all documents related to
@@ -90,11 +90,6 @@ typedef MLAN_PACK_START struct
     t_u16 pkttype;
     HostCmd_DS_COMMAND hostcmd;
 } MLAN_PACK_END SDIOPkt;
-
-/*! @brief Data block count accessed in card */
-#define DATA_BLOCK_COUNT (4U)
-/*! @brief Data buffer size. */
-#define DATA_BUFFER_SIZE (FSL_SDMMC_DEFAULT_BLOCK_SIZE * DATA_BLOCK_COUNT)
 
 /* @brief decription about the read/write buffer
  * The size of the read/write buffer should be a multiple of 512, since SDHC/SDXC card uses 512-byte fixed
@@ -185,13 +180,14 @@ int raw_process_pkt_hdrs(void *pbuf, t_u32 payloadlen, t_u8 interface)
  */
 /* SDIO  TxPD  PAYLOAD | 4 | 22 | payload | */
 
-/* we return the offset of the payload from the beginning of the buffer */
-int process_pkt_hdrs(void *pbuf, t_u32 payloadlen, t_u8 interface)
+void process_pkt_hdrs(void *pbuf, t_u32 payloadlen, t_u8 interface)
 {
     mlan_private *pmpriv = (mlan_private *)mlan_adap->priv[0];
     SDIOPkt *sdiohdr     = (SDIOPkt *)pbuf;
     TxPD *ptxpd          = (TxPD *)((uint8_t *)pbuf + INTF_HEADER_LEN);
-
+#ifdef CONFIG_WMM
+    t_u8 *data_ptr = (t_u8 *)pbuf;
+#endif
     ptxpd->bss_type      = interface;
     ptxpd->bss_num       = GET_BSS_NUM(pmpriv);
     ptxpd->tx_pkt_offset = 0x16; /* we'll just make this constant */
@@ -201,14 +197,20 @@ int process_pkt_hdrs(void *pbuf, t_u32 payloadlen, t_u8 interface)
         ptxpd->tx_pkt_offset = 0x14; /* Override for special frame */
         payloadlen -= ptxpd->tx_pkt_offset + INTF_HEADER_LEN;
     }
-    ptxpd->tx_control    = 0;
-    ptxpd->priority      = 0;
+    ptxpd->tx_control = 0;
+#ifdef CONFIG_WMM
+    t_u8 type_ip_offset = ptxpd->tx_pkt_offset + INTF_HEADER_LEN + MLAN_MAC_ADDR_LENGTH + MLAN_MAC_ADDR_LENGTH;
+    if (data_ptr[type_ip_offset] == 0x8 && data_ptr[type_ip_offset + 1] == 0x0)
+        ptxpd->priority = (data_ptr[type_ip_offset + 3] / 32);
+    else
+        ptxpd->priority = 0;
+#else
+    ptxpd->priority = 0;
+#endif
     ptxpd->flags         = 0;
     ptxpd->pkt_delay_2ms = 0;
 
     sdiohdr->size = payloadlen;
-
-    return ptxpd->tx_pkt_offset + INTF_HEADER_LEN;
 }
 
 static int wlan_card_fw_status(t_u16 *dat)
@@ -811,6 +813,32 @@ static int _wlan_set_cal_data()
     return true;
 }
 
+void wifi_prepare_reconfigure_tx_buf_cmd(HostCmd_DS_COMMAND *cmd, int seq_number);
+
+static int _wlan_reconfigure_tx_buffers()
+{
+    t_u32 tx_blocks = 4, buflen = MLAN_SDIO_BLOCK_SIZE;
+    uint32_t resp;
+
+    (void)memset(outbuf, 0, SDIO_OUTBUF_LEN);
+
+    /* sdiopkt = outbuf */
+    wifi_prepare_reconfigure_tx_buf_cmd(&sdiopkt->hostcmd, wlan_get_next_seq_num());
+    sdiopkt->pkttype = MLAN_TYPE_CMD;
+    sdiopkt->size    = sdiopkt->hostcmd.size + INTF_HEADER_LEN;
+
+    last_cmd_sent = HostCmd_CMD_RECONFIGURE_TX_BUFF;
+
+    /* send CMD53 to write the command to get mac address */
+#if defined(SD8801)
+    sdio_drv_write(mlan_adap->ioport, 1, tx_blocks, buflen, (t_u8 *)outbuf, &resp);
+#elif defined(SD8977) || defined(SD8978) || defined(SD8987) || defined(SD8997) || defined(SD9097) || defined(SD9098)
+    sdio_drv_write(mlan_adap->ioport | CMD_PORT_SLCT, 1, tx_blocks, buflen, (t_u8 *)outbuf, &resp);
+#endif
+
+    return true;
+}
+
 void wifi_prepare_get_mac_addr_cmd(void *cmd, int seq_number);
 void wifi_prepare_get_channel_region_cfg_cmd(HostCmd_DS_COMMAND *cmd, int seq_number);
 void wifi_prepare_get_hw_spec_cmd(HostCmd_DS_COMMAND *cmd, int seq_number);
@@ -1137,11 +1165,22 @@ static void wlan_fw_init_cfg()
 #endif
     if (cal_data_valid)
     {
+        PRINTF("Setting up new cal data\r\n");
         wifi_io_d("CMD : SET_CAL_DATA (0x8f)");
 
         _wlan_set_cal_data();
 
         while (last_resp_rcvd != HostCmd_CMD_CFG_DATA)
+        {
+            os_thread_sleep(os_msec_to_ticks(10));
+            wlan_process_int_status(mlan_adap);
+        }
+        /* When cal data set command is sent, fimrware looses alignment of SDIO Tx buffers.
+         * So we need to send reconfigure command. This can be removed if fix is added in firmware.
+         */
+        _wlan_reconfigure_tx_buffers();
+
+        while (last_resp_rcvd != HostCmd_CMD_RECONFIGURE_TX_BUFF)
         {
             os_thread_sleep(os_msec_to_ticks(10));
             wlan_process_int_status(mlan_adap);
@@ -1299,6 +1338,101 @@ uint8_t *wifi_get_sdio_outbuf(uint32_t *outbuf_len)
 }
 
 t_u16 get_mp_end_port(void);
+#ifdef CONFIG_WMM
+extern int retry_attempts;
+
+static int get_free_port(void)
+{
+    /* Check if the port is available */
+    if (!((1 << txportno) & mlan_adap->mp_wr_bitmap))
+    {
+#ifdef CONFIG_WIFI_IO_DEBUG
+        wifi_io_e(
+            "txportno out of sync txportno "
+            "= (%d) mp_wr_bitmap = (0x%x)",
+            txportno, mlan_adap->mp_wr_bitmap);
+#endif /* CONFIG_WIFI_IO_DEBUG */
+
+        return -WM_FAIL;
+    }
+    else
+    {
+        /* Mark the port number we will use */
+        mlan_adap->mp_wr_bitmap &= ~(1 << txportno);
+    }
+    return WM_SUCCESS;
+}
+
+mlan_status wlan_xmit_wmm_pkt(t_u8 interface, t_u32 txlen, t_u8 *tx_buf)
+{
+    t_u32 tx_blocks = 0, buflen = 0;
+    uint32_t resp;
+    int ret   = false;
+    int retry = retry_attempts;
+    wifi_io_info_d("OUT: i/f: %d len: %d", interface, tx_blocks * buflen);
+
+    calculate_sdio_write_params(txlen, &tx_blocks, &buflen);
+#ifdef CONFIG_WIFI_IO_DEBUG
+    (void)PRINTF("%s: txportno = %d mlan_adap->mp_wr_bitmap: %x\n\r", __func__, txportno, mlan_adap->mp_wr_bitmap);
+#endif /* CONFIG_WIFI_IO_DEBUG */
+retry_xmit:
+    wifi_sdio_lock();
+    ret = get_free_port();
+    if (ret == -WM_FAIL)
+    {
+        wifi_sdio_unlock();
+        if (!retry)
+        {
+            return MLAN_STATUS_FAILURE;
+        }
+        else
+        {
+            retry--;
+            /* Allow the other thread to run and hence
+             * update the write bitmap so that pkt
+             * can be sent to FW */
+            os_thread_sleep(1);
+            goto retry_xmit;
+        }
+    }
+    process_pkt_hdrs(tx_buf, txlen, interface);
+    /* send CMD53 */
+    ret = sdio_drv_write(mlan_adap->ioport + txportno, 1, tx_blocks, buflen, tx_buf, &resp);
+
+    txportno++;
+    if (txportno == mlan_adap->mp_end_port)
+    {
+#if defined(SD8801)
+        txportno = 1;
+#elif defined(SD8977) || defined(SD8978) || defined(SD8987) || defined(SD8997) || defined(SD9097) || defined(SD9098)
+        txportno = 0;
+#endif
+    }
+
+    if (ret == false)
+    {
+        wifi_io_e("sdio_drv_write failed (%d)", ret);
+#ifdef CONFIG_WIFI_FW_DEBUG
+        wifi_sdio_reg_dbg(NULL);
+        if (wm_wifi.wifi_usb_mount_cb != NULL)
+        {
+            ret = wm_wifi.wifi_usb_mount_cb();
+            if (ret == WM_SUCCESS)
+                wifi_dump_firmware_info(NULL);
+            else
+                wifi_e("USB mounting failed");
+        }
+        else
+            wifi_e("USB mount callback is not registered");
+#endif
+        wifi_sdio_unlock();
+        return MLAN_STATUS_FAILURE;
+    }
+
+    wifi_sdio_unlock();
+    return MLAN_STATUS_SUCCESS;
+}
+#endif
 mlan_status wlan_xmit_pkt(t_u32 txlen, t_u8 interface)
 {
     t_u32 tx_blocks = 0, buflen = 0;

@@ -182,7 +182,9 @@
           <name>CCDefines</name>
           <state>DEBUG</state>
           <state>CPU_MIMXRT1052DVL6B</state>
+          <state>SDK_DEBUGCONSOLE=1</state>
           <state>FLEXCAN_WAIT_TIMEOUT=1000</state>
+          <state>MCUXPRESSO_SDK</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -313,9 +315,8 @@
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/../mco_config/EDS</state>
           <state>$PROJ_DIR$/../mco_config</state>
-          <state>$PROJ_DIR$/../../mco_config</state>
-          <state>$PROJ_DIR$/../..</state>
           <state>$PROJ_DIR$/..</state>
+          <state>$PROJ_DIR$/../..</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../middleware/canopen/mco</state>
@@ -324,7 +325,7 @@
           <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/xip</state>
           <state>$PROJ_DIR$/../../../xip</state>
-          <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
+          <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -789,7 +790,7 @@
         </option>
         <option>
           <name>IlinkOverrideProgramEntryLabel</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>IlinkProgramEntryLabelSelect</name>
@@ -797,7 +798,7 @@
         </option>
         <option>
           <name>IlinkProgramEntryLabel</name>
-          <state>__iar_program_start</state>
+          <state>Reset_Handler</state>
         </option>
         <option>
           <name>DoFill</name>
@@ -1160,7 +1161,9 @@
           <state>XIP_EXTERNAL_FLASH=1</state>
           <state>XIP_BOOT_HEADER_ENABLE=1</state>
           <state>CPU_MIMXRT1052DVL6B</state>
+          <state>SDK_DEBUGCONSOLE=1</state>
           <state>FLEXCAN_WAIT_TIMEOUT=1000</state>
+          <state>MCUXPRESSO_SDK</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -1291,9 +1294,8 @@
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/../mco_config/EDS</state>
           <state>$PROJ_DIR$/../mco_config</state>
-          <state>$PROJ_DIR$/../../mco_config</state>
-          <state>$PROJ_DIR$/../..</state>
           <state>$PROJ_DIR$/..</state>
+          <state>$PROJ_DIR$/../..</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../middleware/canopen/mco</state>
@@ -1302,7 +1304,7 @@
           <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/xip</state>
           <state>$PROJ_DIR$/../../../xip</state>
-          <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
+          <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1767,7 +1769,7 @@
         </option>
         <option>
           <name>IlinkOverrideProgramEntryLabel</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>IlinkProgramEntryLabelSelect</name>
@@ -1775,7 +1777,7 @@
         </option>
         <option>
           <name>IlinkProgramEntryLabel</name>
-          <state>__iar_program_start</state>
+          <state>Reset_Handler</state>
         </option>
         <option>
           <name>DoFill</name>
@@ -2138,7 +2140,9 @@
           <state>DATA_SECTION_IS_CACHEABLE=1</state>
           <state>DEBUG</state>
           <state>CPU_MIMXRT1052DVL6B</state>
+          <state>SDK_DEBUGCONSOLE=1</state>
           <state>FLEXCAN_WAIT_TIMEOUT=1000</state>
+          <state>MCUXPRESSO_SDK</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -2269,9 +2273,8 @@
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/../mco_config/EDS</state>
           <state>$PROJ_DIR$/../mco_config</state>
-          <state>$PROJ_DIR$/../../mco_config</state>
-          <state>$PROJ_DIR$/../..</state>
           <state>$PROJ_DIR$/..</state>
+          <state>$PROJ_DIR$/../..</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../middleware/canopen/mco</state>
@@ -2280,7 +2283,7 @@
           <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/xip</state>
           <state>$PROJ_DIR$/../../../xip</state>
-          <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
+          <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -2745,7 +2748,7 @@
         </option>
         <option>
           <name>IlinkOverrideProgramEntryLabel</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>IlinkProgramEntryLabelSelect</name>
@@ -2753,7 +2756,7 @@
         </option>
         <option>
           <name>IlinkProgramEntryLabel</name>
-          <state>__iar_program_start</state>
+          <state>Reset_Handler</state>
         </option>
         <option>
           <name>DoFill</name>
@@ -3114,7 +3117,9 @@
           <name>CCDefines</name>
           <state>NDEBUG</state>
           <state>CPU_MIMXRT1052DVL6B</state>
+          <state>SDK_DEBUGCONSOLE=1</state>
           <state>FLEXCAN_WAIT_TIMEOUT=1000</state>
+          <state>MCUXPRESSO_SDK</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -3245,9 +3250,8 @@
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/../mco_config/EDS</state>
           <state>$PROJ_DIR$/../mco_config</state>
-          <state>$PROJ_DIR$/../../mco_config</state>
-          <state>$PROJ_DIR$/../..</state>
           <state>$PROJ_DIR$/..</state>
+          <state>$PROJ_DIR$/../..</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../middleware/canopen/mco</state>
@@ -3256,7 +3260,7 @@
           <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/xip</state>
           <state>$PROJ_DIR$/../../../xip</state>
-          <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
+          <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -3721,7 +3725,7 @@
         </option>
         <option>
           <name>IlinkOverrideProgramEntryLabel</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>IlinkProgramEntryLabelSelect</name>
@@ -3729,7 +3733,7 @@
         </option>
         <option>
           <name>IlinkProgramEntryLabel</name>
-          <state>__iar_program_start</state>
+          <state>Reset_Handler</state>
         </option>
         <option>
           <name>DoFill</name>
@@ -4092,7 +4096,9 @@
           <state>XIP_BOOT_HEADER_ENABLE=1</state>
           <state>NDEBUG</state>
           <state>CPU_MIMXRT1052DVL6B</state>
+          <state>SDK_DEBUGCONSOLE=1</state>
           <state>FLEXCAN_WAIT_TIMEOUT=1000</state>
+          <state>MCUXPRESSO_SDK</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -4223,9 +4229,8 @@
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/../mco_config/EDS</state>
           <state>$PROJ_DIR$/../mco_config</state>
-          <state>$PROJ_DIR$/../../mco_config</state>
-          <state>$PROJ_DIR$/../..</state>
           <state>$PROJ_DIR$/..</state>
+          <state>$PROJ_DIR$/../..</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../middleware/canopen/mco</state>
@@ -4234,7 +4239,7 @@
           <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/xip</state>
           <state>$PROJ_DIR$/../../../xip</state>
-          <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
+          <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -4699,7 +4704,7 @@
         </option>
         <option>
           <name>IlinkOverrideProgramEntryLabel</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>IlinkProgramEntryLabelSelect</name>
@@ -4707,7 +4712,7 @@
         </option>
         <option>
           <name>IlinkProgramEntryLabel</name>
-          <state>__iar_program_start</state>
+          <state>Reset_Handler</state>
         </option>
         <option>
           <name>DoFill</name>
@@ -5070,7 +5075,9 @@
           <state>SKIP_SYSCLK_INIT</state>
           <state>DATA_SECTION_IS_CACHEABLE=1</state>
           <state>CPU_MIMXRT1052DVL6B</state>
+          <state>SDK_DEBUGCONSOLE=1</state>
           <state>FLEXCAN_WAIT_TIMEOUT=1000</state>
+          <state>MCUXPRESSO_SDK</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -5201,9 +5208,8 @@
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/../mco_config/EDS</state>
           <state>$PROJ_DIR$/../mco_config</state>
-          <state>$PROJ_DIR$/../../mco_config</state>
-          <state>$PROJ_DIR$/../..</state>
           <state>$PROJ_DIR$/..</state>
+          <state>$PROJ_DIR$/../..</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../middleware/canopen/mco</state>
@@ -5212,7 +5218,7 @@
           <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/xip</state>
           <state>$PROJ_DIR$/../../../xip</state>
-          <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
+          <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -5677,7 +5683,7 @@
         </option>
         <option>
           <name>IlinkOverrideProgramEntryLabel</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>IlinkProgramEntryLabelSelect</name>
@@ -5685,7 +5691,7 @@
         </option>
         <option>
           <name>IlinkProgramEntryLabel</name>
-          <state>__iar_program_start</state>
+          <state>Reset_Handler</state>
         </option>
         <option>
           <name>DoFill</name>
@@ -5874,22 +5880,22 @@
       <name>$PROJ_DIR$/../user_IMXRT10xx.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../mco_types.h</name>
+      <name>$PROJ_DIR$/../mco_types.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../mcohw_cfg.h</name>
+      <name>$PROJ_DIR$/../mcohw_cfg.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../mcohw_com_generic.c</name>
+      <name>$PROJ_DIR$/../mcohw_com_generic.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../mcohw_LEDs.h</name>
+      <name>$PROJ_DIR$/../mcohw_LEDs.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../mco_config/mcohw_nvol_sim.c</name>
+      <name>$PROJ_DIR$/../mcohw_nvol_sim.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../mco_libcb.c</name>
+      <name>$PROJ_DIR$/../mco_libcb.c</name>
     </file>
   </group>
   <group>
@@ -5913,13 +5919,13 @@
       <name>$PROJ_DIR$/../mco_config/nodecfg.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../mco_config/procimg.h</name>
+      <name>$PROJ_DIR$/../mco_config/procimg.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../mco_config/user_cbdata.c</name>
+      <name>$PROJ_DIR$/../mco_config/user_cbdata.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../mco_config/user_od.c</name>
+      <name>$PROJ_DIR$/../mco_config/user_od.c</name>
     </file>
   </group>
   <group>
@@ -5970,6 +5976,12 @@
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1052/drivers/fsl_common.c</name>
     </file>
     <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1052/drivers/fsl_common_arm.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1052/drivers/fsl_common_arm.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1052/drivers/fsl_clock.h</name>
     </file>
     <file>
@@ -6004,55 +6016,52 @@
     </file>
   </group>
   <group>
-    <name>MCO</name>
-    <group>
-      <name>mco</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/canopen/mco/comgr.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/canopen/mco/concisedcf.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/canopen/mco/mco.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/canopen/mco/mcohw.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/canopen/mco/mcohw_com.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/canopen/mco/mcop.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/canopen/mco/mcop_inc.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/canopen/mco/mcop_mgr_inc.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/canopen/mco/mcop_xod_inc.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/canopen/mco/raccess.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/canopen/mco/racrc.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/canopen/mco/raserial.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/canopen/mco/sdoclnt.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/canopen/mco/usdo.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/canopen/mco/usdoclnt.h</name>
-      </file>
-    </group>
+    <name>mco</name>
+    <file>
+      <name>$PROJ_DIR$/../../../../../middleware/canopen/mco/comgr.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../middleware/canopen/mco/concisedcf.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../middleware/canopen/mco/mco.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../middleware/canopen/mco/mcohw.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../middleware/canopen/mco/mcohw_com.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../middleware/canopen/mco/mcop.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../middleware/canopen/mco/mcop_inc.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../middleware/canopen/mco/mcop_mgr_inc.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../middleware/canopen/mco/mcop_xod_inc.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../middleware/canopen/mco/raccess.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../middleware/canopen/mco/racrc.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../middleware/canopen/mco/raserial.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../middleware/canopen/mco/sdoclnt.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../middleware/canopen/mco/usdo.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../middleware/canopen/mco/usdoclnt.h</name>
+    </file>
   </group>
   <group>
     <name>device</name>
@@ -6117,40 +6126,31 @@
   <group>
     <name>CMSIS</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_cm7.h</name>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Core/Include/cmsis_armcc.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/mpu_armv7.h</name>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Core/Include/cmsis_armclang.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_armcc.h</name>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Core/Include/cmsis_armclang_ltm.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_armclang.h</name>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Core/Include/cmsis_compiler.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_armclang_ltm.h</name>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Core/Include/cmsis_gcc.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_gcc.h</name>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Core/Include/cmsis_iccarm.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_compiler.h</name>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Core/Include/cmsis_version.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_version.h</name>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Core/Include/core_cm7.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_iccarm.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/arm_common_tables.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/arm_const_structs.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/arm_math.h</name>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Core/Include/mpu_armv7.h</name>
     </file>
   </group>
 </project>

@@ -172,6 +172,7 @@
 #include "src/ux_host_class_printer_soft_reset.c"
 #include "src/ux_host_class_printer_status_get.c"
 #include "src/ux_host_class_printer_write.c"
+#include "src/ux_host_class_printer_device_id_get.c"
 #include "src/ux_host_class_prolific_activate.c"
 #include "src/ux_host_class_prolific_command.c"
 #include "src/ux_host_class_prolific_configure.c"

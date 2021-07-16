@@ -38,12 +38,13 @@ void EM_timer_init (void)
     "Initializing EtherMind Timer Library Module ...\n");
 
     /* Initialize Timer Mutex */
-    EM_thread_mutex_init(&timer_mutex, NULL);
+    /* MISRA C-2012 Rule 17.7 | Coverity CHECKED_RETURN */
+    (void) EM_thread_mutex_init(&timer_mutex, NULL);
 
     /* Initialize Timer Elements */
-    for (index = 0; index < EM_TIMER_MAX_ENTITIES; index ++)
+    for (index = 0U; index < EM_TIMER_MAX_ENTITIES; index ++)
     {
-        timer_init_entity(&timer_entity[index]);
+        (void) timer_init_entity(&timer_entity[index]);
         timer_entity[index].timer_id = NULL;
         timer_entity[index].handle = &timer_entity[index];
     }
@@ -65,7 +66,7 @@ void timer_em_init ( void )
     "Stack ON Initialization for Timer Library ...\n");
 
     /* Initialize Timer Entities */
-    for (index = 0; index < EM_TIMER_MAX_ENTITIES; index ++)
+    for (index = 0U; index < EM_TIMER_MAX_ENTITIES; index ++)
     {
         timer = &timer_entity[index];
 
@@ -86,7 +87,8 @@ void timer_em_init ( void )
     }
 
     /* Initialize Timer Q */
-    timer_q_start = timer_q_end = NULL;
+    timer_q_start = NULL;
+    timer_q_end = NULL;
 
     timer_unlock();
     return;
@@ -102,32 +104,33 @@ void timer_em_shutdown ( void )
     timer_lock();
 
     /* Initialize Timer Q */
-    timer_q_start = timer_q_end = NULL;
+    timer_q_start = NULL;
+    timer_q_end = NULL;
 
     /* Initialize Timer Entities */
-    for (index = 0; index < EM_TIMER_MAX_ENTITIES; index++)
+    for (index = 0U; index < EM_TIMER_MAX_ENTITIES; index++)
     {
         timer = &timer_entity[index];
         if (TIMER_ENTITY_IN_USE == timer->in_use)
         {
             /* Stop Timer */
-            xTimerStop (timer->timer_id, 0);
+            (void) xTimerStop (timer->timer_id, 0U);
 
-            if (timer->data_length > EM_TIMER_STATIC_DATA_SIZE)
+            if (EM_TIMER_STATIC_DATA_SIZE < timer->data_length)
             {
                 timer_free(timer->allocated_data);
             }
 
             /* Delete Timer */
-            xTimerDelete(timer->timer_id, 0);
+            (void) xTimerDelete(timer->timer_id, 0U);
 
-            timer_init_entity(timer);
+            (void) timer_init_entity(timer);
             timer->timer_id = NULL;
         }
         else
         {
             /* Delete Timer */
-            xTimerDelete(timer->timer_id, 0);
+            (void) xTimerDelete(timer->timer_id, 0U);
         }
     }
 
@@ -174,7 +177,7 @@ EM_RESULT EM_start_timer
     }
 
     /* Timer Library expects to have a valid Non-Zero timeout value */
-    if (0 == timeout)
+    if (0U == timeout)
     {
         EM_TIMER_ERR(
         "FAILED to Add New Timer Element. Timeout Value set to ZERO!\n");
@@ -182,7 +185,7 @@ EM_RESULT EM_start_timer
         return EM_TIMER_TIMEOUT_ZERO_NOT_ALLOWED;
     }
 
-    if (0 != data_length)
+    if (0U != data_length)
     {
         if (data_length > EM_TIMER_STATIC_DATA_SIZE)
         {
@@ -222,7 +225,7 @@ EM_RESULT EM_start_timer
         "FAILED to Add New Timer to Timer Queue. Error Code = 0x%04X\n",
         retval);
 
-        if (current_timer.data_length > EM_TIMER_STATIC_DATA_SIZE)
+        if (EM_TIMER_STATIC_DATA_SIZE < current_timer.data_length)
         {
             timer_free (current_timer.allocated_data);
         }
@@ -285,10 +288,10 @@ void timer_timeout_handler (TimerHandle_t timer_id)
     timer_lock ();
 
     /* Stop Timer */
-    xTimerStop  (timer->timer_id, 0);
+    (void) xTimerStop  (timer->timer_id, 0U);
 
     /* Free the Timer */
-    timer_del_entity (timer, 1);
+    (void) timer_del_entity (timer, 1U);
 
     /* Unlock Timer */
     timer_unlock ();
@@ -321,7 +324,7 @@ EM_RESULT EM_stop_timer
     /* Store the timer id before deleting entity */
     timer_id = timer->timer_id;
 
-    retval = timer_del_entity(timer, 0x01);
+    retval = timer_del_entity(timer, 0x01U);
 
     if (EM_SUCCESS != retval)
     {
@@ -336,7 +339,7 @@ EM_RESULT EM_stop_timer
         (void *)handle);
 
         /* Stop Timer */
-        xTimerStop (timer_id, 0);
+        (void) xTimerStop (timer_id, 0U);
 
         EM_TIMER_TRC("*** Stopped Timer [ID: %04X]\n",
         timer_id);
@@ -385,7 +388,7 @@ EM_RESULT EM_restart_timer
         timer->timeout = new_timeout;
 
         /* Stop the existing timer */
-        xTimerStop (timer->timer_id, 0);
+        (void) xTimerStop (timer->timer_id, 0U);
 
         /* Change Timeout. This will also start the timer. */
         ret = xTimerChangePeriod
@@ -394,14 +397,14 @@ EM_RESULT EM_restart_timer
                   EM_TIMER_MS_2_TICKS
                   ((EM_TIMEOUT_MILLISEC & timer->timeout) ?
                    (timer->timeout & (UINT32)~(EM_TIMEOUT_MILLISEC)):
-                   (timer->timeout * 1000)),
-                  0
+                   (timer->timeout * 1000U)),
+                  0U
               );
 
         if (pdPASS != ret)
         {
             EM_TIMER_ERR("*** FAILED to Restart timer\n");
-            timer_del_entity (timer, 0x01);
+            (void) timer_del_entity (timer, 0x01U);
             return EM_TIMER_FAILED_SET_TIME_EVENT;
         }
 
@@ -528,7 +531,7 @@ EM_RESULT timer_add_entity ( TIMER_ENTITY *timer )
 
     new_timer = NULL;
 
-    for (index = 0; index < EM_TIMER_MAX_ENTITIES; index++)
+    for (index = 0U; index < EM_TIMER_MAX_ENTITIES; index++)
     {
         new_timer = &timer_entity[index];
         if (TIMER_ENTITY_FREE == new_timer->in_use)
@@ -584,8 +587,8 @@ EM_RESULT timer_add_entity ( TIMER_ENTITY *timer )
               EM_TIMER_MS_2_TICKS
               ((EM_TIMEOUT_MILLISEC & new_timer->timeout) ?
                (new_timer->timeout & (UINT32)~(EM_TIMEOUT_MILLISEC)):
-               (new_timer->timeout * 1000)),
-              0
+               (new_timer->timeout * 1000U)),
+              0U
           );
 
     if (pdPASS != ret)
@@ -606,7 +609,8 @@ EM_RESULT timer_add_entity ( TIMER_ENTITY *timer )
     /* If the Timer Q Empty */
     if (NULL == timer_q_start)
     {
-        timer_q_start = timer_q_end = new_timer;
+        timer_q_start = new_timer;
+        timer_q_end = new_timer;
         return EM_SUCCESS;
     }
 
@@ -638,7 +642,8 @@ EM_RESULT timer_del_entity
             if (timer == timer_q_start)
             {
                 /* Queue has One Element */
-                timer_q_start = timer_q_end = NULL;
+                timer_q_start = NULL;
+                timer_q_end = NULL;
             }
             else
             {
@@ -686,13 +691,13 @@ EM_RESULT timer_del_entity
     }
 
     /* Free Allocated Data */
-    if ((0x01 == free) &&
+    if ((0x01U == free) &&
         (timer->data_length > EM_TIMER_STATIC_DATA_SIZE))
     {
         timer_free (timer->allocated_data);
     }
 
-    timer_init_entity(timer);
+    (void) timer_init_entity(timer);
     return EM_SUCCESS;
 }
 
@@ -700,14 +705,14 @@ EM_RESULT timer_del_entity
 EM_RESULT timer_init_entity (TIMER_ENTITY *timer)
 {
     timer->in_use = TIMER_ENTITY_FREE;
-    timer->timeout = 0;
+    timer->timeout = 0U;
     timer->callback = NULL;
     timer->allocated_data = NULL;
-    timer->data_length = 0;
+    timer->data_length = 0U;
     timer->next = NULL;
 
 #ifdef EM_TIMER_SUPPORT_REMAINING_TIME
-    timer->start_timestamp = 0;
+    timer->start_timestamp = 0U;
 #endif /* EM_TIMER_SUPPORT_REMAINING_TIME */
 
     return EM_SUCCESS;
@@ -750,7 +755,7 @@ EM_RESULT EM_timer_get_remaining_time
     {
         time_ms = ((EM_TIMEOUT_MILLISEC & timer->timeout) ?
             (timer->timeout & (UINT32)~(EM_TIMEOUT_MILLISEC)) :
-            (timer->timeout * 1000));
+            (timer->timeout * 1000U));
 
         /* Get Current Time */
 
@@ -766,7 +771,7 @@ EM_RESULT EM_timer_get_remaining_time
         else
         {
             /* Difference */
-            diff_in_ticks = (0xFFFFFFFF - timer->start_timestamp) + current_timestamp;
+            diff_in_ticks = (0xFFFFFFFFU - timer->start_timestamp) + current_timestamp;
         }
 
         /* Convert Ticks to ms */
@@ -822,8 +827,8 @@ EM_RESULT EM_list_timer ( void )
 
     EM_TIMERL_TRC("End   Q = %p\n", timer_q_end);
 
-    free = 0;
-    for (index = 0; index < EM_TIMER_MAX_ENTITIES; index ++)
+    free = 0U;
+    for (index = 0U; index < EM_TIMER_MAX_ENTITIES; index ++)
     {
         if (TIMER_ENTITY_FREE == timer_entity[index].in_use)
         {

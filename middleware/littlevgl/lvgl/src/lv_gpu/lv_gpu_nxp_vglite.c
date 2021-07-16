@@ -31,7 +31,7 @@
  *      INCLUDES
  *********************/
 
-#include "lv_conf.h"
+#include "../lv_conf_internal.h"
 
 #if LV_USE_GPU_NXP_VG_LITE
 
@@ -40,7 +40,6 @@
 #include "../lv_misc/lv_log.h"
 #include "fsl_cache.h"
 #include "vg_lite.h"
-
 #include "fsl_debug_console.h"
 
 /*********************
@@ -100,7 +99,7 @@
  **********************/
 
 static lv_res_t _init_vg_buf(vg_lite_buffer_t * dst, uint32_t width, uint32_t height, uint32_t stride,
-                             const lv_color_t * ptr);
+                             const lv_color_t * ptr, bool source);
 
 static lv_res_t _lv_gpu_nxp_vglite_blit_single(lv_gpu_nxp_vglite_blit_info_t * blit);
 #if _BLIT_SPLIT_ENABLED
@@ -154,25 +153,37 @@ lv_res_t lv_gpu_nxp_vglite_fill(lv_color_t * dest_buf, lv_coord_t dest_width, lv
     lv_color32_t col32 = {.full = lv_color_to32(color)}; /* Convert color to RGBA8888 */
     lv_disp_t * disp = _lv_refr_get_disp_refreshing();
 
-    if(_init_vg_buf(&rt, dest_width, dest_height, dest_width * sizeof(lv_color_t), dest_buf) != LV_RES_OK) {
+    if(_init_vg_buf(&rt, (uint32_t) dest_width, (uint32_t) dest_height, (uint32_t) dest_width * sizeof(lv_color_t), (const lv_color_t *) dest_buf, false) != LV_RES_OK) {
 #if LV_GPU_NXP_VG_LITE_LOG_ERRORS
         LV_LOG_ERROR("init_vg_buf reported error. Fill failed.");
 #endif
         return LV_RES_INV;
     }
 
-    if(opa >= LV_OPA_MAX) {   /* Opaque fill */
+    if(opa >= (lv_opa_t) LV_OPA_MAX) {   /* Opaque fill */
         rect.x = fill_area->x1;
         rect.y = fill_area->y1;
-        rect.width = (fill_area->x2 - fill_area->x1) + 1;
-        rect.height = (fill_area->y2 - fill_area->y1) + 1;
+        rect.width = (int32_t) fill_area->x2 - (int32_t) fill_area->x1 + 1;
+        rect.height = (int32_t) fill_area->y2 - (int32_t) fill_area->y1 + 1;
 
-        if(disp && disp->driver.clean_dcache_cb) {  /* Clean & invalidate cache */
+        if(disp != NULL && disp->driver.clean_dcache_cb != NULL) {  /* Clean & invalidate cache */
             disp->driver.clean_dcache_cb(&disp->driver);
         }
 
-        err |= vg_lite_clear(&rt, &rect, col32.full);
-        err |= vg_lite_finish();
+        err = vg_lite_clear(&rt, &rect, col32.full);
+        if (err != VG_LITE_SUCCESS) {
+    #if LV_GPU_NXP_VG_LITE_LOG_ERRORS
+            LV_LOG_ERROR("vg_lite_clear reported error. Fill failed.");
+    #endif
+            return LV_RES_INV;
+        }
+        err = vg_lite_finish();
+        if (err != VG_LITE_SUCCESS) {
+    #if LV_GPU_NXP_VG_LITE_LOG_ERRORS
+            LV_LOG_ERROR("vg_lite_finish reported error. Fill failed.");
+    #endif
+            return LV_RES_INV;
+        }
     }
     else {   /* fill with transparency */
         vg_lite_path_t path;
@@ -186,8 +197,8 @@ lv_res_t lv_gpu_nxp_vglite_fill(lv_color_t * dest_buf, lv_coord_t dest_width, lv
             VLC_OP_END
         };
 
-        err |= vg_lite_init_path(&path, VG_LITE_S16, VG_LITE_LOW, sizeof(path_data), path_data,
-                                 fill_area->x1, fill_area->y1, fill_area->x2 + 1, fill_area->y2 + 1);
+        err = vg_lite_init_path(&path, VG_LITE_S16, VG_LITE_LOW, sizeof(path_data), path_data,
+                (vg_lite_float_t) fill_area->x1, (vg_lite_float_t) fill_area->y1, ((vg_lite_float_t) fill_area->x2) + 1.0f, ((vg_lite_float_t) fill_area->y2) + 1.0f);
         if(err != VG_LITE_SUCCESS)  {
 #if LV_GPU_NXP_VG_LITE_LOG_ERRORS
             LV_LOG_ERROR("vg_lite_init_path() failed.");
@@ -195,12 +206,12 @@ lv_res_t lv_gpu_nxp_vglite_fill(lv_color_t * dest_buf, lv_coord_t dest_width, lv
             return LV_RES_INV;
         }
 
-        colMix.ch.red = ((uint16_t)col32.ch.red * opa) >> 8; /* Pre-multiply color */
-        colMix.ch.green = ((uint16_t)col32.ch.green * opa) >> 8;
-        colMix.ch.blue = ((uint16_t)col32.ch.blue * opa) >> 8;
+        colMix.ch.red = (uint8_t)(((uint16_t)col32.ch.red * opa) >> 8); /* Pre-multiply color */
+        colMix.ch.green = (uint8_t)(((uint16_t)col32.ch.green * opa) >> 8);
+        colMix.ch.blue = (uint8_t)(((uint16_t)col32.ch.blue * opa) >> 8);
         colMix.ch.alpha = opa;
 
-        if(disp && disp->driver.clean_dcache_cb) {  /* Clean & invalidate cache */
+        if((disp != NULL) && (disp->driver.clean_dcache_cb != NULL)) {  /* Clean & invalidate cache */
             disp->driver.clean_dcache_cb(&disp->driver);
         }
 
@@ -208,8 +219,8 @@ lv_res_t lv_gpu_nxp_vglite_fill(lv_color_t * dest_buf, lv_coord_t dest_width, lv
         vg_lite_identity(&matrix);
 
         /* Draw rectangle */
-        err |= vg_lite_draw(&rt, &path, VG_LITE_FILL_EVEN_ODD, &matrix, VG_LITE_BLEND_SRC_OVER, colMix.full);
-        if(err)  {
+        err = vg_lite_draw(&rt, &path, VG_LITE_FILL_EVEN_ODD, &matrix, VG_LITE_BLEND_SRC_OVER, colMix.full);
+        if(err != VG_LITE_SUCCESS) {
 #if LV_GPU_NXP_VG_LITE_LOG_ERRORS
             LV_LOG_ERROR("vg_lite_draw() failed.");
 #endif
@@ -217,8 +228,21 @@ lv_res_t lv_gpu_nxp_vglite_fill(lv_color_t * dest_buf, lv_coord_t dest_width, lv
             return LV_RES_INV;
         }
 
-        err |= vg_lite_finish();
-        err |= vg_lite_clear_path(&path);
+        err = vg_lite_finish();
+        if(err != VG_LITE_SUCCESS) {
+#if LV_GPU_NXP_VG_LITE_LOG_ERRORS
+            LV_LOG_ERROR("vg_lite_finish() failed.");
+#endif
+            return LV_RES_INV;
+        }
+
+        err = vg_lite_clear_path(&path);
+        if(err != VG_LITE_SUCCESS) {
+#if LV_GPU_NXP_VG_LITE_LOG_ERRORS
+            LV_LOG_ERROR("vg_lite_clear_path() failed.");
+#endif
+            return LV_RES_INV;
+        }
     }
 
     if(err == VG_LITE_SUCCESS) {
@@ -423,57 +447,71 @@ static lv_res_t _lv_gpu_nxp_vglite_blit_single(lv_gpu_nxp_vglite_blit_info_t * b
     uint32_t rect[4];
     lv_disp_t * disp = _lv_refr_get_disp_refreshing();
 
-    if(!blit) {
+    if(blit == NULL) {
             /* Wrong parameter */
             return LV_RES_INV;
     }
 
-    if(blit->opa < LV_OPA_MIN) {
+    if(blit->opa < (lv_opa_t) LV_OPA_MIN) {
         return LV_RES_OK; /* Nothing to BLIT */
     }
 
     /* Wrap src/dst buffer into VG-Lite buffer */
-    if(_init_vg_buf(&src_vgbuf, blit->src_width, blit->src_height, blit->src_stride, blit->src) != LV_RES_OK) {
+    if(_init_vg_buf(&src_vgbuf, (uint32_t) blit->src_width, (uint32_t) blit->src_height, (uint32_t) blit->src_stride, blit->src, true) != LV_RES_OK) {
 #if LV_GPU_NXP_VG_LITE_LOG_ERRORS
         LV_LOG_ERROR("init_vg_buf reported error. BLIT failed.");
 #endif
         return LV_RES_INV;
     }
 
-    if(_init_vg_buf(&dst_vgbuf, blit->dst_width, blit->dst_height, blit->dst_stride, blit->dst) != LV_RES_OK) {
+    if(_init_vg_buf(&dst_vgbuf, (uint32_t) blit->dst_width, (uint32_t) blit->dst_height, (uint32_t) blit->dst_stride, blit->dst, false) != LV_RES_OK) {
 #if LV_GPU_NXP_VG_LITE_LOG_ERRORS
         LV_LOG_ERROR("init_vg_buf reported error. BLIT failed.");
 #endif
         return LV_RES_INV;
     }
 
-    rect[0] = blit->src_area.x1; /* start x */
-    rect[1] = blit->src_area.y1; /* start y */
-    rect[2] = blit->src_area.x2 - blit->src_area.x1 + 1; /* width */
-    rect[3] = blit->src_area.y2 - blit->src_area.y1 + 1; /* height */
+    rect[0] = (uint32_t) blit->src_area.x1; /* start x */
+    rect[1] = (uint32_t) blit->src_area.y1; /* start y */
+    rect[2] = (uint32_t) blit->src_area.x2 - (uint32_t) blit->src_area.x1 + 1U; /* width */
+    rect[3] = (uint32_t) blit->src_area.y2 - (uint32_t) blit->src_area.y1 + 1U; /* height */
 
     vg_lite_matrix_t matrix;
     vg_lite_identity(&matrix);
-    vg_lite_translate(blit->dst_area.x1, blit->dst_area.y1, &matrix);
+    vg_lite_translate((vg_lite_float_t)blit->dst_area.x1, (vg_lite_float_t)blit->dst_area.y1, &matrix);
 
-    if(disp && disp->driver.clean_dcache_cb) {  /* Clean & invalidate cache */
+    if((disp != NULL) && (disp->driver.clean_dcache_cb != NULL)) {  /* Clean & invalidate cache */
         disp->driver.clean_dcache_cb(&disp->driver);
     }
 
     uint32_t color;
     vg_lite_blend_t blend;
-    if(blit->opa >= LV_OPA_MAX) {
+    if(blit->opa >= (uint8_t) LV_OPA_MAX) {
         color = 0x0;
         blend = VG_LITE_BLEND_NONE;
     }
     else {
-        color = ((blit->opa) << 24) | ((blit->opa) << 16) | ((blit->opa) << 8) | (blit->opa);
+        uint32_t opa = (uint32_t) blit->opa;
+        color = (opa << 24) | (opa << 16) | (opa << 8) | opa;
         blend = VG_LITE_BLEND_SRC_OVER;
         src_vgbuf.image_mode = VG_LITE_MULTIPLY_IMAGE_MODE;
     }
 
-    err |= vg_lite_blit_rect(&dst_vgbuf, &src_vgbuf, rect, &matrix, blend, color, VG_LITE_FILTER_POINT);
-    err |= vg_lite_finish();
+    err = vg_lite_blit_rect(&dst_vgbuf, &src_vgbuf, rect, &matrix, blend, color, VG_LITE_FILTER_POINT);
+    if(err != VG_LITE_SUCCESS) {
+#if LV_GPU_NXP_VG_LITE_LOG_ERRORS
+        LV_LOG_ERROR("vg_lite_blit_rect() failed.");
+#endif
+        return LV_RES_INV;
+    }
+
+    err = vg_lite_finish();
+    if(err != VG_LITE_SUCCESS) {
+#if LV_GPU_NXP_VG_LITE_LOG_ERRORS
+        LV_LOG_ERROR("vg_lite_finish() failed.");
+#endif
+        return LV_RES_INV;
+    }
 
     if(err == VG_LITE_SUCCESS) {
         return LV_RES_OK;
@@ -495,18 +533,18 @@ static lv_res_t _lv_gpu_nxp_vglite_blit_single(lv_gpu_nxp_vglite_blit_info_t * b
  * @param[in] ptr Pointer to the buffer (must be aligned according VG-Lite requirements)
  */
 static lv_res_t _init_vg_buf(vg_lite_buffer_t * dst, uint32_t width, uint32_t height, uint32_t stride,
-                             const lv_color_t * ptr)
+                             const lv_color_t * ptr, bool source)
 {
-    if((((uintptr_t)ptr) % LV_ATTRIBUTE_MEM_ALIGN_SIZE) != 0x0) {  /* Test for alignment */
+    if((((uintptr_t)ptr) % (uintptr_t)LV_ATTRIBUTE_MEM_ALIGN_SIZE) != 0x0U) {  /* Test for alignment */
 #if LV_GPU_NXP_VG_LITE_LOG_ERRORS
         LV_LOG_ERROR("ptr (0x%X) not aligned to %d.", (size_t) ptr, LV_ATTRIBUTE_MEM_ALIGN_SIZE);
 #endif
         return LV_RES_INV;
     }
 
-    if((stride % LV_GPU_NXP_VG_LITE_STRIDE_ALIGN_PX) != 0x0) {  /* Test for stride alignment */
+    if(source && (stride % (LV_GPU_NXP_VG_LITE_STRIDE_ALIGN_PX * sizeof(lv_color_t))) != 0x0U) {  /* Test for stride alignment */
 #if LV_GPU_NXP_VG_LITE_LOG_ERRORS
-        LV_LOG_ERROR("Buffer stride (%d px) not aligned to %d px.", stride, LV_GPU_NXP_VG_LITE_STRIDE_ALIGN_PX);
+        LV_LOG_ERROR("Buffer stride (%d px) not aligned to %d bytes.", stride, LV_GPU_NXP_VG_LITE_STRIDE_ALIGN_PX * sizeof(lv_color_t));
 #endif
         return LV_RES_INV;
     }
@@ -516,15 +554,18 @@ static lv_res_t _init_vg_buf(vg_lite_buffer_t * dst, uint32_t width, uint32_t he
     dst->image_mode = VG_LITE_NORMAL_IMAGE_MODE;
     dst->transparency_mode = VG_LITE_IMAGE_OPAQUE;
 
-    dst->width = width;
-    dst->height = height;
-    dst->stride = stride;
+    dst->width = (int32_t) width;
+    dst->height = (int32_t) height;
+    dst->stride = (int32_t) stride;
 
-    memset(&dst->yuv, 0, sizeof(dst->yuv));
+    void *r_ptr = memset(&dst->yuv, 0, sizeof(dst->yuv));
+    if (r_ptr == NULL) {
+        return LV_RES_INV;
+    }
 
     dst->memory = (void *) ptr;
     dst->address = (uint32_t) dst->memory;
-    dst->handle = 0x0;
+    dst->handle = NULL;
 
     return LV_RES_OK;
 }
@@ -584,7 +625,7 @@ static lv_res_t _lv_gpu_nxp_vglite_check_blit(lv_gpu_nxp_vglite_blit_info_t * bl
         return LV_RES_INV;
     }
 
-    if(lv_area_get_width(&blit->src_area) < LV_GPU_NXP_VG_LITE_STRIDE_ALIGN_PX) {  /* Test for minimal width */
+    if(lv_area_get_width(&blit->dst_area) < LV_GPU_NXP_VG_LITE_STRIDE_ALIGN_PX) {  /* Test for minimal width */
 #if LV_GPU_NXP_VG_LITE_LOG_ERRORS
         LV_LOG_ERROR("destination area width (%d) is smaller than required (%d).", lv_area_get_width(&blit->dst_area),
                      LV_GPU_NXP_VG_LITE_STRIDE_ALIGN_PX);
@@ -598,22 +639,16 @@ static lv_res_t _lv_gpu_nxp_vglite_check_blit(lv_gpu_nxp_vglite_blit_info_t * bl
 #endif
         return LV_RES_INV;
     }
+    /* No alignment requirement for destination pixel buffer when using mode VG_LITE_LINEAR */
 
-    if((((uintptr_t) blit->dst) % LV_ATTRIBUTE_MEM_ALIGN_SIZE) != 0x0) {  /* Test for pointer alignment */
-#if LV_GPU_NXP_VG_LITE_LOG_ERRORS
-        LV_LOG_ERROR("destination buffer ptr (0x%X) not aligned to %d.", (size_t) blit->dst, LV_ATTRIBUTE_MEM_ALIGN_SIZE);
-#endif
-        return LV_RES_INV;
-    }
-
-    if((blit->src_stride % LV_GPU_NXP_VG_LITE_STRIDE_ALIGN_PX) != 0x0) {  /* Test for stride alignment */
+    if((blit->src_stride % (LV_GPU_NXP_VG_LITE_STRIDE_ALIGN_PX * LV_COLOR_DEPTH / 8)) != 0x0) {  /* Test for stride alignment */
 #if LV_GPU_NXP_VG_LITE_LOG_ERRORS
         LV_LOG_ERROR("source buffer stride (%d px) not aligned to %d px.", blit->src_stride, LV_GPU_NXP_VG_LITE_STRIDE_ALIGN_PX);
 #endif
         return LV_RES_INV;
     }
 
-    if((blit->dst_stride % LV_GPU_NXP_VG_LITE_STRIDE_ALIGN_PX) != 0x0) {  /* Test for stride alignment */
+    if((blit->dst_stride % (LV_GPU_NXP_VG_LITE_STRIDE_ALIGN_PX * LV_COLOR_DEPTH / 8)) != 0x0) {  /* Test for stride alignment */
 #if LV_GPU_NXP_VG_LITE_LOG_ERRORS
         LV_LOG_ERROR("destination buffer stride (%d px) not aligned to %d px.", blit->dst_stride, LV_GPU_NXP_VG_LITE_STRIDE_ALIGN_PX);
 #endif
@@ -639,7 +674,7 @@ static lv_res_t _lv_gpu_nxp_vglite_check_blit(lv_gpu_nxp_vglite_blit_info_t * bl
 static void _align_x(lv_area_t * area, lv_color_t ** buf)
 {
 
-    int alignedAreaStartPx = area->x1 - (area->x1 % LV_GPU_NXP_VG_LITE_STRIDE_ALIGN_PX);
+    int alignedAreaStartPx = area->x1 - (area->x1 % (LV_ATTRIBUTE_MEM_ALIGN_SIZE * 8 / LV_COLOR_DEPTH) );
     CHECK(alignedAreaStartPx < 0, "Should never happen.");
 
     area->x1 -= alignedAreaStartPx;
@@ -655,10 +690,21 @@ static void _align_x(lv_area_t * area, lv_color_t ** buf)
  */
 static void _align_y(lv_area_t * area, lv_color_t ** buf, uint32_t stridePx)
 {
+    int LineToAlignMem;
+    int alignedAreaStartPy;
+    /* find how many lines of pixels will respect memory alignment requirement */
+    if(stridePx % LV_ATTRIBUTE_MEM_ALIGN_SIZE == 0) {
+        alignedAreaStartPy = area->y1;
+    } else {
+        LineToAlignMem = LV_ATTRIBUTE_MEM_ALIGN_SIZE / (sizeof(lv_color_t) * LV_GPU_NXP_VG_LITE_STRIDE_ALIGN_PX);
+        CHECK(LV_ATTRIBUTE_MEM_ALIGN_SIZE % (sizeof(lv_color_t) * LV_GPU_NXP_VG_LITE_STRIDE_ALIGN_PX) != 0, "Complex case: need gcd function.");
+        alignedAreaStartPy = area->y1 - (area->y1 % LineToAlignMem);
+        CHECK(alignedAreaStartPy < 0, "Should never happen.");
+    }
 
-    *buf += area->y1 * stridePx;
-    area->y2 -= area->y1;
-    area->y1 = 0;
+    area->y1 -= alignedAreaStartPy;
+    area->y2 -= alignedAreaStartPy;
+    *buf += alignedAreaStartPy * stridePx;
 }
 
 #if BLIT_DBG_AREAS

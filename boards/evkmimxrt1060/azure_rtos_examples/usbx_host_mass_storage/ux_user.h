@@ -52,7 +52,10 @@
  * CDC_ECM device class.
  * The default is 16.
  */
-#define UX_DEVICE_CLASS_CDC_ECM_NX_PKPOOL_ENTRIES 4
+#define UX_DEVICE_CLASS_CDC_ECM_NX_PKPOOL_ENTRIES 32
+
+/* Defined, this enables CDC ECM class to use the packet pool from NetX instance.  */
+#define UX_HOST_CLASS_CDC_ECM_USE_PACKET_POOL_FROM_NETX
 
 /* Defined, this value will only enable the host side of usbx.  */
 /* #define UX_HOST_SIDE_ONLY   */

@@ -1,16 +1,14 @@
-if(NOT MIDDLEWARE_LITTLEFS_MIMXRT1064_INCLUDED)
-    
-    set(MIDDLEWARE_LITTLEFS_MIMXRT1064_INCLUDED true CACHE BOOL "middleware_littlefs component is included.")
+include_guard(GLOBAL)
+message("middleware_littlefs component is included.")
 
-    target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
-        ${CMAKE_CURRENT_LIST_DIR}/lfs.c
-        ${CMAKE_CURRENT_LIST_DIR}/lfs_util.c
-    )
-
-
-    target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
-        ${CMAKE_CURRENT_LIST_DIR}/.
-    )
+target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
+    ${CMAKE_CURRENT_LIST_DIR}/lfs.c
+    ${CMAKE_CURRENT_LIST_DIR}/lfs_util.c
+)
 
 
-endif()
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
+    ${CMAKE_CURRENT_LIST_DIR}/.
+)
+
+

@@ -112,7 +112,11 @@ status_t SDMMC_OSAEventSet(void *eventHandle, uint32_t eventType)
     assert(eventHandle != NULL);
 
 #if defined(SDMMC_OSA_POLLING_EVENT_BY_SEMPHORE) && SDMMC_OSA_POLLING_EVENT_BY_SEMPHORE
+    OSA_SR_ALLOC();
+    OSA_ENTER_CRITICAL();
     ((sdmmc_osa_event_t *)eventHandle)->eventFlag |= eventType;
+    OSA_EXIT_CRITICAL();
+
     (void)OSA_SemaphorePost(&(((sdmmc_osa_event_t *)eventHandle)->handle));
 #else
     (void)OSA_EventSet(&(((sdmmc_osa_event_t *)eventHandle)->handle), eventType);
@@ -134,10 +138,7 @@ status_t SDMMC_OSAEventGet(void *eventHandle, uint32_t eventType, uint32_t *flag
     assert(flag != NULL);
 
 #if defined(SDMMC_OSA_POLLING_EVENT_BY_SEMPHORE) && SDMMC_OSA_POLLING_EVENT_BY_SEMPHORE
-    OSA_SR_ALLOC();
-    OSA_ENTER_CRITICAL();
     *flag = ((sdmmc_osa_event_t *)eventHandle)->eventFlag;
-    OSA_EXIT_CRITICAL();
 #else
     (void)OSA_EventGet(&(((sdmmc_osa_event_t *)eventHandle)->handle), eventType, flag);
 #endif
@@ -173,11 +174,72 @@ status_t SDMMC_OSAEventClear(void *eventHandle, uint32_t eventType)
  */
 status_t SDMMC_OSAEventDestroy(void *eventHandle)
 {
+    assert(eventHandle != NULL);
+
 #if defined(SDMMC_OSA_POLLING_EVENT_BY_SEMPHORE) && SDMMC_OSA_POLLING_EVENT_BY_SEMPHORE
     (void)OSA_SemaphoreDestroy(&(((sdmmc_osa_event_t *)eventHandle)->handle));
 #else
     (void)OSA_EventDestroy(&(((sdmmc_osa_event_t *)eventHandle)->handle));
 #endif
+
+    return kStatus_Success;
+}
+
+/*!
+ * brief Create a mutex.
+ * param mutexHandle mutex handle.
+ * retval kStatus_Fail or kStatus_Success.
+ */
+status_t SDMMC_OSAMutexCreate(void *mutexHandle)
+{
+    assert(mutexHandle != NULL);
+
+    (void)OSA_MutexCreate(&((sdmmc_osa_mutex_t *)mutexHandle)->handle);
+
+    return kStatus_Success;
+}
+
+/*!
+ * brief set event.
+ * param mutexHandle mutex handle.
+ * param millisec The maximum number of milliseconds to wait for the mutex.
+ *                 If the mutex is locked, Pass the value osaWaitForever_c will
+ *                 wait indefinitely, pass 0 will return KOSA_StatusTimeout
+ *                 immediately.
+ * retval kStatus_Fail or kStatus_Success.
+ */
+status_t SDMMC_OSAMutexLock(void *mutexHandle, uint32_t millisec)
+{
+    assert(mutexHandle != NULL);
+
+    (void)OSA_MutexLock(&((sdmmc_osa_mutex_t *)mutexHandle)->handle, millisec);
+
+    return kStatus_Success;
+}
+
+/*!
+ * brief Get event flag.
+ * param mutexHandle mutex handle.
+ * retval kStatus_Fail or kStatus_Success.
+ */
+status_t SDMMC_OSAMutexUnlock(void *mutexHandle)
+{
+    assert(mutexHandle != NULL);
+
+    (void)OSA_MutexUnlock(&((sdmmc_osa_mutex_t *)mutexHandle)->handle);
+
+    return kStatus_Success;
+}
+
+/*!
+ * brief Delete mutex.
+ * param mutexHandle The mutex handle.
+ */
+status_t SDMMC_OSAMutexDestroy(void *mutexHandle)
+{
+    assert(mutexHandle != NULL);
+
+    (void)OSA_MutexDestroy(&((sdmmc_osa_mutex_t *)mutexHandle)->handle);
 
     return kStatus_Success;
 }
@@ -192,5 +254,22 @@ void SDMMC_OSADelay(uint32_t milliseconds)
     SDK_DelayAtLeastUs(milliseconds * 1000U, SDK_DEVICE_MAXIMUM_CPU_CLOCK_FREQUENCY);
 #else
     OSA_TimeDelay(milliseconds);
+#endif
+}
+
+/*!
+ * brief sdmmc delay us.
+ * param microseconds time to delay
+ * return actual delayed microseconds
+ */
+uint32_t SDMMC_OSADelayUs(uint32_t microseconds)
+{
+#if (defined FSL_OSA_BM_TIMER_CONFIG) && (FSL_OSA_BM_TIMER_CONFIG == FSL_OSA_BM_TIMER_NONE)
+    SDK_DelayAtLeastUs(microseconds, SDK_DEVICE_MAXIMUM_CPU_CLOCK_FREQUENCY);
+    return microseconds;
+#else
+    uint32_t milliseconds = microseconds / 1000U + ((microseconds % 1000U) == 0U ? 0U : 1U);
+    OSA_TimeDelay(milliseconds);
+    return milliseconds * 1000U;
 #endif
 }

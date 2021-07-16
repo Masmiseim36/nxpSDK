@@ -84,8 +84,6 @@ typedef struct
     mid_sm_app_state_t eState;             /* state */
 } mid_sm_app_ctrl_t;
 
-extern mid_struct_a1_t g_sMID;
-
 /* pointer to function with a pointer to state machine control structure */
 typedef void (*mid_pfcn_void_pms)(mid_sm_app_ctrl_t *sAppCtrl);
 

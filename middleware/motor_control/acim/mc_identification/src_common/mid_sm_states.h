@@ -27,7 +27,7 @@ extern mid_sm_app_ctrl_t g_g_sMIDCtrl;
 extern "C" {
 #endif
 
-void M1_MIDApplyPar(mid_acim_alg_prms_a1_t *AlgPar);
+void M1_MIDApplyPar(mid_acim_alg_prms_a1_t *sAlgPar);
 
 #ifdef __cplusplus
 }

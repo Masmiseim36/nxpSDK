@@ -8,9 +8,9 @@
     <definition extID="driver.ft5406_rt.MIMXRT1052"/>
     <definition extID="middleware.freertos-kernel.MIMXRT1052"/>
     <definition extID="middleware.freertos-kernel.heap_3.MIMXRT1052"/>
+    <definition extID="middleware.crank.MIMXRT1052"/>
     <definition extID="platform.drivers.common.MIMXRT1052"/>
     <definition extID="platform.drivers.clock.MIMXRT1052"/>
-    <definition extID="middleware.crank.MIMXRT1052"/>
     <definition extID="device.MIMXRT1052_CMSIS.MIMXRT1052"/>
     <definition extID="utility.debug_console.MIMXRT1052"/>
     <definition extID="component.lpuart_adapter.MIMXRT1052"/>
@@ -23,10 +23,8 @@
     <definition extID="platform.utilities.assert.MIMXRT1052"/>
     <definition extID="platform.drivers.igpio.MIMXRT1052"/>
     <definition extID="platform.drivers.xip_device.MIMXRT1052"/>
-    <definition extID="platform.drivers.xip_board.MIMXRT1052"/>
-    <definition extID="platform.Include_core_cm7.MIMXRT1052"/>
-    <definition extID="platform.Include_common.MIMXRT1052"/>
-    <definition extID="platform.Include_dsp.MIMXRT1052"/>
+    <definition extID="platform.drivers.xip_board.evkbimxrt1050.MIMXRT1052"/>
+    <definition extID="CMSIS_Include_core_cm.MIMXRT1052"/>
     <definition extID="middleware.freertos-kernel.extension.MIMXRT1052"/>
     <definition extID="platform.utilities.misc_utilities.MIMXRT1052"/>
     <definition extID="device.MIMXRT1052_system.MIMXRT1052"/>
@@ -38,7 +36,7 @@
     <definition extID="mdk"/>
     <definition extID="armgcc"/>
   </externalDefinitions>
-  <example id="evkbimxrt1050_crank_storyboard_helloworld" name="crank_storyboard_helloworld" dependency="platform.drivers.cache_armv7_m7.MIMXRT1052 platform.drivers.elcdif.MIMXRT1052 platform.drivers.pxp.MIMXRT1052 platform.drivers.lpi2c.MIMXRT1052 driver.ft5406_rt.MIMXRT1052 middleware.freertos-kernel.MIMXRT1052 middleware.freertos-kernel.heap_3.MIMXRT1052 platform.drivers.common.MIMXRT1052 platform.drivers.clock.MIMXRT1052 middleware.crank.MIMXRT1052 device.MIMXRT1052_CMSIS.MIMXRT1052 utility.debug_console.MIMXRT1052 component.lpuart_adapter.MIMXRT1052 component.serial_manager.MIMXRT1052 component.lists.MIMXRT1052 component.serial_manager_uart.MIMXRT1052 platform.drivers.lpuart.MIMXRT1052 device.MIMXRT1052_startup.MIMXRT1052 platform.drivers.iomuxc.MIMXRT1052 platform.utilities.assert.MIMXRT1052 platform.drivers.igpio.MIMXRT1052 platform.drivers.xip_device.MIMXRT1052 platform.drivers.xip_board.MIMXRT1052 platform.Include_core_cm7.MIMXRT1052 platform.Include_common.MIMXRT1052 platform.Include_dsp.MIMXRT1052 middleware.freertos-kernel.extension.MIMXRT1052 platform.utilities.misc_utilities.MIMXRT1052 device.MIMXRT1052_system.MIMXRT1052" category="crank_storyboard_examples">
+  <example id="evkbimxrt1050_crank_storyboard_helloworld" name="crank_storyboard_helloworld" dependency="platform.drivers.cache_armv7_m7.MIMXRT1052 platform.drivers.elcdif.MIMXRT1052 platform.drivers.pxp.MIMXRT1052 platform.drivers.lpi2c.MIMXRT1052 driver.ft5406_rt.MIMXRT1052 middleware.freertos-kernel.MIMXRT1052 middleware.freertos-kernel.heap_3.MIMXRT1052 middleware.crank.MIMXRT1052 platform.drivers.common.MIMXRT1052 platform.drivers.clock.MIMXRT1052 device.MIMXRT1052_CMSIS.MIMXRT1052 utility.debug_console.MIMXRT1052 component.lpuart_adapter.MIMXRT1052 component.serial_manager.MIMXRT1052 component.lists.MIMXRT1052 component.serial_manager_uart.MIMXRT1052 platform.drivers.lpuart.MIMXRT1052 device.MIMXRT1052_startup.MIMXRT1052 platform.drivers.iomuxc.MIMXRT1052 platform.utilities.assert.MIMXRT1052 platform.drivers.igpio.MIMXRT1052 platform.drivers.xip_device.MIMXRT1052 platform.drivers.xip_board.evkbimxrt1050.MIMXRT1052 CMSIS_Include_core_cm.MIMXRT1052 middleware.freertos-kernel.extension.MIMXRT1052 platform.utilities.misc_utilities.MIMXRT1052 device.MIMXRT1052_system.MIMXRT1052" category="crank_storyboard_examples">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -68,8 +66,9 @@
           <value>SCANF_FLOAT_ENABLE=1</value>
           <value>PRINTF_ADVANCED_ENABLE=1</value>
           <value>SCANF_ADVANCED_ENABLE=1</value>
-          <value>FSL_RTOS_FREE_RTOS</value>
+          <value>SDK_OS_FREE_RTOS</value>
           <value>SERIAL_PORT_TYPE_UART=1</value>
+          <value>MCUXPRESSO_SDK</value>
         </option>
         <option id="com.crt.advproject.gas.hdrlib" type="enum">
           <value>com.crt.advproject.gas.hdrlib.newlib</value>
@@ -86,11 +85,11 @@
         <option id="com.crt.advproject.link.gcc.hdrlib" type="enum">
           <value>com.crt.advproject.gcc.link.hdrlib.newlib.semihost</value>
         </option>
-        <option id="gnu.c.link.option.nostdlibs" type="boolean">
-          <value>true</value>
-        </option>
         <option id="com.crt.advproject.link.fpu" type="enum">
           <value>com.crt.advproject.link.fpu.fpv5dp.hard</value>
+        </option>
+        <option id="gnu.c.link.option.nostdlibs" type="boolean">
+          <value>true</value>
         </option>
         <option id="com.crt.advproject.link.memory.sections" type="stringList">
           <value>isd=*(NonCacheable.init);region=NCACHE_REGION;type=.data</value>
@@ -98,27 +97,6 @@
         </option>
         <option id="com.crt.advproject.link.memory.heapAndStack" type="string">
           <value>&amp;Heap:BOARD_SDRAM;Post Data;0x1400000&amp;Stack:Default;Default;0x1000</value>
-        </option>
-        <option id="gnu.c.link.option.other" type="stringList">
-          <value>--whole-archive</value>
-          <value>-lgre</value>
-          <value>-lgreal</value>
-          <value>-lsbimage</value>
-          <value>-lsbvfs</value>
-          <value>-lfont-plugin-freetype</value>
-          <value>-lgre-plugin-animation</value>
-          <value>-lgre-plugin-ccallback</value>
-          <value>-lgre-plugin-lua</value>
-          <value>-lgre-plugin-greio</value>
-          <value>-lgre-plugin-circle</value>
-          <value>-lgre-plugin-logger</value>
-          <value>-lgre-plugin-poly</value>
-          <value>-lgre-plugin-timer</value>
-          <value>-lrender-plugin-swrender</value>
-          <value>-lsblua</value>
-          <value>-lgreio</value>
-          <value>-lswrender</value>
-          <value>--no-whole-archive</value>
         </option>
         <option id="com.crt.advproject.gas.fpu" type="enum">
           <value>com.crt.advproject.gas.fpu.fpv5dp.hard</value>

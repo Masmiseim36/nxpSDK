@@ -1,7 +1,7 @@
 /**************************************************************************
 MODULE:    MAIN
 CONTAINS:  Example application using MicroCANopen
-           NXP LPC54xxx derivatives with CAN interface.
+           NXP i.MX RT 10xx and 117x derivatives with CAN interface.
 COPYRIGHT: (c) Embedded Systems Academy (EmSA) 2002-2020
            All rights reserved. www.em-sa.com/nxp
 DISCLAIM:  Read and understand our disclaimer before using this code!
@@ -16,17 +16,23 @@ VERSION:   7.10, ESA 20-SEP-02
            $LastChangedRevision: 5038 $
 ***************************************************************************/
 
+/*******************************************************************************
+ * Includes
+ ******************************************************************************/
 // Include all MicroCANopen Plus Manager relevant files
 #include "mcop_mgr_inc.h"
+#include "pin_mux.h"
+#include "clock_config.h"
+#include "board.h"
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
 
+
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
-void Init_HW(void);
 
 /*******************************************************************************
  * Variables
@@ -74,7 +80,21 @@ int main(void)
     uint16_t nmtreset_delay;    // delay before resetting slave nodes
 
     // Initialize hardware components needed for this example
-    Init_HW();
+    BOARD_ConfigMPU();
+    BOARD_InitPins();
+    BOARD_BootClockRUN();
+    BOARD_InitDebugConsole();
+
+    /* Avoiding CAN_CLOCK_CHECK_NO_AFFECTS error in case semihosting console is used */
+    CLOCK_EnableClock(kCLOCK_Lpuart1);
+
+#if USE_LEDS
+    // Initialize status LEDs
+    LIBCB_InitLeds();
+#endif
+
+    // initialize timer interrupt - 1ms period
+    SysTick_Config(SystemCoreClock / 1000U);
 
 #if USE_CANOPEN_FD
     PRINTF("\r\nStarting CANopen FD Library manager example\r\n");
@@ -114,39 +134,6 @@ int main(void)
 
     } // end of while(1)
 } // end of main
-
-/*******************************************************************************
- * DOES:    Initialize hardware components needed for this example
- * RETURNS: nothing
- ******************************************************************************/
-void Init_HW()
-{
-    /* Board pin, clock, debug console init */
-    BOARD_ConfigMPU();
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
-    /* Update the core clock */
-    SystemCoreClockUpdate();
-
-    /* Set PERCLK_CLK source to OSC_CLK*/
-    CLOCK_SetMux(kCLOCK_PerclkMux, 1U);
-    /* Set PERCLK_CLK divider to 2 */
-    CLOCK_SetDiv(kCLOCK_PerclkDiv, 1U);
-
-    /* Avoiding CAN_CLOCK_CHECK_NO_AFFECTS error in case semihosting console is used */
-    CLOCK_EnableClock(kCLOCK_Lpuart1);
-
-#if USE_LEDS
-    // Initialize status LEDs
-    LIBCB_InitLeds();
-#endif
-
-    // initialize timer interrupt - 1ms period
-    SysTick_Config(SystemCoreClock / 1000U);
-
-    return;
-}
 
 /*******************************************************************************
  * DOES:    System Tick handler, execute every 1 ms

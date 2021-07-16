@@ -11,21 +11,38 @@
 #include "board.h"
 #include "pin_mux.h"
 
+/*******************************************************************************
+ * Variables
+ ******************************************************************************/
+
+/* Microphone instance. */
 static EIQ_Micro_t micro;
+/* Ready callback. */
 static EIQ_IBufferAddrUpdater_t readyCallback = NULL;
 
+/* Micro buffer located in noncachable memory block. */
 #if !defined(__ARMCC_VERSION)
-AT_NONCACHEABLE_SECTION_ALIGN(uint8_t buffer[AUDIO_NUM * BUFFER_SIZE * BUFFER_NUM], 4);
+AT_NONCACHEABLE_SECTION_ALIGN(static uint8_t buffer[BUFFER_SIZE * (BUFFER_NUM + 1)], 4);
 #else
-AT_NONCACHEABLE_SECTION_ALIGN_INIT(uint8_t buffer[AUDIO_NUM * BUFFER_SIZE * BUFFER_NUM], 4);
+AT_NONCACHEABLE_SECTION_ALIGN_INIT(static uint8_t buffer[BUFFER_SIZE * (BUFFER_NUM + 1)], 4);
 #endif
 
-static uint8_t bufIdx = 0;
-static sai_handle_t handle = {0};
+typedef struct
+{
+    int head;
+    int tail;
+    uint8_t* start;
+} audio_queue_t;
+
+/* Currently used buffer index. */
+static audio_queue_t queue;
+/* Sai configurations. */
+AT_NONCACHEABLE_SECTION_INIT(static sai_edma_handle_t s_micHandle) = {0};
 static codec_handle_t codecHandle;
 static wm8960_config_t wm8960Config;
 static codec_config_t boardCodecConfig;
-sai_transceiver_t g_transceiverConfig;
+static edma_config_t dmaConfig = {0};
+static edma_handle_t dmaRxHandle = {0};
 
 static sai_transfer_t xfer = {NULL, 0};
 
@@ -36,41 +53,87 @@ static sai_transfer_t xfer = {NULL, 0};
  */
 static clock_audio_pll_config_t audioPllConfig;
 
-static void start(void){
-  memset(buffer, 0, AUDIO_NUM * BUFFER_SIZE * BUFFER_NUM);
-  SAI_RxSoftwareReset(DEMO_SAI, kSAI_ResetTypeSoftware);
-  xfer.dataSize = BUFFER_SIZE;
-  xfer.data = buffer;
-  bufIdx = 0;
+/*******************************************************************************
+ * Code
+ ******************************************************************************/
 
-  if (SAI_TransferReceiveNonBlocking(DEMO_SAI, &handle, &xfer) != kStatus_Success)
-  {
-    printf("SAI_TransferReceiveNonBlocking failed!\r\n");
-  }
+/*!
+ * @brief Starts transfer from microphone.
+ *
+ * This function start transfer from microphone to buffer. Ready handler is called
+ * when data are prepared.
+ */
+static void start(void)
+{
+    memset(buffer, 0, BUFFER_SIZE * (BUFFER_NUM + 1));
+    SAI_RxSoftwareReset(DEMO_SAI, kSAI_ResetTypeSoftware);
+    xfer.dataSize = BUFFER_SIZE;
+    xfer.data = buffer;
+    queue.head = 0;
+    queue.tail = 0;
+
+    if (SAI_TransferReceiveEDMA(DEMO_SAI, &s_micHandle, &xfer) != kStatus_Success)
+    {
+        printf("SAI_TransferReceiveEDMA failed!\r\n");
+    }
 }
 
-static Dims_t getResolution(){
-  Dims_t dims;
-  dims.width = AUDIO_NUM;
-  dims.height = BUFFER_SIZE;
-  return dims;
+/*!
+ * @brief Gets speaker data dimensions.
+ *
+ * This function gets dimensions of the speaker.
+ * width for BUFFER_NUM and height for BUFFER_SIZE
+ *
+ * @return display dimensions
+ */
+static Dims_t getResolution(void)
+{
+    Dims_t dims;
+    dims.width = BUFFER_NUM;
+    dims.height = BUFFER_SIZE;
+    return dims;
 }
 
-static void notify(void){
+/*!
+ * @brief Notifies microphone.
+ *
+ * This function notifies microphone driver that data in buffer could be overwritten.
+ */
+static void notify(void)
+{
+    if (queue.head == 0)
+    {
+        /* Prepend last buffer to the queue start to allow continuous processing
+           of sliding window up to BUFFER_SIZE */
+        memcpy(buffer + (BUFFER_SIZE * BUFFER_NUM), buffer, BUFFER_SIZE);
+    }
 
-  if(++bufIdx == AUDIO_NUM * BUFFER_NUM){
-      bufIdx = 0;
-  }
-  xfer.data = buffer + bufIdx * BUFFER_SIZE;
-  if (SAI_TransferReceiveNonBlocking(DEMO_SAI, &handle, &xfer) != kStatus_Success)
-  {
-    printf("SAI_TransferReceiveNonBlocking failed!\r\n");
-  }
+    queue.head = (queue.head + 1) % BUFFER_NUM;
+    xfer.data = queue.start + queue.head * BUFFER_SIZE;
 
+    /* Drop oldest unprocessed buffers when overflowing */
+    if (queue.head == queue.tail)
+    {
+        queue.tail = (queue.tail + 1) % BUFFER_NUM;
+    }
+
+    if (SAI_TransferReceiveEDMA(DEMO_SAI, &s_micHandle, &xfer) != kStatus_Success)
+    {
+        printf("SAI_TransferReceiveEDMA failed!\r\n");
+    }
 }
 
-static void setReadyCallback(EIQ_IBufferAddrUpdater_t updater){
-  readyCallback = updater;
+/*!
+ * @brief Sets ready callback.
+ *
+ * This function sets external callback which is called when
+ * camera buffer is ready.
+ *
+ * @param updater callback
+ */
+static void setReadyCallback(EIQ_IBufferAddrUpdater_t updater)
+{
+    readyCallback = updater;
 }
 
 /*!
@@ -78,33 +141,100 @@ static void setReadyCallback(EIQ_IBufferAddrUpdater_t updater){
  *
  * @param pointer to I2S base address
  * @param pointer to sai edma handler
- * @param status
+ * @param status status code
  * @param pointer to user data
  */
-static void callback(I2S_Type *base, sai_handle_t *handle, status_t status, void *userData)
+static void callback(I2S_Type *base, sai_edma_handle_t *handle, status_t status, void *userData)
 {
-  if (kStatus_SAI_RxError == status)
-  {
-    printf("SAI_Rx failed!\r\n");
-    return;
-  }
+    if (kStatus_SAI_RxError == status)
+    {
+        printf("SAI_Rx failed!\r\n");
+        return;
+    }
 
-  uint32_t addr = (uint32_t)xfer.data;
-  notify();
+    uint32_t addr = (uint32_t)xfer.data;
+    notify();
 
-  if (readyCallback != NULL){
-    readyCallback((uint32_t) addr);
-  }
+    if (readyCallback != NULL)
+    {
+        readyCallback((uint32_t) addr);
+    }
 }
 
-static uint8_t* getReadyBuff()
+/*!
+ * @brief Gets ready buffer
+ *
+ * @return updated buffer with latest data from mic
+ */
+static uint8_t* getReadyBuff(void)
 {
-  if ((bufIdx % AUDIO_NUM) == 0U)
+    uint8_t* p = queue.start + queue.tail * BUFFER_SIZE;
+    queue.tail = (queue.tail + 1) % BUFFER_NUM;
+
+    return p;
+}
+
+/*!
+ * @brief Gets ready status
+ *
+ * @return True if data are ready, otherwise return false
+ */
+static bool isReady(void)
+{
+    return queue.tail != queue.head;
+}
+
+/*!
+ * @brief Enables SAI output Mclk output
+ *
+ * @param Enables SAI Mclk output flag. Set true for output otherwise input is used
+ */
+static void AUDIO_EnableSaiMclkOutput(bool enable)
+{
+#if defined( CPU_MIMXRT1176DVMAA_cm7 ) || defined( CPU_MIMXRT1166DVM6A_cm7 )
+  if(enable)
   {
-    return buffer + (bufIdx - ((bufIdx == AUDIO_NUM) ? AUDIO_NUM : 0))
-        * BUFFER_SIZE;
+    IOMUXC_GPR->GPR0 |= IOMUXC_GPR_GPR0_SAI1_MCLK_DIR_MASK;
   }
-  return NULL;
+  else
+  {
+    IOMUXC_GPR->GPR0 &= (~IOMUXC_GPR_GPR0_SAI1_MCLK_DIR_MASK);
+  }
+#else
+  if (enable)
+  {
+    IOMUXC_GPR->GPR1 |= IOMUXC_GPR_GPR1_SAI1_MCLK_DIR_MASK;
+  }
+  else
+  {
+    IOMUXC_GPR->GPR1 &= (~IOMUXC_GPR_GPR1_SAI1_MCLK_DIR_MASK);
+  }
+#endif
+}
+
+/*!
+ * @brief Initialize SAI
+ *
+ */
+static void AUDIO_InitClock(void)
+{
+#if defined( CPU_MIMXRT1176DVMAA_cm7 ) || defined( CPU_MIMXRT1166DVM6A_cm7 )
+    /* Clock setting for LPI2C */
+    CLOCK_SetRootClockMux(kCLOCK_Root_Lpi2c5, DEMO_LPI2C_CLOCK_SOURCE_SELECT);
+
+    /* Clock setting for SAI1 */
+    CLOCK_SetRootClockMux(kCLOCK_Root_Sai1, DEMO_SAI1_CLOCK_SOURCE_SELECT);
+    CLOCK_SetRootClockDiv(kCLOCK_Root_Sai1, DEMO_SAI1_CLOCK_SOURCE_DIVIDER + 1U);
+#else
+    /* Clock setting for LPI2C */
+    CLOCK_SetMux(kCLOCK_Lpi2cMux, DEMO_LPI2C_CLOCK_SOURCE_SELECT);
+    CLOCK_SetDiv(kCLOCK_Lpi2cDiv, DEMO_LPI2C_CLOCK_SOURCE_DIVIDER);
+
+    /* Clock setting for SAI1 */
+    CLOCK_SetMux(kCLOCK_Sai1Mux, DEMO_SAI1_CLOCK_SOURCE_SELECT);
+    CLOCK_SetDiv(kCLOCK_Sai1PreDiv, DEMO_SAI1_CLOCK_SOURCE_PRE_DIVIDER);
+    CLOCK_SetDiv(kCLOCK_Sai1Div, DEMO_SAI1_CLOCK_SOURCE_DIVIDER);
+#endif
 }
 
 /*!
@@ -112,81 +242,104 @@ static uint8_t* getReadyBuff()
  */
 static void init(void)
 {
-  audioPllConfig.loopDivider = 32;  /* PLL loop divider. Valid range for DIV_SELECT divider value: 27~54. */
-  audioPllConfig.postDivider = 1;   /* Divider after the PLL, should only be 1, 2, 4, 8, 16. */
-  audioPllConfig.numerator = 77;    /* 30 bit numerator of fractional loop divider. */
-  audioPllConfig.denominator = 100; /* 30 bit denominator of fractional loop divider */
+    sai_transceiver_t saiConfig;
 
-  wm8960Config.i2cConfig.codecI2CInstance = BOARD_CODEC_I2C_INSTANCE;
-  wm8960Config.i2cConfig.codecI2CSourceClock = BOARD_CODEC_I2C_CLOCK_FREQ;
-  wm8960Config.route            = kWM8960_RoutePlaybackandRecord;
+    audioPllConfig.loopDivider = 32;  /* PLL loop divider. Valid range for DIV_SELECT divider value: 27~54. */
+    audioPllConfig.postDivider = 1;   /* Divider after the PLL, should only be 1, 2, 4, 8, 16. */
+    audioPllConfig.numerator = 77;    /* 30 bit numerator of fractional loop divider. */
+    audioPllConfig.denominator = 100; /* 30 bit denominator of fractional loop divider */
+
+    wm8960Config.i2cConfig.codecI2CInstance = BOARD_CODEC_I2C_INSTANCE;
+    wm8960Config.i2cConfig.codecI2CSourceClock = BOARD_CODEC_I2C_CLOCK_FREQ;
+    wm8960Config.route            = kWM8960_RoutePlaybackandRecord;
 #if defined( CPU_MIMXRT1176DVMAA_cm7 ) || defined( CPU_MIMXRT1166DVM6A_cm7 )
-  wm8960Config.leftInputSource  = kWM8960_InputDifferentialMicInput3,
-  wm8960Config.rightInputSource = kWM8960_InputDifferentialMicInput2,
+    wm8960Config.leftInputSource  = kWM8960_InputDifferentialMicInput3,
+    wm8960Config.rightInputSource = kWM8960_InputDifferentialMicInput2,
 #else
-  wm8960Config.rightInputSource = kWM8960_InputDifferentialMicInput2;
+    wm8960Config.rightInputSource = kWM8960_InputDifferentialMicInput2;
 #endif
-  wm8960Config.playSource       = kWM8960_PlaySourceDAC;
-  wm8960Config.slaveAddress     = WM8960_I2C_ADDR;
-  wm8960Config.bus              = kWM8960_BusI2S;
-#if defined( CPU_MIMXRT1176DVMAA_cm7 ) || defined( CPU_MIMXRT1166DVM6A_cm7 )
-  wm8960Config.format.mclk_HZ   = 24576000U;
-#else
-  wm8960Config.format.mclk_HZ = 6144000U;
+    wm8960Config.playSource       = kWM8960_PlaySourceDAC;
+    wm8960Config.slaveAddress     = WM8960_I2C_ADDR;
+    wm8960Config.bus              = kWM8960_BusI2S;
+    wm8960Config.format.mclk_HZ   = 12288750;
+    wm8960Config.format.sampleRate = kWM8960_AudioSampleRate16KHz;
+    wm8960Config.format.bitWidth = kWM8960_AudioBitWidth16bit;
+    wm8960Config.master_slave = true;
+
+    boardCodecConfig.codecDevType = kCODEC_WM8960;
+    boardCodecConfig.codecDevConfig = &wm8960Config;
+
+    /* Audio PLL clock initialization */
+    CLOCK_InitAudioPll(&audioPllConfig);
+
+    /* Enable MCLK clock */
+    AUDIO_EnableSaiMclkOutput(true);
+
+    /* Microphone clock init */
+    AUDIO_InitClock();
+
+    /* Init DMAMUX */
+    DMAMUX_SetSource(DEMO_DMAMUX, DEMO_RX_EDMA_CHANNEL, (uint8_t)DEMO_SAI_RX_SOURCE);
+    DMAMUX_EnableChannel(DEMO_DMAMUX, DEMO_RX_EDMA_CHANNEL);
+
+    /* Init DMA and create handle for DMA */
+    EDMA_GetDefaultConfig(&dmaConfig);
+    EDMA_Init(DEMO_DMA, &dmaConfig);
+    EDMA_CreateHandle(&dmaRxHandle, DEMO_DMA, DEMO_RX_EDMA_CHANNEL);
+#if defined(FSL_FEATURE_EDMA_HAS_CHANNEL_MUX) && FSL_FEATURE_EDMA_HAS_CHANNEL_MUX
+    EDMA_SetChannelMux(DEMO_DMA, DEMO_RX_EDMA_CHANNEL, DEMO_SAI_RX_EDMA_CHANNEL);
 #endif
-  wm8960Config.format.sampleRate = kWM8960_AudioSampleRate16KHz;
-  wm8960Config.format.bitWidth = kWM8960_AudioBitWidth16bit;
-  wm8960Config.master_slave = false;
 
-  boardCodecConfig.codecDevType = kCODEC_WM8960;
-  boardCodecConfig.codecDevConfig = &wm8960Config;
+    /* SAI init */
+    SAI_Init(DEMO_SAI);
 
-  // Board inicialization.
-  CLOCK_InitAudioPll(&audioPllConfig);
+    /* Clear RCSR interrupt flags. */
+    BOARD_ClearRxInterruptFlags();
+    SAI_TransferRxCreateHandleEDMA(DEMO_SAI, &s_micHandle, callback, NULL, &dmaRxHandle);
 
-  /* Enable MCLK clock */
-  BOARD_EnableSaiMclkOutput(true);
+    /* I2S mode configurations */
+    SAI_GetClassicI2SConfig(&saiConfig, DEMO_AUDIO_BIT_WIDTH, kSAI_MonoRight, kSAI_Channel0Mask);
+    saiConfig.syncMode = kSAI_ModeSync;
+    saiConfig.bitClock.bclkPolarity = kSAI_PolarityActiveLow;
+    saiConfig.masterSlave = kSAI_Slave;
+    SAI_TransferRxSetConfigEDMA(DEMO_SAI, &s_micHandle, &saiConfig);
 
-  /* Microphone clock init */
-  BOARD_Microphone_Init();
+    /* set bit clock divider */
+    SAI_RxSetBitClockRate(DEMO_SAI, DEMO_AUDIO_MASTER_CLOCK, DEMO_AUDIO_SAMPLE_RATE, DEMO_AUDIO_BIT_WIDTH,
+                          DEMO_AUDIO_DATA_CHANNEL);
 
-  /* SAI init */
-  SAI_Init(DEMO_SAI);
-
-  /* Clear RCSR interrupt flags. */
-  BOARD_ClearRxInterruptFlags();
-  SAI_TransferRxCreateHandle(DEMO_SAI, &handle, callback, NULL);
-
-  /* I2S mode configurations */
-  SAI_GetClassicI2SConfig(&g_transceiverConfig, DEMO_AUDIO_BIT_WIDTH, kSAI_Stereo, kSAI_Channel0Mask);
-  g_transceiverConfig.syncMode = kSAI_ModeSync;
-  SAI_TransferRxSetConfig(DEMO_SAI, &handle, &g_transceiverConfig);
-
-  /* set bit clock divider */
-  SAI_RxSetBitClockRate(DEMO_SAI, DEMO_AUDIO_MASTER_CLOCK, DEMO_AUDIO_SAMPLE_RATE, DEMO_AUDIO_BIT_WIDTH,
-                        DEMO_AUDIO_DATA_CHANNEL);
-
-  /* master clock configurations */
+    /* master clock configurations */
 #if (defined(FSL_FEATURE_SAI_HAS_MCR) && (FSL_FEATURE_SAI_HAS_MCR)) || \
-  (defined(FSL_FEATURE_SAI_HAS_MCLKDIV_REGISTER) && (FSL_FEATURE_SAI_HAS_MCLKDIV_REGISTER))
+    (defined(FSL_FEATURE_SAI_HAS_MCLKDIV_REGISTER) && (FSL_FEATURE_SAI_HAS_MCLKDIV_REGISTER))
 #if defined(FSL_FEATURE_SAI_HAS_MCLKDIV_REGISTER) && (FSL_FEATURE_SAI_HAS_MCLKDIV_REGISTER)
-  mclkConfig.mclkHz          = DEMO_AUDIO_MASTER_CLOCK;
-  mclkConfig.mclkSourceClkHz = DEMO_SAI_CLK_FREQ;
+    mclkConfig.mclkHz          = DEMO_AUDIO_MASTER_CLOCK;
+    mclkConfig.mclkSourceClkHz = DEMO_SAI_CLK_FREQ;
 #endif
-  SAI_SetMasterClockConfig(DEMO_SAI, &mclkConfig);
+    SAI_SetMasterClockConfig(DEMO_SAI, &mclkConfig);
 #endif
 
-  /* Use default setting to init codec */
-  CODEC_Init(&codecHandle, &boardCodecConfig);
+    /* Use default setting to init codec */
+    CODEC_Init(&codecHandle, &boardCodecConfig);
 }
 
-EIQ_Micro_t* EIQ_MicroInit(){
-  micro.base.getResolution = getResolution;
-  micro.base.notify = notify;
-  micro.base.start = start;
-  micro.setReadyCallback = setReadyCallback;
-  micro.getReadyBuff = getReadyBuff;
-  init();
+/*!
+ * @brief Initializes microphone.
+ *
+ * This function initializes microphone.
+ *
+ * @return pointer to initialized microphone instance
+ */
+EIQ_Micro_t* EIQ_MicroInit(void)
+{
+    micro.base.getResolution = getResolution;
+    micro.base.notify = notify;
+    micro.base.start = start;
+    micro.setReadyCallback = setReadyCallback;
+    micro.getReadyBuff = getReadyBuff;
+    micro.isReady = isReady;
 
-  return &micro;
+    queue.start = buffer + BUFFER_SIZE;
+    init();
+
+    return &micro;
 }

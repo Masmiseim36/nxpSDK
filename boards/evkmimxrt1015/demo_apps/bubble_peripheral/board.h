@@ -87,23 +87,6 @@
 #define BOARD_ARDUINO_I2C_IRQ   (LPI2C1_IRQn)
 #define BOARD_ARDUINO_I2C_INDEX (1)
 
-/*! @brief The WIFI-QCA shield pin. */
-#define BOARD_INITSILEX2401SHIELD_PWRON_GPIO      GPIO3               /*!< GPIO device name: GPIO */
-#define BOARD_INITSILEX2401SHIELD_PWRON_PORT      3U                  /*!< PORT device index: 3 */
-#define BOARD_INITSILEX2401SHIELD_PWRON_GPIO_PIN  2U                  /*!< PIO3 pin index: 2 */
-#define BOARD_INITSILEX2401SHIELD_PWRON_PIN_NAME  GPIO3_34            /*!< Pin name */
-#define BOARD_INITSILEX2401SHIELD_PWRON_LABEL     "PWRON"             /*!< Label */
-#define BOARD_INITSILEX2401SHIELD_PWRON_NAME      "PWRON"             /*!< Identifier name */
-#define BOARD_INITSILEX2401SHIELD_PWRON_DIRECTION kGPIO_DigitalOutput /*!< Direction */
-
-#define BOARD_INITSILEX2401SHIELD_IRQ_GPIO      GPIO2              /*!< GPIO device name: GPIO */
-#define BOARD_INITSILEX2401SHIELD_IRQ_PORT      2U                 /*!< PORT device index: 2 */
-#define BOARD_INITSILEX2401SHIELD_IRQ_GPIO_PIN  20U                /*!< PIO2 pin index: 20 */
-#define BOARD_INITSILEX2401SHIELD_IRQ_PIN_NAME  GPIO2_20           /*!< Pin name */
-#define BOARD_INITSILEX2401SHIELD_IRQ_LABEL     "IRQ"              /*!< Label */
-#define BOARD_INITSILEX2401SHIELD_IRQ_NAME      "IRQ"              /*!< Identifier name */
-#define BOARD_INITSILEX2401SHIELD_IRQ_DIRECTION kGPIO_DigitalInput /*!< Direction */
-
 #if defined(__cplusplus)
 extern "C" {
 #endif /* __cplusplus */

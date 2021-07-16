@@ -14,26 +14,20 @@ See the License for the specific language governing permissions and
 limitations under the License.
 ==============================================================================*/
 
-#include <algorithm>
-#include <functional>
-#include <queue>
-
 #include "get_top_n.h"
 
 // Returns the top N confidence values over threshold in the provided vector,
 // sorted by confidence in descending order.
 void MODEL_GetTopN(const uint8_t* tensorData, int tensorSize, tensor_type_t tensorType,
-                   size_t numResults, float threshold,
-                   std::vector<std::pair<float, int>>* topResults)
+                   size_t numResults, float threshold, result_t* topResults)
 {
-  // Will contain top N results in ascending order.
-  std::priority_queue<std::pair<float, int>, std::vector<std::pair<float, int>>,
-                      std::greater<std::pair<float, int>>>
-      top_result_pq;
+  for (int i = 0; i < numResults; i++) {
+    topResults[i] = {.score = 0.0f, .index = -1};
+  }
 
   const long count = tensorSize;
-  for (int i = 0; i < count; ++i) {
-    float value;
+  for (int i = 0; i < count; i++) {
+    float value = 0.0f;
     switch (tensorType) {
       case kTensorType_FLOAT32: {
         const float* predictions = reinterpret_cast<const float*>(tensorData);
@@ -57,18 +51,16 @@ void MODEL_GetTopN(const uint8_t* tensorData, int tensorSize, tensor_type_t tens
       continue;
     }
 
-    top_result_pq.push(std::pair<float, int>(value, i));
-
-    // If at capacity, kick the smallest value out.
-    if (top_result_pq.size() > numResults) {
-      top_result_pq.pop();
+    result_t pass = {.score = 0.0f, .index = -1};
+    for (int n = 0; n < numResults; n++) {
+      if (pass.index >= 0) {
+        result_t swap = topResults[n];
+        topResults[n] = pass;
+        pass = swap;
+      } else if (topResults[n].score < value) {
+        pass = topResults[n];
+        topResults[n] = {.score = value, .index = i};
+      }
     }
   }
-
-  // Copy to output vector and reverse into descending order.
-  while (!top_result_pq.empty()) {
-    topResults->push_back(top_result_pq.top());
-    top_result_pq.pop();
-  }
-  std::reverse(topResults->begin(), topResults->end());
 }

@@ -1,6 +1,6 @@
 # CROSS COMPILER SETTING
 SET(CMAKE_SYSTEM_NAME Generic)
-CMAKE_MINIMUM_REQUIRED (VERSION 3.1.1)
+CMAKE_MINIMUM_REQUIRED (VERSION 3.10.0)
 
 # THE VERSION NUMBER
 SET (Tutorial_VERSION_MAJOR 1)
@@ -52,7 +52,7 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../devices/MIMXRT1021
     ${ProjDirPath}/../../../../../components/uart
     ${ProjDirPath}/../../../../../components/lists
-    ${ProjDirPath}/../../../../../CMSIS/Include
+    ${ProjDirPath}/../../../../../CMSIS/Core/Include
     ${ProjDirPath}/../../../../../devices/MIMXRT1021/utilities
 )
 
@@ -81,11 +81,7 @@ include(driver_iomuxc_MIMXRT1021)
 
 include(driver_igpio_MIMXRT1021)
 
-include(CMSIS_Include_core_cm7_MIMXRT1021)
-
-include(CMSIS_Include_common_MIMXRT1021)
-
-include(CMSIS_Include_dsp_MIMXRT1021)
+include(CMSIS_Include_core_cm_MIMXRT1021)
 
 include(utilities_misc_utilities_MIMXRT1021)
 

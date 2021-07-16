@@ -1,12 +1,10 @@
-if(NOT DEVICE_MIMXRT1011_CMSIS_MIMXRT1011_INCLUDED)
-    
-    set(DEVICE_MIMXRT1011_CMSIS_MIMXRT1011_INCLUDED true CACHE BOOL "device_MIMXRT1011_CMSIS component is included.")
+include_guard(GLOBAL)
+message("device_MIMXRT1011_CMSIS component is included.")
 
 
-    target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
-        ${CMAKE_CURRENT_LIST_DIR}/.
-    )
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
+    ${CMAKE_CURRENT_LIST_DIR}/.
+)
 
-    include(CMSIS_Include_core_cm7_MIMXRT1011)
+include(CMSIS_Include_core_cm_MIMXRT1011)
 
-endif()

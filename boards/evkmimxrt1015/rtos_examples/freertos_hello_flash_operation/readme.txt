@@ -11,10 +11,10 @@ The example application creates two tasks called flash_operation_task and hello_
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.9
-- GCC ARM Embedded  9.3.1
-- Keil MDK  5.33
-- MCUXpresso  11.3.0
+- IAR embedded Workbench  9.10.2
+- GCC ARM Embedded  10.2.1
+- Keil MDK  5.34
+- MCUXpresso  11.4.0
 
 Hardware requirements
 =====================

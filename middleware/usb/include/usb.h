@@ -27,7 +27,7 @@
 /*! @brief Defines USB stack major version */
 #define USB_STACK_VERSION_MAJOR (2UL)
 /*! @brief Defines USB stack minor version */
-#define USB_STACK_VERSION_MINOR (7UL)
+#define USB_STACK_VERSION_MINOR (8UL)
 /*! @brief Defines USB stack bugfix version */
 #define USB_STACK_VERSION_BUGFIX (0U)
 

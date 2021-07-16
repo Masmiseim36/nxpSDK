@@ -14,7 +14,7 @@
     <definition extID="utility.debug_console.MIMXRT1062"/>
     <definition extID="component.mflash_file.MIMXRT1062"/>
     <definition extID="component.mflash.rt1060.MIMXRT1062"/>
-    <definition extID="middleware.freertos-aws_iot.vendor.nxp.ota.evkmimxrt1060.MIMXRT1062"/>
+    <definition extID="middleware.mbedtls.MIMXRT1062"/>
     <definition extID="middleware.mbedtls.port.ksdk.MIMXRT1062"/>
     <definition extID="middleware.mbedtls.rt.MIMXRT1062"/>
     <definition extID="middleware.freertos-aws_iot.vendor.nxp.secure_sockets.lwip.MIMXRT1062"/>
@@ -22,14 +22,17 @@
     <definition extID="middleware.freertos-aws_iot.demos_ota.MIMXRT1062"/>
     <definition extID="middleware.freertos-aws_iot.libraries.freertos_plus.aws.ota.MIMXRT1062"/>
     <definition extID="middleware.freertos-aws_iot.demos.dev_mode_key_provisioning.MIMXRT1062"/>
+    <definition extID="middleware.freertos-aws_iot.vendor.nxp.ota.MIMXRT1062"/>
     <definition extID="middleware.freertos-kernel.MIMXRT1062"/>
     <definition extID="middleware.freertos-kernel.heap_4.MIMXRT1062"/>
-    <definition extID="middleware.freertos-aws_iot.c_sdk.standard.shadow.MIMXRT1062"/>
-    <definition extID="middleware.freertos-aws_iot.c_sdk.standard.serializer.MIMXRT1062"/>
+    <definition extID="middleware.freertos-aws_iot.libraries.c_sdk.standard.shadow.MIMXRT1062"/>
+    <definition extID="middleware.freertos-aws_iot.libraries.c_sdk.standard.serializer.MIMXRT1062"/>
     <definition extID="middleware.freertos-aws_iot.libraries.3rdparty.pkcs11.MIMXRT1062"/>
     <definition extID="middleware.freertos-aws_iot.vendor.nxp.pkcs11.MIMXRT1062"/>
     <definition extID="middleware.freertos-aws_iot.libraries.abstractions.pkcs11.MIMXRT1062"/>
-    <definition extID="middleware.mbedtls.MIMXRT1062"/>
+    <definition extID="middleware.freertos-aws_iot.libraries.abstractions.pkcs11_mbedtls.MIMXRT1062"/>
+    <definition extID="middleware.freertos-aws_iot.libraries.logging.MIMXRT1062"/>
+    <definition extID="middleware.freertos-aws_iot.libraries.3rdparty.mbedtls_config.MIMXRT1062"/>
     <definition extID="platform.drivers.clock.MIMXRT1062"/>
     <definition extID="platform.drivers.common.MIMXRT1062"/>
     <definition extID="device.MIMXRT1062_CMSIS.MIMXRT1062"/>
@@ -43,27 +46,25 @@
     <definition extID="platform.utilities.assert.MIMXRT1062"/>
     <definition extID="platform.drivers.igpio.MIMXRT1062"/>
     <definition extID="driver.mdio-common.MIMXRT1062"/>
-    <definition extID="platform.Include_core_cm7.MIMXRT1062"/>
-    <definition extID="platform.Include_common.MIMXRT1062"/>
-    <definition extID="platform.Include_dsp.MIMXRT1062"/>
+    <definition extID="CMSIS_Include_core_cm.MIMXRT1062"/>
     <definition extID="component.mflash.common.MIMXRT1062"/>
-    <definition extID="middleware.freertos-aws_iot.common.MIMXRT1062"/>
+    <definition extID="middleware.freertos-aws_iot.libraries.abstractions.secure_sockets.MIMXRT1062"/>
+    <definition extID="middleware.freertos-aws_iot.libraries.c_sdk.standard.common.MIMXRT1062"/>
     <definition extID="middleware.freertos-kernel.extension.MIMXRT1062"/>
     <definition extID="middleware.freertos-aws_iot.libraries.abstractions.platform.MIMXRT1062"/>
-    <definition extID="middleware.freertos-aws_iot.libraries.abstractions.secure_sockets.MIMXRT1062"/>
+    <definition extID="middleware.freertos-aws_iot.libraries.freertos_plus.standard.tls.MIMXRT1062"/>
+    <definition extID="middleware.freertos-aws_iot.libraries.3rdparty.mbedtls_utils.MIMXRT1062"/>
+    <definition extID="middleware.freertos-aws_iot.libraries.freertos_plus.standard.crypto.MIMXRT1062"/>
+    <definition extID="middleware.freertos-aws_iot.libraries.freertos_plus.standard.utils.MIMXRT1062"/>
     <definition extID="middleware.freertos-aws_iot.network_manager.MIMXRT1062"/>
-    <definition extID="middleware.freertos-aws_iot.libraries.abstractions.wifi.MIMXRT1062"/>
     <definition extID="middleware.freertos-aws_iot.mqtt.MIMXRT1062"/>
+    <definition extID="middleware.freertos-aws_iot.libraries.coremqtt.MIMXRT1062"/>
+    <definition extID="middleware.freertos-aws_iot.libraries.abstractions.wifi.MIMXRT1062"/>
     <definition extID="middleware.freertos-aws_iot.libraries.3rdparty.jsmn.MIMXRT1062"/>
     <definition extID="middleware.freertos-aws_iot.libraries.3rdparty.tinycbor.MIMXRT1062"/>
     <definition extID="middleware.freertos-aws_iot.libraries.c_sdk.standard.https.MIMXRT1062"/>
     <definition extID="middleware.freertos-aws_iot.libraries.3rdparty.http_parser.MIMXRT1062"/>
-    <definition extID="middleware.freertos-aws_iot.libraries.freertos_plus.standard.crypto.MIMXRT1062"/>
-    <definition extID="middleware.freertos-aws_iot.libraries.abstractions.threading_alt.MIMXRT1062"/>
-    <definition extID="middleware.freertos-aws_iot.libraries.freertos_plus.standard.tls.MIMXRT1062"/>
-    <definition extID="middleware.freertos-aws_iot.libraries.3rdparty.mbedtls_utils.MIMXRT1062"/>
-    <definition extID="middleware.freertos-aws_iot.libraries.freertos_plus.standard.pkcs11.MIMXRT1062"/>
-    <definition extID="middleware.freertos-aws_iot.libraries.freertos_plus.standard.utils.MIMXRT1062"/>
+    <definition extID="middleware.freertos-aws_iot.libraries.corehttp.MIMXRT1062"/>
     <definition extID="platform.utilities.misc_utilities.MIMXRT1062"/>
     <definition extID="device.MIMXRT1062_system.MIMXRT1062"/>
     <definition extID="iar"/>
@@ -74,12 +75,12 @@
     <definition extID="com.crt.advproject.config.exe.debug"/>
     <definition extID="com.crt.advproject.config.exe.release"/>
   </externalDefinitions>
-  <example id="evkmimxrt1060_ota_demo_enet" name="ota_demo_enet" dependency="driver.mdio-enet.MIMXRT1062 driver.phy-device-ksz8081.MIMXRT1062 platform.drivers.trng.MIMXRT1062 platform.drivers.dcp.MIMXRT1062 platform.drivers.cache_armv7_m7.MIMXRT1062 platform.drivers.flexspi.MIMXRT1062 middleware.lwip.enet_ethernetif.MIMXRT1062 middleware.lwip.MIMXRT1062 driver.phy-common.MIMXRT1062 platform.drivers.enet.MIMXRT1062 utility.debug_console.MIMXRT1062 component.mflash_file.MIMXRT1062 component.mflash.rt1060.MIMXRT1062 middleware.freertos-aws_iot.vendor.nxp.ota.evkmimxrt1060.MIMXRT1062 middleware.mbedtls.port.ksdk.MIMXRT1062 middleware.mbedtls.rt.MIMXRT1062 middleware.freertos-aws_iot.vendor.nxp.secure_sockets.lwip.MIMXRT1062 middleware.freertos-aws_iot.demos.MIMXRT1062 middleware.freertos-aws_iot.demos_ota.MIMXRT1062 middleware.freertos-aws_iot.libraries.freertos_plus.aws.ota.MIMXRT1062 middleware.freertos-aws_iot.demos.dev_mode_key_provisioning.MIMXRT1062 middleware.freertos-kernel.MIMXRT1062 middleware.freertos-kernel.heap_4.MIMXRT1062 middleware.freertos-aws_iot.c_sdk.standard.shadow.MIMXRT1062 middleware.freertos-aws_iot.c_sdk.standard.serializer.MIMXRT1062 middleware.freertos-aws_iot.libraries.3rdparty.pkcs11.MIMXRT1062 middleware.freertos-aws_iot.vendor.nxp.pkcs11.MIMXRT1062 middleware.freertos-aws_iot.libraries.abstractions.pkcs11.MIMXRT1062 middleware.mbedtls.MIMXRT1062 platform.drivers.clock.MIMXRT1062 platform.drivers.common.MIMXRT1062 device.MIMXRT1062_CMSIS.MIMXRT1062 component.lpuart_adapter.MIMXRT1062 component.serial_manager.MIMXRT1062 component.lists.MIMXRT1062 component.serial_manager_uart.MIMXRT1062 platform.drivers.lpuart.MIMXRT1062 device.MIMXRT1062_startup.MIMXRT1062 platform.drivers.iomuxc.MIMXRT1062 platform.utilities.assert.MIMXRT1062 platform.drivers.igpio.MIMXRT1062 driver.mdio-common.MIMXRT1062 platform.Include_core_cm7.MIMXRT1062 platform.Include_common.MIMXRT1062 platform.Include_dsp.MIMXRT1062 component.mflash.common.MIMXRT1062 middleware.freertos-aws_iot.common.MIMXRT1062 middleware.freertos-kernel.extension.MIMXRT1062 middleware.freertos-aws_iot.libraries.abstractions.platform.MIMXRT1062 middleware.freertos-aws_iot.libraries.abstractions.secure_sockets.MIMXRT1062 middleware.freertos-aws_iot.network_manager.MIMXRT1062 middleware.freertos-aws_iot.libraries.abstractions.wifi.MIMXRT1062 middleware.freertos-aws_iot.mqtt.MIMXRT1062 middleware.freertos-aws_iot.libraries.3rdparty.jsmn.MIMXRT1062 middleware.freertos-aws_iot.libraries.3rdparty.tinycbor.MIMXRT1062 middleware.freertos-aws_iot.libraries.c_sdk.standard.https.MIMXRT1062 middleware.freertos-aws_iot.libraries.3rdparty.http_parser.MIMXRT1062 middleware.freertos-aws_iot.libraries.freertos_plus.standard.crypto.MIMXRT1062 middleware.freertos-aws_iot.libraries.abstractions.threading_alt.MIMXRT1062 middleware.freertos-aws_iot.libraries.freertos_plus.standard.tls.MIMXRT1062 middleware.freertos-aws_iot.libraries.3rdparty.mbedtls_utils.MIMXRT1062 middleware.freertos-aws_iot.libraries.freertos_plus.standard.pkcs11.MIMXRT1062 middleware.freertos-aws_iot.libraries.freertos_plus.standard.utils.MIMXRT1062 platform.utilities.misc_utilities.MIMXRT1062 device.MIMXRT1062_system.MIMXRT1062" category="aws_examples">
+  <example id="evkmimxrt1060_ota_demo_enet" name="ota_demo_enet" dependency="driver.mdio-enet.MIMXRT1062 driver.phy-device-ksz8081.MIMXRT1062 platform.drivers.trng.MIMXRT1062 platform.drivers.dcp.MIMXRT1062 platform.drivers.cache_armv7_m7.MIMXRT1062 platform.drivers.flexspi.MIMXRT1062 middleware.lwip.enet_ethernetif.MIMXRT1062 middleware.lwip.MIMXRT1062 driver.phy-common.MIMXRT1062 platform.drivers.enet.MIMXRT1062 utility.debug_console.MIMXRT1062 component.mflash_file.MIMXRT1062 component.mflash.rt1060.MIMXRT1062 middleware.mbedtls.MIMXRT1062 middleware.mbedtls.port.ksdk.MIMXRT1062 middleware.mbedtls.rt.MIMXRT1062 middleware.freertos-aws_iot.vendor.nxp.secure_sockets.lwip.MIMXRT1062 middleware.freertos-aws_iot.demos.MIMXRT1062 middleware.freertos-aws_iot.demos_ota.MIMXRT1062 middleware.freertos-aws_iot.libraries.freertos_plus.aws.ota.MIMXRT1062 middleware.freertos-aws_iot.demos.dev_mode_key_provisioning.MIMXRT1062 middleware.freertos-aws_iot.vendor.nxp.ota.MIMXRT1062 middleware.freertos-kernel.MIMXRT1062 middleware.freertos-kernel.heap_4.MIMXRT1062 middleware.freertos-aws_iot.libraries.c_sdk.standard.shadow.MIMXRT1062 middleware.freertos-aws_iot.libraries.c_sdk.standard.serializer.MIMXRT1062 middleware.freertos-aws_iot.libraries.3rdparty.pkcs11.MIMXRT1062 middleware.freertos-aws_iot.vendor.nxp.pkcs11.MIMXRT1062 middleware.freertos-aws_iot.libraries.abstractions.pkcs11.MIMXRT1062 middleware.freertos-aws_iot.libraries.abstractions.pkcs11_mbedtls.MIMXRT1062 middleware.freertos-aws_iot.libraries.logging.MIMXRT1062 middleware.freertos-aws_iot.libraries.3rdparty.mbedtls_config.MIMXRT1062 platform.drivers.clock.MIMXRT1062 platform.drivers.common.MIMXRT1062 device.MIMXRT1062_CMSIS.MIMXRT1062 component.lpuart_adapter.MIMXRT1062 component.serial_manager.MIMXRT1062 component.lists.MIMXRT1062 component.serial_manager_uart.MIMXRT1062 platform.drivers.lpuart.MIMXRT1062 device.MIMXRT1062_startup.MIMXRT1062 platform.drivers.iomuxc.MIMXRT1062 platform.utilities.assert.MIMXRT1062 platform.drivers.igpio.MIMXRT1062 driver.mdio-common.MIMXRT1062 CMSIS_Include_core_cm.MIMXRT1062 component.mflash.common.MIMXRT1062 middleware.freertos-aws_iot.libraries.abstractions.secure_sockets.MIMXRT1062 middleware.freertos-aws_iot.libraries.c_sdk.standard.common.MIMXRT1062 middleware.freertos-kernel.extension.MIMXRT1062 middleware.freertos-aws_iot.libraries.abstractions.platform.MIMXRT1062 middleware.freertos-aws_iot.libraries.freertos_plus.standard.tls.MIMXRT1062 middleware.freertos-aws_iot.libraries.3rdparty.mbedtls_utils.MIMXRT1062 middleware.freertos-aws_iot.libraries.freertos_plus.standard.crypto.MIMXRT1062 middleware.freertos-aws_iot.libraries.freertos_plus.standard.utils.MIMXRT1062 middleware.freertos-aws_iot.network_manager.MIMXRT1062 middleware.freertos-aws_iot.mqtt.MIMXRT1062 middleware.freertos-aws_iot.libraries.coremqtt.MIMXRT1062 middleware.freertos-aws_iot.libraries.abstractions.wifi.MIMXRT1062 middleware.freertos-aws_iot.libraries.3rdparty.jsmn.MIMXRT1062 middleware.freertos-aws_iot.libraries.3rdparty.tinycbor.MIMXRT1062 middleware.freertos-aws_iot.libraries.c_sdk.standard.https.MIMXRT1062 middleware.freertos-aws_iot.libraries.3rdparty.http_parser.MIMXRT1062 middleware.freertos-aws_iot.libraries.corehttp.MIMXRT1062 platform.utilities.misc_utilities.MIMXRT1062 device.MIMXRT1062_system.MIMXRT1062" category="aws_examples">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
     <memory>
-      <memoryBlock id="BOARD_FLASH_evkmimxrt1060" name="BOARD_FLASH" addr="60040000" size="000C0000" type="ExtFlash" access="RO"/>
+      <memoryBlock id="BOARD_FLASH_evkmimxrt1060" name="BOARD_FLASH" addr="60040000" size="00200000" type="ExtFlash" access="RO"/>
       <memoryBlock id="SRAM_DTC_evkmimxrt1060" name="SRAM_DTC" addr="20000000" size="00020000" type="RAM" access="RW"/>
       <memoryBlock id="SRAM_ITC_evkmimxrt1060" name="SRAM_ITC" addr="00000000" size="00020000" type="RAM" access="RW"/>
       <memoryBlock id="SRAM_OC_evkmimxrt1060" name="SRAM_OC" addr="20200000" size="000C0000" type="RAM" access="RW"/>
@@ -98,9 +99,11 @@
           <value>USE_RTOS=1</value>
           <value>MBEDTLS_CONFIG_FILE='"aws_mbedtls_config.h"'</value>
           <value>OTA_DEVEL_MODE=1</value>
-          <value>MFLASH_FILE_BASEADDR=5767168</value>
-          <value>FSL_RTOS_FREE_RTOS</value>
+          <value>LWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1</value>
+          <value>MFLASH_FILE_BASEADDR=7340032</value>
+          <value>SDK_OS_FREE_RTOS</value>
           <value>SERIAL_PORT_TYPE_UART=1</value>
+          <value>MCUXPRESSO_SDK</value>
         </option>
         <option id="com.crt.advproject.gcc.fpu" type="enum">
           <value>com.crt.advproject.gcc.fpu.fpv5dp.hard</value>
@@ -130,9 +133,6 @@
           <value>isd=*(NonCacheable.init);region=SRAM_DTC;type=.data</value>
           <value>isd=*(NonCacheable);region=SRAM_DTC;type=.bss</value>
         </option>
-        <option id="com.crt.advproject.link.memory.heapAndStack" type="string">
-          <value>&amp;Heap:Default;Default;0x200&amp;Stack:Default;Default;0x200</value>
-        </option>
       </toolchainSetting>
     </toolchainSettings>
     <debug_configurations>
@@ -147,14 +147,15 @@
       </debug_configuration>
     </debug_configurations>
     <include_paths>
+      <include_path path="boards/evkmimxrt1060" project_relative_path="freertos/config_files" type="c_include"/>
       <include_path path="boards/evkmimxrt1060/aws_examples/ota_demo_enet/config_files" project_relative_path="source" type="c_include"/>
-      <include_path path="boards/evkmimxrt1060" project_relative_path="configs" type="c_include"/>
       <include_path path="boards/evkmimxrt1060/aws_examples/ota_demo_enet/config_files" project_relative_path="freertos/config_files" type="c_include"/>
       <include_path path="boards/evkmimxrt1060/aws_examples/ota_demo_enet" project_relative_path="evkmimxrt1060/aws_examples/ota_demo_enet" type="c_include"/>
+      <include_path path="boards/evkmimxrt1060/aws_examples/ota_demo_enet" project_relative_path="." type="c_include"/>
       <include_path path="boards/evkmimxrt1060/aws_examples/ota_demo_enet" project_relative_path="source" type="c_include"/>
       <include_path path="boards/evkmimxrt1060/aws_examples/ota_demo_enet" project_relative_path="board" type="c_include"/>
+      <include_path path="boards/evkmimxrt1060" project_relative_path="freertos/config_files" type="asm_include"/>
       <include_path path="boards/evkmimxrt1060/aws_examples/ota_demo_enet/config_files" project_relative_path="freertos/config_files" type="asm_include"/>
-      <include_path path="boards/evkmimxrt1060" project_relative_path="configs" type="asm_include"/>
     </include_paths>
     <source path="boards/evkmimxrt1060/aws_examples/ota_demo_enet/iar" project_relative_path="./" type="workspace" toolchain="iar">
       <files mask="ota_demo_enet.ewd"/>
@@ -179,38 +180,42 @@
       <files mask="build_flexspi_nor_release.bat"/>
       <files mask="build_flexspi_nor_release.sh"/>
     </source>
-    <source path="boards/evkmimxrt1060/aws_examples/ota_demo_enet/linkscripts" project_relative_path="linkscripts" type="src" toolchain="mcuxpresso">
+    <source path="boards/evkmimxrt1060/aws_examples/ota_demo_enet/mcux/linkscripts" project_relative_path="linkscripts" type="src" toolchain="mcuxpresso">
       <files mask="bss.ldt"/>
       <files mask="data.ldt"/>
       <files mask="main_text.ldt"/>
       <files mask="boot_hdr_MIMXRT1060.ldt"/>
     </source>
-    <source path="boards/evkmimxrt1060/aws_examples/ota_demo_enet/iar" project_relative_path="evkmimxrt1060/aws_examples/ota_demo_enet/linker" type="linker" toolchain="iar">
+    <source path="boards/evkmimxrt1060/aws_examples/ota_demo_enet/iar/linker" project_relative_path="evkmimxrt1060/aws_examples/ota_demo/iar" type="linker" toolchain="iar">
       <files mask="MIMXRT1062xxxxx_flexspi_nor.icf"/>
     </source>
-    <source path="boards/evkmimxrt1060/aws_examples/ota_demo_enet/mdk" project_relative_path="evkmimxrt1060/aws_examples/ota_demo_enet/linker" type="linker" toolchain="mdk">
+    <source path="boards/evkmimxrt1060/aws_examples/ota_demo_enet/mdk/linker" project_relative_path="evkmimxrt1060/aws_examples/ota_demo/mdk" type="linker" toolchain="mdk">
       <files mask="MIMXRT1062xxxxx_flexspi_nor.scf"/>
     </source>
-    <source path="boards/evkmimxrt1060/aws_examples/ota_demo_enet/armgcc" project_relative_path="evkmimxrt1060/aws_examples/ota_demo_enet/linker" type="linker" toolchain="armgcc">
+    <source path="boards/evkmimxrt1060/aws_examples/ota_demo_enet/armgcc/linker" project_relative_path="evkmimxrt1060/aws_examples/ota_demo_enet/armgcc" type="linker" toolchain="armgcc">
       <files mask="MIMXRT1062xxxxx_flexspi_nor.ld"/>
     </source>
     <source path="boards/evkmimxrt1060/aws_examples/ota_demo_enet/config_files" project_relative_path="source" type="c_include">
       <files mask="aws_mbedtls_config.h"/>
     </source>
     <source path="boards/evkmimxrt1060/aws_examples/ota_demo_enet/config_files" project_relative_path="freertos/config_files" type="c_include">
-      <files mask="FreeRTOSConfig.h"/>
       <files mask="aws_bufferpool_config.h"/>
       <files mask="aws_demo_config.h"/>
       <files mask="aws_ggd_config.h"/>
       <files mask="aws_mqtt_config.h"/>
-      <files mask="aws_ota_agent_config.h"/>
       <files mask="aws_secure_sockets_config.h"/>
       <files mask="aws_shadow_config.h"/>
       <files mask="aws_wifi_config.h"/>
       <files mask="FreeRTOSIPConfig.h"/>
       <files mask="iot_config.h"/>
       <files mask="iot_mqtt_agent_config.h"/>
-      <files mask="iot_pkcs11_config.h"/>
+      <files mask="core_pkcs11_config.h"/>
+      <files mask="core_http_config.h"/>
+      <files mask="core_mqtt_config.h"/>
+      <files mask="FreeRTOSConfig.h"/>
+    </source>
+    <source path="boards/evkmimxrt1060/aws_examples/ota_demo_enet/config_files" project_relative_path="freertos/config_files" type="c_include">
+      <files mask="aws_ota_agent_config.h"/>
     </source>
     <source path="boards/evkmimxrt1060/aws_examples/ota_demo_enet/config_files" project_relative_path="freertos/config_files" type="c_include">
       <files mask="aws_iot_network_config.h"/>
@@ -221,10 +226,7 @@
       <files mask="ota_bootloader_hdr.c"/>
     </source>
     <source path="boards/evkmimxrt1060/aws_examples/ota_demo_enet" project_relative_path="source" type="c_include">
-      <files mask="ota_bootloader_supp.h"/>
-    </source>
-    <source path="boards/evkmimxrt1060/aws_examples/ota_demo_enet" project_relative_path="source" type="c_include">
-      <files mask="ota_bootloader_board.h"/>
+      <files mask="lwipopts.h"/>
     </source>
     <source path="boards/evkmimxrt1060/aws_examples/ota_demo_enet" project_relative_path="board" type="src">
       <files mask="pin_mux.c"/>
@@ -233,7 +235,10 @@
       <files mask="pin_mux.h"/>
     </source>
     <source path="boards/evkmimxrt1060/aws_examples/ota_demo_enet" project_relative_path="source" type="c_include">
-      <files mask="lwipopts.h"/>
+      <files mask="ota_bootloader_supp.h"/>
+    </source>
+    <source path="boards/evkmimxrt1060/aws_examples/ota_demo_enet" project_relative_path="board" type="c_include">
+      <files mask="ota_bootloader_board.h"/>
     </source>
     <source path="boards/evkmimxrt1060/aws_examples/ota_demo_enet" project_relative_path="board" type="src">
       <files mask="board.c"/>

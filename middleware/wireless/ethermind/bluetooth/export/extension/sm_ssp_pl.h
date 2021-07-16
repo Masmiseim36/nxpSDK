@@ -104,6 +104,13 @@ API_RESULT BT_sm_set_device_oob_data
            );
 #endif /* BT_SSP_OOB */
 
+#ifdef SM_AUTHREQ_DYNAMIC
+API_RESULT BT_sm_set_local_authreq
+           (
+               /* IN */  UCHAR    valid,
+               /* IN */  UCHAR    authreq
+           );
+#endif /* SM_AUTHREQ_DYNAMIC */
 
 /* ----------------------------------------- Function Declarations */
 /** To return IO Capability to SM Core */

@@ -1,0 +1,102 @@
+Overview
+========
+Application demonstrating very basic BLE Central role functionality by scanning for other BLE devices and establishing a connection to the first one with a strong enough signal.
+Except that this application specifically looks for Proximity Reporter.
+
+
+Toolchain supported
+===================
+- MCUXpresso  11.4.0
+- IAR embedded Workbench  9.10.2
+- GCC ARM Embedded  10.2.1
+
+Hardware requirements
+=====================
+- Micro USB cable
+- evkbmimxrt1060 board
+- Personal Computer
+- One of the following modules:
+  - AzureWave AW-AM457-uSD
+  - AzureWave AW-CM358-uSD
+  - K32W061
+
+Board settings
+==============
+
+Jumper settings for AzureWave AW-AM457-uSD Module:
+  - J42 2-3: VIO_SD 3.3V (Voltage level of SDIO pins is 3.3V)
+  - J2  1-2: 3.3V VIO_uSD (Power Supply from uSD connector)
+  - J4  2-3: 3.3V VIO
+
+The hardware should be reworked according to the hardware rework guide for evkmimxrt1060 and AW-AM457-uSD in document Hardware Rework Guide for EdgeFast BT PAL.
+The pin connect for UART HCI as the following table,
+------------------------------------------------------------------------------------
+PIN NAME | AW-AM457-USD |   I.MXRT1060   | PIN NAME OF RT1060 | GPIO NAME OF RT1060
+------------------------------------------------------------------------------------
+UART_TXD |  J10(pin 4)  |   J16(pin 1)   |    LPUART3_RXD     | GPIO_AD_B1_07
+UART_RXD |  J10(pin 2)  |   J16(pin 2)   |    LPUART3_TXD     | GPIO_AD_B1_06
+UART_RTS |  J10(pin 6)  |   J33(pin 3)   |    LPUART3_CTS     | GPIO_AD_B1_04
+UART_CTS |  J10(pin 8)  |   J33(pin 4)   |    LPUART3_RTS     | GPIO_AD_B1_05
+GND      |  J6(pin 7)   |   J32(pin 7)   |    GND             | GND
+------------------------------------------------------------------------------------
+
+Jumper settings for AzureWave AW-CM358-uSD Module:
+  - J2 1-2: 3.3V VIO_uSD (Power Supply from uSD connector)
+  - J4 1-2: VIO 1.8V (Voltage level of SDIO pins is 1.8V)
+
+The hardware should be reworked according to the hardware rework guide for evkmimxrt1060 and AW-CM358-uSD in document Hardware Rework Guide for EdgeFast BT PAL.
+The pin connect for UART HCI as the following table,
+------------------------------------------------------------------------------------
+PIN NAME | AW-CM358-USD |   I.MXRT1060   | PIN NAME OF RT1060 | GPIO NAME OF RT1060
+------------------------------------------------------------------------------------
+UART_TXD |  J10(pin 4)  |   J16(pin 1)   |    LPUART3_RXD     | GPIO_AD_B1_07
+UART_RXD |  J10(pin 2)  |   J16(pin 2)   |    LPUART3_TXD     | GPIO_AD_B1_06
+UART_RTS |  J10(pin 6)  |   J33(pin 3)   |    LPUART3_CTS     | GPIO_AD_B1_04
+UART_CTS |  J10(pin 8)  |   J33(pin 4)   |    LPUART3_RTS     | GPIO_AD_B1_05
+GND      |  J6(pin 7)   |   J32(pin 7)   |    GND             | GND
+------------------------------------------------------------------------------------
+
+For K32W061, the readme located in <sdk>/middleware/wireless/ethermind/port/pal/mcux/bluetooth/controller/k32w061 explains how to flash the transceiver image and the hardware rework required.
+The pin connect for UART HCI as the following table,
+------------------------------------------------------------------------------------
+PIN NAME | DK6 (K32W061) |   I.MXRT1060   | PIN NAME OF RT1060 | GPIO NAME OF RT1060
+------------------------------------------------------------------------------------
+UART_TXD |  PIO(pin 8)   |   J22(pin 1)   |    LPUART3_RXD     | GPIO_AD_B1_07
+UART_RXD |  PIO(pin 9)   |   J22(pin 2)   |    LPUART3_TXD     | GPIO_AD_B1_06
+UART_RTS |  PIO(pin 6)   |   J23(pin 3)   |    LPUART3_CTS     | GPIO_AD_B1_04
+UART_CTS |  PIO(pin 7)   |   J23(pin 4)   |    LPUART3_RTS     | GPIO_AD_B1_05
+------------------------------------------------------------------------------------
+
+Note:
+After downloaded binary into qspiflash and boot from qspiflash directly, 
+please reset the board by pressing SW7 or power off and on the board to run the application.
+Prepare the Demo
+================
+
+1.  Open example's project and build it.
+
+2.  Connect a USB cable between the PC host and the OpenSDA USB port on the target board.
+
+3.  Open a serial terminal on PC for OpenSDA serial device with these settings:
+    - 115200 baud rate
+    - 8 data bits
+    - No parity
+    - One stop bit
+    - No flow control
+
+4.  Download the program to the target board.
+
+5.  Either press the reset button on your board or launch the debugger in your IDE to begin running the example.
+
+Running the demo
+================
+The application will automatically start scanning and will connect to the first advertiser who is advertising the Link Loss Service. If the connection is successful, the application performs service discovery to find the characteristics of the Link Loss Service, as well as additional services and characteristics specified by the Proximity Profile, such as Immediate Alert and Tx Power services.
+
+If the Tx Power service and its characteristics have been discovered, the application will read the peer's Tx power and display it. Example output:
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Read successful - Tx Power Level: 20
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If the Immediate Alert service and its characteristics have been discovered, the application will continuously monitor the connection RSSI and will trigger or stop the Immediate Alert on the peer when the value is crossing a preset threshold in either direction.
+
+After the mandatory Link Loss service is discovered, the application will write the Link Loss Alert Level on the peer as HIGH_ALERT. To trigger the Link Loss Alert on the peer, the connection will have to be timed out. The user can trigger this by simply resetting the board (press the RST button).

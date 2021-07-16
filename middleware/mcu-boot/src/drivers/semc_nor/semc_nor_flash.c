@@ -330,7 +330,7 @@ void semc_nor_set_ac_timing_parameter(semc_nor_config_t *config)
     // For Async mode WRITE
     config->memConfig.norMemConfig.asyncWeLowTime = acTimingArray.min_tWEL_ns;
     config->memConfig.norMemConfig.asyncWeHighTime = acTimingArray.min_tWEH_ns;
-    config->memConfig.norMemConfig.asyncAddressToDataHoldTime = acTimingArray.min_tAWDH_ns;
+    config->memConfig.norMemConfig.asyncAddressTocsHoldTime = acTimingArray.min_tAWDH_ns;
 
     // For Sync mode sequnce only
     // config->memConfig.norMemConfig.syncDataSetupTime = 0;
@@ -392,7 +392,7 @@ status_t semc_nor_check_toggle_bit(semc_nor_config_t *config, uint32_t toggleChe
 
     // Step 1: Read DQ6 (into a word)
     uint32_t anyAddress = semc_ipg_command_convert_nor_address(&config->memConfig, 0);
-    semc_ipg_command_device_read(anyAddress, SEMC_IPCMD_NOR_IPG_READ_ARRAY, (uint8_t *)&DPR_r1, ipgCmdDataSize);
+    semc_ipg_command_device_read(anyAddress, SEMC_IPCMD_NOR_IPG_READ_ARRAY, (uint8_t *)&DPR_r1, ipgCmdDataSize, config->memConfig.norMemConfig.dataPortWidth, kNandDeviceAccessFeature);
 
     while (1)
     {
@@ -405,7 +405,7 @@ status_t semc_nor_check_toggle_bit(semc_nor_config_t *config, uint32_t toggleChe
         }
 
         // Step 2: Read DA1,DQ5 and DQ6 (into another word)
-        semc_ipg_command_device_read(anyAddress, SEMC_IPCMD_NOR_IPG_READ_ARRAY, (uint8_t *)&DPR_r2, ipgCmdDataSize);
+        semc_ipg_command_device_read(anyAddress, SEMC_IPCMD_NOR_IPG_READ_ARRAY, (uint8_t *)&DPR_r2, ipgCmdDataSize, config->memConfig.norMemConfig.dataPortWidth, kNandDeviceAccessFeature);
 
         // Step 3: If DQ6 did not toggle between the two reads , operation is complete.
         if ((DPR_r1 & kNorDeviceDPR_DQ6_ToggleBitMask) == (DPR_r2 & kNorDeviceDPR_DQ6_ToggleBitMask))
@@ -428,8 +428,8 @@ status_t semc_nor_check_toggle_bit(semc_nor_config_t *config, uint32_t toggleChe
         // DQ1 or DQ5 is 1.
 
         // Step 5: Else (DQ5 != 0) and DQ1==0, read DQ6 again
-        semc_ipg_command_device_read(anyAddress, SEMC_IPCMD_NOR_IPG_READ_ARRAY, (uint8_t *)&DPR_r1, ipgCmdDataSize);
-        semc_ipg_command_device_read(anyAddress, SEMC_IPCMD_NOR_IPG_READ_ARRAY, (uint8_t *)&DPR_r2, ipgCmdDataSize);
+        semc_ipg_command_device_read(anyAddress, SEMC_IPCMD_NOR_IPG_READ_ARRAY, (uint8_t *)&DPR_r1, ipgCmdDataSize, config->memConfig.norMemConfig.dataPortWidth, kNandDeviceAccessFeature);
+        semc_ipg_command_device_read(anyAddress, SEMC_IPCMD_NOR_IPG_READ_ARRAY, (uint8_t *)&DPR_r2, ipgCmdDataSize, config->memConfig.norMemConfig.dataPortWidth, kNandDeviceAccessFeature);
 
         // Step 6: If DQ6 did not toggle between the last two reads then return
         //         Flash_Success
@@ -475,7 +475,7 @@ status_t semc_nor_poll_erase_timer_bit(semc_nor_config_t *config, uint32_t erase
 
         // Step 2: Wait for the Erase Timer Bit (DQ3) to be set
         semc_ipg_command_device_read(s_norOperationInfo.ipgCmdAddrToGetDPR, SEMC_IPCMD_NOR_IPG_READ_ARRAY,
-                                     (uint8_t *)&DPR, ipgCmdDataSize);
+                                     (uint8_t *)&DPR, ipgCmdDataSize, config->memConfig.norMemConfig.dataPortWidth, kNandDeviceAccessFeature);
         if (DPR & kNorDeviceDPR_DQ3_EraseTimerBitMask)
         {
             break;

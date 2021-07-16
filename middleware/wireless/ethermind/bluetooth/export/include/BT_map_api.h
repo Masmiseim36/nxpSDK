@@ -41,7 +41,7 @@
  */
 #ifdef MAP_1_2
 /* OBEX L2CAP PSM for local client entities */
-#define MAP_OBEX_L2CAP_PSM                       0x8601
+#define MAP_OBEX_L2CAP_PSM                       0x8601U
 #endif /* MAP_1_2 */
 
 /* MAP Notification Callback Event types */
@@ -52,36 +52,36 @@
  */
 /*@{*/
 #ifdef MAP_MCE
-#define MAP_MCE_CONNECT_CNF                      0x01
-#define MAP_MCE_DISCONNECT_CNF                   0x02
-#define MAP_MCE_TRANSPORT_CLOSE_CNF              0x03
-#define MAP_MCE_TRANSPORT_CLOSE_IND              0x04
+#define MAP_MCE_CONNECT_CNF                      0x01U
+#define MAP_MCE_DISCONNECT_CNF                   0x02U
+#define MAP_MCE_TRANSPORT_CLOSE_CNF              0x03U
+#define MAP_MCE_TRANSPORT_CLOSE_IND              0x04U
 
-#define MAP_MCE_UPDATE_INBOX_CNF                 0x05
-#define MAP_MCE_SET_FOLDER_CNF                   0x06
-#define MAP_MCE_GET_FOLDER_LISTING_CNF           0x07
-#define MAP_MCE_GET_MESSAGES_LISTING_CNF         0x08
-#define MAP_MCE_GET_MESSAGE_CNF                  0x09
-#define MAP_MCE_SET_MESSAGE_STATUS_CNF           0x0A
-#define MAP_MCE_PUSH_MESSAGE_CNF                 0x0B
-#define MAP_MCE_SET_NTF_REGISTRATION_CNF         0x0C
+#define MAP_MCE_UPDATE_INBOX_CNF                 0x05U
+#define MAP_MCE_SET_FOLDER_CNF                   0x06U
+#define MAP_MCE_GET_FOLDER_LISTING_CNF           0x07U
+#define MAP_MCE_GET_MESSAGES_LISTING_CNF         0x08U
+#define MAP_MCE_GET_MESSAGE_CNF                  0x09U
+#define MAP_MCE_SET_MESSAGE_STATUS_CNF           0x0AU
+#define MAP_MCE_PUSH_MESSAGE_CNF                 0x0BU
+#define MAP_MCE_SET_NTF_REGISTRATION_CNF         0x0CU
 
 #ifdef MAP_1_2
-#define MAP_MCE_GET_MASINSTINFO_CNF              0x0E
+#define MAP_MCE_GET_MASINSTINFO_CNF              0x0EU
 #endif /* MAP_1_2 */
 
 #ifdef MAP_1_3
-#define MAP_MCE_GET_CONVERSATION_LIST_CNF        0x61
-#define MAP_MCE_SET_OWNER_STATUS_CNF             0x62
-#define MAP_MCE_GET_OWNER_STATUS_CNF             0x63
-#define MAP_MCE_SET_NOTIFICATION_FILTER_CNF      0x64
+#define MAP_MCE_GET_CONVERSATION_LIST_CNF        0x61U
+#define MAP_MCE_SET_OWNER_STATUS_CNF             0x62U
+#define MAP_MCE_GET_OWNER_STATUS_CNF             0x63U
+#define MAP_MCE_SET_NOTIFICATION_FILTER_CNF      0x64U
 #endif /* MAP_1_3 */
 
-#define MAP_MCE_NS_CONNECT_IND                   0x10
-#define MAP_MCE_NS_DISCONNECT_IND                0x11
-#define MAP_MCE_NS_TRANSPORT_CLOSE_IND           0x12
-#define MAP_MCE_NS_TRANSPORT_CLOSE_CNF           0x13
-#define MAP_MCE_NS_EVENT_REPORT_IND              0x14
+#define MAP_MCE_NS_CONNECT_IND                   0x10U
+#define MAP_MCE_NS_DISCONNECT_IND                0x11U
+#define MAP_MCE_NS_TRANSPORT_CLOSE_IND           0x12U
+#define MAP_MCE_NS_TRANSPORT_CLOSE_CNF           0x13U
+#define MAP_MCE_NS_EVENT_REPORT_IND              0x14U
 
 /* To be deprecated */
 #define MAP_MCE_ABORT_CNF                        MAP_ABORT_CNF
@@ -90,36 +90,36 @@
 #endif /* MAP_MCE */
 
 #ifdef MAP_MSE
-#define MAP_MSE_CONNECT_IND                      0x21
-#define MAP_MSE_DISCONNECT_IND                   0x22
-#define MAP_MSE_TRANSPORT_CLOSE_IND              0x23
-#define MAP_MSE_TRANSPORT_CLOSE_CNF              0x24
+#define MAP_MSE_CONNECT_IND                      0x21U
+#define MAP_MSE_DISCONNECT_IND                   0x22U
+#define MAP_MSE_TRANSPORT_CLOSE_IND              0x23U
+#define MAP_MSE_TRANSPORT_CLOSE_CNF              0x24U
 
-#define MAP_MSE_UPDATE_INBOX_IND                 0x25
-#define MAP_MSE_SET_FOLDER_IND                   0x26
-#define MAP_MSE_GET_FOLDER_LISTING_IND           0x27
-#define MAP_MSE_GET_MESSAGES_LISTING_IND         0x28
-#define MAP_MSE_GET_MESSAGE_IND                  0x29
-#define MAP_MSE_SET_MESSAGE_STATUS_IND           0x2A
-#define MAP_MSE_PUSH_MESSAGE_IND                 0x2B
-#define MAP_MSE_SET_NTF_REGISTRATION_IND         0x2C
+#define MAP_MSE_UPDATE_INBOX_IND                 0x25U
+#define MAP_MSE_SET_FOLDER_IND                   0x26U
+#define MAP_MSE_GET_FOLDER_LISTING_IND           0x27U
+#define MAP_MSE_GET_MESSAGES_LISTING_IND         0x28U
+#define MAP_MSE_GET_MESSAGE_IND                  0x29U
+#define MAP_MSE_SET_MESSAGE_STATUS_IND           0x2AU
+#define MAP_MSE_PUSH_MESSAGE_IND                 0x2BU
+#define MAP_MSE_SET_NTF_REGISTRATION_IND         0x2CU
 
 #ifdef MAP_1_2
-#define MAP_MSE_GET_MASINSTINFO_IND              0x2E
+#define MAP_MSE_GET_MASINSTINFO_IND              0x2EU
 #endif /* MAP_1_2 */
 
 #ifdef MAP_1_3
-#define MAP_MSE_GET_CONVERSATION_LIST_IND        0x81
-#define MAP_MSE_SET_OWNER_STATUS_IND             0x82
-#define MAP_MSE_GET_OWNER_STATUS_IND             0x83
-#define MAP_MSE_SET_NOTIFICATION_FILTER_IND      0x84
+#define MAP_MSE_GET_CONVERSATION_LIST_IND        0x81U
+#define MAP_MSE_SET_OWNER_STATUS_IND             0x82U
+#define MAP_MSE_GET_OWNER_STATUS_IND             0x83U
+#define MAP_MSE_SET_NOTIFICATION_FILTER_IND      0x84U
 #endif /* MAP_1_3 */
 
-#define MAP_MSE_NS_CONNECT_CNF                   0x30
-#define MAP_MSE_NS_DISCONNECT_CNF                0x31
-#define MAP_MSE_NS_TRANSPORT_CLOSE_CNF           0x32
-#define MAP_MSE_NS_TRANSPORT_CLOSE_IND           0x33
-#define MAP_MSE_NS_SEND_EVENT_CNF                0x34
+#define MAP_MSE_NS_CONNECT_CNF                   0x30U
+#define MAP_MSE_NS_DISCONNECT_CNF                0x31U
+#define MAP_MSE_NS_TRANSPORT_CLOSE_CNF           0x32U
+#define MAP_MSE_NS_TRANSPORT_CLOSE_IND           0x33U
+#define MAP_MSE_NS_SEND_EVENT_CNF                0x34U
 
 /* To be deprecated */
 #define MAP_MSE_ABORT_CNF                        MAP_ABORT_CNF
@@ -128,13 +128,13 @@
 #endif /* MAP_MSE */
 
 /* Common Event codes */
-#define MAP_ABORT_CNF                            0x40
-#define MAP_ABORT_IND                            0x50
-#define MAP_EVENT_INVALID                        0xFF
+#define MAP_ABORT_CNF                            0x40U
+#define MAP_ABORT_IND                            0x50U
+#define MAP_EVENT_INVALID                        0xFFU
 
 /* Invalid entity indentifiers */
-#define MAP_ENTITY_INVALID                       0xFF
-#define MAP_INVALID_OBEX_CONNECTION_ID           0xFFFFFFFF
+#define MAP_ENTITY_INVALID                       0xFFU
+#define MAP_INVALID_OBEX_CONNECTION_ID           0xFFFFFFFFU
 /*@}*/
 /* MAP OBEX Response Codes */
 /**
@@ -158,12 +158,12 @@
 /*@}*/
 /* MAP Services OBEX Target header UUID values */
 #define MAP_MAS_OBEX_TARGET_HDR_UUID \
-        0xBB582B40420C11DBB0DE0800200C9A66
+        0xBB582B40420C11DBB0DE0800200C9A66U
 #define MAP_MNS_OBEX_TARGET_HDR_UUID \
-        0xBB582B41420C11DBB0DE0800200C9A66
+        0xBB582B41420C11DBB0DE0800200C9A66U
 
 /* MAP Target Header Size */
-#define MAP_TARGET_HDR_SIZE                      0x10 /* 16 */
+#define MAP_TARGET_HDR_SIZE                      0x10U /* 16 */
 
 /* MAP Application Parameters header Tag IDs */
 /**
@@ -172,64 +172,64 @@
  * Constant Definitions for MAP Application Parameters header Tag IDs
  */
 /*@{*/
-#define MAP_TAG_ID_MAXLISTCOUNT                  0x01  /* Length : 2 bytes */
-#define MAP_TAG_ID_STARTOFFSET                   0x02  /* Length : 2 bytes */
-#define MAP_TAG_ID_FILTERMESSAGETYPE             0x03  /* Length : 1 byte */
-#define MAP_TAG_ID_FILTERPERIODBEGIN             0x04  /* Length : variable */
-#define MAP_TAG_ID_FILTERPERIODEND               0x05  /* Length : variable */
-#define MAP_TAG_ID_FILTERREADSTATUS              0x06  /* Length : 1 byte */
-#define MAP_TAG_ID_FILTERRECIPIENT               0x07  /* Length : variable */
-#define MAP_TAG_ID_FILTERORIGINATOR              0x08  /* Length : variable */
-#define MAP_TAG_ID_FILTERPRIORITY                0x09  /* Length : 1 byte */
-#define MAP_TAG_ID_ATTACHMENT                    0x0A  /* Length : 1 byte */
-#define MAP_TAG_ID_TRANSPARENT                   0x0B  /* Length : 1 byte */
-#define MAP_TAG_ID_RETRY                         0x0C  /* Length : 1 byte */
-#define MAP_TAG_ID_NEWMESSAGE                    0x0D  /* Length : 1 byte */
-#define MAP_TAG_ID_NOTIFICATIONSTATUS            0x0E  /* Length : 1 byte */
-#define MAP_TAG_ID_MASINSTANCEID                 0x0F  /* Length : 1 byte */
-#define MAP_TAG_ID_PARAMETERMASK                 0x10  /* Length : 4 bytes */
-#define MAP_TAG_ID_FOLDERLISTINGSIZE             0x11  /* Length : 2 bytes */
-#define MAP_TAG_ID_MESSAGESLISTINGSIZE           0x12  /* Length : 2 bytes */
-#define MAP_TAG_ID_SUBJECTLENGTH                 0x13  /* Length : variable (max 255 bytes) */
-#define MAP_TAG_ID_CHARSET                       0x14  /* Length : 1 bytes */
-#define MAP_TAG_ID_FRACTIONREQUEST               0x15  /* Length : 1 bytes */
-#define MAP_TAG_ID_FRACTIONDELIVER               0x16  /* Length : 1 bytes */
-#define MAP_TAG_ID_STATUSINDICATOR               0x17  /* Length : 1 bytes */
-#define MAP_TAG_ID_STATUSVALUE                   0x18  /* Length : 1 bytes */
-#define MAP_TAG_ID_MSETIME                       0x19  /* Length : variable */
+#define MAP_TAG_ID_MAXLISTCOUNT                  0x01U  /* Length : 2 bytes */
+#define MAP_TAG_ID_STARTOFFSET                   0x02U  /* Length : 2 bytes */
+#define MAP_TAG_ID_FILTERMESSAGETYPE             0x03U  /* Length : 1 byte */
+#define MAP_TAG_ID_FILTERPERIODBEGIN             0x04U  /* Length : variable */
+#define MAP_TAG_ID_FILTERPERIODEND               0x05U  /* Length : variable */
+#define MAP_TAG_ID_FILTERREADSTATUS              0x06U  /* Length : 1 byte */
+#define MAP_TAG_ID_FILTERRECIPIENT               0x07U  /* Length : variable */
+#define MAP_TAG_ID_FILTERORIGINATOR              0x08U  /* Length : variable */
+#define MAP_TAG_ID_FILTERPRIORITY                0x09U  /* Length : 1 byte */
+#define MAP_TAG_ID_ATTACHMENT                    0x0AU  /* Length : 1 byte */
+#define MAP_TAG_ID_TRANSPARENT                   0x0BU  /* Length : 1 byte */
+#define MAP_TAG_ID_RETRY                         0x0CU  /* Length : 1 byte */
+#define MAP_TAG_ID_NEWMESSAGE                    0x0DU  /* Length : 1 byte */
+#define MAP_TAG_ID_NOTIFICATIONSTATUS            0x0EU  /* Length : 1 byte */
+#define MAP_TAG_ID_MASINSTANCEID                 0x0FU  /* Length : 1 byte */
+#define MAP_TAG_ID_PARAMETERMASK                 0x10U  /* Length : 4 bytes */
+#define MAP_TAG_ID_FOLDERLISTINGSIZE             0x11U  /* Length : 2 bytes */
+#define MAP_TAG_ID_MESSAGESLISTINGSIZE           0x12U  /* Length : 2 bytes */
+#define MAP_TAG_ID_SUBJECTLENGTH                 0x13U  /* Length : variable (max 255 bytes) */
+#define MAP_TAG_ID_CHARSET                       0x14U  /* Length : 1 bytes */
+#define MAP_TAG_ID_FRACTIONREQUEST               0x15U  /* Length : 1 bytes */
+#define MAP_TAG_ID_FRACTIONDELIVER               0x16U  /* Length : 1 bytes */
+#define MAP_TAG_ID_STATUSINDICATOR               0x17U  /* Length : 1 bytes */
+#define MAP_TAG_ID_STATUSVALUE                   0x18U  /* Length : 1 bytes */
+#define MAP_TAG_ID_MSETIME                       0x19U  /* Length : variable */
 
 #ifdef MAP_1_3
-#define MAP_TAG_ID_DATABASE_IDENTIFIER           0x1A  /* Length : variable (max 32 bytes) */
-#define MAP_TAG_ID_CONV_LIST_VER_CNTR            0x1B  /* Length : variable (max 32 bytes) */
-#define MAP_TAG_ID_PRESENCE_AVAILABILITY         0x1C  /* Length : 1 bytes */
-#define MAP_TAG_ID_PRESENCE_TEXT                 0x1D  /* Length : variable */
-#define MAP_TAG_ID_LAST_ACTIVITY                 0x1E  /* Length : variable */
-#define MAP_TAG_ID_FILTERLASTACTIVITYBEGIN       0x1F  /* Length : variable */
-#define MAP_TAG_ID_FILTERLASTACTIVITYEND         0x20  /* Length : variable */
+#define MAP_TAG_ID_DATABASE_IDENTIFIER           0x1AU  /* Length : variable (max 32 bytes) */
+#define MAP_TAG_ID_CONV_LIST_VER_CNTR            0x1BU  /* Length : variable (max 32 bytes) */
+#define MAP_TAG_ID_PRESENCE_AVAILABILITY         0x1CU  /* Length : 1 bytes */
+#define MAP_TAG_ID_PRESENCE_TEXT                 0x1DU  /* Length : variable */
+#define MAP_TAG_ID_LAST_ACTIVITY                 0x1EU  /* Length : variable */
+#define MAP_TAG_ID_FILTERLASTACTIVITYBEGIN       0x1FU  /* Length : variable */
+#define MAP_TAG_ID_FILTERLASTACTIVITYEND         0x20U  /* Length : variable */
 
-#define MAP_TAG_ID_CHAT_STATE                    0x21  /* Length : 1 bytes */
-#define MAP_TAG_ID_CONVERSATION_ID               0x22  /* Length : variable (max 32 bytes) */
-#define MAP_TAG_ID_FOLDER_VER_CNTR               0x23  /* Length : variable (max 32 bytes) */
-#define MAP_TAG_ID_FILTER_MSG_HANDLE             0x24  /* Length : variable (max 16 bytes) */
-#define MAP_TAG_ID_NOTIFICATION_FILTER_MASK      0x25  /* Length : 4 bytes */
-#define MAP_TAG_ID_CONV_PARAMETER_MASK           0x26  /* Length : 4 bytes */
-#define MAP_TAG_ID_OWNER_UCI                     0x27  /* Length : variable */
-#define MAP_TAG_ID_EXTENTED_DATA                 0x28  /* Length : variable */
-#define MAP_TAG_ID_MAP_SUPPORTED_FEATURES        0x29  /* Length : 4 bytes */
+#define MAP_TAG_ID_CHAT_STATE                    0x21U  /* Length : 1 bytes */
+#define MAP_TAG_ID_CONVERSATION_ID               0x22U  /* Length : variable (max 32 bytes) */
+#define MAP_TAG_ID_FOLDER_VER_CNTR               0x23U  /* Length : variable (max 32 bytes) */
+#define MAP_TAG_ID_FILTER_MSG_HANDLE             0x24U  /* Length : variable (max 16 bytes) */
+#define MAP_TAG_ID_NOTIFICATION_FILTER_MASK      0x25U  /* Length : 4 bytes */
+#define MAP_TAG_ID_CONV_PARAMETER_MASK           0x26U  /* Length : 4 bytes */
+#define MAP_TAG_ID_OWNER_UCI                     0x27U  /* Length : variable */
+#define MAP_TAG_ID_EXTENTED_DATA                 0x28U  /* Length : variable */
+#define MAP_TAG_ID_MAP_SUPPORTED_FEATURES        0x29U  /* Length : 4 bytes */
 #endif /* MAP_1_3 */
 
 #ifdef MAP_1_4
-#define MAP_TAG_ID_MESSAGE_HANDLE                0x2A  /* Length : 8 bytes */
-#define MAP_TAG_ID_MODIFY_TEXT                   0x2B  /* Length : 1 byte */
+#define MAP_TAG_ID_MESSAGE_HANDLE                0x2AU  /* Length : 8 bytes */
+#define MAP_TAG_ID_MODIFY_TEXT                   0x2BU  /* Length : 1 byte */
 #endif /* MAP_1_4 */
 /*@}*/
 /* Maximum number of Application Header Tag IDs */
 #if (defined MAP_1_4)
-#define MAP_NUM_APPL_HEADERS                     0x2B
+#define MAP_NUM_APPL_HEADERS                     0x2BU
 #elif (defined MAP_1_3)
-#define MAP_NUM_APPL_HEADERS                     0x29
+#define MAP_NUM_APPL_HEADERS                     0x29U
 #else
-#define MAP_NUM_APPL_HEADERS                     0x19
+#define MAP_NUM_APPL_HEADERS                     0x19U
 #endif /* MAP_1_4 */
 
 /* MAP Application parameters flag corresponding to each Tag */
@@ -239,56 +239,56 @@
  * Constant Definitions for MAP Application Parameters header Tag IDs
  */
 /*@{*/
-#define MAP_FLAG_MAXLISTCOUNT                    0x00000001
-#define MAP_FLAG_STARTOFFSET                     0x00000002
-#define MAP_FLAG_FILTERMESSAGETYPE               0x00000004
-#define MAP_FLAG_FILTERPERIODBEGIN               0x00000008
-#define MAP_FLAG_FILTERPERIODEND                 0x00000010
-#define MAP_FLAG_FILTERREADSTATUS                0x00000020
-#define MAP_FLAG_FILTERRECIPIENT                 0x00000040
-#define MAP_FLAG_FILTERORIGINATOR                0x00000080
-#define MAP_FLAG_FILTERPRIORITY                  0x00000100
-#define MAP_FLAG_ATTACHMENT                      0x00000200
-#define MAP_FLAG_TRANSPARENT                     0x00000400
-#define MAP_FLAG_RETRY                           0x00000800
-#define MAP_FLAG_NEWMESSAGE                      0x00001000
-#define MAP_FLAG_NOTIFICATIONSTATUS              0x00002000
-#define MAP_FLAG_MASINSTANCEID                   0x00004000
-#define MAP_FLAG_PARAMETERMASK                   0x00008000
-#define MAP_FLAG_FOLDERLISTINGSIZE               0x00010000
-#define MAP_FLAG_MESSAGESLISTINGSIZE             0x00020000
-#define MAP_FLAG_SUBJECTLENGTH                   0x00040000
-#define MAP_FLAG_CHARSET                         0x00080000
-#define MAP_FLAG_FRACTIONREQUEST                 0x00100000
-#define MAP_FLAG_FRACTIONDELIVER                 0x00200000
-#define MAP_FLAG_STATUSINDICATOR                 0x00400000
-#define MAP_FLAG_STATUSVALUE                     0x00800000
-#define MAP_FLAG_MSETIME                         0x01000000
+#define MAP_FLAG_MAXLISTCOUNT                    0x00000001U
+#define MAP_FLAG_STARTOFFSET                     0x00000002U
+#define MAP_FLAG_FILTERMESSAGETYPE               0x00000004U
+#define MAP_FLAG_FILTERPERIODBEGIN               0x00000008U
+#define MAP_FLAG_FILTERPERIODEND                 0x00000010U
+#define MAP_FLAG_FILTERREADSTATUS                0x00000020U
+#define MAP_FLAG_FILTERRECIPIENT                 0x00000040U
+#define MAP_FLAG_FILTERORIGINATOR                0x00000080U
+#define MAP_FLAG_FILTERPRIORITY                  0x00000100U
+#define MAP_FLAG_ATTACHMENT                      0x00000200U
+#define MAP_FLAG_TRANSPARENT                     0x00000400U
+#define MAP_FLAG_RETRY                           0x00000800U
+#define MAP_FLAG_NEWMESSAGE                      0x00001000U
+#define MAP_FLAG_NOTIFICATIONSTATUS              0x00002000U
+#define MAP_FLAG_MASINSTANCEID                   0x00004000U
+#define MAP_FLAG_PARAMETERMASK                   0x00008000U
+#define MAP_FLAG_FOLDERLISTINGSIZE               0x00010000U
+#define MAP_FLAG_MESSAGESLISTINGSIZE             0x00020000U
+#define MAP_FLAG_SUBJECTLENGTH                   0x00040000U
+#define MAP_FLAG_CHARSET                         0x00080000U
+#define MAP_FLAG_FRACTIONREQUEST                 0x00100000U
+#define MAP_FLAG_FRACTIONDELIVER                 0x00200000U
+#define MAP_FLAG_STATUSINDICATOR                 0x00400000U
+#define MAP_FLAG_STATUSVALUE                     0x00800000U
+#define MAP_FLAG_MSETIME                         0x01000000U
 
 #ifdef MAP_1_3
-#define MAP_FLAG_DATABASE_IDENTIFIER             0x02000000
-#define MAP_FLAG_CONV_LIST_VER_CNTR              0x04000000
-#define MAP_FLAG_PRESENCE_AVAILABILITY           0x08000000
-#define MAP_FLAG_PRESENCE_TEXT                   0x10000000
-#define MAP_FLAG_LAST_ACTIVITY                   0x20000000
-#define MAP_FLAG_FILTERLASTACTIVITYBEGIN         0x40000000
-#define MAP_FLAG_FILTERLASTACTIVITYEND           0x80000000
+#define MAP_FLAG_DATABASE_IDENTIFIER             0x02000000U
+#define MAP_FLAG_CONV_LIST_VER_CNTR              0x04000000U
+#define MAP_FLAG_PRESENCE_AVAILABILITY           0x08000000U
+#define MAP_FLAG_PRESENCE_TEXT                   0x10000000U
+#define MAP_FLAG_LAST_ACTIVITY                   0x20000000U
+#define MAP_FLAG_FILTERLASTACTIVITYBEGIN         0x40000000U
+#define MAP_FLAG_FILTERLASTACTIVITYEND           0x80000000U
 
 /* From 33rd application parameter */
-#define MAP_FLAG_CHAT_STATE                      0x00000001
-#define MAP_FLAG_CONVERSATION_ID                 0x00000002
-#define MAP_FLAG_FOLDER_VER_CNTR                 0x00000004
-#define MAP_FLAG_FILTER_MSG_HANDLE               0x00000008
-#define MAP_FLAG_NOTIFICATION_FILTER_MASK        0x00000010
-#define MAP_FLAG_CONV_PARAMETER_MASK             0x00000020
-#define MAP_FLAG_OWNER_UCI                       0x00000040
-#define MAP_FLAG_EXTENDED_DATA                   0x00000080
-#define MAP_FLAG_MAP_SUPPORTED_FEATURES          0x00000100
+#define MAP_FLAG_CHAT_STATE                      0x00000001U
+#define MAP_FLAG_CONVERSATION_ID                 0x00000002U
+#define MAP_FLAG_FOLDER_VER_CNTR                 0x00000004U
+#define MAP_FLAG_FILTER_MSG_HANDLE               0x00000008U
+#define MAP_FLAG_NOTIFICATION_FILTER_MASK        0x00000010U
+#define MAP_FLAG_CONV_PARAMETER_MASK             0x00000020U
+#define MAP_FLAG_OWNER_UCI                       0x00000040U
+#define MAP_FLAG_EXTENDED_DATA                   0x00000080U
+#define MAP_FLAG_MAP_SUPPORTED_FEATURES          0x00000100U
 #endif /* MAP_1_3 */
 
 #ifdef MAP_1_4
-#define MAP_FLAG_MESSAGE_HANDLE                  0x00000200
-#define MAP_FLAG_MODIFY_TEXT                     0x00000400
+#define MAP_FLAG_MESSAGE_HANDLE                  0x00000200U
+#define MAP_FLAG_MODIFY_TEXT                     0x00000400U
 #endif /* MAP_1_4 */
 /*@}*/
 /* MAP SetPath parameter values */
@@ -298,9 +298,9 @@
  * Constant Definitions for MAP SetPath parameter values
  */
 /*@{*/
-#define MAP_SET_CHILD_FOLDER                     0x01
-#define MAP_SET_PARENT_FOLDER                    0x02
-#define MAP_SET_ROOT_FOLDER                      0x03
+#define MAP_SET_CHILD_FOLDER                     0x01U
+#define MAP_SET_PARENT_FOLDER                    0x02U
+#define MAP_SET_ROOT_FOLDER                      0x03U
 /*@}*/
 /**
  * MAPv1.3 Instant Messaging Availability Constants
@@ -312,13 +312,13 @@
  * Constant Definitions for MAPv1.3 Instant Messaging Availability Constants
  */
 /*@{*/
-#define MAP_IM_PRESENCE_UNKNOWN                  0x00
-#define MAP_IM_PRESENCE_OFFLINE                  0x01
-#define MAP_IM_PRESENCE_ONLINE                   0x02
-#define MAP_IM_PRESENCE_AWAY                     0x03
-#define MAP_IM_PRESENCE_DO_NOT_DISTURB           0x04
-#define MAP_IM_PRESENCE_BUSY                     0x05
-#define MAP_IM_PRESENCE_IN_MEETING               0x06
+#define MAP_IM_PRESENCE_UNKNOWN                  0x00U
+#define MAP_IM_PRESENCE_OFFLINE                  0x01U
+#define MAP_IM_PRESENCE_ONLINE                   0x02U
+#define MAP_IM_PRESENCE_AWAY                     0x03U
+#define MAP_IM_PRESENCE_DO_NOT_DISTURB           0x04U
+#define MAP_IM_PRESENCE_BUSY                     0x05U
+#define MAP_IM_PRESENCE_IN_MEETING               0x06U
 /*@}*/
 /**
  * MAPv1.3 IM Chat State Constants
@@ -330,12 +330,12 @@
  * Constant Definitions for MAPv1.3 IM Chat State Constants
  */
 /*@{*/
-#define MAP_IM_CHAT_STATE_UNKNOWN               0x00
-#define MAP_IM_CHAT_STATE_INACTIVE              0x01
-#define MAP_IM_CHAT_STATE_ACTIVE                0x02
-#define MAP_IM_CHAT_STATE_COMPOSING             0x03
-#define MAP_IM_CHAT_STATE_PAUSED_COMPOSING      0x04
-#define MAP_IM_CHAT_STATE_GONE                  0x05
+#define MAP_IM_CHAT_STATE_UNKNOWN               0x00U
+#define MAP_IM_CHAT_STATE_INACTIVE              0x01U
+#define MAP_IM_CHAT_STATE_ACTIVE                0x02U
+#define MAP_IM_CHAT_STATE_COMPOSING             0x03U
+#define MAP_IM_CHAT_STATE_PAUSED_COMPOSING      0x04U
+#define MAP_IM_CHAT_STATE_GONE                  0x05U
 /*@}*/
 /**
  * MAPv1.3 Message Extended Data Constants
@@ -347,10 +347,10 @@
  * Constant Definitions for MAPv1.3 Message Extended Data Constants
  */
 /*@{*/
-#define MAP_MSG_EXT_NUM_FB_LIKES                0x00
-#define MAP_MSG_EXT_NUM_TWITTER_FOLLOWERS       0x01
-#define MAP_MSG_EXT_NUM_TWITTER_RETWEETES       0x02
-#define MAP_MSG_EXT_NUM_GOOGLE_PLUS             0x03
+#define MAP_MSG_EXT_NUM_FB_LIKES                0x00U
+#define MAP_MSG_EXT_NUM_TWITTER_FOLLOWERS       0x01U
+#define MAP_MSG_EXT_NUM_TWITTER_RETWEETES       0x02U
+#define MAP_MSG_EXT_NUM_GOOGLE_PLUS             0x03U
 /*@}*/
 
 /* Application Parameters Header Value Range Definitions */
@@ -358,172 +358,172 @@
 /* MaxListCount - 2 Byte value : 0x0000 to 0xFFFF */
 /* StartOffset - 2 Byte value : 0x0000 to 0xFFFF */
 /* FilterMessageType - 1 Byte Bit-Mask : When SET, type is filtered out */
-#define MAP_FILTER_MSGTYPE_SMS_GSM               0x01
-#define MAP_FILTER_MSGTYPE_SMS_CDMA              0x02
-#define MAP_FILTER_MSGTYPE_EMAIL                 0x04
-#define MAP_FILTER_MSGTYPE_MMS                   0x08
-#define MAP_FILTER_MSGTYPE_IM                    0x10
+#define MAP_FILTER_MSGTYPE_SMS_GSM               0x01U
+#define MAP_FILTER_MSGTYPE_SMS_CDMA              0x02U
+#define MAP_FILTER_MSGTYPE_EMAIL                 0x04U
+#define MAP_FILTER_MSGTYPE_MMS                   0x08U
+#define MAP_FILTER_MSGTYPE_IM                    0x10U
 
 /* FilterPeriodBegin - Variable Length String */
 /* FilterPeriodEnd - Variable Length String */
 /* FilterReadStatus - 1 Byte Bit-Mask */
-#define MAP_FILTER_READSTATUS_NO_FILTER          0x00
-#define MAP_FILTER_READSTATUS_UNREAD_ONLY        0x01
-#define MAP_FILTER_READSTATUS_READ_ONLY          0x02
+#define MAP_FILTER_READSTATUS_NO_FILTER          0x00U
+#define MAP_FILTER_READSTATUS_UNREAD_ONLY        0x01U
+#define MAP_FILTER_READSTATUS_READ_ONLY          0x02U
 
 /* FilterRecipient - Variable Length UTF-8 Text */
 /* FilterOriginator - Variable Length UTF-8 Text */
 /* FilterPriority - 1 Byte Bit-Mask */
-#define MAP_FILTER_PRIORITY_NO_FILTER            0x00
-#define MAP_FILTER_PRIORITY_HIGHPRIO_ONLY        0x01
-#define MAP_FILTER_PRIORITY_NONHIGHPRIO_ONLY     0x02
+#define MAP_FILTER_PRIORITY_NO_FILTER            0x00U
+#define MAP_FILTER_PRIORITY_HIGHPRIO_ONLY        0x01U
+#define MAP_FILTER_PRIORITY_NONHIGHPRIO_ONLY     0x02U
 
 /* Attachment - 1 Byte Bit-Mask */
-#define MAP_ATTACHMENT_OFF                       0x00
-#define MAP_ATTACHMENT_ON                        0x01
+#define MAP_ATTACHMENT_OFF                       0x00U
+#define MAP_ATTACHMENT_ON                        0x01U
 
 /* Transparent - 1 Byte Bit-Mask */
-#define MAP_TRANSPARENT_OFF                      0x00
-#define MAP_TRANSPARENT_ON                       0x01
+#define MAP_TRANSPARENT_OFF                      0x00U
+#define MAP_TRANSPARENT_ON                       0x01U
 
 /* Retry - 1 Byte Bit-Mask */
-#define MAP_RETRY_OFF                            0x00
-#define MAP_RETRY_ON                             0x01
+#define MAP_RETRY_OFF                            0x00U
+#define MAP_RETRY_ON                             0x01U
 
 /* NewMessage - 1 Byte Bit-Mask */
-#define MAP_NEWMESSAGE_OFF                       0x00
-#define MAP_NEWMESSAGE_ON                        0x01
+#define MAP_NEWMESSAGE_OFF                       0x00U
+#define MAP_NEWMESSAGE_ON                        0x01U
 
 /* NotificationStatus - 1 Byte Bit-Mask */
-#define MAP_NOTIFICATIONSTATUS_OFF               0x00
-#define MAP_NOTIFICATIONSTATUS_ON                0x01
+#define MAP_NOTIFICATIONSTATUS_OFF               0x00U
+#define MAP_NOTIFICATIONSTATUS_ON                0x01U
 
 /* MASInstanceID - 1 Byte Value : 0 to 255 */
 /* Parameter Mask - 4 Byte Bit-Mask */
-#define MAP_PARAM_MASK_SUBJECT                   0x00000001
-#define MAP_PARAM_MASK_DATETIME                  0x00000002
-#define MAP_PARAM_MASK_SENDER_NAME               0x00000004
-#define MAP_PARAM_MASK_SENDER_ADDRESSING         0x00000008
-#define MAP_PARAM_MASK_RECIPIENT_NAME            0x00000010
-#define MAP_PARAM_MASK_RECIPIENT_ADDRESSING      0x00000020
-#define MAP_PARAM_MASK_TYPE                      0x00000040
-#define MAP_PARAM_MASK_SIZE                      0x00000080
-#define MAP_PARAM_MASK_RECEPTION_STATUS          0x00000100
-#define MAP_PARAM_MASK_TEXT                      0x00000200
-#define MAP_PARAM_MASK_ATTACHMENT_SIZE           0x00000400
-#define MAP_PARAM_MASK_PRIORITY                  0x00000800
-#define MAP_PARAM_MASK_READ                      0x00001000
-#define MAP_PARAM_MASK_SENT                      0x00002000
-#define MAP_PARAM_MASK_PROTECTED                 0x00004000
-#define MAP_PARAM_MASK_REPLYTO_ADDRESSING        0x00008000
+#define MAP_PARAM_MASK_SUBJECT                   0x00000001U
+#define MAP_PARAM_MASK_DATETIME                  0x00000002U
+#define MAP_PARAM_MASK_SENDER_NAME               0x00000004U
+#define MAP_PARAM_MASK_SENDER_ADDRESSING         0x00000008U
+#define MAP_PARAM_MASK_RECIPIENT_NAME            0x00000010U
+#define MAP_PARAM_MASK_RECIPIENT_ADDRESSING      0x00000020U
+#define MAP_PARAM_MASK_TYPE                      0x00000040U
+#define MAP_PARAM_MASK_SIZE                      0x00000080U
+#define MAP_PARAM_MASK_RECEPTION_STATUS          0x00000100U
+#define MAP_PARAM_MASK_TEXT                      0x00000200U
+#define MAP_PARAM_MASK_ATTACHMENT_SIZE           0x00000400U
+#define MAP_PARAM_MASK_PRIORITY                  0x00000800U
+#define MAP_PARAM_MASK_READ                      0x00001000U
+#define MAP_PARAM_MASK_SENT                      0x00002000U
+#define MAP_PARAM_MASK_PROTECTED                 0x00004000U
+#define MAP_PARAM_MASK_REPLYTO_ADDRESSING        0x00008000U
 
 /* FolderListingSize - 2 Byte value : 0x0000 to 0xFFFF */
 /* MessagesListingSize - 2 Byte value : 0x0000 to 0xFFFF */
 /* SubjectLength - 1 Byte Value : 0 to 255 */
 
 /* Charset - 1 Byte Bit-Mask */
-#define MAP_CHARSET_NATIVE                       0x00
-#define MAP_CHARSET_UTF8                         0x01
+#define MAP_CHARSET_NATIVE                       0x00U
+#define MAP_CHARSET_UTF8                         0x01U
 
 /* FractionRequest - 1 Byte Bit-Mask */
-#define MAP_FRACTIONREQUEST_FIRST                0x00
-#define MAP_FRACTIONREQUEST_NEXT                 0x01
+#define MAP_FRACTIONREQUEST_FIRST                0x00U
+#define MAP_FRACTIONREQUEST_NEXT                 0x01U
 
 /* FractionDeliver - 1 Byte Bit-Mask */
-#define MAP_FRACTIONDELIVER_MORE                 0x00
-#define MAP_FRACTIONDELIVER_LAST                 0x01
+#define MAP_FRACTIONDELIVER_MORE                 0x00U
+#define MAP_FRACTIONDELIVER_LAST                 0x01U
 
 /* StatusIndicator - 1 Byte Bit-Mask */
-#define MAP_STATUSIND_READ_STATUS                0x00
-#define MAP_STATUSIND_DELETED_STATUS             0x01
+#define MAP_STATUSIND_READ_STATUS                0x00U
+#define MAP_STATUSIND_DELETED_STATUS             0x01U
 
 /* StatusValue - 1 Byte Bit-Mask */
-#define MAP_STATUSVALUE_NO                       0x00
-#define MAP_STATUSVALUE_YES                      0x01
+#define MAP_STATUSVALUE_NO                       0x00U
+#define MAP_STATUSVALUE_YES                      0x01U
 
 /**
  * MAP NotificationFilterMask - 4Byte Bit-Mask
  */
-#define MAP_NTF_FLTR_MASK_NEW_MSG                0x00000001 /* NewMessage */
-#define MAP_NTF_FLTR_MASK_MSG_DELETED            0x00000002 /* MessageDeleted */
-#define MAP_NTF_FLTR_MASK_MSG_SHIFT              0x00000004 /* MessageShift */
-#define MAP_NTF_FLTR_MASK_SENDING_SUCCESS        0x00000008 /* SendingSuccess */
-#define MAP_NTF_FLTR_MASK_SENDING_FAILURE        0x00000010 /* SendingFailure */
-#define MAP_NTF_FLTR_MASK_DELIVERY_SUCCESS       0x00000020 /* DeliverySuccess */
-#define MAP_NTF_FLTR_MASK_DELIVERY_FAILURE       0x00000040 /* DeliveryFailure */
-#define MAP_NTF_FLTR_MASK_MEMORY_FULL            0x00000080 /* MemoryFull */
-#define MAP_NTF_FLTR_MASK_MEMORY_AVAILABLE       0x00000100 /* MemoryAvailable */
-#define MAP_NTF_FLTR_MASK_READ_STS_CHNGD         0x00000200 /* ReadStatusChanged */
-#define MAP_NTF_FLTR_MASK_CONV_CHNGD             0x00000400 /* ConversationChanged */
-#define MAP_NTF_FLTR_MASK_PTPNT_PRNCE_CHNGD      0x00000800 /* ParticipantPresenceChanged */
-#define MAP_NTF_FLTR_MASK_PTPNT_CHT_ST_CHNGD     0x00001000 /* ParticipantChatStateChanged */
-#define MAP_NTF_FLTR_MASK_MSG_EXTD_DATA_CHNGD    0x00002000 /* MessageExtendedDataChanged */
-#define MAP_NTF_FLTR_MASK_MSG_REMOVED            0x00004000 /* MessageRemoved */
+#define MAP_NTF_FLTR_MASK_NEW_MSG                0x00000001U /* NewMessage */
+#define MAP_NTF_FLTR_MASK_MSG_DELETED            0x00000002U /* MessageDeleted */
+#define MAP_NTF_FLTR_MASK_MSG_SHIFT              0x00000004U /* MessageShift */
+#define MAP_NTF_FLTR_MASK_SENDING_SUCCESS        0x00000008U /* SendingSuccess */
+#define MAP_NTF_FLTR_MASK_SENDING_FAILURE        0x00000010U /* SendingFailure */
+#define MAP_NTF_FLTR_MASK_DELIVERY_SUCCESS       0x00000020U /* DeliverySuccess */
+#define MAP_NTF_FLTR_MASK_DELIVERY_FAILURE       0x00000040U /* DeliveryFailure */
+#define MAP_NTF_FLTR_MASK_MEMORY_FULL            0x00000080U /* MemoryFull */
+#define MAP_NTF_FLTR_MASK_MEMORY_AVAILABLE       0x00000100U /* MemoryAvailable */
+#define MAP_NTF_FLTR_MASK_READ_STS_CHNGD         0x00000200U /* ReadStatusChanged */
+#define MAP_NTF_FLTR_MASK_CONV_CHNGD             0x00000400U /* ConversationChanged */
+#define MAP_NTF_FLTR_MASK_PTPNT_PRNCE_CHNGD      0x00000800U /* ParticipantPresenceChanged */
+#define MAP_NTF_FLTR_MASK_PTPNT_CHT_ST_CHNGD     0x00001000U /* ParticipantChatStateChanged */
+#define MAP_NTF_FLTR_MASK_MSG_EXTD_DATA_CHNGD    0x00002000U /* MessageExtendedDataChanged */
+#define MAP_NTF_FLTR_MASK_MSG_REMOVED            0x00004000U /* MessageRemoved */
 
 /**
  * MAP ConvParameterMask -4byte bit-mask
  */
-#define MAP_CONV_PARAM_MASK_CONV_NAME            0x00000001 /* Conversation Name */
-#define MAP_CONV_PARAM_MASK_CONV_L_ACTVTY        0x00000002 /* Conversation last_activity */
-#define MAP_CONV_PARAM_MASK_CONV_RD_STS          0x00000004 /* Conversation read_status */
-#define MAP_CONV_PARAM_MASK_CONV_VER_CNTR        0x00000008 /* Conversation version_counter */
-#define MAP_CONV_PARAM_MASK_CONV_SUMMARY         0x00000010 /* Conversation summary */
-#define MAP_CONV_PARAM_MASK_PARTICIPANTS         0x00000020 /* Participants */
-#define MAP_CONV_PARAM_MASK_PTPNT_UCI            0x00000040 /* Participant UCI */
-#define MAP_CONV_PARAM_MASK_PTPNT_DPLY_NAME      0x00000080 /* Participant display_name */
-#define MAP_CONV_PARAM_MASK_PTPNT_CHT_STATE      0x00000100 /* Participant chat_state */
-#define MAP_CONV_PARAM_MASK_PTPNT_L_ACTVTY       0x00000200 /* Participant last_activity */
-#define MAP_CONV_PARAM_MASK_PTPNT_X_BT_UID       0x00000400 /* Participant x_bt_uid */
-#define MAP_CONV_PARAM_MASK_PTPNT_NAME           0x00000800 /* Participant name */
-#define MAP_CONV_PARAM_MASK_PTPNT_PRNCE_ALTY     0x00001000 /* Participant presence_availability */
-#define MAP_CONV_PARAM_MASK_PTPNT_PRNCE_TEXT     0x00002000 /* Participant presence_text */
-#define MAP_CONV_PARAM_MASK_PTPNT_PRNCE_PRTY     0x00004000 /* Participant priority */
+#define MAP_CONV_PARAM_MASK_CONV_NAME            0x00000001U /* Conversation Name */
+#define MAP_CONV_PARAM_MASK_CONV_L_ACTVTY        0x00000002U /* Conversation last_activity */
+#define MAP_CONV_PARAM_MASK_CONV_RD_STS          0x00000004U /* Conversation read_status */
+#define MAP_CONV_PARAM_MASK_CONV_VER_CNTR        0x00000008U /* Conversation version_counter */
+#define MAP_CONV_PARAM_MASK_CONV_SUMMARY         0x00000010U /* Conversation summary */
+#define MAP_CONV_PARAM_MASK_PARTICIPANTS         0x00000020U /* Participants */
+#define MAP_CONV_PARAM_MASK_PTPNT_UCI            0x00000040U /* Participant UCI */
+#define MAP_CONV_PARAM_MASK_PTPNT_DPLY_NAME      0x00000080U /* Participant display_name */
+#define MAP_CONV_PARAM_MASK_PTPNT_CHT_STATE      0x00000100U /* Participant chat_state */
+#define MAP_CONV_PARAM_MASK_PTPNT_L_ACTVTY       0x00000200U /* Participant last_activity */
+#define MAP_CONV_PARAM_MASK_PTPNT_X_BT_UID       0x00000400U /* Participant x_bt_uid */
+#define MAP_CONV_PARAM_MASK_PTPNT_NAME           0x00000800U /* Participant name */
+#define MAP_CONV_PARAM_MASK_PTPNT_PRNCE_ALTY     0x00001000U /* Participant presence_availability */
+#define MAP_CONV_PARAM_MASK_PTPNT_PRNCE_TEXT     0x00002000U /* Participant presence_text */
+#define MAP_CONV_PARAM_MASK_PTPNT_PRNCE_PRTY     0x00004000U /* Participant priority */
 
 /**
  * MAP SupportedFeatures -4byte bit-mask
  */
-#define MAP_SUPP_FTRS_MASK_NTY_REG               0x00000001 /* Notification Registration Feature */
-#define MAP_SUPP_FTRS_MASK_NTY                   0x00000002 /* Notification Feature */
-#define MAP_SUPP_FTRS_MASK_BROWSING              0x00000004 /* Browsing Feature */
-#define MAP_SUPP_FTRS_MASK_UPLOADING             0x00000008 /* Uploading Feature */
-#define MAP_SUPP_FTRS_MASK_DELETE                0x00000010 /* Delete Feature */
-#define MAP_SUPP_FTRS_MASK_INST_INFO             0x00000020 /* Instance Information Feature */
-#define MAP_SUPP_FTRS_MASK_EXTED_EVNT_RPT_11     0x00000040 /* Extended Event Report 1.1 */
-#define MAP_SUPP_FTRS_MASK_EVNT_RPT_12           0x00000080 /* Event Report Version 1.2 */
-#define MAP_SUPP_FTRS_MASK_MSG_FRMT_11           0x00000100 /* Message Format Version 1.1 */
-#define MAP_SUPP_FTRS_MASK_MSG_LIST_FRMT_11      0x00000200 /* Messages-Listing Format Version 1.1 */
-#define MAP_SUPP_FTRS_MASK_PRST_MSG_HNDLS        0x00000400 /* Persistent Message Handles */
-#define MAP_SUPP_FTRS_MASK_DATABASE_ID           0x00000800 /* Database Identifier */
-#define MAP_SUPP_FTRS_MASK_FLDR_VER_CNTR         0x00001000 /* Folder Version Counter */
-#define MAP_SUPP_FTRS_MASK_CONV_VER_CNTR         0x00002000 /* Conversation Version Counters */
-#define MAP_SUPP_FTRS_MASK_PTPNT_PRNCE_CHNG_NTY  0x00004000 /* Participant Presence Change Notification */
-#define MAP_SUPP_FTRS_MASK_PTPNT_CHT_ST_CHNG_NTY 0x00008000 /* Participant Chat State Change Notification */
-#define MAP_SUPP_FTRS_MASK_PBAP_CNTCT_CRS_REF    0x00010000 /* PBAP Contact Cross Reference */
-#define MAP_SUPP_FTRS_MASK_NTFY_FLTR             0x00020000 /* Notification Filtering */
-#define MAP_SUPP_FTRS_MASK_UTC_TIMESTMP_FRMT     0x00040000 /* UTC offset timestamp format */
-#define MAP_SUPP_FTRS_MASK_CONV_LISTING          0x00100000 /* Conversation Listing */
-#define MAP_SUPP_FTRS_MASK_OWNER_STATUS          0x00200000 /* Owner Status */
+#define MAP_SUPP_FTRS_MASK_NTY_REG               0x00000001U /* Notification Registration Feature */
+#define MAP_SUPP_FTRS_MASK_NTY                   0x00000002U /* Notification Feature */
+#define MAP_SUPP_FTRS_MASK_BROWSING              0x00000004U /* Browsing Feature */
+#define MAP_SUPP_FTRS_MASK_UPLOADING             0x00000008U /* Uploading Feature */
+#define MAP_SUPP_FTRS_MASK_DELETE                0x00000010U /* Delete Feature */
+#define MAP_SUPP_FTRS_MASK_INST_INFO             0x00000020U /* Instance Information Feature */
+#define MAP_SUPP_FTRS_MASK_EXTED_EVNT_RPT_11     0x00000040U /* Extended Event Report 1.1 */
+#define MAP_SUPP_FTRS_MASK_EVNT_RPT_12           0x00000080U /* Event Report Version 1.2 */
+#define MAP_SUPP_FTRS_MASK_MSG_FRMT_11           0x00000100U /* Message Format Version 1.1 */
+#define MAP_SUPP_FTRS_MASK_MSG_LIST_FRMT_11      0x00000200U /* Messages-Listing Format Version 1.1 */
+#define MAP_SUPP_FTRS_MASK_PRST_MSG_HNDLS        0x00000400U /* Persistent Message Handles */
+#define MAP_SUPP_FTRS_MASK_DATABASE_ID           0x00000800U /* Database Identifier */
+#define MAP_SUPP_FTRS_MASK_FLDR_VER_CNTR         0x00001000U /* Folder Version Counter */
+#define MAP_SUPP_FTRS_MASK_CONV_VER_CNTR         0x00002000U /* Conversation Version Counters */
+#define MAP_SUPP_FTRS_MASK_PTPNT_PRNCE_CHNG_NTY  0x00004000U /* Participant Presence Change Notification */
+#define MAP_SUPP_FTRS_MASK_PTPNT_CHT_ST_CHNG_NTY 0x00008000U /* Participant Chat State Change Notification */
+#define MAP_SUPP_FTRS_MASK_PBAP_CNTCT_CRS_REF    0x00010000U /* PBAP Contact Cross Reference */
+#define MAP_SUPP_FTRS_MASK_NTFY_FLTR             0x00020000U /* Notification Filtering */
+#define MAP_SUPP_FTRS_MASK_UTC_TIMESTMP_FRMT     0x00040000U /* UTC offset timestamp format */
+#define MAP_SUPP_FTRS_MASK_CONV_LISTING          0x00100000U /* Conversation Listing */
+#define MAP_SUPP_FTRS_MASK_OWNER_STATUS          0x00200000U /* Owner Status */
 
 /**
  * MAPv1.4 Message Forwand Constants
  */
-#define MAP_FRWD_MODIFY_TEXT_REPLACE             0x00
-#define MAP_FRWD_MODIFY_TEXT_PREPEND             0x01
+#define MAP_FRWD_MODIFY_TEXT_REPLACE             0x00U
+#define MAP_FRWD_MODIFY_TEXT_PREPEND             0x01U
 
 /**
  * Max. Conversation id size
  */
-#define MAX_CONVERSATION_ID_SIZE                (32 + 1) /* NULL terminator included */
+#define MAX_CONVERSATION_ID_SIZE                (32U + 1U) /* NULL terminator included */
 
 /**
  * Max. Presence Text
  */
-#define MAX_PRESENCE_TEXT_SIZE                  (255 + 1) /* NULL terminator included */
+#define MAX_PRESENCE_TEXT_SIZE                  (255U + 1U) /* NULL terminator included */
 
 /**
  * Max Timestamp size
  */
-#define MAX_MAP_TIMESTAMP_SIZE                  (20 + 1) /* NULL terminator inlcude */
+#define MAX_MAP_TIMESTAMP_SIZE                  (20U + 1U) /* NULL terminator inlcude */
 /** \} */
 /* ----------------------------------------------------- */
 
@@ -533,29 +533,29 @@
  * \{
  * Describes Structures defined by the module.
  */
-/* MAP Handle type */
+/** MAP Handle type */
 typedef UINT8 MAP_HANDLE;
 
-/* MAP Service Types */
+/** MAP Service Types */
 typedef enum
 {
-    MAP_ACCESS_SERVICE = 0x01,
-    MAP_NTF_SERVICE = 0x02
+    MAP_ACCESS_SERVICE = 0x01U,
+    MAP_NTF_SERVICE = 0x02U
 
 } MAP_SERVICE_TYPE;
 
-/* MAP Entity Handle */
+/** MAP Entity Handle */
 typedef struct _MAP_HANDLE_INFO
 {
-    /* Service Type */
+    /** Service Type */
     MAP_SERVICE_TYPE    service;
 
-    /* Entity MAP Handle ID */
+    /** Entity MAP Handle ID */
     MAP_HANDLE    entity_id;
 
 } MAP_HANDLE_INFO;
 
-/* MAP Header structure, to exchage data with application */
+/** MAP Header structure, to exchage data with application */
 typedef struct _MAP_HEADER_STRUCT
 {
     UCHAR   * value;
@@ -563,7 +563,7 @@ typedef struct _MAP_HEADER_STRUCT
 
 } MAP_HEADER_STRUCT;
 
-/* MAP Application Parameter Structure */
+/** MAP Application Parameter Structure */
 typedef struct _MAP_APPL_PARAMS
 {
     UINT32                 parameter_mask;
@@ -677,7 +677,7 @@ typedef struct _MAP_APPL_PARAMS
 } MAP_APPL_PARAMS;
 
 
-/* MAP Connection Structure */
+/** MAP Connection Structure */
 typedef struct _MAP_CONNECT_STRUCT
 {
     /** Peer bluetooth device address */
@@ -705,7 +705,7 @@ typedef struct _MAP_CONNECT_STRUCT
 } MAP_CONNECT_STRUCT;
 
 
-/* MAP Request Structure */
+/** MAP Request Structure */
 typedef struct _MAP_REQUEST_STRUCT
 {
     /**
@@ -735,7 +735,7 @@ typedef struct _MAP_REQUEST_STRUCT
 } MAP_REQUEST_STRUCT;
 
 
-/* MAP Response Structure */
+/** MAP Response Structure */
 typedef struct _MAP_RESPONSE_STRUCT
 {
     /**
@@ -760,7 +760,7 @@ typedef struct _MAP_RESPONSE_STRUCT
 } MAP_RESPONSE_STRUCT;
 
 
-/* MAP common headers */
+/** MAP common headers */
 typedef union _MAP_HEADERS
 {
     /**
@@ -786,8 +786,8 @@ typedef union _MAP_HEADERS
  * \{
  * Describes Application Callback defined by the module.
  */
-
-/* MAP Event Notification Callback type */
+ 
+/** MAP Event Notification Callback type */
 typedef API_RESULT (* MAP_EVENT_NTF_CB)
                    (
                         MAP_HANDLE_INFO * map_handle,
@@ -797,6 +797,7 @@ typedef API_RESULT (* MAP_EVENT_NTF_CB)
                         UINT16            num_headers
                    );
 /** \} */
+
 /* --------------------------------------------- Macros */
 
 /**
@@ -805,60 +806,68 @@ typedef API_RESULT (* MAP_EVENT_NTF_CB)
  * Describes Utility Macros defined by the module.
  */
 
-/* To initialize a Header Structure */
+/** To initialize a Header Structure */
 #define MAP_INIT_HEADER_STRUCT(hs)    \
         (hs).value = NULL;    \
-        (hs).length = 0;
+        (hs).length = 0U;
 
 #ifndef MAP_1_3
-/* To set application parameter flag */
+/** To set application parameter flag */
 #define MAP_SET_APPL_PARAM_FLAG(flag, set_field)   \
         *(flag) = *(flag) | (set_field)
 
-/* To retrieve the field value (Set/Reset) */
+/** To retrieve the field value (Set/Reset) */
 #define MAP_GET_APPL_PARAM_FLAG(flag, get_field)   \
         (*(flag) & (get_field))
 
-/* Resets all the fields of the application parameter flag */
+/** Resets all the fields of the application parameter flag */
 #define MAP_RESET_APPL_PARAM_FLAG(flag)            \
-        *(flag) = 0x00000000
+        *(flag) = 0x00000000U
+
+/** To check if application parameter flag is zero */
+#define MAP_APPL_PARAM_FLAG_IS_ZERO(flag) \
+        (0U == (flag)[0U])
 
 #else /* MAP_1_3 */
-/* To set application parameter flag */
+/** To set application parameter flag */
 #define MAP_SET_APPL_PARAM_FLAG_EXT(flag, set_field, index)   \
         *((UINT32 *)((flag) + (index))) = *((UINT32 *)((flag) + (index))) | (set_field)
 
-/* To retrieve the field value (Set/Reset) */
+/** To retrieve the field value (Set/Reset) */
 #define MAP_GET_APPL_PARAM_FLAG_EXT(flag, get_field, index)   \
         (*((UINT32 *)((flag) + (index))) & (get_field))
 
-/* Resets all the fields of the application parameter flag */
+/** Resets all the fields of the application parameter flag */
 #define MAP_RESET_APPL_PARAM_FLAG_EXT(flag_ptr, index)        \
-        (flag_ptr)[(index)] = 0x00000000
+        (flag_ptr)[(index)] = 0x00000000U
 
-/* Mapping for default macros */
+/** To check if application parameter flag is zero */
+#define MAP_APPL_PARAM_FLAG_IS_ZERO(flag) \
+        ((0U == (flag)[0U]) && (0U == (flag)[1U]))
+
+/** Mapping for default macros */
 #define MAP_SET_APPL_PARAM_FLAG(flag, set_field)   \
-        MAP_SET_APPL_PARAM_FLAG_EXT((flag), (set_field), 0)
+        MAP_SET_APPL_PARAM_FLAG_EXT((flag), (set_field), 0U)
 
 #define MAP_GET_APPL_PARAM_FLAG(flag, get_field)   \
-        MAP_GET_APPL_PARAM_FLAG_EXT((flag), (get_field), 0)
+        MAP_GET_APPL_PARAM_FLAG_EXT((flag), (get_field), 0U)
 
 #define MAP_RESET_APPL_PARAM_FLAG(flag)    \
-        MAP_RESET_APPL_PARAM_FLAG_EXT((flag), 0); \
-        MAP_RESET_APPL_PARAM_FLAG_EXT((flag), 1)
+        MAP_RESET_APPL_PARAM_FLAG_EXT((flag), 0U); \
+        MAP_RESET_APPL_PARAM_FLAG_EXT((flag), 1U)
 #endif /* MAP_1_3 */
 
-/* Extract header structure value */
+/** Extract header structure value */
 #define MAP_COPY_HEADER_STRUCT(hdr, len, val)      \
         (len) = (hdr)->length;                     \
         BT_str_n_copy((val), (hdr)->value, (len)); \
         (val)[(len)] = '\0';
 
-/* Extract application parameters */
+/** Extract application parameters */
 #define MAP_COPY_APPL_PARAMS(to_params, from_params, search_value_out)      \
         BT_mem_copy((to_params), (from_params), sizeof(MAP_APPL_PARAMS));   \
-        if((from_params)->search_value.length != 0 &&                       \
-           (from_params)->search_value.value != NULL)                       \
+        if(((from_params)->search_value.length != 0U) &&                    \
+           ((from_params)->search_value.value != NULL))                     \
         {                                                                   \
             BT_mem_copy((search_value_out),                                 \
                    (from_params)->search_value.value,                       \
@@ -882,7 +891,6 @@ extern "C" {
 
 /* MAP Message Client APIs */
 #ifdef MAP_MCE
-/* MAP Client Initialization */
 /**
  *  \brief To initialize MAP MCE module
  *
@@ -895,7 +903,6 @@ extern "C" {
  */
 API_RESULT BT_map_mce_init (void);
 
-/* MAP Client Shutdown */
 /**
  *  \brief To shutdown MAP MCE module.
  *
@@ -907,10 +914,8 @@ API_RESULT BT_map_mce_init (void);
  */
 API_RESULT BT_map_mce_shutdown (void);
 
-/* MAP Client Start Instance */
 /**
- *  \brief To start an instance of MAP MCE Access/Notification Service as given
- *         by the map_service paramter.
+ *  \brief To start an instance of MAP MCE.
  *
  *  \par Description:
  *       This API starts a MAP MCE instance. On successful instantiation,
@@ -941,10 +946,8 @@ API_RESULT BT_map_mce_start
                /* OUT */ MAP_HANDLE        * map_handle
            );
 
-/* MAP Client Stop Instance */
 /**
- *  \brief To stop an active MAP MCE instance of Access/Notification Service as
- *         given by the map_service parameter.
+ *  \brief To stop an active MAP MCE instance.
  *
  *  \par Description:
  *       This API stops the MAP MCE instance corresponding to the specified handle.
@@ -968,7 +971,6 @@ API_RESULT BT_map_mce_stop
                /* IN */ MAP_HANDLE        * map_handle
            );
 
-/* MAP Client Connect on Instance */
 /**
  *  \brief To establish the MAP Access Service Connection.
  *
@@ -999,7 +1001,6 @@ API_RESULT BT_map_mce_connect
                /* IN */ MAP_CONNECT_STRUCT * map_connect_info
            );
 
-/* MAP Client Disconnect Instance */
 /**
  *  \brief To disconnect the established MAP Access Service Connection.
  *
@@ -1024,7 +1025,6 @@ API_RESULT BT_map_mce_disconnect
                /* IN */ MAP_HANDLE   * map_handle
            );
 
-/* MAP Client Disconnect Instance Transport */
 /**
  *  \brief To disconnect the underlying transport of MAP Access Service Connection.
  *
@@ -1048,7 +1048,6 @@ API_RESULT BT_map_mce_transport_close
                /* IN */ MAP_HANDLE   * map_handle
            );
 
-/* MAP Client update Server inbox */
 /**
  *  \brief To request an update of Inbox to the MSE.
  *
@@ -1072,7 +1071,6 @@ API_RESULT BT_map_mce_update_inbox
                /* IN */ MAP_HANDLE   * map_handle
            );
 
-/* MAP Client set server folder */
 /**
  *  \brief To set the current folder of the MSE
  *
@@ -1113,7 +1111,6 @@ API_RESULT BT_map_mce_set_folder
                /* IN */ MAP_REQUEST_STRUCT   * map_set_info
            );
 
-/* MAP Client get server folder listing */
 /**
  *  \brief To get the Message Listing from the current or given directory in the MSE
  *
@@ -1151,7 +1148,6 @@ API_RESULT BT_map_mce_get_folder_listing
                /* IN */ MAP_REQUEST_STRUCT   * map_get_info
            );
 
-/* MAP Client get server messages listing */
 /**
  *  \brief To get the Message Listing from the current or given directory in the MSE
  *
@@ -1188,9 +1184,8 @@ API_RESULT BT_map_mce_get_messages_listing
                /* IN */ MAP_REQUEST_STRUCT   * map_get_info
            );
 
-/* MAP Client get message from server */
 /**
- *  \brief
+ *  \brief To get message from server (MSE)
  *
  *  \par Description:
  *       This API retrieves the message with the given message handle from the
@@ -1221,9 +1216,8 @@ API_RESULT BT_map_mce_get_message
                /* IN */ MAP_REQUEST_STRUCT   * map_get_info
            );
 
-/* MAP Client set message status on server */
 /**
- *  \brief To set the message status of the message in the MSE with given handle
+ *  \brief To set message status on server (MSE).
  *
  *  \par Description:
  *       This API sets the message status indicator value of a message with
@@ -1255,9 +1249,8 @@ API_RESULT BT_map_mce_set_message_status
                /* IN */ MAP_REQUEST_STRUCT   * map_set_info
            );
 
-/* MAP Client push message to server */
 /**
- *  \brief To push a message object to the MSE
+ *  \brief To push a message object to the server (MSE)
  *
  *  \par Description:
  *       This API pushes the given message object to the MSE. The application
@@ -1306,9 +1299,8 @@ API_RESULT BT_map_mce_push_message
                /* OUT */ UINT16               * actual
            );
 
-/* MAP Client set notification registration on server */
 /**
- *  \brief To register for enabling or disabling notification with MSE
+ *  \brief To register for enabling or disabling notification with server (MSE)
  *
  *  \par Description:
  *       This API registers with the MSE to enable or disable the notification
@@ -1402,6 +1394,7 @@ API_RESULT BT_map_mce_get_conversation_listing
                /* IN */ MAP_HANDLE          * map_handle,
                /* IN */ MAP_REQUEST_STRUCT  * map_get_info
            );
+
 /**
  *  \brief To set owner status on the MSE.
  *
@@ -1433,6 +1426,7 @@ API_RESULT BT_map_mce_set_owner_status
                /* IN */ MAP_HANDLE          * map_handle,
                /* IN */ MAP_REQUEST_STRUCT  * map_set_info
            );
+
 /**
  *  \brief To get owner status on the MSE.
  *
@@ -1462,6 +1456,7 @@ API_RESULT BT_map_mce_get_owner_status
                /* IN */ MAP_HANDLE          * map_handle,
                /* IN */ MAP_REQUEST_STRUCT  * map_get_info
            );
+
 /**
  *  \brief To set Message Notification and Notification Filtering feature with MSE.
  *
@@ -1654,7 +1649,6 @@ API_RESULT BT_map_mce_ns_send_response
 
 /* MAP Message Server APIs */
 #ifdef MAP_MSE
-/* MAP Server Initialization */
 /**
  *  \brief To initialize MAP MSE module.
  *
@@ -1671,7 +1665,6 @@ API_RESULT BT_map_mce_ns_send_response
  */
 API_RESULT BT_map_mse_init (void);
 
-/* MAP Server Shutdown */
 /**
  *  \brief To shutdown MAP MSE module.
  *
@@ -1689,7 +1682,6 @@ API_RESULT BT_map_mse_init (void);
  */
 API_RESULT BT_map_mse_shutdown (void);
 
-/* MAP Server Start Instance */
 /**
  *  \brief To start a MAP MSE instance.
  *
@@ -1718,7 +1710,6 @@ API_RESULT BT_map_mse_start
                /* OUT */ MAP_HANDLE        * map_handle
            );
 
-/* MAP Server Stop Instance */
 /**
  *  \brief To stop an active MAP MSE instance.
  *
@@ -1744,7 +1735,6 @@ API_RESULT BT_map_mse_stop
                /* IN */ MAP_HANDLE        * map_handle
            );
 
-/* MAP Server Disconnect Instance Transport */
 /**
  *  \brief To disconnect the underlying transport of MAP Access Service Connection.
  *
@@ -1768,7 +1758,6 @@ API_RESULT BT_map_mse_transport_close
                /* IN */ MAP_HANDLE  * map_handle
            );
 
-/* MAP Server Send Response for last received MAS request */
 /**
  *  \brief To send Response to the latest Request received from the MAP MCE.
  *
@@ -1809,7 +1798,6 @@ API_RESULT BT_map_mse_send_response
            );
 
 #ifdef MAP_SUPPORT_NOTIFICATION
-/* MAP Server Connect for Notification Service */
 /**
  *  \brief To establish the MAP Notification Service Connection.
  *
@@ -1842,7 +1830,6 @@ API_RESULT BT_map_mse_ns_connect
                /* IN */ MAP_CONNECT_STRUCT  * map_connect_info
            );
 
-/* MAP MNS Disconnect Instance */
 /**
  *  \brief To disconnect the Established MAP Notification Service Connection.
  *
@@ -1869,7 +1856,6 @@ API_RESULT BT_map_mse_ns_disconnect
                /* IN */ MAP_HANDLE  * map_handle
            );
 
-/* MAP MNS Disconnect Instance Transport */
 /**
  *  \brief To disconnect the underlying transport of MAP Notification Service Connection.
  *
@@ -1893,9 +1879,8 @@ API_RESULT BT_map_mse_ns_transport_close
                /* IN */ MAP_HANDLE  * map_handle
            );
 
-/* MAP Server message notification event */
 /**
- *  \brief To sends a Notification Event to the MNS Server in the MAP Client.
+ *  \brief To send a Notification Event to the MNS Server in the MAP Client.
  *
  *  \par Description:
  *       This API sends a Notification event over Notification channel from the
@@ -1924,6 +1909,7 @@ API_RESULT BT_map_mse_ns_send_event
                /* IN */ MAP_REQUEST_STRUCT   * map_set_info,
                /* IN */ UCHAR                  more
            );
+
 /**
  *  \brief To sends a request to the MAP Notification Service Server.
  *

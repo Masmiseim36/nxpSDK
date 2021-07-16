@@ -93,6 +93,9 @@ var streamer__api_8h =
       [ "STREAM_PIPELINE_PCM_AIRPLAY", "streamer__api_8h.html#ad269d79ba74b567a67e0fac722252652a472836cad25439f135976a2beeade76f", null ],
       [ "STREAM_PIPELINE_PCM_ASYNC", "streamer__api_8h.html#ad269d79ba74b567a67e0fac722252652a2ce7a9dd0f1304c7b85e1de57dfe4df9", null ],
       [ "STREAM_PIPELINE_PCM_ANALOG", "streamer__api_8h.html#ad269d79ba74b567a67e0fac722252652ade3859160cbcea184600b55ed4f6099b", null ],
+      [ "STREAM_PIPELINE_MIC2FILE", "streamer__api_8h.html#ad269d79ba74b567a67e0fac722252652a8f64bc43447969feee5d8f6d45f2db9e", null ],
+      [ "STREAM_PIPELINE_VIT", "streamer__api_8h.html#ad269d79ba74b567a67e0fac722252652a22911de0e66aafc79bf2ed333d42fba3", null ],
+      [ "STREAM_PIPELINE_EAP", "streamer__api_8h.html#ad269d79ba74b567a67e0fac722252652a122cf029ed37e036f26b15fbb204ba45", null ],
       [ "STREAM_PIPELINE_MAX", "streamer__api_8h.html#ad269d79ba74b567a67e0fac722252652a1606e0823001bcccdd4397fe44a5f4a5", null ]
     ] ],
     [ "ElementIndex", "streamer__api_8h.html#a1abb7fc632ea61f43d927e80d7a39958", [
@@ -104,6 +107,8 @@ var streamer__api_8h =
       [ "ELEMENT_MEM_SINK_INDEX", "streamer__api_8h.html#a1abb7fc632ea61f43d927e80d7a39958a24835dead85f61aff367f76cd59b384f", null ],
       [ "ELEMENT_AUDIO_SINK_INDEX", "streamer__api_8h.html#a1abb7fc632ea61f43d927e80d7a39958a1cda043f31224c2ad986d61b5da3bdf5", null ],
       [ "ELEMENT_DECODER_INDEX", "streamer__api_8h.html#a1abb7fc632ea61f43d927e80d7a39958a6591d6f143cac986cbbc5a3136e5b761", null ],
+      [ "ELEMENT_VIT_INDEX", "streamer__api_8h.html#a1abb7fc632ea61f43d927e80d7a39958ae991ac1eb5c8f192b9454ae9b34120f8", null ],
+      [ "ELEMENT_EAP_INDEX", "streamer__api_8h.html#a1abb7fc632ea61f43d927e80d7a39958a3519f7e2016fc6699f2b89f09bcb1ac5", null ],
       [ "ELEMENT_LAST_INDEX", "streamer__api_8h.html#a1abb7fc632ea61f43d927e80d7a39958a0dd59acb983cb1b1090adfb0a66be575", null ]
     ] ],
     [ "StreamElementType", "streamer__api_8h.html#ac57c7c1cd9830a62d5e1f5c4b996996d", [
@@ -115,6 +120,8 @@ var streamer__api_8h =
       [ "TYPE_ELEMENT_MEM_SINK", "streamer__api_8h.html#ac57c7c1cd9830a62d5e1f5c4b996996da5d4fe0f9953a87959aab1094e6711c56", null ],
       [ "TYPE_ELEMENT_AUDIO_SINK", "streamer__api_8h.html#ac57c7c1cd9830a62d5e1f5c4b996996da291eb382314566b4aab19cd040e02513", null ],
       [ "TYPE_ELEMENT_DECODER", "streamer__api_8h.html#ac57c7c1cd9830a62d5e1f5c4b996996dafec1ea0e119a9861bc1f8ad738faeed8", null ],
+      [ "TYPE_ELEMENT_VIT_SINK", "streamer__api_8h.html#ac57c7c1cd9830a62d5e1f5c4b996996da9fd2d8fc241df9bf2504db685bd6bf16", null ],
+      [ "TYPE_ELEMENT_EAP", "streamer__api_8h.html#ac57c7c1cd9830a62d5e1f5c4b996996da9302c3eabd312763a38580328f98226e", null ],
       [ "TYPE_ELEMENT_LAST", "streamer__api_8h.html#ac57c7c1cd9830a62d5e1f5c4b996996da991b415db68b7febac5655489eaafec2", null ]
     ] ],
     [ "DecoderType", "streamer__api_8h.html#a477bc238b10958849277f79d585eff2a", [

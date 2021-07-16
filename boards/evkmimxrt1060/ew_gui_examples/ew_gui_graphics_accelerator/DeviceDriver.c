@@ -65,9 +65,6 @@
 */
   static ApplicationDeviceClass DeviceObject = 0;
 
-  /* variable to detect that hardware button is pressed */
-  static int IsHardButtonPressed = 0;
-
   /* variable to store the current hardware button state */
   static int IsHardButtonDown = 0;
 
@@ -95,13 +92,8 @@ void HardButtonIsrCallback( int aButtonPresssed )
 
 #ifdef _ApplicationDeviceClass_
 
-  if ( aButtonPresssed )
-  {
-    IsHardButtonPressed = 1;
-    IsHardButtonDown = 1;
-  }
-  else
-    IsHardButtonDown = 0;
+  /* store the current button state */
+  IsHardButtonDown = aButtonPresssed;
 
   /*
      Important note: This function is called from an interrupt handler and not
@@ -144,7 +136,6 @@ void DeviceDriver_Initialize( void )
 
   /* Configure interrupt for hardware button */
   EwBspInOutInitButton( HardButtonIsrCallback );
-
 
 #ifdef _ApplicationDeviceClass_
 
@@ -258,8 +249,6 @@ int DeviceDriver_ProcessData( void )
   /* here we just evaluate the current hardware button state */
   if ( IsHardButtonDown )
     ButtonCounter++;
-  else
-    ButtonCounter = 0;
 
   /* check for a valid access to the autoobject of the device class */
   if ( DeviceObject == 0 )
@@ -277,11 +266,19 @@ int DeviceDriver_ProcessData( void )
   /* Update the property HardButtonCounter within the class Application::DeviceClass
      by calling the method 'UpdateHardButtonCounter' - the generated define is
      evaluated to ensures that the method is available within the generated code. */
-  #ifdef _ApplicationDeviceClass__UpdateHardButtonCounter_
+  if ( ButtonCounter > 0 )
+  {
+    /* clear counter if button is released */
+    if ( !IsHardButtonDown )
+      ButtonCounter = 0;
 
-    ApplicationDeviceClass__UpdateHardButtonCounter( DeviceObject, (XInt32)ButtonCounter );
+    #ifdef _ApplicationDeviceClass__UpdateHardButtonCounter_
 
-  #endif
+      ApplicationDeviceClass__UpdateHardButtonCounter( DeviceObject, (XInt32)ButtonCounter );
+      needUpdate = 1;
+
+    #endif
+  }
 
   /*
      Trigger system events if necessary, e.g. if a certain situation happens,
@@ -291,22 +288,20 @@ int DeviceDriver_ProcessData( void )
   /* When the hardware button is pressed, call the method 'TriggerHardButtonEvent()' of the
      device class 'DeviceClass' within the unit 'Application' - the generated define is
      evaluated to ensure that the method is available within the generated code. */
-  if ( IsHardButtonPressed )
+  if ( ButtonCounter == 1 )
   {
     #ifdef _ApplicationDeviceClass__TriggerHardButtonEvent_
 
       ApplicationDeviceClass__TriggerHardButtonEvent( DeviceObject );
+      needUpdate = 1;
 
     #endif
-
-    IsHardButtonPressed = 0;
-    needUpdate = 1;
   }
 
 #endif
 
   /*
-     Return a value != 0 if there is at least on property changed or if a
+     Return a value != 0 if there is at least one property changed or if a
      system event was triggered. The return value is used by the main loop, to
      decide whether the GUI application has changed or not.
   */
@@ -361,23 +356,8 @@ void DeviceDriver_SetLedStatus( XInt32 aValue )
 *******************************************************************************/
 void DeviceDriver_PrintMessage( XString aText )
 {
-  char    buf[ 256 ];
-  char*   ptr = buf;
-  int     buflen = sizeof( buf ) - 1;
-
-  /* check for an empty string */
-  if ( aText == 0 )
-    return;
-
-  /* read each 16-bit character and convert it to 8-bit character */
-  while ( aText && *aText && buflen-- )
-    *ptr++ = (char)(*aText++);
-
-  /* terminate the converted string */
-  *ptr = 0x00;
-
-  /* do something with the converted string */
-  EwPrint( "The string is: %s\n", buf );
+  /* just print the given 16bit string... */
+  EwPrint( "The string is: %S\n", aText );
 }
 
 

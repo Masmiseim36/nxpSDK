@@ -45,9 +45,9 @@
  *  Write Task Queue Types - in the order of decreasing priority
  *  \{
  */
-#define WRITE_TASK_INTERNAL_QUEUE       0x00 /**< Queue Type - Internal */
-#define WRITE_TASK_USER_API_QUEUE       0x01 /**< Queue Type - User API */
-#define WRITE_TASK_USER_DATA_QUEUE      0x02 /**< Queue Type - User Data */
+#define WRITE_TASK_INTERNAL_QUEUE       0x00U /**< Queue Type - Internal */
+#define WRITE_TASK_USER_API_QUEUE       0x01U /**< Queue Type - User API */
+#define WRITE_TASK_USER_DATA_QUEUE      0x02U /**< Queue Type - User Data */
 /** \} */
 /** \} */
 /** \} */

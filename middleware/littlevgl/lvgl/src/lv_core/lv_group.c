@@ -13,10 +13,6 @@
 #include "../lv_themes/lv_theme.h"
 #include "../lv_misc/lv_gc.h"
 
-#if defined(LV_GC_INCLUDE)
-    #include LV_GC_INCLUDE
-#endif /* LV_ENABLE_GC */
-
 /*********************
  *      DEFINES
  *********************/
@@ -85,7 +81,7 @@ lv_group_t * lv_group_create(void)
  */
 void lv_group_del(lv_group_t * group)
 {
-    /*Defocus the the currently focused object*/
+    /*Defocus the currently focused object*/
     if(group->obj_focus != NULL) {
         (*group->obj_focus)->signal_cb(*group->obj_focus, LV_SIGNAL_DEFOCUS, NULL);
         lv_obj_invalidate(*group->obj_focus);
@@ -149,7 +145,6 @@ void lv_group_remove_obj(lv_obj_t * obj)
 {
     lv_group_t * g = obj->group_p;
     if(g == NULL) return;
-    if(g->obj_focus == NULL) return; /*Just to be sure (Not possible if there is at least one object in the group)*/
 
     /*Focus on the next object*/
     if(*g->obj_focus == obj) {
@@ -190,7 +185,7 @@ void lv_group_remove_obj(lv_obj_t * obj)
  */
 void lv_group_remove_all_objs(lv_group_t * group)
 {
-    /*Defocus the the currently focused object*/
+    /*Defocus the currently focused object*/
     if(group->obj_focus != NULL) {
         (*group->obj_focus)->signal_cb(*group->obj_focus, LV_SIGNAL_DEFOCUS, NULL);
         lv_obj_invalidate(*group->obj_focus);
@@ -218,7 +213,7 @@ void lv_group_focus_obj(lv_obj_t * obj)
 
     if(g->frozen != 0) return;
 
-    if(obj == *g->obj_focus) return;
+    if(g->obj_focus != NULL && obj == *g->obj_focus) return;
 
     /*On defocus edit mode must be leaved*/
     lv_group_set_editing(g, false);
@@ -332,9 +327,9 @@ void lv_group_set_editing(lv_group_t * group, bool edit)
         focused->signal_cb(focused, LV_SIGNAL_FOCUS, NULL); /*Focus again to properly leave/open edit/navigate mode*/
         lv_res_t res = lv_event_send(*group->obj_focus, LV_EVENT_FOCUSED, NULL);
         if(res != LV_RES_OK) return;
-    }
 
-    lv_obj_invalidate(focused);
+        lv_obj_invalidate(focused);
+    }
 }
 
 /**
@@ -488,8 +483,9 @@ static void focus_next_core(lv_group_t * group, void * (*begin)(const lv_ll_t *)
         can_move = true;
 
         if(obj_next == NULL) continue;
+        if(lv_obj_get_state(*obj_next, LV_OBJ_PART_MAIN) & LV_STATE_DISABLED) continue;
 
-        /*Hidden objects don't receive focus*/
+        /*Hidden and disabled objects don't receive focus*/
         if(!lv_obj_get_hidden(*obj_next)) break;
     }
 

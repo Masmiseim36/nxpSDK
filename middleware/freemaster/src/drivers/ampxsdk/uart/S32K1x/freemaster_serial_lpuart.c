@@ -34,7 +34,7 @@
 #include "freemaster_serial_lpuart.h"
 
 #if (!(FMSTR_DISABLE))
-	
+    
 #include "lpuart_hw_access.h"
 
 #include "freemaster_protocol.h"
@@ -112,7 +112,7 @@ static FMSTR_BOOL _FMSTR_SerialLpuartInit(void)
 
 static void _FMSTR_SerialLpuartEnableTransmit(FMSTR_BOOL enable)
 {
-	LPUART_SetTransmitterCmd(fmstr_serialBaseAddr, enable);
+    LPUART_SetTransmitterCmd(fmstr_serialBaseAddr, enable);
 }
 
 /******************************************************************************
@@ -123,7 +123,7 @@ static void _FMSTR_SerialLpuartEnableTransmit(FMSTR_BOOL enable)
 
 static void _FMSTR_SerialLpuartEnableReceive(FMSTR_BOOL enable)
 {
-	LPUART_SetReceiverCmd(fmstr_serialBaseAddr, enable);
+    LPUART_SetReceiverCmd(fmstr_serialBaseAddr, enable);
 }
 
 /******************************************************************************
@@ -160,9 +160,9 @@ static void _FMSTR_SerialLpuartEnableTransmitCompleteInterrupt(FMSTR_BOOL enable
 static void _FMSTR_SerialLpuartEnableReceiveInterrupt(FMSTR_BOOL enable)
 {
      if(enable)
-    	 LPUART_SetIntMode(fmstr_serialBaseAddr, LPUART_INT_RX_DATA_REG_FULL, 1);
+         LPUART_SetIntMode(fmstr_serialBaseAddr, LPUART_INT_RX_DATA_REG_FULL, 1);
     else
-    	 LPUART_SetIntMode(fmstr_serialBaseAddr, LPUART_INT_RX_DATA_REG_FULL, 0);
+         LPUART_SetIntMode(fmstr_serialBaseAddr, LPUART_INT_RX_DATA_REG_FULL, 0);
 }
 
 /******************************************************************************
@@ -173,7 +173,7 @@ static void _FMSTR_SerialLpuartEnableReceiveInterrupt(FMSTR_BOOL enable)
 
 static FMSTR_BOOL _FMSTR_SerialLpuartIsTransmitRegEmpty(void)
 {
-	return LPUART_GetStatusFlag(fmstr_serialBaseAddr, LPUART_TX_DATA_REG_EMPTY);
+    return LPUART_GetStatusFlag(fmstr_serialBaseAddr, LPUART_TX_DATA_REG_EMPTY);
 }
 
 /******************************************************************************
@@ -195,7 +195,7 @@ static FMSTR_BOOL _FMSTR_SerialLpuartIsReceiveRegFull(void)
 
 static FMSTR_BOOL _FMSTR_SerialLpuartIsTransmitterActive(void)
 {
-	return LPUART_GetStatusFlag(fmstr_serialBaseAddr, LPUART_TX_COMPLETE);
+    return LPUART_GetStatusFlag(fmstr_serialBaseAddr, LPUART_TX_COMPLETE);
 }
 
 /******************************************************************************
@@ -206,7 +206,7 @@ static FMSTR_BOOL _FMSTR_SerialLpuartIsTransmitterActive(void)
 
 static void _FMSTR_SerialLpuartPutChar(FMSTR_BCHR  ch)
 {
-	LPUART_Putchar9(fmstr_serialBaseAddr, (uint16_t)ch);
+    LPUART_Putchar9(fmstr_serialBaseAddr, (uint16_t)ch);
 }
 
 /******************************************************************************
@@ -216,9 +216,9 @@ static void _FMSTR_SerialLpuartPutChar(FMSTR_BCHR  ch)
 ******************************************************************************/
 static FMSTR_BCHR _FMSTR_SerialLpuartGetChar(void)
 {
-	uint16_t readData;
-	LPUART_Getchar9(fmstr_serialBaseAddr, &readData) ;
-	return (unsigned char)(readData & 0xFF);
+    uint16_t readData;
+    LPUART_Getchar9(fmstr_serialBaseAddr, &readData) ;
+    return (unsigned char)(readData & 0xFF);
 }
 
 /******************************************************************************

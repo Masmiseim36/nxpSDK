@@ -1,5 +1,5 @@
 /*
- *  Copyright 2020 NXP
+ *  Copyright 2020-2021 NXP
  *  All rights reserved.
  *
  *  SPDX-License-Identifier: BSD-3-Clause
@@ -21,9 +21,10 @@
 #elif defined(WIFI_BOARD_AW_AM457)
 #define SD8978
 #define SDMMCHOST_OPERATION_VOLTAGE_1V8
-#elif defined(WIFI_BOARD_AW_CM358MA)
+#elif defined(WIFI_BOARD_AW_CM358)
 #define SD8987
 #define SDMMCHOST_OPERATION_VOLTAGE_1V8
+#define SD_TIMING_MAX kSD_TimingDDR50Mode
 #else
 #error "Please define macro related to wifi board"
 #endif
@@ -38,6 +39,7 @@
 
 #if defined(SD8987)
 #define CONFIG_11AC
+#undef CONFIG_WMM
 #endif
 
 /* Logs */

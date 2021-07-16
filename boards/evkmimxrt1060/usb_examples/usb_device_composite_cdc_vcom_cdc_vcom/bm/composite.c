@@ -146,7 +146,7 @@ void USB_DeviceTaskFn(void *deviceHandle)
  */
 usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *param)
 {
-    usb_status_t error = kStatus_USB_Error;
+    usb_status_t error = kStatus_USB_InvalidRequest;
     uint16_t *temp16   = (uint16_t *)param;
     uint8_t *temp8     = (uint8_t *)param;
 
@@ -178,6 +178,7 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
             {
                 g_composite.attach               = 0U;
                 g_composite.currentConfiguration = 0U;
+                error                            = kStatus_USB_Success;
                 for (uint8_t i = 0; i < USB_DEVICE_CONFIG_CDC_ACM; i++)
                 {
                     g_composite.cdcVcom[i].recvSize = 0;
@@ -194,7 +195,7 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
             }
             else
             {
-                error = kStatus_USB_InvalidRequest;
+                 /* no action, return kStatus_USB_InvalidRequest */
             }
             break;
         case kUSB_DeviceEventSetInterface:
@@ -202,10 +203,42 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
             {
                 uint8_t interface        = (uint8_t)((*temp16 & 0xFF00U) >> 0x08U);
                 uint8_t alternateSetting = (uint8_t)(*temp16 & 0x00FFU);
-                if (interface < USB_INTERFACE_COUNT)
+
+                if (interface == USB_CDC_VCOM_CIC_INTERFACE_INDEX)
                 {
-                    g_composite.currentInterfaceAlternateSetting[interface] = alternateSetting;
-                    error                                                   = kStatus_USB_Success;
+                    if (alternateSetting < USB_CDC_VCOM_CIC_INTERFACE_ALTERNATE_COUNT)
+                    {
+                        g_composite.currentInterfaceAlternateSetting[interface] = alternateSetting;
+                        error                                                   = kStatus_USB_Success;
+                    }
+                }
+                else if (interface == USB_CDC_VCOM_DIC_INTERFACE_INDEX)
+                {
+                    if (alternateSetting < USB_CDC_VCOM_DIC_INTERFACE_ALTERNATE_COUNT)
+                    {
+                        g_composite.currentInterfaceAlternateSetting[interface] = alternateSetting;
+                        error                                                   = kStatus_USB_Success;
+                    }
+                }
+                else if (interface == USB_CDC_VCOM_CIC_INTERFACE_INDEX_2)
+                {
+                    if (alternateSetting < USB_CDC_VCOM_CIC_INTERFACE_2_ALTERNATE_COUNT)
+                    {
+                        g_composite.currentInterfaceAlternateSetting[interface] = alternateSetting;
+                        error                                                   = kStatus_USB_Success;
+                    }
+                }
+                else if (interface == USB_CDC_VCOM_DIC_INTERFACE_INDEX_2)
+                {
+                    if (alternateSetting < USB_CDC_VCOM_DIC_INTERFACE_2_ALTERNATE_COUNT)
+                    {
+                        g_composite.currentInterfaceAlternateSetting[interface] = alternateSetting;
+                        error                                                   = kStatus_USB_Success;
+                    }
+                }
+                else
+                {
+                    /* no action, return kStatus_USB_InvalidRequest */
                 }
             }
             break;
@@ -224,10 +257,6 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
                 {
                     *temp16 = (*temp16 & 0xFF00U) | g_composite.currentInterfaceAlternateSetting[interface];
                     error   = kStatus_USB_Success;
-                }
-                else
-                {
-                    error = kStatus_USB_InvalidRequest;
                 }
             }
             break;
@@ -333,8 +362,8 @@ void main(void)
 {
     BOARD_ConfigMPU();
 
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
+    BOARD_InitBootPins();
+    BOARD_InitBootClocks();
     BOARD_InitDebugConsole();
 
     USB_DeviceApplicationInit();

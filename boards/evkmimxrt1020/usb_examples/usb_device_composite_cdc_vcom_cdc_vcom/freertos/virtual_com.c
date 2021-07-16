@@ -97,7 +97,7 @@ usb_status_t USB_DeviceCdcVcomCallback(class_handle_t handle, uint32_t event, vo
     usb_device_cdc_acm_request_param_struct_t *acmReqParam;
     usb_device_endpoint_callback_message_struct_t *epCbParam;
     volatile usb_cdc_vcom_struct_t *vcomInstance;
-    usb_status_t error = kStatus_USB_Error;
+    usb_status_t error = kStatus_USB_InvalidRequest;
     uint8_t i;
     acmReqParam = (usb_device_cdc_acm_request_param_struct_t *)param;
     epCbParam   = (usb_device_endpoint_callback_message_struct_t *)param;
@@ -171,43 +171,49 @@ usb_status_t USB_DeviceCdcVcomCallback(class_handle_t handle, uint32_t event, vo
                 if (1 == acmReqParam->isSetup)
                 {
                     *(acmReqParam->buffer) = vcomInstance->abstractState;
+                    *(acmReqParam->length) = COMM_FEATURE_DATA_SIZE;
                 }
                 else
                 {
-                    *(acmReqParam->length) = 0;
+                    /* no action, data phase, s_abstractState has been assigned */
                 }
+                error = kStatus_USB_Success;
             }
             else if (USB_DEVICE_CDC_FEATURE_COUNTRY_SETTING == acmReqParam->setupValue)
             {
                 if (1 == acmReqParam->isSetup)
                 {
                     *(acmReqParam->buffer) = vcomInstance->countryCode;
+                    *(acmReqParam->length) = COMM_FEATURE_DATA_SIZE;
                 }
                 else
                 {
-                    *(acmReqParam->length) = 0;
+                    /* no action, data phase, s_countryCode has been assigned */
                 }
+                error = kStatus_USB_Success;
             }
             else
             {
+                /* no action, return kStatus_USB_InvalidRequest */
             }
-            error = kStatus_USB_Success;
             break;
         case kUSB_DeviceCdcEventGetCommFeature:
             if (USB_DEVICE_CDC_FEATURE_ABSTRACT_STATE == acmReqParam->setupValue)
             {
                 *(acmReqParam->buffer) = vcomInstance->abstractState;
                 *(acmReqParam->length) = COMM_FEATURE_DATA_SIZE;
+                error                  = kStatus_USB_Success;
             }
             else if (USB_DEVICE_CDC_FEATURE_COUNTRY_SETTING == acmReqParam->setupValue)
             {
                 *(acmReqParam->buffer) = vcomInstance->countryCode;
                 *(acmReqParam->length) = COMM_FEATURE_DATA_SIZE;
+                error                  = kStatus_USB_Success;
             }
             else
             {
+                /* no action, return kStatus_USB_InvalidRequest */
             }
-            error = kStatus_USB_Success;
             break;
         case kUSB_DeviceCdcEventClearCommFeature:
             break;
@@ -221,16 +227,18 @@ usb_status_t USB_DeviceCdcVcomCallback(class_handle_t handle, uint32_t event, vo
             if (1 == acmReqParam->isSetup)
             {
                 *(acmReqParam->buffer) = vcomInstance->lineCoding;
+                *(acmReqParam->length) = LINE_CODING_SIZE;
             }
             else
             {
-                *(acmReqParam->length) = 0;
+                /* no action, data phase, s_lineCoding has been assigned */
             }
-        }
             error = kStatus_USB_Success;
-            break;
+        }
+        break;
         case kUSB_DeviceCdcEventSetControlLineState:
         {
+            error                     = kStatus_USB_Success;
             vcomInstance->usbCdcAcmInfo->dteStatus = acmReqParam->setupValue;
             /* activate/deactivate Tx carrier */
             if (acmInfo->dteStatus & USB_DEVICE_CDC_CONTROL_SIG_BITMAP_CARRIER_ACTIVATION)

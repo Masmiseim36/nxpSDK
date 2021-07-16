@@ -351,9 +351,9 @@ void FMSTR_CanIsr(void)
     FMSTR_U32 iflag = FMSTR_GETREG32(FMSTR_FCANIFLAG_OFFSET);
 
     /* Acknowledge (ignore) error and wake up flags in ESR */
-	FMSTR_SETREG32(FMSTR_FCANESR1_OFFSET, esr);
+    FMSTR_SETREG32(FMSTR_FCANESR1_OFFSET, esr);
 
-	if(iflag)
+    if(iflag)
     {
         if(iflag & FMSTR_FLEXCAN_RXMB_FLAG)
         {
@@ -363,7 +363,7 @@ void FMSTR_CanIsr(void)
         if(iflag & FMSTR_FLEXCAN_TXMB_FLAG)
         {
             /* Acknowledge frame transmission */
-        	_fmstr_canTxFrame.len = 0;
+            _fmstr_canTxFrame.len = 0;
             /* Send next frame, if needed */
             FMSTR_ProcessCanTx();
         }

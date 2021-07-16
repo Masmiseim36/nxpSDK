@@ -2,47 +2,48 @@ Overview
 ========
 This GUI demo is developed with the Embedded Wizard GUI solution.
 
-Welcome to the example 'GraphicsAccelerator'!
-The intention of this example is to demonstrate the graphics performance. For this
-purpose, a set of basic drawing operations are executed permanently and continuously:
+The intention of this example is to demonstrate the graphics performance.
+For this purpose, a set of basic drawing operations are executed permanently and
+continuously:
 As a result, an endless stream of drawing instructions is produced...
 In case that the graphics hardware provides a graphics accelerator, it can be
 switched on/off to demonstrate the advantage of a graphics accelerator.
 The user can choose the current graphics operation and switch on/off the usage
 of the graphics acclerator (if available).
-The resulting framerate (in fps) and the resulting CPU load (in percent) will be shown.
-This demo application is implemented for a screen size of 480x272 pixel.
 
-In this example a simulation of the user interface is integrated as well. It can
-be executed with the MCUXpresso's built-in web browser. The simulation is
-located in the folder 'ew_gui_examples\<example_name>\Simulation'. The
-simulation uses the JS/WebGL Embedded Wizard Platform Package.
+The resulting framerate (in fps) and the resulting CPU load (in percent) will be
+shown.
 
 This examples runs bare metal, but Embedded Wizard is also possible
-to use with FreeRTOS. Our official Build Environments, that can be downloaded 
-as described above, includes examples and demos that illustrate the integration 
+to use with FreeRTOS. Our official Build Environments, that can be downloaded
+as described above, includes examples and demos that illustrate the integration
 of FreeRTOS and can be used for your reference.
+
 
 
 In order create your own GUI application powered by the latest version of
 Embedded Wizard that is suitable for the i.MX RT1064 Evaluation Kit, please
 visit https://doc.embedded-wizard.de/getting-started-mimxrt1064-evk
 
+For this example a simulation of the user interface is also available. 
+It can be used under following link 
+http://www.embedded-wizard.de/NXP-SDK-Examples/IMXRT1064-EVK/Dashboard/Simulation/ 
+with any web browser. The simulation uses the JS/WebGL Embedded Wizard Platform Package.
 For further information about Embedded Wizard, please visit our web site at
 https://www.embedded-wizard.de/platforms/nxp/imx-rt
 
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.9
-- GCC ARM Embedded  9.3.1
-- Keil MDK  5.33
-- MCUXpresso  11.3.0
+- IAR embedded Workbench  9.10.2
+- GCC ARM Embedded  10.2.1
+- Keil MDK  5.34
+- MCUXpresso  11.4.0
 
 Hardware requirements
 =====================
 - Micro USB cable
-- EVK-MIMXRT1064 board
+- IMXRT1064-EVK board
 - Personal Computer
 - RK043FN02H-CT LCD board
 
@@ -94,9 +95,9 @@ External flash device                        none
 Toolchain                                    <Toolchain name>
 C-Compiler version                           <C-Compiler version>
 Build date and time                          <MMM DD YYYY, HH:MM:SS>
-Runtime Environment (RTE) version            9.30
-Graphics Engine (GFX) version                9.30
-Max surface cache size                       2097152 bytes
+Runtime Environment (RTE) version            10.00
+Graphics Engine (GFX) version                10.00
+Max surface cache size                       8388608 bytes
 Glyph cache size                             256 x 256
 Max issue tasks                              100
 Surface rotation                             0

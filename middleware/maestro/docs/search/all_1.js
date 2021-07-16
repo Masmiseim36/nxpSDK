@@ -8,13 +8,14 @@ var searchData=
   ['albumart_13',['AlbumArt',['../structAlbumArt.html',1,'']]],
   ['albumartsource_14',['AlbumArtSource',['../streamer__api_8h.html#a7302ea5bf02e353889cef886d29ca7bc',1,'streamer_api.h']]],
   ['art_5fdefault_15',['ART_DEFAULT',['../streamer__api_8h.html#a7302ea5bf02e353889cef886d29ca7bca50392eed15170616374e338625851877',1,'streamer_api.h']]],
-  ['art_5fembedded_16',['art_embedded',['../structTrackInfo.html#a73b885f325d726fb78213a552d0bcfdd',1,'TrackInfo::art_embedded()'],['../streamer__api_8h.html#a7302ea5bf02e353889cef886d29ca7bca9ab9dbbac828f39605fd8cc25efd3f5e',1,'ART_EMBEDDED():&#160;streamer_api.h']]],
-  ['art_5ffolder_17',['ART_FOLDER',['../streamer__api_8h.html#a7302ea5bf02e353889cef886d29ca7bcad9892e35261266dd48938cba791f424f',1,'streamer_api.h']]],
-  ['artist_18',['artist',['../structTrackInfo.html#a918d4ad57e4a9f39ea11a8497fb9a030',1,'TrackInfo']]],
-  ['audio_5fsink_5fdevice_5ftype_5fpcmrtos_19',['AUDIO_SINK_DEVICE_TYPE_PCMRTOS',['../streamer__api_8h.html#a304cec254bfec02fe7e137f03acc136da458e78fcec6dda71c00414c10f850279',1,'streamer_api.h']]],
-  ['audio_5ftype_20',['audio_type',['../structTrackInfo.html#a5764c86c0a813bbd93f2fc455f6f7ed2',1,'TrackInfo']]],
-  ['audiosinkdevicedrivertype_21',['AudioSinkDeviceDriverType',['../streamer__api_8h.html#a304cec254bfec02fe7e137f03acc136d',1,'streamer_api.h']]],
-  ['audiosrc_5fpcmrtos_22',['AUDIOSRC_PCMRTOS',['../streamer__api_8h.html#ae5dcd38e8148989fa09363a3b9779baca568b1f38786076bac003834d2d34aee9',1,'streamer_api.h']]],
-  ['audiosrcdevicedrivertype_23',['AudioSrcDeviceDriverType',['../streamer__api_8h.html#ae5dcd38e8148989fa09363a3b9779bac',1,'streamer_api.h']]],
-  ['audsrc_5fset_5fname_5ft_24',['AUDSRC_SET_NAME_T',['../structAUDSRC__SET__NAME__T.html',1,'']]]
+  ['art_5fembedded_16',['art_embedded',['../structTrackInfo.html#a73b885f325d726fb78213a552d0bcfdd',1,'TrackInfo']]],
+  ['art_5fembedded_17',['ART_EMBEDDED',['../streamer__api_8h.html#a7302ea5bf02e353889cef886d29ca7bca9ab9dbbac828f39605fd8cc25efd3f5e',1,'streamer_api.h']]],
+  ['art_5ffolder_18',['ART_FOLDER',['../streamer__api_8h.html#a7302ea5bf02e353889cef886d29ca7bcad9892e35261266dd48938cba791f424f',1,'streamer_api.h']]],
+  ['artist_19',['artist',['../structTrackInfo.html#a918d4ad57e4a9f39ea11a8497fb9a030',1,'TrackInfo']]],
+  ['audio_5fsink_5fdevice_5ftype_5fpcmrtos_20',['AUDIO_SINK_DEVICE_TYPE_PCMRTOS',['../streamer__api_8h.html#a304cec254bfec02fe7e137f03acc136da458e78fcec6dda71c00414c10f850279',1,'streamer_api.h']]],
+  ['audio_5ftype_21',['audio_type',['../structTrackInfo.html#a5764c86c0a813bbd93f2fc455f6f7ed2',1,'TrackInfo']]],
+  ['audiosinkdevicedrivertype_22',['AudioSinkDeviceDriverType',['../streamer__api_8h.html#a304cec254bfec02fe7e137f03acc136d',1,'streamer_api.h']]],
+  ['audiosrc_5fpcmrtos_23',['AUDIOSRC_PCMRTOS',['../streamer__api_8h.html#ae5dcd38e8148989fa09363a3b9779baca568b1f38786076bac003834d2d34aee9',1,'streamer_api.h']]],
+  ['audiosrcdevicedrivertype_24',['AudioSrcDeviceDriverType',['../streamer__api_8h.html#ae5dcd38e8148989fa09363a3b9779bac',1,'streamer_api.h']]],
+  ['audsrc_5fset_5fname_5ft_25',['AUDSRC_SET_NAME_T',['../structAUDSRC__SET__NAME__T.html',1,'']]]
 ];

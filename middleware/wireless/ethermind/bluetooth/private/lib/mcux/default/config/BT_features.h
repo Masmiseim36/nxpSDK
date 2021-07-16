@@ -234,11 +234,11 @@
  */
 #define BT_5_1
 
-
 /* ----------------------------------------------------------------------- */
 /* ==== Bluetooth v4.0 Feature Flags ===================================== */
 /* ----------------------------------------------------------------------- */
 #ifdef BT_4_0
+#ifndef CFG_CLASSIC
 /*
  *  BT_LE
  *
@@ -247,7 +247,9 @@
  *  Dependency: BT_4_0 must be defined.
  */
 #define BT_LE
+#endif /* CFG_CLASSIC */
 
+#ifdef CFG_BLE
 /*
  *  BT_SINGLE_MODE
  *
@@ -255,7 +257,8 @@
  *
  *  Dependency: BT_4_0 must be defined.
  */
-/* #define BT_SINGLE_MODE */
+#define BT_SINGLE_MODE
+#else /* CFG_BLE */
 
 /*
  *  BT_DUAL_MODE
@@ -265,6 +268,11 @@
  *  Dependency: BT_2_1_EDR and BT_4_0 must be defined.
  */
 #define BT_DUAL_MODE
+#endif /* CFG_BLE */
+
+#if ((defined BT_SINGLE_MODE) && (defined BT_DUAL_MODE))
+#error "Only one of BT_SINGLE_MODE, BT_DUAL_MODE shall be defined"
+#endif /* ((defined BT_SINGLE_MODE) && (defined BT_DUAL_MODE)) */
 
 /*
  * Only one of the following modes shall be defined
@@ -287,16 +295,20 @@
 #undef BT_DUAL_MODE
 #endif /* BT_SINGLE_MODE */
 
-#if ((defined BT_SINGLE_MODE) && (defined BT_DUAL_MODE))
-#error "Only one of BT_SINGLE_MODE, BT_DUAL_MODE shall be defined"
-#endif /* ((defined BT_SINGLE_MODE) && (defined BT_DUAL_MODE)) */
+/*
+ * Enable Classic HCI and L2CAP for Dual Mode
+ */
+#ifdef BT_DUAL_MODE
+#define BR_EDR_HCI
+#define BR_EDR_L2CAP
+#endif /* BT_DUAL_MODE */
 
 #endif /* BT_4_0 */
 
 /* ----------------------------------------------------------------------- */
 /* ==== Bluetooth v4.1 Feature Flags ===================================== */
 /* ----------------------------------------------------------------------- */
-
+#ifdef BR_EDR_HCI
 #ifdef BT_4_1
 /*
  *  BT_BRSC
@@ -320,6 +332,7 @@
 #ifdef BT_BRSC
 #define BT_BRSC_TEST
 #endif /* BT_BRSC */
+#endif /* BR_EDR_HCI */
 
 /* ----------------------------------------------------------------------- */
 /* ==== Bluetooth v3.0 Feature Flags ===================================== */
@@ -543,6 +556,7 @@
 
 #endif /* BT_SSP */
 
+#ifdef BT_DUAL_MODE
 /*
  *  BTSIG_ERRATA_11838
  *
@@ -553,6 +567,7 @@
  *  Dependency: BT_SSP must be defined.
  */
 #define BTSIG_ERRATA_11838
+#endif /* BT_DUAL_MODE */
 
 /* ----------------------------------------------------------------------- */
 /* ==== Stack Architecture Flags ========================================= */
@@ -713,7 +728,6 @@
  *  Dependency: None.
  */
 #define HT_ENQUEUE_WITH_RETURN
-
 
 /*
  *  HT_THREAD_SAFE_ENQUEUE
@@ -1098,7 +1112,7 @@
  */
 #define BT_FSM
 
-
+#ifdef BT_LE
 /*
  *  BT_RACP
  *
@@ -1110,7 +1124,7 @@
  *  Dependency: None.
  */
 #define BT_RACP
-
+#endif /* BT_LE */
 
 /* ----------------------------------------------------------------------- */
 /* ==== Device Queue Module Specific Flags =============================== */
@@ -1162,6 +1176,7 @@
  */
 #define HCI_VENDOR_SPECIFIC_COMMANDS
 
+#ifdef BR_EDR_HCI
 /*
  *  HCI_NO_ADD_SCO_CONNECTION
  *
@@ -1184,6 +1199,7 @@
  *  Dependency: None.
  */
 /* #define HCI_NO_ESCO_AUTO_ACCEPT */
+#endif /* BR_EDR_HCI */
 
 /*
  *  HCI_HOST_CONTROLLER_FLOW_ON
@@ -1213,6 +1229,7 @@
  */
 #define HCI_TESTING_COMMANDS
 
+#ifdef BR_EDR_HCI
 /*
  *  HCI_SUPPORT_STORED_LINK_KEY_COMMANDS
  *
@@ -1244,6 +1261,7 @@
 #ifdef BT_4_1
 #define HCI_ENH_SCO
 #endif /* BT_4_1 */
+#endif /* BR_EDR_HCI */
 
 /*
  *  HCI_HAVE_INIT_COMMAND_MASK
@@ -1338,6 +1356,16 @@
  *  Dependancy: None
  */
 #define HCI_CHECK_EVENT_CODE_IN_RANGE
+
+/*
+ *  HAVE_HCI_COMMAND_PARAMS_INIT
+ *
+ *  This flag enables the initialization of HCI_COMMAND_PARAMS structure,
+ *  to suppress MISRA C-2012 Rule 9.1 and Coverity UNINIT warnings.
+ *
+ *  Dependancy: None
+ */
+#define HAVE_HCI_COMMAND_PARAMS_INIT
 
 /*
  * Feature flags for HCI Commands defined for BLE Single Mode
@@ -1496,6 +1524,7 @@
 
 #endif /* BT_LE */
 
+#ifdef BR_EDR_HCI
 #ifdef BT_1_2
 /* Read LMP Handle */
 /* #define HCI_READ_LMP_HANDLE_SUPPORT */
@@ -1554,11 +1583,12 @@
 /* Read Local Simple Pairing Options */
 /* #define HCI_READ_LOCAL_SIMPLE_PAIRING_OPTIONS_SUPPORT */
 #endif /* BT_5_1 */
-
+#endif /* BR_EDR_HCI */
 
 /* ----------------------------------------------------------------------- */
 /* ==== SM Module Specific Flags ========================================= */
 /* ----------------------------------------------------------------------- */
+#ifdef CLASSIC_SEC_MANAGER
 /*
  *  SM_HAVE_MODE_2
  *
@@ -1610,6 +1640,20 @@
 #endif /* BT_SSP */
 
 /*
+ *  SM_AUTHREQ_DYNAMIC
+ *
+ *  This flag enables APIs that allow dynamic configuration of device's
+ *  MITM and Bonding requirement, for the purpose of Secure Simple Pairing.
+ *  For most platform/devices, this configuration should be commented
+ *  as these would be derived from the Service security requirements.
+ *
+ *  Dependency: BT_SSP must be defined.
+ */
+#ifdef BT_SSP
+#define SM_AUTHREQ_DYNAMIC
+#endif /* BT_SSP */
+
+/*
  *  SM_FORCE_CLEAR_ENTITY
  *
  *  This flag enables SM to free the entity and its device queue reference on disconnection
@@ -1638,6 +1682,7 @@
  *  Dependency: None
  */
 /* #define SM_NOSYNC_PSSTORE_ON_DELETION */
+#endif /* CLASSIC_SEC_MANAGER */
 
 #ifdef BT_4_1
 #ifdef BT_LE
@@ -2066,6 +2111,7 @@
 #define L2CAP
 
 #ifdef L2CAP
+#ifdef BR_EDR_L2CAP
 /*
  *  L2CAP_HAVE_GROUP_SUPPORT
  *
@@ -2098,6 +2144,7 @@
  *  Dependency: BT_ENH_L2CAP.
  */
 /* #define L2CAP_EXTENDED_FLOW_SPEC */
+#endif /* BR_EDR_L2CAP */
 
 /*
  *  L2CAP_DATA_TX_NO_WRITE_TASK
@@ -2216,6 +2263,7 @@
  */
 /* #define L2CAP_NO_PARAM_CHECK */
 
+#if ((defined BT_4_1) && (defined BT_LE))
 /*
  *  L2CAP_SUPPORT_CBFC_MODE
  *
@@ -2224,8 +2272,17 @@
  *
  *  Dependency: BT_4_1
  */
-#if ((defined BT_4_1) && (defined BT_LE))
 #define L2CAP_SUPPORT_CBFC_MODE
+
+/*
+ *  L2CAP_CBFC_CONNECT_WITH_CID_CONTEXT
+ *
+ *  This flag enables the application with access to the Local/Remote
+ *  channel identifier in the connection context
+ *
+ *  Dependency: L2CAP_SUPPORT_CBFC_MODE
+ */
+#define L2CAP_CBFC_CONNECT_WITH_CID_CONTEXT
 #endif /* BT_4_1 && BT_LE */
 
 /*
@@ -2265,6 +2322,7 @@
 /* ----------------------------------------------------------------------- */
 /* ==== SDP Module Specific Flags ======================================== */
 /* ----------------------------------------------------------------------- */
+#ifdef SDP
 /*
  *  SDP_SERVER
  *
@@ -2363,7 +2421,6 @@
  */
 #define SDP_SERVER_HAVE_CB_IND_SUPPORT
 
-
 /*
  *  SDP_HAVE_LIB_INDEPENDENT_DBASE_SUPPORT
  *
@@ -2395,7 +2452,7 @@
 #define SDP_SERVER_HAVE_NO_MAX_REC_DEPENDENCY
 
 #endif /* SDP_SERVER */
-
+#endif /* SDP */
 
 /* ----------------------------------------------------------------------- */
 /* ==== RFCOMM Module Specific Flags ===================================== */
@@ -2487,6 +2544,7 @@
 /* ----------------------------------------------------------------------- */
 /* ==== BNEP Module Specific Flags ======================================= */
 /* ----------------------------------------------------------------------- */
+#ifdef BNEP
 /*
  *  BNEP_WRITE_NO_WRITE_TASK
  *
@@ -2496,11 +2554,12 @@
  *  Dependency: None.
  */
 /* #define BNEP_WRITE_NO_WRITE_TASK */
-
+#endif /* BNEP */
 
 /* ---------------------------------------------------------------------- */
 /* ==== AVDTP Module Specific Flag ====================================== */
 /* ---------------------------------------------------------------------- */
+#ifdef AVDTP
 /*
  *  AVDTP_HAVE_CONTENT_PROTECTION
  *
@@ -2619,11 +2678,12 @@
  *  Dependency: None.
  */
 #define HAVE_AVDTP_MEDIA_PKT_FLUSHABLE
-
+#endif /* AVDTP */
 
 /* ----------------------------------------------------------------------- */
 /* ==== AVCTP Module Specific Flags ====================================== */
 /* ----------------------------------------------------------------------- */
+#ifdef AVCTP
 /*
  *  AVCTP_1_3
  *
@@ -2674,7 +2734,7 @@
  *  EtherMind AVCTP module.
  */
 /* #define HAVE_AVRCP_MSG_COPY */
-
+#endif /* AVCTP */
 
 /* ----------------------------------------------------------------------- */
 /* ==== OBEX Module Specific Flags ======================================= */
@@ -2884,6 +2944,7 @@
 /* ----------------------------------------------------------------------- */
 /* ==== HFP Unit Module Specific Flags =================================== */
 /* ----------------------------------------------------------------------- */
+#ifdef HFP_UNIT
 /*
  *  HFP_UNIT_1_5
  *
@@ -2930,11 +2991,12 @@
  *  Dependency: None.
  */
 #define HFP_UNIT_HAVE_RFCOMM_CB_SUPPORT
-
+#endif /* HFP_UNIT */
 
 /* ----------------------------------------------------------------------- */
 /* ==== HFP AG Module Specific Flags ===================================== */
 /* ----------------------------------------------------------------------- */
+#ifdef HFP_AG
 /*
  *  HFP_AG_1_5
  *
@@ -2970,6 +3032,7 @@
  *  Dependency: None.
  */
 #define HFP_AG_1_8
+#endif /* HFP_AG */
 
 /* ----------------------------------------------------------------------- */
 /* ==== A2DP Module Specific Flags ===================================== */
@@ -3110,6 +3173,7 @@
 /* ----------------------------------------------------------------------- */
 /* ==== OPP Module Specific Flags ======================================== */
 /* ----------------------------------------------------------------------- */
+#ifdef OPP
 /*
  *  OPP_EXTENDED_CALLBACK
  *
@@ -3131,11 +3195,12 @@
  *  Dependency: OBEX_OVER_L2CAP
  */
 #define OPP_1_2
-
+#endif /* OPP */
 
 /* ----------------------------------------------------------------------- */
 /* ==== FTP Module Specific Flags ======================================== */
 /* ----------------------------------------------------------------------- */
+#ifdef FTP
 /*
  *  FTP_EXTENDED_CALLBACK
  *
@@ -3157,10 +3222,12 @@
  *  Dependency: OBEX_OVER_L2CAP and OBEX_ENH_SUPPORT
  */
 #define FTP_1_3
+#endif /* FTP */
 
 /* ----------------------------------------------------------------------- */
 /* ==== CTN Module Specific Flags ======================================== */
 /* ----------------------------------------------------------------------- */
+#if ((defined CTN_CCE) || (defined CTN_CSE))
 /*
  *  CTN_SUPPORT_NOTIFICATION
  *
@@ -3181,10 +3248,12 @@
  *  Dependency: None
  */
 /* #define HAVE_CTN_SYNC_INSTANCE */
+#endif /* ((defined CTN_CCE) || (defined CTN_CSE)) */
 
 /* ----------------------------------------------------------------------- */
 /* ==== MAP Module Specific Flags ======================================== */
 /* ----------------------------------------------------------------------- */
+#if ((defined MAP_MCE) || (defined MAP_MSE))
 /*
  *  MAP_SUPPORT_NOTIFICATION
  *
@@ -3234,10 +3303,12 @@
  *  Dependency: OBEX_OVER_L2CAP
  */
 #define MAP_1_4_2
+#endif /* ((defined MAP_MCE) || (defined MAP_MSE)) */
 
 /* ----------------------------------------------------------------------- */
 /* ==== PBAP Module Specific Flags ======================================= */
 /* ----------------------------------------------------------------------- */
+#if ((defined PBAP_PCE) || (defined PBAP_PSE))
 /*
  *  PBAP_1_2
  *
@@ -3247,10 +3318,12 @@
  *  Dependency: OBEX_OVER_L2CAP
  */
 #define PBAP_1_2
+#endif /* ((defined PBAP_PCE) || (defined PBAP_PSE)) */
 
 /* ----------------------------------------------------------------------- */
 /* ==== BIP Module Specific Flags ======================================= */
 /* ----------------------------------------------------------------------- */
+#ifdef BIP
 /*
  *  BIP_1_2
  *
@@ -3260,10 +3333,12 @@
  *  Dependency: OBEX_OVER_L2CAP
  */
 #define BIP_1_2
+#endif /* BIP */
 
 /* ----------------------------------------------------------------------- */
 /* ==== PAN Module Specific Flags ======================================== */
 /* ----------------------------------------------------------------------- */
+#ifdef PAN
 /*
  *  PAN_ROLE_PANU
  *
@@ -3290,11 +3365,12 @@
  *  Dependency: PAN
  */
 #define PAN_ROLE_GN
-
+#endif /* PAN */
 
 /* ----------------------------------------------------------------------- */
 /* ==== HID Module Specific Flags ======================================== */
 /* ----------------------------------------------------------------------- */
+#if ((defined HID_HOST) || (defined HID_DEVICE))
 /*
  *  HID_1_1
  *
@@ -3354,6 +3430,7 @@
 #define HID_DEVICE_LONG_OUT_REPORT
 #endif /* HID_SUPPORT_DATC */
 #endif /* HID_1_0 */
+#endif /* ((defined HID_HOST) || (defined HID_DEVICE)) */
 
 /* ----------------------------------------------------------------------- */
 /* ==== EtherMind LITE Stack Specific Flags ============================== */
@@ -3386,6 +3463,7 @@
 #define L2CAP_NO_UNREGISTER_PSM
 
 /* SDP LITE Feature Flags */
+#ifdef SDP
 #define SDP_NO_SS_REQ
 #define SDP_NO_SA_REQ
 #define SDP_NO_GET_RECORD_HANDLE
@@ -3419,8 +3497,10 @@
 
 /* SDP Databse LITE Feature Flags */
 #define DB_NO_INACTIVATE_RECORD
+#endif /* SDP */
 
 /* RFCOMM LITE Feature Flags */
+#ifdef RFCOMM
 #define RFCOMM_NO_QUERY_STATE
 #define RFCOMM_NO_SEND_PN
 #define RFCOMM_NO_SEND_RPN
@@ -3432,6 +3512,7 @@
 #define RFCOMM_NO_SET_LOCAL_RPN
 #define RFCOMM_NO_GET_LOCAL_PN
 #define RFCOMM_NO_GET_LOCAL_MSC
+#endif /* RFCOMM */
 
 /* HFP Unit LITE Feature Flags */
 #define HFP_UNIT_NO_STOP
@@ -3602,7 +3683,6 @@
  */
 #define SMP_SUPPORT_UTIL_APIS
 
-
 /*
  *  SMP_CHECK_ENCRYPTION_KEY_DIST_FOR_BONDING
  *
@@ -3757,7 +3837,6 @@
  */
 /* #define SMP_LESC_TESTER_BEHAVIOUR */
 
-
 /*
  *  HOST_RESOLVE_PVT_ADDR
  *
@@ -3788,6 +3867,17 @@
  *  Dependency: BT_LE && SMP
  */
 /* #define SMP_HANDLE_PEER_KEY_XCHG_SEQUENCE_VIOLATION */
+
+/*
+ *  SMP_ENABLE_BLURTOOTH_VU_UPDATE
+ *
+ *  This flag enables the validation update to handle the
+ *  Blurtooth Vulnerability with respect to Cross Transport
+ *  Key Distribution
+ *
+ *  Dependency: BT_LE && SMP
+ */
+#define SMP_ENABLE_BLURTOOTH_VU_UPDATE
 
 #endif /* SMP */
 
@@ -4227,6 +4317,15 @@
 #endif /* BT_LOG_TIMESTAMP */
 
 /*
+ * By Default SPP_MAX_ENTITY will be 2. 1 SPP instance is created having SERIALPORT_UUID with default server_channel number 2.
+ * and 1 SPP_VS instance having CustomUUID_0 or default SERIALPORT_UUID on server_channel number 3.
+ *
+ * With SPP_ENABLE_MAX_CONN_RANGE enabled 20 SPP instances are created having SERIALPORT_UUID with 20 different server_channels
+ * and 1 SPP_VS instance created having CustomUUID_0 or with default SERIALPORT_UUID on another server_channel.
+ */
+#define SPP_ENABLE_MAX_CONN_RANGE
+
+/*
  * By default, the Error Logs of all the layers are enabled.
  * To disable error logging of a module, define <module>_NO_DEBUG flag.
  * Example: Define HCI_NO_DEBUG to disable error logging of HCI layer.
@@ -4430,6 +4529,9 @@
 
 /* #define SNOOP_NO_DEBUG */
 /* #define SNOOP_DEBUG */
+
+#define HCI_UART_NO_DEBUG
+/* #define HCI_UART_DEBUG */
 
 #endif /* _H_BT_FEATURES_ */
 

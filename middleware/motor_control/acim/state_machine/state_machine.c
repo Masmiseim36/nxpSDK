@@ -56,7 +56,7 @@ static void SM_StateFaultFast(sm_app_ctrl_t *psAppCtrl)
     if ((psAppCtrl->uiCtrl & SM_CTRL_FAULT_CLEAR) > 0U)
     {
         /* Clear INIT_DONE, FAULT, FAULT_CLEAR flags */
-        psAppCtrl->uiCtrl &= ~(SM_CTRL_INIT_DONE | SM_CTRL_FAULT | SM_CTRL_FAULT_CLEAR);
+        psAppCtrl->uiCtrl &= (uint16_t)(~(SM_CTRL_INIT_DONE | SM_CTRL_FAULT | SM_CTRL_FAULT_CLEAR));
 
         /* User Fault to Init transition function */
         psAppCtrl->psTrans->FaultStop();
@@ -91,7 +91,7 @@ static void SM_StateInitFast(sm_app_ctrl_t *psAppCtrl)
     else if ((psAppCtrl->uiCtrl & SM_CTRL_INIT_DONE) > 0U)
     {
         /* Clear INIT_DONE, START_STOP, OM_CHANGE, STOP_ACK, RUN_ACK flags */
-        psAppCtrl->uiCtrl &= ~(SM_CTRL_INIT_DONE | SM_CTRL_STOP | SM_CTRL_START | SM_CTRL_STOP_ACK | SM_CTRL_RUN_ACK);
+        psAppCtrl->uiCtrl &= (uint16_t)(~(SM_CTRL_INIT_DONE | SM_CTRL_STOP | SM_CTRL_START | SM_CTRL_STOP_ACK | SM_CTRL_RUN_ACK));
 
         /* User Init to Stop transition function */
         psAppCtrl->psTrans->InitStop();
@@ -101,7 +101,7 @@ static void SM_StateInitFast(sm_app_ctrl_t *psAppCtrl)
     }
     else
 	{
-		;
+		/* Else */;
 	}
 }
 
@@ -136,7 +136,7 @@ static void SM_StateStopFast(sm_app_ctrl_t *psAppCtrl)
         if ((psAppCtrl->uiCtrl & SM_CTRL_RUN_ACK) > 0U)
         {
             /* Clears the RUN_ACK flag */
-            psAppCtrl->uiCtrl &= ~(SM_CTRL_RUN_ACK | SM_CTRL_START);
+            psAppCtrl->uiCtrl &= (uint16_t)(~(SM_CTRL_RUN_ACK | SM_CTRL_START));
 
             /* Run state */
             psAppCtrl->eState = kSM_AppRun;
@@ -177,7 +177,7 @@ static void SM_StateRunFast(sm_app_ctrl_t *psAppCtrl)
         if ((psAppCtrl->uiCtrl & SM_CTRL_STOP_ACK) > 0U)
         {
             /* Clears the STOP_ACK flag */
-            psAppCtrl->uiCtrl &= ~(SM_CTRL_STOP_ACK | SM_CTRL_STOP);
+            psAppCtrl->uiCtrl &= (uint16_t)(~(SM_CTRL_STOP_ACK | SM_CTRL_STOP));
 
             /* Run state */
             psAppCtrl->eState = kSM_AppStop;

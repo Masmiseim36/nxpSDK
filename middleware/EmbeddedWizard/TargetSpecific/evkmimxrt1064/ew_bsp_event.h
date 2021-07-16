@@ -19,7 +19,7 @@
 ********************************************************************************
 *
 * DESCRIPTION:
-*   This file is part of the interface (glue layer) between an Embedded Wizard 
+*   This file is part of the interface (glue layer) between an Embedded Wizard
 *   generated UI application and the board support package (BSP) of a dedicated
 *   target.
 *   This template provides a system event mechanism, that can be used in 
@@ -40,13 +40,13 @@
 
 /*******************************************************************************
 * FUNCTION:
-*   EwBspWaitForSystemEvent
+*   EwBspEventWait
 *
 * DESCRIPTION:
-*   The function EwBspWaitForSystemEvent should be called from the Embedded 
+*   The function EwBspEventWait should be called from the Embedded 
 *   Wizard main loop in case there are no pending events, signals or timers that 
 *   have to be processed by the UI application.
-*   The function EwBspWaitForSystemEvent is used to sleep the given time span or
+*   The function EwBspEventWait is used to sleep the given time span or
 *   to suspend the UI task. The function returns as soon as a new system event
 *   occurs or when the given timeout value is expired.
 *   Typically, a system event is a touch event or a key event or any event
@@ -59,7 +59,7 @@
 *   None
 *
 *******************************************************************************/
-void EwBspWaitForSystemEvent
+void EwBspEventWait
 ( 
   int                         aTimeout
 );
@@ -67,10 +67,10 @@ void EwBspWaitForSystemEvent
 
 /*******************************************************************************
 * FUNCTION:
-*   EwBspTriggerSystemEvent
+*   EwBspEventTrigger
 *
 * DESCRIPTION:
-*   The function EwBspTriggerSystemEvent is used in combination with an 
+*   The function EwBspEventTrigger is used in combination with an 
 *   operating system to continue (resume) the operation of the UI main loop.
 *   Typically, a system event is a touch event or a key event or any event
 *   from your device driver.
@@ -82,7 +82,7 @@ void EwBspWaitForSystemEvent
 *   None
 *
 *******************************************************************************/
-void EwBspTriggerSystemEvent
+void EwBspEventTrigger
 ( 
   void
 );

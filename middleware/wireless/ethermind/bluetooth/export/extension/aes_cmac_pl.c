@@ -75,10 +75,10 @@ API_RESULT aes_cmac_128B_encrypt_pl (UCHAR * key, UCHAR * data, UCHAR * encout)
 
 
     BT_debug_trace(EM_MODULE_ID_AES_CMAC, "[AES_CMAC] Enc Input.\n");
-    BT_debug_dump_bytes(EM_MODULE_ID_AES_CMAC, data, 16);
+    BT_debug_dump_bytes(EM_MODULE_ID_AES_CMAC, data, 16U);
 
     BT_debug_trace(EM_MODULE_ID_AES_CMAC, "[AES_CMAC] Enc Key.\n");
-    BT_debug_dump_bytes(EM_MODULE_ID_AES_CMAC, key, 16);
+    BT_debug_dump_bytes(EM_MODULE_ID_AES_CMAC, key, 16U);
 
     /* Invoke HCI Encrypt */
     retval = BT_smp_128B_encrypt_pl (key, data, &counter);
@@ -127,7 +127,7 @@ void aes_cmac_128B_encrypt_complete_pl (UCHAR status, UCHAR * data, UINT16 lengt
 #else /* AES_HAVE_ENC_RETURN */
 
     BT_debug_trace(EM_MODULE_ID_AES_CMAC, "[AES_CMAC] Enc Out.\n");
-    BT_debug_dump_bytes(EM_MODULE_ID_AES_CMAC, data, 16);
+    BT_debug_dump_bytes(EM_MODULE_ID_AES_CMAC, data, 16U);
 
     aes_cmac_aes_128_encryption_complete (status, data, length);
 #endif /* AES_HAVE_ENC_RETURN */

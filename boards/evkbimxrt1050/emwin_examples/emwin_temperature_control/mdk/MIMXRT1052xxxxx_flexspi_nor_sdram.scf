@@ -9,13 +9,13 @@
 **     Compiler:            Keil ARM C/C++ Compiler
 **     Reference manual:    IMXRT1050RM Rev.2.1, 12/2018 | IMXRT1050SRM Rev.2
 **     Version:             rev. 1.0, 2018-09-21
-**     Build:               b191015
+**     Build:               b210227
 **
 **     Abstract:
 **         Linker file for the Keil ARM C/C++ Compiler
 **
 **     Copyright 2016 Freescale Semiconductor, Inc.
-**     Copyright 2016-2019 NXP
+**     Copyright 2016-2021 NXP
 **     All rights reserved.
 **
 **     SPDX-License-Identifier: BSD-3-Clause
@@ -44,11 +44,14 @@
 #define m_text_start                   0x60002400
 #define m_text_size                    0x03FFDC00
 
+#define m_qacode_start                 0x00000000
+#define m_qacode_size                  0x00020000
+
 #define m_interrupts_ram_start         0x80000000
 #define m_interrupts_ram_size          __ram_vector_table_size__
 
-#define  m_data_start                  (m_interrupts_ram_start + m_interrupts_ram_size)
-#define  m_data_size                   (0x01E00000 - m_interrupts_ram_size)
+#define m_data_start                   (m_interrupts_ram_start + m_interrupts_ram_size)
+#define m_data_size                    (0x01E00000 - m_interrupts_ram_size)
 
 #define m_ncache_start                 0x81E00000
 #define m_ncache_size                  0x00200000
@@ -63,13 +66,13 @@
 #if (defined(__stack_size__))
   #define Stack_Size                   __stack_size__
 #else
-  #define Stack_Size                   0x10000
+  #define Stack_Size                   0x0400
 #endif
 
 #if (defined(__heap_size__))
   #define Heap_Size                    __heap_size__
 #else
-  #define Heap_Size                    0x800000
+  #define Heap_Size                    0x0400
 #endif
 
 #if defined(XIP_BOOT_HEADER_ENABLE) && (XIP_BOOT_HEADER_ENABLE == 1)
@@ -117,6 +120,9 @@ LR_m_text m_interrupts_start m_text_start+m_text_size-m_interrupts_start {   ; l
   }
 #endif
   ARM_LIB_STACK m_data_start+m_data_size EMPTY -Stack_Size { ; Stack region growing down
+  }
+  RW_m_ram_text m_qacode_start m_qacode_size { ;
+    * (CodeQuickAccess)
   }
 #if (defined(__heap_noncacheable__))
   RW_m_ncache m_ncache_start m_ncache_size - Heap_Size { ; ncache RW data

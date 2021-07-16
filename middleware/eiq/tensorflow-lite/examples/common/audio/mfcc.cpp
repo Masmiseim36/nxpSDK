@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2018 Arm Limited or its affiliates. All rights reserved.
+ * Copyright 2021 NXP
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -21,9 +22,9 @@
  */
 
 #include "mfcc.hpp"
-#include <string.h>
 
-#include "float.h"
+#include <float.h>
+#include <assert.h>
 
 #ifndef M_PI
 #define M_PI 3.14159265358979323846
@@ -36,7 +37,7 @@ MFCC::MFCC(int num_mfcc_features, int frame_len)
   // Round-up to nearest power of 2.
   frame_len_padded = pow(2, ceil((log(frame_len) / log(2))));
 
-  frame = new float[frame_len_padded];
+  frame = new fft_type[frame_len_padded];
   buffer = new float[frame_len_padded];
   mel_energies = new float[NUM_FBANK_BINS];
 
@@ -53,9 +54,11 @@ MFCC::MFCC(int num_mfcc_features, int frame_len)
   // create DCT matrix
   dct_matrix = create_dct_matrix(NUM_FBANK_BINS, num_mfcc_features);
 
+#ifdef __ARM_ARCH
   // initialize FFT
   rfft = new arm_rfft_fast_instance_f32;
   arm_rfft_fast_init_f32(rfft, frame_len_padded);
+#endif
 }
 
 MFCC::~MFCC()
@@ -67,7 +70,9 @@ MFCC::~MFCC()
   delete [] fbank_filter_first;
   delete [] fbank_filter_last;
   delete [] dct_matrix;
+#ifdef __ARM_ARCH
   delete rfft;
+#endif
   for (int i = 0; i < NUM_FBANK_BINS; i++)
     delete mel_fbank[i];
   delete mel_fbank;
@@ -78,7 +83,11 @@ float * MFCC::create_dct_matrix(int32_t input_length, int32_t coefficient_count)
   int32_t k, n;
   float* M = new float[input_length * coefficient_count];
   float normalizer;
+#ifdef __ARM_ARCH
   arm_sqrt_f32(2.0 / (float)input_length, &normalizer);
+#else
+  normalizer = sqrtf(2.0 / (float)input_length);
+#endif
   for (k = 0; k < coefficient_count; k++) {
     for (n = 0; n < input_length; n++) {
       M[k * input_length + n] = normalizer * cos(((double)M_PI) / input_length * (n + 0.5) * k);
@@ -147,17 +156,32 @@ void MFCC::mfcc_compute(const int16_t * audio_data, float* mfcc_out)
 
   // TensorFlow way of normalizing .wav data to (-1, 1)
   for (i = 0; i < frame_len; i++) {
-    frame[i] = (float)(audio_data[i]) * 1.0 / (1 << 15); 
+    frame[i] = (fft_type)(audio_data[i]) * 1.0 / (1 << 15);
   }
   // Fill up remaining with zeros
-  memset(&frame[frame_len], 0, sizeof(float) * (frame_len_padded-frame_len));
+  memset(&frame[frame_len], 0, sizeof(fft_type) * (frame_len_padded-frame_len));
 
   for (i = 0; i < frame_len; i++) {
     frame[i] *= window_func[i];
   }
 
   // Compute FFT
+#ifdef __ARM_ARCH
   arm_rfft_fast_f32(rfft, frame, buffer, 0);
+#else
+  const int MAX_FFT_LEN = 1024;
+  const int MAX_FFT_LEN_SQRT = 32;
+  static int ip[MAX_FFT_LEN_SQRT + 2];
+  static double w[MAX_FFT_LEN];
+  ip[0] = 0;
+
+  assert(frame_len_padded <= MAX_FFT_LEN);
+  rdft(frame_len_padded, 1, frame, ip, w);
+
+  for (i = 0; i < frame_len_padded; i++) {
+    buffer[i] = (float)frame[i];
+  }
+#endif
 
   // Convert to power spectrum
   // frame is stored as [real0, realN/2-1, real1, im1, real2, im2, ...]
@@ -179,7 +203,11 @@ void MFCC::mfcc_compute(const int16_t * audio_data, float* mfcc_out)
     int32_t first_index = fbank_filter_first[bin];
     int32_t last_index = fbank_filter_last[bin];
     for (i = first_index; i <= last_index; i++) {
+#ifdef __ARM_ARCH
       arm_sqrt_f32(buffer[i], &sqrt_data);
+#else
+      sqrt_data = sqrtf(buffer[i]);
+#endif
       mel_energy += (sqrt_data) * mel_fbank[bin][j++];
     }
     mel_energies[bin] = mel_energy;

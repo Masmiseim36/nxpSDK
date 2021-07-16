@@ -61,11 +61,11 @@
  * Prototypes
  ******************************************************************************/
 /* Declaration of demo function. */
-extern int RunShadowDemo(bool awsIotMqttMode,
-                         const char *pIdentifier,
-                         void *pNetworkServerInfo,
-                         void *pNetworkCredentialInfo,
-                         const IotNetworkInterface_t *pNetworkInterface);
+extern int RunDeviceShadowDemo(bool awsIotMqttMode,
+                               const char *pIdentifier,
+                               void *pNetworkServerInfo,
+                               void *pNetworkCredentialInfo,
+                               const IotNetworkInterface_t *pNetworkInterface);
 
 /*******************************************************************************
  * Variables
@@ -89,7 +89,7 @@ void vApplicationDaemonTaskStartupHook(void)
     if (SYSTEM_Init() == pdPASS)
     {
         static demoContext_t mqttDemoContext = {.networkTypes                = AWSIOT_NETWORK_TYPE_WIFI,
-                                                .demoFunction                = RunShadowDemo,
+                                                .demoFunction                = RunDeviceShadowDemo,
                                                 .networkConnectedCallback    = NULL,
                                                 .networkDisconnectedCallback = NULL};
 

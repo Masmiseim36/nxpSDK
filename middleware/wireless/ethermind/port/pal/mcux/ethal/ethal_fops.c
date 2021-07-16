@@ -46,7 +46,7 @@ typedef struct _fops_file_handle_list
 } fops_file_handle_list_t;
 
 static void fops_idle(osa_task_param_t arg);
-static OSA_TASK_DEFINE(fops_idle, EM_FOPS_FILE_SYNC_TASK_PRIORITY, 1, EM_FOPS_FILE_SYNC_TASK_STACK_SIZE, 0);
+static OSA_TASK_DEFINE(fops_idle, EM_FOPS_FILE_SYNC_TASK_PRIORITY, 1U, EM_FOPS_FILE_SYNC_TASK_STACK_SIZE, 0U);
 static OSA_SEMAPHORE_HANDLE_DEFINE(s_fopsSemaphore);
 static osa_semaphore_handle_t s_fopsSemaphoreHandle;
 static OSA_TASK_HANDLE_DEFINE(s_fopsIdleTask);
@@ -73,7 +73,7 @@ static void fops_list_directory (CHAR *path);
 static void fops_file_write_buffer_queue_init()
 {
     fops_file_write_buffer_node_t *node;
-    uint32_t index = 0;
+    uint32_t index = 0U;
     uint32_t regMask;
     osa_status_t ret = KOSA_StatusSuccess;
 
@@ -100,7 +100,7 @@ static void fops_file_write_buffer_queue_init()
 
         if (NULL != s_emptyMsgq)
         {
-            for (index = 0;index < EM_FOPS_FILE_OBJ_BUFFER_COUNT;index++)
+            for (index = 0U;index < EM_FOPS_FILE_OBJ_BUFFER_COUNT;index++)
             {
                 node = &s_writeBufferNodes[index];
                 ret = OSA_MsgQPut(s_emptyMsgq, &node);
@@ -150,7 +150,7 @@ EM_RESULT EM_fops_get_current_directory
 #else
         ret = FR_NOT_ENABLED;
 #endif
-    if (ret)
+    if (0 != ret)
     {
         retval = EM_FOPS_ERR_GET_CURRECT_DIRECTORY;
     }
@@ -199,26 +199,26 @@ EM_RESULT EM_fops_get_file_attributes
     }
 
     retval = EM_SUCCESS;
-    *file_attribute   = 0;
+    *file_attribute   = 0U;
 
     /* Get the Attributes of the file/directory */
     ret = f_stat((TCHAR*)object_name, &fileInfo);
 
-    if(ret)
+    if(0 != ret)
     {
         retval = EM_FOPS_ERR_GET_FILE_ATTRIBUTES;
     }
     else
     {
         /* Check if it is Folder */
-       if(fileInfo.fattrib & AM_DIR)
+       if (0U != (fileInfo.fattrib & AM_DIR))
        {
            /* Set the bit for Folder */
            EM_FOPS_SET_BIT(*file_attribute, EM_FOPS_MASK_FOLDER);
        }
 
        /* Check if it is Readonly Folder */
-       if(fileInfo.fattrib & AM_RDO)
+       if (0U != (fileInfo.fattrib & AM_RDO))
        {
            /* Set the bit for Readonly Folder */
            EM_FOPS_SET_BIT(*file_attribute, EM_FOPS_MASK_READONLY);
@@ -259,9 +259,9 @@ EM_RESULT EM_fops_set_file_attributes
 {
     BYTE attr;
 
-    attr = (((UINT8)file_attribute & 0xFF) == 0x01)? AM_RDO: 0;
+    attr = (((UINT8)file_attribute & 0xFFU) == 0x01U)? AM_RDO: 0U;
 
-    f_chmod(_T((TCHAR *)object_name), attr, AM_RDO);
+    (void) f_chmod(_T((TCHAR *)object_name), attr, AM_RDO);
     return EM_FAILURE;
 }
 
@@ -298,14 +298,14 @@ EM_RESULT EM_fops_access_first
 
     retval = EM_SUCCESS;
     ret = f_opendir(object, (const TCHAR*)dir);
-    if(ret)
+    if(0 != ret)
     {
         retval = EM_FOPS_ERR_GET_FILE_ATTRIBUTES;
     }
     else
     {
         ret = f_readdir(object, &fi);
-        if ((ret) || (!fi.fname[0]))
+        if ((ret) || (!fi.fname[0U]))
         {
             retval = EM_FOPS_ERR_GET_FILE_ATTRIBUTES;
         }
@@ -313,11 +313,11 @@ EM_RESULT EM_fops_access_first
         {
             EM_str_copy(info->fname, fi.fname);
             info->flsize = fi.fsize;
-            info->fdyear = (uint32_t)((fi.fdate >> 9) + 1980);
-            info->fdmonth = (uint32_t)((fi.fdate >> 5) & 0x000Fu);
+            info->fdyear = (uint32_t)((fi.fdate >> 9U) + 1980U);
+            info->fdmonth = (uint32_t)((fi.fdate >> 5U) & 0x000Fu);
             info->fdday = (uint32_t)(fi.fdate & 0x001Fu);
-            info->fthour = (uint32_t)((fi.ftime >> 11) & 0x0000001Fu);
-            info->ftmin = (uint32_t)((fi.ftime >> 5) & 0x0000003Fu);
+            info->fthour = (uint32_t)((fi.ftime >> 11U) & 0x0000001Fu);
+            info->ftmin = (uint32_t)((fi.ftime >> 5U) & 0x0000003Fu);
             info->ftsec = (uint32_t)(fi.ftime & 0x0000001Fu);
 
             info->fattrib = fi.fattrib;
@@ -356,7 +356,7 @@ EM_RESULT EM_fops_access_next
 
     retval = EM_SUCCESS;
     ret = f_readdir(object, &fi);
-    if ((ret) || (!fi.fname[0]))
+    if ((ret) || (!fi.fname[0U]))
     {
         retval = EM_FOPS_ERR_GET_FILE_ATTRIBUTES;
     }
@@ -364,11 +364,11 @@ EM_RESULT EM_fops_access_next
     {
         EM_str_copy(info->fname, fi.fname);
         info->flsize = fi.fsize;
-        info->fdyear = (uint32_t)((fi.fdate >> 9) + 1980);
-        info->fdmonth = (uint32_t)((fi.fdate >> 5) & 0x000Fu);
+        info->fdyear = (uint32_t)((fi.fdate >> 9U) + 1980U);
+        info->fdmonth = (uint32_t)((fi.fdate >> 5U) & 0x000Fu);
         info->fdday = (uint32_t)(fi.fdate & 0x001Fu);
-        info->fthour = (uint32_t)((fi.ftime >> 11) & 0x0000001Fu);
-        info->ftmin = (uint32_t)((fi.ftime >> 5) & 0x0000003Fu);
+        info->fthour = (uint32_t)((fi.ftime >> 11U) & 0x0000001Fu);
+        info->ftmin = (uint32_t)((fi.ftime >> 5U) & 0x0000003Fu);
         info->ftsec = (uint32_t)(fi.ftime & 0x0000001Fu);
 
         info->fattrib = fi.fattrib;
@@ -402,7 +402,7 @@ EM_RESULT EM_fops_access_close
         return EM_FOPS_INVALID_PARAMETER_VALUE;
     }
 
-    f_closedir(object);
+    (void) f_closedir(object);
 
     return EM_SUCCESS;
 }
@@ -445,7 +445,7 @@ EM_RESULT EM_fops_set_path_forward
         ret = FR_NOT_ENABLED;
 #endif
 
-    if (ret)
+    if (0 != ret)
     {
         retval = EM_FOPS_ERR_SET_PATH_FORWARD;
     }
@@ -483,7 +483,7 @@ EM_RESULT EM_fops_set_path_backward( void )
         ret = FR_NOT_ENABLED;
 #endif
 
-    if (ret)
+    if (0 != ret)
     {
         retval = EM_FOPS_ERR_SET_PATH_BACKWARD;
     }
@@ -585,7 +585,7 @@ EM_RESULT EM_fops_file_open
         return EM_FOPS_MEMORY_ALLOCATION_FAILED;
     }
 
-    memset(fhandle, 0, sizeof(*fhandle));
+    (void) memset(fhandle, 0U, sizeof(*fhandle));
     *file_handle = NULL;
     retval = EM_SUCCESS;
     type = (EM_str_cmp(mode, "wb"))? FA_READ: (FA_WRITE | FA_CREATE_ALWAYS);
@@ -637,13 +637,13 @@ EM_RESULT EM_fops_file_write
            )
 {
 #if EM_FOPS_FILE_SYNC_IN_IDLE
-    static uint8_t initialized = 0;
+    static uint8_t initialized = 0U;
 #else
     FRESULT ret;
 #endif
     EM_RESULT retval;
     fops_file_handle_t * fhandle;
-    UINT actual = 0;
+    UINT actual = 0U;
 #if EM_FOPS_FILE_SYNC_IN_IDLE
     fops_file_handle_t * fHandleP;
     fops_file_handle_t * fHandleQ;
@@ -656,14 +656,14 @@ EM_RESULT EM_fops_file_write
         return EM_FOPS_ERR_FILE_WRITE;
     }
 
-    if (0 == initialized)
+    if (0U == initialized)
     {
         OSA_EnterCritical(&regMask);
-        initialized = 1;
+        initialized = 1U;
 
         if (NULL == s_fopsSemaphoreHandle)
         {
-            if (KOSA_StatusSuccess == OSA_SemaphoreCreate((osa_semaphore_handle_t)s_fopsSemaphore, 0))
+            if (KOSA_StatusSuccess == OSA_SemaphoreCreate((osa_semaphore_handle_t)s_fopsSemaphore, 0U))
             {
                 s_fopsSemaphoreHandle = (osa_semaphore_handle_t)s_fopsSemaphore;
             }
@@ -682,7 +682,7 @@ EM_RESULT EM_fops_file_write
 #endif
 
     /* NULL Check */
-    if ((NULL == file_handle) || (NULL == buffer) || (0 == buf_length))
+    if ((NULL == file_handle) || (NULL == buffer) || (0U == buf_length))
     {
         return EM_FOPS_INVALID_PARAMETER_VALUE;
     }
@@ -692,7 +692,7 @@ EM_RESULT EM_fops_file_write
     retval = EM_SUCCESS;
 #if EM_FOPS_FILE_SYNC_IN_IDLE
 
-    if (0 != fhandle->closing)
+    if (0U != fhandle->closing)
     {
         return EM_FOPS_ERR_FILE_WRITE;
     }
@@ -717,7 +717,7 @@ EM_RESULT EM_fops_file_write
     actual = buf_length;
 
     fhandle->index ++;
-    length = 0;
+    length = 0U;
     while (buf_length > 0u)
     {
         if (NULL == fhandle->busyBuffer)
@@ -730,7 +730,7 @@ EM_RESULT EM_fops_file_write
         length = MIN(buf_length, EM_FOPS_FILE_OBJ_BUFFER_SIZE);
         length = MIN(length, (EM_FOPS_FILE_OBJ_BUFFER_SIZE - fhandle->busyBuffer->bufferLength));
 
-        memcpy(&fhandle->busyBuffer->buffer[fhandle->busyBuffer->bufferLength], buffer, length);
+        (void) memcpy(&fhandle->busyBuffer->buffer[fhandle->busyBuffer->bufferLength], buffer, length);
         buffer += length;
         buf_length -= length;
         fhandle->busyBuffer->bufferLength += length;
@@ -744,7 +744,7 @@ EM_RESULT EM_fops_file_write
         }
     }
 
-    OSA_MutexLock(s_fopsFileObjListLock, osaWaitForever_c);
+    (void) OSA_MutexLock(s_fopsFileObjListLock, osaWaitForever_c);
 
     fHandleP = (fops_file_handle_t *)s_fopsFileObjList.next;
     fHandleQ = NULL;
@@ -769,7 +769,7 @@ EM_RESULT EM_fops_file_write
         }
         fhandle->next = NULL;
     }
-    OSA_MutexUnlock(s_fopsFileObjListLock);
+    (void) OSA_MutexUnlock(s_fopsFileObjListLock);
     (void)OSA_SemaphorePost(s_fopsSemaphoreHandle);
 #else
     ret = f_write((FIL *)&fhandle->fileHandle, buffer, buf_length, &actual);
@@ -780,7 +780,7 @@ EM_RESULT EM_fops_file_write
     else
     {
         ret = f_sync((FIL *)&fhandle->fileHandle);
-        if (ret)
+        if (0 != ret)
         {
             retval = EM_FOPS_ERR_FILE_WRITE;
         }
@@ -830,7 +830,7 @@ EM_RESULT EM_fops_file_read
     UINT actual;
 
     /* NULL Check */
-    if ((NULL == file_handle) || (NULL == buffer) || (0 == buf_length))
+    if ((NULL == file_handle) || (NULL == buffer) || (0U == buf_length))
     {
         return EM_FOPS_INVALID_PARAMETER_VALUE;
     }
@@ -913,13 +913,12 @@ EM_RESULT EM_fops_file_put
           )
 {
     /* NULL Check */
-    if ((NULL == buffer) ||
-        (NULL == file_handle))
+    if ((NULL == buffer) || (NULL == file_handle))
     {
         return EM_FOPS_INVALID_PARAMETER_VALUE;
     }
 
-    f_puts((TCHAR*)buffer, file_handle);
+    (void) f_puts((TCHAR*)buffer, file_handle);
 
     return EM_SUCCESS;
 }
@@ -952,9 +951,7 @@ EM_RESULT EM_fops_file_get
     EM_RESULT retval;
 
     /* NULL Check */
-    if ((NULL == buffer) ||
-        (NULL == buf_length) ||
-        (NULL == file_handle))
+    if ((NULL == buffer) || (NULL == buf_length) || (NULL == file_handle))
     {
         return EM_FOPS_INVALID_PARAMETER_VALUE;
     }
@@ -993,14 +990,13 @@ EM_RESULT EM_fops_file_get_formatted
           )
 {
     TCHAR * buf;
-    TCHAR buffer[32];
+    TCHAR buffer[32U];
     CHAR * rbuf;
     EM_RESULT retval;
     UINT16 rlen, i;
 
     /* NULL Check */
-    if ((NULL == format) ||
-        (NULL == parameter))
+    if ((NULL == format) || (NULL == parameter))
     {
         return EM_FOPS_INVALID_PARAMETER_VALUE;
     }
@@ -1023,7 +1019,7 @@ EM_RESULT EM_fops_file_get_formatted
     if (NULL != buf)
     {
         rlen = EM_str_len(rbuf);
-        for (i = 0; i < rlen; i++)
+        for (i = 0U; i < rlen; i++)
         {
             if (('\r' == rbuf[i]) || ('\n' == rbuf[i]))
             {
@@ -1034,7 +1030,7 @@ EM_RESULT EM_fops_file_get_formatted
 
         if (NULL == length)
         {
-            sscanf(rbuf, format, parameter);
+            (void) sscanf(rbuf, format, parameter);
         }
 
         retval = EM_SUCCESS;
@@ -1089,18 +1085,18 @@ EM_RESULT EM_fops_file_close
 #if EM_FOPS_FILE_SYNC_IN_IDLE
 
     OSA_EnterCritical(&regMask);
-    fhandle->closing = 1;
+    fhandle->closing = 1U;
     OSA_ExitCritical(regMask);
 
     while ((NULL != fhandle->busyBuffer))
     {
-        OSA_TimeDelay(1);
+        OSA_TimeDelay(1U);
     }
     if (NULL != fhandle->fullMsgq)
     {
         while (OSA_MsgQAvailableMsgs(fhandle->fullMsgq) > 0u)
         {
-            OSA_TimeDelay(1);
+            OSA_TimeDelay(1U);
         }
         fhandle->fullMsgq = NULL;
         (void)OSA_MsgQDestroy((osa_msgq_handle_t)fhandle->fullMsgqBuffer);
@@ -1108,7 +1104,7 @@ EM_RESULT EM_fops_file_close
 
     if (NULL != s_fopsFileObjListLock)
     {
-        OSA_MutexLock(s_fopsFileObjListLock, osaWaitForever_c);
+        (void) OSA_MutexLock(s_fopsFileObjListLock, osaWaitForever_c);
     }
     fHandleP = (fops_file_handle_t *)s_fopsFileObjList.next;
     fHandleQ = NULL;
@@ -1136,13 +1132,13 @@ EM_RESULT EM_fops_file_close
 
     if (NULL != s_fopsFileObjListLock)
     {
-        OSA_MutexUnlock(s_fopsFileObjListLock);
+        (void) OSA_MutexUnlock(s_fopsFileObjListLock);
     }
 #endif
 
     retval = EM_SUCCESS;
     ret = f_close((FIL *)&fhandle->fileHandle);
-    if (ret)
+    if (0 != ret)
     {
         retval = EM_FAILURE;
     }
@@ -1189,7 +1185,7 @@ EM_RESULT EM_fops_object_delete
     retval = EM_SUCCESS;
     ret = f_unlink((TCHAR *)object_name);
 
-    if (ret)
+    if (0 != ret)
     {
         retval = EM_FAILURE;
     }
@@ -1266,7 +1262,7 @@ EM_RESULT EM_fops_file_seek
     retval = EM_SUCCESS;
     ret = f_lseek ((FIL *)&fhandle->fileHandle, (FSIZE_t)offset);
 
-    if (ret)
+    if (0 != ret)
     {
         retval = EM_FOPS_ERR_FILE_SEEK_FAILED;
     }
@@ -1310,7 +1306,7 @@ EM_RESULT EM_fops_file_copy
 {
     FRESULT ret;
     EM_RESULT retval;
-    UCHAR buffer[512];
+    UCHAR buffer[512U];
     UINT bytes;
     fops_file_handle_t *ifhandle, *ofhandle;
 
@@ -1339,7 +1335,7 @@ EM_RESULT EM_fops_file_copy
     }
 
     ret = f_open(&ifhandle->fileHandle, _T((TCHAR*)existing_file_name), (FA_READ));
-    if (!ret)
+    if (0 == ret)
     {
         ret = f_open(&ofhandle->fileHandle, _T((TCHAR*)new_file_name), (FA_WRITE | FA_CREATE_ALWAYS));
         if ((!ret) || ((ret == FR_EXIST) && (!fail_if_exists)))
@@ -1347,18 +1343,18 @@ EM_RESULT EM_fops_file_copy
             while(!f_eof(&ifhandle->fileHandle))
             {
                 ret = f_read(&ifhandle->fileHandle, buffer, sizeof(buffer), &bytes);
-                if (!ret)
+                if (0 == ret)
                 {
                     ret = f_write(&ofhandle->fileHandle, buffer, bytes, &bytes);
-                    if (!ret)
+                    if (0 == ret)
                     {
                         retval = EM_SUCCESS;
                     }
                 }
             }
-            f_close(&ofhandle->fileHandle);
+            (void) f_close(&ofhandle->fileHandle);
         }
-        f_close(&ifhandle->fileHandle);
+        (void) f_close(&ifhandle->fileHandle);
     }
 
     EM_free_mem(ifhandle);
@@ -1403,7 +1399,7 @@ EM_RESULT EM_fops_file_move
 
     retval = EM_SUCCESS;
     ret = f_rename((TCHAR*)existing_file_name, (TCHAR*)new_file_name);
-    if (ret)
+    if (0 != ret)
     {
         retval = EM_FOPS_ERR_FILE_MOVE;
     }
@@ -1480,7 +1476,7 @@ EM_RESULT EM_vfops_set_path_backward
 
     /* search till the '\' from back */
 
-    while (i)
+    while (0 != i)
     {
         if (*sep == path[i])
         {
@@ -1531,7 +1527,8 @@ EM_RESULT EM_vfops_set_path_forward
     if ((EM_SUCCESS != retval) || !(file_attr & EM_FOPS_MASK_FOLDER))
     {
         /* its either not a valid object or its not a folder */
-        EM_vfops_set_path_backward (path);
+        /* MISRA C-2012 Rule 17.7 | Coverity CHECKED_RETURN */
+        (void) EM_vfops_set_path_backward (path);
     }
 
     return retval;
@@ -1547,31 +1544,33 @@ static void fops_list_directory (CHAR *path)
     FRESULT fatfsCode = FR_OK;
     FILINFO fileInfo;
     DIR dir;
-    uint8_t outputLabel = 0;
+    uint8_t outputLabel = 0U;
 
-#if _USE_LFN
-    static uint8_t fileNameBuffer[_MAX_LFN];
-    fileInfo.lfname = fileNameBuffer;
-    fileInfo.lfsize = _MAX_LFN;
-#endif /* _USE_LFN */
+#if FF_USE_LFN
+    /* static uint8_t fileNameBuffer[FF_MAX_LFN]; */
+    /* fileInfo.fname = fileNameBuffer; */
+    fileInfo.fsize = FF_MAX_LFN;
+#endif /* FF_USE_LFN */
 
     fatfsCode = f_opendir(&dir, path);
-    if (fatfsCode)
+    if (0 != fatfsCode)
     {
         fops_echo ("Failed to open directory for listing\n");
         return;
     }
-    while (1)
+
+    for(;;)
     {
         fatfsCode = f_readdir(&dir, &fileInfo);
-        if ((fatfsCode) || (!fileInfo.fname[0]))
+        if ((fatfsCode) || (!fileInfo.fname[0U]))
         {
             break;
         }
-        outputLabel = 1;
+        outputLabel = 1U;
         fops_display_file_info(&fileInfo);
     }
-    if (!outputLabel)
+
+    if (0U == outputLabel)
     {
         fops_echo("\r\n");
     }
@@ -1582,11 +1581,7 @@ static void fops_list_directory (CHAR *path)
 static void fops_display_file_info(FILINFO *fileInfo)
 {
     char *fileName;
-#if _USE_LFN
-    fileName = (fileInfo->lfname[0] ? fileInfo->lfname : fileInfo->fname;
-#else
     fileName = fileInfo->fname;
-#endif /* _USE_LFN */
     /* note: if this file/directory don't have one attribute, '_' replace the attribute letter ('R' - readonly, 'H' - hide, 'S' - system) */
     fops_echo("    %s - %c%c%c - %s - %dBytes - %d-%d-%d %d:%d:%d\r\n", (fileInfo->fattrib & AM_DIR) ? "dir" : "fil",
              (fileInfo->fattrib & AM_RDO) ? 'R' : '_',
@@ -1594,17 +1589,17 @@ static void fops_display_file_info(FILINFO *fileInfo)
              (fileInfo->fattrib & AM_SYS) ? 'S' : '_',
              fileName,
              (fileInfo->fsize),
-             (uint32_t)((fileInfo->fdate >> 9) + 1980) /* year */,
-             (uint32_t)((fileInfo->fdate >> 5) & 0x000Fu) /* month */,
+             (uint32_t)((fileInfo->fdate >> 9U) + 1980U) /* year */,
+             (uint32_t)((fileInfo->fdate >> 5U) & 0x000Fu) /* month */,
              (uint32_t)(fileInfo->fdate & 0x001Fu) /* day */,
-             (uint32_t)((fileInfo->ftime >> 11) & 0x0000001Fu) /* hour */,
-             (uint32_t)((fileInfo->ftime >> 5) & 0x0000003Fu) /* minute */,
+             (uint32_t)((fileInfo->ftime >> 11U) & 0x0000001Fu) /* hour */,
+             (uint32_t)((fileInfo->ftime >> 5U) & 0x0000003Fu) /* minute */,
              (uint32_t)(fileInfo->ftime & 0x0000001Fu) /* second */
              );
 }
 
 #if EM_FOPS_FILE_SYNC_IN_IDLE
-void fops_idle(osa_task_param_t arg)
+static void fops_idle(osa_task_param_t arg)
 {
     FRESULT ret;
     fops_file_handle_t *fhandle;
@@ -1614,12 +1609,12 @@ void fops_idle(osa_task_param_t arg)
     uint8_t sync;
     (void)arg;
 
-    while (1)
+    for(;;)
     {
         osaRet = OSA_SemaphoreWait(s_fopsSemaphoreHandle, EM_FOPS_FILE_OBJ_SYNC_TIMEOUT);
         (void)osaRet;
 
-        OSA_MutexLock(s_fopsFileObjListLock, osaWaitForever_c);
+        (void) OSA_MutexLock(s_fopsFileObjListLock, osaWaitForever_c);
         fhandle = s_fopsFileObjList.next;
         while ((NULL != fhandle) && (NULL != fhandle->fullMsgq))
         {
@@ -1627,7 +1622,7 @@ void fops_idle(osa_task_param_t arg)
 #if EM_FOPS_FILE_SYNC_TASK_LOG
             PRINTF("Sync(%d) S(%d)", fhandle->index, OSA_TimeGetMsec());
 #endif
-            while (KOSA_StatusSuccess == OSA_MsgQGet(fhandle->fullMsgq, &node, 0))
+            while (KOSA_StatusSuccess == OSA_MsgQGet(fhandle->fullMsgq, &node, 0U))
             {
                 UINT bytes_written = 0u;
                 ret = f_write((FIL *)&fhandle->fileHandle, node->buffer, node->bufferLength, (UINT *)&bytes_written);
@@ -1677,7 +1672,7 @@ void fops_idle(osa_task_param_t arg)
                 }
             }
 
-            if (sync > 0u)
+            if (0u < sync)
             {
                 ret = f_sync((FIL *)&fhandle->fileHandle);
                 (void)ret;
@@ -1687,7 +1682,7 @@ void fops_idle(osa_task_param_t arg)
             }
             fhandle = fhandle->next;
         }
-        OSA_MutexUnlock(s_fopsFileObjListLock);
+        (void) OSA_MutexUnlock(s_fopsFileObjListLock);
     }
 }
 #endif

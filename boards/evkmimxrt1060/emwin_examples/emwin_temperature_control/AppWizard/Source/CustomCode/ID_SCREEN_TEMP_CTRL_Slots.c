@@ -3,7 +3,7 @@
 *        Solutions for real time microcontroller applications        *
 **********************************************************************
 *                                                                    *
-*        (c) 1996 - 2020  SEGGER Microcontroller GmbH                *
+*        (c) 1996 - 2021  SEGGER Microcontroller GmbH                *
 *                                                                    *
 *        Internet: www.segger.com    Support:  support@segger.com    *
 *                                                                    *
@@ -17,6 +17,9 @@ Purpose     : AppWizard managed file, function content could be changed
 #include "Application.h"
 #include "../Generated/Resource.h"
 #include "../Generated/ID_SCREEN_TEMP_CTRL.h"
+
+/*** Begin of user code area ***/
+/*** End of user code area ***/
 
 /*********************************************************************
 *

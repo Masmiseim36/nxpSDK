@@ -547,7 +547,7 @@ usb_status_t USB_DeviceMscBulkIn(usb_device_handle deviceHandle,
                                  usb_device_endpoint_callback_message_struct_t *event,
                                  void *arg)
 {
-    usb_device_msc_csw_t *csw;
+    usb_device_msc_csw_t *csw          = NULL;
     usb_status_t error                 = kStatus_USB_Error;
     usb_device_msc_struct_t *mscHandle = (usb_device_msc_struct_t *)arg;
     /* endpoint callback length is USB_CANCELLED_TRANSFER_LENGTH (0xFFFFFFFFU) when transfer is canceled */
@@ -986,7 +986,7 @@ usb_status_t USB_DeviceMscDiskClassRequest(usb_device_handle handle,
                                            uint32_t *length,
                                            uint8_t **buffer)
 {
-    usb_status_t error = kStatus_USB_Error;
+    usb_status_t error = kStatus_USB_InvalidRequest;
 
     if ((setup->bmRequestType & USB_REQUEST_TYPE_RECIPIENT_MASK) != USB_REQUEST_TYPE_RECIPIENT_INTERFACE)
     {
@@ -996,19 +996,16 @@ usb_status_t USB_DeviceMscDiskClassRequest(usb_device_handle handle,
     switch (setup->bRequest)
     {
         case USB_DEVICE_MSC_GET_MAX_LUN:
-            if ((setup->wIndex == USB_MSC_DISK_INTERFACE_INDEX) && (!setup->wValue) && (setup->wLength == 0x0001) &&
+            if ((!setup->wValue) && (setup->wLength == 0x0001) &&
                 ((setup->bmRequestType & USB_REQUEST_TYPE_DIR_MASK) == USB_REQUEST_TYPE_DIR_IN))
             {
                 *buffer = (uint8_t *)&g_mscHandle->logicalUnitNumber;
-                *length = setup->wLength;
-            }
-            else
-            {
-                error = kStatus_USB_InvalidRequest;
+                *length = sizeof(g_mscHandle->logicalUnitNumber);
+                error   = kStatus_USB_Success;
             }
             break;
         case USB_DEVICE_MSC_BULK_ONLY_MASS_STORAGE_RESET:
-            if ((setup->wIndex == USB_MSC_DISK_INTERFACE_INDEX) && (!setup->wValue) && (!setup->wLength) &&
+            if ((!setup->wValue) && (!setup->wLength) &&
                 ((setup->bmRequestType & USB_REQUEST_TYPE_DIR_MASK) == USB_REQUEST_TYPE_DIR_OUT))
             {
                 /*Need to go to stall process, because reset recovery contains reset command and clare feature command*/
@@ -1018,10 +1015,7 @@ usb_status_t USB_DeviceMscDiskClassRequest(usb_device_handle handle,
                 g_mscHandle->inEndpointStallFlag  = 1;
                 g_mscHandle->performResetRecover  = 0;
                 g_mscHandle->performResetDoneFlag = 1;
-            }
-            else
-            {
-                error = kStatus_USB_InvalidRequest;
+                error                             = kStatus_USB_Success;
             }
             break;
         default:

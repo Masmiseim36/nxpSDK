@@ -13,9 +13,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 ==============================================================================*/
 
-/* File modified by NXP. Changes are described in file
-   /middleware/eiq/tensorflow-lite/readme.txt in section "Release notes" */
-
 #ifndef TENSORFLOW_CORE_PUBLIC_VERSION_H_
 #define TENSORFLOW_CORE_PUBLIC_VERSION_H_
 
@@ -24,7 +21,7 @@ limitations under the License.
 // Also update tensorflow/tensorflow.bzl and
 // tensorflow/tools/pip_package/setup.py
 #define TF_MAJOR_VERSION 2
-#define TF_MINOR_VERSION 3
+#define TF_MINOR_VERSION 4
 #define TF_PATCH_VERSION 1
 
 // TF_VERSION_SUFFIX is non-empty for pre-releases (e.g. "-alpha", "-alpha.1",
@@ -111,7 +108,7 @@ limitations under the License.
 
 #define TF_GRAPH_DEF_VERSION_MIN_PRODUCER 0
 #define TF_GRAPH_DEF_VERSION_MIN_CONSUMER 0
-#define TF_GRAPH_DEF_VERSION 440  // Updated: 2020/6/22
+#define TF_GRAPH_DEF_VERSION 561  // Updated: 2020/10/21
 
 // Checkpoint compatibility versions (the versions field in SavedSliceMeta).
 //
@@ -134,11 +131,9 @@ extern const char* tf_compiler_version();
 // The git commit designator when tensorflow was built
 // If no git repository, this will be "internal".
 extern const char* tf_git_version();
-#if !defined(__ICCARM__)
 // Value of the _GLIBCXX_USE_CXX11_ABI flag, or 0 if it's not set.
 extern int tf_cxx11_abi_flag();
 // Returns 1 if build is monolithic, or 0 otherwise.
 extern int tf_monolithic_build();
-#endif
 
 #endif  // TENSORFLOW_CORE_PUBLIC_VERSION_H_

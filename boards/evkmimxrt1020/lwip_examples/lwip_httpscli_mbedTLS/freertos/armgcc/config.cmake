@@ -2,6 +2,5 @@
 set(CONFIG_USE_middleware_mbedtls_rt_MIMXRT1021 true)
 set(CONFIG_USE_driver_enet_MIMXRT1021 true)
 set(CONFIG_USE_middleware_lwip_enet_ethernetif_MIMXRT1021 true)
-set(CONFIG_USE_middleware_mbedtls_port_ksdk_MIMXRT1021 true)
 set(CONFIG_USE_component_serial_manager_uart_MIMXRT1021 true)
 set(CONFIG_USE_driver_lpuart_MIMXRT1021 true)

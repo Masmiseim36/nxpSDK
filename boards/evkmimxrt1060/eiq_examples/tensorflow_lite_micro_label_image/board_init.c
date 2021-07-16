@@ -14,9 +14,14 @@
 void BOARD_Init()
 {
     BOARD_ConfigMPU();
+    BOARD_InitBootPins();
     BOARD_InitDEBUG_UARTPins();
     BOARD_InitSDRAMPins();
     BOARD_BootClockRUN();
-    BOARD_ResetDisplayMix();
     BOARD_InitDebugConsole();
+    BOARD_EarlyPrepareCamera();
+    BOARD_InitCSIPins();
+    BOARD_ResetDisplayMix();
+    BOARD_InitLCDPins();
+    BOARD_PrepareDisplayController();
 }

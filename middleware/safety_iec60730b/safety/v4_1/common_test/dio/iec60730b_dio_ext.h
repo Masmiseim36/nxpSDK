@@ -22,7 +22,7 @@
 #define IEC60730B_DIO_EXT_H_
 
 /*
- * List of devices and supported functions can be found in library user guide, 
+ * List of devices and supported functions can be found in library user guide,
  * section Core self test library - source code version.
  */
 
@@ -30,15 +30,15 @@
  * Macros
  ******************************************************************************/
 /* PORT register masks */
-#define PORT_PCR_PS_MSK     (0x1U)
-#define PORT_PCR_PE_MSK     (0x2U)
-#define PORT_PCR_MUX_7_MSK  (0x700U)
-#define PORT_PCR_MUX_1_MSK  (0x100U)
+#define PORT_PCR_PS_MSK    (0x1U)
+#define PORT_PCR_PE_MSK    (0x2U)
+#define PORT_PCR_MUX_7_MSK (0x700U)
+#define PORT_PCR_MUX_1_MSK (0x100U)
 
 /* IMX8M */
 /* PORT register masks */
-#define FS_IOMUXC_SW_PAD_CTL_PAD_PUE_MASK    (0x40U)
-#define FS_IOMUXC_SW_PAD_CTL_PAD_PE_MASK     (0x100U)
+#define FS_IOMUXC_SW_PAD_CTL_PAD_PUE_MASK (0x40U)
+#define FS_IOMUXC_SW_PAD_CTL_PAD_PE_MASK  (0x100U)
 
 /* Assembler skips following section */
 #ifndef __ASM__
@@ -49,9 +49,10 @@
 /*******************************************************************************
  *
  * @brief    Function tests whether the tested pin, that is configured as the input one, has the expected value.
- *           It is adapted to be used as a "get" function for the FS_DIO_ShortToSupplySet*() and the FS_DIO_ShortToAdjSet*() function.
- *           If the Adjacent pin is not involved in test, then tested pin parameters can be entered instead the adjacent pin parameters.
- *           Both tested pin and adjacent pin must be configured as GPIO before the call of the function!!!
+ *           It is adapted to be used as a "get" function for the FS_DIO_ShortToSupplySet*() and the
+ *FS_DIO_ShortToAdjSet*() function. If the Adjacent pin is not involved in test, then tested pin parameters can be
+ *entered instead the adjacent pin parameters. Both tested pin and adjacent pin must be configured as GPIO before the
+ *call of the function!!!
  *
  * @param    *pTestedPin    - pointer to tested pin struct.
  * @param    *pAdjPin       - pointer to adjacent pin struct.
@@ -62,14 +63,17 @@
  *           FS_FAIL_DIO
  *
  ******************************************************************************/
-FS_RESULT FS_DIO_InputExt(fs_dio_test_t *pTestedPin, fs_dio_test_t *pAdjPin, bool_t testedPinValue, bool_t backupEnable);
+FS_RESULT FS_DIO_InputExt(fs_dio_test_t *pTestedPin,
+                          fs_dio_test_t *pAdjPin,
+                          bool_t testedPinValue,
+                          bool_t backupEnable);
 
 /*******************************************************************************
  *
- * @brief    Function sets the tested pin as GPIO input with pull-up, or pull-down enable, to test the pin against the short to Vdd or GND.
- *           For getting the result of the test, call the "FS_DIO_InputExt*()" function with 
- *           the expected "testedPinValue" sets to 0 if for VDD and sets to 1 if for GND.
- *           Tested pin must be configured as GPIO before the call of the function!
+ * @brief    Function sets the tested pin as GPIO input with pull-up, or pull-down enable, to test the pin against the
+ *short to Vdd or GND. For getting the result of the test, call the "FS_DIO_InputExt*()" function with the expected
+ *"testedPinValue" sets to 0 if for VDD and sets to 1 if for GND. Tested pin must be configured as GPIO before the call
+ *of the function!
  *
  * @param    *pTestedPin    - pointer to tested pin struct.
  * @param    shortToVoltage - specify whether pin is tested for short against Gnd, or Vdd.
@@ -84,10 +88,10 @@ FS_RESULT FS_DIO_ShortToSupplySet(fs_dio_test_t *pTestedPin, bool_t shortToVolta
 
 /*******************************************************************************
  *
- * @brief    Function sets the tested pin as GPIO input with "testedPinValue". 
+ * @brief    Function sets the tested pin as GPIO input with "testedPinValue".
  *           And the adjacent pin as GPIO output with opposite output value as for the tested pin.
- *           For getting the result of the test, call the "FS_DIO_InputExt*()" function with the expected "testedPinValue".   
- *           Both tested pin and adjacent pin must be configured as GPIO before the call of the function!
+ *           For getting the result of the test, call the "FS_DIO_InputExt*()" function with the expected
+ *"testedPinValue". Both tested pin and adjacent pin must be configured as GPIO before the call of the function!
  *
  * @param    *pTestedPin    - pointer to tested pin struct.
  * @param    *pAdjPin       - pointer to adjacent pin struct.
@@ -98,14 +102,18 @@ FS_RESULT FS_DIO_ShortToSupplySet(fs_dio_test_t *pTestedPin, bool_t shortToVolta
  *           FS_FAIL_DIO
  *
  ******************************************************************************/
-FS_RESULT FS_DIO_ShortToAdjSet(fs_dio_test_t *pTestedPin, fs_dio_test_t *pAdjPin, bool_t testedPinValue, bool_t backupEnable);
+FS_RESULT FS_DIO_ShortToAdjSet(fs_dio_test_t *pTestedPin,
+                               fs_dio_test_t *pAdjPin,
+                               bool_t testedPinValue,
+                               bool_t backupEnable);
 
 /*******************************************************************************
  *
  * @brief    Function tests whether the tested pin, that is configured as the input one, has the expected value.
- *           It is adapted to be used as a "get" function for the FS_DIO_ShortToSupplySet*() and the FS_DIO_ShortToAdjSet*() function.
- *           If the Adjacent pin is not involved in test, then tested pin parameters can be entered instead the adjacent pin parameters.
- *           Both tested pin and adjacent pin must be configured as GPIO before the call of the function!!!
+ *           It is adapted to be used as a "get" function for the FS_DIO_ShortToSupplySet*() and the
+ *FS_DIO_ShortToAdjSet*() function. If the Adjacent pin is not involved in test, then tested pin parameters can be
+ *entered instead the adjacent pin parameters. Both tested pin and adjacent pin must be configured as GPIO before the
+ *call of the function!!!
  *
  * @param    *pTestedPin    - pointer to tested pin struct.
  * @param    *pAdjPin       - pointer to adjacent pin struct.
@@ -116,14 +124,17 @@ FS_RESULT FS_DIO_ShortToAdjSet(fs_dio_test_t *pTestedPin, fs_dio_test_t *pAdjPin
  *           FS_FAIL_DIO
  *
  ******************************************************************************/
-FS_RESULT FS_DIO_InputExt_IMXRT(fs_dio_test_imx_t *pTestedPin, fs_dio_test_imx_t *pAdjPin, bool_t testedPinValue, bool_t backupEnable);
+FS_RESULT FS_DIO_InputExt_IMXRT(fs_dio_test_imx_t *pTestedPin,
+                                fs_dio_test_imx_t *pAdjPin,
+                                bool_t testedPinValue,
+                                bool_t backupEnable);
 
 /*******************************************************************************
  *
- * @brief    Function sets the tested pin as GPIO input with pull-up, or pull-down enable, to test the pin against the short to Vdd or GND.
- *           For getting the result of the test, call the "FS_DIO_InputExt*()" function with 
- *           the expected "testedPinValue" sets to 0 if for VDD and sets to 1 if for GND.
- *           Tested pin must be configured as GPIO before the call of the function!
+ * @brief    Function sets the tested pin as GPIO input with pull-up, or pull-down enable, to test the pin against the
+ *short to Vdd or GND. For getting the result of the test, call the "FS_DIO_InputExt*()" function with the expected
+ *"testedPinValue" sets to 0 if for VDD and sets to 1 if for GND. Tested pin must be configured as GPIO before the call
+ *of the function!
  *
  * @param    *pTestedPin    - pointer to tested pin struct.
  * @param    shortToVoltage - specify whether pin is tested for short against Gnd, or Vdd.
@@ -138,10 +149,10 @@ FS_RESULT FS_DIO_ShortToSupplySet_IMXRT(fs_dio_test_imx_t *pTestedPin, bool_t sh
 
 /*******************************************************************************
  *
- * @brief    Function sets the tested pin as GPIO input with "testedPinValue". 
+ * @brief    Function sets the tested pin as GPIO input with "testedPinValue".
  *           And the adjacent pin as GPIO output with opposite output value as for the tested pin.
- *           For getting the result of the test, call the "FS_DIO_InputExt*()" function with the expected "testedPinValue".   
- *           Both tested pin and adjacent pin must be configured as GPIO before the call of the function!
+ *           For getting the result of the test, call the "FS_DIO_InputExt*()" function with the expected
+ *"testedPinValue". Both tested pin and adjacent pin must be configured as GPIO before the call of the function!
  *
  * @param    *pTestedPin    - pointer to tested pin struct.
  * @param    *pAdjPin       - pointer to adjacent pin struct.
@@ -152,15 +163,18 @@ FS_RESULT FS_DIO_ShortToSupplySet_IMXRT(fs_dio_test_imx_t *pTestedPin, bool_t sh
  *           FS_FAIL_DIO
  *
  ******************************************************************************/
-FS_RESULT FS_DIO_ShortToAdjSet_IMXRT(fs_dio_test_imx_t *pTestedPin, fs_dio_test_imx_t *pAdjPin, bool_t testedPinValue, bool_t backupEnable);
-
+FS_RESULT FS_DIO_ShortToAdjSet_IMXRT(fs_dio_test_imx_t *pTestedPin,
+                                     fs_dio_test_imx_t *pAdjPin,
+                                     bool_t testedPinValue,
+                                     bool_t backupEnable);
 
 /*******************************************************************************
  *
  * @brief    Function tests whether the tested pin, that is configured as the input one, has the expected value.
- *           It is adapted to be used as a "get" function for the FS_DIO_ShortToSupplySet*() and the FS_DIO_ShortToAdjSet*() function.
- *           If the Adjacent pin is not involved in test, then tested pin parameters can be entered instead the adjacent pin parameters.
- *           Both tested pin and adjacent pin must be configured as GPIO before the call of the function!!!
+ *           It is adapted to be used as a "get" function for the FS_DIO_ShortToSupplySet*() and the
+ *FS_DIO_ShortToAdjSet*() function. If the Adjacent pin is not involved in test, then tested pin parameters can be
+ *entered instead the adjacent pin parameters. Both tested pin and adjacent pin must be configured as GPIO before the
+ *call of the function!!!
  *
  * @param    *pTestedPin    - pointer to tested pin struct.
  * @param    *pAdjPin       - pointer to adjacent pin struct.
@@ -172,14 +186,17 @@ FS_RESULT FS_DIO_ShortToAdjSet_IMXRT(fs_dio_test_imx_t *pTestedPin, fs_dio_test_
  *
  ******************************************************************************/
 
-FS_RESULT FS_DIO_InputExt_IMX8M(fs_dio_test_imx_t *pTestedPin, fs_dio_test_imx_t *pAdjPin, bool_t testedPinValue, bool_t backupEnable);
+FS_RESULT FS_DIO_InputExt_IMX8M(fs_dio_test_imx_t *pTestedPin,
+                                fs_dio_test_imx_t *pAdjPin,
+                                bool_t testedPinValue,
+                                bool_t backupEnable);
 
 /*******************************************************************************
  *
- * @brief    Function sets the tested pin as GPIO input with pull-up, or pull-down enable, to test the pin against the short to Vdd or GND.
- *           For getting the result of the test, call the "FS_DIO_InputExt*()" function with 
- *           the expected "testedPinValue" sets to 0 if for VDD and sets to 1 if for GND.
- *           Tested pin must be configured as GPIO before the call of the function!
+ * @brief    Function sets the tested pin as GPIO input with pull-up, or pull-down enable, to test the pin against the
+ *short to Vdd or GND. For getting the result of the test, call the "FS_DIO_InputExt*()" function with the expected
+ *"testedPinValue" sets to 0 if for VDD and sets to 1 if for GND. Tested pin must be configured as GPIO before the call
+ *of the function!
  *
  * @param    *pTestedPin    - pointer to tested pin struct.
  * @param    shortToVoltage - specify whether pin is tested for short against Gnd, or Vdd.
@@ -195,10 +212,10 @@ FS_RESULT FS_DIO_ShortToSupplySet_IMX8M(fs_dio_test_imx_t *pTestedPin, bool_t sh
 
 /*******************************************************************************
  *
- * @brief    Function sets the tested pin as GPIO input with "testedPinValue". 
+ * @brief    Function sets the tested pin as GPIO input with "testedPinValue".
  *           And the adjacent pin as GPIO output with opposite output value as for the tested pin.
- *           For getting the result of the test, call the "FS_DIO_InputExt*()" function with the expected "testedPinValue".   
- *           Both tested pin and adjacent pin must be configured as GPIO before the call of the function!
+ *           For getting the result of the test, call the "FS_DIO_InputExt*()" function with the expected
+ *"testedPinValue". Both tested pin and adjacent pin must be configured as GPIO before the call of the function!
  *
  * @param    *pTestedPin    - pointer to tested pin struct.
  * @param    *pAdjPin       - pointer to adjacent pin struct.
@@ -210,14 +227,18 @@ FS_RESULT FS_DIO_ShortToSupplySet_IMX8M(fs_dio_test_imx_t *pTestedPin, bool_t sh
  *
  ******************************************************************************/
 
-FS_RESULT FS_DIO_ShortToAdjSet_IMX8M(fs_dio_test_imx_t *pTestedPin, fs_dio_test_imx_t *pAdjPin, bool_t testedPinValue, bool_t backupEnable);
+FS_RESULT FS_DIO_ShortToAdjSet_IMX8M(fs_dio_test_imx_t *pTestedPin,
+                                     fs_dio_test_imx_t *pAdjPin,
+                                     bool_t testedPinValue,
+                                     bool_t backupEnable);
 
 /*******************************************************************************
  *
  * @brief    Function tests whether the tested pin, that is configured as the input one, has the expected value.
- *           It is adapted to be used as a "get" function for the FS_DIO_ShortToSupplySet*() and the FS_DIO_ShortToAdjSet*() function.
- *           If the Adjacent pin is not involved in test, then tested pin parameters can be entered instead the adjacent pin parameters.
- *           Both tested pin and adjacent pin must be configured as GPIO before the call of the function!!!
+ *           It is adapted to be used as a "get" function for the FS_DIO_ShortToSupplySet*() and the
+ *FS_DIO_ShortToAdjSet*() function. If the Adjacent pin is not involved in test, then tested pin parameters can be
+ *entered instead the adjacent pin parameters. Both tested pin and adjacent pin must be configured as GPIO before the
+ *call of the function!!!
  *
  * @param    *pTestedPin    - pointer to tested pin struct.
  * @param    *pAdjPin       - pointer to adjacent pin struct.
@@ -228,14 +249,17 @@ FS_RESULT FS_DIO_ShortToAdjSet_IMX8M(fs_dio_test_imx_t *pTestedPin, fs_dio_test_
  *           FS_FAIL_DIO
  *
  ******************************************************************************/
-FS_RESULT FS_DIO_InputExt_LPC(fs_dio_test_lpc_t *pTestedPin, fs_dio_test_lpc_t *pAdjPin, bool_t testedPinValue, bool_t backupEnable);
+FS_RESULT FS_DIO_InputExt_LPC(fs_dio_test_lpc_t *pTestedPin,
+                              fs_dio_test_lpc_t *pAdjPin,
+                              bool_t testedPinValue,
+                              bool_t backupEnable);
 
 /*******************************************************************************
  *
- * @brief    Function sets the tested pin as GPIO input with pull-up, or pull-down enable, to test the pin against the short to Vdd or GND.
- *           For getting the result of the test, call the "FS_DIO_InputExt*()" function with 
- *           the expected "testedPinValue" sets to 0 if for VDD and sets to 1 if for GND.
- *           Tested pin must be configured as GPIO before the call of the function!
+ * @brief    Function sets the tested pin as GPIO input with pull-up, or pull-down enable, to test the pin against the
+ *short to Vdd or GND. For getting the result of the test, call the "FS_DIO_InputExt*()" function with the expected
+ *"testedPinValue" sets to 0 if for VDD and sets to 1 if for GND. Tested pin must be configured as GPIO before the call
+ *of the function!
  *
  * @param    *pTestedPin    - pointer to tested pin struct.
  * @param    shortToVoltage - specify whether pin is tested for short against Gnd, or Vdd.
@@ -250,10 +274,10 @@ FS_RESULT FS_DIO_ShortToSupplySet_LPC(fs_dio_test_lpc_t *pTestedPin, bool_t shor
 
 /*******************************************************************************
  *
- * @brief    Function sets the tested pin as GPIO input with "testedPinValue". 
+ * @brief    Function sets the tested pin as GPIO input with "testedPinValue".
  *           And the adjacent pin as GPIO output with opposite output value as for the tested pin.
- *           For getting the result of the test, call the "FS_DIO_InputExt*()" function with the expected "testedPinValue".   
- *           Both tested pin and adjacent pin must be configured as GPIO before the call of the function!
+ *           For getting the result of the test, call the "FS_DIO_InputExt*()" function with the expected
+ *"testedPinValue". Both tested pin and adjacent pin must be configured as GPIO before the call of the function!
  *
  * @param    *pTestedPin    - pointer to tested pin struct.
  * @param    *pAdjPin       - pointer to adjacent pin struct.
@@ -264,7 +288,10 @@ FS_RESULT FS_DIO_ShortToSupplySet_LPC(fs_dio_test_lpc_t *pTestedPin, bool_t shor
  *           FS_FAIL_DIO
  *
  ******************************************************************************/
-FS_RESULT FS_DIO_ShortToAdjSet_LPC(fs_dio_test_lpc_t *pTestedPin, fs_dio_test_lpc_t *pAdjPin, bool_t testedPinValue, bool_t backupEnable);
+FS_RESULT FS_DIO_ShortToAdjSet_LPC(fs_dio_test_lpc_t *pTestedPin,
+                                   fs_dio_test_lpc_t *pAdjPin,
+                                   bool_t testedPinValue,
+                                   bool_t backupEnable);
 
 #endif /* __ASM__ */
 #endif /* IEC60730B_DIO_EXT_H_ */

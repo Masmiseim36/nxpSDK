@@ -40,7 +40,7 @@ usb_device_endpoint_struct_t g_UsbDeviceHidMouseEndpoints[USB_HID_MOUSE_ENDPOINT
 
 /* HID mouse interface information */
 usb_device_interface_struct_t g_UsbDeviceHidMouseInterface[] = {{
-    0U, /* The alternate setting of the interface */
+    USB_HID_MOUSE_INTERFACE_ALTERNATE_0, /* The alternate setting of the interface */
     {
         USB_HID_MOUSE_ENDPOINT_COUNT, /* Endpoint count */
         g_UsbDeviceHidMouseEndpoints, /* Endpoints handle */
@@ -164,7 +164,7 @@ uint8_t g_UsbDeviceConfigurationDescriptor[] = {
     USB_DESCRIPTOR_LENGTH_INTERFACE, /* Size of this descriptor in bytes */
     USB_DESCRIPTOR_TYPE_INTERFACE,   /* INTERFACE Descriptor Type */
     USB_HID_MOUSE_INTERFACE_INDEX,   /* Number of this interface. */
-    0x00U,                           /* Value used to select this alternate setting
+    USB_HID_MOUSE_INTERFACE_ALTERNATE_0, /* Value used to select this alternate setting
                                         for the interface identified in the prior field */
     USB_HID_MOUSE_ENDPOINT_COUNT,    /* Number of endpoints used by this
                                           interface (excluding endpoint zero). */

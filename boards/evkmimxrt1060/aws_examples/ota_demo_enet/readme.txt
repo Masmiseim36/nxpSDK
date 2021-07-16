@@ -5,10 +5,10 @@ This example demonstrates how to perform OTA firmware update of the board using 
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.9
-- Keil MDK  5.33
-- GCC ARM Embedded  9.3.1
-- MCUXpresso  11.3.0
+- IAR embedded Workbench  9.10.2
+- Keil MDK  5.34
+- GCC ARM Embedded  10.2.1
+- MCUXpresso  11.4.0
 
 Hardware requirements
 =====================
@@ -24,6 +24,7 @@ No special settings are required.
 Prepare the Demo
 ================
 Prior launching the demo it is recommended to pre-build modified version of the application in .bin format to test the OTA update process.
+For the new version to get recognized it is required to use a higher version number in xAppFirmwareVersion structure. This may be achieved e.g. by modifying the initialization macros used.
 It is also required to have ota_bootloder programmed to the FLASH memory. Please see readme for the ota_bootloader for details.
 For comprehensive guide on seeting up AWS OTA, please see "AWS OTA User Guide.pdf" document.
 

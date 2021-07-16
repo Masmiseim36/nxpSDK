@@ -1,8 +1,7 @@
 /*
- * Copyright 2016 NXP
- * All rights reserved.
  *
- * SPDX-License-Identifier: BSD-3-Clause
+ * Copyright 2016 NXP
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 /**
@@ -29,8 +28,8 @@ extern "C" {
 
 /* ------------------------------ */
 
-
 #define MAX_APDU_BUF_LENGTH             (256 + 1024)  // This value has not been optimized for TGT_A71CH (256+64)
+
 #define MAX_EXT_APDU_BUF_LENGTH         (32769) // extended APDU Max supported Len is 0x7FFF + 2 bytes status code
 
 

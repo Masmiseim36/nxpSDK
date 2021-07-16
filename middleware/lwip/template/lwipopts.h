@@ -17,11 +17,11 @@
 #include "fsl_device_registers.h"
 
 #ifndef USE_RTOS
-#ifdef FSL_RTOS_FREE_RTOS
+#ifdef SDK_OS_FREE_RTOS
 #define USE_RTOS 1
 #else
 #define USE_RTOS 0
-#endif /* FSL_RTOS_FREE_RTOS */
+#endif /* SDK_OS_FREE_RTOS */
 #endif /* USE_RTOS */
 
 #if USE_RTOS
@@ -155,7 +155,7 @@ void sys_check_core_locking(void);
 /* ---------- Pbuf options ---------- */
 /* PBUF_POOL_SIZE: the number of buffers in the pbuf pool. */
 #ifndef PBUF_POOL_SIZE
-#define PBUF_POOL_SIZE          9
+#define PBUF_POOL_SIZE          5
 #endif
 
 /* PBUF_POOL_BUFSIZE: the size of each pbuf in the pbuf pool. */

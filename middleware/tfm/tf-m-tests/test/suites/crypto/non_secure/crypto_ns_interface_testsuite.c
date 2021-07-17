@@ -5,7 +5,7 @@
  *
  */
 
-#include "test/framework/test_framework_helpers.h"
+#include "test_framework_helpers.h"
 #include "tfm_api.h"
 #include "../crypto_tests_common.h"
 
@@ -26,7 +26,9 @@ static void tfm_crypto_test_6008(struct test_result_t *ret);
 static void tfm_crypto_test_6009(struct test_result_t *ret);
 #endif /* TFM_CRYPTO_TEST_ALG_CFB */
 static void tfm_crypto_test_6010(struct test_result_t *ret);
+#ifdef TFM_CRYPTO_TEST_ALG_SHA_224 //NXP
 static void tfm_crypto_test_6011(struct test_result_t *ret);
+#endif
 static void tfm_crypto_test_6012(struct test_result_t *ret);
 #ifdef TFM_CRYPTO_TEST_ALG_SHA_512
 static void tfm_crypto_test_6013(struct test_result_t *ret);
@@ -38,7 +40,9 @@ static void tfm_crypto_test_6020(struct test_result_t *ret);
 static void tfm_crypto_test_6021(struct test_result_t *ret);
 static void tfm_crypto_test_6022(struct test_result_t *ret);
 #endif /* TFM_CRYPTO_TEST_ALG_SHA_512 */
+#ifdef TFM_CRYPTO_TEST_ALG_SHA_224 //NXP
 static void tfm_crypto_test_6024(struct test_result_t *ret);
+#endif
 #ifdef TFM_CRYPTO_TEST_ALG_CCM
 static void tfm_crypto_test_6030(struct test_result_t *ret);
 #endif /* TFM_CRYPTO_TEST_ALG_CCM */
@@ -82,8 +86,10 @@ static struct test_t crypto_tests[] = {
 #endif /* TFM_CRYPTO_TEST_ALG_CFB */
     {&tfm_crypto_test_6010, "TFM_CRYPTO_TEST_6010",
      "Non Secure Unsupported Hash (SHA-1) interface", {TEST_PASSED} },
+#ifdef TFM_CRYPTO_TEST_ALG_SHA_224 //NXP
     {&tfm_crypto_test_6011, "TFM_CRYPTO_TEST_6011",
      "Non Secure Hash (SHA-224) interface", {TEST_PASSED} },
+#endif
     {&tfm_crypto_test_6012, "TFM_CRYPTO_TEST_6012",
      "Non Secure Hash (SHA-256) interface", {TEST_PASSED} },
 #ifdef TFM_CRYPTO_TEST_ALG_SHA_512
@@ -102,8 +108,10 @@ static struct test_t crypto_tests[] = {
     {&tfm_crypto_test_6022, "TFM_CRYPTO_TEST_6022",
      "Non Secure HMAC (SHA-512) interface", {TEST_PASSED} },
 #endif /* TFM_CRYPTO_TEST_ALG_SHA_512 */
+#ifdef TFM_CRYPTO_TEST_ALG_SHA_224 //NXP
     {&tfm_crypto_test_6024, "TFM_CRYPTO_TEST_6024",
      "Non Secure HMAC with long key (SHA-224) interface", {TEST_PASSED} },
+#endif
 #ifdef TFM_CRYPTO_TEST_ALG_CCM
     {&tfm_crypto_test_6030, "TFM_CRYPTO_TEST_6030",
      "Non Secure AEAD (AES-128-CCM) interface", {TEST_PASSED} },
@@ -200,10 +208,12 @@ static void tfm_crypto_test_6010(struct test_result_t *ret)
     psa_unsupported_hash_test(PSA_ALG_SHA_1, ret);
 }
 
+#ifdef TFM_CRYPTO_TEST_ALG_SHA_224 //NXP
 static void tfm_crypto_test_6011(struct test_result_t *ret)
 {
     psa_hash_test(PSA_ALG_SHA_224, ret);
 }
+#endif
 
 static void tfm_crypto_test_6012(struct test_result_t *ret)
 {
@@ -245,10 +255,12 @@ static void tfm_crypto_test_6022(struct test_result_t *ret)
 }
 #endif /* TFM_CRYPTO_TEST_ALG_SHA_512 */
 
+#ifdef TFM_CRYPTO_TEST_ALG_SHA_224 //NXP
 static void tfm_crypto_test_6024(struct test_result_t *ret)
 {
     psa_mac_test(PSA_ALG_HMAC(PSA_ALG_SHA_224), 1, ret);
 }
+#endif
 
 #ifdef TFM_CRYPTO_TEST_ALG_CCM
 static void tfm_crypto_test_6030(struct test_result_t *ret)

@@ -10,7 +10,7 @@
 #include "tfm_veneers.h"
 #include "tfm_secure_api.h"
 #include "tfm/tfm_spm_services.h"
-#include "test/test_services/tfm_core_test/core_test_defs.h"
+#include "core_test_defs.h"
 #include "psa/service.h"
 #include "psa_manifest/pid.h"
 #include "psa_manifest/tfm_irq_test_service_1.h"
@@ -384,7 +384,9 @@ static void spm_irq_test_1_execute_test_scenario_ipc(psa_signal_t signal)
 
 int32_t tfm_irq_test_1_init(void)
 {
+#ifndef TFM_PSA_API
     tfm_enable_irq(SPM_CORE_IRQ_TEST_1_SIGNAL_TIMER_0_IRQ);
+#endif
 #ifdef TFM_PSA_API
     psa_signal_t signals = 0;
 

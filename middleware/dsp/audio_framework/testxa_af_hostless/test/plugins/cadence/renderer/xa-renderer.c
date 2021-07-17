@@ -1,15 +1,17 @@
-/*******************************************************************************
-* Copyright (c) 2015-2020 Cadence Design Systems, Inc.
-* 
+/*
+* Copyright (c) 2015-2021 Cadence Design Systems Inc.
+*
 * Permission is hereby granted, free of charge, to any person obtaining
 * a copy of this software and associated documentation files (the
-* "Software"), to use this Software with Cadence processor cores only and 
-* not with any other processors and platforms, subject to
+* "Software"), to deal in the Software without restriction, including
+* without limitation the rights to use, copy, modify, merge, publish,
+* distribute, sublicense, and/or sell copies of the Software, and to
+* permit persons to whom the Software is furnished to do so, subject to
 * the following conditions:
-* 
+*
 * The above copyright notice and this permission notice shall be included
 * in all copies or substantial portions of the Software.
-* 
+*
 * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
 * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
@@ -17,8 +19,7 @@
 * CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
 * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-******************************************************************************/
+*/
 /*******************************************************************************
  * xa-renderer.c
  *
@@ -60,21 +61,6 @@
 #include "xaf-clk-test.h"
 extern clk_t renderer_cycles;
 #endif
-
-/*******************************************************************************
- * Tracing configuration
- ******************************************************************************/
-
-TRACE_TAG(INIT, 1);
-TRACE_TAG(WARNING, 1);
-
-TRACE_TAG(OUTPUT, 1);
-TRACE_TAG(INPUT, 1);
-
-TRACE_TAG(FIFO, 1);
-TRACE_TAG(ISR, 1);
-TRACE_TAG(UNDERRUN, 1);
-
 
 /*******************************************************************************
  * Codec parameters
@@ -157,7 +143,7 @@ typedef struct XARenderer
     UWORD32                     pcm_width;
     
     /* ...framesize in bytes per channel */
-    UWORD32                     frame_size;     
+    UWORD32                     frame_size_bytes;     
 
     /* ...current sampling rate */
     UWORD32                     rate;
@@ -185,8 +171,13 @@ typedef struct XARenderer
     /* ...execution complete flag */
     UWORD32     exec_done;
 
+    /* ...framesize in samples per channel */
+    UWORD32     frame_size;
+
 }   XARenderer;
 
+
+#define MAX_UWORD32 ((UWORD64)0xFFFFFFFF)
 /*******************************************************************************
  * Operating flags
  ******************************************************************************/
@@ -218,7 +209,7 @@ static void xa_fw_handler(void *arg)
 
     //d->consumed = d->submited_inbytes;
     //d->fifo_avail = d->fifo_avail + d->submited_inbytes;
-    d->fifo_avail = d->fifo_avail + (d->frame_size * d->channels);
+    d->fifo_avail = d->fifo_avail + (d->frame_size_bytes * d->channels);
 
     if((d->fifo_avail)>HW_FIFO_LENGTH)
        {/*under run case*/
@@ -248,6 +239,7 @@ static inline void xa_fw_renderer_close(XARenderer *d)
 {
     fclose(d->fw);
     __xf_timer_stop(&rend_timer);
+    __xf_timer_destroy(&rend_timer);
 }
 
 /* ...submit data (in bytes) into internal renderer ring-buffer */
@@ -260,7 +252,7 @@ static inline UWORD32 xa_fw_renderer_submit(XARenderer *d, void *b, UWORD32 byte
     UWORD32 payload;
 
     fp      = d ->fw;
-    payload = d->frame_size*d->channels;
+    payload = d->frame_size_bytes*d->channels;
     avail   = d->fifo_avail;
     k       = 0;
     zfill   = 0;    
@@ -295,7 +287,7 @@ static inline UWORD32 xa_fw_renderer_submit(XARenderer *d, void *b, UWORD32 byte
             //if (avail <= (HW_FIFO_LENGTH - (2 * payload)))
             if (avail == 0)
             {
-                __xf_timer_start(&rend_timer,__xf_timer_ratio_to_period((d->frame_size / d->sample_size ),
+                __xf_timer_start(&rend_timer,__xf_timer_ratio_to_period((d->frame_size_bytes / d->sample_size ),
                             d->rate));
                 d->state ^= XA_RENDERER_FLAG_IDLE | XA_RENDERER_FLAG_RUNNING;
 
@@ -319,6 +311,7 @@ static inline UWORD32 xa_fw_renderer_submit(XARenderer *d, void *b, UWORD32 byte
         {
             /* ... stop interrupts as soon as exec is done */
             __xf_timer_stop(&rend_timer);
+            d->state ^= XA_RENDERER_FLAG_RUNNING | XA_RENDERER_FLAG_IDLE;
         
             TRACE(OUTPUT, _b("exec done, timer stopped"));
         }
@@ -354,9 +347,9 @@ static XA_ERRORCODE xa_fw_renderer_init (XARenderer *d)
      return XA_FATAL_ERROR;
    }
    /*initially FIFO will be empty so fifo_avail is 2x framesize bytes for ping and pong */
-   d->fifo_avail = d->frame_size * d->channels * 2;
+   d->fifo_avail = d->frame_size_bytes * d->channels * 2;
 
-   /* ...make sure that the frame_size is within the FIFO length */
+   /* ...make sure that the frame_size_bytes is within the FIFO length */
    XF_CHK_ERR(d->fifo_avail <= HW_FIFO_LENGTH, XA_RENDERER_CONFIG_NONFATAL_RANGE);
 
    /* ...initialize FIFO params, zero fill FIFO and init pointers to start of FIFO */
@@ -386,7 +379,8 @@ static XA_ERRORCODE xa_renderer_init(XARenderer *d, WORD32 i_idx, pVOID pv_value
         d->pcm_width = 16;
         d->rate = 48000;
         d->sample_size = ( d->pcm_width >> 3 ); /* convert bits to bytes */ 
-        d->frame_size = MAX_FRAME_SIZE_IN_BYTES_DEFAULT; 
+        d->frame_size_bytes = MAX_FRAME_SIZE_IN_BYTES_DEFAULT; 
+        d->frame_size = MAX_FRAME_SIZE_IN_BYTES_DEFAULT/d->sample_size; 
         
         /* ...and mark renderer has been created */
         d->state = XA_RENDERER_FLAG_PREINIT_DONE;
@@ -438,7 +432,7 @@ static inline XA_ERRORCODE xa_hw_renderer_control(XARenderer *d, UWORD32 state)
         /* ...process buffer start-up, on trigger from application */
         if ((d->state & XA_RENDERER_FLAG_IDLE))
         {
-            UWORD32 payload = d->frame_size * d->channels;
+            UWORD32 payload = d->frame_size_bytes * d->channels;
 
             /* ...start the FIFO from the pong buffer, hence adjust the read pointer and make it follow write pointer */
             d->pfifo_r = d->pfifo_w;
@@ -450,7 +444,7 @@ static inline XA_ERRORCODE xa_hw_renderer_control(XARenderer *d, UWORD32 state)
             d->fifo_avail = 0;
 
             /* ...start-up transmission with zero filled FIFO */
-            __xf_timer_start(&rend_timer, __xf_timer_ratio_to_period((d->frame_size / d->sample_size ), d->rate));
+            __xf_timer_start(&rend_timer, __xf_timer_ratio_to_period((d->frame_size_bytes / d->sample_size ), d->rate));
 
             /* ...change state to Running */
             d->state ^= (XA_RENDERER_FLAG_IDLE | XA_RENDERER_FLAG_RUNNING);
@@ -515,6 +509,9 @@ static XA_ERRORCODE xa_renderer_set_config_param(XARenderer *d, WORD32 i_idx, pV
         /* ...apply setting */
         d->pcm_width = i_value;
         d->sample_size = ( d->pcm_width >> 3 ); /* convert bits to bytes */ 
+
+        /* ...update internal variable frame_size_bytes */
+        d->frame_size_bytes = d->frame_size * d->sample_size;
         return XA_NO_ERROR;
 
     case XA_RENDERER_CONFIG_PARAM_CHANNELS:
@@ -547,11 +544,11 @@ static XA_ERRORCODE xa_renderer_set_config_param(XARenderer *d, WORD32 i_idx, pV
         /* ...check it is valid framesize or not */
         XF_CHK_ERR( ( ( *(WORD32 *)pv_value >= MIN_FRAME_SIZE_IN_BYTES) && ( *(WORD32 *)pv_value <= MAX_FRAME_SIZE_IN_BYTES_DEFAULT ) ), XA_RENDERER_CONFIG_NONFATAL_RANGE);
         
-        /* ...check frame_size is multiple of 4 or not */
+        /* ...check frame_size_bytes is multiple of 4 or not */
         XF_CHK_ERR( ( (*(WORD32 *)pv_value & 0x3) == 0 ), XA_RENDERER_CONFIG_NONFATAL_RANGE);    
         
         /* ...get requested frame size */
-        d->frame_size = (UWORD32) *(WORD32 *)pv_value;        
+        d->frame_size_bytes = (UWORD32) *(WORD32 *)pv_value;        
 
         return XA_NO_ERROR;
 
@@ -571,6 +568,29 @@ static XA_ERRORCODE xa_renderer_set_config_param(XARenderer *d, WORD32 i_idx, pV
         /* ...pass to state control hook */
         return xa_hw_renderer_control(d, i_value);
 
+    case XA_RENDERER_CONFIG_PARAM_FRAME_SIZE_IN_SAMPLES:
+        {
+            WORD32 frame_size_bytes = *(WORD32 *)pv_value * d->sample_size;
+
+            /* ...command is valid only in configuration state */
+            XF_CHK_ERR((d->state & XA_RENDERER_FLAG_POSTINIT_DONE) == 0, XA_RENDERER_CONFIG_FATAL_STATE);
+            
+            /* ...check it is valid framesize or not */
+            XF_CHK_ERR( ( ( frame_size_bytes >= MIN_FRAME_SIZE_IN_BYTES) && ( frame_size_bytes <= MAX_FRAME_SIZE_IN_BYTES_DEFAULT ) ), XA_RENDERER_CONFIG_NONFATAL_RANGE);
+            
+            /* ...check frame_size_bytes is multiple of 4 or not */
+            XF_CHK_ERR( ( (frame_size_bytes & 0x3) == 0 ), XA_RENDERER_CONFIG_NONFATAL_RANGE);    
+            
+            /* ...get requested frame size */
+            d->frame_size  = (UWORD32) *(WORD32 *)pv_value;
+
+            /* ...update internal variable frame_size_bytes */
+            d->frame_size_bytes = d->frame_size * d->sample_size;
+            
+            TRACE(INIT, _b("frame_size:%d"), d->frame_size);
+            
+            return XA_NO_ERROR;
+        }
     default:
         /* ...unrecognized parameter */
         return XF_CHK_ERR(0, XA_API_FATAL_INVALID_CMD_TYPE);
@@ -615,9 +635,9 @@ static XA_ERRORCODE xa_renderer_get_config_param(XARenderer *d, WORD32 i_idx, pV
         *(WORD32 *)pv_value = d->rate;
         return XA_NO_ERROR;
 
-    case XA_RENDERER_CONFIG_PARAM_FRAME_SIZE:
+    case XA_RENDERER_CONFIG_PARAM_FRAME_SIZE: /* ...deprecated */
         /* ...return current audio frame length (in bytes) */
-        *(WORD32 *)pv_value = d->frame_size;
+        *(WORD32 *)pv_value = d->frame_size_bytes;
         return XA_NO_ERROR;
 
     case XA_RENDERER_CONFIG_PARAM_STATE:
@@ -626,7 +646,12 @@ static XA_ERRORCODE xa_renderer_get_config_param(XARenderer *d, WORD32 i_idx, pV
         return XA_NO_ERROR;
     case XA_RENDERER_CONFIG_PARAM_BYTES_PRODUCED:
         /* ...return current execution state */
-        *(UWORD64 *)pv_value = d->cumulative_bytes_produced;
+        *(UWORD32 *)pv_value = (UWORD32)(d->cumulative_bytes_produced > MAX_UWORD32 ? MAX_UWORD32 : d->cumulative_bytes_produced) ;
+        return XA_NO_ERROR;
+
+    case XA_RENDERER_CONFIG_PARAM_FRAME_SIZE_IN_SAMPLES:
+        /* ...return current audio frame length (in samples) */
+        *(WORD32 *)pv_value = d->frame_size;
         return XA_NO_ERROR;
 
     default:
@@ -809,12 +834,12 @@ static XA_ERRORCODE xa_renderer_get_mem_info_size(XARenderer *d, WORD32 i_idx, p
     {
     case 0:
         /* ...input buffer specification; accept exact audio frame */
-        i_value = d->frame_size * d->channels;
+        i_value = d->frame_size_bytes * d->channels;
         break;
 
     case 1:
         /* ...output buffer specification; accept exact audio frame */
-        i_value = d->frame_size * d->channels;
+        i_value = d->frame_size_bytes * d->channels;
         break;
 
     default:

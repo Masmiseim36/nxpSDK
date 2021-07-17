@@ -53,6 +53,12 @@
 #include "hihat_trim.pcm.h"
 #include "hihat_trim.sbc.h"
 #endif
+/* Enable VIT models*/
+#if (XA_VIT_PRE_PROC == 1)
+#include "PL_platformTypes_HIFI4_FUSIONF1.h"
+#include "VIT_Model_en.h"
+#include "VIT_Model_cn.h"
+#endif
 /*${header:end}*/
 
 /*******************************************************************************
@@ -199,21 +205,21 @@ SHELL_COMMAND_DEFINE(src, "\r\n\"src\" Perform sample rate conversion on DSP\r\n
 #endif
 #if XA_PCM_GAIN
 SHELL_COMMAND_DEFINE(gain, "\r\n\"gain\": Perform PCM gain adjustment on DSP\r\n", shellGAIN, 0);
-SHELL_COMMAND_DEFINE(record_dmic,
-                     "\r\n\"record_dmic\": Record DMIC audio"
+SHELL_COMMAND_DEFINE(
+    record_dmic,
+    "\r\n\"record_dmic\": Record DMIC audio"
 #if (XA_VIT_PRE_PROC == 1)
-                     " , perform voice recognition (VIT)"
+    " , perform voice recognition (VIT)"
 #endif
-                     " and playback on WM8904 codec\r\n"
+    " and playback on WM8904 codec\r\n"
 #if (XA_VIT_PRE_PROC == 1)
-                     " For voice recognition say supported WakeWord (Hey NXP) and in 3s frame spported command.\r\n"
-                     " List of supported commands:\r\n"
-                     " MUTE, NEXT, SKIP, PAIR_DEVICE, PAUSE, STOP, POWER_OFF, POWER_ON, PLAY_MUSIC\r\n"
-                     " PLAY_GAME, WATCH_CARTOON, WATCH_MOVIE\r\n"
+    " USAGE: record_dmic [en|cn]\r\n"
+    " For voice recognition say supported WakeWord and in 3s frame supported command.\r\n"
+    " If selected model contains strings, then WakeWord and list of commands will be printed in console.\r\n"
 #endif
-                     " NOTE: this command does not return to the shell\r\n",
-                     shellRecDMIC,
-                     0);
+    " NOTE: this command does not return to the shell\r\n",
+    shellRecDMIC,
+    1);
 #endif
 #if XA_CLIENT_PROXY
 SHELL_COMMAND_DEFINE(eap,
@@ -227,6 +233,9 @@ SHELL_COMMAND_DEFINE(eap,
                      "    5:	Loudness maximiser  \r\n"
                      "    6:	3D Concert sound  \r\n"
                      "    7:	Custom\r\n"
+                     "    8:	Tone Generator\r\n"
+                     "    9:	Crossover 2 way speaker\r\n"
+                     "   10:	Crossover for subwoofer\r\n"
                      "    +:	Volume up\r\n"
                      "    -:	Volume down\r\n"
                      "    l:	Balance left\r\n"
@@ -803,9 +812,6 @@ static shell_status_t shellGAIN(shell_handle_t shellHandle, int32_t argc, char *
 
 static shell_status_t shellRecDMIC(shell_handle_t shellHandle, int32_t argc, char **argv)
 {
-#if (XA_VIT_PRE_PROC == 1)
-    PRINTF("\r\nTo see VIT functionality say wakeword and command.\r\n");
-#endif
     srtm_message msg = {0};
     initMessage(&msg);
 
@@ -820,9 +826,29 @@ static shell_status_t shellRecDMIC(shell_handle_t shellHandle, int32_t argc, cha
     /* Param 6 return parameter, recording status: 0 un-initialized 1 recording 2 paused */
     /* Param 7 return parameter, error code*/
 
+#ifdef CPU_MIMXRT685SFVKB_cm33
+    msg.param[0] = 2;
+#else
     msg.param[0] = 1;
+#endif
     msg.param[1] = 16000;
     msg.param[2] = 16;
+
+#if (XA_VIT_PRE_PROC == 1)
+    if (strcmp(argv[1], "cn") == 0)
+    {
+        msg.param[3] = (uint32_t)&VIT_Model_cn;
+        msg.param[4] = (uint32_t)sizeof(VIT_Model_cn);
+        PRINTF("Setting VIT language to cn\r\n");
+    }
+    else
+    {
+        msg.param[3] = (uint32_t)&VIT_Model_en;
+        msg.param[4] = (uint32_t)sizeof(VIT_Model_en);
+        PRINTF("Setting VIT language to en\r\n");
+    }
+#endif
+
     g_handleShellMessageCallback(&msg, g_handleShellMessageCallbackData);
     return kStatus_SHELL_Success;
 }
@@ -839,7 +865,7 @@ static shell_status_t shellEAPeffect(shell_handle_t shellHandle, int32_t argc, c
     msg.head.command  = SRTM_Command_FilterCfg;
     /* Param 0 Number of EAP config*/
 
-    if (effectNum > 0 && effectNum < 8)
+    if (effectNum > 0 && effectNum < 11)
     {
         msg.param[0] = effectNum;
         g_handleShellMessageCallback(&msg, g_handleShellMessageCallbackData);
@@ -847,25 +873,25 @@ static shell_status_t shellEAPeffect(shell_handle_t shellHandle, int32_t argc, c
     }
     else if (strcmp(argv[1], "+") == 0)
     {
-        msg.param[0] = 8;
+        msg.param[0] = 11;
         g_handleShellMessageCallback(&msg, g_handleShellMessageCallbackData);
         return kStatus_SHELL_Success;
     }
     else if (strcmp(argv[1], "-") == 0)
     {
-        msg.param[0] = 9;
+        msg.param[0] = 12;
         g_handleShellMessageCallback(&msg, g_handleShellMessageCallbackData);
         return kStatus_SHELL_Success;
     }
     else if (strcmp(argv[1], "l") == 0)
     {
-        msg.param[0] = 10;
+        msg.param[0] = 13;
         g_handleShellMessageCallback(&msg, g_handleShellMessageCallbackData);
         return kStatus_SHELL_Success;
     }
     else if (strcmp(argv[1], "r") == 0)
     {
-        msg.param[0] = 11;
+        msg.param[0] = 14;
         g_handleShellMessageCallback(&msg, g_handleShellMessageCallbackData);
         return kStatus_SHELL_Success;
     }
@@ -929,6 +955,8 @@ void shellCmd(handleShellMessageCallback_t *handleShellMessageCallback, void *ar
 static void handleDSPMessageInner(app_handle_t *app, srtm_message *msg, bool *notify_shell)
 {
     *notify_shell = true;
+
+    char string_buff[SRTM_CMD_PARAMS_MAX];
 
     if (msg->head.type == SRTM_MessageTypeResponse)
     {
@@ -1199,6 +1227,7 @@ static void handleDSPMessageInner(app_handle_t *app, srtm_message *msg, bool *no
                     if (msg->error != SRTM_Status_Success)
                     {
                         PRINTF("DSP Gain Control Process failed! return error = %d\r\n", msg->error);
+                        break;
                     }
                     PRINTF("PCM Gain Control read %d bytes and write %d bytes \r\n", msg->param[8], msg->param[9]);
                     break;
@@ -1207,8 +1236,10 @@ static void handleDSPMessageInner(app_handle_t *app, srtm_message *msg, bool *no
                     if (msg->error != SRTM_Status_Success)
                     {
                         PRINTF("DSP Recording start failed! return error = %d\r\n", msg->error);
+                        break;
                     }
-                    *notify_shell = false;
+                    PRINTF("DSP DMIC Recording started\r\n");
+                    vTaskSuspend(app->shell_task_handle);
                     break;
 
                 case SRTM_Command_REC_I2S:
@@ -1218,59 +1249,18 @@ static void handleDSPMessageInner(app_handle_t *app, srtm_message *msg, bool *no
                     }
                     break;
 
-                case SRTM_Command_WWDetected:
-                    PRINTF("\nWakeWord detected!\r\n");
-                    *notify_shell = false;
+                case SRTM_Command_VIT:
+                    PRINTF("DSP DMIC Recording started\r\n");
+                    PRINTF("To see VIT functionality say wakeword and command\r\n");
+                    vTaskSuspend(app->shell_task_handle);
                     break;
 
-                case SRTM_Command_VIT_OUT:
-                    PRINTF("Command number %d: ", msg->param[0]);
-                    switch (msg->param[0])
+                case SRTM_Print_String:
+                    for (int i = 0; i < SRTM_CMD_PARAMS_MAX; i++)
                     {
-                        case 0:
-                            PRINTF("UNKNOWN\r\n");
-                            break;
-                        case 1:
-                            PRINTF("MUTE\r\n");
-                            break;
-                        case 2:
-                            PRINTF("NEXT\r\n");
-                            break;
-                        case 3:
-                            PRINTF("SKIP\r\n");
-                            break;
-                        case 4:
-                            PRINTF("PAIR_DEVICE\r\n");
-                            break;
-                        case 5:
-                            PRINTF("PAUSE\r\n");
-                            break;
-                        case 6:
-                            PRINTF("STOP\r\n");
-                            break;
-                        case 7:
-                            PRINTF("POWER_OFF\r\n");
-                            break;
-                        case 8:
-                            PRINTF("POWER_ON\r\n");
-                            break;
-                        case 9:
-                            PRINTF("PLAY_MUSIC\r\n");
-                            break;
-                        case 10:
-                            PRINTF("PLAY_GAME\r\n");
-                            break;
-                        case 11:
-                            PRINTF("WATCH_CARTOON\r\n");
-                            break;
-                        case 12:
-                            PRINTF("WATCH_MOVIE\r\n");
-                            break;
-                        default:
-                            PRINTF("Err, unknown command number\r\n");
-                            break;
+                        string_buff[i] = (char)msg->param[i];
                     }
-                    *notify_shell = false;
+                    PRINTF("%s", string_buff);
                     break;
 
                 case SRTM_Command_FileStart:

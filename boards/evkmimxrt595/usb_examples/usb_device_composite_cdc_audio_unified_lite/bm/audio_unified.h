@@ -11,61 +11,18 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-
-/* the threshold transfer count that can tolerance by frame */
-#define USB_AUDIO_PLAY_BUFFER_TOLERANCE_THRESHOLD (4U)
-
 /*audio data buffer depth*/
-#define AUDIO_RECORDER_DATA_WHOLE_BUFFER_LENGTH (32)
-#define AUDIO_SPEAKER_DATA_WHOLE_BUFFER_LENGTH  (32)
-#define AUDIO_BUFFER_UPPER_LIMIT(x)             (((x)*5) / 8)
-#define AUDIO_BUFFER_LOWER_LIMIT(x)             (((x)*3) / 8)
+#define AUDIO_BUFFER_UPPER_LIMIT(x) (((x)*5) / 8)
+#define AUDIO_BUFFER_LOWER_LIMIT(x) (((x)*3) / 8)
 
-/* For ip3511hs in high speed mode, microframe can not be obtained and only for frame, the used feedback solution
- * requires us to have to use larger latency and buffer size to avoid buffer overflow or underflow. Sync mode can use
- * low latency (<1ms) even if on ip3511hs */
-#if (USB_DEVICE_CONFIG_AUDIO_CLASS_2_0)
-#if (defined(USB_DEVICE_CONFIG_LPCIP3511HS) && (USB_DEVICE_CONFIG_LPCIP3511HS > 0U))
-#if defined(USB_DEVICE_AUDIO_USE_SYNC_MODE) && (USB_DEVICE_AUDIO_USE_SYNC_MODE > 0U)
-#define AUDIO_CLASS_2_0_HS_LOW_LATENCY_TRANSFER_COUNT \
-    (0x06U) /* 6 means 16 mico frames (6*125us), make sure the latency is smaller than 1ms for sync mode */
-#define AUDIO_CLASS_2_0_HS_LOW_LATENCY_BUFFER_COUNT \
-    (2U) /* 2 units size buffer (1 unit means the size to play during 1ms) */
-#else
-#define AUDIO_CLASS_2_0_HS_LOW_LATENCY_TRANSFER_COUNT (0x10U) /* 0x10 means 16 mico frames (16*125us, 2ms) */
-#define AUDIO_CLASS_2_0_HS_LOW_LATENCY_BUFFER_COUNT \
-    (6U) /* 6 units size buffer (1 unit means the size to play during 1ms) */
-#endif
-#elif (defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0U))
-#define AUDIO_CLASS_2_0_HS_LOW_LATENCY_TRANSFER_COUNT \
-    (0x06U) /* 6 means 16 mico frames (6*125us), make sure the latency is smaller than 1ms for ehci high speed */
-#define AUDIO_CLASS_2_0_HS_LOW_LATENCY_BUFFER_COUNT \
-    (2U) /* 2 units size buffer (1 unit means the size to play during 1ms) */
-#endif
-#endif
-
-/* feedback calculate interval */
-#define AUDIO_CALCULATE_Ff_INTERVAL (16U)
-#define TSAMFREQ2BYTES(f)           (f & 0xFFU), ((f >> 8U) & 0xFFU), ((f >> 16U) & 0xFFU)
-#define TSAMFREQ2BYTESHS(f)         (f & 0xFFU), ((f >> 8U) & 0xFFU), ((f >> 16U) & 0xFFU), ((f >> 24U) & 0xFFU)
-#define AUDIO_ADJUST_MIN_STEP       (0x01)
+#define TSAMFREQ2BYTES(f)     (f & 0xFFU), ((f >> 8U) & 0xFFU), ((f >> 16U) & 0xFFU)
+#define TSAMFREQ2BYTESHS(f)   (f & 0xFFU), ((f >> 8U) & 0xFFU), ((f >> 16U) & 0xFFU), ((f >> 24U) & 0xFFU)
+#define AUDIO_ADJUST_MIN_STEP (0x01)
 
 #define AUDIO_PLAY_BUFFER_SIZE_ONE_FRAME AUDIO_OUT_TRANSFER_LENGTH_ONE_FRAME
 
-#if defined(USB_DEVICE_AUDIO_USE_SYNC_MODE) && (USB_DEVICE_AUDIO_USE_SYNC_MODE > 0U)
-/**********************************************************************
-Audio PLL contants
-      AUDIO_PLL_USB1_SOF_INTERVAL_COUNT
-      The Audio PLL clock is 24.576Mhz, and the USB1_SOF_TOGGLE frequency is 4kHz when the device is attached,
-      so AUDIO_PLL_USB1_SOF_INTERVAL_COUNT = (24576000 * AUDIO_CALCULATE_Ff_INTERVAL (stands for counter interval, 16))
-      /4000 = 98304 AUDIO_PLL_FRACTIONAL_CHANGE_STEP The Audio input clock is 24Mhz, and denominator is 4500, divider is
-15 and PFD is 26. so AUDIO_PLL_FRACTIONAL_CHANGE_STEP = (24000000 * AUDIO_CALCULATE_Ff_INTERVAL (stands for counter
-      interval, 16) * 18) / (27000 * 26 * 15 *4000) + 1
-**********************************************************************/
-#define AUDIO_PLL_USB1_SOF_INTERVAL_COUNT  (98304)  /* The USB1_SOF_TOGGLE's frequency is 4kHz. */
-#define AUDIO_PLL_USB1_SOF_INTERVAL_COUNT1 (491520) /* The USB1_SOF_TOGGLE's frequency is 4kHz. */
-#define AUDIO_PLL_FRACTIONAL_CHANGE_STEP   (1)
-#endif
+#define AUDIO_FRO_USB_SOF_INTERVAL_VALID_DEVIATION ((AUDIO_FRO_USB_SOF_INTERVAL_TICK_COUNT) >> 7)
+#define AUDIO_PLL_USB_SOF_INTERVAL_VALID_DEVIATION ((AUDIO_PLL_USB_SOF_INTERVAL_TICK_COUNT) >> 7)
 
 #define MUTE_CODEC_TASK    (1UL << 0U)
 #define UNMUTE_CODEC_TASK  (1UL << 1U)
@@ -95,10 +52,17 @@ typedef struct _usb_audio_composite_struct
     uint8_t maxTreble;
     uint8_t resTreble;
     uint8_t curAutomaticGain;
-    uint8_t curDelay[2];
-    uint8_t minDelay[2];
-    uint8_t maxDelay[2];
-    uint8_t resDelay[2];
+#if (USB_DEVICE_CONFIG_AUDIO_CLASS_2_0)
+    uint8_t curDelay[4]; /* need to consider the endians */
+    uint8_t minDelay[4]; /* need to consider the endians */
+    uint8_t maxDelay[4]; /* need to consider the endians */
+    uint8_t resDelay[4]; /* need to consider the endians */
+#else
+    uint8_t curDelay[2]; /* need to consider the endians */
+    uint8_t minDelay[2]; /* need to consider the endians */
+    uint8_t maxDelay[2]; /* need to consider the endians */
+    uint8_t resDelay[2]; /* need to consider the endians */
+#endif
     uint8_t curLoudness;
     uint8_t curSamplingFrequency[3];
     uint8_t minSamplingFrequency[3];
@@ -140,12 +104,24 @@ typedef struct _usb_audio_composite_struct
     volatile int32_t audioPllTicksDiff;
     volatile int32_t audioPllTicksEma;
     volatile int32_t audioPllTickEmaFrac;
-    volatile int32_t audioPllStep;
+    volatile int32_t audioPllTickBasedPrecision;
+    volatile uint8_t stopDataLengthAudioAdjust;
+#if defined(USB_DEVICE_CONFIG_LPCIP3511FS) && (USB_DEVICE_CONFIG_LPCIP3511FS > 0U)
+    volatile uint32_t froTrimIntervalCount;
+    volatile uint32_t usbFroTicksPrev;
+    volatile int32_t usbFroTicksEma;
+    volatile int32_t usbFroTickEmaFrac;
+    volatile int32_t usbFroTickBasedPrecision;
+#endif
 #else
     volatile uint32_t maxFrameCount;
     volatile uint32_t lastFrameCount;
     volatile uint32_t currentFrameCount;
     volatile uint8_t firstCalculateFeedback;
+    volatile uint8_t stopFeedbackUpdate;
+    volatile uint32_t lastFeedbackValue;
+    volatile uint8_t feedbackDiscardFlag;
+    volatile uint8_t feedbackDiscardTimes;
 #endif
 } usb_audio_composite_struct_t;
 

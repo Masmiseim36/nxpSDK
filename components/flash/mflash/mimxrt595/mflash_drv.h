@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2020 NXP
+ * Copyright 2017-2021 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -31,15 +31,5 @@
 #endif
 
 #define FLASH_SIZE 0x00010000U /* 64MB in KB unit */
-
-/* Allow incremental writes without erase (enabled by default).
- * This method cannot be used in certain cases, e.g. when page checksums are used
- */
-#ifndef MFLASH_INC_WRITE
-#define MFLASH_INC_WRITE 1
-#endif
-
-/* API used by OTA applications */
-int32_t mflash_drv_write(uint32_t addr, const uint8_t *data, uint32_t data_len);
 
 #endif

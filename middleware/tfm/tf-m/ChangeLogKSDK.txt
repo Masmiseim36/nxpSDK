@@ -1,0 +1,38 @@
+/*!
+@page middleware_log Middleware Change Log
+ 
+@section tfm Trusted Firmware M (TF-M) for MCUXpresso SDK
+  The current version is based on TF-M v1.2.0, released 2021-04-13 (cad01ab98c34bb3a13ab49da2672b8dab0dbb913) on https://git.trustedfirmware.org/TF-M/trusted-firmware-m.git
+
+  - 1.3.0
+    - Ported TF-M v1.3.0 to MCUXpresso SDK. Based on the 2021-04-13 snapshot(cad01ab98c34bb3a13ab49da2672b8dab0dbb913).
+    - Added evkmimxrt685 platform.
+    - Added evkmimxrt595 platform.
+
+  - 1.1
+    - Ported TF-M v1.1 to MCUXpresso SDK. Based on the 2020-08-19 snapshot(54507b1645087e92b5a115919ae8fd571ace8bdb).
+
+  - 1.0 Rev3
+    - Ported TF-M v1.0 to MCUXpresso SDK. Based on the 2020-04-20 snapshot(1e089705899ff68c617cc0c01e5ce8618b8ba6b7).
+    - Added HUK derivation function.
+
+  - 1.0 Rev2
+    - Ported TF-M v1.0 to MCUXpresso SDK. Based on the 2020-04-06 snapshot(d4ac5d14e74d1aa2a78526aa865034fc3d4e199a).
+    - Added the LPC55S Flash module support for ITS and PS.
+    - Added lpcxpresso55s16 platform.
+
+  - 1.0 Rev1
+    - Ported TF-M v1.0-RC1 to MCUXpresso SDK. Based on the 2019-09-23 snapshot(011c0ad0e76d62bd6f2de268c2db1297fe8ba354).
+    - Added MCUx and GCC demo applications.
+    - Added PSA test suite application.
+    - Used mbedCrypto instead of mbedTLS
+
+  - 1.0
+    - Ported TF-M v1.0-beta to MCUXpresso SDK. Based on the 2019-03-13 snapshot(a5a2a5bc32bc50f4def8df9a037b4d67175763b9).
+    - Added lpcxpresso55s69 platform.
+    - Added MDK demo applications.
+    - Bug Fixes:
+      - Fixed compilation warnings and errors. 
+      - Changes in the TF-M original source code are marked by the "NXP" comment.
+*/
+

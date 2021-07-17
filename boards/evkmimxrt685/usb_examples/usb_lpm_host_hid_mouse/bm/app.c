@@ -38,7 +38,8 @@
 #define APP_USER_WAKEUP_KEY_PORT         BOARD_SW1_GPIO_PORT
 #define APP_USER_WAKEUP_KEY_PIN          BOARD_SW1_GPIO_PIN
 #define APP_USER_WAKEUP_KEY_INPUTMUX_SEL kINPUTMUX_GpioPort1Pin1ToPintsel
-#define APP_DEEPSLEEP_RUNCFG0            (SYSCTL0_PDSLEEPCFG0_LPOSC_PD_MASK | SYSCTL0_PDSLEEPCFG0_SYSXTAL_PD_MASK | SYSCTL0_PDSLEEPCFG0_RBB_PD_MASK)
+#define APP_DEEPSLEEP_RUNCFG0 \
+    (SYSCTL0_PDSLEEPCFG0_LPOSC_PD_MASK | SYSCTL0_PDSLEEPCFG0_SYSXTAL_PD_MASK | SYSCTL0_PDSLEEPCFG0_RBB_PD_MASK)
 #define APP_DEEPSLEEP_RUNCFG1                                                              \
     (SYSCTL0_PDSLEEPCFG1_FLEXSPI_SRAM_APD_MASK | SYSCTL0_PDSLEEPCFG1_USBHS_SRAM_PPD_MASK | \
      SYSCTL0_PDSLEEPCFG1_USBHS_SRAM_APD_MASK)
@@ -300,13 +301,13 @@ void USB_HostClockInit(void)
     }
 #endif
     USB_EhciLowPowerPhyInit(CONTROLLER_ID, BOARD_XTAL_SYS_CLK_HZ, &phyConfig);
-    
+
     /* the workaround for LPM wakeup */
     CLOCK_AttachClk(kLPOSC_DIV32_to_32KHZWAKE_CLK);
     CLKCTL0->WAKECLK32KHZDIV = 5;
-    USBPHY->CTRL_CLR = USBPHY_CTRL_CLR_CLKGATE_MASK;
+    USBPHY->CTRL_CLR         = USBPHY_CTRL_CLR_CLKGATE_MASK;
     (*(volatile uint32_t *)(0x4013B090)) &= 0xFFFFFFFE;
-    
+
     /* enable usb1 device clock */
     CLOCK_EnableClock(kCLOCK_UsbhsDevice);
     USBHSH->PORTMODE &= ~USBHSH_PORTMODE_DEV_ENABLE_MASK;
@@ -320,7 +321,6 @@ void USB_HostClockInit(void)
     }
     /* disable usb1 device clock */
     CLOCK_DisableClock(kCLOCK_UsbhsDevice);
-    
 }
 void USB_HostIsrEnable(void)
 {
@@ -853,8 +853,8 @@ int main(void)
                                  /* SD0 voltage is switchable, but in power_manager demo, it's fixed 3.3V. */
                                  .Vdde2Range = kPadVol_300_360};
 
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
+    BOARD_InitBootPins();
+    BOARD_InitBootClocks();
     BOARD_InitDebugConsole();
 
     /* PMIC PCA9420 */

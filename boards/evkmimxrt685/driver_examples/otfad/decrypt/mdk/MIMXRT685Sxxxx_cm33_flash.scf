@@ -8,13 +8,13 @@
 **     Compiler:            Keil ARM C/C++ Compiler
 **     Reference manual:    MIMXRT685 User manual Rev. 0.95 11 November 2019
 **     Version:             rev. 1.0, 2018-06-19
-**     Build:               b200512
+**     Build:               b210303
 **
 **     Abstract:
 **         Linker file for the Keil ARM C/C++ Compiler
 **
 **     Copyright 2016 Freescale Semiconductor, Inc.
-**     Copyright 2016-2020 NXP
+**     Copyright 2016-2021 NXP
 **     All rights reserved.
 **
 **     SPDX-License-Identifier: BSD-3-Clause
@@ -67,10 +67,13 @@
 
 #define  m_boot_flash_conf_start       0x08000400
 
-LR_m_interrupts m_boot_flash_conf_start m_interrupts_size+m_text_size {
-  FLASH_CONFIG m_boot_flash_conf_start m_interrupts_start-m_boot_flash_conf_start { ; load address = execution address
+LR_m_flash_conf m_boot_flash_conf_start m_interrupts_start-m_boot_flash_conf_start {
+  FLASH_CONFIG m_boot_flash_conf_start m_interrupts_start-m_boot_flash_conf_start{ ; load address = execution address
     * (.flash_conf)
   }
+}
+
+LR_m_interrupts m_interrupts_start m_text_start+m_text_size-m_interrupts_start {
   VECTOR_ROM m_interrupts_start FIXED m_interrupts_size { ; load address = execution address
     * (.isr_vector,+FIRST)
   }
@@ -89,6 +92,8 @@ LR_m_interrupts m_boot_flash_conf_start m_interrupts_size+m_text_size {
 #endif
 
   RW_m_data m_data_start ALIGN 4 m_data_size-Stack_Size-Heap_Size { ; RW data
+    * (CodeQuickAccess)
+    * (DataQuickAccess)
     /* Necessary to run flash routines from RAM */
     flexspi_octal_flash_ops.o (+RO +RW +ZI)
     fsl_flexspi.o (+RO +RW +ZI)

@@ -160,21 +160,23 @@ static usb_status_t USB_DeviceLpc3511IpControlPreSetDeviceAddress(usb_device_con
  ******************************************************************************/
 
 /* define the reserved buffer for endpoint max packet copy */
-
+#define SETUP_TRANSFER_DATA_SIZE     (64U) /* The actual size is 8. Here use 64 aligned to 64-byte boundaries. */
+#define CONTROL_TRANSFER_DATA_SIZE   (64U) /* The maximum size in the control data stage. */
+#define ZERO_TRANSFER_DATA_SIZE      (64U) /* The actual size is 4. Here use 64 aligned to 64-byte boundaries. */
 #define SETUP_TRANSFER_DATA_OFFSET   (0U)
-#define CONTROL_TRANSFER_DATA_OFFSET ((USB_DATA_ALIGN_SIZE_MULTIPLE(8U) >> 2))
-#define ZERO_TRANSFER_DATA_OFFSET    ((USB_DATA_ALIGN_SIZE_MULTIPLE(8U) >> 2) + (USB_DATA_ALIGN_SIZE_MULTIPLE(64U) >> 2))
-#define RESERVED_EP_DATA_OFFSET                                                           \
-    ((USB_DATA_ALIGN_SIZE_MULTIPLE(8U) >> 2) + (USB_DATA_ALIGN_SIZE_MULTIPLE(64U) >> 2) + \
-     (USB_DATA_ALIGN_SIZE_MULTIPLE(4U) >> 2))
+#define CONTROL_TRANSFER_DATA_OFFSET (SETUP_TRANSFER_DATA_SIZE >> 2U)
+#define ZERO_TRANSFER_DATA_OFFSET    ((SETUP_TRANSFER_DATA_SIZE + CONTROL_TRANSFER_DATA_SIZE) >> 2U)
+#define RESERVED_EP_DATA_OFFSET \
+    ((SETUP_TRANSFER_DATA_SIZE + CONTROL_TRANSFER_DATA_SIZE + ZERO_TRANSFER_DATA_SIZE) >> 2U)
+
+#define ENDPOINT_RESERVED_BUFFER_ADDRESS ((uint8_t *)&s_SetupAndEpReservedData[0])
 
 #if defined(USB_DEVICE_IP3511_RESERVED_BUFFER_FOR_COPY) && (USB_DEVICE_IP3511_RESERVED_BUFFER_FOR_COPY)
-USB_GLOBAL USB_RAM_ADDRESS_ALIGNMENT(USB_DATA_ALIGN_SIZE) static uint32_t
-    s_SetupAndEpReservedData[USB_DEVICE_IP3511_RESERVED_BUFFER_FOR_COPY]
-                            [USB_DATA_ALIGN_SIZE_MULTIPLE((USB_DEVICE_IP3511_ENDPOINT_RESERVED_BUFFER_SIZE >> 2)) +
-                             RESERVED_EP_DATA_OFFSET];
+USB_GLOBAL USB_RAM_ADDRESS_ALIGNMENT(64) static uint32_t
+    s_SetupAndEpReservedData[(USB_DEVICE_IP3511_BITS_FOR_RESERVED_BUFFER << 6U) >> 2U];
+static uint8_t s_EpReservedBufferBits[(USB_DEVICE_IP3511_BITS_FOR_RESERVED_BUFFER + 7U) / 8U];
 #else
-USB_GLOBAL USB_RAM_ADDRESS_ALIGNMENT(USB_DATA_ALIGN_SIZE) static uint32_t
+USB_GLOBAL USB_RAM_ADDRESS_ALIGNMENT(64) static uint32_t
     s_SetupAndEpReservedData[USB_DEVICE_CONFIG_LPCIP3511FS + USB_DEVICE_CONFIG_LPCIP3511HS][RESERVED_EP_DATA_OFFSET];
 #endif
 
@@ -249,8 +251,7 @@ static inline uint8_t USB_DeviceLpcIp3511MaxPacketNeedCopy(usb_device_lpc3511ip_
 #endif
 }
 
-static uint8_t *USB_DeviceLpcIp3511MallocMaxPacketBuffer(usb_device_lpc3511ip_state_struct_t *lpc3511IpState,
-                                                         uint32_t multile64)
+static uint8_t *USB_DeviceLpcIp3511MallocMaxPacketBuffer(uint32_t multile64)
 {
     uint32_t bitsIndex;
     uint32_t numIndex;
@@ -269,7 +270,7 @@ static uint8_t *USB_DeviceLpcIp3511MallocMaxPacketBuffer(usb_device_lpc3511ip_st
                 OSA_EXIT_CRITICAL();
                 return NULL; /* fail */
             }
-            if (0U != (lpc3511IpState->epReservedBufferBits[(bitsIndex / 8U)] &
+            if (0U != (s_EpReservedBufferBits[(bitsIndex / 8U)] &
                        (uint8_t)(0x01U << (bitsIndex & 0x00000007U)))) /* has allocated */
             {
                 bitsIndex++;
@@ -284,11 +285,11 @@ static uint8_t *USB_DeviceLpcIp3511MallocMaxPacketBuffer(usb_device_lpc3511ip_st
         /* set the bits */
         for (numIndex = 0U; numIndex < multile64; ++numIndex)
         {
-            lpc3511IpState->epReservedBufferBits[((bitsIndex - multile64 + numIndex) / 8U)] |=
+            s_EpReservedBufferBits[((bitsIndex - multile64 + numIndex) / 8U)] |=
                 (uint8_t)(0x01U << ((bitsIndex - multile64 + numIndex) & 0x00000007U));
         }
         OSA_EXIT_CRITICAL();
-        return lpc3511IpState->epReservedBuffer + ((bitsIndex - multile64) * 64U);
+        return ENDPOINT_RESERVED_BUFFER_ADDRESS + ((bitsIndex - multile64) * 64U);
     }
     else
     {
@@ -297,28 +298,26 @@ static uint8_t *USB_DeviceLpcIp3511MallocMaxPacketBuffer(usb_device_lpc3511ip_st
     }
 }
 
-static void USB_DeviceLpcIp3511ReleaseMaxPacketBuffer(usb_device_lpc3511ip_state_struct_t *lpc3511IpState,
-                                                      uint8_t *buffer,
-                                                      uint32_t bufferSize)
+static void USB_DeviceLpcIp3511ReleaseMaxPacketBuffer(uint8_t *buffer, uint32_t bufferSize)
 {
     uint32_t bitsIndex;
     int32_t temp;
     uint8_t bitsNum;
     OSA_SR_ALLOC();
 
-    if ((buffer < lpc3511IpState->epReservedBuffer) ||
-        (buffer >= (lpc3511IpState->epReservedBuffer + USB_DEVICE_IP3511_ENDPOINT_RESERVED_BUFFER_SIZE)))
+    if ((buffer < ENDPOINT_RESERVED_BUFFER_ADDRESS) ||
+        (buffer >= (ENDPOINT_RESERVED_BUFFER_ADDRESS + USB_DEVICE_IP3511_ENDPOINT_RESERVED_BUFFER_SIZE)))
     {
         return;
     }
     /*misra 10.8*/
-    temp      = ((buffer - lpc3511IpState->epReservedBuffer) / 64);
+    temp      = ((buffer - ENDPOINT_RESERVED_BUFFER_ADDRESS) / 64);
     bitsIndex = (uint32_t)temp;
 
     OSA_ENTER_CRITICAL();
     for (bitsNum = 0; bitsNum < ((bufferSize + 63U) / 64U); ++bitsNum)
     {
-        lpc3511IpState->epReservedBufferBits[((bitsIndex + bitsNum) / 8U)] &=
+        s_EpReservedBufferBits[((bitsIndex + bitsNum) / 8U)] &=
             (uint8_t)(~(0x01U << ((bitsIndex + bitsNum) & 0x00000007U))); /* clear the bit */
     }
     OSA_EXIT_CRITICAL();
@@ -365,6 +364,14 @@ static usb_status_t USB_DeviceLpc3511IpEndpointPrime(usb_device_lpc3511ip_state_
 
     /* Flag the endpoint is busy. */
     epState->stateUnion.stateBitField.transferring = 1U;
+
+#if ((defined(USB_DEVICE_IP3511HS_CONTROL_OUT_NYET_WORKAROUND)) && \
+     (USB_DEVICE_IP3511HS_CONTROL_OUT_NYET_WORKAROUND > 0U))
+    if (((endpointIndex >> 1U) == USB_ENDPOINT_CONTROL) && ((endpointIndex & 0x01U) == 0x00U) && (0U == length))
+    {
+        length = 65U;
+    }
+#endif
 
     /* update the endpoint status */
     epState->transferPrimedLength += length;
@@ -492,7 +499,10 @@ static usb_status_t USB_DeviceLpc3511IpEndpointInit(usb_device_lpc3511ip_state_s
     usb_device_lpc3511ip_endpoint_state_struct_t *epState =
         USB_DeviceLpc3511IpGetEndpointStateStruct(lpc3511IpState, endpointIndex);
     uint16_t maxPacketSize = epInit->maxPacketSize;
+#if (defined USB_DEVICE_IP3511_RESERVED_BUFFER_FOR_COPY) && (USB_DEVICE_IP3511_RESERVED_BUFFER_FOR_COPY)
     uint32_t allocateLength;
+    uint8_t *maxPacketBuffer;
+#endif
 
     /* clear the endpoint status bits */
     epState->stateUnion.state = 0x00000000U;
@@ -580,7 +590,7 @@ static usb_status_t USB_DeviceLpc3511IpEndpointInit(usb_device_lpc3511ip_state_s
 #if (defined USB_DEVICE_IP3511_DOUBLE_BUFFER_ENABLE) && (USB_DEVICE_IP3511_DOUBLE_BUFFER_ENABLE)
             allocateLength *= 2U;
 #endif
-            uint8_t *maxPacketBuffer = USB_DeviceLpcIp3511MallocMaxPacketBuffer(lpc3511IpState, allocateLength);
+            maxPacketBuffer = USB_DeviceLpcIp3511MallocMaxPacketBuffer(allocateLength);
             if (maxPacketBuffer == NULL)
             {
                 return kStatus_USB_AllocFail;
@@ -589,7 +599,9 @@ static usb_status_t USB_DeviceLpc3511IpEndpointInit(usb_device_lpc3511ip_state_s
         }
     }
 #endif
-
+#if (defined(USB_DEVICE_CONFIG_ROOT2_TEST) && (USB_DEVICE_CONFIG_ROOT2_TEST > 0U))
+    epState->stateUnion.stateBitField.isOpened = 1U;
+#endif
     return kStatus_USB_Success;
 }
 
@@ -625,22 +637,22 @@ static usb_status_t USB_DeviceLpc3511IpEndpointDeinit(usb_device_lpc3511ip_state
                 ((endpointIndex & 0x01U) == 0x00U))
             {
                 USB_DeviceLpcIp3511ReleaseMaxPacketBuffer(
-                    lpc3511IpState, epState->epPacketBuffer,
+                    epState->epPacketBuffer,
                     USB_LPC3511IP_GET_MULTIPLE_OF_64(USB_DEVICE_IP3511HS_BULK_OUT_ONE_TIME_TRANSFER_SIZE_MAX * 2U));
             }
             else
             {
                 USB_DeviceLpcIp3511ReleaseMaxPacketBuffer(
-                    lpc3511IpState, epState->epPacketBuffer,
+                    epState->epPacketBuffer,
                     USB_LPC3511IP_GET_MULTIPLE_OF_64(epState->stateUnion.stateBitField.maxPacketSize) * 2U);
             }
 #else
             USB_DeviceLpcIp3511ReleaseMaxPacketBuffer(
-                lpc3511IpState, epState->epPacketBuffer,
+                epState->epPacketBuffer,
                 USB_LPC3511IP_GET_MULTIPLE_OF_64(epState->stateUnion.stateBitField.maxPacketSize) * 2U);
 #endif
 #else
-            USB_DeviceLpcIp3511ReleaseMaxPacketBuffer(lpc3511IpState, epState->epPacketBuffer,
+            USB_DeviceLpcIp3511ReleaseMaxPacketBuffer(epState->epPacketBuffer,
                                                       epState->stateUnion.stateBitField.maxPacketSize);
 #endif
         }
@@ -654,6 +666,10 @@ static usb_status_t USB_DeviceLpc3511IpEndpointDeinit(usb_device_lpc3511ip_state
     USB_LPC3511IP_ENDPOINT_SET_ENDPOINT(lpc3511IpState, endpointIndex, 0U, USB_LPC3511IP_ENDPOINT_DISABLE_MASK, 0U, 0U);
     /* Clear the max packet size */
     epState->stateUnion.stateBitField.maxPacketSize = 0U;
+#if (defined(USB_DEVICE_CONFIG_ROOT2_TEST) && (USB_DEVICE_CONFIG_ROOT2_TEST > 0U))
+    /* Clear the endpoint open status */
+    epState->stateUnion.stateBitField.isOpened = 0U;
+#endif
 
     return kStatus_USB_Success;
 }
@@ -672,22 +688,44 @@ static usb_status_t USB_DeviceLpc3511IpEndpointDeinit(usb_device_lpc3511ip_state
 static usb_status_t USB_DeviceLpc3511IpEndpointStall(usb_device_lpc3511ip_state_struct_t *lpc3511IpState, uint8_t ep)
 {
     uint8_t endpointIndex = USB_LPC3511IP_ENDPOINT_DES_INDEX(ep);
-    usb_device_lpc3511ip_endpoint_state_struct_t *epState =
-        USB_DeviceLpc3511IpGetEndpointStateStruct(lpc3511IpState, endpointIndex);
+    usb_device_lpc3511ip_endpoint_state_struct_t *epState;
+    OSA_SR_ALLOC();
 
-    /* Set endpoint stall flag. */
-    epState->stateUnion.stateBitField.stalled = 1U;
-    /* lpc3511IpState->registerBase->EPINUSE &= (~(0x01u << endpointIndex)); */
     /* stall the endpoint */
-    USB_LPC3511IP_ENDPOINT_SET_ENDPOINT(lpc3511IpState, endpointIndex, 0U, USB_LPC3511IP_ENDPOINT_STALL_MASK, 0U, 0U);
-    if ((ep & USB_ENDPOINT_NUMBER_MASK) != USB_CONTROL_ENDPOINT)
+    if ((ep & USB_ENDPOINT_NUMBER_MASK) == USB_CONTROL_ENDPOINT)
     {
-        /* toggle reset for the toggle */
-        epState->stateUnion.stateBitField.epControlDefault |=
-            ((USB_LPC3511IP_ENDPOINT_TOGGLE_RESET_MASK) >> USB_LPC3511IP_ENDPOINT_CONFIGURE_BITS_SHIFT);
-        USB_LPC3511IP_ENDPOINT_SET_ENDPOINT(lpc3511IpState, endpointIndex, 1U, USB_LPC3511IP_ENDPOINT_STALL_MASK, 0U,
-                                            0U);
+        epState                                   = USB_DeviceLpc3511IpGetEndpointStateStruct(lpc3511IpState, 0);
+        epState->stateUnion.stateBitField.stalled = 1U;
+        epState                                   = USB_DeviceLpc3511IpGetEndpointStateStruct(lpc3511IpState, 1);
+        epState->stateUnion.stateBitField.stalled = 1U;
+        /* Enter critical */
+        OSA_ENTER_CRITICAL();
+        USB_LPC3511IP_ENDPOINT_SET_ENDPOINT(lpc3511IpState, 0, 0U, USB_LPC3511IP_ENDPOINT_STALL_MASK, 0U, 0U);
+        USB_LPC3511IP_ENDPOINT_SET_ENDPOINT(lpc3511IpState, 1, 0U, USB_LPC3511IP_ENDPOINT_STALL_MASK, 0U, 0U);
+        /* Exit critical */
+        OSA_EXIT_CRITICAL();
+        /* cancel the transfer in the endpoint */
+        (void)USB_DeviceLpc3511IpCancel(lpc3511IpState, 0);
+        /* cancel the transfer in the endpoint */
+        (void)USB_DeviceLpc3511IpCancel(lpc3511IpState, 0x80);
     }
+    else
+    {
+        epState = USB_DeviceLpc3511IpGetEndpointStateStruct(lpc3511IpState, endpointIndex);
+        /* Set endpoint stall flag. */
+        epState->stateUnion.stateBitField.stalled = 1U;
+        /* lpc3511IpState->registerBase->EPINUSE &= (~(0x01u << endpointIndex)); */
+        /* stall the endpoint */
+        USB_LPC3511IP_ENDPOINT_SET_ENDPOINT(lpc3511IpState, endpointIndex, 0U, USB_LPC3511IP_ENDPOINT_STALL_MASK, 0U,
+                                            0U);
+        if ((ep & USB_ENDPOINT_NUMBER_MASK) != USB_CONTROL_ENDPOINT)
+        {
+            /* toggle reset for the toggle */
+            epState->stateUnion.stateBitField.epControlDefault |=
+                ((USB_LPC3511IP_ENDPOINT_TOGGLE_RESET_MASK) >> USB_LPC3511IP_ENDPOINT_CONFIGURE_BITS_SHIFT);
+            USB_LPC3511IP_ENDPOINT_SET_ENDPOINT(lpc3511IpState, endpointIndex, 1U, USB_LPC3511IP_ENDPOINT_STALL_MASK,
+                                                0U, 0U);
+        }
 #if (defined(FSL_FEATURE_USBHSD_VERSION) && (FSL_FEATURE_USBHSD_VERSION >= 300U)) && \
     (!(defined(FSL_FEATURE_USBHSD_INTERRUPT_DATAX_ISSUE_VERSION_CHECK) &&            \
        (FSL_FEATURE_USBHSD_INTERRUPT_DATAX_ISSUE_VERSION_CHECK)))
@@ -695,27 +733,28 @@ static usb_status_t USB_DeviceLpc3511IpEndpointStall(usb_device_lpc3511ip_state_
 #if ((defined(USB_DEVICE_CONFIG_LPCIP3511HS)) && (USB_DEVICE_CONFIG_LPCIP3511HS > 0U))
 #if (defined(FSL_FEATURE_USBHSD_INTERRUPT_DATAX_ISSUE_VERSION_CHECK) && \
      (FSL_FEATURE_USBHSD_INTERRUPT_DATAX_ISSUE_VERSION_CHECK))
-    if (0U != lpc3511IpState->hsInterruptIssue)
-    {
-#endif
-        if ((0U != lpc3511IpState->controllerSpeed) &&
-            (USB_ENDPOINT_INTERRUPT == epState->stateUnion.stateBitField.endpointType))
+        if (0U != lpc3511IpState->hsInterruptIssue)
         {
-            lpc3511IpState->registerBase->DEVCMDSTAT |=
-                (USB_LPC3511IP_DEVCMDSTAT_INTONNAK_AO_MASK | USB_LPC3511IP_DEVCMDSTAT_INTONNAK_AI_MASK);
-            epState->stateUnion.stateBitField.epControlDefault &=
-                (~((USB_LPC3511IP_ENDPOINT_ENDPOINT_TYPE_MASK | USB_LPC3511IP_ENDPOINT_RFTV_MASK) >>
-                   USB_LPC3511IP_ENDPOINT_CONFIGURE_BITS_SHIFT));
-        }
+#endif
+            if ((0U != lpc3511IpState->controllerSpeed) &&
+                (USB_ENDPOINT_INTERRUPT == epState->stateUnion.stateBitField.endpointType))
+            {
+                lpc3511IpState->registerBase->DEVCMDSTAT |=
+                    (USB_LPC3511IP_DEVCMDSTAT_INTONNAK_AO_MASK | USB_LPC3511IP_DEVCMDSTAT_INTONNAK_AI_MASK);
+                epState->stateUnion.stateBitField.epControlDefault &=
+                    (~((USB_LPC3511IP_ENDPOINT_ENDPOINT_TYPE_MASK | USB_LPC3511IP_ENDPOINT_RFTV_MASK) >>
+                       USB_LPC3511IP_ENDPOINT_CONFIGURE_BITS_SHIFT));
+            }
 #if (defined(FSL_FEATURE_USBHSD_INTERRUPT_DATAX_ISSUE_VERSION_CHECK) && \
      (FSL_FEATURE_USBHSD_INTERRUPT_DATAX_ISSUE_VERSION_CHECK))
-    }
+        }
 #endif
 #endif
 #endif
 
-    /* cancel the transfer in the endpoint */
-    (void)USB_DeviceLpc3511IpCancel(lpc3511IpState, ep);
+        /* cancel the transfer in the endpoint */
+        (void)USB_DeviceLpc3511IpCancel(lpc3511IpState, ep);
+    }
     return kStatus_USB_Success;
 }
 
@@ -1153,11 +1192,23 @@ static void USB_DeviceLpc3511IpInterruptToken(usb_device_lpc3511ip_state_struct_
          */
         if ((length > 0U) && (0U == (length % epState->stateUnion.stateBitField.maxPacketSize)) && (remainLength > 0U))
         {
-            (void)USB_DeviceLpc3511IpTransaction(lpc3511IpState, epState, endpointIndex);
 #if ((defined(USB_DEVICE_IP3511_DISABLE_OUT_DOUBLE_BUFFER)) && (USB_DEVICE_IP3511_DISABLE_OUT_DOUBLE_BUFFER > 0U))
-            USB_DeviceLpc3511IpDoPreviousTransactionMemcpy(
-                lpc3511IpState, epState, len, endpointIndex,
-                (uint8_t)(epState->stateUnion.stateBitField.consumerOdd ^ 1U));
+            if ((endpointIndex >> 1U) == USB_CONTROL_ENDPOINT)
+            {
+                /* do memcpy firstly */
+                USB_DeviceLpc3511IpDoPreviousTransactionMemcpy(lpc3511IpState, epState, len, endpointIndex, 0U);
+                (void)USB_DeviceLpc3511IpTransaction(lpc3511IpState, epState, endpointIndex);
+            }
+            else
+            {
+                (void)USB_DeviceLpc3511IpTransaction(lpc3511IpState, epState, endpointIndex);
+
+                USB_DeviceLpc3511IpDoPreviousTransactionMemcpy(
+                    lpc3511IpState, epState, len, endpointIndex,
+                    (uint8_t)(epState->stateUnion.stateBitField.consumerOdd ^ 1U));
+            }
+#else
+            (void)USB_DeviceLpc3511IpTransaction(lpc3511IpState, epState, endpointIndex);
 #endif
             return;
         }
@@ -1366,6 +1417,7 @@ usb_status_t USB_DeviceLpc3511IpInit(uint8_t controllerId,
         }
         lpc3511IpState = &s_UsbDeviceLpc3511IpState[controllerId - (uint8_t)kUSB_ControllerLpcIp3511Hs0 +
                                                     USB_DEVICE_CONFIG_LPCIP3511FS];
+#if (!(defined(USB_DEVICE_IP3511_RESERVED_BUFFER_FOR_COPY) && (USB_DEVICE_IP3511_RESERVED_BUFFER_FOR_COPY)))
         lpc3511IpState->controlData =
             (uint8_t *)&s_SetupAndEpReservedData[controllerId - (uint8_t)kUSB_ControllerLpcIp3511Hs0 +
                                                  USB_DEVICE_CONFIG_LPCIP3511FS][CONTROL_TRANSFER_DATA_OFFSET];
@@ -1375,6 +1427,7 @@ usb_status_t USB_DeviceLpc3511IpInit(uint8_t controllerId,
         lpc3511IpState->zeroTransactionData =
             (uint8_t *)&s_SetupAndEpReservedData[controllerId - (uint8_t)kUSB_ControllerLpcIp3511Hs0 +
                                                  USB_DEVICE_CONFIG_LPCIP3511FS][ZERO_TRANSFER_DATA_OFFSET];
+#endif
         /* set the endpoint list */
         lpc3511IpState->epCommandStatusList =
             endpointListArray[controllerId - (uint8_t)kUSB_ControllerLpcIp3511Hs0 + USB_DEVICE_CONFIG_LPCIP3511FS];
@@ -1406,6 +1459,7 @@ usb_status_t USB_DeviceLpc3511IpInit(uint8_t controllerId,
             return kStatus_USB_ControllerNotFound;
         }
         lpc3511IpState = &s_UsbDeviceLpc3511IpState[controllerId - (uint8_t)kUSB_ControllerLpcIp3511Fs0];
+#if (!(defined(USB_DEVICE_IP3511_RESERVED_BUFFER_FOR_COPY) && (USB_DEVICE_IP3511_RESERVED_BUFFER_FOR_COPY)))
         lpc3511IpState->controlData =
             (uint8_t *)&s_SetupAndEpReservedData[controllerId - (uint8_t)kUSB_ControllerLpcIp3511Fs0]
                                                 [CONTROL_TRANSFER_DATA_OFFSET];
@@ -1415,6 +1469,7 @@ usb_status_t USB_DeviceLpc3511IpInit(uint8_t controllerId,
         lpc3511IpState->zeroTransactionData =
             (uint8_t *)&s_SetupAndEpReservedData[controllerId - (uint8_t)kUSB_ControllerLpcIp3511Fs0]
                                                 [ZERO_TRANSFER_DATA_OFFSET];
+#endif
         /* set the endpoint list */
         lpc3511IpState->epCommandStatusList = endpointListArray[controllerId - (uint8_t)kUSB_ControllerLpcIp3511Fs0];
         /* get the ip base address */
@@ -1444,43 +1499,10 @@ usb_status_t USB_DeviceLpc3511IpInit(uint8_t controllerId,
     }
 #endif
 
-#if ((defined(USB_DEVICE_IP3511_RESERVED_BUFFER_FOR_COPY)) && (USB_DEVICE_IP3511_RESERVED_BUFFER_FOR_COPY > 0U))
-    /* this controller need max packet buffer copy */
-    if (0U != USB_DeviceLpcIp3511MaxPacketNeedCopy(lpc3511IpState))
-    {
-#if ((defined(USB_DEVICE_CONFIG_LPCIP3511HS)) && (USB_DEVICE_CONFIG_LPCIP3511HS > 0U))
-        /* fix coverity and misra 14.3 */
-        if (controllerId >= (uint8_t)kUSB_ControllerLpcIp3511Hs0)
-        {
-#if (USB_DEVICE_IP3511_ALL_IP_SUPPORT_RESERVED_BUFFER)
-            /* for allocating the max packet buffer */
-            lpc3511IpState->epReservedBuffer =
-                (uint8_t *)&s_SetupAndEpReservedData[controllerId - (uint8_t)kUSB_ControllerLpcIp3511Hs0 +
-                                                     USB_DEVICE_CONFIG_LPCIP3511FS][RESERVED_EP_DATA_OFFSET];
-#else
-            lpc3511IpState->epReservedBuffer =
-                (uint8_t *)&s_SetupAndEpReservedData[controllerId - (uint8_t)kUSB_ControllerLpcIp3511Hs0]
-                                                    [RESERVED_EP_DATA_OFFSET];
-#endif
-        }
-        else
-#endif
-#if ((defined(USB_DEVICE_CONFIG_LPCIP3511FS)) && (USB_DEVICE_CONFIG_LPCIP3511FS > 0U))
-        {
-            lpc3511IpState->epReservedBuffer =
-                (uint8_t *)&s_SetupAndEpReservedData[controllerId - (uint8_t)kUSB_ControllerLpcIp3511Fs0]
-                                                    [RESERVED_EP_DATA_OFFSET];
-        }
-#else
-        {
-            /* no action */
-        }
-#endif
-    }
-    for (controllerId = 0; controllerId < ((USB_DEVICE_IP3511_BITS_FOR_RESERVED_BUFFER + 7U) / 8U); ++controllerId)
-    {
-        lpc3511IpState->epReservedBufferBits[controllerId] = 0U;
-    }
+#if defined(USB_DEVICE_IP3511_RESERVED_BUFFER_FOR_COPY) && (USB_DEVICE_IP3511_RESERVED_BUFFER_FOR_COPY)
+    lpc3511IpState->controlData         = USB_DeviceLpcIp3511MallocMaxPacketBuffer(CONTROL_TRANSFER_DATA_SIZE);
+    lpc3511IpState->setupData           = USB_DeviceLpcIp3511MallocMaxPacketBuffer(SETUP_TRANSFER_DATA_SIZE);
+    lpc3511IpState->zeroTransactionData = USB_DeviceLpcIp3511MallocMaxPacketBuffer(ZERO_TRANSFER_DATA_SIZE);
 #endif
 
     /* disable the controller */
@@ -1538,6 +1560,12 @@ usb_status_t USB_DeviceLpc3511IpDeinit(usb_device_controller_handle controllerHa
 #if (defined(USB_DEVICE_CONFIG_CHARGER_DETECT) && (USB_DEVICE_CONFIG_CHARGER_DETECT > 0U)) && \
     (defined(FSL_FEATURE_SOC_USBHSDCD_COUNT) && (FSL_FEATURE_SOC_USBHSDCD_COUNT > 0U))
     (void)USB_HSDCD_Deinit(lpc3511IpState->dcdHandle);
+#endif
+
+#if defined(USB_DEVICE_IP3511_RESERVED_BUFFER_FOR_COPY) && (USB_DEVICE_IP3511_RESERVED_BUFFER_FOR_COPY)
+    USB_DeviceLpcIp3511ReleaseMaxPacketBuffer(lpc3511IpState->controlData, CONTROL_TRANSFER_DATA_SIZE);
+    USB_DeviceLpcIp3511ReleaseMaxPacketBuffer(lpc3511IpState->setupData, SETUP_TRANSFER_DATA_SIZE);
+    USB_DeviceLpcIp3511ReleaseMaxPacketBuffer(lpc3511IpState->zeroTransactionData, ZERO_TRANSFER_DATA_SIZE);
 #endif
 
     return status;
@@ -2085,7 +2113,11 @@ usb_status_t USB_DeviceLpc3511IpControl(usb_device_controller_handle controllerH
     switch (type)
     {
         case kUSB_DeviceControlRun:
+#if ((defined(USB_DEVICE_CONFIG_ROOT2_TEST)) && (USB_DEVICE_CONFIG_ROOT2_TEST > 0U))
+            lpc3511IpState->registerBase->DEVCMDSTAT |= ((USB_LPC3511IP_DEVCMDSTAT_DCON_MASK) | (0x1 << 21));
+#else
             lpc3511IpState->registerBase->DEVCMDSTAT |= (USB_LPC3511IP_DEVCMDSTAT_DCON_MASK);
+#endif
             lpc3511IpState->registerBase->DEVCMDSTAT &= ~(USB_LPC3511IP_DEVCMDSTAT_FORCE_NEEDCLK_MASK);
             break;
 
@@ -2149,11 +2181,31 @@ usb_status_t USB_DeviceLpc3511IpControl(usb_device_controller_handle controllerH
                 {
                     epState = USB_DeviceLpc3511IpGetEndpointStateStruct(
                         lpc3511IpState, USB_LPC3511IP_ENDPOINT_DES_INDEX(endpointStatus->endpointAddress));
+#if (defined(USB_DEVICE_CONFIG_ROOT2_TEST) && (USB_DEVICE_CONFIG_ROOT2_TEST > 0U))
+                    if (0U == epState->stateUnion.stateBitField.isOpened)
+                    {
+                        error = kStatus_USB_InvalidRequest;
+                    }
+                    else
+                    {
+                        endpointStatus->endpointStatus = (uint16_t)((epState->stateUnion.stateBitField.stalled == 1U) ?
+                                                                        kUSB_DeviceEndpointStateStalled :
+                                                                        kUSB_DeviceEndpointStateIdle);
+                        error                          = kStatus_USB_Success;
+                    }
+#else
                     endpointStatus->endpointStatus =
                         (uint16_t)((epState->stateUnion.stateBitField.stalled == 1U) ? kUSB_DeviceEndpointStateStalled :
                                                                                        kUSB_DeviceEndpointStateIdle);
                     error = kStatus_USB_Success;
+#endif
                 }
+#if (defined(USB_DEVICE_CONFIG_ROOT2_TEST) && (USB_DEVICE_CONFIG_ROOT2_TEST > 0U))
+                else
+                {
+                    error = kStatus_USB_InvalidRequest;
+                }
+#endif
             }
             break;
 
@@ -2170,6 +2222,32 @@ usb_status_t USB_DeviceLpc3511IpControl(usb_device_controller_handle controllerH
             break;
 
         case kUSB_DeviceControlGetSynchFrame:
+#if (defined(USB_DEVICE_CONFIG_ROOT2_TEST) && (USB_DEVICE_CONFIG_ROOT2_TEST > 0U))
+            if (NULL != param)
+            {
+                usb_device_endpoint_status_struct_t *endpointStatus = (usb_device_endpoint_status_struct_t *)param;
+                if ((((endpointStatus->endpointAddress) & USB_ENDPOINT_NUMBER_MASK)) <
+                    (uint8_t)USB_DEVICE_IP3511_ENDPOINTS_NUM)
+                {
+                    epState = USB_DeviceLpc3511IpGetEndpointStateStruct(
+                        lpc3511IpState, USB_LPC3511IP_ENDPOINT_DES_INDEX(endpointStatus->endpointAddress));
+                    /* In configured state (should stall in other states), device must STALL status stage of Synch Frame
+                     * Request with Invalid wIndex */
+                    if (0U == epState->stateUnion.stateBitField.isOpened)
+                    {
+                        error = kStatus_USB_InvalidRequest;
+                    }
+                    else
+                    {
+                        error = kStatus_USB_Success;
+                    }
+                }
+                else
+                {
+                    error = kStatus_USB_InvalidRequest;
+                }
+            }
+#endif
             break;
 
 #if defined(USB_DEVICE_CONFIG_REMOTE_WAKEUP) && (USB_DEVICE_CONFIG_REMOTE_WAKEUP > 0U)

@@ -1,21 +1,19 @@
-if(NOT MIDDLEWARE_MULTICORE_RPMSG_LITE_EVKMIMXRT685_FREERTOS_MIMXRT685S_cm33_INCLUDED)
-    
-    set(MIDDLEWARE_MULTICORE_RPMSG_LITE_EVKMIMXRT685_FREERTOS_MIMXRT685S_cm33_INCLUDED true CACHE BOOL "middleware_multicore_rpmsg_lite_evkmimxrt685_freertos component is included.")
+include_guard(GLOBAL)
+message("middleware_multicore_rpmsg_lite_evkmimxrt685_freertos component is included.")
 
-    target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
-        ${CMAKE_CURRENT_LIST_DIR}/rpmsg_lite/lib/rpmsg_lite/porting/platform/imxrt600_m33/rpmsg_platform.c
-    )
-
-
-    target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
-        ${CMAKE_CURRENT_LIST_DIR}/rpmsg_lite/lib/include/platform/imxrt600_m33
-    )
+target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
+    ${CMAKE_CURRENT_LIST_DIR}/rpmsg_lite/lib/rpmsg_lite/porting/platform/imxrt600_m33/rpmsg_platform.c
+)
 
 
-    include(middleware_multicore_rpmsg_lite_MIMXRT685S_cm33)
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
+    ${CMAKE_CURRENT_LIST_DIR}/rpmsg_lite/lib/include/platform/imxrt600_m33
+)
 
-    include(middleware_freertos-kernel_MIMXRT685S_cm33)
 
-    include(middleware_freertos-kernel_heap_4_MIMXRT685S_cm33)
+include(middleware_multicore_rpmsg_lite_MIMXRT685S_cm33)
 
-endif()
+include(middleware_freertos-kernel_MIMXRT685S_cm33)
+
+include(middleware_freertos-kernel_heap_4_MIMXRT685S_cm33)
+

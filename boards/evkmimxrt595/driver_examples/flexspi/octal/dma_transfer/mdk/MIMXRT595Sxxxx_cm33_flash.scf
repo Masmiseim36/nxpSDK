@@ -3,16 +3,17 @@
 ** ###################################################################
 **     Processors:          MIMXRT595SFAWC_cm33
 **                          MIMXRT595SFFOC_cm33
+**
 **     Compiler:            Keil ARM C/C++ Compiler
-**     Reference manual:    RT500 Reference Manual. Rev.A, 3/2020
-**     Version:             rev. 3.0, 2019-12-10
-**     Build:               b200410
+**     Reference manual:    iMXRT500RM Rev.0, 01/2021
+**     Version:             rev. 4.0, 2020-05-12
+**     Build:               b210303
 **
 **     Abstract:
 **         Linker file for the Keil ARM C/C++ Compiler
 **
 **     Copyright 2016 Freescale Semiconductor, Inc.
-**     Copyright 2016-2020 NXP
+**     Copyright 2016-2021 NXP
 **     All rights reserved.
 **
 **     SPDX-License-Identifier: BSD-3-Clause
@@ -40,7 +41,7 @@
 #endif
 
 /* The SRAM region [0x10000-0x1BFFF] is reserved for ROM code. */
-/* The SRAM region [0x0-0xFFFF], [0x1C000-0x1FFFF] is reserved for app-specific use cases. */
+/* The SRAM region [0x0-0xFFFF], [0x1C000-0x1FFFF] are reserved for app-specific use cases. */
 /* The SRAM region [0x20000-0x7FFFF] is reserved for Non-cached shared memory between M33 and DSP. */
 
 #if (defined(__ram_vector_table__))
@@ -66,10 +67,13 @@
 
 #define  m_boot_flash_conf_start       0x08000400
 
-LR_m_interrupts m_boot_flash_conf_start m_text_start+m_text_size-m_boot_flash_conf_start {
-  FLASH_CONFIG m_boot_flash_conf_start m_interrupts_start-m_boot_flash_conf_start { ; load address = execution address
+LR_m_flash_conf m_boot_flash_conf_start m_interrupts_start-m_boot_flash_conf_start {
+  FLASH_CONFIG m_boot_flash_conf_start m_interrupts_start-m_boot_flash_conf_start{ ; load address = execution address
     * (.flash_conf)
   }
+}
+
+LR_m_interrupts m_interrupts_start m_text_start+m_text_size-m_interrupts_start {
   VECTOR_ROM m_interrupts_start FIXED m_interrupts_size { ; load address = execution address
     * (.isr_vector,+FIRST)
   }

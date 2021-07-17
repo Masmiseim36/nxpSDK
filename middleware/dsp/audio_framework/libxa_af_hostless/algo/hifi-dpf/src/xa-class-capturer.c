@@ -1,15 +1,17 @@
-/*******************************************************************************
-* Copyright (c) 2015-2020 Cadence Design Systems, Inc.
-* 
+/*
+* Copyright (c) 2015-2021 Cadence Design Systems Inc.
+*
 * Permission is hereby granted, free of charge, to any person obtaining
 * a copy of this software and associated documentation files (the
-* "Software"), to use this Software with Cadence processor cores only and 
-* not with any other processors and platforms, subject to
+* "Software"), to deal in the Software without restriction, including
+* without limitation the rights to use, copy, modify, merge, publish,
+* distribute, sublicense, and/or sell copies of the Software, and to
+* permit persons to whom the Software is furnished to do so, subject to
 * the following conditions:
-* 
+*
 * The above copyright notice and this permission notice shall be included
 * in all copies or substantial portions of the Software.
-* 
+*
 * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
 * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
@@ -17,8 +19,7 @@
 * CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
 * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-******************************************************************************/
+*/
 /*******************************************************************************
  * xa-class-capturer.c
  *
@@ -38,15 +39,6 @@
 #include "xa-class-base.h"
 #include "audio/xa-capturer-api.h"
 
-/*******************************************************************************
- * Tracing configuration
- ******************************************************************************/
-
-TRACE_TAG(INIT, 1);
-TRACE_TAG(WARNING, 1);
-TRACE_TAG(INFO, 1);
-TRACE_TAG(INPUT, 1);
-TRACE_TAG(OUTPUT, 1);
 /*******************************************************************************
  * Internal functions definitions
  ******************************************************************************/
@@ -83,6 +75,11 @@ typedef struct XACapturer
     /* ...internal message scheduling flag (shared with interrupt) */
     UWORD32                 schedule;
 
+    /***************************************************************************
+     * response message pointer 
+     **************************************************************************/
+    xf_message_t        *m_response;
+
 }   XACapturer;
 
 /*******************************************************************************
@@ -117,6 +114,9 @@ static inline XA_ERRORCODE xa_capturer_prepare_runtime(XACapturer *capturer)
 
     /* ...retrieve upsampling factor for given sample rate */
     XF_CHK_ERR(factor = xf_timebase_factor(msg->sample_rate), XA_API_FATAL_INVALID_CMD_TYPE);
+
+    /* ...sample size should be positive */
+    XF_CHK_ERR(capturer->sample_size > 0, XA_API_FATAL_INVALID_CMD_TYPE);
 
     /* ...set frame duration factor (converts number of bytes into timebase units) */
     capturer->factor = factor / capturer->sample_size;
@@ -163,17 +163,7 @@ static XA_ERRORCODE xa_capturer_empty_this_buffer(XACodecBase *base, xf_message_
     xf_atomic_clear(&capturer->schedule, 1);
     /* ...schedule data processing if output is ready */
 
-    if (xf_output_port_ready(&capturer->output))
-    {
-         xa_base_schedule(base, 0);
-    }
-    else
-    {
-        /*error case...in empty this buffer output should be ready*/
-        TRACE(INPUT, _b("invalid state[%p]"), capturer);
-        return XA_CAPTURER_EXEC_FATAL_STATE;
-    }
-
+    xa_base_schedule(base, 0); /* ... schedule irrespective of output buffer availability. TENA-2528 */
 
     TRACE(INPUT, _b("Received buffer [%p]:%u"), m->buffer, m->length);
 
@@ -203,8 +193,8 @@ static XA_ERRORCODE xa_capturer_fill_this_buffer(XACodecBase *base, xf_message_t
     }
     else if (m == xf_output_port_control_msg(&capturer->output))
     {
-        /* ...end-of-stream processing indication received; check the state */
-        BUG((base->state & XA_BASE_FLAG_COMPLETED) == 0, _x("invalid state: %x"), base->state);
+        /* ... mark flushing sequence is done */
+        xf_output_port_flush_done(&capturer->output);
 
 #if 1   //TENA_2379                                                                                                     
         if (xf_output_port_unrouting(&capturer->output))
@@ -214,8 +204,12 @@ static XA_ERRORCODE xa_capturer_fill_this_buffer(XACodecBase *base, xf_message_t
             TRACE(INFO, _b("port is unrouted"));
         }   
 #endif
-        /* ... mark flushing sequence is done */
-        xf_output_port_flush_done(&capturer->output);
+        else if (m->length == XF_MSG_LENGTH_INVALID)
+        {
+            /* ...complete flushing and unrouting of the outport whose dest no longer exists */
+            xf_output_port_unroute(&capturer->output);
+            TRACE(INFO, _b("capturer[%p] completed internal unroute of port"), capturer);
+        }
 
         /* ...complete pending zero-length input buffer */
        // xf_input_port_purge(&codec->input);
@@ -231,6 +225,26 @@ static XA_ERRORCODE xa_capturer_fill_this_buffer(XACodecBase *base, xf_message_t
         xf_response_ok(m);
 
         return XA_NO_ERROR;
+    }
+    /* ...indicates that the downstream component no longer exists */
+    else if ((m->length == XF_MSG_LENGTH_INVALID) && xf_output_port_routed(&capturer->output))
+    {
+         m->length = capturer->output.length; /* ...reset length for sanity */
+
+        if(!xf_output_port_flushing(&capturer->output))
+        {
+            /* ...cancel any pending processing */
+            xa_base_cancel(base);
+
+            /* ...output port is invalid; trigger port flush to collect all the buffers in transit */
+            (void)xf_output_port_flush(&capturer->output, XF_FILL_THIS_BUFFER);
+
+            /* ...flushing sequence is started; wait until flow-control message returns */
+            TRACE(INFO, _b("capturer [%p] started internal unroute of port"), capturer);
+         }
+         TRACE(INFO, _b("capturer[%p] drop buffer"), capturer);
+
+         return XA_NO_ERROR;
     }
     else
     {
@@ -296,6 +310,13 @@ static XA_ERRORCODE xa_capturer_port_unroute(XACodecBase *base, xf_message_t *m)
     XF_CHK_ERR(XF_MSG_DST_PORT(m->id) == 1, XA_API_FATAL_INVALID_CMD_TYPE);
 #endif
 
+    if(!xf_output_port_routed(&capturer->output))
+    {
+        /* ...if XF_MSG_LENGTH_INVALID triggered internal unroute is completed, send response instantly */
+        xf_response_ok(m);
+        return XA_NO_ERROR;
+    }
+
     /* ...cancel any pending processing */
     xa_base_cancel(base);
 
@@ -328,10 +349,10 @@ static XA_ERRORCODE xa_capturer_flush(XACodecBase *base, xf_message_t *m)
     /* ...command is allowed only in "postinit" state */
     XF_CHK_ERR(base->state & XA_BASE_FLAG_POSTINIT, XA_API_FATAL_INVALID_CMD);
 
-    /* ...ensure input parameter length is zero */
-    XF_CHK_ERR(m->length == 0, XA_API_FATAL_INVALID_CMD_TYPE);
+    /* ...ensure input parameter length is zero or XF_MSG_LENGTH_INVALID */
+    XF_CHK_ERR((m->length == 0) || (m->length == XF_MSG_LENGTH_INVALID), XA_API_FATAL_INVALID_CMD_TYPE);
 
-    TRACE(1, _b("flush command received"));
+    TRACE(INFO, _b("flush command received"));
 
 #if !CAPTURER_PORT_RENAME
     /* ...flush command must be addressed to input port */
@@ -441,13 +462,11 @@ static XA_ERRORCODE xa_capturer_preprocess(XACodecBase *base)
     {
         return XA_NO_ERROR;
     }
-    else if ((output = xf_output_port_data(&capturer->output)) == NULL)
-    {
-        /* ...no output buffer available */
-        return XA_CAPTURER_EXEC_NONFATAL_NO_DATA;
-    }
-     XA_API(base, XA_API_CMD_SET_MEM_PTR, 0/*codec->out_idx*/, output);
-    TRACE(1, _x("set output ptr: %p"), output);
+
+    output = xf_output_port_data(&capturer->output); /* ... set output buffer pointer even if NULL. TENA-2528 */
+
+    XA_API(base, XA_API_CMD_SET_MEM_PTR, 0/*codec->out_idx*/, output);
+    TRACE(OUTPUT, _x("set output ptr: %p"), output);
     return XA_NO_ERROR;
 }
 
@@ -530,30 +549,40 @@ static XA_ERRORCODE (* const xa_capturer_cmd[])(XACodecBase *, xf_message_t *) =
 static int xa_capturer_terminate(xf_component_t *component, xf_message_t *m)
 {
     XACapturer   *capturer = (XACapturer *) component;
-    UWORD32             opcode = m->opcode;
+
+    if (m == NULL)
+    {
+        /* ...ignore component processing during component termination(rare case) */
+        TRACE(OUTPUT, _b("component processing ignored.."));
+        return -1;
+    }
 
     /* ...check if we received output port control message */
     if (m == xf_output_port_control_msg(&capturer->output))
     {
         /* ...output port flushing complete; mark port is idle and terminate */
         xf_output_port_flush_done(&capturer->output);
+        TRACE(OUTPUT, _b("capturer[%p] flush completed in terminate"), capturer);
         return -1;
     }
-    else if (opcode == XF_FILL_THIS_BUFFER)
+    else if (m->opcode == XF_FILL_THIS_BUFFER)
     {
         /* ...output buffer returned by the sink component; ignore and keep waiting */
         TRACE(OUTPUT, _b("collect output buffer"));
         return 0;
     }
-    else if (opcode == XF_UNREGISTER)
-    {
-        /* ...ignore subsequent unregister command/response - tbd */
-        return 0;
-    }
     else
     {
         /* ...everything else is responded with generic failure */
-        xf_response_err(m);
+        if (XF_MSG_SRC_PROXY(m->id))
+        {
+            xf_response_err(m);
+        }
+        else
+        {
+            xf_response_failure(m);
+            TRACE(OUTPUT, _b("capturer[%p] response_failure in terminate"), capturer);
+        }
         return 0;
     }
 }
@@ -564,6 +593,9 @@ static int xa_capturer_destroy(xf_component_t *component, xf_message_t *m)
     XACapturer   *capturer = (XACapturer *) component;
     UWORD32             core = xf_component_core(component);
 
+    /* ...get the saved command message pointer before the component memory is freed */
+    xf_message_t *m_resp = capturer->m_response;
+
     /* ...destroy input port */
     //xf_input_port_destroy(&codec->input, core);
 
@@ -573,7 +605,10 @@ static int xa_capturer_destroy(xf_component_t *component, xf_message_t *m)
     /* ...deallocate all resources */
     xa_base_destroy(&capturer->base, XF_MM(sizeof(*capturer)), core);
 
-    TRACE(INIT, _b("audio-codec[%p@%u] destroyed"), capturer, core);
+    /* ...complete the command with response */
+    xf_response_err(m_resp);
+
+    TRACE(INIT, _b("capturer[%p@%u] destroyed"), capturer, core);
 
     /* ...indicate the client has been destroyed */
     return 0;
@@ -584,15 +619,15 @@ static int xa_capturer_cleanup(xf_component_t *component, xf_message_t *m)
 {
     XACapturer *capturer = (XACapturer *) component;
     UWORD32             state = XA_CAPTURER_STATE_IDLE;
-     XACodecBase    *base = (XACodecBase *) capturer;
-
-    /* ...complete message with error response */
-    xf_response_err(m);
+    XACodecBase    *base = (XACodecBase *) capturer;
+    
+    XA_API_NORET(base, XA_API_CMD_SET_CONFIG_PARAM, XA_CAPTURER_CONFIG_PARAM_STATE, &state);
 
     /* ...cancel internal scheduling message if needed */
     xa_base_cancel(&capturer->base);
 
-    XA_API_NORET(base, XA_API_CMD_SET_CONFIG_PARAM, XA_CAPTURER_CONFIG_PARAM_STATE, &state);
+    /* ...save command message to send response after flush completes */
+    capturer->m_response = m;
 
     /* ...propagate unregister command to connected component */
     if (xf_output_port_flush(&capturer->output, XF_FLUSH))

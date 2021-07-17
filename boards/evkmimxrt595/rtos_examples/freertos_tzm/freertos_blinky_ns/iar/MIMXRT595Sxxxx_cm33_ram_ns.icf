@@ -2,10 +2,11 @@
 ** ###################################################################
 **     Processors:          MIMXRT595SFAWC_cm33
 **                          MIMXRT595SFFOC_cm33
+**
 **     Compiler:            IAR ANSI C/C++ Compiler for ARM
-**     Reference manual:    RT500 Reference Manual. Rev.A, 3/2020
-**     Version:             rev. 3.0, 2019-12-10
-**     Build:               b200410
+**     Reference manual:    iMXRT500RM Rev.D, 11/2020
+**     Version:             rev. 4.0, 2020-05-12
+**     Build:               b201117
 **
 **     Abstract:
 **         Linker file for the IAR ANSI C/C++ Compiler for ARM
@@ -38,7 +39,7 @@ if (isdefinedsymbol(__heap_size__)) {
 }
 
 /* The SRAM region [0x10000-0x1BFFF] is reserved for ROM code. */
-/* The SRAM region [0x0-0xFFFF], [0x1C000-0x1FFFF] is reserved for app-specific use cases. */
+/* The SRAM region [0x0-0xFFFF], [0x1C000-0x1FFFF] are reserved for app-specific use cases. */
 /* The SRAM region [0x20000-0x7FFFF] is reserved for Non-cached shared memory between M33 and DSP. */
 
 
@@ -83,7 +84,7 @@ define exported symbol __unprivileged_flash_start__     = __syscalls_flash_end__
 define exported symbol __unprivileged_flash_end__       = m_text_end;
 
 define exported symbol __privileged_sram_start__   = m_data_start;
-define exported symbol __privileged_sram_length__  = 0x200;
+define exported symbol __privileged_sram_length__  = 0xD000;
 define exported symbol __privileged_sram_end__     = __privileged_sram_start__ + __privileged_sram_length__;
 
 define block PRIV_FUNCS with alignment = 32, size = __privileged_functions_length__   { section privileged_functions };

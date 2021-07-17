@@ -1,15 +1,17 @@
-/*******************************************************************************
-* Copyright (c) 2015-2020 Cadence Design Systems, Inc.
-* 
+/*
+* Copyright (c) 2015-2021 Cadence Design Systems Inc.
+*
 * Permission is hereby granted, free of charge, to any person obtaining
 * a copy of this software and associated documentation files (the
-* "Software"), to use this Software with Cadence processor cores only and 
-* not with any other processors and platforms, subject to
+* "Software"), to deal in the Software without restriction, including
+* without limitation the rights to use, copy, modify, merge, publish,
+* distribute, sublicense, and/or sell copies of the Software, and to
+* permit persons to whom the Software is furnished to do so, subject to
 * the following conditions:
-* 
+*
 * The above copyright notice and this permission notice shall be included
 * in all copies or substantial portions of the Software.
-* 
+*
 * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
 * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
@@ -17,8 +19,7 @@
 * CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
 * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-******************************************************************************/
+*/
 /*******************************************************************************
  * rbtree.c
  *
@@ -589,6 +590,12 @@ rb_idx_t rb_delete(rb_tree_t *tree, rb_idx_t n_idx)
     /* ...save parent of element N that we are going to remove */
     p_idx = RB_PARENT(tree, n_idx);
 
+    if(p_idx == (rb_idx_t)NULL)
+    {
+        /* ...return if the node to be deleted(n_idx) doesnt exists on tree */
+        return p_idx;
+    }
+
 	/* ...get in-order predecessor/successor of n_idx, if possible */
 	if ((m_idx = RB_LEFT(tree, n_idx)) != RB_NULL(tree))
     {
@@ -611,7 +618,10 @@ rb_idx_t rb_delete(rb_tree_t *tree, rb_idx_t n_idx)
         /* ...tree consists of the only root node N that we are removing */
         RB_SET_ROOT(tree, m_idx);
 
-        /* ..return tree null pointer */
+        /* ...reset the neighbors of deleted node */
+        n_idx->left = n_idx->right = n_idx->parent = (rb_idx_t )NULL;
+
+        /* ...return tree null pointer */
         return m_idx;
     }
     else
@@ -708,7 +718,10 @@ adjust_parent:
             RB_SET_C(tree, c_idx, RB_BLK);
 	}
 
-    /* ....return the node K which replaced deleted node N */
+    /* ...reset the neighbors of deleted node */
+    n_idx->left = n_idx->right = n_idx->parent = (rb_idx_t )NULL;
+
+    /* ...return the node K which replaced deleted node N */
     return k_idx;
 }
 

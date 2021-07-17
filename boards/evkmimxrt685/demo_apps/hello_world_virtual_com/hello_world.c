@@ -88,8 +88,8 @@ int main(void)
     char ch;
 
     /* Init board hardware. */
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
+    BOARD_InitBootPins();
+    BOARD_InitBootClocks();
 
     POWER_DisablePD(kPDRUNCFG_APD_USBHS_SRAM);
     POWER_DisablePD(kPDRUNCFG_PPD_USBHS_SRAM);

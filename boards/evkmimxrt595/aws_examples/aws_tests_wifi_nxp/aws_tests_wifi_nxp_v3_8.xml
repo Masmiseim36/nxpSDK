@@ -16,18 +16,21 @@
     <definition extID="middleware.sdmmc.host.usdhc.freertos.MIMXRT595S"/>
     <definition extID="middleware.freertos-kernel.MIMXRT595S"/>
     <definition extID="middleware.freertos-kernel.heap_4.MIMXRT595S"/>
-    <definition extID="middleware.freertos-aws_iot.c_sdk.standard.shadow.MIMXRT595S"/>
-    <definition extID="middleware.freertos-aws_iot.c_sdk.standard.serializer.MIMXRT595S"/>
+    <definition extID="middleware.freertos-aws_iot.libraries.c_sdk.standard.shadow.MIMXRT595S"/>
+    <definition extID="middleware.freertos-aws_iot.libraries.c_sdk.standard.serializer.MIMXRT595S"/>
     <definition extID="middleware.freertos-aws_iot.libraries.3rdparty.pkcs11.MIMXRT595S"/>
     <definition extID="middleware.freertos-aws_iot.vendor.nxp.pkcs11.MIMXRT595S"/>
     <definition extID="middleware.freertos-aws_iot.libraries.abstractions.pkcs11.MIMXRT595S"/>
+    <definition extID="middleware.freertos-aws_iot.libraries.abstractions.pkcs11_mbedtls.MIMXRT595S"/>
+    <definition extID="middleware.freertos-aws_iot.libraries.logging.MIMXRT595S"/>
+    <definition extID="middleware.freertos-aws_iot.libraries.3rdparty.mbedtls_config.MIMXRT595S"/>
     <definition extID="middleware.mbedtls.MIMXRT595S"/>
-    <definition extID="middleware.mbedtls.port.ksdk.MIMXRT595S"/>
     <definition extID="platform.drivers.casper.MIMXRT595S"/>
     <definition extID="platform.drivers.hashcrypt.MIMXRT595S"/>
     <definition extID="platform.drivers.trng.MIMXRT595S"/>
     <definition extID="component.mflash_file.MIMXRT595S"/>
     <definition extID="component.mflash.rt595.MIMXRT595S"/>
+    <definition extID="middleware.mbedtls.port.ksdk.MIMXRT595S"/>
     <definition extID="middleware.mbedtls.rt1.MIMXRT595S"/>
     <definition extID="middleware.freertos-kernel.cm33_nonsecure_port.MIMXRT595S"/>
     <definition extID="platform.drivers.flexcomm_i2c.MIMXRT595S"/>
@@ -50,18 +53,15 @@
     <definition extID="platform.drivers.lpc_iopctl.MIMXRT595S"/>
     <definition extID="platform.drivers.lpc_gpio.MIMXRT595S"/>
     <definition extID="platform.drivers.reset.MIMXRT595S"/>
-    <definition extID="middleware.freertos-aws_iot.common.MIMXRT595S"/>
+    <definition extID="middleware.freertos-aws_iot.libraries.c_sdk.standard.common.MIMXRT595S"/>
     <definition extID="middleware.freertos-kernel.extension.MIMXRT595S"/>
     <definition extID="middleware.freertos-aws_iot.libraries.abstractions.platform.MIMXRT595S"/>
     <definition extID="middleware.freertos-aws_iot.libraries.abstractions.secure_sockets.MIMXRT595S"/>
-    <definition extID="middleware.freertos-aws_iot.libraries.freertos_plus.standard.pkcs11.MIMXRT595S"/>
     <definition extID="middleware.freertos-aws_iot.libraries.freertos_plus.standard.utils.MIMXRT595S"/>
     <definition extID="middleware.freertos-aws_iot.libraries.freertos_plus.standard.crypto.MIMXRT595S"/>
-    <definition extID="middleware.freertos-aws_iot.libraries.abstractions.threading_alt.MIMXRT595S"/>
+    <definition extID="CMSIS_Include_core_cm.MIMXRT595S"/>
     <definition extID="middleware.freertos-aws_iot.libraries.abstractions.wifi.MIMXRT595S"/>
-    <definition extID="platform.Include_core_cm33.MIMXRT595S"/>
-    <definition extID="platform.Include_common.MIMXRT595S"/>
-    <definition extID="platform.Include_dsp.MIMXRT595S"/>
+    <definition extID="middleware.wifi.wifidriver.MIMXRT595S"/>
     <definition extID="middleware.freertos-aws_iot.libraries.freertos_plus.standard.tls.MIMXRT595S"/>
     <definition extID="middleware.freertos-aws_iot.libraries.3rdparty.mbedtls_utils.MIMXRT595S"/>
     <definition extID="middleware.freertos-aws_iot.libraries.3rdparty.jsmn.MIMXRT595S"/>
@@ -69,6 +69,7 @@
     <definition extID="component.osa_free_rtos.MIMXRT595S"/>
     <definition extID="platform.drivers.usdhc.MIMXRT595S"/>
     <definition extID="middleware.freertos-aws_iot.mqtt.MIMXRT595S"/>
+    <definition extID="middleware.freertos-aws_iot.libraries.coremqtt.MIMXRT595S"/>
     <definition extID="component.mflash.common.MIMXRT595S"/>
     <definition extID="platform.utilities.misc_utilities.MIMXRT595S"/>
     <definition extID="platform.drivers.iap.MIMXRT595S"/>
@@ -80,7 +81,7 @@
     <definition extID="com.crt.advproject.config.exe.debug"/>
     <definition extID="com.crt.advproject.config.exe.release"/>
   </externalDefinitions>
-  <example id="evkmimxrt595_aws_tests_wifi_nxp" name="aws_tests_wifi_nxp" device_core="cm33_MIMXRT595S" dependency="middleware.freertos-aws_iot.demos.dev_mode_key_provisioning.MIMXRT595S middleware.freertos-aws_iot.vendor.nxp.wifi.MIMXRT595S middleware.freertos-aws_iot.tests.MIMXRT595S middleware.freertos-aws_iot.vendor.nxp.secure_sockets.lwip.MIMXRT595S middleware.freertos-aws_iot.libraries.freertos_plus.aws.greengrass.MIMXRT595S middleware.lwip.MIMXRT595S utility.debug_console.MIMXRT595S middleware.wifi.MIMXRT595S middleware.sdmmc.sdio.MIMXRT595S middleware.sdmmc.common.MIMXRT595S middleware.sdmmc.host.usdhc.MIMXRT595S middleware.sdmmc.host.usdhc.freertos.MIMXRT595S middleware.freertos-kernel.MIMXRT595S middleware.freertos-kernel.heap_4.MIMXRT595S middleware.freertos-aws_iot.c_sdk.standard.shadow.MIMXRT595S middleware.freertos-aws_iot.c_sdk.standard.serializer.MIMXRT595S middleware.freertos-aws_iot.libraries.3rdparty.pkcs11.MIMXRT595S middleware.freertos-aws_iot.vendor.nxp.pkcs11.MIMXRT595S middleware.freertos-aws_iot.libraries.abstractions.pkcs11.MIMXRT595S middleware.mbedtls.MIMXRT595S middleware.mbedtls.port.ksdk.MIMXRT595S platform.drivers.casper.MIMXRT595S platform.drivers.hashcrypt.MIMXRT595S platform.drivers.trng.MIMXRT595S component.mflash_file.MIMXRT595S component.mflash.rt595.MIMXRT595S middleware.mbedtls.rt1.MIMXRT595S middleware.freertos-kernel.cm33_nonsecure_port.MIMXRT595S platform.drivers.flexcomm_i2c.MIMXRT595S driver.pca9420.MIMXRT595S platform.drivers.clock.MIMXRT595S platform.drivers.common.MIMXRT595S device.MIMXRT595S_CMSIS.MIMXRT595S platform.utilities.assert.MIMXRT595S component.usart_adapter.MIMXRT595S platform.drivers.power.MIMXRT595S platform.drivers.flexspi.MIMXRT595S platform.drivers.cache_cache64.MIMXRT595S component.serial_manager.MIMXRT595S component.lists.MIMXRT595S component.serial_manager_uart.MIMXRT595S platform.drivers.flexcomm_usart.MIMXRT595S platform.drivers.flash_config.MIMXRT595S device.MIMXRT595S_startup.MIMXRT595S platform.drivers.flexcomm.MIMXRT595S platform.drivers.lpc_iopctl.MIMXRT595S platform.drivers.lpc_gpio.MIMXRT595S platform.drivers.reset.MIMXRT595S middleware.freertos-aws_iot.common.MIMXRT595S middleware.freertos-kernel.extension.MIMXRT595S middleware.freertos-aws_iot.libraries.abstractions.platform.MIMXRT595S middleware.freertos-aws_iot.libraries.abstractions.secure_sockets.MIMXRT595S middleware.freertos-aws_iot.libraries.freertos_plus.standard.pkcs11.MIMXRT595S middleware.freertos-aws_iot.libraries.freertos_plus.standard.utils.MIMXRT595S middleware.freertos-aws_iot.libraries.freertos_plus.standard.crypto.MIMXRT595S middleware.freertos-aws_iot.libraries.abstractions.threading_alt.MIMXRT595S middleware.freertos-aws_iot.libraries.abstractions.wifi.MIMXRT595S platform.Include_core_cm33.MIMXRT595S platform.Include_common.MIMXRT595S platform.Include_dsp.MIMXRT595S middleware.freertos-aws_iot.libraries.freertos_plus.standard.tls.MIMXRT595S middleware.freertos-aws_iot.libraries.3rdparty.mbedtls_utils.MIMXRT595S middleware.freertos-aws_iot.libraries.3rdparty.jsmn.MIMXRT595S middleware.sdmmc.osa.freertos.MIMXRT595S component.osa_free_rtos.MIMXRT595S platform.drivers.usdhc.MIMXRT595S middleware.freertos-aws_iot.mqtt.MIMXRT595S component.mflash.common.MIMXRT595S platform.utilities.misc_utilities.MIMXRT595S platform.drivers.iap.MIMXRT595S" category="aws_examples">
+  <example id="evkmimxrt595_aws_tests_wifi_nxp" name="aws_tests_wifi_nxp" device_core="cm33_MIMXRT595S" dependency="middleware.freertos-aws_iot.demos.dev_mode_key_provisioning.MIMXRT595S middleware.freertos-aws_iot.vendor.nxp.wifi.MIMXRT595S middleware.freertos-aws_iot.tests.MIMXRT595S middleware.freertos-aws_iot.vendor.nxp.secure_sockets.lwip.MIMXRT595S middleware.freertos-aws_iot.libraries.freertos_plus.aws.greengrass.MIMXRT595S middleware.lwip.MIMXRT595S utility.debug_console.MIMXRT595S middleware.wifi.MIMXRT595S middleware.sdmmc.sdio.MIMXRT595S middleware.sdmmc.common.MIMXRT595S middleware.sdmmc.host.usdhc.MIMXRT595S middleware.sdmmc.host.usdhc.freertos.MIMXRT595S middleware.freertos-kernel.MIMXRT595S middleware.freertos-kernel.heap_4.MIMXRT595S middleware.freertos-aws_iot.libraries.c_sdk.standard.shadow.MIMXRT595S middleware.freertos-aws_iot.libraries.c_sdk.standard.serializer.MIMXRT595S middleware.freertos-aws_iot.libraries.3rdparty.pkcs11.MIMXRT595S middleware.freertos-aws_iot.vendor.nxp.pkcs11.MIMXRT595S middleware.freertos-aws_iot.libraries.abstractions.pkcs11.MIMXRT595S middleware.freertos-aws_iot.libraries.abstractions.pkcs11_mbedtls.MIMXRT595S middleware.freertos-aws_iot.libraries.logging.MIMXRT595S middleware.freertos-aws_iot.libraries.3rdparty.mbedtls_config.MIMXRT595S middleware.mbedtls.MIMXRT595S platform.drivers.casper.MIMXRT595S platform.drivers.hashcrypt.MIMXRT595S platform.drivers.trng.MIMXRT595S component.mflash_file.MIMXRT595S component.mflash.rt595.MIMXRT595S middleware.mbedtls.port.ksdk.MIMXRT595S middleware.mbedtls.rt1.MIMXRT595S middleware.freertos-kernel.cm33_nonsecure_port.MIMXRT595S platform.drivers.flexcomm_i2c.MIMXRT595S driver.pca9420.MIMXRT595S platform.drivers.clock.MIMXRT595S platform.drivers.common.MIMXRT595S device.MIMXRT595S_CMSIS.MIMXRT595S platform.utilities.assert.MIMXRT595S component.usart_adapter.MIMXRT595S platform.drivers.power.MIMXRT595S platform.drivers.flexspi.MIMXRT595S platform.drivers.cache_cache64.MIMXRT595S component.serial_manager.MIMXRT595S component.lists.MIMXRT595S component.serial_manager_uart.MIMXRT595S platform.drivers.flexcomm_usart.MIMXRT595S platform.drivers.flash_config.MIMXRT595S device.MIMXRT595S_startup.MIMXRT595S platform.drivers.flexcomm.MIMXRT595S platform.drivers.lpc_iopctl.MIMXRT595S platform.drivers.lpc_gpio.MIMXRT595S platform.drivers.reset.MIMXRT595S middleware.freertos-aws_iot.libraries.c_sdk.standard.common.MIMXRT595S middleware.freertos-kernel.extension.MIMXRT595S middleware.freertos-aws_iot.libraries.abstractions.platform.MIMXRT595S middleware.freertos-aws_iot.libraries.abstractions.secure_sockets.MIMXRT595S middleware.freertos-aws_iot.libraries.freertos_plus.standard.utils.MIMXRT595S middleware.freertos-aws_iot.libraries.freertos_plus.standard.crypto.MIMXRT595S CMSIS_Include_core_cm.MIMXRT595S middleware.freertos-aws_iot.libraries.abstractions.wifi.MIMXRT595S middleware.wifi.wifidriver.MIMXRT595S middleware.freertos-aws_iot.libraries.freertos_plus.standard.tls.MIMXRT595S middleware.freertos-aws_iot.libraries.3rdparty.mbedtls_utils.MIMXRT595S middleware.freertos-aws_iot.libraries.3rdparty.jsmn.MIMXRT595S middleware.sdmmc.osa.freertos.MIMXRT595S component.osa_free_rtos.MIMXRT595S platform.drivers.usdhc.MIMXRT595S middleware.freertos-aws_iot.mqtt.MIMXRT595S middleware.freertos-aws_iot.libraries.coremqtt.MIMXRT595S component.mflash.common.MIMXRT595S platform.utilities.misc_utilities.MIMXRT595S platform.drivers.iap.MIMXRT595S" category="aws_examples">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -99,14 +100,14 @@
           <value>MBEDTLS_CONFIG_FILE='"aws_mbedtls_config.h"'</value>
           <value>UNITY_INCLUDE_CONFIG_H</value>
           <value>AMAZON_FREERTOS_ENABLE_UNIT_TESTS</value>
-          <value>WIFI_BOARD_PAN9026_SDIO</value>
           <value>XIP_IMAGE</value>
           <value>XIP_EXTERNAL_FLASH</value>
           <value>SDIO_ENABLED</value>
-          <value>FSL_RTOS_FREE_RTOS</value>
-          <value>MFLASH_FILE_BASEADDR=3145728</value>
+          <value>SDK_OS_FREE_RTOS</value>
+          <value>MFLASH_FILE_BASEADDR=7340032</value>
           <value>SDK_I2C_BASED_COMPONENT_USED=1</value>
           <value>SERIAL_PORT_TYPE_UART=1</value>
+          <value>MCUXPRESSO_SDK</value>
         </option>
         <option id="com.crt.advproject.gas.hdrlib" type="enum">
           <value>com.crt.advproject.gas.hdrlib.newlibnano</value>
@@ -142,7 +143,7 @@
           <value>com.crt.advproject.misc.dialect.gnu99</value>
         </option>
         <option id="gnu.c.compiler.option.misc.other" type="string">
-          <value>-fomit-frame-pointer -mcpu=cortex-m33 -c -ffunction-sections -fdata-sections -ffreestanding -fno-builtin -imacros "wifi_config.h"</value>
+          <value>-fomit-frame-pointer -mcpu=cortex-m33 -c -ffunction-sections -fdata-sections -ffreestanding -fno-builtin -imacros "app_config.h"</value>
         </option>
         <option id="gnu.c.compiler.option.warnings.allwarn" type="boolean">
           <value>false</value>
@@ -169,6 +170,7 @@
       <include_path path="boards/evkmimxrt595/aws_examples/aws_tests_wifi_nxp/config_files" project_relative_path="configs" type="c_include"/>
       <include_path path="boards/evkmimxrt595/aws_examples/common" project_relative_path="evkmimxrt595/aws_examples/common" type="c_include"/>
       <include_path path="boards/src/aws_examples/common/config_files_wifi_nxp" project_relative_path="source" type="c_include"/>
+      <include_path path="boards/evkmimxrt595/aws_examples/aws_tests_wifi_nxp" project_relative_path="source" type="c_include"/>
       <include_path path="boards/evkmimxrt595" project_relative_path="configs" type="asm_include"/>
       <include_path path="boards/evkmimxrt595/aws_examples/aws_tests_wifi_nxp/config_files" project_relative_path="configs" type="asm_include"/>
     </include_paths>
@@ -221,9 +223,15 @@
       <files mask="FreeRTOSIPConfig.h"/>
       <files mask="iot_config.h"/>
       <files mask="iot_mqtt_agent_config.h"/>
-      <files mask="iot_pkcs11_config.h"/>
-      <files mask="iot_test_pkcs11_config.h"/>
+      <files mask="core_pkcs11_config.h"/>
+      <files mask="core_test_pkcs11_config.h"/>
       <files mask="unity_config.h"/>
+      <files mask="aws_ota_agent_config.h"/>
+      <files mask="aws_test_ota_config.h"/>
+      <files mask="core_http_config.h"/>
+      <files mask="core_mqtt_config.h"/>
+      <files mask="defender_config.h"/>
+      <files mask="shadow_config.h"/>
     </source>
     <source path="boards/evkmimxrt595/aws_examples/aws_tests_wifi_nxp/config_files" project_relative_path="configs" type="c_include">
       <files mask="lwipopts.h"/>
@@ -240,6 +248,9 @@
     <source path="boards/evkmimxrt595/aws_examples/aws_tests_wifi_nxp/mcux/linkscripts" project_relative_path="linkscripts" type="src" toolchain="mcuxpresso">
       <files mask="main_text.ldt"/>
       <files mask="main_data.ldt"/>
+    </source>
+    <source path="boards/evkmimxrt595/aws_examples/aws_tests_wifi_nxp" project_relative_path="source" type="c_include">
+      <files mask="app_config.h"/>
     </source>
     <source path="boards/evkmimxrt595/aws_examples/aws_tests_wifi_nxp" project_relative_path="source" type="c_include">
       <files mask="wifi_config.h"/>

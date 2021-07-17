@@ -1,0 +1,19 @@
+
+----------------------------------------------------------------------
+REL 4.02.00 - LA_OPT_NXP_Software_License
+----------------------------------------------------------------------
+VIT integrating LP_VAD, WakeWordEngine Text2Model and Voice Commands Text2Model features.
+Core supported : FusionF1
+Library validated on RT500 platform
+
+Languages supported : English - Mandarin
+
+English WakeWord supported : "HEY NXP"
+Mandarin  WakeWord supported : " 你好 恩 智 浦 "
+See VIT_Model.h for the list of commands supported.
+
+Dependencies : 
+    - Fusion naturedsp lib : libfusion_library
+
+
+Changes : -

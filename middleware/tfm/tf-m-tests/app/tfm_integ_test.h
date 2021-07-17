@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017-2019, Arm Limited. All rights reserved.
+ * Copyright (c) 2017-2020, Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  *
@@ -26,20 +26,14 @@ __asm("  .global __ARM_use_no_argv\n");
  */
 #define UNUSED_VARIABLE(X) ((void)(X))
 
-#ifdef TEST_FRAMEWORK_NS
+#if defined(TEST_FRAMEWORK_NS) || defined(TEST_FRAMEWORK_S)
 /**
  * \brief Main test application for the RTX-TFM core
  *        integration tests
  *
  */
 void test_app(void *argument);
-#endif /* TEST_FRAMEWORK_NS */
-
-/**
- * \brief Execute the interactive test cases (button push)
- *
- */
-void execute_ns_interactive_tests(void);
+#endif /* TEST_FRAMEWORK_NS || TEST_FRAMEWORK_S */
 
 #ifdef __cplusplus
 }

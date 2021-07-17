@@ -19,12 +19,13 @@ product: Pins v9.0
 processor: MIMXRT595S
 package_id: MIMXRT595SFFOC
 mcu_data: ksdk2_0
-processor_version: 0.9.0
+processor_version: 0.9.3
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 /* clang-format on */
 
 #include "fsl_common.h"
+#include "fsl_gpio.h"
 #include "fsl_iopctl.h"
 #include "pin_mux.h"
 
@@ -37,6 +38,7 @@ processor_version: 0.9.0
 void BOARD_InitBootPins(void)
 {
     BOARD_InitPins();
+    BOARD_InitI3CPins();
 }
 
 /* clang-format off */
@@ -45,9 +47,6 @@ void BOARD_InitBootPins(void)
 BOARD_InitPins:
 - options: {callFromInitBoot: 'true', coreID: cm33, enableClock: 'true'}
 - pin_list:
-  - {pin_num: B10, peripheral: I3C0, signal: SCL, pin_signal: PIO2_29/I3C0_SCL/SCT0_OUT0/CLKOUT/SMARTDMA_PIO29, pupdena: enabled, pupdsel: pullUp, ibena: enabled}
-  - {pin_num: C14, peripheral: I3C0, signal: PUR, pin_signal: PIO2_31/I3C0_PUR/SCT0_OUT7/UTICK_CAP3/CTIMER_INP15/SWO/SMARTDMA_PIO31/CMP0_B}
-  - {pin_num: D10, peripheral: I3C0, signal: SDA, pin_signal: PIO2_30/I3C0_SDA/SCT0_OUT3/CLKIN/CMP0_OUT/SMARTDMA_PIO30, pupdena: enabled, pupdsel: pullUp, ibena: enabled}
   - {pin_num: G16, peripheral: FLEXCOMM0, signal: TXD_SCL_MISO_WS, pin_signal: PIO0_1/FC0_TXD_SCL_MISO_WS/CTIMER0_MAT1/I2S_BRIDGE_WS_IN/SEC_PIO0_1}
   - {pin_num: H16, peripheral: FLEXCOMM0, signal: RXD_SDA_MOSI_DATA, pin_signal: PIO0_2/FC0_RXD_SDA_MOSI_DATA/CTIMER0_MAT2/I2S_BRIDGE_DATA_IN/SEC_PIO0_2, ibena: enabled}
   - {pin_num: H17, peripheral: FLEXCOMM1, signal: RXD_SDA_MOSI_DATA, pin_signal: PIO0_9/FC1_RXD_SDA_MOSI_DATA/SCT0_GPI6/SCT0_OUT6/CTIMER1_MAT2/I2S_BRIDGE_DATA_OUT/SEC_PIO0_9,
@@ -222,6 +221,74 @@ void BOARD_InitPins(void)
     /* PORT1 PIN10 (coords: M5) is configured as MCLK */
     IOPCTL_PinMuxSet(IOPCTL, 1U, 10U, port1_pin10_config);
 
+    const uint32_t port5_pin4_config = (/* Pin is configured as PDM_CLK01 */
+                                        IOPCTL_PIO_FUNC4 |
+                                        /* Disable pull-up / pull-down function */
+                                        IOPCTL_PIO_PUPD_DI |
+                                        /* Enable pull-down function */
+                                        IOPCTL_PIO_PULLDOWN_EN |
+                                        /* Enables input buffer function */
+                                        IOPCTL_PIO_INBUF_EN |
+                                        /* Normal mode */
+                                        IOPCTL_PIO_SLEW_RATE_NORMAL |
+                                        /* Normal drive */
+                                        IOPCTL_PIO_FULLDRIVE_DI |
+                                        /* Analog mux is disabled */
+                                        IOPCTL_PIO_ANAMUX_DI |
+                                        /* Pseudo Output Drain is disabled */
+                                        IOPCTL_PIO_PSEDRAIN_DI |
+                                        /* Input function is not inverted */
+                                        IOPCTL_PIO_INV_DI);
+    /* PORT5 PIN4 (coords: P2) is configured as PDM_CLK01 */
+    IOPCTL_PinMuxSet(IOPCTL, 5U, 4U, port5_pin4_config);
+
+    const uint32_t port5_pin8_config = (/* Pin is configured as PDM_DATA01 */
+                                        IOPCTL_PIO_FUNC4 |
+                                        /* Disable pull-up / pull-down function */
+                                        IOPCTL_PIO_PUPD_DI |
+                                        /* Enable pull-down function */
+                                        IOPCTL_PIO_PULLDOWN_EN |
+                                        /* Enables input buffer function */
+                                        IOPCTL_PIO_INBUF_EN |
+                                        /* Normal mode */
+                                        IOPCTL_PIO_SLEW_RATE_NORMAL |
+                                        /* Normal drive */
+                                        IOPCTL_PIO_FULLDRIVE_DI |
+                                        /* Analog mux is disabled */
+                                        IOPCTL_PIO_ANAMUX_DI |
+                                        /* Pseudo Output Drain is disabled */
+                                        IOPCTL_PIO_PSEDRAIN_DI |
+                                        /* Input function is not inverted */
+                                        IOPCTL_PIO_INV_DI);
+    /* PORT5 PIN8 (coords: P3) is configured as PDM_DATA01 */
+    IOPCTL_PinMuxSet(IOPCTL, 5U, 8U, port5_pin8_config);
+}
+
+/* clang-format off */
+/*
+ * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
+BOARD_InitI3CPins:
+- options: {callFromInitBoot: 'true', coreID: cm33, enableClock: 'true'}
+- pin_list:
+  - {pin_num: C14, peripheral: I3C0, signal: PUR, pin_signal: PIO2_31/I3C0_PUR/SCT0_OUT7/UTICK_CAP3/CTIMER_INP15/SWO/SMARTDMA_PIO31/CMP0_B, slew_rate: normal}
+  - {pin_num: D10, peripheral: I3C0, signal: SDA, pin_signal: PIO2_30/I3C0_SDA/SCT0_OUT3/CLKIN/CMP0_OUT/SMARTDMA_PIO30, pupdena: enabled, pupdsel: pullUp, ibena: enabled,
+    slew_rate: normal}
+  - {pin_num: B10, peripheral: I3C0, signal: SCL, pin_signal: PIO2_29/I3C0_SCL/SCT0_OUT0/CLKOUT/SMARTDMA_PIO29, pupdena: enabled, pupdsel: pullUp, ibena: enabled,
+    slew_rate: normal}
+ * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
+ */
+/* clang-format on */
+
+/* FUNCTION ************************************************************************************************************
+ *
+ * Function Name : BOARD_InitI3CPins
+ * Description   : Configures pin routing and optionally pin electrical features.
+ *
+ * END ****************************************************************************************************************/
+/* Function assigned for the Cortex-M33 */
+void BOARD_InitI3CPins(void)
+{
+
     const uint32_t port2_pin29_config = (/* Pin is configured as I3C0_SCL */
                                          IOPCTL_PIO_FUNC1 |
                                          /* Enable pull-up / pull-down function */
@@ -284,48 +351,90 @@ void BOARD_InitPins(void)
                                          IOPCTL_PIO_INV_DI);
     /* PORT2 PIN31 (coords: C14) is configured as I3C0_PUR */
     IOPCTL_PinMuxSet(IOPCTL, 2U, 31U, port2_pin31_config);
+}
 
-    const uint32_t port5_pin4_config = (/* Pin is configured as PDM_CLK01 */
-                                        IOPCTL_PIO_FUNC4 |
-                                        /* Disable pull-up / pull-down function */
-                                        IOPCTL_PIO_PUPD_DI |
-                                        /* Enable pull-down function */
-                                        IOPCTL_PIO_PULLDOWN_EN |
-                                        /* Enables input buffer function */
-                                        IOPCTL_PIO_INBUF_EN |
-                                        /* Normal mode */
-                                        IOPCTL_PIO_SLEW_RATE_NORMAL |
-                                        /* Normal drive */
-                                        IOPCTL_PIO_FULLDRIVE_DI |
-                                        /* Analog mux is disabled */
-                                        IOPCTL_PIO_ANAMUX_DI |
-                                        /* Pseudo Output Drain is disabled */
-                                        IOPCTL_PIO_PSEDRAIN_DI |
-                                        /* Input function is not inverted */
-                                        IOPCTL_PIO_INV_DI);
-    /* PORT5 PIN4 (coords: P2) is configured as PDM_CLK01 */
-    IOPCTL_PinMuxSet(IOPCTL, 5U, 4U, port5_pin4_config);
+/* clang-format off */
+/*
+ * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
+BOARD_InitI3CPinsAsGPIO:
+- options: {callFromInitBoot: 'false', coreID: cm33, enableClock: 'true'}
+- pin_list:
+  - {pin_num: D10, peripheral: GPIO, signal: 'PIO2, 30', pin_signal: PIO2_30/I3C0_SDA/SCT0_OUT3/CLKIN/CMP0_OUT/SMARTDMA_PIO30, direction: OUTPUT, pupdena: enabled,
+    pupdsel: pullUp, ibena: enabled, slew_rate: normal}
+  - {pin_num: B10, peripheral: GPIO, signal: 'PIO2, 29', pin_signal: PIO2_29/I3C0_SCL/SCT0_OUT0/CLKOUT/SMARTDMA_PIO29, direction: OUTPUT, pupdena: enabled, pupdsel: pullUp,
+    ibena: enabled, slew_rate: normal}
+ * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
+ */
+/* clang-format on */
 
-    const uint32_t port5_pin8_config = (/* Pin is configured as PDM_DATA01 */
-                                        IOPCTL_PIO_FUNC4 |
-                                        /* Disable pull-up / pull-down function */
-                                        IOPCTL_PIO_PUPD_DI |
-                                        /* Enable pull-down function */
-                                        IOPCTL_PIO_PULLDOWN_EN |
-                                        /* Enables input buffer function */
-                                        IOPCTL_PIO_INBUF_EN |
-                                        /* Normal mode */
-                                        IOPCTL_PIO_SLEW_RATE_NORMAL |
-                                        /* Normal drive */
-                                        IOPCTL_PIO_FULLDRIVE_DI |
-                                        /* Analog mux is disabled */
-                                        IOPCTL_PIO_ANAMUX_DI |
-                                        /* Pseudo Output Drain is disabled */
-                                        IOPCTL_PIO_PSEDRAIN_DI |
-                                        /* Input function is not inverted */
-                                        IOPCTL_PIO_INV_DI);
-    /* PORT5 PIN8 (coords: P3) is configured as PDM_DATA01 */
-    IOPCTL_PinMuxSet(IOPCTL, 5U, 8U, port5_pin8_config);
+/* FUNCTION ************************************************************************************************************
+ *
+ * Function Name : BOARD_InitI3CPinsAsGPIO
+ * Description   : Configures pin routing and optionally pin electrical features.
+ *
+ * END ****************************************************************************************************************/
+/* Function assigned for the Cortex-M33 */
+void BOARD_InitI3CPinsAsGPIO(void)
+{
+
+    /* Enables the clock for the GPIO2 module */
+    CLOCK_EnableClock(kCLOCK_HsGpio2);
+
+    gpio_pin_config_t gpio2_pinB10_config = {
+        .pinDirection = kGPIO_DigitalOutput,
+        .outputLogic = 0U
+    };
+    /* Initialize GPIO functionality on pin PIO2_29 (pin B10)  */
+    GPIO_PinInit(GPIO, 2U, 29U, &gpio2_pinB10_config);
+
+    gpio_pin_config_t gpio2_pinD10_config = {
+        .pinDirection = kGPIO_DigitalOutput,
+        .outputLogic = 0U
+    };
+    /* Initialize GPIO functionality on pin PIO2_30 (pin D10)  */
+    GPIO_PinInit(GPIO, 2U, 30U, &gpio2_pinD10_config);
+
+    const uint32_t port2_pin29_config = (/* Pin is configured as PIO2_29 */
+                                         IOPCTL_PIO_FUNC0 |
+                                         /* Enable pull-up / pull-down function */
+                                         IOPCTL_PIO_PUPD_EN |
+                                         /* Enable pull-up function */
+                                         IOPCTL_PIO_PULLUP_EN |
+                                         /* Enables input buffer function */
+                                         IOPCTL_PIO_INBUF_EN |
+                                         /* Normal mode */
+                                         IOPCTL_PIO_SLEW_RATE_NORMAL |
+                                         /* Normal drive */
+                                         IOPCTL_PIO_FULLDRIVE_DI |
+                                         /* Analog mux is disabled */
+                                         IOPCTL_PIO_ANAMUX_DI |
+                                         /* Pseudo Output Drain is disabled */
+                                         IOPCTL_PIO_PSEDRAIN_DI |
+                                         /* Input function is not inverted */
+                                         IOPCTL_PIO_INV_DI);
+    /* PORT2 PIN29 (coords: B10) is configured as PIO2_29 */
+    IOPCTL_PinMuxSet(IOPCTL, 2U, 29U, port2_pin29_config);
+
+    const uint32_t port2_pin30_config = (/* Pin is configured as PIO2_30 */
+                                         IOPCTL_PIO_FUNC0 |
+                                         /* Enable pull-up / pull-down function */
+                                         IOPCTL_PIO_PUPD_EN |
+                                         /* Enable pull-up function */
+                                         IOPCTL_PIO_PULLUP_EN |
+                                         /* Enables input buffer function */
+                                         IOPCTL_PIO_INBUF_EN |
+                                         /* Normal mode */
+                                         IOPCTL_PIO_SLEW_RATE_NORMAL |
+                                         /* Normal drive */
+                                         IOPCTL_PIO_FULLDRIVE_DI |
+                                         /* Analog mux is disabled */
+                                         IOPCTL_PIO_ANAMUX_DI |
+                                         /* Pseudo Output Drain is disabled */
+                                         IOPCTL_PIO_PSEDRAIN_DI |
+                                         /* Input function is not inverted */
+                                         IOPCTL_PIO_INV_DI);
+    /* PORT2 PIN30 (coords: D10) is configured as PIO2_30 */
+    IOPCTL_PinMuxSet(IOPCTL, 2U, 30U, port2_pin30_config);
 }
 /***********************************************************************************************************************
  * EOF

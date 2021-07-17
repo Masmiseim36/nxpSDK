@@ -38,6 +38,9 @@ static volatile bool s_lvglTaskPending = false;
  * Prototypes
  ******************************************************************************/
 static void DEMO_SetupTick(void);
+#if LV_USE_LOG
+static void print_cb(lv_log_level_t level, const char *file, uint32_t line, const char *func, const char *buf);
+#endif
 
 /*******************************************************************************
  * Code
@@ -55,6 +58,10 @@ int main(void)
     PRINTF("littlevgl bare metal widgets demo\r\n");
 
     DEMO_SetupTick();
+
+#if LV_USE_LOG
+    lv_log_register_print_cb(print_cb);
+#endif
 
     lv_port_pre_init();
     lv_init();
@@ -93,3 +100,24 @@ void SysTick_Handler(void)
         s_lvglTaskPending = true;
     }
 }
+
+#if LV_USE_LOG
+static void print_cb(lv_log_level_t level, const char *file, uint32_t line, const char *func, const char *buf)
+{
+    /*Use only the file name not the path*/
+    size_t p;
+
+    for (p = strlen(file); p > 0; p--)
+    {
+        if (file[p] == '/' || file[p] == '\\')
+        {
+            p++; /*Skip the slash*/
+            break;
+        }
+    }
+
+    static const char *lvl_prefix[] = {"Trace", "Info", "Warn", "Error", "User"};
+
+    PRINTF("\r%s: %s \t(%s #%d %s())\n", lvl_prefix[level], buf, &file[p], line, func);
+}
+#endif

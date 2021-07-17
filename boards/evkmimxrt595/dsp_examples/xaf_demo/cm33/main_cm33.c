@@ -23,10 +23,10 @@
 #include "dsp_ipc.h"
 #include "cmd.h"
 #include "sdmmc_config.h"
+#include "dsp_config.h"
 #include "fsl_wm8904.h"
 #include "fsl_codec_common.h"
 #include "fsl_codec_adapter.h"
-#include "dsp_config.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -72,9 +72,17 @@ int BOARD_CODEC_Init(void)
         return -1;
     }
 
-    /* Initial volume kept low for hearing safety. */
-    /* Adjust it to your needs, 0x0006 for -51 dB, 0x0039 for 0 dB etc. */
-    if (CODEC_SetVolume(&g_codecHandle, kCODEC_PlayChannelHeadphoneLeft | kCODEC_PlayChannelHeadphoneRight, 0x0020) !=
+    /* Invert the DAC data in order to output signal with correct polarity - set DACL_DATINV and DACR_DATINV = 1 */
+    if (WM8904_WriteRegister((wm8904_handle_t *)g_codecHandle.codecDevHandle, WM8904_AUDIO_IF_0, 0x1850) !=
+        kStatus_WM8904_Success)
+    {
+        PRINTF("WM8904 configuration failed!\r\n");
+        return -1;
+    }
+
+    /* Initial volume kept at 75% for hearing safety. */
+    /* Adjust it to your needs between 0 - 100*/
+    if (CODEC_SetVolume(&g_codecHandle, kCODEC_PlayChannelHeadphoneLeft | kCODEC_PlayChannelHeadphoneRight, 75) !=
         kStatus_Success)
     {
         return -1;

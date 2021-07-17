@@ -1,15 +1,17 @@
-/*******************************************************************************
-* Copyright (c) 2015-2020 Cadence Design Systems, Inc.
-* 
+/*
+* Copyright (c) 2015-2021 Cadence Design Systems Inc.
+*
 * Permission is hereby granted, free of charge, to any person obtaining
 * a copy of this software and associated documentation files (the
-* "Software"), to use this Software with Cadence processor cores only and 
-* not with any other processors and platforms, subject to
+* "Software"), to deal in the Software without restriction, including
+* without limitation the rights to use, copy, modify, merge, publish,
+* distribute, sublicense, and/or sell copies of the Software, and to
+* permit persons to whom the Software is furnished to do so, subject to
 * the following conditions:
-* 
+*
 * The above copyright notice and this permission notice shall be included
 * in all copies or substantial portions of the Software.
-* 
+*
 * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
 * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
@@ -17,8 +19,7 @@
 * CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
 * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-******************************************************************************/
+*/
 
 #ifndef __XA_RENDERER_API_H__
 #define __XA_RENDERER_API_H__
@@ -38,21 +39,22 @@
 
 /* ...renderer-specific configuration parameters */
 enum xa_config_param_renderer {
-    XA_RENDERER_CONFIG_PARAM_CB             = 0,
-    XA_RENDERER_CONFIG_PARAM_STATE          = 1,
-    XA_RENDERER_CONFIG_PARAM_PCM_WIDTH      = 2,
-    XA_RENDERER_CONFIG_PARAM_CHANNELS       = 3,
-    XA_RENDERER_CONFIG_PARAM_SAMPLE_RATE    = 4,
-    XA_RENDERER_CONFIG_PARAM_FRAME_SIZE     = 5,    /* frame size per channel in bytes */
-    XA_RENDERER_CONFIG_PARAM_BYTES_PRODUCED = 6,
-    XA_RENDERER_CONFIG_PARAM_I2S_INTERFACE  = 7,
-    XA_RENDERER_CONFIG_PARAM_I2S_MASTER_SLAVE  = 8,
-    XA_RENDERER_CONFIG_PARAM_I2S_MODE       = 9,
-    XA_RENDERER_CONFIG_PARAM_I2S_SCK_POLARITY  = 10,
-    XA_RENDERER_CONFIG_PARAM_I2S_WS_POLARITY = 11,
-    XA_RENDERER_CONFIG_PARAM_AUDIO_BUFFER_1 = 12,
-    XA_RENDERER_CONFIG_PARAM_AUDIO_BUFFER_2 = 13,
-    XA_RENDERER_CONFIG_PARAM_NUM            = 14
+    XA_RENDERER_CONFIG_PARAM_CB                    = 0,
+    XA_RENDERER_CONFIG_PARAM_STATE                 = 1,
+    XA_RENDERER_CONFIG_PARAM_PCM_WIDTH             = 2,
+    XA_RENDERER_CONFIG_PARAM_CHANNELS              = 3,
+    XA_RENDERER_CONFIG_PARAM_SAMPLE_RATE           = 4,
+    XA_RENDERER_CONFIG_PARAM_FRAME_SIZE            = 5,    /* frame size per channel in bytes. Deprecated, use XA_RENDERER_CONFIG_PARAM_FRAME_SIZE_IN_SAMPLES instead. */
+    XA_RENDERER_CONFIG_PARAM_BYTES_PRODUCED        = 6,
+    XA_RENDERER_CONFIG_PARAM_FRAME_SIZE_IN_SAMPLES = 7,    /* frame size per channel in samples */
+    XA_RENDERER_CONFIG_PARAM_I2S_INTERFACE         = 8,
+    XA_RENDERER_CONFIG_PARAM_I2S_MASTER_SLAVE      = 9,
+    XA_RENDERER_CONFIG_PARAM_I2S_MODE              = 10,
+    XA_RENDERER_CONFIG_PARAM_I2S_SCK_POLARITY      = 11,
+    XA_RENDERER_CONFIG_PARAM_I2S_WS_POLARITY       = 12,
+    XA_RENDERER_CONFIG_PARAM_AUDIO_BUFFER_1        = 13,
+    XA_RENDERER_CONFIG_PARAM_AUDIO_BUFFER_2        = 14,
+    XA_RENDERER_CONFIG_PARAM_NUM                   = 15
 };
 
 /* ...XA_RENDERER_CONFIG_PARAM_CB: compound parameters data structure */
@@ -61,7 +63,7 @@ typedef struct xa_renderer_cb_s {
     void      (*cb)(struct xa_renderer_cb_s *, WORD32 idx);
 
 }   xa_renderer_cb_t;
-    
+
 
 /* ...renderer states  */
 enum xa_randerer_state {
@@ -70,7 +72,7 @@ enum xa_randerer_state {
     XA_RENDERER_STATE_RUN   = 2,
     XA_RENDERER_STATE_PAUSE = 3
 };
-    
+
 /* ...component identifier (informative) */
 #define XA_CODEC_RENDERER               6
 

@@ -18,12 +18,12 @@
 //! @note See memory.h for index requirements.
 memory_map_entry_t g_memoryMap[] = {
     // SRAM0 (size: 4.5MB)
-    { 0x00000000u, 0x00477fffu, kMemoryIsExecutable | kMemoryType_RAM, &g_normalMemoryInterface },
+    { 0x00000000u, 0x00477fffu, kMemoryIsExecutable | kMemoryType_RAM, kMemoryInternal, &g_normalMemoryInterface },
     // System RAM (size: 4.5MB)
-    { 0x20000000u, 0x20477fffu, kMemoryIsExecutable | kMemoryType_RAM, &g_normalMemoryInterface },
-    { 0x30000000u, 0x30477fffu, kMemoryIsExecutable | kMemoryType_RAM, &g_normalMemoryInterface },
+    { 0x20000000u, 0x20477fffu, kMemoryIsExecutable | kMemoryType_RAM, kMemoryInternal, &g_normalMemoryInterface },
+    { 0x30000000u, 0x30477fffu, kMemoryIsExecutable | kMemoryType_RAM, kMemoryInternal, &g_normalMemoryInterface },
     // QSPI memory (Size will be updated later during interface initialization)
-    { 0x08000000u, 0x0fffffffu, kMemoryIsExecutable | kMemoryType_FLASH | kMemorySkipInitError,
+    { 0x08000000u, 0x0fffffffu, kMemoryIsExecutable | kMemoryType_FLASH | kMemorySkipInitError, kMemoryFlexSpiNor,
       &g_flexspiMemoryInterface },
 
     { 0 } // Terminator

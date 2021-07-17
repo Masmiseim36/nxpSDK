@@ -5,10 +5,10 @@ The powerquad driver API results are compared to the reference result.
 
 Toolchain supported
 ===================
-- MCUXpresso  11.3.0
-- Keil MDK  5.33
-- IAR embedded Workbench  8.50.9
-- GCC ARM Embedded  9.3.1
+- MCUXpresso  11.4.0
+- Keil MDK  5.34
+- IAR embedded Workbench  9.10.2
+- GCC ARM Embedded  10.2.1
 
 Hardware requirements
 =====================

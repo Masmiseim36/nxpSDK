@@ -23,8 +23,6 @@
 #define EXAMPLE_I2C_BAUDRATE       400000
 #define I3C_MASTER_CLOCK_FREQUENCY CLOCK_GetI3cClkFreq()
 #define I3C_MASTER_SLAVE_ADDR_7BIT 0x1A
-#define WAIT_TIME                  1000
-#define I3C_DATA_LENGTH            33
 
 /*******************************************************************************
  * Prototypes
@@ -35,17 +33,15 @@
  * Variables
  ******************************************************************************/
 
-uint8_t g_master_txBuff[I3C_DATA_LENGTH];
-uint8_t g_master_rxBuff[I3C_DATA_LENGTH];
-i3c_bus_t i3cBus;
-i3c_device_t masterDev;
+i3c_bus_t demo_i3cBus;
+i3c_device_t demo_masterDev;
 /*******************************************************************************
  * Code
  ******************************************************************************/
-i3c_master_adapter_resource_t masterResource = {.base = EXAMPLE_MASTER, .transMode = kI3C_MasterTransferInterruptMode};
-
-extern i3c_device_hw_ops_t master_ops;
-i3c_device_control_info_t i3cMasterCtlInfo = {.funcs = &master_ops, .resource = &masterResource, .isSecondary = false};
+i3c_master_adapter_resource_t demo_masterResource = {.base      = EXAMPLE_MASTER,
+                                                     .transMode = kI3C_MasterTransferInterruptMode};
+i3c_device_control_info_t i3cMasterCtlInfo        = {
+    .funcs = (i3c_device_hw_ops_t *)&master_ops, .resource = &demo_masterResource, .isSecondary = false};
 
 
 /*!
@@ -61,33 +57,33 @@ int main(void)
     BOARD_BootClockRUN();
     BOARD_InitDebugConsole();
 
-    masterResource.clockInHz = I3C_MASTER_CLOCK_FREQUENCY;
+    demo_masterResource.clockInHz = I3C_MASTER_CLOCK_FREQUENCY;
 
     PRINTF("\r\nI3C bus master example.\r\n");
 
     /* Create I3C bus. */
     i3c_bus_config_t busConfig;
     I3C_BusGetDefaultBusConfig(&busConfig);
-    I3C_BusCreate(&i3cBus, &busConfig);
+    I3C_BusCreate(&demo_i3cBus, &busConfig);
     i3c_device_information_t masterInfo;
     memset(&masterInfo, 0, sizeof(masterInfo));
     masterInfo.staticAddr  = I3C_MASTER_SLAVE_ADDR_7BIT;
     masterInfo.bcr         = 0x60U;
     masterInfo.dcr         = 0x00U;
-    masterInfo.dynamicAddr = I3C_BusGetValidAddrSlot(&i3cBus, 0);
+    masterInfo.dynamicAddr = I3C_BusGetValidAddrSlot(&demo_i3cBus, 0);
     masterInfo.vendorID    = 0x345U;
 
     extern i3c_device_control_info_t i3cMasterCtlInfo;
-    I3C_BusMasterCreate(&masterDev, &i3cBus, &masterInfo, &i3cMasterCtlInfo);
+    I3C_BusMasterCreate(&demo_masterDev, &demo_i3cBus, &masterInfo, &i3cMasterCtlInfo);
 
     PRINTF("\r\nI3C bus master creates.\r\n");
 
     i3c_device_information_t devInfo;
     uint8_t slaveAddr = 0x0U;
 
-    for (list_element_handle_t listItem = i3cBus.i3cDevList.head; listItem != NULL; listItem = listItem->next)
+    for (list_element_handle_t listItem = demo_i3cBus.i3cDevList.head; listItem != NULL; listItem = listItem->next)
     {
-        if ((i3c_device_t *)listItem == &masterDev)
+        if ((i3c_device_t *)listItem == &demo_masterDev)
         {
             continue;
         }
@@ -97,10 +93,10 @@ int main(void)
             break;
         }
     }
-    I3C_BusMasterGetDeviceInfo(&masterDev, slaveAddr, &devInfo);
+    I3C_BusMasterGetDeviceInfo(&demo_masterDev, slaveAddr, &devInfo);
 
     /* Wait for mastership handoff. */
-    while (i3cBus.currentMaster == &masterDev)
+    while (demo_i3cBus.currentMaster == &demo_masterDev)
         ;
 
     PRINTF("\r\nI3C bus mastership handoff.\r\n");

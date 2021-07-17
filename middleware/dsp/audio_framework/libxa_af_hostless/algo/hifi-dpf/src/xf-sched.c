@@ -1,15 +1,17 @@
-/*******************************************************************************
-* Copyright (c) 2015-2020 Cadence Design Systems, Inc.
-* 
+/*
+* Copyright (c) 2015-2021 Cadence Design Systems Inc.
+*
 * Permission is hereby granted, free of charge, to any person obtaining
 * a copy of this software and associated documentation files (the
-* "Software"), to use this Software with Cadence processor cores only and 
-* not with any other processors and platforms, subject to
+* "Software"), to deal in the Software without restriction, including
+* without limitation the rights to use, copy, modify, merge, publish,
+* distribute, sublicense, and/or sell copies of the Software, and to
+* permit persons to whom the Software is furnished to do so, subject to
 * the following conditions:
-* 
+*
 * The above copyright notice and this permission notice shall be included
 * in all copies or substantial portions of the Software.
-* 
+*
 * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
 * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
@@ -17,8 +19,7 @@
 * CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
 * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-******************************************************************************/
+*/
 /*******************************************************************************
  * xf-sched.c
  *
@@ -33,11 +34,6 @@
 
 #include "xf-dp.h"
 
-/*******************************************************************************
- * Tracing configuration
- ******************************************************************************/
-
-TRACE_TAG(DEBUG, 1);
 
 /* ...current scheduler timestamp */
 static inline UWORD32 xf_sched_timestamp(xf_sched_t *sched)
@@ -66,7 +62,7 @@ void xf_sched_put(xf_sched_t *sched, xf_task_t *t, UWORD32 dts)
     UWORD32 ts;
     UWORD32         _ts;
 
-    __xf_lock(&sched->lock);
+    xf_flx_lock(&sched->lock);
 
     ts = xf_sched_timestamp(sched) + dts;
     /* ...set scheduling timestamp */
@@ -115,7 +111,7 @@ insert:
     BUG(rb_cache(tree) == rb_null(tree), _x("Invalid scheduler state"));
     
     TRACE(DEBUG, _b("in:  %08x:[%p] (ts:%08x)"), ts, node, xf_sched_timestamp(sched));
-    __xf_unlock(&sched->lock);
+    xf_flx_unlock(&sched->lock);
 }
 
 /* ...get first item from the scheduler */
@@ -125,7 +121,7 @@ xf_task_t * xf_sched_get(xf_sched_t *sched)
     rb_idx_t        n_idx, t_idx;
     UWORD32             ts;
 
-    __xf_lock(&sched->lock);
+    xf_flx_lock(&sched->lock);
     /* ...head of the tree is cached; replace it with its parent (direct successor) */
     if ((n_idx = rb_cache(tree)) != rb_null(tree)) {
         /* ...delete current node and rebalance the tree */
@@ -141,30 +137,57 @@ xf_task_t * xf_sched_get(xf_sched_t *sched)
     } else {
         n_idx = NULL;
     }
-    __xf_unlock(&sched->lock);
+    xf_flx_unlock(&sched->lock);
     return n_idx;
 }
 
 /* ...cancel specified task execution (must be scheduled!) */
-void xf_sched_cancel(xf_sched_t *sched, xf_task_t *t)
+UWORD32 xf_sched_cancel(xf_sched_t *sched, xf_task_t *t)
 {
     rb_tree_t      *tree = &sched->tree;
     rb_idx_t        n_idx = t;
     rb_idx_t        t_idx;
+    UWORD32         err;
 
-    __xf_lock(&sched->lock);
+    xf_flx_lock(&sched->lock);
+
     /* ...delete message from tree */
     t_idx = rb_delete(tree, n_idx);
 
-    /* ...adjust head if that was the first message */
-    if (n_idx == rb_cache(tree))
-        rb_set_cache(tree, t_idx);
-    __xf_unlock(&sched->lock);
+    if(t_idx == (rb_idx_t)NULL)
+    {
+        /* ...node is not found on the tree: set deletion failed message */
+        err = 1;
+    }
+    else
+    {
+        /* ...adjust head if that was the first message */
+        if (n_idx == rb_cache(tree))
+            rb_set_cache(tree, t_idx);
+
+        /* ...node is found on the tree: set deletion OK message */
+        err = 0;
+    }
+
+    xf_flx_unlock(&sched->lock);
+    return err;
 }
 
 /* ...initialize scheduler data */
 void xf_sched_init(xf_sched_t *sched)
 {
-    __xf_lock_init(&sched->lock);
+    xf_flx_lock_init(&sched->lock, XF_DUMMY_LOCK);
     rb_init(&sched->tree);
+}
+
+/* ...reinitialize scheduler lock */
+void xf_sched_preempt_reinit(xf_sched_t *sched)
+{
+    xf_flx_lock_reinit(&sched->lock, XF_MUTEX_BASED_LOCK);
+}
+
+/* ...deinit scheduler data */
+void xf_sched_deinit(xf_sched_t *sched)
+{
+    xf_flx_lock_destroy(&sched->lock);
 }

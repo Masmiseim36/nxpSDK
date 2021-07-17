@@ -7,7 +7,7 @@
 
 #include "t_cose_ns_tests.h"
 #include <stdio.h>
-#include "lib/ext/t_cose/test/run_tests.h"
+#include "run_tests.h"
 
 /*
  * The t_cose test cases are defined in: lib/ext/t_cose/test/run_test.c

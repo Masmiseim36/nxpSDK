@@ -1,15 +1,17 @@
-/*******************************************************************************
-* Copyright (c) 2015-2020 Cadence Design Systems, Inc.
-* 
+/*
+* Copyright (c) 2015-2021 Cadence Design Systems Inc.
+*
 * Permission is hereby granted, free of charge, to any person obtaining
 * a copy of this software and associated documentation files (the
-* "Software"), to use this Software with Cadence processor cores only and 
-* not with any other processors and platforms, subject to
+* "Software"), to deal in the Software without restriction, including
+* without limitation the rights to use, copy, modify, merge, publish,
+* distribute, sublicense, and/or sell copies of the Software, and to
+* permit persons to whom the Software is furnished to do so, subject to
 * the following conditions:
-* 
+*
 * The above copyright notice and this permission notice shall be included
 * in all copies or substantial portions of the Software.
-* 
+*
 * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
 * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
@@ -17,8 +19,7 @@
 * CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
 * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-******************************************************************************/
+*/
 /*******************************************************************************
  * xf-mm.h
  *
@@ -90,7 +91,7 @@ typedef union                                       \
 /* ...memory allocator data */
 typedef struct xf_mm_pool
 {
-    xf_lock_t       lock;
+    xf_flx_lock_t       lock;
     /* ...free blocks map sorted by block length */
     rb_tree_t       l_map;
     
@@ -153,11 +154,22 @@ typedef struct xf_mm_buffer
 }   __xf_mm__ xf_mm_buffer_t;
 
 /*******************************************************************************
+ * Module defines
+ ******************************************************************************/
+#define XF_DEBUG_MEM_MAX_ITERATIONS     256
+
+/*******************************************************************************
  * API functions
  ******************************************************************************/
 
 /* ...pool initialization */
 extern int      xf_mm_init(xf_mm_pool_t *pool, void *addr, UWORD32 size);
+
+/* ...pool lock reinitialization */
+extern int      xf_mm_preempt_reinit(xf_mm_pool_t *pool);
+
+/* ...pool deinitialization */
+extern int      xf_mm_deinit(xf_mm_pool_t *pool);
 
 /* ...block allocation */
 extern void *   xf_mm_alloc(xf_mm_pool_t *pool, UWORD32 size);

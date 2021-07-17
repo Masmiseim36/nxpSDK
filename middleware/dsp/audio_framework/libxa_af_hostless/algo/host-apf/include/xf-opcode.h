@@ -1,15 +1,17 @@
-/*******************************************************************************
-* Copyright (c) 2015-2020 Cadence Design Systems, Inc.
-* 
+/*
+* Copyright (c) 2015-2021 Cadence Design Systems Inc.
+*
 * Permission is hereby granted, free of charge, to any person obtaining
 * a copy of this software and associated documentation files (the
-* "Software"), to use this Software with Cadence processor cores only and 
-* not with any other processors and platforms, subject to
+* "Software"), to deal in the Software without restriction, including
+* without limitation the rights to use, copy, modify, merge, publish,
+* distribute, sublicense, and/or sell copies of the Software, and to
+* permit persons to whom the Software is furnished to do so, subject to
 * the following conditions:
-* 
+*
 * The above copyright notice and this permission notice shall be included
 * in all copies or substantial portions of the Software.
-* 
+*
 * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
 * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
@@ -17,8 +19,7 @@
 * CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
 * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-******************************************************************************/
+*/
 /*******************************************************************************
  * xf-opcode.h
  *
@@ -75,7 +76,7 @@
  ******************************************************************************/
 
 /* ...opcode composition with command/response data tags */
-#define __XF_OPCODE(c, r, op)           (((c) << 31) | ((r) << 30) | ((op) & 0x3F))
+#define __XF_OPCODE(c, r, op)           ((UWORD32)(((c) << 31) | ((r) << 30) | ((op) & 0x3F)))
 
 /* ...accessors */
 #define XF_OPCODE_CDATA(opcode)         ((opcode) & (1 << 31))
@@ -140,8 +141,17 @@
 /* ...set priorities */
 #define XF_SET_PRIORITIES               __XF_OPCODE(1, 0, 17)
 
+/* ...channel setup */
+#define XF_EVENT_CHANNEL_CREATE         __XF_OPCODE(1, 0, 18)
+
+/* ...channel delete */
+#define XF_EVENT_CHANNEL_DELETE         __XF_OPCODE(1, 0, 19)
+
+/* ...channel setup */
+#define XF_EVENT                        __XF_OPCODE(1, 0, 20)
+
 /* ...total amount of supported decoder commands */
-#define __XF_OP_NUM                     18
+#define __XF_OP_NUM                     21
 
 /*******************************************************************************
  * XF_START message definition
@@ -306,6 +316,60 @@ typedef struct xf_unroute_port_msg
 	UWORD32                 dst;
 
 }	__attribute__((__packed__)) xf_unroute_port_msg_t;
+
+#ifndef XA_DISABLE_EVENT
+/*******************************************************************************
+ * XF_EVENT_CHANNEL_CREATE definition
+ ******************************************************************************/
+
+/* ...event channel setup command */
+typedef struct xf_event_channel_msg
+{
+	/* ...source port specification */
+	UWORD32                 src;
+
+	/* ...destination port specification */
+	UWORD32                 dst;
+
+    /* ... source command */
+    UWORD32                 src_cfg_param;
+
+    /* ... dest command */
+    UWORD32                 dst_cfg_param;
+
+	/* ...number of buffers to allocate */
+	UWORD32                 alloc_number;
+
+	/* ...length of buffer to allocate */
+	UWORD32                 alloc_size;
+
+	/* ...alignment restriction for a buffer */
+	UWORD32                 alloc_align;
+
+}	__attribute__((__packed__)) xf_event_channel_msg_t;
+
+/*******************************************************************************
+ * XF_EVENT_CHANNEL_DELETE definition
+ ******************************************************************************/
+
+/* ...event channel setup command */
+typedef struct xf_event_channel_delete_msg
+{
+	/* ...source port specification */
+	UWORD32                 src;
+
+	/* ...destination port specification */
+	UWORD32                 dst;
+
+    /* ... source command */
+    UWORD32                 src_cfg_param;
+
+    /* ... dest command */
+    UWORD32                 dst_cfg_param;
+
+}	__attribute__((__packed__)) xf_event_channel_delete_msg_t;
+#endif
+
 
 /*******************************************************************************
  * XF_SET_PRIORITIES definition

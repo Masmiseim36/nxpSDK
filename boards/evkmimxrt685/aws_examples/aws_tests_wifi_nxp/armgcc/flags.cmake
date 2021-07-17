@@ -1,4 +1,5 @@
 SET(CMAKE_ASM_FLAGS_FLASH_DEBUG " \
+    ${CMAKE_ASM_FLAGS_FLASH_DEBUG} \
     -DDEBUG \
     -D__STARTUP_CLEAR_BSS \
     -g \
@@ -16,6 +17,7 @@ SET(CMAKE_ASM_FLAGS_FLASH_DEBUG " \
     -std=gnu99 \
 ")
 SET(CMAKE_ASM_FLAGS_FLASH_RELEASE " \
+    ${CMAKE_ASM_FLAGS_FLASH_RELEASE} \
     -DNDEBUG \
     -D__STARTUP_CLEAR_BSS \
     -mcpu=cortex-m33 \
@@ -32,9 +34,11 @@ SET(CMAKE_ASM_FLAGS_FLASH_RELEASE " \
     -std=gnu99 \
 ")
 SET(CMAKE_C_FLAGS_FLASH_DEBUG " \
-    -include ${ProjDirPath}/../wifi_config.h \
+    ${CMAKE_C_FLAGS_FLASH_DEBUG} \
+    -include ${ProjDirPath}/../app_config.h \
     -DDEBUG \
     -DFSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1 \
+    -DLWIP_TIMEVAL_PRIVATE=0 \
     -DCPU_MIMXRT685SFVKB_cm33 \
     -DBOOT_HEADER_ENABLE=1 \
     -DXIP_IMAGE \
@@ -42,15 +46,16 @@ SET(CMAKE_C_FLAGS_FLASH_DEBUG " \
     -DUSE_RTOS=1 \
     -DUNITY_INCLUDE_CONFIG_H \
     -DAMAZON_FREERTOS_ENABLE_UNIT_TESTS \
-    -DWIFI_BOARD_PAN9026_SDIO \
-    -DMFLASH_FILE_BASEADDR=3145728 \
+    -DMFLASH_FILE_BASEADDR=7340032 \
     -DSDK_I2C_BASED_COMPONENT_USED=1 \
     -DSDIO_ENABLED \
-    -DFSL_RTOS_FREE_RTOS \
+    -DSDK_OS_FREE_RTOS \
     -DSERIAL_PORT_TYPE_UART=1 \
+    -DMCUXPRESSO_SDK \
     -g \
     -O0 \
     -fomit-frame-pointer \
+    -Wno-unused-function \
     -mcpu=cortex-m33 \
     -Wall \
     -mfloat-abi=hard \
@@ -67,9 +72,11 @@ SET(CMAKE_C_FLAGS_FLASH_DEBUG " \
     -std=gnu99 \
 ")
 SET(CMAKE_C_FLAGS_FLASH_RELEASE " \
-    -include ${ProjDirPath}/../wifi_config.h \
+    ${CMAKE_C_FLAGS_FLASH_RELEASE} \
+    -include ${ProjDirPath}/../app_config.h \
     -DNDEBUG \
     -DFSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1 \
+    -DLWIP_TIMEVAL_PRIVATE=0 \
     -DCPU_MIMXRT685SFVKB_cm33 \
     -DBOOT_HEADER_ENABLE=1 \
     -DXIP_IMAGE \
@@ -77,14 +84,15 @@ SET(CMAKE_C_FLAGS_FLASH_RELEASE " \
     -DUSE_RTOS=1 \
     -DUNITY_INCLUDE_CONFIG_H \
     -DAMAZON_FREERTOS_ENABLE_UNIT_TESTS \
-    -DWIFI_BOARD_PAN9026_SDIO \
-    -DMFLASH_FILE_BASEADDR=3145728 \
+    -DMFLASH_FILE_BASEADDR=7340032 \
     -DSDK_I2C_BASED_COMPONENT_USED=1 \
     -DSDIO_ENABLED \
-    -DFSL_RTOS_FREE_RTOS \
+    -DSDK_OS_FREE_RTOS \
     -DSERIAL_PORT_TYPE_UART=1 \
+    -DMCUXPRESSO_SDK \
     -Os \
     -fomit-frame-pointer \
+    -Wno-unused-function \
     -mcpu=cortex-m33 \
     -Wall \
     -mfloat-abi=hard \
@@ -101,8 +109,10 @@ SET(CMAKE_C_FLAGS_FLASH_RELEASE " \
     -std=gnu99 \
 ")
 SET(CMAKE_CXX_FLAGS_FLASH_DEBUG " \
+    ${CMAKE_CXX_FLAGS_FLASH_DEBUG} \
     -DDEBUG \
     -DSERIAL_PORT_TYPE_UART=1 \
+    -DMCUXPRESSO_SDK \
     -g \
     -O0 \
     -mcpu=cortex-m33 \
@@ -122,8 +132,10 @@ SET(CMAKE_CXX_FLAGS_FLASH_DEBUG " \
     -fno-exceptions \
 ")
 SET(CMAKE_CXX_FLAGS_FLASH_RELEASE " \
+    ${CMAKE_CXX_FLAGS_FLASH_RELEASE} \
     -DNDEBUG \
     -DSERIAL_PORT_TYPE_UART=1 \
+    -DMCUXPRESSO_SDK \
     -Os \
     -mcpu=cortex-m33 \
     -Wall \
@@ -142,6 +154,7 @@ SET(CMAKE_CXX_FLAGS_FLASH_RELEASE " \
     -fno-exceptions \
 ")
 SET(CMAKE_EXE_LINKER_FLAGS_FLASH_DEBUG " \
+    ${CMAKE_EXE_LINKER_FLAGS_FLASH_DEBUG} \
     -g \
     -mcpu=cortex-m33 \
     -Wall \
@@ -165,6 +178,7 @@ SET(CMAKE_EXE_LINKER_FLAGS_FLASH_DEBUG " \
     muldefs \
     -Xlinker \
     -Map=output.map \
+    -Wl,--print-memory-usage \
     -Xlinker \
     --defsym=__stack_size__=0x400 \
     -Xlinker \
@@ -172,6 +186,7 @@ SET(CMAKE_EXE_LINKER_FLAGS_FLASH_DEBUG " \
     -T${ProjDirPath}/linker/MIMXRT685Sxxxx_cm33_flash.ld -static \
 ")
 SET(CMAKE_EXE_LINKER_FLAGS_FLASH_RELEASE " \
+    ${CMAKE_EXE_LINKER_FLAGS_FLASH_RELEASE} \
     -mcpu=cortex-m33 \
     -Wall \
     -mfloat-abi=hard \
@@ -194,6 +209,7 @@ SET(CMAKE_EXE_LINKER_FLAGS_FLASH_RELEASE " \
     muldefs \
     -Xlinker \
     -Map=output.map \
+    -Wl,--print-memory-usage \
     -Xlinker \
     --defsym=__stack_size__=0x400 \
     -Xlinker \

@@ -28,8 +28,10 @@
 
 #if (XA_VIT_PRE_PROC)
 
+#include <stdio.h>
 #include <stdint.h>
 #include <string.h>
+#include <stdarg.h>
 
 /* ...debugging facility */
 #include "xf-debug.h"
@@ -46,12 +48,22 @@ extern clk_t vit_pre_proc_cycles;
 #include "fsl_gpio.h"
 
 /* VIT Library, configuration */
-#include "PL_platformTypes_HIFI4.h"
+#include "PL_platformTypes_HIFI4_FUSIONF1.h"
 #include "VIT.h"
-#include "VIT_Model.h"
 
+//VIT Lib
+#ifdef CPU_MIMXRT685SFVKB_dsp
+#define VIT_OPERATING_MODE          VIT_AFE_ENABLE  | VIT_WAKEWORD_ENABLE | VIT_VOICECMD_ENABLE
+#define NUMBER_OF_CHANNELS          2
+#define DEVICE_ID                   VIT_IMXRT600
+#else
+#define VIT_OPERATING_MODE          VIT_WAKEWORD_ENABLE | VIT_VOICECMD_ENABLE
+#define NUMBER_OF_CHANNELS          1
+#define DEVICE_ID                   VIT_IMXRT500
+#endif
 
-
+#undef DSP_PRINTF
+#define DSP_PRINTF CM33_Print
 
 /*******************************************************************************
  * Tracing configuration
@@ -63,6 +75,9 @@ TRACE_TAG(PROCESS, 1);
 /*******************************************************************************
  * Internal functions definitions
  ******************************************************************************/
+#if (NUMBER_OF_CHANNELS > 1)
+void DeInterleave(const PL_INT16 *pDataInput, PL_INT16 *pDataOutput, PL_UINT16 FrameSize, PL_UINT16 ChannelNumber);
+#endif
 
 /* ...API structure */
 typedef struct vit_pre_proc_t
@@ -118,16 +133,11 @@ typedef struct vit_pre_proc_t
 
 extern dsp_handle_t dsp;
 
-//VIT Lib
-#define VIT_OPERATING_MODE           VIT_ALL_MODULE_ENABLE          //Wake Word and Voice Commands detection
 /*
 *   Useful Definitions : not to be changed
 */
 // MEMORY
-#define MEMORY_ALIGNMENT             4     // in bytes
-
-// Current VIT lib is supporting only one 1 input channel
-#define NUMBER_OF_CHANNELS          _1CHAN
+#define MEMORY_ALIGNMENT             8     // in bytes
 
 static VIT_Handle_t              VITHandle = PL_NULL;                      // VIT handle pointer
 static VIT_InstanceParams_st     VITInstParams;                            // VIT instance parameters structure
@@ -137,6 +147,9 @@ static PL_BOOL                   InitPhase_Error = PL_FALSE;
 static VIT_DataIn_st             VIT_InputBuffers = { PL_NULL, PL_NULL, PL_NULL };  // Resetting Input Buffer addresses provided to VIT_process() API
 static PL_INT8                   *pMemory[PL_NR_MEMORY_REGIONS];
 
+static PL_UINT8					 *pMem;		 //Used for storing start address of whole allocation of space for model
+static PL_UINT8 				 *VIT_Model; //Used to hold aligned start address of model
+
 VIT_ReturnStatus_en VIT_Initialize(vit_pre_proc_t *d);
 void VIT_Deinit(void);
 
@@ -145,13 +158,47 @@ void VIT_Deinit(void);
  * DSP functions
  ******************************************************************************/
 
+static void CM33_Print(const char* ptr, ...)
+{
+	//Create buffer with processed string
+	static char buf[256];
+	int message_length;
+	va_list args;
+	va_start(args, ptr);
+	message_length = vsprintf(buf, ptr, args);
+	va_end(args);
+
+	//Create srtm_message for sending string to CM33 side
+	srtm_message msg = {0};
+	msg.head.type = SRTM_MessageTypeNotification;
+	msg.head.majorVersion = SRTM_VERSION_MAJOR;
+	msg.head.minorVersion = SRTM_VERSION_MINOR;
+	msg.head.category = SRTM_MessageCategory_AUDIO;
+	msg.head.command  = SRTM_Print_String;
+
+	//Send string to CM33
+	int pos = 0;
+	for(int i = 0; i<message_length; i++)
+	{
+		msg.param[pos++] = buf[i];
+		if( ((pos+1)==SRTM_CMD_PARAMS_MAX) || ((i+1)==message_length) )
+		{
+			msg.param[pos] = '\0';
+			pos = 0;
+			xos_mutex_lock(&dsp.rpmsgMutex);
+			rpmsg_lite_send(dsp.rpmsg, dsp.ept, MCU_EPT_ADDR, (char *)&msg, sizeof(srtm_message), 100);
+			xos_mutex_unlock(&dsp.rpmsgMutex);
+		}
+	}
+}
+
 static inline void xa_vit_pre_proc_preinit(vit_pre_proc_t *d)
 {
     /* ...pre-configuration initialization; reset internal data */
     memset(d, 0, sizeof(*d));
 
     /* ...set default parameters */
-    d->channels = 1;
+    d->channels = NUMBER_OF_CHANNELS;
     d->pcm_width = 16;
     d->sample_rate = 16000;
     d->frame_size_us = 10000;
@@ -165,7 +212,7 @@ static XA_ERRORCODE xa_vit_pre_proc_do_execute_16bit(vit_pre_proc_t *d)
     UWORD32   filled = d->input_avail;
     WORD16    input, output;
     VIT_ReturnStatus_en    VIT_Status;
-    VIT_VoiceCommand_t     VoiceCommand;                             // Voice Command id
+    VIT_VoiceCommand_st     VoiceCommand;                             // Voice Command id
     VIT_DetectionStatus_en VIT_DetectionResults = VIT_NO_DETECTION;  // VIT detection result
 
     nSize = filled >> 1;    //size of each sample is 2 bytes
@@ -180,21 +227,17 @@ static XA_ERRORCODE xa_vit_pre_proc_do_execute_16bit(vit_pre_proc_t *d)
     /*
     *   VIT Process
     */
-    // Current VIT library is supporting only one channel
-    // VIT_InputBuffers.pBuffer_Chan1 should be set to the input buffer address
-    // VIT_InputBuffers.pBuffer_Chan1 setting can be done out of the while loop
-    // Application should take care of the ping pong buffers (when present) handling - no pingpong buffer in this example app.
-    if (VITInstParams.NumberOfChannel == _1CHAN)
-    {
+#if (NUMBER_OF_CHANNELS == 1)
         VIT_InputBuffers.pBuffer_Chan1 = pIn;                      // PCM buffer : 16-bit - 16kHz - mono
         VIT_InputBuffers.pBuffer_Chan2 = PL_NULL;
         VIT_InputBuffers.pBuffer_Chan3 = PL_NULL;
-    }
-    else
-    {
-        // printf("Input Buffer format issue \n");
-        return VIT_INVALID_PARAMETER_OUTOFRANGE;
-    }
+#elif (NUMBER_OF_CHANNELS == 2)
+    	PL_INT16   DeInterleavedBuffer[VIT_SAMPLES_PER_FRAME*NUMBER_OF_CHANNELS];
+    	DeInterleave(pIn, DeInterleavedBuffer, VITInstParams.SamplesPerFrame, VITInstParams.NumberOfChannel);
+		VIT_InputBuffers.pBuffer_Chan1 = &DeInterleavedBuffer[0];
+		VIT_InputBuffers.pBuffer_Chan2 = &DeInterleavedBuffer[VIT_SAMPLES_PER_FRAME];
+		VIT_InputBuffers.pBuffer_Chan3 = PL_NULL;
+#endif
 
     VIT_Status = VIT_Process ( VITHandle,
                            &VIT_InputBuffers,                               // temporal audio input data
@@ -203,23 +246,14 @@ static XA_ERRORCODE xa_vit_pre_proc_do_execute_16bit(vit_pre_proc_t *d)
 
     if (VIT_Status != VIT_SUCCESS)
     {
-        // printf("VIT_Process error : %d\n", Status);
-        return VIT_SYSTEM_ERROR;                                                  // will stop processing VIT and go directly to MEM free
+        // DSP_PRINTF("VIT_Process error : %d\n", Status);
+        return VIT_SYSTEM_ERROR;                                            // will stop processing VIT and go directly to MEM free
     }
 
 
     if (VIT_DetectionResults == VIT_WW_DETECTED)
     {
-        printf(" - WakeWord detected \n");
-        srtm_message msg = {0};
-        msg.head.type = SRTM_MessageTypeNotification;
-        msg.head.majorVersion = SRTM_VERSION_MAJOR;
-        msg.head.minorVersion = SRTM_VERSION_MINOR;
-        msg.head.category = SRTM_MessageCategory_AUDIO;
-        msg.head.command  = SRTM_Command_WWDetected;
-        xos_mutex_lock(&dsp.rpmsgMutex);
-        rpmsg_lite_send(dsp.rpmsg, dsp.ept, MCU_EPT_ADDR, (char *)&msg, sizeof(srtm_message), RL_DONT_BLOCK);
-        xos_mutex_unlock(&dsp.rpmsgMutex);
+        DSP_PRINTF(" - WakeWord detected \r\n");
 
     }
     else if (VIT_DetectionResults == VIT_VC_DETECTED)
@@ -231,28 +265,22 @@ static XA_ERRORCODE xa_vit_pre_proc_do_execute_16bit(vit_pre_proc_t *d)
                                               );
         if (VIT_Status != VIT_SUCCESS)
         {
-            printf("VIT_GetVoiceCommandFound error : %d\n", VIT_Status);
+            DSP_PRINTF("VIT_GetVoiceCommandFound error : %d\r\n", VIT_Status);
             return VIT_SYSTEM_ERROR;                                              // will stop processing VIT and go directly to MEM free
         }
         else
         {
-            printf(" - Voice Command detected %d", VoiceCommand.Cmd_Id);
+            DSP_PRINTF(" - Voice Command detected %d", VoiceCommand.Cmd_Id);
 
             // Retrieve CMD Name : OPTIONAL
             // Check first if CMD string is present
-            if (VoiceCommand.Cmd_Name != PL_NULL)
+            if (VoiceCommand.pCmd_Name != PL_NULL)
             {
-                printf(" %s\n", VoiceCommand.Cmd_Name);
-                srtm_message msg = {0};
-                msg.head.type = SRTM_MessageTypeNotification;
-                msg.head.majorVersion = SRTM_VERSION_MAJOR;
-                msg.head.minorVersion = SRTM_VERSION_MINOR;
-                msg.head.category = SRTM_MessageCategory_AUDIO;
-                msg.head.command  = SRTM_Command_VIT_OUT;
-                msg.param[0] = VoiceCommand.Cmd_Id;
-                xos_mutex_lock(&dsp.rpmsgMutex);
-                rpmsg_lite_send(dsp.rpmsg, dsp.ept, MCU_EPT_ADDR, (char *)&msg, sizeof(srtm_message), RL_DONT_BLOCK);
-                xos_mutex_unlock(&dsp.rpmsgMutex);
+                DSP_PRINTF(" %s\r\n", VoiceCommand.pCmd_Name);
+            }
+            else
+            {
+            	DSP_PRINTF("\r\n");
             }
         }
     }
@@ -621,7 +649,6 @@ static XA_ERRORCODE xa_vit_pre_proc_get_memtabs_size(vit_pre_proc_t *d, WORD32 i
 
     XF_CHK_ERR(d->state & XA_VIT_PRE_PROC_FLAG_PREINIT_DONE, XA_API_FATAL_INVALID_CMD_TYPE);
 
-    /* ...we have all our tables inside API structure - good? tbd */
     *(WORD32 *)pv_value = 0;
 
     return XA_NO_ERROR;
@@ -635,7 +662,6 @@ static XA_ERRORCODE xa_vit_pre_proc_set_memtabs_ptr(vit_pre_proc_t *d, WORD32 i_
 
     XF_CHK_ERR(d->state & XA_VIT_PRE_PROC_FLAG_PREINIT_DONE, XA_API_FATAL_INVALID_CMD_TYPE);
 
-    /* ...do not do anything; just return success - tbd */
     return XA_NO_ERROR;
 }
 
@@ -807,39 +833,44 @@ VIT_ReturnStatus_en VIT_ModelInfo(void)
     *               - list of commands (when info is present)
     *
     */
-    VIT_Model_Info_t Model_Info;
+    VIT_ModelInfo_st Model_Info;
     VIT_Status = VIT_GetModelInfo(&Model_Info);
     if (VIT_Status != VIT_SUCCESS)
     {
-        // printf("VIT_GetModelInfo error : %d\n", VIT_Status);
-        return VIT_INVALID_MODEL;                                        // We can exit from here since memory is not allocated yet
+        DSP_PRINTF("VIT_GetModelInfo error : %d\r\n", VIT_Status);
+        return VIT_INVALID_MODEL;                                        
     }
 
-    // printf("VIT Model info \n");
-    // printf("  VIT Model Release = 0x%04x\n", Model_Info.VIT_Model_Release);
-    // printf("  Number of Commands supported : %d \n", Model_Info.NbOfVoiceCmds);
+    DSP_PRINTF("VIT Model info \r\n");
+    DSP_PRINTF("  VIT Model Release = 0x%04x\r\n", Model_Info.VIT_Model_Release);
+    if (Model_Info.pLanguage != PL_NULL)
+    {
+        DSP_PRINTF("  Language supported : %s \r\n", Model_Info.pLanguage);
+    }
+
+    DSP_PRINTF("  Number of Commands supported : %d \r\n", Model_Info.NbOfVoiceCmds);
 
     if (!Model_Info.WW_VoiceCmds_Strings)               // Check here if Model is containing WW and CMDs strings
     {
-        // printf("  VIT_Model integrating WakeWord and Voice Commands strings : NO\n");
+        DSP_PRINTF("  VIT_Model integrating WakeWord and Voice Commands strings : NO\r\n");
     }
     else
     {
         const char* ptr;
 
-        // printf("  VIT_Model integrating WakeWord and Voice Commands strings : YES\n");
-        ptr = Model_Info.WakeWord;
+        DSP_PRINTF("  VIT_Model integrating WakeWord and Voice Commands strings : YES\r\n");
+        ptr = Model_Info.pWakeWord;
         if (ptr != PL_NULL)
         {
-            // printf("  WakeWord supported : %s \n", ptr);
+            DSP_PRINTF("  WakeWord supported : %s \r\n", ptr);
         }
-        // printf("  Voice commands supported : \n");
-        ptr = Model_Info.VoiceCmds_List;
+        DSP_PRINTF("  Voice commands supported : \r\n");
+        ptr = Model_Info.pVoiceCmds_List;
         if (ptr != PL_NULL)
         {
             for (PL_UINT16 i = 0; i < Model_Info.NbOfVoiceCmds; i++)
             {
-                // printf("   '%s' \n", ptr);
+                DSP_PRINTF("   '%s' \r\n", ptr);
                 ptr += strlen(ptr) + 1;                 // to consider NULL char
             }
         }
@@ -851,16 +882,21 @@ VIT_ReturnStatus_en VIT_Initialize(vit_pre_proc_t *d)
 {
     VIT_ReturnStatus_en     VIT_Status;                             /* Function call status */
 
-    VIT_Status = VIT_SetModel(VIT_Model);
+    pMem = malloc(dsp.size_of_VIT_model+VIT_MODEL_ALIGNMENT);
+    VIT_Model = (PL_UINT8 *)INSTALLOC_ALIGN(pMem);
+    memcpy(VIT_Model, dsp.VITModelCM_33, dsp.size_of_VIT_model);
+
+    VIT_Status = VIT_SetModel(VIT_Model, VIT_MODEL_IN_RAM);
+
     if (VIT_Status != VIT_SUCCESS)
     {
-        return VIT_INVALID_MODEL;                                        // We can exit from here since memory is not allocated yet
+        return VIT_INVALID_MODEL;                                        
     }
 
     VIT_Status = VIT_ModelInfo();
     if (VIT_Status != VIT_SUCCESS)
     {
-        return VIT_INVALID_MODEL;                                        // We can exit from here since memory is not allocated yet
+        return VIT_INVALID_MODEL;                                        
     }
     /*
      *   Configure VIT Instance Parameters
@@ -868,7 +904,7 @@ VIT_ReturnStatus_en VIT_Initialize(vit_pre_proc_t *d)
     VITInstParams.SampleRate_Hz            = VIT_SAMPLE_RATE;
     VITInstParams.SamplesPerFrame          = VIT_SAMPLES_PER_FRAME;
     VITInstParams.NumberOfChannel          = NUMBER_OF_CHANNELS;
-
+    VITInstParams.DeviceId                 = DEVICE_ID;
 
     /*
      *   VIT get memory table : Get size info per memory type
@@ -878,8 +914,8 @@ VIT_ReturnStatus_en VIT_Initialize(vit_pre_proc_t *d)
                                  &VITInstParams);
     if (VIT_Status != VIT_SUCCESS)
     {
-        // printf("VIT_GetMemoryTable error : %d\n", Status);
-        return VIT_INVALID_BUFFER_MEMORY_ALIGNMENT;     // We can exit from here since memory is not allocated yet
+        // DSP_PRINTF("VIT_GetMemoryTable error : %d\n", Status);
+        return VIT_INVALID_BUFFER_MEMORY_ALIGNMENT;     
     }
 
     /*
@@ -888,16 +924,16 @@ VIT_ReturnStatus_en VIT_Initialize(vit_pre_proc_t *d)
     for (int i = 0; i < PL_NR_MEMORY_REGIONS; i++)
     {
         /* Log the memory size */
-        // printf("Memory region %d, size %d in Bytes\n", (int)i, (int)VITMemoryTable.Region[i].Size);
+        // DSP_PRINTF("Memory region %d, size %d in Bytes\n", (int)i, (int)VITMemoryTable.Region[i].Size);
         if (VITMemoryTable.Region[i].Size != 0)
         {
             // reserve memory space
             // NB : VITMemoryTable.Region[PL_MEMREGION_PERSISTENT_FAST_DATA] should be alloacted
-            //      in the fatest memory of the platform (when possible) - this is not the case in this example.
+            //      in the fastest memory of the platform (when possible) - this is not the case in this example.
             pMemory[i] = malloc(VITMemoryTable.Region[i].Size + MEMORY_ALIGNMENT);
             VITMemoryTable.Region[i].pBaseAddress = (void *)pMemory[i];
 
-            // printf(" Memory region address %p\n", VITMemoryTable.Region[i].pBaseAddress);
+            // DSP_PRINTF(" Memory region address %p\n", VITMemoryTable.Region[i].pBaseAddress);
         }
     }
 
@@ -905,13 +941,13 @@ VIT_ReturnStatus_en VIT_Initialize(vit_pre_proc_t *d)
     *    Create VIT Instance
     */
     VITHandle = PL_NULL;                            // force to null address for correct memory initialization
-    VIT_Status = VIT_GetInstanceHandle(  &VITHandle,
+    VIT_Status = VIT_GetInstanceHandle( &VITHandle,
                                         &VITMemoryTable,
                                         &VITInstParams);
     if (VIT_Status != VIT_SUCCESS)
     {
         InitPhase_Error = PL_TRUE;
-        // printf("VIT_GetInstanceHandle error : %d\n", Status);
+        // DSP_PRINTF("VIT_GetInstanceHandle error : %d\n", Status);
     }
 
     /*
@@ -923,14 +959,14 @@ VIT_ReturnStatus_en VIT_Initialize(vit_pre_proc_t *d)
         if (VIT_Status != VIT_SUCCESS)
         {
             InitPhase_Error = PL_TRUE;
-            // printf("VIT_ResetInstance error : %d\n", Status);
+            // DSP_PRINTF("VIT_ResetInstance error : %d\n", Status);
         }
     }
 
     /*
     *   Set and Apply VIT control parameters
     */
-    VITControlParams.OperatingMode = VIT_OPERATING_MODE;
+    VITControlParams.OperatingMode   = VIT_OPERATING_MODE;
 
     if (!InitPhase_Error)
     {
@@ -939,7 +975,7 @@ VIT_ReturnStatus_en VIT_Initialize(vit_pre_proc_t *d)
         if (VIT_Status != VIT_SUCCESS)
         {
             InitPhase_Error = PL_TRUE;
-            // printf("VIT_SetControlParameters error : %d\n", Status);
+            // DSP_PRINTF("VIT_SetControlParameters error : %d\n", Status);
         }
     }
 
@@ -1010,7 +1046,7 @@ void VIT_Deinit(void)
                                    &VITInstParams);
     if (VIT_Status != VIT_SUCCESS)
     {
-        // printf("VIT_GetMemoryTable error : %d\n", Status);
+        // DSP_PRINTF("VIT_GetMemoryTable error : %d\n", Status);
         // scanf("%d", &Status);
         return;
     }
@@ -1023,5 +1059,39 @@ void VIT_Deinit(void)
             free((PL_INT8 *)pMemory[i]);
         }
     }
+
+    //free memory
+    free((PL_INT8 *)pMem);
 }
+#if (NUMBER_OF_CHANNELS > 1)
+/****************************************************************************************/
+/*                                                                                      */
+/*                          Functions                                                   */
+/*                                                                                      */
+/****************************************************************************************/
+//  de-Interleave Multichannel signal
+//   example:  A1.B1.C1.A2.B2.C2.A3.B3.C3....An.Bn.Cn   (3 Channels case : A, B, C)
+//             will become
+//             A1.A2.A3....An.B1.B2.B3....Bn.C1.C2.C3....Cn
+
+// Simple helper function for de-interleaving of Multichannel stream
+// The caller function shall ensure that all arguments are correct.
+// In place processing is not supported.
+void DeInterleave(const PL_INT16 *pDataInput, PL_INT16 *pDataOutput, PL_UINT16 FrameSize, PL_UINT16 ChannelNumber)
+{
+
+    for (PL_UINT16 ichan = 0; ichan < ChannelNumber; ichan++)
+    {
+        for (PL_UINT16 i = 0; i < FrameSize; i++)
+        {
+            pDataOutput[i+(ichan*FrameSize)] = pDataInput[(i*ChannelNumber)+ichan];
+        }
+    }
+    return;
+}
+#endif
+
+#undef DSP_PRINTF
+#define DSP_PRINTF printf
+
 #endif

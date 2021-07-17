@@ -33,7 +33,7 @@ static void I3C_BusSetAddrSlot(i3c_bus_t *bus, uint8_t addr, i3c_addr_slot_statu
     }
 
     slotPtr = &bus->addrSlots[bitPos / I3C_BUS_ADDR_SLOTDEPTH];
-    *slotPtr &= ~((uint32_t)kI3C_Bus_AddrSlot_StatusMask << (bitPos % I3C_BUS_ADDR_SLOTDEPTH));
+    *slotPtr &= ~((uint32_t)I3C_BUS_ADDR_SLOTMASK << (bitPos % I3C_BUS_ADDR_SLOTDEPTH));
     *slotPtr |= (uint32_t)status << (bitPos % I3C_BUS_ADDR_SLOTDEPTH);
 }
 
@@ -63,7 +63,7 @@ static uint8_t I3C_BusGetAddrSlotStatus(i3c_bus_t *bus, uint8_t checkAddr)
     useStatus = bus->addrSlots[bitPos / I3C_BUS_ADDR_SLOTDEPTH];
     useStatus >>= bitPos % I3C_BUS_ADDR_SLOTDEPTH;
 
-    return (uint8_t)(useStatus & (uint8_t)kI3C_Bus_AddrSlot_StatusMask);
+    return (uint8_t)(useStatus & (uint8_t)I3C_BUS_ADDR_SLOTMASK);
 }
 
 static status_t I3C_CheckBusMasterOps(i3c_device_hw_ops_t *ops)
@@ -106,6 +106,8 @@ static status_t I3C_BusMasterGetMaxReadLength(i3c_device_t *master, i3c_device_i
     }
 
     info->maxReadLength = (uint16_t)pData[0] << 8UL | (uint16_t)pData[1];
+
+    free(getMRLCmd.data);
 
     return result;
 }
@@ -434,7 +436,7 @@ status_t I3C_BusMasterResetDAA(i3c_device_t *masterDev, uint8_t slaveAddr)
 
     rstDaaCmd.isRead   = false;
     rstDaaCmd.destAddr = slaveAddr;
-    rstDaaCmd.cmdId    = I3C_BUS_CCC_RSTDAA((slaveAddr != I3C_BUS_BROADCAST_ADDR) ? true : false);
+    rstDaaCmd.cmdId    = I3C_BUS_CCC_RSTDAA((slaveAddr != I3C_BUS_BROADCAST_ADDR));
 
     return I3C_BusMasterSendCCC(masterDev, &rstDaaCmd);
 }
@@ -519,6 +521,7 @@ status_t I3C_BusMasterSendSlavesList(i3c_device_t *masterDev)
     defSlavesCmd.destAddr      = I3C_BUS_BROADCAST_ADDR;
     defSlavesCmd.cmdId         = I3C_BUS_CCC_DEFSLVS;
     uint8_t devCount           = 0;
+    status_t result            = kStatus_Success;
 
     for (listItem = i2cDevList->head; listItem != NULL; listItem = listItem->next)
     {
@@ -565,7 +568,11 @@ status_t I3C_BusMasterSendSlavesList(i3c_device_t *masterDev)
         slaveInfo++;
     }
 
-    return I3C_BusMasterSendCCC(masterDev, &defSlavesCmd);
+    result = I3C_BusMasterSendCCC(masterDev, &defSlavesCmd);
+
+    free(defSlavesCmd.data);
+
+    return result;
 }
 
 /*!
@@ -583,7 +590,7 @@ status_t I3C_BusMasterEnableEvents(i3c_device_t *masterDev, uint8_t slaveAddr, u
     status_t result           = kStatus_Success;
 
     enEventsCmd.isRead   = false;
-    enEventsCmd.cmdId    = I3C_BUS_CCC_ENEC((slaveAddr != I3C_BUS_BROADCAST_ADDR) ? true : false);
+    enEventsCmd.cmdId    = I3C_BUS_CCC_ENEC((slaveAddr != I3C_BUS_BROADCAST_ADDR));
     enEventsCmd.destAddr = slaveAddr;
     enEventsCmd.data     = &busEvents;
     enEventsCmd.dataSize = 1U;
@@ -608,7 +615,7 @@ status_t I3C_BusMasterDisableEvents(i3c_device_t *masterDev, uint8_t slaveAddr, 
     status_t result            = kStatus_Success;
 
     disEventsCmd.isRead   = false;
-    disEventsCmd.cmdId    = I3C_BUS_CCC_DISEC((slaveAddr != I3C_BUS_BROADCAST_ADDR) ? true : false);
+    disEventsCmd.cmdId    = I3C_BUS_CCC_DISEC((slaveAddr != I3C_BUS_BROADCAST_ADDR));
     disEventsCmd.destAddr = slaveAddr;
     disEventsCmd.data     = &busEvents;
     disEventsCmd.dataSize = 1U;

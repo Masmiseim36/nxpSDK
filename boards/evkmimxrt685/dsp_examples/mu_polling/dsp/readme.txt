@@ -11,8 +11,8 @@ In this example:
 
 Toolchain supported
 ===================
-- Xtensa Xplorer  7.0.9
-- Xtensa C Compiler  12.0.8
+- Xtensa Xplorer  8.0.10
+- Xtensa C Compiler  14.01
 
 Hardware requirements
 =====================
@@ -78,6 +78,3 @@ Send: 30. Receive 30
 Send: 31. Receive 31
 MU example run succeed!
 ~~~~~~~~~~~~~~~~~~~~~
-Customization options
-=====================
-

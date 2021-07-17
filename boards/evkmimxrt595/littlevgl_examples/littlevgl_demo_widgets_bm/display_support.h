@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2020 NXP
+ * Copyright 2019-2021 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -13,10 +13,10 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_PANEL_TFT_PROTO_5 0
-#define DEMO_PANEL_RK055AHD091 1
-#define DEMO_PANEL_RK055IQH091 2
-#define DEMO_PANEL_RM67162     3
+#define DEMO_PANEL_TFT_PROTO_5 0 /* MikroE TFT Proto 5" CAPACITIVE FlexIO Display */
+#define DEMO_PANEL_RK055AHD091 1 /* NXP "RK055HDMIPI4M" MIPI Rectangular Display  */
+#define DEMO_PANEL_RK055IQH091 2 /* NXP RESERVED                                  */
+#define DEMO_PANEL_RM67162     3 /* NXP "G1120B0MIPI" MIPI Circular Display       */
 
 #ifndef DEMO_PANEL
 #define DEMO_PANEL DEMO_PANEL_TFT_PROTO_5
@@ -166,7 +166,6 @@
 #ifndef DEMO_RM67162_USE_XRGB8888
 #define DEMO_RM67162_USE_XRGB8888 0
 #endif
-
 
 /* Pixel format macro mapping. */
 #define DEMO_RM67162_BUFFER_RGB565   0

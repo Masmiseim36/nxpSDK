@@ -12,7 +12,7 @@
 #include "psa/protected_storage.h"
 #include "tfm_memory_utils.h"
 #include "s_test_helpers.h"
-#include "test/framework/test_framework_helpers.h"
+#include "test_framework_helpers.h"
 
 /* Test UIDs */
 #define TEST_UID 2UL  /* UID 1 cannot be used as it references a write once

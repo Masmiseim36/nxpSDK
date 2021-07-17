@@ -29,6 +29,16 @@ enum _target_version_constants
     kTarget_Version_Bugfix = 0
 };
 
+//! @brief Memory Map index constants
+enum
+{
+    kIndexSRAM = 0,
+    kIndexDTCM = 1,
+    kIndexOCRAM = 2,
+    kIndexFlexSpiNor = 3,
+    kSRAMSeparatrix = (uint32_t)0x20000000 //!< This value is the start address of SRAM_U
+};
+
 //! @brief FlexSPI supported speed defintions
 enum
 {

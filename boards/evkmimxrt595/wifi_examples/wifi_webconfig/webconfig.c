@@ -546,7 +546,9 @@ int main(void)
 {
     /* Initialize the hardware */
     BOARD_InitPins();
+#ifndef XIP_EXTERNAL_FLASH
     BOARD_InitFlashPins();
+#endif
     BOARD_BootClockRUN();
     BOARD_InitDebugConsole();
 

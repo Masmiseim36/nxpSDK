@@ -32,6 +32,8 @@ SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DSDK_DEBUGCONSOLE=1")
 
 SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DCPU_MIMXRT595SFFOC_dsp")
 
+SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DMCUXPRESSO_SDK")
+
 SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -g")
 
 SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -O0")
@@ -58,6 +60,8 @@ SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DSDK_DEBUGCONSOLE=1")
 
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DCPU_MIMXRT595SFFOC_dsp")
 
+SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DMCUXPRESSO_SDK")
+
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -Os")
 
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} --xtensa-core=nxp_rt500_RI2020_5_newlib")
@@ -78,7 +82,11 @@ SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -std=gnu99")
 
 SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DDEBUG")
 
+SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DMCUXPRESSO_SDK")
+
 SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -DNDEBUG")
+
+SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -DMCUXPRESSO_SDK")
 
 SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -mlsp=${ProjDirPath}/../../../../../../devices/MIMXRT595S/xtensa/gdbio")
 
@@ -106,13 +114,12 @@ include_directories(${ProjDirPath}/../../../../../../components/lists)
 
 include_directories(${ProjDirPath}/../../../../../../devices/MIMXRT595S)
 
-include_directories(${ProjDirPath}/../../../../../../CMSIS/Include)
+include_directories(${ProjDirPath}/../../../../../../CMSIS/Core/Include)
 
 add_executable(dsp_sema42_fusionf1.elf 
 "${ProjDirPath}/../main_dsp.c"
 "${ProjDirPath}/../pin_mux.c"
 "${ProjDirPath}/../pin_mux.h"
-"${ProjDirPath}/../core_dsp.h"
 "${ProjDirPath}/../board_fusionf1.c"
 "${ProjDirPath}/../board_fusionf1.h"
 "${ProjDirPath}/../../../../../../components/uart/fsl_adapter_uart.h"
@@ -128,6 +135,8 @@ add_executable(dsp_sema42_fusionf1.elf
 "${ProjDirPath}/../../../../../../devices/MIMXRT595S/drivers/fsl_mu.c"
 "${ProjDirPath}/../../../../../../devices/MIMXRT595S/drivers/fsl_common.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT595S/drivers/fsl_common.c"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/drivers/fsl_common_dsp.c"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/drivers/fsl_common_dsp.h"
 "${ProjDirPath}/../../../../../../components/lists/fsl_component_generic_list.h"
 "${ProjDirPath}/../../../../../../components/lists/fsl_component_generic_list.c"
 "${ProjDirPath}/../../../../../../devices/MIMXRT595S/drivers/fsl_iopctl.h"
@@ -141,9 +150,13 @@ add_executable(dsp_sema42_fusionf1.elf
 "${ProjDirPath}/../../../../../../devices/MIMXRT595S/MIMXRT595S_dsp_features.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT595S/system_MIMXRT595S_dsp.c"
 "${ProjDirPath}/../../../../../../devices/MIMXRT595S/system_MIMXRT595S_dsp.h"
-"${ProjDirPath}/../../../../../../CMSIS/Include/arm_common_tables.h"
-"${ProjDirPath}/../../../../../../CMSIS/Include/arm_const_structs.h"
-"${ProjDirPath}/../../../../../../CMSIS/Include/arm_math.h"
+"${ProjDirPath}/../../../../../../CMSIS/Core/Include/cmsis_armcc.h"
+"${ProjDirPath}/../../../../../../CMSIS/Core/Include/cmsis_armclang.h"
+"${ProjDirPath}/../../../../../../CMSIS/Core/Include/cmsis_armclang_ltm.h"
+"${ProjDirPath}/../../../../../../CMSIS/Core/Include/cmsis_compiler.h"
+"${ProjDirPath}/../../../../../../CMSIS/Core/Include/cmsis_gcc.h"
+"${ProjDirPath}/../../../../../../CMSIS/Core/Include/cmsis_iccarm.h"
+"${ProjDirPath}/../../../../../../CMSIS/Core/Include/cmsis_version.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT595S/drivers/fsl_flexcomm.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT595S/drivers/fsl_flexcomm.c"
 )

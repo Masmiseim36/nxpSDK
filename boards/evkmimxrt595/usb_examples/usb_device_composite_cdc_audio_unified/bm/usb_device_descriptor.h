@@ -9,13 +9,11 @@
 #ifndef __USB_DEVICE_DESCRIPTOR_H__
 #define __USB_DEVICE_DESCRIPTOR_H__
 
+#include "usb_audio_config.h"
 #include "usb_device_audio.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-/*! @brief Whether USB Audio use syn mode or not, note that some socs may not support sync mode */
-#define USB_DEVICE_AUDIO_USE_SYNC_MODE (1U)
-
 #define USB_DEVICE_VID (0x1FC9U)
 #define USB_DEVICE_PID (0x00A6U)
 
@@ -137,6 +135,14 @@
 #define USB_AUDIO_RECORDER_STREAM_INTERFACE_INDEX (1)
 #define USB_AUDIO_SPEAKER_STREAM_INTERFACE_INDEX  (2)
 
+#define USB_AUDIO_CONTROL_INTERFACE_ALTERNATE_COUNT         (1)
+#define USB_AUDIO_RECORDER_STREAM_INTERFACE_ALTERNATE_COUNT (2)
+#define USB_AUDIO_SPEAKER_STREAM_INTERFACE_ALTERNATE_COUNT  (2)
+#define USB_AUDIO_CONTROL_INTERFACE_ALTERNATE_0             (0)
+#define USB_AUDIO_RECORDER_STREAM_INTERFACE_ALTERNATE_0     (0)
+#define USB_AUDIO_RECORDER_STREAM_INTERFACE_ALTERNATE_1     (1)
+#define USB_AUDIO_SPEAKER_STREAM_INTERFACE_ALTERNATE_0      (0)
+#define USB_AUDIO_SPEAKER_STREAM_INTERFACE_ALTERNATE_1      (1)
 #if defined(USB_DEVICE_AUDIO_USE_SYNC_MODE) && (USB_DEVICE_AUDIO_USE_SYNC_MODE > 0U)
 #define USB_AUDIO_SPEAKER_STREAM_ENDPOINT_COUNT (1)
 #else
@@ -186,12 +192,6 @@ to initialize out and in sample rate respectively*/
 #define AUDIO_OUT_TRANSFER_LENGTH_ONE_FRAME \
     (AUDIO_OUT_SAMPLING_RATE_KHZ * AUDIO_OUT_FORMAT_CHANNELS * AUDIO_OUT_FORMAT_SIZE)
 
-/* Packet size and interval. */
-#if (USB_DEVICE_CONFIG_AUDIO_CLASS_2_0)
-#define HS_ISO_OUT_ENDP_INTERVAL (0x01)
-#else
-#define HS_ISO_OUT_ENDP_INTERVAL (0x04) /*interval must be 1ms for usb audio 1.0 */
-#endif
 #define HS_ISO_IN_ENDP_INTERVAL (0x04)
 #if ((!USB_DEVICE_CONFIG_AUDIO_CLASS_2_0) && ((HS_ISO_OUT_ENDP_INTERVAL != 4) || (HS_ISO_IN_ENDP_INTERVAL != 4)))
 #error "iso data and sync endpoint interval must be 1 ms for usb audio 1.0"
@@ -242,9 +242,15 @@ to initialize out and in sample rate respectively*/
 #define USB_CDC_VCOM_DIC_SUBCLASS (0x00)
 #define USB_CDC_VCOM_DIC_PROTOCOL (0x00)
 
-#define USB_CDC_VCOM_INTERFACE_COUNT           (2)
-#define USB_CDC_VCOM_CIC_INTERFACE_INDEX       (3)
-#define USB_CDC_VCOM_DIC_INTERFACE_INDEX       (4)
+#define USB_CDC_VCOM_INTERFACE_COUNT     (2)
+#define USB_CDC_VCOM_CIC_INTERFACE_INDEX (3)
+#define USB_CDC_VCOM_DIC_INTERFACE_INDEX (4)
+
+#define USB_CDC_VCOM_CIC_INTERFACE_ALTERNATE_COUNT (1)
+#define USB_CDC_VCOM_DIC_INTERFACE_ALTERNATE_COUNT (1)
+#define USB_CDC_VCOM_CIC_INTERFACE_ALTERNATE_0     (0)
+#define USB_CDC_VCOM_DIC_INTERFACE_ALTERNATE_0     (0)
+
 #define USB_CDC_VCOM_CIC_ENDPOINT_COUNT        (1)
 #define USB_CDC_VCOM_CIC_INTERRUPT_IN_ENDPOINT (4)
 #define USB_CDC_VCOM_DIC_ENDPOINT_COUNT        (2)

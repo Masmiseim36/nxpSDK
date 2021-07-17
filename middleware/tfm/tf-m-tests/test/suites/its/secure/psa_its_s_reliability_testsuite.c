@@ -7,7 +7,7 @@
 
 #include "its_s_tests.h"
 #include "psa/internal_trusted_storage.h"
-#include "test/framework/test_framework_helpers.h"
+#include "test_framework_helpers.h"
 #include "tfm_memory_utils.h"
 
 /* Test UIDs */

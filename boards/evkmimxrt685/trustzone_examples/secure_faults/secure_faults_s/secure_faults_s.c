@@ -18,6 +18,7 @@
 #include "board.h"
 #include "veneer_table.h"
 #include "tzm_config.h"
+#include "tzm_api.h"
 
 /*******************************************************************************
  * Definitions
@@ -25,8 +26,8 @@
 #define AHB_LAYERS_COUNT 18U
 #define NON_SECURE_START DEMO_CODE_START_NS
 
-/* typedef for non-secure callback functions */
-typedef void (*funcptr_ns)(void) __attribute__((cmse_nonsecure_call));
+/* typedef for non-secure callback functions, this type is needed for TEST 1  */
+typedef void (*funcptr_ns)(void) TZM_IS_NONSECURE_CALLED;
 
 typedef union
 {
@@ -189,6 +190,10 @@ void HardFault_Handler(void)
             ahb_violation_status = ahb_violation_status >> 1;
         }
     }
+    /* This while loop is used for demonstration purposes. Otherwise reset should be invoked */
+    while (1)
+    {
+    }
     /* Perform system RESET */
     SCB->AIRCR =
         (SCB->AIRCR & ~SCB_AIRCR_VECTKEY_Msk) | (0x05FAUL << SCB_AIRCR_VECTKEY_Pos) | SCB_AIRCR_SYSRESETREQ_Msk;
@@ -207,7 +212,6 @@ uint32_t GetTestCaseNumber()
  */
 int main(void)
 {
-    funcptr_ns ResetHandler_ns;
     /* Init board hardware. */
     BOARD_InitPins();
     BOARD_BootClockRUN();
@@ -229,15 +233,6 @@ int main(void)
 
     /* CONTINUE WITH CODE EXECUTION */
 
-    /* Set non-secure main stack (MSP_NS) */
-    __TZ_set_MSP_NS(*((uint32_t *)(NON_SECURE_START)));
-
-    /* Set non-secure vector table */
-    SCB_NS->VTOR = NON_SECURE_START;
-
-    /* Get non-secure reset handler */
-    ResetHandler_ns = (funcptr_ns)(*((uint32_t *)((NON_SECURE_START) + 4U)));
-
     /* Call non-secure application */
     PRINTF("Entering normal world.\r\n");
 
@@ -257,12 +252,26 @@ int main(void)
      **************************************************************************/
     if (testCaseNumber == FAULT_INV_S_TO_NS_TRANS)
     {
-        __asm("BXNS %0" : : "r"(ResetHandler_ns));
-    }
-    /* END OF TEST EXAMPLE 1 */
+        funcptr_ns ResetHandler_ns;
+        /* Set non-secure main stack (MSP_NS) */
+        __TZ_set_MSP_NS(*((uint32_t *)(NON_SECURE_START)));
 
-    /* Jump to normal world (Correct way compare to test example 1) */
-    ResetHandler_ns();
+        /* Set non-secure vector table */
+        SCB_NS->VTOR = NON_SECURE_START;
+
+        /* Get non-secure reset handler */
+        ResetHandler_ns = (funcptr_ns)(*((uint32_t *)((NON_SECURE_START) + 4U)));
+
+        /* Incorrect jump to normal world */
+        __asm("BXNS %0" : : "r"(ResetHandler_ns));
+        /* END OF TEST EXAMPLE 1 */
+    }
+    else
+    {
+        /* Jump to normal world (Correct way compare to test example 1) */
+        TZM_JumpToNormalWorld(NON_SECURE_START);
+    }
+
     while (1)
     {
         /* This point should never be reached */

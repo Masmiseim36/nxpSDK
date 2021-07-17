@@ -15,10 +15,10 @@
 /*******************************************************************************
  * Definitions
  *******************************************************************************/
-#define EXAMPLE_BOOT_INTERFACES "0: USART 2: SPI 3: USB HID 4:FlexSPI 6:SD 7:MMC"
+#define EXAMPLE_BOOT_INTERFACES        "0: USART 2: SPI 3: USB HID 4:FlexSPI 6:SD 7:MMC"
 #define EXAMPLE_BOOT_INTERFACE_FLEXSPI (4U)
-#define EXAMPLE_BOOT_INTERFACE_SD (6U)
-#define EXAMPLE_BOOT_INTERFACE_MMC (7U)
+#define EXAMPLE_BOOT_INTERFACE_SD      (6U)
+#define EXAMPLE_BOOT_INTERFACE_MMC     (7U)
 
 /*******************************************************************************
  * Prototypes
@@ -39,14 +39,14 @@ bool EXAMPLE_IsValidInterface(uint8_t idx)
 }
 static uint8_t getIndex(char ch)
 {
-     uint8_t idx = 0xFFU;
+    uint8_t idx = 0xFFU;
 
-     if (ch >= '0' && ch <= '9')
-     {
-         idx = ch - '0';
-     }
+    if (ch >= '0' && ch <= '9')
+    {
+        idx = ch - '0';
+    }
 
-     return idx;
+    return idx;
 }
 
 int main(void)
@@ -77,7 +77,7 @@ int main(void)
             break;
         }
     }
-    option.option.B.tag = IAP_BOOT_OPTION_TAG;
+    option.option.B.tag  = IAP_BOOT_OPTION_TAG;
     option.option.B.mode = (uint8_t)ch;
 
     while (true)

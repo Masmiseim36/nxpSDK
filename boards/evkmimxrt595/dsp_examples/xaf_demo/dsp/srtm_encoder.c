@@ -70,6 +70,8 @@ int srtm_encoder(dsp_handle_t *dsp, unsigned int *pCmdParams, unsigned int enc_n
     int param[16];
     int param_num;
     xf_id_t enc_id;
+    xaf_adev_config_t device_config;
+    xaf_comp_config_t comp_config;
 
 #if (defined(FSL_FEATURE_MEMORY_HAS_ADDRESS_OFFSET) && FSL_FEATURE_MEMORY_HAS_ADDRESS_OFFSET)
     dsp->buffer_in.data = (char *)MEMORY_ConvertMemoryMapAddress(pCmdParams[0], kMEMORY_Local2DMA);
@@ -132,9 +134,15 @@ int srtm_encoder(dsp_handle_t *dsp, unsigned int *pCmdParams, unsigned int enc_n
             DSP_PRINTF("Encoder failure: unknown codec!\r\n");
             goto error_cleanup;
     }
+    xaf_adev_config_default_init(&device_config);
 
-    ret = xaf_adev_open(&p_adev, AUDIO_FRMWK_BUF_SIZE, AUDIO_COMP_BUF_SIZE, DSP_Malloc, DSP_Free);
-    if (ret != XAF_NO_ERROR)
+    device_config.pmem_malloc                 = DSP_Malloc;
+    device_config.pmem_free                   = DSP_Free;
+    device_config.audio_component_buffer_size = AUDIO_COMP_BUF_SIZE;
+    device_config.audio_framework_buffer_size = AUDIO_FRMWK_BUF_SIZE;
+
+    ret = xaf_adev_open(&p_adev, &device_config);
+    if (ret != XAF_NO_ERR)
     {
         DSP_PRINTF("xaf_adev_open failure: %d\r\n", ret);
         goto error_cleanup;
@@ -144,15 +152,22 @@ int srtm_encoder(dsp_handle_t *dsp, unsigned int *pCmdParams, unsigned int enc_n
 
     /* Create encoder component
      * 1 input buffer, 1 output buffer */
-    ret = xaf_comp_create(p_adev, &p_encoder, enc_id, 1, 1, &enc_inbuf[0], XAF_ENCODER);
-    if (ret != XAF_NO_ERROR)
+    xaf_comp_config_default_init(&comp_config);
+
+    comp_config.comp_id            = enc_id;
+    comp_config.num_input_buffers  = 1;
+    comp_config.num_output_buffers = 1;
+    comp_config.pp_inbuf           = (pVOID(*)[XAF_MAX_INBUFS]) & enc_inbuf[0];
+    comp_config.comp_type          = XAF_ENCODER;
+    ret                            = xaf_comp_create(p_adev, &p_encoder, &comp_config);
+    if (ret != XAF_NO_ERR)
     {
         DSP_PRINTF("xaf_comp_create failure: %d\r\n", ret);
         goto error_cleanup;
     }
 
     ret = xaf_comp_set_config(p_encoder, param_num, &param[0]);
-    if (ret != XAF_NO_ERROR)
+    if (ret != XAF_NO_ERR)
     {
         DSP_PRINTF("xaf_comp_set_config failure: %d\r\n", ret);
         goto error_cleanup;
@@ -162,7 +177,7 @@ int srtm_encoder(dsp_handle_t *dsp, unsigned int *pCmdParams, unsigned int enc_n
 
     /* Start encoder component */
     ret = xaf_comp_process(p_adev, p_encoder, NULL, 0, XAF_START_FLAG);
-    if (ret != XAF_NO_ERROR)
+    if (ret != XAF_NO_ERR)
     {
         DSP_PRINTF("xaf_comp_process XAF_START_FLAG failure: %d\r\n", ret);
         goto error_cleanup;
@@ -177,7 +192,7 @@ int srtm_encoder(dsp_handle_t *dsp, unsigned int *pCmdParams, unsigned int enc_n
         if (read_length)
         {
             ret = xaf_comp_process(p_adev, p_encoder, enc_inbuf[0], read_length, XAF_INPUT_READY_FLAG);
-            if (ret != XAF_NO_ERROR)
+            if (ret != XAF_NO_ERR)
             {
                 DSP_PRINTF("xaf_comp_process XAF_INPUT_READY_FLAG failure: %d\r\n", ret);
                 goto error_cleanup;
@@ -189,7 +204,7 @@ int srtm_encoder(dsp_handle_t *dsp, unsigned int *pCmdParams, unsigned int enc_n
         }
 
         ret = xaf_comp_get_status(p_adev, p_encoder, &enc_status, &enc_info[0]);
-        if (ret != XAF_NO_ERROR)
+        if (ret != XAF_NO_ERR)
         {
             DSP_PRINTF("xaf_comp_get_status failure: %d\r\n", ret);
             goto error_cleanup;
@@ -254,7 +269,7 @@ int srtm_encoder(dsp_handle_t *dsp, unsigned int *pCmdParams, unsigned int enc_n
 
     /* Clean up and shut down XAF */
     ret = xaf_comp_delete(p_encoder);
-    if (ret != XAF_NO_ERROR)
+    if (ret != XAF_NO_ERR)
     {
         DSP_PRINTF("xaf_comp_delete failure: %d\r\n", ret);
         goto error_cleanup;
@@ -262,7 +277,7 @@ int srtm_encoder(dsp_handle_t *dsp, unsigned int *pCmdParams, unsigned int enc_n
     p_encoder = NULL;
 
     ret = xaf_adev_close(p_adev, XAF_ADEV_NORMAL_CLOSE);
-    if (ret != XAF_NO_ERROR)
+    if (ret != XAF_NO_ERR)
     {
         DSP_PRINTF("xaf_adev_close failure: %d\r\n", ret);
         goto error_cleanup;
@@ -281,7 +296,7 @@ error_cleanup:
     if (p_adev != NULL)
     {
         ret = xaf_adev_close(p_adev, XAF_ADEV_FORCE_CLOSE);
-        if (ret != XAF_NO_ERROR)
+        if (ret != XAF_NO_ERR)
         {
             DSP_PRINTF("xaf_adev_close failure: %d\r\n", ret);
         }

@@ -18,11 +18,11 @@ gpioHandleiMXSDK_t D15 = {
 gpioHandleiMXSDK_t D14 = {
     .base = GPIO, .pinNumber = 17, .mask = 1 << (17), .irq = GPIO_INTA_IRQn, .portNumber = GPIO1_NUM};
 
-// I2C2 Pin Handles
+// I2C4 Pin Handles
 gpioHandleiMXSDK_t A5 = {
-    .base = GPIO, .pinNumber = 18, .mask = 1 << (18), .irq = FLEXCOMM2_IRQn, .portNumber = GPIO1_NUM};
+    .base = GPIO, .pinNumber = 30, .mask = 1 << (30), .irq = FLEXCOMM4_IRQn, .portNumber = GPIO1_NUM};
 gpioHandleiMXSDK_t A4 = {
-    .base = GPIO, .pinNumber = 17, .mask = 1 << (17), .irq = FLEXCOMM2_IRQn, .portNumber = GPIO1_NUM};
+    .base = GPIO, .pinNumber = 29, .mask = 1 << (29), .irq = FLEXCOMM4_IRQn, .portNumber = GPIO1_NUM};
 
 // SPI5 Pin Handles
 gpioHandleiMXSDK_t D13 = {
@@ -73,9 +73,9 @@ uint32_t USART0_GetFreq(void)
  *  @Reentrant   Yes
  *  @return      uint32_t Returns the clock frequency .
  */
-uint32_t I2C2_GetFreq(void)
+uint32_t I2C4_GetFreq(void)
 {
-    return CLOCK_GetFlexCommClkFreq(2U);
+    return CLOCK_GetFlexCommClkFreq(4U);
 }
 
 /*! @brief       Determines the Clock Frequency feature.

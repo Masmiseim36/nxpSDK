@@ -7,7 +7,7 @@
 ; *----------------------------------------------------------------------------
 ; *
 ; Copyright 1997-2016 Freescale Semiconductor, Inc.
-; Copyright 2016-2020 NXP
+; Copyright 2016-2021 NXP
 ; All rights reserved.
 ;
 ; SPDX-License-Identifier: BSD-3-Clause
@@ -106,7 +106,7 @@ __vector_table_0x1c
         DCD     Reserved46_IRQHandler  ; Reserved interrupt
         DCD     RNG_IRQHandler  ; Random number Generator
         DCD     RTC_IRQHandler  ; RTC alarm and wake-up
-        DCD     DSPWAKE_IRQHandler  ; Wake-up from DSP
+        DCD     Reserved49_IRQHandler  ; Reserved interrupt
         DCD     MU_A_IRQHandler  ; Messaging Unit port A for CM33
         DCD     PIN_INT4_IRQHandler  ; Pin interrupt 4 or pattern match engine slice 4 int
         DCD     PIN_INT5_IRQHandler  ; Pin interrupt 5 or pattern match engine slice 5 int
@@ -411,11 +411,11 @@ RNG_IRQHandler
 RTC_IRQHandler
         LDR     R0, =RTC_DriverIRQHandler
         BX      R0
-        PUBWEAK DSPWAKE_IRQHandler
-        PUBWEAK DSPWAKE_DriverIRQHandler
+        PUBWEAK Reserved49_IRQHandler
+        PUBWEAK Reserved49_DriverIRQHandler
         SECTION .text:CODE:REORDER:NOROOT(2)
-DSPWAKE_IRQHandler
-        LDR     R0, =DSPWAKE_DriverIRQHandler
+Reserved49_IRQHandler
+        LDR     R0, =Reserved49_DriverIRQHandler
         BX      R0
         PUBWEAK MU_A_IRQHandler
         PUBWEAK MU_A_DriverIRQHandler
@@ -606,7 +606,7 @@ HWVAD0_DriverIRQHandler
 Reserved46_DriverIRQHandler
 RNG_DriverIRQHandler
 RTC_DriverIRQHandler
-DSPWAKE_DriverIRQHandler
+Reserved49_DriverIRQHandler
 MU_A_DriverIRQHandler
 PIN_INT4_DriverIRQHandler
 PIN_INT5_DriverIRQHandler

@@ -16,8 +16,8 @@ after it received the flag.
 
 Toolchain supported
 ===================
-- Xtensa Xplorer  7.0.9
-- Xtensa C Compiler  12.0.8
+- Xtensa Xplorer  8.0.10
+- Xtensa C Compiler  14.01
 
 Hardware requirements
 =====================
@@ -45,7 +45,8 @@ Running the demo
 ================
 This example run both M33 and DSP at the same time! 
 
-When the demo runs successfully, the log would be seen on the M33's terminal like below.
+When the demo runs successfully, the log would be seen on the M33's terminal like below
+and the LED D9(RED LED) will be turned on/off according to the log.
 
 ~~~~~~~~~~~~~~~~~~~~~
 Sema42 example!
@@ -60,6 +61,3 @@ Now the LED should be turned off
 
 Sema42 example succeed!
 ~~~~~~~~~~~~~~~~~~~~~
-Customization options
-=====================
-

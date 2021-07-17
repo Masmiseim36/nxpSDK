@@ -8,7 +8,7 @@
 #ifndef __NS_TEST_HELPERS_H__
 #define __NS_TEST_HELPERS_H__
 
-#include "test/framework/test_framework.h"
+#include "test_framework.h"
 
 #ifdef __cplusplus
 extern "C" {

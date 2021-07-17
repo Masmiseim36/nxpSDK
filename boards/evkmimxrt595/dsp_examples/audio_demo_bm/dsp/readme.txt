@@ -8,8 +8,8 @@ to the CODEC, where the audio data will be heard from lineout.
 
 Toolchain supported
 ===================
-- Xtensa Xplorer  8.0.15
-- Xtensa C Compiler  14.05
+- Xtensa Xplorer  8.0.10
+- Xtensa C Compiler  14.01
 
 Hardware requirements
 =====================

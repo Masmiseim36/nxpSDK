@@ -114,7 +114,7 @@ static void bootloader_init(void)
     // Message so python instantiated debugger can tell the
     // bootloader application is running on the target.
     debug_printf("\r\n\r\nRunning bootloader...\r\n");
-    debug_printf("Build time:55 %s %s\r\n", __DATE__, __TIME__);
+//    debug_printf("Build time:55 %s %s\r\n", __DATE__, __TIME__);
 
 #if !BL_FEATURE_HAS_NO_INTERNAL_FLASH
     // Init flash driver.

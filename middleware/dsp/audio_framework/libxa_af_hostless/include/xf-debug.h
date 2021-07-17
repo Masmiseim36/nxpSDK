@@ -1,15 +1,17 @@
-/*******************************************************************************
-* Copyright (c) 2015-2020 Cadence Design Systems, Inc.
-* 
+/*
+* Copyright (c) 2015-2021 Cadence Design Systems Inc.
+*
 * Permission is hereby granted, free of charge, to any person obtaining
 * a copy of this software and associated documentation files (the
-* "Software"), to use this Software with Cadence processor cores only and 
-* not with any other processors and platforms, subject to
+* "Software"), to deal in the Software without restriction, including
+* without limitation the rights to use, copy, modify, merge, publish,
+* distribute, sublicense, and/or sell copies of the Software, and to
+* permit persons to whom the Software is furnished to do so, subject to
 * the following conditions:
-* 
+*
 * The above copyright notice and this permission notice shall be included
 * in all copies or substantial portions of the Software.
-* 
+*
 * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
 * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
@@ -17,8 +19,7 @@
 * CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
 * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-******************************************************************************/
+*/
 /*******************************************************************************
  * xf-debug.h
  *
@@ -91,8 +92,14 @@ extern int  xf_trace(const char *format, ...);
 /* ...tracing facility initialization */
 extern void xf_trace_init(const char *banner);
 
+/* ...tracing facility deinitialization */
+extern void xf_trace_deinit();
+
 /* ...initialize tracing facility */
 #define TRACE_INIT(banner)              (xf_trace_init(banner))
+
+/* ...deinitialize tracing facility */
+#define TRACE_DEINIT()                  (xf_trace_deinit())
 
 /* ...trace tag definition */
 #define TRACE_TAG(tag, on)              enum { __xf_trace_##tag = on }
@@ -133,9 +140,58 @@ TRACE_TAG(1, 1);
 /* ...error output - on by default */
 TRACE_TAG(ERROR, 1);
 
+#if (XF_TRACE == 1)
+TRACE_TAG(BUFFER, 1);
+TRACE_TAG(CMD, 1);
+TRACE_TAG(DEBUG, 1);
+TRACE_TAG(DECODE, 1);
+TRACE_TAG(DISP, 1);
+TRACE_TAG(EXEC, 1);
+TRACE_TAG(FIFO, 1);
+TRACE_TAG(GRAPH, 1);
+TRACE_TAG(INFO, 1);
+TRACE_TAG(INIT, 1);
+TRACE_TAG(INPUT, 1);
+TRACE_TAG(ISR, 1);
+TRACE_TAG(MEM, 1);
+TRACE_TAG(OUTPUT, 1);
+TRACE_TAG(PROBE, 1);
+TRACE_TAG(PROCESS, 1);
+TRACE_TAG(REG, 1);
+TRACE_TAG(ROUTE, 1);
+TRACE_TAG(RSP, 1);
+TRACE_TAG(SETUP, 1);
+TRACE_TAG(UNDERRUN, 1);
+TRACE_TAG(WARNING, 1);
+#elif (XF_TRACE > 1)
+TRACE_TAG(BUFFER, 0);
+TRACE_TAG(CMD, 1);
+TRACE_TAG(DEBUG, 0);
+TRACE_TAG(DECODE, 0);
+TRACE_TAG(DISP, 0);
+TRACE_TAG(EXEC, 0);
+TRACE_TAG(FIFO, 0);
+TRACE_TAG(GRAPH, 0);
+TRACE_TAG(INFO, 0);
+TRACE_TAG(INIT, 0);
+TRACE_TAG(INPUT, 0);
+TRACE_TAG(ISR, 0);
+TRACE_TAG(MEM, 0);
+TRACE_TAG(OUTPUT, 0);
+TRACE_TAG(PROBE, 0);
+TRACE_TAG(PROCESS, 0);
+TRACE_TAG(REG, 0);
+TRACE_TAG(ROUTE, 0);
+TRACE_TAG(RSP, 1);
+TRACE_TAG(SETUP, 0);
+TRACE_TAG(UNDERRUN, 0);
+TRACE_TAG(WARNING, 0);
+#endif
+
 #else
 
 #define TRACE_INIT(banner)              (void)0
+#define TRACE_DEINIT()                  (void)0
 #define TRACE_TAG(tag, on)              __xf_stub(trace_##tag, __LINE__)
 #define TRACE_CFG(tag)			0
 #define TRACE(tag, fmt, ...)            (void)0

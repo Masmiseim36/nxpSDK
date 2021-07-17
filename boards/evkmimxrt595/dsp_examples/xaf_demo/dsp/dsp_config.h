@@ -33,9 +33,9 @@
 /* Audio ping/pong buffers for streaming DSP handling.
  * Assign each buffer to distinct shared RAM partition to maximize performance. */
 /* These addresses are accessed by the M33 core and aliased to M33 data memory */
-#define AUDIO_SHARED_BUFFER_1 0x20020000
+#define AUDIO_SHARED_BUFFER_1      0x20020000
 #define AUDIO_SHARED_BUFFER_1_SIZE (128 * 1024)
-#define AUDIO_SHARED_BUFFER_2 0x20040000
+#define AUDIO_SHARED_BUFFER_2      0x20040000
 #define AUDIO_SHARED_BUFFER_2_SIZE (128 * 1024)
 
 #define AUDIO_I2S_CAPTURER_DEVICE 5

@@ -108,7 +108,7 @@
         <tDllPa/>
         <tDlgDll/>
         <tDlgPa/>
-        <tIfile>flashdebug.ini</tIfile>
+        <tIfile>hello_world_debug_debug.ini</tIfile>
         <pMon>BIN\CMSIS_AGDI_V8M.DLL</pMon>
       </DebugOpt>
       <TargetDriverDllRegistry>
@@ -272,7 +272,7 @@
         <tDllPa/>
         <tDlgDll/>
         <tDlgPa/>
-        <tIfile>flashdebug.ini</tIfile>
+        <tIfile>hello_world_debug_flash_debug.ini</tIfile>
         <pMon>BIN\CMSIS_AGDI_V8M.DLL</pMon>
       </DebugOpt>
       <TargetDriverDllRegistry>
@@ -436,7 +436,7 @@
         <tDllPa/>
         <tDlgDll/>
         <tDlgPa/>
-        <tIfile>flashdebug.ini</tIfile>
+        <tIfile>hello_world_debug_release.ini</tIfile>
         <pMon>BIN\CMSIS_AGDI_V8M.DLL</pMon>
       </DebugOpt>
       <TargetDriverDllRegistry>
@@ -600,7 +600,7 @@
         <tDllPa/>
         <tDlgDll/>
         <tDlgPa/>
-        <tIfile>flashdebug.ini</tIfile>
+        <tIfile>hello_world_debug_flash_release.ini</tIfile>
         <pMon>BIN\CMSIS_AGDI_V8M.DLL</pMon>
       </DebugOpt>
       <TargetDriverDllRegistry>

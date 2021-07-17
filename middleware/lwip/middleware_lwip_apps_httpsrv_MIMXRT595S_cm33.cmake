@@ -1,29 +1,27 @@
-if(NOT MIDDLEWARE_LWIP_APPS_HTTPSRV_MIMXRT595S_cm33_INCLUDED)
-    
-    set(MIDDLEWARE_LWIP_APPS_HTTPSRV_MIMXRT595S_cm33_INCLUDED true CACHE BOOL "middleware_lwip_apps_httpsrv component is included.")
+include_guard(GLOBAL)
+message("middleware_lwip_apps_httpsrv component is included.")
 
-    target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
-        ${CMAKE_CURRENT_LIST_DIR}/src/apps/httpsrv/httpsrv.c
-        ${CMAKE_CURRENT_LIST_DIR}/src/apps/httpsrv/httpsrv_base64.c
-        ${CMAKE_CURRENT_LIST_DIR}/src/apps/httpsrv/httpsrv_fs.c
-        ${CMAKE_CURRENT_LIST_DIR}/src/apps/httpsrv/httpsrv_script.c
-        ${CMAKE_CURRENT_LIST_DIR}/src/apps/httpsrv/httpsrv_sha1.c
-        ${CMAKE_CURRENT_LIST_DIR}/src/apps/httpsrv/httpsrv_supp.c
-        ${CMAKE_CURRENT_LIST_DIR}/src/apps/httpsrv/httpsrv_task.c
-        ${CMAKE_CURRENT_LIST_DIR}/src/apps/httpsrv/httpsrv_tls.c
-        ${CMAKE_CURRENT_LIST_DIR}/src/apps/httpsrv/httpsrv_utf8.c
-        ${CMAKE_CURRENT_LIST_DIR}/src/apps/httpsrv/httpsrv_ws.c
-        ${CMAKE_CURRENT_LIST_DIR}/src/apps/httpsrv/httpsrv_ws_api.c
-    )
-
-
-    target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
-        ${CMAKE_CURRENT_LIST_DIR}/src/apps/httpsrv
-    )
+target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
+    ${CMAKE_CURRENT_LIST_DIR}/src/apps/httpsrv/httpsrv.c
+    ${CMAKE_CURRENT_LIST_DIR}/src/apps/httpsrv/httpsrv_base64.c
+    ${CMAKE_CURRENT_LIST_DIR}/src/apps/httpsrv/httpsrv_fs.c
+    ${CMAKE_CURRENT_LIST_DIR}/src/apps/httpsrv/httpsrv_script.c
+    ${CMAKE_CURRENT_LIST_DIR}/src/apps/httpsrv/httpsrv_sha1.c
+    ${CMAKE_CURRENT_LIST_DIR}/src/apps/httpsrv/httpsrv_supp.c
+    ${CMAKE_CURRENT_LIST_DIR}/src/apps/httpsrv/httpsrv_task.c
+    ${CMAKE_CURRENT_LIST_DIR}/src/apps/httpsrv/httpsrv_tls.c
+    ${CMAKE_CURRENT_LIST_DIR}/src/apps/httpsrv/httpsrv_utf8.c
+    ${CMAKE_CURRENT_LIST_DIR}/src/apps/httpsrv/httpsrv_ws.c
+    ${CMAKE_CURRENT_LIST_DIR}/src/apps/httpsrv/httpsrv_ws_api.c
+)
 
 
-    include(middleware_lwip_MIMXRT595S_cm33)
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
+    ${CMAKE_CURRENT_LIST_DIR}/src/apps/httpsrv
+)
 
-    include(middleware_freertos-kernel_MIMXRT595S_cm33)
 
-endif()
+include(middleware_lwip_MIMXRT595S_cm33)
+
+include(middleware_freertos-kernel_MIMXRT595S_cm33)
+

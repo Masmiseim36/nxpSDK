@@ -1,6 +1,6 @@
 /*
- * FreeRTOS V1.0.0
- * Copyright (C) 2017 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
+ * FreeRTOS V1.1.4
+ * Copyright (C) 2020 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
  * this software and associated documentation files (the "Software"), to deal in
@@ -47,5 +47,10 @@
  * @brief Default socket receive timeout.
  */
 #define socketsconfigDEFAULT_RECV_TIMEOUT (30000)
+
+/**
+ * @brief Enable metrics of secure socket.
+ */
+#define AWS_IOT_SECURE_SOCKETS_METRICS_ENABLED (1)
 
 #endif /* _AWS_SECURE_SOCKETS_CONFIG_H_ */

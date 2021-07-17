@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2020 NXP
+ * Copyright 2019-2021 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -23,8 +23,9 @@
 !!GlobalInfo
 product: Clocks v7.0
 processor: MIMXRT595S
+package_id: MIMXRT595SFFOC
 mcu_data: ksdk2_0
-processor_version: 0.0.0
+processor_version: 0.8.1
 board: MIMXRT595-EVK
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS **********/
 /* clang-format on */

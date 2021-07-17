@@ -1,15 +1,17 @@
-/*******************************************************************************
-* Copyright (c) 2015-2020 Cadence Design Systems, Inc.
-* 
+/*
+* Copyright (c) 2015-2021 Cadence Design Systems Inc.
+*
 * Permission is hereby granted, free of charge, to any person obtaining
 * a copy of this software and associated documentation files (the
-* "Software"), to use this Software with Cadence processor cores only and 
-* not with any other processors and platforms, subject to
+* "Software"), to deal in the Software without restriction, including
+* without limitation the rights to use, copy, modify, merge, publish,
+* distribute, sublicense, and/or sell copies of the Software, and to
+* permit persons to whom the Software is furnished to do so, subject to
 * the following conditions:
-* 
+*
 * The above copyright notice and this permission notice shall be included
 * in all copies or substantial portions of the Software.
-* 
+*
 * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
 * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
@@ -17,8 +19,7 @@
 * CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
 * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-******************************************************************************/
+*/
 /*******************************************************************************
  * xf-io.c
  *
@@ -34,15 +35,6 @@
 #include "xf-dp.h"
 
 /*******************************************************************************
- * Tracing configuration
- ******************************************************************************/
-
-TRACE_TAG(INIT, 1);
-TRACE_TAG(INPUT, 1);
-TRACE_TAG(OUTPUT, 1);
-TRACE_TAG(ROUTE, 1);
-
-/*******************************************************************************
  * Input port API
  ******************************************************************************/
 
@@ -53,7 +45,7 @@ int xf_input_port_init(xf_input_port_t *port, UWORD32 size, UWORD32 align, UWORD
     if (size)
     {
         /* ...internal buffer is used */
-        XF_CHK_ERR(port->buffer = xf_mem_alloc(size, align, core, 0), -ENOMEM);
+        XF_CHK_ERR(port->buffer = xf_mem_alloc(size, align, core, 0), XAF_MEMORY_ERR);
     }
     else
     {
@@ -115,8 +107,11 @@ int xf_input_port_put(xf_input_port_t *port, xf_message_t *m)
         /* ...first message put - set access pointer and length */
         port->access = m->buffer, port->remaining = m->length;
 
+#if 0
         /* ...if first message is empty, mark port is done */
+        /* ...The state change is not required here and is done in input_port_fill */
         (!port->access ? port->flags ^= XF_INPUT_FLAG_EOS | XF_INPUT_FLAG_DONE : 0);
+#endif
 
         /* ...return non-zero to indicate the first buffer is placed into port */
         return 1;
@@ -186,7 +181,7 @@ int xf_input_port_fill(xf_input_port_t *port)
         UWORD32     k;
         
         /* ...determine the size of the chunk to copy */
-        ((k = remaining) > n ? k = n : 0);
+        ((k = remaining) > (UWORD32)n ? k = (UWORD32)n : 0);
 
         /* ...process zero-length input message separately */
         if (k == 0)
@@ -442,7 +437,10 @@ error:
     /* ...destroy pool data */
     xf_msg_pool_destroy(&port->pool, core);
     
-    return -ENOMEM;
+    /* ...reset message queue (it is empty again) */
+    xf_msg_queue_init(&port->queue);
+
+    return XAF_MEMORY_ERR;
 }
 
 /* ...start output port unrouting sequence */
@@ -562,7 +560,12 @@ int xf_output_port_flush(xf_output_port_t *port, UWORD32 opcode)
     if (xf_output_port_routed(port))
     {
         /* ...if port is idle, satisfy immediately */
-        if (port->flags & XF_OUTPUT_FLAG_IDLE)     return 1;
+        if ((port->flags & XF_OUTPUT_FLAG_IDLE) 
+            && (opcode != XF_FILL_THIS_BUFFER) /* ...TENA-2662 */
+        )
+        {
+            return 1;
+        }
         
         /* ...start flushing sequence if not already started */
         if ((port->flags & XF_OUTPUT_FLAG_FLUSHING) == 0)

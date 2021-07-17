@@ -363,7 +363,7 @@ status_t RM67162_Init(display_handle_t *handle, const display_config_t *config)
     status_t status = kStatus_Success;
     mipi_dsc_pixel_format_t dscPixelFormat;
     const rm67162_resource_t *resource = (const rm67162_resource_t *)(handle->resource);
-    mipi_dsi_device_t *dsiDevice = resource->dsiDevice;
+    mipi_dsi_device_t *dsiDevice       = resource->dsiDevice;
     uint32_t initSettingSize;
     const uint8_t(*initSetting)[2];
 
@@ -444,7 +444,7 @@ status_t RM67162_Init(display_handle_t *handle, const display_config_t *config)
 status_t RM67162_Deinit(display_handle_t *handle)
 {
     const rm67162_resource_t *resource = (const rm67162_resource_t *)(handle->resource);
-    mipi_dsi_device_t *dsiDevice = resource->dsiDevice;
+    mipi_dsi_device_t *dsiDevice       = resource->dsiDevice;
 
     (void)MIPI_DSI_DCS_EnterSleepMode(dsiDevice, true);
 
@@ -457,7 +457,7 @@ status_t RM67162_Deinit(display_handle_t *handle)
 status_t RM67162_Start(display_handle_t *handle)
 {
     const rm67162_resource_t *resource = (const rm67162_resource_t *)(handle->resource);
-    mipi_dsi_device_t *dsiDevice = resource->dsiDevice;
+    mipi_dsi_device_t *dsiDevice       = resource->dsiDevice;
 
     return MIPI_DSI_DCS_SetDisplayOn(dsiDevice, true);
 }
@@ -465,7 +465,7 @@ status_t RM67162_Start(display_handle_t *handle)
 status_t RM67162_Stop(display_handle_t *handle)
 {
     const rm67162_resource_t *resource = (const rm67162_resource_t *)(handle->resource);
-    mipi_dsi_device_t *dsiDevice = resource->dsiDevice;
+    mipi_dsi_device_t *dsiDevice       = resource->dsiDevice;
 
     return MIPI_DSI_DCS_SetDisplayOn(dsiDevice, false);
 }

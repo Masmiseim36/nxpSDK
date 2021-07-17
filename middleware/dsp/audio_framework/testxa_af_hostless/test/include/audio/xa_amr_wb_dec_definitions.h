@@ -1,15 +1,17 @@
-/*******************************************************************************
-* Copyright (c) 2015-2020 Cadence Design Systems, Inc.
-* 
+/*
+* Copyright (c) 2015-2021 Cadence Design Systems Inc.
+*
 * Permission is hereby granted, free of charge, to any person obtaining
 * a copy of this software and associated documentation files (the
-* "Software"), to use this Software with Cadence processor cores only and 
-* not with any other processors and platforms, subject to
+* "Software"), to deal in the Software without restriction, including
+* without limitation the rights to use, copy, modify, merge, publish,
+* distribute, sublicense, and/or sell copies of the Software, and to
+* permit persons to whom the Software is furnished to do so, subject to
 * the following conditions:
-* 
+*
 * The above copyright notice and this permission notice shall be included
 * in all copies or substantial portions of the Software.
-* 
+*
 * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
 * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
@@ -17,8 +19,7 @@
 * CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
 * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-******************************************************************************/
+*/
 #ifndef __XA_AMR_WB_DEC_DEFINITIONS_H__
 #define __XA_AMR_WB_DEC_DEFINITIONS_H__
 
@@ -32,13 +33,13 @@
 #define XA_CODEC_AMR_WB_DEC                  5
 
 /* Non Fatal Errors */
-enum xa_error_nonfatal_config_amr_wb {
+enum xa_error_nonfatal_config_amr_wb_dec {
   XA_AMR_WB_DEC_CONFIG_NONFATAL_RANGE = XA_ERROR_CODE(xa_severity_nonfatal, xa_class_config, XA_CODEC_AMR_WB_DEC, 0),
   XA_AMR_WB_DEC_CONFIG_NONFATAL_STATE = XA_ERROR_CODE(xa_severity_nonfatal, xa_class_config, XA_CODEC_AMR_WB_DEC, 1),
   XA_AMR_WB_DEC_CONFIG_NONFATAL_MAX   = XA_ERROR_CODE(xa_severity_nonfatal, xa_class_config, XA_CODEC_AMR_WB_DEC, 2),
 };
 
-enum xa_error_nonfatal_execute_mixer {
+enum xa_error_nonfatal_execute_amr_wb_dec {
     XA_AMR_WB_DEC_EXEC_NONFATAL_STATE    = XA_ERROR_CODE(xa_severity_nonfatal, xa_class_execute, XA_CODEC_AMR_WB_DEC, 0),
     XA_AMR_WB_DEC_EXEC_NONFATAL_NO_DATA  = XA_ERROR_CODE(xa_severity_nonfatal, xa_class_execute, XA_CODEC_AMR_WB_DEC, 1),
     XA_AMR_WB_DEC_EXEC_NONFATAL_INPUT    = XA_ERROR_CODE(xa_severity_nonfatal, xa_class_execute, XA_CODEC_AMR_WB_DEC, 2),
@@ -47,7 +48,7 @@ enum xa_error_nonfatal_execute_mixer {
 };
 
 /* Fatal Errors */
-enum xa_error_fatal_execute_mp3_dec {
+enum xa_error_fatal_execute_amr_wb_dec {
   XA_AMR_WB_DEC_EXEC_FATAL_INVALID_DATA = XA_ERROR_CODE(xa_severity_fatal, xa_class_execute, XA_CODEC_AMR_WB_DEC, 0)
 };
 

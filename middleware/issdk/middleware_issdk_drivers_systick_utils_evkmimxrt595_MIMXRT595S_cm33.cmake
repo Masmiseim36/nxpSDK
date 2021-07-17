@@ -1,15 +1,13 @@
-if(NOT MIDDLEWARE_ISSDK_DRIVERS_SYSTICK_UTILS_EVKMIMXRT595_MIMXRT595S_cm33_INCLUDED)
-    
-    set(MIDDLEWARE_ISSDK_DRIVERS_SYSTICK_UTILS_EVKMIMXRT595_MIMXRT595S_cm33_INCLUDED true CACHE BOOL "middleware_issdk_drivers_systick_utils_evkmimxrt595 component is included.")
+include_guard(GLOBAL)
+message("middleware_issdk_drivers_systick_utils_evkmimxrt595 component is included.")
 
-    target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
-        ${CMAKE_CURRENT_LIST_DIR}/drivers/systick/systick_utils.c
-    )
-
-
-    target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
-        ${CMAKE_CURRENT_LIST_DIR}/drivers/systick
-    )
+target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
+    ${CMAKE_CURRENT_LIST_DIR}/drivers/systick/systick_utils.c
+)
 
 
-endif()
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
+    ${CMAKE_CURRENT_LIST_DIR}/drivers/systick
+)
+
+

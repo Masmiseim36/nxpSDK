@@ -1,0 +1,28 @@
+/*!
+@page middleware_log Middleware Change Log
+ 
+@section psa-arch-tests Arm Platform Security Architecture Test Suite for MCUXpresso SDK
+  The current version is based on psa-arch-tests v1.0, released 2021-24-03 (b0635d9af8ba031e5d74614b2f0a811993dc122e) on https://github.com/ARM-software/psa-arch-tests
+
+  - 1.1
+    - Ported psa-arch-tests v1.1 to MCUXpresso SDK. Based on the 2021-24-03 snapshot(b0635d9af8ba031e5d74614b2f0a811993dc122e).
+
+  - 1.0_rev2
+    - Ported psa-arch-tests v1.0 to MCUXpresso SDK. Based on the 2020-10-06 snapshot(a6b3351d36875a75d1b0e7eaacd975fc8304b789).
+
+  - 1.0_rev1
+    - Ported psa-arch-tests v1.0 to MCUXpresso SDK. Based on the 2020-08-10 snapshot(656685b76e33f16ae2417ca5559771d51e4a63f2).
+
+  - 1.0
+    - Ported psa-arch-tests v1.0 to MCUXpresso SDK. Based on the 2020-04-03 snapshot(3e2358bf417f77168273db2a47baf132ce5ea2b2).
+    - Added lpcxpresso55s16 platform.
+
+  - 0.9
+    - New features:
+      - Ported psa-arch-tests v0.9 to MCUXpresso SDK. Based on the 2019-07-25 snapshot (c80681ed7c7f3e2cbf02ded1ef2464ba2ca7ccd5).
+      - Added lpcxpresso55s69 platform.
+    - Bug Fixes:
+      - Fixed compilation warnings and errors. Changes in the psa-arch-tests original source code are marked by the "NXP" comment.
+      - Renamed test_entry.c files to test_rntry_<test_id>.c to avoid the Keil compilation issue when a lot files have the same name.
+*/
+

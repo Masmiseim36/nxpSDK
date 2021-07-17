@@ -1,15 +1,17 @@
-/*******************************************************************************
-* Copyright (c) 2015-2020 Cadence Design Systems, Inc.
-* 
+/*
+* Copyright (c) 2015-2021 Cadence Design Systems Inc.
+*
 * Permission is hereby granted, free of charge, to any person obtaining
 * a copy of this software and associated documentation files (the
-* "Software"), to use this Software with Cadence processor cores only and 
-* not with any other processors and platforms, subject to
+* "Software"), to deal in the Software without restriction, including
+* without limitation the rights to use, copy, modify, merge, publish,
+* distribute, sublicense, and/or sell copies of the Software, and to
+* permit persons to whom the Software is furnished to do so, subject to
 * the following conditions:
-* 
+*
 * The above copyright notice and this permission notice shall be included
 * in all copies or substantial portions of the Software.
-* 
+*
 * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
 * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
@@ -17,8 +19,7 @@
 * CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
 * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-******************************************************************************/
+*/
 /*******************************************************************************
  * xf-proto.h
  *
@@ -82,3 +83,9 @@ extern void     xf_buffer_put(xf_buffer_t *buffer);
 /* ...proxy operations */
 extern int      xf_proxy_init(xf_proxy_t *proxy, UWORD32 core);
 extern void     xf_proxy_close(xf_proxy_t *proxy);
+
+#ifndef DISABLE_EVENT
+/* ...event channel operations */
+extern int xf_create_event_channel(xf_handle_t *src, UWORD32 src_config_param, xf_handle_t *dst, UWORD32 dst_config_param, UWORD32 num, UWORD32 size, UWORD32 align);
+extern int xf_delete_event_channel(xf_handle_t *src, UWORD32 src_config_param, xf_handle_t *dst, UWORD32 dst_config_param);
+#endif

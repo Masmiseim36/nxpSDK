@@ -82,14 +82,14 @@ static XAF_ERR_CODE get_dec_config(void *p_comp, xaf_format_t *comp_format)
     param[4] = XA_CODEC_CONFIG_PARAM_PCM_WIDTH;
 
     ret = xaf_comp_get_config(p_comp, 3, &param[0]);
-    if (ret != XAF_NO_ERROR)
+    if (ret != XAF_NO_ERR)
         return ret;
 
     comp_format->channels    = param[1];
     comp_format->sample_rate = param[3];
     comp_format->pcm_width   = param[5];
 
-    return XAF_NO_ERROR;
+    return XAF_NO_ERR;
 }
 
 static XAF_ERR_CODE renderer_setup(void *p_renderer, xaf_format_t *format)
@@ -130,6 +130,8 @@ int srtm_decoder(dsp_handle_t *dsp, unsigned int *pCmdParams, unsigned int dec_n
     void *dec_inbuf[1];
     uint32_t read_length;
     int32_t exitcode;
+    xaf_adev_config_t device_config;
+    xaf_comp_config_t comp_config;
 
     int param[14];
     int param_num;
@@ -235,8 +237,15 @@ int srtm_decoder(dsp_handle_t *dsp, unsigned int *pCmdParams, unsigned int dec_n
             goto error_cleanup;
     }
 
-    ret = xaf_adev_open(&p_adev, AUDIO_FRMWK_BUF_SIZE, AUDIO_COMP_BUF_SIZE, DSP_Malloc, DSP_Free);
-    if (ret != XAF_NO_ERROR)
+    xaf_adev_config_default_init(&device_config);
+
+    device_config.pmem_malloc                 = DSP_Malloc;
+    device_config.pmem_free                   = DSP_Free;
+    device_config.audio_component_buffer_size = AUDIO_COMP_BUF_SIZE;
+    device_config.audio_framework_buffer_size = AUDIO_FRMWK_BUF_SIZE;
+
+    ret = xaf_adev_open(&p_adev, &device_config);
+    if (ret != XAF_NO_ERR)
     {
         DSP_PRINTF("xaf_adev_open failure: %d\r\n", ret);
         goto error_cleanup;
@@ -251,15 +260,23 @@ int srtm_decoder(dsp_handle_t *dsp, unsigned int *pCmdParams, unsigned int dec_n
      */
     num_out_buf = (output_renderer) ? 0 : 1;
 
-    ret = xaf_comp_create(p_adev, &p_decoder, dec_id, 1, num_out_buf, &dec_inbuf[0], XAF_DECODER);
-    if (ret != XAF_NO_ERROR)
+    xaf_comp_config_default_init(&comp_config);
+
+    comp_config.comp_id            = dec_id;
+    comp_config.num_input_buffers  = 1;
+    comp_config.num_output_buffers = num_out_buf;
+    comp_config.pp_inbuf           = (pVOID(*)[XAF_MAX_INBUFS]) & dec_inbuf[0];
+    comp_config.comp_type          = XAF_DECODER;
+
+    ret = xaf_comp_create(p_adev, &p_decoder, &comp_config);
+    if (ret != XAF_NO_ERR)
     {
         DSP_PRINTF("xaf_comp_create failure: %d\r\n", ret);
         goto error_cleanup;
     }
 
     ret = xaf_comp_set_config(p_decoder, param_num, &param[0]);
-    if (ret != XAF_NO_ERROR)
+    if (ret != XAF_NO_ERR)
     {
         DSP_PRINTF("srtm_dec_setup failure: %d\r\n", ret);
         goto error_cleanup;
@@ -269,7 +286,7 @@ int srtm_decoder(dsp_handle_t *dsp, unsigned int *pCmdParams, unsigned int dec_n
 
     /* Start decoder component */
     ret = xaf_comp_process(p_adev, p_decoder, NULL, 0, XAF_START_FLAG);
-    if (ret != XAF_NO_ERROR)
+    if (ret != XAF_NO_ERR)
     {
         DSP_PRINTF("xaf_comp_process XAF_START_FLAG failure: %d\r\n", ret);
         goto error_cleanup;
@@ -284,7 +301,7 @@ int srtm_decoder(dsp_handle_t *dsp, unsigned int *pCmdParams, unsigned int dec_n
         if (read_length)
         {
             ret = xaf_comp_process(p_adev, p_decoder, dec_inbuf[0], read_length, XAF_INPUT_READY_FLAG);
-            if (ret != XAF_NO_ERROR)
+            if (ret != XAF_NO_ERR)
             {
                 DSP_PRINTF("xaf_comp_process XAF_INPUT_READY_FLAG failure: %d\r\n", ret);
                 goto error_cleanup;
@@ -296,7 +313,7 @@ int srtm_decoder(dsp_handle_t *dsp, unsigned int *pCmdParams, unsigned int dec_n
         }
 
         ret = xaf_comp_get_status(p_adev, p_decoder, &dec_status, &dec_info[0]);
-        if (ret != XAF_NO_ERROR)
+        if (ret != XAF_NO_ERR)
         {
             DSP_PRINTF("xaf_comp_get_status failure: %d\r\n", ret);
             goto error_cleanup;
@@ -321,14 +338,22 @@ int srtm_decoder(dsp_handle_t *dsp, unsigned int *pCmdParams, unsigned int dec_n
     {
         /* Get decoder format from the decoder */
         ret = get_dec_config(p_decoder, &dec_format);
-        if (ret != XAF_NO_ERROR)
+        if (ret != XAF_NO_ERR)
         {
             DSP_PRINTF("get_dec_config failure: %d\r\n", ret);
             goto error_cleanup;
         }
 
-        ret = xaf_comp_create(p_adev, &p_renderer, "renderer", 0, 0, NULL, XAF_RENDERER);
-        if (ret != XAF_NO_ERROR)
+        xaf_comp_config_default_init(&comp_config);
+
+        comp_config.comp_id            = "renderer";
+        comp_config.num_input_buffers  = 0;
+        comp_config.num_output_buffers = 0;
+        comp_config.pp_inbuf           = NULL;
+        comp_config.comp_type          = XAF_RENDERER;
+
+        ret = xaf_comp_create(p_adev, &p_renderer, &comp_config);
+        if (ret != XAF_NO_ERR)
         {
             DSP_PRINTF("xaf_comp_create failure: %d\r\n", ret);
             goto error_cleanup;
@@ -336,7 +361,7 @@ int srtm_decoder(dsp_handle_t *dsp, unsigned int *pCmdParams, unsigned int dec_n
 
         /* Setup renderer to match decoded PCM format */
         ret = renderer_setup(p_renderer, &dec_format);
-        if (ret != XAF_NO_ERROR)
+        if (ret != XAF_NO_ERR)
         {
             DSP_PRINTF("renderer_setup failure: %d\r\n", ret);
             goto error_cleanup;
@@ -345,7 +370,7 @@ int srtm_decoder(dsp_handle_t *dsp, unsigned int *pCmdParams, unsigned int dec_n
         DSP_PRINTF("[DSP Codec] Renderer component created\r\n");
 
         ret = xaf_connect(p_decoder, 1, p_renderer, 0, 4);
-        if (ret != XAF_NO_ERROR)
+        if (ret != XAF_NO_ERR)
         {
             DSP_PRINTF("xaf_connect failure: %d\r\n", ret);
             goto error_cleanup;
@@ -353,14 +378,14 @@ int srtm_decoder(dsp_handle_t *dsp, unsigned int *pCmdParams, unsigned int dec_n
         DSP_PRINTF("[DSP Codec] Connected XA_DECODER -> XA_RENDERER\r\n");
 
         ret = xaf_comp_process(p_adev, p_renderer, NULL, 0, XAF_START_FLAG);
-        if (ret != XAF_NO_ERROR)
+        if (ret != XAF_NO_ERR)
         {
             DSP_PRINTF("xaf_comp_process XAF_START_FLAG renderer failure: %d\r\n", ret);
             goto error_cleanup;
         }
 
         ret = xaf_comp_get_status(p_adev, p_renderer, &dec_status, &dec_info[0]);
-        if (ret != XAF_NO_ERROR)
+        if (ret != XAF_NO_ERR)
         {
             DSP_PRINTF("xaf_comp_get_status XA_RENDERER failure: %d\r\n", ret);
             return -1;
@@ -411,7 +436,7 @@ int srtm_decoder(dsp_handle_t *dsp, unsigned int *pCmdParams, unsigned int dec_n
 
     /* Clean up and shut down XAF */
     ret = xaf_comp_delete(p_decoder);
-    if (ret != XAF_NO_ERROR)
+    if (ret != XAF_NO_ERR)
     {
         DSP_PRINTF("xaf_comp_delete failure: %d\r\n", ret);
         goto error_cleanup;
@@ -421,7 +446,7 @@ int srtm_decoder(dsp_handle_t *dsp, unsigned int *pCmdParams, unsigned int dec_n
     if (output_renderer)
     {
         ret = xaf_comp_delete(p_renderer);
-        if (ret != XAF_NO_ERROR)
+        if (ret != XAF_NO_ERR)
         {
             DSP_PRINTF("xaf_comp_delete failure: %d\r\n", ret);
             goto error_cleanup;
@@ -430,7 +455,7 @@ int srtm_decoder(dsp_handle_t *dsp, unsigned int *pCmdParams, unsigned int dec_n
     }
 
     ret = xaf_adev_close(p_adev, XAF_ADEV_NORMAL_CLOSE);
-    if (ret != XAF_NO_ERROR)
+    if (ret != XAF_NO_ERR)
     {
         DSP_PRINTF("xaf_adev_close failure: %d\r\n", ret);
         goto error_cleanup;
@@ -449,7 +474,7 @@ error_cleanup:
     if (p_adev != NULL)
     {
         ret = xaf_adev_close(p_adev, XAF_ADEV_FORCE_CLOSE);
-        if (ret != XAF_NO_ERROR)
+        if (ret != XAF_NO_ERR)
         {
             DSP_PRINTF("xaf_adev_close failure: %d\r\n", ret);
         }

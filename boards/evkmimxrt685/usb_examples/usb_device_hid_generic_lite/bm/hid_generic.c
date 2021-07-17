@@ -99,7 +99,7 @@ void USB_DeviceClockInit(void)
     POWER_DisablePD(kPDRUNCFG_APD_USBHS_SRAM);
     POWER_DisablePD(kPDRUNCFG_PPD_USBHS_SRAM);
     POWER_ApplyPD();
-    
+
     /* save usb ip clock freq*/
     usbClockFreq = g_xtalFreq / usbClockDiv;
     /* enable USB PHY PLL clock, the phy bus clock (480MHz) source is same with USB IP */
@@ -162,7 +162,11 @@ static usb_status_t USB_DeviceHidGenericInterruptOut(usb_device_handle handle,
                                                      usb_device_endpoint_callback_message_struct_t *message,
                                                      void *callbackParam)
 {
-    if (g_UsbDeviceHidGeneric.attach)
+    if (g_UsbDeviceHidGeneric.attach
+#if (defined(USB_DEVICE_CONFIG_ROOT2_TEST) && (USB_DEVICE_CONFIG_ROOT2_TEST > 0U))
+        && (message->length != (USB_CANCELLED_TRANSFER_LENGTH))
+#endif
+    )
     {
         USB_DeviceSendRequest(g_UsbDeviceHidGeneric.deviceHandle, USB_HID_GENERIC_ENDPOINT_IN,
                               (uint8_t *)&g_UsbDeviceHidGeneric.buffer[g_UsbDeviceHidGeneric.bufferIndex][0],
@@ -179,7 +183,7 @@ static usb_status_t USB_DeviceHidGenericInterruptOut(usb_device_handle handle,
 /* The device callback */
 usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *param)
 {
-    usb_status_t error = kStatus_USB_Success;
+    usb_status_t error = kStatus_USB_InvalidRequest;
     uint8_t *temp8     = (uint8_t *)param;
 
     switch (event)
@@ -190,6 +194,10 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
             /* Initialize the control pipes */
             USB_DeviceControlPipeInit(g_UsbDeviceHidGeneric.deviceHandle);
             g_UsbDeviceHidGeneric.attach = 0U;
+#if (defined(USB_DEVICE_CONFIG_ROOT2_TEST) && (USB_DEVICE_CONFIG_ROOT2_TEST > 0U))
+            g_UsbDeviceCurrentConfigure = 0U;
+#endif
+            error = kStatus_USB_Success;
 #if (defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0U)) || \
     (defined(USB_DEVICE_CONFIG_LPCIP3511HS) && (USB_DEVICE_CONFIG_LPCIP3511HS > 0U))
             /* Get USB speed to configure the device, including max packet size and interval of the endpoints. */
@@ -255,8 +263,28 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
                     (uint8_t *)&g_UsbDeviceHidGeneric.buffer[g_UsbDeviceHidGeneric.bufferIndex][0],
                     USB_HID_GENERIC_OUT_BUFFER_LENGTH);
             }
+#if (defined(USB_DEVICE_CONFIG_ROOT2_TEST) && (USB_DEVICE_CONFIG_ROOT2_TEST > 0U))
+            else if (0U == (*temp8))
+            {
+                error = USB_DeviceDeinitEndpoint(
+                    g_UsbDeviceHidGeneric.deviceHandle,
+                    (USB_HID_GENERIC_ENDPOINT_OUT | (USB_OUT << USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_SHIFT)));
+                error = USB_DeviceDeinitEndpoint(
+                    g_UsbDeviceHidGeneric.deviceHandle,
+                    (USB_HID_GENERIC_ENDPOINT_IN | (USB_IN << USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_SHIFT)));
+            }
+            else
+            {
+                /* no action */
+            }
+#endif
+            break;
+
+        case kUSB_DeviceEventSetInterface:
+            error = kStatus_USB_Success;
             break;
         default:
+            /* no action required, the default return value is kStatus_USB_InvalidRequest. */
             break;
     }
 
@@ -279,7 +307,13 @@ usb_status_t USB_DeviceGetSetupBuffer(usb_device_handle handle, usb_setup_struct
 /* Configure device remote wakeup */
 usb_status_t USB_DeviceConfigureRemoteWakeup(usb_device_handle handle, uint8_t enable)
 {
+#if (defined(USB_DEVICE_CONFIG_ROOT2_TEST) && (USB_DEVICE_CONFIG_ROOT2_TEST > 0U))
+#if ((defined(USB_DEVICE_CONFIG_REMOTE_WAKEUP)) && (USB_DEVICE_CONFIG_REMOTE_WAKEUP > 0U))
+    return kStatus_USB_Success;
+#endif
+#else
     return kStatus_USB_InvalidRequest;
+#endif
 }
 
 /* Configure the endpoint status (idle or stall) */
@@ -401,8 +435,8 @@ int main(void)
 void main(void)
 #endif
 {
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
+    BOARD_InitBootPins();
+    BOARD_InitBootClocks();
     BOARD_InitDebugConsole();
 
     USB_DeviceApplicationInit();

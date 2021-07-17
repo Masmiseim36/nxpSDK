@@ -6,28 +6,28 @@ Currently only WLAN connection Manager CLIs are available.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.9
-- Keil MDK  5.33
-- GCC ARM Embedded  9.3.1
-- MCUXpresso  11.3.0
+- IAR embedded Workbench  9.10.2
+- Keil MDK  5.34
+- GCC ARM Embedded  10.2.1
+- MCUXpresso  11.4.0
 
 Hardware requirements
 =====================
 - Micro USB cable
 - EVK-MIMXRT595 board
 - Personal Computer
-- One of the following WiFi modules:
-  - Panasonic PAN9026 SDIO ADAPTER
+- One of the following Wi-Fi modules:
   - AzureWave AW-NM191NF-uSD + uSD to SD adapter
   - AzureWave AW-AM457-uSD + uSD to SD adapter
+  - AzureWave AW-CM358-uSD + uSD to SD adapter
 
 Board settings
 ==============
 Make sure resistors R691~R697 are populated and resistors R611~R620,R660, R661 are removed.
 
-This example, by default, is built to work with the Panasonic PAN9026 SDIO ADAPTER. It is configured by the project macro: WIFI_BOARD_PAN9026_SDIO.
-If you want use the AzureWave AW-NM191NF-uSD, please change the project macro WIFI_BOARD_PAN9026_SDIO to WIFI_BOARD_AW_NM191.
-If you want use the AzureWave AW-AM457-uSD, please change the project macro WIFI_BOARD_PAN9026_SDIO to WIFI_BOARD_AW_AM457.
+This example, by default, is built to work with the AzureWave AW-AM457-uSD. It is configured by the macro definition in file app_config.h (#define WIFI_BOARD_AW_AM457).
+If you want use the AzureWave AW-NM191NF-uSD, please change the macro to WIFI_BOARD_AW_NM191.
+If you want use the AzureWave AW-CM358-uSD, please change the macro to WIFI_BOARD_AW_CM358.
 
 Jumper settings for AzureWave AW-NM191NF-uSD Module:
   - J11 1-2: VIO_SD 1.8V (Voltage level of SDIO pins is 1.8V)
@@ -36,6 +36,16 @@ Jumper settings for AzureWave AW-NM191NF-uSD Module:
 Jumper settings for AzureWave AW-AM457-uSD Module:
   - J11 1-2: VIO_SD 1.8V (Voltage level of SDIO pins is 1.8V)
   - J2  1-2: 3.3V VIO_uSD (Power Supply from uSD connector)
+
+Jumper settings for AzureWave AW-CM358-uSD Module:
+  - J4 1-2: VIO 1.8V (Voltage level of SDIO pins is 1.8V)
+  - J2 1-2: 3.3V VIO_uSD (Power Supply from uSD connector)
+  - The pin 1 of J4 is not marked on the board. Please note that pin numbering of J4 is opposite to J2 (pin 1 is close to the "J4" label):
+         3 2 1
+         o o=o J4
+      J2 o=o o
+         1 2 3
+
 Prepare the Demo
 ================
 1.  Connect a micro USB cable between the PC host and the CMSIS DAP USB port on the board

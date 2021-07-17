@@ -68,10 +68,16 @@ USB_GLOBAL USB_RAM_ADDRESS_ALIGNMENT(USB_DATA_ALIGN_SIZE) static uint8_t
 #elif (USB_DEVICE_CONFIG_MSC == 2U)
 USB_GLOBAL USB_RAM_ADDRESS_ALIGNMENT(USB_DATA_ALIGN_SIZE) static usb_device_msc_cbw_t s_MscCbw1;
 USB_GLOBAL USB_RAM_ADDRESS_ALIGNMENT(USB_DATA_ALIGN_SIZE) static usb_device_msc_cbw_t s_MscCbw2;
-#define MSCCBW_ARRAY {&s_MscCbw1, &s_MscCbw2}
+#define MSCCBW_ARRAY           \
+    {                          \
+        &s_MscCbw1, &s_MscCbw2 \
+    }
 USB_GLOBAL USB_RAM_ADDRESS_ALIGNMENT(USB_DATA_ALIGN_SIZE) static usb_device_msc_csw_t s_MscCsw1;
 USB_GLOBAL USB_RAM_ADDRESS_ALIGNMENT(USB_DATA_ALIGN_SIZE) static usb_device_msc_csw_t s_MscCsw2;
-#define MSCCSW_ARRAY {&s_MscCsw1, &s_MscCsw2}
+#define MSCCSW_ARRAY           \
+    {                          \
+        &s_MscCsw1, &s_MscCsw2 \
+    }
 USB_GLOBAL USB_RAM_ADDRESS_ALIGNMENT(USB_DATA_ALIGN_SIZE) static usb_device_request_sense_data_struct_t requestSense1;
 USB_GLOBAL USB_RAM_ADDRESS_ALIGNMENT(USB_DATA_ALIGN_SIZE) static usb_device_read_capacity_struct_t readCapacity1;
 USB_GLOBAL USB_RAM_ADDRESS_ALIGNMENT(USB_DATA_ALIGN_SIZE) static usb_device_read_capacity16_data_struct_t
@@ -87,19 +93,37 @@ USB_GLOBAL USB_RAM_ADDRESS_ALIGNMENT(USB_DATA_ALIGN_SIZE) uint8_t
     formatCapacityData2[sizeof(usb_device_capacity_list_header_struct_t) +
                         sizeof(usb_device_current_max_capacity_descriptor_struct_t) +
                         sizeof(usb_device_formattable_capacity_descriptor_struct_t) * 3];
-#define MSCSENSE_ARRAY {&requestSense1, &requestSense2}
-#define MSCCPAP_ARRAY {&readCapacity1, &readCapacity2}
-#define MSCCAPA16_ARRAY {&readCapacity161, &readCapacity162}
-#define MSCFORMAT_ARRAY {&formatCapacityData1[0], &formatCapacityData2[0]}
+#define MSCSENSE_ARRAY                 \
+    {                                  \
+        &requestSense1, &requestSense2 \
+    }
+#define MSCCPAP_ARRAY                  \
+    {                                  \
+        &readCapacity1, &readCapacity2 \
+    }
+#define MSCCAPA16_ARRAY                    \
+    {                                      \
+        &readCapacity161, &readCapacity162 \
+    }
+#define MSCFORMAT_ARRAY                                  \
+    {                                                    \
+        &formatCapacityData1[0], &formatCapacityData2[0] \
+    }
 #elif (USB_DEVICE_CONFIG_MSC == 3U)
 USB_GLOBAL USB_RAM_ADDRESS_ALIGNMENT(USB_DATA_ALIGN_SIZE) static usb_device_msc_cbw_t s_MscCbw1;
 USB_GLOBAL USB_RAM_ADDRESS_ALIGNMENT(USB_DATA_ALIGN_SIZE) static usb_device_msc_cbw_t s_MscCbw2;
 USB_GLOBAL USB_RAM_ADDRESS_ALIGNMENT(USB_DATA_ALIGN_SIZE) static usb_device_msc_cbw_t s_MscCbw3;
-#define MSCCBW_ARRAY {&s_MscCbw1, &s_MscCbw2, &s_MscCbw3}
+#define MSCCBW_ARRAY                       \
+    {                                      \
+        &s_MscCbw1, &s_MscCbw2, &s_MscCbw3 \
+    }
 USB_GLOBAL USB_RAM_ADDRESS_ALIGNMENT(USB_DATA_ALIGN_SIZE) static usb_device_msc_csw_t s_MscCsw1;
 USB_GLOBAL USB_RAM_ADDRESS_ALIGNMENT(USB_DATA_ALIGN_SIZE) static usb_device_msc_csw_t s_MscCsw2;
 USB_GLOBAL USB_RAM_ADDRESS_ALIGNMENT(USB_DATA_ALIGN_SIZE) static usb_device_msc_csw_t s_MscCsw3;
-#define MSCCSW_ARRAY {&s_MscCsw1, &s_MscCsw2, &s_MscCsw3}
+#define MSCCSW_ARRAY                       \
+    {                                      \
+        &s_MscCsw1, &s_MscCsw2, &s_MscCsw3 \
+    }
 USB_GLOBAL USB_RAM_ADDRESS_ALIGNMENT(USB_DATA_ALIGN_SIZE) static usb_device_request_sense_data_struct_t requestSense1;
 USB_GLOBAL USB_RAM_ADDRESS_ALIGNMENT(USB_DATA_ALIGN_SIZE) static usb_device_read_capacity_struct_t readCapacity1;
 USB_GLOBAL USB_RAM_ADDRESS_ALIGNMENT(USB_DATA_ALIGN_SIZE) static usb_device_read_capacity16_data_struct_t
@@ -124,11 +148,22 @@ USB_GLOBAL USB_RAM_ADDRESS_ALIGNMENT(USB_DATA_ALIGN_SIZE) static uint8_t
     formatCapacityData3[sizeof(usb_device_capacity_list_header_struct_t) +
                         sizeof(usb_device_current_max_capacity_descriptor_struct_t) +
                         sizeof(usb_device_formattable_capacity_descriptor_struct_t) * 3];
-#define MSCSENSE_ARRAY {&requestSense1, &requestSense2, &requestSense3}
-#define MSCCPAP_ARRAY {&readCapacity1, &readCapacity2, &readCapacity3}
-#define MSCCAPA16_ARRAY \
-    {&readCapacity161, &readCapacity162, &readCapacity163}
-#define MSCFORMAT_ARRAY {&formatCapacityData1[0], &formatCapacityData2[0], &formatCapacityData3[0]}
+#define MSCSENSE_ARRAY                                 \
+    {                                                  \
+        &requestSense1, &requestSense2, &requestSense3 \
+    }
+#define MSCCPAP_ARRAY                                  \
+    {                                                  \
+        &readCapacity1, &readCapacity2, &readCapacity3 \
+    }
+#define MSCCAPA16_ARRAY                                      \
+    {                                                        \
+        &readCapacity161, &readCapacity162, &readCapacity163 \
+    }
+#define MSCFORMAT_ARRAY                                                           \
+    {                                                                             \
+        &formatCapacityData1[0], &formatCapacityData2[0], &formatCapacityData3[0] \
+    }
 #else
 #error "the max support USB_DEVICE_CONFIG_MSC is 3"
 #endif
@@ -301,7 +336,7 @@ static usb_status_t USB_DeviceMscBulkIn(usb_device_handle handle,
                                         void *callbackParam)
 {
     usb_device_msc_struct_t *mscHandle = (usb_device_msc_struct_t *)callbackParam;
-    usb_device_msc_csw_t *csw;
+    usb_device_msc_csw_t *csw          = NULL;
     void *temp;
     usb_status_t error = kStatus_USB_Error;
     /* endpoint callback length is USB_CANCELLED_TRANSFER_LENGTH (0xFFFFFFFFU) when transfer is canceled */
@@ -906,6 +941,7 @@ usb_status_t USB_DeviceMscEvent(void *handle, uint32_t event, void *param)
             }
             if (*temp8 == mscHandle->configuration)
             {
+                error = kStatus_USB_Success;
                 break;
             }
 
@@ -946,6 +982,7 @@ usb_status_t USB_DeviceMscEvent(void *handle, uint32_t event, void *param)
             /* Only handle new alternate setting. */
             if (alternate == mscHandle->alternate)
             {
+                error = kStatus_USB_Success;
                 break;
             }
             error = USB_DeviceMscEndpointsDeinit(mscHandle);
@@ -1055,28 +1092,29 @@ usb_status_t USB_DeviceMscEvent(void *handle, uint32_t event, void *param)
                 break;
             }
 
+            if ((control_request->setup->wIndex & 0xFFU) != mscHandle->interfaceNumber)
+            {
+                break;
+            }
+
+            error = kStatus_USB_InvalidRequest;
             switch (control_request->setup->bRequest)
             {
                 case USB_DEVICE_MSC_GET_MAX_LUN:
                     /*Get Max LUN */
-                    if ((control_request->setup->wIndex == mscHandle->interfaceNumber) &&
-                        (0U == control_request->setup->wValue) && (control_request->setup->wLength == 0x0001U) &&
+                    if ((0U == control_request->setup->wValue) && (control_request->setup->wLength == 0x0001U) &&
                         ((control_request->setup->bmRequestType & USB_REQUEST_TYPE_DIR_MASK) ==
                          USB_REQUEST_TYPE_DIR_IN))
                     {
                         control_request->buffer = &mscHandle->logicalUnitNumber;
-                        control_request->length = (uint32_t)control_request->setup->wLength;
-                    }
-                    else
-                    {
-                        error = kStatus_USB_InvalidRequest;
+                        control_request->length = sizeof(mscHandle->logicalUnitNumber);
+                        error                   = kStatus_USB_Success;
                     }
 
                     break;
                 case USB_DEVICE_MSC_BULK_ONLY_MASS_STORAGE_RESET:
                     /*Bulk-Only Mass Storage Reset (class-specific request)*/
-                    if ((control_request->setup->wIndex == mscHandle->interfaceNumber) &&
-                        (0U == control_request->setup->wValue) && (0U == control_request->setup->wLength) &&
+                    if ((0U == control_request->setup->wValue) && (0U == control_request->setup->wLength) &&
                         ((control_request->setup->bmRequestType & USB_REQUEST_TYPE_DIR_MASK) ==
                          USB_REQUEST_TYPE_DIR_OUT))
                     {
@@ -1088,15 +1126,12 @@ usb_status_t USB_DeviceMscEvent(void *handle, uint32_t event, void *param)
                         mscHandle->cbwValidFlag         = 1U;
                         mscHandle->performResetRecover  = 0U;
                         mscHandle->performResetDoneFlag = 1U;
-                    }
-                    else
-                    {
-                        error = kStatus_USB_InvalidRequest;
+                        error                           = kStatus_USB_Success;
                     }
 
                     break;
                 default:
-                    /*no action*/
+                    /* no action, return kStatus_USB_InvalidRequest */
                     break;
             }
         }

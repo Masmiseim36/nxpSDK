@@ -58,16 +58,6 @@
       <locationURI>PARENT-1-PROJECT_LOC/pin_mux.h</locationURI>
     </link>
     <link>
-      <name>board</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>board/core_dsp.h</name>
-      <type>1</type>
-      <locationURI>PARENT-1-PROJECT_LOC/core_dsp.h</locationURI>
-    </link>
-    <link>
       <name>evkmimxrt595</name>
       <type>2</type>
       <locationURI>virtual:/virtual</locationURI>
@@ -198,6 +188,26 @@
       <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT595S/drivers/fsl_common.c</locationURI>
     </link>
     <link>
+      <name>drivers</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>drivers/fsl_common_dsp.c</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT595S/drivers/fsl_common_dsp.c</locationURI>
+    </link>
+    <link>
+      <name>drivers</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>drivers/fsl_common_dsp.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT595S/drivers/fsl_common_dsp.h</locationURI>
+    </link>
+    <link>
       <name>component/lists</name>
       <type>2</type>
       <locationURI>virtual:/virtual</locationURI>
@@ -313,9 +323,9 @@
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
-      <name>CMSIS/arm_common_tables.h</name>
+      <name>CMSIS/cmsis_armcc.h</name>
       <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/CMSIS/Include/arm_common_tables.h</locationURI>
+      <locationURI>PARENT-6-PROJECT_LOC/CMSIS/Core/Include/cmsis_armcc.h</locationURI>
     </link>
     <link>
       <name>CMSIS</name>
@@ -323,9 +333,9 @@
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
-      <name>CMSIS/arm_const_structs.h</name>
+      <name>CMSIS/cmsis_armclang.h</name>
       <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/CMSIS/Include/arm_const_structs.h</locationURI>
+      <locationURI>PARENT-6-PROJECT_LOC/CMSIS/Core/Include/cmsis_armclang.h</locationURI>
     </link>
     <link>
       <name>CMSIS</name>
@@ -333,9 +343,49 @@
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
-      <name>CMSIS/arm_math.h</name>
+      <name>CMSIS/cmsis_armclang_ltm.h</name>
       <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/CMSIS/Include/arm_math.h</locationURI>
+      <locationURI>PARENT-6-PROJECT_LOC/CMSIS/Core/Include/cmsis_armclang_ltm.h</locationURI>
+    </link>
+    <link>
+      <name>CMSIS</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/cmsis_compiler.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/CMSIS/Core/Include/cmsis_compiler.h</locationURI>
+    </link>
+    <link>
+      <name>CMSIS</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/cmsis_gcc.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/CMSIS/Core/Include/cmsis_gcc.h</locationURI>
+    </link>
+    <link>
+      <name>CMSIS</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/cmsis_iccarm.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/CMSIS/Core/Include/cmsis_iccarm.h</locationURI>
+    </link>
+    <link>
+      <name>CMSIS</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/cmsis_version.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/CMSIS/Core/Include/cmsis_version.h</locationURI>
     </link>
     <link>
       <name>drivers</name>

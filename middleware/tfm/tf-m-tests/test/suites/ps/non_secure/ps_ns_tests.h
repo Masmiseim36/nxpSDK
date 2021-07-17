@@ -8,7 +8,7 @@
 #ifndef __PS_NS_TESTS_H__
 #define __PS_NS_TESTS_H__
 
-#include "test/framework/test_framework.h"
+#include "test_framework.h"
 
 #ifdef __cplusplus
 extern "C" {

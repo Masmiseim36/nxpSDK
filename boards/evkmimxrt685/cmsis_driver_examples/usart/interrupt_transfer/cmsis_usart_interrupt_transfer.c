@@ -9,8 +9,8 @@
 #include "pin_mux.h"
 #include "board.h"
 
-#include <stdbool.h>
 #include "fsl_usart_cmsis.h"
+#include <stdbool.h>
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -106,13 +106,6 @@ int main(void)
 
     while (1)
     {
-        /* If g_txBuffer is empty and g_rxBuffer is full, copy g_rxBuffer to g_txBuffer. */
-        if ((!rxBufferEmpty) && (!txBufferFull))
-        {
-            memcpy(g_txBuffer, g_rxBuffer, ECHO_BUFFER_LENGTH);
-            rxBufferEmpty = true;
-            txBufferFull  = true;
-        }
         /* If g_txBuffer is empty and g_rxBuffer is full, copy g_rxBuffer to g_txBuffer. */
         if ((!rxBufferEmpty) && (!txBufferFull))
         {

@@ -424,7 +424,7 @@ static usb_status_t USB_DeviceHidInterruptIn(usb_device_handle deviceHandle,
 
 usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *param)
 {
-    usb_status_t error = kStatus_USB_Success;
+    usb_status_t error = kStatus_USB_InvalidRequest;
     uint8_t *temp8     = (uint8_t *)param;
 
     switch (event)
@@ -454,17 +454,18 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
         case kUSB_DeviceEventAttach:
         {
             usb_echo("USB device attached.\r\n");
+            error = kStatus_USB_Success;
             /*Add one delay here to make the DP pull down long enough to allow host to detect the previous
              * disconnection.*/
             SDK_DelayAtLeastUs(5000, SDK_DEVICE_MAXIMUM_CPU_CLOCK_FREQUENCY);
             USB_DeviceRun(g_UsbDeviceHidMouse.deviceHandle);
         }
         break;
-
         case kUSB_DeviceEventDetach:
         {
             usb_echo("USB device detached.\r\n");
             g_UsbDeviceHidMouse.attach = 0;
+            error                      = kStatus_USB_Success;
             USB_DeviceStop(g_UsbDeviceHidMouse.deviceHandle);
         }
         break;
@@ -523,6 +524,9 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
                 g_UsbDeviceHidMouse.attach = 1U;
                 error                      = USB_DeviceHidMouseAction(); /* run the cursor movement code */
             }
+            break;
+        case kUSB_DeviceEventSetInterface:
+            error = kStatus_USB_Success;
             break;
         default:
             break;

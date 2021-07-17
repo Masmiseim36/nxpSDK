@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2020 NXP
+ * Copyright 2019-2021 NXP
  * All rights reserved.
  *
  *
@@ -36,8 +36,8 @@
 #if defined(MIMXRT595S_cm33_SERIES)
 #define MPI_TZM_PRESET_SIZE MPI_TZM_PRESET_SIZE_RT5XX
 #define MPI_ADDRESS_MASK    (0xEFFFFFFFU) /* Bit28 is secure address indicator */
-#define MPI_MEMCPY          memcpy
-#define MPI_MEMCLR          memset
+#define MPI_MEMCPY          (void)memcpy
+#define MPI_MEMCLR          (void)memset
 
 #elif defined(MIMXRT685S_cm33_SERIES)
 #define MPI_TZM_PRESET_SIZE MPI_TZM_PRESET_SIZE_RT6XX

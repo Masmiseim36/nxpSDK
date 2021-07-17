@@ -227,6 +227,7 @@
           <state>SSD1963_DATA_WITDH=8</state>
           <state>FLEXIO_MCULCD_DATA_BUS_WIDTH=8</state>
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
+          <state>MCUXPRESSO_SDK</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -375,7 +376,7 @@
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../flash_config</state>
-          <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
+          <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
           <state>$PROJ_DIR$/../../../../../components/video/display/dc</state>
         </option>
         <option>
@@ -840,7 +841,7 @@
         </option>
         <option>
           <name>IlinkOverrideProgramEntryLabel</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>IlinkProgramEntryLabelSelect</name>
@@ -848,7 +849,7 @@
         </option>
         <option>
           <name>IlinkProgramEntryLabel</name>
-          <state>__iar_program_start</state>
+          <state>Reset_Handler</state>
         </option>
         <option>
           <name>DoFill</name>
@@ -1279,6 +1280,7 @@
           <state>SSD1963_DATA_WITDH=8</state>
           <state>FLEXIO_MCULCD_DATA_BUS_WIDTH=8</state>
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
+          <state>MCUXPRESSO_SDK</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -1427,7 +1429,7 @@
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../flash_config</state>
-          <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
+          <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
           <state>$PROJ_DIR$/../../../../../components/video/display/dc</state>
         </option>
         <option>
@@ -1892,7 +1894,7 @@
         </option>
         <option>
           <name>IlinkOverrideProgramEntryLabel</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>IlinkProgramEntryLabelSelect</name>
@@ -1900,7 +1902,7 @@
         </option>
         <option>
           <name>IlinkProgramEntryLabel</name>
-          <state>__iar_program_start</state>
+          <state>Reset_Handler</state>
         </option>
         <option>
           <name>DoFill</name>
@@ -2330,6 +2332,7 @@
           <state>SSD1963_DATA_WITDH=8</state>
           <state>FLEXIO_MCULCD_DATA_BUS_WIDTH=8</state>
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
+          <state>MCUXPRESSO_SDK</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -2478,7 +2481,7 @@
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../flash_config</state>
-          <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
+          <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
           <state>$PROJ_DIR$/../../../../../components/video/display/dc</state>
         </option>
         <option>
@@ -2943,7 +2946,7 @@
         </option>
         <option>
           <name>IlinkOverrideProgramEntryLabel</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>IlinkProgramEntryLabelSelect</name>
@@ -2951,7 +2954,7 @@
         </option>
         <option>
           <name>IlinkProgramEntryLabel</name>
-          <state>__iar_program_start</state>
+          <state>Reset_Handler</state>
         </option>
         <option>
           <name>DoFill</name>
@@ -3382,6 +3385,7 @@
           <state>SSD1963_DATA_WITDH=8</state>
           <state>FLEXIO_MCULCD_DATA_BUS_WIDTH=8</state>
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
+          <state>MCUXPRESSO_SDK</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -3530,7 +3534,7 @@
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../flash_config</state>
-          <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
+          <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
           <state>$PROJ_DIR$/../../../../../components/video/display/dc</state>
         </option>
         <option>
@@ -3994,7 +3998,7 @@
         </option>
         <option>
           <name>IlinkOverrideProgramEntryLabel</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>IlinkProgramEntryLabelSelect</name>
@@ -4002,7 +4006,7 @@
         </option>
         <option>
           <name>IlinkProgramEntryLabel</name>
-          <state>__iar_program_start</state>
+          <state>Reset_Handler</state>
         </option>
         <option>
           <name>DoFill</name>
@@ -4308,6 +4312,18 @@
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT595S/drivers/fsl_lcdif.c</name>
     </file>
     <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT595S/drivers/fsl_common.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT595S/drivers/fsl_common.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT595S/drivers/fsl_common_arm.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT595S/drivers/fsl_common_arm.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT595S/drivers/fsl_i2c.h</name>
     </file>
     <file>
@@ -4318,12 +4334,6 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT595S/drivers/fsl_mipi_dsi_smartdma.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT595S/drivers/fsl_common.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT595S/drivers/fsl_common.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT595S/drivers/fsl_power.h</name>
@@ -4375,6 +4385,9 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT595S/drivers/fsl_inputmux_connections.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT595S/drivers/fsl_soc_mipi_dsi.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT595S/drivers/fsl_iap.h</name>
@@ -4550,9 +4563,6 @@
         <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/GAUGE_Private.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/Global.h</name>
-      </file>
-      <file>
         <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/GRAPH.h</name>
       </file>
       <file>
@@ -4560,63 +4570,6 @@
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/GUI.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/GUI__BiDi2_Brackets_800.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/GUI__BiDi2_Types_800.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/GUI_ARRAY.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/GUI_ARRAY_Private.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/GUI_BMP_Private.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/GUI_ConfDefaults.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/GUI_Debug.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/GUI_FontIntern.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/GUI_GCache_Private.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/GUI_GIF_Private.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/GUI_HOOK.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/GUI_JPEG_Private.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/GUI_Private.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/GUI_SetOrientation.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/GUI_SetOrientationCX.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/GUI_SPRITE_Private.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/GUI_Type.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/GUI_Version.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/GUI_VNC.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/GUIDRV_BitPlains.h</name>
@@ -4679,16 +4632,16 @@
         <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/GUIDRV_S1D15G00.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/GUIDRV_SLin.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/GUIDRV_SLin_Private.h</name>
-      </file>
-      <file>
         <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/GUIDRV_SH_MEM.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/GUIDRV_SH_MEM_Private.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/GUIDRV_SLin.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/GUIDRV_SLin_Private.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/GUIDRV_SPage.h</name>
@@ -4713,6 +4666,69 @@
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/GUITDRV_ADS7846.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/GUI_ARRAY.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/GUI_ARRAY_Private.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/GUI_BMP_Private.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/GUI_ConfDefaults.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/GUI_Debug.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/GUI_FontIntern.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/GUI_GCache_Private.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/GUI_GIF_Private.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/GUI_HOOK.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/GUI_JPEG_Private.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/GUI_Private.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/GUI_SPRITE_Private.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/GUI_SPY_Private.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/GUI_SetOrientation.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/GUI_SetOrientationCX.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/GUI_Type.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/GUI_VNC.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/GUI_Version.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/GUI__BiDi2_Brackets_800.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/GUI__BiDi2_Types_800.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/Global.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/HEADER.h</name>
@@ -4791,6 +4807,9 @@
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/MULTIEDIT.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/MULTIEDIT_Private.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header/MULTIPAGE.h</name>
@@ -4950,43 +4969,34 @@
   <group>
     <name>CMSIS</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_cm33.h</name>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Core/Include/cmsis_armcc.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/tz_context.h</name>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Core/Include/cmsis_armclang.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/mpu_armv8.h</name>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Core/Include/cmsis_armclang_ltm.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_armcc.h</name>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Core/Include/cmsis_compiler.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_armclang.h</name>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Core/Include/cmsis_gcc.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_armclang_ltm.h</name>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Core/Include/cmsis_iccarm.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_gcc.h</name>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Core/Include/cmsis_version.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_compiler.h</name>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Core/Include/core_cm33.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_version.h</name>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Core/Include/mpu_armv8.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_iccarm.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/arm_common_tables.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/arm_const_structs.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/arm_math.h</name>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Core/Include/tz_context.h</name>
     </file>
   </group>
 </project>

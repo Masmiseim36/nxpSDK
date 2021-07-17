@@ -269,8 +269,8 @@ int main(void)
     pca9420_modecfg_t pca9420ModeCfg[2];
     uint32_t i;
 
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
+    BOARD_InitBootPins();
+    BOARD_InitBootClocks();
     BOARD_InitDebugConsole();
 
     /*Make sure USDHC ram buffer has power up*/

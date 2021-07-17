@@ -323,6 +323,7 @@ static dmic_channel_config_t s_dmicChannelConfig = {
     .sample_rate = kDMIC_PhyFullSpeed,
 };
 
+
 /*******************************************************************************
  * Local functions
  ******************************************************************************/
@@ -362,7 +363,7 @@ void DMIC_CallbackISR(DMIC_Type *base, dmic_dma_handle_t *handle, status_t statu
     {
         for (i = 0; i < FSL_FEATURE_DMIC_CHANNEL_NUM; i++)
         {
-            capturer->newDataAvailable |= (1 << i);			
+            capturer->newDataAvailable |= (1 << i);
         }
 
         if (capturer->over_flow_flag == 0)
@@ -400,8 +401,6 @@ static void evk_dmic_dma_config(void* ptr)
     uint32_t i;
 
     XACapturer *capturer = (XACapturer*) ptr;
-
-    RESET_PeripheralReset(kDMAC0_RST_SHIFT_RSTn);
 
     DMIC_Init(DMIC0);
 
@@ -585,6 +584,14 @@ static inline XA_ERRORCODE xa_hw_capturer_control(XACapturer *d, UWORD32 state)
 {
     switch (state)
     {
+    case XA_CAPTURER_STATE_START:
+        /* ...capturer must be in idle state */
+        XF_CHK_ERR(d->state & XA_CAPTURER_FLAG_IDLE, XA_CAPTURER_EXEC_NONFATAL_STATE);
+
+        /* ...mark capturer is runnning */
+        d->state ^= XA_CAPTURER_FLAG_IDLE | XA_CAPTURER_FLAG_RUNNING;
+
+        return XA_NO_ERROR;
     case XA_CAPTURER_STATE_RUN:
         /* ...capturer must be in paused state */
         XF_CHK_ERR(d->state & XA_CAPTURER_FLAG_PAUSED, XA_CAPTURER_EXEC_NONFATAL_STATE);

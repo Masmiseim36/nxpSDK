@@ -1,17 +1,17 @@
-if(NOT DRIVER_MIPI_DSI_MIMXRT595S_cm33_INCLUDED)
-    
-    set(DRIVER_MIPI_DSI_MIMXRT595S_cm33_INCLUDED true CACHE BOOL "driver_mipi_dsi component is included.")
+include_guard(GLOBAL)
+message("driver_mipi_dsi component is included.")
 
-    target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
-        ${CMAKE_CURRENT_LIST_DIR}/fsl_mipi_dsi.c
-    )
-
-
-    target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
-        ${CMAKE_CURRENT_LIST_DIR}/.
-    )
+target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
+    ${CMAKE_CURRENT_LIST_DIR}/fsl_mipi_dsi.c
+)
 
 
-    include(driver_common_MIMXRT595S_cm33)
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
+    ${CMAKE_CURRENT_LIST_DIR}/.
+)
 
-endif()
+
+include(driver_common_MIMXRT595S_cm33)
+
+include(driver_soc_mipi_dsi_MIMXRT595S_cm33)
+

@@ -20,9 +20,7 @@
     <definition extID="platform.drivers.flexcomm.MIMXRT595S"/>
     <definition extID="platform.drivers.lpc_iopctl.MIMXRT595S"/>
     <definition extID="platform.drivers.lpc_gpio.MIMXRT595S"/>
-    <definition extID="platform.Include_core_cm33.MIMXRT595S"/>
-    <definition extID="platform.Include_common.MIMXRT595S"/>
-    <definition extID="platform.Include_dsp.MIMXRT595S"/>
+    <definition extID="CMSIS_Include_core_cm.MIMXRT595S"/>
     <definition extID="platform.utilities.misc_utilities.MIMXRT595S"/>
     <definition extID="platform.drivers.iap.MIMXRT595S"/>
     <definition extID="armgcc"/>
@@ -33,7 +31,7 @@
     <definition extID="com.crt.advproject.config.exe.debug"/>
     <definition extID="com.crt.advproject.config.exe.release"/>
   </externalDefinitions>
-  <example id="evkmimxrt595_hello_world_s" name="hello_world_s" device_core="cm33_MIMXRT595S" dependency="utility.debug_console_lite.MIMXRT595S platform.utilities.assert_lite.MIMXRT595S platform.drivers.common.MIMXRT595S platform.drivers.clock.MIMXRT595S platform.drivers.power.MIMXRT595S platform.drivers.reset.MIMXRT595S device.MIMXRT595S_CMSIS.MIMXRT595S component.usart_adapter.MIMXRT595S platform.drivers.flexspi.MIMXRT595S platform.drivers.cache_cache64.MIMXRT595S component.lists.MIMXRT595S platform.drivers.flexcomm_usart.MIMXRT595S platform.drivers.flash_config.MIMXRT595S device.MIMXRT595S_startup.MIMXRT595S platform.drivers.flexcomm.MIMXRT595S platform.drivers.lpc_iopctl.MIMXRT595S platform.drivers.lpc_gpio.MIMXRT595S platform.Include_core_cm33.MIMXRT595S platform.Include_common.MIMXRT595S platform.Include_dsp.MIMXRT595S platform.utilities.misc_utilities.MIMXRT595S platform.drivers.iap.MIMXRT595S" linked_projects="evkmimxrt595_hello_world_ns" category="trustzone_examples">
+  <example id="evkmimxrt595_hello_world_s" name="hello_world_s" device_core="cm33_MIMXRT595S" dependency="utility.debug_console_lite.MIMXRT595S platform.utilities.assert_lite.MIMXRT595S platform.drivers.common.MIMXRT595S platform.drivers.clock.MIMXRT595S platform.drivers.power.MIMXRT595S platform.drivers.reset.MIMXRT595S device.MIMXRT595S_CMSIS.MIMXRT595S component.usart_adapter.MIMXRT595S platform.drivers.flexspi.MIMXRT595S platform.drivers.cache_cache64.MIMXRT595S component.lists.MIMXRT595S platform.drivers.flexcomm_usart.MIMXRT595S platform.drivers.flash_config.MIMXRT595S device.MIMXRT595S_startup.MIMXRT595S platform.drivers.flexcomm.MIMXRT595S platform.drivers.lpc_iopctl.MIMXRT595S platform.drivers.lpc_gpio.MIMXRT595S CMSIS_Include_core_cm.MIMXRT595S platform.utilities.misc_utilities.MIMXRT595S platform.drivers.iap.MIMXRT595S" linked_projects="evkmimxrt595_hello_world_ns" category="trustzone_examples">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -53,6 +51,7 @@
           <value>CPU_MIMXRT595SFFOC_cm33</value>
           <value>BOOT_HEADER_ENABLE=1</value>
           <value>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</value>
+          <value>MCUXPRESSO_SDK</value>
         </option>
         <option id="com.crt.advproject.gas.hdrlib" type="enum">
           <value>com.crt.advproject.gas.hdrlib.newlibnano</value>
@@ -151,15 +150,6 @@
       <files mask="hello_world_s.eww"/>
       <files mask="hello_world.eww"/>
     </source>
-    <source path="boards/evkmimxrt595/trustzone_examples/hello_world/hello_world_s/mdk" project_relative_path="evkmimxrt595/trustzone_examples/hello_world/hello_world_s" type="configuration" toolchain="mdk">
-      <files mask="debug_download.ini"/>
-      <files mask="release_download.ini"/>
-      <files mask="flashdebug_download.ini"/>
-      <files mask="flashrelease_download.ini"/>
-    </source>
-    <source path="boards/evkmimxrt595/trustzone_examples/hello_world/hello_world_s/mdk" project_relative_path="generator/templates/mdk/app_evkmimxrt595" type="configuration" toolchain="mdk">
-      <files mask="flashdebug.ini"/>
-    </source>
     <source path="boards/evkmimxrt595/trustzone_examples/hello_world/hello_world_s" project_relative_path="source" type="src">
       <files mask="hello_world_s.c"/>
     </source>
@@ -171,11 +161,21 @@
     </source>
     <source path="boards/evkmimxrt595/trustzone_examples/hello_world/hello_world_s" project_relative_path="trustzone" type="src">
       <files mask="tzm_config.c"/>
-      <files mask="veneer_table.c"/>
     </source>
     <source path="boards/evkmimxrt595/trustzone_examples/hello_world/hello_world_s" project_relative_path="trustzone" type="c_include">
       <files mask="tzm_config.h"/>
+    </source>
+    <source path="boards/evkmimxrt595/trustzone_examples/hello_world/hello_world_s" project_relative_path="trustzone" type="src">
+      <files mask="veneer_table.c"/>
+    </source>
+    <source path="boards/evkmimxrt595/trustzone_examples/hello_world/hello_world_s" project_relative_path="trustzone" type="c_include">
       <files mask="veneer_table.h"/>
+    </source>
+    <source path="boards/evkmimxrt595/trustzone_examples/hello_world/hello_world_s" project_relative_path="trustzone" type="src">
+      <files mask="tzm_api.c"/>
+    </source>
+    <source path="boards/evkmimxrt595/trustzone_examples/hello_world/hello_world_s" project_relative_path="trustzone" type="c_include">
+      <files mask="tzm_api.h"/>
     </source>
     <source path="boards/evkmimxrt595/trustzone_examples/hello_world/hello_world_s" project_relative_path="board" type="src">
       <files mask="board.c"/>
@@ -199,6 +199,16 @@
     <source path="boards/evkmimxrt595/trustzone_examples/hello_world/hello_world_s/armgcc" project_relative_path="MIMXRT595S/gcc" type="linker" toolchain="armgcc">
       <files mask="MIMXRT595Sxxxx_cm33_ram_s.ld"/>
       <files mask="MIMXRT595Sxxxx_cm33_flash_s.ld"/>
+    </source>
+    <source path="boards/evkmimxrt595/trustzone_examples/hello_world/hello_world_s/mdk" project_relative_path="evkmimxrt595/trustzone_examples/hello_world/hello_world_s" type="configuration" toolchain="mdk">
+      <files mask="hello_world_debug_debug.ini"/>
+      <files mask="hello_world_download_debug.ini"/>
+      <files mask="hello_world_debug_flash_debug.ini"/>
+      <files mask="hello_world_download_flash_debug.ini"/>
+      <files mask="hello_world_debug_release.ini"/>
+      <files mask="hello_world_download_release.ini"/>
+      <files mask="hello_world_debug_flash_release.ini"/>
+      <files mask="hello_world_download_flash_release.ini"/>
     </source>
   </example>
 </ksdk:examples>

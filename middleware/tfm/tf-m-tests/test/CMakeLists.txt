@@ -1,222 +1,108 @@
 #-------------------------------------------------------------------------------
-# Copyright (c) 2017-2020, Arm Limited. All rights reserved.
+# Copyright (c) 2020-2021, Arm Limited. All rights reserved.
 #
 # SPDX-License-Identifier: BSD-3-Clause
 #
 #-------------------------------------------------------------------------------
 
-cmake_minimum_required(VERSION 3.7)
+cmake_minimum_required(VERSION 3.13)
 
-if (NOT DEFINED TFM_ROOT_DIR)
-	set(TFM_ROOT_DIR ${CMAKE_SOURCE_DIR})
+add_library(tfm_ns_tests INTERFACE)
+add_library(tfm_test_framework_ns INTERFACE)
+add_library(tfm_test_framework_s INTERFACE)
+
+# For multi-core projects, the NS app can be run on a different CPU to the
+# Secure code. To facilitate this, we once again reload the compiler to load the
+# setting for the NS CPU. Cmake settings are directory scoped so this affects
+# anything loaded from or declared in this dir.
+if (TFM_MULTI_CORE_TOPOLOGY)
+    include(${CMAKE_SOURCE_DIR}/platform/ext/target/${TFM_PLATFORM}/preload_ns.cmake)
+    tfm_toolchain_reload_compiler()
 endif()
 
-#Tell cmake where our modules can be found
-list(APPEND CMAKE_MODULE_PATH ${TFM_ROOT_DIR}/cmake)
+add_subdirectory(test_services)
 
-#Include common stuff to control cmake.
-include("Common/BuildSys")
+add_subdirectory(suites/attestation)
+add_subdirectory(suites/audit)
+add_subdirectory(suites/core)
+add_subdirectory(suites/crypto)
+add_subdirectory(suites/its)
+add_subdirectory(suites/qcbor)
+add_subdirectory(suites/ps)
+add_subdirectory(suites/t_cose)
+add_subdirectory(suites/platform)
+add_subdirectory(suites/fwu)
 
-#Start an embedded project.
-embedded_project_start(CONFIG "${TFM_ROOT_DIR}/configs/ConfigDefault.cmake")
-project(tfm_tests LANGUAGES ASM C)
-embedded_project_fixup()
-
-#Check incoming configuration options
-if (NOT DEFINED SERVICES_TEST_ENABLED)
-	message(FATAL_ERROR "Incomplete build configuration: SERVICES_TEST_ENABLED is undefined. ")
+if(TFM_PSA_API)
+    add_subdirectory(suites/ipc)
+endif()
+if(TFM_MULTI_CORE_TOPOLOGY)
+    add_subdirectory(suites/multi_core)
 endif()
 
-if (NOT DEFINED CORE_TEST_INTERACTIVE)
-	message(FATAL_ERROR "Incomplete build configuration: CORE_TEST_INTERACTIVE is undefined. ")
-endif()
+add_library(tfm_test_framework_common INTERFACE)
 
-if (NOT DEFINED CORE_TEST_POSITIVE)
-	message(FATAL_ERROR "Incomplete build configuration: CORE_TEST_POSITIVE is undefined. ")
-endif()
+target_sources(tfm_test_framework_common
+    INTERFACE
+    ${CMAKE_CURRENT_SOURCE_DIR}/framework/test_framework.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/framework/test_framework_helpers.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/framework/test_framework_integ_test_helper.c
+)
 
-if (NOT DEFINED TFM_LVL)
-	message(FATAL_ERROR "Incomplete build configuration: TFM_LVL is undefined. ")
-endif()
+target_include_directories(tfm_test_framework_common
+    INTERFACE
+        framework
+)
 
-if (NOT DEFINED TFM_PARTITION_AUDIT_LOG)
-	message(FATAL_ERROR "Incomplete build configuration: TFM_PARTITION_AUDIT_LOG is undefined.")
-endif()
+target_link_libraries(tfm_test_framework_ns
+    INTERFACE
+        tfm_test_framework_common
+        tfm_api_ns
+        tfm_ns_interface
+        tfm_ns_log
+)
 
-if (NOT DEFINED TFM_PARTITION_PROTECTED_STORAGE)
-	message(FATAL_ERROR "Incomplete build configuration: TFM_PARTITION_PROTECTED_STORAGE is undefined.")
-endif()
+target_sources(tfm_ns_tests
+    INTERFACE
+        ${CMAKE_CURRENT_SOURCE_DIR}/framework/non_secure_suites.c
+)
 
-if (NOT DEFINED TFM_PARTITION_INTERNAL_TRUSTED_STORAGE)
-	message(FATAL_ERROR "Incomplete build configuration: TFM_PARTITION_INTERNAL_TRUSTED_STORAGE is undefined.")
-endif()
+target_link_libraries(tfm_ns_tests
+    INTERFACE
+        tfm_test_framework_ns
+        tfm_partition_defs
+)
 
-if (NOT DEFINED TFM_PARTITION_CRYPTO)
-	message(FATAL_ERROR "Incomplete build configuration: TFM_PARTITION_CRYPTO is undefined.")
-endif()
+target_compile_definitions(tfm_ns_tests
+    INTERFACE
+        $<$<BOOL:${SYMMETRIC_INITIAL_ATTESTATION}>:SYMMETRIC_INITIAL_ATTESTATION>
+        $<$<BOOL:${TFM_INTERACTIVE_TEST}>:CORE_TEST_INTERACTIVE>
+)
 
-if (NOT DEFINED TFM_PARTITION_INITIAL_ATTESTATION)
-	message(FATAL_ERROR "Incomplete build configuration: TFM_PARTITION_INITIAL_ATTESTATION is undefined.")
-endif()
+####################### Secure #################################################
 
-if (NOT DEFINED TFM_ENABLE_IRQ_TEST)
-	message(FATAL_ERROR "Incomplete build configuration: TFM_ENABLE_IRQ_TEST is undefined.")
-endif()
+target_link_libraries(tfm_test_framework_s
+    INTERFACE
+        psa_interface
+        tfm_test_framework_common
+        tfm_s_log
+)
 
-#Configure our options as needed.
-if (CORE_TEST_INTERACTIVE OR CORE_TEST_POSITIVE)
-	set(ENABLE_CORE_TESTS True)
-	set(ENABLE_CORE_TESTS_2 True)
-else()
-	set(ENABLE_CORE_TESTS False)
-	set(ENABLE_CORE_TESTS_2 False)
-endif()
+if (TEST_S)
+    target_sources(tfm_s_tests
+        INTERFACE
+            ${CMAKE_CURRENT_SOURCE_DIR}/framework/secure_suites.c
+    )
 
-if (TFM_ENABLE_IRQ_TEST)
-	set(ENABLE_IRQ_TEST_SERVICES ON)
-else()
-	set(ENABLE_IRQ_TEST_SERVICES OFF)
-endif()
+    target_link_libraries(tfm_s_tests
+        INTERFACE
+            tfm_test_framework_s
+            tfm_partition_defs
+            tfm_spm
+    )
 
-if (ENABLE_CORE_TESTS)
-	# If the platform doesn't specify whether the peripheral test is enabled
-	# or not, select it by default.
-	if (NOT DEFINED TFM_ENABLE_PERIPH_ACCESS_TEST)
-		set(TFM_ENABLE_PERIPH_ACCESS_TEST TRUE)
-	endif()
-
-	if (TFM_ENABLE_PERIPH_ACCESS_TEST)
-		add_definitions(-DTFM_ENABLE_PERIPH_ACCESS_TEST)
-	endif()
-else()
-	set(TFM_ENABLE_PERIPH_ACCESS_TEST FALSE)
-endif()
-
-include(${CMAKE_CURRENT_LIST_DIR}/TestConfig.cmake)
-include(${CMAKE_CURRENT_LIST_DIR}/CMakeLists.inc)
-
-if (ENABLE_PROTECTED_STORAGE_SERVICE_TESTS)
-	embedded_set_target_compile_defines(TARGET tfm_secure_tests LANGUAGE C DEFINES ENABLE_PROTECTED_STORAGE_SERVICE_TESTS APPEND)
-	embedded_set_target_compile_defines(TARGET tfm_non_secure_tests LANGUAGE C DEFINES ENABLE_PROTECTED_STORAGE_SERVICE_TESTS APPEND)
-endif()
-
-if (ENABLE_INTERNAL_TRUSTED_STORAGE_SERVICE_TESTS)
-	embedded_set_target_compile_defines(TARGET tfm_secure_tests LANGUAGE C DEFINES ENABLE_INTERNAL_TRUSTED_STORAGE_SERVICE_TESTS APPEND)
-	embedded_set_target_compile_defines(TARGET tfm_non_secure_tests LANGUAGE C DEFINES ENABLE_INTERNAL_TRUSTED_STORAGE_SERVICE_TESTS APPEND)
-endif()
-
-if (ENABLE_CRYPTO_SERVICE_TESTS)
-	embedded_set_target_compile_defines(TARGET tfm_secure_tests LANGUAGE C DEFINES ENABLE_CRYPTO_SERVICE_TESTS APPEND)
-	embedded_set_target_compile_defines(TARGET tfm_non_secure_tests LANGUAGE C DEFINES ENABLE_CRYPTO_SERVICE_TESTS APPEND)
-endif()
-
-if (ENABLE_ATTESTATION_SERVICE_TESTS)
-	embedded_set_target_compile_defines(TARGET tfm_secure_tests LANGUAGE C DEFINES ENABLE_ATTESTATION_SERVICE_TESTS APPEND)
-	embedded_set_target_compile_defines(TARGET tfm_non_secure_tests LANGUAGE C DEFINES ENABLE_ATTESTATION_SERVICE_TESTS APPEND)
-endif()
-
-if (ENABLE_PLATFORM_SERVICE_TESTS)
-	embedded_set_target_compile_defines(TARGET tfm_secure_tests LANGUAGE C DEFINES ENABLE_PLATFORM_SERVICE_TESTS APPEND)
-	embedded_set_target_compile_defines(TARGET tfm_non_secure_tests LANGUAGE C DEFINES ENABLE_PLATFORM_SERVICE_TESTS APPEND)
-endif()
-
-if (ENABLE_QCBOR_TESTS)
-	embedded_set_target_compile_defines(TARGET tfm_secure_tests LANGUAGE C DEFINES ENABLE_QCBOR_TESTS APPEND)
-	embedded_set_target_compile_defines(TARGET tfm_non_secure_tests LANGUAGE C DEFINES ENABLE_QCBOR_TESTS APPEND)
-endif()
-
-if (ENABLE_T_COSE_TESTS)
-	embedded_set_target_compile_defines(TARGET tfm_non_secure_tests LANGUAGE C DEFINES ENABLE_T_COSE_TESTS APPEND)
-endif()
-
-if (ENABLE_AUDIT_LOGGING_SERVICE_TESTS)
-	embedded_set_target_compile_defines(TARGET tfm_secure_tests LANGUAGE C DEFINES ENABLE_AUDIT_LOGGING_SERVICE_TESTS APPEND)
-	embedded_set_target_compile_defines(TARGET tfm_non_secure_tests LANGUAGE C DEFINES ENABLE_AUDIT_LOGGING_SERVICE_TESTS APPEND)
-endif()
-
-if (TFM_MULTI_CORE_TEST)
-	embedded_set_target_compile_defines(TARGET tfm_non_secure_tests LANGUAGE C DEFINES TFM_MULTI_CORE_TEST APPEND)
-endif()
-
-if (NOT DEFINED TFM_BUILD_IN_SPE)
-	message(FATAL_ERROR "TFM_BUILD_IN_SPE is not set. Cannot specify current building status")
-endif()
-
-if (NOT TARGET tfm_t_cose_verify AND (ENABLE_ATTESTATION_SERVICE_TESTS OR ENABLE_T_COSE_TESTS))
-	add_subdirectory(${TFM_ROOT_DIR}/lib/ext/t_cose ${CMAKE_CURRENT_BINARY_DIR}/t_cose)
-endif()
-
-if ((NOT TARGET tfm_qcbor_encode OR NOT TARGET tfm_qcbor_decode) AND (ENABLE_ATTESTATION_SERVICE_TESTS OR ENABLE_QCBOR_TESTS OR ENABLE_T_COSE_TESTS))
-	add_subdirectory(${TFM_ROOT_DIR}/lib/ext/qcbor ${CMAKE_CURRENT_BINARY_DIR}/qcbor)
-endif()
-
-if (TFM_BUILD_IN_SPE)
-	#Build the secure library. Even though secure tests files depend on
-	#tfm_qcbor, this is not expressed here as the tfm_attest library is expected
-	#to hold the compiled tfm_qcbor files.
-	add_library(tfm_secure_tests STATIC ${ALL_SRC_C} ${ALL_SRC_C_S})
-	if (ENABLE_ATTESTATION_SERVICE_TESTS)
-		target_sources(tfm_secure_tests PRIVATE $<TARGET_OBJECTS:tfm_t_cose_verify> $<TARGET_OBJECTS:tfm_qcbor_decode>)
-	endif()
-
-	#Set common compiler and linker flags
-	if (DEFINED CMSE_FLAGS)
-		embedded_set_target_compile_flags(TARGET tfm_secure_tests LANGUAGE C APPEND FLAGS ${CMSE_FLAGS})
-	endif()
-	config_setting_shared_compiler_flags(tfm_secure_tests)
-	config_setting_shared_linker_flags(tfm_secure_tests)
-
-	embedded_set_target_compile_defines(TARGET tfm_secure_tests LANGUAGE C DEFINES __thumb2__ TFM_LVL=${TFM_LVL} APPEND)
-
-	if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
-		set(CMAKE_INSTALL_PREFIX "${CMAKE_BINARY_DIR}/install" CACHE
-			PATH "Default install location for tfm_storage."
-			FORCE)
-	endif()
-
-	install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/framework/test_framework_integ_test.h
-			${CMAKE_CURRENT_SOURCE_DIR}/test_services/tfm_secure_client_service/tfm_secure_client_service_api.h
-			DESTINATION export/tfm/test/inc)
-
-	embedded_project_end(tfm_secure_tests)
-else ()
-	#Build the non-secure library
-	set(CMAKE_STATIC_LIBRARY_PREFIX_C "lib")
-	add_library(tfm_non_secure_tests STATIC ${ALL_SRC_C} ${ALL_SRC_C_NS})
-
-	embedded_target_include_directories(TARGET tfm_non_secure_tests PATH ${CMSIS_DIR}/RTOS2/Include ABSOLUTE APPEND)
-
-	if (ENABLE_ATTESTATION_SERVICE_TESTS OR ENABLE_T_COSE_TESTS)
-		target_sources(tfm_non_secure_tests PRIVATE $<TARGET_OBJECTS:tfm_t_cose_verify> PRIVATE $<TARGET_OBJECTS:tfm_t_cose_sign>)
-	endif()
-	if (ENABLE_ATTESTATION_SERVICE_TESTS OR ENABLE_QCBOR_TESTS OR ENABLE_T_COSE_TESTS)
-		target_sources(tfm_non_secure_tests PRIVATE $<TARGET_OBJECTS:tfm_qcbor_decode> PRIVATE $<TARGET_OBJECTS:tfm_qcbor_encode>)
-	endif()
-
-	#Set common compiler and linker flags
-	config_setting_shared_compiler_flags(tfm_non_secure_tests)
-	config_setting_shared_linker_flags(tfm_non_secure_tests)
-
-	#Set macro definitions
-	set(TARGET_COMPILE_DEFINITIONS __thumb2__ __DOMAIN_NS=1 DOMAIN_NS=__DOMAIN_NS TFM_LVL=${TFM_LVL})
-	embedded_set_target_compile_defines(TARGET tfm_non_secure_tests LANGUAGE C DEFINES ${TARGET_COMPILE_DEFINITIONS} APPEND)
-
-	if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
-		set(CMAKE_INSTALL_PREFIX "${CMAKE_BINARY_DIR}/install" CACHE
-			PATH "Default install location for tfm_storage."
-			FORCE)
-	endif()
-
-	install(TARGETS tfm_non_secure_tests
-			DESTINATION export/tfm/test/lib
-			PUBLIC_HEADER DESTINATION export/tfm/test/inc)
-
-	if(ENABLE_PROTECTED_STORAGE_SERVICE_TESTS)
-		#only PS tests are using semaphore and thread APIs
-		install(FILES ${TFM_ROOT_DIR}/interface/include/os_wrapper/semaphore.h
-				${TFM_ROOT_DIR}/interface/include/os_wrapper/thread.h
-			DESTINATION export/tfm/include/os_wrapper)
-	endif()
-
-	embedded_project_end(tfm_non_secure_tests)
+    target_compile_definitions(tfm_s_tests
+        INTERFACE
+            $<$<BOOL:${PS_TEST_NV_COUNTERS}>:PS_TEST_NV_COUNTERS>
+    )
 endif()

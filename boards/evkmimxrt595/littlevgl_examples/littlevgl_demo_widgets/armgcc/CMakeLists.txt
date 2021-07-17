@@ -1,6 +1,6 @@
 # CROSS COMPILER SETTING
 SET(CMAKE_SYSTEM_NAME Generic)
-CMAKE_MINIMUM_REQUIRED (VERSION 3.1.1)
+CMAKE_MINIMUM_REQUIRED (VERSION 3.10.0)
 
 # THE VERSION NUMBER
 SET (Tutorial_VERSION_MAJOR 1)
@@ -51,7 +51,6 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 )
 
 target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
-    ${ProjDirPath}/.. debug
     ${ProjDirPath}/..
     ${ProjDirPath}/../../../../../middleware/littlevgl/lv_examples/src/lv_demo_widgets
     ${ProjDirPath}/../../../../../middleware/littlevgl/lv_examples
@@ -84,7 +83,7 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../components/serial_manager
     ${ProjDirPath}/../../../../../components/lists
     ${ProjDirPath}/../../../flash_config
-    ${ProjDirPath}/../../../../../CMSIS/Include
+    ${ProjDirPath}/../../../../../CMSIS/Core/Include
     ${ProjDirPath}/../../../../../components/video/display/dc
 )
 
@@ -129,6 +128,8 @@ include(driver_lcdif_MIMXRT595S_cm33)
 
 include(driver_display-mipi-dsi-cmd_MIMXRT595S_cm33)
 
+include(driver_common_MIMXRT595S_cm33)
+
 include(driver_display-rm68200_MIMXRT595S_cm33)
 
 include(driver_display-rm67162_MIMXRT595S_cm33)
@@ -148,8 +149,6 @@ include(driver_ft5406_MIMXRT595S_cm33)
 include(middleware_vglite_MIMXRT595S_cm33)
 
 include(middleware_freertos-kernel_heap_4_MIMXRT595S_cm33)
-
-include(driver_common_MIMXRT595S_cm33)
 
 include(middleware_littlevgl_MIMXRT595S_cm33)
 
@@ -183,11 +182,7 @@ include(driver_lpc_iopctl_MIMXRT595S_cm33)
 
 include(driver_reset_MIMXRT595S_cm33)
 
-include(CMSIS_Include_core_cm33_MIMXRT595S_cm33)
-
-include(CMSIS_Include_common_MIMXRT595S_cm33)
-
-include(CMSIS_Include_dsp_MIMXRT595S_cm33)
+include(CMSIS_Include_core_cm_MIMXRT595S_cm33)
 
 include(driver_lpc_smartdma_MIMXRT595S_cm33)
 
@@ -198,6 +193,8 @@ include(middleware_freertos-kernel_MIMXRT595S_cm33)
 include(middleware_freertos-kernel_extension_MIMXRT595S_cm33)
 
 include(driver_inputmux_connections_MIMXRT595S_cm33)
+
+include(driver_soc_mipi_dsi_MIMXRT595S_cm33)
 
 include(utilities_misc_utilities_MIMXRT595S_cm33)
 

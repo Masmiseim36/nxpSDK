@@ -1,15 +1,17 @@
-/*******************************************************************************
-* Copyright (c) 2015-2020 Cadence Design Systems, Inc.
-* 
+/*
+* Copyright (c) 2015-2021 Cadence Design Systems Inc.
+*
 * Permission is hereby granted, free of charge, to any person obtaining
 * a copy of this software and associated documentation files (the
-* "Software"), to use this Software with Cadence processor cores only and 
-* not with any other processors and platforms, subject to
+* "Software"), to deal in the Software without restriction, including
+* without limitation the rights to use, copy, modify, merge, publish,
+* distribute, sublicense, and/or sell copies of the Software, and to
+* permit persons to whom the Software is furnished to do so, subject to
 * the following conditions:
-* 
+*
 * The above copyright notice and this permission notice shall be included
 * in all copies or substantial portions of the Software.
-* 
+*
 * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
 * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
@@ -17,8 +19,7 @@
 * CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
 * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-******************************************************************************/
+*/
 /*******************************************************************************
  * xa-capturer.c
  *
@@ -60,21 +61,6 @@
 extern clk_t capturer_cycles;
 #endif
 #include "xaf-fio-test.h"
-/*******************************************************************************
- * Tracing configuration
- ******************************************************************************/
-
-TRACE_TAG(INIT, 1);
-TRACE_TAG(WARNING, 1);
-
-TRACE_TAG(OUTPUT, 0);
-TRACE_TAG(INPUT, 1);
-
-TRACE_TAG(FIFO, 1);
-TRACE_TAG(ISR, 1);
-TRACE_TAG(UNDERRUN, 1);
-
-
 
 /*******************************************************************************
  * Codec parameters
@@ -132,7 +118,7 @@ typedef struct XACapturer
     UWORD32                     pcm_width;
     
     /* ...framesize in bytes per channel */
-    UWORD32                     frame_size;    
+    UWORD32                     frame_size_bytes;    
 
     /* ...current sampling rate */
     UWORD32                     rate;
@@ -151,8 +137,12 @@ typedef struct XACapturer
     /*total bytes to be produced*/
     UWORD64            bytes_end;
 
+    /* ...framesize in samples per channel */
+    UWORD32     frame_size;
+
 }   XACapturer;
 
+#define MAX_UWORD32 ((UWORD64)0xFFFFFFFF)
 /*******************************************************************************
  * Operating flags
  ******************************************************************************/
@@ -174,9 +164,9 @@ static void xa_fw_handler(void *arg)
 {
     XACapturer *d = arg;
 
-    d->fifo_avail = d->fifo_avail + (d->frame_size*d->channels);
+    d->fifo_avail = d->fifo_avail + (d->frame_size_bytes*d->channels);
 
-    if((d->fifo_avail) > (2 * d->frame_size * d->channels))
+    if((d->fifo_avail) > (2 * d->frame_size_bytes * d->channels))
     {/*over run case*/
        d->fifo_avail = 0;
     }
@@ -200,6 +190,7 @@ static inline void xa_fw_capturer_close(XACapturer *d)
 {
     fclose(d->fw);
     __xf_timer_stop(&cap_timer);
+    __xf_timer_destroy(&cap_timer);
 }
 
 /* ...submit data (in samples) into internal capturer ring-buffer */
@@ -261,7 +252,8 @@ static XA_ERRORCODE xa_capturer_init(XACapturer *d, WORD32 i_idx, pVOID pv_value
         d->pcm_width = 16;
         d->rate = 48000;
         d->sample_size = ( d->pcm_width >> 3 ); /* convert bits to bytes */ 
-        d->frame_size = MAX_FRAME_SIZE_IN_BYTES_DEFAULT; 
+        d->frame_size_bytes = MAX_FRAME_SIZE_IN_BYTES_DEFAULT; 
+        d->frame_size = MAX_FRAME_SIZE_IN_BYTES_DEFAULT/d->sample_size; 
 
         /* ...and mark capturer has been created */
         d->state = XA_CAPTURER_FLAG_PREINIT_DONE;
@@ -320,7 +312,7 @@ static inline XA_ERRORCODE xa_hw_capturer_control(XACapturer *d, UWORD32 state)
         XF_CHK_ERR(d->state & XA_CAPTURER_FLAG_IDLE, XA_CAPTURER_EXEC_NONFATAL_STATE);
 
         __xf_timer_start(&cap_timer,
-                         __xf_timer_ratio_to_period((d->frame_size / d->sample_size ), d->rate));  
+                         __xf_timer_ratio_to_period((d->frame_size_bytes / d->sample_size ), d->rate));  
 
         /* ...mark capturer is runnning */
         d->state ^= XA_CAPTURER_FLAG_IDLE | XA_CAPTURER_FLAG_RUNNING;
@@ -395,6 +387,9 @@ static XA_ERRORCODE xa_capturer_set_config_param(XACapturer *d, WORD32 i_idx, pV
         d->pcm_width = i_value;
         d->sample_size = ( d->pcm_width >> 3 ); /* convert bits to bytes */ 
 
+        /* ...update internal variable frame_size_bytes */
+        d->frame_size_bytes = d->frame_size * d->sample_size;
+            
         return XA_NO_ERROR;
 
     case XA_CAPTURER_CONFIG_PARAM_CHANNELS:
@@ -434,16 +429,16 @@ static XA_ERRORCODE xa_capturer_set_config_param(XACapturer *d, WORD32 i_idx, pV
         /* ...check it is valid framesize or not */
         XF_CHK_ERR( ( (*(WORD32 *)pv_value >= MIN_FRAME_SIZE_IN_BYTES) && ( *(WORD32 *)pv_value <= (HW_FIFO_LENGTH/4)) ), XA_CAPTURER_CONFIG_NONFATAL_RANGE);
         
-        /* ...check frame_size fits within the FIFO buffer */
+        /* ...check frame_size_bytes fits within the FIFO buffer */
         XF_CHK_ERR( ( (*(WORD32 *)pv_value * d->channels * 2) <= HW_FIFO_LENGTH), XA_CAPTURER_CONFIG_NONFATAL_RANGE);        
 
-        /* ...check frame_size is multiple of 4 or not */
+        /* ...check frame_size_bytes is multiple of 4 or not */
         XF_CHK_ERR( ( (*(WORD32 *)pv_value & 0x3) == 0 ), XA_CAPTURER_CONFIG_NONFATAL_RANGE);        
 
         /* ...get requested frame size */
-        d->frame_size = (UWORD32) *(WORD32 *)pv_value;
+        d->frame_size_bytes = (UWORD32) *(WORD32 *)pv_value;
 
-        TRACE(INIT, _b("frame_size:%d"), d->frame_size);
+        TRACE(INIT, _b("frame_size_bytes:%d"), d->frame_size_bytes);
         
         return XA_NO_ERROR;
     case XA_CAPTURER_CONFIG_PARAM_SAMPLE_END:
@@ -451,7 +446,7 @@ static XA_ERRORCODE xa_capturer_set_config_param(XACapturer *d, WORD32 i_idx, pV
         XF_CHK_ERR((d->state & XA_CAPTURER_FLAG_POSTINIT_DONE) == 0, XA_CAPTURER_CONFIG_FATAL_STATE);
 
         /* ...check it is equal to the only frame size we support */
-        XF_CHK_ERR(*(UWORD32 *)pv_value > 0, XA_CAPTURER_CONFIG_NONFATAL_RANGE);
+        XF_CHK_ERR((*(UWORD32 *)pv_value >= 0), XA_CAPTURER_CONFIG_NONFATAL_RANGE);
         
         /* ...get requested frame size */
         d->bytes_end = ((UWORD64) *(UWORD32 *)pv_value)* (d->sample_size) * (d->channels) ;
@@ -476,6 +471,32 @@ static XA_ERRORCODE xa_capturer_set_config_param(XACapturer *d, WORD32 i_idx, pV
         /* ...pass to state control hook */
         return xa_hw_capturer_control(d, i_value);
 
+    case XA_CAPTURER_CONFIG_PARAM_FRAME_SIZE_IN_SAMPLES:
+        {
+            WORD32 frame_size_bytes = *(WORD32 *)pv_value * d->sample_size;
+
+            /* ...command is valid only in configuration state */
+            XF_CHK_ERR((d->state & XA_CAPTURER_FLAG_POSTINIT_DONE) == 0, XA_CAPTURER_CONFIG_FATAL_STATE);
+            
+            /* ...check it is valid framesize or not */
+            XF_CHK_ERR( ( (frame_size_bytes >= MIN_FRAME_SIZE_IN_BYTES) && ( frame_size_bytes <= (HW_FIFO_LENGTH/4)) ), XA_CAPTURER_CONFIG_NONFATAL_RANGE);
+            
+            /* ...check frame_size_bytes fits within the FIFO buffer */
+            XF_CHK_ERR( ( (frame_size_bytes * d->channels * 2) <= HW_FIFO_LENGTH), XA_CAPTURER_CONFIG_NONFATAL_RANGE);        
+            
+            /* ...check frame_size_bytes is multiple of 4 or not */
+            XF_CHK_ERR( ( (frame_size_bytes & 0x3) == 0 ), XA_CAPTURER_CONFIG_NONFATAL_RANGE);        
+            
+            /* ...get requested frame size */
+            d->frame_size = (UWORD32) *(WORD32 *)pv_value;
+
+            /* ...update internal variable frame_size_bytes */
+            d->frame_size_bytes = d->frame_size * d->sample_size;
+            
+            TRACE(INIT, _b("frame_size:%d"), d->frame_size);
+            
+            return XA_NO_ERROR;
+        }
     default:
         /* ...unrecognized parameter */
         return XF_CHK_ERR(0, XA_API_FATAL_INVALID_CMD_TYPE);
@@ -520,19 +541,26 @@ static XA_ERRORCODE xa_capturer_get_config_param(XACapturer *d, WORD32 i_idx, pV
         *(WORD32 *)pv_value = d->rate;
         return XA_NO_ERROR;
 
-    case XA_CAPTURER_CONFIG_PARAM_FRAME_SIZE:
+    case XA_CAPTURER_CONFIG_PARAM_FRAME_SIZE: /* ...deprecated */
         /* ...return current audio frame length (in bytes) */
-        *(WORD32 *)pv_value = d->frame_size;
+        *(WORD32 *)pv_value = d->frame_size_bytes;
         return XA_NO_ERROR;
 
     case XA_CAPTURER_CONFIG_PARAM_STATE:
         /* ...return current execution state */
         *(WORD32 *)pv_value = xa_hw_capturer_get_state(d);
         return XA_NO_ERROR;
+
     case XA_CAPTURER_CONFIG_PARAM_BYTES_PRODUCED:
         /* ...return current execution state */
-        *(WORD32 *)pv_value = d->tot_bytes_produced;
+        *(UWORD32 *)pv_value = (UWORD32)(d->tot_bytes_produced > MAX_UWORD32 ? MAX_UWORD32 : d->tot_bytes_produced) ;
         return XA_NO_ERROR;
+
+    case XA_CAPTURER_CONFIG_PARAM_FRAME_SIZE_IN_SAMPLES:
+        /* ...return current audio frame length (in samples) */
+        *(WORD32 *)pv_value = d->frame_size;
+        return XA_NO_ERROR;
+
     default:
         /* ...unrecognized parameter */
         return XF_CHK_ERR(0, XA_API_FATAL_INVALID_CMD_TYPE);
@@ -545,10 +573,26 @@ static XA_ERRORCODE xa_capturer_do_exec(XACapturer *d)
     static UWORD32 frame_cnt = 0;
 
     FIO_PRINTF(stdout,"%d\n",++frame_cnt);
-    if(d->fifo_avail >= (d->frame_size * d->channels))
+    if(d->fifo_avail >= (d->frame_size_bytes * d->channels))
     {
-        d->fifo_avail = d->fifo_avail - (d->frame_size * d->channels);
-        bytes_read = fread(d->output,1,(d->frame_size * d->channels ), d->fw );
+        d->fifo_avail = d->fifo_avail - (d->frame_size_bytes * d->channels);
+
+        if(d->output)
+        {
+            /* ... read bytes when output buffer is available. */
+            bytes_read = fread(d->output,1,(d->frame_size_bytes * d->channels ), d->fw );
+        }
+        else
+        {
+            /* ... skip bytes when output buffer is unavailable. TENA-2528 */
+            fseek(d->fw, (d->frame_size_bytes * d->channels), SEEK_CUR);
+
+            TRACE(OUTPUT, _b("output buffer is NULL, dropped %u bytes"), (d->frame_size_bytes * d->channels));
+
+            /* ... return no-data produced non-fatal error */
+            return XA_CAPTURER_EXEC_NONFATAL_NO_DATA;
+        }
+
         d->produced = bytes_read;
         d->tot_bytes_produced = d->tot_bytes_produced + d->produced;
         if(d->bytes_end!=0)
@@ -599,7 +643,9 @@ static XA_ERRORCODE xa_capturer_execute(XACapturer *d, WORD32 i_idx, pVOID pv_va
         /* ...always report "no" - tbd - is that needed at all? */
         XF_CHK_ERR(pv_value, XA_API_FATAL_INVALID_CMD_TYPE);
 
-        if(d->produced == 0)
+        if((d->produced == 0) 
+            && (d->output) /* TENA-2528 */
+        )
         {
             __xf_timer_stop(&cap_timer);
 
@@ -634,8 +680,11 @@ static XA_ERRORCODE xa_capturer_get_output_bytes(XACapturer *d, WORD32 i_idx, pV
     /* ...capturer must be in post-init state */
     XF_CHK_ERR(d->state & XA_CAPTURER_FLAG_POSTINIT_DONE, XA_CAPTURER_EXEC_FATAL_STATE);
 
-    /* ...input buffer must exist */
+#if 1 /* ... skip output buffer check if not available. TENA-2528 */
+#else
+    /* ...output buffer must exist */
     XF_CHK_ERR(d->output, XA_CAPTURER_EXEC_FATAL_INPUT);
+#endif
 
     /* ...return number of bytes produced */
     *(WORD32 *)pv_value = d->produced;
@@ -706,7 +755,7 @@ static XA_ERRORCODE xa_capturer_get_mem_info_size(XACapturer *d, WORD32 i_idx, p
     {
     case 0:
         /* ...output buffer specification; accept exact audio frame */
-        i_value = d->frame_size * d->channels;
+        i_value = d->frame_size_bytes * d->channels;
         break;
 
     default:
@@ -761,7 +810,7 @@ static XA_ERRORCODE xa_capturer_get_mem_info_type(XACapturer *d, WORD32 i_idx, p
 static XA_ERRORCODE xa_capturer_set_mem_ptr(XACapturer *d, WORD32 i_idx, pVOID pv_value)
 {
     /* ...basic sanity check */
-    XF_CHK_ERR(d && pv_value, XA_API_FATAL_INVALID_CMD_TYPE);
+    XF_CHK_ERR(d, XA_API_FATAL_INVALID_CMD_TYPE);
 
     /* ...codec must be initialized */
     XF_CHK_ERR(d->state & XA_CAPTURER_FLAG_POSTINIT_DONE, XA_API_FATAL_INVALID_CMD_TYPE);

@@ -16,10 +16,10 @@ after it received the flag.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.9
-- Keil MDK  5.33
-- GCC ARM Embedded  9.3.1
-- MCUXpresso  11.3.0
+- IAR embedded Workbench  9.10.2
+- Keil MDK  5.34
+- GCC ARM Embedded  10.2.1
+- MCUXpresso  11.4.0
 
 Hardware requirements
 =====================
@@ -47,7 +47,8 @@ Running the demo
 ================
 This example run both M33 and DSP at the same time! 
 
-When the demo runs successfully, the log would be seen on the M33's terminal like below.
+When the demo runs successfully, the log would be seen on the M33's terminal like below
+and the LED D9(RED LED) will be turned on/off according to the log.
 
 ~~~~~~~~~~~~~~~~~~~~~
 Sema42 example!

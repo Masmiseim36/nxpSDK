@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2020 NXP
+ * Copyright 2019-2021 NXP
  * All rights reserved.
  *
  *
@@ -13,7 +13,10 @@
 #include "rpmsg_env.h"
 #include <xtensa/config/core.h>
 
-#ifndef FSL_RTOS_FREE_RTOS
+#ifdef SDK_OS_BAREMETAL
+#include <xtensa\xtruntime.h>
+#include <xtensa/tie/xt_interrupt.h>
+#else
 #include <xtensa/xos.h>
 #endif
 
@@ -144,8 +147,8 @@ int32_t platform_interrupt_enable(uint32_t vector_id)
 {
     RL_ASSERT(0 < disable_counter);
 
-#ifdef FSL_RTOS_FREE_RTOS
-    xt_interrupt_enable(6);
+#ifdef SDK_OS_BAREMETAL
+    _xtos_interrupt_enable(6);
 #else
     xos_interrupt_enable(6);
 #endif
@@ -167,8 +170,8 @@ int32_t platform_interrupt_disable(uint32_t vector_id)
 {
     RL_ASSERT(0 <= disable_counter);
 
-#ifdef FSL_RTOS_FREE_RTOS
-    xt_interrupt_disable(6);
+#ifdef SDK_OS_BAREMETAL
+    _xtos_interrupt_disable(6);
 #else
     xos_interrupt_disable(6);
 #endif
@@ -242,8 +245,8 @@ int32_t platform_init(void)
     }
 
     /* Register interrupt handler for MU_B on HiFi4 */
-#ifdef FSL_RTOS_FREE_RTOS
-    xt_set_interrupt_handler(6, MU_B_IRQHandler, ((void *)0));
+#ifdef SDK_OS_BAREMETAL
+    _xtos_set_interrupt_handler(6, MU_B_IRQHandler);
 #else
     xos_register_interrupt_handler(6, MU_B_IRQHandler, ((void *)0));
 #endif
@@ -258,8 +261,8 @@ int32_t platform_init(void)
  */
 int32_t platform_deinit(void)
 {
-#ifdef FSL_RTOS_FREE_RTOS
-    xt_set_interrupt_handler(6, ((void *)0), ((void *)0));
+#ifdef SDK_OS_BAREMETAL
+    _xtos_set_interrupt_handler(6, ((void *)0));
 #else
     xos_register_interrupt_handler(6, ((void *)0), ((void *)0));
 #endif

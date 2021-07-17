@@ -7,13 +7,13 @@
 **     Compiler:            IAR ANSI C/C++ Compiler for ARM
 **     Reference manual:    MIMXRT685 User manual Rev. 0.95 11 November 2019
 **     Version:             rev. 1.0, 2018-06-19
-**     Build:               b191128
+**     Build:               b201029
 **
 **     Abstract:
 **         Linker file for the IAR ANSI C/C++ Compiler for ARM
 **
 **     Copyright 2016 Freescale Semiconductor, Inc.
-**     Copyright 2016-2019 NXP
+**     Copyright 2016-2020 NXP
 **     All rights reserved.
 **
 **     SPDX-License-Identifier: BSD-3-Clause
@@ -91,7 +91,7 @@ define exported symbol __unprivileged_flash_start__     = __syscalls_flash_start
 define exported symbol __unprivileged_flash_end__       = m_text_end;
 
 define exported symbol __privileged_sram_start__   = m_data_start;
-define exported symbol __privileged_sram_length__  = 0x200;
+define exported symbol __privileged_sram_length__  = 0xD000;
 define exported symbol __privileged_sram_end__     = __privileged_sram_start__ + __privileged_sram_length__ - 1;
 
 define block PRIV_FUNCS with alignment = 32, size = __privileged_functions_length__   { section privileged_functions };
@@ -103,7 +103,7 @@ define block PRIV_DATA with alignment = 32, size = __privileged_sram_length__   
 define region USB_BDT_region = mem:[from m_usb_sram_start to m_usb_sram_start + usb_bdt_size - 1];
 define region USB_SRAM_region = mem:[from m_usb_sram_start + usb_bdt_size to m_usb_sram_end];
 
-initialize by copy { readwrite, section .textrw , section CodeQuickAccess, section DataQuickAccess };
+initialize by copy { readwrite, section .textrw, section CodeQuickAccess, section DataQuickAccess};
 
 do not initialize  { section .noinit, section m_usb_bdt, section m_usb_global  };
 

@@ -1,15 +1,17 @@
-/*******************************************************************************
-* Copyright (c) 2015-2020 Cadence Design Systems, Inc.
-* 
+/*
+* Copyright (c) 2015-2021 Cadence Design Systems Inc.
+*
 * Permission is hereby granted, free of charge, to any person obtaining
 * a copy of this software and associated documentation files (the
-* "Software"), to use this Software with Cadence processor cores only and 
-* not with any other processors and platforms, subject to
+* "Software"), to deal in the Software without restriction, including
+* without limitation the rights to use, copy, modify, merge, publish,
+* distribute, sublicense, and/or sell copies of the Software, and to
+* permit persons to whom the Software is furnished to do so, subject to
 * the following conditions:
-* 
+*
 * The above copyright notice and this permission notice shall be included
 * in all copies or substantial portions of the Software.
-* 
+*
 * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
 * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
@@ -17,8 +19,7 @@
 * CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
 * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-******************************************************************************/
+*/
 /*******************************************************************************
  * xa-mixer.c
  *
@@ -43,13 +44,6 @@
 #include "xaf-clk-test.h"
 extern clk_t mix_cycles;
 #endif
-
-/*******************************************************************************
- * Tracing configuration
- ******************************************************************************/
-
-TRACE_TAG(INIT, 1);
-TRACE_TAG(PROCESS, 1);
 
 /*******************************************************************************
  * Internal functions definitions
@@ -196,7 +190,7 @@ static XA_ERRORCODE xa_mixer_do_execute_stereo_16bit(XAPcmMixer *d)
     }
 
     /* ...set complete flag saying we have no active input port */
-    if((ports_inactive == XA_MIXER_MAX_TRACK_NUMBER))
+    if(ports_inactive == XA_MIXER_MAX_TRACK_NUMBER)
     {
         d->state |= XA_MIXER_FLAG_COMPLETE;
         d->state &= ~XA_MIXER_FLAG_OUTPUT;
@@ -247,7 +241,7 @@ static XA_ERRORCODE xa_mixer_do_execute_stereo_16bit(XAPcmMixer *d)
     //memset(d->input_length, 0, sizeof(d->input_length));
 
     /* ...set complete flag saying we have consumed all available input and input is over */
-    if((ports_completed == XA_MIXER_MAX_TRACK_NUMBER))
+    if(ports_completed == XA_MIXER_MAX_TRACK_NUMBER)
     {
         d->state |= XA_MIXER_FLAG_COMPLETE;
 
@@ -261,6 +255,8 @@ static XA_ERRORCODE xa_mixer_do_execute_stereo_16bit(XAPcmMixer *d)
 /* ...runtime reset */
 static XA_ERRORCODE xa_mixer_do_runtime_init(XAPcmMixer *d)
 {
+    d->state = XA_MIXER_FLAG_RUNNING | XA_MIXER_FLAG_POSTINIT_DONE;
+
     /* ...no special processing is needed here */
     return XA_NO_ERROR;
 }
@@ -402,7 +398,8 @@ static XA_ERRORCODE xa_mixer_set_config_param(XAPcmMixer *d, WORD32 i_idx, pVOID
             return XA_NO_ERROR;
         }
         
-    case XA_MIXER_CONFIG_PARAM_FRAME_SIZE:
+    case XA_MIXER_CONFIG_PARAM_FRAME_SIZE: /* ...deprecated */
+    case XA_MIXER_CONFIG_PARAM_FRAME_SIZE_IN_SAMPLES:
         XF_CHK_ERR(((i_value <= MIXER_FRAME_SIZE_MAX) && (i_value >= MIXER_FRAME_SIZE_MIN)), XA_MIXER_CONFIG_NONFATAL_RANGE);
         /* ...set frame length (in samples) */
         d->frame_size = *(WORD32 *)pv_value;
@@ -446,7 +443,8 @@ static XA_ERRORCODE xa_mixer_get_config_param(XAPcmMixer *d, WORD32 i_idx, pVOID
         *(WORD32 *)pv_value = d->channels;
         return XA_NO_ERROR;
 
-    case XA_MIXER_CONFIG_PARAM_FRAME_SIZE:
+    case XA_MIXER_CONFIG_PARAM_FRAME_SIZE: /* ...deprecated */
+    case XA_MIXER_CONFIG_PARAM_FRAME_SIZE_IN_SAMPLES:
         /* ...return current in/out frame length (in samples) */
         *(WORD32 *)pv_value = d->frame_size;
         return XA_NO_ERROR;

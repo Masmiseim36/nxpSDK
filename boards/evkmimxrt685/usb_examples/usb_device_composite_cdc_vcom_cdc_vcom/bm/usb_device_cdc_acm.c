@@ -393,6 +393,7 @@ usb_status_t USB_DeviceCdcAcmEvent(void *handle, uint32_t event, void *param)
         case kUSB_DeviceClassEventDeviceReset:
             /* Bus reset, clear the configuration. */
             cdcAcmHandle->configuration = 0;
+            error                       = kStatus_USB_Success;
             break;
         case kUSB_DeviceClassEventSetConfiguration:
             temp8 = ((uint8_t *)param);
@@ -402,6 +403,7 @@ usb_status_t USB_DeviceCdcAcmEvent(void *handle, uint32_t event, void *param)
             }
             if (*temp8 == cdcAcmHandle->configuration)
             {
+                error = kStatus_USB_Success;
                 break;
             }
 
@@ -411,7 +413,7 @@ usb_status_t USB_DeviceCdcAcmEvent(void *handle, uint32_t event, void *param)
             error                       = USB_DeviceCdcAcmEndpointsInit(cdcAcmHandle);
             if (kStatus_USB_Success != error)
             {
-#ifdef DEBUG
+#if 0
                 (void)usb_echo("kUSB_DeviceClassEventSetConfiguration, USB_DeviceInitEndpoint fail\r\n");
 #endif
             }
@@ -431,6 +433,7 @@ usb_status_t USB_DeviceCdcAcmEvent(void *handle, uint32_t event, void *param)
             }
             if (alternate == cdcAcmHandle->alternate)
             {
+                error = kStatus_USB_Success;
                 break;
             }
             error                   = USB_DeviceCdcAcmEndpointsDeinit(cdcAcmHandle);
@@ -438,7 +441,7 @@ usb_status_t USB_DeviceCdcAcmEvent(void *handle, uint32_t event, void *param)
             error                   = USB_DeviceCdcAcmEndpointsInit(cdcAcmHandle);
             if (kStatus_USB_Success != error)
             {
-#ifdef DEBUG
+#if 0
                 (void)usb_echo("kUSB_DeviceClassEventSetInterface, USB_DeviceInitEndpoint fail\r\n");
 #endif
             }
@@ -576,78 +579,128 @@ usb_status_t USB_DeviceCdcAcmEvent(void *handle, uint32_t event, void *param)
         {
             usb_device_control_request_struct_t *controlRequest = (usb_device_control_request_struct_t *)param;
 
+            if ((controlRequest->setup->bmRequestType & USB_REQUEST_TYPE_RECIPIENT_MASK) !=
+                USB_REQUEST_TYPE_RECIPIENT_INTERFACE)
+            {
+                break;
+            }
+
             if ((controlRequest->setup->wIndex & 0xFFU) != cdcAcmHandle->interfaceNumber)
             {
                 break;
             }
+
+            error = kStatus_USB_InvalidRequest;
             /* Standard CDC request */
-            if (USB_REQUEST_TYPE_TYPE_CLASS == (controlRequest->setup->bmRequestType & USB_REQUEST_TYPE_TYPE_MASK))
+            reqParam.buffer         = &(controlRequest->buffer);
+            reqParam.length         = &(controlRequest->length);
+            reqParam.interfaceIndex = controlRequest->setup->wIndex;
+            reqParam.setupValue     = controlRequest->setup->wValue;
+            reqParam.isSetup        = controlRequest->isSetup;
+            switch (controlRequest->setup->bRequest)
             {
-                reqParam.buffer         = &(controlRequest->buffer);
-                reqParam.length         = &(controlRequest->length);
-                reqParam.interfaceIndex = controlRequest->setup->wIndex;
-                reqParam.setupValue     = controlRequest->setup->wValue;
-                reqParam.isSetup        = controlRequest->isSetup;
-                switch (controlRequest->setup->bRequest)
-                {
-                    case USB_DEVICE_CDC_REQUEST_SEND_ENCAPSULATED_COMMAND:
+                case USB_DEVICE_CDC_REQUEST_SEND_ENCAPSULATED_COMMAND:
+                    if (((controlRequest->setup->bmRequestType & USB_REQUEST_TYPE_DIR_MASK) ==
+                         USB_REQUEST_TYPE_DIR_OUT) &&
+                        (controlRequest->setup->wLength != 0U))
+                    {
                         /* classCallback is initialized in classInit of s_UsbDeviceClassInterfaceMap,
                         it is from the second parameter of classInit */
                         error = cdcAcmHandle->configStruct->classCallback(
                             (class_handle_t)cdcAcmHandle, kUSB_DeviceCdcEventSendEncapsulatedCommand, &reqParam);
-                        break;
-                    case USB_DEVICE_CDC_REQUEST_GET_ENCAPSULATED_RESPONSE:
+                    }
+                    break;
+                case USB_DEVICE_CDC_REQUEST_GET_ENCAPSULATED_RESPONSE:
+                    if (((controlRequest->setup->bmRequestType & USB_REQUEST_TYPE_DIR_MASK) ==
+                         USB_REQUEST_TYPE_DIR_IN) &&
+                        (controlRequest->setup->wLength != 0U))
+                    {
                         /* classCallback is initialized in classInit of s_UsbDeviceClassInterfaceMap,
                         it is from the second parameter of classInit */
                         error = cdcAcmHandle->configStruct->classCallback(
                             (class_handle_t)cdcAcmHandle, kUSB_DeviceCdcEventGetEncapsulatedResponse, &reqParam);
-                        break;
-                    case USB_DEVICE_CDC_REQUEST_SET_COMM_FEATURE:
+                    }
+                    break;
+                case USB_DEVICE_CDC_REQUEST_SET_COMM_FEATURE:
+                    if (((controlRequest->setup->bmRequestType & USB_REQUEST_TYPE_DIR_MASK) ==
+                         USB_REQUEST_TYPE_DIR_OUT) &&
+                        (controlRequest->setup->wLength != 0U))
+                    {
                         /* classCallback is initialized in classInit of s_UsbDeviceClassInterfaceMap,
                         it is from the second parameter of classInit */
                         error = cdcAcmHandle->configStruct->classCallback((class_handle_t)cdcAcmHandle,
                                                                           kUSB_DeviceCdcEventSetCommFeature, &reqParam);
-                        break;
-                    case USB_DEVICE_CDC_REQUEST_GET_COMM_FEATURE:
+                    }
+                    break;
+                case USB_DEVICE_CDC_REQUEST_GET_COMM_FEATURE:
+                    if (((controlRequest->setup->bmRequestType & USB_REQUEST_TYPE_DIR_MASK) ==
+                         USB_REQUEST_TYPE_DIR_IN) &&
+                        (controlRequest->setup->wLength != 0U))
+                    {
                         /* classCallback is initialized in classInit of s_UsbDeviceClassInterfaceMap,
                         it is from the second parameter of classInit */
                         error = cdcAcmHandle->configStruct->classCallback((class_handle_t)cdcAcmHandle,
                                                                           kUSB_DeviceCdcEventGetCommFeature, &reqParam);
-                        break;
-                    case USB_DEVICE_CDC_REQUEST_CLEAR_COMM_FEATURE:
+                    }
+                    break;
+                case USB_DEVICE_CDC_REQUEST_CLEAR_COMM_FEATURE:
+                    if (((controlRequest->setup->bmRequestType & USB_REQUEST_TYPE_DIR_MASK) ==
+                         USB_REQUEST_TYPE_DIR_OUT) &&
+                        (controlRequest->setup->wLength == 0U))
+                    {
                         /* classCallback is initialized in classInit of s_UsbDeviceClassInterfaceMap,
                         it is from the second parameter of classInit */
                         error = cdcAcmHandle->configStruct->classCallback(
                             (class_handle_t)cdcAcmHandle, kUSB_DeviceCdcEventClearCommFeature, &reqParam);
-                        break;
-                    case USB_DEVICE_CDC_REQUEST_GET_LINE_CODING:
+                    }
+                    break;
+                case USB_DEVICE_CDC_REQUEST_GET_LINE_CODING:
+                    if (((controlRequest->setup->bmRequestType & USB_REQUEST_TYPE_DIR_MASK) ==
+                         USB_REQUEST_TYPE_DIR_IN) &&
+                        (controlRequest->setup->wLength != 0U))
+                    {
                         /* classCallback is initialized in classInit of s_UsbDeviceClassInterfaceMap,
                         it is from the second parameter of classInit */
                         error = cdcAcmHandle->configStruct->classCallback((class_handle_t)cdcAcmHandle,
                                                                           kUSB_DeviceCdcEventGetLineCoding, &reqParam);
-                        break;
-                    case USB_DEVICE_CDC_REQUEST_SET_LINE_CODING:
+                    }
+                    break;
+                case USB_DEVICE_CDC_REQUEST_SET_LINE_CODING:
+                    if (((controlRequest->setup->bmRequestType & USB_REQUEST_TYPE_DIR_MASK) ==
+                         USB_REQUEST_TYPE_DIR_OUT) &&
+                        (controlRequest->setup->wLength != 0U))
+                    {
                         /* classCallback is initialized in classInit of s_UsbDeviceClassInterfaceMap,
                         it is from the second parameter of classInit */
                         error = cdcAcmHandle->configStruct->classCallback((class_handle_t)cdcAcmHandle,
                                                                           kUSB_DeviceCdcEventSetLineCoding, &reqParam);
-                        break;
-                    case USB_DEVICE_CDC_REQUEST_SET_CONTROL_LINE_STATE:
+                    }
+                    break;
+                case USB_DEVICE_CDC_REQUEST_SET_CONTROL_LINE_STATE:
+                    if (((controlRequest->setup->bmRequestType & USB_REQUEST_TYPE_DIR_MASK) ==
+                         USB_REQUEST_TYPE_DIR_OUT) &&
+                        (controlRequest->setup->wLength == 0U))
+                    {
                         /* classCallback is initialized in classInit of s_UsbDeviceClassInterfaceMap,
                         it is from the second parameter of classInit */
                         error = cdcAcmHandle->configStruct->classCallback(
                             (class_handle_t)cdcAcmHandle, kUSB_DeviceCdcEventSetControlLineState, &reqParam);
-                        break;
-                    case USB_DEVICE_CDC_REQUEST_SEND_BREAK:
+                    }
+                    break;
+                case USB_DEVICE_CDC_REQUEST_SEND_BREAK:
+                    if (((controlRequest->setup->bmRequestType & USB_REQUEST_TYPE_DIR_MASK) ==
+                         USB_REQUEST_TYPE_DIR_OUT) &&
+                        (controlRequest->setup->wLength == 0U))
+                    {
                         /* classCallback is initialized in classInit of s_UsbDeviceClassInterfaceMap,
                         it is from the second parameter of classInit */
                         error = cdcAcmHandle->configStruct->classCallback((class_handle_t)cdcAcmHandle,
                                                                           kUSB_DeviceCdcEventSendBreak, &reqParam);
-                        break;
-                    default:
-                        error = kStatus_USB_InvalidRequest;
-                        break;
-                }
+                    }
+                    break;
+                default:
+                    /* no action, return kStatus_USB_InvalidRequest */
+                    break;
             }
         }
         break;
@@ -704,21 +757,21 @@ usb_status_t USB_DeviceCdcAcmInit(uint8_t controllerId,
     cdcAcmHandle->bulkIn.mutex = (osa_mutex_handle_t)&cdcAcmHandle->bulkIn.mutexBuffer[0];
     if (KOSA_StatusSuccess != OSA_MutexCreate((cdcAcmHandle->bulkIn.mutex)))
     {
-#ifdef DEBUG
+#if 0
         (void)usb_echo("mutex create error!");
 #endif
     }
     cdcAcmHandle->bulkOut.mutex = (osa_mutex_handle_t)&cdcAcmHandle->bulkOut.mutexBuffer[0];
     if (KOSA_StatusSuccess != OSA_MutexCreate((cdcAcmHandle->bulkOut.mutex)))
     {
-#ifdef DEBUG
+#if 0
         (void)usb_echo("mutex create error!");
 #endif
     }
     cdcAcmHandle->interruptIn.mutex = (osa_mutex_handle_t)&cdcAcmHandle->interruptIn.mutexBuffer[0];
     if (KOSA_StatusSuccess != OSA_MutexCreate((cdcAcmHandle->interruptIn.mutex)))
     {
-#ifdef DEBUG
+#if 0
         (void)usb_echo("mutex create error!");
 #endif
     }
@@ -748,19 +801,19 @@ usb_status_t USB_DeviceCdcAcmDeinit(class_handle_t handle)
     }
     if (KOSA_StatusSuccess != OSA_MutexDestroy((cdcAcmHandle->bulkIn.mutex)))
     {
-#ifdef DEBUG
+#if 0
         (void)usb_echo("mutex destroy error!");
 #endif
     }
     if (KOSA_StatusSuccess != OSA_MutexDestroy((cdcAcmHandle->bulkOut.mutex)))
     {
-#ifdef DEBUG
+#if 0
         (void)usb_echo("mutex destroy error!");
 #endif
     }
     if (KOSA_StatusSuccess != OSA_MutexDestroy((cdcAcmHandle->interruptIn.mutex)))
     {
-#ifdef DEBUG
+#if 0
         (void)usb_echo("mutex destroy error!");
 #endif
     }

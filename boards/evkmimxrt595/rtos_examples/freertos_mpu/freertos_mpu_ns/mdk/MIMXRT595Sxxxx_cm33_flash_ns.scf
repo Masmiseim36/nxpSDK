@@ -3,10 +3,11 @@
 ** ###################################################################
 **     Processors:          MIMXRT595SFAWC_cm33
 **                          MIMXRT595SFFOC_cm33
+**
 **     Compiler:            Keil ARM C/C++ Compiler
-**     Reference manual:    RT500 Reference Manual. Rev.A, 3/2020
-**     Version:             rev. 3.0, 2019-12-10
-**     Build:               b200410
+**     Reference manual:    iMXRT500RM Rev.D, 11/2020
+**     Version:             rev. 4.0, 2020-05-12
+**     Build:               b201117
 **
 **     Abstract:
 **         Linker file for the Keil ARM C/C++ Compiler
@@ -40,7 +41,7 @@
 #endif
 
 /* The SRAM region [0x10000-0x1BFFF] is reserved for ROM code. */
-/* The SRAM region [0x0-0xFFFF], [0x1C000-0x1FFFF] is reserved for app-specific use cases. */
+/* The SRAM region [0x0-0xFFFF], [0x1C000-0x1FFFF] are reserved for app-specific use cases. */
 /* The SRAM region [0x20000-0x7FFFF] is reserved for Non-cached shared memory between M33 and DSP. */
 
 #if (defined(__ram_vector_table__))
@@ -62,9 +63,9 @@
 #define  m_text_size                   0x000F3E00
 
 #define  priv_data_start               0x20180000
-#define  priv_data_size                0x00000400
+#define  priv_data_size                0x0000D000
 
-#define m_interrupts_ram_start         0x20180400
+#define m_interrupts_ram_start         0x2018D000
 #define m_interrupts_ram_size          __ram_vector_table_size__
 
 #define  m_data_start                  (m_interrupts_ram_start + m_interrupts_ram_size)
@@ -103,7 +104,7 @@ LR_m_interrupts m_interrupts_start m_interrupts_size+m_text_size {
   VECTOR_RAM m_interrupts_start EMPTY 0 {
   }
 #endif
-  RW_m_data m_data_start m_data_size-Stack_Size-Heap_Size { ; RW data
+  RW_m_data m_data_start ALIGN 4 m_data_size-Stack_Size-Heap_Size { ; RW data
     * (CodeQuickAccess)
     * (DataQuickAccess)
     .ANY (+RW +ZI)

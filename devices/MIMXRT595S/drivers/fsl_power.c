@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2020, NXP
+ * Copyright 2018-2021, NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -39,18 +39,18 @@ static const uint32_t powerLdoVoltLevel[POWER_FREQ_LEVELS_NUM] = {
     (SYSCTL0_PDSLEEPCFG0_RBB_PD_MASK | SYSCTL0_PDSLEEPCFG0_FBB_PD_MASK | SYSCTL0_PDSLEEPCFG0_RBBSRAM_PD_MASK)
 
 /* DeepSleep PDSLEEP0 */
-#define PCFG0_DEEP_SLEEP                                                                                             \
-    (SYSCTL0_PDSLEEPCFG0_MAINCLK_SHUTOFF_MASK | SYSCTL0_PDSLEEPCFG0_VDDCOREREG_LP_MASK |                             \
-     SYSCTL0_PDSLEEPCFG0_PMCREF_LP_MASK | SYSCTL0_PDSLEEPCFG0_HVD1V8_PD_MASK | SYSCTL0_PDSLEEPCFG0_LVDCORE_LP_MASK | \
-     SYSCTL0_PDSLEEPCFG0_HVDCORE_PD_MASK | SYSCTL0_PDSLEEPCFG0_RBB_PD_MASK | SYSCTL0_PDSLEEPCFG0_FBB_PD_MASK |       \
-     SYSCTL0_PDSLEEPCFG0_SYSXTAL_PD_MASK | SYSCTL0_PDSLEEPCFG0_LPOSC_PD_MASK | SYSCTL0_PDSLEEPCFG0_RBBSRAM_PD_MASK | \
-     SYSCTL0_PDSLEEPCFG0_FFRO_PD_MASK | SYSCTL0_PDSLEEPCFG0_SYSPLLLDO_PD_MASK |                                      \
-     SYSCTL0_PDSLEEPCFG0_SYSPLLANA_PD_MASK | SYSCTL0_PDSLEEPCFG0_AUDPLLLDO_PD_MASK |                                 \
-     SYSCTL0_PDSLEEPCFG0_AUDPLLANA_PD_MASK | SYSCTL0_PDSLEEPCFG0_ADC_PD_MASK | SYSCTL0_PDSLEEPCFG0_ADC_LP_MASK |     \
-     SYSCTL0_PDSLEEPCFG0_ADC_TEMPSNS_PD_MASK | SYSCTL0_PDSLEEPCFG0_PMC_TEMPSNS_PD_MASK |                             \
-     SYSCTL0_PDSLEEPCFG0_ACMP_PD_MASK | SYSCTL0_PDSLEEPCFG0_HSPAD_FSPI0_VDET_LP_MASK |                               \
-     SYSCTL0_PDSLEEPCFG0_HSPAD_FSPI0_REF_PD_MASK | SYSCTL0_PDSLEEPCFG0_HSPAD_SDIO0_VDET_LP_MASK |                    \
-     SYSCTL0_PDSLEEPCFG0_HSPAD_SDIO0_REF_PD_MASK | SYSCTL0_PDSLEEPCFG0_HSPAD_FSPI1_VDET_LP_MASK |                    \
+#define PCFG0_DEEP_SLEEP                                                                                              \
+    (SYSCTL0_PDSLEEPCFG0_MAINCLK_SHUTOFF_MASK | SYSCTL0_PDSLEEPCFG0_VDDCOREREG_LP_MASK |                              \
+     SYSCTL0_PDSLEEPCFG0_PMCREF_LP_MASK | SYSCTL0_PDSLEEPCFG0_HVD1V8_PD_MASK | SYSCTL0_PDSLEEPCFG0_LVDCORE_LP_MASK |  \
+     SYSCTL0_PDSLEEPCFG0_PORCORE_LP_MASK | SYSCTL0_PDSLEEPCFG0_HVDCORE_PD_MASK | SYSCTL0_PDSLEEPCFG0_RBB_PD_MASK |    \
+     SYSCTL0_PDSLEEPCFG0_FBB_PD_MASK | SYSCTL0_PDSLEEPCFG0_SYSXTAL_PD_MASK | SYSCTL0_PDSLEEPCFG0_LPOSC_PD_MASK |      \
+     SYSCTL0_PDSLEEPCFG0_RBBSRAM_PD_MASK | SYSCTL0_PDSLEEPCFG0_FFRO_PD_MASK | SYSCTL0_PDSLEEPCFG0_SYSPLLLDO_PD_MASK | \
+     SYSCTL0_PDSLEEPCFG0_SYSPLLANA_PD_MASK | SYSCTL0_PDSLEEPCFG0_AUDPLLLDO_PD_MASK |                                  \
+     SYSCTL0_PDSLEEPCFG0_AUDPLLANA_PD_MASK | SYSCTL0_PDSLEEPCFG0_ADC_PD_MASK | SYSCTL0_PDSLEEPCFG0_ADC_LP_MASK |      \
+     SYSCTL0_PDSLEEPCFG0_ADC_TEMPSNS_PD_MASK | SYSCTL0_PDSLEEPCFG0_PMC_TEMPSNS_PD_MASK |                              \
+     SYSCTL0_PDSLEEPCFG0_ACMP_PD_MASK | SYSCTL0_PDSLEEPCFG0_HSPAD_FSPI0_VDET_LP_MASK |                                \
+     SYSCTL0_PDSLEEPCFG0_HSPAD_FSPI0_REF_PD_MASK | SYSCTL0_PDSLEEPCFG0_HSPAD_SDIO0_VDET_LP_MASK |                     \
+     SYSCTL0_PDSLEEPCFG0_HSPAD_SDIO0_REF_PD_MASK | SYSCTL0_PDSLEEPCFG0_HSPAD_FSPI1_VDET_LP_MASK |                     \
      SYSCTL0_PDSLEEPCFG0_HSPAD_FSPI1_REF_PD_MASK)
 
 /* DeepSleep PDSLEEP1 */
@@ -135,7 +135,8 @@ static const uint32_t powerLdoVoltLevel[POWER_FREQ_LEVELS_NUM] = {
 /* Turn on all partitions in parallel.
  * Be cautious to change the PMC_MEM_SEQ_NUM. To save code size, countPartitionSwitches() counted with 0x3F.
  */
-#define PMC_MEM_SEQ_NUM (0x3FU)
+#define PMC_MEM_SEQ_NUM                 (0x3FU)
+#define SYSCTL0_PDRUNCFG1_MEM_BITS_MASK (0x103FEFFEU)
 
 /*******************************************************************************
  * Code
@@ -256,6 +257,7 @@ void POWER_DisablePD(pd_bit_t en)
  */
 void POWER_ApplyPD(void)
 {
+    PMC->CTRL &= ~PMC_CTRL_CLKDIVEN_MASK; /* Disable internal clock divider to decrease the PMC register access delay.*/
     /* Cannot set APPLYCFG when ACTIVEFSM is 1 */
     while ((PMC->STATUS & PMC_STATUS_ACTIVEFSM_MASK) != 0U)
     {
@@ -265,6 +267,7 @@ void POWER_ApplyPD(void)
     while ((PMC->STATUS & PMC_STATUS_ACTIVEFSM_MASK) != 0U)
     {
     }
+    PMC->CTRL |= PMC_CTRL_CLKDIVEN_MASK; /* Enable internal clock divider for power saving.*/
 }
 
 /**
@@ -663,10 +666,30 @@ AT_QUICKACCESS_SECTION_CODE(static void countPartitionSwitches(uint32_t numPerSw
                                                                uint32_t *pFastSwitches,
                                                                uint32_t *pSlowSwitches))
 {
+    const uint32_t slowBitmap =
+        0x103CCF3CU; /* Bit value 1 stands for containing slow memory, 0 stands for fast memory only. */
+    const uint32_t fastBitmap = (slowBitmap ^ SYSCTL0_PDRUNCFG1_MEM_BITS_MASK) |
+                                0x100014U; /* FlexSPI and LCDIF have both fast and slow memory controller */
+
     (void)numPerSwitch;
     /* All partitions are turned on in parallel */
     *pFastSwitches = 0U;
-    *pSlowSwitches = 1U;
+
+    if (0U == ((SYSCTL0->PDRUNCFG1 ^ SYSCTL0_PDRUNCFG1_MEM_BITS_MASK) &
+               (SYSCTL0->PDSLEEPCFG1 & SYSCTL0_PDRUNCFG1_MEM_BITS_MASK) & slowBitmap))
+    {
+        *pSlowSwitches = 0U;
+        if (0U != (((SYSCTL0->PDRUNCFG1 ^ SYSCTL0_PDRUNCFG1_MEM_BITS_MASK) &
+                    (SYSCTL0->PDSLEEPCFG1 & SYSCTL0_PDRUNCFG1_MEM_BITS_MASK) & fastBitmap) |
+                   ((~SYSCTL0->PDRUNCFG2) & SYSCTL0->PDSLEEPCFG2) | ((~SYSCTL0->PDRUNCFG3) & SYSCTL0->PDSLEEPCFG3)))
+        {
+            *pFastSwitches = 1U;
+        }
+    }
+    else
+    {
+        *pSlowSwitches = 1U;
+    }
 }
 
 AT_QUICKACCESS_SECTION_CODE(static uint32_t POWER_CalculateSafetyCount(uint32_t clkMhz))

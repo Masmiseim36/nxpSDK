@@ -7,27 +7,28 @@ Please take look into section "Board settings" if there are some board limitatio
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.9
-- Keil MDK  5.33
-- GCC ARM Embedded  9.3.1
-- MCUXpresso  11.3.0
+- IAR embedded Workbench  9.10.2
+- Keil MDK  5.34
+- GCC ARM Embedded  10.2.1
+- MCUXpresso  11.4.0
 
 Hardware requirements
 =====================
 - Mini/micro USB cable
 - EVK-MIMXRT685 board
 - Personal Computer
-- One of the following WiFi modules:
+- One of the following Wi-Fi modules:
   - Panasonic PAN9026 SDIO ADAPTER
   - AzureWave AW-NM191NF-uSD + uSD to SD adapter
   - AzureWave AW-AM457-uSD + uSD to SD adapter
-
+  - AzureWave AW-CM358-uSD + uSD to SD adapter
 
 Board settings
 ==============
-This example, by default, is built to work with the Panasonic PAN9026 SDIO ADAPTER. It is configured by the project macro: WIFI_BOARD_PAN9026_SDIO.
-If you want use the AzureWave AW-NM191NF-uSD, please change the project macro WIFI_BOARD_PAN9026_SDIO to WIFI_BOARD_AW_NM191.
-If you want use the AzureWave AW-AM457-uSD, please change the project macro WIFI_BOARD_PAN9026_SDIO to WIFI_BOARD_AW_AM457.
+This example, by default, is built to work with the AzureWave AW-AM457-uSD. It is configured by the macro definition in file app_config.h (#define WIFI_BOARD_AW_AM457).
+If you want use the AzureWave AW-NM191NF-uSD, please change the macro to WIFI_BOARD_AW_NM191.
+If you want use the Panasonic PAN9026 SDIO ADAPTER, please change the macro to WIFI_BOARD_PAN9026_SDIO.
+If you want use the AzureWave AW-CM358-uSD, please change the macro to WIFI_BOARD_AW_CM358.
 
 To make example work, connections needed to be as follows:
   JP15-1        <-->        JP15-2
@@ -39,6 +40,15 @@ Jumper settings for AzureWave AW-NM191NF-uSD Module:
 Jumper settings for AzureWave AW-AM457-uSD Module:
   - J11 1-2: VIO_SD 1.8V (Voltage level of SDIO pins is 1.8V)
   - J2  1-2: 3.3V VIO_uSD (Power Supply from uSD connector)
+
+Jumper settings for AzureWave AW-CM358-uSD Module:
+  - J4 1-2: VIO 1.8V (Voltage level of SDIO pins is 1.8V)
+  - J2 1-2: 3.3V VIO_uSD (Power Supply from uSD connector)
+  - The pin 1 of J4 is not marked on the board. Please note that pin numbering of J4 is opposite to J2 (pin 1 is close to the "J4" label):
+         3 2 1
+         o o=o J4
+      J2 o=o o
+         1 2 3
 
 Prepare the Demo
 ================
@@ -55,7 +65,7 @@ Before running the demo it is need to configure AWS IoT Console and update some 
         #define clientcredentialIOT_THING_NAME "MyExample"
 
     In the next step you will get the "device certificate" and the "primary key". The device certificate and private key needs to be opened in text editor and its content copied into the "aws_clientcredential_keys.h".
-    Or you can use the CertificateConfigurator.html (mcu-sdk-2.0\rtos\amazon-freertos\tools\certificate_configuration) to generate the "aws_clientcredential_keys.h".
+    Or you can use the CertificateConfigurator.html (mcu-sdk-2.0\rtos\freertos\tools\certificate_configuration) to generate the "aws_clientcredential_keys.h".
 
     Example:
         #define keyCLIENT_CERTIFICATE_PEM "Paste client certificate here."
@@ -72,10 +82,10 @@ Before running the demo it is need to configure AWS IoT Console and update some 
 
     In the same way update the private key array.
 
-3.  This demo needs WiFi network with internet access.
-    Update these macros in "aws_clientcredential.h" based on your WiFi network configuration:
-        #define clientcredentialWIFI_SSID       "Paste WiFi SSID here."
-        #define clientcredentialWIFI_PASSWORD   "Paste WiFi password here."
+3.  This demo needs Wi-Fi network with internet access.
+    Update these macros in "aws_clientcredential.h" based on your Wi-Fi network configuration:
+        #define clientcredentialWIFI_SSID       "Paste Wi-Fi SSID here."
+        #define clientcredentialWIFI_PASSWORD   "Paste Wi-Fi password here."
 
 4.  Open example's project and build it.
 
@@ -168,7 +178,7 @@ Create policy to be attached into "Cognito_PoolNameUnauth_Role" though "Policies
 
 Running the demo
 ================
-The log below shows the output of the demo in the terminal window. The log can be different based on your WiFi network configuration and based on the actions, which you have done in the Android application.
+The log below shows the output of the demo in the terminal window. The log can be different based on your Wi-Fi network configuration and based on the actions, which you have done in the Android application.
 
 Android application displays Accelerometer data for all three axis and status of LEDs which is split into Desired and Reported section. Desired value is value wanted by user and Reported value is actual value of LEDs on device.
 
@@ -179,69 +189,184 @@ Every mentioned action takes approximately 1-3 seconds.
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 0 114 [Tmr Svc] Write certificate...
-1 239 [Tmr Svc] Device credential provisioning succeeded.
-2 240 [Tmr Svc] Starting WiFi...
+
+1 130 [iot_thread] [INFO ][DEMO][130] ---------STARTING DEMO---------
+
+
+2 132 [iot_thread] [INFO ][INIT][132] SDK successfully initialized.
+
+MAC Address:  0:13:43:91:8C:9D 
+[net] Initialized TCP/IP networking stack
+
+3 3443 [iot_thread] Connecting to nxp .....
+
+4 12155 [wlcmgr] Connected to with IP = [192.168.1.107]
+
+5 12193 [iot_thread] [INFO ][DEMO][12193] Successfully initialized the demo. Network type for the demo: 1
+
+6 12193 [iot_thread] [INFO] Create a TCP connection to a2zcot8a2tqh6c-ats.iot.us-east-2.amazonaws.com:8883.
+7 13297 [iot_thread] [INFO] Packet received. ReceivedBytes=2.
+8 13299 [iot_thread] [INFO] CONNACK session present bit not set.
+9 13299 [iot_thread] [INFO] Connection accepted.
+10 13299 [iot_thread] [INFO] Received MQTT CONNACK successfully from broker.
+11 13299 [iot_thread] [INFO] MQTT connection established with the broker.
+12 13299 [iot_thread] [INFO] MQTT connection successfully established with broker.
+
+
+13 13299 [iot_thread] [INFO] A clean MQTT connection is established. Cleaning up all the stored outgoing publishes.
+
+
+14 13300 [iot_thread] [INFO] SUBSCRIBE topic $aws/things/aws_demo/shadow/delete/accepted to broker.
+
+
+15 13445 [iot_thread] [INFO] Packet received. ReceivedBytes=3.
+16 13445 [iot_thread] [INFO] MQTT_PACKET_TYPE_SUBACK.
+
+
+17 15455 [iot_thread] [INFO] SUBSCRIBE topic $aws/things/aws_demo/shadow/delete/rejected to broker.
+
+
+18 15630 [iot_thread] [INFO] Packet received. ReceivedBytes=3.
+19 15630 [iot_thread] [INFO] MQTT_PACKET_TYPE_SUBACK.
+
+
+20 17640 [iot_thread] [INFO] the published payload: 
+ 
+21 17641 [iot_thread] [INFO] PUBLISH sent for topic $aws/things/aws_demo/shadow/delete to broker with packet ID 3.
+
+
+22 17857 [iot_thread] [INFO] Packet received. ReceivedBytes=2.
+23 17857 [iot_thread] [INFO] Ack packet deserialized with result: MQTTSuccess.
+24 17857 [iot_thread] [INFO] State record updated. New state=MQTTPublishDone.
+25 17857 [iot_thread] [INFO] PUBACK received for packet id 3.
+
+
+26 17857 [iot_thread] [INFO] Cleaned up outgoing publish packet with packet id 3.
+
+
+27 17895 [iot_thread] [INFO] Packet received. ReceivedBytes=92.
+28 17895 [iot_thread] [INFO] De-serialized incoming PUBLISH packet: DeserializerResult=MQTTSuccess.
+29 17895 [iot_thread] [INFO] State record updated. New state=MQTTPubAckSend.
+30 17895 [iot_thread] [INFO] pPublishInfo->pTopicName:$aws/things/aws_demo/shadow/delete/accepted.
+31 17895 [iot_thread] [INFO] Received an MQTT incoming publish on /delete/accepted topic.
+32 19705 [iot_thread] [INFO] UNSUBSCRIBE sent topic $aws/things/aws_demo/shadow/delete/accepted to broker.
+
+
+33 19850 [iot_thread] [INFO] Packet received. ReceivedBytes=2.
+34 19850 [iot_thread] [INFO] MQTT_PACKET_TYPE_UNSUBACK.
+
+
+35 21860 [iot_thread] [INFO] UNSUBSCRIBE sent topic $aws/things/aws_demo/shadow/delete/rejected to broker.
+
+
+36 22035 [iot_thread] [INFO] Packet received. ReceivedBytes=2.
+37 22035 [iot_thread] [INFO] MQTT_PACKET_TYPE_UNSUBACK.
+
+
+38 24045 [iot_thread] [INFO] SUBSCRIBE topic $aws/things/aws_demo/shadow/update/delta to broker.
+
+
+39 24195 [iot_thread] [INFO] Packet received. ReceivedBytes=3.
+40 24195 [iot_thread] [INFO] MQTT_PACKET_TYPE_SUBACK.
+
+
+41 26205 [iot_thread] [INFO] the published payload:{"state":{"desired":{"LEDstate":0},"reported":{"LEDstate":0,"accel":{"x":0,"y":0,"z":0},"LEDinfo":{"isRgbLed":false,"colors":["green"]}}},"clientToken": "token-26205"} 
+ 
+42 26206 [iot_thread] [INFO] PUBLISH sent for topic $aws/things/aws_demo/shadow/update to broker with packet ID 7.
+
+
+43 26509 [iot_thread] [INFO] Packet received. ReceivedBytes=2.
+44 26509 [iot_thread] [INFO] Ack packet deserialized with result: MQTTSuccess.
+45 26509 [iot_thread] [INFO] State record updated. New state=MQTTPublishDone.
+46 26509 [iot_thread] [INFO] PUBACK received for packet id 7.
+
+
+47 26509 [iot_thread] [INFO] Cleaned up outgoing publish packet with packet id 7.
+
+
+48 28318 [iot_thread] [INFO] AWS Remote Control Demo initialized.
+49 28318 [iot_thread] [INFO] Use mobile application to control the remote device.
 .
 .
 .
-3 1177 [Tmr Svc] WiFi module initialized.
-4 4942 [Tmr Svc] WiFi connected to AP Guest.
-5 4942 [Tmr Svc] IP Address acquired 192.168.2.100
-6 4951 [AWS-RemoteCtrl] [INFO ][INIT][4950] SDK successfully initialized.
-7 4957 [AWS-RemoteCtrl] [INFO ][Shadow][4957] Shadow library successfully initialized.
-8 8125 [AWS-RemoteCtrl] [INFO ][MQTT][8125] Establishing new MQTT connection.
-9 8135 [AWS-RemoteCtrl] [INFO ][MQTT][8134] Anonymous metrics (SDK language, SDK version) will be provided to AWS IoT. Recompile with AWS_IOT_MQTT_ENABLE_METRICS set to 0 to disable.
-10 8151 [AWS-RemoteCtrl] [INFO ][MQTT][8151] (MQTT connection 20209568, CONNECT operation 20209740) Waiting for operation completion.
-11 8345 [AWS-RemoteCtrl] [INFO ][MQTT][8344] (MQTT connection 20209568, CONNECT operation 20209740) Wait complete with result SUCCESS.
-12 8357 [AWS-RemoteCtrl] [INFO ][MQTT][8357] New MQTT connection 20208a68 established.
-13 8365 [AWS-RemoteCtrl] [INFO ][MQTT][8365] (MQTT connection 20209568) SUBSCRIBE operation scheduled.
-14 8365 [AWS-RemoteCtrl] [INFO ][MQTT][8365] (MQTT connection 20209568, SUBSCRIBE operation 2020a6c8) Waiting for operation completion.
-15 8522 [AWS-RemoteCtrl] [INFO ][MQTT][8522] (MQTT connection 20209568, SUBSCRIBE operation 2020a6c8) Wait complete with result SUCCESS.
-16 8522 [AWS-RemoteCtrl] [INFO ][MQTT][8522] (MQTT connection 20209568) SUBSCRIBE operation scheduled.
-17 8523 [AWS-RemoteCtrl] [INFO ][MQTT][8522] (MQTT connection 20209568, SUBSCRIBE operation 2020a6c8) Waiting for operation completion.
-18 8684 [AWS-RemoteCtrl] [INFO ][MQTT][8684] (MQTT connection 20209568, SUBSCRIBE operation 2020a6c8) Wait complete with result SUCCESS.
-19 8697 [AWS-RemoteCtrl] [INFO ][MQTT][8697] (MQTT connection 20209568) MQTT PUBLISH operation queued.
-20 8882 [iot_thread] [WARN ][Shadow][8882] Shadow DELETE of aws_rpr_michal was REJECTED.
-21 8882 [iot_thread] [WARN ][Shadow][8882] Code 404: "No shadow exists with name: 'aws_rpr_michal'".
-22 8899 [AWS-RemoteCtrl] [INFO ][MQTT][8899] (MQTT connection 20209568) UNSUBSCRIBE operation scheduled.
-23 8900 [AWS-RemoteCtrl] [INFO ][MQTT][8899] (MQTT connection 20209568, UNSUBSCRIBE operation 2020a6c8) Waiting for operation completion.
-24 9178 [AWS-RemoteCtrl] [INFO ][MQTT][9178] (MQTT connection 20209568, UNSUBSCRIBE operation 2020a6c8) Wait complete with result SUCCESS.
-25 9178 [AWS-RemoteCtrl] [INFO ][MQTT][9178] (MQTT connection 20209568) UNSUBSCRIBE operation scheduled.
-26 9179 [AWS-RemoteCtrl] [INFO ][MQTT][9178] (MQTT connection 20209568, UNSUBSCRIBE operation 2020a6c8) Waiting for operation completion.
-27 9338 [AWS-RemoteCtrl] [INFO ][MQTT][9338] (MQTT connection 20209568, UNSUBSCRIBE operation 2020a6c8) Wait complete with result SUCCESS.
-28 9351 [AWS-RemoteCtrl] [INFO ][Shadow][9351] (aws_rpr_michal) Modifying Shadow DELTA callback.
-29 9359 [AWS-RemoteCtrl] [INFO ][Shadow][9359] (aws_rpr_michal) Adding new DELTA callback.
-30 9368 [AWS-RemoteCtrl] [INFO ][MQTT][9368] (MQTT connection 20209568) SUBSCRIBE operation scheduled.
-31 9368 [AWS-RemoteCtrl] [INFO ][MQTT][9368] (MQTT connection 20209568, SUBSCRIBE operation 2020a680) Waiting for operation completion.
-32 9525 [AWS-RemoteCtrl] [INFO ][MQTT][9525] (MQTT connection 20209568, SUBSCRIBE operation 2020a680) Wait complete with result SUCCESS.
-33 9537 [AWS-RemoteCtrl] [INFO ][Shadow][9537] (aws_rpr_michal) Shadow DELTA callback operation complete with result SUCCESS.
-34 9549 [AWS-RemoteCtrl] [INFO ][Shadow][9549] (aws_rpr_michal) Modifying Shadow UPDATED callback.
-35 9557 [AWS-RemoteCtrl] [INFO ][Shadow][9557] (aws_rpr_michal) Shadow UPDATED callback operation complete with result SUCCESS.
-36 9569 [AWS-RemoteCtrl] [INFO ][MQTT][9569] (MQTT connection 20209568) SUBSCRIBE operation scheduled.
-37 9569 [AWS-RemoteCtrl] [INFO ][MQTT][9569] (MQTT connection 20209568, SUBSCRIBE operation 2020aa00) Waiting for operation completion.
-38 9731 [AWS-RemoteCtrl] [INFO ][MQTT][9731] (MQTT connection 20209568, SUBSCRIBE operation 2020aa00) Wait complete with result SUCCESS.
-39 9731 [AWS-RemoteCtrl] [INFO ][MQTT][9731] (MQTT connection 20209568) SUBSCRIBE operation scheduled.
-40 9732 [AWS-RemoteCtrl] [INFO ][MQTT][9732] (MQTT connection 20209568, SUBSCRIBE operation 2020aa00) Waiting for operation completion.
-41 9888 [AWS-RemoteCtrl] [INFO ][MQTT][9888] (MQTT connection 20209568, SUBSCRIBE operation 2020aa00) Wait complete with result SUCCESS.
-42 9901 [AWS-RemoteCtrl] [INFO ][MQTT][9901] (MQTT connection 20209568) MQTT PUBLISH operation queued.
-43 10091 [iot_thread] [INFO ][Shadow][10091] Shadow UPDATE of aws_rpr_michal was ACCEPTED.
-44 10099 [AWS-RemoteCtrl] AWS Remote Control Demo initialized.
-45 10105 [AWS-RemoteCtrl] Use mobile application to control the remote device.
-46 26970 [iot_thread] [WARN ][Shadow][26970] Shadow UPDATE callback received an unknown operation.
-47 26979 [AWS-RemoteCtrl] Turn on LED
-48 26983 [AWS-RemoteCtrl] [INFO ][MQTT][26983] (MQTT connection 20209568) MQTT PUBLISH operation queued.
-49 27294 [iot_thread] [INFO ][Shadow][27294] Shadow UPDATE of aws_rpr_michal was ACCEPTED.
-50 27302 [AWS-RemoteCtrl] Successfully performed update.
-51 34735 [iot_thread] [WARN ][Shadow][34734] Shadow UPDATE callback received an unknown operation.
-52 34744 [AWS-RemoteCtrl] Turn off LED
-53 34749 [AWS-RemoteCtrl] [INFO ][MQTT][34748] (MQTT connection 20209568) MQTT PUBLISH operation queued.
-54 35059 [iot_thread] [INFO ][Shadow][35059] Shadow UPDATE of aws_rpr_michal was ACCEPTED.
-55 35067 [AWS-RemoteCtrl] Successfully performed update.
-56 36795 [iot_thread] [WARN ][Shadow][36795] Shadow UPDATE callback received an unknown operation.
-57 36805 [AWS-RemoteCtrl] Update accelerometer.
-58 36812 [AWS-RemoteCtrl] [INFO ][MQTT][36812] (MQTT connection 20209568) MQTT PUBLISH operation queued.
-59 37121 [iot_thread] [INFO ][Shadow][37121] Shadow UPDATE of aws_rpr_michal was ACCEPTED.
-60 37129 [AWS-RemoteCtrl] Successfully performed update.
+50 45680 [iot_thread] [INFO] Packet received. ReceivedBytes=161.
+51 45680 [iot_thread] [INFO] De-serialized incoming PUBLISH packet: DeserializerResult=MQTTSuccess.
+52 45680 [iot_thread] [INFO] State record updated. New state=MQTTPubAckSend.
+53 45680 [iot_thread] [INFO] pPublishInfo->pTopicName:$aws/things/aws_demo/shadow/update/delta.
+54 45680 [iot_thread] [INFO] /update/delta json payload:{"version":1051,"timestamp":1623426921,"state":{"LEDstate":1},"metadata":{"LEDstate":{"timestamp":1623426921}}}.
+55 45680 [iot_thread] [INFO] version: 1051
+56 45680 [iot_thread] [INFO] version:1051, ulCurrentVersion:0 
+
+57 45884 [iot_thread] [INFO] Turn on LED
+58 45884 [iot_thread] [INFO] the published payload:{"state":{"reported":{"LEDstate":1}},"clientToken": "token-45884"} 
+ 
+59 45885 [iot_thread] [INFO] PUBLISH sent for topic $aws/things/aws_demo/shadow/update to broker with packet ID 8.
+
+
+60 46144 [iot_thread] [INFO] Packet received. ReceivedBytes=2.
+61 46144 [iot_thread] [INFO] Ack packet deserialized with result: MQTTSuccess.
+62 46144 [iot_thread] [INFO] State record updated. New state=MQTTPublishDone.
+63 46144 [iot_thread] [INFO] PUBACK received for packet id 8.
+
+
+64 46144 [iot_thread] [INFO] Cleaned up outgoing publish packet with packet id 8.
+
+
+65 47953 [iot_thread] [INFO] Successfully performed update.
+.
+.
+.
+66 49423 [iot_thread] [INFO] Packet received. ReceivedBytes=161.
+67 49423 [iot_thread] [INFO] De-serialized incoming PUBLISH packet: DeserializerResult=MQTTSuccess.
+68 49423 [iot_thread] [INFO] State record updated. New state=MQTTPubAckSend.
+69 49423 [iot_thread] [INFO] pPublishInfo->pTopicName:$aws/things/aws_demo/shadow/update/delta.
+70 49423 [iot_thread] [INFO] /update/delta json payload:{"version":1053,"timestamp":1623426925,"state":{"LEDstate":0},"metadata":{"LEDstate":{"timestamp":1623426925}}}.
+71 49423 [iot_thread] [INFO] version: 1053
+72 49423 [iot_thread] [INFO] version:1053, ulCurrentVersion:1051 
+
+73 49625 [iot_thread] [INFO] Turn off LED
+74 49625 [iot_thread] [INFO] the published payload:{"state":{"reported":{"LEDstate":0}},"clientToken": "token-49625"} 
+ 
+75 49626 [iot_thread] [INFO] PUBLISH sent for topic $aws/things/aws_demo/shadow/update to broker with packet ID 9.
+
+
+76 49875 [iot_thread] [INFO] Packet received. ReceivedBytes=2.
+77 49875 [iot_thread] [INFO] Ack packet deserialized with result: MQTTSuccess.
+78 49875 [iot_thread] [INFO] State record updated. New state=MQTTPublishDone.
+79 49875 [iot_thread] [INFO] PUBACK received for packet id 9.
+
+
+80 49875 [iot_thread] [INFO] Cleaned up outgoing publish packet with packet id 9.
+
+
+81 51684 [iot_thread] [INFO] Successfully performed update.
+.
+.
+.
+82 54021 [iot_thread] [INFO] Packet received. ReceivedBytes=167.
+83 54021 [iot_thread] [INFO] De-serialized incoming PUBLISH packet: DeserializerResult=MQTTSuccess.
+84 54021 [iot_thread] [INFO] State record updated. New state=MQTTPubAckSend.
+85 54021 [iot_thread] [INFO] pPublishInfo->pTopicName:$aws/things/aws_demo/shadow/update/delta.
+86 54021 [iot_thread] [INFO] /update/delta json payload:{"version":1055,"timestamp":1623426930,"state":{"accelUpdate":1},"metadata":{"accelUpdate":{"timestamp":1623426930}}}.
+87 54021 [iot_thread] [INFO] version: 1055
+88 54021 [iot_thread] [INFO] version:1055, ulCurrentVersion:1053 
+
+89 54022 [iot_thread] [INFO] Update accelerometer.
+90 54024 [iot_thread] [INFO] the published payload:{"state":{"desired":{"accelUpdate":null},"reported":{"accel":{"x":-5,"y":-15,"z":1001}}},"clientToken": "token-54024"} 
+ 
+91 54024 [iot_thread] [INFO] PUBLISH sent for topic $aws/things/aws_demo/shadow/update to broker with packet ID 10.
+
+
+92 54301 [iot_thread] [INFO] Packet received. ReceivedBytes=2.
+93 54301 [iot_thread] [INFO] Ack packet deserialized with result: MQTTSuccess.
+94 54301 [iot_thread] [INFO] State record updated. New state=MQTTPublishDone.
+95 54301 [iot_thread] [INFO] PUBACK received for packet id 10.
+
+
+96 54301 [iot_thread] [INFO] Cleaned up outgoing publish packet with packet id 10.
+
+
+97 56110 [iot_thread] [INFO] Successfully performed update.
 .
 .
 .

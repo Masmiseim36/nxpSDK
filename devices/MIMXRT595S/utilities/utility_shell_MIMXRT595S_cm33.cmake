@@ -1,21 +1,19 @@
-if(NOT UTILITY_SHELL_MIMXRT595S_cm33_INCLUDED)
-    
-    set(UTILITY_SHELL_MIMXRT595S_cm33_INCLUDED true CACHE BOOL "utility_shell component is included.")
+include_guard(GLOBAL)
+message("utility_shell component is included.")
 
-    target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
-        ${CMAKE_CURRENT_LIST_DIR}/fsl_shell.c
-    )
-
-
-    target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
-        ${CMAKE_CURRENT_LIST_DIR}/.
-    )
+target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
+    ${CMAKE_CURRENT_LIST_DIR}/fsl_shell.c
+)
 
 
-    include(utility_debug_console_MIMXRT595S_cm33)
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
+    ${CMAKE_CURRENT_LIST_DIR}/.
+)
 
-    include(component_lists_MIMXRT595S_cm33)
 
-    include(driver_common_MIMXRT595S_cm33)
+include(utility_debug_console_MIMXRT595S_cm33)
 
-endif()
+include(component_lists_MIMXRT595S_cm33)
+
+include(driver_common_MIMXRT595S_cm33)
+

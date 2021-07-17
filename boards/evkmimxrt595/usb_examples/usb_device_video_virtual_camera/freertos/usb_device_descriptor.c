@@ -65,7 +65,7 @@ usb_device_video_entities_struct_t g_UsbDeviceVideoEntities = {
 
 /* Video device control interface */
 usb_device_interface_struct_t g_UsbDeviceVideoControlInterface[] = {{
-    0U, /* Alternate setting value */
+    USB_VIDEO_VIRTUAL_CAMERA_CONTROL_INTERFACE_ALTERNATE_0, /* Alternate setting value */
     {
         USB_VIDEO_VIRTUAL_CAMERA_CONTROL_ENDPOINT_COUNT, /* control endpoint count */
         g_UsbDeviceVideoControlEndpoints,                /* control endpoint list */
@@ -86,7 +86,7 @@ usb_device_endpoint_struct_t g_UsbDeviceVideoStreamEndpoints[USB_VIDEO_VIRTUAL_C
 /* Video device stream interface */
 usb_device_interface_struct_t g_UsbDeviceVideoStreamInterface[] = {
     {
-        0U, /* Alternate setting value is zero*/
+        USB_VIDEO_VIRTUAL_CAMERA_STREAM_INTERFACE_ALTERNATE_0, /* Alternate setting value is zero*/
         {
             0U, /* endpoint count is zero for this alternate setting */
             NULL,
@@ -94,7 +94,7 @@ usb_device_interface_struct_t g_UsbDeviceVideoStreamInterface[] = {
         NULL,
     },
     {
-        1U, /* Alternate setting value is one */
+        USB_VIDEO_VIRTUAL_CAMERA_STREAM_INTERFACE_ALTERNATE_1, /* Alternate setting value is one */
         {
             USB_VIDEO_VIRTUAL_CAMERA_STREAM_ENDPOINT_COUNT, /* endpoint count is zero for this alternate setting */
             g_UsbDeviceVideoStreamEndpoints,                /* stream endpoint list */
@@ -224,7 +224,7 @@ uint8_t g_UsbDeviceConfigurationDescriptor[] = {
     USB_DESCRIPTOR_LENGTH_INTERFACE,                  /* Size of this descriptor */
     USB_DESCRIPTOR_TYPE_INTERFACE,                    /* INTERFACE Descriptor */
     USB_VIDEO_VIRTUAL_CAMERA_CONTROL_INTERFACE_INDEX, /* Index of control interface */
-    0x00U,                                            /* Index of the interface setting */
+    USB_VIDEO_VIRTUAL_CAMERA_CONTROL_INTERFACE_ALTERNATE_0, /* Index of the interface setting */
     USB_VIDEO_VIRTUAL_CAMERA_CONTROL_ENDPOINT_COUNT,  /* One endpoint of control pipe */
     USB_DEVICE_VIDEO_CC_VIDEO,                        /* CC_VIDEO */
     USB_DEVICE_VIDEO_SC_VIDEOCONTROL,                 /* SC_VIDEOCONTROL */
@@ -320,7 +320,7 @@ uint8_t g_UsbDeviceConfigurationDescriptor[] = {
     USB_DESCRIPTOR_LENGTH_INTERFACE,                 /* Size of this descriptor */
     USB_DESCRIPTOR_TYPE_INTERFACE,                   /* INTERFACE Descriptor */
     USB_VIDEO_VIRTUAL_CAMERA_STREAM_INTERFACE_INDEX, /* Index of stream interface */
-    0x00U,                                           /* Index of the interface setting */
+    USB_VIDEO_VIRTUAL_CAMERA_STREAM_INTERFACE_ALTERNATE_0, /* Index of the interface setting */
     0U,                                              /* No endpoint of stream pipe */
     USB_DEVICE_VIDEO_CC_VIDEO,                       /* CC_VIDEO */
     USB_DEVICE_VIDEO_SC_VIDEOSTREAMING,              /* SC_VIDEOSTREAMING */
@@ -448,7 +448,7 @@ uint8_t g_UsbDeviceConfigurationDescriptor[] = {
     USB_DESCRIPTOR_LENGTH_INTERFACE,                 /* Size of this descriptor */
     USB_DESCRIPTOR_TYPE_INTERFACE,                   /* INTERFACE Descriptor */
     USB_VIDEO_VIRTUAL_CAMERA_STREAM_INTERFACE_INDEX, /* Index of stream interface */
-    0x01U,                                           /* Index of the interface setting */
+    USB_VIDEO_VIRTUAL_CAMERA_STREAM_INTERFACE_ALTERNATE_1, /* Index of the interface setting */
     USB_VIDEO_VIRTUAL_CAMERA_STREAM_ENDPOINT_COUNT,  /* One endpoint of stream pipe */
     USB_DEVICE_VIDEO_CC_VIDEO,                       /* CC_VIDEO */
     USB_DEVICE_VIDEO_SC_VIDEOSTREAMING,              /* SC_VIDEOSTREAMING */

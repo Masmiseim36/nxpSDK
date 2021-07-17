@@ -1,10 +1,12 @@
-/*******************************************************************************
-* Copyright (c) 2015-2020 Cadence Design Systems, Inc.
+/*
+* Copyright (c) 2015-2021 Cadence Design Systems Inc.
 *
 * Permission is hereby granted, free of charge, to any person obtaining
 * a copy of this software and associated documentation files (the
-* "Software"), to use this Software with Cadence processor cores only and
-* not with any other processors and platforms, subject to
+* "Software"), to deal in the Software without restriction, including
+* without limitation the rights to use, copy, modify, merge, publish,
+* distribute, sublicense, and/or sell copies of the Software, and to
+* permit persons to whom the Software is furnished to do so, subject to
 * the following conditions:
 *
 * The above copyright notice and this permission notice shall be included
@@ -17,8 +19,7 @@
 * CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
 * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-******************************************************************************/
+*/
 /*******************************************************************************
  * xa-factory.c
  *
@@ -42,13 +43,6 @@
 #include "xf-debug.h"
 #include "xaf-api.h"
 #include "xa_type_def.h"
-
-/*******************************************************************************
- * Tracing tags
- ******************************************************************************/
-
-/* ...general initialization sequence */
-TRACE_TAG(INIT, 1);
 
 /*******************************************************************************
  * Local types definitions
@@ -90,7 +84,8 @@ extern XA_ERRORCODE xa_vorbis_decoder(xa_codec_handle_t, WORD32, WORD32, pVOID);
 extern XA_ERRORCODE xa_dummy_aec22(xa_codec_handle_t, WORD32, WORD32, pVOID);
 extern XA_ERRORCODE xa_dummy_aec23(xa_codec_handle_t, WORD32, WORD32, pVOID);
 extern XA_ERRORCODE xa_pcm_split(xa_codec_handle_t, WORD32, WORD32, pVOID);
-extern XA_ERRORCODE xa_pcm_mix(xa_codec_handle_t, WORD32, WORD32, pVOID);
+extern XA_ERRORCODE xa_mimo_mix(xa_codec_handle_t, WORD32, WORD32, pVOID);
+extern XA_ERRORCODE xa_pcm_stereo(xa_codec_handle_t, WORD32, WORD32, pVOID);
 extern XA_ERRORCODE xa_opus_encoder(xa_codec_handle_t, WORD32, WORD32, pVOID);
 extern XA_ERRORCODE xa_opus_decoder(xa_codec_handle_t, WORD32, WORD32, pVOID);
 extern XA_ERRORCODE xa_sbc_encoder(xa_codec_handle_t, WORD32, WORD32, pVOID);
@@ -174,14 +169,17 @@ static const xf_component_id_t xf_component_id[] =
 #if XA_PCM_SPLIT
     { "mimo-proc12/pcm_split",  xa_mimo_proc_factory,       xa_pcm_split },
 #endif
-#if XA_PCM_MIX
-    { "mimo-proc21/pcm_mix",    xa_mimo_proc_factory,       xa_pcm_mix },
+#if XA_MIMO_MIX
+    { "mimo-proc21/mimo_mix",    xa_mimo_proc_factory,       xa_mimo_mix },
 #endif
 #if XA_OPUS_ENCODER
     { "audio-encoder/opus",       xa_audio_codec_factory,     xa_opus_encoder},
 #endif
 #if XA_OPUS_DECODER
     { "audio-decoder/opus",       xa_audio_codec_factory,     xa_opus_decoder},
+#endif
+#if XA_PCM_STEREO
+    { "post-proc/pcm_stereo",      xa_audio_codec_factory,     xa_pcm_stereo },
 #endif
 #if XA_SBC_ENCODER
     { "audio-encoder/sbc",       xa_audio_codec_factory,     xa_sbc_encoder},

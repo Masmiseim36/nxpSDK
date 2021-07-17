@@ -188,16 +188,6 @@
       <locationURI>PARENT-1-PROJECT_LOC/xaf_main_dsp.c</locationURI>
     </link>
     <link>
-      <name>source</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>source/core_dsp.h</name>
-      <type>1</type>
-      <locationURI>PARENT-1-PROJECT_LOC/core_dsp.h</locationURI>
-    </link>
-    <link>
       <name>board</name>
       <type>2</type>
       <locationURI>virtual:/virtual</locationURI>
@@ -216,6 +206,16 @@
       <name>board/pin_mux.h</name>
       <type>1</type>
       <locationURI>PARENT-1-PROJECT_LOC/pin_mux.h</locationURI>
+    </link>
+    <link>
+      <name>dsp/naturedsp/hifi4/vector</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>dsp/naturedsp/hifi4/vector/vec_add32x32_hifi4.c</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/naturedsp/hifi4/vector/vec_add32x32_hifi4.c</locationURI>
     </link>
     <link>
       <name>evkmimxrt685</name>
@@ -583,9 +583,9 @@
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
-      <name>vit/HIFI4/Lib/VIT_Model.h</name>
+      <name>vit/HIFI4/Lib/VIT_Model_cn.h</name>
       <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/vit/HIFI4/Lib/VIT_Model.h</locationURI>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/vit/HIFI4/Lib/VIT_Model_cn.h</locationURI>
     </link>
     <link>
       <name>vit/HIFI4/Lib</name>
@@ -593,9 +593,9 @@
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
-      <name>vit/HIFI4/Lib/VIT_Voice_Commands.h</name>
+      <name>vit/HIFI4/Lib/VIT_Model_en.h</name>
       <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/vit/HIFI4/Lib/VIT_Voice_Commands.h</locationURI>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/vit/HIFI4/Lib/VIT_Model_en.h</locationURI>
     </link>
     <link>
       <name>vit/HIFI4/Lib/Inc</name>
@@ -613,9 +613,9 @@
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
-      <name>vit/HIFI4/Lib/Inc/PL_platformTypes_HIFI4.h</name>
+      <name>vit/HIFI4/Lib/Inc/PL_platformTypes_HIFI4_FUSIONF1.h</name>
       <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/vit/HIFI4/Lib/Inc/PL_platformTypes_HIFI4.h</locationURI>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/vit/HIFI4/Lib/Inc/PL_platformTypes_HIFI4_FUSIONF1.h</locationURI>
     </link>
     <link>
       <name>hifi4_nn</name>
@@ -653,9 +653,9 @@
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
-      <name>hifi4_nn/xa_nnlib_kernels_api.h</name>
+      <name>hifi4_nn/xa_nnlib_gru_api.h</name>
       <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/nn/nnlib/inc/xa_nnlib_kernels_api.h</locationURI>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/nn/nnlib/inc/xa_nnlib_gru_api.h</locationURI>
     </link>
     <link>
       <name>hifi4_nn</name>
@@ -663,9 +663,9 @@
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
-      <name>hifi4_nn/xa_nnlib_gru_api.h</name>
+      <name>hifi4_nn/xa_nnlib_kernels_api.h</name>
       <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/nn/nnlib/inc/xa_nnlib_gru_api.h</locationURI>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/nn/nnlib/inc/xa_nnlib_kernels_api.h</locationURI>
     </link>
     <link>
       <name>hifi4_nn</name>
@@ -796,6 +796,26 @@
       <name>drivers/fsl_common.c</name>
       <type>1</type>
       <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT685S/drivers/fsl_common.c</locationURI>
+    </link>
+    <link>
+      <name>drivers</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>drivers/fsl_common_dsp.c</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT685S/drivers/fsl_common_dsp.c</locationURI>
+    </link>
+    <link>
+      <name>drivers</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>drivers/fsl_common_dsp.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT685S/drivers/fsl_common_dsp.h</locationURI>
     </link>
     <link>
       <name>component/lists</name>
@@ -1033,26 +1053,6 @@
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
-      <name>dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src/xf-mem.c</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src/xf-mem.c</locationURI>
-    </link>
-    <link>
-      <name>dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src/xa-class-mimo-proc.c</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src/xa-class-mimo-proc.c</locationURI>
-    </link>
-    <link>
-      <name>dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
       <name>dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src/rbtree.c</name>
       <type>1</type>
       <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src/rbtree.c</locationURI>
@@ -1063,109 +1063,9 @@
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
-      <name>dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src/xa-class-renderer.c</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src/xa-class-renderer.c</locationURI>
-    </link>
-    <link>
-      <name>dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src/xf-msgq1.c</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src/xf-msgq1.c</locationURI>
-    </link>
-    <link>
-      <name>dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src/xf-msgq.c</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src/xf-msgq.c</locationURI>
-    </link>
-    <link>
-      <name>dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src/xf-sched.c</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src/xf-sched.c</locationURI>
-    </link>
-    <link>
-      <name>dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
       <name>dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src/xa-class-audio-codec.c</name>
       <type>1</type>
       <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src/xa-class-audio-codec.c</locationURI>
-    </link>
-    <link>
-      <name>dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src/xf-main.c</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src/xf-main.c</locationURI>
-    </link>
-    <link>
-      <name>dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src/xf-isr.c</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src/xf-isr.c</locationURI>
-    </link>
-    <link>
-      <name>dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src/xf-ipi.c</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src/xf-ipi.c</locationURI>
-    </link>
-    <link>
-      <name>dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src/xf-io.c</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src/xf-io.c</locationURI>
-    </link>
-    <link>
-      <name>dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src/xf-core.c</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src/xf-core.c</locationURI>
-    </link>
-    <link>
-      <name>dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src/xf-msg.c</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src/xf-msg.c</locationURI>
     </link>
     <link>
       <name>dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src</name>
@@ -1193,9 +1093,129 @@
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
+      <name>dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src/xa-class-mimo-proc.c</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src/xa-class-mimo-proc.c</locationURI>
+    </link>
+    <link>
+      <name>dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
       <name>dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src/xa-class-mixer.c</name>
       <type>1</type>
       <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src/xa-class-mixer.c</locationURI>
+    </link>
+    <link>
+      <name>dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src/xa-class-renderer.c</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src/xa-class-renderer.c</locationURI>
+    </link>
+    <link>
+      <name>dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src/xf-core.c</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src/xf-core.c</locationURI>
+    </link>
+    <link>
+      <name>dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src/xf-io.c</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src/xf-io.c</locationURI>
+    </link>
+    <link>
+      <name>dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src/xf-ipi.c</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src/xf-ipi.c</locationURI>
+    </link>
+    <link>
+      <name>dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src/xf-isr.c</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src/xf-isr.c</locationURI>
+    </link>
+    <link>
+      <name>dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src/xf-main.c</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src/xf-main.c</locationURI>
+    </link>
+    <link>
+      <name>dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src/xf-mem.c</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src/xf-mem.c</locationURI>
+    </link>
+    <link>
+      <name>dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src/xf-msg.c</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src/xf-msg.c</locationURI>
+    </link>
+    <link>
+      <name>dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src/xf-msgq.c</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src/xf-msgq.c</locationURI>
+    </link>
+    <link>
+      <name>dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src/xf-msgq1.c</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src/xf-msgq1.c</locationURI>
+    </link>
+    <link>
+      <name>dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src/xf-sched.c</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/src/xf-sched.c</locationURI>
     </link>
     <link>
       <name>dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/include</name>
@@ -1213,36 +1233,6 @@
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
-      <name>dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/include/xf-msg.h</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/include/xf-msg.h</locationURI>
-    </link>
-    <link>
-      <name>dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/include</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/include/xf-sched.h</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/include/xf-sched.h</locationURI>
-    </link>
-    <link>
-      <name>dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/include</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/include/xf-mm.h</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/include/xf-mm.h</locationURI>
-    </link>
-    <link>
-      <name>dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/include</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
       <name>dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/include/xf-core.h</name>
       <type>1</type>
       <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/include/xf-core.h</locationURI>
@@ -1253,59 +1243,9 @@
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
-      <name>dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/include/xf-dp_proxy.h</name>
+      <name>dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/include/xf-dp.h</name>
       <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/include/xf-dp_proxy.h</locationURI>
-    </link>
-    <link>
-      <name>dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/include</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/include/xf-probe.h</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/include/xf-probe.h</locationURI>
-    </link>
-    <link>
-      <name>dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/include</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/include/xf-trace.h</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/include/xf-trace.h</locationURI>
-    </link>
-    <link>
-      <name>dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/include</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/include/xf-timebase.h</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/include/xf-timebase.h</locationURI>
-    </link>
-    <link>
-      <name>dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/include</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/include/xf-io.h</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/include/xf-io.h</locationURI>
-    </link>
-    <link>
-      <name>dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/include</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/include/xf-plugin.h</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/include/xf-plugin.h</locationURI>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/include/xf-dp.h</locationURI>
     </link>
     <link>
       <name>dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/include</name>
@@ -1323,9 +1263,99 @@
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
-      <name>dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/include/xf-dp.h</name>
+      <name>dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/include/xf-dp_proxy.h</name>
       <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/include/xf-dp.h</locationURI>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/include/xf-dp_proxy.h</locationURI>
+    </link>
+    <link>
+      <name>dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/include</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/include/xf-flx-lock-if.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/include/xf-flx-lock-if.h</locationURI>
+    </link>
+    <link>
+      <name>dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/include</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/include/xf-io.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/include/xf-io.h</locationURI>
+    </link>
+    <link>
+      <name>dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/include</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/include/xf-mm.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/include/xf-mm.h</locationURI>
+    </link>
+    <link>
+      <name>dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/include</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/include/xf-msg.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/include/xf-msg.h</locationURI>
+    </link>
+    <link>
+      <name>dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/include</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/include/xf-plugin.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/include/xf-plugin.h</locationURI>
+    </link>
+    <link>
+      <name>dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/include</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/include/xf-probe.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/include/xf-probe.h</locationURI>
+    </link>
+    <link>
+      <name>dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/include</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/include/xf-sched.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/include/xf-sched.h</locationURI>
+    </link>
+    <link>
+      <name>dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/include</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/include/xf-timebase.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/include/xf-timebase.h</locationURI>
+    </link>
+    <link>
+      <name>dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/include</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/include/xf-trace.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/include/xf-trace.h</locationURI>
     </link>
     <link>
       <name>dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/include/audio</name>
@@ -1363,6 +1393,16 @@
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
+      <name>dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/include/sys/xos-msgq/xf-dp_hal.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/include/sys/xos-msgq/xf-dp_hal.h</locationURI>
+    </link>
+    <link>
+      <name>dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/include/sys/xos-msgq</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
       <name>dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/include/sys/xos-msgq/xf-dp_ipc.h</name>
       <type>1</type>
       <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/include/sys/xos-msgq/xf-dp_ipc.h</locationURI>
@@ -1373,29 +1413,9 @@
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
-      <name>dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/include/sys/xos-msgq/xf-sys.h</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/include/sys/xos-msgq/xf-sys.h</locationURI>
-    </link>
-    <link>
-      <name>dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/include/sys/xos-msgq</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
       <name>dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/include/sys/xos-msgq/xf-dp_runtime.h</name>
       <type>1</type>
       <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/include/sys/xos-msgq/xf-dp_runtime.h</locationURI>
-    </link>
-    <link>
-      <name>dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/include/sys/xos-msgq</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/include/sys/xos-msgq/xf-shmem.h</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/include/sys/xos-msgq/xf-shmem.h</locationURI>
     </link>
     <link>
       <name>dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/include/sys/xos-msgq</name>
@@ -1423,9 +1443,19 @@
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
-      <name>dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/include/sys/xos-msgq/xf-dp_hal.h</name>
+      <name>dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/include/sys/xos-msgq/xf-shmem.h</name>
       <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/include/sys/xos-msgq/xf-dp_hal.h</locationURI>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/include/sys/xos-msgq/xf-shmem.h</locationURI>
+    </link>
+    <link>
+      <name>dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/include/sys/xos-msgq</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/include/sys/xos-msgq/xf-sys.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/include/sys/xos-msgq/xf-sys.h</locationURI>
     </link>
     <link>
       <name>dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/include/sys/xos-msgq/iss</name>
@@ -1436,6 +1466,16 @@
       <name>dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/include/sys/xos-msgq/iss/xf-board.h</name>
       <type>1</type>
       <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/libxa_af_hostless/algo/hifi-dpf/include/sys/xos-msgq/iss/xf-board.h</locationURI>
+    </link>
+    <link>
+      <name>dsp/audio_framework/libxa_af_hostless/algo/host-apf/src</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>dsp/audio_framework/libxa_af_hostless/algo/host-apf/src/xaf-api.c</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/libxa_af_hostless/algo/host-apf/src/xaf-api.c</locationURI>
     </link>
     <link>
       <name>dsp/audio_framework/libxa_af_hostless/algo/host-apf/src</name>
@@ -1458,14 +1498,14 @@
       <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/libxa_af_hostless/algo/host-apf/src/xf-trace.c</locationURI>
     </link>
     <link>
-      <name>dsp/audio_framework/libxa_af_hostless/algo/host-apf/src</name>
+      <name>dsp/audio_framework/libxa_af_hostless/algo/host-apf/include</name>
       <type>2</type>
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
-      <name>dsp/audio_framework/libxa_af_hostless/algo/host-apf/src/xaf-api.c</name>
+      <name>dsp/audio_framework/libxa_af_hostless/algo/host-apf/include/xaf-structs.h</name>
       <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/libxa_af_hostless/algo/host-apf/src/xaf-api.c</locationURI>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/libxa_af_hostless/algo/host-apf/include/xaf-structs.h</locationURI>
     </link>
     <link>
       <name>dsp/audio_framework/libxa_af_hostless/algo/host-apf/include</name>
@@ -1473,9 +1513,9 @@
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
-      <name>dsp/audio_framework/libxa_af_hostless/algo/host-apf/include/xf-opcode.h</name>
+      <name>dsp/audio_framework/libxa_af_hostless/algo/host-apf/include/xaf-threads-priority.h</name>
       <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/libxa_af_hostless/algo/host-apf/include/xf-opcode.h</locationURI>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/libxa_af_hostless/algo/host-apf/include/xaf-threads-priority.h</locationURI>
     </link>
     <link>
       <name>dsp/audio_framework/libxa_af_hostless/algo/host-apf/include</name>
@@ -1493,19 +1533,9 @@
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
-      <name>dsp/audio_framework/libxa_af_hostless/algo/host-apf/include/xaf-structs.h</name>
+      <name>dsp/audio_framework/libxa_af_hostless/algo/host-apf/include/xf-opcode.h</name>
       <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/libxa_af_hostless/algo/host-apf/include/xaf-structs.h</locationURI>
-    </link>
-    <link>
-      <name>dsp/audio_framework/libxa_af_hostless/algo/host-apf/include</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>dsp/audio_framework/libxa_af_hostless/algo/host-apf/include/xf-proxy.h</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/libxa_af_hostless/algo/host-apf/include/xf-proxy.h</locationURI>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/libxa_af_hostless/algo/host-apf/include/xf-opcode.h</locationURI>
     </link>
     <link>
       <name>dsp/audio_framework/libxa_af_hostless/algo/host-apf/include</name>
@@ -1523,19 +1553,19 @@
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
-      <name>dsp/audio_framework/libxa_af_hostless/algo/host-apf/include/xf.h</name>
+      <name>dsp/audio_framework/libxa_af_hostless/algo/host-apf/include/xf-proxy.h</name>
       <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/libxa_af_hostless/algo/host-apf/include/xf.h</locationURI>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/libxa_af_hostless/algo/host-apf/include/xf-proxy.h</locationURI>
     </link>
     <link>
-      <name>dsp/audio_framework/libxa_af_hostless/algo/host-apf/include/sys/xos-msgq</name>
+      <name>dsp/audio_framework/libxa_af_hostless/algo/host-apf/include</name>
       <type>2</type>
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
-      <name>dsp/audio_framework/libxa_af_hostless/algo/host-apf/include/sys/xos-msgq/xf-types.h</name>
+      <name>dsp/audio_framework/libxa_af_hostless/algo/host-apf/include/xf.h</name>
       <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/libxa_af_hostless/algo/host-apf/include/sys/xos-msgq/xf-types.h</locationURI>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/libxa_af_hostless/algo/host-apf/include/xf.h</locationURI>
     </link>
     <link>
       <name>dsp/audio_framework/libxa_af_hostless/algo/host-apf/include/sys/xos-msgq</name>
@@ -1553,9 +1583,9 @@
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
-      <name>dsp/audio_framework/libxa_af_hostless/algo/host-apf/include/sys/xos-msgq/xf-runtime.h</name>
+      <name>dsp/audio_framework/libxa_af_hostless/algo/host-apf/include/sys/xos-msgq/xf-hal.h</name>
       <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/libxa_af_hostless/algo/host-apf/include/sys/xos-msgq/xf-runtime.h</locationURI>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/libxa_af_hostless/algo/host-apf/include/sys/xos-msgq/xf-hal.h</locationURI>
     </link>
     <link>
       <name>dsp/audio_framework/libxa_af_hostless/algo/host-apf/include/sys/xos-msgq</name>
@@ -1573,9 +1603,19 @@
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
-      <name>dsp/audio_framework/libxa_af_hostless/algo/host-apf/include/sys/xos-msgq/xf-hal.h</name>
+      <name>dsp/audio_framework/libxa_af_hostless/algo/host-apf/include/sys/xos-msgq/xf-runtime.h</name>
       <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/libxa_af_hostless/algo/host-apf/include/sys/xos-msgq/xf-hal.h</locationURI>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/libxa_af_hostless/algo/host-apf/include/sys/xos-msgq/xf-runtime.h</locationURI>
+    </link>
+    <link>
+      <name>dsp/audio_framework/libxa_af_hostless/algo/host-apf/include/sys/xos-msgq</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>dsp/audio_framework/libxa_af_hostless/algo/host-apf/include/sys/xos-msgq/xf-types.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/libxa_af_hostless/algo/host-apf/include/sys/xos-msgq/xf-types.h</locationURI>
     </link>
     <link>
       <name>dsp/audio_framework/libxa_af_hostless/algo/xa_af_hostless/include</name>
@@ -1593,9 +1633,9 @@
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
-      <name>dsp/audio_framework/libxa_af_hostless/algo/xa_af_hostless/include/xf-ap-dp-common.h</name>
+      <name>dsp/audio_framework/libxa_af_hostless/algo/xa_af_hostless/include/xa_api_defs.h</name>
       <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/libxa_af_hostless/algo/xa_af_hostless/include/xf-ap-dp-common.h</locationURI>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/libxa_af_hostless/algo/xa_af_hostless/include/xa_api_defs.h</locationURI>
     </link>
     <link>
       <name>dsp/audio_framework/libxa_af_hostless/algo/xa_af_hostless/include</name>
@@ -1603,9 +1643,9 @@
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
-      <name>dsp/audio_framework/libxa_af_hostless/algo/xa_af_hostless/include/xa_api_defs.h</name>
+      <name>dsp/audio_framework/libxa_af_hostless/algo/xa_af_hostless/include/xf-ap-dp-common.h</name>
       <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/libxa_af_hostless/algo/xa_af_hostless/include/xa_api_defs.h</locationURI>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/libxa_af_hostless/algo/xa_af_hostless/include/xf-ap-dp-common.h</locationURI>
     </link>
     <link>
       <name>dsp/audio_framework/libxa_af_hostless/algo/xa_af_hostless/include</name>
@@ -1623,9 +1663,9 @@
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
-      <name>dsp/audio_framework/libxa_af_hostless/include/xf-debug.h</name>
+      <name>dsp/audio_framework/libxa_af_hostless/include/xaf-api.h</name>
       <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/libxa_af_hostless/include/xf-debug.h</locationURI>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/libxa_af_hostless/include/xaf-api.h</locationURI>
     </link>
     <link>
       <name>dsp/audio_framework/libxa_af_hostless/include</name>
@@ -1633,29 +1673,9 @@
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
-      <name>dsp/audio_framework/libxa_af_hostless/include/xaf-api.h</name>
+      <name>dsp/audio_framework/libxa_af_hostless/include/xf-debug.h</name>
       <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/libxa_af_hostless/include/xaf-api.h</locationURI>
-    </link>
-    <link>
-      <name>dsp/audio_framework/libxa_af_hostless/include/audio</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>dsp/audio_framework/libxa_af_hostless/include/audio/xa-capturer-api.h</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/libxa_af_hostless/include/audio/xa-capturer-api.h</locationURI>
-    </link>
-    <link>
-      <name>dsp/audio_framework/libxa_af_hostless/include/audio</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>dsp/audio_framework/libxa_af_hostless/include/audio/xa-mixer-api.h</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/libxa_af_hostless/include/audio/xa-mixer-api.h</locationURI>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/libxa_af_hostless/include/xf-debug.h</locationURI>
     </link>
     <link>
       <name>dsp/audio_framework/libxa_af_hostless/include/audio</name>
@@ -1673,9 +1693,39 @@
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
+      <name>dsp/audio_framework/libxa_af_hostless/include/audio/xa-capturer-api.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/libxa_af_hostless/include/audio/xa-capturer-api.h</locationURI>
+    </link>
+    <link>
+      <name>dsp/audio_framework/libxa_af_hostless/include/audio</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
       <name>dsp/audio_framework/libxa_af_hostless/include/audio/xa-mimo-proc-api.h</name>
       <type>1</type>
       <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/libxa_af_hostless/include/audio/xa-mimo-proc-api.h</locationURI>
+    </link>
+    <link>
+      <name>dsp/audio_framework/libxa_af_hostless/include/audio</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>dsp/audio_framework/libxa_af_hostless/include/audio/xa-mixer-api.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/libxa_af_hostless/include/audio/xa-mixer-api.h</locationURI>
+    </link>
+    <link>
+      <name>dsp/audio_framework/libxa_af_hostless/include/audio</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>dsp/audio_framework/libxa_af_hostless/include/audio/xa-renderer-api.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/libxa_af_hostless/include/audio/xa-renderer-api.h</locationURI>
     </link>
     <link>
       <name>dsp/audio_framework/libxa_af_hostless/include/audio</name>
@@ -1713,16 +1763,6 @@
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
-      <name>dsp/audio_framework/libxa_af_hostless/include/audio/xa-renderer-api.h</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/libxa_af_hostless/include/audio/xa-renderer-api.h</locationURI>
-    </link>
-    <link>
-      <name>dsp/audio_framework/libxa_af_hostless/include/audio</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
       <name>dsp/audio_framework/libxa_af_hostless/include/audio/xa_type_def.h</name>
       <type>1</type>
       <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/libxa_af_hostless/include/audio/xa_type_def.h</locationURI>
@@ -1743,9 +1783,9 @@
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
-      <name>dsp/audio_framework/libxa_af_hostless/include/sysdeps/xos/include/osal-thread.h</name>
+      <name>dsp/audio_framework/libxa_af_hostless/include/sysdeps/xos/include/osal-msgq.h</name>
       <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/libxa_af_hostless/include/sysdeps/xos/include/osal-thread.h</locationURI>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/libxa_af_hostless/include/sysdeps/xos/include/osal-msgq.h</locationURI>
     </link>
     <link>
       <name>dsp/audio_framework/libxa_af_hostless/include/sysdeps/xos/include</name>
@@ -1753,9 +1793,9 @@
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
-      <name>dsp/audio_framework/libxa_af_hostless/include/sysdeps/xos/include/osal-msgq.h</name>
+      <name>dsp/audio_framework/libxa_af_hostless/include/sysdeps/xos/include/osal-thread.h</name>
       <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/libxa_af_hostless/include/sysdeps/xos/include/osal-msgq.h</locationURI>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/libxa_af_hostless/include/sysdeps/xos/include/osal-thread.h</locationURI>
     </link>
     <link>
       <name>dsp/audio_framework/libxa_af_hostless/include/sysdeps/xos/include</name>
@@ -1783,6 +1823,36 @@
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
+      <name>dsp/audio_framework/testxa_af_hostless/test/include/xaf-app-threads-priority.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/testxa_af_hostless/test/include/xaf-app-threads-priority.h</locationURI>
+    </link>
+    <link>
+      <name>dsp/audio_framework/testxa_af_hostless/test/include</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>dsp/audio_framework/testxa_af_hostless/test/include/xaf-clk-test.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/testxa_af_hostless/test/include/xaf-clk-test.h</locationURI>
+    </link>
+    <link>
+      <name>dsp/audio_framework/testxa_af_hostless/test/include</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>dsp/audio_framework/testxa_af_hostless/test/include/xaf-fio-test.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/testxa_af_hostless/test/include/xaf-fio-test.h</locationURI>
+    </link>
+    <link>
+      <name>dsp/audio_framework/testxa_af_hostless/test/include</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
       <name>dsp/audio_framework/testxa_af_hostless/test/include/xaf-mem.h</name>
       <type>1</type>
       <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/testxa_af_hostless/test/include/xaf-mem.h</locationURI>
@@ -1803,39 +1873,9 @@
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
-      <name>dsp/audio_framework/testxa_af_hostless/test/include/xaf-fio-test.h</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/testxa_af_hostless/test/include/xaf-fio-test.h</locationURI>
-    </link>
-    <link>
-      <name>dsp/audio_framework/testxa_af_hostless/test/include</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
       <name>dsp/audio_framework/testxa_af_hostless/test/include/xaf-utils-test.h</name>
       <type>1</type>
       <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/testxa_af_hostless/test/include/xaf-utils-test.h</locationURI>
-    </link>
-    <link>
-      <name>dsp/audio_framework/testxa_af_hostless/test/include</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>dsp/audio_framework/testxa_af_hostless/test/include/xaf-clk-test.h</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/testxa_af_hostless/test/include/xaf-clk-test.h</locationURI>
-    </link>
-    <link>
-      <name>dsp/audio_framework/testxa_af_hostless/test/include/audio</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>dsp/audio_framework/testxa_af_hostless/test/include/audio/xa-pcm-gain-api.h</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/testxa_af_hostless/test/include/audio/xa-pcm-gain-api.h</locationURI>
     </link>
     <link>
       <name>dsp/audio_framework/testxa_af_hostless/test/include/audio</name>
@@ -1853,16 +1893,6 @@
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
-      <name>dsp/audio_framework/testxa_af_hostless/test/include/audio/xa-pcm-split-api.h</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/testxa_af_hostless/test/include/audio/xa-pcm-split-api.h</locationURI>
-    </link>
-    <link>
-      <name>dsp/audio_framework/testxa_af_hostless/test/include/audio</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
       <name>dsp/audio_framework/testxa_af_hostless/test/include/audio/xa-aec23-api.h</name>
       <type>1</type>
       <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/testxa_af_hostless/test/include/audio/xa-aec23-api.h</locationURI>
@@ -1873,9 +1903,9 @@
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
-      <name>dsp/audio_framework/testxa_af_hostless/test/include/audio/xa-pcm-mix-api.h</name>
+      <name>dsp/audio_framework/testxa_af_hostless/test/include/audio/xa-mimo-mix-api.h</name>
       <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/testxa_af_hostless/test/include/audio/xa-pcm-mix-api.h</locationURI>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/testxa_af_hostless/test/include/audio/xa-mimo-mix-api.h</locationURI>
     </link>
     <link>
       <name>dsp/audio_framework/testxa_af_hostless/test/include/audio</name>
@@ -1883,9 +1913,9 @@
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
-      <name>dsp/audio_framework/testxa_af_hostless/test/include/audio/xa_amr_wb_dec_definitions.h</name>
+      <name>dsp/audio_framework/testxa_af_hostless/test/include/audio/xa-opus-decoder-api.h</name>
       <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/testxa_af_hostless/test/include/audio/xa_amr_wb_dec_definitions.h</locationURI>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/testxa_af_hostless/test/include/audio/xa-opus-decoder-api.h</locationURI>
     </link>
     <link>
       <name>dsp/audio_framework/testxa_af_hostless/test/include/audio</name>
@@ -1903,9 +1933,49 @@
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
-      <name>dsp/audio_framework/testxa_af_hostless/test/include/audio/xa-opus-decoder-api.h</name>
+      <name>dsp/audio_framework/testxa_af_hostless/test/include/audio/xa-pcm-gain-api.h</name>
       <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/testxa_af_hostless/test/include/audio/xa-opus-decoder-api.h</locationURI>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/testxa_af_hostless/test/include/audio/xa-pcm-gain-api.h</locationURI>
+    </link>
+    <link>
+      <name>dsp/audio_framework/testxa_af_hostless/test/include/audio</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>dsp/audio_framework/testxa_af_hostless/test/include/audio/xa-pcm-split-api.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/testxa_af_hostless/test/include/audio/xa-pcm-split-api.h</locationURI>
+    </link>
+    <link>
+      <name>dsp/audio_framework/testxa_af_hostless/test/include/audio</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>dsp/audio_framework/testxa_af_hostless/test/include/audio/xa-pcm-stereo-api.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/testxa_af_hostless/test/include/audio/xa-pcm-stereo-api.h</locationURI>
+    </link>
+    <link>
+      <name>dsp/audio_framework/testxa_af_hostless/test/include/audio</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>dsp/audio_framework/testxa_af_hostless/test/include/audio/xa_amr_wb_dec_definitions.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/testxa_af_hostless/test/include/audio/xa_amr_wb_dec_definitions.h</locationURI>
+    </link>
+    <link>
+      <name>dsp/audio_framework/testxa_af_hostless/test/plugins</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>dsp/audio_framework/testxa_af_hostless/test/plugins/xa-gain-factor-event.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/testxa_af_hostless/test/plugins/xa-gain-factor-event.h</locationURI>
     </link>
     <link>
       <name>dsp/audio_framework/testxa_af_hostless/test/plugins</name>
@@ -1926,6 +1996,16 @@
       <name>dsp/audio_framework/testxa_af_hostless/test/plugins/cadence/aac_dec/xa-aac-decoder.c</name>
       <type>1</type>
       <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/testxa_af_hostless/test/plugins/cadence/aac_dec/xa-aac-decoder.c</locationURI>
+    </link>
+    <link>
+      <name>dsp/audio_framework/testxa_af_hostless/test/plugins/cadence/mixer</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>dsp/audio_framework/testxa_af_hostless/test/plugins/cadence/mixer/xa-mixer.c</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/testxa_af_hostless/test/plugins/cadence/mixer/xa-mixer.c</locationURI>
     </link>
     <link>
       <name>dsp/audio_framework/testxa_af_hostless/test/plugins/cadence/mp3_dec</name>
@@ -1983,9 +2063,9 @@
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
-      <name>dsp/audio_framework/testxa_af_hostless/test/plugins/nxp/capturer/xa-capturer-i2s.c</name>
+      <name>dsp/audio_framework/testxa_af_hostless/test/plugins/nxp/capturer/xa-capturer-dmic.c</name>
       <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/testxa_af_hostless/test/plugins/nxp/capturer/xa-capturer-i2s.c</locationURI>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/testxa_af_hostless/test/plugins/nxp/capturer/xa-capturer-dmic.c</locationURI>
     </link>
     <link>
       <name>dsp/audio_framework/testxa_af_hostless/test/plugins/nxp/capturer</name>
@@ -1993,9 +2073,9 @@
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
-      <name>dsp/audio_framework/testxa_af_hostless/test/plugins/nxp/capturer/xa-capturer-dmic.c</name>
+      <name>dsp/audio_framework/testxa_af_hostless/test/plugins/nxp/capturer/xa-capturer-i2s.c</name>
       <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/testxa_af_hostless/test/plugins/nxp/capturer/xa-capturer-dmic.c</locationURI>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/testxa_af_hostless/test/plugins/nxp/capturer/xa-capturer-i2s.c</locationURI>
     </link>
     <link>
       <name>dsp/audio_framework/testxa_af_hostless/test/plugins/nxp/client_proxy</name>
@@ -2048,6 +2128,16 @@
       <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/testxa_af_hostless/test/plugins/nxp/opus/xa-opus-decoder.c</locationURI>
     </link>
     <link>
+      <name>dsp/audio_framework/testxa_af_hostless/test/plugins/nxp/pcm_stereo</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>dsp/audio_framework/testxa_af_hostless/test/plugins/nxp/pcm_stereo/xa-pcm-stereo.c</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/audio_framework/testxa_af_hostless/test/plugins/nxp/pcm_stereo/xa-pcm-stereo.c</locationURI>
+    </link>
+    <link>
       <name>dsp/audio_framework/testxa_af_hostless/test/plugins/nxp/sbc_dec</name>
       <type>2</type>
       <locationURI>virtual:/virtual</locationURI>
@@ -2098,124 +2188,154 @@
       <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT685S/utilities/fsl_shell.h</locationURI>
     </link>
     <link>
-      <name>EAP/Example_Application_Simulation/APP_INTEGRATION_XTENSA/COMMON/PlatformTypes</name>
+      <name>EAP/EAP_Includes</name>
       <type>2</type>
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
-      <name>EAP/Example_Application_Simulation/APP_INTEGRATION_XTENSA/COMMON/PlatformTypes/LVC_Types.h</name>
+      <name>EAP/EAP_Includes/LVM.h</name>
       <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/EAP/Example_Application_Simulation/APP_INTEGRATION_XTENSA/COMMON/PlatformTypes/LVC_Types.h</locationURI>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/EAP/EAP_Includes/LVM.h</locationURI>
     </link>
     <link>
-      <name>EAP/Example_Application_Simulation/APP_INTEGRATION_XTENSA/INC</name>
+      <name>EAP/EAP_Includes</name>
       <type>2</type>
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
-      <name>EAP/Example_Application_Simulation/APP_INTEGRATION_XTENSA/INC/EAP_Parameter_TestAllOn.h</name>
+      <name>EAP/EAP_Includes/LVC_Types.h</name>
       <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/EAP/Example_Application_Simulation/APP_INTEGRATION_XTENSA/INC/EAP_Parameter_TestAllOn.h</locationURI>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/EAP/EAP_Includes/LVC_Types.h</locationURI>
     </link>
     <link>
-      <name>EAP/Example_Application_Simulation/APP_INTEGRATION_XTENSA/INC</name>
+      <name>EAP/Example_Application/CONFIG_HEADER</name>
       <type>2</type>
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
-      <name>EAP/Example_Application_Simulation/APP_INTEGRATION_XTENSA/INC/EAP_Parameter_ToneGenerator.h</name>
+      <name>EAP/Example_Application/CONFIG_HEADER/EAP_Parameter_AllEffectOff.h</name>
       <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/EAP/Example_Application_Simulation/APP_INTEGRATION_XTENSA/INC/EAP_Parameter_ToneGenerator.h</locationURI>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/EAP/Example_Application/CONFIG_HEADER/EAP_Parameter_AllEffectOff.h</locationURI>
     </link>
     <link>
-      <name>EAP/Example_Application_Simulation/APP_INTEGRATION_XTENSA/INC</name>
+      <name>EAP/Example_Application/CONFIG_HEADER</name>
       <type>2</type>
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
-      <name>EAP/Example_Application_Simulation/APP_INTEGRATION_XTENSA/INC/EAP_Parameter_AutoVolumeLeveler.h</name>
+      <name>EAP/Example_Application/CONFIG_HEADER/EAP_Parameter_AutoVolumeLeveler.h</name>
       <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/EAP/Example_Application_Simulation/APP_INTEGRATION_XTENSA/INC/EAP_Parameter_AutoVolumeLeveler.h</locationURI>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/EAP/Example_Application/CONFIG_HEADER/EAP_Parameter_AutoVolumeLeveler.h</locationURI>
     </link>
     <link>
-      <name>EAP/Example_Application_Simulation/APP_INTEGRATION_XTENSA/INC</name>
+      <name>EAP/Example_Application/CONFIG_HEADER</name>
       <type>2</type>
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
-      <name>EAP/Example_Application_Simulation/APP_INTEGRATION_XTENSA/INC/EAP_Parameter_MusicEnhancerRMSLimiter.h</name>
+      <name>EAP/Example_Application/CONFIG_HEADER/EAP_Parameter_ConcertSound.h</name>
       <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/EAP/Example_Application_Simulation/APP_INTEGRATION_XTENSA/INC/EAP_Parameter_MusicEnhancerRMSLimiter.h</locationURI>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/EAP/Example_Application/CONFIG_HEADER/EAP_Parameter_ConcertSound.h</locationURI>
     </link>
     <link>
-      <name>EAP/Example_Application_Simulation/APP_INTEGRATION_XTENSA/INC</name>
+      <name>EAP/Example_Application/CONFIG_HEADER</name>
       <type>2</type>
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
-      <name>EAP/Example_Application_Simulation/APP_INTEGRATION_XTENSA/INC/EAP_Parameter_Custom.h</name>
+      <name>EAP/Example_Application/CONFIG_HEADER/EAP_Parameter_Crossover2waySpeakers.h</name>
       <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/EAP/Example_Application_Simulation/APP_INTEGRATION_XTENSA/INC/EAP_Parameter_Custom.h</locationURI>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/EAP/Example_Application/CONFIG_HEADER/EAP_Parameter_Crossover2waySpeakers.h</locationURI>
     </link>
     <link>
-      <name>EAP/Example_Application_Simulation/APP_INTEGRATION_XTENSA/INC</name>
+      <name>EAP/Example_Application/CONFIG_HEADER</name>
       <type>2</type>
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
-      <name>EAP/Example_Application_Simulation/APP_INTEGRATION_XTENSA/INC/EAP_Parameter_LoudnessMaximiser.h</name>
+      <name>EAP/Example_Application/CONFIG_HEADER/EAP_Parameter_CrossoverForSubwoofer.h</name>
       <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/EAP/Example_Application_Simulation/APP_INTEGRATION_XTENSA/INC/EAP_Parameter_LoudnessMaximiser.h</locationURI>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/EAP/Example_Application/CONFIG_HEADER/EAP_Parameter_CrossoverForSubwoofer.h</locationURI>
     </link>
     <link>
-      <name>EAP/Example_Application_Simulation/APP_INTEGRATION_XTENSA/INC</name>
+      <name>EAP/Example_Application/CONFIG_HEADER</name>
       <type>2</type>
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
-      <name>EAP/Example_Application_Simulation/APP_INTEGRATION_XTENSA/INC/TEST_PARAM.h</name>
+      <name>EAP/Example_Application/CONFIG_HEADER/EAP_Parameter_Custom.h</name>
       <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/EAP/Example_Application_Simulation/APP_INTEGRATION_XTENSA/INC/TEST_PARAM.h</locationURI>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/EAP/Example_Application/CONFIG_HEADER/EAP_Parameter_Custom.h</locationURI>
     </link>
     <link>
-      <name>EAP/Example_Application_Simulation/APP_INTEGRATION_XTENSA/INC</name>
+      <name>EAP/Example_Application/CONFIG_HEADER</name>
       <type>2</type>
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
-      <name>EAP/Example_Application_Simulation/APP_INTEGRATION_XTENSA/INC/EAP_Parameter_AllEffectOff.h</name>
+      <name>EAP/Example_Application/CONFIG_HEADER/EAP_Parameter_LoudnessMaximiser.h</name>
       <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/EAP/Example_Application_Simulation/APP_INTEGRATION_XTENSA/INC/EAP_Parameter_AllEffectOff.h</locationURI>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/EAP/Example_Application/CONFIG_HEADER/EAP_Parameter_LoudnessMaximiser.h</locationURI>
     </link>
     <link>
-      <name>EAP/Example_Application_Simulation/APP_INTEGRATION_XTENSA/INC</name>
+      <name>EAP/Example_Application/CONFIG_HEADER</name>
       <type>2</type>
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
-      <name>EAP/Example_Application_Simulation/APP_INTEGRATION_XTENSA/INC/EAP_Parameter_ConcertSound.h</name>
+      <name>EAP/Example_Application/CONFIG_HEADER/EAP_Parameter_MusicEnhancerRMSLimiter.h</name>
       <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/EAP/Example_Application_Simulation/APP_INTEGRATION_XTENSA/INC/EAP_Parameter_ConcertSound.h</locationURI>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/EAP/Example_Application/CONFIG_HEADER/EAP_Parameter_MusicEnhancerRMSLimiter.h</locationURI>
     </link>
     <link>
-      <name>EAP/Example_Application_Simulation/APP_INTEGRATION_XTENSA/INC</name>
+      <name>EAP/Example_Application/CONFIG_HEADER</name>
       <type>2</type>
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
-      <name>EAP/Example_Application_Simulation/APP_INTEGRATION_XTENSA/INC/EAP_Parameter_VoiceEnhancer.h</name>
+      <name>EAP/Example_Application/CONFIG_HEADER/EAP_Parameter_MusicEnhancerRMSLimiter_lowMIPS.h</name>
       <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/EAP/Example_Application_Simulation/APP_INTEGRATION_XTENSA/INC/EAP_Parameter_VoiceEnhancer.h</locationURI>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/EAP/Example_Application/CONFIG_HEADER/EAP_Parameter_MusicEnhancerRMSLimiter_lowMIPS.h</locationURI>
     </link>
     <link>
-      <name>EAP/Example_Application_Simulation/APP_INTEGRATION_XTENSA/LIB</name>
+      <name>EAP/Example_Application/CONFIG_HEADER</name>
       <type>2</type>
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
-      <name>EAP/Example_Application_Simulation/APP_INTEGRATION_XTENSA/LIB/LVM.h</name>
+      <name>EAP/Example_Application/CONFIG_HEADER/EAP_Parameter_TestAllOn.h</name>
       <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/EAP/Example_Application_Simulation/APP_INTEGRATION_XTENSA/LIB/LVM.h</locationURI>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/EAP/Example_Application/CONFIG_HEADER/EAP_Parameter_TestAllOn.h</locationURI>
+    </link>
+    <link>
+      <name>EAP/Example_Application/CONFIG_HEADER</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>EAP/Example_Application/CONFIG_HEADER/EAP_Parameter_ToneGenerator.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/EAP/Example_Application/CONFIG_HEADER/EAP_Parameter_ToneGenerator.h</locationURI>
+    </link>
+    <link>
+      <name>EAP/Example_Application/CONFIG_HEADER</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>EAP/Example_Application/CONFIG_HEADER/EAP_Parameter_VoiceEnhancer.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/EAP/Example_Application/CONFIG_HEADER/EAP_Parameter_VoiceEnhancer.h</locationURI>
+    </link>
+    <link>
+      <name>EAP/Example_Application/CONFIG_HEADER</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>EAP/Example_Application/CONFIG_HEADER/EAP_Parameter_VoiceEnhancer_lowMIPS.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/EAP/Example_Application/CONFIG_HEADER/EAP_Parameter_VoiceEnhancer_lowMIPS.h</locationURI>
     </link>
     <link>
       <name>drivers</name>
@@ -2278,42 +2398,42 @@
       <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT685S/drivers/fsl_flexcomm.c</locationURI>
     </link>
     <link>
-      <name>MIMXRT685S</name>
+      <name>device</name>
       <type>2</type>
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
-      <name>MIMXRT685S/MIMXRT685S_dsp.h</name>
+      <name>device/MIMXRT685S_dsp.h</name>
       <type>1</type>
       <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT685S/MIMXRT685S_dsp.h</locationURI>
     </link>
     <link>
-      <name>MIMXRT685S</name>
+      <name>device</name>
       <type>2</type>
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
-      <name>MIMXRT685S/MIMXRT685S_dsp_features.h</name>
+      <name>device/MIMXRT685S_dsp_features.h</name>
       <type>1</type>
       <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT685S/MIMXRT685S_dsp_features.h</locationURI>
     </link>
     <link>
-      <name>MIMXRT685S</name>
+      <name>device</name>
       <type>2</type>
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
-      <name>MIMXRT685S/system_MIMXRT685S_dsp.c</name>
+      <name>device/system_MIMXRT685S_dsp.c</name>
       <type>1</type>
       <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT685S/system_MIMXRT685S_dsp.c</locationURI>
     </link>
     <link>
-      <name>MIMXRT685S</name>
+      <name>device</name>
       <type>2</type>
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
-      <name>MIMXRT685S/system_MIMXRT685S_dsp.h</name>
+      <name>device/system_MIMXRT685S_dsp.h</name>
       <type>1</type>
       <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT685S/system_MIMXRT685S_dsp.h</locationURI>
     </link>
@@ -2323,9 +2443,9 @@
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
-      <name>CMSIS/arm_common_tables.h</name>
+      <name>CMSIS/cmsis_armcc.h</name>
       <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/CMSIS/Include/arm_common_tables.h</locationURI>
+      <locationURI>PARENT-6-PROJECT_LOC/CMSIS/Core/Include/cmsis_armcc.h</locationURI>
     </link>
     <link>
       <name>CMSIS</name>
@@ -2333,9 +2453,9 @@
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
-      <name>CMSIS/arm_const_structs.h</name>
+      <name>CMSIS/cmsis_armclang.h</name>
       <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/CMSIS/Include/arm_const_structs.h</locationURI>
+      <locationURI>PARENT-6-PROJECT_LOC/CMSIS/Core/Include/cmsis_armclang.h</locationURI>
     </link>
     <link>
       <name>CMSIS</name>
@@ -2343,9 +2463,49 @@
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
-      <name>CMSIS/arm_math.h</name>
+      <name>CMSIS/cmsis_armclang_ltm.h</name>
       <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/CMSIS/Include/arm_math.h</locationURI>
+      <locationURI>PARENT-6-PROJECT_LOC/CMSIS/Core/Include/cmsis_armclang_ltm.h</locationURI>
+    </link>
+    <link>
+      <name>CMSIS</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/cmsis_compiler.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/CMSIS/Core/Include/cmsis_compiler.h</locationURI>
+    </link>
+    <link>
+      <name>CMSIS</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/cmsis_gcc.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/CMSIS/Core/Include/cmsis_gcc.h</locationURI>
+    </link>
+    <link>
+      <name>CMSIS</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/cmsis_iccarm.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/CMSIS/Core/Include/cmsis_iccarm.h</locationURI>
+    </link>
+    <link>
+      <name>CMSIS</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/cmsis_version.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/CMSIS/Core/Include/cmsis_version.h</locationURI>
     </link>
   </linkedResources>
 </projectDescription>

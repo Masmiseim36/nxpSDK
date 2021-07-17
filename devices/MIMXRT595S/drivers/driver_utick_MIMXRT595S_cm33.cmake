@@ -1,19 +1,17 @@
-if(NOT DRIVER_UTICK_MIMXRT595S_cm33_INCLUDED)
-    
-    set(DRIVER_UTICK_MIMXRT595S_cm33_INCLUDED true CACHE BOOL "driver_utick component is included.")
+include_guard(GLOBAL)
+message("driver_utick component is included.")
 
-    target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
-        ${CMAKE_CURRENT_LIST_DIR}/fsl_utick.c
-    )
-
-
-    target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
-        ${CMAKE_CURRENT_LIST_DIR}/.
-    )
+target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
+    ${CMAKE_CURRENT_LIST_DIR}/fsl_utick.c
+)
 
 
-    include(driver_power_MIMXRT595S_cm33)
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
+    ${CMAKE_CURRENT_LIST_DIR}/.
+)
 
-    include(driver_common_MIMXRT595S_cm33)
 
-endif()
+include(driver_power_MIMXRT595S_cm33)
+
+include(driver_common_MIMXRT595S_cm33)
+

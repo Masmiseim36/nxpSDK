@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2020 NXP
+ * Copyright 2018-2021 NXP
  * All rights reserved.
  *
  *
@@ -26,19 +26,6 @@
  * Definitions
  ******************************************************************************/
 #define BOARD_FLEXSPI_DLL_LOCK_RETRY (10)
-#if (__ARM_FEATURE_CMSE & 0x2) && defined(__ARMCC_VERSION)
-/* For the Trustzone examples built with ARM Compiler, the RAM targets will also run in flash(XIP) to do initialization
- * copy. */
-#define BOARD_IS_XIP_FLEXSPI0() (true)
-#define BOARD_IS_XIP_FLEXSPI1() (true)
-#else
-#define BOARD_IS_XIP_FLEXSPI0()                                                                                 \
-    ((((uint32_t)BOARD_InitDebugConsole >= 0x08000000U) && ((uint32_t)BOARD_InitDebugConsole < 0x10000000U)) || \
-     (((uint32_t)BOARD_InitDebugConsole >= 0x18000000U) && ((uint32_t)BOARD_InitDebugConsole < 0x20000000U)))
-#define BOARD_IS_XIP_FLEXSPI1()                                                                                 \
-    ((((uint32_t)BOARD_InitDebugConsole >= 0x28000000U) && ((uint32_t)BOARD_InitDebugConsole < 0x30000000U)) || \
-     (((uint32_t)BOARD_InitDebugConsole >= 0x38000000U) && ((uint32_t)BOARD_InitDebugConsole < 0x40000000U)))
-#endif
 /*******************************************************************************
  * Variables
  ******************************************************************************/
@@ -239,7 +226,9 @@ status_t BOARD_InitPsRam(void)
     config.ahbConfig.buffer[0].priority       = 7; /* Set GPU/Display to highest priority. */
     /* All other masters use last buffer with 1KB bytes. */
     config.ahbConfig.buffer[FSL_FEATURE_FLEXSPI_AHB_BUFFER_COUNT - 1].bufferSize = 1024;
-    config.enableCombination                                                     = true;
+#if !(defined(FSL_FEATURE_FLEXSPI_HAS_NO_MCR0_COMBINATIONEN) && FSL_FEATURE_FLEXSPI_HAS_NO_MCR0_COMBINATIONEN)
+    config.enableCombination = true;
+#endif
     FLEXSPI_Init(BOARD_FLEXSPI_PSRAM, &config);
 
     /* Configure flash settings according to serial flash feature. */
@@ -300,8 +289,14 @@ status_t BOARD_InitPsRam(void)
     return status;
 }
 
-void BOARD_DeinitXip(FLEXSPI_Type *base)
+void BOARD_DeinitFlash(FLEXSPI_Type *base)
 {
+    /* Enable FLEXSPI clock again */
+    CLKCTL0->PSCCTL0_SET = CLKCTL0_PSCCTL0_SET_FLEXSPI0_OTFAD_CLK_MASK;
+
+    /* Enable FLEXSPI module */
+    base->MCR0 &= ~FLEXSPI_MCR0_MDIS_MASK;
+
     /* Wait until FLEXSPI is not busy */
     while (!((base->STS0 & FLEXSPI_STS0_ARBIDLE_MASK) && (base->STS0 & FLEXSPI_STS0_SEQIDLE_MASK)))
     {
@@ -310,7 +305,7 @@ void BOARD_DeinitXip(FLEXSPI_Type *base)
     base->MCR0 |= FLEXSPI_MCR0_MDIS_MASK;
 }
 
-void BOARD_InitXip(FLEXSPI_Type *base)
+void BOARD_InitFlash(FLEXSPI_Type *base)
 {
     uint32_t status;
     uint32_t lastStatus;
@@ -371,10 +366,11 @@ void BOARD_SetFlexspiClock(FLEXSPI_Type *base, uint32_t src, uint32_t divider)
         if ((CLKCTL0->FLEXSPI0FCLKSEL != CLKCTL0_FLEXSPI0FCLKSEL_SEL(src)) ||
             ((CLKCTL0->FLEXSPI0FCLKDIV & CLKCTL0_FLEXSPI0FCLKDIV_DIV_MASK) != (divider - 1)))
         {
-            if (BOARD_IS_XIP_FLEXSPI0())
-            {
-                BOARD_DeinitXip(base);
-            }
+            /* Always deinit FLEXSPI and init FLEXSPI for the flash to make sure the flash works correctly after the
+             FLEXSPI root clock changed as the default FLEXSPI configuration may does not work for the new root clock
+             frequency. */
+            BOARD_DeinitFlash(base);
+
             /* Disable clock before changing clock source */
             CLKCTL0->PSCCTL0_CLR = CLKCTL0_PSCCTL0_CLR_FLEXSPI0_OTFAD_CLK_MASK;
             /* Update flexspi clock. */
@@ -386,10 +382,8 @@ void BOARD_SetFlexspiClock(FLEXSPI_Type *base, uint32_t src, uint32_t divider)
             }
             /* Enable FLEXSPI clock again */
             CLKCTL0->PSCCTL0_SET = CLKCTL0_PSCCTL0_SET_FLEXSPI0_OTFAD_CLK_MASK;
-            if (BOARD_IS_XIP_FLEXSPI0())
-            {
-                BOARD_InitXip(base);
-            }
+
+            BOARD_InitFlash(base);
         }
     }
     else if (base == FLEXSPI1)
@@ -397,10 +391,11 @@ void BOARD_SetFlexspiClock(FLEXSPI_Type *base, uint32_t src, uint32_t divider)
         if ((CLKCTL0->FLEXSPI1FCLKSEL != CLKCTL0_FLEXSPI1FCLKSEL_SEL(src)) ||
             ((CLKCTL0->FLEXSPI1FCLKDIV & CLKCTL0_FLEXSPI1FCLKDIV_DIV_MASK) != (divider - 1)))
         {
-            if (BOARD_IS_XIP_FLEXSPI1())
-            {
-                BOARD_DeinitXip(base);
-            }
+            /* Always deinit FLEXSPI and init FLEXSPI for the flash to make sure the flash works correctly after the
+             FLEXSPI root clock changed as the default FLEXSPI configuration may does not work for the new root clock
+             frequency. */
+            BOARD_DeinitFlash(base);
+
             /* Disable clock before changing clock source */
             CLKCTL0->PSCCTL0_CLR = CLKCTL0_PSCCTL0_CLR_FLEXSPI1_CLK_MASK;
             /* Update flexspi clock. */
@@ -412,10 +407,8 @@ void BOARD_SetFlexspiClock(FLEXSPI_Type *base, uint32_t src, uint32_t divider)
             }
             /* Enable FLEXSPI clock again */
             CLKCTL0->PSCCTL0_SET = CLKCTL0_PSCCTL0_SET_FLEXSPI1_CLK_MASK;
-            if (BOARD_IS_XIP_FLEXSPI1())
-            {
-                BOARD_InitXip(base);
-            }
+
+            BOARD_InitFlash(base);
         }
     }
     else

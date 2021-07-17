@@ -1,15 +1,17 @@
-/*******************************************************************************
-* Copyright (c) 2015-2020 Cadence Design Systems, Inc.
-* 
+/*
+* Copyright (c) 2015-2021 Cadence Design Systems Inc.
+*
 * Permission is hereby granted, free of charge, to any person obtaining
 * a copy of this software and associated documentation files (the
-* "Software"), to use this Software with Cadence processor cores only and 
-* not with any other processors and platforms, subject to
+* "Software"), to deal in the Software without restriction, including
+* without limitation the rights to use, copy, modify, merge, publish,
+* distribute, sublicense, and/or sell copies of the Software, and to
+* permit persons to whom the Software is furnished to do so, subject to
 * the following conditions:
-* 
+*
 * The above copyright notice and this permission notice shall be included
 * in all copies or substantial portions of the Software.
-* 
+*
 * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
 * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
@@ -17,8 +19,7 @@
 * CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
 * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-******************************************************************************/
+*/
 /*******************************************************************************
  * xf-mem.c
  *
@@ -34,16 +35,10 @@
 #include "xf-dp.h"
 
 /*******************************************************************************
- * Tracing configuration
- ******************************************************************************/
-
-TRACE_TAG(INIT, 1);
-
-/*******************************************************************************
  * Internal helpers
  ******************************************************************************/
 
-#define XA_COMP_BUF_SHMEM_STRUCT_SIZE   (12288)     /* 12KB for struct xf_proxy_host_data for host(remote) and dsp(local) */
+#define XA_COMP_BUF_SHMEM_STRUCT_SIZE   (12288)     /* 12KB for struct xf_proxy_host_data for App Interface Layer and DSP Interface Layer */
 
 /* ...initialize block */
 static inline xf_mm_block_t * xf_mm_block_init(void *addr, UWORD32 size)
@@ -107,8 +102,15 @@ static inline  xf_mm_block_t * xf_mm_find_by_size(xf_mm_pool_t *pool, UWORD32 si
         return NULL;
 
     /* ...try to find better match in left subtree */
+#ifdef XF_DEBUG
+    UWORD32 i = 0;
+    for (t_idx = rb_left(tree, p_idx); t_idx != rb_null(tree); i++)
+#else
     for (t_idx = rb_left(tree, p_idx); t_idx != rb_null(tree); )
+#endif
     {
+        BUG((i > XF_DEBUG_MEM_MAX_ITERATIONS), _x("find_by_size exceeded %d iterations"), XF_DEBUG_MEM_MAX_ITERATIONS);
+
         xf_mm_block_t  *b = container_of(t_idx, xf_mm_block_t, l_node);
 
         /* ...check the size of the block */
@@ -138,8 +140,15 @@ static void xf_mm_find_by_addr(xf_mm_pool_t *pool, void *addr, xf_mm_block_t **n
     rb_idx_t    p_idx, l_idx, r_idx;
 
     /* ...it is not possible to have exact match in this map */
+#ifdef XF_DEBUG
+    UWORD32 i = 0;
+    for (p_idx = rb_root(tree), l_idx = r_idx = NULL; p_idx != rb_null(tree); i++)
+#else
     for (p_idx = rb_root(tree), l_idx = r_idx = NULL; p_idx != rb_null(tree); )
+#endif
     {
+        BUG(i > XF_DEBUG_MEM_MAX_ITERATIONS, _x("find_by_addr exceeded %d iterations"), XF_DEBUG_MEM_MAX_ITERATIONS);
+
         /* ...only "is less than" comparison is valid (as "a_node" pointer is biased) */
         if ((UWORD32)p_idx < (UWORD32)addr)
         {
@@ -243,9 +252,12 @@ static void xf_mm_insert_addr(xf_mm_pool_t *pool, xf_mm_block_t *b)
 /* ...block allocation */
 void * xf_mm_alloc(xf_mm_pool_t *pool, UWORD32 size)
 {
+#if defined (XF_TRACE)    
+    UWORD32 osize = size;
+#endif    
     xf_mm_block_t  *b;
 
-    __xf_lock(&pool->lock);
+    xf_flx_lock(&pool->lock);
 
     /* ...find best-fit free block */
     b = xf_mm_find_by_size(pool, size);
@@ -253,7 +265,8 @@ void * xf_mm_alloc(xf_mm_pool_t *pool, UWORD32 size)
     /* ...check block received */
     if (b == NULL)
     {
-        __xf_unlock(&pool->lock);
+        xf_flx_unlock(&pool->lock);
+        TRACE(WARNING, _b("Allocation failed - out of memory: pool=%p size=%d"), pool, size);
         return b;
     }
 
@@ -263,11 +276,16 @@ void * xf_mm_alloc(xf_mm_pool_t *pool, UWORD32 size)
     /* update the buffer utilization counters for DSP's component and framework buffers */
     if(pool->addr == ((xf_shmem_data_t *)(xf_g_dsp->xf_ap_shmem_buffer))->buffer)
     {
-        xf_g_dsp->dsp_frmwk_buf_size_used += size;
+        xf_g_dsp->dsp_frmwk_buf_size_curr += size;
+        if (xf_g_dsp->dsp_frmwk_buf_size_curr > xf_g_dsp->dsp_frmwk_buf_size_peak)
+            xf_g_dsp->dsp_frmwk_buf_size_peak = xf_g_dsp->dsp_frmwk_buf_size_curr;
+        
     }
     else if(pool->addr == xf_g_dsp->xf_dsp_local_buffer)
     {
-        xf_g_dsp->dsp_comp_buf_size_used += size;
+        xf_g_dsp->dsp_comp_buf_size_curr += size;
+        if (xf_g_dsp->dsp_comp_buf_size_curr > xf_g_dsp->dsp_comp_buf_size_peak)
+            xf_g_dsp->dsp_comp_buf_size_peak = xf_g_dsp->dsp_comp_buf_size_curr;
     }
 
     /* ...check if the size is exactly the same as requested */
@@ -276,8 +294,9 @@ void * xf_mm_alloc(xf_mm_pool_t *pool, UWORD32 size)
         /* ...the block needs to be removed from the A-map as well */
         rb_delete(&pool->a_map, &b->a_node);
 
-        __xf_unlock(&pool->lock);
+        xf_flx_unlock(&pool->lock);
         /* ...entire block goes to user */
+        TRACE(INFO, _b("Allocated exact size: pool=%p buffer=%p size=%d"), pool, b, osize);
         return (void *) b;
     }
     else
@@ -285,7 +304,8 @@ void * xf_mm_alloc(xf_mm_pool_t *pool, UWORD32 size)
         /* ...insert the block into L-map */
         xf_mm_insert_size(pool, b, size);
 
-        __xf_unlock(&pool->lock);
+        xf_flx_unlock(&pool->lock);
+        TRACE(INFO, _b("Allocated: pool=%p buffer=%p size=%d"), pool, b, osize);
         /* ...A-map remains intact; tail of the block goes to user */
         return (void *) b + size;
     }
@@ -294,10 +314,25 @@ void * xf_mm_alloc(xf_mm_pool_t *pool, UWORD32 size)
 /* ...block deallocation */
 void xf_mm_free(xf_mm_pool_t *pool, void *addr, UWORD32 size)
 {
+#if defined (XF_TRACE)    
+    UWORD32 osize = size;
+#endif    
     xf_mm_block_t  *b = xf_mm_block_init(addr, size);
     xf_mm_block_t  *n[2];
 
-    __xf_lock(&pool->lock);
+    xf_flx_lock(&pool->lock);
+
+#if 1 //TENA-2491
+    if(pool->addr == ((xf_shmem_data_t *)(xf_g_dsp->xf_ap_shmem_buffer))->buffer)
+    {
+        xf_g_dsp->dsp_frmwk_buf_size_curr -= size;
+    }
+    else if(pool->addr == xf_g_dsp->xf_dsp_local_buffer)
+    {
+        xf_g_dsp->dsp_comp_buf_size_curr -= size;
+    }
+#endif    
+
     /* ...find block neighbours in A-map */
     xf_mm_find_by_addr(pool, addr, n);
 
@@ -358,17 +393,18 @@ void xf_mm_free(xf_mm_pool_t *pool, void *addr, UWORD32 size)
     /* ...add (new or adjusted) block into L-map */
     xf_mm_insert_size(pool, b, size);
 
-    __xf_unlock(&pool->lock);
+    xf_flx_unlock(&pool->lock);
+    TRACE(INFO, _b("Freed: pool=%p addr=%p size=%d"), pool, addr, osize);
 }
 
 /* ...initialize memory allocator */
 int xf_mm_init(xf_mm_pool_t *pool, void *addr, UWORD32 size)
 {
     /* ...check pool alignment validity */
-    XF_CHK_ERR(((UWORD32)addr & (sizeof(xf_mm_block_t) - 1)) == 0, -EINVAL);
+    XF_CHK_ERR(((UWORD32)addr & (sizeof(xf_mm_block_t) - 1)) == 0, XAF_INVALIDVAL_ERR);
 
     /* ...check pool size validity */
-    XF_CHK_ERR(((size) & (sizeof(xf_mm_block_t) - 1)) == 0, -EINVAL);
+    XF_CHK_ERR(((size) & (sizeof(xf_mm_block_t) - 1)) == 0, XAF_INVALIDVAL_ERR);
     
     /* ...set pool parameters (need that stuff at all? - tbd) */    
     pool->addr = addr, pool->size = size;
@@ -376,7 +412,7 @@ int xf_mm_init(xf_mm_pool_t *pool, void *addr, UWORD32 size)
     /* ...initialize rb-trees */
     rb_init(&pool->l_map), rb_init(&pool->a_map);
 
-    __xf_lock_init(&pool->lock);
+    xf_flx_lock_init(&pool->lock, XF_DUMMY_LOCK);
 
     /* ..."free" the entire block */
     xf_mm_free(pool, addr, size);
@@ -386,12 +422,26 @@ int xf_mm_init(xf_mm_pool_t *pool, void *addr, UWORD32 size)
     /* initialize the buffer size utilization counters for DSP's component and framework buffers */
     if(addr == (xf_g_dsp->xf_ap_shmem_buffer + XA_COMP_BUF_SHMEM_STRUCT_SIZE))
     {
-        xf_g_dsp->dsp_frmwk_buf_size_used = XA_COMP_BUF_SHMEM_STRUCT_SIZE;
+        xf_g_dsp->dsp_frmwk_buf_size_peak = xf_g_dsp->dsp_frmwk_buf_size_curr = XA_COMP_BUF_SHMEM_STRUCT_SIZE;
     }
     else if(addr == (xf_g_dsp->xf_dsp_local_buffer))
     {
-        xf_g_dsp->dsp_comp_buf_size_used = 0;
+        xf_g_dsp->dsp_comp_buf_size_peak = xf_g_dsp->dsp_comp_buf_size_curr = 0;
     }
 
+    return 0;
+}
+
+/* ...reinitialize memory access lock */
+int xf_mm_preempt_reinit(xf_mm_pool_t *pool)
+{
+    xf_flx_lock_reinit(&pool->lock, XF_MUTEX_BASED_LOCK);
+    return 0;
+}
+
+/* ...deinitialize memory allocator */
+int xf_mm_deinit(xf_mm_pool_t *pool)
+{ 
+    xf_flx_lock_destroy(&pool->lock);
     return 0;
 }

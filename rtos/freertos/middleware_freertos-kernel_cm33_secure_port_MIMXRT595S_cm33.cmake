@@ -1,21 +1,19 @@
-if(NOT MIDDLEWARE_FREERTOS-KERNEL_CM33_SECURE_PORT_MIMXRT595S_cm33_INCLUDED)
-    
-    set(MIDDLEWARE_FREERTOS-KERNEL_CM33_SECURE_PORT_MIMXRT595S_cm33_INCLUDED true CACHE BOOL "middleware_freertos-kernel_cm33_secure_port component is included.")
+include_guard(GLOBAL)
+message("middleware_freertos-kernel_cm33_secure_port component is included.")
 
-    target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
-        ${CMAKE_CURRENT_LIST_DIR}/freertos_kernel/portable/GCC/ARM_CM33/non_secure/port.c
-        ${CMAKE_CURRENT_LIST_DIR}/freertos_kernel/portable/GCC/ARM_CM33/non_secure/portasm.c
-    )
-
-
-    target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
-        ${CMAKE_CURRENT_LIST_DIR}/freertos_kernel/portable/GCC/ARM_CM33/non_secure
-        ${CMAKE_CURRENT_LIST_DIR}/freertos_kernel/portable/GCC/ARM_CM33/secure
-    )
+target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
+    ${CMAKE_CURRENT_LIST_DIR}/freertos_kernel/portable/GCC/ARM_CM33/non_secure/port.c
+    ${CMAKE_CURRENT_LIST_DIR}/freertos_kernel/portable/GCC/ARM_CM33/non_secure/portasm.c
+)
 
 
-    include(middleware_freertos-kernel_MIMXRT595S_cm33)
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
+    ${CMAKE_CURRENT_LIST_DIR}/freertos_kernel/portable/GCC/ARM_CM33/non_secure
+    ${CMAKE_CURRENT_LIST_DIR}/freertos_kernel/portable/GCC/ARM_CM33/secure
+)
 
-    include(middleware_freertos-kernel_mpu_wrappers_MIMXRT595S_cm33)
 
-endif()
+include(middleware_freertos-kernel_MIMXRT595S_cm33)
+
+include(middleware_freertos-kernel_mpu_wrappers_MIMXRT595S_cm33)
+

@@ -12,25 +12,25 @@ For example UART is assigned to secure world. But GPIO peripheral still allows t
 TxD and RxD pins. This information can be use to decode UART communication from normal world, which
 can lead to unwanted information leak. 
 
-This Secure GPIO demo uses secure GPIO to read S1 button from secure world and standard GPIO to read
-S1 button. If SW1 button is pressed (logical zero is read) the GREEN LED is switched on in secure world
-and blue led is switched on from normal world.
+This Secure GPIO demo uses secure GPIO peripheral to read SW4 button from secure world and standard GPIO peripheral to read
+the same button SW4. If SW4 button is pressed (logical zero is read) the GREEN LED is switched ON in secure world
+and concurrently BLUE LED is switched ON from normal world.
 The second part of the demo is AHB secure controller GPIO mask feature. This feature is controlled by
-button S2. If the S2 button is released, the GPIO mask feature is disabled so state of S1 can be read
-also from normal world. Therefore S1 buttons controls both blue and green LEDs.
-If the S2 button is pressed, the GPIO mask feature is enabled. So normal world cannot read state of 
-S1 button and logical zero is read. Since logical zero corresponds to pressed button the blue LED is switched
-on while S2 is pressed and cannot be further controlled by S1 switch. The green LED can be still controlled
-by S1 button since state of S1 button is read by secure GPIO.
+button SW1. If the SW1 button is released, the GPIO mask feature is disabled so state of button SW4 can be read
+from both secure and normal world. So user can see both LEDs switched ON when SW4 is pressed down.
+If the SW1 button is pressed, the GPIO mask feature is enabled. Thus normal world cannot read state of 
+SW1 button and logical zero only is read by application from normal world. Since logical zero corresponds to the pressed button 
+the BLUE LED is switched ON while SW1 is pressed and cannot be further controlled by button SW4. The GREEN LED can be still controlled
+by SW4 button since state of SW4 button is still read by secure GPIO from secure world.
  
 
 
 Toolchain supported
 ===================
-- GCC ARM Embedded  9.3.1
-- Keil MDK  5.33
-- IAR embedded Workbench  8.50.9
-- MCUXpresso  11.3.0
+- GCC ARM Embedded  10.2.1
+- Keil MDK  5.34
+- IAR embedded Workbench  9.10.2
+- MCUXpresso  11.4.0
 
 Hardware requirements
 =====================

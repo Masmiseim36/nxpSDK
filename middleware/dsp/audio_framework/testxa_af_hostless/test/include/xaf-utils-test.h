@@ -1,15 +1,17 @@
-/*******************************************************************************
-* Copyright (c) 2015-2020 Cadence Design Systems, Inc.
-* 
+/*
+* Copyright (c) 2015-2021 Cadence Design Systems Inc.
+*
 * Permission is hereby granted, free of charge, to any person obtaining
 * a copy of this software and associated documentation files (the
-* "Software"), to use this Software with Cadence processor cores only and 
-* not with any other processors and platforms, subject to
+* "Software"), to deal in the Software without restriction, including
+* without limitation the rights to use, copy, modify, merge, publish,
+* distribute, sublicense, and/or sell copies of the Software, and to
+* permit persons to whom the Software is furnished to do so, subject to
 * the following conditions:
-* 
+*
 * The above copyright notice and this permission notice shall be included
 * in all copies or substantial portions of the Software.
-* 
+*
 * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
 * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
@@ -17,8 +19,7 @@
 * CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
 * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-******************************************************************************/
+*/
 #ifndef __XAF_UTILS_TEST_H__
 #define __XAF_UTILS_TEST_H__
 
@@ -34,6 +35,7 @@
 #include "xaf-test.h"
 #include "xaf-api.h"
 #include "xaf-mem.h"
+#include "xaf-app-threads-priority.h"
 
 #ifdef __XCC__
 #include <xtensa/hal.h>
@@ -44,7 +46,9 @@
 #define TOOLS_SUFFIX    "_RI2"
 #endif
 
-#if XCHAL_HAVE_HIFI5
+#if XCHAL_HAVE_FUSION
+#define BUILD_STRING "XTENSA_FUSION" TOOLS_SUFFIX
+#elif XCHAL_HAVE_HIFI5
 #define BUILD_STRING "XTENSA_HIFI5" TOOLS_SUFFIX
 #elif XCHAL_HAVE_HIFI4
 #define BUILD_STRING "XTENSA_HIFI4" TOOLS_SUFFIX
@@ -81,8 +85,11 @@
 #define STACK_SIZE          8192
 #endif
 
+#define _MIN(a, b)	(((a) < (b))?(a):(b))
+
 #define RUNTIME_MAX_COMMANDS 20 
 #define MAX_NUM_COMP_IN_GRAPH 20
+#define MAX_EVENTS          256
 
 #define NUM_THREAD_ARGS     7
 
@@ -99,7 +106,7 @@ static inline void runtime_param_usage(void)
     fprintf(stdout," \t Port_No      : Port number to be paused and resumed \n");
     fprintf(stdout," \t Pause_Time   : Pause time in milliseconds(absolute time) after pipeline creation \n");
     fprintf(stdout," \t Resume_Time  : Resume time in milliseconds(absolute time), must be greater than Pause_time \n");
-    fprintf(stdout," \t Example      : -pr:0,0,100,200 -pr:1,1,250,300  \n");
+    fprintf(stdout," \t Example      : -pr:0,0,100,200 -pr:2,1,250,300  \n");
     fprintf(stdout,"\n");    
     fprintf(stdout, "-probe-cfg:<Component_ID>,<Port_No,Port_No,...> : Enable probe feature on the specified component \n");
     fprintf(stdout," \t Component_ID : Component Identifier as displayed above \n");
@@ -160,7 +167,8 @@ static inline void runtime_param_footnote(void)
 
 enum
 {
-    PAUSE = 1,
+    IGNORE = 0,
+    PAUSE,
     RESUME,
     PROBE_START,
     PROBE_STOP,
@@ -173,6 +181,8 @@ typedef enum {
     COMP_DELETED    =1,      
     COMP_CREATED    =2,      
 }COMP_STATE;
+
+#define XAF_CFG_CODEC_SCRATCHMEM_SIZE ((UWORD32)56<<10)
 
 typedef struct
 {
@@ -192,18 +202,50 @@ typedef struct
     int size;
 }cmd_array_t;
 
+typedef struct event_info event_info_t;
+
+struct event_info
+{
+    event_info_t *next;
+    UWORD32 comp_addr;
+    UWORD32 comp_error_flag;
+    UWORD32 event_id;
+    UWORD32 buf_size;
+    void *event_buf;
+};
+
+typedef struct
+{
+    event_info_t **events;
+    int num_events;
+    int curr_idx;
+}event_list_t;
+
+/* Types */
+typedef int xa_app_event_handler_fxn_t(event_info_t *event);
+
 /* global variable proto */
 extern int g_force_input_over[MAX_NUM_COMP_IN_GRAPH];
 extern int (*gpcomp_connect)(int comp_id_src, int port_src, int comp_id_dest, int port_dest, int create_delete_flag);
 extern int (*gpcomp_disconnect)(int comp_id_src, int port_src, int comp_id_dest, int port_dest, int create_delete_flag);
+extern UWORD32 g_active_disconnect_comp[MAX_NUM_COMP_IN_GRAPH];
 extern int g_num_comps_in_graph;
 extern xf_thread_t *g_comp_thread;
+extern event_list_t *g_event_list;
+extern xa_app_event_handler_fxn_t *g_app_handler_fn;
+extern UWORD32 worker_thread_scratch_size[XAF_MAX_WORKER_THREADS];
+
+#ifndef XA_DISABLE_EVENT
+extern UWORD32 g_enable_error_channel_flag;
+extern UWORD32  g_event_handler_exit;
+#endif
 
 /* function proto */
 int parse_runtime_params(void **runtime_params, int argc, char **argv, int num_comp );
 void sort_runtime_action_commands(cmd_array_t *command_array);
 int execute_runtime_actions(void *command_array, void *p_adev, void **comp_ptr, int *comp_nbufs, void **comp_threads, int num_threads, void *comp_thread_args[], int num_thread_args, unsigned char *comp_stack);
 int abort_blocked_threads();
+int all_threads_exited(void **comp_threads, int num_threads);
 void set_wbna(int *argc, char **argv);
 int print_verinfo(pUWORD8 ver_info[],pUWORD8 app_name);
 int read_input(void *p_buf, int buf_length, int *read_length, void *p_input, xaf_comp_type comp_type);
@@ -211,9 +253,42 @@ double compute_comp_mcps(unsigned int num_bytes, int comp_cycles, xaf_format_t c
 int print_mem_mcps_info(mem_obj_t* mem_handle, int num_comp);
 void *comp_process_entry(void *arg);
 void *comp_process_entry_recorder(void *arg);
+void *comp_disconnect_entry(void *arg);
+void *event_handler_entry(void *arg);
 int init_rtos(int argc, char **argv, int (*main_task)(int argc, char **argv));
 unsigned short start_rtos(void);
 int main_task(int argc, char **argv);
+int submit_action_cmd(int src_cid, int src_port, int dest_cid, int dest_port, int action, int time);
+void xa_app_initialize_event_list(int num_comp);
+int xa_app_receive_events_cb(void *comp, UWORD32 event_id, void *buf, UWORD32 buf_size, UWORD32 comp_error_flag);
+void xa_app_process_events(void);
+void xa_app_free_event_list(void);
 
+#ifndef XA_DISABLE_EVENT
+#define TST_CHK_API_COMP_CREATE(p_adev, pp_comp, _comp_id, _num_input_buf, _num_output_buf, _pp_inbuf, _comp_type, error_string) {\
+        xaf_comp_config_t comp_config;\
+        TST_CHK_API(xaf_comp_config_default_init(&comp_config), "xaf_comp_config_default_init");\
+		comp_config.error_channel_ctl = g_enable_error_channel_flag;\
+		comp_config.comp_id = _comp_id;\
+		comp_config.comp_type = _comp_type;\
+		comp_config.num_input_buffers = _num_input_buf;\
+		comp_config.num_output_buffers = _num_output_buf;\
+		comp_config.pp_inbuf = (pVOID (*)[XAF_MAX_INBUFS])_pp_inbuf;\
+        TST_CHK_API(xaf_comp_create(p_adev, pp_comp, &comp_config), error_string);\
+    }
+
+#else 
+
+#define TST_CHK_API_COMP_CREATE(p_adev, pp_comp, _comp_id, _num_input_buf, _num_output_buf, _pp_inbuf, _comp_type, error_string) {\
+        xaf_comp_config_t comp_config;\
+        TST_CHK_API(xaf_comp_config_default_init(&comp_config), "xaf_comp_config_default_init");\
+		comp_config.comp_id = _comp_id;\
+		comp_config.comp_type = _comp_type;\
+		comp_config.num_input_buffers = _num_input_buf;\
+		comp_config.num_output_buffers = _num_output_buf;\
+		comp_config.pp_inbuf = (pVOID (*)[XAF_MAX_INBUFS])_pp_inbuf;\
+        TST_CHK_API(xaf_comp_create(p_adev, pp_comp, &comp_config), error_string);\
+    }
+#endif
 
 #endif /* __XAF_UTILS_TEST_H__ */

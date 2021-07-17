@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017-2020, Arm Limited. All rights reserved.
+ * Copyright (c) 2017-2021, Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  *
@@ -10,66 +10,93 @@
 #include "test_framework.h"
 
 /* Service specific includes */
-#include "test/suites/ps/non_secure/ps_ns_tests.h"
-#include "test/suites/its/non_secure/its_ns_tests.h"
-#include "test/suites/audit/non_secure/audit_ns_tests.h"
-#include "test/suites/crypto/non_secure/crypto_ns_tests.h"
-#include "test/suites/attestation/non_secure/attestation_ns_tests.h"
-#include "test/suites/qcbor/non_secure/qcbor_ns_tests.h"
-#include "test/suites/t_cose/non_secure/t_cose_ns_tests.h"
-#include "test/suites/core/non_secure/core_ns_tests.h"
-#include "test/suites/ipc/non_secure/ipc_ns_tests.h"
-#include "test/suites/platform/non_secure/platform_ns_tests.h"
-#include "test/suites/multi_core/non_secure/multi_core_ns_test.h"
+#if defined(TFM_PARTITION_PROTECTED_STORAGE) || defined(FORWARD_PROT_MSG)
+#include "ps_ns_tests.h"
+#endif
+#if defined(TFM_PARTITION_INTERNAL_TRUSTED_STORAGE) || defined(FORWARD_PROT_MSG)
+#include "its_ns_tests.h"
+#endif
+#if defined(TFM_PARTITION_CRYPTO) || defined(FORWARD_PROT_MSG)
+#include "crypto_ns_tests.h"
+#endif
+#if defined(TFM_PARTITION_FIRMWARE_UPDATE)
+#include "fwu_ns_tests.h"
+#endif
+#if defined(TFM_PARTITION_INITIAL_ATTESTATION) || defined(FORWARD_PROT_MSG)
+#include "attest_ns_tests.h"
+#include "qcbor_ns_tests.h"
+#ifndef SYMMETRIC_INITIAL_ATTESTATION
+#include "t_cose_ns_tests.h"
+#endif /* !SYMMETRIC_INITIAL_ATTESTATION */
+#endif
+#if defined(TFM_PARTITION_PLATFORM) || defined(FORWARD_PROT_MSG)
+#include "platform_ns_tests.h"
+#endif
+#include "core_ns_tests.h"
+#ifdef TFM_PSA_API
+#include "ipc_ns_tests.h"
+#else
+#ifdef TFM_PARTITION_AUDIT_LOG
+#include "audit_ns_tests.h"
+#endif
+#endif /* TFM_PSA_API */
+#ifdef TFM_MULTI_CORE_TOPOLOGY
+#include "multi_core_ns_test.h"
+#endif /* TFM_MULTI_CORE_TOPOLOGY */
 
 static struct test_suite_t test_suites[] = {
-#ifdef SERVICES_TEST_NS
     /* List test cases which are compliant with level 1 isolation */
 
-#ifdef ENABLE_PROTECTED_STORAGE_SERVICE_TESTS
+#ifdef ENABLE_PROTECTED_STORAGE_SERVICE_TESTS //NXP defined(TFM_PARTITION_PROTECTED_STORAGE) || defined(FORWARD_PROT_MSG)
     {&register_testsuite_ns_psa_ps_interface, 0, 0, 0},
 #endif
 
-#ifdef ENABLE_INTERNAL_TRUSTED_STORAGE_SERVICE_TESTS
+#if defined(TFM_PARTITION_INTERNAL_TRUSTED_STORAGE) || defined(FORWARD_PROT_MSG)
     /* Non-secure ITS test cases */
     {&register_testsuite_ns_psa_its_interface, 0, 0, 0},
 #endif
 
-#ifdef ENABLE_CRYPTO_SERVICE_TESTS
+#if defined(TFM_PARTITION_CRYPTO) || defined(FORWARD_PROT_MSG)
     /* Non-secure Crypto test cases */
     {&register_testsuite_ns_crypto_interface, 0, 0, 0},
 #endif
 
-#ifdef ENABLE_ATTESTATION_SERVICE_TESTS
-    /* Non-secure initial attestation service test cases */
-    {&register_testsuite_ns_attestation_interface, 0, 0, 0},
-#endif
-
-#ifdef ENABLE_PLATFORM_SERVICE_TESTS
+#ifdef ENABLE_PLATFORM_SERVICE_TESTS //NXP defined(TFM_PARTITION_PLATFORM) || defined(FORWARD_PROT_MSG)
     /* Non-secure platform service test cases */
     {&register_testsuite_ns_platform_interface, 0, 0, 0},
 #endif
 
-#ifdef ENABLE_QCBOR_TESTS
+#if defined(TFM_PARTITION_INITIAL_ATTESTATION) || defined(FORWARD_PROT_MSG)
+    /* Non-secure initial attestation service test cases */
+    {&register_testsuite_ns_attestation_interface, 0, 0, 0},
+
+#ifdef ENABLE_QCBOR_TESTS //NXP
+#ifndef __IAR_SYSTEMS_ICC__ //NXP IAR is failed on QCBOR tests, this known issue.
     /* Non-secure QCBOR library test cases */
     {&register_testsuite_ns_qcbor, 0, 0, 0},
 #endif
-
-#ifdef ENABLE_T_COSE_TESTS
-    /* Non-secure T_COSE library test cases */
-    {&register_testsuite_ns_t_cose, 0, 0, 0},
 #endif
 
-#ifdef ENABLE_AUDIT_LOGGING_SERVICE_TESTS
+//NXP #ifndef SYMMETRIC_INITIAL_ATTESTATION
+#ifdef ENABLE_T_COSE_TESTS //NXP TBD enable it   //DM
+    /* Non-secure T_COSE library test cases */
+    {&register_testsuite_ns_t_cose, 0, 0, 0},
+#endif /* !SYMMETRIC_INITIAL_ATTESTATION */
+#endif
+
+#ifdef TFM_PARTITION_AUDIT_LOG
     /* Non-secure Audit Logging test cases */
     {&register_testsuite_ns_audit_interface, 0, 0, 0},
 #endif
 
-#endif /* SERVICES_TEST_NS */
+#ifdef TFM_PARTITION_FIRMWARE_UPDATE
+    /* Non-secure Firmware Update test cases */
+    {&register_testsuite_ns_psa_fwu_interface, 0, 0, 0},
+#endif
 
-#ifdef CORE_TEST_POSITIVE
-    /* Non-secure core test cases */
-    {&register_testsuite_ns_core_positive, 0, 0, 0},
+#ifdef CORE_TEST_POSITIVE //NXP
+/* Non-secure core test cases */
+{&register_testsuite_ns_core_positive, 0, 0, 0},
 #endif
 
 #ifdef CORE_TEST_INTERACTIVE
@@ -77,12 +104,12 @@ static struct test_suite_t test_suites[] = {
     {&register_testsuite_ns_core_interactive, 0, 0, 0},
 #endif
 
-#ifdef ENABLE_IPC_TEST
+#ifdef ENABLE_IPC_TEST //NXP TFM_PSA_API
     /* Non-secure IPC test cases */
     {&register_testsuite_ns_ipc_interface, 0, 0, 0},
 #endif
 
-#ifdef TFM_MULTI_CORE_TEST
+#ifdef TFM_MULTI_CORE_TOPOLOGY
     /* Multi-core topology test cases */
     {&register_testsuite_multi_core_ns_interface, 0, 0, 0},
 #endif

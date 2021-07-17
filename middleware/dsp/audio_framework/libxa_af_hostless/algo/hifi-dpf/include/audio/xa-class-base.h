@@ -1,15 +1,17 @@
-/*******************************************************************************
-* Copyright (c) 2015-2020 Cadence Design Systems, Inc.
-* 
+/*
+* Copyright (c) 2015-2021 Cadence Design Systems Inc.
+*
 * Permission is hereby granted, free of charge, to any person obtaining
 * a copy of this software and associated documentation files (the
-* "Software"), to use this Software with Cadence processor cores only and 
-* not with any other processors and platforms, subject to
+* "Software"), to deal in the Software without restriction, including
+* without limitation the rights to use, copy, modify, merge, publish,
+* distribute, sublicense, and/or sell copies of the Software, and to
+* permit persons to whom the Software is furnished to do so, subject to
 * the following conditions:
-* 
+*
 * The above copyright notice and this permission notice shall be included
 * in all copies or substantial portions of the Software.
-* 
+*
 * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
 * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
@@ -17,8 +19,7 @@
 * CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
 * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-******************************************************************************/
+*/
 /*******************************************************************************
  * xa-class-base.h
  *
@@ -60,6 +61,7 @@ typedef XA_ERRORCODE  (*xa_codec_setparam_f)(XACodecBase *, WORD32, pVOID p);
 /* ...parameter retrival function */
 typedef XA_ERRORCODE  (*xa_codec_getparam_f)(XACodecBase *, WORD32, pVOID p);
 
+typedef struct xf_channel_info xf_channel_info_t;
 /*******************************************************************************
  * Codec instance structure
  ******************************************************************************/
@@ -87,6 +89,9 @@ struct XACodecBase
 
     /* ...scratch memory pointer */
     void                   *scratch;
+    
+    /* ...scratch memory index of component */    
+    int 					scratch_idx;
 
     /* ...codec control state */
     UWORD32                     state;
@@ -114,10 +119,21 @@ struct XACodecBase
     XA_ERRORCODE (* const * command)(XACodecBase *, xf_message_t *);
     
     /* ...command-processing table size */
-    UWORD32                     command_num;
+    UWORD32                 command_num;
+
+#ifndef XA_DISABLE_EVENT
+    xf_channel_info_t       *channel_info_chain;
+
+    UWORD32                 num_channels;
+
+     /* ...event callback pointer */
+    xa_raise_event_cb_t     cdata;
+
+    UWORD32                 enable_non_fatal_err_reporting;
+#endif
 
     /* ...component type */
-    xaf_comp_type            comp_type;
+    xaf_comp_type           comp_type;
 };
 
 /*******************************************************************************
@@ -174,13 +190,55 @@ struct XACodecBase
     {                                                                                       \
         if (XA_ERROR_SEVERITY(__e))                                                         \
         {                                                                                   \
-            TRACE(ERROR, _x("[%p]:(%d, %d, %p): %X"), (codec), (cmd), (idx), (pv), __e);    \
+            TRACE(ERROR, _x("[%p]:(%d, %d, %p): %X"), (codec), (cmd), (idx), (void *)(pv), __e);    \
             return __e;                                                                     \
         }                                                                                   \
         TRACE(WARNING, _x("%X"), __e);                                                      \
     }                                                                                       \
     __e;                                                                                    \
 })
+
+#ifndef XA_DISABLE_EVENT
+/* ...low-level codec API function execution raises non fatal error returned by plugin*/
+#define XA_COMP_API(codec, cmd, idx, pv)                                                    \
+({                                                                                          \
+    XA_ERRORCODE  __e;                                                                      \
+    __e = (codec)->process((xa_codec_handle_t)(codec)->api.addr, (cmd), (idx), (pv));       \
+    if (__e != XA_NO_ERROR)                                                                 \
+    {                                                                                       \
+        if (XA_ERROR_SEVERITY(__e))                                                         \
+        {                                                                                   \
+            TRACE(ERROR, _x("[%p]:(%d, %d, %p): %X"), (codec), (cmd), (idx), (void *)(pv), __e);    \
+            return __e;                                                                     \
+        }                                                                                   \
+        if(codec->enable_non_fatal_err_reporting)                                           \
+        {                                                                                   \
+            codec->component.error_handler(&codec->component, __e);                         \
+        }                                                                                   \
+        TRACE(WARNING, _x("%X"), __e);                                                      \
+    }                                                                                       \
+    __e;                                                                                    \
+})
+
+#else
+
+/* ...low-level codec API function execution */
+#define XA_COMP_API(codec, cmd, idx, pv)                                                    \
+({                                                                                          \
+    XA_ERRORCODE  __e;                                                                      \
+    __e = (codec)->process((xa_codec_handle_t)(codec)->api.addr, (cmd), (idx), (pv));       \
+    if (__e != XA_NO_ERROR)                                                                 \
+    {                                                                                       \
+        if (XA_ERROR_SEVERITY(__e))                                                         \
+        {                                                                                   \
+            TRACE(ERROR, _x("[%p]:(%d, %d, %p): %X"), (codec), (cmd), (idx), (void *)(pv), __e);    \
+            return __e;                                                                     \
+        }                                                                                   \
+        TRACE(WARNING, _x("%X"), __e);                                                      \
+    }                                                                                       \
+    __e;                                                                                    \
+})
+#endif
 
 #define XA_API_NORET(codec, cmd, idx, pv)                                                           \
 ({                                                                                                  \

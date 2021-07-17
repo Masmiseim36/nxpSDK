@@ -125,6 +125,8 @@ typedef enum _srtm_rt600_nn_command
     SRTM_Command_xa_nn_dot_prod_f32xf32_f32,
     SRTM_Command_xa_nn_vec_activation_min_max_8_8,
     SRTM_Command_xa_nn_vec_activation_min_max_16_16,
+    SRTM_Command_resizenearest_f32,
+    SRTM_Command_resizenearest_8,
     SRTM_Command_NN_MAX,
 } srtm_nn_command_t;
 

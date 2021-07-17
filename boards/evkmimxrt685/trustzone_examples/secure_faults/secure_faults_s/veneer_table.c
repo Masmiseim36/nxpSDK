@@ -13,13 +13,14 @@
 #include "stdint.h"
 #include "arm_cmse.h"
 #include "veneer_table.h"
+#include "tzm_api.h"
 #include "fsl_debug_console.h"
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
 #define MAX_STRING_LENGTH 0x400
-typedef int (*callbackptr_NS)(char const *s1, char const *s2) __attribute__((cmse_nonsecure_call));
+typedef int (*callbackptr_NS)(char const *s1, char const *s2) TZM_IS_NONSECURE_CALLED;
 
 /*******************************************************************************
  * Prototypes
@@ -44,7 +45,7 @@ size_t strnlen(const char *s, size_t maxLength)
 #endif
 
 /* Non-secure callable (entry) function */
-__attribute__((cmse_nonsecure_entry)) void DbgConsole_Printf_NSE(char const *s)
+TZM_IS_NOSECURE_ENTRY void DbgConsole_Printf_NSE(char const *s)
 {
     size_t string_length;
     /* Access to non-secure memory from secure world has to be properly validated */
@@ -53,25 +54,23 @@ __attribute__((cmse_nonsecure_entry)) void DbgConsole_Printf_NSE(char const *s)
     if ((string_length == MAX_STRING_LENGTH) && (s[string_length] != '\0'))
     {
         PRINTF("Input data error: String too long or invalid string termination!\r\n");
-        while (1)
-            ;
+        abort();
     }
 
     /* Check whether string is located in non-secure memory */
+    /* Due to the bug in GCC 10 cmse_check_address_range() always fail, do not call it, see GCC Bugzilla - Bug 99157 */
+#if (__GNUC__ != 10)
     if (cmse_check_address_range((void *)s, string_length, CMSE_NONSECURE | CMSE_MPU_READ) == NULL)
     {
         PRINTF("Input data error: String is not located in normal world!\r\n");
-        while (1)
-            ;
+        abort();
     }
-    // PRINTF("Sent from normal world:\r\n");
+#endif
     PRINTF(s);
 }
 
 /* Non-secure callable (entry) function, calling a non-secure callback function */
-__attribute__((cmse_nonsecure_entry)) uint32_t StringCompare_NSE(volatile callbackptr callback,
-                                                                 char const *s1,
-                                                                 char const *s2)
+TZM_IS_NOSECURE_ENTRY uint32_t StringCompare_NSE(volatile callbackptr callback, char const *s1, char const *s2)
 {
     callbackptr_NS callback_NS;
     size_t string_length;
@@ -80,27 +79,27 @@ __attribute__((cmse_nonsecure_entry)) uint32_t StringCompare_NSE(volatile callba
     /* Input parameters check */
     /* Check whether function pointer is located in non-secure memory */
     callback_NS = (callbackptr_NS)cmse_nsfptr_create(callback);
+    /* Due to the bug in GCC 10 cmse_check_pointed_object() always fail, do not call it, see GCC Bugzilla - Bug 99157 */
+#if (__GNUC__ != 10)
     if (cmse_check_pointed_object((int *)callback_NS, CMSE_NONSECURE) == NULL)
     {
         PRINTF("Input data error: The callback is not located in normal world!\r\n");
-        while (1)
-            ;
+        abort();
     }
+#endif
     /* Check whether string is properly terminated */
     string_length = strnlen(s1, MAX_STRING_LENGTH);
     if ((string_length == MAX_STRING_LENGTH) && (s1[string_length] != '\0'))
     {
         PRINTF("Input data error: First string too long or invalid string termination!\r\n");
-        while (1)
-            ;
+        abort();
     }
     /* Check whether string is properly terminated */
     string_length = strnlen(s2, MAX_STRING_LENGTH);
     if ((string_length == MAX_STRING_LENGTH) && (s2[string_length] != '\0'))
     {
         PRINTF("Input data error: Second string too long or invalid string termination!\r\n");
-        while (1)
-            ;
+        abort();
     }
     PRINTF("Comparing two string as a callback to normal world\r\n");
     PRINTF("String 1: ");
@@ -112,7 +111,7 @@ __attribute__((cmse_nonsecure_entry)) uint32_t StringCompare_NSE(volatile callba
 }
 
 /* Non-secure callable (entry) function */
-__attribute__((cmse_nonsecure_entry)) uint32_t GetTestCaseNumber_NSE(void)
+TZM_IS_NOSECURE_ENTRY uint32_t GetTestCaseNumber_NSE(void)
 {
     return GetTestCaseNumber();
 }

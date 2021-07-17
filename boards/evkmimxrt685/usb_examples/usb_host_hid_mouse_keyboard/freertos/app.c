@@ -265,8 +265,8 @@ static void USB_HostApplicationKeyboardTask(void *param)
 
 int main(void)
 {
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
+    BOARD_InitBootPins();
+    BOARD_InitBootClocks();
     BOARD_InitDebugConsole();
 
     USB_HostApplicationInit();

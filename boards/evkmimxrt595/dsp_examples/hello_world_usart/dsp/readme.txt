@@ -1,7 +1,7 @@
 Overview
 ========
 The dsp_hello_world_usart demo application provides a sanity check for the SDK build
-envionment running both ARM and DSP cores. It also demonstrates how the ARM 
+environment running both ARM and DSP cores. It also demonstrates how the ARM 
 core application is used to start a DSP application.
 
 This demo contains two applications:
@@ -19,8 +19,8 @@ it must be loaded prior to loading the DSP application.
 
 Toolchain supported
 ===================
-- Xtensa C Compiler  14.05
-- Xtensa Xplorer  8.0.15
+- Xtensa C Compiler  14.01
+- Xtensa Xplorer  8.0.10
 
 Hardware requirements
 =====================

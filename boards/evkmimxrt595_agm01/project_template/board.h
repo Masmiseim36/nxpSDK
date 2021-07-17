@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 NXP
+ * Copyright 2018-2021 NXP
  * All rights reserved.
  *
  *
@@ -44,7 +44,7 @@
 
 #define BOARD_FLEXSPI_PSRAM FLEXSPI1
 #ifndef BOARD_ENABLE_PSRAM_CACHE
-#define BOARD_ENABLE_PSRAM_CACHE 0
+#define BOARD_ENABLE_PSRAM_CACHE 1
 #endif
 
 #ifndef BOARD_DEBUG_UART_BAUDRATE
@@ -85,6 +85,16 @@
 #define BOARD_LED_BLUE_GPIO_PORT 3U
 #ifndef BOARD_LED_BLUE_GPIO_PIN
 #define BOARD_LED_BLUE_GPIO_PIN 17U
+#endif
+
+#ifndef BOARD_FLASH_RESET_GPIO
+#define BOARD_FLASH_RESET_GPIO GPIO
+#endif
+#ifndef BOARD_FLASH_RESET_GPIO_PORT
+#define BOARD_FLASH_RESET_GPIO_PORT 4U
+#endif
+#ifndef BOARD_FLASH_RESET_GPIO_PIN
+#define BOARD_FLASH_RESET_GPIO_PIN 5U
 #endif
 
 #define LED_RED_INIT(output)                                                          \
@@ -143,74 +153,6 @@
 #define BOARD_SW2_GPIO_PIN 10U
 #endif
 
-/* USDHC configuration */
-#define BOARD_SD_SUPPORT_180V          (1)
-#define BOARD_USDHC_CD_GPIO_BASE       GPIO
-#define BOARD_USDHC_CD_GPIO_PORT       (2)
-#define BOARD_USDHC_CD_GPIO_PIN        (9)
-#define BOARD_SD_POWER_RESET_GPIO      (GPIO)
-#define BOARD_SD_POWER_RESET_GPIO_PORT (2)
-#define BOARD_SD_POWER_RESET_GPIO_PIN  (10)
-
-/* Card detect handled by uSDHC, no GPIO interrupt */
-#define BOARD_SD_DETECT_TYPE              kSDMMCHOST_DetectCardByHostCD
-#define BOARD_USDHC_CD_PORT_IRQ           USDHC0_IRQn
-#define BOARD_USDHC_CD_STATUS()           0
-#define BOARD_USDHC_CD_INTERRUPT_STATUS() 0
-#define BOARD_USDHC_CD_CLEAR_INTERRUPT(flag)
-#define BOARD_USDHC_CD_GPIO_INIT()
-
-#define BOARD_HAS_SDCARD                 (1U)
-#define BOARD_USDHC_CARD_INSERT_CD_LEVEL (0U)
-
-#define BOARD_USDHC_MMCCARD_POWER_CONTROL_INIT()
-#define BOARD_USDHC_MMCCARD_POWER_CONTROL(state)
-#define BOARD_USDHC_SDCARD_POWER_CONTROL_INIT()                                                                \
-    {                                                                                                          \
-        GPIO_PortInit(BOARD_SD_POWER_RESET_GPIO, BOARD_SD_POWER_RESET_GPIO_PORT);                              \
-        GPIO_PinInit(BOARD_SD_POWER_RESET_GPIO, BOARD_SD_POWER_RESET_GPIO_PORT, BOARD_SD_POWER_RESET_GPIO_PIN, \
-                     &(gpio_pin_config_t){kGPIO_DigitalOutput, 0});                                            \
-    }
-#define BOARD_USDHC_SDCARD_POWER_CONTROL(state)                                                                        \
-    (state ?                                                                                                           \
-         GPIO_PortSet(BOARD_SD_POWER_RESET_GPIO, BOARD_SD_POWER_RESET_GPIO_PORT, 1 << BOARD_SD_POWER_RESET_GPIO_PIN) : \
-         GPIO_PortClear(BOARD_SD_POWER_RESET_GPIO, BOARD_SD_POWER_RESET_GPIO_PORT,                                     \
-                        1 << BOARD_SD_POWER_RESET_GPIO_PIN))
-
-#define BOARD_USDHC0_BASEADDR USDHC0
-#define BOARD_USDHC1_BASEADDR USDHC1
-
-#define BOARD_USDHC0_CLK_FREQ (CLOCK_GetSdioClkFreq(0))
-#define BOARD_USDHC1_CLK_FREQ (CLOCK_GetSdioClkFreq(1))
-
-#define BOARD_USDHC_SWITCH_VOLTAGE_FUNCTION 1U
-#define BOARD_SDMMC_NEED_MANUAL_TUNING
-/* GT202 */
-#define BOARD_INITGT202SHIELD_PWRON_GPIO      GPIO
-#define BOARD_INITGT202SHIELD_IRQ_GPIO        GPIO
-#define BOARD_INITGT202SHIELD_PWRON_DIRECTION kGPIO_DigitalOutput
-#define BOARD_INITGT202SHIELD_IRQ_DIRECTION   kGPIO_DigitalInput
-#define BOARD_INITGT202SHIELD_PWRON_PORT      1
-#define BOARD_INITGT202SHIELD_IRQ_PORT        1
-#define BOARD_INITGT202SHIELD_PWRON_GPIO_PIN  9
-#define BOARD_INITGT202SHIELD_IRQ_GPIO_PIN    8
-
-/* Silex2401 */
-#define BOARD_INITSILEX2401SHIELD_PWRON_GPIO      GPIO
-#define BOARD_INITSILEX2401SHIELD_IRQ_GPIO        GPIO
-#define BOARD_INITSILEX2401SHIELD_PWRON_DIRECTION kGPIO_DigitalOutput
-#define BOARD_INITSILEX2401SHIELD_IRQ_DIRECTION   kGPIO_DigitalInput
-#define BOARD_INITSILEX2401SHIELD_PWRON_PORT      1
-#define BOARD_INITSILEX2401SHIELD_IRQ_PORT        0
-#define BOARD_INITSILEX2401SHIELD_PWRON_GPIO_PIN  0
-#define BOARD_INITSILEX2401SHIELD_IRQ_GPIO_PIN    28
-
-#define BOARD_SD_HOST_BASEADDR BOARD_USDHC0_BASEADDR
-#define BOARD_SD_HOST_CLK_FREQ BOARD_USDHC0_CLK_FREQ
-#define BOARD_SD_HOST_IRQ      USDHC0_IRQn
-
-#define BOARD_SD_Pin_Config(speed, strength)
-
 /* USB PHY condfiguration */
 #define BOARD_USB_PHY_D_CAL     (0x0CU)
 #define BOARD_USB_PHY_TXCAL45DP (0x06U)
@@ -228,6 +170,9 @@
 /* D/C pin, also named RS pin. */
 #define BOARD_SSD1963_RS_PORT 4
 #define BOARD_SSD1963_RS_PIN  31
+/* Touch panel. */
+#define BOARD_SSD1963_TOUCH_I2C_BASEADDR   I2C4
+#define BOARD_SSD1963_TOUCH_I2C_CLOCK_FREQ CLOCK_GetFlexcommClkFreq(4)
 
 /* MIPI panel. */
 /* RST pin. */
@@ -239,6 +184,9 @@
 /* Backlight pin. */
 #define BOARD_MIPI_BL_PORT 0
 #define BOARD_MIPI_BL_PIN  12
+/* TE pin. */
+#define BOARD_MIPI_TE_PORT 3
+#define BOARD_MIPI_TE_PIN  18
 
 /* Touch panel. */
 #define BOARD_MIPI_PANEL_TOUCH_I2C_BASEADDR   I2C4
@@ -260,8 +208,8 @@ void BOARD_InitDebugConsole(void);
 status_t BOARD_InitPsRam(void);
 void BOARD_FlexspiClockSafeConfig(void);
 AT_QUICKACCESS_SECTION_CODE(void BOARD_SetFlexspiClock(FLEXSPI_Type *base, uint32_t src, uint32_t divider));
-AT_QUICKACCESS_SECTION_CODE(void BOARD_DeinitXip(FLEXSPI_Type *base));
-AT_QUICKACCESS_SECTION_CODE(void BOARD_InitXip(FLEXSPI_Type *base));
+AT_QUICKACCESS_SECTION_CODE(void BOARD_DeinitFlash(FLEXSPI_Type *base));
+AT_QUICKACCESS_SECTION_CODE(void BOARD_InitFlash(FLEXSPI_Type *base));
 #if defined(SDK_I2C_BASED_COMPONENT_USED) && SDK_I2C_BASED_COMPONENT_USED
 void BOARD_I2C_Init(I2C_Type *base, uint32_t clkSrc_Hz);
 status_t BOARD_I2C_Send(I2C_Type *base,
@@ -292,7 +240,7 @@ status_t BOARD_MIPIPanelTouch_I2C_Receive(
 void BOARD_Accel_I2C_Init(void);
 status_t BOARD_Accel_I2C_Send(uint8_t deviceAddress, uint32_t subAddress, uint8_t subAddressSize, uint32_t txBuff);
 status_t BOARD_Accel_I2C_Receive(
-    uint8_t deviceAddress, uint32_t subAddress, uint8_t subaddressSize, uint8_t *rxBuff, uint8_t rxBuffSize);
+    uint8_t deviceAddress, uint32_t subAddress, uint8_t subAddressSize, uint8_t *rxBuff, uint8_t rxBuffSize);
 #endif /* SDK_I2C_BASED_COMPONENT_USED */
 
 #if defined BOARD_USE_CODEC

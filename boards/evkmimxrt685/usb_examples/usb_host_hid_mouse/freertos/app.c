@@ -338,8 +338,8 @@ static void USB_HostApplicationTask(void *param)
 
 int main(void)
 {
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
+    BOARD_InitBootPins();
+    BOARD_InitBootClocks();
     BOARD_InitDebugConsole();
 #if (defined USB_HOST_APP_CHARGER_TYPE_SWITCH) && (USB_HOST_APP_CHARGER_TYPE_SWITCH)
     APP_InitSwitchChargerTypePin();

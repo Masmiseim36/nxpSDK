@@ -15,6 +15,7 @@
 #include "FreeRTOS.h"
 #include "semphr.h"
 #include "task.h"
+#include "limits.h"
 #include "pin_mux.h"
 #include "clock_config.h"
 #include "board.h"
@@ -69,40 +70,35 @@ static status_t DEMO_MakeFileSystem(void);
  * Variables
  ******************************************************************************/
 static FATFS g_fileSystem; /* File system object */
-static FIL g_fileObject;   /* File object */
-static uint32_t s_taskSleepTicks = portMAX_DELAY;
+static FIL g_fileObject1;  /* File object */
+static FIL g_fileObject2;  /* File object */
 static const uint8_t s_buffer1[] = {'T', 'A', 'S', 'K', '1', '\r', '\n'};
 static const uint8_t s_buffer2[] = {'T', 'A', 'S', 'K', '2', '\r', '\n'};
 /*! @brief Card semaphore  */
-static SemaphoreHandle_t s_cardAccessSemaphore = NULL;
-static SemaphoreHandle_t s_cardFormatSemaphore = NULL;
 extern mmc_card_t g_mmc;
+/*! @brief file access task handler */
+TaskHandle_t fileAccessTaskHandle1;
+TaskHandle_t fileAccessTaskHandle2;
 /*******************************************************************************
  * Code
  ******************************************************************************/
 static void CardFormatTask(void *pvParameters)
 {
-    s_cardFormatSemaphore = xSemaphoreCreateBinary();
-    s_cardAccessSemaphore = xSemaphoreCreateBinary();
-
     BOARD_MMC_Config(&g_mmc, BOARD_SDMMC_SD_HOST_IRQ_PRIORITY);
-    xSemaphoreGive(s_cardFormatSemaphore);
 
     /* SD host init function */
     if (MMC_HostInit(&g_mmc) == kStatus_Success)
     {
         while (true)
         {
-            /* take card detect semaphore */
-            if (xSemaphoreTake(s_cardFormatSemaphore, portMAX_DELAY) == pdTRUE)
+            if (DEMO_MakeFileSystem() != kStatus_Success)
             {
-                if (DEMO_MakeFileSystem() != kStatus_Success)
-                {
-                    continue;
-                }
-                s_taskSleepTicks = DEMO_TASK_GET_SEM_BLOCK_TICKS;
-                xSemaphoreGive(s_cardAccessSemaphore);
+                continue;
             }
+            xTaskNotifyGive(fileAccessTaskHandle1);
+            xTaskNotifyGive(fileAccessTaskHandle2);
+
+            break;
         }
     }
     else
@@ -125,13 +121,13 @@ int main(void)
     PRINTF("\r\nMMCCARD fatfs freertos example.\r\n");
 
     if (pdPASS != xTaskCreate(CardAccessTask1, "CardAccessTask1", ACCESSFILE_TASK_STACK_SIZE, NULL,
-                              ACCESSFILE_TASK_PRIORITY, NULL))
+                              ACCESSFILE_TASK_PRIORITY, &fileAccessTaskHandle1))
     {
         return -1;
     }
 
     if (pdPASS != xTaskCreate(CardAccessTask2, "CardAccessTask2", ACCESSFILE_TASK_STACK_SIZE, NULL,
-                              ACCESSFILE_TASK_PRIORITY, NULL))
+                              ACCESSFILE_TASK_PRIORITY, &fileAccessTaskHandle2))
     {
         return -1;
     }
@@ -205,63 +201,54 @@ static void CardAccessTask1(void *pvParameters)
     uint32_t writeTimes = 1U;
     FRESULT error;
 
+    xTaskNotifyWait(ULONG_MAX, ULONG_MAX, NULL, portMAX_DELAY);
+
     while (1)
     {
-        /* trying to take the file access semphore */
-        if (xSemaphoreTake(s_cardAccessSemaphore, s_taskSleepTicks) == pdTRUE)
+        error = f_open(&g_fileObject1, _T("/dir_1/test1.txt"), FA_WRITE);
+        if (error)
         {
-            error = f_open(&g_fileObject, _T("/dir_1/test.txt"), FA_WRITE);
-            if (error)
+            if (error == FR_EXIST)
             {
-                if (error == FR_EXIST)
+                PRINTF("File exists.\r\n");
+            }
+            /* if file not exist, creat a new file */
+            else if (error == FR_NO_FILE)
+            {
+                if (f_open(&g_fileObject1, _T("/dir_1/test1.txt"), (FA_WRITE | FA_CREATE_NEW)) != FR_OK)
                 {
-                    PRINTF("File exists.\r\n");
-                }
-                /* if file not exist, creat a new file */
-                else if (error == FR_NO_FILE)
-                {
-                    if (f_open(&g_fileObject, _T("/dir_1/test.txt"), (FA_WRITE | FA_CREATE_NEW)) != FR_OK)
-                    {
-                        PRINTF("Create file failed.\r\n");
-                        break;
-                    }
-                }
-                else
-                {
-                    PRINTF("Open file failed.\r\n");
+                    PRINTF("Create file failed.\r\n");
                     break;
                 }
             }
-            /* write append */
-            if (f_lseek(&g_fileObject, g_fileObject.obj.objsize) != FR_OK)
+            else
             {
-                PRINTF("lseek file failed.\r\n");
+                PRINTF("Open file failed.\r\n");
                 break;
             }
-
-            error = f_write(&g_fileObject, s_buffer1, sizeof(s_buffer1), &bytesWritten);
-            if ((error) || (bytesWritten != sizeof(s_buffer1)))
-            {
-                PRINTF("Write file failed.\r\n");
-                break;
-            }
-            f_close(&g_fileObject);
-
-            xSemaphoreGive(s_cardAccessSemaphore);
-            if (++writeTimes > DEMO_TASK_ACCESS_SDCARD_TIMES)
-            {
-                PRINTF("TASK1: finished.\r\n");
-                break;
-            }
-            {
-                PRINTF("TASK1: write file successed.\r\n");
-            }
-
-            vTaskDelay(1U);
         }
-        else
+        /* write append */
+        if (f_lseek(&g_fileObject1, g_fileObject1.obj.objsize) != FR_OK)
         {
-            PRINTF("TASK1: file access is blocking.\r\n");
+            PRINTF("lseek file failed.\r\n");
+            break;
+        }
+
+        error = f_write(&g_fileObject1, s_buffer1, sizeof(s_buffer1), &bytesWritten);
+        if ((error) || (bytesWritten != sizeof(s_buffer1)))
+        {
+            PRINTF("Write file failed.\r\n");
+            break;
+        }
+        f_close(&g_fileObject1);
+
+        if (++writeTimes > DEMO_TASK_ACCESS_SDCARD_TIMES)
+        {
+            PRINTF("TASK1: finished.\r\n");
+            break;
+        }
+        {
+            PRINTF("TASK1: write file successed.\r\n");
         }
     }
     vTaskSuspend(NULL);
@@ -273,63 +260,54 @@ static void CardAccessTask2(void *pvParameters)
     uint32_t writeTimes = 1U;
     FRESULT error;
 
+    xTaskNotifyWait(ULONG_MAX, ULONG_MAX, NULL, portMAX_DELAY);
+
     while (1)
     {
-        /* trying to take the file access semphore */
-        if (xSemaphoreTake(s_cardAccessSemaphore, s_taskSleepTicks) == pdTRUE)
+        error = f_open(&g_fileObject2, _T("/dir_1/test2.txt"), FA_WRITE);
+        if (error)
         {
-            error = f_open(&g_fileObject, _T("/dir_1/test.txt"), FA_WRITE);
-            if (error)
+            if (error == FR_EXIST)
             {
-                if (error == FR_EXIST)
+                PRINTF("File exists.\r\n");
+            }
+            /* if file not exist, creat a new file */
+            else if (error == FR_NO_FILE)
+            {
+                if (f_open(&g_fileObject2, _T("/dir_1/test2.txt"), (FA_WRITE | FA_CREATE_NEW)) != FR_OK)
                 {
-                    PRINTF("File exists.\r\n");
-                }
-                /* if file not exist, creat a new file */
-                else if (error == FR_NO_FILE)
-                {
-                    if (f_open(&g_fileObject, _T("/dir_1/test.txt"), (FA_WRITE | FA_CREATE_NEW)) != FR_OK)
-                    {
-                        PRINTF("Create file failed.\r\n");
-                        break;
-                    }
-                }
-                else
-                {
-                    PRINTF("Open file failed.\r\n");
+                    PRINTF("Create file failed.\r\n");
                     break;
                 }
             }
-            /* write append */
-            if (f_lseek(&g_fileObject, g_fileObject.obj.objsize) != FR_OK)
+            else
             {
-                PRINTF("lseek file failed.\r\n");
+                PRINTF("Open file failed.\r\n");
                 break;
             }
-
-            error = f_write(&g_fileObject, s_buffer2, sizeof(s_buffer2), &bytesWritten);
-            if ((error) || (bytesWritten != sizeof(s_buffer2)))
-            {
-                PRINTF("Write file failed. \r\n");
-                break;
-            }
-            f_close(&g_fileObject);
-
-            xSemaphoreGive(s_cardAccessSemaphore);
-            if (++writeTimes > DEMO_TASK_ACCESS_SDCARD_TIMES)
-            {
-                PRINTF("TASK2: finished.\r\n");
-                break;
-            }
-            {
-                PRINTF("TASK2: write file successed.\r\n");
-            }
-
-            vTaskDelay(1U);
         }
-        else
+        /* write append */
+        if (f_lseek(&g_fileObject2, g_fileObject2.obj.objsize) != FR_OK)
         {
-            PRINTF("TASK2: file access is blocking.\r\n");
+            PRINTF("lseek file failed.\r\n");
+            break;
+        }
+
+        error = f_write(&g_fileObject2, s_buffer2, sizeof(s_buffer2), &bytesWritten);
+        if ((error) || (bytesWritten != sizeof(s_buffer2)))
+        {
+            PRINTF("Write file failed. \r\n");
+            break;
+        }
+        f_close(&g_fileObject2);
+
+        if (++writeTimes > DEMO_TASK_ACCESS_SDCARD_TIMES)
+        {
+            PRINTF("TASK2: finished.\r\n");
+            break;
+        }
+        {
+            PRINTF("TASK2: write file successed.\r\n");
         }
     }
     vTaskSuspend(NULL);

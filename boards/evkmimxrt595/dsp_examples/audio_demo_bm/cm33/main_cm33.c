@@ -8,13 +8,13 @@
 #include "dsp_support.h"
 #include "fsl_debug_console.h"
 
+#include "dsp_config.h"
 #include "fsl_wm8904.h"
 #include "pin_mux.h"
 #include "clock_config.h"
 #include "board.h"
 #include "fsl_codec_common.h"
 #include "fsl_codec_adapter.h"
-#include "dsp_config.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/

@@ -248,7 +248,7 @@ static int32_t USARTx_SetModemControl(ARM_USART_MODEM_CONTROL control)
 
 static ARM_USART_MODEM_STATUS USARTx_GetModemStatus(void)
 {
-    ARM_USART_MODEM_STATUS modem_status;
+    ARM_USART_MODEM_STATUS modem_status = {0};
 
     modem_status.cts      = 0U;
     modem_status.dsr      = 0U;
@@ -440,16 +440,29 @@ static int32_t USART_DmaTransfer(const void *data_out,
     return ARM_DRIVER_ERROR;
 }
 
-static int32_t USART_DmaGetTxCount(cmsis_usart_dma_driver_state_t *usart)
+static uint32_t USART_DmaGetTxCount(cmsis_usart_dma_driver_state_t *usart)
 {
-    /* Does not support */
-    return ARM_DRIVER_ERROR;
+    uint32_t cnt;
+
+    /* If TX not in progress, then the TX count is txDataSizeAll saved in handle. */
+    if (kStatus_NoTransferInProgress == USART_TransferGetSendCountDMA(usart->resource->base, usart->handle, &cnt))
+    {
+        cnt = usart->handle->txDataSizeAll;
+    }
+
+    return cnt;
 }
 
-static int32_t USART_DmaGetRxCount(cmsis_usart_dma_driver_state_t *usart)
+static uint32_t USART_DmaGetRxCount(cmsis_usart_dma_driver_state_t *usart)
 {
-    /* Does not support */
-    return ARM_DRIVER_ERROR;
+    uint32_t cnt;
+
+    if (kStatus_NoTransferInProgress == USART_TransferGetReceiveCountDMA(usart->resource->base, usart->handle, &cnt))
+    {
+        cnt = usart->handle->rxDataSizeAll;
+    }
+
+    return cnt;
 }
 
 static int32_t USART_DmaControl(uint32_t control, uint32_t arg, cmsis_usart_dma_driver_state_t *usart)
@@ -499,7 +512,7 @@ static int32_t USART_DmaControl(uint32_t control, uint32_t arg, cmsis_usart_dma_
 
 static ARM_USART_STATUS USART_DmaGetStatus(cmsis_usart_dma_driver_state_t *usart)
 {
-    ARM_USART_STATUS stat;
+    ARM_USART_STATUS stat      = {0};
     uint32_t ksdk_usart_status = usart->resource->base->STAT;
 
     stat.tx_busy = (((uint8_t)kUSART_TxBusy == usart->handle->txState) ? (1U) : (0U));
@@ -772,7 +785,7 @@ static int32_t USART_NonBlockingControl(uint32_t control, uint32_t arg, cmsis_us
 
 static ARM_USART_STATUS USART_NonBlockingGetStatus(cmsis_usart_non_blocking_driver_state_t *usart)
 {
-    ARM_USART_STATUS stat;
+    ARM_USART_STATUS stat      = {0};
     uint32_t ksdk_usart_status = usart->resource->base->STAT;
 
     stat.tx_busy = (((uint8_t)kUSART_TxBusy == usart->handle->txState) ? (1U) : (0U));

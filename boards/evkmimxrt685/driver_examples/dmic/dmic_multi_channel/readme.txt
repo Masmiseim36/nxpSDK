@@ -10,10 +10,10 @@ At last the processed data will be sent out through I2S with TDM format.
 
 Toolchain supported
 ===================
-- MCUXpresso  11.3.0
-- IAR embedded Workbench  8.50.9
-- Keil MDK  5.33
-- GCC ARM Embedded  9.3.1
+- MCUXpresso  11.4.0
+- IAR embedded Workbench  9.10.2
+- Keil MDK  5.34
+- GCC ARM Embedded  10.2.1
 
 Hardware requirements
 =====================
@@ -21,7 +21,9 @@ Hardware requirements
 - EVK-MIMXRT685 boards
 - Personal Computer
 - 8-DMIC board
-- CS42888 audio board
+- IMX-AUD-IO audio board
+- RCA to 3.5mm audio cacble
+- Headphone
 
 Board settings
 ==============
@@ -30,7 +32,7 @@ The board enables octal flash (U19) by default. To enable external DMIC (J31), m
 
 Connect 8-DMIC board to J31.
 To make example work, connections needed to be as follows:
-CS42888 audio board             rt600 evk REVE board
+IMX-AUD-IO audio board             rt600 evk REVE board
 A4                      ->          GND
 A5                      ->          J27 PIN3(BCLK)
 A6                      ->          J27 pin2(WS)
@@ -53,9 +55,10 @@ Prepare the Demo
     - One stop bit
     - No flow control
 3.  Insert 8dmic board to J31
-4.  Connect CS42888 audio board to RT600 EVK per above description.
-3.  Download the program to the target board.
-4.  Launch the debugger in your IDE to begin running the demo.
+4.  Connect IMX-AUD-IO audio board to RT600 EVK per above description.
+5.  Connect RCA to 3.5mm audio cable to audio board and connect headphone to the RCA to 3.5mm audio cacble.
+6.  Download the program to the target board.
+7.  Launch the debugger in your IDE to begin running the demo.
 
 Running the demo
 ================
@@ -74,4 +77,6 @@ Init CS42888 codec
 Start play audio data
 
 
-2. During the DMIC start receive data, you can speak or play song nearby the dmic, then you can hear the multichannel audio data from the CS42888 audio board, AOUT0, AOUT2, AOUT4.
+2. During the DMIC start receive data, you can speak or play song nearby the dmic, then you can hear the multichannel audio data from the IMX-AUD-IO audio board.
+If you are using IMX-AUD-IO REVA, the audio will come out from AOUT0, AOUT2, AOUT4.
+If you are using IMX-AUD-IO REVB1, the audio will come out from AUDIO-OUT-C, AUDIO-OUT-RL, AUDIO-OUT-FL.

@@ -1,17 +1,15 @@
-if(NOT COMPONENT_RT_GPIO_ADAPTER_MIMXRT595S_cm33_INCLUDED)
-    
-    set(COMPONENT_RT_GPIO_ADAPTER_MIMXRT595S_cm33_INCLUDED true CACHE BOOL "component_rt_gpio_adapter component is included.")
+include_guard(GLOBAL)
+message("component_rt_gpio_adapter component is included.")
 
-    target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
-        ${CMAKE_CURRENT_LIST_DIR}/fsl_adapter_rt_gpio.c
-    )
-
-
-    target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
-        ${CMAKE_CURRENT_LIST_DIR}/.
-    )
+target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
+    ${CMAKE_CURRENT_LIST_DIR}/fsl_adapter_rt_gpio.c
+)
 
 
-    include(driver_lpc_gpio_MIMXRT595S_cm33)
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
+    ${CMAKE_CURRENT_LIST_DIR}/.
+)
 
-endif()
+
+include(driver_lpc_gpio_MIMXRT595S_cm33)
+

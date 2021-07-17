@@ -16,7 +16,7 @@
               <ListEntry>${xt_project_loc}/../../../../../../devices/MIMXRT685S/utilities/debug_console</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../devices/MIMXRT685S/utilities</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../devices/MIMXRT685S</ListEntry>
-              <ListEntry>${xt_project_loc}/../../../../../../CMSIS/Include</ListEntry>
+              <ListEntry>${xt_project_loc}/../../../../../../CMSIS/Core/Include</ListEntry>
             </value>
           </StringListMapEntry>
         </StringListMapOptions>
@@ -29,11 +29,21 @@
               <ListEntry key="SERIAL_PORT_TYPE_UART" value="1"/>
               <ListEntry key="DEBUG_CONSOLE_RX_ENABLE" value="0"/>
               <ListEntry key="CPU_MIMXRT685SFVKB_dsp" value=""/>
+              <ListEntry key="MCUXPRESSO_SDK" value=""/>
             </value>
           </KeyValueListMapEntry>
         </KeyValueListMapOptions>
       </PreprocessorOptions>
       <CompilerOptions>
+        <StringListMapOptions>
+          <StringListMapEntry>
+            <key>CompilerAdditionalOptions</key>
+            <value flag="" inheritance="append">
+                        <ListEntry>-Wno-missing-braces&#13;
+-fmessage-length=0&#13;
+-std=gnu99</ListEntry></value>
+          </StringListMapEntry>
+        </StringListMapOptions>
         <FlagValueMapOptions>
           <FlagValueMapEntry>
             <key>Optimization</key>
@@ -54,16 +64,6 @@
             <value use="true" flag="-fsigned-char"/>
           </SingleFlagMapEntry>
         </SingleFlagMapOptions>
-        <StringListMapOptions>
-          <StringListMapEntry>
-            <key>CompilerAdditionalOptions</key>
-            <value inheritance="append">
-              <ListEntry>-Wno-missing-braces&#13;
--fmessage-length=0&#13;
--std=gnu99</ListEntry>
-            </value>
-          </StringListMapEntry>
-        </StringListMapOptions>
       </CompilerOptions>
       <AssemblerOptions/>
       <LinkerOptions>
@@ -95,5 +95,6 @@
         </StringListMapOptions>
       </LinkerOptions>
     </BaseSettings>
+    <OverriddenSettings/>
   </BuildSettings>
 </BuildTarget>

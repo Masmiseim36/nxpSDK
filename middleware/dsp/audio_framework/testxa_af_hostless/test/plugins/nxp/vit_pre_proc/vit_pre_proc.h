@@ -8,6 +8,11 @@
 #ifndef __VIT_PRE_PROC_API_H
 #define __VIT_PRE_PROC_API_H
 
+#define VIT_MODEL_ALIGNMENT 64
+#define INSTALLOC_OFFSET           ((PL_UINTPTR) (VIT_MODEL_ALIGNMENT-1))
+#define INSTALLOC_MASK             ((PL_UINTPTR)~INSTALLOC_OFFSET)
+#define INSTALLOC_ALIGN(ptr)       (((PL_UINTPTR)ptr + INSTALLOC_OFFSET)&INSTALLOC_MASK)
+
 /*******************************************************************************
  * Includes
  ******************************************************************************/
@@ -44,7 +49,11 @@ enum xa_config_param_vit_pre_proc
 /* ...component identifier (informative) */
 #define XA_CODEC_VIT_PRE_PROC (0x42)
 
+#ifdef CPU_MIMXRT685SFVKB_dsp
+#define VIT_PRE_PROC_MAX_CHANNELS (3)
+#else
 #define VIT_PRE_PROC_MAX_CHANNELS (1)
+#endif
 
 /*******************************************************************************
  * Class 0: API Errors

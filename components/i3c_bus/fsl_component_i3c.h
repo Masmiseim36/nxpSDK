@@ -27,6 +27,8 @@
 #define I3C_BUS_MAX_ADDR       0x7FU /*!< Maximum address allowed for address assignment. */
 #define I3C_BUS_ADDR_SLOTWIDTH 2U    /*!< Address slot width used in address management in bus pool. */
 #define I3C_BUS_ADDR_SLOTDEPTH 32U   /*!< Address slot depth used in address management in bus pool. */
+#define I3C_BUS_ADDR_SLOTMASK  3U    /*!< Address slot mask used in address management in bus pool. */
+
 /*@}*/
 
 /*! @name I3C BUS CCC (Common Command Codes) definitions*/
@@ -77,23 +79,23 @@
 #define I3C_BUS_DEV_BCR_DEV_MASTER     0x01U
 #define I3C_BUS_DEV_BCR_DEV_ROLE_SHIFT 6U
 #define I3C_BUS_DEV_BCR_DEV_ROLE_MASK  0xC0U
-#define I3C_BUS_DEV_BCR_DEV_ROLE(x)    ((x << I3C_BUS_DEV_BCR_DEV_ROLE_SHIFT) & I3C_BUS_DEV_BCR_DEV_ROLE_MASK)
+#define I3C_BUS_DEV_BCR_DEV_ROLE(x)    (((x) << I3C_BUS_DEV_BCR_DEV_ROLE_SHIFT) & I3C_BUS_DEV_BCR_DEV_ROLE_MASK)
 
 #define I3C_BUS_DEV_BCR_MODE_SHIFT 5U
 #define I3C_BUS_DEV_BCR_MODE_MASK  0x20U
-#define I3C_BUS_DEV_BCR_MODE(x)    ((x << I3C_BUS_DEV_BCR_MODE_SHIFT) & I3C_BUS_DEV_BCR_MODE_MASK)
+#define I3C_BUS_DEV_BCR_MODE(x)    (((x) << I3C_BUS_DEV_BCR_MODE_SHIFT) & I3C_BUS_DEV_BCR_MODE_MASK)
 
 #define I3C_BUS_DEV_BCR_IBI_PAYLOAD_SHIFT 2U
 #define I3C_BUS_DEV_BCR_IBI_PAYLOAD_MASK  0x04U
-#define I3C_BUS_DEV_BCR_IBI_PAYLOAD(x)    ((x << I3C_BUS_DEV_BCR_IBI_PAYLOAD_SHIFT) & I3C_BUS_DEV_BCR_IBI_PAYLOAD_MASK)
+#define I3C_BUS_DEV_BCR_IBI_PAYLOAD(x)    (((x) << I3C_BUS_DEV_BCR_IBI_PAYLOAD_SHIFT) & I3C_BUS_DEV_BCR_IBI_PAYLOAD_MASK)
 
 #define I3C_BUS_DEV_BCR_IBI_REQUEST_SHIFT 1U
 #define I3C_BUS_DEV_BCR_IBI_REQUEST_MASK  0x02U
-#define I3C_BUS_DEV_BCR_IBI_REQUEST(x)    ((x << I3C_BUS_DEV_BCR_IBI_REQUEST_SHIFT) & I3C_BUS_DEV_BCR_IBI_REQUEST_MASK)
+#define I3C_BUS_DEV_BCR_IBI_REQUEST(x)    (((x) << I3C_BUS_DEV_BCR_IBI_REQUEST_SHIFT) & I3C_BUS_DEV_BCR_IBI_REQUEST_MASK)
 
 #define I3C_BUS_DEV_BCR_SPEED_LIMIT_SHIFT 0U
 #define I3C_BUS_DEV_BCR_SPEED_LIMIT_MASK  0x01U
-#define I3C_BUS_DEV_BCR_SPEED_LIMIT(x)    ((x << I3C_BUS_DEV_BCR_SPEED_LIMIT_SHIFT) & I3C_BUS_DEV_BCR_SPEED_LIMIT_MASK)
+#define I3C_BUS_DEV_BCR_SPEED_LIMIT(x)    (((x) << I3C_BUS_DEV_BCR_SPEED_LIMIT_SHIFT) & I3C_BUS_DEV_BCR_SPEED_LIMIT_MASK)
 
 /*@}*/
 
@@ -256,11 +258,10 @@ typedef enum _i3c_bus_mode
 /*! @brief I3C address slot status in address pool. */
 typedef enum _i3c_addr_slot_status
 {
-    kI3C_Bus_AddrSlot_Free = 0,        /*!< Address slot is free. */
-    kI3C_Bus_AddrSlot_Reserved,        /*!< Address slot is reserved. */
-    kI3C_Bus_AddrSlot_I2CDev,          /*!< Address slot is I2C device. */
-    kI3C_Bus_AddrSlot_I3CDev,          /*!< Address slot is I3C device. */
-    kI3C_Bus_AddrSlot_StatusMask = 3U, /*!< Address slot mask to get address status. */
+    kI3C_Bus_AddrSlot_Free = 0, /*!< Address slot is free. */
+    kI3C_Bus_AddrSlot_Reserved, /*!< Address slot is reserved. */
+    kI3C_Bus_AddrSlot_I2CDev,   /*!< Address slot is I2C device. */
+    kI3C_Bus_AddrSlot_I3CDev,   /*!< Address slot is I3C device. */
 } i3c_addr_slot_status_t;
 
 /*! @brief I3C initial bus configuration, user input to configure. */

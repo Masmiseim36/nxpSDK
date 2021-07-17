@@ -7,7 +7,7 @@
  * --------------------------------------------------------------------------*/
 /*
  * Copyright 1997-2016 Freescale Semiconductor, Inc.
- * Copyright 2016-2020 NXP
+ * Copyright 2016-2021 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -110,13 +110,12 @@ __Vectors:
 
     .size    __Vectors, . - __Vectors
 
-    .text
+    .section InRoot$$Sections, "ax"
     .thumb
 
 /* Reset Handler */
     .thumb_func
     .align 2
-    .globl   Reset_Handler
     .weak    Reset_Handler
     .type    Reset_Handler, %function
 Reset_Handler:
@@ -137,6 +136,9 @@ Reset_Handler:
 
     .pool
     .size Reset_Handler, . - Reset_Handler
+
+    .text
+    .thumb
 
     .align  1
     .thumb_func

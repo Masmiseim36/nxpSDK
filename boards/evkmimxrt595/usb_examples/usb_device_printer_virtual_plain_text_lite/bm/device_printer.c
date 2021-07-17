@@ -194,7 +194,7 @@ static usb_status_t USB_DevicePrinterBulkOutCallback(usb_device_handle handle,
 
 usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *param)
 {
-    usb_status_t status = kStatus_USB_Success;
+    usb_status_t status = kStatus_USB_InvalidRequest;
     uint8_t *param8p    = (uint8_t *)param;
 
     switch (event)
@@ -227,12 +227,14 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
             /*Add one delay here to make the DP pull down long enough to allow host to detect the previous disconnection.*/
             SDK_DelayAtLeastUs(5000, SDK_DEVICE_MAXIMUM_CPU_CLOCK_FREQUENCY);
             USB_DeviceRun(g_DevicePrinterApp.deviceHandle);
+            status = kStatus_USB_Success;
             break;
 
         case kUSB_DeviceEventDetach:
             usb_echo("USB device detached.\r\n");
             g_DevicePrinterApp.attach = 0;
             USB_DeviceStop(g_DevicePrinterApp.deviceHandle);
+            status = kStatus_USB_Success;
             break;
 #endif
 
@@ -283,11 +285,13 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
                 g_DevicePrinterApp.printerState = kPrinter_ReceiveNeedPrime;
                 g_DevicePrinterApp.stateChanged = 1;
 
-                USB_DeviceSendRequest(g_DevicePrinterApp.deviceHandle, USB_PRINTER_BULK_ENDPOINT_IN,
-                                      g_DevicePrinterApp.sendBuffer, g_DevicePrinterApp.sendLength);
+                status = USB_DeviceSendRequest(g_DevicePrinterApp.deviceHandle, USB_PRINTER_BULK_ENDPOINT_IN,
+                                           g_DevicePrinterApp.sendBuffer, g_DevicePrinterApp.sendLength);
             }
             break;
-
+        case kUSB_DeviceEventSetInterface:
+            status = kStatus_USB_Success;
+            break;
         default:
             break;
     }
@@ -371,10 +375,10 @@ usb_status_t USB_DeviceProcessClassRequest(usb_device_handle handle,
                                            uint32_t *length,
                                            uint8_t **buffer)
 {
-    usb_status_t error = kStatus_USB_Success;
+    usb_status_t error = kStatus_USB_InvalidRequest;
     uint32_t len;
 
-    if (setup->wIndex != USB_PRINTER_INTERFACE_INDEX)
+    if ((setup->bmRequestType & USB_REQUEST_TYPE_RECIPIENT_MASK) != USB_REQUEST_TYPE_RECIPIENT_INTERFACE)
     {
         return error;
     }
@@ -382,8 +386,8 @@ usb_status_t USB_DeviceProcessClassRequest(usb_device_handle handle,
     switch (setup->bRequest)
     {
         case USB_DEVICE_PRINTER_GET_DEVICE_ID:
-            if (((uint8_t)setup->wValue == 0U) && ((uint8_t)(setup->wIndex >> 8) == USB_PRINTER_INTERFACE_INDEX) &&
-                ((uint8_t)(setup->wIndex) == 0))
+            if (((setup->bmRequestType & USB_REQUEST_TYPE_DIR_MASK) == USB_REQUEST_TYPE_DIR_IN)
+                && (setup->wLength != 0U) && ((uint8_t)(setup->wIndex >> 8) == USB_PRINTER_INTERFACE_INDEX))
             {
                 for (len = 0; len < sizeof(g_PrinterID); ++len)
                 {
@@ -394,25 +398,18 @@ usb_status_t USB_DeviceProcessClassRequest(usb_device_handle handle,
                 s_PrinterClassBuffer[1] = (uint8_t)len;
                 *buffer                 = s_PrinterClassBuffer;
                 *length                 = len;
-            }
-            else
-            {
-                *buffer = NULL;
-                *length = 0U;
+                error                   = kStatus_USB_Success;
             }
             break;
 
         case USB_DEVICE_PRINTER_GET_PORT_STATUS:
-            if ((uint8_t)(setup->wIndex) == USB_PRINTER_INTERFACE_INDEX)
+            if (((setup->bmRequestType & USB_REQUEST_TYPE_DIR_MASK) == USB_REQUEST_TYPE_DIR_IN)
+                && (setup->wLength == 1U) && ((uint8_t)(setup->wIndex) == USB_PRINTER_INTERFACE_INDEX))
             {
                 s_PrinterClassBuffer[0] = g_DevicePrinterApp.printerPortStatus;
                 *buffer                 = s_PrinterClassBuffer;
                 *length                 = 1U;
-            }
-            else
-            {
-                *buffer = NULL;
-                *length = 0U;
+                error                   = kStatus_USB_Success;
             }
             break;
 

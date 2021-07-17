@@ -1,15 +1,17 @@
-/*******************************************************************************
-* Copyright (c) 2015-2020 Cadence Design Systems, Inc.
-* 
+/*
+* Copyright (c) 2015-2021 Cadence Design Systems Inc.
+*
 * Permission is hereby granted, free of charge, to any person obtaining
 * a copy of this software and associated documentation files (the
-* "Software"), to use this Software with Cadence processor cores only and 
-* not with any other processors and platforms, subject to
+* "Software"), to deal in the Software without restriction, including
+* without limitation the rights to use, copy, modify, merge, publish,
+* distribute, sublicense, and/or sell copies of the Software, and to
+* permit persons to whom the Software is furnished to do so, subject to
 * the following conditions:
-* 
+*
 * The above copyright notice and this permission notice shall be included
 * in all copies or substantial portions of the Software.
-* 
+*
 * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
 * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
@@ -17,8 +19,7 @@
 * CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
 * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-******************************************************************************/
+*/
 /*******************************************************************************
  * xa-mixer-api.h
  *
@@ -53,10 +54,11 @@ enum xa_config_param_mixer {
     XA_MIXER_CONFIG_PARAM_PCM_WIDTH         = 1,
     XA_MIXER_CONFIG_PARAM_CHANNELS          = 2,
     XA_MIXER_CONFIG_PARAM_SAMPLE_RATE       = 4,
-    XA_MIXER_CONFIG_PARAM_FRAME_SIZE        = 5,
+    XA_MIXER_CONFIG_PARAM_FRAME_SIZE        = 5, /* Deprecated, use XA_MIXER_CONFIG_PARAM_FRAME_SIZE_IN_SAMPLES instead. */
     XA_MIXER_CONFIG_PARAM_BUFFER_SIZE       = 6,
     XA_MIXER_CONFIG_PARAM_VOLUME            = 7,
-    XA_MIXER_CONFIG_PARAM_NUM               = 8
+    XA_MIXER_CONFIG_PARAM_FRAME_SIZE_IN_SAMPLES = 8,    /* frame size per channel in samples */
+    XA_MIXER_CONFIG_PARAM_NUM               = 9
 };
 
 /* ...component identifier (informative) */

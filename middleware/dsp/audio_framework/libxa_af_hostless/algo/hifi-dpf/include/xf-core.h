@@ -1,15 +1,17 @@
-/*******************************************************************************
-* Copyright (c) 2015-2020 Cadence Design Systems, Inc.
-* 
+/*
+* Copyright (c) 2015-2021 Cadence Design Systems Inc.
+*
 * Permission is hereby granted, free of charge, to any person obtaining
 * a copy of this software and associated documentation files (the
-* "Software"), to use this Software with Cadence processor cores only and 
-* not with any other processors and platforms, subject to
+* "Software"), to deal in the Software without restriction, including
+* without limitation the rights to use, copy, modify, merge, publish,
+* distribute, sublicense, and/or sell copies of the Software, and to
+* permit persons to whom the Software is furnished to do so, subject to
 * the following conditions:
-* 
+*
 * The above copyright notice and this permission notice shall be included
 * in all copies or substantial portions of the Software.
-* 
+*
 * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
 * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
@@ -17,8 +19,7 @@
 * CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
 * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-******************************************************************************/
+*/
 /*******************************************************************************
  * xf-core.h
  *
@@ -55,7 +56,7 @@ typedef struct xf_core_rw_data
     /* ...message queue containing local commands/responses */
     xf_sync_queue_t     local;
 
-    /* ...message queue containing responses to remote proxy (if enabled) */
+    /* ...message queue containing responses to App Interface Layer (if enabled) */
     xf_sync_queue_t     remote;
 
     /* ...pointer to shared memory data? anything else? - tbd */
@@ -94,8 +95,12 @@ typedef union xf_cmap_link
 
 struct xf_worker {
     void *stack;
+    void *scratch;
     xf_msgq_t queue;
     xf_thread_t thread;
+    UWORD32 core;
+    xf_msg_queue_t base_cancel_queue;
+    xf_msg_pool_t base_cancel_pool;
 };
 
 /* ...per-core local data */
@@ -107,9 +112,11 @@ typedef struct xf_core_data
     /* ...command/response queue for communication within local core (including ISRs) */
     xf_sync_queue_t     queue;
 
+#if 0
     /* ...pending response queue (submitted from ISR context) */
     xf_sync_queue_t     response;
-    
+#endif    
+
     /* ...per-core component mapping */
     xf_cmap_link_t      cmap[XF_CFG_MAX_CLIENTS];
 
@@ -135,6 +142,12 @@ typedef struct xf_core_data
     UWORD32 worker_stack_size;
     struct xf_worker *worker;
     /* ...any debugging information? for memory allocation etc... ? */
+
+    /* ...the default priority to be set on component creation, before its actual priority can be assigned */
+    UWORD32 component_default_priority;
+
+    /* ...worker thread scratch sizes */
+    UWORD32 worker_thread_scratch_size[XAF_MAX_WORKER_THREADS];
 
 }   xf_core_data_t;
 
@@ -173,8 +186,15 @@ typedef struct {
 
     UWORD8 *xf_dsp_local_buffer;
     WORD32 xf_dsp_local_buffer_size;
-    WORD32 dsp_comp_buf_size_used;  /* cumulative buffer size used in bytes from audio_comp_buf_size */
-    WORD32 dsp_frmwk_buf_size_used;  /* cumulative buffer size used in bytes from audio_frmwk_buf_size */
+    WORD32 dsp_comp_buf_size_peak;  /* cumulative buffer size used in bytes from audio_comp_buf_size */
+    WORD32 dsp_frmwk_buf_size_peak;  /* cumulative buffer size used in bytes from audio_frmwk_buf_size */
+    WORD32 dsp_comp_buf_size_curr;   /* current usage from audio_comp_buf_size in bytes */
+    WORD32 dsp_frmwk_buf_size_curr;  /* current usage from audio_frmwk_buf_size in bytes */  
+
+    void *dsp_thread_args[XAF_NUM_THREAD_ARGS];
+
+    UWORD32 worker_thread_scratch_size[XAF_MAX_WORKER_THREADS]; /* ...user configurable worker scratch size */
+
 } xf_dsp_t;
 
 extern xf_dsp_t *xf_g_dsp;
@@ -192,7 +212,7 @@ typedef struct xf_worker_msg {
 extern int  xf_core_init(UWORD32 core);
 
 /* ...deinitialize per-core framework data */
-extern void xf_core_deinit(UWORD32 core);
+extern int xf_core_deinit(UWORD32 core);
 
 /* ...global data initialization function */
 extern int  xf_global_init(void);

@@ -17,8 +17,8 @@ it must be loaded prior to loading the DSP application.
 
 Toolchain supported
 ===================
-- Xtensa Xplorer  7.0.9
-- Xtensa C Compiler  12.0.8
+- Xtensa Xplorer  8.0.10
+- Xtensa C Compiler  14.01
 
 Hardware requirements
 =====================
@@ -88,7 +88,4 @@ When the demo runs successfully, the following output will be appended to the te
     /*FIR BLMS TEST START*/
     FIR BLMS 64 64 takes 45192 cycles
     /*FIR BLMS TEST END with 0 */
-
-Customization options
-=====================
 

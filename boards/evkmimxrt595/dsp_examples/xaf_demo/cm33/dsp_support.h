@@ -31,18 +31,18 @@ extern const char dsp_text_image_end[];
 extern const char dsp_data_image_start[];
 extern const char dsp_data_image_end[];
 #define DSP_IMAGE_TEXT_START ((uint32_t *)dsp_text_image_start)
-#define DSP_IMAGE_TEXT_SIZE ((uint32_t)dsp_text_image_end - (uint32_t)dsp_text_image_start)
+#define DSP_IMAGE_TEXT_SIZE  ((uint32_t)dsp_text_image_end - (uint32_t)dsp_text_image_start)
 #define DSP_IMAGE_DATA_START ((uint32_t *)dsp_data_image_start)
-#define DSP_IMAGE_DATA_SIZE ((uint32_t)dsp_data_image_end - (uint32_t)dsp_data_image_start)
+#define DSP_IMAGE_DATA_SIZE  ((uint32_t)dsp_data_image_end - (uint32_t)dsp_data_image_start)
 #elif defined(__GNUC__)
 extern const char dsp_text_image_start[];
 extern int dsp_text_image_size;
 extern const char dsp_data_image_start[];
 extern int dsp_data_image_size;
 #define DSP_IMAGE_TEXT_START ((uint32_t *)dsp_text_image_start)
-#define DSP_IMAGE_TEXT_SIZE ((int32_t)dsp_text_image_size)
+#define DSP_IMAGE_TEXT_SIZE  ((int32_t)dsp_text_image_size)
 #define DSP_IMAGE_DATA_START ((uint32_t *)dsp_data_image_start)
-#define DSP_IMAGE_DATA_SIZE ((int32_t)dsp_data_image_size)
+#define DSP_IMAGE_DATA_SIZE  ((int32_t)dsp_data_image_size)
 #endif
 /*******************************************************************************
  * API

@@ -1,7 +1,7 @@
 Overview
 ========
 The dsp_hello_world_usart demo application provides a sanity check for the SDK build
-envionment running both ARM and DSP cores. It also demonstrates how the ARM 
+environment running both ARM and DSP cores. It also demonstrates how the ARM 
 core application is used to start a DSP application.
 
 This demo contains two applications:
@@ -19,8 +19,8 @@ it must be loaded prior to loading the DSP application.
 
 Toolchain supported
 ===================
-- Xtensa Xplorer  7.0.9
-- Xtensa C Compiler  12.0.8
+- Xtensa Xplorer  8.0.10
+- Xtensa C Compiler  14.01
 
 Hardware requirements
 =====================
@@ -60,8 +60,5 @@ Running the demo DSP
 ====================
 When the demo runs successfully, the terminal will display the following:
 
-    Hello World running on DSP core 'nxp_rt600_RI2019_newlib'
-
-Customization options
-=====================
+    Hello World running on DSP core 'nxp_rt600_RI2020_5_newlib'
 

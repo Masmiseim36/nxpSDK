@@ -1,15 +1,17 @@
-/*******************************************************************************
-* Copyright (c) 2015-2020 Cadence Design Systems, Inc.
-* 
+/*
+* Copyright (c) 2015-2021 Cadence Design Systems Inc.
+*
 * Permission is hereby granted, free of charge, to any person obtaining
 * a copy of this software and associated documentation files (the
-* "Software"), to use this Software with Cadence processor cores only and 
-* not with any other processors and platforms, subject to
+* "Software"), to deal in the Software without restriction, including
+* without limitation the rights to use, copy, modify, merge, publish,
+* distribute, sublicense, and/or sell copies of the Software, and to
+* permit persons to whom the Software is furnished to do so, subject to
 * the following conditions:
-* 
+*
 * The above copyright notice and this permission notice shall be included
 * in all copies or substantial portions of the Software.
-* 
+*
 * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
 * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
@@ -17,8 +19,7 @@
 * CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
 * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-******************************************************************************/
+*/
 /*******************************************************************************
  * xa-class-mixer.c
  *
@@ -34,17 +35,6 @@
 #include "xf-dp.h"
 #include "xa-class-base.h"
 #include "audio/xa-mixer-api.h"
-
-/*******************************************************************************
- * Tracing tags
- ******************************************************************************/
-
-TRACE_TAG(INIT, 1);
-TRACE_TAG(WARNING, 1);
-TRACE_TAG(INFO, 1);
-TRACE_TAG(INPUT, 1);
-TRACE_TAG(OUTPUT, 1);
-TRACE_TAG(PROBE, 1);
 
 /*******************************************************************************
  * Data structures
@@ -141,6 +131,11 @@ typedef struct XAMixer
    
     /* ...mixer output buffer pointer */
     void                    *out_ptr;
+    
+    /***************************************************************************
+     * response message pointer 
+     **************************************************************************/
+    xf_message_t        *m_response;
 
 }   XAMixer;
 
@@ -192,6 +187,7 @@ typedef struct XAMixer
 /*******************************************************************************
  * Helper functions
  ******************************************************************************/
+#if 0
 /* ...Count the tracks that have received data or are active*/
 static inline UWORD32 xa_mixer_check_active(XAMixer *mixer)
 {
@@ -206,6 +202,7 @@ static inline UWORD32 xa_mixer_check_active(XAMixer *mixer)
     }
     return cnt;
 }
+#endif
 
 /* ...prepare mixer for steady operation */
 static inline XA_ERRORCODE xa_mixer_prepare_runtime(XAMixer *mixer)
@@ -234,6 +231,9 @@ static inline XA_ERRORCODE xa_mixer_prepare_runtime(XAMixer *mixer)
 
     /* ...calculate mixer frame duration; get upsample factor */
     XF_CHK_ERR(factor = xf_timebase_factor(msg->sample_rate), XA_MIXER_CONFIG_FATAL_RANGE);
+
+    /* ...sample size should be positive */
+    XF_CHK_ERR(mixer->sample_size > 0, XA_API_FATAL_INVALID_CMD_TYPE);
 
     /* ...set frame duration factor (converts number of bytes into timebase units) */
     mixer->factor = factor / mixer->sample_size;
@@ -282,6 +282,16 @@ static XA_ERRORCODE xa_mixer_empty_this_buffer(XACodecBase *base, xf_message_t *
     /* ...place received message into track input port */
     if (xf_input_port_put(&track->input, m))
     {
+        /* ...restart mixer if it is in completed state */
+        if (base->state & XA_BASE_FLAG_COMPLETED)
+        {
+            /* ...reset execution stage */
+            base->state = XA_BASE_FLAG_POSTINIT | XA_BASE_FLAG_EXECUTION;
+
+            /* ...reset execution runtime */
+            XA_API(base, XA_API_CMD_EXECUTE, XA_CMD_TYPE_DO_RUNTIME_INIT, NULL);
+        }
+
         /* ...process track autostart if needed */
         if (xa_track_test_flags(track, XA_TRACK_FLAG_IDLE))
         {
@@ -359,8 +369,8 @@ static XA_ERRORCODE xa_mixer_fill_this_buffer(XACodecBase *base, xf_message_t *m
     {
         int i;
 
-        /* ...end-of-stream processing indication received; check the state */
-        BUG((base->state & XA_BASE_FLAG_COMPLETED) == 0, _x("invalid state: %x"), base->state);
+        /* ... mark flushing sequence is done */
+        xf_output_port_flush_done(&mixer->output);
 
 #if 1   //TENA_2379                                                                                                     
         if (xf_output_port_unrouting(&mixer->output))
@@ -370,8 +380,12 @@ static XA_ERRORCODE xa_mixer_fill_this_buffer(XACodecBase *base, xf_message_t *m
             TRACE(INFO, _b("port is unrouted"));
         }   
 #endif
-        /* ... mark flushing sequence is done */
-        xf_output_port_flush_done(&mixer->output);
+        else if (m->length == XF_MSG_LENGTH_INVALID)
+        {
+            /* ...complete flushing and unrouting of the outport whose dest no longer exists */
+            xf_output_port_unroute(&mixer->output);
+            TRACE(INFO, _b("mixer[%p] completed internal unroute of port"), mixer);
+        }
 
         /* ...complete pending zero-length input buffer */
         for (i = 0; i < XA_MIXER_MAX_TRACK_NUMBER; i++)
@@ -385,6 +399,28 @@ static XA_ERRORCODE xa_mixer_fill_this_buffer(XACodecBase *base, xf_message_t *m
         return XA_NO_ERROR;
     }
 #endif
+    /* ...indicates that the downstream component no longer exists */
+    else if ((m->length == XF_MSG_LENGTH_INVALID) && xf_output_port_routed(&mixer->output))
+    {
+         m->length = mixer->output.length; /* ...reset length for sanity */
+
+        if(!xf_output_port_flushing(&mixer->output))
+        {
+            /* ...cancel any pending processing */
+            xa_base_cancel(base);
+
+            /* ...output port is invalid; trigger port flush to collect all the buffers in transit */
+            (void)xf_output_port_flush(&mixer->output, XF_FILL_THIS_BUFFER);
+
+            /* ...clear output-port-setup condition */
+            base->state &= ~XA_MIXER_FLAG_OUTPUT_SETUP;
+
+            TRACE(INFO, _b("mixer[%p] started internal unroute of port"), mixer);
+         }
+         TRACE(INFO, _b("mixer[%p] drop buffer"), mixer);
+
+         return XA_NO_ERROR;
+    }
     else if (m->length != 0) /* ...EOS response */
     {
         /* ...message must have exactly expected size (there is no ordered abortion) */
@@ -461,6 +497,13 @@ static XA_ERRORCODE xa_mixer_port_unroute(XACodecBase *base, xf_message_t *m)
 
     /* ...make sure output port is addressed */
     XF_CHK_ERR(XF_MSG_DST_PORT(m->id) == XA_MIXER_MAX_TRACK_NUMBER, XA_API_FATAL_INVALID_CMD_TYPE);
+
+    if(!xf_output_port_routed(port))
+    {
+        /* ...if XF_MSG_LENGTH_INVALID triggered internal unroute is completed, send response instantly */
+        xf_response_ok(m);
+        return XA_NO_ERROR;
+    }
 
     /* ...cancel any pending processing */
     xa_base_cancel(base);
@@ -651,8 +694,8 @@ static XA_ERRORCODE xa_mixer_flush(XACodecBase *base, xf_message_t *m)
     UWORD32         i = XF_MSG_DST_PORT(m->id);
     XATrack    *track = &mixer->track[i];
 
-    /* ...make sure the buffer is empty */
-    XF_CHK_ERR(m->length == 0, XA_API_FATAL_INVALID_CMD_TYPE);
+    /* ...ensure input parameter length is zero or XF_MSG_LENGTH_INVALID */
+    XF_CHK_ERR((m->length == 0) || (m->length == XF_MSG_LENGTH_INVALID), XA_API_FATAL_INVALID_CMD_TYPE);
 
     /* ...check destination port index */
     if (i == XA_MIXER_MAX_TRACK_NUMBER)
@@ -786,6 +829,7 @@ static XA_ERRORCODE xa_mixer_preprocess(XACodecBase *base)
     XATrack        *track;
     UWORD8              i;
     XA_ERRORCODE    e = XA_MIXER_EXEC_NONFATAL_NO_DATA;
+    int inport_nodata_flag = 0;
 
     /* ...check if output port is paused */
     if (xa_port_test_flags(&mixer->output.flags, XA_OUT_TRACK_FLAG_PAUSED))
@@ -880,7 +924,8 @@ static XA_ERRORCODE xa_mixer_preprocess(XACodecBase *base)
             if (!xf_input_port_fill(&track->input))
             {
                 /* ...failed to prefill input buffer - no sufficient data yet */
-                return XA_MIXER_EXEC_NONFATAL_NO_DATA;
+                inport_nodata_flag = 1; 
+                continue;
             }
             else
             {
@@ -907,6 +952,9 @@ static XA_ERRORCODE xa_mixer_preprocess(XACodecBase *base)
         /* ...mark the track input is setup (emit silence or actual data) */
         xa_track_set_flags(track, XA_TRACK_FLAG_INPUT_SETUP);
     }
+
+    if (inport_nodata_flag)
+        return XA_MIXER_EXEC_NONFATAL_NO_DATA;
 
     /* ...do mixing operation only when all active tracks are setup */
     return e;
@@ -1142,29 +1190,39 @@ static XA_ERRORCODE (* const xa_mixer_cmd[])(XACodecBase *, xf_message_t *) =
 static int xa_mixer_terminate(xf_component_t *component, xf_message_t *m)
 {
     XAMixer    *mixer = (XAMixer *) component;
-    UWORD32         opcode = m->opcode;
-    
+
+    if (m == NULL)
+    {
+        /* ...ignore component processing during component termination(rare case) */
+        TRACE(OUTPUT, _b("component processing ignored.."));
+        return -1;
+    }
+
     if (m == xf_output_port_control_msg(&mixer->output))
     {
         /* ...output port flushing complete; mark port is idle and terminate */
         xf_output_port_flush_done(&mixer->output);
+        TRACE(OUTPUT, _b("mixer[%p] flush completed in terminate"), mixer);
         return -1;
     }
-    else if (opcode == XF_FILL_THIS_BUFFER && xf_output_port_routed(&mixer->output))
+    else if (m->opcode == XF_FILL_THIS_BUFFER && xf_output_port_routed(&mixer->output))
     {
         /* ...output buffer returned by the sink component; ignore and keep waiting */
         TRACE(OUTPUT, _b("collect output buffer"));
         return 0;
     }
-    else if (opcode == XF_UNREGISTER)
-    {
-        /* ...ignore subsequent unregister command/response */
-        return 0;
-    }
     else
     {
         /* ...everything else is responded with generic failure */
-        xf_response_err(m);
+        if (XF_MSG_SRC_PROXY(m->id))
+        {
+            xf_response_err(m);
+        }
+        else
+        {
+            xf_response_failure(m);
+            TRACE(OUTPUT, _b("mixer[%p] response_failure in terminate"), mixer);
+        }
         return 0;
     }
 }
@@ -1176,6 +1234,9 @@ static int xa_mixer_destroy(xf_component_t *component, xf_message_t *m)
     UWORD32         core = xf_component_core(component);
     UWORD32         i;
     
+    /* ...get the saved command message pointer before the component memory is freed */
+    xf_message_t *m_resp = mixer->m_response;
+
     /* ...destroy all inputs */
     for (i = 0; i < XA_MIXER_MAX_TRACK_NUMBER; i++)
     {
@@ -1194,6 +1255,9 @@ static int xa_mixer_destroy(xf_component_t *component, xf_message_t *m)
     /* ...destroy base object */
     xa_base_destroy(&mixer->base, XF_MM(sizeof(*mixer)), core);
 
+    /* ...complete the command with response */
+    xf_response_err(m_resp);
+
     TRACE(INIT, _b("mixer[%p] destroyed"), mixer);
 
     return 0;
@@ -1205,9 +1269,6 @@ static int xa_mixer_cleanup(xf_component_t *component, xf_message_t *m)
     XAMixer    *mixer = (XAMixer *) component;
     UWORD32         i;
 
-    /* ...complete message with error result code */
-    xf_response_err(m);
-    
     /* ...cancel internal scheduling message if needed */
     xa_base_cancel(&mixer->base);    
     
@@ -1224,6 +1285,9 @@ static int xa_mixer_cleanup(xf_component_t *component, xf_message_t *m)
             BUG(1, _x("probe port: invalid state"));
         }
     }
+
+    /* ...save command message to send response after flush completes */
+    mixer->m_response = m;
 
     /* ...flush output port */
     if (xf_output_port_flush(&mixer->output, XF_FLUSH))

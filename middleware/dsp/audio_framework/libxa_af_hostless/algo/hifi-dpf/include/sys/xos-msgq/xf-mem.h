@@ -1,15 +1,17 @@
-/*******************************************************************************
-* Copyright (c) 2015-2020 Cadence Design Systems, Inc.
-* 
+/*
+* Copyright (c) 2015-2021 Cadence Design Systems Inc.
+*
 * Permission is hereby granted, free of charge, to any person obtaining
 * a copy of this software and associated documentation files (the
-* "Software"), to use this Software with Cadence processor cores only and 
-* not with any other processors and platforms, subject to
+* "Software"), to deal in the Software without restriction, including
+* without limitation the rights to use, copy, modify, merge, publish,
+* distribute, sublicense, and/or sell copies of the Software, and to
+* permit persons to whom the Software is furnished to do so, subject to
 * the following conditions:
-* 
+*
 * The above copyright notice and this permission notice shall be included
 * in all copies or substantial portions of the Software.
-* 
+*
 * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
 * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
@@ -17,8 +19,7 @@
 * CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
 * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-******************************************************************************/
+*/
 /*******************************************************************************
  * xf-mem.h
  *
@@ -28,6 +29,19 @@
 #ifndef __XF_H
 #error "xf-mem.h mustn't be included directly"
 #endif
+
+ /*******************************************************************************/
+
+/* ...memory allocation metadata */
+typedef struct xf_mem_info
+{
+    void *buf_ptr;
+    UWORD32 alloc_size;
+} __attribute__((__packed__)) xf_mem_info_t;
+
+#define _MAX(a, b)  (((a) > (b))?(a):(b))
+#define XF_MIN_ALIGNMENT 1 
+#define XF_MAX_ALIGNMENT 4096
 
 /*******************************************************************************
  * System specific memory pools
@@ -59,6 +73,10 @@ static inline void xf_shmem_alloc_rmref(UWORD32 core, xf_message_t *m)
 /* ...allocate aligned memory on particular core specifying if it is shared */
 static inline void * xf_mem_alloc(UWORD32 size, UWORD32 align, UWORD32 core, UWORD32 shared)
 {
+    UWORD32 aligned_size;
+    void *ptr, *aligned_ptr;
+    xf_mem_info_t *mem_info;
+
 #if XF_CFG_CORES_NUM > 1    
     if (shared)
     {
@@ -67,8 +85,26 @@ static inline void * xf_mem_alloc(UWORD32 size, UWORD32 align, UWORD32 core, UWO
     }
 #endif
     
-    /* ...select local memory pool basing on core specification */
-    return xf_mm_alloc(&XF_CORE_DATA(core)->local_pool, size);
+    XF_CHK_ERR(align <= XF_MAX_ALIGNMENT, NULL);
+
+    /* ... alignment value should be greater than 0 */
+    align = _MAX(align, XF_MIN_ALIGNMENT); 
+
+    /* ...need extra bytes to store allocation meta data, also size should be properly aligned */
+    aligned_size = XF_MM(size + sizeof(xf_mem_info_t) + align-1);
+
+    ptr = xf_mm_alloc(&XF_CORE_DATA(core)->local_pool, aligned_size);
+    if (ptr == NULL) return ptr;
+
+    /* ...align the buffer pointer */
+    aligned_ptr = (void *) (((UWORD32)ptr + align-1) & ~(align-1)); 
+
+    /* ...store original buffer pointer and allocated size */
+    mem_info = (xf_mem_info_t *) ((UWORD32)aligned_ptr+size);
+    mem_info->buf_ptr = ptr;
+    mem_info->alloc_size = aligned_size;
+
+    return aligned_ptr;
 }
 
 /* ...release allocated memory */
@@ -82,9 +118,10 @@ static inline void xf_mem_free(void *p, UWORD32 size, UWORD32 core, UWORD32 shar
         return;
     }
 #endif
-    
-    /* ...select proper pool basing on core specification */
-    xf_mm_free(&XF_CORE_DATA(core)->local_pool, p, size);
+
+    /* ...fetch alignment metadata and free */
+    xf_mem_info_t *mem_info = (xf_mem_info_t *) ((UWORD32)p + size);
+    xf_mm_free(&XF_CORE_DATA(core)->local_pool, mem_info->buf_ptr, mem_info->alloc_size);
 }
 
 /* ...allocate AP-DSP shared memory */
@@ -102,7 +139,7 @@ static inline int xf_shmem_alloc(UWORD32 core, xf_message_t *m)
     }
     else
     {
-        return -ENOMEM;
+        return XAF_MEMORY_ERR;
     }
 }
 
@@ -122,10 +159,10 @@ static inline void xf_shmem_free(UWORD32 core, xf_message_t *m)
  * Scratch memory management
  ******************************************************************************/
 
-static inline void * xf_scratch_mem_init(UWORD32 core)
+static inline void * xf_scratch_mem_init(UWORD32 core, UWORD32 thread_priority)
 {
     /* ...allocate scratch memory from local DSP memory */
-    return xf_mem_alloc(XF_CFG_CODEC_SCRATCHMEM_SIZE, XF_CFG_CODEC_SCRATCHMEM_ALIGN, core, 0);
+    return xf_mem_alloc(XF_CORE_DATA(core)->worker_thread_scratch_size[thread_priority], XF_CFG_CODEC_SCRATCHMEM_ALIGN, core, 0);
 }
 
 /*******************************************************************************
@@ -137,7 +174,7 @@ static inline int xf_mm_alloc_buffer(UWORD32 size, UWORD32 align, UWORD32 core, 
 {
     /* ...allocate memory from proper local pool */
     if ((size = XF_MM(size)) != 0)
-        XF_CHK_ERR(b->addr = xf_mem_alloc(size, align, core, 0), -ENOMEM);
+        XF_CHK_ERR(b->addr = xf_mem_alloc(size, align, core, 0), XAF_MEMORY_ERR);
     else
         b->addr = NULL;
 

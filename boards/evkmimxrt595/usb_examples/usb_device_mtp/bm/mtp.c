@@ -522,6 +522,7 @@ usb_status_t USB_DeviceMtpCallback(class_handle_t handle, uint32_t event, void *
             break;
 
         case kUSB_DeviceMtpEventGetExtendedEventData:
+            error = kStatus_USB_InvalidRequest;
             break;
 
         case kUSB_DeviceMtpEventOpenSession:
@@ -631,6 +632,7 @@ usb_status_t USB_DeviceMtpCallback(class_handle_t handle, uint32_t event, void *
             break;
 
         default:
+            error = kStatus_USB_InvalidRequest;
             break;
     }
 
@@ -647,7 +649,7 @@ usb_status_t USB_DeviceMtpCallback(class_handle_t handle, uint32_t event, void *
  */
 usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *param)
 {
-    usb_status_t error = kStatus_USB_Error;
+    usb_status_t error = kStatus_USB_InvalidRequest;
     uint16_t *temp16   = (uint16_t *)param;
     uint8_t *temp8     = (uint8_t *)param;
     switch (event)
@@ -672,6 +674,7 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
         case kUSB_DeviceEventDetach:
             USB_DeviceMtpCancelCurrentTransaction(g_mtp.mtpHandle);
             USB_DeviceCmdCloseSession(NULL);
+            error = kStatus_USB_Success;
             break;
 #endif
 
@@ -680,15 +683,17 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
             {
                 g_mtp.attach               = 0;
                 g_mtp.currentConfiguration = 0U;
+                error                      = kStatus_USB_Success;
             }
             else if (USB_MTP_CONFIGURE_INDEX == (*temp8))
             {
                 g_mtp.attach               = 1;
                 g_mtp.currentConfiguration = *temp8;
+                error                      = kStatus_USB_Success;
             }
             else
             {
-                error = kStatus_USB_InvalidRequest;
+                /* no action, return kStatus_USB_InvalidRequest */
             }
             break;
         case kUSB_DeviceEventSetInterface:
@@ -698,7 +703,11 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
                 uint8_t alternateSetting = (uint8_t)(*temp16 & 0x00FFU);
                 if (interface < USB_MTP_INTERFACE_COUNT)
                 {
-                    g_mtp.currentInterfaceAlternateSetting[interface] = alternateSetting;
+                    if (alternateSetting < USB_MTP_INTERFACE_ALTERNATE_COUNT)
+                    {
+                        g_mtp.currentInterfaceAlternateSetting[interface] = alternateSetting;
+                        error                                             = kStatus_USB_Success;
+                    }
                 }
             }
             break;
@@ -717,10 +726,6 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
                 {
                     *temp16 = (*temp16 & 0xFF00U) | g_mtp.currentInterfaceAlternateSetting[interface];
                     error   = kStatus_USB_Success;
-                }
-                else
-                {
-                    error = kStatus_USB_InvalidRequest;
                 }
             }
             break;

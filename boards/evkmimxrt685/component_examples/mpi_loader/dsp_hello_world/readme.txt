@@ -7,10 +7,10 @@ kick off it and both cores then execute in parallel.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.9
-- Keil MDK  5.33
-- MCUXpresso  11.3.0
-- GCC ARM Embedded  9.3.1
+- IAR embedded Workbench  9.10.2
+- Keil MDK  5.34
+- MCUXpresso  11.4.0
+- GCC ARM Embedded  10.2.1
 
 Hardware requirements
 =====================
@@ -61,6 +61,6 @@ When the demo runs successfully, the terminal will display the following:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Hello World running on core 'Cortex-M33'
 
-Hello World running on DSP core 'nxp_rt600_RI2019_newlib'
+Hello World running on DSP core 'nxp_rt600_RI2020_5_newlib'
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 

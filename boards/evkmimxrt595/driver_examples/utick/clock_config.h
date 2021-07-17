@@ -17,7 +17,7 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define BOARD_SYSOSC_SETTLING_US 100U   /*!< Board System oscillator settling time in us */
+#define BOARD_SYSOSC_SETTLING_US 220U   /*!< Board System oscillator settling time in us */
 #define BOARD_XTAL32K_CLK_HZ 32768U     /*!< Board xtal32K frequency in Hz */
 #define BOARD_XTAL_SYS_CLK_HZ 24000000U /*!< Board xtal frequency in Hz */
 

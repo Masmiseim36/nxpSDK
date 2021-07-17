@@ -25,8 +25,33 @@ static volatile bool s_lvgl_initialized = false;
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
+#if LV_USE_LOG
+static void print_cb(lv_log_level_t level, const char *file, uint32_t line, const char *func, const char *buf)
+{
+    /*Use only the file name not the path*/
+    size_t p;
+
+    for (p = strlen(file); p > 0; p--)
+    {
+        if (file[p] == '/' || file[p] == '\\')
+        {
+            p++; /*Skip the slash*/
+            break;
+        }
+    }
+
+    static const char *lvl_prefix[] = {"Trace", "Info", "Warn", "Error", "User"};
+
+    PRINTF("\r%s: %s \t(%s #%d %s())\n", lvl_prefix[level], buf, &file[p], line, func);
+}
+#endif
+
 static void AppTask(void *param)
 {
+#if LV_USE_LOG
+    lv_log_register_print_cb(print_cb);
+#endif
+
     lv_port_pre_init();
     lv_init();
     lv_port_disp_init();
@@ -97,7 +122,7 @@ void vApplicationTickHook(void)
 /*!
  * @brief Stack overflow hook.
  */
-void vApplicationStackOverflowHook(TaskHandle_t xTask, signed char *pcTaskName)
+void vApplicationStackOverflowHook(TaskHandle_t xTask, char *pcTaskName)
 {
     (void)pcTaskName;
     (void)xTask;

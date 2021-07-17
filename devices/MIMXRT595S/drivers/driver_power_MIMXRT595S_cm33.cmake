@@ -1,17 +1,15 @@
-if(NOT DRIVER_POWER_MIMXRT595S_cm33_INCLUDED)
-    
-    set(DRIVER_POWER_MIMXRT595S_cm33_INCLUDED true CACHE BOOL "driver_power component is included.")
+include_guard(GLOBAL)
+message("driver_power component is included.")
 
-    target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
-        ${CMAKE_CURRENT_LIST_DIR}/fsl_power.c
-    )
-
-
-    target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
-        ${CMAKE_CURRENT_LIST_DIR}/.
-    )
+target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
+    ${CMAKE_CURRENT_LIST_DIR}/fsl_power.c
+)
 
 
-    include(driver_common_MIMXRT595S_cm33)
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
+    ${CMAKE_CURRENT_LIST_DIR}/.
+)
 
-endif()
+
+include(driver_common_MIMXRT595S_cm33)
+

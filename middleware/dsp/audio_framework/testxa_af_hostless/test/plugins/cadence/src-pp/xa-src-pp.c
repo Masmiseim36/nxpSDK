@@ -1,15 +1,17 @@
-/*******************************************************************************
-* Copyright (c) 2015-2020 Cadence Design Systems, Inc.
-* 
+/*
+* Copyright (c) 2015-2021 Cadence Design Systems Inc.
+*
 * Permission is hereby granted, free of charge, to any person obtaining
 * a copy of this software and associated documentation files (the
-* "Software"), to use this Software with Cadence processor cores only and 
-* not with any other processors and platforms, subject to
+* "Software"), to deal in the Software without restriction, including
+* without limitation the rights to use, copy, modify, merge, publish,
+* distribute, sublicense, and/or sell copies of the Software, and to
+* permit persons to whom the Software is furnished to do so, subject to
 * the following conditions:
-* 
+*
 * The above copyright notice and this permission notice shall be included
 * in all copies or substantial portions of the Software.
-* 
+*
 * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
 * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
@@ -17,8 +19,7 @@
 * CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
 * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-******************************************************************************/
+*/
 
 /*******************************************************************************
  * xa-src-pp.c
@@ -57,8 +58,9 @@ typedef struct xa_src_pp
     WORD32 in_fs;
     WORD32 out_fs;
     WORD32 chunk_size;
-    WORD32 pcm_width;
+    WORD32 pcm_width_bytes;
     WORD32 input_over;
+    WORD32 exec_done;
 } xa_src_pp_t;
 
 /*******************************************************************************
@@ -87,8 +89,11 @@ static inline XA_ERRORCODE xa_src_pp_get_config_param(xa_src_pp_t *p_src_state, 
         break;
         
     case XA_SRC_PP_CONFIG_PARAM_BYTES_PER_SAMPLE:
+        *(WORD32 *) pv_value = p_src_state->pcm_width_bytes;
+        break;
+
     case XA_CODEC_CONFIG_PARAM_PCM_WIDTH:
-        *(WORD32 *) pv_value = p_src_state->pcm_width;
+        *(WORD32 *) pv_value = p_src_state->pcm_width_bytes * 8;
         break;
     }
     
@@ -122,7 +127,7 @@ static inline XA_ERRORCODE xa_src_pp_set_config_param(xa_src_pp_t *p_src_state, 
             break;
 
         case XA_SRC_PP_CONFIG_PARAM_BYTES_PER_SAMPLE:
-            p_src_state->pcm_width = *(WORD32 *) pv_value;
+            p_src_state->pcm_width_bytes = *(WORD32 *) pv_value;
             break;
         }
     }
@@ -173,9 +178,13 @@ XA_ERRORCODE xa_src_pp_fx (xa_codec_handle_t p_xa_module_hdl, WORD32 i_cmd, WORD
         p_src_state->in_bytes = insize;
 
         insize = insize/p_src_state->in_channels;
-        insize = (p_src_state->pcm_width == 2) ? insize >> 1 : insize >> 2;
+        insize = (p_src_state->pcm_width_bytes == 2) ? insize >> 1 : insize >> 2;
 
         xa_src_pp(p_xa_module_obj, XA_API_CMD_SET_CONFIG_PARAM, XA_SRC_PP_CONFIG_PARAM_INPUT_CHUNK_SIZE, &insize);
+
+        /* ... reset states to allow rerun. TENA-2544. */
+        p_src_state->exec_done = 0;
+
         return XA_NO_ERROR;
     }
 
@@ -231,10 +240,13 @@ XA_ERRORCODE xa_src_pp_fx (xa_codec_handle_t p_xa_module_hdl, WORD32 i_cmd, WORD
             xa_src_pp(p_xa_module_obj, XA_API_CMD_GET_CONFIG_PARAM, XA_SRC_PP_CONFIG_PARAM_OUTPUT_CHUNK_SIZE, &outsize);
 
             outsize = outsize * p_src_state->in_channels;
-            outsize = (p_src_state->pcm_width == 2) ? outsize << 1 : outsize << 2;
+            outsize = (p_src_state->pcm_width_bytes == 2) ? outsize << 1 : outsize << 2;
             p_src_state->out_bytes = outsize;
             p_src_state->consumed_bytes = p_src_state->in_bytes;
             p_src_state->in_bytes = 0;
+
+            p_src_state->exec_done = p_src_state->input_over; /* set state exec_done if input_over. TENA-2544 */
+            p_src_state->input_over = 0;    /* reset input over, once exec_done is declared. TENA-2544 */
         }
 
         if (i_cmd == XA_API_CMD_GET_API_SIZE)

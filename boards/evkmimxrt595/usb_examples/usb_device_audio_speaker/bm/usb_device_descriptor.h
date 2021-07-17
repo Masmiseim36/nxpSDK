@@ -9,13 +9,11 @@
 #ifndef __USB_DEVICE_DESCRIPTOR_H__
 #define __USB_DEVICE_DESCRIPTOR_H__
 
+#include "usb_audio_config.h"
 #include "usb_device_audio.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-/*! @brief Whether USB Audio use syn mode or not, note that some socs may not support sync mode */
-#define USB_DEVICE_AUDIO_USE_SYNC_MODE (0U)
-
 /*! @brief Whether UAC 5.1 is enabled or not. */
 #define USB_AUDIO_CHANNEL5_1 (0)
 
@@ -60,9 +58,16 @@
 #define USB_DEVICE_STRING_COUNT        (3)
 #define USB_DEVICE_LANGUAGE_COUNT      (1)
 
-#define USB_AUDIO_SPEAKER_CONFIGURE_INDEX (1)
-#define USB_AUDIO_CONTROL_INTERFACE_INDEX (0)
-#define USB_AUDIO_STREAM_INTERFACE_INDEX  (1)
+#define USB_AUDIO_SPEAKER_CONFIGURE_INDEX        (1)
+#define USB_AUDIO_CONTROL_INTERFACE_INDEX        (0)
+#define USB_AUDIO_SPEAKER_STREAM_INTERFACE_INDEX (1)
+
+#define USB_AUDIO_CONTROL_INTERFACE_ALTERNATE_COUNT        (1)
+#define USB_AUDIO_SPEAKER_STREAM_INTERFACE_ALTERNATE_COUNT (2)
+
+#define USB_AUDIO_CONTROL_INTERFACE_ALTERNATE_0        (0x00U)
+#define USB_AUDIO_SPEAKER_STREAM_INTERFACE_ALTERNATE_0 (0x00U)
+#define USB_AUDIO_SPEAKER_STREAM_INTERFACE_ALTERNATE_1 (0x01U)
 
 #if defined(USB_DEVICE_AUDIO_USE_SYNC_MODE) && (USB_DEVICE_AUDIO_USE_SYNC_MODE > 0U)
 #define USB_AUDIO_STREAM_ENDPOINT_COUNT (1)
@@ -100,11 +105,6 @@ Specification, Revision 2.0 chapter 9.6.6*/
 #define AUDIO_OUT_TRANSFER_LENGTH_ONE_FRAME (AUDIO_SAMPLING_RATE_KHZ * AUDIO_FORMAT_CHANNELS * AUDIO_FORMAT_SIZE)
 
 /* Packet size and interval. */
-#if (USB_DEVICE_CONFIG_AUDIO_CLASS_2_0)
-#define HS_ISO_OUT_ENDP_INTERVAL (0x01)
-#else
-#define HS_ISO_OUT_ENDP_INTERVAL (0x04) /*interval must be 1ms for usb audio 1.0 */
-#endif
 #define HS_ISO_IN_ENDP_INTERVAL (0x04)
 #if ((!USB_DEVICE_CONFIG_AUDIO_CLASS_2_0) && ((HS_ISO_OUT_ENDP_INTERVAL != 4) || (HS_ISO_IN_ENDP_INTERVAL != 4)))
 #error "iso data and sync endpoint interval must be 1 ms for usb audio 1.0"

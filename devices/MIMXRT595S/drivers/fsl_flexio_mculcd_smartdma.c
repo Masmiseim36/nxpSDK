@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2020 NXP
+ * Copyright 2019-2021 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -106,13 +106,13 @@ static void FLEXIO_MCULCD_SMARTDMA_GetTxChunkLen(
 
 static void FLEXIO_MCULCD_RGB656ToRGB888(const uint16_t *rgb565, uint32_t pixelCount, uint8_t *rgb888)
 {
-    while ((pixelCount--) != 0)
+    while ((pixelCount--) != 0U)
     {
-        *rgb888 = ((*rgb565) & 0x001FU) << 3U;
+        *rgb888 = (uint8_t)(((*rgb565) & 0x001FU) << 3U);
         rgb888++;
-        *rgb888 = ((*rgb565) & 0x07E0U) >> 3U;
+        *rgb888 = (uint8_t)(((*rgb565) & 0x07E0U) >> 3U);
         rgb888++;
-        *rgb888 = ((*rgb565) & 0xF800U) >> 8U;
+        *rgb888 = (uint8_t)(((*rgb565) & 0xF800U) >> 8U);
         rgb888++;
 
         rgb565++;
@@ -154,24 +154,24 @@ status_t FLEXIO_MCULCD_TransferCreateHandleSMARTDMA(FLEXIO_MCULCD_Type *base,
     }
 
     /* Zero the handle. */
-    memset(handle, 0, sizeof(*handle));
+    (void)memset(handle, 0, sizeof(*handle));
 
     if (NULL == config)
     {
-        handle->smartdmaApi = kSMARTDMA_FlexIO_DMA;
+        handle->smartdmaApi = (uint8_t)kSMARTDMA_FlexIO_DMA;
     }
     else
     {
         if (config->inputPixelFormat == config->outputPixelFormat)
         {
-            handle->smartdmaApi = kSMARTDMA_FlexIO_DMA;
+            handle->smartdmaApi = (uint8_t)kSMARTDMA_FlexIO_DMA;
         }
         else if (((config->inputPixelFormat == kFLEXIO_MCULCD_RGB565) &&
                   (config->outputPixelFormat == kFLEXIO_MCULCD_RGB888)) ||
                  ((config->inputPixelFormat == kFLEXIO_MCULCD_BGR565) &&
                   (config->outputPixelFormat == kFLEXIO_MCULCD_BGR888)))
         {
-            handle->smartdmaApi      = kSMARTDMA_FlexIO_DMA_RGB565To888;
+            handle->smartdmaApi      = (uint8_t)kSMARTDMA_FlexIO_DMA_RGB565To888;
             handle->needColorConvert = true;
         }
         else
@@ -181,7 +181,7 @@ status_t FLEXIO_MCULCD_TransferCreateHandleSMARTDMA(FLEXIO_MCULCD_Type *base,
     }
 
     /* Initialize the state. */
-    handle->state = kFLEXIO_MCULCD_StateIdle;
+    handle->state = (uint32_t)kFLEXIO_MCULCD_StateIdle;
 
     /* Register callback and userData. */
     handle->completionCallback = callback;
@@ -193,7 +193,7 @@ status_t FLEXIO_MCULCD_TransferCreateHandleSMARTDMA(FLEXIO_MCULCD_Type *base,
     SMARTDMA_InstallCallback(FLEXIO_MCULCD_SMARTDMA_Callback, handle);
 
     /* The shifter interrupt is used by the SMARTDMA. */
-    FLEXIO_EnableShifterStatusInterrupts(base->flexioBase, (1 << FLEXIO_MCULCD_SMARTDMA_TX_END_SHIFTER));
+    FLEXIO_EnableShifterStatusInterrupts(base->flexioBase, (1UL << FLEXIO_MCULCD_SMARTDMA_TX_END_SHIFTER));
 
     return kStatus_Success;
 }
@@ -223,7 +223,7 @@ status_t FLEXIO_MCULCD_TransferSMARTDMA(FLEXIO_MCULCD_Type *base,
     uint32_t part1Len, part2Len, part3Len;
 
     /* Check if the device is busy. */
-    if (kFLEXIO_MCULCD_StateIdle != handle->state)
+    if ((uint32_t)kFLEXIO_MCULCD_StateIdle != handle->state)
     {
         return kStatus_FLEXIO_MCULCD_Busy;
     }
@@ -236,7 +236,7 @@ status_t FLEXIO_MCULCD_TransferSMARTDMA(FLEXIO_MCULCD_Type *base,
 
     FLEXIO_MCULCD_SMARTDMA_GetTxChunkLen(xfer->dataSize, xfer->dataAddrOrSameValue, &part1Len, &part2Len, &part3Len);
 
-    handle->state = kFLEXIO_MCULCD_StateWriteArray;
+    handle->state = (uint32_t)kFLEXIO_MCULCD_StateWriteArray;
 
     /* Start transfer. */
     handle->remainingCount      = xfer->dataSize;
@@ -248,30 +248,30 @@ status_t FLEXIO_MCULCD_TransferSMARTDMA(FLEXIO_MCULCD_Type *base,
     /* Send the command. */
     FLEXIO_MCULCD_WriteCommandBlocking(base, xfer->command);
 
-    if (part1Len > 0)
+    if (part1Len > 0U)
     {
         if (handle->needColorConvert)
         {
             FLEXIO_MCULCD_RGB656ToRGB888((uint16_t *)xfer->dataAddrOrSameValue, part1Len >> 1U,
                                          handle->blockingXferBuffer);
-            FLEXIO_MCULCD_WriteDataArrayBlocking(base, handle->blockingXferBuffer, (part1Len >> 1U) * 3);
+            FLEXIO_MCULCD_WriteDataArrayBlocking(base, handle->blockingXferBuffer, (part1Len >> 1U) * 3U);
         }
         else
         {
-            FLEXIO_MCULCD_WriteDataArrayBlocking(base, (void *)xfer->dataAddrOrSameValue, (size_t)part1Len);
+            FLEXIO_MCULCD_WriteDataArrayBlocking(base, (void *)(uint8_t *)xfer->dataAddrOrSameValue, (size_t)part1Len);
         }
         handle->remainingCount -= part1Len;
         handle->dataAddrOrSameValue += part1Len;
     }
 
-    if (0 == part2Len)
+    if (0U == part2Len)
     {
         /* In this case, all data are sent out as part 1. Only notify upper layer here. */
         FLEXIO_MCULCD_StopTransfer(base);
-        handle->state = kFLEXIO_MCULCD_StateIdle;
+        handle->state = (uint32_t)kFLEXIO_MCULCD_StateIdle;
 
         /* Callback to inform upper layer. */
-        if (handle->completionCallback)
+        if (NULL != handle->completionCallback)
         {
             handle->completionCallback(base, handle, kStatus_FLEXIO_MCULCD_Idle, handle->userData);
         }
@@ -292,7 +292,7 @@ status_t FLEXIO_MCULCD_TransferSMARTDMA(FLEXIO_MCULCD_Type *base,
 
         /* The part 3 is transfered using blocking method in ISR, convert the color
            to save time in ISR. */
-        if ((0 != part3Len) && (handle->needColorConvert))
+        if ((0U != part3Len) && (handle->needColorConvert))
         {
             FLEXIO_MCULCD_RGB656ToRGB888((uint16_t *)xfer->dataAddrOrSameValue, part3Len >> 1U,
                                          handle->blockingXferBuffer);
@@ -322,7 +322,7 @@ void FLEXIO_MCULCD_TransferAbortSMARTDMA(FLEXIO_MCULCD_Type *base, flexio_mculcd
     SMARTDMA_Reset();
 
     /* Set the handle state. */
-    handle->state     = kFLEXIO_MCULCD_StateIdle;
+    handle->state     = (uint32_t)kFLEXIO_MCULCD_StateIdle;
     handle->dataCount = 0;
 }
 
@@ -344,7 +344,7 @@ status_t FLEXIO_MCULCD_TransferGetCountSMARTDMA(FLEXIO_MCULCD_Type *base,
 
     uint32_t state = handle->state;
 
-    if (kFLEXIO_MCULCD_StateIdle == state)
+    if ((uint32_t)kFLEXIO_MCULCD_StateIdle == state)
     {
         return kStatus_NoTransferInProgress;
     }
@@ -370,27 +370,27 @@ static void FLEXIO_MCULCD_SMARTDMA_Callback(void *param)
     flexioMculcdSmartDmaHandle->remainingCount -= flexioMculcdSmartDmaHandle->dataCountUsingEzh;
 
     /* Send the part 3 */
-    if (flexioMculcdSmartDmaHandle->remainingCount)
+    if (0U != flexioMculcdSmartDmaHandle->remainingCount)
     {
         if (flexioMculcdSmartDmaHandle->needColorConvert)
         {
             FLEXIO_MCULCD_WriteDataArrayBlocking(flexioLcdMcuBase, flexioMculcdSmartDmaHandle->blockingXferBuffer,
-                                                 (flexioMculcdSmartDmaHandle->remainingCount >> 1U) * 3);
+                                                 (flexioMculcdSmartDmaHandle->remainingCount >> 1U) * 3U);
         }
         else
         {
             FLEXIO_MCULCD_WriteDataArrayBlocking(flexioLcdMcuBase,
-                                                 (void *)flexioMculcdSmartDmaHandle->dataAddrOrSameValue,
+                                                 (void *)(uint8_t *)flexioMculcdSmartDmaHandle->dataAddrOrSameValue,
                                                  flexioMculcdSmartDmaHandle->remainingCount);
         }
     }
 
     flexioMculcdSmartDmaHandle->remainingCount = 0;
     FLEXIO_MCULCD_StopTransfer(flexioLcdMcuBase);
-    flexioMculcdSmartDmaHandle->state = kFLEXIO_MCULCD_StateIdle;
+    flexioMculcdSmartDmaHandle->state = (uint32_t)kFLEXIO_MCULCD_StateIdle;
 
     /* Callback to inform upper layer. */
-    if (flexioMculcdSmartDmaHandle->completionCallback)
+    if (NULL != flexioMculcdSmartDmaHandle->completionCallback)
     {
         flexioMculcdSmartDmaHandle->completionCallback(flexioLcdMcuBase, flexioMculcdSmartDmaHandle,
                                                        kStatus_FLEXIO_MCULCD_Idle,

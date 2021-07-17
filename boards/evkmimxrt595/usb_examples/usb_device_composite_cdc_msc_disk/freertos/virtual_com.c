@@ -80,7 +80,7 @@ volatile static usb_device_composite_struct_t *g_deviceComposite;
  */
 usb_status_t USB_DeviceCdcVcomCallback(class_handle_t handle, uint32_t event, void *param)
 {
-    usb_status_t error = kStatus_USB_Error;
+    usb_status_t error = kStatus_USB_InvalidRequest;
     uint32_t len;
     uint8_t *uartBitmap;
     usb_cdc_acm_info_t *acmInfo = &s_usbCdcAcmInfo;
@@ -98,7 +98,7 @@ usb_status_t USB_DeviceCdcVcomCallback(class_handle_t handle, uint32_t event, vo
                  ** meaning that we want to inform the host that we do not have any additional
                  ** data, so it can flush the output.
                  */
-                USB_DeviceCdcAcmSend(handle, USB_CDC_VCOM_DIC_BULK_IN_ENDPOINT, NULL, 0);
+                error = USB_DeviceCdcAcmSend(handle, USB_CDC_VCOM_DIC_BULK_IN_ENDPOINT, NULL, 0);
             }
             else if ((1 == g_deviceComposite->cdcVcom.attach) && (1 == g_deviceComposite->cdcVcom.startTransactions))
             {
@@ -106,8 +106,8 @@ usb_status_t USB_DeviceCdcVcomCallback(class_handle_t handle, uint32_t event, vo
                 {
                     /* User: add your own code for send complete event */
                     /* Schedule buffer for next receive event */
-                    USB_DeviceCdcAcmRecv(handle, USB_CDC_VCOM_DIC_BULK_OUT_ENDPOINT, s_currRecvBuf,
-                                         g_cdcVcomDicEndpoints[1].maxPacketSize);
+                    error = USB_DeviceCdcAcmRecv(handle, USB_CDC_VCOM_DIC_BULK_OUT_ENDPOINT, s_currRecvBuf,
+                                                 g_cdcVcomDicEndpoints[1].maxPacketSize);
                 }
             }
             else
@@ -124,18 +124,20 @@ usb_status_t USB_DeviceCdcVcomCallback(class_handle_t handle, uint32_t event, vo
                 if (!s_recvSize)
                 {
                     /* Schedule buffer for next receive event */
-                    USB_DeviceCdcAcmRecv(handle, USB_CDC_VCOM_DIC_BULK_OUT_ENDPOINT, s_currRecvBuf,
-                                         g_cdcVcomDicEndpoints[1].maxPacketSize);
+                    error = USB_DeviceCdcAcmRecv(handle, USB_CDC_VCOM_DIC_BULK_OUT_ENDPOINT, s_currRecvBuf,
+                                                 g_cdcVcomDicEndpoints[1].maxPacketSize);
                 }
                 else
                 {
                     xSemaphoreGive(VcomIdle);
+                    error = kStatus_USB_Success;
                 }
             }
         }
         break;
         case kUSB_DeviceCdcEventSerialStateNotif:
             ((usb_device_cdc_acm_struct_t *)handle)->hasSentState = 0;
+            error                                                 = kStatus_USB_Success;
             break;
         case kUSB_DeviceCdcEventSendEncapsulatedCommand:
             break;
@@ -147,43 +149,49 @@ usb_status_t USB_DeviceCdcVcomCallback(class_handle_t handle, uint32_t event, vo
                 if (1 == acmReqParam->isSetup)
                 {
                     *(acmReqParam->buffer) = s_abstractState;
+                    *(acmReqParam->length) = sizeof(s_abstractState);
                 }
                 else
                 {
-                    *(acmReqParam->length) = 0;
+                    /* no action, data phase, s_abstractState has been assigned */
                 }
+                error = kStatus_USB_Success;
             }
             else if (USB_DEVICE_CDC_FEATURE_COUNTRY_SETTING == acmReqParam->setupValue)
             {
                 if (1 == acmReqParam->isSetup)
                 {
                     *(acmReqParam->buffer) = s_countryCode;
+                    *(acmReqParam->length) = sizeof(s_countryCode);
                 }
                 else
                 {
-                    *(acmReqParam->length) = 0;
+                    /* no action, data phase, s_countryCode has been assigned */
                 }
+                error = kStatus_USB_Success;
             }
             else
             {
+                /* no action, return kStatus_USB_InvalidRequest */
             }
-            error = kStatus_USB_Success;
             break;
         case kUSB_DeviceCdcEventGetCommFeature:
             if (USB_DEVICE_CDC_FEATURE_ABSTRACT_STATE == acmReqParam->setupValue)
             {
                 *(acmReqParam->buffer) = s_abstractState;
                 *(acmReqParam->length) = COMM_FEATURE_DATA_SIZE;
+                error                  = kStatus_USB_Success;
             }
             else if (USB_DEVICE_CDC_FEATURE_COUNTRY_SETTING == acmReqParam->setupValue)
             {
                 *(acmReqParam->buffer) = s_countryCode;
                 *(acmReqParam->length) = COMM_FEATURE_DATA_SIZE;
+                error                  = kStatus_USB_Success;
             }
             else
             {
+                /* no action, return kStatus_USB_InvalidRequest */
             }
-            error = kStatus_USB_Success;
             break;
         case kUSB_DeviceCdcEventClearCommFeature:
             break;
@@ -197,16 +205,18 @@ usb_status_t USB_DeviceCdcVcomCallback(class_handle_t handle, uint32_t event, vo
             if (1 == acmReqParam->isSetup)
             {
                 *(acmReqParam->buffer) = s_lineCoding;
+                *(acmReqParam->length) = sizeof(s_lineCoding);
             }
             else
             {
-                *(acmReqParam->length) = 0;
+                /* no action, data phase, s_lineCoding has been assigned */
             }
-        }
             error = kStatus_USB_Success;
-            break;
+        }
+        break;
         case kUSB_DeviceCdcEventSetControlLineState:
         {
+            error                     = kStatus_USB_Success;
             s_usbCdcAcmInfo.dteStatus = acmReqParam->setupValue;
             /* activate/deactivate Tx carrier */
             if (acmInfo->dteStatus & USB_DEVICE_CDC_CONTROL_SIG_BITMAP_CARRIER_ACTIVATION)

@@ -1,15 +1,17 @@
-/*******************************************************************************
-* Copyright (c) 2015-2020 Cadence Design Systems, Inc.
-* 
+/*
+* Copyright (c) 2015-2021 Cadence Design Systems Inc.
+*
 * Permission is hereby granted, free of charge, to any person obtaining
 * a copy of this software and associated documentation files (the
-* "Software"), to use this Software with Cadence processor cores only and 
-* not with any other processors and platforms, subject to
+* "Software"), to deal in the Software without restriction, including
+* without limitation the rights to use, copy, modify, merge, publish,
+* distribute, sublicense, and/or sell copies of the Software, and to
+* permit persons to whom the Software is furnished to do so, subject to
 * the following conditions:
-* 
+*
 * The above copyright notice and this permission notice shall be included
 * in all copies or substantial portions of the Software.
-* 
+*
 * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
 * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
@@ -17,8 +19,7 @@
 * CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
 * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-******************************************************************************/
+*/
 /*******************************************************************************
  * xf-main.c
  *
@@ -34,12 +35,6 @@
 #include "xf-dp.h"
 
 /*******************************************************************************
- * Tracing configuration
- ******************************************************************************/
-
-TRACE_TAG(INFO, 1);
-
-/*******************************************************************************
  * Global data definition
  ******************************************************************************/
 
@@ -52,6 +47,16 @@ xf_dsp_t *xf_g_dsp;
 /*******************************************************************************
  * IPC layer initialization
  ******************************************************************************/
+
+/* ...system-specific IPC layer deinitialization */
+int xf_ipc_deinit(UWORD32 core)
+{
+    xf_core_data_t  *cd = XF_CORE_DATA(core);
+
+    XF_CHK_API(xf_mm_deinit(&cd->shared_pool));
+
+    return 0;
+}
 
 /* ...system-specific IPC layer initialization */
 int xf_ipc_init(UWORD32 core)
@@ -99,12 +104,16 @@ static void xf_core_loop(UWORD32 core)
  * DSP entry point
  ******************************************************************************/
 
-static int _dsp_thread_entry(void)
+static int _dsp_thread_entry(void *arg)
 {
 #if XF_CFG_CORES_NUM > 1
     UWORD32     i;
 #endif
     UWORD32     size;
+    void *(*dsp_args)[XAF_NUM_THREAD_ARGS] = arg;
+    int core = 0;
+    //UWORD32 (*pworker_thread_scratch_size)[XAF_MAX_WORKER_THREADS] = (UWORD32 (*)[XAF_MAX_WORKER_THREADS])(*dsp_args)[0];
+    memcpy(XF_CORE_DATA(core)->worker_thread_scratch_size, (UWORD32 (*)[XAF_MAX_WORKER_THREADS])(*dsp_args)[0], sizeof(XF_CORE_DATA(core)->worker_thread_scratch_size));
     
     /* ...validation of parameters shared with ARM */
     size = XF_CFG_CORES_NUM;
@@ -157,12 +166,19 @@ static int _dsp_thread_entry(void)
     /* ...enter execution loop on master core #0 */
     xf_core_loop(0);
 
-    /* ...not reachable */
+#if XF_CFG_CORES_NUM > 1
+    /* ...DSP shared memory pool initialization */
+    XF_CHK_API(xf_mm_deinit(&xf_dsp_shmem_pool));
+#endif    // #if XF_CFG_CORES_NUM > 1
+
+    /* ...deinitialize per-core memory loop */
+    XF_CHK_API(xf_mm_deinit(&(xf_g_dsp->xf_core_data[0]).local_pool));
+
     return 0;
 }
 
 void *dsp_thread_entry(void *arg)
 {
-    _dsp_thread_entry();
+    _dsp_thread_entry(arg);
     return NULL;
 }

@@ -1,6 +1,6 @@
 # CROSS COMPILER SETTING
 SET(CMAKE_SYSTEM_NAME Generic)
-CMAKE_MINIMUM_REQUIRED (VERSION 3.1.1)
+CMAKE_MINIMUM_REQUIRED (VERSION 3.10.0)
 
 # THE VERSION NUMBER
 SET (Tutorial_VERSION_MAJOR 1)
@@ -34,7 +34,7 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../hello_world_ns.c"
 "${ProjDirPath}/../pin_mux.c"
 "${ProjDirPath}/../pin_mux.h"
-"${ProjDirPath}/../../hello_world_s/veneer_table.h"
+"${ProjDirPath}/../veneer_table.h"
 "${ProjDirPath}/../board.c"
 "${ProjDirPath}/../board.h"
 "${ProjDirPath}/../clock_config.c"
@@ -52,7 +52,7 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../../devices/MIMXRT595S
     ${ProjDirPath}/../../../../../../components/uart
     ${ProjDirPath}/../../../../../../components/lists
-    ${ProjDirPath}/../../../../../../CMSIS/Include
+    ${ProjDirPath}/../../../../../../CMSIS/Core/Include
     ${ProjDirPath}/../../../../../../devices/MIMXRT595S/utilities
 )
 
@@ -89,11 +89,7 @@ include(driver_lpc_iopctl_MIMXRT595S_cm33)
 
 include(driver_lpc_gpio_MIMXRT595S_cm33)
 
-include(CMSIS_Include_core_cm33_MIMXRT595S_cm33)
-
-include(CMSIS_Include_common_MIMXRT595S_cm33)
-
-include(CMSIS_Include_dsp_MIMXRT595S_cm33)
+include(CMSIS_Include_core_cm_MIMXRT595S_cm33)
 
 include(utilities_misc_utilities_MIMXRT595S_cm33)
 
@@ -112,19 +108,19 @@ target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE nosys)
 
 if(CMAKE_BUILD_TYPE STREQUAL debug)
     target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../hello_world_s/armgcc/${CMAKE_BUILD_TYPE}/hello_world_s_CMSE_Lib.o)
-endif()
+endif(CMAKE_BUILD_TYPE STREQUAL debug)
 
 if(CMAKE_BUILD_TYPE STREQUAL release)
     target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../hello_world_s/armgcc/${CMAKE_BUILD_TYPE}/hello_world_s_CMSE_Lib.o)
-endif()
+endif(CMAKE_BUILD_TYPE STREQUAL release)
 
 if(CMAKE_BUILD_TYPE STREQUAL flash_debug)
     target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../hello_world_s/armgcc/${CMAKE_BUILD_TYPE}/hello_world_s_CMSE_Lib.o)
-endif()
+endif(CMAKE_BUILD_TYPE STREQUAL flash_debug)
 
 if(CMAKE_BUILD_TYPE STREQUAL flash_release)
     target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../hello_world_s/armgcc/${CMAKE_BUILD_TYPE}/hello_world_s_CMSE_Lib.o)
-endif()
+endif(CMAKE_BUILD_TYPE STREQUAL flash_release)
 
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--end-group)
 

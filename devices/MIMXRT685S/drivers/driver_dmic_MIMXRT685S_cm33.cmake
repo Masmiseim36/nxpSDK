@@ -1,17 +1,15 @@
-if(NOT DRIVER_DMIC_MIMXRT685S_cm33_INCLUDED)
-    
-    set(DRIVER_DMIC_MIMXRT685S_cm33_INCLUDED true CACHE BOOL "driver_dmic component is included.")
+include_guard(GLOBAL)
+message("driver_dmic component is included.")
 
-    target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
-        ${CMAKE_CURRENT_LIST_DIR}/fsl_dmic.c
-    )
-
-
-    target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
-        ${CMAKE_CURRENT_LIST_DIR}/.
-    )
+target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
+    ${CMAKE_CURRENT_LIST_DIR}/fsl_dmic.c
+)
 
 
-    include(driver_common_MIMXRT685S_cm33)
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
+    ${CMAKE_CURRENT_LIST_DIR}/.
+)
 
-endif()
+
+include(driver_common_MIMXRT685S_cm33)
+

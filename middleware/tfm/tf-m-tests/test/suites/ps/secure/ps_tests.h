@@ -8,7 +8,7 @@
 #ifndef __PS_TESTS_H__
 #define __PS_TESTS_H__
 
-#include "test/framework/test_framework.h"
+#include "test_framework.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -28,7 +28,6 @@ void register_testsuite_s_psa_ps_interface(struct test_suite_t *p_test_suite);
  */
 void register_testsuite_s_psa_ps_reliability(struct test_suite_t *p_test_suite);
 
-#ifdef PS_TEST_NV_COUNTERS
 /**
  * \brief Register testsuite for the ps rollback protection tests.
  *
@@ -36,7 +35,6 @@ void register_testsuite_s_psa_ps_reliability(struct test_suite_t *p_test_suite);
  */
 void register_testsuite_s_rollback_protection(
                                              struct test_suite_t *p_test_suite);
-#endif
 
 #ifdef __cplusplus
 }

@@ -1,6 +1,6 @@
 # CROSS COMPILER SETTING
 SET(CMAKE_SYSTEM_NAME Generic)
-CMAKE_MINIMUM_REQUIRED (VERSION 3.1.1)
+CMAKE_MINIMUM_REQUIRED (VERSION 3.10.0)
 
 # THE VERSION NUMBER
 SET (Tutorial_VERSION_MAJOR 1)
@@ -44,7 +44,6 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 )
 
 target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
-    ${ProjDirPath}/.. debug
     ${ProjDirPath}/..
 )
 
@@ -59,7 +58,7 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../flash_config
     ${ProjDirPath}/../../../../../components/serial_manager
     ${ProjDirPath}/../../../../../components/lists
-    ${ProjDirPath}/../../../../../CMSIS/Include
+    ${ProjDirPath}/../../../../../CMSIS/Core/Include
     ${ProjDirPath}/../../../../../components/osa
 )
 
@@ -124,11 +123,7 @@ include(driver_reset_MIMXRT685S_cm33)
 
 include(middleware_freertos-kernel_extension_MIMXRT685S_cm33)
 
-include(CMSIS_Include_core_cm33_MIMXRT685S_cm33)
-
-include(CMSIS_Include_common_MIMXRT685S_cm33)
-
-include(CMSIS_Include_dsp_MIMXRT685S_cm33)
+include(CMSIS_Include_core_cm_MIMXRT685S_cm33)
 
 include(middleware_sdmmc_osa_freertos_MIMXRT685S_cm33)
 

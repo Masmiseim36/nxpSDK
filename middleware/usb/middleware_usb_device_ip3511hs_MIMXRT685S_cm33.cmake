@@ -1,20 +1,18 @@
-if(NOT MIDDLEWARE_USB_DEVICE_IP3511HS_MIMXRT685S_cm33_INCLUDED)
-    
-    set(MIDDLEWARE_USB_DEVICE_IP3511HS_MIMXRT685S_cm33_INCLUDED true CACHE BOOL "middleware_usb_device_ip3511hs component is included.")
+include_guard(GLOBAL)
+message("middleware_usb_device_ip3511hs component is included.")
 
-    target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
-        ${CMAKE_CURRENT_LIST_DIR}/device/usb_device_lpcip3511.c
-    )
-
-
-    target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
-        ${CMAKE_CURRENT_LIST_DIR}/device
-        ${CMAKE_CURRENT_LIST_DIR}/include
-    )
+target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
+    ${CMAKE_CURRENT_LIST_DIR}/device/usb_device_lpcip3511.c
+)
 
 
-    include(middleware_usb_phy_MIMXRT685S_cm33)
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
+    ${CMAKE_CURRENT_LIST_DIR}/device
+    ${CMAKE_CURRENT_LIST_DIR}/include
+)
 
-    include(middleware_usb_device_common_header_MIMXRT685S_cm33)
 
-endif()
+include(middleware_usb_phy_MIMXRT685S_cm33)
+
+include(middleware_usb_device_common_header_MIMXRT685S_cm33)
+

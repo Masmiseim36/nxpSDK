@@ -8,12 +8,15 @@
             <key>Includes</key>
             <value flag="-I" inheritance="donotinherit">
               <ListEntry>${xt_project_loc}/..</ListEntry>
+              <ListEntry>${xt_project_loc}/../../../../../../middleware/dsp/naturedsp/hifi4/include</ListEntry>
+              <ListEntry>${xt_project_loc}/../../../../../../middleware/dsp/naturedsp/hifi4/include_private</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../devices/MIMXRT685S/drivers</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../components/uart</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../components/serial_manager</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../middleware/multicore/rpmsg_lite/lib/include/platform/imxrt600_hifi4</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../middleware/dsp/codecs/aacplus_dec/hifi4/include/aac_dec</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../middleware/dsp/codecs/asrc_src_pp/hifi4/include/src_pp</ListEntry>
+              <ListEntry>${xt_project_loc}/../../../../../../middleware/dsp/codecs/g711/hifi4/include/g711_codec</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../middleware/dsp/codecs/mp3_dec/hifi4/include/mp3_dec</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../middleware/dsp/codecs/opus/hifi4/include/opus_codec</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../middleware/dsp/codecs/opus/hifi4/include/ogg_lib</ListEntry>
@@ -40,15 +43,15 @@
               <ListEntry>${xt_project_loc}/../../../../../../middleware/dsp/audio_framework/libxa_af_hostless/include/sysdeps/xos/include</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/include</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/include/audio</ListEntry>
+              <ListEntry>${xt_project_loc}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/plugins</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/plugins/nxp/client_proxy</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/plugins/nxp/vit_pre_proc</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/test_inp</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../devices/MIMXRT685S/utilities</ListEntry>
-              <ListEntry>${xt_project_loc}/../../../../../../middleware/EAP/Example_Application_Simulation/APP_INTEGRATION_XTENSA/COMMON/PlatformTypes</ListEntry>
-              <ListEntry>${xt_project_loc}/../../../../../../middleware/EAP/Example_Application_Simulation/APP_INTEGRATION_XTENSA/INC</ListEntry>
-              <ListEntry>${xt_project_loc}/../../../../../../middleware/EAP/Example_Application_Simulation/APP_INTEGRATION_XTENSA/LIB</ListEntry>
+              <ListEntry>${xt_project_loc}/../../../../../../middleware/EAP/Example_Application/CONFIG_HEADER</ListEntry>
+              <ListEntry>${xt_project_loc}/../../../../../../middleware/EAP/EAP_Includes</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../devices/MIMXRT685S</ListEntry>
-              <ListEntry>${xt_project_loc}/../../../../../../CMSIS/Include</ListEntry>
+              <ListEntry>${xt_project_loc}/../../../../../../CMSIS/Core/Include</ListEntry>
             </value>
           </StringListMapEntry>
         </StringListMapOptions>
@@ -84,6 +87,8 @@
               <ListEntry key="ALGORITHM_PR_EQNB" value="1"/>
               <ListEntry key="ALGORITHM_LIMP" value="1"/>
               <ListEntry key="ALGORITHM_LIMR" value="1"/>
+              <ListEntry key="ALGORITHM_XO" value="1"/>
+              <ListEntry key="PLATFORM_ID" value="LVM_IMXRT600"/>
               <ListEntry key="SERIAL_PORT_TYPE_UART" value="1"/>
               <ListEntry key="NNLIB_V2" value=""/>
               <ListEntry key="HAVE_XOS" value=""/>
@@ -91,11 +96,26 @@
               <ListEntry key="FIO_LOCAL_FS" value=""/>
               <ListEntry key="DEBUG_CONSOLE_RX_ENABLE" value="0"/>
               <ListEntry key="CPU_MIMXRT685SFVKB_dsp" value=""/>
+              <ListEntry key="MCUXPRESSO_SDK" value=""/>
             </value>
           </KeyValueListMapEntry>
         </KeyValueListMapOptions>
       </PreprocessorOptions>
       <CompilerOptions>
+        <StringListMapOptions>
+          <StringListMapEntry>
+            <key>CompilerAdditionalOptions</key>
+            <value flag="" inheritance="append">
+                        <ListEntry>-fpermissive&#13;
+-mno-mul16&#13;
+-mno-mul32&#13;
+-mno-div32&#13;
+-INLINE:requested&#13;
+-Wno-missing-braces&#13;
+-fmessage-length=0&#13;
+-std=gnu99</ListEntry></value>
+          </StringListMapEntry>
+        </StringListMapOptions>
         <SingleFlagMapOptions>
           <SingleFlagMapEntry>
             <key>OptimizeSpace</key>
@@ -114,21 +134,6 @@
             <value use="true" flag="-fsigned-char"/>
           </SingleFlagMapEntry>
         </SingleFlagMapOptions>
-        <StringListMapOptions>
-          <StringListMapEntry>
-            <key>CompilerAdditionalOptions</key>
-            <value inheritance="append">
-              <ListEntry>-fpermissive&#13;
--mno-mul16&#13;
--mno-mul32&#13;
--mno-div32&#13;
--INLINE:requested&#13;
--Wno-missing-braces&#13;
--fmessage-length=0&#13;
--std=gnu99</ListEntry>
-            </value>
-          </StringListMapEntry>
-        </StringListMapOptions>
       </CompilerOptions>
       <AssemblerOptions/>
       <LinkerOptions>
@@ -138,14 +143,15 @@
             <value inheritance="append">
               <ListEntry>${xt_project_loc}/../../../../../../middleware/dsp/codecs/aacplus_dec/hifi4/lib/xa_aacplus_v2_loas_dec.a&#13;
 ${xt_project_loc}/../../../../../../middleware/dsp/codecs/asrc_src_pp/hifi4/lib/xa_asrc_src_pp.a&#13;
+${xt_project_loc}/../../../../../../middleware/dsp/codecs/g711/hifi4/lib/xa_g711_codec.a&#13;
 ${xt_project_loc}/../../../../../../middleware/dsp/codecs/mp3_dec/hifi4/lib/xa_mp3_dec.a&#13;
 ${xt_project_loc}/../../../../../../middleware/dsp/codecs/opus/hifi4/lib/xa_opus_codec.a&#13;
 ${xt_project_loc}/../../../../../../middleware/dsp/codecs/sbc_dec/hifi4/lib/xa_sbc_dec.a&#13;
 ${xt_project_loc}/../../../../../../middleware/dsp/codecs/sbc_enc/hifi4/lib/xa_sbc_enc.a&#13;
 ${xt_project_loc}/../../../../../../middleware/dsp/codecs/vorbis_dec/hifi4/lib/xa_vorbis_dec.a&#13;
-${xt_project_loc}/../../../../../../middleware/vit/HIFI4/Lib/libVIT_HIFI4_v2_3_0.a&#13;
+${xt_project_loc}/../../../../../../middleware/vit/HIFI4/Lib/libVIT_HIFI4_v5_2_0.a&#13;
 ${xt_project_loc}/../../../../../../middleware/dsp/nn/nnlib/lib/libxa_nnlib.a&#13;
-${xt_project_loc}/../../../../../../middleware/EAP/EAP_Library/libEAP_Lib_2_0_2_RT600.a&#13;
+${xt_project_loc}/../../../../../../middleware/EAP/EAP_Library/libEAP_Lib_3_0_8_RT600.a&#13;
 </ListEntry>
             </value>
           </StringListMapEntry>
@@ -166,5 +172,6 @@ ${xt_project_loc}/../../../../../../middleware/EAP/EAP_Library/libEAP_Lib_2_0_2_
         <LinkerSupport custom="true" key="-mlsp" value="${xt_project_loc}/../../../../../../devices/MIMXRT685S/xtensa/min-rt"/>
       </LinkerOptions>
     </BaseSettings>
+    <OverriddenSettings/>
   </BuildSettings>
 </BuildTarget>

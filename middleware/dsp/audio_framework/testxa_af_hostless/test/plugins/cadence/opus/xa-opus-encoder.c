@@ -1,15 +1,17 @@
-/*******************************************************************************
-* Copyright (c) 2015-2020 Cadence Design Systems, Inc.
-* 
+/*
+* Copyright (c) 2015-2021 Cadence Design Systems Inc.
+*
 * Permission is hereby granted, free of charge, to any person obtaining
 * a copy of this software and associated documentation files (the
-* "Software"), to use this Software with Cadence processor cores only and 
-* not with any other processors and platforms, subject to
+* "Software"), to deal in the Software without restriction, including
+* without limitation the rights to use, copy, modify, merge, publish,
+* distribute, sublicense, and/or sell copies of the Software, and to
+* permit persons to whom the Software is furnished to do so, subject to
 * the following conditions:
-* 
+*
 * The above copyright notice and this permission notice shall be included
 * in all copies or substantial portions of the Software.
-* 
+*
 * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
 * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
@@ -17,8 +19,7 @@
 * CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
 * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-******************************************************************************/
+*/
 /*******************************************************************************
  * xa-opus-encoder.c
  *
@@ -29,8 +30,6 @@
 /*******************************************************************************
  * Includes
  ******************************************************************************/
-
-#if (XA_OPUS_ENCODER)
 
 #include <stdint.h>
 #include <string.h>
@@ -45,12 +44,6 @@
 #include "xaf-clk-test.h"
 extern clk_t enc_cycles;
 #endif
-
-/*******************************************************************************
- * Tracing configuration
- ******************************************************************************/
-TRACE_TAG(INIT, 1);
-TRACE_TAG(INFO, 1);
 
 typedef struct XA_OPUS_Encoder
 {
@@ -93,6 +86,9 @@ typedef struct XA_OPUS_Encoder
 	    /* ...opus encoder frame size */
 	    UWORD32 			frame_size;
 
+	    /* ...opus encoder max frames per packet */
+	    UWORD32 			max_frames_per_packet;
+
 	    /* ...Opus enc handle */
 	    UWORD32            internal_data __attribute__((aligned(8)));
 
@@ -131,6 +127,14 @@ static XA_ERRORCODE xa_opus_encoder_init(XA_OPUS_Encoder *d, WORD32 i_idx, pVOID
     case XA_CMD_TYPE_INIT_API_PRE_CONFIG_PARAMS:
         {
             memset(d, 0, sizeof(*d));
+            
+            /* ...init defaults */
+            d->frame_size = 320;
+            d->sample_rate = 16000;
+            d->channels = 1;
+            d->pcm_width = 16;
+            d->max_frames_per_packet = 1;
+
             /* Mark Opus Enc component Pre-Initialization is DONE */
             d->state |= XA_OPUS_ENC_FLAG_PREINIT_DONE;
             return XA_NO_ERROR;
@@ -243,20 +247,21 @@ static XA_ERRORCODE xa_opus_encoder_set_config_param(XA_OPUS_Encoder *d, WORD32 
     case XA_OPUS_ENC_CONFIG_PARAM_FORCE_MODE:
     	d->enc_control.force_mode = *(WORD32 *)pv_value;
     	break;
-    case XA_OPUS_ENC_CONFIG_PARAM_FRAME_SIZE:
+    case XA_OPUS_ENC_CONFIG_PARAM_FRAME_SIZE: /* deprecated */
+    case XA_OPUS_ENC_CONFIG_PARAM_FRAME_SIZE_IN_SAMPLES:
     	d->frame_size = *(WORD32 *)pv_value;
     	break;
-#if 0
+    case XA_OPUS_ENC_CONFIG_PARAM_MAX_FRAMES_PER_PACKET:
+        XF_CHK_ERR((*(WORD32 *)pv_value <= 6) && (*(WORD32 *)pv_value > 0), XA_OPUS_ENC_CONFIG_NONFATAL_RANGE);
+    	d->max_frames_per_packet = *(WORD32 *)pv_value;
+    	break;
     case XA_OPUS_ENC_CONFIG_PARAM_SIGNAL_TYPE:
     	d->enc_control.signal_type = *(WORD32 *)pv_value;
     	break;
     case XA_OPUS_ENC_CONFIG_PARAM_RESET_STATE:
     	d->enc_control.reset_state = *(WORD32 *)pv_value;
     	break;
-    case XA_OPUS_ENC_CONFIG_PARAM_VARIABLE_DURATION:
-    	d->enc_control.variable_duration = *(WORD32 *)pv_value;
-    	break;
-#endif
+
     default:
         /* ...unrecognised command */
         TRACE(ERROR, _x("Invalid index: %X"), i_idx);
@@ -313,15 +318,16 @@ static XA_ERRORCODE xa_opus_encoder_execute(XA_OPUS_Encoder *d, WORD32 i_idx, pV
     case XA_CMD_TYPE_DO_EXECUTE:
     {
     	WORD16 out_samples = 0;
+        WORD32 frame_bytes = d->channels * d->frame_size * (d->pcm_width/8);
 
     	d->produced = 0;
     	d->consumed = 0; 
 #if 1
-        if( (d->input_avail < d->frame_size*(d->pcm_width/8)))
+        if(d->input_avail < frame_bytes)
         {
             if(d->state & XA_OPUS_ENC_FLAG_EOS_RECEIVED)
             {
-              memset( (char*)d->input + d->input_avail, 0, (d->frame_size*(d->pcm_width/8) - d->input_avail));
+              memset( (char*)d->input + d->input_avail, 0, (frame_bytes - d->input_avail));
             }
             else
             {
@@ -332,12 +338,13 @@ static XA_ERRORCODE xa_opus_encoder_execute(XA_OPUS_Encoder *d, WORD32 i_idx, pV
     	xa_opus_enc((xa_codec_handle_t)(&d->internal_data), (pWORD16)d->input, (pUWORD8)d->output, d->frame_size, &d->enc_control, &out_samples, (pVOID)d->scratch);
 
     	d->produced = out_samples;
-    	d->consumed = _MIN(d->frame_size*(d->pcm_width/8), d->input_avail); //WORD16 is input pcm_width
+    	d->consumed = _MIN(frame_bytes, d->input_avail);
 
         d->state |= XA_OPUS_ENC_FLAG_OUTPUT;
         if ((d->input_avail == d->consumed) && (d->state & XA_OPUS_ENC_FLAG_EOS_RECEIVED)) /* Signal done */
         {
              d->state |= XA_OPUS_ENC_FLAG_COMPLETE;
+             d->state &= ~XA_OPUS_ENC_FLAG_EOS_RECEIVED; /* TENA-2544 */
         }
         return XA_NO_ERROR;
     }
@@ -377,6 +384,10 @@ static XA_ERRORCODE xa_opus_encoder_set_input_bytes(XA_OPUS_Encoder *d, WORD32 i
 
     /* ...all is correct; set input buffer length in bytes */
     d->input_avail = size;
+
+    /* ... reset exec-done state of the plugin to enable processing input. TENA-2544 */
+    d->state &= ~XA_OPUS_ENC_FLAG_COMPLETE;
+
     return XA_NO_ERROR;
 }
 
@@ -475,11 +486,11 @@ static XA_ERRORCODE xa_opus_encoder_get_mem_info_size(XA_OPUS_Encoder *d, WORD32
     {
     case 0:
         /* ...input buffers */
-#if 1
+#if 0
     	*(WORD32 *)pv_value = XA_OPUS_MAX_BYTES_CHANNEL_PACKET*(d->channels);
 #else
-        /* reduces the input buffer size according to the frame_size set: from 11520 to 3840 (for frmaesize 320) */
-    	*(WORD32 *)pv_value = (d->frame_size*sizeof(WORD16) * XA_OPUS_MAX_FRAMES_PER_PACKET)*(d->channels);
+        /* ...input buffer size according to the frame_size  */
+    	*(WORD32 *)pv_value = d->frame_size * sizeof(WORD16) * d->max_frames_per_packet * (d->channels);
 #endif
     	return XA_NO_ERROR;
 
@@ -639,5 +650,3 @@ XA_ERRORCODE xa_opus_encoder(xa_codec_handle_t p_xa_module_obj, WORD32 i_cmd, WO
     
     return ret;
 }
-
-#endif

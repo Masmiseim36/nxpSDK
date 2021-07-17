@@ -122,6 +122,8 @@ __attribute__((weak)) void SystemInit(void)
     SCB->NSACR |= ((3UL << 0) | (3UL << 10)); /* enable CP0, CP1, CP10, CP11 Non-secure Access */
 
     SYSCTL0->DSPSTALL = SYSCTL0_DSPSTALL_DSPSTALL_MASK;
+    
+    PMC->CTRL |= PMC_CTRL_CLKDIVEN_MASK; /* enable the internal clock divider for power saving */
 
     if (SYSTEM_IS_XIP_FLEXSPI() && (CACHE64_POLSEL0->POLSEL == 0U)) /* set CAHCHE64 if not configured */
     {

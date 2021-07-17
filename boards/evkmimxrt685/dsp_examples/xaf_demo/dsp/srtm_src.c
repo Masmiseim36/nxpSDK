@@ -25,7 +25,6 @@
 
 #define AUDIO_FRMWK_BUF_SIZE (64 * 1024)
 #define AUDIO_COMP_BUF_SIZE  (256 * 1024)
-#define NUM_COMP_IN_GRAPH    1
 #define MAX_SRC_FRAME_ADJUST 2
 #define MAX_INPUT_CHUNK_LEN  512
 
@@ -85,15 +84,12 @@ int srtm_src(dsp_handle_t *dsp, unsigned int *pCmdParams)
     int read_length;
     int i;
     xaf_format_t src_format;
-    xf_id_t comp_id = "audio-fx/src-pp";
-    int num_comp;
-    xaf_comp_type comp_type;
+    xf_id_t comp_id   = "audio-fx/src-pp";
     int in_frame_size = 0;
-
-    num_comp = NUM_COMP_IN_GRAPH;
-
     uint32_t *input_size, *output_size;
     XAF_ERR_CODE ret;
+    xaf_adev_config_t device_config;
+    xaf_comp_config_t comp_config;
 
 #if (defined(FSL_FEATURE_MEMORY_HAS_ADDRESS_OFFSET) && FSL_FEATURE_MEMORY_HAS_ADDRESS_OFFSET)
     dsp->buffer_in.data = (char *)MEMORY_ConvertMemoryMapAddress(pCmdParams[0], kMEMORY_Local2DMA);
@@ -144,8 +140,15 @@ int srtm_src(dsp_handle_t *dsp, unsigned int *pCmdParams)
     in_frame_size = XAF_INBUF_SIZE / (srtm_input_sample_width * srtm_input_channels * MAX_SRC_FRAME_ADJUST);
     in_frame_size = (in_frame_size > MAX_INPUT_CHUNK_LEN) ? MAX_INPUT_CHUNK_LEN : in_frame_size;
 
-    ret = xaf_adev_open(&p_adev, AUDIO_FRMWK_BUF_SIZE, AUDIO_COMP_BUF_SIZE, DSP_Malloc, DSP_Free);
-    if (ret != XAF_NO_ERROR)
+    xaf_adev_config_default_init(&device_config);
+
+    device_config.pmem_malloc                 = DSP_Malloc;
+    device_config.pmem_free                   = DSP_Free;
+    device_config.audio_component_buffer_size = AUDIO_COMP_BUF_SIZE;
+    device_config.audio_framework_buffer_size = AUDIO_FRMWK_BUF_SIZE;
+
+    ret = xaf_adev_open(&p_adev, &device_config);
+    if (ret != XAF_NO_ERR)
     {
         DSP_PRINTF("xaf_adev_open failure: %d\r\n", ret);
         return -1;
@@ -153,9 +156,16 @@ int srtm_src(dsp_handle_t *dsp, unsigned int *pCmdParams)
 
     DSP_PRINTF("[DSP SRC] Audio Device Ready\r\n");
     /* ...create src component */
-    comp_type = XAF_POST_PROC;
-    ret       = xaf_comp_create(p_adev, &p_src, comp_id, 1, 1, &src_inbuf[0], comp_type);
-    if (ret != XAF_NO_ERROR)
+    xaf_comp_config_default_init(&comp_config);
+
+    comp_config.comp_id            = comp_id;
+    comp_config.num_input_buffers  = 1;
+    comp_config.num_output_buffers = 1;
+    comp_config.pp_inbuf           = (pVOID(*)[XAF_MAX_INBUFS]) & src_inbuf[0];
+    comp_config.comp_type          = XAF_POST_PROC;
+
+    ret = xaf_comp_create(p_adev, &p_src, &comp_config);
+    if (ret != XAF_NO_ERR)
     {
         DSP_PRINTF("xaf_comp_create failure: %d\r\n", ret);
         return -1;
@@ -167,7 +177,7 @@ int srtm_src(dsp_handle_t *dsp, unsigned int *pCmdParams)
 
     /* ...start src component */
     ret = xaf_comp_process(p_adev, p_src, NULL, 0, XAF_START_FLAG);
-    if (ret != XAF_NO_ERROR)
+    if (ret != XAF_NO_ERR)
     {
         DSP_PRINTF("xaf_comp_process XAF_START_FLAG failure: %d\r\n", ret);
         return -1;
@@ -182,7 +192,7 @@ int srtm_src(dsp_handle_t *dsp, unsigned int *pCmdParams)
         if (read_length)
         {
             ret = xaf_comp_process(p_adev, p_src, src_inbuf[0], read_length, XAF_INPUT_READY_FLAG);
-            if (ret != XAF_NO_ERROR)
+            if (ret != XAF_NO_ERR)
             {
                 DSP_PRINTF("xaf_comp_process XAF_INPUT_READY_FLAG failure: %d\r\n", ret);
                 return -1;
@@ -194,7 +204,7 @@ int srtm_src(dsp_handle_t *dsp, unsigned int *pCmdParams)
         }
 
         ret = xaf_comp_get_status(p_adev, p_src, &src_status, &src_info[0]);
-        if (ret != XAF_NO_ERROR)
+        if (ret != XAF_NO_ERR)
         {
             DSP_PRINTF("xaf_comp_get_status failure: %d\r\n", ret);
             return -1;
@@ -231,14 +241,14 @@ int srtm_src(dsp_handle_t *dsp, unsigned int *pCmdParams)
 
     /* Clean up and shut down XAF */
     ret = xaf_comp_delete(p_src);
-    if (ret != XAF_NO_ERROR)
+    if (ret != XAF_NO_ERR)
     {
         DSP_PRINTF("xaf_comp_delete failure: %d\r\n", ret);
         return -1;
     }
 
     ret = xaf_adev_close(p_adev, XAF_ADEV_NORMAL_CLOSE);
-    if (ret != XAF_NO_ERROR)
+    if (ret != XAF_NO_ERR)
     {
         DSP_PRINTF("xaf_adev_close failure: %d\r\n", ret);
         return -1;

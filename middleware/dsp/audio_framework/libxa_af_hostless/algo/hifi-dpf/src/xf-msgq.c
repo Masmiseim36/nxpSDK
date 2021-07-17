@@ -1,15 +1,17 @@
-/*******************************************************************************
-* Copyright (c) 2015-2020 Cadence Design Systems, Inc.
-* 
+/*
+* Copyright (c) 2015-2021 Cadence Design Systems Inc.
+*
 * Permission is hereby granted, free of charge, to any person obtaining
 * a copy of this software and associated documentation files (the
-* "Software"), to use this Software with Cadence processor cores only and 
-* not with any other processors and platforms, subject to
+* "Software"), to deal in the Software without restriction, including
+* without limitation the rights to use, copy, modify, merge, publish,
+* distribute, sublicense, and/or sell copies of the Software, and to
+* permit persons to whom the Software is furnished to do so, subject to
 * the following conditions:
-* 
+*
 * The above copyright notice and this permission notice shall be included
 * in all copies or substantial portions of the Software.
-* 
+*
 * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
 * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
@@ -17,8 +19,7 @@
 * CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
 * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-******************************************************************************/
+*/
 /*******************************************************************************
  * xf-shmem.c
  *
@@ -32,22 +33,6 @@
  ******************************************************************************/
 
 #include "xf-dp.h"
-
-/*******************************************************************************
- * Tracing tags
- ******************************************************************************/
-
-/* ...general initialization sequence */
-TRACE_TAG(INIT, 1);
-
-/* ...interface status change */
-TRACE_TAG(EXEC, 0);
-
-/* ...command reception */
-TRACE_TAG(CMD, 1);
-
-/* ...response generation */
-TRACE_TAG(RSP, 1);
 
 /*******************************************************************************
  * Local constants definitions
@@ -206,7 +191,7 @@ static UWORD32 xf_shmem_process_output(UWORD32 core)
         if ((m = xf_msg_proxy_get(core)) == NULL)
             break;
 
-        /* ...notify remote interface each time we send it a message (only if it was empty?) */
+        /* ...notify App Interface Layer each time we send it a message (only if it was empty?) */
         status = XF_PROXY_STATUS_REMOTE | XF_PROXY_STATUS_LOCAL;
 
 #if 0
@@ -248,7 +233,7 @@ static UWORD32 xf_shmem_process_output(UWORD32 core)
  * Entry points
  ******************************************************************************/
 
-/* ...process local/remote shared memory interface status change */
+/* ...process local(DSP Interface Layer)/remote(App Interface Layer) shared memory interface status change */
 void xf_shmem_process_queues(UWORD32 core)
 {
     UWORD32     status;
@@ -273,14 +258,14 @@ void xf_shmem_process_queues(UWORD32 core)
     while (status);
 }
 
-/* ...completion callback for message originating from remote proxy */
+/* ...completion callback for message originating from App Interface Layer */
 void xf_msg_proxy_complete(xf_message_t *m)
 {
     /* ...place message into proxy response queue */
     xf_msg_proxy_put(m);
 }
 
-/* ...initialize shared memory interface (DSP side) */
+/* ...initialize shared memory interface (DSP Interface Layer) */
 int xf_shmem_init(UWORD32 core)
 {
     xf_core_rw_data_t  *rw = XF_CORE_RW_DATA(core);
@@ -302,6 +287,23 @@ int xf_shmem_init(UWORD32 core)
     XF_CHK_API(xf_ipc_init(core));
 
     TRACE(INIT, _b("SHMEM-%u subsystem initialized"), core);
+
+    return 0;
+}
+
+/* ...deinitialize shared memory interface (DSP Interface Layer) */
+int xf_shmem_deinit(UWORD32 core)
+{
+    xf_core_rw_data_t  *rw = XF_CORE_RW_DATA(core);
+
+    /* ...initialize local/remote message queues */
+    xf_sync_queue_deinit(&rw->local);
+    xf_sync_queue_deinit(&rw->remote);
+
+   /* ...system-specific deinitialization of IPC layer */
+    XF_CHK_API(xf_ipc_deinit(core));
+
+    TRACE(INIT, _b("SHMEM-%u subsystem deinitialized"), core);
 
     return 0;
 }

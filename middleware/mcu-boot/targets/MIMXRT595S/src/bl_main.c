@@ -98,7 +98,7 @@ static void bootloader_init(void)
 #define TOOLCHAIN "ARMGCC"
 #endif
     debug_printf("Toolchain: %s\r\n", TOOLCHAIN);
-    debug_printf("Build time: %s %s\r\n", __DATE__, __TIME__);
+//    debug_printf("Build time: %s %s\r\n", __DATE__, __TIME__);
 
     // Configure clocks.
     configure_clocks(kClockOption_EnterBootloader);

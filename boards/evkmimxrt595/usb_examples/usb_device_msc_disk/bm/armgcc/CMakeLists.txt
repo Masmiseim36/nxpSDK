@@ -1,6 +1,6 @@
 # CROSS COMPILER SETTING
 SET(CMAKE_SYSTEM_NAME Generic)
-CMAKE_MINIMUM_REQUIRED (VERSION 3.1.1)
+CMAKE_MINIMUM_REQUIRED (VERSION 3.10.0)
 
 # THE VERSION NUMBER
 SET (Tutorial_VERSION_MAJOR 1)
@@ -33,8 +33,8 @@ include(${ProjDirPath}/config.cmake)
 add_executable(${MCUX_SDK_PROJECT_NAME} 
 "${ProjDirPath}/../usb_disk_adapter.h"
 "${ProjDirPath}/../usb_mmc_adapter.c"
-"${ProjDirPath}/../../../../sdmmc_config.c"
-"${ProjDirPath}/../../../../sdmmc_config.h"
+"${ProjDirPath}/../sdmmc_config.c"
+"${ProjDirPath}/../sdmmc_config.h"
 "${ProjDirPath}/../disk.c"
 "${ProjDirPath}/../disk.h"
 "${ProjDirPath}/../usb_device_descriptor.c"
@@ -72,7 +72,7 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../../components/lists
     ${ProjDirPath}/../../../../flash_config
     ${ProjDirPath}/../../../../../../components/osa
-    ${ProjDirPath}/../../../../../../CMSIS/Include
+    ${ProjDirPath}/../../../../../../CMSIS/Core/Include
     ${ProjDirPath}/../../../../../../devices/MIMXRT595S/utilities
 )
 
@@ -133,11 +133,7 @@ include(component_osa_MIMXRT595S_cm33)
 
 include(middleware_usb_common_header_MIMXRT595S_cm33)
 
-include(CMSIS_Include_core_cm33_MIMXRT595S_cm33)
-
-include(CMSIS_Include_common_MIMXRT595S_cm33)
-
-include(CMSIS_Include_dsp_MIMXRT595S_cm33)
+include(CMSIS_Include_core_cm_MIMXRT595S_cm33)
 
 include(middleware_usb_device_common_header_MIMXRT595S_cm33)
 

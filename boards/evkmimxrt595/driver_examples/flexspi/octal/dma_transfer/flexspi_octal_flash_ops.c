@@ -314,9 +314,11 @@ void flexspi_nor_flash_init(FLEXSPI_Type *base)
     FLEXSPI_GetDefaultConfig(&config);
 
     /*Set AHB buffer size for reading data through AHB bus. */
-    config.ahbConfig.enableAHBPrefetch   = true;
-    config.rxSampleClock                 = EXAMPLE_FLEXSPI_RX_SAMPLE_CLOCK;
-    config.enableCombination             = true;
+    config.ahbConfig.enableAHBPrefetch = true;
+    config.rxSampleClock               = EXAMPLE_FLEXSPI_RX_SAMPLE_CLOCK;
+#if !(defined(FSL_FEATURE_FLEXSPI_HAS_NO_MCR0_COMBINATIONEN) && FSL_FEATURE_FLEXSPI_HAS_NO_MCR0_COMBINATIONEN)
+    config.enableCombination = true;
+#endif
     config.ahbConfig.enableAHBBufferable = true;
     config.ahbConfig.enableAHBCachable   = true;
     FLEXSPI_Init(base, &config);

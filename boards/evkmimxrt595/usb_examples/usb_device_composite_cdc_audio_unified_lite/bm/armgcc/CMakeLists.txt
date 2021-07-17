@@ -1,6 +1,6 @@
 # CROSS COMPILER SETTING
 SET(CMAKE_SYSTEM_NAME Generic)
-CMAKE_MINIMUM_REQUIRED (VERSION 3.1.1)
+CMAKE_MINIMUM_REQUIRED (VERSION 3.10.0)
 
 # THE VERSION NUMBER
 SET (Tutorial_VERSION_MAJOR 1)
@@ -33,6 +33,7 @@ include(${ProjDirPath}/config.cmake)
 add_executable(${MCUX_SDK_PROJECT_NAME} 
 "${ProjDirPath}/../audio_data_dmic.c"
 "${ProjDirPath}/../audio_data_dmic.h"
+"${ProjDirPath}/../usb_audio_config.h"
 "${ProjDirPath}/../audio_unified.c"
 "${ProjDirPath}/../audio_unified.h"
 "${ProjDirPath}/../composite.c"
@@ -65,7 +66,6 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../../devices/MIMXRT595S/drivers
     ${ProjDirPath}/../../../../../../components/codec/wm8904
     ${ProjDirPath}/../../../../../../components/codec
-    ${ProjDirPath}/../../../../../../components/codec/port/wm8904
     ${ProjDirPath}/../../../../../../components/codec/i2c
     ${ProjDirPath}/../../../../../../components/i2c
     ${ProjDirPath}/../../../../../../devices/MIMXRT595S/utilities/debug_console_lite
@@ -75,7 +75,7 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../../components/lists
     ${ProjDirPath}/../../../../flash_config
     ${ProjDirPath}/../../../../../../components/osa
-    ${ProjDirPath}/../../../../../../CMSIS/Include
+    ${ProjDirPath}/../../../../../../CMSIS/Core/Include
     ${ProjDirPath}/../../../../../../devices/MIMXRT595S/utilities
 )
 
@@ -98,7 +98,7 @@ include(driver_wm8904_MIMXRT595S_cm33)
 
 include(driver_i3c_MIMXRT595S_cm33)
 
-include(driver_sctimer_MIMXRT595S_cm33)
+include(driver_ctimer_MIMXRT595S_cm33)
 
 include(driver_dmic_MIMXRT595S_cm33)
 
@@ -152,11 +152,7 @@ include(component_osa_MIMXRT595S_cm33)
 
 include(middleware_usb_common_header_MIMXRT595S_cm33)
 
-include(CMSIS_Include_core_cm33_MIMXRT595S_cm33)
-
-include(CMSIS_Include_common_MIMXRT595S_cm33)
-
-include(CMSIS_Include_dsp_MIMXRT595S_cm33)
+include(CMSIS_Include_core_cm_MIMXRT595S_cm33)
 
 include(middleware_usb_device_common_header_MIMXRT595S_cm33)
 

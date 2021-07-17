@@ -5,14 +5,15 @@ with a DMA master:
 
 In this example, one i2c instance as slave and another i2c instance on the other board as master. Master sends a 
 piece of data to slave, and receive a piece of data from slave. This example checks if the data received from 
-slave is correct.
+slave is correct. I2C slave works as supporting board to help demonstrate master DMA trasnfer, actually uses interrupt
+way. 
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.9
-- Keil MDK  5.33
-- GCC ARM Embedded  9.3.1
-- MCUXpresso  11.3.0
+- IAR embedded Workbench  9.10.2
+- Keil MDK  5.34
+- GCC ARM Embedded  10.2.1
+- MCUXpresso  11.4.0
 
 Hardware requirements
 =====================

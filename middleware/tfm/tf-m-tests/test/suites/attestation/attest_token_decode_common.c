@@ -10,7 +10,7 @@
  */
 
 #include "attest_token_decode.h"
-#include "attestation.h"
+#include "attest.h"
 #include "q_useful_buf.h"
 #include "qcbor_util.h"
 

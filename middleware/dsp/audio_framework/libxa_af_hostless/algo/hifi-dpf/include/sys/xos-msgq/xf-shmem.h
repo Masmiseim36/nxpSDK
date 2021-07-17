@@ -1,15 +1,17 @@
-/*******************************************************************************
-* Copyright (c) 2015-2020 Cadence Design Systems, Inc.
-* 
+/*
+* Copyright (c) 2015-2021 Cadence Design Systems Inc.
+*
 * Permission is hereby granted, free of charge, to any person obtaining
 * a copy of this software and associated documentation files (the
-* "Software"), to use this Software with Cadence processor cores only and 
-* not with any other processors and platforms, subject to
+* "Software"), to deal in the Software without restriction, including
+* without limitation the rights to use, copy, modify, merge, publish,
+* distribute, sublicense, and/or sell copies of the Software, and to
+* permit persons to whom the Software is furnished to do so, subject to
 * the following conditions:
-* 
+*
 * The above copyright notice and this permission notice shall be included
 * in all copies or substantial portions of the Software.
-* 
+*
 * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
 * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
@@ -17,8 +19,7 @@
 * CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
 * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-******************************************************************************/
+*/
 /*******************************************************************************
  * xf-shmem.h
  *
@@ -33,7 +34,7 @@
  * Memory structures
  ******************************************************************************/
 
-/* ...data managed by host CPU (remote) - in case of shunt it is a IPC layer */
+/* ...data managed by App Interface Layer - in case of shunt it is a IPC layer */
 struct xf_proxy_host_data
 {
     /* ...command queue */
@@ -47,7 +48,7 @@ struct xf_proxy_host_data
 
 }   __attribute__((__packed__, __aligned__(XF_PROXY_ALIGNMENT)));
 
-/* ...data managed by DSP (local) */
+/* ...data managed by DSP Interface Layer (local) */
 struct xf_proxy_dsp_data
 {
     /* ...response queue */
@@ -64,10 +65,10 @@ struct xf_proxy_dsp_data
 /* ...shared memory data */
 typedef struct xf_shmem_data 
 {
-    /* ...outgoing data (maintained by host CPU (remote side)) */
+    /* ...outgoing data (maintained by App Interface Layer) */
     struct xf_proxy_host_data   remote      __xf_shmem__;
     
-    /* ...ingoing data (maintained by DSP (local side)) */
+    /* ...incoming data (maintained by DSP Interface Layer) */
     struct xf_proxy_dsp_data    local       __xf_shmem__;
 
     /* ...shared memory pool (page-aligned; why? we map memory to user-space) */
@@ -148,8 +149,11 @@ static inline int xf_shmem_enabled(UWORD32 core)
 /* ...process shared memory interface on given DSP core */
 extern void xf_shmem_process_queues(UWORD32 core);
 
-/* ...completion callback for message originating from remote proxy */
+/* ...completion callback for message originating from App Interface Layer */
 extern void xf_msg_proxy_complete(xf_message_t *m);
 
-/* ...initialize shared memory interface (DSP side) */
+/* ...initialize shared memory interface (DSP Interface Layer) */
 extern int xf_shmem_init(UWORD32 core);
+
+/* ...deinitialize shared memory interface (DSP Interface Layer) */
+extern int xf_shmem_deinit(UWORD32 core);

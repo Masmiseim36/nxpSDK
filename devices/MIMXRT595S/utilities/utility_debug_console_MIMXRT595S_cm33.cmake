@@ -1,21 +1,19 @@
-if(NOT UTILITY_DEBUG_CONSOLE_MIMXRT595S_cm33_INCLUDED)
-    
-    set(UTILITY_DEBUG_CONSOLE_MIMXRT595S_cm33_INCLUDED true CACHE BOOL "utility_debug_console component is included.")
+include_guard(GLOBAL)
+message("utility_debug_console component is included.")
 
-    target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
-        ${CMAKE_CURRENT_LIST_DIR}/str/fsl_str.c
-        ${CMAKE_CURRENT_LIST_DIR}/debug_console/fsl_debug_console.c
-    )
-
-
-    target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
-        ${CMAKE_CURRENT_LIST_DIR}/str
-        ${CMAKE_CURRENT_LIST_DIR}/debug_console
-    )
+target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
+    ${CMAKE_CURRENT_LIST_DIR}/str/fsl_str.c
+    ${CMAKE_CURRENT_LIST_DIR}/debug_console/fsl_debug_console.c
+)
 
 
-    include(component_serial_manager_MIMXRT595S_cm33)
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
+    ${CMAKE_CURRENT_LIST_DIR}/str
+    ${CMAKE_CURRENT_LIST_DIR}/debug_console
+)
 
-    include(driver_common_MIMXRT595S_cm33)
 
-endif()
+include(component_serial_manager_MIMXRT595S_cm33)
+
+include(driver_common_MIMXRT595S_cm33)
+

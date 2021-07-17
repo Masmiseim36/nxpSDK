@@ -1,15 +1,17 @@
-/*******************************************************************************
-* Copyright (c) 2015-2020 Cadence Design Systems, Inc.
-* 
+/*
+* Copyright (c) 2015-2021 Cadence Design Systems Inc.
+*
 * Permission is hereby granted, free of charge, to any person obtaining
 * a copy of this software and associated documentation files (the
-* "Software"), to use this Software with Cadence processor cores only and 
-* not with any other processors and platforms, subject to
+* "Software"), to deal in the Software without restriction, including
+* without limitation the rights to use, copy, modify, merge, publish,
+* distribute, sublicense, and/or sell copies of the Software, and to
+* permit persons to whom the Software is furnished to do so, subject to
 * the following conditions:
-* 
+*
 * The above copyright notice and this permission notice shall be included
 * in all copies or substantial portions of the Software.
-* 
+*
 * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
 * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
@@ -17,8 +19,7 @@
 * CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
 * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-******************************************************************************/
+*/
 /*******************************************************************************
  * xf-msg.h
  *
@@ -28,6 +29,11 @@
 #ifndef __XF_H
 #error "xf-msg.h mustn't be included directly"
 #endif
+
+/*******************************************************************************
+ * Macro definitions
+ ******************************************************************************/
+#define XF_MSG_LENGTH_INVALID   0xFFFFFFFF
 
 /*******************************************************************************
  * Types definitions
@@ -96,7 +102,7 @@ typedef struct  xf_msg_queue
 
 typedef struct xf_sync_queue
 {
-    xf_lock_t lock;
+    xf_flx_lock_t lock;
     xf_msg_queue_t queue;
 }   xf_sync_queue_t;
 
@@ -112,8 +118,32 @@ static inline void  xf_msg_queue_init(xf_msg_queue_t *queue)
 
 static inline void  xf_sync_queue_init(xf_sync_queue_t *queue)
 {
-    __xf_lock_init(&queue->lock);
+#ifdef ENABLE_SYNC_MSGQ_ACCESS_OPT
+    xf_flx_lock_init(&queue->lock, XF_DUMMY_LOCK);
+#else
+    xf_flx_lock_init(&queue->lock, XF_INTRPT_BASED_LOCK);
+#endif
+
     xf_msg_queue_init(&queue->queue);
+}
+
+/*... reinitialize sync queue lock */
+static inline void  xf_sync_queue_preempt_reinit(xf_sync_queue_t *queue)
+{
+#ifdef ENABLE_SYNC_MSGQ_ACCESS_OPT
+#ifdef SYNC_MSGQ_ACCESS_USING_MUTEX
+    xf_flx_lock_init(&queue->lock, XF_MUTEX_BASED_LOCK);
+#else
+    xf_flx_lock_init(&queue->lock, XF_INTRPT_BASED_LOCK);
+#endif
+#else
+    /* ...nothing to be done here */
+#endif
+}
+
+static inline void  xf_sync_queue_deinit(xf_sync_queue_t *queue)
+{
+    xf_flx_lock_destroy(&queue->lock);
 }
 
 /* ...push message in FIFO queue */
@@ -143,9 +173,10 @@ static inline int xf_sync_enqueue(xf_sync_queue_t *queue, xf_message_t *m)
 {
     int empty;
 
-    __xf_lock(&queue->lock);
+    xf_flx_lock(&queue->lock);
     empty = xf_msg_enqueue(&queue->queue, m);
-    __xf_unlock(&queue->lock);
+    xf_flx_unlock(&queue->lock);
+
     return empty;
 }
 
@@ -172,9 +203,10 @@ static inline xf_message_t * xf_sync_dequeue(xf_sync_queue_t *queue)
 {
     xf_message_t *m;
 
-    __xf_lock(&queue->lock);
+    xf_flx_lock(&queue->lock);
     m = xf_msg_dequeue(&queue->queue);
-    __xf_unlock(&queue->lock);
+    xf_flx_unlock(&queue->lock);
+
     return m;
 }
 
@@ -265,6 +297,16 @@ static inline void xf_response_err(xf_message_t *m)
 {
     /* ...set generic error message */
     m->opcode = XF_UNREGISTER, m->length = 0;
+
+    /* ...return message to originator */
+    xf_msg_complete(m);
+}
+
+/* ...send lookup-failed-response message */
+static inline void xf_response_failure(xf_message_t *m)
+{
+    /* ...length would indicate lookup-failure. */
+    m->length = XF_MSG_LENGTH_INVALID;
 
     /* ...return message to originator */
     xf_msg_complete(m);

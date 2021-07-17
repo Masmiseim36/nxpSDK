@@ -21,7 +21,7 @@
  * Definitions
  ******************************************************************************/
 #define BOARD_XTAL_SYS_CLK_HZ 24000000U /*!< Board xtal_sys frequency in Hz */
-#define BOARD_XTAL32K_CLK_HZ 32768U     /*!< Board xtal32K frequency in Hz */
+#define BOARD_XTAL32K_CLK_HZ  32768U    /*!< Board xtal32K frequency in Hz */
 
 /*******************************************************************************
  * Prototypes

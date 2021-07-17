@@ -332,9 +332,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>DEBUG, CPU_MIMXRT595SFFOC_cm33, BOOT_HEADER_ENABLE=1, BOARD_ENABLE_PSRAM_CACHE=0, SSD1963_DATA_WITDH=8, FLEXIO_MCULCD_DATA_BUS_WIDTH=8, SDK_I2C_BASED_COMPONENT_USED=1</Define>
+              <Define>DEBUG, CPU_MIMXRT595SFFOC_cm33, BOOT_HEADER_ENABLE=1, BOARD_ENABLE_PSRAM_CACHE=0, SSD1963_DATA_WITDH=8, FLEXIO_MCULCD_DATA_BUS_WIDTH=8, SDK_I2C_BASED_COMPONENT_USED=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../devices/MIMXRT595S/drivers;../../../../../components/ssd1963;../../../../../components/video/display/dbi;../../../../../components/video/display/dbi/flexio;../../../../../components/video/display/dc/ssd1963;../../../../../components/video/display/dc/lcdif;../../../../../components/video;../../../../../components/video/display;../../../../../components/video/display/rm68191;../../../../../components/video/display/mipi_dsi_cmd;../../../../../components/video/display/rm68200;../../../../../components/video/display/rm67162;../../../../../components/video/display/dc/dsi_cmd;../../../../../components/ft3267;../../../../../components/gt911;../../../../../components/ft5406;../../../../../devices/MIMXRT595S/utilities/debug_console_lite;../../../../../middleware/emwin/emWin_header;../../../../../middleware/emwin/emWin_Config;../../../../../devices/MIMXRT595S;../../../../../components/uart;../../../../../components/lists;../../../flash_config;../../../../../CMSIS/Include;../../../../../components/video/display/dc</IncludePath>
+              <IncludePath>..;../../../../../devices/MIMXRT595S/drivers;../../../../../components/ssd1963;../../../../../components/video/display/dbi;../../../../../components/video/display/dbi/flexio;../../../../../components/video/display/dc/ssd1963;../../../../../components/video/display/dc/lcdif;../../../../../components/video;../../../../../components/video/display;../../../../../components/video/display/rm68191;../../../../../components/video/display/mipi_dsi_cmd;../../../../../components/video/display/rm68200;../../../../../components/video/display/rm67162;../../../../../components/video/display/dc/dsi_cmd;../../../../../components/ft3267;../../../../../components/gt911;../../../../../components/ft5406;../../../../../devices/MIMXRT595S/utilities/debug_console_lite;../../../../../middleware/emwin/emWin_header;../../../../../middleware/emwin/emWin_Config;../../../../../devices/MIMXRT595S;../../../../../components/uart;../../../../../components/lists;../../../flash_config;../../../../../CMSIS/Core/Include;../../../../../components/video/display/dc</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -368,7 +368,7 @@
             <ScatterFile>MIMXRT595Sxxxx_cm33_ram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>../../../../../middleware/emwin/emWin_library/Keil/emWin_M33.lib --remove --predefine="-D__stack_size__=0x800"</Misc>
+            <Misc>../../../../../middleware/emwin/emWin_library/Keil/emWin_M33.lib --remove --entry=Reset_Handler --predefine="-D__stack_size__=0x800"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314,6329</DisabledWarnings>
           </LDads>
@@ -544,6 +544,26 @@
               <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_lcdif.c</FilePath>
             </File>
             <File>
+              <FileName>fsl_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_common.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_common_arm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_common_arm.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_i2c.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_i2c.h</FilePath>
@@ -562,16 +582,6 @@
               <FileName>fsl_mipi_dsi_smartdma.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_mipi_dsi_smartdma.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_common.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_common.c</FilePath>
             </File>
             <File>
               <FileName>fsl_power.h</FileName>
@@ -657,6 +667,11 @@
               <FileName>fsl_inputmux_connections.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_inputmux_connections.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_soc_mipi_dsi.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_soc_mipi_dsi.h</FilePath>
             </File>
             <File>
               <FileName>fsl_iap.h</FileName>
@@ -944,11 +959,6 @@
               <FilePath>../../../../../middleware/emwin/emWin_header/GAUGE_Private.h</FilePath>
             </File>
             <File>
-              <FileName>Global.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/emwin/emWin_header/Global.h</FilePath>
-            </File>
-            <File>
               <FileName>GRAPH.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/emwin/emWin_header/GRAPH.h</FilePath>
@@ -962,101 +972,6 @@
               <FileName>GUI.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/emwin/emWin_header/GUI.h</FilePath>
-            </File>
-            <File>
-              <FileName>GUI__BiDi2_Brackets_800.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/emwin/emWin_header/GUI__BiDi2_Brackets_800.h</FilePath>
-            </File>
-            <File>
-              <FileName>GUI__BiDi2_Types_800.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/emwin/emWin_header/GUI__BiDi2_Types_800.h</FilePath>
-            </File>
-            <File>
-              <FileName>GUI_ARRAY.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/emwin/emWin_header/GUI_ARRAY.h</FilePath>
-            </File>
-            <File>
-              <FileName>GUI_ARRAY_Private.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/emwin/emWin_header/GUI_ARRAY_Private.h</FilePath>
-            </File>
-            <File>
-              <FileName>GUI_BMP_Private.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/emwin/emWin_header/GUI_BMP_Private.h</FilePath>
-            </File>
-            <File>
-              <FileName>GUI_ConfDefaults.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/emwin/emWin_header/GUI_ConfDefaults.h</FilePath>
-            </File>
-            <File>
-              <FileName>GUI_Debug.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/emwin/emWin_header/GUI_Debug.h</FilePath>
-            </File>
-            <File>
-              <FileName>GUI_FontIntern.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/emwin/emWin_header/GUI_FontIntern.h</FilePath>
-            </File>
-            <File>
-              <FileName>GUI_GCache_Private.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/emwin/emWin_header/GUI_GCache_Private.h</FilePath>
-            </File>
-            <File>
-              <FileName>GUI_GIF_Private.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/emwin/emWin_header/GUI_GIF_Private.h</FilePath>
-            </File>
-            <File>
-              <FileName>GUI_HOOK.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/emwin/emWin_header/GUI_HOOK.h</FilePath>
-            </File>
-            <File>
-              <FileName>GUI_JPEG_Private.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/emwin/emWin_header/GUI_JPEG_Private.h</FilePath>
-            </File>
-            <File>
-              <FileName>GUI_Private.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/emwin/emWin_header/GUI_Private.h</FilePath>
-            </File>
-            <File>
-              <FileName>GUI_SetOrientation.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/emwin/emWin_header/GUI_SetOrientation.h</FilePath>
-            </File>
-            <File>
-              <FileName>GUI_SetOrientationCX.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/emwin/emWin_header/GUI_SetOrientationCX.h</FilePath>
-            </File>
-            <File>
-              <FileName>GUI_SPRITE_Private.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/emwin/emWin_header/GUI_SPRITE_Private.h</FilePath>
-            </File>
-            <File>
-              <FileName>GUI_Type.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/emwin/emWin_header/GUI_Type.h</FilePath>
-            </File>
-            <File>
-              <FileName>GUI_Version.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/emwin/emWin_header/GUI_Version.h</FilePath>
-            </File>
-            <File>
-              <FileName>GUI_VNC.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/emwin/emWin_header/GUI_VNC.h</FilePath>
             </File>
             <File>
               <FileName>GUIDRV_BitPlains.h</FileName>
@@ -1159,16 +1074,6 @@
               <FilePath>../../../../../middleware/emwin/emWin_header/GUIDRV_S1D15G00.h</FilePath>
             </File>
             <File>
-              <FileName>GUIDRV_SLin.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/emwin/emWin_header/GUIDRV_SLin.h</FilePath>
-            </File>
-            <File>
-              <FileName>GUIDRV_SLin_Private.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/emwin/emWin_header/GUIDRV_SLin_Private.h</FilePath>
-            </File>
-            <File>
               <FileName>GUIDRV_SH_MEM.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/emwin/emWin_header/GUIDRV_SH_MEM.h</FilePath>
@@ -1177,6 +1082,16 @@
               <FileName>GUIDRV_SH_MEM_Private.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/emwin/emWin_header/GUIDRV_SH_MEM_Private.h</FilePath>
+            </File>
+            <File>
+              <FileName>GUIDRV_SLin.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/GUIDRV_SLin.h</FilePath>
+            </File>
+            <File>
+              <FileName>GUIDRV_SLin_Private.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/GUIDRV_SLin_Private.h</FilePath>
             </File>
             <File>
               <FileName>GUIDRV_SPage.h</FileName>
@@ -1217,6 +1132,111 @@
               <FileName>GUITDRV_ADS7846.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/emwin/emWin_header/GUITDRV_ADS7846.h</FilePath>
+            </File>
+            <File>
+              <FileName>GUI_ARRAY.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/GUI_ARRAY.h</FilePath>
+            </File>
+            <File>
+              <FileName>GUI_ARRAY_Private.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/GUI_ARRAY_Private.h</FilePath>
+            </File>
+            <File>
+              <FileName>GUI_BMP_Private.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/GUI_BMP_Private.h</FilePath>
+            </File>
+            <File>
+              <FileName>GUI_ConfDefaults.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/GUI_ConfDefaults.h</FilePath>
+            </File>
+            <File>
+              <FileName>GUI_Debug.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/GUI_Debug.h</FilePath>
+            </File>
+            <File>
+              <FileName>GUI_FontIntern.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/GUI_FontIntern.h</FilePath>
+            </File>
+            <File>
+              <FileName>GUI_GCache_Private.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/GUI_GCache_Private.h</FilePath>
+            </File>
+            <File>
+              <FileName>GUI_GIF_Private.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/GUI_GIF_Private.h</FilePath>
+            </File>
+            <File>
+              <FileName>GUI_HOOK.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/GUI_HOOK.h</FilePath>
+            </File>
+            <File>
+              <FileName>GUI_JPEG_Private.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/GUI_JPEG_Private.h</FilePath>
+            </File>
+            <File>
+              <FileName>GUI_Private.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/GUI_Private.h</FilePath>
+            </File>
+            <File>
+              <FileName>GUI_SPRITE_Private.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/GUI_SPRITE_Private.h</FilePath>
+            </File>
+            <File>
+              <FileName>GUI_SPY_Private.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/GUI_SPY_Private.h</FilePath>
+            </File>
+            <File>
+              <FileName>GUI_SetOrientation.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/GUI_SetOrientation.h</FilePath>
+            </File>
+            <File>
+              <FileName>GUI_SetOrientationCX.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/GUI_SetOrientationCX.h</FilePath>
+            </File>
+            <File>
+              <FileName>GUI_Type.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/GUI_Type.h</FilePath>
+            </File>
+            <File>
+              <FileName>GUI_VNC.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/GUI_VNC.h</FilePath>
+            </File>
+            <File>
+              <FileName>GUI_Version.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/GUI_Version.h</FilePath>
+            </File>
+            <File>
+              <FileName>GUI__BiDi2_Brackets_800.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/GUI__BiDi2_Brackets_800.h</FilePath>
+            </File>
+            <File>
+              <FileName>GUI__BiDi2_Types_800.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/GUI__BiDi2_Types_800.h</FilePath>
+            </File>
+            <File>
+              <FileName>Global.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/Global.h</FilePath>
             </File>
             <File>
               <FileName>HEADER.h</FileName>
@@ -1347,6 +1367,11 @@
               <FileName>MULTIEDIT.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/emwin/emWin_header/MULTIEDIT.h</FilePath>
+            </File>
+            <File>
+              <FileName>MULTIEDIT_Private.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/MULTIEDIT_Private.h</FilePath>
             </File>
             <File>
               <FileName>MULTIPAGE.h</FileName>
@@ -1604,69 +1629,54 @@
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
-              <FileName>core_cm33.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/core_cm33.h</FilePath>
-            </File>
-            <File>
-              <FileName>tz_context.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/tz_context.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv8.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/mpu_armv8.h</FilePath>
-            </File>
-            <File>
               <FileName>cmsis_armcc.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_armcc.h</FilePath>
+              <FilePath>../../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_armclang.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_armclang.h</FilePath>
+              <FilePath>../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_armclang_ltm.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_armclang_ltm.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_gcc.h</FilePath>
+              <FilePath>../../../../../CMSIS/Core/Include/cmsis_armclang_ltm.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_compiler.h</FilePath>
+              <FilePath>../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
             </File>
             <File>
-              <FileName>cmsis_version.h</FileName>
+              <FileName>cmsis_gcc.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_version.h</FilePath>
+              <FilePath>../../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_iccarm.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_iccarm.h</FilePath>
+              <FilePath>../../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
-              <FileName>arm_common_tables.h</FileName>
+              <FileName>cmsis_version.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/arm_common_tables.h</FilePath>
+              <FilePath>../../../../../CMSIS/Core/Include/cmsis_version.h</FilePath>
             </File>
             <File>
-              <FileName>arm_const_structs.h</FileName>
+              <FileName>core_cm33.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/arm_const_structs.h</FilePath>
+              <FilePath>../../../../../CMSIS/Core/Include/core_cm33.h</FilePath>
             </File>
             <File>
-              <FileName>arm_math.h</FileName>
+              <FileName>mpu_armv8.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/arm_math.h</FilePath>
+              <FilePath>../../../../../CMSIS/Core/Include/mpu_armv8.h</FilePath>
+            </File>
+            <File>
+              <FileName>tz_context.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Core/Include/tz_context.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2001,9 +2011,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>DEBUG, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, CPU_MIMXRT595SFFOC_cm33, BOOT_HEADER_ENABLE=1, BOARD_ENABLE_PSRAM_CACHE=0, SSD1963_DATA_WITDH=8, FLEXIO_MCULCD_DATA_BUS_WIDTH=8, SDK_I2C_BASED_COMPONENT_USED=1</Define>
+              <Define>DEBUG, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, CPU_MIMXRT595SFFOC_cm33, BOOT_HEADER_ENABLE=1, BOARD_ENABLE_PSRAM_CACHE=0, SSD1963_DATA_WITDH=8, FLEXIO_MCULCD_DATA_BUS_WIDTH=8, SDK_I2C_BASED_COMPONENT_USED=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../devices/MIMXRT595S/drivers;../../../../../components/ssd1963;../../../../../components/video/display/dbi;../../../../../components/video/display/dbi/flexio;../../../../../components/video/display/dc/ssd1963;../../../../../components/video/display/dc/lcdif;../../../../../components/video;../../../../../components/video/display;../../../../../components/video/display/rm68191;../../../../../components/video/display/mipi_dsi_cmd;../../../../../components/video/display/rm68200;../../../../../components/video/display/rm67162;../../../../../components/video/display/dc/dsi_cmd;../../../../../components/ft3267;../../../../../components/gt911;../../../../../components/ft5406;../../../../../devices/MIMXRT595S/utilities/debug_console_lite;../../../../../middleware/emwin/emWin_header;../../../../../middleware/emwin/emWin_Config;../../../../../devices/MIMXRT595S;../../../../../components/uart;../../../../../components/lists;../../../flash_config;../../../../../CMSIS/Include;../../../../../components/video/display/dc</IncludePath>
+              <IncludePath>..;../../../../../devices/MIMXRT595S/drivers;../../../../../components/ssd1963;../../../../../components/video/display/dbi;../../../../../components/video/display/dbi/flexio;../../../../../components/video/display/dc/ssd1963;../../../../../components/video/display/dc/lcdif;../../../../../components/video;../../../../../components/video/display;../../../../../components/video/display/rm68191;../../../../../components/video/display/mipi_dsi_cmd;../../../../../components/video/display/rm68200;../../../../../components/video/display/rm67162;../../../../../components/video/display/dc/dsi_cmd;../../../../../components/ft3267;../../../../../components/gt911;../../../../../components/ft5406;../../../../../devices/MIMXRT595S/utilities/debug_console_lite;../../../../../middleware/emwin/emWin_header;../../../../../middleware/emwin/emWin_Config;../../../../../devices/MIMXRT595S;../../../../../components/uart;../../../../../components/lists;../../../flash_config;../../../../../CMSIS/Core/Include;../../../../../components/video/display/dc</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2037,7 +2047,7 @@
             <ScatterFile>MIMXRT595Sxxxx_cm33_flash.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>../../../../../middleware/emwin/emWin_library/Keil/emWin_M33.lib --remove --predefine="-D__stack_size__=0x800"</Misc>
+            <Misc>../../../../../middleware/emwin/emWin_library/Keil/emWin_M33.lib --remove --entry=Reset_Handler --predefine="-D__stack_size__=0x800"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314,6329</DisabledWarnings>
           </LDads>
@@ -2213,6 +2223,26 @@
               <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_lcdif.c</FilePath>
             </File>
             <File>
+              <FileName>fsl_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_common.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_common_arm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_common_arm.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_i2c.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_i2c.h</FilePath>
@@ -2231,16 +2261,6 @@
               <FileName>fsl_mipi_dsi_smartdma.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_mipi_dsi_smartdma.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_common.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_common.c</FilePath>
             </File>
             <File>
               <FileName>fsl_power.h</FileName>
@@ -2326,6 +2346,11 @@
               <FileName>fsl_inputmux_connections.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_inputmux_connections.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_soc_mipi_dsi.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_soc_mipi_dsi.h</FilePath>
             </File>
             <File>
               <FileName>fsl_iap.h</FileName>
@@ -2613,11 +2638,6 @@
               <FilePath>../../../../../middleware/emwin/emWin_header/GAUGE_Private.h</FilePath>
             </File>
             <File>
-              <FileName>Global.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/emwin/emWin_header/Global.h</FilePath>
-            </File>
-            <File>
               <FileName>GRAPH.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/emwin/emWin_header/GRAPH.h</FilePath>
@@ -2631,101 +2651,6 @@
               <FileName>GUI.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/emwin/emWin_header/GUI.h</FilePath>
-            </File>
-            <File>
-              <FileName>GUI__BiDi2_Brackets_800.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/emwin/emWin_header/GUI__BiDi2_Brackets_800.h</FilePath>
-            </File>
-            <File>
-              <FileName>GUI__BiDi2_Types_800.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/emwin/emWin_header/GUI__BiDi2_Types_800.h</FilePath>
-            </File>
-            <File>
-              <FileName>GUI_ARRAY.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/emwin/emWin_header/GUI_ARRAY.h</FilePath>
-            </File>
-            <File>
-              <FileName>GUI_ARRAY_Private.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/emwin/emWin_header/GUI_ARRAY_Private.h</FilePath>
-            </File>
-            <File>
-              <FileName>GUI_BMP_Private.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/emwin/emWin_header/GUI_BMP_Private.h</FilePath>
-            </File>
-            <File>
-              <FileName>GUI_ConfDefaults.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/emwin/emWin_header/GUI_ConfDefaults.h</FilePath>
-            </File>
-            <File>
-              <FileName>GUI_Debug.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/emwin/emWin_header/GUI_Debug.h</FilePath>
-            </File>
-            <File>
-              <FileName>GUI_FontIntern.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/emwin/emWin_header/GUI_FontIntern.h</FilePath>
-            </File>
-            <File>
-              <FileName>GUI_GCache_Private.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/emwin/emWin_header/GUI_GCache_Private.h</FilePath>
-            </File>
-            <File>
-              <FileName>GUI_GIF_Private.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/emwin/emWin_header/GUI_GIF_Private.h</FilePath>
-            </File>
-            <File>
-              <FileName>GUI_HOOK.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/emwin/emWin_header/GUI_HOOK.h</FilePath>
-            </File>
-            <File>
-              <FileName>GUI_JPEG_Private.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/emwin/emWin_header/GUI_JPEG_Private.h</FilePath>
-            </File>
-            <File>
-              <FileName>GUI_Private.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/emwin/emWin_header/GUI_Private.h</FilePath>
-            </File>
-            <File>
-              <FileName>GUI_SetOrientation.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/emwin/emWin_header/GUI_SetOrientation.h</FilePath>
-            </File>
-            <File>
-              <FileName>GUI_SetOrientationCX.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/emwin/emWin_header/GUI_SetOrientationCX.h</FilePath>
-            </File>
-            <File>
-              <FileName>GUI_SPRITE_Private.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/emwin/emWin_header/GUI_SPRITE_Private.h</FilePath>
-            </File>
-            <File>
-              <FileName>GUI_Type.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/emwin/emWin_header/GUI_Type.h</FilePath>
-            </File>
-            <File>
-              <FileName>GUI_Version.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/emwin/emWin_header/GUI_Version.h</FilePath>
-            </File>
-            <File>
-              <FileName>GUI_VNC.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/emwin/emWin_header/GUI_VNC.h</FilePath>
             </File>
             <File>
               <FileName>GUIDRV_BitPlains.h</FileName>
@@ -2828,16 +2753,6 @@
               <FilePath>../../../../../middleware/emwin/emWin_header/GUIDRV_S1D15G00.h</FilePath>
             </File>
             <File>
-              <FileName>GUIDRV_SLin.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/emwin/emWin_header/GUIDRV_SLin.h</FilePath>
-            </File>
-            <File>
-              <FileName>GUIDRV_SLin_Private.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/emwin/emWin_header/GUIDRV_SLin_Private.h</FilePath>
-            </File>
-            <File>
               <FileName>GUIDRV_SH_MEM.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/emwin/emWin_header/GUIDRV_SH_MEM.h</FilePath>
@@ -2846,6 +2761,16 @@
               <FileName>GUIDRV_SH_MEM_Private.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/emwin/emWin_header/GUIDRV_SH_MEM_Private.h</FilePath>
+            </File>
+            <File>
+              <FileName>GUIDRV_SLin.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/GUIDRV_SLin.h</FilePath>
+            </File>
+            <File>
+              <FileName>GUIDRV_SLin_Private.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/GUIDRV_SLin_Private.h</FilePath>
             </File>
             <File>
               <FileName>GUIDRV_SPage.h</FileName>
@@ -2886,6 +2811,111 @@
               <FileName>GUITDRV_ADS7846.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/emwin/emWin_header/GUITDRV_ADS7846.h</FilePath>
+            </File>
+            <File>
+              <FileName>GUI_ARRAY.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/GUI_ARRAY.h</FilePath>
+            </File>
+            <File>
+              <FileName>GUI_ARRAY_Private.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/GUI_ARRAY_Private.h</FilePath>
+            </File>
+            <File>
+              <FileName>GUI_BMP_Private.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/GUI_BMP_Private.h</FilePath>
+            </File>
+            <File>
+              <FileName>GUI_ConfDefaults.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/GUI_ConfDefaults.h</FilePath>
+            </File>
+            <File>
+              <FileName>GUI_Debug.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/GUI_Debug.h</FilePath>
+            </File>
+            <File>
+              <FileName>GUI_FontIntern.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/GUI_FontIntern.h</FilePath>
+            </File>
+            <File>
+              <FileName>GUI_GCache_Private.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/GUI_GCache_Private.h</FilePath>
+            </File>
+            <File>
+              <FileName>GUI_GIF_Private.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/GUI_GIF_Private.h</FilePath>
+            </File>
+            <File>
+              <FileName>GUI_HOOK.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/GUI_HOOK.h</FilePath>
+            </File>
+            <File>
+              <FileName>GUI_JPEG_Private.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/GUI_JPEG_Private.h</FilePath>
+            </File>
+            <File>
+              <FileName>GUI_Private.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/GUI_Private.h</FilePath>
+            </File>
+            <File>
+              <FileName>GUI_SPRITE_Private.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/GUI_SPRITE_Private.h</FilePath>
+            </File>
+            <File>
+              <FileName>GUI_SPY_Private.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/GUI_SPY_Private.h</FilePath>
+            </File>
+            <File>
+              <FileName>GUI_SetOrientation.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/GUI_SetOrientation.h</FilePath>
+            </File>
+            <File>
+              <FileName>GUI_SetOrientationCX.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/GUI_SetOrientationCX.h</FilePath>
+            </File>
+            <File>
+              <FileName>GUI_Type.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/GUI_Type.h</FilePath>
+            </File>
+            <File>
+              <FileName>GUI_VNC.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/GUI_VNC.h</FilePath>
+            </File>
+            <File>
+              <FileName>GUI_Version.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/GUI_Version.h</FilePath>
+            </File>
+            <File>
+              <FileName>GUI__BiDi2_Brackets_800.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/GUI__BiDi2_Brackets_800.h</FilePath>
+            </File>
+            <File>
+              <FileName>GUI__BiDi2_Types_800.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/GUI__BiDi2_Types_800.h</FilePath>
+            </File>
+            <File>
+              <FileName>Global.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/Global.h</FilePath>
             </File>
             <File>
               <FileName>HEADER.h</FileName>
@@ -3016,6 +3046,11 @@
               <FileName>MULTIEDIT.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/emwin/emWin_header/MULTIEDIT.h</FilePath>
+            </File>
+            <File>
+              <FileName>MULTIEDIT_Private.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/MULTIEDIT_Private.h</FilePath>
             </File>
             <File>
               <FileName>MULTIPAGE.h</FileName>
@@ -3273,69 +3308,54 @@
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
-              <FileName>core_cm33.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/core_cm33.h</FilePath>
-            </File>
-            <File>
-              <FileName>tz_context.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/tz_context.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv8.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/mpu_armv8.h</FilePath>
-            </File>
-            <File>
               <FileName>cmsis_armcc.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_armcc.h</FilePath>
+              <FilePath>../../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_armclang.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_armclang.h</FilePath>
+              <FilePath>../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_armclang_ltm.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_armclang_ltm.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_gcc.h</FilePath>
+              <FilePath>../../../../../CMSIS/Core/Include/cmsis_armclang_ltm.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_compiler.h</FilePath>
+              <FilePath>../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
             </File>
             <File>
-              <FileName>cmsis_version.h</FileName>
+              <FileName>cmsis_gcc.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_version.h</FilePath>
+              <FilePath>../../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_iccarm.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_iccarm.h</FilePath>
+              <FilePath>../../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
-              <FileName>arm_common_tables.h</FileName>
+              <FileName>cmsis_version.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/arm_common_tables.h</FilePath>
+              <FilePath>../../../../../CMSIS/Core/Include/cmsis_version.h</FilePath>
             </File>
             <File>
-              <FileName>arm_const_structs.h</FileName>
+              <FileName>core_cm33.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/arm_const_structs.h</FilePath>
+              <FilePath>../../../../../CMSIS/Core/Include/core_cm33.h</FilePath>
             </File>
             <File>
-              <FileName>arm_math.h</FileName>
+              <FileName>mpu_armv8.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/arm_math.h</FilePath>
+              <FilePath>../../../../../CMSIS/Core/Include/mpu_armv8.h</FilePath>
+            </File>
+            <File>
+              <FileName>tz_context.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Core/Include/tz_context.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -3670,9 +3690,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>NDEBUG, CPU_MIMXRT595SFFOC_cm33, BOOT_HEADER_ENABLE=1, BOARD_ENABLE_PSRAM_CACHE=0, SSD1963_DATA_WITDH=8, FLEXIO_MCULCD_DATA_BUS_WIDTH=8, SDK_I2C_BASED_COMPONENT_USED=1</Define>
+              <Define>NDEBUG, CPU_MIMXRT595SFFOC_cm33, BOOT_HEADER_ENABLE=1, BOARD_ENABLE_PSRAM_CACHE=0, SSD1963_DATA_WITDH=8, FLEXIO_MCULCD_DATA_BUS_WIDTH=8, SDK_I2C_BASED_COMPONENT_USED=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../devices/MIMXRT595S/drivers;../../../../../components/ssd1963;../../../../../components/video/display/dbi;../../../../../components/video/display/dbi/flexio;../../../../../components/video/display/dc/ssd1963;../../../../../components/video/display/dc/lcdif;../../../../../components/video;../../../../../components/video/display;../../../../../components/video/display/rm68191;../../../../../components/video/display/mipi_dsi_cmd;../../../../../components/video/display/rm68200;../../../../../components/video/display/rm67162;../../../../../components/video/display/dc/dsi_cmd;../../../../../components/ft3267;../../../../../components/gt911;../../../../../components/ft5406;../../../../../devices/MIMXRT595S/utilities/debug_console_lite;../../../../../middleware/emwin/emWin_header;../../../../../middleware/emwin/emWin_Config;../../../../../devices/MIMXRT595S;../../../../../components/uart;../../../../../components/lists;../../../flash_config;../../../../../CMSIS/Include;../../../../../components/video/display/dc</IncludePath>
+              <IncludePath>..;../../../../../devices/MIMXRT595S/drivers;../../../../../components/ssd1963;../../../../../components/video/display/dbi;../../../../../components/video/display/dbi/flexio;../../../../../components/video/display/dc/ssd1963;../../../../../components/video/display/dc/lcdif;../../../../../components/video;../../../../../components/video/display;../../../../../components/video/display/rm68191;../../../../../components/video/display/mipi_dsi_cmd;../../../../../components/video/display/rm68200;../../../../../components/video/display/rm67162;../../../../../components/video/display/dc/dsi_cmd;../../../../../components/ft3267;../../../../../components/gt911;../../../../../components/ft5406;../../../../../devices/MIMXRT595S/utilities/debug_console_lite;../../../../../middleware/emwin/emWin_header;../../../../../middleware/emwin/emWin_Config;../../../../../devices/MIMXRT595S;../../../../../components/uart;../../../../../components/lists;../../../flash_config;../../../../../CMSIS/Core/Include;../../../../../components/video/display/dc</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -3706,7 +3726,7 @@
             <ScatterFile>MIMXRT595Sxxxx_cm33_ram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>../../../../../middleware/emwin/emWin_library/Keil/emWin_M33.lib --remove --predefine="-D__stack_size__=0x800"</Misc>
+            <Misc>../../../../../middleware/emwin/emWin_library/Keil/emWin_M33.lib --remove --entry=Reset_Handler --predefine="-D__stack_size__=0x800"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314,6329</DisabledWarnings>
           </LDads>
@@ -3882,6 +3902,26 @@
               <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_lcdif.c</FilePath>
             </File>
             <File>
+              <FileName>fsl_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_common.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_common_arm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_common_arm.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_i2c.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_i2c.h</FilePath>
@@ -3900,16 +3940,6 @@
               <FileName>fsl_mipi_dsi_smartdma.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_mipi_dsi_smartdma.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_common.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_common.c</FilePath>
             </File>
             <File>
               <FileName>fsl_power.h</FileName>
@@ -3995,6 +4025,11 @@
               <FileName>fsl_inputmux_connections.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_inputmux_connections.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_soc_mipi_dsi.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_soc_mipi_dsi.h</FilePath>
             </File>
             <File>
               <FileName>fsl_iap.h</FileName>
@@ -4282,11 +4317,6 @@
               <FilePath>../../../../../middleware/emwin/emWin_header/GAUGE_Private.h</FilePath>
             </File>
             <File>
-              <FileName>Global.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/emwin/emWin_header/Global.h</FilePath>
-            </File>
-            <File>
               <FileName>GRAPH.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/emwin/emWin_header/GRAPH.h</FilePath>
@@ -4300,101 +4330,6 @@
               <FileName>GUI.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/emwin/emWin_header/GUI.h</FilePath>
-            </File>
-            <File>
-              <FileName>GUI__BiDi2_Brackets_800.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/emwin/emWin_header/GUI__BiDi2_Brackets_800.h</FilePath>
-            </File>
-            <File>
-              <FileName>GUI__BiDi2_Types_800.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/emwin/emWin_header/GUI__BiDi2_Types_800.h</FilePath>
-            </File>
-            <File>
-              <FileName>GUI_ARRAY.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/emwin/emWin_header/GUI_ARRAY.h</FilePath>
-            </File>
-            <File>
-              <FileName>GUI_ARRAY_Private.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/emwin/emWin_header/GUI_ARRAY_Private.h</FilePath>
-            </File>
-            <File>
-              <FileName>GUI_BMP_Private.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/emwin/emWin_header/GUI_BMP_Private.h</FilePath>
-            </File>
-            <File>
-              <FileName>GUI_ConfDefaults.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/emwin/emWin_header/GUI_ConfDefaults.h</FilePath>
-            </File>
-            <File>
-              <FileName>GUI_Debug.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/emwin/emWin_header/GUI_Debug.h</FilePath>
-            </File>
-            <File>
-              <FileName>GUI_FontIntern.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/emwin/emWin_header/GUI_FontIntern.h</FilePath>
-            </File>
-            <File>
-              <FileName>GUI_GCache_Private.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/emwin/emWin_header/GUI_GCache_Private.h</FilePath>
-            </File>
-            <File>
-              <FileName>GUI_GIF_Private.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/emwin/emWin_header/GUI_GIF_Private.h</FilePath>
-            </File>
-            <File>
-              <FileName>GUI_HOOK.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/emwin/emWin_header/GUI_HOOK.h</FilePath>
-            </File>
-            <File>
-              <FileName>GUI_JPEG_Private.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/emwin/emWin_header/GUI_JPEG_Private.h</FilePath>
-            </File>
-            <File>
-              <FileName>GUI_Private.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/emwin/emWin_header/GUI_Private.h</FilePath>
-            </File>
-            <File>
-              <FileName>GUI_SetOrientation.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/emwin/emWin_header/GUI_SetOrientation.h</FilePath>
-            </File>
-            <File>
-              <FileName>GUI_SetOrientationCX.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/emwin/emWin_header/GUI_SetOrientationCX.h</FilePath>
-            </File>
-            <File>
-              <FileName>GUI_SPRITE_Private.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/emwin/emWin_header/GUI_SPRITE_Private.h</FilePath>
-            </File>
-            <File>
-              <FileName>GUI_Type.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/emwin/emWin_header/GUI_Type.h</FilePath>
-            </File>
-            <File>
-              <FileName>GUI_Version.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/emwin/emWin_header/GUI_Version.h</FilePath>
-            </File>
-            <File>
-              <FileName>GUI_VNC.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/emwin/emWin_header/GUI_VNC.h</FilePath>
             </File>
             <File>
               <FileName>GUIDRV_BitPlains.h</FileName>
@@ -4497,16 +4432,6 @@
               <FilePath>../../../../../middleware/emwin/emWin_header/GUIDRV_S1D15G00.h</FilePath>
             </File>
             <File>
-              <FileName>GUIDRV_SLin.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/emwin/emWin_header/GUIDRV_SLin.h</FilePath>
-            </File>
-            <File>
-              <FileName>GUIDRV_SLin_Private.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/emwin/emWin_header/GUIDRV_SLin_Private.h</FilePath>
-            </File>
-            <File>
               <FileName>GUIDRV_SH_MEM.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/emwin/emWin_header/GUIDRV_SH_MEM.h</FilePath>
@@ -4515,6 +4440,16 @@
               <FileName>GUIDRV_SH_MEM_Private.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/emwin/emWin_header/GUIDRV_SH_MEM_Private.h</FilePath>
+            </File>
+            <File>
+              <FileName>GUIDRV_SLin.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/GUIDRV_SLin.h</FilePath>
+            </File>
+            <File>
+              <FileName>GUIDRV_SLin_Private.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/GUIDRV_SLin_Private.h</FilePath>
             </File>
             <File>
               <FileName>GUIDRV_SPage.h</FileName>
@@ -4555,6 +4490,111 @@
               <FileName>GUITDRV_ADS7846.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/emwin/emWin_header/GUITDRV_ADS7846.h</FilePath>
+            </File>
+            <File>
+              <FileName>GUI_ARRAY.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/GUI_ARRAY.h</FilePath>
+            </File>
+            <File>
+              <FileName>GUI_ARRAY_Private.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/GUI_ARRAY_Private.h</FilePath>
+            </File>
+            <File>
+              <FileName>GUI_BMP_Private.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/GUI_BMP_Private.h</FilePath>
+            </File>
+            <File>
+              <FileName>GUI_ConfDefaults.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/GUI_ConfDefaults.h</FilePath>
+            </File>
+            <File>
+              <FileName>GUI_Debug.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/GUI_Debug.h</FilePath>
+            </File>
+            <File>
+              <FileName>GUI_FontIntern.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/GUI_FontIntern.h</FilePath>
+            </File>
+            <File>
+              <FileName>GUI_GCache_Private.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/GUI_GCache_Private.h</FilePath>
+            </File>
+            <File>
+              <FileName>GUI_GIF_Private.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/GUI_GIF_Private.h</FilePath>
+            </File>
+            <File>
+              <FileName>GUI_HOOK.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/GUI_HOOK.h</FilePath>
+            </File>
+            <File>
+              <FileName>GUI_JPEG_Private.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/GUI_JPEG_Private.h</FilePath>
+            </File>
+            <File>
+              <FileName>GUI_Private.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/GUI_Private.h</FilePath>
+            </File>
+            <File>
+              <FileName>GUI_SPRITE_Private.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/GUI_SPRITE_Private.h</FilePath>
+            </File>
+            <File>
+              <FileName>GUI_SPY_Private.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/GUI_SPY_Private.h</FilePath>
+            </File>
+            <File>
+              <FileName>GUI_SetOrientation.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/GUI_SetOrientation.h</FilePath>
+            </File>
+            <File>
+              <FileName>GUI_SetOrientationCX.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/GUI_SetOrientationCX.h</FilePath>
+            </File>
+            <File>
+              <FileName>GUI_Type.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/GUI_Type.h</FilePath>
+            </File>
+            <File>
+              <FileName>GUI_VNC.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/GUI_VNC.h</FilePath>
+            </File>
+            <File>
+              <FileName>GUI_Version.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/GUI_Version.h</FilePath>
+            </File>
+            <File>
+              <FileName>GUI__BiDi2_Brackets_800.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/GUI__BiDi2_Brackets_800.h</FilePath>
+            </File>
+            <File>
+              <FileName>GUI__BiDi2_Types_800.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/GUI__BiDi2_Types_800.h</FilePath>
+            </File>
+            <File>
+              <FileName>Global.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/Global.h</FilePath>
             </File>
             <File>
               <FileName>HEADER.h</FileName>
@@ -4685,6 +4725,11 @@
               <FileName>MULTIEDIT.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/emwin/emWin_header/MULTIEDIT.h</FilePath>
+            </File>
+            <File>
+              <FileName>MULTIEDIT_Private.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/MULTIEDIT_Private.h</FilePath>
             </File>
             <File>
               <FileName>MULTIPAGE.h</FileName>
@@ -4942,69 +4987,54 @@
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
-              <FileName>core_cm33.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/core_cm33.h</FilePath>
-            </File>
-            <File>
-              <FileName>tz_context.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/tz_context.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv8.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/mpu_armv8.h</FilePath>
-            </File>
-            <File>
               <FileName>cmsis_armcc.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_armcc.h</FilePath>
+              <FilePath>../../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_armclang.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_armclang.h</FilePath>
+              <FilePath>../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_armclang_ltm.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_armclang_ltm.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_gcc.h</FilePath>
+              <FilePath>../../../../../CMSIS/Core/Include/cmsis_armclang_ltm.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_compiler.h</FilePath>
+              <FilePath>../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
             </File>
             <File>
-              <FileName>cmsis_version.h</FileName>
+              <FileName>cmsis_gcc.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_version.h</FilePath>
+              <FilePath>../../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_iccarm.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_iccarm.h</FilePath>
+              <FilePath>../../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
-              <FileName>arm_common_tables.h</FileName>
+              <FileName>cmsis_version.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/arm_common_tables.h</FilePath>
+              <FilePath>../../../../../CMSIS/Core/Include/cmsis_version.h</FilePath>
             </File>
             <File>
-              <FileName>arm_const_structs.h</FileName>
+              <FileName>core_cm33.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/arm_const_structs.h</FilePath>
+              <FilePath>../../../../../CMSIS/Core/Include/core_cm33.h</FilePath>
             </File>
             <File>
-              <FileName>arm_math.h</FileName>
+              <FileName>mpu_armv8.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/arm_math.h</FilePath>
+              <FilePath>../../../../../CMSIS/Core/Include/mpu_armv8.h</FilePath>
+            </File>
+            <File>
+              <FileName>tz_context.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Core/Include/tz_context.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -5339,9 +5369,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>NDEBUG, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, CPU_MIMXRT595SFFOC_cm33, BOOT_HEADER_ENABLE=1, BOARD_ENABLE_PSRAM_CACHE=0, SSD1963_DATA_WITDH=8, FLEXIO_MCULCD_DATA_BUS_WIDTH=8, SDK_I2C_BASED_COMPONENT_USED=1</Define>
+              <Define>NDEBUG, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, CPU_MIMXRT595SFFOC_cm33, BOOT_HEADER_ENABLE=1, BOARD_ENABLE_PSRAM_CACHE=0, SSD1963_DATA_WITDH=8, FLEXIO_MCULCD_DATA_BUS_WIDTH=8, SDK_I2C_BASED_COMPONENT_USED=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../devices/MIMXRT595S/drivers;../../../../../components/ssd1963;../../../../../components/video/display/dbi;../../../../../components/video/display/dbi/flexio;../../../../../components/video/display/dc/ssd1963;../../../../../components/video/display/dc/lcdif;../../../../../components/video;../../../../../components/video/display;../../../../../components/video/display/rm68191;../../../../../components/video/display/mipi_dsi_cmd;../../../../../components/video/display/rm68200;../../../../../components/video/display/rm67162;../../../../../components/video/display/dc/dsi_cmd;../../../../../components/ft3267;../../../../../components/gt911;../../../../../components/ft5406;../../../../../devices/MIMXRT595S/utilities/debug_console_lite;../../../../../middleware/emwin/emWin_header;../../../../../middleware/emwin/emWin_Config;../../../../../devices/MIMXRT595S;../../../../../components/uart;../../../../../components/lists;../../../flash_config;../../../../../CMSIS/Include;../../../../../components/video/display/dc</IncludePath>
+              <IncludePath>..;../../../../../devices/MIMXRT595S/drivers;../../../../../components/ssd1963;../../../../../components/video/display/dbi;../../../../../components/video/display/dbi/flexio;../../../../../components/video/display/dc/ssd1963;../../../../../components/video/display/dc/lcdif;../../../../../components/video;../../../../../components/video/display;../../../../../components/video/display/rm68191;../../../../../components/video/display/mipi_dsi_cmd;../../../../../components/video/display/rm68200;../../../../../components/video/display/rm67162;../../../../../components/video/display/dc/dsi_cmd;../../../../../components/ft3267;../../../../../components/gt911;../../../../../components/ft5406;../../../../../devices/MIMXRT595S/utilities/debug_console_lite;../../../../../middleware/emwin/emWin_header;../../../../../middleware/emwin/emWin_Config;../../../../../devices/MIMXRT595S;../../../../../components/uart;../../../../../components/lists;../../../flash_config;../../../../../CMSIS/Core/Include;../../../../../components/video/display/dc</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -5375,7 +5405,7 @@
             <ScatterFile>MIMXRT595Sxxxx_cm33_flash.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>../../../../../middleware/emwin/emWin_library/Keil/emWin_M33.lib --remove --predefine="-D__stack_size__=0x800"</Misc>
+            <Misc>../../../../../middleware/emwin/emWin_library/Keil/emWin_M33.lib --remove --entry=Reset_Handler --predefine="-D__stack_size__=0x800"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314,6329</DisabledWarnings>
           </LDads>
@@ -5551,6 +5581,26 @@
               <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_lcdif.c</FilePath>
             </File>
             <File>
+              <FileName>fsl_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_common.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_common_arm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_common_arm.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_i2c.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_i2c.h</FilePath>
@@ -5569,16 +5619,6 @@
               <FileName>fsl_mipi_dsi_smartdma.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_mipi_dsi_smartdma.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_common.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_common.c</FilePath>
             </File>
             <File>
               <FileName>fsl_power.h</FileName>
@@ -5664,6 +5704,11 @@
               <FileName>fsl_inputmux_connections.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_inputmux_connections.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_soc_mipi_dsi.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_soc_mipi_dsi.h</FilePath>
             </File>
             <File>
               <FileName>fsl_iap.h</FileName>
@@ -5951,11 +5996,6 @@
               <FilePath>../../../../../middleware/emwin/emWin_header/GAUGE_Private.h</FilePath>
             </File>
             <File>
-              <FileName>Global.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/emwin/emWin_header/Global.h</FilePath>
-            </File>
-            <File>
               <FileName>GRAPH.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/emwin/emWin_header/GRAPH.h</FilePath>
@@ -5969,101 +6009,6 @@
               <FileName>GUI.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/emwin/emWin_header/GUI.h</FilePath>
-            </File>
-            <File>
-              <FileName>GUI__BiDi2_Brackets_800.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/emwin/emWin_header/GUI__BiDi2_Brackets_800.h</FilePath>
-            </File>
-            <File>
-              <FileName>GUI__BiDi2_Types_800.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/emwin/emWin_header/GUI__BiDi2_Types_800.h</FilePath>
-            </File>
-            <File>
-              <FileName>GUI_ARRAY.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/emwin/emWin_header/GUI_ARRAY.h</FilePath>
-            </File>
-            <File>
-              <FileName>GUI_ARRAY_Private.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/emwin/emWin_header/GUI_ARRAY_Private.h</FilePath>
-            </File>
-            <File>
-              <FileName>GUI_BMP_Private.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/emwin/emWin_header/GUI_BMP_Private.h</FilePath>
-            </File>
-            <File>
-              <FileName>GUI_ConfDefaults.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/emwin/emWin_header/GUI_ConfDefaults.h</FilePath>
-            </File>
-            <File>
-              <FileName>GUI_Debug.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/emwin/emWin_header/GUI_Debug.h</FilePath>
-            </File>
-            <File>
-              <FileName>GUI_FontIntern.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/emwin/emWin_header/GUI_FontIntern.h</FilePath>
-            </File>
-            <File>
-              <FileName>GUI_GCache_Private.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/emwin/emWin_header/GUI_GCache_Private.h</FilePath>
-            </File>
-            <File>
-              <FileName>GUI_GIF_Private.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/emwin/emWin_header/GUI_GIF_Private.h</FilePath>
-            </File>
-            <File>
-              <FileName>GUI_HOOK.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/emwin/emWin_header/GUI_HOOK.h</FilePath>
-            </File>
-            <File>
-              <FileName>GUI_JPEG_Private.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/emwin/emWin_header/GUI_JPEG_Private.h</FilePath>
-            </File>
-            <File>
-              <FileName>GUI_Private.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/emwin/emWin_header/GUI_Private.h</FilePath>
-            </File>
-            <File>
-              <FileName>GUI_SetOrientation.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/emwin/emWin_header/GUI_SetOrientation.h</FilePath>
-            </File>
-            <File>
-              <FileName>GUI_SetOrientationCX.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/emwin/emWin_header/GUI_SetOrientationCX.h</FilePath>
-            </File>
-            <File>
-              <FileName>GUI_SPRITE_Private.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/emwin/emWin_header/GUI_SPRITE_Private.h</FilePath>
-            </File>
-            <File>
-              <FileName>GUI_Type.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/emwin/emWin_header/GUI_Type.h</FilePath>
-            </File>
-            <File>
-              <FileName>GUI_Version.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/emwin/emWin_header/GUI_Version.h</FilePath>
-            </File>
-            <File>
-              <FileName>GUI_VNC.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/emwin/emWin_header/GUI_VNC.h</FilePath>
             </File>
             <File>
               <FileName>GUIDRV_BitPlains.h</FileName>
@@ -6166,16 +6111,6 @@
               <FilePath>../../../../../middleware/emwin/emWin_header/GUIDRV_S1D15G00.h</FilePath>
             </File>
             <File>
-              <FileName>GUIDRV_SLin.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/emwin/emWin_header/GUIDRV_SLin.h</FilePath>
-            </File>
-            <File>
-              <FileName>GUIDRV_SLin_Private.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/emwin/emWin_header/GUIDRV_SLin_Private.h</FilePath>
-            </File>
-            <File>
               <FileName>GUIDRV_SH_MEM.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/emwin/emWin_header/GUIDRV_SH_MEM.h</FilePath>
@@ -6184,6 +6119,16 @@
               <FileName>GUIDRV_SH_MEM_Private.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/emwin/emWin_header/GUIDRV_SH_MEM_Private.h</FilePath>
+            </File>
+            <File>
+              <FileName>GUIDRV_SLin.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/GUIDRV_SLin.h</FilePath>
+            </File>
+            <File>
+              <FileName>GUIDRV_SLin_Private.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/GUIDRV_SLin_Private.h</FilePath>
             </File>
             <File>
               <FileName>GUIDRV_SPage.h</FileName>
@@ -6224,6 +6169,111 @@
               <FileName>GUITDRV_ADS7846.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/emwin/emWin_header/GUITDRV_ADS7846.h</FilePath>
+            </File>
+            <File>
+              <FileName>GUI_ARRAY.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/GUI_ARRAY.h</FilePath>
+            </File>
+            <File>
+              <FileName>GUI_ARRAY_Private.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/GUI_ARRAY_Private.h</FilePath>
+            </File>
+            <File>
+              <FileName>GUI_BMP_Private.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/GUI_BMP_Private.h</FilePath>
+            </File>
+            <File>
+              <FileName>GUI_ConfDefaults.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/GUI_ConfDefaults.h</FilePath>
+            </File>
+            <File>
+              <FileName>GUI_Debug.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/GUI_Debug.h</FilePath>
+            </File>
+            <File>
+              <FileName>GUI_FontIntern.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/GUI_FontIntern.h</FilePath>
+            </File>
+            <File>
+              <FileName>GUI_GCache_Private.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/GUI_GCache_Private.h</FilePath>
+            </File>
+            <File>
+              <FileName>GUI_GIF_Private.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/GUI_GIF_Private.h</FilePath>
+            </File>
+            <File>
+              <FileName>GUI_HOOK.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/GUI_HOOK.h</FilePath>
+            </File>
+            <File>
+              <FileName>GUI_JPEG_Private.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/GUI_JPEG_Private.h</FilePath>
+            </File>
+            <File>
+              <FileName>GUI_Private.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/GUI_Private.h</FilePath>
+            </File>
+            <File>
+              <FileName>GUI_SPRITE_Private.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/GUI_SPRITE_Private.h</FilePath>
+            </File>
+            <File>
+              <FileName>GUI_SPY_Private.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/GUI_SPY_Private.h</FilePath>
+            </File>
+            <File>
+              <FileName>GUI_SetOrientation.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/GUI_SetOrientation.h</FilePath>
+            </File>
+            <File>
+              <FileName>GUI_SetOrientationCX.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/GUI_SetOrientationCX.h</FilePath>
+            </File>
+            <File>
+              <FileName>GUI_Type.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/GUI_Type.h</FilePath>
+            </File>
+            <File>
+              <FileName>GUI_VNC.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/GUI_VNC.h</FilePath>
+            </File>
+            <File>
+              <FileName>GUI_Version.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/GUI_Version.h</FilePath>
+            </File>
+            <File>
+              <FileName>GUI__BiDi2_Brackets_800.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/GUI__BiDi2_Brackets_800.h</FilePath>
+            </File>
+            <File>
+              <FileName>GUI__BiDi2_Types_800.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/GUI__BiDi2_Types_800.h</FilePath>
+            </File>
+            <File>
+              <FileName>Global.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/Global.h</FilePath>
             </File>
             <File>
               <FileName>HEADER.h</FileName>
@@ -6354,6 +6404,11 @@
               <FileName>MULTIEDIT.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/emwin/emWin_header/MULTIEDIT.h</FilePath>
+            </File>
+            <File>
+              <FileName>MULTIEDIT_Private.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/MULTIEDIT_Private.h</FilePath>
             </File>
             <File>
               <FileName>MULTIPAGE.h</FileName>
@@ -6611,69 +6666,54 @@
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
-              <FileName>core_cm33.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/core_cm33.h</FilePath>
-            </File>
-            <File>
-              <FileName>tz_context.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/tz_context.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv8.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/mpu_armv8.h</FilePath>
-            </File>
-            <File>
               <FileName>cmsis_armcc.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_armcc.h</FilePath>
+              <FilePath>../../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_armclang.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_armclang.h</FilePath>
+              <FilePath>../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_armclang_ltm.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_armclang_ltm.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_gcc.h</FilePath>
+              <FilePath>../../../../../CMSIS/Core/Include/cmsis_armclang_ltm.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_compiler.h</FilePath>
+              <FilePath>../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
             </File>
             <File>
-              <FileName>cmsis_version.h</FileName>
+              <FileName>cmsis_gcc.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_version.h</FilePath>
+              <FilePath>../../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_iccarm.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_iccarm.h</FilePath>
+              <FilePath>../../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
-              <FileName>arm_common_tables.h</FileName>
+              <FileName>cmsis_version.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/arm_common_tables.h</FilePath>
+              <FilePath>../../../../../CMSIS/Core/Include/cmsis_version.h</FilePath>
             </File>
             <File>
-              <FileName>arm_const_structs.h</FileName>
+              <FileName>core_cm33.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/arm_const_structs.h</FilePath>
+              <FilePath>../../../../../CMSIS/Core/Include/core_cm33.h</FilePath>
             </File>
             <File>
-              <FileName>arm_math.h</FileName>
+              <FileName>mpu_armv8.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/arm_math.h</FilePath>
+              <FilePath>../../../../../CMSIS/Core/Include/mpu_armv8.h</FilePath>
+            </File>
+            <File>
+              <FileName>tz_context.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Core/Include/tz_context.h</FilePath>
             </File>
           </Files>
         </Group>

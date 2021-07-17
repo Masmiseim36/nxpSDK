@@ -1,0 +1,6 @@
+@Start
+@Input_path ../test_inp/
+@Output_path ../test_out/
+sweep_le.src sweep-encoded.aa A
+sweep_le.src sweep-encoded.uu U
+@Stop

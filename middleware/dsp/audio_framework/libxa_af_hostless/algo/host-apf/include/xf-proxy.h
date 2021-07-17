@@ -1,15 +1,17 @@
-/*******************************************************************************
-* Copyright (c) 2015-2020 Cadence Design Systems, Inc.
-* 
+/*
+* Copyright (c) 2015-2021 Cadence Design Systems Inc.
+*
 * Permission is hereby granted, free of charge, to any person obtaining
 * a copy of this software and associated documentation files (the
-* "Software"), to use this Software with Cadence processor cores only and 
-* not with any other processors and platforms, subject to
+* "Software"), to deal in the Software without restriction, including
+* without limitation the rights to use, copy, modify, merge, publish,
+* distribute, sublicense, and/or sell copies of the Software, and to
+* permit persons to whom the Software is furnished to do so, subject to
 * the following conditions:
-* 
+*
 * The above copyright notice and this permission notice shall be included
 * in all copies or substantial portions of the Software.
-* 
+*
 * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
 * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
@@ -17,8 +19,7 @@
 * CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
 * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-******************************************************************************/
+*/
 /*******************************************************************************
  * xf-proxy.h
  *
@@ -168,6 +169,8 @@ struct xf_proxy
 
     /* ...client association map */
     xf_proxy_cmap_link_t    cmap[XF_CFG_PROXY_MAX_CLIENTS];
+
+    UWORD32 proxy_thread_priority;
 };
 
 /*******************************************************************************
@@ -245,10 +248,22 @@ struct xf_handle
 #define PROXY_THREAD_STACK_SIZE  8192
 #define STACK_SIZE 8192
 
+#ifndef XA_DISABLE_EVENT
+/* ...events to application callback structure(relay) */
+typedef struct xa_app_submit_event_cb_s
+{
+    WORD32 (*cb)(struct xa_app_submit_event_cb_s *, UWORD32 comp_id, UWORD32 event_id, pVOID event_buf, UWORD32 buf_size);
+}xa_app_submit_event_cb_t;
+#endif
+
 typedef struct xf_ap_s {
     xf_thread_t     dsp_thread;
 
-    unsigned char dsp_stack[STACK_SIZE];
+#if !defined(HAVE_FREERTOS)
+	unsigned char dsp_stack[STACK_SIZE];
+
+	char proxy_thread_stack[PROXY_THREAD_STACK_SIZE];
+#endif
 
     ipc_msgq_t g_ipc_msgq;
 
@@ -256,13 +271,17 @@ typedef struct xf_ap_s {
 
     xf_lock_t   g_comp_delete_lock; //TENA_2356
 
-    char proxy_thread_stack[PROXY_THREAD_STACK_SIZE];
-
     xaf_mem_malloc_fxn_t *xf_mem_malloc_fxn;
 
     xaf_mem_free_fxn_t *xf_mem_free_fxn;
 
-    WORD32 xaf_memory_used; /* TENA-2155 to track all the non-shmem and non-component mallocs on the host */
+#ifndef XA_DISABLE_EVENT
+    xaf_app_event_handler_fxn_t app_event_handler_cb;
+
+    xa_app_submit_event_cb_t *cdata;
+#endif
+
+    WORD32 xaf_memory_used; /* TENA-2155 to track all the non-shmem and non-component mallocs on the App Interface Layer */
 } xf_ap_t;
 
 typedef struct {
@@ -273,7 +292,7 @@ typedef struct {
     //xf_mm_pool_t            xf_ap_shmem_pool;
 
     /* ...per-core local memory pool */
-    UWORD8 xf_dsp_local_pool[XF_DSP_OBJ_SIZE_DSP_LOCAL_POOL];    //dsp side this buffer is 40 bytes
+    UWORD8 xf_dsp_local_pool[XF_DSP_OBJ_SIZE_DSP_LOCAL_POOL];    //at DSP Interface Layer this buffer is 40 bytes
 
 #if XF_CFG_CORES_NUM_DSP > 1
     /* ...DSP cluster shared memory pool */
@@ -296,8 +315,15 @@ typedef struct {
 
     UWORD8 *xf_dsp_local_buffer;
     WORD32 xf_dsp_local_buffer_size;
-    WORD32 dsp_comp_buf_size_used;  /* cumulative buffer size used in bytes from audio_comp_buf_size */
-    WORD32 dsp_frmwk_buf_size_used;  /* cumulative buffer size used in bytes from audio_frmwk_buf_size */
+    WORD32 dsp_comp_buf_size_peak;  /* cumulative buffer size used in bytes from audio_comp_buf_size */
+    WORD32 dsp_frmwk_buf_size_peak;  /* cumulative buffer size used in bytes from audio_frmwk_buf_size */
+    WORD32 dsp_comp_buf_size_curr;   /* current usage from audio_comp_buf_size in bytes */
+    WORD32 dsp_frmwk_buf_size_curr;  /* current usage from audio_frmwk_buf_size in bytes */  
+
+    void *dsp_thread_args[XAF_NUM_THREAD_ARGS];
+
+    UWORD32 worker_thread_scratch_size[XAF_MAX_WORKER_THREADS]; /* ...user configurable worker scratch size */
+
 } xf_dsp_t;
 
 /*******************************************************************************

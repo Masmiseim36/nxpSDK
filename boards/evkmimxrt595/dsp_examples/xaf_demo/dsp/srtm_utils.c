@@ -223,7 +223,7 @@ int DSP_ProcessThread(void *arg, int wake_value)
     DSP_PRINTF("[DSP_ProcessThread] start\r\n");
 
     ret = xaf_comp_process(NULL, ctx->comp, NULL, 0, XAF_EXEC_FLAG);
-    if (ret != XAF_NO_ERROR)
+    if (ret != XAF_NO_ERR)
     {
         DSP_PRINTF("[DSP_ProcessThread] xaf_comp_process XAF_EXEC_FLAG failure: %d\r\n", ret);
         return -1;
@@ -238,7 +238,7 @@ int DSP_ProcessThread(void *arg, int wake_value)
             xos_event_clear(&ctx->pipeline_event, DSP_EVENT_STOP);
             /* Send INPUT_OVER to decoder to gracefully shutdown pipeline */
             ret = xaf_comp_process(NULL, ctx->comp, NULL, 0, XAF_INPUT_OVER_FLAG);
-            if (ret != XAF_NO_ERROR)
+            if (ret != XAF_NO_ERR)
             {
                 DSP_PRINTF("[DSP_ProcessThread] xaf_comp_process XAF_INPUT_OVER_FLAG failure: %d\r\n", ret);
             }
@@ -247,7 +247,7 @@ int DSP_ProcessThread(void *arg, int wake_value)
         }
 
         ret = xaf_comp_get_status(NULL, ctx->comp, &status, &info[0]);
-        if (ret != XAF_NO_ERROR)
+        if (ret != XAF_NO_ERR)
         {
             DSP_PRINTF("[DSP_ProcessThread] xaf_comp_get_status failure: %d\r\n", ret);
             ctx->file_playing = false;
@@ -274,7 +274,7 @@ int DSP_ProcessThread(void *arg, int wake_value)
             if (read_size > 0)
             {
                 ret = xaf_comp_process(NULL, ctx->comp, (void *)buffer, read_size, XAF_INPUT_READY_FLAG);
-                if (ret != XAF_NO_ERROR)
+                if (ret != XAF_NO_ERR)
                 {
                     DSP_PRINTF("[DSP_ProcessThread] xaf_comp_process XAF_INPUT_READY_FLAG failure: %d\r\n", ret);
                     return -1;
@@ -283,7 +283,7 @@ int DSP_ProcessThread(void *arg, int wake_value)
             else
             {
                 ret = xaf_comp_process(NULL, ctx->comp, NULL, 0, XAF_INPUT_OVER_FLAG);
-                if (ret != XAF_NO_ERROR)
+                if (ret != XAF_NO_ERR)
                 {
                     DSP_PRINTF("[DSP_ProcessThread] xaf_comp_process XAF_INPUT_OVER_FLAG failure: %d\r\n", ret);
                     return -1;
@@ -307,7 +307,7 @@ int DSP_ProcessThread(void *arg, int wake_value)
                 write_size = ctx->audio_write(ctx, buffer, buffer_len);
 
                 ret = xaf_comp_process(NULL, ctx->comp, buffer, buffer_len, XAF_NEED_OUTPUT_FLAG);
-                if (ret != XAF_NO_ERROR)
+                if (ret != XAF_NO_ERR)
                 {
                     DSP_PRINTF("[DSP_ProcessThread] xaf_comp_process XAF_NEED_OUTPUT_FLAG failure: %d\r\n", ret);
                     return -1;

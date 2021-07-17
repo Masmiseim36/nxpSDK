@@ -18,14 +18,12 @@
 #include "board.h"
 #include "veneer_table.h"
 #include "tzm_config.h"
+#include "tzm_api.h"
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
 #define NON_SECURE_START DEMO_CODE_START_NS
-
-/* typedef for non-secure callback functions */
-typedef void (*funcptr_ns)(void) __attribute__((cmse_nonsecure_call));
 
 /*******************************************************************************
  * Prototypes
@@ -51,28 +49,17 @@ void SystemInitHook(void)
  */
 int main(void)
 {
-    funcptr_ns ResetHandler_ns;
-
     /* Init board hardware. */
     BOARD_InitPins();
     BOARD_BootClockRUN();
     BOARD_InitDebugConsole();
 
     PRINTF("Hello from secure world!\r\n");
-
-    /* Set non-secure main stack (MSP_NS) */
-    __TZ_set_MSP_NS(*((uint32_t *)(NON_SECURE_START)));
-
-    /* Set non-secure vector table */
-    SCB_NS->VTOR = NON_SECURE_START;
-
-    /* Get non-secure reset handler */
-    ResetHandler_ns = (funcptr_ns)(*((uint32_t *)((NON_SECURE_START) + 4U)));
-
-    /* Call non-secure application */
     PRINTF("Entering normal world.\r\n");
-    /* Jump to normal world */
-    ResetHandler_ns();
+
+    /* Call non-secure application - jump to normal world */
+    TZM_JumpToNormalWorld(NON_SECURE_START);
+
     while (1)
     {
         /* This point should never be reached */

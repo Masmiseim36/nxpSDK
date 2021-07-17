@@ -4,15 +4,15 @@
 **                          MIMXRT595SFFOC_cm33
 **
 **     Compiler:            IAR ANSI C/C++ Compiler for ARM
-**     Reference manual:    iMXRT500RM Rev.D, 11/2020
+**     Reference manual:    iMXRT500RM Rev.0, 01/2021
 **     Version:             rev. 4.0, 2020-05-12
-**     Build:               b201117
+**     Build:               b210303
 **
 **     Abstract:
 **         Linker file for the IAR ANSI C/C++ Compiler for ARM
 **
 **     Copyright 2016 Freescale Semiconductor, Inc.
-**     Copyright 2016-2020 NXP
+**     Copyright 2016-2021 NXP
 **     All rights reserved.
 **
 **     SPDX-License-Identifier: BSD-3-Clause

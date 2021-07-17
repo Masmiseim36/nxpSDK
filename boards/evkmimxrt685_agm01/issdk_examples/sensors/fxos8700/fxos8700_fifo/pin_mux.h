@@ -63,11 +63,11 @@ void BOARD_InitPins(void); /* Function assigned for the Cortex-M33 */
  * @brief Configures pin routing and optionally pin electrical features.
  *
  */
-void I2C2_InitPins(void); /* Function assigned for the Cortex-M33 */
+void I2C4_InitPins(void); /* Function assigned for the Cortex-M33 */
 
 #define IOPCTL_PIO_ANAMUX_DI 0x00u        /*!<@brief Analog mux is disabled */
 #define IOPCTL_PIO_FULLDRIVE_DI 0x00u     /*!<@brief Normal drive */
-#define IOPCTL_PIO_FUNC1 0x01u            /*!<@brief Selects pin function 1 */
+#define IOPCTL_PIO_FUNC0 0x00u            /*!<@brief Selects pin function 0 */
 #define IOPCTL_PIO_INBUF_DI 0x00u         /*!<@brief Disable input buffer function */
 #define IOPCTL_PIO_INV_DI 0x00u           /*!<@brief Input function is not inverted */
 #define IOPCTL_PIO_PSEDRAIN_DI 0x00u      /*!<@brief Pseudo Output Drain is disabled */
@@ -79,7 +79,7 @@ void I2C2_InitPins(void); /* Function assigned for the Cortex-M33 */
  * @brief Configures pin routing and optionally pin electrical features.
  *
  */
-void I2C2_DeinitPins(void); /* Function assigned for the Cortex-M33 */
+void I2C4_DeinitPins(void); /* Function assigned for the Cortex-M33 */
 
 #define IOPCTL_PIO_ANAMUX_DI 0x00u        /*!<@brief Analog mux is disabled */
 #define IOPCTL_PIO_FULLDRIVE_DI 0x00u     /*!<@brief Normal drive */

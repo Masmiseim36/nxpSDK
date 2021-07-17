@@ -7,7 +7,7 @@
 
 #include "qcbor_ns_tests.h"
 #include <stdio.h>
-#include "lib/ext/qcbor/test/run_tests.h"
+#include "run_tests.h"
 
 /*
  * The QCBOR test cases are defined in: lib/ext/qcbor/test/run_test.c

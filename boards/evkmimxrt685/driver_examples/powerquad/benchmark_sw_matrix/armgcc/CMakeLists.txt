@@ -1,6 +1,6 @@
 # CROSS COMPILER SETTING
 SET(CMAKE_SYSTEM_NAME Generic)
-CMAKE_MINIMUM_REQUIRED (VERSION 3.1.1)
+CMAKE_MINIMUM_REQUIRED (VERSION 3.10.0)
 
 # THE VERSION NUMBER
 SET (Tutorial_VERSION_MAJOR 1)
@@ -31,78 +31,9 @@ include(${ProjDirPath}/flags.cmake)
 include(${ProjDirPath}/config.cmake)
 
 add_executable(${MCUX_SDK_PROJECT_NAME} 
-"${ProjDirPath}/../../../../../../CMSIS/DSP/Source/TransformFunctions/arm_bitreversal.c"
-"${ProjDirPath}/../../../../../../CMSIS/DSP/Source/TransformFunctions/arm_bitreversal2.c"
 "${ProjDirPath}/../powerquad_benchmark_sw_matrix.c"
 "${ProjDirPath}/../pin_mux.c"
 "${ProjDirPath}/../pin_mux.h"
-"${ProjDirPath}/../../../../../../CMSIS/DSP/Source/BasicMathFunctions/arm_mult_q31.c"
-"${ProjDirPath}/../../../../../../CMSIS/DSP/Source/BasicMathFunctions/arm_shift_q31.c"
-"${ProjDirPath}/../../../../../../CMSIS/DSP/Source/ComplexMathFunctions/arm_cmplx_mult_cmplx_q31.c"
-"${ProjDirPath}/../../../../../../CMSIS/DSP/Source/TransformFunctions/arm_cfft_radix2_q31.c"
-"${ProjDirPath}/../../../../../../CMSIS/DSP/Source/TransformFunctions/arm_cfft_radix2_init_q31.c"
-"${ProjDirPath}/../../../../../../CMSIS/DSP/Source/TransformFunctions/arm_cfft_radix4_q31.c"
-"${ProjDirPath}/../../../../../../CMSIS/DSP/Source/TransformFunctions/arm_cfft_radix4_init_q31.c"
-"${ProjDirPath}/../../../../../../CMSIS/DSP/Source/BasicMathFunctions/arm_mult_q15.c"
-"${ProjDirPath}/../../../../../../CMSIS/DSP/Source/BasicMathFunctions/arm_shift_q15.c"
-"${ProjDirPath}/../../../../../../CMSIS/DSP/Source/ComplexMathFunctions/arm_cmplx_mult_cmplx_q15.c"
-"${ProjDirPath}/../../../../../../CMSIS/DSP/Source/TransformFunctions/arm_cfft_radix2_q15.c"
-"${ProjDirPath}/../../../../../../CMSIS/DSP/Source/TransformFunctions/arm_cfft_radix2_init_q15.c"
-"${ProjDirPath}/../../../../../../CMSIS/DSP/Source/TransformFunctions/arm_cfft_radix4_q15.c"
-"${ProjDirPath}/../../../../../../CMSIS/DSP/Source/TransformFunctions/arm_cfft_radix4_init_q15.c"
-"${ProjDirPath}/../../../../../../CMSIS/DSP/Source/MatrixFunctions/arm_mat_add_q15.c"
-"${ProjDirPath}/../../../../../../CMSIS/DSP/Source/MatrixFunctions/arm_mat_add_q31.c"
-"${ProjDirPath}/../../../../../../CMSIS/DSP/Source/MatrixFunctions/arm_mat_add_f32.c"
-"${ProjDirPath}/../../../../../../CMSIS/DSP/Source/MatrixFunctions/arm_mat_sub_q15.c"
-"${ProjDirPath}/../../../../../../CMSIS/DSP/Source/MatrixFunctions/arm_mat_sub_q31.c"
-"${ProjDirPath}/../../../../../../CMSIS/DSP/Source/MatrixFunctions/arm_mat_sub_f32.c"
-"${ProjDirPath}/../../../../../../CMSIS/DSP/Source/MatrixFunctions/arm_mat_mult_q15.c"
-"${ProjDirPath}/../../../../../../CMSIS/DSP/Source/MatrixFunctions/arm_mat_mult_q31.c"
-"${ProjDirPath}/../../../../../../CMSIS/DSP/Source/MatrixFunctions/arm_mat_mult_f32.c"
-"${ProjDirPath}/../../../../../../CMSIS/DSP/Source/MatrixFunctions/arm_mat_inverse_f32.c"
-"${ProjDirPath}/../../../../../../CMSIS/DSP/Source/MatrixFunctions/arm_mat_trans_q15.c"
-"${ProjDirPath}/../../../../../../CMSIS/DSP/Source/MatrixFunctions/arm_mat_trans_q31.c"
-"${ProjDirPath}/../../../../../../CMSIS/DSP/Source/MatrixFunctions/arm_mat_trans_f32.c"
-"${ProjDirPath}/../../../../../../CMSIS/DSP/Source/MatrixFunctions/arm_mat_scale_q15.c"
-"${ProjDirPath}/../../../../../../CMSIS/DSP/Source/MatrixFunctions/arm_mat_scale_q31.c"
-"${ProjDirPath}/../../../../../../CMSIS/DSP/Source/MatrixFunctions/arm_mat_scale_f32.c"
-"${ProjDirPath}/../../../../../../CMSIS/DSP/Source/MatrixFunctions/arm_mat_init_f32.c"
-"${ProjDirPath}/../../../../../../CMSIS/DSP/Source/MatrixFunctions/arm_mat_init_q31.c"
-"${ProjDirPath}/../../../../../../CMSIS/DSP/Source/MatrixFunctions/arm_mat_init_q15.c"
-"${ProjDirPath}/../../../../../../CMSIS/DSP/Source/FastMathFunctions/arm_sqrt_q15.c"
-"${ProjDirPath}/../../../../../../CMSIS/DSP/Source/FastMathFunctions/arm_sqrt_q31.c"
-"${ProjDirPath}/../../../../../../CMSIS/DSP/Source/FastMathFunctions/arm_sin_q15.c"
-"${ProjDirPath}/../../../../../../CMSIS/DSP/Source/FastMathFunctions/arm_sin_q31.c"
-"${ProjDirPath}/../../../../../../CMSIS/DSP/Source/FastMathFunctions/arm_sin_f32.c"
-"${ProjDirPath}/../../../../../../CMSIS/DSP/Source/FastMathFunctions/arm_cos_q15.c"
-"${ProjDirPath}/../../../../../../CMSIS/DSP/Source/FastMathFunctions/arm_cos_q31.c"
-"${ProjDirPath}/../../../../../../CMSIS/DSP/Source/FastMathFunctions/arm_cos_f32.c"
-"${ProjDirPath}/../../../../../../CMSIS/DSP/Source/FilteringFunctions/arm_fir_q15.c"
-"${ProjDirPath}/../../../../../../CMSIS/DSP/Source/FilteringFunctions/arm_fir_init_q15.c"
-"${ProjDirPath}/../../../../../../CMSIS/DSP/Source/FilteringFunctions/arm_fir_q31.c"
-"${ProjDirPath}/../../../../../../CMSIS/DSP/Source/FilteringFunctions/arm_fir_init_q31.c"
-"${ProjDirPath}/../../../../../../CMSIS/DSP/Source/FilteringFunctions/arm_fir_f32.c"
-"${ProjDirPath}/../../../../../../CMSIS/DSP/Source/FilteringFunctions/arm_fir_init_f32.c"
-"${ProjDirPath}/../../../../../../CMSIS/DSP/Source/FilteringFunctions/arm_conv_q15.c"
-"${ProjDirPath}/../../../../../../CMSIS/DSP/Source/FilteringFunctions/arm_conv_q31.c"
-"${ProjDirPath}/../../../../../../CMSIS/DSP/Source/FilteringFunctions/arm_conv_f32.c"
-"${ProjDirPath}/../../../../../../CMSIS/DSP/Source/FilteringFunctions/arm_correlate_q15.c"
-"${ProjDirPath}/../../../../../../CMSIS/DSP/Source/FilteringFunctions/arm_correlate_q31.c"
-"${ProjDirPath}/../../../../../../CMSIS/DSP/Source/FilteringFunctions/arm_correlate_f32.c"
-"${ProjDirPath}/../../../../../../CMSIS/DSP/Source/FilteringFunctions/arm_biquad_cascade_df2T_init_f32.c"
-"${ProjDirPath}/../../../../../../CMSIS/DSP/Source/FilteringFunctions/arm_biquad_cascade_df2T_f32.c"
-"${ProjDirPath}/../../../../../../CMSIS/DSP/Source/TransformFunctions/arm_rfft_q15.c"
-"${ProjDirPath}/../../../../../../CMSIS/DSP/Source/TransformFunctions/arm_rfft_init_q15.c"
-"${ProjDirPath}/../../../../../../CMSIS/DSP/Source/TransformFunctions/arm_rfft_q31.c"
-"${ProjDirPath}/../../../../../../CMSIS/DSP/Source/TransformFunctions/arm_rfft_init_q31.c"
-"${ProjDirPath}/../../../../../../CMSIS/DSP/Source/TransformFunctions/arm_cfft_q15.c"
-"${ProjDirPath}/../../../../../../CMSIS/DSP/Source/TransformFunctions/arm_cfft_q31.c"
-"${ProjDirPath}/../../../../../../CMSIS/DSP/Source/TransformFunctions/arm_dct4_q15.c"
-"${ProjDirPath}/../../../../../../CMSIS/DSP/Source/TransformFunctions/arm_dct4_init_q15.c"
-"${ProjDirPath}/../../../../../../CMSIS/DSP/Source/TransformFunctions/arm_dct4_q31.c"
-"${ProjDirPath}/../../../../../../CMSIS/DSP/Source/TransformFunctions/arm_dct4_init_q31.c"
-"${ProjDirPath}/../../../../../../CMSIS/DSP/Source/CommonTables/arm_common_tables.c"
-"${ProjDirPath}/../../../../../../CMSIS/DSP/Source/CommonTables/arm_const_structs.c"
 "${ProjDirPath}/../board.c"
 "${ProjDirPath}/../board.h"
 "${ProjDirPath}/../clock_config.c"
@@ -116,11 +47,12 @@ target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
 set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../../devices/MIMXRT685S/utilities/debug_console_lite
     ${ProjDirPath}/../../../../../../devices/MIMXRT685S/drivers
+    ${ProjDirPath}/../../../../../../CMSIS/DSP
     ${ProjDirPath}/../../../../../../devices/MIMXRT685S
     ${ProjDirPath}/../../../../../../components/uart
     ${ProjDirPath}/../../../../flash_config
     ${ProjDirPath}/../../../../../../components/lists
-    ${ProjDirPath}/../../../../../../CMSIS/Include
+    ${ProjDirPath}/../../../../../../CMSIS/Core/Include
     ${ProjDirPath}/../../../../../../devices/MIMXRT685S/utilities
 )
 
@@ -130,6 +62,8 @@ include(utility_debug_console_lite_MIMXRT685S_cm33)
 include(utility_assert_lite_MIMXRT685S_cm33)
 
 include(driver_clock_MIMXRT685S_cm33)
+
+include(CMSIS_DSP_Library_MIMXRT685S_cm33)
 
 include(driver_common_MIMXRT685S_cm33)
 
@@ -161,11 +95,7 @@ include(driver_lpc_iopctl_MIMXRT685S_cm33)
 
 include(driver_reset_MIMXRT685S_cm33)
 
-include(CMSIS_Include_core_cm33_MIMXRT685S_cm33)
-
-include(CMSIS_Include_common_MIMXRT685S_cm33)
-
-include(CMSIS_Include_dsp_MIMXRT685S_cm33)
+include(CMSIS_Include_core_cm_MIMXRT685S_cm33)
 
 include(driver_inputmux_connections_MIMXRT685S_cm33)
 
@@ -181,6 +111,22 @@ target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE c)
 target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE gcc)
 
 target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE nosys)
+
+if(CMAKE_BUILD_TYPE STREQUAL debug)
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../CMSIS/DSP/Lib/GCC/libarm_ARMv8MMLldfsp_math.a)
+endif(CMAKE_BUILD_TYPE STREQUAL debug)
+
+if(CMAKE_BUILD_TYPE STREQUAL release)
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../CMSIS/DSP/Lib/GCC/libarm_ARMv8MMLldfsp_math.a)
+endif(CMAKE_BUILD_TYPE STREQUAL release)
+
+if(CMAKE_BUILD_TYPE STREQUAL flash_debug)
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../CMSIS/DSP/Lib/GCC/libarm_ARMv8MMLldfsp_math.a)
+endif(CMAKE_BUILD_TYPE STREQUAL flash_debug)
+
+if(CMAKE_BUILD_TYPE STREQUAL flash_release)
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../CMSIS/DSP/Lib/GCC/libarm_ARMv8MMLldfsp_math.a)
+endif(CMAKE_BUILD_TYPE STREQUAL flash_release)
 
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--end-group)
 

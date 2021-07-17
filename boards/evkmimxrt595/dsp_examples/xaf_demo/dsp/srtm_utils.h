@@ -66,6 +66,13 @@ typedef struct _dsp_handle_t
     volatile bool eof;
     volatile bool ipc_waiting;
     volatile bool file_playing;
+
+#if (XA_VIT_PRE_PROC == 1)
+    /* VIT variables */
+    const unsigned char *VITModelCM_33;
+    uint32_t size_of_VIT_model;
+#endif
+
 } dsp_handle_t;
 
 /*******************************************************************************

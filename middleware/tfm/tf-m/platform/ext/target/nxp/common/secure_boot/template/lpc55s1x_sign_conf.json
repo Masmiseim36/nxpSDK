@@ -1,0 +1,18 @@
+{
+    "family": "lpc55s1x",
+    "inputImageFile": "_tmp/for_signing.bin",
+    "imageLinkAddress": "0x0",
+    "outputImageExecutionTarget": "Internal flash (XIP)",
+    "outputImageAuthenticationType": "Signed",
+    "enableTrustZone": true,
+    "trustZonePresetFile": "",
+    "enableHwUserModeKeys": false,
+    "imageBuildNumber": "0x1",
+    "rootCertificate0File": "../template/certificate_rotk1.der.crt",
+    "rootCertificate1File": "../template/certificate_rotk2.der.crt",
+    "rootCertificate2File": "../template/certificate_rotk3.der.crt",
+    "rootCertificate3File": "../template/certificate_rotk4.der.crt",
+    "mainCertChainId": 0,
+    "mainCertPrivateKeyFile": "../template/rotk1.pem",
+    "masterBootOutputFile": "_tmp/signed.bin"
+}

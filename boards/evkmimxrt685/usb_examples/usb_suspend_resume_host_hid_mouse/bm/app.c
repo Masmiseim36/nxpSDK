@@ -726,8 +726,8 @@ int main(void)
                                  /* SD0 voltage is switchable, but in power_manager demo, it's fixed 3.3V. */
                                  .Vdde2Range = kPadVol_300_360};
 
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
+    BOARD_InitBootPins();
+    BOARD_InitBootClocks();
     BOARD_InitDebugConsole();
 
     /* PMIC PCA9420 */

@@ -1,9 +1,9 @@
 /*
  *  Self-test demonstration program
  *
- *  Copyright (C) 2006-2015, ARM Limited, All Rights Reserved
+ *  Copyright The Mbed TLS Contributors
  *  SPDX-License-Identifier: Apache-2.0
- *  Copyright 2017 NXP. Not a Contribution
+ *  Copyright 2017, 2021 NXP. Not a Contribution
  *
  *  Licensed under the Apache License, Version 2.0 (the "License"); you may
  *  not use this file except in compliance with the License.
@@ -92,9 +92,11 @@
 #else
 #include <stdio.h>
 #include <stdlib.h>
-#define mbedtls_printf printf
-#define mbedtls_snprintf snprintf
-#define mbedtls_exit exit
+#define mbedtls_calloc     calloc
+#define mbedtls_free       free
+#define mbedtls_printf     printf
+#define mbedtls_snprintf   snprintf
+#define mbedtls_exit       exit
 #define MBEDTLS_EXIT_SUCCESS EXIT_SUCCESS
 #define MBEDTLS_EXIT_FAILURE EXIT_FAILURE
 #endif
@@ -449,7 +451,11 @@ int main(int argc, char *argv[])
     /*Make sure casper ram buffer has power up*/
     POWER_DisablePD(kPDRUNCFG_PPD_CASPER_SRAM);
     POWER_ApplyPD();
-    CRYPTO_InitHardware();
+    if( CRYPTO_InitHardware() != kStatus_Success )
+    {
+        mbedtls_printf( "Initialization of crypto HW failed\n" );
+        mbedtls_exit( MBEDTLS_EXIT_FAILURE );
+    }
 #endif
     bench_print_features();
 

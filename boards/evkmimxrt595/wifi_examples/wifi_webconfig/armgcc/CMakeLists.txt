@@ -1,6 +1,6 @@
 # CROSS COMPILER SETTING
 SET(CMAKE_SYSTEM_NAME Generic)
-CMAKE_MINIMUM_REQUIRED (VERSION 3.1.1)
+CMAKE_MINIMUM_REQUIRED (VERSION 3.10.0)
 
 # THE VERSION NUMBER
 SET (Tutorial_VERSION_MAJOR 1)
@@ -45,9 +45,10 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../wpl.h"
 "${ProjDirPath}/../wpl_nxp.c"
 "${ProjDirPath}/../FreeRTOSConfig.h"
-"${ProjDirPath}/../../../sdmmc_config.c"
-"${ProjDirPath}/../../../sdmmc_config.h"
 "${ProjDirPath}/../wifi_config.h"
+"${ProjDirPath}/../sdmmc_config.c"
+"${ProjDirPath}/../sdmmc_config.h"
+"${ProjDirPath}/../app_config.h"
 "${ProjDirPath}/../board.c"
 "${ProjDirPath}/../board.h"
 "${ProjDirPath}/../clock_config.c"
@@ -55,20 +56,10 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 )
 
 target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
-    ${ProjDirPath}/.. debug
-    ${ProjDirPath}/.. debug
-    ${ProjDirPath}/../../.. debug
-    ${ProjDirPath}/../../common debug
-    ${ProjDirPath}/../../../../src/wifi_common/webconfig debug
     ${ProjDirPath}/..
-    ${ProjDirPath}/../../../../../middleware/lwip/src/apps/httpsrv
     ${ProjDirPath}/../../..
-    ${ProjDirPath}/../../common release
-    ${ProjDirPath}/../../../../src/wifi_common/webconfig release
-    ${ProjDirPath}/../../common flash_debug
-    ${ProjDirPath}/../../../../src/wifi_common/webconfig flash_debug
-    ${ProjDirPath}/../../common flash_release
-    ${ProjDirPath}/../../../../src/wifi_common/webconfig flash_release
+    ${ProjDirPath}/../../../../src/wifi_common/webconfig
+    ${ProjDirPath}/../../../../../middleware/lwip/src/apps/httpsrv
 )
 
 set(CMAKE_MODULE_PATH
@@ -86,7 +77,7 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../components/serial_manager
     ${ProjDirPath}/../../../../../components/lists
     ${ProjDirPath}/../../../flash_config
-    ${ProjDirPath}/../../../../../CMSIS/Include
+    ${ProjDirPath}/../../../../../CMSIS/Core/Include
     ${ProjDirPath}/../../../../../components/osa
 )
 
@@ -161,13 +152,11 @@ include(middleware_freertos-kernel_MIMXRT595S_cm33)
 
 include(middleware_freertos-kernel_extension_MIMXRT595S_cm33)
 
-include(CMSIS_Include_core_cm33_MIMXRT595S_cm33)
-
-include(CMSIS_Include_common_MIMXRT595S_cm33)
-
-include(CMSIS_Include_dsp_MIMXRT595S_cm33)
+include(CMSIS_Include_core_cm_MIMXRT595S_cm33)
 
 include(component_mflash_common_MIMXRT595S_cm33)
+
+include(middleware_wifi_wifidriver_MIMXRT595S_cm33)
 
 include(middleware_sdmmc_osa_freertos_MIMXRT595S_cm33)
 

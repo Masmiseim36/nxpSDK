@@ -245,7 +245,8 @@
           <state>DEBUG_CONSOLE_RX_ENABLE=0</state>
           <state>SD_ENABLED</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
-          <state>FSL_RTOS_FREE_RTOS</state>
+          <state>SDK_OS_FREE_RTOS</state>
+          <state>MCUXPRESSO_SDK</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -371,6 +372,8 @@
         <option>
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/vit/HIFI4/Lib</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/vit/HIFI4/Lib/Inc</state>
           <state>$PROJ_DIR$/../../../..</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/wm8904</state>
@@ -378,6 +381,7 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities</state>
           <state>$PROJ_DIR$/../../../../../../components/codec</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/port/wm8904</state>
+          <state>$PROJ_DIR$/../../../../../../components/codec/port</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/i2c</state>
           <state>$PROJ_DIR$/../../../../../../components/i2c</state>
           <state>$PROJ_DIR$/../../../../../../middleware/sdmmc/sd</state>
@@ -394,7 +398,7 @@
           <state>$PROJ_DIR$/../../../../flash_config</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
-          <state>$PROJ_DIR$/../../../../../../CMSIS/Include</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/sdmmc/osa</state>
           <state>$PROJ_DIR$/../../../../../../components/osa</state>
@@ -864,7 +868,7 @@
         </option>
         <option>
           <name>IlinkOverrideProgramEntryLabel</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>IlinkProgramEntryLabelSelect</name>
@@ -872,7 +876,7 @@
         </option>
         <option>
           <name>IlinkProgramEntryLabel</name>
-          <state>__iar_program_start</state>
+          <state>Reset_Handler</state>
         </option>
         <option>
           <name>DoFill</name>
@@ -1320,7 +1324,8 @@
           <state>DEBUG_CONSOLE_RX_ENABLE=0</state>
           <state>SD_ENABLED</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
-          <state>FSL_RTOS_FREE_RTOS</state>
+          <state>SDK_OS_FREE_RTOS</state>
+          <state>MCUXPRESSO_SDK</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -1446,6 +1451,8 @@
         <option>
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/vit/HIFI4/Lib</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/vit/HIFI4/Lib/Inc</state>
           <state>$PROJ_DIR$/../../../..</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/wm8904</state>
@@ -1453,6 +1460,7 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities</state>
           <state>$PROJ_DIR$/../../../../../../components/codec</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/port/wm8904</state>
+          <state>$PROJ_DIR$/../../../../../../components/codec/port</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/i2c</state>
           <state>$PROJ_DIR$/../../../../../../components/i2c</state>
           <state>$PROJ_DIR$/../../../../../../middleware/sdmmc/sd</state>
@@ -1469,7 +1477,7 @@
           <state>$PROJ_DIR$/../../../../flash_config</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
-          <state>$PROJ_DIR$/../../../../../../CMSIS/Include</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/sdmmc/osa</state>
           <state>$PROJ_DIR$/../../../../../../components/osa</state>
@@ -1944,7 +1952,7 @@
         </option>
         <option>
           <name>IlinkOverrideProgramEntryLabel</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>IlinkProgramEntryLabelSelect</name>
@@ -1952,7 +1960,7 @@
         </option>
         <option>
           <name>IlinkProgramEntryLabel</name>
-          <state>__iar_program_start</state>
+          <state>Reset_Handler</state>
         </option>
         <option>
           <name>DoFill</name>
@@ -2195,6 +2203,18 @@
       <name>$PROJ_DIR$/../rpmsg_config.h</name>
     </file>
     <file>
+      <name>$PROJ_DIR$/../VIT_Model_cn.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../VIT_Model_en.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../PL_platformTypes_HIFI4_FUSIONF1.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../PL_memoryRegion.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../FreeRTOSConfig.h</name>
     </file>
   </group>
@@ -2282,10 +2302,10 @@
       <name>$PROJ_DIR$/../pmic_support.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../sdmmc_config.c</name>
+      <name>$PROJ_DIR$/../sdmmc_config.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../sdmmc_config.h</name>
+      <name>$PROJ_DIR$/../sdmmc_config.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../board.c</name>
@@ -2343,6 +2363,12 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_common.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_common_arm.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_common_arm.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_gpio.h</name>
@@ -2431,12 +2457,21 @@
     <file>
       <name>$PROJ_DIR$/../../../../../../components/codec/fsl_codec_common.c</name>
     </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../components/codec/port/wm8904/fsl_codec_adapter.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../components/codec/port/wm8904/fsl_codec_adapter.h</name>
-    </file>
+    <group>
+      <name>port</name>
+      <group>
+        <name>wm8904</name>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../components/codec/port/wm8904/fsl_codec_wm8904_adapter.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../components/codec/port/wm8904/fsl_codec_wm8904_adapter.h</name>
+        </file>
+      </group>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/codec/port/fsl_codec_adapter.h</name>
+      </file>
+    </group>
     <file>
       <name>$PROJ_DIR$/../../../../../../components/codec/i2c/fsl_codec_i2c.h</name>
     </file>
@@ -2460,13 +2495,13 @@
                 <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM33_NTZ/non_secure/port.c</name>
               </file>
               <file>
+                <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM33_NTZ/non_secure/portasm.h</name>
+              </file>
+              <file>
                 <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM33_NTZ/non_secure/portasm.s</name>
               </file>
               <file>
                 <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM33_NTZ/non_secure/portmacro.h</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM33_NTZ/non_secure/portasm.h</name>
               </file>
             </group>
           </group>
@@ -2485,21 +2520,18 @@
         </file>
       </group>
       <file>
-        <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/event_groups.c</name>
+        <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/croutine.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/croutine.c</name>
+        <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/event_groups.c</name>
       </file>
       <group>
         <name>include</name>
         <file>
-          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include/croutine.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include/StackMacros.h</name>
-        </file>
-        <file>
           <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include/atomic.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include/croutine.h</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include/deprecated_definitions.h</name>
@@ -2536,6 +2568,9 @@
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include/stack_macros.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include/StackMacros.h</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include/stream_buffer.h</name>
@@ -2722,7 +2757,13 @@
         <name>$PROJ_DIR$/../../../../../../middleware/fatfs/source/diskio.c</name>
       </file>
       <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/fatfs/source/diskio.h</name>
+      </file>
+      <file>
         <name>$PROJ_DIR$/../../../../../../middleware/fatfs/source/ff.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/fatfs/source/ff.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../../middleware/fatfs/source/ffsystem.c</name>
@@ -2730,19 +2771,13 @@
       <file>
         <name>$PROJ_DIR$/../../../../../../middleware/fatfs/source/ffunicode.c</name>
       </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/fatfs/source/diskio.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/fatfs/source/ff.h</name>
-      </file>
       <group>
         <name>fsl_sd_disk</name>
         <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/fatfs/source/fsl_sd_disk/fsl_sd_disk.h</name>
+          <name>$PROJ_DIR$/../../../../../../middleware/fatfs/source/fsl_sd_disk/fsl_sd_disk.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/fatfs/source/fsl_sd_disk/fsl_sd_disk.c</name>
+          <name>$PROJ_DIR$/../../../../../../middleware/fatfs/source/fsl_sd_disk/fsl_sd_disk.h</name>
         </file>
       </group>
     </group>
@@ -2820,7 +2855,7 @@
     </file>
   </group>
   <group>
-    <name>MIMXRT685S</name>
+    <name>device</name>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/fsl_device_registers.h</name>
     </file>
@@ -2830,6 +2865,18 @@
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/MIMXRT685S_cm33_features.h</name>
     </file>
+  </group>
+  <group>
+    <name>flash_config</name>
+    <file>
+      <name>$PROJ_DIR$/../../../../flash_config/flash_config.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../flash_config/flash_config.h</name>
+    </file>
+  </group>
+  <group>
+    <name>MIMXRT685S</name>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/system_MIMXRT685S_cm33.c</name>
     </file>
@@ -2844,54 +2891,36 @@
     </group>
   </group>
   <group>
-    <name>flash_config</name>
-    <file>
-      <name>$PROJ_DIR$/../../../../flash_config/flash_config.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../flash_config/flash_config.h</name>
-    </file>
-  </group>
-  <group>
     <name>CMSIS</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/core_cm33.h</name>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/cmsis_armcc.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/tz_context.h</name>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/cmsis_armclang.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/mpu_armv8.h</name>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/cmsis_armclang_ltm.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_armcc.h</name>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/cmsis_compiler.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_armclang.h</name>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/cmsis_gcc.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_armclang_ltm.h</name>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/cmsis_iccarm.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_gcc.h</name>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/cmsis_version.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_compiler.h</name>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/core_cm33.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_version.h</name>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/mpu_armv8.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_iccarm.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/arm_common_tables.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/arm_const_structs.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/arm_math.h</name>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/tz_context.h</name>
     </file>
   </group>
 </project>

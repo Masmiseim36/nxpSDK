@@ -8,12 +8,11 @@
 #include "tfm_integ_test.h"
 
 #ifdef TEST_FRAMEWORK_NS
-#include "test/framework/test_framework_integ_test.h"
+#include "test_framework_integ_test.h"
 #endif
 
 #ifdef TEST_FRAMEWORK_S
-#include \
-  "test/test_services/tfm_secure_client_service/tfm_secure_client_service_api.h"
+#include "tfm_secure_client_service_api.h"
 #endif
 
 #if defined(TEST_FRAMEWORK_NS) || defined(TEST_FRAMEWORK_S)

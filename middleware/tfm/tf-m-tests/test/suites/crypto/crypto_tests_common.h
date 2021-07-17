@@ -13,7 +13,7 @@ extern "C" {
 #endif
 
 #include "psa/crypto.h"
-#include "test/framework/test_framework_helpers.h"
+#include "test_framework_helpers.h"
 
 /**
  * \brief Size of the key to use in tests in bits

@@ -18,7 +18,7 @@ static void SPI_RTOS_Callback(SPI_Type *base, spi_master_handle_t *drv_handle, s
     spi_rtos_handle_t *handle = (spi_rtos_handle_t *)userData;
     BaseType_t reschedule;
     handle->async_status = status;
-    xSemaphoreGiveFromISR(handle->event, &reschedule);
+    (void)xSemaphoreGiveFromISR(handle->event, &reschedule);
     portYIELD_FROM_ISR(reschedule);
 }
 
@@ -38,6 +38,8 @@ status_t SPI_RTOS_Init(spi_rtos_handle_t *handle,
                        const spi_master_config_t *masterConfig,
                        uint32_t srcClock_Hz)
 {
+    status_t status;
+
     if (handle == NULL)
     {
         return kStatus_InvalidArgument;
@@ -48,7 +50,7 @@ status_t SPI_RTOS_Init(spi_rtos_handle_t *handle,
         return kStatus_InvalidArgument;
     }
 
-    memset(handle, 0, sizeof(spi_rtos_handle_t));
+    (void)memset(handle, 0, sizeof(spi_rtos_handle_t));
 
     handle->mutex = xSemaphoreCreateMutex();
     if (handle->mutex == NULL)
@@ -65,10 +67,10 @@ status_t SPI_RTOS_Init(spi_rtos_handle_t *handle,
 
     handle->base = base;
 
-    SPI_MasterInit(handle->base, masterConfig, srcClock_Hz);
-    SPI_MasterTransferCreateHandle(handle->base, &handle->drv_handle, SPI_RTOS_Callback, (void *)handle);
+    (void)SPI_MasterInit(handle->base, masterConfig, srcClock_Hz);
+    status = SPI_MasterTransferCreateHandle(handle->base, &handle->drv_handle, SPI_RTOS_Callback, (void *)handle);
 
-    return kStatus_Success;
+    return status;
 }
 
 /*!
@@ -110,7 +112,7 @@ status_t SPI_RTOS_Transfer(spi_rtos_handle_t *handle, spi_transfer_t *transfer)
     status = SPI_MasterTransferNonBlocking(handle->base, &handle->drv_handle, transfer);
     if (status != kStatus_Success)
     {
-        xSemaphoreGive(handle->mutex);
+        (void)xSemaphoreGive(handle->mutex);
         return status;
     }
 
@@ -124,7 +126,7 @@ status_t SPI_RTOS_Transfer(spi_rtos_handle_t *handle, spi_transfer_t *transfer)
     status = handle->async_status;
 
     /* Unlock resource mutex */
-    xSemaphoreGive(handle->mutex);
+    (void)xSemaphoreGive(handle->mutex);
 
     /* Translate status of underlying driver */
     if (status == kStatus_SPI_Idle)

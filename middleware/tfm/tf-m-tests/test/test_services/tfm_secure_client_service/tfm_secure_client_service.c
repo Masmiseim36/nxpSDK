@@ -6,11 +6,11 @@
  */
 
 #include "tfm_secure_client_service.h"
-#include "test/framework/test_framework_integ_test.h"
+#include "test_framework_integ_test.h"
 #ifdef TFM_PSA_API
 #include "psa/client.h"
 #include "psa/service.h"
-#include "psa_manifest/tfm_test_client_service.h"
+#include "psa_manifest/tfm_secure_client_service.h"
 #endif
 
 /**

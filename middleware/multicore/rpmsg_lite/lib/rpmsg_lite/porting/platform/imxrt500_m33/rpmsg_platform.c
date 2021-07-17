@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2020 NXP
+ * Copyright 2019-2021 NXP
  * All rights reserved.
  *
  *
@@ -244,7 +244,7 @@ void platform_cache_disable(void)
  */
 uint32_t platform_vatopa(void *addr)
 {
-    return (((uint32_t)addr & 0x0FFFFFFF) + 0x800000);
+    return (((uint32_t)(char *)addr & 0x0FFFFFFFu) + 0x800000u);
 }
 
 /**
@@ -255,7 +255,7 @@ uint32_t platform_vatopa(void *addr)
  */
 void *platform_patova(uint32_t addr)
 {
-    return (void *)((addr - 0x00800000) | 0x20000000);
+    return (void *)(char *)((addr - 0x00800000u) | 0x20000000u);
 }
 
 /**

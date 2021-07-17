@@ -30,7 +30,7 @@
  * Definitions
  ******************************************************************************/
 #define AUDIO_FRMWK_BUF_SIZE (32 * 1024)
-#define AUDIO_COMP_BUF_SIZE  (304 * 1024)
+#define AUDIO_COMP_BUF_SIZE  (101 * 1024)
 
 enum
 {
@@ -167,6 +167,18 @@ static int capturer_setup(void *p_capturer, xaf_format_t *format, bool i2s)
     return xaf_comp_set_config(p_capturer, num_params, &param[0]);
 }
 
+/* Explicitly start the capturer component.
+ * This will initiate the I2S DMA input. */
+static int capturer_start_operation(void *p_comp)
+{
+    int param[2];
+
+    param[0] = XA_CAPTURER_CONFIG_PARAM_STATE;
+    param[1] = XA_CAPTURER_STATE_START;
+
+    return xaf_comp_set_config(p_comp, 1, &param[0]);
+}
+
 /* Explicitly start the renderer component.
  * This will begin the I2S DMA output with zeros until valid data comes in. */
 static int renderer_start_operation(void *p_comp)
@@ -198,6 +210,8 @@ int srtm_capturer_gain_renderer_init(unsigned int *pCmdParams, bool i2s)
     int channels, sampling_rate, width;
     int info[4];
     XAF_ERR_CODE ret;
+    xaf_adev_config_t device_config;
+    xaf_comp_config_t comp_config[NUM_COMP_IN_GRAPH];
 
     channels      = pCmdParams[0];
     sampling_rate = pCmdParams[1];
@@ -265,8 +279,15 @@ int srtm_capturer_gain_renderer_init(unsigned int *pCmdParams, bool i2s)
         }
     }
 
-    ret = xaf_adev_open(&p_adev, AUDIO_FRMWK_BUF_SIZE, AUDIO_COMP_BUF_SIZE, DSP_Malloc, DSP_Free);
-    if (ret != XAF_NO_ERROR)
+    xaf_adev_config_default_init(&device_config);
+
+    device_config.pmem_malloc                 = DSP_Malloc;
+    device_config.pmem_free                   = DSP_Free;
+    device_config.audio_component_buffer_size = AUDIO_COMP_BUF_SIZE;
+    device_config.audio_framework_buffer_size = AUDIO_FRMWK_BUF_SIZE;
+
+    ret = xaf_adev_open(&p_adev, &device_config);
+    if (ret != XAF_NO_ERR)
     {
         DSP_PRINTF("xaf_adev_open failure: %d\r\n", ret);
         return -1;
@@ -279,9 +300,15 @@ int srtm_capturer_gain_renderer_init(unsigned int *pCmdParams, bool i2s)
     {
         cid = comp_create_order[k];
 
-        ret = xaf_comp_create(p_adev, &p_comp[cid], comp_id[cid], comp_ninbuf[cid], comp_noutbuf[cid], NULL,
-                              comp_type[cid]);
-        if (ret != XAF_NO_ERROR)
+        xaf_comp_config_default_init(&comp_config[cid]);
+
+        comp_config[cid].comp_id            = comp_id[cid];
+        comp_config[cid].num_input_buffers  = comp_ninbuf[cid];
+        comp_config[cid].num_output_buffers = comp_noutbuf[cid];
+        comp_config[cid].comp_type          = comp_type[cid];
+
+        ret = xaf_comp_create(p_adev, &p_comp[cid], &comp_config[cid]);
+        if (ret != XAF_NO_ERR)
         {
             DSP_PRINTF("xaf_comp_create[%d] failure: %d\r\n", k, ret);
             return -1;
@@ -292,14 +319,14 @@ int srtm_capturer_gain_renderer_init(unsigned int *pCmdParams, bool i2s)
 
     /* Start capturer */
     ret = xaf_comp_process(p_adev, p_comp[XA_CAPTURER_0], NULL, 0, XAF_START_FLAG);
-    if (ret != XAF_NO_ERROR)
+    if (ret != XAF_NO_ERR)
     {
         DSP_PRINTF("xaf_comp_process XAF_START_FLAG CAPTURER_0 failure: %d\r\n", ret);
         return -1;
     }
 
     ret = xaf_comp_get_status(p_adev, p_comp[XA_CAPTURER_0], &comp_status, &info[0]);
-    if (ret != XAF_NO_ERROR)
+    if (ret != XAF_NO_ERR)
     {
         DSP_PRINTF("xaf_comp_get_status CAPTURER_0 failure: %d\r\n", ret);
         return -1;
@@ -307,14 +334,14 @@ int srtm_capturer_gain_renderer_init(unsigned int *pCmdParams, bool i2s)
 
     /* Start renderer component */
     ret = xaf_comp_process(p_adev, p_comp[XA_RENDERER_0], NULL, 0, XAF_START_FLAG);
-    if (ret != XAF_NO_ERROR)
+    if (ret != XAF_NO_ERR)
     {
         DSP_PRINTF("xaf_comp_process XAF_START_FLAG RENDERER_0 failure: %d\r\n", ret);
         return -1;
     }
 
     ret = xaf_comp_get_status(p_adev, p_comp[XA_RENDERER_0], &comp_status, &info[0]);
-    if (ret != XAF_NO_ERROR)
+    if (ret != XAF_NO_ERR)
     {
         DSP_PRINTF("xaf_comp_get_status RENDERER_0 failure: %d\r\n", ret);
         return -1;
@@ -322,9 +349,15 @@ int srtm_capturer_gain_renderer_init(unsigned int *pCmdParams, bool i2s)
 
     /* Connect all the non-input components and then only START each of the dest components */
     ret = xaf_connect(p_comp[XA_CAPTURER_0], 0, p_comp[XA_GAIN_0], 0, 4);
-    if (ret != XAF_NO_ERROR)
+    if (ret != XAF_NO_ERR)
     {
         DSP_PRINTF("xaf_connect CAPTURER_0 -> GAIN_0 failure: %d\r\n", ret);
+        return -1;
+    }
+    ret = capturer_start_operation(p_comp[XA_CAPTURER_0]);
+    if (ret != XAF_NO_ERR)
+    {
+        DSP_PRINTF("Capturer start operation failure.\r\n");
         return -1;
     }
 
@@ -332,14 +365,14 @@ int srtm_capturer_gain_renderer_init(unsigned int *pCmdParams, bool i2s)
 
     /* Start PCM gain */
     ret = xaf_comp_process(p_adev, p_comp[XA_GAIN_0], NULL, 0, XAF_START_FLAG);
-    if (ret != XAF_NO_ERROR)
+    if (ret != XAF_NO_ERR)
     {
         DSP_PRINTF("xaf_comp_process XAF_START_FLAG GAIN_0 failure: %d\r\n", ret);
         return -1;
     }
 
     ret = xaf_comp_get_status(p_adev, p_comp[XA_GAIN_0], &comp_status, &info[0]);
-    if (ret != XAF_NO_ERROR)
+    if (ret != XAF_NO_ERR)
     {
         DSP_PRINTF("xaf_comp_get_status GAIN_0 failure: %d\r\n", ret);
         return -1;
@@ -347,7 +380,7 @@ int srtm_capturer_gain_renderer_init(unsigned int *pCmdParams, bool i2s)
 
 #if XA_VIT_PRE_PROC
     ret = xaf_connect(p_comp[XA_GAIN_0], 1, p_comp[XA_VIT_PRE_PROC_0], 0, 4);
-    if (ret != XAF_NO_ERROR)
+    if (ret != XAF_NO_ERR)
     {
         DSP_PRINTF("xaf_connect CAPTURER_0 -> VIT_PRE_PROC_0 failure: %d\r\n", ret);
         return -1;
@@ -357,14 +390,14 @@ int srtm_capturer_gain_renderer_init(unsigned int *pCmdParams, bool i2s)
 
     /* Start VIT pre processing */
     ret = xaf_comp_process(p_adev, p_comp[XA_VIT_PRE_PROC_0], NULL, 0, XAF_START_FLAG);
-    if (ret != XAF_NO_ERROR)
+    if (ret != XAF_NO_ERR)
     {
         DSP_PRINTF("xaf_comp_process XAF_START_FLAG VIT_PRE_PROC_0 failure: %d\r\n", ret);
         return -1;
     }
 
     ret = xaf_comp_get_status(p_adev, p_comp[XA_VIT_PRE_PROC_0], &comp_status, &info[0]);
-    if (ret != XAF_NO_ERROR)
+    if (ret != XAF_NO_ERR)
     {
         DSP_PRINTF("xaf_comp_get_status VIT_PRE_PROC_0 failure: %d\r\n", ret);
         return -1;
@@ -375,7 +408,7 @@ int srtm_capturer_gain_renderer_init(unsigned int *pCmdParams, bool i2s)
     renderer_start_operation(p_comp[XA_RENDERER_0]);
 
     ret = xaf_connect(p_comp[XA_VIT_PRE_PROC_0], 1, p_comp[XA_RENDERER_0], 0, 4);
-    if (ret != XAF_NO_ERROR)
+    if (ret != XAF_NO_ERR)
     {
         DSP_PRINTF("xaf_connect VIT_PRE_PROC_0 -> RENDERER_0 failure: %d\r\n", ret);
         return -1;
@@ -389,7 +422,7 @@ int srtm_capturer_gain_renderer_init(unsigned int *pCmdParams, bool i2s)
     renderer_start_operation(p_comp[XA_RENDERER_0]);
 
     ret = xaf_connect(p_comp[XA_GAIN_0], 1, p_comp[XA_RENDERER_0], 0, 4);
-    if (ret != XAF_NO_ERROR)
+    if (ret != XAF_NO_ERR)
     {
         DSP_PRINTF("xaf_connect GAIN_0 -> RENDERER_0 failure: %d\r\n", ret);
         return -1;
@@ -410,7 +443,7 @@ int srtm_capturer_gain_renderer_init(unsigned int *pCmdParams, bool i2s)
         ret            = xaf_comp_get_config(p_comp[cid], 2, &param[0]);
         renderer_state = param[1];
 
-        if (ret != XAF_NO_ERROR)
+        if (ret != XAF_NO_ERR)
         {
             DSP_PRINTF("renderer get_config error:%x\n", ret);
             return -1;
@@ -421,7 +454,7 @@ int srtm_capturer_gain_renderer_init(unsigned int *pCmdParams, bool i2s)
     {
         cid = comp_create_order[k];
         ret = xaf_comp_delete(p_comp[cid]);
-        if (ret != XAF_NO_ERROR)
+        if (ret != XAF_NO_ERR)
         {
             DSP_PRINTF("xaf_comp_delete[%d] failure: %d\r\n", k, ret);
             return -1;
@@ -429,7 +462,7 @@ int srtm_capturer_gain_renderer_init(unsigned int *pCmdParams, bool i2s)
     }
 
     xaf_adev_close(p_adev, XAF_ADEV_NORMAL_CLOSE);
-    if (ret != XAF_NO_ERROR)
+    if (ret != XAF_NO_ERR)
     {
         DSP_PRINTF("xaf_adev_close failure: %d\r\n", ret);
         return -1;

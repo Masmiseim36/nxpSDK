@@ -42,9 +42,7 @@
     <definition extID="device.MIMXRT595S_startup.MIMXRT595S"/>
     <definition extID="platform.drivers.flexcomm.MIMXRT595S"/>
     <definition extID="platform.drivers.lpc_iopctl.MIMXRT595S"/>
-    <definition extID="platform.Include_core_cm33.MIMXRT595S"/>
-    <definition extID="platform.Include_common.MIMXRT595S"/>
-    <definition extID="platform.Include_dsp.MIMXRT595S"/>
+    <definition extID="CMSIS_Include_core_cm.MIMXRT595S"/>
     <definition extID="middleware.freertos-kernel.MIMXRT595S"/>
     <definition extID="middleware.freertos-kernel.extension.MIMXRT595S"/>
     <definition extID="middleware.sdmmc.osa.freertos.MIMXRT595S"/>
@@ -62,7 +60,7 @@
     <definition extID="com.crt.advproject.config.exe.debug"/>
     <definition extID="com.crt.advproject.config.exe.release"/>
   </externalDefinitions>
-  <example id="evkmimxrt595_dsp_xaf_demo_cm33" name="dsp_xaf_demo_cm33" device_core="cm33_MIMXRT595S" dependency="platform.drivers.clock.MIMXRT595S platform.drivers.flexcomm_i2c.MIMXRT595S platform.drivers.i3c.MIMXRT595S driver.wm8904.MIMXRT595S middleware.freertos-kernel.cm33_nonsecure_port.MIMXRT595S utility.shell.MIMXRT595S driver.codec.MIMXRT595S platform.drivers.common.MIMXRT595S component.wm8904_adapter.MIMXRT595S component.codec_i2c.MIMXRT595S component.i3c_adapter.MIMXRT595S platform.drivers.lpc_gpio.MIMXRT595S platform.drivers.usdhc.MIMXRT595S middleware.sdmmc.sd.MIMXRT595S middleware.sdmmc.common.MIMXRT595S middleware.sdmmc.host.usdhc.MIMXRT595S middleware.sdmmc.host.usdhc.freertos.MIMXRT595S middleware.fatfs.MIMXRT595S middleware.fatfs.sd.MIMXRT595S platform.drivers.power.MIMXRT595S platform.drivers.reset.MIMXRT595S platform.drivers.dsp.MIMXRT595S platform.drivers.inputmux.MIMXRT595S middleware.multicore.rpmsg_lite.evkmimxrt595_freertos.MIMXRT595S platform.drivers.mu.MIMXRT595S driver.pca9420.MIMXRT595S device.MIMXRT595S_CMSIS.MIMXRT595S utility.debug_console.MIMXRT595S platform.utilities.assert.MIMXRT595S component.usart_adapter.MIMXRT595S platform.drivers.flexspi.MIMXRT595S platform.drivers.cache_cache64.MIMXRT595S component.serial_manager.MIMXRT595S component.lists.MIMXRT595S component.serial_manager_uart.MIMXRT595S platform.drivers.flexcomm_usart.MIMXRT595S platform.drivers.flash_config.MIMXRT595S device.MIMXRT595S_startup.MIMXRT595S platform.drivers.flexcomm.MIMXRT595S platform.drivers.lpc_iopctl.MIMXRT595S platform.Include_core_cm33.MIMXRT595S platform.Include_common.MIMXRT595S platform.Include_dsp.MIMXRT595S middleware.freertos-kernel.MIMXRT595S middleware.freertos-kernel.extension.MIMXRT595S middleware.sdmmc.osa.freertos.MIMXRT595S component.osa_free_rtos.MIMXRT595S platform.drivers.inputmux_connections.MIMXRT595S middleware.multicore.rpmsg_lite.MIMXRT595S middleware.freertos-kernel.heap_4.MIMXRT595S platform.utilities.misc_utilities.MIMXRT595S platform.drivers.iap.MIMXRT595S" category="dsp_examples">
+  <example id="evkmimxrt595_dsp_xaf_demo_cm33" name="dsp_xaf_demo_cm33" device_core="cm33_MIMXRT595S" dependency="platform.drivers.clock.MIMXRT595S platform.drivers.flexcomm_i2c.MIMXRT595S platform.drivers.i3c.MIMXRT595S driver.wm8904.MIMXRT595S middleware.freertos-kernel.cm33_nonsecure_port.MIMXRT595S utility.shell.MIMXRT595S driver.codec.MIMXRT595S platform.drivers.common.MIMXRT595S component.wm8904_adapter.MIMXRT595S component.codec_i2c.MIMXRT595S component.i3c_adapter.MIMXRT595S platform.drivers.lpc_gpio.MIMXRT595S platform.drivers.usdhc.MIMXRT595S middleware.sdmmc.sd.MIMXRT595S middleware.sdmmc.common.MIMXRT595S middleware.sdmmc.host.usdhc.MIMXRT595S middleware.sdmmc.host.usdhc.freertos.MIMXRT595S middleware.fatfs.MIMXRT595S middleware.fatfs.sd.MIMXRT595S platform.drivers.power.MIMXRT595S platform.drivers.reset.MIMXRT595S platform.drivers.dsp.MIMXRT595S platform.drivers.inputmux.MIMXRT595S middleware.multicore.rpmsg_lite.evkmimxrt595_freertos.MIMXRT595S platform.drivers.mu.MIMXRT595S driver.pca9420.MIMXRT595S device.MIMXRT595S_CMSIS.MIMXRT595S utility.debug_console.MIMXRT595S platform.utilities.assert.MIMXRT595S component.usart_adapter.MIMXRT595S platform.drivers.flexspi.MIMXRT595S platform.drivers.cache_cache64.MIMXRT595S component.serial_manager.MIMXRT595S component.lists.MIMXRT595S component.serial_manager_uart.MIMXRT595S platform.drivers.flexcomm_usart.MIMXRT595S platform.drivers.flash_config.MIMXRT595S device.MIMXRT595S_startup.MIMXRT595S platform.drivers.flexcomm.MIMXRT595S platform.drivers.lpc_iopctl.MIMXRT595S CMSIS_Include_core_cm.MIMXRT595S middleware.freertos-kernel.MIMXRT595S middleware.freertos-kernel.extension.MIMXRT595S middleware.sdmmc.osa.freertos.MIMXRT595S component.osa_free_rtos.MIMXRT595S platform.drivers.inputmux_connections.MIMXRT595S middleware.multicore.rpmsg_lite.MIMXRT595S middleware.freertos-kernel.heap_4.MIMXRT595S platform.utilities.misc_utilities.MIMXRT595S platform.drivers.iap.MIMXRT595S" category="dsp_examples">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -87,7 +85,7 @@
           <value>XA_SBC_DECODER=1</value>
           <value>XA_PCM_GAIN=1</value>
           <value>XA_SRC_PP_FX=1</value>
-          <value>XA_VIT_PRE_PROC=0</value>
+          <value>XA_VIT_PRE_PROC=1</value>
           <value>XA_CLIENT_PROXY=1</value>
           <value>XA_RENDERER=1</value>
           <value>XA_CAPTURER=1</value>
@@ -97,7 +95,8 @@
           <value>DEBUG_CONSOLE_RX_ENABLE=0</value>
           <value>SD_ENABLED</value>
           <value>SERIAL_PORT_TYPE_UART=1</value>
-          <value>FSL_RTOS_FREE_RTOS</value>
+          <value>SDK_OS_FREE_RTOS</value>
+          <value>MCUXPRESSO_SDK</value>
           <value>DSP_IMAGE_COPY_TO_RAM=1</value>
         </option>
         <option id="com.crt.advproject.gas.fpu" type="enum">
@@ -141,6 +140,8 @@
       <include_path path="boards/evkmimxrt595/dsp_examples/xaf_demo/cm33" project_relative_path="source" type="c_include"/>
       <include_path path="boards/evkmimxrt595/dsp_examples/xaf_demo/cm33" project_relative_path="resources" type="c_include"/>
       <include_path path="boards/evkmimxrt595/dsp_examples/xaf_demo/cm33" project_relative_path="board" type="c_include"/>
+      <include_path path="middleware/vit/FusionF1/Lib" project_relative_path="middleware/vit" type="c_include"/>
+      <include_path path="middleware/vit/FusionF1/Lib/Inc" project_relative_path="middleware/vit" type="c_include"/>
       <include_path path="boards/evkmimxrt595" project_relative_path="board" type="c_include"/>
       <include_path path="boards/evkmimxrt595/dsp_examples/xaf_demo/cm33" project_relative_path="source" type="asm_include"/>
       <include_path path="boards/evkmimxrt595/dsp_examples/xaf_demo/dsp/binary" project_relative_path="dsp_binary" type="asm_include"/>
@@ -168,10 +169,6 @@
       <files mask="build_flash_debug.sh"/>
       <files mask="build_flash_release.bat"/>
       <files mask="build_flash_release.sh"/>
-      <files mask="build_debug.bat"/>
-      <files mask="build_debug.sh"/>
-      <files mask="build_release.bat"/>
-      <files mask="build_release.sh"/>
     </source>
     <source path="boards/evkmimxrt595/dsp_examples/xaf_demo/cm33" project_relative_path="source" type="src">
       <files mask="main_cm33.c"/>
@@ -231,6 +228,14 @@
     <source path="boards/evkmimxrt595/dsp_examples/xaf_demo/cm33" project_relative_path="source" type="asm_include" toolchain="armgcc mcuxpresso mdk">
       <files mask="incbin.S"/>
     </source>
+    <source path="boards/evkmimxrt595/dsp_examples/xaf_demo/cm33" project_relative_path="source" type="c_include">
+      <files mask="VIT_Model_cn.h"/>
+      <files mask="VIT_Model_en.h"/>
+    </source>
+    <source path="boards/evkmimxrt595/dsp_examples/xaf_demo/cm33" project_relative_path="source" type="c_include">
+      <files mask="PL_platformTypes_HIFI4_FUSIONF1.h"/>
+      <files mask="PL_memoryRegion.h"/>
+    </source>
     <source path="boards/evkmimxrt595/dsp_examples/xaf_demo/cm33" project_relative_path="board" type="src">
       <files mask="dsp_support.c"/>
     </source>
@@ -239,19 +244,15 @@
     </source>
     <source path="boards/evkmimxrt595/dsp_examples/xaf_demo/cm33" project_relative_path="board" type="src">
       <files mask="pmic_support.c"/>
+      <files mask="sdmmc_config.c"/>
       <files mask="board.c"/>
       <files mask="clock_config.c"/>
     </source>
     <source path="boards/evkmimxrt595/dsp_examples/xaf_demo/cm33" project_relative_path="board" type="c_include">
       <files mask="pmic_support.h"/>
+      <files mask="sdmmc_config.h"/>
       <files mask="board.h"/>
       <files mask="clock_config.h"/>
-    </source>
-    <source path="boards/evkmimxrt595" project_relative_path="board" type="src">
-      <files mask="sdmmc_config.c"/>
-    </source>
-    <source path="boards/evkmimxrt595" project_relative_path="board" type="c_include">
-      <files mask="sdmmc_config.h"/>
     </source>
     <source path="boards/evkmimxrt595/dsp_examples/xaf_demo/cm33" project_relative_path="doc" type="doc">
       <files mask="readme.txt"/>
@@ -260,20 +261,17 @@
       <files mask="dsp_text_release.bin"/>
       <files mask="dsp_data_release.bin"/>
     </source>
-    <source path="boards/evkmimxrt595/dsp_examples/xaf_demo/cm33/iar" project_relative_path="MIMXRT595S/iar" type="linker" toolchain="iar">
-      <files mask="MIMXRT595Sxxxx_cm33_ram.icf"/>
-      <files mask="MIMXRT595Sxxxx_cm33_flash.icf"/>
-    </source>
-    <source path="boards/evkmimxrt595/dsp_examples/xaf_demo/cm33/mdk" project_relative_path="MIMXRT595S/arm" type="linker" toolchain="mdk">
-      <files mask="MIMXRT595Sxxxx_cm33_ram.scf"/>
-      <files mask="MIMXRT595Sxxxx_cm33_flash.scf"/>
-    </source>
-    <source path="boards/evkmimxrt595/dsp_examples/xaf_demo/cm33/armgcc" project_relative_path="MIMXRT595S/gcc" type="linker" toolchain="armgcc">
-      <files mask="MIMXRT595Sxxxx_cm33_ram.ld"/>
-      <files mask="MIMXRT595Sxxxx_cm33_flash.ld"/>
-    </source>
     <source path="boards/evkmimxrt595/dsp_examples/xaf_demo/cm33/mdk" project_relative_path="generator/templates/mdk/app_evkmimxrt595" type="configuration" toolchain="mdk">
       <files mask="flashdebug.ini"/>
+    </source>
+    <source path="boards/evkmimxrt595/dsp_examples/xaf_demo/cm33/iar" project_relative_path="evkmimxrt595/dsp_examples/xaf_demo/linker" type="linker" toolchain="iar">
+      <files mask="MIMXRT595Sxxxx_cm33_flash.icf"/>
+    </source>
+    <source path="boards/evkmimxrt595/dsp_examples/xaf_demo/cm33/mdk" project_relative_path="evkmimxrt595/dsp_examples/xaf_demo/linker" type="linker" toolchain="mdk">
+      <files mask="MIMXRT595Sxxxx_cm33_flash.scf"/>
+    </source>
+    <source path="boards/evkmimxrt595/dsp_examples/xaf_demo/cm33/armgcc" project_relative_path="evkmimxrt595/dsp_examples/xaf_demo/linker" type="linker" toolchain="armgcc">
+      <files mask="MIMXRT595Sxxxx_cm33_flash.ld"/>
     </source>
   </example>
 </ksdk:examples>

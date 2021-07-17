@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017-2020, Arm Limited. All rights reserved.
+ * Copyright (c) 2017-2021, Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  *
@@ -10,19 +10,34 @@
 #include "test_framework.h"
 
 /* Service specific includes */
-#include "test/suites/ps/secure/ps_tests.h"
-#include "test/suites/its/secure/its_s_tests.h"
-#include "test/suites/audit/secure/audit_s_tests.h"
-#include "test/suites/attestation/secure/attestation_s_tests.h"
-#include "test/suites/crypto/secure/crypto_s_tests.h"
-#include "test/suites/ipc/secure/ipc_s_tests.h"
-#include "test/suites/platform/secure/platform_s_tests.h"
+#if defined(TFM_PARTITION_PROTECTED_STORAGE) || defined(FORWARD_PROT_MSG)
+#include "ps_tests.h"
+#endif
+#if defined(TFM_PARTITION_INTERNAL_TRUSTED_STORAGE) || defined(FORWARD_PROT_MSG)
+#include "its_s_tests.h"
+#endif
+#if defined(TFM_PARTITION_INITIAL_ATTESTATION) || defined(FORWARD_PROT_MSG)
+#include "attest_s_tests.h"
+#endif
+#if defined(TFM_PARTITION_CRYPTO) || defined(FORWARD_PROT_MSG)
+#include "crypto_s_tests.h"
+#endif
+#if defined(TFM_PARTITION_FIRMWARE_UPDATE)
+#include "fwu_s_tests.h"
+#endif
+#if defined(TFM_PARTITION_PLATFORM) || defined(FORWARD_PROT_MSG)
+#include "platform_s_tests.h"
+#endif
+#ifdef TFM_PSA_API
+#include "ipc_s_tests.h"
+#else
+#ifdef TFM_PARTITION_AUDIT_LOG
+#include "audit_s_tests.h"
+#endif
+#endif /* TFM_PSA_API */
 
 static struct test_suite_t test_suites[] = {
-#ifdef SERVICES_TEST_S
-    /* List test cases which are compliant with level 1 isolation */
-
-#ifdef ENABLE_PROTECTED_STORAGE_SERVICE_TESTS
+#if defined(TFM_PARTITION_PROTECTED_STORAGE) || defined(FORWARD_PROT_MSG)
     {&register_testsuite_s_psa_ps_interface, 0, 0, 0},
     {&register_testsuite_s_psa_ps_reliability, 0, 0, 0},
 
@@ -31,37 +46,41 @@ static struct test_suite_t test_suites[] = {
 #endif
 #endif
 
-#ifdef ENABLE_INTERNAL_TRUSTED_STORAGE_SERVICE_TESTS
+#if defined(TFM_PARTITION_INTERNAL_TRUSTED_STORAGE) || defined(FORWARD_PROT_MSG)
     /* Secure ITS test cases */
     {&register_testsuite_s_psa_its_interface, 0, 0, 0},
     {&register_testsuite_s_psa_its_reliability, 0, 0, 0},
 #endif
 
-#ifdef ENABLE_CRYPTO_SERVICE_TESTS
+#if defined(TFM_PARTITION_CRYPTO) || defined(FORWARD_PROT_MSG)
     /* Crypto test cases */
     {&register_testsuite_s_crypto_interface, 0, 0, 0},
 #endif
 
-#ifdef ENABLE_ATTESTATION_SERVICE_TESTS
+#if defined(TFM_PARTITION_INITIAL_ATTESTATION) || defined(FORWARD_PROT_MSG)
     /* Secure initial attestation service test cases */
     {&register_testsuite_s_attestation_interface, 0, 0, 0},
 #endif
 
-#ifdef ENABLE_PLATFORM_SERVICE_TESTS
+#if defined(TFM_PARTITION_PLATFORM) || defined(FORWARD_PROT_MSG)
     /* Secure platform service test cases */
     {&register_testsuite_s_platform_interface, 0, 0, 0},
 #endif
 
-#ifdef ENABLE_AUDIT_LOGGING_SERVICE_TESTS
+#ifdef TFM_PARTITION_AUDIT_LOG
     /* Secure Audit Logging test cases */
     {&register_testsuite_s_audit_interface, 0, 0, 0},
 #endif
 
-#ifdef ENABLE_IPC_TEST
+#ifdef TFM_PARTITION_FIRMWARE_UPDATE
+    /* Non-secure Firmware Update test cases */
+    {&register_testsuite_s_psa_fwu_interface, 0, 0, 0},
+#endif
+
+#if defined(TFM_PARTITION_FFM11) //NXP was #ifdef TFM_PSA_API 
     /* Secure IPC test cases */
     {&register_testsuite_s_ipc_interface, 0, 0, 0},
 #endif
-#endif /* SERVICES_TEST_S */
     /* End of test suites */
     {0, 0, 0, 0}
 };

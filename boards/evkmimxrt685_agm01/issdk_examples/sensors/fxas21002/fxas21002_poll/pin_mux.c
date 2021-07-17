@@ -103,35 +103,33 @@ void BOARD_InitPins(void)
                                         IOPCTL_PIO_INV_DI);
     /* PORT0 PIN2 (coords: G4) is configured as FC0_RXD_SDA_MOSI_DATA */
     IOPCTL_PinMuxSet(IOPCTL, 0U, 2U, port0_pin2_config);
-
-    CLOCK_AttachClk(kSFRO_to_FLEXCOMM2);
 }
 
 /* clang-format off */
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
-I2C2_InitPins:
+I2C4_InitPins:
 - options: {callFromInitBoot: 'false', coreID: cm33, enableClock: 'true'}
 - pin_list:
-  - {pin_num: D7, peripheral: FLEXCOMM2, signal: CTS_SDA_SSEL0, pin_signal: PIO0_17/FC2_CTS_SDA_SSEL0/SCT0_GPI3/SCT0_OUT3/CTIMER2_MAT3/FC5_SSEL2/SEC_PIO0_17, pupdena: enabled,
-    pupdsel: pullUp, ibena: enabled, slew_rate: normal, drive: full, amena: disabled, odena: enabled, iiena: disabled}
-  - {pin_num: B7, peripheral: FLEXCOMM2, signal: RTS_SCL_SSEL1, pin_signal: PIO0_18/FC2_RTS_SCL_SSEL1/SCT0_GPI6/SCT0_OUT6/CTIMER_INP4/FC5_SSEL3/SEC_PIO0_18, direction: OUTPUT,
-    pupdena: enabled, pupdsel: pullUp, ibena: enabled, slew_rate: normal, drive: full, amena: disabled, odena: enabled, iiena: disabled}
+  - {pin_num: C11, peripheral: FLEXCOMM4, signal: RXD_SDA_MOSI_DATA, pin_signal: PIO0_30/FC4_RXD_SDA_MOSI_DATA/CTIMER4_MAT2/I2S_BRIDGE_DATA_OUT/SEC_PIO0_30, pupdena: enabled,
+    pupdsel: pullUp, ibena: enabled, slew_rate: normal, drive: normal, amena: disabled, odena: enabled, iiena: disabled}
+  - {pin_num: B10, peripheral: FLEXCOMM4, signal: TXD_SCL_MISO_WS, pin_signal: PIO0_29/FC4_TXD_SCL_MISO_WS/CTIMER4_MAT1/I2S_BRIDGE_WS_OUT/SEC_PIO0_29, pupdena: enabled,
+    pupdsel: pullUp, ibena: enabled, slew_rate: normal, drive: normal, amena: disabled, odena: enabled, iiena: disabled}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 /* clang-format on */
 
 /* FUNCTION ************************************************************************************************************
  *
- * Function Name : I2C2_InitPins
+ * Function Name : I2C4_InitPins
  * Description   : Configures pin routing and optionally pin electrical features.
  *
  * END ****************************************************************************************************************/
 /* Function assigned for the Cortex-M33 */
-void I2C2_InitPins(void)
+void I2C4_InitPins(void)
 {
 
-    const uint32_t port0_pin17_config = (/* Pin is configured as FC2_CTS_SDA_SSEL0 */
+    const uint32_t port0_pin29_config = (/* Pin is configured as FC4_TXD_SCL_MISO_WS */
                                          IOPCTL_PIO_FUNC1 |
                                          /* Enable pull-up / pull-down function */
                                          IOPCTL_PIO_PUPD_EN |
@@ -141,18 +139,18 @@ void I2C2_InitPins(void)
                                          IOPCTL_PIO_INBUF_EN |
                                          /* Normal mode */
                                          IOPCTL_PIO_SLEW_RATE_NORMAL |
-                                         /* Full drive enable */
-                                         IOPCTL_PIO_FULLDRIVE_EN |
+                                         /* Normal drive */
+                                         IOPCTL_PIO_FULLDRIVE_DI |
                                          /* Analog mux is disabled */
                                          IOPCTL_PIO_ANAMUX_DI |
                                          /* Pseudo Output Drain is enabled */
                                          IOPCTL_PIO_PSEDRAIN_EN |
                                          /* Input function is not inverted */
                                          IOPCTL_PIO_INV_DI);
-    /* PORT0 PIN17 (coords: D7) is configured as FC2_CTS_SDA_SSEL0 */
-    IOPCTL_PinMuxSet(IOPCTL, 0U, 17U, port0_pin17_config);
+    /* PORT0 PIN29 (coords: B10) is configured as FC4_TXD_SCL_MISO_WS */
+    IOPCTL_PinMuxSet(IOPCTL, 0U, 29U, port0_pin29_config);
 
-    const uint32_t port0_pin18_config = (/* Pin is configured as FC2_RTS_SCL_SSEL1 */
+    const uint32_t port0_pin30_config = (/* Pin is configured as FC4_RXD_SDA_MOSI_DATA */
                                          IOPCTL_PIO_FUNC1 |
                                          /* Enable pull-up / pull-down function */
                                          IOPCTL_PIO_PUPD_EN |
@@ -162,27 +160,30 @@ void I2C2_InitPins(void)
                                          IOPCTL_PIO_INBUF_EN |
                                          /* Normal mode */
                                          IOPCTL_PIO_SLEW_RATE_NORMAL |
-                                         /* Full drive enable */
-                                         IOPCTL_PIO_FULLDRIVE_EN |
+                                         /* Normal drive */
+                                         IOPCTL_PIO_FULLDRIVE_DI |
                                          /* Analog mux is disabled */
                                          IOPCTL_PIO_ANAMUX_DI |
                                          /* Pseudo Output Drain is enabled */
                                          IOPCTL_PIO_PSEDRAIN_EN |
                                          /* Input function is not inverted */
                                          IOPCTL_PIO_INV_DI);
-    /* PORT0 PIN18 (coords: B7) is configured as FC2_RTS_SCL_SSEL1 */
-    IOPCTL_PinMuxSet(IOPCTL, 0U, 18U, port0_pin18_config);
+    /* PORT0 PIN30 (coords: C11) is configured as FC4_RXD_SDA_MOSI_DATA */
+    IOPCTL_PinMuxSet(IOPCTL, 0U, 30U, port0_pin30_config);
+
+    /* Use 16 MHz clock for the FLEXCOMM4 */
+    CLOCK_AttachClk(kSFRO_to_FLEXCOMM4);
 }
 
 /* clang-format off */
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
-I2C2_DeinitPins:
+I2C4_DeinitPins:
 - options: {callFromInitBoot: 'false', coreID: cm33, enableClock: 'true'}
 - pin_list:
-  - {pin_num: D7, peripheral: FLEXCOMM2, signal: CTS_SDA_SSEL0, pin_signal: PIO0_17/FC2_CTS_SDA_SSEL0/SCT0_GPI3/SCT0_OUT3/CTIMER2_MAT3/FC5_SSEL2/SEC_PIO0_17, pupdena: disabled,
-    pupdsel: pullDown, ibena: disabled, slew_rate: normal, drive: normal, amena: disabled, odena: disabled, iiena: disabled}
-  - {pin_num: B7, peripheral: FLEXCOMM2, signal: RTS_SCL_SSEL1, pin_signal: PIO0_18/FC2_RTS_SCL_SSEL1/SCT0_GPI6/SCT0_OUT6/CTIMER_INP4/FC5_SSEL3/SEC_PIO0_18, pupdena: disabled,
+  - {pin_num: B10, peripheral: GPIO, signal: 'PIO0, 29', pin_signal: PIO0_29/FC4_TXD_SCL_MISO_WS/CTIMER4_MAT1/I2S_BRIDGE_WS_OUT/SEC_PIO0_29, pupdena: disabled, pupdsel: pullDown,
+    ibena: disabled, slew_rate: normal, drive: normal, amena: disabled, odena: disabled, iiena: disabled}
+  - {pin_num: C11, peripheral: GPIO, signal: 'PIO0, 30', pin_signal: PIO0_30/FC4_RXD_SDA_MOSI_DATA/CTIMER4_MAT2/I2S_BRIDGE_DATA_OUT/SEC_PIO0_30, pupdena: disabled,
     pupdsel: pullDown, ibena: disabled, slew_rate: normal, drive: normal, amena: disabled, odena: disabled, iiena: disabled}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
@@ -190,16 +191,16 @@ I2C2_DeinitPins:
 
 /* FUNCTION ************************************************************************************************************
  *
- * Function Name : I2C2_DeinitPins
+ * Function Name : I2C4_DeinitPins
  * Description   : Configures pin routing and optionally pin electrical features.
  *
  * END ****************************************************************************************************************/
 /* Function assigned for the Cortex-M33 */
-void I2C2_DeinitPins(void)
+void I2C4_DeinitPins(void)
 {
 
-    const uint32_t port0_pin17_config = (/* Pin is configured as FC2_CTS_SDA_SSEL0 */
-                                         IOPCTL_PIO_FUNC1 |
+    const uint32_t port0_pin29_config = (/* Pin is configured as PIO0_29 */
+                                         IOPCTL_PIO_FUNC0 |
                                          /* Disable pull-up / pull-down function */
                                          IOPCTL_PIO_PUPD_DI |
                                          /* Enable pull-down function */
@@ -216,11 +217,11 @@ void I2C2_DeinitPins(void)
                                          IOPCTL_PIO_PSEDRAIN_DI |
                                          /* Input function is not inverted */
                                          IOPCTL_PIO_INV_DI);
-    /* PORT0 PIN17 (coords: D7) is configured as FC2_CTS_SDA_SSEL0 */
-    IOPCTL_PinMuxSet(IOPCTL, 0U, 17U, port0_pin17_config);
+    /* PORT0 PIN29 (coords: B10) is configured as PIO0_29 */
+    IOPCTL_PinMuxSet(IOPCTL, 0U, 29U, port0_pin29_config);
 
-    const uint32_t port0_pin18_config = (/* Pin is configured as FC2_RTS_SCL_SSEL1 */
-                                         IOPCTL_PIO_FUNC1 |
+    const uint32_t port0_pin30_config = (/* Pin is configured as PIO0_30 */
+                                         IOPCTL_PIO_FUNC0 |
                                          /* Disable pull-up / pull-down function */
                                          IOPCTL_PIO_PUPD_DI |
                                          /* Enable pull-down function */
@@ -237,8 +238,8 @@ void I2C2_DeinitPins(void)
                                          IOPCTL_PIO_PSEDRAIN_DI |
                                          /* Input function is not inverted */
                                          IOPCTL_PIO_INV_DI);
-    /* PORT0 PIN18 (coords: B7) is configured as FC2_RTS_SCL_SSEL1 */
-    IOPCTL_PinMuxSet(IOPCTL, 0U, 18U, port0_pin18_config);
+    /* PORT0 PIN30 (coords: C11) is configured as PIO0_30 */
+    IOPCTL_PinMuxSet(IOPCTL, 0U, 30U, port0_pin30_config);
 }
 
 /* clang-format off */

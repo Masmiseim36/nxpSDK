@@ -1,15 +1,17 @@
-/*******************************************************************************
-* Copyright (c) 2015-2020 Cadence Design Systems, Inc.
-* 
+/*
+* Copyright (c) 2015-2021 Cadence Design Systems Inc.
+*
 * Permission is hereby granted, free of charge, to any person obtaining
 * a copy of this software and associated documentation files (the
-* "Software"), to use this Software with Cadence processor cores only and 
-* not with any other processors and platforms, subject to
+* "Software"), to deal in the Software without restriction, including
+* without limitation the rights to use, copy, modify, merge, publish,
+* distribute, sublicense, and/or sell copies of the Software, and to
+* permit persons to whom the Software is furnished to do so, subject to
 * the following conditions:
-* 
+*
 * The above copyright notice and this permission notice shall be included
 * in all copies or substantial portions of the Software.
-* 
+*
 * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
 * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
@@ -17,8 +19,7 @@
 * CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
 * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-******************************************************************************/
+*/
 /*******************************************************************************
  * xf-io.h
  *
@@ -97,7 +98,7 @@ static inline int xf_input_port_created(xf_input_port_t *port)
 /* ...check if input port is ready (has pending message) */
 static inline int xf_input_port_ready(xf_input_port_t *port)
 {
-    return (xf_msg_queue_head(&port->queue) != NULL);
+    return ((xf_msg_queue_head(&port->queue) != NULL) && !(port->flags & XF_INPUT_FLAG_PURGING));
 }
 
 /* ...test if input port entered end-of-stream condition */
@@ -215,13 +216,19 @@ static inline int xf_output_port_idle(xf_output_port_t *port)
 /* ...check if port is ready (has output buffers - better use flags - tbd) */
 static inline int xf_output_port_ready(xf_output_port_t *port)
 {
-    return (xf_msg_queue_head(&port->queue) != NULL && !xf_output_port_unrouting(port));
+    return (xf_msg_queue_head(&port->queue) != NULL && !xf_output_port_unrouting(port) && !(port->flags & XF_OUTPUT_FLAG_FLUSHING));
 }
 
 /* ...output port flow-control message accessor */
 static inline xf_message_t * xf_output_port_control_msg(xf_output_port_t *port)
 {
     return xf_msg_pool_item(&port->pool, 0);
+}
+
+/* ...check if port flushing is ongoing */
+static inline int xf_output_port_flushing(xf_output_port_t *port)
+{
+    return ((port->flags & XF_OUTPUT_FLAG_FLUSHING) != 0);
 }
 
 /*******************************************************************************

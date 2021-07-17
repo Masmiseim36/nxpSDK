@@ -1,15 +1,17 @@
-/*******************************************************************************
-* Copyright (c) 2015-2020 Cadence Design Systems, Inc.
-* 
+/*
+* Copyright (c) 2015-2021 Cadence Design Systems Inc.
+*
 * Permission is hereby granted, free of charge, to any person obtaining
 * a copy of this software and associated documentation files (the
-* "Software"), to use this Software with Cadence processor cores only and 
-* not with any other processors and platforms, subject to
+* "Software"), to deal in the Software without restriction, including
+* without limitation the rights to use, copy, modify, merge, publish,
+* distribute, sublicense, and/or sell copies of the Software, and to
+* permit persons to whom the Software is furnished to do so, subject to
 * the following conditions:
-* 
+*
 * The above copyright notice and this permission notice shall be included
 * in all copies or substantial portions of the Software.
-* 
+*
 * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
 * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
@@ -17,8 +19,7 @@
 * CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
 * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-******************************************************************************/
+*/
 /*******************************************************************************
  * xf-msgq.c
  *
@@ -45,13 +46,6 @@ extern XAF_ERR_CODE xaf_malloc(void **buf_ptr, int size, int id);
 
 /* ...remote IPC is coherent for hostless xaf (say) */
 #define XF_REMOTE_IPC_NON_COHERENT      0
-/*******************************************************************************
- * Tracing configuration
- ******************************************************************************/
-
-TRACE_TAG(INIT, 1);
-TRACE_TAG(CMD, 1);
-TRACE_TAG(RSP, 1);
 
 /*******************************************************************************
  * Global abstractions
@@ -101,12 +95,12 @@ int ipc_msgq_init(xf_msgq_t *cmdq, xf_msgq_t *respq, xf_event_t **msgq_event)
     }
 
     xf_g_ap->g_ipc_msgq.cmd_msgq = __xf_msgq_create(SEND_MSGQ_ENTRIES, sizeof(xf_proxy_msg_t));
-    /* ...allocation mustn't fail on host */
+    /* ...allocation mustn't fail on App Interface Layer */
     BUG(xf_g_ap->g_ipc_msgq.cmd_msgq == NULL, _x("Out-of-memeory"));
 
 
     xf_g_ap->g_ipc_msgq.resp_msgq = __xf_msgq_create(RECV_MSGQ_ENTRIES, sizeof(xf_proxy_msg_t));
-    /* ...allocation mustn't fail on host */
+    /* ...allocation mustn't fail on App Interface Layer */
     BUG(xf_g_ap->g_ipc_msgq.resp_msgq == NULL, _x("Out-of-memeory"));
 
     __xf_event_init(&xf_g_ap->g_ipc_msgq.msgq_event, 0xffff);
@@ -175,7 +169,7 @@ int xf_ipc_recv(xf_proxy_ipc_data_t *ipc, xf_proxy_msg_t *msg, void **buffer)
     TRACE(RSP, _b("R[%08x]:(%x,%u,%08x)"), msg->id, msg->opcode, msg->length, msg->address);
 
     /* ...translate shared address into local pointer */
-    XF_CHK_ERR((*buffer = xf_ipc_a2b(ipc, msg->address)) != (void *)-1, -EBADFD);
+    XF_CHK_ERR((*buffer = xf_ipc_a2b(ipc, msg->address)) != (void *)-1, XAF_INVALIDVAL_ERR);
 
     /* ...return positive result indicating the message has been received */
     return sizeof(*msg);
@@ -192,7 +186,7 @@ int xf_ipc_open(xf_proxy_ipc_data_t *ipc, UWORD32 core)
     XF_CHK_API(ipc_msgq_init(&ipc->cmd_msgq, &ipc->resp_msgq, &ipc->msgq_event));
 
     ipc->lresp_msgq = __xf_msgq_create(SEND_LOCAL_MSGQ_ENTRIES, sizeof(xf_user_msg_t));
-    /* ...allocation mustn't fail on host */
+    /* ...allocation mustn't fail on App Interface Layer */
     BUG(ipc->lresp_msgq == NULL, _x("Out-of-memeory"));
 
     TRACE(INIT, _b("proxy-%u interface opened"), core);
@@ -227,7 +221,7 @@ void xf_ipc_close(xf_proxy_ipc_data_t *ipc, UWORD32 core)
 int xf_ipc_data_init(xf_ipc_data_t *ipc)
 {
     ipc->resp_msgq = __xf_msgq_create(SEND_LOCAL_MSGQ_ENTRIES, sizeof(xf_user_msg_t));
-    /* ...allocation mustn't fail on host */
+    /* ...allocation mustn't fail on App Interface Layer */
     BUG(ipc->resp_msgq == NULL, _x("Out-of-memeory"));
     return 0;
 }

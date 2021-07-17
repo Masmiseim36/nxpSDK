@@ -216,14 +216,14 @@ static XAF_ERR_CODE get_dec_config(void *p_comp, xaf_format_t *comp_format)
     param[4] = XA_CODEC_CONFIG_PARAM_PCM_WIDTH;
 
     ret = xaf_comp_get_config(p_comp, 3, &param[0]);
-    if (ret != XAF_NO_ERROR)
+    if (ret != XAF_NO_ERR)
         return ret;
 
     comp_format->channels    = param[1];
     comp_format->sample_rate = param[3];
     comp_format->pcm_width   = param[5];
 
-    return XAF_NO_ERROR;
+    return XAF_NO_ERR;
 }
 
 /*******************************************************************************
@@ -241,6 +241,8 @@ int srtm_file_dec_create(dsp_handle_t *dsp, srtm_audio_component_t type)
     const char *comp_type = NULL;
     const char *dec_name;
     XAF_ERR_CODE (*comp_setup)(void *p_comp);
+    xaf_adev_config_t device_config;
+    xaf_comp_config_t comp_config;
 
 #if XA_MP3_DECODER
     if (type == DSP_COMPONENT_MP3)
@@ -271,9 +273,15 @@ int srtm_file_dec_create(dsp_handle_t *dsp, srtm_audio_component_t type)
         DSP_PRINTF("invalid codec type: %d\r\n", (int)type);
         return -1;
     }
+    xaf_adev_config_default_init(&device_config);
 
-    ret = xaf_adev_open(&dsp->audio_device, AUDIO_FRMWK_BUF_SIZE, AUDIO_COMP_BUF_SIZE, DSP_Malloc, DSP_Free);
-    if (ret != XAF_NO_ERROR)
+    device_config.pmem_malloc = DSP_Malloc;
+    device_config.pmem_free = DSP_Free;
+    device_config.audio_component_buffer_size = AUDIO_COMP_BUF_SIZE;
+    device_config.audio_framework_buffer_size = AUDIO_FRMWK_BUF_SIZE;
+
+    ret = xaf_adev_open(&dsp->audio_device, &device_config);
+    if (ret != XAF_NO_ERR)
     {
         DSP_PRINTF("xaf_adev_open failure: %d\r\n", ret);
         return -1;
@@ -286,15 +294,24 @@ int srtm_file_dec_create(dsp_handle_t *dsp, srtm_audio_component_t type)
      * 1 output buffer for decode to memory buffer
      * 0 output buffer for decode to renderer
      */
-    ret = xaf_comp_create(dsp->audio_device, &dsp->comp_codec, comp_type, 2, 0, &dec_inbuf[0], XAF_DECODER);
-    if (ret != XAF_NO_ERROR)
+
+    xaf_comp_config_default_init(&comp_config);
+
+    comp_config.comp_id = comp_type;
+    comp_config.num_input_buffers = 2;
+    comp_config.num_output_buffers = 0;
+    comp_config.pp_inbuf = (pVOID (*)[XAF_MAX_INBUFS])&dec_inbuf[0];
+    comp_config.comp_type = XAF_DECODER;
+
+    ret = xaf_comp_create(dsp->audio_device, &dsp->comp_codec, &comp_config);
+    if (ret != XAF_NO_ERR)
     {
         DSP_PRINTF("xaf_comp_create failure: %d\r\n", ret);
         goto error_cleanup;
     }
 
     ret = comp_setup(dsp->comp_codec);
-    if (ret != XAF_NO_ERROR)
+    if (ret != XAF_NO_ERR)
     {
         DSP_PRINTF("comp_setup failure: %d\r\n", ret);
         goto error_cleanup;
@@ -302,7 +319,7 @@ int srtm_file_dec_create(dsp_handle_t *dsp, srtm_audio_component_t type)
 
     /* Start decoder component */
     ret = xaf_comp_process(dsp->audio_device, dsp->comp_codec, NULL, 0, XAF_START_FLAG);
-    if (ret != XAF_NO_ERROR)
+    if (ret != XAF_NO_ERR)
     {
         DSP_PRINTF("xaf_comp_process XAF_START_FLAG failure: %d\r\n", ret);
         goto error_cleanup;
@@ -317,7 +334,7 @@ int srtm_file_dec_create(dsp_handle_t *dsp, srtm_audio_component_t type)
         if (read_length)
         {
             ret = xaf_comp_process(dsp->audio_device, dsp->comp_codec, dec_inbuf[0], read_length, XAF_INPUT_READY_FLAG);
-            if (ret != XAF_NO_ERROR)
+            if (ret != XAF_NO_ERR)
             {
                 DSP_PRINTF("xaf_comp_process XAF_INPUT_READY_FLAG failure: %d\r\n", ret);
                 goto error_cleanup;
@@ -329,7 +346,7 @@ int srtm_file_dec_create(dsp_handle_t *dsp, srtm_audio_component_t type)
         }
 
         ret = xaf_comp_get_status(dsp->audio_device, dsp->comp_codec, &comp_status, &comp_info[0]);
-        if (ret != XAF_NO_ERROR)
+        if (ret != XAF_NO_ERR)
         {
             DSP_PRINTF("xaf_comp_get_status failure: %d\r\n", ret);
             goto error_cleanup;
@@ -361,8 +378,16 @@ int srtm_file_dec_create(dsp_handle_t *dsp, srtm_audio_component_t type)
 
     if (need_src(dec_format.sample_rate))
     {
-        ret = xaf_comp_create(dsp->audio_device, &dsp->comp_src, "audio-fx/src-pp", 0, 0, NULL, XAF_POST_PROC);
-        if (ret != XAF_NO_ERROR)
+        xaf_comp_config_default_init(&comp_config);
+
+        comp_config.comp_id = "audio-fx/src-pp";
+        comp_config.num_input_buffers = 0;
+        comp_config.num_output_buffers = 0;
+        comp_config.pp_inbuf = NULL;
+        comp_config.comp_type = XAF_POST_PROC;
+
+        ret = xaf_comp_create(dsp->audio_device, &dsp->comp_src, &comp_config);
+        if (ret != XAF_NO_ERR)
         {
             DSP_PRINTF("xaf_comp_create src-pp failure: %d\r\n", ret);
             goto error_cleanup;
@@ -370,21 +395,21 @@ int srtm_file_dec_create(dsp_handle_t *dsp, srtm_audio_component_t type)
 
         ret =
             src_setup(dsp->comp_src, dec_format.channels, dec_format.sample_rate, 48000, 512, dec_format.pcm_width / 8);
-        if (ret != XAF_NO_ERROR)
+        if (ret != XAF_NO_ERR)
         {
             DSP_PRINTF("src_setup failure: %d\r\n", ret);
             goto error_cleanup;
         }
 
         ret = xaf_comp_process(dsp->audio_device, dsp->comp_src, NULL, 0, XAF_START_FLAG);
-        if (ret != XAF_NO_ERROR)
+        if (ret != XAF_NO_ERR)
         {
             DSP_PRINTF("xaf_comp_process SRC XAF_START_FLAG failure: %d\r\n", ret);
             goto error_cleanup;
         }
 
         ret = xaf_comp_get_status(dsp->audio_device, dsp->comp_src, &comp_status, &comp_info[0]);
-        if (ret != XAF_NO_ERROR)
+        if (ret != XAF_NO_ERR)
         {
             DSP_PRINTF("xaf_comp_get_status SRC failure: %d\r\n", ret);
             goto error_cleanup;
@@ -394,17 +419,24 @@ int srtm_file_dec_create(dsp_handle_t *dsp, srtm_audio_component_t type)
     }
 
 #if XA_CLIENT_PROXY
+    xaf_comp_config_default_init(&comp_config);
+
+    comp_config.comp_id = "post-proc/client_proxy";
+    comp_config.num_input_buffers = 0;
+    comp_config.num_output_buffers = 0;
+    comp_config.pp_inbuf = NULL;
+    comp_config.comp_type = XAF_POST_PROC;
+
     /* Create and setup client proxy component */
-    ret = xaf_comp_create(dsp->audio_device, &dsp->comp_client_proxy,
-                    "post-proc/client_proxy", 0, 0, NULL, XAF_POST_PROC);
-    if (ret != XAF_NO_ERROR)
+    ret = xaf_comp_create(dsp->audio_device, &dsp->comp_client_proxy, &comp_config);
+    if (ret != XAF_NO_ERR)
     {
         DSP_PRINTF("xaf_comp_create client_proxy failure: %d\r\n", ret);
         goto error_cleanup;
     }
 
     ret = client_proxy_setup(dsp->comp_client_proxy, &dec_format);
-    if (ret != XAF_NO_ERROR)
+    if (ret != XAF_NO_ERR)
     {
         DSP_PRINTF("client_proxy_setup failure: %d\r\n", ret);
         goto error_cleanup;
@@ -412,14 +444,14 @@ int srtm_file_dec_create(dsp_handle_t *dsp, srtm_audio_component_t type)
 
     /* Start client proxy component */
     ret = xaf_comp_process(dsp->audio_device, dsp->comp_client_proxy, NULL, 0, XAF_START_FLAG);
-    if (ret != XAF_NO_ERROR)
+    if (ret != XAF_NO_ERR)
     {
         DSP_PRINTF("xaf_comp_process XAF_START_FLAG CLIENT_PROXY failure: %d\r\n", ret);
         return ret;
     }
 
     ret = xaf_comp_get_status(dsp->audio_device, dsp->comp_client_proxy, &comp_status, &comp_info[0]);
-    if (ret != XAF_NO_ERROR)
+    if (ret != XAF_NO_ERR)
     {
         DSP_PRINTF("xaf_comp_get_status CLIENT_PROXY failure: %d\r\n", ret);
         return -1;
@@ -428,11 +460,19 @@ int srtm_file_dec_create(dsp_handle_t *dsp, srtm_audio_component_t type)
     DSP_PRINTF("[DSP Codec] EAP filter component started\r\n");
 #endif
 
-    ret = xaf_comp_create(dsp->audio_device, &dsp->comp_renderer, "renderer", 0, 0, NULL, XAF_RENDERER);
+    xaf_comp_config_default_init(&comp_config);
+
+    comp_config.comp_id = "renderer";
+    comp_config.num_input_buffers = 0;
+    comp_config.num_output_buffers = 0;
+    comp_config.pp_inbuf = NULL;
+    comp_config.comp_type = XAF_RENDERER;
+
+    ret = xaf_comp_create(dsp->audio_device, &dsp->comp_renderer, &comp_config);
 
     /* Setup renderer to match decoded PCM format */
     ret = renderer_setup(dsp->comp_renderer, &dec_format);
-    if (ret != XAF_NO_ERROR)
+    if (ret != XAF_NO_ERR)
     {
         DSP_PRINTF("renderer_setup failure: %d\r\n", ret);
         goto error_cleanup;
@@ -440,14 +480,14 @@ int srtm_file_dec_create(dsp_handle_t *dsp, srtm_audio_component_t type)
 
     /* Start renderer component */
     ret = xaf_comp_process(dsp->audio_device, dsp->comp_renderer, NULL, 0, XAF_START_FLAG);
-    if (ret != XAF_NO_ERROR)
+    if (ret != XAF_NO_ERR)
     {
         DSP_PRINTF("xaf_comp_process XAF_START_FLAG renderer failure: %d\r\n", ret);
         goto error_cleanup;
     }
 
     ret = xaf_comp_get_status(dsp->audio_device, dsp->comp_renderer, &comp_status, &comp_info[0]);
-    if (ret != XAF_NO_ERROR)
+    if (ret != XAF_NO_ERR)
     {
         DSP_PRINTF("xaf_comp_get_status XA_RENDERER failure: %d\r\n", ret);
         return -1;
@@ -472,7 +512,7 @@ int srtm_file_dec_create(dsp_handle_t *dsp, srtm_audio_component_t type)
     if (need_src(dec_format.sample_rate))
     {
         ret = xaf_connect(dsp->comp_codec, 1, dsp->comp_src, 0, 4);
-        if (ret != XAF_NO_ERROR)
+        if (ret != XAF_NO_ERR)
         {
             DSP_PRINTF("xaf_connect failure: %d\r\n", ret);
             goto error_cleanup;
@@ -490,7 +530,7 @@ int srtm_file_dec_create(dsp_handle_t *dsp, srtm_audio_component_t type)
 #if XA_CLIENT_PROXY
     /* Connect all the non-input components and then only START each of the dest components */
     ret = xaf_connect(comp, 1, dsp->comp_client_proxy, 0, 4);
-    if (ret != XAF_NO_ERROR)
+    if (ret != XAF_NO_ERR)
     {
         DSP_PRINTF("xaf_connect CLIENT_PROXY failure: %d\r\n", ret);
         return ret;
@@ -499,7 +539,7 @@ int srtm_file_dec_create(dsp_handle_t *dsp, srtm_audio_component_t type)
     DSP_PRINTF("[DSP Codec] Connected %s -> XA_EAP_FILTER\n\r", comp_name(dsp, comp));
 
     ret = xaf_connect(dsp->comp_client_proxy, 1, dsp->comp_renderer, 0, 4);
-    if (ret != XAF_NO_ERROR)
+    if (ret != XAF_NO_ERR)
     {
         DSP_PRINTF("xaf_connect RENDERER failure: %d\r\n", ret);
         return ret;
@@ -509,7 +549,7 @@ int srtm_file_dec_create(dsp_handle_t *dsp, srtm_audio_component_t type)
 
 #else
     ret = xaf_connect(comp, 1, dsp->comp_renderer, 0, 4);
-    if (ret != XAF_NO_ERROR)
+    if (ret != XAF_NO_ERR)
     {
         DSP_PRINTF("xaf_connect RENDERER failure: %d\r\n", ret);
         goto error_cleanup;
@@ -550,7 +590,7 @@ int srtm_file_dec_create(dsp_handle_t *dsp, srtm_audio_component_t type)
 
 error_cleanup:
     ret = xaf_adev_close(dsp->audio_device, XAF_ADEV_FORCE_CLOSE);
-    if (ret != XAF_NO_ERROR)
+    if (ret != XAF_NO_ERR)
     {
         DSP_PRINTF("xaf_adev_close failure: %d\r\n", ret);
     }
@@ -578,7 +618,7 @@ int srtm_file_dec_close(void *arg, int wake_value)
 
     /* Clean up and shut down XAF */
     ret = xaf_comp_delete(dsp->comp_codec);
-    if (ret != XAF_NO_ERROR)
+    if (ret != XAF_NO_ERR)
     {
         DSP_PRINTF("xaf_comp_delete failure: %d\r\n", ret);
         return -1;
@@ -587,7 +627,7 @@ int srtm_file_dec_close(void *arg, int wake_value)
     if (dsp->comp_src)
     {
         ret = xaf_comp_delete(dsp->comp_src);
-        if (ret != XAF_NO_ERROR)
+        if (ret != XAF_NO_ERR)
         {
             DSP_PRINTF("xaf_comp_delete failure: %d\r\n", ret);
             return -1;
@@ -596,7 +636,7 @@ int srtm_file_dec_close(void *arg, int wake_value)
     }
 
     ret = xaf_comp_delete(dsp->comp_renderer);
-    if (ret != XAF_NO_ERROR)
+    if (ret != XAF_NO_ERR)
     {
         DSP_PRINTF("xaf_comp_delete failure: %d\r\n", ret);
         return -1;
@@ -604,7 +644,7 @@ int srtm_file_dec_close(void *arg, int wake_value)
 
 #if XA_CLIENT_PROXY
     ret = xaf_comp_delete(dsp->comp_client_proxy);
-    if (ret != XAF_NO_ERROR)
+    if (ret != XAF_NO_ERR)
     {
         DSP_PRINTF("xaf_comp_delete failure: %d\r\n", ret);
         return -1;
@@ -612,7 +652,7 @@ int srtm_file_dec_close(void *arg, int wake_value)
 #endif
 
     ret = xaf_adev_close(dsp->audio_device, XAF_ADEV_NORMAL_CLOSE);
-    if (ret != XAF_NO_ERROR)
+    if (ret != XAF_NO_ERR)
     {
         DSP_PRINTF("xaf_adev_close failure: %d\r\n", ret);
         return -1;

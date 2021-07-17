@@ -17,6 +17,7 @@
 #include "board.h"
 #include "veneer_table.h"
 #include "tzm_config.h"
+#include "tzm_api.h"
 
 /*******************************************************************************
  * Definitions
@@ -36,8 +37,6 @@
 #define DEMO_BLUE_LED_PIN_SEC_MASK AHB_SECURE_CTRL_SEC_GPIO_MASK0_PIO0_PIN10_SEC_MASK_MASK
 #define NON_SECURE_START DEMO_CODE_START_NS
 
-/* typedef for non-secure callback functions */
-typedef void (*funcptr_ns)(void) __attribute__((cmse_nonsecure_call));
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
@@ -93,8 +92,6 @@ void SysTick_Handler(void)
  */
 int main(void)
 {
-    funcptr_ns ResetHandler_ns;
-
     /* Board pin init */
     BOARD_InitPins();
     BOARD_BootClockRUN();
@@ -125,18 +122,9 @@ int main(void)
     /* Set systick reload value to generate 5ms interrupt */
     SysTick_Config(USEC_TO_COUNT(5000U, DEMO_SYSTICK_CLK_FREQ));
 
-    /* Set non-secure main stack (MSP_NS) */
-    __TZ_set_MSP_NS(*((uint32_t *)(NON_SECURE_START)));
-
-    /* Set non-secure vector table */
-    SCB_NS->VTOR = NON_SECURE_START;
-
-    /* Get non-secure reset handler */
-    ResetHandler_ns = (funcptr_ns)(*((uint32_t *)((NON_SECURE_START) + 4U)));
-
     /* Call non-secure application - jump to normal world */
-    /*  */
-    ResetHandler_ns();
+    TZM_JumpToNormalWorld(NON_SECURE_START);
+
     while (1)
     {
         /* This point should never be reached */

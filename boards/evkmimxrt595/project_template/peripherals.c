@@ -14,6 +14,7 @@
 !!GlobalInfo
 product: Peripherals v6.0
 processor: MIMXRT595S
+package_id: MIMXRT595SFFOC
 mcu_data: ksdk2_0
 processor_version: 0.0.0
 board: MIMXRT595-EVK

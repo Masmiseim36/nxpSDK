@@ -5,8 +5,8 @@
  *
  */
 
-#include "test/framework/test_framework_helpers.h"
-#include "test/test_services/tfm_secure_client_2/tfm_secure_client_2_api.h"
+#include "test_framework_helpers.h"
+#include "tfm_secure_client_2_api.h"
 #include "tfm_api.h"
 #include "../crypto_tests_common.h"
 
@@ -27,7 +27,9 @@ static void tfm_crypto_test_5008(struct test_result_t *ret);
 static void tfm_crypto_test_5009(struct test_result_t *ret);
 #endif /* TFM_CRYPTO_TEST_ALG_CFB */
 static void tfm_crypto_test_5010(struct test_result_t *ret);
+#ifdef TFM_CRYPTO_TEST_ALG_SHA_224 //NXP
 static void tfm_crypto_test_5011(struct test_result_t *ret);
+#endif
 static void tfm_crypto_test_5012(struct test_result_t *ret);
 #ifdef TFM_CRYPTO_TEST_ALG_SHA_512
 static void tfm_crypto_test_5013(struct test_result_t *ret);
@@ -39,7 +41,9 @@ static void tfm_crypto_test_5020(struct test_result_t *ret);
 static void tfm_crypto_test_5021(struct test_result_t *ret);
 static void tfm_crypto_test_5022(struct test_result_t *ret);
 #endif /* TFM_CRYPTO_TEST_ALG_SHA_512 */
+#ifdef TFM_CRYPTO_TEST_ALG_SHA_224 //NXP
 static void tfm_crypto_test_5024(struct test_result_t *ret);
+#endif
 #ifdef TFM_CRYPTO_TEST_ALG_CCM
 static void tfm_crypto_test_5030(struct test_result_t *ret);
 #endif /* TFM_CRYPTO_TEST_ALG_CCM */
@@ -84,8 +88,10 @@ static struct test_t crypto_tests[] = {
 #endif /* TFM_CRYPTO_TEST_ALG_CFB */
     {&tfm_crypto_test_5010, "TFM_CRYPTO_TEST_5010",
      "Secure Unsupported Hash (SHA-1) interface", {TEST_PASSED} },
+#ifdef TFM_CRYPTO_TEST_ALG_SHA_224 //NXP
     {&tfm_crypto_test_5011, "TFM_CRYPTO_TEST_5011",
      "Secure Hash (SHA-224) interface", {TEST_PASSED} },
+#endif 
     {&tfm_crypto_test_5012, "TFM_CRYPTO_TEST_5012",
      "Secure Hash (SHA-256) interface", {TEST_PASSED} },
 #ifdef TFM_CRYPTO_TEST_ALG_SHA_512
@@ -104,8 +110,10 @@ static struct test_t crypto_tests[] = {
     {&tfm_crypto_test_5022, "TFM_CRYPTO_TEST_5022",
      "Secure HMAC (SHA-512) interface", {TEST_PASSED} },
 #endif /* TFM_CRYPTO_TEST_ALG_SHA_512 */
+#ifdef TFM_CRYPTO_TEST_ALG_SHA_224 //NXP
     {&tfm_crypto_test_5024, "TFM_CRYPTO_TEST_5024",
      "Secure HMAC with long key (SHA-224) interface", {TEST_PASSED} },
+#endif
 #ifdef TFM_CRYPTO_TEST_ALG_CCM
     {&tfm_crypto_test_5030, "TFM_CRYPTO_TEST_5030",
      "Secure AEAD (AES-128-CCM) interface", {TEST_PASSED} },
@@ -204,10 +212,12 @@ static void tfm_crypto_test_5010(struct test_result_t *ret)
     psa_unsupported_hash_test(PSA_ALG_SHA_1, ret);
 }
 
+#ifdef TFM_CRYPTO_TEST_ALG_SHA_224 //NXP
 static void tfm_crypto_test_5011(struct test_result_t *ret)
 {
     psa_hash_test(PSA_ALG_SHA_224, ret);
 }
+#endif
 
 static void tfm_crypto_test_5012(struct test_result_t *ret)
 {
@@ -249,10 +259,12 @@ static void tfm_crypto_test_5022(struct test_result_t *ret)
 }
 #endif /* TFM_CRYPTO_TEST_ALG_SHA_512 */
 
+#ifdef TFM_CRYPTO_TEST_ALG_SHA_224 //NXP
 static void tfm_crypto_test_5024(struct test_result_t *ret)
 {
     psa_mac_test(PSA_ALG_HMAC(PSA_ALG_SHA_224), 1, ret);
 }
+#endif
 
 #ifdef TFM_CRYPTO_TEST_ALG_CCM
 static void tfm_crypto_test_5030(struct test_result_t *ret)

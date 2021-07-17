@@ -1,21 +1,19 @@
-if(NOT MIDDLEWARE_VGLITE_ELEMENTARY_MIMXRT595S_cm33_INCLUDED)
-    
-    set(MIDDLEWARE_VGLITE_ELEMENTARY_MIMXRT595S_cm33_INCLUDED true CACHE BOOL "middleware_vglite_elementary component is included.")
+include_guard(GLOBAL)
+message("middleware_vglite_elementary component is included.")
 
-    target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
-        ${CMAKE_CURRENT_LIST_DIR}/elementary/src/elm_buffer.c
-        ${CMAKE_CURRENT_LIST_DIR}/elementary/src/elm_draw.c
-        ${CMAKE_CURRENT_LIST_DIR}/elementary/src/elm_init.c
-        ${CMAKE_CURRENT_LIST_DIR}/elementary/src/elm_object.c
-        ${CMAKE_CURRENT_LIST_DIR}/elementary/src/elm_os.c
-        ${CMAKE_CURRENT_LIST_DIR}/elementary/src/elm_text.c
-    )
-
-
-    target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
-        ${CMAKE_CURRENT_LIST_DIR}/elementary/inc
-        ${CMAKE_CURRENT_LIST_DIR}/elementary/src
-    )
+target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
+    ${CMAKE_CURRENT_LIST_DIR}/elementary/src/elm_buffer.c
+    ${CMAKE_CURRENT_LIST_DIR}/elementary/src/elm_draw.c
+    ${CMAKE_CURRENT_LIST_DIR}/elementary/src/elm_init.c
+    ${CMAKE_CURRENT_LIST_DIR}/elementary/src/elm_object.c
+    ${CMAKE_CURRENT_LIST_DIR}/elementary/src/elm_os.c
+    ${CMAKE_CURRENT_LIST_DIR}/elementary/src/elm_text.c
+)
 
 
-endif()
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
+    ${CMAKE_CURRENT_LIST_DIR}/elementary/inc
+    ${CMAKE_CURRENT_LIST_DIR}/elementary/src
+)
+
+

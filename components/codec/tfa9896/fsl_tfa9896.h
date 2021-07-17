@@ -12,6 +12,7 @@
 
 /*!
  * @addtogroup tfa9896
+ * @ingroup codec
  * @{
  */
 

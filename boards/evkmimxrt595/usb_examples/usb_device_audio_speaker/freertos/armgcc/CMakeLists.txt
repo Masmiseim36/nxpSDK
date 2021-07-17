@@ -1,6 +1,6 @@
 # CROSS COMPILER SETTING
 SET(CMAKE_SYSTEM_NAME Generic)
-CMAKE_MINIMUM_REQUIRED (VERSION 3.1.1)
+CMAKE_MINIMUM_REQUIRED (VERSION 3.10.0)
 
 # THE VERSION NUMBER
 SET (Tutorial_VERSION_MAJOR 1)
@@ -31,6 +31,7 @@ include(${ProjDirPath}/flags.cmake)
 include(${ProjDirPath}/config.cmake)
 
 add_executable(${MCUX_SDK_PROJECT_NAME} 
+"${ProjDirPath}/../usb_audio_config.h"
 "${ProjDirPath}/../audio_speaker.c"
 "${ProjDirPath}/../audio_speaker.h"
 "${ProjDirPath}/../usb_device_descriptor.c"
@@ -52,8 +53,6 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 )
 
 target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
-    ${ProjDirPath}/.. release
-    ${ProjDirPath}/../../../.. release
     ${ProjDirPath}/..
     ${ProjDirPath}/../../../..
 )
@@ -63,7 +62,6 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../../devices/MIMXRT595S/drivers
     ${ProjDirPath}/../../../../../../components/codec/wm8904
     ${ProjDirPath}/../../../../../../components/codec
-    ${ProjDirPath}/../../../../../../components/codec/port/wm8904
     ${ProjDirPath}/../../../../../../components/codec/i2c
     ${ProjDirPath}/../../../../../../components/i2c
     ${ProjDirPath}/../../../../../../rtos/freertos
@@ -74,7 +72,7 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../../components/lists
     ${ProjDirPath}/../../../../flash_config
     ${ProjDirPath}/../../../../../../components/osa
-    ${ProjDirPath}/../../../../../../CMSIS/Include
+    ${ProjDirPath}/../../../../../../CMSIS/Core/Include
 )
 
 # include modules
@@ -96,7 +94,7 @@ include(driver_wm8904_MIMXRT595S_cm33)
 
 include(driver_i3c_MIMXRT595S_cm33)
 
-include(driver_sctimer_MIMXRT595S_cm33)
+include(driver_ctimer_MIMXRT595S_cm33)
 
 include(driver_codec_MIMXRT595S_cm33)
 
@@ -154,11 +152,7 @@ include(component_osa_MIMXRT595S_cm33)
 
 include(middleware_usb_common_header_MIMXRT595S_cm33)
 
-include(CMSIS_Include_core_cm33_MIMXRT595S_cm33)
-
-include(CMSIS_Include_common_MIMXRT595S_cm33)
-
-include(CMSIS_Include_dsp_MIMXRT595S_cm33)
+include(CMSIS_Include_core_cm_MIMXRT595S_cm33)
 
 include(middleware_usb_device_common_header_MIMXRT595S_cm33)
 

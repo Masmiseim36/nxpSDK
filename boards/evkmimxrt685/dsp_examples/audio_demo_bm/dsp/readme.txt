@@ -8,8 +8,8 @@ to the CODEC, where the audio data will be heard from lineout.
 
 Toolchain supported
 ===================
-- Xtensa Xplorer  7.0.9
-- Xtensa C Compiler  12.0.8
+- Xtensa Xplorer  8.0.10
+- Xtensa C Compiler  14.01
 
 Hardware requirements
 =====================
@@ -21,8 +21,6 @@ Hardware requirements
 
 Board settings
 ==============
-Note: The I3C Pin configuration in pin_mux.c is verified for default 1.8V, for 3.3V, 
-need to manually configure slew rate to slow mode for I3C-SCL/SDA. 
 
 To enable the example audio using WM8904 codec, connect jumpers as follows:
   JP7-1        <-->        JP7-2
@@ -58,6 +56,3 @@ The following lines are printed to the serial terminal when the demo program is 
 This example transfers data from DMIC to Codec. Connect headphone/earphone on audio out of the board.
 Speak into the DMIC or play audio near the DMIC (U40, U41), and you will hear sound on the left channel of
 headphone/earphone.
-Customization options
-=====================
-

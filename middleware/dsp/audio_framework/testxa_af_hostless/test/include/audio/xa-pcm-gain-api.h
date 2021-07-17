@@ -1,15 +1,17 @@
-/*******************************************************************************
-* Copyright (c) 2015-2020 Cadence Design Systems, Inc.
-* 
+/*
+* Copyright (c) 2015-2021 Cadence Design Systems Inc.
+*
 * Permission is hereby granted, free of charge, to any person obtaining
 * a copy of this software and associated documentation files (the
-* "Software"), to use this Software with Cadence processor cores only and 
-* not with any other processors and platforms, subject to
+* "Software"), to deal in the Software without restriction, including
+* without limitation the rights to use, copy, modify, merge, publish,
+* distribute, sublicense, and/or sell copies of the Software, and to
+* permit persons to whom the Software is furnished to do so, subject to
 * the following conditions:
-* 
+*
 * The above copyright notice and this permission notice shall be included
 * in all copies or substantial portions of the Software.
-* 
+*
 * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
 * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
@@ -17,8 +19,7 @@
 * CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
 * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-******************************************************************************/
+*/
 /*******************************************************************************
  * xa-pcm-gain-api.h
  *
@@ -55,8 +56,14 @@ enum xa_config_param_pcm_gain {
     XA_PCM_GAIN_CONFIG_PARAM_SAMPLE_RATE       = 0x1,
     XA_PCM_GAIN_CONFIG_PARAM_PCM_WIDTH         = 0x2,
     XA_PCM_GAIN_CONFIG_PARAM_PRODUCED          = 0x3,
-    XA_PCM_GAIN_CONFIG_PARAM_FRAME_SIZE        = 0x4,
-    XA_PCM_GAIN_CONFIG_PARAM_GAIN_FACTOR       = 0x5
+    XA_PCM_GAIN_CONFIG_PARAM_FRAME_SIZE        = 0x4, /* Deprecated, use XA_PCM_GAIN_CONFIG_PARAM_FRAME_SIZE_IN_SAMPLES instead. */
+    XA_PCM_GAIN_CONFIG_PARAM_GAIN_FACTOR       = 0x5,
+    XA_PCM_GAIN_BURN_ADDITIONAL_CYCLES         = 0x6,  /* Parameter to simulate desired MHz load in PCM-GAIN for experimental purpose */
+    XA_PCM_GAIN_CONFIG_PARAM_FRAME_SIZE_IN_SAMPLES = 0x7,
+#ifndef XA_DISABLE_EVENT
+    XA_PCM_GAIN_CONFIG_PARAM_EVENT_GAIN_FACTOR = 0x8
+#endif
+
 };
 
 /* ...component identifier (informative) */

@@ -8,15 +8,15 @@
 #include <stddef.h>
 #include "tfm_ss_core_test.h"
 #include "tfm_api.h"
-#include "test/test_services/tfm_core_test/core_test_defs.h"
-#include "test/framework/test_framework.h"
+#include "core_test_defs.h"
+#include "test_framework.h"
 #include "tfm_veneers.h"
 #include "tfm_secure_api.h"
-#include "secure_fw/include/tfm/tfm_spm_services.h"
+#include "tfm/tfm_spm_services.h"
 #include "psa/service.h"
 #include "tfm_plat_test.h"
 #include "psa_manifest/pid.h"
-#include "psa_manifest/tfm_test_core.h"
+#include "psa_manifest/tfm_ss_core_test.h"
 #ifdef TFM_PSA_API
 #include "psa_manifest/sid.h"
 #endif
@@ -149,7 +149,7 @@ static psa_status_t test_ss_to_ss_buffer(uint32_t *in_ptr, uint32_t *out_ptr,
     /* Service internal buffer */
     uint32_t ss_buffer[SS_BUFFER_LEN] = {0};
     //NXP uint32_t slave_buffer [len];
-    uint32_t slave_buffer[SS_BUFFER_LEN] = {0}; //NXP
+    uint32_t slave_buffer[SS_BUFFER_LEN] = {0}; //NXP to avoid IAR compilation error.
     int32_t result;
     int32_t *result_ptr = &result;
     int32_t res;

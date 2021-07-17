@@ -1,4 +1,5 @@
 SET(CMAKE_ASM_FLAGS_FLASH_DEBUG " \
+    ${CMAKE_ASM_FLAGS_FLASH_DEBUG} \
     -DDSP_IMAGE_COPY_TO_RAM=0 \
     -DDEBUG \
     -D__STARTUP_CLEAR_BSS \
@@ -17,6 +18,7 @@ SET(CMAKE_ASM_FLAGS_FLASH_DEBUG " \
     -std=gnu99 \
 ")
 SET(CMAKE_ASM_FLAGS_FLASH_RELEASE " \
+    ${CMAKE_ASM_FLAGS_FLASH_RELEASE} \
     -DDSP_IMAGE_COPY_TO_RAM=1 \
     -DNDEBUG \
     -D__STARTUP_CLEAR_BSS \
@@ -34,6 +36,7 @@ SET(CMAKE_ASM_FLAGS_FLASH_RELEASE " \
     -std=gnu99 \
 ")
 SET(CMAKE_ASM_FLAGS_DEBUG " \
+    ${CMAKE_ASM_FLAGS_DEBUG} \
     -DDSP_IMAGE_COPY_TO_RAM=0 \
     -DDEBUG \
     -D__STARTUP_CLEAR_BSS \
@@ -52,6 +55,7 @@ SET(CMAKE_ASM_FLAGS_DEBUG " \
     -std=gnu99 \
 ")
 SET(CMAKE_ASM_FLAGS_RELEASE " \
+    ${CMAKE_ASM_FLAGS_RELEASE} \
     -DDSP_IMAGE_COPY_TO_RAM=1 \
     -DNDEBUG \
     -D__STARTUP_CLEAR_BSS \
@@ -69,12 +73,14 @@ SET(CMAKE_ASM_FLAGS_RELEASE " \
     -std=gnu99 \
 ")
 SET(CMAKE_C_FLAGS_FLASH_DEBUG " \
+    ${CMAKE_C_FLAGS_FLASH_DEBUG} \
     -DDSP_IMAGE_COPY_TO_RAM=0 \
     -DDEBUG \
     -DFSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1 \
     -DCPU_MIMXRT595SFFOC_cm33 \
     -DBOOT_HEADER_ENABLE=1 \
     -DSDK_I2C_BASED_COMPONENT_USED=1 \
+    -DMCUXPRESSO_SDK \
     -g \
     -O0 \
     -mcpu=cortex-m33 \
@@ -93,12 +99,14 @@ SET(CMAKE_C_FLAGS_FLASH_DEBUG " \
     -std=gnu99 \
 ")
 SET(CMAKE_C_FLAGS_FLASH_RELEASE " \
+    ${CMAKE_C_FLAGS_FLASH_RELEASE} \
     -DDSP_IMAGE_COPY_TO_RAM=1 \
     -DNDEBUG \
     -DFSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1 \
     -DCPU_MIMXRT595SFFOC_cm33 \
     -DBOOT_HEADER_ENABLE=1 \
     -DSDK_I2C_BASED_COMPONENT_USED=1 \
+    -DMCUXPRESSO_SDK \
     -Os \
     -mcpu=cortex-m33 \
     -Wall \
@@ -116,11 +124,13 @@ SET(CMAKE_C_FLAGS_FLASH_RELEASE " \
     -std=gnu99 \
 ")
 SET(CMAKE_C_FLAGS_DEBUG " \
+    ${CMAKE_C_FLAGS_DEBUG} \
     -DDSP_IMAGE_COPY_TO_RAM=0 \
     -DDEBUG \
     -DCPU_MIMXRT595SFFOC_cm33 \
     -DBOOT_HEADER_ENABLE=1 \
     -DSDK_I2C_BASED_COMPONENT_USED=1 \
+    -DMCUXPRESSO_SDK \
     -g \
     -O0 \
     -mcpu=cortex-m33 \
@@ -139,11 +149,13 @@ SET(CMAKE_C_FLAGS_DEBUG " \
     -std=gnu99 \
 ")
 SET(CMAKE_C_FLAGS_RELEASE " \
+    ${CMAKE_C_FLAGS_RELEASE} \
     -DDSP_IMAGE_COPY_TO_RAM=1 \
     -DNDEBUG \
     -DCPU_MIMXRT595SFFOC_cm33 \
     -DBOOT_HEADER_ENABLE=1 \
     -DSDK_I2C_BASED_COMPONENT_USED=1 \
+    -DMCUXPRESSO_SDK \
     -Os \
     -mcpu=cortex-m33 \
     -Wall \
@@ -161,7 +173,9 @@ SET(CMAKE_C_FLAGS_RELEASE " \
     -std=gnu99 \
 ")
 SET(CMAKE_CXX_FLAGS_FLASH_DEBUG " \
+    ${CMAKE_CXX_FLAGS_FLASH_DEBUG} \
     -DDEBUG \
+    -DMCUXPRESSO_SDK \
     -g \
     -O0 \
     -mcpu=cortex-m33 \
@@ -181,7 +195,9 @@ SET(CMAKE_CXX_FLAGS_FLASH_DEBUG " \
     -fno-exceptions \
 ")
 SET(CMAKE_CXX_FLAGS_FLASH_RELEASE " \
+    ${CMAKE_CXX_FLAGS_FLASH_RELEASE} \
     -DNDEBUG \
+    -DMCUXPRESSO_SDK \
     -Os \
     -mcpu=cortex-m33 \
     -Wall \
@@ -200,7 +216,9 @@ SET(CMAKE_CXX_FLAGS_FLASH_RELEASE " \
     -fno-exceptions \
 ")
 SET(CMAKE_CXX_FLAGS_DEBUG " \
+    ${CMAKE_CXX_FLAGS_DEBUG} \
     -DDEBUG \
+    -DMCUXPRESSO_SDK \
     -g \
     -O0 \
     -mcpu=cortex-m33 \
@@ -220,7 +238,9 @@ SET(CMAKE_CXX_FLAGS_DEBUG " \
     -fno-exceptions \
 ")
 SET(CMAKE_CXX_FLAGS_RELEASE " \
+    ${CMAKE_CXX_FLAGS_RELEASE} \
     -DNDEBUG \
+    -DMCUXPRESSO_SDK \
     -Os \
     -mcpu=cortex-m33 \
     -Wall \
@@ -239,6 +259,7 @@ SET(CMAKE_CXX_FLAGS_RELEASE " \
     -fno-exceptions \
 ")
 SET(CMAKE_EXE_LINKER_FLAGS_FLASH_DEBUG " \
+    ${CMAKE_EXE_LINKER_FLAGS_FLASH_DEBUG} \
     -g \
     -mcpu=cortex-m33 \
     -Wall \
@@ -263,9 +284,11 @@ SET(CMAKE_EXE_LINKER_FLAGS_FLASH_DEBUG " \
     muldefs \
     -Xlinker \
     -Map=output.map \
+    -Wl,--print-memory-usage \
     -T${ProjDirPath}/MIMXRT595Sxxxx_cm33_flash.ld -static \
 ")
 SET(CMAKE_EXE_LINKER_FLAGS_FLASH_RELEASE " \
+    ${CMAKE_EXE_LINKER_FLAGS_FLASH_RELEASE} \
     -mcpu=cortex-m33 \
     -Wall \
     -mfloat-abi=hard \
@@ -289,9 +312,11 @@ SET(CMAKE_EXE_LINKER_FLAGS_FLASH_RELEASE " \
     muldefs \
     -Xlinker \
     -Map=output.map \
+    -Wl,--print-memory-usage \
     -T${ProjDirPath}/MIMXRT595Sxxxx_cm33_flash.ld -static \
 ")
 SET(CMAKE_EXE_LINKER_FLAGS_DEBUG " \
+    ${CMAKE_EXE_LINKER_FLAGS_DEBUG} \
     -g \
     -mcpu=cortex-m33 \
     -Wall \
@@ -316,9 +341,11 @@ SET(CMAKE_EXE_LINKER_FLAGS_DEBUG " \
     muldefs \
     -Xlinker \
     -Map=output.map \
+    -Wl,--print-memory-usage \
     -T${ProjDirPath}/MIMXRT595Sxxxx_cm33_ram.ld -static \
 ")
 SET(CMAKE_EXE_LINKER_FLAGS_RELEASE " \
+    ${CMAKE_EXE_LINKER_FLAGS_RELEASE} \
     -mcpu=cortex-m33 \
     -Wall \
     -mfloat-abi=hard \
@@ -342,5 +369,6 @@ SET(CMAKE_EXE_LINKER_FLAGS_RELEASE " \
     muldefs \
     -Xlinker \
     -Map=output.map \
+    -Wl,--print-memory-usage \
     -T${ProjDirPath}/MIMXRT595Sxxxx_cm33_ram.ld -static \
 ")

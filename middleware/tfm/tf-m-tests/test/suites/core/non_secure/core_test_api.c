@@ -6,7 +6,7 @@
  */
 
 #include "core_test_api.h"
-#include "test/test_services/tfm_core_test/core_test_defs.h"
+#include "core_test_defs.h"
 
 int32_t tfm_core_test_call(int32_t (*fn_ptr)(struct psa_invec*, size_t,
                                              struct psa_outvec*, size_t),

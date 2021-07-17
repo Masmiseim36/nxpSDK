@@ -1,15 +1,17 @@
-/*******************************************************************************
-* Copyright (c) 2015-2020 Cadence Design Systems, Inc.
-* 
+/*
+* Copyright (c) 2015-2021 Cadence Design Systems Inc.
+*
 * Permission is hereby granted, free of charge, to any person obtaining
 * a copy of this software and associated documentation files (the
-* "Software"), to use this Software with Cadence processor cores only and 
-* not with any other processors and platforms, subject to
+* "Software"), to deal in the Software without restriction, including
+* without limitation the rights to use, copy, modify, merge, publish,
+* distribute, sublicense, and/or sell copies of the Software, and to
+* permit persons to whom the Software is furnished to do so, subject to
 * the following conditions:
-* 
+*
 * The above copyright notice and this permission notice shall be included
 * in all copies or substantial portions of the Software.
-* 
+*
 * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
 * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
@@ -17,8 +19,7 @@
 * CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
 * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-******************************************************************************/
+*/
 /*******************************************************************************
  * xa-class-audio-codec.c
  *
@@ -35,18 +36,6 @@
 #include "audio/xa-audio-decoder-api.h"
 
 #define INIT_CHG
-
-/*******************************************************************************
- * Tracing configuration
- ******************************************************************************/
-
-TRACE_TAG(INIT, 1);
-TRACE_TAG(WARNING, 1);
-TRACE_TAG(INFO, 1);
-TRACE_TAG(INPUT, 1);
-TRACE_TAG(OUTPUT, 1);
-TRACE_TAG(DECODE, 1);
-TRACE_TAG(PROBE, 1);
 
 /*******************************************************************************
  * Internal functions definitions
@@ -98,6 +87,14 @@ typedef struct XAAudioCodec
 
     /* ...codec output buffer pointer */
     void 					*out_ptr;
+    
+    /* ...temporary output pointer for audio class component initialization */
+    void                   *pinit_output;
+
+    /***************************************************************************
+     * response message pointer 
+     **************************************************************************/
+    xf_message_t        *m_response;
 
 }   XAAudioCodec;
 
@@ -113,6 +110,9 @@ typedef struct XAAudioCodec
 
 /* ...probe port setup condition */
 #define XA_CODEC_FLAG_PROBE_SETUP		__XA_BASE_FLAG(1 << 2)
+
+/* ...end-of-stream sequence complete condition */
+#define XA_CODEC_FLAG_EOS_SEQ_DONE		__XA_BASE_FLAG(1 << 3)
 
 /*******************************************************************************
  * Auxiliary port operation flags
@@ -158,6 +158,9 @@ static inline XA_ERRORCODE xa_codec_prepare_runtime(XAAudioCodec *codec)
     /* ...save sample size in bytes */
     codec->sample_size = msg->channels * (msg->pcm_width == 16 ? 2 : 4);
 
+    /* ...sample size should be positive */
+    XF_CHK_ERR(codec->sample_size > 0, XA_API_FATAL_INVALID_CMD_TYPE);
+
     /* ...calculate frame duration; get number of samples in the frame (don't like division here - tbd) */
     frame_size = msg->output_length[0] / codec->sample_size;
 
@@ -179,6 +182,14 @@ static inline XA_ERRORCODE xa_codec_prepare_runtime(XAAudioCodec *codec)
 
     /* ...codec runtime initialization is completed */
     TRACE(INIT, _b("codec[%p] runtime initialized: i=%u, o=%u"), codec, msg->input_length[0], msg->output_length[0]);
+    
+    /* ...Free temporary output buffer */
+    if ( codec->pinit_output != NULL)
+    {
+        UWORD32 core = XF_MSG_DST_CORE(m->id);
+        xf_mem_free(codec->pinit_output, msg->output_length[0], core, 0 );
+        codec->pinit_output  = NULL;
+    }
 
     return XA_NO_ERROR;
 }
@@ -282,8 +293,8 @@ static XA_ERRORCODE xa_codec_fill_this_buffer(XACodecBase *base, xf_message_t *m
     }
     else if (m == xf_output_port_control_msg(&codec->output))
     {
-        /* ...end-of-stream processing indication received; check the state */
-        BUG((base->state & XA_BASE_FLAG_COMPLETED) == 0, _x("invalid state: %x"), base->state);
+        /* ... mark flushing sequence is done */
+        xf_output_port_flush_done(&codec->output);
 
 #if 1   //TENA_2379                                                                                                     
         if (xf_output_port_unrouting(&codec->output))
@@ -293,8 +304,12 @@ static XA_ERRORCODE xa_codec_fill_this_buffer(XACodecBase *base, xf_message_t *m
             TRACE(INFO, _b("port is unrouted"));
         }   
 #endif
-        /* ... mark flushing sequence is done */
-        xf_output_port_flush_done(&codec->output);
+        else if (m->length == XF_MSG_LENGTH_INVALID)
+        {
+            /* ...complete flushing and unrouting of the outport whose dest no longer exists */
+            xf_output_port_unroute(&codec->output);
+            TRACE(INFO, _b("codec[%p] completed internal unroute of port"), codec);
+        }
 
         /* ...complete pending zero-length input buffer */
         xf_input_port_purge(&codec->input);
@@ -304,15 +319,54 @@ static XA_ERRORCODE xa_codec_fill_this_buffer(XACodecBase *base, xf_message_t *m
         /* ...playback is over */
         return XA_NO_ERROR;
     }
-    else if ((base->state & XA_BASE_FLAG_COMPLETED) && !xf_output_port_routed(&codec->output))
+    else if ((base->state & XA_BASE_FLAG_COMPLETED) && !(base->state & XA_CODEC_FLAG_EOS_SEQ_DONE) && !xf_output_port_routed(&codec->output))
     {
+        /* ...mark EOS sequence done */
+        base->state |= XA_CODEC_FLAG_EOS_SEQ_DONE;
+
         /* ...return message arrived from application immediately */
         xf_response_ok(m);
 
         return XA_NO_ERROR;
     }
+    /* ...indicates that the downstream component no longer exists */
+    else if ((m->length == XF_MSG_LENGTH_INVALID) && xf_output_port_routed(&codec->output))
+    {
+         m->length = codec->output.length; /* ...reset length for sanity */
+
+        if(!xf_output_port_flushing(&codec->output))
+        {
+            /* ...cancel any pending processing */
+            xa_base_cancel(base);
+
+            /* ...output port is invalid; trigger port flush to collect all the buffers in transit */
+            (void)xf_output_port_flush(&codec->output, XF_FILL_THIS_BUFFER);
+
+            /* ...clear output-port-setup condition */
+            base->state &= ~XA_CODEC_FLAG_OUTPUT_SETUP;
+
+            TRACE(INFO, _b("codec[%p] started internal unroute of port"), codec);
+         }
+         TRACE(INFO, _b("codec[%p] drop buffer"), codec);
+
+         return XA_NO_ERROR;
+    }
     else
     {
+        if (base->state & XA_CODEC_FLAG_EOS_SEQ_DONE)
+        {
+            /* ...reset execution stage */
+            base->state = XA_BASE_FLAG_POSTINIT | XA_BASE_FLAG_EXECUTION;
+            
+            /* ...reset execution runtime */
+            XA_API(base, XA_API_CMD_EXECUTE, XA_CMD_TYPE_DO_RUNTIME_INIT, NULL);
+
+            /* ...reset produced samples counter */
+            codec->produced = 0;
+        
+            TRACE(INFO, _b("codec[%p] COMPLETED to EXECUTION"), codec);
+        }
+
         TRACE(OUTPUT, _b("Received output buffer [%p]:%u"), m->buffer, m->length);
 
         /* ...adjust message length (may be shorter than original) */
@@ -338,7 +392,7 @@ static XA_ERRORCODE xa_codec_fill_this_buffer(XACodecBase *base, xf_message_t *m
     	}
 
         /* ...schedule data processing instantly */
-        if (base->state & (XA_BASE_FLAG_RUNTIME_INIT | XA_BASE_FLAG_EXECUTION))
+        if ((base->state & (XA_BASE_FLAG_RUNTIME_INIT | XA_BASE_FLAG_EXECUTION)) && (xf_output_port_ready(&codec->output)))
         {
             xa_base_schedule(base, 0);
         }
@@ -388,6 +442,13 @@ static XA_ERRORCODE xa_codec_port_unroute(XACodecBase *base, xf_message_t *m)
     /* ...make sure output port is addressed */
     XF_CHK_ERR(XF_MSG_DST_PORT(m->id) == 1, XA_API_FATAL_INVALID_CMD_TYPE);
 
+    if(!xf_output_port_routed(&codec->output))
+    {
+        /* ...if XF_MSG_LENGTH_INVALID triggered internal unroute is completed, send response instantly */
+        xf_response_ok(m);
+        return XA_NO_ERROR;
+    }
+
     /* ...cancel any pending processing */
     xa_base_cancel(base);
 
@@ -424,14 +485,16 @@ static XA_ERRORCODE xa_codec_flush(XACodecBase *base, xf_message_t *m)
     /* ...command is allowed only in "postinit" state */
     XF_CHK_ERR(base->state & XA_BASE_FLAG_POSTINIT, XA_API_FATAL_INVALID_CMD);
 
-    /* ...ensure input parameter length is zero */
-    XF_CHK_ERR(m->length == 0, XA_API_FATAL_INVALID_CMD_TYPE);
+    /* ...ensure input parameter length is zero or XF_MSG_LENGTH_INVALID */
+    XF_CHK_ERR((m->length == 0) || (m->length == XF_MSG_LENGTH_INVALID), XA_API_FATAL_INVALID_CMD_TYPE);
 
-    TRACE(1, _b("flush command received"));
+    TRACE(INFO, _b("flush command received"));
     
     /* ...flush command must be addressed to input port */
     if (XF_MSG_DST_PORT(m->id) == 0)
     {
+        int outbuf_available_flag;
+
         /* ...cancel data processing message if needed */
         xa_base_cancel(base);
 
@@ -447,9 +510,21 @@ static XA_ERRORCODE xa_codec_flush(XACodecBase *base, xf_message_t *m)
         /* ...reset produced samples counter */
         codec->produced = 0;
 
+        outbuf_available_flag = xf_output_port_ready(&codec->output);
         /* ...propagate flushing command to output port */
         if (xf_output_port_flush(&codec->output, XF_FLUSH))
         {
+            /* ...set the component state to completed for unrouted port */
+            if (!xf_output_port_routed(&codec->output))
+            {
+                base->state ^= XA_BASE_FLAG_EXECUTION | XA_BASE_FLAG_COMPLETED;
+
+                if(outbuf_available_flag)
+                {
+                    /* ...mark EOS sequence done, after flushing with 0 length output */
+                    base->state |= XA_CODEC_FLAG_EOS_SEQ_DONE;
+                }
+            }
             /* ...flushing sequence is not needed; satisfy command instantly */
             xf_response(m);
         }
@@ -508,6 +583,32 @@ static XA_ERRORCODE xa_codec_port_pause(XACodecBase *base, xf_message_t *m)
     /* ...check destination port is valid */
     XF_CHK_ERR(i <= 2, XA_API_FATAL_INVALID_CMD_TYPE);
 
+    /* ... if pause has come for probe port(probe-stop), handle it first */
+    if (codec->probe_enabled && (i == 2) && !xa_port_test_flags(&codec->probe.flags, XA_CODEC_PROBE_PORT_PAUSED))
+    {
+        /* ...flush probe port */
+        if (!xf_output_port_flush(&codec->probe, XF_FLUSH))
+        {
+            BUG(1, _x("probe port: invalid state"));
+        }
+
+        /* ...pause probe port */
+        xa_port_set_flags(&codec->probe.flags, XA_CODEC_PROBE_PORT_PAUSED);
+
+        /* ...other ports may be waiting, so force data processing */
+        if (xf_input_port_ready(&codec->input) && xf_output_port_ready(&codec->output))
+        {
+            xa_base_schedule(base, 0);
+        }
+
+        TRACE(INFO, _b("codec[%p]-probe port[%u] paused"), codec, i);
+
+        /* ...complete message immediately */
+        xf_response_ok(m);
+
+        return XA_NO_ERROR;
+    }
+
     /* ...check if codec is running */
     if (base->state & XA_BASE_FLAG_COMPLETED)
     {
@@ -531,25 +632,6 @@ static XA_ERRORCODE xa_codec_port_pause(XACodecBase *base, xf_message_t *m)
         xa_port_set_flags(&codec->output.flags, XA_CODEC_OUT_PORT_PAUSED);
 
         TRACE(INFO, _b("codec[%p]-port[%u] paused"), codec, i);
-    }
-    else if (i == 2 && codec->probe_enabled && !xa_port_test_flags(&codec->probe.flags, XA_CODEC_PROBE_PORT_PAUSED))
-    {
-        /* ...flush probe port */
-        if (!xf_output_port_flush(&codec->probe, XF_FLUSH))
-        {
-            BUG(1, _x("probe port: invalid state"));
-        }
-
-        /* ...pause probe port */
-        xa_port_set_flags(&codec->probe.flags, XA_CODEC_PROBE_PORT_PAUSED);
-
-        /* ...other ports may be waiting, so force data processing */
-        if (xf_input_port_ready(&codec->input) && xf_output_port_ready(&codec->output))
-        {
-            xa_base_schedule(base, 0);
-        }
-
-        TRACE(INFO, _b("codec[%p]-probe port[%u] paused"), codec, i);
     }
     else
     {
@@ -656,7 +738,7 @@ static XA_ERRORCODE xa_codec_memtab(XACodecBase *base, WORD32 idx, WORD32 type, 
             XA_API(base, XA_API_CMD_SET_MEM_PTR, idx, codec->input.buffer);
         }
 
-        (size ? TRACE(1, _x("set input ptr: %p"), codec->input.buffer) : 0);
+        (size ? TRACE(INPUT, _x("set input ptr: %p"), codec->input.buffer) : 0);
         
         /* ...put input port into running state */
         xa_port_clear_flags(&codec->input.flags, XA_CODEC_INP_PORT_PAUSED);
@@ -671,6 +753,9 @@ static XA_ERRORCODE xa_codec_memtab(XACodecBase *base, WORD32 idx, WORD32 type, 
 
         /* ...save output port index */
         codec->out_idx = idx;
+        
+        /* ...allocate this output buffer only for the codec initialization. This buffer will be freed when initialization is done */
+        XF_CHK_ERR(codec->pinit_output = xf_mem_alloc(size, align, core, 0), XAF_MEMORY_ERR);
 
         /* ...put output port into running state */
         xa_port_clear_flags(&codec->output.flags, XA_CODEC_OUT_PORT_PAUSED);
@@ -753,8 +838,8 @@ static XA_ERRORCODE xa_codec_preprocess(XACodecBase *base)
                 return XA_NO_ERROR;
             }
 #endif
-            /* ...run-time is not initialized yet; use scratch buffer */
-            output = base->scratch;
+            /* ...run-time is not initialized yet; use temporary output buffer */
+             output = (char *)codec->pinit_output;
         }
         else if ((output = xf_output_port_data(&codec->output)) == NULL)
         {
@@ -768,7 +853,7 @@ static XA_ERRORCODE xa_codec_preprocess(XACodecBase *base)
         /* ...set the output buffer pointer */
         XA_API(base, XA_API_CMD_SET_MEM_PTR, codec->out_idx, output);
 
-        TRACE(1, _x("set output ptr: %p"), output);
+        TRACE(OUTPUT, _x("set output ptr: %p"), output);
         
         /* ...mark output port is setup */
         base->state ^= XA_CODEC_FLAG_OUTPUT_SETUP;
@@ -962,7 +1047,7 @@ static XA_ERRORCODE xa_codec_postprocess(XACodecBase *base, int done)
             else
             {
                 /* ...flushing sequence is started; wait until flow-control message returns */
-                TRACE(INFO, _b("propagate end-of-stream condition"));
+                TRACE(INFO, _b("codec[%p] propagate end-of-stream condition"), codec);
             }
 
             /* ...output stream is over; flush probe port */
@@ -974,6 +1059,12 @@ static XA_ERRORCODE xa_codec_postprocess(XACodecBase *base, int done)
             	}
 
             	TRACE(INFO, _b("probe port completed"));
+            }
+
+            if (!produced && !xf_output_port_routed(&codec->output))
+            {
+                /* ...mark EOS sequence done */
+                base->state |= XA_CODEC_FLAG_EOS_SEQ_DONE;
             }
         }
 
@@ -1065,30 +1156,39 @@ static XA_ERRORCODE (* const xa_codec_cmd[])(XACodecBase *, xf_message_t *) =
 static int xa_audio_codec_terminate(xf_component_t *component, xf_message_t *m)
 {
     XAAudioCodec   *codec = (XAAudioCodec *) component;
-    UWORD32             opcode = m->opcode;
 
+    if (m == NULL)
+    {
+        /* ...ignore component processing during component termination(rare case) */
+        TRACE(OUTPUT, _b("component processing ignored.."));
+        return -1;
+    }
     /* ...check if we received output port control message */
-    if (m == xf_output_port_control_msg(&codec->output))
+    else if (m == xf_output_port_control_msg(&codec->output))
     {
         /* ...output port flushing complete; mark port is idle and terminate */
         xf_output_port_flush_done(&codec->output);
+        TRACE(OUTPUT, _b("codec[%p] flush completed in terminate"), codec);
         return -1;
     }
-    else if (opcode == XF_FILL_THIS_BUFFER)
+    else if (m->opcode == XF_FILL_THIS_BUFFER)
     {
         /* ...output buffer returned by the sink component; ignore and keep waiting */
         TRACE(OUTPUT, _b("collect output buffer"));
         return 0;
     }
-    else if (opcode == XF_UNREGISTER)
-    {
-        /* ...ignore subsequent unregister command/response - tbd */
-        return 0;
-    }
     else
     {
         /* ...everything else is responded with generic failure */
-        xf_response_err(m);
+        if (XF_MSG_SRC_PROXY(m->id))
+        {
+            xf_response_err(m);
+        }
+        else
+        {
+            xf_response_failure(m);
+            TRACE(OUTPUT, _b("codec[%p] response_failure in terminate"), codec);
+        }
         return 0;
     }
 }
@@ -1098,6 +1198,9 @@ static int xa_audio_codec_destroy(xf_component_t *component, xf_message_t *m)
 {
     XAAudioCodec   *codec = (XAAudioCodec *) component;
     UWORD32             core = xf_component_core(component);
+
+    /* ...get the saved command message pointer before the component memory is freed */
+    xf_message_t *m_resp = codec->m_response;
 
     /* ...destroy input port */
     xf_input_port_destroy(&codec->input, core);
@@ -1113,6 +1216,9 @@ static int xa_audio_codec_destroy(xf_component_t *component, xf_message_t *m)
     /* ...deallocate all resources */
     xa_base_destroy(&codec->base, XF_MM(sizeof(*codec)), core);
 
+    /* ...complete the command with response */
+    xf_response_err(m_resp);
+
     TRACE(INIT, _b("audio-codec[%p@%u] destroyed"), codec, core);
 
     /* ...indicate the client has been destroyed */
@@ -1124,14 +1230,14 @@ static int xa_audio_codec_cleanup(xf_component_t *component, xf_message_t *m)
 {
     XAAudioCodec *codec = (XAAudioCodec *) component;
 
-    /* ...complete message with error response */
-    xf_response_err(m);
-
     /* ...cancel internal scheduling message if needed */
     xa_base_cancel(&codec->base);
 
     /* ...purge input port (returns OK? pretty strange at this point - tbd) */
     xf_input_port_purge(&codec->input);
+
+    /* ...save command message to send response after flush completes */
+    codec->m_response = m;
 
     if (codec->probe_enabled)
     {

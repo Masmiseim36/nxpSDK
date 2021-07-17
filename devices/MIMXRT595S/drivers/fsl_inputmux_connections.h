@@ -23,29 +23,29 @@
  */
 
 /*! @brief Periphinmux IDs */
-#define SCT0_PMUX_ID 0x00U
-#define PINTSEL_PMUX_ID 0x100U
-#define DSP_INT_PMUX_ID 0x140U
-#define DMA0_ITRIG_PMUX_ID 0x200U
-#define DMA0_OTRIG_PMUX_ID 0x300U
-#define DMA0_CHMUX_SEL0_ID 0x320U
-#define DMA1_ITRIG_PMUX_ID 0x400U
-#define DMA1_OTRIG_PMUX_ID 0x500U
-#define DMA1_CHMUX_SEL0_ID 0x520U
+#define SCT0_PMUX_ID         0x00U
+#define PINTSEL_PMUX_ID      0x100U
+#define DSP_INT_PMUX_ID      0x140U
+#define DMA0_ITRIG_PMUX_ID   0x200U
+#define DMA0_OTRIG_PMUX_ID   0x300U
+#define DMA0_CHMUX_SEL0_ID   0x320U
+#define DMA1_ITRIG_PMUX_ID   0x400U
+#define DMA1_OTRIG_PMUX_ID   0x500U
+#define DMA1_CHMUX_SEL0_ID   0x520U
 #define CT32BIT0_CAP_PMUX_ID 0x600U
 #define CT32BIT1_CAP_PMUX_ID 0x610U
 #define CT32BIT2_CAP_PMUX_ID 0x620U
 #define CT32BIT3_CAP_PMUX_ID 0x630U
 #define CT32BIT4_CAP_PMUX_ID 0x640U
-#define FREQMEAS_PMUX_ID 0x700U
-#define SMART_DMA_PMUX_ID 0x720U
-#define DMA0_REQ_ENA0_ID 0x740U
-#define DMA1_REQ_ENA0_ID 0x760U
-#define DMA0_ITRIG_EN0_ID 0x780U
-#define DMA1_ITRIG_EN0_ID 0x7A0U
+#define FREQMEAS_PMUX_ID     0x700U
+#define SMART_DMA_PMUX_ID    0x720U
+#define DMA0_REQ_ENA0_ID     0x740U
+#define DMA1_REQ_ENA0_ID     0x760U
+#define DMA0_ITRIG_EN0_ID    0x780U
+#define DMA1_ITRIG_EN0_ID    0x7A0U
 
-#define ENA_SHIFT 5U
-#define PMUX_SHIFT 20U
+#define ENA_SHIFT       5U
+#define PMUX_SHIFT      20U
 #define CHMUX_AVL_SHIFT 31U
 #define CHMUX_OFF_SHIFT 19U
 #define CHMUX_VAL_SHIFT 17U
@@ -648,46 +648,22 @@ typedef enum _inputmux_signal_t
     kINPUTMUX_Flexcomm16RxToDmac0Ch28RequestEna = 28U + (DMA0_REQ_ENA0_ID << ENA_SHIFT) + (1U << CHMUX_AVL_SHIFT) +
                                                   ((DMA0_CHMUX_SEL0_ID + 32) << CHMUX_OFF_SHIFT) +
                                                   (0U << CHMUX_VAL_SHIFT),
-    kINPUTMUX_FlexioShft4ToDmac0Ch28RequestEna = 28U + (DMA0_REQ_ENA0_ID << ENA_SHIFT) + (1U << CHMUX_AVL_SHIFT) +
-                                                 ((DMA0_CHMUX_SEL0_ID + 32) << CHMUX_OFF_SHIFT) +
-                                                 (1U << CHMUX_VAL_SHIFT),
     kINPUTMUX_Flexcomm16TxToDmac0Ch29RequestEna = 29U + (DMA0_REQ_ENA0_ID << ENA_SHIFT) + (1U << CHMUX_AVL_SHIFT) +
                                                   ((DMA0_CHMUX_SEL0_ID + 36) << CHMUX_OFF_SHIFT) +
                                                   (0U << CHMUX_VAL_SHIFT),
-    kINPUTMUX_FlexioShft5ToDmac0Ch29RequestEna = 29U + (DMA0_REQ_ENA0_ID << ENA_SHIFT) + (1U << CHMUX_AVL_SHIFT) +
-                                                 ((DMA0_CHMUX_SEL0_ID + 36) << CHMUX_OFF_SHIFT) +
-                                                 (1U << CHMUX_VAL_SHIFT),
     kINPUTMUX_I3c1RxToDmac0Ch30RequestEna = 30U + (DMA0_REQ_ENA0_ID << ENA_SHIFT) + (1U << CHMUX_AVL_SHIFT) +
                                             ((DMA0_CHMUX_SEL0_ID + 40) << CHMUX_OFF_SHIFT) + (0U << CHMUX_VAL_SHIFT),
-    kINPUTMUX_FlexioShft6ToDmac0Ch30RequestEna = 30U + (DMA0_REQ_ENA0_ID << ENA_SHIFT) + (1U << CHMUX_AVL_SHIFT) +
-                                                 ((DMA0_CHMUX_SEL0_ID + 40) << CHMUX_OFF_SHIFT) +
-                                                 (1U << CHMUX_VAL_SHIFT),
     kINPUTMUX_I3c1TxToDmac0Ch31RequestEna = 31U + (DMA0_REQ_ENA0_ID << ENA_SHIFT) + (1U << CHMUX_AVL_SHIFT) +
                                             ((DMA0_CHMUX_SEL0_ID + 44) << CHMUX_OFF_SHIFT) + (0U << CHMUX_VAL_SHIFT),
-    kINPUTMUX_FlexioShft7ToDmac0Ch31RequestEna = 31U + (DMA0_REQ_ENA0_ID << ENA_SHIFT) + (1U << CHMUX_AVL_SHIFT) +
-                                                 ((DMA0_CHMUX_SEL0_ID + 44) << CHMUX_OFF_SHIFT) +
-                                                 (1U << CHMUX_VAL_SHIFT),
-    kINPUTMUX_FlexioShft0ToDmac0Ch32RequestEna = 0U + ((DMA0_REQ_ENA0_ID + 4) << ENA_SHIFT) + (1U << CHMUX_AVL_SHIFT) +
-                                                 ((DMA0_CHMUX_SEL0_ID + 48) << CHMUX_OFF_SHIFT) +
-                                                 (0U << CHMUX_VAL_SHIFT),
     kINPUTMUX_Flexcomm11RxToDmac0Ch32RequestEna = 0U + ((DMA0_REQ_ENA0_ID + 4) << ENA_SHIFT) + (1U << CHMUX_AVL_SHIFT) +
                                                   ((DMA0_CHMUX_SEL0_ID + 48) << CHMUX_OFF_SHIFT) +
                                                   (1U << CHMUX_VAL_SHIFT),
-    kINPUTMUX_FlexioShft1ToDmac0Ch33RequestEna = 1U + ((DMA0_REQ_ENA0_ID + 4) << ENA_SHIFT) + (1U << CHMUX_AVL_SHIFT) +
-                                                 ((DMA0_CHMUX_SEL0_ID + 52) << CHMUX_OFF_SHIFT) +
-                                                 (0U << CHMUX_VAL_SHIFT),
     kINPUTMUX_Flexcomm11TxToDmac0Ch33RequestEna = 1U + ((DMA0_REQ_ENA0_ID + 4) << ENA_SHIFT) + (1U << CHMUX_AVL_SHIFT) +
                                                   ((DMA0_CHMUX_SEL0_ID + 52) << CHMUX_OFF_SHIFT) +
                                                   (1U << CHMUX_VAL_SHIFT),
-    kINPUTMUX_FlexioShft2ToDmac0Ch34RequestEna = 2U + ((DMA0_REQ_ENA0_ID + 4) << ENA_SHIFT) + (1U << CHMUX_AVL_SHIFT) +
-                                                 ((DMA0_CHMUX_SEL0_ID + 56) << CHMUX_OFF_SHIFT) +
-                                                 (0U << CHMUX_VAL_SHIFT),
     kINPUTMUX_Flexcomm12RxToDmac0Ch34RequestEna = 2U + ((DMA0_REQ_ENA0_ID + 4) << ENA_SHIFT) + (1U << CHMUX_AVL_SHIFT) +
                                                   ((DMA0_CHMUX_SEL0_ID + 56) << CHMUX_OFF_SHIFT) +
                                                   (1U << CHMUX_VAL_SHIFT),
-    kINPUTMUX_FlexioShft3ToDmac0Ch35RequestEna = 3U + ((DMA0_REQ_ENA0_ID + 4) << ENA_SHIFT) + (1U << CHMUX_AVL_SHIFT) +
-                                                 ((DMA0_CHMUX_SEL0_ID + 60) << CHMUX_OFF_SHIFT) +
-                                                 (0U << CHMUX_VAL_SHIFT),
     kINPUTMUX_Flexcomm12TxToDmac0Ch35RequestEna = 3U + ((DMA0_REQ_ENA0_ID + 4) << ENA_SHIFT) + (1U << CHMUX_AVL_SHIFT) +
                                                   ((DMA0_CHMUX_SEL0_ID + 60) << CHMUX_OFF_SHIFT) +
                                                   (1U << CHMUX_VAL_SHIFT),
@@ -756,46 +732,22 @@ typedef enum _inputmux_signal_t
     kINPUTMUX_Flexcomm16RxToDmac1Ch28RequestEna = 28U + (DMA1_REQ_ENA0_ID << ENA_SHIFT) + (1U << CHMUX_AVL_SHIFT) +
                                                   ((DMA1_CHMUX_SEL0_ID + 32) << CHMUX_OFF_SHIFT) +
                                                   (0U << CHMUX_VAL_SHIFT),
-    kINPUTMUX_FlexioShft4ToDmac1Ch28RequestEna = 28U + (DMA1_REQ_ENA0_ID << ENA_SHIFT) + (1U << CHMUX_AVL_SHIFT) +
-                                                 ((DMA1_CHMUX_SEL0_ID + 32) << CHMUX_OFF_SHIFT) +
-                                                 (1U << CHMUX_VAL_SHIFT),
     kINPUTMUX_Flexcomm16TxToDmac1Ch29RequestEna = 29U + (DMA1_REQ_ENA0_ID << ENA_SHIFT) + (1U << CHMUX_AVL_SHIFT) +
                                                   ((DMA1_CHMUX_SEL0_ID + 36) << CHMUX_OFF_SHIFT) +
                                                   (0U << CHMUX_VAL_SHIFT),
-    kINPUTMUX_FlexioShft5ToDmac1Ch29RequestEna = 29U + (DMA1_REQ_ENA0_ID << ENA_SHIFT) + (1U << CHMUX_AVL_SHIFT) +
-                                                 ((DMA1_CHMUX_SEL0_ID + 36) << CHMUX_OFF_SHIFT) +
-                                                 (1U << CHMUX_VAL_SHIFT),
     kINPUTMUX_I3c1RxToDmac1Ch30RequestEna = 30U + (DMA1_REQ_ENA0_ID << ENA_SHIFT) + (1U << CHMUX_AVL_SHIFT) +
                                             ((DMA1_CHMUX_SEL0_ID + 40) << CHMUX_OFF_SHIFT) + (0U << CHMUX_VAL_SHIFT),
-    kINPUTMUX_FlexioShft6ToDmac1Ch30RequestEna = 30U + (DMA1_REQ_ENA0_ID << ENA_SHIFT) + (1U << CHMUX_AVL_SHIFT) +
-                                                 ((DMA1_CHMUX_SEL0_ID + 40) << CHMUX_OFF_SHIFT) +
-                                                 (1U << CHMUX_VAL_SHIFT),
     kINPUTMUX_I3c1TxToDmac1Ch31RequestEna = 31U + (DMA1_REQ_ENA0_ID << ENA_SHIFT) + (1U << CHMUX_AVL_SHIFT) +
                                             ((DMA1_CHMUX_SEL0_ID + 44) << CHMUX_OFF_SHIFT) + (0U << CHMUX_VAL_SHIFT),
-    kINPUTMUX_FlexioShft7ToDmac1Ch31RequestEna = 31U + (DMA1_REQ_ENA0_ID << ENA_SHIFT) + (1U << CHMUX_AVL_SHIFT) +
-                                                 ((DMA1_CHMUX_SEL0_ID + 44) << CHMUX_OFF_SHIFT) +
-                                                 (1U << CHMUX_VAL_SHIFT),
-    kINPUTMUX_FlexioShft0ToDmac1Ch32RequestEna = 0U + ((DMA1_REQ_ENA0_ID + 4) << ENA_SHIFT) + (1U << CHMUX_AVL_SHIFT) +
-                                                 ((DMA1_CHMUX_SEL0_ID + 48) << CHMUX_OFF_SHIFT) +
-                                                 (0U << CHMUX_VAL_SHIFT),
     kINPUTMUX_Flexcomm11RxToDmac1Ch32RequestEna = 0U + ((DMA1_REQ_ENA0_ID + 4) << ENA_SHIFT) + (1U << CHMUX_AVL_SHIFT) +
                                                   ((DMA1_CHMUX_SEL0_ID + 48) << CHMUX_OFF_SHIFT) +
                                                   (1U << CHMUX_VAL_SHIFT),
-    kINPUTMUX_FlexioShft1ToDmac1Ch33RequestEna = 1U + ((DMA1_REQ_ENA0_ID + 4) << ENA_SHIFT) + (1U << CHMUX_AVL_SHIFT) +
-                                                 ((DMA1_CHMUX_SEL0_ID + 52) << CHMUX_OFF_SHIFT) +
-                                                 (0U << CHMUX_VAL_SHIFT),
     kINPUTMUX_Flexcomm11TxToDmac1Ch33RequestEna = 1U + ((DMA1_REQ_ENA0_ID + 4) << ENA_SHIFT) + (1U << CHMUX_AVL_SHIFT) +
                                                   ((DMA1_CHMUX_SEL0_ID + 52) << CHMUX_OFF_SHIFT) +
                                                   (1U << CHMUX_VAL_SHIFT),
-    kINPUTMUX_FlexioShft2ToDmac1Ch34RequestEna = 2U + ((DMA1_REQ_ENA0_ID + 4) << ENA_SHIFT) + (1U << CHMUX_AVL_SHIFT) +
-                                                 ((DMA1_CHMUX_SEL0_ID + 56) << CHMUX_OFF_SHIFT) +
-                                                 (0U << CHMUX_VAL_SHIFT),
     kINPUTMUX_Flexcomm12RxToDmac1Ch34RequestEna = 2U + ((DMA1_REQ_ENA0_ID + 4) << ENA_SHIFT) + (1U << CHMUX_AVL_SHIFT) +
                                                   ((DMA1_CHMUX_SEL0_ID + 56) << CHMUX_OFF_SHIFT) +
                                                   (1U << CHMUX_VAL_SHIFT),
-    kINPUTMUX_FlexioShft3ToDmac1Ch35RequestEna = 3U + ((DMA1_REQ_ENA0_ID + 4) << ENA_SHIFT) + (1U << CHMUX_AVL_SHIFT) +
-                                                 ((DMA1_CHMUX_SEL0_ID + 60) << CHMUX_OFF_SHIFT) +
-                                                 (0U << CHMUX_VAL_SHIFT),
     kINPUTMUX_Flexcomm12TxToDmac1Ch35RequestEna = 3U + ((DMA1_REQ_ENA0_ID + 4) << ENA_SHIFT) + (1U << CHMUX_AVL_SHIFT) +
                                                   ((DMA1_CHMUX_SEL0_ID + 60) << CHMUX_OFF_SHIFT) +
                                                   (1U << CHMUX_VAL_SHIFT),

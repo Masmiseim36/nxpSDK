@@ -332,9 +332,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>DEBUG, CPU_MIMXRT595SFFOC_cm33, BOOT_HEADER_ENABLE=1, BOARD_ENABLE_PSRAM_CACHE=0, SSD1963_DATA_WITDH=8, FLEXIO_MCULCD_DATA_BUS_WIDTH=8, SDK_I2C_BASED_COMPONENT_USED=1, LV_CONF_INCLUDE_SIMPLE=1, LV_EX_CONF_INCLUDE_SIMPLE=1, SDK_I2C_BASED_COMPONENT_USED=1, VG_RESOLVE_ENGINE=0, VG_PE_COLOR_KEY=0, VG_IM_INDEX_FORMAT=0, VG_AYUV_INPUT_OUTPUT=0, VG_DOUBLE_IMAGE=0, VG_RECTANGLE_STRIP_MODE=0, VG_MMU=0, VG_IM_FILTER=0, VG_IM_YUV_PACKET=1, VG_IM_YUV_PLANAR=0, VG_PE_YUV_PACKET=1, VG_TARGET_TILED=1, VG_COMMAND_CALL=1, VG_SHARE_BUFFER_IM_16K=0, VG_OFFLINE_MODE=0, VG_RESOLUTION_2880=0, VG_PE_PREMULTIPLY=0, VG_POST_CONVERTER=0, VG_PRE_CONVERTER=0, VG_RENDER_BY_MESH=0, VG_TARGET_FAST_CLEAR=0, VG_BUFFER_NUMBER_OF_TARGET=0, VG_VIDEO_CLEAR_CONTROL=0, VG_VIDEO_CONTROL=0, VGLITE_TST_FIRMWARE=0, VG_LITE_SYS_GPU_CTRL=0, SERIAL_PORT_TYPE_UART=1, FSL_RTOS_FREE_RTOS</Define>
+              <Define>DEBUG, CPU_MIMXRT595SFFOC_cm33, BOOT_HEADER_ENABLE=1, BOARD_ENABLE_PSRAM_CACHE=0, SSD1963_DATA_WITDH=8, FLEXIO_MCULCD_DATA_BUS_WIDTH=8, SDK_I2C_BASED_COMPONENT_USED=1, LV_CONF_INCLUDE_SIMPLE=1, LV_EX_CONF_INCLUDE_SIMPLE=1, SDK_I2C_BASED_COMPONENT_USED=1, VG_RESOLVE_ENGINE=0, VG_PE_COLOR_KEY=0, VG_IM_INDEX_FORMAT=0, VG_AYUV_INPUT_OUTPUT=0, VG_DOUBLE_IMAGE=0, VG_RECTANGLE_STRIP_MODE=0, VG_MMU=0, VG_IM_FILTER=0, VG_IM_YUV_PACKET=1, VG_IM_YUV_PLANAR=0, VG_PE_YUV_PACKET=1, VG_TARGET_TILED=1, VG_COMMAND_CALL=1, VG_SHARE_BUFFER_IM_16K=0, VG_OFFLINE_MODE=0, VG_RESOLUTION_2880=0, VG_PE_PREMULTIPLY=0, VG_POST_CONVERTER=0, VG_PRE_CONVERTER=0, VG_RENDER_BY_MESH=0, VG_TARGET_FAST_CLEAR=0, VG_BUFFER_NUMBER_OF_TARGET=0, VG_VIDEO_CLEAR_CONTROL=0, VG_VIDEO_CONTROL=0, VGLITE_TST_FIRMWARE=0, VG_LITE_SYS_GPU_CTRL=0, SERIAL_PORT_TYPE_UART=1, SDK_OS_FREE_RTOS, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../middleware/littlevgl/lv_examples/src/lv_demo_widgets;../../../../../middleware/littlevgl/lv_examples;../..;../../../../../devices/MIMXRT595S/drivers;../../../../../components/ssd1963;../../../../../components/video/display/dbi;../../../../../components/video/display/dbi/flexio;../../../../../components/video/display/dc/ssd1963;../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../components/video/display/dc/lcdif;../../../../../components/video;../../../../../components/video/display;../../../../../components/video/display/rm68191;../../../../../components/video/display/mipi_dsi_cmd;../../../../../components/video/display/rm68200;../../../../../components/video/display/rm67162;../../../../../components/video/display/dc/dsi_cmd;../../../../../components/ft3267;../../../../../components/gt911;../../../../../components/ft5406;../../../../../middleware/vglite/inc;../../../../../middleware/vglite/font;../../../../../middleware/vglite/font/mcufont/decoder;../../../../../middleware/vglite/VGLite/rtos;../../../../../middleware/vglite/VGLiteKernel;../../../../../middleware/vglite/VGLiteKernel/rtos;../../../../../middleware/littlevgl/lvgl;../../../../../middleware/littlevgl/lvgl/src;../../../../../middleware/littlevgl;../../../../../devices/MIMXRT595S;../../../../../devices/MIMXRT595S/utilities/str;../../../../../devices/MIMXRT595S/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../flash_config;../../../../../CMSIS/Include;../../../../../components/video/display/dc;../../../../../rtos/freertos/freertos_kernel/include</IncludePath>
+              <IncludePath>..;../../../../../middleware/littlevgl/lv_examples/src/lv_demo_widgets;../../../../../middleware/littlevgl/lv_examples;../..;../../../../../devices/MIMXRT595S/drivers;../../../../../components/ssd1963;../../../../../components/video/display/dbi;../../../../../components/video/display/dbi/flexio;../../../../../components/video/display/dc/ssd1963;../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../components/video/display/dc/lcdif;../../../../../components/video;../../../../../components/video/display;../../../../../components/video/display/rm68191;../../../../../components/video/display/mipi_dsi_cmd;../../../../../components/video/display/rm68200;../../../../../components/video/display/rm67162;../../../../../components/video/display/dc/dsi_cmd;../../../../../components/ft3267;../../../../../components/gt911;../../../../../components/ft5406;../../../../../middleware/vglite/inc;../../../../../middleware/vglite/font;../../../../../middleware/vglite/font/mcufont/decoder;../../../../../middleware/vglite/VGLite/rtos;../../../../../middleware/vglite/VGLiteKernel;../../../../../middleware/vglite/VGLiteKernel/rtos;../../../../../middleware/littlevgl/lvgl;../../../../../middleware/littlevgl/lvgl/src;../../../../../middleware/littlevgl;../../../../../devices/MIMXRT595S;../../../../../devices/MIMXRT595S/utilities/str;../../../../../devices/MIMXRT595S/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../flash_config;../../../../../CMSIS/Core/Include;../../../../../components/video/display/dc;../../../../../rtos/freertos/freertos_kernel/include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -368,7 +368,7 @@
             <ScatterFile>MIMXRT595Sxxxx_cm33_ram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove</Misc>
+            <Misc>--remove --entry=Reset_Handler</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314,6329</DisabledWarnings>
           </LDads>
@@ -594,6 +594,26 @@
               <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_lcdif.c</FilePath>
             </File>
             <File>
+              <FileName>fsl_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_common.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_common_arm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_common_arm.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_i2c.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_i2c.h</FilePath>
@@ -612,16 +632,6 @@
               <FileName>fsl_mipi_dsi_smartdma.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_mipi_dsi_smartdma.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_common.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_common.c</FilePath>
             </File>
             <File>
               <FileName>fsl_flexspi.c</FileName>
@@ -697,6 +707,11 @@
               <FileName>fsl_inputmux_connections.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_inputmux_connections.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_soc_mipi_dsi.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_soc_mipi_dsi.h</FilePath>
             </File>
             <File>
               <FileName>fsl_iap.h</FileName>
@@ -849,14 +864,14 @@
               <FilePath>../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33_NTZ/non_secure/portasm.c</FilePath>
             </File>
             <File>
-              <FileName>portmacro.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33_NTZ/non_secure/portmacro.h</FilePath>
-            </File>
-            <File>
               <FileName>portasm.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33_NTZ/non_secure/portasm.h</FilePath>
+            </File>
+            <File>
+              <FileName>portmacro.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33_NTZ/non_secure/portmacro.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1101,6 +1116,16 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>vglite/font/mcufont</GroupName>
+          <Files>
+            <File>
+              <FileName>LICENSE</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/vglite/font/mcufont/LICENSE</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>vglite/VGLiteKernel</GroupName>
           <Files>
             <File>
@@ -1136,6 +1161,16 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>vglite</GroupName>
+          <Files>
+            <File>
+              <FileName>ChangeLogKSDK.txt</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/vglite/ChangeLogKSDK.txt</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>freertos/freertos_kernel/portable/MemMang</GroupName>
           <Files>
             <File>
@@ -1163,6 +1198,11 @@
         <Group>
           <GroupName>littlevgl/lvgl/src</GroupName>
           <Files>
+            <File>
+              <FileName>lv_conf_kconfig.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_conf_kconfig.h</FilePath>
+            </File>
             <File>
               <FileName>lv_api_map.h</FileName>
               <FileType>5</FileType>
@@ -1404,6 +1444,16 @@
               <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_font/lv_font_loader.h</FilePath>
             </File>
             <File>
+              <FileName>lv_font_montserrat_8.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_font/lv_font_montserrat_8.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_font_montserrat_10.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_font/lv_font_montserrat_10.c</FilePath>
+            </File>
+            <File>
               <FileName>lv_font_montserrat_12.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_font/lv_font_montserrat_12.c</FilePath>
@@ -1517,6 +1567,11 @@
               <FileName>lv_font_unscii_8.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_font/lv_font_unscii_8.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_font_unscii_16.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_font/lv_font_unscii_16.c</FilePath>
             </File>
             <File>
               <FileName>lv_symbol_def.h</FileName>
@@ -2359,69 +2414,54 @@
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
-              <FileName>core_cm33.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/core_cm33.h</FilePath>
-            </File>
-            <File>
-              <FileName>tz_context.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/tz_context.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv8.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/mpu_armv8.h</FilePath>
-            </File>
-            <File>
               <FileName>cmsis_armcc.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_armcc.h</FilePath>
+              <FilePath>../../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_armclang.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_armclang.h</FilePath>
+              <FilePath>../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_armclang_ltm.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_armclang_ltm.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_gcc.h</FilePath>
+              <FilePath>../../../../../CMSIS/Core/Include/cmsis_armclang_ltm.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_compiler.h</FilePath>
+              <FilePath>../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
             </File>
             <File>
-              <FileName>cmsis_version.h</FileName>
+              <FileName>cmsis_gcc.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_version.h</FilePath>
+              <FilePath>../../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_iccarm.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_iccarm.h</FilePath>
+              <FilePath>../../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
-              <FileName>arm_common_tables.h</FileName>
+              <FileName>cmsis_version.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/arm_common_tables.h</FilePath>
+              <FilePath>../../../../../CMSIS/Core/Include/cmsis_version.h</FilePath>
             </File>
             <File>
-              <FileName>arm_const_structs.h</FileName>
+              <FileName>core_cm33.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/arm_const_structs.h</FilePath>
+              <FilePath>../../../../../CMSIS/Core/Include/core_cm33.h</FilePath>
             </File>
             <File>
-              <FileName>arm_math.h</FileName>
+              <FileName>mpu_armv8.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/arm_math.h</FilePath>
+              <FilePath>../../../../../CMSIS/Core/Include/mpu_armv8.h</FilePath>
+            </File>
+            <File>
+              <FileName>tz_context.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Core/Include/tz_context.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2429,14 +2469,14 @@
           <GroupName>freertos/freertos_kernel</GroupName>
           <Files>
             <File>
-              <FileName>event_groups.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/event_groups.c</FilePath>
-            </File>
-            <File>
               <FileName>croutine.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../rtos/freertos/freertos_kernel/croutine.c</FilePath>
+            </File>
+            <File>
+              <FileName>event_groups.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/event_groups.c</FilePath>
             </File>
             <File>
               <FileName>list.c</FileName>
@@ -2469,19 +2509,14 @@
           <GroupName>freertos/freertos_kernel/include</GroupName>
           <Files>
             <File>
-              <FileName>croutine.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/croutine.h</FilePath>
-            </File>
-            <File>
-              <FileName>StackMacros.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/StackMacros.h</FilePath>
-            </File>
-            <File>
               <FileName>atomic.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../rtos/freertos/freertos_kernel/include/atomic.h</FilePath>
+            </File>
+            <File>
+              <FileName>croutine.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/croutine.h</FilePath>
             </File>
             <File>
               <FileName>deprecated_definitions.h</FileName>
@@ -2542,6 +2577,11 @@
               <FileName>stack_macros.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../rtos/freertos/freertos_kernel/include/stack_macros.h</FilePath>
+            </File>
+            <File>
+              <FileName>StackMacros.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/StackMacros.h</FilePath>
             </File>
             <File>
               <FileName>stream_buffer.h</FileName>
@@ -2906,9 +2946,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>DEBUG, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, CPU_MIMXRT595SFFOC_cm33, BOOT_HEADER_ENABLE=1, BOARD_ENABLE_PSRAM_CACHE=0, SSD1963_DATA_WITDH=8, FLEXIO_MCULCD_DATA_BUS_WIDTH=8, SDK_I2C_BASED_COMPONENT_USED=1, LV_CONF_INCLUDE_SIMPLE=1, LV_EX_CONF_INCLUDE_SIMPLE=1, SDK_I2C_BASED_COMPONENT_USED=1, VG_RESOLVE_ENGINE=0, VG_PE_COLOR_KEY=0, VG_IM_INDEX_FORMAT=0, VG_AYUV_INPUT_OUTPUT=0, VG_DOUBLE_IMAGE=0, VG_RECTANGLE_STRIP_MODE=0, VG_MMU=0, VG_IM_FILTER=0, VG_IM_YUV_PACKET=1, VG_IM_YUV_PLANAR=0, VG_PE_YUV_PACKET=1, VG_TARGET_TILED=1, VG_COMMAND_CALL=1, VG_SHARE_BUFFER_IM_16K=0, VG_OFFLINE_MODE=0, VG_RESOLUTION_2880=0, VG_PE_PREMULTIPLY=0, VG_POST_CONVERTER=0, VG_PRE_CONVERTER=0, VG_RENDER_BY_MESH=0, VG_TARGET_FAST_CLEAR=0, VG_BUFFER_NUMBER_OF_TARGET=0, VG_VIDEO_CLEAR_CONTROL=0, VG_VIDEO_CONTROL=0, VGLITE_TST_FIRMWARE=0, VG_LITE_SYS_GPU_CTRL=0, SERIAL_PORT_TYPE_UART=1, FSL_RTOS_FREE_RTOS</Define>
+              <Define>DEBUG, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, CPU_MIMXRT595SFFOC_cm33, BOOT_HEADER_ENABLE=1, BOARD_ENABLE_PSRAM_CACHE=0, SSD1963_DATA_WITDH=8, FLEXIO_MCULCD_DATA_BUS_WIDTH=8, SDK_I2C_BASED_COMPONENT_USED=1, LV_CONF_INCLUDE_SIMPLE=1, LV_EX_CONF_INCLUDE_SIMPLE=1, SDK_I2C_BASED_COMPONENT_USED=1, VG_RESOLVE_ENGINE=0, VG_PE_COLOR_KEY=0, VG_IM_INDEX_FORMAT=0, VG_AYUV_INPUT_OUTPUT=0, VG_DOUBLE_IMAGE=0, VG_RECTANGLE_STRIP_MODE=0, VG_MMU=0, VG_IM_FILTER=0, VG_IM_YUV_PACKET=1, VG_IM_YUV_PLANAR=0, VG_PE_YUV_PACKET=1, VG_TARGET_TILED=1, VG_COMMAND_CALL=1, VG_SHARE_BUFFER_IM_16K=0, VG_OFFLINE_MODE=0, VG_RESOLUTION_2880=0, VG_PE_PREMULTIPLY=0, VG_POST_CONVERTER=0, VG_PRE_CONVERTER=0, VG_RENDER_BY_MESH=0, VG_TARGET_FAST_CLEAR=0, VG_BUFFER_NUMBER_OF_TARGET=0, VG_VIDEO_CLEAR_CONTROL=0, VG_VIDEO_CONTROL=0, VGLITE_TST_FIRMWARE=0, VG_LITE_SYS_GPU_CTRL=0, SERIAL_PORT_TYPE_UART=1, SDK_OS_FREE_RTOS, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../middleware/littlevgl/lv_examples/src/lv_demo_widgets;../../../../../middleware/littlevgl/lv_examples;../..;../../../../../devices/MIMXRT595S/drivers;../../../../../components/ssd1963;../../../../../components/video/display/dbi;../../../../../components/video/display/dbi/flexio;../../../../../components/video/display/dc/ssd1963;../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../components/video/display/dc/lcdif;../../../../../components/video;../../../../../components/video/display;../../../../../components/video/display/rm68191;../../../../../components/video/display/mipi_dsi_cmd;../../../../../components/video/display/rm68200;../../../../../components/video/display/rm67162;../../../../../components/video/display/dc/dsi_cmd;../../../../../components/ft3267;../../../../../components/gt911;../../../../../components/ft5406;../../../../../middleware/vglite/inc;../../../../../middleware/vglite/font;../../../../../middleware/vglite/font/mcufont/decoder;../../../../../middleware/vglite/VGLite/rtos;../../../../../middleware/vglite/VGLiteKernel;../../../../../middleware/vglite/VGLiteKernel/rtos;../../../../../middleware/littlevgl/lvgl;../../../../../middleware/littlevgl/lvgl/src;../../../../../middleware/littlevgl;../../../../../devices/MIMXRT595S;../../../../../devices/MIMXRT595S/utilities/str;../../../../../devices/MIMXRT595S/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../flash_config;../../../../../CMSIS/Include;../../../../../components/video/display/dc;../../../../../rtos/freertos/freertos_kernel/include</IncludePath>
+              <IncludePath>..;../../../../../middleware/littlevgl/lv_examples/src/lv_demo_widgets;../../../../../middleware/littlevgl/lv_examples;../..;../../../../../devices/MIMXRT595S/drivers;../../../../../components/ssd1963;../../../../../components/video/display/dbi;../../../../../components/video/display/dbi/flexio;../../../../../components/video/display/dc/ssd1963;../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../components/video/display/dc/lcdif;../../../../../components/video;../../../../../components/video/display;../../../../../components/video/display/rm68191;../../../../../components/video/display/mipi_dsi_cmd;../../../../../components/video/display/rm68200;../../../../../components/video/display/rm67162;../../../../../components/video/display/dc/dsi_cmd;../../../../../components/ft3267;../../../../../components/gt911;../../../../../components/ft5406;../../../../../middleware/vglite/inc;../../../../../middleware/vglite/font;../../../../../middleware/vglite/font/mcufont/decoder;../../../../../middleware/vglite/VGLite/rtos;../../../../../middleware/vglite/VGLiteKernel;../../../../../middleware/vglite/VGLiteKernel/rtos;../../../../../middleware/littlevgl/lvgl;../../../../../middleware/littlevgl/lvgl/src;../../../../../middleware/littlevgl;../../../../../devices/MIMXRT595S;../../../../../devices/MIMXRT595S/utilities/str;../../../../../devices/MIMXRT595S/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../flash_config;../../../../../CMSIS/Core/Include;../../../../../components/video/display/dc;../../../../../rtos/freertos/freertos_kernel/include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2942,7 +2982,7 @@
             <ScatterFile>MIMXRT595Sxxxx_cm33_flash.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove</Misc>
+            <Misc>--remove --entry=Reset_Handler</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314,6329</DisabledWarnings>
           </LDads>
@@ -3168,6 +3208,26 @@
               <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_lcdif.c</FilePath>
             </File>
             <File>
+              <FileName>fsl_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_common.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_common_arm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_common_arm.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_i2c.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_i2c.h</FilePath>
@@ -3186,16 +3246,6 @@
               <FileName>fsl_mipi_dsi_smartdma.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_mipi_dsi_smartdma.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_common.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_common.c</FilePath>
             </File>
             <File>
               <FileName>fsl_flexspi.c</FileName>
@@ -3271,6 +3321,11 @@
               <FileName>fsl_inputmux_connections.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_inputmux_connections.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_soc_mipi_dsi.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_soc_mipi_dsi.h</FilePath>
             </File>
             <File>
               <FileName>fsl_iap.h</FileName>
@@ -3423,14 +3478,14 @@
               <FilePath>../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33_NTZ/non_secure/portasm.c</FilePath>
             </File>
             <File>
-              <FileName>portmacro.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33_NTZ/non_secure/portmacro.h</FilePath>
-            </File>
-            <File>
               <FileName>portasm.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33_NTZ/non_secure/portasm.h</FilePath>
+            </File>
+            <File>
+              <FileName>portmacro.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33_NTZ/non_secure/portmacro.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -3675,6 +3730,16 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>vglite/font/mcufont</GroupName>
+          <Files>
+            <File>
+              <FileName>LICENSE</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/vglite/font/mcufont/LICENSE</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>vglite/VGLiteKernel</GroupName>
           <Files>
             <File>
@@ -3710,6 +3775,16 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>vglite</GroupName>
+          <Files>
+            <File>
+              <FileName>ChangeLogKSDK.txt</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/vglite/ChangeLogKSDK.txt</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>freertos/freertos_kernel/portable/MemMang</GroupName>
           <Files>
             <File>
@@ -3737,6 +3812,11 @@
         <Group>
           <GroupName>littlevgl/lvgl/src</GroupName>
           <Files>
+            <File>
+              <FileName>lv_conf_kconfig.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_conf_kconfig.h</FilePath>
+            </File>
             <File>
               <FileName>lv_api_map.h</FileName>
               <FileType>5</FileType>
@@ -3978,6 +4058,16 @@
               <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_font/lv_font_loader.h</FilePath>
             </File>
             <File>
+              <FileName>lv_font_montserrat_8.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_font/lv_font_montserrat_8.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_font_montserrat_10.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_font/lv_font_montserrat_10.c</FilePath>
+            </File>
+            <File>
               <FileName>lv_font_montserrat_12.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_font/lv_font_montserrat_12.c</FilePath>
@@ -4091,6 +4181,11 @@
               <FileName>lv_font_unscii_8.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_font/lv_font_unscii_8.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_font_unscii_16.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_font/lv_font_unscii_16.c</FilePath>
             </File>
             <File>
               <FileName>lv_symbol_def.h</FileName>
@@ -4933,69 +5028,54 @@
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
-              <FileName>core_cm33.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/core_cm33.h</FilePath>
-            </File>
-            <File>
-              <FileName>tz_context.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/tz_context.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv8.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/mpu_armv8.h</FilePath>
-            </File>
-            <File>
               <FileName>cmsis_armcc.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_armcc.h</FilePath>
+              <FilePath>../../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_armclang.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_armclang.h</FilePath>
+              <FilePath>../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_armclang_ltm.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_armclang_ltm.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_gcc.h</FilePath>
+              <FilePath>../../../../../CMSIS/Core/Include/cmsis_armclang_ltm.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_compiler.h</FilePath>
+              <FilePath>../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
             </File>
             <File>
-              <FileName>cmsis_version.h</FileName>
+              <FileName>cmsis_gcc.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_version.h</FilePath>
+              <FilePath>../../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_iccarm.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_iccarm.h</FilePath>
+              <FilePath>../../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
-              <FileName>arm_common_tables.h</FileName>
+              <FileName>cmsis_version.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/arm_common_tables.h</FilePath>
+              <FilePath>../../../../../CMSIS/Core/Include/cmsis_version.h</FilePath>
             </File>
             <File>
-              <FileName>arm_const_structs.h</FileName>
+              <FileName>core_cm33.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/arm_const_structs.h</FilePath>
+              <FilePath>../../../../../CMSIS/Core/Include/core_cm33.h</FilePath>
             </File>
             <File>
-              <FileName>arm_math.h</FileName>
+              <FileName>mpu_armv8.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/arm_math.h</FilePath>
+              <FilePath>../../../../../CMSIS/Core/Include/mpu_armv8.h</FilePath>
+            </File>
+            <File>
+              <FileName>tz_context.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Core/Include/tz_context.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -5003,14 +5083,14 @@
           <GroupName>freertos/freertos_kernel</GroupName>
           <Files>
             <File>
-              <FileName>event_groups.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/event_groups.c</FilePath>
-            </File>
-            <File>
               <FileName>croutine.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../rtos/freertos/freertos_kernel/croutine.c</FilePath>
+            </File>
+            <File>
+              <FileName>event_groups.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/event_groups.c</FilePath>
             </File>
             <File>
               <FileName>list.c</FileName>
@@ -5043,19 +5123,14 @@
           <GroupName>freertos/freertos_kernel/include</GroupName>
           <Files>
             <File>
-              <FileName>croutine.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/croutine.h</FilePath>
-            </File>
-            <File>
-              <FileName>StackMacros.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/StackMacros.h</FilePath>
-            </File>
-            <File>
               <FileName>atomic.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../rtos/freertos/freertos_kernel/include/atomic.h</FilePath>
+            </File>
+            <File>
+              <FileName>croutine.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/croutine.h</FilePath>
             </File>
             <File>
               <FileName>deprecated_definitions.h</FileName>
@@ -5116,6 +5191,11 @@
               <FileName>stack_macros.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../rtos/freertos/freertos_kernel/include/stack_macros.h</FilePath>
+            </File>
+            <File>
+              <FileName>StackMacros.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/StackMacros.h</FilePath>
             </File>
             <File>
               <FileName>stream_buffer.h</FileName>
@@ -5480,9 +5560,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>NDEBUG, CPU_MIMXRT595SFFOC_cm33, BOOT_HEADER_ENABLE=1, BOARD_ENABLE_PSRAM_CACHE=0, SSD1963_DATA_WITDH=8, FLEXIO_MCULCD_DATA_BUS_WIDTH=8, SDK_I2C_BASED_COMPONENT_USED=1, LV_CONF_INCLUDE_SIMPLE=1, LV_EX_CONF_INCLUDE_SIMPLE=1, SDK_I2C_BASED_COMPONENT_USED=1, VG_RESOLVE_ENGINE=0, VG_PE_COLOR_KEY=0, VG_IM_INDEX_FORMAT=0, VG_AYUV_INPUT_OUTPUT=0, VG_DOUBLE_IMAGE=0, VG_RECTANGLE_STRIP_MODE=0, VG_MMU=0, VG_IM_FILTER=0, VG_IM_YUV_PACKET=1, VG_IM_YUV_PLANAR=0, VG_PE_YUV_PACKET=1, VG_TARGET_TILED=1, VG_COMMAND_CALL=1, VG_SHARE_BUFFER_IM_16K=0, VG_OFFLINE_MODE=0, VG_RESOLUTION_2880=0, VG_PE_PREMULTIPLY=0, VG_POST_CONVERTER=0, VG_PRE_CONVERTER=0, VG_RENDER_BY_MESH=0, VG_TARGET_FAST_CLEAR=0, VG_BUFFER_NUMBER_OF_TARGET=0, VG_VIDEO_CLEAR_CONTROL=0, VG_VIDEO_CONTROL=0, VGLITE_TST_FIRMWARE=0, VG_LITE_SYS_GPU_CTRL=0, SERIAL_PORT_TYPE_UART=1, FSL_RTOS_FREE_RTOS</Define>
+              <Define>NDEBUG, CPU_MIMXRT595SFFOC_cm33, BOOT_HEADER_ENABLE=1, BOARD_ENABLE_PSRAM_CACHE=0, SSD1963_DATA_WITDH=8, FLEXIO_MCULCD_DATA_BUS_WIDTH=8, SDK_I2C_BASED_COMPONENT_USED=1, LV_CONF_INCLUDE_SIMPLE=1, LV_EX_CONF_INCLUDE_SIMPLE=1, SDK_I2C_BASED_COMPONENT_USED=1, VG_RESOLVE_ENGINE=0, VG_PE_COLOR_KEY=0, VG_IM_INDEX_FORMAT=0, VG_AYUV_INPUT_OUTPUT=0, VG_DOUBLE_IMAGE=0, VG_RECTANGLE_STRIP_MODE=0, VG_MMU=0, VG_IM_FILTER=0, VG_IM_YUV_PACKET=1, VG_IM_YUV_PLANAR=0, VG_PE_YUV_PACKET=1, VG_TARGET_TILED=1, VG_COMMAND_CALL=1, VG_SHARE_BUFFER_IM_16K=0, VG_OFFLINE_MODE=0, VG_RESOLUTION_2880=0, VG_PE_PREMULTIPLY=0, VG_POST_CONVERTER=0, VG_PRE_CONVERTER=0, VG_RENDER_BY_MESH=0, VG_TARGET_FAST_CLEAR=0, VG_BUFFER_NUMBER_OF_TARGET=0, VG_VIDEO_CLEAR_CONTROL=0, VG_VIDEO_CONTROL=0, VGLITE_TST_FIRMWARE=0, VG_LITE_SYS_GPU_CTRL=0, SERIAL_PORT_TYPE_UART=1, SDK_OS_FREE_RTOS, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../middleware/littlevgl/lv_examples/src/lv_demo_widgets;../../../../../middleware/littlevgl/lv_examples;../..;../../../../../devices/MIMXRT595S/drivers;../../../../../components/ssd1963;../../../../../components/video/display/dbi;../../../../../components/video/display/dbi/flexio;../../../../../components/video/display/dc/ssd1963;../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../components/video/display/dc/lcdif;../../../../../components/video;../../../../../components/video/display;../../../../../components/video/display/rm68191;../../../../../components/video/display/mipi_dsi_cmd;../../../../../components/video/display/rm68200;../../../../../components/video/display/rm67162;../../../../../components/video/display/dc/dsi_cmd;../../../../../components/ft3267;../../../../../components/gt911;../../../../../components/ft5406;../../../../../middleware/vglite/inc;../../../../../middleware/vglite/font;../../../../../middleware/vglite/font/mcufont/decoder;../../../../../middleware/vglite/VGLite/rtos;../../../../../middleware/vglite/VGLiteKernel;../../../../../middleware/vglite/VGLiteKernel/rtos;../../../../../middleware/littlevgl/lvgl;../../../../../middleware/littlevgl/lvgl/src;../../../../../middleware/littlevgl;../../../../../devices/MIMXRT595S;../../../../../devices/MIMXRT595S/utilities/str;../../../../../devices/MIMXRT595S/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../flash_config;../../../../../CMSIS/Include;../../../../../components/video/display/dc;../../../../../rtos/freertos/freertos_kernel/include</IncludePath>
+              <IncludePath>..;../../../../../middleware/littlevgl/lv_examples/src/lv_demo_widgets;../../../../../middleware/littlevgl/lv_examples;../..;../../../../../devices/MIMXRT595S/drivers;../../../../../components/ssd1963;../../../../../components/video/display/dbi;../../../../../components/video/display/dbi/flexio;../../../../../components/video/display/dc/ssd1963;../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../components/video/display/dc/lcdif;../../../../../components/video;../../../../../components/video/display;../../../../../components/video/display/rm68191;../../../../../components/video/display/mipi_dsi_cmd;../../../../../components/video/display/rm68200;../../../../../components/video/display/rm67162;../../../../../components/video/display/dc/dsi_cmd;../../../../../components/ft3267;../../../../../components/gt911;../../../../../components/ft5406;../../../../../middleware/vglite/inc;../../../../../middleware/vglite/font;../../../../../middleware/vglite/font/mcufont/decoder;../../../../../middleware/vglite/VGLite/rtos;../../../../../middleware/vglite/VGLiteKernel;../../../../../middleware/vglite/VGLiteKernel/rtos;../../../../../middleware/littlevgl/lvgl;../../../../../middleware/littlevgl/lvgl/src;../../../../../middleware/littlevgl;../../../../../devices/MIMXRT595S;../../../../../devices/MIMXRT595S/utilities/str;../../../../../devices/MIMXRT595S/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../flash_config;../../../../../CMSIS/Core/Include;../../../../../components/video/display/dc;../../../../../rtos/freertos/freertos_kernel/include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -5516,7 +5596,7 @@
             <ScatterFile>MIMXRT595Sxxxx_cm33_ram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove</Misc>
+            <Misc>--remove --entry=Reset_Handler</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314,6329</DisabledWarnings>
           </LDads>
@@ -5742,6 +5822,26 @@
               <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_lcdif.c</FilePath>
             </File>
             <File>
+              <FileName>fsl_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_common.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_common_arm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_common_arm.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_i2c.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_i2c.h</FilePath>
@@ -5760,16 +5860,6 @@
               <FileName>fsl_mipi_dsi_smartdma.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_mipi_dsi_smartdma.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_common.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_common.c</FilePath>
             </File>
             <File>
               <FileName>fsl_flexspi.c</FileName>
@@ -5845,6 +5935,11 @@
               <FileName>fsl_inputmux_connections.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_inputmux_connections.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_soc_mipi_dsi.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_soc_mipi_dsi.h</FilePath>
             </File>
             <File>
               <FileName>fsl_iap.h</FileName>
@@ -5997,14 +6092,14 @@
               <FilePath>../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33_NTZ/non_secure/portasm.c</FilePath>
             </File>
             <File>
-              <FileName>portmacro.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33_NTZ/non_secure/portmacro.h</FilePath>
-            </File>
-            <File>
               <FileName>portasm.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33_NTZ/non_secure/portasm.h</FilePath>
+            </File>
+            <File>
+              <FileName>portmacro.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33_NTZ/non_secure/portmacro.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -6249,6 +6344,16 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>vglite/font/mcufont</GroupName>
+          <Files>
+            <File>
+              <FileName>LICENSE</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/vglite/font/mcufont/LICENSE</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>vglite/VGLiteKernel</GroupName>
           <Files>
             <File>
@@ -6284,6 +6389,16 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>vglite</GroupName>
+          <Files>
+            <File>
+              <FileName>ChangeLogKSDK.txt</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/vglite/ChangeLogKSDK.txt</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>freertos/freertos_kernel/portable/MemMang</GroupName>
           <Files>
             <File>
@@ -6311,6 +6426,11 @@
         <Group>
           <GroupName>littlevgl/lvgl/src</GroupName>
           <Files>
+            <File>
+              <FileName>lv_conf_kconfig.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_conf_kconfig.h</FilePath>
+            </File>
             <File>
               <FileName>lv_api_map.h</FileName>
               <FileType>5</FileType>
@@ -6552,6 +6672,16 @@
               <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_font/lv_font_loader.h</FilePath>
             </File>
             <File>
+              <FileName>lv_font_montserrat_8.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_font/lv_font_montserrat_8.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_font_montserrat_10.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_font/lv_font_montserrat_10.c</FilePath>
+            </File>
+            <File>
               <FileName>lv_font_montserrat_12.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_font/lv_font_montserrat_12.c</FilePath>
@@ -6665,6 +6795,11 @@
               <FileName>lv_font_unscii_8.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_font/lv_font_unscii_8.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_font_unscii_16.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_font/lv_font_unscii_16.c</FilePath>
             </File>
             <File>
               <FileName>lv_symbol_def.h</FileName>
@@ -7507,69 +7642,54 @@
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
-              <FileName>core_cm33.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/core_cm33.h</FilePath>
-            </File>
-            <File>
-              <FileName>tz_context.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/tz_context.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv8.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/mpu_armv8.h</FilePath>
-            </File>
-            <File>
               <FileName>cmsis_armcc.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_armcc.h</FilePath>
+              <FilePath>../../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_armclang.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_armclang.h</FilePath>
+              <FilePath>../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_armclang_ltm.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_armclang_ltm.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_gcc.h</FilePath>
+              <FilePath>../../../../../CMSIS/Core/Include/cmsis_armclang_ltm.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_compiler.h</FilePath>
+              <FilePath>../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
             </File>
             <File>
-              <FileName>cmsis_version.h</FileName>
+              <FileName>cmsis_gcc.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_version.h</FilePath>
+              <FilePath>../../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_iccarm.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_iccarm.h</FilePath>
+              <FilePath>../../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
-              <FileName>arm_common_tables.h</FileName>
+              <FileName>cmsis_version.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/arm_common_tables.h</FilePath>
+              <FilePath>../../../../../CMSIS/Core/Include/cmsis_version.h</FilePath>
             </File>
             <File>
-              <FileName>arm_const_structs.h</FileName>
+              <FileName>core_cm33.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/arm_const_structs.h</FilePath>
+              <FilePath>../../../../../CMSIS/Core/Include/core_cm33.h</FilePath>
             </File>
             <File>
-              <FileName>arm_math.h</FileName>
+              <FileName>mpu_armv8.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/arm_math.h</FilePath>
+              <FilePath>../../../../../CMSIS/Core/Include/mpu_armv8.h</FilePath>
+            </File>
+            <File>
+              <FileName>tz_context.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Core/Include/tz_context.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -7577,14 +7697,14 @@
           <GroupName>freertos/freertos_kernel</GroupName>
           <Files>
             <File>
-              <FileName>event_groups.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/event_groups.c</FilePath>
-            </File>
-            <File>
               <FileName>croutine.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../rtos/freertos/freertos_kernel/croutine.c</FilePath>
+            </File>
+            <File>
+              <FileName>event_groups.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/event_groups.c</FilePath>
             </File>
             <File>
               <FileName>list.c</FileName>
@@ -7617,19 +7737,14 @@
           <GroupName>freertos/freertos_kernel/include</GroupName>
           <Files>
             <File>
-              <FileName>croutine.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/croutine.h</FilePath>
-            </File>
-            <File>
-              <FileName>StackMacros.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/StackMacros.h</FilePath>
-            </File>
-            <File>
               <FileName>atomic.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../rtos/freertos/freertos_kernel/include/atomic.h</FilePath>
+            </File>
+            <File>
+              <FileName>croutine.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/croutine.h</FilePath>
             </File>
             <File>
               <FileName>deprecated_definitions.h</FileName>
@@ -7690,6 +7805,11 @@
               <FileName>stack_macros.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../rtos/freertos/freertos_kernel/include/stack_macros.h</FilePath>
+            </File>
+            <File>
+              <FileName>StackMacros.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/StackMacros.h</FilePath>
             </File>
             <File>
               <FileName>stream_buffer.h</FileName>
@@ -8054,9 +8174,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>NDEBUG, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, CPU_MIMXRT595SFFOC_cm33, BOOT_HEADER_ENABLE=1, BOARD_ENABLE_PSRAM_CACHE=0, SSD1963_DATA_WITDH=8, FLEXIO_MCULCD_DATA_BUS_WIDTH=8, SDK_I2C_BASED_COMPONENT_USED=1, LV_CONF_INCLUDE_SIMPLE=1, LV_EX_CONF_INCLUDE_SIMPLE=1, SDK_I2C_BASED_COMPONENT_USED=1, VG_RESOLVE_ENGINE=0, VG_PE_COLOR_KEY=0, VG_IM_INDEX_FORMAT=0, VG_AYUV_INPUT_OUTPUT=0, VG_DOUBLE_IMAGE=0, VG_RECTANGLE_STRIP_MODE=0, VG_MMU=0, VG_IM_FILTER=0, VG_IM_YUV_PACKET=1, VG_IM_YUV_PLANAR=0, VG_PE_YUV_PACKET=1, VG_TARGET_TILED=1, VG_COMMAND_CALL=1, VG_SHARE_BUFFER_IM_16K=0, VG_OFFLINE_MODE=0, VG_RESOLUTION_2880=0, VG_PE_PREMULTIPLY=0, VG_POST_CONVERTER=0, VG_PRE_CONVERTER=0, VG_RENDER_BY_MESH=0, VG_TARGET_FAST_CLEAR=0, VG_BUFFER_NUMBER_OF_TARGET=0, VG_VIDEO_CLEAR_CONTROL=0, VG_VIDEO_CONTROL=0, VGLITE_TST_FIRMWARE=0, VG_LITE_SYS_GPU_CTRL=0, SERIAL_PORT_TYPE_UART=1, FSL_RTOS_FREE_RTOS</Define>
+              <Define>NDEBUG, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, CPU_MIMXRT595SFFOC_cm33, BOOT_HEADER_ENABLE=1, BOARD_ENABLE_PSRAM_CACHE=0, SSD1963_DATA_WITDH=8, FLEXIO_MCULCD_DATA_BUS_WIDTH=8, SDK_I2C_BASED_COMPONENT_USED=1, LV_CONF_INCLUDE_SIMPLE=1, LV_EX_CONF_INCLUDE_SIMPLE=1, SDK_I2C_BASED_COMPONENT_USED=1, VG_RESOLVE_ENGINE=0, VG_PE_COLOR_KEY=0, VG_IM_INDEX_FORMAT=0, VG_AYUV_INPUT_OUTPUT=0, VG_DOUBLE_IMAGE=0, VG_RECTANGLE_STRIP_MODE=0, VG_MMU=0, VG_IM_FILTER=0, VG_IM_YUV_PACKET=1, VG_IM_YUV_PLANAR=0, VG_PE_YUV_PACKET=1, VG_TARGET_TILED=1, VG_COMMAND_CALL=1, VG_SHARE_BUFFER_IM_16K=0, VG_OFFLINE_MODE=0, VG_RESOLUTION_2880=0, VG_PE_PREMULTIPLY=0, VG_POST_CONVERTER=0, VG_PRE_CONVERTER=0, VG_RENDER_BY_MESH=0, VG_TARGET_FAST_CLEAR=0, VG_BUFFER_NUMBER_OF_TARGET=0, VG_VIDEO_CLEAR_CONTROL=0, VG_VIDEO_CONTROL=0, VGLITE_TST_FIRMWARE=0, VG_LITE_SYS_GPU_CTRL=0, SERIAL_PORT_TYPE_UART=1, SDK_OS_FREE_RTOS, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../middleware/littlevgl/lv_examples/src/lv_demo_widgets;../../../../../middleware/littlevgl/lv_examples;../..;../../../../../devices/MIMXRT595S/drivers;../../../../../components/ssd1963;../../../../../components/video/display/dbi;../../../../../components/video/display/dbi/flexio;../../../../../components/video/display/dc/ssd1963;../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../components/video/display/dc/lcdif;../../../../../components/video;../../../../../components/video/display;../../../../../components/video/display/rm68191;../../../../../components/video/display/mipi_dsi_cmd;../../../../../components/video/display/rm68200;../../../../../components/video/display/rm67162;../../../../../components/video/display/dc/dsi_cmd;../../../../../components/ft3267;../../../../../components/gt911;../../../../../components/ft5406;../../../../../middleware/vglite/inc;../../../../../middleware/vglite/font;../../../../../middleware/vglite/font/mcufont/decoder;../../../../../middleware/vglite/VGLite/rtos;../../../../../middleware/vglite/VGLiteKernel;../../../../../middleware/vglite/VGLiteKernel/rtos;../../../../../middleware/littlevgl/lvgl;../../../../../middleware/littlevgl/lvgl/src;../../../../../middleware/littlevgl;../../../../../devices/MIMXRT595S;../../../../../devices/MIMXRT595S/utilities/str;../../../../../devices/MIMXRT595S/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../flash_config;../../../../../CMSIS/Include;../../../../../components/video/display/dc;../../../../../rtos/freertos/freertos_kernel/include</IncludePath>
+              <IncludePath>..;../../../../../middleware/littlevgl/lv_examples/src/lv_demo_widgets;../../../../../middleware/littlevgl/lv_examples;../..;../../../../../devices/MIMXRT595S/drivers;../../../../../components/ssd1963;../../../../../components/video/display/dbi;../../../../../components/video/display/dbi/flexio;../../../../../components/video/display/dc/ssd1963;../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../components/video/display/dc/lcdif;../../../../../components/video;../../../../../components/video/display;../../../../../components/video/display/rm68191;../../../../../components/video/display/mipi_dsi_cmd;../../../../../components/video/display/rm68200;../../../../../components/video/display/rm67162;../../../../../components/video/display/dc/dsi_cmd;../../../../../components/ft3267;../../../../../components/gt911;../../../../../components/ft5406;../../../../../middleware/vglite/inc;../../../../../middleware/vglite/font;../../../../../middleware/vglite/font/mcufont/decoder;../../../../../middleware/vglite/VGLite/rtos;../../../../../middleware/vglite/VGLiteKernel;../../../../../middleware/vglite/VGLiteKernel/rtos;../../../../../middleware/littlevgl/lvgl;../../../../../middleware/littlevgl/lvgl/src;../../../../../middleware/littlevgl;../../../../../devices/MIMXRT595S;../../../../../devices/MIMXRT595S/utilities/str;../../../../../devices/MIMXRT595S/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../flash_config;../../../../../CMSIS/Core/Include;../../../../../components/video/display/dc;../../../../../rtos/freertos/freertos_kernel/include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -8090,7 +8210,7 @@
             <ScatterFile>MIMXRT595Sxxxx_cm33_flash.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove</Misc>
+            <Misc>--remove --entry=Reset_Handler</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314,6329</DisabledWarnings>
           </LDads>
@@ -8316,6 +8436,26 @@
               <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_lcdif.c</FilePath>
             </File>
             <File>
+              <FileName>fsl_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_common.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_common_arm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_common_arm.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_i2c.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_i2c.h</FilePath>
@@ -8334,16 +8474,6 @@
               <FileName>fsl_mipi_dsi_smartdma.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_mipi_dsi_smartdma.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_common.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_common.c</FilePath>
             </File>
             <File>
               <FileName>fsl_flexspi.c</FileName>
@@ -8419,6 +8549,11 @@
               <FileName>fsl_inputmux_connections.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_inputmux_connections.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_soc_mipi_dsi.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_soc_mipi_dsi.h</FilePath>
             </File>
             <File>
               <FileName>fsl_iap.h</FileName>
@@ -8571,14 +8706,14 @@
               <FilePath>../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33_NTZ/non_secure/portasm.c</FilePath>
             </File>
             <File>
-              <FileName>portmacro.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33_NTZ/non_secure/portmacro.h</FilePath>
-            </File>
-            <File>
               <FileName>portasm.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33_NTZ/non_secure/portasm.h</FilePath>
+            </File>
+            <File>
+              <FileName>portmacro.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33_NTZ/non_secure/portmacro.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -8823,6 +8958,16 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>vglite/font/mcufont</GroupName>
+          <Files>
+            <File>
+              <FileName>LICENSE</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/vglite/font/mcufont/LICENSE</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>vglite/VGLiteKernel</GroupName>
           <Files>
             <File>
@@ -8858,6 +9003,16 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>vglite</GroupName>
+          <Files>
+            <File>
+              <FileName>ChangeLogKSDK.txt</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/vglite/ChangeLogKSDK.txt</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>freertos/freertos_kernel/portable/MemMang</GroupName>
           <Files>
             <File>
@@ -8885,6 +9040,11 @@
         <Group>
           <GroupName>littlevgl/lvgl/src</GroupName>
           <Files>
+            <File>
+              <FileName>lv_conf_kconfig.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_conf_kconfig.h</FilePath>
+            </File>
             <File>
               <FileName>lv_api_map.h</FileName>
               <FileType>5</FileType>
@@ -9126,6 +9286,16 @@
               <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_font/lv_font_loader.h</FilePath>
             </File>
             <File>
+              <FileName>lv_font_montserrat_8.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_font/lv_font_montserrat_8.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_font_montserrat_10.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_font/lv_font_montserrat_10.c</FilePath>
+            </File>
+            <File>
               <FileName>lv_font_montserrat_12.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_font/lv_font_montserrat_12.c</FilePath>
@@ -9239,6 +9409,11 @@
               <FileName>lv_font_unscii_8.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_font/lv_font_unscii_8.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_font_unscii_16.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_font/lv_font_unscii_16.c</FilePath>
             </File>
             <File>
               <FileName>lv_symbol_def.h</FileName>
@@ -10081,69 +10256,54 @@
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
-              <FileName>core_cm33.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/core_cm33.h</FilePath>
-            </File>
-            <File>
-              <FileName>tz_context.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/tz_context.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv8.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/mpu_armv8.h</FilePath>
-            </File>
-            <File>
               <FileName>cmsis_armcc.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_armcc.h</FilePath>
+              <FilePath>../../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_armclang.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_armclang.h</FilePath>
+              <FilePath>../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_armclang_ltm.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_armclang_ltm.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_gcc.h</FilePath>
+              <FilePath>../../../../../CMSIS/Core/Include/cmsis_armclang_ltm.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_compiler.h</FilePath>
+              <FilePath>../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
             </File>
             <File>
-              <FileName>cmsis_version.h</FileName>
+              <FileName>cmsis_gcc.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_version.h</FilePath>
+              <FilePath>../../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_iccarm.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_iccarm.h</FilePath>
+              <FilePath>../../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
-              <FileName>arm_common_tables.h</FileName>
+              <FileName>cmsis_version.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/arm_common_tables.h</FilePath>
+              <FilePath>../../../../../CMSIS/Core/Include/cmsis_version.h</FilePath>
             </File>
             <File>
-              <FileName>arm_const_structs.h</FileName>
+              <FileName>core_cm33.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/arm_const_structs.h</FilePath>
+              <FilePath>../../../../../CMSIS/Core/Include/core_cm33.h</FilePath>
             </File>
             <File>
-              <FileName>arm_math.h</FileName>
+              <FileName>mpu_armv8.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/arm_math.h</FilePath>
+              <FilePath>../../../../../CMSIS/Core/Include/mpu_armv8.h</FilePath>
+            </File>
+            <File>
+              <FileName>tz_context.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Core/Include/tz_context.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -10151,14 +10311,14 @@
           <GroupName>freertos/freertos_kernel</GroupName>
           <Files>
             <File>
-              <FileName>event_groups.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/event_groups.c</FilePath>
-            </File>
-            <File>
               <FileName>croutine.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../rtos/freertos/freertos_kernel/croutine.c</FilePath>
+            </File>
+            <File>
+              <FileName>event_groups.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/event_groups.c</FilePath>
             </File>
             <File>
               <FileName>list.c</FileName>
@@ -10191,19 +10351,14 @@
           <GroupName>freertos/freertos_kernel/include</GroupName>
           <Files>
             <File>
-              <FileName>croutine.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/croutine.h</FilePath>
-            </File>
-            <File>
-              <FileName>StackMacros.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/StackMacros.h</FilePath>
-            </File>
-            <File>
               <FileName>atomic.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../rtos/freertos/freertos_kernel/include/atomic.h</FilePath>
+            </File>
+            <File>
+              <FileName>croutine.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/croutine.h</FilePath>
             </File>
             <File>
               <FileName>deprecated_definitions.h</FileName>
@@ -10264,6 +10419,11 @@
               <FileName>stack_macros.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../rtos/freertos/freertos_kernel/include/stack_macros.h</FilePath>
+            </File>
+            <File>
+              <FileName>StackMacros.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/StackMacros.h</FilePath>
             </File>
             <File>
               <FileName>stream_buffer.h</FileName>

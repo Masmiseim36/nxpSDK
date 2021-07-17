@@ -42,4 +42,12 @@ typedef struct _i3c_device_adapter_resource
     i3c_slave_transfer_callback_t callback; /*!< i3c device transfer callback function. */
 } i3c_device_adapter_resource_t;
 
+/*******************************************************************************
+ * Variables
+ ******************************************************************************/
+/*! @brief I3C device master operation pointers structure */
+extern const i3c_device_hw_ops_t master_ops;
+/*! @brief I3C device slave operation pointers structure */
+extern const i3c_device_hw_ops_t slave_ops;
+
 #endif

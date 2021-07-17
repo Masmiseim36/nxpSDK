@@ -304,7 +304,7 @@ void USB_DeviceClockInit(void)
     POWER_DisablePD(kPDRUNCFG_APD_USBHS_SRAM);
     POWER_DisablePD(kPDRUNCFG_PPD_USBHS_SRAM);
     POWER_ApplyPD();
-    
+
     /* save usb ip clock freq*/
     usbClockFreq = g_xtalFreq / usbClockDiv;
     /* enable USB PHY PLL clock, the phy bus clock (480MHz) source is same with USB IP */
@@ -512,7 +512,7 @@ static void APP_WeightScaleSendData(void *handle, weightscale_measurement_struct
  */
 static usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *param)
 {
-    usb_status_t error = kStatus_USB_Error;
+    usb_status_t error = kStatus_USB_InvalidRequest;
     uint16_t *temp16   = (uint16_t *)param;
     uint8_t *temp8     = (uint8_t *)param;
     switch (event)
@@ -563,6 +563,7 @@ static usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event,
 #endif
             appEvent = APP_EVENT_UNDEFINED;
             AGENT_SetAgentState(g_shimAgent.classHandle, AGENT_STATE_DISCONNECTED);
+            error = kStatus_USB_Success;
         }
         break;
         case kUSB_DeviceEventSetConfiguration:
@@ -570,20 +571,24 @@ static usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event,
             {
                 g_shimAgent.attach        = 0;
                 g_shimAgent.currentConfig = 0U;
+                error                     = kStatus_USB_Success;
             }
             else if (USB_PHDC_WEIGHT_SCALE_CONFIGURE_INDEX == (*temp8))
             {
                 g_shimAgent.attach        = 1;
                 g_shimAgent.currentConfig = *temp8;
                 /* send the first NULL data to establish a connection between the device and host */
-                USB_ShimAgentSendData(g_shimAgent.classHandle, AGENT_SEND_DATA_QOS, NULL, 0U);
-                /* prepare for the first receiving */
-                USB_DevicePhdcRecv(g_shimAgent.classHandle, g_shimAgent.bulkOutData.epNumber,
-                                   g_shimAgent.recvDataBuffer, g_shimAgent.bulkOutData.epMaxPacketSize);
+                error = USB_ShimAgentSendData(g_shimAgent.classHandle, AGENT_SEND_DATA_QOS, NULL, 0U);
+                if (error == kStatus_USB_Success)
+                {
+                    /* prepare for the first receiving */
+                    error = USB_DevicePhdcRecv(g_shimAgent.classHandle, g_shimAgent.bulkOutData.epNumber,
+                                            g_shimAgent.recvDataBuffer, g_shimAgent.bulkOutData.epMaxPacketSize);
+                }
             }
             else
             {
-                error = kStatus_USB_InvalidRequest;
+                /* no action, return kStatus_USB_InvalidRequest */
             }
             break;
         case kUSB_DeviceEventSetInterface:
@@ -591,9 +596,13 @@ static usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event,
             {
                 uint8_t interface        = (uint8_t)((*temp16 & 0xFF00U) >> 0x08U);
                 uint8_t alternateSetting = (uint8_t)(*temp16 & 0x00FFU);
-                if (interface < 1U)
+                if (interface < USB_PHDC_WEIGHT_SCALE_INTERFACE_COUNT)
                 {
-                    g_shimAgent.currentInterfaceAlternateSetting[interface] = alternateSetting;
+                    if (alternateSetting < USB_PHDC_WEIGHT_SCALE_INTERFACE_ALTERNATE_COUNT)
+                    {
+                        g_shimAgent.currentInterfaceAlternateSetting[interface] = alternateSetting;
+                        error = kStatus_USB_Success;
+                    }
                 }
             }
             break;
@@ -613,10 +622,6 @@ static usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event,
                 {
                     *temp16 = (*temp16 & 0xFF00U) | g_shimAgent.currentInterfaceAlternateSetting[interface];
                     error   = kStatus_USB_Success;
-                }
-                else
-                {
-                    error = kStatus_USB_InvalidRequest;
                 }
             }
             break;
@@ -640,6 +645,7 @@ static usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event,
             }
             break;
         default:
+            /* no action, return kStatus_USB_InvalidRequest */
             break;
     }
     return error;
@@ -658,7 +664,7 @@ static usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event,
 static usb_status_t USB_DeviceWeightScaleCallback(void *handle, uint32_t event, void *param)
 {
     usb_device_control_request_struct_t *request = (usb_device_control_request_struct_t *)param;
-    usb_status_t error                           = kStatus_USB_Success;
+    usb_status_t error                           = kStatus_USB_InvalidRequest;
 
     switch (event)
     {
@@ -667,6 +673,7 @@ static usb_status_t USB_DeviceWeightScaleCallback(void *handle, uint32_t event, 
         {
             usb_device_endpoint_callback_message_struct_t *message =
                 (usb_device_endpoint_callback_message_struct_t *)param;
+
             /* endpoint callback length is USB_CANCELLED_TRANSFER_LENGTH (0xFFFFFFFFU) when transfer is canceled */
             if ((NULL != message) && (message->length == USB_CANCELLED_TRANSFER_LENGTH))
             {
@@ -685,18 +692,18 @@ static usb_status_t USB_DeviceWeightScaleCallback(void *handle, uint32_t event, 
 #if META_DATA_MESSAGE_PREAMBLE_IMPLEMENTED
             /* Meta-data message preamble is enabled */
             g_shimAgent.isMetaDataMessagePreambleEnabled = 1U;
+            error                                        = kStatus_USB_Success;
 #else
             /* Respond the request with a stall */
-            error = kStatus_USB_InvalidRequest;
 #endif
             break;
         case kUSB_DevicePhdcEventClearFeature:
 #if META_DATA_MESSAGE_PREAMBLE_IMPLEMENTED
             /* Meta-data message preamble is disabled */
             g_shimAgent.isMetaDataMessagePreambleEnabled = 0U;
+            error                                        = kStatus_USB_Success;
 #else
             /* Respond the request with a stall */
-            error = kStatus_USB_InvalidRequest;
 #endif
             break;
         case kUSB_DevicePhdcEventGetStatus:
@@ -704,9 +711,10 @@ static usb_status_t USB_DeviceWeightScaleCallback(void *handle, uint32_t event, 
             g_shimAgent.classBuffer[1] = ((uint8_t *)(&g_shimAgent.endpointsHaveData))[1];
             request->buffer            = g_shimAgent.classBuffer;
             request->length            = 2U;
+            error                      = kStatus_USB_Success;
             break;
         default:
-            error = kStatus_USB_InvalidRequest;
+            /* no action, return kStatus_USB_InvalidRequest */
             break;
     }
     return error;
@@ -837,8 +845,8 @@ int main(void)
 void main(void)
 #endif
 {
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
+    BOARD_InitBootPins();
+    BOARD_InitBootClocks();
     BOARD_InitDebugConsole();
     if (xTaskCreate(APP_task,                       /* pointer to the task */
                     "app task",                     /* task name for kernel awareness debugging */

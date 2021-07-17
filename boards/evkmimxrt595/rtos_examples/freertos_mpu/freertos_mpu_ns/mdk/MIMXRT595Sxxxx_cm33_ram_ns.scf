@@ -3,10 +3,11 @@
 ** ###################################################################
 **     Processors:          MIMXRT595SFAWC_cm33
 **                          MIMXRT595SFFOC_cm33
+**
 **     Compiler:            Keil ARM C/C++ Compiler
-**     Reference manual:    RT500 Reference Manual. Rev.A, 3/2020
-**     Version:             rev. 3.0, 2019-12-10
-**     Build:               b200410
+**     Reference manual:    iMXRT500RM Rev.D, 11/2020
+**     Version:             rev. 4.0, 2020-05-12
+**     Build:               b201117
 **
 **     Abstract:
 **         Linker file for the Keil ARM C/C++ Compiler
@@ -40,8 +41,9 @@
 #endif
 
 /* The SRAM region [0x10000-0x1BFFF] is reserved for ROM code. */
-/* The SRAM region [0x0-0xFFFF], [0x1C000-0x1FFFF] is reserved for app-specific use cases. */
+/* The SRAM region [0x0-0xFFFF], [0x1C000-0x1FFFF] are reserved for app-specific use cases. */
 /* The SRAM region [0x20000-0x7FFFF] is reserved for Non-cached shared memory between M33 and DSP. */
+
 #define  m_flash_image_start           0x08041000
 
 #define  m_interrupts_start            0x000C0000
@@ -57,10 +59,10 @@
 #define  m_text_size                   0x00033E00
 
 #define  priv_data_start               0x20180000
-#define  priv_data_size                0x00000400
+#define  priv_data_size                0x0000D000
 
-#define  m_data_start                  0x20180400
-#define  m_data_size                   0x0007FC00
+#define  m_data_start                  0x2018D000
+#define  m_data_size                   0x00073000
 
 #define  m_usb_sram_start              0x40140000
 #define  m_usb_sram_size               0x00004000

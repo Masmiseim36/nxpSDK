@@ -1,6 +1,6 @@
 # CROSS COMPILER SETTING
 SET(CMAKE_SYSTEM_NAME Generic)
-CMAKE_MINIMUM_REQUIRED (VERSION 3.1.1)
+CMAKE_MINIMUM_REQUIRED (VERSION 3.10.0)
 
 # THE VERSION NUMBER
 SET (Tutorial_VERSION_MAJOR 1)
@@ -49,11 +49,8 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 )
 
 target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
-    ${ProjDirPath}/../../dsp/binary flash_debug
+    ${ProjDirPath}/../../dsp/binary
     ${ProjDirPath}/..
-    ${ProjDirPath}/../../dsp/binary flash_release
-    ${ProjDirPath}/../../dsp/binary debug
-    ${ProjDirPath}/../../dsp/binary release
 )
 
 set(CMAKE_MODULE_PATH
@@ -61,7 +58,6 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../../components/codec/wm8904
     ${ProjDirPath}/../../../../../../devices/MIMXRT595S/utilities
     ${ProjDirPath}/../../../../../../components/codec
-    ${ProjDirPath}/../../../../../../components/codec/port/wm8904
     ${ProjDirPath}/../../../../../../components/codec/i2c
     ${ProjDirPath}/../../../../../../components/i2c
     ${ProjDirPath}/../../../../../../components/pca9420
@@ -70,7 +66,7 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../../components/serial_manager
     ${ProjDirPath}/../../../../../../components/lists
     ${ProjDirPath}/../../../../flash_config
-    ${ProjDirPath}/../../../../../../CMSIS/Include
+    ${ProjDirPath}/../../../../../../CMSIS/Core/Include
 )
 
 # include modules
@@ -134,11 +130,7 @@ include(driver_flexcomm_MIMXRT595S_cm33)
 
 include(driver_lpc_iopctl_MIMXRT595S_cm33)
 
-include(CMSIS_Include_core_cm33_MIMXRT595S_cm33)
-
-include(CMSIS_Include_common_MIMXRT595S_cm33)
-
-include(CMSIS_Include_dsp_MIMXRT595S_cm33)
+include(CMSIS_Include_core_cm_MIMXRT595S_cm33)
 
 include(driver_inputmux_connections_MIMXRT595S_cm33)
 

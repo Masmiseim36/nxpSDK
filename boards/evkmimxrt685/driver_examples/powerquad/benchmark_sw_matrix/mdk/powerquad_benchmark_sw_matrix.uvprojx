@@ -332,9 +332,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>DEBUG, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, __FPU_PRESENT=1, __DSP_PRESENT=1</Define>
+              <Define>DEBUG, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, __FPU_PRESENT=1, __DSP_PRESENT=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../devices/MIMXRT685S/utilities/debug_console_lite;../../../../../../devices/MIMXRT685S/drivers;../../../../../../devices/MIMXRT685S;../../../../../../components/uart;../../../../flash_config;../../../../../../components/lists;../../../../../../CMSIS/Include</IncludePath>
+              <IncludePath>..;../../../../../../devices/MIMXRT685S/utilities/debug_console_lite;../../../../../../devices/MIMXRT685S/drivers;../../../../../../CMSIS/DSP/Include;../../../../../../devices/MIMXRT685S;../../../../../../components/uart;../../../../flash_config;../../../../../../components/lists;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -368,428 +368,13 @@
             <ScatterFile>MIMXRT685Sxxxx_cm33_ram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --predefine="-D__stack_size__=0x8000"</Misc>
+            <Misc>../../../../../../CMSIS/DSP/Lib/ARM/arm_ARMv8MMLldfsp_math.lib --remove --entry=Reset_Handler --predefine="-D__stack_size__=0x8000"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314,6329</DisabledWarnings>
           </LDads>
         </TargetArmAds>
       </TargetOption>
       <Groups>
-        <Group>
-          <GroupName>CMSIS</GroupName>
-          <Files>
-            <File>
-              <FileName>arm_bitreversal.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/TransformFunctions/arm_bitreversal.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_bitreversal2.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/TransformFunctions/arm_bitreversal2.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_mult_q31.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/BasicMathFunctions/arm_mult_q31.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_shift_q31.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/BasicMathFunctions/arm_shift_q31.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_cmplx_mult_cmplx_q31.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/ComplexMathFunctions/arm_cmplx_mult_cmplx_q31.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_cfft_radix2_q31.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/TransformFunctions/arm_cfft_radix2_q31.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_cfft_radix2_init_q31.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/TransformFunctions/arm_cfft_radix2_init_q31.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_cfft_radix4_q31.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/TransformFunctions/arm_cfft_radix4_q31.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_cfft_radix4_init_q31.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/TransformFunctions/arm_cfft_radix4_init_q31.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_mult_q15.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/BasicMathFunctions/arm_mult_q15.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_shift_q15.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/BasicMathFunctions/arm_shift_q15.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_cmplx_mult_cmplx_q15.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/ComplexMathFunctions/arm_cmplx_mult_cmplx_q15.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_cfft_radix2_q15.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/TransformFunctions/arm_cfft_radix2_q15.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_cfft_radix2_init_q15.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/TransformFunctions/arm_cfft_radix2_init_q15.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_cfft_radix4_q15.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/TransformFunctions/arm_cfft_radix4_q15.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_cfft_radix4_init_q15.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/TransformFunctions/arm_cfft_radix4_init_q15.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_mat_add_q15.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/MatrixFunctions/arm_mat_add_q15.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_mat_add_q31.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/MatrixFunctions/arm_mat_add_q31.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_mat_add_f32.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/MatrixFunctions/arm_mat_add_f32.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_mat_sub_q15.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/MatrixFunctions/arm_mat_sub_q15.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_mat_sub_q31.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/MatrixFunctions/arm_mat_sub_q31.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_mat_sub_f32.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/MatrixFunctions/arm_mat_sub_f32.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_mat_mult_q15.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/MatrixFunctions/arm_mat_mult_q15.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_mat_mult_q31.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/MatrixFunctions/arm_mat_mult_q31.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_mat_mult_f32.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/MatrixFunctions/arm_mat_mult_f32.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_mat_inverse_f32.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/MatrixFunctions/arm_mat_inverse_f32.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_mat_trans_q15.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/MatrixFunctions/arm_mat_trans_q15.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_mat_trans_q31.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/MatrixFunctions/arm_mat_trans_q31.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_mat_trans_f32.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/MatrixFunctions/arm_mat_trans_f32.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_mat_scale_q15.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/MatrixFunctions/arm_mat_scale_q15.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_mat_scale_q31.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/MatrixFunctions/arm_mat_scale_q31.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_mat_scale_f32.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/MatrixFunctions/arm_mat_scale_f32.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_mat_init_f32.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/MatrixFunctions/arm_mat_init_f32.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_mat_init_q31.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/MatrixFunctions/arm_mat_init_q31.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_mat_init_q15.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/MatrixFunctions/arm_mat_init_q15.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_sqrt_q15.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/FastMathFunctions/arm_sqrt_q15.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_sqrt_q31.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/FastMathFunctions/arm_sqrt_q31.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_sin_q15.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/FastMathFunctions/arm_sin_q15.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_sin_q31.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/FastMathFunctions/arm_sin_q31.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_sin_f32.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/FastMathFunctions/arm_sin_f32.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_cos_q15.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/FastMathFunctions/arm_cos_q15.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_cos_q31.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/FastMathFunctions/arm_cos_q31.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_cos_f32.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/FastMathFunctions/arm_cos_f32.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_fir_q15.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/FilteringFunctions/arm_fir_q15.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_fir_init_q15.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/FilteringFunctions/arm_fir_init_q15.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_fir_q31.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/FilteringFunctions/arm_fir_q31.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_fir_init_q31.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/FilteringFunctions/arm_fir_init_q31.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_fir_f32.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/FilteringFunctions/arm_fir_f32.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_fir_init_f32.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/FilteringFunctions/arm_fir_init_f32.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_conv_q15.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/FilteringFunctions/arm_conv_q15.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_conv_q31.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/FilteringFunctions/arm_conv_q31.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_conv_f32.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/FilteringFunctions/arm_conv_f32.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_correlate_q15.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/FilteringFunctions/arm_correlate_q15.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_correlate_q31.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/FilteringFunctions/arm_correlate_q31.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_correlate_f32.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/FilteringFunctions/arm_correlate_f32.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_biquad_cascade_df2T_init_f32.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/FilteringFunctions/arm_biquad_cascade_df2T_init_f32.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_biquad_cascade_df2T_f32.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/FilteringFunctions/arm_biquad_cascade_df2T_f32.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_rfft_q15.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/TransformFunctions/arm_rfft_q15.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_rfft_init_q15.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/TransformFunctions/arm_rfft_init_q15.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_rfft_q31.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/TransformFunctions/arm_rfft_q31.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_rfft_init_q31.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/TransformFunctions/arm_rfft_init_q31.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_cfft_q15.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/TransformFunctions/arm_cfft_q15.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_cfft_q31.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/TransformFunctions/arm_cfft_q31.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_dct4_q15.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/TransformFunctions/arm_dct4_q15.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_dct4_init_q15.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/TransformFunctions/arm_dct4_init_q15.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_dct4_q31.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/TransformFunctions/arm_dct4_q31.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_dct4_init_q31.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/TransformFunctions/arm_dct4_init_q31.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_common_tables.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/CommonTables/arm_common_tables.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_const_structs.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/CommonTables/arm_const_structs.c</FilePath>
-            </File>
-            <File>
-              <FileName>core_cm33.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/core_cm33.h</FilePath>
-            </File>
-            <File>
-              <FileName>tz_context.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/tz_context.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv8.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/mpu_armv8.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_armcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_armcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_armclang.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_armclang.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_armclang_ltm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_armclang_ltm.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_gcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_compiler.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_version.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_version.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_iccarm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_iccarm.h</FilePath>
-            </File>
-            <File>
-              <FileName>arm_common_tables.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/arm_common_tables.h</FilePath>
-            </File>
-            <File>
-              <FileName>arm_const_structs.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/arm_const_structs.h</FilePath>
-            </File>
-            <File>
-              <FileName>arm_math.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/arm_math.h</FilePath>
-            </File>
-          </Files>
-        </Group>
         <Group>
           <GroupName>source</GroupName>
           <Files>
@@ -889,6 +474,16 @@
               <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_common.c</FilePath>
             </File>
             <File>
+              <FileName>fsl_common_arm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_common_arm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_common_arm.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_power.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_power.h</FilePath>
@@ -981,7 +576,27 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>MIMXRT685S</GroupName>
+          <GroupName>CMSIS/DSP/Include</GroupName>
+          <Files>
+            <File>
+              <FileName>arm_common_tables.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/arm_common_tables.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_const_structs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/arm_const_structs.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_math.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/arm_math.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>device</GroupName>
           <Files>
             <File>
               <FileName>fsl_device_registers.h</FileName>
@@ -997,16 +612,6 @@
               <FileName>MIMXRT685S_cm33_features.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT685S/MIMXRT685S_cm33_features.h</FilePath>
-            </File>
-            <File>
-              <FileName>system_MIMXRT685S_cm33.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/system_MIMXRT685S_cm33.c</FilePath>
-            </File>
-            <File>
-              <FileName>system_MIMXRT685S_cm33.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/system_MIMXRT685S_cm33.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1056,12 +661,82 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>MIMXRT685S</GroupName>
+          <Files>
+            <File>
+              <FileName>system_MIMXRT685S_cm33.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT685S/system_MIMXRT685S_cm33.c</FilePath>
+            </File>
+            <File>
+              <FileName>system_MIMXRT685S_cm33.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT685S/system_MIMXRT685S_cm33.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>MIMXRT685S/arm</GroupName>
           <Files>
             <File>
               <FileName>startup_MIMXRT685S_cm33.S</FileName>
               <FileType>2</FileType>
               <FilePath>../../../../../../devices/MIMXRT685S/arm/startup_MIMXRT685S_cm33.S</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>CMSIS</GroupName>
+          <Files>
+            <File>
+              <FileName>cmsis_armcc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_armclang.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_armclang_ltm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armclang_ltm.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_compiler.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_gcc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_iccarm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_version.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_version.h</FilePath>
+            </File>
+            <File>
+              <FileName>core_cm33.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/core_cm33.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_armv8.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/mpu_armv8.h</FilePath>
+            </File>
+            <File>
+              <FileName>tz_context.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/tz_context.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1396,9 +1071,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>DEBUG, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, __FPU_PRESENT=1, __DSP_PRESENT=1</Define>
+              <Define>DEBUG, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, __FPU_PRESENT=1, __DSP_PRESENT=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../devices/MIMXRT685S/utilities/debug_console_lite;../../../../../../devices/MIMXRT685S/drivers;../../../../../../devices/MIMXRT685S;../../../../../../components/uart;../../../../flash_config;../../../../../../components/lists;../../../../../../CMSIS/Include</IncludePath>
+              <IncludePath>..;../../../../../../devices/MIMXRT685S/utilities/debug_console_lite;../../../../../../devices/MIMXRT685S/drivers;../../../../../../CMSIS/DSP/Include;../../../../../../devices/MIMXRT685S;../../../../../../components/uart;../../../../flash_config;../../../../../../components/lists;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1432,428 +1107,13 @@
             <ScatterFile>MIMXRT685Sxxxx_cm33_flash.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --keep=*(CodeQuickAccess) --predefine="-D__stack_size__=0x8000"</Misc>
+            <Misc>../../../../../../CMSIS/DSP/Lib/ARM/arm_ARMv8MMLldfsp_math.lib --remove --keep=*(CodeQuickAccess) --entry=Reset_Handler --predefine="-D__stack_size__=0x8000"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314,6329</DisabledWarnings>
           </LDads>
         </TargetArmAds>
       </TargetOption>
       <Groups>
-        <Group>
-          <GroupName>CMSIS</GroupName>
-          <Files>
-            <File>
-              <FileName>arm_bitreversal.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/TransformFunctions/arm_bitreversal.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_bitreversal2.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/TransformFunctions/arm_bitreversal2.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_mult_q31.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/BasicMathFunctions/arm_mult_q31.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_shift_q31.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/BasicMathFunctions/arm_shift_q31.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_cmplx_mult_cmplx_q31.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/ComplexMathFunctions/arm_cmplx_mult_cmplx_q31.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_cfft_radix2_q31.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/TransformFunctions/arm_cfft_radix2_q31.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_cfft_radix2_init_q31.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/TransformFunctions/arm_cfft_radix2_init_q31.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_cfft_radix4_q31.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/TransformFunctions/arm_cfft_radix4_q31.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_cfft_radix4_init_q31.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/TransformFunctions/arm_cfft_radix4_init_q31.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_mult_q15.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/BasicMathFunctions/arm_mult_q15.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_shift_q15.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/BasicMathFunctions/arm_shift_q15.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_cmplx_mult_cmplx_q15.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/ComplexMathFunctions/arm_cmplx_mult_cmplx_q15.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_cfft_radix2_q15.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/TransformFunctions/arm_cfft_radix2_q15.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_cfft_radix2_init_q15.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/TransformFunctions/arm_cfft_radix2_init_q15.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_cfft_radix4_q15.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/TransformFunctions/arm_cfft_radix4_q15.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_cfft_radix4_init_q15.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/TransformFunctions/arm_cfft_radix4_init_q15.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_mat_add_q15.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/MatrixFunctions/arm_mat_add_q15.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_mat_add_q31.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/MatrixFunctions/arm_mat_add_q31.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_mat_add_f32.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/MatrixFunctions/arm_mat_add_f32.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_mat_sub_q15.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/MatrixFunctions/arm_mat_sub_q15.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_mat_sub_q31.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/MatrixFunctions/arm_mat_sub_q31.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_mat_sub_f32.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/MatrixFunctions/arm_mat_sub_f32.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_mat_mult_q15.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/MatrixFunctions/arm_mat_mult_q15.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_mat_mult_q31.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/MatrixFunctions/arm_mat_mult_q31.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_mat_mult_f32.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/MatrixFunctions/arm_mat_mult_f32.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_mat_inverse_f32.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/MatrixFunctions/arm_mat_inverse_f32.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_mat_trans_q15.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/MatrixFunctions/arm_mat_trans_q15.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_mat_trans_q31.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/MatrixFunctions/arm_mat_trans_q31.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_mat_trans_f32.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/MatrixFunctions/arm_mat_trans_f32.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_mat_scale_q15.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/MatrixFunctions/arm_mat_scale_q15.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_mat_scale_q31.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/MatrixFunctions/arm_mat_scale_q31.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_mat_scale_f32.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/MatrixFunctions/arm_mat_scale_f32.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_mat_init_f32.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/MatrixFunctions/arm_mat_init_f32.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_mat_init_q31.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/MatrixFunctions/arm_mat_init_q31.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_mat_init_q15.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/MatrixFunctions/arm_mat_init_q15.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_sqrt_q15.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/FastMathFunctions/arm_sqrt_q15.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_sqrt_q31.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/FastMathFunctions/arm_sqrt_q31.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_sin_q15.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/FastMathFunctions/arm_sin_q15.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_sin_q31.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/FastMathFunctions/arm_sin_q31.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_sin_f32.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/FastMathFunctions/arm_sin_f32.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_cos_q15.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/FastMathFunctions/arm_cos_q15.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_cos_q31.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/FastMathFunctions/arm_cos_q31.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_cos_f32.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/FastMathFunctions/arm_cos_f32.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_fir_q15.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/FilteringFunctions/arm_fir_q15.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_fir_init_q15.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/FilteringFunctions/arm_fir_init_q15.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_fir_q31.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/FilteringFunctions/arm_fir_q31.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_fir_init_q31.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/FilteringFunctions/arm_fir_init_q31.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_fir_f32.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/FilteringFunctions/arm_fir_f32.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_fir_init_f32.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/FilteringFunctions/arm_fir_init_f32.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_conv_q15.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/FilteringFunctions/arm_conv_q15.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_conv_q31.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/FilteringFunctions/arm_conv_q31.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_conv_f32.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/FilteringFunctions/arm_conv_f32.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_correlate_q15.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/FilteringFunctions/arm_correlate_q15.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_correlate_q31.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/FilteringFunctions/arm_correlate_q31.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_correlate_f32.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/FilteringFunctions/arm_correlate_f32.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_biquad_cascade_df2T_init_f32.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/FilteringFunctions/arm_biquad_cascade_df2T_init_f32.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_biquad_cascade_df2T_f32.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/FilteringFunctions/arm_biquad_cascade_df2T_f32.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_rfft_q15.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/TransformFunctions/arm_rfft_q15.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_rfft_init_q15.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/TransformFunctions/arm_rfft_init_q15.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_rfft_q31.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/TransformFunctions/arm_rfft_q31.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_rfft_init_q31.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/TransformFunctions/arm_rfft_init_q31.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_cfft_q15.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/TransformFunctions/arm_cfft_q15.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_cfft_q31.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/TransformFunctions/arm_cfft_q31.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_dct4_q15.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/TransformFunctions/arm_dct4_q15.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_dct4_init_q15.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/TransformFunctions/arm_dct4_init_q15.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_dct4_q31.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/TransformFunctions/arm_dct4_q31.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_dct4_init_q31.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/TransformFunctions/arm_dct4_init_q31.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_common_tables.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/CommonTables/arm_common_tables.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_const_structs.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/CommonTables/arm_const_structs.c</FilePath>
-            </File>
-            <File>
-              <FileName>core_cm33.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/core_cm33.h</FilePath>
-            </File>
-            <File>
-              <FileName>tz_context.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/tz_context.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv8.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/mpu_armv8.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_armcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_armcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_armclang.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_armclang.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_armclang_ltm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_armclang_ltm.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_gcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_compiler.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_version.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_version.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_iccarm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_iccarm.h</FilePath>
-            </File>
-            <File>
-              <FileName>arm_common_tables.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/arm_common_tables.h</FilePath>
-            </File>
-            <File>
-              <FileName>arm_const_structs.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/arm_const_structs.h</FilePath>
-            </File>
-            <File>
-              <FileName>arm_math.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/arm_math.h</FilePath>
-            </File>
-          </Files>
-        </Group>
         <Group>
           <GroupName>source</GroupName>
           <Files>
@@ -1953,6 +1213,16 @@
               <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_common.c</FilePath>
             </File>
             <File>
+              <FileName>fsl_common_arm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_common_arm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_common_arm.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_power.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_power.h</FilePath>
@@ -2045,7 +1315,27 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>MIMXRT685S</GroupName>
+          <GroupName>CMSIS/DSP/Include</GroupName>
+          <Files>
+            <File>
+              <FileName>arm_common_tables.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/arm_common_tables.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_const_structs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/arm_const_structs.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_math.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/arm_math.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>device</GroupName>
           <Files>
             <File>
               <FileName>fsl_device_registers.h</FileName>
@@ -2061,16 +1351,6 @@
               <FileName>MIMXRT685S_cm33_features.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT685S/MIMXRT685S_cm33_features.h</FilePath>
-            </File>
-            <File>
-              <FileName>system_MIMXRT685S_cm33.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/system_MIMXRT685S_cm33.c</FilePath>
-            </File>
-            <File>
-              <FileName>system_MIMXRT685S_cm33.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/system_MIMXRT685S_cm33.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2120,12 +1400,82 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>MIMXRT685S</GroupName>
+          <Files>
+            <File>
+              <FileName>system_MIMXRT685S_cm33.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT685S/system_MIMXRT685S_cm33.c</FilePath>
+            </File>
+            <File>
+              <FileName>system_MIMXRT685S_cm33.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT685S/system_MIMXRT685S_cm33.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>MIMXRT685S/arm</GroupName>
           <Files>
             <File>
               <FileName>startup_MIMXRT685S_cm33.S</FileName>
               <FileType>2</FileType>
               <FilePath>../../../../../../devices/MIMXRT685S/arm/startup_MIMXRT685S_cm33.S</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>CMSIS</GroupName>
+          <Files>
+            <File>
+              <FileName>cmsis_armcc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_armclang.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_armclang_ltm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armclang_ltm.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_compiler.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_gcc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_iccarm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_version.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_version.h</FilePath>
+            </File>
+            <File>
+              <FileName>core_cm33.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/core_cm33.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_armv8.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/mpu_armv8.h</FilePath>
+            </File>
+            <File>
+              <FileName>tz_context.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/tz_context.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2460,9 +1810,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>NDEBUG, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, __FPU_PRESENT=1, __DSP_PRESENT=1</Define>
+              <Define>NDEBUG, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, __FPU_PRESENT=1, __DSP_PRESENT=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../devices/MIMXRT685S/utilities/debug_console_lite;../../../../../../devices/MIMXRT685S/drivers;../../../../../../devices/MIMXRT685S;../../../../../../components/uart;../../../../flash_config;../../../../../../components/lists;../../../../../../CMSIS/Include</IncludePath>
+              <IncludePath>..;../../../../../../devices/MIMXRT685S/utilities/debug_console_lite;../../../../../../devices/MIMXRT685S/drivers;../../../../../../CMSIS/DSP/Include;../../../../../../devices/MIMXRT685S;../../../../../../components/uart;../../../../flash_config;../../../../../../components/lists;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2496,428 +1846,13 @@
             <ScatterFile>MIMXRT685Sxxxx_cm33_ram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --predefine="-D__stack_size__=0x8000"</Misc>
+            <Misc>../../../../../../CMSIS/DSP/Lib/ARM/arm_ARMv8MMLldfsp_math.lib --remove --entry=Reset_Handler --predefine="-D__stack_size__=0x8000"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314,6329</DisabledWarnings>
           </LDads>
         </TargetArmAds>
       </TargetOption>
       <Groups>
-        <Group>
-          <GroupName>CMSIS</GroupName>
-          <Files>
-            <File>
-              <FileName>arm_bitreversal.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/TransformFunctions/arm_bitreversal.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_bitreversal2.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/TransformFunctions/arm_bitreversal2.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_mult_q31.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/BasicMathFunctions/arm_mult_q31.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_shift_q31.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/BasicMathFunctions/arm_shift_q31.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_cmplx_mult_cmplx_q31.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/ComplexMathFunctions/arm_cmplx_mult_cmplx_q31.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_cfft_radix2_q31.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/TransformFunctions/arm_cfft_radix2_q31.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_cfft_radix2_init_q31.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/TransformFunctions/arm_cfft_radix2_init_q31.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_cfft_radix4_q31.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/TransformFunctions/arm_cfft_radix4_q31.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_cfft_radix4_init_q31.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/TransformFunctions/arm_cfft_radix4_init_q31.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_mult_q15.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/BasicMathFunctions/arm_mult_q15.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_shift_q15.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/BasicMathFunctions/arm_shift_q15.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_cmplx_mult_cmplx_q15.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/ComplexMathFunctions/arm_cmplx_mult_cmplx_q15.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_cfft_radix2_q15.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/TransformFunctions/arm_cfft_radix2_q15.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_cfft_radix2_init_q15.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/TransformFunctions/arm_cfft_radix2_init_q15.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_cfft_radix4_q15.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/TransformFunctions/arm_cfft_radix4_q15.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_cfft_radix4_init_q15.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/TransformFunctions/arm_cfft_radix4_init_q15.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_mat_add_q15.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/MatrixFunctions/arm_mat_add_q15.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_mat_add_q31.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/MatrixFunctions/arm_mat_add_q31.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_mat_add_f32.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/MatrixFunctions/arm_mat_add_f32.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_mat_sub_q15.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/MatrixFunctions/arm_mat_sub_q15.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_mat_sub_q31.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/MatrixFunctions/arm_mat_sub_q31.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_mat_sub_f32.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/MatrixFunctions/arm_mat_sub_f32.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_mat_mult_q15.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/MatrixFunctions/arm_mat_mult_q15.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_mat_mult_q31.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/MatrixFunctions/arm_mat_mult_q31.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_mat_mult_f32.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/MatrixFunctions/arm_mat_mult_f32.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_mat_inverse_f32.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/MatrixFunctions/arm_mat_inverse_f32.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_mat_trans_q15.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/MatrixFunctions/arm_mat_trans_q15.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_mat_trans_q31.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/MatrixFunctions/arm_mat_trans_q31.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_mat_trans_f32.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/MatrixFunctions/arm_mat_trans_f32.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_mat_scale_q15.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/MatrixFunctions/arm_mat_scale_q15.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_mat_scale_q31.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/MatrixFunctions/arm_mat_scale_q31.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_mat_scale_f32.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/MatrixFunctions/arm_mat_scale_f32.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_mat_init_f32.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/MatrixFunctions/arm_mat_init_f32.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_mat_init_q31.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/MatrixFunctions/arm_mat_init_q31.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_mat_init_q15.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/MatrixFunctions/arm_mat_init_q15.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_sqrt_q15.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/FastMathFunctions/arm_sqrt_q15.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_sqrt_q31.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/FastMathFunctions/arm_sqrt_q31.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_sin_q15.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/FastMathFunctions/arm_sin_q15.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_sin_q31.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/FastMathFunctions/arm_sin_q31.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_sin_f32.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/FastMathFunctions/arm_sin_f32.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_cos_q15.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/FastMathFunctions/arm_cos_q15.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_cos_q31.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/FastMathFunctions/arm_cos_q31.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_cos_f32.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/FastMathFunctions/arm_cos_f32.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_fir_q15.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/FilteringFunctions/arm_fir_q15.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_fir_init_q15.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/FilteringFunctions/arm_fir_init_q15.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_fir_q31.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/FilteringFunctions/arm_fir_q31.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_fir_init_q31.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/FilteringFunctions/arm_fir_init_q31.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_fir_f32.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/FilteringFunctions/arm_fir_f32.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_fir_init_f32.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/FilteringFunctions/arm_fir_init_f32.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_conv_q15.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/FilteringFunctions/arm_conv_q15.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_conv_q31.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/FilteringFunctions/arm_conv_q31.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_conv_f32.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/FilteringFunctions/arm_conv_f32.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_correlate_q15.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/FilteringFunctions/arm_correlate_q15.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_correlate_q31.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/FilteringFunctions/arm_correlate_q31.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_correlate_f32.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/FilteringFunctions/arm_correlate_f32.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_biquad_cascade_df2T_init_f32.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/FilteringFunctions/arm_biquad_cascade_df2T_init_f32.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_biquad_cascade_df2T_f32.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/FilteringFunctions/arm_biquad_cascade_df2T_f32.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_rfft_q15.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/TransformFunctions/arm_rfft_q15.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_rfft_init_q15.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/TransformFunctions/arm_rfft_init_q15.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_rfft_q31.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/TransformFunctions/arm_rfft_q31.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_rfft_init_q31.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/TransformFunctions/arm_rfft_init_q31.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_cfft_q15.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/TransformFunctions/arm_cfft_q15.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_cfft_q31.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/TransformFunctions/arm_cfft_q31.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_dct4_q15.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/TransformFunctions/arm_dct4_q15.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_dct4_init_q15.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/TransformFunctions/arm_dct4_init_q15.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_dct4_q31.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/TransformFunctions/arm_dct4_q31.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_dct4_init_q31.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/TransformFunctions/arm_dct4_init_q31.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_common_tables.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/CommonTables/arm_common_tables.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_const_structs.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/CommonTables/arm_const_structs.c</FilePath>
-            </File>
-            <File>
-              <FileName>core_cm33.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/core_cm33.h</FilePath>
-            </File>
-            <File>
-              <FileName>tz_context.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/tz_context.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv8.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/mpu_armv8.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_armcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_armcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_armclang.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_armclang.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_armclang_ltm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_armclang_ltm.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_gcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_compiler.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_version.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_version.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_iccarm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_iccarm.h</FilePath>
-            </File>
-            <File>
-              <FileName>arm_common_tables.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/arm_common_tables.h</FilePath>
-            </File>
-            <File>
-              <FileName>arm_const_structs.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/arm_const_structs.h</FilePath>
-            </File>
-            <File>
-              <FileName>arm_math.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/arm_math.h</FilePath>
-            </File>
-          </Files>
-        </Group>
         <Group>
           <GroupName>source</GroupName>
           <Files>
@@ -3017,6 +1952,16 @@
               <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_common.c</FilePath>
             </File>
             <File>
+              <FileName>fsl_common_arm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_common_arm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_common_arm.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_power.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_power.h</FilePath>
@@ -3109,7 +2054,27 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>MIMXRT685S</GroupName>
+          <GroupName>CMSIS/DSP/Include</GroupName>
+          <Files>
+            <File>
+              <FileName>arm_common_tables.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/arm_common_tables.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_const_structs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/arm_const_structs.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_math.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/arm_math.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>device</GroupName>
           <Files>
             <File>
               <FileName>fsl_device_registers.h</FileName>
@@ -3125,16 +2090,6 @@
               <FileName>MIMXRT685S_cm33_features.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT685S/MIMXRT685S_cm33_features.h</FilePath>
-            </File>
-            <File>
-              <FileName>system_MIMXRT685S_cm33.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/system_MIMXRT685S_cm33.c</FilePath>
-            </File>
-            <File>
-              <FileName>system_MIMXRT685S_cm33.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/system_MIMXRT685S_cm33.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -3184,12 +2139,82 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>MIMXRT685S</GroupName>
+          <Files>
+            <File>
+              <FileName>system_MIMXRT685S_cm33.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT685S/system_MIMXRT685S_cm33.c</FilePath>
+            </File>
+            <File>
+              <FileName>system_MIMXRT685S_cm33.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT685S/system_MIMXRT685S_cm33.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>MIMXRT685S/arm</GroupName>
           <Files>
             <File>
               <FileName>startup_MIMXRT685S_cm33.S</FileName>
               <FileType>2</FileType>
               <FilePath>../../../../../../devices/MIMXRT685S/arm/startup_MIMXRT685S_cm33.S</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>CMSIS</GroupName>
+          <Files>
+            <File>
+              <FileName>cmsis_armcc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_armclang.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_armclang_ltm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armclang_ltm.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_compiler.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_gcc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_iccarm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_version.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_version.h</FilePath>
+            </File>
+            <File>
+              <FileName>core_cm33.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/core_cm33.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_armv8.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/mpu_armv8.h</FilePath>
+            </File>
+            <File>
+              <FileName>tz_context.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/tz_context.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -3524,9 +2549,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>NDEBUG, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, __FPU_PRESENT=1, __DSP_PRESENT=1</Define>
+              <Define>NDEBUG, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, __FPU_PRESENT=1, __DSP_PRESENT=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../devices/MIMXRT685S/utilities/debug_console_lite;../../../../../../devices/MIMXRT685S/drivers;../../../../../../devices/MIMXRT685S;../../../../../../components/uart;../../../../flash_config;../../../../../../components/lists;../../../../../../CMSIS/Include</IncludePath>
+              <IncludePath>..;../../../../../../devices/MIMXRT685S/utilities/debug_console_lite;../../../../../../devices/MIMXRT685S/drivers;../../../../../../CMSIS/DSP/Include;../../../../../../devices/MIMXRT685S;../../../../../../components/uart;../../../../flash_config;../../../../../../components/lists;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -3560,428 +2585,13 @@
             <ScatterFile>MIMXRT685Sxxxx_cm33_flash.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --keep=*(CodeQuickAccess) --predefine="-D__stack_size__=0x8000"</Misc>
+            <Misc>../../../../../../CMSIS/DSP/Lib/ARM/arm_ARMv8MMLldfsp_math.lib --remove --keep=*(CodeQuickAccess) --entry=Reset_Handler --predefine="-D__stack_size__=0x8000"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314,6329</DisabledWarnings>
           </LDads>
         </TargetArmAds>
       </TargetOption>
       <Groups>
-        <Group>
-          <GroupName>CMSIS</GroupName>
-          <Files>
-            <File>
-              <FileName>arm_bitreversal.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/TransformFunctions/arm_bitreversal.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_bitreversal2.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/TransformFunctions/arm_bitreversal2.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_mult_q31.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/BasicMathFunctions/arm_mult_q31.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_shift_q31.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/BasicMathFunctions/arm_shift_q31.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_cmplx_mult_cmplx_q31.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/ComplexMathFunctions/arm_cmplx_mult_cmplx_q31.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_cfft_radix2_q31.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/TransformFunctions/arm_cfft_radix2_q31.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_cfft_radix2_init_q31.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/TransformFunctions/arm_cfft_radix2_init_q31.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_cfft_radix4_q31.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/TransformFunctions/arm_cfft_radix4_q31.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_cfft_radix4_init_q31.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/TransformFunctions/arm_cfft_radix4_init_q31.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_mult_q15.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/BasicMathFunctions/arm_mult_q15.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_shift_q15.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/BasicMathFunctions/arm_shift_q15.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_cmplx_mult_cmplx_q15.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/ComplexMathFunctions/arm_cmplx_mult_cmplx_q15.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_cfft_radix2_q15.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/TransformFunctions/arm_cfft_radix2_q15.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_cfft_radix2_init_q15.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/TransformFunctions/arm_cfft_radix2_init_q15.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_cfft_radix4_q15.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/TransformFunctions/arm_cfft_radix4_q15.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_cfft_radix4_init_q15.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/TransformFunctions/arm_cfft_radix4_init_q15.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_mat_add_q15.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/MatrixFunctions/arm_mat_add_q15.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_mat_add_q31.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/MatrixFunctions/arm_mat_add_q31.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_mat_add_f32.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/MatrixFunctions/arm_mat_add_f32.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_mat_sub_q15.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/MatrixFunctions/arm_mat_sub_q15.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_mat_sub_q31.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/MatrixFunctions/arm_mat_sub_q31.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_mat_sub_f32.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/MatrixFunctions/arm_mat_sub_f32.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_mat_mult_q15.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/MatrixFunctions/arm_mat_mult_q15.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_mat_mult_q31.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/MatrixFunctions/arm_mat_mult_q31.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_mat_mult_f32.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/MatrixFunctions/arm_mat_mult_f32.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_mat_inverse_f32.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/MatrixFunctions/arm_mat_inverse_f32.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_mat_trans_q15.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/MatrixFunctions/arm_mat_trans_q15.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_mat_trans_q31.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/MatrixFunctions/arm_mat_trans_q31.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_mat_trans_f32.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/MatrixFunctions/arm_mat_trans_f32.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_mat_scale_q15.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/MatrixFunctions/arm_mat_scale_q15.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_mat_scale_q31.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/MatrixFunctions/arm_mat_scale_q31.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_mat_scale_f32.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/MatrixFunctions/arm_mat_scale_f32.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_mat_init_f32.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/MatrixFunctions/arm_mat_init_f32.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_mat_init_q31.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/MatrixFunctions/arm_mat_init_q31.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_mat_init_q15.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/MatrixFunctions/arm_mat_init_q15.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_sqrt_q15.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/FastMathFunctions/arm_sqrt_q15.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_sqrt_q31.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/FastMathFunctions/arm_sqrt_q31.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_sin_q15.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/FastMathFunctions/arm_sin_q15.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_sin_q31.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/FastMathFunctions/arm_sin_q31.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_sin_f32.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/FastMathFunctions/arm_sin_f32.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_cos_q15.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/FastMathFunctions/arm_cos_q15.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_cos_q31.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/FastMathFunctions/arm_cos_q31.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_cos_f32.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/FastMathFunctions/arm_cos_f32.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_fir_q15.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/FilteringFunctions/arm_fir_q15.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_fir_init_q15.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/FilteringFunctions/arm_fir_init_q15.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_fir_q31.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/FilteringFunctions/arm_fir_q31.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_fir_init_q31.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/FilteringFunctions/arm_fir_init_q31.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_fir_f32.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/FilteringFunctions/arm_fir_f32.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_fir_init_f32.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/FilteringFunctions/arm_fir_init_f32.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_conv_q15.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/FilteringFunctions/arm_conv_q15.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_conv_q31.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/FilteringFunctions/arm_conv_q31.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_conv_f32.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/FilteringFunctions/arm_conv_f32.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_correlate_q15.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/FilteringFunctions/arm_correlate_q15.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_correlate_q31.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/FilteringFunctions/arm_correlate_q31.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_correlate_f32.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/FilteringFunctions/arm_correlate_f32.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_biquad_cascade_df2T_init_f32.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/FilteringFunctions/arm_biquad_cascade_df2T_init_f32.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_biquad_cascade_df2T_f32.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/FilteringFunctions/arm_biquad_cascade_df2T_f32.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_rfft_q15.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/TransformFunctions/arm_rfft_q15.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_rfft_init_q15.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/TransformFunctions/arm_rfft_init_q15.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_rfft_q31.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/TransformFunctions/arm_rfft_q31.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_rfft_init_q31.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/TransformFunctions/arm_rfft_init_q31.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_cfft_q15.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/TransformFunctions/arm_cfft_q15.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_cfft_q31.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/TransformFunctions/arm_cfft_q31.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_dct4_q15.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/TransformFunctions/arm_dct4_q15.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_dct4_init_q15.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/TransformFunctions/arm_dct4_init_q15.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_dct4_q31.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/TransformFunctions/arm_dct4_q31.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_dct4_init_q31.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/TransformFunctions/arm_dct4_init_q31.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_common_tables.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/CommonTables/arm_common_tables.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_const_structs.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../CMSIS/DSP/Source/CommonTables/arm_const_structs.c</FilePath>
-            </File>
-            <File>
-              <FileName>core_cm33.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/core_cm33.h</FilePath>
-            </File>
-            <File>
-              <FileName>tz_context.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/tz_context.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv8.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/mpu_armv8.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_armcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_armcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_armclang.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_armclang.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_armclang_ltm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_armclang_ltm.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_gcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_compiler.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_version.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_version.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_iccarm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_iccarm.h</FilePath>
-            </File>
-            <File>
-              <FileName>arm_common_tables.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/arm_common_tables.h</FilePath>
-            </File>
-            <File>
-              <FileName>arm_const_structs.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/arm_const_structs.h</FilePath>
-            </File>
-            <File>
-              <FileName>arm_math.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/arm_math.h</FilePath>
-            </File>
-          </Files>
-        </Group>
         <Group>
           <GroupName>source</GroupName>
           <Files>
@@ -4081,6 +2691,16 @@
               <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_common.c</FilePath>
             </File>
             <File>
+              <FileName>fsl_common_arm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_common_arm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_common_arm.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_power.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_power.h</FilePath>
@@ -4173,7 +2793,27 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>MIMXRT685S</GroupName>
+          <GroupName>CMSIS/DSP/Include</GroupName>
+          <Files>
+            <File>
+              <FileName>arm_common_tables.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/arm_common_tables.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_const_structs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/arm_const_structs.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_math.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/arm_math.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>device</GroupName>
           <Files>
             <File>
               <FileName>fsl_device_registers.h</FileName>
@@ -4189,16 +2829,6 @@
               <FileName>MIMXRT685S_cm33_features.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT685S/MIMXRT685S_cm33_features.h</FilePath>
-            </File>
-            <File>
-              <FileName>system_MIMXRT685S_cm33.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/system_MIMXRT685S_cm33.c</FilePath>
-            </File>
-            <File>
-              <FileName>system_MIMXRT685S_cm33.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/system_MIMXRT685S_cm33.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -4248,12 +2878,82 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>MIMXRT685S</GroupName>
+          <Files>
+            <File>
+              <FileName>system_MIMXRT685S_cm33.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT685S/system_MIMXRT685S_cm33.c</FilePath>
+            </File>
+            <File>
+              <FileName>system_MIMXRT685S_cm33.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT685S/system_MIMXRT685S_cm33.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>MIMXRT685S/arm</GroupName>
           <Files>
             <File>
               <FileName>startup_MIMXRT685S_cm33.S</FileName>
               <FileType>2</FileType>
               <FilePath>../../../../../../devices/MIMXRT685S/arm/startup_MIMXRT685S_cm33.S</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>CMSIS</GroupName>
+          <Files>
+            <File>
+              <FileName>cmsis_armcc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_armclang.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_armclang_ltm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armclang_ltm.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_compiler.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_gcc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_iccarm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_version.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_version.h</FilePath>
+            </File>
+            <File>
+              <FileName>core_cm33.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/core_cm33.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_armv8.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/mpu_armv8.h</FilePath>
+            </File>
+            <File>
+              <FileName>tz_context.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/tz_context.h</FilePath>
             </File>
           </Files>
         </Group>

@@ -12,7 +12,7 @@
 #include "psa/client.h"
 #endif
 
-#include "secure_fw/partitions/protected_storage/ps_object_system.h"
+#include "ps_object_system.h"
 
 psa_status_t tfm_ps_test_prepare(psa_invec *in_vec, size_t in_len,
                                  psa_outvec *out_vec, size_t out_len)

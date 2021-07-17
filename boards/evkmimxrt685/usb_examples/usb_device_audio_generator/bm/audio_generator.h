@@ -66,10 +66,17 @@ typedef struct _usb_audio_generator_struct
     uint8_t maxTreble;
     uint8_t resTreble;
     uint8_t curAutomaticGain;
+#if (USB_DEVICE_CONFIG_AUDIO_CLASS_2_0)
+    uint8_t curDelay[4]; /* need to consider the endians */
+    uint8_t minDelay[4]; /* need to consider the endians */
+    uint8_t maxDelay[4]; /* need to consider the endians */
+    uint8_t resDelay[4]; /* need to consider the endians */
+#else
     uint8_t curDelay[2]; /* need to consider the endians */
     uint8_t minDelay[2]; /* need to consider the endians */
     uint8_t maxDelay[2]; /* need to consider the endians */
     uint8_t resDelay[2]; /* need to consider the endians */
+#endif
     uint8_t curLoudness;
     uint8_t curSamplingFrequency[3]; /* need to consider the endians */
     uint8_t minSamplingFrequency[3]; /* need to consider the endians */

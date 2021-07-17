@@ -1,15 +1,17 @@
-/*******************************************************************************
-* Copyright (c) 2015-2020 Cadence Design Systems, Inc.
-* 
+/*
+* Copyright (c) 2015-2021 Cadence Design Systems Inc.
+*
 * Permission is hereby granted, free of charge, to any person obtaining
 * a copy of this software and associated documentation files (the
-* "Software"), to use this Software with Cadence processor cores only and 
-* not with any other processors and platforms, subject to
+* "Software"), to deal in the Software without restriction, including
+* without limitation the rights to use, copy, modify, merge, publish,
+* distribute, sublicense, and/or sell copies of the Software, and to
+* permit persons to whom the Software is furnished to do so, subject to
 * the following conditions:
-* 
+*
 * The above copyright notice and this permission notice shall be included
 * in all copies or substantial portions of the Software.
-* 
+*
 * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
 * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
@@ -17,8 +19,7 @@
 * CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
 * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-******************************************************************************/
+*/
 /*******************************************************************************
  * xa-pcm-split.c
  *
@@ -59,13 +60,6 @@ extern clk_t pcm_split_cycles;
 
 #define XA_MIMO_IN_PORTS		1
 #define XA_MIMO_OUT_PORTS		2
-
-/*******************************************************************************
- * Tracing configuration
- ******************************************************************************/
-
-TRACE_TAG(INIT, 1);
-TRACE_TAG(PROCESS, 1);
 
 /*******************************************************************************
  * Internal functions definitions
@@ -172,9 +166,11 @@ static XA_ERRORCODE xa_aec_do_execute_stereo_16bit(XAPcmAec *d)
         /* 1 in, 2 out */
 
         /* ...check I/O buffer */
+#if 1
         XF_CHK_ERR(d->input[0], XA_PCM_SPLIT_EXEC_FATAL_STATE);
-        XF_CHK_ERR(d->output[0], XA_PCM_SPLIT_EXEC_FATAL_STATE);
-        XF_CHK_ERR(d->output[1], XA_PCM_SPLIT_EXEC_FATAL_STATE);
+        XF_CHK_ERR(d->output[0], XA_PCM_SPLIT_EXEC_NONFATAL_NO_DATA);
+        XF_CHK_ERR(d->output[1], XA_PCM_SPLIT_EXEC_NONFATAL_NO_DATA);
+#endif
 
         WORD32    filled = d->input_length[0];
         WORD16    *pIn0  = (WORD16 *) d->input[0];
@@ -243,6 +239,13 @@ static XA_ERRORCODE xa_aec_do_execute_stereo_16bit(XAPcmAec *d)
 /* ...runtime reset */
 static XA_ERRORCODE xa_aec_do_runtime_init(XAPcmAec *d)
 {
+    int i, num_ports;
+
+    num_ports = XA_MIMO_IN_PORTS + XA_MIMO_OUT_PORTS;
+    for (i=0; i<num_ports; i++) 
+        d->port_state[i] = 0;
+
+    d->state = XA_AEC_FLAG_PREINIT_DONE | XA_AEC_FLAG_POSTINIT_DONE | XA_AEC_FLAG_RUNNING;
     /* ...no special processing is needed here */
     return XA_NO_ERROR;
 }

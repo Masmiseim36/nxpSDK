@@ -1,5 +1,5 @@
 /*
- * Copyright 2017, 2019-2020 NXP
+ * Copyright 2017, 2019-2021 NXP
  * All rights reserved.
  *
  *
@@ -71,21 +71,6 @@
     ((uint32_t)kDSI_InterruptGroup1ResetTriggerReceived | (uint32_t)kDSI_InterruptGroup1TearTriggerReceived | \
      (uint32_t)kDSI_InterruptGroup1AckTriggerReceived)
 #define DSI_INT_STATUS_ERROR_REPORT_MASK (0xFFFFU << 9U)
-
-#if (defined(FSL_FEATURE_DSI_CSR_OFFSET) && FSL_FEATURE_DSI_CSR_OFFSET)
-#if (defined(FSL_FEATURE_LDB_COMBO_PHY) && FSL_FEATURE_LDB_COMBO_PHY)
-typedef MIPI_DSI_LVDS_COMBO_CSR_Type MIPI_DSI_CSR_Type;
-#define MIPI_DSI_CSR_ULPS_CTRL(csr)      ((csr)->ULPS_CTRL)
-#define MIPI_DSI_CSR_ULPS_CTRL_ULPS_MASK MIPI_DSI_LVDS_COMBO_CSR_ULPS_CTRL_TX_ULPS_MASK
-#define MIPI_DSI_CSR_PXL2DPI(csr)        ((csr)->PXL2DPI_CTRL)
-#else
-#define MIPI_DSI_CSR_ULPS_CTRL(csr)      ((csr)->TX_ULPS_ENABLE)
-#define MIPI_DSI_CSR_ULPS_CTRL_ULPS_MASK MIPI_DSI_TX_ULPS_ENABLE_TX_ULPS_ENABLE_MASK
-#define MIPI_DSI_CSR_PXL2DPI(csr)        ((csr)->PXL2DPI_CONFIG)
-#endif
-
-#define DSI_GET_CSR(dsi_base) (MIPI_DSI_CSR_Type *)((uint32_t)(dsi_base) - (uint32_t)FSL_FEATURE_DSI_CSR_OFFSET)
-#endif
 
 #if defined(MIPI_DSI_HOST_DPHY_PD_TX_dphy_pd_tx_MASK)
 #define DPHY_PD_REG DPHY_PD_TX
@@ -378,17 +363,9 @@ void DSI_Init(MIPI_DSI_HOST_Type *base, const dsi_config_t *config)
     (void)CLOCK_EnableClock(s_dsiClocks[DSI_GetInstance(base)]);
 #endif /* FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL */
 
-#if (defined(FSL_FEATURE_DSI_CSR_OFFSET) && FSL_FEATURE_DSI_CSR_OFFSET)
-    MIPI_DSI_CSR_Type *csr = DSI_GET_CSR(base);
-    if (config->enableTxUlps)
-    {
-        MIPI_DSI_CSR_ULPS_CTRL(csr) = MIPI_DSI_CSR_ULPS_CTRL_ULPS_MASK;
-    }
-    else
-    {
-        MIPI_DSI_CSR_ULPS_CTRL(csr) = 0U;
-    }
-#endif
+#if (defined(FSL_FEATURE_MIPI_DSI_HOST_HAS_ULPS_CTRL) && FSL_FEATURE_MIPI_DSI_HOST_HAS_ULPS_CTRL)
+    SOC_MIPI_DSI_EnableUlps(base, config->enableTxUlps);
+#endif /* FSL_FEATURE_MIPI_DSI_HOST_HAS_ULPS_CTRL */
 
     base->DSI_HOST_CFG_NUM_LANES = config->numLanes - 1UL;
 
@@ -464,12 +441,14 @@ void DSI_GetDefaultConfig(dsi_config_t *config)
 
     config->numLanes                 = 4;
     config->enableNonContinuousHsClk = false;
-    config->enableTxUlps             = false;
-    config->autoInsertEoTp           = true;
-    config->numExtraEoTp             = 0;
-    config->htxTo_ByteClk            = 0;
-    config->lrxHostTo_ByteClk        = 0;
-    config->btaTo_ByteClk            = 0;
+#if (defined(FSL_FEATURE_MIPI_DSI_HOST_HAS_ULPS_CTRL) && FSL_FEATURE_MIPI_DSI_HOST_HAS_ULPS_CTRL)
+    config->enableTxUlps = false;
+#endif /* FSL_FEATURE_MIPI_DSI_HOST_HAS_ULPS_CTRL */
+    config->autoInsertEoTp    = true;
+    config->numExtraEoTp      = 0;
+    config->htxTo_ByteClk     = 0;
+    config->lrxHostTo_ByteClk = 0;
+    config->btaTo_ByteClk     = 0;
 }
 
 /*!
@@ -496,10 +475,9 @@ void DSI_SetDpiConfig(MIPI_DSI_HOST_Type *base,
     /* coefficient DPI event size to number of DSI bytes. */
     uint32_t coff = (numLanes * dsiHsBitClkFreq_Hz) / (dpiPixelClkFreq_Hz * 8U);
 
-#if (defined(FSL_FEATURE_DSI_CSR_OFFSET) && FSL_FEATURE_DSI_CSR_OFFSET)
-    MIPI_DSI_CSR_Type *csr    = DSI_GET_CSR(base);
-    MIPI_DSI_CSR_PXL2DPI(csr) = (uint32_t)config->dpiColorCoding;
-#endif
+#if (defined(FSL_FEATURE_MIPI_DSI_HOST_HAS_PXL2DPI) && FSL_FEATURE_MIPI_DSI_HOST_HAS_PXL2DPI)
+    SOC_MIPI_DSI_SetPixelDpiMap(base, (uint32_t)config->dpiColorCoding);
+#endif /* FSL_FEATURE_MIPI_DSI_HOST_HAS_PXL2DPI */
 
     base->DSI_HOST_CFG_DPI_PIXEL_PAYLOAD_SIZE     = config->pixelPayloadSize;
     base->DSI_HOST_CFG_DPI_INTERFACE_COLOR_CODING = (uint32_t)config->dpiColorCoding;
@@ -604,10 +582,12 @@ uint32_t DSI_InitDphy(MIPI_DSI_HOST_Type *base, const dsi_dphy_config_t *config,
     base->DPHY_M_PRG_HS_TRAIL    = config->tHsTrail_ByteClk;
     base->DPHY_MC_PRG_HS_TRAIL   = config->tClkTrail_ByteClk;
 
-    base->DSI_HOST_CFG_T_PRE   = config->tClkPre_ByteClk;
-    base->DSI_HOST_CFG_T_POST  = config->tClkPost_ByteClk;
-    base->DSI_HOST_CFG_TX_GAP  = config->tHsExit_ByteClk;
+    base->DSI_HOST_CFG_T_PRE  = config->tClkPre_ByteClk;
+    base->DSI_HOST_CFG_T_POST = config->tClkPost_ByteClk;
+    base->DSI_HOST_CFG_TX_GAP = config->tHsExit_ByteClk;
+#if (defined(FSL_FEATURE_MIPI_DSI_HOST_HAS_ULPS) && FSL_FEATURE_MIPI_DSI_HOST_HAS_ULPS)
     base->DSI_HOST_CFG_TWAKEUP = config->tWakeup_EscClk;
+#endif
 
 #if defined(MIPI_DSI_HOST_DPHY_RTERM_SEL_dphy_rterm_sel_MASK)
     base->DPHY_RTERM_SEL = MIPI_DSI_HOST_DPHY_RTERM_SEL_dphy_rterm_sel_MASK;
@@ -687,8 +667,10 @@ void DSI_GetDphyDefaultConfig(dsi_dphy_config_t *config, uint32_t txHsBitClk_Hz,
     /* THS-EXIT in byte clock. At least 100ns. */
     config->tHsExit_ByteClk = (uint8_t)(DSI_NS_TO_BYTE_CLK(100U, byteClkFreq_kHz) + 1U);
 
+#if (defined(FSL_FEATURE_MIPI_DSI_HOST_HAS_ULPS) && FSL_FEATURE_MIPI_DSI_HOST_HAS_ULPS)
     /* T-WAKEUP. At least 1ms. */
     config->tWakeup_EscClk = txEscClk_Hz / 1000U + 1U;
+#endif
 
     /* THS-PREPARE. 40ns+4*UI to 85ns+6*UI. */
     config->tHsPrepare_HalfEscClk =
@@ -1145,7 +1127,7 @@ status_t DSI_TransferCreateHandle(MIPI_DSI_HOST_Type *base,
 
 #if defined(MIPI_DSI_HOST_IRQS)
     /* Enable interrupt in NVIC. */
-    EnableIRQ(s_dsiIRQ[instance]);
+    (void)EnableIRQ(s_dsiIRQ[instance]);
 #endif
 
     return kStatus_Success;

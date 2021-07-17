@@ -13,8 +13,8 @@
 #include "cmsis.h"
 #include "tfm_api.h"
 #include "tfm_plat_test.h"
-#include "test/suites/core/non_secure/core_test_api.h"
-#include "test/test_services/tfm_core_test/core_test_defs.h"
+#include "core_test_api.h"
+#include "core_test_defs.h"
 #ifdef TFM_PSA_API
 #include "psa_manifest/sid.h"
 #else  /* TFM_PSA_API */

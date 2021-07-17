@@ -23,16 +23,15 @@
 
 #include "fsl_gpio.h"
 
+#include "dsp_config.h"
 #include "board_fusionf1.h"
 #include "fsl_inputmux.h"
 #include "fsl_dma.h"
+#include "fsl_i2s.h"
 #include "pin_mux.h"
-#include "dsp_config.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define BOARD_XTAL_SYS_CLK_HZ 24000000U /*!< Board xtal_sys frequency in Hz */
-#define BOARD_XTAL32K_CLK_HZ  32768U    /*!< Board xtal32K frequency in Hz */
 #define INIT_DEBUG_CONSOLE 0
 
 #define APP_RPMSG_READY_EVENT_DATA    (1)
@@ -40,6 +39,8 @@
 
 #define NOTIF_EVT_RPMSG_RECEIVED_DATA (1 << 0)
 #define NOTIF_EVT                     (NOTIF_EVT_RPMSG_RECEIVED_DATA)
+#define BOARD_XTAL_SYS_CLK_HZ 24000000U /*!< Board xtal_sys frequency in Hz */
+#define BOARD_XTAL32K_CLK_HZ  32768U    /*!< Board xtal32K frequency in Hz */
 #define DSP_THREAD_STACK_SIZE (8 * 1024)
 #define DSP_THREAD_PRIORITY   (XOS_MAX_PRIORITY - 3)
 
@@ -338,7 +339,7 @@ static int handleMSG_AUDIO(dsp_handle_t *dsp, srtm_message *msg)
             /* Param 9 return paramter, actual write size of output*/
             DSP_PRINTF(
                 "Input buffer addr 0x%X, size %d, rate %d, channels %d, sample width %d, output buffer \
-				addr 0x%X, size %d, rate %d\r\n",
+                addr 0x%X, size %d, rate %d\r\n",
                 msg->param[0], msg->param[1], msg->param[2], msg->param[3], msg->param[4], msg->param[5], msg->param[6],
                 msg->param[7]);
             if ((msg->param[0] == 0) || (msg->param[1] == 0) || (msg->param[2] == 0) || (msg->param[3] == 0) ||
@@ -374,7 +375,7 @@ static int handleMSG_AUDIO(dsp_handle_t *dsp, srtm_message *msg)
             msg->param[17] = msg->param[7];
             DSP_PRINTF(
                 "Input buffer addr 0x%X, size %d, output buffer addr 0x%X, size %d, sampling rate %d, num \
-				of channels %d, pcm sample width %d, gain control index %d\r\n",
+                of channels %d, pcm sample width %d, gain control index %d\r\n",
                 msg->param[0], msg->param[1], msg->param[2], msg->param[3], msg->param[4], msg->param[5], msg->param[6],
                 msg->param[7]);
             if ((msg->param[0] == 0) || (msg->param[1] == 0) || (msg->param[2] == 0) || (msg->param[3] == 0) ||
@@ -402,6 +403,27 @@ static int handleMSG_AUDIO(dsp_handle_t *dsp, srtm_message *msg)
             }
             else
             {
+#if XA_VIT_PRE_PROC
+                ringbuf_destroy(dsp->audioBuffer);
+                if ((msg->param[3] == 0) || (msg->param[4] == 0))
+                {
+                    msg->head.type = SRTM_MessageTypeNotification;
+                    msg->error     = SRTM_Status_InvalidParameter;
+                }
+                else
+                {
+                    dsp->VITModelCM_33     = (unsigned char *)msg->param[3];
+                    dsp->size_of_VIT_model = (uint32_t)msg->param[4];
+                }
+                msg->head.command = SRTM_Command_VIT;
+#endif
+                // since srtm_capturer_gain_renderer_init is not running as separate thread and never returns, there is
+                // need to send response before it starts
+                msg->head.type = SRTM_MessageTypeResponse;
+                xos_mutex_lock(&dsp->rpmsgMutex);
+                rpmsg_lite_send(dsp->rpmsg, dsp->ept, MCU_EPT_ADDR, (char *)msg, sizeof(srtm_message), RL_DONT_BLOCK);
+                xos_mutex_unlock(&dsp->rpmsgMutex);
+
                 msg->error = srtm_capturer_gain_renderer_init(&msg->param[0], false);
             }
             break;
@@ -598,6 +620,12 @@ int main(void)
     BOARD_InitDebugConsole();
 #endif
 
+#ifdef XA_CLIENT_PROXY
+    /* Dummy I2S init for EAP */
+    i2s_config_t s_TxConfig;
+    I2S_TxGetDefaultConfig(&s_TxConfig);
+    I2S_TxInit(I2S1, &s_TxConfig);
+#endif
     /* Iniitalize DMA1 which will be shared by capturer and renderer. */
     DMA_Init(DMA1);
 

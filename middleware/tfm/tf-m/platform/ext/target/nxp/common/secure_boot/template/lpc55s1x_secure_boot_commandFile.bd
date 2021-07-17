@@ -1,0 +1,22 @@
+options {
+    flags = 0x8; // bd file format: 0x8 encrypted + signed (always 0x8)
+    buildNumber = 0x1; // not used
+    productVersion = "1.00.00"; // not used
+    componentVersion = "1.00.00"; // not used
+    secureBinaryVersion = "2.1";  // must be 2.1
+}
+sources {
+     mainImage = extern(0);
+}
+
+/* Bootable section */
+section (0;hmacEntries=20) {
+
+    /* Check S and NS versions */
+    version_check sec 0x1; 
+    version_check nsec 0x1;
+
+    erase 0x0..sizeof(mainImage);   /* 0x39000 reseved = 0x3800 (S+NS) + 0x1000 (SB_TAIL) */
+
+    load mainImage > 0x0;
+}

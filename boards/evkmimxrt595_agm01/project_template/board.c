@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 NXP
+ * Copyright 2018-2021 NXP
  * All rights reserved.
  *
  *
@@ -26,12 +26,6 @@
  * Definitions
  ******************************************************************************/
 #define BOARD_FLEXSPI_DLL_LOCK_RETRY (10)
-#define BOARD_IS_XIP_FLEXSPI0()                                                                                 \
-    ((((uint32_t)BOARD_InitDebugConsole >= 0x08000000U) && ((uint32_t)BOARD_InitDebugConsole < 0x10000000U)) || \
-     (((uint32_t)BOARD_InitDebugConsole >= 0x18000000U) && ((uint32_t)BOARD_InitDebugConsole < 0x20000000U)))
-#define BOARD_IS_XIP_FLEXSPI1()                                                                                 \
-    ((((uint32_t)BOARD_InitDebugConsole >= 0x28000000U) && ((uint32_t)BOARD_InitDebugConsole < 0x30000000U)) || \
-     (((uint32_t)BOARD_InitDebugConsole >= 0x38000000U) && ((uint32_t)BOARD_InitDebugConsole < 0x40000000U)))
 /*******************************************************************************
  * Variables
  ******************************************************************************/
@@ -128,7 +122,7 @@ status_t BOARD_InitPsRam(void)
     flexspi_device_config_t deviceconfig = {
         .flexspiRootClk       = 396000000, /* 396MHZ SPI serial clock, DDR serial clock 198M */
         .isSck2Enabled        = false,
-        .flashSize            = 0x8000, /*64Mb/KByte*/
+        .flashSize            = 0x2000, /* 64Mb/KByte */
         .CSIntervalUnit       = kFLEXSPI_CsIntervalUnit1SckCycle,
         .CSInterval           = 5,
         .CSHoldTime           = 3,
@@ -193,11 +187,19 @@ status_t BOARD_InitPsRam(void)
     CLOCK_SetClkDiv(kCLOCK_DivFlexspi1Clk, 1);
 
     RESET_PeripheralReset(kFLEXSPI1_RST_SHIFT_RSTn);
+#if (defined(FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL) && FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL)
+    /* Need to explicitly enable FlexSPI1 clock in mpi_loader_extram_loader case.
+     * In that case, FlexSPI driver need to be used before data sections copy. So
+     * global variables are forbidden with FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL=1.
+     */
+    CLOCK_EnableClock(kCLOCK_Flexspi1);
+#endif
 
     /* As cache depends on FlexSPI power and clock, cache must be initialized after FlexSPI power/clock is set */
     CACHE64_GetDefaultConfig(&cacheCfg);
     CACHE64_Init(CACHE64_POLSEL1, &cacheCfg);
 #if BOARD_ENABLE_PSRAM_CACHE
+    CACHE64_EnableWriteBuffer(CACHE64_CTRL1, true);
     CACHE64_EnableCache(CACHE64_CTRL1);
 #endif
 
@@ -224,7 +226,9 @@ status_t BOARD_InitPsRam(void)
     config.ahbConfig.buffer[0].priority       = 7; /* Set GPU/Display to highest priority. */
     /* All other masters use last buffer with 1KB bytes. */
     config.ahbConfig.buffer[FSL_FEATURE_FLEXSPI_AHB_BUFFER_COUNT - 1].bufferSize = 1024;
-    config.enableCombination                                                     = true;
+#if !(defined(FSL_FEATURE_FLEXSPI_HAS_NO_MCR0_COMBINATIONEN) && FSL_FEATURE_FLEXSPI_HAS_NO_MCR0_COMBINATIONEN)
+    config.enableCombination = true;
+#endif
     FLEXSPI_Init(BOARD_FLEXSPI_PSRAM, &config);
 
     /* Configure flash settings according to serial flash feature. */
@@ -266,7 +270,7 @@ status_t BOARD_InitPsRam(void)
 
     /* Set LC code to 0x04(LC=7, maximum frequency 200M) - MR0. */
     mr0Val[0] = mr0mr1[0] & 0x00FFU;
-    mr0Val[0] = (mr0Val[0] & ~0x3C) | (4 << 2U);
+    mr0Val[0] = (mr0Val[0] & ~0x3CU) | (4U << 2U);
     status    = flexspi_hyper_ram_write_mcr(BOARD_FLEXSPI_PSRAM, 0x0, mr0Val);
     if (status != kStatus_Success)
     {
@@ -275,7 +279,7 @@ status_t BOARD_InitPsRam(void)
 
     /* Set WLC code to 0x01(WLC=7, maximum frequency 200M) - MR4. */
     mr4Val[0] = mr4mr8[0] & 0x00FFU;
-    mr4Val[0] = (mr4Val[0] & ~0xE0) | (1 << 5U);
+    mr4Val[0] = (mr4Val[0] & ~0xE0U) | (1U << 5U);
     status    = flexspi_hyper_ram_write_mcr(BOARD_FLEXSPI_PSRAM, 0x4, mr4Val);
     if (status != kStatus_Success)
     {
@@ -285,8 +289,14 @@ status_t BOARD_InitPsRam(void)
     return status;
 }
 
-void BOARD_DeinitXip(FLEXSPI_Type *base)
+void BOARD_DeinitFlash(FLEXSPI_Type *base)
 {
+    /* Enable FLEXSPI clock again */
+    CLKCTL0->PSCCTL0_SET = CLKCTL0_PSCCTL0_SET_FLEXSPI0_OTFAD_CLK_MASK;
+
+    /* Enable FLEXSPI module */
+    base->MCR0 &= ~FLEXSPI_MCR0_MDIS_MASK;
+
     /* Wait until FLEXSPI is not busy */
     while (!((base->STS0 & FLEXSPI_STS0_ARBIDLE_MASK) && (base->STS0 & FLEXSPI_STS0_SEQIDLE_MASK)))
     {
@@ -295,11 +305,15 @@ void BOARD_DeinitXip(FLEXSPI_Type *base)
     base->MCR0 |= FLEXSPI_MCR0_MDIS_MASK;
 }
 
-void BOARD_InitXip(FLEXSPI_Type *base)
+void BOARD_InitFlash(FLEXSPI_Type *base)
 {
     uint32_t status;
     uint32_t lastStatus;
     uint32_t retry;
+
+    /* If serial root clock is >= 100 MHz, DLLEN set to 1, OVRDEN set to 0, then SLVDLYTARGET setting of 0x0 is
+     * recommended. */
+    base->DLLCR[0] = 0x1U;
 
     /* Enable FLEXSPI module */
     base->MCR0 &= ~FLEXSPI_MCR0_MDIS_MASK;
@@ -349,13 +363,14 @@ void BOARD_SetFlexspiClock(FLEXSPI_Type *base, uint32_t src, uint32_t divider)
 {
     if (base == FLEXSPI0)
     {
-        if (CLKCTL0->FLEXSPI0FCLKSEL != CLKCTL0_FLEXSPI0FCLKSEL_SEL(src) ||
-            (CLKCTL0->FLEXSPI0FCLKDIV & CLKCTL0_FLEXSPI0FCLKDIV_DIV_MASK) != (divider - 1))
+        if ((CLKCTL0->FLEXSPI0FCLKSEL != CLKCTL0_FLEXSPI0FCLKSEL_SEL(src)) ||
+            ((CLKCTL0->FLEXSPI0FCLKDIV & CLKCTL0_FLEXSPI0FCLKDIV_DIV_MASK) != (divider - 1)))
         {
-            if (BOARD_IS_XIP_FLEXSPI0())
-            {
-                BOARD_DeinitXip(base);
-            }
+            /* Always deinit FLEXSPI and init FLEXSPI for the flash to make sure the flash works correctly after the
+             FLEXSPI root clock changed as the default FLEXSPI configuration may does not work for the new root clock
+             frequency. */
+            BOARD_DeinitFlash(base);
+
             /* Disable clock before changing clock source */
             CLKCTL0->PSCCTL0_CLR = CLKCTL0_PSCCTL0_CLR_FLEXSPI0_OTFAD_CLK_MASK;
             /* Update flexspi clock. */
@@ -367,21 +382,20 @@ void BOARD_SetFlexspiClock(FLEXSPI_Type *base, uint32_t src, uint32_t divider)
             }
             /* Enable FLEXSPI clock again */
             CLKCTL0->PSCCTL0_SET = CLKCTL0_PSCCTL0_SET_FLEXSPI0_OTFAD_CLK_MASK;
-            if (BOARD_IS_XIP_FLEXSPI0())
-            {
-                BOARD_InitXip(base);
-            }
+
+            BOARD_InitFlash(base);
         }
     }
     else if (base == FLEXSPI1)
     {
-        if (CLKCTL0->FLEXSPI1FCLKSEL != CLKCTL0_FLEXSPI1FCLKSEL_SEL(src) ||
-            (CLKCTL0->FLEXSPI1FCLKDIV & CLKCTL0_FLEXSPI1FCLKDIV_DIV_MASK) != (divider - 1))
+        if ((CLKCTL0->FLEXSPI1FCLKSEL != CLKCTL0_FLEXSPI1FCLKSEL_SEL(src)) ||
+            ((CLKCTL0->FLEXSPI1FCLKDIV & CLKCTL0_FLEXSPI1FCLKDIV_DIV_MASK) != (divider - 1)))
         {
-            if (BOARD_IS_XIP_FLEXSPI1())
-            {
-                BOARD_DeinitXip(base);
-            }
+            /* Always deinit FLEXSPI and init FLEXSPI for the flash to make sure the flash works correctly after the
+             FLEXSPI root clock changed as the default FLEXSPI configuration may does not work for the new root clock
+             frequency. */
+            BOARD_DeinitFlash(base);
+
             /* Disable clock before changing clock source */
             CLKCTL0->PSCCTL0_CLR = CLKCTL0_PSCCTL0_CLR_FLEXSPI1_CLK_MASK;
             /* Update flexspi clock. */
@@ -393,10 +407,8 @@ void BOARD_SetFlexspiClock(FLEXSPI_Type *base, uint32_t src, uint32_t divider)
             }
             /* Enable FLEXSPI clock again */
             CLKCTL0->PSCCTL0_SET = CLKCTL0_PSCCTL0_SET_FLEXSPI1_CLK_MASK;
-            if (BOARD_IS_XIP_FLEXSPI1())
-            {
-                BOARD_InitXip(base);
-            }
+
+            BOARD_InitFlash(base);
         }
     }
     else
@@ -409,10 +421,10 @@ void BOARD_SetFlexspiClock(FLEXSPI_Type *base, uint32_t src, uint32_t divider)
  * updating in case XIP(execute code on FLEXSPI memory.) */
 void BOARD_FlexspiClockSafeConfig(void)
 {
-    /* Move FLEXSPI clock source from main clock to FRO192M to avoid instruction/data fetch issue in XIP when
+    /* Move FLEXSPI clock source from main clock to FRO192M / 2 to avoid instruction/data fetch issue in XIP when
      * updating PLL and main clock.
      */
-    BOARD_SetFlexspiClock(FLEXSPI0, 3U, 1);
+    BOARD_SetFlexspiClock(FLEXSPI0, 3U, 2U);
 }
 
 #if defined(SDK_I2C_BASED_COMPONENT_USED) && SDK_I2C_BASED_COMPONENT_USED
@@ -488,13 +500,15 @@ status_t BOARD_I3C_Send(I3C_Type *base,
     /* Prepare transfer structure. */
     masterXfer.slaveAddress   = deviceAddress;
     masterXfer.direction      = kI3C_Write;
+    masterXfer.busType        = kI3C_TypeI2C;
     masterXfer.subaddress     = subAddress;
     masterXfer.subaddressSize = subaddressSize;
     masterXfer.data           = txBuff;
     masterXfer.dataSize       = txBuffSize;
     masterXfer.flags          = kI3C_TransferDefaultFlag;
+    masterXfer.busType        = kI3C_TypeI2C;
 
-    return I3C_MasterTransferBlocking(base, kI3C_TypeI2C, &masterXfer);
+    return I3C_MasterTransferBlocking(base, &masterXfer);
 }
 
 status_t BOARD_I3C_Receive(I3C_Type *base,
@@ -513,9 +527,11 @@ status_t BOARD_I3C_Receive(I3C_Type *base,
     masterXfer.data           = rxBuff;
     masterXfer.dataSize       = rxBuffSize;
     masterXfer.direction      = kI3C_Read;
+    masterXfer.busType        = kI3C_TypeI2C;
     masterXfer.flags          = kI3C_TransferDefaultFlag;
+    masterXfer.busType        = kI3C_TypeI2C;
 
-    return I3C_MasterTransferBlocking(base, kI3C_TypeI2C, &masterXfer);
+    return I3C_MasterTransferBlocking(base, &masterXfer);
 }
 
 void BOARD_Codec_I2C_Init(void)
@@ -592,15 +608,15 @@ void BOARD_Accel_I2C_Init(void)
     BOARD_I2C_Init(BOARD_ACCEL_I2C_BASEADDR, BOARD_ACCEL_I2C_CLOCK_FREQ);
 }
 
-status_t BOARD_Accel_I2C_Send(uint8_t deviceAddress, uint32_t subAddress, uint8_t subaddressSize, uint32_t txBuff)
+status_t BOARD_Accel_I2C_Send(uint8_t deviceAddress, uint32_t subAddress, uint8_t subAddressSize, uint32_t txBuff)
 {
     uint8_t data = (uint8_t)txBuff;
-    return BOARD_I2C_Send(BOARD_ACCEL_I2C_BASEADDR, deviceAddress, subAddress, subaddressSize, &data, 1);
+    return BOARD_I2C_Send(BOARD_ACCEL_I2C_BASEADDR, deviceAddress, subAddress, subAddressSize, &data, 1);
 }
 
 status_t BOARD_Accel_I2C_Receive(
-    uint8_t deviceAddress, uint32_t subAddress, uint8_t subaddressSize, uint8_t *rxBuff, uint8_t rxBuffSize)
+    uint8_t deviceAddress, uint32_t subAddress, uint8_t subAddressSize, uint8_t *rxBuff, uint8_t rxBuffSize)
 {
-    return BOARD_I2C_Receive(BOARD_ACCEL_I2C_BASEADDR, deviceAddress, subAddress, subaddressSize, rxBuff, rxBuffSize);
+    return BOARD_I2C_Receive(BOARD_ACCEL_I2C_BASEADDR, deviceAddress, subAddress, subAddressSize, rxBuff, rxBuffSize);
 }
 #endif /* SDK_I2C_BASED_COMPONENT_USED */

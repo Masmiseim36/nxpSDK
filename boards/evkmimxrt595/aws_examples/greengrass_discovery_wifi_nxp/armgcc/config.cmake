@@ -2,7 +2,6 @@
 set(CONFIG_USE_middleware_wifi_MIMXRT595S_cm33 true)
 set(CONFIG_USE_middleware_sdmmc_host_usdhc_MIMXRT595S_cm33 true)
 set(CONFIG_USE_middleware_sdmmc_host_usdhc_freertos_MIMXRT595S_cm33 true)
-set(CONFIG_USE_middleware_mbedtls_port_ksdk_MIMXRT595S_cm33 true)
 set(CONFIG_USE_component_mflash_rt595_MIMXRT595S_cm33 true)
 set(CONFIG_USE_middleware_mbedtls_rt1_MIMXRT595S_cm33 true)
 set(CONFIG_USE_component_serial_manager_uart_MIMXRT595S_cm33 true)

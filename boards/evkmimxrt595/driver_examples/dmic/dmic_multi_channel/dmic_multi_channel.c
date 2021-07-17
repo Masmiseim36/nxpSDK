@@ -25,9 +25,9 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_I2S_TX                     (I2S5)
-#define DEMO_I2S_SAMPLE_RATE            48000
-#define I2S_CLOCK_DIVIDER               (24576000 / DEMO_I2S_SAMPLE_RATE / 32 / 8)
+#define DEMO_I2S_TX          (I2S5)
+#define DEMO_I2S_SAMPLE_RATE 48000
+#define I2S_CLOCK_DIVIDER    (24576000 / DEMO_I2S_SAMPLE_RATE / 32 / 8)
 
 #define DEMO_DMA_MEMCPY_CHANNEL_0         0
 #define DEMO_DMIC_NUMS                    4U

@@ -38,6 +38,11 @@ typedef struct _usb_hid_generic_struct
     uint8_t attach;
     uint8_t currentConfiguration;
     uint8_t currentInterfaceAlternateSetting[USB_HID_GENERIC_INTERFACE_COUNT];
+#if (defined(USB_DEVICE_CONFIG_ROOT2_TEST) && (USB_DEVICE_CONFIG_ROOT2_TEST > 0U))
+#if ((defined(USB_DEVICE_CONFIG_REMOTE_WAKEUP)) && (USB_DEVICE_CONFIG_REMOTE_WAKEUP > 0U))
+    volatile uint8_t remoteWakeup;
+#endif
+#endif
 } usb_hid_generic_struct_t;
 
 /*******************************************************************************

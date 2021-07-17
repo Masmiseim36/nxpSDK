@@ -6,7 +6,7 @@
  */
 
 #include "its_ns_tests.h"
-#include "test/framework/test_framework_helpers.h"
+#include "test_framework_helpers.h"
 #include "../its_tests_common.h"
 
 static struct test_t psa_its_ns_tests[] = {

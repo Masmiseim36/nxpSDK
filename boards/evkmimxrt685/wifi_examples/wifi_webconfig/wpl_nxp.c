@@ -14,7 +14,7 @@
 #elif defined(SD8977)
 #include "sduart8977_wlan_bt.h"
 #elif defined(SD8978)
-#include "sduart8978_wlan_bt.h"
+#include "sduartIW416_wlan_bt.h"
 #elif defined(SD8987)
 #include "sduart8987_wlan_bt.h"
 #elif defined(SD8997)
@@ -389,7 +389,7 @@ int WPL_Join(char *ssid, char *password)
     int ret;
     uint32_t pwd_len = 0;
     // Note down the Join task so that
-    xJoinTaskNotify  = xTaskGetCurrentTaskHandle();
+    xJoinTaskNotify = xTaskGetCurrentTaskHandle();
 
     if (strlen(ssid) > WPL_WIFI_SSID_LENGTH)
     {

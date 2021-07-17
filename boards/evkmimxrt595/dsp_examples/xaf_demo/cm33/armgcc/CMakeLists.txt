@@ -1,6 +1,6 @@
 # CROSS COMPILER SETTING
 SET(CMAKE_SYSTEM_NAME Generic)
-CMAKE_MINIMUM_REQUIRED (VERSION 3.1.1)
+CMAKE_MINIMUM_REQUIRED (VERSION 3.10.0)
 
 # THE VERSION NUMBER
 SET (Tutorial_VERSION_MAJOR 1)
@@ -66,13 +66,17 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../pin_mux.c"
 "${ProjDirPath}/../pin_mux.h"
 "${ProjDirPath}/../incbin.S"
+"${ProjDirPath}/../VIT_Model_cn.h"
+"${ProjDirPath}/../VIT_Model_en.h"
+"${ProjDirPath}/../PL_platformTypes_HIFI4_FUSIONF1.h"
+"${ProjDirPath}/../PL_memoryRegion.h"
 "${ProjDirPath}/../dsp_support.c"
 "${ProjDirPath}/../dsp_support.h"
 "${ProjDirPath}/../FreeRTOSConfig.h"
 "${ProjDirPath}/../pmic_support.c"
 "${ProjDirPath}/../pmic_support.h"
-"${ProjDirPath}/../../../../sdmmc_config.c"
-"${ProjDirPath}/../../../../sdmmc_config.h"
+"${ProjDirPath}/../sdmmc_config.c"
+"${ProjDirPath}/../sdmmc_config.h"
 "${ProjDirPath}/../board.c"
 "${ProjDirPath}/../board.h"
 "${ProjDirPath}/../clock_config.c"
@@ -82,13 +86,11 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 )
 
 target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
-    ${ProjDirPath}/.. flash_debug
-    ${ProjDirPath}/../../dsp/binary flash_debug
     ${ProjDirPath}/..
+    ${ProjDirPath}/../../dsp/binary
+    ${ProjDirPath}/../../../../../../middleware/vit/FusionF1/Lib
+    ${ProjDirPath}/../../../../../../middleware/vit/FusionF1/Lib/Inc
     ${ProjDirPath}/../../../..
-    ${ProjDirPath}/../../dsp/binary flash_release
-    ${ProjDirPath}/../../dsp/binary debug
-    ${ProjDirPath}/../../dsp/binary release
 )
 
 set(CMAKE_MODULE_PATH
@@ -97,7 +99,6 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../../rtos/freertos
     ${ProjDirPath}/../../../../../../devices/MIMXRT595S/utilities
     ${ProjDirPath}/../../../../../../components/codec
-    ${ProjDirPath}/../../../../../../components/codec/port/wm8904
     ${ProjDirPath}/../../../../../../components/codec/i2c
     ${ProjDirPath}/../../../../../../components/i2c
     ${ProjDirPath}/../../../../../../middleware/sdmmc
@@ -109,7 +110,7 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../../components/serial_manager
     ${ProjDirPath}/../../../../../../components/lists
     ${ProjDirPath}/../../../../flash_config
-    ${ProjDirPath}/../../../../../../CMSIS/Include
+    ${ProjDirPath}/../../../../../../CMSIS/Core/Include
     ${ProjDirPath}/../../../../../../components/osa
 )
 
@@ -194,11 +195,7 @@ include(driver_flexcomm_MIMXRT595S_cm33)
 
 include(driver_lpc_iopctl_MIMXRT595S_cm33)
 
-include(CMSIS_Include_core_cm33_MIMXRT595S_cm33)
-
-include(CMSIS_Include_common_MIMXRT595S_cm33)
-
-include(CMSIS_Include_dsp_MIMXRT595S_cm33)
+include(CMSIS_Include_core_cm_MIMXRT595S_cm33)
 
 include(middleware_freertos-kernel_MIMXRT595S_cm33)
 

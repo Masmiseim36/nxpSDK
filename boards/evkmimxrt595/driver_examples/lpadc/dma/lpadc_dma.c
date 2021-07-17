@@ -21,7 +21,7 @@
 #define DEMO_LPADC_USER_CHANNEL     0U
 #define DEMO_LPADC_USER_CMDID       1U /* The available command number are 1-15 */
 #define DEMO_LPADC_RESFIFO_REG_ADDR (uint32_t)(&(ADC0->RESFIFO))
-#define DEMO_RESULT_FIFO_READY_FLAG  kLPADC_ResultFIFO0ReadyFlag
+#define DEMO_RESULT_FIFO_READY_FLAG kLPADC_ResultFIFO0ReadyFlag
 
 #define DEMO_DMA_BASE             DMA0
 #define DEMO_DMA_ADC_CHANNEL      0U

@@ -47,7 +47,6 @@ extern clk_t client_proxy_cycles;
 #include "fsl_gpio.h"
 
 /* EAP Library, configuration */
-#include "TEST_PARAM.h"
 #include "LVM.h" // EAP library
 #include "EAP_Parameter_AutoVolumeLeveler.h"
 #include "EAP_Parameter_ConcertSound.h"
@@ -56,6 +55,9 @@ extern clk_t client_proxy_cycles;
 #include "EAP_Parameter_VoiceEnhancer.h"
 #include "EAP_Parameter_AllEffectOff.h"
 #include "EAP_Parameter_Custom.h"
+#include "EAP_Parameter_Crossover2waySpeakers.h"
+#include "EAP_Parameter_CrossoverForSubwoofer.h"
+#include "EAP_Parameter_ToneGenerator.h"
 
 /*******************************************************************************
  * Tracing configuration
@@ -119,6 +121,8 @@ typedef struct client_proxy_t
 #define XA_CLIENT_PROXY_FLAG_OUTPUT            (1 << 3)
 #define XA_CLIENT_PROXY_FLAG_COMPLETE          (1 << 4)
 
+#define LVM_FRAME_SIZE_MS 10
+
 
 extern dsp_handle_t dsp;
 
@@ -137,7 +141,7 @@ LVM_ReturnStatus_en EAP_Init(client_proxy_t *d);
 LVM_ReturnStatus_en EAP_SetSampleRateAndNumOfChannels(client_proxy_t *d);
 LVM_ReturnStatus_en EAP_SetConfig(LVM_ControlParams_t *pEAP_ControlParamsSet);
 LVM_ReturnStatus_en EAP_UpdateConfig(LVM_ControlParams_t *pEAP_ControlParamsUpdate, LVM_INT8 paramNum);
-LVM_ReturnStatus_en EAP_Execute(void * inputBuffer, void * outputBuffer, int numSamples, int audioTimeMs);
+LVM_ReturnStatus_en EAP_Execute(void * inputBuffer, void * outputBuffer[2], int numSamples, int audioTimeMs);
 LVM_ReturnStatus_en EAP_Deinit();
 LVM_UINT32 EAP_AudioTime = 0;
 
@@ -161,10 +165,21 @@ static XA_ERRORCODE xa_client_proxy_do_execute_16bit(client_proxy_t *d)
 {
     WORD32    k, i, nSize;
     WORD16    *pIn = (WORD16 *) d->input;
-    WORD16    *pOut = (WORD16 *) d->output;
+    WORD16    *pOut[2];
     UWORD32   filled = d->input_avail;
-    WORD16    input, output;
 
+    if (EAP_ControlParams.XO_OperatingMode == LVM_MODE_ON)
+    {
+        for(i = 0; i < 2; i++)
+        {
+            pOut[i] = malloc(filled * d->channels);
+        }
+    }
+    else
+    {
+        pOut[0] = (WORD16 *) d->output;
+        pOut[1] = NULL;
+    }
     nSize = filled >> 1;    //size of each sample is 2 bytes
     k = (WORD32)(d->buffer_size - filled);
 
@@ -174,28 +189,49 @@ static XA_ERRORCODE xa_client_proxy_do_execute_16bit(client_proxy_t *d)
 
     (k > 0 ? memset((void *)pIn + filled, 0x00, k) : 0);
 
-
     EAP_AudioTime += LVM_FRAME_SIZE_MS;
 
-    EAP_Execute(pIn, pOut, nSize/d->channels, EAP_AudioTime);
+    EAP_Execute(pIn, (void *)pOut, nSize/d->channels, EAP_AudioTime);
 
-    /* ...Processing loop */
-    for (i = 0; i < nSize; i++)
+    if (EAP_ControlParams.XO_OperatingMode == LVM_MODE_ON)
     {
-        input = *pIn++;
-        output = *pOut++;
+        if (d->channels > 1)
+        {
+            for (i = 0; i< nSize/d->channels; i++)
+            {
+                /* Interleave data - mix low and high band output of crossover, take just right channel */
+                *((WORD16*)d->output + 2 * i)     = *(pOut[0] + d->channels * i);
+                *((WORD16*)d->output + 2 * i + 1) = *(pOut[1] + d->channels * i);
+            }
+        }
+        else
+        {
+            for (i = 0; i< nSize/d->channels; i++)
+            {
+                /* In case of mono input just use the low band for the mono output */
+                *((WORD16*)d->output + i) = *(pOut[0] + i);
+            }
+        }
     }
 
     /* ...save total number of consumed bytes */
-    d->consumed = (UWORD32)((void *)pIn - d->input);
+    d->consumed = filled;
 
     /* ...save total number of produced bytes */
-    d->produced = (UWORD32)((void *)pOut - d->output);
+    d->produced = filled;
 
     /* ...put flag saying we have output buffer */
     d->state |= XA_CLIENT_PROXY_FLAG_OUTPUT;
 
     TRACE(PROCESS, _b("produced: %u bytes (%u samples)"), d->produced, nSize);
+
+    if (EAP_ControlParams.XO_OperatingMode == LVM_MODE_ON)
+    {
+        for(i = 0; i < 2; i++)
+        {
+            free(pOut[i]);
+        }
+    }
 
     /* ...return success result code */
     return XA_NO_ERROR;
@@ -398,15 +434,24 @@ static XA_ERRORCODE xa_client_proxy_set_config_param(client_proxy_t *d, WORD32 i
                     memcpy(&EAP_ControlParams, &ControlParamSet_custom, sizeof(LVM_ControlParams_t));
                     break;
                 case 8:
+                    memcpy(&EAP_ControlParams, &ControlParamSet_toneGenerator, sizeof(LVM_ControlParams_t));
+                    break;
                 case 9:
+                    memcpy(&EAP_ControlParams, &ControlParamSet_Crossover2WaySpeaker, sizeof(LVM_ControlParams_t));
+                    break;
                 case 10:
+                    memcpy(&EAP_ControlParams, &ControlParamSet_CrossoverForSubwoofer, sizeof(LVM_ControlParams_t));
+                    break;
                 case 11:
+                case 12:
+                case 13:
+                case 14:
                     LVM_Status = EAP_UpdateConfig(&EAP_ControlParams, i_value);
                     break;
                 default:
                     XF_CHK_ERR(0, XA_CLIENT_PROXY_CONFIG_NONFATAL_RANGE);
             }
-            if (i_value < 8)
+            if (i_value < 11)
             {
                 LVM_Status = EAP_SetSampleRateAndNumOfChannels(d);
                 if (LVM_Status == LVM_OUTOFRANGE)
@@ -795,7 +840,7 @@ LVM_INT16               MallocAlign = 4;                        /* 4 byte Malloc
 
 LVM_ReturnStatus_en EAP_Init(client_proxy_t *d)
 {
-    LVM_ReturnStatus_en     LVM_Status;                             /* Function call status */
+    volatile LVM_ReturnStatus_en     LVM_Status;                             /* Function call status */
     LVM_UINT16              i;                                      /* loop index */
     LVM_INT32               temp32;                                 /* temporary address */
 
@@ -865,6 +910,7 @@ LVM_ReturnStatus_en EAP_Init(client_proxy_t *d)
     /*
     * Get an EAP Instance
     */
+    EAP_InstParams.Platform = PLATFORM_ID;
     EAP_hInstance = LVM_NULL;                                           /* Initialise to NULL */
     LVM_Status = LVM_GetInstanceHandle( &EAP_hInstance,                 /* Init sets the instance handle */
                                         &EAP_MemTab,
@@ -887,7 +933,7 @@ LVM_ReturnStatus_en EAP_Init(client_proxy_t *d)
 LVM_ReturnStatus_en EAP_SetConfig(LVM_ControlParams_t *pEAP_ControlParamsSet)
 {
     /* Function call status */
-    LVM_ReturnStatus_en LVM_Status;
+    volatile LVM_ReturnStatus_en LVM_Status;
 
     /******************************************************************************
     Call set control parameters
@@ -900,7 +946,7 @@ LVM_ReturnStatus_en EAP_SetConfig(LVM_ControlParams_t *pEAP_ControlParamsSet)
 
 LVM_ReturnStatus_en EAP_UpdateConfig(LVM_ControlParams_t *pEAP_ControlParamsUpdate, LVM_INT8 paramNum)
 {
-    LVM_ReturnStatus_en LVM_Status;
+    volatile LVM_ReturnStatus_en LVM_Status;
     LVM_Status = LVM_GetControlParameters(EAP_hInstance, pEAP_ControlParamsUpdate);
     if (LVM_Status != LVM_SUCCESS)
     {
@@ -911,16 +957,16 @@ LVM_ReturnStatus_en EAP_UpdateConfig(LVM_ControlParams_t *pEAP_ControlParamsUpda
     LVM_INT8 balance = pEAP_ControlParamsUpdate->VC_Balance;
     switch (paramNum)
     {
-        case 8:
+        case 11:
             pEAP_ControlParamsUpdate->VC_EffectLevel += 2;
             break;
-        case 9:
+        case 12:
             pEAP_ControlParamsUpdate->VC_EffectLevel -= 2;
             break;
-        case 10:
+        case 13:
             pEAP_ControlParamsUpdate->VC_Balance -= 2;
             break;
-        case 11:
+        case 14:
             pEAP_ControlParamsUpdate->VC_Balance += 2;
             break;
     }
@@ -940,7 +986,7 @@ LVM_ReturnStatus_en EAP_UpdateConfig(LVM_ControlParams_t *pEAP_ControlParamsUpda
 }
 
 LVM_ReturnStatus_en EAP_SetSampleRateAndNumOfChannels(client_proxy_t *d){
-    LVM_ReturnStatus_en LVM_Status = LVM_SUCCESS;
+    volatile LVM_ReturnStatus_en LVM_Status = LVM_SUCCESS;
     switch (d->sample_rate)
     {
         case 4000:
@@ -1001,16 +1047,17 @@ LVM_ReturnStatus_en EAP_SetSampleRateAndNumOfChannels(client_proxy_t *d){
     }
 }
 
-LVM_ReturnStatus_en EAP_Execute(void * inputBuffer, void * outputBuffer, int numSamples, int audioTimeMs)
+LVM_ReturnStatus_en EAP_Execute(void * inputBuffer, void * outputBuffer[2], int numSamples, int audioTimeMs)
 {
     /* Function call status */
-    LVM_ReturnStatus_en     LVM_Status;
+    volatile LVM_ReturnStatus_en     LVM_Status;
 
     LVM_Status = LVM_Process(EAP_hInstance,             /* Instance handle */
                              inputBuffer,               /* Input buffer */
-                             outputBuffer,              /* Output buffer */
+                             (LVM_INT16 **)outputBuffer, /* Output buffer */
                              numSamples,                /* Number of samples to process */
                              audioTimeMs);              /* Audio Time*/
+
 
     /* Check for error and stop if needed */
     if(LVM_Status != LVM_SUCCESS)
@@ -1023,7 +1070,7 @@ LVM_ReturnStatus_en EAP_Execute(void * inputBuffer, void * outputBuffer, int num
 
 LVM_ReturnStatus_en EAP_Deinit()
 {
-    LVM_ReturnStatus_en     LVM_Status;                             /* Function call status */
+    volatile LVM_ReturnStatus_en     LVM_Status;                             /* Function call status */
     LVM_UINT16              i;                                      /* loop index */
     LVM_INT32               temp32;                                 /* temporary address */
 

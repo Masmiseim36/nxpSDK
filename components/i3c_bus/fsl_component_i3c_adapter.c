@@ -42,13 +42,11 @@ static void i3c_slave2master_callback(I3C_Type *base, void *userData);
 /*******************************************************************************
  * Variables
  ******************************************************************************/
-extern i3c_slave_handle_t *s_i3cSlaveHandle[];
-extern void *s_i3cMasterHandle[];
 
-volatile bool g_masterCompletionFlag = false;
-volatile bool g_ibiWonFlag           = false;
-volatile status_t g_completionStatus = kStatus_Success;
-volatile bool g_transferPolling      = false;
+static volatile bool g_masterCompletionFlag = false;
+static volatile bool g_ibiWonFlag           = false;
+static volatile status_t g_completionStatus = kStatus_Success;
+static volatile bool g_transferPolling      = false;
 
 const i3c_device_hw_ops_t master_ops = {.Init              = I3C_MasterAdapterInit,
                                         .Deinit            = NULL,
@@ -61,7 +59,7 @@ const i3c_device_hw_ops_t master_ops = {.Init              = I3C_MasterAdapterIn
                                         .RequestMastership = I3C_SlaveAdapterRequestMastership,
                                         .RequestIBI        = I3C_SlaveAdapterRequestIBI};
 
-const i3c_device_hw_ops_t slave_ops                 = {.Init              = I3C_SlaveAdapterInit,
+const i3c_device_hw_ops_t slave_ops                        = {.Init              = I3C_SlaveAdapterInit,
                                        .Deinit            = NULL,
                                        .ProceedDAA        = NULL,
                                        .CheckSupportCCC   = NULL,
@@ -71,9 +69,9 @@ const i3c_device_hw_ops_t slave_ops                 = {.Init              = I3C_
                                        .HotJoin           = I3C_SlaveAdapterRequestHotJoin,
                                        .RequestMastership = I3C_SlaveAdapterRequestMastership,
                                        .RequestIBI        = I3C_SlaveAdapterRequestIBI};
-const i3c_master_transfer_callback_t masterCallback = {.slave2Master     = i3c_slave2master_callback,
-                                                       .ibiCallback      = i3c_master_ibi_callback,
-                                                       .transferComplete = i3c_master_callback};
+static const i3c_master_transfer_callback_t masterCallback = {.slave2Master     = i3c_slave2master_callback,
+                                                              .ibiCallback      = i3c_master_ibi_callback,
+                                                              .transferComplete = i3c_master_callback};
 
 /*******************************************************************************
  * Code
@@ -108,10 +106,14 @@ static void i3c_secondarymaster_callback(I3C_Type *base, i3c_slave_transfer_t *x
                 masterPrivate->devCount = pDevList[0];
                 masterPrivate->devList  = (i3c_ccc_dev_t *)(void *)&pDevList[1];
             }
+            break;
 
+        case (uint32_t)kI3C_SlaveTransmitEvent:
+        case (uint32_t)kI3C_SlaveReceiveEvent:
             break;
 
         default:
+            assert(false);
             break;
     }
 }
@@ -183,30 +185,6 @@ static void i3c_master_callback(I3C_Type *base, i3c_master_handle_t *handle, sta
 
     g_completionStatus = status;
 }
-//
-// static void i3c_master_dma_callback(I3C_Type *base, i3c_master_dma_handle_t *handle, status_t status, void *userData)
-//{
-//    /* Signal transfer success when received success status. */
-//    if (status == kStatus_Success)
-//    {
-//        g_masterCompletionFlag = true;
-//    }
-//    if (status == kStatus_I3C_IBIWon)
-//    {
-//        g_ibiWonFlag = true;
-//        if (handle->ibiAddress == I3C_BUS_ADDR_HOTJOIN)
-//        {
-//            I3C_BusMasterDoDAA(((i3c_device_t *)userData)->bus);
-//        }
-//        else
-//        {
-//            uint8_t ibiPayloadSize = sizeof(handle->ibiPayloadSize);
-//            void *ibiData = malloc(ibiPayloadSize);
-//            memcpy(ibiData, handle->ibiBuff, ibiPayloadSize);
-//            I3C_BusMasterHandleIBI(((i3c_device_t *)userData)->bus, handle->ibiAddress, ibiData, ibiPayloadSize);
-//        }
-//    }
-//}
 
 static status_t I3C_MasterAdapterInit(i3c_device_t *master)
 {
@@ -254,18 +232,12 @@ static status_t I3C_MasterAdapterInit(i3c_device_t *master)
     }
 
     I3C_Init(base, &masterConfig, masterResource->clockInHz);
-    // I3C_MasterAdapterSetDeviceInfo(base, &master->info, masterControlInfo->isSecondary);
 
     if (transMode == kI3C_MasterTransferInterruptMode)
     {
         i3c_master_handle_t *g_i3c_m_handle = malloc(sizeof(i3c_master_handle_t));
         I3C_MasterTransferCreateHandle(base, g_i3c_m_handle, &masterCallback, master);
     }
-    //    else
-    //    {
-    //        i3c_master_dma_handle_t *g_i3c_m_dma_handle = malloc(sizeof(*i3c_master_dma_handle_t));
-    //        I3C_MasterTransferCreateHandleDMA(base, g_i3c_m_dma_handle, i3c_master_dma_callback, NULL);
-    //    }
 
     status_t result = kStatus_Success;
 
@@ -386,6 +358,7 @@ static status_t I3CMasterAdapterTransfer(I3C_Type *base,
     g_masterCompletionFlag = false;
     uint32_t timeout       = 0U;
     status_t result        = kStatus_Success;
+    g_completionStatus     = kStatus_Success;
 
     /*TODO: wait for module idle */
     if (g_transferPolling == true)
@@ -405,24 +378,18 @@ static status_t I3CMasterAdapterTransfer(I3C_Type *base,
             }
 
             /* Wait for transfer completed. */
-            while ((!g_ibiWonFlag) && (!g_masterCompletionFlag) && (g_completionStatus == kStatus_Success) &&
-                   (++timeout < I3C_TIME_OUT_INDEX))
+            while ((!g_ibiWonFlag) && (!g_masterCompletionFlag))
             {
+                timeout++;
+                if ((g_completionStatus != kStatus_Success) || (timeout > I3C_TIME_OUT_INDEX))
+                {
+                    break;
+                }
                 __NOP();
             }
 
             result = g_completionStatus;
         }
-        //    else
-        //    {
-        //        result = I3C_MasterTransferDMA(base, &g_i3c_m_dma_handle, &xfer);
-        //
-        //        /* Wait for transfer completed. */
-        //        while ((!g_ibiWonFlag) && (!g_masterCompletionFlag) && (++timeout < I3C_TIME_OUT_INDEX))
-        //        {
-        //        }
-        //
-        //    }
 
         if (timeout == I3C_TIME_OUT_INDEX)
         {
@@ -652,8 +619,8 @@ static status_t I3C_MasterAdapterHandOffMasterShip(i3c_device_t *master, uint8_t
     I3C_SlaveTransferCreateHandle(base, g_i3c_s_handle, i3c_secondarymaster_callback, master);
 
     /* Start slave non-blocking transfer. */
-    I3C_SlaveTransferNonBlocking(base, g_i3c_s_handle,
-                                 ((uint32_t)kI3C_SlaveCompletionEvent | (uint32_t)kI3C_SlaveReceivedCCCEvent));
+    result = I3C_SlaveTransferNonBlocking(base, g_i3c_s_handle,
+                                          ((uint32_t)kI3C_SlaveCompletionEvent | (uint32_t)kI3C_SlaveReceivedCCCEvent));
     I3C_SlaveDisableInterrupts(base, (uint32_t)kI3C_SlaveTxReadyFlag);
 
     return result;

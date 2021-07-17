@@ -10,7 +10,6 @@
     <definition extID="platform.drivers.clock.MIMXRT1176"/>
     <definition extID="platform.drivers.common.MIMXRT1176"/>
     <definition extID="platform.devices.MIMXRT1176_CMSIS.MIMXRT1176"/>
-    <definition extID="platform.Include_core_cm4.MIMXRT1176"/>
     <definition extID="component.lpuart_adapter.MIMXRT1176"/>
     <definition extID="component.lists.MIMXRT1176"/>
     <definition extID="platform.drivers.lpuart.MIMXRT1176"/>
@@ -18,13 +17,12 @@
     <definition extID="platform.drivers.iomuxc.MIMXRT1176"/>
     <definition extID="platform.drivers.igpio.MIMXRT1176"/>
     <definition extID="platform.drivers.xip_device.MIMXRT1176"/>
-    <definition extID="platform.drivers.xip_board.MIMXRT1176"/>
+    <definition extID="platform.drivers.xip_board.evkmimxrt1170.MIMXRT1176"/>
     <definition extID="platform.drivers.pmu_1.MIMXRT1176"/>
     <definition extID="platform.drivers.dcdc_soc.MIMXRT1176"/>
     <definition extID="platform.drivers.anatop_ai.MIMXRT1176"/>
+    <definition extID="CMSIS_Include_core_cm.MIMXRT1176"/>
     <definition extID="platform.utilities.misc_utilities.MIMXRT1176"/>
-    <definition extID="platform.Include_common.MIMXRT1176"/>
-    <definition extID="platform.Include_dsp.MIMXRT1176"/>
     <definition extID="platform.devices.MIMXRT1176_system.MIMXRT1176"/>
     <definition extID="mcuxpresso"/>
     <definition extID="iar"/>
@@ -34,7 +32,7 @@
     <definition extID="com.crt.advproject.config.exe.debug"/>
     <definition extID="com.crt.advproject.config.exe.release"/>
   </externalDefinitions>
-  <example id="evkmimxrt1170_cache_cm4" name="cache_cm4" device_core="cm4_MIMXRT1176xxxxx" dependency="platform.drivers.edma.MIMXRT1176 utility.debug_console_lite.MIMXRT1176 platform.utilities.assert_lite.MIMXRT1176 platform.drivers.dmamux.MIMXRT1176 platform.drivers.cache_lmem.MIMXRT1176 platform.drivers.clock.MIMXRT1176 platform.drivers.common.MIMXRT1176 platform.devices.MIMXRT1176_CMSIS.MIMXRT1176 platform.Include_core_cm4.MIMXRT1176 component.lpuart_adapter.MIMXRT1176 component.lists.MIMXRT1176 platform.drivers.lpuart.MIMXRT1176 platform.devices.MIMXRT1176_startup.MIMXRT1176 platform.drivers.iomuxc.MIMXRT1176 platform.drivers.igpio.MIMXRT1176 platform.drivers.xip_device.MIMXRT1176 platform.drivers.xip_board.MIMXRT1176 platform.drivers.pmu_1.MIMXRT1176 platform.drivers.dcdc_soc.MIMXRT1176 platform.drivers.anatop_ai.MIMXRT1176 platform.utilities.misc_utilities.MIMXRT1176 platform.Include_common.MIMXRT1176 platform.Include_dsp.MIMXRT1176 platform.devices.MIMXRT1176_system.MIMXRT1176" category="driver_examples">
+  <example id="evkmimxrt1170_cache_cm4" name="cache_cm4" device_core="cm4_MIMXRT1176xxxxx" dependency="platform.drivers.edma.MIMXRT1176 utility.debug_console_lite.MIMXRT1176 platform.utilities.assert_lite.MIMXRT1176 platform.drivers.dmamux.MIMXRT1176 platform.drivers.cache_lmem.MIMXRT1176 platform.drivers.clock.MIMXRT1176 platform.drivers.common.MIMXRT1176 platform.devices.MIMXRT1176_CMSIS.MIMXRT1176 component.lpuart_adapter.MIMXRT1176 component.lists.MIMXRT1176 platform.drivers.lpuart.MIMXRT1176 platform.devices.MIMXRT1176_startup.MIMXRT1176 platform.drivers.iomuxc.MIMXRT1176 platform.drivers.igpio.MIMXRT1176 platform.drivers.xip_device.MIMXRT1176 platform.drivers.xip_board.evkmimxrt1170.MIMXRT1176 platform.drivers.pmu_1.MIMXRT1176 platform.drivers.dcdc_soc.MIMXRT1176 platform.drivers.anatop_ai.MIMXRT1176 CMSIS_Include_core_cm.MIMXRT1176 platform.utilities.misc_utilities.MIMXRT1176 platform.devices.MIMXRT1176_system.MIMXRT1176" category="driver_examples/cache">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -54,8 +52,8 @@
         <option id="gnu.c.compiler.option.preprocessor.def.symbols" type="stringList">
           <value>CPU_MIMXRT1176DVMAA_cm4</value>
           <value>SDK_DEBUGCONSOLE=1</value>
-          <value>XIP_EXTERNAL_FLASH=1</value>
           <value>XIP_BOOT_HEADER_ENABLE=0</value>
+          <value>MCUXPRESSO_SDK</value>
         </option>
         <option id="com.crt.advproject.gas.fpu" type="enum">
           <value>com.crt.advproject.gas.fpu.fpv4.hard</value>
@@ -166,11 +164,14 @@
       <files mask="MIMXRT1176xxxxx_cm4_ram.ld"/>
       <files mask="MIMXRT1176xxxxx_cm4_flexspi_nor.ld"/>
     </source>
+    <source path="boards/evkmimxrt1170/driver_examples/cache/cm4/iar" project_relative_path="evkmimxrt1170" type="other" toolchain="iar">
+      <files mask="evkmimxrt1170_connect_cm4.mac"/>
+    </source>
     <source path="boards/evkmimxrt1170/driver_examples/cache/cm4/mdk" project_relative_path="evkmimxrt1170" type="configuration" toolchain="mdk">
       <files mask="evkmimxrt1170_ram_cm4.ini"/>
       <files mask="evkmimxrt1170_cm4_flexspi_nor.ini"/>
     </source>
-    <source path="boards/evkmimxrt1170/driver_examples/cache/cm4" project_relative_path="evkmimxrt1170" type="other" toolchain="iar armgcc">
+    <source path="boards/evkmimxrt1170/driver_examples/cache/cm4" project_relative_path="evkmimxrt1170" type="other" toolchain="iar mdk armgcc">
       <files mask="evkmimxrt1170_connect_cm4_cm4side.jlinkscript"/>
     </source>
   </example>

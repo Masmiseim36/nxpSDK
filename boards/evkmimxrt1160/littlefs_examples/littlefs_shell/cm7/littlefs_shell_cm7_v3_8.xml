@@ -3,13 +3,14 @@
   <externalDefinitions>
     <definition extID="cm7_MIMXRT1166xxxxx"/>
     <definition extID="platform.drivers.cache_armv7_m7.MIMXRT1166"/>
+    <definition extID="component.mflash.rt1160.MIMXRT1166"/>
+    <definition extID="component.mflash.common.MIMXRT1166"/>
     <definition extID="platform.drivers.flexspi.MIMXRT1166"/>
     <definition extID="middleware.littlefs.MIMXRT1166"/>
     <definition extID="utility.shell.MIMXRT1166"/>
     <definition extID="platform.drivers.clock.MIMXRT1166"/>
     <definition extID="platform.drivers.common.MIMXRT1166"/>
     <definition extID="platform.devices.MIMXRT1166_CMSIS.MIMXRT1166"/>
-    <definition extID="platform.Include_core_cm7.MIMXRT1166"/>
     <definition extID="utility.debug_console.MIMXRT1166"/>
     <definition extID="component.lpuart_adapter.MIMXRT1166"/>
     <definition extID="component.serial_manager.MIMXRT1166"/>
@@ -23,9 +24,8 @@
     <definition extID="platform.drivers.pmu_1.MIMXRT1166"/>
     <definition extID="platform.drivers.dcdc_soc.MIMXRT1166"/>
     <definition extID="platform.drivers.anatop_ai.MIMXRT1166"/>
+    <definition extID="CMSIS_Include_core_cm.MIMXRT1166"/>
     <definition extID="platform.utilities.misc_utilities.MIMXRT1166"/>
-    <definition extID="platform.Include_common.MIMXRT1166"/>
-    <definition extID="platform.Include_dsp.MIMXRT1166"/>
     <definition extID="platform.devices.MIMXRT1166_system.MIMXRT1166"/>
     <definition extID="iar"/>
     <definition extID="mcuxpresso"/>
@@ -33,7 +33,7 @@
     <definition extID="armgcc"/>
     <definition extID="com.nxp.mcuxpresso"/>
   </externalDefinitions>
-  <example id="evkmimxrt1160_littlefs_shell_cm7" name="littlefs_shell_cm7" device_core="cm7_MIMXRT1166xxxxx" dependency="platform.drivers.cache_armv7_m7.MIMXRT1166 platform.drivers.flexspi.MIMXRT1166 middleware.littlefs.MIMXRT1166 utility.shell.MIMXRT1166 platform.drivers.clock.MIMXRT1166 platform.drivers.common.MIMXRT1166 platform.devices.MIMXRT1166_CMSIS.MIMXRT1166 platform.Include_core_cm7.MIMXRT1166 utility.debug_console.MIMXRT1166 component.lpuart_adapter.MIMXRT1166 component.serial_manager.MIMXRT1166 component.lists.MIMXRT1166 component.serial_manager_uart.MIMXRT1166 platform.drivers.lpuart.MIMXRT1166 platform.devices.MIMXRT1166_startup.MIMXRT1166 platform.drivers.iomuxc.MIMXRT1166 platform.utilities.assert.MIMXRT1166 platform.drivers.igpio.MIMXRT1166 platform.drivers.pmu_1.MIMXRT1166 platform.drivers.dcdc_soc.MIMXRT1166 platform.drivers.anatop_ai.MIMXRT1166 platform.utilities.misc_utilities.MIMXRT1166 platform.Include_common.MIMXRT1166 platform.Include_dsp.MIMXRT1166 platform.devices.MIMXRT1166_system.MIMXRT1166" category="littlefs_examples">
+  <example id="evkmimxrt1160_littlefs_shell_cm7" name="littlefs_shell_cm7" device_core="cm7_MIMXRT1166xxxxx" dependency="platform.drivers.cache_armv7_m7.MIMXRT1166 component.mflash.rt1160.MIMXRT1166 component.mflash.common.MIMXRT1166 platform.drivers.flexspi.MIMXRT1166 middleware.littlefs.MIMXRT1166 utility.shell.MIMXRT1166 platform.drivers.clock.MIMXRT1166 platform.drivers.common.MIMXRT1166 platform.devices.MIMXRT1166_CMSIS.MIMXRT1166 utility.debug_console.MIMXRT1166 component.lpuart_adapter.MIMXRT1166 component.serial_manager.MIMXRT1166 component.lists.MIMXRT1166 component.serial_manager_uart.MIMXRT1166 platform.drivers.lpuart.MIMXRT1166 platform.devices.MIMXRT1166_startup.MIMXRT1166 platform.drivers.iomuxc.MIMXRT1166 platform.utilities.assert.MIMXRT1166 platform.drivers.igpio.MIMXRT1166 platform.drivers.pmu_1.MIMXRT1166 platform.drivers.dcdc_soc.MIMXRT1166 platform.drivers.anatop_ai.MIMXRT1166 CMSIS_Include_core_cm.MIMXRT1166 platform.utilities.misc_utilities.MIMXRT1166 platform.devices.MIMXRT1166_system.MIMXRT1166" category="littlefs_examples">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -104,6 +104,7 @@
     </toolchainSettings>
     <include_paths>
       <include_path path="boards/evkmimxrt1160/littlefs_examples/littlefs_shell/cm7" project_relative_path="board" type="c_include"/>
+      <include_path path="boards/evkmimxrt1160/littlefs_examples/littlefs_shell/cm7" project_relative_path="source" type="c_include"/>
       <include_path path="boards/evkmimxrt1160/littlefs_examples/littlefs_shell/cm7" project_relative_path="evkmimxrt1160/littlefs_examples/littlefs_shell/cm7" type="c_include"/>
     </include_paths>
     <source path="boards/evkmimxrt1160/littlefs_examples/littlefs_shell/cm7/iar" project_relative_path="./" type="workspace" toolchain="iar">
@@ -135,15 +136,17 @@
     </source>
     <source path="boards/evkmimxrt1160/littlefs_examples/littlefs_shell/cm7" project_relative_path="source" type="src">
       <files mask="littlefs_shell.c"/>
+      <files mask="lfs_mflash.c"/>
+    </source>
+    <source path="boards/evkmimxrt1160/littlefs_examples/littlefs_shell/cm7" project_relative_path="source" type="c_include">
+      <files mask="lfs_mflash.h"/>
     </source>
     <source path="boards/evkmimxrt1160/littlefs_examples/littlefs_shell/cm7" project_relative_path="board" type="src">
       <files mask="pin_mux.c"/>
-      <files mask="lfs_support.c"/>
       <files mask="peripherals.c"/>
     </source>
     <source path="boards/evkmimxrt1160/littlefs_examples/littlefs_shell/cm7" project_relative_path="board" type="c_include">
       <files mask="pin_mux.h"/>
-      <files mask="lfs_support.h"/>
       <files mask="peripherals.h"/>
     </source>
     <source path="boards/evkmimxrt1160/littlefs_examples/littlefs_shell/cm7" project_relative_path="board" type="src">
@@ -177,6 +180,9 @@
     <source path="boards/evkmimxrt1160/littlefs_examples/littlefs_shell/cm7/mdk" project_relative_path="evkmimxrt1160" type="configuration" toolchain="mdk">
       <files mask="evkmimxrt1160_ram.ini"/>
       <files mask="evkmimxrt1160_sdram_init.ini"/>
+    </source>
+    <source path="boards/evkmimxrt1160/littlefs_examples/littlefs_shell/cm7" project_relative_path="evkmimxrt1160" type="other" toolchain="iar mdk armgcc">
+      <files mask="evkmimxrt1160_connect_cm4_cm7side.jlinkscript"/>
     </source>
   </example>
 </ksdk:examples>

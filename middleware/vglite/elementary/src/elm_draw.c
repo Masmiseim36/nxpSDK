@@ -81,6 +81,73 @@ static vg_lite_pattern_mode_t pat_to_pad(ELM_PATTERN_MODE mode)
             break;
     }
 }
+static vg_lite_error_t draw_evo_pattern(el_Obj_Buffer *buff, el_Obj_Group *ego,int * index)
+{
+    el_Obj_EVO *evo;
+    vg_lite_error_t error = VG_LITE_INVALID_ARGUMENT;
+    vg_lite_color_t color;
+    vg_lite_filter_t filter;
+    vg_lite_blend_t blend;
+    vg_lite_fill_t rule; 
+    vg_lite_buffer_t *buffer;
+    vg_lite_matrix_t mat;
+    vg_lite_pattern_mode_t pat_mode;
+    int width = 0;
+    int height = 0;
+
+    int start = *index;
+    int i = start;
+    evo = &ego->group.objects[i];
+    width  = (int)(evo->data.path.bounding_box[2] - evo->data.path.bounding_box[0]);
+    height = (int)(evo->data.path.bounding_box[3] - evo->data.path.bounding_box[1]);
+    buffer = (vg_lite_buffer_t *)malloc(sizeof(vg_lite_buffer_t));
+    memset(buffer,0,sizeof(vg_lite_buffer_t));
+    buffer->width = width;
+    buffer->height = height;
+    buffer->format = VG_LITE_RGBA8888;
+    error = vg_lite_allocate(buffer);
+    vg_lite_clear(buffer,NULL,0xffffffff);
+    i++;
+    evo = &ego->group.objects[i];
+    while(evo->is_pattern)
+    {
+        blend = (vg_lite_blend_t)evo->attribute.blend;
+        rule = (vg_lite_fill_t)evo->attribute.fill_rule;
+        color = (vg_lite_color_t)evo->attribute.paint.color;
+        memcpy(&mat, &(evo->attribute.transform.matrix), sizeof(mat));
+        error = vg_lite_draw(buffer, &evo->data.path,
+                                rule,
+                                &mat,
+                                blend,
+                                color);
+        if(error)
+            return error;
+        i++;
+        evo = &ego->group.objects[i];
+    }
+    *index = i - 1;
+    evo = &ego->group.objects[start];
+    blend = (vg_lite_blend_t)evo->attribute.blend;
+    rule = (vg_lite_fill_t)evo->attribute.fill_rule;
+    color = (vg_lite_color_t)evo->attribute.paint.color;
+    memcpy(&mat, &(evo->attribute.transform.matrix), sizeof(mat));
+    filter = VG_LITE_FILTER_POINT;
+    pat_mode = VG_LITE_PATTERN_COLOR;
+    error = vg_lite_draw_pattern(&buff->buffer, &evo->data.path,
+                            rule,
+                            &mat,
+                            buffer,
+                            &mat,
+                            blend,
+                            pat_mode,
+                            color,
+                            filter);
+    vg_lite_finish();
+    vg_lite_free(buffer);
+    free(buffer);
+    return error;
+}
+
 static vg_lite_error_t draw_evo(el_Obj_Buffer *buff, el_Obj_EVO *evo, vg_lite_matrix_t *mat)
 {
     el_Obj_EBO *pattern;
@@ -111,6 +178,19 @@ static vg_lite_error_t draw_evo(el_Obj_Buffer *buff, el_Obj_EVO *evo, vg_lite_ma
                                       &evo->attribute.paint.grad->data.grad,
                                       blend);
 #endif
+        break;
+    case ELM_PAINT_RADIAL_GRADIENT:
+        memcpy(&evo->attribute.paint.grad->data.rad_grad.matrix,
+               &evo->attribute.paint.grad->data.transform.matrix,
+               sizeof(evo->attribute.paint.grad->data.transform.matrix));
+
+        error = vg_lite_draw_radial_gradient(&buff->buffer, &evo->data.path,
+                                      rule,
+                                      mat,
+                                      &evo->attribute.paint.grad->data.rad_grad,
+                                      0,
+                                      blend,
+                                      VG_LITE_FILTER_LINEAR);
         break;
     case ELM_PAINT_COLOR:
         color = (vg_lite_color_t)evo->attribute.paint.color;
@@ -147,11 +227,11 @@ static vg_lite_error_t draw_evo(el_Obj_Buffer *buff, el_Obj_EVO *evo, vg_lite_ma
                                      pat_mode, color, filter);
 #endif
         break;
-#if (VG_RENDER_TEXT==1)
     case ELM_PAINT_TEXT:
+#if (VG_RENDER_TEXT==1)
         error = draw_text(buff, evo, mat);
-        break;
 #endif /* VG_RENDER_TEXT */
+        break;
     }
 
     return error;
@@ -318,11 +398,31 @@ BOOL ElmDraw(ElmBuffer buffer, ElmHandle object)
             for (i = 0; i < ego->group.count; i++)
             {
                 evo = &ego->group.objects[i];
+                if(evo->is_image)
+                {
+                    ElmHandle ebo_handle;
+                    el_Object *elm_ebo;
+                    el_Obj_EBO *ebo;
+                    ebo_handle = ElmCreateObjectFromFile(ELM_OBJECT_TYPE_EBO, evo->eboname);
+                    elm_ebo = get_object(ebo_handle);
+                    ebo = (el_Obj_EBO *)elm_ebo;
+                    memcpy(&mat, &evo->defaultAttrib.transform.matrix, sizeof(mat));
+
+                    error = draw_ebo(buff, ebo, &mat);
+                    if (error)
+                    {
+                        status = FALSE;
+                    }
+                    continue;
+                }
                 memcpy(&mat, &(evo->attribute.transform.matrix), sizeof(mat));
                 memcpy(&res_mat, &mat_group, sizeof(mat_group));
                 multiply(&res_mat, &mat);
 
-                error = draw_evo(buff, evo, &res_mat);
+                if(evo->has_pattern)
+                    error = draw_evo_pattern(buff,ego,&i);
+                else
+                    error = draw_evo(buff, evo, &res_mat);
                 if (error)
                 {
                     status = FALSE;

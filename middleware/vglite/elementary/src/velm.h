@@ -118,6 +118,7 @@ typedef enum {
      */
     typedef struct {
         vg_lite_linear_gradient_t   grad;
+        vg_lite_radial_gradient_t   rad_grad;
         el_Transform                transform;
     } el_GradData;
 
@@ -185,8 +186,13 @@ typedef enum {
         el_Object           object;
         el_Attribute        attribute;
         el_Attribute        defaultAttrib;
-        el_Paint            paint;
         el_EVOData          data;
+        uint32_t            has_pattern;
+        uint32_t            is_pattern;
+        uint32_t            is_image;
+        char                eboname[20];
+        uint32_t            img_width;
+        uint32_t            img_height;
     } el_Obj_EVO;
 
     /*!

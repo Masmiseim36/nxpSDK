@@ -188,6 +188,7 @@
           <state>CPU_MIMXRT1166DVM6A_cm7</state>
           <state>TX_INCLUDE_USER_DEFINE_FILE</state>
           <state>GX_INCLUDE_USER_DEFINE_FILE</state>
+          <state>MCUXPRESSO_SDK</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -316,8 +317,7 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
-          <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/binary/threadx</state>
-          <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/binary/guix</state>
+          <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/threadx/common/inc</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/guix/common/inc</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/iar/inc</state>
@@ -784,7 +784,7 @@
         </option>
         <option>
           <name>IlinkOverrideProgramEntryLabel</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>IlinkProgramEntryLabelSelect</name>
@@ -1155,6 +1155,7 @@
           <state>CPU_MIMXRT1166DVM6A_cm7</state>
           <state>TX_INCLUDE_USER_DEFINE_FILE</state>
           <state>GX_INCLUDE_USER_DEFINE_FILE</state>
+          <state>MCUXPRESSO_SDK</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -1283,8 +1284,7 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
-          <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/binary/threadx</state>
-          <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/binary/guix</state>
+          <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/threadx/common/inc</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/guix/common/inc</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/iar/inc</state>
@@ -1751,7 +1751,7 @@
         </option>
         <option>
           <name>IlinkOverrideProgramEntryLabel</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>IlinkProgramEntryLabelSelect</name>
@@ -1946,10 +1946,10 @@
     <group>
       <name>config</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/binary/threadx/tx_user.h</name>
+        <name>$PROJ_DIR$/../tx_user.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/binary/guix/gx_user.h</name>
+        <name>$PROJ_DIR$/../gx_user.h</name>
       </file>
     </group>
     <group>
@@ -1959,64 +1959,100 @@
         <group>
           <name>inc</name>
           <file>
-            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/guix/common/inc/gx_utility.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/guix/common/inc/gx_multi_line_text_input.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/guix/common/inc/gx_sprite.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/guix/common/inc/gx_radial_slider.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/guix/common/inc/gx_menu.h</name>
-          </file>
-          <file>
             <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/guix/common/inc/gx_animation.h</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/guix/common/inc/gx_text_input_cursor.h</name>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/guix/common/inc/gx_api.h</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/guix/common/inc/gx_canvas.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/guix/common/inc/gx_line_chart.h</name>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/guix/common/inc/gx_binres_loader.h</name>
           </file>
           <file>
             <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/guix/common/inc/gx_button.h</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/guix/common/inc/gx_radial_progress_bar.h</name>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/guix/common/inc/gx_canvas.h</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/guix/common/inc/gx_numeric_prompt.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/guix/common/inc/gx_scroll_wheel.h</name>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/guix/common/inc/gx_circular_gauge.h</name>
           </file>
           <file>
             <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/guix/common/inc/gx_context.h</name>
           </file>
           <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/guix/common/inc/gx_display.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/guix/common/inc/gx_drop_list.h</name>
+          </file>
+          <file>
             <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/guix/common/inc/gx_icon.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/guix/common/inc/gx_window.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/guix/common/inc/gx_system.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/guix/common/inc/gx_numeric_pixelmap_prompt.h</name>
           </file>
           <file>
             <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/guix/common/inc/gx_image_reader.h</name>
           </file>
           <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/guix/common/inc/gx_line_chart.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/guix/common/inc/gx_menu.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/guix/common/inc/gx_multi_line_text_input.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/guix/common/inc/gx_multi_line_text_view.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/guix/common/inc/gx_numeric_pixelmap_prompt.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/guix/common/inc/gx_numeric_prompt.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/guix/common/inc/gx_pixelmap_prompt.h</name>
+          </file>
+          <file>
             <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/guix/common/inc/gx_progress_bar.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/guix/common/inc/gx_prompt.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/guix/common/inc/gx_radial_progress_bar.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/guix/common/inc/gx_radial_slider.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/guix/common/inc/gx_rich_text_view.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/guix/common/inc/gx_screen_stack.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/guix/common/inc/gx_scroll_wheel.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/guix/common/inc/gx_scrollbar.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/guix/common/inc/gx_single_line_text_input.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/guix/common/inc/gx_slider.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/guix/common/inc/gx_sprite.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/guix/common/inc/gx_system.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/guix/common/inc/gx_system_rtos_bind.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/guix/common/inc/gx_text_input_cursor.h</name>
           </file>
           <file>
             <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/guix/common/inc/gx_tree_view.h</name>
@@ -2025,49 +2061,13 @@
             <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/guix/common/inc/gx_user_sample.h</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/guix/common/inc/gx_prompt.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/guix/common/inc/gx_api.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/guix/common/inc/gx_rich_text_view.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/guix/common/inc/gx_slider.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/guix/common/inc/gx_display.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/guix/common/inc/gx_single_line_text_input.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/guix/common/inc/gx_binres_loader.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/guix/common/inc/gx_pixelmap_prompt.h</name>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/guix/common/inc/gx_utility.h</name>
           </file>
           <file>
             <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/guix/common/inc/gx_widget.h</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/guix/common/inc/gx_scrollbar.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/guix/common/inc/gx_screen_stack.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/guix/common/inc/gx_system_rtos_bind.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/guix/common/inc/gx_multi_line_text_view.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/guix/common/inc/gx_circular_gauge.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/guix/common/inc/gx_drop_list.h</name>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/guix/common/inc/gx_window.h</name>
           </file>
         </group>
         <group>
@@ -2526,40 +2526,40 @@
         <group>
           <name>inc</name>
           <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/threadx/common/inc/tx_api.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/threadx/common/inc/tx_block_pool.h</name>
+          </file>
+          <file>
             <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/threadx/common/inc/tx_byte_pool.h</name>
           </file>
           <file>
             <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/threadx/common/inc/tx_event_flags.h</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/threadx/common/inc/tx_timer.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/threadx/common/inc/tx_queue.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/threadx/common/inc/tx_thread.h</name>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/threadx/common/inc/tx_initialize.h</name>
           </file>
           <file>
             <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/threadx/common/inc/tx_mutex.h</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/threadx/common/inc/tx_trace.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/threadx/common/inc/tx_initialize.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/threadx/common/inc/tx_api.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/threadx/common/inc/tx_user_sample.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/threadx/common/inc/tx_block_pool.h</name>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/threadx/common/inc/tx_queue.h</name>
           </file>
           <file>
             <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/threadx/common/inc/tx_semaphore.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/threadx/common/inc/tx_thread.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/threadx/common/inc/tx_timer.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/threadx/common/inc/tx_trace.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/threadx/common/inc/tx_user_sample.h</name>
           </file>
         </group>
       </group>

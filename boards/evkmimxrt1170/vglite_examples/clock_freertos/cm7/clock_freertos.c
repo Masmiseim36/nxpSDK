@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 NXP
+ * Copyright 2019, 2021 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -198,13 +198,20 @@ static vg_lite_error_t init_vg_lite(void)
         return error;
     }
     // Initialize the draw.
-
-    ret = ElmInitalize(128, 128);
+    ret = ElmInitialize(DEFAULT_VG_LITE_TW_WIDTH, DEFAULT_VG_LITE_TW_HEIGHT);
     if (!ret)
     {
-        PRINTF("ElmInitalize failed\n");
+        PRINTF("ElmInitialize failed\n");
         cleanup();
         return VG_LITE_OUT_OF_MEMORY;
+    }
+    // Set GPU command buffer size for this drawing task.
+    error = vg_lite_set_command_buffer_size(VG_LITE_COMMAND_BUFFER_SIZE);
+    if (error)
+    {
+        PRINTF("vg_lite_set_command_buffer_size() returned error %d\n", error);
+        cleanup();
+        return error;
     }
 
     // Setup a scale at center of buffer.

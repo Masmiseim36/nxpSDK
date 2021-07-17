@@ -55,9 +55,6 @@ ULONG arp_space_area[1024 / sizeof(ULONG)];
 /* Define the counters used in the demo application...  */
 ULONG error_counter;
 
-/* Define the SysTick cycles which will be loaded on tx_initialize_low_level.s */
-int systick_cycles;
-
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
@@ -105,6 +102,12 @@ void IOMUXC_SelectENETClock(void)
     SDK_DelayAtLeastUs(1000, CLOCK_GetFreq(kCLOCK_CpuClk));
 }
 
+/* return the ENET MDIO interface clock frequency */
+uint32_t BOARD_GetMDIOClock(void)
+{
+    return CLOCK_GetRootClockFreq(kCLOCK_Root_Bus);
+}
+
 void main(void)
 {
     /* Init board hardware. */
@@ -141,9 +144,6 @@ void main(void)
 #endif
 
     PRINTF("Start the iperf example...\r\n");
-
-    /* systick_cycles must be initialized before tx_kernel_enter(). */
-    systick_cycles = (SystemCoreClock / TX_TIMER_TICKS_PER_SECOND) - 1;
 
     /* Enter the ThreadX kernel.  */
     tx_kernel_enter();

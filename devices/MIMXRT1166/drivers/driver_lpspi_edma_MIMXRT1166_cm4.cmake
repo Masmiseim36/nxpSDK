@@ -1,19 +1,17 @@
-if(NOT DRIVER_LPSPI_EDMA_MIMXRT1166_cm4_INCLUDED)
-    
-    set(DRIVER_LPSPI_EDMA_MIMXRT1166_cm4_INCLUDED true CACHE BOOL "driver_lpspi_edma component is included.")
+include_guard(GLOBAL)
+message("driver_lpspi_edma component is included.")
 
-    target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
-        ${CMAKE_CURRENT_LIST_DIR}/fsl_lpspi_edma.c
-    )
-
-
-    target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
-        ${CMAKE_CURRENT_LIST_DIR}/.
-    )
+target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
+    ${CMAKE_CURRENT_LIST_DIR}/fsl_lpspi_edma.c
+)
 
 
-    include(driver_edma_MIMXRT1166_cm4)
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
+    ${CMAKE_CURRENT_LIST_DIR}/.
+)
 
-    include(driver_lpspi_MIMXRT1166_cm4)
 
-endif()
+include(driver_edma_MIMXRT1166_cm4)
+
+include(driver_lpspi_MIMXRT1166_cm4)
+

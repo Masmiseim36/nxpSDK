@@ -19,7 +19,7 @@
  * Definitions
  ******************************************************************************/
 /* Master related */
-#define DRIVER_MASTER_SPI Driver_SPI1
+#define DRIVER_MASTER_SPI         Driver_SPI1
 #define EXAMPLE_LPSPI_MASTER_IRQN (LPSPI1_IRQn)
 #define EXAMPLE_LPSPI_DEALY_COUNT 0xfffffU
 

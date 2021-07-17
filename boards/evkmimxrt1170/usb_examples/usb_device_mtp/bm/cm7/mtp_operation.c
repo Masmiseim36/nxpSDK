@@ -30,8 +30,9 @@
  * Prototypes
  ******************************************************************************/
 
+#if USB_DEVICE_CONFIG_USE_TASK
 extern void USB_DeviceTaskFn(void *deviceHandle);
-
+#endif
 /*******************************************************************************
  * Variables
  ******************************************************************************/
@@ -496,7 +497,9 @@ usb_status_t USB_DeviceDeleteDir(uint8_t *path)
                 break; /* Break on error or end of dir */
             }
 
+#if USB_DEVICE_CONFIG_USE_TASK
             USB_DeviceTaskFn(g_mtp.deviceHandle);
+#endif
 
             /* check buffer length */
             length2 = length + USB_DeviceUnicodeStringLength((const uint16_t *)(&fno.name[0]));
@@ -535,7 +538,8 @@ usb_status_t USB_DeviceDeleteDir(uint8_t *path)
 
     (void)USB_DeviceMtpCloseDir(dir);
 
-    if (result == kStatus_USB_Success)
+    /* kStatus_USB_InvalidRequest means end of dir, so delete the current directory. */
+    if (result == kStatus_USB_InvalidRequest)
     {
         result = USB_DeviceMtpUnlink((const uint16_t *)path); /* delete self */
     }
@@ -599,7 +603,9 @@ usb_status_t USB_DeviceCopyFile(uint8_t *destPath, uint8_t *srcPath)
         return kStatus_USB_Error;
     }
 
+#if USB_DEVICE_CONFIG_USE_TASK
     USB_DeviceTaskFn(g_mtp.deviceHandle);
+#endif
 
     result = USB_DeviceMtpOpen(&fileDest, (const uint16_t *)destPath,
                                USB_DEVICE_MTP_CREATE_ALWAYS | USB_DEVICE_MTP_READ | USB_DEVICE_MTP_WRITE);
@@ -611,7 +617,9 @@ usb_status_t USB_DeviceCopyFile(uint8_t *destPath, uint8_t *srcPath)
 
     for (;;)
     {
+#if USB_DEVICE_CONFIG_USE_TASK
         USB_DeviceTaskFn(g_mtp.deviceHandle);
+#endif
 
         result = USB_DeviceMtpRead(fileSrc, &g_mtpTransferBuffer[0], USB_DEVICE_MTP_TRANSFER_BUFF_SIZE, &readSize);
         if ((result != kStatus_USB_Success) || (readSize == 0U))
@@ -702,7 +710,9 @@ usb_status_t USB_DeviceCopyDir(uint8_t *destPath, uint8_t *srcPath)
                 break; /* Break on error or end of dir */
             }
 
+#if USB_DEVICE_CONFIG_USE_TASK
             USB_DeviceTaskFn(g_mtp.deviceHandle);
+#endif
 
             /* check buffer length */
             length2 = lengthSrc + USB_DeviceUnicodeStringLength((const uint16_t *)(&fno.name[0]));
@@ -2179,6 +2189,7 @@ void USB_DeviceCmdDeleteObj(void *param)
     }
     else
     {
+        result = kStatus_USB_Error;
         /* root path */
         for (i = 0; i < g_mtp.storageList->storageCount; i++)
         {

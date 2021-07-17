@@ -23,7 +23,7 @@
 #elif defined(SD8977)
 #include "sduart8977_wlan_bt.h"
 #elif defined(SD8978)
-#include "sduart8978_wlan_bt.h"
+#include "sduartIW416_wlan_bt.h"
 #elif defined(SD8987)
 #include "sduart8987_wlan_bt.h"
 #elif defined(SD8997)
@@ -40,7 +40,6 @@
 #include <wm_os.h>
 #include "dhcp-server.h"
 #include "cli.h"
-#include "ping.h"
 #include "iperf.h"
 
 #include "fsl_sdmmc_host.h"
@@ -273,8 +272,16 @@ int main(void)
 
     BOARD_ConfigMPU();
     BOARD_InitPins();
+#if defined(WIFI_BOARD_AW_CM358)
+    /* Init SDIO_RST */
+    BOARD_InitM2WifiResetPins();
+#endif
     BOARD_BootClockRUN();
     BOARD_InitDebugConsole();
+#if defined(WIFI_BOARD_AW_CM358)
+    /* Set SDIO_RST to 1 */
+    GPIO_PinWrite(BOARD_INITM2WIFIRESETPINS_SDIO_RST_GPIO, BOARD_INITM2WIFIRESETPINS_SDIO_RST_GPIO_PIN, 1U);
+#endif
 
     printSeparator();
     PRINTF("wifi test mode demo\r\n");

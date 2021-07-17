@@ -89,13 +89,6 @@ int main(void)
             rxBufferEmpty = true;
             txBufferFull  = true;
         }
-        /* If g_txBuffer is empty and g_rxBuffer is full, copy g_rxBuffer to g_txBuffer. */
-        if ((!rxBufferEmpty) && (!txBufferFull))
-        {
-            memcpy(g_txBuffer, g_rxBuffer, ECHO_BUFFER_LENGTH);
-            rxBufferEmpty = true;
-            txBufferFull  = true;
-        }
 
         /* If RX is idle and g_rxBuffer is empty, start to read data to g_rxBuffer. */
         if ((!rxOnGoing) && rxBufferEmpty)

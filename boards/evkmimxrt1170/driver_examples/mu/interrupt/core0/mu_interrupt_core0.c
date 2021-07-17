@@ -17,8 +17,8 @@
  * Definitions
  ******************************************************************************/
 
-#define APP_MU MUA
-#define APP_MU_IRQn MUA_IRQn
+#define APP_MU            MUA
+#define APP_MU_IRQn       MUA_IRQn
 #define APP_MU_IRQHandler MUA_IRQHandler
 
 #define BOOT_CORE1_BY_MU 0
@@ -37,7 +37,7 @@ extern const char core1_image_start[];
 extern const char *core1_image_end;
 extern int core1_image_size;
 #define CORE1_IMAGE_START ((void *)core1_image_start)
-#define CORE1_IMAGE_SIZE ((void *)core1_image_size)
+#define CORE1_IMAGE_SIZE  ((void *)core1_image_size)
 #endif
 /* Flag indicates Core Boot Up*/
 #define BOOT_FLAG 0x01U

@@ -69,7 +69,7 @@ if (isdefinedsymbol(__stack_size__)) {
 if (isdefinedsymbol(__heap_size__)) {
   define symbol __size_heap__          = __heap_size__;
 } else {
-  define symbol __size_heap__          = 0x800000;
+  define symbol __size_heap__          = 0x80000;
 }
 
 define exported symbol __VECTOR_TABLE          = m_interrupts_start;

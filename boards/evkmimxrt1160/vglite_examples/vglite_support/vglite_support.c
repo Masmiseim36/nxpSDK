@@ -16,7 +16,6 @@
  * Definitions
  ******************************************************************************/
 #define MAX_CONTIGUOUS_SIZE         0x200000
-#define VG_LITE_COMMAND_BUFFER_SIZE (256 << 10)
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
@@ -35,7 +34,6 @@ static uint32_t gpu_mem_base    = 0x0;
  */
 extern void *vglite_heap_base;
 extern uint32_t vglite_heap_size;
-extern uint32_t vglite_cmd_buff_size;
 
 #if (CUSTOM_VGLITE_MEMORY_CONFIG == 0)
 /* VGLite driver heap */
@@ -43,7 +41,6 @@ AT_NONCACHEABLE_SECTION_ALIGN(static uint8_t contiguous_mem[MAX_CONTIGUOUS_SIZE]
 
 void *vglite_heap_base        = &contiguous_mem;
 uint32_t vglite_heap_size     = MAX_CONTIGUOUS_SIZE;
-uint32_t vglite_cmd_buff_size = VG_LITE_COMMAND_BUFFER_SIZE;
 #endif /* CUSTOM_VGLITE_MEMORY_CONFIG */
 
 /*******************************************************************************
@@ -58,8 +55,8 @@ static status_t BOARD_InitVGliteClock(void)
 {
     const clock_root_config_t gc355ClockConfig = {
         .clockOff = false,
-        .mux      = 4, /*!< PLL_528. */
-        .div      = 1,
+        .mux      = kCLOCK_GC355_ClockRoot_MuxVideoPllOut, /*!< 984MHz */
+        .div      = 2,
     };
 
     CLOCK_SetRootClock(kCLOCK_Root_Gc355, &gc355ClockConfig);
@@ -87,8 +84,6 @@ status_t BOARD_PrepareVGLiteController(void)
     }
 
     vg_lite_init_mem(registerMemBase, gpu_mem_base, vglite_heap_base, vglite_heap_size);
-
-    vg_lite_set_command_buffer_size(vglite_cmd_buff_size);
 
     return kStatus_Success;
 }

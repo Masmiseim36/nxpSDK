@@ -19,11 +19,11 @@
  * Definitions
  ******************************************************************************/
 /* Slave related */
-#define EXAMPLE_LPSPI_SLAVE_BASEADDR (LPSPI1)
-#define EXAMPLE_LPSPI_SLAVE_IRQN (LPSPI1_IRQn)
+#define EXAMPLE_LPSPI_SLAVE_BASEADDR   (LPSPI1)
+#define EXAMPLE_LPSPI_SLAVE_IRQN       (LPSPI1_IRQn)
 #define EXAMPLE_LPSPI_SLAVE_IRQHandler LPSPI1_IRQHandler
 
-#define EXAMPLE_LPSPI_SLAVE_PCS_FOR_INIT (kLPSPI_Pcs0)
+#define EXAMPLE_LPSPI_SLAVE_PCS_FOR_INIT     (kLPSPI_Pcs0)
 #define EXAMPLE_LPSPI_SLAVE_PCS_FOR_TRANSFER (kLPSPI_SlavePcs0)
 
 #define LPSPI_MASTER_CLK_FREQ (CLOCK_GetFreqFromObs(CCM_OBS_LPSPI1_CLK_ROOT))

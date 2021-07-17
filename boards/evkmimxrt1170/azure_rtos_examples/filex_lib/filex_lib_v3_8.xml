@@ -50,6 +50,7 @@
           <value>CPU_MIMXRT1176DVMAA_cm7</value>
           <value>TX_INCLUDE_USER_DEFINE_FILE</value>
           <value>FX_INCLUDE_USER_DEFINE_FILE</value>
+          <value>MCUXPRESSO_SDK</value>
         </option>
         <option id="com.crt.advproject.gas.fpu" type="enum">
           <value>com.crt.advproject.gas.fpu.fpv5dp.hard</value>
@@ -65,6 +66,9 @@
         </option>
       </toolchainSetting>
     </toolchainSettings>
+    <include_paths>
+      <include_path path="boards/evkmimxrt1170/azure_rtos_examples/filex_lib" project_relative_path="azure-rtos/config" type="c_include"/>
+    </include_paths>
     <source path="boards/evkmimxrt1170/azure_rtos_examples/filex_lib/iar" project_relative_path="./" type="workspace" toolchain="iar">
       <files mask="filex_lib.ewp"/>
       <files mask="filex_lib.eww"/>
@@ -75,6 +79,12 @@
     </source>
     <source path="boards/evkmimxrt1170/azure_rtos_examples/filex_lib" project_relative_path="doc" type="doc" toolchain="iar mdk mcuxpresso armgcc">
       <files mask="readme.txt"/>
+    </source>
+    <source path="boards/evkmimxrt1170/azure_rtos_examples/filex_lib" project_relative_path="azure-rtos/config" type="c_include">
+      <files mask="tx_user.h"/>
+    </source>
+    <source path="boards/evkmimxrt1170/azure_rtos_examples/filex_lib" project_relative_path="azure-rtos/config" type="c_include">
+      <files mask="fx_user.h"/>
     </source>
   </example>
 </ksdk:examples>

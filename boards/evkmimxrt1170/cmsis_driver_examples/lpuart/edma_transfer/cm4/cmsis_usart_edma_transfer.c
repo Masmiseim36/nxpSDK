@@ -14,9 +14,9 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_USART Driver_USART1
+#define DEMO_USART                    Driver_USART1
 #define EXAMPLE_USART_DMAMUX_BASEADDR DMAMUX1
-#define EXAMPLE_USART_DMA_BASEADDR DMA1
+#define EXAMPLE_USART_DMA_BASEADDR    DMA1
 #define ECHO_BUFFER_LENGTH 8
 
 /*******************************************************************************

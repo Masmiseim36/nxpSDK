@@ -3,7 +3,6 @@
   <externalDefinitions>
     <definition extID="cm4_MIMXRT1176xxxxx"/>
     <definition extID="platform.devices.MIMXRT1176_CMSIS.MIMXRT1176"/>
-    <definition extID="platform.Include_core_cm4.MIMXRT1176"/>
     <definition extID="platform.drivers.clock.MIMXRT1176"/>
     <definition extID="platform.drivers.pmu_1.MIMXRT1176"/>
     <definition extID="platform.drivers.igpio.MIMXRT1176"/>
@@ -12,11 +11,13 @@
     <definition extID="middleware.mcu-boot.MIMXRT1176_startup.MIMXRT1176"/>
     <definition extID="middleware.mcu-boot.src_bm_usb_hid.MIMXRT1176"/>
     <definition extID="middleware.mcu-boot.bootsources.MIMXRT1176"/>
+    <definition extID="middleware.mcu-boot.mem_sdmmc.MIMXRT1176"/>
     <definition extID="middleware.mcu-boot.MIMXRT1176_sources.MIMXRT1176"/>
     <definition extID="middleware.baremetal.MIMXRT1176"/>
     <definition extID="middleware.usb.device.controller.driver.MIMXRT1176"/>
     <definition extID="component.osa.MIMXRT1176"/>
     <definition extID="middleware.usb.device_controller_ehci.MIMXRT1176"/>
+    <definition extID="middleware.mcu-boot.drv_semc_nand.MIMXRT1176"/>
     <definition extID="middleware.mcu-boot.src_startup.MIMXRT1176"/>
     <definition extID="middleware.mcu-boot.drv_microseconds_pit.MIMXRT1176"/>
     <definition extID="middleware.mcu-boot.mem_flexspi_nor.MIMXRT1176"/>
@@ -24,10 +25,10 @@
     <definition extID="middleware.mcu-boot.mem_spi_nand.MIMXRT1176"/>
     <definition extID="middleware.mcu-boot.drv_ocotp.MIMXRT1176"/>
     <definition extID="middleware.mcu-boot.mem_spi_nor_eeprom.MIMXRT1176"/>
-    <definition extID="platform.Include_common.MIMXRT1176"/>
-    <definition extID="platform.Include_dsp.MIMXRT1176"/>
+    <definition extID="CMSIS_Include_core_cm.MIMXRT1176"/>
     <definition extID="platform.drivers.common.MIMXRT1176"/>
     <definition extID="platform.drivers.anatop_ai.MIMXRT1176"/>
+    <definition extID="middleware.mcu-boot.drv_sdmmc.MIMXRT1176"/>
     <definition extID="component.lists.MIMXRT1176"/>
     <definition extID="middleware.usb.phy.MIMXRT1176"/>
     <definition extID="middleware.usb.common_header.MIMXRT1176"/>
@@ -41,7 +42,7 @@
     <definition extID="mcuxpresso"/>
     <definition extID="com.nxp.mcuxpresso"/>
   </externalDefinitions>
-  <example id="evkmimxrt1170_flashloader_cm4" name="flashloader_cm4" device_core="cm4_MIMXRT1176xxxxx" dependency="platform.devices.MIMXRT1176_CMSIS.MIMXRT1176 platform.Include_core_cm4.MIMXRT1176 platform.drivers.clock.MIMXRT1176 platform.drivers.pmu_1.MIMXRT1176 platform.drivers.igpio.MIMXRT1176 platform.drivers.lpuart.MIMXRT1176 platform.drivers.iomuxc.MIMXRT1176 middleware.mcu-boot.MIMXRT1176_startup.MIMXRT1176 middleware.mcu-boot.src_bm_usb_hid.MIMXRT1176 middleware.mcu-boot.bootsources.MIMXRT1176 middleware.mcu-boot.MIMXRT1176_sources.MIMXRT1176 middleware.baremetal.MIMXRT1176 middleware.usb.device.controller.driver.MIMXRT1176 component.osa.MIMXRT1176 middleware.usb.device_controller_ehci.MIMXRT1176 middleware.mcu-boot.src_startup.MIMXRT1176 middleware.mcu-boot.drv_microseconds_pit.MIMXRT1176 middleware.mcu-boot.mem_flexspi_nor.MIMXRT1176 middleware.mcu-boot.drv_flexspi_nand.MIMXRT1176 middleware.mcu-boot.mem_spi_nand.MIMXRT1176 middleware.mcu-boot.drv_ocotp.MIMXRT1176 middleware.mcu-boot.mem_spi_nor_eeprom.MIMXRT1176 platform.Include_common.MIMXRT1176 platform.Include_dsp.MIMXRT1176 platform.drivers.common.MIMXRT1176 platform.drivers.anatop_ai.MIMXRT1176 component.lists.MIMXRT1176 middleware.usb.phy.MIMXRT1176 middleware.usb.common_header.MIMXRT1176 middleware.usb.device.common_header.MIMXRT1176 middleware.mcu-boot.drv_flexspi_nor.MIMXRT1176 middleware.mcu-boot.drv_serial_nor_eeprom.MIMXRT1176 platform.drivers.lpspi.MIMXRT1176" category="bootloader_examples">
+  <example id="evkmimxrt1170_flashloader_cm4" name="flashloader_cm4" device_core="cm4_MIMXRT1176xxxxx" dependency="platform.devices.MIMXRT1176_CMSIS.MIMXRT1176 platform.drivers.clock.MIMXRT1176 platform.drivers.pmu_1.MIMXRT1176 platform.drivers.igpio.MIMXRT1176 platform.drivers.lpuart.MIMXRT1176 platform.drivers.iomuxc.MIMXRT1176 middleware.mcu-boot.MIMXRT1176_startup.MIMXRT1176 middleware.mcu-boot.src_bm_usb_hid.MIMXRT1176 middleware.mcu-boot.bootsources.MIMXRT1176 middleware.mcu-boot.mem_sdmmc.MIMXRT1176 middleware.mcu-boot.MIMXRT1176_sources.MIMXRT1176 middleware.baremetal.MIMXRT1176 middleware.usb.device.controller.driver.MIMXRT1176 component.osa.MIMXRT1176 middleware.usb.device_controller_ehci.MIMXRT1176 middleware.mcu-boot.drv_semc_nand.MIMXRT1176 middleware.mcu-boot.src_startup.MIMXRT1176 middleware.mcu-boot.drv_microseconds_pit.MIMXRT1176 middleware.mcu-boot.mem_flexspi_nor.MIMXRT1176 middleware.mcu-boot.drv_flexspi_nand.MIMXRT1176 middleware.mcu-boot.mem_spi_nand.MIMXRT1176 middleware.mcu-boot.drv_ocotp.MIMXRT1176 middleware.mcu-boot.mem_spi_nor_eeprom.MIMXRT1176 CMSIS_Include_core_cm.MIMXRT1176 platform.drivers.common.MIMXRT1176 platform.drivers.anatop_ai.MIMXRT1176 middleware.mcu-boot.drv_sdmmc.MIMXRT1176 component.lists.MIMXRT1176 middleware.usb.phy.MIMXRT1176 middleware.usb.common_header.MIMXRT1176 middleware.usb.device.common_header.MIMXRT1176 middleware.mcu-boot.drv_flexspi_nor.MIMXRT1176 middleware.mcu-boot.drv_serial_nor_eeprom.MIMXRT1176 platform.drivers.lpspi.MIMXRT1176" category="bootloader_examples">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -148,16 +149,16 @@
     <source path="boards/evkmimxrt1170/bootloader_examples/flashloader/cm4/mdk" project_relative_path="mcu-boot/boards/evkmimxrt1170/flashloader" type="configuration" toolchain="mdk">
       <files mask="Debug_RAM.ini"/>
     </source>
-    <source path="middleware/mcu-boot/targets/common/linker/iar/MIMXRT1176" project_relative_path="middleware/mcu-boot" type="linker" toolchain="iar">
+    <source path="middleware/mcu-boot/targets/common/linker/iar/MIMXRT1176" project_relative_path="mcu-boot" type="linker" toolchain="iar">
       <files mask="MIMXRT1176_ram_flashloader.icf"/>
     </source>
-    <source path="middleware/mcu-boot/targets/common/linker/arm/MIMXRT1176" project_relative_path="middleware/mcu-boot" type="linker" toolchain="mdk">
+    <source path="middleware/mcu-boot/targets/common/linker/arm/MIMXRT1176" project_relative_path="mcu-boot" type="linker" toolchain="mdk">
       <files mask="MIMXRT1176_ram_flashloader.scf"/>
     </source>
-    <source path="middleware/mcu-boot/targets/common/linker/mcuxpresso/MIMXRT1176" project_relative_path="middleware/mcu-boot" type="linker" toolchain="mcuxpresso">
+    <source path="middleware/mcu-boot/targets/common/linker/mcuxpresso/MIMXRT1176" project_relative_path="mcu-boot" type="linker" toolchain="mcuxpresso">
       <files mask="MIMXRT1176_ram_flashloader.ld"/>
     </source>
-    <source path="middleware/mcu-boot/targets/common/linker/gcc/MIMXRT1176" project_relative_path="middleware/mcu-boot" type="linker" toolchain="armgcc">
+    <source path="middleware/mcu-boot/targets/common/linker/gcc/MIMXRT1176" project_relative_path="mcu-boot" type="linker" toolchain="armgcc">
       <files mask="MIMXRT1176_ram_flashloader.ld"/>
     </source>
     <source path="boards/evkmimxrt1170/bootloader_examples/flashloader/cm4" project_relative_path="usb/device/class/hid" type="src">

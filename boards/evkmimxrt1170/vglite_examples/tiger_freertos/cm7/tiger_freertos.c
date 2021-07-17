@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 NXP
+ * Copyright 2019, 2021 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -43,45 +43,44 @@ static vg_lite_matrix_t matrix;
 #if (CUSTOM_VGLITE_MEMORY_CONFIG != 1)
 #error "Application must be compiled with CUSTOM_VGLITE_MEMORY_CONFIG=1"
 #else
-
 #define VGLITE_COMMAND_BUFFER_SZ (128 * 1024)
-
-#if defined(CPU_MIMXRT595SFFOC_cm33)
-	/* RT500 platform */
-	#define VGLITE_HEAP_SZ 3955776 /* 3.8 MB */
+/* On RT595S */
+#if defined(MIMXRT595S_cm33_SERIES)
+#define VGLITE_HEAP_SZ 3955776 /* 3.8 MB */
+/* On RT1170 */
+#elif defined(CPU_MIMXRT1176DVMAA_cm7) || defined(CPU_MIMXRT1166DVM6A_cm7)
+#define VGLITE_HEAP_SZ 8912896 /* 8.5 MB */
 #else
-	/* RT1170 or RT1160 platform */
-	#define VGLITE_HEAP_SZ 8912896 /* 8.5 MB */
+#error "Unsupported CPU !"
 #endif
-
 #if (720 * 1280 == (DEMO_PANEL_WIDTH) * (DEMO_PANEL_HEIGHT))
-	#define TW             720
-#if defined(CPU_MIMXRT595SFFOC_cm33)
-	/* On RT500, use a tessellation window of 720 x 640 */
-	#define TH             640
+#define TW 720
+/* On RT595S */
+#if defined(MIMXRT595S_cm33_SERIES)
+/* Tessellation window = 720 x 640 */
+#define TH 640
+/* On RT1170 */
+#elif defined(CPU_MIMXRT1176DVMAA_cm7) || defined(CPU_MIMXRT1166DVM6A_cm7)
+/* Tessellation window = 720 x 1280 */
+#define TH 1280
 #else
-	/* On RT1160 and RT1170, use a tessellation window of 720 x 1280 */
-	#define TH             1280
+#error "Unsupported CPU !"
 #endif
-
 /* Panel RM67162. Supported only by platform RT595S. */
 #elif (400 * 400 == (DEMO_PANEL_WIDTH) * (DEMO_PANEL_HEIGHT))
 /* Tessellation window = 400 x 400 */
-#define TW             400
-#define TH             400
-
+#define TW 400
+#define TH 400
 #else
 /* Tessellation window = 256 x 256 */
-#define TW             256
-#define TH             256
+#define TW 256
+#define TH 256
 #endif
-
 /* Allocate the heap and set the command buffer(s) size */
 AT_NONCACHEABLE_SECTION_ALIGN(uint8_t vglite_heap[VGLITE_HEAP_SZ], 64);
 
 void *vglite_heap_base        = &vglite_heap;
 uint32_t vglite_heap_size     = VGLITE_HEAP_SZ;
-uint32_t vglite_cmd_buff_size = VGLITE_COMMAND_BUFFER_SZ;
 #endif
 
 /*******************************************************************************
@@ -158,6 +157,14 @@ static vg_lite_error_t init_vg_lite(void)
     if (error)
     {
         PRINTF("vg_lite engine init failed: vg_lite_init() returned error %d\n", error);
+        cleanup();
+        return error;
+    }
+    // Set GPU command buffer size for this drawing task.
+    error = vg_lite_set_command_buffer_size(VGLITE_COMMAND_BUFFER_SZ);
+    if (error)
+    {
+        PRINTF("vg_lite_set_command_buffer_size() returned error %d\n", error);
         cleanup();
         return error;
     }

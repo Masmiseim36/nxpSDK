@@ -183,8 +183,9 @@
           <state>DEBUG</state>
           <state>CPU_MIMXRT1176DVMAA_cm7</state>
           <state>SDK_DEBUGCONSOLE=1</state>
-          <state>USB_STACK_BM</state>
+          <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</state>
+          <state>MCUXPRESSO_SDK</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -319,14 +320,15 @@
           <state>$PROJ_DIR$/../../../../../../middleware/freemaster/src/common</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176</state>
-          <state>$PROJ_DIR$/../../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
+          <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/xip</state>
           <state>$PROJ_DIR$/../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../middleware/freemaster/src/platforms/gen32le</state>
           <state>$PROJ_DIR$/../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can</state>
           <state>$PROJ_DIR$/../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1165,8 +1167,9 @@
           <state>DATA_SECTION_IS_CACHEABLE=1</state>
           <state>CPU_MIMXRT1176DVMAA_cm7</state>
           <state>SDK_DEBUGCONSOLE=1</state>
-          <state>USB_STACK_BM</state>
+          <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</state>
+          <state>MCUXPRESSO_SDK</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -1301,14 +1304,15 @@
           <state>$PROJ_DIR$/../../../../../../middleware/freemaster/src/common</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176</state>
-          <state>$PROJ_DIR$/../../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
+          <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/xip</state>
           <state>$PROJ_DIR$/../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../middleware/freemaster/src/platforms/gen32le</state>
           <state>$PROJ_DIR$/../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can</state>
           <state>$PROJ_DIR$/../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -2144,8 +2148,9 @@
           <state>XIP_BOOT_HEADER_ENABLE=1</state>
           <state>CPU_MIMXRT1176DVMAA_cm7</state>
           <state>SDK_DEBUGCONSOLE=1</state>
-          <state>USB_STACK_BM</state>
+          <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</state>
+          <state>MCUXPRESSO_SDK</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -2280,14 +2285,15 @@
           <state>$PROJ_DIR$/../../../../../../middleware/freemaster/src/common</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176</state>
-          <state>$PROJ_DIR$/../../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
+          <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/xip</state>
           <state>$PROJ_DIR$/../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../middleware/freemaster/src/platforms/gen32le</state>
           <state>$PROJ_DIR$/../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can</state>
           <state>$PROJ_DIR$/../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -3123,8 +3129,9 @@
           <state>DEBUG</state>
           <state>CPU_MIMXRT1176DVMAA_cm7</state>
           <state>SDK_DEBUGCONSOLE=1</state>
-          <state>USB_STACK_BM</state>
+          <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</state>
+          <state>MCUXPRESSO_SDK</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -3259,14 +3266,15 @@
           <state>$PROJ_DIR$/../../../../../../middleware/freemaster/src/common</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176</state>
-          <state>$PROJ_DIR$/../../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
+          <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/xip</state>
           <state>$PROJ_DIR$/../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../middleware/freemaster/src/platforms/gen32le</state>
           <state>$PROJ_DIR$/../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can</state>
           <state>$PROJ_DIR$/../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -4100,8 +4108,9 @@
           <state>NDEBUG</state>
           <state>CPU_MIMXRT1176DVMAA_cm7</state>
           <state>SDK_DEBUGCONSOLE=1</state>
-          <state>USB_STACK_BM</state>
+          <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</state>
+          <state>MCUXPRESSO_SDK</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -4236,14 +4245,15 @@
           <state>$PROJ_DIR$/../../../../../../middleware/freemaster/src/common</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176</state>
-          <state>$PROJ_DIR$/../../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
+          <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/xip</state>
           <state>$PROJ_DIR$/../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../middleware/freemaster/src/platforms/gen32le</state>
           <state>$PROJ_DIR$/../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can</state>
           <state>$PROJ_DIR$/../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -5082,8 +5092,9 @@
           <state>NDEBUG</state>
           <state>CPU_MIMXRT1176DVMAA_cm7</state>
           <state>SDK_DEBUGCONSOLE=1</state>
-          <state>USB_STACK_BM</state>
+          <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</state>
+          <state>MCUXPRESSO_SDK</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -5218,14 +5229,15 @@
           <state>$PROJ_DIR$/../../../../../../middleware/freemaster/src/common</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176</state>
-          <state>$PROJ_DIR$/../../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
+          <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/xip</state>
           <state>$PROJ_DIR$/../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../middleware/freemaster/src/platforms/gen32le</state>
           <state>$PROJ_DIR$/../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can</state>
           <state>$PROJ_DIR$/../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -6061,8 +6073,9 @@
           <state>NDEBUG</state>
           <state>CPU_MIMXRT1176DVMAA_cm7</state>
           <state>SDK_DEBUGCONSOLE=1</state>
-          <state>USB_STACK_BM</state>
+          <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</state>
+          <state>MCUXPRESSO_SDK</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -6197,14 +6210,15 @@
           <state>$PROJ_DIR$/../../../../../../middleware/freemaster/src/common</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176</state>
-          <state>$PROJ_DIR$/../../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
+          <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/xip</state>
           <state>$PROJ_DIR$/../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../middleware/freemaster/src/platforms/gen32le</state>
           <state>$PROJ_DIR$/../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can</state>
           <state>$PROJ_DIR$/../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -7040,8 +7054,9 @@
           <state>DATA_SECTION_IS_CACHEABLE=1</state>
           <state>CPU_MIMXRT1176DVMAA_cm7</state>
           <state>SDK_DEBUGCONSOLE=1</state>
-          <state>USB_STACK_BM</state>
+          <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</state>
+          <state>MCUXPRESSO_SDK</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -7176,14 +7191,15 @@
           <state>$PROJ_DIR$/../../../../../../middleware/freemaster/src/common</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176</state>
-          <state>$PROJ_DIR$/../../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
+          <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/xip</state>
           <state>$PROJ_DIR$/../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../middleware/freemaster/src/platforms/gen32le</state>
           <state>$PROJ_DIR$/../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can</state>
           <state>$PROJ_DIR$/../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -7925,6 +7941,12 @@
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_common.c</name>
     </file>
     <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_common_arm.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_common_arm.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_iomuxc.h</name>
     </file>
     <file>
@@ -8020,6 +8042,12 @@
     <file>
       <name>$PROJ_DIR$/../../../../../../middleware/freemaster/src/common/freemaster_serial.h</name>
     </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../middleware/freemaster/src/common/freemaster_net.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../middleware/freemaster/src/common/freemaster_net.h</name>
+    </file>
     <group>
       <name>platforms</name>
       <file>
@@ -8082,6 +8110,18 @@
       <file>
         <name>$PROJ_DIR$/../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial/freemaster_serial_usb.h</name>
       </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/freemaster/src/drivers/mcuxsdk/network/freemaster_net_lwip_udp.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/freemaster/src/drivers/mcuxsdk/network/freemaster_net_lwip_udp.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/freemaster/src/drivers/mcuxsdk/network/freemaster_net_lwip_tcp.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/freemaster/src/drivers/mcuxsdk/network/freemaster_net_lwip_tcp.h</name>
+      </file>
     </group>
   </group>
   <group>
@@ -8115,45 +8155,6 @@
     </file>
   </group>
   <group>
-    <name>CMSIS</name>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/core_cm7.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/mpu_armv7.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_armcc.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_armclang.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_armclang_ltm.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_gcc.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_compiler.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_version.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_iccarm.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/arm_common_tables.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/arm_const_structs.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/arm_math.h</name>
-    </file>
-  </group>
-  <group>
     <name>component</name>
     <group>
       <name>uart</name>
@@ -8162,6 +8163,24 @@
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../../components/uart/fsl_adapter_lpuart.c</name>
+      </file>
+    </group>
+    <group>
+      <name>serial_manager</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/serial_manager/fsl_component_serial_manager.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/serial_manager/fsl_component_serial_port_internal.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/serial_manager/fsl_component_serial_manager.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/serial_manager/fsl_component_serial_port_uart.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/serial_manager/fsl_component_serial_port_uart.c</name>
       </file>
     </group>
     <group>
@@ -8193,6 +8212,36 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../xip/evkmimxrt1170_flexspi_nor_config.h</name>
+    </file>
+  </group>
+  <group>
+    <name>CMSIS</name>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/cmsis_armcc.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/cmsis_armclang.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/cmsis_armclang_ltm.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/cmsis_compiler.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/cmsis_gcc.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/cmsis_iccarm.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/cmsis_version.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/core_cm7.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/mpu_armv7.h</name>
     </file>
   </group>
 </project>

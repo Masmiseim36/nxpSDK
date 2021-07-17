@@ -45,6 +45,7 @@ var NAVTREEINDEX2 =
 "classerpcgen_1_1_enum_member.html#a52c61d8869f285868244250bf00e0a7e":[1,0,1,11,3],
 "classerpcgen_1_1_enum_member.html#a5a37dd2b599437cbfaee49f2ad0a1ffd":[1,0,1,11,5],
 "classerpcgen_1_1_enum_member.html#a64ce4b33dfa9c10635ac2fd64089a4f1":[1,0,1,11,2],
+"classerpcgen_1_1_enum_member.html#aab7fd802b0d950fe2a477ed08362acbd":[1,0,1,11,7],
 "classerpcgen_1_1_enum_member.html#ad07ccca78ae5da696345920e3e7274b6":[1,0,1,11,6],
 "classerpcgen_1_1_enum_member.html#ad76e73550d53b86b084a69af269246d5":[1,0,1,11,0],
 "classerpcgen_1_1_enum_type.html":[1,0,1,12],
@@ -248,6 +249,5 @@ var NAVTREEINDEX2 =
 "classerpcgen_1_1_struct_member.html":[1,0,1,29],
 "classerpcgen_1_1_struct_member.html#a0bc51253c4a72731dcd1b42edbd7d306":[1,0,1,29,9],
 "classerpcgen_1_1_struct_member.html#a1e8a57d1402159b2db0170962a3bb3ae":[1,0,1,29,8],
-"classerpcgen_1_1_struct_member.html#a2340c490221778803f3e9436b78ba9bb":[1,0,1,29,14],
-"classerpcgen_1_1_struct_member.html#a302ab3e5a4e5075fcad137ea80305379":[1,0,1,29,0]
+"classerpcgen_1_1_struct_member.html#a2340c490221778803f3e9436b78ba9bb":[1,0,1,29,14]
 };

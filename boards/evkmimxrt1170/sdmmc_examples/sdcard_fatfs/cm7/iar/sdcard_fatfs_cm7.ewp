@@ -184,6 +184,7 @@
           <state>CPU_MIMXRT1176DVMAA_cm7</state>
           <state>FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1</state>
           <state>SD_ENABLED</state>
+          <state>MCUXPRESSO_SDK</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -321,12 +322,12 @@
           <state>$PROJ_DIR$/../../../../../../middleware/fatfs/source</state>
           <state>$PROJ_DIR$/../../../../../../middleware/fatfs/source/fsl_sd_disk</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176</state>
-          <state>$PROJ_DIR$/../../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/xip</state>
           <state>$PROJ_DIR$/../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/cm7</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/sdmmc/osa</state>
           <state>$PROJ_DIR$/../../../../../../components/osa</state>
         </option>
@@ -1166,6 +1167,7 @@
           <state>CPU_MIMXRT1176DVMAA_cm7</state>
           <state>FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1</state>
           <state>SD_ENABLED</state>
+          <state>MCUXPRESSO_SDK</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -1303,12 +1305,12 @@
           <state>$PROJ_DIR$/../../../../../../middleware/fatfs/source</state>
           <state>$PROJ_DIR$/../../../../../../middleware/fatfs/source/fsl_sd_disk</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176</state>
-          <state>$PROJ_DIR$/../../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/xip</state>
           <state>$PROJ_DIR$/../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/cm7</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/sdmmc/osa</state>
           <state>$PROJ_DIR$/../../../../../../components/osa</state>
         </option>
@@ -2148,6 +2150,7 @@
           <state>CPU_MIMXRT1176DVMAA_cm7</state>
           <state>FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1</state>
           <state>SD_ENABLED</state>
+          <state>MCUXPRESSO_SDK</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -2285,12 +2288,12 @@
           <state>$PROJ_DIR$/../../../../../../middleware/fatfs/source</state>
           <state>$PROJ_DIR$/../../../../../../middleware/fatfs/source/fsl_sd_disk</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176</state>
-          <state>$PROJ_DIR$/../../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/xip</state>
           <state>$PROJ_DIR$/../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/cm7</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/sdmmc/osa</state>
           <state>$PROJ_DIR$/../../../../../../components/osa</state>
         </option>
@@ -3128,6 +3131,7 @@
           <state>CPU_MIMXRT1176DVMAA_cm7</state>
           <state>FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1</state>
           <state>SD_ENABLED</state>
+          <state>MCUXPRESSO_SDK</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -3265,12 +3269,12 @@
           <state>$PROJ_DIR$/../../../../../../middleware/fatfs/source</state>
           <state>$PROJ_DIR$/../../../../../../middleware/fatfs/source/fsl_sd_disk</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176</state>
-          <state>$PROJ_DIR$/../../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/xip</state>
           <state>$PROJ_DIR$/../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/cm7</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/sdmmc/osa</state>
           <state>$PROJ_DIR$/../../../../../../components/osa</state>
         </option>
@@ -4110,6 +4114,7 @@
           <state>CPU_MIMXRT1176DVMAA_cm7</state>
           <state>FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1</state>
           <state>SD_ENABLED</state>
+          <state>MCUXPRESSO_SDK</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -4247,12 +4252,12 @@
           <state>$PROJ_DIR$/../../../../../../middleware/fatfs/source</state>
           <state>$PROJ_DIR$/../../../../../../middleware/fatfs/source/fsl_sd_disk</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176</state>
-          <state>$PROJ_DIR$/../../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/xip</state>
           <state>$PROJ_DIR$/../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/cm7</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/sdmmc/osa</state>
           <state>$PROJ_DIR$/../../../../../../components/osa</state>
         </option>
@@ -5092,6 +5097,7 @@
           <state>CPU_MIMXRT1176DVMAA_cm7</state>
           <state>FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1</state>
           <state>SD_ENABLED</state>
+          <state>MCUXPRESSO_SDK</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -5229,12 +5235,12 @@
           <state>$PROJ_DIR$/../../../../../../middleware/fatfs/source</state>
           <state>$PROJ_DIR$/../../../../../../middleware/fatfs/source/fsl_sd_disk</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176</state>
-          <state>$PROJ_DIR$/../../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/xip</state>
           <state>$PROJ_DIR$/../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/cm7</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/sdmmc/osa</state>
           <state>$PROJ_DIR$/../../../../../../components/osa</state>
         </option>
@@ -5938,6 +5944,12 @@
     </file>
   </group>
   <group>
+    <name>evkmimxrt1170</name>
+    <file>
+      <name>$PROJ_DIR$/../evkmimxrt1170_connect_cm4_cm7side.jlinkscript</name>
+    </file>
+  </group>
+  <group>
     <name>drivers</name>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_usdhc.c</name>
@@ -5956,6 +5968,12 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_common.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_common_arm.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_common_arm.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_lpuart.h</name>
@@ -5989,6 +6007,9 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/cm7/fsl_cache.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_memory.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_anatop_ai.h</name>
@@ -6074,7 +6095,13 @@
         <name>$PROJ_DIR$/../../../../../../middleware/fatfs/source/diskio.c</name>
       </file>
       <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/fatfs/source/diskio.h</name>
+      </file>
+      <file>
         <name>$PROJ_DIR$/../../../../../../middleware/fatfs/source/ff.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/fatfs/source/ff.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../../middleware/fatfs/source/ffsystem.c</name>
@@ -6082,19 +6109,13 @@
       <file>
         <name>$PROJ_DIR$/../../../../../../middleware/fatfs/source/ffunicode.c</name>
       </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/fatfs/source/diskio.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/fatfs/source/ff.h</name>
-      </file>
       <group>
         <name>fsl_sd_disk</name>
         <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/fatfs/source/fsl_sd_disk/fsl_sd_disk.h</name>
+          <name>$PROJ_DIR$/../../../../../../middleware/fatfs/source/fsl_sd_disk/fsl_sd_disk.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/fatfs/source/fsl_sd_disk/fsl_sd_disk.c</name>
+          <name>$PROJ_DIR$/../../../../../../middleware/fatfs/source/fsl_sd_disk/fsl_sd_disk.h</name>
         </file>
       </group>
     </group>
@@ -6115,45 +6136,6 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/system_MIMXRT1176_cm7.h</name>
-    </file>
-  </group>
-  <group>
-    <name>CMSIS</name>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/core_cm7.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/mpu_armv7.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_armcc.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_armclang.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_armclang_ltm.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_gcc.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_compiler.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_version.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_iccarm.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/arm_common_tables.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/arm_const_structs.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/arm_math.h</name>
     </file>
   </group>
   <group>
@@ -6211,6 +6193,36 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../xip/evkmimxrt1170_flexspi_nor_config.h</name>
+    </file>
+  </group>
+  <group>
+    <name>CMSIS</name>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/cmsis_armcc.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/cmsis_armclang.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/cmsis_armclang_ltm.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/cmsis_compiler.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/cmsis_gcc.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/cmsis_iccarm.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/cmsis_version.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/core_cm7.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/mpu_armv7.h</name>
     </file>
   </group>
 </project>

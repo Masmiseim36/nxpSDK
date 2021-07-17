@@ -20,9 +20,9 @@
  ******************************************************************************/
 /* SAI instance and clock */
 #define DEMO_CODEC_WM8960
-#define DEMO_SAI SAI1
-#define DEMO_SAI_CHANNEL (0)
-#define DEMO_SAI_IRQ SAI1_IRQn
+#define DEMO_SAI              SAI1
+#define DEMO_SAI_CHANNEL      (0)
+#define DEMO_SAI_IRQ          SAI1_IRQn
 #define DEMO_SAITxIRQHandler  SAI1_IRQHandler
 #define DEMO_SAI_TX_SYNC_MODE kSAI_ModeAsync
 #define DEMO_SAI_RX_SYNC_MODE kSAI_ModeSync

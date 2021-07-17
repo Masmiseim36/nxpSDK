@@ -2,12 +2,11 @@
 ** ###################################################################
 **     Processors:          MIMXRT1166CVM5A_cm4
 **                          MIMXRT1166DVM6A_cm4
-**                          MIMXRT1166XVM5A_cm4
 **
 **     Compiler:            GNU C Compiler
 **     Reference manual:    IMXRT1160RM, Rev 0, 03/2021
 **     Version:             rev. 0.1, 2020-12-29
-**     Build:               b210422
+**     Build:               b210402
 **
 **     Abstract:
 **         Linker file for the GNU C Compiler

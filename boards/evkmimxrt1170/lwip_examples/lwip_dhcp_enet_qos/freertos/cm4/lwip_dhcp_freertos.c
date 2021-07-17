@@ -83,6 +83,12 @@
 #define EXAMPLE_NETIF_INIT_FN ethernetif0_init
 #endif /* EXAMPLE_NETIF_INIT_FN */
 
+/*! @brief Stack size of the temporary lwIP initialization thread. */
+#define INIT_THREAD_STACKSIZE 1024
+
+/*! @brief Priority of the temporary lwIP initialization thread. */
+#define INIT_THREAD_PRIO DEFAULT_THREAD_PRIO
+
 /*! @brief Stack size of the thread which prints DHCP info. */
 #define PRINT_THREAD_STACKSIZE 512
 
@@ -92,6 +98,8 @@
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
+
+static void print_dhcp_state(void *arg);
 
 /*******************************************************************************
  * Variables
@@ -154,6 +162,49 @@ void ENET_QOS_SetSYSControl(enet_qos_mii_mode_t miiMode)
     IOMUXC_GPR->GPR6 |= IOMUXC_GPR_GPR6_ENET_QOS_CLKGEN_EN_MASK; /* Set this bit to enable ENET_QOS clock generation. */
 }
 
+
+/*!
+ * @brief Initializes lwIP stack.
+ *
+ * @param arg unused
+ */
+static void stack_init(void *arg)
+{
+    static struct netif netif;
+    ip4_addr_t netif_ipaddr, netif_netmask, netif_gw;
+    ethernetif_config_t enet_config = {
+        .phyHandle  = &phyHandle,
+        .macAddress = configMAC_ADDR,
+    };
+
+    LWIP_UNUSED_ARG(arg);
+
+    mdioHandle.resource.csrClock_Hz = EXAMPLE_CLOCK_FREQ;
+
+    IP4_ADDR(&netif_ipaddr, 0U, 0U, 0U, 0U);
+    IP4_ADDR(&netif_netmask, 0U, 0U, 0U, 0U);
+    IP4_ADDR(&netif_gw, 0U, 0U, 0U, 0U);
+
+    tcpip_init(NULL, NULL);
+
+    netifapi_netif_add(&netif, &netif_ipaddr, &netif_netmask, &netif_gw, &enet_config, EXAMPLE_NETIF_INIT_FN,
+                       tcpip_input);
+    netifapi_netif_set_default(&netif);
+    netifapi_netif_set_up(&netif);
+
+    netifapi_dhcp_start(&netif);
+
+    PRINTF("\r\n************************************************\r\n");
+    PRINTF(" DHCP example\r\n");
+    PRINTF("************************************************\r\n");
+
+    if (sys_thread_new("print_dhcp", print_dhcp_state, &netif, PRINT_THREAD_STACKSIZE, PRINT_THREAD_PRIO) == NULL)
+    {
+        LWIP_ASSERT("stack_init(): Task creation failed.", 0);
+    }
+
+    vTaskDelete(NULL);
+}
 
 /*!
  * @brief Prints DHCP status of the interface when it has changed from last status.
@@ -240,19 +291,6 @@ static void print_dhcp_state(void *arg)
  */
 int main(void)
 {
-    static struct netif netif;
-#if defined(FSL_FEATURE_SOC_LPC_ENET_COUNT) && (FSL_FEATURE_SOC_LPC_ENET_COUNT > 0)
-    static mem_range_t non_dma_memory[] = NON_DMA_MEMORY_ARRAY;
-#endif /* FSL_FEATURE_SOC_LPC_ENET_COUNT */
-    ip4_addr_t netif_ipaddr, netif_netmask, netif_gw;
-    ethernetif_config_t enet_config = {
-        .phyHandle  = &phyHandle,
-        .macAddress = configMAC_ADDR,
-#if defined(FSL_FEATURE_SOC_LPC_ENET_COUNT) && (FSL_FEATURE_SOC_LPC_ENET_COUNT > 0)
-        .non_dma_memory = non_dma_memory,
-#endif /* FSL_FEATURE_SOC_LPC_ENET_COUNT */
-    };
-
     gpio_pin_config_t gpio_config = {kGPIO_DigitalOutput, 0, kGPIO_NoIntmode};
 
     /* Hardware Initialization. */
@@ -278,28 +316,10 @@ int main(void)
 
     NVIC_SetPriority(ENET_QOS_IRQn, ENET_PRIORITY);
 
-    mdioHandle.resource.csrClock_Hz = EXAMPLE_CLOCK_FREQ;
-
-    IP4_ADDR(&netif_ipaddr, 0U, 0U, 0U, 0U);
-    IP4_ADDR(&netif_netmask, 0U, 0U, 0U, 0U);
-    IP4_ADDR(&netif_gw, 0U, 0U, 0U, 0U);
-
-    tcpip_init(NULL, NULL);
-
-    netifapi_netif_add(&netif, &netif_ipaddr, &netif_netmask, &netif_gw, &enet_config, EXAMPLE_NETIF_INIT_FN,
-                       tcpip_input);
-    netifapi_netif_set_default(&netif);
-    netifapi_netif_set_up(&netif);
-
-    netifapi_dhcp_start(&netif);
-
-    PRINTF("\r\n************************************************\r\n");
-    PRINTF(" DHCP example\r\n");
-    PRINTF("************************************************\r\n");
-
-    if (sys_thread_new("print_dhcp", print_dhcp_state, &netif, PRINT_THREAD_STACKSIZE, PRINT_THREAD_PRIO) == NULL)
+    /* Initialize lwIP from thread */
+    if (sys_thread_new("main", stack_init, NULL, INIT_THREAD_STACKSIZE, INIT_THREAD_PRIO) == NULL)
     {
-        LWIP_ASSERT("stack_init(): Task creation failed.", 0);
+        LWIP_ASSERT("main(): Task creation failed.", 0);
     }
 
     vTaskStartScheduler();

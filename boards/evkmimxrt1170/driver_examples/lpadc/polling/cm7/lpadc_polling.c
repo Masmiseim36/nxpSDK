@@ -16,10 +16,10 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_LPADC_BASE LPADC1
+#define DEMO_LPADC_BASE         LPADC1
 #define DEMO_LPADC_USER_CHANNEL 0U
-#define DEMO_LPADC_USER_CMDID 1U /* CMD1 */
-#define DEMO_LPADC_VREF_SOURCE kLPADC_ReferenceVoltageAlt1
+#define DEMO_LPADC_USER_CMDID   1U /* CMD1 */
+#define DEMO_LPADC_VREF_SOURCE  kLPADC_ReferenceVoltageAlt1
 
 /*******************************************************************************
  * Prototypes

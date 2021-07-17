@@ -28,7 +28,6 @@
 #include "vg_lite_kernel.h"
 #include "vg_lite_hal.h"
 #include "vg_lite_hw.h"
-#include "vg_lite_os.h"
 #if defined(__linux__) && !EMULATOR
 #include <asm/uaccess.h>
 #include <linux/version.h>
@@ -36,6 +35,8 @@
 
 static int s_reference = 0;
 static int task_num = 0;
+static vg_lite_kernel_initialize_t ts_initialize = {0};
+static uint8_t ts_init = 0;
 
 static vg_lite_error_t do_terminate(vg_lite_kernel_terminate_t * data);
 
@@ -179,16 +180,19 @@ static vg_lite_error_t init_vglite(vg_lite_kernel_initialize_t * data)
         }
     }
 
-    if((error = vg_lite_os_lock()) == VG_LITE_SUCCESS){
+    if((error = (vg_lite_error_t)vg_lite_os_lock()) == VG_LITE_SUCCESS){
         ++task_num;
         for(semaphore_id = 0; semaphore_id < TASK_LENGTH ; semaphore_id++)
         {
-            if(!vg_lite_os_get_semaphore(semaphore_id))
+            if (vg_lite_os_init_event(&context->async_event[0],
+	                              semaphore_id,
+	                              VG_LITE_IDLE) == VG_LITE_SUCCESS)
             {
-                context->semaphore = vg_lite_os_create_semaphore();
-                context->semaphore_id = semaphore_id;
-                vg_lite_os_set_semaphore(context->semaphore_id,context->semaphore);
-                vg_lite_os_release_semaphore(context->semaphore);
+                for (i = 1; i < CMDBUF_COUNT; i++)
+                    vg_lite_os_config_event(&context->async_event[i],
+                                            semaphore_id,
+                                            VG_LITE_IDLE);
+
                 break;
             }
         }
@@ -240,8 +244,6 @@ static vg_lite_error_t init_vglite(vg_lite_kernel_initialize_t * data)
     {
         int width = data->tessellation_width;
         int height = 0;
-        unsigned long stride, buffer_size, l1_size, l2_size;
-
         height = VG_LITE_ALIGN(data->tessellation_height, 16);
 
         chip_id = vg_lite_hal_peek(0x20);
@@ -254,47 +256,79 @@ static vg_lite_error_t init_vglite(vg_lite_kernel_initialize_t * data)
             data->capabilities.cap.tiled = 0x2;
         }
 
-        /* Compute tessellation buffer size. */
-        stride = VG_LITE_ALIGN(width * 8, 64);
-        buffer_size = VG_LITE_ALIGN(stride * height, 64);
-        /* Each bit in the L1 cache represents 64 bytes of tessellation data. */
-        l1_size = VG_LITE_ALIGN(VG_LITE_ALIGN(buffer_size / 64, 64) / 8, 64);
-        /* Each bit in the L2 cache represents 32 bytes of L1 data. */
-        l2_size = data->capabilities.cap.l2_cache ? VG_LITE_ALIGN(VG_LITE_ALIGN(l1_size / 32, 64) / 8, 64) : 0;
+        if(ts_init++ == 0)
+        {
+            int width = data->tessellation_width;
+            int height = 0;
+            unsigned long stride, buffer_size, l1_size, l2_size;
 
-        /* Allocate the memory. */
-        vg_lite_os_lock();
-        error = vg_lite_hal_allocate_contiguous(buffer_size + l1_size + l2_size,
-                                                                       &context->tessellation_buffer_logical,
-                                                                       &context->tessellation_buffer_physical,
-                                                                       &context->tessellation_buffer);
-        vg_lite_os_unlock();
+            height = VG_LITE_ALIGN(data->tessellation_height, 16);
 
-        if (error != VG_LITE_SUCCESS) {
-            /* Free any allocated memory. */
-            vg_lite_kernel_terminate_t terminate = { context };
-            do_terminate(&terminate);
+            chip_id = vg_lite_hal_peek(0x20);
+            if(chip_id == GPU_CHIP_ID_GC355)
+                width = VG_LITE_ALIGN(width, 128);
+            /* Check if we can used tiled tessellation (128x16). */
+            if (((width & 127) == 0) && ((height & 15) == 0)) {
+                data->capabilities.cap.tiled = 0x3;
+            } else {
+                data->capabilities.cap.tiled = 0x2;
+            }
 
-            /* Out of memory. */
-            return error;
+            /* Compute tessellation buffer size. */
+            stride = VG_LITE_ALIGN(width * 8, 64);
+            buffer_size = VG_LITE_ALIGN(stride * height, 64);
+            /* Each bit in the L1 cache represents 64 bytes of tessellation data. */
+            l1_size = VG_LITE_ALIGN(VG_LITE_ALIGN(buffer_size / 64, 64) / 8, 64);
+            /* Each bit in the L2 cache represents 32 bytes of L1 data. */
+            l2_size = data->capabilities.cap.l2_cache ? VG_LITE_ALIGN(VG_LITE_ALIGN(l1_size / 32, 64) / 8, 64) : 0;
+
+            /* Allocate the memory. */
+            vg_lite_os_lock();
+            error = vg_lite_hal_allocate_contiguous(buffer_size + l1_size + l2_size,
+                                                                           &context->tessellation_buffer_logical,
+                                                                           &context->tessellation_buffer_physical,
+                                                                           &context->tessellation_buffer);
+            vg_lite_os_unlock();
+
+            if (error != VG_LITE_SUCCESS) {
+                /* Free any allocated memory. */
+                vg_lite_kernel_terminate_t terminate = { context };
+                do_terminate(&terminate);
+
+                /* Out of memory. */
+                return error;
+            }
+
+            /* Return the tessellation buffer pointers and GPU addresses. */
+            ts_initialize.tessellation_buffer_gpu[0] = context->tessellation_buffer_physical;
+            ts_initialize.tessellation_buffer_gpu[1] = context->tessellation_buffer_physical + buffer_size;
+            ts_initialize.tessellation_buffer_gpu[2] = (l2_size ? ts_initialize.tessellation_buffer_gpu[1] + l1_size
+                                                : ts_initialize.tessellation_buffer_gpu[1]);
+            ts_initialize.tessellation_buffer_logic[0] = (uint8_t *)context->tessellation_buffer_logical;
+            ts_initialize.tessellation_buffer_logic[1] = ts_initialize.tessellation_buffer_logic[0] + buffer_size;
+            ts_initialize.tessellation_buffer_logic[2] = (l2_size ? ts_initialize.tessellation_buffer_logic[1] + l1_size
+                                                  : ts_initialize.tessellation_buffer_logic[1]);
+            ts_initialize.tessellation_buffer_size[0] = buffer_size;
+            ts_initialize.tessellation_buffer_size[1] = l1_size;
+            ts_initialize.tessellation_buffer_size[2] = l2_size;
+
+            ts_initialize.tessellation_stride = stride;
+            ts_initialize.tessellation_width_height = width | (height << 16);
+            ts_initialize.tessellation_shift = 0;
         }
+        data->tessellation_buffer_gpu[0] = ts_initialize.tessellation_buffer_gpu[0];
+        data->tessellation_buffer_gpu[1] = ts_initialize.tessellation_buffer_gpu[1];
+        data->tessellation_buffer_gpu[2] = ts_initialize.tessellation_buffer_gpu[2];
+        data->tessellation_buffer_logic[0] = ts_initialize.tessellation_buffer_logic[0];
+        data->tessellation_buffer_logic[1] = ts_initialize.tessellation_buffer_logic[1];
+        data->tessellation_buffer_logic[2] = ts_initialize.tessellation_buffer_logic[2];
+        data->tessellation_buffer_size[0] = ts_initialize.tessellation_buffer_size[0];
+        data->tessellation_buffer_size[1] = ts_initialize.tessellation_buffer_size[1];
+        data->tessellation_buffer_size[2] = ts_initialize.tessellation_buffer_size[2];
 
-        /* Return the tessellation buffer pointers and GPU addresses. */
-        data->tessellation_buffer_gpu[0] = context->tessellation_buffer_physical;
-        data->tessellation_buffer_gpu[1] = context->tessellation_buffer_physical + buffer_size;
-        data->tessellation_buffer_gpu[2] = (l2_size ? data->tessellation_buffer_gpu[1] + l1_size
-                                            : data->tessellation_buffer_gpu[1]);
-        data->tessellation_buffer_logic[0] = (uint8_t *)context->tessellation_buffer_logical;
-        data->tessellation_buffer_logic[1] = data->tessellation_buffer_logic[0] + buffer_size;
-        data->tessellation_buffer_logic[2] = (l2_size ? data->tessellation_buffer_logic[1] + l1_size
-                                              : data->tessellation_buffer_logic[1]);
-        data->tessellation_buffer_size[0] = buffer_size;
-        data->tessellation_buffer_size[1] = l1_size;
-        data->tessellation_buffer_size[2] = l2_size;
-
-        data->tessellation_stride = stride;
-        data->tessellation_width_height = width | (height << 16);
-        data->tessellation_shift = 0;
+        data->tessellation_stride = ts_initialize.tessellation_stride;
+        data->tessellation_width_height = ts_initialize.tessellation_width_height;
+        data->tessellation_shift = ts_initialize.tessellation_shift;
     }
 
     if(task_num == 1)
@@ -334,6 +368,7 @@ static vg_lite_error_t terminate_vglite(vg_lite_kernel_terminate_t * data)
 {
     vg_lite_kernel_context_t *context = NULL;
     vg_lite_error_t error = VG_LITE_SUCCESS;
+    int32_t i;
 #if defined(__linux__) && !EMULATOR
     vg_lite_kernel_context_t mycontext = {0};
     if (copy_from_user(&mycontext, data->context, sizeof(vg_lite_kernel_context_t)) != 0) {
@@ -357,13 +392,7 @@ static vg_lite_error_t terminate_vglite(vg_lite_kernel_terminate_t * data)
         context->command_buffer[1] = NULL;
     }
 
-    if (context->tessellation_buffer) {
-        /* Free the tessellation buffer. */
-        vg_lite_hal_free_contiguous(context->tessellation_buffer);
-        context->tessellation_buffer = NULL;
-    }
-
-    if((error = vg_lite_os_lock()) == VG_LITE_SUCCESS){
+    if((error = (vg_lite_error_t)vg_lite_os_lock()) == VG_LITE_SUCCESS){
         --task_num;
         --s_reference;
         vg_lite_os_unlock();
@@ -371,9 +400,17 @@ static vg_lite_error_t terminate_vglite(vg_lite_kernel_terminate_t * data)
     else
         return error;
 
-    vg_lite_os_delete_semaphore_by_id(context->semaphore_id);
+    /* Delete all async events associated to command buffers */
+    for (i = 0; i < CMDBUF_COUNT; i++)
+        vg_lite_os_delete_event(&context->async_event[i]);
 
     if(task_num == 0){
+        if (context->tessellation_buffer) {
+            /* Free the tessellation buffer. */
+            vg_lite_hal_free_contiguous(context->tessellation_buffer);
+            context->tessellation_buffer = NULL;
+        }
+        ts_init = 0;
         /* Disable the GPU. */
         gpu(0);
 
@@ -410,7 +447,7 @@ static vg_lite_error_t do_terminate(vg_lite_kernel_terminate_t * data)
 static vg_lite_error_t do_allocate(vg_lite_kernel_allocate_t * data)
 {
     vg_lite_error_t error;
-    if((error = vg_lite_os_lock()) == VG_LITE_SUCCESS)
+    if((error = (vg_lite_error_t)vg_lite_os_lock()) == VG_LITE_SUCCESS)
     {
         error = vg_lite_hal_allocate_contiguous(data->bytes, &data->memory, &data->memory_gpu, &data->memory_handle);
         vg_lite_os_unlock();
@@ -455,7 +492,8 @@ static vg_lite_error_t do_submit(vg_lite_kernel_submit_t * data)
     offset = (uint8_t *) data->commands - (uint8_t *)context->command_buffer_logical[data->command_id];
 
     /* Send the current command buffer to the command queue. */
-    error = vg_lite_hal_submit(physical, offset, data->command_size, &data->context->signal[data->command_id],data->context->semaphore_id);
+    error = vg_lite_hal_submit(physical, offset, data->command_size,
+                               &data->context->async_event[data->command_id]);
     if(error != VG_LITE_SUCCESS)
         return error;
 
@@ -466,7 +504,8 @@ static vg_lite_error_t do_wait(vg_lite_kernel_wait_t * data)
 {
     vg_lite_error_t error;
     /* Wait for the signal of current command buffer to 1. */
-    error = vg_lite_hal_wait(data->timeout_ms, &data->context->signal[data->command_id],data->context->semaphore);
+    error = vg_lite_hal_wait(data->timeout_ms,
+                             &data->context->async_event[data->command_id]);
 
     return error;
 }
@@ -536,12 +575,12 @@ static void soft_reset(void)
 
 static vg_lite_error_t do_mutex_lock()
 {
-    return vg_lite_os_lock();
+    return (vg_lite_error_t)vg_lite_os_lock();
 }
 
 static vg_lite_error_t do_mutex_unlock()
 {
-    return vg_lite_os_unlock();
+    return (vg_lite_error_t)vg_lite_os_unlock();
 }
 
 vg_lite_error_t vg_lite_kernel(vg_lite_kernel_command_t command, void * data)

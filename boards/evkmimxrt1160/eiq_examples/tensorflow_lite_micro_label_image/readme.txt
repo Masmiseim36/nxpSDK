@@ -23,8 +23,17 @@ via UART (virtual COM port).
 
 Files:
   main.cpp - example main function
-  image_data.h - image file converted into a C language array using
-    the xxd tool (distributed with the Vim editor at www.vim.org)
+  image_data.h - image file converted to a C language array of RGB values
+    using Python with the OpenCV and Numpy packages:
+    import cv2
+    import numpy as np
+    img = cv2.imread('stopwatch.bmp')
+    img = cv2.resize(img, (128, 128))
+    img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+    with open('image_data.h', 'w') as fout:
+      print('static const uint8_t image_data[] = {', file=fout)
+      img.tofile(fout, ', ', '0x%02X')
+      print('}\n', file=fout)
   labels.h - names of object classes
   mobilenet_v1_0.25_128_quant_int8.tflite - pre-trained TensorFlow Lite model quantized
     using TF Lite converter (for more details see the eIQ TensorFlow Lite User's Guide, which
@@ -46,10 +55,10 @@ Files:
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.9
-- Keil MDK  5.33
-- GCC ARM Embedded  9.3.1
-- MCUXpresso  11.3.1
+- IAR embedded Workbench  9.10.2
+- Keil MDK  5.34
+- GCC ARM Embedded  10.2.1
+- MCUXpresso  11.4.0
 
 Hardware requirements
 =====================

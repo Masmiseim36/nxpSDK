@@ -34,7 +34,7 @@
   <td id="projectlogo"><img alt="Logo" src="nxp_logo_small.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">eRPC API Reference
-   &#160;<span id="projectnumber">Rev. 1.8.0</span>
+   &#160;<span id="projectnumber">Rev. 1.8.1</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -225,6 +225,12 @@ USB CDC transport setup</h2></td></tr>
 <tr class="memitem:ga34c5ca73771a6175e9ba1ffe40630879"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__transport__setup.html#ga925aa73c3fc0da2a6f94ee65c4b108c0">erpc_transport_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__transport__setup.html#ga34c5ca73771a6175e9ba1ffe40630879">erpc_transport_usb_cdc_init</a> (void *serialHandle, void *serialConfig, void *usbCdcConfig, uint8_t *usbRingBuffer, uint32_t usbRingBufferLength)</td></tr>
 <tr class="memdesc:ga34c5ca73771a6175e9ba1ffe40630879"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create an USB CDC transport.  <a href="#ga34c5ca73771a6175e9ba1ffe40630879">More...</a><br /></td></tr>
 <tr class="separator:ga34c5ca73771a6175e9ba1ffe40630879"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
+I2C transport setup</h2></td></tr>
+<tr class="memitem:ga1d9f98c8926f281f68dbeca9e21f5ba9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__transport__setup.html#ga925aa73c3fc0da2a6f94ee65c4b108c0">erpc_transport_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__transport__setup.html#ga1d9f98c8926f281f68dbeca9e21f5ba9">erpc_transport_i2c_slave_init</a> (void *baseAddr, uint32_t baudRate, uint32_t srcClock_Hz)</td></tr>
+<tr class="memdesc:ga1d9f98c8926f281f68dbeca9e21f5ba9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create an I2C slave transport.  <a href="#ga1d9f98c8926f281f68dbeca9e21f5ba9">More...</a><br /></td></tr>
+<tr class="separator:ga1d9f98c8926f281f68dbeca9e21f5ba9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
 <a class="anchor" id="gadd5c1658590ea80c4c777c872ac4dd94"></a>
@@ -862,7 +868,7 @@ USB CDC transport setup</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Create an Linux RPMSG endpoint transport. </p>
-<p>This function is using RPMSG endpoints based on this implementation: <a href="https://github.com/NXPmicro/rpmsg-sysfs/tree/0aa1817545a765c200b1b2f9b6680a420dcf9171">https://github.com/NXPmicro/rpmsg-sysfs/tree/0aa1817545a765c200b1b2f9b6680a420dcf9171</a> .</p>
+<p>This function is using RPMSG endpoints based on this implementation: github.com/NXPmicro/rpmsg-sysfs/tree/0aa1817545a765c200b1b2f9b6680a420dcf9171 .</p>
 <p>When local/remote address is set to '-1', then default addresses will be used. When type is set to '0', then Datagram model will be used, else Stream.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -1010,6 +1016,50 @@ USB CDC transport setup</h2></td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">usbCdcConfig</td><td>Pointer to serial port usb config structure allocated by the caller, see serial manager header file. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">usbRingBuffer</td><td>Pointer to point serial manager ring buffer allocated by the caller, see serial manager header file. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">usbRingBufferLength</td><td>Serial manager ring buffer size.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Return NULL or erpc_transport_t instance pointer. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga1d9f98c8926f281f68dbeca9e21f5ba9"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group__transport__setup.html#ga925aa73c3fc0da2a6f94ee65c4b108c0">erpc_transport_t</a> erpc_transport_i2c_slave_init </td>
+          <td>(</td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>baseAddr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>baudRate</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>srcClock_Hz</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Create an I2C slave transport. </p>
+<p>Create I2C slave transport instance, to be used at slave core.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">baseAddr</td><td>Base address of I2C peripheral used in this transport layer. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">baudRate</td><td>SPI baud rate. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">srcClock_Hz</td><td>I2C source clock in Hz.</td></tr>
   </table>
   </dd>
 </dl>

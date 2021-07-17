@@ -38,10 +38,10 @@ vg_lite_error_t vg_lite_upload_path(vg_lite_path_t * path)
     uint32_t bytes;
     vg_lite_buffer_t Buf, *buffer;
     buffer = &Buf;
-    
+
     /* Compute the number of bytes required for path + command buffer prefix/postfix. */
     bytes = (8 + path->path_length + 7 + 8) & ~7;
-    
+
     /* Allocate GPU memory. */
     buffer->width  = bytes;
     buffer->height = 1;
@@ -50,27 +50,26 @@ vg_lite_error_t vg_lite_upload_path(vg_lite_path_t * path)
     if (vg_lite_allocate(buffer) != VG_LITE_SUCCESS) {
         return VG_LITE_OUT_OF_MEMORY;
     }
-    
+
     /* Initialize command buffer prefix. */
     ((uint32_t *) buffer->memory)[0] = 0x40000000 | ((path->path_length + 7) / 8);
     ((uint32_t *) buffer->memory)[1] = 0;
-    
+
     /* Copy the path data. */
     memcpy((uint32_t *) buffer->memory + 2, path->path, path->path_length);
-    
+
     /* Initialize command buffer postfix. */
     ((uint32_t *) buffer->memory)[bytes / 4 - 2] = 0x70000000;
     ((uint32_t *) buffer->memory)[bytes / 4 - 1] = 0;
-    
+
     /* Mark path as uploaded. */
-    path->path = buffer->memory;
     path->uploaded.handle = buffer->handle;
     path->uploaded.address = buffer->address;
     path->uploaded.memory = buffer->memory;
     path->uploaded.bytes = bytes;
     path->path_changed = 0;
     VLM_PATH_ENABLE_UPLOAD(*path);      /* Implicitly enable path uploading. */
-    
+
     /* Return pointer to vg_lite_buffer structure. */
     return VG_LITE_SUCCESS;
 }

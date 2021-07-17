@@ -16,19 +16,19 @@
  * Definitions
  ******************************************************************************/
 #define EXAMPLE_LPI2C_MASTER_BASEADDR LPI2C1
-#define EXAMPLE_LPI2C_SLAVE_BASEADDR LPI2C5
+#define EXAMPLE_LPI2C_SLAVE_BASEADDR  LPI2C5
 
 /* Get frequency of lpi2c clock */
 #define LPI2C_CLOCK_FREQUENCY (CLOCK_GetFreq(kCLOCK_OscRc48MDiv2))
 
 #define LPI2C_MASTER_CLOCK_FREQUENCY LPI2C_CLOCK_FREQUENCY
-#define LPI2C_SLAVE_CLOCK_FREQUENCY LPI2C_CLOCK_FREQUENCY
+#define LPI2C_SLAVE_CLOCK_FREQUENCY  LPI2C_CLOCK_FREQUENCY
 
 #define LPI2C_MASTER_IRQ LPI2C1_IRQn
-#define LPI2C_SLAVE_IRQ LPI2C5_IRQn
+#define LPI2C_SLAVE_IRQ  LPI2C5_IRQn
 
 #define LPI2C_MASTER_IRQHandler LPI2C1_IRQHandler
-#define LPI2C_SLAVE_IRQHandler LPI2C5_IRQHandler
+#define LPI2C_SLAVE_IRQHandler  LPI2C5_IRQHandler
 #define LPI2C_MASTER_SLAVE_ADDR_7BIT 0x7EU
 #define LPI2C_BAUDRATE               100000U
 #define LPI2C_DATA_LENGTH            32U
@@ -175,12 +175,20 @@ int main(void)
 
     PRINTF("\r\nLPI2C example -- MasterFunctionalInterrupt_SlaveFunctionalInterrupt.\r\n");
 
-    /*  Enable master and slave NVIC interrupt. */
+    /* Enable master and slave NVIC interrupt. */
     EnableIRQ(LPI2C_MASTER_IRQ);
     EnableIRQ(LPI2C_SLAVE_IRQ);
 
     /* Set lpi2c slave interrupt priority higher. */
+#if defined(__CORTEX_M) && (__CORTEX_M == 0U) && defined(FSL_FEATURE_NUMBER_OF_LEVEL1_INT_VECTORS) && \
+    (FSL_FEATURE_NUMBER_OF_LEVEL1_INT_VECTORS > 0)
+    if (LPI2C_SLAVE_IRQ < FSL_FEATURE_NUMBER_OF_LEVEL1_INT_VECTORS)
+    {
+        NVIC_SetPriority(LPI2C_SLAVE_IRQ, 0);
+    }
+#else
     NVIC_SetPriority(LPI2C_SLAVE_IRQ, 0);
+#endif
     NVIC_SetPriority(LPI2C_MASTER_IRQ, 1);
 
     /* 1.Set up lpi2c slave first */

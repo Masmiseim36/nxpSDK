@@ -1,17 +1,15 @@
-if(NOT DRIVER_XRDC2_MIMXRT1176_cm4_INCLUDED)
-    
-    set(DRIVER_XRDC2_MIMXRT1176_cm4_INCLUDED true CACHE BOOL "driver_xrdc2 component is included.")
+include_guard(GLOBAL)
+message("driver_xrdc2 component is included.")
 
-    target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
-        ${CMAKE_CURRENT_LIST_DIR}/fsl_xrdc2.c
-    )
-
-
-    target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
-        ${CMAKE_CURRENT_LIST_DIR}/.
-    )
+target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
+    ${CMAKE_CURRENT_LIST_DIR}/fsl_xrdc2.c
+)
 
 
-    include(driver_common_MIMXRT1176_cm4)
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
+    ${CMAKE_CURRENT_LIST_DIR}/.
+)
 
-endif()
+
+include(driver_common_MIMXRT1176_cm4)
+

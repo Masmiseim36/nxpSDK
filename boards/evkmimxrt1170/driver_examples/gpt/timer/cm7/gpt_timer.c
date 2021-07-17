@@ -15,8 +15,8 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define GPT_IRQ_ID GPT2_IRQn
-#define EXAMPLE_GPT GPT2
+#define GPT_IRQ_ID             GPT2_IRQn
+#define EXAMPLE_GPT            GPT2
 #define EXAMPLE_GPT_IRQHandler GPT2_IRQHandler
 
 /* Get source clock for GPT driver (GPT prescaler = 0) */

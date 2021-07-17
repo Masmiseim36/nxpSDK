@@ -172,8 +172,12 @@ usb_status_t USB_DeviceHidMouseClassRequest(usb_device_handle handle,
         case USB_DEVICE_HID_REQUEST_SET_REPORT:
             break;
         case USB_DEVICE_HID_REQUEST_SET_IDLE:
-            error                        = kStatus_USB_Success;
-            s_UsbDeviceHidMouse.idleRate = 125U;
+            if (((setup->bmRequestType & USB_REQUEST_TYPE_DIR_MASK) == USB_REQUEST_TYPE_DIR_OUT) &&
+                (setup->wLength == 0U))
+            {
+                error                        = kStatus_USB_Success;
+                s_UsbDeviceHidMouse.idleRate = 125U;
+            }
             break;
         case USB_DEVICE_HID_REQUEST_SET_PROTOCOL:
             break;

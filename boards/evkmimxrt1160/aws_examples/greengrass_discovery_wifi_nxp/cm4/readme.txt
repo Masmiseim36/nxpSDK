@@ -1,8 +1,8 @@
 Overview
 ========
 This example demonstrates how the board can discover Greengrass core and communicate with AWS IoT cloud through it.
-You will need device (A Mac, Windows PC, or UNIX-like system) for running AWS Greengrass. Example will connect to WiFi network, try to discover your AWS Greengrass device and send Hello World message to AWS IoT cloud through it.
-This demo needs WiFi network with internet access and opened 8883 and 8443 ports.
+You will need device (A Mac, Windows PC, or UNIX-like system) for running AWS Greengrass. Example will connect to Wi-Fi network, try to discover your AWS Greengrass device and send Hello World message to AWS IoT cloud through it.
+This demo needs Wi-Fi network with internet access and opened 8883 and 8443 ports.
 
 
 Prepare the AWS Greengrass and AWS IoT
@@ -28,27 +28,36 @@ Before running the demo it is needed to configure AWS IoT Console, AWS Greengras
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.9
-- Keil MDK  5.33
-- GCC ARM Embedded  9.3.1
+- IAR embedded Workbench  9.10.2
+- Keil MDK  5.34
+- GCC ARM Embedded  10.2.1
 
 Hardware requirements
 =====================
 - Micro USB cable
 - MIMXRT1160-EVK board
 - Personal Computer
-- One of the following WiFi modules:
+- One of the following Wi-Fi modules:
   - Panasonic PAN9026 SDIO ADAPTER + SD to uSD adapter
   - AzureWave AW-NM191NF-uSD
+  - AzureWave AW-AM457-uSD
+  - AzureWave AW-CM358MA
 
 Board settings
 ==============
-This example, by default, is built to work with the Panasonic PAN9026 SDIO ADAPTER. It is configured by the project macro: WIFI_BOARD_PAN9026_SDIO.
-If you want use the AzureWave AW-NM191NF-uSD, please change the project macro WIFI_BOARD_PAN9026_SDIO to WIFI_BOARD_AW_NM191.
+This example, by default, is built to work with the AzureWave AW-AM457-uSD. It is configured by the macro definition in file app_config.h (#define WIFI_BOARD_AW_AM457).
+If you want use the AzureWave AW-NM191NF-uSD, please change the macro to WIFI_BOARD_AW_NM191.
+If you want use the Panasonic PAN9026 SDIO ADAPTER, please change the macro to WIFI_BOARD_PAN9026_SDIO.
+If you want use the AzureWave AW-CM358MA, please change the macro to WIFI_BOARD_AW_CM358.
 
 Jumper settings for AzureWave AW-NM191NF-uSD Module:
   - J11 1-2: VIO_SD 1.8V (Voltage level of SDIO pins is 1.8V)
   - J2  1-2: 3.3V VIO_uSD (Power Supply from uSD connector)
+
+Jumper settings for AzureWave AW-AM457-uSD Module:
+  - J11 1-2: VIO_SD 1.8V (Voltage level of SDIO pins is 1.8V)
+  - J2  1-2: 3.3V VIO_uSD (Power Supply from uSD connector)
+
 Prepare the Demo
 ================
 
@@ -58,7 +67,7 @@ Prepare the Demo
         static const char clientcredentialMQTT_BROKER_ENDPOINT[] = "abcdefgh123456.iot.us-west-2.amazonaws.com";
         #define clientcredentialIOT_THING_NAME "HelloWorldDevice"
 
-    The device certificate and private key needs to be opened in text editor and its content copied into the "aws_clientcredential_keys.h" or you can use the CertificateConfigurator.html (mcu-sdk-2.0\rtos\amazon-freertos\tools\certificate_configuration) to generate the "aws_clientcredential_keys.h".
+    The device certificate and private key needs to be opened in text editor and its content copied into the "aws_clientcredential_keys.h" or you can use the CertificateConfigurator.html (mcu-sdk-2.0\rtos\freertos\tools\certificate_configuration) to generate the "aws_clientcredential_keys.h".
 
     keyCLIENT_CERTIFICATE_PEM is stored in <device id>.cert.pem file and keyCLIENT_PRIVATE_KEY_PEM is stored in <device id>.private.key file.
 
@@ -77,9 +86,9 @@ Prepare the Demo
 
     In the same way update the private key array.
 
-2.  Update these macros in "aws_clientcredential.h" based on your WiFi network configuration:
-        #define clientcredentialWIFI_SSID       "Paste WiFi SSID here."
-        #define clientcredentialWIFI_PASSWORD   "Paste WiFi password here."
+2.  Update these macros in "aws_clientcredential.h" based on your Wi-Fi network configuration:
+        #define clientcredentialWIFI_SSID       "Paste Wi-Fi SSID here."
+        #define clientcredentialWIFI_PASSWORD   "Paste Wi-Fi password here."
 
 3.  Open example's project and build it.
 
@@ -105,39 +114,92 @@ You can check connection log in Greengrass device on path: /greengrass/ggc/var/l
 
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-0 120 [Tmr Svc] Write certificate...
-1 249 [Tmr Svc] Device credential provisioning succeeded.
-2 252 [iot_thread] [INFO ][INIT][252] SDK successfully initialized.
-.
-.
-.
-3 4953 [iot_thread] [INFO ][DEMO][4953] Successfully initialized the demo. Network type for the demo: 1
-4 4953 [iot_thread] Attempting automated selection of Greengrass device
-5 9194 [iot_thread] About to close socket.
-6 9197 [iot_thread] Socket closed.
-7 9197 [iot_thread] Stack high watermark for discovery helper task: 1536.
-8 11717 [iot_thread] About to close socket.
-9 11719 [iot_thread] Socket closed.
-10 11719 [iot_thread] Stack high watermark for discovery helper task: 876.
-11 11720 [iot_thread] Greengrass device discovered.
-12 11720 [iot_thread] Establishing MQTT communication to Greengrass...
-13 14204 [iot_thread] [INFO ][MQTT][14204] Establishing new MQTT connection.
-14 14210 [iot_thread] [INFO ][MQTT][14210] Anonymous metrics (SDK language, SDK version) will be provided to AWS IoT. Recompile with AWS_IOT_MQTT_ENABLE_METRICS set to 0 to disable.
-15 14211 [iot_thread] [INFO ][MQTT][14211] (MQTT connection 20209ee0, CONNECT operation 20209cf8) Waiting for operation completion.
-16 14215 [iot_thread] [INFO ][MQTT][14215] (MQTT connection 20209ee0, CONNECT operation 20209cf8) Wait complete with result SUCCESS.
-17 14216 [iot_thread] [INFO ][MQTT][14216] New MQTT connection 20209810 established.
-18 14217 [iot_thread] [INFO ][MQTT][14217] (MQTT connection 20209ee0) MQTT PUBLISH operation queued.
-19 15717 [iot_thread] [INFO ][MQTT][15717] (MQTT connection 20209ee0) MQTT PUBLISH operation queued.
-20 17217 [iot_thread] [INFO ][MQTT][17217] (MQTT connection 20209ee0) MQTT PUBLISH operation queued.
-21 18717 [iot_thread] Disconnecting from broker.
-22 18717 [iot_thread] [INFO ][MQTT][18717] (MQTT connection 20209ee0) Disconnecting connection.
-23 18717 [iot_thread] [INFO ][MQTT][18717] (MQTT connection 20209ee0, DISCONNECT operation 2020b158) Waiting for operation completion.
-24 18719 [iot_thread] [INFO ][MQTT][18717] (MQTT connection 20209ee0, DISCONNECT operation 2020b158) Wait complete with result SUCCESS.
-25 18719 [iot_thread] [INFO ][MQTT][18719] (MQTT connection 20209ee0) Connection disconnected.
-26 18721 [iot_thread] [INFO ][MQTT][18721] (MQTT connection 20209ee0) Network connection closed.
-27 18723 [iot_thread] [INFO ][MQTT][18723] (MQTT connection 20209ee0) Network connection destroyed.
-28 18723 [iot_thread] Disconnected from the broker.
-29 18723 [iot_thread] Deleted Client.
-30 18723 [iot_thread] Heap low watermark: 2576. Stack high watermark: 876.
-31 18723 [iot_thread] ----Demo finished----
+0 128 [Tmr Svc] Write certificate...
+
+1 154 [iot_thread] [INFO ][DEMO][154] ---------STARTING DEMO---------
+
+
+2 156 [iot_thread] [INFO ][INIT][156] SDK successfully initialized.
+
+MAC Address:  0:13:43:7F:9E:77 
+[net] Initialized TCP/IP networking stack
+
+3 3460 [iot_thread] Connecting to nxp .....
+
+4 37015 [wlcmgr] Connected to with IP = [192.168.199.188]
+
+5 37060 [iot_thread] [INFO ][DEMO][37060] Successfully initialized the demo. Network type for the demo: 1
+
+6 37060 [iot_thread] [INFO ][MQTT][37060] MQTT library successfully initialized.
+
+7 37060 [iot_thread] [INFO ][DEMO][37060] Attempting automated selection of Greengrass device
+
+
+8 40491 [iot_thread] JSON file retrieval completed
+
+9 40491 [iot_thread] About to close socket.
+
+10 40494 [iot_thread] Socket closed.
+
+11 40494 [iot_thread] Stack high watermark for discovery helper task: 1530.
+
+12 41456 [iot_thread] About to close socket.
+
+13 41457 [iot_thread] Socket closed.
+
+14 41460 [iot_thread] Stack high watermark for discovery helper task: 882.
+
+15 41460 [iot_thread] [INFO ][DEMO][41460] Greengrass device discovered.
+
+16 41460 [iot_thread] [INFO ][DEMO][41460] Attempting to establish MQTT connection to Greengrass.
+
+17 42487 [iot_thread] [INFO ][MQTT][42487] Establishing new MQTT connection.
+
+18 42491 [iot_thread] [INFO ][MQTT][42491] (MQTT connection 202144f0, CONNECT operation 202145b0) Waiting for operation completion.
+
+19 42736 [NetRecv] [INFO] CONNACK session present bit not set.
+20 42736 [NetRecv] [INFO] Connection accepted.
+21 42737 [iot_thread] [INFO ][MQTT][42737] (MQTT connection 202144f0, CONNECT operation 202145b0) Wait complete with result SUCCESS.
+
+22 42738 [iot_thread] [INFO ][MQTT][42738] New MQTT connection 2020bf20 established.
+
+23 42740 [iot_thread] [INFO ][MQTT][42740] (MQTT connection 202144f0) MQTT PUBLISH operation queued.
+
+24 44241 [iot_thread] [INFO ][MQTT][44241] (MQTT connection 202144f0) MQTT PUBLISH operation queued.
+
+25 45742 [iot_thread] [INFO ][MQTT][45741] (MQTT connection 202144f0) MQTT PUBLISH operation queued.
+
+26 47242 [iot_thread] [INFO ][DEMO][47242] Disconnecting from broker.
+
+27 47242 [iot_thread] [INFO ][MQTT][47242] (MQTT connection 202144f0) Disconnecting connection.
+
+28 47242 [iot_thread] [INFO] Disconnected from the broker.
+29 47244 [iot_thread] [INFO ][MQTT][47244] (MQTT connection 202144f0) Network connection closed.
+
+30 47477 [iot_thread] [INFO ][MQTT][47477] (MQTT connection 202144f0) Network connection destroyed.
+
+31 47477 [iot_thread] [INFO ][DEMO][47477] Disconnected from the broker.
+
+32 47477 [iot_thread] Heap low watermark: 14984. Stack high watermark: 882.
+
+33 47477 [iot_thread] [INFO ][MQTT][47477] MQTT library cleanup done.
+
+34 47477 [iot_thread] [INFO ][DEMO][47477] Cleaned up MQTT library.
+
+35 47479 [iot_thread] [INFO ][DEMO][47479] memory_metrics::freertos_heap::before::bytes::87384
+
+36 47479 [iot_thread] [INFO ][DEMO][47479] memory_metrics::freertos_heap::after::bytes::14984
+
+37 47479 [iot_thread] [INFO ][DEMO][47479] memory_metrics::demo_task_stack::before::bytes::7856
+
+38 47479 [iot_thread] [INFO ][DEMO][47479] memory_metrics::demo_task_stack::after::bytes::3528
+
+39 48479 [iot_thread] [INFO ][DEMO][48479] Demo completed successfully.
+
+40 48484 [wlcmgr] Dis-connected
+
+41 48529 [iot_thread] [INFO ][INIT][48529] SDK cleanup done.
+
+42 48529 [iot_thread] [INFO ][DEMO][48529] -------DEMO FINISHED-------
+
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

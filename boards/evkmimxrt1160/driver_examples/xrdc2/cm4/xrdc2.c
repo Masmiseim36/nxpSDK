@@ -82,14 +82,14 @@ void DEMO_AssignDomain(void)
     assignment.secureAttr    = kXRDC2_MasterSecure;
     assignment.domainId      = DEMO_CORE_DOMAIN;
     /* The XID input is not used for domain assignment hit. */
-    assignment.mask  = XRDC2_MAKE_M4_AHBC_MATCH(0, 1, 1, 1, 7);
-    assignment.match = XRDC2_MAKE_M4_AHBC_MATCH(0, 0, 0, 0, 0);
+    assignment.mask  = 0x3FUL;
+    assignment.match = 0UL;
 
     XRDC2_SetMasterDomainAssignment(DEMO_XRDC2, kXRDC2_Master_M4_AHBC, 0, &assignment);
 
     /* The XID input is not used for domain assignment hit. */
-    assignment.mask  = XRDC2_MAKE_M4_AHBS_MATCH(0, 1, 1, 1, 7);
-    assignment.match = XRDC2_MAKE_M4_AHBS_MATCH(0, 0, 0, 0, 0);
+    assignment.mask  = 0x3FUL;
+    assignment.match = 0UL;
     XRDC2_SetMasterDomainAssignment(DEMO_XRDC2, kXRDC2_Master_M4_AHBS, 0, &assignment);
 }
 

@@ -26,24 +26,23 @@
     <definition extID="platform.drivers.common.MIMXRT1176"/>
     <definition extID="component.serial_manager_uart.MIMXRT1176"/>
     <definition extID="platform.drivers.lpuart.MIMXRT1176"/>
+    <definition extID="platform.devices.MIMXRT1176_CMSIS.MIMXRT1176"/>
     <definition extID="platform.devices.MIMXRT1176_startup.MIMXRT1176"/>
     <definition extID="platform.drivers.clock.MIMXRT1176"/>
     <definition extID="platform.drivers.igpio.MIMXRT1176"/>
     <definition extID="platform.drivers.iomuxc.MIMXRT1176"/>
     <definition extID="platform.drivers.xip_device.MIMXRT1176"/>
-    <definition extID="platform.drivers.xip_board.MIMXRT1176"/>
-    <definition extID="platform.devices.MIMXRT1176_CMSIS.MIMXRT1176"/>
-    <definition extID="platform.Include_core_cm7.MIMXRT1176"/>
+    <definition extID="platform.drivers.xip_board.evkmimxrt1170.MIMXRT1176"/>
     <definition extID="platform.utilities.assert.MIMXRT1176"/>
     <definition extID="platform.drivers.pmu_1.MIMXRT1176"/>
     <definition extID="platform.drivers.dcdc_soc.MIMXRT1176"/>
     <definition extID="middleware.freertos-kernel.extension.MIMXRT1176"/>
     <definition extID="driver.mdio-common.MIMXRT1176"/>
     <definition extID="platform.drivers.anatop_ai.MIMXRT1176"/>
+    <definition extID="CMSIS_Include_core_cm.MIMXRT1176"/>
+    <definition extID="platform.drivers.memory.MIMXRT1176"/>
     <definition extID="platform.devices.MIMXRT1176_system.MIMXRT1176"/>
     <definition extID="platform.utilities.misc_utilities.MIMXRT1176"/>
-    <definition extID="platform.Include_common.MIMXRT1176"/>
-    <definition extID="platform.Include_dsp.MIMXRT1176"/>
     <definition extID="mcuxpresso"/>
     <definition extID="iar"/>
     <definition extID="mdk"/>
@@ -52,7 +51,7 @@
     <definition extID="com.crt.advproject.config.exe.debug"/>
     <definition extID="com.crt.advproject.config.exe.release"/>
   </externalDefinitions>
-  <example id="evkmimxrt1170_deepviewrt_modelrunner" name="deepviewrt_modelrunner" device_core="cm7_MIMXRT1176xxxxx" dependency="middleware.lwip.apps.httpsrv.MIMXRT1176 middleware.lwip.MIMXRT1176 middleware.freertos-kernel.MIMXRT1176 middleware.lwip.apps.mdns.MIMXRT1176 middleware.lwip.enet_ethernetif.MIMXRT1176 driver.phy-common.MIMXRT1176 platform.drivers.enet.MIMXRT1176 utility.debug_console.MIMXRT1176 middleware.lwip.empty_ethernetif.MIMXRT1176 middleware.eiq.deepviewrt.modelrunner.server.MIMXRT1176 middleware.freertos-kernel.heap_3.MIMXRT1176 platform.drivers.cache_armv7_m7.MIMXRT1176 driver.phy-device-ksz8081.MIMXRT1176 driver.phy-device-rtl8211f.MIMXRT1176 platform.drivers.semc.MIMXRT1176 driver.mdio-enet.MIMXRT1176 platform.drivers.gpt.MIMXRT1176 middleware.eiq.deepviewrt.MIMXRT1176 component.lists.MIMXRT1176 component.lpuart_adapter.MIMXRT1176 component.serial_manager.MIMXRT1176 platform.drivers.common.MIMXRT1176 component.serial_manager_uart.MIMXRT1176 platform.drivers.lpuart.MIMXRT1176 platform.devices.MIMXRT1176_startup.MIMXRT1176 platform.drivers.clock.MIMXRT1176 platform.drivers.igpio.MIMXRT1176 platform.drivers.iomuxc.MIMXRT1176 platform.drivers.xip_device.MIMXRT1176 platform.drivers.xip_board.MIMXRT1176 platform.devices.MIMXRT1176_CMSIS.MIMXRT1176 platform.Include_core_cm7.MIMXRT1176 platform.utilities.assert.MIMXRT1176 platform.drivers.pmu_1.MIMXRT1176 platform.drivers.dcdc_soc.MIMXRT1176 middleware.freertos-kernel.extension.MIMXRT1176 driver.mdio-common.MIMXRT1176 platform.drivers.anatop_ai.MIMXRT1176 platform.devices.MIMXRT1176_system.MIMXRT1176 platform.utilities.misc_utilities.MIMXRT1176 platform.Include_common.MIMXRT1176 platform.Include_dsp.MIMXRT1176" category="eiq_examples">
+  <example id="evkmimxrt1170_deepviewrt_modelrunner" name="deepviewrt_modelrunner" device_core="cm7_MIMXRT1176xxxxx" dependency="middleware.lwip.apps.httpsrv.MIMXRT1176 middleware.lwip.MIMXRT1176 middleware.freertos-kernel.MIMXRT1176 middleware.lwip.apps.mdns.MIMXRT1176 middleware.lwip.enet_ethernetif.MIMXRT1176 driver.phy-common.MIMXRT1176 platform.drivers.enet.MIMXRT1176 utility.debug_console.MIMXRT1176 middleware.lwip.empty_ethernetif.MIMXRT1176 middleware.eiq.deepviewrt.modelrunner.server.MIMXRT1176 middleware.freertos-kernel.heap_3.MIMXRT1176 platform.drivers.cache_armv7_m7.MIMXRT1176 driver.phy-device-ksz8081.MIMXRT1176 driver.phy-device-rtl8211f.MIMXRT1176 platform.drivers.semc.MIMXRT1176 driver.mdio-enet.MIMXRT1176 platform.drivers.gpt.MIMXRT1176 middleware.eiq.deepviewrt.MIMXRT1176 component.lists.MIMXRT1176 component.lpuart_adapter.MIMXRT1176 component.serial_manager.MIMXRT1176 platform.drivers.common.MIMXRT1176 component.serial_manager_uart.MIMXRT1176 platform.drivers.lpuart.MIMXRT1176 platform.devices.MIMXRT1176_CMSIS.MIMXRT1176 platform.devices.MIMXRT1176_startup.MIMXRT1176 platform.drivers.clock.MIMXRT1176 platform.drivers.igpio.MIMXRT1176 platform.drivers.iomuxc.MIMXRT1176 platform.drivers.xip_device.MIMXRT1176 platform.drivers.xip_board.evkmimxrt1170.MIMXRT1176 platform.utilities.assert.MIMXRT1176 platform.drivers.pmu_1.MIMXRT1176 platform.drivers.dcdc_soc.MIMXRT1176 middleware.freertos-kernel.extension.MIMXRT1176 driver.mdio-common.MIMXRT1176 platform.drivers.anatop_ai.MIMXRT1176 CMSIS_Include_core_cm.MIMXRT1176 platform.drivers.memory.MIMXRT1176 platform.devices.MIMXRT1176_system.MIMXRT1176 platform.utilities.misc_utilities.MIMXRT1176" category="eiq_examples">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -108,7 +107,10 @@
           <value>SDK_DEBUGCONSOLE=1</value>
           <value>SKIP_SYSCLK_INIT</value>
           <value>USE_RTOS=1</value>
+          <value>SDK_OS_FREE_RTOS</value>
+          <value>LWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1</value>
           <value>SERIAL_PORT_TYPE_UART=1</value>
+          <value>MCUXPRESSO_SDK</value>
         </option>
         <option id="com.crt.advproject.gas.hdrlib" type="enum">
           <value>com.crt.advproject.gas.hdrlib.newlib</value>
@@ -138,6 +140,9 @@
         <option id="com.crt.advproject.link.memory.heapAndStack" type="string">
           <value>&amp;Heap:BOARD_SDRAM;Post Data;0x400000&amp;Stack:SRAM_ITC_cm7;End;0x8000</value>
         </option>
+        <option id="gnu.c.link.option.other" type="stringList">
+          <value>--no-wchar-size-warning</value>
+        </option>
         <option id="com.crt.advproject.gas.fpu" type="enum">
           <value>com.crt.advproject.gas.fpu.fpv5dp.hard</value>
         </option>
@@ -159,6 +164,7 @@
       <include_path path="boards/evkmimxrt1170/eiq_examples/deepviewrt_modelrunner" project_relative_path="source" type="c_include"/>
       <include_path path="rtos/freertos/libraries/abstractions/posix/include" project_relative_path="." type="c_include"/>
       <include_path path="boards/evkmimxrt1170/eiq_examples/deepviewrt_modelrunner" project_relative_path="board" type="c_include"/>
+      <include_path path="boards/evkmimxrt1170/eiq_examples/deepviewrt_modelrunner/source" project_relative_path="source" type="asm_include"/>
     </include_paths>
     <source path="boards/evkmimxrt1170/eiq_examples/deepviewrt_modelrunner/iar" project_relative_path="./" type="workspace" toolchain="iar">
       <files mask="deepviewrt_modelrunner.ewd"/>
@@ -178,10 +184,10 @@
       <files mask="CMakeLists.txt"/>
       <files mask="flags.cmake"/>
       <files mask="config.cmake"/>
-      <files mask="build_flexspi_nor_release.bat"/>
-      <files mask="build_flexspi_nor_release.sh"/>
-      <files mask="build_flexspi_nor_debug.bat"/>
-      <files mask="build_flexspi_nor_debug.sh"/>
+      <files mask="build_flexspi_nor_sdram_release.bat"/>
+      <files mask="build_flexspi_nor_sdram_release.sh"/>
+      <files mask="build_flexspi_nor_sdram_debug.bat"/>
+      <files mask="build_flexspi_nor_sdram_debug.sh"/>
     </source>
     <source path="boards/evkmimxrt1170/eiq_examples/deepviewrt_modelrunner/source" project_relative_path="source" type="src">
       <files mask="modelrunner.c"/>
@@ -234,6 +240,12 @@
     </source>
     <source path="boards/evkmimxrt1170/eiq_examples/deepviewrt_modelrunner/mdk" project_relative_path="board" type="src" toolchain="mdk">
       <files mask="retarget.c"/>
+    </source>
+    <source path="boards/evkmimxrt1170/eiq_examples/deepviewrt_modelrunner/mdk" project_relative_path="evkmimxrt1170" type="configuration" toolchain="mdk">
+      <files mask="evkmimxrt1170_flexspi_nor_sdram.ini"/>
+    </source>
+    <source path="boards/evkmimxrt1170/eiq_examples/deepviewrt_modelrunner/iar" project_relative_path="evkmimxrt1170" type="other" toolchain="iar">
+      <files mask="evkmimxrt1170_connect_cm7.mac"/>
     </source>
   </example>
 </ksdk:examples>

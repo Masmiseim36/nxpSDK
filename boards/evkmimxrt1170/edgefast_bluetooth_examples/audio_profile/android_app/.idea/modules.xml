@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/aws_examples-music_control_android.iml" filepath="$PROJECT_DIR$/aws_examples-music_control_android.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/aws_examples-music_control_android-app.iml" filepath="$PROJECT_DIR$/app/aws_examples-music_control_android-app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/music_control_android.iml" filepath="$PROJECT_DIR$/music_control_android.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/music_control_android-app.iml" filepath="$PROJECT_DIR$/app/music_control_android-app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/src-aws_examples-music_control_android.iml" filepath="$PROJECT_DIR$/src-aws_examples-music_control_android.iml" />
+    </modules>
+  </component>
+</project>

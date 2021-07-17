@@ -232,16 +232,10 @@ static void print_dhcp_state(struct netif *netif)
 int main(void)
 {
     struct netif netif;
-#if defined(FSL_FEATURE_SOC_LPC_ENET_COUNT) && (FSL_FEATURE_SOC_LPC_ENET_COUNT > 0)
-    mem_range_t non_dma_memory[] = NON_DMA_MEMORY_ARRAY;
-#endif /* FSL_FEATURE_SOC_LPC_ENET_COUNT */
     ip4_addr_t netif_ipaddr, netif_netmask, netif_gw;
     ethernetif_config_t enet_config = {
         .phyHandle  = &phyHandle,
         .macAddress = configMAC_ADDR,
-#if defined(FSL_FEATURE_SOC_LPC_ENET_COUNT) && (FSL_FEATURE_SOC_LPC_ENET_COUNT > 0)
-        .non_dma_memory = non_dma_memory,
-#endif /* FSL_FEATURE_SOC_LPC_ENET_COUNT */
     };
 
     gpio_pin_config_t gpio_config = {kGPIO_DigitalOutput, 0, kGPIO_NoIntmode};

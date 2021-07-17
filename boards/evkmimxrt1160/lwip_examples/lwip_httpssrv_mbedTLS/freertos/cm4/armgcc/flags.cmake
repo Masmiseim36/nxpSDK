@@ -46,6 +46,7 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG " \
     -DDATA_SECTION_IS_CACHEABLE=1 \
     -DDEBUG \
     -D_POSIX_SOURCE \
+    -DLWIP_TIMEVAL_PRIVATE=0 \
     -DCPU_MIMXRT1166DVM6A_cm4 \
     -DFSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1 \
     -DFSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE \
@@ -57,11 +58,14 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG " \
     -DHTTPSRV_CFG_MBEDTLS_ENABLE=1 \
     -DCRYPTO_USE_DRIVER_CAAM \
     -DFSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1 \
+    -DLWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1 \
     -DSERIAL_PORT_TYPE_UART=1 \
-    -DFSL_RTOS_FREE_RTOS \
+    -DSDK_OS_FREE_RTOS \
+    -DMCUXPRESSO_SDK \
     -g \
     -O0 \
     -fomit-frame-pointer \
+    -Wno-unused-function \
     -mcpu=cortex-m4 \
     -Wall \
     -mfloat-abi=hard \
@@ -86,6 +90,7 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE " \
     -DDATA_SECTION_IS_CACHEABLE=1 \
     -DNDEBUG \
     -D_POSIX_SOURCE \
+    -DLWIP_TIMEVAL_PRIVATE=0 \
     -DCPU_MIMXRT1166DVM6A_cm4 \
     -DFSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1 \
     -DFSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE \
@@ -97,10 +102,13 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE " \
     -DHTTPSRV_CFG_MBEDTLS_ENABLE=1 \
     -DCRYPTO_USE_DRIVER_CAAM \
     -DFSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1 \
+    -DLWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1 \
     -DSERIAL_PORT_TYPE_UART=1 \
-    -DFSL_RTOS_FREE_RTOS \
+    -DSDK_OS_FREE_RTOS \
+    -DMCUXPRESSO_SDK \
     -Os \
     -fomit-frame-pointer \
+    -Wno-unused-function \
     -mcpu=cortex-m4 \
     -Wall \
     -mfloat-abi=hard \
@@ -121,6 +129,7 @@ SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG " \
     -DDEBUG \
     -DCPU_MIMXRT1166DVM6A_cm4 \
     -DSERIAL_PORT_TYPE_UART=1 \
+    -DMCUXPRESSO_SDK \
     -g \
     -O0 \
     -mcpu=cortex-m4 \
@@ -144,6 +153,7 @@ SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE " \
     -DNDEBUG \
     -DCPU_MIMXRT1166DVM6A_cm4 \
     -DSERIAL_PORT_TYPE_UART=1 \
+    -DMCUXPRESSO_SDK \
     -Os \
     -mcpu=cortex-m4 \
     -Wall \
@@ -187,6 +197,7 @@ SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG " \
     muldefs \
     -Xlinker \
     -Map=output.map \
+    -Wl,--print-memory-usage \
     -Xlinker \
     --defsym=__stack_size__=1000 \
     -Xlinker \
@@ -218,6 +229,7 @@ SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE " \
     muldefs \
     -Xlinker \
     -Map=output.map \
+    -Wl,--print-memory-usage \
     -Xlinker \
     --defsym=__stack_size__=1000 \
     -Xlinker \

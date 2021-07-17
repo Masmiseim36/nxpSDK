@@ -332,9 +332,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>DEBUG, CPU_MIMXRT1176DVMAA_cm7, FREESCALE_KSDK_BM, MBEDTLS_CONFIG_FILE='\"ksdk_mbedtls_config.h\"', CRYPTO_USE_DRIVER_CAAM, SERIAL_PORT_TYPE_UART=1</Define>
+              <Define>DEBUG, CPU_MIMXRT1176DVMAA_cm7, FREESCALE_KSDK_BM, MBEDTLS_CONFIG_FILE='\"ksdk_mbedtls_config.h\"', CRYPTO_USE_DRIVER_CAAM, SERIAL_PORT_TYPE_UART=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../devices/MIMXRT1176/drivers;../../../../../../middleware/mbedtls/port/ksdk;../../../../../../middleware/mbedtls/include;../../../../../../middleware/mbedtls/library;../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../../devices/MIMXRT1176;../../../../../../CMSIS/Include;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../devices/MIMXRT1176/xip;../../../../xip;../../../../../../devices/MIMXRT1176/drivers/cm7</IncludePath>
+              <IncludePath>..;../../../../../../devices/MIMXRT1176/drivers;../../../../../../middleware/mbedtls/include;../../../../../../middleware/mbedtls/library;../../../../../../middleware/mbedtls/port/ksdk;../../../../../../devices/MIMXRT1176;../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../devices/MIMXRT1176/xip;../../../../xip;../../../../../../devices/MIMXRT1176/drivers/cm7;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -368,7 +368,7 @@
             <ScatterFile>MIMXRT1176xxxxx_cm7_ram_ocram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --predefine="-D__stack_size__=0x2000" --predefine="-D__heap_size__=0x8000"</Misc>
+            <Misc>--remove --entry=Reset_Handler --predefine="-D__stack_size__=0x2000" --predefine="-D__heap_size__=0x8000"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -441,6 +441,16 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>evkmimxrt1170</GroupName>
+          <Files>
+            <File>
+              <FileName>evkmimxrt1170_connect_cm4_cm7side.jlinkscript</FileName>
+              <FileType>5</FileType>
+              <FilePath>../evkmimxrt1170_connect_cm4_cm7side.jlinkscript</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>drivers</GroupName>
           <Files>
             <File>
@@ -472,6 +482,16 @@
               <FileName>fsl_common.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_common.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_common_arm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_common_arm.h</FilePath>
             </File>
             <File>
               <FileName>fsl_lpuart.h</FileName>
@@ -529,6 +549,11 @@
               <FilePath>../../../../../../devices/MIMXRT1176/drivers/cm7/fsl_cache.h</FilePath>
             </File>
             <File>
+              <FileName>fsl_memory.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_memory.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_anatop_ai.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_anatop_ai.h</FilePath>
@@ -537,76 +562,6 @@
               <FileName>fsl_anatop_ai.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_anatop_ai.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>mbedtls/port/ksdk</GroupName>
-          <Files>
-            <File>
-              <FileName>ksdk_mbedtls.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/ksdk_mbedtls.c</FilePath>
-            </File>
-            <File>
-              <FileName>ksdk_mbedtls.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/ksdk_mbedtls.h</FilePath>
-            </File>
-            <File>
-              <FileName>ksdk_mbedtls_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/ksdk_mbedtls_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>sha1_alt.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/sha1_alt.h</FilePath>
-            </File>
-            <File>
-              <FileName>sha256_alt.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/sha256_alt.h</FilePath>
-            </File>
-            <File>
-              <FileName>des_alt.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/des_alt.h</FilePath>
-            </File>
-            <File>
-              <FileName>des_alt.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/des_alt.c</FilePath>
-            </File>
-            <File>
-              <FileName>aes_alt.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/aes_alt.h</FilePath>
-            </File>
-            <File>
-              <FileName>aes_alt.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/aes_alt.c</FilePath>
-            </File>
-            <File>
-              <FileName>ecp_alt.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/ecp_alt.h</FilePath>
-            </File>
-            <File>
-              <FileName>ecp_alt.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/ecp_alt.c</FilePath>
-            </File>
-            <File>
-              <FileName>ecp_curves_alt.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/ecp_curves_alt.c</FilePath>
-            </File>
-            <File>
-              <FileName>ecp_alt_ksdk.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/ecp_alt_ksdk.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -717,6 +672,11 @@
               <FileName>config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/mbedtls/include/mbedtls/config.h</FilePath>
+            </File>
+            <File>
+              <FileName>config_psa.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/include/mbedtls/config_psa.h</FilePath>
             </File>
             <File>
               <FileName>ctr_drbg.h</FileName>
@@ -904,6 +864,11 @@
               <FilePath>../../../../../../middleware/mbedtls/include/mbedtls/poly1305.h</FilePath>
             </File>
             <File>
+              <FileName>psa_util.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/include/mbedtls/psa_util.h</FilePath>
+            </File>
+            <File>
               <FileName>ripemd160.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/mbedtls/include/mbedtls/ripemd160.h</FilePath>
@@ -1006,6 +971,66 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>mbedtls/include/psa</GroupName>
+          <Files>
+            <File>
+              <FileName>crypto.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/include/psa/crypto.h</FilePath>
+            </File>
+            <File>
+              <FileName>crypto_compat.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/include/psa/crypto_compat.h</FilePath>
+            </File>
+            <File>
+              <FileName>crypto_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/include/psa/crypto_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>crypto_driver_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/include/psa/crypto_driver_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>crypto_extra.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/include/psa/crypto_extra.h</FilePath>
+            </File>
+            <File>
+              <FileName>crypto_platform.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/include/psa/crypto_platform.h</FilePath>
+            </File>
+            <File>
+              <FileName>crypto_se_driver.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/include/psa/crypto_se_driver.h</FilePath>
+            </File>
+            <File>
+              <FileName>crypto_sizes.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/include/psa/crypto_sizes.h</FilePath>
+            </File>
+            <File>
+              <FileName>crypto_struct.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/include/psa/crypto_struct.h</FilePath>
+            </File>
+            <File>
+              <FileName>crypto_types.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/include/psa/crypto_types.h</FilePath>
+            </File>
+            <File>
+              <FileName>crypto_values.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/include/psa/crypto_values.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>mbedtls/library</GroupName>
           <Files>
             <File>
@@ -1089,9 +1114,19 @@
               <FilePath>../../../../../../middleware/mbedtls/library/chachapoly.c</FilePath>
             </File>
             <File>
+              <FileName>check_crypto_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/check_crypto_config.h</FilePath>
+            </File>
+            <File>
               <FileName>cmac.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/mbedtls/library/cmac.c</FilePath>
+            </File>
+            <File>
+              <FileName>common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/common.h</FilePath>
             </File>
             <File>
               <FileName>ctr_drbg.c</FileName>
@@ -1177,11 +1212,6 @@
               <FileName>md.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/mbedtls/library/md.c</FilePath>
-            </File>
-            <File>
-              <FileName>md_wrap.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/mbedtls/library/md_wrap.c</FilePath>
             </File>
             <File>
               <FileName>md2.c</FileName>
@@ -1279,6 +1309,106 @@
               <FilePath>../../../../../../middleware/mbedtls/library/poly1305.c</FilePath>
             </File>
             <File>
+              <FileName>psa_crypto.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto.c</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_client.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_client.c</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_core.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_core.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_driver_wrappers.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_driver_wrappers.c</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_driver_wrappers.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_driver_wrappers.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_ecp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_ecp.c</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_ecp.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_ecp.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_invasive.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_invasive.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_its.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_its.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_random_impl.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_random_impl.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_rsa.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_rsa.c</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_rsa.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_rsa.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_se.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_se.c</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_se.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_se.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_service_integration.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_service_integration.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_slot_management.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_slot_management.c</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_slot_management.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_slot_management.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_storage.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_storage.c</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_storage.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_storage.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_its_file.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_its_file.c</FilePath>
+            </File>
+            <File>
               <FileName>ripemd160.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/mbedtls/library/ripemd160.c</FilePath>
@@ -1329,6 +1459,16 @@
               <FilePath>../../../../../../middleware/mbedtls/library/ssl_cookie.c</FilePath>
             </File>
             <File>
+              <FileName>ssl_invasive.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/ssl_invasive.h</FilePath>
+            </File>
+            <File>
+              <FileName>ssl_msg.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/ssl_msg.c</FilePath>
+            </File>
+            <File>
               <FileName>ssl_srv.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/mbedtls/library/ssl_srv.c</FilePath>
@@ -1342,6 +1482,16 @@
               <FileName>ssl_tls.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/mbedtls/library/ssl_tls.c</FilePath>
+            </File>
+            <File>
+              <FileName>ssl_tls13_keys.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/ssl_tls13_keys.c</FilePath>
+            </File>
+            <File>
+              <FileName>ssl_tls13_keys.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/ssl_tls13_keys.h</FilePath>
             </File>
             <File>
               <FileName>threading.c</FileName>
@@ -1406,37 +1556,77 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>utilities</GroupName>
+          <GroupName>mbedtls/port/ksdk</GroupName>
           <Files>
             <File>
-              <FileName>fsl_str.c</FileName>
+              <FileName>ksdk_mbedtls.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1176/utilities/str/fsl_str.c</FilePath>
+              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/ksdk_mbedtls.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_str.h</FileName>
+              <FileName>ksdk_mbedtls.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1176/utilities/str/fsl_str.h</FilePath>
+              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/ksdk_mbedtls.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_debug_console.c</FileName>
+              <FileName>ksdk_mbedtls_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/ksdk_mbedtls_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>sha1_alt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/sha1_alt.h</FilePath>
+            </File>
+            <File>
+              <FileName>sha256_alt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/sha256_alt.h</FilePath>
+            </File>
+            <File>
+              <FileName>des_alt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/des_alt.h</FilePath>
+            </File>
+            <File>
+              <FileName>des_alt.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1176/utilities/debug_console/fsl_debug_console.c</FilePath>
+              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/des_alt.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_debug_console.h</FileName>
+              <FileName>aes_alt.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1176/utilities/debug_console/fsl_debug_console.h</FilePath>
+              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/aes_alt.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_debug_console_conf.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1176/utilities/debug_console/fsl_debug_console_conf.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_assert.c</FileName>
+              <FileName>aes_alt.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1176/utilities/fsl_assert.c</FilePath>
+              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/aes_alt.c</FilePath>
+            </File>
+            <File>
+              <FileName>ecp_alt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/ecp_alt.h</FilePath>
+            </File>
+            <File>
+              <FileName>ecp_alt.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/ecp_alt.c</FilePath>
+            </File>
+            <File>
+              <FileName>ecp_curves_alt.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/ecp_curves_alt.c</FilePath>
+            </File>
+            <File>
+              <FileName>ecp_alt_ksdk.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/ecp_alt_ksdk.c</FilePath>
+            </File>
+            <File>
+              <FileName>threading_alt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/threading_alt.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1471,67 +1661,37 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>CMSIS</GroupName>
+          <GroupName>utilities</GroupName>
           <Files>
             <File>
-              <FileName>core_cm7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/core_cm7.h</FilePath>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1176/utilities/str/fsl_str.c</FilePath>
             </File>
             <File>
-              <FileName>mpu_armv7.h</FileName>
+              <FileName>fsl_str.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT1176/utilities/str/fsl_str.h</FilePath>
             </File>
             <File>
-              <FileName>cmsis_armcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_armcc.h</FilePath>
+              <FileName>fsl_debug_console.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1176/utilities/debug_console/fsl_debug_console.c</FilePath>
             </File>
             <File>
-              <FileName>cmsis_armclang.h</FileName>
+              <FileName>fsl_debug_console.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_armclang.h</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT1176/utilities/debug_console/fsl_debug_console.h</FilePath>
             </File>
             <File>
-              <FileName>cmsis_armclang_ltm.h</FileName>
+              <FileName>fsl_debug_console_conf.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_armclang_ltm.h</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT1176/utilities/debug_console/fsl_debug_console_conf.h</FilePath>
             </File>
             <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_gcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_compiler.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_version.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_version.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_iccarm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_iccarm.h</FilePath>
-            </File>
-            <File>
-              <FileName>arm_common_tables.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/arm_common_tables.h</FilePath>
-            </File>
-            <File>
-              <FileName>arm_const_structs.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/arm_const_structs.h</FilePath>
-            </File>
-            <File>
-              <FileName>arm_math.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/arm_math.h</FilePath>
+              <FileName>fsl_assert.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1176/utilities/fsl_assert.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1627,6 +1787,56 @@
               <FileName>evkmimxrt1170_flexspi_nor_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../xip/evkmimxrt1170_flexspi_nor_config.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>CMSIS</GroupName>
+          <Files>
+            <File>
+              <FileName>cmsis_armcc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_armclang.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_armclang_ltm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armclang_ltm.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_compiler.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_gcc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_iccarm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_version.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_version.h</FilePath>
+            </File>
+            <File>
+              <FileName>core_cm7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/core_cm7.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/mpu_armv7.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1961,9 +2171,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, DEBUG, CPU_MIMXRT1176DVMAA_cm7, FREESCALE_KSDK_BM, MBEDTLS_CONFIG_FILE='\"ksdk_mbedtls_config.h\"', CRYPTO_USE_DRIVER_CAAM, SERIAL_PORT_TYPE_UART=1</Define>
+              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, DEBUG, CPU_MIMXRT1176DVMAA_cm7, FREESCALE_KSDK_BM, MBEDTLS_CONFIG_FILE='\"ksdk_mbedtls_config.h\"', CRYPTO_USE_DRIVER_CAAM, SERIAL_PORT_TYPE_UART=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../devices/MIMXRT1176/drivers;../../../../../../middleware/mbedtls/port/ksdk;../../../../../../middleware/mbedtls/include;../../../../../../middleware/mbedtls/library;../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../../devices/MIMXRT1176;../../../../../../CMSIS/Include;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../devices/MIMXRT1176/xip;../../../../xip;../../../../../../devices/MIMXRT1176/drivers/cm7</IncludePath>
+              <IncludePath>..;../../../../../../devices/MIMXRT1176/drivers;../../../../../../middleware/mbedtls/include;../../../../../../middleware/mbedtls/library;../../../../../../middleware/mbedtls/port/ksdk;../../../../../../devices/MIMXRT1176;../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../devices/MIMXRT1176/xip;../../../../xip;../../../../../../devices/MIMXRT1176/drivers/cm7;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1997,7 +2207,7 @@
             <ScatterFile>MIMXRT1176xxxxx_cm7_flexspi_nor_ocram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --predefine="-DXIP_BOOT_HEADER_ENABLE=1" --predefine="-D__stack_size__=0x2000" --predefine="-D__heap_size__=0x8000"</Misc>
+            <Misc>--remove --entry=Reset_Handler --predefine="-DXIP_BOOT_HEADER_ENABLE=1" --predefine="-D__stack_size__=0x2000" --predefine="-D__heap_size__=0x8000"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -2070,6 +2280,16 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>evkmimxrt1170</GroupName>
+          <Files>
+            <File>
+              <FileName>evkmimxrt1170_connect_cm4_cm7side.jlinkscript</FileName>
+              <FileType>5</FileType>
+              <FilePath>../evkmimxrt1170_connect_cm4_cm7side.jlinkscript</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>drivers</GroupName>
           <Files>
             <File>
@@ -2101,6 +2321,16 @@
               <FileName>fsl_common.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_common.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_common_arm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_common_arm.h</FilePath>
             </File>
             <File>
               <FileName>fsl_lpuart.h</FileName>
@@ -2158,6 +2388,11 @@
               <FilePath>../../../../../../devices/MIMXRT1176/drivers/cm7/fsl_cache.h</FilePath>
             </File>
             <File>
+              <FileName>fsl_memory.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_memory.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_anatop_ai.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_anatop_ai.h</FilePath>
@@ -2166,76 +2401,6 @@
               <FileName>fsl_anatop_ai.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_anatop_ai.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>mbedtls/port/ksdk</GroupName>
-          <Files>
-            <File>
-              <FileName>ksdk_mbedtls.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/ksdk_mbedtls.c</FilePath>
-            </File>
-            <File>
-              <FileName>ksdk_mbedtls.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/ksdk_mbedtls.h</FilePath>
-            </File>
-            <File>
-              <FileName>ksdk_mbedtls_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/ksdk_mbedtls_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>sha1_alt.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/sha1_alt.h</FilePath>
-            </File>
-            <File>
-              <FileName>sha256_alt.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/sha256_alt.h</FilePath>
-            </File>
-            <File>
-              <FileName>des_alt.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/des_alt.h</FilePath>
-            </File>
-            <File>
-              <FileName>des_alt.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/des_alt.c</FilePath>
-            </File>
-            <File>
-              <FileName>aes_alt.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/aes_alt.h</FilePath>
-            </File>
-            <File>
-              <FileName>aes_alt.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/aes_alt.c</FilePath>
-            </File>
-            <File>
-              <FileName>ecp_alt.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/ecp_alt.h</FilePath>
-            </File>
-            <File>
-              <FileName>ecp_alt.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/ecp_alt.c</FilePath>
-            </File>
-            <File>
-              <FileName>ecp_curves_alt.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/ecp_curves_alt.c</FilePath>
-            </File>
-            <File>
-              <FileName>ecp_alt_ksdk.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/ecp_alt_ksdk.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2346,6 +2511,11 @@
               <FileName>config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/mbedtls/include/mbedtls/config.h</FilePath>
+            </File>
+            <File>
+              <FileName>config_psa.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/include/mbedtls/config_psa.h</FilePath>
             </File>
             <File>
               <FileName>ctr_drbg.h</FileName>
@@ -2533,6 +2703,11 @@
               <FilePath>../../../../../../middleware/mbedtls/include/mbedtls/poly1305.h</FilePath>
             </File>
             <File>
+              <FileName>psa_util.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/include/mbedtls/psa_util.h</FilePath>
+            </File>
+            <File>
               <FileName>ripemd160.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/mbedtls/include/mbedtls/ripemd160.h</FilePath>
@@ -2635,6 +2810,66 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>mbedtls/include/psa</GroupName>
+          <Files>
+            <File>
+              <FileName>crypto.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/include/psa/crypto.h</FilePath>
+            </File>
+            <File>
+              <FileName>crypto_compat.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/include/psa/crypto_compat.h</FilePath>
+            </File>
+            <File>
+              <FileName>crypto_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/include/psa/crypto_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>crypto_driver_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/include/psa/crypto_driver_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>crypto_extra.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/include/psa/crypto_extra.h</FilePath>
+            </File>
+            <File>
+              <FileName>crypto_platform.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/include/psa/crypto_platform.h</FilePath>
+            </File>
+            <File>
+              <FileName>crypto_se_driver.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/include/psa/crypto_se_driver.h</FilePath>
+            </File>
+            <File>
+              <FileName>crypto_sizes.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/include/psa/crypto_sizes.h</FilePath>
+            </File>
+            <File>
+              <FileName>crypto_struct.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/include/psa/crypto_struct.h</FilePath>
+            </File>
+            <File>
+              <FileName>crypto_types.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/include/psa/crypto_types.h</FilePath>
+            </File>
+            <File>
+              <FileName>crypto_values.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/include/psa/crypto_values.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>mbedtls/library</GroupName>
           <Files>
             <File>
@@ -2718,9 +2953,19 @@
               <FilePath>../../../../../../middleware/mbedtls/library/chachapoly.c</FilePath>
             </File>
             <File>
+              <FileName>check_crypto_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/check_crypto_config.h</FilePath>
+            </File>
+            <File>
               <FileName>cmac.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/mbedtls/library/cmac.c</FilePath>
+            </File>
+            <File>
+              <FileName>common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/common.h</FilePath>
             </File>
             <File>
               <FileName>ctr_drbg.c</FileName>
@@ -2806,11 +3051,6 @@
               <FileName>md.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/mbedtls/library/md.c</FilePath>
-            </File>
-            <File>
-              <FileName>md_wrap.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/mbedtls/library/md_wrap.c</FilePath>
             </File>
             <File>
               <FileName>md2.c</FileName>
@@ -2908,6 +3148,106 @@
               <FilePath>../../../../../../middleware/mbedtls/library/poly1305.c</FilePath>
             </File>
             <File>
+              <FileName>psa_crypto.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto.c</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_client.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_client.c</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_core.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_core.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_driver_wrappers.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_driver_wrappers.c</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_driver_wrappers.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_driver_wrappers.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_ecp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_ecp.c</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_ecp.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_ecp.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_invasive.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_invasive.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_its.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_its.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_random_impl.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_random_impl.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_rsa.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_rsa.c</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_rsa.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_rsa.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_se.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_se.c</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_se.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_se.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_service_integration.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_service_integration.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_slot_management.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_slot_management.c</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_slot_management.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_slot_management.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_storage.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_storage.c</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_storage.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_storage.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_its_file.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_its_file.c</FilePath>
+            </File>
+            <File>
               <FileName>ripemd160.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/mbedtls/library/ripemd160.c</FilePath>
@@ -2958,6 +3298,16 @@
               <FilePath>../../../../../../middleware/mbedtls/library/ssl_cookie.c</FilePath>
             </File>
             <File>
+              <FileName>ssl_invasive.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/ssl_invasive.h</FilePath>
+            </File>
+            <File>
+              <FileName>ssl_msg.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/ssl_msg.c</FilePath>
+            </File>
+            <File>
               <FileName>ssl_srv.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/mbedtls/library/ssl_srv.c</FilePath>
@@ -2971,6 +3321,16 @@
               <FileName>ssl_tls.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/mbedtls/library/ssl_tls.c</FilePath>
+            </File>
+            <File>
+              <FileName>ssl_tls13_keys.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/ssl_tls13_keys.c</FilePath>
+            </File>
+            <File>
+              <FileName>ssl_tls13_keys.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/ssl_tls13_keys.h</FilePath>
             </File>
             <File>
               <FileName>threading.c</FileName>
@@ -3035,37 +3395,77 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>utilities</GroupName>
+          <GroupName>mbedtls/port/ksdk</GroupName>
           <Files>
             <File>
-              <FileName>fsl_str.c</FileName>
+              <FileName>ksdk_mbedtls.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1176/utilities/str/fsl_str.c</FilePath>
+              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/ksdk_mbedtls.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_str.h</FileName>
+              <FileName>ksdk_mbedtls.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1176/utilities/str/fsl_str.h</FilePath>
+              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/ksdk_mbedtls.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_debug_console.c</FileName>
+              <FileName>ksdk_mbedtls_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/ksdk_mbedtls_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>sha1_alt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/sha1_alt.h</FilePath>
+            </File>
+            <File>
+              <FileName>sha256_alt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/sha256_alt.h</FilePath>
+            </File>
+            <File>
+              <FileName>des_alt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/des_alt.h</FilePath>
+            </File>
+            <File>
+              <FileName>des_alt.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1176/utilities/debug_console/fsl_debug_console.c</FilePath>
+              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/des_alt.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_debug_console.h</FileName>
+              <FileName>aes_alt.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1176/utilities/debug_console/fsl_debug_console.h</FilePath>
+              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/aes_alt.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_debug_console_conf.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1176/utilities/debug_console/fsl_debug_console_conf.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_assert.c</FileName>
+              <FileName>aes_alt.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1176/utilities/fsl_assert.c</FilePath>
+              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/aes_alt.c</FilePath>
+            </File>
+            <File>
+              <FileName>ecp_alt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/ecp_alt.h</FilePath>
+            </File>
+            <File>
+              <FileName>ecp_alt.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/ecp_alt.c</FilePath>
+            </File>
+            <File>
+              <FileName>ecp_curves_alt.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/ecp_curves_alt.c</FilePath>
+            </File>
+            <File>
+              <FileName>ecp_alt_ksdk.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/ecp_alt_ksdk.c</FilePath>
+            </File>
+            <File>
+              <FileName>threading_alt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/threading_alt.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -3100,67 +3500,37 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>CMSIS</GroupName>
+          <GroupName>utilities</GroupName>
           <Files>
             <File>
-              <FileName>core_cm7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/core_cm7.h</FilePath>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1176/utilities/str/fsl_str.c</FilePath>
             </File>
             <File>
-              <FileName>mpu_armv7.h</FileName>
+              <FileName>fsl_str.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT1176/utilities/str/fsl_str.h</FilePath>
             </File>
             <File>
-              <FileName>cmsis_armcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_armcc.h</FilePath>
+              <FileName>fsl_debug_console.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1176/utilities/debug_console/fsl_debug_console.c</FilePath>
             </File>
             <File>
-              <FileName>cmsis_armclang.h</FileName>
+              <FileName>fsl_debug_console.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_armclang.h</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT1176/utilities/debug_console/fsl_debug_console.h</FilePath>
             </File>
             <File>
-              <FileName>cmsis_armclang_ltm.h</FileName>
+              <FileName>fsl_debug_console_conf.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_armclang_ltm.h</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT1176/utilities/debug_console/fsl_debug_console_conf.h</FilePath>
             </File>
             <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_gcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_compiler.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_version.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_version.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_iccarm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_iccarm.h</FilePath>
-            </File>
-            <File>
-              <FileName>arm_common_tables.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/arm_common_tables.h</FilePath>
-            </File>
-            <File>
-              <FileName>arm_const_structs.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/arm_const_structs.h</FilePath>
-            </File>
-            <File>
-              <FileName>arm_math.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/arm_math.h</FilePath>
+              <FileName>fsl_assert.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1176/utilities/fsl_assert.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -3256,6 +3626,56 @@
               <FileName>evkmimxrt1170_flexspi_nor_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../xip/evkmimxrt1170_flexspi_nor_config.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>CMSIS</GroupName>
+          <Files>
+            <File>
+              <FileName>cmsis_armcc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_armclang.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_armclang_ltm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armclang_ltm.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_compiler.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_gcc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_iccarm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_version.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_version.h</FilePath>
+            </File>
+            <File>
+              <FileName>core_cm7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/core_cm7.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/mpu_armv7.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -3590,9 +4010,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>USE_SDRAM, DATA_SECTION_IS_CACHEABLE=1, DEBUG, CPU_MIMXRT1176DVMAA_cm7, FREESCALE_KSDK_BM, MBEDTLS_CONFIG_FILE='\"ksdk_mbedtls_config.h\"', CRYPTO_USE_DRIVER_CAAM, SERIAL_PORT_TYPE_UART=1</Define>
+              <Define>USE_SDRAM, DATA_SECTION_IS_CACHEABLE=1, DEBUG, CPU_MIMXRT1176DVMAA_cm7, FREESCALE_KSDK_BM, MBEDTLS_CONFIG_FILE='\"ksdk_mbedtls_config.h\"', CRYPTO_USE_DRIVER_CAAM, SERIAL_PORT_TYPE_UART=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../devices/MIMXRT1176/drivers;../../../../../../middleware/mbedtls/port/ksdk;../../../../../../middleware/mbedtls/include;../../../../../../middleware/mbedtls/library;../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../../devices/MIMXRT1176;../../../../../../CMSIS/Include;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../devices/MIMXRT1176/xip;../../../../xip;../../../../../../devices/MIMXRT1176/drivers/cm7</IncludePath>
+              <IncludePath>..;../../../../../../devices/MIMXRT1176/drivers;../../../../../../middleware/mbedtls/include;../../../../../../middleware/mbedtls/library;../../../../../../middleware/mbedtls/port/ksdk;../../../../../../devices/MIMXRT1176;../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../devices/MIMXRT1176/xip;../../../../xip;../../../../../../devices/MIMXRT1176/drivers/cm7;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -3626,7 +4046,7 @@
             <ScatterFile>MIMXRT1176xxxxx_cm7_sdram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --predefine="-D__stack_size__=0x2000" --predefine="-D__heap_size__=0x8000"</Misc>
+            <Misc>--remove --entry=Reset_Handler --predefine="-D__stack_size__=0x2000" --predefine="-D__heap_size__=0x8000"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -3699,6 +4119,16 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>evkmimxrt1170</GroupName>
+          <Files>
+            <File>
+              <FileName>evkmimxrt1170_connect_cm4_cm7side.jlinkscript</FileName>
+              <FileType>5</FileType>
+              <FilePath>../evkmimxrt1170_connect_cm4_cm7side.jlinkscript</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>drivers</GroupName>
           <Files>
             <File>
@@ -3730,6 +4160,16 @@
               <FileName>fsl_common.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_common.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_common_arm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_common_arm.h</FilePath>
             </File>
             <File>
               <FileName>fsl_lpuart.h</FileName>
@@ -3787,6 +4227,11 @@
               <FilePath>../../../../../../devices/MIMXRT1176/drivers/cm7/fsl_cache.h</FilePath>
             </File>
             <File>
+              <FileName>fsl_memory.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_memory.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_anatop_ai.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_anatop_ai.h</FilePath>
@@ -3795,76 +4240,6 @@
               <FileName>fsl_anatop_ai.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_anatop_ai.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>mbedtls/port/ksdk</GroupName>
-          <Files>
-            <File>
-              <FileName>ksdk_mbedtls.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/ksdk_mbedtls.c</FilePath>
-            </File>
-            <File>
-              <FileName>ksdk_mbedtls.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/ksdk_mbedtls.h</FilePath>
-            </File>
-            <File>
-              <FileName>ksdk_mbedtls_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/ksdk_mbedtls_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>sha1_alt.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/sha1_alt.h</FilePath>
-            </File>
-            <File>
-              <FileName>sha256_alt.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/sha256_alt.h</FilePath>
-            </File>
-            <File>
-              <FileName>des_alt.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/des_alt.h</FilePath>
-            </File>
-            <File>
-              <FileName>des_alt.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/des_alt.c</FilePath>
-            </File>
-            <File>
-              <FileName>aes_alt.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/aes_alt.h</FilePath>
-            </File>
-            <File>
-              <FileName>aes_alt.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/aes_alt.c</FilePath>
-            </File>
-            <File>
-              <FileName>ecp_alt.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/ecp_alt.h</FilePath>
-            </File>
-            <File>
-              <FileName>ecp_alt.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/ecp_alt.c</FilePath>
-            </File>
-            <File>
-              <FileName>ecp_curves_alt.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/ecp_curves_alt.c</FilePath>
-            </File>
-            <File>
-              <FileName>ecp_alt_ksdk.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/ecp_alt_ksdk.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -3975,6 +4350,11 @@
               <FileName>config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/mbedtls/include/mbedtls/config.h</FilePath>
+            </File>
+            <File>
+              <FileName>config_psa.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/include/mbedtls/config_psa.h</FilePath>
             </File>
             <File>
               <FileName>ctr_drbg.h</FileName>
@@ -4162,6 +4542,11 @@
               <FilePath>../../../../../../middleware/mbedtls/include/mbedtls/poly1305.h</FilePath>
             </File>
             <File>
+              <FileName>psa_util.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/include/mbedtls/psa_util.h</FilePath>
+            </File>
+            <File>
               <FileName>ripemd160.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/mbedtls/include/mbedtls/ripemd160.h</FilePath>
@@ -4264,6 +4649,66 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>mbedtls/include/psa</GroupName>
+          <Files>
+            <File>
+              <FileName>crypto.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/include/psa/crypto.h</FilePath>
+            </File>
+            <File>
+              <FileName>crypto_compat.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/include/psa/crypto_compat.h</FilePath>
+            </File>
+            <File>
+              <FileName>crypto_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/include/psa/crypto_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>crypto_driver_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/include/psa/crypto_driver_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>crypto_extra.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/include/psa/crypto_extra.h</FilePath>
+            </File>
+            <File>
+              <FileName>crypto_platform.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/include/psa/crypto_platform.h</FilePath>
+            </File>
+            <File>
+              <FileName>crypto_se_driver.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/include/psa/crypto_se_driver.h</FilePath>
+            </File>
+            <File>
+              <FileName>crypto_sizes.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/include/psa/crypto_sizes.h</FilePath>
+            </File>
+            <File>
+              <FileName>crypto_struct.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/include/psa/crypto_struct.h</FilePath>
+            </File>
+            <File>
+              <FileName>crypto_types.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/include/psa/crypto_types.h</FilePath>
+            </File>
+            <File>
+              <FileName>crypto_values.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/include/psa/crypto_values.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>mbedtls/library</GroupName>
           <Files>
             <File>
@@ -4347,9 +4792,19 @@
               <FilePath>../../../../../../middleware/mbedtls/library/chachapoly.c</FilePath>
             </File>
             <File>
+              <FileName>check_crypto_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/check_crypto_config.h</FilePath>
+            </File>
+            <File>
               <FileName>cmac.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/mbedtls/library/cmac.c</FilePath>
+            </File>
+            <File>
+              <FileName>common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/common.h</FilePath>
             </File>
             <File>
               <FileName>ctr_drbg.c</FileName>
@@ -4435,11 +4890,6 @@
               <FileName>md.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/mbedtls/library/md.c</FilePath>
-            </File>
-            <File>
-              <FileName>md_wrap.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/mbedtls/library/md_wrap.c</FilePath>
             </File>
             <File>
               <FileName>md2.c</FileName>
@@ -4537,6 +4987,106 @@
               <FilePath>../../../../../../middleware/mbedtls/library/poly1305.c</FilePath>
             </File>
             <File>
+              <FileName>psa_crypto.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto.c</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_client.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_client.c</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_core.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_core.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_driver_wrappers.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_driver_wrappers.c</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_driver_wrappers.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_driver_wrappers.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_ecp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_ecp.c</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_ecp.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_ecp.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_invasive.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_invasive.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_its.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_its.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_random_impl.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_random_impl.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_rsa.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_rsa.c</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_rsa.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_rsa.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_se.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_se.c</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_se.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_se.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_service_integration.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_service_integration.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_slot_management.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_slot_management.c</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_slot_management.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_slot_management.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_storage.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_storage.c</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_storage.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_storage.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_its_file.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_its_file.c</FilePath>
+            </File>
+            <File>
               <FileName>ripemd160.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/mbedtls/library/ripemd160.c</FilePath>
@@ -4587,6 +5137,16 @@
               <FilePath>../../../../../../middleware/mbedtls/library/ssl_cookie.c</FilePath>
             </File>
             <File>
+              <FileName>ssl_invasive.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/ssl_invasive.h</FilePath>
+            </File>
+            <File>
+              <FileName>ssl_msg.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/ssl_msg.c</FilePath>
+            </File>
+            <File>
               <FileName>ssl_srv.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/mbedtls/library/ssl_srv.c</FilePath>
@@ -4600,6 +5160,16 @@
               <FileName>ssl_tls.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/mbedtls/library/ssl_tls.c</FilePath>
+            </File>
+            <File>
+              <FileName>ssl_tls13_keys.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/ssl_tls13_keys.c</FilePath>
+            </File>
+            <File>
+              <FileName>ssl_tls13_keys.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/ssl_tls13_keys.h</FilePath>
             </File>
             <File>
               <FileName>threading.c</FileName>
@@ -4664,37 +5234,77 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>utilities</GroupName>
+          <GroupName>mbedtls/port/ksdk</GroupName>
           <Files>
             <File>
-              <FileName>fsl_str.c</FileName>
+              <FileName>ksdk_mbedtls.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1176/utilities/str/fsl_str.c</FilePath>
+              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/ksdk_mbedtls.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_str.h</FileName>
+              <FileName>ksdk_mbedtls.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1176/utilities/str/fsl_str.h</FilePath>
+              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/ksdk_mbedtls.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_debug_console.c</FileName>
+              <FileName>ksdk_mbedtls_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/ksdk_mbedtls_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>sha1_alt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/sha1_alt.h</FilePath>
+            </File>
+            <File>
+              <FileName>sha256_alt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/sha256_alt.h</FilePath>
+            </File>
+            <File>
+              <FileName>des_alt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/des_alt.h</FilePath>
+            </File>
+            <File>
+              <FileName>des_alt.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1176/utilities/debug_console/fsl_debug_console.c</FilePath>
+              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/des_alt.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_debug_console.h</FileName>
+              <FileName>aes_alt.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1176/utilities/debug_console/fsl_debug_console.h</FilePath>
+              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/aes_alt.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_debug_console_conf.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1176/utilities/debug_console/fsl_debug_console_conf.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_assert.c</FileName>
+              <FileName>aes_alt.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1176/utilities/fsl_assert.c</FilePath>
+              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/aes_alt.c</FilePath>
+            </File>
+            <File>
+              <FileName>ecp_alt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/ecp_alt.h</FilePath>
+            </File>
+            <File>
+              <FileName>ecp_alt.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/ecp_alt.c</FilePath>
+            </File>
+            <File>
+              <FileName>ecp_curves_alt.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/ecp_curves_alt.c</FilePath>
+            </File>
+            <File>
+              <FileName>ecp_alt_ksdk.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/ecp_alt_ksdk.c</FilePath>
+            </File>
+            <File>
+              <FileName>threading_alt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/threading_alt.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -4729,67 +5339,37 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>CMSIS</GroupName>
+          <GroupName>utilities</GroupName>
           <Files>
             <File>
-              <FileName>core_cm7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/core_cm7.h</FilePath>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1176/utilities/str/fsl_str.c</FilePath>
             </File>
             <File>
-              <FileName>mpu_armv7.h</FileName>
+              <FileName>fsl_str.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT1176/utilities/str/fsl_str.h</FilePath>
             </File>
             <File>
-              <FileName>cmsis_armcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_armcc.h</FilePath>
+              <FileName>fsl_debug_console.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1176/utilities/debug_console/fsl_debug_console.c</FilePath>
             </File>
             <File>
-              <FileName>cmsis_armclang.h</FileName>
+              <FileName>fsl_debug_console.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_armclang.h</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT1176/utilities/debug_console/fsl_debug_console.h</FilePath>
             </File>
             <File>
-              <FileName>cmsis_armclang_ltm.h</FileName>
+              <FileName>fsl_debug_console_conf.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_armclang_ltm.h</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT1176/utilities/debug_console/fsl_debug_console_conf.h</FilePath>
             </File>
             <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_gcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_compiler.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_version.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_version.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_iccarm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_iccarm.h</FilePath>
-            </File>
-            <File>
-              <FileName>arm_common_tables.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/arm_common_tables.h</FilePath>
-            </File>
-            <File>
-              <FileName>arm_const_structs.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/arm_const_structs.h</FilePath>
-            </File>
-            <File>
-              <FileName>arm_math.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/arm_math.h</FilePath>
+              <FileName>fsl_assert.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1176/utilities/fsl_assert.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -4885,6 +5465,56 @@
               <FileName>evkmimxrt1170_flexspi_nor_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../xip/evkmimxrt1170_flexspi_nor_config.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>CMSIS</GroupName>
+          <Files>
+            <File>
+              <FileName>cmsis_armcc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_armclang.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_armclang_ltm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armclang_ltm.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_compiler.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_gcc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_iccarm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_version.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_version.h</FilePath>
+            </File>
+            <File>
+              <FileName>core_cm7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/core_cm7.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/mpu_armv7.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -5219,9 +5849,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>NDEBUG, CPU_MIMXRT1176DVMAA_cm7, FREESCALE_KSDK_BM, MBEDTLS_CONFIG_FILE='\"ksdk_mbedtls_config.h\"', CRYPTO_USE_DRIVER_CAAM, SERIAL_PORT_TYPE_UART=1</Define>
+              <Define>NDEBUG, CPU_MIMXRT1176DVMAA_cm7, FREESCALE_KSDK_BM, MBEDTLS_CONFIG_FILE='\"ksdk_mbedtls_config.h\"', CRYPTO_USE_DRIVER_CAAM, SERIAL_PORT_TYPE_UART=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../devices/MIMXRT1176/drivers;../../../../../../middleware/mbedtls/port/ksdk;../../../../../../middleware/mbedtls/include;../../../../../../middleware/mbedtls/library;../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../../devices/MIMXRT1176;../../../../../../CMSIS/Include;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../devices/MIMXRT1176/xip;../../../../xip;../../../../../../devices/MIMXRT1176/drivers/cm7</IncludePath>
+              <IncludePath>..;../../../../../../devices/MIMXRT1176/drivers;../../../../../../middleware/mbedtls/include;../../../../../../middleware/mbedtls/library;../../../../../../middleware/mbedtls/port/ksdk;../../../../../../devices/MIMXRT1176;../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../devices/MIMXRT1176/xip;../../../../xip;../../../../../../devices/MIMXRT1176/drivers/cm7;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -5255,7 +5885,7 @@
             <ScatterFile>MIMXRT1176xxxxx_cm7_ram_ocram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --predefine="-D__stack_size__=0x2000" --predefine="-D__heap_size__=0x8000"</Misc>
+            <Misc>--remove --entry=Reset_Handler --predefine="-D__stack_size__=0x2000" --predefine="-D__heap_size__=0x8000"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -5328,6 +5958,16 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>evkmimxrt1170</GroupName>
+          <Files>
+            <File>
+              <FileName>evkmimxrt1170_connect_cm4_cm7side.jlinkscript</FileName>
+              <FileType>5</FileType>
+              <FilePath>../evkmimxrt1170_connect_cm4_cm7side.jlinkscript</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>drivers</GroupName>
           <Files>
             <File>
@@ -5359,6 +5999,16 @@
               <FileName>fsl_common.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_common.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_common_arm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_common_arm.h</FilePath>
             </File>
             <File>
               <FileName>fsl_lpuart.h</FileName>
@@ -5416,6 +6066,11 @@
               <FilePath>../../../../../../devices/MIMXRT1176/drivers/cm7/fsl_cache.h</FilePath>
             </File>
             <File>
+              <FileName>fsl_memory.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_memory.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_anatop_ai.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_anatop_ai.h</FilePath>
@@ -5424,76 +6079,6 @@
               <FileName>fsl_anatop_ai.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_anatop_ai.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>mbedtls/port/ksdk</GroupName>
-          <Files>
-            <File>
-              <FileName>ksdk_mbedtls.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/ksdk_mbedtls.c</FilePath>
-            </File>
-            <File>
-              <FileName>ksdk_mbedtls.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/ksdk_mbedtls.h</FilePath>
-            </File>
-            <File>
-              <FileName>ksdk_mbedtls_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/ksdk_mbedtls_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>sha1_alt.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/sha1_alt.h</FilePath>
-            </File>
-            <File>
-              <FileName>sha256_alt.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/sha256_alt.h</FilePath>
-            </File>
-            <File>
-              <FileName>des_alt.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/des_alt.h</FilePath>
-            </File>
-            <File>
-              <FileName>des_alt.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/des_alt.c</FilePath>
-            </File>
-            <File>
-              <FileName>aes_alt.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/aes_alt.h</FilePath>
-            </File>
-            <File>
-              <FileName>aes_alt.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/aes_alt.c</FilePath>
-            </File>
-            <File>
-              <FileName>ecp_alt.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/ecp_alt.h</FilePath>
-            </File>
-            <File>
-              <FileName>ecp_alt.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/ecp_alt.c</FilePath>
-            </File>
-            <File>
-              <FileName>ecp_curves_alt.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/ecp_curves_alt.c</FilePath>
-            </File>
-            <File>
-              <FileName>ecp_alt_ksdk.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/ecp_alt_ksdk.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -5604,6 +6189,11 @@
               <FileName>config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/mbedtls/include/mbedtls/config.h</FilePath>
+            </File>
+            <File>
+              <FileName>config_psa.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/include/mbedtls/config_psa.h</FilePath>
             </File>
             <File>
               <FileName>ctr_drbg.h</FileName>
@@ -5791,6 +6381,11 @@
               <FilePath>../../../../../../middleware/mbedtls/include/mbedtls/poly1305.h</FilePath>
             </File>
             <File>
+              <FileName>psa_util.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/include/mbedtls/psa_util.h</FilePath>
+            </File>
+            <File>
               <FileName>ripemd160.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/mbedtls/include/mbedtls/ripemd160.h</FilePath>
@@ -5893,6 +6488,66 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>mbedtls/include/psa</GroupName>
+          <Files>
+            <File>
+              <FileName>crypto.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/include/psa/crypto.h</FilePath>
+            </File>
+            <File>
+              <FileName>crypto_compat.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/include/psa/crypto_compat.h</FilePath>
+            </File>
+            <File>
+              <FileName>crypto_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/include/psa/crypto_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>crypto_driver_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/include/psa/crypto_driver_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>crypto_extra.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/include/psa/crypto_extra.h</FilePath>
+            </File>
+            <File>
+              <FileName>crypto_platform.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/include/psa/crypto_platform.h</FilePath>
+            </File>
+            <File>
+              <FileName>crypto_se_driver.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/include/psa/crypto_se_driver.h</FilePath>
+            </File>
+            <File>
+              <FileName>crypto_sizes.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/include/psa/crypto_sizes.h</FilePath>
+            </File>
+            <File>
+              <FileName>crypto_struct.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/include/psa/crypto_struct.h</FilePath>
+            </File>
+            <File>
+              <FileName>crypto_types.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/include/psa/crypto_types.h</FilePath>
+            </File>
+            <File>
+              <FileName>crypto_values.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/include/psa/crypto_values.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>mbedtls/library</GroupName>
           <Files>
             <File>
@@ -5976,9 +6631,19 @@
               <FilePath>../../../../../../middleware/mbedtls/library/chachapoly.c</FilePath>
             </File>
             <File>
+              <FileName>check_crypto_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/check_crypto_config.h</FilePath>
+            </File>
+            <File>
               <FileName>cmac.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/mbedtls/library/cmac.c</FilePath>
+            </File>
+            <File>
+              <FileName>common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/common.h</FilePath>
             </File>
             <File>
               <FileName>ctr_drbg.c</FileName>
@@ -6064,11 +6729,6 @@
               <FileName>md.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/mbedtls/library/md.c</FilePath>
-            </File>
-            <File>
-              <FileName>md_wrap.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/mbedtls/library/md_wrap.c</FilePath>
             </File>
             <File>
               <FileName>md2.c</FileName>
@@ -6166,6 +6826,106 @@
               <FilePath>../../../../../../middleware/mbedtls/library/poly1305.c</FilePath>
             </File>
             <File>
+              <FileName>psa_crypto.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto.c</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_client.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_client.c</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_core.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_core.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_driver_wrappers.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_driver_wrappers.c</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_driver_wrappers.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_driver_wrappers.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_ecp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_ecp.c</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_ecp.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_ecp.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_invasive.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_invasive.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_its.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_its.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_random_impl.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_random_impl.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_rsa.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_rsa.c</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_rsa.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_rsa.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_se.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_se.c</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_se.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_se.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_service_integration.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_service_integration.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_slot_management.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_slot_management.c</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_slot_management.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_slot_management.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_storage.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_storage.c</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_storage.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_storage.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_its_file.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_its_file.c</FilePath>
+            </File>
+            <File>
               <FileName>ripemd160.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/mbedtls/library/ripemd160.c</FilePath>
@@ -6216,6 +6976,16 @@
               <FilePath>../../../../../../middleware/mbedtls/library/ssl_cookie.c</FilePath>
             </File>
             <File>
+              <FileName>ssl_invasive.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/ssl_invasive.h</FilePath>
+            </File>
+            <File>
+              <FileName>ssl_msg.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/ssl_msg.c</FilePath>
+            </File>
+            <File>
               <FileName>ssl_srv.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/mbedtls/library/ssl_srv.c</FilePath>
@@ -6229,6 +6999,16 @@
               <FileName>ssl_tls.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/mbedtls/library/ssl_tls.c</FilePath>
+            </File>
+            <File>
+              <FileName>ssl_tls13_keys.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/ssl_tls13_keys.c</FilePath>
+            </File>
+            <File>
+              <FileName>ssl_tls13_keys.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/ssl_tls13_keys.h</FilePath>
             </File>
             <File>
               <FileName>threading.c</FileName>
@@ -6293,37 +7073,77 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>utilities</GroupName>
+          <GroupName>mbedtls/port/ksdk</GroupName>
           <Files>
             <File>
-              <FileName>fsl_str.c</FileName>
+              <FileName>ksdk_mbedtls.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1176/utilities/str/fsl_str.c</FilePath>
+              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/ksdk_mbedtls.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_str.h</FileName>
+              <FileName>ksdk_mbedtls.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1176/utilities/str/fsl_str.h</FilePath>
+              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/ksdk_mbedtls.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_debug_console.c</FileName>
+              <FileName>ksdk_mbedtls_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/ksdk_mbedtls_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>sha1_alt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/sha1_alt.h</FilePath>
+            </File>
+            <File>
+              <FileName>sha256_alt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/sha256_alt.h</FilePath>
+            </File>
+            <File>
+              <FileName>des_alt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/des_alt.h</FilePath>
+            </File>
+            <File>
+              <FileName>des_alt.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1176/utilities/debug_console/fsl_debug_console.c</FilePath>
+              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/des_alt.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_debug_console.h</FileName>
+              <FileName>aes_alt.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1176/utilities/debug_console/fsl_debug_console.h</FilePath>
+              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/aes_alt.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_debug_console_conf.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1176/utilities/debug_console/fsl_debug_console_conf.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_assert.c</FileName>
+              <FileName>aes_alt.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1176/utilities/fsl_assert.c</FilePath>
+              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/aes_alt.c</FilePath>
+            </File>
+            <File>
+              <FileName>ecp_alt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/ecp_alt.h</FilePath>
+            </File>
+            <File>
+              <FileName>ecp_alt.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/ecp_alt.c</FilePath>
+            </File>
+            <File>
+              <FileName>ecp_curves_alt.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/ecp_curves_alt.c</FilePath>
+            </File>
+            <File>
+              <FileName>ecp_alt_ksdk.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/ecp_alt_ksdk.c</FilePath>
+            </File>
+            <File>
+              <FileName>threading_alt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/threading_alt.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -6358,67 +7178,37 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>CMSIS</GroupName>
+          <GroupName>utilities</GroupName>
           <Files>
             <File>
-              <FileName>core_cm7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/core_cm7.h</FilePath>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1176/utilities/str/fsl_str.c</FilePath>
             </File>
             <File>
-              <FileName>mpu_armv7.h</FileName>
+              <FileName>fsl_str.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT1176/utilities/str/fsl_str.h</FilePath>
             </File>
             <File>
-              <FileName>cmsis_armcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_armcc.h</FilePath>
+              <FileName>fsl_debug_console.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1176/utilities/debug_console/fsl_debug_console.c</FilePath>
             </File>
             <File>
-              <FileName>cmsis_armclang.h</FileName>
+              <FileName>fsl_debug_console.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_armclang.h</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT1176/utilities/debug_console/fsl_debug_console.h</FilePath>
             </File>
             <File>
-              <FileName>cmsis_armclang_ltm.h</FileName>
+              <FileName>fsl_debug_console_conf.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_armclang_ltm.h</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT1176/utilities/debug_console/fsl_debug_console_conf.h</FilePath>
             </File>
             <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_gcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_compiler.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_version.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_version.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_iccarm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_iccarm.h</FilePath>
-            </File>
-            <File>
-              <FileName>arm_common_tables.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/arm_common_tables.h</FilePath>
-            </File>
-            <File>
-              <FileName>arm_const_structs.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/arm_const_structs.h</FilePath>
-            </File>
-            <File>
-              <FileName>arm_math.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/arm_math.h</FilePath>
+              <FileName>fsl_assert.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1176/utilities/fsl_assert.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -6514,6 +7304,56 @@
               <FileName>evkmimxrt1170_flexspi_nor_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../xip/evkmimxrt1170_flexspi_nor_config.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>CMSIS</GroupName>
+          <Files>
+            <File>
+              <FileName>cmsis_armcc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_armclang.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_armclang_ltm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armclang_ltm.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_compiler.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_gcc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_iccarm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_version.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_version.h</FilePath>
+            </File>
+            <File>
+              <FileName>core_cm7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/core_cm7.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/mpu_armv7.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -6848,9 +7688,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, NDEBUG, CPU_MIMXRT1176DVMAA_cm7, FREESCALE_KSDK_BM, MBEDTLS_CONFIG_FILE='\"ksdk_mbedtls_config.h\"', CRYPTO_USE_DRIVER_CAAM, SERIAL_PORT_TYPE_UART=1</Define>
+              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, NDEBUG, CPU_MIMXRT1176DVMAA_cm7, FREESCALE_KSDK_BM, MBEDTLS_CONFIG_FILE='\"ksdk_mbedtls_config.h\"', CRYPTO_USE_DRIVER_CAAM, SERIAL_PORT_TYPE_UART=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../devices/MIMXRT1176/drivers;../../../../../../middleware/mbedtls/port/ksdk;../../../../../../middleware/mbedtls/include;../../../../../../middleware/mbedtls/library;../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../../devices/MIMXRT1176;../../../../../../CMSIS/Include;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../devices/MIMXRT1176/xip;../../../../xip;../../../../../../devices/MIMXRT1176/drivers/cm7</IncludePath>
+              <IncludePath>..;../../../../../../devices/MIMXRT1176/drivers;../../../../../../middleware/mbedtls/include;../../../../../../middleware/mbedtls/library;../../../../../../middleware/mbedtls/port/ksdk;../../../../../../devices/MIMXRT1176;../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../devices/MIMXRT1176/xip;../../../../xip;../../../../../../devices/MIMXRT1176/drivers/cm7;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -6884,7 +7724,7 @@
             <ScatterFile>MIMXRT1176xxxxx_cm7_flexspi_nor_ocram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --predefine="-DXIP_BOOT_HEADER_ENABLE=1" --predefine="-D__stack_size__=0x2000" --predefine="-D__heap_size__=0x8000"</Misc>
+            <Misc>--remove --entry=Reset_Handler --predefine="-DXIP_BOOT_HEADER_ENABLE=1" --predefine="-D__stack_size__=0x2000" --predefine="-D__heap_size__=0x8000"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -6957,6 +7797,16 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>evkmimxrt1170</GroupName>
+          <Files>
+            <File>
+              <FileName>evkmimxrt1170_connect_cm4_cm7side.jlinkscript</FileName>
+              <FileType>5</FileType>
+              <FilePath>../evkmimxrt1170_connect_cm4_cm7side.jlinkscript</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>drivers</GroupName>
           <Files>
             <File>
@@ -6988,6 +7838,16 @@
               <FileName>fsl_common.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_common.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_common_arm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_common_arm.h</FilePath>
             </File>
             <File>
               <FileName>fsl_lpuart.h</FileName>
@@ -7045,6 +7905,11 @@
               <FilePath>../../../../../../devices/MIMXRT1176/drivers/cm7/fsl_cache.h</FilePath>
             </File>
             <File>
+              <FileName>fsl_memory.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_memory.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_anatop_ai.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_anatop_ai.h</FilePath>
@@ -7053,76 +7918,6 @@
               <FileName>fsl_anatop_ai.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_anatop_ai.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>mbedtls/port/ksdk</GroupName>
-          <Files>
-            <File>
-              <FileName>ksdk_mbedtls.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/ksdk_mbedtls.c</FilePath>
-            </File>
-            <File>
-              <FileName>ksdk_mbedtls.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/ksdk_mbedtls.h</FilePath>
-            </File>
-            <File>
-              <FileName>ksdk_mbedtls_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/ksdk_mbedtls_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>sha1_alt.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/sha1_alt.h</FilePath>
-            </File>
-            <File>
-              <FileName>sha256_alt.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/sha256_alt.h</FilePath>
-            </File>
-            <File>
-              <FileName>des_alt.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/des_alt.h</FilePath>
-            </File>
-            <File>
-              <FileName>des_alt.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/des_alt.c</FilePath>
-            </File>
-            <File>
-              <FileName>aes_alt.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/aes_alt.h</FilePath>
-            </File>
-            <File>
-              <FileName>aes_alt.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/aes_alt.c</FilePath>
-            </File>
-            <File>
-              <FileName>ecp_alt.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/ecp_alt.h</FilePath>
-            </File>
-            <File>
-              <FileName>ecp_alt.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/ecp_alt.c</FilePath>
-            </File>
-            <File>
-              <FileName>ecp_curves_alt.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/ecp_curves_alt.c</FilePath>
-            </File>
-            <File>
-              <FileName>ecp_alt_ksdk.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/ecp_alt_ksdk.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -7233,6 +8028,11 @@
               <FileName>config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/mbedtls/include/mbedtls/config.h</FilePath>
+            </File>
+            <File>
+              <FileName>config_psa.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/include/mbedtls/config_psa.h</FilePath>
             </File>
             <File>
               <FileName>ctr_drbg.h</FileName>
@@ -7420,6 +8220,11 @@
               <FilePath>../../../../../../middleware/mbedtls/include/mbedtls/poly1305.h</FilePath>
             </File>
             <File>
+              <FileName>psa_util.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/include/mbedtls/psa_util.h</FilePath>
+            </File>
+            <File>
               <FileName>ripemd160.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/mbedtls/include/mbedtls/ripemd160.h</FilePath>
@@ -7522,6 +8327,66 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>mbedtls/include/psa</GroupName>
+          <Files>
+            <File>
+              <FileName>crypto.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/include/psa/crypto.h</FilePath>
+            </File>
+            <File>
+              <FileName>crypto_compat.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/include/psa/crypto_compat.h</FilePath>
+            </File>
+            <File>
+              <FileName>crypto_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/include/psa/crypto_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>crypto_driver_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/include/psa/crypto_driver_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>crypto_extra.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/include/psa/crypto_extra.h</FilePath>
+            </File>
+            <File>
+              <FileName>crypto_platform.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/include/psa/crypto_platform.h</FilePath>
+            </File>
+            <File>
+              <FileName>crypto_se_driver.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/include/psa/crypto_se_driver.h</FilePath>
+            </File>
+            <File>
+              <FileName>crypto_sizes.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/include/psa/crypto_sizes.h</FilePath>
+            </File>
+            <File>
+              <FileName>crypto_struct.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/include/psa/crypto_struct.h</FilePath>
+            </File>
+            <File>
+              <FileName>crypto_types.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/include/psa/crypto_types.h</FilePath>
+            </File>
+            <File>
+              <FileName>crypto_values.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/include/psa/crypto_values.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>mbedtls/library</GroupName>
           <Files>
             <File>
@@ -7605,9 +8470,19 @@
               <FilePath>../../../../../../middleware/mbedtls/library/chachapoly.c</FilePath>
             </File>
             <File>
+              <FileName>check_crypto_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/check_crypto_config.h</FilePath>
+            </File>
+            <File>
               <FileName>cmac.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/mbedtls/library/cmac.c</FilePath>
+            </File>
+            <File>
+              <FileName>common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/common.h</FilePath>
             </File>
             <File>
               <FileName>ctr_drbg.c</FileName>
@@ -7693,11 +8568,6 @@
               <FileName>md.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/mbedtls/library/md.c</FilePath>
-            </File>
-            <File>
-              <FileName>md_wrap.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/mbedtls/library/md_wrap.c</FilePath>
             </File>
             <File>
               <FileName>md2.c</FileName>
@@ -7795,6 +8665,106 @@
               <FilePath>../../../../../../middleware/mbedtls/library/poly1305.c</FilePath>
             </File>
             <File>
+              <FileName>psa_crypto.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto.c</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_client.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_client.c</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_core.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_core.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_driver_wrappers.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_driver_wrappers.c</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_driver_wrappers.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_driver_wrappers.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_ecp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_ecp.c</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_ecp.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_ecp.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_invasive.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_invasive.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_its.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_its.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_random_impl.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_random_impl.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_rsa.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_rsa.c</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_rsa.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_rsa.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_se.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_se.c</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_se.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_se.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_service_integration.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_service_integration.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_slot_management.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_slot_management.c</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_slot_management.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_slot_management.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_storage.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_storage.c</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_storage.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_storage.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_its_file.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_its_file.c</FilePath>
+            </File>
+            <File>
               <FileName>ripemd160.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/mbedtls/library/ripemd160.c</FilePath>
@@ -7845,6 +8815,16 @@
               <FilePath>../../../../../../middleware/mbedtls/library/ssl_cookie.c</FilePath>
             </File>
             <File>
+              <FileName>ssl_invasive.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/ssl_invasive.h</FilePath>
+            </File>
+            <File>
+              <FileName>ssl_msg.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/ssl_msg.c</FilePath>
+            </File>
+            <File>
               <FileName>ssl_srv.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/mbedtls/library/ssl_srv.c</FilePath>
@@ -7858,6 +8838,16 @@
               <FileName>ssl_tls.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/mbedtls/library/ssl_tls.c</FilePath>
+            </File>
+            <File>
+              <FileName>ssl_tls13_keys.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/ssl_tls13_keys.c</FilePath>
+            </File>
+            <File>
+              <FileName>ssl_tls13_keys.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/ssl_tls13_keys.h</FilePath>
             </File>
             <File>
               <FileName>threading.c</FileName>
@@ -7922,37 +8912,77 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>utilities</GroupName>
+          <GroupName>mbedtls/port/ksdk</GroupName>
           <Files>
             <File>
-              <FileName>fsl_str.c</FileName>
+              <FileName>ksdk_mbedtls.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1176/utilities/str/fsl_str.c</FilePath>
+              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/ksdk_mbedtls.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_str.h</FileName>
+              <FileName>ksdk_mbedtls.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1176/utilities/str/fsl_str.h</FilePath>
+              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/ksdk_mbedtls.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_debug_console.c</FileName>
+              <FileName>ksdk_mbedtls_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/ksdk_mbedtls_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>sha1_alt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/sha1_alt.h</FilePath>
+            </File>
+            <File>
+              <FileName>sha256_alt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/sha256_alt.h</FilePath>
+            </File>
+            <File>
+              <FileName>des_alt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/des_alt.h</FilePath>
+            </File>
+            <File>
+              <FileName>des_alt.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1176/utilities/debug_console/fsl_debug_console.c</FilePath>
+              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/des_alt.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_debug_console.h</FileName>
+              <FileName>aes_alt.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1176/utilities/debug_console/fsl_debug_console.h</FilePath>
+              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/aes_alt.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_debug_console_conf.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1176/utilities/debug_console/fsl_debug_console_conf.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_assert.c</FileName>
+              <FileName>aes_alt.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1176/utilities/fsl_assert.c</FilePath>
+              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/aes_alt.c</FilePath>
+            </File>
+            <File>
+              <FileName>ecp_alt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/ecp_alt.h</FilePath>
+            </File>
+            <File>
+              <FileName>ecp_alt.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/ecp_alt.c</FilePath>
+            </File>
+            <File>
+              <FileName>ecp_curves_alt.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/ecp_curves_alt.c</FilePath>
+            </File>
+            <File>
+              <FileName>ecp_alt_ksdk.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/ecp_alt_ksdk.c</FilePath>
+            </File>
+            <File>
+              <FileName>threading_alt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/threading_alt.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -7987,67 +9017,37 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>CMSIS</GroupName>
+          <GroupName>utilities</GroupName>
           <Files>
             <File>
-              <FileName>core_cm7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/core_cm7.h</FilePath>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1176/utilities/str/fsl_str.c</FilePath>
             </File>
             <File>
-              <FileName>mpu_armv7.h</FileName>
+              <FileName>fsl_str.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT1176/utilities/str/fsl_str.h</FilePath>
             </File>
             <File>
-              <FileName>cmsis_armcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_armcc.h</FilePath>
+              <FileName>fsl_debug_console.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1176/utilities/debug_console/fsl_debug_console.c</FilePath>
             </File>
             <File>
-              <FileName>cmsis_armclang.h</FileName>
+              <FileName>fsl_debug_console.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_armclang.h</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT1176/utilities/debug_console/fsl_debug_console.h</FilePath>
             </File>
             <File>
-              <FileName>cmsis_armclang_ltm.h</FileName>
+              <FileName>fsl_debug_console_conf.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_armclang_ltm.h</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT1176/utilities/debug_console/fsl_debug_console_conf.h</FilePath>
             </File>
             <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_gcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_compiler.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_version.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_version.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_iccarm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_iccarm.h</FilePath>
-            </File>
-            <File>
-              <FileName>arm_common_tables.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/arm_common_tables.h</FilePath>
-            </File>
-            <File>
-              <FileName>arm_const_structs.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/arm_const_structs.h</FilePath>
-            </File>
-            <File>
-              <FileName>arm_math.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/arm_math.h</FilePath>
+              <FileName>fsl_assert.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1176/utilities/fsl_assert.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -8143,6 +9143,56 @@
               <FileName>evkmimxrt1170_flexspi_nor_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../xip/evkmimxrt1170_flexspi_nor_config.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>CMSIS</GroupName>
+          <Files>
+            <File>
+              <FileName>cmsis_armcc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_armclang.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_armclang_ltm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armclang_ltm.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_compiler.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_gcc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_iccarm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_version.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_version.h</FilePath>
+            </File>
+            <File>
+              <FileName>core_cm7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/core_cm7.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/mpu_armv7.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -8477,9 +9527,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>USE_SDRAM, DATA_SECTION_IS_CACHEABLE=1, NDEBUG, CPU_MIMXRT1176DVMAA_cm7, FREESCALE_KSDK_BM, MBEDTLS_CONFIG_FILE='\"ksdk_mbedtls_config.h\"', CRYPTO_USE_DRIVER_CAAM, SERIAL_PORT_TYPE_UART=1</Define>
+              <Define>USE_SDRAM, DATA_SECTION_IS_CACHEABLE=1, NDEBUG, CPU_MIMXRT1176DVMAA_cm7, FREESCALE_KSDK_BM, MBEDTLS_CONFIG_FILE='\"ksdk_mbedtls_config.h\"', CRYPTO_USE_DRIVER_CAAM, SERIAL_PORT_TYPE_UART=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../devices/MIMXRT1176/drivers;../../../../../../middleware/mbedtls/port/ksdk;../../../../../../middleware/mbedtls/include;../../../../../../middleware/mbedtls/library;../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../../devices/MIMXRT1176;../../../../../../CMSIS/Include;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../devices/MIMXRT1176/xip;../../../../xip;../../../../../../devices/MIMXRT1176/drivers/cm7</IncludePath>
+              <IncludePath>..;../../../../../../devices/MIMXRT1176/drivers;../../../../../../middleware/mbedtls/include;../../../../../../middleware/mbedtls/library;../../../../../../middleware/mbedtls/port/ksdk;../../../../../../devices/MIMXRT1176;../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../devices/MIMXRT1176/xip;../../../../xip;../../../../../../devices/MIMXRT1176/drivers/cm7;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -8513,7 +9563,7 @@
             <ScatterFile>MIMXRT1176xxxxx_cm7_sdram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --predefine="-D__stack_size__=0x2000" --predefine="-D__heap_size__=0x8000"</Misc>
+            <Misc>--remove --entry=Reset_Handler --predefine="-D__stack_size__=0x2000" --predefine="-D__heap_size__=0x8000"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -8586,6 +9636,16 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>evkmimxrt1170</GroupName>
+          <Files>
+            <File>
+              <FileName>evkmimxrt1170_connect_cm4_cm7side.jlinkscript</FileName>
+              <FileType>5</FileType>
+              <FilePath>../evkmimxrt1170_connect_cm4_cm7side.jlinkscript</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>drivers</GroupName>
           <Files>
             <File>
@@ -8617,6 +9677,16 @@
               <FileName>fsl_common.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_common.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_common_arm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_common_arm.h</FilePath>
             </File>
             <File>
               <FileName>fsl_lpuart.h</FileName>
@@ -8674,6 +9744,11 @@
               <FilePath>../../../../../../devices/MIMXRT1176/drivers/cm7/fsl_cache.h</FilePath>
             </File>
             <File>
+              <FileName>fsl_memory.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_memory.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_anatop_ai.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_anatop_ai.h</FilePath>
@@ -8682,76 +9757,6 @@
               <FileName>fsl_anatop_ai.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_anatop_ai.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>mbedtls/port/ksdk</GroupName>
-          <Files>
-            <File>
-              <FileName>ksdk_mbedtls.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/ksdk_mbedtls.c</FilePath>
-            </File>
-            <File>
-              <FileName>ksdk_mbedtls.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/ksdk_mbedtls.h</FilePath>
-            </File>
-            <File>
-              <FileName>ksdk_mbedtls_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/ksdk_mbedtls_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>sha1_alt.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/sha1_alt.h</FilePath>
-            </File>
-            <File>
-              <FileName>sha256_alt.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/sha256_alt.h</FilePath>
-            </File>
-            <File>
-              <FileName>des_alt.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/des_alt.h</FilePath>
-            </File>
-            <File>
-              <FileName>des_alt.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/des_alt.c</FilePath>
-            </File>
-            <File>
-              <FileName>aes_alt.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/aes_alt.h</FilePath>
-            </File>
-            <File>
-              <FileName>aes_alt.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/aes_alt.c</FilePath>
-            </File>
-            <File>
-              <FileName>ecp_alt.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/ecp_alt.h</FilePath>
-            </File>
-            <File>
-              <FileName>ecp_alt.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/ecp_alt.c</FilePath>
-            </File>
-            <File>
-              <FileName>ecp_curves_alt.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/ecp_curves_alt.c</FilePath>
-            </File>
-            <File>
-              <FileName>ecp_alt_ksdk.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/ecp_alt_ksdk.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -8862,6 +9867,11 @@
               <FileName>config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/mbedtls/include/mbedtls/config.h</FilePath>
+            </File>
+            <File>
+              <FileName>config_psa.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/include/mbedtls/config_psa.h</FilePath>
             </File>
             <File>
               <FileName>ctr_drbg.h</FileName>
@@ -9049,6 +10059,11 @@
               <FilePath>../../../../../../middleware/mbedtls/include/mbedtls/poly1305.h</FilePath>
             </File>
             <File>
+              <FileName>psa_util.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/include/mbedtls/psa_util.h</FilePath>
+            </File>
+            <File>
               <FileName>ripemd160.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/mbedtls/include/mbedtls/ripemd160.h</FilePath>
@@ -9151,6 +10166,66 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>mbedtls/include/psa</GroupName>
+          <Files>
+            <File>
+              <FileName>crypto.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/include/psa/crypto.h</FilePath>
+            </File>
+            <File>
+              <FileName>crypto_compat.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/include/psa/crypto_compat.h</FilePath>
+            </File>
+            <File>
+              <FileName>crypto_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/include/psa/crypto_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>crypto_driver_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/include/psa/crypto_driver_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>crypto_extra.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/include/psa/crypto_extra.h</FilePath>
+            </File>
+            <File>
+              <FileName>crypto_platform.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/include/psa/crypto_platform.h</FilePath>
+            </File>
+            <File>
+              <FileName>crypto_se_driver.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/include/psa/crypto_se_driver.h</FilePath>
+            </File>
+            <File>
+              <FileName>crypto_sizes.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/include/psa/crypto_sizes.h</FilePath>
+            </File>
+            <File>
+              <FileName>crypto_struct.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/include/psa/crypto_struct.h</FilePath>
+            </File>
+            <File>
+              <FileName>crypto_types.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/include/psa/crypto_types.h</FilePath>
+            </File>
+            <File>
+              <FileName>crypto_values.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/include/psa/crypto_values.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>mbedtls/library</GroupName>
           <Files>
             <File>
@@ -9234,9 +10309,19 @@
               <FilePath>../../../../../../middleware/mbedtls/library/chachapoly.c</FilePath>
             </File>
             <File>
+              <FileName>check_crypto_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/check_crypto_config.h</FilePath>
+            </File>
+            <File>
               <FileName>cmac.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/mbedtls/library/cmac.c</FilePath>
+            </File>
+            <File>
+              <FileName>common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/common.h</FilePath>
             </File>
             <File>
               <FileName>ctr_drbg.c</FileName>
@@ -9322,11 +10407,6 @@
               <FileName>md.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/mbedtls/library/md.c</FilePath>
-            </File>
-            <File>
-              <FileName>md_wrap.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/mbedtls/library/md_wrap.c</FilePath>
             </File>
             <File>
               <FileName>md2.c</FileName>
@@ -9424,6 +10504,106 @@
               <FilePath>../../../../../../middleware/mbedtls/library/poly1305.c</FilePath>
             </File>
             <File>
+              <FileName>psa_crypto.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto.c</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_client.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_client.c</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_core.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_core.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_driver_wrappers.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_driver_wrappers.c</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_driver_wrappers.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_driver_wrappers.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_ecp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_ecp.c</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_ecp.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_ecp.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_invasive.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_invasive.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_its.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_its.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_random_impl.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_random_impl.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_rsa.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_rsa.c</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_rsa.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_rsa.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_se.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_se.c</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_se.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_se.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_service_integration.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_service_integration.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_slot_management.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_slot_management.c</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_slot_management.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_slot_management.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_storage.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_storage.c</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_storage.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_storage.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_its_file.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_its_file.c</FilePath>
+            </File>
+            <File>
               <FileName>ripemd160.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/mbedtls/library/ripemd160.c</FilePath>
@@ -9474,6 +10654,16 @@
               <FilePath>../../../../../../middleware/mbedtls/library/ssl_cookie.c</FilePath>
             </File>
             <File>
+              <FileName>ssl_invasive.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/ssl_invasive.h</FilePath>
+            </File>
+            <File>
+              <FileName>ssl_msg.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/ssl_msg.c</FilePath>
+            </File>
+            <File>
               <FileName>ssl_srv.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/mbedtls/library/ssl_srv.c</FilePath>
@@ -9487,6 +10677,16 @@
               <FileName>ssl_tls.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/mbedtls/library/ssl_tls.c</FilePath>
+            </File>
+            <File>
+              <FileName>ssl_tls13_keys.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/ssl_tls13_keys.c</FilePath>
+            </File>
+            <File>
+              <FileName>ssl_tls13_keys.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/ssl_tls13_keys.h</FilePath>
             </File>
             <File>
               <FileName>threading.c</FileName>
@@ -9551,37 +10751,77 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>utilities</GroupName>
+          <GroupName>mbedtls/port/ksdk</GroupName>
           <Files>
             <File>
-              <FileName>fsl_str.c</FileName>
+              <FileName>ksdk_mbedtls.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1176/utilities/str/fsl_str.c</FilePath>
+              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/ksdk_mbedtls.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_str.h</FileName>
+              <FileName>ksdk_mbedtls.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1176/utilities/str/fsl_str.h</FilePath>
+              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/ksdk_mbedtls.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_debug_console.c</FileName>
+              <FileName>ksdk_mbedtls_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/ksdk_mbedtls_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>sha1_alt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/sha1_alt.h</FilePath>
+            </File>
+            <File>
+              <FileName>sha256_alt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/sha256_alt.h</FilePath>
+            </File>
+            <File>
+              <FileName>des_alt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/des_alt.h</FilePath>
+            </File>
+            <File>
+              <FileName>des_alt.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1176/utilities/debug_console/fsl_debug_console.c</FilePath>
+              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/des_alt.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_debug_console.h</FileName>
+              <FileName>aes_alt.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1176/utilities/debug_console/fsl_debug_console.h</FilePath>
+              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/aes_alt.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_debug_console_conf.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1176/utilities/debug_console/fsl_debug_console_conf.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_assert.c</FileName>
+              <FileName>aes_alt.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1176/utilities/fsl_assert.c</FilePath>
+              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/aes_alt.c</FilePath>
+            </File>
+            <File>
+              <FileName>ecp_alt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/ecp_alt.h</FilePath>
+            </File>
+            <File>
+              <FileName>ecp_alt.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/ecp_alt.c</FilePath>
+            </File>
+            <File>
+              <FileName>ecp_curves_alt.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/ecp_curves_alt.c</FilePath>
+            </File>
+            <File>
+              <FileName>ecp_alt_ksdk.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/ecp_alt_ksdk.c</FilePath>
+            </File>
+            <File>
+              <FileName>threading_alt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/port/ksdk/threading_alt.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -9616,67 +10856,37 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>CMSIS</GroupName>
+          <GroupName>utilities</GroupName>
           <Files>
             <File>
-              <FileName>core_cm7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/core_cm7.h</FilePath>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1176/utilities/str/fsl_str.c</FilePath>
             </File>
             <File>
-              <FileName>mpu_armv7.h</FileName>
+              <FileName>fsl_str.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT1176/utilities/str/fsl_str.h</FilePath>
             </File>
             <File>
-              <FileName>cmsis_armcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_armcc.h</FilePath>
+              <FileName>fsl_debug_console.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1176/utilities/debug_console/fsl_debug_console.c</FilePath>
             </File>
             <File>
-              <FileName>cmsis_armclang.h</FileName>
+              <FileName>fsl_debug_console.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_armclang.h</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT1176/utilities/debug_console/fsl_debug_console.h</FilePath>
             </File>
             <File>
-              <FileName>cmsis_armclang_ltm.h</FileName>
+              <FileName>fsl_debug_console_conf.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_armclang_ltm.h</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT1176/utilities/debug_console/fsl_debug_console_conf.h</FilePath>
             </File>
             <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_gcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_compiler.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_version.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_version.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_iccarm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_iccarm.h</FilePath>
-            </File>
-            <File>
-              <FileName>arm_common_tables.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/arm_common_tables.h</FilePath>
-            </File>
-            <File>
-              <FileName>arm_const_structs.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/arm_const_structs.h</FilePath>
-            </File>
-            <File>
-              <FileName>arm_math.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/arm_math.h</FilePath>
+              <FileName>fsl_assert.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1176/utilities/fsl_assert.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -9772,6 +10982,56 @@
               <FileName>evkmimxrt1170_flexspi_nor_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../xip/evkmimxrt1170_flexspi_nor_config.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>CMSIS</GroupName>
+          <Files>
+            <File>
+              <FileName>cmsis_armcc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_armclang.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_armclang_ltm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armclang_ltm.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_compiler.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_gcc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_iccarm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_version.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_version.h</FilePath>
+            </File>
+            <File>
+              <FileName>core_cm7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/core_cm7.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/mpu_armv7.h</FilePath>
             </File>
           </Files>
         </Group>

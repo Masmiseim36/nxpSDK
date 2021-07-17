@@ -1,7 +1,7 @@
 /*
 ** ###################################################################
 **     Version:             rev. 1.0, 2020-12-29
-**     Build:               b210329
+**     Build:               b210427
 **
 **     Abstract:
 **         Chip specific module features.
@@ -362,6 +362,8 @@
 #define FSL_FEATURE_ENET_HAS_RGMII_TXC_DELAY (1)
 /* @brief Has receive clock delay (register bit field ECR[RXC_DLY]). */
 #define FSL_FEATURE_ENET_HAS_RGMII_RXC_DELAY (0)
+/* @brief PTP Timestamp CAPTURE bit always returns 0 when the capture is not over. */
+#define FSL_FEATURE_ENET_TIMESTAMP_CAPTURE_BIT_INVALID (0)
 
 /* ENET_QOS module features */
 

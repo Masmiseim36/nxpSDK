@@ -39,9 +39,11 @@ SET(CMAKE_C_FLAGS_DEBUG " \
     ${CMAKE_C_FLAGS_DEBUG} \
     -DDEBUG \
     -DCPU_MIMXRT1166DVM6A_cm4 \
+    -DFLEXSPI_IN_USE \
     -DMCMGR_HANDLE_EXCEPTIONS=1 \
     -D__SEMIHOST_HARDFAULT_DISABLE=1 \
     -DMULTICORE_APP=1 \
+    -DMCUXPRESSO_SDK \
     -g \
     -O0 \
     -mcpu=cortex-m4 \
@@ -63,9 +65,11 @@ SET(CMAKE_C_FLAGS_RELEASE " \
     ${CMAKE_C_FLAGS_RELEASE} \
     -DNDEBUG \
     -DCPU_MIMXRT1166DVM6A_cm4 \
+    -DFLEXSPI_IN_USE \
     -DMCMGR_HANDLE_EXCEPTIONS=1 \
     -D__SEMIHOST_HARDFAULT_DISABLE=1 \
     -DMULTICORE_APP=1 \
+    -DMCUXPRESSO_SDK \
     -Os \
     -mcpu=cortex-m4 \
     -Wall \
@@ -86,6 +90,7 @@ SET(CMAKE_CXX_FLAGS_DEBUG " \
     ${CMAKE_CXX_FLAGS_DEBUG} \
     -DDEBUG \
     -DCPU_MIMXRT1166DVM6A_cm4 \
+    -DMCUXPRESSO_SDK \
     -g \
     -O0 \
     -mcpu=cortex-m4 \
@@ -108,6 +113,7 @@ SET(CMAKE_CXX_FLAGS_RELEASE " \
     ${CMAKE_CXX_FLAGS_RELEASE} \
     -DNDEBUG \
     -DCPU_MIMXRT1166DVM6A_cm4 \
+    -DMCUXPRESSO_SDK \
     -Os \
     -mcpu=cortex-m4 \
     -Wall \
@@ -151,6 +157,7 @@ SET(CMAKE_EXE_LINKER_FLAGS_DEBUG " \
     muldefs \
     -Xlinker \
     -Map=output.map \
+    -Wl,--print-memory-usage \
     -T${ProjDirPath}/MIMXRT1166xxxxx_cm4_ram.ld -static \
 ")
 SET(CMAKE_EXE_LINKER_FLAGS_RELEASE " \
@@ -178,5 +185,6 @@ SET(CMAKE_EXE_LINKER_FLAGS_RELEASE " \
     muldefs \
     -Xlinker \
     -Map=output.map \
+    -Wl,--print-memory-usage \
     -T${ProjDirPath}/MIMXRT1166xxxxx_cm4_ram.ld -static \
 ")

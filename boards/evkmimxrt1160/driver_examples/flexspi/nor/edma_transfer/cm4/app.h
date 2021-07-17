@@ -8,6 +8,9 @@
 #ifndef _APP_H_
 #define _APP_H_
 
+/*${header:start}*/
+#include "fsl_cache.h"
+/*${header:end}*/
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -51,10 +54,6 @@
 #define FLEXSPI_RX_DMA_CHANNEL 1U
 
 #define CACHE_MAINTAIN 1
-
-#if defined(CACHE_MAINTAIN) && CACHE_MAINTAIN
-#include "fsl_cache.h"
-#endif
 
 /*${macro:end}*/
 

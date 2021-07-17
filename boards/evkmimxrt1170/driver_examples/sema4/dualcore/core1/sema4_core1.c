@@ -17,8 +17,8 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_MU MUB
-#define DEMO_SEMA4 SEMA4
+#define DEMO_MU       MUB
+#define DEMO_SEMA4    SEMA4
 #define DEMO_PROC_NUM 1 /* Fixed value by system integration. */
 
 /*******************************************************************************

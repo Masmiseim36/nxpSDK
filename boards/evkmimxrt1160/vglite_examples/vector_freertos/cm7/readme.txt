@@ -4,9 +4,9 @@ This application draw a polygon vector graphic with high render quality on blue 
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.9
-- GCC ARM Embedded  9.3.1
-- MCUXpresso  11.3.1
+- IAR embedded Workbench  9.10.2
+- GCC ARM Embedded  10.2.1
+- MCUXpresso  11.4.0
 
 Hardware requirements
 =====================

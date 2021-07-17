@@ -14,8 +14,8 @@
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 !!GlobalInfo
 product: Pins v8.0
-processor: MIMXRT1176xxxxx
-package_id: MIMXRT1176DVMAA
+processor: MIMXRT1166xxxxx
+package_id: MIMXRT1166DVM6A
 mcu_data: ksdk2_0
 processor_version: 0.8.1
 pin_labels:

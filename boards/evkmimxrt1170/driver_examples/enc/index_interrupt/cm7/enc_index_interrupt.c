@@ -16,9 +16,9 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_ENC_BASEADDR ENC1
+#define DEMO_ENC_BASEADDR     ENC1
 #define DEMO_ENC_INDEX_IRQ_ID ENC1_IRQn
-#define ENC_INDEX_IRQHandler ENC1_IRQHandler
+#define ENC_INDEX_IRQHandler  ENC1_IRQHandler
 
 /*******************************************************************************
  * Prototypes

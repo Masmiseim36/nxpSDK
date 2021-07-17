@@ -24,10 +24,10 @@ at a fixed location that is then known for both cores.
 
 Toolchain supported
 ===================
-- GCC ARM Embedded  9.3.1
-- Keil MDK  5.33
-- IAR embedded Workbench  8.50.9
-- MCUXpresso  11.3.1
+- GCC ARM Embedded  10.2.1
+- Keil MDK  5.34
+- IAR embedded Workbench  9.10.2
+- MCUXpresso  11.4.0
 
 Hardware requirements
 =====================
@@ -81,12 +81,13 @@ The "Copy CORE1 image to address..." log message is not displayed on the termina
 In case of MCUXpresso IDE the secondary core image is copied to the target memory during startup automatically.
 
 Note:
-To download binary into qspiflash and boot from qspiflash directly, following steps are needed:
+To download binary of cm7 core into qspiflash and boot from qspiflash directly, following steps are needed:
 1. Compile flash target of the project, and get the binaray file "hello_world.bin".
 3. Set the SW1: 1 off 2 off 3 on 4 off, then power on the board and connect USB cable to J11.
 4. Drop the binaray into disk "RT1170-EVK" on PC.
 5. Wait for the disk disappear and appear again which will take couple of seconds.
 7. Reset the board by pressing SW3 or power off and on the board. 
+(If default boot core is cm4, binary of cm4 could be downloaded and boot according to steps above.)
 
 Note:
 To download and debug IAR EW project using J-Link (replacing the default CMSIS-DAP debug probe), following steps are needed:

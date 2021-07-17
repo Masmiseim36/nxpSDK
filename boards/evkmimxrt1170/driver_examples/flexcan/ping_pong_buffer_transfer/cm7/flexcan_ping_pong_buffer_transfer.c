@@ -26,14 +26,7 @@
 #define RX_QUEUE_BUFFER_SIZE  (4U)
 #define TX_MESSAGE_BUFFER_NUM (8U)
 
-#define DLC                        (8)
-#define USE_IMPROVED_TIMING_CONFIG (1)
-/* The CAN clock prescaler = CAN source clock/(baud rate * quantum), and the prescaler must be an integer.
-   The quantum default value is set to 10=(3+2+1)+4, because for most platforms the CAN clock frequency is
-   a multiple of 10. e.g. 120M CAN source clock/(1M baud rate * 10) is an integer. If the CAN clock frequency
-   is not a multiple of 10, users need to set SET_CAN_QUANTUM and define the PSEG1/PSEG2/PROPSEG (classical CAN)
-   and FPSEG1/FPSEG2/FPROPSEG (CANFD) vaule. Or can set USE_IMPROVED_TIMING_CONFIG macro to use driver api to
-   calculates the improved timing values. */
+#define DLC (8)
 
 /* Select OSC24Mhz as master flexcan clock source */
 #define FLEXCAN_CLOCK_SOURCE_SELECT (1U)
@@ -41,6 +34,8 @@
 #define FLEXCAN_CLOCK_SOURCE_DIVIDER (1U)
 /* Get frequency of flexcan clock */
 #define EXAMPLE_CAN_CLK_FREQ ((CLOCK_GetRootClockFreq(kCLOCK_Root_Can3) / 100000U) * 100000U)
+/* Set USE_IMPROVED_TIMING_CONFIG macro to use api to calculates the improved CAN / CAN FD timing values. */
+#define USE_IMPROVED_TIMING_CONFIG (1U)
 /* Fix MISRA_C-2012 Rule 17.7. */
 #define LOG_INFO (void)PRINTF
 /* Rx queue end Message Buffer index. */
@@ -384,8 +379,8 @@ int main(void)
     flexcan_timing_config_t timing_config;
     memset(&timing_config, 0, sizeof(flexcan_timing_config_t));
 #if (defined(USE_CANFD) && USE_CANFD)
-    if (FLEXCAN_FDCalculateImprovedTimingValues(flexcanConfig.baudRate, flexcanConfig.baudRateFD, EXAMPLE_CAN_CLK_FREQ,
-                                                &timing_config))
+    if (FLEXCAN_FDCalculateImprovedTimingValues(EXAMPLE_CAN, flexcanConfig.baudRate, flexcanConfig.baudRateFD,
+                                                EXAMPLE_CAN_CLK_FREQ, &timing_config))
     {
         /* Update the improved timing configuration*/
         memcpy(&(flexcanConfig.timingConfig), &timing_config, sizeof(flexcan_timing_config_t));
@@ -395,7 +390,8 @@ int main(void)
         LOG_INFO("No found Improved Timing Configuration. Just used default configuration\r\n\r\n");
     }
 #else
-    if (FLEXCAN_CalculateImprovedTimingValues(flexcanConfig.baudRate, EXAMPLE_CAN_CLK_FREQ, &timing_config))
+    if (FLEXCAN_CalculateImprovedTimingValues(EXAMPLE_CAN, flexcanConfig.baudRate, EXAMPLE_CAN_CLK_FREQ,
+                                              &timing_config))
     {
         /* Update the improved timing configuration*/
         memcpy(&(flexcanConfig.timingConfig), &timing_config, sizeof(flexcan_timing_config_t));

@@ -8,6 +8,9 @@
 #ifndef _APP_H_
 #define _APP_H_
 
+/*${header:start}*/
+#include "fsl_cache.h"
+/*${header:end}*/
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -52,10 +55,6 @@
 
 #define CACHE_MAINTAIN 1
 
-#if defined(CACHE_MAINTAIN) && CACHE_MAINTAIN
-#include "fsl_cache.h"
-#endif
-
 /*${macro:end}*/
 
 /*******************************************************************************
@@ -63,15 +62,12 @@
  ******************************************************************************/
 /*${prototype:start}*/
 void BOARD_InitHardware(void);
-/*${prototype:end}*/
-
-/*${function:start}*/
 static inline void flexspi_clock_init(void)
 {
     /*Clock setting for flexspi1*/
     CLOCK_SetRootClockDiv(kCLOCK_Root_Flexspi1, 2);
     CLOCK_SetRootClockMux(kCLOCK_Root_Flexspi1, 0);
 }
-/*${function:end}*/
+/*${prototype:end}*/
 
 #endif /* _APP_H_ */

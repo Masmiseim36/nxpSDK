@@ -27,8 +27,7 @@ typedef struct vg_lite_queue{
     uint32_t  cmd_physical;
     uint32_t  cmd_offset;
     uint32_t  cmd_size;
-    uint32_t* signal;
-    uint32_t  semaphore_id;
+    vg_lite_os_async_event_t *event;
 }
 vg_lite_queue_t;
 
@@ -86,12 +85,12 @@ void command_queue(void * parameters)
                     vg_lite_hal_poke(VG_LITE_HW_CMDBUF_SIZE, (peek_queue->cmd_size +7)/8 );
 
                     if(vg_lite_hal_wait_interrupt(ISR_WAIT_TIME, (uint32_t)~0, &even_got))
-                        *(peek_queue->signal) = VG_LITE_HW_FINISHED;
+                        peek_queue->event->signal = VG_LITE_HW_FINISHED;
                     else
                         /* wait timeout */
-                        *(peek_queue->signal) = VG_LITE_IDLE;
-                    if(semaphore[peek_queue->semaphore_id]){
-                        xSemaphoreGive(semaphore[peek_queue->semaphore_id]);
+                        peek_queue->event->signal = VG_LITE_IDLE;
+                    if(semaphore[peek_queue->event->semaphore_id]){
+                        xSemaphoreGive(semaphore[peek_queue->event->semaphore_id]);
                     }
 
                     vg_lite_os_free((void *) peek_queue);
@@ -101,45 +100,7 @@ void command_queue(void * parameters)
     }
 }
 
-OsSemaphoreHandle_t vg_lite_os_create_semaphore(void)
-{
-    return (OsSemaphoreHandle_t)xSemaphoreCreateBinary();
-}
-
-void vg_lite_os_release_semaphore(OsSemaphoreHandle_t semaphore)
-{
-    xSemaphoreGive((SemaphoreHandle_t)semaphore);
-}
-
-long vg_lite_os_take_semaphore( OsSemaphoreHandle_t semaphore, uint32_t xTicksToWait)
-{
-    return xSemaphoreTake((SemaphoreHandle_t)semaphore, xTicksToWait);
-}
-
-void vg_lite_os_delete_semaphore(OsSemaphoreHandle_t semaphore)
-{
-    vSemaphoreDelete((SemaphoreHandle_t)semaphore);
-}
-
-void vg_lite_os_set_semaphore(uint32_t id, OsSemaphoreHandle_t Semaphore)
-{
-    semaphore[id] = (SemaphoreHandle_t)Semaphore;
-}
-
-OsSemaphoreHandle_t vg_lite_os_get_semaphore(uint32_t id)
-{
-    return (OsSemaphoreHandle_t)semaphore[id];
-}
-
-void vg_lite_os_delete_semaphore_by_id(uint32_t id)
-{
-    if(semaphore[id]){
-        vSemaphoreDelete(semaphore[id]);
-        semaphore[id] = NULL;
-    }
-}
-
-vg_lite_error_t vg_lite_os_set_tls(void* tls)
+int32_t vg_lite_os_set_tls(void* tls)
 {
     if(tls == NULL)
         return VG_LITE_INVALID_ARGUMENT;
@@ -173,7 +134,7 @@ void vg_lite_os_sleep(uint32_t msec)
     vTaskDelay((configTICK_RATE_HZ * msec + 999)/ 1000);
 }
 
-vg_lite_error_t vg_lite_os_initialize(void)
+int32_t vg_lite_os_initialize(void)
 {
     static int task_number = 0;
     BaseType_t ret;
@@ -219,7 +180,7 @@ void vg_lite_os_deinitialize(void)
     /* TODO: Remove power. */
 }
 
-vg_lite_error_t vg_lite_os_lock()
+int32_t vg_lite_os_lock()
 {
     if(mutex == NULL)
         return VG_LITE_NOT_SUPPORT;
@@ -230,7 +191,7 @@ vg_lite_error_t vg_lite_os_lock()
     return VG_LITE_SUCCESS;
 }
 
-vg_lite_error_t vg_lite_os_unlock()
+int32_t vg_lite_os_unlock()
 {
     if(xSemaphoreGive(mutex) != pdTRUE)
         return VG_LITE_MULTI_THREAD_FAIL;
@@ -238,7 +199,7 @@ vg_lite_error_t vg_lite_os_unlock()
     return VG_LITE_SUCCESS;
 }
 
-vg_lite_error_t vg_lite_os_submit(uint32_t physical, uint32_t offset, uint32_t size,  uint32_t * signal, uint32_t semaphore_id)
+int32_t vg_lite_os_submit(uint32_t physical, uint32_t offset, uint32_t size, vg_lite_os_async_event_t *event)
 {
     vg_lite_queue_t* queue_node;
 
@@ -252,18 +213,17 @@ vg_lite_error_t vg_lite_os_submit(uint32_t physical, uint32_t offset, uint32_t s
     queue_node->cmd_physical = physical;
     queue_node->cmd_offset = offset;
     queue_node->cmd_size = size;
-    queue_node->signal = signal;
-    queue_node->semaphore_id = semaphore_id;
+    queue_node->event = event;
+
+    /* Current command buffer has been sent to the command queue. */
+    event->signal = VG_LITE_IN_QUEUE;
 
     if(xQueueSend(os_obj.queue_handle,
                   (void *) &queue_node,
                   ISR_WAIT_TIME/portTICK_PERIOD_MS) != pdTRUE)
         return VG_LITE_MULTI_THREAD_FAIL;
 
-    /* Current command buffer has been sent to the command queue. */
-    *signal = VG_LITE_IN_QUEUE;
-
-    if (xSemaphoreTake((SemaphoreHandle_t)semaphore[semaphore_id], portMAX_DELAY) == pdTRUE) {
+    if (vg_lite_os_wait_event(event) == VG_LITE_SUCCESS) {
         if(xSemaphoreGive(command_semaphore) != pdTRUE)
             return VG_LITE_MULTI_THREAD_FAIL;
         return VG_LITE_SUCCESS;
@@ -272,16 +232,16 @@ vg_lite_error_t vg_lite_os_submit(uint32_t physical, uint32_t offset, uint32_t s
     return VG_LITE_MULTI_THREAD_FAIL;
 }
 
-vg_lite_error_t vg_lite_os_wait(uint32_t timeout, uint32_t * signal ,OsSemaphoreHandle_t semaphore)
+int32_t vg_lite_os_wait(uint32_t timeout, vg_lite_os_async_event_t *event)
 {
-    if(semaphore) {
-        if (xSemaphoreTake((SemaphoreHandle_t)semaphore, portMAX_DELAY) == pdTRUE) {
-            if(*signal == VG_LITE_HW_FINISHED){
-                xSemaphoreGive((SemaphoreHandle_t)semaphore);
+    if (semaphore[event->semaphore_id]) {
+        if (xSemaphoreTake(semaphore[event->semaphore_id], portMAX_DELAY) == pdTRUE) {
+            if(event->signal == VG_LITE_HW_FINISHED){
+                xSemaphoreGive(semaphore[event->semaphore_id]);
                 return VG_LITE_SUCCESS;
             }
             else{
-                xSemaphoreGive((SemaphoreHandle_t)semaphore);
+                xSemaphoreGive(semaphore[event->semaphore_id]);
                 return VG_LITE_TIMEOUT;
             }
         }
@@ -343,4 +303,59 @@ int32_t vg_lite_os_wait_interrupt(uint32_t timeout, uint32_t mask, uint32_t * va
     }
     return 0;
 #endif
+}
+
+int32_t vg_lite_os_init_event(vg_lite_os_async_event_t *event,
+                                      uint32_t semaphore_id,
+                                      int32_t state)
+{
+    if (event->semaphore_id >= TASK_LENGTH)
+        return VG_LITE_INVALID_ARGUMENT;
+
+    if (semaphore[semaphore_id])
+        return VG_LITE_ALREADY_EXISTS;
+
+    semaphore[semaphore_id] = xSemaphoreCreateBinary();
+    if (!semaphore[semaphore_id])
+        return VG_LITE_OUT_OF_MEMORY;
+
+    xSemaphoreGive(semaphore[semaphore_id]);
+
+    event->semaphore_id = semaphore_id;
+    event->signal       = state;
+
+    return VG_LITE_SUCCESS;
+}
+
+int32_t vg_lite_os_delete_event(vg_lite_os_async_event_t *event)
+{
+    if (event->semaphore_id >= TASK_LENGTH)
+        return VG_LITE_INVALID_ARGUMENT;
+
+    if (semaphore[event->semaphore_id]){
+        vSemaphoreDelete(semaphore[event->semaphore_id]);
+        semaphore[event->semaphore_id] = NULL;
+    }
+
+    return VG_LITE_SUCCESS;
+}
+
+int32_t vg_lite_os_wait_event(vg_lite_os_async_event_t *event)
+{
+    if (event->semaphore_id >= TASK_LENGTH)
+        return VG_LITE_INVALID_ARGUMENT;
+
+    if (xSemaphoreTake(semaphore[event->semaphore_id], portMAX_DELAY) != pdTRUE)
+        return VG_LITE_MULTI_THREAD_FAIL;
+
+    return VG_LITE_SUCCESS;
+}
+
+int32_t vg_lite_os_signal_event(vg_lite_os_async_event_t *event)
+{
+    if (event->semaphore_id >= TASK_LENGTH)
+        return VG_LITE_INVALID_ARGUMENT;
+
+    xSemaphoreGive(semaphore[event->semaphore_id]);
+    return VG_LITE_SUCCESS;
 }

@@ -27,6 +27,8 @@
 #ifndef _vg_lite_kernel_h_
 #define _vg_lite_kernel_h_
 
+#include "vg_lite_os.h"
+
 /* Interrupt IDs from GPU. */
 #define EVENT_UNEXPECTED_MESH  0x80000000
 #define EVENT_CMD_BAD_WRITE    0x40000000
@@ -43,6 +45,20 @@
 
 #define VG_LITE_ALIGN(number, alignment)    \
         (((number) + ((alignment) - 1)) & ~((alignment) - 1))
+
+/* Available function optimization levels */
+#if (defined(__ICCARM__))
+#define VG_LITE_ATTR_OPTIMIZE_LOW               _Pragma("optimize=none")
+#define VG_LITE_ATTR_OPTIMIZE_MEDIUM            _Pragma("optimize=medium")
+#define VG_LITE_ATTR_OPTIMIZE_HIGH              _Pragma("optimize=high")
+#else /* ARMGCC */
+#define VG_LITE_ATTR_OPTIMIZE_LOW               __attribute__((optimize(1)))
+#define VG_LITE_ATTR_OPTIMIZE_MEDIUM            __attribute__((optimize(2)))
+#define VG_LITE_ATTR_OPTIMIZE_HIGH              __attribute__((optimize(3)))
+#endif /* defined(__ICCARM__) */
+
+/* Allow develpers to force a function optimization level */
+#define VG_LITE_OPTIMIZE(level)                 VG_LITE_ATTR_OPTIMIZE_##level
 
 #define VG_LITE_KERNEL_IS_GPU_IDLE() \
 ((vg_lite_hal_peek(VG_LITE_HW_IDLE) & VG_LITE_HW_IDLE_STATE) == VG_LITE_HW_IDLE_STATE)
@@ -75,17 +91,19 @@ typedef enum vg_lite_error
     VG_LITE_GENERIC_IO,         /*! Cannot communicate with the kernel driver. */
     VG_LITE_NOT_SUPPORT,        /*! Function call not supported. */
     VG_LITE_MULTI_THREAD_FAIL,  /*! Multi-thread/tasks fail. */
+    VG_LITE_ALREADY_EXISTS,     /*! Element already exists (e.g. font exists) */
+    VG_LITE_NOT_ALIGNED         /*! Data alignment error */
 }
 vg_lite_error_t;
 #endif
 
-typedef enum vg_lite_buffer_singal
+typedef enum vg_lite_buffer_signal
 {
     VG_LITE_IDLE = 0,        /*! Buffer available. */
     VG_LITE_HW_FINISHED,     /*! HW has completed command buffer. */
     VG_LITE_IN_QUEUE,        /*! Buffer has been send to queue. */
 }
-vg_lite_buffer_singal_t;
+vg_lite_buffer_signal_t;
 
 typedef enum vg_lite_kernel_counter
 {
@@ -154,9 +172,7 @@ struct vg_lite_kernel_context {
     void      * command_buffer[CMDBUF_COUNT];
     void      * command_buffer_logical[CMDBUF_COUNT];
     uint32_t    command_buffer_physical[CMDBUF_COUNT];
-    uint32_t    signal[CMDBUF_COUNT];
-    uint32_t    semaphore_id;
-    void      * semaphore;
+    vg_lite_os_async_event_t async_event[CMDBUF_COUNT];
 
     /* Tessellation buffer. */
     void      * tessellation_buffer;

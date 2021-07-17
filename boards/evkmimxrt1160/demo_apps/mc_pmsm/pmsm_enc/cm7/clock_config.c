@@ -1,11 +1,4 @@
 /*
- * Copyright 2020 NXP
- * All rights reserved.
- *
- * SPDX-License-Identifier: BSD-3-Clause
- */
-
-/*
  * How to setup clock using clock driver functions:
  *
  * 1. Call CLOCK_InitXXXPLL() to configure corresponding PLL clock.
@@ -22,7 +15,7 @@ product: Clocks v7.0
 processor: MIMXRT1166xxxxx
 package_id: MIMXRT1166DVM6A
 mcu_data: ksdk2_0
-processor_version: 0.9.0
+processor_version: 0.10.9
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS **********/
 
 #include "clock_config.h"
@@ -109,7 +102,6 @@ outputs:
 - {id: ENET_25M_CLK_ROOT.outFreq, value: 24 MHz}
 - {id: ENET_TIMER1_CLK_ROOT.outFreq, value: 24 MHz}
 - {id: ENET_TIMER2_CLK_ROOT.outFreq, value: 24 MHz}
-- {id: ENET_TX_CLK.outFreq, value: 24 MHz}
 - {id: FLEXIO1_CLK_ROOT.outFreq, value: 24 MHz}
 - {id: FLEXIO2_CLK_ROOT.outFreq, value: 24 MHz}
 - {id: FLEXSPI1_CLK_ROOT.outFreq, value: 24 MHz}
@@ -790,10 +782,12 @@ void BOARD_BootClockRUN(void)
 
     /* Set MQS configuration. */
     IOMUXC_MQSConfig(IOMUXC_GPR,kIOMUXC_MqsPwmOverSampleRate32, 0);
-    /* Set ENET Tx clock source. */
-    IOMUXC_GPR->GPR4 &= ~IOMUXC_GPR_GPR4_ENET_TX_CLK_SEL_MASK;
+    /* Set ENET Ref clock source. */
+    IOMUXC_GPR->GPR4 &= ~IOMUXC_GPR_GPR4_ENET_REF_CLK_DIR_MASK;
     /* Set ENET_1G Tx clock source. */
-    IOMUXC_GPR->GPR5 &= ~IOMUXC_GPR_GPR5_ENET1G_TX_CLK_SEL_MASK;
+    IOMUXC_GPR->GPR5 = ((IOMUXC_GPR->GPR5 & ~IOMUXC_GPR_GPR5_ENET1G_TX_CLK_SEL_MASK) | IOMUXC_GPR_GPR5_ENET1G_RGMII_EN_MASK);
+    /* Set ENET_1G Ref clock source. */
+    IOMUXC_GPR->GPR5 &= ~IOMUXC_GPR_GPR5_ENET1G_REF_CLK_DIR_MASK;
     /* Set GPT1 High frequency reference clock source. */
     IOMUXC_GPR->GPR22 &= ~IOMUXC_GPR_GPR22_REF_1M_CLK_GPT1_MASK;
     /* Set GPT2 High frequency reference clock source. */

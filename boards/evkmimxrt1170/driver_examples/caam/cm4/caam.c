@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2020 NXP
+ * Copyright 2016-2021 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -26,11 +26,7 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define EXAMPLE_SW_GPIO BOARD_USER_BUTTON_GPIO
-#define EXAMPLE_SW_GPIO_PIN BOARD_USER_BUTTON_GPIO_PIN
-#define EXAMPLE_SW_IRQ BOARD_USER_BUTTON_IRQ
-#define EXAMPLE_GPIO_IRQHandler BOARD_USER_BUTTON_IRQ_HANDLER
-#define EXAMPLE_SW_NAME BOARD_USER_BUTTON_NAME
+
 
 /*******************************************************************************
  * Variables

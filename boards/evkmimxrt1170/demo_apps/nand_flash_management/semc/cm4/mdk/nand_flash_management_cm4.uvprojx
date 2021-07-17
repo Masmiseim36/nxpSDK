@@ -332,9 +332,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>DEBUG, PRINTF_FLOAT_ENABLE=1, CPU_MIMXRT1176DVMAA_cm4, DEBUG_CONSOLE_RX_ENABLE=0, SERIAL_PORT_TYPE_UART=1, FSL_RTOS_FREE_RTOS</Define>
+              <Define>DEBUG, PRINTF_FLOAT_ENABLE=1, CACHE_MAINTAIN=1, CPU_MIMXRT1176DVMAA_cm4, DEBUG_CONSOLE_RX_ENABLE=0, SERIAL_PORT_TYPE_UART=1, SDK_OS_FREE_RTOS, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>../..;..;../../../../../../../components/flash/nand/semc;../../../../../../../middleware/dhara/dhara;../../../../../../../middleware/dhara/ecc;../../../../../../../middleware/fatfs/source/fsl_nand_disk;../../../../../../../middleware/fatfs/source;../../../../../../../devices/MIMXRT1176/utilities;../../../../../../../devices/MIMXRT1176/drivers;../../../../../../../devices/MIMXRT1176;../../../../../../../CMSIS/Include;../../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1176/xip;../../../../../xip;../../../../../../../devices/MIMXRT1176/drivers/cm4;../../../../../../../components/flash/nand;../../../../../../../rtos/freertos/freertos_kernel/include;../../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F</IncludePath>
+              <IncludePath>../..;..;../../../../../../../components/flash/nand/semc;../../../../../../../middleware/dhara/dhara;../../../../../../../middleware/dhara/ecc;../../../../../../../middleware/fatfs/source/fsl_nand_disk;../../../../../../../middleware/fatfs/source;../../../../../../../devices/MIMXRT1176/utilities;../../../../../../../devices/MIMXRT1176/drivers;../../../../../../../devices/MIMXRT1176;../../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1176/xip;../../../../../xip;../../../../../../../devices/MIMXRT1176/drivers/cm4;../../../../../../../components/flash/nand;../../../../../../../CMSIS/Core/Include;../../../../../../../rtos/freertos/freertos_kernel/include;../../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -368,7 +368,7 @@
             <ScatterFile>MIMXRT1176xxxxx_cm4_ram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --predefine="-D__stack_size__=0x1000" --predefine="-D__heap_size__=0x1000"</Misc>
+            <Misc>--remove --entry=Reset_Handler --predefine="-D__stack_size__=0x1000" --predefine="-D__heap_size__=0x1000"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -461,6 +461,16 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>evkmimxrt1170</GroupName>
+          <Files>
+            <File>
+              <FileName>evkmimxrt1170_connect_cm4_cm4side.jlinkscript</FileName>
+              <FileType>5</FileType>
+              <FilePath>../evkmimxrt1170_connect_cm4_cm4side.jlinkscript</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>nand_flash</GroupName>
           <Files>
             <File>
@@ -541,16 +551,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>dhara</GroupName>
-          <Files>
-            <File>
-              <FileName>ChangeLogKSDK.txt</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/dhara/ChangeLogKSDK.txt</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>freertos/freertos_kernel/portable/MemMang</GroupName>
           <Files>
             <File>
@@ -569,14 +569,14 @@
           <GroupName>fatfs/source/fsl_nand_disk</GroupName>
           <Files>
             <File>
-              <FileName>fsl_nand_disk.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/fatfs/source/fsl_nand_disk/fsl_nand_disk.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_nand_disk.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../middleware/fatfs/source/fsl_nand_disk/fsl_nand_disk.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_nand_disk.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/fatfs/source/fsl_nand_disk/fsl_nand_disk.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -589,9 +589,19 @@
               <FilePath>../../../../../../../middleware/fatfs/source/diskio.c</FilePath>
             </File>
             <File>
+              <FileName>diskio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/fatfs/source/diskio.h</FilePath>
+            </File>
+            <File>
               <FileName>ff.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../middleware/fatfs/source/ff.c</FilePath>
+            </File>
+            <File>
+              <FileName>ff.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/fatfs/source/ff.h</FilePath>
             </File>
             <File>
               <FileName>ffsystem.c</FileName>
@@ -602,16 +612,6 @@
               <FileName>ffunicode.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../middleware/fatfs/source/ffunicode.c</FilePath>
-            </File>
-            <File>
-              <FileName>diskio.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/fatfs/source/diskio.h</FilePath>
-            </File>
-            <File>
-              <FileName>ff.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/fatfs/source/ff.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -682,6 +682,16 @@
               <FileName>fsl_common.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_common.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_common_arm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_common_arm.h</FilePath>
             </File>
             <File>
               <FileName>fsl_lpuart.h</FileName>
@@ -791,71 +801,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>CMSIS</GroupName>
-          <Files>
-            <File>
-              <FileName>core_cm4.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Include/core_cm4.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_armcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Include/cmsis_armcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_armclang.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Include/cmsis_armclang.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_armclang_ltm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Include/cmsis_armclang_ltm.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Include/cmsis_gcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_compiler.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_version.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Include/cmsis_version.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_iccarm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Include/cmsis_iccarm.h</FilePath>
-            </File>
-            <File>
-              <FileName>arm_common_tables.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Include/arm_common_tables.h</FilePath>
-            </File>
-            <File>
-              <FileName>arm_const_structs.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Include/arm_const_structs.h</FilePath>
-            </File>
-            <File>
-              <FileName>arm_math.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Include/arm_math.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>component/uart</GroupName>
           <Files>
             <File>
@@ -951,17 +896,67 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos/freertos_kernel</GroupName>
+          <GroupName>CMSIS</GroupName>
           <Files>
             <File>
-              <FileName>event_groups.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../rtos/freertos/freertos_kernel/event_groups.c</FilePath>
+              <FileName>cmsis_armcc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
             </File>
+            <File>
+              <FileName>cmsis_armclang.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_armclang_ltm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_armclang_ltm.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_compiler.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_gcc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_iccarm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_version.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_version.h</FilePath>
+            </File>
+            <File>
+              <FileName>core_cm4.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Core/Include/core_cm4.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Core/Include/mpu_armv7.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>freertos/freertos_kernel</GroupName>
+          <Files>
             <File>
               <FileName>croutine.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../rtos/freertos/freertos_kernel/croutine.c</FilePath>
+            </File>
+            <File>
+              <FileName>event_groups.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../rtos/freertos/freertos_kernel/event_groups.c</FilePath>
             </File>
             <File>
               <FileName>list.c</FileName>
@@ -994,19 +989,14 @@
           <GroupName>freertos/freertos_kernel/include</GroupName>
           <Files>
             <File>
-              <FileName>croutine.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../rtos/freertos/freertos_kernel/include/croutine.h</FilePath>
-            </File>
-            <File>
-              <FileName>StackMacros.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../rtos/freertos/freertos_kernel/include/StackMacros.h</FilePath>
-            </File>
-            <File>
               <FileName>atomic.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../rtos/freertos/freertos_kernel/include/atomic.h</FilePath>
+            </File>
+            <File>
+              <FileName>croutine.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../rtos/freertos/freertos_kernel/include/croutine.h</FilePath>
             </File>
             <File>
               <FileName>deprecated_definitions.h</FileName>
@@ -1067,6 +1057,11 @@
               <FileName>stack_macros.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../rtos/freertos/freertos_kernel/include/stack_macros.h</FilePath>
+            </File>
+            <File>
+              <FileName>StackMacros.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../rtos/freertos/freertos_kernel/include/StackMacros.h</FilePath>
             </File>
             <File>
               <FileName>stream_buffer.h</FileName>
@@ -1446,9 +1441,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=0, DEBUG, PRINTF_FLOAT_ENABLE=1, CPU_MIMXRT1176DVMAA_cm4, DEBUG_CONSOLE_RX_ENABLE=0, SERIAL_PORT_TYPE_UART=1, FSL_RTOS_FREE_RTOS</Define>
+              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=0, DEBUG, PRINTF_FLOAT_ENABLE=1, CACHE_MAINTAIN=1, CPU_MIMXRT1176DVMAA_cm4, DEBUG_CONSOLE_RX_ENABLE=0, SERIAL_PORT_TYPE_UART=1, SDK_OS_FREE_RTOS, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>../..;..;../../../../../../../components/flash/nand/semc;../../../../../../../middleware/dhara/dhara;../../../../../../../middleware/dhara/ecc;../../../../../../../middleware/fatfs/source/fsl_nand_disk;../../../../../../../middleware/fatfs/source;../../../../../../../devices/MIMXRT1176/utilities;../../../../../../../devices/MIMXRT1176/drivers;../../../../../../../devices/MIMXRT1176;../../../../../../../CMSIS/Include;../../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1176/xip;../../../../../xip;../../../../../../../devices/MIMXRT1176/drivers/cm4;../../../../../../../components/flash/nand;../../../../../../../rtos/freertos/freertos_kernel/include;../../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F</IncludePath>
+              <IncludePath>../..;..;../../../../../../../components/flash/nand/semc;../../../../../../../middleware/dhara/dhara;../../../../../../../middleware/dhara/ecc;../../../../../../../middleware/fatfs/source/fsl_nand_disk;../../../../../../../middleware/fatfs/source;../../../../../../../devices/MIMXRT1176/utilities;../../../../../../../devices/MIMXRT1176/drivers;../../../../../../../devices/MIMXRT1176;../../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1176/xip;../../../../../xip;../../../../../../../devices/MIMXRT1176/drivers/cm4;../../../../../../../components/flash/nand;../../../../../../../CMSIS/Core/Include;../../../../../../../rtos/freertos/freertos_kernel/include;../../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1482,7 +1477,7 @@
             <ScatterFile>MIMXRT1176xxxxx_cm4_flexspi_nor.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --predefine="-D__stack_size__=0x1000" --predefine="-D__heap_size__=0x1000"</Misc>
+            <Misc>--remove --entry=Reset_Handler --predefine="-D__stack_size__=0x1000" --predefine="-D__heap_size__=0x1000"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -1575,6 +1570,16 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>evkmimxrt1170</GroupName>
+          <Files>
+            <File>
+              <FileName>evkmimxrt1170_connect_cm4_cm4side.jlinkscript</FileName>
+              <FileType>5</FileType>
+              <FilePath>../evkmimxrt1170_connect_cm4_cm4side.jlinkscript</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>nand_flash</GroupName>
           <Files>
             <File>
@@ -1655,16 +1660,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>dhara</GroupName>
-          <Files>
-            <File>
-              <FileName>ChangeLogKSDK.txt</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/dhara/ChangeLogKSDK.txt</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>freertos/freertos_kernel/portable/MemMang</GroupName>
           <Files>
             <File>
@@ -1683,14 +1678,14 @@
           <GroupName>fatfs/source/fsl_nand_disk</GroupName>
           <Files>
             <File>
-              <FileName>fsl_nand_disk.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/fatfs/source/fsl_nand_disk/fsl_nand_disk.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_nand_disk.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../middleware/fatfs/source/fsl_nand_disk/fsl_nand_disk.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_nand_disk.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/fatfs/source/fsl_nand_disk/fsl_nand_disk.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1703,9 +1698,19 @@
               <FilePath>../../../../../../../middleware/fatfs/source/diskio.c</FilePath>
             </File>
             <File>
+              <FileName>diskio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/fatfs/source/diskio.h</FilePath>
+            </File>
+            <File>
               <FileName>ff.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../middleware/fatfs/source/ff.c</FilePath>
+            </File>
+            <File>
+              <FileName>ff.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/fatfs/source/ff.h</FilePath>
             </File>
             <File>
               <FileName>ffsystem.c</FileName>
@@ -1716,16 +1721,6 @@
               <FileName>ffunicode.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../middleware/fatfs/source/ffunicode.c</FilePath>
-            </File>
-            <File>
-              <FileName>diskio.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/fatfs/source/diskio.h</FilePath>
-            </File>
-            <File>
-              <FileName>ff.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/fatfs/source/ff.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1796,6 +1791,16 @@
               <FileName>fsl_common.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_common.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_common_arm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_common_arm.h</FilePath>
             </File>
             <File>
               <FileName>fsl_lpuart.h</FileName>
@@ -1905,71 +1910,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>CMSIS</GroupName>
-          <Files>
-            <File>
-              <FileName>core_cm4.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Include/core_cm4.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_armcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Include/cmsis_armcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_armclang.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Include/cmsis_armclang.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_armclang_ltm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Include/cmsis_armclang_ltm.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Include/cmsis_gcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_compiler.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_version.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Include/cmsis_version.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_iccarm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Include/cmsis_iccarm.h</FilePath>
-            </File>
-            <File>
-              <FileName>arm_common_tables.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Include/arm_common_tables.h</FilePath>
-            </File>
-            <File>
-              <FileName>arm_const_structs.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Include/arm_const_structs.h</FilePath>
-            </File>
-            <File>
-              <FileName>arm_math.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Include/arm_math.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>component/uart</GroupName>
           <Files>
             <File>
@@ -2065,17 +2005,67 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos/freertos_kernel</GroupName>
+          <GroupName>CMSIS</GroupName>
           <Files>
             <File>
-              <FileName>event_groups.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../rtos/freertos/freertos_kernel/event_groups.c</FilePath>
+              <FileName>cmsis_armcc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
             </File>
+            <File>
+              <FileName>cmsis_armclang.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_armclang_ltm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_armclang_ltm.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_compiler.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_gcc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_iccarm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_version.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_version.h</FilePath>
+            </File>
+            <File>
+              <FileName>core_cm4.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Core/Include/core_cm4.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Core/Include/mpu_armv7.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>freertos/freertos_kernel</GroupName>
+          <Files>
             <File>
               <FileName>croutine.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../rtos/freertos/freertos_kernel/croutine.c</FilePath>
+            </File>
+            <File>
+              <FileName>event_groups.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../rtos/freertos/freertos_kernel/event_groups.c</FilePath>
             </File>
             <File>
               <FileName>list.c</FileName>
@@ -2108,19 +2098,14 @@
           <GroupName>freertos/freertos_kernel/include</GroupName>
           <Files>
             <File>
-              <FileName>croutine.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../rtos/freertos/freertos_kernel/include/croutine.h</FilePath>
-            </File>
-            <File>
-              <FileName>StackMacros.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../rtos/freertos/freertos_kernel/include/StackMacros.h</FilePath>
-            </File>
-            <File>
               <FileName>atomic.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../rtos/freertos/freertos_kernel/include/atomic.h</FilePath>
+            </File>
+            <File>
+              <FileName>croutine.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../rtos/freertos/freertos_kernel/include/croutine.h</FilePath>
             </File>
             <File>
               <FileName>deprecated_definitions.h</FileName>
@@ -2181,6 +2166,11 @@
               <FileName>stack_macros.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../rtos/freertos/freertos_kernel/include/stack_macros.h</FilePath>
+            </File>
+            <File>
+              <FileName>StackMacros.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../rtos/freertos/freertos_kernel/include/StackMacros.h</FilePath>
             </File>
             <File>
               <FileName>stream_buffer.h</FileName>
@@ -2560,9 +2550,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>NDEBUG, PRINTF_FLOAT_ENABLE=1, CPU_MIMXRT1176DVMAA_cm4, DEBUG_CONSOLE_RX_ENABLE=0, SERIAL_PORT_TYPE_UART=1, FSL_RTOS_FREE_RTOS</Define>
+              <Define>NDEBUG, PRINTF_FLOAT_ENABLE=1, CACHE_MAINTAIN=1, CPU_MIMXRT1176DVMAA_cm4, DEBUG_CONSOLE_RX_ENABLE=0, SERIAL_PORT_TYPE_UART=1, SDK_OS_FREE_RTOS, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>../..;..;../../../../../../../components/flash/nand/semc;../../../../../../../middleware/dhara/dhara;../../../../../../../middleware/dhara/ecc;../../../../../../../middleware/fatfs/source/fsl_nand_disk;../../../../../../../middleware/fatfs/source;../../../../../../../devices/MIMXRT1176/utilities;../../../../../../../devices/MIMXRT1176/drivers;../../../../../../../devices/MIMXRT1176;../../../../../../../CMSIS/Include;../../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1176/xip;../../../../../xip;../../../../../../../devices/MIMXRT1176/drivers/cm4;../../../../../../../components/flash/nand;../../../../../../../rtos/freertos/freertos_kernel/include;../../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F</IncludePath>
+              <IncludePath>../..;..;../../../../../../../components/flash/nand/semc;../../../../../../../middleware/dhara/dhara;../../../../../../../middleware/dhara/ecc;../../../../../../../middleware/fatfs/source/fsl_nand_disk;../../../../../../../middleware/fatfs/source;../../../../../../../devices/MIMXRT1176/utilities;../../../../../../../devices/MIMXRT1176/drivers;../../../../../../../devices/MIMXRT1176;../../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1176/xip;../../../../../xip;../../../../../../../devices/MIMXRT1176/drivers/cm4;../../../../../../../components/flash/nand;../../../../../../../CMSIS/Core/Include;../../../../../../../rtos/freertos/freertos_kernel/include;../../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2596,7 +2586,7 @@
             <ScatterFile>MIMXRT1176xxxxx_cm4_ram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --predefine="-D__stack_size__=0x1000" --predefine="-D__heap_size__=0x1000"</Misc>
+            <Misc>--remove --entry=Reset_Handler --predefine="-D__stack_size__=0x1000" --predefine="-D__heap_size__=0x1000"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -2689,6 +2679,16 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>evkmimxrt1170</GroupName>
+          <Files>
+            <File>
+              <FileName>evkmimxrt1170_connect_cm4_cm4side.jlinkscript</FileName>
+              <FileType>5</FileType>
+              <FilePath>../evkmimxrt1170_connect_cm4_cm4side.jlinkscript</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>nand_flash</GroupName>
           <Files>
             <File>
@@ -2769,16 +2769,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>dhara</GroupName>
-          <Files>
-            <File>
-              <FileName>ChangeLogKSDK.txt</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/dhara/ChangeLogKSDK.txt</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>freertos/freertos_kernel/portable/MemMang</GroupName>
           <Files>
             <File>
@@ -2797,14 +2787,14 @@
           <GroupName>fatfs/source/fsl_nand_disk</GroupName>
           <Files>
             <File>
-              <FileName>fsl_nand_disk.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/fatfs/source/fsl_nand_disk/fsl_nand_disk.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_nand_disk.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../middleware/fatfs/source/fsl_nand_disk/fsl_nand_disk.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_nand_disk.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/fatfs/source/fsl_nand_disk/fsl_nand_disk.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2817,9 +2807,19 @@
               <FilePath>../../../../../../../middleware/fatfs/source/diskio.c</FilePath>
             </File>
             <File>
+              <FileName>diskio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/fatfs/source/diskio.h</FilePath>
+            </File>
+            <File>
               <FileName>ff.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../middleware/fatfs/source/ff.c</FilePath>
+            </File>
+            <File>
+              <FileName>ff.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/fatfs/source/ff.h</FilePath>
             </File>
             <File>
               <FileName>ffsystem.c</FileName>
@@ -2830,16 +2830,6 @@
               <FileName>ffunicode.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../middleware/fatfs/source/ffunicode.c</FilePath>
-            </File>
-            <File>
-              <FileName>diskio.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/fatfs/source/diskio.h</FilePath>
-            </File>
-            <File>
-              <FileName>ff.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/fatfs/source/ff.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2910,6 +2900,16 @@
               <FileName>fsl_common.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_common.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_common_arm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_common_arm.h</FilePath>
             </File>
             <File>
               <FileName>fsl_lpuart.h</FileName>
@@ -3019,71 +3019,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>CMSIS</GroupName>
-          <Files>
-            <File>
-              <FileName>core_cm4.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Include/core_cm4.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_armcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Include/cmsis_armcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_armclang.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Include/cmsis_armclang.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_armclang_ltm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Include/cmsis_armclang_ltm.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Include/cmsis_gcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_compiler.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_version.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Include/cmsis_version.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_iccarm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Include/cmsis_iccarm.h</FilePath>
-            </File>
-            <File>
-              <FileName>arm_common_tables.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Include/arm_common_tables.h</FilePath>
-            </File>
-            <File>
-              <FileName>arm_const_structs.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Include/arm_const_structs.h</FilePath>
-            </File>
-            <File>
-              <FileName>arm_math.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Include/arm_math.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>component/uart</GroupName>
           <Files>
             <File>
@@ -3179,17 +3114,67 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos/freertos_kernel</GroupName>
+          <GroupName>CMSIS</GroupName>
           <Files>
             <File>
-              <FileName>event_groups.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../rtos/freertos/freertos_kernel/event_groups.c</FilePath>
+              <FileName>cmsis_armcc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
             </File>
+            <File>
+              <FileName>cmsis_armclang.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_armclang_ltm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_armclang_ltm.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_compiler.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_gcc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_iccarm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_version.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_version.h</FilePath>
+            </File>
+            <File>
+              <FileName>core_cm4.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Core/Include/core_cm4.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Core/Include/mpu_armv7.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>freertos/freertos_kernel</GroupName>
+          <Files>
             <File>
               <FileName>croutine.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../rtos/freertos/freertos_kernel/croutine.c</FilePath>
+            </File>
+            <File>
+              <FileName>event_groups.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../rtos/freertos/freertos_kernel/event_groups.c</FilePath>
             </File>
             <File>
               <FileName>list.c</FileName>
@@ -3222,19 +3207,14 @@
           <GroupName>freertos/freertos_kernel/include</GroupName>
           <Files>
             <File>
-              <FileName>croutine.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../rtos/freertos/freertos_kernel/include/croutine.h</FilePath>
-            </File>
-            <File>
-              <FileName>StackMacros.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../rtos/freertos/freertos_kernel/include/StackMacros.h</FilePath>
-            </File>
-            <File>
               <FileName>atomic.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../rtos/freertos/freertos_kernel/include/atomic.h</FilePath>
+            </File>
+            <File>
+              <FileName>croutine.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../rtos/freertos/freertos_kernel/include/croutine.h</FilePath>
             </File>
             <File>
               <FileName>deprecated_definitions.h</FileName>
@@ -3295,6 +3275,11 @@
               <FileName>stack_macros.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../rtos/freertos/freertos_kernel/include/stack_macros.h</FilePath>
+            </File>
+            <File>
+              <FileName>StackMacros.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../rtos/freertos/freertos_kernel/include/StackMacros.h</FilePath>
             </File>
             <File>
               <FileName>stream_buffer.h</FileName>
@@ -3674,9 +3659,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=0, NDEBUG, PRINTF_FLOAT_ENABLE=1, CPU_MIMXRT1176DVMAA_cm4, DEBUG_CONSOLE_RX_ENABLE=0, SERIAL_PORT_TYPE_UART=1, FSL_RTOS_FREE_RTOS</Define>
+              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=0, NDEBUG, PRINTF_FLOAT_ENABLE=1, CACHE_MAINTAIN=1, CPU_MIMXRT1176DVMAA_cm4, DEBUG_CONSOLE_RX_ENABLE=0, SERIAL_PORT_TYPE_UART=1, SDK_OS_FREE_RTOS, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>../..;..;../../../../../../../components/flash/nand/semc;../../../../../../../middleware/dhara/dhara;../../../../../../../middleware/dhara/ecc;../../../../../../../middleware/fatfs/source/fsl_nand_disk;../../../../../../../middleware/fatfs/source;../../../../../../../devices/MIMXRT1176/utilities;../../../../../../../devices/MIMXRT1176/drivers;../../../../../../../devices/MIMXRT1176;../../../../../../../CMSIS/Include;../../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1176/xip;../../../../../xip;../../../../../../../devices/MIMXRT1176/drivers/cm4;../../../../../../../components/flash/nand;../../../../../../../rtos/freertos/freertos_kernel/include;../../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F</IncludePath>
+              <IncludePath>../..;..;../../../../../../../components/flash/nand/semc;../../../../../../../middleware/dhara/dhara;../../../../../../../middleware/dhara/ecc;../../../../../../../middleware/fatfs/source/fsl_nand_disk;../../../../../../../middleware/fatfs/source;../../../../../../../devices/MIMXRT1176/utilities;../../../../../../../devices/MIMXRT1176/drivers;../../../../../../../devices/MIMXRT1176;../../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1176/xip;../../../../../xip;../../../../../../../devices/MIMXRT1176/drivers/cm4;../../../../../../../components/flash/nand;../../../../../../../CMSIS/Core/Include;../../../../../../../rtos/freertos/freertos_kernel/include;../../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -3710,7 +3695,7 @@
             <ScatterFile>MIMXRT1176xxxxx_cm4_flexspi_nor.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --predefine="-D__stack_size__=0x1000" --predefine="-D__heap_size__=0x1000"</Misc>
+            <Misc>--remove --entry=Reset_Handler --predefine="-D__stack_size__=0x1000" --predefine="-D__heap_size__=0x1000"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -3803,6 +3788,16 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>evkmimxrt1170</GroupName>
+          <Files>
+            <File>
+              <FileName>evkmimxrt1170_connect_cm4_cm4side.jlinkscript</FileName>
+              <FileType>5</FileType>
+              <FilePath>../evkmimxrt1170_connect_cm4_cm4side.jlinkscript</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>nand_flash</GroupName>
           <Files>
             <File>
@@ -3883,16 +3878,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>dhara</GroupName>
-          <Files>
-            <File>
-              <FileName>ChangeLogKSDK.txt</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/dhara/ChangeLogKSDK.txt</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>freertos/freertos_kernel/portable/MemMang</GroupName>
           <Files>
             <File>
@@ -3911,14 +3896,14 @@
           <GroupName>fatfs/source/fsl_nand_disk</GroupName>
           <Files>
             <File>
-              <FileName>fsl_nand_disk.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/fatfs/source/fsl_nand_disk/fsl_nand_disk.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_nand_disk.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../middleware/fatfs/source/fsl_nand_disk/fsl_nand_disk.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_nand_disk.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/fatfs/source/fsl_nand_disk/fsl_nand_disk.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -3931,9 +3916,19 @@
               <FilePath>../../../../../../../middleware/fatfs/source/diskio.c</FilePath>
             </File>
             <File>
+              <FileName>diskio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/fatfs/source/diskio.h</FilePath>
+            </File>
+            <File>
               <FileName>ff.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../middleware/fatfs/source/ff.c</FilePath>
+            </File>
+            <File>
+              <FileName>ff.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/fatfs/source/ff.h</FilePath>
             </File>
             <File>
               <FileName>ffsystem.c</FileName>
@@ -3944,16 +3939,6 @@
               <FileName>ffunicode.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../middleware/fatfs/source/ffunicode.c</FilePath>
-            </File>
-            <File>
-              <FileName>diskio.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/fatfs/source/diskio.h</FilePath>
-            </File>
-            <File>
-              <FileName>ff.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/fatfs/source/ff.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -4024,6 +4009,16 @@
               <FileName>fsl_common.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_common.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_common_arm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/drivers/fsl_common_arm.h</FilePath>
             </File>
             <File>
               <FileName>fsl_lpuart.h</FileName>
@@ -4133,71 +4128,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>CMSIS</GroupName>
-          <Files>
-            <File>
-              <FileName>core_cm4.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Include/core_cm4.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_armcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Include/cmsis_armcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_armclang.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Include/cmsis_armclang.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_armclang_ltm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Include/cmsis_armclang_ltm.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Include/cmsis_gcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_compiler.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_version.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Include/cmsis_version.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_iccarm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Include/cmsis_iccarm.h</FilePath>
-            </File>
-            <File>
-              <FileName>arm_common_tables.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Include/arm_common_tables.h</FilePath>
-            </File>
-            <File>
-              <FileName>arm_const_structs.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Include/arm_const_structs.h</FilePath>
-            </File>
-            <File>
-              <FileName>arm_math.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Include/arm_math.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>component/uart</GroupName>
           <Files>
             <File>
@@ -4293,17 +4223,67 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos/freertos_kernel</GroupName>
+          <GroupName>CMSIS</GroupName>
           <Files>
             <File>
-              <FileName>event_groups.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../rtos/freertos/freertos_kernel/event_groups.c</FilePath>
+              <FileName>cmsis_armcc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
             </File>
+            <File>
+              <FileName>cmsis_armclang.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_armclang_ltm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_armclang_ltm.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_compiler.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_gcc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_iccarm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_version.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_version.h</FilePath>
+            </File>
+            <File>
+              <FileName>core_cm4.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Core/Include/core_cm4.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Core/Include/mpu_armv7.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>freertos/freertos_kernel</GroupName>
+          <Files>
             <File>
               <FileName>croutine.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../rtos/freertos/freertos_kernel/croutine.c</FilePath>
+            </File>
+            <File>
+              <FileName>event_groups.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../rtos/freertos/freertos_kernel/event_groups.c</FilePath>
             </File>
             <File>
               <FileName>list.c</FileName>
@@ -4336,19 +4316,14 @@
           <GroupName>freertos/freertos_kernel/include</GroupName>
           <Files>
             <File>
-              <FileName>croutine.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../rtos/freertos/freertos_kernel/include/croutine.h</FilePath>
-            </File>
-            <File>
-              <FileName>StackMacros.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../rtos/freertos/freertos_kernel/include/StackMacros.h</FilePath>
-            </File>
-            <File>
               <FileName>atomic.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../rtos/freertos/freertos_kernel/include/atomic.h</FilePath>
+            </File>
+            <File>
+              <FileName>croutine.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../rtos/freertos/freertos_kernel/include/croutine.h</FilePath>
             </File>
             <File>
               <FileName>deprecated_definitions.h</FileName>
@@ -4409,6 +4384,11 @@
               <FileName>stack_macros.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../rtos/freertos/freertos_kernel/include/stack_macros.h</FilePath>
+            </File>
+            <File>
+              <FileName>StackMacros.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../rtos/freertos/freertos_kernel/include/StackMacros.h</FilePath>
             </File>
             <File>
               <FileName>stream_buffer.h</FileName>

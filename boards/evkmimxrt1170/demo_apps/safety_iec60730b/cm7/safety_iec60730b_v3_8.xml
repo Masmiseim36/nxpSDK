@@ -8,7 +8,6 @@
     <definition extID="platform.drivers.lpuart.MIMXRT1176"/>
     <definition extID="platform.drivers.igpio.MIMXRT1176"/>
     <definition extID="platform.devices.MIMXRT1176_CMSIS.MIMXRT1176"/>
-    <definition extID="platform.Include_core_cm7.MIMXRT1176"/>
     <definition extID="platform.drivers.iomuxc.MIMXRT1176"/>
     <definition extID="platform.utilities.assert.MIMXRT1176"/>
     <definition extID="utility.debug_console.MIMXRT1176"/>
@@ -19,12 +18,10 @@
     <definition extID="component.lists.MIMXRT1176"/>
     <definition extID="component.serial_manager_uart.MIMXRT1176"/>
     <definition extID="component.lpuart_adapter.MIMXRT1176"/>
-    <definition extID="platform.drivers.rtwdog.MIMXRT1176"/>
     <definition extID="platform.drivers.dcdc_soc.MIMXRT1176"/>
     <definition extID="platform.utilities.misc_utilities.MIMXRT1176"/>
     <definition extID="platform.drivers.anatop_ai.MIMXRT1176"/>
-    <definition extID="platform.Include_common.MIMXRT1176"/>
-    <definition extID="platform.Include_dsp.MIMXRT1176"/>
+    <definition extID="CMSIS_Include_core_cm.MIMXRT1176"/>
     <definition extID="iar"/>
     <definition extID="mdk"/>
     <definition extID="mcuxpresso"/>
@@ -32,7 +29,7 @@
     <definition extID="com.crt.advproject.config.exe.debug"/>
     <definition extID="com.crt.advproject.config.exe.release"/>
   </externalDefinitions>
-  <example id="evkmimxrt1170_safety_iec60730b" name="safety_iec60730b" device_core="cm7_MIMXRT1176xxxxx" dependency="middleware.safety.MIMXRT1176 platform.drivers.clock.MIMXRT1176 platform.drivers.common.MIMXRT1176 platform.drivers.lpuart.MIMXRT1176 platform.drivers.igpio.MIMXRT1176 platform.devices.MIMXRT1176_CMSIS.MIMXRT1176 platform.Include_core_cm7.MIMXRT1176 platform.drivers.iomuxc.MIMXRT1176 platform.utilities.assert.MIMXRT1176 utility.debug_console.MIMXRT1176 middleware.fmstr.MIMXRT1176 middleware.fmstr.platform_gen32le.MIMXRT1176 platform.drivers.pmu_1.MIMXRT1176 component.serial_manager.MIMXRT1176 component.lists.MIMXRT1176 component.serial_manager_uart.MIMXRT1176 component.lpuart_adapter.MIMXRT1176 platform.drivers.rtwdog.MIMXRT1176 platform.drivers.dcdc_soc.MIMXRT1176 platform.utilities.misc_utilities.MIMXRT1176 platform.drivers.anatop_ai.MIMXRT1176 platform.Include_common.MIMXRT1176 platform.Include_dsp.MIMXRT1176" category="demo_apps">
+  <example id="evkmimxrt1170_safety_iec60730b" name="safety_iec60730b" device_core="cm7_MIMXRT1176xxxxx" dependency="middleware.safety.MIMXRT1176 platform.drivers.clock.MIMXRT1176 platform.drivers.common.MIMXRT1176 platform.drivers.lpuart.MIMXRT1176 platform.drivers.igpio.MIMXRT1176 platform.devices.MIMXRT1176_CMSIS.MIMXRT1176 platform.drivers.iomuxc.MIMXRT1176 platform.utilities.assert.MIMXRT1176 utility.debug_console.MIMXRT1176 middleware.fmstr.MIMXRT1176 middleware.fmstr.platform_gen32le.MIMXRT1176 platform.drivers.pmu_1.MIMXRT1176 component.serial_manager.MIMXRT1176 component.lists.MIMXRT1176 component.serial_manager_uart.MIMXRT1176 component.lpuart_adapter.MIMXRT1176 platform.drivers.dcdc_soc.MIMXRT1176 platform.utilities.misc_utilities.MIMXRT1176 platform.drivers.anatop_ai.MIMXRT1176 CMSIS_Include_core_cm.MIMXRT1176" category="demo_apps">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -45,7 +42,7 @@
     <toolchainSettings>
       <toolchainSetting id_refs="com.nxp.mcuxpresso">
         <buildSteps>
-          <postBuildStep>arm-none-eabi-objcopy -v -O ihex "${BuildArtifactFileName}" "${BuildArtifactFileBaseName}.hex"; ${ProjDirPath}/linker/crc_hex.bat -..\\\\${ConfigName}\\evkmimxrt1170_safety_iec60730b.hex -..\\\\${ConfigName}\\evkmimxrt1170_safety_iec60730b_crc.hex -..\\tools\\srecord\\srec_cat -CRC32</postBuildStep>
+          <postBuildStep>arm-none-eabi-objcopy -v -O ihex "${BuildArtifactFileName}" "${BuildArtifactFileBaseName}.hex"; ${ProjDirPath}/crc_hex.bat -${ConfigName}/${BuildArtifactFileBaseName}.hex -${ConfigName}/${BuildArtifactFileBaseName}_crc.hex -tools\\srecord\\srec_cat.exe -CRC32</postBuildStep>
         </buildSteps>
         <option id="gnu.c.compiler.option.preprocessor.def.symbols" type="stringList">
           <value>CPU_MIMXRT1176DVMAA_cm7</value>
@@ -56,6 +53,7 @@
           <value>XIP_BOOT_HEADER_ENABLE=1</value>
           <value>SKIP_SYSCLK_INIT</value>
           <value>SERIAL_PORT_TYPE_UART=1</value>
+          <value>MCUXPRESSO_SDK</value>
         </option>
         <option id="com.crt.advproject.gas.fpu" type="enum">
           <value>com.crt.advproject.gas.fpu.fpv5dp.hard</value>
@@ -104,6 +102,7 @@
       <include_path path="boards/evkmimxrt1170/demo_apps/safety_iec60730b/cm7" project_relative_path="board" type="c_include"/>
       <include_path path="middleware/safety_iec60730b/boards/evkmimxrt1170/xip" project_relative_path="device" type="c_include"/>
       <include_path path="boards/evkmimxrt1170/demo_apps/safety_iec60730b/cm7/mdk/linker" project_relative_path="linker" toolchain="mdk" type="c_include"/>
+      <include_path path="MIMXRT1176" project_relative_path="MIMXRT1176" type="c_include"/>
       <include_path path="middleware/safety_iec60730b/boards/common/cm4_cm7/startup/cm7" project_relative_path="." type="asm_include"/>
     </include_paths>
     <source path="boards/evkmimxrt1170/demo_apps/safety_iec60730b/cm7/iar" project_relative_path="./" type="workspace" toolchain="iar">
@@ -128,11 +127,8 @@
     <source path="boards/evkmimxrt1170/demo_apps/safety_iec60730b/cm7" project_relative_path="board" type="c_include">
       <files mask="pin_mux.h"/>
     </source>
-    <source path="boards/evkmimxrt1170/demo_apps/safety_iec60730b/cm7/mdk" project_relative_path="boards/common" type="configuration" toolchain="mdk">
-      <files mask="debug.ini" hidden="true"/>
-    </source>
-    <source path="middleware/safety_iec60730b/tools/crc" project_relative_path="linker" type="script" toolchain="mdk mcuxpresso">
-      <files mask="crc_hex.bat"/>
+    <source path="middleware/safety_iec60730b/tools/crc" project_relative_path="." type="script" toolchain="mdk mcuxpresso">
+      <files mask="crc_hex.bat" hidden="true"/>
     </source>
     <source path="tools/srecord" project_relative_path="tools/srecord" type="other" toolchain="mdk mcuxpresso">
       <files mask="srec_cat.exe" hidden="true"/>
@@ -165,12 +161,12 @@
       <files mask="vectors_mcux.h"/>
     </source>
     <source path="boards/evkmimxrt1170/demo_apps/safety_iec60730b/cm7" project_relative_path="board" type="src">
-      <files mask="clock_config.c"/>
       <files mask="board.c"/>
+      <files mask="clock_config.c"/>
     </source>
     <source path="boards/evkmimxrt1170/demo_apps/safety_iec60730b/cm7" project_relative_path="board" type="c_include">
-      <files mask="clock_config.h"/>
       <files mask="board.h"/>
+      <files mask="clock_config.h"/>
     </source>
     <source path="boards/evkmimxrt1170/demo_apps/safety_iec60730b/cm7/iar/linker" project_relative_path="linker" type="linker" toolchain="iar">
       <files mask="evkmimxrt1170_safety_flash.icf"/>
@@ -192,9 +188,6 @@
       <files mask="evkmimxrt1170_flexspi_nor_config.h"/>
       <files mask="fsl_flexspi_nor_boot.h"/>
     </source>
-    <source path="boards/evkmimxrt1170/demo_apps/safety_iec60730b/cm7/mdk" project_relative_path="boards/evkmimxrt1170/linker/mdk" type="configuration" toolchain="mdk">
-      <files mask="flash.ini" hidden="true"/>
-    </source>
     <source path="boards/evkmimxrt1170/demo_apps/safety_iec60730b/cm7/mdk/linker" project_relative_path="linker" type="c_include" toolchain="mdk">
       <files mask="linker_config.h"/>
     </source>
@@ -207,6 +200,12 @@
     <source path="boards/evkmimxrt1170/demo_apps/safety_iec60730b/cm7" project_relative_path="source" type="src">
       <files mask="safety_test_items.c"/>
       <files mask="project_setup_evkmimxrt1170.c"/>
+    </source>
+    <source path="MIMXRT1176" project_relative_path="MIMXRT1176" type="src">
+      <files mask="system_MIMXRT1176_cm7.c"/>
+    </source>
+    <source path="MIMXRT1176" project_relative_path="MIMXRT1176" type="c_include">
+      <files mask="system_MIMXRT1176_cm7.h"/>
     </source>
     <source path="boards/evkmimxrt1170/demo_apps/safety_iec60730b/cm7" project_relative_path="source" type="src">
       <files mask="safety_cm7_imxrt.c"/>

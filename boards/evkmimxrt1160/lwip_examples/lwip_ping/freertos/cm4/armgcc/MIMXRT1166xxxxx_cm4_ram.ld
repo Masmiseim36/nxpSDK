@@ -30,7 +30,7 @@ ENTRY(Reset_Handler)
 HEAP_SIZE  = DEFINED(__heap_size__)  ? __heap_size__  : 25600;
 STACK_SIZE = DEFINED(__stack_size__) ? __stack_size__ : 2048;
 RPMSG_SHMEM_SIZE = DEFINED(__use_shmem__) ? 0x2000 : 0;
-NCACHE_HEAP_START = DEFINED(__heap_noncacheable__) ? 0x20250000 - HEAP_SIZE : 0x20240000 - HEAP_SIZE;
+NCACHE_HEAP_START = DEFINED(__heap_noncacheable__) ? 0x20250000 - HEAP_SIZE : 0x20020000 - HEAP_SIZE;
 NCACHE_HEAP_SIZE  = DEFINED(__heap_noncacheable__) ? HEAP_SIZE : 0x0000;
 
 /* Specify the memory areas */
@@ -38,7 +38,7 @@ MEMORY
 {
   m_interrupts          (RX)  : ORIGIN = 0x1FFE0000, LENGTH = 0x00000400
   m_text                (RX)  : ORIGIN = 0x1FFE0400, LENGTH = 0x0001FC00
-  m_data                (RW)  : ORIGIN = 0x20220000, LENGTH = DEFINED(__heap_noncacheable__) ? 0x00020000 : 0x00020000 - HEAP_SIZE
+  m_data                (RW)  : ORIGIN = 0x20000000, LENGTH = DEFINED(__heap_noncacheable__) ? 0x00020000 : 0x00020000 - HEAP_SIZE
   m_ncache              (RW)  : ORIGIN = 0x20248000, LENGTH = DEFINED(__heap_noncacheable__) ? 0x00008000 - HEAP_SIZE : 0x00008000
   m_data2               (RW)  : ORIGIN = 0x20240000, LENGTH = 0x00008000
   rpmsg_sh_mem          (RW)  : ORIGIN = 0x202C0000, LENGTH = RPMSG_SHMEM_SIZE

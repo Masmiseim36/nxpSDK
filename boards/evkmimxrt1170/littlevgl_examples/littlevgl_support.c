@@ -7,7 +7,7 @@
 
 #include "littlevgl_support.h"
 #include "lvgl.h"
-#if defined(FSL_RTOS_FREE_RTOS)
+#if defined(SDK_OS_FREE_RTOS)
 #include "FreeRTOS.h"
 #include "semphr.h"
 #endif
@@ -47,15 +47,19 @@
 #define DEMO_CACHE_LINE_SIZE FSL_FEATURE_L1DCACHE_LINESIZE_BYTE
 #endif
 
-#if (DEMO_CACHE_LINE_SIZE > 0)
+#if (DEMO_CACHE_LINE_SIZE > FRAME_BUFFER_ALIGN)
 #define DEMO_FB_ALIGN DEMO_CACHE_LINE_SIZE
 #else
-#define DEMO_FB_ALIGN 4U
+#define DEMO_FB_ALIGN FRAME_BUFFER_ALIGN
 #endif
 
-#define DEMO_FB_SIZE                                                                                      \
-    (((DEMO_BUFFER_WIDTH * DEMO_BUFFER_HEIGHT * DEMO_BUFFER_BYTE_PER_PIXEL) + DEMO_CACHE_LINE_SIZE - 1) & \
-     ~(DEMO_CACHE_LINE_SIZE - 1))
+#if (LV_ATTRIBUTE_MEM_ALIGN_SIZE > DEMO_FB_ALIGN)
+#undef DEMO_FB_ALIGN
+#define DEMO_FB_ALIGN LV_ATTRIBUTE_MEM_ALIGN_SIZE
+#endif
+
+#define DEMO_FB_SIZE \
+    (((DEMO_BUFFER_WIDTH * DEMO_BUFFER_HEIGHT * LCD_FB_BYTE_PER_PIXEL) + DEMO_FB_ALIGN - 1) & ~(DEMO_FB_ALIGN - 1))
 
 #if LV_USE_GPU && LV_USE_GPU_NXP_VG_LITE
 #define VG_LITE_MAX_CONTIGUOUS_SIZE 0x200000
@@ -66,6 +70,10 @@
  * Prototypes
  ******************************************************************************/
 static void DEMO_FlushDisplay(lv_disp_drv_t *disp_drv, const lv_area_t *area, lv_color_t *color_p);
+
+#if LV_USE_GPU
+static void DEMO_CleanInvalidateCache(lv_disp_drv_t *disp_drv);
+#endif
 
 static void DEMO_InitTouch(void);
 
@@ -88,7 +96,7 @@ static status_t BOARD_InitVGliteClock(void);
  ******************************************************************************/
 SDK_ALIGN(static uint8_t s_frameBuffer[2][DEMO_FB_SIZE], DEMO_FB_ALIGN);
 
-#if defined(FSL_RTOS_FREE_RTOS)
+#if defined(SDK_OS_FREE_RTOS)
 static SemaphoreHandle_t s_transferDone;
 #else
 static volatile bool s_transferDone;
@@ -145,7 +153,7 @@ void lv_port_disp_init(void)
     static lv_disp_buf_t disp_buf;
 
     memset(s_frameBuffer, 0, sizeof(s_frameBuffer));
-    lv_disp_buf_init(&disp_buf, s_frameBuffer[0], s_frameBuffer[1], LCD_WIDTH * LCD_HEIGHT);
+    lv_disp_buf_init(&disp_buf, s_frameBuffer[0], s_frameBuffer[1], LV_HOR_RES_MAX * LV_VER_RES_MAX);
 
     status_t status;
     dc_fb_info_t fbInfo;
@@ -177,7 +185,7 @@ void lv_port_disp_init(void)
 
     g_dc.ops->setCallback(&g_dc, 0, DEMO_BufferSwitchOffCallback, NULL);
 
-#if defined(FSL_RTOS_FREE_RTOS)
+#if defined(SDK_OS_FREE_RTOS)
     s_transferDone = xSemaphoreCreateBinary();
     if (NULL == s_transferDone)
     {
@@ -194,7 +202,7 @@ void lv_port_disp_init(void)
     /* Wait for frame buffer sent to display controller video memory. */
     if ((g_dc.ops->getProperty(&g_dc) & kDC_FB_ReserveFrameBuffer) == 0)
     {
-#if defined(FSL_RTOS_FREE_RTOS)
+#if defined(SDK_OS_FREE_RTOS)
         if (xSemaphoreTake(s_transferDone, portMAX_DELAY) != pdTRUE)
         {
             PRINTF("Wait semaphore error: s_transferDone\r\n");
@@ -219,11 +227,15 @@ void lv_port_disp_init(void)
     /*Set up the functions to access to your display*/
 
     /*Set the resolution of the display*/
-    disp_drv.hor_res = LCD_WIDTH;
-    disp_drv.ver_res = LCD_HEIGHT;
+    disp_drv.hor_res = LV_HOR_RES_MAX;
+    disp_drv.ver_res = LV_VER_RES_MAX;
 
     /*Used to copy the buffer's content to the display*/
     disp_drv.flush_cb = DEMO_FlushDisplay;
+
+#if LV_USE_GPU
+    disp_drv.clean_dcache_cb = DEMO_CleanInvalidateCache;
+#endif
 
     /*Set a display buffer*/
     disp_drv.buffer = &disp_buf;
@@ -234,11 +246,19 @@ void lv_port_disp_init(void)
 #if LV_USE_GPU && LV_USE_GPU_NXP_PXP
     lv_gpu_nxp_pxp_init(&pxp_default_cfg);
 #endif
+
+#if LV_USE_GPU && LV_USE_GPU_NXP_VG_LITE
+    if (vg_lite_init(64, 64) != VG_LITE_SUCCESS) {
+        PRINTF("VGLite init error. STOP.");
+        vg_lite_close();
+        assert(0);
+    }
+#endif
 }
 
 static void DEMO_BufferSwitchOffCallback(void *param, void *switchOffBuffer)
 {
-#if defined(FSL_RTOS_FREE_RTOS)
+#if defined(SDK_OS_FREE_RTOS)
     BaseType_t taskAwake = pdFALSE;
 
     xSemaphoreGiveFromISR(s_transferDone, &taskAwake);
@@ -248,16 +268,27 @@ static void DEMO_BufferSwitchOffCallback(void *param, void *switchOffBuffer)
 #endif
 }
 
+#if LV_USE_GPU
+static void DEMO_CleanInvalidateCache(lv_disp_drv_t *disp_drv)
+{
+#if __CORTEX_M == 4
+    L1CACHE_CleanInvalidateSystemCache();
+#else
+    SCB_CleanInvalidateDCache();
+#endif
+}
+#endif
+
 static void DEMO_FlushDisplay(lv_disp_drv_t *disp_drv, const lv_area_t *area, lv_color_t *color_p)
 {
-#if !defined(FSL_RTOS_FREE_RTOS)
+#if !defined(SDK_OS_FREE_RTOS)
     s_transferDone = false;
 #endif
 
     DCACHE_CleanInvalidateByRange((uint32_t)color_p, DEMO_FB_SIZE);
     g_dc.ops->setFrameBuffer(&g_dc, 0, (void *)color_p);
 
-#if defined(FSL_RTOS_FREE_RTOS)
+#if defined(SDK_OS_FREE_RTOS)
     if (xSemaphoreTake(s_transferDone, portMAX_DELAY) == pdTRUE)
     {
         /* IMPORTANT!!!
@@ -385,8 +416,8 @@ static status_t BOARD_InitVGliteClock(void)
 {
     const clock_root_config_t gc355ClockConfig = {
         .clockOff = false,
-        .mux      = 4, /*!< PLL_528. */
-        .div      = 1,
+        .mux      = kCLOCK_GC355_ClockRoot_MuxVideoPllOut,
+        .div      = 2,
     };
 
     CLOCK_SetRootClock(kCLOCK_Root_Gc355, &gc355ClockConfig);

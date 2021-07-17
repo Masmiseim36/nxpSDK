@@ -15,7 +15,7 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_SEMA4 SEMA4
+#define DEMO_SEMA4    SEMA4
 #define DEMO_PROC_NUM 1 /* Fixed value by system integration. */
 
 #define DEMO_CHECK(x)                                    \

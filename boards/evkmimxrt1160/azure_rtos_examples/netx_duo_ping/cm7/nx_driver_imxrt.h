@@ -212,6 +212,9 @@ typedef struct NX_DRIVER_INFORMATION_STRUCT
                                should expose its entry function as well as its interrupt handling function(s) here. All other
                                functions in the driver should have local scope, i.e., defined as static.  */
 
+/* Return the ENET MDIO interface clock frequency. Define it in board-related code. */
+uint32_t BOARD_GetMDIOClock(void);
+
 /* Define global driver entry function. */
 
 VOID  nx_driver_imx(NX_IP_DRIVER *driver_req_ptr);

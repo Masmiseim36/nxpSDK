@@ -1,6 +1,6 @@
 # CROSS COMPILER SETTING
 SET(CMAKE_SYSTEM_NAME Generic)
-CMAKE_MINIMUM_REQUIRED (VERSION 3.1.1)
+CMAKE_MINIMUM_REQUIRED (VERSION 3.10.0)
 
 # THE VERSION NUMBER
 SET (Tutorial_VERSION_MAJOR 1)
@@ -47,20 +47,17 @@ target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
 
 set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../../devices/MIMXRT1176
-    ${ProjDirPath}/../../../../../../CMSIS/Include
     ${ProjDirPath}/../../../../../../devices/MIMXRT1176/drivers
-    ${ProjDirPath}/../../../../../..
     ${ProjDirPath}/../../../../../../middleware/mcu-boot
     ${ProjDirPath}/../../../../../../middleware
     ${ProjDirPath}/../../../../../../middleware/usb
     ${ProjDirPath}/../../../../../../components/osa
+    ${ProjDirPath}/../../../../../../CMSIS/Core/Include
     ${ProjDirPath}/../../../../../../components/lists
 )
 
 # include modules
 include(device_MIMXRT1176_CMSIS_MIMXRT1176_cm7)
-
-include(CMSIS_Include_core_cm7_MIMXRT1176_cm7)
 
 include(driver_clock_MIMXRT1176_cm7)
 
@@ -78,6 +75,8 @@ include(middleware_mcu-boot_src_bm_usb_hid_MIMXRT1176_cm7)
 
 include(middleware_mcu-boot_bootsources_MIMXRT1176_cm7)
 
+include(middleware_mcu-boot_mem_sdmmc_MIMXRT1176_cm7)
+
 include(middleware_mcu-boot_MIMXRT1176_sources_MIMXRT1176_cm7)
 
 include(middleware_baremetal_MIMXRT1176_cm7)
@@ -87,6 +86,8 @@ include(middleware_usb_device_controller_driver_MIMXRT1176_cm7)
 include(component_osa_MIMXRT1176_cm7)
 
 include(middleware_usb_device_ehci_MIMXRT1176_cm7)
+
+include(middleware_mcu-boot_drv_semc_nand_MIMXRT1176_cm7)
 
 include(middleware_mcu-boot_src_startup_MIMXRT1176_cm7)
 
@@ -102,13 +103,13 @@ include(middleware_mcu-boot_drv_ocotp_MIMXRT1176_cm7)
 
 include(middleware_mcu-boot_mem_spi_nor_eeprom_MIMXRT1176_cm7)
 
-include(CMSIS_Include_common_MIMXRT1176_cm7)
-
-include(CMSIS_Include_dsp_MIMXRT1176_cm7)
+include(CMSIS_Include_core_cm_MIMXRT1176_cm7)
 
 include(driver_common_MIMXRT1176_cm7)
 
 include(driver_anatop_ai_MIMXRT1176_cm7)
+
+include(middleware_mcu-boot_drv_sdmmc_MIMXRT1176_cm7)
 
 include(component_lists_MIMXRT1176_cm7)
 

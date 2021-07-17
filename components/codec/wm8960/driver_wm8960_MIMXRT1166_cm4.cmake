@@ -1,19 +1,17 @@
-if(NOT DRIVER_WM8960_MIMXRT1166_cm4_INCLUDED)
-    
-    set(DRIVER_WM8960_MIMXRT1166_cm4_INCLUDED true CACHE BOOL "driver_wm8960 component is included.")
+include_guard(GLOBAL)
+message("driver_wm8960 component is included.")
 
-    target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
-        ${CMAKE_CURRENT_LIST_DIR}/fsl_wm8960.c
-    )
-
-
-    target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
-        ${CMAKE_CURRENT_LIST_DIR}/.
-    )
+target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
+    ${CMAKE_CURRENT_LIST_DIR}/fsl_wm8960.c
+)
 
 
-    include(driver_common_MIMXRT1166_cm4)
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
+    ${CMAKE_CURRENT_LIST_DIR}/.
+)
 
-    include(component_codec_i2c_MIMXRT1166_cm4)
 
-endif()
+include(driver_common_MIMXRT1166_cm4)
+
+include(component_codec_i2c_MIMXRT1166_cm4)
+

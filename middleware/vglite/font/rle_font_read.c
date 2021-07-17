@@ -305,7 +305,7 @@ vg_lite_font_t vg_lite_find_font(
     char tmp_data;
     int font_found = 0;
     int end_pos = 0; /* End position of font name */
-    char *font_name = '\0';
+    char *font_name;
     /*
     printf("Font params: [%s],%d, %d, %d, %d\n",
            font_name_list,

@@ -1,15 +1,15 @@
 Overview
 ========
-The mbdedTLS Benchmark demo application performs cryptographic algorithm benchmarking and prints results to the
+The mbedTLS Benchmark demo application performs cryptographic algorithm benchmarking and prints results to the
 terminal.
 
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.9
-- Keil MDK  5.33
-- GCC ARM Embedded  9.3.1
-- MCUXpresso  11.3.1
+- IAR embedded Workbench  9.10.2
+- Keil MDK  5.34
+- GCC ARM Embedded  10.2.1
+- MCUXpresso  11.4.0
 
 Hardware requirements
 =====================
@@ -46,54 +46,53 @@ Running the demo
 ================
 When the demo runs successfully, which takes a couple of minutes, the terminal displays similar information like the following:
 
-mbedTLS version 2.12.0
-fsys=120000000
+mbedTLS version 2.26.0
+fsys=250105263
 Using following implementations:
-  SHA: MMCAU HW accelerated
-  AES: MMCAU HW accelerated
-  AES GCM: MMCAU HW accelerated
-  DES: MMCAU HW accelerated
-  Asymmetric encryption: Software implementation
+  SHA: HASHCRYPT HW accelerated
+  AES: HASHCRYPT HW accelerated
+  AES GCM: Software implementation
+  DES: Software implementation
+  Asymmetric cryptography: CASPER HW accelerated ECC256/384/521 and RSA verify
 
-
-  MD5                      :  6505.98 KB/s,   17.62 cycles/byte
-  SHA-1                    :  3688.66 KB/s,   31.38 cycles/byte
-  SHA-256                  :  2450.96 KB/s,   47.43 cycles/byte
-  SHA-512                  :  451.70 KB/s,  259.62 cycles/byte
-  3DES                     :  849.94 KB/s,  137.65 cycles/byte
-  DES                      :  1740.01 KB/s,   66.99 cycles/byte
-  AES-CBC-128              :  2099.88 KB/s,   55.42 cycles/byte
-  AES-CBC-192              :  1999.21 KB/s,   58.24 cycles/byte
-  AES-CBC-256              :  1917.44 KB/s,   60.74 cycles/byte
-  AES-GCM-128              :  518.11 KB/s,  226.22 cycles/byte
-  AES-GCM-192              :  511.61 KB/s,  229.08 cycles/byte
-  AES-GCM-256              :  505.44 KB/s,  231.92 cycles/byte
-  AES-CCM-128              :  699.82 KB/s,  167.29 cycles/byte
-  AES-CCM-192              :  676.79 KB/s,  173.01 cycles/byte
-  AES-CCM-256              :  655.23 KB/s,  178.73 cycles/byte
-  CTR_DRBG (NOPR)          :  2181.05 KB/s,   53.36 cycles/byte
-  CTR_DRBG (PR)            :  1484.93 KB/s,   78.58 cycles/byte
-  HMAC_DRBG SHA-1 (NOPR)   :  244.85 KB/s,  480.17 cycles/byte
-  HMAC_DRBG SHA-1 (PR)     :  226.67 KB/s,  518.88 cycles/byte
-  HMAC_DRBG SHA-256 (NOPR) :  268.80 KB/s,  437.21 cycles/byte
-  HMAC_DRBG SHA-256 (PR)   :  235.97 KB/s,  498.34 cycles/byte
-  RSA-1024                 :   94.00  public/s
-  RSA-1024                 :    3.00 private/s
-  DHE-2048                 :    0.18 handshake/s
-  DH-2048                  :    0.18 handshake/s
-  ECDSA-secp384r1          :    1.67 sign/s
-  ECDSA-secp256r1          :    2.67 sign/s
-  ECDSA-secp224r1          :    4.33 sign/s
-  ECDSA-secp192r1          :    5.33 sign/s
-  ECDSA-secp384r1          :    1.00 verify/s
-  ECDSA-secp256r1          :    1.67 verify/s
-  ECDSA-secp224r1          :    2.33 verify/s
-  ECDSA-secp192r1          :    3.00 verify/s
-  ECDHE-secp384r1          :    1.00 handshake/s
-  ECDHE-secp256r1          :    1.67 handshake/s
-  ECDHE-secp224r1          :    2.67 handshake/s
-  ECDHE-secp192r1          :    3.33 handshake/s
-  ECDH-secp384r1           :    2.00 handshake/s
-  ECDH-secp256r1           :    3.00 handshake/s
-  ECDH-secp224r1           :    4.67 handshake/s
-  ECDH-secp192r1           :    6.00 handshake/s
+  MD5                      :  13871.43 KB/s,   17.33 cycles/byte
+  SHA-1                    :  95852.80 KB/s,    2.27 cycles/byte
+  SHA-256                  :  104942.33 KB/s,    2.05 cycles/byte
+  SHA-512                  :  2016.78 KB/s,  120.89 cycles/byte
+  3DES                     :  871.28 KB/s,  280.37 cycles/byte
+  DES                      :  2118.32 KB/s,  115.08 cycles/byte
+  AES-CBC-128              :  77563.50 KB/s,    2.87 cycles/byte
+  AES-CBC-192              :  66632.58 KB/s,    3.39 cycles/byte
+  AES-CBC-256              :  58500.90 KB/s,    3.90 cycles/byte
+  AES-GCM-128              :  2096.09 KB/s,  116.30 cycles/byte
+  AES-GCM-192              :  2066.84 KB/s,  117.95 cycles/byte
+  AES-GCM-256              :  2042.72 KB/s,  119.35 cycles/byte
+  AES-CCM-128              :  3942.24 KB/s,   61.69 cycles/byte
+  AES-CCM-192              :  3742.94 KB/s,   64.99 cycles/byte
+  AES-CCM-256              :  3589.41 KB/s,   67.79 cycles/byte
+  Poly1305                 :  23583.22 KB/s,   10.08 cycles/byte
+  CTR_DRBG (NOPR)          :  10029.10 KB/s,   24.08 cycles/byte
+  CTR_DRBG (PR)            :  6888.67 KB/s,   35.18 cycles/byte
+  HMAC_DRBG SHA-1 (NOPR)   :  2396.60 KB/s,  101.67 cycles/byte
+  HMAC_DRBG SHA-1 (PR)     :  2191.93 KB/s,  111.20 cycles/byte
+  HMAC_DRBG SHA-256 (NOPR) :  3152.89 KB/s,   77.21 cycles/byte
+  HMAC_DRBG SHA-256 (PR)   :  3152.90 KB/s,   77.21 cycles/byte
+  RSA-1024                 :  1636.33  public/s
+  RSA-1024                 :   13.00 private/s
+  DHE-2048                 :    0.60 handshake/s
+  DH-2048                  :    1.00 handshake/s
+  ECDSA-secp521r1          :   11.33 sign/s
+  ECDSA-secp384r1          :   17.67 sign/s
+  ECDSA-secp256r1          :   37.67 sign/s
+  ECDSA-secp521r1          :    8.33 verify/s
+  ECDSA-secp384r1          :   16.67 verify/s
+  ECDSA-secp256r1          :   35.67 verify/s
+  ECDHE-secp521r1          :    6.67 handshake/s
+  ECDHE-secp384r1          :   10.33 handshake/s
+  ECDHE-secp256r1          :   22.00 handshake/s
+  ECDH-secp521r1           :   12.67 handshake/s
+  ECDH-secp384r1           :   20.00 handshake/s
+  ECDH-secp256r1           :   43.33 handshake/s
+  ECDHE-secp521r1          :    3.67 full handshake/s
+  ECDHE-secp384r1          :    5.33 full handshake/s
+  ECDHE-secp256r1          :   11.33 full handshake/s

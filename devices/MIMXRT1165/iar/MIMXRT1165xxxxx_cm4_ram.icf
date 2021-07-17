@@ -30,8 +30,8 @@ define symbol m_interrupts_end         = 0x1FFE03FF;
 define symbol m_text_start             = 0x1FFE0400;
 define symbol m_text_end               = 0x1FFFFFFF;
 
-define symbol m_data_start             = 0x20220000;
-define symbol m_data_end               = 0x2023FFFF;
+define symbol m_data_start             = 0x20000000;
+define symbol m_data_end               = 0x2001FFFF;
 
 if (isdefinedsymbol(__use_shmem__)) {
   define exported symbol rpmsg_sh_mem_start      = 0x202C0000;

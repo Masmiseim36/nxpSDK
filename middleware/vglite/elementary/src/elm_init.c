@@ -120,7 +120,7 @@ static void _terminate_elm(void)
 
  @return none
  */
-BOOL ElmInitalize(uint32_t width, uint32_t height)
+BOOL ElmInitialize(uint32_t width, uint32_t height)
 {
     BOOL result = TRUE;
 

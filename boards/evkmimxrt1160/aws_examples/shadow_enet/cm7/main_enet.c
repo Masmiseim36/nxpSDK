@@ -114,11 +114,11 @@
  ******************************************************************************/
 void BOARD_InitNetwork(void);
 /* Declaration of demo function. */
-extern int RunShadowDemo(bool awsIotMqttMode,
-                         const char *pIdentifier,
-                         void *pNetworkServerInfo,
-                         void *pNetworkCredentialInfo,
-                         const IotNetworkInterface_t *pNetworkInterface);
+extern int RunDeviceShadowDemo(bool awsIotMqttMode,
+                               const char *pIdentifier,
+                               void *pNetworkServerInfo,
+                               void *pNetworkCredentialInfo,
+                               const IotNetworkInterface_t *pNetworkInterface);
 
 extern int initNetwork(void);
 
@@ -129,9 +129,6 @@ static mdio_handle_t mdioHandle = {.ops = &EXAMPLE_MDIO_OPS};
 static phy_handle_t phyHandle   = {.phyAddr = EXAMPLE_PHY_ADDRESS, .mdioHandle = &mdioHandle, .ops = &EXAMPLE_PHY_OPS};
 
 struct netif netif;
-#if defined(FSL_FEATURE_SOC_LPC_ENET_COUNT) && (FSL_FEATURE_SOC_LPC_ENET_COUNT > 0)
-mem_range_t non_dma_memory[] = NON_DMA_MEMORY_ARRAY;
-#endif /* FSL_FEATURE_SOC_LPC_ENET_COUNT */
 
 /*******************************************************************************
  * Code
@@ -142,9 +139,6 @@ int initNetwork(void)
     ethernetif_config_t enet_config = {
         .phyHandle  = &phyHandle,
         .macAddress = configMAC_ADDR,
-#if defined(FSL_FEATURE_SOC_LPC_ENET_COUNT) && (FSL_FEATURE_SOC_LPC_ENET_COUNT > 0)
-        .non_dma_memory = non_dma_memory,
-#endif /* FSL_FEATURE_SOC_LPC_ENET_COUNT */
     };
 
     mdioHandle.resource.csrClock_Hz = EXAMPLE_CLOCK_FREQ;
@@ -238,7 +232,7 @@ void vApplicationDaemonTaskStartupHook(void)
         else
         {
             static demoContext_t mqttDemoContext = {.networkTypes                = AWSIOT_NETWORK_TYPE_ETH,
-                                                    .demoFunction                = RunShadowDemo,
+                                                    .demoFunction                = RunDeviceShadowDemo,
                                                     .networkConnectedCallback    = NULL,
                                                     .networkDisconnectedCallback = NULL};
 

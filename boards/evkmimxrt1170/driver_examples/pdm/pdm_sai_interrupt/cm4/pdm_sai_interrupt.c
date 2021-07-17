@@ -228,7 +228,9 @@ int main(void)
 
     /* master clock configurations */
     BOARD_MasterClockConfig();
-
+#if defined DEMO_BOARD_CODEC_INIT
+    DEMO_BOARD_CODEC_INIT();
+#else
     if (CODEC_Init(&codecHandle, &boardCodecConfig) != kStatus_Success)
     {
         assert(false);
@@ -238,6 +240,7 @@ int main(void)
     {
         assert(false);
     }
+#endif
     /* Set up pdm */
     PDM_Init(DEMO_PDM, &pdmConfig);
     PDM_SetChannelConfig(DEMO_PDM, DEMO_PDM_ENABLE_CHANNEL_LEFT, &channelConfig);

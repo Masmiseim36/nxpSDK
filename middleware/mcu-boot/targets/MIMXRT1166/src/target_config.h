@@ -75,6 +75,9 @@ enum
     kIndexSemc = 6,
 };
 
+#define SEMC_MAX_CLK_FREQ kSemcClkFreq_200MHz
+#define SEMC_2ND_MAX_CLK_FREQ kSemcClkFreq_166MHz
+
 //!@brief IMXRT SOC System ID
 #define IMXRT_SOC_SYSTEM_ID (0x1170UL)
 

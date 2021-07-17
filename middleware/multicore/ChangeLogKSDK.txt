@@ -2,7 +2,24 @@
 @page middleware_log Middleware Change Log
 
 @section multicore Multicore SDK
-  The current version of Multicore SDK is 2.9.0.
+  The current version of Multicore SDK is 2.10.0.
+  - 2.10.0
+    - Multicore SDK component versions:
+      - embedded Remote Procedure Call (eRPC) v1.8.1
+      - eRPC generator (erpcgen) v.1.8.1
+      - Multicore Manager (MCMgr) v4.1.1
+      - RPMsg-Lite v3.1.2
+    - New features:
+      - eRPC: Fix misra erpc c, GitHub PR #158.
+      - eRPC: Allow conditional compilation of message_loggers and pre_post_action.
+      - eRPC: New i2c_slave_transport trasnport introduced.
+      - eRPC: (D)SPI slave transports updated to avoid busy loops in rtos environments.
+      - erpcgen: Re-implement EnumMember::hasValue(), GitHub PR #159.
+      - erpcgen: Fixing several misra issues in shim code, erpcgen and unit tests updated, GitHub PR #156.
+      - erpcgen: Fix bison file, GitHub PR #156. 
+      - RPMsg-Lite: Fixed incorrect description of the rpmsg_lite_get_endpoint_from_addr function.
+      - RPMsg-Lite: Updated RL_BUFFER_COUNT documentation.
+      - RPMsg-Lite: env_print macro adjusted to address MISRA 21.6 rule in MCUXpressoSDK projects.
   - 2.9.0
     - Multicore SDK component versions:
       - embedded Remote Procedure Call (eRPC) v1.8.0

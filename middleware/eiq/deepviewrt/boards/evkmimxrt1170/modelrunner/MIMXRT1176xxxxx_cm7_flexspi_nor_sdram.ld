@@ -27,8 +27,8 @@
 /* Entry Point */
 ENTRY(Reset_Handler)
 
-HEAP_SIZE  = DEFINED(__heap_size__)  ? __heap_size__  : 0x800000;
-STACK_SIZE = DEFINED(__stack_size__) ? __stack_size__ : 0x10000;
+HEAP_SIZE  = DEFINED(__heap_size__)  ? __heap_size__  : 0x400000;
+STACK_SIZE = DEFINED(__stack_size__) ? __stack_size__ : 0x8000;
 VECTOR_RAM_SIZE = DEFINED(__ram_vector_table__) ? 0x00000400 : 0;
 NCACHE_HEAP_START = DEFINED(__heap_noncacheable__) ? 0x20340000 - HEAP_SIZE : 0x84000000 - HEAP_SIZE;
 NCACHE_HEAP_SIZE  = DEFINED(__heap_noncacheable__) ? HEAP_SIZE : 0x0000;
@@ -261,10 +261,10 @@ SECTIONS
   {
     . = ALIGN(8);
     . += STACK_SIZE;
-  } > m_data
+  } > m_qacode
 
   /* Initializes stack on the end of block */
-  __StackTop   = ORIGIN(m_data) + LENGTH(m_data);
+  __StackTop   = ORIGIN(m_qacode) + LENGTH(m_qacode);
   __StackLimit = __StackTop - STACK_SIZE;
   PROVIDE(__stack = __StackTop);
 

@@ -58,7 +58,8 @@ SET(CMAKE_C_FLAGS_SDRAM_DEBUG " \
     -DgcdGC355_MEM_PRINT=0 \
     -DgcdGC355_PROFILER=0 \
     -DFSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1 \
-    -DFSL_RTOS_FREE_RTOS \
+    -DSDK_OS_FREE_RTOS \
+    -DMCUXPRESSO_SDK \
     -g \
     -O0 \
     -mcpu=cortex-m7 \
@@ -99,7 +100,8 @@ SET(CMAKE_C_FLAGS_SDRAM_RELEASE " \
     -DgcdGC355_MEM_PRINT=0 \
     -DgcdGC355_PROFILER=0 \
     -DFSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1 \
-    -DFSL_RTOS_FREE_RTOS \
+    -DSDK_OS_FREE_RTOS \
+    -DMCUXPRESSO_SDK \
     -Os \
     -mcpu=cortex-m7 \
     -Wall \
@@ -120,6 +122,7 @@ SET(CMAKE_CXX_FLAGS_SDRAM_DEBUG " \
     ${CMAKE_CXX_FLAGS_SDRAM_DEBUG} \
     -DDEBUG \
     -DCPU_MIMXRT1176DVMAA_cm7 \
+    -DMCUXPRESSO_SDK \
     -g \
     -O0 \
     -mcpu=cortex-m7 \
@@ -142,6 +145,7 @@ SET(CMAKE_CXX_FLAGS_SDRAM_RELEASE " \
     ${CMAKE_CXX_FLAGS_SDRAM_RELEASE} \
     -DNDEBUG \
     -DCPU_MIMXRT1176DVMAA_cm7 \
+    -DMCUXPRESSO_SDK \
     -Os \
     -mcpu=cortex-m7 \
     -Wall \
@@ -162,11 +166,12 @@ SET(CMAKE_CXX_FLAGS_SDRAM_RELEASE " \
 SET(CMAKE_EXE_LINKER_FLAGS_SDRAM_DEBUG " \
     ${CMAKE_EXE_LINKER_FLAGS_SDRAM_DEBUG} \
     -g \
-    --specs=rdimon.specs \
     -mcpu=cortex-m7 \
     -Wall \
     -mfloat-abi=hard \
     -mfpu=fpv5-d16 \
+    --specs=nano.specs \
+    --specs=nosys.specs \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
@@ -184,15 +189,17 @@ SET(CMAKE_EXE_LINKER_FLAGS_SDRAM_DEBUG " \
     muldefs \
     -Xlinker \
     -Map=output.map \
+    -Wl,--print-memory-usage \
     -T${ProjDirPath}/openvg_tiger_MIMXRT1176xxxxx_cm7_sdram_only.ld -static \
 ")
 SET(CMAKE_EXE_LINKER_FLAGS_SDRAM_RELEASE " \
     ${CMAKE_EXE_LINKER_FLAGS_SDRAM_RELEASE} \
-    --specs=rdimon.specs \
     -mcpu=cortex-m7 \
     -Wall \
     -mfloat-abi=hard \
     -mfpu=fpv5-d16 \
+    --specs=nano.specs \
+    --specs=nosys.specs \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
@@ -210,5 +217,6 @@ SET(CMAKE_EXE_LINKER_FLAGS_SDRAM_RELEASE " \
     muldefs \
     -Xlinker \
     -Map=output.map \
+    -Wl,--print-memory-usage \
     -T${ProjDirPath}/openvg_tiger_MIMXRT1176xxxxx_cm7_sdram_only.ld -static \
 ")

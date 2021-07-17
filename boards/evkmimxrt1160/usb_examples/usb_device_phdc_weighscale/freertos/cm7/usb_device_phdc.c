@@ -361,6 +361,7 @@ usb_status_t USB_DevicePhdcEvent(void *handle, uint32_t event, void *param)
             phdcHandle->bulkIn.isBusy      = 0U;
             phdcHandle->bulkOut.isBusy     = 0U;
             phdcHandle->interruptIn.isBusy = 0U;
+            error                          = kStatus_USB_Success;
             break;
         case kUSB_DeviceClassEventSetConfiguration:
             temp8 = ((uint8_t *)param);
@@ -370,6 +371,7 @@ usb_status_t USB_DevicePhdcEvent(void *handle, uint32_t event, void *param)
             }
             if (*temp8 == phdcHandle->configuration)
             {
+                error = kStatus_USB_Success;
                 break;
             }
 
@@ -396,6 +398,7 @@ usb_status_t USB_DevicePhdcEvent(void *handle, uint32_t event, void *param)
             }
             if (alternate == phdcHandle->alternate)
             {
+                error = kStatus_USB_Success;
                 break;
             }
             error                 = USB_DevicePhdcEndpointsDeinit(phdcHandle);
@@ -536,40 +539,53 @@ usb_status_t USB_DevicePhdcEvent(void *handle, uint32_t event, void *param)
                 break;
             }
 
+            error = kStatus_USB_InvalidRequest;
             switch (controlRequest->setup->bRequest)
             {
                 case USB_DEVICE_PHDC_REQUEST_SET_FEATURE:
                 {
-                    /* classCallback is initialized in classInit of s_UsbDeviceClassInterfaceMap,
-                    it is from the second parameter of classInit */
-                    error = phdcHandle->configStruct->classCallback(
-                        (class_handle_t)phdcHandle, kUSB_DevicePhdcEventSetFeature, &controlRequest->setup->wValue);
+                    if (((controlRequest->setup->bmRequestType & USB_REQUEST_TYPE_DIR_MASK) == USB_REQUEST_TYPE_DIR_OUT)
+                        && (controlRequest->setup->wLength == 0U))
+                    {
+                        /* classCallback is initialized in classInit of s_UsbDeviceClassInterfaceMap,
+                        it is from the second parameter of classInit */
+                        error = phdcHandle->configStruct->classCallback(
+                            (class_handle_t)phdcHandle, kUSB_DevicePhdcEventSetFeature, &controlRequest->setup->wValue);
+                    }
                 }
                 break;
                 case USB_DEVICE_PHDC_REQUEST_CLEAR_FEATURE:
                 {
-                    /* classCallback is initialized in classInit of s_UsbDeviceClassInterfaceMap,
-                    it is from the second parameter of classInit */
-                    error = phdcHandle->configStruct->classCallback(
-                        (class_handle_t)phdcHandle, kUSB_DevicePhdcEventClearFeature, &controlRequest->setup->wValue);
+                    if (((controlRequest->setup->bmRequestType & USB_REQUEST_TYPE_DIR_MASK) == USB_REQUEST_TYPE_DIR_OUT)
+                        && (controlRequest->setup->wLength == 0U))
+                    {
+                        /* classCallback is initialized in classInit of s_UsbDeviceClassInterfaceMap,
+                        it is from the second parameter of classInit */
+                        error = phdcHandle->configStruct->classCallback(
+                            (class_handle_t)phdcHandle, kUSB_DevicePhdcEventClearFeature, &controlRequest->setup->wValue);
+                    }
                 }
                 break;
                 case USB_DEVICE_PHDC_REQUEST_GET_STATUS:
                 {
-                    /* classCallback is initialized in classInit of s_UsbDeviceClassInterfaceMap,
-                    it is from the second parameter of classInit */
-                    error = phdcHandle->configStruct->classCallback((class_handle_t)phdcHandle,
-                                                                    kUSB_DevicePhdcEventGetStatus, controlRequest);
+                    if (((controlRequest->setup->bmRequestType & USB_REQUEST_TYPE_DIR_MASK) == USB_REQUEST_TYPE_DIR_IN)
+                        && (controlRequest->setup->wLength <= 2U))
+                    {
+                        /* classCallback is initialized in classInit of s_UsbDeviceClassInterfaceMap,
+                        it is from the second parameter of classInit */
+                        error = phdcHandle->configStruct->classCallback((class_handle_t)phdcHandle,
+                                                                        kUSB_DevicePhdcEventGetStatus, controlRequest);
+                    }
                 }
                 break;
                 default:
-                    error = kStatus_USB_InvalidRequest;
+                    /* no action */
                     break;
             }
         }
         break;
         default:
-            error = kStatus_USB_InvalidRequest;
+            /* no action */
             break;
     }
     return error;

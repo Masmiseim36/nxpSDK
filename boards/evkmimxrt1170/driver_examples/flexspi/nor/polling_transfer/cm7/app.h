@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2021 NXP
+ * Copyright 2018 NXP
  * All rights reserved.
  *
  *
@@ -40,28 +40,41 @@
 #define FLASH_BUSY_STATUS_POL    1
 #define FLASH_BUSY_STATUS_OFFSET 0
 
-#define CACHE_MAINTAIN 0x01U
-
-#if defined(CACHE_MAINTAIN) && CACHE_MAINTAIN
-#include "fsl_cache.h"
-#endif
+/*
+ * If cache is enabled, this example should maintain the cache to make sure
+ * CPU core accesses the memory, not cache only.
+ */
+#define CACHE_MAINTAIN 1
 
 /*${macro:end}*/
+
+/*******************************************************************************
+ * Variables
+ ******************************************************************************/
+/*${variable:start}*/
+typedef struct _flexspi_cache_status
+{
+#if (defined __CORTEX_M) && (__CORTEX_M == 7U)
+    volatile bool DCacheEnableFlag;
+    volatile bool ICacheEnableFlag;
+#elif (defined __CORTEX_M) && (__CORTEX_M == 4U)
+    volatile bool codeCacheEnableFlag;
+    volatile bool systemCacheEnableFlag;
+#endif
+} flexspi_cache_status_t;
+/*${variable:end}*/
 
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
 /*${prototype:start}*/
 void BOARD_InitHardware(void);
-/*${prototype:end}*/
-
-/*${function:start}*/
 static inline void flexspi_clock_init(void)
 {
     /*Clock setting for flexspi1*/
     CLOCK_SetRootClockDiv(kCLOCK_Root_Flexspi1, 2);
     CLOCK_SetRootClockMux(kCLOCK_Root_Flexspi1, 0);
 }
-/*${function:end}*/
+/*${prototype:end}*/
 
 #endif /* _APP_H_ */

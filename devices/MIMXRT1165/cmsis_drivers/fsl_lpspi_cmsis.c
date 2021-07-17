@@ -29,7 +29,7 @@
      (defined(RTE_SPI2) && RTE_SPI2 && defined(LPSPI2)) || (defined(RTE_SPI3) && RTE_SPI3 && defined(LPSPI3)) || \
      (defined(RTE_SPI4) && RTE_SPI4 && defined(LPSPI4)) || (defined(RTE_SPI5) && RTE_SPI5 && defined(LPSPI5)))
 
-#define ARM_LPSPI_DRV_VERSION ARM_DRIVER_VERSION_MAJOR_MINOR((2), (3)) /* driver version */
+#define ARM_LPSPI_DRV_VERSION ARM_DRIVER_VERSION_MAJOR_MINOR((2), (4)) /* driver version */
 
 /*
  * ARMCC does not support split the data section automatically, so the driver
@@ -857,7 +857,7 @@ static int32_t LPSPI_EdmaControl(uint32_t control, uint32_t arg, cmsis_lpspi_edm
 
 static ARM_SPI_STATUS LPSPI_EdmaGetStatus(cmsis_lpspi_edma_driver_state_t *lpspi)
 {
-    ARM_SPI_STATUS stat;
+    ARM_SPI_STATUS stat = {0};
 
     if (LPSPI_IsMaster(lpspi->resource->base))
     {
@@ -1256,7 +1256,7 @@ static int32_t LPSPI_InterruptControl(uint32_t control, uint32_t arg, cmsis_lpsp
 
 static ARM_SPI_STATUS LPSPI_InterruptGetStatus(cmsis_lpspi_interrupt_driver_state_t *lpspi)
 {
-    ARM_SPI_STATUS stat;
+    ARM_SPI_STATUS stat = {0};
 
     if (LPSPI_IsMaster(lpspi->resource->base))
     {
@@ -2291,7 +2291,7 @@ static ARM_SPI_STATUS LPSPI5_InterruptGetStatus(void)
 
 ARM_DRIVER_SPI Driver_SPI5 = {
     LPSPIx_GetVersion,     LPSPIx_GetCapabilities,
-#if definde(RTE_SPI5_DMA_EN) && RTE_SPI5_DMA_EN
+#if defined(RTE_SPI5_DMA_EN) && RTE_SPI5_DMA_EN
     LPSPI5_EdmaInitialize, LPSPI5_EdmaUninitialize, LPSPI5_EdmaPowerControl, LPSPI5_EdmaSend,     LPSPI5_EdmaReceive,
     LPSPI5_EdmaTransfer,   LPSPI5_EdmaGetCount,     LPSPI5_EdmaControl,      LPSPI5_EdmaGetStatus
 #else
@@ -2461,7 +2461,7 @@ static ARM_SPI_STATUS LPSPI6_InterruptGetStatus(void)
 
 ARM_DRIVER_SPI Driver_SPI6 = {
     LPSPIx_GetVersion,     LPSPIx_GetCapabilities,
-#if definde(RTE_SPI6_DMA_EN) && RTE_SPI6_DMA_EN
+#if defined(RTE_SPI6_DMA_EN) && RTE_SPI6_DMA_EN
     LPSPI6_EdmaInitialize, LPSPI6_EdmaUninitialize, LPSPI6_EdmaPowerControl, LPSPI6_EdmaSend,     LPSPI6_EdmaReceive,
     LPSPI6_EdmaTransfer,   LPSPI6_EdmaGetCount,     LPSPI6_EdmaControl,      LPSPI6_EdmaGetStatus
 #else

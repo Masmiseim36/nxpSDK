@@ -8,9 +8,9 @@ and sends a Web page back to the PC.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.9
-- Keil MDK  5.33
-- GCC ARM Embedded  9.3.1
+- IAR embedded Workbench  9.10.2
+- Keil MDK  5.34
+- GCC ARM Embedded  10.2.1
 
 Hardware requirements
 =====================
@@ -52,6 +52,8 @@ Running the demo
         ************************************************
 2.  On the browser address bar, type https://192.168.0.102(IP address of the board).
 	The browser should show a web page.
+	Username admin and password admin is required to access "Authorization example" section of the web page.
+
 
 Modifying content of static web pages
 To modify content available through the web server you must complete following steps:

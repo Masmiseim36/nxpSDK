@@ -1,5 +1,5 @@
 /*
- * Copyright 2020, NXP
+ * Copyright 2020-2021 NXP
  * All rights reserved.
  *
  *
@@ -20,7 +20,7 @@
  * Definitions
  ******************************************************************************/
 /*! @brief DCDC driver version. */
-#define FSL_DCDC_DRIVER_VERSION (MAKE_VERSION(2, 1, 0)) /*!< Version 2.1.0. */
+#define FSL_DCDC_DRIVER_VERSION (MAKE_VERSION(2, 1, 1)) /*!< Version 2.1.1. */
 
 /*! @brief The array of VDD1P0 target voltage in standby mode. */
 #define STANDBY_MODE_VDD1P0_TARGET_VOLTAGE                                                                             \
@@ -943,8 +943,8 @@ void DCDC_SetPointInit(DCDC_Type *base, const dcdc_setpoint_config_t *config);
  * @brief Disable DCDC module when the control mode selected as setpoint mode.
  *
  * @param base DCDC peripheral base address.
- * @param setpointMap. The map of the setpoint to disable the DCDC module.
- *                      Should be the OR'ed value of @ref _dcdc_setpoint_map.
+ * @param setpointMap The map of the setpoint to disable the DCDC module,
+ *                      Should be the OR'ed value of _dcdc_setpoint_map.
  */
 static inline void DCDC_SetPointDeinit(DCDC_Type *base, uint32_t setpointMap)
 {

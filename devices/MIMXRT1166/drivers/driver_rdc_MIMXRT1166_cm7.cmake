@@ -1,17 +1,15 @@
-if(NOT DRIVER_RDC_MIMXRT1166_cm7_INCLUDED)
-    
-    set(DRIVER_RDC_MIMXRT1166_cm7_INCLUDED true CACHE BOOL "driver_rdc component is included.")
+include_guard(GLOBAL)
+message("driver_rdc component is included.")
 
-    target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
-        ${CMAKE_CURRENT_LIST_DIR}/fsl_rdc.c
-    )
-
-
-    target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
-        ${CMAKE_CURRENT_LIST_DIR}/.
-    )
+target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
+    ${CMAKE_CURRENT_LIST_DIR}/fsl_rdc.c
+)
 
 
-    include(driver_common_MIMXRT1166_cm7)
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
+    ${CMAKE_CURRENT_LIST_DIR}/.
+)
 
-endif()
+
+include(driver_common_MIMXRT1166_cm7)
+

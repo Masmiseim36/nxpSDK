@@ -36,21 +36,20 @@
  * Variables
  ******************************************************************************/
 /* Define global data structures. */
-TX_THREAD demo_thread;
-FX_MEDIA ram_disk;
-UX_SLAVE_CLASS_STORAGE_PARAMETER storage_parameter;
-UX_SLAVE_CLASS_DFU_PARAMETER dfu_parameter;
+static TX_THREAD demo_thread;
+static FX_MEDIA ram_disk;
+static UX_SLAVE_CLASS_STORAGE_PARAMETER storage_parameter;
 
-ULONG thread_stack[DEMO_STACK_SIZE / sizeof(ULONG)];
+static ULONG thread_stack[DEMO_STACK_SIZE / sizeof(ULONG)];
 
-CHAR ram_disk_memory[RAM_DISK_SIZE];
+static ULONG ram_disk_memory[RAM_DISK_SIZE / sizeof(ULONG)];
 
 /* Buffer for FileX RAM media initialization. */
-unsigned char buffer[512];
+static ULONG buffer[512 / sizeof(ULONG)];
 
-AT_NONCACHEABLE_SECTION(static char usb_memory[USBX_MEMORY_SIZE]);
+AT_NONCACHEABLE_SECTION_ALIGN(static ULONG usb_memory[USBX_MEMORY_SIZE / sizeof(ULONG)], 64);
 
-UCHAR device_framework_full_speed[] = {
+static UCHAR device_framework_full_speed[] = {
     /* Device descriptor */
     0x12, 0x01, 0x10, 0x01, 0x00, 0x00, 0x00, 0x40, 0x81, 0x07, 0x00, 0x00, 0x00, 0x00, 0x01, 0x02, 0x03, 0x01,
 
@@ -67,7 +66,7 @@ UCHAR device_framework_full_speed[] = {
     0x07, 0x05, 0x02, 0x02, 0x40, 0x00, 0x00};
 
 #define DEVICE_FRAMEWORK_LENGTH_HIGH_SPEED 60
-UCHAR device_framework_high_speed[] = {
+static UCHAR device_framework_high_speed[] = {
     /* Device descriptor */
     0x12, 0x01, 0x00, 0x02, 0x00, 0x00, 0x00, 0x40, 0x81, 0x07, 0x00, 0x00, 0x01, 0x00, 0x01, 0x02, 0x03, 0x01,
 
@@ -93,7 +92,7 @@ UCHAR device_framework_high_speed[] = {
  * Byte 3       : Byte containing the length of the descriptor string
  */
 #define STRING_FRAMEWORK_LENGTH 38
-UCHAR string_framework[] = {
+static UCHAR string_framework[] = {
     /* Manufacturer string descriptor : Index 1 */
     0x09, 0x04, 0x01, 0x0c, 0x45, 0x78, 0x70, 0x72, 0x65, 0x73, 0x20, 0x4c, 0x6f, 0x67, 0x69, 0x63,
 
@@ -110,24 +109,14 @@ UCHAR string_framework[] = {
  * adjusted accordingly.
  */
 #define LANGUAGE_ID_FRAMEWORK_LENGTH 2
-UCHAR language_id_framework[] = {
+static UCHAR language_id_framework[] = {
     /* English. */
     0x09, 0x04};
-
-/* Define the SysTick cycles which will be loaded on tx_initialize_low_level.s */
-int systick_cycles;
 
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
 /* Define local function prototypes. */
-VOID demo_thread_entry(ULONG arg);
-UINT demo_thread_media_read(
-    VOID *storage, ULONG lun, UCHAR *data_pointer, ULONG number_blocks, ULONG lba, ULONG *media_status);
-UINT demo_thread_media_write(
-    VOID *storage, ULONG lun, UCHAR *data_pointer, ULONG number_blocks, ULONG lba, ULONG *media_status);
-UINT demo_thread_media_status(VOID *storage, ULONG lun, ULONG media_id, ULONG *media_status);
-UINT demo_thread_media_flush(VOID *storage, ULONG lun, ULONG number_blocks, ULONG lba, ULONG *media_status);
 
 /* Define external function prototypes. */
 extern VOID _fx_ram_driver(FX_MEDIA *media_ptr);
@@ -135,15 +124,90 @@ extern VOID _fx_ram_driver(FX_MEDIA *media_ptr);
 /*******************************************************************************
  * Code
  ******************************************************************************/
+
+static VOID demo_thread_entry(ULONG arg)
+{
+    ULONG status;
+
+    TX_THREAD_NOT_USED(arg);
+
+    /* Format the ram drive. */
+    status = fx_media_format(&ram_disk, _fx_ram_driver, ram_disk_memory,
+                             (UCHAR *)buffer, sizeof(buffer), "RAM DISK", 1, 512, 0,
+                             RAM_DISK_SIZE / 512, 512, 4, 1, 1);
+
+    /* Check the media format status. */
+    if (status != FX_SUCCESS)
+    {
+        /* Error opening media.  Return to caller. */
+        return;
+    }
+
+    /* Open the ram_disk. */
+    status = fx_media_open(&ram_disk, "RAM DISK", _fx_ram_driver, ram_disk_memory,
+                           (UCHAR *)buffer, sizeof(buffer));
+
+    /* Check the media open status. */
+    if (status != FX_SUCCESS)
+    {
+        /* Error opening media.  Return to caller. */
+        return;
+    }
+
+    /* Initialize the BSP layer of the USB OTG HS Controller. */
+    usb_device_setup();
+
+    /* Register the K64 USB device controllers available in this system */
+    _ux_dcd_mcimx6_initialize(usb_device_base());
+
+    /* Init the USB interrupt. */
+    usb_device_interrupt_setup(USB_DEVICE_INTERRUPT_PRIORITY);
+}
+
+static UINT demo_thread_media_status(VOID *storage, ULONG lun, ULONG media_id, ULONG *media_status)
+{
+    /* The RAM disk drive never fails. This is just for demo only !!!! */
+    return (UX_SUCCESS);
+}
+
+static UINT demo_thread_media_read(
+    VOID *storage, ULONG lun, UCHAR *data_pointer, ULONG number_blocks, ULONG lba, ULONG *media_status)
+{
+    UINT status = 0;
+
+    ram_disk.fx_media_driver_logical_sector = lba;
+    ram_disk.fx_media_driver_sectors        = number_blocks;
+    ram_disk.fx_media_driver_request        = FX_DRIVER_READ;
+    ram_disk.fx_media_driver_buffer         = data_pointer;
+    _fx_ram_driver(&ram_disk);
+
+    status = ram_disk.fx_media_driver_status;
+
+    return (status);
+}
+
+static UINT demo_thread_media_write(
+    VOID *storage, ULONG lun, UCHAR *data_pointer, ULONG number_blocks, ULONG lba, ULONG *media_status)
+{
+    UINT status = 0;
+
+    ram_disk.fx_media_driver_logical_sector = lba;
+    ram_disk.fx_media_driver_sectors        = number_blocks;
+    ram_disk.fx_media_driver_request        = FX_DRIVER_WRITE;
+    ram_disk.fx_media_driver_buffer         = data_pointer;
+    _fx_ram_driver(&ram_disk);
+
+    status = ram_disk.fx_media_driver_status;
+
+    return (status);
+}
+
 int main(void)
 {
     /* Initialize the board. */
     board_setup();
 
     PRINTF("USBX device mass storage example\r\n");
-
-    /* This sentence must be called before tx_kernel_enter(). */
-    systick_cycles = (SystemCoreClock / TX_TIMER_TICKS_PER_SECOND) - 1;
 
     /* Enter the ThreadX kernel. */
     tx_kernel_enter();
@@ -191,8 +255,6 @@ void tx_application_define(void *first_unused_memory)
         demo_thread_media_write;
     storage_parameter.ux_slave_class_storage_parameter_lun[0].ux_slave_class_storage_media_status =
         demo_thread_media_status;
-    storage_parameter.ux_slave_class_storage_parameter_lun[0].ux_slave_class_storage_media_flush =
-        demo_thread_media_flush;
 
     /* Initilize the device storage class. The class is connected with interface 0 on configuration 1. */
     status = ux_device_stack_class_register(_ux_system_slave_class_storage_name, _ux_device_class_storage_entry, 1, 0,
@@ -205,82 +267,4 @@ void tx_application_define(void *first_unused_memory)
                      TX_AUTO_START);
 
     return;
-}
-
-void demo_thread_entry(ULONG arg)
-{
-    ULONG status;
-
-    /* Format the ram drive. */
-    status = fx_media_format(&ram_disk, _fx_ram_driver, ram_disk_memory, buffer, sizeof(buffer), "RAM DISK", 1, 512, 0,
-                             RAM_DISK_SIZE / 512, 512, 4, 1, 1);
-
-    /* Check the media format status. */
-    if (status != FX_SUCCESS)
-    {
-        /* Error opening media.  Return to caller. */
-        return;
-    }
-
-    /* Open the ram_disk. */
-    status = fx_media_open(&ram_disk, "RAM DISK", _fx_ram_driver, ram_disk_memory, buffer, sizeof(buffer));
-
-    /* Check the media open status. */
-    if (status != FX_SUCCESS)
-    {
-        /* Error opening media.  Return to caller. */
-        return;
-    }
-
-    /* Initialize the BSP layer of the USB OTG HS Controller. */
-    usb_device_setup();
-
-    /* Register the K64 USB device controllers available in this system */
-    _ux_dcd_mcimx6_initialize(usb_device_base());
-
-    /* Init the USB interrupt. */
-    usb_device_interrupt_setup(USB_DEVICE_INTERRUPT_PRIORITY);
-}
-
-UINT demo_thread_media_status(VOID *storage, ULONG lun, ULONG media_id, ULONG *media_status)
-{
-    /* The ATA drive never fails. This is just for demo only !!!! */
-    return (UX_SUCCESS);
-}
-
-UINT demo_thread_media_flush(VOID *storage, ULONG lun, ULONG number_blocks, ULONG lba, ULONG *media_status)
-{
-    /* The ATA drive never fails. This is just for demo only !!!! */
-    return (UX_SUCCESS);
-}
-
-UINT demo_thread_media_read(
-    VOID *storage, ULONG lun, UCHAR *data_pointer, ULONG number_blocks, ULONG lba, ULONG *media_status)
-{
-    UINT status = 0;
-
-    ram_disk.fx_media_driver_logical_sector = lba;
-    ram_disk.fx_media_driver_sectors        = number_blocks;
-    ram_disk.fx_media_driver_request        = FX_DRIVER_READ;
-    ram_disk.fx_media_driver_buffer         = data_pointer;
-    _fx_ram_driver(&ram_disk);
-    status = ram_disk.fx_media_driver_status;
-
-    return (status);
-}
-
-UINT demo_thread_media_write(
-    VOID *storage, ULONG lun, UCHAR *data_pointer, ULONG number_blocks, ULONG lba, ULONG *media_status)
-{
-    UINT status = 0;
-
-    ram_disk.fx_media_driver_logical_sector = lba;
-    ram_disk.fx_media_driver_sectors        = number_blocks;
-    ram_disk.fx_media_driver_request        = FX_DRIVER_WRITE;
-    ram_disk.fx_media_driver_buffer         = data_pointer;
-    _fx_ram_driver(&ram_disk);
-
-    status = ram_disk.fx_media_driver_status;
-
-    return (status);
 }

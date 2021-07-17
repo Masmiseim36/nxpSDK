@@ -286,7 +286,15 @@ void BOARD_BootClockRUN(void)
     clock_root_config_t rootCfg = {0};
 
 #if !defined(SKIP_DCDC_ADJUSTMENT) || (!SKIP_DCDC_ADJUSTMENT)
-    DCDC_SetVDD1P0BuckModeTargetVoltage(DCDC, kDCDC_1P0BuckTarget1P15V);
+    if((OCOTP->FUSEN[16].FUSE == 0x57AC5969U) && ((OCOTP->FUSEN[17].FUSE & 0xFFU) == 0x0BU))
+    {
+        DCDC_SetVDD1P0BuckModeTargetVoltage(DCDC, kDCDC_1P0BuckTarget1P15V);
+    }
+    else
+    {
+        /* Set 1.125V for production samples to align with data sheet requirement */
+        DCDC_SetVDD1P0BuckModeTargetVoltage(DCDC, kDCDC_1P0BuckTarget1P125V);
+    }
 #endif
 
 #if !defined(SKIP_FBB_ENABLE) || (!SKIP_FBB_ENABLE)

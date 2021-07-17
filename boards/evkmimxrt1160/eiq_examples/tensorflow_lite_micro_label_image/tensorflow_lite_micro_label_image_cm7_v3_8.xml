@@ -2,13 +2,19 @@
 <ksdk:examples xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd manifest.xsd">
   <externalDefinitions>
     <definition extID="cm7_MIMXRT1166xxxxx"/>
-    <definition extID="driver.camera-common.MIMXRT1166"/>
     <definition extID="driver.camera-device-common.MIMXRT1166"/>
+    <definition extID="driver.camera-receiver-common.MIMXRT1166"/>
     <definition extID="driver.camera-device-sccb.MIMXRT1166"/>
     <definition extID="driver.camera-device-ov5640.MIMXRT1166"/>
+    <definition extID="driver.display-rm68191.MIMXRT1166"/>
+    <definition extID="driver.display-rm68200.MIMXRT1166"/>
+    <definition extID="driver.camera-common.MIMXRT1166"/>
     <definition extID="driver.camera-receiver-csi.MIMXRT1166"/>
-    <definition extID="driver.camera-receiver-common.MIMXRT1166"/>
     <definition extID="platform.drivers.csi.MIMXRT1166"/>
+    <definition extID="driver.video-common.MIMXRT1166"/>
+    <definition extID="driver.video-i2c.MIMXRT1166"/>
+    <definition extID="platform.drivers.elcdif.MIMXRT1166"/>
+    <definition extID="platform.drivers.pxp.MIMXRT1166"/>
     <definition extID="driver.dc-fb-common.MIMXRT1166"/>
     <definition extID="driver.dc-fb-elcdif.MIMXRT1166"/>
     <definition extID="driver.dc-fb-lcdifv2.MIMXRT1166"/>
@@ -16,25 +22,19 @@
     <definition extID="driver.display-mipi-dsi-cmd.MIMXRT1166"/>
     <definition extID="platform.drivers.common.MIMXRT1166"/>
     <definition extID="platform.drivers.mipi_dsi_split.MIMXRT1166"/>
-    <definition extID="driver.display-rm68191.MIMXRT1166"/>
-    <definition extID="driver.display-rm68200.MIMXRT1166"/>
-    <definition extID="platform.drivers.elcdif.MIMXRT1166"/>
     <definition extID="platform.drivers.igpio.MIMXRT1166"/>
     <definition extID="platform.drivers.mipi_csi2rx.MIMXRT1166"/>
-    <definition extID="platform.drivers.pxp.MIMXRT1166"/>
     <definition extID="platform.drivers.soc_mipi_csi2rx.MIMXRT1166"/>
     <definition extID="platform.drivers.soc_src.MIMXRT1166"/>
-    <definition extID="driver.video-common.MIMXRT1166"/>
-    <definition extID="driver.video-i2c.MIMXRT1166"/>
     <definition extID="utility.debug_console_lite.MIMXRT1166"/>
     <definition extID="platform.utilities.assert_lite.MIMXRT1166"/>
-    <definition extID="middleware.eiq.tensorflow_lite_micro.MIMXRT1166"/>
     <definition extID="middleware.eiq.worker.video.MIMXRT1166"/>
+    <definition extID="middleware.eiq.gui.printf.MIMXRT1166"/>
+    <definition extID="middleware.eiq.tensorflow_lite_micro.MIMXRT1166"/>
     <definition extID="component.lists.MIMXRT1166"/>
     <definition extID="component.lpuart_adapter.MIMXRT1166"/>
     <definition extID="platform.drivers.lpuart.MIMXRT1166"/>
     <definition extID="platform.devices.MIMXRT1166_CMSIS.MIMXRT1166"/>
-    <definition extID="platform.Include_core_cm7.MIMXRT1166"/>
     <definition extID="platform.devices.MIMXRT1166_startup.MIMXRT1166"/>
     <definition extID="platform.drivers.dcdc_soc.MIMXRT1166"/>
     <definition extID="platform.drivers.pmu_1.MIMXRT1166"/>
@@ -42,18 +42,20 @@
     <definition extID="platform.drivers.iomuxc.MIMXRT1166"/>
     <definition extID="platform.drivers.lpi2c.MIMXRT1166"/>
     <definition extID="platform.drivers.xip_device.MIMXRT1166"/>
-    <definition extID="platform.drivers.xip_board.MIMXRT1166"/>
+    <definition extID="platform.drivers.xip_board.evkmimxrt1160.MIMXRT1166"/>
+    <definition extID="middleware.eiq.tensorflow_lite_micro.cmsis_nn.MIMXRT1166"/>
     <definition extID="platform.drivers.anatop_ai.MIMXRT1166"/>
+    <definition extID="CMSIS_Include_core_cm.MIMXRT1166"/>
+    <definition extID="platform.drivers.memory.MIMXRT1166"/>
     <definition extID="platform.drivers.lcdifv2.MIMXRT1166"/>
-    <definition extID="middleware.eiq.tensorflow_lite.third_party.cmsis.MIMXRT1166"/>
-    <definition extID="middleware.eiq.tensorflow_lite.third_party.flatbuffers.MIMXRT1166"/>
-    <definition extID="middleware.eiq.tensorflow_lite.third_party.gemmlowp.MIMXRT1166"/>
-    <definition extID="middleware.eiq.tensorflow_lite.third_party.ruy.MIMXRT1166"/>
     <definition extID="middleware.eiq.worker.MIMXRT1166"/>
+    <definition extID="middleware.eiq.tensorflow_lite_micro.third_party.flatbuffers.MIMXRT1166"/>
+    <definition extID="middleware.eiq.tensorflow_lite_micro.third_party.gemmlowp.MIMXRT1166"/>
+    <definition extID="middleware.eiq.tensorflow_lite_micro.third_party.ruy.MIMXRT1166"/>
     <definition extID="platform.utilities.misc_utilities.MIMXRT1166"/>
-    <definition extID="platform.Include_common.MIMXRT1166"/>
-    <definition extID="platform.Include_dsp.MIMXRT1166"/>
     <definition extID="platform.devices.MIMXRT1166_system.MIMXRT1166"/>
+    <definition extID="middleware.eiq.tensorflow_lite_micro.third_party.cmsis_nn.MIMXRT1166"/>
+    <definition extID="CMSIS_DSP_Library.MIMXRT1166"/>
     <definition extID="iar"/>
     <definition extID="mdk"/>
     <definition extID="armgcc"/>
@@ -62,7 +64,7 @@
     <definition extID="com.crt.advproject.config.exe.debug"/>
     <definition extID="com.crt.advproject.config.exe.release"/>
   </externalDefinitions>
-  <example id="evkmimxrt1160_tensorflow_lite_micro_label_image_cm7" name="tensorflow_lite_micro_label_image_cm7" device_core="cm7_MIMXRT1166xxxxx" dependency="driver.camera-common.MIMXRT1166 driver.camera-device-common.MIMXRT1166 driver.camera-device-sccb.MIMXRT1166 driver.camera-device-ov5640.MIMXRT1166 driver.camera-receiver-csi.MIMXRT1166 driver.camera-receiver-common.MIMXRT1166 platform.drivers.csi.MIMXRT1166 driver.dc-fb-common.MIMXRT1166 driver.dc-fb-elcdif.MIMXRT1166 driver.dc-fb-lcdifv2.MIMXRT1166 driver.display-common.MIMXRT1166 driver.display-mipi-dsi-cmd.MIMXRT1166 platform.drivers.common.MIMXRT1166 platform.drivers.mipi_dsi_split.MIMXRT1166 driver.display-rm68191.MIMXRT1166 driver.display-rm68200.MIMXRT1166 platform.drivers.elcdif.MIMXRT1166 platform.drivers.igpio.MIMXRT1166 platform.drivers.mipi_csi2rx.MIMXRT1166 platform.drivers.pxp.MIMXRT1166 platform.drivers.soc_mipi_csi2rx.MIMXRT1166 platform.drivers.soc_src.MIMXRT1166 driver.video-common.MIMXRT1166 driver.video-i2c.MIMXRT1166 utility.debug_console_lite.MIMXRT1166 platform.utilities.assert_lite.MIMXRT1166 middleware.eiq.tensorflow_lite_micro.MIMXRT1166 middleware.eiq.worker.video.MIMXRT1166 component.lists.MIMXRT1166 component.lpuart_adapter.MIMXRT1166 platform.drivers.lpuart.MIMXRT1166 platform.devices.MIMXRT1166_CMSIS.MIMXRT1166 platform.Include_core_cm7.MIMXRT1166 platform.devices.MIMXRT1166_startup.MIMXRT1166 platform.drivers.dcdc_soc.MIMXRT1166 platform.drivers.pmu_1.MIMXRT1166 platform.drivers.clock.MIMXRT1166 platform.drivers.iomuxc.MIMXRT1166 platform.drivers.lpi2c.MIMXRT1166 platform.drivers.xip_device.MIMXRT1166 platform.drivers.xip_board.MIMXRT1166 platform.drivers.anatop_ai.MIMXRT1166 platform.drivers.lcdifv2.MIMXRT1166 middleware.eiq.tensorflow_lite.third_party.cmsis.MIMXRT1166 middleware.eiq.tensorflow_lite.third_party.flatbuffers.MIMXRT1166 middleware.eiq.tensorflow_lite.third_party.gemmlowp.MIMXRT1166 middleware.eiq.tensorflow_lite.third_party.ruy.MIMXRT1166 middleware.eiq.worker.MIMXRT1166 platform.utilities.misc_utilities.MIMXRT1166 platform.Include_common.MIMXRT1166 platform.Include_dsp.MIMXRT1166 platform.devices.MIMXRT1166_system.MIMXRT1166" category="eiq_examples">
+  <example id="evkmimxrt1160_tensorflow_lite_micro_label_image_cm7" name="tensorflow_lite_micro_label_image_cm7" device_core="cm7_MIMXRT1166xxxxx" dependency="driver.camera-device-common.MIMXRT1166 driver.camera-receiver-common.MIMXRT1166 driver.camera-device-sccb.MIMXRT1166 driver.camera-device-ov5640.MIMXRT1166 driver.display-rm68191.MIMXRT1166 driver.display-rm68200.MIMXRT1166 driver.camera-common.MIMXRT1166 driver.camera-receiver-csi.MIMXRT1166 platform.drivers.csi.MIMXRT1166 driver.video-common.MIMXRT1166 driver.video-i2c.MIMXRT1166 platform.drivers.elcdif.MIMXRT1166 platform.drivers.pxp.MIMXRT1166 driver.dc-fb-common.MIMXRT1166 driver.dc-fb-elcdif.MIMXRT1166 driver.dc-fb-lcdifv2.MIMXRT1166 driver.display-common.MIMXRT1166 driver.display-mipi-dsi-cmd.MIMXRT1166 platform.drivers.common.MIMXRT1166 platform.drivers.mipi_dsi_split.MIMXRT1166 platform.drivers.igpio.MIMXRT1166 platform.drivers.mipi_csi2rx.MIMXRT1166 platform.drivers.soc_mipi_csi2rx.MIMXRT1166 platform.drivers.soc_src.MIMXRT1166 utility.debug_console_lite.MIMXRT1166 platform.utilities.assert_lite.MIMXRT1166 middleware.eiq.worker.video.MIMXRT1166 middleware.eiq.gui.printf.MIMXRT1166 middleware.eiq.tensorflow_lite_micro.MIMXRT1166 component.lists.MIMXRT1166 component.lpuart_adapter.MIMXRT1166 platform.drivers.lpuart.MIMXRT1166 platform.devices.MIMXRT1166_CMSIS.MIMXRT1166 platform.devices.MIMXRT1166_startup.MIMXRT1166 platform.drivers.dcdc_soc.MIMXRT1166 platform.drivers.pmu_1.MIMXRT1166 platform.drivers.clock.MIMXRT1166 platform.drivers.iomuxc.MIMXRT1166 platform.drivers.lpi2c.MIMXRT1166 platform.drivers.xip_device.MIMXRT1166 platform.drivers.xip_board.evkmimxrt1160.MIMXRT1166 middleware.eiq.tensorflow_lite_micro.cmsis_nn.MIMXRT1166 platform.drivers.anatop_ai.MIMXRT1166 CMSIS_Include_core_cm.MIMXRT1166 platform.drivers.memory.MIMXRT1166 platform.drivers.lcdifv2.MIMXRT1166 middleware.eiq.worker.MIMXRT1166 middleware.eiq.tensorflow_lite_micro.third_party.flatbuffers.MIMXRT1166 middleware.eiq.tensorflow_lite_micro.third_party.gemmlowp.MIMXRT1166 middleware.eiq.tensorflow_lite_micro.third_party.ruy.MIMXRT1166 platform.utilities.misc_utilities.MIMXRT1166 platform.devices.MIMXRT1166_system.MIMXRT1166 middleware.eiq.tensorflow_lite_micro.third_party.cmsis_nn.MIMXRT1166 CMSIS_DSP_Library.MIMXRT1166" category="eiq_examples">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.ccnature"/>
     </projects>
@@ -121,11 +123,10 @@
           <value>SDK_I2C_BASED_COMPONENT_USED=1</value>
           <value>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</value>
           <value>SDK_I2C_BASED_COMPONENT_USED=1</value>
-          <value>FLATBUFFERS_LITTLEENDIAN</value>
-          <value>GEMMLOWP_MCU</value>
-          <value>RUY_MCU</value>
-          <value>TFLITE_MCU</value>
+          <value>EIQ_GUI_PRINTF</value>
           <value>TF_LITE_STATIC_MEMORY</value>
+          <value>CMSIS_NN</value>
+          <value>MCUXPRESSO_SDK</value>
         </option>
         <option id="gnu.cpp.compiler.option.preprocessor.def" type="stringList">
           <value>SDK_DEBUGCONSOLE_UART</value>
@@ -133,11 +134,10 @@
           <value>__FPU_PRESENT=1</value>
           <value>CPU_MIMXRT1166DVM6A_cm7</value>
           <value>SDK_I2C_BASED_COMPONENT_USED=1</value>
-          <value>FLATBUFFERS_LITTLEENDIAN</value>
-          <value>GEMMLOWP_MCU</value>
-          <value>RUY_MCU</value>
-          <value>TFLITE_MCU</value>
+          <value>EIQ_GUI_PRINTF</value>
           <value>TF_LITE_STATIC_MEMORY</value>
+          <value>CMSIS_NN</value>
+          <value>MCUXPRESSO_SDK</value>
         </option>
         <option id="com.crt.advproject.link.memory.sections.cpp" type="stringList">
           <value>isd=KEEP(*(CodeQuickAccess));region=SRAM_ITC_cm7;type=.data</value>
@@ -151,7 +151,7 @@
           <value>true</value>
         </option>
         <option id="com.crt.advproject.link.memory.heapAndStack.cpp" type="string">
-          <value>&amp;Heap:BOARD_SDRAM;Post Data;0x800000&amp;Stack:SRAM_DTC_cm7;End;0x10000</value>
+          <value>&amp;Heap:BOARD_SDRAM;Post Data;0x80000&amp;Stack:SRAM_DTC_cm7;End;0x10000</value>
         </option>
         <option id="com.crt.advproject.gas.fpu" type="enum">
           <value>com.crt.advproject.gas.fpu.fpv5dp.hard</value>
@@ -170,11 +170,12 @@
       </debug_configuration>
     </debug_configurations>
     <include_paths>
-      <include_path path="middleware/eiq/tensorflow-lite/examples/micro/label_image" project_relative_path="source" type="c_include"/>
-      <include_path path="middleware/eiq/tensorflow-lite/examples/image/label_image" project_relative_path="source" type="c_include"/>
+      <include_path path="middleware/eiq/tensorflow-lite/examples/label_image" project_relative_path="source" type="c_include"/>
+      <include_path path="middleware/eiq/common" project_relative_path="source" type="c_include"/>
       <include_path path="middleware/eiq/common/image" project_relative_path="source/image" type="c_include"/>
       <include_path path="middleware/eiq/common/model" project_relative_path="source/model" type="c_include"/>
       <include_path path="boards/evkmimxrt1160/eiq_examples/tensorflow_lite_micro_label_image" project_relative_path="board" type="c_include"/>
+      <include_path path="middleware/eiq/tensorflow-lite/examples/label_image/pcq" project_relative_path="source/model" type="c_include"/>
     </include_paths>
     <source path="boards/evkmimxrt1160/eiq_examples/tensorflow_lite_micro_label_image/iar" project_relative_path="./" type="workspace" toolchain="iar">
       <files mask="tensorflow_lite_micro_label_image_cm7.ewd"/>
@@ -201,20 +202,14 @@
     </source>
     <source path="middleware/eiq/common/image" project_relative_path="source/image" type="src">
       <files mask="image_conv_rotate.c"/>
-      <files mask="image_capture.c"/>
       <files mask="image_decode_raw.c"/>
-      <files mask="image_resize_nearest.c"/>
+      <files mask="image_capture.c"/>
       <files mask="image_draw.c"/>
-    </source>
-    <source path="middleware/eiq/common" project_relative_path="board" type="c_include">
-      <files mask="board_init.h"/>
+      <files mask="image_resize_nearest.c"/>
     </source>
     <source path="middleware/eiq/common" project_relative_path="source" type="c_include">
       <files mask="demo_info.h"/>
       <files mask="timer.h"/>
-    </source>
-    <source path="middleware/eiq/common" project_relative_path="source" type="src">
-      <files mask="timer.c"/>
     </source>
     <source path="middleware/eiq/common/image" project_relative_path="source/image" type="c_include">
       <files mask="image.h"/>
@@ -231,47 +226,57 @@
     <source path="middleware/eiq/tensorflow-lite/examples/common/model" project_relative_path="source/model" type="src">
       <files mask="output_postproc.cpp"/>
     </source>
-    <source path="middleware/eiq/tensorflow-lite/examples/micro/label_image" project_relative_path="source" type="c_include">
+    <source path="middleware/eiq/tensorflow-lite/examples/label_image" project_relative_path="source" type="c_include">
       <files mask="demo_config.h"/>
-    </source>
-    <source path="middleware/eiq/tensorflow-lite/examples/micro/label_image" project_relative_path="source" type="src">
-      <files mask="demo_info.cpp"/>
-    </source>
-    <source path="middleware/eiq/tensorflow-lite/examples/micro/label_image" project_relative_path="source/image" type="c_include">
-      <files mask="image_data.h"/>
-    </source>
-    <source path="middleware/eiq/tensorflow-lite/examples/image/label_image" project_relative_path="source" type="c_include">
       <files mask="labels.h"/>
     </source>
-    <source path="middleware/eiq/tensorflow-lite/examples/image/label_image" project_relative_path="doc" type="doc">
+    <source path="middleware/eiq/tensorflow-lite/examples/common" project_relative_path="source" type="src">
+      <files mask="demo_info.cpp"/>
+    </source>
+    <source path="middleware/eiq/tensorflow-lite/examples/label_image" project_relative_path="source/image" type="c_include">
+      <files mask="image_data.h"/>
+    </source>
+    <source path="middleware/eiq/tensorflow-lite/examples/label_image" project_relative_path="doc" type="doc">
       <files mask="labels.txt"/>
-      <files mask="mobilenet_v1_0.25_128_quant_int8.tflite"/>
       <files mask="stopwatch.bmp"/>
     </source>
-    <source path="middleware/eiq/tensorflow-lite/examples/micro/label_image" project_relative_path="source/model" type="src">
-      <files mask="model.cpp"/>
+    <source path="middleware/eiq/tensorflow-lite/examples/label_image" project_relative_path="source/model" type="src">
       <files mask="model_mobilenet_ops_micro.cpp"/>
     </source>
-    <source path="middleware/eiq/tensorflow-lite/examples/image/label_image" project_relative_path="source/model" type="c_include">
-      <files mask="model_data.h"/>
+    <source path="middleware/eiq/tensorflow-lite/examples" project_relative_path="source/model" type="src">
+      <files mask="model.cpp"/>
     </source>
     <source path="middleware/eiq/tensorflow-lite/examples/image" project_relative_path="source" type="src">
       <files mask="main.cpp"/>
     </source>
     <source path="boards/evkmimxrt1160/eiq_examples/tensorflow_lite_micro_label_image" project_relative_path="board" type="src">
       <files mask="pin_mux.c"/>
-      <files mask="board.c"/>
-      <files mask="board_init.c"/>
     </source>
     <source path="boards/evkmimxrt1160/eiq_examples/tensorflow_lite_micro_label_image" project_relative_path="board" type="c_include">
       <files mask="pin_mux.h"/>
-      <files mask="board.h"/>
+    </source>
+    <source path="middleware/eiq/tensorflow-lite/examples/label_image/pcq" project_relative_path="source/model" type="c_include">
+      <files mask="model_data.h"/>
+    </source>
+    <source path="middleware/eiq/tensorflow-lite/examples/label_image/pcq" project_relative_path="doc" type="doc">
+      <files mask="mobilenet_v1_0.25_128_quant_int8.tflite"/>
+    </source>
+    <source path="middleware/eiq/common" project_relative_path="source" type="src">
+      <files mask="timer.c"/>
     </source>
     <source path="boards/evkmimxrt1160/eiq_examples/tensorflow_lite_micro_label_image" project_relative_path="board" type="src">
+      <files mask="board_init.c"/>
+    </source>
+    <source path="boards/evkmimxrt1160/eiq_examples/tensorflow_lite_micro_label_image" project_relative_path="board" type="c_include">
+      <files mask="board_init.h"/>
+    </source>
+    <source path="boards/evkmimxrt1160/eiq_examples/tensorflow_lite_micro_label_image" project_relative_path="board" type="src">
+      <files mask="board.c"/>
       <files mask="clock_config.c"/>
       <files mask="dcd.c"/>
     </source>
     <source path="boards/evkmimxrt1160/eiq_examples/tensorflow_lite_micro_label_image" project_relative_path="board" type="c_include">
+      <files mask="board.h"/>
       <files mask="clock_config.h"/>
       <files mask="dcd.h"/>
     </source>

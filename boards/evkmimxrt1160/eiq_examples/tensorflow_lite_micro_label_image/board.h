@@ -17,30 +17,30 @@
  * Definitions
  ******************************************************************************/
 /*! @brief The board name */
-#define BOARD_NAME "MIMXRT1170-EVK"
+#define BOARD_NAME "MIMXRT1160-EVK"
 #ifndef DEBUG_CONSOLE_UART_INDEX
 #define DEBUG_CONSOLE_UART_INDEX 1
 #endif
 
 /* The UART to use for debug messages. */
-#define BOARD_DEBUG_UART_TYPE kSerialPort_Uart
+#define BOARD_DEBUG_UART_TYPE     kSerialPort_Uart
 #define BOARD_DEBUG_UART_CLK_FREQ 24000000
 
 #if DEBUG_CONSOLE_UART_INDEX == 1
 #define BOARD_DEBUG_UART_BASEADDR (uint32_t) LPUART1
 #define BOARD_DEBUG_UART_INSTANCE 1U
-#define BOARD_UART_IRQ LPUART1_IRQn
-#define BOARD_UART_IRQ_HANDLER LPUART1_IRQHandler
+#define BOARD_UART_IRQ            LPUART1_IRQn
+#define BOARD_UART_IRQ_HANDLER    LPUART1_IRQHandler
 #elif DEBUG_CONSOLE_UART_INDEX == 2
 #define BOARD_DEBUG_UART_BASEADDR (uint32_t) LPUART2
 #define BOARD_DEBUG_UART_INSTANCE 2U
-#define BOARD_UART_IRQ LPUART2_IRQn
-#define BOARD_UART_IRQ_HANDLER LPUART2_IRQHandler
+#define BOARD_UART_IRQ            LPUART2_IRQn
+#define BOARD_UART_IRQ_HANDLER    LPUART2_IRQHandler
 #elif DEBUG_CONSOLE_UART_INDEX == 12
 #define BOARD_DEBUG_UART_BASEADDR (uint32_t) LPUART12
 #define BOARD_DEBUG_UART_INSTANCE 12U
-#define BOARD_UART_IRQ LPUART12_IRQn
-#define BOARD_UART_IRQ_HANDLER LPUART12_IRQHandler
+#define BOARD_UART_IRQ            LPUART12_IRQn
+#define BOARD_UART_IRQ_HANDLER    LPUART12_IRQHandler
 #else
 #error "Unsupported UART"
 #endif
@@ -51,19 +51,19 @@
 
 /* Definitions for eRPC MU transport layer */
 #if defined(FSL_FEATURE_MU_SIDE_A)
-#define MU_BASE MUA
-#define MU_IRQ MUA_IRQn
+#define MU_BASE        MUA
+#define MU_IRQ         MUA_IRQn
 #define MU_IRQ_HANDLER MUA_IRQHandler
 #endif
 #if defined(FSL_FEATURE_MU_SIDE_B)
-#define MU_BASE MUB
-#define MU_IRQ MUB_IRQn
+#define MU_BASE        MUB
+#define MU_IRQ         MUB_IRQn
 #define MU_IRQ_HANDLER MUB_IRQHandler
 #endif
 #define MU_IRQ_PRIORITY (2)
 
 /*! @brief The USER_LED used for board */
-#define LOGIC_LED_ON (0U)
+#define LOGIC_LED_ON  (0U)
 #define LOGIC_LED_OFF (1U)
 #ifndef BOARD_USER_LED_GPIO
 #define BOARD_USER_LED_GPIO GPIO9
@@ -89,9 +89,9 @@
 #ifndef BOARD_USER_BUTTON_GPIO_PIN
 #define BOARD_USER_BUTTON_GPIO_PIN (0U)
 #endif
-#define BOARD_USER_BUTTON_IRQ GPIO13_Combined_0_31_IRQn
+#define BOARD_USER_BUTTON_IRQ         GPIO13_Combined_0_31_IRQn
 #define BOARD_USER_BUTTON_IRQ_HANDLER GPIO13_Combined_0_31_IRQHandler
-#define BOARD_USER_BUTTON_NAME "SW7"
+#define BOARD_USER_BUTTON_NAME        "SW7"
 
 /*! @brief The board flash size */
 #define BOARD_FLASH_SIZE (0x1000000U)
@@ -101,174 +101,71 @@
 #define SKIP_SEMC_INIT
 #endif
 
-/*! @brief The ENET PHY address. */
+/*! @brief The ENET0 PHY address. */
 #define BOARD_ENET0_PHY_ADDRESS (0x02U) /* Phy address of enet port 0. */
 
-/* @brief The EMVSIM SMARTCARD PHY configuration. */
-#define BOARD_SMARTCARD_MODULE (EMVSIM1)          /*!< SMARTCARD communicational module instance */
-#define BOARD_SMARTCARD_MODULE_IRQ (EMVSIM1_IRQn) /*!< SMARTCARD communicational module IRQ handler */
+/*! @brief The ENET1 PHY address. */
+#define BOARD_ENET1_PHY_ADDRESS (0x01U) /* Phy address of enet port 1. */
+
+/*! @brief The EMVSIM SMARTCARD PHY configuration. */
+#define BOARD_SMARTCARD_MODULE                (EMVSIM1)      /*!< SMARTCARD communicational module instance */
+#define BOARD_SMARTCARD_MODULE_IRQ            (EMVSIM1_IRQn) /*!< SMARTCARD communicational module IRQ handler */
 #define BOARD_SMARTCARD_CLOCK_MODULE_CLK_FREQ (CLOCK_GetRootClockFreq(kCLOCK_Root_Emv1))
-#define BOARD_SMARTCARD_CLOCK_VALUE (4000000U) /*!< SMARTCARD clock frequency */
+#define BOARD_SMARTCARD_CLOCK_VALUE           (4000000U) /*!< SMARTCARD clock frequency */
 
 /* USB PHY condfiguration */
-#define BOARD_USB_PHY_D_CAL (0x0CU)
+#define BOARD_USB_PHY_D_CAL     (0x07U)
 #define BOARD_USB_PHY_TXCAL45DP (0x06U)
 #define BOARD_USB_PHY_TXCAL45DM (0x06U)
 
-#define BOARD_ARDUINO_INT_IRQ (GPIO1_INT3_IRQn)
-#define BOARD_ARDUINO_I2C_IRQ (LPI2C1_IRQn)
+#define BOARD_ARDUINO_INT_IRQ   (GPIO1_INT3_IRQn)
+#define BOARD_ARDUINO_I2C_IRQ   (LPI2C1_IRQn)
 #define BOARD_ARDUINO_I2C_INDEX (1)
-#define BOARD_USDHC1_BASEADDR USDHC1
-#define BOARD_USDHC2_BASEADDR USDHC2
-#define BOARD_USDHC_CD_GPIO_BASE GPIO9
-#define BOARD_USDHC_CD_GPIO_PIN 2
-#define BOARD_USDHC_CD_PORT_IRQ GPIO2_Combined_16_31_IRQn
-#define BOARD_USDHC_CD_PORT_IRQ_HANDLER GPIO2_Combined_16_31_IRQHandler
 
-#define BOARD_USDHC_CD_STATUS() (GPIO_PinRead(BOARD_USDHC_CD_GPIO_BASE, BOARD_USDHC_CD_GPIO_PIN))
-
-#define BOARD_USDHC_CD_INTERRUPT_STATUS() (GPIO_PortGetInterruptFlags(BOARD_USDHC_CD_GPIO_BASE))
-#define BOARD_USDHC_CD_CLEAR_INTERRUPT(flag) (GPIO_PortClearInterruptFlags(BOARD_USDHC_CD_GPIO_BASE, flag))
-
-#define BOARD_USDHC_CD_GPIO_INIT()                                                          \
-    {                                                                                       \
-        gpio_pin_config_t sw_config = {                                                     \
-            kGPIO_DigitalInput,                                                             \
-            0,                                                                              \
-            kGPIO_IntRisingOrFallingEdge,                                                   \
-        };                                                                                  \
-        GPIO_PinInit(BOARD_USDHC_CD_GPIO_BASE, BOARD_USDHC_CD_GPIO_PIN, &sw_config);        \
-        GPIO_PortEnableInterrupts(BOARD_USDHC_CD_GPIO_BASE, 1U << BOARD_USDHC_CD_GPIO_PIN); \
-        GPIO_PortClearInterruptFlags(BOARD_USDHC_CD_GPIO_BASE, ~0);                         \
-    }
 #define BOARD_HAS_SDCARD (1U)
-#define BOARD_SD_POWER_RESET_GPIO (GPIO9)
-#define BOARD_SD_POWER_RESET_GPIO_PIN (14U)
-
-#define BOARD_USDHC_CARD_INSERT_CD_LEVEL (0U)
-
-#define BOARD_USDHC_MMCCARD_POWER_CONTROL(state)
-
-#define BOARD_USDHC_MMCCARD_POWER_CONTROL_INIT()                                            \
-    {                                                                                       \
-        gpio_pin_config_t sw_config = {                                                     \
-            kGPIO_DigitalOutput,                                                            \
-            0,                                                                              \
-            kGPIO_NoIntmode,                                                                \
-        };                                                                                  \
-        GPIO_PinInit(BOARD_SD_POWER_RESET_GPIO, BOARD_SD_POWER_RESET_GPIO_PIN, &sw_config); \
-        GPIO_PinWrite(BOARD_SD_POWER_RESET_GPIO, BOARD_SD_POWER_RESET_GPIO_PIN, true);      \
-    }
-
-#define BOARD_USDHC_SDCARD_POWER_CONTROL_INIT()                                             \
-    {                                                                                       \
-        gpio_pin_config_t sw_config = {                                                     \
-            kGPIO_DigitalOutput,                                                            \
-            0,                                                                              \
-            kGPIO_NoIntmode,                                                                \
-        };                                                                                  \
-        GPIO_PinInit(BOARD_SD_POWER_RESET_GPIO, BOARD_SD_POWER_RESET_GPIO_PIN, &sw_config); \
-    }
-
-#define BOARD_USDHC_SDCARD_POWER_CONTROL(state) \
-    (GPIO_PinWrite(BOARD_SD_POWER_RESET_GPIO, BOARD_SD_POWER_RESET_GPIO_PIN, state == true ? false : true))
-
-#define BOARD_USDHC1_CLK_FREQ 400000000U
-#define BOARD_USDHC2_CLK_FREQ (CLOCK_GetSysPfdFreq(kCLOCK_Pfd0) / (CLOCK_GetDiv(kCLOCK_Usdhc2Div) + 1U))
-
-#define BOARD_SD_HOST_BASEADDR BOARD_USDHC1_BASEADDR
-#define BOARD_SD_HOST_CLK_FREQ BOARD_USDHC1_CLK_FREQ
-#define BOARD_SD_HOST_IRQ USDHC1_IRQn
-
-#define BOARD_MMC_HOST_BASEADDR BOARD_USDHC2_BASEADDR
-#define BOARD_MMC_HOST_CLK_FREQ BOARD_USDHC2_CLK_FREQ
-#define BOARD_MMC_HOST_IRQ USDHC2_IRQn
-#define BOARD_MMC_VCCQ_SUPPLY kMMC_VoltageWindow170to195
-#define BOARD_MMC_VCC_SUPPLY kMMC_VoltageWindows270to360
-/* we are using the BB SD socket to DEMO the MMC example,but the
- * SD socket provide 4bit bus only, so we define this macro to avoid
- * 8bit data bus test
- */
-#define BOARD_MMC_SUPPORT_8BIT_BUS (1U)
-
-#define BOARD_SD_HOST_SUPPORT_SDR104_FREQ (200000000U)
-#define BOARD_SD_HOST_SUPPORT_HS200_FREQ (180000000U)
-
-/*! @brief The WIFI-QCA shield pin. */
-#define BOARD_INITGT202SHIELD_PWRON_GPIO GPIO1                    /*!< GPIO device name: GPIO */
-#define BOARD_INITGT202SHIELD_PWRON_PORT 1U                       /*!< PORT device index: 1 */
-#define BOARD_INITGT202SHIELD_PWRON_GPIO_PIN 3U                   /*!< PIO4 pin index: 3 */
-#define BOARD_INITGT202SHIELD_PWRON_PIN_NAME GPIO1_3              /*!< Pin name */
-#define BOARD_INITGT202SHIELD_PWRON_LABEL "PWRON"                 /*!< Label */
-#define BOARD_INITGT202SHIELD_PWRON_NAME "PWRON"                  /*!< Identifier name */
-#define BOARD_INITGT202SHIELD_PWRON_DIRECTION kGPIO_DigitalOutput /*!< Direction */
-
-#define BOARD_INITGT202SHIELD_IRQ_GPIO GPIO1                   /*!< GPIO device name: GPIO */
-#define BOARD_INITGT202SHIELD_IRQ_PORT 1U                      /*!< PORT device index: 1 */
-#define BOARD_INITGT202SHIELD_IRQ_GPIO_PIN 19U                 /*!< PIO1 pin index: 19 */
-#define BOARD_INITGT202SHIELD_IRQ_PIN_NAME GPIO1_19            /*!< Pin name */
-#define BOARD_INITGT202SHIELD_IRQ_LABEL "IRQ"                  /*!< Label */
-#define BOARD_INITGT202SHIELD_IRQ_NAME "IRQ"                   /*!< Identifier name */
-#define BOARD_INITGT202SHIELD_IRQ_DIRECTION kGPIO_DigitalInput /*!< Direction */
-
-#define BOARD_INITSILEX2401SHIELD_PWRON_GPIO GPIO1                    /*!< GPIO device name: GPIO */
-#define BOARD_INITSILEX2401SHIELD_PWRON_PORT 1U                       /*!< PORT device index: 1 */
-#define BOARD_INITSILEX2401SHIELD_PWRON_GPIO_PIN 9U                   /*!< PIO4 pin index: 9 */
-#define BOARD_INITSILEX2401SHIELD_PWRON_PIN_NAME GPIO1_9              /*!< Pin name */
-#define BOARD_INITSILEX2401SHIELD_PWRON_LABEL "PWRON"                 /*!< Label */
-#define BOARD_INITSILEX2401SHIELD_PWRON_NAME "PWRON"                  /*!< Identifier name */
-#define BOARD_INITSILEX2401SHIELD_PWRON_DIRECTION kGPIO_DigitalOutput /*!< Direction */
-
-#define BOARD_INITSILEX2401SHIELD_IRQ_GPIO GPIO1                   /*!< GPIO device name: GPIO */
-#define BOARD_INITSILEX2401SHIELD_IRQ_PORT 1U                      /*!< PORT device index: 1 */
-#define BOARD_INITSILEX2401SHIELD_IRQ_GPIO_PIN 11U                 /*!< PIO1 pin index: 11 */
-#define BOARD_INITSILEX2401SHIELD_IRQ_PIN_NAME GPIO1_11            /*!< Pin name */
-#define BOARD_INITSILEX2401SHIELD_IRQ_LABEL "IRQ"                  /*!< Label */
-#define BOARD_INITSILEX2401SHIELD_IRQ_NAME "IRQ"                   /*!< Identifier name */
-#define BOARD_INITSILEX2401SHIELD_IRQ_DIRECTION kGPIO_DigitalInput /*!< Direction */
 
 /* @Brief Board accelerator sensor configuration */
 #define BOARD_ACCEL_I2C_BASEADDR LPI2C5
 /* Clock divider for LPI2C clock source */
 #define BOARD_ACCEL_I2C_CLOCK_FREQ (CLOCK_GetRootClockFreq(kCLOCK_Root_Lpi2c5))
 
-#define BOARD_CODEC_I2C_BASEADDR LPI2C5
-#define BOARD_CODEC_I2C_INSTANCE 5U
-#define BOARD_CODEC_I2C_CLOCK_SOURCE_SELECT (0U)
-#define BOARD_CODEC_I2C_CLOCK_SOURCE_DIVIDER (5U)
-#define BOARD_CODEC_I2C_CLOCK_FREQ (24000000U)
+#define BOARD_CODEC_I2C_BASEADDR             LPI2C5
+#define BOARD_CODEC_I2C_INSTANCE             5U
+#define BOARD_CODEC_I2C_CLOCK_SOURCE_SELECT  (0U)
+#define BOARD_CODEC_I2C_CLOCK_SOURCE_DIVIDER (6U)
+#define BOARD_CODEC_I2C_CLOCK_FREQ           (24000000U)
 
 /* @Brief Board CAMERA configuration */
-#define BOARD_CAMERA_I2C_BASEADDR LPI2C6
-#define BOARD_CAMERA_I2C_CLOCK_ROOT kCLOCK_Root_Lpi2c6
-#define BOARD_CAMERA_I2C_CLOCK_SOURCE (1U)   /* OSC24M. */
-#define BOARD_CAMERA_I2C_CLOCK_DIVIDER (11U) /* Divider = 12, LPI2C clock frequency 2M. */
+#define BOARD_CAMERA_I2C_BASEADDR      LPI2C6
+#define BOARD_CAMERA_I2C_CLOCK_ROOT    kCLOCK_Root_Lpi2c6
+#define BOARD_CAMERA_I2C_CLOCK_SOURCE  (1U)  /* OSC24M. */
+#define BOARD_CAMERA_I2C_CLOCK_DIVIDER (12U) /* Divider = 12, LPI2C clock frequency 2M. */
 
 /*! @brief The MIPI panel pins. */
-#define BOARD_MIPI_PANEL_RST_GPIO GPIO9
-#define BOARD_MIPI_PANEL_RST_PIN 1
+#define BOARD_MIPI_PANEL_RST_GPIO   GPIO9
+#define BOARD_MIPI_PANEL_RST_PIN    1
 #define BOARD_MIPI_PANEL_POWER_GPIO GPIO11
-#define BOARD_MIPI_PANEL_POWER_PIN 16
+#define BOARD_MIPI_PANEL_POWER_PIN  16
 /* Back light pin. */
 #define BOARD_MIPI_PANEL_BL_GPIO GPIO9
-#define BOARD_MIPI_PANEL_BL_PIN 29
+#define BOARD_MIPI_PANEL_BL_PIN  29
 
 /* Touch panel. */
-#define BOARD_MIPI_PANEL_TOUCH_I2C_BASEADDR LPI2C5
-#define BOARD_MIPI_PANEL_TOUCH_I2C_CLOCK_ROOT kCLOCK_Root_Lpi2c5
-#define BOARD_MIPI_PANEL_TOUCH_I2C_CLOCK_SOURCE (1U)   /* OSC24M. */
-#define BOARD_MIPI_PANEL_TOUCH_I2C_CLOCK_DIVIDER (11U) /* Divider = 12, LPI2C clock frequency 2M. */
-#define BOARD_MIPI_PANEL_TOUCH_I2C_CLOCK_FREQ CLOCK_GetRootClockFreq(BOARD_MIPI_PANEL_TOUCH_I2C_CLOCK_ROOT)
-#define BOARD_MIPI_PANEL_TOUCH_RST_GPIO GPIO9
-#define BOARD_MIPI_PANEL_TOUCH_RST_PIN 0
-#define BOARD_MIPI_PANEL_TOUCH_INT_GPIO GPIO8
-#define BOARD_MIPI_PANEL_TOUCH_INT_PIN 31
+#define BOARD_MIPI_PANEL_TOUCH_I2C_BASEADDR      LPI2C5
+#define BOARD_MIPI_PANEL_TOUCH_I2C_CLOCK_ROOT    kCLOCK_Root_Lpi2c5
+#define BOARD_MIPI_PANEL_TOUCH_I2C_CLOCK_SOURCE  (1U)  /* OSC24M. */
+#define BOARD_MIPI_PANEL_TOUCH_I2C_CLOCK_DIVIDER (12U) /* Divider = 12, LPI2C clock frequency 2M. */
+#define BOARD_MIPI_PANEL_TOUCH_I2C_CLOCK_FREQ    CLOCK_GetRootClockFreq(BOARD_MIPI_PANEL_TOUCH_I2C_CLOCK_ROOT)
+#define BOARD_MIPI_PANEL_TOUCH_RST_GPIO          GPIO9
+#define BOARD_MIPI_PANEL_TOUCH_RST_PIN           0
+#define BOARD_MIPI_PANEL_TOUCH_INT_GPIO          GPIO8
+#define BOARD_MIPI_PANEL_TOUCH_INT_PIN           31
 
 /*! @brief The camera pins. */
 #define BOARD_CAMERA_PWDN_GPIO GPIO9
-#define BOARD_CAMERA_PWDN_PIN 25
-#define BOARD_CAMERA_RST_GPIO GPIO11
-#define BOARD_CAMERA_RST_PIN 15
+#define BOARD_CAMERA_PWDN_PIN  25
+#define BOARD_CAMERA_RST_GPIO  GPIO11
+#define BOARD_CAMERA_RST_PIN   15
 
 /* SD card detection method when using wifi module. */
 #define BOARD_WIFI_SD_DETECT_TYPE kSDMMCHOST_DetectCardByHostDATA3

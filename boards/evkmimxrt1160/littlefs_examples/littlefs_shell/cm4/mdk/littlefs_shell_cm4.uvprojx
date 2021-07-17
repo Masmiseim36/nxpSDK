@@ -332,9 +332,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>DEBUG, CPU_MIMXRT1166DVM6A_cm4, LFS_NO_INTRINSICS=1, SDK_DEBUGCONSOLE_UART, DEBUG_CONSOLE_RX_ENABLE=0, SERIAL_PORT_TYPE_UART=1</Define>
+              <Define>DEBUG, CPU_MIMXRT1166DVM6A_cm4, LFS_NO_INTRINSICS=1, SDK_DEBUGCONSOLE_UART, MFLASH_FILE_BASEADDR=14221312, DEBUG_CONSOLE_RX_ENABLE=0, SERIAL_PORT_TYPE_UART=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../devices/MIMXRT1166/drivers/cm4;../../../../../../devices/MIMXRT1166/drivers;../../../../../../middleware/littlefs;../../../../../../devices/MIMXRT1166/utilities;../../../../../../devices/MIMXRT1166;../../../../../../CMSIS/Include;../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../devices/MIMXRT1166/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists</IncludePath>
+              <IncludePath>..;../../../../../../devices/MIMXRT1166/drivers/cm4;../../../../../../components/flash/mflash/mimxrt1160;../../../../../../components/flash/mflash;../../../../../../devices/MIMXRT1166/drivers;../../../../../../middleware/littlefs;../../../../../../devices/MIMXRT1166/utilities;../../../../../../devices/MIMXRT1166;../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../devices/MIMXRT1166/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -368,7 +368,7 @@
             <ScatterFile>MIMXRT1166xxxxx_cm4_ram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --predefine="-D__stack_size__=0x1000" --predefine="-D__heap_size__=0x1000"</Misc>
+            <Misc>--remove --entry=Reset_Handler --predefine="-D__stack_size__=0x1000" --predefine="-D__heap_size__=0x1000"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -382,6 +382,16 @@
               <FileName>littlefs_shell.c</FileName>
               <FileType>1</FileType>
               <FilePath>../littlefs_shell.c</FilePath>
+            </File>
+            <File>
+              <FileName>lfs_mflash.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../lfs_mflash.c</FilePath>
+            </File>
+            <File>
+              <FileName>lfs_mflash.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../lfs_mflash.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -397,16 +407,6 @@
               <FileName>pin_mux.h</FileName>
               <FileType>5</FileType>
               <FilePath>../pin_mux.h</FilePath>
-            </File>
-            <File>
-              <FileName>lfs_support.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../lfs_support.c</FilePath>
-            </File>
-            <File>
-              <FileName>lfs_support.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../lfs_support.h</FilePath>
             </File>
             <File>
               <FileName>peripherals.c</FileName>
@@ -461,6 +461,21 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>evkmimxrt1160</GroupName>
+          <Files>
+            <File>
+              <FileName>evkmimxrt1160_connect_cm4_cm4side.jlinkscript</FileName>
+              <FileType>5</FileType>
+              <FilePath>../evkmimxrt1160_connect_cm4_cm4side.jlinkscript</FilePath>
+            </File>
+            <File>
+              <FileName>evkmimxrt1160_connect_cm4_cm4side_sdram.jlinkscript</FileName>
+              <FileType>5</FileType>
+              <FilePath>../evkmimxrt1160_connect_cm4_cm4side_sdram.jlinkscript</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>drivers</GroupName>
           <Files>
             <File>
@@ -502,6 +517,16 @@
               <FileName>fsl_common.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT1166/drivers/fsl_common.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1166/drivers/fsl_common_arm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1166/drivers/fsl_common_arm.h</FilePath>
             </File>
             <File>
               <FileName>fsl_lpuart.h</FileName>
@@ -557,6 +582,31 @@
               <FileName>fsl_anatop_ai.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT1166/drivers/fsl_anatop_ai.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>flash/mflash/mimxrt1160</GroupName>
+          <Files>
+            <File>
+              <FileName>mflash_drv.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/flash/mflash/mimxrt1160/mflash_drv.h</FilePath>
+            </File>
+            <File>
+              <FileName>mflash_drv.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/flash/mflash/mimxrt1160/mflash_drv.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>flash/mflash</GroupName>
+          <Files>
+            <File>
+              <FileName>mflash_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/flash/mflash/mflash_common.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -661,71 +711,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>CMSIS</GroupName>
-          <Files>
-            <File>
-              <FileName>core_cm4.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/core_cm4.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_armcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_armcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_armclang.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_armclang.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_armclang_ltm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_armclang_ltm.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_gcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_compiler.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_version.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_version.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_iccarm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_iccarm.h</FilePath>
-            </File>
-            <File>
-              <FileName>arm_common_tables.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/arm_common_tables.h</FilePath>
-            </File>
-            <File>
-              <FileName>arm_const_structs.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/arm_const_structs.h</FilePath>
-            </File>
-            <File>
-              <FileName>arm_math.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/arm_math.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>component/uart</GroupName>
           <Files>
             <File>
@@ -792,6 +777,56 @@
               <FileName>startup_MIMXRT1166_cm4.S</FileName>
               <FileType>2</FileType>
               <FilePath>../../../../../../devices/MIMXRT1166/arm/startup_MIMXRT1166_cm4.S</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>CMSIS</GroupName>
+          <Files>
+            <File>
+              <FileName>cmsis_armcc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_armclang.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_armclang_ltm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armclang_ltm.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_compiler.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_gcc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_iccarm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_version.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_version.h</FilePath>
+            </File>
+            <File>
+              <FileName>core_cm4.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/core_cm4.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/mpu_armv7.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1126,9 +1161,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>USE_SDRAM, DATA_SECTION_IS_CACHEABLE=1, DEBUG, CPU_MIMXRT1166DVM6A_cm4, LFS_NO_INTRINSICS=1, SDK_DEBUGCONSOLE_UART, DEBUG_CONSOLE_RX_ENABLE=0, SERIAL_PORT_TYPE_UART=1</Define>
+              <Define>USE_SDRAM, DATA_SECTION_IS_CACHEABLE=1, DEBUG, CPU_MIMXRT1166DVM6A_cm4, LFS_NO_INTRINSICS=1, SDK_DEBUGCONSOLE_UART, MFLASH_FILE_BASEADDR=14221312, DEBUG_CONSOLE_RX_ENABLE=0, SERIAL_PORT_TYPE_UART=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../devices/MIMXRT1166/drivers/cm4;../../../../../../devices/MIMXRT1166/drivers;../../../../../../middleware/littlefs;../../../../../../devices/MIMXRT1166/utilities;../../../../../../devices/MIMXRT1166;../../../../../../CMSIS/Include;../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../devices/MIMXRT1166/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists</IncludePath>
+              <IncludePath>..;../../../../../../devices/MIMXRT1166/drivers/cm4;../../../../../../components/flash/mflash/mimxrt1160;../../../../../../components/flash/mflash;../../../../../../devices/MIMXRT1166/drivers;../../../../../../middleware/littlefs;../../../../../../devices/MIMXRT1166/utilities;../../../../../../devices/MIMXRT1166;../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../devices/MIMXRT1166/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1162,7 +1197,7 @@
             <ScatterFile>MIMXRT1166xxxxx_cm4_sdram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --predefine="-D__stack_size__=0x1000" --predefine="-D__heap_size__=0x1000"</Misc>
+            <Misc>--remove --entry=Reset_Handler --predefine="-D__stack_size__=0x1000" --predefine="-D__heap_size__=0x1000"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -1176,6 +1211,16 @@
               <FileName>littlefs_shell.c</FileName>
               <FileType>1</FileType>
               <FilePath>../littlefs_shell.c</FilePath>
+            </File>
+            <File>
+              <FileName>lfs_mflash.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../lfs_mflash.c</FilePath>
+            </File>
+            <File>
+              <FileName>lfs_mflash.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../lfs_mflash.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1191,16 +1236,6 @@
               <FileName>pin_mux.h</FileName>
               <FileType>5</FileType>
               <FilePath>../pin_mux.h</FilePath>
-            </File>
-            <File>
-              <FileName>lfs_support.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../lfs_support.c</FilePath>
-            </File>
-            <File>
-              <FileName>lfs_support.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../lfs_support.h</FilePath>
             </File>
             <File>
               <FileName>peripherals.c</FileName>
@@ -1255,6 +1290,21 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>evkmimxrt1160</GroupName>
+          <Files>
+            <File>
+              <FileName>evkmimxrt1160_connect_cm4_cm4side.jlinkscript</FileName>
+              <FileType>5</FileType>
+              <FilePath>../evkmimxrt1160_connect_cm4_cm4side.jlinkscript</FilePath>
+            </File>
+            <File>
+              <FileName>evkmimxrt1160_connect_cm4_cm4side_sdram.jlinkscript</FileName>
+              <FileType>5</FileType>
+              <FilePath>../evkmimxrt1160_connect_cm4_cm4side_sdram.jlinkscript</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>drivers</GroupName>
           <Files>
             <File>
@@ -1296,6 +1346,16 @@
               <FileName>fsl_common.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT1166/drivers/fsl_common.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1166/drivers/fsl_common_arm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1166/drivers/fsl_common_arm.h</FilePath>
             </File>
             <File>
               <FileName>fsl_lpuart.h</FileName>
@@ -1351,6 +1411,31 @@
               <FileName>fsl_anatop_ai.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT1166/drivers/fsl_anatop_ai.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>flash/mflash/mimxrt1160</GroupName>
+          <Files>
+            <File>
+              <FileName>mflash_drv.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/flash/mflash/mimxrt1160/mflash_drv.h</FilePath>
+            </File>
+            <File>
+              <FileName>mflash_drv.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/flash/mflash/mimxrt1160/mflash_drv.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>flash/mflash</GroupName>
+          <Files>
+            <File>
+              <FileName>mflash_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/flash/mflash/mflash_common.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1455,71 +1540,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>CMSIS</GroupName>
-          <Files>
-            <File>
-              <FileName>core_cm4.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/core_cm4.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_armcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_armcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_armclang.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_armclang.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_armclang_ltm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_armclang_ltm.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_gcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_compiler.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_version.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_version.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_iccarm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_iccarm.h</FilePath>
-            </File>
-            <File>
-              <FileName>arm_common_tables.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/arm_common_tables.h</FilePath>
-            </File>
-            <File>
-              <FileName>arm_const_structs.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/arm_const_structs.h</FilePath>
-            </File>
-            <File>
-              <FileName>arm_math.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/arm_math.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>component/uart</GroupName>
           <Files>
             <File>
@@ -1586,6 +1606,56 @@
               <FileName>startup_MIMXRT1166_cm4.S</FileName>
               <FileType>2</FileType>
               <FilePath>../../../../../../devices/MIMXRT1166/arm/startup_MIMXRT1166_cm4.S</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>CMSIS</GroupName>
+          <Files>
+            <File>
+              <FileName>cmsis_armcc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_armclang.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_armclang_ltm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armclang_ltm.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_compiler.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_gcc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_iccarm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_version.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_version.h</FilePath>
+            </File>
+            <File>
+              <FileName>core_cm4.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/core_cm4.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/mpu_armv7.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1920,9 +1990,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>NDEBUG, CPU_MIMXRT1166DVM6A_cm4, LFS_NO_INTRINSICS=1, SDK_DEBUGCONSOLE_UART, DEBUG_CONSOLE_RX_ENABLE=0, SERIAL_PORT_TYPE_UART=1</Define>
+              <Define>NDEBUG, CPU_MIMXRT1166DVM6A_cm4, LFS_NO_INTRINSICS=1, SDK_DEBUGCONSOLE_UART, MFLASH_FILE_BASEADDR=14221312, DEBUG_CONSOLE_RX_ENABLE=0, SERIAL_PORT_TYPE_UART=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../devices/MIMXRT1166/drivers/cm4;../../../../../../devices/MIMXRT1166/drivers;../../../../../../middleware/littlefs;../../../../../../devices/MIMXRT1166/utilities;../../../../../../devices/MIMXRT1166;../../../../../../CMSIS/Include;../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../devices/MIMXRT1166/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists</IncludePath>
+              <IncludePath>..;../../../../../../devices/MIMXRT1166/drivers/cm4;../../../../../../components/flash/mflash/mimxrt1160;../../../../../../components/flash/mflash;../../../../../../devices/MIMXRT1166/drivers;../../../../../../middleware/littlefs;../../../../../../devices/MIMXRT1166/utilities;../../../../../../devices/MIMXRT1166;../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../devices/MIMXRT1166/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1956,7 +2026,7 @@
             <ScatterFile>MIMXRT1166xxxxx_cm4_ram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --predefine="-D__stack_size__=0x1000" --predefine="-D__heap_size__=0x1000"</Misc>
+            <Misc>--remove --entry=Reset_Handler --predefine="-D__stack_size__=0x1000" --predefine="-D__heap_size__=0x1000"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -1970,6 +2040,16 @@
               <FileName>littlefs_shell.c</FileName>
               <FileType>1</FileType>
               <FilePath>../littlefs_shell.c</FilePath>
+            </File>
+            <File>
+              <FileName>lfs_mflash.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../lfs_mflash.c</FilePath>
+            </File>
+            <File>
+              <FileName>lfs_mflash.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../lfs_mflash.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1985,16 +2065,6 @@
               <FileName>pin_mux.h</FileName>
               <FileType>5</FileType>
               <FilePath>../pin_mux.h</FilePath>
-            </File>
-            <File>
-              <FileName>lfs_support.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../lfs_support.c</FilePath>
-            </File>
-            <File>
-              <FileName>lfs_support.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../lfs_support.h</FilePath>
             </File>
             <File>
               <FileName>peripherals.c</FileName>
@@ -2049,6 +2119,21 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>evkmimxrt1160</GroupName>
+          <Files>
+            <File>
+              <FileName>evkmimxrt1160_connect_cm4_cm4side.jlinkscript</FileName>
+              <FileType>5</FileType>
+              <FilePath>../evkmimxrt1160_connect_cm4_cm4side.jlinkscript</FilePath>
+            </File>
+            <File>
+              <FileName>evkmimxrt1160_connect_cm4_cm4side_sdram.jlinkscript</FileName>
+              <FileType>5</FileType>
+              <FilePath>../evkmimxrt1160_connect_cm4_cm4side_sdram.jlinkscript</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>drivers</GroupName>
           <Files>
             <File>
@@ -2090,6 +2175,16 @@
               <FileName>fsl_common.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT1166/drivers/fsl_common.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1166/drivers/fsl_common_arm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1166/drivers/fsl_common_arm.h</FilePath>
             </File>
             <File>
               <FileName>fsl_lpuart.h</FileName>
@@ -2145,6 +2240,31 @@
               <FileName>fsl_anatop_ai.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT1166/drivers/fsl_anatop_ai.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>flash/mflash/mimxrt1160</GroupName>
+          <Files>
+            <File>
+              <FileName>mflash_drv.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/flash/mflash/mimxrt1160/mflash_drv.h</FilePath>
+            </File>
+            <File>
+              <FileName>mflash_drv.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/flash/mflash/mimxrt1160/mflash_drv.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>flash/mflash</GroupName>
+          <Files>
+            <File>
+              <FileName>mflash_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/flash/mflash/mflash_common.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2249,71 +2369,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>CMSIS</GroupName>
-          <Files>
-            <File>
-              <FileName>core_cm4.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/core_cm4.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_armcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_armcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_armclang.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_armclang.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_armclang_ltm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_armclang_ltm.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_gcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_compiler.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_version.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_version.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_iccarm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_iccarm.h</FilePath>
-            </File>
-            <File>
-              <FileName>arm_common_tables.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/arm_common_tables.h</FilePath>
-            </File>
-            <File>
-              <FileName>arm_const_structs.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/arm_const_structs.h</FilePath>
-            </File>
-            <File>
-              <FileName>arm_math.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/arm_math.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>component/uart</GroupName>
           <Files>
             <File>
@@ -2380,6 +2435,56 @@
               <FileName>startup_MIMXRT1166_cm4.S</FileName>
               <FileType>2</FileType>
               <FilePath>../../../../../../devices/MIMXRT1166/arm/startup_MIMXRT1166_cm4.S</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>CMSIS</GroupName>
+          <Files>
+            <File>
+              <FileName>cmsis_armcc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_armclang.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_armclang_ltm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armclang_ltm.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_compiler.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_gcc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_iccarm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_version.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_version.h</FilePath>
+            </File>
+            <File>
+              <FileName>core_cm4.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/core_cm4.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/mpu_armv7.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2714,9 +2819,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>USE_SDRAM, DATA_SECTION_IS_CACHEABLE=1, NDEBUG, CPU_MIMXRT1166DVM6A_cm4, LFS_NO_INTRINSICS=1, SDK_DEBUGCONSOLE_UART, DEBUG_CONSOLE_RX_ENABLE=0, SERIAL_PORT_TYPE_UART=1</Define>
+              <Define>USE_SDRAM, DATA_SECTION_IS_CACHEABLE=1, NDEBUG, CPU_MIMXRT1166DVM6A_cm4, LFS_NO_INTRINSICS=1, SDK_DEBUGCONSOLE_UART, MFLASH_FILE_BASEADDR=14221312, DEBUG_CONSOLE_RX_ENABLE=0, SERIAL_PORT_TYPE_UART=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../devices/MIMXRT1166/drivers/cm4;../../../../../../devices/MIMXRT1166/drivers;../../../../../../middleware/littlefs;../../../../../../devices/MIMXRT1166/utilities;../../../../../../devices/MIMXRT1166;../../../../../../CMSIS/Include;../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../devices/MIMXRT1166/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists</IncludePath>
+              <IncludePath>..;../../../../../../devices/MIMXRT1166/drivers/cm4;../../../../../../components/flash/mflash/mimxrt1160;../../../../../../components/flash/mflash;../../../../../../devices/MIMXRT1166/drivers;../../../../../../middleware/littlefs;../../../../../../devices/MIMXRT1166/utilities;../../../../../../devices/MIMXRT1166;../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../devices/MIMXRT1166/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2750,7 +2855,7 @@
             <ScatterFile>MIMXRT1166xxxxx_cm4_sdram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --predefine="-D__stack_size__=0x1000" --predefine="-D__heap_size__=0x1000"</Misc>
+            <Misc>--remove --entry=Reset_Handler --predefine="-D__stack_size__=0x1000" --predefine="-D__heap_size__=0x1000"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -2764,6 +2869,16 @@
               <FileName>littlefs_shell.c</FileName>
               <FileType>1</FileType>
               <FilePath>../littlefs_shell.c</FilePath>
+            </File>
+            <File>
+              <FileName>lfs_mflash.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../lfs_mflash.c</FilePath>
+            </File>
+            <File>
+              <FileName>lfs_mflash.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../lfs_mflash.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2779,16 +2894,6 @@
               <FileName>pin_mux.h</FileName>
               <FileType>5</FileType>
               <FilePath>../pin_mux.h</FilePath>
-            </File>
-            <File>
-              <FileName>lfs_support.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../lfs_support.c</FilePath>
-            </File>
-            <File>
-              <FileName>lfs_support.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../lfs_support.h</FilePath>
             </File>
             <File>
               <FileName>peripherals.c</FileName>
@@ -2843,6 +2948,21 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>evkmimxrt1160</GroupName>
+          <Files>
+            <File>
+              <FileName>evkmimxrt1160_connect_cm4_cm4side.jlinkscript</FileName>
+              <FileType>5</FileType>
+              <FilePath>../evkmimxrt1160_connect_cm4_cm4side.jlinkscript</FilePath>
+            </File>
+            <File>
+              <FileName>evkmimxrt1160_connect_cm4_cm4side_sdram.jlinkscript</FileName>
+              <FileType>5</FileType>
+              <FilePath>../evkmimxrt1160_connect_cm4_cm4side_sdram.jlinkscript</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>drivers</GroupName>
           <Files>
             <File>
@@ -2884,6 +3004,16 @@
               <FileName>fsl_common.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT1166/drivers/fsl_common.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1166/drivers/fsl_common_arm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1166/drivers/fsl_common_arm.h</FilePath>
             </File>
             <File>
               <FileName>fsl_lpuart.h</FileName>
@@ -2939,6 +3069,31 @@
               <FileName>fsl_anatop_ai.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT1166/drivers/fsl_anatop_ai.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>flash/mflash/mimxrt1160</GroupName>
+          <Files>
+            <File>
+              <FileName>mflash_drv.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/flash/mflash/mimxrt1160/mflash_drv.h</FilePath>
+            </File>
+            <File>
+              <FileName>mflash_drv.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/flash/mflash/mimxrt1160/mflash_drv.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>flash/mflash</GroupName>
+          <Files>
+            <File>
+              <FileName>mflash_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/flash/mflash/mflash_common.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -3043,71 +3198,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>CMSIS</GroupName>
-          <Files>
-            <File>
-              <FileName>core_cm4.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/core_cm4.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_armcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_armcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_armclang.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_armclang.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_armclang_ltm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_armclang_ltm.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_gcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_compiler.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_version.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_version.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_iccarm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_iccarm.h</FilePath>
-            </File>
-            <File>
-              <FileName>arm_common_tables.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/arm_common_tables.h</FilePath>
-            </File>
-            <File>
-              <FileName>arm_const_structs.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/arm_const_structs.h</FilePath>
-            </File>
-            <File>
-              <FileName>arm_math.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/arm_math.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>component/uart</GroupName>
           <Files>
             <File>
@@ -3174,6 +3264,56 @@
               <FileName>startup_MIMXRT1166_cm4.S</FileName>
               <FileType>2</FileType>
               <FilePath>../../../../../../devices/MIMXRT1166/arm/startup_MIMXRT1166_cm4.S</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>CMSIS</GroupName>
+          <Files>
+            <File>
+              <FileName>cmsis_armcc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_armclang.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_armclang_ltm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_armclang_ltm.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_compiler.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_gcc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_iccarm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_version.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cmsis_version.h</FilePath>
+            </File>
+            <File>
+              <FileName>core_cm4.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/core_cm4.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/mpu_armv7.h</FilePath>
             </File>
           </Files>
         </Group>

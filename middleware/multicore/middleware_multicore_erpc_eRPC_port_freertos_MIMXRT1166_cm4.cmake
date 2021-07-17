@@ -1,19 +1,17 @@
-if(NOT MIDDLEWARE_MULTICORE_ERPC_ERPC_PORT_FREERTOS_MIMXRT1166_cm4_INCLUDED)
-    
-    set(MIDDLEWARE_MULTICORE_ERPC_ERPC_PORT_FREERTOS_MIMXRT1166_cm4_INCLUDED true CACHE BOOL "middleware_multicore_erpc_eRPC_port_freertos component is included.")
+include_guard(GLOBAL)
+message("middleware_multicore_erpc_eRPC_port_freertos component is included.")
 
-    target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
-        ${CMAKE_CURRENT_LIST_DIR}/erpc/erpc_c/port/erpc_port_freertos.cpp
-        ${CMAKE_CURRENT_LIST_DIR}/erpc/erpc_c/port/erpc_threading_freertos.cpp
-        ${CMAKE_CURRENT_LIST_DIR}/erpc/erpc_c/port/erpc_setup_extensions_freertos.cpp
-    )
-
-
-    target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
-        ${CMAKE_CURRENT_LIST_DIR}/erpc/erpc_c/port
-    )
+target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
+    ${CMAKE_CURRENT_LIST_DIR}/erpc/erpc_c/port/erpc_port_freertos.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/erpc/erpc_c/port/erpc_threading_freertos.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/erpc/erpc_c/port/erpc_setup_extensions_freertos.cpp
+)
 
 
-    include(middleware_multicore_erpc_common_MIMXRT1166_cm4)
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
+    ${CMAKE_CURRENT_LIST_DIR}/erpc/erpc_c/port
+)
 
-endif()
+
+include(middleware_multicore_erpc_common_MIMXRT1166_cm4)
+

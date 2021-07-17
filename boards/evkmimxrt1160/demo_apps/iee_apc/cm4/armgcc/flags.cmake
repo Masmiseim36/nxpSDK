@@ -4,7 +4,6 @@ SET(CMAKE_ASM_FLAGS_DEBUG " \
     -D__STARTUP_CLEAR_BSS \
     -D__STARTUP_INITIALIZE_NONCACHEDATA \
     -g \
-    -flto \
     -mcpu=cortex-m4 \
     -Wall \
     -mfloat-abi=hard \
@@ -23,7 +22,6 @@ SET(CMAKE_ASM_FLAGS_RELEASE " \
     -DNDEBUG \
     -D__STARTUP_CLEAR_BSS \
     -D__STARTUP_INITIALIZE_NONCACHEDATA \
-    -flto \
     -mcpu=cortex-m4 \
     -Wall \
     -mfloat-abi=hard \
@@ -43,7 +41,6 @@ SET(CMAKE_ASM_FLAGS_SDRAM_DEBUG " \
     -DDEBUG \
     -D__STARTUP_INITIALIZE_NONCACHEDATA \
     -g \
-    -flto \
     -mcpu=cortex-m4 \
     -Wall \
     -mfloat-abi=hard \
@@ -62,7 +59,6 @@ SET(CMAKE_ASM_FLAGS_SDRAM_RELEASE " \
     -D__STARTUP_CLEAR_BSS \
     -DNDEBUG \
     -D__STARTUP_INITIALIZE_NONCACHEDATA \
-    -flto \
     -mcpu=cortex-m4 \
     -Wall \
     -mfloat-abi=hard \
@@ -82,7 +78,6 @@ SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_DEBUG " \
     -DDEBUG \
     -D__STARTUP_INITIALIZE_NONCACHEDATA \
     -g \
-    -flto \
     -mcpu=cortex-m4 \
     -Wall \
     -mfloat-abi=hard \
@@ -101,7 +96,6 @@ SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_RELEASE " \
     -D__STARTUP_CLEAR_BSS \
     -DNDEBUG \
     -D__STARTUP_INITIALIZE_NONCACHEDATA \
-    -flto \
     -mcpu=cortex-m4 \
     -Wall \
     -mfloat-abi=hard \
@@ -125,9 +119,9 @@ SET(CMAKE_C_FLAGS_DEBUG " \
     -DPRINTF_ADVANCED_ENABLE=0 \
     -DSCANF_ADVANCED_ENABLE=0 \
     -DSERIAL_PORT_TYPE_UART=1 \
+    -DMCUXPRESSO_SDK \
     -g \
     -O0 \
-    -flto \
     -mcpu=cortex-m4 \
     -Wall \
     -mfloat-abi=hard \
@@ -153,8 +147,8 @@ SET(CMAKE_C_FLAGS_RELEASE " \
     -DPRINTF_ADVANCED_ENABLE=0 \
     -DSCANF_ADVANCED_ENABLE=0 \
     -DSERIAL_PORT_TYPE_UART=1 \
+    -DMCUXPRESSO_SDK \
     -Os \
-    -flto \
     -mcpu=cortex-m4 \
     -Wall \
     -mfloat-abi=hard \
@@ -182,9 +176,9 @@ SET(CMAKE_C_FLAGS_SDRAM_DEBUG " \
     -DPRINTF_ADVANCED_ENABLE=0 \
     -DSCANF_ADVANCED_ENABLE=0 \
     -DSERIAL_PORT_TYPE_UART=1 \
+    -DMCUXPRESSO_SDK \
     -g \
     -O0 \
-    -flto \
     -mcpu=cortex-m4 \
     -Wall \
     -mfloat-abi=hard \
@@ -212,8 +206,8 @@ SET(CMAKE_C_FLAGS_SDRAM_RELEASE " \
     -DPRINTF_ADVANCED_ENABLE=0 \
     -DSCANF_ADVANCED_ENABLE=0 \
     -DSERIAL_PORT_TYPE_UART=1 \
+    -DMCUXPRESSO_SDK \
     -Os \
-    -flto \
     -mcpu=cortex-m4 \
     -Wall \
     -mfloat-abi=hard \
@@ -241,9 +235,9 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG " \
     -DPRINTF_ADVANCED_ENABLE=0 \
     -DSCANF_ADVANCED_ENABLE=0 \
     -DSERIAL_PORT_TYPE_UART=1 \
+    -DMCUXPRESSO_SDK \
     -g \
     -O0 \
-    -flto \
     -mcpu=cortex-m4 \
     -Wall \
     -mfloat-abi=hard \
@@ -271,8 +265,8 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE " \
     -DPRINTF_ADVANCED_ENABLE=0 \
     -DSCANF_ADVANCED_ENABLE=0 \
     -DSERIAL_PORT_TYPE_UART=1 \
+    -DMCUXPRESSO_SDK \
     -Os \
-    -flto \
     -mcpu=cortex-m4 \
     -Wall \
     -mfloat-abi=hard \
@@ -293,6 +287,7 @@ SET(CMAKE_CXX_FLAGS_DEBUG " \
     -DDEBUG \
     -DCPU_MIMXRT1166DVM6A_cm4 \
     -DSERIAL_PORT_TYPE_UART=1 \
+    -DMCUXPRESSO_SDK \
     -g \
     -O0 \
     -mcpu=cortex-m4 \
@@ -316,6 +311,7 @@ SET(CMAKE_CXX_FLAGS_RELEASE " \
     -DNDEBUG \
     -DCPU_MIMXRT1166DVM6A_cm4 \
     -DSERIAL_PORT_TYPE_UART=1 \
+    -DMCUXPRESSO_SDK \
     -Os \
     -mcpu=cortex-m4 \
     -Wall \
@@ -338,6 +334,7 @@ SET(CMAKE_CXX_FLAGS_SDRAM_DEBUG " \
     -DDEBUG \
     -DCPU_MIMXRT1166DVM6A_cm4 \
     -DSERIAL_PORT_TYPE_UART=1 \
+    -DMCUXPRESSO_SDK \
     -g \
     -O0 \
     -mcpu=cortex-m4 \
@@ -361,6 +358,7 @@ SET(CMAKE_CXX_FLAGS_SDRAM_RELEASE " \
     -DNDEBUG \
     -DCPU_MIMXRT1166DVM6A_cm4 \
     -DSERIAL_PORT_TYPE_UART=1 \
+    -DMCUXPRESSO_SDK \
     -Os \
     -mcpu=cortex-m4 \
     -Wall \
@@ -383,6 +381,7 @@ SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_DEBUG " \
     -DDEBUG \
     -DCPU_MIMXRT1166DVM6A_cm4 \
     -DSERIAL_PORT_TYPE_UART=1 \
+    -DMCUXPRESSO_SDK \
     -g \
     -O0 \
     -mcpu=cortex-m4 \
@@ -406,6 +405,7 @@ SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE " \
     -DNDEBUG \
     -DCPU_MIMXRT1166DVM6A_cm4 \
     -DSERIAL_PORT_TYPE_UART=1 \
+    -DMCUXPRESSO_SDK \
     -Os \
     -mcpu=cortex-m4 \
     -Wall \
@@ -426,7 +426,6 @@ SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE " \
 SET(CMAKE_EXE_LINKER_FLAGS_DEBUG " \
     ${CMAKE_EXE_LINKER_FLAGS_DEBUG} \
     -g \
-    -flto \
     -mcpu=cortex-m4 \
     -Wall \
     -mfloat-abi=hard \
@@ -450,11 +449,11 @@ SET(CMAKE_EXE_LINKER_FLAGS_DEBUG " \
     muldefs \
     -Xlinker \
     -Map=output.map \
+    -Wl,--print-memory-usage \
     -T${ProjDirPath}/MIMXRT1166xxxxx_cm4_ram.ld -static \
 ")
 SET(CMAKE_EXE_LINKER_FLAGS_RELEASE " \
     ${CMAKE_EXE_LINKER_FLAGS_RELEASE} \
-    -flto \
     -mcpu=cortex-m4 \
     -Wall \
     -mfloat-abi=hard \
@@ -478,12 +477,12 @@ SET(CMAKE_EXE_LINKER_FLAGS_RELEASE " \
     muldefs \
     -Xlinker \
     -Map=output.map \
+    -Wl,--print-memory-usage \
     -T${ProjDirPath}/MIMXRT1166xxxxx_cm4_ram.ld -static \
 ")
 SET(CMAKE_EXE_LINKER_FLAGS_SDRAM_DEBUG " \
     ${CMAKE_EXE_LINKER_FLAGS_SDRAM_DEBUG} \
     -g \
-    -flto \
     -mcpu=cortex-m4 \
     -Wall \
     -mfloat-abi=hard \
@@ -507,11 +506,11 @@ SET(CMAKE_EXE_LINKER_FLAGS_SDRAM_DEBUG " \
     muldefs \
     -Xlinker \
     -Map=output.map \
+    -Wl,--print-memory-usage \
     -T${ProjDirPath}/MIMXRT1166xxxxx_cm4_sdram.ld -static \
 ")
 SET(CMAKE_EXE_LINKER_FLAGS_SDRAM_RELEASE " \
     ${CMAKE_EXE_LINKER_FLAGS_SDRAM_RELEASE} \
-    -flto \
     -mcpu=cortex-m4 \
     -Wall \
     -mfloat-abi=hard \
@@ -535,12 +534,12 @@ SET(CMAKE_EXE_LINKER_FLAGS_SDRAM_RELEASE " \
     muldefs \
     -Xlinker \
     -Map=output.map \
+    -Wl,--print-memory-usage \
     -T${ProjDirPath}/MIMXRT1166xxxxx_cm4_sdram.ld -static \
 ")
 SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_DEBUG " \
     ${CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_DEBUG} \
     -g \
-    -flto \
     -mcpu=cortex-m4 \
     -Wall \
     -mfloat-abi=hard \
@@ -564,11 +563,11 @@ SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_DEBUG " \
     muldefs \
     -Xlinker \
     -Map=output.map \
+    -Wl,--print-memory-usage \
     -T${ProjDirPath}/MIMXRT1166xxxxx_cm4_flexspi_nor.ld -static \
 ")
 SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_RELEASE " \
     ${CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_RELEASE} \
-    -flto \
     -mcpu=cortex-m4 \
     -Wall \
     -mfloat-abi=hard \
@@ -592,5 +591,6 @@ SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_RELEASE " \
     muldefs \
     -Xlinker \
     -Map=output.map \
+    -Wl,--print-memory-usage \
     -T${ProjDirPath}/MIMXRT1166xxxxx_cm4_flexspi_nor.ld -static \
 ")

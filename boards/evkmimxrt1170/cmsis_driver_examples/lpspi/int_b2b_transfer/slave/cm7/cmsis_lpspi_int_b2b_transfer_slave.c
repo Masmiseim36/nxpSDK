@@ -19,7 +19,7 @@
  * Definitions
  ******************************************************************************/
 /* Master related */
-#define DRIVER_SLAVE_SPI Driver_SPI1
+#define DRIVER_SLAVE_SPI         Driver_SPI1
 #define EXAMPLE_LPSPI_SLAVE_IRQN (LPSPI1_IRQn)
 
 #define EXAMPLE_LPSPI_CLOCK_FREQ (CLOCK_GetFreqFromObs(CCM_OBS_LPSPI1_CLK_ROOT))

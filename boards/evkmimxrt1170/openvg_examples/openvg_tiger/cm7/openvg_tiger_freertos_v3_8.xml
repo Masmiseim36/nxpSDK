@@ -20,25 +20,25 @@
     <definition extID="driver.display-rm68200.MIMXRT1176"/>
     <definition extID="driver.dc-fb-lcdifv2.MIMXRT1176"/>
     <definition extID="platform.devices.MIMXRT1176_CMSIS.MIMXRT1176"/>
-    <definition extID="platform.Include_core_cm7.MIMXRT1176"/>
     <definition extID="component.lpuart_adapter.MIMXRT1176"/>
     <definition extID="component.lists.MIMXRT1176"/>
     <definition extID="platform.drivers.lpuart.MIMXRT1176"/>
     <definition extID="platform.devices.MIMXRT1176_startup.MIMXRT1176"/>
     <definition extID="platform.drivers.iomuxc.MIMXRT1176"/>
     <definition extID="platform.drivers.igpio.MIMXRT1176"/>
+    <definition extID="platform.drivers.xip_board.evkmimxrt1170.MIMXRT1176"/>
     <definition extID="platform.drivers.pmu_1.MIMXRT1176"/>
     <definition extID="platform.drivers.dcdc_soc.MIMXRT1176"/>
     <definition extID="platform.drivers.cache_armv7_m7.MIMXRT1176"/>
     <definition extID="platform.drivers.anatop_ai.MIMXRT1176"/>
+    <definition extID="CMSIS_Include_core_cm.MIMXRT1176"/>
     <definition extID="middleware.freertos-kernel.MIMXRT1176"/>
     <definition extID="middleware.freertos-kernel.extension.MIMXRT1176"/>
     <definition extID="driver.dc-fb-common.MIMXRT1176"/>
     <definition extID="platform.drivers.soc_mipi_csi2rx.MIMXRT1176"/>
     <definition extID="platform.drivers.lcdifv2.MIMXRT1176"/>
+    <definition extID="platform.drivers.memory.MIMXRT1176"/>
     <definition extID="platform.utilities.misc_utilities.MIMXRT1176"/>
-    <definition extID="platform.Include_common.MIMXRT1176"/>
-    <definition extID="platform.Include_dsp.MIMXRT1176"/>
     <definition extID="platform.devices.MIMXRT1176_system.MIMXRT1176"/>
     <definition extID="iar"/>
     <definition extID="armgcc"/>
@@ -48,7 +48,7 @@
     <definition extID="com.crt.advproject.config.exe.release"/>
     <definition extID="mdk"/>
   </externalDefinitions>
-  <example id="evkmimxrt1170_openvg_tiger_freertos" name="openvg_tiger_freertos" device_core="cm7_MIMXRT1176xxxxx" dependency="utility.debug_console_lite.MIMXRT1176 platform.utilities.assert_lite.MIMXRT1176 middleware.freertos-kernel.heap_4.MIMXRT1176 middleware.openvg.egl.MIMXRT1176 middleware.openvg.khr.MIMXRT1176 middleware.openvg.vg.MIMXRT1176 driver.fbdev.MIMXRT1176 driver.video-common.MIMXRT1176 platform.drivers.clock.MIMXRT1176 platform.drivers.soc_src.MIMXRT1176 platform.drivers.common.MIMXRT1176 driver.display-common.MIMXRT1176 driver.display-rm68191.MIMXRT1176 platform.drivers.mipi_dsi_split.MIMXRT1176 driver.display-mipi-dsi-cmd.MIMXRT1176 driver.display-rm68200.MIMXRT1176 driver.dc-fb-lcdifv2.MIMXRT1176 platform.devices.MIMXRT1176_CMSIS.MIMXRT1176 platform.Include_core_cm7.MIMXRT1176 component.lpuart_adapter.MIMXRT1176 component.lists.MIMXRT1176 platform.drivers.lpuart.MIMXRT1176 platform.devices.MIMXRT1176_startup.MIMXRT1176 platform.drivers.iomuxc.MIMXRT1176 platform.drivers.igpio.MIMXRT1176 platform.drivers.pmu_1.MIMXRT1176 platform.drivers.dcdc_soc.MIMXRT1176 platform.drivers.cache_armv7_m7.MIMXRT1176 platform.drivers.anatop_ai.MIMXRT1176 middleware.freertos-kernel.MIMXRT1176 middleware.freertos-kernel.extension.MIMXRT1176 driver.dc-fb-common.MIMXRT1176 platform.drivers.soc_mipi_csi2rx.MIMXRT1176 platform.drivers.lcdifv2.MIMXRT1176 platform.utilities.misc_utilities.MIMXRT1176 platform.Include_common.MIMXRT1176 platform.Include_dsp.MIMXRT1176 platform.devices.MIMXRT1176_system.MIMXRT1176" category="openvg_examples">
+  <example id="evkmimxrt1170_openvg_tiger_freertos" name="openvg_tiger_freertos" device_core="cm7_MIMXRT1176xxxxx" dependency="utility.debug_console_lite.MIMXRT1176 platform.utilities.assert_lite.MIMXRT1176 middleware.freertos-kernel.heap_4.MIMXRT1176 middleware.openvg.egl.MIMXRT1176 middleware.openvg.khr.MIMXRT1176 middleware.openvg.vg.MIMXRT1176 driver.fbdev.MIMXRT1176 driver.video-common.MIMXRT1176 platform.drivers.clock.MIMXRT1176 platform.drivers.soc_src.MIMXRT1176 platform.drivers.common.MIMXRT1176 driver.display-common.MIMXRT1176 driver.display-rm68191.MIMXRT1176 platform.drivers.mipi_dsi_split.MIMXRT1176 driver.display-mipi-dsi-cmd.MIMXRT1176 driver.display-rm68200.MIMXRT1176 driver.dc-fb-lcdifv2.MIMXRT1176 platform.devices.MIMXRT1176_CMSIS.MIMXRT1176 component.lpuart_adapter.MIMXRT1176 component.lists.MIMXRT1176 platform.drivers.lpuart.MIMXRT1176 platform.devices.MIMXRT1176_startup.MIMXRT1176 platform.drivers.iomuxc.MIMXRT1176 platform.drivers.igpio.MIMXRT1176 platform.drivers.xip_board.evkmimxrt1170.MIMXRT1176 platform.drivers.pmu_1.MIMXRT1176 platform.drivers.dcdc_soc.MIMXRT1176 platform.drivers.cache_armv7_m7.MIMXRT1176 platform.drivers.anatop_ai.MIMXRT1176 CMSIS_Include_core_cm.MIMXRT1176 middleware.freertos-kernel.MIMXRT1176 middleware.freertos-kernel.extension.MIMXRT1176 driver.dc-fb-common.MIMXRT1176 platform.drivers.soc_mipi_csi2rx.MIMXRT1176 platform.drivers.lcdifv2.MIMXRT1176 platform.drivers.memory.MIMXRT1176 platform.utilities.misc_utilities.MIMXRT1176 platform.devices.MIMXRT1176_system.MIMXRT1176" category="openvg_examples">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -89,7 +89,8 @@
           <value>gcdGC355_MEM_PRINT=0</value>
           <value>gcdGC355_PROFILER=0</value>
           <value>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</value>
-          <value>FSL_RTOS_FREE_RTOS</value>
+          <value>SDK_OS_FREE_RTOS</value>
+          <value>MCUXPRESSO_SDK</value>
         </option>
         <option id="com.crt.advproject.link.memory.sections" type="stringList">
           <value>isd=KEEP(*(CodeQuickAccess));region=SRAM_ITC_cm7;type=.data</value>
@@ -194,6 +195,9 @@
     </source>
     <source path="boards/evkmimxrt1170/openvg_examples/openvg_tiger/cm7" project_relative_path="doc" type="doc" toolchain="iar mdk armgcc">
       <files mask="readme.txt"/>
+    </source>
+    <source path="boards/evkmimxrt1170/openvg_examples/openvg_tiger/cm7" project_relative_path="evkmimxrt1170" type="other" toolchain="iar mdk armgcc">
+      <files mask="evkmimxrt1170_connect_cm4_cm7side.jlinkscript"/>
     </source>
   </example>
 </ksdk:examples>

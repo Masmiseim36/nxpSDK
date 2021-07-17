@@ -14,5 +14,6 @@ var group__transports =
     [ "TCP/IP", "group__tcp__transport.html", "group__tcp__transport" ],
     [ "Messaging Unit", "group__mu__transport.html", "group__mu__transport" ],
     [ "RPMsg Endpoints", "group__rpmsg__linux__transport.html", "group__rpmsg__linux__transport" ],
-    [ "USB CDC", "group___u_s_b___c_d_c__transport.html", "group___u_s_b___c_d_c__transport" ]
+    [ "USB CDC", "group___u_s_b___c_d_c__transport.html", "group___u_s_b___c_d_c__transport" ],
+    [ "I2C Slave", "group__i2c__slave__transport.html", "group__i2c__slave__transport" ]
 ];

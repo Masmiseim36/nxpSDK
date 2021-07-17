@@ -78,8 +78,10 @@ SET(CMAKE_C_FLAGS_DEBUG " \
     -DCPU_MIMXRT1166DVM6A_cm7 \
     -DLFS_NO_INTRINSICS=1 \
     -DSDK_DEBUGCONSOLE_UART \
+    -DMFLASH_FILE_BASEADDR=14221312 \
     -DDEBUG_CONSOLE_RX_ENABLE=0 \
     -DSERIAL_PORT_TYPE_UART=1 \
+    -DMCUXPRESSO_SDK \
     -g \
     -O0 \
     -mcpu=cortex-m7 \
@@ -103,8 +105,10 @@ SET(CMAKE_C_FLAGS_RELEASE " \
     -DCPU_MIMXRT1166DVM6A_cm7 \
     -DLFS_NO_INTRINSICS=1 \
     -DSDK_DEBUGCONSOLE_UART \
+    -DMFLASH_FILE_BASEADDR=14221312 \
     -DDEBUG_CONSOLE_RX_ENABLE=0 \
     -DSERIAL_PORT_TYPE_UART=1 \
+    -DMCUXPRESSO_SDK \
     -Os \
     -mcpu=cortex-m7 \
     -Wall \
@@ -129,8 +133,10 @@ SET(CMAKE_C_FLAGS_SDRAM_DEBUG " \
     -DCPU_MIMXRT1166DVM6A_cm7 \
     -DLFS_NO_INTRINSICS=1 \
     -DSDK_DEBUGCONSOLE_UART \
+    -DMFLASH_FILE_BASEADDR=14221312 \
     -DDEBUG_CONSOLE_RX_ENABLE=0 \
     -DSERIAL_PORT_TYPE_UART=1 \
+    -DMCUXPRESSO_SDK \
     -g \
     -O0 \
     -mcpu=cortex-m7 \
@@ -156,8 +162,10 @@ SET(CMAKE_C_FLAGS_SDRAM_RELEASE " \
     -DCPU_MIMXRT1166DVM6A_cm7 \
     -DLFS_NO_INTRINSICS=1 \
     -DSDK_DEBUGCONSOLE_UART \
+    -DMFLASH_FILE_BASEADDR=14221312 \
     -DDEBUG_CONSOLE_RX_ENABLE=0 \
     -DSERIAL_PORT_TYPE_UART=1 \
+    -DMCUXPRESSO_SDK \
     -Os \
     -mcpu=cortex-m7 \
     -Wall \
@@ -179,6 +187,7 @@ SET(CMAKE_CXX_FLAGS_DEBUG " \
     -DDEBUG \
     -DCPU_MIMXRT1166DVM6A_cm7 \
     -DSERIAL_PORT_TYPE_UART=1 \
+    -DMCUXPRESSO_SDK \
     -g \
     -O0 \
     -mcpu=cortex-m7 \
@@ -202,6 +211,7 @@ SET(CMAKE_CXX_FLAGS_RELEASE " \
     -DNDEBUG \
     -DCPU_MIMXRT1166DVM6A_cm7 \
     -DSERIAL_PORT_TYPE_UART=1 \
+    -DMCUXPRESSO_SDK \
     -Os \
     -mcpu=cortex-m7 \
     -Wall \
@@ -224,6 +234,7 @@ SET(CMAKE_CXX_FLAGS_SDRAM_DEBUG " \
     -DDEBUG \
     -DCPU_MIMXRT1166DVM6A_cm7 \
     -DSERIAL_PORT_TYPE_UART=1 \
+    -DMCUXPRESSO_SDK \
     -g \
     -O0 \
     -mcpu=cortex-m7 \
@@ -247,6 +258,7 @@ SET(CMAKE_CXX_FLAGS_SDRAM_RELEASE " \
     -DNDEBUG \
     -DCPU_MIMXRT1166DVM6A_cm7 \
     -DSERIAL_PORT_TYPE_UART=1 \
+    -DMCUXPRESSO_SDK \
     -Os \
     -mcpu=cortex-m7 \
     -Wall \
@@ -290,6 +302,7 @@ SET(CMAKE_EXE_LINKER_FLAGS_DEBUG " \
     muldefs \
     -Xlinker \
     -Map=output.map \
+    -Wl,--print-memory-usage \
     -Xlinker \
     --defsym=__stack_size__=0x1000 \
     -Xlinker \
@@ -321,6 +334,7 @@ SET(CMAKE_EXE_LINKER_FLAGS_RELEASE " \
     muldefs \
     -Xlinker \
     -Map=output.map \
+    -Wl,--print-memory-usage \
     -Xlinker \
     --defsym=__stack_size__=0x1000 \
     -Xlinker \
@@ -353,6 +367,7 @@ SET(CMAKE_EXE_LINKER_FLAGS_SDRAM_DEBUG " \
     muldefs \
     -Xlinker \
     -Map=output.map \
+    -Wl,--print-memory-usage \
     -Xlinker \
     --defsym=__stack_size__=0x1000 \
     -Xlinker \
@@ -384,6 +399,7 @@ SET(CMAKE_EXE_LINKER_FLAGS_SDRAM_RELEASE " \
     muldefs \
     -Xlinker \
     -Map=output.map \
+    -Wl,--print-memory-usage \
     -Xlinker \
     --defsym=__stack_size__=0x1000 \
     -Xlinker \

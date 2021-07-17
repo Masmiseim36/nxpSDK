@@ -224,7 +224,7 @@ static status_t GT911_ReadRawTouchData(gt911_handle_t *handle, uint8_t *touchPoi
 
         /* Must set the status register to 0 after read. */
         gt911Stat = 0;
-        status = handle->I2C_SendFunc(handle->i2cAddr, GT911_REG_STAT, GT911_REG_ADDR_SIZE, &gt911Stat, 1);
+        status    = handle->I2C_SendFunc(handle->i2cAddr, GT911_REG_STAT, GT911_REG_ADDR_SIZE, &gt911Stat, 1);
     }
 
     return status;
@@ -241,8 +241,10 @@ status_t GT911_GetSingleTouch(gt911_handle_t *handle, int *touch_x, int *touch_y
     {
         if (touchPointNum > 0U)
         {
-            *touch_x = (int)(uint16_t)((uint16_t)handle->pointReg[0].lowX + (((uint16_t)handle->pointReg[0].highX) << 8U));
-            *touch_y = (int)(uint16_t)((uint16_t)handle->pointReg[0].lowY + (((uint16_t)handle->pointReg[0].highY) << 8U));
+            *touch_x =
+                (int)(uint16_t)((uint16_t)handle->pointReg[0].lowX + (((uint16_t)handle->pointReg[0].highX) << 8U));
+            *touch_y =
+                (int)(uint16_t)((uint16_t)handle->pointReg[0].lowY + (((uint16_t)handle->pointReg[0].highY) << 8U));
         }
         else
         {

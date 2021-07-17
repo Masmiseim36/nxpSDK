@@ -30,8 +30,8 @@ define symbol m_interrupts_end         = 0x1FFE03FF;
 define symbol m_text_start             = 0x1FFE0400;
 define symbol m_text_end               = 0x1FFFFFFF;
 
-define symbol m_data_start             = 0x20220000;
-define symbol m_data_end               = 0x2023FFFF;
+define symbol m_data_start             = 0x20000000;
+define symbol m_data_end               = 0x2001FFFF;
 
 if (isdefinedsymbol(__use_shmem__)) {
   define exported symbol rpmsg_sh_mem_start      = 0x202C0000;
@@ -60,7 +60,7 @@ if (isdefinedsymbol(__stack_size__)) {
 if (isdefinedsymbol(__heap_size__)) {
   define symbol __size_heap__          = __heap_size__;
 } else {
-  define symbol __size_heap__          = 0x2000;
+  define symbol __size_heap__          = 0x0400;
 }
 
 define exported symbol __VECTOR_TABLE          = m_interrupts_start;

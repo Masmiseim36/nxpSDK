@@ -97,7 +97,8 @@ void RecordSDCard(I2S_Type *base, uint32_t time_s)
     uint8_t header[44]    = {0};
     uint32_t fileSize     = time_s * DEMO_AUDIO_SAMPLE_RATE * 2U * 2U + 44U;
     FRESULT error;
-    sai_transfer_t xfer = {0};
+    sai_transfer_t xfer                = {0};
+    static const TCHAR wavpathBuffer[] = DEMO_RECORD_WAV_PATH;
 
     /* Clear the status */
     isrxFinished = false;
@@ -108,7 +109,7 @@ void RecordSDCard(I2S_Type *base, uint32_t time_s)
 
     PRINTF("\r\nBegin to record......\r\n");
     PRINTF("\r\nFile path is record/music1.wav\r\n");
-    error = f_open(&g_fileObject, _T("/record/music1.wav"), (FA_WRITE | FA_READ | FA_CREATE_ALWAYS));
+    error = f_open(&g_fileObject, (char const *)wavpathBuffer, (FA_WRITE | FA_READ | FA_CREATE_ALWAYS));
     if (error)
     {
         if (error == FR_EXIST)
@@ -183,7 +184,7 @@ void RecordSDCard(I2S_Type *base, uint32_t time_s)
     emptyBlock = 0;
     fullBlock  = 0;
     memset(audioBuff, 0, BUFFER_SIZE * BUFFER_NUM);
-    f_open(&g_fileObject, _T("/record/music1.wav"), (FA_READ));
+    f_open(&g_fileObject, (char const *)wavpathBuffer, (FA_READ));
     if (f_lseek(&g_fileObject, 44U))
     {
         PRINTF("Set file pointer position failed. \r\n");

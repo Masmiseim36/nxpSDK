@@ -1,11 +1,12 @@
 <map id="erpc_framed_transport.h" name="erpc_framed_transport.h">
 <area shape="rect" id="node2" href="$erpc__dspi__master__transport_8h.html" title="erpc_dspi_master_transport.h" alt="" coords="5,87,200,114"/>
 <area shape="rect" id="node3" href="$erpc__dspi__slave__transport_8h.html" title="erpc_dspi_slave_transport.h" alt="" coords="225,87,407,114"/>
-<area shape="rect" id="node4" href="$erpc__serial__transport_8h.html" title="erpc_serial_transport.h" alt="" coords="432,87,587,114"/>
-<area shape="rect" id="node5" href="$erpc__spi__master__transport_8h.html" title="erpc_spi_master_transport.h" alt="" coords="611,87,797,114"/>
-<area shape="rect" id="node6" href="$erpc__spi__slave__transport_8h.html" title="erpc_spi_slave_transport.h" alt="" coords="821,87,997,114"/>
-<area shape="rect" id="node7" href="$erpc__spidev__master__transport_8h.html" title="erpc_spidev_master\l_transport.h" alt="" coords="1022,80,1159,121"/>
-<area shape="rect" id="node8" href="$erpc__tcp__transport_8h.html" title="erpc_tcp_transport.h" alt="" coords="1184,87,1325,114"/>
-<area shape="rect" id="node9" href="$erpc__uart__cmsis__transport_8h.html" title="erpc_uart_cmsis_transport.h" alt="" coords="1349,87,1536,114"/>
-<area shape="rect" id="node10" href="$erpc__usb__cdc__transport_8h.html" title="erpc_usb_cdc_transport.h" alt="" coords="1561,87,1733,114"/>
+<area shape="rect" id="node4" href="$erpc__i2c__slave__transport_8h.html" title="erpc_i2c_slave_transport.h" alt="" coords="432,87,608,114"/>
+<area shape="rect" id="node5" href="$erpc__serial__transport_8h.html" title="erpc_serial_transport.h" alt="" coords="632,87,787,114"/>
+<area shape="rect" id="node6" href="$erpc__spi__master__transport_8h.html" title="erpc_spi_master_transport.h" alt="" coords="811,87,997,114"/>
+<area shape="rect" id="node7" href="$erpc__spi__slave__transport_8h.html" title="erpc_spi_slave_transport.h" alt="" coords="1021,87,1197,114"/>
+<area shape="rect" id="node8" href="$erpc__spidev__master__transport_8h.html" title="erpc_spidev_master\l_transport.h" alt="" coords="1222,80,1359,121"/>
+<area shape="rect" id="node9" href="$erpc__tcp__transport_8h.html" title="erpc_tcp_transport.h" alt="" coords="1384,87,1525,114"/>
+<area shape="rect" id="node10" href="$erpc__uart__cmsis__transport_8h.html" title="erpc_uart_cmsis_transport.h" alt="" coords="1549,87,1736,114"/>
+<area shape="rect" id="node11" href="$erpc__usb__cdc__transport_8h.html" title="erpc_usb_cdc_transport.h" alt="" coords="1761,87,1933,114"/>
 </map>

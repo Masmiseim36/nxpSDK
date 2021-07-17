@@ -29,14 +29,14 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef _RPMSG_CONFIG_H
-#define _RPMSG_CONFIG_H
+#ifndef RPMSG_CONFIG_H_
+#define RPMSG_CONFIG_H_
 
 /* RPMsg config values */
 /* START { */
 #define RL_MS_PER_INTERVAL (1)
 
-#define RL_BUFFER_PAYLOAD_SIZE (496)
+#define RL_BUFFER_PAYLOAD_SIZE (496U)
 
 #define RL_API_HAS_ZEROCOPY (1)
 
@@ -53,4 +53,4 @@
     } while (0);
 /* } END */
 
-#endif /* _RPMSG_CONFIG_H */
+#endif /* RPMSG_CONFIG_H_ */

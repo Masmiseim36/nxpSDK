@@ -77,13 +77,15 @@ SET(CMAKE_C_FLAGS_SDRAM_RELEASE " \
     -DUSE_SDRAM \
     -DDATA_SECTION_IS_CACHEABLE=1 \
     -DNDEBUG \
+    -DLWIP_TIMEVAL_PRIVATE=0 \
     -DCPU_MIMXRT1166DVM6A_cm7 \
     -DUSE_RTOS=1 \
     -DUSB_STACK_FREERTOS \
     -DPRINTF_ADVANCED_ENABLE=1 \
     -DSDK_DEBUGCONSOLE=1 \
     -DSERIAL_PORT_TYPE_UART=1 \
-    -DFSL_RTOS_FREE_RTOS \
+    -DSDK_OS_FREE_RTOS \
+    -DMCUXPRESSO_SDK \
     -Os \
     -mcpu=cortex-m7 \
     -Wall \
@@ -103,13 +105,15 @@ SET(CMAKE_C_FLAGS_SDRAM_RELEASE " \
 SET(CMAKE_C_FLAGS_RELEASE " \
     ${CMAKE_C_FLAGS_RELEASE} \
     -DNDEBUG \
+    -DLWIP_TIMEVAL_PRIVATE=0 \
     -DCPU_MIMXRT1166DVM6A_cm7 \
     -DUSE_RTOS=1 \
     -DUSB_STACK_FREERTOS \
     -DPRINTF_ADVANCED_ENABLE=1 \
     -DSDK_DEBUGCONSOLE=1 \
     -DSERIAL_PORT_TYPE_UART=1 \
-    -DFSL_RTOS_FREE_RTOS \
+    -DSDK_OS_FREE_RTOS \
+    -DMCUXPRESSO_SDK \
     -Os \
     -mcpu=cortex-m7 \
     -Wall \
@@ -131,13 +135,15 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG " \
     -DXIP_EXTERNAL_FLASH=1 \
     -DXIP_BOOT_HEADER_ENABLE=1 \
     -DDEBUG \
+    -DLWIP_TIMEVAL_PRIVATE=0 \
     -DCPU_MIMXRT1166DVM6A_cm7 \
     -DUSE_RTOS=1 \
     -DUSB_STACK_FREERTOS \
     -DPRINTF_ADVANCED_ENABLE=1 \
     -DSDK_DEBUGCONSOLE=1 \
     -DSERIAL_PORT_TYPE_UART=1 \
-    -DFSL_RTOS_FREE_RTOS \
+    -DSDK_OS_FREE_RTOS \
+    -DMCUXPRESSO_SDK \
     -g \
     -O0 \
     -mcpu=cortex-m7 \
@@ -160,13 +166,15 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE " \
     -DXIP_EXTERNAL_FLASH=1 \
     -DXIP_BOOT_HEADER_ENABLE=1 \
     -DNDEBUG \
+    -DLWIP_TIMEVAL_PRIVATE=0 \
     -DCPU_MIMXRT1166DVM6A_cm7 \
     -DUSE_RTOS=1 \
     -DUSB_STACK_FREERTOS \
     -DPRINTF_ADVANCED_ENABLE=1 \
     -DSDK_DEBUGCONSOLE=1 \
     -DSERIAL_PORT_TYPE_UART=1 \
-    -DFSL_RTOS_FREE_RTOS \
+    -DSDK_OS_FREE_RTOS \
+    -DMCUXPRESSO_SDK \
     -Os \
     -mcpu=cortex-m7 \
     -Wall \
@@ -188,6 +196,7 @@ SET(CMAKE_CXX_FLAGS_SDRAM_RELEASE " \
     -DNDEBUG \
     -DCPU_MIMXRT1166DVM6A_cm7 \
     -DSERIAL_PORT_TYPE_UART=1 \
+    -DMCUXPRESSO_SDK \
     -Os \
     -mcpu=cortex-m7 \
     -Wall \
@@ -210,6 +219,7 @@ SET(CMAKE_CXX_FLAGS_RELEASE " \
     -DNDEBUG \
     -DCPU_MIMXRT1166DVM6A_cm7 \
     -DSERIAL_PORT_TYPE_UART=1 \
+    -DMCUXPRESSO_SDK \
     -Os \
     -mcpu=cortex-m7 \
     -Wall \
@@ -232,6 +242,7 @@ SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_DEBUG " \
     -DDEBUG \
     -DCPU_MIMXRT1166DVM6A_cm7 \
     -DSERIAL_PORT_TYPE_UART=1 \
+    -DMCUXPRESSO_SDK \
     -g \
     -O0 \
     -mcpu=cortex-m7 \
@@ -255,6 +266,7 @@ SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE " \
     -DNDEBUG \
     -DCPU_MIMXRT1166DVM6A_cm7 \
     -DSERIAL_PORT_TYPE_UART=1 \
+    -DMCUXPRESSO_SDK \
     -Os \
     -mcpu=cortex-m7 \
     -Wall \
@@ -297,6 +309,7 @@ SET(CMAKE_EXE_LINKER_FLAGS_SDRAM_RELEASE " \
     muldefs \
     -Xlinker \
     -Map=output.map \
+    -Wl,--print-memory-usage \
     -Xlinker \
     --defsym=__heap_noncacheable__=1 \
     -Xlinker \
@@ -330,6 +343,7 @@ SET(CMAKE_EXE_LINKER_FLAGS_RELEASE " \
     muldefs \
     -Xlinker \
     -Map=output.map \
+    -Wl,--print-memory-usage \
     -Xlinker \
     --defsym=__stack_size__=2048 \
     -Xlinker \
@@ -362,6 +376,7 @@ SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_DEBUG " \
     muldefs \
     -Xlinker \
     -Map=output.map \
+    -Wl,--print-memory-usage \
     -Xlinker \
     --defsym=__stack_size__=2048 \
     -Xlinker \
@@ -393,6 +408,7 @@ SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_RELEASE " \
     muldefs \
     -Xlinker \
     -Map=output.map \
+    -Wl,--print-memory-usage \
     -Xlinker \
     --defsym=__stack_size__=2048 \
     -Xlinker \

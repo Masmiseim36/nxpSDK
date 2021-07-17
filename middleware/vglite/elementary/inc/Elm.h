@@ -90,7 +90,8 @@ extern "C" {
         ELM_PAINT_COLOR    = 0,     /*! Paint evo with solid color */
         ELM_PAINT_PATTERN  = 1,     /*! Paint evo with ebo */
         ELM_PAINT_GRADIENT = 2,     /*! Paint evo with a linear gradient built-in evo object */
-        ELM_PAINT_TEXT     = 3,     /*! Paint evo-text */
+        ELM_PAINT_RADIAL_GRADIENT = 3, /*! Paint evo with a radial gradient built-in evo object */
+        ELM_PAINT_TEXT     = 4,     /*! Paint evo-text */
     } ELM_PAINT_TYPE;
 
     /*!
@@ -205,7 +206,7 @@ extern "C" {
 
      @return none
      */
-    BOOL ElmInitalize(uint32_t width, uint32_t height);
+    BOOL ElmInitialize(uint32_t width, uint32_t height);
 
     /*!
      @abstract Terminate Elementary context.

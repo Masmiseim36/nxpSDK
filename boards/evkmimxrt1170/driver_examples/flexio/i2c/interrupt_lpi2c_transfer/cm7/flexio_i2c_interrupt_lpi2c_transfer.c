@@ -21,7 +21,7 @@
  ******************************************************************************/
 #define BOARD_LPI2C_SLAVE_BASE LPI2C5
 #define BOARD_LPI2C_SLAVE_IRQn LPI2C5_IRQn
-#define BOARD_FLEXIO_BASE FLEXIO2
+#define BOARD_FLEXIO_BASE      FLEXIO2
 
 /* Get frequency of lpi2c clock */
 #define LPI2C_CLOCK_FREQUENCY (CLOCK_GetFreqFromObs(CCM_OBS_LPI2C5_CLK_ROOT))
@@ -87,10 +87,21 @@ int main(void)
 
     PRINTF("\r\nFlexIO I2C interrupt - LPI2C interrupt\r\n");
 
-    /*  Set i2c slave interrupt priority higher. */
-    NVIC_SetPriority(BOARD_LPI2C_SLAVE_IRQn, 0);
-
-    NVIC_SetPriority(flexio_irqs[FLEXIO_GetInstance(BOARD_FLEXIO_BASE)], 1);
+    /* Set i2c slave interrupt priority higher. */
+#if defined(__CORTEX_M) && (__CORTEX_M == 0U) && defined(FSL_FEATURE_NUMBER_OF_LEVEL1_INT_VECTORS) && \
+    (FSL_FEATURE_NUMBER_OF_LEVEL1_INT_VECTORS > 0)
+    if (BOARD_LPI2C_SLAVE_IRQn < FSL_FEATURE_NUMBER_OF_LEVEL1_INT_VECTORS)
+    {
+        NVIC_SetPriority(BOARD_LPI2C_SLAVE_IRQn, 0U);
+    }
+    if (flexio_irqs[FLEXIO_GetInstance(BOARD_FLEXIO_BASE)] < FSL_FEATURE_NUMBER_OF_LEVEL1_INT_VECTORS)
+    {
+        NVIC_SetPriority(flexio_irqs[FLEXIO_GetInstance(BOARD_FLEXIO_BASE)], 1U);
+    }
+#else
+    NVIC_SetPriority(BOARD_LPI2C_SLAVE_IRQn, 0U);
+    NVIC_SetPriority(flexio_irqs[FLEXIO_GetInstance(BOARD_FLEXIO_BASE)], 1U);
+#endif
 
     /*1.Set up i2c slave first*/
     /*

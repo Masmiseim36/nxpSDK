@@ -1675,11 +1675,11 @@
         </option>
         <option>
           <name>MacOverride</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>MacFile</name>
-          <state/>
+          <state>$PROJ_DIR$/evkmimxrt1170_connect_cm4.mac</state>
         </option>
         <option>
           <name>MemOverride</name>
@@ -6604,11 +6604,11 @@
         </option>
         <option>
           <name>MacOverride</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>MacFile</name>
-          <state/>
+          <state>$PROJ_DIR$/evkmimxrt1170_connect_cm4.mac</state>
         </option>
         <option>
           <name>MemOverride</name>

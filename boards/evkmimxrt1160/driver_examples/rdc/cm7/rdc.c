@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2020 NXP
+ * Copyright 2017-2021 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -334,7 +334,7 @@ static void APP_RDC_Mem(void)
      * Invalidate the cache, so new read will read from memory directly,
      * to make sure trigger read error.
      */
-    DCACHE_InvalidateByRange(APP_RDC_MEM_BASE_ADDR, APP_RDC_MEM_END_ADDR - APP_RDC_MEM_BASE_ADDR + 1);
+    DCACHE_InvalidateByRange(APP_RDC_MEM_BASE_ADDR, APP_RDC_MEM_END_ADDR - APP_RDC_MEM_BASE_ADDR);
 #endif
 
     s_faultFlag = false;
@@ -346,7 +346,7 @@ static void APP_RDC_Mem(void)
      * Flush the cache, so the modified data is written to memory,
      * to make sure trigger write error.
      */
-    DCACHE_CleanInvalidateByRange(APP_RDC_MEM_BASE_ADDR, APP_RDC_MEM_END_ADDR - APP_RDC_MEM_BASE_ADDR + 1);
+    DCACHE_CleanInvalidateByRange(APP_RDC_MEM_BASE_ADDR, APP_RDC_MEM_END_ADDR - APP_RDC_MEM_BASE_ADDR);
     __DSB();
 #endif
 

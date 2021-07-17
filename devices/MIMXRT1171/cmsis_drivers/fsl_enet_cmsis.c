@@ -1,7 +1,7 @@
 /*
  * Copyright (c) 2013-2016 ARM Limited. All rights reserved.
  * Copyright (c) 2016, Freescale Semiconductor, Inc. Not a Contribution.
- * Copyright 2016-2020 NXP. Not a Contribution.
+ * Copyright 2016-2021 NXP. Not a Contribution.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -172,7 +172,7 @@ static int32_t ENET_CommonControl(uint32_t control, uint32_t arg, cmsis_enet_mac
             }
 #endif /* FSL_FEATURE_ENET_HAS_AVB */
 
-            switch (arg & ARM_ETH_MAC_SPEED_Msk)
+            switch (arg & (uint32_t)ARM_ETH_MAC_SPEED_Msk)
             {
                 case (uint32_t)ARM_ETH_MAC_SPEED_10M:
                     rcr |= ENET_RCR_RMII_10T_MASK;
@@ -187,8 +187,12 @@ static int32_t ENET_CommonControl(uint32_t control, uint32_t arg, cmsis_enet_mac
                     {
                         ecr |= ENET_ECR_SPEED_MASK;
                         rcr &= ~ENET_RCR_RMII_10T_MASK;
-                        break;
                     }
+                    else
+                    {
+                        result = ARM_DRIVER_ERROR_UNSUPPORTED;
+                    }
+                    break;
 #endif /* FSL_FEATURE_ENET_HAS_AVB */
                 default:
                     result = ARM_DRIVER_ERROR_UNSUPPORTED;
@@ -367,7 +371,7 @@ static int32_t ENET_CommonPowerControl(ARM_POWER_STATE state, cmsis_enet_mac_dri
             config.txAccelerConfig = (uint8_t)kENET_TxAccelIpCheckEnabled | (uint8_t)kENET_TxAccelProtoCheckEnabled;
             /* Initialize Ethernet Mac. */
             freq = enet->resource->GetFreq();
-            ENET_Init(enet->resource->base, enet->handle, &config, enet->buffers, &macAddr[0], freq);
+            (void)ENET_Init(enet->resource->base, enet->handle, &config, enet->buffers, &macAddr[0], freq);
 
             /* Callback setup */
             ENET_SetCallback(enet->handle, ENET_SetInterruptCallback, (void *)enet->cb_event);
@@ -524,7 +528,7 @@ SDK_ALIGN(static uint8_t g_rxDataBuff[ENET_RXBD_NUM][SDK_SIZEALIGN(ENET_RXBUFF_S
           CMSIS_ENET_BUFF_ALIGNMENT);
 SDK_ALIGN(static uint8_t g_txDataBuff[ENET_TXBD_NUM][SDK_SIZEALIGN(ENET_TXBUFF_SIZE, CMSIS_ENET_BUFF_ALIGNMENT)],
           CMSIS_ENET_BUFF_ALIGNMENT);
-extern uint32_t ENET0_GetFreq(void);
+
 extern void ENET0_InitPins(void);
 extern void ENET0_DeinitPins(void);
 

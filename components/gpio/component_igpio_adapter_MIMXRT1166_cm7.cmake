@@ -1,17 +1,15 @@
-if(NOT COMPONENT_IGPIO_ADAPTER_MIMXRT1166_cm7_INCLUDED)
-    
-    set(COMPONENT_IGPIO_ADAPTER_MIMXRT1166_cm7_INCLUDED true CACHE BOOL "component_igpio_adapter component is included.")
+include_guard(GLOBAL)
+message("component_igpio_adapter component is included.")
 
-    target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
-        ${CMAKE_CURRENT_LIST_DIR}/fsl_adapter_igpio.c
-    )
-
-
-    target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
-        ${CMAKE_CURRENT_LIST_DIR}/.
-    )
+target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
+    ${CMAKE_CURRENT_LIST_DIR}/fsl_adapter_igpio.c
+)
 
 
-    include(driver_igpio_MIMXRT1166_cm7)
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
+    ${CMAKE_CURRENT_LIST_DIR}/.
+)
 
-endif()
+
+include(driver_igpio_MIMXRT1166_cm7)
+

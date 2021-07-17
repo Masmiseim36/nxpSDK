@@ -5,7 +5,7 @@
 **     Compiler:            Keil ARM C/C++ Compiler
 **     Reference manual:    IMXRT1170RM, Rev 1, 02/2021
 **     Version:             rev. 1.0, 2020-12-29
-**     Build:               b210402
+**     Build:               b210414
 **
 **     Abstract:
 **         Linker file for the Keil ARM C/C++ Compiler
@@ -28,7 +28,7 @@
 #define m_text_start                   0x20200400
 #define m_text_size                    0x0001FC00
 
-#define m_data_start                   0x20220000
+#define m_data_start                   0x20000000
 #define m_data_size                    0x00020000
 
 #define m_ncache_start                 0x20280000

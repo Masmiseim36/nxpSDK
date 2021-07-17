@@ -1,6 +1,6 @@
 # CROSS COMPILER SETTING
 SET(CMAKE_SYSTEM_NAME Generic)
-CMAKE_MINIMUM_REQUIRED (VERSION 3.1.1)
+CMAKE_MINIMUM_REQUIRED (VERSION 3.10.0)
 
 # THE VERSION NUMBER
 SET (Tutorial_VERSION_MAJOR 1)
@@ -31,6 +31,7 @@ include(${ProjDirPath}/flags.cmake)
 include(${ProjDirPath}/config.cmake)
 
 add_executable(${MCUX_SDK_PROJECT_NAME} 
+"${ProjDirPath}/../usb_audio_config.h"
 "${ProjDirPath}/../audio_speaker.c"
 "${ProjDirPath}/../audio_speaker.h"
 "${ProjDirPath}/../usb_device_descriptor.c"
@@ -59,19 +60,18 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../../../components/codec/wm8960
     ${ProjDirPath}/../../../../../../../components/codec
     ${ProjDirPath}/../../../../../../../devices/MIMXRT1176/drivers
-    ${ProjDirPath}/../../../../../../../components/codec/port/wm8960
     ${ProjDirPath}/../../../../../../../components/codec/i2c
     ${ProjDirPath}/../../../../../../../components/i2c
     ${ProjDirPath}/../../../../../../../devices/MIMXRT1176/utilities/debug_console_lite
     ${ProjDirPath}/../../../../../../../middleware
     ${ProjDirPath}/../../../../../../../devices/MIMXRT1176
-    ${ProjDirPath}/../../../../../../../CMSIS/Include
     ${ProjDirPath}/../../../../../../../components/uart
     ${ProjDirPath}/../../../../../../../components/lists
     ${ProjDirPath}/../../../../../../../devices/MIMXRT1176/xip
     ${ProjDirPath}/../../../../../xip
     ${ProjDirPath}/../../../../../../../components/osa
     ${ProjDirPath}/../../../../../../../devices/MIMXRT1176/drivers/cm7
+    ${ProjDirPath}/../../../../../../../CMSIS/Core/Include
     ${ProjDirPath}/../../../../../../../devices/MIMXRT1176/utilities
 )
 
@@ -112,8 +112,6 @@ include(driver_clock_MIMXRT1176_cm7)
 
 include(device_MIMXRT1176_CMSIS_MIMXRT1176_cm7)
 
-include(CMSIS_Include_core_cm7_MIMXRT1176_cm7)
-
 include(component_lpuart_adapter_MIMXRT1176_cm7)
 
 include(component_lists_MIMXRT1176_cm7)
@@ -128,7 +126,7 @@ include(driver_igpio_MIMXRT1176_cm7)
 
 include(driver_xip_device_MIMXRT1176_cm7)
 
-include(driver_xip_board_MIMXRT1176_cm7)
+include(driver_xip_board_evkmimxrt1170_MIMXRT1176_cm7)
 
 include(middleware_usb_device_controller_driver_MIMXRT1176_cm7)
 
@@ -144,13 +142,11 @@ include(middleware_usb_common_header_MIMXRT1176_cm7)
 
 include(driver_anatop_ai_MIMXRT1176_cm7)
 
+include(CMSIS_Include_core_cm_MIMXRT1176_cm7)
+
 include(middleware_usb_device_common_header_MIMXRT1176_cm7)
 
 include(utilities_misc_utilities_MIMXRT1176_cm7)
-
-include(CMSIS_Include_common_MIMXRT1176_cm7)
-
-include(CMSIS_Include_dsp_MIMXRT1176_cm7)
 
 include(device_MIMXRT1176_system_MIMXRT1176_cm7)
 

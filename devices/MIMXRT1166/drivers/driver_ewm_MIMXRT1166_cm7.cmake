@@ -1,17 +1,15 @@
-if(NOT DRIVER_EWM_MIMXRT1166_cm7_INCLUDED)
-    
-    set(DRIVER_EWM_MIMXRT1166_cm7_INCLUDED true CACHE BOOL "driver_ewm component is included.")
+include_guard(GLOBAL)
+message("driver_ewm component is included.")
 
-    target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
-        ${CMAKE_CURRENT_LIST_DIR}/fsl_ewm.c
-    )
-
-
-    target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
-        ${CMAKE_CURRENT_LIST_DIR}/.
-    )
+target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
+    ${CMAKE_CURRENT_LIST_DIR}/fsl_ewm.c
+)
 
 
-    include(driver_common_MIMXRT1166_cm7)
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
+    ${CMAKE_CURRENT_LIST_DIR}/.
+)
 
-endif()
+
+include(driver_common_MIMXRT1166_cm7)
+

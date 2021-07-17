@@ -16,12 +16,12 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_LPADC_BASE LPADC1
-#define DEMO_LPADC_IRQn ADC1_IRQn
+#define DEMO_LPADC_BASE             LPADC1
+#define DEMO_LPADC_IRQn             ADC1_IRQn
 #define DEMO_LPADC_IRQ_HANDLER_FUNC ADC1_IRQHandler
-#define DEMO_LPADC_USER_CHANNEL 0U
-#define DEMO_LPADC_USER_CMDID 1U /* CMD1 */
-#define DEMO_LPADC_VREF_SOURCE kLPADC_ReferenceVoltageAlt1
+#define DEMO_LPADC_USER_CHANNEL     0U
+#define DEMO_LPADC_USER_CMDID       1U /* CMD1 */
+#define DEMO_LPADC_VREF_SOURCE      kLPADC_ReferenceVoltageAlt1
 
 /*******************************************************************************
  * Prototypes

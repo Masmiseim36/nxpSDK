@@ -13,8 +13,8 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define EXAMPLE_SPDIF SPDIF
-#define DEMO_SPDIF_CLOCK_FREQ CLOCK_GetPllFreq(kCLOCK_Pll_AudioPll)
+#define EXAMPLE_SPDIF          SPDIF
+#define DEMO_SPDIF_CLOCK_FREQ  CLOCK_GetPllFreq(kCLOCK_Pll_AudioPll)
 #define DEMO_SPDIF_SAMPLE_RATE 48000
 #define BUFFER_SIZE 768
 #define BUFFER_NUM  4

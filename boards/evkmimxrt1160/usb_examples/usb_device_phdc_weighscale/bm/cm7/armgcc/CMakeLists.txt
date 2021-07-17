@@ -1,6 +1,6 @@
 # CROSS COMPILER SETTING
 SET(CMAKE_SYSTEM_NAME Generic)
-CMAKE_MINIMUM_REQUIRED (VERSION 3.1.1)
+CMAKE_MINIMUM_REQUIRED (VERSION 3.10.0)
 
 # THE VERSION NUMBER
 SET (Tutorial_VERSION_MAJOR 1)
@@ -69,13 +69,13 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../../../middleware
     ${ProjDirPath}/../../../../../../../devices/MIMXRT1166/drivers
     ${ProjDirPath}/../../../../../../../devices/MIMXRT1166
-    ${ProjDirPath}/../../../../../../../CMSIS/Include
     ${ProjDirPath}/../../../../../../../components/uart
     ${ProjDirPath}/../../../../../../../components/lists
     ${ProjDirPath}/../../../../../../../devices/MIMXRT1166/xip
     ${ProjDirPath}/../../../../../xip
     ${ProjDirPath}/../../../../../../../components/osa
     ${ProjDirPath}/../../../../../../../devices/MIMXRT1166/drivers/cm7
+    ${ProjDirPath}/../../../../../../../CMSIS/Core/Include
     ${ProjDirPath}/../../../../../../../devices/MIMXRT1166/utilities
 )
 
@@ -95,8 +95,6 @@ include(driver_clock_MIMXRT1166_cm7)
 include(driver_common_MIMXRT1166_cm7)
 
 include(device_MIMXRT1166_CMSIS_MIMXRT1166_cm7)
-
-include(CMSIS_Include_core_cm7_MIMXRT1166_cm7)
 
 include(component_lpuart_adapter_MIMXRT1166_cm7)
 
@@ -128,13 +126,11 @@ include(middleware_usb_common_header_MIMXRT1166_cm7)
 
 include(driver_anatop_ai_MIMXRT1166_cm7)
 
+include(CMSIS_Include_core_cm_MIMXRT1166_cm7)
+
 include(middleware_usb_device_common_header_MIMXRT1166_cm7)
 
 include(utilities_misc_utilities_MIMXRT1166_cm7)
-
-include(CMSIS_Include_common_MIMXRT1166_cm7)
-
-include(CMSIS_Include_dsp_MIMXRT1166_cm7)
 
 include(device_MIMXRT1166_system_MIMXRT1166_cm7)
 

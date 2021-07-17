@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2020 NXP
+ * Copyright 2017-2021 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -16,11 +16,11 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define APP_RDC RDC
+#define APP_RDC            RDC
 #define APP_CUR_MASTER_DID 1 /* Current master domain ID. */
-#define APP_RDC_PERIPH kRDC_Periph_GPIO_1_6
+#define APP_RDC_PERIPH     kRDC_Periph_GPIO_1_6
 /* Peripheral 0~63 use semaphore1, 64~127 use semaphore2. */
-#define APP_RDC_SEMA42 RDC_SEMAPHORE1
+#define APP_RDC_SEMA42      RDC_SEMAPHORE1
 #define APP_RDC_SEMA42_GATE (((uint8_t)APP_RDC_PERIPH) & 0x3F)
 
 /*
@@ -29,9 +29,9 @@
  * so the region must not be used to for other purpose, such as
  * used as data section, bss section, and so on.
  */
-#define APP_RDC_MEM kRDC_Mem_MRC5_0
+#define APP_RDC_MEM           kRDC_Mem_MRC5_0
 #define APP_RDC_MEM_BASE_ADDR 0x20360000
-#define APP_RDC_MEM_END_ADDR 0x20400000
+#define APP_RDC_MEM_END_ADDR  0x20400000
 
 /* The RDC domain ID for ARM core is fixed value. */
 #define APP_ASSIGN_DOMAIN_ID_BY_RDC 0
@@ -334,7 +334,7 @@ static void APP_RDC_Mem(void)
      * Invalidate the cache, so new read will read from memory directly,
      * to make sure trigger read error.
      */
-    DCACHE_InvalidateByRange(APP_RDC_MEM_BASE_ADDR, APP_RDC_MEM_END_ADDR - APP_RDC_MEM_BASE_ADDR + 1);
+    DCACHE_InvalidateByRange(APP_RDC_MEM_BASE_ADDR, APP_RDC_MEM_END_ADDR - APP_RDC_MEM_BASE_ADDR);
 #endif
 
     s_faultFlag = false;
@@ -346,7 +346,7 @@ static void APP_RDC_Mem(void)
      * Flush the cache, so the modified data is written to memory,
      * to make sure trigger write error.
      */
-    DCACHE_CleanInvalidateByRange(APP_RDC_MEM_BASE_ADDR, APP_RDC_MEM_END_ADDR - APP_RDC_MEM_BASE_ADDR + 1);
+    DCACHE_CleanInvalidateByRange(APP_RDC_MEM_BASE_ADDR, APP_RDC_MEM_END_ADDR - APP_RDC_MEM_BASE_ADDR);
     __DSB();
 #endif
 

@@ -332,9 +332,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, XIP_BOOT_HEADER_DCD_ENABLE=1, USE_SDRAM, DATA_SECTION_IS_CACHEABLE=1, DEBUG, CPU_MIMXRT1166DVM6A_cm7, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, MBEDTLS_SSL_CIPHERSUITES=MBEDTLS_TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256, LWIP_ENET_FLEXIBLE_CONFIGURATION, USE_RTOS=1, PRINTF_ADVANCED_ENABLE=1, HTTPSRV_CFG_WEBSOCKET_ENABLED=1, HTTPSRV_CFG_MBEDTLS_ENABLE=1, MBEDTLS_CONFIG_FILE='\"ksdk_mbedtls_config.h\"', CRYPTO_USE_DRIVER_CAAM, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, SERIAL_PORT_TYPE_UART=1, FSL_RTOS_FREE_RTOS</Define>
+              <Define>FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, XIP_BOOT_HEADER_DCD_ENABLE=1, USE_SDRAM, DATA_SECTION_IS_CACHEABLE=1, DEBUG, CPU_MIMXRT1166DVM6A_cm7, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, MBEDTLS_SSL_CIPHERSUITES=MBEDTLS_TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256, LWIP_ENET_FLEXIBLE_CONFIGURATION, USE_RTOS=1, PRINTF_ADVANCED_ENABLE=1, HTTPSRV_CFG_WEBSOCKET_ENABLED=1, HTTPSRV_CFG_MBEDTLS_ENABLE=1, MBEDTLS_CONFIG_FILE='\"ksdk_mbedtls_config.h\"', CRYPTO_USE_DRIVER_CAAM, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, LWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1, SERIAL_PORT_TYPE_UART=1, SDK_OS_FREE_RTOS, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../../components/phy/mdio/enet;../../../../../../../components/phy/device/phyksz8081;../../../../../../../components/phy/device/phyrtl8211f;../../../../../../../devices/MIMXRT1166/drivers;../../../../../../../middleware/mbedtls/port/ksdk;../../../../../../../middleware/lwip/src/apps/httpsrv;../../../../../../../middleware/mbedtls/include;../../../../../../../middleware/mbedtls/library;../../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../../devices/MIMXRT1166/utilities/debug_console;../../../../../../../middleware/lwip/port;../../../../../../../middleware/lwip/src;../../../../../../../middleware/lwip/src/include;../../../../../../../components/phy;../../../../../../../devices/MIMXRT1166;../../../../../../../CMSIS/Include;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1166/xip;../../../../../xip;../../../../../../../devices/MIMXRT1166/drivers/cm7;../../../../../../../rtos/freertos/freertos_kernel/include;../../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F</IncludePath>
+              <IncludePath>..;../../../../../../../components/phy/mdio/enet;../../../../../../../components/phy/device/phyksz8081;../../../../../../../components/phy/device/phyrtl8211f;../../../../../../../devices/MIMXRT1166/drivers;../../../../../../../middleware/mbedtls/include;../../../../../../../middleware/mbedtls/library;../../../../../../../middleware/mbedtls/port/ksdk;../../../../../../../middleware/lwip/src/apps/httpsrv;../../../../../../../middleware/lwip/port;../../../../../../../middleware/lwip/src;../../../../../../../middleware/lwip/src/include;../../../../../../../components/phy;../../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../../devices/MIMXRT1166/utilities/debug_console;../../../../../../../devices/MIMXRT1166;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1166/xip;../../../../../xip;../../../../../../../devices/MIMXRT1166/drivers/cm7;../../../../../../../CMSIS/Core/Include;../../../../../../../rtos/freertos/freertos_kernel/include;../../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -368,7 +368,7 @@
             <ScatterFile>MIMXRT1166xxxxx_cm7_flexspi_nor_sdram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --predefine="-DXIP_BOOT_HEADER_ENABLE=1" --predefine="-D__stack_size__=1000" --predefine="-D__heap_size__=100000"</Misc>
+            <Misc>--remove --entry=Reset_Handler --predefine="-DXIP_BOOT_HEADER_ENABLE=1" --predefine="-D__stack_size__=1000" --predefine="-D__heap_size__=100000"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -452,6 +452,16 @@
               <FileName>readme.txt</FileName>
               <FileType>5</FileType>
               <FilePath>../readme.txt</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>evkmimxrt1160</GroupName>
+          <Files>
+            <File>
+              <FileName>evkmimxrt1160_connect_cm4_cm7side.jlinkscript</FileName>
+              <FileType>5</FileType>
+              <FilePath>../evkmimxrt1160_connect_cm4_cm7side.jlinkscript</FilePath>
             </File>
           </Files>
         </Group>
@@ -549,6 +559,16 @@
               <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_common.c</FilePath>
             </File>
             <File>
+              <FileName>fsl_common_arm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_common_arm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_common_arm.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_lpuart.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_lpuart.h</FilePath>
@@ -613,75 +633,10 @@
               <FileType>1</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_anatop_ai.c</FilePath>
             </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>mbedtls/port/ksdk</GroupName>
-          <Files>
             <File>
-              <FileName>ksdk_mbedtls.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/mbedtls/port/ksdk/ksdk_mbedtls.c</FilePath>
-            </File>
-            <File>
-              <FileName>ksdk_mbedtls.h</FileName>
+              <FileName>fsl_memory.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/mbedtls/port/ksdk/ksdk_mbedtls.h</FilePath>
-            </File>
-            <File>
-              <FileName>ksdk_mbedtls_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/mbedtls/port/ksdk/ksdk_mbedtls_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>sha1_alt.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/mbedtls/port/ksdk/sha1_alt.h</FilePath>
-            </File>
-            <File>
-              <FileName>sha256_alt.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/mbedtls/port/ksdk/sha256_alt.h</FilePath>
-            </File>
-            <File>
-              <FileName>des_alt.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/mbedtls/port/ksdk/des_alt.h</FilePath>
-            </File>
-            <File>
-              <FileName>des_alt.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/mbedtls/port/ksdk/des_alt.c</FilePath>
-            </File>
-            <File>
-              <FileName>aes_alt.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/mbedtls/port/ksdk/aes_alt.h</FilePath>
-            </File>
-            <File>
-              <FileName>aes_alt.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/mbedtls/port/ksdk/aes_alt.c</FilePath>
-            </File>
-            <File>
-              <FileName>ecp_alt.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/mbedtls/port/ksdk/ecp_alt.h</FilePath>
-            </File>
-            <File>
-              <FileName>ecp_alt.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/mbedtls/port/ksdk/ecp_alt.c</FilePath>
-            </File>
-            <File>
-              <FileName>ecp_curves_alt.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/mbedtls/port/ksdk/ecp_curves_alt.c</FilePath>
-            </File>
-            <File>
-              <FileName>ecp_alt_ksdk.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/mbedtls/port/ksdk/ecp_alt_ksdk.c</FilePath>
+              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_memory.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -792,6 +747,11 @@
               <FileName>config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../middleware/mbedtls/include/mbedtls/config.h</FilePath>
+            </File>
+            <File>
+              <FileName>config_psa.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/mbedtls/include/mbedtls/config_psa.h</FilePath>
             </File>
             <File>
               <FileName>ctr_drbg.h</FileName>
@@ -979,6 +939,11 @@
               <FilePath>../../../../../../../middleware/mbedtls/include/mbedtls/poly1305.h</FilePath>
             </File>
             <File>
+              <FileName>psa_util.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/mbedtls/include/mbedtls/psa_util.h</FilePath>
+            </File>
+            <File>
               <FileName>ripemd160.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../middleware/mbedtls/include/mbedtls/ripemd160.h</FilePath>
@@ -1081,6 +1046,66 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>mbedtls/include/psa</GroupName>
+          <Files>
+            <File>
+              <FileName>crypto.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/mbedtls/include/psa/crypto.h</FilePath>
+            </File>
+            <File>
+              <FileName>crypto_compat.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/mbedtls/include/psa/crypto_compat.h</FilePath>
+            </File>
+            <File>
+              <FileName>crypto_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/mbedtls/include/psa/crypto_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>crypto_driver_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/mbedtls/include/psa/crypto_driver_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>crypto_extra.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/mbedtls/include/psa/crypto_extra.h</FilePath>
+            </File>
+            <File>
+              <FileName>crypto_platform.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/mbedtls/include/psa/crypto_platform.h</FilePath>
+            </File>
+            <File>
+              <FileName>crypto_se_driver.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/mbedtls/include/psa/crypto_se_driver.h</FilePath>
+            </File>
+            <File>
+              <FileName>crypto_sizes.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/mbedtls/include/psa/crypto_sizes.h</FilePath>
+            </File>
+            <File>
+              <FileName>crypto_struct.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/mbedtls/include/psa/crypto_struct.h</FilePath>
+            </File>
+            <File>
+              <FileName>crypto_types.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/mbedtls/include/psa/crypto_types.h</FilePath>
+            </File>
+            <File>
+              <FileName>crypto_values.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/mbedtls/include/psa/crypto_values.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>mbedtls/library</GroupName>
           <Files>
             <File>
@@ -1164,9 +1189,19 @@
               <FilePath>../../../../../../../middleware/mbedtls/library/chachapoly.c</FilePath>
             </File>
             <File>
+              <FileName>check_crypto_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/mbedtls/library/check_crypto_config.h</FilePath>
+            </File>
+            <File>
               <FileName>cmac.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../middleware/mbedtls/library/cmac.c</FilePath>
+            </File>
+            <File>
+              <FileName>common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/mbedtls/library/common.h</FilePath>
             </File>
             <File>
               <FileName>ctr_drbg.c</FileName>
@@ -1252,11 +1287,6 @@
               <FileName>md.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../middleware/mbedtls/library/md.c</FilePath>
-            </File>
-            <File>
-              <FileName>md_wrap.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/mbedtls/library/md_wrap.c</FilePath>
             </File>
             <File>
               <FileName>md2.c</FileName>
@@ -1354,6 +1384,106 @@
               <FilePath>../../../../../../../middleware/mbedtls/library/poly1305.c</FilePath>
             </File>
             <File>
+              <FileName>psa_crypto.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../middleware/mbedtls/library/psa_crypto.c</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_client.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../middleware/mbedtls/library/psa_crypto_client.c</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_core.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/mbedtls/library/psa_crypto_core.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_driver_wrappers.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../middleware/mbedtls/library/psa_crypto_driver_wrappers.c</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_driver_wrappers.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/mbedtls/library/psa_crypto_driver_wrappers.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_ecp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../middleware/mbedtls/library/psa_crypto_ecp.c</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_ecp.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/mbedtls/library/psa_crypto_ecp.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_invasive.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/mbedtls/library/psa_crypto_invasive.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_its.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/mbedtls/library/psa_crypto_its.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_random_impl.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/mbedtls/library/psa_crypto_random_impl.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_rsa.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../middleware/mbedtls/library/psa_crypto_rsa.c</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_rsa.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/mbedtls/library/psa_crypto_rsa.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_se.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../middleware/mbedtls/library/psa_crypto_se.c</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_se.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/mbedtls/library/psa_crypto_se.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_service_integration.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/mbedtls/library/psa_crypto_service_integration.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_slot_management.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../middleware/mbedtls/library/psa_crypto_slot_management.c</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_slot_management.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/mbedtls/library/psa_crypto_slot_management.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_storage.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../middleware/mbedtls/library/psa_crypto_storage.c</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_storage.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/mbedtls/library/psa_crypto_storage.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_its_file.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../middleware/mbedtls/library/psa_its_file.c</FilePath>
+            </File>
+            <File>
               <FileName>ripemd160.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../middleware/mbedtls/library/ripemd160.c</FilePath>
@@ -1404,6 +1534,16 @@
               <FilePath>../../../../../../../middleware/mbedtls/library/ssl_cookie.c</FilePath>
             </File>
             <File>
+              <FileName>ssl_invasive.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/mbedtls/library/ssl_invasive.h</FilePath>
+            </File>
+            <File>
+              <FileName>ssl_msg.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../middleware/mbedtls/library/ssl_msg.c</FilePath>
+            </File>
+            <File>
               <FileName>ssl_srv.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../middleware/mbedtls/library/ssl_srv.c</FilePath>
@@ -1417,6 +1557,16 @@
               <FileName>ssl_tls.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../middleware/mbedtls/library/ssl_tls.c</FilePath>
+            </File>
+            <File>
+              <FileName>ssl_tls13_keys.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../middleware/mbedtls/library/ssl_tls13_keys.c</FilePath>
+            </File>
+            <File>
+              <FileName>ssl_tls13_keys.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/mbedtls/library/ssl_tls13_keys.h</FilePath>
             </File>
             <File>
               <FileName>threading.c</FileName>
@@ -1481,37 +1631,77 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>utilities</GroupName>
+          <GroupName>mbedtls/port/ksdk</GroupName>
           <Files>
             <File>
-              <FileName>fsl_str.c</FileName>
+              <FileName>ksdk_mbedtls.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1166/utilities/str/fsl_str.c</FilePath>
+              <FilePath>../../../../../../../middleware/mbedtls/port/ksdk/ksdk_mbedtls.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_str.h</FileName>
+              <FileName>ksdk_mbedtls.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1166/utilities/str/fsl_str.h</FilePath>
+              <FilePath>../../../../../../../middleware/mbedtls/port/ksdk/ksdk_mbedtls.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_debug_console.c</FileName>
+              <FileName>ksdk_mbedtls_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/mbedtls/port/ksdk/ksdk_mbedtls_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>sha1_alt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/mbedtls/port/ksdk/sha1_alt.h</FilePath>
+            </File>
+            <File>
+              <FileName>sha256_alt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/mbedtls/port/ksdk/sha256_alt.h</FilePath>
+            </File>
+            <File>
+              <FileName>des_alt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/mbedtls/port/ksdk/des_alt.h</FilePath>
+            </File>
+            <File>
+              <FileName>des_alt.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1166/utilities/debug_console/fsl_debug_console.c</FilePath>
+              <FilePath>../../../../../../../middleware/mbedtls/port/ksdk/des_alt.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_debug_console.h</FileName>
+              <FileName>aes_alt.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1166/utilities/debug_console/fsl_debug_console.h</FilePath>
+              <FilePath>../../../../../../../middleware/mbedtls/port/ksdk/aes_alt.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_debug_console_conf.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1166/utilities/debug_console/fsl_debug_console_conf.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_assert.c</FileName>
+              <FileName>aes_alt.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1166/utilities/fsl_assert.c</FilePath>
+              <FilePath>../../../../../../../middleware/mbedtls/port/ksdk/aes_alt.c</FilePath>
+            </File>
+            <File>
+              <FileName>ecp_alt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/mbedtls/port/ksdk/ecp_alt.h</FilePath>
+            </File>
+            <File>
+              <FileName>ecp_alt.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../middleware/mbedtls/port/ksdk/ecp_alt.c</FilePath>
+            </File>
+            <File>
+              <FileName>ecp_curves_alt.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../middleware/mbedtls/port/ksdk/ecp_curves_alt.c</FilePath>
+            </File>
+            <File>
+              <FileName>ecp_alt_ksdk.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../middleware/mbedtls/port/ksdk/ecp_alt_ksdk.c</FilePath>
+            </File>
+            <File>
+              <FileName>threading_alt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/mbedtls/port/ksdk/threading_alt.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1874,94 +2064,14 @@
           <GroupName>lwip/src/include/lwip</GroupName>
           <Files>
             <File>
-              <FileName>inet_chksum.h</FileName>
+              <FileName>acd.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/inet_chksum.h</FilePath>
+              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/acd.h</FilePath>
             </File>
             <File>
-              <FileName>ip6.h</FileName>
+              <FileName>altcp.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/ip6.h</FilePath>
-            </File>
-            <File>
-              <FileName>udp.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/udp.h</FilePath>
-            </File>
-            <File>
-              <FileName>def.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/def.h</FilePath>
-            </File>
-            <File>
-              <FileName>mld6.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/mld6.h</FilePath>
-            </File>
-            <File>
-              <FileName>err.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/err.h</FilePath>
-            </File>
-            <File>
-              <FileName>ip4.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/ip4.h</FilePath>
-            </File>
-            <File>
-              <FileName>opt.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/opt.h</FilePath>
-            </File>
-            <File>
-              <FileName>errno.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/errno.h</FilePath>
-            </File>
-            <File>
-              <FileName>debug.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/debug.h</FilePath>
-            </File>
-            <File>
-              <FileName>icmp.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/icmp.h</FilePath>
-            </File>
-            <File>
-              <FileName>netif.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/netif.h</FilePath>
-            </File>
-            <File>
-              <FileName>sio.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/sio.h</FilePath>
-            </File>
-            <File>
-              <FileName>ip6_zone.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/ip6_zone.h</FilePath>
-            </File>
-            <File>
-              <FileName>igmp.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/igmp.h</FilePath>
-            </File>
-            <File>
-              <FileName>netdb.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/netdb.h</FilePath>
-            </File>
-            <File>
-              <FileName>dhcp.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/dhcp.h</FilePath>
-            </File>
-            <File>
-              <FileName>altcp_tls.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/altcp_tls.h</FilePath>
+              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/altcp.h</FilePath>
             </File>
             <File>
               <FileName>altcp_tcp.h</FileName>
@@ -1969,19 +2079,9 @@
               <FilePath>../../../../../../../middleware/lwip/src/include/lwip/altcp_tcp.h</FilePath>
             </File>
             <File>
-              <FileName>ip_addr.h</FileName>
+              <FileName>altcp_tls.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/ip_addr.h</FilePath>
-            </File>
-            <File>
-              <FileName>inet.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/inet.h</FilePath>
-            </File>
-            <File>
-              <FileName>tcp.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/tcp.h</FilePath>
+              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/altcp_tls.h</FilePath>
             </File>
             <File>
               <FileName>api.h</FileName>
@@ -1999,114 +2099,19 @@
               <FilePath>../../../../../../../middleware/lwip/src/include/lwip/autoip.h</FilePath>
             </File>
             <File>
-              <FileName>ip4_addr.h</FileName>
+              <FileName>debug.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/ip4_addr.h</FilePath>
+              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/debug.h</FilePath>
             </File>
             <File>
-              <FileName>altcp.h</FileName>
+              <FileName>def.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/altcp.h</FilePath>
+              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/def.h</FilePath>
             </File>
             <File>
-              <FileName>mem.h</FileName>
+              <FileName>dhcp.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/mem.h</FilePath>
-            </File>
-            <File>
-              <FileName>sys.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/sys.h</FilePath>
-            </File>
-            <File>
-              <FileName>init.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/init.h</FilePath>
-            </File>
-            <File>
-              <FileName>dns.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/dns.h</FilePath>
-            </File>
-            <File>
-              <FileName>tcpbase.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/tcpbase.h</FilePath>
-            </File>
-            <File>
-              <FileName>stats.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/stats.h</FilePath>
-            </File>
-            <File>
-              <FileName>icmp6.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/icmp6.h</FilePath>
-            </File>
-            <File>
-              <FileName>netifapi.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/netifapi.h</FilePath>
-            </File>
-            <File>
-              <FileName>ethip6.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/ethip6.h</FilePath>
-            </File>
-            <File>
-              <FileName>snmp.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/snmp.h</FilePath>
-            </File>
-            <File>
-              <FileName>raw.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/raw.h</FilePath>
-            </File>
-            <File>
-              <FileName>if_api.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/if_api.h</FilePath>
-            </File>
-            <File>
-              <FileName>tcpip.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/tcpip.h</FilePath>
-            </File>
-            <File>
-              <FileName>ip6_frag.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/ip6_frag.h</FilePath>
-            </File>
-            <File>
-              <FileName>nd6.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/nd6.h</FilePath>
-            </File>
-            <File>
-              <FileName>ip.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/ip.h</FilePath>
-            </File>
-            <File>
-              <FileName>pbuf.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/pbuf.h</FilePath>
-            </File>
-            <File>
-              <FileName>acd.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/acd.h</FilePath>
-            </File>
-            <File>
-              <FileName>ip4_frag.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/ip4_frag.h</FilePath>
-            </File>
-            <File>
-              <FileName>timeouts.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/timeouts.h</FilePath>
+              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/dhcp.h</FilePath>
             </File>
             <File>
               <FileName>dhcp6.h</FileName>
@@ -2114,14 +2119,19 @@
               <FilePath>../../../../../../../middleware/lwip/src/include/lwip/dhcp6.h</FilePath>
             </File>
             <File>
-              <FileName>sockets.h</FileName>
+              <FileName>dns.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/sockets.h</FilePath>
+              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/dns.h</FilePath>
             </File>
             <File>
-              <FileName>netbuf.h</FileName>
+              <FileName>err.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/netbuf.h</FilePath>
+              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/err.h</FilePath>
+            </File>
+            <File>
+              <FileName>errno.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/errno.h</FilePath>
             </File>
             <File>
               <FileName>etharp.h</FileName>
@@ -2129,14 +2139,194 @@
               <FilePath>../../../../../../../middleware/lwip/src/include/lwip/etharp.h</FilePath>
             </File>
             <File>
+              <FileName>ethip6.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/ethip6.h</FilePath>
+            </File>
+            <File>
+              <FileName>icmp.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/icmp.h</FilePath>
+            </File>
+            <File>
+              <FileName>icmp6.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/icmp6.h</FilePath>
+            </File>
+            <File>
+              <FileName>if_api.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/if_api.h</FilePath>
+            </File>
+            <File>
+              <FileName>igmp.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/igmp.h</FilePath>
+            </File>
+            <File>
+              <FileName>inet.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/inet.h</FilePath>
+            </File>
+            <File>
+              <FileName>inet_chksum.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/inet_chksum.h</FilePath>
+            </File>
+            <File>
+              <FileName>init.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/init.h</FilePath>
+            </File>
+            <File>
+              <FileName>ip.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/ip.h</FilePath>
+            </File>
+            <File>
+              <FileName>ip4.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/ip4.h</FilePath>
+            </File>
+            <File>
+              <FileName>ip4_addr.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/ip4_addr.h</FilePath>
+            </File>
+            <File>
+              <FileName>ip4_frag.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/ip4_frag.h</FilePath>
+            </File>
+            <File>
+              <FileName>ip6.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/ip6.h</FilePath>
+            </File>
+            <File>
               <FileName>ip6_addr.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../middleware/lwip/src/include/lwip/ip6_addr.h</FilePath>
             </File>
             <File>
+              <FileName>ip6_frag.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/ip6_frag.h</FilePath>
+            </File>
+            <File>
+              <FileName>ip6_zone.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/ip6_zone.h</FilePath>
+            </File>
+            <File>
+              <FileName>ip_addr.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/ip_addr.h</FilePath>
+            </File>
+            <File>
+              <FileName>mem.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/mem.h</FilePath>
+            </File>
+            <File>
               <FileName>memp.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../middleware/lwip/src/include/lwip/memp.h</FilePath>
+            </File>
+            <File>
+              <FileName>mld6.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/mld6.h</FilePath>
+            </File>
+            <File>
+              <FileName>nd6.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/nd6.h</FilePath>
+            </File>
+            <File>
+              <FileName>netbuf.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/netbuf.h</FilePath>
+            </File>
+            <File>
+              <FileName>netdb.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/netdb.h</FilePath>
+            </File>
+            <File>
+              <FileName>netif.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/netif.h</FilePath>
+            </File>
+            <File>
+              <FileName>netifapi.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/netifapi.h</FilePath>
+            </File>
+            <File>
+              <FileName>opt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/opt.h</FilePath>
+            </File>
+            <File>
+              <FileName>pbuf.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/pbuf.h</FilePath>
+            </File>
+            <File>
+              <FileName>raw.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/raw.h</FilePath>
+            </File>
+            <File>
+              <FileName>sio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/sio.h</FilePath>
+            </File>
+            <File>
+              <FileName>snmp.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/snmp.h</FilePath>
+            </File>
+            <File>
+              <FileName>sockets.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/sockets.h</FilePath>
+            </File>
+            <File>
+              <FileName>stats.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/stats.h</FilePath>
+            </File>
+            <File>
+              <FileName>sys.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/sys.h</FilePath>
+            </File>
+            <File>
+              <FileName>tcp.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/tcp.h</FilePath>
+            </File>
+            <File>
+              <FileName>tcpbase.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/tcpbase.h</FilePath>
+            </File>
+            <File>
+              <FileName>tcpip.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/tcpip.h</FilePath>
+            </File>
+            <File>
+              <FileName>timeouts.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/timeouts.h</FilePath>
+            </File>
+            <File>
+              <FileName>udp.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/udp.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2514,16 +2704,6 @@
           <GroupName>lwip/src/netif</GroupName>
           <Files>
             <File>
-              <FileName>lowpan6.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/netif/lowpan6.c</FilePath>
-            </File>
-            <File>
-              <FileName>ethernet.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/netif/ethernet.c</FilePath>
-            </File>
-            <File>
               <FileName>bridgeif.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../middleware/lwip/src/netif/bridgeif.c</FilePath>
@@ -2534,14 +2714,14 @@
               <FilePath>../../../../../../../middleware/lwip/src/netif/bridgeif_fdb.c</FilePath>
             </File>
             <File>
-              <FileName>zepif.c</FileName>
+              <FileName>ethernet.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/netif/zepif.c</FilePath>
+              <FilePath>../../../../../../../middleware/lwip/src/netif/ethernet.c</FilePath>
             </File>
             <File>
-              <FileName>lowpan6_common.c</FileName>
+              <FileName>lowpan6.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/netif/lowpan6_common.c</FilePath>
+              <FilePath>../../../../../../../middleware/lwip/src/netif/lowpan6.c</FilePath>
             </File>
             <File>
               <FileName>lowpan6_ble.c</FileName>
@@ -2549,9 +2729,19 @@
               <FilePath>../../../../../../../middleware/lwip/src/netif/lowpan6_ble.c</FilePath>
             </File>
             <File>
+              <FileName>lowpan6_common.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/netif/lowpan6_common.c</FilePath>
+            </File>
+            <File>
               <FileName>slipif.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../middleware/lwip/src/netif/slipif.c</FilePath>
+            </File>
+            <File>
+              <FileName>zepif.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/netif/zepif.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2559,59 +2749,9 @@
           <GroupName>lwip/src/netif/ppp</GroupName>
           <Files>
             <File>
-              <FileName>pppol2tp.c</FileName>
+              <FileName>auth.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/netif/ppp/pppol2tp.c</FilePath>
-            </File>
-            <File>
-              <FileName>mppe.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/netif/ppp/mppe.c</FilePath>
-            </File>
-            <File>
-              <FileName>vj.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/netif/ppp/vj.c</FilePath>
-            </File>
-            <File>
-              <FileName>pppcrypt.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/netif/ppp/pppcrypt.c</FilePath>
-            </File>
-            <File>
-              <FileName>ppp.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/netif/ppp/ppp.c</FilePath>
-            </File>
-            <File>
-              <FileName>eap.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/netif/ppp/eap.c</FilePath>
-            </File>
-            <File>
-              <FileName>chap-md5.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/netif/ppp/chap-md5.c</FilePath>
-            </File>
-            <File>
-              <FileName>lcp.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/netif/ppp/lcp.c</FilePath>
-            </File>
-            <File>
-              <FileName>pppos.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/netif/ppp/pppos.c</FilePath>
-            </File>
-            <File>
-              <FileName>ipcp.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/netif/ppp/ipcp.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsm.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/netif/ppp/fsm.c</FilePath>
+              <FilePath>../../../../../../../middleware/lwip/src/netif/ppp/auth.c</FilePath>
             </File>
             <File>
               <FileName>ccp.c</FileName>
@@ -2619,9 +2759,9 @@
               <FilePath>../../../../../../../middleware/lwip/src/netif/ppp/ccp.c</FilePath>
             </File>
             <File>
-              <FileName>utils.c</FileName>
+              <FileName>chap-md5.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/netif/ppp/utils.c</FilePath>
+              <FilePath>../../../../../../../middleware/lwip/src/netif/ppp/chap-md5.c</FilePath>
             </File>
             <File>
               <FileName>chap-new.c</FileName>
@@ -2629,29 +2769,19 @@
               <FilePath>../../../../../../../middleware/lwip/src/netif/ppp/chap-new.c</FilePath>
             </File>
             <File>
+              <FileName>chap_ms.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/netif/ppp/chap_ms.c</FilePath>
+            </File>
+            <File>
               <FileName>demand.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../middleware/lwip/src/netif/ppp/demand.c</FilePath>
             </File>
             <File>
-              <FileName>pppoe.c</FileName>
+              <FileName>eap.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/netif/ppp/pppoe.c</FilePath>
-            </File>
-            <File>
-              <FileName>ipv6cp.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/netif/ppp/ipv6cp.c</FilePath>
-            </File>
-            <File>
-              <FileName>lwip_ecp.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/netif/ppp/lwip_ecp.c</FilePath>
-            </File>
-            <File>
-              <FileName>multilink.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/netif/ppp/multilink.c</FilePath>
+              <FilePath>../../../../../../../middleware/lwip/src/netif/ppp/eap.c</FilePath>
             </File>
             <File>
               <FileName>eui64.c</FileName>
@@ -2659,14 +2789,49 @@
               <FilePath>../../../../../../../middleware/lwip/src/netif/ppp/eui64.c</FilePath>
             </File>
             <File>
+              <FileName>fsm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/netif/ppp/fsm.c</FilePath>
+            </File>
+            <File>
+              <FileName>ipcp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/netif/ppp/ipcp.c</FilePath>
+            </File>
+            <File>
+              <FileName>ipv6cp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/netif/ppp/ipv6cp.c</FilePath>
+            </File>
+            <File>
+              <FileName>lcp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/netif/ppp/lcp.c</FilePath>
+            </File>
+            <File>
+              <FileName>lwip_ecp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/netif/ppp/lwip_ecp.c</FilePath>
+            </File>
+            <File>
               <FileName>magic.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../middleware/lwip/src/netif/ppp/magic.c</FilePath>
             </File>
             <File>
-              <FileName>upap.c</FileName>
+              <FileName>mppe.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/netif/ppp/upap.c</FilePath>
+              <FilePath>../../../../../../../middleware/lwip/src/netif/ppp/mppe.c</FilePath>
+            </File>
+            <File>
+              <FileName>multilink.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/netif/ppp/multilink.c</FilePath>
+            </File>
+            <File>
+              <FileName>ppp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/netif/ppp/ppp.c</FilePath>
             </File>
             <File>
               <FileName>pppapi.c</FileName>
@@ -2674,14 +2839,74 @@
               <FilePath>../../../../../../../middleware/lwip/src/netif/ppp/pppapi.c</FilePath>
             </File>
             <File>
-              <FileName>chap_ms.c</FileName>
+              <FileName>pppcrypt.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/netif/ppp/chap_ms.c</FilePath>
+              <FilePath>../../../../../../../middleware/lwip/src/netif/ppp/pppcrypt.c</FilePath>
             </File>
             <File>
-              <FileName>auth.c</FileName>
+              <FileName>pppoe.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/netif/ppp/auth.c</FilePath>
+              <FilePath>../../../../../../../middleware/lwip/src/netif/ppp/pppoe.c</FilePath>
+            </File>
+            <File>
+              <FileName>pppol2tp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/netif/ppp/pppol2tp.c</FilePath>
+            </File>
+            <File>
+              <FileName>pppos.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/netif/ppp/pppos.c</FilePath>
+            </File>
+            <File>
+              <FileName>upap.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/netif/ppp/upap.c</FilePath>
+            </File>
+            <File>
+              <FileName>utils.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/netif/ppp/utils.c</FilePath>
+            </File>
+            <File>
+              <FileName>vj.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/netif/ppp/vj.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>utilities</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1166/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1166/utilities/str/fsl_str.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_debug_console.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1166/utilities/debug_console/fsl_debug_console.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_debug_console.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1166/utilities/debug_console/fsl_debug_console.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_debug_console_conf.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1166/utilities/debug_console/fsl_debug_console_conf.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_assert.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1166/utilities/fsl_assert.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2727,71 +2952,6 @@
               <FileName>system_MIMXRT1166_cm7.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1166/system_MIMXRT1166_cm7.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>CMSIS</GroupName>
-          <Files>
-            <File>
-              <FileName>core_cm7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Include/core_cm7.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_armcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Include/cmsis_armcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_armclang.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Include/cmsis_armclang.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_armclang_ltm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Include/cmsis_armclang_ltm.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Include/cmsis_gcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_compiler.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_version.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Include/cmsis_version.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_iccarm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Include/cmsis_iccarm.h</FilePath>
-            </File>
-            <File>
-              <FileName>arm_common_tables.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Include/arm_common_tables.h</FilePath>
-            </File>
-            <File>
-              <FileName>arm_const_structs.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Include/arm_const_structs.h</FilePath>
-            </File>
-            <File>
-              <FileName>arm_math.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Include/arm_math.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2887,6 +3047,56 @@
               <FileName>evkmimxrt1160_flexspi_nor_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../xip/evkmimxrt1160_flexspi_nor_config.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>CMSIS</GroupName>
+          <Files>
+            <File>
+              <FileName>cmsis_armcc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_armclang.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_armclang_ltm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_armclang_ltm.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_compiler.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_gcc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_iccarm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_version.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_version.h</FilePath>
+            </File>
+            <File>
+              <FileName>core_cm7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Core/Include/core_cm7.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Core/Include/mpu_armv7.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -3019,14 +3229,14 @@
           <GroupName>freertos/freertos_kernel</GroupName>
           <Files>
             <File>
-              <FileName>event_groups.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../rtos/freertos/freertos_kernel/event_groups.c</FilePath>
-            </File>
-            <File>
               <FileName>croutine.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../rtos/freertos/freertos_kernel/croutine.c</FilePath>
+            </File>
+            <File>
+              <FileName>event_groups.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../rtos/freertos/freertos_kernel/event_groups.c</FilePath>
             </File>
             <File>
               <FileName>list.c</FileName>
@@ -3059,19 +3269,14 @@
           <GroupName>freertos/freertos_kernel/include</GroupName>
           <Files>
             <File>
-              <FileName>croutine.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../rtos/freertos/freertos_kernel/include/croutine.h</FilePath>
-            </File>
-            <File>
-              <FileName>StackMacros.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../rtos/freertos/freertos_kernel/include/StackMacros.h</FilePath>
-            </File>
-            <File>
               <FileName>atomic.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../rtos/freertos/freertos_kernel/include/atomic.h</FilePath>
+            </File>
+            <File>
+              <FileName>croutine.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../rtos/freertos/freertos_kernel/include/croutine.h</FilePath>
             </File>
             <File>
               <FileName>deprecated_definitions.h</FileName>
@@ -3132,6 +3337,11 @@
               <FileName>stack_macros.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../rtos/freertos/freertos_kernel/include/stack_macros.h</FilePath>
+            </File>
+            <File>
+              <FileName>StackMacros.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../rtos/freertos/freertos_kernel/include/StackMacros.h</FilePath>
             </File>
             <File>
               <FileName>stream_buffer.h</FileName>
@@ -3511,9 +3721,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, XIP_BOOT_HEADER_DCD_ENABLE=1, USE_SDRAM, DATA_SECTION_IS_CACHEABLE=1, NDEBUG, CPU_MIMXRT1166DVM6A_cm7, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, MBEDTLS_SSL_CIPHERSUITES=MBEDTLS_TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256, LWIP_ENET_FLEXIBLE_CONFIGURATION, USE_RTOS=1, PRINTF_ADVANCED_ENABLE=1, HTTPSRV_CFG_WEBSOCKET_ENABLED=1, HTTPSRV_CFG_MBEDTLS_ENABLE=1, MBEDTLS_CONFIG_FILE='\"ksdk_mbedtls_config.h\"', CRYPTO_USE_DRIVER_CAAM, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, SERIAL_PORT_TYPE_UART=1, FSL_RTOS_FREE_RTOS</Define>
+              <Define>FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, XIP_BOOT_HEADER_DCD_ENABLE=1, USE_SDRAM, DATA_SECTION_IS_CACHEABLE=1, NDEBUG, CPU_MIMXRT1166DVM6A_cm7, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, MBEDTLS_SSL_CIPHERSUITES=MBEDTLS_TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256, LWIP_ENET_FLEXIBLE_CONFIGURATION, USE_RTOS=1, PRINTF_ADVANCED_ENABLE=1, HTTPSRV_CFG_WEBSOCKET_ENABLED=1, HTTPSRV_CFG_MBEDTLS_ENABLE=1, MBEDTLS_CONFIG_FILE='\"ksdk_mbedtls_config.h\"', CRYPTO_USE_DRIVER_CAAM, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, LWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1, SERIAL_PORT_TYPE_UART=1, SDK_OS_FREE_RTOS, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../../components/phy/mdio/enet;../../../../../../../components/phy/device/phyksz8081;../../../../../../../components/phy/device/phyrtl8211f;../../../../../../../devices/MIMXRT1166/drivers;../../../../../../../middleware/mbedtls/port/ksdk;../../../../../../../middleware/lwip/src/apps/httpsrv;../../../../../../../middleware/mbedtls/include;../../../../../../../middleware/mbedtls/library;../../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../../devices/MIMXRT1166/utilities/debug_console;../../../../../../../middleware/lwip/port;../../../../../../../middleware/lwip/src;../../../../../../../middleware/lwip/src/include;../../../../../../../components/phy;../../../../../../../devices/MIMXRT1166;../../../../../../../CMSIS/Include;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1166/xip;../../../../../xip;../../../../../../../devices/MIMXRT1166/drivers/cm7;../../../../../../../rtos/freertos/freertos_kernel/include;../../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F</IncludePath>
+              <IncludePath>..;../../../../../../../components/phy/mdio/enet;../../../../../../../components/phy/device/phyksz8081;../../../../../../../components/phy/device/phyrtl8211f;../../../../../../../devices/MIMXRT1166/drivers;../../../../../../../middleware/mbedtls/include;../../../../../../../middleware/mbedtls/library;../../../../../../../middleware/mbedtls/port/ksdk;../../../../../../../middleware/lwip/src/apps/httpsrv;../../../../../../../middleware/lwip/port;../../../../../../../middleware/lwip/src;../../../../../../../middleware/lwip/src/include;../../../../../../../components/phy;../../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../../devices/MIMXRT1166/utilities/debug_console;../../../../../../../devices/MIMXRT1166;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1166/xip;../../../../../xip;../../../../../../../devices/MIMXRT1166/drivers/cm7;../../../../../../../CMSIS/Core/Include;../../../../../../../rtos/freertos/freertos_kernel/include;../../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -3547,7 +3757,7 @@
             <ScatterFile>MIMXRT1166xxxxx_cm7_flexspi_nor_sdram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --predefine="-DXIP_BOOT_HEADER_ENABLE=1" --predefine="-D__stack_size__=1000" --predefine="-D__heap_size__=100000"</Misc>
+            <Misc>--remove --entry=Reset_Handler --predefine="-DXIP_BOOT_HEADER_ENABLE=1" --predefine="-D__stack_size__=1000" --predefine="-D__heap_size__=100000"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -3631,6 +3841,16 @@
               <FileName>readme.txt</FileName>
               <FileType>5</FileType>
               <FilePath>../readme.txt</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>evkmimxrt1160</GroupName>
+          <Files>
+            <File>
+              <FileName>evkmimxrt1160_connect_cm4_cm7side.jlinkscript</FileName>
+              <FileType>5</FileType>
+              <FilePath>../evkmimxrt1160_connect_cm4_cm7side.jlinkscript</FilePath>
             </File>
           </Files>
         </Group>
@@ -3728,6 +3948,16 @@
               <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_common.c</FilePath>
             </File>
             <File>
+              <FileName>fsl_common_arm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_common_arm.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common_arm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_common_arm.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_lpuart.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_lpuart.h</FilePath>
@@ -3792,75 +4022,10 @@
               <FileType>1</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_anatop_ai.c</FilePath>
             </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>mbedtls/port/ksdk</GroupName>
-          <Files>
             <File>
-              <FileName>ksdk_mbedtls.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/mbedtls/port/ksdk/ksdk_mbedtls.c</FilePath>
-            </File>
-            <File>
-              <FileName>ksdk_mbedtls.h</FileName>
+              <FileName>fsl_memory.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/mbedtls/port/ksdk/ksdk_mbedtls.h</FilePath>
-            </File>
-            <File>
-              <FileName>ksdk_mbedtls_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/mbedtls/port/ksdk/ksdk_mbedtls_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>sha1_alt.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/mbedtls/port/ksdk/sha1_alt.h</FilePath>
-            </File>
-            <File>
-              <FileName>sha256_alt.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/mbedtls/port/ksdk/sha256_alt.h</FilePath>
-            </File>
-            <File>
-              <FileName>des_alt.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/mbedtls/port/ksdk/des_alt.h</FilePath>
-            </File>
-            <File>
-              <FileName>des_alt.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/mbedtls/port/ksdk/des_alt.c</FilePath>
-            </File>
-            <File>
-              <FileName>aes_alt.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/mbedtls/port/ksdk/aes_alt.h</FilePath>
-            </File>
-            <File>
-              <FileName>aes_alt.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/mbedtls/port/ksdk/aes_alt.c</FilePath>
-            </File>
-            <File>
-              <FileName>ecp_alt.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/mbedtls/port/ksdk/ecp_alt.h</FilePath>
-            </File>
-            <File>
-              <FileName>ecp_alt.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/mbedtls/port/ksdk/ecp_alt.c</FilePath>
-            </File>
-            <File>
-              <FileName>ecp_curves_alt.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/mbedtls/port/ksdk/ecp_curves_alt.c</FilePath>
-            </File>
-            <File>
-              <FileName>ecp_alt_ksdk.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/mbedtls/port/ksdk/ecp_alt_ksdk.c</FilePath>
+              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_memory.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -3971,6 +4136,11 @@
               <FileName>config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../middleware/mbedtls/include/mbedtls/config.h</FilePath>
+            </File>
+            <File>
+              <FileName>config_psa.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/mbedtls/include/mbedtls/config_psa.h</FilePath>
             </File>
             <File>
               <FileName>ctr_drbg.h</FileName>
@@ -4158,6 +4328,11 @@
               <FilePath>../../../../../../../middleware/mbedtls/include/mbedtls/poly1305.h</FilePath>
             </File>
             <File>
+              <FileName>psa_util.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/mbedtls/include/mbedtls/psa_util.h</FilePath>
+            </File>
+            <File>
               <FileName>ripemd160.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../middleware/mbedtls/include/mbedtls/ripemd160.h</FilePath>
@@ -4260,6 +4435,66 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>mbedtls/include/psa</GroupName>
+          <Files>
+            <File>
+              <FileName>crypto.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/mbedtls/include/psa/crypto.h</FilePath>
+            </File>
+            <File>
+              <FileName>crypto_compat.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/mbedtls/include/psa/crypto_compat.h</FilePath>
+            </File>
+            <File>
+              <FileName>crypto_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/mbedtls/include/psa/crypto_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>crypto_driver_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/mbedtls/include/psa/crypto_driver_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>crypto_extra.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/mbedtls/include/psa/crypto_extra.h</FilePath>
+            </File>
+            <File>
+              <FileName>crypto_platform.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/mbedtls/include/psa/crypto_platform.h</FilePath>
+            </File>
+            <File>
+              <FileName>crypto_se_driver.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/mbedtls/include/psa/crypto_se_driver.h</FilePath>
+            </File>
+            <File>
+              <FileName>crypto_sizes.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/mbedtls/include/psa/crypto_sizes.h</FilePath>
+            </File>
+            <File>
+              <FileName>crypto_struct.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/mbedtls/include/psa/crypto_struct.h</FilePath>
+            </File>
+            <File>
+              <FileName>crypto_types.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/mbedtls/include/psa/crypto_types.h</FilePath>
+            </File>
+            <File>
+              <FileName>crypto_values.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/mbedtls/include/psa/crypto_values.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>mbedtls/library</GroupName>
           <Files>
             <File>
@@ -4343,9 +4578,19 @@
               <FilePath>../../../../../../../middleware/mbedtls/library/chachapoly.c</FilePath>
             </File>
             <File>
+              <FileName>check_crypto_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/mbedtls/library/check_crypto_config.h</FilePath>
+            </File>
+            <File>
               <FileName>cmac.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../middleware/mbedtls/library/cmac.c</FilePath>
+            </File>
+            <File>
+              <FileName>common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/mbedtls/library/common.h</FilePath>
             </File>
             <File>
               <FileName>ctr_drbg.c</FileName>
@@ -4431,11 +4676,6 @@
               <FileName>md.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../middleware/mbedtls/library/md.c</FilePath>
-            </File>
-            <File>
-              <FileName>md_wrap.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/mbedtls/library/md_wrap.c</FilePath>
             </File>
             <File>
               <FileName>md2.c</FileName>
@@ -4533,6 +4773,106 @@
               <FilePath>../../../../../../../middleware/mbedtls/library/poly1305.c</FilePath>
             </File>
             <File>
+              <FileName>psa_crypto.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../middleware/mbedtls/library/psa_crypto.c</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_client.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../middleware/mbedtls/library/psa_crypto_client.c</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_core.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/mbedtls/library/psa_crypto_core.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_driver_wrappers.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../middleware/mbedtls/library/psa_crypto_driver_wrappers.c</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_driver_wrappers.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/mbedtls/library/psa_crypto_driver_wrappers.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_ecp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../middleware/mbedtls/library/psa_crypto_ecp.c</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_ecp.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/mbedtls/library/psa_crypto_ecp.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_invasive.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/mbedtls/library/psa_crypto_invasive.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_its.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/mbedtls/library/psa_crypto_its.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_random_impl.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/mbedtls/library/psa_crypto_random_impl.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_rsa.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../middleware/mbedtls/library/psa_crypto_rsa.c</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_rsa.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/mbedtls/library/psa_crypto_rsa.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_se.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../middleware/mbedtls/library/psa_crypto_se.c</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_se.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/mbedtls/library/psa_crypto_se.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_service_integration.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/mbedtls/library/psa_crypto_service_integration.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_slot_management.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../middleware/mbedtls/library/psa_crypto_slot_management.c</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_slot_management.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/mbedtls/library/psa_crypto_slot_management.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_storage.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../middleware/mbedtls/library/psa_crypto_storage.c</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_storage.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/mbedtls/library/psa_crypto_storage.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_its_file.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../middleware/mbedtls/library/psa_its_file.c</FilePath>
+            </File>
+            <File>
               <FileName>ripemd160.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../middleware/mbedtls/library/ripemd160.c</FilePath>
@@ -4583,6 +4923,16 @@
               <FilePath>../../../../../../../middleware/mbedtls/library/ssl_cookie.c</FilePath>
             </File>
             <File>
+              <FileName>ssl_invasive.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/mbedtls/library/ssl_invasive.h</FilePath>
+            </File>
+            <File>
+              <FileName>ssl_msg.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../middleware/mbedtls/library/ssl_msg.c</FilePath>
+            </File>
+            <File>
               <FileName>ssl_srv.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../middleware/mbedtls/library/ssl_srv.c</FilePath>
@@ -4596,6 +4946,16 @@
               <FileName>ssl_tls.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../middleware/mbedtls/library/ssl_tls.c</FilePath>
+            </File>
+            <File>
+              <FileName>ssl_tls13_keys.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../middleware/mbedtls/library/ssl_tls13_keys.c</FilePath>
+            </File>
+            <File>
+              <FileName>ssl_tls13_keys.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/mbedtls/library/ssl_tls13_keys.h</FilePath>
             </File>
             <File>
               <FileName>threading.c</FileName>
@@ -4660,37 +5020,77 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>utilities</GroupName>
+          <GroupName>mbedtls/port/ksdk</GroupName>
           <Files>
             <File>
-              <FileName>fsl_str.c</FileName>
+              <FileName>ksdk_mbedtls.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1166/utilities/str/fsl_str.c</FilePath>
+              <FilePath>../../../../../../../middleware/mbedtls/port/ksdk/ksdk_mbedtls.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_str.h</FileName>
+              <FileName>ksdk_mbedtls.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1166/utilities/str/fsl_str.h</FilePath>
+              <FilePath>../../../../../../../middleware/mbedtls/port/ksdk/ksdk_mbedtls.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_debug_console.c</FileName>
+              <FileName>ksdk_mbedtls_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/mbedtls/port/ksdk/ksdk_mbedtls_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>sha1_alt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/mbedtls/port/ksdk/sha1_alt.h</FilePath>
+            </File>
+            <File>
+              <FileName>sha256_alt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/mbedtls/port/ksdk/sha256_alt.h</FilePath>
+            </File>
+            <File>
+              <FileName>des_alt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/mbedtls/port/ksdk/des_alt.h</FilePath>
+            </File>
+            <File>
+              <FileName>des_alt.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1166/utilities/debug_console/fsl_debug_console.c</FilePath>
+              <FilePath>../../../../../../../middleware/mbedtls/port/ksdk/des_alt.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_debug_console.h</FileName>
+              <FileName>aes_alt.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1166/utilities/debug_console/fsl_debug_console.h</FilePath>
+              <FilePath>../../../../../../../middleware/mbedtls/port/ksdk/aes_alt.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_debug_console_conf.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1166/utilities/debug_console/fsl_debug_console_conf.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_assert.c</FileName>
+              <FileName>aes_alt.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1166/utilities/fsl_assert.c</FilePath>
+              <FilePath>../../../../../../../middleware/mbedtls/port/ksdk/aes_alt.c</FilePath>
+            </File>
+            <File>
+              <FileName>ecp_alt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/mbedtls/port/ksdk/ecp_alt.h</FilePath>
+            </File>
+            <File>
+              <FileName>ecp_alt.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../middleware/mbedtls/port/ksdk/ecp_alt.c</FilePath>
+            </File>
+            <File>
+              <FileName>ecp_curves_alt.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../middleware/mbedtls/port/ksdk/ecp_curves_alt.c</FilePath>
+            </File>
+            <File>
+              <FileName>ecp_alt_ksdk.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../middleware/mbedtls/port/ksdk/ecp_alt_ksdk.c</FilePath>
+            </File>
+            <File>
+              <FileName>threading_alt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/mbedtls/port/ksdk/threading_alt.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -5053,94 +5453,14 @@
           <GroupName>lwip/src/include/lwip</GroupName>
           <Files>
             <File>
-              <FileName>inet_chksum.h</FileName>
+              <FileName>acd.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/inet_chksum.h</FilePath>
+              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/acd.h</FilePath>
             </File>
             <File>
-              <FileName>ip6.h</FileName>
+              <FileName>altcp.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/ip6.h</FilePath>
-            </File>
-            <File>
-              <FileName>udp.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/udp.h</FilePath>
-            </File>
-            <File>
-              <FileName>def.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/def.h</FilePath>
-            </File>
-            <File>
-              <FileName>mld6.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/mld6.h</FilePath>
-            </File>
-            <File>
-              <FileName>err.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/err.h</FilePath>
-            </File>
-            <File>
-              <FileName>ip4.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/ip4.h</FilePath>
-            </File>
-            <File>
-              <FileName>opt.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/opt.h</FilePath>
-            </File>
-            <File>
-              <FileName>errno.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/errno.h</FilePath>
-            </File>
-            <File>
-              <FileName>debug.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/debug.h</FilePath>
-            </File>
-            <File>
-              <FileName>icmp.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/icmp.h</FilePath>
-            </File>
-            <File>
-              <FileName>netif.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/netif.h</FilePath>
-            </File>
-            <File>
-              <FileName>sio.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/sio.h</FilePath>
-            </File>
-            <File>
-              <FileName>ip6_zone.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/ip6_zone.h</FilePath>
-            </File>
-            <File>
-              <FileName>igmp.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/igmp.h</FilePath>
-            </File>
-            <File>
-              <FileName>netdb.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/netdb.h</FilePath>
-            </File>
-            <File>
-              <FileName>dhcp.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/dhcp.h</FilePath>
-            </File>
-            <File>
-              <FileName>altcp_tls.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/altcp_tls.h</FilePath>
+              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/altcp.h</FilePath>
             </File>
             <File>
               <FileName>altcp_tcp.h</FileName>
@@ -5148,19 +5468,9 @@
               <FilePath>../../../../../../../middleware/lwip/src/include/lwip/altcp_tcp.h</FilePath>
             </File>
             <File>
-              <FileName>ip_addr.h</FileName>
+              <FileName>altcp_tls.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/ip_addr.h</FilePath>
-            </File>
-            <File>
-              <FileName>inet.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/inet.h</FilePath>
-            </File>
-            <File>
-              <FileName>tcp.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/tcp.h</FilePath>
+              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/altcp_tls.h</FilePath>
             </File>
             <File>
               <FileName>api.h</FileName>
@@ -5178,114 +5488,19 @@
               <FilePath>../../../../../../../middleware/lwip/src/include/lwip/autoip.h</FilePath>
             </File>
             <File>
-              <FileName>ip4_addr.h</FileName>
+              <FileName>debug.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/ip4_addr.h</FilePath>
+              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/debug.h</FilePath>
             </File>
             <File>
-              <FileName>altcp.h</FileName>
+              <FileName>def.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/altcp.h</FilePath>
+              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/def.h</FilePath>
             </File>
             <File>
-              <FileName>mem.h</FileName>
+              <FileName>dhcp.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/mem.h</FilePath>
-            </File>
-            <File>
-              <FileName>sys.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/sys.h</FilePath>
-            </File>
-            <File>
-              <FileName>init.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/init.h</FilePath>
-            </File>
-            <File>
-              <FileName>dns.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/dns.h</FilePath>
-            </File>
-            <File>
-              <FileName>tcpbase.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/tcpbase.h</FilePath>
-            </File>
-            <File>
-              <FileName>stats.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/stats.h</FilePath>
-            </File>
-            <File>
-              <FileName>icmp6.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/icmp6.h</FilePath>
-            </File>
-            <File>
-              <FileName>netifapi.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/netifapi.h</FilePath>
-            </File>
-            <File>
-              <FileName>ethip6.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/ethip6.h</FilePath>
-            </File>
-            <File>
-              <FileName>snmp.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/snmp.h</FilePath>
-            </File>
-            <File>
-              <FileName>raw.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/raw.h</FilePath>
-            </File>
-            <File>
-              <FileName>if_api.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/if_api.h</FilePath>
-            </File>
-            <File>
-              <FileName>tcpip.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/tcpip.h</FilePath>
-            </File>
-            <File>
-              <FileName>ip6_frag.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/ip6_frag.h</FilePath>
-            </File>
-            <File>
-              <FileName>nd6.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/nd6.h</FilePath>
-            </File>
-            <File>
-              <FileName>ip.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/ip.h</FilePath>
-            </File>
-            <File>
-              <FileName>pbuf.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/pbuf.h</FilePath>
-            </File>
-            <File>
-              <FileName>acd.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/acd.h</FilePath>
-            </File>
-            <File>
-              <FileName>ip4_frag.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/ip4_frag.h</FilePath>
-            </File>
-            <File>
-              <FileName>timeouts.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/timeouts.h</FilePath>
+              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/dhcp.h</FilePath>
             </File>
             <File>
               <FileName>dhcp6.h</FileName>
@@ -5293,14 +5508,19 @@
               <FilePath>../../../../../../../middleware/lwip/src/include/lwip/dhcp6.h</FilePath>
             </File>
             <File>
-              <FileName>sockets.h</FileName>
+              <FileName>dns.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/sockets.h</FilePath>
+              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/dns.h</FilePath>
             </File>
             <File>
-              <FileName>netbuf.h</FileName>
+              <FileName>err.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/netbuf.h</FilePath>
+              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/err.h</FilePath>
+            </File>
+            <File>
+              <FileName>errno.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/errno.h</FilePath>
             </File>
             <File>
               <FileName>etharp.h</FileName>
@@ -5308,14 +5528,194 @@
               <FilePath>../../../../../../../middleware/lwip/src/include/lwip/etharp.h</FilePath>
             </File>
             <File>
+              <FileName>ethip6.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/ethip6.h</FilePath>
+            </File>
+            <File>
+              <FileName>icmp.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/icmp.h</FilePath>
+            </File>
+            <File>
+              <FileName>icmp6.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/icmp6.h</FilePath>
+            </File>
+            <File>
+              <FileName>if_api.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/if_api.h</FilePath>
+            </File>
+            <File>
+              <FileName>igmp.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/igmp.h</FilePath>
+            </File>
+            <File>
+              <FileName>inet.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/inet.h</FilePath>
+            </File>
+            <File>
+              <FileName>inet_chksum.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/inet_chksum.h</FilePath>
+            </File>
+            <File>
+              <FileName>init.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/init.h</FilePath>
+            </File>
+            <File>
+              <FileName>ip.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/ip.h</FilePath>
+            </File>
+            <File>
+              <FileName>ip4.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/ip4.h</FilePath>
+            </File>
+            <File>
+              <FileName>ip4_addr.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/ip4_addr.h</FilePath>
+            </File>
+            <File>
+              <FileName>ip4_frag.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/ip4_frag.h</FilePath>
+            </File>
+            <File>
+              <FileName>ip6.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/ip6.h</FilePath>
+            </File>
+            <File>
               <FileName>ip6_addr.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../middleware/lwip/src/include/lwip/ip6_addr.h</FilePath>
             </File>
             <File>
+              <FileName>ip6_frag.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/ip6_frag.h</FilePath>
+            </File>
+            <File>
+              <FileName>ip6_zone.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/ip6_zone.h</FilePath>
+            </File>
+            <File>
+              <FileName>ip_addr.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/ip_addr.h</FilePath>
+            </File>
+            <File>
+              <FileName>mem.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/mem.h</FilePath>
+            </File>
+            <File>
               <FileName>memp.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../middleware/lwip/src/include/lwip/memp.h</FilePath>
+            </File>
+            <File>
+              <FileName>mld6.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/mld6.h</FilePath>
+            </File>
+            <File>
+              <FileName>nd6.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/nd6.h</FilePath>
+            </File>
+            <File>
+              <FileName>netbuf.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/netbuf.h</FilePath>
+            </File>
+            <File>
+              <FileName>netdb.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/netdb.h</FilePath>
+            </File>
+            <File>
+              <FileName>netif.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/netif.h</FilePath>
+            </File>
+            <File>
+              <FileName>netifapi.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/netifapi.h</FilePath>
+            </File>
+            <File>
+              <FileName>opt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/opt.h</FilePath>
+            </File>
+            <File>
+              <FileName>pbuf.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/pbuf.h</FilePath>
+            </File>
+            <File>
+              <FileName>raw.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/raw.h</FilePath>
+            </File>
+            <File>
+              <FileName>sio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/sio.h</FilePath>
+            </File>
+            <File>
+              <FileName>snmp.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/snmp.h</FilePath>
+            </File>
+            <File>
+              <FileName>sockets.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/sockets.h</FilePath>
+            </File>
+            <File>
+              <FileName>stats.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/stats.h</FilePath>
+            </File>
+            <File>
+              <FileName>sys.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/sys.h</FilePath>
+            </File>
+            <File>
+              <FileName>tcp.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/tcp.h</FilePath>
+            </File>
+            <File>
+              <FileName>tcpbase.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/tcpbase.h</FilePath>
+            </File>
+            <File>
+              <FileName>tcpip.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/tcpip.h</FilePath>
+            </File>
+            <File>
+              <FileName>timeouts.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/timeouts.h</FilePath>
+            </File>
+            <File>
+              <FileName>udp.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/include/lwip/udp.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -5693,16 +6093,6 @@
           <GroupName>lwip/src/netif</GroupName>
           <Files>
             <File>
-              <FileName>lowpan6.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/netif/lowpan6.c</FilePath>
-            </File>
-            <File>
-              <FileName>ethernet.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/netif/ethernet.c</FilePath>
-            </File>
-            <File>
               <FileName>bridgeif.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../middleware/lwip/src/netif/bridgeif.c</FilePath>
@@ -5713,14 +6103,14 @@
               <FilePath>../../../../../../../middleware/lwip/src/netif/bridgeif_fdb.c</FilePath>
             </File>
             <File>
-              <FileName>zepif.c</FileName>
+              <FileName>ethernet.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/netif/zepif.c</FilePath>
+              <FilePath>../../../../../../../middleware/lwip/src/netif/ethernet.c</FilePath>
             </File>
             <File>
-              <FileName>lowpan6_common.c</FileName>
+              <FileName>lowpan6.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/netif/lowpan6_common.c</FilePath>
+              <FilePath>../../../../../../../middleware/lwip/src/netif/lowpan6.c</FilePath>
             </File>
             <File>
               <FileName>lowpan6_ble.c</FileName>
@@ -5728,9 +6118,19 @@
               <FilePath>../../../../../../../middleware/lwip/src/netif/lowpan6_ble.c</FilePath>
             </File>
             <File>
+              <FileName>lowpan6_common.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/netif/lowpan6_common.c</FilePath>
+            </File>
+            <File>
               <FileName>slipif.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../middleware/lwip/src/netif/slipif.c</FilePath>
+            </File>
+            <File>
+              <FileName>zepif.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/netif/zepif.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -5738,59 +6138,9 @@
           <GroupName>lwip/src/netif/ppp</GroupName>
           <Files>
             <File>
-              <FileName>pppol2tp.c</FileName>
+              <FileName>auth.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/netif/ppp/pppol2tp.c</FilePath>
-            </File>
-            <File>
-              <FileName>mppe.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/netif/ppp/mppe.c</FilePath>
-            </File>
-            <File>
-              <FileName>vj.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/netif/ppp/vj.c</FilePath>
-            </File>
-            <File>
-              <FileName>pppcrypt.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/netif/ppp/pppcrypt.c</FilePath>
-            </File>
-            <File>
-              <FileName>ppp.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/netif/ppp/ppp.c</FilePath>
-            </File>
-            <File>
-              <FileName>eap.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/netif/ppp/eap.c</FilePath>
-            </File>
-            <File>
-              <FileName>chap-md5.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/netif/ppp/chap-md5.c</FilePath>
-            </File>
-            <File>
-              <FileName>lcp.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/netif/ppp/lcp.c</FilePath>
-            </File>
-            <File>
-              <FileName>pppos.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/netif/ppp/pppos.c</FilePath>
-            </File>
-            <File>
-              <FileName>ipcp.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/netif/ppp/ipcp.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsm.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/netif/ppp/fsm.c</FilePath>
+              <FilePath>../../../../../../../middleware/lwip/src/netif/ppp/auth.c</FilePath>
             </File>
             <File>
               <FileName>ccp.c</FileName>
@@ -5798,9 +6148,9 @@
               <FilePath>../../../../../../../middleware/lwip/src/netif/ppp/ccp.c</FilePath>
             </File>
             <File>
-              <FileName>utils.c</FileName>
+              <FileName>chap-md5.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/netif/ppp/utils.c</FilePath>
+              <FilePath>../../../../../../../middleware/lwip/src/netif/ppp/chap-md5.c</FilePath>
             </File>
             <File>
               <FileName>chap-new.c</FileName>
@@ -5808,29 +6158,19 @@
               <FilePath>../../../../../../../middleware/lwip/src/netif/ppp/chap-new.c</FilePath>
             </File>
             <File>
+              <FileName>chap_ms.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/netif/ppp/chap_ms.c</FilePath>
+            </File>
+            <File>
               <FileName>demand.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../middleware/lwip/src/netif/ppp/demand.c</FilePath>
             </File>
             <File>
-              <FileName>pppoe.c</FileName>
+              <FileName>eap.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/netif/ppp/pppoe.c</FilePath>
-            </File>
-            <File>
-              <FileName>ipv6cp.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/netif/ppp/ipv6cp.c</FilePath>
-            </File>
-            <File>
-              <FileName>lwip_ecp.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/netif/ppp/lwip_ecp.c</FilePath>
-            </File>
-            <File>
-              <FileName>multilink.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/netif/ppp/multilink.c</FilePath>
+              <FilePath>../../../../../../../middleware/lwip/src/netif/ppp/eap.c</FilePath>
             </File>
             <File>
               <FileName>eui64.c</FileName>
@@ -5838,14 +6178,49 @@
               <FilePath>../../../../../../../middleware/lwip/src/netif/ppp/eui64.c</FilePath>
             </File>
             <File>
+              <FileName>fsm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/netif/ppp/fsm.c</FilePath>
+            </File>
+            <File>
+              <FileName>ipcp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/netif/ppp/ipcp.c</FilePath>
+            </File>
+            <File>
+              <FileName>ipv6cp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/netif/ppp/ipv6cp.c</FilePath>
+            </File>
+            <File>
+              <FileName>lcp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/netif/ppp/lcp.c</FilePath>
+            </File>
+            <File>
+              <FileName>lwip_ecp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/netif/ppp/lwip_ecp.c</FilePath>
+            </File>
+            <File>
               <FileName>magic.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../middleware/lwip/src/netif/ppp/magic.c</FilePath>
             </File>
             <File>
-              <FileName>upap.c</FileName>
+              <FileName>mppe.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/netif/ppp/upap.c</FilePath>
+              <FilePath>../../../../../../../middleware/lwip/src/netif/ppp/mppe.c</FilePath>
+            </File>
+            <File>
+              <FileName>multilink.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/netif/ppp/multilink.c</FilePath>
+            </File>
+            <File>
+              <FileName>ppp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/netif/ppp/ppp.c</FilePath>
             </File>
             <File>
               <FileName>pppapi.c</FileName>
@@ -5853,14 +6228,74 @@
               <FilePath>../../../../../../../middleware/lwip/src/netif/ppp/pppapi.c</FilePath>
             </File>
             <File>
-              <FileName>chap_ms.c</FileName>
+              <FileName>pppcrypt.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/netif/ppp/chap_ms.c</FilePath>
+              <FilePath>../../../../../../../middleware/lwip/src/netif/ppp/pppcrypt.c</FilePath>
             </File>
             <File>
-              <FileName>auth.c</FileName>
+              <FileName>pppoe.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/netif/ppp/auth.c</FilePath>
+              <FilePath>../../../../../../../middleware/lwip/src/netif/ppp/pppoe.c</FilePath>
+            </File>
+            <File>
+              <FileName>pppol2tp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/netif/ppp/pppol2tp.c</FilePath>
+            </File>
+            <File>
+              <FileName>pppos.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/netif/ppp/pppos.c</FilePath>
+            </File>
+            <File>
+              <FileName>upap.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/netif/ppp/upap.c</FilePath>
+            </File>
+            <File>
+              <FileName>utils.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/netif/ppp/utils.c</FilePath>
+            </File>
+            <File>
+              <FileName>vj.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/netif/ppp/vj.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>utilities</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1166/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1166/utilities/str/fsl_str.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_debug_console.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1166/utilities/debug_console/fsl_debug_console.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_debug_console.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1166/utilities/debug_console/fsl_debug_console.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_debug_console_conf.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1166/utilities/debug_console/fsl_debug_console_conf.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_assert.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1166/utilities/fsl_assert.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -5906,71 +6341,6 @@
               <FileName>system_MIMXRT1166_cm7.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1166/system_MIMXRT1166_cm7.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>CMSIS</GroupName>
-          <Files>
-            <File>
-              <FileName>core_cm7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Include/core_cm7.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_armcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Include/cmsis_armcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_armclang.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Include/cmsis_armclang.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_armclang_ltm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Include/cmsis_armclang_ltm.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Include/cmsis_gcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_compiler.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_version.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Include/cmsis_version.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_iccarm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Include/cmsis_iccarm.h</FilePath>
-            </File>
-            <File>
-              <FileName>arm_common_tables.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Include/arm_common_tables.h</FilePath>
-            </File>
-            <File>
-              <FileName>arm_const_structs.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Include/arm_const_structs.h</FilePath>
-            </File>
-            <File>
-              <FileName>arm_math.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Include/arm_math.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -6066,6 +6436,56 @@
               <FileName>evkmimxrt1160_flexspi_nor_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../xip/evkmimxrt1160_flexspi_nor_config.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>CMSIS</GroupName>
+          <Files>
+            <File>
+              <FileName>cmsis_armcc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_armcc.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_armclang.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_armclang.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_armclang_ltm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_armclang_ltm.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_compiler.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_compiler.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_gcc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_gcc.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_iccarm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_iccarm.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_version.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Core/Include/cmsis_version.h</FilePath>
+            </File>
+            <File>
+              <FileName>core_cm7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Core/Include/core_cm7.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Core/Include/mpu_armv7.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -6198,14 +6618,14 @@
           <GroupName>freertos/freertos_kernel</GroupName>
           <Files>
             <File>
-              <FileName>event_groups.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../rtos/freertos/freertos_kernel/event_groups.c</FilePath>
-            </File>
-            <File>
               <FileName>croutine.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../rtos/freertos/freertos_kernel/croutine.c</FilePath>
+            </File>
+            <File>
+              <FileName>event_groups.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../rtos/freertos/freertos_kernel/event_groups.c</FilePath>
             </File>
             <File>
               <FileName>list.c</FileName>
@@ -6238,19 +6658,14 @@
           <GroupName>freertos/freertos_kernel/include</GroupName>
           <Files>
             <File>
-              <FileName>croutine.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../rtos/freertos/freertos_kernel/include/croutine.h</FilePath>
-            </File>
-            <File>
-              <FileName>StackMacros.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../rtos/freertos/freertos_kernel/include/StackMacros.h</FilePath>
-            </File>
-            <File>
               <FileName>atomic.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../rtos/freertos/freertos_kernel/include/atomic.h</FilePath>
+            </File>
+            <File>
+              <FileName>croutine.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../rtos/freertos/freertos_kernel/include/croutine.h</FilePath>
             </File>
             <File>
               <FileName>deprecated_definitions.h</FileName>
@@ -6311,6 +6726,11 @@
               <FileName>stack_macros.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../rtos/freertos/freertos_kernel/include/stack_macros.h</FilePath>
+            </File>
+            <File>
+              <FileName>StackMacros.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../rtos/freertos/freertos_kernel/include/StackMacros.h</FilePath>
             </File>
             <File>
               <FileName>stream_buffer.h</FileName>

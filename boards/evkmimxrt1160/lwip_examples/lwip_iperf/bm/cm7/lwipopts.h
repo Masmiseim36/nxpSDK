@@ -4,7 +4,7 @@
  * This file is based on \src\include\lwip\opt.h
  ******************************************************************************
  * Copyright (c) 2013-2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2019 NXP
+ * Copyright 2016-2019,2021 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -127,7 +127,7 @@ void sys_check_core_locking(void);
 /* ---------- Pbuf options ---------- */
 /* PBUF_POOL_SIZE: the number of buffers in the pbuf pool. */
 #ifndef PBUF_POOL_SIZE
-#define PBUF_POOL_SIZE 9
+#define PBUF_POOL_SIZE 5
 #endif
 
 /* PBUF_POOL_BUFSIZE: the size of each pbuf in the pbuf pool. */
@@ -167,7 +167,7 @@ void sys_check_core_locking(void);
 
 /* TCP receive window. */
 #ifndef TCP_WND
-#define TCP_WND (2 * TCP_MSS)
+#define TCP_WND (8 * TCP_MSS)
 #endif
 
 /* Enable backlog*/

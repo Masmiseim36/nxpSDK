@@ -16,8 +16,8 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define EXAMPLE_DMA DMA1
-#define EXAMPLE_DMAMUX DMAMUX1
+#define EXAMPLE_DMA                 DMA1
+#define EXAMPLE_DMAMUX              DMAMUX1
 #define DMA0_DMA16_DriverIRQHandler DMA_CH_0_16_DriverIRQHandler
 #define BUFF_LENGTH 4U
 

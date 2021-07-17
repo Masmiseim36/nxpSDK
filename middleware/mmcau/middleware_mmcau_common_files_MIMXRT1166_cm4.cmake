@@ -1,17 +1,15 @@
-if(NOT MIDDLEWARE_MMCAU_COMMON_FILES_MIMXRT1166_cm4_INCLUDED)
-    
-    set(MIDDLEWARE_MMCAU_COMMON_FILES_MIMXRT1166_cm4_INCLUDED true CACHE BOOL "middleware_mmcau_common_files component is included.")
+include_guard(GLOBAL)
+message("middleware_mmcau_common_files component is included.")
 
-    target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
-        ${CMAKE_CURRENT_LIST_DIR}/fsl_mmcau.c
-    )
-
-
-    target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
-        ${CMAKE_CURRENT_LIST_DIR}/.
-    )
+target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
+    ${CMAKE_CURRENT_LIST_DIR}/fsl_mmcau.c
+)
 
 
-    include(driver_common_MIMXRT1166_cm4)
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
+    ${CMAKE_CURRENT_LIST_DIR}/.
+)
 
-endif()
+
+include(driver_common_MIMXRT1166_cm4)
+

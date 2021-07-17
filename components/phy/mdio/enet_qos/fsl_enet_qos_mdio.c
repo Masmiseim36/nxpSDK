@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 NXP
+ * Copyright 2020-2021 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -25,11 +25,6 @@ static status_t ENET_QOS_MDIO_Read(mdio_handle_t *handle, uint32_t phyAddr, uint
  * Variables
  ******************************************************************************/
 
-#if !(defined(FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL) && FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL)
-/*! @brief Pointers to enet clocks for each instance. */
-extern const clock_ip_name_t s_enetqosClock[];
-#endif /* FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL */
-
 const mdio_operations_t enet_qos_ops = {.mdioInit     = ENET_QOS_MDIO_Init,
                                         .mdioWrite    = ENET_QOS_MDIO_Write,
                                         .mdioRead     = ENET_QOS_MDIO_Read,
@@ -53,7 +48,7 @@ static void ENET_QOS_MDIO_Init(mdio_handle_t *handle)
     ENET_QOS_SetSMI(base, resource->csrClock_Hz);
 }
 
-status_t ENET_QOS_MDIO_Write(mdio_handle_t *handle, uint32_t phyAddr, uint32_t devAddr, uint32_t data)
+static status_t ENET_QOS_MDIO_Write(mdio_handle_t *handle, uint32_t phyAddr, uint32_t devAddr, uint32_t data)
 {
     mdio_resource_t *resource = (mdio_resource_t *)&handle->resource;
     ENET_QOS_Type *base       = (ENET_QOS_Type *)resource->base;
@@ -79,12 +74,13 @@ status_t ENET_QOS_MDIO_Write(mdio_handle_t *handle, uint32_t phyAddr, uint32_t d
     }
 #else
     while (ENET_QOS_IsSMIBusy(base))
-        ;
+    {
+    }
 #endif
     return result;
 }
 
-status_t ENET_QOS_MDIO_Read(mdio_handle_t *handle, uint32_t phyAddr, uint32_t devAddr, uint32_t *dataPtr)
+static status_t ENET_QOS_MDIO_Read(mdio_handle_t *handle, uint32_t phyAddr, uint32_t devAddr, uint32_t *dataPtr)
 {
     mdio_resource_t *resource = (mdio_resource_t *)&handle->resource;
     ENET_QOS_Type *base       = (ENET_QOS_Type *)resource->base;
@@ -109,7 +105,8 @@ status_t ENET_QOS_MDIO_Read(mdio_handle_t *handle, uint32_t phyAddr, uint32_t de
     }
 #else
     while (ENET_QOS_IsSMIBusy(base))
-        ;
+    {
+    }
 #endif
     *dataPtr = ENET_QOS_ReadSMIData(base);
     return result;

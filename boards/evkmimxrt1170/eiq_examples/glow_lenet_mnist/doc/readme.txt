@@ -20,7 +20,6 @@ Toolchains supported
 ====================
 - MCUXpresso IDE
 - IAR Embedded Workbench for ARM
-- Keil uVision MDK
 - ArmGCC - GNU Tools ARM Embedded
 
 Hardware requirements

@@ -6,7 +6,6 @@
     <definition extID="middleware.freertos-kernel.heap_4.MIMXRT1166"/>
     <definition extID="platform.drivers.common.MIMXRT1166"/>
     <definition extID="platform.devices.MIMXRT1166_CMSIS.MIMXRT1166"/>
-    <definition extID="platform.Include_core_cm7.MIMXRT1166"/>
     <definition extID="utility.debug_console.MIMXRT1166"/>
     <definition extID="component.lpuart_adapter.MIMXRT1166"/>
     <definition extID="component.serial_manager.MIMXRT1166"/>
@@ -23,11 +22,10 @@
     <definition extID="platform.drivers.dcdc_soc.MIMXRT1166"/>
     <definition extID="platform.drivers.cache_armv7_m7.MIMXRT1166"/>
     <definition extID="platform.drivers.anatop_ai.MIMXRT1166"/>
+    <definition extID="CMSIS_Include_core_cm.MIMXRT1166"/>
     <definition extID="middleware.freertos-kernel.MIMXRT1166"/>
     <definition extID="middleware.freertos-kernel.extension.MIMXRT1166"/>
     <definition extID="platform.utilities.misc_utilities.MIMXRT1166"/>
-    <definition extID="platform.Include_common.MIMXRT1166"/>
-    <definition extID="platform.Include_dsp.MIMXRT1166"/>
     <definition extID="platform.devices.MIMXRT1166_system.MIMXRT1166"/>
     <definition extID="iar"/>
     <definition extID="mdk"/>
@@ -37,7 +35,7 @@
     <definition extID="com.crt.advproject.config.exe.debug"/>
     <definition extID="com.crt.advproject.config.exe.release"/>
   </externalDefinitions>
-  <example id="evkmimxrt1160_freertos_hello_cm7" name="freertos_hello_cm7" device_core="cm7_MIMXRT1166xxxxx" dependency="platform.drivers.clock.MIMXRT1166 middleware.freertos-kernel.heap_4.MIMXRT1166 platform.drivers.common.MIMXRT1166 platform.devices.MIMXRT1166_CMSIS.MIMXRT1166 platform.Include_core_cm7.MIMXRT1166 utility.debug_console.MIMXRT1166 component.lpuart_adapter.MIMXRT1166 component.serial_manager.MIMXRT1166 component.lists.MIMXRT1166 component.serial_manager_uart.MIMXRT1166 platform.drivers.lpuart.MIMXRT1166 platform.devices.MIMXRT1166_startup.MIMXRT1166 platform.drivers.iomuxc.MIMXRT1166 platform.utilities.assert.MIMXRT1166 platform.drivers.igpio.MIMXRT1166 platform.drivers.xip_device.MIMXRT1166 platform.drivers.xip_board.MIMXRT1166 platform.drivers.pmu_1.MIMXRT1166 platform.drivers.dcdc_soc.MIMXRT1166 platform.drivers.cache_armv7_m7.MIMXRT1166 platform.drivers.anatop_ai.MIMXRT1166 middleware.freertos-kernel.MIMXRT1166 middleware.freertos-kernel.extension.MIMXRT1166 platform.utilities.misc_utilities.MIMXRT1166 platform.Include_common.MIMXRT1166 platform.Include_dsp.MIMXRT1166 platform.devices.MIMXRT1166_system.MIMXRT1166" category="rtos_examples">
+  <example id="evkmimxrt1160_freertos_hello_cm7" name="freertos_hello_cm7" device_core="cm7_MIMXRT1166xxxxx" dependency="platform.drivers.clock.MIMXRT1166 middleware.freertos-kernel.heap_4.MIMXRT1166 platform.drivers.common.MIMXRT1166 platform.devices.MIMXRT1166_CMSIS.MIMXRT1166 utility.debug_console.MIMXRT1166 component.lpuart_adapter.MIMXRT1166 component.serial_manager.MIMXRT1166 component.lists.MIMXRT1166 component.serial_manager_uart.MIMXRT1166 platform.drivers.lpuart.MIMXRT1166 platform.devices.MIMXRT1166_startup.MIMXRT1166 platform.drivers.iomuxc.MIMXRT1166 platform.utilities.assert.MIMXRT1166 platform.drivers.igpio.MIMXRT1166 platform.drivers.xip_device.MIMXRT1166 platform.drivers.xip_board.MIMXRT1166 platform.drivers.pmu_1.MIMXRT1166 platform.drivers.dcdc_soc.MIMXRT1166 platform.drivers.cache_armv7_m7.MIMXRT1166 platform.drivers.anatop_ai.MIMXRT1166 CMSIS_Include_core_cm.MIMXRT1166 middleware.freertos-kernel.MIMXRT1166 middleware.freertos-kernel.extension.MIMXRT1166 platform.utilities.misc_utilities.MIMXRT1166 platform.devices.MIMXRT1166_system.MIMXRT1166" category="rtos_examples">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -58,7 +56,8 @@
           <value>XIP_EXTERNAL_FLASH=1</value>
           <value>XIP_BOOT_HEADER_ENABLE=1</value>
           <value>SERIAL_PORT_TYPE_UART=1</value>
-          <value>FSL_RTOS_FREE_RTOS</value>
+          <value>SDK_OS_FREE_RTOS</value>
+          <value>MCUXPRESSO_SDK</value>
         </option>
         <option id="com.crt.advproject.gas.fpu" type="enum">
           <value>com.crt.advproject.gas.fpu.fpv5dp.hard</value>
@@ -184,6 +183,9 @@
       <files mask="evkmimxrt1160_ram.ini"/>
       <files mask="evkmimxrt1160_sdram_init.ini"/>
       <files mask="evkmimxrt1160_flexspi_nor.ini"/>
+    </source>
+    <source path="boards/evkmimxrt1160/rtos_examples/freertos_hello/cm7" project_relative_path="evkmimxrt1160" type="other" toolchain="iar mdk armgcc">
+      <files mask="evkmimxrt1160_connect_cm4_cm7side.jlinkscript"/>
     </source>
   </example>
 </ksdk:examples>

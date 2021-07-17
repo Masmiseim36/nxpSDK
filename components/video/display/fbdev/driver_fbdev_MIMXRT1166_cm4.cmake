@@ -1,19 +1,17 @@
-if(NOT DRIVER_FBDEV_MIMXRT1166_cm4_INCLUDED)
-    
-    set(DRIVER_FBDEV_MIMXRT1166_cm4_INCLUDED true CACHE BOOL "driver_fbdev component is included.")
+include_guard(GLOBAL)
+message("driver_fbdev component is included.")
 
-    target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
-        ${CMAKE_CURRENT_LIST_DIR}/fsl_fbdev.c
-    )
-
-
-    target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
-        ${CMAKE_CURRENT_LIST_DIR}/.
-    )
+target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
+    ${CMAKE_CURRENT_LIST_DIR}/fsl_fbdev.c
+)
 
 
-    include(driver_dc-fb-common_MIMXRT1166_cm4)
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
+    ${CMAKE_CURRENT_LIST_DIR}/.
+)
 
-    include(middleware_freertos-kernel_MIMXRT1166_cm4)
 
-endif()
+include(driver_dc-fb-common_MIMXRT1166_cm4)
+
+include(middleware_freertos-kernel_MIMXRT1166_cm4)
+

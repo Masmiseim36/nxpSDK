@@ -3,14 +3,28 @@
 
 #include <stdint.h>
 
-#include "vg_lite_kernel.h"
+#define vg_lite_os_set_event_state(event, state)      (event)->signal = state
 
-typedef void * OsSemaphoreHandle_t;
+#define vg_lite_os_event_state(event)                 (event)->signal
+
+#define vg_lite_os_config_event(event, sem_id, state) \
+    { \
+        (event)->semaphore_id = sem_id; \
+        (event)->signal = state; \
+    }
+
+
+typedef struct vg_lite_os_async_event
+{
+    uint32_t    semaphore_id; /*! The Id of the semaphore assigned to this event */
+    int32_t     signal;       /*! The command buffer status */
+}
+vg_lite_os_async_event_t;
 
 /*!
 @brief  Set the value in a task’s thread local storage array.
 */
-vg_lite_error_t vg_lite_os_set_tls(void* tls);
+int32_t vg_lite_os_set_tls(void* tls);
 
 /*!
 @brief  Get the current task’s thread local storage array.
@@ -41,7 +55,7 @@ void vg_lite_os_sleep(uint32_t msec);
 /*!
 @brief  initialize the os parameters.
 */
-vg_lite_error_t vg_lite_os_initialize();
+int32_t vg_lite_os_initialize();
 
 /*!
 @brief  deinitialize the os parameters.
@@ -51,57 +65,22 @@ void vg_lite_os_deinitialize();
 /*!
 @brief  Mutex semaphore take.
 */
-vg_lite_error_t vg_lite_os_lock();
+int32_t vg_lite_os_lock();
 
 /*!
 @brief  Mutex semaphore give.
 */
-vg_lite_error_t vg_lite_os_unlock();
+int32_t vg_lite_os_unlock();
 
 /*!
 @brief  Submit the current command buffer to the command queue.
 */
-vg_lite_error_t vg_lite_os_submit(uint32_t physical, uint32_t offset, uint32_t size,  uint32_t * signal, uint32_t semaphore_id);
+int32_t vg_lite_os_submit(uint32_t physical, uint32_t offset, uint32_t size, vg_lite_os_async_event_t *event);
 
 /*!
 @brief  Wait for the current command buffer to be executed.
 */
-vg_lite_error_t vg_lite_os_wait(uint32_t timeout, uint32_t * signal ,OsSemaphoreHandle_t semaphore);
-
-/*!
-@brief  Create semaphore.
-*/
-OsSemaphoreHandle_t vg_lite_os_create_semaphore(void);
-
-/*!
-@brief  Set semaphore.
-*/
-void vg_lite_os_set_semaphore(uint32_t id, OsSemaphoreHandle_t semaphore);
-
-/*!
-@brief  Get semaphore.
-*/
-OsSemaphoreHandle_t vg_lite_os_get_semaphore(uint32_t id);
-
-/*!
-@brief  Delete semaphore by id.
-*/
-void vg_lite_os_delete_semaphore_by_id(uint32_t id);
-
-/*!
-@brief  Release semaphore.
-*/
-void vg_lite_os_release_semaphore(OsSemaphoreHandle_t semaphore);
-
-/*!
-@brief  Take semaphore.
-*/
-long vg_lite_os_take_semaphore( OsSemaphoreHandle_t semaphore, uint32_t xTicksToWait);
-
-/*!
-@brief  Delete semaphore.
-*/
-void vg_lite_os_delete_semaphore(OsSemaphoreHandle_t semaphore);
+int32_t vg_lite_os_wait(uint32_t timeout, vg_lite_os_async_event_t *event);
 
 /*!
 @brief  IRQ Handler.
@@ -112,5 +91,27 @@ void vg_lite_os_IRQHandler();
 @brief  Wait until an interrupt from the VGLite graphics hardware has been received.
 */
 int32_t vg_lite_os_wait_interrupt(uint32_t timeout, uint32_t mask, uint32_t * value);
+
+/*!
+@brief
+*/
+int32_t vg_lite_os_init_event(vg_lite_os_async_event_t *event,
+                                      uint32_t semaphore_id,
+                                      int32_t state);
+
+/*!
+@brief
+*/
+int32_t vg_lite_os_delete_event(vg_lite_os_async_event_t *event);
+
+/*!
+@brief
+*/
+int32_t vg_lite_os_wait_event(vg_lite_os_async_event_t *event);
+
+/*!
+@brief
+*/
+int32_t vg_lite_os_signal_event(vg_lite_os_async_event_t *event);
 
 #endif

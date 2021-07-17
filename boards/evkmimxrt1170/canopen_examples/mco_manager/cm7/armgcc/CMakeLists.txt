@@ -1,6 +1,6 @@
 # CROSS COMPILER SETTING
 SET(CMAKE_SYSTEM_NAME Generic)
-CMAKE_MINIMUM_REQUIRED (VERSION 3.1.1)
+CMAKE_MINIMUM_REQUIRED (VERSION 3.10.0)
 
 # THE VERSION NUMBER
 SET (Tutorial_VERSION_MAJOR 1)
@@ -55,6 +55,7 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../pin_mux.h"
 "${ProjDirPath}/../dcd.c"
 "${ProjDirPath}/../dcd.h"
+"${ProjDirPath}/../evkmimxrt1170_connect_cm4_cm7side.jlinkscript"
 )
 
 target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
@@ -67,14 +68,14 @@ target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
 set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../../devices/MIMXRT1176/drivers
     ${ProjDirPath}/../../../../../../devices/MIMXRT1176/utilities/debug_console_lite
-    ${ProjDirPath}/../../../../../../middleware/canopen
+    ${ProjDirPath}/../../../../../../middleware/canopen/mco
     ${ProjDirPath}/../../../../../../devices/MIMXRT1176
-    ${ProjDirPath}/../../../../../../CMSIS/Include
     ${ProjDirPath}/../../../../../../components/uart
     ${ProjDirPath}/../../../../../../components/lists
     ${ProjDirPath}/../../../../../../devices/MIMXRT1176/xip
     ${ProjDirPath}/../../../../xip
     ${ProjDirPath}/../../../../../../devices/MIMXRT1176/drivers/cm7
+    ${ProjDirPath}/../../../../../../CMSIS/Core/Include
     ${ProjDirPath}/../../../../../../devices/MIMXRT1176/utilities
 )
 
@@ -95,8 +96,6 @@ include(middleware_canopen_MIMXRT1176_cm7)
 
 include(device_MIMXRT1176_CMSIS_MIMXRT1176_cm7)
 
-include(CMSIS_Include_core_cm7_MIMXRT1176_cm7)
-
 include(component_lpuart_adapter_MIMXRT1176_cm7)
 
 include(component_lists_MIMXRT1176_cm7)
@@ -109,7 +108,7 @@ include(driver_igpio_MIMXRT1176_cm7)
 
 include(driver_xip_device_MIMXRT1176_cm7)
 
-include(driver_xip_board_MIMXRT1176_cm7)
+include(driver_xip_board_evkmimxrt1170_MIMXRT1176_cm7)
 
 include(driver_pmu_1_MIMXRT1176_cm7)
 
@@ -119,11 +118,9 @@ include(driver_cache_armv7_m7_MIMXRT1176_cm7)
 
 include(driver_anatop_ai_MIMXRT1176_cm7)
 
+include(CMSIS_Include_core_cm_MIMXRT1176_cm7)
+
 include(utilities_misc_utilities_MIMXRT1176_cm7)
-
-include(CMSIS_Include_common_MIMXRT1176_cm7)
-
-include(CMSIS_Include_dsp_MIMXRT1176_cm7)
 
 include(device_MIMXRT1176_system_MIMXRT1176_cm7)
 
@@ -139,28 +136,28 @@ target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE gcc)
 target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE nosys)
 
 if(CMAKE_BUILD_TYPE STREQUAL debug)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../middleware/canopen/mcolibs/imxrt117x/mco_manager/libMCO_MGR_IMXRT117x_SDK_CM7.a)
-endif()
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../middleware/canopen/mcolibs/imxrt11xx/mco_manager/libMCO_MGR_IMXRT11xx_SDK_CM7.a)
+endif(CMAKE_BUILD_TYPE STREQUAL debug)
 
 if(CMAKE_BUILD_TYPE STREQUAL release)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../middleware/canopen/mcolibs/imxrt117x/mco_manager/libMCO_MGR_IMXRT117x_SDK_CM7.a)
-endif()
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../middleware/canopen/mcolibs/imxrt11xx/mco_manager/libMCO_MGR_IMXRT11xx_SDK_CM7.a)
+endif(CMAKE_BUILD_TYPE STREQUAL release)
 
 if(CMAKE_BUILD_TYPE STREQUAL sdram_debug)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../middleware/canopen/mcolibs/imxrt117x/mco_manager/libMCO_MGR_IMXRT117x_SDK_CM7.a)
-endif()
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../middleware/canopen/mcolibs/imxrt11xx/mco_manager/libMCO_MGR_IMXRT11xx_SDK_CM7.a)
+endif(CMAKE_BUILD_TYPE STREQUAL sdram_debug)
 
 if(CMAKE_BUILD_TYPE STREQUAL sdram_release)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../middleware/canopen/mcolibs/imxrt117x/mco_manager/libMCO_MGR_IMXRT117x_SDK_CM7.a)
-endif()
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../middleware/canopen/mcolibs/imxrt11xx/mco_manager/libMCO_MGR_IMXRT11xx_SDK_CM7.a)
+endif(CMAKE_BUILD_TYPE STREQUAL sdram_release)
 
 if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../middleware/canopen/mcolibs/imxrt117x/mco_manager/libMCO_MGR_IMXRT117x_SDK_CM7.a)
-endif()
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../middleware/canopen/mcolibs/imxrt11xx/mco_manager/libMCO_MGR_IMXRT11xx_SDK_CM7.a)
+endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
 
 if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../middleware/canopen/mcolibs/imxrt117x/mco_manager/libMCO_MGR_IMXRT117x_SDK_CM7.a)
-endif()
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../middleware/canopen/mcolibs/imxrt11xx/mco_manager/libMCO_MGR_IMXRT11xx_SDK_CM7.a)
+endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
 
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--end-group)
 

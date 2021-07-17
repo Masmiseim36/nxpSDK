@@ -29,8 +29,8 @@
  ******************************************************************************/
 #define EXAMPLE_I2C_MASTER_BASE (LPI2C1_BASE)
 #define EXAMPLE_I2C_MASTER_IRQN (LPI2C1_IRQn)
-#define EXAMPLE_I2C_SLAVE_BASE (LPI2C5_BASE)
-#define EXAMPLE_I2C_SLAVE_IRQN (LPI2C5_IRQn)
+#define EXAMPLE_I2C_SLAVE_BASE  (LPI2C5_BASE)
+#define EXAMPLE_I2C_SLAVE_IRQN  (LPI2C5_IRQn)
 
 /* Get frequency of lpi2c clock */
 #define LPI2C_CLOCK_FREQUENCY (CLOCK_GetFreq(kCLOCK_OscRc48MDiv2))

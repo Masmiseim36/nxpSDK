@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2007-2015 Freescale Semiconductor, Inc.
- * Copyright 2018-2020 NXP
+ * Copyright 2018-2021 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  *
@@ -213,7 +213,7 @@ static usb_status_t USB_DeviceCdcVcomCallback(class_handle_t handle, uint32_t ev
     uint8_t *uartBitmap;
     usb_device_cdc_acm_request_param_struct_t *acmReqParam;
     usb_device_endpoint_callback_message_struct_t *epCbParam;
-    usb_status_t error          = kStatus_USB_Error;
+    usb_status_t error          = kStatus_USB_InvalidRequest;
     usb_cdc_acm_info_t *acmInfo = &s_usbCdcAcmInfo;
     acmReqParam                 = (usb_device_cdc_acm_request_param_struct_t *)param;
     epCbParam                   = (usb_device_endpoint_callback_message_struct_t *)param;
@@ -272,43 +272,49 @@ static usb_status_t USB_DeviceCdcVcomCallback(class_handle_t handle, uint32_t ev
                 if (1 == acmReqParam->isSetup)
                 {
                     *(acmReqParam->buffer) = s_abstractState;
+                    *(acmReqParam->length) = sizeof(s_abstractState);
                 }
                 else
                 {
-                    *(acmReqParam->length) = 0;
+                    /* no action, data phase, s_abstractState has been assigned */
                 }
+                error = kStatus_USB_Success;
             }
             else if (USB_DEVICE_CDC_FEATURE_COUNTRY_SETTING == acmReqParam->setupValue)
             {
                 if (1 == acmReqParam->isSetup)
                 {
                     *(acmReqParam->buffer) = s_countryCode;
+                    *(acmReqParam->length) = sizeof(s_countryCode);
                 }
                 else
                 {
-                    *(acmReqParam->length) = 0;
+                    /* no action, data phase, s_countryCode has been assigned */
                 }
+                error = kStatus_USB_Success;
             }
             else
             {
+                /* no action, return kStatus_USB_InvalidRequest */
             }
-            error = kStatus_USB_Success;
             break;
         case kUSB_DeviceCdcEventGetCommFeature:
             if (USB_DEVICE_CDC_FEATURE_ABSTRACT_STATE == acmReqParam->setupValue)
             {
                 *(acmReqParam->buffer) = s_abstractState;
                 *(acmReqParam->length) = COMM_FEATURE_DATA_SIZE;
+                error                  = kStatus_USB_Success;
             }
             else if (USB_DEVICE_CDC_FEATURE_COUNTRY_SETTING == acmReqParam->setupValue)
             {
                 *(acmReqParam->buffer) = s_countryCode;
                 *(acmReqParam->length) = COMM_FEATURE_DATA_SIZE;
+                error                  = kStatus_USB_Success;
             }
             else
             {
+                /* no action, return kStatus_USB_InvalidRequest */
             }
-            error = kStatus_USB_Success;
             break;
         case kUSB_DeviceCdcEventClearCommFeature:
             break;
@@ -322,14 +328,15 @@ static usb_status_t USB_DeviceCdcVcomCallback(class_handle_t handle, uint32_t ev
             if (1 == acmReqParam->isSetup)
             {
                 *(acmReqParam->buffer) = s_lineCoding;
+                *(acmReqParam->length) = sizeof(s_lineCoding);
             }
             else
             {
-                *(acmReqParam->length) = 0;
+                /* no action, data phase, s_lineCoding has been assigned */
             }
-        }
             error = kStatus_USB_Success;
-            break;
+        }
+        break;
         case kUSB_DeviceCdcEventSetControlLineState:
         {
             s_usbCdcAcmInfo.dteStatus = acmReqParam->setupValue;
@@ -436,7 +443,7 @@ static usb_status_t USB_DeviceCdcVcomCallback(class_handle_t handle, uint32_t ev
 
 static usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *param)
 {
-    usb_status_t error = kStatus_USB_Error;
+    usb_status_t error = kStatus_USB_InvalidRequest;
     uint16_t *temp16   = (uint16_t *)param;
     uint8_t *temp8     = (uint8_t *)param;
 
@@ -446,6 +453,7 @@ static usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event,
         {
             _fmstr_exampleUsbCtx.attach               = 0;
             _fmstr_exampleUsbCtx.currentConfiguration = 0U;
+            error                                     = kStatus_USB_Success;
 #if (defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0U)) || \
     (defined(USB_DEVICE_CONFIG_LPCIP3511HS) && (USB_DEVICE_CONFIG_LPCIP3511HS > 0U))
             /* Get USB speed to configure the device, including max packet size and interval of the endpoints. */
@@ -461,18 +469,20 @@ static usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event,
             {
                 _fmstr_exampleUsbCtx.attach               = 0;
                 _fmstr_exampleUsbCtx.currentConfiguration = 0U;
+                error                                     = kStatus_USB_Success;
             }
             else if (USB_CDC_VCOM_CONFIGURE_INDEX == (*temp8))
             {
                 _fmstr_exampleUsbCtx.attach               = 1;
                 _fmstr_exampleUsbCtx.currentConfiguration = *temp8;
+                error                                     = kStatus_USB_Success;
                 /* Schedule buffer for receive */
                 USB_DeviceCdcAcmRecv(_fmstr_exampleUsbCtx.cdcAcmHandle, USB_CDC_VCOM_BULK_OUT_ENDPOINT, s_usbRxTxBuff,
                                      g_UsbDeviceCdcVcomDicEndpoints[0].maxPacketSize);
             }
             else
             {
-                error = kStatus_USB_InvalidRequest;
+                /* no action, return kStatus_USB_InvalidRequest */
             }
             break;
         case kUSB_DeviceEventSetInterface:
@@ -483,6 +493,7 @@ static usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event,
                 if (interface < USB_CDC_VCOM_INTERFACE_COUNT)
                 {
                     _fmstr_exampleUsbCtx.currentInterfaceAlternateSetting[interface] = alternateSetting;
+                    error                                                            = kStatus_USB_Success;
                 }
             }
             break;

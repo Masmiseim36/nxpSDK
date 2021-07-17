@@ -106,6 +106,8 @@ void BOARD_SDCardDAT3PullFunction(uint32_t status)
         SDK_DelayAtLeastUs(1000U, SDK_DEVICE_MAXIMUM_CPU_CLOCK_FREQUENCY);
         /* make sure the card is power on for DAT3 pull up */
         BOARD_SDCardPowerControl(true);
+        /* power on delay */
+        SDK_DelayAtLeastUs(1000U, SDK_DEVICE_MAXIMUM_CPU_CLOCK_FREQUENCY);
     }
     else
     {

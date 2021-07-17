@@ -14,12 +14,12 @@
 /* Freescale includes. */
 #include "fsl_device_registers.h"
 #include "fsl_debug_console.h"
-#include "pin_mux.h"
-#include "clock_config.h"
-#include "board.h"
 #include "fsl_flexspi.h"
 
 
+#include "pin_mux.h"
+#include "clock_config.h"
+#include "board.h"
 #include "app.h"
 #include "fsl_common.h"
 /*******************************************************************************
@@ -213,10 +213,30 @@ static void flash_operation_task(void *pvParameters)
 
     PRINTF("Flash Vendor ID: 0x%x\r\n", vendorID);
 
+    /* Disable I cache to avoid cache pre-fatch instruction with branch prediction from flash
+       and application operate flash synchronously in multi-tasks. */
+#if defined(__ICACHE_PRESENT) && (__ICACHE_PRESENT == 1U)
+    volatile bool ICacheEnableFlag = false;
+    /* Disable I cache. */
+    if (SCB_CCR_IC_Msk == (SCB_CCR_IC_Msk & SCB->CCR))
+    {
+        SCB_DisableICache();
+        ICacheEnableFlag = true;
+    }
+#endif /* __ICACHE_PRESENT */
     /* Enter quad mode. */
     taskENTER_CRITICAL();
     status = flexspi_nor_enable_quad_mode(EXAMPLE_FLEXSPI);
     taskEXIT_CRITICAL();
+#if defined(__ICACHE_PRESENT) && (__ICACHE_PRESENT == 1U)
+    if (ICacheEnableFlag)
+    {
+        /* Enable I cache. */
+        SCB_EnableICache();
+        ICacheEnableFlag = false;
+    }
+#endif /* __ICACHE_PRESENT */
+
     if (status != kStatus_Success)
     {
         configASSERT(NULL);
@@ -228,7 +248,6 @@ static void flash_operation_task(void *pvParameters)
     /* Disable I cache to avoid cache pre-fatch instruction with branch prediction from flash
        and application operate flash synchronously in multi-tasks. */
 #if defined(__ICACHE_PRESENT) && (__ICACHE_PRESENT == 1U)
-    volatile bool ICacheEnableFlag = false;
     /* Disable I cache. */
     if (SCB_CCR_IC_Msk == (SCB_CCR_IC_Msk & SCB->CCR))
     {

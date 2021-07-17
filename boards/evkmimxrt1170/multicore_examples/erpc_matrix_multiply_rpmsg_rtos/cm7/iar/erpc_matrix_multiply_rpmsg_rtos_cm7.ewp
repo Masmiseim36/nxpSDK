@@ -187,8 +187,9 @@
           <state>CPU_MIMXRT1176DVMAA_cm7</state>
           <state>__USE_SHMEM</state>
           <state>MULTICORE_APP=1</state>
-          <state>FSL_RTOS_FREE_RTOS</state>
+          <state>SDK_OS_FREE_RTOS</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
+          <state>MCUXPRESSO_SDK</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -331,7 +332,6 @@
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM4F</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176</state>
-          <state>$PROJ_DIR$/../../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
@@ -340,6 +340,7 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/xip</state>
           <state>$PROJ_DIR$/../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/cm7</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/multicore/erpc/erpc_c</state>
         </option>
@@ -727,7 +728,6 @@
           <name>IlinkConfigDefines</name>
           <state>__use_shmem__=1</state>
           <state>__stack_size__=0x400</state>
-          <state>__heap_size__=0x2000</state>
         </option>
         <option>
           <name>IlinkMapFile</name>
@@ -1186,8 +1186,9 @@
           <state>CPU_MIMXRT1176DVMAA_cm7</state>
           <state>__USE_SHMEM</state>
           <state>MULTICORE_APP=1</state>
-          <state>FSL_RTOS_FREE_RTOS</state>
+          <state>SDK_OS_FREE_RTOS</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
+          <state>MCUXPRESSO_SDK</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -1330,7 +1331,6 @@
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM4F</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176</state>
-          <state>$PROJ_DIR$/../../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
@@ -1339,6 +1339,7 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/xip</state>
           <state>$PROJ_DIR$/../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/cm7</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/multicore/erpc/erpc_c</state>
         </option>
@@ -1726,7 +1727,6 @@
           <name>IlinkConfigDefines</name>
           <state>__use_shmem__=1</state>
           <state>__stack_size__=0x400</state>
-          <state>__heap_size__=0x2000</state>
         </option>
         <option>
           <name>IlinkMapFile</name>
@@ -2186,6 +2186,12 @@
     </file>
   </group>
   <group>
+    <name>evkmimxrt1170</name>
+    <file>
+      <name>$PROJ_DIR$/../evkmimxrt1170_connect_cm4_cm7side.jlinkscript</name>
+    </file>
+  </group>
+  <group>
     <name>mcmgr</name>
     <file>
       <name>$PROJ_DIR$/../../../../../../middleware/multicore/mcmgr/src/mcmgr_internal_core_api_imxrt1170.c</name>
@@ -2287,6 +2293,12 @@
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_common.c</name>
     </file>
     <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_common_arm.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_common_arm.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_lpuart.h</name>
     </file>
     <file>
@@ -2331,21 +2343,18 @@
     <group>
       <name>freertos_kernel</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/event_groups.c</name>
+        <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/croutine.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/croutine.c</name>
+        <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/event_groups.c</name>
       </file>
       <group>
         <name>include</name>
         <file>
-          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include/croutine.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include/StackMacros.h</name>
-        </file>
-        <file>
           <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include/atomic.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include/croutine.h</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include/deprecated_definitions.h</name>
@@ -2382,6 +2391,9 @@
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include/stack_macros.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include/StackMacros.h</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include/stream_buffer.h</name>
@@ -2422,7 +2434,7 @@
             <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/portable/MemMang/ReadMe.url</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/portable/MemMang/heap_3.c</name>
+            <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/portable/MemMang/heap_4.c</name>
           </file>
         </group>
         <file>
@@ -2459,45 +2471,6 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/system_MIMXRT1176_cm7.h</name>
-    </file>
-  </group>
-  <group>
-    <name>CMSIS</name>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/core_cm7.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/mpu_armv7.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_armcc.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_armclang.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_armclang_ltm.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_gcc.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_compiler.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_version.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_iccarm.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/arm_common_tables.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/arm_const_structs.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/arm_math.h</name>
     </file>
   </group>
   <group>
@@ -2579,6 +2552,36 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../xip/evkmimxrt1170_flexspi_nor_config.h</name>
+    </file>
+  </group>
+  <group>
+    <name>CMSIS</name>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/cmsis_armcc.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/cmsis_armclang.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/cmsis_armclang_ltm.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/cmsis_compiler.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/cmsis_gcc.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/cmsis_iccarm.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/cmsis_version.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/core_cm7.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/mpu_armv7.h</name>
     </file>
   </group>
 </project>

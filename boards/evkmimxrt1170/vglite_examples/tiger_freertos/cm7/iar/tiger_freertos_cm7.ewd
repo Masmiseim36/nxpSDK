@@ -1703,7 +1703,7 @@
         </option>
         <option>
           <name>CExtraOptions</name>
-          <state>--jlink_script_file=$PROJ_DIR$/../evkmimxrt1170_connect_cm4_cm7side.jlinkscript</state>
+          <state/>
         </option>
         <option>
           <name>CFpuProcessor</name>
@@ -3346,7 +3346,7 @@
         </option>
         <option>
           <name>CExtraOptions</name>
-          <state>--jlink_script_file=$PROJ_DIR$/../evkmimxrt1170_connect_cm4_cm7side.jlinkscript</state>
+          <state/>
         </option>
         <option>
           <name>CFpuProcessor</name>
@@ -6632,7 +6632,7 @@
         </option>
         <option>
           <name>CExtraOptions</name>
-          <state>--jlink_script_file=$PROJ_DIR$/../evkmimxrt1170_connect_cm4_cm7side.jlinkscript</state>
+          <state/>
         </option>
         <option>
           <name>CFpuProcessor</name>
@@ -8275,7 +8275,7 @@
         </option>
         <option>
           <name>CExtraOptions</name>
-          <state>--jlink_script_file=$PROJ_DIR$/../evkmimxrt1170_connect_cm4_cm7side.jlinkscript</state>
+          <state/>
         </option>
         <option>
           <name>CFpuProcessor</name>

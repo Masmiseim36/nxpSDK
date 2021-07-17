@@ -1,21 +1,19 @@
-if(NOT DRIVER_DC-FB-LCDIFV2_MIMXRT1166_cm4_INCLUDED)
-    
-    set(DRIVER_DC-FB-LCDIFV2_MIMXRT1166_cm4_INCLUDED true CACHE BOOL "driver_dc-fb-lcdifv2 component is included.")
+include_guard(GLOBAL)
+message("driver_dc-fb-lcdifv2 component is included.")
 
-    target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
-        ${CMAKE_CURRENT_LIST_DIR}/fsl_dc_fb_lcdifv2.c
-    )
-
-
-    target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
-        ${CMAKE_CURRENT_LIST_DIR}/.
-    )
+target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
+    ${CMAKE_CURRENT_LIST_DIR}/fsl_dc_fb_lcdifv2.c
+)
 
 
-    include(driver_dc-fb-common_MIMXRT1166_cm4)
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
+    ${CMAKE_CURRENT_LIST_DIR}/.
+)
 
-    include(driver_display-common_MIMXRT1166_cm4)
 
-    include(driver_lcdifv2_MIMXRT1166_cm4)
+include(driver_dc-fb-common_MIMXRT1166_cm4)
 
-endif()
+include(driver_display-common_MIMXRT1166_cm4)
+
+include(driver_lcdifv2_MIMXRT1166_cm4)
+

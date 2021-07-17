@@ -145,7 +145,7 @@ void USB_DeviceTaskFn(void *deviceHandle)
  */
 usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *param)
 {
-    usb_status_t error = kStatus_USB_Error;
+    usb_status_t error = kStatus_USB_InvalidRequest;
     uint8_t *temp8     = (uint8_t *)param;
 
     switch (event)
@@ -176,6 +176,7 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
             {
                 g_UsbDeviceDfu.attach               = 0U;
                 g_UsbDeviceDfu.currentConfiguration = 0U;
+                error                               = kStatus_USB_Success;
             }
             else if (USB_DFU_CONFIGURE_INDEX == (*temp8))
             {
@@ -186,8 +187,11 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
             }
             else
             {
-                error = kStatus_USB_InvalidRequest;
+                /* no action, return kStatus_USB_InvalidRequest. */
             }
+            break;
+        case kUSB_DeviceEventSetInterface:
+            error = kStatus_USB_Success;
             break;
         default:
             break;
@@ -250,6 +254,12 @@ usb_status_t USB_DeviceGetClassReceiveBuffer(usb_device_handle handle,
                                              uint8_t **buffer)
 {
     usb_status_t error = kStatus_USB_InvalidRequest;
+
+    if ((NULL == buffer) || ((*length) > sizeof(dfuFirmwareBlock)))
+    {
+        return kStatus_USB_InvalidRequest;
+    }
+
     switch (setup->bRequest)
     {
         case USB_DEVICE_DFU_DNLOAD:

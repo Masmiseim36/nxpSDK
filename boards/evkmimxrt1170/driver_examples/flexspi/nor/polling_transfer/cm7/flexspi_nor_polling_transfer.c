@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2021 NXP
+ * Copyright 2016-2018 NXP
  * All rights reserved.
  *
  *
@@ -10,6 +10,7 @@
 #include "fsl_flexspi.h"
 #include "app.h"
 #include "fsl_debug_console.h"
+#include "fsl_cache.h"
 
 #include "pin_mux.h"
 #include "clock_config.h"
@@ -24,6 +25,20 @@
 
 /*******************************************************************************
  * Variables
+ ******************************************************************************/
+/* Program data buffer should be 4-bytes alignment, which can avoid busfault due to this memory region is configured as
+   Device Memory by MPU. */
+SDK_ALIGN(static uint8_t s_nor_program_buffer[256], 4);
+static uint8_t s_nor_read_buffer[256];
+
+extern status_t flexspi_nor_flash_erase_sector(FLEXSPI_Type *base, uint32_t address);
+extern status_t flexspi_nor_flash_page_program(FLEXSPI_Type *base, uint32_t dstAddr, const uint32_t *src);
+extern status_t flexspi_nor_get_vendor_id(FLEXSPI_Type *base, uint8_t *vendorId);
+extern status_t flexspi_nor_enable_quad_mode(FLEXSPI_Type *base);
+extern status_t flexspi_nor_erase_chip(FLEXSPI_Type *base);
+extern void flexspi_nor_flash_init(FLEXSPI_Type *base);
+/*******************************************************************************
+ * Code
  ******************************************************************************/
 flexspi_device_config_t deviceconfig = {
     .flexspiRootClk       = 12000000,
@@ -110,20 +125,8 @@ const uint32_t customLUT[CUSTOM_LUT_LENGTH] = {
     [4 * NOR_CMD_LUT_SEQ_IDX_ERASECHIP] =
         FLEXSPI_LUT_SEQ(kFLEXSPI_Command_SDR, kFLEXSPI_1PAD, 0xC7, kFLEXSPI_Command_STOP, kFLEXSPI_1PAD, 0),
 };
-/* Program data buffer should be 4-bytes alignment, which can avoid busfault due to this memory region is configured as
-   Device Memory by MPU. */
-SDK_ALIGN(static uint8_t s_nor_program_buffer[256], 4);
-static uint8_t s_nor_read_buffer[256];
 
-extern status_t flexspi_nor_flash_erase_sector(FLEXSPI_Type *base, uint32_t address);
-extern status_t flexspi_nor_flash_page_program(FLEXSPI_Type *base, uint32_t dstAddr, const uint32_t *src);
-extern status_t flexspi_nor_get_vendor_id(FLEXSPI_Type *base, uint8_t *vendorId);
-extern status_t flexspi_nor_enable_quad_mode(FLEXSPI_Type *base);
-extern status_t flexspi_nor_erase_chip(FLEXSPI_Type *base);
-extern void flexspi_nor_flash_init(FLEXSPI_Type *base);
-/*******************************************************************************
- * Code
- ******************************************************************************/
+
 int main(void)
 {
     uint32_t i = 0;
@@ -178,9 +181,7 @@ int main(void)
 
     memset(s_nor_program_buffer, 0xFFU, sizeof(s_nor_program_buffer));
 
-#if defined(CACHE_MAINTAIN) && CACHE_MAINTAIN
     DCACHE_InvalidateByRange(EXAMPLE_FLEXSPI_AMBA_BASE + EXAMPLE_SECTOR * SECTOR_SIZE, FLASH_PAGE_SIZE);
-#endif
 
     memcpy(s_nor_read_buffer, (void *)(EXAMPLE_FLEXSPI_AMBA_BASE + EXAMPLE_SECTOR * SECTOR_SIZE),
            sizeof(s_nor_read_buffer));
@@ -208,9 +209,7 @@ int main(void)
         return -1;
     }
 
-#if defined(CACHE_MAINTAIN) && CACHE_MAINTAIN
     DCACHE_InvalidateByRange(EXAMPLE_FLEXSPI_AMBA_BASE + EXAMPLE_SECTOR * SECTOR_SIZE, FLASH_PAGE_SIZE);
-#endif
 
     memcpy(s_nor_read_buffer, (void *)(EXAMPLE_FLEXSPI_AMBA_BASE + EXAMPLE_SECTOR * SECTOR_SIZE),
            sizeof(s_nor_read_buffer));

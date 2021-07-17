@@ -1,17 +1,15 @@
-if(NOT DRIVER_FLEXIO_UART_MIMXRT1176_cm4_INCLUDED)
-    
-    set(DRIVER_FLEXIO_UART_MIMXRT1176_cm4_INCLUDED true CACHE BOOL "driver_flexio_uart component is included.")
+include_guard(GLOBAL)
+message("driver_flexio_uart component is included.")
 
-    target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
-        ${CMAKE_CURRENT_LIST_DIR}/fsl_flexio_uart.c
-    )
-
-
-    target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
-        ${CMAKE_CURRENT_LIST_DIR}/.
-    )
+target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
+    ${CMAKE_CURRENT_LIST_DIR}/fsl_flexio_uart.c
+)
 
 
-    include(driver_flexio_MIMXRT1176_cm4)
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
+    ${CMAKE_CURRENT_LIST_DIR}/.
+)
 
-endif()
+
+include(driver_flexio_MIMXRT1176_cm4)
+

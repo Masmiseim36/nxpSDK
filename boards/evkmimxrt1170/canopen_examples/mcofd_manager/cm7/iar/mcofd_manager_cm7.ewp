@@ -185,6 +185,7 @@
           <state>USE_CANOPEN_FD</state>
           <state>SDK_DEBUGCONSOLE=1</state>
           <state>FLEXCAN_WAIT_TIMEOUT=1000</state>
+          <state>MCUXPRESSO_SDK</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -321,12 +322,12 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../middleware/canopen/mco</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176</state>
-          <state>$PROJ_DIR$/../../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/xip</state>
           <state>$PROJ_DIR$/../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/cm7</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -787,7 +788,7 @@
         </option>
         <option>
           <name>IlinkAdditionalLibs</name>
-          <state>$PROJ_DIR$/../../../../../../middleware/canopen/mcolibs/imxrt117x/mco_manager/libMCOFD_MGR_IMXRT117x_SDK_CM7.a</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/canopen/mcolibs/imxrt11xx/mco_manager/libMCOFD_MGR_IMXRT11xx_SDK_CM7.a</state>
         </option>
         <option>
           <name>IlinkOverrideProgramEntryLabel</name>
@@ -1165,6 +1166,7 @@
           <state>USE_CANOPEN_FD</state>
           <state>SDK_DEBUGCONSOLE=1</state>
           <state>FLEXCAN_WAIT_TIMEOUT=1000</state>
+          <state>MCUXPRESSO_SDK</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -1301,12 +1303,12 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../middleware/canopen/mco</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176</state>
-          <state>$PROJ_DIR$/../../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/xip</state>
           <state>$PROJ_DIR$/../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/cm7</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1767,7 +1769,7 @@
         </option>
         <option>
           <name>IlinkAdditionalLibs</name>
-          <state>$PROJ_DIR$/../../../../../../middleware/canopen/mcolibs/imxrt117x/mco_manager/libMCOFD_MGR_IMXRT117x_SDK_CM7.a</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/canopen/mcolibs/imxrt11xx/mco_manager/libMCOFD_MGR_IMXRT11xx_SDK_CM7.a</state>
         </option>
         <option>
           <name>IlinkOverrideProgramEntryLabel</name>
@@ -2145,6 +2147,7 @@
           <state>USE_CANOPEN_FD</state>
           <state>SDK_DEBUGCONSOLE=1</state>
           <state>FLEXCAN_WAIT_TIMEOUT=1000</state>
+          <state>MCUXPRESSO_SDK</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -2281,12 +2284,12 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../middleware/canopen/mco</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176</state>
-          <state>$PROJ_DIR$/../../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/xip</state>
           <state>$PROJ_DIR$/../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/cm7</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -2747,7 +2750,7 @@
         </option>
         <option>
           <name>IlinkAdditionalLibs</name>
-          <state>$PROJ_DIR$/../../../../../../middleware/canopen/mcolibs/imxrt117x/mco_manager/libMCOFD_MGR_IMXRT117x_SDK_CM7.a</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/canopen/mcolibs/imxrt11xx/mco_manager/libMCOFD_MGR_IMXRT11xx_SDK_CM7.a</state>
         </option>
         <option>
           <name>IlinkOverrideProgramEntryLabel</name>
@@ -3123,6 +3126,7 @@
           <state>USE_CANOPEN_FD</state>
           <state>SDK_DEBUGCONSOLE=1</state>
           <state>FLEXCAN_WAIT_TIMEOUT=1000</state>
+          <state>MCUXPRESSO_SDK</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -3259,12 +3263,12 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../middleware/canopen/mco</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176</state>
-          <state>$PROJ_DIR$/../../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/xip</state>
           <state>$PROJ_DIR$/../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/cm7</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -3725,7 +3729,7 @@
         </option>
         <option>
           <name>IlinkAdditionalLibs</name>
-          <state>$PROJ_DIR$/../../../../../../middleware/canopen/mcolibs/imxrt117x/mco_manager/libMCOFD_MGR_IMXRT117x_SDK_CM7.a</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/canopen/mcolibs/imxrt11xx/mco_manager/libMCOFD_MGR_IMXRT11xx_SDK_CM7.a</state>
         </option>
         <option>
           <name>IlinkOverrideProgramEntryLabel</name>
@@ -4103,6 +4107,7 @@
           <state>USE_CANOPEN_FD</state>
           <state>SDK_DEBUGCONSOLE=1</state>
           <state>FLEXCAN_WAIT_TIMEOUT=1000</state>
+          <state>MCUXPRESSO_SDK</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -4239,12 +4244,12 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../middleware/canopen/mco</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176</state>
-          <state>$PROJ_DIR$/../../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/xip</state>
           <state>$PROJ_DIR$/../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/cm7</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -4705,7 +4710,7 @@
         </option>
         <option>
           <name>IlinkAdditionalLibs</name>
-          <state>$PROJ_DIR$/../../../../../../middleware/canopen/mcolibs/imxrt117x/mco_manager/libMCOFD_MGR_IMXRT117x_SDK_CM7.a</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/canopen/mcolibs/imxrt11xx/mco_manager/libMCOFD_MGR_IMXRT11xx_SDK_CM7.a</state>
         </option>
         <option>
           <name>IlinkOverrideProgramEntryLabel</name>
@@ -5083,6 +5088,7 @@
           <state>USE_CANOPEN_FD</state>
           <state>SDK_DEBUGCONSOLE=1</state>
           <state>FLEXCAN_WAIT_TIMEOUT=1000</state>
+          <state>MCUXPRESSO_SDK</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -5219,12 +5225,12 @@
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../middleware/canopen/mco</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176</state>
-          <state>$PROJ_DIR$/../../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/xip</state>
           <state>$PROJ_DIR$/../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/cm7</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -5685,7 +5691,7 @@
         </option>
         <option>
           <name>IlinkAdditionalLibs</name>
-          <state>$PROJ_DIR$/../../../../../../middleware/canopen/mcolibs/imxrt117x/mco_manager/libMCOFD_MGR_IMXRT117x_SDK_CM7.a</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/canopen/mcolibs/imxrt11xx/mco_manager/libMCOFD_MGR_IMXRT11xx_SDK_CM7.a</state>
         </option>
         <option>
           <name>IlinkOverrideProgramEntryLabel</name>
@@ -5968,6 +5974,12 @@
     </file>
   </group>
   <group>
+    <name>evkmimxrt1170</name>
+    <file>
+      <name>$PROJ_DIR$/../evkmimxrt1170_connect_cm4_cm7side.jlinkscript</name>
+    </file>
+  </group>
+  <group>
     <name>drivers</name>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_lpuart.h</name>
@@ -5980,6 +5992,12 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_common.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_common_arm.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_common_arm.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_clock.h</name>
@@ -6088,12 +6106,6 @@
     </file>
   </group>
   <group>
-    <name>LICENSE</name>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../middleware/canopen/LICENSE.INFO</name>
-    </file>
-  </group>
-  <group>
     <name>device</name>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/fsl_device_registers.h</name>
@@ -6109,45 +6121,6 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/system_MIMXRT1176_cm7.h</name>
-    </file>
-  </group>
-  <group>
-    <name>CMSIS</name>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/core_cm7.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/mpu_armv7.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_armcc.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_armclang.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_armclang_ltm.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_gcc.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_compiler.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_version.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_iccarm.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/arm_common_tables.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/arm_const_structs.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/arm_math.h</name>
     </file>
   </group>
   <group>
@@ -6190,6 +6163,36 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../xip/evkmimxrt1170_flexspi_nor_config.h</name>
+    </file>
+  </group>
+  <group>
+    <name>CMSIS</name>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/cmsis_armcc.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/cmsis_armclang.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/cmsis_armclang_ltm.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/cmsis_compiler.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/cmsis_gcc.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/cmsis_iccarm.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/cmsis_version.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/core_cm7.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/mpu_armv7.h</name>
     </file>
   </group>
 </project>

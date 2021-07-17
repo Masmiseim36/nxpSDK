@@ -80,7 +80,7 @@
 /* MDIO operations. */
 #define EXAMPLE_MDIO_OPS enet_ops
 
-#define EXAMPLE_CLOCK_FREQ CLOCK_GetRootClockFreq(kCLOCK_Root_Bus)
+#define EXAMPLE_CLOCK_FREQ      BOARD_GetMDIOClock()
 
 #ifndef PHY_AUTONEGO_TIMEOUT_COUNT
 #define PHY_AUTONEGO_TIMEOUT_COUNT (100000)

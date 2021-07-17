@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 NXP
+ * Copyright 2020-2021 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -16,15 +16,6 @@
 /*******************************************************************************
  * Definitons
  ******************************************************************************/
-#if 1
-#define SDMMC_PRINTF(...)          \
-    do                             \
-    {                              \
-        debug_printf(__VA_ARGS__); \
-    } while (0)
-#else
-#define SDMMC_PRINTF(...)
-#endif
 
 /*******************************************************************************
  * Prototypes

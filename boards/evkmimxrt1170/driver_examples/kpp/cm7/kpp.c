@@ -14,10 +14,10 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define EXAMPLE_KPP_ACTIVE_COLUMROWS (0xC)
-#define EXAMPLE_KPP_MATRX_NUM (2)
+#define EXAMPLE_KPP_ACTIVE_COLUMROWS  (0xC)
+#define EXAMPLE_KPP_MATRX_NUM         (2)
 #define EXAMPLE_KPP_COLROW_START_INDX (2)
-#define EXAMPLE_KPP KPP
+#define EXAMPLE_KPP                   KPP
 #define EXAMPLE_KPP_KEYPRESS_LONG_NUM (0xFFF)
 /*******************************************************************************
  * Prototypes

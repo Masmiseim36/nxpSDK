@@ -190,6 +190,9 @@ int main(void)
     /* master clock configurations */
     BOARD_MasterClockConfig();
 
+#if defined DEMO_BOARD_CODEC_INIT
+    DEMO_BOARD_CODEC_INIT();
+#else
     if (CODEC_Init(&codecHandle, &boardCodecConfig) != kStatus_Success)
     {
         assert(false);
@@ -199,6 +202,7 @@ int main(void)
     {
         assert(false);
     }
+#endif
     /* Set up pdm */
     PDM_Init(DEMO_PDM, &pdmConfig);
     if (PDM_SetSampleRateConfig(DEMO_PDM, DEMO_PDM_CLK_FREQ, DEMO_AUDIO_SAMPLE_RATE) != kStatus_Success)

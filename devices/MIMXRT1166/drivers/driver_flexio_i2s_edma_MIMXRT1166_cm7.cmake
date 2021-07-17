@@ -1,19 +1,17 @@
-if(NOT DRIVER_FLEXIO_I2S_EDMA_MIMXRT1166_cm7_INCLUDED)
-    
-    set(DRIVER_FLEXIO_I2S_EDMA_MIMXRT1166_cm7_INCLUDED true CACHE BOOL "driver_flexio_i2s_edma component is included.")
+include_guard(GLOBAL)
+message("driver_flexio_i2s_edma component is included.")
 
-    target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
-        ${CMAKE_CURRENT_LIST_DIR}/fsl_flexio_i2s_edma.c
-    )
-
-
-    target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
-        ${CMAKE_CURRENT_LIST_DIR}/.
-    )
+target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
+    ${CMAKE_CURRENT_LIST_DIR}/fsl_flexio_i2s_edma.c
+)
 
 
-    include(driver_edma_MIMXRT1166_cm7)
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
+    ${CMAKE_CURRENT_LIST_DIR}/.
+)
 
-    include(driver_flexio_i2s_MIMXRT1166_cm7)
 
-endif()
+include(driver_edma_MIMXRT1166_cm7)
+
+include(driver_flexio_i2s_MIMXRT1166_cm7)
+

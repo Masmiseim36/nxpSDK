@@ -247,7 +247,7 @@ static usb_status_t USB_DeviceHidInterruptIn(usb_device_handle deviceHandle,
 
 usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *param)
 {
-    usb_status_t error = kStatus_USB_Success;
+    usb_status_t error = kStatus_USB_InvalidRequest;
     uint8_t *temp8     = (uint8_t *)param;
 
     switch (event)
@@ -258,6 +258,7 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
             /* Initialize the control IN and OUT pipes */
             USB_DeviceControlPipeInit(g_UsbDeviceHidMouse.deviceHandle);
             g_UsbDeviceHidMouse.attach = 0U;
+            error                      = kStatus_USB_Success;
 #if (defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0U)) || \
     (defined(USB_DEVICE_CONFIG_LPCIP3511HS) && (USB_DEVICE_CONFIG_LPCIP3511HS > 0U))
             /* Get USB speed to configure the device, including max packet size and interval of the endpoints. */
@@ -274,6 +275,7 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
         {
             g_UsbDeviceHidMouse.connectStateChanged = 1U;
             g_UsbDeviceHidMouse.connectState        = 1U;
+            error                                   = kStatus_USB_Success;
 #if (defined(USB_DEVICE_CONFIG_CHARGER_DETECT) && (USB_DEVICE_CONFIG_CHARGER_DETECT > 0U)) && \
     (((defined(FSL_FEATURE_SOC_USBHSDCD_COUNT) && (FSL_FEATURE_SOC_USBHSDCD_COUNT > 0U))) ||  \
      (defined(FSL_FEATURE_SOC_USB_ANALOG_COUNT) && (FSL_FEATURE_SOC_USB_ANALOG_COUNT > 0U)))
@@ -295,6 +297,7 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
             g_UsbDeviceHidMouse.connectStateChanged = 1U;
             g_UsbDeviceHidMouse.connectState        = 0U;
             g_UsbDeviceHidMouse.attach              = 0U;
+            error                                   = kStatus_USB_Success;
 #if (defined(USB_DEVICE_CONFIG_CHARGER_DETECT) && (USB_DEVICE_CONFIG_CHARGER_DETECT > 0U)) && \
     (((defined(FSL_FEATURE_SOC_USBHSDCD_COUNT) && (FSL_FEATURE_SOC_USBHSDCD_COUNT > 0U))) ||  \
      (defined(FSL_FEATURE_SOC_USB_ANALOG_COUNT) && (FSL_FEATURE_SOC_USB_ANALOG_COUNT > 0U)))
@@ -341,6 +344,11 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
                 error                      = USB_DeviceHidMouseAction(); /* run the cursor movement code */
             }
             break;
+
+        case kUSB_DeviceEventSetInterface:
+            error = kStatus_USB_Success;
+            break;
+
 #if (defined(USB_DEVICE_CONFIG_CHARGER_DETECT) && (USB_DEVICE_CONFIG_CHARGER_DETECT > 0U)) && \
     (((defined(FSL_FEATURE_SOC_USBHSDCD_COUNT) && (FSL_FEATURE_SOC_USBHSDCD_COUNT > 0U))) ||  \
      (defined(FSL_FEATURE_SOC_USB_ANALOG_COUNT) && (FSL_FEATURE_SOC_USB_ANALOG_COUNT > 0U)))
@@ -348,6 +356,7 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
             /*temp pointer point to detection result*/
             if (param)
             {
+                error = kStatus_USB_Success;
                 if (kUSB_DcdSDP == *temp8)
                 {
                     g_UsbDeviceHidMouse.dcdDectionStatus = kUSB_DeviceDCDDectionSDP;
@@ -370,11 +379,13 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
                 }
                 else
                 {
+                    error = kStatus_USB_InvalidRequest;
                 }
             }
             break;
 #endif
         default:
+            /* no action required, the default return value is kStatus_USB_InvalidRequest. */
             break;
     }
 

@@ -124,6 +124,7 @@ SET(CMAKE_C_FLAGS_DEBUG " \
     -DSCANF_ADVANCED_ENABLE=0 \
     -DUSB_DEVICE_CONFIG_CDC_ACM=1 \
     -DSERIAL_PORT_TYPE_UART=1 \
+    -DMCUXPRESSO_SDK \
     -g \
     -O0 \
     -mcpu=cortex-m7 \
@@ -156,6 +157,7 @@ SET(CMAKE_C_FLAGS_RELEASE " \
     -DSCANF_ADVANCED_ENABLE=0 \
     -DUSB_DEVICE_CONFIG_CDC_ACM=1 \
     -DSERIAL_PORT_TYPE_UART=1 \
+    -DMCUXPRESSO_SDK \
     -Os \
     -mcpu=cortex-m7 \
     -Wall \
@@ -189,6 +191,7 @@ SET(CMAKE_C_FLAGS_SDRAM_DEBUG " \
     -DSCANF_ADVANCED_ENABLE=0 \
     -DUSB_DEVICE_CONFIG_CDC_ACM=1 \
     -DSERIAL_PORT_TYPE_UART=1 \
+    -DMCUXPRESSO_SDK \
     -g \
     -O0 \
     -mcpu=cortex-m7 \
@@ -223,6 +226,7 @@ SET(CMAKE_C_FLAGS_SDRAM_RELEASE " \
     -DSCANF_ADVANCED_ENABLE=0 \
     -DUSB_DEVICE_CONFIG_CDC_ACM=1 \
     -DSERIAL_PORT_TYPE_UART=1 \
+    -DMCUXPRESSO_SDK \
     -Os \
     -mcpu=cortex-m7 \
     -Wall \
@@ -256,6 +260,7 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG " \
     -DSCANF_ADVANCED_ENABLE=0 \
     -DUSB_DEVICE_CONFIG_CDC_ACM=1 \
     -DSERIAL_PORT_TYPE_UART=1 \
+    -DMCUXPRESSO_SDK \
     -g \
     -O0 \
     -mcpu=cortex-m7 \
@@ -290,6 +295,7 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE " \
     -DSCANF_ADVANCED_ENABLE=0 \
     -DUSB_DEVICE_CONFIG_CDC_ACM=1 \
     -DSERIAL_PORT_TYPE_UART=1 \
+    -DMCUXPRESSO_SDK \
     -Os \
     -mcpu=cortex-m7 \
     -Wall \
@@ -314,6 +320,7 @@ SET(CMAKE_CXX_FLAGS_DEBUG " \
     -DDEBUG_CONSOLE_TRANSFER_NON_BLOCKING \
     -DUSB_DEVICE_CONFIG_CDC_ACM=1 \
     -DSERIAL_PORT_TYPE_UART=1 \
+    -DMCUXPRESSO_SDK \
     -g \
     -O0 \
     -mcpu=cortex-m7 \
@@ -340,6 +347,7 @@ SET(CMAKE_CXX_FLAGS_RELEASE " \
     -DDEBUG_CONSOLE_TRANSFER_NON_BLOCKING \
     -DUSB_DEVICE_CONFIG_CDC_ACM=1 \
     -DSERIAL_PORT_TYPE_UART=1 \
+    -DMCUXPRESSO_SDK \
     -Os \
     -mcpu=cortex-m7 \
     -Wall \
@@ -365,6 +373,7 @@ SET(CMAKE_CXX_FLAGS_SDRAM_DEBUG " \
     -DDEBUG_CONSOLE_TRANSFER_NON_BLOCKING \
     -DUSB_DEVICE_CONFIG_CDC_ACM=1 \
     -DSERIAL_PORT_TYPE_UART=1 \
+    -DMCUXPRESSO_SDK \
     -g \
     -O0 \
     -mcpu=cortex-m7 \
@@ -391,6 +400,7 @@ SET(CMAKE_CXX_FLAGS_SDRAM_RELEASE " \
     -DDEBUG_CONSOLE_TRANSFER_NON_BLOCKING \
     -DUSB_DEVICE_CONFIG_CDC_ACM=1 \
     -DSERIAL_PORT_TYPE_UART=1 \
+    -DMCUXPRESSO_SDK \
     -Os \
     -mcpu=cortex-m7 \
     -Wall \
@@ -416,6 +426,7 @@ SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_DEBUG " \
     -DDEBUG_CONSOLE_TRANSFER_NON_BLOCKING \
     -DUSB_DEVICE_CONFIG_CDC_ACM=1 \
     -DSERIAL_PORT_TYPE_UART=1 \
+    -DMCUXPRESSO_SDK \
     -g \
     -O0 \
     -mcpu=cortex-m7 \
@@ -442,6 +453,7 @@ SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_RELEASE " \
     -DDEBUG_CONSOLE_TRANSFER_NON_BLOCKING \
     -DUSB_DEVICE_CONFIG_CDC_ACM=1 \
     -DSERIAL_PORT_TYPE_UART=1 \
+    -DMCUXPRESSO_SDK \
     -Os \
     -mcpu=cortex-m7 \
     -Wall \
@@ -485,6 +497,7 @@ SET(CMAKE_EXE_LINKER_FLAGS_DEBUG " \
     muldefs \
     -Xlinker \
     -Map=output.map \
+    -Wl,--print-memory-usage \
     -T${ProjDirPath}/MIMXRT1166xxxxx_cm7_ram.ld -static \
 ")
 SET(CMAKE_EXE_LINKER_FLAGS_RELEASE " \
@@ -512,6 +525,7 @@ SET(CMAKE_EXE_LINKER_FLAGS_RELEASE " \
     muldefs \
     -Xlinker \
     -Map=output.map \
+    -Wl,--print-memory-usage \
     -T${ProjDirPath}/MIMXRT1166xxxxx_cm7_ram.ld -static \
 ")
 SET(CMAKE_EXE_LINKER_FLAGS_SDRAM_DEBUG " \
@@ -540,6 +554,7 @@ SET(CMAKE_EXE_LINKER_FLAGS_SDRAM_DEBUG " \
     muldefs \
     -Xlinker \
     -Map=output.map \
+    -Wl,--print-memory-usage \
     -T${ProjDirPath}/MIMXRT1166xxxxx_cm7_sdram.ld -static \
 ")
 SET(CMAKE_EXE_LINKER_FLAGS_SDRAM_RELEASE " \
@@ -567,6 +582,7 @@ SET(CMAKE_EXE_LINKER_FLAGS_SDRAM_RELEASE " \
     muldefs \
     -Xlinker \
     -Map=output.map \
+    -Wl,--print-memory-usage \
     -T${ProjDirPath}/MIMXRT1166xxxxx_cm7_sdram.ld -static \
 ")
 SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_DEBUG " \
@@ -595,6 +611,7 @@ SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_DEBUG " \
     muldefs \
     -Xlinker \
     -Map=output.map \
+    -Wl,--print-memory-usage \
     -T${ProjDirPath}/MIMXRT1166xxxxx_cm7_flexspi_nor.ld -static \
 ")
 SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_RELEASE " \
@@ -622,5 +639,6 @@ SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_RELEASE " \
     muldefs \
     -Xlinker \
     -Map=output.map \
+    -Wl,--print-memory-usage \
     -T${ProjDirPath}/MIMXRT1166xxxxx_cm7_flexspi_nor.ld -static \
 ")

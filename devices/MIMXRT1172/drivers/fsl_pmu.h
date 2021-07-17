@@ -11,7 +11,7 @@
 #include "fsl_common.h"
 
 /*!
- * @addtogroup pmu PMU: Power Management Unit
+ * @addtogroup pmu
  * @{
  */
 
@@ -410,6 +410,9 @@ typedef union _pmu_well_bias_option
     } wellBiasStruct;
 } pmu_well_bias_option_t;
 
+/*!
+ * @brief The structure of well bias configuration.
+ */
 typedef struct _pmu_well_bias_config
 {
     pmu_well_bias_option_t wellBiasOption;     /*!< Well bias basic function, please
@@ -465,8 +468,6 @@ void PMU_StaticEnablePllLdo(ANADIG_PMU_Type *base);
 
 /*!
  * @brief Disables PLL LDO via AI interface in Static/Software mode.
- *
- * @param base PMU peripheral base address.
  */
 void PMU_StaticDisablePllLdo(void);
 
@@ -620,7 +621,7 @@ void PMU_GPCSetLpsrDigLdoTargetVoltage(uint32_t setpointMap, pmu_lpsr_dig_target
  *      config->enableLdoStable        = false;
  *  @endcode
  *
- * @param config Pointer to @ref structure pmu_snvs_dig_config_t.
+ * @param config Pointer to @ref pmu_snvs_dig_config_t.
  */
 void PMU_GetSnvsDigLdoDefaultConfig(pmu_snvs_dig_config_t *config);
 

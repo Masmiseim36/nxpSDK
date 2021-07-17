@@ -1,6 +1,6 @@
 # CROSS COMPILER SETTING
 SET(CMAKE_SYSTEM_NAME Generic)
-CMAKE_MINIMUM_REQUIRED (VERSION 3.1.1)
+CMAKE_MINIMUM_REQUIRED (VERSION 3.10.0)
 
 # THE VERSION NUMBER
 SET (Tutorial_VERSION_MAJOR 1)
@@ -53,10 +53,10 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../clock_config.h"
 "${ProjDirPath}/../dcd.c"
 "${ProjDirPath}/../dcd.h"
+"${ProjDirPath}/../evkmimxrt1170_connect_cm4_cm7side.jlinkscript"
 )
 
 target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
-    ${ProjDirPath}/.. flexspi_nor_sdram_debug
     ${ProjDirPath}/..
     ${ProjDirPath}/../../../vglite_support
 )
@@ -74,7 +74,6 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../../components/video/display/fbdev
     ${ProjDirPath}/../../../../../../rtos/freertos
     ${ProjDirPath}/../../../../../../devices/MIMXRT1176
-    ${ProjDirPath}/../../../../../../CMSIS/Include
     ${ProjDirPath}/../../../../../../devices/MIMXRT1176/utilities
     ${ProjDirPath}/../../../../../../components/uart
     ${ProjDirPath}/../../../../../../components/serial_manager
@@ -82,6 +81,7 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../../devices/MIMXRT1176/xip
     ${ProjDirPath}/../../../../xip
     ${ProjDirPath}/../../../../../../devices/MIMXRT1176/drivers/cm7
+    ${ProjDirPath}/../../../../../../CMSIS/Core/Include
     ${ProjDirPath}/../../../../../../components/video/display/dc
 )
 
@@ -122,8 +122,6 @@ include(middleware_vglite_elementary_MIMXRT1176_cm7)
 
 include(device_MIMXRT1176_CMSIS_MIMXRT1176_cm7)
 
-include(CMSIS_Include_core_cm7_MIMXRT1176_cm7)
-
 include(utility_debug_console_MIMXRT1176_cm7)
 
 include(component_lpuart_adapter_MIMXRT1176_cm7)
@@ -146,7 +144,7 @@ include(driver_igpio_MIMXRT1176_cm7)
 
 include(driver_xip_device_MIMXRT1176_cm7)
 
-include(driver_xip_board_MIMXRT1176_cm7)
+include(driver_xip_board_evkmimxrt1170_MIMXRT1176_cm7)
 
 include(driver_pmu_1_MIMXRT1176_cm7)
 
@@ -156,7 +154,11 @@ include(driver_cache_armv7_m7_MIMXRT1176_cm7)
 
 include(driver_anatop_ai_MIMXRT1176_cm7)
 
+include(CMSIS_Include_core_cm_MIMXRT1176_cm7)
+
 include(driver_soc_mipi_csi2rx_MIMXRT1176_cm7)
+
+include(driver_memory_MIMXRT1176_cm7)
 
 include(driver_dc-fb-common_MIMXRT1176_cm7)
 
@@ -165,10 +167,6 @@ include(middleware_freertos-kernel_MIMXRT1176_cm7)
 include(middleware_freertos-kernel_extension_MIMXRT1176_cm7)
 
 include(utilities_misc_utilities_MIMXRT1176_cm7)
-
-include(CMSIS_Include_common_MIMXRT1176_cm7)
-
-include(CMSIS_Include_dsp_MIMXRT1176_cm7)
 
 include(device_MIMXRT1176_system_MIMXRT1176_cm7)
 

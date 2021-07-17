@@ -86,10 +86,46 @@
  * Prototypes
  ******************************************************************************/
 
+/*!
+ * @brief Resets panel using reset pin.
+ * 
+ * @param pullUp sets true pin
+ */
 static void BOARD_PullPanelResetPin(bool pullUp);
+
+/*!
+ * @brief Resets panel power down pin.
+ * 
+ * @param pullUp sets true pin
+ */
 static void BOARD_PullPanelPowerPin(bool pullUp);
+
+/*!
+ * @brief Initializes Lcdif Clock.
+ */
 static void BOARD_InitLcdifClock(void);
+
+/*!
+ * @brief Initializes Mipi Dsi Clock.
+ */
 static void BOARD_InitMipiDsiClock(void);
+
+/*!
+ * @brief Data transfer using blocking method.
+ *
+ * Perform data transfer using blocking method. This function waits until all
+ * data send or received, or timeout happens.
+ *
+ * @param xfer pointer to the transfer structure.
+ * @return kStatus_Success Data transfer finished with no error.
+ * @return kStatus_Timeout Transfer failed because of timeout.
+ * @return kStatus_DSI_RxDataError RX data error, user could use ref DSI_GetRxErrorStatus
+ * to check the error details.
+ * @return kStatus_DSI_ErrorReportReceived Error Report packet received, user could use
+ *        ref DSI_GetAndClearHostStatus to check the error report status.
+ * @return kStatus_DSI_NotSupported Transfer format not supported.
+ * @return kStatus_DSI_Fail Transfer failed for other reasons.
+ */
 static status_t BOARD_DSI_Transfer(dsi_transfer_t *xfer);
 
 /*******************************************************************************
@@ -305,6 +341,9 @@ static void BOARD_InitMipiDsiClock(void)
     mipiDsiDphyRefClkFreq_Hz = BOARD_XTAL0_CLK_HZ;
 }
 
+/*!
+ * @brief Initializes Lcd panel.
+ */
 static status_t BOARD_InitLcdPanel(void)
 {
     status_t status;
@@ -343,6 +382,9 @@ static status_t BOARD_InitLcdPanel(void)
     return status;
 }
 
+/*!
+ * @brief Sets Mipi Dsi Configuration.
+ */
 static void BOARD_SetMipiDsiConfig(void)
 {
     dsi_config_t dsiConfig;
@@ -402,6 +444,9 @@ static void BOARD_SetMipiDsiConfig(void)
     DSI_SetDpiConfig(DEMO_MIPI_DSI, &dpiConfig, DEMO_MIPI_DSI_LANE_NUM, mipiDsiDpiClkFreq_Hz, mipiDsiDphyBitClkFreq_Hz);
 }
 
+/*!
+ * @brief Initializes Display interface.
+ */
 status_t BOARD_InitDisplayInterface(void)
 {
     CLOCK_EnableClock(kCLOCK_Video_Mux);
@@ -440,6 +485,9 @@ status_t BOARD_InitDisplayInterface(void)
     return BOARD_InitLcdPanel();
 }
 
+/*!
+ * @brief Handles LCDIFv2 IRQ.
+ */
 #if (DEMO_DISPLAY_CONTROLLER == DEMO_DISPLAY_CONTROLLER_LCDIFV2)
 void LCDIFv2_IRQHandler(void)
 {
@@ -452,6 +500,9 @@ void eLCDIF_IRQHandler(void)
 }
 #endif
 
+/*!
+ * @brief Verifies display clock source.
+ */
 status_t BOARD_VerifyDisplayClockSource(void)
 {
     status_t status;
@@ -476,6 +527,11 @@ status_t BOARD_VerifyDisplayClockSource(void)
     return status;
 }
 
+/*!
+ * @brief Initializes display controler.
+ * 
+ * @return status code
+ */
 status_t BOARD_PrepareDisplayController(void)
 {
     status_t status;
@@ -508,6 +564,9 @@ status_t BOARD_PrepareDisplayController(void)
     return kStatus_Success;
 }
 
+/*!
+ * @brief Resets display controler.
+ */
 void BOARD_ResetDisplayMix(void)
 {
     /*

@@ -18,6 +18,7 @@ var hierarchy =
     [ "erpc::MessageBuffer::Cursor", "classerpc_1_1_message_buffer_1_1_cursor.html", null ],
     [ "erpc::Mutex::Guard", "classerpc_1_1_mutex_1_1_guard.html", null ],
     [ "erpc::FramedTransport::Header", "classerpc_1_1_framed_transport.html#structerpc_1_1_framed_transport_1_1_header", null ],
+    [ "I2C_CLB_USER_DATA_PTR", "struct_i2_c___c_l_b___u_s_e_r___d_a_t_a.html", null ],
     [ "erpc::ManuallyConstructed< T >", "classerpc_1_1_manually_constructed.html", null ],
     [ "erpc::MessageBuffer", "classerpc_1_1_message_buffer.html", null ],
     [ "erpc::MessageBufferFactory", "classerpc_1_1_message_buffer_factory.html", [
@@ -42,6 +43,7 @@ var hierarchy =
       [ "erpc::FramedTransport", "classerpc_1_1_framed_transport.html", [
         [ "erpc::DspiMasterTransport", "classerpc_1_1_dspi_master_transport.html", null ],
         [ "erpc::DspiSlaveTransport", "classerpc_1_1_dspi_slave_transport.html", null ],
+        [ "erpc::I2cSlaveTransport", "classerpc_1_1_i2c_slave_transport.html", null ],
         [ "erpc::SerialTransport", "classerpc_1_1_serial_transport.html", null ],
         [ "erpc::SpidevMasterTransport", "classerpc_1_1_spidev_master_transport.html", null ],
         [ "erpc::SpiMasterTransport", "classerpc_1_1_spi_master_transport.html", null ],

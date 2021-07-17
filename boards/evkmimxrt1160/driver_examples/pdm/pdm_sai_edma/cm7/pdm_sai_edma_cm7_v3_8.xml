@@ -18,7 +18,6 @@
     <definition extID="platform.drivers.sai_edma.MIMXRT1166"/>
     <definition extID="platform.drivers.sai.MIMXRT1166"/>
     <definition extID="platform.devices.MIMXRT1166_CMSIS.MIMXRT1166"/>
-    <definition extID="platform.Include_core_cm7.MIMXRT1166"/>
     <definition extID="component.lpuart_adapter.MIMXRT1166"/>
     <definition extID="component.lists.MIMXRT1166"/>
     <definition extID="platform.drivers.lpuart.MIMXRT1166"/>
@@ -31,10 +30,9 @@
     <definition extID="platform.drivers.dcdc_soc.MIMXRT1166"/>
     <definition extID="platform.drivers.cache_armv7_m7.MIMXRT1166"/>
     <definition extID="platform.drivers.anatop_ai.MIMXRT1166"/>
+    <definition extID="CMSIS_Include_core_cm.MIMXRT1166"/>
     <definition extID="platform.drivers.edma.MIMXRT1166"/>
     <definition extID="platform.utilities.misc_utilities.MIMXRT1166"/>
-    <definition extID="platform.Include_common.MIMXRT1166"/>
-    <definition extID="platform.Include_dsp.MIMXRT1166"/>
     <definition extID="platform.devices.MIMXRT1166_system.MIMXRT1166"/>
     <definition extID="iar"/>
     <definition extID="mdk"/>
@@ -44,7 +42,7 @@
     <definition extID="com.crt.advproject.config.exe.debug"/>
     <definition extID="com.crt.advproject.config.exe.release"/>
   </externalDefinitions>
-  <example id="evkmimxrt1160_pdm_sai_edma_cm7" name="pdm_sai_edma_cm7" device_core="cm7_MIMXRT1166xxxxx" dependency="platform.drivers.lpi2c.MIMXRT1166 driver.wm8960.MIMXRT1166 driver.codec.MIMXRT1166 platform.drivers.common.MIMXRT1166 component.wm8960_adapter.MIMXRT1166 component.codec_i2c.MIMXRT1166 component.lpi2c_adapter.MIMXRT1166 platform.drivers.dmamux.MIMXRT1166 utility.debug_console_lite.MIMXRT1166 platform.utilities.assert_lite.MIMXRT1166 platform.drivers.clock.MIMXRT1166 platform.drivers.pdm_edma.MIMXRT1166 platform.drivers.pdm.MIMXRT1166 platform.drivers.sai_edma.MIMXRT1166 platform.drivers.sai.MIMXRT1166 platform.devices.MIMXRT1166_CMSIS.MIMXRT1166 platform.Include_core_cm7.MIMXRT1166 component.lpuart_adapter.MIMXRT1166 component.lists.MIMXRT1166 platform.drivers.lpuart.MIMXRT1166 platform.devices.MIMXRT1166_startup.MIMXRT1166 platform.drivers.iomuxc.MIMXRT1166 platform.drivers.igpio.MIMXRT1166 platform.drivers.xip_device.MIMXRT1166 platform.drivers.xip_board.MIMXRT1166 platform.drivers.pmu_1.MIMXRT1166 platform.drivers.dcdc_soc.MIMXRT1166 platform.drivers.cache_armv7_m7.MIMXRT1166 platform.drivers.anatop_ai.MIMXRT1166 platform.drivers.edma.MIMXRT1166 platform.utilities.misc_utilities.MIMXRT1166 platform.Include_common.MIMXRT1166 platform.Include_dsp.MIMXRT1166 platform.devices.MIMXRT1166_system.MIMXRT1166" category="driver_examples/pdm">
+  <example id="evkmimxrt1160_pdm_sai_edma_cm7" name="pdm_sai_edma_cm7" device_core="cm7_MIMXRT1166xxxxx" dependency="platform.drivers.lpi2c.MIMXRT1166 driver.wm8960.MIMXRT1166 driver.codec.MIMXRT1166 platform.drivers.common.MIMXRT1166 component.wm8960_adapter.MIMXRT1166 component.codec_i2c.MIMXRT1166 component.lpi2c_adapter.MIMXRT1166 platform.drivers.dmamux.MIMXRT1166 utility.debug_console_lite.MIMXRT1166 platform.utilities.assert_lite.MIMXRT1166 platform.drivers.clock.MIMXRT1166 platform.drivers.pdm_edma.MIMXRT1166 platform.drivers.pdm.MIMXRT1166 platform.drivers.sai_edma.MIMXRT1166 platform.drivers.sai.MIMXRT1166 platform.devices.MIMXRT1166_CMSIS.MIMXRT1166 component.lpuart_adapter.MIMXRT1166 component.lists.MIMXRT1166 platform.drivers.lpuart.MIMXRT1166 platform.devices.MIMXRT1166_startup.MIMXRT1166 platform.drivers.iomuxc.MIMXRT1166 platform.drivers.igpio.MIMXRT1166 platform.drivers.xip_device.MIMXRT1166 platform.drivers.xip_board.MIMXRT1166 platform.drivers.pmu_1.MIMXRT1166 platform.drivers.dcdc_soc.MIMXRT1166 platform.drivers.cache_armv7_m7.MIMXRT1166 platform.drivers.anatop_ai.MIMXRT1166 CMSIS_Include_core_cm.MIMXRT1166 platform.drivers.edma.MIMXRT1166 platform.utilities.misc_utilities.MIMXRT1166 platform.devices.MIMXRT1166_system.MIMXRT1166" category="driver_examples/pdm">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -67,6 +65,7 @@
           <value>SDK_I2C_BASED_COMPONENT_USED=1</value>
           <value>BOARD_USE_CODEC=1</value>
           <value>CODEC_WM8960_ENABLE</value>
+          <value>MCUXPRESSO_SDK</value>
         </option>
         <option id="com.crt.advproject.gas.fpu" type="enum">
           <value>com.crt.advproject.gas.fpu.fpv5dp.hard</value>
@@ -188,6 +187,9 @@
       <files mask="evkmimxrt1160_ram.ini"/>
       <files mask="evkmimxrt1160_sdram_init.ini"/>
       <files mask="evkmimxrt1160_flexspi_nor.ini"/>
+    </source>
+    <source path="boards/evkmimxrt1160/driver_examples/pdm/pdm_sai_edma/cm7" project_relative_path="evkmimxrt1160" type="other" toolchain="iar mdk armgcc">
+      <files mask="evkmimxrt1160_connect_cm4_cm7side.jlinkscript"/>
     </source>
   </example>
 </ksdk:examples>

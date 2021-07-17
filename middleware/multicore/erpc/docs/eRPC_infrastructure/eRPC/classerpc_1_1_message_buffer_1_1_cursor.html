@@ -34,7 +34,7 @@
   <td id="projectlogo"><img alt="Logo" src="nxp_logo_small.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">eRPC API Reference
-   &#160;<span id="projectnumber">Rev. 1.8.0</span>
+   &#160;<span id="projectnumber">Rev. 1.8.1</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -142,10 +142,10 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a6f3dff599ef13d4ffca7e5d559a50afa"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_message_buffer_1_1_cursor.html#a6f3dff599ef13d4ffca7e5d559a50afa">getRemaining</a> (void) const </td></tr>
 <tr class="memdesc:a6f3dff599ef13d4ffca7e5d559a50afa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return remaining free space in current buffer.  <a href="#a6f3dff599ef13d4ffca7e5d559a50afa">More...</a><br /></td></tr>
 <tr class="separator:a6f3dff599ef13d4ffca7e5d559a50afa"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a13613fadb3bb88585f5802ff845259a4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__infra.html#ga5f8872e58f09a16d192bf664f9898651">erpc_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_message_buffer_1_1_cursor.html#a13613fadb3bb88585f5802ff845259a4">read</a> (void *data, uint32_t length)</td></tr>
+<tr class="memitem:a13613fadb3bb88585f5802ff845259a4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__infra.html#gadea8a058796ed8b9a73c5f833445a661">erpc_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_message_buffer_1_1_cursor.html#a13613fadb3bb88585f5802ff845259a4">read</a> (void *data, uint32_t length)</td></tr>
 <tr class="memdesc:a13613fadb3bb88585f5802ff845259a4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read data from current buffer.  <a href="#a13613fadb3bb88585f5802ff845259a4">More...</a><br /></td></tr>
 <tr class="separator:a13613fadb3bb88585f5802ff845259a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7e3588d2e063d827dbe5dbf72d5952e8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__infra.html#ga5f8872e58f09a16d192bf664f9898651">erpc_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_message_buffer_1_1_cursor.html#a7e3588d2e063d827dbe5dbf72d5952e8">write</a> (const void *data, uint32_t length)</td></tr>
+<tr class="memitem:a7e3588d2e063d827dbe5dbf72d5952e8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__infra.html#gadea8a058796ed8b9a73c5f833445a661">erpc_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_message_buffer_1_1_cursor.html#a7e3588d2e063d827dbe5dbf72d5952e8">write</a> (const void *data, uint32_t length)</td></tr>
 <tr class="memdesc:a7e3588d2e063d827dbe5dbf72d5952e8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read data from current buffer.  <a href="#a7e3588d2e063d827dbe5dbf72d5952e8">More...</a><br /></td></tr>
 <tr class="separator:a7e3588d2e063d827dbe5dbf72d5952e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa5019dc0b15d584306b7f8048471a7c7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa5019dc0b15d584306b7f8048471a7c7"></a>
@@ -229,7 +229,12 @@ Public Member Functions</h2></td></tr>
 
 <p>Constructor. </p>
 <p>This function initializes object attributes.</p>
-<p>param[in] buffer <a class="el" href="classerpc_1_1_message_buffer.html" title="Represents a memory buffer containing a message. ">MessageBuffer</a> for sending/receiving. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">buffer</td><td><a class="el" href="classerpc_1_1_message_buffer.html" title="Represents a memory buffer containing a message. ">MessageBuffer</a> for sending/receiving. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -346,7 +351,7 @@ Public Member Functions</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group__infra.html#ga5f8872e58f09a16d192bf664f9898651">erpc_status_t</a> MessageBuffer::Cursor::read </td>
+          <td class="memname"><a class="el" href="group__infra.html#gadea8a058796ed8b9a73c5f833445a661">erpc_status_t</a> MessageBuffer::Cursor::read </td>
           <td>(</td>
           <td class="paramtype">void *&#160;</td>
           <td class="paramname"><em>data</em>, </td>
@@ -388,7 +393,7 @@ Public Member Functions</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group__infra.html#ga5f8872e58f09a16d192bf664f9898651">erpc_status_t</a> MessageBuffer::Cursor::write </td>
+          <td class="memname"><a class="el" href="group__infra.html#gadea8a058796ed8b9a73c5f833445a661">erpc_status_t</a> MessageBuffer::Cursor::write </td>
           <td>(</td>
           <td class="paramtype">const void *&#160;</td>
           <td class="paramname"><em>data</em>, </td>

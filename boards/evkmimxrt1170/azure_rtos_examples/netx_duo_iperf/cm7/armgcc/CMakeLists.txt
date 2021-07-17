@@ -1,6 +1,6 @@
 # CROSS COMPILER SETTING
 SET(CMAKE_SYSTEM_NAME Generic)
-CMAKE_MINIMUM_REQUIRED (VERSION 3.1.1)
+CMAKE_MINIMUM_REQUIRED (VERSION 3.10.0)
 
 # THE VERSION NUMBER
 SET (Tutorial_VERSION_MAJOR 1)
@@ -80,12 +80,12 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../../components/serial_manager
     ${ProjDirPath}/../../../../../../devices/MIMXRT1176/drivers
     ${ProjDirPath}/../../../../../../devices/MIMXRT1176
-    ${ProjDirPath}/../../../../../../CMSIS/Include
     ${ProjDirPath}/../../../../../../devices/MIMXRT1176/drivers/cm7
     ${ProjDirPath}/../../../../xip
     ${ProjDirPath}/../../../../../../devices/MIMXRT1176/xip
     ${ProjDirPath}/../../../../../../devices/MIMXRT1176/utilities
     ${ProjDirPath}/../../../../../../components/phy
+    ${ProjDirPath}/../../../../../../CMSIS/Core/Include
 )
 
 # include modules
@@ -111,8 +111,6 @@ include(driver_lpuart_MIMXRT1176_cm7)
 
 include(device_MIMXRT1176_CMSIS_MIMXRT1176_cm7)
 
-include(CMSIS_Include_core_cm7_MIMXRT1176_cm7)
-
 include(device_MIMXRT1176_startup_MIMXRT1176_cm7)
 
 include(driver_cache_armv7_m7_MIMXRT1176_cm7)
@@ -129,7 +127,7 @@ include(driver_lpi2c_MIMXRT1176_cm7)
 
 include(driver_pmu_1_MIMXRT1176_cm7)
 
-include(driver_xip_board_MIMXRT1176_cm7)
+include(driver_xip_board_evkmimxrt1170_MIMXRT1176_cm7)
 
 include(driver_xip_device_MIMXRT1176_cm7)
 
@@ -151,15 +149,15 @@ include(driver_mdio-common_MIMXRT1176_cm7)
 
 include(driver_anatop_ai_MIMXRT1176_cm7)
 
+include(CMSIS_Include_core_cm_MIMXRT1176_cm7)
+
 include(driver_enet_MIMXRT1176_cm7)
+
+include(driver_memory_MIMXRT1176_cm7)
 
 include(driver_phy-common_MIMXRT1176_cm7)
 
 include(utilities_misc_utilities_MIMXRT1176_cm7)
-
-include(CMSIS_Include_common_MIMXRT1176_cm7)
-
-include(CMSIS_Include_dsp_MIMXRT1176_cm7)
 
 include(device_MIMXRT1176_system_MIMXRT1176_cm7)
 

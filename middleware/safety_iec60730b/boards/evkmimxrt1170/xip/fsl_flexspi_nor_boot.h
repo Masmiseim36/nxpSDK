@@ -66,23 +66,23 @@ typedef struct _ivt_
 /* Set resume entry */
 #if defined(__CC_ARM) || defined(__ARMCC_VERSION)
 #include "linker_config.h"
-#define IMAGE_ENTRY_ADDRESS ((uint32_t)ROM_interrupts_start) 
-#define FLASH_BASE ((uint32_t)m_flash_config_start)   
+#define IMAGE_ENTRY_ADDRESS ((uint32_t)ROM_interrupts_start)
+#define FLASH_BASE          ((uint32_t)m_flash_config_start)
 #elif defined(__MCUXPRESSO)
-    extern uint32_t m_intvec_table_start[];
-    extern uint32_t __boot_hdr_start__[];
+extern uint32_t m_intvec_table_start[];
+extern uint32_t __boot_hdr_start__[];
 #define IMAGE_ENTRY_ADDRESS ((uint32_t)m_intvec_table_start)
 #define FLASH_BASE          ((uint32_t)__boot_hdr_start__)
 #elif defined(__ICCARM__)
-    extern uint32_t __VECTOR_TABLE[];
-    extern uint32_t m_boot_hdr_conf_start[];
-#define IMAGE_ENTRY_ADDRESS ((uint32_t)__VECTOR_TABLE)    
-#define FLASH_BASE ((uint32_t)m_boot_hdr_conf_start)   
+extern uint32_t __VECTOR_TABLE[];
+extern uint32_t m_boot_hdr_conf_start[];
+#define IMAGE_ENTRY_ADDRESS ((uint32_t)__VECTOR_TABLE)
+#define FLASH_BASE          ((uint32_t)m_boot_hdr_conf_start)
 #elif defined(__GNUC__)
-    extern uint32_t __VECTOR_TABLE[];
-    extern uint32_t __FLASH_BASE[];
-#define IMAGE_ENTRY_ADDRESS ((uint32_t)__VECTOR_TABLE)     
-#define FLASH_BASE ((uint32_t)__VECTOR_TABLE)   
+extern uint32_t __VECTOR_TABLE[];
+extern uint32_t __FLASH_BASE[];
+#define IMAGE_ENTRY_ADDRESS ((uint32_t)__VECTOR_TABLE)
+#define FLASH_BASE          ((uint32_t)__VECTOR_TABLE)
 #endif
 #if defined(XIP_BOOT_HEADER_ENABLE) && (XIP_BOOT_HEADER_ENABLE == 1)
 #if defined(XIP_BOOT_HEADER_DCD_ENABLE) && (XIP_BOOT_HEADER_DCD_ENABLE == 1)
@@ -107,11 +107,11 @@ typedef struct _boot_data_
 } BOOT_DATA_T;
 
 #if defined(BOARD_FLASH_SIZE)
-#define FLASH_SIZE            BOARD_FLASH_SIZE
+#define FLASH_SIZE BOARD_FLASH_SIZE
 #else
 #error "Please define macro BOARD_FLASH_SIZE"
 #endif
-#define PLUGIN_FLAG           (uint32_t)0
+#define PLUGIN_FLAG (uint32_t)0
 
 /* External Variables */
 const BOOT_DATA_T boot_data;

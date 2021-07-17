@@ -1,6 +1,6 @@
 # CROSS COMPILER SETTING
 SET(CMAKE_SYSTEM_NAME Generic)
-CMAKE_MINIMUM_REQUIRED (VERSION 3.1.1)
+CMAKE_MINIMUM_REQUIRED (VERSION 3.10.0)
 
 # THE VERSION NUMBER
 SET (Tutorial_VERSION_MAJOR 1)
@@ -52,10 +52,9 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 )
 
 target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
-    ${ProjDirPath}/.. debug
+    ${ProjDirPath}/..
     ${ProjDirPath}/../../../erpc_common
     ${ProjDirPath}/../../../erpc_common/erpc_matrix_multiply/service
-    ${ProjDirPath}/..
     ${ProjDirPath}/../..
 )
 
@@ -64,7 +63,6 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../../devices/MIMXRT1166/drivers
     ${ProjDirPath}/../../../../../../rtos/freertos
     ${ProjDirPath}/../../../../../../devices/MIMXRT1166
-    ${ProjDirPath}/../../../../../../CMSIS/Include
     ${ProjDirPath}/../../../../../../devices/MIMXRT1166/utilities
     ${ProjDirPath}/../../../../../../components/uart
     ${ProjDirPath}/../../../../../../components/serial_manager
@@ -72,6 +70,7 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../../devices/MIMXRT1166/xip
     ${ProjDirPath}/../../../../xip
     ${ProjDirPath}/../../../../../../devices/MIMXRT1166/drivers/cm4
+    ${ProjDirPath}/../../../../../../CMSIS/Core/Include
 )
 
 # include modules
@@ -91,7 +90,7 @@ include(middleware_multicore_erpc_eRPC_port_freertos_MIMXRT1166_cm4)
 
 include(middleware_multicore_mcmgr_MIMXRT1166_cm4)
 
-include(middleware_freertos-kernel_heap_3_MIMXRT1166_cm4)
+include(middleware_freertos-kernel_heap_4_MIMXRT1166_cm4)
 
 include(middleware_multicore_erpc_doc_MIMXRT1166_cm4)
 
@@ -100,8 +99,6 @@ include(middleware_freertos-kernel_MIMXRT1166_cm4)
 include(driver_common_MIMXRT1166_cm4)
 
 include(device_MIMXRT1166_CMSIS_MIMXRT1166_cm4)
-
-include(CMSIS_Include_core_cm4_MIMXRT1166_cm4)
 
 include(utility_debug_console_MIMXRT1166_cm4)
 
@@ -135,15 +132,13 @@ include(driver_cache_lmem_MIMXRT1166_cm4)
 
 include(driver_anatop_ai_MIMXRT1166_cm4)
 
+include(CMSIS_Include_core_cm_MIMXRT1166_cm4)
+
 include(middleware_multicore_erpc_common_MIMXRT1166_cm4)
 
 include(middleware_freertos-kernel_extension_MIMXRT1166_cm4)
 
 include(utilities_misc_utilities_MIMXRT1166_cm4)
-
-include(CMSIS_Include_common_MIMXRT1166_cm4)
-
-include(CMSIS_Include_dsp_MIMXRT1166_cm4)
 
 include(device_MIMXRT1166_system_MIMXRT1166_cm4)
 

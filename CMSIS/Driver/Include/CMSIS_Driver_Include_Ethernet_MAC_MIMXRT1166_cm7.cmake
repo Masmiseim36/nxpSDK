@@ -1,12 +1,10 @@
-if(NOT CMSIS_DRIVER_INCLUDE_ETHERNET_MAC_MIMXRT1166_cm7_INCLUDED)
-    
-    set(CMSIS_DRIVER_INCLUDE_ETHERNET_MAC_MIMXRT1166_cm7_INCLUDED true CACHE BOOL "CMSIS_Driver_Include_Ethernet_MAC component is included.")
+include_guard(GLOBAL)
+message("CMSIS_Driver_Include_Ethernet_MAC component is included.")
 
 
-    target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
-        ${CMAKE_CURRENT_LIST_DIR}/.
-    )
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
+    ${CMAKE_CURRENT_LIST_DIR}/.
+)
 
-    include(CMSIS_Driver_Include_Ethernet_MIMXRT1166_cm7)
+include(CMSIS_Driver_Include_Ethernet_MIMXRT1166_cm7)
 
-endif()

@@ -22,7 +22,6 @@
     <definition extID="component.serial_manager_uart.MIMXRT1176"/>
     <definition extID="platform.drivers.lpuart.MIMXRT1176"/>
     <definition extID="platform.devices.MIMXRT1176_CMSIS.MIMXRT1176"/>
-    <definition extID="platform.Include_core_cm7.MIMXRT1176"/>
     <definition extID="platform.devices.MIMXRT1176_startup.MIMXRT1176"/>
     <definition extID="platform.drivers.cache_armv7_m7.MIMXRT1176"/>
     <definition extID="platform.drivers.clock.MIMXRT1176"/>
@@ -30,19 +29,19 @@
     <definition extID="platform.drivers.igpio.MIMXRT1176"/>
     <definition extID="platform.drivers.iomuxc.MIMXRT1176"/>
     <definition extID="platform.drivers.pmu_1.MIMXRT1176"/>
-    <definition extID="platform.drivers.xip_board.MIMXRT1176"/>
+    <definition extID="platform.drivers.xip_board.evkmimxrt1170.MIMXRT1176"/>
     <definition extID="platform.drivers.xip_device.MIMXRT1176"/>
     <definition extID="platform.utilities.assert.MIMXRT1176"/>
     <definition extID="utility.debug_console.MIMXRT1176"/>
     <definition extID="middleware.azure_rtos.tx.MIMXRT1176"/>
     <definition extID="middleware.azure_rtos.tx.template.MIMXRT1176"/>
     <definition extID="platform.drivers.anatop_ai.MIMXRT1176"/>
+    <definition extID="CMSIS_Include_core_cm.MIMXRT1176"/>
     <definition extID="platform.drivers.soc_mipi_csi2rx.MIMXRT1176"/>
     <definition extID="driver.dc-fb-common.MIMXRT1176"/>
     <definition extID="platform.drivers.lcdifv2.MIMXRT1176"/>
+    <definition extID="platform.drivers.memory.MIMXRT1176"/>
     <definition extID="platform.utilities.misc_utilities.MIMXRT1176"/>
-    <definition extID="platform.Include_common.MIMXRT1176"/>
-    <definition extID="platform.Include_dsp.MIMXRT1176"/>
     <definition extID="platform.devices.MIMXRT1176_system.MIMXRT1176"/>
     <definition extID="iar"/>
     <definition extID="mdk"/>
@@ -52,7 +51,7 @@
     <definition extID="com.crt.advproject.config.exe.debug"/>
     <definition extID="com.crt.advproject.config.exe.release"/>
   </externalDefinitions>
-  <example id="evkmimxrt1170_guix_washing_machine_hd" name="guix_washing_machine_hd" device_core="cm7_MIMXRT1176xxxxx" dependency="middleware.azure_rtos.gx.MIMXRT1176 driver.video-common.MIMXRT1176 driver.display-common.MIMXRT1176 driver.display-rm68200.MIMXRT1176 driver.display-rm68191.MIMXRT1176 platform.drivers.mipi_dsi_split.MIMXRT1176 driver.display-mipi-dsi-cmd.MIMXRT1176 platform.drivers.common.MIMXRT1176 driver.dc-fb-lcdifv2.MIMXRT1176 platform.drivers.elcdif.MIMXRT1176 driver.dc-fb-elcdif.MIMXRT1176 platform.drivers.lpi2c.MIMXRT1176 driver.gt911.MIMXRT1176 platform.drivers.soc_src.MIMXRT1176 component.lists.MIMXRT1176 component.lpuart_adapter.MIMXRT1176 component.serial_manager.MIMXRT1176 component.serial_manager_uart.MIMXRT1176 platform.drivers.lpuart.MIMXRT1176 platform.devices.MIMXRT1176_CMSIS.MIMXRT1176 platform.Include_core_cm7.MIMXRT1176 platform.devices.MIMXRT1176_startup.MIMXRT1176 platform.drivers.cache_armv7_m7.MIMXRT1176 platform.drivers.clock.MIMXRT1176 platform.drivers.dcdc_soc.MIMXRT1176 platform.drivers.igpio.MIMXRT1176 platform.drivers.iomuxc.MIMXRT1176 platform.drivers.pmu_1.MIMXRT1176 platform.drivers.xip_board.MIMXRT1176 platform.drivers.xip_device.MIMXRT1176 platform.utilities.assert.MIMXRT1176 utility.debug_console.MIMXRT1176 middleware.azure_rtos.tx.MIMXRT1176 middleware.azure_rtos.tx.template.MIMXRT1176 platform.drivers.anatop_ai.MIMXRT1176 platform.drivers.soc_mipi_csi2rx.MIMXRT1176 driver.dc-fb-common.MIMXRT1176 platform.drivers.lcdifv2.MIMXRT1176 platform.utilities.misc_utilities.MIMXRT1176 platform.Include_common.MIMXRT1176 platform.Include_dsp.MIMXRT1176 platform.devices.MIMXRT1176_system.MIMXRT1176" category="azure_rtos_examples">
+  <example id="evkmimxrt1170_guix_washing_machine_hd" name="guix_washing_machine_hd" device_core="cm7_MIMXRT1176xxxxx" dependency="middleware.azure_rtos.gx.MIMXRT1176 driver.video-common.MIMXRT1176 driver.display-common.MIMXRT1176 driver.display-rm68200.MIMXRT1176 driver.display-rm68191.MIMXRT1176 platform.drivers.mipi_dsi_split.MIMXRT1176 driver.display-mipi-dsi-cmd.MIMXRT1176 platform.drivers.common.MIMXRT1176 driver.dc-fb-lcdifv2.MIMXRT1176 platform.drivers.elcdif.MIMXRT1176 driver.dc-fb-elcdif.MIMXRT1176 platform.drivers.lpi2c.MIMXRT1176 driver.gt911.MIMXRT1176 platform.drivers.soc_src.MIMXRT1176 component.lists.MIMXRT1176 component.lpuart_adapter.MIMXRT1176 component.serial_manager.MIMXRT1176 component.serial_manager_uart.MIMXRT1176 platform.drivers.lpuart.MIMXRT1176 platform.devices.MIMXRT1176_CMSIS.MIMXRT1176 platform.devices.MIMXRT1176_startup.MIMXRT1176 platform.drivers.cache_armv7_m7.MIMXRT1176 platform.drivers.clock.MIMXRT1176 platform.drivers.dcdc_soc.MIMXRT1176 platform.drivers.igpio.MIMXRT1176 platform.drivers.iomuxc.MIMXRT1176 platform.drivers.pmu_1.MIMXRT1176 platform.drivers.xip_board.evkmimxrt1170.MIMXRT1176 platform.drivers.xip_device.MIMXRT1176 platform.utilities.assert.MIMXRT1176 utility.debug_console.MIMXRT1176 middleware.azure_rtos.tx.MIMXRT1176 middleware.azure_rtos.tx.template.MIMXRT1176 platform.drivers.anatop_ai.MIMXRT1176 CMSIS_Include_core_cm.MIMXRT1176 platform.drivers.soc_mipi_csi2rx.MIMXRT1176 driver.dc-fb-common.MIMXRT1176 platform.drivers.lcdifv2.MIMXRT1176 platform.drivers.memory.MIMXRT1176 platform.utilities.misc_utilities.MIMXRT1176 platform.devices.MIMXRT1176_system.MIMXRT1176" category="azure_rtos_examples">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.ccnature"/>
     </projects>
@@ -117,9 +116,11 @@
           <value>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</value>
           <value>SDK_I2C_BASED_COMPONENT_USED=1</value>
           <value>TX_INCLUDE_USER_DEFINE_FILE</value>
+          <value>MCUXPRESSO_SDK</value>
         </option>
         <option id="gnu.cpp.compiler.option.preprocessor.def" type="stringList">
           <value>SERIAL_PORT_TYPE_UART=1</value>
+          <value>MCUXPRESSO_SDK</value>
         </option>
         <option id="com.crt.advproject.link.memory.sections.cpp" type="stringList">
           <value>isd=KEEP(*(CodeQuickAccess));region=SRAM_ITC_cm7;type=.data</value>

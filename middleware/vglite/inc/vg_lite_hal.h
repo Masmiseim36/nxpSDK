@@ -31,6 +31,8 @@
 #define _vg_lite_hal_h_
 
 #include "vg_lite_platform.h"
+#include "vg_lite_os.h"
+#include "vg_lite_kernel.h"
 
 #define VGLITE_MEM_ALIGNMENT    128
 #define TASK_LENGTH             8
@@ -242,13 +244,13 @@ int32_t vg_lite_hal_wait_interrupt(uint32_t timeout, uint32_t mask, uint32_t * v
  @param size
  Current command buffer size.
 
- @param singal
- Current command buffer signal.
+ @param event
+ The async event to use to track the response for this request.
 
  @param semaphore_id
  Current thread semaphore id.
  */
-vg_lite_error_t vg_lite_hal_submit(uint32_t physical, uint32_t offset, uint32_t size,  uint32_t * singal,  uint32_t semaphore_id);
+vg_lite_error_t vg_lite_hal_submit(uint32_t physical, uint32_t offset, uint32_t size,  vg_lite_os_async_event_t *event);
 
 /*!
  @brief Wait for the current command buffer to be executed.
@@ -256,11 +258,11 @@ vg_lite_error_t vg_lite_hal_submit(uint32_t physical, uint32_t offset, uint32_t 
  @param timeout
  Timeout in milliseconds.
 
- @param singal
- Current command buffer singal.
- When singal is 1, it means current command buffer has been executed.
+ @param event
+ The async event to wait for. If the event's signal is 1, the current command
+ buffer has been executed.
  */
-vg_lite_error_t vg_lite_hal_wait(uint32_t timeout, uint32_t * singal ,void * semaphore);
+vg_lite_error_t vg_lite_hal_wait(uint32_t timeout, vg_lite_os_async_event_t *event);
 
 #ifdef __cplusplus
 }

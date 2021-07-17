@@ -20,10 +20,8 @@
 !!GlobalInfo
 product: Clocks v7.0
 processor: MIMXRT1166xxxxx
-package_id: MIMXRT1166DVM6A
 mcu_data: ksdk2_0
-processor_version: 0.0.0
-board: MIMXRT1160-EVK
+processor_version: 0.10.9
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS **********/
 
 #include "clock_config.h"
@@ -86,9 +84,9 @@ outputs:
 - {id: ADC2_CLK_ROOT.outFreq, value: 24 MHz}
 - {id: ARM_PLL_CLK.outFreq, value: 600 MHz}
 - {id: ASRC_CLK_ROOT.outFreq, value: 24 MHz}
-- {id: AXI_CLK_ROOT.outFreq, value: 600 MHz}
-- {id: BUS_CLK_ROOT.outFreq, value: 198 MHz}
-- {id: BUS_LPSR_CLK_ROOT.outFreq, value: 120 MHz}
+- {id: AXI_CLK_ROOT.outFreq, value: 24 MHz}
+- {id: BUS_CLK_ROOT.outFreq, value: 24 MHz}
+- {id: BUS_LPSR_CLK_ROOT.outFreq, value: 24 MHz}
 - {id: CAN1_CLK_ROOT.outFreq, value: 24 MHz}
 - {id: CAN2_CLK_ROOT.outFreq, value: 24 MHz}
 - {id: CAN3_CLK_ROOT.outFreq, value: 24 MHz}
@@ -100,7 +98,7 @@ outputs:
 - {id: CSI2_UI_CLK_ROOT.outFreq, value: 24 MHz}
 - {id: CSI_CLK_ROOT.outFreq, value: 24 MHz}
 - {id: CSSYS_CLK_ROOT.outFreq, value: 24 MHz}
-- {id: CSTRACE_CLK_ROOT.outFreq, value: 132 MHz}
+- {id: CSTRACE_CLK_ROOT.outFreq, value: 24 MHz}
 - {id: ELCDIF_CLK_ROOT.outFreq, value: 24 MHz}
 - {id: EMV1_CLK_ROOT.outFreq, value: 24 MHz}
 - {id: EMV2_CLK_ROOT.outFreq, value: 24 MHz}
@@ -110,12 +108,11 @@ outputs:
 - {id: ENET_25M_CLK_ROOT.outFreq, value: 24 MHz}
 - {id: ENET_TIMER1_CLK_ROOT.outFreq, value: 24 MHz}
 - {id: ENET_TIMER2_CLK_ROOT.outFreq, value: 24 MHz}
-- {id: ENET_TX_CLK.outFreq, value: 24 MHz}
 - {id: FLEXIO1_CLK_ROOT.outFreq, value: 24 MHz}
 - {id: FLEXIO2_CLK_ROOT.outFreq, value: 24 MHz}
 - {id: FLEXSPI1_CLK_ROOT.outFreq, value: 24 MHz}
 - {id: FLEXSPI2_CLK_ROOT.outFreq, value: 24 MHz}
-- {id: GC355_CLK_ROOT.outFreq, value: 492.0000125 MHz}
+- {id: GC355_CLK_ROOT.outFreq, value: 24 MHz}
 - {id: GPT1_CLK_ROOT.outFreq, value: 24 MHz}
 - {id: GPT1_ipg_clk_highfreq.outFreq, value: 24 MHz}
 - {id: GPT2_CLK_ROOT.outFreq, value: 24 MHz}
@@ -153,10 +150,10 @@ outputs:
 - {id: LPUART7_CLK_ROOT.outFreq, value: 24 MHz}
 - {id: LPUART8_CLK_ROOT.outFreq, value: 24 MHz}
 - {id: LPUART9_CLK_ROOT.outFreq, value: 24 MHz}
-- {id: M4_CLK_ROOT.outFreq, value: 240 MHz}
+- {id: M4_CLK_ROOT.outFreq, value: 24 MHz}
 - {id: M4_SYSTICK_CLK_ROOT.outFreq, value: 24 MHz}
-- {id: M7_CLK_ROOT.outFreq, value: 600 MHz}
-- {id: M7_SYSTICK_CLK_ROOT.outFreq, value: 100 kHz}
+- {id: M7_CLK_ROOT.outFreq, value: 24 MHz}
+- {id: M7_SYSTICK_CLK_ROOT.outFreq, value: 24 MHz}
 - {id: MIC_CLK_ROOT.outFreq, value: 24 MHz}
 - {id: MIPI_DSI_TX_CLK_ESC_ROOT.outFreq, value: 24 MHz}
 - {id: MIPI_ESC_CLK_ROOT.outFreq, value: 24 MHz}
@@ -169,7 +166,8 @@ outputs:
 - {id: OSC_RC_400M.outFreq, value: 400 MHz}
 - {id: OSC_RC_48M.outFreq, value: 48 MHz}
 - {id: OSC_RC_48M_DIV2.outFreq, value: 24 MHz}
-- {id: PLL_VIDEO_CLK.outFreq, value: 984.000025 MHz}
+- {id: PLL_AUDIO_CLK.outFreq, value: 672.000025 MHz}
+- {id: PLL_VIDEO_CLK.outFreq, value: 672.000025 MHz}
 - {id: SAI1_CLK_ROOT.outFreq, value: 24 MHz}
 - {id: SAI1_MCLK1.outFreq, value: 24 MHz}
 - {id: SAI1_MCLK3.outFreq, value: 24 MHz}
@@ -183,63 +181,39 @@ outputs:
 - {id: SAI4_MCLK1.outFreq, value: 24 MHz}
 - {id: SEMC_CLK_ROOT.outFreq, value: 198 MHz}
 - {id: SPDIF_CLK_ROOT.outFreq, value: 24 MHz}
+- {id: SYS_PLL1_CLK.outFreq, value: 1 GHz}
 - {id: SYS_PLL2_CLK.outFreq, value: 528 MHz}
 - {id: SYS_PLL2_PFD0_CLK.outFreq, value: 352 MHz}
 - {id: SYS_PLL2_PFD1_CLK.outFreq, value: 594 MHz}
 - {id: SYS_PLL2_PFD2_CLK.outFreq, value: 396 MHz}
-- {id: SYS_PLL2_PFD3_CLK.outFreq, value: 396 MHz}
+- {id: SYS_PLL2_PFD3_CLK.outFreq, value: 297 MHz}
 - {id: SYS_PLL3_CLK.outFreq, value: 480 MHz}
-- {id: SYS_PLL3_DIV2_CLK.outFreq, value: 240 MHz}
 - {id: SYS_PLL3_PFD0_CLK.outFreq, value: 8640/13 MHz}
 - {id: SYS_PLL3_PFD1_CLK.outFreq, value: 8640/17 MHz}
 - {id: SYS_PLL3_PFD2_CLK.outFreq, value: 270 MHz}
-- {id: SYS_PLL3_PFD3_CLK.outFreq, value: 4320/11 MHz}
+- {id: SYS_PLL3_PFD3_CLK.outFreq, value: 8640/13 MHz}
 - {id: USDHC1_CLK_ROOT.outFreq, value: 24 MHz}
 - {id: USDHC2_CLK_ROOT.outFreq, value: 24 MHz}
 settings:
-- {id: CoreBusClockRootsInitializationConfig, value: selectedCore}
-- {id: ANADIG_OSC_OSC_24M_CTRL_LP_EN_CFG, value: Low}
-- {id: ANADIG_OSC_OSC_24M_CTRL_OSC_EN_CFG, value: Enabled}
 - {id: ANADIG_PLL.ARM_PLL_POST_DIV.scale, value: '4'}
 - {id: ANADIG_PLL.ARM_PLL_VDIV.scale, value: '100'}
-- {id: ANADIG_PLL.PLL_AUDIO_BYPASS.sel, value: ANADIG_OSC.OSC_24M}
+- {id: ANADIG_PLL.PLL_AUDIO.denom, value: '960000'}
+- {id: ANADIG_PLL.PLL_AUDIO.div, value: '28'}
+- {id: ANADIG_PLL.PLL_AUDIO.num, value: '1'}
 - {id: ANADIG_PLL.PLL_VIDEO.denom, value: '960000'}
-- {id: ANADIG_PLL.PLL_VIDEO.div, value: '41'}
+- {id: ANADIG_PLL.PLL_VIDEO.div, value: '28'}
 - {id: ANADIG_PLL.PLL_VIDEO.num, value: '1'}
-- {id: ANADIG_PLL.SYS_PLL1_BYPASS.sel, value: ANADIG_OSC.OSC_24M}
-- {id: ANADIG_PLL.SYS_PLL2.denom, value: '268435455'}
+- {id: ANADIG_PLL.SYS_PLL2.denom, value: '60000'}
 - {id: ANADIG_PLL.SYS_PLL2.div, value: '22'}
 - {id: ANADIG_PLL.SYS_PLL2.num, value: '0'}
-- {id: ANADIG_PLL.SYS_PLL2_PFD3_DIV.scale, value: '24'}
-- {id: ANADIG_PLL.SYS_PLL2_SS_DIV.scale, value: '268435455'}
-- {id: ANADIG_PLL.SYS_PLL3_PFD3_DIV.scale, value: '22', locked: true}
-- {id: ANADIG_PLL.SYS_PLL3_PFD3_MUL.scale, value: '18', locked: true}
+- {id: ANADIG_PLL.SYS_PLL3_PFD3_DIV.scale, value: '13'}
 - {id: ANADIG_PLL_ARM_PLL_CTRL_POWERUP_CFG, value: Enabled}
-- {id: ANADIG_PLL_PLL_AUDIO_CTRL_GATE_CFG, value: Disabled}
+- {id: ANADIG_PLL_PLL_AUDIO_CTRL0_POWERUP_CFG, value: Enabled}
 - {id: ANADIG_PLL_PLL_VIDEO_CTRL0_POWERUP_CFG, value: Enabled}
-- {id: ANADIG_PLL_SYS_PLL1_CTRL0_POWERUP_CFG, value: Disabled}
-- {id: ANADIG_PLL_SYS_PLL1_CTRL_GATE_CFG, value: Disabled}
 - {id: ANADIG_PLL_SYS_PLL2_CTRL_POWERUP_CFG, value: Enabled}
 - {id: ANADIG_PLL_SYS_PLL3_CTRL_POWERUP_CFG, value: Enabled}
-- {id: ANADIG_PLL_SYS_PLL3_CTRL_SYS_PLL3_DIV2_CFG, value: Enabled}
-- {id: CCM.CLOCK_ROOT0.MUX.sel, value: ANADIG_PLL.ARM_PLL_CLK}
-- {id: CCM.CLOCK_ROOT1.DIV.scale, value: '2'}
-- {id: CCM.CLOCK_ROOT1.MUX.sel, value: ANADIG_PLL.SYS_PLL3_CLK}
-- {id: CCM.CLOCK_ROOT2.DIV.scale, value: '2'}
-- {id: CCM.CLOCK_ROOT2.MUX.sel, value: ANADIG_PLL.SYS_PLL2_PFD3_CLK}
-- {id: CCM.CLOCK_ROOT25.DIV.scale, value: '22'}
-- {id: CCM.CLOCK_ROOT25.MUX.sel, value: ANADIG_PLL.SYS_PLL2_CLK}
-- {id: CCM.CLOCK_ROOT26.DIV.scale, value: '22'}
-- {id: CCM.CLOCK_ROOT26.MUX.sel, value: ANADIG_PLL.SYS_PLL2_CLK}
-- {id: CCM.CLOCK_ROOT3.DIV.scale, value: '4'}
-- {id: CCM.CLOCK_ROOT3.MUX.sel, value: ANADIG_PLL.SYS_PLL3_CLK}
 - {id: CCM.CLOCK_ROOT4.DIV.scale, value: '3'}
 - {id: CCM.CLOCK_ROOT4.MUX.sel, value: ANADIG_PLL.SYS_PLL2_PFD1_CLK}
-- {id: CCM.CLOCK_ROOT6.DIV.scale, value: '4'}
-- {id: CCM.CLOCK_ROOT6.MUX.sel, value: ANADIG_PLL.SYS_PLL2_CLK}
-- {id: CCM.CLOCK_ROOT68.DIV.scale, value: '2'}
-- {id: CCM.CLOCK_ROOT68.MUX.sel, value: ANADIG_PLL.PLL_VIDEO_CLK}
-- {id: CCM.CLOCK_ROOT8.DIV.scale, value: '240'}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS **********/
 
 /*******************************************************************************
@@ -256,16 +230,34 @@ const clock_arm_pll_config_t armPllConfig_BOARD_BootClockRUN =
         .loopDivider = 200,                       /* PLL Loop divider, Fout = Fin * ( loopDivider / ( 2 * postDivider ) ) */
     };
 
+const clock_sys_pll1_config_t sysPll1Config_BOARD_BootClockRUN =
+    {
+        .pllDiv2En = 0,                           /* Enable Sys Pll1 divide-by-2 clock or not */
+        .pllDiv5En = 0,                           /* Enable Sys Pll1 divide-by-5 clock or not */
+        .ss = NULL,                               /* Spread spectrum parameter */
+        .ssEnable = false,                        /* Enable spread spectrum or not */
+    };
+
 const clock_sys_pll2_config_t sysPll2Config_BOARD_BootClockRUN =
     {
-        .mfd = 268435455,                         /* Denominator of spread spectrum */
+        .mfd = 60000,                             /* Denominator of spread spectrum */
+        .ss = NULL,                               /* Spread spectrum parameter */
+        .ssEnable = false,                        /* Enable spread spectrum or not */
+    };
+
+const clock_audio_pll_config_t audioPllConfig_BOARD_BootClockRUN =
+    {
+        .loopDivider = 28,                        /* PLL Loop divider, valid range for DIV_SELECT divider value: 27 ~ 54. */
+        .postDivider = 0,                         /* Divider after PLL, should only be 1, 2, 4, 8, 16, 32 */
+        .numerator = 1,                           /* 30 bit numerator of fractional loop divider, Fout = Fin * ( loopDivider + numerator / denominator ) */
+        .denominator = 960000,                    /* 30 bit denominator of fractional loop divider, Fout = Fin * ( loopDivider + numerator / denominator ) */
         .ss = NULL,                               /* Spread spectrum parameter */
         .ssEnable = false,                        /* Enable spread spectrum or not */
     };
 
 const clock_video_pll_config_t videoPllConfig_BOARD_BootClockRUN =
     {
-        .loopDivider = 41,                        /* PLL Loop divider, valid range for DIV_SELECT divider value: 27 ~ 54. */
+        .loopDivider = 28,                        /* PLL Loop divider, valid range for DIV_SELECT divider value: 27 ~ 54. */
         .postDivider = 0,                         /* Divider after PLL, should only be 1, 2, 4, 8, 16, 32 */
         .numerator = 1,                           /* 30 bit numerator of fractional loop divider, Fout = Fin * ( loopDivider + numerator / denominator ) */
         .denominator = 960000,                    /* 30 bit denominator of fractional loop divider, Fout = Fin * ( loopDivider + numerator / denominator ) */
@@ -279,6 +271,9 @@ const clock_video_pll_config_t videoPllConfig_BOARD_BootClockRUN =
 void BOARD_BootClockRUN(void)
 {
     clock_root_config_t rootCfg = {0};
+
+    /* Set DCDC to DCM mode to improve the efficiency for light loading in run mode and transient performance with a big loading step. */
+    DCDC_BootIntoDCM(DCDC);
 
 #if defined(BYPASS_LDO_LPSR) && BYPASS_LDO_LPSR
     PMU_StaticEnableLpsrAnaLdoBypassMode(ANADIG_LDO_SNVS, true);
@@ -300,7 +295,7 @@ void BOARD_BootClockRUN(void)
     CLOCK_OSC_EnableOsc48MDiv2(true);
 
     /* Config OSC 24M */
-    ANADIG_OSC->OSC_24M_CTRL |= ANADIG_OSC_OSC_24M_CTRL_OSC_EN(1) | ANADIG_OSC_OSC_24M_CTRL_BYPASS_EN(0) | ANADIG_OSC_OSC_24M_CTRL_BYPASS_CLK(0) | ANADIG_OSC_OSC_24M_CTRL_LP_EN(1) | ANADIG_OSC_OSC_24M_CTRL_OSC_24M_GATE(0);
+    ANADIG_OSC->OSC_24M_CTRL |= ANADIG_OSC_OSC_24M_CTRL_OSC_EN(0) | ANADIG_OSC_OSC_24M_CTRL_BYPASS_EN(0) | ANADIG_OSC_OSC_24M_CTRL_BYPASS_CLK(0) | ANADIG_OSC_OSC_24M_CTRL_LP_EN(0) | ANADIG_OSC_OSC_24M_CTRL_OSC_24M_GATE(0);
     /* Wait for 24M OSC to be stable. */
     while (ANADIG_OSC_OSC_24M_CTRL_OSC_24M_STABLE_MASK !=
             (ANADIG_OSC->OSC_24M_CTRL & ANADIG_OSC_OSC_24M_CTRL_OSC_24M_STABLE_MASK))
@@ -310,14 +305,19 @@ void BOARD_BootClockRUN(void)
     /* Swicth both core, M7 Systick and Bus_Lpsr to OscRC48MDiv2 first */
     rootCfg.mux = kCLOCK_M7_ClockRoot_MuxOscRc48MDiv2;
     rootCfg.div = 1;
-#if __CORTEX_M == 7
     CLOCK_SetRootClock(kCLOCK_Root_M7, &rootCfg);
+
+    rootCfg.mux = kCLOCK_M7_SYSTICK_ClockRoot_MuxOscRc48MDiv2;
+    rootCfg.div = 1;
     CLOCK_SetRootClock(kCLOCK_Root_M7_Systick, &rootCfg);
-#endif
-#if __CORTEX_M == 4
+
+    rootCfg.mux = kCLOCK_M4_ClockRoot_MuxOscRc48MDiv2;
+    rootCfg.div = 1;
     CLOCK_SetRootClock(kCLOCK_Root_M4, &rootCfg);
+
+    rootCfg.mux = kCLOCK_BUS_LPSR_ClockRoot_MuxOscRc48MDiv2;
+    rootCfg.div = 1;
     CLOCK_SetRootClock(kCLOCK_Root_Bus_Lpsr, &rootCfg);
-#endif
 
     /*
     * if DCD is used, please make sure the clock source of SEMC is not changed in the following PLL/PFD configuration code.
@@ -325,11 +325,8 @@ void BOARD_BootClockRUN(void)
     /* Init Arm Pll. */
     CLOCK_InitArmPll(&armPllConfig_BOARD_BootClockRUN);
 
-    /* Bypass Sys Pll1. */
-    CLOCK_SetPllBypass(kCLOCK_PllSys1, true);
-
-    /* DeInit Sys Pll1. */
-    CLOCK_DeinitSysPll1();
+    /* Init Sys Pll1. */
+    CLOCK_InitSysPll1(&sysPll1Config_BOARD_BootClockRUN);
 
     /* Init Sys Pll2. */
     CLOCK_InitSysPll2(&sysPll2Config_BOARD_BootClockRUN);
@@ -344,7 +341,7 @@ void BOARD_BootClockRUN(void)
     CLOCK_InitPfd(kCLOCK_PllSys2, kCLOCK_Pfd2, 24);
 
     /* Init System Pll2 pfd3. */
-    CLOCK_InitPfd(kCLOCK_PllSys2, kCLOCK_Pfd3, 24);
+    CLOCK_InitPfd(kCLOCK_PllSys2, kCLOCK_Pfd3, 32);
 
     /* Init Sys Pll3. */
     CLOCK_InitSysPll3();
@@ -359,45 +356,37 @@ void BOARD_BootClockRUN(void)
     CLOCK_InitPfd(kCLOCK_PllSys3, kCLOCK_Pfd2, 32);
 
     /* Init System Pll3 pfd3. */
-    CLOCK_InitPfd(kCLOCK_PllSys3, kCLOCK_Pfd3, 22);
+    CLOCK_InitPfd(kCLOCK_PllSys3, kCLOCK_Pfd3, 13);
 
-    /* Bypass Audio Pll. */
-    CLOCK_SetPllBypass(kCLOCK_PllAudio, true);
+    /* Disable Sys Pll3 Div2 output. */
+    ANADIG_PLL->SYS_PLL3_CTRL &= ~ANADIG_PLL_SYS_PLL3_CTRL_SYS_PLL3_DIV2_MASK;
 
-    /* DeInit Audio Pll. */
-    CLOCK_DeinitAudioPll();
+    /* Init Audio Pll. */
+    CLOCK_InitAudioPll(&audioPllConfig_BOARD_BootClockRUN);
 
     /* Init Video Pll. */
     CLOCK_InitVideoPll(&videoPllConfig_BOARD_BootClockRUN);
 
     /* Module clock root configurations. */
-    /* Configure M7 using ARM_PLL_CLK */
-#if __CORTEX_M == 7
-    rootCfg.mux = kCLOCK_M7_ClockRoot_MuxArmPllOut;
+    /* Configure M7 using OSC_RC_48M_DIV2 */
+    rootCfg.mux = kCLOCK_M7_ClockRoot_MuxOscRc48MDiv2;
     rootCfg.div = 1;
     CLOCK_SetRootClock(kCLOCK_Root_M7, &rootCfg);
-#endif
 
-    /* Configure M4 using SYS_PLL3_CLK */
-#if __CORTEX_M == 4
-    rootCfg.mux = kCLOCK_M4_ClockRoot_MuxSysPll3Out;
-    rootCfg.div = 2;
+    /* Configure M4 using OSC_RC_48M_DIV2 */
+    rootCfg.mux = kCLOCK_M4_ClockRoot_MuxOscRc48MDiv2;
+    rootCfg.div = 1;
     CLOCK_SetRootClock(kCLOCK_Root_M4, &rootCfg);
-#endif
 
-    /* Configure BUS using SYS_PLL2_PFD3_CLK */
-#if __CORTEX_M == 7
-    rootCfg.mux = kCLOCK_BUS_ClockRoot_MuxSysPll2Pfd3;
-    rootCfg.div = 2;
+    /* Configure BUS using OSC_RC_48M_DIV2 */
+    rootCfg.mux = kCLOCK_BUS_ClockRoot_MuxOscRc48MDiv2;
+    rootCfg.div = 1;
     CLOCK_SetRootClock(kCLOCK_Root_Bus, &rootCfg);
-#endif
 
-    /* Configure BUS_LPSR using SYS_PLL3_CLK */
-#if __CORTEX_M == 4
-    rootCfg.mux = kCLOCK_BUS_LPSR_ClockRoot_MuxSysPll3Out;
-    rootCfg.div = 4;
+    /* Configure BUS_LPSR using OSC_RC_48M_DIV2 */
+    rootCfg.mux = kCLOCK_BUS_LPSR_ClockRoot_MuxOscRc48MDiv2;
+    rootCfg.div = 1;
     CLOCK_SetRootClock(kCLOCK_Root_Bus_Lpsr, &rootCfg);
-#endif
 
     /* Configure SEMC using SYS_PLL2_PFD1_CLK */
 #ifndef SKIP_SEMC_INIT
@@ -417,24 +406,20 @@ void BOARD_BootClockRUN(void)
     rootCfg.div = 1;
     CLOCK_SetRootClock(kCLOCK_Root_Cssys, &rootCfg);
 
-    /* Configure CSTRACE using SYS_PLL2_CLK */
-    rootCfg.mux = kCLOCK_CSTRACE_ClockRoot_MuxSysPll2Out;
-    rootCfg.div = 4;
+    /* Configure CSTRACE using OSC_RC_48M_DIV2 */
+    rootCfg.mux = kCLOCK_CSTRACE_ClockRoot_MuxOscRc48MDiv2;
+    rootCfg.div = 1;
     CLOCK_SetRootClock(kCLOCK_Root_Cstrace, &rootCfg);
 
     /* Configure M4_SYSTICK using OSC_RC_48M_DIV2 */
-#if __CORTEX_M == 4
     rootCfg.mux = kCLOCK_M4_SYSTICK_ClockRoot_MuxOscRc48MDiv2;
     rootCfg.div = 1;
     CLOCK_SetRootClock(kCLOCK_Root_M4_Systick, &rootCfg);
-#endif
 
     /* Configure M7_SYSTICK using OSC_RC_48M_DIV2 */
-#if __CORTEX_M == 7
     rootCfg.mux = kCLOCK_M7_SYSTICK_ClockRoot_MuxOscRc48MDiv2;
-    rootCfg.div = 240;
+    rootCfg.div = 1;
     CLOCK_SetRootClock(kCLOCK_Root_M7_Systick, &rootCfg);
-#endif
 
     /* Configure ADC1 using OSC_RC_48M_DIV2 */
     rootCfg.mux = kCLOCK_ADC1_ClockRoot_MuxOscRc48MDiv2;
@@ -492,7 +477,7 @@ void BOARD_BootClockRUN(void)
     CLOCK_SetRootClock(kCLOCK_Root_Gpt6, &rootCfg);
 
     /* Configure FLEXSPI1 using OSC_RC_48M_DIV2 */
-#if !(defined(XIP_EXTERNAL_FLASH) && (XIP_EXTERNAL_FLASH == 1))
+#if !(defined(XIP_EXTERNAL_FLASH) && (XIP_EXTERNAL_FLASH == 1) || defined(FLEXSPI_IN_USE))
     rootCfg.mux = kCLOCK_FLEXSPI1_ClockRoot_MuxOscRc48MDiv2;
     rootCfg.div = 1;
     CLOCK_SetRootClock(kCLOCK_Root_Flexspi1, &rootCfg);
@@ -518,14 +503,14 @@ void BOARD_BootClockRUN(void)
     rootCfg.div = 1;
     CLOCK_SetRootClock(kCLOCK_Root_Can3, &rootCfg);
 
-    /* Configure LPUART1 using SYS_PLL2_CLK */
-    rootCfg.mux = kCLOCK_LPUART1_ClockRoot_MuxSysPll2Out;
-    rootCfg.div = 22;
+    /* Configure LPUART1 using OSC_RC_48M_DIV2 */
+    rootCfg.mux = kCLOCK_LPUART1_ClockRoot_MuxOscRc48MDiv2;
+    rootCfg.div = 1;
     CLOCK_SetRootClock(kCLOCK_Root_Lpuart1, &rootCfg);
 
-    /* Configure LPUART2 using SYS_PLL2_CLK */
-    rootCfg.mux = kCLOCK_LPUART2_ClockRoot_MuxSysPll2Out;
-    rootCfg.div = 22;
+    /* Configure LPUART2 using OSC_RC_48M_DIV2 */
+    rootCfg.mux = kCLOCK_LPUART2_ClockRoot_MuxOscRc48MDiv2;
+    rootCfg.div = 1;
     CLOCK_SetRootClock(kCLOCK_Root_Lpuart2, &rootCfg);
 
     /* Configure LPUART3 using OSC_RC_48M_DIV2 */
@@ -723,9 +708,9 @@ void BOARD_BootClockRUN(void)
     rootCfg.div = 1;
     CLOCK_SetRootClock(kCLOCK_Root_Sai4, &rootCfg);
 
-    /* Configure GC355 using PLL_VIDEO_CLK */
-    rootCfg.mux = kCLOCK_GC355_ClockRoot_MuxVideoPllOut;
-    rootCfg.div = 2;
+    /* Configure GC355 using OSC_RC_48M_DIV2 */
+    rootCfg.mux = kCLOCK_GC355_ClockRoot_MuxOscRc48MDiv2;
+    rootCfg.div = 1;
     CLOCK_SetRootClock(kCLOCK_Root_Gc355, &rootCfg);
 
     /* Configure LCDIF using OSC_RC_48M_DIV2 */
@@ -791,10 +776,12 @@ void BOARD_BootClockRUN(void)
 
     /* Set MQS configuration. */
     IOMUXC_MQSConfig(IOMUXC_GPR,kIOMUXC_MqsPwmOverSampleRate32, 0);
-    /* Set ENET Tx clock source. */
-    IOMUXC_GPR->GPR4 &= ~IOMUXC_GPR_GPR4_ENET_TX_CLK_SEL_MASK;
+    /* Set ENET Ref clock source. */
+    IOMUXC_GPR->GPR4 &= ~IOMUXC_GPR_GPR4_ENET_REF_CLK_DIR_MASK;
     /* Set ENET_1G Tx clock source. */
-    IOMUXC_GPR->GPR5 &= ~IOMUXC_GPR_GPR5_ENET1G_TX_CLK_SEL_MASK;
+    IOMUXC_GPR->GPR5 = ((IOMUXC_GPR->GPR5 & ~IOMUXC_GPR_GPR5_ENET1G_TX_CLK_SEL_MASK) | IOMUXC_GPR_GPR5_ENET1G_RGMII_EN_MASK);
+    /* Set ENET_1G Ref clock source. */
+    IOMUXC_GPR->GPR5 &= ~IOMUXC_GPR_GPR5_ENET1G_REF_CLK_DIR_MASK;
     /* Set GPT1 High frequency reference clock source. */
     IOMUXC_GPR->GPR22 &= ~IOMUXC_GPR_GPR22_REF_1M_CLK_GPT1_MASK;
     /* Set GPT2 High frequency reference clock source. */

@@ -7,7 +7,7 @@
 **     Compiler:            IAR ANSI C/C++ Compiler for ARM
 **     Reference manual:    IMXRT1170RM, Rev 1, 02/2021
 **     Version:             rev. 1.0, 2020-12-29
-**     Build:               b210402
+**     Build:               b210414
 **
 **     Abstract:
 **         Linker file for the IAR ANSI C/C++ Compiler for ARM
@@ -30,8 +30,8 @@ define symbol m_interrupts_end         = 0x202003FF;
 define symbol m_text_start             = 0x20200400;
 define symbol m_text_end               = 0x2021FFFF;
 
-define symbol m_data_start             = 0x20220000;
-define symbol m_data_end               = 0x2023FFFF;
+define symbol m_data_start             = 0x20000000;
+define symbol m_data_end               = 0x2001FFFF;
 
 define symbol m_ncache_start           = 0x20280000;
 define symbol m_ncache_end             = 0x202BFFFF;

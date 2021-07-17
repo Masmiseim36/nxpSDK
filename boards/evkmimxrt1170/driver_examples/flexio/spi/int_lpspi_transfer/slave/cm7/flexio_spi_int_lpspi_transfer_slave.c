@@ -17,23 +17,23 @@
  * Definitions
  ******************************************************************************/
 /*Master related*/
-#define TRANSFER_SIZE 256U        /*! Transfer dataSize */
+#define TRANSFER_SIZE     256U    /*! Transfer dataSize */
 #define TRANSFER_BAUDRATE 450000U /*! Transfer baudrate - 450k */
 
 #define MASTER_LPSPI_BASEADDR (LPSPI1)
-#define MASTER_LPSPI_IRQN (LPSPI1_IRQn)
+#define MASTER_LPSPI_IRQN     (LPSPI1_IRQn)
 
-#define MASTER_LPSPI_PCS_FOR_INIT (kLPSPI_Pcs0)
+#define MASTER_LPSPI_PCS_FOR_INIT     (kLPSPI_Pcs0)
 #define MASTER_LPSPI_PCS_FOR_TRANSFER (kLPSPI_MasterPcs0)
 
 #define MASTER_LPSPI_CLOCK_FREQUENCY (CLOCK_GetFreqFromObs(CCM_OBS_LPSPI1_CLK_ROOT))
 
 /*Slave related*/
 #define SLAVE_FLEXIO_SPI_BASEADDR (FLEXIO2)
-#define FLEXIO_SPI_SOUT_PIN 12U
-#define FLEXIO_SPI_SIN_PIN 11U
-#define FLEXIO_SPI_CLK_PIN 10U
-#define FLEXIO_SPI_PCS_PIN 13U
+#define FLEXIO_SPI_SOUT_PIN       12U
+#define FLEXIO_SPI_SIN_PIN        11U
+#define FLEXIO_SPI_CLK_PIN        10U
+#define FLEXIO_SPI_PCS_PIN        13U
 
 #define SLAVE_FLEXIO_SPI_IRQ FLEXIO2_IRQn
 
@@ -62,7 +62,6 @@ flexio_spi_slave_handle_t g_s_handle;
 
 volatile bool isSlaveTransferCompleted  = false;
 volatile bool isMasterTransferCompleted = false;
-bool isMasterIrqInIntmux                = false;
 
 /*******************************************************************************
  * Code
@@ -149,11 +148,20 @@ int main(void)
     FLEXIO_SPI_SlaveInit(&spiDev, &slaveConfig);
 
     /* Set slave interrupt priority higher. */
-    if (!isMasterIrqInIntmux)
+#if defined(__CORTEX_M) && (__CORTEX_M == 0U) && defined(FSL_FEATURE_NUMBER_OF_LEVEL1_INT_VECTORS) && \
+    (FSL_FEATURE_NUMBER_OF_LEVEL1_INT_VECTORS > 0)
+    if (SLAVE_FLEXIO_SPI_IRQ < FSL_FEATURE_NUMBER_OF_LEVEL1_INT_VECTORS)
+    {
+        NVIC_SetPriority(SLAVE_FLEXIO_SPI_IRQ, 0U);
+    }
+    if (MASTER_LPSPI_IRQN < FSL_FEATURE_NUMBER_OF_LEVEL1_INT_VECTORS)
     {
         NVIC_SetPriority(MASTER_LPSPI_IRQN, 1U);
     }
+#else
     NVIC_SetPriority(SLAVE_FLEXIO_SPI_IRQ, 0U);
+    NVIC_SetPriority(MASTER_LPSPI_IRQN, 1U);
+#endif
 
     /* Set up the transfer data */
     for (i = 0U; i < TRANSFER_SIZE; i++)

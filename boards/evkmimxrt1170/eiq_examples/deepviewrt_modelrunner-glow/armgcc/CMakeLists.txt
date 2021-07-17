@@ -1,6 +1,6 @@
 # CROSS COMPILER SETTING
 SET(CMAKE_SYSTEM_NAME Generic)
-CMAKE_MINIMUM_REQUIRED (VERSION 3.1.1)
+CMAKE_MINIMUM_REQUIRED (VERSION 3.10.0)
 
 # THE VERSION NUMBER
 SET (Tutorial_VERSION_MAJOR 1)
@@ -86,7 +86,7 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../devices/MIMXRT1176
     ${ProjDirPath}/../../../../../devices/MIMXRT1176/xip
     ${ProjDirPath}/../../../xip
-    ${ProjDirPath}/../../../../../CMSIS/Include
+    ${ProjDirPath}/../../../../../CMSIS/Core/Include
 )
 
 # include modules
@@ -144,6 +144,8 @@ include(component_serial_manager_uart_MIMXRT1176_cm7)
 
 include(driver_lpuart_MIMXRT1176_cm7)
 
+include(device_MIMXRT1176_CMSIS_MIMXRT1176_cm7)
+
 include(device_MIMXRT1176_startup_MIMXRT1176_cm7)
 
 include(driver_clock_MIMXRT1176_cm7)
@@ -154,11 +156,7 @@ include(driver_iomuxc_MIMXRT1176_cm7)
 
 include(driver_xip_device_MIMXRT1176_cm7)
 
-include(driver_xip_board_MIMXRT1176_cm7)
-
-include(device_MIMXRT1176_CMSIS_MIMXRT1176_cm7)
-
-include(CMSIS_Include_core_cm7_MIMXRT1176_cm7)
+include(driver_xip_board_evkmimxrt1170_MIMXRT1176_cm7)
 
 include(utility_assert_MIMXRT1176_cm7)
 
@@ -172,13 +170,13 @@ include(driver_mdio-common_MIMXRT1176_cm7)
 
 include(driver_anatop_ai_MIMXRT1176_cm7)
 
+include(CMSIS_Include_core_cm_MIMXRT1176_cm7)
+
+include(driver_memory_MIMXRT1176_cm7)
+
 include(device_MIMXRT1176_system_MIMXRT1176_cm7)
 
 include(utilities_misc_utilities_MIMXRT1176_cm7)
-
-include(CMSIS_Include_common_MIMXRT1176_cm7)
-
-include(CMSIS_Include_dsp_MIMXRT1176_cm7)
 
 
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--start-group)
@@ -191,13 +189,13 @@ target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE gcc)
 
 target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE nosys)
 
-if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/eiq/deepviewrt/lib/libdeepviewrt-cortex-m7f.a)
-endif()
+if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_sdram_release)
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/eiq/deepviewrt/lib/libdeepview-rt-cortex-m7f.a)
+endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_sdram_release)
 
-if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/eiq/deepviewrt/lib/libdeepviewrt-cortex-m7f.a)
-endif()
+if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_sdram_debug)
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/eiq/deepviewrt/lib/libdeepview-rt-cortex-m7f.a)
+endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_sdram_debug)
 
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--end-group)
 

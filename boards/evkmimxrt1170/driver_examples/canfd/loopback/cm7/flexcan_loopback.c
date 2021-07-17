@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2019 NXP
+ * Copyright 2016-2021 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -15,14 +15,12 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define EXAMPLE_CAN CAN3
-#define EXAMPLE_FLEXCAN_IRQn CAN3_IRQn
+#define EXAMPLE_CAN                CAN3
+#define EXAMPLE_FLEXCAN_IRQn       CAN3_IRQn
 #define EXAMPLE_FLEXCAN_IRQHandler CAN3_IRQHandler
-#define RX_MESSAGE_BUFFER_NUM (9)
-#define TX_MESSAGE_BUFFER_NUM (8)
-#define USE_IMPROVED_TIMING_CONFIG (1)
-#define DEMO_FORCE_CAN_SRC_OSC (1)
-#define USE_CANFD (1)
+#define RX_MESSAGE_BUFFER_NUM      (9)
+#define TX_MESSAGE_BUFFER_NUM      (8)
+#define USE_CANFD                  (1)
 /*
  *    DWORD_IN_MB    DLC    BYTES_IN_MB             Maximum MBs
  *    2              8      kFLEXCAN_8BperMB        64
@@ -34,7 +32,7 @@
  * and the Message Buffers are limited corresponding to each payload configuration:
  */
 #define DWORD_IN_MB (16)
-#define DLC (15)
+#define DLC         (15)
 #define BYTES_IN_MB kFLEXCAN_64BperMB
 
 /* Select OSC24Mhz as master flexcan clock source */
@@ -43,6 +41,8 @@
 #define FLEXCAN_CLOCK_SOURCE_DIVIDER (1U)
 /* Get frequency of flexcan clock */
 #define EXAMPLE_CAN_CLK_FREQ ((CLOCK_GetRootClockFreq(kCLOCK_Root_Can3) / 100000U) * 100000U)
+/* Set USE_IMPROVED_TIMING_CONFIG macro to use api to calculates the improved CAN / CAN FD timing values. */
+#define USE_IMPROVED_TIMING_CONFIG (1U)
 /* Fix MISRA_C-2012 Rule 17.7. */
 #define LOG_INFO (void)PRINTF
 /*******************************************************************************
@@ -136,8 +136,8 @@ int main(void)
     flexcan_timing_config_t timing_config;
     memset(&timing_config, 0, sizeof(flexcan_timing_config_t));
 #if (defined(USE_CANFD) && USE_CANFD)
-    if (FLEXCAN_FDCalculateImprovedTimingValues(flexcanConfig.baudRate, flexcanConfig.baudRateFD, EXAMPLE_CAN_CLK_FREQ,
-                                                &timing_config))
+    if (FLEXCAN_FDCalculateImprovedTimingValues(EXAMPLE_CAN, flexcanConfig.baudRate, flexcanConfig.baudRateFD,
+                                                EXAMPLE_CAN_CLK_FREQ, &timing_config))
     {
         /* Update the improved timing configuration*/
         memcpy(&(flexcanConfig.timingConfig), &timing_config, sizeof(flexcan_timing_config_t));
@@ -147,7 +147,8 @@ int main(void)
         LOG_INFO("No found Improved Timing Configuration. Just used default configuration\r\n\r\n");
     }
 #else
-    if (FLEXCAN_CalculateImprovedTimingValues(flexcanConfig.baudRate, EXAMPLE_CAN_CLK_FREQ, &timing_config))
+    if (FLEXCAN_CalculateImprovedTimingValues(EXAMPLE_CAN, flexcanConfig.baudRate, EXAMPLE_CAN_CLK_FREQ,
+                                              &timing_config))
     {
         /* Update the improved timing configuration*/
         memcpy(&(flexcanConfig.timingConfig), &timing_config, sizeof(flexcan_timing_config_t));

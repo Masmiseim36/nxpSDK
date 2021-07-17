@@ -1,6 +1,6 @@
 # CROSS COMPILER SETTING
 SET(CMAKE_SYSTEM_NAME Generic)
-CMAKE_MINIMUM_REQUIRED (VERSION 3.1.1)
+CMAKE_MINIMUM_REQUIRED (VERSION 3.10.0)
 
 # THE VERSION NUMBER
 SET (Tutorial_VERSION_MAJOR 1)
@@ -37,9 +37,10 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../FreeRTOSConfig.h"
 "${ProjDirPath}/../pin_mux.c"
 "${ProjDirPath}/../pin_mux.h"
+"${ProjDirPath}/../wifi_config.h"
 "${ProjDirPath}/../sdmmc_config.c"
 "${ProjDirPath}/../sdmmc_config.h"
-"${ProjDirPath}/../wifi_config.h"
+"${ProjDirPath}/../app_config.h"
 "${ProjDirPath}/../board.c"
 "${ProjDirPath}/../board.h"
 "${ProjDirPath}/../clock_config.c"
@@ -50,8 +51,6 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 )
 
 target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
-    ${ProjDirPath}/.. flexspi_nor_debug
-    ${ProjDirPath}/.. flexspi_nor_debug
     ${ProjDirPath}/..
     ${ProjDirPath}/../../../common/cm4
     ${ProjDirPath}/../../../..
@@ -65,13 +64,13 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../../devices/MIMXRT1176/drivers
     ${ProjDirPath}/../../../../../../middleware/sdmmc
     ${ProjDirPath}/../../../../../../devices/MIMXRT1176
-    ${ProjDirPath}/../../../../../../CMSIS/Include
     ${ProjDirPath}/../../../../../../components/uart
     ${ProjDirPath}/../../../../../../components/serial_manager
     ${ProjDirPath}/../../../../../../components/lists
     ${ProjDirPath}/../../../../../../devices/MIMXRT1176/xip
     ${ProjDirPath}/../../../../xip
     ${ProjDirPath}/../../../../../../devices/MIMXRT1176/drivers/cm4
+    ${ProjDirPath}/../../../../../../CMSIS/Core/Include
     ${ProjDirPath}/../../../../../../components/osa
 )
 
@@ -104,8 +103,6 @@ include(driver_common_MIMXRT1176_cm4)
 
 include(device_MIMXRT1176_CMSIS_MIMXRT1176_cm4)
 
-include(CMSIS_Include_core_cm4_MIMXRT1176_cm4)
-
 include(component_lpuart_adapter_MIMXRT1176_cm4)
 
 include(component_serial_manager_MIMXRT1176_cm4)
@@ -126,7 +123,7 @@ include(driver_igpio_MIMXRT1176_cm4)
 
 include(driver_xip_device_MIMXRT1176_cm4)
 
-include(driver_xip_board_MIMXRT1176_cm4)
+include(driver_xip_board_evkmimxrt1170_MIMXRT1176_cm4)
 
 include(driver_pmu_1_MIMXRT1176_cm4)
 
@@ -138,15 +135,17 @@ include(middleware_freertos-kernel_extension_MIMXRT1176_cm4)
 
 include(driver_anatop_ai_MIMXRT1176_cm4)
 
+include(CMSIS_Include_core_cm_MIMXRT1176_cm4)
+
+include(middleware_wifi_wifidriver_MIMXRT1176_cm4)
+
+include(driver_memory_MIMXRT1176_cm4)
+
 include(middleware_sdmmc_osa_freertos_MIMXRT1176_cm4)
 
 include(component_osa_free_rtos_MIMXRT1176_cm4)
 
 include(utilities_misc_utilities_MIMXRT1176_cm4)
-
-include(CMSIS_Include_common_MIMXRT1176_cm4)
-
-include(CMSIS_Include_dsp_MIMXRT1176_cm4)
 
 include(device_MIMXRT1176_system_MIMXRT1176_cm4)
 

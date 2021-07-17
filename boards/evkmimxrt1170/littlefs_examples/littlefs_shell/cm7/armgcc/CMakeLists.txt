@@ -1,6 +1,6 @@
 # CROSS COMPILER SETTING
 SET(CMAKE_SYSTEM_NAME Generic)
-CMAKE_MINIMUM_REQUIRED (VERSION 3.1.1)
+CMAKE_MINIMUM_REQUIRED (VERSION 3.10.0)
 
 # THE VERSION NUMBER
 SET (Tutorial_VERSION_MAJOR 1)
@@ -32,10 +32,10 @@ include(${ProjDirPath}/config.cmake)
 
 add_executable(${MCUX_SDK_PROJECT_NAME} 
 "${ProjDirPath}/../littlefs_shell.c"
+"${ProjDirPath}/../lfs_mflash.c"
+"${ProjDirPath}/../lfs_mflash.h"
 "${ProjDirPath}/../pin_mux.c"
 "${ProjDirPath}/../pin_mux.h"
-"${ProjDirPath}/../lfs_support.c"
-"${ProjDirPath}/../lfs_support.h"
 "${ProjDirPath}/../peripherals.c"
 "${ProjDirPath}/../peripherals.h"
 "${ProjDirPath}/../board.c"
@@ -44,6 +44,7 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../clock_config.h"
 "${ProjDirPath}/../dcd.c"
 "${ProjDirPath}/../dcd.h"
+"${ProjDirPath}/../evkmimxrt1170_connect_cm4_cm7side.jlinkscript"
 )
 
 target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
@@ -51,21 +52,27 @@ target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
 )
 
 set(CMAKE_MODULE_PATH
-    ${ProjDirPath}/../../../../../../devices/MIMXRT1176/drivers/cm7
+    ${ProjDirPath}/../../../../../../components/flash/mflash/mimxrt1170
+    ${ProjDirPath}/../../../../../../components/flash/mflash
     ${ProjDirPath}/../../../../../../devices/MIMXRT1176/drivers
+    ${ProjDirPath}/../../../../../../devices/MIMXRT1176/drivers/cm7
     ${ProjDirPath}/../../../../../../middleware/littlefs
     ${ProjDirPath}/../../../../../../devices/MIMXRT1176/utilities
     ${ProjDirPath}/../../../../../../devices/MIMXRT1176
-    ${ProjDirPath}/../../../../../../CMSIS/Include
     ${ProjDirPath}/../../../../../../components/uart
     ${ProjDirPath}/../../../../../../components/serial_manager
     ${ProjDirPath}/../../../../../../components/lists
+    ${ProjDirPath}/../../../../../../CMSIS/Core/Include
 )
 
 # include modules
-include(driver_cache_armv7_m7_MIMXRT1176_cm7)
+include(component_mflash_rt1170_MIMXRT1176_cm7)
+
+include(component_mflash_common_MIMXRT1176_cm7)
 
 include(driver_flexspi_MIMXRT1176_cm7)
+
+include(driver_cache_armv7_m7_MIMXRT1176_cm7)
 
 include(middleware_littlefs_MIMXRT1176_cm7)
 
@@ -76,8 +83,6 @@ include(driver_clock_MIMXRT1176_cm7)
 include(driver_common_MIMXRT1176_cm7)
 
 include(device_MIMXRT1176_CMSIS_MIMXRT1176_cm7)
-
-include(CMSIS_Include_core_cm7_MIMXRT1176_cm7)
 
 include(utility_debug_console_MIMXRT1176_cm7)
 
@@ -105,11 +110,9 @@ include(driver_dcdc_soc_MIMXRT1176_cm7)
 
 include(driver_anatop_ai_MIMXRT1176_cm7)
 
+include(CMSIS_Include_core_cm_MIMXRT1176_cm7)
+
 include(utilities_misc_utilities_MIMXRT1176_cm7)
-
-include(CMSIS_Include_common_MIMXRT1176_cm7)
-
-include(CMSIS_Include_dsp_MIMXRT1176_cm7)
 
 include(device_MIMXRT1176_system_MIMXRT1176_cm7)
 

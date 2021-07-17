@@ -43,7 +43,7 @@ Note that these steps assume you use the Azure IoT Hub for the first time.
    Find the primaryKey in the command result. It's the primary symmetric key, {MySymmetricKey}. Like:
      "authentication": {
          "symmetricKey": {
-             "primaryKey": "{MySymmetricKey}",
+             "primaryKey": {MySymmetricKey},
 
 9. Write the above device parameters into the source code, sample_config.h, in your project. Fill these three macros,
    HOST_NAME, DEVICE_ID, DEVICE_SAS.
@@ -53,7 +53,7 @@ Note that these steps assume you use the Azure IoT Hub for the first time.
    For example:
      #define HOST_NAME "test-hub.azure-devices.net"
      #define DEVICE_ID "test-dev"
-     #define DEVICE_SYMMETRIC_KEY ""
+     #define DEVICE_SYMMETRIC_KEY "d/UdrshSDtn+WtcCHlaZyDcqIlUj5FpN8xqewCp2XYk="
 
 10. Build the code and write it into the on-board Flash.
 
@@ -77,10 +77,10 @@ Note that these steps assume you use the Azure IoT Hub for the first time.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.9
-- Keil MDK  5.33
-- GCC ARM Embedded  9.3.1
-- MCUXpresso  11.3.1
+- IAR embedded Workbench  9.10.2
+- Keil MDK  5.34
+- GCC ARM Embedded  10.2.1
+- MCUXpresso  11.4.0
 
 Hardware requirements
 =====================
@@ -139,6 +139,18 @@ Telemetry message send: {"temperature":30}.
 Telemetry message send: {"temperature":30}.
 Telemetry message send: {"temperature":30}.
 Telemetry message send: {"temperature":30}.
+
+To read telemetry message from Azure IoT Hub, execute the command:
+
+> az iot hub monitor-events --hub-name {MyIoTHubName} --device-id {MyDeviceId}
+
+To read the device twin definition:
+
+> az iot hub device-twin show --hub-name {MyIoTHubName} --device-id {MyDeviceId}
+
+To invoke direct method on the device from the cloud:
+
+> az iot hub invoke-device-method --hub-name {MyIoTHubName} --device-id {MyDeviceId} --method-name getMaxMinReport
 
 Result
 1. If the serial port outputs a message which is similar to the following message, it confirms that the Azure Device Twin function is OK.

@@ -17,7 +17,7 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define EXAMPLE_DMA DMA1
+#define EXAMPLE_DMA    DMA1
 #define EXAMPLE_DMAMUX DMAMUX1
 #define BUFFER_LENGTH      8U
 #define HALF_BUFFER_LENGTH (BUFFER_LENGTH / 2U)

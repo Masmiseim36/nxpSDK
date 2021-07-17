@@ -1,5 +1,3 @@
-if(NOT MIDDLEWARE_MULTICORE_ERPC_DOC_MIMXRT1176_cm4_INCLUDED)
-    
-    set(MIDDLEWARE_MULTICORE_ERPC_DOC_MIMXRT1176_cm4_INCLUDED true CACHE BOOL "middleware_multicore_erpc_doc component is included.")
+include_guard(GLOBAL)
+message("middleware_multicore_erpc_doc component is included.")
 
-endif()

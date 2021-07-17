@@ -28,21 +28,19 @@
 #define DEMO_SAI_IRQ          SAI1_IRQn
 #define DEMO_SAITxIRQHandler  SAI1_IRQHandler
 #define DEMO_SAI_TX_SYNC_MODE kSAI_ModeAsync
-#define DEMO_SAI_MASTER_SLAVE kSAI_Master
+#define DEMO_SAI_MASTER_SLAVE kSAI_Slave
 
 #define DEMO_AUDIO_DATA_CHANNEL (2U)
 #define DEMO_AUDIO_BIT_WIDTH    kSAI_WordWidth16bits
 #define DEMO_AUDIO_SAMPLE_RATE  (kSAI_SampleRate16KHz)
-#define DEMO_AUDIO_MASTER_CLOCK DEMO_SAI_CLK_FREQ
+#define DEMO_AUDIO_MASTER_CLOCK 12288000U
 
-/* Select Audio/Video PLL (786.48 MHz) as sai1 clock source */
+/* Select Audio/Video PLL (384 MHz) as sai1 clock source */
 #define DEMO_SAI1_CLOCK_SOURCE_SELECT (2U)
 /* Clock pre divider for sai1 clock source */
 #define DEMO_SAI1_CLOCK_SOURCE_PRE_DIVIDER (1U)
 /* Clock divider for sai1 clock source */
 #define DEMO_SAI1_CLOCK_SOURCE_DIVIDER (63U)
-/* Get frequency of sai1 clock */
-#define DEMO_SAI_CLK_FREQ 24576000U
 
 /* I2C instance and clock */
 #define DEMO_I2C LPI2C1
@@ -88,21 +86,26 @@ wm8960_config_t wm8960Config = {
     .playSource       = kWM8960_PlaySourceDAC,
     .slaveAddress     = WM8960_I2C_ADDR,
     .bus              = kWM8960_BusI2S,
-    .format           = {.mclk_HZ    = 24576000U,
+    .format           = {.mclk_HZ    = 12000000U,
                .sampleRate = kWM8960_AudioSampleRate16KHz,
                .bitWidth   = kWM8960_AudioBitWidth16bit},
-    .master_slave     = false,
+    .master_slave     = true,
+    .masterClock =
+        {
+            .sysclkSource = kWM8960_SysClkSourceInternalPLL,
+            .sysclkFreq   = DEMO_AUDIO_MASTER_CLOCK,
+        },
 };
 codec_config_t boardCodecConfig = {.codecDevType = kCODEC_WM8960, .codecDevConfig = &wm8960Config};
 /*
  * AUDIO PLL setting: Frequency = Fref * (DIV_SELECT + NUM / DENOM) / (2^POST)
- *                              = 24 * (32 + 77/100)  / 2
- *                              = 393.24MHZ
+ *                              = 24 * (30 + 200/100)  / 2
+ *                              = 384 MHZ
  */
 const clock_audio_pll_config_t audioPllConfig = {
-    .loopDivider = 32,  /* PLL loop divider. Valid range for DIV_SELECT divider value: 27~54. */
+    .loopDivider = 30,  /* PLL loop divider. Valid range for DIV_SELECT divider value: 27~54. */
     .postDivider = 1,   /* Divider after the PLL, should only be 0, 1, 2, 3, 4, 5 */
-    .numerator   = 77,  /* 30 bit numerator of fractional loop divider. */
+    .numerator   = 200, /* 30 bit numerator of fractional loop divider. */
     .denominator = 100, /* 30 bit denominator of fractional loop divider */
 };
 AT_NONCACHEABLE_SECTION_INIT(sai_edma_handle_t txHandle) = {0};
@@ -176,10 +179,10 @@ int main(void)
 
     /*Clock setting for SAI1*/
     CLOCK_SetRootClockMux(kCLOCK_Root_Sai1, 4);
-    CLOCK_SetRootClockDiv(kCLOCK_Root_Sai1, 16);
+    CLOCK_SetRootClockDiv(kCLOCK_Root_Sai1, 32);
 
     CLOCK_SetRootClockMux(kCLOCK_Root_Mic, 6);
-    CLOCK_SetRootClockDiv(kCLOCK_Root_Mic, 16);
+    CLOCK_SetRootClockDiv(kCLOCK_Root_Mic, 32);
 
     /*Enable MCLK clock*/
     BOARD_EnableSaiMclkOutput(true);

@@ -16,10 +16,10 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_DAC12_BASE DAC
-#define DEMO_DAC12_IRQ_ID DAC_IRQn
+#define DEMO_DAC12_BASE         DAC
+#define DEMO_DAC12_IRQ_ID       DAC_IRQn
 #define DEMO_DAC12_HANDLER_FUNC DAC_IRQHandler
-#define DEMO_DAC12_VREF_SOURCE kDAC12_ReferenceVoltageSourceAlt2
+#define DEMO_DAC12_VREF_SOURCE  kDAC12_ReferenceVoltageSourceAlt2
 
 #define DEMO_DAC_VALUE_ARRAY_SIZE 32U
 

@@ -38,7 +38,7 @@ usb_device_endpoint_struct_t g_cdcVnicDicEp[USB_CDC_VNIC_ENDPOINT_DIC_COUNT] = {
     {USB_CDC_VNIC_BULK_OUT_ENDPOINT | (USB_OUT << 7U), USB_ENDPOINT_BULK, FS_CDC_VNIC_BULK_OUT_PACKET_SIZE, 0U}};
 
 /* Define interface for communication class */
-usb_device_interface_struct_t g_cdcVnicCommunicationInterface[] = {{0,
+usb_device_interface_struct_t g_cdcVnicCommunicationInterface[] = {{USB_CDC_VNIC_COMM_INTERFACE_ALTERNATE_0,
                                                                     {
                                                                         USB_CDC_VNIC_ENDPOINT_CIC_COUNT,
                                                                         g_cdcVnicCicEp,
@@ -46,7 +46,7 @@ usb_device_interface_struct_t g_cdcVnicCommunicationInterface[] = {{0,
                                                                     NULL}};
 
 /* Define interface for data class */
-usb_device_interface_struct_t g_cdcVnicDataInterface[] = {{0,
+usb_device_interface_struct_t g_cdcVnicDataInterface[] = {{USB_CDC_VNIC_DATA_INTERFACE_ALTERNATE_0,
                                                            {
                                                                USB_CDC_VNIC_ENDPOINT_DIC_COUNT,
                                                                g_cdcVnicDicEp,
@@ -145,7 +145,7 @@ uint8_t g_UsbDeviceConfigurationDescriptor[] = {
     USB_DEVICE_MAX_POWER,
 
     /* Communication Interface Descriptor */
-    USB_DESCRIPTOR_LENGTH_INTERFACE, USB_DESCRIPTOR_TYPE_INTERFACE, USB_CDC_VNIC_COMM_INTERFACE_INDEX, 0x00,
+    USB_DESCRIPTOR_LENGTH_INTERFACE, USB_DESCRIPTOR_TYPE_INTERFACE, USB_CDC_VNIC_COMM_INTERFACE_INDEX, USB_CDC_VNIC_COMM_INTERFACE_ALTERNATE_0,
     USB_CDC_VNIC_ENDPOINT_CIC_COUNT, USB_CDC_VNIC_CIC_CLASS, USB_CDC_VNIC_CIC_SUBCLASS, 0xFF,
     0x00, /* Interface Description String Index*/
 
@@ -177,7 +177,7 @@ uint8_t g_UsbDeviceConfigurationDescriptor[] = {
     USB_SHORT_GET_HIGH(FS_CDC_VNIC_INTERRUPT_IN_PACKET_SIZE), FS_CDC_VNIC_INTERRUPT_IN_INTERVAL,
 
     /* Data Interface Descriptor */
-    USB_DESCRIPTOR_LENGTH_INTERFACE, USB_DESCRIPTOR_TYPE_INTERFACE, USB_CDC_VNIC_DATA_INTERFACE_INDEX, 0x00,
+    USB_DESCRIPTOR_LENGTH_INTERFACE, USB_DESCRIPTOR_TYPE_INTERFACE, USB_CDC_VNIC_DATA_INTERFACE_INDEX, USB_CDC_VNIC_DATA_INTERFACE_ALTERNATE_0,
     USB_CDC_VNIC_ENDPOINT_DIC_COUNT, USB_CDC_VNIC_DIC_CLASS, USB_CDC_VNIC_DIC_SUBCLASS, USB_CDC_VNIC_DIC_PROTOCOL,
     0x00, /* Interface Description String Index*/
 

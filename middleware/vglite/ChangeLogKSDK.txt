@@ -2,7 +2,38 @@
 @page middleware_log Middleware Change Log
 
 @section vglite VGLite GPU Driver
-  The current version of the VGLite GPU Driver is 3.0.9_rev2.
+  The current version of the VGLite GPU Driver is 3.0.11_rev3.
+  - version 3.0.11_rev3
+    - Fixed:
+      - Fix async event reset after being initialized
+      - (IMX-2604) Fix polygon's rendering regression in multitasking scenarios
+      - Avoid "vg_lite_blit" modifying user's transformation matrix
+  - version 3.0.11_rev2
+    - Fixed:
+      - (MGG-685) Added workaround to improve "blit" output quality for RT500
+      - (MCUX-43004) Fixed clipping window regression issue introduced by VGLite 3.0.11.1
+      - (MGG-764) Fixed VGLite heap useless splitting of memory nodes
+      - (MGG-765) Fixed regression issue introduced by VGLite 3.0.11.1 when loading graphic resources using Elementary library
+      - (IMX-2506) Fixed "vg_lite_update_rad_grad" not checking the result of memory allocation
+      - (MCUX-42992) Fixed IAR toolchain not recognizing optimization directive
+      - (MGG-763) Remove risk of out-of-bounds read in "vg_lite_update_rad_grad" function
+    - Changed:
+      - (IMX-2527) Improved memory footprint by using a common tessellation buffer for all drawing tasks
+      - (MGG-712) Restructured OS abstraction layer to allow easier integration with popular OSes
+  - version 3.0.11_rev1
+    - Fixed:
+      - (IMX-2502) Fixed GPU command buffer overflow when copying context data
+      - (IMX-2503) Fixed additional colour ring incorrectly appearing at the edge of radial gradients
+      - (IMX-2487) Fixed risk of memory leak in "vg_lite_upload_path"
+      - (IMX-2429) Fixed incorrect blending of A4 and A8 images (regression since VGLite 3.0.4.x)
+      - (MGG-687) Fixed build warning when VG_RENDER_TEXT feature is disabled
+    - Changed:
+      - (IMX-2354) Added support for dynamic command buffer size management
+    - Added:
+      - (IMX-2435) Added new API function - vg_lite_get_transform_matrix - to calculate parameters for 2D perspective transformations
+      - (IMX-2411) Added support for radial gradients in Elementary library
+      - (IMX-2026) Added support for images embedded in EVO data in Elementary library
+      - (IMX-2026) Added support for patterns embedded in EVO data in Elementary library
   - version 3.0.9_rev2
     - Fixed:
       - (MCUX-40557) Fixed build warnings

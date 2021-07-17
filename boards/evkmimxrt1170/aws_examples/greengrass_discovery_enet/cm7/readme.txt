@@ -1,7 +1,7 @@
 Overview
 ========
 This example demonstrates how the board can discover Greengrass core and communicate with AWS IoT cloud through it.
-You will need device (A Mac, Windows PC, or UNIX-like system) for running AWS Greengrass. Example will connect to WiFi network, try to discover your AWS Greengrass device and send Hello World message to AWS IoT cloud through it.
+You will need device (A Mac, Windows PC, or UNIX-like system) for running AWS Greengrass. Example try to discover your AWS Greengrass device and send Hello World message to AWS IoT cloud through it.
 This demo needs network with internet access and opened 8883 and 8443 ports.
 
 
@@ -28,10 +28,10 @@ Before running the demo it is needed to configure AWS IoT Console, AWS Greengras
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.9
-- Keil MDK  5.33
-- GCC ARM Embedded  9.3.1
-- MCUXpresso  11.3.1
+- IAR embedded Workbench  9.10.2
+- Keil MDK  5.34
+- GCC ARM Embedded  10.2.1
+- MCUXpresso  11.4.0
 
 Hardware requirements
 =====================
@@ -99,39 +99,88 @@ You can check connection log in Greengrass device on path: /greengrass/ggc/var/l
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Initializing PHY...
-0 159 [Tmr Svc] Write certificate...
-1 468 [Tmr Svc] Device credential provisioning succeeded.
-2 2091 [Tmr Svc] Getting IP address from DHCP ...
-3 5091 [Tmr Svc] IPv4 Address: 192.168.2.102
-4 5091 [Tmr Svc] DHCP OK
-5 5094 [iot_thread] [INFO ][INIT][5094] SDK successfully initialized.
-6 5094 [iot_thread] [INFO ][DEMO][5094] Successfully initialized the demo. Network type for the demo: 4
-7 5094 [iot_thread] Attempting automated selection of Greengrass device
-8 16847 [iot_thread] About to close socket.
-9 16849 [iot_thread] Socket closed.
-10 16849 [iot_thread] Stack high watermark for discovery helper task: 1409.
-11 21021 [iot_thread] About to close socket.
-12 21024 [iot_thread] Socket closed.
-13 21024 [iot_thread] Stack high watermark for discovery helper task: 759.
-14 21024 [iot_thread] Greengrass device discovered.
-15 21024 [iot_thread] Establishing MQTT communication to Greengrass...
-16 25201 [iot_thread] [INFO ][MQTT][25201] Establishing new MQTT connection.
-17 25203 [iot_thread] [INFO ][MQTT][25203] Anonymous metrics (SDK language, SDK version) will be provided to AWS IoT. Recompile with AWS_IOT_MQTT_ENABLE_METRICS set to 0 to disable.
-18 25204 [iot_thread] [INFO ][MQTT][25204] (MQTT connection 2000c520, CONNECT operation 20006448) Waiting for operation completion.
-19 25207 [iot_thread] [INFO ][MQTT][25207] (MQTT connection 2000c520, CONNECT operation 20006448) Wait complete with result SUCCESS.
-20 25208 [iot_thread] [INFO ][MQTT][25208] New MQTT connection 2000b2a8 established.
-21 25209 [iot_thread] [INFO ][MQTT][25209] (MQTT connection 2000c520) MQTT PUBLISH operation queued.
-22 26709 [iot_thread] [INFO ][MQTT][26709] (MQTT connection 2000c520) MQTT PUBLISH operation queued.
-23 28209 [iot_thread] [INFO ][MQTT][28209] (MQTT connection 2000c520) MQTT PUBLISH operation queued.
-24 29709 [iot_thread] Disconnecting from broker.
-25 29709 [iot_thread] [INFO ][MQTT][29709] (MQTT connection 2000c520) Disconnecting connection.
-26 29709 [iot_thread] [INFO ][MQTT][29709] (MQTT connection 2000c520, DISCONNECT operation 2000c638) Waiting for operation completion.
-27 29710 [iot_thread] [INFO ][MQTT][29709] (MQTT connection 2000c520, DISCONNECT operation 2000c638) Wait complete with result SUCCESS.
-28 29711 [iot_thread] [INFO ][MQTT][29711] (MQTT connection 2000c520) Connection disconnected.
-29 29712 [iot_thread] [INFO ][MQTT][29712] (MQTT connection 2000c520) Network connection closed.
-30 29712 [iot_thread] [INFO ][MQTT][29712] (MQTT connection 2000c520) Network connection destroyed.
-31 29712 [iot_thread] Disconnected from the broker.
-32 29712 [iot_thread] Deleted Client.
-33 29714 [iot_thread] Heap low watermark: 11904. Stack high watermark: 759.
-34 29714 [iot_thread] ----Demo finished----
+0 172 [Tmr Svc] Write certificate...
+
+1 1815 [Tmr Svc] Getting IP address from DHCP ...
+
+2 2815 [Tmr Svc] IPv4 Address: 192.168.199.100
+
+3 2815 [Tmr Svc] DHCP OK
+
+4 2816 [iot_thread] [INFO ][DEMO][2816] ---------STARTING DEMO---------
+
+
+5 2818 [iot_thread] [INFO ][INIT][2818] SDK successfully initialized.
+
+6 2818 [iot_thread] [INFO ][DEMO][2818] Successfully initialized the demo. Network type for the demo: 4
+
+7 2818 [iot_thread] [INFO ][MQTT][2818] MQTT library successfully initialized.
+
+8 2818 [iot_thread] [INFO ][DEMO][2818] Attempting automated selection of Greengrass device
+
+
+9 4505 [iot_thread] JSON file retrieval completed
+
+10 4505 [iot_thread] About to close socket.
+
+11 4506 [iot_thread] Socket closed.
+
+12 4506 [iot_thread] Stack high watermark for discovery helper task: 1462.
+
+13 5215 [iot_thread] About to close socket.
+
+14 5217 [iot_thread] Socket closed.
+
+15 5217 [iot_thread] Stack high watermark for discovery helper task: 814.
+
+16 5217 [iot_thread] [INFO ][DEMO][5217] Greengrass device discovered.
+
+17 5217 [iot_thread] [INFO ][DEMO][5217] Attempting to establish MQTT connection to Greengrass.
+
+18 5935 [iot_thread] [INFO ][MQTT][5935] Establishing new MQTT connection.
+
+19 5937 [iot_thread] [INFO ][MQTT][5937] (MQTT connection 202d1828, CONNECT operation 202d18e8) Waiting for operation completion.
+
+20 6147 [NetRecv] [INFO] CONNACK session present bit not set.
+21 6147 [NetRecv] [INFO] Connection accepted.
+22 6148 [iot_thread] [INFO ][MQTT][6148] (MQTT connection 202d1828, CONNECT operation 202d18e8) Wait complete with result SUCCESS.
+
+23 6149 [iot_thread] [INFO ][MQTT][6149] New MQTT connection 202ce860 established.
+
+24 6150 [iot_thread] [INFO ][MQTT][6150] (MQTT connection 202d1828) MQTT PUBLISH operation queued.
+
+25 7651 [iot_thread] [INFO ][MQTT][7651] (MQTT connection 202d1828) MQTT PUBLISH operation queued.
+
+26 9152 [iot_thread] [INFO ][MQTT][9152] (MQTT connection 202d1828) MQTT PUBLISH operation queued.
+
+27 10652 [iot_thread] [INFO ][DEMO][10652] Disconnecting from broker.
+
+28 10652 [iot_thread] [INFO ][MQTT][10652] (MQTT connection 202d1828) Disconnecting connection.
+
+29 10653 [iot_thread] [INFO] Disconnected from the broker.
+30 10653 [iot_thread] [INFO ][MQTT][10653] (MQTT connection 202d1828) Network connection closed.
+
+31 10905 [iot_thread] [INFO ][MQTT][10905] (MQTT connection 202d1828) Network connection destroyed.
+
+32 10905 [iot_thread] [INFO ][DEMO][10905] Disconnected from the broker.
+
+33 10905 [iot_thread] Heap low watermark: 21784. Stack high watermark: 814.
+
+34 10905 [iot_thread] [INFO ][MQTT][10905] MQTT library cleanup done.
+
+35 10905 [iot_thread] [INFO ][DEMO][10905] Cleaned up MQTT library.
+
+36 10905 [iot_thread] [INFO ][DEMO][10905] memory_metrics::freertos_heap::before::bytes::72392
+
+37 10905 [iot_thread] [INFO ][DEMO][10905] memory_metrics::freertos_heap::after::bytes::21784
+
+38 10905 [iot_thread] [INFO ][DEMO][10905] memory_metrics::demo_task_stack::before::bytes::7856
+
+39 10905 [iot_thread] [INFO ][DEMO][10905] memory_metrics::demo_task_stack::after::bytes::3256
+
+40 11905 [iot_thread] [INFO ][DEMO][11905] Demo completed successfully.
+
+41 11906 [iot_thread] [INFO ][INIT][11906] SDK cleanup done.
+
+42 11906 [iot_thread] [INFO ][DEMO][11906] -------DEMO FINISHED----
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

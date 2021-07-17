@@ -21,5 +21,6 @@ var group__transport__setup =
     [ "erpc_transport_rpmsg_linux_deinit", "group__transport__setup.html#ga47ceb0fc19ed2d526711e5edb7857bfc", null ],
     [ "erpc_transport_tcp_init", "group__transport__setup.html#ga04d179a8f547f7f7924fd9a7ec9205aa", null ],
     [ "erpc_transport_tcp_close", "group__transport__setup.html#ga6a7cbe195e4275705c0e3ab5338c8664", null ],
-    [ "erpc_transport_usb_cdc_init", "group__transport__setup.html#ga34c5ca73771a6175e9ba1ffe40630879", null ]
+    [ "erpc_transport_usb_cdc_init", "group__transport__setup.html#ga34c5ca73771a6175e9ba1ffe40630879", null ],
+    [ "erpc_transport_i2c_slave_init", "group__transport__setup.html#ga1d9f98c8926f281f68dbeca9e21f5ba9", null ]
 ];

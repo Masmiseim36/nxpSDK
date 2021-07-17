@@ -31,8 +31,10 @@
 #define APP_FLEXRAM_ITCM_MAGIC_ADDR 0xA0
 
 /* OCRAM relocate definition */
-#define APP_OCRAM_SIZE             (512 * 1024U)
-#define APP_DTCM_ALLOCATE_BANK_NUM 2
+#define APP_OCRAM_SIZE              (512 * 1024U)
+#define APP_OCRAM_ALLOCATE_BANK_NUM 4
+#define APP_ITCM_ALLOCATE_BANK_NUM  8
+#define APP_DTCM_ALLOCATE_BANK_NUM  4
 
 /*
  * If cache is enabled, this example should maintain the cache to make sure
@@ -44,6 +46,7 @@
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
+static status_t OCRAM_Reallocate(void);
 static void OCRAM_Access(void);
 static void DTCM_Access(void);
 
@@ -109,6 +112,8 @@ int main(void)
 
     /* enable IRQ */
     EnableIRQ(APP_FLEXRAM_IRQ);
+    /* reallocate ram */
+    OCRAM_Reallocate();
     /* init flexram */
     FLEXRAM_Init(APP_FLEXRAM);
     /*test OCRAM access*/
@@ -121,6 +126,32 @@ int main(void)
     while (1)
     {
     }
+}
+
+static status_t OCRAM_Reallocate(void)
+{
+    flexram_allocate_ram_t ramAllocate = {
+        .ocramBankNum = APP_OCRAM_ALLOCATE_BANK_NUM,
+        .dtcmBankNum  = APP_DTCM_ALLOCATE_BANK_NUM,
+        .itcmBankNum  = APP_ITCM_ALLOCATE_BANK_NUM,
+    };
+
+    PRINTF("\r\nAllocate on-chip ram:\r\n");
+    PRINTF("\r\n   OCRAM bank numbers %d\r\n", ramAllocate.ocramBankNum);
+    PRINTF("\r\n   DTCM  bank numbers %d\r\n", ramAllocate.dtcmBankNum);
+    PRINTF("\r\n   ITCM  bank numbers %d\r\n", ramAllocate.itcmBankNum);
+
+    if (FLEXRAM_AllocateRam(&ramAllocate) != kStatus_Success)
+    {
+        PRINTF("\r\nAllocate on-chip ram fail\r\n");
+        return kStatus_Fail;
+    }
+    else
+    {
+        PRINTF("\r\nAllocate on-chip ram success\r\n");
+    }
+
+    return kStatus_Success;
 }
 
 static void OCRAM_Access(void)

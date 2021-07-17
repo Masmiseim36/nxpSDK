@@ -7,7 +7,7 @@
 **     Compiler:            GNU C Compiler
 **     Reference manual:    IMXRT1170RM, Rev 1, 02/2021
 **     Version:             rev. 1.0, 2020-12-29
-**     Build:               b210402
+**     Build:               b210416
 **
 **     Abstract:
 **         Linker file for the GNU C Compiler
@@ -30,7 +30,7 @@ ENTRY(Reset_Handler)
 HEAP_SIZE  = DEFINED(__heap_size__)  ? __heap_size__  : 0x0400;
 STACK_SIZE = DEFINED(__stack_size__) ? __stack_size__ : 0x800;
 VECTOR_RAM_SIZE = DEFINED(__ram_vector_table__) ? 0x00000400 : 0;
-NCACHE_HEAP_START = DEFINED(__heap_noncacheable__) ? 0x202C0000 - HEAP_SIZE : 0x20240000 - HEAP_SIZE;
+NCACHE_HEAP_START = DEFINED(__heap_noncacheable__) ? 0x202C0000 - HEAP_SIZE : 0x20020000 - HEAP_SIZE;
 NCACHE_HEAP_SIZE  = DEFINED(__heap_noncacheable__) ? HEAP_SIZE : 0x0000;
 
 /* Specify the memory areas */
@@ -41,7 +41,7 @@ MEMORY
   m_interrupts          (RX)  : ORIGIN = 0x08002000, LENGTH = 0x00000400
   m_text                (RX)  : ORIGIN = 0x08002400, LENGTH = 0x00FFDC00
   m_qacode              (RX)  : ORIGIN = 0x1FFE0000, LENGTH = 0x00020000
-  m_data                (RW)  : ORIGIN = 0x20220000, LENGTH = DEFINED(__heap_noncacheable__) ? 0x00020000 : 0x00020000 - HEAP_SIZE
+  m_data                (RW)  : ORIGIN = 0x20000000, LENGTH = DEFINED(__heap_noncacheable__) ? 0x00020000 : 0x00020000 - HEAP_SIZE
   m_ncache              (RW)  : ORIGIN = 0x20280000, LENGTH = DEFINED(__heap_noncacheable__) ? 0x00040000 - HEAP_SIZE : 0x00040000
   m_data2               (RW)  : ORIGIN = 0x20240000, LENGTH = 0x00040000
   m_heap                (RW)  : ORIGIN = NCACHE_HEAP_START, LENGTH = HEAP_SIZE

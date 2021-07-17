@@ -27,7 +27,7 @@
  ******************************************************************************/
 
 uint8_t g_currentConfigure = 0U;
-uint8_t g_interface[1U];
+uint8_t g_interface[USB_PHDC_WEIGHT_SCALE_INTERFACE_COUNT];
 /*! @brief USB device descriptor */
 USB_DMA_INIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE)
 uint8_t g_UsbDeviceDescriptor[] = {
@@ -89,7 +89,7 @@ uint8_t g_UsbDeviceConfigurationDescriptor[] = {
     USB_DESCRIPTOR_LENGTH_INTERFACE,       /* Size of this descriptor in bytes */
     USB_DESCRIPTOR_TYPE_INTERFACE,         /* INTERFACE Descriptor Type */
     USB_PHDC_WEIGHT_SCALE_INTERFACE_INDEX, /* Number of this interface. */
-    0x00U,                                 /* Value used to select this alternate setting
+    USB_PHDC_WEIGHT_SCALE_INTERFACE_ALTERNATE_0, /* Value used to select this alternate setting
                                               for the interface identified in the prior field */
     USB_PHDC_WEIGHT_SCALE_ENDPOINT_COUNT,  /* Number of endpoints used by this
                                               interface (excluding endpoint zero). */
@@ -311,7 +311,7 @@ usb_status_t USB_DeviceGetDescriptor(usb_device_handle handle,
 
                 if (USB_DEVICE_STRING_COUNT == languageIndex)
                 {
-                    error = kStatus_USB_InvalidRequest;
+                    return kStatus_USB_InvalidRequest;
                 }
                 *buffer = (uint8_t *)g_UsbDeviceLanguageList.languageList[languageId].string[languageIndex];
                 *length = g_UsbDeviceLanguageList.languageList[languageId].length[languageIndex];
@@ -386,8 +386,12 @@ usb_status_t USB_DeviceGetConfigure(usb_device_handle handle, uint8_t *configure
  */
 usb_status_t USB_DeviceSetInterface(usb_device_handle handle, uint8_t interface, uint8_t alternateSetting)
 {
-    g_interface[interface] = alternateSetting;
-    return USB_DeviceCallback(handle, kUSB_DeviceEventSetInterface, &interface);
+    if (interface < USB_PHDC_WEIGHT_SCALE_INTERFACE_COUNT)
+    {
+        g_interface[interface] = alternateSetting;
+        return USB_DeviceCallback(handle, kUSB_DeviceEventSetInterface, &interface);
+    }
+    return kStatus_USB_InvalidRequest;
 }
 
 /*!
@@ -403,8 +407,12 @@ usb_status_t USB_DeviceSetInterface(usb_device_handle handle, uint8_t interface,
  */
 usb_status_t USB_DeviceGetInterface(usb_device_handle handle, uint8_t interface, uint8_t *alternateSetting)
 {
-    *alternateSetting = g_interface[interface];
-    return kStatus_USB_Success;
+    if (interface < USB_PHDC_WEIGHT_SCALE_INTERFACE_COUNT)
+    {
+        *alternateSetting = g_interface[interface];
+        return kStatus_USB_Success;
+    }
+    return kStatus_USB_InvalidRequest;
 }
 
 /*!

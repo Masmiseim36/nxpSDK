@@ -21,9 +21,9 @@
  ******************************************************************************/
 /* SAI and I2C instance and clock */
 #define DEMO_CODEC_WM8960
-#define DEMO_I2C LPI2C5
+#define DEMO_I2C         LPI2C5
 #define DEMO_FLEXIO_BASE FLEXIO2
-#define DEMO_SAI SAI1
+#define DEMO_SAI         SAI1
 
 /* Get frequency of sai1 clock */
 #define DEMO_SAI_CLK_FREQ (CLOCK_GetFreqFromObs(CCM_OBS_PLL_AUDIO_OUT))
@@ -33,10 +33,10 @@
 
 #define DEMO_FLEXIO_CLK_FREQ (CLOCK_GetFreqFromObs(CCM_OBS_FLEXIO2_CLK_ROOT))
 
-#define BCLK_PIN (13U)
+#define BCLK_PIN       (13U)
 #define FRAME_SYNC_PIN (12U)
-#define TX_DATA_PIN (11U)
-#define RX_DATA_PIN (10U)
+#define TX_DATA_PIN    (11U)
+#define RX_DATA_PIN    (10U)
 #define OVER_SAMPLE_RATE (384)
 #define BUFFER_SIZE      (256)
 #define BUFFER_NUM       (4)

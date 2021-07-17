@@ -4,7 +4,7 @@
       <processor>MIMXRT1176xxxxx</processor>
       <package>MIMXRT1176DVMAA</package>
       <mcu_data>ksdk2_0</mcu_data>
-      <cores selected="cm7">
+      <cores selected="cm4">
          <core name="Cortex-M4F" id="cm4" description=""/>
          <core name="Cortex-M7F" id="cm7" description=""/>
       </cores>
@@ -456,7 +456,6 @@
                         <command type="nop"/>
                         <command type="nop"/>
                         <command type="write_value" address="SEMC_INTR" value="0x03" value_width="4"/>
-                        <command type="write_value" address="SEMC_DCCR" value="0x17" value_width="4"/>
                         <command type="nop"/>
                         <command type="write_value" address="SEMC_SDRAMCR3" value="0x21210409" value_width="4"/>
                      </commands>

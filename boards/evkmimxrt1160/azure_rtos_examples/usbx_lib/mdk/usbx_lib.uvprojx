@@ -348,9 +348,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>DEBUG, CPU_MIMXRT1166DVM6A_cm7, MIMXRT, UX_OTG_SUPPORT, TX_INCLUDE_USER_DEFINE_FILE, FX_INCLUDE_USER_DEFINE_FILE, NX_INCLUDE_USER_DEFINE_FILE, UX_INCLUDE_USER_DEFINE_FILE</Define>
+              <Define>DEBUG, CPU_MIMXRT1166DVM6A_cm7, MIMXRT, UX_OTG_SUPPORT, TX_INCLUDE_USER_DEFINE_FILE, FX_INCLUDE_USER_DEFINE_FILE, NX_INCLUDE_USER_DEFINE_FILE, UX_INCLUDE_USER_DEFINE_FILE, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>../../../../../rtos/azure-rtos/binary/threadx;../../../../../rtos/azure-rtos/binary/filex;../../../../../rtos/azure-rtos/binary/netxduo;../../../../../rtos/azure-rtos/binary/usbx;../../../../../rtos/azure-rtos/threadx/common/inc;../../../../../rtos/azure-rtos/filex/common/inc;../../../../../rtos/azure-rtos/netxduo/common/inc;../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc;../../../../../rtos/azure-rtos/netxduo/nx_secure/inc;../../../../../rtos/azure-rtos/netxduo/nx_secure/ports;../../../../../rtos/azure-rtos/usbx/common/core/inc;../../../../../rtos/azure-rtos/usbx/common/usbx_device_classes/inc;../../../../../rtos/azure-rtos/usbx/common/usbx_host_classes/inc;../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/inc;../../../../../rtos/azure-rtos/usbx/common/usbx_network/inc;../../../../../rtos/azure-rtos/usbx/common/usbx_pictbridge/inc;../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/inc;../../../../../rtos/azure-rtos/filex/ports/cortex_m7/ac6/inc;../../../../../rtos/azure-rtos/netxduo/ports/cortex_m7/ac6/inc;../../../../../rtos/azure-rtos/usbx/ports/cortex_m7/ac6/inc</IncludePath>
+              <IncludePath>..;../../../../../rtos/azure-rtos/threadx/common/inc;../../../../../rtos/azure-rtos/filex/common/inc;../../../../../rtos/azure-rtos/netxduo/common/inc;../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc;../../../../../rtos/azure-rtos/netxduo/nx_secure/inc;../../../../../rtos/azure-rtos/netxduo/nx_secure/ports;../../../../../rtos/azure-rtos/usbx/common/core/inc;../../../../../rtos/azure-rtos/usbx/common/usbx_device_classes/inc;../../../../../rtos/azure-rtos/usbx/common/usbx_host_classes/inc;../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/inc;../../../../../rtos/azure-rtos/usbx/common/usbx_network/inc;../../../../../rtos/azure-rtos/usbx/common/usbx_pictbridge/inc;../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/inc;../../../../../rtos/azure-rtos/filex/ports/cortex_m7/ac6/inc;../../../../../rtos/azure-rtos/netxduo/ports/cortex_m7/ac6/inc;../../../../../rtos/azure-rtos/usbx/ports/cortex_m7/ac6/inc</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -406,28 +406,38 @@
             <File>
               <FileName>tx_user.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/binary/threadx/tx_user.h</FilePath>
+              <FilePath>../tx_user.h</FilePath>
             </File>
             <File>
               <FileName>fx_user.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/binary/filex/fx_user.h</FilePath>
+              <FilePath>../fx_user.h</FilePath>
             </File>
             <File>
               <FileName>nx_user.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/binary/netxduo/nx_user.h</FilePath>
+              <FilePath>../nx_user.h</FilePath>
             </File>
             <File>
               <FileName>ux_user.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/binary/usbx/ux_user.h</FilePath>
+              <FilePath>../ux_user.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
           <GroupName>azure-rtos/threadx/common/inc</GroupName>
           <Files>
+            <File>
+              <FileName>tx_api.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/threadx/common/inc/tx_api.h</FilePath>
+            </File>
+            <File>
+              <FileName>tx_block_pool.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/threadx/common/inc/tx_block_pool.h</FilePath>
+            </File>
             <File>
               <FileName>tx_byte_pool.h</FileName>
               <FileType>5</FileType>
@@ -439,19 +449,9 @@
               <FilePath>../../../../../rtos/azure-rtos/threadx/common/inc/tx_event_flags.h</FilePath>
             </File>
             <File>
-              <FileName>tx_timer.h</FileName>
+              <FileName>tx_initialize.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/threadx/common/inc/tx_timer.h</FilePath>
-            </File>
-            <File>
-              <FileName>tx_queue.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/threadx/common/inc/tx_queue.h</FilePath>
-            </File>
-            <File>
-              <FileName>tx_thread.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/threadx/common/inc/tx_thread.h</FilePath>
+              <FilePath>../../../../../rtos/azure-rtos/threadx/common/inc/tx_initialize.h</FilePath>
             </File>
             <File>
               <FileName>tx_mutex.h</FileName>
@@ -459,34 +459,34 @@
               <FilePath>../../../../../rtos/azure-rtos/threadx/common/inc/tx_mutex.h</FilePath>
             </File>
             <File>
-              <FileName>tx_trace.h</FileName>
+              <FileName>tx_queue.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/threadx/common/inc/tx_trace.h</FilePath>
-            </File>
-            <File>
-              <FileName>tx_initialize.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/threadx/common/inc/tx_initialize.h</FilePath>
-            </File>
-            <File>
-              <FileName>tx_api.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/threadx/common/inc/tx_api.h</FilePath>
-            </File>
-            <File>
-              <FileName>tx_user_sample.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/threadx/common/inc/tx_user_sample.h</FilePath>
-            </File>
-            <File>
-              <FileName>tx_block_pool.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/threadx/common/inc/tx_block_pool.h</FilePath>
+              <FilePath>../../../../../rtos/azure-rtos/threadx/common/inc/tx_queue.h</FilePath>
             </File>
             <File>
               <FileName>tx_semaphore.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../rtos/azure-rtos/threadx/common/inc/tx_semaphore.h</FilePath>
+            </File>
+            <File>
+              <FileName>tx_thread.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/threadx/common/inc/tx_thread.h</FilePath>
+            </File>
+            <File>
+              <FileName>tx_timer.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/threadx/common/inc/tx_timer.h</FilePath>
+            </File>
+            <File>
+              <FileName>tx_trace.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/threadx/common/inc/tx_trace.h</FilePath>
+            </File>
+            <File>
+              <FileName>tx_user_sample.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/threadx/common/inc/tx_user_sample.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -494,39 +494,9 @@
           <GroupName>azure-rtos/filex/common/inc</GroupName>
           <Files>
             <File>
-              <FileName>fx_media.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/filex/common/inc/fx_media.h</FilePath>
-            </File>
-            <File>
-              <FileName>fx_unicode.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/filex/common/inc/fx_unicode.h</FilePath>
-            </File>
-            <File>
               <FileName>fx_api.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../rtos/azure-rtos/filex/common/inc/fx_api.h</FilePath>
-            </File>
-            <File>
-              <FileName>fx_directory_exFAT.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/filex/common/inc/fx_directory_exFAT.h</FilePath>
-            </File>
-            <File>
-              <FileName>fx_utility.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/filex/common/inc/fx_utility.h</FilePath>
-            </File>
-            <File>
-              <FileName>fx_file.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/filex/common/inc/fx_file.h</FilePath>
-            </File>
-            <File>
-              <FileName>fx_system.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/filex/common/inc/fx_system.h</FilePath>
             </File>
             <File>
               <FileName>fx_directory.h</FileName>
@@ -534,14 +504,44 @@
               <FilePath>../../../../../rtos/azure-rtos/filex/common/inc/fx_directory.h</FilePath>
             </File>
             <File>
-              <FileName>fx_user_sample.h</FileName>
+              <FileName>fx_directory_exFAT.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/filex/common/inc/fx_user_sample.h</FilePath>
+              <FilePath>../../../../../rtos/azure-rtos/filex/common/inc/fx_directory_exFAT.h</FilePath>
             </File>
             <File>
               <FileName>fx_fault_tolerant.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../rtos/azure-rtos/filex/common/inc/fx_fault_tolerant.h</FilePath>
+            </File>
+            <File>
+              <FileName>fx_file.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/filex/common/inc/fx_file.h</FilePath>
+            </File>
+            <File>
+              <FileName>fx_media.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/filex/common/inc/fx_media.h</FilePath>
+            </File>
+            <File>
+              <FileName>fx_system.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/filex/common/inc/fx_system.h</FilePath>
+            </File>
+            <File>
+              <FileName>fx_unicode.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/filex/common/inc/fx_unicode.h</FilePath>
+            </File>
+            <File>
+              <FileName>fx_user_sample.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/filex/common/inc/fx_user_sample.h</FilePath>
+            </File>
+            <File>
+              <FileName>fx_utility.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/filex/common/inc/fx_utility.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -549,54 +549,9 @@
           <GroupName>azure-rtos/netxduo/common/inc</GroupName>
           <Files>
             <File>
-              <FileName>nx_igmp.h</FileName>
+              <FileName>nx_api.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/netxduo/common/inc/nx_igmp.h</FilePath>
-            </File>
-            <File>
-              <FileName>nx_ipv4.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/netxduo/common/inc/nx_ipv4.h</FilePath>
-            </File>
-            <File>
-              <FileName>nx_packet.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/netxduo/common/inc/nx_packet.h</FilePath>
-            </File>
-            <File>
-              <FileName>nx_nd_cache.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/netxduo/common/inc/nx_nd_cache.h</FilePath>
-            </File>
-            <File>
-              <FileName>nx_md5.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/netxduo/common/inc/nx_md5.h</FilePath>
-            </File>
-            <File>
-              <FileName>nx_icmpv6.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/netxduo/common/inc/nx_icmpv6.h</FilePath>
-            </File>
-            <File>
-              <FileName>nx_icmp.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/netxduo/common/inc/nx_icmp.h</FilePath>
-            </File>
-            <File>
-              <FileName>nx_user_sample.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/netxduo/common/inc/nx_user_sample.h</FilePath>
-            </File>
-            <File>
-              <FileName>nx_tcp.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/netxduo/common/inc/nx_tcp.h</FilePath>
-            </File>
-            <File>
-              <FileName>nx_icmpv4.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/netxduo/common/inc/nx_icmpv4.h</FilePath>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/common/inc/nx_api.h</FilePath>
             </File>
             <File>
               <FileName>nx_arp.h</FileName>
@@ -604,29 +559,24 @@
               <FilePath>../../../../../rtos/azure-rtos/netxduo/common/inc/nx_arp.h</FilePath>
             </File>
             <File>
-              <FileName>nx_ipv6.h</FileName>
+              <FileName>nx_icmp.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/netxduo/common/inc/nx_ipv6.h</FilePath>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/common/inc/nx_icmp.h</FilePath>
             </File>
             <File>
-              <FileName>nx_system.h</FileName>
+              <FileName>nx_icmpv4.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/netxduo/common/inc/nx_system.h</FilePath>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/common/inc/nx_icmpv4.h</FilePath>
             </File>
             <File>
-              <FileName>nx_api.h</FileName>
+              <FileName>nx_icmpv6.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/netxduo/common/inc/nx_api.h</FilePath>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/common/inc/nx_icmpv6.h</FilePath>
             </File>
             <File>
-              <FileName>nx_rarp.h</FileName>
+              <FileName>nx_igmp.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/netxduo/common/inc/nx_rarp.h</FilePath>
-            </File>
-            <File>
-              <FileName>nx_mld.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/netxduo/common/inc/nx_mld.h</FilePath>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/common/inc/nx_igmp.h</FilePath>
             </File>
             <File>
               <FileName>nx_ip.h</FileName>
@@ -634,9 +584,59 @@
               <FilePath>../../../../../rtos/azure-rtos/netxduo/common/inc/nx_ip.h</FilePath>
             </File>
             <File>
+              <FileName>nx_ipv4.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/common/inc/nx_ipv4.h</FilePath>
+            </File>
+            <File>
+              <FileName>nx_ipv6.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/common/inc/nx_ipv6.h</FilePath>
+            </File>
+            <File>
+              <FileName>nx_md5.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/common/inc/nx_md5.h</FilePath>
+            </File>
+            <File>
+              <FileName>nx_mld.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/common/inc/nx_mld.h</FilePath>
+            </File>
+            <File>
+              <FileName>nx_nd_cache.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/common/inc/nx_nd_cache.h</FilePath>
+            </File>
+            <File>
+              <FileName>nx_packet.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/common/inc/nx_packet.h</FilePath>
+            </File>
+            <File>
+              <FileName>nx_rarp.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/common/inc/nx_rarp.h</FilePath>
+            </File>
+            <File>
+              <FileName>nx_system.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/common/inc/nx_system.h</FilePath>
+            </File>
+            <File>
+              <FileName>nx_tcp.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/common/inc/nx_tcp.h</FilePath>
+            </File>
+            <File>
               <FileName>nx_udp.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../rtos/azure-rtos/netxduo/common/inc/nx_udp.h</FilePath>
+            </File>
+            <File>
+              <FileName>nx_user_sample.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/common/inc/nx_user_sample.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -644,44 +644,19 @@
           <GroupName>azure-rtos/netxduo/crypto_libraries/inc</GroupName>
           <Files>
             <File>
-              <FileName>nx_crypto_sha1.h</FileName>
+              <FileName>nx_crypto.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_sha1.h</FilePath>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto.h</FilePath>
             </File>
             <File>
-              <FileName>nx_crypto_hmac_md5.h</FileName>
+              <FileName>nx_crypto_3des.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_hmac_md5.h</FilePath>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_3des.h</FilePath>
             </File>
             <File>
-              <FileName>nx_crypto_xcbc_mac.h</FileName>
+              <FileName>nx_crypto_aes.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_xcbc_mac.h</FilePath>
-            </File>
-            <File>
-              <FileName>nx_crypto_hmac.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_hmac.h</FilePath>
-            </File>
-            <File>
-              <FileName>nx_crypto_ccm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_ccm.h</FilePath>
-            </File>
-            <File>
-              <FileName>nx_crypto_dh.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_dh.h</FilePath>
-            </File>
-            <File>
-              <FileName>nx_crypto_tls_prf_1.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_tls_prf_1.h</FilePath>
-            </File>
-            <File>
-              <FileName>nx_crypto_const.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_const.h</FilePath>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_aes.h</FilePath>
             </File>
             <File>
               <FileName>nx_crypto_cbc.h</FileName>
@@ -689,34 +664,39 @@
               <FilePath>../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_cbc.h</FilePath>
             </File>
             <File>
+              <FileName>nx_crypto_ccm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_ccm.h</FilePath>
+            </File>
+            <File>
+              <FileName>nx_crypto_const.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_const.h</FilePath>
+            </File>
+            <File>
+              <FileName>nx_crypto_ctr.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_ctr.h</FilePath>
+            </File>
+            <File>
+              <FileName>nx_crypto_des.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_des.h</FilePath>
+            </File>
+            <File>
+              <FileName>nx_crypto_dh.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_dh.h</FilePath>
+            </File>
+            <File>
+              <FileName>nx_crypto_drbg.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_drbg.h</FilePath>
+            </File>
+            <File>
               <FileName>nx_crypto_ec.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_ec.h</FilePath>
-            </File>
-            <File>
-              <FileName>nx_crypto_md5.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_md5.h</FilePath>
-            </File>
-            <File>
-              <FileName>nx_crypto_tls_prf_sha384.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_tls_prf_sha384.h</FilePath>
-            </File>
-            <File>
-              <FileName>nx_crypto.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto.h</FilePath>
-            </File>
-            <File>
-              <FileName>nx_crypto_sha5.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_sha5.h</FilePath>
-            </File>
-            <File>
-              <FileName>nx_crypto_rsa.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_rsa.h</FilePath>
             </File>
             <File>
               <FileName>nx_crypto_ecdh.h</FileName>
@@ -729,34 +709,9 @@
               <FilePath>../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_ecdsa.h</FilePath>
             </File>
             <File>
-              <FileName>nx_crypto_hmac_sha2.h</FileName>
+              <FileName>nx_crypto_ecjpake.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_hmac_sha2.h</FilePath>
-            </File>
-            <File>
-              <FileName>nx_crypto_3des.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_3des.h</FilePath>
-            </File>
-            <File>
-              <FileName>nx_crypto_null.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_null.h</FilePath>
-            </File>
-            <File>
-              <FileName>nx_crypto_drbg.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_drbg.h</FilePath>
-            </File>
-            <File>
-              <FileName>nx_crypto_phash.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_phash.h</FilePath>
-            </File>
-            <File>
-              <FileName>nx_crypto_hmac_sha1.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_hmac_sha1.h</FilePath>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_ecjpake.h</FilePath>
             </File>
             <File>
               <FileName>nx_crypto_gcm.h</FileName>
@@ -764,29 +719,29 @@
               <FilePath>../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_gcm.h</FilePath>
             </File>
             <File>
-              <FileName>nx_crypto_tls_prf_sha256.h</FileName>
+              <FileName>nx_crypto_hkdf.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_tls_prf_sha256.h</FilePath>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_hkdf.h</FilePath>
             </File>
             <File>
-              <FileName>nx_crypto_sha2.h</FileName>
+              <FileName>nx_crypto_hmac.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_sha2.h</FilePath>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_hmac.h</FilePath>
             </File>
             <File>
-              <FileName>nx_crypto_pkcs1_v1.5.h</FileName>
+              <FileName>nx_crypto_hmac_md5.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_pkcs1_v1.5.h</FilePath>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_hmac_md5.h</FilePath>
             </File>
             <File>
-              <FileName>nx_crypto_tls_prf_sha512.h</FileName>
+              <FileName>nx_crypto_hmac_sha1.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_tls_prf_sha512.h</FilePath>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_hmac_sha1.h</FilePath>
             </File>
             <File>
-              <FileName>nx_crypto_huge_number.h</FileName>
+              <FileName>nx_crypto_hmac_sha2.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_huge_number.h</FilePath>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_hmac_sha2.h</FilePath>
             </File>
             <File>
               <FileName>nx_crypto_hmac_sha5.h</FileName>
@@ -794,24 +749,14 @@
               <FilePath>../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_hmac_sha5.h</FilePath>
             </File>
             <File>
-              <FileName>nx_crypto_ecjpake.h</FileName>
+              <FileName>nx_crypto_huge_number.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_ecjpake.h</FilePath>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_huge_number.h</FilePath>
             </File>
             <File>
-              <FileName>nx_crypto_des.h</FileName>
+              <FileName>nx_crypto_md5.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_des.h</FilePath>
-            </File>
-            <File>
-              <FileName>nx_crypto_ctr.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_ctr.h</FilePath>
-            </File>
-            <File>
-              <FileName>nx_crypto_aes.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_aes.h</FilePath>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_md5.h</FilePath>
             </File>
             <File>
               <FileName>nx_crypto_method_self_test.h</FileName>
@@ -819,9 +764,64 @@
               <FilePath>../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_method_self_test.h</FilePath>
             </File>
             <File>
-              <FileName>nx_crypto_hkdf.h</FileName>
+              <FileName>nx_crypto_null.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_hkdf.h</FilePath>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_null.h</FilePath>
+            </File>
+            <File>
+              <FileName>nx_crypto_phash.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_phash.h</FilePath>
+            </File>
+            <File>
+              <FileName>nx_crypto_pkcs1_v1.5.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_pkcs1_v1.5.h</FilePath>
+            </File>
+            <File>
+              <FileName>nx_crypto_rsa.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_rsa.h</FilePath>
+            </File>
+            <File>
+              <FileName>nx_crypto_sha1.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_sha1.h</FilePath>
+            </File>
+            <File>
+              <FileName>nx_crypto_sha2.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_sha2.h</FilePath>
+            </File>
+            <File>
+              <FileName>nx_crypto_sha5.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_sha5.h</FilePath>
+            </File>
+            <File>
+              <FileName>nx_crypto_tls_prf_1.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_tls_prf_1.h</FilePath>
+            </File>
+            <File>
+              <FileName>nx_crypto_tls_prf_sha256.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_tls_prf_sha256.h</FilePath>
+            </File>
+            <File>
+              <FileName>nx_crypto_tls_prf_sha384.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_tls_prf_sha384.h</FilePath>
+            </File>
+            <File>
+              <FileName>nx_crypto_tls_prf_sha512.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_tls_prf_sha512.h</FilePath>
+            </File>
+            <File>
+              <FileName>nx_crypto_xcbc_mac.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_xcbc_mac.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -829,14 +829,29 @@
           <GroupName>azure-rtos/netxduo/nx_secure/inc</GroupName>
           <Files>
             <File>
-              <FileName>nx_secure_tls_api.h</FileName>
+              <FileName>nx_secure_crypto_table_self_test.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/netxduo/nx_secure/inc/nx_secure_tls_api.h</FilePath>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/nx_secure/inc/nx_secure_crypto_table_self_test.h</FilePath>
+            </File>
+            <File>
+              <FileName>nx_secure_dtls.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/nx_secure/inc/nx_secure_dtls.h</FilePath>
             </File>
             <File>
               <FileName>nx_secure_dtls_api.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../rtos/azure-rtos/netxduo/nx_secure/inc/nx_secure_dtls_api.h</FilePath>
+            </File>
+            <File>
+              <FileName>nx_secure_tls.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/nx_secure/inc/nx_secure_tls.h</FilePath>
+            </File>
+            <File>
+              <FileName>nx_secure_tls_api.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/nx_secure/inc/nx_secure_tls_api.h</FilePath>
             </File>
             <File>
               <FileName>nx_secure_user_sample.h</FileName>
@@ -847,21 +862,6 @@
               <FileName>nx_secure_x509.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../rtos/azure-rtos/netxduo/nx_secure/inc/nx_secure_x509.h</FilePath>
-            </File>
-            <File>
-              <FileName>nx_secure_dtls.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/netxduo/nx_secure/inc/nx_secure_dtls.h</FilePath>
-            </File>
-            <File>
-              <FileName>nx_secure_crypto_table_self_test.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/netxduo/nx_secure/inc/nx_secure_crypto_table_self_test.h</FilePath>
-            </File>
-            <File>
-              <FileName>nx_secure_tls.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/netxduo/nx_secure/inc/nx_secure_tls.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -879,24 +879,9 @@
           <GroupName>azure-rtos/usbx/common/core/inc</GroupName>
           <Files>
             <File>
-              <FileName>ux_host_class_dpump.h</FileName>
+              <FileName>ux_api.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/core/inc/ux_host_class_dpump.h</FilePath>
-            </File>
-            <File>
-              <FileName>ux_device_class_dpump.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/core/inc/ux_device_class_dpump.h</FilePath>
-            </File>
-            <File>
-              <FileName>ux_utility.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/core/inc/ux_utility.h</FilePath>
-            </File>
-            <File>
-              <FileName>ux_hcd_sim_host.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/core/inc/ux_hcd_sim_host.h</FilePath>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/core/inc/ux_api.h</FilePath>
             </File>
             <File>
               <FileName>ux_dcd_sim_slave.h</FileName>
@@ -904,9 +889,24 @@
               <FilePath>../../../../../rtos/azure-rtos/usbx/common/core/inc/ux_dcd_sim_slave.h</FilePath>
             </File>
             <File>
+              <FileName>ux_device_class_dpump.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/core/inc/ux_device_class_dpump.h</FilePath>
+            </File>
+            <File>
               <FileName>ux_device_stack.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../rtos/azure-rtos/usbx/common/core/inc/ux_device_stack.h</FilePath>
+            </File>
+            <File>
+              <FileName>ux_hcd_sim_host.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/core/inc/ux_hcd_sim_host.h</FilePath>
+            </File>
+            <File>
+              <FileName>ux_host_class_dpump.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/core/inc/ux_host_class_dpump.h</FilePath>
             </File>
             <File>
               <FileName>ux_host_stack.h</FileName>
@@ -919,20 +919,60 @@
               <FilePath>../../../../../rtos/azure-rtos/usbx/common/core/inc/ux_system.h</FilePath>
             </File>
             <File>
-              <FileName>ux_api.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/core/inc/ux_api.h</FilePath>
-            </File>
-            <File>
               <FileName>ux_user_sample.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../rtos/azure-rtos/usbx/common/core/inc/ux_user_sample.h</FilePath>
+            </File>
+            <File>
+              <FileName>ux_utility.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/core/inc/ux_utility.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
           <GroupName>azure-rtos/usbx/common/usbx_device_classes/inc</GroupName>
           <Files>
+            <File>
+              <FileName>ux_device_class_audio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_device_classes/inc/ux_device_class_audio.h</FilePath>
+            </File>
+            <File>
+              <FileName>ux_device_class_audio10.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_device_classes/inc/ux_device_class_audio10.h</FilePath>
+            </File>
+            <File>
+              <FileName>ux_device_class_audio20.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_device_classes/inc/ux_device_class_audio20.h</FilePath>
+            </File>
+            <File>
+              <FileName>ux_device_class_cdc_acm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_device_classes/inc/ux_device_class_cdc_acm.h</FilePath>
+            </File>
+            <File>
+              <FileName>ux_device_class_cdc_ecm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_device_classes/inc/ux_device_class_cdc_ecm.h</FilePath>
+            </File>
+            <File>
+              <FileName>ux_device_class_dfu.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_device_classes/inc/ux_device_class_dfu.h</FilePath>
+            </File>
+            <File>
+              <FileName>ux_device_class_hid.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_device_classes/inc/ux_device_class_hid.h</FilePath>
+            </File>
+            <File>
+              <FileName>ux_device_class_pima.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_device_classes/inc/ux_device_class_pima.h</FilePath>
+            </File>
             <File>
               <FileName>ux_device_class_rndis.h</FileName>
               <FileType>5</FileType>
@@ -943,75 +983,15 @@
               <FileType>5</FileType>
               <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_device_classes/inc/ux_device_class_storage.h</FilePath>
             </File>
-            <File>
-              <FileName>ux_device_class_audio.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_device_classes/inc/ux_device_class_audio.h</FilePath>
-            </File>
-            <File>
-              <FileName>ux_device_class_cdc_ecm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_device_classes/inc/ux_device_class_cdc_ecm.h</FilePath>
-            </File>
-            <File>
-              <FileName>ux_device_class_pima.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_device_classes/inc/ux_device_class_pima.h</FilePath>
-            </File>
-            <File>
-              <FileName>ux_device_class_cdc_acm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_device_classes/inc/ux_device_class_cdc_acm.h</FilePath>
-            </File>
-            <File>
-              <FileName>ux_device_class_audio20.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_device_classes/inc/ux_device_class_audio20.h</FilePath>
-            </File>
-            <File>
-              <FileName>ux_device_class_audio10.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_device_classes/inc/ux_device_class_audio10.h</FilePath>
-            </File>
-            <File>
-              <FileName>ux_device_class_hid.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_device_classes/inc/ux_device_class_hid.h</FilePath>
-            </File>
-            <File>
-              <FileName>ux_device_class_dfu.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_device_classes/inc/ux_device_class_dfu.h</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>
           <GroupName>azure-rtos/usbx/common/usbx_host_classes/inc</GroupName>
           <Files>
             <File>
-              <FileName>ux_host_class_pima.h</FileName>
+              <FileName>ux_host_class_asix.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_classes/inc/ux_host_class_pima.h</FilePath>
-            </File>
-            <File>
-              <FileName>ux_host_class_cdc_acm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_classes/inc/ux_host_class_cdc_acm.h</FilePath>
-            </File>
-            <File>
-              <FileName>ux_host_class_hub.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_classes/inc/ux_host_class_hub.h</FilePath>
-            </File>
-            <File>
-              <FileName>ux_host_class_cdc_ecm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_classes/inc/ux_host_class_cdc_ecm.h</FilePath>
-            </File>
-            <File>
-              <FileName>ux_host_class_hid_keyboard.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_classes/inc/ux_host_class_hid_keyboard.h</FilePath>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_classes/inc/ux_host_class_asix.h</FilePath>
             </File>
             <File>
               <FileName>ux_host_class_audio.h</FileName>
@@ -1019,39 +999,14 @@
               <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_classes/inc/ux_host_class_audio.h</FilePath>
             </File>
             <File>
-              <FileName>ux_host_class_hid.h</FileName>
+              <FileName>ux_host_class_cdc_acm.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_classes/inc/ux_host_class_hid.h</FilePath>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_classes/inc/ux_host_class_cdc_acm.h</FilePath>
             </File>
             <File>
-              <FileName>ux_host_class_hid_mouse.h</FileName>
+              <FileName>ux_host_class_cdc_ecm.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_classes/inc/ux_host_class_hid_mouse.h</FilePath>
-            </File>
-            <File>
-              <FileName>ux_host_class_printer.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_classes/inc/ux_host_class_printer.h</FilePath>
-            </File>
-            <File>
-              <FileName>ux_host_class_swar.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_classes/inc/ux_host_class_swar.h</FilePath>
-            </File>
-            <File>
-              <FileName>ux_host_class_asix.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_classes/inc/ux_host_class_asix.h</FilePath>
-            </File>
-            <File>
-              <FileName>ux_host_class_video.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_classes/inc/ux_host_class_video.h</FilePath>
-            </File>
-            <File>
-              <FileName>ux_host_class_prolific.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_classes/inc/ux_host_class_prolific.h</FilePath>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_classes/inc/ux_host_class_cdc_ecm.h</FilePath>
             </File>
             <File>
               <FileName>ux_host_class_gser.h</FileName>
@@ -1059,14 +1014,59 @@
               <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_classes/inc/ux_host_class_gser.h</FilePath>
             </File>
             <File>
-              <FileName>ux_host_class_storage.h</FileName>
+              <FileName>ux_host_class_hid.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_classes/inc/ux_host_class_storage.h</FilePath>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_classes/inc/ux_host_class_hid.h</FilePath>
+            </File>
+            <File>
+              <FileName>ux_host_class_hid_keyboard.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_classes/inc/ux_host_class_hid_keyboard.h</FilePath>
+            </File>
+            <File>
+              <FileName>ux_host_class_hid_mouse.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_classes/inc/ux_host_class_hid_mouse.h</FilePath>
             </File>
             <File>
               <FileName>ux_host_class_hid_remote_control.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_classes/inc/ux_host_class_hid_remote_control.h</FilePath>
+            </File>
+            <File>
+              <FileName>ux_host_class_hub.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_classes/inc/ux_host_class_hub.h</FilePath>
+            </File>
+            <File>
+              <FileName>ux_host_class_pima.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_classes/inc/ux_host_class_pima.h</FilePath>
+            </File>
+            <File>
+              <FileName>ux_host_class_printer.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_classes/inc/ux_host_class_printer.h</FilePath>
+            </File>
+            <File>
+              <FileName>ux_host_class_prolific.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_classes/inc/ux_host_class_prolific.h</FilePath>
+            </File>
+            <File>
+              <FileName>ux_host_class_storage.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_classes/inc/ux_host_class_storage.h</FilePath>
+            </File>
+            <File>
+              <FileName>ux_host_class_swar.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_classes/inc/ux_host_class_swar.h</FilePath>
+            </File>
+            <File>
+              <FileName>ux_host_class_video.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_classes/inc/ux_host_class_video.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1074,14 +1074,14 @@
           <GroupName>azure-rtos/usbx/common/usbx_host_controllers/inc</GroupName>
           <Files>
             <File>
-              <FileName>ux_hcd_ohci.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/inc/ux_hcd_ohci.h</FilePath>
-            </File>
-            <File>
               <FileName>ux_hcd_ehci.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/inc/ux_hcd_ehci.h</FilePath>
+            </File>
+            <File>
+              <FileName>ux_hcd_ohci.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/inc/ux_hcd_ohci.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1149,354 +1149,9 @@
           <GroupName>azure-rtos/usbx/common/usbx_host_controllers/src</GroupName>
           <Files>
             <File>
-              <FileName>ux_hcd_ehci_ed_obtain.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_ed_obtain.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_hcd_ohci_port_disable.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ohci_port_disable.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_hcd_ohci_regular_td_obtain.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ohci_regular_td_obtain.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_hcd_ehci_port_resume.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_port_resume.c</FilePath>
-            </File>
-            <File>
               <FileName>ux_hcd_ehci_asynch_td_process.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_asynch_td_process.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_hcd_ehci_power_on_port.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_power_on_port.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_hcd_ohci_port_enable.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ohci_port_enable.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_hcd_ehci_endpoint_reset.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_endpoint_reset.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_hcd_ehci_request_control_transfer.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_request_control_transfer.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_hcd_ohci_controller_disable.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ohci_controller_disable.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_hcd_ehci_interrupt_handler.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_interrupt_handler.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_hcd_ehci_port_suspend.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_port_suspend.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_hcd_ohci_periodic_endpoint_destroy.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ohci_periodic_endpoint_destroy.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_hcd_ohci_endpoint_error_clear.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ohci_endpoint_error_clear.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_hcd_ehci_port_reset.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_port_reset.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_hcd_ehci_isochronous_endpoint_create.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_isochronous_endpoint_create.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_hcd_ohci_request_isochronous_transfer.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ohci_request_isochronous_transfer.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_hcd_ehci_regular_td_obtain.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_regular_td_obtain.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_hcd_ohci_asynchronous_endpoint_create.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ohci_asynchronous_endpoint_create.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_hcd_ohci_port_resume.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ohci_port_resume.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_hcd_ehci_request_interrupt_transfer.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_request_interrupt_transfer.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_hcd_ohci_done_queue_process.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ohci_done_queue_process.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_hcd_ohci_isochronous_td_obtain.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ohci_isochronous_td_obtain.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_hcd_ohci_register_read.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ohci_register_read.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_hcd_ehci_fsisochronous_tds_process.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_fsisochronous_tds_process.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_hcd_ohci_request_control_transfer.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ohci_request_control_transfer.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_hcd_ohci_frame_number_get.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ohci_frame_number_get.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_hcd_ehci_least_traffic_list_get.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_least_traffic_list_get.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_hcd_ohci_interrupt_endpoint_create.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ohci_interrupt_endpoint_create.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_hcd_ehci_asynchronous_endpoint_destroy.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_asynchronous_endpoint_destroy.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_hcd_ohci_periodic_tree_create.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ohci_periodic_tree_create.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_hcd_ehci_done_queue_process.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_done_queue_process.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_hcd_ehci_isochronous_endpoint_destroy.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_isochronous_endpoint_destroy.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_hcd_ehci_hsisochronous_tds_process.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_hsisochronous_tds_process.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_hcd_ohci_initialize.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ohci_initialize.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_hcd_ehci_request_isochronous_transfer.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_request_isochronous_transfer.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_hcd_ohci_register_write.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ohci_register_write.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_hcd_ohci_frame_number_set.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ohci_frame_number_set.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_hcd_ohci_least_traffic_list_get.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ohci_least_traffic_list_get.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_hcd_ohci_request_transfer.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ohci_request_transfer.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_hcd_ehci_fsisochronous_td_obtain.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_fsisochronous_td_obtain.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_hcd_ohci_request_interupt_transfer.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ohci_request_interupt_transfer.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_hcd_ehci_transfer_abort.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_transfer_abort.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_hcd_ehci_port_status_get.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_port_status_get.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_hcd_ohci_transfer_request_process.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ohci_transfer_request_process.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_hcd_ohci_power_root_hubs.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ohci_power_root_hubs.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_hcd_ehci_ed_clean.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_ed_clean.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_hcd_ohci_transfer_abort.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ohci_transfer_abort.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_hcd_ohci_asynchronous_endpoint_destroy.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ohci_asynchronous_endpoint_destroy.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_hcd_ehci_initialize.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_initialize.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_hcd_ohci_endpoint_reset.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ohci_endpoint_reset.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_hcd_ehci_frame_number_get.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_frame_number_get.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_hcd_ohci_next_td_clean.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ohci_next_td_clean.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_hcd_ehci_register_write.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_register_write.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_hcd_ohci_ed_obtain.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ohci_ed_obtain.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_hcd_ehci_controller_disable.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_controller_disable.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_hcd_ehci_request_bulk_transfer.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_request_bulk_transfer.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_hcd_ehci_request_transfer_add.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_request_transfer_add.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_hcd_ohci_port_status_get.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ohci_port_status_get.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_hcd_ehci_interrupt_endpoint_create.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_interrupt_endpoint_create.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_hcd_ehci_port_disable.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_port_disable.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_hcd_ohci_port_suspend.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ohci_port_suspend.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_hcd_ohci_request_bulk_transfer.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ohci_request_bulk_transfer.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_hcd_ehci_poll_rate_entry_get.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_poll_rate_entry_get.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_hcd_ohci_port_reset.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ohci_port_reset.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_hcd_ehci_register_read.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_register_read.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_hcd_ohci_isochronous_endpoint_create.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ohci_isochronous_endpoint_create.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_hcd_ehci_interrupt_endpoint_destroy.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_interrupt_endpoint_destroy.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_hcd_ehci_hsisochronous_td_obtain.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_hsisochronous_td_obtain.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_hcd_ehci_request_transfer.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_request_transfer.c</FilePath>
             </File>
             <File>
               <FileName>ux_hcd_ehci_asynchronous_endpoint_create.c</FileName>
@@ -1504,34 +1159,19 @@
               <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_asynchronous_endpoint_create.c</FilePath>
             </File>
             <File>
-              <FileName>ux_hcd_ehci_power_down_port.c</FileName>
+              <FileName>ux_hcd_ehci_asynchronous_endpoint_destroy.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_power_down_port.c</FilePath>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_asynchronous_endpoint_destroy.c</FilePath>
             </File>
             <File>
-              <FileName>ux_hcd_ehci_entry.c</FileName>
+              <FileName>ux_hcd_ehci_controller_disable.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_entry.c</FilePath>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_controller_disable.c</FilePath>
             </File>
             <File>
-              <FileName>ux_hcd_ohci_entry.c</FileName>
+              <FileName>ux_hcd_ehci_done_queue_process.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ohci_entry.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_hcd_ohci_power_down_port.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ohci_power_down_port.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_hcd_ehci_periodic_descriptor_link.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_periodic_descriptor_link.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_hcd_ehci_transfer_request_process.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_transfer_request_process.c</FilePath>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_done_queue_process.c</FilePath>
             </File>
             <File>
               <FileName>ux_hcd_ehci_door_bell_wait.c</FileName>
@@ -1539,19 +1179,29 @@
               <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_door_bell_wait.c</FilePath>
             </File>
             <File>
-              <FileName>ux_hcd_ehci_next_td_clean.c</FileName>
+              <FileName>ux_hcd_ehci_ed_clean.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_next_td_clean.c</FilePath>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_ed_clean.c</FilePath>
             </File>
             <File>
-              <FileName>ux_hcd_ehci_periodic_tree_create.c</FileName>
+              <FileName>ux_hcd_ehci_ed_obtain.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_periodic_tree_create.c</FilePath>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_ed_obtain.c</FilePath>
             </File>
             <File>
-              <FileName>ux_hcd_ehci_power_root_hubs.c</FileName>
+              <FileName>ux_hcd_ehci_endpoint_reset.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_power_root_hubs.c</FilePath>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_endpoint_reset.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_hcd_ehci_entry.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_entry.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_hcd_ehci_frame_number_get.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_frame_number_get.c</FilePath>
             </File>
             <File>
               <FileName>ux_hcd_ehci_frame_number_set.c</FileName>
@@ -1559,14 +1209,364 @@
               <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_frame_number_set.c</FilePath>
             </File>
             <File>
-              <FileName>ux_hcd_ohci_power_on_port.c</FileName>
+              <FileName>ux_hcd_ehci_fsisochronous_td_obtain.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ohci_power_on_port.c</FilePath>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_fsisochronous_td_obtain.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_hcd_ehci_fsisochronous_tds_process.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_fsisochronous_tds_process.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_hcd_ehci_hsisochronous_td_obtain.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_hsisochronous_td_obtain.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_hcd_ehci_hsisochronous_tds_process.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_hsisochronous_tds_process.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_hcd_ehci_initialize.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_initialize.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_hcd_ehci_interrupt_endpoint_create.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_interrupt_endpoint_create.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_hcd_ehci_interrupt_endpoint_destroy.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_interrupt_endpoint_destroy.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_hcd_ehci_interrupt_handler.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_interrupt_handler.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_hcd_ehci_isochronous_endpoint_create.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_isochronous_endpoint_create.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_hcd_ehci_isochronous_endpoint_destroy.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_isochronous_endpoint_destroy.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_hcd_ehci_least_traffic_list_get.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_least_traffic_list_get.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_hcd_ehci_next_td_clean.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_next_td_clean.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_hcd_ehci_periodic_descriptor_link.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_periodic_descriptor_link.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_hcd_ehci_periodic_tree_create.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_periodic_tree_create.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_hcd_ehci_poll_rate_entry_get.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_poll_rate_entry_get.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_hcd_ehci_port_disable.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_port_disable.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_hcd_ehci_port_reset.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_port_reset.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_hcd_ehci_port_resume.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_port_resume.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_hcd_ehci_port_status_get.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_port_status_get.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_hcd_ehci_port_suspend.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_port_suspend.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_hcd_ehci_power_down_port.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_power_down_port.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_hcd_ehci_power_on_port.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_power_on_port.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_hcd_ehci_power_root_hubs.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_power_root_hubs.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_hcd_ehci_register_read.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_register_read.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_hcd_ehci_register_write.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_register_write.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_hcd_ehci_regular_td_obtain.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_regular_td_obtain.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_hcd_ehci_request_bulk_transfer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_request_bulk_transfer.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_hcd_ehci_request_control_transfer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_request_control_transfer.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_hcd_ehci_request_interrupt_transfer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_request_interrupt_transfer.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_hcd_ehci_request_isochronous_transfer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_request_isochronous_transfer.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_hcd_ehci_request_transfer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_request_transfer.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_hcd_ehci_request_transfer_add.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_request_transfer_add.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_hcd_ehci_transfer_abort.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_transfer_abort.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_hcd_ehci_transfer_request_process.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_transfer_request_process.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_hcd_ohci_asynchronous_endpoint_create.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ohci_asynchronous_endpoint_create.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_hcd_ohci_asynchronous_endpoint_destroy.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ohci_asynchronous_endpoint_destroy.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_hcd_ohci_controller_disable.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ohci_controller_disable.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_hcd_ohci_done_queue_process.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ohci_done_queue_process.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_hcd_ohci_ed_obtain.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ohci_ed_obtain.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_hcd_ohci_endpoint_error_clear.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ohci_endpoint_error_clear.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_hcd_ohci_endpoint_reset.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ohci_endpoint_reset.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_hcd_ohci_entry.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ohci_entry.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_hcd_ohci_frame_number_get.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ohci_frame_number_get.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_hcd_ohci_frame_number_set.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ohci_frame_number_set.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_hcd_ohci_initialize.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ohci_initialize.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_hcd_ohci_interrupt_endpoint_create.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ohci_interrupt_endpoint_create.c</FilePath>
             </File>
             <File>
               <FileName>ux_hcd_ohci_interrupt_handler.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ohci_interrupt_handler.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_hcd_ohci_isochronous_endpoint_create.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ohci_isochronous_endpoint_create.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_hcd_ohci_isochronous_td_obtain.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ohci_isochronous_td_obtain.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_hcd_ohci_least_traffic_list_get.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ohci_least_traffic_list_get.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_hcd_ohci_next_td_clean.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ohci_next_td_clean.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_hcd_ohci_periodic_endpoint_destroy.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ohci_periodic_endpoint_destroy.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_hcd_ohci_periodic_tree_create.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ohci_periodic_tree_create.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_hcd_ohci_port_disable.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ohci_port_disable.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_hcd_ohci_port_enable.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ohci_port_enable.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_hcd_ohci_port_reset.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ohci_port_reset.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_hcd_ohci_port_resume.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ohci_port_resume.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_hcd_ohci_port_status_get.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ohci_port_status_get.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_hcd_ohci_port_suspend.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ohci_port_suspend.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_hcd_ohci_power_down_port.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ohci_power_down_port.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_hcd_ohci_power_on_port.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ohci_power_on_port.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_hcd_ohci_power_root_hubs.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ohci_power_root_hubs.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_hcd_ohci_register_read.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ohci_register_read.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_hcd_ohci_register_write.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ohci_register_write.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_hcd_ohci_regular_td_obtain.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ohci_regular_td_obtain.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_hcd_ohci_request_bulk_transfer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ohci_request_bulk_transfer.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_hcd_ohci_request_control_transfer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ohci_request_control_transfer.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_hcd_ohci_request_interupt_transfer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ohci_request_interupt_transfer.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_hcd_ohci_request_isochronous_transfer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ohci_request_isochronous_transfer.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_hcd_ohci_request_transfer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ohci_request_transfer.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_hcd_ohci_transfer_abort.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ohci_transfer_abort.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_hcd_ohci_transfer_request_process.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ohci_transfer_request_process.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1977,9 +1977,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>NDEBUG, CPU_MIMXRT1166DVM6A_cm7, MIMXRT, UX_OTG_SUPPORT, TX_INCLUDE_USER_DEFINE_FILE, FX_INCLUDE_USER_DEFINE_FILE, NX_INCLUDE_USER_DEFINE_FILE, UX_INCLUDE_USER_DEFINE_FILE</Define>
+              <Define>NDEBUG, CPU_MIMXRT1166DVM6A_cm7, MIMXRT, UX_OTG_SUPPORT, TX_INCLUDE_USER_DEFINE_FILE, FX_INCLUDE_USER_DEFINE_FILE, NX_INCLUDE_USER_DEFINE_FILE, UX_INCLUDE_USER_DEFINE_FILE, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>../../../../../rtos/azure-rtos/binary/threadx;../../../../../rtos/azure-rtos/binary/filex;../../../../../rtos/azure-rtos/binary/netxduo;../../../../../rtos/azure-rtos/binary/usbx;../../../../../rtos/azure-rtos/threadx/common/inc;../../../../../rtos/azure-rtos/filex/common/inc;../../../../../rtos/azure-rtos/netxduo/common/inc;../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc;../../../../../rtos/azure-rtos/netxduo/nx_secure/inc;../../../../../rtos/azure-rtos/netxduo/nx_secure/ports;../../../../../rtos/azure-rtos/usbx/common/core/inc;../../../../../rtos/azure-rtos/usbx/common/usbx_device_classes/inc;../../../../../rtos/azure-rtos/usbx/common/usbx_host_classes/inc;../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/inc;../../../../../rtos/azure-rtos/usbx/common/usbx_network/inc;../../../../../rtos/azure-rtos/usbx/common/usbx_pictbridge/inc;../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/inc;../../../../../rtos/azure-rtos/filex/ports/cortex_m7/ac6/inc;../../../../../rtos/azure-rtos/netxduo/ports/cortex_m7/ac6/inc;../../../../../rtos/azure-rtos/usbx/ports/cortex_m7/ac6/inc</IncludePath>
+              <IncludePath>..;../../../../../rtos/azure-rtos/threadx/common/inc;../../../../../rtos/azure-rtos/filex/common/inc;../../../../../rtos/azure-rtos/netxduo/common/inc;../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc;../../../../../rtos/azure-rtos/netxduo/nx_secure/inc;../../../../../rtos/azure-rtos/netxduo/nx_secure/ports;../../../../../rtos/azure-rtos/usbx/common/core/inc;../../../../../rtos/azure-rtos/usbx/common/usbx_device_classes/inc;../../../../../rtos/azure-rtos/usbx/common/usbx_host_classes/inc;../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/inc;../../../../../rtos/azure-rtos/usbx/common/usbx_network/inc;../../../../../rtos/azure-rtos/usbx/common/usbx_pictbridge/inc;../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/inc;../../../../../rtos/azure-rtos/filex/ports/cortex_m7/ac6/inc;../../../../../rtos/azure-rtos/netxduo/ports/cortex_m7/ac6/inc;../../../../../rtos/azure-rtos/usbx/ports/cortex_m7/ac6/inc</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2035,28 +2035,38 @@
             <File>
               <FileName>tx_user.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/binary/threadx/tx_user.h</FilePath>
+              <FilePath>../tx_user.h</FilePath>
             </File>
             <File>
               <FileName>fx_user.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/binary/filex/fx_user.h</FilePath>
+              <FilePath>../fx_user.h</FilePath>
             </File>
             <File>
               <FileName>nx_user.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/binary/netxduo/nx_user.h</FilePath>
+              <FilePath>../nx_user.h</FilePath>
             </File>
             <File>
               <FileName>ux_user.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/binary/usbx/ux_user.h</FilePath>
+              <FilePath>../ux_user.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
           <GroupName>azure-rtos/threadx/common/inc</GroupName>
           <Files>
+            <File>
+              <FileName>tx_api.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/threadx/common/inc/tx_api.h</FilePath>
+            </File>
+            <File>
+              <FileName>tx_block_pool.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/threadx/common/inc/tx_block_pool.h</FilePath>
+            </File>
             <File>
               <FileName>tx_byte_pool.h</FileName>
               <FileType>5</FileType>
@@ -2068,19 +2078,9 @@
               <FilePath>../../../../../rtos/azure-rtos/threadx/common/inc/tx_event_flags.h</FilePath>
             </File>
             <File>
-              <FileName>tx_timer.h</FileName>
+              <FileName>tx_initialize.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/threadx/common/inc/tx_timer.h</FilePath>
-            </File>
-            <File>
-              <FileName>tx_queue.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/threadx/common/inc/tx_queue.h</FilePath>
-            </File>
-            <File>
-              <FileName>tx_thread.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/threadx/common/inc/tx_thread.h</FilePath>
+              <FilePath>../../../../../rtos/azure-rtos/threadx/common/inc/tx_initialize.h</FilePath>
             </File>
             <File>
               <FileName>tx_mutex.h</FileName>
@@ -2088,34 +2088,34 @@
               <FilePath>../../../../../rtos/azure-rtos/threadx/common/inc/tx_mutex.h</FilePath>
             </File>
             <File>
-              <FileName>tx_trace.h</FileName>
+              <FileName>tx_queue.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/threadx/common/inc/tx_trace.h</FilePath>
-            </File>
-            <File>
-              <FileName>tx_initialize.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/threadx/common/inc/tx_initialize.h</FilePath>
-            </File>
-            <File>
-              <FileName>tx_api.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/threadx/common/inc/tx_api.h</FilePath>
-            </File>
-            <File>
-              <FileName>tx_user_sample.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/threadx/common/inc/tx_user_sample.h</FilePath>
-            </File>
-            <File>
-              <FileName>tx_block_pool.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/threadx/common/inc/tx_block_pool.h</FilePath>
+              <FilePath>../../../../../rtos/azure-rtos/threadx/common/inc/tx_queue.h</FilePath>
             </File>
             <File>
               <FileName>tx_semaphore.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../rtos/azure-rtos/threadx/common/inc/tx_semaphore.h</FilePath>
+            </File>
+            <File>
+              <FileName>tx_thread.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/threadx/common/inc/tx_thread.h</FilePath>
+            </File>
+            <File>
+              <FileName>tx_timer.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/threadx/common/inc/tx_timer.h</FilePath>
+            </File>
+            <File>
+              <FileName>tx_trace.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/threadx/common/inc/tx_trace.h</FilePath>
+            </File>
+            <File>
+              <FileName>tx_user_sample.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/threadx/common/inc/tx_user_sample.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2123,39 +2123,9 @@
           <GroupName>azure-rtos/filex/common/inc</GroupName>
           <Files>
             <File>
-              <FileName>fx_media.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/filex/common/inc/fx_media.h</FilePath>
-            </File>
-            <File>
-              <FileName>fx_unicode.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/filex/common/inc/fx_unicode.h</FilePath>
-            </File>
-            <File>
               <FileName>fx_api.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../rtos/azure-rtos/filex/common/inc/fx_api.h</FilePath>
-            </File>
-            <File>
-              <FileName>fx_directory_exFAT.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/filex/common/inc/fx_directory_exFAT.h</FilePath>
-            </File>
-            <File>
-              <FileName>fx_utility.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/filex/common/inc/fx_utility.h</FilePath>
-            </File>
-            <File>
-              <FileName>fx_file.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/filex/common/inc/fx_file.h</FilePath>
-            </File>
-            <File>
-              <FileName>fx_system.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/filex/common/inc/fx_system.h</FilePath>
             </File>
             <File>
               <FileName>fx_directory.h</FileName>
@@ -2163,14 +2133,44 @@
               <FilePath>../../../../../rtos/azure-rtos/filex/common/inc/fx_directory.h</FilePath>
             </File>
             <File>
-              <FileName>fx_user_sample.h</FileName>
+              <FileName>fx_directory_exFAT.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/filex/common/inc/fx_user_sample.h</FilePath>
+              <FilePath>../../../../../rtos/azure-rtos/filex/common/inc/fx_directory_exFAT.h</FilePath>
             </File>
             <File>
               <FileName>fx_fault_tolerant.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../rtos/azure-rtos/filex/common/inc/fx_fault_tolerant.h</FilePath>
+            </File>
+            <File>
+              <FileName>fx_file.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/filex/common/inc/fx_file.h</FilePath>
+            </File>
+            <File>
+              <FileName>fx_media.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/filex/common/inc/fx_media.h</FilePath>
+            </File>
+            <File>
+              <FileName>fx_system.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/filex/common/inc/fx_system.h</FilePath>
+            </File>
+            <File>
+              <FileName>fx_unicode.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/filex/common/inc/fx_unicode.h</FilePath>
+            </File>
+            <File>
+              <FileName>fx_user_sample.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/filex/common/inc/fx_user_sample.h</FilePath>
+            </File>
+            <File>
+              <FileName>fx_utility.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/filex/common/inc/fx_utility.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2178,54 +2178,9 @@
           <GroupName>azure-rtos/netxduo/common/inc</GroupName>
           <Files>
             <File>
-              <FileName>nx_igmp.h</FileName>
+              <FileName>nx_api.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/netxduo/common/inc/nx_igmp.h</FilePath>
-            </File>
-            <File>
-              <FileName>nx_ipv4.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/netxduo/common/inc/nx_ipv4.h</FilePath>
-            </File>
-            <File>
-              <FileName>nx_packet.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/netxduo/common/inc/nx_packet.h</FilePath>
-            </File>
-            <File>
-              <FileName>nx_nd_cache.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/netxduo/common/inc/nx_nd_cache.h</FilePath>
-            </File>
-            <File>
-              <FileName>nx_md5.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/netxduo/common/inc/nx_md5.h</FilePath>
-            </File>
-            <File>
-              <FileName>nx_icmpv6.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/netxduo/common/inc/nx_icmpv6.h</FilePath>
-            </File>
-            <File>
-              <FileName>nx_icmp.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/netxduo/common/inc/nx_icmp.h</FilePath>
-            </File>
-            <File>
-              <FileName>nx_user_sample.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/netxduo/common/inc/nx_user_sample.h</FilePath>
-            </File>
-            <File>
-              <FileName>nx_tcp.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/netxduo/common/inc/nx_tcp.h</FilePath>
-            </File>
-            <File>
-              <FileName>nx_icmpv4.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/netxduo/common/inc/nx_icmpv4.h</FilePath>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/common/inc/nx_api.h</FilePath>
             </File>
             <File>
               <FileName>nx_arp.h</FileName>
@@ -2233,29 +2188,24 @@
               <FilePath>../../../../../rtos/azure-rtos/netxduo/common/inc/nx_arp.h</FilePath>
             </File>
             <File>
-              <FileName>nx_ipv6.h</FileName>
+              <FileName>nx_icmp.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/netxduo/common/inc/nx_ipv6.h</FilePath>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/common/inc/nx_icmp.h</FilePath>
             </File>
             <File>
-              <FileName>nx_system.h</FileName>
+              <FileName>nx_icmpv4.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/netxduo/common/inc/nx_system.h</FilePath>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/common/inc/nx_icmpv4.h</FilePath>
             </File>
             <File>
-              <FileName>nx_api.h</FileName>
+              <FileName>nx_icmpv6.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/netxduo/common/inc/nx_api.h</FilePath>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/common/inc/nx_icmpv6.h</FilePath>
             </File>
             <File>
-              <FileName>nx_rarp.h</FileName>
+              <FileName>nx_igmp.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/netxduo/common/inc/nx_rarp.h</FilePath>
-            </File>
-            <File>
-              <FileName>nx_mld.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/netxduo/common/inc/nx_mld.h</FilePath>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/common/inc/nx_igmp.h</FilePath>
             </File>
             <File>
               <FileName>nx_ip.h</FileName>
@@ -2263,9 +2213,59 @@
               <FilePath>../../../../../rtos/azure-rtos/netxduo/common/inc/nx_ip.h</FilePath>
             </File>
             <File>
+              <FileName>nx_ipv4.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/common/inc/nx_ipv4.h</FilePath>
+            </File>
+            <File>
+              <FileName>nx_ipv6.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/common/inc/nx_ipv6.h</FilePath>
+            </File>
+            <File>
+              <FileName>nx_md5.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/common/inc/nx_md5.h</FilePath>
+            </File>
+            <File>
+              <FileName>nx_mld.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/common/inc/nx_mld.h</FilePath>
+            </File>
+            <File>
+              <FileName>nx_nd_cache.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/common/inc/nx_nd_cache.h</FilePath>
+            </File>
+            <File>
+              <FileName>nx_packet.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/common/inc/nx_packet.h</FilePath>
+            </File>
+            <File>
+              <FileName>nx_rarp.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/common/inc/nx_rarp.h</FilePath>
+            </File>
+            <File>
+              <FileName>nx_system.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/common/inc/nx_system.h</FilePath>
+            </File>
+            <File>
+              <FileName>nx_tcp.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/common/inc/nx_tcp.h</FilePath>
+            </File>
+            <File>
               <FileName>nx_udp.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../rtos/azure-rtos/netxduo/common/inc/nx_udp.h</FilePath>
+            </File>
+            <File>
+              <FileName>nx_user_sample.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/common/inc/nx_user_sample.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2273,44 +2273,19 @@
           <GroupName>azure-rtos/netxduo/crypto_libraries/inc</GroupName>
           <Files>
             <File>
-              <FileName>nx_crypto_sha1.h</FileName>
+              <FileName>nx_crypto.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_sha1.h</FilePath>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto.h</FilePath>
             </File>
             <File>
-              <FileName>nx_crypto_hmac_md5.h</FileName>
+              <FileName>nx_crypto_3des.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_hmac_md5.h</FilePath>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_3des.h</FilePath>
             </File>
             <File>
-              <FileName>nx_crypto_xcbc_mac.h</FileName>
+              <FileName>nx_crypto_aes.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_xcbc_mac.h</FilePath>
-            </File>
-            <File>
-              <FileName>nx_crypto_hmac.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_hmac.h</FilePath>
-            </File>
-            <File>
-              <FileName>nx_crypto_ccm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_ccm.h</FilePath>
-            </File>
-            <File>
-              <FileName>nx_crypto_dh.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_dh.h</FilePath>
-            </File>
-            <File>
-              <FileName>nx_crypto_tls_prf_1.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_tls_prf_1.h</FilePath>
-            </File>
-            <File>
-              <FileName>nx_crypto_const.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_const.h</FilePath>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_aes.h</FilePath>
             </File>
             <File>
               <FileName>nx_crypto_cbc.h</FileName>
@@ -2318,34 +2293,39 @@
               <FilePath>../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_cbc.h</FilePath>
             </File>
             <File>
+              <FileName>nx_crypto_ccm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_ccm.h</FilePath>
+            </File>
+            <File>
+              <FileName>nx_crypto_const.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_const.h</FilePath>
+            </File>
+            <File>
+              <FileName>nx_crypto_ctr.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_ctr.h</FilePath>
+            </File>
+            <File>
+              <FileName>nx_crypto_des.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_des.h</FilePath>
+            </File>
+            <File>
+              <FileName>nx_crypto_dh.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_dh.h</FilePath>
+            </File>
+            <File>
+              <FileName>nx_crypto_drbg.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_drbg.h</FilePath>
+            </File>
+            <File>
               <FileName>nx_crypto_ec.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_ec.h</FilePath>
-            </File>
-            <File>
-              <FileName>nx_crypto_md5.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_md5.h</FilePath>
-            </File>
-            <File>
-              <FileName>nx_crypto_tls_prf_sha384.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_tls_prf_sha384.h</FilePath>
-            </File>
-            <File>
-              <FileName>nx_crypto.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto.h</FilePath>
-            </File>
-            <File>
-              <FileName>nx_crypto_sha5.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_sha5.h</FilePath>
-            </File>
-            <File>
-              <FileName>nx_crypto_rsa.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_rsa.h</FilePath>
             </File>
             <File>
               <FileName>nx_crypto_ecdh.h</FileName>
@@ -2358,34 +2338,9 @@
               <FilePath>../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_ecdsa.h</FilePath>
             </File>
             <File>
-              <FileName>nx_crypto_hmac_sha2.h</FileName>
+              <FileName>nx_crypto_ecjpake.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_hmac_sha2.h</FilePath>
-            </File>
-            <File>
-              <FileName>nx_crypto_3des.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_3des.h</FilePath>
-            </File>
-            <File>
-              <FileName>nx_crypto_null.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_null.h</FilePath>
-            </File>
-            <File>
-              <FileName>nx_crypto_drbg.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_drbg.h</FilePath>
-            </File>
-            <File>
-              <FileName>nx_crypto_phash.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_phash.h</FilePath>
-            </File>
-            <File>
-              <FileName>nx_crypto_hmac_sha1.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_hmac_sha1.h</FilePath>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_ecjpake.h</FilePath>
             </File>
             <File>
               <FileName>nx_crypto_gcm.h</FileName>
@@ -2393,29 +2348,29 @@
               <FilePath>../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_gcm.h</FilePath>
             </File>
             <File>
-              <FileName>nx_crypto_tls_prf_sha256.h</FileName>
+              <FileName>nx_crypto_hkdf.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_tls_prf_sha256.h</FilePath>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_hkdf.h</FilePath>
             </File>
             <File>
-              <FileName>nx_crypto_sha2.h</FileName>
+              <FileName>nx_crypto_hmac.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_sha2.h</FilePath>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_hmac.h</FilePath>
             </File>
             <File>
-              <FileName>nx_crypto_pkcs1_v1.5.h</FileName>
+              <FileName>nx_crypto_hmac_md5.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_pkcs1_v1.5.h</FilePath>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_hmac_md5.h</FilePath>
             </File>
             <File>
-              <FileName>nx_crypto_tls_prf_sha512.h</FileName>
+              <FileName>nx_crypto_hmac_sha1.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_tls_prf_sha512.h</FilePath>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_hmac_sha1.h</FilePath>
             </File>
             <File>
-              <FileName>nx_crypto_huge_number.h</FileName>
+              <FileName>nx_crypto_hmac_sha2.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_huge_number.h</FilePath>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_hmac_sha2.h</FilePath>
             </File>
             <File>
               <FileName>nx_crypto_hmac_sha5.h</FileName>
@@ -2423,24 +2378,14 @@
               <FilePath>../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_hmac_sha5.h</FilePath>
             </File>
             <File>
-              <FileName>nx_crypto_ecjpake.h</FileName>
+              <FileName>nx_crypto_huge_number.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_ecjpake.h</FilePath>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_huge_number.h</FilePath>
             </File>
             <File>
-              <FileName>nx_crypto_des.h</FileName>
+              <FileName>nx_crypto_md5.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_des.h</FilePath>
-            </File>
-            <File>
-              <FileName>nx_crypto_ctr.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_ctr.h</FilePath>
-            </File>
-            <File>
-              <FileName>nx_crypto_aes.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_aes.h</FilePath>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_md5.h</FilePath>
             </File>
             <File>
               <FileName>nx_crypto_method_self_test.h</FileName>
@@ -2448,9 +2393,64 @@
               <FilePath>../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_method_self_test.h</FilePath>
             </File>
             <File>
-              <FileName>nx_crypto_hkdf.h</FileName>
+              <FileName>nx_crypto_null.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_hkdf.h</FilePath>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_null.h</FilePath>
+            </File>
+            <File>
+              <FileName>nx_crypto_phash.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_phash.h</FilePath>
+            </File>
+            <File>
+              <FileName>nx_crypto_pkcs1_v1.5.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_pkcs1_v1.5.h</FilePath>
+            </File>
+            <File>
+              <FileName>nx_crypto_rsa.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_rsa.h</FilePath>
+            </File>
+            <File>
+              <FileName>nx_crypto_sha1.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_sha1.h</FilePath>
+            </File>
+            <File>
+              <FileName>nx_crypto_sha2.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_sha2.h</FilePath>
+            </File>
+            <File>
+              <FileName>nx_crypto_sha5.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_sha5.h</FilePath>
+            </File>
+            <File>
+              <FileName>nx_crypto_tls_prf_1.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_tls_prf_1.h</FilePath>
+            </File>
+            <File>
+              <FileName>nx_crypto_tls_prf_sha256.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_tls_prf_sha256.h</FilePath>
+            </File>
+            <File>
+              <FileName>nx_crypto_tls_prf_sha384.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_tls_prf_sha384.h</FilePath>
+            </File>
+            <File>
+              <FileName>nx_crypto_tls_prf_sha512.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_tls_prf_sha512.h</FilePath>
+            </File>
+            <File>
+              <FileName>nx_crypto_xcbc_mac.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_xcbc_mac.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2458,14 +2458,29 @@
           <GroupName>azure-rtos/netxduo/nx_secure/inc</GroupName>
           <Files>
             <File>
-              <FileName>nx_secure_tls_api.h</FileName>
+              <FileName>nx_secure_crypto_table_self_test.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/netxduo/nx_secure/inc/nx_secure_tls_api.h</FilePath>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/nx_secure/inc/nx_secure_crypto_table_self_test.h</FilePath>
+            </File>
+            <File>
+              <FileName>nx_secure_dtls.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/nx_secure/inc/nx_secure_dtls.h</FilePath>
             </File>
             <File>
               <FileName>nx_secure_dtls_api.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../rtos/azure-rtos/netxduo/nx_secure/inc/nx_secure_dtls_api.h</FilePath>
+            </File>
+            <File>
+              <FileName>nx_secure_tls.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/nx_secure/inc/nx_secure_tls.h</FilePath>
+            </File>
+            <File>
+              <FileName>nx_secure_tls_api.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/nx_secure/inc/nx_secure_tls_api.h</FilePath>
             </File>
             <File>
               <FileName>nx_secure_user_sample.h</FileName>
@@ -2476,21 +2491,6 @@
               <FileName>nx_secure_x509.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../rtos/azure-rtos/netxduo/nx_secure/inc/nx_secure_x509.h</FilePath>
-            </File>
-            <File>
-              <FileName>nx_secure_dtls.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/netxduo/nx_secure/inc/nx_secure_dtls.h</FilePath>
-            </File>
-            <File>
-              <FileName>nx_secure_crypto_table_self_test.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/netxduo/nx_secure/inc/nx_secure_crypto_table_self_test.h</FilePath>
-            </File>
-            <File>
-              <FileName>nx_secure_tls.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/netxduo/nx_secure/inc/nx_secure_tls.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2508,24 +2508,9 @@
           <GroupName>azure-rtos/usbx/common/core/inc</GroupName>
           <Files>
             <File>
-              <FileName>ux_host_class_dpump.h</FileName>
+              <FileName>ux_api.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/core/inc/ux_host_class_dpump.h</FilePath>
-            </File>
-            <File>
-              <FileName>ux_device_class_dpump.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/core/inc/ux_device_class_dpump.h</FilePath>
-            </File>
-            <File>
-              <FileName>ux_utility.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/core/inc/ux_utility.h</FilePath>
-            </File>
-            <File>
-              <FileName>ux_hcd_sim_host.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/core/inc/ux_hcd_sim_host.h</FilePath>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/core/inc/ux_api.h</FilePath>
             </File>
             <File>
               <FileName>ux_dcd_sim_slave.h</FileName>
@@ -2533,9 +2518,24 @@
               <FilePath>../../../../../rtos/azure-rtos/usbx/common/core/inc/ux_dcd_sim_slave.h</FilePath>
             </File>
             <File>
+              <FileName>ux_device_class_dpump.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/core/inc/ux_device_class_dpump.h</FilePath>
+            </File>
+            <File>
               <FileName>ux_device_stack.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../rtos/azure-rtos/usbx/common/core/inc/ux_device_stack.h</FilePath>
+            </File>
+            <File>
+              <FileName>ux_hcd_sim_host.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/core/inc/ux_hcd_sim_host.h</FilePath>
+            </File>
+            <File>
+              <FileName>ux_host_class_dpump.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/core/inc/ux_host_class_dpump.h</FilePath>
             </File>
             <File>
               <FileName>ux_host_stack.h</FileName>
@@ -2548,20 +2548,60 @@
               <FilePath>../../../../../rtos/azure-rtos/usbx/common/core/inc/ux_system.h</FilePath>
             </File>
             <File>
-              <FileName>ux_api.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/core/inc/ux_api.h</FilePath>
-            </File>
-            <File>
               <FileName>ux_user_sample.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../rtos/azure-rtos/usbx/common/core/inc/ux_user_sample.h</FilePath>
+            </File>
+            <File>
+              <FileName>ux_utility.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/core/inc/ux_utility.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
           <GroupName>azure-rtos/usbx/common/usbx_device_classes/inc</GroupName>
           <Files>
+            <File>
+              <FileName>ux_device_class_audio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_device_classes/inc/ux_device_class_audio.h</FilePath>
+            </File>
+            <File>
+              <FileName>ux_device_class_audio10.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_device_classes/inc/ux_device_class_audio10.h</FilePath>
+            </File>
+            <File>
+              <FileName>ux_device_class_audio20.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_device_classes/inc/ux_device_class_audio20.h</FilePath>
+            </File>
+            <File>
+              <FileName>ux_device_class_cdc_acm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_device_classes/inc/ux_device_class_cdc_acm.h</FilePath>
+            </File>
+            <File>
+              <FileName>ux_device_class_cdc_ecm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_device_classes/inc/ux_device_class_cdc_ecm.h</FilePath>
+            </File>
+            <File>
+              <FileName>ux_device_class_dfu.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_device_classes/inc/ux_device_class_dfu.h</FilePath>
+            </File>
+            <File>
+              <FileName>ux_device_class_hid.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_device_classes/inc/ux_device_class_hid.h</FilePath>
+            </File>
+            <File>
+              <FileName>ux_device_class_pima.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_device_classes/inc/ux_device_class_pima.h</FilePath>
+            </File>
             <File>
               <FileName>ux_device_class_rndis.h</FileName>
               <FileType>5</FileType>
@@ -2572,75 +2612,15 @@
               <FileType>5</FileType>
               <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_device_classes/inc/ux_device_class_storage.h</FilePath>
             </File>
-            <File>
-              <FileName>ux_device_class_audio.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_device_classes/inc/ux_device_class_audio.h</FilePath>
-            </File>
-            <File>
-              <FileName>ux_device_class_cdc_ecm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_device_classes/inc/ux_device_class_cdc_ecm.h</FilePath>
-            </File>
-            <File>
-              <FileName>ux_device_class_pima.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_device_classes/inc/ux_device_class_pima.h</FilePath>
-            </File>
-            <File>
-              <FileName>ux_device_class_cdc_acm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_device_classes/inc/ux_device_class_cdc_acm.h</FilePath>
-            </File>
-            <File>
-              <FileName>ux_device_class_audio20.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_device_classes/inc/ux_device_class_audio20.h</FilePath>
-            </File>
-            <File>
-              <FileName>ux_device_class_audio10.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_device_classes/inc/ux_device_class_audio10.h</FilePath>
-            </File>
-            <File>
-              <FileName>ux_device_class_hid.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_device_classes/inc/ux_device_class_hid.h</FilePath>
-            </File>
-            <File>
-              <FileName>ux_device_class_dfu.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_device_classes/inc/ux_device_class_dfu.h</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>
           <GroupName>azure-rtos/usbx/common/usbx_host_classes/inc</GroupName>
           <Files>
             <File>
-              <FileName>ux_host_class_pima.h</FileName>
+              <FileName>ux_host_class_asix.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_classes/inc/ux_host_class_pima.h</FilePath>
-            </File>
-            <File>
-              <FileName>ux_host_class_cdc_acm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_classes/inc/ux_host_class_cdc_acm.h</FilePath>
-            </File>
-            <File>
-              <FileName>ux_host_class_hub.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_classes/inc/ux_host_class_hub.h</FilePath>
-            </File>
-            <File>
-              <FileName>ux_host_class_cdc_ecm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_classes/inc/ux_host_class_cdc_ecm.h</FilePath>
-            </File>
-            <File>
-              <FileName>ux_host_class_hid_keyboard.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_classes/inc/ux_host_class_hid_keyboard.h</FilePath>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_classes/inc/ux_host_class_asix.h</FilePath>
             </File>
             <File>
               <FileName>ux_host_class_audio.h</FileName>
@@ -2648,39 +2628,14 @@
               <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_classes/inc/ux_host_class_audio.h</FilePath>
             </File>
             <File>
-              <FileName>ux_host_class_hid.h</FileName>
+              <FileName>ux_host_class_cdc_acm.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_classes/inc/ux_host_class_hid.h</FilePath>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_classes/inc/ux_host_class_cdc_acm.h</FilePath>
             </File>
             <File>
-              <FileName>ux_host_class_hid_mouse.h</FileName>
+              <FileName>ux_host_class_cdc_ecm.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_classes/inc/ux_host_class_hid_mouse.h</FilePath>
-            </File>
-            <File>
-              <FileName>ux_host_class_printer.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_classes/inc/ux_host_class_printer.h</FilePath>
-            </File>
-            <File>
-              <FileName>ux_host_class_swar.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_classes/inc/ux_host_class_swar.h</FilePath>
-            </File>
-            <File>
-              <FileName>ux_host_class_asix.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_classes/inc/ux_host_class_asix.h</FilePath>
-            </File>
-            <File>
-              <FileName>ux_host_class_video.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_classes/inc/ux_host_class_video.h</FilePath>
-            </File>
-            <File>
-              <FileName>ux_host_class_prolific.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_classes/inc/ux_host_class_prolific.h</FilePath>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_classes/inc/ux_host_class_cdc_ecm.h</FilePath>
             </File>
             <File>
               <FileName>ux_host_class_gser.h</FileName>
@@ -2688,14 +2643,59 @@
               <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_classes/inc/ux_host_class_gser.h</FilePath>
             </File>
             <File>
-              <FileName>ux_host_class_storage.h</FileName>
+              <FileName>ux_host_class_hid.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_classes/inc/ux_host_class_storage.h</FilePath>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_classes/inc/ux_host_class_hid.h</FilePath>
+            </File>
+            <File>
+              <FileName>ux_host_class_hid_keyboard.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_classes/inc/ux_host_class_hid_keyboard.h</FilePath>
+            </File>
+            <File>
+              <FileName>ux_host_class_hid_mouse.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_classes/inc/ux_host_class_hid_mouse.h</FilePath>
             </File>
             <File>
               <FileName>ux_host_class_hid_remote_control.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_classes/inc/ux_host_class_hid_remote_control.h</FilePath>
+            </File>
+            <File>
+              <FileName>ux_host_class_hub.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_classes/inc/ux_host_class_hub.h</FilePath>
+            </File>
+            <File>
+              <FileName>ux_host_class_pima.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_classes/inc/ux_host_class_pima.h</FilePath>
+            </File>
+            <File>
+              <FileName>ux_host_class_printer.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_classes/inc/ux_host_class_printer.h</FilePath>
+            </File>
+            <File>
+              <FileName>ux_host_class_prolific.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_classes/inc/ux_host_class_prolific.h</FilePath>
+            </File>
+            <File>
+              <FileName>ux_host_class_storage.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_classes/inc/ux_host_class_storage.h</FilePath>
+            </File>
+            <File>
+              <FileName>ux_host_class_swar.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_classes/inc/ux_host_class_swar.h</FilePath>
+            </File>
+            <File>
+              <FileName>ux_host_class_video.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_classes/inc/ux_host_class_video.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2703,14 +2703,14 @@
           <GroupName>azure-rtos/usbx/common/usbx_host_controllers/inc</GroupName>
           <Files>
             <File>
-              <FileName>ux_hcd_ohci.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/inc/ux_hcd_ohci.h</FilePath>
-            </File>
-            <File>
               <FileName>ux_hcd_ehci.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/inc/ux_hcd_ehci.h</FilePath>
+            </File>
+            <File>
+              <FileName>ux_hcd_ohci.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/inc/ux_hcd_ohci.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2778,354 +2778,9 @@
           <GroupName>azure-rtos/usbx/common/usbx_host_controllers/src</GroupName>
           <Files>
             <File>
-              <FileName>ux_hcd_ehci_ed_obtain.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_ed_obtain.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_hcd_ohci_port_disable.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ohci_port_disable.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_hcd_ohci_regular_td_obtain.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ohci_regular_td_obtain.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_hcd_ehci_port_resume.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_port_resume.c</FilePath>
-            </File>
-            <File>
               <FileName>ux_hcd_ehci_asynch_td_process.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_asynch_td_process.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_hcd_ehci_power_on_port.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_power_on_port.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_hcd_ohci_port_enable.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ohci_port_enable.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_hcd_ehci_endpoint_reset.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_endpoint_reset.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_hcd_ehci_request_control_transfer.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_request_control_transfer.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_hcd_ohci_controller_disable.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ohci_controller_disable.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_hcd_ehci_interrupt_handler.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_interrupt_handler.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_hcd_ehci_port_suspend.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_port_suspend.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_hcd_ohci_periodic_endpoint_destroy.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ohci_periodic_endpoint_destroy.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_hcd_ohci_endpoint_error_clear.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ohci_endpoint_error_clear.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_hcd_ehci_port_reset.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_port_reset.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_hcd_ehci_isochronous_endpoint_create.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_isochronous_endpoint_create.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_hcd_ohci_request_isochronous_transfer.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ohci_request_isochronous_transfer.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_hcd_ehci_regular_td_obtain.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_regular_td_obtain.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_hcd_ohci_asynchronous_endpoint_create.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ohci_asynchronous_endpoint_create.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_hcd_ohci_port_resume.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ohci_port_resume.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_hcd_ehci_request_interrupt_transfer.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_request_interrupt_transfer.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_hcd_ohci_done_queue_process.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ohci_done_queue_process.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_hcd_ohci_isochronous_td_obtain.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ohci_isochronous_td_obtain.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_hcd_ohci_register_read.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ohci_register_read.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_hcd_ehci_fsisochronous_tds_process.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_fsisochronous_tds_process.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_hcd_ohci_request_control_transfer.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ohci_request_control_transfer.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_hcd_ohci_frame_number_get.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ohci_frame_number_get.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_hcd_ehci_least_traffic_list_get.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_least_traffic_list_get.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_hcd_ohci_interrupt_endpoint_create.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ohci_interrupt_endpoint_create.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_hcd_ehci_asynchronous_endpoint_destroy.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_asynchronous_endpoint_destroy.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_hcd_ohci_periodic_tree_create.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ohci_periodic_tree_create.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_hcd_ehci_done_queue_process.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_done_queue_process.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_hcd_ehci_isochronous_endpoint_destroy.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_isochronous_endpoint_destroy.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_hcd_ehci_hsisochronous_tds_process.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_hsisochronous_tds_process.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_hcd_ohci_initialize.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ohci_initialize.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_hcd_ehci_request_isochronous_transfer.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_request_isochronous_transfer.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_hcd_ohci_register_write.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ohci_register_write.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_hcd_ohci_frame_number_set.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ohci_frame_number_set.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_hcd_ohci_least_traffic_list_get.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ohci_least_traffic_list_get.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_hcd_ohci_request_transfer.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ohci_request_transfer.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_hcd_ehci_fsisochronous_td_obtain.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_fsisochronous_td_obtain.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_hcd_ohci_request_interupt_transfer.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ohci_request_interupt_transfer.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_hcd_ehci_transfer_abort.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_transfer_abort.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_hcd_ehci_port_status_get.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_port_status_get.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_hcd_ohci_transfer_request_process.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ohci_transfer_request_process.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_hcd_ohci_power_root_hubs.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ohci_power_root_hubs.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_hcd_ehci_ed_clean.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_ed_clean.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_hcd_ohci_transfer_abort.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ohci_transfer_abort.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_hcd_ohci_asynchronous_endpoint_destroy.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ohci_asynchronous_endpoint_destroy.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_hcd_ehci_initialize.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_initialize.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_hcd_ohci_endpoint_reset.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ohci_endpoint_reset.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_hcd_ehci_frame_number_get.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_frame_number_get.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_hcd_ohci_next_td_clean.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ohci_next_td_clean.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_hcd_ehci_register_write.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_register_write.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_hcd_ohci_ed_obtain.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ohci_ed_obtain.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_hcd_ehci_controller_disable.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_controller_disable.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_hcd_ehci_request_bulk_transfer.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_request_bulk_transfer.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_hcd_ehci_request_transfer_add.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_request_transfer_add.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_hcd_ohci_port_status_get.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ohci_port_status_get.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_hcd_ehci_interrupt_endpoint_create.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_interrupt_endpoint_create.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_hcd_ehci_port_disable.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_port_disable.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_hcd_ohci_port_suspend.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ohci_port_suspend.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_hcd_ohci_request_bulk_transfer.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ohci_request_bulk_transfer.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_hcd_ehci_poll_rate_entry_get.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_poll_rate_entry_get.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_hcd_ohci_port_reset.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ohci_port_reset.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_hcd_ehci_register_read.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_register_read.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_hcd_ohci_isochronous_endpoint_create.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ohci_isochronous_endpoint_create.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_hcd_ehci_interrupt_endpoint_destroy.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_interrupt_endpoint_destroy.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_hcd_ehci_hsisochronous_td_obtain.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_hsisochronous_td_obtain.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_hcd_ehci_request_transfer.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_request_transfer.c</FilePath>
             </File>
             <File>
               <FileName>ux_hcd_ehci_asynchronous_endpoint_create.c</FileName>
@@ -3133,34 +2788,19 @@
               <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_asynchronous_endpoint_create.c</FilePath>
             </File>
             <File>
-              <FileName>ux_hcd_ehci_power_down_port.c</FileName>
+              <FileName>ux_hcd_ehci_asynchronous_endpoint_destroy.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_power_down_port.c</FilePath>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_asynchronous_endpoint_destroy.c</FilePath>
             </File>
             <File>
-              <FileName>ux_hcd_ehci_entry.c</FileName>
+              <FileName>ux_hcd_ehci_controller_disable.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_entry.c</FilePath>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_controller_disable.c</FilePath>
             </File>
             <File>
-              <FileName>ux_hcd_ohci_entry.c</FileName>
+              <FileName>ux_hcd_ehci_done_queue_process.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ohci_entry.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_hcd_ohci_power_down_port.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ohci_power_down_port.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_hcd_ehci_periodic_descriptor_link.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_periodic_descriptor_link.c</FilePath>
-            </File>
-            <File>
-              <FileName>ux_hcd_ehci_transfer_request_process.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_transfer_request_process.c</FilePath>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_done_queue_process.c</FilePath>
             </File>
             <File>
               <FileName>ux_hcd_ehci_door_bell_wait.c</FileName>
@@ -3168,19 +2808,29 @@
               <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_door_bell_wait.c</FilePath>
             </File>
             <File>
-              <FileName>ux_hcd_ehci_next_td_clean.c</FileName>
+              <FileName>ux_hcd_ehci_ed_clean.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_next_td_clean.c</FilePath>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_ed_clean.c</FilePath>
             </File>
             <File>
-              <FileName>ux_hcd_ehci_periodic_tree_create.c</FileName>
+              <FileName>ux_hcd_ehci_ed_obtain.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_periodic_tree_create.c</FilePath>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_ed_obtain.c</FilePath>
             </File>
             <File>
-              <FileName>ux_hcd_ehci_power_root_hubs.c</FileName>
+              <FileName>ux_hcd_ehci_endpoint_reset.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_power_root_hubs.c</FilePath>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_endpoint_reset.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_hcd_ehci_entry.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_entry.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_hcd_ehci_frame_number_get.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_frame_number_get.c</FilePath>
             </File>
             <File>
               <FileName>ux_hcd_ehci_frame_number_set.c</FileName>
@@ -3188,14 +2838,364 @@
               <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_frame_number_set.c</FilePath>
             </File>
             <File>
-              <FileName>ux_hcd_ohci_power_on_port.c</FileName>
+              <FileName>ux_hcd_ehci_fsisochronous_td_obtain.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ohci_power_on_port.c</FilePath>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_fsisochronous_td_obtain.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_hcd_ehci_fsisochronous_tds_process.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_fsisochronous_tds_process.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_hcd_ehci_hsisochronous_td_obtain.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_hsisochronous_td_obtain.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_hcd_ehci_hsisochronous_tds_process.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_hsisochronous_tds_process.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_hcd_ehci_initialize.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_initialize.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_hcd_ehci_interrupt_endpoint_create.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_interrupt_endpoint_create.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_hcd_ehci_interrupt_endpoint_destroy.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_interrupt_endpoint_destroy.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_hcd_ehci_interrupt_handler.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_interrupt_handler.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_hcd_ehci_isochronous_endpoint_create.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_isochronous_endpoint_create.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_hcd_ehci_isochronous_endpoint_destroy.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_isochronous_endpoint_destroy.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_hcd_ehci_least_traffic_list_get.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_least_traffic_list_get.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_hcd_ehci_next_td_clean.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_next_td_clean.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_hcd_ehci_periodic_descriptor_link.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_periodic_descriptor_link.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_hcd_ehci_periodic_tree_create.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_periodic_tree_create.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_hcd_ehci_poll_rate_entry_get.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_poll_rate_entry_get.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_hcd_ehci_port_disable.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_port_disable.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_hcd_ehci_port_reset.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_port_reset.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_hcd_ehci_port_resume.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_port_resume.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_hcd_ehci_port_status_get.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_port_status_get.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_hcd_ehci_port_suspend.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_port_suspend.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_hcd_ehci_power_down_port.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_power_down_port.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_hcd_ehci_power_on_port.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_power_on_port.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_hcd_ehci_power_root_hubs.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_power_root_hubs.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_hcd_ehci_register_read.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_register_read.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_hcd_ehci_register_write.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_register_write.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_hcd_ehci_regular_td_obtain.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_regular_td_obtain.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_hcd_ehci_request_bulk_transfer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_request_bulk_transfer.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_hcd_ehci_request_control_transfer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_request_control_transfer.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_hcd_ehci_request_interrupt_transfer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_request_interrupt_transfer.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_hcd_ehci_request_isochronous_transfer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_request_isochronous_transfer.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_hcd_ehci_request_transfer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_request_transfer.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_hcd_ehci_request_transfer_add.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_request_transfer_add.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_hcd_ehci_transfer_abort.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_transfer_abort.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_hcd_ehci_transfer_request_process.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ehci_transfer_request_process.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_hcd_ohci_asynchronous_endpoint_create.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ohci_asynchronous_endpoint_create.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_hcd_ohci_asynchronous_endpoint_destroy.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ohci_asynchronous_endpoint_destroy.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_hcd_ohci_controller_disable.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ohci_controller_disable.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_hcd_ohci_done_queue_process.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ohci_done_queue_process.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_hcd_ohci_ed_obtain.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ohci_ed_obtain.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_hcd_ohci_endpoint_error_clear.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ohci_endpoint_error_clear.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_hcd_ohci_endpoint_reset.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ohci_endpoint_reset.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_hcd_ohci_entry.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ohci_entry.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_hcd_ohci_frame_number_get.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ohci_frame_number_get.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_hcd_ohci_frame_number_set.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ohci_frame_number_set.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_hcd_ohci_initialize.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ohci_initialize.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_hcd_ohci_interrupt_endpoint_create.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ohci_interrupt_endpoint_create.c</FilePath>
             </File>
             <File>
               <FileName>ux_hcd_ohci_interrupt_handler.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ohci_interrupt_handler.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_hcd_ohci_isochronous_endpoint_create.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ohci_isochronous_endpoint_create.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_hcd_ohci_isochronous_td_obtain.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ohci_isochronous_td_obtain.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_hcd_ohci_least_traffic_list_get.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ohci_least_traffic_list_get.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_hcd_ohci_next_td_clean.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ohci_next_td_clean.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_hcd_ohci_periodic_endpoint_destroy.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ohci_periodic_endpoint_destroy.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_hcd_ohci_periodic_tree_create.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ohci_periodic_tree_create.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_hcd_ohci_port_disable.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ohci_port_disable.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_hcd_ohci_port_enable.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ohci_port_enable.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_hcd_ohci_port_reset.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ohci_port_reset.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_hcd_ohci_port_resume.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ohci_port_resume.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_hcd_ohci_port_status_get.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ohci_port_status_get.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_hcd_ohci_port_suspend.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ohci_port_suspend.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_hcd_ohci_power_down_port.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ohci_power_down_port.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_hcd_ohci_power_on_port.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ohci_power_on_port.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_hcd_ohci_power_root_hubs.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ohci_power_root_hubs.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_hcd_ohci_register_read.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ohci_register_read.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_hcd_ohci_register_write.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ohci_register_write.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_hcd_ohci_regular_td_obtain.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ohci_regular_td_obtain.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_hcd_ohci_request_bulk_transfer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ohci_request_bulk_transfer.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_hcd_ohci_request_control_transfer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ohci_request_control_transfer.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_hcd_ohci_request_interupt_transfer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ohci_request_interupt_transfer.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_hcd_ohci_request_isochronous_transfer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ohci_request_isochronous_transfer.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_hcd_ohci_request_transfer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ohci_request_transfer.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_hcd_ohci_transfer_abort.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ohci_transfer_abort.c</FilePath>
+            </File>
+            <File>
+              <FileName>ux_hcd_ohci_transfer_request_process.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/src/ux_hcd_ohci_transfer_request_process.c</FilePath>
             </File>
           </Files>
         </Group>

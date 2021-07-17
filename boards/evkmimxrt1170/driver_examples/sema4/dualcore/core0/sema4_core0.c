@@ -18,12 +18,12 @@
  * Definitions
  ******************************************************************************/
 
-#define DEMO_MU MUA
-#define DEMO_SEMA4 SEMA4
-#define DEMO_PROC_NUM 0 /* Fixed value by system integration. */
-#define CORE1_BOOT_ADDRESS 0x20200000
+#define DEMO_MU                     MUA
+#define DEMO_SEMA4                  SEMA4
+#define DEMO_PROC_NUM               0 /* Fixed value by system integration. */
+#define CORE1_BOOT_ADDRESS          0x20200000
 #define DEMO_EnableSema4Interrupt() NVIC_EnableIRQ(SEMA4_CP0_IRQn)
-#define DEMO_SEMA4IRQHandler SEMA4_CP0_IRQHandler
+#define DEMO_SEMA4IRQHandler        SEMA4_CP0_IRQHandler
 
 #if defined(__CC_ARM) || defined(__ARMCC_VERSION)
 extern uint32_t Image$$CORE1_REGION$$Base;
@@ -37,7 +37,7 @@ extern const char core1_image_start[];
 extern const char *core1_image_end;
 extern int core1_image_size;
 #define CORE1_IMAGE_START ((void *)core1_image_start)
-#define CORE1_IMAGE_SIZE ((void *)core1_image_size)
+#define CORE1_IMAGE_SIZE  ((void *)core1_image_size)
 #endif
 #define DEMO_INVALID_GATE_NUM 0xFFFFFFFFU
 

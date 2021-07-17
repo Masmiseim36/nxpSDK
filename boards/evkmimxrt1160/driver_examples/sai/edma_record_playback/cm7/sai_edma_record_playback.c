@@ -22,14 +22,15 @@
  ******************************************************************************/
 /* SAI instance and clock */
 #define DEMO_CODEC_WM8960
-#define DEMO_SAI              SAI1
-#define DEMO_SAI_CHANNEL      (0)
-#define DEMO_SAI_BITWIDTH     (kSAI_WordWidth16bits)
-#define DEMO_SAI_IRQ          SAI1_IRQn
-#define DEMO_SAITxIRQHandler  SAI1_IRQHandler
-#define DEMO_SAI_TX_SYNC_MODE kSAI_ModeAsync
-#define DEMO_SAI_RX_SYNC_MODE kSAI_ModeSync
-#define DEMO_SAI_MASTER_SLAVE kSAI_Master
+#define DEMO_SAI                       SAI1
+#define DEMO_SAI_CHANNEL               (0)
+#define DEMO_SAI_BITWIDTH              (kSAI_WordWidth16bits)
+#define DEMO_SAI_IRQ                   SAI1_IRQn
+#define DEMO_SAITxIRQHandler           SAI1_IRQHandler
+#define DEMO_SAI_TX_SYNC_MODE          kSAI_ModeAsync
+#define DEMO_SAI_RX_SYNC_MODE          kSAI_ModeSync
+#define DEMO_SAI_MASTER_SLAVE          kSAI_Master
+#define DEMO_SAI_TX_BIT_CLOCK_POLARITY kSAI_PolarityActiveLow
 
 #define DEMO_AUDIO_DATA_CHANNEL (2U)
 #define DEMO_AUDIO_BIT_WIDTH    kSAI_WordWidth16bits
@@ -195,8 +196,9 @@ int main(void)
 
     /* I2S mode configurations */
     SAI_GetClassicI2SConfig(&saiConfig, DEMO_AUDIO_BIT_WIDTH, kSAI_Stereo, 1U << DEMO_SAI_CHANNEL);
-    saiConfig.syncMode    = DEMO_SAI_TX_SYNC_MODE;
-    saiConfig.masterSlave = DEMO_SAI_MASTER_SLAVE;
+    saiConfig.syncMode              = DEMO_SAI_TX_SYNC_MODE;
+    saiConfig.bitClock.bclkPolarity = DEMO_SAI_TX_BIT_CLOCK_POLARITY;
+    saiConfig.masterSlave           = DEMO_SAI_MASTER_SLAVE;
     SAI_TransferTxSetConfigEDMA(DEMO_SAI, &txHandle, &saiConfig);
     saiConfig.syncMode = DEMO_SAI_RX_SYNC_MODE;
     SAI_TransferRxSetConfigEDMA(DEMO_SAI, &rxHandle, &saiConfig);

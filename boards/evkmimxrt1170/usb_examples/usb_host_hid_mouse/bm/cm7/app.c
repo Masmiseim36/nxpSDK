@@ -88,7 +88,7 @@ void USB_OTG2_IRQHandler(void)
 }
 
 void USB_HostClockInit(void)
-{   
+{
     uint32_t usbClockFreq;
     usb_phy_config_struct_t phyConfig = {
         BOARD_USB_PHY_D_CAL,

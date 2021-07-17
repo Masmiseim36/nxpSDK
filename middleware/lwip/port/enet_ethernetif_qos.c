@@ -32,7 +32,7 @@
 
 /*
  * Copyright (c) 2013-2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2020 NXP
+ * Copyright 2016-2021 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -63,15 +63,17 @@
 #include "fsl_enet_qos.h"
 #include "fsl_phy.h"
 
+/*
+ * Padding of ethernet frames has to be disabled for zero-copy functionality
+ * since ENET_QOS driver requires the starting buffer addresses to be aligned.
+ */
+#if ETH_PAD_SIZE != 0
+#error "ETH_PAD_SIZE != 0"
+#endif /* ETH_PAD_SIZE != 0 */
+
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-
-#if (PBUF_POOL_BUFSIZE >= (ENET_QOS_FRAME_MAX_FRAMELEN - ENET_QOS_FCS_LEN))
-#define RX_FRAME_FITS_INTO_PBUF 1
-#else
-#define RX_FRAME_FITS_INTO_PBUF 0
-#endif /* (PBUF_POOL_BUFSIZE >= (ENET_QOS_FRAME_MAX_FRAMELEN - ENET_QOS_FCS_LEN)) */
 
 #ifndef ENET_RXBD_NUM
 #define ENET_RXBD_NUM (5)
@@ -82,7 +84,7 @@
 #endif
 
 #ifndef ENET_RXBUFF_SIZE
-#define ENET_RXBUFF_SIZE (ENET_QOS_FRAME_MAX_FRAMELEN + ETH_PAD_SIZE)
+#define ENET_RXBUFF_SIZE (ENET_QOS_FRAME_MAX_FRAMELEN)
 #endif
 
 #ifndef ENET_TXBUFF_SIZE
@@ -103,8 +105,37 @@
 #define FSL_ENET_BUFF_ALIGNMENT FSL_FEATURE_L1DCACHE_LINESIZE_BYTE
 #endif
 
+/* The number of RX buffers. ENET_RXBD_NUM is always held by ENET driver,
+ * so a couple more are needed to pass zero-copy data into lwIP. */
+#ifndef ENET_RXBUFF_NUM
+#define ENET_RXBUFF_NUM (ENET_RXBD_NUM * 2)
+#endif
+
+/* The number of ENET buffers needed to receive frame of maximum length. */
+#define MAX_BUFFERS_PER_FRAME \
+    ((ENET_QOS_FRAME_MAX_FRAMELEN / ENET_RXBUFF_SIZE) + ((ENET_QOS_FRAME_MAX_FRAMELEN % ENET_RXBUFF_SIZE == 0) ? 0 : 1))
+
+/* At least ENET_RXBD_NUM number of buffers is always held by ENET driver for RX.
+ * Some additional buffers are needed to pass at least one frame zero-copy data to lwIP. */
+#if ENET_RXBUFF_NUM < (ENET_RXBD_NUM + MAX_BUFFERS_PER_FRAME)
+#error "ENET_RXBUFF_NUM < (ENET_RXBD_NUM + MAX_BUFFERS_PER_FRAME)"
+#endif
+
 typedef uint8_t rx_buffer_t[SDK_SIZEALIGN(ENET_RXBUFF_SIZE, FSL_ENET_BUFF_ALIGNMENT)];
 typedef uint8_t tx_buffer_t[SDK_SIZEALIGN(ENET_TXBUFF_SIZE, FSL_ENET_BUFF_ALIGNMENT)];
+
+/*!
+ * @brief Used to wrap received data in a pbuf to be passed into lwIP
+ *        without copying.
+ * Once last reference is released, buffer can be used by ENET RX DMA again.
+ */
+typedef struct rx_pbuf_wrapper
+{
+    struct pbuf_custom p;      /*!< Pbuf wrapper. Has to be first. */
+    void *buffer;              /*!< Original buffer wrapped by p. */
+    volatile bool buffer_used; /*!< Wrapped buffer is used by ENET or lwIP. */
+    struct netif *netif;       /*!< Network interface context data. */
+} rx_pbuf_wrapper_t;
 
 /*!
  * @brief Helper struct to hold private data used to operate the ethernet interface.
@@ -124,7 +155,14 @@ struct ethernetif
     tx_buffer_t *txDataBuff;
     volatile uint8_t txIdx;
     uint32_t rxBufferStartAddr[ENET_RXBD_NUM];
+    rx_pbuf_wrapper_t RxPbufs[ENET_RXBUFF_NUM];
 };
+
+/*******************************************************************************
+ * Prototypes
+ ******************************************************************************/
+
+static void ethernetif_rx_release(struct pbuf *p);
 
 /*******************************************************************************
  * Code
@@ -270,6 +308,51 @@ static inline enet_qos_tx_bd_struct_t *ethernetif_get_tx_desc(struct ethernetif 
     return &(ethernetif->txBuffDescrip[index]);
 }
 
+/*! @brief Defines the ENET Rx memory buffer free function pointer. */
+static void *ethernetif_rx_alloc(ENET_QOS_Type *base, void *userData, uint8_t channel)
+{
+    struct netif *netif           = (struct netif *)userData;
+    struct ethernetif *ethernetif = netif->state;
+    void *buffer                  = NULL;
+    int i;
+
+    SYS_ARCH_DECL_PROTECT(old_level);
+    SYS_ARCH_PROTECT(old_level);
+
+    for (i = 0; i < ENET_RXBUFF_NUM; i++)
+    {
+        if (!ethernetif->RxPbufs[i].buffer_used)
+        {
+            ethernetif->RxPbufs[i].buffer_used = true;
+            buffer                             = &ethernetif->rxDataBuff[i];
+            break;
+        }
+    }
+
+    SYS_ARCH_UNPROTECT(old_level);
+
+    return buffer;
+}
+
+/**
+ * Callback for release of RX zero-copy buffer from ENET driver.
+ */
+static void ethernetif_rx_free(ENET_QOS_Type *base, void *buffer, void *userData, uint8_t channel)
+{
+    struct netif *netif           = (struct netif *)userData;
+    struct ethernetif *ethernetif = netif->state;
+    int idx                       = ((rx_buffer_t *)buffer) - ethernetif->rxDataBuff;
+    LWIP_ASSERT("Freed buffer out of range", ((idx >= 0) && (idx < ENET_RXBUFF_NUM)));
+
+    SYS_ARCH_DECL_PROTECT(old_level);
+    SYS_ARCH_PROTECT(old_level);
+
+    LWIP_ASSERT("ethernetif_rx_free: freeing unallocated buffer", ethernetif->RxPbufs[idx].buffer_used);
+    ethernetif->RxPbufs[idx].buffer_used = false;
+
+    SYS_ARCH_UNPROTECT(old_level);
+}
+
 /**
  * Initializes ENET_QOS driver.
  */
@@ -288,12 +371,6 @@ void ethernetif_enet_init(struct netif *netif,
     enet_qos_ptp_config_t ptpConfig = {0};
 #endif /* !NO_SYS */
 
-    /* calculate start addresses of all rx buffers */
-    for (i = 0; i < ENET_RXBD_NUM; i++)
-    {
-        ethernetif->rxBufferStartAddr[i] = (uint32_t) & (ethernetif->rxDataBuff[i][ETH_PAD_SIZE]);
-    }
-
     /* prepare the buffer configuration. */
     buffCfg[0].rxRingLen = ENET_RXBD_NUM; /* The length of receive buffer descriptor ring. */
     buffCfg[0].txRingLen = ENET_TXBD_NUM; /* The length of transmit buffer descriptor ring. */
@@ -311,6 +388,14 @@ void ethernetif_enet_init(struct netif *netif,
     buffCfg[0].rxBuffNeedMaintain = true; /* Whether receive data buffer need cache maintain. */
 
     sysClock = ethernetifConfig->phyHandle->mdioHandle->resource.csrClock_Hz;
+    
+    for (i = 0; i < ENET_RXBUFF_NUM; i++)
+    {
+        ethernetif->RxPbufs[i].p.custom_free_function = ethernetif_rx_release;
+        ethernetif->RxPbufs[i].buffer                 = &(ethernetif->rxDataBuff[i][0]);
+        ethernetif->RxPbufs[i].buffer_used            = false;
+        ethernetif->RxPbufs[i].netif                  = netif;
+    }
 
     ENET_QOS_GetDefaultConfig(&config);
 
@@ -332,6 +417,8 @@ void ethernetif_enet_init(struct netif *netif,
     config.miiDuplex = (enet_qos_mii_duplex_t)duplex;
 
     config.specialControl = kENET_QOS_HashMulticastEnable | kENET_QOS_StoreAndForward;
+    config.rxBuffAlloc = ethernetif_rx_alloc;
+    config.rxBuffFree = ethernetif_rx_free;
 
 #if !NO_SYS
     ptpConfig.tsRollover = kENET_QOS_DigitalRollover;
@@ -356,6 +443,9 @@ void ethernetif_enet_init(struct netif *netif,
 
     status = ENET_QOS_DescriptorInit(ethernetif->base, &config, &buffCfg[0]);
     LWIP_ASSERT("ENET_QOS_DescriptorInit failed\r\n", status == kStatus_Success);
+
+    status = ENET_QOS_RxBufferAllocAll(ethernetif->base, &ethernetif->handle);
+    LWIP_ASSERT("ENET_QOS_RxBufferAllocAll failed\r\n", status == kStatus_Success);
 
     /* Active TX/RX. */
     ENET_QOS_StartRxTx(ethernetif->base, 1, 1);
@@ -441,114 +531,117 @@ static err_t ethernetif_send_frame(struct ethernetif *ethernetif, unsigned char 
     }
 }
 
-struct pbuf *ethernetif_linkinput(struct netif *netif)
+/**
+ * Reclaims RX buffer held by the p after p is no longer used
+ * by the application / lwIP.
+ */
+static void ethernetif_rx_release(struct pbuf *p)
 {
+    rx_pbuf_wrapper_t *wrapper    = (rx_pbuf_wrapper_t *)p;
+    struct netif *netif           = wrapper->netif;
     struct ethernetif *ethernetif = netif->state;
-    struct pbuf *p                = NULL;
-    uint32_t len;
-    status_t status;
 
-    /* Obtain the size of the packet and put it into the "len" variable. */
-    status = ENET_QOS_GetRxFrameSize(ethernetif->base, &ethernetif->handle, &len, 0U);
+    ethernetif_rx_free(ethernetif->base, wrapper->buffer, netif, 0);
+}
 
-    if (kStatus_ENET_QOS_RxFrameEmpty != status)
+/** Wraps received buffer(s) into a pbuf or a pbuf chain and returns it. */
+static struct pbuf *ethernetif_rx_frame_to_pbufs(struct ethernetif *ethernetif, enet_qos_rx_frame_struct_t *rxFrame)
+{
+    void *buffer;
+    uint16_t bufferLength;
+    rx_pbuf_wrapper_t *wrapper;
+    uint16_t len   = 0U;
+    struct pbuf *p = NULL;
+    struct pbuf *q = NULL;
+    int idx;
+    int i;
+
+    for (i = 0; ((i < MAX_BUFFERS_PER_FRAME) && (len < rxFrame->totLen)); i++)
     {
-        /* Call enet_read_frame when there is a received frame. */
-        if (len != 0)
+        buffer       = rxFrame->rxBuffArray[i].buffer;
+        bufferLength = rxFrame->rxBuffArray[i].length;
+        len += bufferLength;
+
+        /* Find pbuf wrapper for the actually read byte buffer */
+        idx = ((rx_buffer_t *)buffer) - ethernetif->rxDataBuff;
+        LWIP_ASSERT("Buffer returned by ENET_GetRxFrame() doesn't match any RX buffer descriptor",
+                    ((idx >= 0) && (idx < ENET_RXBUFF_NUM)));
+        wrapper = &ethernetif->RxPbufs[idx];
+        LWIP_ASSERT("Buffer returned by ENET_GetRxFrame() doesn't match wrapper buffer", wrapper->buffer == buffer);
+
+        /* Wrap the received buffer in pbuf. */
+        if (p == NULL)
         {
-#if ETH_PAD_SIZE
-            len += ETH_PAD_SIZE; /* allow room for Ethernet padding */
-#endif
-
-            /* We allocate a pbuf chain of pbufs from the pool. */
-            p = pbuf_alloc(PBUF_RAW, len, PBUF_POOL);
-
-            if (p != NULL)
-            {
-#if ETH_PAD_SIZE
-                pbuf_header(p, -ETH_PAD_SIZE); /* drop the padding word */
-#endif
-
-#if RX_FRAME_FITS_INTO_PBUF
-                LWIP_ASSERT("Frame does not fit into a single pbuf", p->next == 0);
-                ENET_QOS_ReadFrame(ethernetif->base, &ethernetif->handle, p->payload, p->len, 0U, NULL);
-#else
-                if (p->next == 0) /* One-chain buffer.*/
-                {
-                    ENET_QOS_ReadFrame(ethernetif->base, &ethernetif->handle, p->payload, p->len, 0U, NULL);
-                }
-                else /* Multi-chain buffer.*/
-                {
-                    /*
-                     * Static variable to avoid huge stack growth.
-                     * This is not thread-safe, but the function ethernetif_input(),
-                     * which calls ethernetif_linkinput(), is always called
-                     * from the same ISR context when on RTOS or from a main loop
-                     * when on bare metal.
-                     */
-                    static uint8_t data_tmp[ENET_QOS_FRAME_MAX_FRAMELEN];
-                    uint32_t data_tmp_len = 0;
-                    struct pbuf *q;
-
-                    ENET_QOS_ReadFrame(ethernetif->base, &ethernetif->handle, data_tmp, p->tot_len, 0U, NULL);
-
-                    /* We iterate over the pbuf chain until we have read the entire
-                     * packet into the pbuf. */
-                    for (q = p; (q != NULL) && ((data_tmp_len + q->len) <= sizeof(data_tmp)); q = q->next)
-                    {
-                        /* Read enough bytes to fill this pbuf in the chain. The
-                         * available data in the pbuf is given by the q->len
-                         * variable. */
-                        memcpy(q->payload, &data_tmp[data_tmp_len], q->len);
-                        data_tmp_len += q->len;
-                    }
-                }
-#endif /* RX_FRAME_FITS_INTO_PBUF */
-
-                MIB2_STATS_NETIF_ADD(netif, ifinoctets, p->tot_len);
-                if (((u8_t *)p->payload)[0] & 1)
-                {
-                    /* broadcast or multicast packet*/
-                    MIB2_STATS_NETIF_INC(netif, ifinnucastpkts);
-                }
-                else
-                {
-                    /* unicast packet*/
-                    MIB2_STATS_NETIF_INC(netif, ifinucastpkts);
-                }
-#if ETH_PAD_SIZE
-                pbuf_header(p, ETH_PAD_SIZE); /* reclaim the padding word */
-#endif
-
-                LINK_STATS_INC(link.recv);
-            }
-            else
-            {
-                /* drop packet*/
-                ENET_QOS_ReadFrame(ethernetif->base, &ethernetif->handle, NULL, 0U, 0U, NULL);
-
-                LWIP_DEBUGF(NETIF_DEBUG, ("ethernetif_linkinput: Fail to allocate new memory space\n"));
-
-                LINK_STATS_INC(link.memerr);
-                LINK_STATS_INC(link.drop);
-                MIB2_STATS_NETIF_INC(netif, ifindiscards);
-            }
+            p = pbuf_alloced_custom(PBUF_RAW, bufferLength, PBUF_REF, &wrapper->p, buffer, bufferLength);
+            LWIP_ASSERT("pbuf_alloced_custom() failed", p);
         }
         else
         {
-            /* Update the received buffer when error happened. */
-            if (status == kStatus_ENET_QOS_RxFrameError)
-            {
-                /* Update the receive buffer. */
-                ENET_QOS_ReadFrame(ethernetif->base, &ethernetif->handle, NULL, 0U, 0U, NULL);
+            q = pbuf_alloced_custom(PBUF_RAW, bufferLength, PBUF_REF, &wrapper->p, buffer, bufferLength);
+            LWIP_ASSERT("pbuf_alloced_custom() failed", q);
 
-                LWIP_DEBUGF(NETIF_DEBUG, ("ethernetif_linkinput: RxFrameError\n"));
-
-                LINK_STATS_INC(link.drop);
-                MIB2_STATS_NETIF_INC(netif, ifindiscards);
-            }
+            pbuf_cat(p, q);
         }
     }
+
+    LWIP_ASSERT("p->tot_len != rxFrame->totLen", p->tot_len == rxFrame->totLen);
+
+    MIB2_STATS_NETIF_ADD(netif, ifinoctets, p->tot_len);
+    if (((u8_t *)p->payload)[0] & 1)
+    {
+        /* broadcast or multicast packet */
+        MIB2_STATS_NETIF_INC(netif, ifinnucastpkts);
+    }
+    else
+    {
+        /* unicast packet */
+        MIB2_STATS_NETIF_INC(netif, ifinucastpkts);
+    }
+
+    LINK_STATS_INC(link.recv);
+
+    return p;
+}
+
+struct pbuf *ethernetif_linkinput(struct netif *netif)
+{
+    struct ethernetif *ethernetif = netif->state;
+    enet_qos_buffer_struct_t buffers[MAX_BUFFERS_PER_FRAME];
+    enet_qos_rx_frame_struct_t rxFrame = {.rxBuffArray = &buffers[0]};
+    struct pbuf *p                 = NULL;
+    status_t status;
+
+    status = ENET_QOS_GetRxFrame(ethernetif->base, &ethernetif->handle, &rxFrame, 0);
+    switch (status)
+    {
+        case kStatus_Success:
+            /* Frame read, process it into pbufs. */
+            p = ethernetif_rx_frame_to_pbufs(ethernetif, &rxFrame);
+            break;
+
+        case kStatus_ENET_QOS_RxFrameEmpty:
+            /* Frame not available. */
+            break;
+
+        case kStatus_ENET_QOS_RxFrameError:
+            /* Error receiving frame */
+            LWIP_DEBUGF(NETIF_DEBUG, ("ethernetif_linkinput: RxFrameError\n"));
+            LINK_STATS_INC(link.drop);
+            MIB2_STATS_NETIF_INC(netif, ifindiscards);
+            break;
+
+        case kStatus_ENET_QOS_RxFrameDrop:
+            /* Frame received, but it had to be dropped
+             * because new buffer(s) allocation failed in the ENET driver. */
+            LINK_STATS_INC(link.drop);
+            MIB2_STATS_NETIF_INC(netif, ifindiscards);
+            break;
+
+        default:
+            LWIP_ASSERT("Unhandled return value.", 0);
+            break;
+    }
+
     return p;
 }
 
@@ -646,8 +739,10 @@ err_t ethernetif0_init(struct netif *netif)
                                   ENET_QOS_BUFF_ALIGNMENT);
     AT_NONCACHEABLE_SECTION_ALIGN(static enet_qos_tx_bd_struct_t txBuffDescrip_0[ENET_TXBD_NUM],
                                   ENET_QOS_BUFF_ALIGNMENT);
-    SDK_ALIGN(static rx_buffer_t rxDataBuff_0[ENET_RXBD_NUM], FSL_ENET_BUFF_ALIGNMENT);
+    SDK_ALIGN(static rx_buffer_t rxDataBuff_0[ENET_RXBUFF_NUM], FSL_ENET_BUFF_ALIGNMENT);
     SDK_ALIGN(static tx_buffer_t txDataBuff_0[ENET_TXBD_NUM], FSL_ENET_BUFF_ALIGNMENT);
+
+    memset((void *)&ethernetif_0, 0, sizeof(struct ethernetif));
 
     ethernetif_0.rxBuffDescrip = &(rxBuffDescrip_0[0]);
     ethernetif_0.txBuffDescrip = &(txBuffDescrip_0[0]);
@@ -677,8 +772,10 @@ err_t ethernetif1_init(struct netif *netif)
                                   ENET_QOS_BUFF_ALIGNMENT);
     AT_NONCACHEABLE_SECTION_ALIGN(static enet_qos_tx_bd_struct_t txBuffDescrip_1[ENET_TXBD_NUM],
                                   ENET_QOS_BUFF_ALIGNMENT);
-    SDK_ALIGN(static rx_buffer_t rxDataBuff_1[ENET_RXBD_NUM], FSL_ENET_BUFF_ALIGNMENT);
+    SDK_ALIGN(static rx_buffer_t rxDataBuff_1[ENET_RXBUFF_NUM], FSL_ENET_BUFF_ALIGNMENT);
     SDK_ALIGN(static tx_buffer_t txDataBuff_1[ENET_TXBD_NUM], FSL_ENET_BUFF_ALIGNMENT);
+
+    memset((void *)&ethernetif_1, 0, sizeof(struct ethernetif));
 
     ethernetif_1.rxBuffDescrip = &(rxBuffDescrip_1[0]);
     ethernetif_1.txBuffDescrip = &(txBuffDescrip_1[0]);

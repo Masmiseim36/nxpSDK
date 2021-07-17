@@ -14,7 +14,7 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define BOARD_FLEXIO_BASE FLEXIO2
+#define BOARD_FLEXIO_BASE  FLEXIO2
 #define FLEXIO_UART_TX_PIN 10U
 #define FLEXIO_UART_RX_PIN 11U
 

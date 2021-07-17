@@ -55,6 +55,23 @@ void BOARD_InitPins(void);                    /* Function assigned for the Corte
  */
 void BOARD_I2C_ConfigurePins(void);           /* Function assigned for the Cortex-M7F */
 
+/* GPIO_AD_16 (coord N17), SDIO_RST */
+/* Routed pin properties */
+#define BOARD_INITM2WIFIRESETPINS_SDIO_RST_PERIPHERAL                      GPIO9   /*!< Peripheral name */
+#define BOARD_INITM2WIFIRESETPINS_SDIO_RST_SIGNAL                        gpio_io   /*!< Signal name */
+#define BOARD_INITM2WIFIRESETPINS_SDIO_RST_CHANNEL                           15U   /*!< Signal channel */
+
+/* Symbols to be used with GPIO driver */
+#define BOARD_INITM2WIFIRESETPINS_SDIO_RST_GPIO                            GPIO9   /*!< GPIO peripheral base pointer */
+#define BOARD_INITM2WIFIRESETPINS_SDIO_RST_GPIO_PIN                          15U   /*!< GPIO pin number */
+#define BOARD_INITM2WIFIRESETPINS_SDIO_RST_GPIO_PIN_MASK             (1U << 15U)   /*!< GPIO pin mask */
+
+/*!
+ * @brief Configures pin routing and optionally pin electrical features.
+ *
+ */
+void BOARD_InitM2WifiResetPins(void);         /* Function assigned for the Cortex-M7F */
+
 #if defined(__cplusplus)
 }
 #endif

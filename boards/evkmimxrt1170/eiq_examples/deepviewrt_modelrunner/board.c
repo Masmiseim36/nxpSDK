@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2021 NXP
+ * Copyright 2018-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -30,10 +30,6 @@ uint32_t BOARD_DebugConsoleSrcFreq(void)
 #else
     return CLOCK_GetRootClockFreq(kCLOCK_Root_Lpuart2);
 #endif
-}
-
-uint32_t SEMC_DBICR1_CEITV(uint32_t x){
-		return 0;
 }
 
 /* Initialize debug console. */

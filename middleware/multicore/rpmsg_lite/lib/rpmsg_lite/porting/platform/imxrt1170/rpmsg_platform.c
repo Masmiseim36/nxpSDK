@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2020 NXP
+ * Copyright 2019-2021 NXP
  * All rights reserved.
  *
  *
@@ -167,8 +167,8 @@ void platform_time_delay(uint32_t num_msec)
 {
     uint32_t loop;
 
-    /* Recalculate the CPU frequency */
-    SystemCoreClockUpdate();
+    /* Recalculate the CPU frequency - not implemented in system_MIMXRT1176_cm[4,7].c */
+    /* SystemCoreClockUpdate(); */
 
     /* Calculate the CPU loops to delay, each loop has 3 cycles */
     loop = SystemCoreClock / 3U / 1000U * num_msec;

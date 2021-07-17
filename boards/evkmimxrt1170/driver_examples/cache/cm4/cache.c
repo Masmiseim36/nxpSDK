@@ -19,9 +19,9 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define EXAMPLE_DMA_BASE DMA1
-#define EXAMPLE_DMAMUX_BASE DMAMUX1
-#define MEM_DMATRANSFER_LEN 10U * FSL_FEATURE_L1DCACHE_LINESIZE_BYTE
+#define EXAMPLE_DMA_BASE            DMA1
+#define EXAMPLE_DMAMUX_BASE         DMAMUX1
+#define MEM_DMATRANSFER_LEN         10U * FSL_FEATURE_L1DCACHE_LINESIZE_BYTE
 #define DMA0_DMA16_DriverIRQHandler DMA_CH_0_16_DriverIRQHandler
 
 /* DMA Timtout. */

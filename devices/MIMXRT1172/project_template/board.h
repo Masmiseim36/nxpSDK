@@ -203,6 +203,12 @@
 /* SD card detection method when using wifi module. */
 #define BOARD_WIFI_SD_DETECT_TYPE kSDMMCHOST_DetectCardByHostDATA3
 
+#define BOARD_BT_UART_INSTANCE    7
+#define BOARD_BT_UART_BAUDRATE    3000000
+#define BOARD_BT_UART_CLK_FREQ    CLOCK_GetRootClockFreq(kCLOCK_Root_Lpuart7);
+#define BOARD_BT_UART_IRQ         LPUART7_IRQn
+#define BOARD_BT_UART_IRQ_HANDLER LPUART7_IRQHandler
+
 #if defined(__cplusplus)
 extern "C" {
 #endif /* __cplusplus */

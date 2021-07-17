@@ -1,17 +1,15 @@
-if(NOT MIDDLEWARE_DHARA_DHARA_ECC_HAMMING_MIMXRT1176_cm4_INCLUDED)
-    
-    set(MIDDLEWARE_DHARA_DHARA_ECC_HAMMING_MIMXRT1176_cm4_INCLUDED true CACHE BOOL "middleware_dhara_dhara_ecc_hamming component is included.")
+include_guard(GLOBAL)
+message("middleware_dhara_dhara_ecc_hamming component is included.")
 
-    target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
-        ${CMAKE_CURRENT_LIST_DIR}/ecc/hamming.c
-    )
-
-
-    target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
-        ${CMAKE_CURRENT_LIST_DIR}/ecc
-    )
+target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
+    ${CMAKE_CURRENT_LIST_DIR}/ecc/hamming.c
+)
 
 
-    include(middleware_dhara_MIMXRT1176_cm4)
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
+    ${CMAKE_CURRENT_LIST_DIR}/ecc
+)
 
-endif()
+
+include(middleware_dhara_MIMXRT1176_cm4)
+

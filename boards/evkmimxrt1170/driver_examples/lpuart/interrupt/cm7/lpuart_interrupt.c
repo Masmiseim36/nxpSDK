@@ -14,9 +14,9 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_LPUART LPUART1
-#define DEMO_LPUART_CLK_FREQ BOARD_DebugConsoleSrcFreq()
-#define DEMO_LPUART_IRQn LPUART1_IRQn
+#define DEMO_LPUART            LPUART1
+#define DEMO_LPUART_CLK_FREQ   BOARD_DebugConsoleSrcFreq()
+#define DEMO_LPUART_IRQn       LPUART1_IRQn
 #define DEMO_LPUART_IRQHandler LPUART1_IRQHandler
 
 /*! @brief Ring buffer size (Unit: Byte). */

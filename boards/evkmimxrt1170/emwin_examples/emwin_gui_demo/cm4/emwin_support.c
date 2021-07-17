@@ -27,7 +27,7 @@ SDK_ALIGN(uint8_t s_gui_memory[GUI_NUMBYTES], 4U);
 AT_NONCACHEABLE_SECTION_ALIGN(uint8_t s_vram_buffer[VRAM_SIZE * GUI_BUFFERS], FRAME_BUFFER_ALIGN);
 
 #define GUI_MEMORY_ADDR ((uint32_t)s_gui_memory)
-#define VRAM_ADDR ((uint32_t)s_vram_buffer)
+#define VRAM_ADDR       ((uint32_t)s_vram_buffer)
 
 static volatile int32_t s_LCDpendingBuffer = -1;
 

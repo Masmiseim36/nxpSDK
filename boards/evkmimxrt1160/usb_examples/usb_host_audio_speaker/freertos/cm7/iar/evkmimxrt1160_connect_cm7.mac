@@ -109,7 +109,7 @@ SDRAM_WaitIpCmdDone()
         __delay(10);
     }while((reg & 0x3) == 0);
 
-    __writeMemory32(0x400D403C, 0x00000003, "Memory");    // clear IPCMDERR and IPCMDDONE bits
+    __writeMemory32(0x00000003, 0x400D403C, "Memory");    // clear IPCMDERR and IPCMDDONE bits
 }
 
 setSemcClock()

@@ -8,11 +8,7 @@
 #define __SDMMC_INIT_H__
 
 #include "fsl_iomuxc.h"
-//#if FSL_FEATURE_SOC_GPIO_COUNT
-//#include "gpio/fsl_gpio.h"
-//#elif FSL_FEATURE_SOC_IGPIO_COUNT
 #include "fsl_gpio.h"
-//#endif
 #if FSL_FEATURE_SOC_PORT_COUNT
 #include "fsl_port.h"
 #endif

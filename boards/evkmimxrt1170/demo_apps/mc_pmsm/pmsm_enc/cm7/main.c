@@ -7,30 +7,78 @@
  */
 
 #include "fsl_common.h"
-#include "main.h"
+#include "mc_periph_init.h"
+#include "freemaster.h"
+#include "pin_mux.h"
+#include "fsl_gpio.h"
+#include "fsl_lpuart.h"
+#include "m1_sm_snsless_enc.h"
+#include "fsl_adc_etc.h"
+
+#include "freemaster_serial_lpuart.h"
+#include "board.h"
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
+/* Version info */
+#define MCRSP_VER "2.0.0" /* motor control package version */
+
+/*! @brief The UART to use for FreeMASTER communication */
+#define BOARD_FMSTR_UART_PORT LPUART1
+#define BOARD_FMSTR_UART_BAUDRATE 19200U
+
+#define BOARD_USER_BUTTON_PRIORITY 4
+
+/* CPU load measurement SysTick START / STOP macros */
+#define SYSTICK_START_COUNT() (SysTick->VAL = SysTick->LOAD)
+#define SYSTICK_STOP_COUNT(par1)   \
+    uint32_t val  = SysTick->VAL;  \
+    uint32_t load = SysTick->LOAD; \
+    par1          = load - val
+
+/* Three instruction added after interrupt flag clearing as required */
+#define M1_END_OF_ISR \
+    {                 \
+        __DSB();      \
+        __ISB();      \
+    }
+
+/* Init SDK HW */
+static void BOARD_Init(void);
+/* ADC COCO interrupt */
+void ADC_ETC_IRQ0_IRQHandler(void);
+/* TMR1 reload ISR called with 1ms period */
+void TMR1_IRQHandler(void);
+/* SW8 Button interrupt handler */
+void GPIO13_Combined_0_31_IRQHandler(void);
+/* Demo Speed Stimulator */
+static void DemoSpeedStimulator(void);
+/* Demo Position Stimulator */
+static void DemoPositionStimulator(void);
+
+static void BOARD_InitUART(uint32_t u32BaudRate);
+static void BOARD_InitSysTick(void);
+static void BOARD_InitGPIO(void);
 
 /*******************************************************************************
  * Variables
  ******************************************************************************/
 
-/* CPU load measurement using Systick*/
-uint32_t g_ui32NumberOfCycles    = 0;
-uint32_t g_ui32MaxNumberOfCycles = 0;
+/* CPU load measurement using Systick */
+uint32_t g_ui32NumberOfCycles    = 0U;
+uint32_t g_ui32MaxNumberOfCycles = 0U;
 
 /* Demo mode enabled/disabled */
 bool_t bDemoModeSpeed    = FALSE;
 bool_t bDemoModePosition = FALSE;
 
 /* Counters used for demo mode */
-static uint32_t ui32SpeedStimulatorCnt    = 0;
-static uint32_t ui32PositionStimulatorCnt = 0;
+static uint32_t ui32SpeedStimulatorCnt    = 0U;
+static uint32_t ui32PositionStimulatorCnt = 0U;
 
 /* Counter for button pressing */
-static uint32_t ui32ButtonFilter = 0;
+static uint32_t ui32ButtonFilter = 0U;
 
 /* Application and board ID  */
 app_ver_t g_sAppId = {
@@ -40,7 +88,11 @@ app_ver_t g_sAppId = {
 };
 
 /* Structure used in FM to get required ID's */
-app_ver_t g_sAppIdFM;
+app_ver_t g_sAppIdFM = {
+	"",
+	"",
+	MCRSP_VER,
+};
 
 /*******************************************************************************
  * Prototypes
@@ -83,7 +135,7 @@ int main(void)
     FMSTR_Init();
 
     /* Turn off application */
-    M1_SetAppSwitch(0);
+    M1_SetAppSwitch(FALSE);
 
     /* Enable interrupts */
     EnableGlobalIRQ(ui32PrimaskReg);
@@ -215,11 +267,13 @@ void GPIO13_Combined_0_31_IRQHandler(void)
  *
  * @return  none
  */
-void DemoSpeedStimulator(void)
+static void DemoSpeedStimulator(void)
 {
     /* Increase push button pressing counter  */
     if (ui32ButtonFilter < 1000)
-        ui32ButtonFilter++;
+    {
+    	ui32ButtonFilter++;
+    }
 
     if (bDemoModeSpeed)
     {
@@ -254,7 +308,8 @@ void DemoSpeedStimulator(void)
                 M1_SetAppSwitch(0);
                 break;
             default:
-                break;
+            	;
+            	break;
         }
     }
 }
@@ -268,7 +323,7 @@ void DemoSpeedStimulator(void)
  *
  * @return  none
  */
-void DemoPositionStimulator(void)
+static void DemoPositionStimulator(void)
 {
     if (bDemoModePosition)
     {
@@ -306,7 +361,8 @@ void DemoPositionStimulator(void)
                 M1_SetAppSwitch(0);
                 break;
             default:
-                break;
+			    ;
+            	break;
         }
     }
 }
@@ -318,7 +374,7 @@ void DemoPositionStimulator(void)
  *
  *@return     none
  */
-void BOARD_Init(void)
+static void BOARD_Init(void)
 {
     /* MPU configuration. */
     BOARD_ConfigMPU();
@@ -331,14 +387,14 @@ void BOARD_Init(void)
 }
 
 /*!
- * @brief   void BOARD_InitGPIO(void)
+ * @brief   static void BOARD_InitGPIO(void)
  *           - Initialization of the GPIO peripherals
  *
  * @param   void
  *
  * @return  none
  */
-void BOARD_InitGPIO(void)
+static void BOARD_InitGPIO(void)
 {
     /* LED pin configuration */
     const gpio_pin_config_t output_pin_config = {
@@ -371,7 +427,7 @@ void BOARD_InitGPIO(void)
  *
  *@return     none
  */
-void BOARD_InitUART(uint32_t u32BaudRate)
+static void BOARD_InitUART(uint32_t u32BaudRate)
 {
     lpuart_config_t config;
 
@@ -399,7 +455,7 @@ void BOARD_InitUART(uint32_t u32BaudRate)
  *
  *@return     none
  */
-void BOARD_InitSysTick(void)
+static void BOARD_InitSysTick(void)
 {
     /* Initialize SysTick core timer to run free */
     /* Set period to maximum value 2^24*/

@@ -1,17 +1,15 @@
-if(NOT DRIVER_FT5406_RT_MIMXRT1176_cm7_INCLUDED)
-    
-    set(DRIVER_FT5406_RT_MIMXRT1176_cm7_INCLUDED true CACHE BOOL "driver_ft5406_rt component is included.")
+include_guard(GLOBAL)
+message("driver_ft5406_rt component is included.")
 
-    target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
-        ${CMAKE_CURRENT_LIST_DIR}/fsl_ft5406_rt.c
-    )
-
-
-    target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
-        ${CMAKE_CURRENT_LIST_DIR}/.
-    )
+target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
+    ${CMAKE_CURRENT_LIST_DIR}/fsl_ft5406_rt.c
+)
 
 
-    include(driver_lpi2c_MIMXRT1176_cm7)
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
+    ${CMAKE_CURRENT_LIST_DIR}/.
+)
 
-endif()
+
+include(driver_lpi2c_MIMXRT1176_cm7)
+

@@ -49,6 +49,8 @@
  * soon as card is detected. So If application would like to re-detect sdcard/sdiocard, please calling
  * SD_PollingCardInsert/SDIO_PollingCardInsert The function will polling the card detect status and could yield CPU
  * while RTOS and non-blocking adapter is using.
+ * DAT3 card detect maynot able to cover all the card(wifi/sdcard), as the difference of the card driver strength,
+ * application should pay attention of the limitation.
  *
  * Using card detect pin for card detection is recommended.
  */

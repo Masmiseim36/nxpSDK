@@ -314,9 +314,8 @@ int main(void)
     uint32_t refClock = ENET_PTP_REF_CLK; /* PTP REF clock. */
     phy_speed_t speed;
     phy_duplex_t duplex;
-    bool link     = false;
-    bool autonego = false;
-    enet_qos_cbs_config_t cbsConfig;
+    bool link          = false;
+    bool autonego      = false;
     uint32_t ringId    = 0;
     uint32_t testTxNum = 0;
     status_t status;
@@ -346,8 +345,6 @@ int main(void)
 
     EnableIRQ(ENET_1G_MAC0_Tx_Rx_1_IRQn);
     EnableIRQ(ENET_1G_MAC0_Tx_Rx_2_IRQn);
-
-    memset(&cbsConfig, 0, sizeof(enet_qos_cbs_config_t));
 
     for (uint8_t ringId = 0; ringId < ENET_QOS_RXQUEUE_USE; ringId++)
     {
@@ -477,12 +474,6 @@ int main(void)
     ptpConfig.systemTimeClock_Hz = refClock;
     config.ptpConfig             = &ptpConfig;
 
-    /* Configure AVB queue */
-    cbsConfig.sendSlope  = 0x1000U;
-    cbsConfig.idleSlope  = 0x1000U;
-    cbsConfig.highCredit = 0x3E800U;
-    cbsConfig.lowCredit  = 0xFFC18000;
-
     /* Multi-queue config */
     enet_qos_multiqueue_config_t multiQueue = {
         .burstLen   = kENET_QOS_BurstLen1,
@@ -497,10 +488,10 @@ int main(void)
                     .cbsConfig = NULL,
                 },
                 {
-                    .mode      = kENET_QOS_DCB_Mode, /*kENET_QOS_AVB_Mode,*/
+                    .mode      = kENET_QOS_DCB_Mode,
                     .weight    = 0x10U,
                     .priority  = 0x1U,
-                    .cbsConfig = &cbsConfig,
+                    .cbsConfig = NULL,
                 },
                 {
                     .mode      = kENET_QOS_DCB_Mode,
@@ -601,6 +592,9 @@ int main(void)
     PRINTF("\r\n%d frames will be sent in %d queues, and frames will be received in %d queues.\r\n",
            ENET_QOS_TRANSMIT_DATA_NUM, ENET_QOS_TXQUEUE_USE, ENET_QOS_RXQUEUE_USE);
 
+    /* Start with Ring 2 because ring(queue) 2 has higher priority on tx DMA channel.
+    tx Ring N uses DMA channel N and channel N has higher priority than N-1. */
+    ringId = 2;
     while (1)
     {
         if (testTxNum < ENET_QOS_TRANSMIT_DATA_NUM)
@@ -615,7 +609,7 @@ int main(void)
                 {
                 }
 
-                ringId = (ringId + 1) % 3;
+                ringId = (ringId + 2) % 3;
             }
         }
         if (g_txSuccessFlag)

@@ -2,7 +2,5 @@
 set(CONFIG_USE_middleware_mbedtls_rt2_MIMXRT1166_cm4 true)
 set(CONFIG_USE_driver_enet_MIMXRT1166_cm4 true)
 set(CONFIG_USE_middleware_lwip_enet_ethernetif_MIMXRT1166_cm4 true)
-set(CONFIG_USE_middleware_mbedtls_port_ksdk_MIMXRT1166_cm4 true)
-set(CONFIG_USE_CMSIS_Include_core_cm4_MIMXRT1166_cm4 true)
 set(CONFIG_USE_component_serial_manager_uart_MIMXRT1166_cm4 true)
 set(CONFIG_USE_driver_lpuart_MIMXRT1166_cm4 true)

@@ -16,7 +16,7 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_DAC12_BASE DAC
+#define DEMO_DAC12_BASE        DAC
 #define DEMO_DAC12_VREF_SOURCE kDAC12_ReferenceVoltageSourceAlt2
 
 

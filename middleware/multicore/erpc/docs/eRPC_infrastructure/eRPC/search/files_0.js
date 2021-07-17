@@ -12,6 +12,7 @@ var searchData=
   ['erpc_5fdspi_5fmaster_5ftransport_2eh',['erpc_dspi_master_transport.h',['../erpc__dspi__master__transport_8h.html',1,'']]],
   ['erpc_5fdspi_5fslave_5ftransport_2eh',['erpc_dspi_slave_transport.h',['../erpc__dspi__slave__transport_8h.html',1,'']]],
   ['erpc_5fframed_5ftransport_2eh',['erpc_framed_transport.h',['../erpc__framed__transport_8h.html',1,'']]],
+  ['erpc_5fi2c_5fslave_5ftransport_2eh',['erpc_i2c_slave_transport.h',['../erpc__i2c__slave__transport_8h.html',1,'']]],
   ['erpc_5finter_5fthread_5fbuffer_5ftransport_2eh',['erpc_inter_thread_buffer_transport.h',['../erpc__inter__thread__buffer__transport_8h.html',1,'']]],
   ['erpc_5fmanually_5fconstructed_2eh',['erpc_manually_constructed.h',['../erpc__manually__constructed_8h.html',1,'']]],
   ['erpc_5fmbf_5fsetup_2eh',['erpc_mbf_setup.h',['../erpc__mbf__setup_8h.html',1,'']]],

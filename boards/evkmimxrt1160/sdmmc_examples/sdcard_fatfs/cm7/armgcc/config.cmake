@@ -2,5 +2,4 @@
 set(CONFIG_USE_middleware_sdmmc_host_usdhc_MIMXRT1166_cm7 true)
 set(CONFIG_USE_middleware_sdmmc_host_usdhc_interrupt_MIMXRT1166_cm7 true)
 set(CONFIG_USE_middleware_fatfs_sd_MIMXRT1166_cm7 true)
-set(CONFIG_USE_CMSIS_Include_core_cm7_MIMXRT1166_cm7 true)
 set(CONFIG_USE_driver_lpuart_MIMXRT1166_cm7 true)

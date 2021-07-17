@@ -27,15 +27,15 @@
  * M4 LMEM region is used in this example. M7 accesses this region
  * through the address 0x20200000 ~ 0x2023ffff.
  */
-#define DEMO_XRDC2_MEM kXRDC2_Mem_M4LMEM_Region0
+#define DEMO_XRDC2_MEM            kXRDC2_Mem_M4LMEM_Region0
 #define DEMO_XRDC2_MEM_START_ADDR 0x20200000
-#define DEMO_XRDC2_MEM_END_ADDR 0x2023ffff
+#define DEMO_XRDC2_MEM_END_ADDR   0x2023ffff
 
 /* Peripheral */
 #define DEMO_XRDC2_PERIPH kXRDC2_Periph_GPIO1
 
 /* Memory Slot */
-#define DEMO_XRDC2_MEM_SLOT kXRDC2_MemSlot_GPV0
+#define DEMO_XRDC2_MEM_SLOT            kXRDC2_MemSlot_GPV0
 #define DEMO_XRDC2_MEM_SLOT_START_ADDR 0x41000000
 /* The memory slot region is large, in this example, only access part of region. */
 #define DEMO_XRDC2_MEM_SLOT_ACCESS_SIZE 0x10
@@ -83,14 +83,14 @@ void DEMO_AssignDomain(void)
     assignment.secureAttr    = kXRDC2_MasterSecure;
     assignment.domainId      = DEMO_CORE_DOMAIN;
     /* The XID input is not used for domain assignment hit. */
-    assignment.mask  = XRDC2_MAKE_M7_AXI_MATCH(0, 1, 1, 1, 7);
-    assignment.match = XRDC2_MAKE_M7_AXI_MATCH(0, 0, 0, 0, 0);
+    assignment.mask  = 0x3FUL;
+    assignment.match = 0UL;
 
     XRDC2_SetMasterDomainAssignment(DEMO_XRDC2, kXRDC2_Master_M7_AXI, 0, &assignment);
 
     /* The XID input is not used for domain assignment hit. */
-    assignment.mask  = XRDC2_MAKE_M7_AHB_MATCH(0, 1, 1, 1, 7);
-    assignment.match = XRDC2_MAKE_M7_AHB_MATCH(0, 0, 0, 0, 0);
+    assignment.mask  = 0x3FUL;
+    assignment.match = 0UL;
     XRDC2_SetMasterDomainAssignment(DEMO_XRDC2, kXRDC2_Master_M7_AHB, 0, &assignment);
 }
 
@@ -150,7 +150,7 @@ void DEMO_TouchMemSlot(void)
 {
     uint32_t addrOffset;
 
-    for (addrOffset = 0; addrOffset < DEMO_XRDC2_MEM_SLOT_ACCESS_SIZE; addrOffset+= sizeof(uint32_t))
+    for (addrOffset = 0; addrOffset < DEMO_XRDC2_MEM_SLOT_ACCESS_SIZE; addrOffset += sizeof(uint32_t))
     {
         (void)(*(volatile uint32_t *)(DEMO_XRDC2_MEM_SLOT_START_ADDR + addrOffset));
     }

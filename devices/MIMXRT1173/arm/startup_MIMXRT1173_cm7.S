@@ -4,7 +4,7 @@
 /*            MIMXRT1173_cm7                                                 */
 /*  @version: 1.0                                                            */
 /*  @date:    2020-12-29                                                     */
-/*  @build:   b210402                                                        */
+/*  @build:   b210419                                                        */
 /* ------------------------------------------------------------------------- */
 /*                                                                           */
 /* Copyright 1997-2016 Freescale Semiconductor, Inc.                         */
@@ -291,7 +291,6 @@ __Vectors:
 
     .thumb_func
     .align 2
-    .globl   Reset_Handler
     .weak    Reset_Handler
     .type    Reset_Handler, %function
 Reset_Handler:

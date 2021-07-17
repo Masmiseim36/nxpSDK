@@ -1,19 +1,17 @@
-if(NOT MIDDLEWARE_FATFS_SD_MIMXRT1166_cm4_INCLUDED)
-    
-    set(MIDDLEWARE_FATFS_SD_MIMXRT1166_cm4_INCLUDED true CACHE BOOL "middleware_fatfs_sd component is included.")
+include_guard(GLOBAL)
+message("middleware_fatfs_sd component is included.")
 
-    target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
-        ${CMAKE_CURRENT_LIST_DIR}/source/fsl_sd_disk/fsl_sd_disk.c
-    )
-
-
-    target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
-        ${CMAKE_CURRENT_LIST_DIR}/source/fsl_sd_disk
-    )
+target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
+    ${CMAKE_CURRENT_LIST_DIR}/source/fsl_sd_disk/fsl_sd_disk.c
+)
 
 
-    include(middleware_fatfs_MIMXRT1166_cm4)
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
+    ${CMAKE_CURRENT_LIST_DIR}/source/fsl_sd_disk
+)
 
-    include(middleware_sdmmc_sd_MIMXRT1166_cm4)
 
-endif()
+include(middleware_fatfs_MIMXRT1166_cm4)
+
+include(middleware_sdmmc_sd_MIMXRT1166_cm4)
+

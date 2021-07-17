@@ -186,6 +186,7 @@
           <state>XIP_BOOT_HEADER_ENABLE=1</state>
           <state>SKIP_SYSCLK_INIT</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
+          <state>MCUXPRESSO_SDK</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -317,6 +318,7 @@
           <state>$PROJ_DIR$/../../../../../../middleware/safety_iec60730b/boards/common/cm4_cm7/startup/cm7</state>
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../../../../middleware/safety_iec60730b/boards/evkmimxrt1170/xip</state>
+          <state>$PROJ_DIR$/../../../../../../MIMXRT1176</state>
           <state>$PROJ_DIR$/../../../../../../middleware/safety_iec60730b/safety/v4_1/core_test/cm4_cm7/register</state>
           <state>$PROJ_DIR$/../../../../../../middleware/safety_iec60730b/safety/v4_1/core_test/cm4_cm7/ram</state>
           <state>$PROJ_DIR$/../../../../../../middleware/safety_iec60730b/safety/v4_1/core_test/cm4_cm7/flash</state>
@@ -332,7 +334,6 @@
           <state>$PROJ_DIR$/../../../../../../middleware/safety_iec60730b/safety/v4_1/common_test/aio</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../middleware/freemaster/src/common</state>
@@ -342,6 +343,7 @@
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -618,7 +620,7 @@
           <state>$PROJ_DIR$/../../../../../../middleware/safety_iec60730b/safety/v4_1/common_test/dio</state>
           <state>$PROJ_DIR$/../../../../../../middleware/safety_iec60730b/safety/v4_1/common_test/clock</state>
           <state>$PROJ_DIR$/../../../../../../middleware/safety_iec60730b/safety/v4_1/common_test/aio</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/safety_iec60730b/devices/MIMXRT1176</state>
         </option>
         <option>
           <name>AExtraOptionsCheckV2</name>
@@ -822,7 +824,7 @@
         </option>
         <option>
           <name>IlinkOverrideProgramEntryLabel</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>IlinkProgramEntryLabelSelect</name>
@@ -1058,16 +1060,16 @@
       <name>$PROJ_DIR$/../pin_mux.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../clock_config.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../clock_config.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../board.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../board.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../clock_config.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../clock_config.h</name>
     </file>
   </group>
   <group>
@@ -1125,15 +1127,24 @@
     </file>
   </group>
   <group>
+    <name>MIMXRT1176</name>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../MIMXRT1176/system_MIMXRT1176_cm7.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../MIMXRT1176/system_MIMXRT1176_cm7.h</name>
+    </file>
+  </group>
+  <group>
     <name>GUI</name>
     <file>
       <name>$PROJ_DIR$/../GUI/safety_flash.pmp</name>
     </file>
   </group>
   <group>
-    <name>safety</name>
+    <name>safety_iec60730b</name>
     <group>
-      <name>v4_1</name>
+      <name>safety</name>
       <group>
         <name>register</name>
         <file>
@@ -1227,15 +1238,6 @@
     </group>
   </group>
   <group>
-    <name>MIMXRT1176</name>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/system_MIMXRT1176_cm7.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/system_MIMXRT1176_cm7.h</name>
-    </file>
-  </group>
-  <group>
     <name>drivers</name>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_clock.h</name>
@@ -1248,6 +1250,12 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_common.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_common_arm.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_common_arm.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_lpuart.h</name>
@@ -1271,12 +1279,6 @@
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_pmu.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_rtwdog.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_rtwdog.c</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_dcdc.h</name>
     </file>
     <file>
@@ -1287,45 +1289,6 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_anatop_ai.c</name>
-    </file>
-  </group>
-  <group>
-    <name>CMSIS</name>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/core_cm7.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/mpu_armv7.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_armcc.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_armclang.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_armclang_ltm.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_gcc.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_compiler.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_version.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_iccarm.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/arm_common_tables.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/arm_const_structs.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/arm_math.h</name>
     </file>
   </group>
   <group>
@@ -1417,6 +1380,12 @@
     <file>
       <name>$PROJ_DIR$/../../../../../../middleware/freemaster/src/common/freemaster_serial.h</name>
     </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../middleware/freemaster/src/common/freemaster_net.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../middleware/freemaster/src/common/freemaster_net.h</name>
+    </file>
     <group>
       <name>platforms</name>
       <file>
@@ -1479,6 +1448,18 @@
       <file>
         <name>$PROJ_DIR$/../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial/freemaster_serial_usb.h</name>
       </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/freemaster/src/drivers/mcuxsdk/network/freemaster_net_lwip_udp.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/freemaster/src/drivers/mcuxsdk/network/freemaster_net_lwip_udp.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/freemaster/src/drivers/mcuxsdk/network/freemaster_net_lwip_tcp.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/freemaster/src/drivers/mcuxsdk/network/freemaster_net_lwip_tcp.h</name>
+      </file>
     </group>
   </group>
   <group>
@@ -1519,5 +1500,35 @@
         <name>$PROJ_DIR$/../../../../../../components/uart/fsl_adapter_lpuart.c</name>
       </file>
     </group>
+  </group>
+  <group>
+    <name>CMSIS</name>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/cmsis_armcc.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/cmsis_armclang.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/cmsis_armclang_ltm.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/cmsis_compiler.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/cmsis_gcc.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/cmsis_iccarm.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/cmsis_version.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/core_cm7.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/mpu_armv7.h</name>
+    </file>
   </group>
 </project>

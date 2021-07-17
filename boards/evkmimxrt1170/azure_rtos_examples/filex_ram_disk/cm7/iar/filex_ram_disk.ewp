@@ -190,6 +190,7 @@
           <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>FX_INCLUDE_USER_DEFINE_FILE</state>
           <state>TX_INCLUDE_USER_DEFINE_FILE</state>
+          <state>MCUXPRESSO_SDK</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -324,7 +325,6 @@
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176</state>
-          <state>$PROJ_DIR$/../../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/cm7</state>
           <state>$PROJ_DIR$/../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/xip</state>
@@ -334,6 +334,7 @@
           <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/filex/ports/cortex_m7/iar/inc</state>
           <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/threadx/common/inc</state>
           <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/iar/inc</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1179,6 +1180,7 @@
           <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>FX_INCLUDE_USER_DEFINE_FILE</state>
           <state>TX_INCLUDE_USER_DEFINE_FILE</state>
+          <state>MCUXPRESSO_SDK</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -1313,7 +1315,6 @@
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176</state>
-          <state>$PROJ_DIR$/../../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/cm7</state>
           <state>$PROJ_DIR$/../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/xip</state>
@@ -1323,6 +1324,7 @@
           <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/filex/ports/cortex_m7/iar/inc</state>
           <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/threadx/common/inc</state>
           <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/iar/inc</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -2166,6 +2168,7 @@
           <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>FX_INCLUDE_USER_DEFINE_FILE</state>
           <state>TX_INCLUDE_USER_DEFINE_FILE</state>
+          <state>MCUXPRESSO_SDK</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -2300,7 +2303,6 @@
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176</state>
-          <state>$PROJ_DIR$/../../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/cm7</state>
           <state>$PROJ_DIR$/../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/xip</state>
@@ -2310,6 +2312,7 @@
           <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/filex/ports/cortex_m7/iar/inc</state>
           <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/threadx/common/inc</state>
           <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/iar/inc</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -3155,6 +3158,7 @@
           <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>FX_INCLUDE_USER_DEFINE_FILE</state>
           <state>TX_INCLUDE_USER_DEFINE_FILE</state>
+          <state>MCUXPRESSO_SDK</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -3289,7 +3293,6 @@
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176</state>
-          <state>$PROJ_DIR$/../../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/cm7</state>
           <state>$PROJ_DIR$/../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/xip</state>
@@ -3299,6 +3302,7 @@
           <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/filex/ports/cortex_m7/iar/inc</state>
           <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/threadx/common/inc</state>
           <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/iar/inc</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -4004,34 +4008,34 @@
         <group>
           <name>inc</name>
           <file>
-            <name>$PROJ_DIR$/../../../../../../rtos/azure-rtos/filex/common/inc/fx_media.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../rtos/azure-rtos/filex/common/inc/fx_unicode.h</name>
-          </file>
-          <file>
             <name>$PROJ_DIR$/../../../../../../rtos/azure-rtos/filex/common/inc/fx_api.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../rtos/azure-rtos/filex/common/inc/fx_directory_exFAT.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../rtos/azure-rtos/filex/common/inc/fx_utility.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../rtos/azure-rtos/filex/common/inc/fx_file.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../rtos/azure-rtos/filex/common/inc/fx_system.h</name>
           </file>
           <file>
             <name>$PROJ_DIR$/../../../../../../rtos/azure-rtos/filex/common/inc/fx_directory.h</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../../rtos/azure-rtos/filex/common/inc/fx_user_sample.h</name>
+            <name>$PROJ_DIR$/../../../../../../rtos/azure-rtos/filex/common/inc/fx_directory_exFAT.h</name>
           </file>
           <file>
             <name>$PROJ_DIR$/../../../../../../rtos/azure-rtos/filex/common/inc/fx_fault_tolerant.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../rtos/azure-rtos/filex/common/inc/fx_file.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../rtos/azure-rtos/filex/common/inc/fx_media.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../rtos/azure-rtos/filex/common/inc/fx_system.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../rtos/azure-rtos/filex/common/inc/fx_unicode.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../rtos/azure-rtos/filex/common/inc/fx_user_sample.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../rtos/azure-rtos/filex/common/inc/fx_utility.h</name>
           </file>
         </group>
       </group>
@@ -4058,40 +4062,40 @@
         <group>
           <name>inc</name>
           <file>
+            <name>$PROJ_DIR$/../../../../../../rtos/azure-rtos/threadx/common/inc/tx_api.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../rtos/azure-rtos/threadx/common/inc/tx_block_pool.h</name>
+          </file>
+          <file>
             <name>$PROJ_DIR$/../../../../../../rtos/azure-rtos/threadx/common/inc/tx_byte_pool.h</name>
           </file>
           <file>
             <name>$PROJ_DIR$/../../../../../../rtos/azure-rtos/threadx/common/inc/tx_event_flags.h</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../../rtos/azure-rtos/threadx/common/inc/tx_timer.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../rtos/azure-rtos/threadx/common/inc/tx_queue.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../rtos/azure-rtos/threadx/common/inc/tx_thread.h</name>
+            <name>$PROJ_DIR$/../../../../../../rtos/azure-rtos/threadx/common/inc/tx_initialize.h</name>
           </file>
           <file>
             <name>$PROJ_DIR$/../../../../../../rtos/azure-rtos/threadx/common/inc/tx_mutex.h</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../../rtos/azure-rtos/threadx/common/inc/tx_trace.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../rtos/azure-rtos/threadx/common/inc/tx_initialize.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../rtos/azure-rtos/threadx/common/inc/tx_api.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../rtos/azure-rtos/threadx/common/inc/tx_user_sample.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../rtos/azure-rtos/threadx/common/inc/tx_block_pool.h</name>
+            <name>$PROJ_DIR$/../../../../../../rtos/azure-rtos/threadx/common/inc/tx_queue.h</name>
           </file>
           <file>
             <name>$PROJ_DIR$/../../../../../../rtos/azure-rtos/threadx/common/inc/tx_semaphore.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../rtos/azure-rtos/threadx/common/inc/tx_thread.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../rtos/azure-rtos/threadx/common/inc/tx_timer.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../rtos/azure-rtos/threadx/common/inc/tx_trace.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../rtos/azure-rtos/threadx/common/inc/tx_user_sample.h</name>
           </file>
         </group>
       </group>
@@ -4110,22 +4114,22 @@
             <group>
               <name>src</name>
               <file>
+                <name>$PROJ_DIR$/../../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/iar/src/tx_thread_context_restore.s</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/iar/src/tx_thread_context_save.s</name>
+              </file>
+              <file>
                 <name>$PROJ_DIR$/../../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/iar/src/tx_thread_interrupt_control.s</name>
               </file>
               <file>
-                <name>$PROJ_DIR$/../../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/iar/src/tx_timer_interrupt.s</name>
+                <name>$PROJ_DIR$/../../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/iar/src/tx_thread_interrupt_disable.s</name>
               </file>
               <file>
                 <name>$PROJ_DIR$/../../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/iar/src/tx_thread_interrupt_restore.s</name>
               </file>
               <file>
-                <name>$PROJ_DIR$/../../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/iar/src/tx_iar.c</name>
-              </file>
-              <file>
                 <name>$PROJ_DIR$/../../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/iar/src/tx_thread_schedule.s</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/iar/src/tx_initialize_low_level.s</name>
               </file>
               <file>
                 <name>$PROJ_DIR$/../../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/iar/src/tx_thread_stack_build.s</name>
@@ -4134,16 +4138,16 @@
                 <name>$PROJ_DIR$/../../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/iar/src/tx_thread_system_return.s</name>
               </file>
               <file>
-                <name>$PROJ_DIR$/../../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/iar/src/tx_thread_context_restore.s</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/iar/src/tx_thread_context_save.s</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/iar/src/tx_thread_interrupt_disable.s</name>
+                <name>$PROJ_DIR$/../../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/iar/src/tx_timer_interrupt.s</name>
               </file>
             </group>
           </group>
+        </group>
+        <group>
+          <name>common</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../rtos/azure-rtos/threadx/ports/common/tx_initialize_low_level.c</name>
+          </file>
         </group>
       </group>
     </group>
@@ -4200,6 +4204,12 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_common.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_common_arm.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_common_arm.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_lpuart.h</name>
@@ -4272,45 +4282,6 @@
     </file>
   </group>
   <group>
-    <name>CMSIS</name>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/core_cm7.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/mpu_armv7.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_armcc.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_armclang.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_armclang_ltm.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_gcc.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_compiler.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_version.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_iccarm.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/arm_common_tables.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/arm_const_structs.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/arm_math.h</name>
-    </file>
-  </group>
-  <group>
     <name>startup</name>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/iar/startup_MIMXRT1176_cm7.s</name>
@@ -4350,6 +4321,36 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities/debug_console/fsl_debug_console_conf.h</name>
+    </file>
+  </group>
+  <group>
+    <name>CMSIS</name>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/cmsis_armcc.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/cmsis_armclang.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/cmsis_armclang_ltm.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/cmsis_compiler.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/cmsis_gcc.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/cmsis_iccarm.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/cmsis_version.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/core_cm7.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/mpu_armv7.h</name>
     </file>
   </group>
 </project>

@@ -102,8 +102,16 @@ int main(void)
 {
     BOARD_ConfigMPU();
     BOARD_InitBootPins();
+#if defined(WIFI_BOARD_AW_CM358)
+    /* Init SDIO_RST */
+    BOARD_InitM2WifiResetPins();
+#endif
     BOARD_InitBootClocks();
     BOARD_InitDebugConsole();
+#if defined(WIFI_BOARD_AW_CM358)
+    /* Set SDIO_RST to 1 */
+    GPIO_PinWrite(BOARD_INITM2WIFIRESETPINS_SDIO_RST_GPIO, BOARD_INITM2WIFIRESETPINS_SDIO_RST_GPIO_PIN, 1U);
+#endif
     CRYPTO_InitHardware();
 
     xLoggingTaskInitialize(LOGGING_TASK_STACK_SIZE, LOGGING_TASK_PRIORITY, LOGGING_QUEUE_LENGTH);

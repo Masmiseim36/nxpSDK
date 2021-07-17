@@ -603,11 +603,31 @@ static ElmHandle _load_evo(uint8_t *void_data, int size, el_Obj_EVO *evo)
 {
     int i = 0, j = 0;
     ELM_ELEMENT_TYPE element_type;
+#if (RTOS && DDRLESS) || BAREMETAL
+    uint32_t colors[VLC_MAX_GRAD];
+    void *path_data;
+#else
+    uint32_t *colors = NULL;
+    uint8_t *path_data = NULL;
+#endif
+    el_Obj_EVO *local_evo = NULL;
 
     uint8_t *p_base_addr = (uint8_t *) void_data;
     uint8_t *data = (uint8_t *) void_data;
-
     int ret = -1;
+    uint32_t is_image;
+
+    if (evo == NULL) {
+#if (RTOS && DDRLESS) || BAREMETAL
+        local_evo = alloc_evo(1);
+#else
+        local_evo = (el_Obj_EVO *)elm_alloc(1, sizeof(el_Obj_EVO));
+#endif
+        evo = local_evo;
+    }
+    JUMP_IF_NULL(evo, error_exit);
+    memset(evo, 0, sizeof(el_Obj_EVO));
+
     element_type = (ELM_ELEMENT_TYPE)*(uint32_t *)(p_base_addr + 3 * 4);
     DBG_READ_32B("element_type", element_type, (DBG_OFFSET() + 3 * 4));
     if(element_type == ELEMENT_FONT) {
@@ -636,202 +656,272 @@ static ElmHandle _load_evo(uint8_t *void_data, int size, el_Obj_EVO *evo)
     data = (uint8_t *)(data + 8);
     DBG_INC_OFFSET(8);
 
-    vg_lite_float_t min_x = *(vg_lite_float_t *)(data + 2 * 4);
-    DBG_TRACE(("DBG:  min_x: %f offset=%d\n", min_x, (DBG_OFFSET() + 2 * 4)));
+    /* the offset of is_image relative to evo_data is 76*/
+    is_image = (*(uint32_t *)(data + 84)) >> 29 & 1;
 
-    vg_lite_float_t min_y = *(vg_lite_float_t *)(data + 3 * 4);
-    DBG_TRACE(("DBG:  min_y: %f offset=%d\n", min_y, (DBG_OFFSET() + 3 * 4)));
+    if(is_image)
+    {
+        vg_lite_matrix_t path_matrix;
+        uint32_t imagelength = *(uint32_t *)(data + 2 * 4);
+        /* the offset of img_width relative to evo_data is 116*/
+        uint32_t img_width = *(uint32_t *)(data + 31*4);
+        /* the offset of img_height relative to evo_data is 120*/
+        uint32_t img_height = *(uint32_t *)(data + 32*4);
+        memcpy(evo->eboname,data + 3 * 4,imagelength);
+        evo->is_image = is_image;
+        vg_lite_identity(&path_matrix);
+        for (i = 0 ;i < 3; i++)
+            for (j = 0; j < 3; j++)
+            {
+                /* the offset of transform relative to evo_data is 80*/
+                path_matrix.m[i][j] = *(float *)(data + (22 + i *3 + j)*4);
+            }
+        _init_transform(&evo->defaultAttrib.transform);
+        memcpy(&evo->defaultAttrib.transform.matrix, &path_matrix, sizeof(path_matrix));
+        evo->img_width = img_width;
+        evo->img_height = img_height;
+    }
+    else
+    {
+        uint32_t stop_count,stop_offset,color_offset;
+        vg_lite_radial_gradient_spreadmode_t spread_mode = VG_LITE_RADIAL_GRADIENT_SPREAD_FILL;
+        vg_lite_radial_gradient_parameter_t radialGradient;
 
-    vg_lite_float_t max_x = *(vg_lite_float_t *)(data + 4 * 4);
-    DBG_TRACE(("DBG:  max_x: %f offset=%d\n", max_x, (DBG_OFFSET() + 4 * 4)));
+        vg_lite_float_t min_x = *(vg_lite_float_t *)(data + 2 * 4);
+        vg_lite_float_t min_y = *(vg_lite_float_t *)(data + 3 * 4);
+        vg_lite_float_t max_x = *(vg_lite_float_t *)(data + 4 * 4);
+        vg_lite_float_t max_y = *(vg_lite_float_t *)(data + 5 * 4);
+        vg_lite_format_t data_format = *(vg_lite_format_t *)(data + 6 * 4);
+        uint32_t path_length = *(uint32_t *)(data + 7 * 4);
+        uint32_t path_offset = *(uint32_t *)(data + 8 * 4);
+        vg_lite_matrix_t path_matrix;
+        vg_lite_quality_t quality = *(vg_lite_quality_t *)(data + 18 * 4);
+        ELM_EVO_FILL fill_rule =  *(ELM_EVO_FILL *)(data + 19 * 4);
+        ELM_BLEND blend = *(ELM_BLEND *)(data + 20 * 4);
+        ELM_PAINT_TYPE type = (ELM_PAINT_TYPE)((*(uint32_t *)(data + 21 * 4)) & 0x0fffffff);
+        uint32_t has_pattern = (*(uint32_t *)(data + 21 * 4)) >> 31 & 1;
+        uint32_t is_pattern = (*(uint32_t *)(data + 21 * 4)) >> 30 & 1;
+        uint32_t color = *(uint32_t *)(data + 22 * 4);
+        vg_lite_matrix_t grad_matrix;
 
-    vg_lite_float_t max_y = *(vg_lite_float_t *)(data + 5 * 4);
-    DBG_TRACE(("DBG:  max_y: %f offset=%d\n", max_y, (DBG_OFFSET() + 5 * 4)));
-
-    vg_lite_format_t data_format = *(vg_lite_format_t *)(data + 6 * 4);
-    DBG_READ_32B("data_format", data_format, (DBG_OFFSET() + 6 * 4));
-
-    uint32_t path_length = *(uint32_t *)(data + 7 * 4);
-    DBG_READ_32B("path_length", path_length, (DBG_OFFSET() + 7 * 4));
-
-    uint32_t path_offset = *(uint32_t *)(data + 8 * 4);
-    DBG_READ_32B("path_offset", path_offset, (DBG_OFFSET() + 8 * 4));
-
-    vg_lite_matrix_t path_matrix;
-    vg_lite_quality_t quality = *(vg_lite_quality_t *)(data + 18 * 4);
-    DBG_READ_32B("quality", quality, (DBG_OFFSET() + 18 * 4));
-
-    ELM_EVO_FILL fill_rule =  *(ELM_EVO_FILL *)(data + 19 * 4);
-    DBG_READ_32B("fill_rule", fill_rule, (DBG_OFFSET() + 19 * 4));
-
-    ELM_BLEND blend = *(ELM_BLEND *)(data + 20 * 4);
-    DBG_READ_32B("blend", blend, (DBG_OFFSET() + 20 * 4));
-
-    ELM_PAINT_TYPE type = *(ELM_PAINT_TYPE *)(data + 21 * 4);
-    DBG_READ_32B("type", type, (DBG_OFFSET() + 21 * 4));
-
-    uint32_t color = *(uint32_t *)(data + 22 * 4);
-    DBG_READ_32B("color", color, (DBG_OFFSET() + 22 * 4));
-
-    vg_lite_matrix_t grad_matrix;
-    uint32_t stop_count = *(uint32_t *)(data + 32 * 4);
-    DBG_READ_32B("stop_count", stop_count, (DBG_OFFSET() + 32 * 4));
-
-    uint32_t stop_offset = *(uint32_t *)(data + 33 * 4);
-    DBG_READ_32B("stop_offset", stop_offset, (DBG_OFFSET() + 33 * 4));
-
-    uint32_t color_offset = *(uint32_t *)(data + 34 * 4);
-    DBG_READ_32B("color_offset", color_offset, (DBG_OFFSET() + 34 * 4));
-
-    el_Transform *transform = NULL;
-    el_Transform *grad_transform = NULL;
-    el_Obj_EVO *local_evo = NULL;
+        el_Transform *transform = NULL;
+        el_Transform *grad_transform = NULL;
 
 #if (RTOS && DDRLESS) || BAREMETAL
-    uint32_t stops[VLC_MAX_GRAD];
-    uint32_t colors[VLC_MAX_GRAD];
-    void *path_data = (void *)(data + path_offset);
+        path_data = (void *)(data + path_offset);
 #else
-    uint32_t *stops = NULL, *colors = NULL;
-    uint8_t *path_data = NULL;
+        if(type == ELM_PAINT_RADIAL_GRADIENT)
+        {
+            radialGradient.cx = *(vg_lite_float_t *)(data + 23 * 4);
+            radialGradient.cy = *(vg_lite_float_t *)(data + 24 * 4);
+            radialGradient.r = *(vg_lite_float_t *)(data + 25 * 4);
+            radialGradient.fx = *(vg_lite_float_t *)(data + 26 * 4);
+            radialGradient.fy = *(vg_lite_float_t *)(data + 27 * 4);
+            spread_mode = *(vg_lite_radial_gradient_spreadmode_t *)(data + 28 * 4);
 
-    stops = (uint32_t *)elm_alloc(1, 4 * sizeof(stop_count));
-    colors = (uint32_t *)elm_alloc(1, 4 * sizeof(stop_count));
-    path_data = (uint8_t *)elm_alloc(1, path_length);
+            stop_count = *(uint32_t *)(data + 38 * 4);
+            stop_offset = *(uint32_t *)(data + 39 * 4);
+            color_offset = *(uint32_t *)(data + 40 * 4);
+        }
+        else
+        {
+            stop_count = *(uint32_t *)(data + 32 * 4);
+            stop_offset = *(uint32_t *)(data + 33 * 4);
+            color_offset = *(uint32_t *)(data + 34 * 4);
+        }
 
-    JUMP_IF_NULL(stops, error_exit);
-    JUMP_IF_NULL(colors, error_exit);
-    JUMP_IF_NULL(path_data, error_exit);
+        path_data = (uint8_t *)elm_alloc(1, path_length);
+        JUMP_IF_NULL(path_data, error_exit);
 
 #ifdef ENABLE_STRICT_DEBUG_MEMSET
-    memset(stops, 0, 4 * sizeof(stop_count));
-    memset(colors, 0, 4 * sizeof(stop_count));
-    memset(path_data, 0, path_length);
+        memset(path_data, 0, path_length);
 #endif
-    memcpy(path_data, (void *)(data + path_offset), path_length);
+        memcpy(path_data, (void *)(data + path_offset), path_length);
 #endif
 #if (VG_RENDER_TEXT==1)
-    dbg_float_ary_no_offset_update("path_data", (float *)path_data, 
-                                   path_length/4, path_offset);
-    DBG_TRACE(("\n"));
+        dbg_float_ary_no_offset_update("path_data", (float *)path_data, 
+                                       path_length/4, path_offset);
+        DBG_TRACE(("\n"));
 #endif /* VG_RENDER_TEXT */
-    if (evo == NULL) {
-#if (RTOS && DDRLESS) || BAREMETAL
-        local_evo = alloc_evo(1);
-#else
-        local_evo = (el_Obj_EVO *)elm_alloc(1, sizeof(el_Obj_EVO));
-#endif
-        evo = local_evo;
-    }
-    JUMP_IF_NULL(evo, error_exit);
-#ifdef ENABLE_STRICT_DEBUG_MEMSET
-    memset(evo, 0, sizeof(el_Obj_EVO));   
-#endif
 
-#if (RTOS && DDRLESS) || BAREMETAL
-    evo->defaultAttrib.paint.grad = alloc_grad();
-#else
-    evo->defaultAttrib.paint.grad = (el_Obj_Grad*)elm_alloc(1, sizeof(el_Obj_Grad));
-#endif
-    JUMP_IF_NULL(evo->defaultAttrib.paint.grad, error_exit);
-#ifdef ENABLE_STRICT_DEBUG_MEMSET
-    memset(evo->defaultAttrib.paint.grad, 0, sizeof(el_Obj_Grad));   
-#endif
-    evo->defaultAttrib.paint.grad->data.grad.image.width = 0;
-    evo->defaultAttrib.paint.grad->data.grad.image.height = 0;
-    evo->defaultAttrib.paint.grad->data.grad.image.stride = 0;
-    evo->defaultAttrib.paint.grad->data.grad.image.tiled = VG_LITE_LINEAR;
+        if(has_pattern)
+            evo->has_pattern = 1;
+        if(is_pattern)
+            evo->is_pattern = 1;
 
-    _init_transform(&evo->defaultAttrib.transform);
-    _init_transform(&evo->defaultAttrib.paint.grad->data.transform);
-    transform = &evo->defaultAttrib.transform;
-    grad_transform = &evo->defaultAttrib.paint.grad->data.transform;
+        _init_transform(&evo->defaultAttrib.transform);
+        transform = &evo->defaultAttrib.transform;
 
-    evo->object.type = ELM_OBJECT_TYPE_EVO;
-    evo->object.reference = 0;
+        evo->object.type = ELM_OBJECT_TYPE_EVO;
+        evo->object.reference = 0;
 
-    vg_lite_identity(&path_matrix);
-    vg_lite_identity(&grad_matrix);
-    for (i = 0 ;i < 3; i++)
-        for (j = 0; j < 3; j++)
+        vg_lite_identity(&path_matrix);
+        vg_lite_identity(&grad_matrix);
+        for (i = 0 ;i < 3; i++)
+            for (j = 0; j < 3; j++)
+            {
+                path_matrix.m[i][j] = *(float *)(data + (9 + i *3 + j)*4);
+                if(type == ELM_PAINT_RADIAL_GRADIENT)
+                    grad_matrix.m[i][j] = *(float *)(data + (29 + i *3 + j)*4);
+                else 
+                    grad_matrix.m[i][j] = *(float *)(data + (23 + i *3 + j)*4);
+
+            }
+        dbg_float_ary_no_offset_update("path_matrix", 
+                                       &path_matrix.m[0][0], 9, (DBG_OFFSET() + 9*4));
+        DBG_TRACE(("\n"));
+        if(type == ELM_PAINT_RADIAL_GRADIENT)
         {
-            path_matrix.m[i][j] = *(float *)(data + (9 + i *3 + j)*4);
-            grad_matrix.m[i][j] = *(float *)(data + (23 + i *3 + j)*4);
-
+            dbg_float_ary_no_offset_update("grad_matrix", 
+                                           &grad_matrix.m[0][0], 9, (DBG_OFFSET() + 29*4));
         }
-    dbg_float_ary_no_offset_update("path_matrix", 
-                                   &path_matrix.m[0][0], 9, (DBG_OFFSET() + 9*4));
-    DBG_TRACE(("\n"));
-    dbg_float_ary_no_offset_update("grad_matrix", 
-                                   &grad_matrix.m[0][0], 9, (DBG_OFFSET() + 23*4));
-    DBG_TRACE(("\n"));
+        else
+        {
+            dbg_float_ary_no_offset_update("grad_matrix", 
+                                           &grad_matrix.m[0][0], 9, (DBG_OFFSET() + 23*4));
+        }
+        DBG_TRACE(("\n"));
 
-    for (i = 0; i < stop_count; i++)
-    {
-        stops[i] = (uint32_t)((*(float *)(data + stop_offset + i*4))*255);
-        colors[i] = *(uint32_t *)(data + color_offset + i*4);
-    }
-    dbg_int_ary_no_offset_update("stops", &stops[0], 
-                                 stop_count, (DBG_OFFSET() + stop_offset) );
-    dbg_int_ary_no_offset_update("colors", &colors[0], 
-                                 stop_count, (DBG_OFFSET() + color_offset) );
-
-    // fill path
-#ifdef ENABLE_DEBUG_TRACE
-    float bounds[4];
-    bounds[0] = min_x;
-    bounds[1] = min_y;
-    bounds[2] = max_x;
-    bounds[3] = max_y;
-    vft_dbg_path_bounds("EVO_INIT PATH_BOUNDS", bounds, 4);
-    vft_dbg_path("EVO_INIT PATH_DATA", evo->data.path.path, evo->data.path.path_length/4);
+        if ((type == ELM_PAINT_RADIAL_GRADIENT) || (type == ELM_PAINT_GRADIENT)) {
+#if (RTOS && DDRLESS) || BAREMETAL
+            evo->defaultAttrib.paint.grad = alloc_grad();
+#else
+            evo->defaultAttrib.paint.grad = (el_Obj_Grad*)elm_alloc(1, sizeof(el_Obj_Grad));
 #endif
-    vg_lite_init_path(&evo->data.path, data_format, quality, path_length, path_data,
-                      min_x, min_y, max_x, max_y);
+            JUMP_IF_NULL(evo->defaultAttrib.paint.grad, error_exit);
+#ifdef ENABLE_STRICT_DEBUG_MEMSET
+            memset(evo->defaultAttrib.paint.grad, 0, sizeof(el_Obj_Grad));
+#endif
+            evo->defaultAttrib.paint.grad->data.grad.image.width = 0;
+            evo->defaultAttrib.paint.grad->data.grad.image.height = 0;
+            evo->defaultAttrib.paint.grad->data.grad.image.stride = 0;
+            evo->defaultAttrib.paint.grad->data.grad.image.tiled = VG_LITE_LINEAR;
 
-    // fill default attribute with evo
-    memcpy(&transform->matrix, &path_matrix, sizeof(path_matrix));
-    evo->defaultAttrib.quality = (ELM_QUALITY)quality;
-    evo->defaultAttrib.fill_rule = fill_rule;
-    evo->defaultAttrib.blend = blend;
-    evo->defaultAttrib.paint.type = type;
+            _init_transform(&evo->defaultAttrib.paint.grad->data.transform);
+            grad_transform = &evo->defaultAttrib.paint.grad->data.transform;
+            memcpy(&grad_transform->matrix, &grad_matrix, sizeof(grad_matrix));
 
-    vg_lite_init_grad(&evo->defaultAttrib.paint.grad->data.grad);
-    vg_lite_set_grad(&evo->defaultAttrib.paint.grad->data.grad, stop_count, colors, stops);
-    if (stop_count > 0)
-    {
-        vg_lite_update_grad(&evo->defaultAttrib.paint.grad->data.grad);
-    }
+            colors = (uint32_t *)elm_alloc(stop_count, sizeof(uint32_t));
+            JUMP_IF_NULL(colors, error_exit);
+            for (i = 0 ;i < stop_count; i++)
+                colors[i] = *(uint32_t *)(data + color_offset + i*4);
+        }
 
-    memcpy(&grad_transform->matrix, &grad_matrix, sizeof(grad_matrix));
-    evo->defaultAttrib.paint.color = color;
-    evo->attribute = evo->defaultAttrib;
+        // fill path
+#ifdef ENABLE_DEBUG_TRACE
+        float bounds[4];
+        bounds[0] = min_x;
+        bounds[1] = min_y;
+        bounds[2] = max_x;
+        bounds[3] = max_y;
+        vft_dbg_path_bounds("EVO_INIT PATH_BOUNDS", bounds, 4);
+        vft_dbg_path("EVO_INIT PATH_DATA", evo->data.path.path, evo->data.path.path_length/4);
+#endif
+        vg_lite_init_path(&evo->data.path, data_format, (vg_lite_quality_t)quality, path_length, path_data,
+                          min_x, min_y, max_x, max_y);
 
-    ref_object(&evo->object);
-    JUMP_IF_NON_ZERO_VALUE(add_object(&evo->object), error_exit);
+        memcpy(&transform->matrix, &path_matrix, sizeof(path_matrix));
+        evo->defaultAttrib.quality = ELM_QUALITY_LOW;
+        evo->defaultAttrib.fill_rule = fill_rule;
+        evo->defaultAttrib.blend = blend;
+        evo->defaultAttrib.paint.type = type;
+
+        switch (type) {
+        case ELM_PAINT_GRADIENT:
+        {
+#if (RTOS && DDRLESS) || BAREMETAL
+            uint32_t stops[VLC_MAX_GRAD];
+#else
+            uint32_t *stops;
+
+            stops = (uint32_t *)malloc(stop_count * sizeof(uint32_t));
+            JUMP_IF_NULL(stops, error_exit);
+#endif
+            for (i = 0 ;i < stop_count; i++)
+            {
+                stops[i] = (uint32_t)((*(float *)(data + stop_offset + i*4))*255);
+            }
+            vg_lite_init_grad(&evo->defaultAttrib.paint.grad->data.grad);
+            vg_lite_set_grad(&evo->defaultAttrib.paint.grad->data.grad, stop_count, colors, stops);
+            if (stop_count > 0)
+            {
+                vg_lite_update_grad(&evo->defaultAttrib.paint.grad->data.grad);
+            }
 
 #if (RTOS && DDRLESS) || BAREMETAL
 #else
-    elm_free(stops);
-    elm_free(colors);
+            free(stops);
 #endif
+            break;
+        }
+        case ELM_PAINT_RADIAL_GRADIENT:
+        {
+            float *stops;
+            vg_lite_color_ramp_t *vgColorRamp;
+
+            stops = (float *)elm_alloc(stop_count, sizeof(float));
+            JUMP_IF_NULL(stops, error_exit);
+            memset(stops, 0, stop_count * sizeof(float));
+            vgColorRamp = (vg_lite_color_ramp_t *)elm_alloc(stop_count, sizeof(vg_lite_color_ramp_t));
+            if (vgColorRamp == NULL) {
+                elm_free(stops);
+                goto error_exit;
+            }
+            memset(vgColorRamp, 0, sizeof(vg_lite_color_ramp_t) * stop_count);
+            for (i = 0; i < stop_count; i++)
+            {
+                stops[i] = (*(float *)(data + stop_offset + i*4));
+                vgColorRamp[i].alpha = (float)(colors[i] >> 24) / 255.0f;
+                vgColorRamp[i].red = (float)(colors[i] >> 16 & 0xFF) / 255.0f;
+                vgColorRamp[i].green = (float)(colors[i] >> 8 & 0xFF) / 255.0f;
+                vgColorRamp[i].blue = (float)(colors[i] & 0xFF) / 255.0f;
+                vgColorRamp[i].stop = stops[i];
+            }
+            dbg_int_ary_no_offset_update("stops", &stops[0],
+                                     stop_count, (DBG_OFFSET() + stop_offset) );
+            dbg_int_ary_no_offset_update("colors", &colors[0],
+                                     stop_count, (DBG_OFFSET() + color_offset) );
+
+            memset(&evo->defaultAttrib.paint.grad->data.rad_grad, 0, sizeof(evo->defaultAttrib.paint.grad->data.rad_grad));
+            vg_lite_set_rad_grad(&evo->defaultAttrib.paint.grad->data.rad_grad, stop_count,vgColorRamp,radialGradient,spread_mode,1);
+            vg_lite_update_rad_grad(&evo->defaultAttrib.paint.grad->data.rad_grad);
+
+            elm_free(stops);
+            elm_free(vgColorRamp);
+            break;
+        }
+        default:
+            /* Do nothing */
+            break;
+        }
+
+        evo->defaultAttrib.paint.color = color;
+        evo->attribute = evo->defaultAttrib;
+
+        ref_object(&evo->object);
+        JUMP_IF_NON_ZERO_VALUE(add_object(&evo->object), error_exit);
+
+#if (RTOS && DDRLESS) || BAREMETAL
+#else
+        elm_free(colors);
+#endif
+    }
+
     return evo->object.handle;
 
 error_exit:
+
 #if (RTOS && DDRLESS) || BAREMETAL
 #else
-    if ( stops != NULL )
-        elm_free(stops);
     if ( colors != NULL )
         elm_free(colors);
     if ( path_data != NULL)
         elm_free(path_data);
 #endif
-    if ( local_evo != NULL ) {
-        if ( local_evo->defaultAttrib.paint.grad != NULL )
-            elm_free(local_evo->defaultAttrib.paint.grad);
+    if ( (evo != NULL) && (evo->defaultAttrib.paint.grad != NULL) )
+        elm_free(evo->defaultAttrib.paint.grad);
+    if ( local_evo != NULL )
         elm_free(local_evo);
-    }
 
     return ELM_NULL_HANDLE;
 }
@@ -841,6 +931,7 @@ static ElmHandle _load_ebo(uint8_t *data, int size)
     vg_lite_error_t error;
     vg_lite_buffer_t *buffer;
     uint32_t data_offset, clut_count, clut_data_offset, *colors;
+    uint32_t version;
 
 #if (RTOS && DDRLESS) || BAREMETAL
     el_Obj_EBO *ebo = alloc_ebo();
@@ -853,30 +944,53 @@ static ElmHandle _load_ebo(uint8_t *data, int size)
 #endif
     buffer = &ebo->data.buffer;
 
-    ebo->object.type = (ELM_OBJECT_TYPE)(*(uint32_t *)(data + 1 * 4));
-    ebo->object.reference = 0;
-
-    buffer->width  = *(int32_t *)(data + 2 * 4);
-    buffer->height = *(int32_t *)(data + 3 * 4);
-    buffer->format = *(vg_lite_buffer_format_t *)(data + 6 * 4);
-    buffer->stride = 0;
-    error = vg_lite_allocate(buffer);
-    if (error != VG_LITE_SUCCESS)
+    version = *(uint32_t *)(data);
+    if(version == 1)
     {
-        destroy_ebo(ebo);
-        return 0;
-    }
-    buffer->stride = *(int32_t *)(data + 4 * 4);
-    buffer->tiled = (vg_lite_buffer_layout_t)(*(int32_t *)(data + 5 * 4));
-    data_offset = *(uint32_t *)(data + 7 * 4);
-    clut_count = *(uint32_t *)(data + 8 * 4);
-    clut_data_offset = *(uint32_t *)(data + 9 * 4);
-    colors = (uint32_t *)(data + clut_data_offset);
-    memcpy(buffer->memory, data + data_offset, buffer->stride * buffer->height);
-    /* Save CLUT infomation. */
-    ebo->clut_count = clut_count;
-    memcpy(ebo->clut, colors, sizeof(uint32_t) * clut_count);
+        ebo->object.type = (ELM_OBJECT_TYPE)(*(uint32_t *)(data + 1 * 4));
+        ebo->object.reference = 0;
 
+        buffer->width  = *(int32_t *)(data + 2 * 4);
+        buffer->height = *(int32_t *)(data + 3 * 4);
+        buffer->format = *(vg_lite_buffer_format_t *)(data + 6 * 4);
+        buffer->stride = 0;
+        error = vg_lite_allocate(buffer);
+        if (error != VG_LITE_SUCCESS)
+        {
+            destroy_ebo(ebo);
+            return 0;
+        }
+        buffer->stride = *(int32_t *)(data + 4 * 4);
+        buffer->tiled = (vg_lite_buffer_layout_t)(*(int32_t *)(data + 5 * 4));
+        data_offset = *(uint32_t *)(data + 7 * 4);
+        clut_count = *(uint32_t *)(data + 8 * 4);
+        clut_data_offset = *(uint32_t *)(data + 9 * 4);
+        colors = (uint32_t *)(data + clut_data_offset);
+        memcpy(buffer->memory, data + data_offset, buffer->stride * buffer->height);
+        /* Save CLUT infomation. */
+        ebo->clut_count = clut_count;
+        memcpy(ebo->clut, colors, sizeof(uint32_t) * clut_count);
+    }
+    else if(version == 2)
+    {
+        ebo->object.type = (ELM_OBJECT_TYPE)(*(uint32_t *)(data + 1 * 4));
+        ebo->object.reference = 0;
+
+        buffer->width  = *(int32_t *)(data + 2 * 4);
+        buffer->height = *(int32_t *)(data + 3 * 4);
+        buffer->format = *(vg_lite_buffer_format_t *)(data + 6 * 4);
+        buffer->stride = 0;
+        error = vg_lite_allocate(buffer);
+        if (error != VG_LITE_SUCCESS)
+        {
+            destroy_ebo(ebo);
+            return 0;
+        }
+        buffer->stride = *(int32_t *)(data + 4 * 4);
+        buffer->tiled = (vg_lite_buffer_layout_t)(*(int32_t *)(data + 5 * 4));
+        data_offset = *(uint32_t *)(data + 7 * 4);
+        memcpy(buffer->memory, data + data_offset, buffer->stride * buffer->height);
+    }
     /* Set transformation to identity. */
     ebo->defaultAttrib.transform.dirty = 1;
     ebo->defaultAttrib.transform.identity = 1;
@@ -898,12 +1012,11 @@ static ElmHandle _load_ego(void *void_data, int size)
     int i,j;
     unsigned int evoDataSize = 0;
     unsigned int evo_offset, invalid_count = 0;
-//    el_Object *obj;
+    /* el_Object *obj; */
     ELM_ELEMENT_TYPE element_type;
     uint32_t size_font_block = 0;
-    uint32_t maxReadSize = 0;
+    uint32_t offs = 0;
     int ret = 0;
-
     uint8_t *p_base_addr = (uint8_t *) void_data;
     uint8_t * data = (uint8_t *) void_data;
 
@@ -952,46 +1065,34 @@ static ElmHandle _load_ego(void *void_data, int size)
                                    (DBG_OFFSET() + 2*4));
 
     ego->group.count = *(unsigned int *)((int8_t *)data + 11 * 4);
-    DBG_READ_32B("group_count", ego->group.count, (DBG_OFFSET() + 11*4));
 #if (RTOS && DDRLESS) || BAREMETAL
     ego->group.objects = alloc_evo(ego->group.count);
 #else
     ego->group.objects = (el_Obj_EVO *)elm_alloc(1, ego->group.count * sizeof(el_Obj_EVO));
 #endif
     JUMP_IF_NULL(ego->group.objects, error_exit);
+#ifdef ENABLE_STRICT_DEBUG_MEMSET
     memset(ego->group.objects, 0, ego->group.count * sizeof(el_Obj_EVO));
-
-    for (i = 0; i < ego->group.count && maxReadSize < size; i++)
+#endif
+    for (i = 0; i < ego->group.count && offs < size; i++)
     {
-        /* Validate offset before reading from it */
-        if ( (12 + i) * 4 >= size )
+        /* Check if "evoDataSize" is inside the EGO data */
+        if ((12 + i) * 4 > size - 4)
             goto error_exit;
-
         evoDataSize = *(unsigned int *)((int8_t *)data + (12 + i) * 4);
-        DBG_READ_32B("evodataSize", evoDataSize, (DBG_OFFSET() + (12 + i) * 4));
 
-        if ( evoDataSize >= size )
+        /* Check if "evo_offset" is inside the EGO data */
+        if ((12 + i + ego->group.count) * 4 > size - 4)
             goto error_exit;
 
-        /* Validate offset before reading from it */
-        if ( (12 + i + ego->group.count) * 4 >= size )
-            goto error_exit;
+        evo_offset = *(unsigned int *)((int8_t *)data + (12 + i + ego->group.count) * 4);
 
-        evo_offset = *(unsigned int *)((int8_t *)data +
-                                       (12 + i + ego->group.count) * 4);
-
-        maxReadSize = evoDataSize + evo_offset;
-
-        if ( (12 + i + ego->group.count) * 4 >= size )
+        /* Check whether EVO object is truncated */
+        offs = evo_offset + evoDataSize;
+        if (offs > size)
             goto error_exit;
 
         evo_offset -= size_font_block;
-        DBG_READ_32B("evo_offset", evo_offset, \
-                           (DBG_OFFSET() + (data - p_base_addr) + \
-                            (12 + i + ego->group.count) * 4));
-
-        if ( evo_offset > size || maxReadSize > size )
-            goto error_exit;
 
         if (evoDataSize == 0)
         {
@@ -1002,16 +1103,20 @@ static ElmHandle _load_ego(void *void_data, int size)
         element_type = (ELM_ELEMENT_TYPE)*(uint32_t *)(data + evo_offset + 1 * 4);
         if(element_type == ELEMENT_PATH)
         {
-        //recompute path_data_offset and stop_offset and color_offset
+        /*recompute path_data_offset and stop_offset and color_offset*/
         *(unsigned int *)((int8_t *)data + evo_offset + 8 * 4) -= ((evo_offset - 2 * 4) + size_font_block + 2*4);//path_data offset
-        *(unsigned int *)((int8_t *)data + evo_offset + 33 * 4) -= ((evo_offset - 2 * 4) + size_font_block + 2*4);//stop_offset
-        *(unsigned int *)((int8_t *)data + evo_offset + 34 * 4) -= ((evo_offset - 2 *4 ) + size_font_block + 2*4);//color_offset
+        if(*(unsigned int *)((int8_t *)data + evo_offset + 19 * 4) == ELM_PAINT_RADIAL_GRADIENT){
+            *(unsigned int *)((int8_t *)data + evo_offset + 39 * 4) -= ((evo_offset - 2 * 4) + size_font_block + 2 * 4);/*stop_offset*/
+            *(unsigned int *)((int8_t *)data + evo_offset + 40 * 4) -= ((evo_offset - 2 * 4) + size_font_block + 2 * 4);/*color_offset*/
+        }else {
+            *(unsigned int *)((int8_t *)data + evo_offset + 33 * 4) -= ((evo_offset - 2 * 4) + size_font_block + 2 * 4);/*stop_offset*/
+            *(unsigned int *)((int8_t *)data + evo_offset + 34 * 4) -= ((evo_offset - 2 * 4) + size_font_block + 2 * 4);/*color_offset*/
+        }
         }
 
         ego->group.objects[i].object.handle = _load_evo((uint8_t *)(data + evo_offset - 2 * 4), evoDataSize, &ego->group.objects[i]);
-
-//        obj = get_object(ego->group.objects[i].object.handle);
-//        ego->group.objects[i] = *(el_Obj_EVO *)obj;
+/*      obj = get_object(ego->group.objects[i].object.handle);
+        ego->group.objects[i] = *(el_Obj_EVO *)obj;*/
     }
 
     ego->group.count -= invalid_count;

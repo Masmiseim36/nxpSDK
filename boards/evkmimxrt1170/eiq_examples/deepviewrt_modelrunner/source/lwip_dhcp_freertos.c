@@ -27,21 +27,17 @@
 #include "clock_config.h"
 #include "board.h"
 #include "fsl_phy.h"
-#include "fsl_gpio.h"
+#include "modelrunner.h"
 
-#include "fsl_gpt.h"
-#if defined(EXAMPLE_USE_100M_ENET_PORT) || defined(CPU_MIMXRT1064DVL6A)
+#ifdef EXAMPLE_USE_100M_ENET_PORT
 #include "fsl_phyksz8081.h"
 #else
 #include "fsl_phyrtl8211f.h"
 #endif
-#if defined(EXAMPLE_USE_100M_ENET_PORT) || defined(CPU_MIMXRT1176DVMAA_cm7)
-#include "fsl_semc.h"
-#include "fsl_enet.h"
-#endif
 #include "fsl_enet_mdio.h"
+#include "fsl_gpio.h"
 #include "fsl_iomuxc.h"
-#include "modelrunner.h"
+#include "fsl_enet.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -69,7 +65,7 @@
         0x02, 0x12, 0x13, 0x10, 0x15, 0x11 \
     }
 
-#if defined(EXAMPLE_USE_100M_ENET_PORT) || defined(CPU_MIMXRT1064DVL6A)
+#ifdef EXAMPLE_USE_100M_ENET_PORT
 /* Address of PHY interface. */
 #define EXAMPLE_PHY_ADDRESS BOARD_ENET0_PHY_ADDRESS
 /* PHY operations. */
@@ -88,18 +84,9 @@
 /* MDIO operations. */
 #define EXAMPLE_MDIO_OPS enet_ops
 
-
 /* ENET clock frequency. */
-#if defined(CPU_MIMXRT1064DVL6A)
-#define EXAMPLE_CLOCK_FREQ CLOCK_GetFreq(kCLOCK_IpgClk)
-/*! os_clock_now() will use the HW GPT if 1. Otherwise use rtos systick*/
-#define USE_GPT 1
-#elif defined(CPU_MIMXRT1176DVMAA_cm7)
-#define USE_GPT 0
 #define EXAMPLE_CLOCK_FREQ CLOCK_GetRootClockFreq(kCLOCK_Root_Bus)
-#define EXAMPLE_SEMC               SEMC
-#define EXAMPLE_SEMC_CLK_FREQ      CLOCK_GetRootClockFreq(kCLOCK_Root_Semc)
-#endif
+
 
 #ifndef EXAMPLE_NETIF_INIT_FN
 /*! @brief Network interface initialization function. */
@@ -115,18 +102,10 @@
 /*! Use DHCP server to get IP address*/
 #define USE_DHCP 1
 
-#if USE_GPT
-#define GPT_IRQ_ID GPT2_IRQn
-#define USR_GPT GPT2
-#define USR_GPT_IRQHandler GPT2_IRQHandler
-
-/* Get source clock for GPT driver (GPT prescaler = 0) */
-#define USR_GPT_CLK_FREQ CLOCK_GetFreq(kCLOCK_PerClk)
-#endif
-
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
+
 /*******************************************************************************
  * Variables
  ******************************************************************************/
@@ -134,98 +113,17 @@ static struct netif netif;
 static mdio_handle_t mdioHandle = {.ops = &EXAMPLE_MDIO_OPS};
 static phy_handle_t phyHandle   = {.phyAddr = EXAMPLE_PHY_ADDRESS, .mdioHandle = &mdioHandle, .ops = &EXAMPLE_PHY_OPS};
 
-#if USE_GPT
-volatile bool gptIsrEventFlag = false;
-int64_t g_systickCounter = 0;
-volatile uint32_t cnt_val;
-#endif
-
 /*******************************************************************************
  * Code
  ******************************************************************************/
-#if USE_GPT
-static void Config_GPT(void)
-{
-	//uint32_t gptFreq;
-    gpt_config_t gptConfig;
-	// initialize the GPT
-	// enables the GPT
-    GPT_GetDefaultConfig(&gptConfig);
-
-	gptConfig.enableFreeRun = true;
-
-    /* Initialize GPT module */
-    GPT_Init(USR_GPT, &gptConfig);
-
-    /* Divide GPT clock source frequency by 3 inside GPT module */
-    GPT_SetClockDivider(USR_GPT, 1);
-
-    /* Get GPT clock frequency */
-    //gptFreq = USR_GPT_CLK_FREQ;
-
-    /* Enable GPT rollover interrupt */
-    GPT_EnableInterrupts(USR_GPT, kGPT_RollOverFlagInterruptEnable);
-
-    /* Enable at the Interrupt */
-    EnableIRQ(GPT_IRQ_ID);
-
-    GPT_StartTimer(USR_GPT);
-
-}
-
-void USR_GPT_IRQHandler(void)
-{
-
-	g_systickCounter+= 57266230613;
-
-
-    /* Clear interrupt flag.*/
-	GPT_ClearStatusFlags(USR_GPT, kGPT_RollOverFlag);
-
-    /* gptIsrFlag = true; */
-/* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F, Cortex-M7, Cortex-M7F Store immediate overlapping
-  exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U || __CORTEX_M == 7U)
-    __DSB();
-#endif
-}
-
-int64_t os_clock_now()
-{
-
-	cnt_val = *(uint32_t *)((0x401F0024u));
-	int64_t hardware_cnt_time = (int64_t)((double)cnt_val/3.0*40.0);
-    return (g_systickCounter+hardware_cnt_time);
-
-
-}
-#else
-extern u32_t sys_now(void);
-int64_t os_clock_now()
-{
-	int64_t ns_time = (int64_t)(sys_now()*1e6);
-    return ns_time;
-}
-#endif
-
-
-
 void BOARD_InitModuleClock(void)
 {
-#if defined(CPU_MIMXRT1064DVL6A)
-    const clock_enet_pll_config_t config = {
-        .enableClkOutput    = true,
-        .enableClkOutput25M = false,
-        .loopDivider        = 1,
-    };
-    CLOCK_InitEnetPll(&config);
-#elif defined(CPU_MIMXRT1176DVMAA_cm7)
     const clock_sys_pll1_config_t sysPll1Config = {
         .pllDiv2En = true,
     };
     CLOCK_InitSysPll1(&sysPll1Config);
 
-#if defined(EXAMPLE_USE_100M_ENET_PORT) || defined(CPU_MIMXRT1064DVL6A)
+#ifdef EXAMPLE_USE_100M_ENET_PORT
     clock_root_config_t rootCfg = {.mux = 4, .div = 10}; /* Generate 50M root clock. */
     CLOCK_SetRootClock(kCLOCK_Root_Enet1, &rootCfg);
 #else
@@ -238,21 +136,11 @@ void BOARD_InitModuleClock(void)
     rootCfg.mux = 7;
     rootCfg.div = 2;
     CLOCK_SetRootClock(kCLOCK_Root_Bus, &rootCfg); /* Generate 198M bus clock. */
-#endif
-}
-
-void delay(void)
-{
-    volatile uint32_t i = 0;
-    for (i = 0; i < 1000000; ++i)
-    {
-        __asm("NOP"); /* delay */
-    }
 }
 
 void IOMUXC_SelectENETClock(void)
 {
-#if defined(EXAMPLE_USE_100M_ENET_PORT) || defined(CPU_MIMXRT1064DVL6A)
+#ifdef EXAMPLE_USE_100M_ENET_PORT
     IOMUXC_GPR->GPR4 |= 0x3; /* 50M ENET_REF_CLOCK output to PHY and ENET module. */
 #else
     IOMUXC_GPR->GPR5 |= IOMUXC_GPR_GPR5_ENET1G_RGMII_EN_MASK; /* bit1:iomuxc_gpr_enet_clk_dir
@@ -262,11 +150,19 @@ void IOMUXC_SelectENETClock(void)
 
 void BOARD_ENETFlexibleConfigure(enet_config_t *config)
 {
-#if defined(EXAMPLE_USE_100M_ENET_PORT) || defined(CPU_MIMXRT1064DVL6A)
+#ifdef EXAMPLE_USE_100M_ENET_PORT
     config->miiMode = kENET_RmiiMode;
 #else
     config->miiMode = kENET_RgmiiMode;
 #endif
+}
+
+
+extern u32_t sys_now(void);
+int64_t os_clock_now()
+{
+    int64_t ns_time = (int64_t)(sys_now()*1e6);
+    return ns_time;
 }
 
 /*!
@@ -387,57 +283,13 @@ static void stack_init(void)
  */
 static void print_dhcp_state(void* arg)
 {
-	stack_init();
+    stack_init();
     /* create modelrunner thread in RTOS */
     if (sys_thread_new("modelrunner", modelrunner_task, NULL, 8192, DEFAULT_THREAD_PRIO) == NULL){
         PRINTF("modelrunner_task(): Task creation failed\r\n");
     }
     vTaskDelete(NULL);
 }
-
-#if defined(CPU_MIMXRT1176DVMAA_cm7)
-status_t BOARD_InitSEMC(void)
-{
-    semc_config_t config;
-    semc_sdram_config_t sdramconfig;
-    uint32_t clockFrq = EXAMPLE_SEMC_CLK_FREQ;
-
-    /* Initializes the MAC configure structure to zero. */
-    memset(&config, 0, sizeof(semc_config_t));
-    memset(&sdramconfig, 0, sizeof(semc_sdram_config_t));
-
-    /* Initialize SEMC. */
-    SEMC_GetDefaultConfig(&config);
-    config.dqsMode = kSEMC_Loopbackdqspad; /* For more accurate timing. */
-    SEMC_Init(SEMC, &config);
-
-    /* Configure SDRAM. */
-    sdramconfig.csxPinMux           = kSEMC_MUXCSX0;
-    sdramconfig.address             = 0x80000000;
-    sdramconfig.memsize_kbytes      = 2 * 32 * 1024;       /* 64MB = 2*32*1024*1KBytes*/
-    sdramconfig.portSize            = kSEMC_PortSize32Bit; /*two 16-bit SDRAMs make up 32-bit portsize*/
-    sdramconfig.burstLen            = kSEMC_Sdram_BurstLen8;
-    sdramconfig.columnAddrBitNum    = kSEMC_SdramColunm_9bit;
-    sdramconfig.casLatency          = kSEMC_LatencyThree;
-    sdramconfig.tPrecharge2Act_Ns   = 15; /* tRP 15ns */
-    sdramconfig.tAct2ReadWrite_Ns   = 15; /* tRCD 15ns */
-    sdramconfig.tRefreshRecovery_Ns = 70; /* Use the maximum of the (Trfc , Txsr). */
-    sdramconfig.tWriteRecovery_Ns   = 2;  /* tWR 2ns */
-    sdramconfig.tCkeOff_Ns =
-        42; /* The minimum cycle of SDRAM CLK off state. CKE is off in self refresh at a minimum period tRAS.*/
-    sdramconfig.tAct2Prechage_Ns       = 40; /* tRAS 40ns */
-    sdramconfig.tSelfRefRecovery_Ns    = 70;
-    sdramconfig.tRefresh2Refresh_Ns    = 60;
-    sdramconfig.tAct2Act_Ns            = 2; /* tRC/tRDD 2ns */
-    sdramconfig.tPrescalePeriod_Ns     = 160 * (1000000000 / clockFrq);
-    sdramconfig.refreshPeriod_nsPerRow = 64 * 1000000 / 8192; /* 64ms/8192 */
-    sdramconfig.refreshUrgThreshold    = sdramconfig.refreshPeriod_nsPerRow;
-    sdramconfig.refreshBurstLen        = 1;
-    sdramconfig.delayChain             = 2;
-
-    return SEMC_ConfigureSDRAM(SEMC, kSEMC_SDRAM_CS0, &sdramconfig, clockFrq);
-}
-#endif
 
 /*!
  * @brief Main function.
@@ -447,39 +299,14 @@ int main(void)
     gpio_pin_config_t gpio_config = {kGPIO_DigitalOutput, 0, kGPIO_NoIntmode};
 
     BOARD_ConfigMPU();
-#if defined(CPU_MIMXRT1064DVL6A)
-    BOARD_InitBootPins();
-    BOARD_InitBootClocks();
-#elif defined(CPU_MIMXRT1176DVMAA_cm7)
     BOARD_InitPins();
-    BOARD_InitSemcPins();
     BOARD_BootClockRUN();
-    //Re-init SDRAM here since DCD refresh has issues
-    if (BOARD_InitSEMC() != kStatus_Success)
-    {
-       PRINTF("\r\n SEMC SDRAM Init Failed\r\n");
-    }
-#endif
     BOARD_InitDebugConsole();
     BOARD_InitModuleClock();
 
-#if USE_GPT
-	Config_GPT();
-#endif
-
-#if defined(CPU_MIMXRT1064DVL6A)
-    IOMUXC_EnableMode(IOMUXC_GPR, kIOMUXC_GPR_ENET1TxClkOutputDir, true);
-
-    GPIO_PinInit(GPIO1, 9, &gpio_config);
-    GPIO_PinInit(GPIO1, 10, &gpio_config);
-    /* pull up the ENET_INT before RESET. */
-    GPIO_WritePinOutput(GPIO1, 10, 1);
-    GPIO_WritePinOutput(GPIO1, 9, 0);
-    delay();
-    GPIO_WritePinOutput(GPIO1, 9, 1);
-#elif defined(CPU_MIMXRT1176DVMAA_cm7)
     IOMUXC_SelectENETClock();
-#if defined(EXAMPLE_USE_100M_ENET_PORT) || defined(CPU_MIMXRT1064DVL6A)
+
+#ifdef EXAMPLE_USE_100M_ENET_PORT
     BOARD_InitEnetPins();
     GPIO_PinInit(GPIO9, 11, &gpio_config);
     GPIO_PinInit(GPIO12, 12, &gpio_config);
@@ -502,17 +329,13 @@ int main(void)
     EnableIRQ(ENET_1G_MAC0_Tx_Rx_1_IRQn);
     EnableIRQ(ENET_1G_MAC0_Tx_Rx_2_IRQn);
 #endif
-#endif
-
-    mdioHandle.resource.csrClock_Hz = EXAMPLE_CLOCK_FREQ;
 
     PRINTF("\r\n************************************************\r\n");
     PRINTF(" DeepviewRT Modelrunner\r\n");
     PRINTF("************************************************\r\n");
 
-#if defined(CPU_MIMXRT1064DVL6A)
-    BOARD_InitHyperFlash();
-#endif
+    /* Change the default behavior, store model in SDRAM, avoiding re-work board */
+    //BOARD_InitHyperFlash();
 
     if (sys_thread_new("print_dhcp", print_dhcp_state, NULL, PRINT_THREAD_STACKSIZE, PRINT_THREAD_PRIO) == NULL)
     {

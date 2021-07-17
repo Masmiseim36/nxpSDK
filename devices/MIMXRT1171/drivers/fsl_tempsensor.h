@@ -23,7 +23,7 @@
 
 /*! @name Driver version */
 /*@{*/
-#define FSL_TMPSNS_DRIVER_VERSION (MAKE_VERSION(2, 0, 2)) /*!< Version 2.0.2 */
+#define FSL_TMPSNS_DRIVER_VERSION (MAKE_VERSION(2, 0, 3)) /*!< Version 2.0.3 */
 /*@}*/
 
 /*! @brief TMPSNS interrupt status type, tmpsns_interrupt_status_enable_t. */

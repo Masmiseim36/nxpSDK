@@ -18,7 +18,7 @@
 /* The PWM base address */
 #define BOARD_PWM_BASEADDR PWM1
 
-#define PWM_SRC_CLK_FREQ CLOCK_GetRootClockFreq(kCLOCK_Root_Bus)
+#define PWM_SRC_CLK_FREQ       CLOCK_GetRootClockFreq(kCLOCK_Root_Bus)
 #define DEMO_PWM_CLOCK_DEVIDER kPWM_Prescale_Divide_4
 /* Definition for default PWM frequence in hz. */
 #ifndef APP_DEFAULT_PWM_FREQUENCE

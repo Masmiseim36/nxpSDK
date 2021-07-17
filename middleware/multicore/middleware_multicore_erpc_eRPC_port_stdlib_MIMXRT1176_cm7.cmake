@@ -1,17 +1,15 @@
-if(NOT MIDDLEWARE_MULTICORE_ERPC_ERPC_PORT_STDLIB_MIMXRT1176_cm7_INCLUDED)
-    
-    set(MIDDLEWARE_MULTICORE_ERPC_ERPC_PORT_STDLIB_MIMXRT1176_cm7_INCLUDED true CACHE BOOL "middleware_multicore_erpc_eRPC_port_stdlib component is included.")
+include_guard(GLOBAL)
+message("middleware_multicore_erpc_eRPC_port_stdlib component is included.")
 
-    target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
-        ${CMAKE_CURRENT_LIST_DIR}/erpc/erpc_c/port/erpc_port_stdlib.cpp
-    )
-
-
-    target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
-        ${CMAKE_CURRENT_LIST_DIR}/erpc/erpc_c/port
-    )
+target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
+    ${CMAKE_CURRENT_LIST_DIR}/erpc/erpc_c/port/erpc_port_stdlib.cpp
+)
 
 
-    include(middleware_multicore_erpc_common_MIMXRT1176_cm7)
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
+    ${CMAKE_CURRENT_LIST_DIR}/erpc/erpc_c/port
+)
 
-endif()
+
+include(middleware_multicore_erpc_common_MIMXRT1176_cm7)
+

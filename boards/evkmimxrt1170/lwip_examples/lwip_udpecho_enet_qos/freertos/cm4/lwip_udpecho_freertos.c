@@ -80,6 +80,12 @@
 #define EXAMPLE_NETIF_INIT_FN ethernetif0_init
 #endif /* EXAMPLE_NETIF_INIT_FN */
 
+/*! @brief Stack size of the temporary lwIP initialization thread. */
+#define INIT_THREAD_STACKSIZE 1024
+
+/*! @brief Priority of the temporary lwIP initialization thread. */
+#define INIT_THREAD_PRIO DEFAULT_THREAD_PRIO
+
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
@@ -147,47 +153,20 @@ void ENET_QOS_SetSYSControl(enet_qos_mii_mode_t miiMode)
 
 
 /*!
- * @brief Main function
+ * @brief Initializes lwIP stack.
+ *
+ * @param arg unused
  */
-int main(void)
+static void stack_init(void *arg)
 {
     static struct netif netif;
-#if defined(FSL_FEATURE_SOC_LPC_ENET_COUNT) && (FSL_FEATURE_SOC_LPC_ENET_COUNT > 0)
-    static mem_range_t non_dma_memory[] = NON_DMA_MEMORY_ARRAY;
-#endif /* FSL_FEATURE_SOC_LPC_ENET_COUNT */
     ip4_addr_t netif_ipaddr, netif_netmask, netif_gw;
     ethernetif_config_t enet_config = {
         .phyHandle  = &phyHandle,
         .macAddress = configMAC_ADDR,
-#if defined(FSL_FEATURE_SOC_LPC_ENET_COUNT) && (FSL_FEATURE_SOC_LPC_ENET_COUNT > 0)
-        .non_dma_memory = non_dma_memory,
-#endif /* FSL_FEATURE_SOC_LPC_ENET_COUNT */
     };
 
-    gpio_pin_config_t gpio_config = {kGPIO_DigitalOutput, 0, kGPIO_NoIntmode};
-
-    /* Hardware Initialization. */
-    BOARD_ConfigMPU();
-    BOARD_InitBootPins();
-    BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
-    BOARD_InitModuleClock();
-
-    IOMUXC_GPR->GPR6 |= IOMUXC_GPR_GPR6_ENET_QOS_RGMII_EN_MASK; /* Set this bit to enable ENET_QOS RGMII TX clock output
-                                                                   on TX_CLK pad. */
-
-    GPIO_PinInit(GPIO11, 14, &gpio_config);
-    /* For a complete PHY reset of RTL8211FDI-CG, this pin must be asserted low for at least 10ms. And
-     * wait for a further 30ms(for internal circuits settling time) before accessing the PHY register */
-    GPIO_WritePinOutput(GPIO11, 14, 0);
-    SDK_DelayAtLeastUs(10000, SDK_DEVICE_MAXIMUM_CPU_CLOCK_FREQUENCY);
-    GPIO_WritePinOutput(GPIO11, 14, 1);
-    SDK_DelayAtLeastUs(30000, SDK_DEVICE_MAXIMUM_CPU_CLOCK_FREQUENCY);
-
-    EnableIRQ(ENET_1G_MAC0_Tx_Rx_1_IRQn);
-    EnableIRQ(ENET_1G_MAC0_Tx_Rx_2_IRQn);
-
-    NVIC_SetPriority(ENET_QOS_IRQn, ENET_PRIORITY);
+    LWIP_UNUSED_ARG(arg);
 
     mdioHandle.resource.csrClock_Hz = EXAMPLE_CLOCK_FREQ;
 
@@ -214,6 +193,45 @@ int main(void)
     PRINTF("************************************************\r\n");
 
     udpecho_init();
+
+    vTaskDelete(NULL);
+}
+
+/*!
+ * @brief Main function
+ */
+int main(void)
+{
+    gpio_pin_config_t gpio_config = {kGPIO_DigitalOutput, 0, kGPIO_NoIntmode};
+
+    /* Hardware Initialization. */
+    BOARD_ConfigMPU();
+    BOARD_InitBootPins();
+    BOARD_BootClockRUN();
+    BOARD_InitDebugConsole();
+    BOARD_InitModuleClock();
+
+    IOMUXC_GPR->GPR6 |= IOMUXC_GPR_GPR6_ENET_QOS_RGMII_EN_MASK; /* Set this bit to enable ENET_QOS RGMII TX clock output
+                                                                   on TX_CLK pad. */
+
+    GPIO_PinInit(GPIO11, 14, &gpio_config);
+    /* For a complete PHY reset of RTL8211FDI-CG, this pin must be asserted low for at least 10ms. And
+     * wait for a further 30ms(for internal circuits settling time) before accessing the PHY register */
+    GPIO_WritePinOutput(GPIO11, 14, 0);
+    SDK_DelayAtLeastUs(10000, SDK_DEVICE_MAXIMUM_CPU_CLOCK_FREQUENCY);
+    GPIO_WritePinOutput(GPIO11, 14, 1);
+    SDK_DelayAtLeastUs(30000, SDK_DEVICE_MAXIMUM_CPU_CLOCK_FREQUENCY);
+
+    EnableIRQ(ENET_1G_MAC0_Tx_Rx_1_IRQn);
+    EnableIRQ(ENET_1G_MAC0_Tx_Rx_2_IRQn);
+
+    NVIC_SetPriority(ENET_QOS_IRQn, ENET_PRIORITY);
+
+    /* Initialize lwIP from thread */
+    if (sys_thread_new("main", stack_init, NULL, INIT_THREAD_STACKSIZE, INIT_THREAD_PRIO) == NULL)
+    {
+        LWIP_ASSERT("main(): Task creation failed.", 0);
+    }
 
     vTaskStartScheduler();
 

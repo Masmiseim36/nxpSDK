@@ -1,6 +1,6 @@
 # CROSS COMPILER SETTING
 SET(CMAKE_SYSTEM_NAME Generic)
-CMAKE_MINIMUM_REQUIRED (VERSION 3.1.1)
+CMAKE_MINIMUM_REQUIRED (VERSION 3.10.0)
 
 # THE VERSION NUMBER
 SET (Tutorial_VERSION_MAJOR 1)
@@ -42,6 +42,7 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../clock_config.h"
 "${ProjDirPath}/../dcd.c"
 "${ProjDirPath}/../dcd.h"
+"${ProjDirPath}/../evkmimxrt1160_connect_cm4_cm7side.jlinkscript"
 )
 
 target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
@@ -53,12 +54,12 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../../middleware/sdmmc
     ${ProjDirPath}/../../../../../../devices/MIMXRT1166/utilities/debug_console_lite
     ${ProjDirPath}/../../../../../../devices/MIMXRT1166
-    ${ProjDirPath}/../../../../../../CMSIS/Include
     ${ProjDirPath}/../../../../../../components/uart
     ${ProjDirPath}/../../../../../../components/lists
     ${ProjDirPath}/../../../../../../devices/MIMXRT1166/xip
     ${ProjDirPath}/../../../../xip
     ${ProjDirPath}/../../../../../../devices/MIMXRT1166/drivers/cm7
+    ${ProjDirPath}/../../../../../../CMSIS/Core/Include
     ${ProjDirPath}/../../../../../../components/osa
     ${ProjDirPath}/../../../../../../devices/MIMXRT1166/utilities
 )
@@ -84,8 +85,6 @@ include(driver_common_MIMXRT1166_cm7)
 
 include(device_MIMXRT1166_CMSIS_MIMXRT1166_cm7)
 
-include(CMSIS_Include_core_cm7_MIMXRT1166_cm7)
-
 include(component_lpuart_adapter_MIMXRT1166_cm7)
 
 include(component_lists_MIMXRT1166_cm7)
@@ -108,17 +107,17 @@ include(driver_dcdc_soc_MIMXRT1166_cm7)
 
 include(driver_cache_armv7_m7_MIMXRT1166_cm7)
 
+include(driver_memory_MIMXRT1166_cm7)
+
 include(driver_anatop_ai_MIMXRT1166_cm7)
+
+include(CMSIS_Include_core_cm_MIMXRT1166_cm7)
 
 include(middleware_sdmmc_osa_bm_MIMXRT1166_cm7)
 
 include(component_osa_bm_MIMXRT1166_cm7)
 
 include(utilities_misc_utilities_MIMXRT1166_cm7)
-
-include(CMSIS_Include_common_MIMXRT1166_cm7)
-
-include(CMSIS_Include_dsp_MIMXRT1166_cm7)
 
 include(device_MIMXRT1166_system_MIMXRT1166_cm7)
 

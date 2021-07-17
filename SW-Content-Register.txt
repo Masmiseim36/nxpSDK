@@ -538,30 +538,6 @@ cmsis_drivers              Name: SDK CMSIS Peripheral Drivers
                            Location: devices/<device>/cmsis_drivers          
                            Origin: NXP (Apache License 2.0)                  
 
-Crank Storyboard GUI       Name: Crank Storyboard GUI                        
-                           Version: 7.0                                      
-                           Outgoing License: LA_OPT_NXP_Software_License.txt 
-                           - Additional distribution license granted -       
-                           License in Section 2.3 applies                    
-                           License File: LA_OPT_NXP_Software_License.txt     
-                           Format: Precompiled libraries, source code        
-                           Description: Crank Storyboard GUI Engine          
-                           Location: middleware/Crank_Software               
-                           Origin: Crank Software Inc. (Proprietary)         
-                           Url: https://www.cranksoftware.com/storyboard     
-
-Embedded Wizard            Name: Embedded Wizard GUI solution                
-                           Version: 10.0                                     
-                           Outgoing License: LA_OPT_NXP_Software_License.txt 
-                           - Additional distribution license granted -       
-                           License in Section 2.3 applies                    
-                           License File: LA_OPT_NXP_Software_License.txt     
-                           Format: Precompiled libraries, source code        
-                           Description: Embedded Wizard GUI solution         
-                           Location: middleware/EmbeddedWizard               
-                           Origin: TARA Systems GmbH (Proprietary)           
-                           Url: https://www.embedded-wizard.de               
-
 MCMGR                      Name: MCMGR                                       
                            Version: 4.1.1                                    
                            Outgoing License: BSD-3-Clause                    
@@ -572,7 +548,7 @@ MCMGR                      Name: MCMGR
                            Origin: NXP (BSD-3-Clause)                        
 
 multicore                  Name: Multicore SDK                               
-                           Version: 2.9.0                                    
+                           Version: 2.10.0                                   
                            Outgoing License: BSD-3-Clause                    
                            License File: COPYING-BSD-3                       
                            Format: source code                               
@@ -582,7 +558,7 @@ multicore                  Name: Multicore SDK
                            Origin: NXP (BSD-3-Clause)                        
 
 rpmsg_lite                 Name: RPMsg-Lite                                  
-                           Version: 3.1.1                                    
+                           Version: 3.1.2                                    
                            Outgoing License: BSD-3-Clause                    
                            License File: COPYING-BSD-3                       
                            Format: source code                               
@@ -594,7 +570,7 @@ rpmsg_lite                 Name: RPMsg-Lite
                            Url: https://github.com/NXPmicro/rpmsg-lite       
 
 erpc                       Name: eRPC                                        
-                           Version: 1.8.0                                    
+                           Version: 1.8.1                                    
                            Outgoing License: BSD-3-Clause                    
                            License File: middleware/multicore/erpc/LICENSE   
                            Format: source code                               
@@ -645,6 +621,30 @@ cpp_option_parser          Name: C++ option-parser
                            Url:                                              
                            http://www.bradapp.com/ftp/src/libs/C++/Options.ht
                            ml                                                
+
+Crank Storyboard GUI       Name: Crank Storyboard GUI                        
+                           Version: 7.0                                      
+                           Outgoing License: LA_OPT_NXP_Software_License.txt 
+                           - Additional distribution license granted -       
+                           License in Section 2.3 applies                    
+                           License File: LA_OPT_NXP_Software_License.txt     
+                           Format: Precompiled libraries, source code        
+                           Description: Crank Storyboard GUI Engine          
+                           Location: middleware/Crank_Software               
+                           Origin: Crank Software Inc. (Proprietary)         
+                           Url: https://www.cranksoftware.com/storyboard     
+
+Embedded Wizard            Name: Embedded Wizard GUI solution                
+                           Version: 10.0                                     
+                           Outgoing License: LA_OPT_NXP_Software_License.txt 
+                           - Additional distribution license granted -       
+                           License in Section 2.3 applies                    
+                           License File: LA_OPT_NXP_Software_License.txt     
+                           Format: Precompiled libraries, source code        
+                           Description: Embedded Wizard GUI solution         
+                           Location: middleware/EmbeddedWizard               
+                           Origin: TARA Systems GmbH (Proprietary)           
+                           Url: https://www.embedded-wizard.de               
 
 emwin                      Name: emWin                                       
                            Version: 6.16                                     
@@ -738,7 +738,7 @@ libjpeg                    Name: LIBJPEG
                            Origin: IJG (IJG) - http://www.ijg.org            
 
 vglite                     Name: vglite                                      
-                           Version: 3.0.9_rev2                               
+                           Version: 3.0.11_rev2                              
                            Outgoing License: MIT                             
                            License File: middleware/vglite/LICENSE.txt       
                            Format: source code                               

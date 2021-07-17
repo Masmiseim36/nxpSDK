@@ -21,11 +21,11 @@
  ******************************************************************************/
 /* SAI instance and clock */
 #define DEMO_CODEC_WM8960
-#define DEMO_SAI SAI1
-#define DEMO_SAI_CHANNEL (0)
-#define DEMO_SAI_TX_SYNC_MODE kSAI_ModeAsync
-#define DEMO_SAI_RX_SYNC_MODE kSAI_ModeSync
-#define DEMO_SAI_MASTER_SLAVE kSAI_Master
+#define DEMO_SAI                SAI1
+#define DEMO_SAI_CHANNEL        (0)
+#define DEMO_SAI_TX_SYNC_MODE   kSAI_ModeAsync
+#define DEMO_SAI_RX_SYNC_MODE   kSAI_ModeSync
+#define DEMO_SAI_MASTER_SLAVE   kSAI_Master
 #define DEMO_AUDIO_DATA_CHANNEL (2U)
 #define DEMO_AUDIO_BIT_WIDTH    kSAI_WordWidth16bits
 #define DEMO_AUDIO_SAMPLE_RATE  (kSAI_SampleRate16KHz)
@@ -157,7 +157,9 @@ int main(void)
     /* master clock configurations */
     BOARD_MASTER_CLOCK_CONFIG();
 
-    /* Use default setting to init codec */
+#if defined DEMO_BOARD_CODEC_INIT
+    DEMO_BOARD_CODEC_INIT();
+#else
     if (CODEC_Init(&codecHandle, &boardCodecConfig) != kStatus_Success)
     {
         assert(false);
@@ -167,6 +169,7 @@ int main(void)
     {
         assert(false);
     }
+#endif
     /* delay for codec output stable */
     DelayMS(DEMO_CODEC_INIT_DELAY_MS);
 

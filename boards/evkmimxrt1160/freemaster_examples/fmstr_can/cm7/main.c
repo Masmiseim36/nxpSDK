@@ -92,7 +92,7 @@ static void init_freemaster_can(void)
     flexcanConfig.baudRate = 500000U;
 
     /* Update the improved timing configuration*/
-    if (FLEXCAN_CalculateImprovedTimingValues(flexcanConfig.baudRate, canSrcClock, &timing_config))
+    if (FLEXCAN_CalculateImprovedTimingValues(CAN3, flexcanConfig.baudRate, canSrcClock, &timing_config))
         flexcanConfig.timingConfig = timing_config;
 
     FLEXCAN_Init(CAN3, &flexcanConfig, canSrcClock);

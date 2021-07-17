@@ -34,7 +34,7 @@
   <td id="projectlogo"><img alt="Logo" src="nxp_logo_small.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">eRPC API Reference
-   &#160;<span id="projectnumber">Rev. 1.8.0</span>
+   &#160;<span id="projectnumber">Rev. 1.8.1</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -150,16 +150,16 @@ Public Member Functions</h2></td></tr>
 virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_r_p_msg_transport.html#a9170c0983cf46938b63433d1256f08c8">~RPMsgTransport</a> (void)</td></tr>
 <tr class="memdesc:a9170c0983cf46938b63433d1256f08c8"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classerpc_1_1_codec.html" title="Abstract serialization encoder/decoder interface. ">Codec</a> destructor. <br /></td></tr>
 <tr class="separator:a9170c0983cf46938b63433d1256f08c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5d98c0f410ac60ee1cd4705eb6310ea3"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="group__infra.html#ga5f8872e58f09a16d192bf664f9898651">erpc_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_r_p_msg_transport.html#a5d98c0f410ac60ee1cd4705eb6310ea3">init</a> (uint32_t src_addr, uint32_t dst_addr, void *base_address, uint32_t length, uint32_t rpmsg_link_id)</td></tr>
+<tr class="memitem:a5d98c0f410ac60ee1cd4705eb6310ea3"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="group__infra.html#gadea8a058796ed8b9a73c5f833445a661">erpc_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_r_p_msg_transport.html#a5d98c0f410ac60ee1cd4705eb6310ea3">init</a> (uint32_t src_addr, uint32_t dst_addr, void *base_address, uint32_t length, uint32_t rpmsg_link_id)</td></tr>
 <tr class="memdesc:a5d98c0f410ac60ee1cd4705eb6310ea3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialization of <a class="el" href="classerpc_1_1_r_p_msg_transport.html" title="Transport that uses RPMsg zero copy API for interprocessor messaging. ">RPMsgTransport</a> layer - as RPMsg master.  <a href="#a5d98c0f410ac60ee1cd4705eb6310ea3">More...</a><br /></td></tr>
 <tr class="separator:a5d98c0f410ac60ee1cd4705eb6310ea3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac88eb829b9ed54b337dc3f08fbe47a28"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="group__infra.html#ga5f8872e58f09a16d192bf664f9898651">erpc_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_r_p_msg_transport.html#ac88eb829b9ed54b337dc3f08fbe47a28">init</a> (uint32_t src_addr, uint32_t dst_addr, void *base_address, uint32_t rpmsg_link_id, void(*ready_cb)(void), char *nameservice_name)</td></tr>
+<tr class="memitem:ac88eb829b9ed54b337dc3f08fbe47a28"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="group__infra.html#gadea8a058796ed8b9a73c5f833445a661">erpc_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_r_p_msg_transport.html#ac88eb829b9ed54b337dc3f08fbe47a28">init</a> (uint32_t src_addr, uint32_t dst_addr, void *base_address, uint32_t rpmsg_link_id, void(*ready_cb)(void), char *nameservice_name)</td></tr>
 <tr class="memdesc:ac88eb829b9ed54b337dc3f08fbe47a28"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialization of <a class="el" href="classerpc_1_1_r_p_msg_transport.html" title="Transport that uses RPMsg zero copy API for interprocessor messaging. ">RPMsgTransport</a> layer - as RPMsg remote.  <a href="#ac88eb829b9ed54b337dc3f08fbe47a28">More...</a><br /></td></tr>
 <tr class="separator:ac88eb829b9ed54b337dc3f08fbe47a28"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:accaaae7170e9b1ae42a4cdf1b2213583"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="group__infra.html#ga5f8872e58f09a16d192bf664f9898651">erpc_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_r_p_msg_transport.html#accaaae7170e9b1ae42a4cdf1b2213583">receive</a> (<a class="el" href="classerpc_1_1_message_buffer.html">MessageBuffer</a> *message)</td></tr>
+<tr class="memitem:accaaae7170e9b1ae42a4cdf1b2213583"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="group__infra.html#gadea8a058796ed8b9a73c5f833445a661">erpc_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_r_p_msg_transport.html#accaaae7170e9b1ae42a4cdf1b2213583">receive</a> (<a class="el" href="classerpc_1_1_message_buffer.html">MessageBuffer</a> *message)</td></tr>
 <tr class="memdesc:accaaae7170e9b1ae42a4cdf1b2213583"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set message to first received message.  <a href="#accaaae7170e9b1ae42a4cdf1b2213583">More...</a><br /></td></tr>
 <tr class="separator:accaaae7170e9b1ae42a4cdf1b2213583"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6060897b2c31b37876dccc357d274278"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="group__infra.html#ga5f8872e58f09a16d192bf664f9898651">erpc_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_r_p_msg_transport.html#a6060897b2c31b37876dccc357d274278">send</a> (<a class="el" href="classerpc_1_1_message_buffer.html">MessageBuffer</a> *message)</td></tr>
+<tr class="memitem:a6060897b2c31b37876dccc357d274278"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="group__infra.html#gadea8a058796ed8b9a73c5f833445a661">erpc_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_r_p_msg_transport.html#a6060897b2c31b37876dccc357d274278">send</a> (<a class="el" href="classerpc_1_1_message_buffer.html">MessageBuffer</a> *message)</td></tr>
 <tr class="memdesc:a6060897b2c31b37876dccc357d274278"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function to send prepared message.  <a href="#a6060897b2c31b37876dccc357d274278">More...</a><br /></td></tr>
 <tr class="separator:a6060897b2c31b37876dccc357d274278"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a51eac0d87a7d70408df2290c8175706d"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_r_p_msg_transport.html#a51eac0d87a7d70408df2290c8175706d">hasMessage</a> (void)</td></tr>
@@ -240,7 +240,7 @@ Static Protected Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group__infra.html#ga5f8872e58f09a16d192bf664f9898651">erpc_status_t</a> RPMsgTransport::init </td>
+          <td class="memname"><a class="el" href="group__infra.html#gadea8a058796ed8b9a73c5f833445a661">erpc_status_t</a> RPMsgTransport::init </td>
           <td>(</td>
           <td class="paramtype">uint32_t&#160;</td>
           <td class="paramname"><em>src_addr</em>, </td>
@@ -312,7 +312,7 @@ Static Protected Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group__infra.html#ga5f8872e58f09a16d192bf664f9898651">erpc_status_t</a> RPMsgTransport::init </td>
+          <td class="memname"><a class="el" href="group__infra.html#gadea8a058796ed8b9a73c5f833445a661">erpc_status_t</a> RPMsgTransport::init </td>
           <td>(</td>
           <td class="paramtype">uint32_t&#160;</td>
           <td class="paramname"><em>src_addr</em>, </td>
@@ -391,7 +391,7 @@ Static Protected Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group__infra.html#ga5f8872e58f09a16d192bf664f9898651">erpc_status_t</a> RPMsgTransport::receive </td>
+          <td class="memname"><a class="el" href="group__infra.html#gadea8a058796ed8b9a73c5f833445a661">erpc_status_t</a> RPMsgTransport::receive </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classerpc_1_1_message_buffer.html">MessageBuffer</a> *&#160;</td>
           <td class="paramname"><em>message</em></td><td>)</td>
@@ -427,7 +427,7 @@ Static Protected Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group__infra.html#ga5f8872e58f09a16d192bf664f9898651">erpc_status_t</a> RPMsgTransport::send </td>
+          <td class="memname"><a class="el" href="group__infra.html#gadea8a058796ed8b9a73c5f833445a661">erpc_status_t</a> RPMsgTransport::send </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classerpc_1_1_message_buffer.html">MessageBuffer</a> *&#160;</td>
           <td class="paramname"><em>message</em></td><td>)</td>

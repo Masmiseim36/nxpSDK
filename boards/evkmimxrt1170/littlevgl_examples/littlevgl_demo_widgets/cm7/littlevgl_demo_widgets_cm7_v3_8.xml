@@ -21,7 +21,6 @@
     <definition extID="platform.drivers.clock.MIMXRT1176"/>
     <definition extID="middleware.littlevgl.MIMXRT1176"/>
     <definition extID="platform.devices.MIMXRT1176_CMSIS.MIMXRT1176"/>
-    <definition extID="platform.Include_core_cm7.MIMXRT1176"/>
     <definition extID="utility.debug_console.MIMXRT1176"/>
     <definition extID="component.lpuart_adapter.MIMXRT1176"/>
     <definition extID="component.serial_manager.MIMXRT1176"/>
@@ -33,19 +32,19 @@
     <definition extID="platform.utilities.assert.MIMXRT1176"/>
     <definition extID="platform.drivers.igpio.MIMXRT1176"/>
     <definition extID="platform.drivers.xip_device.MIMXRT1176"/>
-    <definition extID="platform.drivers.xip_board.MIMXRT1176"/>
+    <definition extID="platform.drivers.xip_board.evkmimxrt1170.MIMXRT1176"/>
     <definition extID="platform.drivers.pmu_1.MIMXRT1176"/>
     <definition extID="platform.drivers.dcdc_soc.MIMXRT1176"/>
     <definition extID="platform.drivers.cache_armv7_m7.MIMXRT1176"/>
     <definition extID="platform.drivers.anatop_ai.MIMXRT1176"/>
+    <definition extID="CMSIS_Include_core_cm.MIMXRT1176"/>
     <definition extID="platform.drivers.soc_mipi_csi2rx.MIMXRT1176"/>
     <definition extID="driver.dc-fb-common.MIMXRT1176"/>
     <definition extID="platform.drivers.lcdifv2.MIMXRT1176"/>
+    <definition extID="platform.drivers.memory.MIMXRT1176"/>
     <definition extID="middleware.freertos-kernel.MIMXRT1176"/>
     <definition extID="middleware.freertos-kernel.extension.MIMXRT1176"/>
     <definition extID="platform.utilities.misc_utilities.MIMXRT1176"/>
-    <definition extID="platform.Include_common.MIMXRT1176"/>
-    <definition extID="platform.Include_dsp.MIMXRT1176"/>
     <definition extID="platform.devices.MIMXRT1176_system.MIMXRT1176"/>
     <definition extID="iar"/>
     <definition extID="mdk"/>
@@ -55,7 +54,7 @@
     <definition extID="com.crt.advproject.config.exe.debug"/>
     <definition extID="com.crt.advproject.config.exe.release"/>
   </externalDefinitions>
-  <example id="evkmimxrt1170_littlevgl_demo_widgets_cm7" name="littlevgl_demo_widgets_cm7" device_core="cm7_MIMXRT1176xxxxx" dependency="driver.video-common.MIMXRT1176 driver.display-common.MIMXRT1176 driver.display-rm68191.MIMXRT1176 platform.drivers.mipi_dsi_split.MIMXRT1176 driver.display-mipi-dsi-cmd.MIMXRT1176 platform.drivers.common.MIMXRT1176 driver.display-rm68200.MIMXRT1176 driver.dc-fb-lcdifv2.MIMXRT1176 driver.gt911.MIMXRT1176 platform.drivers.lpi2c.MIMXRT1176 platform.drivers.soc_src.MIMXRT1176 platform.drivers.pxp.MIMXRT1176 platform.drivers.elcdif.MIMXRT1176 driver.dc-fb-elcdif.MIMXRT1176 middleware.vglite.MIMXRT1176 middleware.freertos-kernel.heap_4.MIMXRT1176 platform.drivers.clock.MIMXRT1176 middleware.littlevgl.MIMXRT1176 platform.devices.MIMXRT1176_CMSIS.MIMXRT1176 platform.Include_core_cm7.MIMXRT1176 utility.debug_console.MIMXRT1176 component.lpuart_adapter.MIMXRT1176 component.serial_manager.MIMXRT1176 component.lists.MIMXRT1176 component.serial_manager_uart.MIMXRT1176 platform.drivers.lpuart.MIMXRT1176 platform.devices.MIMXRT1176_startup.MIMXRT1176 platform.drivers.iomuxc.MIMXRT1176 platform.utilities.assert.MIMXRT1176 platform.drivers.igpio.MIMXRT1176 platform.drivers.xip_device.MIMXRT1176 platform.drivers.xip_board.MIMXRT1176 platform.drivers.pmu_1.MIMXRT1176 platform.drivers.dcdc_soc.MIMXRT1176 platform.drivers.cache_armv7_m7.MIMXRT1176 platform.drivers.anatop_ai.MIMXRT1176 platform.drivers.soc_mipi_csi2rx.MIMXRT1176 driver.dc-fb-common.MIMXRT1176 platform.drivers.lcdifv2.MIMXRT1176 middleware.freertos-kernel.MIMXRT1176 middleware.freertos-kernel.extension.MIMXRT1176 platform.utilities.misc_utilities.MIMXRT1176 platform.Include_common.MIMXRT1176 platform.Include_dsp.MIMXRT1176 platform.devices.MIMXRT1176_system.MIMXRT1176" category="littlevgl_examples">
+  <example id="evkmimxrt1170_littlevgl_demo_widgets_cm7" name="littlevgl_demo_widgets_cm7" device_core="cm7_MIMXRT1176xxxxx" dependency="driver.video-common.MIMXRT1176 driver.display-common.MIMXRT1176 driver.display-rm68191.MIMXRT1176 platform.drivers.mipi_dsi_split.MIMXRT1176 driver.display-mipi-dsi-cmd.MIMXRT1176 platform.drivers.common.MIMXRT1176 driver.display-rm68200.MIMXRT1176 driver.dc-fb-lcdifv2.MIMXRT1176 driver.gt911.MIMXRT1176 platform.drivers.lpi2c.MIMXRT1176 platform.drivers.soc_src.MIMXRT1176 platform.drivers.pxp.MIMXRT1176 platform.drivers.elcdif.MIMXRT1176 driver.dc-fb-elcdif.MIMXRT1176 middleware.vglite.MIMXRT1176 middleware.freertos-kernel.heap_4.MIMXRT1176 platform.drivers.clock.MIMXRT1176 middleware.littlevgl.MIMXRT1176 platform.devices.MIMXRT1176_CMSIS.MIMXRT1176 utility.debug_console.MIMXRT1176 component.lpuart_adapter.MIMXRT1176 component.serial_manager.MIMXRT1176 component.lists.MIMXRT1176 component.serial_manager_uart.MIMXRT1176 platform.drivers.lpuart.MIMXRT1176 platform.devices.MIMXRT1176_startup.MIMXRT1176 platform.drivers.iomuxc.MIMXRT1176 platform.utilities.assert.MIMXRT1176 platform.drivers.igpio.MIMXRT1176 platform.drivers.xip_device.MIMXRT1176 platform.drivers.xip_board.evkmimxrt1170.MIMXRT1176 platform.drivers.pmu_1.MIMXRT1176 platform.drivers.dcdc_soc.MIMXRT1176 platform.drivers.cache_armv7_m7.MIMXRT1176 platform.drivers.anatop_ai.MIMXRT1176 CMSIS_Include_core_cm.MIMXRT1176 platform.drivers.soc_mipi_csi2rx.MIMXRT1176 driver.dc-fb-common.MIMXRT1176 platform.drivers.lcdifv2.MIMXRT1176 platform.drivers.memory.MIMXRT1176 middleware.freertos-kernel.MIMXRT1176 middleware.freertos-kernel.extension.MIMXRT1176 platform.utilities.misc_utilities.MIMXRT1176 platform.devices.MIMXRT1176_system.MIMXRT1176" category="littlevgl_examples">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -111,7 +110,8 @@
           <value>VGLITE_TST_FIRMWARE=0</value>
           <value>VG_LITE_SYS_GPU_CTRL=0</value>
           <value>SERIAL_PORT_TYPE_UART=1</value>
-          <value>FSL_RTOS_FREE_RTOS</value>
+          <value>SDK_OS_FREE_RTOS</value>
+          <value>MCUXPRESSO_SDK</value>
         </option>
         <option id="com.crt.advproject.link.memory.sections" type="stringList">
           <value>isd=KEEP(*(CodeQuickAccess));region=SRAM_ITC_cm7;type=.data</value>
@@ -248,6 +248,9 @@
     </source>
     <source path="boards/evkmimxrt1170/littlevgl_examples/littlevgl_demo_widgets/cm7/mdk" project_relative_path="evkmimxrt1170" type="configuration" toolchain="mdk">
       <files mask="evkmimxrt1170_flexspi_nor_sdram.ini"/>
+    </source>
+    <source path="boards/evkmimxrt1170/littlevgl_examples/littlevgl_demo_widgets/cm7" project_relative_path="evkmimxrt1170" type="other" toolchain="iar mdk armgcc">
+      <files mask="evkmimxrt1170_connect_cm4_cm7side.jlinkscript"/>
     </source>
   </example>
 </ksdk:examples>

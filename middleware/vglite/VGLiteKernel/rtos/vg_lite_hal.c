@@ -173,13 +173,13 @@ void vg_lite_hal_barrier(void)
 static int vg_lite_init(void);
 vg_lite_error_t vg_lite_hal_initialize(void)
 {
-    vg_lite_error_t error = VG_LITE_SUCCESS;
+    int32_t error = VG_LITE_SUCCESS;
     /* TODO: Turn on the power. */
     vg_lite_init();
     /* TODO: Turn on the clock. */
     error = vg_lite_os_initialize();
 
-    return error;
+    return (vg_lite_error_t)error;
 }
 
 void vg_lite_hal_deinitialize(void)
@@ -194,6 +194,13 @@ static int split_node(heap_node_t * node, unsigned long size)
     /* TODO: the original is linux specific list based, needs rewrite.
     */
     heap_node_t * split;
+
+    /*
+     * If the newly allocated object fits exactly the size of the free
+     * node, there is no need to split.
+     */
+    if (node->size - size == 0)
+        return 0;
 
     /* Allocate a new node. */
     split = (heap_node_t *)vg_lite_os_malloc(sizeof(heap_node_t));
@@ -383,14 +390,14 @@ void vg_lite_hal_unmap(void * handle)
     (void) handle;
 }
 
-vg_lite_error_t vg_lite_hal_submit(uint32_t physical, uint32_t offset, uint32_t size,  uint32_t * signal, uint32_t semaphore_id)
+vg_lite_error_t vg_lite_hal_submit(uint32_t physical, uint32_t offset, uint32_t size, vg_lite_os_async_event_t *event)
 {
-    return vg_lite_os_submit(physical,offset,size,signal,semaphore_id);
+    return (vg_lite_error_t)vg_lite_os_submit(physical,offset,size,event);
 }
 
-vg_lite_error_t vg_lite_hal_wait(uint32_t timeout, uint32_t * signal,void * semaphore)
+vg_lite_error_t vg_lite_hal_wait(uint32_t timeout, vg_lite_os_async_event_t *event)
 {
-    return  vg_lite_os_wait(timeout,signal,semaphore);
+    return  (vg_lite_error_t)vg_lite_os_wait(timeout,event);
 }
 
 static void vg_lite_exit(void)

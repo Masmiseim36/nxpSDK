@@ -18,19 +18,39 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
+
 #define DEMO_CSI_CLK_FREQ (CLOCK_GetFreqFromObs(CCM_OBS_BUS_CLK_ROOT))
 #define DEMO_MIPI_CSI2_UI_CLK_FREQ (CLOCK_GetFreqFromObs(CCM_OBS_CSI2_UI_CLK_ROOT))
 
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
+
+/*!
+ * @brief Resets camera power down pin.
+ * 
+ * @param pullUp sets true pin
+ */
 static void BOARD_PullCameraPowerDownPin(bool pullUp);
+
+/*!
+ * @brief Resets camera using reset pin.
+ * 
+ * @param pullUp sets true pin
+ */
 static void BOARD_PullCameraResetPin(bool pullUp);
+
+/*!
+ * @brief Verifies camera clock source.
+ * 
+ * @return status code
+ */
 static status_t BOARD_VerifyCameraClockSource(void);
 
 /*******************************************************************************
  * Variables
  ******************************************************************************/
+
 /* Camera connect to CSI. */
 static csi_resource_t csiResource = {
     .csiBase = CSI,
@@ -60,14 +80,23 @@ camera_device_handle_t cameraDevice = {
 /*******************************************************************************
  * Code
  ******************************************************************************/
+
 extern void CSI_DriverIRQHandler(void);
 
+/*!
+ * @brief Handles CSI IRQ.
+ */
 void CSI_IRQHandler(void)
 {
   CSI_DriverIRQHandler();
   __DSB();
 }
 
+/*!
+ * @brief Prepares camera for initialization.
+ * 
+ * @return status code
+ */
 void BOARD_EarlyPrepareCamera(void)
 {
   /* If the camera I2C bus should be released by sending I2C sequence,
@@ -99,6 +128,9 @@ static void BOARD_PullCameraPowerDownPin(bool pullUp)
   }
 }
 
+/*!
+ * @brief Prepares camera for initialization.
+ */
 void BOARD_EarlyInitCamera(void)
 {
   /* If the camera I2C bus should be released by sending I2C sequence,
@@ -106,6 +138,9 @@ void BOARD_EarlyInitCamera(void)
    */
 }
 
+/*!
+ * @brief Initializes camera controler.
+ */
 void BOARD_InitCameraResource(void)
 {
   BOARD_Camera_I2C_Init();
@@ -113,6 +148,9 @@ void BOARD_InitCameraResource(void)
   /* CSI MCLK is connect to dedicated 24M OSC, so don't need to configure it. */
 }
 
+/*!
+ * @brief Initializes Mipi Csi Clock.
+ */
 void BOARD_InitMipiCsi(void)
 {
   csi2rx_config_t csi2rxConfig = {0};
@@ -247,6 +285,11 @@ void BOARD_InitMipiCsi(void)
   CSI2RX_Init(MIPI_CSI2RX, &csi2rxConfig);
 }
 
+/*!
+ * @brief Verifies camera clock source.
+ * 
+ * @return status code
+ */
 static status_t BOARD_VerifyCameraClockSource(void)
 {
   status_t status;

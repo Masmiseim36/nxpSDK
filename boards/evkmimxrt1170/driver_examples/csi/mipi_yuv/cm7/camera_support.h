@@ -16,11 +16,11 @@
  * Definitions
  ******************************************************************************/
 
-#define DEMO_CAMERA_HEIGHT 720
-#define DEMO_CAMERA_WIDTH 1280
-#define DEMO_CAMERA_FRAME_RATE 30
+#define DEMO_CAMERA_HEIGHT        720
+#define DEMO_CAMERA_WIDTH         1280
+#define DEMO_CAMERA_FRAME_RATE    30
 #define DEMO_CAMERA_CONTROL_FLAGS (kCAMERA_HrefActiveHigh | kCAMERA_DataLatchOnRisingEdge)
-#define DEMO_CAMERA_BUFFER_ALIGN 64
+#define DEMO_CAMERA_BUFFER_ALIGN  64
 #define DEMO_CAMERA_MIPI_CSI_LANE 2
 
 extern camera_device_handle_t cameraDevice;

@@ -16,9 +16,9 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define LED_INIT() USER_LED_INIT(LOGIC_LED_OFF)
+#define LED_INIT()   USER_LED_INIT(LOGIC_LED_OFF)
 #define LED_TOGGLE() USER_LED_TOGGLE()
-#define APP_MU MUB
+#define APP_MU       MUB
 /* Flag indicates Core Boot Up*/
 #define BOOT_FLAG 0x01U
 

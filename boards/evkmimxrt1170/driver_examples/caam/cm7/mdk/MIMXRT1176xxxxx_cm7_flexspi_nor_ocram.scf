@@ -52,8 +52,8 @@
 #define m_ncache_start                 0x202C0000
 #define m_ncache_size                  0x00002000
 
-#define m_data2_start                  0x202C2000
-#define m_data2_size                   0x0007E000
+  #define m_data2_start                0x202C2000
+  #define m_data2_size                 0x0007E000
 
 
 #define m_core1_image_start            0x30FC0000

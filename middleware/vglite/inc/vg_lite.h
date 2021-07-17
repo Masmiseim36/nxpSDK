@@ -380,6 +380,16 @@ extern "C" {
 
 /* Structures *******************************************************************************************************************/
 
+    /* A 2D Point definition. */
+    typedef struct vg_lite_point {
+        int x;
+        int y;
+    }
+    vg_lite_point_t;
+
+    /* Four 2D Point that form a polygon */
+    typedef vg_lite_point_t vg_lite_point4_t[4];
+
     /* This structure is used to query VGLite driver information */
     typedef struct vg_lite_info {
         uint32_t  api_version;          /*! VGLite API version. */
@@ -551,6 +561,23 @@ extern "C" {
     } vg_lite_radial_gradient_t;
 
 /* API Function prototypes *****************************************************************************************************/
+
+    /*!
+     @abstract Get a 3*3 homogenous transform matrix by source coordinates and target coordinates.
+
+     @param src
+     Pointer to the four 2D points that form a source polygon.
+
+     @param dst
+     Pointer to the four 2D points that form a destination polygon.
+
+     @param mat
+     Output parameter,pointer to 3*3 homogenous matrix that transform source polygon to destination polygon.
+
+     @result
+     Returns the status as defined by <code>vg_lite_error_t</code>.
+     */
+    vg_lite_error_t vg_lite_get_transform_matrix(vg_lite_point4_t src, vg_lite_point4_t dst,vg_lite_matrix_t *mat);
 
     /*!
      @abstract Allocate a buffer from hardware accessible memory.

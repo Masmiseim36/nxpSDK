@@ -1,20 +1,16 @@
-if(NOT MIDDLEWARE_FREERTOS-AWS_IOT_DEMOS_SHADOW_MIMXRT1166_cm7_INCLUDED)
-    
-    set(MIDDLEWARE_FREERTOS-AWS_IOT_DEMOS_SHADOW_MIMXRT1166_cm7_INCLUDED true CACHE BOOL "middleware_freertos-aws_iot_demos_shadow component is included.")
+include_guard(GLOBAL)
+message("middleware_freertos-aws_iot_demos_shadow component is included.")
 
-    target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
-        ${CMAKE_CURRENT_LIST_DIR}/demos/shadow/aws_iot_demo_shadow.c
-    )
+target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
+    ${CMAKE_CURRENT_LIST_DIR}/demos/device_shadow_for_aws/shadow_demo_main.c
+)
 
 
-    include(middleware_freertos-aws_iot_c_sdk_standard_shadow_MIMXRT1166_cm7)
+include(middleware_freertos-aws_iot_demos_MIMXRT1166_cm7)
 
-    include(middleware_freertos-aws_iot_c_sdk_standard_serializer_MIMXRT1166_cm7)
+include(middleware_freertos-aws_iot_libraries_device_shadow_for_aws_MIMXRT1166_cm7)
 
-    include(middleware_freertos-aws_iot_demos_MIMXRT1166_cm7)
+include(middleware_freertos-aws_iot_libraries_corejason_MIMXRT1166_cm7)
 
-    include(middleware_freertos-aws_iot_libraries_abstractions_platform_MIMXRT1166_cm7)
+include(middleware_freertos-aws_iot_mqtt_demo_helpers_MIMXRT1166_cm7)
 
-    include(middleware_freertos-aws_iot_mqtt_MIMXRT1166_cm7)
-
-endif()

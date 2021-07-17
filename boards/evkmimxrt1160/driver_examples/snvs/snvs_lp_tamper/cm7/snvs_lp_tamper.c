@@ -148,7 +148,7 @@ uint32_t GetInputNumber()
     return ch - '0';
 }
 
-void avtive_tamper_setting(uint32_t tx, uint32_t rx)
+void active_tamper_setting(uint32_t tx, uint32_t rx)
 {
     tamper_active_tx_config_t tx_config;
     tamper_active_rx_config_t rx_config;
@@ -160,10 +160,10 @@ void avtive_tamper_setting(uint32_t tx, uint32_t rx)
     SNVS_LP_TamperPinRx_GetDefaultConfig(&rx_config);
 
     /* Enable active tamper TX */
-    SNVS_LP_EnableTxActiveTamper(SNVS, (snvs_lp_active_tamper_t)tx, tx_config);
+    SNVS_LP_EnableTxActiveTamper(SNVS, (snvs_lp_active_tx_tamper_t)tx, tx_config);
 
-    /* Set cersponding TX pin in RX config structure */
-    rx_config.activeTamper = (snvs_lp_active_tamper_t)tx;
+    /* Set coresponding TX pin in RX config structure */
+    rx_config.activeTamper = (snvs_lp_active_tx_tamper_t)tx;
 
     /* Enable RX pin and route active tamper TX to it */
     SNVS_LP_EnableRxActiveTamper(SNVS, (snvs_lp_external_tamper_t)rx, rx_config);
@@ -261,7 +261,7 @@ int main(void)
                 snvs_lp_passive_tamper_t taper_cfg;
 
                 /* Fill default values into passive tamper pin config structure */
-                SNVS_LP_TamperPin_GetDefaultConfig(&taper_cfg);
+                SNVS_LP_PassiveTamperPin_GetDefaultConfig(&taper_cfg);
 
                 taper_cfg.polarity = 1U, taper_cfg.filterenable = 0U, taper_cfg.filter = 3U;
 
@@ -313,7 +313,7 @@ int main(void)
                 PRINTF("\r\nSelect tamper ecternal rx pin input(6-10) and confirm by Enter...\r\n");
                 snvs_lp_external_tamper_t tamper_pin_rx = (snvs_lp_external_tamper_t)GetInputNumber();
 
-                avtive_tamper_setting(tamper_pin_tx, tamper_pin_rx);
+                active_tamper_setting(tamper_pin_tx, tamper_pin_rx);
                 PRINTF(
                     "\r\nif tamper pin tx %d and rx pin %d don't connect together, will trigger tamper violation\r\n",
                     tamper_pin_tx, tamper_pin_rx);

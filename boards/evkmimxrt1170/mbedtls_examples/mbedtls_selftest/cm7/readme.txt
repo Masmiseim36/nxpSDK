@@ -1,15 +1,15 @@
 Overview
 ========
-The mbdedTLS SelfTest program performs cryptographic algorithm testing and prints results to the
+The mbedTLS SelfTest program performs cryptographic algorithm testing and prints results to the
 terminal.
 
 
 Toolchain supported
 ===================
-- GCC ARM Embedded  9.3.1
-- MCUXpresso  11.3.1
-- IAR embedded Workbench  8.50.9
-- Keil MDK  5.33
+- GCC ARM Embedded  10.2.1
+- MCUXpresso  11.4.0
+- IAR embedded Workbench  9.10.2
+- Keil MDK  5.34
 
 Hardware requirements
 =====================
@@ -40,7 +40,14 @@ Running the demo
 ================
 When the demo runs successfully, the terminal will display similar information like the following:
 
-  
+mbedTLS version 2.26.0
+fsys=250105263
+Using following implementations:
+  SHA: HASHCRYPT HW accelerated
+  AES: HASHCRYPT HW accelerated
+  AES GCM: Software implementation
+  DES: Software implementation
+  Asymmetric cryptography: CASPER HW accelerated ECC256/384/521 and RSA verify
   MD5 test #1: passed
   MD5 test #2: passed
   MD5 test #3: passed
@@ -53,9 +60,6 @@ When the demo runs successfully, the terminal will display similar information l
   SHA-1 test #2: passed
   SHA-1 test #3: passed
 
-  SHA-224 test #1: passed
-  SHA-224 test #2: passed
-  SHA-224 test #3: passed
   SHA-256 test #1: passed
   SHA-256 test #2: passed
   SHA-256 test #3: passed
@@ -101,6 +105,13 @@ When the demo runs successfully, the terminal will display similar information l
   AES-CFB128-192 (enc): passed
   AES-CFB128-256 (dec): passed
   AES-CFB128-256 (enc): passed
+
+  AES-OFB-128 (dec): passed
+  AES-OFB-128 (enc): passed
+  AES-OFB-192 (dec): passed
+  AES-OFB-192 (enc): passed
+  AES-OFB-256 (dec): passed
+  AES-OFB-256 (enc): passed
 
   AES-CTR-128 (dec): passed
   AES-CTR-128 (enc): passed
@@ -186,6 +197,9 @@ When the demo runs successfully, the terminal will display similar information l
   CCM-AES #2: passed
   CCM-AES #3: passed
 
+  Poly1305 test 0 passed
+  Poly1305 test 1 passed
+
   Base64 encoding test: passed
   Base64 decoding test: passed
 
@@ -195,12 +209,11 @@ When the demo runs successfully, the terminal will display similar information l
   MPI test #4 (inv_mod): passed
   MPI test #5 (simple gcd): passed
 
-  RSA parse key #1       : passed
-  RSA-1024 key validation: passed
-  PKCS#1 encryption      : passed
-  PKCS#1 decryption      : passed
-  PKCS#1 data sign       : passed
-  PKCS#1 sig. verify     : passed
+  RSA key validation: passed
+  PKCS#1 encryption : passed
+  PKCS#1 decryption : passed
+  PKCS#1 data sign  : passed
+  PKCS#1 sig. verify: passed
 
   X.509 certificate load: passed
   X.509 signature verify: passed
@@ -211,8 +224,8 @@ When the demo runs successfully, the terminal will display similar information l
   HMAC_DRBG (PR = True) : passed
   HMAC_DRBG (PR = False) : passed
 
-  ECP test #1 (constant op_count, base point G): passed
-  ECP test #2 (constant op_count, other point): passed
+  ECP SW test #1 (constant op_count, base point G): passed
+  ECP SW test #2 (constant op_count, other point): passed
 
   DHM parameter load: passed
 
@@ -225,6 +238,6 @@ When the demo runs successfully, the terminal will display similar information l
   PBKDF2 (SHA1) #4: passed
   PBKDF2 (SHA1) #5: passed
 
-  Executed 18 test suites
+  Executed 19 test suites
 
-                           [ All tests PASS ]
+  [ All tests PASS ]

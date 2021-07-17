@@ -74,9 +74,13 @@ uint8_t g_UsbDeviceDescriptor[] = {
     USB_SHORT_GET_HIGH(USB_DEVICE_DEMO_BCD_VERSION), /* Device release number in binary-coded decimal */
     0x01U,                                           /* Index of string descriptor describing manufacturer */
     0x02U,                                           /* Index of string descriptor describing product */
-    0x00U,                                           /* Index of string descriptor describing the
-                                                        device's serial number */
-    USB_DEVICE_CONFIGURATION_COUNT,                  /* Number of possible configurations */
+#if (defined(USB_DEVICE_CONFIG_ROOT2_TEST) && (USB_DEVICE_CONFIG_ROOT2_TEST > 0U))
+    0x03U, /* Index of string descriptor describing the
+              device's serial number */
+#else
+    0x00U,
+#endif
+    USB_DEVICE_CONFIGURATION_COUNT, /* Number of possible configurations */
 };
 
 USB_DMA_INIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE)
@@ -101,23 +105,23 @@ uint8_t g_UsbDeviceConfigurationDescriptor[] = {
          D5: Remote Wakeup
          D4...0: Reserved (reset to zero)
     */
-    USB_DEVICE_MAX_POWER,            /* Maximum power consumption of the USB
-                                      * device from the bus in this specific
-                                      * configuration when the device is fully
-                                      * operational. Expressed in 2 mA units
-                                      *  (i.e., 50 = 100 mA).
-                                      */
-    USB_DESCRIPTOR_LENGTH_INTERFACE, /* Size of this descriptor in bytes */
-    USB_DESCRIPTOR_TYPE_INTERFACE,   /* INTERFACE Descriptor Type */
-    USB_HID_GENERIC_INTERFACE_INDEX, /* Number of this interface. */
-    0x00U,                           /* Value used to select this alternate setting
+    USB_DEVICE_MAX_POWER,                  /* Maximum power consumption of the USB
+                                            * device from the bus in this specific
+                                            * configuration when the device is fully
+                                            * operational. Expressed in 2 mA units
+                                            *  (i.e., 50 = 100 mA).
+                                            */
+    USB_DESCRIPTOR_LENGTH_INTERFACE,       /* Size of this descriptor in bytes */
+    USB_DESCRIPTOR_TYPE_INTERFACE,         /* INTERFACE Descriptor Type */
+    USB_HID_GENERIC_INTERFACE_INDEX,       /* Number of this interface. */
+    USB_HID_GENERIC_INTERFACE_ALTERNATE_0, /* Value used to select this alternate setting
                                         for the interface identified in the prior field */
-    USB_HID_GENERIC_ENDPOINT_COUNT,  /* Number of endpoints used by this
-                                        interface (excluding endpoint zero). */
-    USB_HID_GENERIC_CLASS,           /* Class code (assigned by the USB-IF). */
-    USB_HID_GENERIC_SUBCLASS,        /* Subclass code (assigned by the USB-IF). */
-    USB_HID_GENERIC_PROTOCOL,        /* Protocol code (assigned by the USB). */
-    0x00U,                           /* Index of string descriptor describing this interface */
+    USB_HID_GENERIC_ENDPOINT_COUNT,        /* Number of endpoints used by this
+                                              interface (excluding endpoint zero). */
+    USB_HID_GENERIC_CLASS,                 /* Class code (assigned by the USB-IF). */
+    USB_HID_GENERIC_SUBCLASS,              /* Subclass code (assigned by the USB-IF). */
+    USB_HID_GENERIC_PROTOCOL,              /* Protocol code (assigned by the USB). */
+    0x00U,                                 /* Index of string descriptor describing this interface */
 
     USB_DESCRIPTOR_LENGTH_HID,      /* Numeric expression that is the total size of the
                                        HID descriptor. */
@@ -232,16 +236,61 @@ uint8_t g_UsbDeviceString2[] = {
     'E',           0x00U,
 };
 
+#if (defined(USB_DEVICE_CONFIG_ROOT2_TEST) && (USB_DEVICE_CONFIG_ROOT2_TEST > 0U))
+/* ROOT2 requirement: Serial String must have 16 Hexadecimal digits, leading four digits are zero */
+USB_DMA_INIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE)
+uint8_t g_UsbDeviceString3[] = {
+    (16 * 2 + 2), USB_DESCRIPTOR_TYPE_STRING,
+    '0',          0,
+    '0',          0,
+    '0',          0,
+    '0',          0,
+    '1',          0,
+    '2',          0,
+    '3',          0,
+    '4',          0,
+    '5',          0,
+    '6',          0,
+    '7',          0,
+    '8',          0,
+    '9',          0,
+    '0',          0,
+    '0',          0,
+    '0',          0,
+};
+
+/* Microsoft OS must be 12 03 4D 00 53 00 46 00 54 00 31 00 30 00 30 00 90 00 */
+USB_DMA_INIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE)
+uint8_t g_UsbDeviceOSString[] = {
+    (8 * 2 + 2), USB_DESCRIPTOR_TYPE_STRING,
+    'M', /*Signature:*/
+    0x00U,       'S',
+    0x00U,       'F',
+    0x00U,       'T',
+    0x00U,       '1',
+    0x00U,       '0',
+    0x00U,       '0',
+    0x00U,       0x90U, /*Vendor Code*/
+    0x00U,
+};
+#endif /* USB_DEVICE_CONFIG_ROOT2_TEST */
+
 uint32_t g_UsbDeviceStringDescriptorLength[USB_DEVICE_STRING_COUNT] = {
     sizeof(g_UsbDeviceString0),
     sizeof(g_UsbDeviceString1),
     sizeof(g_UsbDeviceString2),
+#if (defined(USB_DEVICE_CONFIG_ROOT2_TEST) && (USB_DEVICE_CONFIG_ROOT2_TEST > 0U))
+    sizeof(g_UsbDeviceString3),
+#endif
 };
 
 uint8_t *g_UsbDeviceStringDescriptorArray[USB_DEVICE_STRING_COUNT] = {
     g_UsbDeviceString0,
     g_UsbDeviceString1,
     g_UsbDeviceString2,
+#if (defined(USB_DEVICE_CONFIG_ROOT2_TEST) && (USB_DEVICE_CONFIG_ROOT2_TEST > 0U))
+    g_UsbDeviceString3,
+#endif
 };
 
 usb_language_t g_UsbDeviceLanguage[USB_DEVICE_LANGUAGE_COUNT] = {{
@@ -307,7 +356,14 @@ usb_status_t USB_DeviceGetDescriptor(usb_device_handle handle,
                         break;
                     }
                 }
-
+#if (defined(USB_DEVICE_CONFIG_ROOT2_TEST) && (USB_DEVICE_CONFIG_ROOT2_TEST > 0U))
+                if (0xEE == descriptorIndex)
+                {
+                    *buffer = (uint8_t *)g_UsbDeviceOSString;
+                    *length = sizeof(g_UsbDeviceOSString);
+                    return kStatus_USB_Success;
+                }
+#endif
                 if (USB_DEVICE_STRING_COUNT == languageIndex)
                 {
                     return kStatus_USB_InvalidRequest;
@@ -350,10 +406,23 @@ usb_status_t USB_DeviceGetDescriptor(usb_device_handle handle,
 /* Set current confgiuration request */
 usb_status_t USB_DeviceSetConfigure(usb_device_handle handle, uint8_t configure)
 {
+#if (defined(USB_DEVICE_CONFIG_ROOT2_TEST) && (USB_DEVICE_CONFIG_ROOT2_TEST > 0U))
+    if (configure > USB_HID_GENERIC_CONFIGURE_INDEX)
+    {
+        return kStatus_USB_InvalidRequest;
+    }
+    if (configure == g_UsbDeviceCurrentConfigure)
+    {
+        return kStatus_USB_Success;
+    }
+#endif
+#if (defined(USB_DEVICE_CONFIG_ROOT2_TEST) && (USB_DEVICE_CONFIG_ROOT2_TEST > 0U))
+#else
     if (!configure)
     {
         return kStatus_USB_Error;
     }
+#endif
     g_UsbDeviceCurrentConfigure = configure;
     return USB_DeviceCallback(handle, kUSB_DeviceEventSetConfiguration, &configure);
 }
@@ -368,15 +437,41 @@ usb_status_t USB_DeviceGetConfigure(usb_device_handle handle, uint8_t *configure
 /* Set current alternate settting of the interface request */
 usb_status_t USB_DeviceSetInterface(usb_device_handle handle, uint8_t interface, uint8_t alternateSetting)
 {
-    g_UsbDeviceInterface[interface] = alternateSetting;
-    return USB_DeviceCallback(handle, kUSB_DeviceEventSetInterface, &interface);
+#if (defined(USB_DEVICE_CONFIG_ROOT2_TEST) && (USB_DEVICE_CONFIG_ROOT2_TEST > 0U))
+    /* If a device only supports a default setting for the specified interface, then a STALL may
+       be returned in the Status stage of the request. */
+    if (1U == USB_HID_GENERIC_INTERFACE_ALTERNATE_COUNT)
+    {
+        return kStatus_USB_InvalidRequest;
+    }
+#else
+    if (interface < USB_HID_GENERIC_INTERFACE_COUNT)
+    {
+        g_UsbDeviceInterface[interface] = alternateSetting;
+        return USB_DeviceCallback(handle, kUSB_DeviceEventSetInterface, &interface);
+    }
+    return kStatus_USB_InvalidRequest;
+#endif
 }
 
 /* Get current alternate settting of the interface request */
 usb_status_t USB_DeviceGetInterface(usb_device_handle handle, uint8_t interface, uint8_t *alternateSetting)
 {
-    *alternateSetting = g_UsbDeviceInterface[interface];
-    return kStatus_USB_Success;
+#if (defined(USB_DEVICE_CONFIG_ROOT2_TEST) && (USB_DEVICE_CONFIG_ROOT2_TEST > 0U))
+    /* If a device only supports a default setting for the specified interface, then a STALL may
+       be returned in the Status stage of the request. */
+    if (1U == USB_HID_GENERIC_INTERFACE_ALTERNATE_COUNT)
+    {
+        return kStatus_USB_InvalidRequest;
+    }
+#else
+    if (interface < USB_HID_GENERIC_INTERFACE_COUNT)
+    {
+        *alternateSetting = g_UsbDeviceInterface[interface];
+        return kStatus_USB_Success;
+    }
+    return kStatus_USB_InvalidRequest;
+#endif
 }
 
 /* Due to the difference of HS and FS descriptors, the device descriptors and configurations need to be updated to match

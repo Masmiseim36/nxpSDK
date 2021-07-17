@@ -1,19 +1,17 @@
-if(NOT DRIVER_EDMA_MIMXRT1176_cm7_INCLUDED)
-    
-    set(DRIVER_EDMA_MIMXRT1176_cm7_INCLUDED true CACHE BOOL "driver_edma component is included.")
+include_guard(GLOBAL)
+message("driver_edma component is included.")
 
-    target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
-        ${CMAKE_CURRENT_LIST_DIR}/fsl_edma.c
-    )
-
-
-    target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
-        ${CMAKE_CURRENT_LIST_DIR}/.
-    )
+target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
+    ${CMAKE_CURRENT_LIST_DIR}/fsl_edma.c
+)
 
 
-    include(driver_common_MIMXRT1176_cm7)
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
+    ${CMAKE_CURRENT_LIST_DIR}/.
+)
 
-    include(driver_dmamux_MIMXRT1176_cm7)
 
-endif()
+include(driver_common_MIMXRT1176_cm7)
+
+include(driver_dmamux_MIMXRT1176_cm7)
+

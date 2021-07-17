@@ -1,6 +1,6 @@
 # CROSS COMPILER SETTING
 SET(CMAKE_SYSTEM_NAME Generic)
-CMAKE_MINIMUM_REQUIRED (VERSION 3.1.1)
+CMAKE_MINIMUM_REQUIRED (VERSION 3.10.0)
 
 # THE VERSION NUMBER
 SET (Tutorial_VERSION_MAJOR 1)
@@ -40,19 +40,20 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../clock_config.h"
 "${ProjDirPath}/../dcd.c"
 "${ProjDirPath}/../dcd.h"
+"${ProjDirPath}/../evkmimxrt1160_connect_cm4_cm7side.jlinkscript"
 )
 
 target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
     ${ProjDirPath}/..
 )
 
-if((CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug))
+if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
     target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../cm4/armgcc/debug)
-endif()
+endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
 
-if((CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release))
+if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
     target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../cm4/armgcc/release)
-endif()
+endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
 
 set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../../middleware/multicore
@@ -60,12 +61,12 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../../devices/MIMXRT1166/drivers
     ${ProjDirPath}/../../../../../../devices/MIMXRT1166/utilities/incbin
     ${ProjDirPath}/../../../../../../devices/MIMXRT1166
-    ${ProjDirPath}/../../../../../../CMSIS/Include
     ${ProjDirPath}/../../../../../../components/uart
     ${ProjDirPath}/../../../../../../components/lists
     ${ProjDirPath}/../../../../../../devices/MIMXRT1166/xip
     ${ProjDirPath}/../../../../xip
     ${ProjDirPath}/../../../../../../devices/MIMXRT1166/drivers/cm7
+    ${ProjDirPath}/../../../../../../CMSIS/Core/Include
     ${ProjDirPath}/../../../../../../devices/MIMXRT1166/utilities
 )
 
@@ -90,8 +91,6 @@ include(driver_common_MIMXRT1166_cm7)
 
 include(device_MIMXRT1166_CMSIS_MIMXRT1166_cm7)
 
-include(CMSIS_Include_core_cm7_MIMXRT1166_cm7)
-
 include(component_lpuart_adapter_MIMXRT1166_cm7)
 
 include(component_lists_MIMXRT1166_cm7)
@@ -114,11 +113,9 @@ include(driver_cache_armv7_m7_MIMXRT1166_cm7)
 
 include(driver_anatop_ai_MIMXRT1166_cm7)
 
+include(CMSIS_Include_core_cm_MIMXRT1166_cm7)
+
 include(utilities_misc_utilities_MIMXRT1166_cm7)
-
-include(CMSIS_Include_common_MIMXRT1166_cm7)
-
-include(CMSIS_Include_dsp_MIMXRT1166_cm7)
 
 include(device_MIMXRT1166_system_MIMXRT1166_cm7)
 

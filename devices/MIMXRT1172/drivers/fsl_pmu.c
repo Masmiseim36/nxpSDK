@@ -194,9 +194,7 @@ void PMU_StaticEnablePllLdo(ANADIG_PMU_Type *base)
 }
 
 /*!
- * @brief Disables PLL LDO via AI interface in Static/Software mode.
- *
- * @param base PMU peripheral base address.
+ * brief Disables PLL LDO via AI interface in Static/Software mode.
  */
 void PMU_StaticDisablePllLdo(void)
 {
@@ -543,8 +541,7 @@ void PMU_SnvsDigLdoInit(ANADIG_LDO_SNVS_DIG_Type *base, pmu_ldo_operate_mode_t m
  */
 void PMU_GPCEnableLdo(pmu_ldo_name_t name, uint32_t setpointMap)
 {
-    assert((name == kPMU_PllLdo) || (name > kPMU_PllLdo));
-    assert(name < kPMU_SnvsDigLdo);
+    assert(name != kPMU_SnvsDigLdo);
 
     uint32_t ldoEnableRegArray[] = PMU_LDO_ENABLE_SETPOINT_REGISTERS;
 
@@ -619,8 +616,7 @@ void PMU_GPCEnableLdoBypassMode(pmu_ldo_name_t name, uint32_t setpointMap)
  */
 void PMU_GPCEnableLdoStandbyMode(pmu_ldo_name_t name, uint32_t setpointMap)
 {
-    assert((name == kPMU_PllLdo) || (name > kPMU_PllLdo));
-    assert(name < kPMU_SnvsDigLdo);
+    assert(name != kPMU_SnvsDigLdo);
 
     uint32_t ldoStandbyEnableRegArray[] = PMU_LDO_STBY_EN_REGISTERS;
 
@@ -814,6 +810,15 @@ void PMU_SetBodyBiasControlMode(ANADIG_PMU_Type *base, pmu_body_bias_name_t name
     }
 }
 
+/*!
+ * brief Enables/disables the selected body bias.
+ *
+ * param base PMU peripheral base address.
+ * param name The name of the body bias to be turned on/off, please refer to pmu_body_bias_name_t.
+ * param enable Used to turn on/off the specific body bias.
+ *              - \b true Enable the selected body bias.
+ *              - \b false Disable the selected body bias.
+ */
 void PMU_EnableBodyBias(ANADIG_PMU_Type *base, pmu_body_bias_name_t name, bool enable)
 {
     uint32_t tmp32;
@@ -905,7 +910,7 @@ void PMU_GPCEnableBodyBias(pmu_body_bias_name_t name, uint32_t setpointMap)
  *
  * param name The name of the selected body bias. Please see the enumeration pmu_body_bias_name_t for details.
  * param setpointMap The map of setpoints that the specific body bias's wbias power switch will be turn on in those
- * setpoints, this value should be the OR'ed Value of @ref _pmu_setpoint_map.
+ * setpoints, this value should be the OR'ed Value of _pmu_setpoint_map.
  */
 void PMU_GPCEnableBodyBiasStandbyMode(pmu_body_bias_name_t name, uint32_t setpointMap)
 {

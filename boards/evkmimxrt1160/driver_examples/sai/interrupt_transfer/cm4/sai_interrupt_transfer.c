@@ -157,7 +157,9 @@ int main(void)
     /* master clock configurations */
     BOARD_MASTER_CLOCK_CONFIG();
 
-    /* Use default setting to init codec */
+#if defined DEMO_BOARD_CODEC_INIT
+    DEMO_BOARD_CODEC_INIT();
+#else
     if (CODEC_Init(&codecHandle, &boardCodecConfig) != kStatus_Success)
     {
         assert(false);
@@ -167,6 +169,7 @@ int main(void)
     {
         assert(false);
     }
+#endif
     /* delay for codec output stable */
     DelayMS(DEMO_CODEC_INIT_DELAY_MS);
 

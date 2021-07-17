@@ -6,6 +6,7 @@ var classerpc_1_1_codec =
     [ "setBuffer", "classerpc_1_1_codec.html#ace7d311abca68729346074d603879c9f", null ],
     [ "reset", "classerpc_1_1_codec.html#a5ee5a1d8930812d4256201bde6390bf3", null ],
     [ "getStatus", "classerpc_1_1_codec.html#ac329078b8a41270ef630ec44cb408860", null ],
+    [ "isStatusOk", "classerpc_1_1_codec.html#a663439fd4b60421df4915f43c07051b8", null ],
     [ "updateStatus", "classerpc_1_1_codec.html#a86556f8f7f972a796766bcaafae3f349", null ],
     [ "startWriteMessage", "classerpc_1_1_codec.html#ade36a3e253eb62fb6533aef091625047", null ],
     [ "write", "classerpc_1_1_codec.html#aca48e28afe7669b796418e1d79441a2b", null ],

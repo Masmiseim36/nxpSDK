@@ -7,10 +7,10 @@ Note: The output log of the case is not constant, since difference of card acces
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.9
-- Keil MDK  5.33
-- MCUXpresso  11.3.1
-- GCC ARM Embedded  9.3.1
+- IAR embedded Workbench  9.10.2
+- Keil MDK  5.34
+- MCUXpresso  11.4.0
+- GCC ARM Embedded  10.2.1
 
 Hardware requirements
 =====================
@@ -50,12 +50,9 @@ Make file system......The time may be long if the card capacity is big.
 
 Create directory......
 TASK1: write file successed.
-TASK1: file access is blocking.
-TASK1: file access is blocking.
 TASK2: write file successed.
-TASK2: file access is blocking.
-TASK2: file access is blocking.
 TASK1: finsied.
 TASK2: finsied.
+
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

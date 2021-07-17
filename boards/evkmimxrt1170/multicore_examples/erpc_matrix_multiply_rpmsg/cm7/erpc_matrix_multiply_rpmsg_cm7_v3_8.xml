@@ -19,7 +19,6 @@
     <definition extID="utility.incbin.MIMXRT1176"/>
     <definition extID="platform.drivers.common.MIMXRT1176"/>
     <definition extID="platform.devices.MIMXRT1176_CMSIS.MIMXRT1176"/>
-    <definition extID="platform.Include_core_cm7.MIMXRT1176"/>
     <definition extID="component.lpuart_adapter.MIMXRT1176"/>
     <definition extID="component.lists.MIMXRT1176"/>
     <definition extID="platform.drivers.lpuart.MIMXRT1176"/>
@@ -27,16 +26,15 @@
     <definition extID="platform.drivers.iomuxc.MIMXRT1176"/>
     <definition extID="platform.drivers.igpio.MIMXRT1176"/>
     <definition extID="platform.drivers.xip_device.MIMXRT1176"/>
-    <definition extID="platform.drivers.xip_board.MIMXRT1176"/>
+    <definition extID="platform.drivers.xip_board.evkmimxrt1170.MIMXRT1176"/>
     <definition extID="platform.drivers.pmu_1.MIMXRT1176"/>
     <definition extID="platform.drivers.dcdc_soc.MIMXRT1176"/>
     <definition extID="platform.drivers.cache_armv7_m7.MIMXRT1176"/>
     <definition extID="platform.drivers.anatop_ai.MIMXRT1176"/>
+    <definition extID="CMSIS_Include_core_cm.MIMXRT1176"/>
     <definition extID="middleware.multicore.rpmsg_lite.MIMXRT1176"/>
     <definition extID="middleware.multicore.erpc.common.MIMXRT1176"/>
     <definition extID="platform.utilities.misc_utilities.MIMXRT1176"/>
-    <definition extID="platform.Include_common.MIMXRT1176"/>
-    <definition extID="platform.Include_dsp.MIMXRT1176"/>
     <definition extID="platform.devices.MIMXRT1176_system.MIMXRT1176"/>
     <definition extID="armgcc"/>
     <definition extID="mdk"/>
@@ -46,7 +44,7 @@
     <definition extID="com.crt.advproject.config.exe.debug"/>
     <definition extID="com.crt.advproject.config.exe.release"/>
   </externalDefinitions>
-  <example id="evkmimxrt1170_erpc_matrix_multiply_rpmsg_cm7" name="erpc_matrix_multiply_rpmsg_cm7" device_core="cm7_MIMXRT1176xxxxx" dependency="middleware.multicore.mcmgr.imxrt1170.MIMXRT1176 middleware.multicore.rpmsg_lite.imxrt1170_bm.MIMXRT1176 utility.debug_console_lite.MIMXRT1176 platform.utilities.assert_lite.MIMXRT1176 platform.drivers.clock.MIMXRT1176 platform.drivers.mu.MIMXRT1176 middleware.multicore.erpc.eRPC_client.MIMXRT1176 middleware.multicore.erpc.eRPC_rpmsg_lite_master_c_wrapper.MIMXRT1176 middleware.multicore.erpc.eRPC_rpmsg_lite_transport.MIMXRT1176 middleware.multicore.erpc.eRPC_port_stdlib.MIMXRT1176 middleware.baremetal.MIMXRT1176 middleware.multicore.mcmgr.MIMXRT1176 middleware.multicore.erpc.doc.MIMXRT1176 utility.incbin.MIMXRT1176 platform.drivers.common.MIMXRT1176 platform.devices.MIMXRT1176_CMSIS.MIMXRT1176 platform.Include_core_cm7.MIMXRT1176 component.lpuart_adapter.MIMXRT1176 component.lists.MIMXRT1176 platform.drivers.lpuart.MIMXRT1176 platform.devices.MIMXRT1176_startup.MIMXRT1176 platform.drivers.iomuxc.MIMXRT1176 platform.drivers.igpio.MIMXRT1176 platform.drivers.xip_device.MIMXRT1176 platform.drivers.xip_board.MIMXRT1176 platform.drivers.pmu_1.MIMXRT1176 platform.drivers.dcdc_soc.MIMXRT1176 platform.drivers.cache_armv7_m7.MIMXRT1176 platform.drivers.anatop_ai.MIMXRT1176 middleware.multicore.rpmsg_lite.MIMXRT1176 middleware.multicore.erpc.common.MIMXRT1176 platform.utilities.misc_utilities.MIMXRT1176 platform.Include_common.MIMXRT1176 platform.Include_dsp.MIMXRT1176 platform.devices.MIMXRT1176_system.MIMXRT1176" linked_projects="evkmimxrt1170_erpc_matrix_multiply_rpmsg_cm4" category="multicore_examples">
+  <example id="evkmimxrt1170_erpc_matrix_multiply_rpmsg_cm7" name="erpc_matrix_multiply_rpmsg_cm7" device_core="cm7_MIMXRT1176xxxxx" dependency="middleware.multicore.mcmgr.imxrt1170.MIMXRT1176 middleware.multicore.rpmsg_lite.imxrt1170_bm.MIMXRT1176 utility.debug_console_lite.MIMXRT1176 platform.utilities.assert_lite.MIMXRT1176 platform.drivers.clock.MIMXRT1176 platform.drivers.mu.MIMXRT1176 middleware.multicore.erpc.eRPC_client.MIMXRT1176 middleware.multicore.erpc.eRPC_rpmsg_lite_master_c_wrapper.MIMXRT1176 middleware.multicore.erpc.eRPC_rpmsg_lite_transport.MIMXRT1176 middleware.multicore.erpc.eRPC_port_stdlib.MIMXRT1176 middleware.baremetal.MIMXRT1176 middleware.multicore.mcmgr.MIMXRT1176 middleware.multicore.erpc.doc.MIMXRT1176 utility.incbin.MIMXRT1176 platform.drivers.common.MIMXRT1176 platform.devices.MIMXRT1176_CMSIS.MIMXRT1176 component.lpuart_adapter.MIMXRT1176 component.lists.MIMXRT1176 platform.drivers.lpuart.MIMXRT1176 platform.devices.MIMXRT1176_startup.MIMXRT1176 platform.drivers.iomuxc.MIMXRT1176 platform.drivers.igpio.MIMXRT1176 platform.drivers.xip_device.MIMXRT1176 platform.drivers.xip_board.evkmimxrt1170.MIMXRT1176 platform.drivers.pmu_1.MIMXRT1176 platform.drivers.dcdc_soc.MIMXRT1176 platform.drivers.cache_armv7_m7.MIMXRT1176 platform.drivers.anatop_ai.MIMXRT1176 CMSIS_Include_core_cm.MIMXRT1176 middleware.multicore.rpmsg_lite.MIMXRT1176 middleware.multicore.erpc.common.MIMXRT1176 platform.utilities.misc_utilities.MIMXRT1176 platform.devices.MIMXRT1176_system.MIMXRT1176" linked_projects="evkmimxrt1170_erpc_matrix_multiply_rpmsg_cm4" category="multicore_examples">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.ccnature"/>
     </projects>
@@ -66,8 +64,11 @@
           <value>XIP_BOOT_HEADER_ENABLE=1</value>
           <value>__USE_SHMEM</value>
           <value>MULTICORE_APP=1</value>
+          <value>MCUXPRESSO_SDK</value>
         </option>
-        <option id="gnu.cpp.compiler.option.preprocessor.def" type="stringList"/>
+        <option id="gnu.cpp.compiler.option.preprocessor.def" type="stringList">
+          <value>MCUXPRESSO_SDK</value>
+        </option>
         <option id="com.crt.advproject.link.cpp.multicore.slave" type="string">
           <value>Master</value>
         </option>
@@ -240,6 +241,9 @@
     </source>
     <source path="boards/evkmimxrt1170/multicore_examples/erpc_matrix_multiply_rpmsg/cm7/mdk" project_relative_path="evkmimxrt1170" type="configuration" toolchain="mdk">
       <files mask="evkmimxrt1170_flexspi_nor.ini"/>
+    </source>
+    <source path="boards/evkmimxrt1170/multicore_examples/erpc_matrix_multiply_rpmsg/cm7" project_relative_path="evkmimxrt1170" type="other" toolchain="iar mdk armgcc">
+      <files mask="evkmimxrt1170_connect_cm4_cm7side.jlinkscript"/>
     </source>
   </example>
 </ksdk:examples>

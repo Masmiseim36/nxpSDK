@@ -96,9 +96,15 @@
 #define EXAMPLE_MQTT_SERVER_PORT 1883
 
 /*! @brief Stack size of the temporary lwIP initialization thread. */
-#define APP_THREAD_STACKSIZE 1024
+#define INIT_THREAD_STACKSIZE 1024
 
 /*! @brief Priority of the temporary lwIP initialization thread. */
+#define INIT_THREAD_PRIO DEFAULT_THREAD_PRIO
+
+/*! @brief Stack size of the temporary initialization thread. */
+#define APP_THREAD_STACKSIZE 1024
+
+/*! @brief Priority of the temporary initialization thread. */
 #define APP_THREAD_PRIO DEFAULT_THREAD_PRIO
 
 /*******************************************************************************
@@ -472,23 +478,65 @@ static void generate_client_id(void)
 }
 
 /*!
- * @brief Main function
+ * @brief Initializes lwIP stack.
+ *
+ * @param arg unused
  */
-int main(void)
+static void stack_init(void *arg)
 {
     static struct netif netif;
-#if defined(FSL_FEATURE_SOC_LPC_ENET_COUNT) && (FSL_FEATURE_SOC_LPC_ENET_COUNT > 0)
-    static mem_range_t non_dma_memory[] = NON_DMA_MEMORY_ARRAY;
-#endif /* FSL_FEATURE_SOC_LPC_ENET_COUNT */
     ip4_addr_t netif_ipaddr, netif_netmask, netif_gw;
     ethernetif_config_t enet_config = {
         .phyHandle  = &phyHandle,
         .macAddress = configMAC_ADDR,
-#if defined(FSL_FEATURE_SOC_LPC_ENET_COUNT) && (FSL_FEATURE_SOC_LPC_ENET_COUNT > 0)
-        .non_dma_memory = non_dma_memory,
-#endif /* FSL_FEATURE_SOC_LPC_ENET_COUNT */
     };
 
+    LWIP_UNUSED_ARG(arg);
+    generate_client_id();
+
+    mdioHandle.resource.csrClock_Hz = EXAMPLE_CLOCK_FREQ;
+
+    IP4_ADDR(&netif_ipaddr, 0U, 0U, 0U, 0U);
+    IP4_ADDR(&netif_netmask, 0U, 0U, 0U, 0U);
+    IP4_ADDR(&netif_gw, 0U, 0U, 0U, 0U);
+
+    tcpip_init(NULL, NULL);
+
+    LOCK_TCPIP_CORE();
+    mqtt_client = mqtt_client_new();
+    UNLOCK_TCPIP_CORE();
+    if (mqtt_client == NULL)
+    {
+        PRINTF("mqtt_client_new() failed.\r\n");
+        while (1)
+        {
+        }
+    }
+
+    netifapi_netif_add(&netif, &netif_ipaddr, &netif_netmask, &netif_gw, &enet_config, EXAMPLE_NETIF_INIT_FN,
+                       tcpip_input);
+    netifapi_netif_set_default(&netif);
+    netifapi_netif_set_up(&netif);
+
+    netifapi_dhcp_start(&netif);
+
+    PRINTF("\r\n************************************************\r\n");
+    PRINTF(" MQTT client example\r\n");
+    PRINTF("************************************************\r\n");
+
+    if (sys_thread_new("app_task", app_thread, &netif, APP_THREAD_STACKSIZE, APP_THREAD_PRIO) == NULL)
+    {
+        LWIP_ASSERT("stack_init(): Task creation failed.", 0);
+    }
+
+    vTaskDelete(NULL);
+}
+
+/*!
+ * @brief Main function
+ */
+int main(void)
+{
     gpio_pin_config_t gpio_config = {kGPIO_DigitalOutput, 0, kGPIO_NoIntmode};
 
     /* Hardware Initialization. */
@@ -513,37 +561,9 @@ int main(void)
     EnableIRQ(ENET_1G_MAC0_Tx_Rx_2_IRQn);
 
     NVIC_SetPriority(ENET_QOS_IRQn, ENET_PRIORITY);
-    generate_client_id();
 
-    mdioHandle.resource.csrClock_Hz = EXAMPLE_CLOCK_FREQ;
-
-    IP4_ADDR(&netif_ipaddr, 0U, 0U, 0U, 0U);
-    IP4_ADDR(&netif_netmask, 0U, 0U, 0U, 0U);
-    IP4_ADDR(&netif_gw, 0U, 0U, 0U, 0U);
-
-    tcpip_init(NULL, NULL);
-
-    mqtt_client = mqtt_client_new();
-    if (mqtt_client == NULL)
-    {
-        PRINTF("mqtt_client_new() failed.\r\n");
-        while (1)
-        {
-        }
-    }
-
-    netifapi_netif_add(&netif, &netif_ipaddr, &netif_netmask, &netif_gw, &enet_config, EXAMPLE_NETIF_INIT_FN,
-                       tcpip_input);
-    netifapi_netif_set_default(&netif);
-    netifapi_netif_set_up(&netif);
-
-    netifapi_dhcp_start(&netif);
-
-    PRINTF("\r\n************************************************\r\n");
-    PRINTF(" MQTT client example\r\n");
-    PRINTF("************************************************\r\n");
-
-    if (sys_thread_new("app_task", app_thread, &netif, APP_THREAD_STACKSIZE, APP_THREAD_PRIO) == NULL)
+    /* Initialize lwIP from thread */
+    if (sys_thread_new("main", stack_init, NULL, INIT_THREAD_STACKSIZE, INIT_THREAD_PRIO) == NULL)
     {
         LWIP_ASSERT("main(): Task creation failed.", 0);
     }

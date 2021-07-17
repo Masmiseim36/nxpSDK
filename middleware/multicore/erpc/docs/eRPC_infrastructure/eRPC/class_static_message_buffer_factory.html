@@ -34,7 +34,7 @@
   <td id="projectlogo"><img alt="Logo" src="nxp_logo_small.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">eRPC API Reference
-   &#160;<span id="projectnumber">Rev. 1.8.0</span>
+   &#160;<span id="projectnumber">Rev. 1.8.1</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -162,18 +162,18 @@ virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="c
 <tr class="memdesc:add24390e455e842edc93467feb40e8eb inherit pub_methods_classerpc_1_1_message_buffer_factory"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classerpc_1_1_client_manager.html" title="Base client implementation. ">ClientManager</a> destructor. <br /></td></tr>
 <tr class="separator:add24390e455e842edc93467feb40e8eb inherit pub_methods_classerpc_1_1_message_buffer_factory"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a52d400d44d1836d7764cc64e3d842a06 inherit pub_methods_classerpc_1_1_message_buffer_factory"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_message_buffer_factory.html#a52d400d44d1836d7764cc64e3d842a06">createServerBuffer</a> (void)</td></tr>
-<tr class="memdesc:a52d400d44d1836d7764cc64e3d842a06 inherit pub_methods_classerpc_1_1_message_buffer_factory"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function inform server if it has to create buffer for received message.  <a href="#a52d400d44d1836d7764cc64e3d842a06">More...</a><br /></td></tr>
+<tr class="memdesc:a52d400d44d1836d7764cc64e3d842a06 inherit pub_methods_classerpc_1_1_message_buffer_factory"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function informs server if it has to create buffer for received message.  <a href="#a52d400d44d1836d7764cc64e3d842a06">More...</a><br /></td></tr>
 <tr class="separator:a52d400d44d1836d7764cc64e3d842a06 inherit pub_methods_classerpc_1_1_message_buffer_factory"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aab77e9b0501e87a332f4cb3e2835bd54 inherit pub_methods_classerpc_1_1_message_buffer_factory"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="group__infra.html#ga5f8872e58f09a16d192bf664f9898651">erpc_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_message_buffer_factory.html#aab77e9b0501e87a332f4cb3e2835bd54">prepareServerBufferForSend</a> (<a class="el" href="classerpc_1_1_message_buffer.html">MessageBuffer</a> *message)</td></tr>
+<tr class="memitem:aab77e9b0501e87a332f4cb3e2835bd54 inherit pub_methods_classerpc_1_1_message_buffer_factory"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="group__infra.html#gadea8a058796ed8b9a73c5f833445a661">erpc_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_message_buffer_factory.html#aab77e9b0501e87a332f4cb3e2835bd54">prepareServerBufferForSend</a> (<a class="el" href="classerpc_1_1_message_buffer.html">MessageBuffer</a> *message)</td></tr>
 <tr class="memdesc:aab77e9b0501e87a332f4cb3e2835bd54 inherit pub_methods_classerpc_1_1_message_buffer_factory"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function is preparing output buffer on server side.  <a href="#aab77e9b0501e87a332f4cb3e2835bd54">More...</a><br /></td></tr>
 <tr class="separator:aab77e9b0501e87a332f4cb3e2835bd54 inherit pub_methods_classerpc_1_1_message_buffer_factory"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
-<tr class="memitem:afce5f72b00938dd99931ae25dfe11195"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_static_message_buffer_factory.html#afce5f72b00938dd99931ae25dfe11195">m_freeBufferBitmap</a> [(<a class="el" href="group__config.html#ga4c997c7ee5b73d96d9e11af367dbfd6a">ERPC_DEFAULT_BUFFERS_COUNT</a> &gt;&gt; 3)+1]</td></tr>
-<tr class="separator:afce5f72b00938dd99931ae25dfe11195"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6dafb179b9126f5ae07a328bdd933d11"><td class="memItemLeft" align="right" valign="top">uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_static_message_buffer_factory.html#a6dafb179b9126f5ae07a328bdd933d11">m_buffers</a> [<a class="el" href="group__config.html#ga4c997c7ee5b73d96d9e11af367dbfd6a">ERPC_DEFAULT_BUFFERS_COUNT</a>][(<a class="el" href="group__config.html#ga31c380773a119185d1ab1816accc3f04">ERPC_DEFAULT_BUFFER_SIZE</a>+sizeof(uint64_t)-1)/sizeof(uint64_t)]</td></tr>
-<tr class="separator:a6dafb179b9126f5ae07a328bdd933d11"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5bef7065f3fd7814392ce34d092c83cb"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_static_message_buffer_factory.html#a5bef7065f3fd7814392ce34d092c83cb">m_freeBufferBitmap</a> [(<a class="el" href="group__config.html#ga4c997c7ee5b73d96d9e11af367dbfd6a">ERPC_DEFAULT_BUFFERS_COUNT</a> &gt;&gt; 3U)+1U]</td></tr>
+<tr class="separator:a5bef7065f3fd7814392ce34d092c83cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acdadc631c42d4f677122defd283b69c3"><td class="memItemLeft" align="right" valign="top">uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_static_message_buffer_factory.html#acdadc631c42d4f677122defd283b69c3">m_buffers</a> [<a class="el" href="group__config.html#ga4c997c7ee5b73d96d9e11af367dbfd6a">ERPC_DEFAULT_BUFFERS_COUNT</a>][ERPC_BUFFER_SIZE_UINT64]</td></tr>
+<tr class="separator:acdadc631c42d4f677122defd283b69c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3cb47dc31bea70681a87e127c6be4c07"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classerpc_1_1_semaphore.html">Semaphore</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_static_message_buffer_factory.html#a3cb47dc31bea70681a87e127c6be4c07">m_semaphore</a></td></tr>
 <tr class="separator:a3cb47dc31bea70681a87e127c6be4c07"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -244,7 +244,7 @@ Protected Attributes</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
-<a class="anchor" id="afce5f72b00938dd99931ae25dfe11195"></a>
+<a class="anchor" id="a5bef7065f3fd7814392ce34d092c83cb"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -252,7 +252,7 @@ Protected Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t StaticMessageBufferFactory::m_freeBufferBitmap[(<a class="el" href="group__config.html#ga4c997c7ee5b73d96d9e11af367dbfd6a">ERPC_DEFAULT_BUFFERS_COUNT</a> &gt;&gt; 3)+1]</td>
+          <td class="memname">uint8_t StaticMessageBufferFactory::m_freeBufferBitmap[(<a class="el" href="group__config.html#ga4c997c7ee5b73d96d9e11af367dbfd6a">ERPC_DEFAULT_BUFFERS_COUNT</a> &gt;&gt; 3U)+1U]</td>
         </tr>
       </table>
   </td>
@@ -265,7 +265,7 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a6dafb179b9126f5ae07a328bdd933d11"></a>
+<a class="anchor" id="acdadc631c42d4f677122defd283b69c3"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -273,7 +273,7 @@ Protected Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">uint64_t StaticMessageBufferFactory::m_buffers[<a class="el" href="group__config.html#ga4c997c7ee5b73d96d9e11af367dbfd6a">ERPC_DEFAULT_BUFFERS_COUNT</a>][(<a class="el" href="group__config.html#ga31c380773a119185d1ab1816accc3f04">ERPC_DEFAULT_BUFFER_SIZE</a>+sizeof(uint64_t)-1)/sizeof(uint64_t)]</td>
+          <td class="memname">uint64_t StaticMessageBufferFactory::m_buffers[<a class="el" href="group__config.html#ga4c997c7ee5b73d96d9e11af367dbfd6a">ERPC_DEFAULT_BUFFERS_COUNT</a>][ERPC_BUFFER_SIZE_UINT64]</td>
         </tr>
       </table>
   </td>

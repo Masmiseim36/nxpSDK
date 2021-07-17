@@ -192,6 +192,7 @@
           <state>FSL_OSA_BM_TIMER_CONFIG=0</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>SDK_DEBUGCONSOLE=1</state>
+          <state>MCUXPRESSO_SDK</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -327,7 +328,6 @@
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/host/class</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/drivers</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166</state>
-          <state>$PROJ_DIR$/../../../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../../components/uart</state>
@@ -337,6 +337,7 @@
           <state>$PROJ_DIR$/../../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/drivers/cm7</state>
+          <state>$PROJ_DIR$/../../../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1182,6 +1183,7 @@
           <state>FSL_OSA_BM_TIMER_CONFIG=0</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>SDK_DEBUGCONSOLE=1</state>
+          <state>MCUXPRESSO_SDK</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -1317,7 +1319,6 @@
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/host/class</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/drivers</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166</state>
-          <state>$PROJ_DIR$/../../../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../../components/uart</state>
@@ -1327,6 +1328,7 @@
           <state>$PROJ_DIR$/../../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/drivers/cm7</state>
+          <state>$PROJ_DIR$/../../../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -2172,6 +2174,7 @@
           <state>FSL_OSA_BM_TIMER_CONFIG=0</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>SDK_DEBUGCONSOLE=1</state>
+          <state>MCUXPRESSO_SDK</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -2307,7 +2310,6 @@
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/host/class</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/drivers</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166</state>
-          <state>$PROJ_DIR$/../../../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../../components/uart</state>
@@ -2317,6 +2319,7 @@
           <state>$PROJ_DIR$/../../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/drivers/cm7</state>
+          <state>$PROJ_DIR$/../../../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -3162,6 +3165,7 @@
           <state>FSL_OSA_BM_TIMER_CONFIG=0</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>SDK_DEBUGCONSOLE=1</state>
+          <state>MCUXPRESSO_SDK</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -3297,7 +3301,6 @@
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/host/class</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/drivers</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166</state>
-          <state>$PROJ_DIR$/../../../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../../components/uart</state>
@@ -3307,6 +3310,7 @@
           <state>$PROJ_DIR$/../../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/drivers/cm7</state>
+          <state>$PROJ_DIR$/../../../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -4152,6 +4156,7 @@
           <state>FSL_OSA_BM_TIMER_CONFIG=0</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>SDK_DEBUGCONSOLE=1</state>
+          <state>MCUXPRESSO_SDK</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -4287,7 +4292,6 @@
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/host/class</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/drivers</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166</state>
-          <state>$PROJ_DIR$/../../../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../../components/uart</state>
@@ -4297,6 +4301,7 @@
           <state>$PROJ_DIR$/../../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/drivers/cm7</state>
+          <state>$PROJ_DIR$/../../../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -5142,6 +5147,7 @@
           <state>FSL_OSA_BM_TIMER_CONFIG=0</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>SDK_DEBUGCONSOLE=1</state>
+          <state>MCUXPRESSO_SDK</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -5277,7 +5283,6 @@
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/host/class</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/drivers</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166</state>
-          <state>$PROJ_DIR$/../../../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../../components/uart</state>
@@ -5287,6 +5292,7 @@
           <state>$PROJ_DIR$/../../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/drivers/cm7</state>
+          <state>$PROJ_DIR$/../../../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -6094,6 +6100,12 @@
       <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/drivers/fsl_common.c</name>
     </file>
     <file>
+      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/drivers/fsl_common_arm.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/drivers/fsl_common_arm.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/drivers/fsl_lpuart.h</name>
     </file>
     <file>
@@ -6149,45 +6161,6 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/system_MIMXRT1166_cm7.h</name>
-    </file>
-  </group>
-  <group>
-    <name>CMSIS</name>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../CMSIS/Include/core_cm7.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../CMSIS/Include/mpu_armv7.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../CMSIS/Include/cmsis_armcc.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../CMSIS/Include/cmsis_armclang.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../CMSIS/Include/cmsis_armclang_ltm.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../CMSIS/Include/cmsis_gcc.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../CMSIS/Include/cmsis_compiler.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../CMSIS/Include/cmsis_version.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../CMSIS/Include/cmsis_iccarm.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../CMSIS/Include/arm_common_tables.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../CMSIS/Include/arm_const_structs.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../CMSIS/Include/arm_math.h</name>
     </file>
   </group>
   <group>
@@ -6284,6 +6257,36 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../xip/evkmimxrt1160_flexspi_nor_config.h</name>
+    </file>
+  </group>
+  <group>
+    <name>CMSIS</name>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../CMSIS/Core/Include/cmsis_armcc.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../CMSIS/Core/Include/cmsis_armclang.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../CMSIS/Core/Include/cmsis_armclang_ltm.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../CMSIS/Core/Include/cmsis_compiler.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../CMSIS/Core/Include/cmsis_gcc.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../CMSIS/Core/Include/cmsis_iccarm.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../CMSIS/Core/Include/cmsis_version.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../CMSIS/Core/Include/core_cm7.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../CMSIS/Core/Include/mpu_armv7.h</name>
     </file>
   </group>
 </project>

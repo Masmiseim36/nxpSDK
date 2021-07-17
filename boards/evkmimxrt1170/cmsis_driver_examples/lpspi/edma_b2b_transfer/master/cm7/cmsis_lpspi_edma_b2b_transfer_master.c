@@ -19,11 +19,11 @@
  * Definitions
  ******************************************************************************/
 /* Master related */
-#define DRIVER_MASTER_SPI Driver_SPI1
-#define EXAMPLE_LPSPI_MASTER_IRQN (LPSPI1_IRQn)
-#define EXAMPLE_LPSPI_DEALY_COUNT 0xfffffU
+#define DRIVER_MASTER_SPI                     Driver_SPI1
+#define EXAMPLE_LPSPI_MASTER_IRQN             (LPSPI1_IRQn)
+#define EXAMPLE_LPSPI_DEALY_COUNT             0xfffffU
 #define EXAMPLE_LPSPI_MASTER_DMA_MUX_BASEADDR DMAMUX0
-#define EXAMPLE_LPSPI_MASTER_DMA_BASEADDR DMA0
+#define EXAMPLE_LPSPI_MASTER_DMA_BASEADDR     DMA0
 
 #define EXAMPLE_LPSPI_CLOCK_FREQ (CLOCK_GetFreqFromObs(CCM_OBS_LPSPI1_CLK_ROOT))
 #define TRANSFER_SIZE     64U     /* Transfer dataSize */

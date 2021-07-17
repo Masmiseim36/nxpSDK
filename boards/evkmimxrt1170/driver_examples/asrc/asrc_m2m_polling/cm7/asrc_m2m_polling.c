@@ -20,8 +20,8 @@
  ******************************************************************************/
 /* SAI instance and clock */
 #define DEMO_CODEC_WM8960
-#define DEMO_SAI SAI1
-#define DEMO_SAI_IRQ SAI1_IRQn
+#define DEMO_SAI         SAI1
+#define DEMO_SAI_IRQ     SAI1_IRQn
 #define SAI_TxIRQHandler SAI1_IRQHandler
 
 /* Select Audio/Video PLL (786.48 MHz) as sai1 clock source */
@@ -35,13 +35,13 @@
     (CLOCK_GetFreq(kCLOCK_AudioPllClk) / (DEMO_SAI1_CLOCK_SOURCE_DIVIDER + 1U) / \
      (DEMO_SAI1_CLOCK_SOURCE_PRE_DIVIDER + 1U))
 
-#define DEMO_AUDIO_MASTER_CLOCK 24576000U
+#define DEMO_AUDIO_MASTER_CLOCK          24576000U
 #define DEMO_ASRC_OUTPUT_SOURCE_CLOCK_HZ (16 * 48000 * 2)
-#define DEMO_ASRC_PERIPHERAL_CLOCK 200000000U
-#define DEMO_ASRC ASRC
-#define DEMO_ASRC_CHANNEL_PAIR kASRC_ChannelPairA
+#define DEMO_ASRC_PERIPHERAL_CLOCK       200000000U
+#define DEMO_ASRC                        ASRC
+#define DEMO_ASRC_CHANNEL_PAIR           kASRC_ChannelPairA
 
-#define DEMO_AUDIO_SAMPLE_RATE_IN (kSAI_SampleRate48KHz)
+#define DEMO_AUDIO_SAMPLE_RATE_IN  (kSAI_SampleRate48KHz)
 #define DEMO_AUDIO_SAMPLE_RATE_OUT (kSAI_SampleRate32KHz)
 
 /* I2C instance and clock */
@@ -55,8 +55,8 @@
 #define DEMO_I2C_CLK_FREQ ((CLOCK_GetFreq(kCLOCK_Usb1PllClk) / 8) / (DEMO_LPI2C_CLOCK_SOURCE_DIVIDER + 1U))
 
 /* DMA */
-#define EXAMPLE_DMA DMA0
-#define EXAMPLE_CHANNEL (0U)
+#define EXAMPLE_DMA           DMA0
+#define EXAMPLE_CHANNEL       (0U)
 #define EXAMPLE_SAI_TX_SOURCE kDmaRequestMuxSai1Tx
 
 #define OVER_SAMPLE_RATE (384U)

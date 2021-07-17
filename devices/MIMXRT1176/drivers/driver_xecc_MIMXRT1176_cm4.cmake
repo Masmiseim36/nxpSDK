@@ -1,17 +1,15 @@
-if(NOT DRIVER_XECC_MIMXRT1176_cm4_INCLUDED)
-    
-    set(DRIVER_XECC_MIMXRT1176_cm4_INCLUDED true CACHE BOOL "driver_xecc component is included.")
+include_guard(GLOBAL)
+message("driver_xecc component is included.")
 
-    target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
-        ${CMAKE_CURRENT_LIST_DIR}/fsl_xecc.c
-    )
-
-
-    target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
-        ${CMAKE_CURRENT_LIST_DIR}/.
-    )
+target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
+    ${CMAKE_CURRENT_LIST_DIR}/fsl_xecc.c
+)
 
 
-    include(driver_common_MIMXRT1176_cm4)
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
+    ${CMAKE_CURRENT_LIST_DIR}/.
+)
 
-endif()
+
+include(driver_common_MIMXRT1176_cm4)
+

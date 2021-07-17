@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2021 NXP
+ * Copyright 2018 NXP
  * All rights reserved.
  *
  *
@@ -8,6 +8,9 @@
 #ifndef _APP_H_
 #define _APP_H_
 
+/*${header:start}*/
+#include "fsl_cache.h"
+/*${header:end}*/
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -50,11 +53,7 @@
 #define FLEXSPI_TX_DMA_CHANNEL 0U
 #define FLEXSPI_RX_DMA_CHANNEL 1U
 
-#define CACHE_MAINTAIN 0x01U
-
-#if defined(CACHE_MAINTAIN) && CACHE_MAINTAIN
-#include "fsl_cache.h"
-#endif
+#define CACHE_MAINTAIN 1
 
 /*${macro:end}*/
 
@@ -63,15 +62,12 @@
  ******************************************************************************/
 /*${prototype:start}*/
 void BOARD_InitHardware(void);
-/*${prototype:end}*/
-
-/*${function:start}*/
 static inline void flexspi_clock_init(void)
 {
     /*Clock setting for flexspi1*/
     CLOCK_SetRootClockDiv(kCLOCK_Root_Flexspi1, 2);
     CLOCK_SetRootClockMux(kCLOCK_Root_Flexspi1, 0);
 }
-/*${function:end}*/
+/*${prototype:end}*/
 
 #endif /* _APP_H_ */

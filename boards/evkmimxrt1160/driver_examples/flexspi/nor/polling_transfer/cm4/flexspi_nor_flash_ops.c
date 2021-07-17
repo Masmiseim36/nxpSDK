@@ -9,20 +9,13 @@
 
 #include "fsl_flexspi.h"
 #include "app.h"
+#if (defined CACHE_MAINTAIN) && (CACHE_MAINTAIN == 1)
+#include "fsl_cache.h"
+#endif
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-typedef struct _flexspi_cache_status
-{
-#if (defined __CORTEX_M) && (__CORTEX_M == 7U)
-    volatile bool DCacheEnableFlag;
-    volatile bool ICacheEnableFlag;
-#elif (defined __CORTEX_M) && (__CORTEX_M == 4U)
-    volatile bool codeCacheEnableFlag;
-    volatile bool systemCacheEnableFlag;
-#endif
-} flexspi_cache_status_t;
 
 /*******************************************************************************
  * Prototypes

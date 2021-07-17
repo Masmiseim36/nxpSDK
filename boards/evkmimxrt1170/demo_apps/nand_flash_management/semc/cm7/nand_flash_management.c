@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2021 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -12,7 +12,6 @@
 #include "ff.h"
 #include "diskio.h"
 #include "fsl_nand_disk.h"
-#include "board.h"
 #include "FreeRTOS.h"
 #include "semphr.h"
 #include "task.h"

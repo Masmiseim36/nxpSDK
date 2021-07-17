@@ -74,7 +74,7 @@
 
 /* ENET clock frequency. */
 #define EXAMPLE_CLOCK_FREQ CLOCK_GetRootClockFreq(kCLOCK_Root_Bus)
-#define CONTROLLER_ID kUSB_ControllerEhci0
+#define CONTROLLER_ID      kUSB_ControllerEhci0
 
 #if defined(__GIC_PRIO_BITS)
 #define USB_HOST_INTERRUPT_PRIORITY (25U)

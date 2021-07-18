@@ -1,0 +1,9 @@
+[PE_STARTUP]
+SHOWDIALOG=_ "0"
+interface_selection=_ "1"
+[PE_STORED_DEVICES]
+device0=_ "Freescale_K6x_K60DN512M10"
+[PE_PEDEBUG]
+CURRENTDEVICE=_ "Freescale_K6x_K60DN512M10"
+[PE_DEVICE]
+CHIPMODE=_ "Freescale_K6x_K60DN512M10"

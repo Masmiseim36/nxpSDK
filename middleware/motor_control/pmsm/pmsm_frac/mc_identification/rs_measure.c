@@ -44,9 +44,9 @@ void MID_getRs(mid_get_rs_a1_t *sRsMeasFcn)
     frac16_t f16Id_rescaled;
 
     /* Initialization */
-    if (sRsMeasFcn->ui16Active == 0U)
+    if (sRsMeasFcn->bActive == FALSE)
     {
-        sRsMeasFcn->ui16Active             = 1U;
+        sRsMeasFcn->bActive                = TRUE;
         sRsMeasFcn->ui16LoopCounter        = 0;
         sRsMeasFcn->f16Rs                  = FRAC16(0.0);
         sRsMeasFcn->sUdReqMA32Filter.u16Sh = 6;
@@ -66,7 +66,7 @@ void MID_getRs(mid_get_rs_a1_t *sRsMeasFcn)
     f16IdfbckFilt = GDFLIB_FilterMA_F16(*(sRsMeasFcn->pf16Idfbck), &sRsMeasFcn->sIdfbckMA32Filter);
 
     /* After 600ms start calculation */
-    if (sRsMeasFcn->ui16LoopCounter == M1_TIME_1200MS)
+    if (sRsMeasFcn->ui16LoopCounter == (uint16_t)M1_TIME_1200MS)
     {
         /* store actual measured current and required voltage for Rs calculation */
         f16Id = f16IdfbckFilt;
@@ -132,6 +132,6 @@ void MID_getRs(mid_get_rs_a1_t *sRsMeasFcn)
     /* Exit the function after 1200ms */
     if (sRsMeasFcn->ui16LoopCounter > M1_TIME_2400MS)
     {
-        sRsMeasFcn->ui16Active = 0U;
+        sRsMeasFcn->bActive = FALSE;
     }
 }

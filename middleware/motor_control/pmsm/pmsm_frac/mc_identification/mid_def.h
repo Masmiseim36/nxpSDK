@@ -33,4 +33,6 @@
 #define MID_SPEED_RAMP_UP FRAC16(0.000060606061)
 #define MID_SPEED_RAMP_DOWN FRAC16(0.000060606061)
 
+extern uint16_t ui16FaultMID;
+
 #endif /* _MID_DEF_H_ */

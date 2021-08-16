@@ -15,12 +15,14 @@
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 !!GlobalInfo
-product: Pins v8.0
+product: Pins v10.0
 processor: MKV11Z128xxx7
 package_id: MKV11Z128VLH7
 mcu_data: ksdk2_0
-processor_version: 0.9.0
+processor_version: 0.10.7
 board: TWR-KV11Z75M
+pin_labels:
+- {pin_num: '18', pin_signal: ADC1_SE4/CMP1_IN4/DAC0_OUT/PTE30/FTM0_CH3/FTM_CLKIN1, label: 'J18[11]/J22[A32]/J22[B61]/J22[D61]/J500[28]/DAC0_OUT', identifier: OC}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 /* clang-format on */
@@ -140,6 +142,8 @@ PinTool_Misc:
   - {pin_num: '17', peripheral: GPIOE, signal: 'GPIO, 29', pin_signal: CMP1_IN5/CMP0_IN5/PTE29/FTM0_CH2/FTM_CLKIN0}
   - {pin_num: '26', peripheral: GPIOA, signal: 'GPIO, 4', pin_signal: PTA4/LLWU_P3/FTM0_CH1/FTM4_FLT0/FTM0_FLT3/NMI_b}
   - {pin_num: '35', peripheral: GPIOB, signal: 'GPIO, 0', pin_signal: ADC0_SE8/ADC1_SE8/PTB0/LLWU_P5/I2C0_SCL/FTM1_CH0/FTM1_QD_PHA/UART0_RX, pull_enable: enable}
+  - {pin_num: '18', peripheral: CMP1, signal: 'IN, 4', pin_signal: ADC1_SE4/CMP1_IN4/DAC0_OUT/PTE30/FTM0_CH3/FTM_CLKIN1}
+  - {peripheral: FTM0, signal: 'FLT, 1', pin_signal: CMP1_Output}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 /* clang-format on */
@@ -179,6 +183,16 @@ void PinTool_Misc(void)
 
     /* PORTE29 (pin 17) is configured as PTE29 */
     PORT_SetPinMux(PORTE, 29U, kPORT_MuxAsGpio);
+
+    /* PORTE30 (pin 18) is configured as CMP1_IN4 */
+    PORT_SetPinMux(PINTOOL_MISC_OC_PORT, PINTOOL_MISC_OC_PIN, kPORT_PinDisabledOrAnalog);
+
+    SIM->SOPT4 = ((SIM->SOPT4 &
+                   /* Mask bits to zero which are setting */
+                   (~(SIM_SOPT4_FTM0FLT1_MASK)))
+
+                  /* FTM0 Fault 1 Select: CMP1 out. */
+                  | SIM_SOPT4_FTM0FLT1(SOPT4_FTM0FLT1_CMP));
 }
 /***********************************************************************************************************************
  * EOF

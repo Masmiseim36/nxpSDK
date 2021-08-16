@@ -63,6 +63,7 @@ void deinit_hardware(void)
 
 uint32_t get_bus_clock(void)
 {
+//    return CLOCK_GetFreq(I2C0_CLK_SRC);
     uint32_t busClockDivider = ((SIM->CLKDIV1 & SIM_CLKDIV1_OUTDIV4_MASK) >> SIM_CLKDIV1_OUTDIV4_SHIFT) + 1;
     return (SystemCoreClock / busClockDivider);
 }

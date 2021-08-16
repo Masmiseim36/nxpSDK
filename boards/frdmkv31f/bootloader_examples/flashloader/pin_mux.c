@@ -29,8 +29,6 @@ pin_labels:
 - {pin_num: '55', pin_signal: ADC0_SE12/PTB2/I2C0_SCL/UART0_RTS_b/FTM0_FLT1/FTM0_FLT3, label: 'J2[20]/ADC0_SE12/I2C0_SCL', identifier: ADC0_SE12;SCL}
 - {pin_num: '62', pin_signal: PTB16/SPI1_SOUT/UART0_RX/FTM_CLKIN0/FB_AD17/EWM_IN, label: 'U7[4]/UART0_RX_TGTMCU', identifier: DEBUG_UART_RX;RX_GPIO;RX}
 - {pin_num: '63', pin_signal: PTB17/SPI1_SIN/UART0_TX/FTM_CLKIN1/FB_AD16/EWM_OUT_b, label: 'U10[1]/UART0_TX_TGTMCU', identifier: DEBUG_UART_TX;TX}
-- {pin_num: '95', pin_signal: PTD2/LLWU_P13/SPI0_SOUT/UART2_RX/FTM3_CH2/FB_AD4/LPUART0_RX/I2C0_SCL, label: 'U8[4]/I2C0_SCL', identifier: ACCEL_SCL;SCL}
-- {pin_num: '96', pin_signal: PTD3/SPI0_SIN/UART2_TX/FTM3_CH3/FB_AD3/LPUART0_TX/I2C0_SDA, label: 'U8[6]/I2C0_SDA', identifier: ACCEL_SDA;SDA}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 /* clang-format on */
@@ -48,6 +46,52 @@ pin_labels:
  * END ****************************************************************************************************************/
 void BOARD_InitBootPins(void)
 {
+}
+
+/* clang-format off */
+/*
+ * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
+BOARD_InitBootPin:
+- options: {callFromInitBoot: 'false', prefix: BOOT_PIN_, coreID: core0, enableClock: 'false'}
+- pin_list:
+  - {pin_num: '5', peripheral: GPIOE, signal: 'GPIO, 4', pin_signal: PTE4/LLWU_P2/SPI1_PCS0/LPUART0_TX, direction: INPUT, slew_rate: fast, open_drain: disable, pull_select: up,
+    pull_enable: enable}
+ * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
+ */
+/* clang-format on */
+
+/* FUNCTION ************************************************************************************************************
+ *
+ * Function Name : BOARD_InitBootPin
+ * Description   : Configures pin routing and optionally pin electrical features.
+ *
+ * END ****************************************************************************************************************/
+void BOARD_InitBootPin(void)
+{
+
+    gpio_pin_config_t SW3_config = {
+        .pinDirection = kGPIO_DigitalInput,
+        .outputLogic = 0U
+    };
+    /* Initialize GPIO functionality on pin PTE4 (pin 5)  */
+    GPIO_PinInit(BOOT_PIN_SW3_GPIO, BOOT_PIN_SW3_PIN, &SW3_config);
+
+    const port_pin_config_t SW3 = {/* Internal pull-up resistor is enabled */
+                                   kPORT_PullUp,
+                                   /* Fast slew rate is configured */
+                                   kPORT_FastSlewRate,
+                                   /* Passive filter is disabled */
+                                   kPORT_PassiveFilterDisable,
+                                   /* Open drain is disabled */
+                                   kPORT_OpenDrainDisable,
+                                   /* Low drive strength is configured */
+                                   kPORT_LowDriveStrength,
+                                   /* Pin is configured as PTE4 */
+                                   kPORT_MuxAsGpio,
+                                   /* Pin Control Register fields [15:0] are not locked */
+                                   kPORT_UnlockRegister};
+    /* PORTE4 (pin 5) is configured as PTE4 */
+    PORT_SetPinConfig(BOOT_PIN_SW3_PORT, BOOT_PIN_SW3_PIN, &SW3);
 }
 
 /* clang-format off */
@@ -150,8 +194,8 @@ void UART0_RestoreDefault(void)
 I2C0_InitPins:
 - options: {callFromInitBoot: 'false', prefix: I2C0_, coreID: core0, enableClock: 'false'}
 - pin_list:
-  - {pin_num: '95', peripheral: I2C0, signal: SCL, pin_signal: PTD2/LLWU_P13/SPI0_SOUT/UART2_RX/FTM3_CH2/FB_AD4/LPUART0_RX/I2C0_SCL, identifier: SCL}
-  - {pin_num: '96', peripheral: I2C0, signal: SDA, pin_signal: PTD3/SPI0_SIN/UART2_TX/FTM3_CH3/FB_AD3/LPUART0_TX/I2C0_SDA, identifier: SDA}
+  - {pin_num: '55', peripheral: I2C0, signal: SCL, pin_signal: ADC0_SE12/PTB2/I2C0_SCL/UART0_RTS_b/FTM0_FLT1/FTM0_FLT3, identifier: SCL}
+  - {pin_num: '54', peripheral: I2C0, signal: SDA, pin_signal: ADC0_SE9/ADC1_SE9/PTB1/I2C0_SDA/FTM1_CH1/FTM0_FLT2/EWM_IN/FTM1_QD_PHB/UART0_TX, identifier: SDA}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 /* clang-format on */
@@ -165,11 +209,11 @@ I2C0_InitPins:
 void I2C0_InitPins(void)
 {
 
-    /* PORTD2 (pin 95) is configured as I2C0_SCL */
-    PORT_SetPinMux(I2C0_SCL_PORT, I2C0_SCL_PIN, kPORT_MuxAlt7);
+    /* PORTB1 (pin 54) is configured as I2C0_SDA */
+    PORT_SetPinMux(I2C0_SDA_PORT, I2C0_SDA_PIN, kPORT_MuxAlt2);
 
-    /* PORTD3 (pin 96) is configured as I2C0_SDA */
-    PORT_SetPinMux(I2C0_SDA_PORT, I2C0_SDA_PIN, kPORT_MuxAlt7);
+    /* PORTB2 (pin 55) is configured as I2C0_SCL */
+    PORT_SetPinMux(I2C0_SCL_PORT, I2C0_SCL_PIN, kPORT_MuxAlt2);
 }
 
 /* clang-format off */
@@ -178,8 +222,8 @@ void I2C0_InitPins(void)
 I2C0_RestoreDefault:
 - options: {callFromInitBoot: 'false', coreID: core0, enableClock: 'false'}
 - pin_list:
-  - {pin_num: '95', peripheral: n/a, signal: disabled, pin_signal: PTD2/LLWU_P13/SPI0_SOUT/UART2_RX/FTM3_CH2/FB_AD4/LPUART0_RX/I2C0_SCL}
-  - {pin_num: '96', peripheral: n/a, signal: disabled, pin_signal: PTD3/SPI0_SIN/UART2_TX/FTM3_CH3/FB_AD3/LPUART0_TX/I2C0_SDA}
+  - {pin_num: '55', peripheral: ADC0, signal: 'SE, 12', pin_signal: ADC0_SE12/PTB2/I2C0_SCL/UART0_RTS_b/FTM0_FLT1/FTM0_FLT3, identifier: SCL}
+  - {pin_num: '54', peripheral: ADC0, signal: 'SE, 9', pin_signal: ADC0_SE9/ADC1_SE9/PTB1/I2C0_SDA/FTM1_CH1/FTM0_FLT2/EWM_IN/FTM1_QD_PHB/UART0_TX, identifier: SDA}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 /* clang-format on */
@@ -193,11 +237,11 @@ I2C0_RestoreDefault:
 void I2C0_RestoreDefault(void)
 {
 
-    /* PORTD2 (pin 95) is disabled */
-    PORT_SetPinMux(PORTD, 2U, kPORT_PinDisabledOrAnalog);
+    /* PORTB1 (pin 54) is configured as ADC0_SE9 */
+    PORT_SetPinMux(I2C0_RESTOREDEFAULT_SDA_PORT, I2C0_RESTOREDEFAULT_SDA_PIN, kPORT_PinDisabledOrAnalog);
 
-    /* PORTD3 (pin 96) is disabled */
-    PORT_SetPinMux(PORTD, 3U, kPORT_PinDisabledOrAnalog);
+    /* PORTB2 (pin 55) is configured as ADC0_SE12 */
+    PORT_SetPinMux(I2C0_RESTOREDEFAULT_SCL_PORT, I2C0_RESTOREDEFAULT_SCL_PIN, kPORT_PinDisabledOrAnalog);
 }
 
 /* clang-format off */

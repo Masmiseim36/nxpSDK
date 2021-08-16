@@ -15,17 +15,20 @@
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 !!GlobalInfo
-product: Pins v8.0
+product: Pins v9.0
 processor: MKV31F512xxx12
 package_id: MKV31F512VLL12
 mcu_data: ksdk2_0
-processor_version: 0.9.2
+processor_version: 0.10.4
+pin_labels:
+- {pin_num: '85', pin_signal: PTC13/FB_AD26, label: RELAY, identifier: RELAY}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 /* clang-format on */
 
 #include "fsl_common.h"
 #include "fsl_port.h"
+#include "fsl_gpio.h"
 #include "pin_mux.h"
 
 /* FUNCTION ************************************************************************************************************
@@ -132,7 +135,7 @@ void PinTool_UART(void)
 PinTool_Misc:
 - options: {callFromInitBoot: 'true', coreID: core0, enableClock: 'true'}
 - pin_list:
-  - {pin_num: '85', peripheral: GPIOC, signal: 'GPIO, 13', pin_signal: PTC13/FB_AD26}
+  - {pin_num: '85', peripheral: GPIOC, signal: 'GPIO, 13', pin_signal: PTC13/FB_AD26, direction: OUTPUT}
   - {pin_num: '70', peripheral: GPIOC, signal: 'GPIO, 0', pin_signal: ADC0_SE14/PTC0/SPI0_PCS4/PDB0_EXTRG/FB_AD14/FTM0_FLT1/SPI0_PCS0}
   - {pin_num: '51', peripheral: FTM0, signal: 'FLT, 0', pin_signal: XTAL0/PTA19/FTM0_FLT0/FTM1_FLT0/FTM_CLKIN1/LPTMR0_ALT1}
   - {pin_num: '65', peripheral: GPIOB, signal: 'GPIO, 19', pin_signal: PTB19/FTM2_CH1/FB_OE_b/FTM2_QD_PHB}
@@ -155,6 +158,13 @@ void PinTool_Misc(void)
     /* Port C Clock Gate Control: Clock enabled */
     CLOCK_EnableClock(kCLOCK_PortC);
 
+    gpio_pin_config_t RELAY_config = {
+        .pinDirection = kGPIO_DigitalOutput,
+        .outputLogic = 0U
+    };
+    /* Initialize GPIO functionality on pin PTC13 (pin 85)  */
+    GPIO_PinInit(PINTOOL_MISC_RELAY_GPIO, PINTOOL_MISC_RELAY_PIN, &RELAY_config);
+
     /* PORTA19 (pin 51) is configured as FTM0_FLT0 */
     PORT_SetPinMux(PORTA, 19U, kPORT_MuxAlt2);
 
@@ -165,7 +175,7 @@ void PinTool_Misc(void)
     PORT_SetPinMux(PORTC, 0U, kPORT_MuxAsGpio);
 
     /* PORTC13 (pin 85) is configured as PTC13 */
-    PORT_SetPinMux(PORTC, 13U, kPORT_MuxAsGpio);
+    PORT_SetPinMux(PINTOOL_MISC_RELAY_PORT, PINTOOL_MISC_RELAY_PIN, kPORT_MuxAsGpio);
 
     SIM->SOPT4 = ((SIM->SOPT4 &
                    /* Mask bits to zero which are setting */

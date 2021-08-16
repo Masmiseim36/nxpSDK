@@ -45,7 +45,7 @@ product: Clocks v7.0
 processor: MKV11Z128xxx7
 package_id: MKV11Z128VLF7
 mcu_data: ksdk2_0
-processor_version: 0.9.0
+processor_version: 0.10.4
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS **********/
 /* clang-format on */
 
@@ -164,7 +164,7 @@ void BOARD_BootClockRUN(void)
     /* Set the system clock dividers in SIM to safe value. */
     CLOCK_SetSimSafeDivs();
     /* Set MCG to FEI mode. */
-#if FSL_CLOCK_DRIVER_VERSION >= MAKE_VERSION(2, 2, 0)
+#if FSL_CLOCK_DRIVER_VERSION >= MAKE_VERSION(2, 0, 0)
     CLOCK_BootToFeiMode(mcgConfig_BOARD_BootClockRUN.dmx32,
                         mcgConfig_BOARD_BootClockRUN.drs,
                         CLOCK_CONFIG_FllStableDelay);

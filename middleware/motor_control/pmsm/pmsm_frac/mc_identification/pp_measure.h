@@ -17,7 +17,7 @@
  ******************************************************************************/
 typedef struct
 {
-    uint16_t ui16Active;        /* Indicates whether Ke is being measured (true) or not (false) */
+    uint16_t bActive;           /* Indicates whether Ke is being measured (true) or not (false) */
     uint16_t ui16PpDetermined;  /* Indicates whether the user already set pp in MCAT (true) or not yet (false) */
     uint16_t ui16WaitingSteady; /* Indicates that motor is waiting in steady state (when electrical position is zero) */
     uint16_t ui16LoopCounter;   /* Serves for timing to determine e.g. 300ms */
@@ -35,7 +35,6 @@ typedef struct
 /*******************************************************************************
  * Variables
  ******************************************************************************/
-extern uint16_t ui16FaultMID;
 
 #ifdef __cplusplus
 extern "C" {

@@ -19,7 +19,7 @@ typedef struct
 {
     GDFLIB_FILTER_MA_T_A32 sUdReqMA32Filter;  /* Ud required filter */
     GDFLIB_FILTER_MA_T_A32 sIdfbckMA32Filter; /* Id feedback filter */
-    uint16_t ui16Active;                      /* Inidicates whether Transfer characteristic is being measured
+    uint16_t bActive;                         /* Inidicates whether Transfer characteristic is being measured
                                                  (true) or not (false) */
     uint16_t ui16LoopCounter;                 /* Serves for timing to determine e.g. 600ms */
     frac16_t f16Rs;                           /* Stator resistance of connected motor */
@@ -38,7 +38,6 @@ typedef struct
 /*******************************************************************************
  * Variables
  ******************************************************************************/
-extern uint16_t ui16FaultMID;
 
 #ifdef __cplusplus
 extern "C" {

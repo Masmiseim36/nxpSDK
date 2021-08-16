@@ -34,7 +34,7 @@ extern "C" {
 /* Definition of peripheral ID */
 #define UART0_PERIPHERAL UART0
 /* Definition of the clock source frequency */
-#define UART0_CLOCK_SOURCE 62914560UL
+#define UART0_CLOCK_SOURCE 83886080UL
 /* FreeMASTER_Recorder_0's buffer size definition */
 #define FREEMASTER_REC_0_SIZE 4096
 /* Pipe1's Rx buffer size definition */

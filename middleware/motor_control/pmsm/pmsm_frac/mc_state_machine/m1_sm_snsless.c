@@ -7,7 +7,7 @@
  */
 
 #include "m1_sm_snsless.h"
-#include "mcdrv.h"
+#include "mc_periph_init.h"
 #include "mid_sm_states.h"
 
 /*******************************************************************************
@@ -302,8 +302,8 @@ static void M1_StateInitFast(void)
     s_fltM1bemfScale       = M1_E_MAX;
 
     /* Application timing */
-    g_sM1Drive.ui16FastCtrlLoopFreq = (g_sClockSetup.ui16M1PwmFreq / M1_FOC_FREQ_VS_PWM_FREQ);
-    g_sM1Drive.ui16SlowCtrlLoopFreq = g_sClockSetup.ui16M1SpeedLoopFreq;
+    g_sM1Drive.ui16FastCtrlLoopFreq = M1_FAST_LOOP_FREQ;
+    g_sM1Drive.ui16SlowCtrlLoopFreq = M1_SLOW_LOOP_FREQ;
 
     /* Clear rest of variables  */
     M1_ClearFOCVariables();
@@ -782,7 +782,6 @@ static void M1_StateRunReadyFast(void)
                 M1_TransRunReadyAlign();
             }
             break;
-        case kControlMode_SpeedFOC:
         default:
             if ((MLIB_AbsSat_F16(g_sM1Drive.sSpeed.f16SpeedCmd) > g_sM1Drive.sFaultThresholds.f16SpeedMin) &&
                 (MLIB_AbsSat_F16(g_sM1Drive.sSpeed.f16SpeedCmd) <= g_sM1Drive.sFaultThresholds.f16SpeedNom))
@@ -794,6 +793,7 @@ static void M1_StateRunReadyFast(void)
             {
                 g_sM1Drive.sSpeed.f16SpeedCmd = 0;
             }
+            break;
     }
 }
 
@@ -807,6 +807,19 @@ static void M1_StateRunReadyFast(void)
 static void M1_StateRunAlignFast(void)
 {
     /* type the code to do when in the RUN ALIGN sub-state */
+    /* When alignment elapsed go to Startup */
+    if (--g_sM1Drive.ui16CounterState == 0U)
+    {
+        /* Transition to the RUN kRunState_Startup sub-state */
+        M1_TransRunAlignStartup();
+    }
+
+    /* If zero speed command go back to Ready */
+    if ((g_sM1Drive.sSpeed.f16SpeedCmd == 0) && (g_sM1Drive.sScalarCtrl.f16FreqCmd == 0))
+    {
+        M1_TransRunAlignReady();
+    }
+  
     /* clear actual speed values */
     g_sM1Drive.sScalarCtrl.f16FreqRamp = 0;
     g_sM1Drive.sSpeed.f16Speed         = 0;
@@ -869,10 +882,8 @@ static void M1_StateRunStartupFast(void)
             g_sM1Drive.sFocPMSM.bCurrentLoopOn = TRUE;
             MCS_PMSMFocCtrl(&g_sM1Drive.sFocPMSM);
             break;
-
-        case kControlMode_SpeedFOC:
         default:
-
+			
             /* Current control loop */
             g_sM1Drive.sFocPMSM.sIDQReq.f16D = 0;
 
@@ -896,7 +907,8 @@ static void M1_StateRunStartupFast(void)
 
             /* FOC */
             g_sM1Drive.sFocPMSM.bCurrentLoopOn = TRUE;
-            MCS_PMSMFocCtrl(&g_sM1Drive.sFocPMSM);
+            MCS_PMSMFocCtrl(&g_sM1Drive.sFocPMSM);			
+			break;
     }
 
     /* switch to close loop  */
@@ -962,7 +974,6 @@ static void M1_StateRunSpinFast(void)
             }
             break;
 
-        case kControlMode_SpeedFOC:
         default:
             if (MLIB_AbsSat_F16(g_sM1Drive.sSpeed.f16SpeedRamp) < g_sM1Drive.sFaultThresholds.f16SpeedMin)
             {
@@ -973,6 +984,7 @@ static void M1_StateRunSpinFast(void)
             /* FOC */
             g_sM1Drive.sFocPMSM.bCurrentLoopOn = TRUE;
             MCS_PMSMFocCtrl(&g_sM1Drive.sFocPMSM);
+			
             break;
     }
 }
@@ -1053,18 +1065,6 @@ static void M1_StateRunReadySlow(void)
  */
 static void M1_StateRunAlignSlow(void)
 {
-    /* When alignment elapsed go to Startup */
-    if (--g_sM1Drive.ui16CounterState == 0U)
-    {
-        /* Transition to the RUN kRunState_Startup sub-state */
-        M1_TransRunAlignStartup();
-    }
-
-    /* If zero speed command go back to Ready */
-    if ((g_sM1Drive.sSpeed.f16SpeedCmd == 0) && (g_sM1Drive.sScalarCtrl.f16FreqCmd == 0))
-    {
-        M1_TransRunAlignReady();
-    }
 }
 
 /*!
@@ -1192,6 +1192,10 @@ static void M1_TransRunCalibMeasure(void)
 {
     /* Type the code to do when going from the RUN CALIB to the RUN READY sub-state */
     /* Initialise measurement */
+  
+    /* Clear external position */
+    g_sM1Drive.sFocPMSM.f16PosElExt = FRAC16(0.0); 
+  
     /* Current controllers */
     g_sM1Drive.sFocPMSM.sIdPiParams.a32PGain    = MID_KP_GAIN;
     g_sM1Drive.sFocPMSM.sIdPiParams.a32IGain    = MID_KI_GAIN;
@@ -1205,11 +1209,11 @@ static void M1_TransRunCalibMeasure(void)
     g_sM1Drive.sFocPMSM.sIqPiParams.f16InErrK_1 = 0;
     g_sM1Drive.sFocPMSM.sIqPiParams.f16UpperLim = FRAC16(1.0);
     g_sM1Drive.sFocPMSM.sIqPiParams.f16LowerLim = FRAC16(-1.0);
-    g_sM1Drive.sFocPMSM.sIqPiParams.bLimFlag    = 0;
+    g_sM1Drive.sFocPMSM.sIqPiParams.bLimFlag    = FALSE;
 
     /* MID_alignment */
     sMIDAlignment.pf16IdReq  = &g_sM1Drive.sFocPMSM.sIDQReq.f16D;
-    sMIDAlignment.ui16Active = 0U;
+    sMIDAlignment.bActive = FALSE;
 
     /* Power Stage characterisation */
     sMIDPwrStgChar.pf16IdReq  = &g_sM1Drive.sFocPMSM.sIDQReq.f16D;
@@ -1693,7 +1697,7 @@ bool_t M1_GetAppSwitch(void)
  *
  * @return uint16_t Return current application state
  */
-uint16_t M1_GetAppState()
+uint16_t M1_GetAppState(void)
 {
     return ((uint16_t)g_sM1Ctrl.eState);
 }

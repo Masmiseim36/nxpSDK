@@ -49,6 +49,19 @@ void PinTool_UART(void);
 
 #define SOPT4_FTM0FLT0_FTM 0x00u /*!<@brief FTM0 Fault 0 Select: FTM0_FLT0 pin */
 
+/*! @name PORTC13 (number 85), RELAY
+  @{ */
+
+/* Symbols to be used with GPIO driver */
+#define PINTOOL_MISC_RELAY_GPIO GPIOC                /*!<@brief GPIO peripheral base pointer */
+#define PINTOOL_MISC_RELAY_GPIO_PIN_MASK (1U << 13U) /*!<@brief GPIO pin mask */
+
+/* Symbols to be used with PORT driver */
+#define PINTOOL_MISC_RELAY_PORT PORTC                /*!<@brief PORT peripheral base pointer */
+#define PINTOOL_MISC_RELAY_PIN 13U                   /*!<@brief PORT pin number */
+#define PINTOOL_MISC_RELAY_PIN_MASK (1U << 13U)      /*!<@brief PORT pin mask */
+                                                     /* @} */
+
 /*!
  * @brief Configures pin routing and optionally pin electrical features.
  *

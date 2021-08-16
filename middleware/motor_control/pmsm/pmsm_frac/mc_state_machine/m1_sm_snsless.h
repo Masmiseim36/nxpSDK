@@ -20,6 +20,14 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
+/* Application info */
+typedef struct _app_ver
+{
+    char cBoardID[15];
+    char cMotorType[4];
+    char cAppVer[5];
+} app_ver_t;
+
 #define MC_FAULT_I_DCBUS_OVER (0U)  /* OverCurrent fault flag */
 #define MC_FAULT_U_DCBUS_UNDER (1U) /* Undervoltage fault flag */
 #define MC_FAULT_U_DCBUS_OVER (2U)  /* Overvoltage fault flag */

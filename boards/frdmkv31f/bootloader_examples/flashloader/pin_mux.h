@@ -32,6 +32,19 @@ extern "C" {
  */
 void BOARD_InitBootPins(void);
 
+/*! @name PORTE4 (number 5), SW3
+  @{ */
+#define BOOT_PIN_SW3_GPIO GPIOE /*!<@brief GPIO device name: GPIOE */
+#define BOOT_PIN_SW3_PORT PORTE /*!<@brief PORT device name: PORTE */
+#define BOOT_PIN_SW3_PIN 4U     /*!<@brief PORTE pin index: 4 */
+                                /* @} */
+
+/*!
+ * @brief Configures pin routing and optionally pin electrical features.
+ *
+ */
+void BOARD_InitBootPin(void);
+
 /*! @name PORTB16 (number 62), U7[4]/UART0_RX_TGTMCU
   @{ */
 #define UART0_POLLFORACTIVITY_RX_GPIO_GPIO GPIOB /*!<@brief GPIO device name: GPIOB */
@@ -83,16 +96,16 @@ void UART0_InitPins(void);
  */
 void UART0_RestoreDefault(void);
 
-/*! @name PORTD2 (number 95), U8[4]/I2C0_SCL
+/*! @name PORTB2 (number 55), J2[20]/ADC0_SE12/I2C0_SCL
   @{ */
-#define I2C0_SCL_PORT PORTD /*!<@brief PORT device name: PORTD */
-#define I2C0_SCL_PIN 2U     /*!<@brief PORTD pin index: 2 */
+#define I2C0_SCL_PORT PORTB /*!<@brief PORT device name: PORTB */
+#define I2C0_SCL_PIN 2U     /*!<@brief PORTB pin index: 2 */
                             /* @} */
 
-/*! @name PORTD3 (number 96), U8[6]/I2C0_SDA
+/*! @name PORTB1 (number 54), J2[18]/ADC0_SE9/I2C0_SDA
   @{ */
-#define I2C0_SDA_PORT PORTD /*!<@brief PORT device name: PORTD */
-#define I2C0_SDA_PIN 3U     /*!<@brief PORTD pin index: 3 */
+#define I2C0_SDA_PORT PORTB /*!<@brief PORT device name: PORTB */
+#define I2C0_SDA_PIN 1U     /*!<@brief PORTB pin index: 1 */
                             /* @} */
 
 /*!
@@ -100,6 +113,18 @@ void UART0_RestoreDefault(void);
  *
  */
 void I2C0_InitPins(void);
+
+/*! @name PORTB2 (number 55), J2[20]/ADC0_SE12/I2C0_SCL
+  @{ */
+#define I2C0_RESTOREDEFAULT_SCL_PORT PORTB /*!<@brief PORT device name: PORTB */
+#define I2C0_RESTOREDEFAULT_SCL_PIN 2U     /*!<@brief PORTB pin index: 2 */
+                                           /* @} */
+
+/*! @name PORTB1 (number 54), J2[18]/ADC0_SE9/I2C0_SDA
+  @{ */
+#define I2C0_RESTOREDEFAULT_SDA_PORT PORTB /*!<@brief PORT device name: PORTB */
+#define I2C0_RESTOREDEFAULT_SDA_PIN 1U     /*!<@brief PORTB pin index: 1 */
+                                           /* @} */
 
 /*!
  * @brief Configures pin routing and optionally pin electrical features.

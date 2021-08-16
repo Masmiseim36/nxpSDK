@@ -14,11 +14,11 @@
 /* clang-format off */
 /* TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 !!GlobalInfo
-product: Peripherals v8.0
+product: Peripherals v10.0
 processor: MKV31F512xxx12
 package_id: MKV31F512VLL12
 mcu_data: ksdk2_0
-processor_version: 0.9.0
+processor_version: 0.10.6
 board: HVP-KV31F120M
 functionalGroups:
 - name: BOARD_InitPeripherals
@@ -34,6 +34,14 @@ component:
 - global_system_definitions:
   - user_definitions: ''
   - user_includes: ''
+ * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS **********/
+
+/* TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
+component:
+- type: 'uart_cmsis_common'
+- type_id: 'uart_cmsis_common_9cb8e302497aa696fdbb5a4fd622c2a8'
+- global_USART_CMSIS_common:
+  - quick_selection: 'default'
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS **********/
 /* clang-format on */
 
@@ -62,7 +70,7 @@ instance:
   - uartConfig_t:
     - uartConfig:
       - clockSource: 'BusInterfaceClock'
-      - clockSourceFreq: 'BOARD_BootClockRUN'
+      - clockSourceFreq: 'BOARD_BootClockHSRUN'
       - baudRate_Bps: '19200'
       - parityMode: 'kUART_ParityDisabled'
       - txFifoWatermark: '0'
@@ -83,8 +91,32 @@ const uart_config_t UART0_config = {
 };
 
 static void UART0_init(void) {
-  UART_Init(UART0_PERIPHERAL, &UART0_config, UART0_CLOCK_SOURCE);
+  assert(UART_Init(UART0_PERIPHERAL, &UART0_config, UART0_CLOCK_SOURCE) == kStatus_Success);
 }
+
+/***********************************************************************************************************************
+ * NVIC initialization code
+ **********************************************************************************************************************/
+/* clang-format off */
+/* TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
+instance:
+- name: 'NVIC'
+- type: 'nvic'
+- mode: 'general'
+- custom_name_enabled: 'false'
+- type_id: 'nvic_57b5eef3774cc60acaede6f5b8bddc67'
+- functional_group: 'BOARD_InitPeripherals'
+- peripheral: 'NVIC'
+- config_sets:
+  - nvic:
+    - interrupt_table: []
+    - interrupts: []
+ * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS **********/
+/* clang-format on */
+
+/* Empty initialization function (commented out)
+static void NVIC_init(void) {
+} */
 
 /***********************************************************************************************************************
  * FreeMASTER initialization code
@@ -190,6 +222,11 @@ instance:
       - FMSTR_USE_APPCMD: 'true'
       - FMSTR_APPCMD_BUFF_SIZE: '32'
       - FMSTR_MAX_APPCMD_CALLS: '4'
+      - FMSTR_DEBUG_LEVEL: '0'
+      - FMSTR_DEBUG_PRINTF: 'debug_console'
+      - FMSTR_DEBUG_TX: 'false'
+      - FMSTR_CUSTOM_INCLUDES: ''
+      - FMSTR_CUSTOM_OPTIONS: ''
     - freemaster_codegenerator: []
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS **********/
 /* clang-format on */

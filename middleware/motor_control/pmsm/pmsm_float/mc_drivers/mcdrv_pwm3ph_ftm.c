@@ -31,13 +31,12 @@ static bool_t s_statusPass;
  *
  * @param this Pointer to the current object
  *
- * @return boot_t true on success
+ * @return none
  */
-bool_t MCDRV_FtmPwm3PhSet(mcdrv_pwm3ph_ftm_t *this)
+void MCDRV_FtmPwm3PhSet(mcdrv_pwm3ph_ftm_t *this)
 {
     frac16_t f16DutyCycle;
     GMCLIB_3COOR_T_F16 sUABCtemp;
-    s_statusPass = TRUE;
 
     /* pointer to duty cycle structure */
     sUABCtemp = *this->psUABC;
@@ -60,7 +59,6 @@ bool_t MCDRV_FtmPwm3PhSet(mcdrv_pwm3ph_ftm_t *this)
     /* Set LDOK bit in FTm PWMLOAD register */
     this->pui32PwmBase->PWMLOAD = 0x0200;
 
-    return (s_statusPass);
 }
 
 /*!
@@ -68,11 +66,10 @@ bool_t MCDRV_FtmPwm3PhSet(mcdrv_pwm3ph_ftm_t *this)
  *
  * @param this Pointer to the current object
  *
- * @return boot_t true on success
+ * @return none
  */
-bool_t MCDRV_FtmPwm3PhOutEn(mcdrv_pwm3ph_ftm_t *this)
+void MCDRV_FtmPwm3PhOutEn(mcdrv_pwm3ph_ftm_t *this)
 {
-    s_statusPass = TRUE;
 
     uint8_t ui8MaskTemp = 0U;
 
@@ -97,7 +94,6 @@ bool_t MCDRV_FtmPwm3PhOutEn(mcdrv_pwm3ph_ftm_t *this)
     /* PWM outputs enabled required FTM channels */
     this->pui32PwmBase->OUTMASK &= ui8MaskTemp;
 
-    return (s_statusPass);
 }
 
 /*!
@@ -105,11 +101,10 @@ bool_t MCDRV_FtmPwm3PhOutEn(mcdrv_pwm3ph_ftm_t *this)
  *
  * @param this Pointer to the current object
  *
- * @return boot_t true on success
+ * @return none
  */
-bool_t MCDRV_FtmPwm3PhOutDis(mcdrv_pwm3ph_ftm_t *this)
+void MCDRV_FtmPwm3PhOutDis(mcdrv_pwm3ph_ftm_t *this)
 {
-    s_statusPass = TRUE;
 
     uint8_t ui8MaskTemp = 0U;
 
@@ -134,7 +129,6 @@ bool_t MCDRV_FtmPwm3PhOutDis(mcdrv_pwm3ph_ftm_t *this)
     /* PWM outputs disable required FTM channels */
     this->pui32PwmBase->OUTMASK |= ui8MaskTemp;
 
-    return (s_statusPass);
 }
 
 /*!

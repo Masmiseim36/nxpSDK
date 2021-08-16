@@ -23,10 +23,10 @@
 void MID_alignment(mid_align_a1_t *sAlignmentFcn)
 {
     /* if alignment hasn't started, set the duration of the alignment process */
-    if (sAlignmentFcn->ui16Active == 0U)
+    if (sAlignmentFcn->bActive == FALSE)
     {
         sAlignmentFcn->ui16LoopCounter = sAlignmentFcn->ui16AlignDuration;
-        sAlignmentFcn->ui16Active      = 1U;
+        sAlignmentFcn->bActive      = TRUE;
     }
 
     /* decrement alignment timer/counter */
@@ -42,6 +42,6 @@ void MID_alignment(mid_align_a1_t *sAlignmentFcn)
     {
         /* after defined time period set required d-axis current to zero */
         *(sAlignmentFcn->pf16IdReq) = FRAC16(0.0);
-        sAlignmentFcn->ui16Active   = 0U;
+        sAlignmentFcn->bActive   = FALSE;
     }
 }

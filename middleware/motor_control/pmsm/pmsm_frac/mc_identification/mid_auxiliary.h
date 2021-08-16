@@ -18,7 +18,7 @@
 /*! @brief MID Align function input structure */
 typedef struct
 {
-    uint16_t ui16Active;        /* Inidicates whether Rs is being measured (true) or not (false) */
+    uint16_t bActive;        /* Inidicates whether Rs is being measured (true) or not (false) */
     uint16_t ui16LoopCounter;   /* Serves for timing to determine e.g. 600ms */
     frac16_t *pf16IdReq;        /* Pointer to required current Id (input to controllers) */
     frac16_t f16CurrentAlign;   /* Alignment current */

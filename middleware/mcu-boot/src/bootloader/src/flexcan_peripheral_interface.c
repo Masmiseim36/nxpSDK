@@ -138,119 +138,6 @@ static status_t FLEXCAN_Send(uint8_t instance,
 /*!
  * @brief The table contains propseg, pseg1, pseg2, pre_divider, and rjw.
  */
-#ifdef KV46F16_SERIES
-/* 8Mhz osc clock based */
-const flexcan_timing_config_t bit_rate_table_8Mhz[FLEXCAN_MAX_SPEED] = {
-    { 7, 2, 2, 2, 0 }, /* 125 kHz */
-    { 3, 2, 2, 2, 0 }, /* 250 kHz */
-    { 1, 1, 1, 1, 2 }, /* 500 kHz */
-    { 0, 2, 2, 2, 2 }, /* 750 kHz */
-    { 0, 1, 1, 1, 2 }  /* 1   MHz */
-};
-
-/* 20.9715Mhz internal clock based */
-const flexcan_timing_config_t bit_rate_table[] = {
-    { 7, 3, 7, 7, 3 }, /* 125 kHz */
-    { 3, 3, 7, 7, 3 }, /* 250 kHz */
-    { 1, 3, 7, 7, 3 }, /* 500 kHz */
-    { 1, 3, 3, 3, 5 }, /* 750 kHz */
-    { 0, 3, 5, 5, 7 }  /* 1   MHz */
-};
-#endif
-
-#ifdef KV58F24_SERIES
-/* 20.9715Mhz internal clock based */
-const flexcan_timing_config_t bit_rate_table[] = {
-    { 7, 3, 7, 7, 3 }, /* 125 kHz */
-    { 3, 3, 7, 7, 3 }, /* 250 kHz */
-    { 1, 3, 7, 7, 3 }, /* 500 kHz */
-    { 1, 3, 3, 3, 5 }, /* 750 kHz */
-    { 0, 3, 5, 5, 7 }  /* 1   MHz */
-};
-#endif
-
-#if defined(CPU_PKE18F512VLH15) || defined(CPU_MKE18Z256VLH7)
-/* 24Mhz clock based (ROM version) */
-const flexcan_timing_config_t bit_rate_table[FLEXCAN_MAX_SPEED] = {
-    { 15, 3, 4, 4, 0 }, /* 125 kHz */
-    { 7, 3, 4, 4, 0 },  /* 250 kHz */
-    { 3, 3, 3, 3, 2 },  /* 500 kHz */
-    { 3, 1, 1, 1, 2 },  /* 750 kHz */
-    { 1, 2, 2, 2, 4 }   /* 1   MHz */
-};
-
-/* 12Mhz clock based (FPGA version only) */
-const flexcan_timing_config_t bit_rate_table_12Mhz[FLEXCAN_MAX_SPEED] = {
-    { 7, 3, 4, 4, 0 }, /* 125 kHz */
-    { 3, 3, 4, 4, 0 }, /* 250 kHz */
-    { 1, 3, 3, 3, 2 }, /* 500 kHz */
-    { 1, 1, 1, 1, 2 }, /* 750 kHz */
-    { 0, 2, 2, 2, 4 }  /* 1   MHz */
-};
-
-/* 6Mhz clock based (FPGA version only) */
-const flexcan_timing_config_t bit_rate_table_6Mhz[FLEXCAN_MAX_SPEED] = {
-    { 3, 3, 4, 4, 0 }, /* 125 kHz */
-    { 1, 3, 4, 4, 0 }, /* 250 kHz */
-    { 0, 3, 3, 3, 2 }, /* 500 kHz */
-    { 0, 1, 1, 1, 2 }, /* 750 kHz */
-    { 0, 0, 0, 1, 1 }  /* 1   MHz */
-};
-
-/* 8Mhz clock based (real hardware version) */
-const flexcan_timing_config_t bit_rate_table_8Mhz[FLEXCAN_MAX_SPEED] = {
-    { 7, 2, 2, 2, 0 }, /* 125 kHz */
-    { 3, 2, 2, 2, 0 }, /* 250 kHz */
-    { 1, 1, 1, 1, 2 }, /* 500 kHz */
-    { 0, 2, 2, 2, 2 }, /* 750 kHz */
-    { 0, 1, 1, 1, 2 }  /* 1   MHz */
-};
-#endif // CPU_PKE18F512VLH15
-
-#ifdef KV11Z7_SERIES 
-/* 10Mhz osc clock based */
-const flexcan_timing_config_t bit_rate_table_10Mhz[FLEXCAN_MAX_SPEED] = {
-    { 7, 3, 3, 3, 0 }, /* 125 kHz */
-    { 3, 3, 3, 3, 0 }, /* 250 kHz */
-    { 1, 2, 2, 2, 2 }, /* 500 kHz */
-    { 0, 3, 3, 3, 3 }, /* 750 kHz */
-    { 0, 1, 1, 1, 4 }  /* 1   MHz */
-};
-
-/* 20.9715Mhz internal clock based */
-const flexcan_timing_config_t bit_rate_table[] = {
-    { 7, 3, 7, 7, 3 }, /* 125 kHz */
-    { 3, 3, 7, 7, 3 }, /* 250 kHz */
-    { 1, 3, 7, 7, 3 }, /* 500 kHz */
-    { 1, 3, 3, 3, 5 }, /* 750 kHz */
-    { 0, 3, 5, 5, 7 }  /* 1   MHz */
-};
-#endif
-
-#ifdef KS22F12_SERIES
-#if defined(BL_TARGET_FLASH)
-/* IRC48Mhz clock based */
-const flexcan_timing_config_t bit_rate_table[] = {
-    { 23, 3, 4, 4, 4 }, /* 125 kHz */
-    { 11, 3, 4, 4, 4 }, /* 250 kHz */
-    { 5, 3, 4, 4, 4 },  /* 500 kHz */
-    { 3, 3, 4, 4, 4 },  /* 750 kHz */
-    { 2, 3, 4, 4, 4 }   /* 1   MHz */
-};
-#elif defined(BL_TARGET_RAM)
-/* 20.9715Mhz internal clock based */
-const flexcan_timing_config_t bit_rate_table[] = {
-    { 7, 3, 7, 7, 3 }, /* 125 kHz */
-    { 3, 3, 7, 7, 3 }, /* 250 kHz */
-    { 1, 3, 7, 7, 3 }, /* 500 kHz */
-    { 1, 3, 3, 3, 5 }, /* 750 kHz */
-    { 0, 3, 5, 5, 7 }  /* 1   MHz */
-};
-#else
-#error "No specified bit rate table for current build!"
-#endif // defined(BL_TARGET_FLASH)
-#endif
-
 #ifdef BL_FEATURE_CORE_CLOCK_DEFAULT
 /* 20.9715Mhz internal clock based */
 const flexcan_timing_config_t bit_rate_table[] = {
@@ -260,8 +147,58 @@ const flexcan_timing_config_t bit_rate_table[] = {
     { 1, 3, 3, 3, 5 }, /* 750 kHz */
     { 0, 3, 5, 5, 7 }  /* 1   MHz */
 };
-#endif
 
+#elif defined BL_FEATURE_CORE_CLOCK_24MHZ
+/* 24Mhz clock based */
+const flexcan_timing_config_t bit_rate_table[FLEXCAN_MAX_SPEED] = {
+    { 15, 3, 4, 4, 0 }, /* 125 kHz */
+    { 7, 3, 4, 4, 0 },  /* 250 kHz */
+    { 3, 3, 3, 3, 2 },  /* 500 kHz */
+    { 3, 1, 1, 1, 2 },  /* 750 kHz */
+    { 1, 2, 2, 2, 4 }   /* 1   MHz */
+};
+
+#elif defined BL_FEATURE_CORE_CLOCK_12MHZ
+/* 12Mhz clock based (FPGA version only) */
+const flexcan_timing_config_t bit_rate_table[FLEXCAN_MAX_SPEED] = {
+    { 7, 3, 4, 4, 0 }, /* 125 kHz */
+    { 3, 3, 4, 4, 0 }, /* 250 kHz */
+    { 1, 3, 3, 3, 2 }, /* 500 kHz */
+    { 1, 1, 1, 1, 2 }, /* 750 kHz */
+    { 0, 2, 2, 2, 4 }  /* 1   MHz */ 
+};
+
+#elif defined BL_FEATURE_CORE_CLOCK_6MHZ
+/* 6Mhz clock based (FPGA version only) */
+const flexcan_timing_config_t bit_rate_table[FLEXCAN_MAX_SPEED] = {
+    { 3, 3, 4, 4, 0 }, /* 125 kHz */
+    { 1, 3, 4, 4, 0 }, /* 250 kHz */
+    { 0, 3, 3, 3, 2 }, /* 500 kHz */
+    { 0, 1, 1, 1, 2 }, /* 750 kHz */
+    { 0, 0, 0, 1, 1 }  /* 1   MHz */
+};
+
+#elif defined BL_FEATURE_CORE_CLOCK_8MHZ
+const flexcan_timing_config_t bit_rate_table[FLEXCAN_MAX_SPEED] = {
+    { 7, 2, 2, 2, 0 }, /* 125 kHz */
+    { 3, 2, 2, 2, 0 }, /* 250 kHz */
+    { 1, 1, 1, 1, 2 }, /* 500 kHz */
+    { 0, 2, 2, 2, 2 }, /* 750 kHz */
+    { 0, 1, 1, 1, 2 }  /* 1   MHz */
+};
+
+#elif defined BL_FEATURE_CORE_CLOCK_48MHZ
+/* IRC48Mhz clock based */
+const flexcan_timing_config_t bit_rate_table[] = {
+    { 23, 3, 4, 4, 4 }, /* 125 kHz */
+    { 11, 3, 4, 4, 4 }, /* 250 kHz */
+    { 5, 3, 4, 4, 4 },  /* 500 kHz */
+    { 3, 3, 4, 4, 4 },  /* 750 kHz */
+    { 2, 3, 4, 4, 4 }   /* 1   MHz */
+};
+#else
+#error "No specified bit rate table for current build!"
+#endif 
 
 /*!
  * @brief flexCAN control interface information
@@ -683,7 +620,7 @@ status_t FLEXCAN_Send(uint8_t instance,
     uint32_t baseAddr = g_flexcanBaseAddr[instance];
     osa_status_t syncStatus;
     uint8_t i;
-    flexcan_frame_t frame;
+    flexcan_frame_t frame = {0};
     flexcan_mb_transfer_t xfer;
     xfer.mbIdx = mb_idx;
     frame.format = tx_info->msg_id_type;

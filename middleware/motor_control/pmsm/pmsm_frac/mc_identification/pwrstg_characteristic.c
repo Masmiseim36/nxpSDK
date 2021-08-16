@@ -32,9 +32,9 @@ void MID_GetTransferCharacteristic(mid_get_char_a1_t *sTransferCharFcn)
     frac32_t f32IdfbckFilt, f32Rs;
 
     /* Initialisation */
-    if (sTransferCharFcn->ui16Active == 0U)
+    if (sTransferCharFcn->bActive == FALSE)
     {
-        sTransferCharFcn->ui16Active             = 1U;
+        sTransferCharFcn->bActive                = TRUE;
         sTransferCharFcn->ui16LoopCounter        = 0;
         sTransferCharFcn->f16IdReqActual         = MLIB_Neg_F16(sTransferCharFcn->f16IdCalib);
         *(sTransferCharFcn->pf16IdReq)           = sTransferCharFcn->f16IdReqActual;
@@ -53,7 +53,7 @@ void MID_GetTransferCharacteristic(mid_get_char_a1_t *sTransferCharFcn)
     f16IdfbckFilt = GDFLIB_FilterMA_F16(*(sTransferCharFcn->pf16Idfbck), &sTransferCharFcn->sIdfbckMA32Filter);
 
     /* After 300ms settling of Id start calculation */
-    if (sTransferCharFcn->ui16LoopCounter >= M1_TIME_600MS)
+    if (sTransferCharFcn->ui16LoopCounter >= (uint16_t)M1_TIME_600MS)
     {
         /* Faults */
         /* Check if Rs is low enough to reach 2A */
@@ -61,14 +61,14 @@ void MID_GetTransferCharacteristic(mid_get_char_a1_t *sTransferCharFcn)
             (sTransferCharFcn->ui16LUTIndex == 0U))
         {
             ui16FaultMID |= MID_FAULT_TOO_HIGH_RS;
-            sTransferCharFcn->ui16Active   = 0U;
+            sTransferCharFcn->bActive   = FALSE;
             *(sTransferCharFcn->pf16IdReq) = FRAC16(0.0);
         }
         /* Check if motor is connected */
         if ((MLIB_Abs_F16(*(sTransferCharFcn->pf16Idfbck)) < M1_K_I_50MA) && (sTransferCharFcn->ui16LUTIndex == 0U))
         {
             ui16FaultMID |= MID_FAULT_NO_MOTOR;
-            sTransferCharFcn->ui16Active   = 0U;
+            sTransferCharFcn->bActive   = FALSE;
             *(sTransferCharFcn->pf16IdReq) = FRAC16(0.0);
         }
 
@@ -93,9 +93,9 @@ void MID_GetTransferCharacteristic(mid_get_char_a1_t *sTransferCharFcn)
         sTransferCharFcn->ui16LoopCounter = 0;
 
         /* End after last current was measured */
-        if (sTransferCharFcn->ui16LUTIndex >= M1_CHAR_CURRENT_POINT_NUMBERS)
+        if (sTransferCharFcn->ui16LUTIndex >= (uint16_t)M1_CHAR_CURRENT_POINT_NUMBERS)
         {
-            sTransferCharFcn->ui16Active   = 0U;
+            sTransferCharFcn->bActive   = FALSE;
             *(sTransferCharFcn->pf16IdReq) = FRAC16(0.0);
         }
     }

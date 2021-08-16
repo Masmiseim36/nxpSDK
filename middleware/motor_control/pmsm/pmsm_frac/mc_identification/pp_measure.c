@@ -27,14 +27,14 @@
 void MID_getPp(mid_get_pp_a1_t *sPpMeasFcn)
 {
     /* Initialisation */
-    if (sPpMeasFcn->ui16Active == 0U)
+    if (sPpMeasFcn->bActive == FALSE)
     {
         sPpMeasFcn->sSpeedElRampParam.f16RampUp   = MID_SPEED_RAMP_UP;
         sPpMeasFcn->sSpeedElRampParam.f16RampDown = MID_SPEED_RAMP_DOWN;
         sPpMeasFcn->sSpeedIntegrator.a32Gain      = M1_SCALAR_INTEG_GAIN;
         sPpMeasFcn->sSpeedIntegrator.f32IAccK_1   = FRAC32(0.0);
         GFLIB_IntegratorInit_F16(0, &sPpMeasFcn->sSpeedIntegrator);
-        sPpMeasFcn->ui16Active       = 1U;
+        sPpMeasFcn->bActive       = TRUE;
         sPpMeasFcn->f16SpeedElRamp   = FRAC16(0.0);
         sPpMeasFcn->ui16PpDetermined = 0;
     }
@@ -58,7 +58,7 @@ void MID_getPp(mid_get_pp_a1_t *sPpMeasFcn)
         *sPpMeasFcn->pf16PosEl = FRAC16(-1.0);
 
         /* Initialise waiting */
-        if (sPpMeasFcn->ui16WaitingSteady == 0)
+        if (sPpMeasFcn->ui16WaitingSteady == 0U)
         {
             sPpMeasFcn->ui16LoopCounter   = 0;
             sPpMeasFcn->ui16WaitingSteady = 1;
@@ -67,7 +67,7 @@ void MID_getPp(mid_get_pp_a1_t *sPpMeasFcn)
         sPpMeasFcn->ui16LoopCounter++;
 
         /* Escape waiting in steady position after 2400 ms */
-        if (sPpMeasFcn->ui16LoopCounter > M1_TIME_2400MS)
+        if (sPpMeasFcn->ui16LoopCounter > (uint16_t)M1_TIME_2400MS)
         {
             *sPpMeasFcn->pf16PosEl        = FRAC16(0.0);
             sPpMeasFcn->f16PosElLast      = FRAC16(0.0);
@@ -82,6 +82,6 @@ void MID_getPp(mid_get_pp_a1_t *sPpMeasFcn)
     if (sPpMeasFcn->ui16PpDetermined > 0U)
     {
         /* When finished exit the function */
-        sPpMeasFcn->ui16Active = 0U;
+        sPpMeasFcn->bActive = FALSE;
     }
 }

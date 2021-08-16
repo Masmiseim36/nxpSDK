@@ -22,6 +22,8 @@
 #include "fsl_clock.h"
 #include "freemaster.h"
 #include "freemaster_serial_uart.h"
+#include "mc_periph_init.h"
+#include "m1_sm_snsless.h"
 
 #if defined(__cplusplus)
 extern "C" {
@@ -53,6 +55,18 @@ extern "C" {
 #define FREEMASTER_SERIAL_PERIPHERAL UART1
 /* Definition of the clock source frequency */
 #define FREEMASTER_SERIAL_PERIPHERAL_CLK_FREQ 20971520UL
+/* MC_PMSM interrupt vector ID (number). */
+#define SLOW_LOOP_IRQN FTM2_IRQn
+/* MC_PMSM interrupt handler identifier. */
+#define SLOW_LOOP_IRQHANDLER FTM2_IRQHandler
+/* MC_PMSM interrupt vector ID (number). */
+#define FAST_LOOP_IRQN ADC1_IRQn
+/* MC_PMSM interrupt handler identifier. */
+#define FAST_LOOP_IRQHANDLER ADC1_IRQHandler
+/* MC_PMSM interrupt vector ID (number). */
+#define PDB_ERROR_IRQN PDB0_PDB1_IRQn
+/* MC_PMSM interrupt handler identifier. */
+#define PDB_ERROR_IRQHANDLER PDB0_PDB1_IRQHandler
 
 /***********************************************************************************************************************
  * Global variables

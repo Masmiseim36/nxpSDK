@@ -109,7 +109,7 @@ static void MID_StateStart(void)
     MID_alignment(&sMIDAlignment);
 
     /* When MID_alignment is done */
-    if (sMIDAlignment.ui16Active == 0U)
+    if (sMIDAlignment.bActive == FALSE)
     {
         /* set _DONE to switch to following transition state */
         g_sMIDCtrl.uiCtrl |= MID_SM_CTRL_START_DONE;
@@ -129,7 +129,7 @@ static void MID_StatePwrStgCharact(void)
     MID_GetTransferCharacteristic(&sMIDPwrStgChar);
 
     /* If characteristic for the last current was measured (f16TransferCharIndex == number of ) */
-    if (sMIDPwrStgChar.ui16Active == 0U)
+    if (sMIDPwrStgChar.bActive == FALSE)
     {
         /* set _DONE to switch to following transition state */
         g_sMIDCtrl.uiCtrl |= MID_SM_CTRL_PWR_STG_CHARACT_DONE;
@@ -150,7 +150,7 @@ static void MID_StateRs(void)
     MID_getRs(&sMIDRs);
 
     /* when the R_s measurement is finished, set the RS_DONE flag */
-    if (sMIDRs.ui16Active == 0U)
+    if (sMIDRs.bActive == FALSE)
     {
         /* set _DONE to switch to following transition state */
         g_sMIDCtrl.uiCtrl |= MID_SM_CTRL_RS_DONE;
@@ -172,7 +172,7 @@ static void MID_StateLd(void)
     MID_getLs(&sMIDLs);
 
     /* when the L_s measurement is finished, set the LS_DONE flag */
-    if (sMIDLs.ui16Active == 0U)
+    if (sMIDLs.bActive == FALSE)
     {
         /* Store measured Ls to Ld */
         sMIDLs.f16Ld         = sMIDLs.f16Ls;
@@ -199,7 +199,7 @@ static void MID_StateLq(void)
     MID_getLs(&sMIDLs);
 
     /* when the L_s measurement is finished, set the LS_DONE flag */
-    if (sMIDLs.ui16Active == 0U)
+    if (sMIDLs.bActive == FALSE)
     {
         /* Store measured Ls to Lq */
         sMIDLs.f16Lq         = sMIDLs.f16Ls;
@@ -226,7 +226,7 @@ static void MID_StatePp(void)
     MID_getPp(&sMIDPp);
 
     /* Escape MID_StateKe when measurement ends */
-    if (sMIDPp.ui16Active == 0U)
+    if (sMIDPp.bActive == FALSE)
     {
         g_sMIDCtrl.uiCtrl |= MID_SM_CTRL_PP_DONE;
     }
@@ -249,7 +249,7 @@ static void MID_StateKe(void)
         /* Call Rs measurement routine */
         MID_getKe(&sMIDKe);
         /* Escape MID_StateKe when measurement ends */
-        if (sMIDKe.ui16Active == 0U)
+        if (sMIDKe.bActive == FALSE)
         {
             g_sMIDCtrl.uiCtrl |= MID_SM_CTRL_KE_DONE;
         }
@@ -286,7 +286,7 @@ static void MID_TransStart2PwrStgCharact(void)
     /* Type the code to do when going from the START to the PWR_STG_CHARACT state */
 
     /* enable start of characterisation */
-    sMIDPwrStgChar.ui16Active = 0U;
+    sMIDPwrStgChar.bActive = FALSE;
 
     /* acknowledge that the state machine can proceed into PWR_STG_CHARACT state */
     g_sMIDCtrl.uiCtrl |= MID_SM_CTRL_PWR_STG_CHARACT_ACK;
@@ -304,7 +304,7 @@ static void MID_TransStart2Rs(void)
     /* Type the code to do when going from the PWR_STG_CHARACT to the RS state */
 
     /* enable start of Rs measurement */
-    sMIDRs.ui16Active        = 0U;
+    sMIDRs.bActive        = FALSE;
     sMIDRs.pf16UdErrorLookUp = &(f16TransferCharError[0]);
 
     /* acknowledge that the state machine can proceed into RS state */
@@ -321,7 +321,7 @@ static void MID_TransStart2Rs(void)
 static void MID_TransStart2Pp(void)
 {
     /* Type the code to do when going from the LS to the STOP state */
-    sMIDPp.ui16Active       = 0U;
+    sMIDPp.bActive       = FALSE;
     sMIDPp.ui16PpDetermined = 0U;
 
     /* Acknowledge that the system can proceed into the STOP state */
@@ -362,7 +362,7 @@ static void MID_TransRs2Ld(void)
     sMIDLs.f16Ls      = FRAC16(0.0);
 
     /* enable start of Ls measurement */
-    sMIDLs.ui16Active = 0U;
+    sMIDLs.bActive = FALSE;
 
     /* Pass value of Rs to Ls strucutre */
     sMIDLs.f16Rs         = sMIDRs.f16Rs;
@@ -391,7 +391,7 @@ static void MID_TransLd2Lq(void)
     sMIDLs.f16Ls      = FRAC16(0.0);
 
     /* enable start of Ls measurement */
-    sMIDLs.ui16Active = 0U;
+    sMIDLs.bActive = FALSE;
 
     /* Pass value of Rs to Ls strucutre */
     sMIDLs.f16Rs         = sMIDRs.f16Rs;
@@ -417,7 +417,7 @@ static void MID_TransLq2Ke(void)
     *pf16Uq = FRAC16(0.0);
 
     sMIDKe.ui16MCATObsrvDone = 0U;
-    sMIDKe.ui16Active        = 0U;
+    sMIDKe.bActive        = FALSE;
 
     /* Acknowledge that the system can proceed into the STOP state */
     g_sMIDCtrl.uiCtrl |= MID_SM_CTRL_KE_ACK;

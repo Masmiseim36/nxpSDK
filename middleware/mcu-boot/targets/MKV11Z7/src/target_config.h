@@ -25,6 +25,14 @@ enum _target_clocks
     kDivider_Max = 16,
 };
 
+//! @brief Memory Map index constants
+enum
+{
+    kIndexFlashArray = 0,
+    kIndexSRAM = 1,
+    kSRAMSeparatrix = (uint32_t)0x20000000 //!< This value is the start address of SRAM_U
+};
+
 //! @brief Constants for sram partition
 enum _sram_partition
 {

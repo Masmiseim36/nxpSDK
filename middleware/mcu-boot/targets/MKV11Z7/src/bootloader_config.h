@@ -44,6 +44,7 @@
 #endif
 #if !defined(BL_CONFIG_CAN)
 #define BL_CONFIG_CAN (1)
+#define BL_FEATURE_CORE_CLOCK_DEFAULT (1)
 #endif
 
 //@}

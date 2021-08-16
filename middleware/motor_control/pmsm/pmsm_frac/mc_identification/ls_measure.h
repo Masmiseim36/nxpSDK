@@ -16,7 +16,7 @@
  ******************************************************************************/
 typedef struct
 {
-    uint16_t ui16Active;             /* Inidicates whether Ls is being measured (true) or not (false) */
+    uint16_t bActive;             /* Inidicates whether Ls is being measured (true) or not (false) */
     uint16_t ui16LoopCounter;        /* Serves for timing to determine e.g. 300ms */
     int16_t i16AmplitudeOK;          /* Indicates that amplitude of the measuring signal was set */
     int16_t i16FrequencyOK;          /* Indicates that frequency of the measuring signal was set */
@@ -57,7 +57,6 @@ typedef struct
 /*******************************************************************************
  * Variables
  ******************************************************************************/
-extern uint16_t ui16FaultMID;
 
 #ifdef __cplusplus
 extern "C" {

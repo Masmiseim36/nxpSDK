@@ -6,7 +6,7 @@
     <definition extID="platform.drivers.dmamux.MKV31F51212"/>
     <definition extID="platform.drivers.clock.MKV31F51212"/>
     <definition extID="middleware.rtcesl.cm4f.MKV31F51212"/>
-    <definition extID="middleware.motor_control.acim.MKV31F51212"/>
+    <definition extID="middleware.mc_acim.float.MKV31F51212"/>
     <definition extID="platform.drivers.common.MKV31F51212"/>
     <definition extID="device.MKV31F51212_CMSIS.MKV31F51212"/>
     <definition extID="utility.debug_console.MKV31F51212"/>
@@ -22,9 +22,7 @@
     <definition extID="platform.utilities.assert.MKV31F51212"/>
     <definition extID="middleware.fmstr.MKV31F51212"/>
     <definition extID="middleware.fmstr.platform_gen32le.MKV31F51212"/>
-    <definition extID="platform.Include_core_cm4.MKV31F51212"/>
-    <definition extID="platform.Include_common.MKV31F51212"/>
-    <definition extID="platform.Include_dsp.MKV31F51212"/>
+    <definition extID="CMSIS_Include_core_cm.MKV31F51212"/>
     <definition extID="platform.utilities.misc_utilities.MKV31F51212"/>
     <definition extID="device.MKV31F51212_system.MKV31F51212"/>
     <definition extID="iar"/>
@@ -33,7 +31,7 @@
     <definition extID="mcuxpresso"/>
     <definition extID="com.nxp.mcuxpresso"/>
   </externalDefinitions>
-  <example id="hvpkv31f120m_mc_acim" name="mc_acim" dependency="platform.drivers.sim.MKV31F51212 platform.drivers.port.MKV31F51212 platform.drivers.dmamux.MKV31F51212 platform.drivers.clock.MKV31F51212 middleware.rtcesl.cm4f.MKV31F51212 middleware.motor_control.acim.MKV31F51212 platform.drivers.common.MKV31F51212 device.MKV31F51212_CMSIS.MKV31F51212 utility.debug_console.MKV31F51212 component.uart_adapter.MKV31F51212 component.serial_manager.MKV31F51212 component.lists.MKV31F51212 component.serial_manager_uart.MKV31F51212 platform.drivers.uart.MKV31F51212 device.MKV31F51212_startup.MKV31F51212 platform.drivers.lpuart.MKV31F51212 platform.drivers.smc.MKV31F51212 platform.drivers.gpio.MKV31F51212 platform.utilities.assert.MKV31F51212 middleware.fmstr.MKV31F51212 middleware.fmstr.platform_gen32le.MKV31F51212 platform.Include_core_cm4.MKV31F51212 platform.Include_common.MKV31F51212 platform.Include_dsp.MKV31F51212 platform.utilities.misc_utilities.MKV31F51212 device.MKV31F51212_system.MKV31F51212" category="demo_apps">
+  <example id="hvpkv31f120m_mc_acim" name="mc_acim" dependency="platform.drivers.sim.MKV31F51212 platform.drivers.port.MKV31F51212 platform.drivers.dmamux.MKV31F51212 platform.drivers.clock.MKV31F51212 middleware.rtcesl.cm4f.MKV31F51212 middleware.mc_acim.float.MKV31F51212 platform.drivers.common.MKV31F51212 device.MKV31F51212_CMSIS.MKV31F51212 utility.debug_console.MKV31F51212 component.uart_adapter.MKV31F51212 component.serial_manager.MKV31F51212 component.lists.MKV31F51212 component.serial_manager_uart.MKV31F51212 platform.drivers.uart.MKV31F51212 device.MKV31F51212_startup.MKV31F51212 platform.drivers.lpuart.MKV31F51212 platform.drivers.smc.MKV31F51212 platform.drivers.gpio.MKV31F51212 platform.utilities.assert.MKV31F51212 middleware.fmstr.MKV31F51212 middleware.fmstr.platform_gen32le.MKV31F51212 CMSIS_Include_core_cm.MKV31F51212 platform.utilities.misc_utilities.MKV31F51212 device.MKV31F51212_system.MKV31F51212" category="demo_apps">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -42,6 +40,7 @@
         <option id="gnu.c.compiler.option.preprocessor.def.symbols" type="stringList">
           <value>CPU_MKV31F512VLL12</value>
           <value>SERIAL_PORT_TYPE_UART=1</value>
+          <value>MCUXPRESSO_SDK</value>
         </option>
         <option id="com.crt.advproject.gas.fpu" type="enum">
           <value>com.crt.advproject.gas.fpu.fpv4.hard</value>
@@ -126,25 +125,25 @@
     <source path="middleware/motor_control/acim/meterlib/cm4f_4.0/meterliblp/inc" project_relative_path="meterlib/meterliblp" type="c_include">
       <files mask="meterliblp.h"/>
     </source>
-    <source path="middleware/motor_control/acim/meterlib/cm4f_4.0/meterliblp" project_relative_path="libs" type="lib" toolchain="iar">
+    <source path="middleware/motor_control/acim/meterlib/cm4f_4.0/meterliblp" project_relative_path="libs" method="copy" type="lib" toolchain="iar">
       <files mask="meterliblp_cm4f_iar.a"/>
     </source>
-    <source path="middleware/motor_control/acim/meterlib/cm4f_4.0/meterliblp" project_relative_path="libs" type="lib" toolchain="mdk">
+    <source path="middleware/motor_control/acim/meterlib/cm4f_4.0/meterliblp" project_relative_path="libs" method="copy" type="lib" toolchain="mdk">
       <files mask="meterliblp_cm4f_arm.lib"/>
     </source>
-    <source path="middleware/motor_control/acim/meterlib/cm4f_4.0" project_relative_path="libs" type="lib" toolchain="mcuxpresso armgcc">
+    <source path="middleware/motor_control/acim/meterlib/cm4f_4.0" project_relative_path="libs" method="copy" type="lib" toolchain="mcuxpresso armgcc">
       <files mask="libmeterlib_cm4f_gcc.a"/>
     </source>
-    <source path="middleware/motor_control/acim/meterlib/cm4f_4.0/meterlib" project_relative_path="libs" type="lib" toolchain="iar">
+    <source path="middleware/motor_control/acim/meterlib/cm4f_4.0/meterlib" project_relative_path="libs" method="copy" type="lib" toolchain="iar">
       <files mask="meterlib_cm4f_iar.a"/>
     </source>
-    <source path="middleware/motor_control/acim/meterlib/cm4f_4.0/meterlib" project_relative_path="libs" type="lib" toolchain="mdk">
+    <source path="middleware/motor_control/acim/meterlib/cm4f_4.0/meterlib" project_relative_path="libs" method="copy" type="lib" toolchain="mdk">
       <files mask="meterlib_cm4f_arm.lib"/>
     </source>
-    <source path="middleware/motor_control/acim/meterlib/cm4f_4.0/fraclib" project_relative_path="libs" type="lib" toolchain="iar">
+    <source path="middleware/motor_control/acim/meterlib/cm4f_4.0/fraclib" project_relative_path="libs" method="copy" type="lib" toolchain="iar">
       <files mask="fraclib_cm4f_iar.a"/>
     </source>
-    <source path="middleware/motor_control/acim/meterlib/cm4f_4.0/fraclib" project_relative_path="libs" type="lib" toolchain="mdk">
+    <source path="middleware/motor_control/acim/meterlib/cm4f_4.0/fraclib" project_relative_path="libs" method="copy" type="lib" toolchain="mdk">
       <files mask="fraclib_cm4f_arm.lib"/>
     </source>
     <source path="middleware/motor_control/freemaster/acim" project_relative_path="motor_control/freemaster/acim" type="src">
@@ -384,13 +383,11 @@
     </source>
     <source path="boards/hvpkv31f120m/demo_apps/mc_acim" project_relative_path="source" type="src">
       <files mask="main.c"/>
-      <files mask="mcdrv_hvpkv31f120m.c"/>
+      <files mask="mc_periph_init.c"/>
     </source>
     <source path="boards/hvpkv31f120m/demo_apps/mc_acim" project_relative_path="source" type="c_include">
-      <files mask="main.h"/>
       <files mask="m1_acim_appconfig.h"/>
-      <files mask="mcdrv_hvpkv31f120m.h"/>
-      <files mask="mcdrv.h"/>
+      <files mask="mc_periph_init.h"/>
       <files mask="char_pwrstg.h"/>
     </source>
     <source path="boards/hvpkv31f120m/demo_apps/mc_acim" project_relative_path="board" type="src">

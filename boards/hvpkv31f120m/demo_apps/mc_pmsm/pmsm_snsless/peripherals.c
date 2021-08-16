@@ -14,11 +14,11 @@
 /* clang-format off */
 /* TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 !!GlobalInfo
-product: Peripherals v8.0
+product: Peripherals v10.0
 processor: MKV31F512xxx12
 package_id: MKV31F512VLL12
 mcu_data: ksdk2_0
-processor_version: 0.9.2
+processor_version: 0.10.4
 functionalGroups:
 - name: BOARD_InitPeripherals
   UUID: 4b679f12-a0c0-486f-b84d-efddf4e30c8a
@@ -82,8 +82,35 @@ const uart_config_t UART0_config = {
 };
 
 static void UART0_init(void) {
-  UART_Init(UART0_PERIPHERAL, &UART0_config, UART0_CLOCK_SOURCE);
+  assert(UART_Init(UART0_PERIPHERAL, &UART0_config, UART0_CLOCK_SOURCE) == kStatus_Success);
 }
+
+/***********************************************************************************************************************
+ * NVIC initialization code
+ **********************************************************************************************************************/
+/* clang-format off */
+/* TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
+instance:
+- name: 'NVIC'
+- type: 'nvic'
+- mode: 'general'
+- custom_name_enabled: 'false'
+- type_id: 'nvic_57b5eef3774cc60acaede6f5b8bddc67'
+- functional_group: 'BOARD_InitPeripherals'
+- peripheral: 'NVIC'
+- config_sets:
+  - nvic:
+    - interrupt_table:
+      - 0: []
+      - 1: []
+      - 2: []
+    - interrupts: []
+ * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS **********/
+/* clang-format on */
+
+/* Empty initialization function (commented out)
+static void NVIC_init(void) {
+} */
 
 /***********************************************************************************************************************
  * FreeMASTER initialization code
@@ -189,6 +216,11 @@ instance:
       - FMSTR_USE_APPCMD: 'true'
       - FMSTR_APPCMD_BUFF_SIZE: '32'
       - FMSTR_MAX_APPCMD_CALLS: '4'
+      - FMSTR_DEBUG_LEVEL: '0'
+      - FMSTR_DEBUG_PRINTF: 'debug_console'
+      - FMSTR_DEBUG_TX: 'false'
+      - FMSTR_CUSTOM_INCLUDES: ''
+      - FMSTR_CUSTOM_OPTIONS: ''
     - freemaster_codegenerator: []
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS **********/
 /* clang-format on */
@@ -227,6 +259,95 @@ static void FreeMASTER_init(void) {
 }
 
 /***********************************************************************************************************************
+ * MC_PMSM initialization code
+ **********************************************************************************************************************/
+/* clang-format off */
+/* TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
+instance:
+- name: 'MC_PMSM'
+- type: 'mc_pmsm'
+- mode: 'general'
+- custom_name_enabled: 'false'
+- type_id: 'mc_pmsm_e46a8ee77e01be2dbe0a6770ae154c23'
+- functional_group: 'BOARD_InitPeripherals'
+- config_sets:
+  - mc_config:
+    - initMCPMSM: 'true'
+    - timing:
+      - pwmPeripheralFTM: 'FTM0'
+      - clockSource: '1'
+      - clockSourceFreq: 'BOARD_BootClockHSRUN'
+      - pwmFreq: 'freq10'
+      - M1_FOC_FREQ_VS_PWM_FREQ: '1'
+      - slowLoopPeripheralFTM: 'FTM2'
+      - SLclockSource: '1'
+      - SLclockSourceFreq: 'BOARD_BootClockHSRUN'
+      - slowLoopFreq: 'freq1_0'
+    - outputControl:
+      - phaseA: '0'
+      - phaseB: '1'
+      - phaseC: '2'
+      - topTrans: 'high'
+      - bottomTrans: 'high'
+      - M1_PWM_DEADTIME_ENABLE: 'true'
+      - pwmDeadtime: '1500 ns'
+      - M1_FAULT_ENABLE: 'true'
+      - faultPinSelect: 'FLT.0'
+      - M1_FAULT_POL: 'low'
+      - cmpThreshold: '50'
+      - dcbusBrakeEnable: 'true'
+      - dcbusBrakeGPIO:
+        - peripheralGPIO: 'GPIOC'
+        - gpioPinSelect: 'GPIO.0'
+    - adcSensing:
+      - blockADC: []
+      - adc0Mux: 'a'
+      - adc1Mux: 'a'
+      - bothADCs: 'b'
+      - PH_A:
+        - adcInstance: 'adc1'
+        - adc1: 'SE.8'
+      - PH_B:
+        - adc0: 'SE.3'
+        - adc1: 'SE.0'
+      - PH_C:
+        - adcInstance: 'adc0'
+        - adc0: 'SE.0'
+      - UDCB:
+        - adcInstance: 'adc0'
+        - adc0: 'SE.12'
+      - AUX:
+        - adcInstance: 'adc1'
+        - adc1: 'SE.7a'
+      - ADC_OFFSET_WINDOW: 'offset3'
+      - clockSource: 'BusInterfaceClock'
+      - clockSourceFreq: 'BOARD_BootClockHSRUN'
+    - inrushRelay:
+      - inrushRelayEnable: 'true'
+      - inrushRelayDelay: '1 s'
+      - inrushRelayGPIO:
+        - peripheralGPIO: 'GPIOC'
+        - gpioPinSelect: 'GPIO.13'
+    - interruptConfig:
+      - fastLoopInterrupt:
+        - IRQn: 'ADC1_IRQn'
+        - enable_custom_name: 'false'
+      - slowLoopInterrupt:
+        - IRQn: 'FTM2_IRQn'
+        - enable_custom_name: 'false'
+      - pdbInterrupt:
+        - IRQn: 'PDB0_IRQn'
+        - enable_custom_name: 'false'
+    - mc_codegenerator: []
+ * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS **********/
+/* clang-format on */
+
+static void MC_PMSM_init(void) {
+  /* MC_PMSM middleware initialization */
+  MCDRV_Init_M1();
+}
+
+/***********************************************************************************************************************
  * Initialization functions
  **********************************************************************************************************************/
 void BOARD_InitPeripherals(void)
@@ -234,6 +355,7 @@ void BOARD_InitPeripherals(void)
   /* Initialize components */
   UART0_init();
   FreeMASTER_init();
+  MC_PMSM_init();
 }
 
 /***********************************************************************************************************************

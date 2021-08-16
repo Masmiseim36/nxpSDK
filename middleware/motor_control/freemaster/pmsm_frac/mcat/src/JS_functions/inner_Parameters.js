@@ -215,13 +215,13 @@ function clickCalculateParam()
       
     FM_Umax = Umax;
 	
-	Scalar_Uq_Min_sc = Math.round(Scalar_Uq_Min/UDCmax*1000000000000)/1000000000000;
+    Scalar_Uq_Min_sc = Math.round(Scalar_Uq_Min/UDCmax*1000000000000)/1000000000000;
     testFracValRange("Scalar_Uq_Min_sc",Scalar_Uq_Min_sc); 	
     Align_volt_sc = Math.round(Align_volt/Umax*1000000000000)/1000000000000;
     testFracValRange("Align_volt_sc",Align_volt_sc); 
     Align_cur_sc = Math.round(Align_cur/Imax*1000000000000)/1000000000000;
     testFracValRange("Align_cur_sc",Align_cur_sc);
-    Align_dur_sc =  Math.round(Align_dur/SLOOP_Ts);
+    Align_dur_sc =  Math.round(Align_dur/CLOOP_Ts);
     Calib_dur_sc =  Math.round(Calib_dur/SLOOP_Ts);
     Fault_dur_sc =  Math.round(Fault_dur/SLOOP_Ts);
     Freewheel_dur_sc =  Math.round(Freewheel_dur/SLOOP_Ts);

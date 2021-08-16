@@ -20,7 +20,7 @@ typedef struct
 {
     GDFLIB_FILTER_MA_T_A32 sUdReqMA32Filter;  /* Ud required filter */
     GDFLIB_FILTER_MA_T_A32 sIdfbckMA32Filter; /* Id feedback filter */
-    uint16_t ui16Active;                      /* Inidicates whether Rs is being measured (true) or not (false) */
+    uint16_t bActive;                         /* Inidicates whether Rs is being measured (true) or not (false) */
     uint16_t ui16LoopCounter;                 /* Serves for timing to determine e.g. 600ms */
     frac16_t *pf16IdReq;                      /* Pointer to required current Id (PI current controller's input) */
     frac16_t f16IdMeas;                       /* User defined measuring DC current */
@@ -38,7 +38,6 @@ typedef struct
  * Variables
  ******************************************************************************/
 extern frac16_t f16TransferCharError[];
-extern uint16_t ui16FaultMID;
 
 #ifdef __cplusplus
 extern "C" {

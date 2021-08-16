@@ -229,16 +229,21 @@ void MCS_PMSMScalarCtrl(mcs_pmsm_foc_t *psFocPMSM, mcs_pmsm_scalar_ctrl_t *psSca
 
     /* voltage calculation */
     psScalarPMSM->sUDQReq.f16Q = (frac16_t)(MLIB_ShLSat_F16(
-        MLIB_Mul_F16(psScalarPMSM->f16VHzGain, psScalarPMSM->f16FreqRamp), psScalarPMSM->i16VHzGainShift));
+        MLIB_Mul_F16(psScalarPMSM->f16VHzGain, psScalarPMSM->f16FreqRamp), (uint16_t)(psScalarPMSM->i16VHzGainShift)));
     psScalarPMSM->sUDQReq.f16D = 0;
     
     /* voltage limitation to f16UqMin */
     if (psScalarPMSM->sUDQReq.f16Q >= FRAC16(0.0))
-        psScalarPMSM->sUDQReq.f16Q = (frac16_t)(GFLIB_LowerLimit_F16(psScalarPMSM->sUDQReq.f16Q,
-                                                                     psScalarPMSM->f16UqMin));
-    else                                                
-        psScalarPMSM->sUDQReq.f16Q = (frac16_t)(GFLIB_UpperLimit_F16(psScalarPMSM->sUDQReq.f16Q,
-                                                                     MLIB_Neg_F16(psScalarPMSM->f16UqMin)));
+    {
+    	psScalarPMSM->sUDQReq.f16Q = (frac16_t)(GFLIB_LowerLimit_F16(psScalarPMSM->sUDQReq.f16Q,
+    	                                                                     psScalarPMSM->f16UqMin));
+    }
+    else
+    {
+    	psScalarPMSM->sUDQReq.f16Q = (frac16_t)(GFLIB_UpperLimit_F16(psScalarPMSM->sUDQReq.f16Q,
+    	                                                                     MLIB_Neg_F16(psScalarPMSM->f16UqMin)));
+    }
+
                                                 
     /* stator voltage angle , used the same integrator as for the open-loop start up*/
     psScalarPMSM->f16PosElScalar = GFLIB_Integrator_F16(psScalarPMSM->f16FreqRamp, &psScalarPMSM->sFreqIntegrator);

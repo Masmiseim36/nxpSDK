@@ -20,20 +20,6 @@
  * Variables
  ******************************************************************************/
 
-/* global control variables */
-extern bool_t bDemoMode;
-
-/* global used misc variables */
-extern uint32_t g_ui32NumberOfCycles;
-extern uint32_t g_ui32MaxNumberOfCycles;
-
-/* Application and board ID  */
-extern app_ver_t g_sAppIdFM;
-
-extern bool_t g_bM1SwitchAppOnOff;
-extern mcdef_pmsm_t g_sM1Drive;
-extern sm_app_ctrl_t g_sM1Ctrl;
-
 /*******************************************************************************
  * Code
  ******************************************************************************/
@@ -195,12 +181,12 @@ FMSTR_TSA_TABLE_END()
 FMSTR_TSA_TABLE_BEGIN(sMID_table)
 
 /* sMIDAlignment structure definition */
-FMSTR_TSA_RW_VAR(sMIDAlignment.ui16Active, FMSTR_TSA_UINT16)        /* MID Align Active */
+FMSTR_TSA_RW_VAR(sMIDAlignment.bActive, FMSTR_TSA_UINT16)        /* MID Align Active */
 FMSTR_TSA_RW_VAR(sMIDAlignment.ui16AlignDuration, FMSTR_TSA_UINT16) /* MID Align AlignDuration */
 FMSTR_TSA_RW_VAR(sMIDAlignment.f16CurrentAlign, FMSTR_TSA_FRAC16)   /* MID Align CurrentAlign */
 
 /* sMIDKe structure definition */
-FMSTR_TSA_RW_VAR(sMIDKe.ui16Active, FMSTR_TSA_UINT16)        /* MID Ke Active */
+FMSTR_TSA_RW_VAR(sMIDKe.bActive, FMSTR_TSA_UINT16)        /* MID Ke Active */
 FMSTR_TSA_RW_VAR(sMIDKe.f16IdReqOpenLoop, FMSTR_TSA_FRAC16)  /* MID Ke IdReqOpenLoop */
 FMSTR_TSA_RW_VAR(sMIDKe.f16Ke, FMSTR_TSA_FRAC16)             /* MID Ke Ke */
 FMSTR_TSA_RW_VAR(sMIDKe.ui16MCATObsrvDone, FMSTR_TSA_UINT16) /* MID Ke MCATObsrvDone */
@@ -211,7 +197,7 @@ FMSTR_TSA_RW_VAR(sMIDKe.f16SpeedElReq, FMSTR_TSA_FRAC16)     /* MID Ke SpeedElRe
 FMSTR_TSA_RW_VAR(sMIDKe.sSpeedIntegrator.a32Gain, FMSTR_TSA_FRAC_Q(16, 15)) /* MID Ke SpeedIntegrator.f16C1 */
 
 /* sMIDLs structure definition */
-FMSTR_TSA_RW_VAR(sMIDLs.ui16Active, FMSTR_TSA_UINT16)        /* MID Ke Active */
+FMSTR_TSA_RW_VAR(sMIDLs.bActive, FMSTR_TSA_UINT16)        /* MID Ke Active */
 FMSTR_TSA_RW_VAR(sMIDLs.f16FreqDecrement, FMSTR_TSA_FRAC16)  /* MID Ls FreqDecrement */
 FMSTR_TSA_RW_VAR(sMIDLs.f16FreqMin, FMSTR_TSA_FRAC16)        /* MID Ls FreqMin */
 FMSTR_TSA_RW_VAR(sMIDLs.f16FreqStart, FMSTR_TSA_FRAC16)      /* MID Ls FreqStart */
@@ -227,13 +213,13 @@ FMSTR_TSA_RW_VAR(sMIDLs.i16ShiftZdMax, FMSTR_TSA_SINT16)     /* MID Ls ShiftZdMa
 FMSTR_TSA_RW_VAR(sMIDLs.f16UdIncrement, FMSTR_TSA_FRAC16)    /* MID Ls UdIncrement */
 
 /* sMIDPp structure definition */
-FMSTR_TSA_RW_VAR(sMIDPp.ui16Active, FMSTR_TSA_UINT16)       /* MID Pp Active */
+FMSTR_TSA_RW_VAR(sMIDPp.bActive, FMSTR_TSA_UINT16)       /* MID Pp Active */
 FMSTR_TSA_RW_VAR(sMIDPp.f16IdReqOpenLoop, FMSTR_TSA_FRAC16) /* MID Pp IdReqOpenLoop */
 FMSTR_TSA_RW_VAR(sMIDPp.ui16PpDetermined, FMSTR_TSA_UINT16) /* MID Pp PpDetermined */
 FMSTR_TSA_RW_VAR(sMIDPp.f16SpeedElReq, FMSTR_TSA_FRAC16)    /* MID Pp SpeedElReq */
 
 /* sMIDRs structure definition */
-FMSTR_TSA_RW_VAR(sMIDRs.ui16Active, FMSTR_TSA_UINT16)           /* MID Rs Active */
+FMSTR_TSA_RW_VAR(sMIDRs.bActive, FMSTR_TSA_UINT16)           /* MID Rs Active */
 FMSTR_TSA_RW_VAR(sMIDRs.f16IdMeas, FMSTR_TSA_FRAC16)            /* MID Rs IdMeas */
 FMSTR_TSA_RW_VAR(sMIDRs.f16RescaleIdLUTGain, FMSTR_TSA_FRAC16)  /* MID Rs RescaleIdLUTGain */
 FMSTR_TSA_RW_VAR(sMIDRs.i16RescaleIdLUTShift, FMSTR_TSA_SINT16) /* MID Rs RescaleIdLUTShift */
@@ -244,7 +230,7 @@ FMSTR_TSA_RW_VAR(sMIDRs.i16ShiftRsMax, FMSTR_TSA_SINT16)        /* MID Rs ShiftR
 FMSTR_TSA_RW_MEM(f16TransferCharError, FMSTR_TSA_FRAC16, &f16TransferCharError[0], (65 << 1)) /* MID TransCharError */
 
 /* sMIDKe structure definition */
-FMSTR_TSA_RW_VAR(sMIDPwrStgChar.ui16Active, FMSTR_TSA_UINT16)     /* MID PwrStg Active */
+FMSTR_TSA_RW_VAR(sMIDPwrStgChar.bActive, FMSTR_TSA_UINT16)     /* MID PwrStg Active */
 FMSTR_TSA_RW_VAR(sMIDPwrStgChar.f16IdCalib, FMSTR_TSA_FRAC16)     /* MID PwrStg IdCalib */
 FMSTR_TSA_RW_VAR(sMIDPwrStgChar.f16IdIncrement, FMSTR_TSA_FRAC16) /* MID PwrStg IdIncrement */
 FMSTR_TSA_RW_VAR(sMIDPwrStgChar.f16Rs, FMSTR_TSA_FRAC16)          /* MID PwrStg Rs */

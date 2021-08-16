@@ -1,7 +1,7 @@
 /*
  * Copyright (c) 2013-2016 ARM Limited. All rights reserved.
  * Copyright (c) 2016, Freescale Semiconductor, Inc. Not a Contribution.
- * Copyright 2016-2017,2020 NXP. Not a Contribution.
+ * Copyright 2016-2017,2020,2021 NXP. Not a Contribution.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -65,6 +65,11 @@ typedef const struct _cmsis_uart_dma_resource
     uint32_t rxDmaChannel;     /*!< DMA channel for uart RX.             */
     DMAMUX_Type *rxDmamuxBase; /*!< DMAMUX peripheral base address for RX. */
     uint8_t rxDmaRequest;      /*!< RX DMA request source.                 */
+
+#if FSL_FEATURE_DMA_MODULE_CHANNEL != FSL_FEATURE_DMAMUX_MODULE_CHANNEL
+    uint32_t txDmamuxChannel; /*!< DMAMUX channel for uart TX.             */
+    uint32_t rxDmamuxChannel; /*!< DMAMUX channel for uart TX.             */
+#endif
 } cmsis_uart_dma_resource_t;
 
 typedef struct _cmsis_uart_dma_driver_state
@@ -274,7 +279,7 @@ static int32_t UARTx_SetModemControl(ARM_USART_MODEM_CONTROL control)
 
 static ARM_USART_MODEM_STATUS UARTx_GetModemStatus(void)
 {
-    ARM_USART_MODEM_STATUS modem_status;
+    ARM_USART_MODEM_STATUS modem_status = {0};
 
     modem_status.cts      = 0U;
     modem_status.dsr      = 0U;
@@ -348,8 +353,13 @@ static int32_t UART_DmaPowerControl(ARM_POWER_STATE state, cmsis_uart_dma_driver
             if ((uart->flags & (uint8_t)USART_FLAG_POWER) != 0U)
             {
                 UART_Deinit(uart->resource->base);
+#if FSL_FEATURE_DMA_MODULE_CHANNEL != FSL_FEATURE_DMAMUX_MODULE_CHANNEL
+                DMAMUX_DisableChannel(uart->dmaResource->rxDmamuxBase, uart->dmaResource->rxDmamuxChannel);
+                DMAMUX_DisableChannel(uart->dmaResource->txDmamuxBase, uart->dmaResource->txDmamuxChannel);
+#else
                 DMAMUX_DisableChannel(uart->dmaResource->rxDmamuxBase, uart->dmaResource->rxDmaChannel);
                 DMAMUX_DisableChannel(uart->dmaResource->txDmamuxBase, uart->dmaResource->txDmaChannel);
+#endif
                 uart->flags = (uint8_t)USART_FLAG_INIT;
             }
             break;
@@ -378,13 +388,20 @@ static int32_t UART_DmaPowerControl(ARM_POWER_STATE state, cmsis_uart_dma_driver
 
             /* Set up DMA setting. */
             DMA_CreateHandle(uart->rxHandle, dmaResource->rxDmaBase, dmaResource->rxDmaChannel);
+            DMA_CreateHandle(uart->txHandle, dmaResource->txDmaBase, dmaResource->txDmaChannel);
+#if FSL_FEATURE_DMA_MODULE_CHANNEL != FSL_FEATURE_DMAMUX_MODULE_CHANNEL
+            DMAMUX_SetSource(dmaResource->rxDmamuxBase, dmaResource->rxDmamuxChannel, dmaResource->rxDmaRequest);
+            DMAMUX_EnableChannel(dmaResource->rxDmamuxBase, dmaResource->rxDmamuxChannel);
+
+            DMAMUX_SetSource(dmaResource->txDmamuxBase, dmaResource->txDmamuxChannel, dmaResource->txDmaRequest);
+            DMAMUX_EnableChannel(dmaResource->txDmamuxBase, dmaResource->txDmamuxChannel);
+#else
             DMAMUX_SetSource(dmaResource->rxDmamuxBase, dmaResource->rxDmaChannel, dmaResource->rxDmaRequest);
             DMAMUX_EnableChannel(dmaResource->rxDmamuxBase, dmaResource->rxDmaChannel);
 
-            DMA_CreateHandle(uart->txHandle, dmaResource->txDmaBase, dmaResource->txDmaChannel);
             DMAMUX_SetSource(dmaResource->txDmamuxBase, dmaResource->txDmaChannel, dmaResource->txDmaRequest);
             DMAMUX_EnableChannel(dmaResource->txDmamuxBase, dmaResource->txDmaChannel);
-
+#endif
             /* Setup the uart. */
             (void)UART_Init(uart->resource->base, &config, uart->resource->GetFreq());
             UART_TransferCreateHandleDMA(uart->resource->base, uart->handle, KSDK_UART_DmaCallback,
@@ -535,7 +552,7 @@ static int32_t UART_DmaControl(uint32_t control, uint32_t arg, cmsis_uart_dma_dr
 
 static ARM_USART_STATUS UART_DmaGetStatus(cmsis_uart_dma_driver_state_t *uart)
 {
-    ARM_USART_STATUS stat;
+    ARM_USART_STATUS stat     = {0};
     uint32_t ksdk_uart_status = UART_GetStatusFlags(uart->resource->base);
 
     stat.tx_busy = (((uint8_t)kuart_TxBusy == uart->handle->txState) ? (1U) : (0U));
@@ -794,7 +811,7 @@ static int32_t UART_EdmaControl(uint32_t control, uint32_t arg, cmsis_uart_edma_
 
 static ARM_USART_STATUS UART_EdmaGetStatus(cmsis_uart_edma_driver_state_t *uart)
 {
-    ARM_USART_STATUS stat;
+    ARM_USART_STATUS stat     = {0};
     uint32_t ksdk_uart_status = UART_GetStatusFlags(uart->resource->base);
 
     stat.tx_busy = (((uint8_t)kuart_TxBusy == uart->handle->txState) ? (1U) : (0U));
@@ -1065,7 +1082,7 @@ static int32_t UART_NonBlockingControl(uint32_t control, uint32_t arg, cmsis_uar
 
 static ARM_USART_STATUS UART_NonBlockingGetStatus(cmsis_uart_interrupt_driver_state_t *uart)
 {
-    ARM_USART_STATUS stat;
+    ARM_USART_STATUS stat     = {0};
     uint32_t ksdk_uart_status = UART_GetStatusFlags(uart->resource->base);
 
     stat.tx_busy = (((uint8_t)kuart_TxBusy == uart->handle->txState) ? (1U) : (0U));
@@ -1104,9 +1121,12 @@ static cmsis_uart_resource_t uart0_Resource = {UART0, UART0_GetFreq};
 #if (defined(FSL_FEATURE_SOC_DMA_COUNT) && FSL_FEATURE_SOC_DMA_COUNT)
 
 static cmsis_uart_dma_resource_t uart0_DmaResource = {
-    RTE_USART0_DMA_TX_DMA_BASE, RTE_USART0_DMA_TX_CH, RTE_USART0_DMA_TX_DMAMUX_BASE, RTE_USART0_DMA_TX_PERI_SEL,
+    RTE_USART0_DMA_TX_DMA_BASE, RTE_USART0_DMA_TX_CH,    RTE_USART0_DMA_TX_DMAMUX_BASE, RTE_USART0_DMA_TX_PERI_SEL,
 
-    RTE_USART0_DMA_RX_DMA_BASE, RTE_USART0_DMA_RX_CH, RTE_USART0_DMA_RX_DMAMUX_BASE, RTE_USART0_DMA_RX_PERI_SEL,
+    RTE_USART0_DMA_RX_DMA_BASE, RTE_USART0_DMA_RX_CH,    RTE_USART0_DMA_RX_DMAMUX_BASE, RTE_USART0_DMA_RX_PERI_SEL,
+#if FSL_FEATURE_DMA_MODULE_CHANNEL != FSL_FEATURE_DMAMUX_MODULE_CHANNEL
+    RTE_USART0_DMAMUX_TX_CH,    RTE_USART0_DMAMUX_RX_CH,
+#endif
 };
 
 static uart_dma_handle_t UART0_DmaHandle;
@@ -1411,9 +1431,12 @@ static cmsis_uart_resource_t uart1_Resource = {UART1, UART1_GetFreq};
 #if (defined(FSL_FEATURE_SOC_DMA_COUNT) && FSL_FEATURE_SOC_DMA_COUNT)
 
 static cmsis_uart_dma_resource_t uart1_DmaResource = {
-    RTE_USART1_DMA_TX_DMA_BASE, RTE_USART1_DMA_TX_CH, RTE_USART1_DMA_TX_DMAMUX_BASE, RTE_USART1_DMA_TX_PERI_SEL,
+    RTE_USART1_DMA_TX_DMA_BASE, RTE_USART1_DMA_TX_CH,    RTE_USART1_DMA_TX_DMAMUX_BASE, RTE_USART1_DMA_TX_PERI_SEL,
 
-    RTE_USART1_DMA_RX_DMA_BASE, RTE_USART1_DMA_RX_CH, RTE_USART1_DMA_RX_DMAMUX_BASE, RTE_USART1_DMA_RX_PERI_SEL,
+    RTE_USART1_DMA_RX_DMA_BASE, RTE_USART1_DMA_RX_CH,    RTE_USART1_DMA_RX_DMAMUX_BASE, RTE_USART1_DMA_RX_PERI_SEL,
+#if FSL_FEATURE_DMA_MODULE_CHANNEL != FSL_FEATURE_DMAMUX_MODULE_CHANNEL
+    RTE_USART1_DMAMUX_TX_CH,    RTE_USART1_DMAMUX_RX_CH,
+#endif
 };
 
 static uart_dma_handle_t UART1_DmaHandle;
@@ -1715,12 +1738,15 @@ static cmsis_uart_resource_t uart2_Resource = {UART2, UART2_GetFreq};
 #if (defined(FSL_FEATURE_SOC_DMA_COUNT) && FSL_FEATURE_SOC_DMA_COUNT)
 
 static cmsis_uart_dma_resource_t uart2_DmaResource = {
-    RTE_USART2_DMA_TX_DMA_BASE, RTE_USART2_DMA_TX_CH, RTE_USART2_DMA_TX_DMAMUX_BASE, RTE_USART2_DMA_TX_PERI_SEL,
+    RTE_USART2_DMA_TX_DMA_BASE, RTE_USART2_DMA_TX_CH,    RTE_USART2_DMA_TX_DMAMUX_BASE, RTE_USART2_DMA_TX_PERI_SEL,
 
-    RTE_USART2_DMA_RX_DMA_BASE, RTE_USART2_DMA_RX_CH, RTE_USART2_DMA_RX_DMAMUX_BASE, RTE_USART2_DMA_RX_PERI_SEL,
+    RTE_USART2_DMA_RX_DMA_BASE, RTE_USART2_DMA_RX_CH,    RTE_USART2_DMA_RX_DMAMUX_BASE, RTE_USART2_DMA_RX_PERI_SEL,
+#if FSL_FEATURE_DMA_MODULE_CHANNEL != FSL_FEATURE_DMAMUX_MODULE_CHANNEL
+    RTE_USART2_DMAMUX_TX_CH,    RTE_USART2_DMAMUX_RX_CH,
+#endif
 };
 
-static uart_dma_handle_t UART2_DmaHandle;
+uart_dma_handle_t UART2_DmaHandle;
 static dma_handle_t UART2_DmaRxHandle;
 static dma_handle_t UART2_DmaTxHandle;
 
@@ -2016,9 +2042,12 @@ static cmsis_uart_resource_t uart3_Resource = {UART3, UART3_GetFreq};
 #if (defined(FSL_FEATURE_SOC_DMA_COUNT) && FSL_FEATURE_SOC_DMA_COUNT)
 
 static cmsis_uart_dma_resource_t uart3_DmaResource = {
-    RTE_USART3_DMA_TX_DMA_BASE, RTE_USART3_DMA_TX_CH, RTE_USART3_DMA_TX_DMAMUX_BASE, RTE_USART3_DMA_TX_PERI_SEL,
+    RTE_USART3_DMA_TX_DMA_BASE, RTE_USART3_DMA_TX_CH,    RTE_USART3_DMA_TX_DMAMUX_BASE, RTE_USART3_DMA_TX_PERI_SEL,
 
-    RTE_USART3_DMA_RX_DMA_BASE, RTE_USART3_DMA_RX_CH, RTE_USART3_DMA_RX_DMAMUX_BASE, RTE_USART3_DMA_RX_PERI_SEL,
+    RTE_USART3_DMA_RX_DMA_BASE, RTE_USART3_DMA_RX_CH,    RTE_USART3_DMA_RX_DMAMUX_BASE, RTE_USART3_DMA_RX_PERI_SEL,
+#if FSL_FEATURE_DMA_MODULE_CHANNEL != FSL_FEATURE_DMAMUX_MODULE_CHANNEL
+    RTE_USART3_DMAMUX_TX_CH,    RTE_USART3_DMAMUX_RX_CH,
+#endif
 };
 
 static uart_dma_handle_t UART3_DmaHandle;
@@ -2336,9 +2365,19 @@ static ARM_USART_STATUS UART3_NonBlockingGetStatus(void)
 #if (defined(FSL_FEATURE_SOC_DMA_COUNT) && FSL_FEATURE_SOC_DMA_COUNT)
 
     static cmsis_uart_dma_resource_t uart4_DmaResource = {
-        RTE_USART4_DMA_TX_DMA_BASE, RTE_USART4_DMA_TX_CH, RTE_USART4_DMA_TX_DMAMUX_BASE, RTE_USART4_DMA_TX_PERI_SEL,
+        RTE_USART4_DMA_TX_DMA_BASE,
+        RTE_USART4_DMA_TX_CH,
+        RTE_USART4_DMA_TX_DMAMUX_BASE,
+        RTE_USART4_DMA_TX_PERI_SEL,
 
-        RTE_USART4_DMA_RX_DMA_BASE, RTE_USART4_DMA_RX_CH, RTE_USART4_DMA_RX_DMAMUX_BASE, RTE_USART4_DMA_RX_PERI_SEL,
+        RTE_USART4_DMA_RX_DMA_BASE,
+        RTE_USART4_DMA_RX_CH,
+        RTE_USART4_DMA_RX_DMAMUX_BASE,
+        RTE_USART4_DMA_RX_PERI_SEL,
+#if FSL_FEATURE_DMA_MODULE_CHANNEL != FSL_FEATURE_DMAMUX_MODULE_CHANNEL
+        RTE_USART4_DMAMUX_TX_CH,
+        RTE_USART4_DMAMUX_RX_CH,
+#endif
     };
 
     uart_dma_handle_t UART4_DmaHandle;
@@ -2662,9 +2701,19 @@ static ARM_USART_STATUS UART4_NonBlockingGetStatus(void)
 #if (defined(FSL_FEATURE_SOC_DMA_COUNT) && FSL_FEATURE_SOC_DMA_COUNT)
 
     static cmsis_uart_dma_resource_t uart5_DmaResource = {
-        RTE_USART5_DMA_TX_DMA_BASE, RTE_USART5_DMA_TX_CH, RTE_USART5_DMA_TX_DMAMUX_BASE, RTE_USART5_DMA_TX_PERI_SEL,
+        RTE_USART5_DMA_TX_DMA_BASE,
+        RTE_USART5_DMA_TX_CH,
+        RTE_USART5_DMA_TX_DMAMUX_BASE,
+        RTE_USART5_DMA_TX_PERI_SEL,
 
-        RTE_USART5_DMA_RX_DMA_BASE, RTE_USART5_DMA_RX_CH, RTE_USART5_DMA_RX_DMAMUX_BASE, RTE_USART5_DMA_RX_PERI_SEL,
+        RTE_USART5_DMA_RX_DMA_BASE,
+        RTE_USART5_DMA_RX_CH,
+        RTE_USART5_DMA_RX_DMAMUX_BASE,
+        RTE_USART5_DMA_RX_PERI_SEL,
+#if FSL_FEATURE_DMA_MODULE_CHANNEL != FSL_FEATURE_DMAMUX_MODULE_CHANNEL
+        RTE_USART5_DMAMUX_TX_CH,
+        RTE_USART5_DMAMUX_RX_CH,
+#endif
     };
 
     uart_dma_handle_t UART5_DmaHandle;

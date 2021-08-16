@@ -31,9 +31,9 @@ void MID_getLs(mid_get_ls_a1_t *sLsMeasFcn)
     frac32_t f32Ld, f32XLdShifted;
 
     /* Initialisation */
-    if (sLsMeasFcn->ui16Active == 0U)
+    if (sLsMeasFcn->bActive == FALSE)
     {
-        sLsMeasFcn->ui16Active             = 1U;
+        sLsMeasFcn->bActive             = TRUE;
         sLsMeasFcn->ui16LoopCounter        = 0U;
         sLsMeasFcn->i16AmplitudeOK         = 0;
         sLsMeasFcn->i16FrequencyOK         = 0;
@@ -57,7 +57,7 @@ void MID_getLs(mid_get_ls_a1_t *sLsMeasFcn)
     if (sLsMeasFcn->i16AmplitudeOK != 1)
     {
         /* Apply sine voltage (start with 10V/1kHz) for 300ms */
-        if (sLsMeasFcn->ui16LoopCounter < M1_TIME_300MS)
+        if (sLsMeasFcn->ui16LoopCounter < (uint16_t)M1_TIME_300MS)
         {
             *(sLsMeasFcn->pf16UdReq) = MLIB_Mul_F16(sLsMeasFcn->f16UdAmplitude, GFLIB_Sin_F16(sLsMeasFcn->f16Angle));
         }
@@ -194,7 +194,7 @@ void MID_getLs(mid_get_ls_a1_t *sLsMeasFcn)
             /* Return frac16_t inductance */
             sLsMeasFcn->f16Ls = MLIB_Conv_F16l(f32Ld);
 
-            sLsMeasFcn->ui16Active   = 0U;
+            sLsMeasFcn->bActive   = FALSE;
             *(sLsMeasFcn->pf16UdReq) = FRAC16(0.0);
 
             /* Check Faults */

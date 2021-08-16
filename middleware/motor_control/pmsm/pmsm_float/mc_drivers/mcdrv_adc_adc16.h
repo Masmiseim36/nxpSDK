@@ -109,72 +109,72 @@ extern "C" {
  *
  * @param this   Pointer to the current object
  *
- * @return boot_t true on success
+ * @return none
  */
-bool_t MCDRV_Curr3Ph2ShGet(mcdrv_adc16_t *this);
+void MCDRV_Curr3Ph2ShGet(mcdrv_adc16_t *this);
 
 /*!
  * @brief Set initial channel assignment for phase currents & DCB voltage
  *
  * @param this   Pointer to the current object
  *
- * @return boot_t true on success
+ * @return none
  */
-bool_t MCDRV_Curr3Ph2ShChanAssignInit(mcdrv_adc16_t *this);
+void MCDRV_Curr3Ph2ShChanAssignInit(mcdrv_adc16_t *this);
 
 /*!
  * @brief Function set new channel assignment for next sampling based on SVM sector
  *
  * @param this   Pointer to the current object
  *
- * @return boot_t true on success
+ * @return none
  */
-bool_t MCDRV_Curr3Ph2ShChanAssign(mcdrv_adc16_t *this);
+void MCDRV_Curr3Ph2ShChanAssign(mcdrv_adc16_t *this);
 
 /*!
  * @brief Function initializes phase current channel offset measurement
  *
  * @param this   Pointer to the current object
  *
- * @return boot_t true on success
+ * @return none
  */
-bool_t MCDRV_Curr3Ph2ShCalibInit(mcdrv_adc16_t *this);
+void MCDRV_Curr3Ph2ShCalibInit(mcdrv_adc16_t *this);
 
 /*!
  * @brief Function reads current samples and filter them based on SVM sector
  *
  * @param this   Pointer to the current object
  *
- * @return boot_t true on success
+ * @return none
  */
-bool_t MCDRV_Curr3Ph2ShCalib(mcdrv_adc16_t *this);
+void MCDRV_Curr3Ph2ShCalib(mcdrv_adc16_t *this);
 
 /*!
  * @brief Function passes measured offset values to main structure
  *
  * @param this   Pointer to the current object
  *
- * @return boot_t true on success
+ * @return none
  */
-bool_t MCDRV_Curr3Ph2ShCalibSet(mcdrv_adc16_t *this);
+void MCDRV_Curr3Ph2ShCalibSet(mcdrv_adc16_t *this);
 
 /*!
  * @brief Function reads and passes DCB voltage sample
  *
  * @param this   Pointer to the current object
  *
- * @return boot_t true on success
+ * @return none
  */
-bool_t MCDRV_VoltDcBusGet(mcdrv_adc16_t *this);
+void MCDRV_VoltDcBusGet(mcdrv_adc16_t *this);
 
 /*!
  * @brief Function reads and passes auxiliary sample
  *
  * @param this   Pointer to the current object
  *
- * @return boot_t true on success
+ * @return none
  */
-bool_t MCDRV_AuxValGet(mcdrv_adc16_t *this);
+void MCDRV_AuxValGet(mcdrv_adc16_t *this);
 
 #ifdef __cplusplus
 }

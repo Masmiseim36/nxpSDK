@@ -12,16 +12,13 @@
  **********************************************************************************************************************/
 
 /*
- * Copyright 2020 NXP
- *
- * SPDX-License-Identifier: BSD-3-Clause
- *
  * FreeMASTER Communication Driver - User Configuration File
  */
 
 #ifndef __FREEMASTER_CFG_H
 #define __FREEMASTER_CFG_H
-  
+
+
 ////////////////////////////////////////////////////////////////////////////////
 // Definitions
 ////////////////////////////////////////////////////////////////////////////////
@@ -77,6 +74,19 @@
 #define FMSTR_USE_APPCMD        1  // Enable/disable App.Commands support
 #define FMSTR_APPCMD_BUFF_SIZE  32  // App.Command data buffer size
 #define FMSTR_MAX_APPCMD_CALLS  4   // How many app.cmd callbacks? (0=disable)
+
+////////////////////////////////////////////////////////////////////////////////
+// Debugging options
+////////////////////////////////////////////////////////////////////////////////
+
+#define FMSTR_DEBUG_LEVEL       0  // Driver debugging print level (0=none, 1=errors, 2=normal, 3=verbose)
+
+// Debug-TX mode is a special mode used to test or debug the data transmitter. Our driver
+// will be sending test frames periodically until a first valid command is received from the
+// PC Host. You can hook a logic analyzer to transmission pins to determine port and baudrate.
+// Or you can connect the FreeMASTER tool and run the connection wizard to listen for the
+// dummy frames.
+#define FMSTR_DEBUG_TX          0
 
 #endif /* __FREEMASTER_CFG_H */
 

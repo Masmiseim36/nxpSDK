@@ -19,7 +19,7 @@
  ******************************************************************************/
 typedef struct
 {
-    uint16_t ui16Active;                     /* Inidicates whether Ke is being measured
+    uint16_t bActive;                        /* Inidicates whether Ke is being measured
                                                 (true) or not (false) */
     uint16_t ui16MCATObsrvDone;              /* Inidicates whether MCAT has calculated Befm
                                                 observer (true) or not yet (false) */

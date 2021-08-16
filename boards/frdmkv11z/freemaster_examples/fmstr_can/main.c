@@ -64,6 +64,8 @@ int main(void)
 static void init_freemaster_can(void)
 {
     flexcan_config_t flexcanConfig;
+    flexcan_timing_config_t timing_config;
+    uint32_t canSrcClock = CLOCK_GetFreq(kCLOCK_CoreSysClk);
 
     /* Init FlexCAN module. */
     /*
@@ -81,7 +83,11 @@ static void init_freemaster_can(void)
     flexcanConfig.clkSrc   = kFLEXCAN_ClkSrcPeri;
     flexcanConfig.baudRate = 100000U;
 
-    FLEXCAN_Init(CAN0, &flexcanConfig, CLOCK_GetFreq(kCLOCK_CoreSysClk));
+    /* Update the improved timing configuration */
+    if (FLEXCAN_CalculateImprovedTimingValues(CAN0, flexcanConfig.baudRate, canSrcClock, &timing_config))
+        flexcanConfig.timingConfig = timing_config;
+
+    FLEXCAN_Init(CAN0, &flexcanConfig, canSrcClock);
 
     /* Register communication module used by FreeMASTER driver. */
     FMSTR_CanSetBaseAddress(CAN0);

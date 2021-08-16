@@ -30,7 +30,7 @@ void MID_getKe(mid_get_ke_a1_t *sKeMeasFcn)
     frac32_t f32Etotal, f32EtotalShifted, f32SpeedElReq, f32Ke;
 
     /* Initialisation */
-    if (sKeMeasFcn->ui16Active == 0U)
+    if (sKeMeasFcn->bActive == FALSE)
     {
         sKeMeasFcn->sSpeedElRampParam.f16RampUp   = MID_SPEED_RAMP_UP;
         sKeMeasFcn->sSpeedElRampParam.f16RampDown = MID_SPEED_RAMP_DOWN;
@@ -42,7 +42,7 @@ void MID_getKe(mid_get_ke_a1_t *sKeMeasFcn)
         sKeMeasFcn->sEqMA32Filter.u16Sh  = 10;
         sKeMeasFcn->sEqMA32Filter.a32Acc = FRAC32(0.0);
 
-        sKeMeasFcn->ui16Active      = 1U;
+        sKeMeasFcn->bActive         = TRUE;
         sKeMeasFcn->ui16LoopCounter = 0;
         sKeMeasFcn->f16SpeedElRamp  = FRAC16(0.0);
     }
@@ -61,7 +61,7 @@ void MID_getKe(mid_get_ke_a1_t *sKeMeasFcn)
     {
         sKeMeasFcn->ui16LoopCounter++;
 
-        if (sKeMeasFcn->ui16LoopCounter > M1_TIME_2400MS)
+        if (sKeMeasFcn->ui16LoopCounter > (uint16_t)M1_TIME_2400MS)
         {
             /* Total Bemf calculation */
             f32EdFiltSquare = MLIB_Mul_F32(f32EdFilt, f32EdFilt);
@@ -96,7 +96,7 @@ void MID_getKe(mid_get_ke_a1_t *sKeMeasFcn)
             }
 
             /* When finished exit the function */
-            sKeMeasFcn->ui16Active = 0U;
+            sKeMeasFcn->bActive = FALSE;
         }
     }
 }

@@ -6,12 +6,38 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-#include "main.h"
+#include "mc_periph_init.h"
+#include "freemaster.h"
+#include "fsl_common.h"
+#include "fsl_uart.h"
+#include "pin_mux.h"
+#include "peripherals.h"
+#include "m1_sm_ref_sol.h"
+
+#include "freemaster_serial_uart.h"
+#include "board.h"
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
+#define M1_END_OF_ISR \
+    {                 \
+        __DSB();      \
+        __ISB();      \
+    }
 
+
+/* CPU load measurement SysTick START / STOP macros */
+#define SYSTICK_START_COUNT() (SysTick->VAL = SysTick->LOAD)
+#define SYSTICK_STOP_COUNT(par1)   \
+    uint32_t val  = SysTick->VAL;  \
+    uint32_t load = SysTick->LOAD; \
+    par1          = load - val
+
+static void BOARD_Init(void);
+static void BOARD_InitGPIO(void);
+static void InitSysTick(void);
+static void DemoSpeedStimulator(void);
 /*******************************************************************************
  * Variables
  ******************************************************************************/
@@ -185,7 +211,7 @@ void PDB0_IRQHandler(void)
  *
  * @return  none
  */
-void DemoSpeedStimulator(void)
+static void DemoSpeedStimulator(void)
 {
     if (bDemoMode)
     {
@@ -216,7 +242,7 @@ void DemoSpeedStimulator(void)
     }
 }
 
-void BOARD_Init(void)
+static void BOARD_Init(void)
 {
     /* Initialize clock configuration */
     BOARD_BootClockHSRUN();
@@ -238,7 +264,7 @@ void BOARD_Init(void)
  *
  *@return     none
  */
-void BOARD_InitGPIO(void)
+static void BOARD_InitGPIO(void)
 {
     /* LED pin configuration */
     const gpio_pin_config_t led_config = {
@@ -263,7 +289,7 @@ void BOARD_InitGPIO(void)
  *
  *@return     none
  */
-void InitSysTick(void)
+static void InitSysTick(void)
 {
     /* Initialize SysTick core timer to run free */
     /* Set period to maximum value 2^24*/

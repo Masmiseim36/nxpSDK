@@ -15,11 +15,11 @@
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 !!GlobalInfo
-product: Pins v8.0
+product: Pins v9.0
 processor: MKV11Z128xxx7
 package_id: MKV11Z128VLF7
 mcu_data: ksdk2_0
-processor_version: 0.9.0
+processor_version: 0.10.4
 pin_labels:
 - {pin_num: '15', pin_signal: PTE24/CAN0_TX/FTM0_CH0/I2C0_SCL/EWM_OUT_b, label: FTM0_CH0, identifier: FTM0_CH0}
 - {pin_num: '16', pin_signal: PTE25/LLWU_P21/CAN0_RX/FTM0_CH1/I2C0_SDA/EWM_IN, label: FTM0_CH1, identifier: FTM0_CH1}

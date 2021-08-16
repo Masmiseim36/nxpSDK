@@ -120,6 +120,8 @@ void PinTool_FTM(void);
  */
 void PinTool_UART(void);
 
+#define SOPT4_FTM0FLT1_CMP 0x01u /*!<@brief FTM0 Fault 1 Select: CMP1 out */
+
 /*! @name PORTD6 (number 63), J22[B33]/J22[D34]/J24[27]/J500[13]/U2[9]/FTM1_CH0/LED6
   @{ */
 
@@ -146,6 +148,15 @@ void PinTool_UART(void);
 #define PINTOOL_MISC_SW2_PORT PORTA               /*!<@brief PORT peripheral base pointer */
 #define PINTOOL_MISC_SW2_PIN 4U                   /*!<@brief PORT pin number */
 #define PINTOOL_MISC_SW2_PIN_MASK (1U << 4U)      /*!<@brief PORT pin mask */
+                                                  /* @} */
+
+/*! @name PORTE30 (number 18), J18[11]/J22[A32]/J22[B61]/J22[D61]/J500[28]/DAC0_OUT
+  @{ */
+
+/* Symbols to be used with PORT driver */
+#define PINTOOL_MISC_OC_PORT PORTE                /*!<@brief PORT peripheral base pointer */
+#define PINTOOL_MISC_OC_PIN 30U                   /*!<@brief PORT pin number */
+#define PINTOOL_MISC_OC_PIN_MASK (1U << 30U)      /*!<@brief PORT pin mask */
                                                   /* @} */
 
 /*!

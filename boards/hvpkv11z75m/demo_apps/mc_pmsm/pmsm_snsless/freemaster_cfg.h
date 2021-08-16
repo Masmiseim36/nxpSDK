@@ -12,7 +12,7 @@
  **********************************************************************************************************************/
 
 /*
- * Copyright 2020 NXP
+ * Copyright 2021 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  *
@@ -21,7 +21,8 @@
 
 #ifndef __FREEMASTER_CFG_H
 #define __FREEMASTER_CFG_H
-  
+
+
 ////////////////////////////////////////////////////////////////////////////////
 // Definitions
 ////////////////////////////////////////////////////////////////////////////////
@@ -78,6 +79,11 @@
 #define FMSTR_APPCMD_BUFF_SIZE  32  // App.Command data buffer size
 #define FMSTR_MAX_APPCMD_CALLS  4   // How many app.cmd callbacks? (0=disable)
 
+////////////////////////////////////////////////////////////////////////////////
+// Debugging terminal configuration
+////////////////////////////////////////////////////////////////////////////////
+
+#define FMSTR_DEBUG_LEVEL       0  // Driver debugging print level (0=none, 1=errors, 2=normal, 3=verbose)
 #endif /* __FREEMASTER_CFG_H */
 
 ////////////////////////////////////////////////////////////////////////////////

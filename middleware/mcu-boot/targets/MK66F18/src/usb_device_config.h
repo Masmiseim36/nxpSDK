@@ -127,6 +127,11 @@
 #define USB_DEVICE_CONFIG_DETACH_ENABLE                          (0U)
 /* clang-format on */
 
+/* USB PHY condfiguration */
+#define BOARD_USB_PHY_D_CAL     (0x0CU)
+#define BOARD_USB_PHY_TXCAL45DP (0x06U)
+#define BOARD_USB_PHY_TXCAL45DM (0x06U)   
+   
 /* @} */
 
 #endif /* __USB_DEVICE_CONFIG_H__ */

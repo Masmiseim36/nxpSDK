@@ -84,8 +84,7 @@ instance:
           - enable_interrrupt: 'enabled'
           - enable_priority: 'false'
           - priority: '0'
-          - useDefaultISR: 'false'
-          - enable_custom_name: 'false'
+          - useDefaultISR: 'true'
       - canConfig:
         - peripheralCAN: 'CAN0'
         - generic_can_driver_version: 'custom:2.0.0'

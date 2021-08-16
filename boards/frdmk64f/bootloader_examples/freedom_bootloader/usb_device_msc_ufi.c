@@ -660,8 +660,8 @@ usb_status_t USB_DeviceMscUfiReadCapacityCommand(struct _usb_device_msc_struct *
     {
         /* classCallback is initialized in classInit of s_UsbDeviceClassInterfaceMap,
         it is from the second parameter of classInit */
-        status = mscHandle->configurationStruct->classCallback(
-            (class_handle_t)mscHandle, kUSB_DeviceMscEventReadCapacity, (void *)&diskInformation);
+        (void)mscHandle->configurationStruct->classCallback((class_handle_t)mscHandle, kUSB_DeviceMscEventReadCapacity,
+                                                            (void *)&diskInformation);
     }
 
     if (logicalUnitNumber > mscHandle->logicalUnitNumber)

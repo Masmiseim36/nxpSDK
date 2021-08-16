@@ -55,8 +55,15 @@ inline static void WAIT_AML_WaitForMul4Cycles(uint32_t cycles)
                     subs cycles, cycles, #4
                     nop
                     bne loop};
+#elif defined (__ICCARM__)                       /* For IAR Compiler */
+    __asm("mov r0, %0 \n" 
+          "loop: \n\t"              
+          "subs r0, r0, #4 \n\t"      
+          "nop \n\t"             
+          "bne loop \n\t"            
+          : "+r" (cycles));		  
 #elif defined(__thumb__) && !defined(__thumb2__) /* Thumb instruction set only */
-    __asm("mov r0, %r0 \n\t" 
+    __asm("mov r0, %0 \n" 
           "loop: \n\t"              
           "sub r0, #4 \n\t"      
           "nop \n\t"             

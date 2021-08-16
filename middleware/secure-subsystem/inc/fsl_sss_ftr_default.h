@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 NXP
+ * Copyright 2018-2021 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -22,7 +22,7 @@
 
 /** Early access release Applet, CH + CL Compatible implementation */
 #define SSS_HAVE_SE050_EAR 1
-#define SSS_HAVE_SSCP (SSS_HAVE_A71CH + SSS_HAVE_SE050 + SSS_HAVE_SE050_EAR)
+#define SSS_HAVE_SSCP      (SSS_HAVE_A71CH + SSS_HAVE_SE050 + SSS_HAVE_SE050_EAR)
 
 #if (SSS_HAVE_A71CH + SSS_HAVE_SE050 + SSS_HAVE_SE050_EAR) >= 2
 #error Select only Secure Element

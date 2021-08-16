@@ -169,6 +169,7 @@ usb_status_t USB_DeviceAudioRequest(class_handle_t handle, uint32_t event, void 
             if (request->isSetup == 1U)
             {
                 request->buffer = (uint8_t *)&g_deviceComposite->audioGenerator.curSampleFrequency;
+                request->length = sizeof(g_deviceComposite->audioGenerator.curSampleFrequency);
             }
             break;
         case USB_DEVICE_AUDIO_CS_GET_CUR_CLOCK_VALID_CONTROL:
@@ -179,6 +180,7 @@ usb_status_t USB_DeviceAudioRequest(class_handle_t handle, uint32_t event, void 
             if (request->isSetup == 1U)
             {
                 request->buffer = &g_deviceComposite->audioGenerator.curClockValid;
+                request->length = sizeof(g_deviceComposite->audioGenerator.curClockValid);
             }
             break;
         case USB_DEVICE_AUDIO_CS_GET_RANGE_SAMPLING_FREQ_CONTROL:
@@ -210,24 +212,28 @@ usb_status_t USB_DeviceAudioRequest(class_handle_t handle, uint32_t event, void 
             if (request->isSetup == 1U)
             {
                 request->buffer = g_deviceComposite->audioGenerator.curSamplingFrequency;
+                request->length = sizeof(g_deviceComposite->audioGenerator.curSamplingFrequency);
             }
             break;
         case USB_DEVICE_AUDIO_EP_SET_RES_SAMPLING_FREQ_CONTROL:
             if (request->isSetup == 1U)
             {
                 request->buffer = g_deviceComposite->audioGenerator.resSamplingFrequency;
+                request->length = sizeof(g_deviceComposite->audioGenerator.resSamplingFrequency);
             }
             break;
         case USB_DEVICE_AUDIO_EP_SET_MAX_SAMPLING_FREQ_CONTROL:
             if (request->isSetup == 1U)
             {
                 request->buffer = g_deviceComposite->audioGenerator.maxSamplingFrequency;
+                request->length = sizeof(g_deviceComposite->audioGenerator.maxSamplingFrequency);
             }
             break;
         case USB_DEVICE_AUDIO_EP_SET_MIN_SAMPLING_FREQ_CONTROL:
             if (request->isSetup == 1U)
             {
                 request->buffer = g_deviceComposite->audioGenerator.minSamplingFrequency;
+                request->length = sizeof(g_deviceComposite->audioGenerator.minSamplingFrequency);
             }
             break;
 #endif
@@ -236,6 +242,7 @@ usb_status_t USB_DeviceAudioRequest(class_handle_t handle, uint32_t event, void 
             if (request->isSetup == 1U)
             {
                 request->buffer = g_deviceComposite->audioGenerator.curVolume20;
+                request->length = sizeof(g_deviceComposite->audioGenerator.curVolume20);
             }
             else
             {
@@ -247,6 +254,7 @@ usb_status_t USB_DeviceAudioRequest(class_handle_t handle, uint32_t event, void 
             if (request->isSetup == 1U)
             {
                 request->buffer = g_deviceComposite->audioGenerator.curVolume;
+                request->length = sizeof(g_deviceComposite->audioGenerator.curVolume);
             }
             else
             {
@@ -261,6 +269,7 @@ usb_status_t USB_DeviceAudioRequest(class_handle_t handle, uint32_t event, void 
             if (request->isSetup == 1U)
             {
                 request->buffer = &g_deviceComposite->audioGenerator.curMute20;
+                request->length = sizeof(g_deviceComposite->audioGenerator.curMute20);
             }
             else
             {
@@ -270,6 +279,7 @@ usb_status_t USB_DeviceAudioRequest(class_handle_t handle, uint32_t event, void 
             if (request->isSetup == 1U)
             {
                 request->buffer = &g_deviceComposite->audioGenerator.curMute;
+                request->length = sizeof(g_deviceComposite->audioGenerator.curMute);
             }
             else
             {
@@ -282,120 +292,140 @@ usb_status_t USB_DeviceAudioRequest(class_handle_t handle, uint32_t event, void 
             if (request->isSetup == 1U)
             {
                 request->buffer = &g_deviceComposite->audioGenerator.curBass;
+                request->length = sizeof(g_deviceComposite->audioGenerator.curBass);
             }
             break;
         case USB_DEVICE_AUDIO_FU_SET_CUR_MID_CONTROL:
             if (request->isSetup == 1U)
             {
                 request->buffer = &g_deviceComposite->audioGenerator.curMid;
+                request->length = sizeof(g_deviceComposite->audioGenerator.curMid);
             }
             break;
         case USB_DEVICE_AUDIO_FU_SET_CUR_TREBLE_CONTROL:
             if (request->isSetup == 1U)
             {
                 request->buffer = &g_deviceComposite->audioGenerator.curTreble;
+                request->length = sizeof(g_deviceComposite->audioGenerator.curTreble);
             }
             break;
         case USB_DEVICE_AUDIO_FU_SET_CUR_AUTOMATIC_GAIN_CONTROL:
             if (request->isSetup == 1U)
             {
                 request->buffer = &g_deviceComposite->audioGenerator.curAutomaticGain;
+                request->length = sizeof(g_deviceComposite->audioGenerator.curAutomaticGain);
             }
             break;
         case USB_DEVICE_AUDIO_FU_SET_CUR_DELAY_CONTROL:
             if (request->isSetup == 1U)
             {
                 request->buffer = g_deviceComposite->audioGenerator.curDelay;
+                request->length = sizeof(g_deviceComposite->audioGenerator.curDelay);
             }
             break;
         case USB_DEVICE_AUDIO_FU_SET_MIN_VOLUME_CONTROL:
             if (request->isSetup == 1U)
             {
                 request->buffer = g_deviceComposite->audioGenerator.minVolume;
+                request->length = sizeof(g_deviceComposite->audioGenerator.minVolume);
             }
             break;
         case USB_DEVICE_AUDIO_FU_SET_MIN_BASS_CONTROL:
             if (request->isSetup == 1U)
             {
                 request->buffer = &g_deviceComposite->audioGenerator.minBass;
+                request->length = sizeof(g_deviceComposite->audioGenerator.minBass);
             }
             break;
         case USB_DEVICE_AUDIO_FU_SET_MIN_MID_CONTROL:
             if (request->isSetup == 1U)
             {
                 request->buffer = &g_deviceComposite->audioGenerator.minMid;
+                request->length = sizeof(g_deviceComposite->audioGenerator.minMid);
             }
             break;
         case USB_DEVICE_AUDIO_FU_SET_MIN_TREBLE_CONTROL:
             if (request->isSetup == 1U)
             {
                 request->buffer = &g_deviceComposite->audioGenerator.minTreble;
+                request->length = sizeof(g_deviceComposite->audioGenerator.minTreble);
             }
             break;
         case USB_DEVICE_AUDIO_FU_SET_MIN_DELAY_CONTROL:
             if (request->isSetup == 1U)
             {
                 request->buffer = g_deviceComposite->audioGenerator.minDelay;
+                request->length = sizeof(g_deviceComposite->audioGenerator.minDelay);
             }
             break;
         case USB_DEVICE_AUDIO_FU_SET_MAX_VOLUME_CONTROL:
             if (request->isSetup == 1U)
             {
                 request->buffer = g_deviceComposite->audioGenerator.maxVolume;
+                request->length = sizeof(g_deviceComposite->audioGenerator.maxVolume);
             }
             break;
         case USB_DEVICE_AUDIO_FU_SET_MAX_BASS_CONTROL:
             if (request->isSetup == 1U)
             {
                 request->buffer = &g_deviceComposite->audioGenerator.maxBass;
+                request->length = sizeof(g_deviceComposite->audioGenerator.maxBass);
             }
             break;
         case USB_DEVICE_AUDIO_FU_SET_MAX_MID_CONTROL:
             if (request->isSetup == 1U)
             {
                 request->buffer = &g_deviceComposite->audioGenerator.maxMid;
+                request->length = sizeof(g_deviceComposite->audioGenerator.maxMid);
             }
             break;
         case USB_DEVICE_AUDIO_FU_SET_MAX_TREBLE_CONTROL:
             if (request->isSetup == 1U)
             {
                 request->buffer = &g_deviceComposite->audioGenerator.maxTreble;
+                request->length = sizeof(g_deviceComposite->audioGenerator.maxTreble);
             }
             break;
         case USB_DEVICE_AUDIO_FU_SET_MAX_DELAY_CONTROL:
             if (request->isSetup == 1U)
             {
                 request->buffer = g_deviceComposite->audioGenerator.maxDelay;
+                request->length = sizeof(g_deviceComposite->audioGenerator.maxDelay);
             }
             break;
         case USB_DEVICE_AUDIO_FU_SET_RES_VOLUME_CONTROL:
             if (request->isSetup == 1U)
             {
                 request->buffer = g_deviceComposite->audioGenerator.resVolume;
+                request->length = sizeof(g_deviceComposite->audioGenerator.resVolume);
             }
             break;
         case USB_DEVICE_AUDIO_FU_SET_RES_BASS_CONTROL:
             if (request->isSetup == 1U)
             {
                 request->buffer = &g_deviceComposite->audioGenerator.resBass;
+                request->length = sizeof(g_deviceComposite->audioGenerator.resBass);
             }
             break;
         case USB_DEVICE_AUDIO_FU_SET_RES_MID_CONTROL:
             if (request->isSetup == 1U)
             {
                 request->buffer = &g_deviceComposite->audioGenerator.resMid;
+                request->length = sizeof(g_deviceComposite->audioGenerator.resMid);
             }
             break;
         case USB_DEVICE_AUDIO_FU_SET_RES_TREBLE_CONTROL:
             if (request->isSetup == 1U)
             {
                 request->buffer = &g_deviceComposite->audioGenerator.resTreble;
+                request->length = sizeof(g_deviceComposite->audioGenerator.resTreble);
             }
             break;
         case USB_DEVICE_AUDIO_FU_SET_RES_DELAY_CONTROL:
             if (request->isSetup == 1U)
             {
                 request->buffer = g_deviceComposite->audioGenerator.resDelay;
+                request->length = sizeof(g_deviceComposite->audioGenerator.resDelay);
             }
             break;
         default:
@@ -416,7 +446,7 @@ usb_status_t USB_DeviceAudioRequest(class_handle_t handle, uint32_t event, void 
  */
 usb_status_t USB_DeviceAudioGeneratorCallback(class_handle_t handle, uint32_t event, void *param)
 {
-    usb_status_t error = kStatus_USB_Error;
+    usb_status_t error = kStatus_USB_InvalidRequest;
     usb_device_endpoint_callback_message_struct_t *ep_cb_param;
     ep_cb_param = (usb_device_endpoint_callback_message_struct_t *)param;
 

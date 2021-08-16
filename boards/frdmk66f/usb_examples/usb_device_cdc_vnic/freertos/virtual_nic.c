@@ -590,7 +590,7 @@ usb_status_t USB_DeviceCdcRndisCallback(class_handle_t handle, uint32_t event, v
  */
 usb_status_t USB_DeviceCdcVnicCallback(class_handle_t handle, uint32_t event, void *param)
 {
-    usb_status_t error = kStatus_USB_Error;
+    usb_status_t error = kStatus_USB_InvalidRequest;
     usb_device_cdc_acm_request_param_struct_t *acmReqParam;
     usb_device_endpoint_callback_message_struct_t *epCbParam;
     acmReqParam = (usb_device_cdc_acm_request_param_struct_t *)param;
@@ -620,6 +620,7 @@ usb_status_t USB_DeviceCdcVnicCallback(class_handle_t handle, uint32_t event, vo
                     default:
                         break;
                 }
+                error = kStatus_USB_Success;
             }
         }
         break;
@@ -642,6 +643,7 @@ usb_status_t USB_DeviceCdcVnicCallback(class_handle_t handle, uint32_t event, vo
                     default:
                         break;
                 }
+                error = kStatus_USB_Success;
             }
             else
             {
@@ -651,22 +653,23 @@ usb_status_t USB_DeviceCdcVnicCallback(class_handle_t handle, uint32_t event, vo
         break;
         case kUSB_DeviceCdcEventSerialStateNotif:
             ((usb_device_cdc_acm_struct_t *)handle)->hasSentState = 0;
+            error                                                 = kStatus_USB_Success;
             break;
         case kUSB_DeviceCdcEventSendEncapsulatedCommand:
             if (1 == acmReqParam->isSetup)
             {
-                *(acmReqParam->buffer) = (g_cdcVnic.rndisHandle)->rndisCommand;
+                *(acmReqParam->buffer) = g_cdcVnic.rndisHandle->rndisCommand;
+                *(acmReqParam->length) = RNDIS_MAX_EXPECTED_COMMAND_SIZE;
             }
             else
             {
+                /* data phase */
                 USB_DeviceCdcRndisMessageSet(g_cdcVnic.rndisHandle, acmReqParam->buffer, acmReqParam->length);
-                *(acmReqParam->length) = 0;
             }
             error = kStatus_USB_Success;
             break;
         case kUSB_DeviceCdcEventGetEncapsulatedResponse:
-            USB_DeviceCdcRndisMessageGet(g_cdcVnic.rndisHandle, acmReqParam->buffer, acmReqParam->length);
-            error = kStatus_USB_Success;
+            error = USB_DeviceCdcRndisMessageGet(g_cdcVnic.rndisHandle, acmReqParam->buffer, acmReqParam->length);
             break;
         default:
             break;
@@ -688,7 +691,7 @@ usb_status_t USB_DeviceCdcVnicCallback(class_handle_t handle, uint32_t event, vo
  */
 usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *param)
 {
-    usb_status_t error = kStatus_USB_Error;
+    usb_status_t error = kStatus_USB_InvalidRequest;
     uint16_t *temp16   = (uint16_t *)param;
     uint8_t *temp8     = (uint8_t *)param;
 
@@ -700,6 +703,7 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
             uint32_t len;
             g_cdcVnic.attach               = 0;
             g_cdcVnic.currentConfiguration = 0U;
+            error                          = kStatus_USB_Success;
 #if (defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0U)) || \
     (defined(USB_DEVICE_CONFIG_LPCIP3511HS) && (USB_DEVICE_CONFIG_LPCIP3511HS > 0U))
             /* Get USB speed to configure the device, including max packet size and interval of the endpoints. */
@@ -724,6 +728,7 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
             {
                 g_cdcVnic.attach               = 0;
                 g_cdcVnic.currentConfiguration = 0U;
+                error                          = kStatus_USB_Success;
             }
             else if (USB_CDC_VNIC_CONFIGURE_INDEX == (*temp8))
             {
@@ -739,7 +744,7 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
             }
             else
             {
-                error = kStatus_USB_InvalidRequest;
+                /* no action, return kStatus_USB_InvalidRequest */
             }
             break;
         case kUSB_DeviceEventSetInterface:
@@ -747,15 +752,48 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
             {
                 uint8_t interface        = (uint8_t)((*temp16 & 0xFF00U) >> 0x08U);
                 uint8_t alternateSetting = (uint8_t)(*temp16 & 0x00FFU);
-                if (interface < USB_CDC_VNIC_INTERFACE_COUNT)
+
+                if (interface == USB_CDC_VNIC_COMM_INTERFACE_INDEX)
                 {
-                    g_cdcVnic.currentInterfaceAlternateSetting[interface] = alternateSetting;
+                    if (alternateSetting < USB_CDC_VNIC_COMM_INTERFACE_ALTERNATE_COUNT)
+                    {
+                        g_cdcVnic.currentInterfaceAlternateSetting[interface] = alternateSetting;
+                        error                                                 = kStatus_USB_Success;
+                    }
+                }
+                else if (interface == USB_CDC_VNIC_DATA_INTERFACE_INDEX)
+                {
+                    if (alternateSetting < USB_CDC_VNIC_DATA_INTERFACE_ALTERNATE_COUNT)
+                    {
+                        g_cdcVnic.currentInterfaceAlternateSetting[interface] = alternateSetting;
+                        error                                                 = kStatus_USB_Success;
+                    }
+                }
+                else
+                {
+                    /* no action, return kStatus_USB_InvalidRequest */
                 }
             }
             break;
         case kUSB_DeviceEventGetConfiguration:
+            if (param)
+            {
+                /* Get current configuration request */
+                *temp8 = g_cdcVnic.currentConfiguration;
+                error  = kStatus_USB_Success;
+            }
             break;
         case kUSB_DeviceEventGetInterface:
+            if (param)
+            {
+                /* Get current alternate setting of the interface request */
+                uint8_t interface = (uint8_t)((*temp16 & 0xFF00U) >> 0x08U);
+                if (interface < USB_CDC_VNIC_INTERFACE_COUNT)
+                {
+                    *temp16 = (*temp16 & 0xFF00U) | g_cdcVnic.currentInterfaceAlternateSetting[interface];
+                    error   = kStatus_USB_Success;
+                }
+            }
             break;
         case kUSB_DeviceEventGetDeviceDescriptor:
             if (param)
@@ -778,6 +816,7 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
             }
             break;
         default:
+            /* no action, return kStatus_USB_InvalidRequest */
             break;
     }
 
@@ -899,8 +938,8 @@ int main(void)
 void main(void)
 #endif
 {
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
+    BOARD_InitBootPins();
+    BOARD_InitBootClocks();
     BOARD_InitDebugConsole();
     /* Disable SYSMPU. */
     SYSMPU_Enable(SYSMPU, false);

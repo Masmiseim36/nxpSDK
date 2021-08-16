@@ -17,6 +17,9 @@
 #include "microseconds.h"
 #include "pin_mux.h"
 
+#include "usb_phy.h"
+#include "composite.h"
+
 ////////////////////////////////////////////////////////////////////////////////
 // Definitions
 ////////////////////////////////////////////////////////////////////////////////
@@ -73,82 +76,36 @@ void deinit_hardware(void)
 // configuration is maintained by USB stack itself.
 bool usb_clock_init(void)
 {
-#if ((BL_CONFIG_USB_HID) || (BL_CONFIG_USB_MSC))
-
-    SIM->CLKDIV2 = (uint32_t)0x0UL; /* Update USB clock prescalers */
-                                    // Select IRC48M clock
-    SIM->SOPT2 |= (SIM_SOPT2_USBSRC_MASK | SIM_SOPT2_PLLFLLSEL_MASK);
-
-    // Enable USB-OTG IP clocking
-    SIM->SCGC4 |= (SIM_SCGC4_USBOTG_MASK);
-
-    // Configure enable USB regulator for device
-    SIM->SOPT1 |= SIM_SOPT1_USBREGEN_MASK;
-    /* SIM_SOPT1: OSC32KSEL=0 */
-    SIM->SOPT1 &=
-        (uint32_t)~SIM_SOPT1_OSC32KSEL_MASK; /* System oscillator drives 32 kHz clock for various peripherals */
-
-    USB0->CLK_RECOVER_IRC_EN = 0x03;
-    USB0->CLK_RECOVER_CTRL |= USB_CLK_RECOVER_CTRL_CLOCK_RECOVER_EN_MASK;
-
-    USB0->CLK_RECOVER_CTRL |= 0x20;
+#if defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0U)
+    usb_phy_config_struct_t phyConfig = {
+        BOARD_USB_PHY_D_CAL,
+        BOARD_USB_PHY_TXCAL45DP,
+        BOARD_USB_PHY_TXCAL45DM,
+    };
 #endif
-#if ((BL_CONFIG_HS_USB_HID) || (BL_CONFIG_HS_USB_MSC))
-    MCG->C1 |= MCG_C1_IRCLKEN_MASK; // 32kHz IRC enable
-    OSC->CR |= OSC_CR_ERCLKEN_MASK; // external reference clock enable
-    // Configure EXT_PLL from USB HS PHY
-    SIM->SOPT2 |= SIM_SOPT2_USBREGEN_MASK; // | SIM_SOPT2_PLLFLLSEL(2); //enable USB PHY PLL regulator, needs to be
-                                           // enabled before enable PLL
-    SIM->SCGC3 |= SIM_SCGC3_USBHS_MASK | SIM_SCGC3_USBHSPHY_MASK; // open HS USB PHY clock gate
-
-    microseconds_delay(1000);
-
-    SIM->USBPHYCTL =
-        SIM_USBPHYCTL_USB3VOUTTRG(6) | SIM_USBPHYCTL_USBVREGSEL_MASK; // trim the USB regulator output to be 3.13V
-
-    USBPHY->TRIM_OVERRIDE_EN = 0x001f; // override IFR value
-
-    USBPHY->PLL_SIC |= USBPHY_PLL_SIC_PLL_POWER_MASK; // power up PLL
-    if (BOARD_XTAL0_CLK_HZ == 24000000)
-        USBPHY->PLL_SIC |= USBPHY_PLL_SIC_PLL_DIV_SEL(0);
-    else if (BOARD_XTAL0_CLK_HZ == 16000000)
-        USBPHY->PLL_SIC |= USBPHY_PLL_SIC_PLL_DIV_SEL(1);
-    else if (BOARD_XTAL0_CLK_HZ == 12000000)
-        USBPHY->PLL_SIC |= USBPHY_PLL_SIC_PLL_DIV_SEL(2);
-
-    USBPHY->PLL_SIC &= ~USBPHY_PLL_SIC_PLL_BYPASS_MASK; // clear bypass bit
-
-    USBPHY->PLL_SIC |= USBPHY_PLL_SIC_PLL_EN_USB_CLKS_MASK; // enable USB clock output from USB PHY PLL
-
-    while (!(USBPHY->PLL_SIC & USBPHY_PLL_SIC_PLL_LOCK_MASK))
-        ;
-    USBPHY->CTRL &= ~USBPHY_CTRL_SFTRST_MASK;  // release PHY from reset
-    USBPHY->CTRL &= ~USBPHY_CTRL_CLKGATE_MASK; // Clear to 0 to run clocks
-    USBPHY->CTRL |= USBPHY_CTRL_SET_ENUTMILEVEL2_MASK | USBPHY_CTRL_SET_ENUTMILEVEL3_MASK;
-
-    USBPHY->PWD = 0; // for normal operation
-
-    USBPHY->ANACTRL |= USBPHY_ANACTRL_PFD_FRAC(24); // N=24
-
-    USBPHY->ANACTRL |= USBPHY_ANACTRL_PFD_CLK_SEL(4); // div by 4
-    USBPHY->ANACTRL &= ~USBPHY_ANACTRL_DEV_PULLDOWN_MASK;
-    USBPHY->ANACTRL &= ~USBPHY_ANACTRL_PFD_CLKGATE_MASK;
-    while (!(USBPHY->ANACTRL & USBPHY_ANACTRL_PFD_STABLE_MASK))
+#if defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0U)
+    CLOCK_EnableUsbhs0PhyPllClock(kCLOCK_UsbPhySrcExt, BOARD_XTAL0_CLK_HZ);
+    CLOCK_EnableUsbhs0Clock(kCLOCK_UsbSrcUnused, 0U);
+    USB_EhciPhyInit(CONTROLLER_ID, BOARD_XTAL0_CLK_HZ, &phyConfig);
+#endif
+#if defined(USB_DEVICE_CONFIG_KHCI) && (USB_DEVICE_CONFIG_KHCI > 0U)
+    SystemCoreClockUpdate();
+    CLOCK_EnableUsbfs0Clock(kCLOCK_UsbSrcIrc48M, 48000000U);
+/*
+ * If the SOC has USB KHCI dedicated RAM, the RAM memory needs to be clear after
+ * the KHCI clock is enabled. When the demo uses USB EHCI IP, the USB KHCI dedicated
+ * RAM can not be used and the memory can't be accessed.
+ */
+#if (defined(FSL_FEATURE_USB_KHCI_USB_RAM) && (FSL_FEATURE_USB_KHCI_USB_RAM > 0U))
+#if (defined(FSL_FEATURE_USB_KHCI_USB_RAM_BASE_ADDRESS) && (FSL_FEATURE_USB_KHCI_USB_RAM_BASE_ADDRESS > 0U))
+    for (int i = 0; i < FSL_FEATURE_USB_KHCI_USB_RAM; i++)
     {
+        ((uint8_t *)FSL_FEATURE_USB_KHCI_USB_RAM_BASE_ADDRESS)[i] = 0x00U;
     }
-    USBPHY->TX |= 1 << 24;
-
-    USBHS->USBCMD |= USBHS_USBCMD_RST_MASK;
-    while (USBHS->USBCMD & USBHS_USBCMD_RST_MASK)
-    { /* delay while resetting USB controller */
-    }
-
-    USBHS->USBMODE = USBHS_USBMODE_CM(2);
-/* Set interrupt threshold control = 0 */
-//    USBHS_USBCMD &= ~( USBHS_USBCMD_ITC(0xFF));
-/* Setup Lockouts Off */
-//    USBHS_USBMODE |= USBHS_USBMODE_SLOM_MASK;
-#endif
+#endif /* FSL_FEATURE_USB_KHCI_USB_RAM_BASE_ADDRESS */
+#endif /* FSL_FEATURE_USB_KHCI_USB_RAM */
+#endif  
+       
     return true;
 }
 

@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 NXP
+ * Copyright 2018-2021 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -38,8 +38,8 @@
 /* ************************************************************************** */
 
 #define SSS_SSCP_CONNECTIONTYPE_SOCKET 0x01
-#define SSS_SSCP_CONNECTIONTYPE_VCOM 0x02
-#define SSS_SSCP_CONNECTIONTYPE_SCI2C 0x03
+#define SSS_SSCP_CONNECTIONTYPE_VCOM   0x02
+#define SSS_SSCP_CONNECTIONTYPE_SCI2C  0x03
 
 #define SSS_SUBSYSTEM_TYPE_IS_SSCP(subsystem) ((subsystem == kType_SSS_SE_A71CH) || (subsystem == kType_SSS_SE_SE050))
 

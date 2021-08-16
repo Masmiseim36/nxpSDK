@@ -13,8 +13,8 @@
 #include "erpc_error_handler.h"
 #include "erpc_matrix_multiply.h"
 
-#include "fsl_device_registers.h"
 #include "fsl_uart_cmsis.h"
+#include "fsl_device_registers.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/

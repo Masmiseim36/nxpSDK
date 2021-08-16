@@ -815,7 +815,7 @@ static int32_t DSPI_EdmaControl(uint32_t control, uint32_t arg, cmsis_dspi_edma_
 
 static ARM_SPI_STATUS DSPI_EdmaGetStatus(cmsis_dspi_edma_driver_state_t *dspi)
 {
-    ARM_SPI_STATUS stat;
+    ARM_SPI_STATUS stat       = {0};
     uint32_t ksdk_dspi_status = DSPI_GetStatusFlags(dspi->resource->base);
 
     if (DSPI_IsMaster(dspi->resource->base))
@@ -1272,7 +1272,7 @@ static int32_t DSPI_InterruptControl(uint32_t control, uint32_t arg, cmsis_dspi_
 
 static ARM_SPI_STATUS DSPI_InterruptGetStatus(cmsis_dspi_interrupt_driver_state_t *dspi)
 {
-    ARM_SPI_STATUS stat;
+    ARM_SPI_STATUS stat       = {0};
     uint32_t ksdk_dspi_status = DSPI_GetStatusFlags(dspi->resource->base);
 
     if (DSPI_IsMaster(dspi->resource->base))

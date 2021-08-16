@@ -205,8 +205,7 @@ usb_status_t USB_DeviceAudioGetControlTerminal(
                     }
                     else
                     {
-                        return kStatus_USB_Error; /* Input Terminals only support the Get Terminal Copy Protect Control
-                                                     request */
+                        /* Input Terminals only support the Get Terminal Copy Protect Control request */
                     }
                     break;
                 case USB_DEVICE_AUDIO_TE_CONNECTOR_CONTROL:
@@ -230,8 +229,7 @@ usb_status_t USB_DeviceAudioGetControlTerminal(
                     }
                     else
                     {
-                        return kStatus_USB_Error; /* Input Terminals only support the Get Terminal Copy Protect Control
-                                                     request */
+                        /* Input Terminals only support the Get Terminal Copy Protect Control request */
                     }
                     break;
                 default:
@@ -265,8 +263,7 @@ usb_status_t USB_DeviceAudioSetControlTerminal(
                     }
                     else
                     {
-                        return kStatus_USB_Error; /* Output Terminals only support the Set Terminal Copy Protect Control
-                                                     request */
+                        /* Output Terminals only support the Set Terminal Copy Protect Control request */
                     }
                     break;
                 default:
@@ -274,7 +271,7 @@ usb_status_t USB_DeviceAudioSetControlTerminal(
                     break;
             }
 #else
-        case USB_DEVICE_AUDIO_GET_CUR_REQUEST:
+        case USB_DEVICE_AUDIO_SET_CUR_REQUEST:
             switch (controlSelector)
             {
                 case USB_DEVICE_AUDIO_TE_COPY_PROTECT_CONTROL:
@@ -284,8 +281,7 @@ usb_status_t USB_DeviceAudioSetControlTerminal(
                     }
                     else
                     {
-                        return kStatus_USB_Error; /* Output Terminals only support the Set Terminal Copy Protect Control
-                                                     request */
+                        /* Output Terminals only support the Set Terminal Copy Protect Control request */
                     }
                     break;
                 default:
@@ -895,7 +891,7 @@ usb_status_t USB_DeviceAudioSetRequestEndpoint(usb_device_handle handle,
             switch (controlSelector)
             {
                 case USB_DEVICE_AUDIO_EP_PITCH_CONTROL_SELECTOR_AUDIO20:
-                    audioCommand = USB_DEVICE_AUDIO_EP_PITCH_CONTROL_SELECTOR_AUDIO20;
+                    audioCommand = USB_DEVICE_AUDIO_EP_SET_CUR_PITCH_CONTROL_AUDIO20;
                     break;
                 default:
                     /*no action*/
@@ -1056,23 +1052,46 @@ usb_status_t USB_DeviceProcessClassRequest(usb_device_handle handle,
                                            uint8_t **buffer)
 {
     usb_status_t error = kStatus_USB_InvalidRequest;
+    uint8_t interfaceOrEndpoint = (uint8_t)setup->wIndex;
 
-    switch (setup->bmRequestType)
+    if ((setup->bmRequestType & USB_REQUEST_TYPE_RECIPIENT_MASK) == USB_REQUEST_TYPE_RECIPIENT_ENDPOINT)
     {
-        case USB_DEVICE_AUDIO_SET_REQUEST_INTERFACE:
-            error = USB_DeviceAudioSetRequestInterface(handle, setup, length, buffer);
-            break;
-        case USB_DEVICE_AUDIO_GET_REQUEST_INTERFACE:
-            error = USB_DeviceAudioGetRequestInterface(handle, setup, length, buffer);
-            break;
-        case USB_DEVICE_AUDIO_SET_REQUEST_ENDPOINT:
-            error = USB_DeviceAudioSetRequestEndpoint(handle, setup, length, buffer);
-            break;
-        case USB_DEVICE_AUDIO_GET_REQUEST_ENDPOINT:
-            error = USB_DeviceAudioGetRequestEndpoint(handle, setup, length, buffer);
-            break;
-        default:
-            break;
+        if ((interfaceOrEndpoint == USB_AUDIO_STREAM_ENDPOINT) ||
+            (interfaceOrEndpoint == USB_AUDIO_CONTROL_ENDPOINT))
+        {
+            switch (setup->bmRequestType)
+            {
+                case USB_DEVICE_AUDIO_SET_REQUEST_ENDPOINT:
+                    error = USB_DeviceAudioSetRequestEndpoint(handle, setup, length, buffer);
+                    break;
+                case USB_DEVICE_AUDIO_GET_REQUEST_ENDPOINT:
+                    error = USB_DeviceAudioGetRequestEndpoint(handle, setup, length, buffer);
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+    else if ((setup->bmRequestType & USB_REQUEST_TYPE_RECIPIENT_MASK) == USB_REQUEST_TYPE_RECIPIENT_INTERFACE)
+    {
+        if (USB_AUDIO_CONTROL_INTERFACE_INDEX == interfaceOrEndpoint)
+        {
+            switch (setup->bmRequestType)
+            {
+                case USB_DEVICE_AUDIO_SET_REQUEST_INTERFACE:
+                    error = USB_DeviceAudioSetRequestInterface(handle, setup, length, buffer);
+                    break;
+                case USB_DEVICE_AUDIO_GET_REQUEST_INTERFACE:
+                    error = USB_DeviceAudioGetRequestInterface(handle, setup, length, buffer);
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+    else
+    {
+        /* no action */
     }
 
     return error;
@@ -1196,7 +1215,7 @@ usb_status_t USB_DeviceAudioProcessTerminalRequest(uint32_t audioCommand,
             *length = sizeof(s_audioGenerator.curSampleFrequency);
             break;
         case USB_DEVICE_AUDIO_CS_SET_CUR_SAMPLING_FREQ_CONTROL:
-            *buffer = (uint8_t *)&s_audioGenerator.curSampleFrequency;
+            s_audioGenerator.curSampleFrequency = *(uint32_t *)(*buffer);
             break;
         case USB_DEVICE_AUDIO_CS_GET_CUR_CLOCK_VALID_CONTROL:
             *buffer = (uint8_t *)&s_audioGenerator.curClockValid;
@@ -1281,6 +1300,10 @@ usb_status_t USB_DeviceAudioProcessTerminalRequest(uint32_t audioCommand,
         case USB_DEVICE_AUDIO_FU_SET_CUR_DELAY_CONTROL:
             s_audioGenerator.curDelay[0] = **(buffer);
             s_audioGenerator.curDelay[1] = *((*buffer) + 1);
+#if (USB_DEVICE_CONFIG_AUDIO_CLASS_2_0)
+            s_audioGenerator.curDelay[2] = *((*buffer) + 2);
+            s_audioGenerator.curDelay[3] = *((*buffer) + 3);
+#endif
             break;
         case USB_DEVICE_AUDIO_FU_SET_MIN_VOLUME_CONTROL:
             s_audioGenerator.minVolume[0] = **(buffer);
@@ -1298,6 +1321,10 @@ usb_status_t USB_DeviceAudioProcessTerminalRequest(uint32_t audioCommand,
         case USB_DEVICE_AUDIO_FU_SET_MIN_DELAY_CONTROL:
             s_audioGenerator.minDelay[0] = **(buffer);
             s_audioGenerator.minDelay[1] = *((*buffer) + 1);
+#if (USB_DEVICE_CONFIG_AUDIO_CLASS_2_0)
+            s_audioGenerator.minDelay[2] = *((*buffer) + 2);
+            s_audioGenerator.minDelay[3] = *((*buffer) + 3);
+#endif
             break;
         case USB_DEVICE_AUDIO_FU_SET_MAX_VOLUME_CONTROL:
             s_audioGenerator.maxVolume[0] = **(buffer);
@@ -1315,6 +1342,10 @@ usb_status_t USB_DeviceAudioProcessTerminalRequest(uint32_t audioCommand,
         case USB_DEVICE_AUDIO_FU_SET_MAX_DELAY_CONTROL:
             s_audioGenerator.maxDelay[0] = **(buffer);
             s_audioGenerator.maxDelay[1] = *((*buffer) + 1);
+#if (USB_DEVICE_CONFIG_AUDIO_CLASS_2_0)
+            s_audioGenerator.maxDelay[2] = *((*buffer) + 2);
+            s_audioGenerator.maxDelay[3] = *((*buffer) + 3);
+#endif
             break;
         case USB_DEVICE_AUDIO_FU_SET_RES_VOLUME_CONTROL:
             s_audioGenerator.resVolume[0] = **(buffer);
@@ -1332,6 +1363,10 @@ usb_status_t USB_DeviceAudioProcessTerminalRequest(uint32_t audioCommand,
         case USB_DEVICE_AUDIO_FU_SET_RES_DELAY_CONTROL:
             s_audioGenerator.resDelay[0] = **(buffer);
             s_audioGenerator.resDelay[1] = *((*buffer) + 1);
+#if (USB_DEVICE_CONFIG_AUDIO_CLASS_2_0)
+            s_audioGenerator.resDelay[2] = *((*buffer) + 2);
+            s_audioGenerator.resDelay[3] = *((*buffer) + 3);
+#endif
             break;
         default:
             error = kStatus_USB_InvalidRequest;
@@ -1458,7 +1493,7 @@ usb_status_t USB_DeviceConfigureEndpointStatus(usb_device_handle handle, uint8_t
  */
 usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *param)
 {
-    usb_status_t error = kStatus_USB_Success;
+    usb_status_t error = kStatus_USB_InvalidRequest;
     uint8_t *temp8     = (uint8_t *)param;
     uint8_t count      = 0U;
 
@@ -1473,6 +1508,7 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
             }
             s_audioGenerator.attach               = 0U;
             s_audioGenerator.currentConfiguration = 0U;
+            error                                 = kStatus_USB_Success;
             USB_DeviceControlPipeInit(s_audioGenerator.deviceHandle);
 #if (defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0U)) || \
     (defined(USB_DEVICE_CONFIG_LPCIP3511HS) && (USB_DEVICE_CONFIG_LPCIP3511HS > 0U))
@@ -1490,16 +1526,17 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
             {
                 s_audioGenerator.attach               = 0U;
                 s_audioGenerator.currentConfiguration = 0U;
+                error                                 = kStatus_USB_Success;
             }
             else if (USB_AUDIO_GENERATOR_CONFIGURE_INDEX == (*temp8))
             {
                 /* Set the configuration request */
                 s_audioGenerator.attach               = 1U;
                 s_audioGenerator.currentConfiguration = *temp8;
+                error                                 = kStatus_USB_Success;
             }
             else
             {
-                error = kStatus_USB_InvalidRequest;
             }
             break;
         case kUSB_DeviceEventSetInterface:
@@ -1508,6 +1545,7 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
                 uint8_t interface        = (*temp8) & 0xFFU;
                 uint8_t alternateSetting = g_UsbDeviceInterface[interface];
 
+                error = kStatus_USB_Success;
                 if (s_audioGenerator.currentStreamInterfaceAlternateSetting != alternateSetting)
                 {
                     if (s_audioGenerator.currentStreamInterfaceAlternateSetting)
@@ -1601,7 +1639,7 @@ int main(void)
 void main(void)
 #endif
 {
-    BOARD_InitPins();
+    BOARD_InitBootPins();
     BOARD_BootClockHSRUN();
     BOARD_InitDebugConsole();
 

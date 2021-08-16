@@ -7,7 +7,6 @@
 
 #include "sai.h"
 
-#include "fsl_dialog7212.h"
 #include "pin_mux.h"
 #include "clock_config.h"
 #include "peripherals.h"
@@ -17,6 +16,7 @@
 #include "fsl_sysmpu.h"
 #include "fsl_codec_common.h"
 #include "fsl_codec_adapter.h"
+#include "fsl_dialog7212.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -35,7 +35,9 @@
 #define I2C_RELEASE_SCL_GPIO  GPIOC
 #define I2C_RELEASE_SCL_PIN   10U
 #define I2C_RELEASE_BUS_COUNT 100U
-
+#ifndef DEMO_CODEC_VOLUME
+#define DEMO_CODEC_VOLUME 100
+#endif
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
@@ -146,7 +148,8 @@ int SD_FatFsInit()
     /* If there is SDCard, Initialize SDcard and Fatfs */
     FRESULT error;
 
-    const TCHAR driverNumberBuffer[3U] = {SDDISK + '0', ':', '/'};
+    static const TCHAR driverNumberBuffer[3U] = {SDDISK + '0', ':', '/'};
+    static const TCHAR recordpathBuffer[]     = DEMO_RECORD_PATH;
 
     PRINTF("\r\nPlease insert a card into board.\r\n");
 
@@ -154,8 +157,26 @@ int SD_FatFsInit()
     {
         return -1;
     }
-
-    if (f_mount(&g_fileSystem, driverNumberBuffer, 0U))
+    error = f_mount(&g_fileSystem, driverNumberBuffer, 1U);
+    if (error == FR_OK)
+    {
+        PRINTF("Mount volume Successfully.\r\n");
+    }
+    else if (error == FR_NO_FILESYSTEM)
+    {
+#if FF_USE_MKFS
+        PRINTF("\r\nMake file system......The time may be long if the card capacity is big.\r\n");
+        if (f_mkfs(driverNumberBuffer, 0, work, sizeof work) != FR_OK)
+        {
+            PRINTF("Make file system failed.\r\n");
+            return -1;
+        }
+#else
+        PRINTF("No file system detected, Please check.\r\n");
+        return -1;
+#endif /* FF_USE_MKFS */
+    }
+    else
     {
         PRINTF("Mount volume failed.\r\n");
         return -1;
@@ -170,17 +191,8 @@ int SD_FatFsInit()
     }
 #endif
 
-#if FF_USE_MKFS
-    PRINTF("\r\nMake file system......The time may be long if the card capacity is big.\r\n");
-    if (f_mkfs(driverNumberBuffer, 0, work, sizeof work))
-    {
-        PRINTF("Make file system failed.\r\n");
-        return -1;
-    }
-#endif /* FF_USE_MKFS */
-
     PRINTF("\r\nCreate directory......\r\n");
-    error = f_mkdir(_T("/record"));
+    error = f_mkdir((char const *)&recordpathBuffer[0U]);
     if (error)
     {
         if (error == FR_EXIST)
@@ -206,7 +218,7 @@ int main(void)
     char input       = '1';
     uint8_t userItem = 1U;
 
-    BOARD_InitPins();
+    BOARD_InitBootPins();
     BOARD_InitBootClocks();
     BOARD_InitBootPeripherals();
     BOARD_InitDebugConsole();
@@ -219,7 +231,11 @@ int main(void)
     {
         assert(false);
     }
-
+    if (CODEC_SetVolume(&codecHandle, kCODEC_PlayChannelHeadphoneLeft | kCODEC_PlayChannelHeadphoneRight,
+                        DEMO_CODEC_VOLUME) != kStatus_Success)
+    {
+        assert(false);
+    }
     /* Enable interrupt to handle FIFO error */
     SAI_TxEnableInterrupts(DEMO_SAI_PERIPHERAL, kSAI_FIFOErrorInterruptEnable);
     SAI_RxEnableInterrupts(DEMO_SAI_PERIPHERAL, kSAI_FIFOErrorInterruptEnable);

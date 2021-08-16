@@ -5,6 +5,7 @@
     <definition extID="driver.phy-device-ksz8081.MK66F18"/>
     <definition extID="platform.drivers.rnga.MK66F18"/>
     <definition extID="middleware.mmcau.cm4_cm7.MK66F18"/>
+    <definition extID="middleware.mbedtls.MK66F18"/>
     <definition extID="middleware.mbedtls.port.ksdk.MK66F18"/>
     <definition extID="middleware.mbedtls.kinetis.MK66F18"/>
     <definition extID="component.mflash_file.MK66F18"/>
@@ -22,12 +23,14 @@
     <definition extID="middleware.freertos-aws_iot.demos.dev_mode_key_provisioning.MK66F18"/>
     <definition extID="middleware.freertos-kernel.MK66F18"/>
     <definition extID="middleware.freertos-kernel.heap_4.MK66F18"/>
-    <definition extID="middleware.freertos-aws_iot.c_sdk.standard.shadow.MK66F18"/>
-    <definition extID="middleware.freertos-aws_iot.c_sdk.standard.serializer.MK66F18"/>
+    <definition extID="middleware.freertos-aws_iot.libraries.c_sdk.standard.shadow.MK66F18"/>
+    <definition extID="middleware.freertos-aws_iot.libraries.c_sdk.standard.serializer.MK66F18"/>
     <definition extID="middleware.freertos-aws_iot.libraries.3rdparty.pkcs11.MK66F18"/>
     <definition extID="middleware.freertos-aws_iot.vendor.nxp.pkcs11.MK66F18"/>
     <definition extID="middleware.freertos-aws_iot.libraries.abstractions.pkcs11.MK66F18"/>
-    <definition extID="middleware.mbedtls.MK66F18"/>
+    <definition extID="middleware.freertos-aws_iot.libraries.abstractions.pkcs11_mbedtls.MK66F18"/>
+    <definition extID="middleware.freertos-aws_iot.libraries.logging.MK66F18"/>
+    <definition extID="middleware.freertos-aws_iot.libraries.3rdparty.mbedtls_config.MK66F18"/>
     <definition extID="platform.drivers.clock.MK66F18"/>
     <definition extID="platform.drivers.flash.MK66F18"/>
     <definition extID="platform.drivers.common.MK66F18"/>
@@ -43,25 +46,22 @@
     <definition extID="platform.drivers.gpio.MK66F18"/>
     <definition extID="platform.utilities.assert.MK66F18"/>
     <definition extID="driver.mdio-common.MK66F18"/>
-    <definition extID="platform.Include_core_cm4.MK66F18"/>
-    <definition extID="platform.Include_common.MK66F18"/>
-    <definition extID="platform.Include_dsp.MK66F18"/>
+    <definition extID="CMSIS_Include_core_cm.MK66F18"/>
     <definition extID="middleware.mmcau.common_files.MK66F18"/>
     <definition extID="component.mflash.common.MK66F18"/>
     <definition extID="platform.drivers.cache_lmem.MK66F18"/>
     <definition extID="middleware.freertos-aws_iot.libraries.abstractions.secure_sockets.MK66F18"/>
-    <definition extID="middleware.freertos-aws_iot.common.MK66F18"/>
+    <definition extID="middleware.freertos-aws_iot.libraries.c_sdk.standard.common.MK66F18"/>
     <definition extID="middleware.freertos-kernel.extension.MK66F18"/>
     <definition extID="middleware.freertos-aws_iot.libraries.abstractions.platform.MK66F18"/>
     <definition extID="middleware.freertos-aws_iot.libraries.freertos_plus.standard.tls.MK66F18"/>
     <definition extID="middleware.freertos-aws_iot.libraries.3rdparty.mbedtls_utils.MK66F18"/>
     <definition extID="middleware.freertos-aws_iot.libraries.freertos_plus.standard.crypto.MK66F18"/>
-    <definition extID="middleware.freertos-aws_iot.libraries.abstractions.threading_alt.MK66F18"/>
-    <definition extID="middleware.freertos-aws_iot.libraries.freertos_plus.standard.pkcs11.MK66F18"/>
     <definition extID="middleware.freertos-aws_iot.libraries.freertos_plus.standard.utils.MK66F18"/>
     <definition extID="middleware.freertos-aws_iot.libraries.3rdparty.jsmn.MK66F18"/>
     <definition extID="middleware.freertos-aws_iot.network_manager.MK66F18"/>
     <definition extID="middleware.freertos-aws_iot.mqtt.MK66F18"/>
+    <definition extID="middleware.freertos-aws_iot.libraries.coremqtt.MK66F18"/>
     <definition extID="middleware.freertos-aws_iot.libraries.abstractions.wifi.MK66F18"/>
     <definition extID="platform.utilities.misc_utilities.MK66F18"/>
     <definition extID="device.MK66F18_system.MK66F18"/>
@@ -71,7 +71,7 @@
     <definition extID="mcuxpresso"/>
     <definition extID="com.nxp.mcuxpresso"/>
   </externalDefinitions>
-  <example id="frdmk66f_aws_greengrass_discovery_enet" name="aws_greengrass_discovery_enet" dependency="driver.mdio-enet.MK66F18 driver.phy-device-ksz8081.MK66F18 platform.drivers.rnga.MK66F18 middleware.mmcau.cm4_cm7.MK66F18 middleware.mbedtls.port.ksdk.MK66F18 middleware.mbedtls.kinetis.MK66F18 component.mflash_file.MK66F18 component.mflash.frdmk66f.MK66F18 middleware.lwip.enet_ethernetif.MK66F18 middleware.lwip.MK66F18 driver.phy-common.MK66F18 platform.drivers.enet.MK66F18 utility.debug_console.MK66F18 platform.drivers.port.MK66F18 middleware.freertos-aws_iot.vendor.nxp.secure_sockets.lwip.MK66F18 middleware.freertos-aws_iot.libraries.freertos_plus.aws.greengrass.MK66F18 middleware.freertos-aws_iot.demos.MK66F18 middleware.freertos-aws_iot.demos_greengrass_discovery.MK66F18 middleware.freertos-aws_iot.demos.dev_mode_key_provisioning.MK66F18 middleware.freertos-kernel.MK66F18 middleware.freertos-kernel.heap_4.MK66F18 middleware.freertos-aws_iot.c_sdk.standard.shadow.MK66F18 middleware.freertos-aws_iot.c_sdk.standard.serializer.MK66F18 middleware.freertos-aws_iot.libraries.3rdparty.pkcs11.MK66F18 middleware.freertos-aws_iot.vendor.nxp.pkcs11.MK66F18 middleware.freertos-aws_iot.libraries.abstractions.pkcs11.MK66F18 middleware.mbedtls.MK66F18 platform.drivers.clock.MK66F18 platform.drivers.flash.MK66F18 platform.drivers.common.MK66F18 device.MK66F18_CMSIS.MK66F18 component.uart_adapter.MK66F18 component.serial_manager.MK66F18 component.lists.MK66F18 component.serial_manager_uart.MK66F18 platform.drivers.uart.MK66F18 device.MK66F18_startup.MK66F18 platform.drivers.lpuart.MK66F18 platform.drivers.smc.MK66F18 platform.drivers.gpio.MK66F18 platform.utilities.assert.MK66F18 driver.mdio-common.MK66F18 platform.Include_core_cm4.MK66F18 platform.Include_common.MK66F18 platform.Include_dsp.MK66F18 middleware.mmcau.common_files.MK66F18 component.mflash.common.MK66F18 platform.drivers.cache_lmem.MK66F18 middleware.freertos-aws_iot.libraries.abstractions.secure_sockets.MK66F18 middleware.freertos-aws_iot.common.MK66F18 middleware.freertos-kernel.extension.MK66F18 middleware.freertos-aws_iot.libraries.abstractions.platform.MK66F18 middleware.freertos-aws_iot.libraries.freertos_plus.standard.tls.MK66F18 middleware.freertos-aws_iot.libraries.3rdparty.mbedtls_utils.MK66F18 middleware.freertos-aws_iot.libraries.freertos_plus.standard.crypto.MK66F18 middleware.freertos-aws_iot.libraries.abstractions.threading_alt.MK66F18 middleware.freertos-aws_iot.libraries.freertos_plus.standard.pkcs11.MK66F18 middleware.freertos-aws_iot.libraries.freertos_plus.standard.utils.MK66F18 middleware.freertos-aws_iot.libraries.3rdparty.jsmn.MK66F18 middleware.freertos-aws_iot.network_manager.MK66F18 middleware.freertos-aws_iot.mqtt.MK66F18 middleware.freertos-aws_iot.libraries.abstractions.wifi.MK66F18 platform.utilities.misc_utilities.MK66F18 device.MK66F18_system.MK66F18" category="aws_examples">
+  <example id="frdmk66f_aws_greengrass_discovery_enet" name="aws_greengrass_discovery_enet" dependency="driver.mdio-enet.MK66F18 driver.phy-device-ksz8081.MK66F18 platform.drivers.rnga.MK66F18 middleware.mmcau.cm4_cm7.MK66F18 middleware.mbedtls.MK66F18 middleware.mbedtls.port.ksdk.MK66F18 middleware.mbedtls.kinetis.MK66F18 component.mflash_file.MK66F18 component.mflash.frdmk66f.MK66F18 middleware.lwip.enet_ethernetif.MK66F18 middleware.lwip.MK66F18 driver.phy-common.MK66F18 platform.drivers.enet.MK66F18 utility.debug_console.MK66F18 platform.drivers.port.MK66F18 middleware.freertos-aws_iot.vendor.nxp.secure_sockets.lwip.MK66F18 middleware.freertos-aws_iot.libraries.freertos_plus.aws.greengrass.MK66F18 middleware.freertos-aws_iot.demos.MK66F18 middleware.freertos-aws_iot.demos_greengrass_discovery.MK66F18 middleware.freertos-aws_iot.demos.dev_mode_key_provisioning.MK66F18 middleware.freertos-kernel.MK66F18 middleware.freertos-kernel.heap_4.MK66F18 middleware.freertos-aws_iot.libraries.c_sdk.standard.shadow.MK66F18 middleware.freertos-aws_iot.libraries.c_sdk.standard.serializer.MK66F18 middleware.freertos-aws_iot.libraries.3rdparty.pkcs11.MK66F18 middleware.freertos-aws_iot.vendor.nxp.pkcs11.MK66F18 middleware.freertos-aws_iot.libraries.abstractions.pkcs11.MK66F18 middleware.freertos-aws_iot.libraries.abstractions.pkcs11_mbedtls.MK66F18 middleware.freertos-aws_iot.libraries.logging.MK66F18 middleware.freertos-aws_iot.libraries.3rdparty.mbedtls_config.MK66F18 platform.drivers.clock.MK66F18 platform.drivers.flash.MK66F18 platform.drivers.common.MK66F18 device.MK66F18_CMSIS.MK66F18 component.uart_adapter.MK66F18 component.serial_manager.MK66F18 component.lists.MK66F18 component.serial_manager_uart.MK66F18 platform.drivers.uart.MK66F18 device.MK66F18_startup.MK66F18 platform.drivers.lpuart.MK66F18 platform.drivers.smc.MK66F18 platform.drivers.gpio.MK66F18 platform.utilities.assert.MK66F18 driver.mdio-common.MK66F18 CMSIS_Include_core_cm.MK66F18 middleware.mmcau.common_files.MK66F18 component.mflash.common.MK66F18 platform.drivers.cache_lmem.MK66F18 middleware.freertos-aws_iot.libraries.abstractions.secure_sockets.MK66F18 middleware.freertos-aws_iot.libraries.c_sdk.standard.common.MK66F18 middleware.freertos-kernel.extension.MK66F18 middleware.freertos-aws_iot.libraries.abstractions.platform.MK66F18 middleware.freertos-aws_iot.libraries.freertos_plus.standard.tls.MK66F18 middleware.freertos-aws_iot.libraries.3rdparty.mbedtls_utils.MK66F18 middleware.freertos-aws_iot.libraries.freertos_plus.standard.crypto.MK66F18 middleware.freertos-aws_iot.libraries.freertos_plus.standard.utils.MK66F18 middleware.freertos-aws_iot.libraries.3rdparty.jsmn.MK66F18 middleware.freertos-aws_iot.network_manager.MK66F18 middleware.freertos-aws_iot.mqtt.MK66F18 middleware.freertos-aws_iot.libraries.coremqtt.MK66F18 middleware.freertos-aws_iot.libraries.abstractions.wifi.MK66F18 platform.utilities.misc_utilities.MK66F18 device.MK66F18_system.MK66F18" category="aws_examples">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -85,8 +85,10 @@
           <value>FRDM_K66F</value>
           <value>FREEDOM</value>
           <value>MFLASH_FILE_BASEADDR=2031616</value>
-          <value>FSL_RTOS_FREE_RTOS</value>
+          <value>LWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1</value>
+          <value>SDK_OS_FREE_RTOS</value>
           <value>SERIAL_PORT_TYPE_UART=1</value>
+          <value>MCUXPRESSO_SDK</value>
         </option>
         <option id="com.crt.advproject.gcc.fpu" type="enum">
           <value>com.crt.advproject.gcc.fpu.fpv4.hard</value>
@@ -178,7 +180,10 @@
       <files mask="FreeRTOSIPConfig.h"/>
       <files mask="iot_config.h"/>
       <files mask="iot_mqtt_agent_config.h"/>
-      <files mask="iot_pkcs11_config.h"/>
+      <files mask="core_mqtt_config.h"/>
+      <files mask="core_pkcs11_config.h"/>
+      <files mask="shadow_config.h"/>
+      <files mask="shadow_demo_config.h"/>
       <files mask="aws_ggd_config.h"/>
       <files mask="aws_wifi_config.h"/>
     </source>

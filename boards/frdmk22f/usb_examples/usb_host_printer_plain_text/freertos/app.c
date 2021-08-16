@@ -212,7 +212,7 @@ static void USB_HostApplicationTask(void *param)
 
 int main(void)
 {
-    BOARD_InitPins();
+    BOARD_InitBootPins();
     BOARD_BootClockHSRUN();
     BOARD_InitDebugConsole();
 

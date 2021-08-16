@@ -5,18 +5,41 @@ One board acts like a server and the second as client. When client starts, it ge
 matrixes and sends them to server. Server then performs matrix multiplication and sends
 result data back to client. Client then prints the result matrix.
 
+Optional HW setup is to use the PC as the eRPC client and the board as the eRPC server. In this case
+the LIBUSBSIOSPITransport (Python) is used on the PC side and the SPI slave transport on the board side. 
+This configuration is supported for selected boards only.
+
 eRPC documentation
 eRPC specific files are stored in: middleware\multicore\erpc
 eRPC documentation is stored in: middleware\multicore\erpc\doc
 eRPC is open-source project stored on github: https://github.com/EmbeddedRPC/erpc
 eRPC documentation can be also found in: http://embeddedrpc.github.io
 
+PC Side Setup (Optional for PC-to-board communication)
+1. Make sure you have Python installed on your PC
+2. Install serial module by executing following command in command line: "python -m pip install pyserial"
+3. Install eRPC module to Python by executing setup.py located in: middleware\multicore\erpc\erpc_python - "python setup.py install"
+
+usage: run_spi.py [-h] [-b BD] [-g CS_PORT] [-p CS_PIN]
+
+eRPC Matrix Multiply example
+
+optional arguments:
+  -h, --help                    show this help message an
+  -b BD, --bd BD                Baud rate (default value is 500000)
+  -g CS_PORT, --csport CS_PORT  Chip select GPIO port number (see the board schematics)
+  -g CS_PIN, --cspin CS_PIN     Chip select GPIO port number (see the board schematics)
+
+Example:
+To run PC side as a client with a board connected as a server:
+"run_spi.py --bd 500000 --csport 0 --cspin 15"
+
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.9
-- MCUXpresso  11.3.0
-- Keil MDK  5.33
-- GCC ARM Embedded  9.3.1
+- IAR embedded Workbench  9.10.2
+- MCUXpresso  11.4.0
+- Keil MDK  5.34
+- GCC ARM Embedded  10.2.1
 
 Hardware requirements
 =====================

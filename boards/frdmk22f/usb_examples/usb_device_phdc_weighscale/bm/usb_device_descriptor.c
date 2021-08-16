@@ -51,7 +51,7 @@ usb_device_endpoint_struct_t g_UsbDevicePhdcWeightScaleEndpoints[USB_PHDC_WEIGHT
 
 /*! @brief PHDC weight scale interface entry */
 usb_device_interface_struct_t g_UsbDevicePhdcWeightScaleInterface[] = {{
-    0U, /* the alternate setting of the interface */
+    USB_PHDC_WEIGHT_SCALE_INTERFACE_ALTERNATE_0, /* the alternate setting of the interface */
     {
         USB_PHDC_WEIGHT_SCALE_ENDPOINT_COUNT, /* the endpoint count */
         g_UsbDevicePhdcWeightScaleEndpoints,  /* the endpoint handle */
@@ -145,7 +145,7 @@ uint8_t g_UsbDeviceConfigurationDescriptor[] = {
     USB_DESCRIPTOR_LENGTH_INTERFACE,       /* Size of this descriptor in bytes */
     USB_DESCRIPTOR_TYPE_INTERFACE,         /* INTERFACE Descriptor Type */
     USB_PHDC_WEIGHT_SCALE_INTERFACE_INDEX, /* Number of this interface. */
-    0x00U,                                 /* Value used to select this alternate setting
+    USB_PHDC_WEIGHT_SCALE_INTERFACE_ALTERNATE_0, /* Value used to select this alternate setting
                                               for the interface identified in the prior field */
     USB_PHDC_WEIGHT_SCALE_ENDPOINT_COUNT,  /* Number of endpoints used by this
                                               interface (excluding endpoint zero). */

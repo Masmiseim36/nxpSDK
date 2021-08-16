@@ -3,15 +3,15 @@
   <externalDefinitions>
     <definition extID="platform.drivers.rnga.MK66F18"/>
     <definition extID="middleware.mmcau.cm4_cm7.MK66F18"/>
+    <definition extID="middleware.mbedtls.MK66F18"/>
     <definition extID="middleware.mbedtls.port.ksdk.MK66F18"/>
     <definition extID="middleware.mbedtls.kinetis.MK66F18"/>
     <definition extID="platform.drivers.port.MK66F18"/>
-    <definition extID="middleware.mbedtls.MK66F18"/>
-    <definition extID="utility.debug_console.MK66F18"/>
     <definition extID="platform.drivers.clock.MK66F18"/>
     <definition extID="platform.drivers.flash.MK66F18"/>
     <definition extID="platform.drivers.common.MK66F18"/>
     <definition extID="device.MK66F18_CMSIS.MK66F18"/>
+    <definition extID="utility.debug_console.MK66F18"/>
     <definition extID="component.uart_adapter.MK66F18"/>
     <definition extID="component.serial_manager.MK66F18"/>
     <definition extID="component.lists.MK66F18"/>
@@ -22,19 +22,17 @@
     <definition extID="platform.drivers.smc.MK66F18"/>
     <definition extID="platform.drivers.gpio.MK66F18"/>
     <definition extID="platform.utilities.assert.MK66F18"/>
-    <definition extID="platform.Include_core_cm4.MK66F18"/>
-    <definition extID="platform.Include_common.MK66F18"/>
-    <definition extID="platform.Include_dsp.MK66F18"/>
+    <definition extID="CMSIS_Include_core_cm.MK66F18"/>
     <definition extID="middleware.mmcau.common_files.MK66F18"/>
     <definition extID="platform.utilities.misc_utilities.MK66F18"/>
     <definition extID="device.MK66F18_system.MK66F18"/>
     <definition extID="armgcc"/>
-    <definition extID="mcuxpresso"/>
-    <definition extID="iar"/>
     <definition extID="mdk"/>
+    <definition extID="iar"/>
+    <definition extID="mcuxpresso"/>
     <definition extID="com.nxp.mcuxpresso"/>
   </externalDefinitions>
-  <example id="frdmk66f_mbedtls_benchmark" name="mbedtls_benchmark" dependency="platform.drivers.rnga.MK66F18 middleware.mmcau.cm4_cm7.MK66F18 middleware.mbedtls.port.ksdk.MK66F18 middleware.mbedtls.kinetis.MK66F18 platform.drivers.port.MK66F18 middleware.mbedtls.MK66F18 utility.debug_console.MK66F18 platform.drivers.clock.MK66F18 platform.drivers.flash.MK66F18 platform.drivers.common.MK66F18 device.MK66F18_CMSIS.MK66F18 component.uart_adapter.MK66F18 component.serial_manager.MK66F18 component.lists.MK66F18 component.serial_manager_uart.MK66F18 platform.drivers.uart.MK66F18 device.MK66F18_startup.MK66F18 platform.drivers.lpuart.MK66F18 platform.drivers.smc.MK66F18 platform.drivers.gpio.MK66F18 platform.utilities.assert.MK66F18 platform.Include_core_cm4.MK66F18 platform.Include_common.MK66F18 platform.Include_dsp.MK66F18 middleware.mmcau.common_files.MK66F18 platform.utilities.misc_utilities.MK66F18 device.MK66F18_system.MK66F18" category="mbedtls_examples">
+  <example id="frdmk66f_mbedtls_benchmark" name="mbedtls_benchmark" dependency="platform.drivers.rnga.MK66F18 middleware.mmcau.cm4_cm7.MK66F18 middleware.mbedtls.MK66F18 middleware.mbedtls.port.ksdk.MK66F18 middleware.mbedtls.kinetis.MK66F18 platform.drivers.port.MK66F18 platform.drivers.clock.MK66F18 platform.drivers.flash.MK66F18 platform.drivers.common.MK66F18 device.MK66F18_CMSIS.MK66F18 utility.debug_console.MK66F18 component.uart_adapter.MK66F18 component.serial_manager.MK66F18 component.lists.MK66F18 component.serial_manager_uart.MK66F18 platform.drivers.uart.MK66F18 device.MK66F18_startup.MK66F18 platform.drivers.lpuart.MK66F18 platform.drivers.smc.MK66F18 platform.drivers.gpio.MK66F18 platform.utilities.assert.MK66F18 CMSIS_Include_core_cm.MK66F18 middleware.mmcau.common_files.MK66F18 platform.utilities.misc_utilities.MK66F18 device.MK66F18_system.MK66F18" category="mbedtls_examples">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -49,6 +47,7 @@
           <value>FRDM_K66F</value>
           <value>FREEDOM</value>
           <value>SERIAL_PORT_TYPE_UART=1</value>
+          <value>MCUXPRESSO_SDK</value>
         </option>
         <option id="com.crt.advproject.gcc.fpu" type="enum">
           <value>com.crt.advproject.gcc.fpu.fpv4.hard</value>
@@ -74,6 +73,10 @@
         <option id="gnu.c.link.option.nostdlibs" type="boolean">
           <value>true</value>
         </option>
+        <option id="com.crt.advproject.link.memory.sections" type="stringList">
+          <value>isd=*(NonCacheable.init);region=RAM2;type=.data</value>
+          <value>isd=*(NonCacheable);region=RAM2;type=.bss</value>
+        </option>
         <option id="com.crt.advproject.link.memory.heapAndStack" type="string">
           <value>&amp;Heap:Default;Default;0x8000&amp;Stack:Default;Default;0x2000</value>
         </option>
@@ -94,15 +97,15 @@
       <files mask="build_release.bat"/>
       <files mask="build_release.sh"/>
     </source>
-    <source path="boards/frdmk66f/mbedtls_examples/mbedtls_benchmark/iar" project_relative_path="./" type="workspace" toolchain="iar">
-      <files mask="mbedtls_benchmark.ewd"/>
-      <files mask="mbedtls_benchmark.ewp"/>
-      <files mask="mbedtls_benchmark.eww"/>
-    </source>
     <source path="boards/frdmk66f/mbedtls_examples/mbedtls_benchmark/mdk" project_relative_path="./" type="workspace" toolchain="mdk">
       <files mask="mbedtls_benchmark.uvprojx"/>
       <files mask="mbedtls_benchmark.uvoptx"/>
       <files mask="mbedtls_benchmark.uvmpw"/>
+    </source>
+    <source path="boards/frdmk66f/mbedtls_examples/mbedtls_benchmark/iar" project_relative_path="./" type="workspace" toolchain="iar">
+      <files mask="mbedtls_benchmark.ewd"/>
+      <files mask="mbedtls_benchmark.ewp"/>
+      <files mask="mbedtls_benchmark.eww"/>
     </source>
     <source path="boards/frdmk66f/mbedtls_examples/mbedtls_benchmark" project_relative_path="source" type="src">
       <files mask="benchmark.c"/>

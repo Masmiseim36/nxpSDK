@@ -25,9 +25,9 @@
 #include "board.h"
 #include "fsl_phy.h"
 
-#include "fsl_device_registers.h"
 #include "fsl_phyksz8081.h"
 #include "fsl_enet_mdio.h"
+#include "fsl_device_registers.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -73,6 +73,12 @@
 #define EXAMPLE_NETIF_INIT_FN ethernetif0_init
 #endif /* EXAMPLE_NETIF_INIT_FN */
 
+/*! @brief Stack size of the temporary lwIP initialization thread. */
+#define INIT_THREAD_STACKSIZE 1024
+
+/*! @brief Priority of the temporary lwIP initialization thread. */
+#define INIT_THREAD_PRIO DEFAULT_THREAD_PRIO
+
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
@@ -89,29 +95,20 @@ static phy_handle_t phyHandle   = {.phyAddr = EXAMPLE_PHY_ADDRESS, .mdioHandle =
  ******************************************************************************/
 
 /*!
- * @brief Main function
+ * @brief Initializes lwIP stack.
+ *
+ * @param arg unused
  */
-int main(void)
+static void stack_init(void *arg)
 {
     static struct netif netif;
-#if defined(FSL_FEATURE_SOC_LPC_ENET_COUNT) && (FSL_FEATURE_SOC_LPC_ENET_COUNT > 0)
-    static mem_range_t non_dma_memory[] = NON_DMA_MEMORY_ARRAY;
-#endif /* FSL_FEATURE_SOC_LPC_ENET_COUNT */
     ip4_addr_t netif_ipaddr, netif_netmask, netif_gw;
     ethernetif_config_t enet_config = {
         .phyHandle  = &phyHandle,
         .macAddress = configMAC_ADDR,
-#if defined(FSL_FEATURE_SOC_LPC_ENET_COUNT) && (FSL_FEATURE_SOC_LPC_ENET_COUNT > 0)
-        .non_dma_memory = non_dma_memory,
-#endif /* FSL_FEATURE_SOC_LPC_ENET_COUNT */
     };
 
-    SYSMPU_Type *base = SYSMPU;
-    BOARD_InitBootPins();
-    BOARD_InitBootClocks();
-    BOARD_InitDebugConsole();
-    /* Disable SYSMPU. */
-    base->CESR &= ~SYSMPU_CESR_VLD_MASK;
+    LWIP_UNUSED_ARG(arg);
 
     mdioHandle.resource.csrClock_Hz = EXAMPLE_CLOCK_FREQ;
 
@@ -138,6 +135,27 @@ int main(void)
     PRINTF("************************************************\r\n");
 
     udpecho_init();
+
+    vTaskDelete(NULL);
+}
+
+/*!
+ * @brief Main function
+ */
+int main(void)
+{
+    SYSMPU_Type *base = SYSMPU;
+    BOARD_InitBootPins();
+    BOARD_InitBootClocks();
+    BOARD_InitDebugConsole();
+    /* Disable SYSMPU. */
+    base->CESR &= ~SYSMPU_CESR_VLD_MASK;
+
+    /* Initialize lwIP from thread */
+    if (sys_thread_new("main", stack_init, NULL, INIT_THREAD_STACKSIZE, INIT_THREAD_PRIO) == NULL)
+    {
+        LWIP_ASSERT("main(): Task creation failed.", 0);
+    }
 
     vTaskStartScheduler();
 

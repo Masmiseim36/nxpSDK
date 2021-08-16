@@ -5,9 +5,9 @@
     <definition extID="platform.drivers.port.MK64F12"/>
     <definition extID="platform.drivers.clock.MK64F12"/>
     <definition extID="platform.drivers.flexcan.MK64F12"/>
+    <definition extID="middleware.fmstr.MK64F12"/>
     <definition extID="utility.debug_console_lite.MK64F12"/>
     <definition extID="platform.utilities.assert_lite.MK64F12"/>
-    <definition extID="middleware.fmstr.MK64F12"/>
     <definition extID="platform.drivers.flash.MK64F12"/>
     <definition extID="platform.drivers.common.MK64F12"/>
     <definition extID="device.MK64F12_CMSIS.MK64F12"/>
@@ -18,11 +18,11 @@
     <definition extID="platform.drivers.gpio.MK64F12"/>
     <definition extID="component.uart_adapter.MK64F12"/>
     <definition extID="middleware.fmstr.platform_gen32le.MK64F12"/>
+    <definition extID="component.serial_manager.MK64F12"/>
     <definition extID="component.lists.MK64F12"/>
+    <definition extID="component.serial_manager_uart.MK64F12"/>
     <definition extID="platform.drivers.sysmpu.MK64F12"/>
-    <definition extID="platform.Include_core_cm4.MK64F12"/>
-    <definition extID="platform.Include_common.MK64F12"/>
-    <definition extID="platform.Include_dsp.MK64F12"/>
+    <definition extID="CMSIS_Include_core_cm.MK64F12"/>
     <definition extID="platform.utilities.misc_utilities.MK64F12"/>
     <definition extID="device.MK64F12_system.MK64F12"/>
     <definition extID="iar"/>
@@ -31,7 +31,7 @@
     <definition extID="mcuxpresso"/>
     <definition extID="com.nxp.mcuxpresso"/>
   </externalDefinitions>
-  <example id="frdmk64f_fmstr_example_can" name="fmstr_example_can" dependency="platform.drivers.sim.MK64F12 platform.drivers.port.MK64F12 platform.drivers.clock.MK64F12 platform.drivers.flexcan.MK64F12 utility.debug_console_lite.MK64F12 platform.utilities.assert_lite.MK64F12 middleware.fmstr.MK64F12 platform.drivers.flash.MK64F12 platform.drivers.common.MK64F12 device.MK64F12_CMSIS.MK64F12 device.MK64F12_startup.MK64F12 platform.drivers.uart.MK64F12 platform.drivers.ftm.MK64F12 platform.drivers.smc.MK64F12 platform.drivers.gpio.MK64F12 component.uart_adapter.MK64F12 middleware.fmstr.platform_gen32le.MK64F12 component.lists.MK64F12 platform.drivers.sysmpu.MK64F12 platform.Include_core_cm4.MK64F12 platform.Include_common.MK64F12 platform.Include_dsp.MK64F12 platform.utilities.misc_utilities.MK64F12 device.MK64F12_system.MK64F12" category="FreeMASTER_examples">
+  <example id="frdmk64f_fmstr_example_can" name="fmstr_example_can" dependency="platform.drivers.sim.MK64F12 platform.drivers.port.MK64F12 platform.drivers.clock.MK64F12 platform.drivers.flexcan.MK64F12 middleware.fmstr.MK64F12 utility.debug_console_lite.MK64F12 platform.utilities.assert_lite.MK64F12 platform.drivers.flash.MK64F12 platform.drivers.common.MK64F12 device.MK64F12_CMSIS.MK64F12 device.MK64F12_startup.MK64F12 platform.drivers.uart.MK64F12 platform.drivers.ftm.MK64F12 platform.drivers.smc.MK64F12 platform.drivers.gpio.MK64F12 component.uart_adapter.MK64F12 middleware.fmstr.platform_gen32le.MK64F12 component.serial_manager.MK64F12 component.lists.MK64F12 component.serial_manager_uart.MK64F12 platform.drivers.sysmpu.MK64F12 CMSIS_Include_core_cm.MK64F12 platform.utilities.misc_utilities.MK64F12 device.MK64F12_system.MK64F12" category="FreeMASTER_examples">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -42,7 +42,8 @@
           <value>SDK_DEBUGCONSOLE=1</value>
           <value>FRDM_K64F</value>
           <value>FREEDOM</value>
-          <value>USB_STACK_BM</value>
+          <value>SERIAL_PORT_TYPE_UART=1</value>
+          <value>MCUXPRESSO_SDK</value>
         </option>
         <option id="com.crt.advproject.gas.fpu" type="enum">
           <value>com.crt.advproject.gas.fpu.fpv4.hard</value>

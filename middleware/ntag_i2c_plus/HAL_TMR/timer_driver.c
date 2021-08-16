@@ -10,7 +10,7 @@
 /* INCLUDES                                                            */
 /***********************************************************************/
 #include "HAL_timer_driver.h"
-#if defined(FSL_RTOS_FREE_RTOS)
+#if defined(SDK_OS_FREE_RTOS)
 #include "FreeRTOS.h"
 #include "task.h"
 #endif
@@ -22,7 +22,7 @@
 /***********************************************************************/
 /* GLOBAL VARIABLES                                                    */
 /***********************************************************************/
-#if !defined(FSL_RTOS_FREE_RTOS)
+#if !defined(SDK_OS_FREE_RTOS)
 static volatile uint32_t timer = 0;
 #endif
 
@@ -34,7 +34,7 @@ static volatile uint32_t timer = 0;
 /***********************************************************************/
 void HAL_Timer_Init()
 {
-#if !defined(FSL_RTOS_FREE_RTOS)
+#if !defined(SDK_OS_FREE_RTOS)
     /* produce a timer interrupt every 1ms */
     SysTick_Config(SystemCoreClock / 1000);
 #endif
@@ -42,7 +42,7 @@ void HAL_Timer_Init()
 
 void HAL_Timer_delay_ms(uint32_t ms)
 {
-#if !defined(FSL_RTOS_FREE_RTOS)
+#if !defined(SDK_OS_FREE_RTOS)
     volatile uint32_t until = timer + ms;
     while (until > timer)
     {
@@ -55,7 +55,7 @@ void HAL_Timer_delay_ms(uint32_t ms)
 
 uint32_t HAL_Timer_getTime_ms()
 {
-#if !defined(FSL_RTOS_FREE_RTOS)
+#if !defined(SDK_OS_FREE_RTOS)
     return timer;
 #else
     return xTaskGetTickCount() * portTICK_PERIOD_MS;
@@ -68,7 +68,7 @@ uint32_t HAL_Timer_getTime_ms()
 /***********************************************************************/
 /* INTERUPT SERVICE ROUTINES                                           */
 /***********************************************************************/
-#if !defined(FSL_RTOS_FREE_RTOS)
+#if !defined(SDK_OS_FREE_RTOS)
 void SysTick_Handler(void)
 {
     timer++;

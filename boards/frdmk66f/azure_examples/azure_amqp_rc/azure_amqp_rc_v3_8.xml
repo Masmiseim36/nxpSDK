@@ -5,6 +5,7 @@
     <definition extID="driver.phy-device-ksz8081.MK66F18"/>
     <definition extID="middleware.mmcau.cm4_cm7.MK66F18"/>
     <definition extID="platform.drivers.rnga.MK66F18"/>
+    <definition extID="middleware.mbedtls.MK66F18"/>
     <definition extID="middleware.mbedtls.port.ksdk.MK66F18"/>
     <definition extID="middleware.mbedtls.kinetis.MK66F18"/>
     <definition extID="platform.drivers.port.MK66F18"/>
@@ -12,10 +13,9 @@
     <definition extID="platform.drivers.clock.MK66F18"/>
     <definition extID="platform.drivers.gpio.MK66F18"/>
     <definition extID="middleware.freertos-kernel.heap_3.MK66F18"/>
-    <definition extID="middleware.mbedtls.MK66F18"/>
-    <definition extID="utility.debug_console.MK66F18"/>
     <definition extID="middleware.lwip.apps.sntp.MK66F18"/>
     <definition extID="middleware.lwip.MK66F18"/>
+    <definition extID="utility.debug_console.MK66F18"/>
     <definition extID="middleware.lwip.enet_ethernetif.MK66F18"/>
     <definition extID="driver.phy-common.MK66F18"/>
     <definition extID="platform.drivers.enet.MK66F18"/>
@@ -34,9 +34,7 @@
     <definition extID="platform.drivers.smc.MK66F18"/>
     <definition extID="platform.utilities.assert.MK66F18"/>
     <definition extID="driver.mdio-common.MK66F18"/>
-    <definition extID="platform.Include_core_cm4.MK66F18"/>
-    <definition extID="platform.Include_common.MK66F18"/>
-    <definition extID="platform.Include_dsp.MK66F18"/>
+    <definition extID="CMSIS_Include_core_cm.MK66F18"/>
     <definition extID="middleware.mmcau.common_files.MK66F18"/>
     <definition extID="middleware.freertos-kernel.MK66F18"/>
     <definition extID="middleware.freertos-kernel.extension.MK66F18"/>
@@ -58,7 +56,7 @@
     <definition extID="mdk"/>
     <definition extID="com.nxp.mcuxpresso"/>
   </externalDefinitions>
-  <example id="frdmk66f_azure_amqp_rc" name="azure_amqp_rc" dependency="driver.mdio-enet.MK66F18 driver.phy-device-ksz8081.MK66F18 middleware.mmcau.cm4_cm7.MK66F18 platform.drivers.rnga.MK66F18 middleware.mbedtls.port.ksdk.MK66F18 middleware.mbedtls.kinetis.MK66F18 platform.drivers.port.MK66F18 platform.drivers.sim.MK66F18 platform.drivers.clock.MK66F18 platform.drivers.gpio.MK66F18 middleware.freertos-kernel.heap_3.MK66F18 middleware.mbedtls.MK66F18 utility.debug_console.MK66F18 middleware.lwip.apps.sntp.MK66F18 middleware.lwip.MK66F18 middleware.lwip.enet_ethernetif.MK66F18 driver.phy-common.MK66F18 platform.drivers.enet.MK66F18 middleware.azure_iot.iothub_client.amqp.MK66F18 middleware.azure_iot.java_app.MK66F18 platform.drivers.flash.MK66F18 platform.drivers.common.MK66F18 device.MK66F18_CMSIS.MK66F18 component.uart_adapter.MK66F18 component.serial_manager.MK66F18 component.lists.MK66F18 component.serial_manager_uart.MK66F18 platform.drivers.uart.MK66F18 device.MK66F18_startup.MK66F18 platform.drivers.lpuart.MK66F18 platform.drivers.smc.MK66F18 platform.utilities.assert.MK66F18 driver.mdio-common.MK66F18 platform.Include_core_cm4.MK66F18 platform.Include_common.MK66F18 platform.Include_dsp.MK66F18 middleware.mmcau.common_files.MK66F18 middleware.freertos-kernel.MK66F18 middleware.freertos-kernel.extension.MK66F18 middleware.azure_iot.MK66F18 middleware.azure_iot.amqp.MK66F18 middleware.azure_iot.adapters.MK66F18 middleware.azure_iot.adapters.freertos.MK66F18 middleware.azure_iot.iothub_client.MK66F18 middleware.azure_iot.certs.MK66F18 middleware.azure_iot.parson.MK66F18 middleware.azure_iot.umock_c.MK66F18 middleware.azure_iot.azure_macro_utils.MK66F18 middleware.azure_iot.mbedtls.MK66F18 platform.utilities.misc_utilities.MK66F18 device.MK66F18_system.MK66F18" category="azure_examples">
+  <example id="frdmk66f_azure_amqp_rc" name="azure_amqp_rc" dependency="driver.mdio-enet.MK66F18 driver.phy-device-ksz8081.MK66F18 middleware.mmcau.cm4_cm7.MK66F18 platform.drivers.rnga.MK66F18 middleware.mbedtls.MK66F18 middleware.mbedtls.port.ksdk.MK66F18 middleware.mbedtls.kinetis.MK66F18 platform.drivers.port.MK66F18 platform.drivers.sim.MK66F18 platform.drivers.clock.MK66F18 platform.drivers.gpio.MK66F18 middleware.freertos-kernel.heap_3.MK66F18 middleware.lwip.apps.sntp.MK66F18 middleware.lwip.MK66F18 utility.debug_console.MK66F18 middleware.lwip.enet_ethernetif.MK66F18 driver.phy-common.MK66F18 platform.drivers.enet.MK66F18 middleware.azure_iot.iothub_client.amqp.MK66F18 middleware.azure_iot.java_app.MK66F18 platform.drivers.flash.MK66F18 platform.drivers.common.MK66F18 device.MK66F18_CMSIS.MK66F18 component.uart_adapter.MK66F18 component.serial_manager.MK66F18 component.lists.MK66F18 component.serial_manager_uart.MK66F18 platform.drivers.uart.MK66F18 device.MK66F18_startup.MK66F18 platform.drivers.lpuart.MK66F18 platform.drivers.smc.MK66F18 platform.utilities.assert.MK66F18 driver.mdio-common.MK66F18 CMSIS_Include_core_cm.MK66F18 middleware.mmcau.common_files.MK66F18 middleware.freertos-kernel.MK66F18 middleware.freertos-kernel.extension.MK66F18 middleware.azure_iot.MK66F18 middleware.azure_iot.amqp.MK66F18 middleware.azure_iot.adapters.MK66F18 middleware.azure_iot.adapters.freertos.MK66F18 middleware.azure_iot.iothub_client.MK66F18 middleware.azure_iot.certs.MK66F18 middleware.azure_iot.parson.MK66F18 middleware.azure_iot.umock_c.MK66F18 middleware.azure_iot.azure_macro_utils.MK66F18 middleware.azure_iot.mbedtls.MK66F18 platform.utilities.misc_utilities.MK66F18 device.MK66F18_system.MK66F18" category="azure_examples">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -69,6 +67,7 @@
           <value>CPU_MK66FN2M0VMD18</value>
           <value>SDK_DEBUGCONSOLE=0</value>
           <value>SDK_DEBUGCONSOLE_UART</value>
+          <value>PBUF_POOL_SIZE=4</value>
           <value>PRINTF_ADVANCED_ENABLE=1</value>
           <value>USE_RTOS=1</value>
           <value>LWIP_DNS=1</value>
@@ -78,8 +77,10 @@
           <value>MBEDTLS_CONFIG_FILE='"azure_mbedtls_config.h"'</value>
           <value>FRDM_K66F</value>
           <value>FREEDOM</value>
+          <value>LWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1</value>
           <value>SERIAL_PORT_TYPE_UART=1</value>
-          <value>FSL_RTOS_FREE_RTOS</value>
+          <value>SDK_OS_FREE_RTOS</value>
+          <value>MCUXPRESSO_SDK</value>
         </option>
         <option id="com.crt.advproject.gcc.fpu" type="enum">
           <value>com.crt.advproject.gcc.fpu.fpv4.hard</value>

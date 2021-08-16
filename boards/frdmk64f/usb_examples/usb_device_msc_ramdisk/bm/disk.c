@@ -115,7 +115,7 @@ void USB_DeviceTaskFn(void *deviceHandle)
  */
 usb_status_t USB_DeviceMscCallback(class_handle_t handle, uint32_t event, void *param)
 {
-    usb_status_t error = kStatus_USB_Error;
+    usb_status_t error = kStatus_USB_Success;
     usb_device_lba_information_struct_t *lbaInformationStructure;
     usb_device_lba_app_struct_t *lbaData;
     usb_device_ufi_app_struct_t *ufi;
@@ -163,16 +163,14 @@ usb_status_t USB_DeviceMscCallback(class_handle_t handle, uint32_t event, void *
             ufi->size   = sizeof(usb_device_mode_parameters_header_struct_t);
             ufi->buffer = (uint8_t *)&g_ModeParametersHeader;
             break;
-        case kUSB_DeviceMscEventModeSelect:
-            break;
         case kUSB_DeviceMscEventModeSelectResponse:
             ufi = (usb_device_ufi_app_struct_t *)param;
             break;
+        case kUSB_DeviceMscEventModeSelect:
         case kUSB_DeviceMscEventFormatComplete:
-            break;
         case kUSB_DeviceMscEventRemovalRequest:
-            break;
         case kUSB_DeviceMscEventRequestSense:
+            error = kStatus_USB_InvalidRequest;
             break;
         case kUSB_DeviceMscEventReadCapacity:
             capacityInformation                         = (usb_device_capacity_information_struct_t *)param;
@@ -185,6 +183,7 @@ usb_status_t USB_DeviceMscCallback(class_handle_t handle, uint32_t event, void *
             capacityInformation->totalLbaNumberSupports = TOTAL_LOGICAL_ADDRESS_BLOCKS_NORMAL;
             break;
         default:
+            error = kStatus_USB_InvalidRequest;
             break;
     }
     return error;
@@ -200,7 +199,7 @@ usb_status_t USB_DeviceMscCallback(class_handle_t handle, uint32_t event, void *
  */
 usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *param)
 {
-    usb_status_t error = kStatus_USB_Error;
+    usb_status_t error = kStatus_USB_InvalidRequest;
     uint16_t *temp16   = (uint16_t *)param;
     uint8_t *temp8     = (uint8_t *)param;
     switch (event)
@@ -225,15 +224,17 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
             {
                 g_msc.attach               = 0;
                 g_msc.currentConfiguration = 0U;
+                error                      = kStatus_USB_Success;
             }
             else if (USB_MSC_CONFIGURE_INDEX == (*temp8))
             {
                 g_msc.attach               = 1;
                 g_msc.currentConfiguration = *temp8;
+                error                      = kStatus_USB_Success;
             }
             else
             {
-                error = kStatus_USB_InvalidRequest;
+                /* no action, return kStatus_USB_InvalidRequest */
             }
             break;
         case kUSB_DeviceEventSetInterface:
@@ -243,7 +244,11 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
                 uint8_t alternateSetting = (uint8_t)(*temp16 & 0x00FFU);
                 if (interface < USB_MSC_INTERFACE_COUNT)
                 {
-                    g_msc.currentInterfaceAlternateSetting[interface] = alternateSetting;
+                    if (alternateSetting < USB_MSC_INTERFACE_ALTERNATE_COUNT)
+                    {
+                        g_msc.currentInterfaceAlternateSetting[interface] = alternateSetting;
+                        error                                             = kStatus_USB_Success;
+                    }
                 }
             }
             break;
@@ -262,10 +267,6 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
                 {
                     *temp16 = (*temp16 & 0xFF00U) | g_msc.currentInterfaceAlternateSetting[interface];
                     error   = kStatus_USB_Success;
-                }
-                else
-                {
-                    error = kStatus_USB_InvalidRequest;
                 }
             }
             break;
@@ -359,8 +360,8 @@ int main(void)
 void main(void)
 #endif
 {
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
+    BOARD_InitBootPins();
+    BOARD_InitBootClocks();
     BOARD_InitDebugConsole();
 
     USB_DeviceApplicationInit();

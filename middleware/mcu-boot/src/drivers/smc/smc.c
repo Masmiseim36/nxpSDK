@@ -323,9 +323,11 @@ void enter_vlps(void)
 #if !defined(CPU_PKE18F512VLH15)
 void enter_lls(void)
 {
+#if defined(FSL_FEATURE_SMC_HAS_LOW_LEAKAGE_STOP_MODE) && FSL_FEATURE_SMC_HAS_LOW_LEAKAGE_STOP_MODE
     /* Write to PMPROT to allow LLS power modes this write-once
        bit allows the MCU to enter the LLS low power mode*/
     SMC->PMPROT = SMC_PMPROT_AVLLS_MASK;
+#endif // FSL_FEATURE_SMC_HAS_LOW_LEAKAGE_STOP_MODE
     /* Set the STOPM field to 0b011 for LLS mode  */
     SMC->PMCTRL &= ~SMC_PMCTRL_STOPM_MASK;
     SMC->PMCTRL |= SMC_PMCTRL_STOPM(0x3);
@@ -360,8 +362,10 @@ void enter_lls(void)
 
 void enter_vlls3(void)
 {
+#if defined(FSL_FEATURE_SMC_HAS_LOW_LEAKAGE_STOP_MODE) && FSL_FEATURE_SMC_HAS_LOW_LEAKAGE_STOP_MODE
     /* Write to PMPROT to allow VLLS3 power modes */
     SMC->PMPROT = SMC_PMPROT_AVLLS_MASK;
+#endif // #if defined(FSL_FEATURE_SMC_HAS_LOW_LEAKAGE_STOP_MODE) && FSL_FEATURE_SMC_HAS_LOW_LEAKAGE_STOP_MODE
     /* Set the STOPM field to 0b100 for VLLS3 mode */
     SMC->PMCTRL &= ~SMC_PMCTRL_STOPM_MASK;
     SMC->PMCTRL |= SMC_PMCTRL_STOPM(0x4);
@@ -411,8 +415,10 @@ void enter_vlls3(void)
 
 void enter_vlls2(void)
 {
+#if defined(FSL_FEATURE_SMC_HAS_LOW_LEAKAGE_STOP_MODE) && FSL_FEATURE_SMC_HAS_LOW_LEAKAGE_STOP_MODE
     /* Write to PMPROT to allow VLLS2 power modes */
     SMC->PMPROT = SMC_PMPROT_AVLLS_MASK;
+#endif // #if defined(FSL_FEATURE_SMC_HAS_LOW_LEAKAGE_STOP_MODE) && FSL_FEATURE_SMC_HAS_LOW_LEAKAGE_STOP_MODE
     /* Set the STOPM field to 0b100 for VLLS2 mode */
     SMC->PMCTRL &= ~SMC_PMCTRL_STOPM_MASK;
     SMC->PMCTRL |= SMC_PMCTRL_STOPM(0x4);
@@ -462,7 +468,9 @@ void enter_vlls2(void)
 
 void enter_vlls1(void)
 {
+#if defined (FSL_FEATURE_SMC_HAS_LOW_LEAKAGE_STOP_MODE) && FSL_FEATURE_SMC_HAS_LOW_LEAKAGE_STOP_MODE
     SMC->PMPROT = SMC_PMPROT_AVLLS_MASK;
+#endif
 
     /* Write to PMPROT to allow all possible power modes */
     /* Set the STOPM field to 0b100 for VLLS1 mode */

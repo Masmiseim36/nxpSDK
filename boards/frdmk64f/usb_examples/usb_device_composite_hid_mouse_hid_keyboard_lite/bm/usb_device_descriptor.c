@@ -171,7 +171,7 @@ uint8_t g_UsbDeviceConfigurationDescriptor[] = {
     USB_DESCRIPTOR_LENGTH_INTERFACE, /* Size of this descriptor in bytes */
     USB_DESCRIPTOR_TYPE_INTERFACE,   /* INTERFACE Descriptor Type */
     USB_HID_MOUSE_INTERFACE_INDEX,   /* Number of this interface. */
-    0x00U,                           /* Value used to select this alternate setting
+    USB_HID_MOUSE_INTERFACE_ALTERNATE_0, /* Value used to select this alternate setting
                                         for the interface identified in the prior field */
     USB_HID_MOUSE_ENDPOINT_COUNT,    /* Number of endpoints used by this
                                           interface (excluding endpoint zero). */
@@ -210,7 +210,7 @@ uint8_t g_UsbDeviceConfigurationDescriptor[] = {
     USB_DESCRIPTOR_LENGTH_INTERFACE,  /* Size of this descriptor in bytes */
     USB_DESCRIPTOR_TYPE_INTERFACE,    /* INTERFACE Descriptor Type */
     USB_HID_KEYBOARD_INTERFACE_INDEX, /* Number of this interface. */
-    0x00U,                            /* Value used to select this alternate setting
+    USB_HID_KEYBOARD_INTERFACE_ALTERNATE_0, /* Value used to select this alternate setting
                                          for the interface identified in the prior field */
     USB_HID_KEYBOARD_ENDPOINT_COUNT,  /* Number of endpoints used by this
                                         interface (excluding endpoint zero). */
@@ -398,10 +398,7 @@ usb_status_t USB_DeviceGetDescriptor(usb_device_handle handle,
     usb_status_t error      = kStatus_USB_Success;
     uint8_t descriptorType  = (uint8_t)((setup->wValue & 0xFF00U) >> 8U);
     uint8_t descriptorIndex = (uint8_t)((setup->wValue & 0x00FFU));
-    if (USB_REQUEST_STANDARD_GET_DESCRIPTOR != setup->bRequest)
-    {
-        return kStatus_USB_InvalidRequest;
-    }
+
     switch (descriptorType)
     {
         case USB_DESCRIPTOR_TYPE_HID_REPORT:
@@ -508,15 +505,23 @@ usb_status_t USB_DeviceGetConfigure(usb_device_handle handle, uint8_t *configure
 /* Set current alternate settting of the interface request */
 usb_status_t USB_DeviceSetInterface(usb_device_handle handle, uint8_t interface, uint8_t alternateSetting)
 {
-    g_UsbDeviceInterface[interface] = alternateSetting;
-    return USB_DeviceCallback(handle, kUSB_DeviceEventSetInterface, &interface);
+    if (interface < USB_COMPOSITE_INTERFACE_COUNT)
+    {
+        g_UsbDeviceInterface[interface] = alternateSetting;
+        return USB_DeviceCallback(handle, kUSB_DeviceEventSetInterface, &interface);
+    }
+    return kStatus_USB_InvalidRequest;
 }
 
 /* Get current alternate settting of the interface request */
 usb_status_t USB_DeviceGetInterface(usb_device_handle handle, uint8_t interface, uint8_t *alternateSetting)
 {
-    *alternateSetting = g_UsbDeviceInterface[interface];
-    return kStatus_USB_Success;
+    if (interface < USB_COMPOSITE_INTERFACE_COUNT)
+    {
+        *alternateSetting = g_UsbDeviceInterface[interface];
+        return kStatus_USB_Success;
+    }
+    return kStatus_USB_InvalidRequest;
 }
 
 /* Due to the difference of HS and FS descriptors, the device descriptors and configurations need to be updated to match

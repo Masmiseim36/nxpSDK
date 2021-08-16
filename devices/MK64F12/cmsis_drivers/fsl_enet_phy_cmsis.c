@@ -1,7 +1,7 @@
 /*
  * Copyright (c) 2013-2016 ARM Limited. All rights reserved.
  * Copyright (c) 2016, Freescale Semiconductor, Inc. Not a Contribution.
- * Copyright 2016-2020 NXP. Not a Contribution.
+ * Copyright 2016-2021 NXP. Not a Contribution.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -19,7 +19,6 @@
  */
 
 #include "fsl_enet_phy_cmsis.h"
-#include "fsl_phy.h"
 #include "fsl_enet.h"
 
 #define ARM_ETH_PHY_DRV_VERSION ARM_DRIVER_VERSION_MAJOR_MINOR(2, 1)
@@ -42,8 +41,6 @@ typedef struct _cmsis_enet_phy_state
 } cmsis_enet_phy_state_t;
 
 static const ARM_DRIVER_VERSION s_phyDriverVersion = {ARM_ETH_PHY_API_VERSION, ARM_ETH_PHY_DRV_VERSION};
-
-extern phy_handle_t phyHandle;
 
 static ARM_DRIVER_VERSION PHYx_GetVersion(void)
 {
@@ -149,8 +146,8 @@ static int32_t PHY0_UnInitialize(void)
 static int32_t PHY0_PowerControl(ARM_POWER_STATE state)
 {
     int32_t status;
-    phy_config_t phyConfig;
-    bool autonego = false;
+    phy_config_t phyConfig = {0};
+    bool autonego          = false;
     uint32_t count;
 
     switch (state)
@@ -210,8 +207,8 @@ static int32_t PHY0_SetInterface(uint32_t interface)
 
 static int32_t PHY0_SetMode(uint32_t mode)
 {
-    int32_t status = ARM_DRIVER_OK;
-    phy_config_t phyConfig;
+    int32_t status         = ARM_DRIVER_OK;
+    phy_config_t phyConfig = {0};
     uint32_t count;
     bool autonego = false;
 

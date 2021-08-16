@@ -62,17 +62,8 @@ void deinit_hardware(void)
 
 bool usb_clock_init(void)
 {
-    SIM->SCGC4 &= ~SIM_SCGC4_USBOTG_MASK;
-
-    SIM->CLKDIV2 = (uint32_t)0x00L;
-    SIM->SOPT2 |= SIM_SOPT2_USBSRC_MASK | SIM_SOPT2_PLLFLLSEL(0x03);
-
-    SIM->SCGC4 |= SIM_SCGC4_USBOTG_MASK;
-
-    USB0->CLK_RECOVER_IRC_EN = 0x03;
-    USB0->CLK_RECOVER_CTRL |= USB_CLK_RECOVER_CTRL_CLOCK_RECOVER_EN_MASK;
-
-    USB0->CLK_RECOVER_CTRL |= 0x20;
+    SystemCoreClockUpdate();
+    CLOCK_EnableUsbfs0Clock(kCLOCK_UsbSrcIrc48M, 48000000U);
 
     return true;
 }

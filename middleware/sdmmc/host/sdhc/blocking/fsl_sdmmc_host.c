@@ -108,43 +108,6 @@ status_t SDMMCHOST_PollingCardDetectStatus(sdmmchost_t *host, uint32_t waitCardS
     return kStatus_Success;
 }
 
-status_t SDMMCHOST_WaitCardDetectStatus(SDMMCHOST_TYPE *hostBase,
-                                        const sdmmchost_detect_card_t *cd,
-                                        bool waitCardStatus)
-{
-    assert(cd != NULL);
-
-    while (((SDHC_GetInterruptStatusFlags(hostBase) & (uint32_t)kSDHC_CardInsertionFlag) != 0U) != waitCardStatus)
-    {
-    }
-
-    return kStatus_Success;
-}
-
-void SDMMCHOST_PowerOffCard(SDMMCHOST_TYPE *base, const sdmmchost_pwr_card_t *pwr)
-{
-    if (pwr != NULL)
-    {
-        pwr->powerOff();
-        SDMMC_OSADelay(pwr->powerOffDelay_ms);
-    }
-}
-
-void SDMMCHOST_PowerOnCard(SDMMCHOST_TYPE *base, const sdmmchost_pwr_card_t *pwr)
-{
-    /* use user define the power on function  */
-    if (pwr != NULL)
-    {
-        pwr->powerOn();
-        SDMMC_OSADelay(pwr->powerOnDelay_ms);
-    }
-    else
-    {
-        /* Delay several milliseconds to make card stable. */
-        SDMMC_OSADelay(1000U);
-    }
-}
-
 status_t SDMMCHOST_TransferFunction(sdmmchost_t *host, sdmmchost_transfer_t *content)
 {
     status_t error = kStatus_Success;
@@ -184,9 +147,40 @@ static void SDMMCHOST_ErrorRecovery(SDHC_Type *base)
     }
 }
 
-void SDMMCHOST_SetCardPower(sdmmchost_t *host, bool enable)
+void SDMMCHOST_ConvertDataToLittleEndian(sdmmchost_t *host, uint32_t *data, uint32_t wordSize, uint32_t format)
 {
-    /* host not support */
+    uint32_t temp = 0U;
+
+    if (((uint32_t)host->hostController.config.endianMode == (uint32_t)kSDMMCHOST_EndianModeLittle) &&
+        (format == kSDMMC_DataPacketFormatMSBFirst))
+    {
+        for (uint32_t i = 0U; i < wordSize; i++)
+        {
+            temp    = data[i];
+            data[i] = SWAP_WORD_BYTE_SEQUENCE(temp);
+        }
+    }
+    else if ((uint32_t)host->hostController.config.endianMode == (uint32_t)kSDMMCHOST_EndianModeHalfWordBig)
+    {
+        for (uint32_t i = 0U; i < wordSize; i++)
+        {
+            temp    = data[i];
+            data[i] = SWAP_HALF_WROD_BYTE_SEQUENCE(temp);
+        }
+    }
+    else if (((uint32_t)host->hostController.config.endianMode == (uint32_t)kSDMMCHOST_EndianModeBig) &&
+             (format == kSDMMC_DataPacketFormatLSBFirst))
+    {
+        for (uint32_t i = 0U; i < wordSize; i++)
+        {
+            temp    = data[i];
+            data[i] = SWAP_WORD_BYTE_SEQUENCE(temp);
+        }
+    }
+    else
+    {
+        /* nothing to do */
+    }
 }
 
 status_t SDMMCHOST_Init(sdmmchost_t *host)
@@ -194,6 +188,13 @@ status_t SDMMCHOST_Init(sdmmchost_t *host)
     assert(host != NULL);
 
     sdhc_host_t *sdhcHost = &(host->hostController);
+    /* host capability flags */
+    host->capability = (uint32_t)kSDMMCHOST_SupportHighSpeed | (uint32_t)kSDMMCHOST_SupportSuspendResume |
+                       (uint32_t)kSDMMCHOST_SupportVoltage3v3 | (uint32_t)kSDMMCHOST_Support4BitDataWidth |
+                       (uint32_t)kSDMMCHOST_Support8BitDataWidth | (uint32_t)kSDMMCHOST_SupportDetectCardByData3 |
+                       (uint32_t)kSDMMCHOST_SupportAutoCmd12;
+    host->maxBlockCount = SDMMCHOST_SUPPORT_MAX_BLOCK_COUNT;
+    host->maxBlockSize  = SDMMCHOST_SUPPORT_MAX_BLOCK_LENGTH;
 
     /* Initializes SDHC. */
     sdhcHost->config.endianMode          = kSDHC_EndianModeLittle;
@@ -223,19 +224,4 @@ void SDMMCHOST_Deinit(sdmmchost_t *host)
 {
     sdhc_host_t *sdhcHost = &host->hostController;
     SDHC_Deinit(sdhcHost->base);
-}
-
-status_t SDMMCHOST_StartBoot(sdmmchost_t *host,
-                             sdmmchost_boot_config_t *hostConfig,
-                             sdmmchost_cmd_t *cmd,
-                             uint8_t *buffer)
-{
-    /* not support */
-    return kStatus_Success;
-}
-
-status_t SDMMCHOST_ReadBootData(sdmmchost_t *host, sdmmchost_boot_config_t *hostConfig, uint8_t *buffer)
-{
-    /* not support */
-    return kStatus_Success;
 }

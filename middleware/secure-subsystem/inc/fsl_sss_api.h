@@ -1,5 +1,5 @@
 /*
- * Copyright 2018,2019 NXP
+ * Copyright 2018-2021 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -116,19 +116,19 @@ typedef enum
     kSSS_ConnectionType_Encrypted
 } sss_connection_type_t;
 
-#define SSS_ALGORITHM_START_AES (0x00)
-#define SSS_ALGORITHM_START_CHACHA (0x01)
-#define SSS_ALGORITHM_START_DES (0x02)
-#define SSS_ALGORITHM_START_SHA (0x03)
-#define SSS_ALGORITHM_START_MAC (0x04)
-#define SSS_ALGORITHM_START_DH (0x05)
-#define SSS_ALGORITHM_START_DSA (0x06)
-#define SSS_ALGORITHM_START_RSASSA_PKCS1_V1_5 (0x07)
+#define SSS_ALGORITHM_START_AES                   (0x00)
+#define SSS_ALGORITHM_START_CHACHA                (0x01)
+#define SSS_ALGORITHM_START_DES                   (0x02)
+#define SSS_ALGORITHM_START_SHA                   (0x03)
+#define SSS_ALGORITHM_START_MAC                   (0x04)
+#define SSS_ALGORITHM_START_DH                    (0x05)
+#define SSS_ALGORITHM_START_DSA                   (0x06)
+#define SSS_ALGORITHM_START_RSASSA_PKCS1_V1_5     (0x07)
 #define SSS_ALGORITHM_START_RSASSA_PKCS1_PSS_MGF1 (0x08)
-#define SSS_ALGORITHM_START_RSAES_PKCS1_OAEP (0x09)
-#define SSS_ALGORITHM_START_RSAES_PKCS1_V1_5 (0x0A)
-#define SSS_ALGORITHM_START_RSASSA_NO_PADDING (0x0B)
-#define SSS_ALGORITHM_START_ECDSA (0x0C)
+#define SSS_ALGORITHM_START_RSAES_PKCS1_OAEP      (0x09)
+#define SSS_ALGORITHM_START_RSAES_PKCS1_V1_5      (0x0A)
+#define SSS_ALGORITHM_START_RSASSA_NO_PADDING     (0x0B)
+#define SSS_ALGORITHM_START_ECDSA                 (0x0C)
 
 #define SSS_ENUM_ALGORITHM(GROUP, INDEX) (((SSS_ALGORITHM_START_##GROUP) << 8) | (INDEX))
 
@@ -206,7 +206,7 @@ typedef enum _sss_algorithm
 #endif
 
 // Deprecated names for RSAES_PKCS1_OAEP algorithms
-#define kAlgorithm_SSS_RSASSA_PKCS1_OEAP_SHA1 kAlgorithm_SSS_RSAES_PKCS1_OAEP_SHA1
+#define kAlgorithm_SSS_RSASSA_PKCS1_OEAP_SHA1   kAlgorithm_SSS_RSAES_PKCS1_OAEP_SHA1
 #define kAlgorithm_SSS_RSASSA_PKCS1_OEAP_SHA224 kAlgorithm_SSS_RSAES_PKCS1_OAEP_SHA224
 #define kAlgorithm_SSS_RSASSA_PKCS1_OEAP_SHA256 kAlgorithm_SSS_RSAES_PKCS1_OAEP_SHA256
 #define kAlgorithm_SSS_RSASSA_PKCS1_OEAP_SHA384 kAlgorithm_SSS_RSAES_PKCS1_OAEP_SHA384

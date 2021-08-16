@@ -400,59 +400,92 @@ static usb_status_t USB_DeviceKhciEndpointStall(usb_device_khci_state_struct_t *
     uint8_t direction =
         (ep & USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_MASK) >> USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_SHIFT;
     uint8_t index = ((uint8_t)((uint32_t)endpoint << 1U)) | (uint8_t)direction;
+    OSA_SR_ALLOC();
 
-    /* Cancel the transfer of the endpoint */
-    (void)USB_DeviceKhciCancel(khciState, ep);
-
-    /* Set endpoint stall flag. */
-    khciState->endpointState[index].stateUnion.stateBitField.stalled = 1U;
-#if defined(FSL_FEATURE_USB_KHCI_HAS_STALL_LOW) && (FSL_FEATURE_USB_KHCI_HAS_STALL_LOW > 0U)
-    if (USB_CONTROL_ENDPOINT != endpoint)
+    if (USB_CONTROL_ENDPOINT == endpoint)
     {
-        if (USB_IN == direction)
-        {
-            /*endpoint is between 1 and 15*/
-            if (endpoint < 8U)
-            {
-                khciState->registerBase->STALL_IL_DIS &= (uint8_t)(~(1UL << endpoint));
-            }
-#if defined(FSL_FEATURE_USB_KHCI_HAS_STALL_HIGH) && (FSL_FEATURE_USB_KHCI_HAS_STALL_HIGH > 0U)
-            else if (endpoint >= 8U)
-            {
-                khciState->registerBase->STALL_IH_DIS &= (uint8_t)(~(1UL << (endpoint - 8U)));
-            }
-#endif
-            else
-            {
-                /*no action*/
-            }
-        }
-        else
-        {
-            if (endpoint < 8U)
-            {
-                khciState->registerBase->STALL_OL_DIS &= (uint8_t)(~(1UL << endpoint));
-            }
-#if defined(FSL_FEATURE_USB_KHCI_HAS_STALL_HIGH) && (FSL_FEATURE_USB_KHCI_HAS_STALL_HIGH > 0U)
-            else if (endpoint >= 8U)
-            {
-                khciState->registerBase->STALL_OH_DIS &= (uint8_t)(~(1UL << (endpoint - 8U)));
-            }
-#endif
-            else
-            {
-                /*no action*/
-            }
-        }
+        /* Cancel the transfer of the endpoint */
+        (void)USB_DeviceKhciCancel(khciState, 0x00);
+        (void)USB_DeviceKhciCancel(khciState, 0x80);
+        /* Set endpoint stall flag. */
+        khciState->endpointState[0].stateUnion.stateBitField.stalled = 1U;
+        khciState->endpointState[1].stateUnion.stateBitField.stalled = 1U;
+        /* Enter critical */
+        OSA_ENTER_CRITICAL();
+        /* Set endpoint stall in BDT. And then if the host send a IN/OUT tansaction, the device will response a STALL
+         * state. */
+        USB_KHCI_BDT_SET_CONTROL(
+            (uint32_t)khciState->bdt, endpoint, 0, khciState->endpointState[0].stateUnion.stateBitField.bdtOdd,
+            USB_LONG_TO_LITTLE_ENDIAN(
+                (uint32_t)(USB_KHCI_BDT_BC(khciState->endpointState[0].stateUnion.stateBitField.maxPacketSize) |
+                           USB_KHCI_BDT_DTS | USB_KHCI_BDT_STALL | USB_KHCI_BDT_OWN)));
+        /* Set endpoint stall in BDT. And then if the host send a IN/OUT tansaction, the device will response a STALL
+         * state. */
+        USB_KHCI_BDT_SET_CONTROL(
+            (uint32_t)khciState->bdt, endpoint, 1, khciState->endpointState[1].stateUnion.stateBitField.bdtOdd,
+            USB_LONG_TO_LITTLE_ENDIAN(
+                (uint32_t)(USB_KHCI_BDT_BC(khciState->endpointState[1].stateUnion.stateBitField.maxPacketSize) |
+                           USB_KHCI_BDT_DTS | USB_KHCI_BDT_STALL | USB_KHCI_BDT_OWN)));
+        /* Exit critical */
+        OSA_EXIT_CRITICAL();
     }
+    else
+    {
+        /* Cancel the transfer of the endpoint */
+        (void)USB_DeviceKhciCancel(khciState, ep);
+
+        /* Set endpoint stall flag. */
+        khciState->endpointState[index].stateUnion.stateBitField.stalled = 1U;
+#if defined(FSL_FEATURE_USB_KHCI_HAS_STALL_LOW) && (FSL_FEATURE_USB_KHCI_HAS_STALL_LOW > 0U)
+        if (USB_CONTROL_ENDPOINT != endpoint)
+        {
+            if (USB_IN == direction)
+            {
+                /*endpoint is between 1 and 15*/
+                if (endpoint < 8U)
+                {
+                    khciState->registerBase->STALL_IL_DIS &= (uint8_t)(~(1UL << endpoint));
+                }
+#if defined(FSL_FEATURE_USB_KHCI_HAS_STALL_HIGH) && (FSL_FEATURE_USB_KHCI_HAS_STALL_HIGH > 0U)
+                else if (endpoint >= 8U)
+                {
+                    khciState->registerBase->STALL_IH_DIS &= (uint8_t)(~(1UL << (endpoint - 8U)));
+                }
 #endif
-    /* Set endpoint stall in BDT. And then if the host send a IN/OUT tansaction, the device will response a STALL state.
-     */
-    USB_KHCI_BDT_SET_CONTROL(
-        (uint32_t)khciState->bdt, endpoint, direction, khciState->endpointState[index].stateUnion.stateBitField.bdtOdd,
-        USB_LONG_TO_LITTLE_ENDIAN(
-            (uint32_t)(USB_KHCI_BDT_BC(khciState->endpointState[index].stateUnion.stateBitField.maxPacketSize) |
-                       USB_KHCI_BDT_DTS | USB_KHCI_BDT_STALL | USB_KHCI_BDT_OWN)));
+                else
+                {
+                    /*no action*/
+                }
+            }
+            else
+            {
+                if (endpoint < 8U)
+                {
+                    khciState->registerBase->STALL_OL_DIS &= (uint8_t)(~(1UL << endpoint));
+                }
+#if defined(FSL_FEATURE_USB_KHCI_HAS_STALL_HIGH) && (FSL_FEATURE_USB_KHCI_HAS_STALL_HIGH > 0U)
+                else if (endpoint >= 8U)
+                {
+                    khciState->registerBase->STALL_OH_DIS &= (uint8_t)(~(1UL << (endpoint - 8U)));
+                }
+#endif
+                else
+                {
+                    /*no action*/
+                }
+            }
+        }
+#endif
+        /* Set endpoint stall in BDT. And then if the host send a IN/OUT tansaction, the device will response a STALL
+         * state.
+         */
+        USB_KHCI_BDT_SET_CONTROL(
+            (uint32_t)khciState->bdt, endpoint, direction,
+            khciState->endpointState[index].stateUnion.stateBitField.bdtOdd,
+            USB_LONG_TO_LITTLE_ENDIAN(
+                (uint32_t)(USB_KHCI_BDT_BC(khciState->endpointState[index].stateUnion.stateBitField.maxPacketSize) |
+                           USB_KHCI_BDT_DTS | USB_KHCI_BDT_STALL | USB_KHCI_BDT_OWN)));
+    }
 
     khciState->registerBase->CTL &= (uint8_t)(~USB_CTL_TXSUSPENDTOKENBUSY_MASK);
 
@@ -1274,7 +1307,11 @@ usb_status_t USB_DeviceKhciControl(usb_device_controller_handle khciHandle, usb_
 #endif
 #if ((defined(USB_DEVICE_CONFIG_REMOTE_WAKEUP)) && (USB_DEVICE_CONFIG_REMOTE_WAKEUP > 0U))
     usb_device_struct_t *deviceHandle;
+#endif
+#if ((defined(USB_DEVICE_CONFIG_LOW_POWER_MODE)) && (USB_DEVICE_CONFIG_LOW_POWER_MODE > 0U))
+#if ((defined(USB_DEVICE_CONFIG_REMOTE_WAKEUP)) && (USB_DEVICE_CONFIG_REMOTE_WAKEUP > 0U))
     uint64_t startTick;
+#endif
 #endif
     usb_status_t status = kStatus_USB_Error;
 

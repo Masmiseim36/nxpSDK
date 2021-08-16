@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2020 NXP
+ * Copyright 2018-2021 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -135,5 +135,14 @@ typedef enum _sss_cipher_type
     kSSS_CipherType_PCR         = SAB_KEY_TYPE_ASYMMETRIC,
     kSSS_CipherType_ReservedPin = SAB_KEY_TYPE_ASYMMETRIC,
 } sss_cipher_type_t;
+
+/* Key generate function modes */
+typedef enum
+{
+    kSSS_KeyGenMode_Symetric = SAB_KEY_GEN_MODE_SYMMETRIC,
+    kSSS_KeyGenMode_Ecc      = SAB_KEY_GEN_MODE_ECC,
+    kSSS_KeyGenMode_Montdh   = SAB_KEY_GEN_MODE_MONTDH,
+    kSSS_KeyGenMode_Ecdsa    = SAB_KEY_GEN_MODE_EDDSA
+} sss_key_gen_mode_t;
 
 #endif /* _FSL_SSS_CONFIG_H_ */

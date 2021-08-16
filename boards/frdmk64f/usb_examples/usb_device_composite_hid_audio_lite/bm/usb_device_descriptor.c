@@ -131,7 +131,7 @@ uint8_t g_UsbDeviceConfigurationDescriptor[] = {
     USB_DESCRIPTOR_LENGTH_INTERFACE,   /* Size of the descriptor, in bytes  */
     USB_DESCRIPTOR_TYPE_INTERFACE,     /* INTERFACE Descriptor Type   */
     USB_AUDIO_CONTROL_INTERFACE_INDEX, /* The number of this interface is 0 */
-    0x00U,                             /* The value used to select the alternate setting for this interface is 0   */
+    USB_AUDIO_GENERATOR_CONTROL_INTERFACE_ALTERNATE_0, /* The value used to select the alternate setting for this interface is 0   */
     0x00U,                     /* The number of endpoints used by this interface is 0 (excluding endpoint zero)   */
     USB_AUDIO_CLASS,           /* The interface implements the Audio Interface class   */
     USB_SUBCLASS_AUDIOCONTROL, /* The interface implements the AUDIOCONTROL Subclass   */
@@ -225,7 +225,7 @@ uint8_t g_UsbDeviceConfigurationDescriptor[] = {
     USB_DESCRIPTOR_LENGTH_INTERFACE,  /* Descriptor size is 9 bytes  */
     USB_DESCRIPTOR_TYPE_INTERFACE,    /* INTERFACE Descriptor Type   */
     USB_AUDIO_STREAM_INTERFACE_INDEX, /* The number of this interface is 1.  */
-    0x00U,                            /* The value used to select the alternate setting for this interface is 0   */
+    USB_AUDIO_GENERATOR_STREAM_INTERFACE_ALTERNATE_0, /* The value used to select the alternate setting for this interface is 0   */
     0x00U,                    /* The number of endpoints used by this interface is 0 (excluding endpoint zero)   */
     USB_AUDIO_CLASS,          /* The interface implements the Audio Interface class   */
     USB_SUBCLASS_AUDIOSTREAM, /* The interface implements the AUDIOSTREAMING Subclass   */
@@ -236,7 +236,7 @@ uint8_t g_UsbDeviceConfigurationDescriptor[] = {
     USB_DESCRIPTOR_LENGTH_INTERFACE,  /* Descriptor size is 9 bytes  */
     USB_DESCRIPTOR_TYPE_INTERFACE,    /* INTERFACE Descriptor Type  */
     USB_AUDIO_STREAM_INTERFACE_INDEX, /*The number of this interface is 1.  */
-    0x01U,                            /* The value used to select the alternate setting for this interface is 1  */
+    USB_AUDIO_GENERATOR_STREAM_INTERFACE_ALTERNATE_1, /* The value used to select the alternate setting for this interface is 1  */
     0x01U,                    /* The number of endpoints used by this interface is 1 (excluding endpoint zero)    */
     USB_AUDIO_CLASS,          /* The interface implements the Audio Interface class   */
     USB_SUBCLASS_AUDIOSTREAM, /* The interface implements the AUDIOSTREAMING Subclass   */
@@ -291,7 +291,7 @@ uint8_t g_UsbDeviceConfigurationDescriptor[] = {
     USB_DESCRIPTOR_LENGTH_INTERFACE, /* Size of this descriptor in bytes */
     USB_DESCRIPTOR_TYPE_INTERFACE,   /* INTERFACE Descriptor Type */
     USB_HID_MOUSE_INTERFACE_INDEX,   /* Number of this interface. */
-    0x00U,                           /* Value used to select this alternate setting
+    USB_HID_MOUSE_INTERFACE_ALTERNATE_0, /* Value used to select this alternate setting
                                         for the interface identified in the prior field */
     USB_HID_MOUSE_ENDPOINT_COUNT,    /* Number of endpoints used by this
                                         interface (excluding endpoint zero). */
@@ -362,7 +362,7 @@ uint8_t g_UsbDeviceConfigurationDescriptor[] = {
     USB_DESCRIPTOR_LENGTH_INTERFACE,   /* Size of this descriptor in bytes */
     USB_DESCRIPTOR_TYPE_INTERFACE,     /* INTERFACE Descriptor Type */
     USB_AUDIO_CONTROL_INTERFACE_INDEX, /* Number of this interface. */
-    0x00U,                             /* Value used to select this alternate setting
+    USB_AUDIO_GENERATOR_CONTROL_INTERFACE_ALTERNATE_0, /* Value used to select this alternate setting
                                           for the interface identified in the prior field */
     0x01U,                             /* Number of endpoints used by this
                                           interface (excluding endpoint zero). */
@@ -436,7 +436,7 @@ uint8_t g_UsbDeviceConfigurationDescriptor[] = {
     USB_DESCRIPTOR_LENGTH_INTERFACE,  /* Descriptor size is 9 bytes  */
     USB_DESCRIPTOR_TYPE_INTERFACE,    /* INTERFACE Descriptor Type   */
     USB_AUDIO_STREAM_INTERFACE_INDEX, /* The number of this interface is 1.  */
-    0x00U,                            /* The value used to select the alternate setting for this interface is 0   */
+    USB_AUDIO_GENERATOR_STREAM_INTERFACE_ALTERNATE_0, /* The value used to select the alternate setting for this interface is 0   */
     0x00U,                    /* The number of endpoints used by this interface is 0 (excluding endpoint zero)   */
     USB_AUDIO_CLASS,          /* The interface implements the Audio Interface class   */
     USB_SUBCLASS_AUDIOSTREAM, /* The interface implements the AUDIOSTREAMING Subclass   */
@@ -447,7 +447,7 @@ uint8_t g_UsbDeviceConfigurationDescriptor[] = {
     USB_DESCRIPTOR_LENGTH_INTERFACE,  /* Descriptor size is 9 bytes  */
     USB_DESCRIPTOR_TYPE_INTERFACE,    /* INTERFACE Descriptor Type  */
     USB_AUDIO_STREAM_INTERFACE_INDEX, /*The number of this interface is 1.  */
-    0x01U,                            /* The value used to select the alternate setting for this interface is 1  */
+    USB_AUDIO_GENERATOR_STREAM_INTERFACE_ALTERNATE_1, /* The value used to select the alternate setting for this interface is 1  */
     0x01U,                    /* The number of endpoints used by this interface is 1 (excluding endpoint zero)    */
     USB_AUDIO_CLASS,          /* The interface implements the Audio Interface class   */
     USB_SUBCLASS_AUDIOSTREAM, /* The interface implements the AUDIOSTREAMING Subclass   */
@@ -506,8 +506,8 @@ uint8_t g_UsbDeviceConfigurationDescriptor[] = {
     /* Interface Descriptor */
     USB_DESCRIPTOR_LENGTH_INTERFACE, /* Size of this descriptor in bytes */
     USB_DESCRIPTOR_TYPE_INTERFACE,   /* INTERFACE Descriptor Type */
-    0x02,                            /* Number of this interface. */
-    0x00U,                           /* Value used to select this alternate setting
+    USB_HID_MOUSE_INTERFACE_INDEX,   /* Number of this interface. */
+    USB_HID_MOUSE_INTERFACE_ALTERNATE_0, /* Value used to select this alternate setting
                                         for the interface identified in the prior field */
     USB_HID_MOUSE_ENDPOINT_COUNT,    /* Number of endpoints used by this
                                         interface (excluding endpoint zero). */
@@ -674,6 +674,7 @@ usb_status_t USB_DeviceGetDescriptor(usb_device_handle handle,
             }
             else
             {
+                ret = kStatus_USB_InvalidRequest;
             }
         }
         break;
@@ -790,8 +791,12 @@ usb_status_t USB_DeviceGetConfigure(usb_device_handle handle, uint8_t *configure
  */
 usb_status_t USB_DeviceSetInterface(usb_device_handle handle, uint8_t interface, uint8_t alternateSetting)
 {
-    g_UsbDeviceInterface[interface] = alternateSetting;
-    return USB_DeviceCallback(handle, kUSB_DeviceEventSetInterface, &interface);
+    if (interface < USB_COMPOSITE_INTERFACE_COUNT)
+    {
+        g_UsbDeviceInterface[interface] = alternateSetting;
+        return USB_DeviceCallback(handle, kUSB_DeviceEventSetInterface, &interface);
+    }
+    return kStatus_USB_InvalidRequest;
 }
 
 /*!
@@ -807,8 +812,12 @@ usb_status_t USB_DeviceSetInterface(usb_device_handle handle, uint8_t interface,
  */
 usb_status_t USB_DeviceGetInterface(usb_device_handle handle, uint8_t interface, uint8_t *alternateSetting)
 {
-    *alternateSetting = g_UsbDeviceInterface[interface];
-    return kStatus_USB_Success;
+    if (interface < USB_COMPOSITE_INTERFACE_COUNT)
+    {
+        *alternateSetting = g_UsbDeviceInterface[interface];
+        return kStatus_USB_Success;
+    }
+    return kStatus_USB_InvalidRequest;    
 }
 
 /* Due to the difference of HS and FS descriptors, the device descriptors and configurations need to be updated to match

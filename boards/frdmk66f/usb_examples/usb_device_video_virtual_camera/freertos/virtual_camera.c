@@ -440,7 +440,7 @@ static usb_status_t USB_DeviceVideoRequest(class_handle_t handle, uint32_t event
 /* USB device Video class callback */
 static usb_status_t USB_DeviceVideoCallback(class_handle_t handle, uint32_t event, void *param)
 {
-    usb_status_t error = kStatus_USB_Error;
+    usb_status_t error = kStatus_USB_InvalidRequest;
 
     switch (event)
     {
@@ -554,7 +554,7 @@ static void USB_DeviceVideoApplicationSetDefault(void)
 /* The device callback */
 static usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *param)
 {
-    usb_status_t error = kStatus_USB_Success;
+    usb_status_t error = kStatus_USB_InvalidRequest;
     uint8_t *temp8     = (uint8_t *)param;
     uint16_t *temp16   = (uint16_t *)param;
 
@@ -581,6 +581,7 @@ static usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event,
                 g_UsbDeviceVideoVirtualCamera.currentMaxPacketSize = HS_STREAM_IN_PACKET_SIZE;
             }
 #endif
+            error = kStatus_USB_Success;
         }
         break;
         case kUSB_DeviceEventSetConfiguration:
@@ -588,16 +589,18 @@ static usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event,
             {
                 g_UsbDeviceVideoVirtualCamera.attach               = 0U;
                 g_UsbDeviceVideoVirtualCamera.currentConfiguration = 0U;
+                error                                              = kStatus_USB_Success;
             }
             else if (USB_VIDEO_VIRTUAL_CAMERA_CONFIGURE_INDEX == (*temp8))
             {
                 /* Set the configuration request */
                 g_UsbDeviceVideoVirtualCamera.attach               = 1U;
                 g_UsbDeviceVideoVirtualCamera.currentConfiguration = *temp8;
+                error                                              = kStatus_USB_Success;
             }
             else
             {
-                error = kStatus_USB_InvalidRequest;
+                /* no action */
             }
             break;
         case kUSB_DeviceEventSetInterface:
@@ -607,11 +610,20 @@ static usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event,
                 uint8_t interface        = (uint8_t)((*temp16 & 0xFF00U) >> 0x08U);
                 uint8_t alternateSetting = (uint8_t)(*temp16 & 0x00FFU);
 
-                if (g_UsbDeviceVideoVirtualCamera.currentInterfaceAlternateSetting[interface] != alternateSetting)
+                if (USB_VIDEO_VIRTUAL_CAMERA_CONTROL_INTERFACE_INDEX == interface)
                 {
-                    if (!g_UsbDeviceVideoVirtualCamera.currentInterfaceAlternateSetting[interface])
+                    if (alternateSetting < USB_VIDEO_VIRTUAL_CAMERA_CONTROL_INTERFACE_ALTERNATE_COUNT)
                     {
-                        if (USB_VIDEO_VIRTUAL_CAMERA_STREAM_INTERFACE_INDEX == interface)
+                        g_UsbDeviceVideoVirtualCamera.currentInterfaceAlternateSetting[interface] = alternateSetting;
+                        error = kStatus_USB_Success;
+                    }
+                }
+                else if (USB_VIDEO_VIRTUAL_CAMERA_STREAM_INTERFACE_INDEX == interface)
+                {
+                    if (alternateSetting < USB_VIDEO_VIRTUAL_CAMERA_STREAM_INTERFACE_ALTERNATE_COUNT)
+                    {
+                        if (USB_VIDEO_VIRTUAL_CAMERA_STREAM_INTERFACE_ALTERNATE_0 == 
+                            g_UsbDeviceVideoVirtualCamera.currentInterfaceAlternateSetting[interface])
                         {
                             USB_DeviceVideoPrepareVideoData();
                             error = USB_DeviceSendRequest(g_UsbDeviceVideoVirtualCamera.deviceHandle,
@@ -619,8 +631,16 @@ static usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event,
                                                           g_UsbDeviceVideoVirtualCamera.imageBuffer,
                                                           g_UsbDeviceVideoVirtualCamera.imageBufferLength);
                         }
+                        else
+                        {
+                            error = kStatus_USB_Success;
+                        }
+                        g_UsbDeviceVideoVirtualCamera.currentInterfaceAlternateSetting[interface] = alternateSetting;
                     }
-                    g_UsbDeviceVideoVirtualCamera.currentInterfaceAlternateSetting[interface] = alternateSetting;
+                }
+                else
+                {
+                    /* no action */
                 }
             }
             break;
@@ -642,10 +662,6 @@ static usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event,
                     *temp16 =
                         (*temp16 & 0xFF00U) | g_UsbDeviceVideoVirtualCamera.currentInterfaceAlternateSetting[interface];
                     error = kStatus_USB_Success;
-                }
-                else
-                {
-                    error = kStatus_USB_InvalidRequest;
                 }
             }
             break;
@@ -672,6 +688,7 @@ static usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event,
             }
             break;
         default:
+            /* no action */
             break;
     }
 
@@ -748,8 +765,8 @@ int main(void)
 void main(void)
 #endif
 {
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
+    BOARD_InitBootPins();
+    BOARD_InitBootClocks();
     BOARD_InitDebugConsole();
 
     if (xTaskCreate(APP_task,                                            /* pointer to the task */

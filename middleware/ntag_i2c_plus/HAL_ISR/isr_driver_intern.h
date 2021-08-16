@@ -14,7 +14,7 @@
 /***********************************************************************/
 #include "HAL_ISR_driver.h"
 
-#if defined(__LPC8XX__) || defined(__LPC11UXX__) || defined(__LPC11U37H__) ||defined(CPU_LPC55S69JBD100_cm33_core0) || defined(CPU_LPC55S28JBD100) || defined(CPU_LPC55S16JBD100)
+#if defined(__LPC8XX__) || defined(__LPC11UXX__) || defined(__LPC11U37H__) ||defined(CPU_LPC55S69JBD100_cm33_core0) || defined(CPU_LPC55S28JBD100) || defined(CPU_LPC55S16JBD100) || defined(CPU_LPC55S06JBD64) || defined(CPU_LPC5506JHI48) 
 #include "isr_lpc_intern.h"
 #include "fsl_pint.h"
 #endif
@@ -64,7 +64,7 @@ extern ISR_CALLBACK_T isr_callback_list[];
 /***********************************************************************/
 void disableInterrupt(uint32_t channel);
 void enableInterrupt(uint32_t channel);
-#if defined(__LPC8XX__) || defined(__LPC11UXX__) || defined(__LPC11U37H__) || defined(CPU_LPC55S69JBD100_cm33_core0) || defined(CPU_LPC55S28JBD100) || defined(CPU_LPC55S16JBD100)
+#if defined(__LPC8XX__) || defined(__LPC11UXX__) || defined(__LPC11U37H__) || defined(CPU_LPC55S69JBD100_cm33_core0) || defined(CPU_LPC55S28JBD100) || defined(CPU_LPC55S16JBD100) || defined(CPU_LPC55S06JBD64) || defined(CPU_LPC5506JHI48) 
 void setupMode(PINT_Type *pint, ISR_PIN_FUNC_T pin, ISR_MODE_T mode, ISR_HANDLER_T callback);
 #else
 void setupMode(void *port, uint32_t pin, ISR_MODE_T mode);

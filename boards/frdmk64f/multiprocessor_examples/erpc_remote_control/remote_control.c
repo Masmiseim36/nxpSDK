@@ -46,8 +46,8 @@
 /* App 1 service code, client part */
 #include "erpc_remote_control_app_1.h"
 
-#include "fsl_common.h"
 #include "fsl_uart_cmsis.h"
+#include "fsl_common.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -590,13 +590,13 @@ static void server_task(void *pvParameters)
     while (1)
     {
         /* Process message */
-        status_t status = erpc_server_poll();
+        erpc_status_t status = erpc_server_poll();
 
         /* Sleep */
         vTaskDelay(100);
 
         /* Handle error status */
-        if (kStatus_Success != status)
+        if (kErpcStatus_Success != status)
         {
             /* Error occurred */
             erpc_error_handler(status, 0);

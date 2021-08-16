@@ -427,7 +427,7 @@ const sector_info_t g_msdDiskSectors[] = {
  */
 usb_status_t usb_device_msc_callback(class_handle_t handle, uint32_t event, void *param)
 {
-    usb_status_t error = kStatus_USB_Error;
+    usb_status_t error = kStatus_USB_InvalidRequest;
     usb_device_lba_information_struct_t *lba_info_structure_ptr;
     usb_device_lba_app_struct_t *lba_data_ptr;
     usb_device_ufi_app_struct_t *ufi;
@@ -476,6 +476,7 @@ usb_status_t usb_device_msc_callback(class_handle_t handle, uint32_t event, void
             if (lba_data_ptr != NULL)
             {
                 lba_data_ptr->buffer = (uint8_t *)g_device_composite->msc_disk.msc_state.buffer;
+                error = kStatus_USB_Success;
             }
 
             break;
@@ -506,23 +507,24 @@ usb_status_t usb_device_msc_callback(class_handle_t handle, uint32_t event, void
         case kUSB_DeviceMscEventTestUnitReady:
             /*change the test unit ready command's sense data if need, be careful to modify*/
             ufi = (usb_device_ufi_app_struct_t *)param;
+            error = kStatus_USB_Success;
             break;
         case kUSB_DeviceMscEventInquiry:
             ufi = (usb_device_ufi_app_struct_t *)param;
             ufi->size = sizeof(usb_device_inquiry_data_fromat_struct_t);
             ufi->buffer = (uint8_t *)&g_InquiryInfo;
+            error = kStatus_USB_Success;
             break;
         case kUSB_DeviceMscEventModeSense:
             ufi = (usb_device_ufi_app_struct_t *)param;
             ufi->size = sizeof(usb_device_mode_parameters_header_struct_t);
             ufi->buffer = (uint8_t *)&g_ModeParametersHeader;
+            error = kStatus_USB_Success;
             break;
-        case kUSB_DeviceMscEventModeSelect:
-            break;
+
         case kUSB_DeviceMscEventModeSelectResponse:
             ufi = (usb_device_ufi_app_struct_t *)param;
-            break;
-        case kUSB_DeviceMscEventFormatComplete:
+            error = kStatus_USB_Success;
             break;
         case kUSB_DeviceMscEventRemovalRequest:
             prevent_removal_ptr = (uint8_t *)param;
@@ -542,11 +544,18 @@ usb_status_t usb_device_msc_callback(class_handle_t handle, uint32_t event, void
             capacityInformation->lengthOfEachLba = LENGTH_OF_EACH_LBA;
             capacityInformation->totalLbaNumberSupports =
                 kDiskTotalLogicalBlocks; // TOTAL_LOGICAL_ADDRESS_BLOCKS_NORMAL;
+            error = kStatus_USB_Success;
             break;
         case kUSB_DeviceMscEventReadFormatCapacity:
             capacityInformation = (usb_device_capacity_information_struct_t *)param;
             capacityInformation->lengthOfEachLba = LENGTH_OF_EACH_LBA;
             capacityInformation->totalLbaNumberSupports = kDiskTotalLogicalBlocks;
+            error = kStatus_USB_Success;
+            break;
+        case kUSB_DeviceMscEventModeSelect:
+        case kUSB_DeviceMscEventFormatComplete:
+        default:
+            /* no action, return kStatus_USB_InvalidRequest */
             break;
     }
     return error;

@@ -129,6 +129,8 @@ void USB_DeviceTaskFn(void *deviceHandle)
     USB_DeviceKhciTaskFunction(deviceHandle);
 }
 #endif
+#if ((defined USB_DEVICE_CONFIG_CDC_CIC_EP_DISABLE) && (USB_DEVICE_CONFIG_CDC_CIC_EP_DISABLE > 0U))
+#else
 /*!
  * @brief Interrupt in pipe callback function.
  *
@@ -148,6 +150,7 @@ usb_status_t USB_DeviceCdcAcmInterruptIn(usb_device_handle handle,
     s_cdcVcom.hasSentState = 0;
     return error;
 }
+#endif
 
 /*!
  * @brief Bulk in pipe callback function.
@@ -318,7 +321,10 @@ usb_status_t USB_DeviceProcessClassRequest(usb_device_handle handle,
     usb_status_t error = kStatus_USB_InvalidRequest;
 
     usb_cdc_acm_info_t *acmInfo = &s_usbCdcAcmInfo;
+#if ((defined USB_DEVICE_CONFIG_CDC_CIC_EP_DISABLE) && (USB_DEVICE_CONFIG_CDC_CIC_EP_DISABLE > 0U))
+#else
     uint32_t len;
+#endif
     uint8_t *uartBitmap;
     if (setup->wIndex != USB_CDC_VCOM_COMM_INTERFACE_INDEX)
     {
@@ -332,130 +338,155 @@ usb_status_t USB_DeviceProcessClassRequest(usb_device_handle handle,
         case USB_DEVICE_CDC_REQUEST_GET_ENCAPSULATED_RESPONSE:
             break;
         case USB_DEVICE_CDC_REQUEST_SET_COMM_FEATURE:
-            if (USB_DEVICE_CDC_FEATURE_ABSTRACT_STATE == setup->wValue)
+            if (((setup->bmRequestType & USB_REQUEST_TYPE_DIR_MASK) == USB_REQUEST_TYPE_DIR_OUT) &&
+                (setup->wLength != 0U))
             {
-                *buffer = s_abstractState;
+                if (USB_DEVICE_CDC_FEATURE_ABSTRACT_STATE == setup->wValue)
+                {
+                    (void)memcpy(s_abstractState, *buffer, COMM_FEATURE_DATA_SIZE);
+                    error = kStatus_USB_Success;
+                }
+                else if (USB_DEVICE_CDC_FEATURE_COUNTRY_SETTING == setup->wValue)
+                {
+                    (void)memcpy(s_countryCode, *buffer, COMM_FEATURE_DATA_SIZE);
+                    error = kStatus_USB_Success;
+                }
+                else
+                {
+                }
             }
-            else if (USB_DEVICE_CDC_FEATURE_COUNTRY_SETTING == setup->wValue)
-            {
-                *buffer = s_countryCode;
-            }
-            else
-            {
-            }
-            error = kStatus_USB_Success;
             break;
         case USB_DEVICE_CDC_REQUEST_GET_COMM_FEATURE:
-            if (USB_DEVICE_CDC_FEATURE_ABSTRACT_STATE == setup->wValue)
+            if (((setup->bmRequestType & USB_REQUEST_TYPE_DIR_MASK) == USB_REQUEST_TYPE_DIR_IN) &&
+                (setup->wLength != 0U))
             {
-                *buffer = s_abstractState;
-                *length = COMM_FEATURE_DATA_SIZE;
+                if (USB_DEVICE_CDC_FEATURE_ABSTRACT_STATE == setup->wValue)
+                {
+                    *buffer = s_abstractState;
+                    *length = COMM_FEATURE_DATA_SIZE;
+                    error   = kStatus_USB_Success;
+                }
+                else if (USB_DEVICE_CDC_FEATURE_COUNTRY_SETTING == setup->wValue)
+                {
+                    *buffer = s_countryCode;
+                    *length = COMM_FEATURE_DATA_SIZE;
+                    error   = kStatus_USB_Success;
+                }
+                else
+                {
+                }
             }
-            else if (USB_DEVICE_CDC_FEATURE_COUNTRY_SETTING == setup->wValue)
-            {
-                *buffer = s_countryCode;
-                *length = COMM_FEATURE_DATA_SIZE;
-            }
-            else
-            {
-            }
-            error = kStatus_USB_Success;
             break;
         case USB_DEVICE_CDC_REQUEST_CLEAR_COMM_FEATURE:
             break;
         case USB_DEVICE_CDC_REQUEST_GET_LINE_CODING:
-            *buffer = s_lineCoding;
-            *length = LINE_CODING_SIZE;
-            error   = kStatus_USB_Success;
+            if (((setup->bmRequestType & USB_REQUEST_TYPE_DIR_MASK) == USB_REQUEST_TYPE_DIR_IN) &&
+                (setup->wLength != 0U))
+            {
+                *buffer = s_lineCoding;
+                *length = LINE_CODING_SIZE;
+                error   = kStatus_USB_Success;
+            }
             break;
         case USB_DEVICE_CDC_REQUEST_SET_LINE_CODING:
-            *buffer = s_lineCoding;
-            error   = kStatus_USB_Success;
+            if (((setup->bmRequestType & USB_REQUEST_TYPE_DIR_MASK) == USB_REQUEST_TYPE_DIR_OUT) &&
+                (setup->wLength != 0U))
+            {
+                (void)memcpy(s_lineCoding, *buffer, LINE_CODING_SIZE);
+                error = kStatus_USB_Success;
+            }
             break;
         case USB_DEVICE_CDC_REQUEST_SET_CONTROL_LINE_STATE:
         {
-            error              = kStatus_USB_Success;
-            acmInfo->dteStatus = setup->wValue;
-            /* activate/deactivate Tx carrier */
-            if (acmInfo->dteStatus & USB_DEVICE_CDC_CONTROL_SIG_BITMAP_CARRIER_ACTIVATION)
+            if (((setup->bmRequestType & USB_REQUEST_TYPE_DIR_MASK) == USB_REQUEST_TYPE_DIR_OUT) &&
+                (setup->wLength == 0U))
             {
-                acmInfo->uartState |= USB_DEVICE_CDC_UART_STATE_TX_CARRIER;
-            }
-            else
-            {
-                acmInfo->uartState &= (uint16_t)~USB_DEVICE_CDC_UART_STATE_TX_CARRIER;
-            }
-
-            /* activate carrier and DTE. Com port of terminal tool running on PC is open now */
-            if (acmInfo->dteStatus & USB_DEVICE_CDC_CONTROL_SIG_BITMAP_DTE_PRESENCE)
-            {
-                acmInfo->uartState |= USB_DEVICE_CDC_UART_STATE_RX_CARRIER;
-            }
-            /* Com port of terminal tool running on PC is closed now */
-            else
-            {
-                acmInfo->uartState &= (uint16_t)~USB_DEVICE_CDC_UART_STATE_RX_CARRIER;
-            }
-
-            /* Indicates to DCE if DTE is present or not */
-            acmInfo->dtePresent = (acmInfo->dteStatus & USB_DEVICE_CDC_CONTROL_SIG_BITMAP_DTE_PRESENCE) ? true : false;
-
-            /* Initialize the serial state buffer */
-            acmInfo->serialStateBuf[0] = NOTIF_REQUEST_TYPE;                        /* bmRequestType */
-            acmInfo->serialStateBuf[1] = USB_DEVICE_CDC_REQUEST_SERIAL_STATE_NOTIF; /* bNotification */
-            acmInfo->serialStateBuf[2] = 0x00;                                      /* wValue */
-            acmInfo->serialStateBuf[3] = 0x00;
-            acmInfo->serialStateBuf[4] = 0x00; /* wIndex */
-            acmInfo->serialStateBuf[5] = 0x00;
-            acmInfo->serialStateBuf[6] = UART_BITMAP_SIZE; /* wLength */
-            acmInfo->serialStateBuf[7] = 0x00;
-            /* Notify to host the line state */
-            acmInfo->serialStateBuf[4] = setup->wIndex;
-            /* Lower byte of UART BITMAP */
-            uartBitmap    = (uint8_t *)&acmInfo->serialStateBuf[NOTIF_PACKET_SIZE + UART_BITMAP_SIZE - 2];
-            uartBitmap[0] = acmInfo->uartState & 0xFFu;
-            uartBitmap[1] = (acmInfo->uartState >> 8) & 0xFFu;
-            len           = (uint32_t)(NOTIF_PACKET_SIZE + UART_BITMAP_SIZE);
-            if (0 == s_cdcVcom.hasSentState)
-            {
-                error = USB_DeviceSendRequest(handle, USB_CDC_VCOM_INTERRUPT_IN_ENDPOINT, acmInfo->serialStateBuf, len);
-                if (kStatus_USB_Success != error)
+                error              = kStatus_USB_Success;
+                acmInfo->dteStatus = setup->wValue;
+                /* activate/deactivate Tx carrier */
+                if (acmInfo->dteStatus & USB_DEVICE_CDC_CONTROL_SIG_BITMAP_CARRIER_ACTIVATION)
                 {
-                    usb_echo("kUSB_DeviceCdcEventSetControlLineState error!");
+                    acmInfo->uartState |= USB_DEVICE_CDC_UART_STATE_TX_CARRIER;
                 }
-                s_cdcVcom.hasSentState = 1;
-            }
-            /* Update status */
-            if (acmInfo->dteStatus & USB_DEVICE_CDC_CONTROL_SIG_BITMAP_CARRIER_ACTIVATION)
-            {
-                /*    To do: CARRIER_ACTIVATED */
-            }
-            else
-            {
-                /* To do: CARRIER_DEACTIVATED */
-            }
-            if (acmInfo->dteStatus & USB_DEVICE_CDC_CONTROL_SIG_BITMAP_DTE_PRESENCE)
-            {
-                /* DTE_ACTIVATED */
-                if (1 == s_cdcVcom.attach)
+                else
                 {
-                    s_cdcVcom.startTransactions = 1;
+                    acmInfo->uartState &= (uint16_t)~USB_DEVICE_CDC_UART_STATE_TX_CARRIER;
+                }
+
+                /* activate carrier and DTE. Com port of terminal tool running on PC is open now */
+                if (acmInfo->dteStatus & USB_DEVICE_CDC_CONTROL_SIG_BITMAP_DTE_PRESENCE)
+                {
+                    acmInfo->uartState |= USB_DEVICE_CDC_UART_STATE_RX_CARRIER;
+                }
+                /* Com port of terminal tool running on PC is closed now */
+                else
+                {
+                    acmInfo->uartState &= (uint16_t)~USB_DEVICE_CDC_UART_STATE_RX_CARRIER;
+                }
+
+                /* Indicates to DCE if DTE is present or not */
+                acmInfo->dtePresent = (acmInfo->dteStatus & USB_DEVICE_CDC_CONTROL_SIG_BITMAP_DTE_PRESENCE) ? true : false;
+
+                /* Initialize the serial state buffer */
+                acmInfo->serialStateBuf[0] = NOTIF_REQUEST_TYPE;                        /* bmRequestType */
+                acmInfo->serialStateBuf[1] = USB_DEVICE_CDC_REQUEST_SERIAL_STATE_NOTIF; /* bNotification */
+                acmInfo->serialStateBuf[2] = 0x00;                                      /* wValue */
+                acmInfo->serialStateBuf[3] = 0x00;
+                acmInfo->serialStateBuf[4] = 0x00; /* wIndex */
+                acmInfo->serialStateBuf[5] = 0x00;
+                acmInfo->serialStateBuf[6] = UART_BITMAP_SIZE; /* wLength */
+                acmInfo->serialStateBuf[7] = 0x00;
+                /* Notify to host the line state */
+                acmInfo->serialStateBuf[4] = setup->wIndex;
+                /* Lower byte of UART BITMAP */
+                uartBitmap    = (uint8_t *)&acmInfo->serialStateBuf[NOTIF_PACKET_SIZE + UART_BITMAP_SIZE - 2];
+                uartBitmap[0] = acmInfo->uartState & 0xFFu;
+                uartBitmap[1] = (acmInfo->uartState >> 8) & 0xFFu;
+#if ((defined USB_DEVICE_CONFIG_CDC_CIC_EP_DISABLE) && (USB_DEVICE_CONFIG_CDC_CIC_EP_DISABLE > 0U))
+#else
+                len = (uint32_t)(NOTIF_PACKET_SIZE + UART_BITMAP_SIZE);
+                if (0 == s_cdcVcom.hasSentState)
+                {
+                    error = USB_DeviceSendRequest(handle, USB_CDC_VCOM_INTERRUPT_IN_ENDPOINT, acmInfo->serialStateBuf, len);
+                    if (kStatus_USB_Success != error)
+                    {
+                        usb_echo("kUSB_DeviceCdcEventSetControlLineState error!");
+                    }
+                    s_cdcVcom.hasSentState = 1;
+                }
+#endif
+                /* Update status */
+                if (acmInfo->dteStatus & USB_DEVICE_CDC_CONTROL_SIG_BITMAP_CARRIER_ACTIVATION)
+                {
+                    /*    To do: CARRIER_ACTIVATED */
+                }
+                else
+                {
+                    /* To do: CARRIER_DEACTIVATED */
+                }
+                if (acmInfo->dteStatus & USB_DEVICE_CDC_CONTROL_SIG_BITMAP_DTE_PRESENCE)
+                {
+                    /* DTE_ACTIVATED */
+                    if (1 == s_cdcVcom.attach)
+                    {
+                        s_cdcVcom.startTransactions = 1;
 #if defined(FSL_FEATURE_USB_KHCI_KEEP_ALIVE_ENABLED) && (FSL_FEATURE_USB_KHCI_KEEP_ALIVE_ENABLED > 0U) && \
     defined(USB_DEVICE_CONFIG_KEEP_ALIVE_MODE) && (USB_DEVICE_CONFIG_KEEP_ALIVE_MODE > 0U) &&             \
     defined(FSL_FEATURE_USB_KHCI_USB_RAM) && (FSL_FEATURE_USB_KHCI_USB_RAM > 0U)
-                    s_waitForDataReceive = 1;
-                    USB0->INTEN &= ~USB_INTEN_SOFTOKEN_MASK;
-                    s_comOpen = 1;
-                    usb_echo("USB_APP_CDC_DTE_ACTIVATED\r\n");
+                        s_waitForDataReceive = 1;
+                        USB0->INTEN &= ~USB_INTEN_SOFTOKEN_MASK;
+                        s_comOpen = 1;
+                        usb_echo("USB_APP_CDC_DTE_ACTIVATED\r\n");
 #endif
+                    }
                 }
-            }
-            else
-            {
-                /* DTE_DEACTIVATED */
-                if (1 == s_cdcVcom.attach)
+                else
                 {
-                    s_cdcVcom.startTransactions = 0;
+                    /* DTE_DEACTIVATED */
+                    if (1 == s_cdcVcom.attach)
+                    {
+                        s_cdcVcom.startTransactions = 0;
+                    }
                 }
             }
         }
@@ -482,7 +513,7 @@ usb_status_t USB_DeviceProcessClassRequest(usb_device_handle handle,
  */
 usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *param)
 {
-    usb_status_t error = kStatus_USB_Error;
+    usb_status_t error = kStatus_USB_InvalidRequest;
     uint8_t *temp8     = (uint8_t *)param;
 
     switch (event)
@@ -492,6 +523,7 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
             USB_DeviceControlPipeInit(s_cdcVcom.deviceHandle);
             s_cdcVcom.attach               = 0;
             s_cdcVcom.currentConfiguration = 0U;
+            error                          = kStatus_USB_Success;
 #if (defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0U)) || \
     (defined(USB_DEVICE_CONFIG_LPCIP3511HS) && (USB_DEVICE_CONFIG_LPCIP3511HS > 0U))
             /* Get USB speed to configure the device, including max packet size and interval of the endpoints. */
@@ -508,6 +540,7 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
             {
                 s_cdcVcom.attach               = 0;
                 s_cdcVcom.currentConfiguration = 0U;
+                error                          = kStatus_USB_Success;
             }
             else if (USB_CDC_VCOM_CONFIGURE_INDEX == (*temp8))
             {
@@ -517,6 +550,8 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
                 s_cdcVcom.attach               = 1;
                 s_cdcVcom.currentConfiguration = *temp8;
 
+#if ((defined USB_DEVICE_CONFIG_CDC_CIC_EP_DISABLE) && (USB_DEVICE_CONFIG_CDC_CIC_EP_DISABLE > 0U))
+#else
                 /* Initiailize endpoint for interrupt pipe */
                 epCallback.callbackFn    = USB_DeviceCdcAcmInterruptIn;
                 epCallback.callbackParam = handle;
@@ -537,6 +572,7 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
                 }
 
                 USB_DeviceInitEndpoint(s_cdcVcom.deviceHandle, &epInitStruct, &epCallback);
+#endif
 
                 /* Initiailize endpoints for bulk pipe */
                 epCallback.callbackFn    = USB_DeviceCdcAcmBulkIn;
@@ -586,12 +622,15 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
                     s_usbBulkMaxPacketSize = FS_CDC_VCOM_BULK_OUT_PACKET_SIZE;
                 }
                 /* Schedule buffer for receive */
-                USB_DeviceRecvRequest(handle, USB_CDC_VCOM_BULK_OUT_ENDPOINT, s_currRecvBuf, s_usbBulkMaxPacketSize);
+                error = USB_DeviceRecvRequest(handle, USB_CDC_VCOM_BULK_OUT_ENDPOINT, s_currRecvBuf, s_usbBulkMaxPacketSize);
             }
             else
             {
-                error = kStatus_USB_InvalidRequest;
+                /* no action, return kStatus_USB_InvalidRequest */
             }
+            break;
+        case kUSB_DeviceEventSetInterface:
+            error = kStatus_USB_Success;
             break;
         default:
             break;
@@ -734,8 +773,8 @@ int main(void)
 void main(void)
 #endif
 {
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
+    BOARD_InitBootPins();
+    BOARD_InitBootClocks();
     BOARD_InitDebugConsole();
 
     APPInit();

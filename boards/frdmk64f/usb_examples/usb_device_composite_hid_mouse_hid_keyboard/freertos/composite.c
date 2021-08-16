@@ -124,7 +124,7 @@ void USB_DeviceTaskFn(void *deviceHandle)
 /* The Device callback */
 static usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *param)
 {
-    usb_status_t error = kStatus_USB_Error;
+    usb_status_t error = kStatus_USB_InvalidRequest;
     uint16_t *temp16   = (uint16_t *)param;
     uint8_t *temp8     = (uint8_t *)param;
 
@@ -151,6 +151,7 @@ static usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event,
             {
                 g_UsbDeviceComposite.attach               = 0U;
                 g_UsbDeviceComposite.currentConfiguration = 0U;
+                error                                     = kStatus_USB_Success;
             }
             else if (USB_COMPOSITE_CONFIGURE_INDEX == (*temp8))
             {
@@ -163,7 +164,7 @@ static usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event,
             }
             else
             {
-                error = kStatus_USB_InvalidRequest;
+                /* no action, return kStatus_USB_InvalidRequest. */
             }
             break;
         case kUSB_DeviceEventSetInterface:
@@ -172,13 +173,28 @@ static usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event,
                 /* Set device interface request */
                 uint8_t interface        = (uint8_t)((*temp16 & 0xFF00U) >> 0x08U);
                 uint8_t alternateSetting = (uint8_t)(*temp16 & 0x00FFU);
-                if (interface < USB_COMPOSITE_INTERFACE_COUNT)
+                if (USB_HID_MOUSE_INTERFACE_INDEX == interface)
                 {
-                    g_UsbDeviceComposite.currentInterfaceAlternateSetting[interface] = alternateSetting;
-                    USB_DeviceHidMouseSetInterface(g_UsbDeviceComposite.hidMouseHandle, interface, alternateSetting);
-                    USB_DeviceHidKeyboardSetInterface(g_UsbDeviceComposite.hidKeyboardHandle, interface,
-                                                      alternateSetting);
-                    error = kStatus_USB_Success;
+                    if (alternateSetting < USB_HID_MOUSE_INTERFACE_ALTERNATE_COUNT)
+                    {
+                        g_UsbDeviceComposite.currentInterfaceAlternateSetting[interface] = alternateSetting;
+                        USB_DeviceHidMouseSetInterface(g_UsbDeviceComposite.hidMouseHandle, interface, alternateSetting);
+                        error = kStatus_USB_Success;
+                    }
+                }
+                else if (USB_HID_KEYBOARD_INTERFACE_INDEX == interface)
+                {
+                    if (alternateSetting < USB_HID_KEYBOARD_INTERFACE_ALTERNATE_COUNT)
+                    {
+                        g_UsbDeviceComposite.currentInterfaceAlternateSetting[interface] = alternateSetting;
+                        USB_DeviceHidKeyboardSetInterface(g_UsbDeviceComposite.hidKeyboardHandle, interface,
+                                                          alternateSetting);
+                        error = kStatus_USB_Success;
+                    }
+                }
+                else
+                {
+                    /* no action, return kStatus_USB_InvalidRequest. */
                 }
             }
             break;
@@ -199,10 +215,6 @@ static usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event,
                 {
                     *temp16 = (*temp16 & 0xFF00U) | g_UsbDeviceComposite.currentInterfaceAlternateSetting[interface];
                     error   = kStatus_USB_Success;
-                }
-                else
-                {
-                    error = kStatus_USB_InvalidRequest;
                 }
             }
             break;
@@ -351,8 +363,8 @@ int main(void)
 void main(void)
 #endif
 {
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
+    BOARD_InitBootPins();
+    BOARD_InitBootClocks();
     BOARD_InitDebugConsole();
 
     if (xTaskCreate(APP_task,                                   /* pointer to the task */

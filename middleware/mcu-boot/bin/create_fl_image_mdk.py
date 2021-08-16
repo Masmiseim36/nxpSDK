@@ -27,32 +27,33 @@
 # ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 # SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
+from __future__ import print_function
 import sys
 import os
 import elf
 
-# usage: create_fl_image.py <elffile> <binfile> <cfile> 
+PY = sys.version_info[0]
+# usage: create_fl_image.py <elffile> <binfile> <cfile>
 
 def main(argv):
     # Collect arguments
     if len(sys.argv) != 4:
-        print 'usage: create_fl_image.py <elffile> <binfile> <cfile>'
+        print('usage: create_fl_image.py <elffile> <binfile> <cfile>')
         sys.exit(2)
     elfFilename = argv[0]
     binFilename = argv[1]
     cFilename = argv[2]
-    
+
     # Open files
     try:
         binFile = open(binFilename, 'rb')
     except IOError:
-        print 'cannot open file %s' % binFilename
+        print('cannot open file %s' % binFilename)
         sys.exit(2)
     try:
         cFile = open(cFilename, 'w')
     except IOError:
-        print 'cannot open file %s' % cFilename
+        print('cannot open file %s' % cFilename)
         sys.exit(2)
     elfData = elf.ELFObject()
     try:
@@ -64,15 +65,15 @@ def main(argv):
             vectors = elfData.getSymbol("__Vectors")
             stack = elfData.getSymbol("Image$$ARM_LIB_STACK$$ZI$$Limit")
     except:
-        print 'cannot process file %s' % elfFilename
+        print('cannot process file %s' % elfFilename)
         sys.exit(2)
-        
-            
+
+
     # Print header
-    print >> cFile, '/* Created by create_fl_image.py, do not edit */\n'
-    print >> cFile, '#include "bootloader_common.h"\n'
-    print >> cFile, 'const uint8_t g_flashloaderImage[] = {'
-    
+    print ('/* Created by create_fl_image.py, do not edit */\n', file=cFile)
+    print ('#include "bootloader_common.h"\n', file=cFile)
+    print ('const uint8_t g_flashloaderImage[] = {', file=cFile)
+
     # Print byte data
     totalBytes = 0
     while True:
@@ -81,11 +82,13 @@ def main(argv):
         if dataLen == 0: break
         totalBytes += dataLen;
         cFile.write('    ')
+        if PY == 2:
+            data = bytearray(data)
         for i in range(dataLen):
-            cFile.write('0x%02x, ' % ord(data[i]))
-        print >> cFile
-    print >> cFile, '};\n'
-    
+            cFile.write('0x%02x, ' % data[i])
+        print (file=cFile)
+    print('};\n', file=cFile)
+
     # Print size and other info
     cFile.write('const uint32_t g_flashloaderSize = %dU;\n' % totalBytes)
     cFile.write('const uint32_t g_flashloaderBase = 0x%x;\n' % vectors.st_value)

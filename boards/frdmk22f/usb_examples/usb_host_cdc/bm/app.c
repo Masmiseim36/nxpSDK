@@ -189,7 +189,7 @@ void APP_init(void)
 
 int main(void)
 {
-    BOARD_InitPins();
+    BOARD_InitBootPins();
     BOARD_BootClockHSRUN();
     BOARD_InitDebugConsole();
 

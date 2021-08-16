@@ -12,7 +12,10 @@ BraceWrapping:
   AfterExternBlock : false
   BeforeCatch : true
   BeforeElse : true
+  AfterCaseLabel : true
 SortIncludes : false
+AlignEscapedNewlines : "Left"
+AlignConsecutiveMacros : true
 AlignConsecutiveAssignments : true
 AlignConsecutiveDeclarations : false
 AlignTrailingComments            : true
@@ -40,6 +43,7 @@ SpaceBeforeAssignmentOperators : true
 SpaceBeforeParens : "ControlStatements"
 SpacesBeforeTrailingComments : 1
 SpacesInCStyleCastParentheses : false
+SpacesInContainerLiterals : false
 SpacesInParentheses : false
 Standard : "Cpp03"
 TabWidth : 1

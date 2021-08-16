@@ -95,7 +95,7 @@ void USB_DeviceTaskFn(void *deviceHandle)
 /* Device callback */
 usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *param)
 {
-    usb_status_t error = kStatus_USB_Success;
+    usb_status_t error = kStatus_USB_InvalidRequest;
     uint8_t *temp8     = (uint8_t *)param;
 
     switch (event)
@@ -106,6 +106,7 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
             /* Initialize the control IN and OUT pipes */
             USB_DeviceControlPipeInit(handle);
             g_UsbDeviceComposite.attach = 0U;
+            error                       = kStatus_USB_Success;
 #if (defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0U)) || \
     (defined(USB_DEVICE_CONFIG_LPCIP3511HS) && (USB_DEVICE_CONFIG_LPCIP3511HS > 0U))
             /* Get USB speed to configure the device, including max packet size and interval of the endpoints. */
@@ -119,15 +120,16 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
         case kUSB_DeviceEventSetConfiguration:
             if (USB_COMPOSITE_CONFIGURE_INDEX == (*temp8))
             {
+                g_UsbDeviceComposite.attach = 1U;
                 /* If the confguration is valid, set HID keyboard */
                 USB_DeviceHidKeyboardSetConfigure(handle, (*temp8));
                 /* If the confguration is valid, set HID mouse */
                 USB_DeviceHidMouseSetConfigure(handle, (*temp8));
+                error = kStatus_USB_Success;
             }
-            else
-            {
-            }
-            g_UsbDeviceComposite.attach = 1U;
+            break;
+        case kUSB_DeviceEventSetInterface:
+            error = kStatus_USB_Success;
             break;
         default:
             break;
@@ -287,8 +289,8 @@ int main(void)
 void main(void)
 #endif
 {
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
+    BOARD_InitBootPins();
+    BOARD_InitBootClocks();
     BOARD_InitDebugConsole();
 
     USB_DeviceApplicationInit();

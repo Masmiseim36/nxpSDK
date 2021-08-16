@@ -251,8 +251,8 @@ void app_task(void *param)
 
 int main(void)
 {
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
+    BOARD_InitBootPins();
+    BOARD_InitBootClocks();
     BOARD_InitDebugConsole();
 
     if (xTaskCreate(app_task, "app task", 2000L / sizeof(portSTACK_TYPE), NULL, 3, NULL) != pdPASS)

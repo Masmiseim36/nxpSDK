@@ -694,7 +694,7 @@ int main(void)
 {
     gpio_pin_config_t pinConfig = {kGPIO_DigitalInput, 1U};
 
-    BOARD_InitPins();
+    BOARD_InitBootPins();
     BOARD_BootClockHSRUN();
 
     BOARD_InitDebugConsole();

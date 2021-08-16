@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 NXP
+ * Copyright 2018-2021 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -210,7 +210,7 @@
  */
 
 /*! @brief Maximum number of parameters to be supported in one sscp_operation_t */
-#define SSCP_OPERATION_PARAM_COUNT (7u)
+#define SSCP_OPERATION_PARAM_COUNT   (7u)
 #define SSCP_OPERATION_RESULTS_COUNT (2u)
 
 /*! @brief Default SSCP context is a pointer to memory. */
@@ -238,8 +238,9 @@
  */
 typedef enum
 {
-    kStatus_SSCP_Success = 0x10203040u,
-    kStatus_SSCP_Fail    = 0x40302010u,
+    kStatus_SSCP_Success      = 0x10203040u,
+    kStatus_SSCP_Fail         = 0x40302010u,
+    kStatus_SSCP_ResourceBusy = 0x40302020u,
 } sscp_status_t;
 
 typedef struct _sscp_context sscp_context_t;

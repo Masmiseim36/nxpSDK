@@ -440,6 +440,8 @@ void USB_HostHidMouseTask(void *param)
 
             usb_echo("turn off vbus\r\n");
             USB_HostTurnOffVbus();
+            /* delay to make sure usb vbus has been turned off */
+            SDK_DelayAtLeastUs(50000, SDK_DEVICE_MAXIMUM_CPU_CLOCK_FREQUENCY);
             usb_echo("remove device\r\n");
             USB_AppEnterCritical(&critialSr);
             mouseInstance->deviceState = kStatus_DEV_Idle;

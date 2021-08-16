@@ -1,7 +1,7 @@
 /*
  * Copyright (c) 2013-2016 ARM Limited. All rights reserved.
  * Copyright (c) 2016, Freescale Semiconductor, Inc. Not a Contribution.
- * Copyright 2016-2020 NXP. Not a Contribution.
+ * Copyright 2016-2021 NXP. Not a Contribution.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -66,6 +66,10 @@ typedef const struct _cmsis_i2c_dma_resource
     uint32_t i2cDmaChannel;     /*!< DMA channel for i2c.             */
     DMAMUX_Type *i2cDmamuxBase; /*!< DMAMUX peripheral base address for i2c. */
     uint16_t i2cDmaRequest;     /*!< i2c DMA request source.                 */
+
+#if FSL_FEATURE_DMA_MODULE_CHANNEL != FSL_FEATURE_DMAMUX_MODULE_CHANNEL
+    uint32_t i2cDmamuxChannel; /*!< DMAMUX channel for i2c.             */
+#endif
 } cmsis_i2c_dma_resource_t;
 
 typedef struct _cmsis_i2c_dma_driver_state
@@ -148,9 +152,15 @@ static int32_t I2C_Master_DmaInitialize(ARM_I2C_SignalEvent_t cb_event, cmsis_i2
     if (0U == (i2c->flags & (uint8_t)I2C_FLAG_INIT))
     {
         /* Configure DMAMUX channel */
+#if FSL_FEATURE_DMA_MODULE_CHANNEL != FSL_FEATURE_DMAMUX_MODULE_CHANNEL
+        DMAMUX_SetSource(i2c->dmaResource->i2cDmamuxBase, i2c->dmaResource->i2cDmamuxChannel,
+                         (uint8_t)i2c->dmaResource->i2cDmaRequest);
+        DMAMUX_EnableChannel(i2c->dmaResource->i2cDmamuxBase, i2c->dmaResource->i2cDmamuxChannel);
+#else
         DMAMUX_SetSource(i2c->dmaResource->i2cDmamuxBase, i2c->dmaResource->i2cDmaChannel,
                          (uint8_t)i2c->dmaResource->i2cDmaRequest);
         DMAMUX_EnableChannel(i2c->dmaResource->i2cDmamuxBase, i2c->dmaResource->i2cDmaChannel);
+#endif
         /* Creat dmahandle  */
         DMA_CreateHandle(i2c->dmaHandle, i2c->dmaResource->i2cDmaBase, i2c->dmaResource->i2cDmaChannel);
         /* Create master_dma_handle. */
@@ -373,7 +383,11 @@ static int32_t I2C_Master_DmaPowerControl(ARM_POWER_STATE state, cmsis_i2c_dma_d
             {
                 (void)I2C_Master_DmaControl(ARM_I2C_ABORT_TRANSFER, 0, i2c);
                 I2C_MasterDeinit(i2c->resource->base);
+#if FSL_FEATURE_DMA_MODULE_CHANNEL != FSL_FEATURE_DMAMUX_MODULE_CHANNEL
+                DMAMUX_DisableChannel(i2c->dmaResource->i2cDmamuxBase, i2c->dmaResource->i2cDmamuxChannel);
+#else
                 DMAMUX_DisableChannel(i2c->dmaResource->i2cDmamuxBase, i2c->dmaResource->i2cDmaChannel);
+#endif
                 i2c->flags = (uint8_t)I2C_FLAG_INIT;
             }
             break;
@@ -1206,7 +1220,12 @@ static cmsis_i2c_resource_t I2C0_Resource = {I2C0, I2C0_GetFreq};
 #if (defined(FSL_FEATURE_SOC_DMA_COUNT) && FSL_FEATURE_SOC_DMA_COUNT)
 
 static cmsis_i2c_dma_resource_t I2C0_DmaResource = {RTE_I2C0_Master_DMA_BASE, RTE_I2C0_Master_DMA_CH,
-                                                    RTE_I2C0_Master_DMAMUX_BASE, (uint16_t)RTE_I2C0_Master_PERI_SEL};
+                                                    RTE_I2C0_Master_DMAMUX_BASE, (uint16_t)RTE_I2C0_Master_PERI_SEL
+#if FSL_FEATURE_DMA_MODULE_CHANNEL != FSL_FEATURE_DMAMUX_MODULE_CHANNEL
+                                                    ,
+                                                    RTE_I2C0_Master_DMAMUX_CH
+#endif
+};
 
 static i2c_master_dma_handle_t I2C0_DmaHandle;
 static dma_handle_t I2C0_DmaTxRxHandle;
@@ -1467,7 +1486,12 @@ static cmsis_i2c_resource_t I2C1_Resource = {I2C1, I2C1_GetFreq};
 #if (defined(FSL_FEATURE_SOC_DMA_COUNT) && FSL_FEATURE_SOC_DMA_COUNT)
 
 static cmsis_i2c_dma_resource_t I2C1_DmaResource = {RTE_I2C1_Master_DMA_BASE, RTE_I2C1_Master_DMA_CH,
-                                                    RTE_I2C1_Master_DMAMUX_BASE, RTE_I2C1_Master_PERI_SEL};
+                                                    RTE_I2C1_Master_DMAMUX_BASE, RTE_I2C1_Master_PERI_SEL
+#if FSL_FEATURE_DMA_MODULE_CHANNEL != FSL_FEATURE_DMAMUX_MODULE_CHANNEL
+                                                    ,
+                                                    RTE_I2C1_Master_DMAMUX_CH
+#endif
+};
 
 static i2c_master_dma_handle_t I2C1_DmaHandle;
 static dma_handle_t I2C1_DmaTxRxHandle;
@@ -1727,7 +1751,12 @@ static cmsis_i2c_resource_t I2C2_Resource = {I2C2, I2C2_GetFreq};
 #if (defined(FSL_FEATURE_SOC_DMA_COUNT) && FSL_FEATURE_SOC_DMA_COUNT)
 
 static cmsis_i2c_dma_resource_t I2C2_DmaResource = {RTE_I2C2_Master_DMA_BASE, RTE_I2C2_Master_DMA_CH,
-                                                    RTE_I2C2_Master_DMAMUX_BASE, RTE_I2C2_Master_PERI_SEL};
+                                                    RTE_I2C2_Master_DMAMUX_BASE, RTE_I2C2_Master_PERI_SEL
+#if FSL_FEATURE_DMA_MODULE_CHANNEL != FSL_FEATURE_DMAMUX_MODULE_CHANNEL
+                                                    ,
+                                                    RTE_I2C2_Master_DMAMUX_CH
+#endif
+};
 
 static i2c_master_dma_handle_t I2C2_DmaHandle;
 static dma_handle_t I2C2_DmaTxRxHandle;
@@ -1988,7 +2017,12 @@ static cmsis_i2c_resource_t I2C3_Resource = {I2C3, I2C3_GetFreq};
 #if (defined(FSL_FEATURE_SOC_DMA_COUNT) && FSL_FEATURE_SOC_DMA_COUNT)
 
 static cmsis_i2c_dma_resource_t I2C3_DmaResource = {RTE_I2C3_Master_DMA_BASE, RTE_I2C3_Master_DMA_CH,
-                                                    RTE_I2C3_Master_DMAMUX_BASE, RTE_I2C3_Master_PERI_SEL};
+                                                    RTE_I2C3_Master_DMAMUX_BASE, RTE_I2C3_Master_PERI_SEL
+#if FSL_FEATURE_DMA_MODULE_CHANNEL != FSL_FEATURE_DMAMUX_MODULE_CHANNEL
+                                                    ,
+                                                    RTE_I2C1_Master_DMAMUX_CH
+#endif
+};
 
 static i2c_master_dma_handle_t I2C3_DmaHandle;
 static dma_handle_t I2C3_DmaTxRxHandle;

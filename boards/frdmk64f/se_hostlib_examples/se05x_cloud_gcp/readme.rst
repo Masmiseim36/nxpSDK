@@ -1,13 +1,6 @@
 ..
     Copyright 2019,2020 NXP
 
-    This software is owned or controlled by NXP and may only be used
-    strictly in accordance with the applicable license terms.  By expressly
-    accepting such terms or by downloading, installing, activating and/or
-    otherwise using the software, you are agreeing that you have read, and
-    that you agree to comply with and are bound by, such license terms.  If
-    you do not agree to be bound by the applicable license terms, then you
-    may not retain, install, activate or otherwise use the software.
 
 .. highlight:: bat
 
@@ -27,7 +20,7 @@ Prerequisites
 - MCUXpresso  installed (for running azure demo on k64)
 - Any Serial communicator
 - Flash VCOM binary on the device. VCOM binary can found under :file:`<PROJECT>\binaries` folder.
-- Refer to :ref:`cli-tool` for pyCLI tool setup
+- Refer to :ref:`cli-tool` for ssscli tool setup
 
 
 Using WiFi with LPC55S

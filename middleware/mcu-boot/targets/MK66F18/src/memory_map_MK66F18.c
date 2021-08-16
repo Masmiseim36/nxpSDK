@@ -17,8 +17,8 @@
 //! This map is not const because it is updated at runtime with the actual sizes of
 //! flash and RAM for the chip we're running on.
 memory_map_entry_t g_memoryMap[] = {
-    { 0x00000000, 0x001fffff, kMemoryIsExecutable | kMemoryType_FLASH, &g_flashMemoryInterface },   // Flash array (2MB)
-    { 0x1fff0000, 0x2002ffff, kMemoryIsExecutable | kMemoryType_RAM, &g_normalMemoryInterface },  // SRAM (256KB)
+    { 0x00000000, 0x001fffff, kMemoryIsExecutable | kMemoryType_FLASH, kMemoryInternal, &g_flashMemoryInterface },   // Flash array (2MB)
+    { 0x1fff0000, 0x2002ffff, kMemoryIsExecutable | kMemoryType_RAM, kMemoryInternal, &g_normalMemoryInterface },  // SRAM (256KB)
     { 0 }                                                                       // Terminator
 };
 

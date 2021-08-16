@@ -75,6 +75,7 @@
 
     /* Clock manager provides in this variable system core clock frequency */
     extern uint32_t SystemCoreClock;
+    extern void vLoggingPrintf( const char *pcFormatString, ... );
 #endif
 
 /*-----------------------------------------------------------
@@ -111,13 +112,15 @@
 #define configNUM_THREAD_LOCAL_STORAGE_POINTERS 5
 #define configUSE_APPLICATION_TASK_TAG 0
 
+#define configFRTOS_MEMORY_SCHEME 4
+
 /* Memory allocation related definitions. */
 #define configSUPPORT_STATIC_ALLOCATION 1
 #define configSUPPORT_DYNAMIC_ALLOCATION 1
 #if defined(USB_STACK_FREERTOS_HEAP_SIZE) && (USB_STACK_FREERTOS_HEAP_SIZE > 0)
 #define configTOTAL_HEAP_SIZE ((size_t)(USB_STACK_FREERTOS_HEAP_SIZE))
 #else
-#define configTOTAL_HEAP_SIZE ((size_t)(110 * 1024))
+#define configTOTAL_HEAP_SIZE ((size_t)(120 * 1024))
 #endif
 #define configAPPLICATION_ALLOCATED_HEAP 0
 
@@ -143,7 +146,7 @@
 #define configTIMER_QUEUE_LENGTH 10
 #define configTIMER_TASK_STACK_DEPTH (configMINIMAL_STACK_SIZE * 2)
 
-#define configPRINTF( X )  printf X
+#define configPRINTF( X )  vLoggingPrintf X
 
 
 /* Map the logging task's printf to the board specific output function. */
@@ -156,7 +159,6 @@
 /* Set to 1 to prepend each log message with a message number, the task name,
  * and a time stamp. */
 #define configLOGGING_INCLUDE_TIME_AND_TASK_NAME    0
-
 
 /* Define to trap errors during development. */
 #define configASSERT(x)           \

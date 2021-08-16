@@ -205,7 +205,7 @@ void Audio_AppTask(void *param)
  */
 int main(void)
 {
-    BOARD_InitPins();
+    BOARD_InitBootPins();
     BOARD_BootClockHSRUN();
     BOARD_InitDebugConsole();
 

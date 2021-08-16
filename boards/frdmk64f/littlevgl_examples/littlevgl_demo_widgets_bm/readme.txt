@@ -4,10 +4,10 @@ A demo application to show littlevgl widgets.
 
 Toolchain supported
 ===================
-- Keil MDK  5.33
-- IAR embedded Workbench  8.50.9
-- GCC ARM Embedded  9.3.1
-- MCUXpresso  11.3.0
+- Keil MDK  5.34
+- IAR embedded Workbench  9.10.2
+- GCC ARM Embedded  10.2.1
+- MCUXpresso  11.4.0
 
 Hardware requirements
 =====================
@@ -18,6 +18,12 @@ Hardware requirements
 
 Board settings
 ==============
+There are different versions of Adafruit 2.8" TFT LCD shields. The shields marked
+v2.0 works directly with this project. For the other shields, please solder
+the center pin of IOREF pads to the 3.3V pad, and solder the pads 11, 12, and 13.
+See the link for details:
+https://community.nxp.com/t5/MCUXpresso-Community-Articles/Modifying-the-latest-Adafruit-2-8-quot-LCD-for-SDK-graphics/ba-p/1131104
+
 Attach the LCD shield to the FRDM board.
 
 Prepare the Demo

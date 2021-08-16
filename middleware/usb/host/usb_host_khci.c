@@ -1386,10 +1386,14 @@ static void _USB_HostKhciTransferStateMachine(usb_host_controller_handle control
                         {
                             if (0U != (eventBit & USB_KHCI_EVENT_TOK_DONE))
                             {
-                                (void)_USB_HostKhciTransactionDone(usbHostPointer, tempTransfer);
+                                tempTransfer->union1.transferResult = _USB_HostKhciTransactionDone(usbHostPointer, tempTransfer);
+                                if (tempTransfer->union1.transferResult > 0U)
+                                {
+                                    tempTransfer->transferSofar += (uint32_t)tempTransfer->union1.transferResult;
+                                }
                                 _USB_HostKhciUnlinkTrRequestFromList(usbHostPointer, tempTransfer);
                                 _USB_HostKhciProcessTrCallback(usbHostPointer, tempTransfer,
-                                                               transfer->union1.transferResult);
+                                                               tempTransfer->union1.transferResult);
                                 usbHostPointer->trState = (uint32_t)kKhci_TrGetMsg;
                             }
                         }

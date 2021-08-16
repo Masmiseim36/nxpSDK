@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2020 NXP
+ * Copyright 2016-2021 NXP
  * All rights reserved.
  *
  *
@@ -38,9 +38,9 @@
 #include "httpsrv.h"
 #include "lwip/apps/mdns.h"
 
-#include "fsl_device_registers.h"
 #include "fsl_phyksz8081.h"
 #include "fsl_enet_mdio.h"
+#include "fsl_device_registers.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -111,7 +111,7 @@
 static void cgi_urldecode(char *url);
 static int cgi_rtc_data(HTTPSRV_CGI_REQ_STRUCT *param);
 static int cgi_example(HTTPSRV_CGI_REQ_STRUCT *param);
-static int ssi_date_time(HTTPSRV_SSI_PARAM_STRUCT *param);
+static int ssi_config(HTTPSRV_SSI_PARAM_STRUCT *param);
 static bool cgi_get_varval(char *var_str, char *var_name, char *var_val, uint32_t length);
 
 /*******************************************************************************
@@ -122,9 +122,6 @@ static mdio_handle_t mdioHandle = {.ops = &EXAMPLE_MDIO_OPS};
 static phy_handle_t phyHandle   = {.phyAddr = EXAMPLE_PHY_ADDRESS, .mdioHandle = &mdioHandle, .ops = &EXAMPLE_PHY_OPS};
 
 static struct netif netif;
-#if defined(FSL_FEATURE_SOC_LPC_ENET_COUNT) && (FSL_FEATURE_SOC_LPC_ENET_COUNT > 0)
-static mem_range_t non_dma_memory[] = NON_DMA_MEMORY_ARRAY;
-#endif /* FSL_FEATURE_SOC_LPC_ENET_COUNT */
 /* FS data.*/
 extern const HTTPSRV_FS_DIR_ENTRY httpsrv_fs_data[];
 
@@ -152,7 +149,7 @@ const HTTPSRV_CGI_LINK_STRUCT cgi_lnk_tbl[] = {
     {0, 0} // DO NOT REMOVE - last item - end of table
 };
 
-const HTTPSRV_SSI_LINK_STRUCT ssi_lnk_tbl[] = {{"date_time", ssi_date_time}, {0, 0}};
+const HTTPSRV_SSI_LINK_STRUCT ssi_lnk_tbl[] = {{"config", ssi_config}, {0, 0}};
 
 /*******************************************************************************
  * Code
@@ -298,16 +295,103 @@ static bool cgi_get_varval(char *src, char *var_name, char *dst, uint32_t length
 }
 
 /* Example Server Side Include callback. */
-static int ssi_date_time(HTTPSRV_SSI_PARAM_STRUCT *param)
+static int ssi_config(HTTPSRV_SSI_PARAM_STRUCT *param)
 {
-    if (strcmp(param->com_param, "time") == 0)
+    char *string_value = NULL;
+    int int_value      = -1;
+    char str[16];
+
+    if (strcmp(param->com_param, "SERVER_STACK_SIZE") == 0)
     {
-        HTTPSRV_ssi_write(param->ses_handle, __TIME__, strlen(__TIME__));
+        int_value = HTTPSRV_CFG_SERVER_STACK_SIZE;
     }
-    else if (strcmp(param->com_param, "date") == 0)
+    else if (strcmp(param->com_param, "HTTP_SESSION_STACK_SIZE") == 0)
     {
-        HTTPSRV_ssi_write(param->ses_handle, __DATE__, strlen(__DATE__));
+        int_value = HTTPSRV_CFG_HTTP_SESSION_STACK_SIZE;
     }
+    else if (strcmp(param->com_param, "HTTPS_SESSION_STACK_SIZE") == 0)
+    {
+        int_value = HTTPSRV_CFG_HTTPS_SESSION_STACK_SIZE;
+    }
+    else if (strcmp(param->com_param, "DEFAULT_PRIORITY") == 0)
+    {
+        int_value = HTTPSRV_CFG_DEFAULT_PRIORITY;
+    }
+    else if (strcmp(param->com_param, "DEFAULT_HTTP_PORT") == 0)
+    {
+        int_value = HTTPSRV_CFG_DEFAULT_HTTP_PORT;
+    }
+    else if (strcmp(param->com_param, "DEFAULT_HTTPS_PORT") == 0)
+    {
+        int_value = HTTPSRV_CFG_DEFAULT_HTTPS_PORT;
+    }
+    else if (strcmp(param->com_param, "DEFAULT_INDEX_PAGE") == 0)
+    {
+        string_value = HTTPSRV_CFG_DEFAULT_INDEX_PAGE;
+    }
+    else if (strcmp(param->com_param, "CACHE_MAXAGE") == 0)
+    {
+        int_value = HTTPSRV_CFG_CACHE_MAXAGE;
+    }
+    else if (strcmp(param->com_param, "DEFAULT_SES_CNT") == 0)
+    {
+        int_value = HTTPSRV_CFG_DEFAULT_SES_CNT;
+    }
+    else if (strcmp(param->com_param, "SES_BUFFER_SIZE") == 0)
+    {
+        int_value = HTTPSRV_CFG_SES_BUFFER_SIZE;
+    }
+    else if (strcmp(param->com_param, "DEFAULT_URL_LEN") == 0)
+    {
+        int_value = HTTPSRV_CFG_DEFAULT_URL_LEN;
+    }
+    else if (strcmp(param->com_param, "MAX_SCRIPT_LN") == 0)
+    {
+        int_value = HTTPSRV_CFG_MAX_SCRIPT_LN;
+    }
+    else if (strcmp(param->com_param, "KEEPALIVE_ENABLED") == 0)
+    {
+        int_value = HTTPSRV_CFG_KEEPALIVE_ENABLED;
+    }
+    else if (strcmp(param->com_param, "KEEPALIVE_TIMEOUT") == 0)
+    {
+        int_value = HTTPSRV_CFG_KEEPALIVE_TIMEOUT;
+    }
+    else if (strcmp(param->com_param, "SES_TIMEOUT") == 0)
+    {
+        int_value = HTTPSRV_CFG_SES_TIMEOUT;
+    }
+    else if (strcmp(param->com_param, "SEND_TIMEOUT") == 0)
+    {
+        int_value = HTTPSRV_CFG_SEND_TIMEOUT;
+    }
+    else if (strcmp(param->com_param, "RECEIVE_TIMEOUT") == 0)
+    {
+        int_value = HTTPSRV_CFG_RECEIVE_TIMEOUT;
+    }
+    else if (strcmp(param->com_param, "WEBSOCKET_ENABLED") == 0)
+    {
+        int_value = HTTPSRV_CFG_WEBSOCKET_ENABLED;
+    }
+    else if (strcmp(param->com_param, "WOLFSSL_ENABLE") == 0)
+    {
+        int_value = HTTPSRV_CFG_WOLFSSL_ENABLE;
+    }
+    else if (strcmp(param->com_param, "MBEDTLS_ENABLE") == 0)
+    {
+        int_value = HTTPSRV_CFG_MBEDTLS_ENABLE;
+    }
+
+    if (string_value != NULL)
+    {
+        HTTPSRV_ssi_write(param->ses_handle, string_value, strlen(string_value));
+    }
+    else
+    {
+        sprintf(str, "%d", int_value);
+        HTTPSRV_ssi_write(param->ses_handle, str, strlen(str));
+    }
+
     return (0);
 }
 
@@ -405,9 +489,6 @@ static void stack_init(void)
     ethernetif_config_t enet_config = {
         .phyHandle  = &phyHandle,
         .macAddress = configMAC_ADDR,
-#if defined(FSL_FEATURE_SOC_LPC_ENET_COUNT) && (FSL_FEATURE_SOC_LPC_ENET_COUNT > 0)
-        .non_dma_memory = non_dma_memory,
-#endif /* FSL_FEATURE_SOC_LPC_ENET_COUNT */
     };
 
     mdioHandle.resource.csrClock_Hz = EXAMPLE_CLOCK_FREQ;

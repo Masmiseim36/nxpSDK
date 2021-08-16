@@ -1,8 +1,7 @@
 /*
- * Copyright 2018-2020 NXP
- * All rights reserved.
  *
- * SPDX-License-Identifier: BSD-3-Clause
+ * Copyright 2018-2020 NXP
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 #ifndef SSS_APIS_INC_FSL_SSS_FTR_H_
@@ -48,6 +47,12 @@
 /** SE050 (Similar to A71CL) */
 #define SSS_HAVE_APPLET_SE05X_L 0
 
+/** SE051UWB (Similar to SE05x) */
+#define SSS_HAVE_APPLET_SE051_UWB 0
+
+/** AUTH */
+#define SSS_HAVE_APPLET_AUTH 0
+
 /** NXP Internal testing Applet */
 #define SSS_HAVE_APPLET_LOOPBACK 0
 
@@ -60,6 +65,8 @@
     + SSS_HAVE_APPLET_SE05X_B        \
     + SSS_HAVE_APPLET_SE05X_C        \
     + SSS_HAVE_APPLET_SE05X_L        \
+    + SSS_HAVE_APPLET_SE051_UWB      \
+    + SSS_HAVE_APPLET_AUTH           \
     + SSS_HAVE_APPLET_LOOPBACK       \
     ) > 1)
 #        error "Enable only one of 'Applet'"
@@ -75,6 +82,8 @@
     + SSS_HAVE_APPLET_SE05X_B        \
     + SSS_HAVE_APPLET_SE05X_C        \
     + SSS_HAVE_APPLET_SE05X_L        \
+    + SSS_HAVE_APPLET_SE051_UWB      \
+    + SSS_HAVE_APPLET_AUTH           \
     + SSS_HAVE_APPLET_LOOPBACK       \
     ) == 0)
 #        error "Enable at-least one of 'Applet'"
@@ -82,17 +91,17 @@
 
 
 
-/** SE05X_Ver : SE50 Applet version.
+/** SE05X_Ver : SE05X Applet version.
  *
- * 03_XX would only enable features of version 03.XX version of applet.
- * But, this would be compatibility would be added for newer versions of the Applet.
- * When 04_XX is selected, it would expose features available in 04_XX at compile time.
+ * Selection of Applet version 03_XX enables SE050 features.
+ * Selection of Applet version 06_00 enables SE051 features.
+ *
  */
 
 /** SE050 */
 #define SSS_HAVE_SE05X_VER_03_XX 1
 
-/** NXP Internal - 6.00 */
+/** SE051 */
 #define SSS_HAVE_SE05X_VER_06_00 0
 
 #if (( 0                             \
@@ -269,6 +278,34 @@
     + SSS_HAVE_FIPS_140_3            \
     ) == 0)
 #        error "Enable at-least one of 'FIPS'"
+#endif
+
+
+
+/** SBL : Enable/Disable SBL Bootable support
+ *
+ * This option is to enable/disable boot from SBL by switching linker address
+ */
+
+/** Not SBL bootable */
+#define SSS_HAVE_SBL_NONE 1
+
+/** SE050 based LPC55S SBL bootable */
+#define SSS_HAVE_SBL_SBL_LPC55S 0
+
+#if (( 0                             \
+    + SSS_HAVE_SBL_NONE              \
+    + SSS_HAVE_SBL_SBL_LPC55S        \
+    ) > 1)
+#        error "Enable only one of 'SBL'"
+#endif
+
+
+#if (( 0                             \
+    + SSS_HAVE_SBL_NONE              \
+    + SSS_HAVE_SBL_SBL_LPC55S        \
+    ) == 0)
+#        error "Enable at-least one of 'SBL'"
 #endif
 
 
@@ -452,10 +489,10 @@
 
 
 #define SSS_HAVE_APPLET \
- (SSS_HAVE_APPLET_A71CH | SSS_HAVE_APPLET_A71CL | SSS_HAVE_APPLET_A71CH_SIM | SSS_HAVE_APPLET_SE05X_A | SSS_HAVE_APPLET_SE05X_B | SSS_HAVE_APPLET_SE05X_C | SSS_HAVE_APPLET_SE05X_L | SSS_HAVE_APPLET_LOOPBACK)
+ (SSS_HAVE_APPLET_A71CH | SSS_HAVE_APPLET_A71CL | SSS_HAVE_APPLET_A71CH_SIM | SSS_HAVE_APPLET_SE05X_A | SSS_HAVE_APPLET_SE05X_B | SSS_HAVE_APPLET_SE05X_C | SSS_HAVE_APPLET_SE05X_L | SSS_HAVE_APPLET_SE051_UWB | SSS_HAVE_APPLET_AUTH | SSS_HAVE_APPLET_LOOPBACK)
 
 #define SSS_HAVE_APPLET_SE05X_IOT \
- (SSS_HAVE_APPLET_SE05X_A | SSS_HAVE_APPLET_SE05X_B | SSS_HAVE_APPLET_SE05X_C)
+ (SSS_HAVE_APPLET_SE05X_A | SSS_HAVE_APPLET_SE05X_B | SSS_HAVE_APPLET_SE05X_C | SSS_HAVE_APPLET_SE051_UWB | SSS_HAVE_APPLET_AUTH)
 
 #define SSS_HAVE_MBEDTLS_ALT \
  (SSS_HAVE_MBEDTLS_ALT_SSS | SSS_HAVE_MBEDTLS_ALT_A71CH)
@@ -510,6 +547,10 @@
 #define SSS_HAVE_SE05X_C (SSS_HAVE_APPLET_SE05X_C)
 #define WithApplet_SE05X_L (SSS_HAVE_APPLET_SE05X_L)
 #define SSS_HAVE_SE05X_L (SSS_HAVE_APPLET_SE05X_L)
+#define WithApplet_SE051_UWB (SSS_HAVE_APPLET_SE051_UWB)
+#define SSS_HAVE_SE051_UWB (SSS_HAVE_APPLET_SE051_UWB)
+#define WithApplet_AUTH (SSS_HAVE_APPLET_AUTH)
+#define SSS_HAVE_AUTH (SSS_HAVE_APPLET_AUTH)
 #define WithApplet_LoopBack (SSS_HAVE_APPLET_LOOPBACK)
 #define SSS_HAVE_LoopBack (SSS_HAVE_APPLET_LOOPBACK)
 #define SSS_HAVE_MBEDTLS (SSS_HAVE_HOSTCRYPTO_MBEDTLS)
@@ -547,6 +588,12 @@
 
 /* Montgomery Curve is enabled */
 #define SSS_HAVE_EC_MONT 1
+
+/* MIFARE DESFire is enabled */
+#define SSS_HAVE_MIFARE_DESFIRE 1
+
+/* PBKDF2 is enabled */
+#define SSS_HAVE_PBKDF2 1
 
 /* TLS handshake support on SE is enabled */
 #define SSS_HAVE_TLS_HANDSHAKE 1
@@ -603,6 +650,63 @@
 #   define SSS_HAVE_EC_ED 0
 #endif
 #endif
+
+#if SSS_HAVE_RSA
+#   define SSS_HAVE_RSA_4K 1
+#if SSS_HAVE_APPLET_SE051_UWB
+#   undef SSS_HAVE_RSA_4K
+#   define SSS_HAVE_RSA_4K 0
+#endif
+#endif
+
+#if SSS_HAVE_ECC
+#   define SSS_HAVE_EC_NIST_192 1
+#   define SSS_HAVE_EC_NIST_224 1
+#   define SSS_HAVE_EC_NIST_256 1
+#   define SSS_HAVE_EC_NIST_384 1
+#   define SSS_HAVE_EC_NIST_521 1
+#   define SSS_HAVE_EC_BP 1
+#   define SSS_HAVE_EC_NIST_K 1
+#   define SSS_HAVE_ECDAA 1
+#   define SSS_HAVE_EDDSA 1
+#if SSS_HAVE_APPLET_SE05X_A
+#   undef SSS_HAVE_ECDAA
+#   undef SSS_HAVE_EDDSA
+#   define SSS_HAVE_ECDAA 0
+#   define SSS_HAVE_EDDSA 0
+#endif
+#if SSS_HAVE_APPLET_AUTH
+#   undef SSS_HAVE_EC_NIST_192
+#   undef SSS_HAVE_EC_NIST_224
+#   undef SSS_HAVE_EC_NIST_521
+#   undef SSS_HAVE_EC_BP
+#   undef SSS_HAVE_EC_NIST_K
+#   undef SSS_HAVE_ECDAA
+#   undef SSS_HAVE_EDDSA
+#   define SSS_HAVE_EC_NIST_192 0
+#   define SSS_HAVE_EC_NIST_224 0
+#   define SSS_HAVE_EC_NIST_521 0
+#   define SSS_HAVE_EC_BP 0
+#   define SSS_HAVE_EC_NIST_K 0
+#   define SSS_HAVE_ECDAA 0
+#   define SSS_HAVE_EDDSA 0
+#endif
+#endif
+
+#if SSS_HAVE_APPLET
+#define SSS_HAVE_HASH_1 1
+#define SSS_HAVE_HASH_224 1
+#define SSS_HAVE_HASH_512 1
+#if SSS_HAVE_APPLET_AUTH
+#   undef SSS_HAVE_HASH_1
+#   undef SSS_HAVE_HASH_224
+#   undef SSS_HAVE_HASH_512
+#   define SSS_HAVE_HASH_1 0
+#   define SSS_HAVE_HASH_224 0
+#   define SSS_HAVE_HASH_512 0
+#endif
+#endif
+
 
 /* ========= Calculated values : END ======================== */
 

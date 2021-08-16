@@ -201,8 +201,8 @@ static void USB_HostApplicationInit(void)
 
 int main(void)
 {
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
+    BOARD_InitBootPins();
+    BOARD_InitBootClocks();
     BOARD_InitDebugConsole();
 
     USB_HostApplicationInit();

@@ -1,9 +1,11 @@
 /*
  * Copyright (c) 2014 Freescale Semiconductor, Inc.
+ * Copyright 2021 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
+
 #if !defined(__TARGET_CONFIG_H__)
 #define __TARGET_CONFIG_H__
 
@@ -36,6 +38,14 @@ enum _target_clocks
     //! Valid clock divider range
     kDivider_Min = 1,
     kDivider_Max = 16,
+};
+
+//! @brief Memory Map index constants
+enum
+{
+    kIndexFlashArray = 0,
+    kIndexSRAM = 1,
+    kSRAMSeparatrix = (uint32_t)0x20000000 //!< This value is the start address of SRAM_U
 };
 
 //! @brief Constants for sram partition

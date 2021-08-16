@@ -130,7 +130,7 @@ void USB_DeviceTaskFn(void *deviceHandle)
  */
 usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *param)
 {
-    usb_status_t error = kStatus_USB_Error;
+    usb_status_t error = kStatus_USB_InvalidRequest;
     uint16_t *temp16   = (uint16_t *)param;
     uint8_t *temp8     = (uint8_t *)param;
     uint8_t count      = 0U;
@@ -161,6 +161,7 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
             {
                 g_composite.attach               = 0U;
                 g_composite.currentConfiguration = 0U;
+                error                            = kStatus_USB_Success;
             }
             else if (USB_COMPOSITE_CONFIGURE_INDEX == (*temp8))
             {
@@ -172,20 +173,45 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
             }
             else
             {
-                error = kStatus_USB_InvalidRequest;
             }
             break;
         case kUSB_DeviceEventSetInterface:
-
             if (g_composite.attach)
             {
                 uint8_t interface        = (uint8_t)((*temp16 & 0xFF00U) >> 0x08U);
                 uint8_t alternateSetting = (uint8_t)(*temp16 & 0x00FFU);
+
                 if (USB_AUDIO_STREAM_INTERFACE_INDEX == interface)
                 {
-                    USB_DeviceAudioGeneratorSetInterface(g_composite.audioGenerator.audioHandle, interface,
-                                                         alternateSetting);
-                    error = kStatus_USB_Success;
+                    if (alternateSetting < USB_AUDIO_GENERATOR_STREAM_INTERFACE_ALTERNATE_COUNT)
+                    {
+                        USB_DeviceAudioGeneratorSetInterface(g_composite.audioGenerator.audioHandle, interface,
+                                                             alternateSetting);
+                        error = kStatus_USB_Success;
+                    }
+                }
+                else if (USB_AUDIO_CONTROL_INTERFACE_INDEX == interface)
+                {
+                    if (alternateSetting < USB_AUDIO_GENERATOR_CONTROL_INTERFACE_ALTERNATE_COUNT)
+                    {
+                        error = kStatus_USB_Success;
+                    }
+                }
+                else if (USB_HID_MOUSE_INTERFACE_INDEX == interface)
+                {
+                    if (alternateSetting < USB_HID_MOUSE_INTERFACE_ALTERNATE_COUNT)
+                    {
+                        error = kStatus_USB_Success;
+                    }
+                }
+                else
+                {
+                    /* no action */
+                }
+
+                if (kStatus_USB_Success == error)
+                {
+                    g_composite.currentInterfaceAlternateSetting[interface] = alternateSetting;
                 }
             }
             break;
@@ -204,10 +230,6 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
                 {
                     *temp16 = (*temp16 & 0xFF00U) | g_composite.currentInterfaceAlternateSetting[interface];
                     error   = kStatus_USB_Success;
-                }
-                else
-                {
-                    error = kStatus_USB_InvalidRequest;
                 }
             }
             break;
@@ -340,8 +362,8 @@ int main(void)
 void main(void)
 #endif
 {
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
+    BOARD_InitBootPins();
+    BOARD_InitBootClocks();
     BOARD_InitDebugConsole();
 
 #if defined(AUDIO_DATA_SOURCE_DMIC) && (AUDIO_DATA_SOURCE_DMIC > 0U)

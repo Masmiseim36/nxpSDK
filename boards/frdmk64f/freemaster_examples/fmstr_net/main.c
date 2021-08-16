@@ -1,0 +1,140 @@
+/*
+ * Copyright 2021 NXP
+ *
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
+ * FreeMASTER Communication Driver - Example Application
+ */
+
+////////////////////////////////////////////////////////////////////////////////
+// Includes
+////////////////////////////////////////////////////////////////////////////////
+
+#include "pin_mux.h"
+#include "board.h"
+
+#include "lwip/opt.h"
+
+#include "freemaster.h"
+#include "network.h"
+#include "freemaster_example.h"
+
+
+////////////////////////////////////////////////////////////////////////////////
+// Definitions
+////////////////////////////////////////////////////////////////////////////////
+
+
+/* Stack size of the temporary lwIP initialization thread. */
+#define EXAMPLE_THREAD_STACKSIZE 1024
+
+/* Priority of the network communication task. */
+#define EXAMPLE_FMSTR_THREAD_PRIO 3
+
+/* Priority of the example task. */
+#define EXAMPLE_APP_THREAD_PRIO 2
+
+////////////////////////////////////////////////////////////////////////////////
+// Variables
+////////////////////////////////////////////////////////////////////////////////
+
+//! Note: All global variables accessed by FreeMASTER are defined in a shared
+//! freemaster_example.c file
+
+////////////////////////////////////////////////////////////////////////////////
+// Prototypes
+////////////////////////////////////////////////////////////////////////////////
+
+static void fmstr_task(void *arg);
+static void example_task(void *arg);
+
+////////////////////////////////////////////////////////////////////////////////
+// Code
+////////////////////////////////////////////////////////////////////////////////
+
+int main(void)
+{
+    /* Board initialization */
+    SYSMPU_Type *base = SYSMPU;
+    BOARD_InitPins();
+    BOARD_BootClockRUN();
+    BOARD_InitDebugConsole();
+
+    /* Disable SYSMPU. */
+    base->CESR &= ~SYSMPU_CESR_VLD_MASK;
+    
+    /* Network interface initialization */
+    Network_Init(CLOCK_GetFreq(kCLOCK_CoreSysClk));
+    
+    /* FreeMaster task */
+    if(xTaskCreate(fmstr_task, "fmstr_task", EXAMPLE_THREAD_STACKSIZE, NULL, EXAMPLE_FMSTR_THREAD_PRIO, NULL) == pdFAIL)
+        LWIP_ASSERT("fmstr_task: Task creation failed.", 0);
+    
+    /* Example application task */
+    if(xTaskCreate(example_task, "example_task", EXAMPLE_THREAD_STACKSIZE, NULL, EXAMPLE_APP_THREAD_PRIO, NULL) == pdFAIL)
+        LWIP_ASSERT("example_task: Task creation failed.", 0);
+    
+    PRINTF("\n\nFreeMaster TCP/UDP %s Example\n\n", (FMSTR_NET_BLOCKING_TIMEOUT == 0 ? "Non-Blocking" : "Blocking"));
+    
+    vTaskStartScheduler();
+
+    /* Will not get here unless a task calls vTaskEndScheduler ()*/
+    return 0;
+}
+
+/*
+ * FreeMASTER Example application task. 
+ *
+ * This task runs a generic FreeMASTER example code - increments several
+ * variables so they can be monitored using the FreeMASTER PC Host tool.
+ * Note that the FALSE is passed to generic calls, so that the functions
+ * do not call FMSTR_Init() and FMSTR_Poll() API - this is called in a 
+ * task dedicated to FreeMASTER communication.
+ */
+static void example_task(void *arg)
+{    
+    /* Generic example initialization code */
+    FMSTR_Example_Init_Ex(FMSTR_FALSE);
+    
+    while(1)
+    {
+        /* Increment test variables periodically, use the 
+           FreeMASTER PC Host tool to visualize the variables */
+        FMSTR_Example_Poll_Ex(FMSTR_FALSE);
+        
+        /* Check the network connection and DHCP status periodically */
+        Network_Poll();
+    }
+}
+
+/*
+ * FreeMASTER task.
+ *
+ * Network communication takes place here. This task sleeps when waiting
+ * for a communication and lets the other example tasks to run.
+ */
+static void fmstr_task(void *arg)
+{
+    /* FreeMASTER driver initialization */
+    FMSTR_Init();
+    
+    while(1)
+    {
+        /* The FreeMASTER poll handles the communication interface and protocol
+           processing. This call will block the task execution when no communication 
+           takes place (also see FMSTR_NET_BLOCKING_TIMEOUT option) */
+        FMSTR_Poll();
+
+        /* When no blocking timeout is specified, the FMSTR_Poll() returns 
+           immediately without any blocking. We need to sleep to let other 
+           tasks to run. */
+#if FMSTR_NET_BLOCKING_TIMEOUT == 0
+        vTaskDelay(1);
+#endif        
+    }
+}
+
+
+////////////////////////////////////////////////////////////////////////////////
+// EOF
+/////////////////////////////////////////////////////////////////////////////////

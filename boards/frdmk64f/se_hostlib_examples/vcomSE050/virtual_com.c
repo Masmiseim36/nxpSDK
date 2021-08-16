@@ -8,7 +8,7 @@
 #include "fsl_sss_ftr.h"
 #include "fsl_device_registers.h"
 #include "clock_config.h"
-#include "board.h"
+#include "pin_mux.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -21,6 +21,7 @@
 #include "usb_device_cdc_acm.h"
 #include "usb_device_ch9.h"
 #include "fsl_debug_console.h"
+#include "board.h"
 
 #include "usb_device_descriptor.h"
 #include "virtual_com.h"
@@ -43,6 +44,10 @@ we rename those ISRs using a define to its name and undefine here
 #if defined(LPC_55x)
 #include "fsl_power.h"
 #endif
+#if defined(CPU_MIMXRT1062DVL6A)
+#include "fsl_dcp.h"
+#include "fsl_trng.h"
+#endif
 #if defined(CPU_LPC54018)
 #include "fsl_power.h"
 #endif
@@ -58,7 +63,6 @@ we rename those ISRs using a define to its name and undefine here
     defined(FSL_FEATURE_USB_KHCI_USB_RAM) && (FSL_FEATURE_USB_KHCI_USB_RAM > 0U)
 extern uint8_t USB_EnterLowpowerMode(void);
 #endif
-#include "pin_mux.h"
 #include <ax_reset.h>
 #include <se_reset_config.h>
 
@@ -118,7 +122,7 @@ static uint8_t s_countryCode[COMM_FEATURE_DATA_SIZE] = {
 /* CDC ACM information */
 USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) static usb_cdc_acm_info_t s_usbCdcAcmInfo;
 /* Data buffer for receiving and sending*/
-#if defined(IMX_RT)
+#if defined(CPU_MIMXRT1062DVL6A)
 USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) static uint8_t s_currRecvBuf[DATA_BUFF_SIZE];
 //USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) static uint8_t s_currSendBuf[DATA_BUFF_SIZE];
 #else
@@ -152,7 +156,7 @@ volatile static uint8_t s_comOpen = 0;
 /*******************************************************************************
 * Code
 ******************************************************************************/
-#if defined(IMX_RT)
+#if defined(CPU_MIMXRT1062DVL6A)
 /* The function sets the cacheable memory to shareable, this suggestion is referred from chapter 2.2.1 Memory regions, types and attributes in Cortex-M7 Devices, Generic User Guide */
 void BOARD_ConfigUSBMPU()
 {
@@ -357,7 +361,7 @@ usb_status_t USB_DeviceCdcVcomCallback(class_handle_t handle, uint32_t event, vo
     uint8_t *uartBitmap;
     usb_device_cdc_acm_request_param_struct_t *acmReqParam;
     usb_device_endpoint_callback_message_struct_t *epCbParam;
-    usb_status_t error = kStatus_USB_Error;
+    usb_status_t error = kStatus_USB_InvalidRequest;
     usb_cdc_acm_info_t *acmInfo = &s_usbCdcAcmInfo;
     acmReqParam = (usb_device_cdc_acm_request_param_struct_t *)param;
     epCbParam = (usb_device_endpoint_callback_message_struct_t *)param;
@@ -426,35 +430,39 @@ usb_status_t USB_DeviceCdcVcomCallback(class_handle_t handle, uint32_t event, vo
         if (USB_DEVICE_CDC_FEATURE_ABSTRACT_STATE == acmReqParam->setupValue) {
             if (1 == acmReqParam->isSetup) {
                 *(acmReqParam->buffer) = s_abstractState;
+                *(acmReqParam->length) = sizeof(s_abstractState);
             }
             else {
-                *(acmReqParam->length) = 0;
+                /* no action, data phase, s_abstractState has been assigned */
             }
+            error = kStatus_USB_Success;
         }
         else if (USB_DEVICE_CDC_FEATURE_COUNTRY_SETTING == acmReqParam->setupValue) {
             if (1 == acmReqParam->isSetup) {
                 *(acmReqParam->buffer) = s_countryCode;
+                *(acmReqParam->length) = sizeof(s_countryCode);
             }
             else {
-                *(acmReqParam->length) = 0;
+                /* no action, data phase, s_countryCode has been assigned */
             }
+            error = kStatus_USB_Success;
         }
         else {
         }
-        error = kStatus_USB_Success;
         break;
     case kUSB_DeviceCdcEventGetCommFeature:
         if (USB_DEVICE_CDC_FEATURE_ABSTRACT_STATE == acmReqParam->setupValue) {
             *(acmReqParam->buffer) = s_abstractState;
             *(acmReqParam->length) = COMM_FEATURE_DATA_SIZE;
+            error = kStatus_USB_Success;
         }
         else if (USB_DEVICE_CDC_FEATURE_COUNTRY_SETTING == acmReqParam->setupValue) {
             *(acmReqParam->buffer) = s_countryCode;
             *(acmReqParam->length) = COMM_FEATURE_DATA_SIZE;
+            error = kStatus_USB_Success;
         }
         else {
         }
-        error = kStatus_USB_Success;
         break;
     case kUSB_DeviceCdcEventClearCommFeature:
         break;
@@ -466,14 +474,16 @@ usb_status_t USB_DeviceCdcVcomCallback(class_handle_t handle, uint32_t event, vo
     case kUSB_DeviceCdcEventSetLineCoding: {
         if (1 == acmReqParam->isSetup) {
             *(acmReqParam->buffer) = s_lineCoding;
+            *(acmReqParam->length) = sizeof(s_lineCoding);
         }
         else {
-            *(acmReqParam->length) = 0;
+            /* no action, data phase, s_lineCoding has been assigned */
         }
     }
         error = kStatus_USB_Success;
         break;
     case kUSB_DeviceCdcEventSetControlLineState: {
+        error = kStatus_USB_Success;
         s_usbCdcAcmInfo.dteStatus = acmReqParam->setupValue;
         /* activate/deactivate Tx carrier */
         if (acmInfo->dteStatus & USB_DEVICE_CDC_CONTROL_SIG_BITMAP_CARRIER_ACTIVATION) {
@@ -569,13 +579,14 @@ usb_status_t USB_DeviceCdcVcomCallback(class_handle_t handle, uint32_t event, vo
  */
 usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *param)
 {
-    usb_status_t error = kStatus_USB_Error;
+    usb_status_t error = kStatus_USB_InvalidRequest;
     uint16_t *temp16 = (uint16_t *)param;
     uint8_t *temp8 = (uint8_t *)param;
 
     switch (event) {
     case kUSB_DeviceEventBusReset: {
         s_cdcVcom.attach = 0;
+        error            = kStatus_USB_Success;
 #if (defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0U)) || \
     (defined(USB_DEVICE_CONFIG_LPCIP3511HS) && (USB_DEVICE_CONFIG_LPCIP3511HS > 0U))
         /* Get USB speed to configure the device, including max packet size and interval of the endpoints. */
@@ -589,6 +600,7 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
             s_cdcVcom.attach = 1;
             s_cdcVcom.currentConfiguration = *temp8;
             if (USB_CDC_VCOM_CONFIGURE_INDEX == (*temp8)) {
+                error = kStatus_USB_Success;
                 /* Schedule buffer for receive */
                 USB_DeviceCdcAcmRecv(s_cdcVcom.cdcAcmHandle,
                     USB_CDC_VCOM_BULK_OUT_ENDPOINT,
@@ -603,6 +615,7 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
             uint8_t alternateSetting = (uint8_t)(*temp16 & 0x00FFU);
             if (interface < USB_CDC_VCOM_INTERFACE_COUNT) {
                 s_cdcVcom.currentInterfaceAlternateSetting[interface] = alternateSetting;
+                error                                                 = kStatus_USB_Success;
             }
         }
         break;
@@ -755,7 +768,11 @@ void main(void)
     LED_RED_INIT(1);
 #endif
 
-#if defined(IMX_RT)
+#if defined(CPU_MIMXRT1062DVL6A)
+#define LPI2C_CLOCK_SOURCE_DIVIDER (5U)
+    dcp_config_t dcpConfig;
+    trng_config_t trngConfig;
+
     BOARD_ConfigMPU();
     BOARD_InitBootPins();
     BOARD_BootClockRUN();
@@ -763,6 +780,19 @@ void main(void)
     BOARD_ConfigUSBMPU();
     /* Data cache must be temporarily disabled to be able to use sdram */
     SCB_DisableDCache();
+    CLOCK_SetDiv(kCLOCK_Lpi2cDiv, LPI2C_CLOCK_SOURCE_DIVIDER);
+    DCP_GetDefaultConfig(&dcpConfig);
+    DCP_Init(DCP, &dcpConfig);
+
+    /* Initialize TRNG */
+    TRNG_GetDefaultConfig(&trngConfig);
+    /* Set sample mode of the TRNG ring oscillator to Von Neumann, for better random data.
+    * It is optional.*/
+    trngConfig.sampleMode = kTRNG_SampleModeVonNeumann;
+
+    /* Initialize TRNG */
+    TRNG_Init(TRNG, &trngConfig);
+
 #endif
 #ifdef CPU_LPC54018
     /* Init board hardware. */

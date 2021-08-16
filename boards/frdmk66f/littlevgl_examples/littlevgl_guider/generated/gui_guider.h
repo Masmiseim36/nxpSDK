@@ -12,8 +12,8 @@
 
 typedef struct
 {
-	lv_obj_t *btn;
-	lv_obj_t *label;
+    lv_obj_t *btn;
+    lv_obj_t *label;
 } lv_ui;
 
 extern lv_ui guider_ui;

@@ -20,11 +20,9 @@
     <definition extID="platform.drivers.lpuart.MK66F18"/>
     <definition extID="platform.drivers.smc.MK66F18"/>
     <definition extID="platform.drivers.gpio.MK66F18"/>
-    <definition extID="platform.Include_core_cm4.MK66F18"/>
-    <definition extID="platform.Include_common.MK66F18"/>
-    <definition extID="platform.Include_dsp.MK66F18"/>
-    <definition extID="platform.CMSIS_Driver_Include.I2C_CMSISInclude.MK66F18"/>
-    <definition extID="platform.CMSIS_Driver_Include.Common_CMSISInclude.MK66F18"/>
+    <definition extID="CMSIS_Include_core_cm.MK66F18"/>
+    <definition extID="CMSIS_Driver_Include.I2C.MK66F18"/>
+    <definition extID="CMSIS_Driver_Include.Common.MK66F18"/>
     <definition extID="platform.utilities.misc_utilities.MK66F18"/>
     <definition extID="device.MK66F18_system.MK66F18"/>
     <definition extID="iar"/>
@@ -33,7 +31,7 @@
     <definition extID="mcuxpresso"/>
     <definition extID="com.nxp.mcuxpresso"/>
   </externalDefinitions>
-  <example id="frdmk66f_cmsis_i2c_int_b2b_transfer_master" name="cmsis_i2c_int_b2b_transfer_master" dependency="utility.debug_console_lite.MK66F18 platform.utilities.assert_lite.MK66F18 platform.drivers.port.MK66F18 platform.drivers.clock.MK66F18 platform.drivers.edma.MK66F18 platform.drivers.dmamux.MK66F18 platform.drivers.i2c.MK66F18 platform.drivers.i2c_edma.MK66F18 platform.drivers.i2c_cmsis.MK66F18 platform.drivers.common.MK66F18 platform.drivers.flash.MK66F18 device.MK66F18_CMSIS.MK66F18 component.uart_adapter.MK66F18 component.lists.MK66F18 platform.drivers.uart.MK66F18 device.MK66F18_startup.MK66F18 platform.drivers.lpuart.MK66F18 platform.drivers.smc.MK66F18 platform.drivers.gpio.MK66F18 platform.Include_core_cm4.MK66F18 platform.Include_common.MK66F18 platform.Include_dsp.MK66F18 platform.CMSIS_Driver_Include.I2C_CMSISInclude.MK66F18 platform.CMSIS_Driver_Include.Common_CMSISInclude.MK66F18 platform.utilities.misc_utilities.MK66F18 device.MK66F18_system.MK66F18" category="cmsis_driver_examples/i2c">
+  <example id="frdmk66f_cmsis_i2c_int_b2b_transfer_master" name="cmsis_i2c_int_b2b_transfer_master" dependency="utility.debug_console_lite.MK66F18 platform.utilities.assert_lite.MK66F18 platform.drivers.port.MK66F18 platform.drivers.clock.MK66F18 platform.drivers.edma.MK66F18 platform.drivers.dmamux.MK66F18 platform.drivers.i2c.MK66F18 platform.drivers.i2c_edma.MK66F18 platform.drivers.i2c_cmsis.MK66F18 platform.drivers.common.MK66F18 platform.drivers.flash.MK66F18 device.MK66F18_CMSIS.MK66F18 component.uart_adapter.MK66F18 component.lists.MK66F18 platform.drivers.uart.MK66F18 device.MK66F18_startup.MK66F18 platform.drivers.lpuart.MK66F18 platform.drivers.smc.MK66F18 platform.drivers.gpio.MK66F18 CMSIS_Include_core_cm.MK66F18 CMSIS_Driver_Include.I2C.MK66F18 CMSIS_Driver_Include.Common.MK66F18 platform.utilities.misc_utilities.MK66F18 device.MK66F18_system.MK66F18" category="cmsis_driver_examples/i2c">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -43,6 +41,7 @@
           <value>CPU_MK66FN2M0VMD18</value>
           <value>FRDM_K66F</value>
           <value>FREEDOM</value>
+          <value>MCUXPRESSO_SDK</value>
         </option>
         <option id="com.crt.advproject.gas.fpu" type="enum">
           <value>com.crt.advproject.gas.fpu.fpv4.hard</value>

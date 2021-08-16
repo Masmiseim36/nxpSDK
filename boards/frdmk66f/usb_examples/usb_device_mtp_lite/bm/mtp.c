@@ -1461,7 +1461,7 @@ usb_status_t USB_DeviceMtpEndpointsDeinit(void)
  */
 usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *param)
 {
-    usb_status_t error = kStatus_USB_Error;
+    usb_status_t error = kStatus_USB_InvalidRequest;
     uint8_t *temp8     = (uint8_t *)param;
     switch (event)
     {
@@ -1494,24 +1494,25 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
         case kUSB_DeviceEventSetConfiguration:
             if (g_mtp.currentConfiguration == *temp8)
             {
-                break;
+                error = kStatus_USB_Success;
             }
-            if (g_mtp.currentConfiguration)
-            {
-                USB_DeviceMtpEndpointsDeinit();
-            }
-            g_mtp.currentConfiguration = *temp8;
-            if (USB_MTP_CONFIGURE_INDEX == (*temp8))
+            else if (USB_MTP_CONFIGURE_INDEX == (*temp8))
             {
                 error = USB_DeviceMtpEndpointsInit();
                 if (kStatus_USB_Success == error)
                 {
                     USB_DeviceMtpPrimeCommand(g_mtpHandle);
                 }
-                g_mtp.attach = 1;
+                g_mtp.attach               = 1;
+                g_mtp.currentConfiguration = *temp8;
+            }
+            else
+            {
+                /* no action, return kStatus_USB_InvalidRequest. */
             }
             break;
         case kUSB_DeviceEventSetInterface:
+            error = kStatus_USB_Success;
             break;
         default:
             break;
@@ -1634,7 +1635,7 @@ usb_status_t USB_DeviceProcessClassRequest(usb_device_handle handle,
                                            uint32_t *length,
                                            uint8_t **buffer)
 {
-    usb_status_t error = kStatus_USB_Error;
+    usb_status_t error = kStatus_USB_InvalidRequest;
 
     if ((setup->bmRequestType & USB_REQUEST_TYPE_RECIPIENT_MASK) != USB_REQUEST_TYPE_RECIPIENT_INTERFACE)
     {
@@ -1645,7 +1646,7 @@ usb_status_t USB_DeviceProcessClassRequest(usb_device_handle handle,
     {
         case USB_DEVICE_MTP_CANCEL_REQUEST:
             if ((setup->wIndex == USB_MTP_INTERFACE_INDEX) && (0U == g_mtpHandle->isHostCancel) &&
-                (0U == setup->wValue) && (0U == setup->wValue) && (setup->wLength == 0x0006U) &&
+                (0U == setup->wValue) && (setup->wLength == 0x0006U) &&
                 ((setup->bmRequestType & USB_REQUEST_TYPE_DIR_MASK) == USB_REQUEST_TYPE_DIR_OUT))
             {
                 error = kStatus_USB_Success;
@@ -1660,19 +1661,11 @@ usb_status_t USB_DeviceProcessClassRequest(usb_device_handle handle,
                     USB_DeviceMtpCancelCurrentTransaction(g_mtpHandle);
                 }
             }
-            else
-            {
-                error = kStatus_USB_InvalidRequest;
-            }
             break;
         case USB_DEVICE_MTP_GET_EXTENDED_EVENT_DATA:
-            if ((setup->wIndex == USB_MTP_INTERFACE_INDEX) && (0U == setup->wValue) && (0U == setup->wLength) &&
-                ((setup->bmRequestType & USB_REQUEST_TYPE_DIR_MASK) == USB_REQUEST_TYPE_DIR_OUT))
+            if ((setup->wIndex == USB_MTP_INTERFACE_INDEX) && (0U == setup->wValue) && (0U != setup->wLength) &&
+                ((setup->bmRequestType & USB_REQUEST_TYPE_DIR_MASK) == USB_REQUEST_TYPE_DIR_IN))
             {
-            }
-            else
-            {
-                error = kStatus_USB_InvalidRequest;
             }
             break;
         case USB_DEVICE_MTP_DEVICE_RESET_REQUEST:
@@ -1718,10 +1711,6 @@ usb_status_t USB_DeviceProcessClassRequest(usb_device_handle handle,
 
                 USB_DeviceMtpPrimeCommand(g_mtpHandle);
             }
-            else
-            {
-                error = kStatus_USB_InvalidRequest;
-            }
             break;
         case USB_DEVICE_MTP_GET_DEVICE_STATUS_REQUEST:
             if ((setup->wIndex == USB_MTP_INTERFACE_INDEX) && (0U == setup->wValue) && (4U <= setup->wLength) &&
@@ -1750,10 +1739,6 @@ usb_status_t USB_DeviceProcessClassRequest(usb_device_handle handle,
                 *length = g_mtpHandle->deviceStatus->wLength;
 
                 error = kStatus_USB_Success;
-            }
-            else
-            {
-                error = kStatus_USB_InvalidRequest;
             }
             break;
         default:
@@ -1875,8 +1860,8 @@ int main(void)
 void main(void)
 #endif
 {
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
+    BOARD_InitBootPins();
+    BOARD_InitBootClocks();
     BOARD_InitDebugConsole();
     BOARD_SD_Config(&g_sd, NULL, USB_DEVICE_INTERRUPT_PRIORITY - 1U, NULL);
     USB_DeviceApplicationInit();

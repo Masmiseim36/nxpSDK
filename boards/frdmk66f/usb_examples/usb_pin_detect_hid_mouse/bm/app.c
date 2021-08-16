@@ -380,8 +380,8 @@ void main(void)
 {
     port_pin_config_t portConfig = {0};
 
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
+    BOARD_InitBootPins();
+    BOARD_InitBootClocks();
     BOARD_InitDebugConsole();
 
     /* Enable USB ID PIN */

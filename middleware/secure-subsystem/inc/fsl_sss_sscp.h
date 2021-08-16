@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 NXP
+ * Copyright 2018-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -170,7 +170,6 @@ typedef struct _sss_sscp_rng
     sss_sscp_session_t *session;
     uint32_t rngTypeSpecifier;
     /*! Implementation specific part */
-    uint32_t ctx;
 } sss_sscp_rng_t;
 
 /*******************************************************************************
@@ -186,7 +185,7 @@ sss_status_t sss_sscp_open_session(sss_sscp_session_t *session,
                                    uint32_t connectionMethod,
                                    const void *connectionData);
 
-void sss_sscp_close_session(sss_sscp_session_t *session);
+sss_status_t sss_sscp_close_session(sss_sscp_session_t *session);
 
 /*******************************SYMETRIC***************************************/
 

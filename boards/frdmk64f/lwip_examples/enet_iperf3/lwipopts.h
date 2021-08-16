@@ -4,7 +4,7 @@
  * This file is based on \src\include\lwip\opt.h
  ******************************************************************************
  * Copyright (c) 2013-2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2019 NXP
+ * Copyright 2016-2021 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -129,10 +129,25 @@ void sys_mark_tcpip_thread(void);
 #define MEMP_NUM_SYS_TIMEOUT 10
 #endif
 
+/* MEMP_NUM_NETBUF: the number of struct netbufs. */
+#if !defined MEMP_NUM_NETBUF
+#define MEMP_NUM_NETBUF 32
+#endif
+
+/* MEMP_NUM_TCPIP_MSG_INPKT: the number of struct tcpip_msg, which are used
+   for incoming packets. */
+#if !defined MEMP_NUM_TCPIP_MSG_INPKT
+#define MEMP_NUM_TCPIP_MSG_INPKT 32
+#endif
+
 /* ---------- Pbuf options ---------- */
 /* PBUF_POOL_SIZE: the number of buffers in the pbuf pool. */
 #ifndef PBUF_POOL_SIZE
+#ifdef IPERF3_ENET
+#define PBUF_POOL_SIZE 5
+#else
 #define PBUF_POOL_SIZE 24
+#endif
 #endif
 
 /* PBUF_POOL_BUFSIZE: the size of each pbuf in the pbuf pool. */
@@ -178,7 +193,7 @@ void sys_mark_tcpip_thread(void);
 /* TCP receive window. */
 #ifndef TCP_WND
 #ifdef IPERF3_ENET
-#define TCP_WND (4 * TCP_MSS)
+#define TCP_WND (18 * TCP_MSS)
 #else
 #define TCP_WND (24 * TCP_MSS)
 #endif
@@ -323,21 +338,21 @@ Some MCU allow computing and verifying the IP, UDP, TCP and ICMP checksums by ha
  * NETCONN_RAW. The queue size value itself is platform-dependent, but is passed
  * to sys_mbox_new() when the recvmbox is created.
  */
-#define DEFAULT_RAW_RECVMBOX_SIZE 12
+#define DEFAULT_RAW_RECVMBOX_SIZE 32
 
 /**
  * DEFAULT_UDP_RECVMBOX_SIZE: The mailbox size for the incoming packets on a
  * NETCONN_UDP. The queue size value itself is platform-dependent, but is passed
  * to sys_mbox_new() when the recvmbox is created.
  */
-#define DEFAULT_UDP_RECVMBOX_SIZE 12
+#define DEFAULT_UDP_RECVMBOX_SIZE 32
 
 /**
  * DEFAULT_TCP_RECVMBOX_SIZE: The mailbox size for the incoming packets on a
  * NETCONN_TCP. The queue size value itself is platform-dependent, but is passed
  * to sys_mbox_new() when the recvmbox is created.
  */
-#define DEFAULT_TCP_RECVMBOX_SIZE 12
+#define DEFAULT_TCP_RECVMBOX_SIZE 32
 
 /**
  * DEFAULT_ACCEPTMBOX_SIZE: The mailbox size for the incoming connections.

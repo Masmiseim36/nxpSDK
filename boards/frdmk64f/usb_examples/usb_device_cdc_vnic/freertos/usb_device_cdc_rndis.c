@@ -26,12 +26,12 @@
     OSA_ENTER_CRITICAL()
 #define USB_CDC_RNDIS_MUTEX_UNLOCK(_X_) OSA_EXIT_CRITICAL()
 #else
-#define USB_CDC_RNDIS_MUTEX_LOCK(_X_) (void)OSA_MutexLock(_X_, USB_OSA_WAIT_TIMEOUT)
+#define USB_CDC_RNDIS_MUTEX_LOCK(_X_)   (void)OSA_MutexLock(_X_, USB_OSA_WAIT_TIMEOUT)
 #define USB_CDC_RNDIS_MUTEX_UNLOCK(_X_) (void)OSA_MutexUnlock(_X_)
 #endif
 
 #define NOTIF_PACKET_SIZE (0x08)
-#define VENDOR_INFO_SIZE (16)
+#define VENDOR_INFO_SIZE  (16)
 
 /*******************************************************************************
  * Prototypes
@@ -264,7 +264,7 @@ usb_status_t USB_DeviceCdcRndisMessageSet(usb_device_cdc_rndis_struct_t *handle,
 
     if (messageType == RNDIS_HALT_MSG)
     {
-        /* No response is send to host on receiving Halt Command */
+        /* No response is sent to host on receiving Halt Command */
         (void)USB_DeviceCdcRndisHaltCommand(handle);
     }
     else

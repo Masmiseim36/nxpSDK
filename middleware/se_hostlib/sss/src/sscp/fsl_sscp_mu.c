@@ -52,10 +52,9 @@ sscp_status_t sscp_mu_invoke_command(sscp_context_t *context, uint32_t commandID
 
     bool done = false;
     for (i = 0; !done && (i < SSCP_OPERATION_PARAM_COUNT); i++) {
-
-        if ((SSCP_OP_GET_PARAM(i, op->paramTypes) == kSSCP_ParamType_MemrefInput) || \
-            (SSCP_OP_GET_PARAM(i, op->paramTypes) == kSSCP_ParamType_MemrefInOut) || \
-            (SSCP_OP_GET_PARAM(i, op->paramTypes) == kSSCP_ParamType_MemrefOutput) || \
+        if ((SSCP_OP_GET_PARAM(i, op->paramTypes) == kSSCP_ParamType_MemrefInput) ||
+            (SSCP_OP_GET_PARAM(i, op->paramTypes) == kSSCP_ParamType_MemrefInOut) ||
+            (SSCP_OP_GET_PARAM(i, op->paramTypes) == kSSCP_ParamType_MemrefOutput) ||
             (SSCP_OP_GET_PARAM(i, op->paramTypes) == kSSCP_ParamType_ValueInput)) {
             if (wrIdx >= 15) {
                 break;
@@ -66,7 +65,6 @@ sscp_status_t sscp_mu_invoke_command(sscp_context_t *context, uint32_t commandID
                 break;
             }
         }
-
 
         switch (SSCP_OP_GET_PARAM(i, op->paramTypes)) {
         case kSSCP_ParamType_ContextReference:

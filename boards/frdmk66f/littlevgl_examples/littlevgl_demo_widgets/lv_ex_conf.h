@@ -24,7 +24,7 @@
 /*Widgets demo*/
 #define LV_USE_DEMO_WIDGETS 1
 #if LV_USE_DEMO_WIDGETS != 0
-#  define LV_DEMO_WIDGETS_SLIDESHOW  0
+#define LV_DEMO_WIDGETS_SLIDESHOW 0
 #endif
 
 #define LV_USE_DEMO_BENCHMARK 0

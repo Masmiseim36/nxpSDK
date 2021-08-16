@@ -5,6 +5,7 @@
     <definition extID="driver.phy-device-ksz8081.MK64F12"/>
     <definition extID="platform.drivers.rnga.MK64F12"/>
     <definition extID="middleware.mmcau.cm4_cm7.MK64F12"/>
+    <definition extID="middleware.mbedtls.MK64F12"/>
     <definition extID="middleware.mbedtls.port.ksdk.MK64F12"/>
     <definition extID="middleware.mbedtls.kinetis.MK64F12"/>
     <definition extID="component.mflash_file.MK64F12"/>
@@ -21,12 +22,14 @@
     <definition extID="middleware.freertos-aws_iot.demos.dev_mode_key_provisioning.MK64F12"/>
     <definition extID="middleware.freertos-kernel.MK64F12"/>
     <definition extID="middleware.freertos-kernel.heap_4.MK64F12"/>
-    <definition extID="middleware.freertos-aws_iot.c_sdk.standard.shadow.MK64F12"/>
-    <definition extID="middleware.freertos-aws_iot.c_sdk.standard.serializer.MK64F12"/>
+    <definition extID="middleware.freertos-aws_iot.libraries.c_sdk.standard.shadow.MK64F12"/>
+    <definition extID="middleware.freertos-aws_iot.libraries.c_sdk.standard.serializer.MK64F12"/>
     <definition extID="middleware.freertos-aws_iot.libraries.3rdparty.pkcs11.MK64F12"/>
     <definition extID="middleware.freertos-aws_iot.vendor.nxp.pkcs11.MK64F12"/>
     <definition extID="middleware.freertos-aws_iot.libraries.abstractions.pkcs11.MK64F12"/>
-    <definition extID="middleware.mbedtls.MK64F12"/>
+    <definition extID="middleware.freertos-aws_iot.libraries.abstractions.pkcs11_mbedtls.MK64F12"/>
+    <definition extID="middleware.freertos-aws_iot.libraries.logging.MK64F12"/>
+    <definition extID="middleware.freertos-aws_iot.libraries.3rdparty.mbedtls_config.MK64F12"/>
     <definition extID="platform.drivers.flash.MK64F12"/>
     <definition extID="platform.drivers.gpio.MK64F12"/>
     <definition extID="platform.drivers.clock.MK64F12"/>
@@ -41,24 +44,27 @@
     <definition extID="device.MK64F12_startup.MK64F12"/>
     <definition extID="platform.utilities.assert.MK64F12"/>
     <definition extID="driver.mdio-common.MK64F12"/>
-    <definition extID="platform.Include_core_cm4.MK64F12"/>
-    <definition extID="platform.Include_common.MK64F12"/>
-    <definition extID="platform.Include_dsp.MK64F12"/>
+    <definition extID="CMSIS_Include_core_cm.MK64F12"/>
     <definition extID="middleware.mmcau.common_files.MK64F12"/>
     <definition extID="component.mflash.common.MK64F12"/>
     <definition extID="middleware.freertos-aws_iot.libraries.abstractions.secure_sockets.MK64F12"/>
-    <definition extID="middleware.freertos-aws_iot.common.MK64F12"/>
+    <definition extID="middleware.freertos-aws_iot.libraries.c_sdk.standard.common.MK64F12"/>
     <definition extID="middleware.freertos-kernel.extension.MK64F12"/>
     <definition extID="middleware.freertos-aws_iot.libraries.abstractions.platform.MK64F12"/>
     <definition extID="middleware.freertos-aws_iot.libraries.freertos_plus.standard.tls.MK64F12"/>
     <definition extID="middleware.freertos-aws_iot.libraries.3rdparty.mbedtls_utils.MK64F12"/>
     <definition extID="middleware.freertos-aws_iot.libraries.freertos_plus.standard.crypto.MK64F12"/>
-    <definition extID="middleware.freertos-aws_iot.libraries.abstractions.threading_alt.MK64F12"/>
-    <definition extID="middleware.freertos-aws_iot.libraries.freertos_plus.standard.pkcs11.MK64F12"/>
     <definition extID="middleware.freertos-aws_iot.libraries.freertos_plus.standard.utils.MK64F12"/>
     <definition extID="middleware.freertos-aws_iot.network_manager.MK64F12"/>
     <definition extID="middleware.freertos-aws_iot.mqtt.MK64F12"/>
+    <definition extID="middleware.freertos-aws_iot.libraries.coremqtt.MK64F12"/>
     <definition extID="middleware.freertos-aws_iot.libraries.abstractions.wifi.MK64F12"/>
+    <definition extID="middleware.freertos-aws_iot.libraries.device_shadow_for_aws.MK64F12"/>
+    <definition extID="middleware.freertos-aws_iot.libraries.corejason.MK64F12"/>
+    <definition extID="middleware.freertos-aws_iot.mqtt_demo_helpers.MK64F12"/>
+    <definition extID="middleware.freertos-aws_iot.libraries.abstractions.transport.MK64F12"/>
+    <definition extID="middleware.freertos-aws_iot.libraries.abstractions.backoff_algorithm.MK64F12"/>
+    <definition extID="middleware.freertos-aws_iot.pkcs11_helpers.MK64F12"/>
     <definition extID="platform.utilities.misc_utilities.MK64F12"/>
     <definition extID="device.MK64F12_system.MK64F12"/>
     <definition extID="iar"/>
@@ -67,7 +73,7 @@
     <definition extID="mcuxpresso"/>
     <definition extID="com.nxp.mcuxpresso"/>
   </externalDefinitions>
-  <example id="frdmk64f_aws_shadow_enet" name="aws_shadow_enet" dependency="driver.mdio-enet.MK64F12 driver.phy-device-ksz8081.MK64F12 platform.drivers.rnga.MK64F12 middleware.mmcau.cm4_cm7.MK64F12 middleware.mbedtls.port.ksdk.MK64F12 middleware.mbedtls.kinetis.MK64F12 component.mflash_file.MK64F12 component.mflash.frdmk64f.MK64F12 middleware.lwip.enet_ethernetif.MK64F12 middleware.lwip.MK64F12 driver.phy-common.MK64F12 platform.drivers.enet.MK64F12 utility.debug_console.MK64F12 platform.drivers.port.MK64F12 middleware.freertos-aws_iot.vendor.nxp.secure_sockets.lwip.MK64F12 middleware.freertos-aws_iot.demos.MK64F12 middleware.freertos-aws_iot.demos_shadow.MK64F12 middleware.freertos-aws_iot.demos.dev_mode_key_provisioning.MK64F12 middleware.freertos-kernel.MK64F12 middleware.freertos-kernel.heap_4.MK64F12 middleware.freertos-aws_iot.c_sdk.standard.shadow.MK64F12 middleware.freertos-aws_iot.c_sdk.standard.serializer.MK64F12 middleware.freertos-aws_iot.libraries.3rdparty.pkcs11.MK64F12 middleware.freertos-aws_iot.vendor.nxp.pkcs11.MK64F12 middleware.freertos-aws_iot.libraries.abstractions.pkcs11.MK64F12 middleware.mbedtls.MK64F12 platform.drivers.flash.MK64F12 platform.drivers.gpio.MK64F12 platform.drivers.clock.MK64F12 platform.drivers.uart.MK64F12 platform.drivers.smc.MK64F12 device.MK64F12_CMSIS.MK64F12 component.uart_adapter.MK64F12 component.serial_manager.MK64F12 platform.drivers.common.MK64F12 component.lists.MK64F12 component.serial_manager_uart.MK64F12 device.MK64F12_startup.MK64F12 platform.utilities.assert.MK64F12 driver.mdio-common.MK64F12 platform.Include_core_cm4.MK64F12 platform.Include_common.MK64F12 platform.Include_dsp.MK64F12 middleware.mmcau.common_files.MK64F12 component.mflash.common.MK64F12 middleware.freertos-aws_iot.libraries.abstractions.secure_sockets.MK64F12 middleware.freertos-aws_iot.common.MK64F12 middleware.freertos-kernel.extension.MK64F12 middleware.freertos-aws_iot.libraries.abstractions.platform.MK64F12 middleware.freertos-aws_iot.libraries.freertos_plus.standard.tls.MK64F12 middleware.freertos-aws_iot.libraries.3rdparty.mbedtls_utils.MK64F12 middleware.freertos-aws_iot.libraries.freertos_plus.standard.crypto.MK64F12 middleware.freertos-aws_iot.libraries.abstractions.threading_alt.MK64F12 middleware.freertos-aws_iot.libraries.freertos_plus.standard.pkcs11.MK64F12 middleware.freertos-aws_iot.libraries.freertos_plus.standard.utils.MK64F12 middleware.freertos-aws_iot.network_manager.MK64F12 middleware.freertos-aws_iot.mqtt.MK64F12 middleware.freertos-aws_iot.libraries.abstractions.wifi.MK64F12 platform.utilities.misc_utilities.MK64F12 device.MK64F12_system.MK64F12" category="aws_examples">
+  <example id="frdmk64f_aws_shadow_enet" name="aws_shadow_enet" dependency="driver.mdio-enet.MK64F12 driver.phy-device-ksz8081.MK64F12 platform.drivers.rnga.MK64F12 middleware.mmcau.cm4_cm7.MK64F12 middleware.mbedtls.MK64F12 middleware.mbedtls.port.ksdk.MK64F12 middleware.mbedtls.kinetis.MK64F12 component.mflash_file.MK64F12 component.mflash.frdmk64f.MK64F12 middleware.lwip.enet_ethernetif.MK64F12 middleware.lwip.MK64F12 driver.phy-common.MK64F12 platform.drivers.enet.MK64F12 utility.debug_console.MK64F12 platform.drivers.port.MK64F12 middleware.freertos-aws_iot.vendor.nxp.secure_sockets.lwip.MK64F12 middleware.freertos-aws_iot.demos.MK64F12 middleware.freertos-aws_iot.demos_shadow.MK64F12 middleware.freertos-aws_iot.demos.dev_mode_key_provisioning.MK64F12 middleware.freertos-kernel.MK64F12 middleware.freertos-kernel.heap_4.MK64F12 middleware.freertos-aws_iot.libraries.c_sdk.standard.shadow.MK64F12 middleware.freertos-aws_iot.libraries.c_sdk.standard.serializer.MK64F12 middleware.freertos-aws_iot.libraries.3rdparty.pkcs11.MK64F12 middleware.freertos-aws_iot.vendor.nxp.pkcs11.MK64F12 middleware.freertos-aws_iot.libraries.abstractions.pkcs11.MK64F12 middleware.freertos-aws_iot.libraries.abstractions.pkcs11_mbedtls.MK64F12 middleware.freertos-aws_iot.libraries.logging.MK64F12 middleware.freertos-aws_iot.libraries.3rdparty.mbedtls_config.MK64F12 platform.drivers.flash.MK64F12 platform.drivers.gpio.MK64F12 platform.drivers.clock.MK64F12 platform.drivers.uart.MK64F12 platform.drivers.smc.MK64F12 device.MK64F12_CMSIS.MK64F12 component.uart_adapter.MK64F12 component.serial_manager.MK64F12 platform.drivers.common.MK64F12 component.lists.MK64F12 component.serial_manager_uart.MK64F12 device.MK64F12_startup.MK64F12 platform.utilities.assert.MK64F12 driver.mdio-common.MK64F12 CMSIS_Include_core_cm.MK64F12 middleware.mmcau.common_files.MK64F12 component.mflash.common.MK64F12 middleware.freertos-aws_iot.libraries.abstractions.secure_sockets.MK64F12 middleware.freertos-aws_iot.libraries.c_sdk.standard.common.MK64F12 middleware.freertos-kernel.extension.MK64F12 middleware.freertos-aws_iot.libraries.abstractions.platform.MK64F12 middleware.freertos-aws_iot.libraries.freertos_plus.standard.tls.MK64F12 middleware.freertos-aws_iot.libraries.3rdparty.mbedtls_utils.MK64F12 middleware.freertos-aws_iot.libraries.freertos_plus.standard.crypto.MK64F12 middleware.freertos-aws_iot.libraries.freertos_plus.standard.utils.MK64F12 middleware.freertos-aws_iot.network_manager.MK64F12 middleware.freertos-aws_iot.mqtt.MK64F12 middleware.freertos-aws_iot.libraries.coremqtt.MK64F12 middleware.freertos-aws_iot.libraries.abstractions.wifi.MK64F12 middleware.freertos-aws_iot.libraries.device_shadow_for_aws.MK64F12 middleware.freertos-aws_iot.libraries.corejason.MK64F12 middleware.freertos-aws_iot.mqtt_demo_helpers.MK64F12 middleware.freertos-aws_iot.libraries.abstractions.transport.MK64F12 middleware.freertos-aws_iot.libraries.abstractions.backoff_algorithm.MK64F12 middleware.freertos-aws_iot.pkcs11_helpers.MK64F12 platform.utilities.misc_utilities.MK64F12 device.MK64F12_system.MK64F12" category="aws_examples">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -81,8 +87,10 @@
           <value>FRDM_K64F</value>
           <value>FREEDOM</value>
           <value>MFLASH_FILE_BASEADDR=983040</value>
-          <value>FSL_RTOS_FREE_RTOS</value>
+          <value>LWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1</value>
+          <value>SDK_OS_FREE_RTOS</value>
           <value>SERIAL_PORT_TYPE_UART=1</value>
+          <value>MCUXPRESSO_SDK</value>
         </option>
         <option id="com.crt.advproject.gcc.fpu" type="enum">
           <value>com.crt.advproject.gcc.fpu.fpv4.hard</value>
@@ -171,7 +179,10 @@
       <files mask="FreeRTOSIPConfig.h"/>
       <files mask="iot_config.h"/>
       <files mask="iot_mqtt_agent_config.h"/>
-      <files mask="iot_pkcs11_config.h"/>
+      <files mask="core_mqtt_config.h"/>
+      <files mask="core_pkcs11_config.h"/>
+      <files mask="shadow_config.h"/>
+      <files mask="shadow_demo_config.h"/>
     </source>
     <source path="boards/frdmk64f/aws_examples/shadow_enet/config_files" project_relative_path="freertos/config_files" type="c_include">
       <files mask="aws_iot_network_config.h"/>

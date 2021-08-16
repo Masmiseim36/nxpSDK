@@ -69,28 +69,8 @@ void deinit_hardware(void)
 // configuration is maintained by USB stack itself.
 bool usb_clock_init(void)
 {
-    // Enable USB-OTG IP clocking
-    SIM->SCGC4 |= (SIM_SCGC4_USBOTG_MASK);
-
-    // If clock of usb module cannot be enabled, return false
-    if (!(SIM->SCGC4 & SIM_SCGC4_USBOTG_MASK))
-    {
-        return false;
-    }
-
-    // Reset the USB peripheral, this must be done here instead of USB driver due to silicon errata
-    // for at least KL25 and K22
-    USB0->USBTRC0 |= USB_USBTRC0_USBRESET_MASK;
-    while (USB0->USBTRC0 & USB_USBTRC0_USBRESET_MASK)
-        ;
-
-    // Select IRC48M clock, SIM_SOPT2_USBSRC_MASK selects internal clock,
-    // 0x30000 = SIM_SOPT2_PLLFLLSEL_MASK, selects IRC48MHz clock
-    SIM->SOPT2 |= (SIM_SOPT2_USBSRC_MASK | SIM_SOPT2_PLLFLLSEL_MASK);
-
-    // need to set the clock_recover_en and irc_en register
-    USB0->CLK_RECOVER_CTRL |= USB_CLK_RECOVER_CTRL_CLOCK_RECOVER_EN_MASK;
-    USB0->CLK_RECOVER_IRC_EN |= USB_CLK_RECOVER_IRC_EN_IRC_EN_MASK;
+    SystemCoreClockUpdate();
+    CLOCK_EnableUsbfs0Clock(kCLOCK_UsbSrcIrc48M, 48000000U);
 
     return true;
 }

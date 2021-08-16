@@ -3,15 +3,9 @@
  * @author NXP Semiconductors
  * @version 1.0
  * @par License
- * Copyright 2017,2018,2020 NXP
  *
- * This software is owned or controlled by NXP and may only be used
- * strictly in accordance with the applicable license terms.  By expressly
- * accepting such terms or by downloading, installing, activating and/or
- * otherwise using the software, you are agreeing that you have read, and
- * that you agree to comply with and are bound by, such license terms.  If
- * you do not agree to be bound by the applicable license terms, then you
- * may not retain, install, activate or otherwise use the software.
+ * Copyright 2017,2018,2020 NXP
+ * SPDX-License-Identifier: Apache-2.0
  *
  * @par Description
  * Get network EPOCH for timestamp
@@ -148,7 +142,7 @@ uint32_t resolveHostname(const char *hostname)
 #ifndef ntohl
 uint32_t ntohl(uint32_t input)
 {
-    uint8_t buffer[4] = { 0 };
+    uint8_t buffer[4] = {0};
     memcpy(&buffer, &input, sizeof(buffer));
     return ((uint32_t)buffer[3] << 0 * 8) | ((uint32_t)buffer[2] << 1 * 8) | ((uint32_t)buffer[1] << 2 * 8) |
            ((uint32_t)buffer[0] << 3 * 8);

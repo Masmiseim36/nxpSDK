@@ -517,7 +517,7 @@ void FMSTR_Example_Init(void)
     varFLT    = 0;
     varFLTrw  = 0;
     varFLTinc = 1.0;
-    arrFLT_size = ARR_SIZE_FLT;	
+    arrFLT_size = ARR_SIZE_FLT;    
 #endif
 
 #if FMSTR_DEMO_SUPPORT_DBL

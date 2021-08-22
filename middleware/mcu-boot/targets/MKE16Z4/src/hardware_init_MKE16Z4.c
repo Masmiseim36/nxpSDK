@@ -6,36 +6,23 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
+#include "bl_context.h"
 #include "bootloader_common.h"
-#include "bootloader/bl_context.h"
 #include "fsl_device_registers.h"
 #include "smc.h"
 #include "target_config.h"
 #if BL_FEATURE_CRC_CHECK
-#include "bootloader/bl_app_crc_check.h"
+#include "bl_app_crc_check.h"
 #endif
+#include "pin_mux.h"
+
 ////////////////////////////////////////////////////////////////////////////////
 // Definitions
 ////////////////////////////////////////////////////////////////////////////////
 
-uint32_t busClock = 24000000u; //! 24MHz default bus clock
-
-enum
-{
-    //! @brief Mask for the bit of RCM_MR[BOOTROM] indicating that the BOOTCFG0 pin was asserted.
-    kBootedViaPinMask = 1
-};
-
-typedef enum _rom_clock_manage_option
-{
-    kClock_Init = 1,
-    kClock_Restore = 2,
-} rom_clock_manage_option_t;
-
 ////////////////////////////////////////////////////////////////////////////////
 // Code
 ////////////////////////////////////////////////////////////////////////////////
-extern uint32_t get_firc_clock();
 
 void init_hardware(void)
 {
@@ -54,14 +41,8 @@ void init_hardware(void)
     // Enable PORTE clock for BOOT PIN
     PCC->CLKCFG[PCC_PORTE_INDEX] = PCC_CLKCFG_CGC(1);
 
-    // Select Clock source for LPUART0
-    PCC->CLKCFG[PCC_LPUART0_INDEX] = PCC_CLKCFG_PCS((uint32_t)kClockSource_FastIRC);
-    // Select Clock source for LPI2C0
-    PCC->CLKCFG[PCC_LPSPI0_INDEX] = PCC_CLKCFG_PCS((uint32_t)kClockSource_FastIRC);
-    // Select Clock source for LPSPI0
-    PCC->CLKCFG[PCC_LPI2C0_INDEX] = PCC_CLKCFG_PCS((uint32_t)kClockSource_FastIRC);
-
-    SystemCoreClock = get_system_core_clock();
+    // Load the user configuration data so that we can configure the clocks
+    g_bootloaderContext.propertyInterface->load_user_config();
 }
 
 void deinit_hardware(void)
@@ -89,8 +70,23 @@ void deinit_hardware(void)
 uint32_t get_uart_clock(uint32_t instance)
 {
     assert(instance < 3);
+    switch (instance)
+    {
+        case 0:
+            return CLOCK_GetIpFreq(kCLOCK_Lpuart0);
+        case 1:
+            return CLOCK_GetIpFreq(kCLOCK_Lpuart1);
+        case 2:
+            return CLOCK_GetIpFreq(kCLOCK_Lpuart2);
+        default:
+            return CLOCK_GetIpFreq(kCLOCK_Lpuart0);
+    }
+}
 
-    return get_firc_clock() / 2;
+// See bootloader_common.h for documentation on this function.
+uint32_t get_bus_clock(void)
+{
+    return SystemCoreClock / (((SCG->CSR & SCG_CSR_DIVSLOW_MASK) >> SCG_CSR_DIVSLOW_SHIFT) + 1);
 }
 
 bool is_boot_pin_asserted(void)
@@ -104,16 +100,15 @@ bool is_boot_pin_asserted(void)
     // Set GPIOD Pin 2 to input mode
     GPIOD->PDDR &= ~(1u << 2);
 
-
     // Note: The PTD2 is connected with a pull-up resistor, so ROM use the negative logic to determine whether BOOT Pin
     //       is asserted or not
     uint32_t readCount = 0;
     uint32_t assertCount = 0;
-    while(readCount++ < 500)
+    while (readCount++ < 500)
     {
         assertCount += ((GPIOD->PDIR & (1u << 2)) ? 0 : 1);
         register uint32_t delayCnt = 10;
-        while(delayCnt--)
+        while (delayCnt--)
         {
             __NOP();
         }
@@ -122,7 +117,7 @@ bool is_boot_pin_asserted(void)
     // Restore to default GPIO setting
     PORTD->PCR[2] = defaultPTD2;
 
-    return (assertCount > 250 ? true: false);
+    return (assertCount > 250 ? true : false);
 }
 
 #if DEBUG && __ICCARM__
@@ -135,9 +130,7 @@ size_t __write(int handle, const unsigned char *buf, size_t size)
 
 #endif // DEBUG && __ICCARM__
 
-void debug_init(void)
-{
-}
+void debug_init(void) {}
 
 void update_available_peripherals()
 {
@@ -145,17 +138,6 @@ void update_available_peripherals()
     if (!(PCC->CLKCFG[PCC_MSCAN0_INDEX] & PCC_CLKCFG_PR_MASK))
     {
         g_bootloaderContext.propertyInterface->store->configurationData.enabledPeripherals &= ~kPeripheralType_CAN;
-    }
-}
-
-// Note: This function is added to satisfy the MDK when the microlib is selected
-void __aeabi_assert(const char *file, const char *line, int val)
-{
-    if (val == 0u)
-    {
-        while(1)
-        {
-        }
     }
 }
 

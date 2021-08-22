@@ -50,7 +50,7 @@ enum nt_control_slider_event
  * Slider event callback function pointer type.
  */
 typedef void (*nt_control_slider_callback)(const struct nt_control *control,
-                                           enum nt_control_slider_event,
+                                           enum nt_control_slider_event event,
                                            uint32_t position);
 
 /** An interface structure, which contains pointers to the entry points of
@@ -66,11 +66,9 @@ extern const struct nt_control_interface nt_control_slider_interface;
  *
  * A common example definition of the Slider control for all source code examples is as follows:
  * \code
- *  // Definition of the electrode array used by the control (more info in electrodes)
  *  const struct nt_electrode  * const control_0_electrodes[] = {&electrode_0, &electrode_1,
  *    NULL};
  *
- *  // Definition of the Slider control
  *  const struct nt_control my_slider_control =
  *  {
  *    .interface = &nt_control_slider_interface,
@@ -95,7 +93,6 @@ extern "C" {
  * Example:
  * \code
  *
- *  //Create the callback function for aslider
  *  static void my_slider_cb(const struct nt_control *control,
  *                            enum nt_control_aslider_event event,
  *                            uint32_t position)
@@ -110,7 +107,6 @@ extern "C" {
  *    printf("New slider control event %s on position: %d.", event_names[event], position);
  *  }
  *
- *  // register the callback function for slider
  *  nt_control_slider_register_callback(&my_slider_control, my_slider_cb);
  * \endcode
  */
@@ -125,7 +121,6 @@ void nt_control_slider_register_callback(const struct nt_control *control, nt_co
  * Example:
  * \code
  * uint32_t position;
- * // Get position of Slider control
  * position = nt_control_slider_get_position(&my_slider_control);
  * printf("Position of Slider control is: %d.", position);
  * \endcode
@@ -139,7 +134,6 @@ uint32_t nt_control_slider_get_position(const struct nt_control *control);
  * Example:
  * \code
  * uint32_t touched;
- * // Get state of Slider control
  * touched = nt_control_slider_is_touched(&my_slider_control);
  * if(touched)
  *      printf("The Slider control is currently touched.");
@@ -156,7 +150,6 @@ uint32_t nt_control_slider_is_touched(const struct nt_control *control);
  * Example:
  * \code
  * uint32_t movement;
- * // Get state of Slider control
  * movement = nt_control_slider_movement_detected(&my_slider_control);
  * if(movement)
  *      printf("The Slider control is currently moving.");
@@ -174,7 +167,6 @@ uint32_t nt_control_slider_movement_detected(const struct nt_control *control);
  * Example:
  * \code
  * uint32_t direction;
- * // Get direction of Slider control
  * direction = nt_control_slider_get_direction(&my_slider_control);
  * if(direction)
  *      printf("The Slider direction is left.");
@@ -192,7 +184,6 @@ uint32_t nt_control_slider_get_direction(const struct nt_control *control);
  * Example:
  * \code
  * uint32_t invalid_position;
- * // Get invalid position of Slider control
  * invalid_position = nt_control_slider_get_invalid_position(&my_slider_control);
  * if(invalid_position)
  *      printf("The Slider control has an invalid position (two fingers touch ?).");

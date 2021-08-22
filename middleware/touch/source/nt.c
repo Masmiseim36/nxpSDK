@@ -23,17 +23,17 @@ int32_t nt_init(const struct nt_system *system, uint8_t *pool, const uint32_t si
     {
         return (int32_t)NT_FAILURE;
     }
-	result = _nt_system_init(system);
+    result = _nt_system_init(system);
     if ((bool)(result < (int32_t)NT_SUCCESS))
     {
         return result;
     }
-	result = _nt_system_module_function((int32_t)NT_SYSTEM_MODULE_INIT);
+    result = _nt_system_module_function((int32_t)NT_SYSTEM_MODULE_INIT);
     if ((bool)(result < (int32_t)NT_SUCCESS))
     {
         return result;
     }
-	result = _nt_system_control_function((int32_t)NT_SYSTEM_CONTROL_INIT);
+    result = _nt_system_control_function((int32_t)NT_SYSTEM_CONTROL_INIT);
     if ((bool)(result < (int32_t)NT_SUCCESS))
     {
         return result;

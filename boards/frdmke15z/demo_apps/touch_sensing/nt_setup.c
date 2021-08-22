@@ -226,7 +226,7 @@ const tsi_config_t tsi_hw_config = {
     .configSelfCap.commonConfig.noChargeNum   = kTSI_SscNoChargeNumValue_2,
     .configSelfCap.commonConfig.ssc_prescaler = kTSI_ssc_div_by_2,
     .configSelfCap.enableSensitivity          = true,
-    .configSelfCap.enableShield               = false,
+    .configSelfCap.enableShield               = kTSI_shieldAllOff,
     .configSelfCap.xdn                        = kTSI_SensitivityXdnOption_3,
     .configSelfCap.ctrim                      = kTSI_SensitivityCtrimOption_0,
     .configSelfCap.inputCurrent               = kTSI_CurrentMultipleInputValue_0,
@@ -264,7 +264,6 @@ const struct nt_tsi_recalib_config recalib_configuration = {
     .MutRangeDeltaMin  = 150,
     .MutRangeDeltaMax  = 7000,
 };
-extern struct nt_module_gpio_user_interface gpio_interface;
 const struct nt_module_safety_gpio_params my_safety_params = {
     .delay_interval = 0,
     .user_interface = &gpio_interface,
@@ -282,8 +281,8 @@ const struct nt_control_aslider nt_control_aslider_ASlider_2 = {
 const struct nt_control_keypad nt_control_keypad_Keypad_1 = {
     .groups           = NULL,
     .groups_size      = 0,
-    .multi_touch      = (uint32_t[]){0x0C, 0x18, 0x30, 0x24, 0x3C, 0},
-    .multi_touch_size = 5,
+    .multi_touch      = (uint32_t[]){0x0C, 0x18, 0x30, 0x24, 0x3C, 0x03, 0},
+    .multi_touch_size = 6,
 };
 const struct nt_control Keypad_1 = {
     .electrodes            = &Keypad_1_controls[0],

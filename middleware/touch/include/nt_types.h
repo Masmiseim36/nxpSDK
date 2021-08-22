@@ -31,7 +31,7 @@
 #endif
 
 /** Generic flags for NT processing. */
-#define NT_FLAGS_SYSTEM_SHIFT(x) ((x) + 0)
+#define NT_FLAGS_SYSTEM_SHIFT(x)   ((x) + 0)
 #define NT_FLAGS_SPECIFIC_SHIFT(x) ((x) + 16)
 
 /**
@@ -79,12 +79,13 @@ enum nt_result
 #if (NT_DEBUG == 0)
 #define NT_ASSERT(expr) ((void)0)
 #else
-#define NT_ASSERT(expr)                   \
-    {                                     \
-        if (!(expr))                      \
-        {                                 \
-            nt_error((char *)__FILE__, __LINE__); \
-        }                                 \
+#define NT_ASSERT(expr)                     \
+    {                                       \
+        if (!(bool)(expr))                  \
+        {                                   \
+            char p[] = "__FILE__";          \
+            nt_error((char *)&p, __LINE__); \
+        }                                   \
     }
 #endif
 

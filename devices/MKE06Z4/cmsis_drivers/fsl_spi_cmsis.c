@@ -1,7 +1,7 @@
 /*
  * Copyright (c) 2013-2016 ARM Limited. All rights reserved.
  * Copyright (c) 2016, Freescale Semiconductor, Inc. Not a Contribution.
- * Copyright 2016-2020 NXP. Not a Contribution.
+ * Copyright 2016-2021 NXP. Not a Contribution.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -75,6 +75,10 @@ typedef const struct _cmsis_spi_dma_resource
     DMAMUX_Type *rxDmamuxBase;
     uint8_t rxDmaRequest;
 
+#if FSL_FEATURE_DMA_MODULE_CHANNEL != FSL_FEATURE_DMAMUX_MODULE_CHANNEL
+    uint32_t txdmamuxChannel;
+    uint32_t rxdmamuxChannel;
+#endif
 } cmsis_spi_dma_resource_t;
 
 typedef union _cmsis_spi_dma_handle
@@ -393,8 +397,13 @@ static int32_t SPI_DMAPowerControl(ARM_POWER_STATE state, cmsis_SPI_dma_driver_s
             if ((SPI->flags & (uint8_t)SPI_FLAG_POWER) != 0U)
             {
                 SPI_Deinit(SPI->resource->base);
+#if FSL_FEATURE_DMA_MODULE_CHANNEL != FSL_FEATURE_DMAMUX_MODULE_CHANNEL
+                DMAMUX_DisableChannel(SPI->dmaResource->rxDmamuxBase, SPI->dmaResource->rxdmamuxChannel);
+                DMAMUX_DisableChannel(SPI->dmaResource->txDmamuxBase, SPI->dmaResource->txdmamuxChannel);
+#else
                 DMAMUX_DisableChannel(SPI->dmaResource->rxDmamuxBase, SPI->dmaResource->rxdmaChannel);
                 DMAMUX_DisableChannel(SPI->dmaResource->txDmamuxBase, SPI->dmaResource->txdmaChannel);
+#endif
                 SPI->flags = (uint8_t)SPI_FLAG_INIT;
             }
             break;
@@ -499,7 +508,7 @@ static int32_t SPI_DMAReceive(void *data, uint32_t num, cmsis_SPI_dma_driver_sta
 #endif /* FSL_FEATURE_SPI_HAS_FIFO */
 
     /* If transfer mode is single wire. */
-    if (((uint8_t)SPI_C2_SPC0_MASK & SPI->resource->base->C2))
+    if (((uint8_t)SPI_C2_SPC0_MASK & SPI->resource->base->C2) != 0U)
     {
         SPI_SetPinMode(SPI->resource->base, kSPI_PinModeInput);
     }
@@ -649,13 +658,20 @@ static int32_t SPI_DMAControl(uint32_t control, uint32_t arg, cmsis_SPI_dma_driv
             (void)memset(SPI->dmaTxDataHandle, 0, sizeof(dma_handle_t));
 
             DMA_CreateHandle(SPI->dmaRxDataHandle, dmaResource->rxdmaBase, dmaResource->rxdmaChannel);
+            DMA_CreateHandle(SPI->dmaTxDataHandle, dmaResource->txdmaBase, dmaResource->txdmaChannel);
+#if FSL_FEATURE_DMA_MODULE_CHANNEL != FSL_FEATURE_DMAMUX_MODULE_CHANNEL
+            DMAMUX_SetSource(dmaResource->rxDmamuxBase, dmaResource->rxdmamuxChannel, dmaResource->rxDmaRequest);
+            DMAMUX_EnableChannel(dmaResource->rxDmamuxBase, dmaResource->rxdmamuxChannel);
+
+            DMAMUX_SetSource(dmaResource->txDmamuxBase, dmaResource->txdmamuxChannel, dmaResource->txDmaRequest);
+            DMAMUX_EnableChannel(dmaResource->txDmamuxBase, dmaResource->txdmamuxChannel);
+#else
             DMAMUX_SetSource(dmaResource->rxDmamuxBase, dmaResource->rxdmaChannel, dmaResource->rxDmaRequest);
             DMAMUX_EnableChannel(dmaResource->rxDmamuxBase, dmaResource->rxdmaChannel);
 
-            DMA_CreateHandle(SPI->dmaTxDataHandle, dmaResource->txdmaBase, dmaResource->txdmaChannel);
             DMAMUX_SetSource(dmaResource->txDmamuxBase, dmaResource->txdmaChannel, dmaResource->txDmaRequest);
             DMAMUX_EnableChannel(dmaResource->txDmamuxBase, dmaResource->txdmaChannel);
-
+#endif
             SPI_MasterTransferCreateHandleDMA(SPI->resource->base, &SPI->handle->masterHandle,
                                               KSDK_SPI_MasterDMACallback, (void *)SPI->event, SPI->dmaTxDataHandle,
                                               SPI->dmaRxDataHandle);
@@ -671,13 +687,20 @@ static int32_t SPI_DMAControl(uint32_t control, uint32_t arg, cmsis_SPI_dma_driv
             (void)memset(SPI->dmaTxDataHandle, 0, sizeof(dma_handle_t));
 
             DMA_CreateHandle(SPI->dmaTxDataHandle, dmaResource->txdmaBase, dmaResource->txdmaChannel);
+            DMA_CreateHandle(SPI->dmaRxDataHandle, dmaResource->rxdmaBase, dmaResource->rxdmaChannel);
+#if FSL_FEATURE_DMA_MODULE_CHANNEL != FSL_FEATURE_DMAMUX_MODULE_CHANNEL
+            DMAMUX_SetSource(dmaResource->txDmamuxBase, dmaResource->txdmamuxChannel, dmaResource->txDmaRequest);
+            DMAMUX_EnableChannel(dmaResource->txDmamuxBase, dmaResource->txdmamuxChannel);
+
+            DMAMUX_SetSource(dmaResource->rxDmamuxBase, dmaResource->rxdmamuxChannel, dmaResource->rxDmaRequest);
+            DMAMUX_EnableChannel(dmaResource->rxDmamuxBase, dmaResource->rxdmamuxChannel);
+#else
             DMAMUX_SetSource(dmaResource->txDmamuxBase, dmaResource->txdmaChannel, dmaResource->txDmaRequest);
             DMAMUX_EnableChannel(dmaResource->txDmamuxBase, dmaResource->txdmaChannel);
 
-            DMA_CreateHandle(SPI->dmaRxDataHandle, dmaResource->rxdmaBase, dmaResource->rxdmaChannel);
             DMAMUX_SetSource(dmaResource->rxDmamuxBase, dmaResource->rxdmaChannel, dmaResource->rxDmaRequest);
             DMAMUX_EnableChannel(dmaResource->rxDmamuxBase, dmaResource->rxdmaChannel);
-
+#endif
             SPI_SlaveTransferCreateHandleDMA(SPI->resource->base, &SPI->handle->slaveHandle, KSDK_SPI_SlaveDMACallback,
                                              (void *)SPI->event, SPI->dmaTxDataHandle, SPI->dmaRxDataHandle);
 
@@ -724,13 +747,20 @@ static int32_t SPI_DMAControl(uint32_t control, uint32_t arg, cmsis_SPI_dma_driv
             (void)memset(SPI->dmaTxDataHandle, 0, sizeof(dma_handle_t));
 
             DMA_CreateHandle(SPI->dmaRxDataHandle, dmaResource->rxdmaBase, dmaResource->rxdmaChannel);
+            DMA_CreateHandle(SPI->dmaTxDataHandle, dmaResource->txdmaBase, dmaResource->txdmaChannel);
+#if FSL_FEATURE_DMA_MODULE_CHANNEL != FSL_FEATURE_DMAMUX_MODULE_CHANNEL
+            DMAMUX_SetSource(dmaResource->rxDmamuxBase, dmaResource->rxdmamuxChannel, dmaResource->rxDmaRequest);
+            DMAMUX_EnableChannel(dmaResource->rxDmamuxBase, dmaResource->rxdmamuxChannel);
+
+            DMAMUX_SetSource(dmaResource->txDmamuxBase, dmaResource->txdmamuxChannel, dmaResource->txDmaRequest);
+            DMAMUX_EnableChannel(dmaResource->txDmamuxBase, dmaResource->txdmamuxChannel);
+#else
             DMAMUX_SetSource(dmaResource->rxDmamuxBase, dmaResource->rxdmaChannel, dmaResource->rxDmaRequest);
             DMAMUX_EnableChannel(dmaResource->rxDmamuxBase, dmaResource->rxdmaChannel);
 
-            DMA_CreateHandle(SPI->dmaTxDataHandle, dmaResource->txdmaBase, dmaResource->txdmaChannel);
             DMAMUX_SetSource(dmaResource->txDmamuxBase, dmaResource->txdmaChannel, dmaResource->txDmaRequest);
             DMAMUX_EnableChannel(dmaResource->txDmamuxBase, dmaResource->txdmaChannel);
-
+#endif
             SPI_MasterTransferCreateHandleDMA(SPI->resource->base, &SPI->handle->masterHandle,
                                               KSDK_SPI_MasterDMACallback, (void *)SPI->event, SPI->dmaTxDataHandle,
                                               SPI->dmaRxDataHandle);
@@ -746,13 +776,20 @@ static int32_t SPI_DMAControl(uint32_t control, uint32_t arg, cmsis_SPI_dma_driv
             (void)memset(SPI->dmaTxDataHandle, 0, sizeof(dma_handle_t));
 
             DMA_CreateHandle(SPI->dmaTxDataHandle, dmaResource->txdmaBase, dmaResource->txdmaChannel);
+            DMA_CreateHandle(SPI->dmaRxDataHandle, dmaResource->rxdmaBase, dmaResource->rxdmaChannel);
+#if FSL_FEATURE_DMA_MODULE_CHANNEL != FSL_FEATURE_DMAMUX_MODULE_CHANNEL
+            DMAMUX_SetSource(dmaResource->txDmamuxBase, dmaResource->txdmamuxChannel, dmaResource->txDmaRequest);
+            DMAMUX_EnableChannel(dmaResource->txDmamuxBase, dmaResource->txdmamuxChannel);
+
+            DMAMUX_SetSource(dmaResource->rxDmamuxBase, dmaResource->rxdmamuxChannel, dmaResource->rxDmaRequest);
+            DMAMUX_EnableChannel(dmaResource->rxDmamuxBase, dmaResource->rxdmamuxChannel);
+#else
             DMAMUX_SetSource(dmaResource->txDmamuxBase, dmaResource->txdmaChannel, dmaResource->txDmaRequest);
             DMAMUX_EnableChannel(dmaResource->txDmamuxBase, dmaResource->txdmaChannel);
 
-            DMA_CreateHandle(SPI->dmaRxDataHandle, dmaResource->rxdmaBase, dmaResource->rxdmaChannel);
             DMAMUX_SetSource(dmaResource->rxDmamuxBase, dmaResource->rxdmaChannel, dmaResource->rxDmaRequest);
             DMAMUX_EnableChannel(dmaResource->rxDmamuxBase, dmaResource->rxdmaChannel);
-
+#endif
             SPI_SlaveTransferCreateHandleDMA(SPI->resource->base, &SPI->handle->slaveHandle, KSDK_SPI_SlaveDMACallback,
                                              (void *)SPI->event, SPI->dmaTxDataHandle, SPI->dmaRxDataHandle);
 
@@ -773,7 +810,7 @@ static int32_t SPI_DMAControl(uint32_t control, uint32_t arg, cmsis_SPI_dma_driv
 
 static ARM_SPI_STATUS SPI_DMAGetStatus(cmsis_SPI_dma_driver_state_t *SPI)
 {
-    ARM_SPI_STATUS stat;
+    ARM_SPI_STATUS stat = {0};
 
     if (SPI_IsMaster(SPI->resource->base))
     {
@@ -1211,7 +1248,7 @@ static int32_t SPI_InterruptControl(uint32_t control, uint32_t arg, cmsis_spi_in
 
 static ARM_SPI_STATUS SPI_InterruptGetStatus(cmsis_spi_interrupt_driver_state_t *SPI)
 {
-    ARM_SPI_STATUS stat;
+    ARM_SPI_STATUS stat = {0};
 
     if (SPI_IsMaster(SPI->resource->base))
     {
@@ -1255,10 +1292,12 @@ static cmsis_spi_resource_t SPI0_Resource = {SPI0, 0, SPI0_GetFreq};
 
 #if (defined(FSL_FEATURE_SOC_DMA_COUNT) && FSL_FEATURE_SOC_DMA_COUNT)
 static cmsis_spi_dma_resource_t SPI0_DMAResource = {
-    RTE_SPI0_DMA_TX_DMA_BASE, RTE_SPI0_DMA_TX_CH, RTE_SPI0_DMA_TX_DMAMUX_BASE, RTE_SPI0_DMA_TX_PERI_SEL,
+    RTE_SPI0_DMA_TX_DMA_BASE, RTE_SPI0_DMA_TX_CH,   RTE_SPI0_DMA_TX_DMAMUX_BASE, RTE_SPI0_DMA_TX_PERI_SEL,
 
-    RTE_SPI0_DMA_RX_DMA_BASE, RTE_SPI0_DMA_RX_CH, RTE_SPI0_DMA_RX_DMAMUX_BASE, RTE_SPI0_DMA_RX_PERI_SEL,
-
+    RTE_SPI0_DMA_RX_DMA_BASE, RTE_SPI0_DMA_RX_CH,   RTE_SPI0_DMA_RX_DMAMUX_BASE, RTE_SPI0_DMA_RX_PERI_SEL,
+#if FSL_FEATURE_DMA_MODULE_CHANNEL != FSL_FEATURE_DMAMUX_MODULE_CHANNEL
+    RTE_SPI0_DMAMUX_TX_CH,    RTE_SPI0_DMAMUX_RX_CH
+#endif
 };
 
 static cmsis_spi_dma_handle_t SPI0_DmaHandle;
@@ -1428,10 +1467,12 @@ static cmsis_spi_resource_t SPI1_Resource = {SPI1, 1, SPI1_GetFreq};
 
 #if (defined(FSL_FEATURE_SOC_DMA_COUNT) && FSL_FEATURE_SOC_DMA_COUNT)
 static cmsis_spi_dma_resource_t SPI1_DMAResource = {
-    RTE_SPI1_DMA_TX_DMA_BASE, RTE_SPI1_DMA_TX_CH, RTE_SPI1_DMA_TX_DMAMUX_BASE, RTE_SPI1_DMA_TX_PERI_SEL,
+    RTE_SPI1_DMA_TX_DMA_BASE, RTE_SPI1_DMA_TX_CH,   RTE_SPI1_DMA_TX_DMAMUX_BASE, RTE_SPI1_DMA_TX_PERI_SEL,
 
-    RTE_SPI1_DMA_RX_DMA_BASE, RTE_SPI1_DMA_RX_CH, RTE_SPI1_DMA_RX_DMAMUX_BASE, RTE_SPI1_DMA_RX_PERI_SEL,
-
+    RTE_SPI1_DMA_RX_DMA_BASE, RTE_SPI1_DMA_RX_CH,   RTE_SPI1_DMA_RX_DMAMUX_BASE, RTE_SPI1_DMA_RX_PERI_SEL,
+#if FSL_FEATURE_DMA_MODULE_CHANNEL != FSL_FEATURE_DMAMUX_MODULE_CHANNEL
+    RTE_SPI1_DMAMUX_TX_CH,    RTE_SPI1_DMAMUX_RX_CH
+#endif
 };
 
 static cmsis_spi_dma_handle_t SPI1_DmaHandle;

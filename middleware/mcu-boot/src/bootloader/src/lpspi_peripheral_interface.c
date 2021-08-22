@@ -187,17 +187,17 @@ status_t lpspi_full_init(const peripheral_descriptor_t *self, serial_byte_receiv
     {
 #if defined(SPI0_SELECTED_PCS)
         case 0:
-            selectedChip = kLPSPI_Pcs0;
+            selectedChip = (lpspi_which_pcs_t)SPI0_SELECTED_PCS;
             break;
 #endif // #if defined(SPI0_SELECTED_PCS)
 #if defined(SPI1_SELECTED_PCS)
         case 1:
-            selectedChip = kLPSPI_Pcs1;
+            selectedChip = (lpspi_which_pcs_t)SPI1_SELECTED_PCS;
             break;
 #endif // #if defined(SPI1_SELECTED_PCS)
 #if defined(SPI2_SELECTED_PCS)
         case 2:
-            selectedChip = kLPSPI_Pcs2;
+            selectedChip = (lpspi_which_pcs_t)SPI2_SELECTED_PCS;
             break;
 #endif // #if defined(SPI2_SELECTED_PCS)
         default:

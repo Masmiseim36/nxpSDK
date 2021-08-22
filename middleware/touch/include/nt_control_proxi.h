@@ -79,11 +79,9 @@ extern const struct nt_control_interface nt_control_proxi_interface;
  *
  * A common example definition of the Proxi control for all source code examples is as follows:
  * \code
- * // Add following macros to nt_setup.h to configure array dimensions
  * #define NT_PROXI_ELECTRODES 4
  * #define NT_PROXI_GESTURES 3
  *
- *  // definition of electrode array used by control (more info in electrodes )
  * const struct nt_electrode  * const control_0_electrodes[] = {&electrode_0, &electrode_1,
  *   NULL};
  *
@@ -96,7 +94,6 @@ extern const struct nt_control_interface nt_control_proxi_interface;
  *   .gesture = (uint32_t []){0x0123, 0x3210, 0},
  * };
  *
- *  // Definition of proxi control
  * const struct nt_control proxi_0 =
  * {
  *   .interface = &nt_control_proxi_interface,
@@ -123,7 +120,6 @@ extern "C" {
  * Example:
  * \code
  *
- *  //Create the callback function for proxi
  *  static void my_proxi_cb(const struct nt_control *control,
  *                           enum nt_control_proxi_event event,
  *                           uint32_t index_or_gesture,
@@ -141,7 +137,6 @@ extern "C" {
  *    printf("New proxi control event %s on key: %d.", event_names[event], index);
  *  }
  *
- *  // register the callback function for proxi
  *  nt_control_proxi_register_touch_callback(&my_proxi_control, my_proxi_touch_cb);
  * \endcode
  */
@@ -160,7 +155,6 @@ void nt_control_proxi_register_callback(const struct nt_control *control, nt_con
  *
  * Example:
  * \code
- * // Want to store second unlock gesture (first unlock gesture has index 0).
  * uint8_t gesture = 1;
  * nt_control_proxi_set_gesture(&my_proxi_control, gesture);
  * \endcode

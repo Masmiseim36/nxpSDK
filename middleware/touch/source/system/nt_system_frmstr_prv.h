@@ -44,7 +44,7 @@ int32_t _nt_freemaster_init(void);
  * \param size - size of the variable
  * \return The result of the operation.
  */
-int32_t _nt_freemaster_add_variable(const char *name, const char *type_name, void *address, uint32_t size);
+int32_t _nt_freemaster_add_variable(const char *name, const char *type_name, const void *address, uint32_t size);
 
 #ifdef __cplusplus
 }

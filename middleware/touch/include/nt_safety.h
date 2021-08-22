@@ -22,6 +22,13 @@
 #include "nt_electrodes.h"
 #include "../source/safety/nt_safety_crc.h"
 
+#if (FSL_FEATURE_TSI_VERSION == 5)
+#include "fsl_ftm.h"
+extern FGPIO_Type *g_gpioBaseAddr[];
+extern PORT_Type *g_portBaseAddr[];
+extern FTM_Type *g_ftmBaseAddr[];
+#endif
+
 #define NT_MODULE_SAFETY_NAME "nt_module_safety_interface"
 
 /**
@@ -31,7 +38,6 @@
  * Function check and return TOF flag.
   \code
     #include "gpio.h"
-    // Get FlexTimer overrun state.
     uint32_t testResult;
     testResult = timer_get_overrun();
   \endcode
@@ -45,7 +51,6 @@ uint32_t timer_get_overrun(void);
    Function Stop the FlexTimer to count.
   \code
     #include "gpio.h"
-    // Stop the FlexTimer.
     stop_timer();
   \endcode
  */
@@ -58,7 +63,6 @@ void stop_timer(void);
  * Function Initialize the FlexTimer to be in free-running mode.
   \code
     #include "gpio.h"
-    // Initialize the FlexTimer.
     init_timer();
   \endcode
  */
@@ -73,7 +77,6 @@ void init_timer(void);
  * Function configures selected pin of the selected port as gpio output.
   \code
     #include "gpio.h"
-    // Set pin 5 of the port 2 (PTC) as gpio output
     uint32_t port = 2;
     uint32_t pin = 5;
     set_pin_ouput(port, pin);
@@ -90,7 +93,6 @@ void set_pin_ouput(uint32_t port, uint32_t pin);
  * Function configures selected pin of the selected port as logic 0.
   \code
     #include "gpio.h"
-    // Set pin 5 of the port 2 (PTC) as logic 0
     uint32_t port = 2;
     uint32_t pin = 5;
     set_pin_low(port, pin);
@@ -107,7 +109,6 @@ void set_pin_low(uint32_t port, uint32_t pin);
  * Function configures selected pin of the selected port as logic 1.
   \code
     #include "gpio.h"
-    // Set pin 5 of the port 2 (PTC) as logic 1
     uint32_t port = 2;
     uint32_t pin = 5;
     set_pin_high(port, pin);
@@ -124,7 +125,6 @@ void set_pin_high(uint32_t port, uint32_t pin);
  * Function reads selected pin value of the selected port.
   \code
     #include "gpio.h"
-    // Set pin 5 of the port 2 (PTC) as gpio output
     uint32_t port = 2;
     uint32_t pin = 5;
     uint32_t testResult;
@@ -142,7 +142,6 @@ uint32_t get_pin_value(uint32_t port, uint32_t pin);
  * Function configures selected pin of the selected port as gpio output and set output to logic 1.
   \code
     #include "gpio.h"
-    // Set pin 5 of the port 2 (PTC) as gpio output
     uint32_t port = 2;
     uint32_t pin = 5;
     set_pin_default_state(port, pin);
@@ -157,7 +156,6 @@ void set_pin_default_state(uint32_t port, uint32_t pin);
  * Function Start the FlexTimer to count.
   \code
     #include "gpio.h"
-    // Start the FlexTimer.
     start_timer();
   \endcode
  */
@@ -170,7 +168,6 @@ void start_timer(void);
  * Function resets the FlexTimer counter.
   \code
     #include "gpio.h"
-    // Reset the FlexTimer.
     timer_reset_counter();
   \endcode
  */
@@ -183,7 +180,6 @@ void timer_reset_counter(void);
  * Function reads FlexTimer counted value.
   \code
     #include "gpio.h"
-    // Reads FlexTimer counted value.
     uint32_t testResult;
     testResult = timer_get_counter();
   \endcode
@@ -199,7 +195,6 @@ uint32_t timer_get_counter(void);
  * Function configure selected pin to have pull up resistor.
   \code
     #include "gpio.h"
-    // Set pin 5 of the port 2 (PTC) to have pull up resistor.
     uint32_t port = 2;
     uint32_t pin = 5;
     set_pin_pull_up(port, pin);
@@ -216,7 +211,6 @@ void set_pin_pull_up(uint32_t port, uint32_t pin);
  * Function configure selected pin to have pull down resistor.
   \code
     #include "gpio.h"
-    // Set pin 5 of the port 2 (PTC) to have pull down resistor.
     uint32_t port = 2;
     uint32_t pin = 5;
     set_pin_pull_down(port, pin);
@@ -233,7 +227,6 @@ void set_pin_pull_down(uint32_t port, uint32_t pin);
  * Function disable selected pin pull resistor.
   \code
     #include "gpio.h"
-    // Disable pin 5 of the port 2 (PTC) pull resistor.
     uint32_t port = 2;
     uint32_t pin = 5;
     dis_pin_pull(port, pin);
@@ -250,7 +243,6 @@ void dis_pin_pull(uint32_t port, uint32_t pin);
  * Function configures selected pin of the selected port as TSI peripheral pin.
   \code
     #include "gpio.h"
-    // Set pin 5 of the port 2 (PTC) as gpio output
     uint32_t port = 2;
     uint32_t pin = 5;
     set_pin_tsi_mode(port, pin);
@@ -267,7 +259,6 @@ void set_pin_tsi_mode(uint32_t port, uint32_t pin);
  * Function configures selected pin of the selected port as GPIO pin.
   \code
     #include "gpio.h"
-    // Set pin 5 of the port 2 (PTC) as gpio output
     uint32_t port = 2;
     uint32_t pin = 5;
     set_pin_gpio_mode(port, pin);
@@ -284,7 +275,6 @@ void set_pin_gpio_mode(uint32_t port, uint32_t pin);
  * Function configures selected pin of the selected port as gpio input.
   \code
     #include "gpio.h"
-    // Set pin 5 of the port 2 (PTC) as gpio output
     uint32_t port = 2;
     uint32_t pin = 5;
     testResult = set_pin_ouput(port, pin);
@@ -301,7 +291,6 @@ void configure_gpio_touch_sensing_pins(uint32_t instance);
  * Function configures selected pin of the selected port as gpio input.
   \code
     #include "gpio.h"
-    // Set pin 5 of the port 2 (PTC) as gpio input
     uint32_t port = 2;
     uint32_t pin = 5;
     set_pin_input(port, pin);
@@ -332,9 +321,13 @@ struct nt_module_safety_gpio_params
  */
 
 /**
- * The TSI module interface structure.
+ * The Safety interface structure.
  */
 extern const struct nt_module_safety_interface nt_safety_interface; /*!< Can't be NULL. */
+/**
+ * The Safety GPIO interface structure.
+ */
+extern const struct nt_module_gpio_user_interface gpio_interface; /*!< Can't be NULL. */
 
 #ifdef __cplusplus
 extern "C" {
@@ -346,7 +339,6 @@ extern "C" {
  *
  * Check the status safety gpio user interface and check if the GPIO pins and the timer function are properly defined.
   \code
-    // Complete the safety test of all electrodes from the module where my_electrode is defined.
     int32_t testResult;
     testResult = nt_module_safety_gpio_check_data(nt_electrode_get_module_data(&my_electrode));
   \endcode
@@ -364,12 +356,11 @@ int32_t nt_module_safety_gpio_check_data(const struct nt_module_data *module);
  * When the mutual-cap mode is defined for the electrode, both of the associated (Rx and Tx) pin
  * shorts are tested.
   \code
-    // Test if "my_electrode" is shorted to VDD
     int32_t testResult;
-    testResult = nt_module_safety_check_electrode_short_vdd(&my_electrode);
+    testResult = nt_module_safety_check_electrode_short_vdd_set(&my_electrode);
   \endcode
  */
-int32_t nt_module_safety_check_electrode_short_vdd(const struct nt_electrode *elec);
+int32_t nt_module_safety_check_electrode_short_vdd_set(const struct nt_electrode *elec);
 
 /**
  * \brief Electrode baseline too low level test
@@ -381,7 +372,6 @@ int32_t nt_module_safety_check_electrode_short_vdd(const struct nt_electrode *el
  * level is higher than 87.5% of the stored baseline, the function returns the
  * success status.
   \code
-    // Test the baseline low level for the already defined my_electrode
     int32_t testResult;
     testResult = nt_module_safety_check_baseline_low(&my_electrode);
   \endcode
@@ -399,7 +389,6 @@ int32_t nt_module_safety_check_baseline_low(const struct nt_electrode *elec);
  * success status. If all tests passed, the function returns the success status. If not, the
  * failure status is returned.
   \code
-    // Test the baseline high level for the already defined my_electrode
     int32_t testResult;
     testResult = nt_module_safety_check_baseline_high(&my_electrode);
   \endcode
@@ -416,7 +405,6 @@ int32_t nt_module_safety_check_baseline_high(const struct nt_electrode *elec);
  * _nt_module_safety_switch_electrodes_gpio function. After the test, the electrodes are
  * switched back using the _nt_module_safety_switch_electrodes_tsi function.
   \code
-    // Complete the safety test of all electrodes from the module where my_electrode is defined.
     int32_t testResult;
     testResult = nt_module_safety_check_electrodes (nt_electrode_get_module_data(&my_electrode));
   \endcode
@@ -430,10 +418,8 @@ int32_t nt_module_safety_check_electrodes(struct nt_module_data *module);
  * The function read the gpio and pin information from gpio_input member of the electrode structure and
  * and change this pin to GPIO mode.
   \code
-    // get module data
     struct nt_module_data *module = _nt_module_get_data(_nt_system_get_module((uint32_t)&nt_module_tsi_interface,
  instance)); NT_ASSERT(module != NULL);
-    // switch electrode 0 to GPIO
     struct nt_electrode const *electrode = module->rom->electrodes[0];
     int32_t Result = _nt_module_safety_switch_electrode_gpio(electrode);
   \endcode
@@ -446,10 +432,8 @@ int32_t _nt_module_safety_switch_electrode_gpio(const struct nt_electrode *elec)
  *
  * Function change electrode pin mode from GPIO to TSI.
   \code
-    // get module data
     struct nt_module_data *module = _nt_module_get_data(_nt_system_get_module((uint32_t)&nt_module_tsi_interface,
  instance)); NT_ASSERT(module != NULL);
-    // switch electrode 0 to GPIO
     struct nt_electrode const *electrode = module->rom->electrodes[0];
     int32_t Result = _nt_module_safety_switch_electrode_tsi(electrode);
   \endcode

@@ -6,7 +6,7 @@
  */
 
 #include "bootloader_config.h"
-#include "bootloader/bl_peripheral_interface.h"
+#include "bl_peripheral_interface.h"
 #include "fsl_device_registers.h"
 #include "fsl_lpi2c.h"
 #include "bootloader_common.h"

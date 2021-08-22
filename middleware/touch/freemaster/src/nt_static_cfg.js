@@ -509,7 +509,7 @@ function GenerateOut(id)
     str = str + GenFileContent2(data[label], label, label, data[label]["rndid"]);
     if(GetModeFromWeb("modeid-1_form", "modeid-1rb"))
     {
-      str = str + "extern struct nt_module_gpio_user_interface gpio_interface;\n";
+///      str = str + "extern struct nt_module_gpio_user_interface gpio_interface;\n";
       label = "nt_module_safety_gpio_params";
       str = str + GenFileContent2(data[label], label, label, data[label]["rndid"]);    
     }

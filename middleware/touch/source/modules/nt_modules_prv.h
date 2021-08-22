@@ -97,7 +97,7 @@ struct nt_module_interface
                            const struct nt_electrode *electrode); /*!< Change the the mode of the module. */
     int32_t (*load_configuration)(struct nt_module_data *module,
                                   const enum nt_module_mode mode,
-                                  const void *config); /*!<  Load the configuration for the selected mode. */
+                                  void *config); /*!<  Load the configuration for the selected mode. */
     int32_t (*save_configuration)(struct nt_module_data *module,
                                   const enum nt_module_mode mode,
                                   void *config); /*!<  Save the configuration of the selected mode. */

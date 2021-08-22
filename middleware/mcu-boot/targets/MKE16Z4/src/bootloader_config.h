@@ -42,6 +42,10 @@
 #define BL_FEATURE_MIN_PROFILE (1)
 #endif
 
+// Determines whether to support Kinetis C90TFS FTFx flash
+#define BL_FLASH_TYPE_KINETIS_C90TFS_FLASH (1)
+#define BL_FEATURE_FLASH_CHECK_CUMULATIVE_WRITE (1)
+
 #define BL_HAS_MASS_ERASE (0)
 
 #define BL_FEATURE_FLASH_SECURITY (1)
@@ -69,7 +73,7 @@
 // After coming out of reset the bootloader will spin in a peripheral detection
 // loop for this amount of time. A zero value means no time out.
 #if DEBUG
-#define BL_DEFAULT_PERIPHERAL_DETECT_TIMEOUT 5000
+#define BL_DEFAULT_PERIPHERAL_DETECT_TIMEOUT 0
 #else
 #define BL_DEFAULT_PERIPHERAL_DETECT_TIMEOUT 5000
 #endif // DEBUG

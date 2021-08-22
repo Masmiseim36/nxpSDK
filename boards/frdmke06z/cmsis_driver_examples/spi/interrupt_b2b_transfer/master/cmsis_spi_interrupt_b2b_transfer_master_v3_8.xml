@@ -14,11 +14,9 @@
     <definition extID="device.MKE06Z4_startup.MKE06Z4"/>
     <definition extID="platform.drivers.port_ke06.MKE06Z4"/>
     <definition extID="platform.drivers.gpio_1.MKE06Z4"/>
-    <definition extID="platform.Include_core_cm0plus.MKE06Z4"/>
-    <definition extID="platform.Include_common.MKE06Z4"/>
-    <definition extID="platform.Include_dsp.MKE06Z4"/>
-    <definition extID="platform.CMSIS_Driver_Include.SPI_CMSISInclude.MKE06Z4"/>
-    <definition extID="platform.CMSIS_Driver_Include.Common_CMSISInclude.MKE06Z4"/>
+    <definition extID="CMSIS_Include_core_cm.MKE06Z4"/>
+    <definition extID="CMSIS_Driver_Include.SPI.MKE06Z4"/>
+    <definition extID="CMSIS_Driver_Include.Common.MKE06Z4"/>
     <definition extID="platform.utilities.misc_utilities.MKE06Z4"/>
     <definition extID="device.MKE06Z4_system.MKE06Z4"/>
     <definition extID="iar"/>
@@ -27,7 +25,7 @@
     <definition extID="mcuxpresso"/>
     <definition extID="com.nxp.mcuxpresso"/>
   </externalDefinitions>
-  <example id="frdmke06z_cmsis_spi_interrupt_b2b_transfer_master" name="cmsis_spi_interrupt_b2b_transfer_master" dependency="utility.debug_console_lite.MKE06Z4 platform.utilities.assert_lite.MKE06Z4 platform.drivers.clock.MKE06Z4 platform.drivers.spi.MKE06Z4 platform.drivers.spi_cmsis.MKE06Z4 platform.drivers.common.MKE06Z4 device.MKE06Z4_CMSIS.MKE06Z4 component.uart_adapter.MKE06Z4 component.lists.MKE06Z4 platform.drivers.uart.MKE06Z4 device.MKE06Z4_startup.MKE06Z4 platform.drivers.port_ke06.MKE06Z4 platform.drivers.gpio_1.MKE06Z4 platform.Include_core_cm0plus.MKE06Z4 platform.Include_common.MKE06Z4 platform.Include_dsp.MKE06Z4 platform.CMSIS_Driver_Include.SPI_CMSISInclude.MKE06Z4 platform.CMSIS_Driver_Include.Common_CMSISInclude.MKE06Z4 platform.utilities.misc_utilities.MKE06Z4 device.MKE06Z4_system.MKE06Z4" category="cmsis_driver_examples/spi">
+  <example id="frdmke06z_cmsis_spi_interrupt_b2b_transfer_master" name="cmsis_spi_interrupt_b2b_transfer_master" dependency="utility.debug_console_lite.MKE06Z4 platform.utilities.assert_lite.MKE06Z4 platform.drivers.clock.MKE06Z4 platform.drivers.spi.MKE06Z4 platform.drivers.spi_cmsis.MKE06Z4 platform.drivers.common.MKE06Z4 device.MKE06Z4_CMSIS.MKE06Z4 component.uart_adapter.MKE06Z4 component.lists.MKE06Z4 platform.drivers.uart.MKE06Z4 device.MKE06Z4_startup.MKE06Z4 platform.drivers.port_ke06.MKE06Z4 platform.drivers.gpio_1.MKE06Z4 CMSIS_Include_core_cm.MKE06Z4 CMSIS_Driver_Include.SPI.MKE06Z4 CMSIS_Driver_Include.Common.MKE06Z4 platform.utilities.misc_utilities.MKE06Z4 device.MKE06Z4_system.MKE06Z4" category="cmsis_driver_examples/spi">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -37,6 +35,7 @@
           <value>CPU_MKE06Z128VLK4</value>
           <value>FRDM_KE06Z</value>
           <value>FREEDOM</value>
+          <value>MCUXPRESSO_SDK</value>
         </option>
         <option id="com.crt.advproject.gas.fpu" type="enum">
           <value>com.crt.advproject.gas.fpu.none</value>

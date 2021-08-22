@@ -32,17 +32,33 @@
 
 #define NT_MODULE_TSI_NAME "nt_module_tsi_interface"
 
-/* ASM implemented macro     */
+#ifndef NT_FLASH_START
+#ifndef NT_FLASH_END      /* For ARM(KEIL) version < 6 compiler */
+#if defined(__MCUXPRESSO) /* For GCC compiler  MCUX IDE */
+extern uint32_t flash_start;
+extern uint32_t flash_end;
+#endif
+#endif /* NT_FLASH_END */
+#endif /* NT_FLASH_START */
+
 #if defined(__IAR_SYSTEMS_ICC__) /* For IAR compiler   */
 #define CUSTOM_DELAY() \
     {                  \
         asm("nop");    \
     }
 #elif defined(__CC_ARM) /* For ARM(KEIL) version < 6 compiler */
-#define CUSTOM_DELAY() __NOP();
-#elif defined(__GNUC__) && (__ARMCC_VERSION >= 6010050) /* For ARM(KEIL) version >= 6 compiler */
+#define CUSTOM_DELAY() \
+    {                  \
+        asm("nop");    \
+    }
+#elif defined(__GNUC__) && defined(__ARMCC_VERSION) /* For ARM(KEIL) version >= 6 compiler */
 #define CUSTOM_DELAY() __NOP();
 #elif defined(__GNUC__) /* For GCC compiler */
+#define CUSTOM_DELAY() \
+    {                  \
+        asm("nop");    \
+    }
+#elif defined(__MCUXPRESSO)
 #define CUSTOM_DELAY() \
     {                  \
         asm("nop");    \
@@ -102,7 +118,6 @@ to assign the gpio_input
     returned_status = nt_module_TSI_ReleaseAll(0);
     if (returned_status != NT_SUCCESS)
     {
-      // virtual release was not successful for all electrodes
     }
 
   \endcode
@@ -131,7 +146,6 @@ requires to assign the gpio_input
     returned_status = nt_module_TSI_Release(0, electrodes, 1);
     if (returned_status != NT_SUCCESS)
     {
-      // virtual release was not successful for the specified electrodes
     }
 
   \endcode
@@ -142,8 +156,7 @@ requires to assign the gpio_input
 *   - NT_SUCCESS if the specified electrodes have been switched back to the TSI mode
 *   - NT_FAILURE if the specified electrodes have not been switched back to the TSI mode
 */
-int32_t nt_module_TSI_Release(uint32_t instance, struct nt_electrode **electrodes, uint8_t counterNumber);
-
+int32_t nt_module_TSI_Release(uint32_t instance, struct nt_electrode **electrodes, uint8_t elNumber);
 /**
 * \brief The function make virtual release on one specified electrode by switching back to the TSI mode.
 *
@@ -163,7 +176,6 @@ gpio_input
     returned_status = nt_module_TSI_ReleaseOneElect(&El_0);
     if (returned_status != NT_SUCCESS)
     {
-      // virtual release was not successful for one specified electrode
     }
 
   \endcode
@@ -172,7 +184,7 @@ gpio_input
 *   - NT_SUCCESS if specified electrode has been switched back to the TSI mode
 *   - NT_FAILURE if specified electrode has not been switched back to the TSI mode
 */
-int32_t nt_module_TSI_ReleaseOneElect(struct nt_electrode *electrode);
+int32_t nt_module_TSI_ReleaseOneElect(const struct nt_electrode *electrode);
 
 /**
 * \brief The function make the virtual release on one specified electrode assigned to the TSI module by switching back
@@ -190,7 +202,6 @@ to assign the gpio_input
     returned_status = nt_module_TSI_TouchAll(0);
     if (returned_status != NT_SUCCESS)
     {
-      // virtual touch was not successful for all electrodes
     }
 
   \endcode
@@ -224,7 +235,6 @@ gpio_input
     returned_status = nt_module_TSI_Touch(0, electrodes, 1);
     if (returned_status != NT_SUCCESS)
     {
-      // virtual touch was not successful for the specified electrodes
     }
 
   \endcode
@@ -257,7 +267,6 @@ gpio_input
     returned_status = nt_module_TSI_TouchOneElect(&El_0);
     if (returned_status != NT_SUCCESS)
     {
-      // virtual touch was not successful for one specified electrode
     }
 
   \endcode
@@ -266,10 +275,8 @@ gpio_input
 *   - NT_SUCCESS if one specified electrode has been switched to GPIO mode with pull-up/down
 *   - NT_FAILURE if one specified electrodes has not been switched to GPIO mode with pull-up/down
 */
-int32_t nt_module_TSI_TouchOneElect(struct nt_electrode *electrode);
+int32_t nt_module_TSI_TouchOneElect(const struct nt_electrode *electrode);
 #endif /* NT_SAFETY_SUPPORT */
-
-void delay(void);
 
 #ifdef __cplusplus
 extern "C" {

@@ -21,8 +21,8 @@ struct nt_module_data *nt_electrode_get_module_data(const struct nt_electrode *e
     /* try to find in each module */
     while (*modules != NULL)
     {
-        struct nt_module *module         = (struct nt_module *)(*modules)->rom;
-        struct nt_electrode **electrodes = (struct nt_electrode **)(module)->electrodes;
+        const struct nt_module *module               = (*modules)->rom;
+        const struct nt_electrode *const *electrodes = (module)->electrodes;
 
         while (*electrodes != NULL)
         {
@@ -43,13 +43,13 @@ int32_t _nt_electrode_get_index_from_module(const struct nt_module *module, cons
     NT_ASSERT(electrode != NULL);
     uint32_t e = 0;
 
-    struct nt_electrode **electrodes = (struct nt_electrode **)module->electrodes;
-    e                                = 0;
+    const struct nt_electrode *const *electrodes = module->electrodes;
+    e                                            = 0;
     while (*electrodes != NULL)
     {
         if (electrode == *electrodes)
         {
-            return e;
+            return ((int32_t)e);
         }
         e++;
         electrodes++;
@@ -65,7 +65,7 @@ struct nt_electrode_data *_nt_electrode_get_data(const struct nt_electrode *elec
     uint32_t m = 0;
     int32_t e  = 0;
 
-    struct nt_module **modules = (struct nt_module **)_nt_system_get()->rom->modules;
+    const struct nt_module *const *modules = _nt_system_get()->rom->modules;
     /* try to find in each module */
     while (*modules != NULL)
     {
@@ -130,32 +130,33 @@ uint32_t _nt_electrode_shielding_process(struct nt_electrode_data *electrode, ui
         }
         uint32_t shielding_signal = (uint16_t)shielding_electrode->signal;
 
-        delta_signal_sh = (shielding_signal - shielding_electrode->baseline) * sh_gain;
-        delta_signal    = signal - electrode->baseline;
+        delta_signal_sh =
+            (int32_t)((int32_t)shielding_signal - (int32_t)shielding_electrode->baseline) * (int32_t)sh_gain;
+        delta_signal = (int32_t)signal - (int32_t)electrode->baseline;
 
-        if ((delta_signal > sh_threshold) && (delta_signal_sh > sh_threshold))
+        if ((delta_signal > (int32_t)sh_threshold) && (delta_signal_sh > (int32_t)sh_threshold))
         {
             /* Signal delta normalization on 16-bit range */
-            tmp_signal = (delta_signal_sh * 0xFFFFU) / delta_signal;
-            tmp_signal = ((tmp_signal * delta_signal_sh) / 0xFFFFU);
+            tmp_signal = (int32_t)(delta_signal_sh * 0xFFFF) / delta_signal;
+            tmp_signal = ((tmp_signal * delta_signal_sh) / (int32_t)0xFFFF);
 
-            tmp_signal = tmp_signal / sh_attn; /*attenuate the shielding effect*/
+            tmp_signal = tmp_signal / (int32_t)sh_attn; /*attenuate the shielding effect*/
             /* limiting the maximum compensation value */
-            if (tmp_signal > sh_sens)
+            if (tmp_signal > (int32_t)sh_sens)
             {
-                tmp_signal = sh_sens;
+                tmp_signal = (int32_t)sh_sens;
             }
 
-            tmp_signal = signal - tmp_signal;
+            tmp_signal = (int32_t)signal - tmp_signal;
 
             /* avoid the negative baseline drop */
-            if (tmp_signal > ((electrode->baseline) + sh_threshold))
+            if (tmp_signal > (int32_t)electrode->baseline + (int32_t)sh_threshold)
             {
-                signal = tmp_signal;
+                signal = (uint32_t)tmp_signal;
             }
             else
             {
-                signal = ((electrode->baseline) + sh_threshold);
+                signal = (uint32_t)electrode->baseline + (uint32_t)sh_threshold;
             }
         }
     }
@@ -197,7 +198,7 @@ struct nt_electrode_data *_nt_electrode_init(struct nt_module_data *module, cons
 
     elec->rom = electrode;
 
-    _nt_electrode_set_status(elec, NT_ELECTRODE_STATE_INIT);
+    _nt_electrode_set_status(elec, (int32_t)NT_ELECTRODE_STATE_INIT);
     elec->status_index = 0U;
     if (electrode->shielding_electrode != NULL)
     {
@@ -243,9 +244,9 @@ int32_t nt_electrode_enable(const struct nt_electrode *electrode, uint32_t touch
 
     electrode->keydetector_interface->nt_keydetector_enable(electrode_data, touch);
 
-    _nt_electrode_set_flag(electrode_data, NT_ELECTRODE_ENABLED); /* Set electrode state as enabled */
+    _nt_electrode_set_flag(electrode_data, (int32_t)NT_ELECTRODE_ENABLED); /* Set electrode state as enabled */
 
-    return (int32_t) NT_SUCCESS;
+    return (int32_t)NT_SUCCESS;
 }
 
 int32_t nt_electrode_resume(const struct nt_electrode *electrode)
@@ -258,9 +259,9 @@ int32_t nt_electrode_resume(const struct nt_electrode *electrode)
     NT_ASSERT(module_data != NULL);
     NT_ASSERT(module_data->rom->interface->electrode_enable != NULL);
 
-    _nt_electrode_set_flag(electrode_data, NT_ELECTRODE_ENABLED); /* Set electrode state as enabled */
+    _nt_electrode_set_flag(electrode_data, (uint32_t)NT_ELECTRODE_ENABLED); /* Set electrode state as enabled */
 
-    return (int32_t) NT_SUCCESS;
+    return (int32_t)NT_SUCCESS;
 }
 int32_t nt_electrode_disable(const struct nt_electrode *electrode)
 {
@@ -272,14 +273,14 @@ int32_t nt_electrode_disable(const struct nt_electrode *electrode)
     NT_ASSERT(module_data != NULL);
     NT_ASSERT(module_data->rom->interface->electrode_disable != NULL);
 
-    _nt_electrode_clear_flag(electrode_data, NT_ELECTRODE_ENABLED); /* Set electrode state as disabled */
+    _nt_electrode_clear_flag(electrode_data, (uint32_t)NT_ELECTRODE_ENABLED); /* Set electrode state as disabled */
 
-    return (int32_t) NT_SUCCESS;
+    return (int32_t)NT_SUCCESS;
 }
 
 int32_t nt_electrode_suspend(const struct nt_electrode *electrode)
 {
-    return (int32_t) nt_electrode_disable(electrode);
+    return (int32_t)nt_electrode_disable(electrode);
 }
 
 int32_t nt_electrode_reset(const struct nt_electrode *electrode)
@@ -290,7 +291,7 @@ int32_t nt_electrode_reset(const struct nt_electrode *electrode)
     NT_ASSERT(electrode_data != NULL);
 
     electrode->keydetector_interface->nt_keydetector_reset(electrode_data);
-    return (int32_t) NT_SUCCESS;
+    return (int32_t)NT_SUCCESS;
 }
 
 uint32_t nt_electrode_is_enabled(const struct nt_electrode *electrode)
@@ -299,7 +300,7 @@ uint32_t nt_electrode_is_enabled(const struct nt_electrode *electrode)
 
     struct nt_electrode_data *electrode_data = _nt_electrode_get_data(electrode);
 
-    return _nt_electrode_get_flag(electrode_data, NT_ELECTRODE_ENABLED);
+    return _nt_electrode_get_flag(electrode_data, (uint32_t)NT_ELECTRODE_ENABLED);
 }
 
 uint32_t nt_electrode_get_signal(const struct nt_electrode *electrode)
@@ -383,7 +384,7 @@ void _nt_electrode_set_raw_signal(struct nt_electrode_data *electrode, uint32_t 
 uint32_t _nt_electrode_get_raw_signal(const struct nt_electrode_data *electrode)
 {
     NT_ASSERT(electrode != NULL);
-    return (int32_t)electrode->raw_signal;
+    return ((uint32_t)electrode->raw_signal);
 }
 
 /* internal function */
@@ -392,7 +393,7 @@ void _nt_electrode_set_status(struct nt_electrode_data *electrode, int32_t state
     NT_ASSERT(electrode != NULL);
     uint32_t index = (uint32_t)electrode->status_index;
 
-    if (++index >= NT_ELECTRODE_STATUS_HISTORY_COUNT)
+    if (++index >= (uint32_t)NT_ELECTRODE_STATUS_HISTORY_COUNT)
     {
         index = 0U;
     }
@@ -411,7 +412,7 @@ int32_t _nt_electrode_get_status(const struct nt_electrode_data *electrode, uint
     }
     else
     {
-        return (int32_t) NT_FAILURE;
+        return (int32_t)NT_FAILURE;
     }
 }
 
@@ -424,7 +425,7 @@ int32_t _nt_electrode_get_last_status(const struct nt_electrode_data *electrode)
 int32_t _nt_electrode_get_delta(const struct nt_electrode_data *electrode)
 {
     NT_ASSERT(electrode != NULL);
-    return (_nt_electrode_get_signal(electrode) - (uint32_t)electrode->baseline);
+    return ((int32_t)_nt_electrode_get_signal(electrode) - (int32_t)electrode->baseline);
 }
 
 uint32_t _nt_electrode_get_time_stamp(const struct nt_electrode_data *electrode, uint32_t index)
@@ -455,7 +456,7 @@ uint32_t _nt_electrode_get_time_offset(const struct nt_electrode_data *electrode
 uint32_t _nt_electrode_get_time_offset_period(const struct nt_electrode_data *electrode, uint32_t event_period)
 {
     NT_ASSERT(electrode != NULL);
-    if (event_period)
+    if ((bool)event_period)
     {
         uint32_t time_offset = _nt_electrode_get_time_offset(electrode);
         uint32_t time_period = (uint32_t)_nt_system_get_time_period();
@@ -472,7 +473,7 @@ uint32_t _nt_electrode_is_touched(const struct nt_electrode_data *electrode)
     NT_ASSERT(electrode != NULL);
     uint32_t touched = 0;
 
-    if (_nt_electrode_get_status(electrode, electrode->status_index) == NT_ELECTRODE_STATE_TOUCH)
+    if (_nt_electrode_get_status(electrode, electrode->status_index) == (int32_t)NT_ELECTRODE_STATE_TOUCH)
     {
         touched = 1;
     }

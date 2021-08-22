@@ -43,6 +43,14 @@ enum _target_clocks
     kDivider_Max = 16,
 };
 
+//! @brief Memory Map index constants
+enum
+{
+    kIndexFlashArray = 0,
+    kIndexSRAM = 1,
+    kSRAMSeparatrix = (uint32_t)0x20000000 //!< This value is the start address of SRAM_U
+};
+
 //! @brief Constants for sram partition
 enum
 {
@@ -66,6 +74,9 @@ enum _target_version_constants
 #define CRC_CHECK_FAILURE_PIN_GPIO GPIOD
 #define CRC_CHECK_FAILURE_PIN_DEFAULT_MODE 0
 #define CRC_CHECK_FAILURE_PIN_GPIO_MODE 1
+
+#define SIM_SDID_SRAMSIZE_MASK SIM_SDID_RAMSIZE_MASK
+#define SIM_SDID_SRAMSIZE_SHIFT SIM_SDID_RAMSIZE_SHIFT
 
 #endif // __TARGET_CONFIG_H__
 ////////////////////////////////////////////////////////////////////////////////

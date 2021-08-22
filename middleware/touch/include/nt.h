@@ -85,7 +85,6 @@ extern "C" {
       printf("Initialization of NT failed. There can be a problem with the memory size
       or invalid parameters in component parameter structures.");
     }
-    // The NT is successfully initialized
 
    \endcode
  */
@@ -113,14 +112,11 @@ int32_t nt_init(const struct nt_system *system, uint8_t *pool, const uint32_t si
       printf("Initialization of NT failed. There can be problem with memory size
       or invalid parameters in component parameter structures.");
     }
-    // The NT is successfully initialized
 
-    // Main never-ending loop of the application
     while(1)
     {
       if(nt_task() == NT_SUCCESS)
       {
-        // New data has been processed
       }
     }
 
@@ -142,12 +138,10 @@ int32_t nt_task(void);
  * may only start the hardware sampling with interrupt enabled.
  * This is an example of the NT library triggering:
    \code
-    //For example, there is a callback routine from any periodical source (for example 5 ms)
     static void Timer_5msCallBack(void)
     {
      if(nt_trigger() != NT_SUCCESS)
       {
-        // Trigger error
       }
     }
    \endcode

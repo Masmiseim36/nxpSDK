@@ -75,7 +75,7 @@ struct nt_control_keypad
 
 /** An interface structure, which contains pointers to the entry points of the Keypad
  *  algorithms. A pointer to this structure must be assigned to any
- *  instance of the nt_control_keypad, to define the control behaviour. */
+ *  instance of the nt_control_keypad, to define the control behavior. */
 extern const struct nt_control_interface nt_control_keypad_interface;
 
 /**
@@ -86,7 +86,6 @@ extern const struct nt_control_interface nt_control_keypad_interface;
  *
  * A common example definition of the Keypad control for all source code examples is as follows:
  * \code
- *  // definition of electrode array used by control (more info in electrodes )
  *  const struct nt_electrode  * const control_0_electrodes[] = {&electrode_0, &electrode_1,
  *    &electrode_2, &electrode_3, NULL};
  *
@@ -96,7 +95,6 @@ extern const struct nt_control_interface nt_control_keypad_interface;
  *     .groups_size = 0,
  *  };
  *
- *  // Definition of rotary control
  *  const struct nt_control my_keypad_control =
  *  {
  *    .interface = &nt_control_keypad_control_interface,
@@ -118,13 +116,12 @@ extern "C" {
  * \param enable    enable the only one key pressed is valid.
  * \return none
  *
- * Enable or Disable the only one key press is valid at once. The behaviour is following:
+ * Enable or Disable the only one key press is valid at once. The behavior is following:
  * Once the feature is enabled the first touched key is valid and all other are ignored
  * since the active electrode is pressed.
  * Example:
  * \code
  *
- *  // switch off the only one key is valid functionality
  *  nt_control_keypad_only_one_key_valid(&my_keypad_control, 0);
  * \endcode
  */
@@ -141,7 +138,6 @@ void nt_control_keypad_only_one_key_valid(const struct nt_control *control, uint
  * Example:
  * \code
  *
- *  //Create the callback function for keypad
  *  static void my_keypad_cb(const struct nt_control *control,
  *                           enum nt_control_keypad_event event,
  *                           uint32_t index)
@@ -157,7 +153,6 @@ void nt_control_keypad_only_one_key_valid(const struct nt_control *control, uint
  *    printf("New keypad control event %s on key: %d.", event_names[event], index);
  *  }
  *
- *  // register the callback function for keypad
  *  nt_control_keypad_register_touch_callback(&my_keypad_control, my_keypad_touch_cb);
  * \endcode
  */
@@ -172,7 +167,6 @@ void nt_control_keypad_register_callback(const struct nt_control *control, nt_co
  * Example:
  * \code
  *
- *  //Set autorepeat rate to 100 ticks and start after 1000 ticks
  *  nt_control_keypad_set_autorepeat_rate(&my_keypad_control, 100, 1000);
  * \endcode
  */
@@ -185,7 +179,6 @@ void nt_control_keypad_set_autorepeat_rate(const struct nt_control *control, uin
  * Example:
  * \code
  *  uint32_t autorepeat_rate;
- *  //Get autorepeat rate
  *  autorepeat_rate = nt_control_keypad_get_autorepeat_rate(&my_keypad_control);
  *  printf("Auto-repeat rate of my keypad control is set to : %d.", autorepeat_rate);
  * \endcode
@@ -205,7 +198,6 @@ uint32_t nt_control_keypad_get_autorepeat_rate(const struct nt_control *control)
  * Example:
  * \code
  * uint32_t touched;
- * // Get the state of first key Keypad control
  * touched = nt_control_keypad_is_button_touched(&my_keypad_control, 0);
  * if(touched)
  *      printf("The first key of the Keypad control is currently touched.");

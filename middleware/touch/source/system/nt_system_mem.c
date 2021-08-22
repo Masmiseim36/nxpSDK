@@ -17,25 +17,25 @@ int32_t _nt_mem_init(uint8_t *pool, const uint32_t size)
 
     if (pool == NULL)
     {
-        return (int32_t) NT_FAILURE;
+        return (int32_t)NT_FAILURE;
     }
 
     /* Is the buffer start address aligned? */
     if ((bool)(((uint32_t)pool) & 0x03U))
     {
-        return (int32_t) NT_FAILURE;
+        return (int32_t)NT_FAILURE;
     }
 
     if (system->memory.pool != NULL)
     {
-        return (int32_t) NT_FAILURE;
+        return (int32_t)NT_FAILURE;
     }
 
     system->memory.pool         = pool;
     system->memory.pool_size    = (size & 0xfffffffcU); /* Just only 4 byte aligned area is interesting */
     system->memory.free_pointer = pool;
 
-    data_pointer = (uint32_t *)system->memory.pool;
+    data_pointer = (uint32_t *)(void *)system->memory.pool;
     counter      = system->memory.pool_size >> 2;
 
     while ((bool)(counter--))
@@ -44,7 +44,7 @@ int32_t _nt_mem_init(uint8_t *pool, const uint32_t size)
         data_pointer++;
     }
 
-    return (int32_t) NT_SUCCESS;
+    return (int32_t)NT_SUCCESS;
 }
 
 void *_nt_mem_alloc(const uint32_t size)
@@ -90,8 +90,8 @@ uint32_t nt_mem_get_free_size(void)
 
     int32_t size = (int32_t)mem->pool_size;
 
-    size -= (int32_t)*(mem->free_pointer);
-    size += (int32_t)*(mem->pool);
+    size -= (int32_t) * (mem->free_pointer);
+    size += (int32_t) * (mem->pool);
 
     NT_ASSERT(size >= 0);
 
@@ -106,5 +106,5 @@ int32_t _nt_mem_deinit(void)
     system->memory.pool_size    = 0;
     system->memory.free_pointer = NULL;
 
-    return (int32_t) NT_SUCCESS;
+    return (int32_t)NT_SUCCESS;
 }

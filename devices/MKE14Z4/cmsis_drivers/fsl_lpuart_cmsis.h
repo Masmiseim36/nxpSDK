@@ -1,7 +1,7 @@
 /*
  * Copyright (c) 2013-2016 ARM Limited. All rights reserved.
  * Copyright (c) 2016, Freescale Semiconductor, Inc. Not a Contribution.
- * Copyright 2016-2017,2020 NXP. Not a Contribution.
+ * Copyright 2016-2017,2020,2021 NXP. Not a Contribution.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -63,21 +63,40 @@ extern ARM_DRIVER_USART Driver_USART5;
 extern ARM_DRIVER_USART Driver_USART6;
 #endif /* LPUART6 */
 
+#if defined(LPUART7) && defined(RTE_USART7) && RTE_USART7
+extern ARM_DRIVER_USART Driver_USART7;
+#endif /* LPUART7 */
+
+#if defined(LPUART8) && defined(RTE_USART8) && RTE_USART8
+extern ARM_DRIVER_USART Driver_USART8;
+#endif /* LPUART8 */
+
+#if defined(LPUART9) && defined(RTE_USART9) && RTE_USART9
+extern ARM_DRIVER_USART Driver_USART9;
+#endif /* LPUART9 */
+
+#if defined(LPUART10) && defined(RTE_USART10) && RTE_USART10
+extern ARM_DRIVER_USART Driver_USART10;
+#endif /* LPUART10 */
+
+#if defined(LPUART11) && defined(RTE_USART11) && RTE_USART11
+extern ARM_DRIVER_USART Driver_USART11;
+#endif /* LPUART11 */
+
+#if defined(LPUART12) && defined(RTE_USART12) && RTE_USART12
+extern ARM_DRIVER_USART Driver_USART12;
+#endif /* LPUART12 */
+
 #if (FSL_FEATURE_SOC_LPUART_COUNT == 1) && (FSL_FEATURE_SOC_UART_COUNT == 3)
-
 extern ARM_DRIVER_USART Driver_USART3;
-
 #endif
 
 #if (FSL_FEATURE_SOC_LPUART_COUNT == 1) && (FSL_FEATURE_SOC_UART_COUNT == 4)
-
 extern ARM_DRIVER_USART Driver_USART4;
-
 #endif
 
 #if (FSL_FEATURE_SOC_LPUART_COUNT == 1) && (FSL_FEATURE_SOC_UART_COUNT == 5)
 extern ARM_DRIVER_USART Driver_USART5;
-
 #endif
 
 /* USART Driver state flags */

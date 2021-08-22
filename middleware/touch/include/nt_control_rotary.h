@@ -47,7 +47,7 @@ enum nt_control_rotary_event
  * Rotary event callback function pointer type.
  */
 typedef void (*nt_control_rotary_callback)(const struct nt_control *control,
-                                           enum nt_control_rotary_event,
+                                           enum nt_control_rotary_event event,
                                            uint32_t position);
 
 /** The interface structure, which contains pointers to the entry points of the
@@ -63,11 +63,9 @@ extern const struct nt_control_interface nt_control_rotary_interface;
  *
  * The common example definition of Rotary control for all source code examples is as follows:
  * \code
- *  // definition of electrode array used by control (more info in electrodes )
  *  const struct nt_electrode  * const control_0_electrodes[] = {&electrode_0, &electrode_1,
  *    &electrode_2, &electrode_3, NULL};
  *
- *  // Definition of the Rotary control
  *  const struct nt_control my_rotary_control =
  *  {
  *    .interface = &nt_control_rotary_interface,
@@ -87,15 +85,14 @@ extern "C" {
  * \param control  Pointer to the control.
  * \param callback Address of function to be invoked.
  * \return none
- *
+
  * Register the specified callback function as the Rotary events handler.
  * Example:
  * \code
  *
- *  //Create the callback function for arotary
  *  static void my_rotary_cb(const struct nt_control *control,
- *                            enum nt_control_arotary_event event,
- *                            uint32_t position)
+ *                           enum nt_control_arotary_event event,
+ *                           uint32_t position)
  *  {
  *    (void)control;
  *    char* event_names[] =
@@ -107,7 +104,6 @@ extern "C" {
  *    printf("New rotary control event %s on position: %d.", event_names[event], position);
  *  }
  *
- *  // register the callback function for rotary
  *  nt_control_rotary_register_callback(&my_rotary_control, my_rotary_cb);
  * \endcode
  */
@@ -123,7 +119,6 @@ void nt_control_rotary_register_callback(const struct nt_control *control, nt_co
  * Example:
  * \code
  * uint32_t position;
- * // Get position of Rotary control
  * position = nt_control_rotary_get_position(&my_rotary_control);
  * printf("Position of Rotary control is: %d.", position);
  * \endcode
@@ -137,7 +132,6 @@ uint32_t nt_control_rotary_get_position(const struct nt_control *control);
  * Example:
  * \code
  * uint32_t touched;
- * // Get state of the Rotary control
  * touched = nt_control_rotary_is_touched(&my_rotary_control);
  * if(touched)
  *      printf("The Rotary control is currently touched.");
@@ -154,7 +148,6 @@ uint32_t nt_control_rotary_is_touched(const struct nt_control *control);
  * Example:
  * \code
  * uint32_t movement;
- * // Get state of rotary control
  * movement = nt_control_rotary_movement_detected(&my_rotary_control);
  * if(movement)
  *      printf("The Rotary control is currently moving.");
@@ -172,7 +165,6 @@ uint32_t nt_control_rotary_movement_detected(const struct nt_control *control);
  * Example:
  * \code
  * uint32_t direction;
- * // Get direction of rotary control
  * direction = nt_control_rotary_get_direction(&my_rotary_control);
  * if(direction)
  *      printf("The Rotary direction is left.");
@@ -190,7 +182,6 @@ uint32_t nt_control_rotary_get_direction(const struct nt_control *control);
  * Example:
  * \code
  * uint32_t invalid_position;
- * // Get invalid position of Rotary control
  * invalid_position = nt_control_rotary_get_invalid_position(&my_rotary_control);
  * if(invalid_position)
  *      printf("The Rotary control has an invalid position (two fingers touch ?).");

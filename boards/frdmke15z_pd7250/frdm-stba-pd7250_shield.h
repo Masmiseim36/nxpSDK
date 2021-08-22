@@ -18,9 +18,9 @@
 #define SHIELD_NAME "FRDM-STBI-DP300x"
 
 // DBAP Sensor Information
-#define DBAP_I2C_ADDR   0x60
-#define DBAP_INT1       D5
-#define DBAP_INT2       D2
-#define DBAP_CS         D10
+#define DBAP_I2C_ADDR 0x60
+#define DBAP_INT1     D5
+#define DBAP_INT2     D2
+#define DBAP_CS       D10
 
 #endif /* _FRDM_STBA_PD7250_SHIELD_H_ */

@@ -76,8 +76,8 @@ struct nt_electrode_data
         special_data; /*!< Pointer to the special data (for example noise mode data for the TSI). */
     struct nt_electrode_data *shielding_electrode; /*!< Pointer to a shielding electrode (if it is used). */
 #if (FSL_FEATURE_TSI_VERSION == 5)
-    const tsi_config_t *tsi_hw_config; /*!< Pointer to TSI(HW)configuration params. Can be changed in runtime. */
-#endif 
+    tsi_config_t *tsi_hw_config; /*!< Pointer to TSI(HW)configuration params. Can be changed in runtime. */
+#endif
 };
 
 /** Electrodes flags which can be set/cleared.

@@ -77,7 +77,7 @@ uint32_t nt_control_aslider_is_touched(const struct nt_control *control)
     struct nt_control_data *control_data = _nt_control_get_data(control);
     NT_ASSERT(control_data != NULL);
 
-    uint32_t flag = _nt_control_get_flag(control_data, (int32_t) NT_ASLIDER_TOUCH_FLAG);
+    uint32_t flag = _nt_control_get_flag(control_data, (int32_t)NT_ASLIDER_TOUCH_FLAG);
     return (bool)flag ? 1U : 0U;
 }
 
@@ -89,7 +89,7 @@ uint32_t nt_control_aslider_movement_detected(const struct nt_control *control)
     struct nt_control_data *control_data = _nt_control_get_data(control);
     NT_ASSERT(control_data != NULL);
 
-    uint32_t flag = _nt_control_get_flag(control_data, (int32_t) NT_ASLIDER_MOVEMENT_FLAG);
+    uint32_t flag = _nt_control_get_flag(control_data, (int32_t)NT_ASLIDER_MOVEMENT_FLAG);
     return (bool)flag ? 1U : 0U;
 }
 
@@ -101,7 +101,7 @@ uint32_t nt_control_aslider_get_direction(const struct nt_control *control)
     struct nt_control_data *control_data = _nt_control_get_data(control);
     NT_ASSERT(control_data != NULL);
 
-    uint32_t flag = _nt_control_get_flag(control_data, (int32_t) NT_ASLIDER_DIRECTION_FLAG);
+    uint32_t flag = _nt_control_get_flag(control_data, (int32_t)NT_ASLIDER_DIRECTION_FLAG);
     return (bool)flag ? 1U : 0U;
 }
 
@@ -113,7 +113,7 @@ uint32_t nt_control_aslider_get_invalid_position(const struct nt_control *contro
     struct nt_control_data *control_data = _nt_control_get_data(control);
     NT_ASSERT(control_data != NULL);
 
-    uint32_t flag = _nt_control_get_flag(control_data, (int32_t) NT_ASLIDER_INVALID_POSITION_FLAG);
+    uint32_t flag = _nt_control_get_flag(control_data, (int32_t)NT_ASLIDER_INVALID_POSITION_FLAG);
     return (bool)flag ? 1U : 0U;
 }
 
@@ -145,7 +145,7 @@ static int32_t _nt_control_aslider_get_base_data(struct nt_control_data *control
 
         if (delta <= 0)
         {
-            return (int32_t) NT_INVALID_RESULT;
+            return (int32_t)NT_INVALID_RESULT;
         }
 
         if (delta > delta1)
@@ -161,22 +161,22 @@ static int32_t _nt_control_aslider_get_base_data(struct nt_control_data *control
             delta2     = delta;
         }
         else
-        { //empty else for MISRA
-        }  
+        { /* no command to avoid Misra issue */
+        }
     }
     /* Check if the measured results has at least +- good scale */
     if ((delta1 / delta2) < 1)
     {
-        return (int32_t) NT_INVALID_RESULT;
+        return (int32_t)NT_INVALID_RESULT;
     }
 
-    if ((bool)_nt_control_check_neighbours_electrodes(control, max_first, max_second, 0) != (bool) NT_SUCCESS)
+    if ((bool)_nt_control_check_neighbours_electrodes(control, max_first, max_second, 0) != (bool)NT_SUCCESS)
     {
-        _nt_control_set_flag(control, (int32_t) NT_ASLIDER_INVALID_POSITION_FLAG);
-        return (int32_t) NT_INVALID_RESULT;
+        _nt_control_set_flag(control, (int32_t)NT_ASLIDER_INVALID_POSITION_FLAG);
+        return (int32_t)NT_INVALID_RESULT;
     }
 
-    temp_data->range = (uint32_t)(delta1 + delta2);
+    temp_data->range = (uint32_t)delta1 + (uint32_t)delta2;
 
     if (max_first < max_second)
     {
@@ -189,9 +189,9 @@ static int32_t _nt_control_aslider_get_base_data(struct nt_control_data *control
         temp_data->first_delta  = (uint32_t)delta1;
     }
 
-    _nt_control_clear_flag(control, (int32_t) NT_ASLIDER_INVALID_POSITION_FLAG);
+    _nt_control_clear_flag(control, (int32_t)NT_ASLIDER_INVALID_POSITION_FLAG);
 
-    return (int32_t) NT_SUCCESS;
+    return (int32_t)NT_SUCCESS;
 }
 
 static uint32_t _nt_control_aslider_calculate_position(const struct nt_control_data *control,
@@ -212,17 +212,17 @@ static uint32_t _nt_control_aslider_calculate_position(const struct nt_control_d
 
 static void _nt_control_aslider_process_all_released(struct nt_control_data *control)
 {
-    if ((bool)_nt_control_get_flag(control, (int32_t) NT_ASLIDER_TOUCH_FLAG))
+    if ((bool)_nt_control_get_flag(control, (int32_t)NT_ASLIDER_TOUCH_FLAG))
     {
         /* if none is touched & touch was reported, all released event */
         struct nt_control_aslider_data *ram = control->data.aslider;
         NT_ASSERT(ram != NULL);
-        _nt_control_clear_flag(control,
-                               (uint32_t) NT_ASLIDER_TOUCH_FLAG | (uint32_t) NT_ASLIDER_INVALID_POSITION_FLAG | (uint32_t)NT_ASLIDER_MOVEMENT_FLAG);
+        _nt_control_clear_flag(control, (uint32_t)NT_ASLIDER_TOUCH_FLAG | (uint32_t)NT_ASLIDER_INVALID_POSITION_FLAG |
+                                            (uint32_t)NT_ASLIDER_MOVEMENT_FLAG);
         _nt_control_aslider_invoke_callback(control, NT_ASLIDER_ALL_RELEASE, (uint32_t)ram->position);
-        _nt_control_clear_flag_all_elec(control, (int32_t) NT_ELECTRODE_LOCK_BASELINE_REQ_FLAG);
+        _nt_control_clear_flag_all_elec(control, (int32_t)NT_ELECTRODE_LOCK_BASELINE_REQ_FLAG);
     }
-    _nt_control_clear_flag(control, (int32_t) NT_CONTROL_NEW_DATA_FLAG); /* data processed */
+    _nt_control_clear_flag(control, (int32_t)NT_CONTROL_NEW_DATA_FLAG); /* data processed */
 }
 
 static int32_t _nt_control_aslider_init(struct nt_control_data *control)
@@ -243,22 +243,22 @@ static int32_t _nt_control_aslider_init(struct nt_control_data *control)
 
     if (aslider->range == 0U)
     {
-        return (int32_t) NT_FAILURE;
+        return (int32_t)NT_FAILURE;
     }
 
     control->data.aslider = _nt_mem_alloc(sizeof(struct nt_control_aslider_data));
 
     if (control->data.aslider == NULL)
     {
-        return (int32_t) NT_OUT_OF_MEMORY;
+        return (int32_t)NT_OUT_OF_MEMORY;
     }
 
-    if ((bool)_nt_control_check_data(control) != (bool) NT_SUCCESS)
+    if ((bool)_nt_control_check_data(control) != (bool)NT_SUCCESS)
     {
-        return (int32_t) NT_FAILURE;
+        return (int32_t)NT_FAILURE;
     }
 
-    return (int32_t) NT_SUCCESS;
+    return (int32_t)NT_SUCCESS;
 }
 
 static int32_t _nt_control_aslider_process(struct nt_control_data *control)
@@ -266,62 +266,63 @@ static int32_t _nt_control_aslider_process(struct nt_control_data *control)
     NT_ASSERT(control != NULL);
     NT_ASSERT(control->rom->interface == &nt_control_aslider_interface);
 
-    if (!(bool)_nt_control_get_flag(control, (int32_t) NT_CONTROL_EN_FLAG) || !(bool)_nt_control_get_flag(control, (int32_t) NT_CONTROL_NEW_DATA_FLAG))
+    if (!(bool)_nt_control_get_flag(control, (int32_t)NT_CONTROL_EN_FLAG) ||
+        !(bool)_nt_control_get_flag(control, (int32_t)NT_CONTROL_NEW_DATA_FLAG))
     {
-        return (int32_t) NT_FAILURE; /* control disabled or data not ready */
+        return (int32_t)NT_FAILURE; /* control disabled or data not ready */
     }
 
     if (!(bool)_nt_control_get_electrodes_state(control))
     {
         _nt_control_aslider_process_all_released(control);
-        return (int32_t) NT_SUCCESS; /* no touch on the control's electrodes */
+        return (int32_t)NT_SUCCESS; /* no touch on the control's electrodes */
     }
 
     if ((bool)_nt_control_get_electrodes_digital_state(control))
     {
-        return (int32_t) NT_SUCCESS; /* no touch on the control's electrodes */
+        return (int32_t)NT_SUCCESS; /* no touch on the control's electrodes */
     }
 
     struct nt_control_aslider_data *ram = control->data.aslider;
     struct nt_control_aslider_temp_data computing_data;
 
     /* at least one is touched, validate position */
-    if ((bool)_nt_control_aslider_get_base_data(control, &computing_data) == (bool) NT_SUCCESS)
+    if ((bool)_nt_control_aslider_get_base_data(control, &computing_data) == (bool)NT_SUCCESS)
     {
         uint32_t current_position = _nt_control_aslider_calculate_position(control, &computing_data);
 
         if (ram->position != current_position)
         {
             struct nt_control_aslider const *rom = control->rom->control_params.aslider;
-            if (_nt_abs_int32((int32_t)(ram->position - (uint8_t)current_position)) > rom->insensitivity)
+            if (_nt_abs_int32((int32_t)ram->position - (int32_t)current_position) > rom->insensitivity)
             {
                 if (ram->position < current_position)
                 {
-                    _nt_control_set_flag(control, (int32_t) NT_ASLIDER_DIRECTION_FLAG);
+                    _nt_control_set_flag(control, (int32_t)NT_ASLIDER_DIRECTION_FLAG);
                 }
                 else
                 {
-                    _nt_control_clear_flag(control, (int32_t) NT_ASLIDER_DIRECTION_FLAG);
+                    _nt_control_clear_flag(control, (int32_t)NT_ASLIDER_DIRECTION_FLAG);
                 }
                 ram->position = (uint8_t)current_position;
-                _nt_control_set_flag(control, (int32_t) NT_ASLIDER_MOVEMENT_FLAG);
+                _nt_control_set_flag(control, (int32_t)NT_ASLIDER_MOVEMENT_FLAG);
                 _nt_control_aslider_invoke_callback(control, NT_ASLIDER_MOVEMENT, (uint32_t)ram->position);
             }
         }
         else
         {
-            _nt_control_clear_flag(control, (int32_t) NT_ASLIDER_MOVEMENT_FLAG);
+            _nt_control_clear_flag(control, (int32_t)NT_ASLIDER_MOVEMENT_FLAG);
         }
     }
 
     /* aslider is touched for the first time */
-    if (!(bool)_nt_control_get_flag(control, (int32_t) NT_ASLIDER_TOUCH_FLAG))
+    if (!(bool)_nt_control_get_flag(control, (int32_t)NT_ASLIDER_TOUCH_FLAG))
     {
         _nt_control_aslider_invoke_callback(control, NT_ASLIDER_INITIAL_TOUCH, (uint32_t)ram->position);
     }
     /* lock baseline for all elec in the control */
-    _nt_control_set_flag_all_elec(control, (int32_t) NT_ELECTRODE_LOCK_BASELINE_REQ_FLAG);
-    _nt_control_set_flag(control, (int32_t) NT_ASLIDER_TOUCH_FLAG);
-    _nt_control_clear_flag(control, (int32_t) NT_CONTROL_NEW_DATA_FLAG); /* data processed */
-    return (int32_t) NT_SUCCESS;
+    _nt_control_set_flag_all_elec(control, (int32_t)NT_ELECTRODE_LOCK_BASELINE_REQ_FLAG);
+    _nt_control_set_flag(control, (int32_t)NT_ASLIDER_TOUCH_FLAG);
+    _nt_control_clear_flag(control, (int32_t)NT_CONTROL_NEW_DATA_FLAG); /* data processed */
+    return (int32_t)NT_SUCCESS;
 }

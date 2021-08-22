@@ -76,11 +76,12 @@ int32_t nt_control_proxi_set_gesture(const struct nt_control *control, uint8_t g
     {
         ram->select_gesture = (uint8_t)(gesture + 1U);
         if (gesture >= ram->gesture_number)
-        {   ram->gesture_number = gesture + 1U;
-        }    
-        return (int32_t) NT_SUCCESS;
+        {
+            ram->gesture_number = gesture + 1U;
+        }
+        return (int32_t)NT_SUCCESS;
     }
-    return (int32_t) NT_FAILURE;
+    return (int32_t)NT_FAILURE;
 }
 
 static int32_t _nt_control_proxi_init(struct nt_control_data *control)
@@ -89,28 +90,28 @@ static int32_t _nt_control_proxi_init(struct nt_control_data *control)
     NT_ASSERT(control->rom->interface == &nt_control_proxi_interface);
     NT_ASSERT(control->rom->control_params.proxi != NULL);
 
-    struct nt_control_proxi *proxi = (struct nt_control_proxi *)control->rom->control_params.proxi;
+    const struct nt_control_proxi *proxi = (const struct nt_control_proxi *)control->rom->control_params.proxi;
 
     if (proxi->range == 0U)
     {
-        return (int32_t) NT_FAILURE;
+        return (int32_t)NT_FAILURE;
     }
 
     if (proxi->threshold == 0U)
     {
-        return (int32_t) NT_FAILURE;
+        return (int32_t)NT_FAILURE;
     }
 
     control->data.proxi = _nt_mem_alloc(sizeof(struct nt_control_proxi_data));
 
     if (control->data.proxi == NULL)
     {
-        return (int32_t) NT_OUT_OF_MEMORY;
+        return (int32_t)NT_OUT_OF_MEMORY;
     }
 
-    if ((bool)_nt_control_check_data(control) != (bool) NT_SUCCESS)
+    if ((bool)_nt_control_check_data(control) != (bool)NT_SUCCESS)
     {
-        return (int32_t) NT_FAILURE;
+        return (int32_t)NT_FAILURE;
     }
 
     NT_ASSERT(control->data.proxi != NULL);
@@ -133,9 +134,9 @@ static int32_t _nt_control_proxi_init(struct nt_control_data *control)
     ram->buffer             = 0; /* Initialization buffer variable */
 
     /* Check if gestures are defined */
-    if (*(uint64_t *)proxi->gesture == 0U)
+    if (*(uint32_t *)proxi->gesture == 0U)
     {
-        return (int32_t) NT_FAILURE;
+        return (int32_t)NT_FAILURE;
     }
     /* Evaluate how many gestures was defined */
     ram->gesture_number = 0;
@@ -147,7 +148,7 @@ static int32_t _nt_control_proxi_init(struct nt_control_data *control)
 
     if (control->electrodes_size > 8U)
     {
-        return (int32_t) NT_FAILURE;
+        return (int32_t)NT_FAILURE;
     }
 
     /* Set buffer mask constant */
@@ -155,12 +156,12 @@ static int32_t _nt_control_proxi_init(struct nt_control_data *control)
     elec_counter         = control->electrodes_size;
     while ((bool)(elec_counter--))
     {
-        buffer_mask |= (uint32_t) (0xfU << (elec_counter << 2U));
+        buffer_mask |= (0xfUL << (elec_counter << 2U));
     }
     ram->buffer_mask = buffer_mask;
 
 #endif /* NT_PROXI_GESTURES > 0 */
-    return (int32_t) NT_SUCCESS;
+    return (int32_t)NT_SUCCESS;
 }
 
 static int32_t _nt_control_proxi_process(struct nt_control_data *control)
@@ -178,9 +179,10 @@ static int32_t _nt_control_proxi_process(struct nt_control_data *control)
     NT_ASSERT(ram != NULL);
     NT_ASSERT(rom != NULL);
 
-    if (!(bool)_nt_control_get_flag(control, (int32_t) NT_CONTROL_EN_FLAG) || !(bool)_nt_control_get_flag(control, (int32_t) NT_CONTROL_NEW_DATA_FLAG))
+    if (!(bool)_nt_control_get_flag(control, (int32_t)NT_CONTROL_EN_FLAG) ||
+        !(bool)_nt_control_get_flag(control, (int32_t)NT_CONTROL_NEW_DATA_FLAG))
     {
-        return (int32_t) NT_FAILURE; /* control disabled or data not ready */
+        return (int32_t)NT_FAILURE; /* control disabled or data not ready */
     }
 
     /* Proximity process */
@@ -196,43 +198,45 @@ static int32_t _nt_control_proxi_process(struct nt_control_data *control)
         }
 
         /* denominator in not zero (checked in init) so calculate scaled proximity */
-        current_prox = (uint32_t)((uint16_t)current_prox * (uint8_t)rom->range);
+        current_prox = (uint32_t)((uint32_t)current_prox * (uint32_t)rom->range);
         current_prox = (uint32_t)((uint32_t)current_prox / (uint16_t)ram->proxi_max[elec_counter]);
 
         /* Store proximity to array for gesture processing */
-        ram->proxi_curr[elec_counter] = (uint8_t) current_prox;
+        ram->proxi_curr[elec_counter] = (uint8_t)current_prox;
 
         /* If touch, check change and direction */
-        if ((bool)_nt_control_proxi_get_flag(&ram->proxi_flags[elec_counter], (int32_t) NT_PROXI_TOUCH_FLAG))
+        if ((bool)_nt_control_proxi_get_flag(&ram->proxi_flags[elec_counter], (int32_t)NT_PROXI_TOUCH_FLAG))
         { /* Check insensitivity for movement neglecting. */
-            if (current_prox >= (uint32_t)(ram->proxi_movement[elec_counter] + rom->insensitivity))
+            if (current_prox >= ((uint32_t)ram->proxi_movement[elec_counter] + (uint32_t)rom->insensitivity))
             {
-                _nt_control_proxi_set_flag(&ram->proxi_flags[elec_counter], (int32_t) NT_PROXI_DIRECTION_FLAG);
-                _nt_control_set_flag(control, (int32_t) NT_PROXI_DIRECTION_FLAG);
+                _nt_control_proxi_set_flag(&ram->proxi_flags[elec_counter], (int32_t)NT_PROXI_DIRECTION_FLAG);
+                _nt_control_set_flag(control, (int32_t)NT_PROXI_DIRECTION_FLAG);
                 if ((uint16_t)ram->proxi_movement[elec_counter] + (uint16_t)rom->insensitivity < 255U)
-                {   ram->proxi_movement[elec_counter] += rom->insensitivity;
-                }    
+                {
+                    ram->proxi_movement[elec_counter] += rom->insensitivity;
+                }
                 /* flags and callbacks when moving (proximity changing) */
-                _nt_control_proxi_set_flag(&ram->proxi_flags[elec_counter], (int32_t) NT_PROXI_MOVEMENT_FLAG);
-                _nt_control_set_flag(control, (int32_t) NT_PROXI_MOVEMENT_FLAG);
+                _nt_control_proxi_set_flag(&ram->proxi_flags[elec_counter], (int32_t)NT_PROXI_MOVEMENT_FLAG);
+                _nt_control_set_flag(control, (int32_t)NT_PROXI_MOVEMENT_FLAG);
                 _nt_control_proxi_invoke_callback(control, NT_PROXI_MOVEMENT, elec_counter, current_prox);
             }
             else if (current_prox < ram->proxi_movement[elec_counter])
             {
-                _nt_control_proxi_clear_flag(&ram->proxi_flags[elec_counter], (int32_t) NT_PROXI_DIRECTION_FLAG);
-                _nt_control_clear_flag(control, (int32_t) NT_PROXI_DIRECTION_FLAG);
+                _nt_control_proxi_clear_flag(&ram->proxi_flags[elec_counter], (int32_t)NT_PROXI_DIRECTION_FLAG);
+                _nt_control_clear_flag(control, (int32_t)NT_PROXI_DIRECTION_FLAG);
                 if ((uint16_t)ram->proxi_movement[elec_counter] - (uint16_t)rom->insensitivity > 0U)
-                {   ram->proxi_movement[elec_counter] -= rom->insensitivity;
-                }    
+                {
+                    ram->proxi_movement[elec_counter] -= rom->insensitivity;
+                }
                 /* flags and callbacks when moving (proximity changing) */
-                _nt_control_proxi_set_flag(&ram->proxi_flags[elec_counter], (int32_t) NT_PROXI_MOVEMENT_FLAG);
-                _nt_control_set_flag(control, (int32_t) NT_PROXI_MOVEMENT_FLAG);
+                _nt_control_proxi_set_flag(&ram->proxi_flags[elec_counter], (int32_t)NT_PROXI_MOVEMENT_FLAG);
+                _nt_control_set_flag(control, (int32_t)NT_PROXI_MOVEMENT_FLAG);
                 _nt_control_proxi_invoke_callback(control, NT_PROXI_MOVEMENT, elec_counter, current_prox);
             }
             else /* Too small proximity change - will be neglected */
             {
-                _nt_control_proxi_clear_flag(&ram->proxi_flags[elec_counter], (int32_t) NT_PROXI_MOVEMENT_FLAG);
-                _nt_control_clear_flag(control, (int32_t) NT_PROXI_MOVEMENT_FLAG);
+                _nt_control_proxi_clear_flag(&ram->proxi_flags[elec_counter], (int32_t)NT_PROXI_MOVEMENT_FLAG);
+                _nt_control_clear_flag(control, (int32_t)NT_PROXI_MOVEMENT_FLAG);
             }
         }
         ram->proxi_curr[elec_counter] = (uint8_t)current_prox; /* store proximity value for next step */
@@ -240,27 +244,28 @@ static int32_t _nt_control_proxi_process(struct nt_control_data *control)
         /* Touch recognition */
         if (current_prox > rom->threshold) /* Check Touch threshold */
         {                                  /* Skip if touch was detected previously, only one touch event call */
-            if (!(bool)_nt_control_proxi_get_flag((&ram->proxi_flags[elec_counter]), (int32_t) NT_PROXI_TOUCH_FLAG))
+            if (!(bool)_nt_control_proxi_get_flag((&ram->proxi_flags[elec_counter]), (int32_t)NT_PROXI_TOUCH_FLAG))
             {
-                _nt_control_set_flag(control, (int32_t) NT_PROXI_TOUCH_FLAG);
-                _nt_control_proxi_set_flag(&ram->proxi_flags[elec_counter], (int32_t) NT_PROXI_TOUCH_FLAG);
-                _nt_control_proxi_clear_flag(&ram->proxi_flags[elec_counter], (int32_t) NT_PROXI_RELEASE_FLAG);
+                _nt_control_set_flag(control, (int32_t)NT_PROXI_TOUCH_FLAG);
+                _nt_control_proxi_set_flag(&ram->proxi_flags[elec_counter], (int32_t)NT_PROXI_TOUCH_FLAG);
+                _nt_control_proxi_clear_flag(&ram->proxi_flags[elec_counter], (int32_t)NT_PROXI_RELEASE_FLAG);
                 _nt_control_proxi_invoke_callback(control, NT_PROXI_TOUCH, elec_counter, current_prox);
             }
         }
         else /* Release event */
         {
-            _nt_control_clear_flag(control, (int32_t) NT_PROXI_TOUCH_FLAG);                                  /* released */
-            _nt_control_clear_flag(control, (int32_t) NT_PROXI_MOVEMENT_FLAG);                               /* clear flag */
-            _nt_control_proxi_clear_flag(&ram->proxi_flags[elec_counter], (int32_t) NT_PROXI_TOUCH_FLAG);    /* released */
-            _nt_control_proxi_clear_flag(&ram->proxi_flags[elec_counter], (int32_t) NT_PROXI_MOVEMENT_FLAG); /* clear flag */
+            _nt_control_clear_flag(control, (int32_t)NT_PROXI_TOUCH_FLAG);    /* released */
+            _nt_control_clear_flag(control, (int32_t)NT_PROXI_MOVEMENT_FLAG); /* clear flag */
+            _nt_control_proxi_clear_flag(&ram->proxi_flags[elec_counter], (int32_t)NT_PROXI_TOUCH_FLAG); /* released */
+            _nt_control_proxi_clear_flag(&ram->proxi_flags[elec_counter],
+                                         (int32_t)NT_PROXI_MOVEMENT_FLAG); /* clear flag */
             ram->proxi_movement[elec_counter] = rom->threshold;
             /* Call just once, if already released, no more calls*/
-            if (!(bool)_nt_control_proxi_get_flag(&ram->proxi_flags[elec_counter], (int32_t) NT_PROXI_RELEASE_FLAG))
+            if (!(bool)_nt_control_proxi_get_flag(&ram->proxi_flags[elec_counter], (int32_t)NT_PROXI_RELEASE_FLAG))
             {
                 _nt_control_proxi_invoke_callback(control, NT_PROXI_RELEASE, elec_counter, current_prox);
-                _nt_control_proxi_set_flag(&ram->proxi_flags[elec_counter], (int32_t) NT_PROXI_RELEASE_FLAG);
-                _nt_control_set_flag(control, (int32_t) NT_PROXI_RELEASE_FLAG);
+                _nt_control_proxi_set_flag(&ram->proxi_flags[elec_counter], (int32_t)NT_PROXI_RELEASE_FLAG);
+                _nt_control_set_flag(control, (int32_t)NT_PROXI_RELEASE_FLAG);
             }
         }
     }
@@ -268,15 +273,15 @@ static int32_t _nt_control_proxi_process(struct nt_control_data *control)
 /* index (position) recognition */
 #if NT_PROXI_ELECTRODES > 1 /* must be more then 2 electrodes to find proxi max. */
     elec_counter = control->electrodes_size;
-    if ((bool)_nt_control_get_flag(control, (int32_t) NT_PROXI_TOUCH_FLAG))
+    if ((bool)_nt_control_get_flag(control, (int32_t)NT_PROXI_TOUCH_FLAG))
     {
-        ram->proximity = 0;    /* Clear proximity max. */
+        ram->proximity = 0;            /* Clear proximity max. */
         while ((bool)(elec_counter--)) /* Find proximity max and its electrode */
         {
             if (ram->proxi_curr[elec_counter] > ram->proximity) /* Compare electrode proximity with max values */
             {
                 ram->proximity = ram->proxi_curr[elec_counter]; /* Store current in case of higher value was found */
-                if ((bool)_nt_control_proxi_get_flag(&ram->proxi_flags[elec_counter], (int32_t) NT_PROXI_TOUCH_FLAG))
+                if ((bool)_nt_control_proxi_get_flag(&ram->proxi_flags[elec_counter], (int32_t)NT_PROXI_TOUCH_FLAG))
                 {
                     ram->index = elec_counter; /* Store index of the touched electrode with max proximity */
                 }
@@ -297,7 +302,8 @@ static int32_t _nt_control_proxi_process(struct nt_control_data *control)
                 if (ram->select_gesture > ram->gesture_number) /* Ensure to rewrite defines gesture number only */
                     ram->select_gesture = 0;
                 rom->gesture[ram->select_gesture - 1] = ram->buffer; /* Store buffered value to gesture array */
-                _nt_control_proxi_invoke_callback(control, (int32_t) NT_PROXI_SET_GESTURE, ram->select_gesture, current_prox);
+                _nt_control_proxi_invoke_callback(control, (int32_t)NT_PROXI_SET_GESTURE, ram->select_gesture,
+                                                  current_prox);
                 ram->select_gesture = 0; /* Clean selected gesture quantity for next gesture storing */
             }
             else
@@ -306,22 +312,23 @@ static int32_t _nt_control_proxi_process(struct nt_control_data *control)
                 uint32_t temp_gesture;
                 for (n = 0; n < ram->gesture_number; n++)
                 {
-                    temp_gesture = rom->gesture[n];      /* Read from Rom */
-                    if (temp_gesture == ram->buffer)     /* Compare buffered gesture with stored one */
-                    {   ram->recognized_gesture = n + 1; /* In case of sameness store the gesture number */
+                    temp_gesture = rom->gesture[n];  /* Read from Rom */
+                    if (temp_gesture == ram->buffer) /* Compare buffered gesture with stored one */
+                    {
+                        ram->recognized_gesture = n + 1; /* In case of sameness store the gesture number */
                     }
                 }
                 if (ram->recognized_gesture != 0)
-                    _nt_control_proxi_invoke_callback(control, (int32_t) NT_PROXI_GET_GESTURE, ram->recognized_gesture,
+                    _nt_control_proxi_invoke_callback(control, (int32_t)NT_PROXI_GET_GESTURE, ram->recognized_gesture,
                                                       current_prox);
             }
         }
 #endif /* #if NT_PROXI_GESTURES > 0 */
     }
-#else                                                          /* #if NT_PROXI_ELECTRODES > 0 */
+#else                                                                   /* #if NT_PROXI_ELECTRODES > 0 */
     ram->proximity = (uint8_t)current_prox; /* Store current proxi if only one electrode assigned */
-#endif                                                         /* #if NT_PROXI_ELECTRODES > 0 */
-    _nt_control_clear_flag(control, (int32_t) NT_CONTROL_NEW_DATA_FLAG); /* data processed */
+#endif                                                                  /* #if NT_PROXI_ELECTRODES > 0 */
+    _nt_control_clear_flag(control, (int32_t)NT_CONTROL_NEW_DATA_FLAG); /* data processed */
 
-    return (int32_t) NT_SUCCESS;
+    return (int32_t)NT_SUCCESS;
 }

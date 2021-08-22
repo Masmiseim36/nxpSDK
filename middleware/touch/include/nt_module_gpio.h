@@ -18,6 +18,7 @@
 #include "nt_modules.h"
 #include "nt_types.h"
 #include "nt_gpio.h"
+#include "nt_safety.h"
 
 #define NT_MODULE_GPIO_NAME "nt_module_gpio_interface"
 
@@ -31,23 +32,23 @@ struct nt_module_data;
  */
 struct nt_module_gpio_user_interface
 {
-    void (*set_pin_output)(uint32_t port, uint32_t pin);    /*!< Set pin direction to output */
-    void (*set_pin_input)(uint32_t port, uint32_t pin);     /*!< Set pin direction to input */
-    void (*set_pin_low)(uint32_t port, uint32_t pin);       /*!< Set pin to logic low */
-    void (*set_pin_high)(uint32_t port, uint32_t pin);      /*!< Set pin to logic high */
-    uint32_t (*get_pin_value)(uint32_t port, uint32_t pin); /*!< Get pin value */
-    void (*set_pin_default_state)(uint32_t port,
-                                  uint32_t pin);          /*!< Set pin to default state when it's not being measured */
-    void (*init_timer)(void);                             /*!< Init timer */
-    void (*start_timer)(void);                            /*!< Start timer */
-    void (*stop_timer)(void);                             /*!< Stop timer */
-    void (*timer_reset_counter)(void);                    /*!< Reset timer counter */
-    uint32_t (*timer_get_counter)(void);                  /*!< Get timer counter */
-    uint32_t (*timer_get_overrun)(void);                  /*!< Get timer overrun */
-    void (*set_pin_pull_up)(uint32_t port, uint32_t pin); /*!< Set pin to GPIO with pull-up */
-    void (*set_pin_pull_down)(uint32_t port, uint32_t pin); /*!< Set pin to GPIO with pull-down */
-    void (*set_pin_tsi_mode)(uint32_t port, uint32_t pin);  /*!< Set pin to TSI mode */
-    void (*set_pin_gpio_mode)(uint32_t port, uint32_t pin); /*!< Set pin to GPIO mode */
+    void (*set_pin_output_ptr)(uint32_t port, uint32_t pin);    /*!< Set pin direction to output */
+    void (*set_pin_input_ptr)(uint32_t port, uint32_t pin);     /*!< Set pin direction to input */
+    void (*set_pin_low_ptr)(uint32_t port, uint32_t pin);       /*!< Set pin to logic low */
+    void (*set_pin_high_ptr)(uint32_t port, uint32_t pin);      /*!< Set pin to logic high */
+    uint32_t (*get_pin_value_ptr)(uint32_t port, uint32_t pin); /*!< Get pin value */
+    void (*set_pin_default_state_ptr)(uint32_t port,
+                                      uint32_t pin); /*!< Set pin to default state when it's not being measured */
+    void (*init_timer_ptr)(void);                    /*!< Init timer */
+    void (*start_timer_ptr)(void);                   /*!< Start timer */
+    void (*stop_timer_ptr)(void);                    /*!< Stop timer */
+    void (*timer_reset_counter_ptr)(void);           /*!< Reset timer counter */
+    uint32_t (*timer_get_counter_ptr)(void);         /*!< Get timer counter */
+    uint32_t (*timer_get_overrun_ptr)(void);         /*!< Get timer overrun */
+    void (*set_pin_pull_up_ptr)(uint32_t port, uint32_t pin);   /*!< Set pin to GPIO with pull-up */
+    void (*set_pin_pull_down_ptr)(uint32_t port, uint32_t pin); /*!< Set pin to GPIO with pull-down */
+    void (*set_pin_tsi_mode_ptr)(uint32_t port, uint32_t pin);  /*!< Set pin to TSI mode */
+    void (*set_pin_gpio_mode_ptr)(uint32_t port, uint32_t pin); /*!< Set pin to GPIO mode */
 };
 
 /** GPIO module, which uses the \b ??interrupts? port to sample a signal from the running timer counter.

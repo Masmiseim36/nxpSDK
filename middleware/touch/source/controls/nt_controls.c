@@ -19,7 +19,7 @@ struct nt_control_data *_nt_control_get_data(const struct nt_control *control)
     NT_ASSERT(control != NULL);
     uint32_t i = 0;
 
-    struct nt_control **controls = (struct nt_control **)_nt_system_get()->rom->controls;
+    const struct nt_control *const *controls = _nt_system_get()->rom->controls;
 
     while (*controls != NULL)
     {
@@ -35,31 +35,29 @@ struct nt_control_data *_nt_control_get_data(const struct nt_control *control)
 
 int32_t _nt_control_check_data(const struct nt_control_data *control)
 {
-    int32_t result = (int32_t) NT_SUCCESS;
+    int32_t result = (int32_t)NT_SUCCESS;
 
     if (control->rom == NULL)
     {
-        result = (int32_t) NT_FAILURE;
+        result = (int32_t)NT_FAILURE;
     }
 
     else if (control->rom->interface == NULL)
     {
-        result = (int32_t) NT_FAILURE;
+        result = (int32_t)NT_FAILURE;
     }
     else if (control->rom->electrodes == NULL)
     {
-        result = (int32_t) NT_FAILURE;
+        result = (int32_t)NT_FAILURE;
     }
     else
-    { /* avoid Misra issue */
+    { /* no command to avoid Misra issue */
     }
 
     if (control->data.general == NULL)
     {
-        result = (int32_t) NT_FAILURE;
+        result = (int32_t)NT_FAILURE;
     }
-
-
 
     return result;
 }
@@ -76,9 +74,9 @@ struct nt_control_data *_nt_control_init(const struct nt_control *control)
     }
 
     _this->rom             = control;
-    _this->electrodes_size = (uint8_t) nt_control_count_electrodes(_this->rom);
+    _this->electrodes_size = (uint8_t)nt_control_count_electrodes(_this->rom);
 
-    _this->electrodes = _nt_mem_alloc(sizeof(struct nt_electrode_data *) * _this->electrodes_size);
+    _this->electrodes = _nt_mem_alloc((uint32_t)sizeof(struct nt_electrode_data *) * (uint32_t)_this->electrodes_size);
 
     if (_this->electrodes == NULL)
     {
@@ -93,19 +91,20 @@ struct nt_control_data *_nt_control_init(const struct nt_control *control)
 
     if (control->interface->init != NULL)
     {
-        if (control->interface->init(_this) < (int32_t) NT_SUCCESS)
+        if (control->interface->init(_this) < (int32_t)NT_SUCCESS)
         {
             return NULL; /* failure stops the entire init phase */
         }
     }
 
-    if ((bool)_nt_control_check_data(_this) != (bool) NT_SUCCESS)
+    if ((bool)_nt_control_check_data(_this) != (bool)NT_SUCCESS)
     {
         return NULL;
     }
 
-    if ((bool)_nt_freemaster_add_variable(control->interface->name, "nt_control_interface", (void *)control->interface,
-                                    sizeof(struct nt_control_interface)) != (bool) NT_SUCCESS)
+    if ((bool)_nt_freemaster_add_variable(control->interface->name, "nt_control_interface",
+                                          (const void *)control->interface,
+                                          sizeof(struct nt_control_interface)) != (bool)NT_SUCCESS)
     {
         return NULL;
     }
@@ -120,7 +119,7 @@ void nt_control_enable(const struct nt_control *control)
     struct nt_control_data *control_data = _nt_control_get_data(control);
     NT_ASSERT(control_data != NULL);
 
-    _nt_control_set_flag(control_data, (int32_t) NT_CONTROL_EN_FLAG);
+    _nt_control_set_flag(control_data, (int32_t)NT_CONTROL_EN_FLAG);
 }
 
 void nt_control_disable(const struct nt_control *control)
@@ -130,7 +129,7 @@ void nt_control_disable(const struct nt_control *control)
     struct nt_control_data *control_data = _nt_control_get_data(control);
     NT_ASSERT(control_data != NULL);
 
-    _nt_control_clear_flag(control_data, (int32_t) NT_CONTROL_EN_FLAG);
+    _nt_control_clear_flag(control_data, (int32_t)NT_CONTROL_EN_FLAG);
 }
 
 int32_t nt_control_get_touch_button(const struct nt_control *control, uint32_t index)
@@ -145,10 +144,10 @@ int32_t nt_control_get_touch_button(const struct nt_control *control, uint32_t i
     {
         if ((bool)(_nt_electrode_get_last_status(control_data->electrodes[i]) == (int32_t)NT_ELECTRODE_STATE_TOUCH))
         {
-            return i;
+            return (int32_t)i;
         }
     }
-    return (int32_t) NT_FAILURE;
+    return (int32_t)NT_FAILURE;
 }
 
 uint64_t _nt_control_get_electrodes_state(struct nt_control_data *control)
@@ -175,9 +174,11 @@ uint32_t _nt_control_get_electrodes_digital_state(struct nt_control_data *contro
     while ((bool)(elec_counter--))
     {
         /* all electrode status in a bit field */
-        if ((bool)_nt_electrode_get_flag(control->electrodes[elec_counter],
-                                   (int32_t)NT_ELECTRODE_DIGITAL_RESULT_ONLY_FLAG | (int32_t)NT_ELECTRODE_AFTER_INIT_TOUCH_FLAG))
-        {   current_state |= (uint32_t)(1U << elec_counter);
+        if ((bool)_nt_electrode_get_flag(
+                control->electrodes[elec_counter],
+                (uint32_t)NT_ELECTRODE_DIGITAL_RESULT_ONLY_FLAG | (uint32_t)NT_ELECTRODE_AFTER_INIT_TOUCH_FLAG))
+        {
+            current_state |= (uint32_t)1 << elec_counter;
         }
     }
     return current_state;
@@ -241,7 +242,7 @@ int32_t _nt_control_check_neighbours_electrodes(struct nt_control_data *control,
         }
     }
 
-    return (result > 1U) ? (int32_t) NT_INVALID_RESULT : (int32_t) NT_SUCCESS;
+    return (result > 1U) ? (int32_t)NT_INVALID_RESULT : (int32_t)NT_SUCCESS;
 }
 
 int32_t _nt_control_check_edge_electrodes(struct nt_control_data *control, uint32_t electrode_ix)
@@ -249,10 +250,11 @@ int32_t _nt_control_check_edge_electrodes(struct nt_control_data *control, uint3
     uint32_t elec_size = control->electrodes_size;
 
     if ((bool)(electrode_ix == 0U) || (bool)(electrode_ix == (elec_size - 1U)))
-    {    return (int32_t) NT_SUCCESS;
+    {
+        return (int32_t)NT_SUCCESS;
     }
 
-    return (int32_t) NT_INVALID_RESULT;
+    return (int32_t)NT_INVALID_RESULT;
 }
 
 uint32_t nt_control_count_electrodes(const struct nt_control *control)

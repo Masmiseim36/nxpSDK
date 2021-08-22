@@ -8,7 +8,11 @@
 #include <string.h>
 #include "nt_drv_tsi_driver.h"
 #include "nt_setup.h"
-#if CPU_K32L2A41VLL1A || CPU_K32L2A31VLL1A
+
+#ifdef CPU_K32L2A41VLL1A
+#include "fsl_intmux.h"
+#endif
+#ifdef CPU_K32L2A31VLL1A
 #include "fsl_intmux.h"
 #endif
 #if FSL_FEATURE_SOC_TSI_COUNT
@@ -38,7 +42,7 @@
  *END**************************************************************************/
 tsi_status_t NT_TSI_DRV_Init(uint32_t instance, nt_tsi_state_t *tsiState, const nt_tsi_user_config_t *tsiUserConfig)
 {
-    NT_ASSERT(instance < FSL_FEATURE_SOC_TSI_COUNT);
+    NT_ASSERT(instance < (uint32_t)FSL_FEATURE_SOC_TSI_COUNT);
 
     TSI_Type *base        = g_tsiBase[instance];
     nt_tsi_state_t *tsiSt = g_tsiStatePtr[instance];
@@ -47,7 +51,7 @@ tsi_status_t NT_TSI_DRV_Init(uint32_t instance, nt_tsi_state_t *tsiState, const 
     NT_OSA_EnterCritical();
 
     /* Exit if current instance is already initialized. */
-    if (tsiSt)
+    if (tsiSt != NULL)
     {
         /* OS: End of critical section. */
         NT_OSA_ExitCritical();
@@ -58,20 +62,12 @@ tsi_status_t NT_TSI_DRV_Init(uint32_t instance, nt_tsi_state_t *tsiState, const 
     tsiSt = g_tsiStatePtr[instance] = tsiState;
 
     /* Clear the state structure for this instance. */
-    memset(tsiSt, 0, sizeof(nt_tsi_state_t));
+    (void)(void *) memset(tsiSt, 0, sizeof(nt_tsi_state_t));
 
     /* OS: create the mutex used by whole driver. */
     NT_OSA_MutexCreate(&tsiSt->lock);
     /* OS: create the mutex used by change mode function. */
     NT_OSA_MutexCreate(&tsiSt->lockChangeMode);
-
-    /* OS: Critical section. Access to global variable */
-    if (knt_Status_OSA_Success != NT_OSA_MutexLock(&tsiSt->lock, OSA_WAIT_FOREVER))
-    {
-        /* TODO: OS End of critical section. */
-        NT_OSA_ExitCritical();
-        return kStatus_TSI_Error;
-    }
 
     /* OS: End of critical section. */
     NT_OSA_ExitCritical();
@@ -86,10 +82,10 @@ tsi_status_t NT_TSI_DRV_Init(uint32_t instance, nt_tsi_state_t *tsiState, const 
     NT_TSI_DRV_InitSpecific(base, &tsiSt->opModesData[tsiSt->opMode].config);
 
     /* Clear possible pending flags */
-    TSI_ClearStatusFlags(base, (kTSI_EndOfScanFlag | (uint32_t)kTSI_OutOfRangeFlag));
+    TSI_ClearStatusFlags(base, ((uint32_t)kTSI_EndOfScanFlag | (uint32_t)kTSI_OutOfRangeFlag));
 
-    TSI_EnableInterrupts(base, kTSI_GlobalInterruptEnable);
-    TSI_EnableInterrupts(base, kTSI_EndOfScanInterruptEnable);
+    TSI_EnableInterrupts(base, (uint32_t)kTSI_GlobalInterruptEnable);
+    TSI_EnableInterrupts(base, (uint32_t)kTSI_EndOfScanInterruptEnable);
 
 #if (FSL_FEATURE_TSI_VERSION == 2)
     TSI_EnablePeriodicalScan(base, false);
@@ -101,11 +97,11 @@ tsi_status_t NT_TSI_DRV_Init(uint32_t instance, nt_tsi_state_t *tsiState, const 
     tsiState->opModesData[tsiState->opMode].enabledElectrodes = 0;
 
 /* Enable TSI interrupt on NVIC level. */
-#if CPU_K32L2A41VLL1A || CPU_K32L2A31VLL1A
+#if defined(CPU_K32L2A41VLL1A) || defined(CPU_K32L2A31VLL1A)
     INTMUX_Init(INTMUX0);
     INTMUX_EnableInterrupt(INTMUX0, 0, TSI0_IRQn);
 #else
-    EnableIRQ(g_tsiIrqId[instance]);
+    (void)EnableIRQ(s_TsiIRQ[instance]);
 #endif
     tsiSt->status = kStatus_TSI_Initialized;
 
@@ -124,7 +120,7 @@ tsi_status_t NT_TSI_DRV_Init(uint32_t instance, nt_tsi_state_t *tsiState, const 
  *END**************************************************************************/
 tsi_status_t NT_TSI_DRV_DeInit(uint32_t instance)
 {
-    NT_ASSERT(instance < FSL_FEATURE_SOC_TSI_COUNT);
+    NT_ASSERT(instance < (uint32_t)FSL_FEATURE_SOC_TSI_COUNT);
 
     TSI_Type *base           = g_tsiBase[instance];
     nt_tsi_state_t *tsiState = g_tsiStatePtr[instance];
@@ -134,20 +130,17 @@ tsi_status_t NT_TSI_DRV_DeInit(uint32_t instance)
         return kStatus_TSI_Error;
     }
 
-    TSI_DisableInterrupts(base, kTSI_GlobalInterruptEnable);
+    TSI_DisableInterrupts(base, (int32_t)kTSI_GlobalInterruptEnable);
     tsiState->opModesData[tsiState->opMode].enabledElectrodes = 0;
     TSI_ClearStatusFlags(base, (uint32_t)kTSI_OutOfRangeFlag);
-    TSI_ClearStatusFlags(base, kTSI_EndOfScanFlag);
+    TSI_ClearStatusFlags(base, (int32_t)kTSI_EndOfScanFlag);
     TSI_EnableModule(base, false);
 
     /* Disable the interrupt */
-    DisableIRQ(g_tsiIrqId[instance]);
+    (void)(status_t) DisableIRQ(g_tsiIrqId[instance]);
 
     /* Clear runtime structure pointer.*/
     tsiState = NULL;
-
-    /* Gate TSI module clock */
-    CLOCK_DisableClock(kCLOCK_Tsi0);
 
     /*Deinit TSI module*/
     TSI_Deinit(base);
@@ -164,16 +157,10 @@ tsi_status_t NT_TSI_DRV_DeInit(uint32_t instance)
  *END**************************************************************************/
 tsi_status_t NT_TSI_DRV_SetCallBackFunc(uint32_t instance, const tsi_callback_t pFuncCallBack, void *usrData)
 {
-    NT_ASSERT(instance < FSL_FEATURE_SOC_TSI_COUNT);
+    NT_ASSERT(instance < (uint32_t)FSL_FEATURE_SOC_TSI_COUNT);
 #ifdef NT_OSA
     nt_tsi_state_t *tsiState = g_tsiStatePtr[instance];
 #endif
-
-    /* OS: Critical section. Access to global variable */
-    if (knt_Status_OSA_Success != NT_OSA_MutexLock(&tsiState->lock, OSA_WAIT_FOREVER))
-    {
-        return kStatus_TSI_Error;
-    }
 
     if (g_tsiStatePtr[instance]->status != kStatus_TSI_Initialized)
     {
@@ -200,7 +187,7 @@ tsi_status_t NT_TSI_DRV_SetCallBackFunc(uint32_t instance, const tsi_callback_t 
  *END**************************************************************************/
 uint64_t NT_TSI_DRV_GetEnabledElectrodes(uint32_t instance)
 {
-    NT_ASSERT(instance < FSL_FEATURE_SOC_TSI_COUNT);
+    NT_ASSERT(instance < (uint32_t)FSL_FEATURE_SOC_TSI_COUNT);
 
     nt_tsi_state_t *tsiState = g_tsiStatePtr[instance];
 
@@ -215,7 +202,7 @@ uint64_t NT_TSI_DRV_GetEnabledElectrodes(uint32_t instance)
  *END**************************************************************************/
 tsi_status_t NT_TSI_DRV_GetStatus(uint32_t instance)
 {
-    NT_ASSERT(instance < FSL_FEATURE_SOC_TSI_COUNT);
+    NT_ASSERT(instance < (uint32_t)FSL_FEATURE_SOC_TSI_COUNT);
 
     return g_tsiStatePtr[instance]->status;
 }
@@ -228,17 +215,11 @@ tsi_status_t NT_TSI_DRV_GetStatus(uint32_t instance)
  *END**************************************************************************/
 tsi_status_t NT_TSI_DRV_DisableLowPower(uint32_t instance, const nt_tsi_modes_t mode)
 {
-    NT_ASSERT(instance < FSL_FEATURE_SOC_TSI_COUNT);
+    NT_ASSERT(instance < (uint32_t)FSL_FEATURE_SOC_TSI_COUNT);
 
     TSI_Type *base           = g_tsiBase[instance];
     nt_tsi_state_t *tsiState = g_tsiStatePtr[instance];
     tsi_status_t status;
-
-    /* OS: Critical section. Access to global variable */
-    if (knt_Status_OSA_Success != NT_OSA_MutexLock(&tsiState->lock, OSA_WAIT_FOREVER))
-    {
-        return kStatus_TSI_Error;
-    }
 
     if (tsiState->status != kStatus_TSI_LowPower)
     {
@@ -248,8 +229,8 @@ tsi_status_t NT_TSI_DRV_DisableLowPower(uint32_t instance, const nt_tsi_modes_t 
         return tsiState->status;
     }
     TSI_EnableLowPower(base, false);
-    TSI_EnableInterrupts(base, kTSI_GlobalInterruptEnable);
-    TSI_EnableInterrupts(base, kTSI_EndOfScanInterruptEnable);
+    TSI_EnableInterrupts(base, (uint32_t)kTSI_GlobalInterruptEnable);
+    TSI_EnableInterrupts(base, (uint32_t)kTSI_EndOfScanInterruptEnable);
 
 #if (FSL_FEATURE_TSI_VERSION == 2)
     TSI_EnablePeriodicalScan(base, false);
@@ -275,7 +256,7 @@ tsi_status_t NT_TSI_DRV_DisableLowPower(uint32_t instance, const nt_tsi_modes_t 
  *END**************************************************************************/
 nt_tsi_modes_t NT_TSI_DRV_GetMode(uint32_t instance)
 {
-    NT_ASSERT(instance < FSL_FEATURE_SOC_TSI_COUNT);
+    NT_ASSERT(instance < (uint32_t)FSL_FEATURE_SOC_TSI_COUNT);
 
     return g_tsiStatePtr[instance]->opMode;
 }
@@ -290,19 +271,13 @@ tsi_status_t NT_TSI_DRV_SaveConfiguration(uint32_t instance,
                                           const nt_tsi_modes_t mode,
                                           nt_tsi_operation_mode_t *operationMode)
 {
-    NT_ASSERT(instance < FSL_FEATURE_SOC_TSI_COUNT);
-    NT_ASSERT(operationMode);
+    NT_ASSERT(instance < (uint32_t)FSL_FEATURE_SOC_TSI_COUNT);
+    NT_ASSERT(operationMode != NULL);
     nt_tsi_state_t *tsiState = g_tsiStatePtr[instance];
 
     if (mode >= tsi_OpModeCnt)
     {
         return kStatus_TSI_InvalidMode;
-    }
-
-    /* OS: Critical section. Access to global variable */
-    if (knt_Status_OSA_Success != NT_OSA_MutexLock(&tsiState->lock, OSA_WAIT_FOREVER))
-    {
-        return kStatus_TSI_Error;
     }
 
     *operationMode = tsiState->opModesData[mode];
@@ -321,7 +296,7 @@ tsi_status_t NT_TSI_DRV_SaveConfiguration(uint32_t instance,
  *END**************************************************************************/
 tsi_status_t NT_TSI_DRV_Suspend(uint32_t instance)
 {
-    NT_ASSERT(instance < FSL_FEATURE_SOC_TSI_COUNT);
+    NT_ASSERT(instance < (uint32_t)FSL_FEATURE_SOC_TSI_COUNT);
 
     nt_tsi_state_t *tsiState = g_tsiStatePtr[instance];
     tsiState->opSatus        = tsi_OpStatusSuspend;
@@ -337,7 +312,7 @@ tsi_status_t NT_TSI_DRV_Suspend(uint32_t instance)
  *END**************************************************************************/
 tsi_status_t NT_TSI_DRV_Resume(uint32_t instance)
 {
-    NT_ASSERT(instance < FSL_FEATURE_SOC_TSI_COUNT);
+    NT_ASSERT(instance < (uint32_t)FSL_FEATURE_SOC_TSI_COUNT);
 
     TSI_Type *base = g_tsiBase[instance];
 

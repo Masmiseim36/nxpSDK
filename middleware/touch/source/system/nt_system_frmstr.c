@@ -14,6 +14,7 @@
 #include "nt_system.h"
 #include "../source/system/nt_system_prv.h"
 #include "../source/system/nt_system_mem_prv.h"
+#include "../source/system/nt_system_frmstr_prv.h"
 
 /* Controls includes */
 #include "nt_controls.h"
@@ -519,12 +520,13 @@ int32_t _nt_freemaster_init(void)
     {
         return (int32_t)NT_OUT_OF_MEMORY;
     }
-    FMSTR_BOOL bTemp = FMSTR_SetUpTsaBuff(p_freemaster_tsa_buffer, NT_MAXIMAL_COUNT_OF_INTERFACES * sizeof(FMSTR_TSA_ENTRY));
+    (void)(FMSTR_BOOL)
+        FMSTR_SetUpTsaBuff(p_freemaster_tsa_buffer, NT_MAXIMAL_COUNT_OF_INTERFACES * sizeof(FMSTR_TSA_ENTRY));
 
     return (int32_t)NT_SUCCESS;
 }
 
-int32_t _nt_freemaster_add_variable(const char *name, const char *type_name, void *address, uint32_t size)
+int32_t _nt_freemaster_add_variable(const char *name, const char *type_name, const void *address, uint32_t size)
 {
     if (FMSTR_TsaAddVar(name, type_name, address, size, FMSTR_TSA_INFO_RO_VAR) == 0U)
     {

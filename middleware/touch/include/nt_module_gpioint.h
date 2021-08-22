@@ -31,18 +31,18 @@ struct nt_module_interface;
  */
 struct nt_module_gpioint_user_interface
 {
-    void (*set_pin_output)(uint32_t port, uint32_t pin);    /*!< Set the pin direction to output */
-    void (*set_pin_input)(uint32_t port, uint32_t pin);     /*!< Set the pin direction to input */
-    void (*set_pin_low)(uint32_t port, uint32_t pin);       /*!< Set the pin to logic low */
-    void (*set_pin_high)(uint32_t port, uint32_t pin);      /*!< Set the pin to logic high */
-    void (*init_pin)(uint32_t port, uint32_t pin);          /*!< Initialize the pin to a state ready for measurement */
-    void (*set_pin_interrupt)(uint32_t port, uint32_t pin); /*!< Enable the pin to generate an interrupt */
-    void (*clear_pin_interrupt)(uint32_t port, uint32_t pin); /*!< Disable the pin to generate an interrupt */
-    void (*init_timer)(void);                                 /*!< Init timer */
-    void (*start_timer)(void);                                /*!< Start timer */
-    void (*stop_timer)(void);                                 /*!< Stop timer */
-    void (*timer_reset_counter)(void);                        /*!< Reset timer counter */
-    uint32_t (*timer_get_counter)(void);                      /*!< Get timer counter */
+    void (*set_pin_output_ptr)(uint32_t port, uint32_t pin); /*!< Set the pin direction to output */
+    void (*set_pin_input_ptr)(uint32_t port, uint32_t pin);  /*!< Set the pin direction to input */
+    void (*set_pin_low_ptr)(uint32_t port, uint32_t pin);    /*!< Set the pin to logic low */
+    void (*set_pin_high_ptr)(uint32_t port, uint32_t pin);   /*!< Set the pin to logic high */
+    void (*init_pin_ptr)(uint32_t port, uint32_t pin);       /*!< Initialize the pin to a state ready for measurement */
+    void (*set_pin_interrupt_ptr)(uint32_t port, uint32_t pin);   /*!< Enable the pin to generate an interrupt */
+    void (*clear_pin_interrupt_ptr)(uint32_t port, uint32_t pin); /*!< Disable the pin to generate an interrupt */
+    void (*init_timer_ptr)(void);                                 /*!< Init timer */
+    void (*start_timer_ptr)(void);                                /*!< Start timer */
+    void (*stop_timer_ptr)(void);                                 /*!< Stop timer */
+    void (*timer_reset_counter_ptr)(void);                        /*!< Reset timer counter */
+    uint32_t (*timer_get_counter_ptr)(void);                      /*!< Get timer counter */
 };
 
 /** GPIO interrupt module, which uses the port interrupts to sample a signal from the running timer counter.

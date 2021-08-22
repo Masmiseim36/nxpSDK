@@ -125,10 +125,8 @@ extern const struct nt_control_interface nt_control_matrix_interface;
  *
  * A common example definition of the Matrix control for all source code examples is as follows:
  * \code
- * // Add following macros to nt_setup.h to configure array dimension
  * #define NT_MATRIX_UNLOCK_GESTURES  4
  *
- *  // definition of electrode array used by control (more info in electrodes)
  *  const struct nt_electrode  * const control_0_electrodes[] = {&electrode_0, &electrode_1,&electrode_2, &electrode_3,
  *    &electrode_4,&electrode_5,&electrode_6,&electrode_7,&electrode_8,&electrode_9,&electrode_10,&electrode_11, NULL};
  *
@@ -140,18 +138,12 @@ extern const struct nt_control_interface nt_control_matrix_interface;
  *     .touchpad_size_vertical  = 6,
  *     .sensing_mode            = false,
  *     .increase_resolution     = true,
- *     .gesture = (nt_points64 []){{{0x0BA9977555533211,0x0BBA987765443221},{0x0000000000000000,0x0000000000000000}},//
- * gesture "\"
- *                                {{0x0000001111223578,0x000000567889ABAA},{0x0000000000000000,0x0000000000000000}}, //
- * gesture "O"
- *                                {{0x00000BAAABBBBAA9,0x00000BBA98765422},{0x0000000000000000,0x0000000000000000}}, //
- * gesture "Z"
- *                                {{0x0022222222222211,0x00BABA987654322B},{0x009AAAAAAAAAAAA9,0x009AAAAAAAAAAAA9}}, //
- * gesture "="
+ *     .gesture = (nt_points64 []){{{0x0BA9977555533211,0x0BBA987765443221},{0x0000000000000000,0x0000000000000000}},
+ *                                {{0x0000001111223578,0x000000567889ABAA},{0x0000000000000000,0x0000000000000000}},
+ *                                {{0x00000BAAABBBBAA9,0x00000BBA98765422},{0x0000000000000000,0x0000000000000000}},
  *                                {{0,0},{0,0}}},
  *  };
  *
- *  // Definition of matrix control
  *  const struct nt_control my_matrix_control =
  *  {
  *    .interface = &nt_control_matrix_control_interface,
@@ -178,7 +170,6 @@ extern "C" {
  * Example:
  * \code
  *
- *  //Create the callback function for matrix
  *  static void my_matrix_cb(const struct nt_control *control,
  *                           enum nt_control_matrix_event event,
  *                           nt_points8 *position,
@@ -199,7 +190,6 @@ extern "C" {
  *    printf("New matrix control event %s on key: %d.", event_names[event], index);
  *  }
  *
- *  // register the callback function for matrix
  *  nt_control_matrix_register_touch_callback(&my_matrix_control, my_matrix_touch_cb);
  * \endcode
  */
@@ -218,7 +208,6 @@ void nt_control_matrix_register_callback(const struct nt_control *control, nt_co
  *
  * Example:
  * \code
- * // Want to store second unlock gesture (first unlock gesture has index 0).
  * uint8_t gesture = 1;
  * nt_control_matrix_set_gesture(&my_matrix_control, gesture);
  * \endcode

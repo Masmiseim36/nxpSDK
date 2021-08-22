@@ -37,17 +37,17 @@ int32_t _nt_system_check_data(const struct nt_system *system)
 }
 
 /* Get the count of pointer array terminated by NULL pointer. */
-uint32_t _nt_system_count_pointer_array(const void **pointer_array)
+uint32_t _nt_system_count_pointer_array(const void *const *pointer_array)
 {
-    void **array   = (void **)pointer_array;
-    uint32_t count = 0;
+    const void *const *array = pointer_array;
+    uint32_t count           = 0;
 
     if (array == NULL)
     {
         return 0;
     }
 
-    while ((bool)(*array++))
+    while ((bool)(*array++ != NULL))
     {
         count++;
     }
@@ -64,17 +64,17 @@ int32_t _nt_system_init(const struct nt_system *system)
         return (int32_t)NT_FAILURE;
     }
 
-    nt_kernel_data.controls_cnt = (uint8_t)_nt_system_count_pointer_array((const void **)system->controls);
-    nt_kernel_data.modules_cnt  = (uint8_t)_nt_system_count_pointer_array((const void **)system->modules);
+    nt_kernel_data.controls_cnt = (uint8_t)_nt_system_count_pointer_array((const void *const *)system->controls);
+    nt_kernel_data.modules_cnt  = (uint8_t)_nt_system_count_pointer_array((const void *const *)system->modules);
 
-    nt_kernel_data.controls = _nt_mem_alloc((uint32_t)(sizeof(void *) * (uint32_t) nt_kernel_data.controls_cnt));
+    nt_kernel_data.controls = _nt_mem_alloc((uint32_t)(sizeof(void *) * (uint32_t)nt_kernel_data.controls_cnt));
 
     if (nt_kernel_data.controls == NULL)
     {
         return (int32_t)NT_OUT_OF_MEMORY;
     }
 
-    nt_kernel_data.modules = _nt_mem_alloc(sizeof(void *) * (uint32_t) nt_kernel_data.modules_cnt);
+    nt_kernel_data.modules = _nt_mem_alloc(sizeof(void *) * (uint32_t)nt_kernel_data.modules_cnt);
 
     if (nt_kernel_data.modules == NULL)
     {
@@ -150,9 +150,24 @@ uint32_t nt_system_get_time_counter(void)
 /* internal function */
 int32_t _nt_system_module_function(uint32_t option)
 {
-    int32_t result = (int32_t)NT_SUCCESS;
+    uint32_t result;
     struct nt_module_data *module;
     uint32_t i;
+
+    switch (option)
+    {
+        case (uint32_t)NT_SYSTEM_MODULE_INIT:
+            result = (int32_t)NT_SUCCESS;
+            break;
+        case (uint32_t)NT_SYSTEM_MODULE_CHECK_DATA:
+            result = (int32_t)NT_FAILURE;
+            break;
+        default:
+        {
+            result = (int32_t)NT_FAILURE;
+        }
+        break;
+    }
 
     /* steps through all control pointers */
     for (i = 0; i < nt_kernel_data.modules_cnt; i++)
@@ -165,37 +180,43 @@ int32_t _nt_system_module_function(uint32_t option)
                 nt_kernel_data.modules[i] = _nt_module_init(nt_kernel_data.rom->modules[i]);
                 if (nt_kernel_data.modules[i] == NULL)
                 {
-                    return (int32_t) NT_OUT_OF_MEMORY; /* failure stops the entire init phase */
-                }
+                    result |= (uint32_t)NT_OUT_OF_MEMORY; /* failure stops the entire init phase  */
+                }                                         /* if any module has not enough memory */
             }
             break;
             case (uint32_t)NT_SYSTEM_MODULE_TRIGGER:
                 if (_nt_module_trigger(module) == (int32_t)NT_SCAN_IN_PROGRESS)
                 {
-                    result = (int32_t)NT_FAILURE; /* module not ready, triggering continues */
+                    result = (uint32_t)NT_FAILURE; /* module not ready, triggering continues */
                 }
                 break;
             case (uint32_t)NT_SYSTEM_MODULE_PROCESS:
-            	result = _nt_module_process(module);
+                result = (uint32_t)_nt_module_process(module);
                 break;
 #if (NT_SAFETY_SUPPORT == 1)
             case (uint32_t)NT_SYSTEM_MODULE_SAFETY_PROCESS:
-                result =_nt_module_process_safety(module);
+                result = (uint32_t)_nt_module_process_safety(module);
                 break;
 #endif /* NT_SAFETY_SUPPORT */
             case (uint32_t)NT_SYSTEM_MODULE_CHECK_DATA:
                 if (!(bool)(_nt_module_get_flag(module, (int32_t)NT_MODULE_NEW_DATA_FLAG)))
                 {
-                    return (int32_t)NT_FAILURE; /* module has not processed all data yet */
+                    result &= (uint32_t)NT_FAILURE; /* module has not processed all data yet */
                 }
+                else
+                {
+                    result &= (uint32_t)NT_SUCCESS; /* module has processed all data yet */
+                }                                   /* at least one module succeed to process the control */
                 break;
             default:
-            	result = (int32_t)NT_NOT_SUPPORTED; /* module not ready, triggering continues */
-                break;
+            {
+                result = (int32_t)NT_FAILURE; /* module not ready, triggering continues */
+            }
+            break;
         }
         module++;
     }
-    return result;
+    return (int32_t)result;
 }
 
 /* internal function */
@@ -226,7 +247,7 @@ int32_t _nt_system_control_function(uint32_t option)
                 {
                     result = (int32_t)NT_FAILURE; /* overrun error, trigger others anyway */
                 }
-            break;
+                break;
             case (int32_t)NT_SYSTEM_CONTROL_PROCESS:
             {
                 const struct nt_control_interface *interface =
@@ -241,10 +262,11 @@ int32_t _nt_system_control_function(uint32_t option)
             }
             break;
             case (int32_t)NT_SYSTEM_CONTROL_DATA_READY:
-                _nt_control_set_flag(control,(uint32_t) NT_CONTROL_NEW_DATA_FLAG);
-            break;
+                _nt_control_set_flag(control, (uint32_t)NT_CONTROL_NEW_DATA_FLAG);
+                break;
             default:
-                return (int32_t)NT_NOT_SUPPORTED;
+                result = (int32_t)NT_NOT_SUPPORTED;
+                break;
         }
     }
     return result;
@@ -292,7 +314,7 @@ void _nt_system_invoke_callback(uint32_t event, union nt_system_event_context *c
             system->callback(NT_SYSTEM_EVENT_CRC_FAILED, NULL);
             break;
         default:
-        	system->callback(NT_SYSTEM_EVENT_OVERRUN, NULL);
+            system->callback(NT_SYSTEM_EVENT_OVERRUN, NULL);
             break;
     }
 }
@@ -324,7 +346,7 @@ void _nt_system_modules_data_ready(struct nt_module_data *module)
         /* all modules have been processed, set data ready for all controls */
 
         _nt_system_invoke_callback((uint32_t)NT_SYSTEM_EVENT_MODULE_DATA_READY, &context);
-        int32_t TempResult = _nt_system_control_function((uint32_t)NT_SYSTEM_CONTROL_DATA_READY);
+        (void)(int32_t) _nt_system_control_function((uint32_t)NT_SYSTEM_CONTROL_DATA_READY);
     }
 }
 
@@ -332,7 +354,7 @@ const struct nt_module *_nt_system_get_module(uint32_t interface_address, uint32
 {
     const struct nt_module *const *module = nt_kernel_data.rom->modules;
 
-    while (*module)
+    while (*module != NULL)
     {
         if ((uint32_t)((*module)->interface) == interface_address)
         {

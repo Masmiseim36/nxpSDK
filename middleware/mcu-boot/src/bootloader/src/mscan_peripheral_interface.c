@@ -6,14 +6,14 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-#include "utilities/fsl_assert.h"
-#include "bootloader/bl_context.h"
+#include "bl_context.h"
 #include "bootloader_common.h"
-#include "packet/command_packet.h"
-#include "fsl_mscan.h"
+#include "command_packet.h"
+#include "fsl_assert.h"
 #include "fsl_device_registers.h"
-#include "packet/serial_packet.h"
-#include "utilities/fsl_rtos_abstraction.h"
+#include "fsl_mscan.h"
+#include "fsl_rtos_abstraction.h"
+#include "serial_packet.h"
 
 #if BL_CONFIG_CAN
 
@@ -35,15 +35,15 @@ typedef struct MsCANState
 {
     volatile uint32_t rx_mb_idx; /*!< Index of the message buffer for receiving*/
     volatile uint32_t tx_mb_idx; /*!< Index of the message buffer for transmitting*/
-    semaphore_t txIrqSync;       /*!< Used to wait for ISR to complete its TX business.*/
-    semaphore_t rxIrqSync;       /*!< Used to wait for ISR to complete its RX business.*/
+    bt_semaphore_t txIrqSync;       /*!< Used to wait for ISR to complete its TX business.*/
+    bt_semaphore_t rxIrqSync;       /*!< Used to wait for ISR to complete its RX business.*/
 } mscan_state_t;
 
 /*! @brief MsCAN data info from user*/
 typedef struct MsCANDataInfo
 {
     mscan_frame_format_t msg_id_type; /*!< Type of message ID (standard or extended)*/
-    uint32_t data_length;               /*!< Length of Data in Bytes*/
+    uint32_t data_length;             /*!< Length of Data in Bytes*/
 } mscan_data_info_t;
 
 /*! @brief MsCAN operation modes*/
@@ -52,7 +52,7 @@ typedef enum _mscan_operation_modes
     kMsCanNormalMode,     /*!< Normal mode or user mode*/
     kMsCanListenOnlyMode, /*!< Listen-only mode*/
     kMsCanLoopBackMode,   /*!< Loop-back mode*/
-    kMsCanInitializeMode,     /*!< Initialize mode*/
+    kMsCanInitializeMode, /*!< Initialize mode*/
     kMsCanDisableMode,    /*!< Module disable mode*/
 } mscan_operation_modes_t;
 
@@ -62,7 +62,7 @@ typedef struct _mscan_transfer_info
     mscan_state_t state;       //!< state
     mscan_data_info_t rx_info; //!< tx info
     mscan_data_info_t tx_info; //!< tx info
-    int8_t baudrate;             //!< baudrate (index)
+    int8_t baudrate;           //!< baudrate (index)
     mscan_operation_modes_t mode;
     bool baudrateDetect; //!< auto baudrate detection
     uint16_t txId;
@@ -96,10 +96,10 @@ typedef struct _mscan_transfer_info
 #define MSCAN_RJW_MASK 0x0003 // bit[1:0]
 #define MSCAN_RJW_SHIFT 0
 
-#define MSCAN_IDENTIFIER_MASK           0x3F
-#define MSCAN_IDENTIFIER_MASK_125KHz    0x3C
-#define MSCAN_IDENTIFIER_MASK_250KHz    0x3F
-#define MSCAN_IDENTIFIER_MASK_500KHz    0x18
+#define MSCAN_IDENTIFIER_MASK 0x3F
+#define MSCAN_IDENTIFIER_MASK_125KHz 0x3C
+#define MSCAN_IDENTIFIER_MASK_250KHz 0x3F
+#define MSCAN_IDENTIFIER_MASK_500KHz 0x18
 
 ////////////////////////////////////////////////////////////////////////////////
 // Prototypes
@@ -120,11 +120,11 @@ static void mscan_peripheral_init(uint32_t instance);
 //! @brief msCAN sending data function
 static status_t mscan_write(const peripheral_descriptor_t *self, const uint8_t *buffer, uint32_t byteCount);
 static status_t MSCAN_Send(uint8_t instance,
-                             uint32_t mb_idx,
-                             mscan_data_info_t *tx_info,
-                             uint32_t msg_id,
-                             uint8_t *mb_data,
-                             uint32_t timeout_ms);
+                           uint32_t mb_idx,
+                           mscan_data_info_t *tx_info,
+                           uint32_t msg_id,
+                           uint8_t *mb_data,
+                           uint32_t timeout_ms);
 ////////////////////////////////////////////////////////////////////////////////
 // Variables
 ////////////////////////////////////////////////////////////////////////////////
@@ -153,7 +153,7 @@ const mscan_timing_config_t bit_rate_table[MSCAN_MAX_SPEED] = {
     { 7, 2, 3, 2, 0 }, /* 125 kHz */
     { 3, 2, 3, 2, 0 }, /* 250 kHz */
     { 1, 2, 3, 2, 0 }, /* 500 kHz */
-    { 1, 2, 3, 2, 0 },  /* 750 kHz */
+    { 1, 2, 3, 2, 0 }, /* 750 kHz */
     { 0, 0, 3, 2, 0 }  /* 1   MHz */
 };
 #else
@@ -162,25 +162,24 @@ const mscan_timing_config_t bit_rate_table[] = {
     { 7, 0, 3, 2, 0 }, /* 125 kHz */
     { 3, 0, 3, 2, 0 }, /* 250 kHz */
     { 1, 0, 3, 2, 0 }, /* 500 kHz */
-    { 1, 0, 3, 2, 0 },  /* 750 kHz */
+    { 1, 0, 3, 2, 0 }, /* 750 kHz */
     { 0, 0, 3, 2, 0 }  /* 1   MHz */
 };
 #endif
 
-
 /*!
  * @brief msCAN control interface information
  */
-const peripheral_control_interface_t g_mscanControlInterface = {.pollForActivity = mscan_poll_for_activity,
-                                                                  .init = mscan_full_init,
-                                                                  .shutdown = mscan_full_shutdown,
-                                                                  .pump = 0 };
+const peripheral_control_interface_t g_mscanControlInterface = {
+    .pollForActivity = mscan_poll_for_activity, .init = mscan_full_init, .shutdown = mscan_full_shutdown, .pump = 0
+};
 
 /*!
  * @brief msCAN byte interface information
  */
 const peripheral_byte_inteface_t g_mscanByteInterface = {
-    .init = NULL, .write = mscan_write,
+    .init = NULL,
+    .write = mscan_write,
 };
 
 //! @brief Global state for the MSCAN peripheral interface.
@@ -398,7 +397,7 @@ void MSCAN_DisableOperationMode(MSCAN_Type *baseAddr, mscan_operation_modes_t mo
 }
 
 void MSCAN_EnableTimer(MSCAN_Type *baseAddr)
-{  
+{
     /* Enable Timer. */
     baseAddr->CANCTL0 |= MSCAN_CANCTL0_TIME_MASK;
 }
@@ -442,7 +441,6 @@ void mscan_data_sink(uint8_t sink_byte, uint32_t instance)
     s_mscan_app_data_sink_callback(sink_byte);
 }
 
-
 /*FUNCTION**********************************************************************
  *
  * Function Name : mscan_peripheral_init
@@ -461,7 +459,7 @@ void mscan_peripheral_init(uint32_t instance)
     config.clkSrc = kMSCAN_ClkSrcOsc;
 
     mscan_timing_config_t bit_rate_table1;
-    
+
     // Read the can txId. If it is not set, i.e. 0xff,
     canId = g_bootloaderContext.propertyInterface->store->configurationData.canTxId;
     if (canId != 0xffff)
@@ -577,13 +575,14 @@ void mscan_peripheral_init(uint32_t instance)
         // using setting table
         MSCAN_SetTimingConfig((MSCAN_Type *)baseAddr, &bit_rate_table[s_mscanInfo.baudrate]);
     }
-       
+
     MSCAN_EnableTimer((MSCAN_Type *)baseAddr);
-    
+
     /* Create MSCAN handle structure and set call back function. */
     MSCAN_TransferCreateHandle((MSCAN_Type *)baseAddr, &mscanHandle, mscan_callback, NULL);
-    
-    MSCAN_EnableRxInterrupts((MSCAN_Type *)baseAddr, kMSCAN_RxFullInterruptEnable | kMSCAN_RxStatusChangeInterruptEnable);
+
+    MSCAN_EnableRxInterrupts((MSCAN_Type *)baseAddr,
+                             kMSCAN_RxFullInterruptEnable | kMSCAN_RxStatusChangeInterruptEnable);
 }
 
 /*FUNCTION**********************************************************************
@@ -595,14 +594,14 @@ void mscan_peripheral_init(uint32_t instance)
 status_t mscan_full_init(const peripheral_descriptor_t *self, serial_byte_receive_func_t function)
 {
     s_mscan_app_data_sink_callback = function;
-    //CLOCK_EnableClock(kCLOCK_PortC);
+    // CLOCK_EnableClock(kCLOCK_PortC);
     // Configure selected pin as flexcan peripheral interface
     self->pinmuxConfig(self->instance, kPinmuxType_Peripheral);
 
     mscan_peripheral_init(self->instance);
 
-    s_mscanIntialized[self->instance] = true;   
-    
+    s_mscanIntialized[self->instance] = true;
+
     return kStatus_Success;
 }
 
@@ -658,16 +657,16 @@ status_t mscan_write(const peripheral_descriptor_t *self, const uint8_t *buffer,
 }
 
 status_t MSCAN_Send(uint8_t instance,
-                      uint32_t mb_idx,
-                      mscan_data_info_t *tx_info,
-                      uint32_t msg_id,
-                      uint8_t *mb_data,
-                      uint32_t timeout_ms)
+                    uint32_t mb_idx,
+                    mscan_data_info_t *tx_info,
+                    uint32_t msg_id,
+                    uint8_t *mb_data,
+                    uint32_t timeout_ms)
 {
     MSCAN_Type *baseAddr = (MSCAN_Type *)g_mscanBaseAddr[instance];
     status_t status;
     uint8_t i;
-    osa_status_t syncStatus;
+    bt_osa_status_t syncStatus;
     mscan_frame_t frame;
     frame.format = kMSCAN_FrameFormatStandard;
     frame.DLR = tx_info->data_length;
@@ -699,13 +698,12 @@ status_t MSCAN_Send(uint8_t instance,
 
     do
     {
-       syncStatus = OSA_SemaWait(&s_mscanInfo.state.txIrqSync, timeout_ms);
-       
-    } while (syncStatus == kStatus_OSA_Idle);
-    MSCAN_EnableRxInterrupts((MSCAN_Type *)baseAddr, kMSCAN_RxFullInterruptEnable);  
-     
-    return status;
+        syncStatus = OSA_SemaWait(&s_mscanInfo.state.txIrqSync, timeout_ms);
 
+    } while (syncStatus == kStatus_OSA_Idle);
+    MSCAN_EnableRxInterrupts((MSCAN_Type *)baseAddr, kMSCAN_RxFullInterruptEnable);
+
+    return status;
 }
 
 /*FUNCTION**********************************************************************
@@ -717,7 +715,7 @@ status_t MSCAN_Send(uint8_t instance,
 void MSCAN_IRQBusoffHandler(uint8_t instance)
 {
     MSCAN_Type *baseAddr = (MSCAN_Type *)g_mscanBaseAddr[instance];
-    MSCAN_ClearRxFlag(baseAddr,MSCAN_CANRFLG_OVRIF_MASK | MSCAN_CANRFLG_CSCIF_MASK);
+    MSCAN_ClearRxFlag(baseAddr, MSCAN_CANRFLG_OVRIF_MASK | MSCAN_CANRFLG_CSCIF_MASK);
 }
 
 /*FUNCTION**********************************************************************
@@ -730,55 +728,57 @@ void MSCAN_IRQBusoffHandler(uint8_t instance)
 void MSCAN_IRQErrorHandler(uint8_t instance)
 {
     MSCAN_Type *baseAddr = (MSCAN_Type *)g_mscanBaseAddr[instance];
-    
-    uint8_t Rxflag1;   
+
+    uint8_t Rxflag1;
     Rxflag1 = MSCAN_GetRxFlag(baseAddr);
 
     int8_t reidr1 = baseAddr->REIDR1;
-    
+
     // chcck bus-off interrupt
     if ((Rxflag1 & MSCAN_CANRFLG_RSTAT_MASK) == MSCAN_CANRFLG_RSTAT_MASK)
     {
         MSCAN_IRQBusoffHandler(instance);
-    }    
+    }
     else if ((Rxflag1 & MSCAN_CANRFLG_RSTAT_MASK) < MSCAN_CANRFLG_RSTAT_MASK)
     {
-      if (s_mscanInfo.baudrateDetect) 
-      {              
-        if ((s_mscanInfo.baudrate == (MSCAN_MAX_SPEED - 1)) || 
-           ((reidr1 & MSCAN_IDENTIFIER_MASK) == MSCAN_IDENTIFIER_MASK_500KHz))
+        if (s_mscanInfo.baudrateDetect)
         {
-            // Since 750KHz is not supported
-            s_mscanInfo.baudrate = 2; // 500 KHz
-        }
-        else
-        {
-            s_mscanInfo.baudrate = 4;   // restore to default 1MHz
-        }
+            if ((s_mscanInfo.baudrate == (MSCAN_MAX_SPEED - 1)) ||
+                ((reidr1 & MSCAN_IDENTIFIER_MASK) == MSCAN_IDENTIFIER_MASK_500KHz))
+            {
+                // Since 750KHz is not supported
+                s_mscanInfo.baudrate = 2; // 500 KHz
+            }
+            else
+            {
+                s_mscanInfo.baudrate = 4; // restore to default 1MHz
+            }
 
-        if ((reidr1 & MSCAN_IDENTIFIER_MASK) == MSCAN_IDENTIFIER_MASK_125KHz)
-        {
-            s_mscanInfo.baudrate = 0;   // 125KHz
+            if ((reidr1 & MSCAN_IDENTIFIER_MASK) == MSCAN_IDENTIFIER_MASK_125KHz)
+            {
+                s_mscanInfo.baudrate = 0; // 125KHz
+            }
+            else if ((reidr1 & MSCAN_IDENTIFIER_MASK) == MSCAN_IDENTIFIER_MASK_250KHz)
+            {
+                s_mscanInfo.baudrate = 1; // 250 KHz
+            }
+
+            MSCAN_DisableRxInterrupts((MSCAN_Type *)baseAddr, kMSCAN_RxFullInterruptEnable |
+                                                                  kMSCAN_RxStatusChangeInterruptEnable |
+                                                                  kMSCAN_StatusChangeInterruptEnable);
+
+            MSCAN_ClearRxFlag(baseAddr, MSCAN_CANRFLG_OVRIF_MASK | MSCAN_CANRFLG_CSCIF_MASK | MSCAN_CANRFLG_RXF_MASK);
+            MSCAN_ClearRxFlag(baseAddr, (MSCAN_CANRFLG_RSTAT_MASK | MSCAN_CANRFLG_TSTAT_MASK));
+            MSCAN_SetTimingConfig(baseAddr, &bit_rate_table[s_mscanInfo.baudrate]);
+
+            MSCAN_EnableRxInterrupts((MSCAN_Type *)baseAddr,
+                                     (kMSCAN_RxFullInterruptEnable | kMSCAN_RxStatusChangeInterruptEnable |
+                                      kMSCAN_StatusChangeInterruptEnable | kMSCAN_WakeUpInterruptEnable));
         }
-        else if ((reidr1 & MSCAN_IDENTIFIER_MASK) == MSCAN_IDENTIFIER_MASK_250KHz)
-        {
-            s_mscanInfo.baudrate = 1;   // 250 KHz
-        }
-              
-        MSCAN_DisableRxInterrupts((MSCAN_Type *)baseAddr, kMSCAN_RxFullInterruptEnable | kMSCAN_RxStatusChangeInterruptEnable | 
-                                  kMSCAN_StatusChangeInterruptEnable);     
-        
-        MSCAN_ClearRxFlag(baseAddr,MSCAN_CANRFLG_OVRIF_MASK | MSCAN_CANRFLG_CSCIF_MASK | MSCAN_CANRFLG_RXF_MASK);
-        MSCAN_ClearRxFlag(baseAddr, (MSCAN_CANRFLG_RSTAT_MASK | MSCAN_CANRFLG_TSTAT_MASK)); 
-        MSCAN_SetTimingConfig(baseAddr, &bit_rate_table[s_mscanInfo.baudrate]);             
-        
-        MSCAN_EnableRxInterrupts((MSCAN_Type *)baseAddr, (kMSCAN_RxFullInterruptEnable | kMSCAN_RxStatusChangeInterruptEnable |
-                                                          kMSCAN_StatusChangeInterruptEnable | kMSCAN_WakeUpInterruptEnable));           
-      }
     }
     else
     {
-      mscan_peripheral_init(instance);
+        mscan_peripheral_init(instance);
     }
 }
 
@@ -786,12 +786,11 @@ void MSCAN_Rx_IRQHandler(void)
 {
     MSCAN_Type *baseAddr = (MSCAN_Type *)g_mscanBaseAddr[0];
     status_t status;
-    osa_status_t syncStatus;
+    bt_osa_status_t syncStatus;
     /* Get current State of Message Buffer. */
-        
+
     while (MSCAN_GetRxBufferFullFlag(baseAddr))
     {
-
         OSA_SemaPost(&s_mscanInfo.state.rxIrqSync);
         uint8_t i;
         uint8_t sink_byte = 0;
@@ -804,47 +803,47 @@ void MSCAN_Rx_IRQHandler(void)
             {
                 switch (i)
                 {
-                case 0:
-                    sink_byte = rxFrame.dataByte0;
-                    break;
-                case 1:
-                    sink_byte = rxFrame.dataByte1;
-                    break;
-                case 2:
-                    sink_byte = rxFrame.dataByte2;
-                    break;
-                case 3:
-                    sink_byte = rxFrame.dataByte3;
-                    break;
-                case 4:
-                    sink_byte = rxFrame.dataByte4;
-                    break;
-                case 5:
-                    sink_byte = rxFrame.dataByte5;
-                    break;
-                case 6:
-                    sink_byte = rxFrame.dataByte6;
-                    break;
-                case 7:
-                    sink_byte = rxFrame.dataByte7;
-                    break;
-                default:
-                    break;
+                    case 0:
+                        sink_byte = rxFrame.dataByte0;
+                        break;
+                    case 1:
+                        sink_byte = rxFrame.dataByte1;
+                        break;
+                    case 2:
+                        sink_byte = rxFrame.dataByte2;
+                        break;
+                    case 3:
+                        sink_byte = rxFrame.dataByte3;
+                        break;
+                    case 4:
+                        sink_byte = rxFrame.dataByte4;
+                        break;
+                    case 5:
+                        sink_byte = rxFrame.dataByte5;
+                        break;
+                    case 6:
+                        sink_byte = rxFrame.dataByte6;
+                        break;
+                    case 7:
+                        sink_byte = rxFrame.dataByte7;
+                        break;
+                    default:
+                        break;
                 }
                 s_mscanInfo.data_sink(sink_byte, 0);
-            }  
+            }
         }
         // OSA_SemaPost(&s_mscanInfo.state.rxIrqSync);
         MSCAN_TransferAbortReceive(baseAddr, &mscanHandle, kMSCAN_RxFullInterruptEnable);
-        
+
         MSCAN_ClearRxBufferFullFlag(baseAddr);
         do
         {
-           syncStatus = OSA_SemaWait(&s_mscanInfo.state.txIrqSync, 10);
-           
+            syncStatus = OSA_SemaWait(&s_mscanInfo.state.txIrqSync, 10);
+
         } while (syncStatus == kStatus_OSA_Idle);
-        
-        MSCAN_DisableRxInterrupts((MSCAN_Type *)baseAddr, (kMSCAN_StatusChangeInterruptEnable)); 
+
+        MSCAN_DisableRxInterrupts((MSCAN_Type *)baseAddr, (kMSCAN_StatusChangeInterruptEnable));
     }
 
     return;
@@ -854,71 +853,19 @@ void MSCAN_ORed_IRQHandler(void)
 {
     MSCAN_Type *baseAddr = (MSCAN_Type *)g_mscanBaseAddr[0];
     status_t status = kStatus_MSCAN_UnHandled;
-    osa_status_t syncStatus;    
-        
+    osa_status_t syncStatus;
+
     uint8_t Rxflag1 = MSCAN_GetRxFlag(baseAddr);
-    uint8_t Rxflag2 = MSCAN_GetRxInerruptFlag(baseAddr);           
-    
+    uint8_t Rxflag2 = MSCAN_GetRxInerruptFlag(baseAddr);
+
     if ((Rxflag1 & (MSCAN_CANRFLG_OVRIF_MASK | MSCAN_CANRFLG_RSTAT_MASK | MSCAN_CANRFLG_CSCIF_MASK)) &&
         (Rxflag2 & (MSCAN_CANRIER_OVRIE_MASK | MSCAN_CANRIER_RSTATE_MASK | MSCAN_CANRIER_CSCIE_MASK)))
     {
         MSCAN_IRQErrorHandler(0);
-    } 
-    
-//    /* Get current State of Message Buffer. */
-//    if (MSCAN_GetRxBufferFullFlag(base))
-//    {
-//        switch (mscanHandle.mbStateRx)
-//        {
-//            /* Solve Rx Data Frame. */
-//            case kMSCAN_StateRxData:
-//                status = MSCAN_ReadRxMb(base, mscanHandle.mbFrameBuf);
-//                if (kStatus_Success == status)
-//                {
-//                    status = kStatus_MSCAN_RxIdle;
-//                }
-//                MSCAN_TransferAbortReceive(base, &mscanHandle, kMSCAN_RxFullInterruptEnable);
-//                break;
-//
-//            /* Solve Rx Remote Frame. */
-//            case kMSCAN_StateRxRemote:
-//                status = MSCAN_ReadRxMb(base, mscanHandle.mbFrameBuf);
-//                if (kStatus_Success == status)
-//                {
-//                    status = kStatus_MSCAN_RxIdle;
-//                }
-//                MSCAN_TransferAbortReceive(base, &mscanHandle, kMSCAN_RxFullInterruptEnable);
-//                break;
-//        }
-//        MSCAN_ClearRxBufferFullFlag(base);
-//    }
-//    else
-//    {
-//        switch (mscanHandle.mbStateTx)
-//        {
-//            /* Solve Tx Data Frame. */
-//            case kMSCAN_StateTxData:
-//                status = kStatus_MSCAN_TxIdle;
-//                MSCAN_TransferAbortSend(base, &mscanHandle, kMSCAN_TxEmptyInterruptEnable);
-//                break;
-//
-//            /* Solve Tx Remote Frame. */
-//            case kMSCAN_StateTxRemote:
-//                mscanHandle.mbStateRx = kMSCAN_StateRxRemote;
-//                status = kStatus_MSCAN_TxSwitchToRx;
-//                break;
-//
-//            default:
-//                status = kStatus_MSCAN_UnHandled;
-//                break;
-//        }
-//    }
+    }
 
-//    mscanHandle.callback(baseAddr, &mscanHandle, status, mscanHandle.userData);
-  return;
+    return;
 }
-
-
 
 //! @}
 

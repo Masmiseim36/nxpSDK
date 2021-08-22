@@ -64,18 +64,18 @@ void nt_control_keypad_only_one_key_valid(const struct nt_control *control, uint
                 {
                     continue;
                 }
-                _nt_control_keypad_key_release(control_data, (int32_t) elec_counter);
+                _nt_control_keypad_key_release(control_data, (int32_t)elec_counter);
             }
         }
     }
 
     if ((bool)enable)
     {
-        _nt_control_set_flag(control_data, (int32_t) NT_KEYPAD_ONLY_ONE_KEY_FLAG);
+        _nt_control_set_flag(control_data, (int32_t)NT_KEYPAD_ONLY_ONE_KEY_FLAG);
     }
     else
     {
-        _nt_control_clear_flag(control_data, (int32_t) NT_KEYPAD_ONLY_ONE_KEY_FLAG);
+        _nt_control_clear_flag(control_data, (int32_t)NT_KEYPAD_ONLY_ONE_KEY_FLAG);
         ram->last_state = 0;
     }
 }
@@ -96,7 +96,7 @@ void nt_control_keypad_register_callback(const struct nt_control *control, nt_co
 
 void nt_control_keypad_set_autorepeat_rate(const struct nt_control *control, uint32_t value, uint32_t start_value)
 {
-    NT_ASSERT(value < 65535);
+    NT_ASSERT(value < 65535U);
     NT_ASSERT(control != NULL);
     NT_ASSERT(control->interface == &nt_control_keypad_interface);
 
@@ -135,7 +135,7 @@ uint32_t nt_control_keypad_is_button_touched(const struct nt_control *control, u
     struct nt_control_keypad_data *ram = control_data->data.keypad;
     NT_ASSERT(ram != NULL);
 
-    return (uint32_t)(ram->last_key_state & (uint64_t)((uint32_t)1 << index));
+    return (uint32_t)(ram->last_key_state & (1ULL << index));
 }
 
 static void _nt_control_keypad_invoke_callback(struct nt_control_data *control,
@@ -157,18 +157,18 @@ static void _nt_control_keypad_key_press(struct nt_control_data *control, int32_
     struct nt_control_keypad_data *ram = control->data.keypad;
     NT_ASSERT(ram != NULL);
 
-    if ((bool)_nt_control_get_flag(control, (int32_t) NT_KEYPAD_ONLY_ONE_KEY_FLAG) && (bool)ram->last_key_state)
+    if ((bool)_nt_control_get_flag(control, (int32_t)NT_KEYPAD_ONLY_ONE_KEY_FLAG) && (bool)ram->last_key_state)
     {
         return;
     }
 
     /* Add the flags to real keys pressed */
-    ram->last_key_state |= (uint64_t)((uint32_t)1 << (uint32_t)ix);
+    ram->last_key_state |= (uint64_t)(1ULL << (uint32_t)ix);
     ram->last_electrode = ix;
     ram->repeat_time    = nt_system_get_time_counter() +
                        ((ram->start_autorepeat_rate != 0U) ? ram->start_autorepeat_rate : ram->autorepeat_rate);
 
-    _nt_control_keypad_invoke_callback(control, NT_KEYPAD_TOUCH,(uint32_t) ix);
+    _nt_control_keypad_invoke_callback(control, NT_KEYPAD_TOUCH, (uint32_t)ix);
 }
 
 static void _nt_control_keypad_key_release(struct nt_control_data *control, int32_t ix)
@@ -177,7 +177,7 @@ static void _nt_control_keypad_key_release(struct nt_control_data *control, int3
     struct nt_control_keypad_data *ram = control->data.keypad;
     NT_ASSERT(ram != NULL);
 
-    if ((bool)_nt_control_get_flag(control, (int32_t) NT_KEYPAD_ONLY_ONE_KEY_FLAG))
+    if ((bool)_nt_control_get_flag(control, (int32_t)NT_KEYPAD_ONLY_ONE_KEY_FLAG))
     {
         if (ram->last_electrode != ix)
         {
@@ -190,14 +190,14 @@ static void _nt_control_keypad_key_release(struct nt_control_data *control, int3
     }
 
     /* Add the flags to real keys pressed */
-    ram->last_key_state &= (uint64_t)~((uint64_t)1 << (uint16_t)ix);
+    ram->last_key_state &= (uint64_t) ~((uint64_t)1 << (uint16_t)ix);
 
     if (ram->last_electrode == ix)
     {
         ram->last_electrode = -1;
     }
 
-    _nt_control_keypad_invoke_callback(control, NT_KEYPAD_RELEASE, (uint32_t) ix);
+    _nt_control_keypad_invoke_callback(control, NT_KEYPAD_RELEASE, (uint32_t)ix);
 }
 
 static void _nt_control_keypad_decode_groups(struct nt_control_data *control, uint64_t changes, uint64_t current_state)
@@ -223,8 +223,8 @@ static void _nt_control_keypad_decode_groups(struct nt_control_data *control, ui
                 _nt_control_keypad_key_release(control, (int32_t)group_counter);
             }
             else
-            {   //no command to avoid Misra issue
-            }  
+            { // no command to avoid Misra issue
+            }
         }
     }
 }
@@ -241,11 +241,11 @@ static void _nt_control_keypad_decode_simple(struct nt_control_data *control, ui
             /* decode elec state */
             if ((bool)((current_state >> elec_counter) & 0x1U))
             {
-                _nt_control_keypad_key_press(control, (int32_t) elec_counter);
+                _nt_control_keypad_key_press(control, (int32_t)elec_counter);
             }
             else
             {
-                _nt_control_keypad_key_release(control, (int32_t) elec_counter);
+                _nt_control_keypad_key_release(control, (int32_t)elec_counter);
             }
         }
     }
@@ -259,7 +259,8 @@ static void _nt_control_keypad_autorepeat(struct nt_control_data *control)
     NT_ASSERT(ram != NULL);
 
     if (ram->last_electrode < 0)
-    {    return;
+    {
+        return;
     }
     if (counter >= ram->repeat_time)
     {
@@ -278,29 +279,29 @@ static int32_t _nt_control_keypad_init(struct nt_control_data *control)
 
     if (keypad->groups != NULL && keypad->groups_size == 0U)
     {
-        return (int32_t) NT_FAILURE;
+        return (int32_t)NT_FAILURE;
     }
 
     if (keypad->multi_touch != NULL && keypad->multi_touch_size == 0U)
     {
-        return (int32_t) NT_FAILURE;
+        return (int32_t)NT_FAILURE;
     }
 
     control->data.keypad = _nt_mem_alloc(sizeof(struct nt_control_keypad_data));
 
     if (control->data.keypad == NULL)
     {
-        return (int32_t) NT_OUT_OF_MEMORY;
+        return (int32_t)NT_OUT_OF_MEMORY;
     }
 
-    if ((bool)_nt_control_check_data(control) != (bool) NT_SUCCESS)
+    if ((bool)_nt_control_check_data(control) != (bool)NT_SUCCESS)
     {
-        return (int32_t) NT_FAILURE;
+        return (int32_t)NT_FAILURE;
     }
 
     control->data.keypad->last_electrode = -1;
 
-    return (int32_t) NT_SUCCESS;
+    return (int32_t)NT_SUCCESS;
 }
 
 static int32_t _nt_control_keypad_process(struct nt_control_data *control)
@@ -313,12 +314,12 @@ static int32_t _nt_control_keypad_process(struct nt_control_data *control)
     struct nt_control_keypad_data *ram = control->data.keypad;
     NT_ASSERT(ram != NULL);
 
-    if (!(bool)_nt_control_get_flag(control, (int32_t) NT_CONTROL_EN_FLAG))
+    if (!(bool)_nt_control_get_flag(control, (int32_t)NT_CONTROL_EN_FLAG))
     {
-        return (int32_t) NT_FAILURE; /* not enabled or data not ready */
+        return (int32_t)NT_FAILURE; /* not enabled or data not ready */
     }
 
-    if ((bool)_nt_control_get_flag(control, (int32_t) NT_CONTROL_NEW_DATA_FLAG))
+    if ((bool)_nt_control_get_flag(control, (int32_t)NT_CONTROL_NEW_DATA_FLAG))
     {
         uint64_t current_state = _nt_control_get_electrodes_state(control);
         uint64_t has_changed   = current_state ^ ram->last_state;
@@ -334,8 +335,8 @@ static int32_t _nt_control_keypad_process(struct nt_control_data *control)
                     if (current_state == keypad->multi_touch[multi_touch_counter])
                     {
                         _nt_control_keypad_invoke_callback(control, NT_KEYPAD_MULTI_TOUCH, multi_touch_counter);
-                        _nt_control_clear_flag(control, (int32_t) NT_CONTROL_NEW_DATA_FLAG); /* data processed */
-                        return (int32_t) NT_SUCCESS;
+                        _nt_control_clear_flag(control, (int32_t)NT_CONTROL_NEW_DATA_FLAG); /* data processed */
+                        return (int32_t)NT_SUCCESS;
                     }
                 }
             }
@@ -349,7 +350,7 @@ static int32_t _nt_control_keypad_process(struct nt_control_data *control)
                 _nt_control_keypad_decode_simple(control, has_changed, current_state);
             }
         }
-        _nt_control_clear_flag(control, (int32_t) NT_CONTROL_NEW_DATA_FLAG); /* data processed */
+        _nt_control_clear_flag(control, (int32_t)NT_CONTROL_NEW_DATA_FLAG); /* data processed */
     }
 
     if (ram->autorepeat_rate != 0U)
@@ -357,5 +358,5 @@ static int32_t _nt_control_keypad_process(struct nt_control_data *control)
         _nt_control_keypad_autorepeat(control);
     }
 
-    return (int32_t) NT_SUCCESS;
+    return (int32_t)NT_SUCCESS;
 }

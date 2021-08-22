@@ -21,32 +21,34 @@ static int32_t _nt_iir_iterate(int16_t x, int16_t *px, int32_t *py, int32_t p1co
 static int32_t _nt_filter_fbutt_get_coef(int32_t fsample, int32_t fcutt);
 
 /* filters using frac arithmetic */
-//#define _NT_FRAC32(x) ((int64_t)((x) * (((x) > 0) ? 0x7fffffffU : 0x80000000U)))
-#define _NT_FRAC32(x) ((int32_t)((x) < 1.0 ? ((x) >= -1.0 ? (x)*((double)0x80000000U) : ((double)-2147483648)) : ((double)0x7FFFFFFFU)))
+#define _NT_FRAC32(x) \
+    ((int32_t)((x) < 1.0 ? ((x) >= -1.0 ? (x) * ((double)0x80000000U) : ((double)-2147483648)) : ((double)0x7FFFFFFFU)))
 
 static inline int16_t _nt_get_msb_from_int32(int32_t lsrc)
 {
-    return (int16_t)((uint32_t)lsrc >> 16U);
+    uint32_t temp = ((uint32_t)lsrc >> 16U);
+    return (int16_t)temp;
 }
 
 static int32_t _nt_multiply_int32_int16(int32_t lsrc1, int16_t ssrc1)
 {
-    return (int32_t)((uint64_t)((int64_t)lsrc1 * (int64_t)ssrc1) >> 15U);
+    uint64_t temp = ((uint64_t)lsrc1 * (uint64_t)ssrc1) >> 15U;
+    return (int32_t)temp;
 }
 
 static int32_t _nt_multiply_int32(int32_t lsrc1, int32_t lsrc2)
 {
-    return (int32_t)((uint64_t)((int64_t)lsrc1 * (int64_t)lsrc2) >> 31U);
+    uint64_t temp = (uint64_t)((uint64_t)lsrc1 * (uint64_t)lsrc2) >> 31U;
+    return (int32_t)temp;
 }
 
 uint32_t _nt_abs_int32(int32_t lsrc)
 {
     if (lsrc < 0)
-    {   return (uint32_t)(lsrc * -1);
+    {
+        lsrc = -lsrc;
     }
-    else
-    {   return (uint32_t)lsrc;
-    }
+    return (uint32_t)lsrc;
 }
 
 static int32_t _nt_iir_iterate(int16_t x, int16_t *px, int32_t *py, int32_t p1coef)
@@ -75,7 +77,8 @@ static int32_t _nt_filter_fbutt_get_coef(int32_t fsample, int32_t fcutt)
 void _nt_filter_fbutt_init(const struct nt_filter_fbutt *rom, struct nt_filter_fbutt_data *ram, uint32_t signal)
 {
     ram->x          = (int16_t)signal;
-    ram->y          = (int32_t)(signal << 16U); /* expands signal to the higher part */
+    uint32_t temp   = (uint32_t)signal << 16U;
+    ram->y          = (int32_t)temp; /* expands signal to the higher part */
     ram->coeficient = _nt_filter_fbutt_get_coef(1000 / (int32_t)(_nt_system_get()->rom->time_period), rom->cutoff);
 }
 
@@ -98,9 +101,11 @@ int32_t _nt_filter_moving_average_init(const struct nt_filter_moving_average *ro
                                        uint16_t value)
 {
     if (rom->n2_order > NT_FILTER_MOVING_AVERAGE_MAX_ORDER)
-    {   return -1;
+    {
+        return -1;
     }
-    ram->sum = (int32_t)((uint32_t)value << (uint32_t)rom->n2_order);
+    uint32_t temp = ((uint32_t)value << (uint32_t)rom->n2_order);
+    ram->sum      = (int32_t)temp;
 
     return 0;
 }
@@ -109,36 +114,41 @@ uint32_t _nt_filter_moving_average_process(const struct nt_filter_moving_average
                                            struct nt_filter_moving_average_data *ram,
                                            uint16_t value)
 {
-    ram->sum -= (int32_t)(ram->sum >>(uint32_t)rom->n2_order);
-    ram->sum += value;
+    uint32_t temp = ((uint32_t)ram->sum >> (uint32_t)rom->n2_order);
+    ram->sum -= (int32_t)temp;
+    ram->sum += (int32_t)value;
     return (uint32_t)((uint32_t)ram->sum >> (uint32_t)rom->n2_order);
 }
 
 uint16_t _nt_filter_abs(int16_t value)
 {
     if (value < 0)
-    {   return (uint16_t)(-value);
+    {
+        return (uint16_t)(-value);
     }
 
     return (uint16_t)value;
 }
 
-uint16_t _nt_filter_pos(int16_t value)
+uint16_t _nt_filter_pos(int32_t value)
 {
-    if (value < (int16_t)0)
-    {   return 0;
+    if (value < (int32_t)0)
+    {
+        return 0;
     }
 
-    return value;
+    return (uint16_t)value;
 }
 
 uint16_t _nt_filter_limit_u(int32_t value, uint16_t limit_l, uint16_t limit_h)
 {
     if (value > (int32_t)limit_h)
-    {   return limit_h;
+    {
+        return limit_h;
     }
-    if (value < limit_l)
-    {   return limit_l;
+    if (value < (int32_t)limit_l)
+    {
+        return limit_l;
     }
     return (uint16_t)value;
 }
@@ -148,12 +158,14 @@ int32_t _nt_filter_range_s(int32_t value, uint32_t limit)
     int32_t sl = (int32_t)limit;
 
     if (value > sl)
-    {   return sl;
+    {
+        return sl;
     }
     sl *= -1;
 
     if (value < sl)
-    {   return sl;
+    {
+        return sl;
     }
     return value;
 }
@@ -163,11 +175,13 @@ uint16_t _nt_filter_deadrange_u(uint16_t value, uint16_t base, uint16_t range)
     if ((bool)_nt_filter_is_deadrange_u(value, base, range))
     {
         if (value > base)
-        {   return _nt_filter_limit_u((int32_t)(base + range), 0, 0xffffU);
+        {
+            return _nt_filter_limit_u((int32_t)base + (int32_t)range, 0U, 0xffffU);
         }
         else
-        {   return _nt_filter_limit_u((int32_t)(base - range), 0, 0xffffU);
-        }    
+        {
+            return _nt_filter_limit_u((int32_t)base - (int32_t)range, 0U, 0xffffU);
+        }
     }
 
     return value;
@@ -176,10 +190,10 @@ uint16_t _nt_filter_deadrange_u(uint16_t value, uint16_t base, uint16_t range)
 uint16_t _nt_filter_deadrange_p(uint16_t value, uint16_t base, uint16_t range)
 {
     if (value < (base + range))
-    {  
-        return _nt_filter_limit_u((int32_t)(base + range), 0, 0xffffU);
+    {
+        return _nt_filter_limit_u((int32_t)base + (int32_t)range, 0U, 0xffffU);
     }
-        
+
     return value;
 }
 

@@ -50,7 +50,7 @@ union nt_system_event_context
 {
     struct
     {
-        struct nt_electrode *electrode;
+        const struct nt_electrode *electrode;
     } sig_out_of_limit;
 
     struct nt_module_data *module_data;
@@ -124,10 +124,8 @@ extern "C" {
  * \code
  *  static void my_nt_system_callback(uint32_t event);
  *
- *  // To catch the system events, install the system handler
  *  nt_system_register_callback(my_nt_system_callback)
  *
- *  // The NT system events handling routine
  *  static void my_nt_system_callback(uint32_t event)
  *  {
  *    if(event == NT_SYSTEM_EVENT_OVERRUN)
@@ -153,10 +151,8 @@ void nt_system_register_callback(nt_system_callback callback);
  * \code
  *  static void my_nt_error_callback(char *file_name, uint32_t line);
  *
- *  // For library debugging only, install the error handler
  *  nt_error_register_callback(my_nt_error_callback)
  *
- *  // The NT error-handling routine
  *  static void my_nt_error_callback(char *file_name, uint32_t line)
  *  {
  *    printf("\nError occurred in the NT library. File: %s, Line: %d.\n", file_name, line);
@@ -170,7 +166,6 @@ void nt_error_register_callback(nt_error_callback callback);
  * \return Time counter value.
  * This is an example of getting the current time of the NT library:
  * \code
- *  // Printing the current NXP Touch library time
  *  printf("The current NT library time is: &d ms since start.\n", nt_system_get_time_counter());
  *
  * \endcode
@@ -182,7 +177,6 @@ uint32_t nt_system_get_time_counter(void);
  * \return Returns the safety period calculated as system time period and safety period multioplier.
  * This is an example of getting the current time of the NT library:
  * \code
- *  // Printing the current NXP Touch library safety period
  *  printf("The NT library safety period is: &d ms since start.\n", _nt_system_get_safety_period());
  *
  * \endcode
@@ -194,7 +188,6 @@ uint32_t _nt_system_get_safety_period(void);
  * \return Time counter offset value.
  * This is an example of getting the current time of the NT library:
  * \code
- *  // Printing the current NXP Touch library time offset
  *  printf("The NT library time offset is: &d ms since start.\n", nt_system_get_time_offset());
  *
  * \endcode
@@ -216,7 +209,6 @@ uint32_t nt_system_get_time_offset(uint32_t event_stamp);
  *    printf("Initialization of the NT failed. There may be a problem with the memory size,
  *    or invalid parameters in the complemented parameter structures.");
  *  }
- *  // The NT is successfully initialized
  *
  *  printf("The unused memory size is: &d Bytes. The memory pool can be reduced
  *  by this size.", nt_mem_get_free_size());

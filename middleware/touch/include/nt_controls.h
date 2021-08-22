@@ -83,7 +83,6 @@ extern "C" {
  * Enables the control operation by setting the NT_CONTROL_ENABLE_FLAG.
  * This is an example of enabling the control in the NT library:
  * \code
- *  // The NT control my_nt_control_keypad is enabled
  *  nt_control_enable(&my_nt_control_keypad);
  * \endcode
  */
@@ -97,7 +96,6 @@ void nt_control_enable(const struct nt_control *control);
  * Disables the control operation by clearing the NT_CONTROL_ENABLE_FLAG.
  * This is an example of disabling the control in the NT library:
  * \code
- *  // The NT control my_nt_control_keypad is disabled
  *  nt_control_disable(&my_nt_control_keypad);
  * \endcode
  */
@@ -165,7 +163,6 @@ uint32_t nt_control_count_electrodes(const struct nt_control *control);
  * \return Pointer to the electrode instance retrieved from control's electrode list.
  * This is an example of getting the electrode pointer of control by index in the NT library:
  * \code
- *  // Get the pointer of electrode on index 2 for my_control
  *  nt_electrode *my_electrode = nt_control_get_electrode(&my_control, 2);
  * \endcode*/
 const struct nt_electrode *nt_control_get_electrode(const struct nt_control *control, uint32_t index);

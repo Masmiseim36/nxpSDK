@@ -1,12 +1,14 @@
 /*
  * Copyright 2013 - 2016, Freescale Semiconductor, Inc.
+ * Copyright 2016-2021 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-
 #ifndef _NT_SAFETY_CRC_H_
 #define _NT_SAFETY_CRC_H_
+
+#include "nt_system.h"
 
 /**
  * \defgroup gsafety_crc General API
@@ -28,7 +30,6 @@ extern "C" {
  *
  * Calculate the CRC on the System configuration data and returns the pointer to the CRC checksum
   \code
-    // Calc CRC on system configuration data
     int32_t testResult;
     testResult = nt_safety_calc_cfg_crc(const struct nt_system *system, uint16_t *crc_val);
   \endcode
@@ -42,7 +43,6 @@ int32_t nt_safety_calc_cfg_crc(const struct nt_system *system, uint16_t *crc_val
  *   - NT_FAILURE if the check cannot be finished
  * Check the system data .
   \code
-    // Check the system configuration data, calculate CRC and compare with the  pre-calculated CRC
     int32_t testResult;
     testResult = nt_safety_check_cfg_data(const struct nt_system *system, uint16_t crc_val);
   \endcode

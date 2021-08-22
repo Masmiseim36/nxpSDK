@@ -50,17 +50,17 @@ static int32_t _nt_module_gpio_init(struct nt_module_data *module)
 
     if (module->special_data.gpio == NULL)
     {
-        return (int32_t) NT_OUT_OF_MEMORY;
+        return (int32_t)NT_OUT_OF_MEMORY;
     }
 
-    if (nt_gpio_data_check(module) < (int32_t) NT_SUCCESS)
+    if (nt_gpio_data_check(module) < (int32_t)NT_SUCCESS)
     {
-        return (int32_t) NT_FAILURE;
+        return (int32_t)NT_FAILURE;
     }
 
     const struct nt_module_gpio_user_interface *interface = module->rom->module_params.gpio->user_interface;
 
-    interface->init_timer();
+    interface->init_timer_ptr();
 
     uint32_t electrode_counter = module->electrodes_cnt;
 
@@ -70,16 +70,16 @@ static int32_t _nt_module_gpio_init(struct nt_module_data *module)
         const struct nt_electrode *elec = module->electrodes[electrode_counter]->rom;
 
         /* default state for all pins. */
-        interface->set_pin_default_state(elec->pin_input >> NT_GPIO_PORT_SHIFT, elec->pin_input & 0xFFU);
+        interface->set_pin_default_state_ptr(elec->pin_input >> NT_GPIO_PORT_SHIFT, elec->pin_input & 0xFFU);
     }
 
-    return (int32_t) NT_SUCCESS;
+    return (int32_t)NT_SUCCESS;
 }
 
 static int32_t _nt_module_gpio_trigger(struct nt_module_data *module)
 {
-    _nt_module_set_flag(module, NT_MODULE_NEW_DATA_FLAG);
-    return (int32_t) NT_SUCCESS;
+    _nt_module_set_flag(module, (uint32_t)NT_MODULE_NEW_DATA_FLAG);
+    return (int32_t)NT_SUCCESS;
 }
 
 static int32_t _nt_module_gpio_process(struct nt_module_data *module)
@@ -94,37 +94,37 @@ static int32_t _nt_module_gpio_process(struct nt_module_data *module)
         uint32_t pin                   = elec->rom->pin_input & 0xFFU;
         uint32_t overrun               = 0;
         uint32_t disabledInterrupts;
-        interface->set_pin_output(port, pin);
+        interface->set_pin_output_ptr(port, pin);
 
         disabledInterrupts = __get_PRIMASK();
         /* all interrupts MUST be disabled to achieve valuable measurement */
-        if (!disabledInterrupts)
+        if (!(bool)disabledInterrupts)
         {
-        	(void)(uint32_t) DisableGlobalIRQ();
+            (void)(uint32_t) DisableGlobalIRQ();
         }
 
-        interface->set_pin_low(port, pin);
-        interface->timer_reset_counter();
-        interface->start_timer();
-        interface->set_pin_input(port, pin);
-        while (!interface->get_pin_value(port, pin))
+        interface->set_pin_low_ptr(port, pin);
+        interface->timer_reset_counter_ptr();
+        interface->start_timer_ptr();
+        interface->set_pin_input_ptr(port, pin);
+        while (!(bool)interface->get_pin_value_ptr(port, pin))
         {
-            if ((bool)(interface->timer_get_overrun()))
+            if ((bool)(interface->timer_get_overrun_ptr()))
             {
                 overrun = 1;
                 break;
             }
         };
-        uint32_t signal = interface->timer_get_counter();
+        uint32_t signal = interface->timer_get_counter_ptr();
 
-        if (!disabledInterrupts)
+        if (!(bool)disabledInterrupts)
         {
             EnableGlobalIRQ(disabledInterrupts);
         }
 
-        interface->set_pin_default_state(port, pin);
+        interface->set_pin_default_state_ptr(port, pin);
 
-        if (!overrun)
+        if (!(bool)overrun)
         {
             _nt_electrode_set_raw_signal(elec, signal);
 
@@ -134,28 +134,28 @@ static int32_t _nt_module_gpio_process(struct nt_module_data *module)
         }
     }
 
-    _nt_module_set_flag(module, NT_MODULE_NEW_DATA_FLAG);
+    _nt_module_set_flag(module, (uint32_t)NT_MODULE_NEW_DATA_FLAG);
     _nt_system_modules_data_ready(module);
 
-    return (int32_t) NT_SUCCESS;
+    return (int32_t)NT_SUCCESS;
 }
 
-static int32_t _nt_module_gpio_electrode_enable(struct nt_module_data *module, const uint32_t elec_index)
+static int32_t _nt_module_gpio_electrode_enable(struct nt_module_data *module, uint32_t elec_index)
 {
     if (elec_index < module->electrodes_cnt)
     {
-        module->special_data.gpio->pen |= (uint32_t)(1U << elec_index);
+        module->special_data.gpio->pen |= (uint32_t)1 << elec_index;
     }
-    return (int32_t) NT_SUCCESS;
+    return (int32_t)NT_SUCCESS;
 }
 
-static int32_t _nt_module_gpio_electrode_disable(struct nt_module_data *module, const uint32_t elec_index)
+static int32_t _nt_module_gpio_electrode_disable(struct nt_module_data *module, uint32_t elec_index)
 {
     if (elec_index < module->electrodes_cnt)
     {
-        module->special_data.gpio->pen &= ~(uint32_t)(1U << elec_index);
+        module->special_data.gpio->pen &= ~(uint32_t)((uint32_t)1 << elec_index);
     }
-    return (int32_t) NT_SUCCESS;
+    return (int32_t)NT_SUCCESS;
 }
 
 static int32_t _nt_module_gpio_change_mode(struct nt_module_data *module,
@@ -167,68 +167,68 @@ static int32_t _nt_module_gpio_change_mode(struct nt_module_data *module,
 
     if (mode == NT_MODULE_MODE_NORMAL)
     {
-        return (int32_t) NT_SUCCESS;
+        return (int32_t)NT_SUCCESS;
     }
     else
     {
-        return (int32_t) NT_NOT_SUPPORTED;
+        return (int32_t)NT_NOT_SUPPORTED;
     }
 }
 
 static int32_t nt_gpio_check_interface(const struct nt_module_data *module)
 {
     const struct nt_module_gpio_user_interface *interface = module->rom->module_params.gpio->user_interface;
-    if (interface->set_pin_output == NULL)
+    if (interface->set_pin_output_ptr == NULL)
     {
-        return (int32_t) NT_FAILURE;
+        return (int32_t)NT_FAILURE;
     }
-    else if (interface->set_pin_input == NULL)
+    else if (interface->set_pin_input_ptr == NULL)
     {
-        return (int32_t) NT_FAILURE;
+        return (int32_t)NT_FAILURE;
     }
-    else if (interface->set_pin_low == NULL)
+    else if (interface->set_pin_low_ptr == NULL)
     {
-        return (int32_t) NT_FAILURE;
+        return (int32_t)NT_FAILURE;
     }
-    else if (interface->set_pin_high == NULL)
+    else if (interface->set_pin_high_ptr == NULL)
     {
-        return (int32_t) NT_FAILURE;
+        return (int32_t)NT_FAILURE;
     }
-    else if (interface->init_timer == NULL)
+    else if (interface->init_timer_ptr == NULL)
     {
-        return (int32_t) NT_FAILURE;
+        return (int32_t)NT_FAILURE;
     }
-    else if (interface->start_timer == NULL)
+    else if (interface->start_timer_ptr == NULL)
     {
-        return (int32_t) NT_FAILURE;
+        return (int32_t)NT_FAILURE;
     }
-    else if (interface->stop_timer == NULL)
+    else if (interface->stop_timer_ptr == NULL)
     {
-        return (int32_t) NT_FAILURE;
+        return (int32_t)NT_FAILURE;
     }
-    else if (interface->timer_reset_counter == NULL)
+    else if (interface->timer_reset_counter_ptr == NULL)
     {
-        return (int32_t) NT_FAILURE;
+        return (int32_t)NT_FAILURE;
     }
-    else if (interface->timer_get_counter == NULL)
+    else if (interface->timer_get_counter_ptr == NULL)
     {
-        return (int32_t) NT_FAILURE;
+        return (int32_t)NT_FAILURE;
     }
-    else if (interface->timer_get_overrun == NULL)
+    else if (interface->timer_get_overrun_ptr == NULL)
     {
-        return (int32_t) NT_FAILURE;
+        return (int32_t)NT_FAILURE;
     }
-    else if (interface->set_pin_default_state == NULL)
+    else if (interface->set_pin_default_state_ptr == NULL)
     {
-        return (int32_t) NT_FAILURE;
+        return (int32_t)NT_FAILURE;
     }
-    else if (interface->get_pin_value == NULL)
+    else if (interface->get_pin_value_ptr == NULL)
     {
-        return (int32_t) NT_FAILURE;
+        return (int32_t)NT_FAILURE;
     }
     else
     {
-    	return (int32_t) NT_SUCCESS;
+        return (int32_t)NT_SUCCESS;
     }
 }
 
@@ -236,11 +236,11 @@ int32_t nt_gpio_data_check(const struct nt_module_data *module)
 {
     if (module->rom->module_params.gpio->user_interface == NULL)
     {
-        return (int32_t) NT_FAILURE;
+        return (int32_t)NT_FAILURE;
     }
-    if (nt_gpio_check_interface(module) < (int32_t) NT_SUCCESS)
+    if (nt_gpio_check_interface(module) < (int32_t)NT_SUCCESS)
     {
-        return (int32_t) NT_FAILURE;
+        return (int32_t)NT_FAILURE;
     }
-    return (int32_t) NT_SUCCESS;
+    return (int32_t)NT_SUCCESS;
 }

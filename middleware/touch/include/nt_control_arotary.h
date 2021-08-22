@@ -69,36 +69,33 @@ struct nt_control_arotary
 };
 
 /** An interface structure, which contains pointers to the entry points of the Analog
- *  Rotary algorithms. A pointer to this structure must be assigned to any
- *  instance of the nt_control to define the control behaviour. */
+    Rotary algorithms. A pointer to this structure must be assigned to any
+    instance of the nt_control to define the control behaviour. */
 extern const struct nt_control_interface nt_control_arotary_interface; /*!< Can't be NULL. */
 
 /**
  * \defgroup arotary_api Analog Rotary Control API
  * \ingroup arotary
- *
+
  * These functions can be used to set or get the Analog Rotary control properties.
- *
+
  * A common example definition of the Analog Rotary control for all source code examples is as follows:
  * \code
- *  // definition of the electrode array used by the control (more info in electrodes )
  *  const struct nt_electrode  * const control_0_electrodes[] = {&electrode_0, &electrode_1,
  *    &electrode_2, &electrode_3, NULL};
- *
- *  // Define additional parameters of the Analog Rotary
+
  *  const struct nt_control_arotary my_arotary_params =
  *  {
  *   .range = 255,
  *  };
- *
- *  // Definition of the Analog Rotary control
+
  *  const struct nt_control my_arotary_control =
  *  {
  *    .interface = &nt_control_arotary_control_interface,
  *    .electrodes = control_0_electrodes,
  *    .control_params.arotary = &my_arotary_params,
  *  };
- *
+
  * \endcode
  * \{
  */
@@ -118,7 +115,6 @@ extern "C" {
  * Example:
  * \code
  *
- *  //Create the callback function for arotary
  *  static void my_arotary_cb(const struct nt_control *control,
  *                            enum nt_control_arotary_event event,
  *                            uint32_t position)
@@ -133,7 +129,6 @@ extern "C" {
  *    printf("New analog rotary control event %s on position: %d.", event_names[event], position);
  *  }
  *
- *  // register the callback function for arotary
  *  nt_control_arotary_register_callback(&my_arotary_control, my_arotary_cb);
  * \endcode
  */
@@ -149,7 +144,6 @@ void nt_control_arotary_register_callback(const struct nt_control *control, nt_c
  * Example:
  * \code
  * uint32_t position;
- * // Get position of arotary control
  * position = nt_control_arotary_get_position(&my_arotary_control);
  * printf("Position of Analog Rotary control is: %d.", position);
  * \endcode
@@ -163,7 +157,6 @@ uint32_t nt_control_arotary_get_position(const struct nt_control *control);
  * Example:
  * \code
  * uint32_t touched;
- * // Get state of arotary control
  * touched = nt_control_arotary_is_touched(&my_arotary_control);
  * if(touched)
  *      printf("The Analog Rotary control is currently touched.");
@@ -180,7 +173,6 @@ uint32_t nt_control_arotary_is_touched(const struct nt_control *control);
  * Example:
  * \code
  * uint32_t movement;
- * // Get state of arotary control
  * movement = nt_control_arotary_movement_detected(&my_arotary_control);
  * if(movement)
  *      printf("The Analog Rotary control is currently moving.");
@@ -199,7 +191,6 @@ uint32_t nt_control_arotary_movement_detected(const struct nt_control *control);
  * Example:
  * \code
  * uint32_t direction;
- * // Get direction of arotary control
  * direction = nt_control_arotary_get_direction(&my_arotary_control);
  * if(direction)
  *      printf("The Analog Rotary direction is left.");
@@ -219,7 +210,6 @@ uint32_t nt_control_arotary_get_direction(const struct nt_control *control);
  * Example:
  * \code
  * uint32_t invalid_position;
- * // Get invalid position of arotary control
  * invalid_position = nt_control_arotary_get_invalid_position(&my_arotary_control);
  * if(invalid_position)
  *      printf("The Analog Rotary control has an invalid position (two fingers touch ?).");

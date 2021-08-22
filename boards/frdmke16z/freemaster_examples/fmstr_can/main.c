@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2007-2015 Freescale Semiconductor, Inc.
- * Copyright 2018-2019 NXP
+ * Copyright 2018-2021 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  *
@@ -50,7 +50,7 @@ int main(void)
     /* This example uses shared code from FreeMASTER generic example application */
     FMSTR_Example_Init();
 
-    while(1)
+    while (1)
     {
         /* FreeMASTER example increments several variables periodically,
            use the FreeMASTER PC Host tool to visualize the variables */
@@ -80,7 +80,7 @@ static void init_freemaster_can(void)
     MSCAN_GetDefaultConfig(&mscanConfig);
 
     mscanConfig.enableTimer = true;
-    mscanConfig.baudRate = 500000U;
+    mscanConfig.baudRate    = 500000U;
 
     /* Acceptance filter configuration. */
     mscanConfig.filterConfig.u32IDAR0 = 0;
@@ -97,8 +97,8 @@ static void init_freemaster_can(void)
 
 #if FMSTR_SHORT_INTR || FMSTR_LONG_INTR
     /* Enable RX fifo0 new message interrupt using interrupt line 0. */
-    EnableIRQ(MSCAN_1_IRQn);
-    EnableIRQ(MSCAN_2_IRQn);
+    EnableIRQ(MSCAN_Rx_IRQn);
+    EnableIRQ(MSCAN_ORed_IRQn);
     /* Enable interrupts. */
     EnableGlobalIRQ(0);
 #endif
@@ -106,36 +106,32 @@ static void init_freemaster_can(void)
 
 #if FMSTR_SHORT_INTR || FMSTR_LONG_INTR
 /*
-*   Application interrupt handler of communication peripheral used in interrupt modes
-*   of FreeMASTER communication.
-*
-*   NXP MCUXpresso SDK framework defines interrupt vector table as a part of "startup_XXXXXX.x"
-*   assembler/C file. The table points to weakly defined symbols, which may be overwritten by the
-*   application specific implementation. FreeMASTER overrides the original weak definition and
-*   redirects the call to its own handler.
-*
-*/
+ *   Application interrupt handler of communication peripheral used in interrupt modes
+ *   of FreeMASTER communication.
+ *
+ *   NXP MCUXpresso SDK framework defines interrupt vector table as a part of "startup_XXXXXX.x"
+ *   assembler/C file. The table points to weakly defined symbols, which may be overwritten by the
+ *   application specific implementation. FreeMASTER overrides the original weak definition and
+ *   redirects the call to its own handler.
+ *
+ */
 
-void MSCAN_1_IRQHandler (void)
+void MSCAN_Rx_IRQHandler(void)
 {
     /* Call FreeMASTER Interrupt routine handler */
     FMSTR_CanIsr();
-    /* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-        exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+
+    /* May be needed for ARM errata 838869 */
+    SDK_ISR_EXIT_BARRIER;
 }
 
-void MSCAN_2_IRQHandler (void)
+void MSCAN_ORed_IRQHandler(void)
 {
     /* Call FreeMASTER Interrupt routine handler */
     FMSTR_CanIsr();
-    /* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-        exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+
+    /* May be needed for ARM errata 838869 */
+    SDK_ISR_EXIT_BARRIER;
 }
 
 #endif

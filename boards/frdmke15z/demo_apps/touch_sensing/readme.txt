@@ -27,7 +27,7 @@ Prepare the Demo
 ===============
 1.  Connect a USB cable between the host PC and the OpenSDA USB port on the target board.
 2.  Download the program to the target board.
-3.  Download a FreeMASTER tool (from: http://www.nxp.com/freemaster, version 3.0) and install the FreeMASTER
+3.  Download a FreeMASTER tool (from: http://www.nxp.com/freemaster, version 3.1) and install the FreeMASTER
 4.  Open the FreeMASTER project NXPTouchKE15.pmp file from: MCUXpresso SDK\middleware\touch\freemaster\NXPTouchKE15.pmp and choose Project -> Options... from FreeMASTER menu.  
 5.  In Comm tab set the port with description: JLink CDC UART Port.
 6.  Set the Speed to 19200 baud rate.

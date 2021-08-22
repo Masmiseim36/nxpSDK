@@ -42,31 +42,31 @@
 #ifndef NT_ELECTRODE_STATUS_HISTORY_COUNT
 /** Definition of the electrode history status depth. Default setting is 4.
  */
-#define NT_ELECTRODE_STATUS_HISTORY_COUNT 4
+#define NT_ELECTRODE_STATUS_HISTORY_COUNT 4U
 #else
-#if NT_ELECTRODE_STATUS_HISTORY_COUNT < 4
+#if NT_ELECTRODE_STATUS_HISTORY_COUNT < 4U
 #error The depth of electrode history buffer (NT_ELECTRODE_STATUS_HISTORY_COUNT) can be set less than 4.
 #endif
 #endif
 
 #ifndef NT_ELECTRODE_SHIELD_THRESHOLD
 /** Definition of the lowest signal value on the shield electrode used for offset compensation */
-#define NT_ELECTRODE_SHIELD_THRESHOLD 10
+#define NT_ELECTRODE_SHIELD_THRESHOLD 10U
 #endif
 
 #ifndef NT_ELECTRODE_SHIELD_GAIN
 /** Definition of the lowest signal value on the shield electrode used for offset compensation */
-#define NT_ELECTRODE_SHIELD_GAIN 1
+#define NT_ELECTRODE_SHIELD_GAIN 1U
 #endif
 
 #ifndef NT_ELECTRODE_SHIELD_SENS
 /** Definition of the max signal value on the shield electrode used for offset compensation */
-#define NT_ELECTRODE_SHIELD_SENS 1000
+#define NT_ELECTRODE_SHIELD_SENS 1000U
 #endif
 
 #ifndef NT_ELECTRODE_SHIELD_ATTN
 /** Definition of the max signal value on the shield electrode used for offset compensation */
-#define NT_ELECTRODE_SHIELD_ATTN 1
+#define NT_ELECTRODE_SHIELD_ATTN 1U
 #endif
 /* forward declarations */
 struct nt_filter;
@@ -120,8 +120,8 @@ struct nt_electrode
     const struct nt_keydetector_interface *keydetector_interface; /*!< Pointer to Key Detector interface. */
     const union nt_keydetector_params keydetector_params;         /*!< Pointer to Key Detector params. */
 #if (FSL_FEATURE_TSI_VERSION == 5)
-    const tsi_config_t *tsi_hw_config;                            /*!< Const pointer to TSI(HW) configuration params. */
-#endif 
+    tsi_config_t *tsi_hw_config; /*!< Const pointer to TSI(HW) configuration params. */
+#endif
 };
 
 /**
@@ -145,12 +145,10 @@ extern "C" {
  * \return result of operation \ref nt_result.
  * This is an example of using this function in the code:
   \code
-    //The electrode that is defined in the setup of NT after the initialization must be enabled.
     if (nt_init(&system_0, nt_memory_pool, sizeof(nt_memory_pool)) < NT_SUCCESS)
     {
-      while(1); // add code to handle this error
+      while(1);
     }
-    // Enable electrode_0 that is defined in the setup of NT
     if(nt_electrode_enable(&electrode_0, 0) != NT_SUCCESS)
     {
       printf("Enable electrode_0 failed.");
@@ -166,7 +164,6 @@ int32_t nt_electrode_enable(const struct nt_electrode *electrode, uint32_t touch
  * \return result of operation \ref nt_result.
  * This is an example of using this function in the code:
   \code
-    // re-enable electrode_0 that is defined in the setup of NT
     if(nt_electrode_resume(&electrode_0) != NT_SUCCESS)
     {
       printf("Enable electrode_0 failed.");
@@ -182,7 +179,6 @@ int32_t nt_electrode_resume(const struct nt_electrode *electrode);
  * \return result of operation \ref nt_result.
  * This is an example of using this function in code:
  *\code
- *  // Suspend electrode_0 that is defined in the setup of NT
  *  if(nt_electrode_suspend(&electrode_0) != NT_SUCCESS)
  *  {
  *    printf("Suspending electrode_0 failed.");
@@ -197,7 +193,6 @@ int32_t nt_electrode_suspend(const struct nt_electrode *electrode);
  * \return result of operation \ref nt_result.
  * This is an example of using this function in code:
  *\code
- *  // Disable electrode_0 that is defined in the setup of NT
  *  if(nt_electrode_disable(&electrode_0) != NT_SUCCESS)
  *  {
  *    printf("Disable electrode_0 failed.");
@@ -212,7 +207,6 @@ int32_t nt_electrode_disable(const struct nt_electrode *electrode);
  * \return result of operation \ref nt_result.
  * This is an example of using this function in code:
  *\code
- *  // Reset electrode_0 that is defined in the setup of NT
  *  if(nt_electrode_reset(&electrode_0) != NT_SUCCESS)
  *  {
  *    printf("reset electrode_0 failed.");
@@ -232,7 +226,6 @@ int32_t nt_electrode_reset(const struct nt_electrode *electrode);
  * position based on the signal value, rather than on a simple touch / release status.
  * This is an example of using this function in the code:
  *\code
- *  // Get current signal of my_electrode
  *  printf("The my_electrode has signal: %d.", nt_electrode_get_signal(&my_electrode));
  *\endcode
  */
@@ -243,7 +236,6 @@ uint32_t nt_electrode_get_signal(const struct nt_electrode *electrode);
  * \param electrode Pointer to the electrode data.
  * \return Current electrode status.
  * \code
- *  // Get the latest status of my_electrode
  *  char * electrode_state_name[3] =
  * {
  *   "Initialize",
@@ -261,7 +253,6 @@ int32_t nt_electrode_get_last_status(const struct nt_electrode *electrode);
  * \param electrode Pointer to the electrode data.
  * \return Time from the last electrode event.
  * \code
- *  // Get the time offset from the last change of the electrode status
  *  uint32_t offset = nt_electrode_get_time_offset(&my_electrode);
  *  printf("The my_electrode last status change has been before: %d ms .", offset);
  * \endcode
@@ -273,7 +264,6 @@ uint32_t nt_electrode_get_time_offset(const struct nt_electrode *electrode);
  * \param electrode Pointer to the electrode data.
  * \return Current electrode status.
  * \code
- *  // Get the time stamp of the last change of the electrode status
  *  uint32_t time = nt_electrode_get_last_time_stamp(&my_electrode);
  *  printf("The my_electrode last status change was at: %d ms .", time);
  * \endcode
@@ -289,7 +279,6 @@ uint32_t nt_electrode_get_last_time_stamp(const struct nt_electrode *electrode);
  * to calculate the real electrode signal value, which is good to be compared
  * with the signals coming from other electrodes.
  *\code
- *  // Get the current raw signal of my_electrode
  *  printf("The my_electrode has raw signal: %d.", nt_electrode_get_raw_signal(&my_electrode));
  *\endcode
  */

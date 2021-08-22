@@ -130,7 +130,7 @@ uint16_t _nt_filter_abs(int16_t value);
  * \param value Input signed value.
  * \return value of input,if positive, else returns 0
  */
-uint16_t _nt_filter_pos(int16_t value);
+uint16_t _nt_filter_pos(int32_t value);
 
 /**
  * \brief This function limit the input value in allowed range (16-bit version).

@@ -217,7 +217,6 @@ extern "C" {
 
    if(NT_TSI_DRV_Init(0, &myTsiDriverStateStructure, &myTsiDriveruserConfig) != kStatus_TSI_Success)
    {
-      // Error, the TSI is not initialized
    }
   \endcode
 *
@@ -256,7 +255,6 @@ void NT_TSI_DRV_InitSpecific(TSI_Type *base, const tsi_config_t *config);
  \code
    if(NT_TSI_DRV_DeInit(0) != kStatus_TSI_Success)
    {
-      // Error, the TSI is not de-initialized
    }
   \endcode
 * \param instance The TSI module instance.
@@ -270,10 +268,8 @@ tsi_status_t NT_TSI_DRV_DeInit(uint32_t instance);
 * The function must be called for each used electrode after the initialization of the TSI driver.
 *
   \code
-        // On the TSI instance 0, enable electrode with index 5
     if(NT_TSI_DRV_EnableElectrode(0, 5, TRUE) != kStatus_TSI_Success)
     {
-        // Error, the TSI 5'th electrode is not enabled
     }
   \endcode
 * \param instance   TSI module instance.
@@ -306,15 +302,12 @@ the registered callback function by using
 *         \ref NT_TSI_DRV_SetCallBackFunc or \ref NT_TSI_DRV_Init.
 *
   \code
-    // Example of the pooling style of the use of the NT_TSI_DRV_Measure() function
     if(NT_TSI_DRV_Measure(0) != kStatus_TSI_Success)
     {
-        // Error, the TSI 5'th electrode is not enabled
     }
 
     while(NT_TSI_DRV_GetStatus(0) != kStatus_TSI_Initialized)
     {
-        // Do something useful - don't waste the CPU cycle time
     }
 
   \endcode
@@ -329,7 +322,6 @@ tsi_status_t NT_TSI_DRV_Measure(uint32_t instance);
 * This function returns the current working status of the driver.
 *
   \code
-    // Get the current status of the TSI driver
 
     tsi_status_t status;
 
@@ -351,20 +343,14 @@ tsi_status_t NT_TSI_DRV_GetStatus(uint32_t instance);
 *           and recalibrate the low-power mode to get the best performance for this mode.
 *
   \code
-    // Switch the driver to the low-power mode
     uint16_t signal;
 
-    // The first time is needed to configure the low-power mode configuration
-
-    (void)NT_TSI_DRV_ChangeMode(0, tsi_OpModeLowPower); // I don't check the result because I believe in.
-    // Enable the right electrode for the low-power AKE up operation
+    (void)NT_TSI_DRV_ChangeMode(0, tsi_OpModeLowPower);
     (void)NT_TSI_DRV_EnableElectrode(0, 5, true);
-    // Recalibrate the mode to get the best performance for this electrode
     (void)NT_TSI_DRV_Recalibrate(0);
 
     if(NT_TSI_DRV_EnableLowPower(0) != kStatus_TSI_Success)
     {
-        // Error, the TSI driver can't go to the low-power mode
     }
 
 
@@ -382,11 +368,9 @@ tsi_status_t NT_TSI_DRV_EnableLowPower(uint32_t instance);
 *           configuration to be able go back to the low-power state.
 *
   \code
-    // Switch the driver from the low-power mode
 
     if(NT_TSI_DRV_DisableLowPower(0, tsi_OpModeNormal) != kStatus_TSI_Success)
     {
-        // Error, the TSI driver cannot go from the low-power mode
     }
 
 
@@ -407,7 +391,6 @@ tsi_status_t NT_TSI_DRV_DisableLowPower(uint32_t instance, const nt_tsi_modes_t 
   \code
     uint32_t result;
 
-    // Measure one electrode at one time
     result= NT_TSI_DRV_MeasureOneElect(0, &El_1);
 
 
@@ -417,7 +400,7 @@ tsi_status_t NT_TSI_DRV_DisableLowPower(uint32_t instance, const nt_tsi_modes_t 
 * \return           The measured electrode counter value.
 */
 
-uint16_t NT_TSI_DRV_MeasureOneElect(uint32_t instance, struct nt_electrode *electrode);
+uint16_t NT_TSI_DRV_MeasureOneElect(uint32_t instance, const struct nt_electrode *electrode);
 
 /**
 * \brief Automatically measures all used TSI electrodes.
@@ -429,10 +412,8 @@ uint16_t NT_TSI_DRV_MeasureOneElect(uint32_t instance, struct nt_electrode *elec
   \code
      uint16_t curr_counters[TF_TSI_TOTAL_CHANNEL_COUNT];
 
-    // Measure all electrodes at one time
     if(NT_TSI_DRV_MeasureAllElect(0, &curr_counters) != kStatus_TSI_Success)
     {
-        // Error, the TSI driver cannot measure the electrodes in this mode
     }
 
   \endcode
@@ -454,10 +435,8 @@ tsi_status_t NT_TSI_DRV_MeasureAllElect(uint32_t instance, uint16_t (*counters)[
      struct nt_kernel * system = _nt_system_get();
      struct nt_electrode **electrodes = (struct nt_electrode **)system->rom->modules[0]->electrodes;
 
-    // Measure all electrodes at one time
     if(result = NT_TSI_DRV_MeasureMoreElect(0, &curr_counters, electrodes, 1);) != kStatus_TSI_Success)
     {
-        // Error, the TSI driver cannot measure the electrodes in this mode
     }
 
   \endcode
@@ -490,7 +469,6 @@ gpio method,
 * \warning In some cases, the function does not finish the calibration (returns an error).
 *
   \code
-    // define auto-calibration constant in nt_setup.c file
     tsi_status_t recalib_status
     struct nt_module tsi_module
     struct nt_tsi_recalib_config recalib_config = {
@@ -504,19 +482,16 @@ gpio method,
     .MutRangeDeltaMax = 600,
     };
 
-    // assign auto-calibration structure to tsi module in nt_setup.c file
     const struct nt_module tsi_module =
     {
         ...
         .recalib_config = (void*)&recalib_config,
     };
 
-    // call the nt_module_recalibrate function
     recalib_status = (tsi_status_t) nt_module_recalibrate(&tsi_module);
 
     if (recalib_status != kStatus_TSI_Success)
     {
-        // Error, TSI calibration  was not successful (recalib_config parameters are too strict)
     }
 
   \endcode
@@ -534,18 +509,14 @@ tsi_status_t NT_TSI_DRV_Recalibrate(uint32_t instance, void *configuration);
 *           which is handled by the parameter to a callback function. One function can be called by more sources.
 *
   \code
-    // Clear the previous callback function
 
     if(NT_TSI_DRV_SetCallBackFunc(0, NULL, NULL) != kStatus_TSI_Success)
     {
-        // Error, the TSI driver cannot set up the callback function at the moment
     }
 
-    // Set new callback function
 
     if(NT_TSI_DRV_SetCallBackFunc(0, myFunction, (void*)0x12345678) != kStatus_TSI_Success)
     {
-        // Error, the TSI driver cannot set up the callback function at the moment
     }
 
 
@@ -563,11 +534,9 @@ tsi_status_t NT_TSI_DRV_SetCallBackFunc(uint32_t instance, const tsi_callback_t 
 * This function changes the working operation mode of the driver.
 *
   \code
-    // Change the operation mode to low-power
 
     if(NT_TSI_DRV_ChangeMode(0, tsi_OpModeLowPower) != kStatus_TSI_Success)
     {
-        // Error, the TSI driver cannot change the operation mode into low-power
     }
 
   \endcode
@@ -583,7 +552,6 @@ tsi_status_t NT_TSI_DRV_ChangeMode(uint32_t instance, const nt_tsi_modes_t mode)
 * This function returns the current working operation mode of the driver.
 *
   \code
-    // Gets the current operation mode of the TSI driver
     nt_tsi_modes_t mode;
 
     mode = NT_TSI_DRV_GetMode(0);
@@ -603,13 +571,11 @@ nt_tsi_modes_t NT_TSI_DRV_GetMode(uint32_t instance);
 *           more time.
 *
   \code
-    // Load operation mode configuration
 
     extern const nt_tsi_operation_mode_t * myTsiNvmLowPowerConfiguration;
 
     if(NT_TSI_DRV_LoadConfiguration(0, tsi_OpModeLowPower, myTsiNvmLowPowerConfiguration) != kStatus_TSI_Success)
     {
-        // Error, the TSI driver cannot load the configuration
     }
 
   \endcode
@@ -631,13 +597,11 @@ tsi_status_t NT_TSI_DRV_LoadConfiguration(uint32_t instance,
 *           more time.
 *
   \code
-    // Save operation mode configuration
 
     extern nt_tsi_operation_mode_t  myTsiNvmLowPowerConfiguration;
 
     if(NT_TSI_DRV_SaveConfiguration(0, tsi_OpModeLowPower, &myTsiNvmLowPowerConfiguration) != kStatus_TSI_Success)
     {
-        // Error, the TSI driver cannot save the configuration.
     }
 
   \endcode

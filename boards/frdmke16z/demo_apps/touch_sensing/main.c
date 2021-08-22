@@ -358,6 +358,11 @@ static void keypad_callback(const struct nt_control *control, enum nt_control_ke
                     break;
                 case 4:
                     break;
+                case 5:
+                    /* LED off */
+                    brightness_global = 0;
+                    SetHueBrightness(hue_angle_global, brightness_global);
+                    break;
                 default:
                     break;
             }
@@ -521,18 +526,21 @@ static void init_freemaster_lpuart(void)
 #endif
 }
 
-/*!
- * @brief An example of a direct interrupt vector installation - overriding the weak
- * symbol which is put into the vector table. Note that the function name
- * contains the UART instance number. Replace the UART1 in the name with the
- * proper instance number (for example, the value of the BOARD_DEBUG_UART_INSTANCE
- * macro defined in board.h)
- *
- * This 'direct' approach may be used instead of OSA_InstallIntHandler
- * (above), for example, when the ROM-based interrupt table is used.
- */
+#if FMSTR_SHORT_INTR || FMSTR_LONG_INTR
+/*
+*   Application interrupt handler of communication peripheral used in interrupt modes
+*   of FreeMASTER communication.
+*
+*   NXP MCUXpresso SDK framework defines interrupt vector table as a part of "startup_XXXXXX.x"
+*   assembler/C file. The table points to weakly defined symbols, which may be overwritten by the
+*   application specific implementation. FreeMASTER overrides the original weak definition and
+*   redirects the call to its own handler.
+*
+*/
 
 void BOARD_UART_IRQ_HANDLER(void)
 {
-    // FMSTR_SerialIsr();
+    /* Call FreeMASTER Interrupt routine handler */
+    FMSTR_SerialIsr();
 }
+#endif

@@ -137,7 +137,6 @@ extern "C" {
     {
       printf("The change of mode for my_nt_module failed.");
     }
-    // The NT successfully change mode of my_nt_module
 
    \endcode
  */
@@ -160,7 +159,6 @@ uint32_t nt_module_recalibrate(const struct nt_module *module);
     {
       printf("The change of mode for my_nt_module failed.");
     }
-    // The NT successfully changed mode of my_nt_module
 
    \endcode
  */
@@ -179,17 +177,15 @@ int32_t nt_module_change_mode(struct nt_module *module,
  *   - NT_FAILURE if the load operation cannot be finished
  * This is an example of loading the configuration data of the module in the NT library:
    \code
-    // I want to load new configuration for the TSI module and the proximity mode
     if(nt_module_load_configuration(&my_nt_module, NT_MODULE_MODE_PROXIMITY, &my_module_tsi_proximity_configuration) ==
  NT_FAILURE)
     {
       printf("Loading of new configuration for the my_nt_module failed.");
     }
-    // The NT successfully loaded the new configuration of the my_nt_module.
 
    \endcode
  */
-int32_t nt_module_load_configuration(struct nt_module *module, const enum nt_module_mode mode, const void *config);
+int32_t nt_module_load_configuration(struct nt_module *module, const enum nt_module_mode mode, void *config);
 
 /**
  * \brief Saves the module configuration for the selected mode.
@@ -204,14 +200,11 @@ int32_t nt_module_load_configuration(struct nt_module *module, const enum nt_mod
  *   - NT_FAILURE if the save operation cannot be finished
  * This is an example of saving the configuration data of the module in the NT library:
    \code
-    // I want to save the configuration of the TSI module and the proximity mode into my variable
-    // tsi_config_t my_module_tsi_proximity_configuration;
     if(nt_module_save_configuration(&my_nt_module, NT_MODULE_MODE_PROXIMITY, &my_module_tsi_proximity_configuration) ==
  NT_FAILURE)
     {
       printf("Saving of the current configuration for the my_nt_module failed.");
     }
-    // The NT successfully saved the current configuration of the my_nt_module
 
    \endcode
  */

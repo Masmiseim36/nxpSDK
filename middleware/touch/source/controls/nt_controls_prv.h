@@ -265,19 +265,19 @@ static inline uint32_t _nt_control_get_flag(const struct nt_control_data *contro
  * \internal
  * \brief Check for data everrun in the control.
  * \param control Pointer to the control data.
- * \return (int32_t) NT_FAILURE
+ * \return (int32_t)NT_FAILURE
            NT_SUCCESS
  *
  * If the control flag is not NT_CONTROL_NEW_DATA_FLAG, it resets the flag in control.
  */
 static inline int32_t _nt_control_overrun(struct nt_control_data *control)
 {
-    if ((bool)_nt_control_get_flag(control, (int32_t) NT_CONTROL_NEW_DATA_FLAG))
+    if ((bool)_nt_control_get_flag(control, (int32_t)NT_CONTROL_NEW_DATA_FLAG))
     {
-        return (int32_t) NT_FAILURE; /* overrun, data has not been processed */
+        return (int32_t)NT_FAILURE; /* overrun, data has not been processed */
     }
-    _nt_control_clear_flag(control, (int32_t) NT_CONTROL_NEW_DATA_FLAG);
-    return (int32_t) NT_SUCCESS;
+    _nt_control_clear_flag(control, (int32_t)NT_CONTROL_NEW_DATA_FLAG);
+    return (int32_t)NT_SUCCESS;
 }
 
 /**

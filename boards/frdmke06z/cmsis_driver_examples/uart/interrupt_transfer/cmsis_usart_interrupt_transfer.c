@@ -10,8 +10,8 @@
 #include "clock_config.h"
 #include "board.h"
 
-#include "fsl_uart.h"
 #include "fsl_uart_cmsis.h"
+#include "fsl_uart.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -82,13 +82,6 @@ int main(void)
 
     while (1)
     {
-        /* If g_txBuffer is empty and g_rxBuffer is full, copy g_rxBuffer to g_txBuffer. */
-        if ((!rxBufferEmpty) && (!txBufferFull))
-        {
-            memcpy(g_txBuffer, g_rxBuffer, ECHO_BUFFER_LENGTH);
-            rxBufferEmpty = true;
-            txBufferFull  = true;
-        }
         /* If g_txBuffer is empty and g_rxBuffer is full, copy g_rxBuffer to g_txBuffer. */
         if ((!rxBufferEmpty) && (!txBufferFull))
         {

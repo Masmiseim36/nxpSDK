@@ -6,12 +6,12 @@
  */
 
 #include "bootloader_config.h"
-#include "bootloader/bl_peripheral_interface.h"
+#include "bl_peripheral_interface.h"
 #include "fsl_device_registers.h"
 #include "fsl_lpspi.h"
 #include "bootloader_common.h"
 #if FSL_FEATURE_SOC_INTMUX_COUNT
-#include "intmux/fsl_intmux.h"
+#include "fsl_intmux.h"
 #endif // #if FSL_FEATURE_SOC_INTMUX_COUNT
 #include <assert.h>
 

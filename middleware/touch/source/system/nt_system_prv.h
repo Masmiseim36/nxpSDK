@@ -185,7 +185,7 @@ const struct nt_module *_nt_system_get_module(uint32_t interface_address, uint32
 void nt_error(char *file, uint32_t line);
 
 /* Get the count of pointer array terminated by NULL pointer. */
-uint32_t _nt_system_count_pointer_array(const void **pointer_array);
+uint32_t _nt_system_count_pointer_array(const void *const *pointer_array);
 
 /* System data check */
 int32_t _nt_system_check_data(const struct nt_system *system);

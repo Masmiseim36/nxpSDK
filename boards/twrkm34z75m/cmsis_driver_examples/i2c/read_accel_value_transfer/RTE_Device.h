@@ -1,44 +1,28 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2020 NXP
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of the copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
-#ifndef __RTE_DEVICE_H
-#define __RTE_DEVICE_H
+#ifndef _RTE_DEVICE_H
+#define _RTE_DEVICE_H
+
+extern void I2C0_InitPins();
+extern void I2C0_DeinitPins();
 
 /*Driver name mapping*/
-#define RTE_I2C0 1
-#define RTE_I2C0_DMA_EN 0
+/* User needs to provide the implementation of I2CX_GetFreq/I2CX_InitPins/I2CX_DeinitPins for the enabled I2C instance.
+ */
+#define RTE_I2C0            1
+#define RTE_I2C0_PIN_INIT   I2C0_InitPins
+#define RTE_I2C0_PIN_DEINIT I2C0_DeinitPins
+#define RTE_I2C0_DMA_EN     0
 
 /*I2C configuration*/
-#define RTE_I2C0_Master_DMA_BASE DMA0
-#define RTE_I2C0_Master_DMA_CH 0
+#define RTE_I2C0_Master_DMA_BASE    DMA0
+#define RTE_I2C0_Master_DMA_CH      0
 #define RTE_I2C0_Master_DMAMUX_BASE DMAMUX0
-#define RTE_I2C0_Master_PERI_SEL kDmaRequestMux0I2C0
+#define RTE_I2C0_Master_PERI_SEL    kDmaRequestMux0I2C0
 
-#endif /* __RTE_DEVICE_H */
+#endif /* _RTE_DEVICE_H */

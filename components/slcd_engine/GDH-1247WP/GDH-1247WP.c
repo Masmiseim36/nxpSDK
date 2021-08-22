@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 NXP
+ * Copyright 2019-2020 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -29,842 +29,843 @@
  id20: xx xx xx xx xx xx xx xx
 */
 #include <stdint.h>
+#include "GDH-1247WP.h"
 
-const uint16_t SLCD_NumPos1_Num0[] = {
+static const uint16_t SLCD_NumPos1_Num0[] = {
     0xaee,
     0x0,
 };
 
-const uint16_t SLCD_NumPos1_Num1[] = {
+static const uint16_t SLCD_NumPos1_Num1[] = {
     0xa48,
     0x0,
 };
 
-const uint16_t SLCD_NumPos1_Num2[] = {
+static const uint16_t SLCD_NumPos1_Num2[] = {
     0xaba,
     0x0,
 };
 
-const uint16_t SLCD_NumPos1_Num3[] = {
+static const uint16_t SLCD_NumPos1_Num3[] = {
     0xada,
     0x0,
 };
 
-const uint16_t SLCD_NumPos1_Num4[] = {
+static const uint16_t SLCD_NumPos1_Num4[] = {
     0xa5c,
     0x0,
 };
 
-const uint16_t SLCD_NumPos1_Num5[] = {
+static const uint16_t SLCD_NumPos1_Num5[] = {
     0xad6,
     0x0,
 };
 
-const uint16_t SLCD_NumPos1_Num6[] = {
+static const uint16_t SLCD_NumPos1_Num6[] = {
     0xaf6,
     0x0,
 };
 
-const uint16_t SLCD_NumPos1_Num7[] = {
+static const uint16_t SLCD_NumPos1_Num7[] = {
     0xa4a,
     0x0,
 };
 
-const uint16_t SLCD_NumPos1_Num8[] = {
+static const uint16_t SLCD_NumPos1_Num8[] = {
     0xafe,
     0x0,
 };
 
-const uint16_t SLCD_NumPos1_Num9[] = {
+static const uint16_t SLCD_NumPos1_Num9[] = {
     0xade,
     0x0,
 };
 
-const uint16_t *SLCD_NumPos1[] = {
+static const uint16_t *SLCD_NumPos1[] = {
 
     SLCD_NumPos1_Num0, SLCD_NumPos1_Num1, SLCD_NumPos1_Num2, SLCD_NumPos1_Num3, SLCD_NumPos1_Num4,
     SLCD_NumPos1_Num5, SLCD_NumPos1_Num6, SLCD_NumPos1_Num7, SLCD_NumPos1_Num8, SLCD_NumPos1_Num9,
 };
 
-const uint16_t SLCD_NumPos2_Num0[] = {
+static const uint16_t SLCD_NumPos2_Num0[] = {
     0xbee,
     0x0,
 };
 
-const uint16_t SLCD_NumPos2_Num1[] = {
+static const uint16_t SLCD_NumPos2_Num1[] = {
     0xb48,
     0x0,
 };
 
-const uint16_t SLCD_NumPos2_Num2[] = {
+static const uint16_t SLCD_NumPos2_Num2[] = {
     0xbba,
     0x0,
 };
 
-const uint16_t SLCD_NumPos2_Num3[] = {
+static const uint16_t SLCD_NumPos2_Num3[] = {
     0xbda,
     0x0,
 };
 
-const uint16_t SLCD_NumPos2_Num4[] = {
+static const uint16_t SLCD_NumPos2_Num4[] = {
     0xb5c,
     0x0,
 };
 
-const uint16_t SLCD_NumPos2_Num5[] = {
+static const uint16_t SLCD_NumPos2_Num5[] = {
     0xbd6,
     0x0,
 };
 
-const uint16_t SLCD_NumPos2_Num6[] = {
+static const uint16_t SLCD_NumPos2_Num6[] = {
     0xbf6,
     0x0,
 };
 
-const uint16_t SLCD_NumPos2_Num7[] = {
+static const uint16_t SLCD_NumPos2_Num7[] = {
     0xb4a,
     0x0,
 };
 
-const uint16_t SLCD_NumPos2_Num8[] = {
+static const uint16_t SLCD_NumPos2_Num8[] = {
     0xbfe,
     0x0,
 };
 
-const uint16_t SLCD_NumPos2_Num9[] = {
+static const uint16_t SLCD_NumPos2_Num9[] = {
     0xbde,
     0x0,
 };
 
-const uint16_t *SLCD_NumPos2[] = {
+static const uint16_t *SLCD_NumPos2[] = {
 
     SLCD_NumPos2_Num0, SLCD_NumPos2_Num1, SLCD_NumPos2_Num2, SLCD_NumPos2_Num3, SLCD_NumPos2_Num4,
     SLCD_NumPos2_Num5, SLCD_NumPos2_Num6, SLCD_NumPos2_Num7, SLCD_NumPos2_Num8, SLCD_NumPos2_Num9,
 };
 
-const uint16_t SLCD_NumPos3_Num0[] = {
+static const uint16_t SLCD_NumPos3_Num0[] = {
     0xcee,
     0x0,
 };
 
-const uint16_t SLCD_NumPos3_Num1[] = {
+static const uint16_t SLCD_NumPos3_Num1[] = {
     0xc48,
     0x0,
 };
 
-const uint16_t SLCD_NumPos3_Num2[] = {
+static const uint16_t SLCD_NumPos3_Num2[] = {
     0xcba,
     0x0,
 };
 
-const uint16_t SLCD_NumPos3_Num3[] = {
+static const uint16_t SLCD_NumPos3_Num3[] = {
     0xcda,
     0x0,
 };
 
-const uint16_t SLCD_NumPos3_Num4[] = {
+static const uint16_t SLCD_NumPos3_Num4[] = {
     0xc5c,
     0x0,
 };
 
-const uint16_t SLCD_NumPos3_Num5[] = {
+static const uint16_t SLCD_NumPos3_Num5[] = {
     0xcd6,
     0x0,
 };
 
-const uint16_t SLCD_NumPos3_Num6[] = {
+static const uint16_t SLCD_NumPos3_Num6[] = {
     0xcf6,
     0x0,
 };
 
-const uint16_t SLCD_NumPos3_Num7[] = {
+static const uint16_t SLCD_NumPos3_Num7[] = {
     0xc4a,
     0x0,
 };
 
-const uint16_t SLCD_NumPos3_Num8[] = {
+static const uint16_t SLCD_NumPos3_Num8[] = {
     0xcfe,
     0x0,
 };
 
-const uint16_t SLCD_NumPos3_Num9[] = {
+static const uint16_t SLCD_NumPos3_Num9[] = {
     0xcde,
     0x0,
 };
 
-const uint16_t *SLCD_NumPos3[] = {
+static const uint16_t *SLCD_NumPos3[] = {
 
     SLCD_NumPos3_Num0, SLCD_NumPos3_Num1, SLCD_NumPos3_Num2, SLCD_NumPos3_Num3, SLCD_NumPos3_Num4,
     SLCD_NumPos3_Num5, SLCD_NumPos3_Num6, SLCD_NumPos3_Num7, SLCD_NumPos3_Num8, SLCD_NumPos3_Num9,
 };
 
-const uint16_t SLCD_NumPos4_Num0[] = {
+static const uint16_t SLCD_NumPos4_Num0[] = {
     0xdee,
     0x0,
 };
 
-const uint16_t SLCD_NumPos4_Num1[] = {
+static const uint16_t SLCD_NumPos4_Num1[] = {
     0xd48,
     0x0,
 };
 
-const uint16_t SLCD_NumPos4_Num2[] = {
+static const uint16_t SLCD_NumPos4_Num2[] = {
     0xdba,
     0x0,
 };
 
-const uint16_t SLCD_NumPos4_Num3[] = {
+static const uint16_t SLCD_NumPos4_Num3[] = {
     0xdda,
     0x0,
 };
 
-const uint16_t SLCD_NumPos4_Num4[] = {
+static const uint16_t SLCD_NumPos4_Num4[] = {
     0xd5c,
     0x0,
 };
 
-const uint16_t SLCD_NumPos4_Num5[] = {
+static const uint16_t SLCD_NumPos4_Num5[] = {
     0xdd6,
     0x0,
 };
 
-const uint16_t SLCD_NumPos4_Num6[] = {
+static const uint16_t SLCD_NumPos4_Num6[] = {
     0xdf6,
     0x0,
 };
 
-const uint16_t SLCD_NumPos4_Num7[] = {
+static const uint16_t SLCD_NumPos4_Num7[] = {
     0xd4a,
     0x0,
 };
 
-const uint16_t SLCD_NumPos4_Num8[] = {
+static const uint16_t SLCD_NumPos4_Num8[] = {
     0xdfe,
     0x0,
 };
 
-const uint16_t SLCD_NumPos4_Num9[] = {
+static const uint16_t SLCD_NumPos4_Num9[] = {
     0xdde,
     0x0,
 };
 
-const uint16_t *SLCD_NumPos4[] = {
+static const uint16_t *SLCD_NumPos4[] = {
 
     SLCD_NumPos4_Num0, SLCD_NumPos4_Num1, SLCD_NumPos4_Num2, SLCD_NumPos4_Num3, SLCD_NumPos4_Num4,
     SLCD_NumPos4_Num5, SLCD_NumPos4_Num6, SLCD_NumPos4_Num7, SLCD_NumPos4_Num8, SLCD_NumPos4_Num9,
 };
 
-const uint16_t SLCD_NumPos5_Num0[] = {
+static const uint16_t SLCD_NumPos5_Num0[] = {
     0xeee,
     0x0,
 };
 
-const uint16_t SLCD_NumPos5_Num1[] = {
+static const uint16_t SLCD_NumPos5_Num1[] = {
     0xe48,
     0x0,
 };
 
-const uint16_t SLCD_NumPos5_Num2[] = {
+static const uint16_t SLCD_NumPos5_Num2[] = {
     0xeba,
     0x0,
 };
 
-const uint16_t SLCD_NumPos5_Num3[] = {
+static const uint16_t SLCD_NumPos5_Num3[] = {
     0xeda,
     0x0,
 };
 
-const uint16_t SLCD_NumPos5_Num4[] = {
+static const uint16_t SLCD_NumPos5_Num4[] = {
     0xe5c,
     0x0,
 };
 
-const uint16_t SLCD_NumPos5_Num5[] = {
+static const uint16_t SLCD_NumPos5_Num5[] = {
     0xed6,
     0x0,
 };
 
-const uint16_t SLCD_NumPos5_Num6[] = {
+static const uint16_t SLCD_NumPos5_Num6[] = {
     0xef6,
     0x0,
 };
 
-const uint16_t SLCD_NumPos5_Num7[] = {
+static const uint16_t SLCD_NumPos5_Num7[] = {
     0xe4a,
     0x0,
 };
 
-const uint16_t SLCD_NumPos5_Num8[] = {
+static const uint16_t SLCD_NumPos5_Num8[] = {
     0xefe,
     0x0,
 };
 
-const uint16_t SLCD_NumPos5_Num9[] = {
+static const uint16_t SLCD_NumPos5_Num9[] = {
     0xede,
     0x0,
 };
 
-const uint16_t *SLCD_NumPos5[] = {
+static const uint16_t *SLCD_NumPos5[] = {
 
     SLCD_NumPos5_Num0, SLCD_NumPos5_Num1, SLCD_NumPos5_Num2, SLCD_NumPos5_Num3, SLCD_NumPos5_Num4,
     SLCD_NumPos5_Num5, SLCD_NumPos5_Num6, SLCD_NumPos5_Num7, SLCD_NumPos5_Num8, SLCD_NumPos5_Num9,
 };
 
-const uint16_t SLCD_NumPos6_Num0[] = {
+static const uint16_t SLCD_NumPos6_Num0[] = {
     0xfee,
     0x0,
 };
 
-const uint16_t SLCD_NumPos6_Num1[] = {
+static const uint16_t SLCD_NumPos6_Num1[] = {
     0xf48,
     0x0,
 };
 
-const uint16_t SLCD_NumPos6_Num2[] = {
+static const uint16_t SLCD_NumPos6_Num2[] = {
     0xfba,
     0x0,
 };
 
-const uint16_t SLCD_NumPos6_Num3[] = {
+static const uint16_t SLCD_NumPos6_Num3[] = {
     0xfda,
     0x0,
 };
 
-const uint16_t SLCD_NumPos6_Num4[] = {
+static const uint16_t SLCD_NumPos6_Num4[] = {
     0xf5c,
     0x0,
 };
 
-const uint16_t SLCD_NumPos6_Num5[] = {
+static const uint16_t SLCD_NumPos6_Num5[] = {
     0xfd6,
     0x0,
 };
 
-const uint16_t SLCD_NumPos6_Num6[] = {
+static const uint16_t SLCD_NumPos6_Num6[] = {
     0xff6,
     0x0,
 };
 
-const uint16_t SLCD_NumPos6_Num7[] = {
+static const uint16_t SLCD_NumPos6_Num7[] = {
     0xf4a,
     0x0,
 };
 
-const uint16_t SLCD_NumPos6_Num8[] = {
+static const uint16_t SLCD_NumPos6_Num8[] = {
     0xffe,
     0x0,
 };
 
-const uint16_t SLCD_NumPos6_Num9[] = {
+static const uint16_t SLCD_NumPos6_Num9[] = {
     0xfde,
     0x0,
 };
 
-const uint16_t *SLCD_NumPos6[] = {
+static const uint16_t *SLCD_NumPos6[] = {
 
     SLCD_NumPos6_Num0, SLCD_NumPos6_Num1, SLCD_NumPos6_Num2, SLCD_NumPos6_Num3, SLCD_NumPos6_Num4,
     SLCD_NumPos6_Num5, SLCD_NumPos6_Num6, SLCD_NumPos6_Num7, SLCD_NumPos6_Num8, SLCD_NumPos6_Num9,
 };
 
-const uint16_t SLCD_NumPos7_Num0[] = {
+static const uint16_t SLCD_NumPos7_Num0[] = {
     0x10ee,
     0x0,
 };
 
-const uint16_t SLCD_NumPos7_Num1[] = {
+static const uint16_t SLCD_NumPos7_Num1[] = {
     0x1048,
     0x0,
 };
 
-const uint16_t SLCD_NumPos7_Num2[] = {
+static const uint16_t SLCD_NumPos7_Num2[] = {
     0x10ba,
     0x0,
 };
 
-const uint16_t SLCD_NumPos7_Num3[] = {
+static const uint16_t SLCD_NumPos7_Num3[] = {
     0x10da,
     0x0,
 };
 
-const uint16_t SLCD_NumPos7_Num4[] = {
+static const uint16_t SLCD_NumPos7_Num4[] = {
     0x105c,
     0x0,
 };
 
-const uint16_t SLCD_NumPos7_Num5[] = {
+static const uint16_t SLCD_NumPos7_Num5[] = {
     0x10d6,
     0x0,
 };
 
-const uint16_t SLCD_NumPos7_Num6[] = {
+static const uint16_t SLCD_NumPos7_Num6[] = {
     0x10f6,
     0x0,
 };
 
-const uint16_t SLCD_NumPos7_Num7[] = {
+static const uint16_t SLCD_NumPos7_Num7[] = {
     0x104a,
     0x0,
 };
 
-const uint16_t SLCD_NumPos7_Num8[] = {
+static const uint16_t SLCD_NumPos7_Num8[] = {
     0x10fe,
     0x0,
 };
 
-const uint16_t SLCD_NumPos7_Num9[] = {
+static const uint16_t SLCD_NumPos7_Num9[] = {
     0x10de,
     0x0,
 };
 
-const uint16_t *SLCD_NumPos7[] = {
+static const uint16_t *SLCD_NumPos7[] = {
 
     SLCD_NumPos7_Num0, SLCD_NumPos7_Num1, SLCD_NumPos7_Num2, SLCD_NumPos7_Num3, SLCD_NumPos7_Num4,
     SLCD_NumPos7_Num5, SLCD_NumPos7_Num6, SLCD_NumPos7_Num7, SLCD_NumPos7_Num8, SLCD_NumPos7_Num9,
 };
 
-const uint16_t SLCD_NumPos8_Num0[] = {
+static const uint16_t SLCD_NumPos8_Num0[] = {
     0x11ee,
     0x0,
 };
 
-const uint16_t SLCD_NumPos8_Num1[] = {
+static const uint16_t SLCD_NumPos8_Num1[] = {
     0x1148,
     0x0,
 };
 
-const uint16_t SLCD_NumPos8_Num2[] = {
+static const uint16_t SLCD_NumPos8_Num2[] = {
     0x11ba,
     0x0,
 };
 
-const uint16_t SLCD_NumPos8_Num3[] = {
+static const uint16_t SLCD_NumPos8_Num3[] = {
     0x11da,
     0x0,
 };
 
-const uint16_t SLCD_NumPos8_Num4[] = {
+static const uint16_t SLCD_NumPos8_Num4[] = {
     0x115c,
     0x0,
 };
 
-const uint16_t SLCD_NumPos8_Num5[] = {
+static const uint16_t SLCD_NumPos8_Num5[] = {
     0x11d6,
     0x0,
 };
 
-const uint16_t SLCD_NumPos8_Num6[] = {
+static const uint16_t SLCD_NumPos8_Num6[] = {
     0x11f6,
     0x0,
 };
 
-const uint16_t SLCD_NumPos8_Num7[] = {
+static const uint16_t SLCD_NumPos8_Num7[] = {
     0x114a,
     0x0,
 };
 
-const uint16_t SLCD_NumPos8_Num8[] = {
+static const uint16_t SLCD_NumPos8_Num8[] = {
     0x11fe,
     0x0,
 };
 
-const uint16_t SLCD_NumPos8_Num9[] = {
+static const uint16_t SLCD_NumPos8_Num9[] = {
     0x11de,
     0x0,
 };
 
-const uint16_t *SLCD_NumPos8[] = {
+static const uint16_t *SLCD_NumPos8[] = {
 
     SLCD_NumPos8_Num0, SLCD_NumPos8_Num1, SLCD_NumPos8_Num2, SLCD_NumPos8_Num3, SLCD_NumPos8_Num4,
     SLCD_NumPos8_Num5, SLCD_NumPos8_Num6, SLCD_NumPos8_Num7, SLCD_NumPos8_Num8, SLCD_NumPos8_Num9,
 };
 
-const uint16_t SLCD_NumPos9_Num0[] = {
+static const uint16_t SLCD_NumPos9_Num0[] = {
     0x12ee,
     0x0,
 };
 
-const uint16_t SLCD_NumPos9_Num1[] = {
+static const uint16_t SLCD_NumPos9_Num1[] = {
     0x1248,
     0x0,
 };
 
-const uint16_t SLCD_NumPos9_Num2[] = {
+static const uint16_t SLCD_NumPos9_Num2[] = {
     0x12ba,
     0x0,
 };
 
-const uint16_t SLCD_NumPos9_Num3[] = {
+static const uint16_t SLCD_NumPos9_Num3[] = {
     0x12da,
     0x0,
 };
 
-const uint16_t SLCD_NumPos9_Num4[] = {
+static const uint16_t SLCD_NumPos9_Num4[] = {
     0x125c,
     0x0,
 };
 
-const uint16_t SLCD_NumPos9_Num5[] = {
+static const uint16_t SLCD_NumPos9_Num5[] = {
     0x12d6,
     0x0,
 };
 
-const uint16_t SLCD_NumPos9_Num6[] = {
+static const uint16_t SLCD_NumPos9_Num6[] = {
     0x12f6,
     0x0,
 };
 
-const uint16_t SLCD_NumPos9_Num7[] = {
+static const uint16_t SLCD_NumPos9_Num7[] = {
     0x124a,
     0x0,
 };
 
-const uint16_t SLCD_NumPos9_Num8[] = {
+static const uint16_t SLCD_NumPos9_Num8[] = {
     0x12fe,
     0x0,
 };
 
-const uint16_t SLCD_NumPos9_Num9[] = {
+static const uint16_t SLCD_NumPos9_Num9[] = {
     0x12de,
     0x0,
 };
 
-const uint16_t *SLCD_NumPos9[] = {
+static const uint16_t *SLCD_NumPos9[] = {
 
     SLCD_NumPos9_Num0, SLCD_NumPos9_Num1, SLCD_NumPos9_Num2, SLCD_NumPos9_Num3, SLCD_NumPos9_Num4,
     SLCD_NumPos9_Num5, SLCD_NumPos9_Num6, SLCD_NumPos9_Num7, SLCD_NumPos9_Num8, SLCD_NumPos9_Num9,
 };
 
-const uint16_t SLCD_NumPos10_Num0[] = {
+static const uint16_t SLCD_NumPos10_Num0[] = {
     0x5ee,
     0x0,
 };
 
-const uint16_t SLCD_NumPos10_Num1[] = {
+static const uint16_t SLCD_NumPos10_Num1[] = {
     0x548,
     0x0,
 };
 
-const uint16_t SLCD_NumPos10_Num2[] = {
+static const uint16_t SLCD_NumPos10_Num2[] = {
     0x5d6,
     0x0,
 };
 
-const uint16_t SLCD_NumPos10_Num3[] = {
+static const uint16_t SLCD_NumPos10_Num3[] = {
     0x5da,
     0x0,
 };
 
-const uint16_t SLCD_NumPos10_Num4[] = {
+static const uint16_t SLCD_NumPos10_Num4[] = {
     0x578,
     0x0,
 };
 
-const uint16_t SLCD_NumPos10_Num5[] = {
+static const uint16_t SLCD_NumPos10_Num5[] = {
     0x5ba,
     0x0,
 };
 
-const uint16_t SLCD_NumPos10_Num6[] = {
+static const uint16_t SLCD_NumPos10_Num6[] = {
     0x5be,
     0x0,
 };
 
-const uint16_t SLCD_NumPos10_Num7[] = {
+static const uint16_t SLCD_NumPos10_Num7[] = {
     0x5c8,
     0x0,
 };
 
-const uint16_t SLCD_NumPos10_Num8[] = {
+static const uint16_t SLCD_NumPos10_Num8[] = {
     0x5fe,
     0x0,
 };
 
-const uint16_t SLCD_NumPos10_Num9[] = {
+static const uint16_t SLCD_NumPos10_Num9[] = {
     0x5fa,
     0x0,
 };
 
-const uint16_t *SLCD_NumPos10[] = {
+static const uint16_t *SLCD_NumPos10[] = {
 
     SLCD_NumPos10_Num0, SLCD_NumPos10_Num1, SLCD_NumPos10_Num2, SLCD_NumPos10_Num3, SLCD_NumPos10_Num4,
     SLCD_NumPos10_Num5, SLCD_NumPos10_Num6, SLCD_NumPos10_Num7, SLCD_NumPos10_Num8, SLCD_NumPos10_Num9,
 };
 
-const uint16_t SLCD_NumPos11_Num0[] = {
+static const uint16_t SLCD_NumPos11_Num0[] = {
     0x4ee,
     0x0,
 };
 
-const uint16_t SLCD_NumPos11_Num1[] = {
+static const uint16_t SLCD_NumPos11_Num1[] = {
     0x448,
     0x0,
 };
 
-const uint16_t SLCD_NumPos11_Num2[] = {
+static const uint16_t SLCD_NumPos11_Num2[] = {
     0x4d6,
     0x0,
 };
 
-const uint16_t SLCD_NumPos11_Num3[] = {
+static const uint16_t SLCD_NumPos11_Num3[] = {
     0x4da,
     0x0,
 };
 
-const uint16_t SLCD_NumPos11_Num4[] = {
+static const uint16_t SLCD_NumPos11_Num4[] = {
     0x478,
     0x0,
 };
 
-const uint16_t SLCD_NumPos11_Num5[] = {
+static const uint16_t SLCD_NumPos11_Num5[] = {
     0x4ba,
     0x0,
 };
 
-const uint16_t SLCD_NumPos11_Num6[] = {
+static const uint16_t SLCD_NumPos11_Num6[] = {
     0x4be,
     0x0,
 };
 
-const uint16_t SLCD_NumPos11_Num7[] = {
+static const uint16_t SLCD_NumPos11_Num7[] = {
     0x4c8,
     0x0,
 };
 
-const uint16_t SLCD_NumPos11_Num8[] = {
+static const uint16_t SLCD_NumPos11_Num8[] = {
     0x4fe,
     0x0,
 };
 
-const uint16_t SLCD_NumPos11_Num9[] = {
+static const uint16_t SLCD_NumPos11_Num9[] = {
     0x4fa,
     0x0,
 };
 
-const uint16_t *SLCD_NumPos11[] = {
+static const uint16_t *SLCD_NumPos11[] = {
 
     SLCD_NumPos11_Num0, SLCD_NumPos11_Num1, SLCD_NumPos11_Num2, SLCD_NumPos11_Num3, SLCD_NumPos11_Num4,
     SLCD_NumPos11_Num5, SLCD_NumPos11_Num6, SLCD_NumPos11_Num7, SLCD_NumPos11_Num8, SLCD_NumPos11_Num9,
 };
 
-const uint16_t SLCD_NumPos12_Num0[] = {
+static const uint16_t SLCD_NumPos12_Num0[] = {
     0x3ee,
     0x0,
 };
 
-const uint16_t SLCD_NumPos12_Num1[] = {
+static const uint16_t SLCD_NumPos12_Num1[] = {
     0x348,
     0x0,
 };
 
-const uint16_t SLCD_NumPos12_Num2[] = {
+static const uint16_t SLCD_NumPos12_Num2[] = {
     0x3d6,
     0x0,
 };
 
-const uint16_t SLCD_NumPos12_Num3[] = {
+static const uint16_t SLCD_NumPos12_Num3[] = {
     0x3da,
     0x0,
 };
 
-const uint16_t SLCD_NumPos12_Num4[] = {
+static const uint16_t SLCD_NumPos12_Num4[] = {
     0x378,
     0x0,
 };
 
-const uint16_t SLCD_NumPos12_Num5[] = {
+static const uint16_t SLCD_NumPos12_Num5[] = {
     0x3ba,
     0x0,
 };
 
-const uint16_t SLCD_NumPos12_Num6[] = {
+static const uint16_t SLCD_NumPos12_Num6[] = {
     0x3be,
     0x0,
 };
 
-const uint16_t SLCD_NumPos12_Num7[] = {
+static const uint16_t SLCD_NumPos12_Num7[] = {
     0x3c8,
     0x0,
 };
 
-const uint16_t SLCD_NumPos12_Num8[] = {
+static const uint16_t SLCD_NumPos12_Num8[] = {
     0x3fe,
     0x0,
 };
 
-const uint16_t SLCD_NumPos12_Num9[] = {
+static const uint16_t SLCD_NumPos12_Num9[] = {
     0x3fa,
     0x0,
 };
 
-const uint16_t *SLCD_NumPos12[] = {
+static const uint16_t *SLCD_NumPos12[] = {
 
     SLCD_NumPos12_Num0, SLCD_NumPos12_Num1, SLCD_NumPos12_Num2, SLCD_NumPos12_Num3, SLCD_NumPos12_Num4,
     SLCD_NumPos12_Num5, SLCD_NumPos12_Num6, SLCD_NumPos12_Num7, SLCD_NumPos12_Num8, SLCD_NumPos12_Num9,
 };
 
-const uint16_t SLCD_NumPos13_Num0[] = {
+static const uint16_t SLCD_NumPos13_Num0[] = {
     0x2ee,
     0x0,
 };
 
-const uint16_t SLCD_NumPos13_Num1[] = {
+static const uint16_t SLCD_NumPos13_Num1[] = {
     0x248,
     0x0,
 };
 
-const uint16_t SLCD_NumPos13_Num2[] = {
+static const uint16_t SLCD_NumPos13_Num2[] = {
     0x2d6,
     0x0,
 };
 
-const uint16_t SLCD_NumPos13_Num3[] = {
+static const uint16_t SLCD_NumPos13_Num3[] = {
     0x2da,
     0x0,
 };
 
-const uint16_t SLCD_NumPos13_Num4[] = {
+static const uint16_t SLCD_NumPos13_Num4[] = {
     0x278,
     0x0,
 };
 
-const uint16_t SLCD_NumPos13_Num5[] = {
+static const uint16_t SLCD_NumPos13_Num5[] = {
     0x2ba,
     0x0,
 };
 
-const uint16_t SLCD_NumPos13_Num6[] = {
+static const uint16_t SLCD_NumPos13_Num6[] = {
     0x2be,
     0x0,
 };
 
-const uint16_t SLCD_NumPos13_Num7[] = {
+static const uint16_t SLCD_NumPos13_Num7[] = {
     0x2c8,
     0x0,
 };
 
-const uint16_t SLCD_NumPos13_Num8[] = {
+static const uint16_t SLCD_NumPos13_Num8[] = {
     0x2fe,
     0x0,
 };
 
-const uint16_t SLCD_NumPos13_Num9[] = {
+static const uint16_t SLCD_NumPos13_Num9[] = {
     0x2fa,
     0x0,
 };
 
-const uint16_t *SLCD_NumPos13[] = {
+static const uint16_t *SLCD_NumPos13[] = {
 
     SLCD_NumPos13_Num0, SLCD_NumPos13_Num1, SLCD_NumPos13_Num2, SLCD_NumPos13_Num3, SLCD_NumPos13_Num4,
     SLCD_NumPos13_Num5, SLCD_NumPos13_Num6, SLCD_NumPos13_Num7, SLCD_NumPos13_Num8, SLCD_NumPos13_Num9,
 };
 
-const uint16_t SLCD_NumPos14_Num0[] = {
+static const uint16_t SLCD_NumPos14_Num0[] = {
     0x1ee,
     0x0,
 };
 
-const uint16_t SLCD_NumPos14_Num1[] = {
+static const uint16_t SLCD_NumPos14_Num1[] = {
     0x148,
     0x0,
 };
 
-const uint16_t SLCD_NumPos14_Num2[] = {
+static const uint16_t SLCD_NumPos14_Num2[] = {
     0x1d6,
     0x0,
 };
 
-const uint16_t SLCD_NumPos14_Num3[] = {
+static const uint16_t SLCD_NumPos14_Num3[] = {
     0x1da,
     0x0,
 };
 
-const uint16_t SLCD_NumPos14_Num4[] = {
+static const uint16_t SLCD_NumPos14_Num4[] = {
     0x178,
     0x0,
 };
 
-const uint16_t SLCD_NumPos14_Num5[] = {
+static const uint16_t SLCD_NumPos14_Num5[] = {
     0x1ba,
     0x0,
 };
 
-const uint16_t SLCD_NumPos14_Num6[] = {
+static const uint16_t SLCD_NumPos14_Num6[] = {
     0x1be,
     0x0,
 };
 
-const uint16_t SLCD_NumPos14_Num7[] = {
+static const uint16_t SLCD_NumPos14_Num7[] = {
     0x1c8,
     0x0,
 };
 
-const uint16_t SLCD_NumPos14_Num8[] = {
+static const uint16_t SLCD_NumPos14_Num8[] = {
     0x1fe,
     0x0,
 };
 
-const uint16_t SLCD_NumPos14_Num9[] = {
+static const uint16_t SLCD_NumPos14_Num9[] = {
     0x1fa,
     0x0,
 };
 
-const uint16_t *SLCD_NumPos14[] = {
+static const uint16_t *SLCD_NumPos14[] = {
 
     SLCD_NumPos14_Num0, SLCD_NumPos14_Num1, SLCD_NumPos14_Num2, SLCD_NumPos14_Num3, SLCD_NumPos14_Num4,
     SLCD_NumPos14_Num5, SLCD_NumPos14_Num6, SLCD_NumPos14_Num7, SLCD_NumPos14_Num8, SLCD_NumPos14_Num9,
 };
 
-const uint16_t SLCD_NumPos15_Num0[] = {
+static const uint16_t SLCD_NumPos15_Num0[] = {
     0x677,
     0x0,
 };
 
-const uint16_t SLCD_NumPos15_Num1[] = {
+static const uint16_t SLCD_NumPos15_Num1[] = {
     0x624,
     0x0,
 };
 
-const uint16_t SLCD_NumPos15_Num2[] = {
+static const uint16_t SLCD_NumPos15_Num2[] = {
     0x66b,
     0x0,
 };
 
-const uint16_t SLCD_NumPos15_Num3[] = {
+static const uint16_t SLCD_NumPos15_Num3[] = {
     0x66d,
     0x0,
 };
 
-const uint16_t SLCD_NumPos15_Num4[] = {
+static const uint16_t SLCD_NumPos15_Num4[] = {
     0x63c,
     0x0,
 };
 
-const uint16_t SLCD_NumPos15_Num5[] = {
+static const uint16_t SLCD_NumPos15_Num5[] = {
     0x65d,
     0x0,
 };
 
-const uint16_t SLCD_NumPos15_Num6[] = {
+static const uint16_t SLCD_NumPos15_Num6[] = {
     0x65f,
     0x0,
 };
 
-const uint16_t SLCD_NumPos15_Num7[] = {
+static const uint16_t SLCD_NumPos15_Num7[] = {
     0x664,
     0x0,
 };
 
-const uint16_t SLCD_NumPos15_Num8[] = {
+static const uint16_t SLCD_NumPos15_Num8[] = {
     0x67f,
     0x0,
 };
 
-const uint16_t SLCD_NumPos15_Num9[] = {
+static const uint16_t SLCD_NumPos15_Num9[] = {
     0x67d,
     0x0,
 };
 
-const uint16_t *SLCD_NumPos15[] = {
+static const uint16_t *SLCD_NumPos15[] = {
     SLCD_NumPos15_Num0, SLCD_NumPos15_Num1, SLCD_NumPos15_Num2, SLCD_NumPos15_Num3, SLCD_NumPos15_Num4,
     SLCD_NumPos15_Num5, SLCD_NumPos15_Num6, SLCD_NumPos15_Num7, SLCD_NumPos15_Num8, SLCD_NumPos15_Num9,
 };

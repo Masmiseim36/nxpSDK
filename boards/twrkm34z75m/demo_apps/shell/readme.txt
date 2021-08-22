@@ -1,14 +1,19 @@
 Overview
 ========
 The Shell Demo application demonstrates to control Leds by commands.
+Note: Please input one character at a time. If you input too many characters each time, the receiver may overflow
+because the low level UART uses simple polling way for receiving. If you want to try inputting many characters each time,
+just define DEBUG_CONSOLE_TRANSFER_NON_BLOCKING in your project to use the advanced debug console utility.
+Besides, the demo does not support semihosting mode. The shell component is based on debug console and 
+serial manager. When semihosting is used, debug console and serial manager are bypassed. So the shell demo cannot
+work with semihosting.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench 7.80.4
-- Keil MDK 5.21a
-- GCC ARM Embedded 2016-5.4-q3
-- Kinetis Development Studio IDE 3.2.0
-- MCUXpresso0.8
+- IAR embedded Workbench  9.10.2
+- Keil MDK  5.34
+- GCC ARM Embedded  10.2.1
+- MCUXpresso  11.4.0
 
 Hardware requirements
 =====================
@@ -37,8 +42,8 @@ Running the demo
 When the example runs successfully, the following message is displayed in the terminal:
 
 ~~~~~~~~~~~~~~~~~~~~~
-SHELL (build: Jan 25 2016)
-Copyright (c) 2015 Freescale Semiconductor
+SHELL (build: Jun 19 2020)
+Copyright 2020 NXP
 
 SHELL>> help
 
@@ -61,6 +66,9 @@ SHELL>> led 4 on
 LED index is wrongs
 SHELL>>
 ~~~~~~~~~~~~~~~~~~~~~
-Customization options
-=====================
 
+Note:
+    1,The shell information "SHELL (build: Jun 19 2020)" may be different, which depends on the compile date.
+    2,If the command 'led x on'/'led x off' run success, the corresponding LEDx on board will turn on/turn off.
+      But the valid "Led index" may be different, which depends how many LEDs are available on the specific board.
+      For example: one board only have LED1/LED2, then shell demo will print "LED index is wrong" for all led index bigger than 2.

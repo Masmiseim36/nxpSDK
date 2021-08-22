@@ -45,6 +45,10 @@ Prepare the Demo
 2.  Download the program to the target board.
 3.  Continue with help of the AN4255.pdf, AN4265.pdf, AN4847.pdf for more details about the  metering  library usage.
 
+Filter-Based Metering Algorithms Configuration Tool:
+================
+Filter-Based Metering Algorithms Configuration Tool enables to calculates the metering parameters and generates metering configuration. The tool can be downloaded from: https://cache.nxp.com/secured/assets/documents/en/application-note-software/AN4265SW.zip?__gda__=1624456565_67a51c25a902c782827fad361d35eb20&fileExt=.zip 
+
 Example list:
 ================
 meterlib1ph_test.c 

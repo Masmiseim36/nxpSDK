@@ -1,56 +1,33 @@
 /*
  * Copyright (c) 2013 - 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2018 NXP
+ * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of the copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #include "fsl_debug_console.h"
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #include "fsl_pdb.h"
 #include "fsl_adc16.h"
 
-#include "pin_mux.h"
-#include "clock_config.h"
-#include "fsl_xbar.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_PDB_BASE PDB0
-#define DEMO_PDB_IRQ_ID PDB0_IRQn
+#define DEMO_PDB_BASE        PDB0
+#define DEMO_PDB_IRQ_ID      PDB0_IRQn
 #define DEMO_PDB_IRQ_HANDLER PDB0_IRQHandler
 
-#define DEMO_PDB_ADC_TRIGGER_CHANNEL 0U    /* For ADC0. */
-#define DEMO_PDB_ADC_PRETRIGGER_CHANNEL 0U /* For ADC0_SC1[0]. */
+#define DEMO_PDB_ADC_TRIGGER_CHANNEL    kPDB_ADCTriggerChannel0 /* For ADC0. */
+#define DEMO_PDB_ADC_PRETRIGGER_CHANNEL kPDB_ADCPreTrigger0     /* For ADC0_SC1[0]. */
 
-#define DEMO_ADC_BASE ADC0
+#define DEMO_ADC_BASE          ADC0
 #define DEMO_ADC_CHANNEL_GROUP 0U
-#define DEMO_ADC_USER_CHANNEL 8U
-#define DEMO_ADC_IRQ_ID ADC0_IRQn
-#define DEMO_ADC_IRQ_HANDLER ADC0_IRQHandler
+#define DEMO_ADC_USER_CHANNEL  8U
+#define DEMO_ADC_IRQ_ID        ADC0_IRQn
+#define DEMO_ADC_IRQ_HANDLER   ADC0_IRQHandler
 
 /*******************************************************************************
  * Prototypes
@@ -69,6 +46,7 @@ volatile bool g_PdbDelayInterruptFlag;
 volatile uint32_t g_AdcInterruptCounter;
 volatile bool g_AdcInterruptFlag;
 volatile uint32_t g_AdcConvValue;
+const uint32_t g_Adc16_12bitFullRange = 4096U;
 
 /*******************************************************************************
  * Code
@@ -76,17 +54,8 @@ volatile uint32_t g_AdcConvValue;
 
 void BOARD_ConfigTriggerSource(void)
 {
-    /* Structure of initialize XBAR. */
-    xbar_control_config_t xbarConfig;
-
-    /* Init xbar module. */
-    XBAR_Init(XBAR);
-    /* Configure the XBAR signal connections. */
-    XBAR_SetSignalsConnection(XBAR, kXBAR_InputPdb0Ch0Pretrigger0, kXBAR_OutputAdcTrgA);
-    /* Configure the XBAR interrupt. */
-    xbarConfig.activeEdge = kXBAR_EdgeRising;
-    xbarConfig.requestType = kXBAR_RequestDisable;
-    XBAR_SetOutputSignalConfig(XBAR, kXBAR_OutputAdcTrgA, &xbarConfig);
+    /* Configure PDB to trigger ADC directly. */
+    SIM->MISC_CTL |= SIM_MISC_CTL_PDBADCTRG_MASK;
 }
 void static DEMO_InitPDB_ADC(void)
 {
@@ -119,7 +88,7 @@ void static DEMO_InitPDB_ADC(void)
 #endif /* FSL_FEATURE_ADC16_HAS_CALIBRATION */
     ADC16_EnableHardwareTrigger(DEMO_ADC_BASE, true);
 
-    adc16ChannelConfigStruct.channelNumber = DEMO_ADC_USER_CHANNEL;
+    adc16ChannelConfigStruct.channelNumber                        = DEMO_ADC_USER_CHANNEL;
     adc16ChannelConfigStruct.enableInterruptOnConversionCompleted = true; /* Enable the interrupt. */
 #if defined(FSL_FEATURE_ADC16_HAS_DIFF_MODE) && FSL_FEATURE_ADC16_HAS_DIFF_MODE
     adc16ChannelConfigStruct.enableDifferentialConversion = false;
@@ -135,6 +104,7 @@ void DEMO_PDB_IRQ_HANDLER(void)
     PDB_ClearStatusFlags(DEMO_PDB_BASE, kPDB_DelayEventFlag);
     g_PdbDelayInterruptCounter++;
     g_PdbDelayInterruptFlag = true;
+    SDK_ISR_EXIT_BARRIER;
 }
 
 /*!
@@ -146,6 +116,7 @@ void DEMO_ADC_IRQ_HANDLER(void)
     g_AdcConvValue = ADC16_GetChannelConversionValue(DEMO_ADC_BASE, DEMO_ADC_CHANNEL_GROUP);
     g_AdcInterruptCounter++;
     g_AdcInterruptFlag = true;
+    SDK_ISR_EXIT_BARRIER;
 }
 
 /*!
@@ -184,8 +155,8 @@ int main(void)
     PDB_EnableInterrupts(DEMO_PDB_BASE, kPDB_DelayInterruptEnable);
 
     /* Configure the ADC Pre-Trigger. */
-    pdbAdcPreTriggerConfigStruct.enablePreTriggerMask = 1U << DEMO_PDB_ADC_PRETRIGGER_CHANNEL;
-    pdbAdcPreTriggerConfigStruct.enableOutputMask = 1U << DEMO_PDB_ADC_PRETRIGGER_CHANNEL;
+    pdbAdcPreTriggerConfigStruct.enablePreTriggerMask          = 1U << DEMO_PDB_ADC_PRETRIGGER_CHANNEL;
+    pdbAdcPreTriggerConfigStruct.enableOutputMask              = 1U << DEMO_PDB_ADC_PRETRIGGER_CHANNEL;
     pdbAdcPreTriggerConfigStruct.enableBackToBackOperationMask = 0U;
     PDB_SetADCPreTriggerConfig(DEMO_PDB_BASE, DEMO_PDB_ADC_TRIGGER_CHANNEL, &pdbAdcPreTriggerConfigStruct);
     PDB_SetADCPreTriggerDelayValue(DEMO_PDB_BASE, DEMO_PDB_ADC_TRIGGER_CHANNEL, DEMO_PDB_ADC_PRETRIGGER_CHANNEL, 200U);
@@ -197,15 +168,16 @@ int main(void)
     DEMO_InitPDB_ADC();
 
     g_PdbDelayInterruptCounter = 0U;
-    g_AdcInterruptCounter = 0U;
+    g_AdcInterruptCounter      = 0U;
 
+    PRINTF("ADC Full Range: %d\r\n", g_Adc16_12bitFullRange);
     while (1)
     {
         PRINTF("\r\nType any key into terminal to trigger the PDB and then trigger the ADC's conversion ...\r\n");
         GETCHAR();
 
         g_PdbDelayInterruptFlag = false;
-        g_AdcInterruptFlag = false;
+        g_AdcInterruptFlag      = false;
         PDB_DoSoftwareTrigger(DEMO_PDB_BASE);
         while ((!g_PdbDelayInterruptFlag) || (!g_AdcInterruptFlag))
         {

@@ -6,11 +6,10 @@ for an ASCII string. Several CRC protocols are implemented using the CRC driver 
 
 Toolchain supported
 ===================
-- IAR embedded Workbench 7.80.4
-- Keil MDK 5.21a
-- GCC ARM Embedded 2016-5.4-q3
-- Kinetis Development Studio IDE 3.2.0
-- MCUXpresso0.8
+- IAR embedded Workbench  9.10.2
+- Keil MDK  5.34
+- GCC ARM Embedded  10.2.1
+- MCUXpresso  11.4.0
 
 Hardware requirements
 =====================
@@ -24,26 +23,21 @@ No special settings are required.
 
 Prepare the Demo
 ================
-Connect a serial cable from the debug UART port of the board to the PC. Start Tera Term
-(http://ttssh2.osdn.jp) and make a connection to the virtual serial port.
-
-1. Start Tera Term
-2. New connection -> Serial
-3. Set apropriate COMx port (x is port number) in Port context menu. Number is provided by operation
-   system and could be different from computer to computer. Select COM number related to virtual
-   serial port. Confirm selected port by OK button.
-4. Set following connection parameters in menu Setup->Serial port...
-        Baud rate:    115200
-        Data:         8
-        Parity:       none
-        Stop:         1
-        Flow control: one
-5.  Confirm selected parameters by OK button.
+1.  Connect a USB cable between the host PC and the OpenSDA USB port on the target board.
+2.  Open a serial terminal with the following settings:
+   - 115200 baud rate
+   - 8 data bits
+   - No parity
+   - One stop bit
+   - No flow control
+3. Download the program to the target board.
+4. Either press the reset button on your board or launch the debugger in your IDE to begin running
+   the demo.
 
 Running the demo
 ================
-Example output on terminal:
-
+When the demo runs successfully, the following message is displayed in the terminal:
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 CRC Peripheral Driver Example
 
 Test string: 123456789
@@ -52,6 +46,4 @@ CRC-16 MAXIM: 0x44c2
 CRC-16 KERMIT: 0x2189
 CRC-32: 0xcbf43926
 CRC-32 POSIX: 0x765e7680
-Customization options
-=====================
-
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

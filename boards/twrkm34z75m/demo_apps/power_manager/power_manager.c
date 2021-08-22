@@ -2,30 +2,7 @@
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of the copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #include "fsl_common.h"
@@ -37,39 +14,39 @@
 #include "fsl_debug_console.h"
 #include "power_manager.h"
 #include "fsl_notifier.h"
+#include "pin_mux.h"
 #include "board.h"
 
-#include "pin_mux.h"
 #include "fsl_pmc.h"
 #include "fsl_uart.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define APP_DEBUG_UART_BAUDRATE 9600                 /* Debug console baud rate. */
-#define APP_DEBUG_UART_CLKSRC_NAME kCLOCK_BusClk     /* Bus clock. */
+#define APP_DEBUG_UART_BAUDRATE    9600          /* Debug console baud rate. */
+#define APP_DEBUG_UART_CLKSRC_NAME kCLOCK_BusClk /* Bus clock. */
 
-#define LLWU_LPTMR_IDX 0U       /* LLWU_M0IF */
-#define LLWU_WAKEUP_PIN_IDX 15U /* LLWU_P15 */
+#define LLWU_LPTMR_IDX       0U  /* LLWU_M0IF */
+#define LLWU_WAKEUP_PIN_IDX  15U /* LLWU_P15 */
 #define LLWU_WAKEUP_PIN_TYPE kLLWU_ExternalPinRisingEdge
 
-#define APP_WAKEUP_BUTTON_GPIO BOARD_SW1_GPIO
-#define APP_WAKEUP_BUTTON_PORT BOARD_SW1_PORT
-#define APP_WAKEUP_BUTTON_GPIO_PIN BOARD_SW1_GPIO_PIN
-#define APP_WAKEUP_BUTTON_IRQ BOARD_SW1_IRQ
+#define APP_WAKEUP_BUTTON_GPIO        BOARD_SW1_GPIO
+#define APP_WAKEUP_BUTTON_PORT        BOARD_SW1_PORT
+#define APP_WAKEUP_BUTTON_GPIO_PIN    BOARD_SW1_GPIO_PIN
+#define APP_WAKEUP_BUTTON_IRQ         BOARD_SW1_IRQ
 #define APP_WAKEUP_BUTTON_IRQ_HANDLER BOARD_SW1_IRQ_HANDLER
-#define APP_WAKEUP_BUTTON_NAME BOARD_SW1_NAME
-#define APP_WAKEUP_BUTTON_IRQ_TYPE kPORT_InterruptFallingEdge
+#define APP_WAKEUP_BUTTON_NAME        BOARD_SW1_NAME
+#define APP_WAKEUP_BUTTON_IRQ_TYPE    kPORT_InterruptFallingEdge
 /* Debug console RX pin: PORTI6 MUX: 2 */
-#define DEBUG_CONSOLE_RX_PORT PORTI
-#define DEBUG_CONSOLE_RX_GPIO GPIOI
-#define DEBUG_CONSOLE_RX_PIN 6U
+#define DEBUG_CONSOLE_RX_PORT   PORTI
+#define DEBUG_CONSOLE_RX_GPIO   GPIOI
+#define DEBUG_CONSOLE_RX_PIN    6U
 #define DEBUG_CONSOLE_RX_PINMUX kPORT_MuxAlt2
 /* Debug console TX pin: PORTI7 MUX: 2 */
-#define DEBUG_CONSOLE_TX_PORT PORTI
-#define DEBUG_CONSOLE_TX_GPIO GPIOI
-#define DEBUG_CONSOLE_TX_PIN 7U
+#define DEBUG_CONSOLE_TX_PORT   PORTI
+#define DEBUG_CONSOLE_TX_GPIO   GPIOI
+#define DEBUG_CONSOLE_TX_PIN    7U
 #define DEBUG_CONSOLE_TX_PINMUX kPORT_MuxAlt2
-#define CORE_CLK_FREQ CLOCK_GetFreq(kCLOCK_CoreSysClk)
+#define CORE_CLK_FREQ           CLOCK_GetFreq(kCLOCK_CoreSysClk)
 
 /*******************************************************************************
  * Prototypes
@@ -113,9 +90,9 @@ static void APP_FllStableDelay(void)
 void APP_SetClockVlpr(void)
 {
     const sim_clock_config_t simConfig = {
-        .pllFllSel = 0U,        /* PLLFLLSEL select FLL */
-        .er32kSrc = 0U,         /* ERCLK32K selection, use OSC */
-        .clkdiv1 = 0x03000000U, /* SIM_CLKDIV1 */
+        .pllFllSel = 0U,          /* PLLFLLSEL select FLL */
+        .er32kSrc  = 0U,          /* ERCLK32K selection, use OSC */
+        .clkdiv1   = 0x03000000U, /* SIM_CLKDIV1 */
     };
 
     CLOCK_SetSimSafeDivs();
@@ -124,7 +101,7 @@ void APP_SetClockVlpr(void)
     /* MCG works in FEE mode now, will switch to BLPI mode. */
 
     CLOCK_SetFbiMode(kMCG_Dmx32Default, kMCG_DrsLow, NULL); /* Enter FBI. */
-    CLOCK_SetLowPowerEnable(true);       /* Enter BLPI. */
+    CLOCK_SetLowPowerEnable(true);                          /* Enter BLPI. */
 
     CLOCK_SetSimConfig(&simConfig);
 }
@@ -132,9 +109,9 @@ void APP_SetClockVlpr(void)
 void APP_SetClockRunFromVlpr(void)
 {
     const sim_clock_config_t simConfig = {
-        .pllFllSel = 0U,        /* PLLFLLSEL select FLL */
-        .er32kSrc = 0U,         /* ERCLK32K selection, use OSC */
-        .clkdiv1 = 0x02000000U, /* SIM_CLKDIV1 */
+        .pllFllSel = 0U,          /* PLLFLLSEL select FLL */
+        .er32kSrc  = 0U,          /* ERCLK32K selection, use OSC */
+        .clkdiv1   = 0x02000000U, /* SIM_CLKDIV1 */
     };
 
     CLOCK_SetSimSafeDivs();
@@ -152,15 +129,15 @@ static void APP_InitDebugConsole(void)
 {
     uint32_t uartClkSrcFreq;
     uartClkSrcFreq = CLOCK_GetFreq(APP_DEBUG_UART_CLKSRC_NAME);
-    DbgConsole_Init(BOARD_DEBUG_UART_BASEADDR, APP_DEBUG_UART_BAUDRATE, BOARD_DEBUG_UART_TYPE, uartClkSrcFreq);
+    DbgConsole_Init(BOARD_DEBUG_UART_INSTANCE, APP_DEBUG_UART_BAUDRATE, BOARD_DEBUG_UART_TYPE, uartClkSrcFreq);
 }
 
 
 status_t callback0(notifier_notification_block_t *notify, void *dataPtr)
 {
-    user_callback_data_t *userData = (user_callback_data_t *)dataPtr;
-    status_t ret = kStatus_Fail;
-    app_power_mode_t targetMode = ((power_user_config_t *)notify->targetConfig)->mode;
+    user_callback_data_t *userData     = (user_callback_data_t *)dataPtr;
+    status_t ret                       = kStatus_Fail;
+    app_power_mode_t targetMode        = ((power_user_config_t *)notify->targetConfig)->mode;
     smc_power_state_t originPowerState = userData->originPowerState;
 
     switch (notify->notifyType)
@@ -238,6 +215,7 @@ void LLWU_IRQHandler(void)
         PORT_ClearPinsInterruptFlags(APP_WAKEUP_BUTTON_PORT, (1U << APP_WAKEUP_BUTTON_GPIO_PIN));
         LLWU_ClearExternalWakeupPinFlag(LLWU, LLWU_WAKEUP_PIN_IDX);
     }
+    __DSB();
 }
 
 /*!
@@ -251,6 +229,7 @@ void LPTMR0_IRQHandler(void)
         LPTMR_ClearStatusFlags(LPTMR0, kLPTMR_TimerCompareFlag);
         LPTMR_StopTimer(LPTMR0);
     }
+    __DSB();
 }
 
 /*!
@@ -264,6 +243,7 @@ void APP_WAKEUP_BUTTON_IRQ_HANDLER(void)
         PORT_SetPinInterruptConfig(APP_WAKEUP_BUTTON_PORT, APP_WAKEUP_BUTTON_GPIO_PIN, kPORT_InterruptOrDMADisabled);
         PORT_ClearPinsInterruptFlags(APP_WAKEUP_BUTTON_PORT, (1U << APP_WAKEUP_BUTTON_GPIO_PIN));
     }
+    __DSB();
 }
 
 /*!
@@ -325,13 +305,12 @@ static app_wakeup_source_t APP_GetWakeupSource(void)
             PRINTF("Wrong value!\r\n");
         }
     }
-
 }
 
 /*! @brief Get wakeup timeout and wakeup source. */
 void APP_GetWakeupConfig(app_power_mode_t targetMode)
 {
-/* Get wakeup source by user input. */
+    /* Get wakeup source by user input. */
     if (targetMode == kAPP_PowerModeVlls0)
     {
         /* In VLLS0 mode, the LPO is disabled, LPTMR could not work. */
@@ -427,7 +406,6 @@ bool APP_CheckPowerMode(smc_power_state_t currentPowerState, app_power_mode_t ta
      */
     switch (currentPowerState)
     {
-
         case kSMC_PowerStateRun:
             if (kAPP_PowerModeVlpw == targetPowerMode)
             {
@@ -437,8 +415,7 @@ bool APP_CheckPowerMode(smc_power_state_t currentPowerState, app_power_mode_t ta
             break;
 
         case kSMC_PowerStateVlpr:
-            if ((kAPP_PowerModeWait == targetPowerMode) ||
-                (kAPP_PowerModeStop == targetPowerMode))
+            if ((kAPP_PowerModeWait == targetPowerMode) || (kAPP_PowerModeStop == targetPowerMode))
             {
                 PRINTF("Could not enter HSRUN/STOP/WAIT modes from VLPR mode.\r\n");
                 modeValid = false;
@@ -476,19 +453,17 @@ status_t APP_PowerModeSwitch(notifier_user_config_t *targetConfig, void *userDat
     app_power_mode_t targetPowerMode;           /* Local variable with target power mode name*/
     power_user_config_t *targetPowerModeConfig; /* Local variable with target power mode configruation */
 
-
     smc_power_mode_vlls_config_t vlls_config; /* Local variable for vlls configuration */
 
     targetPowerModeConfig = (power_user_config_t *)targetConfig;
-    currentPowerMode = SMC_GetPowerModeState(SMC);
-    targetPowerMode = targetPowerModeConfig->mode;
+    currentPowerMode      = SMC_GetPowerModeState(SMC);
+    targetPowerMode       = targetPowerModeConfig->mode;
 
     switch (targetPowerMode)
     {
         case kAPP_PowerModeVlpr:
             APP_SetClockVlpr();
-            SMC_SetPowerModeVlpr(SMC
-                                 );
+            SMC_SetPowerModeVlpr(SMC);
             while (kSMC_PowerStateVlpr != SMC_GetPowerModeState(SMC))
             {
             }
@@ -508,7 +483,6 @@ status_t APP_PowerModeSwitch(notifier_user_config_t *targetConfig, void *userDat
                 APP_SetClockRunFromVlpr();
             }
             break;
-
 
         /* For wait modes. */
         case kAPP_PowerModeWait:
@@ -534,7 +508,6 @@ status_t APP_PowerModeSwitch(notifier_user_config_t *targetConfig, void *userDat
             SMC_SetPowerModeVlps(SMC);
             SMC_PostExitStopModes();
             break;
-
 
         case kAPP_PowerModeVlls0:
         case kAPP_PowerModeVlls1:
@@ -583,39 +556,28 @@ int main(void)
     lptmr_config_t lptmrConfig;
 
     /*Power mode configurations*/
-    power_user_config_t vlprConfig =
-    {
+    power_user_config_t vlprConfig = {
         kAPP_PowerModeVlpr,
-
 
         true,
 
-
     };
 
-    power_user_config_t vlpwConfig = vlprConfig;
+    power_user_config_t vlpwConfig  = vlprConfig;
     power_user_config_t vlls1Config = vlprConfig;
     power_user_config_t vlls3Config = vlprConfig;
-    power_user_config_t vlpsConfig = vlprConfig;
-    power_user_config_t waitConfig = vlprConfig;
-    power_user_config_t stopConfig = vlprConfig;
-    power_user_config_t runConfig = vlprConfig;
-
+    power_user_config_t vlpsConfig  = vlprConfig;
+    power_user_config_t waitConfig  = vlprConfig;
+    power_user_config_t stopConfig  = vlprConfig;
+    power_user_config_t runConfig   = vlprConfig;
 
     power_user_config_t vlls0Config = vlprConfig;
 
     power_user_config_t vlls2Config = vlprConfig;
 
-
     /* Initializes array of pointers to power mode configurations */
-    notifier_user_config_t *powerConfigs[] =
-    {
-        &runConfig,
-        &waitConfig,
-        &stopConfig,
-        &vlprConfig,
-        &vlpwConfig,
-        &vlpsConfig,
+    notifier_user_config_t *powerConfigs[] = {
+        &runConfig,   &waitConfig, &stopConfig, &vlprConfig, &vlpwConfig, &vlpsConfig,
 
         &vlls0Config,
 
@@ -639,23 +601,24 @@ int main(void)
     memset(&callbackData0, 0, sizeof(user_callback_data_t));
 
     /* Initializes configuration structures */
-    vlpwConfig.mode = kAPP_PowerModeVlpw;
+    vlpwConfig.mode  = kAPP_PowerModeVlpw;
     vlls1Config.mode = kAPP_PowerModeVlls1;
     vlls3Config.mode = kAPP_PowerModeVlls3;
-    vlpsConfig.mode = kAPP_PowerModeVlps;
-    waitConfig.mode = kAPP_PowerModeWait;
-    stopConfig.mode = kAPP_PowerModeStop;
-    runConfig.mode = kAPP_PowerModeRun;
-
+    vlpsConfig.mode  = kAPP_PowerModeVlps;
+    waitConfig.mode  = kAPP_PowerModeWait;
+    stopConfig.mode  = kAPP_PowerModeStop;
+    runConfig.mode   = kAPP_PowerModeRun;
 
     vlls0Config.mode = kAPP_PowerModeVlls0;
 
     vlls2Config.mode = kAPP_PowerModeVlls2;
 
-
     /* Create Notifier Handle */
     NOTIFIER_CreateHandle(&powerModeHandle, powerConfigs, ARRAY_SIZE(powerConfigs), callbacks, 1U, APP_PowerModeSwitch,
                           NULL);
+
+    /* Must configure pins before PMC_ClearPeriphIOIsolationFlag */
+    BOARD_InitPins();
 
     /* Power related. */
     SMC_SetPowerModeProtection(SMC, kSMC_AllowPowerModeAll);
@@ -664,7 +627,6 @@ int main(void)
         PMC_ClearPeriphIOIsolationFlag(PMC);
         NVIC_ClearPendingIRQ(LLWU_IRQn);
     }
-    BOARD_InitPins();
     BOARD_BootClockRUN();
     APP_InitDebugConsole();
 
@@ -672,7 +634,7 @@ int main(void)
     LPTMR_GetDefaultConfig(&lptmrConfig);
     /* Use LPO as clock source. */
     lptmrConfig.prescalerClockSource = kLPTMR_PrescalerClock_1;
-    lptmrConfig.bypassPrescaler = true;
+    lptmrConfig.bypassPrescaler      = true;
 
     LPTMR_Init(LPTMR0, &lptmrConfig);
 
@@ -715,7 +677,6 @@ int main(void)
 
         PRINTF("Press  %c for enter: VLLS3    - Very Low Leakage Stop 3 mode\r\n", kAPP_PowerModeVlls3);
 
-
         PRINTF("\r\nWaiting for power mode select..\r\n\r\n");
 
         /* Wait for user response */
@@ -737,8 +698,7 @@ int main(void)
             }
 
             /* If target mode is RUN/VLPR/HSRUN, don't need to set wakeup source. */
-            if ((kAPP_PowerModeRun == targetPowerMode) ||
-                (kAPP_PowerModeVlpr == targetPowerMode))
+            if ((kAPP_PowerModeRun == targetPowerMode) || (kAPP_PowerModeVlpr == targetPowerMode))
             {
                 needSetWakeup = false;
             }
@@ -754,7 +714,7 @@ int main(void)
             }
 
             callbackData0.originPowerState = currentPowerState;
-            targetConfigIndex = targetPowerMode - kAPP_PowerModeMin - 1;
+            targetConfigIndex              = targetPowerMode - kAPP_PowerModeMin - 1;
             NOTIFIER_SwitchConfig(&powerModeHandle, targetConfigIndex, kNOTIFIER_PolicyAgreement);
             PRINTF("\r\nNext loop\r\n");
         }

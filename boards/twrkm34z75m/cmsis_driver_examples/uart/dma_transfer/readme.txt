@@ -3,7 +3,7 @@ Overview
 CMSIS-Driver defines generic peripheral driver interfaces for middleware making it reusable across a wide 
 range of supported microcontroller devices. The API connects microcontroller peripherals with middleware 
 that implements for example communication stacks, file systems, or graphic user interfaces. 
-More information and usage methord please refer to http://www.keil.com/pack/doc/cmsis/Driver/html/index.html.
+More information and usage method please refer to http://www.keil.com/pack/doc/cmsis/Driver/html/index.html.
 
 The cmsis_uart_edma_transfer example shows how to use uart cmsis  driver with EDMA:
 
@@ -14,11 +14,10 @@ Note: The example echo every 8 characters, so input 8 characters every time.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench 7.80.4
-- Keil MDK 5.21a
-- GCC ARM Embedded 2016-5.4-q3
-- Kinetis Development Studio IDE 3.2.0
-- MCUXpresso0.8
+- IAR embedded Workbench  9.10.2
+- Keil MDK  5.34
+- GCC ARM Embedded  10.2.1
+- MCUXpresso  11.4.0
 
 Hardware requirements
 =====================
@@ -47,12 +46,9 @@ Running the demo
 When the demo runs successfully, the log would be seen on the UART Terminal port which connected to the USB2COM like:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
-UART DMA example
+USART DMA example
 Send back received data
 Echo every 8 characters
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 When you input 8 characters, system will echo it by UART and them would be seen on the terminal.
-Customization options
-=====================
-

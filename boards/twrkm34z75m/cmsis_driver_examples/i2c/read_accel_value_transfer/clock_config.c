@@ -1,33 +1,10 @@
 /*
- * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2021 NXP
+ * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of the copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
-
+ 
 /*
  * How to setup clock using clock driver functions:
  *
@@ -56,15 +33,17 @@
  * 4. Call CLOCK_SetSimConfig to set the clock configuration in SIM.
  */
 
-/* TEXT BELOW IS USED AS SETTING FOR THE CLOCKS TOOL *****************************
-!!ClocksProfile
-product: Clocks v1.0
+/* clang-format off */
+/* TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
+!!GlobalInfo
+product: Clocks v7.0
 processor: MKM34Z256xxx7
 package_id: MKM34Z256VLQ7
 mcu_data: ksdk2_0
-processor_version: 1.1.0
+processor_version: 9.0.1
 board: TWR-KM34Z75M
- * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR THE CLOCKS TOOL **/
+ * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS **********/
+/* clang-format on */
 
 #include "fsl_smc.h"
 #include "fsl_irtc.h"
@@ -122,11 +101,21 @@ static void CLOCK_CONFIG_EnableRtcOsc(uint32_t capLoad)
 }
 
 /*******************************************************************************
+ ************************ BOARD_InitBootClocks function ************************
+ ******************************************************************************/
+void BOARD_InitBootClocks(void)
+{
+    BOARD_BootClockRUN();
+}
+
+/*******************************************************************************
  ********************** Configuration BOARD_BootClockRUN ***********************
  ******************************************************************************/
-/* TEXT BELOW IS USED AS SETTING FOR THE CLOCKS TOOL *****************************
+/* clang-format off */
+/* TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 !!Configuration
 name: BOARD_BootClockRUN
+called_from_default_init: true
 outputs:
 - {id: Bus_clock.outFreq, value: 71.991296/3 MHz}
 - {id: Core_clock.outFreq, value: 71.991296 MHz}
@@ -146,13 +135,11 @@ settings:
 - {id: MCG.IREFS.sel, value: MCG.FRDIV}
 - {id: MCG.OSCSEL.sel, value: SIM.RTC32KCLK}
 - {id: MCG.PLL32KREFSEL.sel, value: MCG.FRDIV}
-- {id: 'MCG::C2[LP].bitField', value: FLL or PLL is not disabled in bypass modes.}
 - {id: MCG_C1_IRCLKEN_CFG, value: Enabled}
 - {id: MCG_C2_OSC_MODE_CFG, value: ModeOscLowPower}
 - {id: MCG_C2_RANGE0_CFG, value: High}
 - {id: MCG_C2_RANGE0_FRDIV_CFG, value: High}
 - {id: OSC_CR_ERCLKEN_CFG, value: Enabled}
-- {id: RTC_CR_OSCE_CFG, value: Enabled}
 - {id: SIM.ADCTRGSEL.sel, value: SIM.ADC_asynchronous_clk}
 - {id: SIM.AFECLKSEL.sel, value: MCG.MCGFLLCLK}
 - {id: SIM.CLKDIVBUS.scale, value: '3', locked: true}
@@ -166,7 +153,8 @@ sources:
 - {id: OSC.OSC.outFreq, value: 8 MHz, enabled: true}
 - {id: RTC.OSC32kHz.outFreq, value: 32.768 kHz, enabled: true}
 - {id: SIM.ADC_asynchronous_clk.outFreq, value: 1.255 MHz}
- * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR THE CLOCKS TOOL **/
+ * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS **********/
+/* clang-format on */
 
 /*******************************************************************************
  * Variables for BOARD_BootClockRUN configuration
@@ -238,7 +226,8 @@ void BOARD_BootClockRUN(void)
 /*******************************************************************************
  ********************* Configuration BOARD_BootClockVLPR ***********************
  ******************************************************************************/
-/* TEXT BELOW IS USED AS SETTING FOR THE CLOCKS TOOL *****************************
+/* clang-format off */
+/* TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 !!Configuration
 name: BOARD_BootClockVLPR
 outputs:
@@ -256,12 +245,12 @@ settings:
 - {id: MCG_C2_OSC_MODE_CFG, value: ModeOscLowPower}
 - {id: MCG_C2_RANGE0_CFG, value: High}
 - {id: MCG_C2_RANGE0_FRDIV_CFG, value: High}
-- {id: RTC_CR_OSCE_CFG, value: Enabled}
 - {id: RTC_CR_OSC_CAP_LOAD_CFG, value: SC18PF}
 - {id: SIM.CLKDIVBUS.scale, value: '4'}
 sources:
 - {id: OSC.OSC.outFreq, value: 8 MHz}
- * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR THE CLOCKS TOOL **/
+ * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS **********/
+/* clang-format on */
 
 /*******************************************************************************
  * Variables for BOARD_BootClockVLPR configuration

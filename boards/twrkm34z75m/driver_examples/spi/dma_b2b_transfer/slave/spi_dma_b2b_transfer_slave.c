@@ -1,51 +1,29 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
+ * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of the copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #include "fsl_spi_dma.h"
 #include "fsl_dmamux.h"
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #include "fsl_debug_console.h"
 
 #include "fsl_common.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define EXAMPLE_SPI_SLAVE SPI0
-#define EXAMPLE_DMA DMA0
-#define EXAMPLE_DMAMUX DMAMUX0
-#define EXAMPLE_SPI_TX_CHANNEL 3U
-#define EXAMPLE_SPI_RX_CHANNEL 2U
-#define EXAMPLE_SPI_TX_SOURCE kDmaRequestMux0SPI0Tx
-#define EXAMPLE_SPI_RX_SOURCE kDmaRequestMux0SPI0Rx
+#define EXAMPLE_SPI_SLAVE        SPI0
+#define EXAMPLE_DMA              DMA0
+#define EXAMPLE_DMAMUX           DMAMUX
+#define EXAMPLE_SPI_TX_CHANNEL   3U
+#define EXAMPLE_SPI_RX_CHANNEL   2U
+#define EXAMPLE_SPI_TX_SOURCE    kDmaRequestMux0SPI0Tx
+#define EXAMPLE_SPI_RX_SOURCE    kDmaRequestMux0SPI0Rx
 #define EXAMPLE_SPI_SOURCE_CLOCK kCLOCK_CoreSysClk
 
 /*******************************************************************************
@@ -72,8 +50,8 @@ static void slaveCallback(SPI_Type *base, spi_dma_handle_t *handle, status_t sta
 
 int main(void)
 {
-    uint32_t i = 0;
-    uint8_t err = 0;
+    uint32_t i          = 0;
+    uint8_t err         = 0;
     spi_transfer_t xfer = {0};
     spi_slave_config_t userConfig;
 
@@ -83,6 +61,19 @@ int main(void)
     PRINTF("\n\rSlave is working....\n\r");
 
     /* Init DMAMUX */
+#if FSL_FEATURE_DMA_MODULE_CHANNEL != FSL_FEATURE_DMAMUX_MODULE_CHANNEL
+    DMAMUX_Init(EXAMPLE_TX_DMAMUX);
+    DMAMUX_Init(EXAMPLE_RX_DMAMUX);
+    DMAMUX_SetSource(EXAMPLE_TX_DMAMUX, EXAMPLE_SPI_TX_DMAMUX_CHANNEL, EXAMPLE_SPI_TX_SOURCE);
+    DMAMUX_SetSource(EXAMPLE_RX_DMAMUX, EXAMPLE_SPI_RX_DMAMUX_CHANNEL, EXAMPLE_SPI_RX_SOURCE);
+    DMAMUX_EnableChannel(EXAMPLE_TX_DMAMUX, EXAMPLE_SPI_TX_DMAMUX_CHANNEL);
+    DMAMUX_EnableChannel(EXAMPLE_RX_DMAMUX, EXAMPLE_SPI_RX_DMAMUX_CHANNEL);
+
+    /* Init the DMA module */
+    DMA_Init(EXAMPLE_DMA);
+    DMA_CreateHandle(&txHandle, EXAMPLE_DMA, EXAMPLE_SPI_TX_DMA_CHANNEL);
+    DMA_CreateHandle(&rxHandle, EXAMPLE_DMA, EXAMPLE_SPI_RX_DMA_CHANNEL);
+#else
     DMAMUX_Init(EXAMPLE_DMAMUX);
     DMAMUX_SetSource(EXAMPLE_DMAMUX, EXAMPLE_SPI_TX_CHANNEL, EXAMPLE_SPI_TX_SOURCE);
     DMAMUX_SetSource(EXAMPLE_DMAMUX, EXAMPLE_SPI_RX_CHANNEL, EXAMPLE_SPI_RX_SOURCE);
@@ -93,6 +84,7 @@ int main(void)
     DMA_Init(EXAMPLE_DMA);
     DMA_CreateHandle(&txHandle, EXAMPLE_DMA, EXAMPLE_SPI_TX_CHANNEL);
     DMA_CreateHandle(&rxHandle, EXAMPLE_DMA, EXAMPLE_SPI_RX_CHANNEL);
+#endif
 
     /* Init the SPI slave */
     /*
@@ -113,8 +105,8 @@ int main(void)
     }
 
     /* receive data from master */
-    xfer.txData = sendBuff;
-    xfer.rxData = buff;
+    xfer.txData   = sendBuff;
+    xfer.rxData   = buff;
     xfer.dataSize = BUFFER_SIZE;
     SPI_SlaveTransferDMA(EXAMPLE_SPI_SLAVE, &s_handle, &xfer);
 
@@ -126,7 +118,7 @@ int main(void)
     {
         if (buff[i] != i)
         {
-            PRINTF("\n\rThe %d number is wrong! It is %dn\r", i, buff[i]);
+            PRINTF("\n\rThe %d number is wrong! It is %d\n\r", i, buff[i]);
             err++;
         }
     }

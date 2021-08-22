@@ -7,11 +7,10 @@ protection against tampering, protection against spurious memory/register update
 
 Toolchain supported
 ===================
-- IAR embedded Workbench 7.80.4
-- Keil MDK 5.21a
-- GCC ARM Embedded 2016-5.4-q3
-- Kinetis Development Studio IDE 3.2.0
-- MCUXpresso0.8
+- IAR embedded Workbench  9.10.2
+- Keil MDK  5.34
+- GCC ARM Embedded  10.2.1
+- MCUXpresso  11.4.0
 
 Hardware requirements
 =====================
@@ -48,7 +47,4 @@ Alarm Time is 2015/1/21 18:55:33
 
 RTC Example END.
 ~~~~~~~~~~~~~~~~~~~~~~~
-
-Customization options
-=====================
 

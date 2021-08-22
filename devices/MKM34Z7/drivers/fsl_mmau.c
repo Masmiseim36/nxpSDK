@@ -1,51 +1,55 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2020 NXP
+ * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of the copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #include "fsl_mmau.h"
 
+/* Component ID definition, used by tools. */
+#ifndef FSL_COMPONENT_ID
+#define FSL_COMPONENT_ID "platform.drivers.mmau"
+#endif
+
 /*******************************************************************************
  * Code
  ******************************************************************************/
+/*!
+ * brief Set control/status register into reset state.
+ *
+ * This function sets control/status register to a known state. This state is
+ * defined in Reference Manual, which is power on reset value. This function must
+ * execute in a Supervisor Mode
+ * param base MMAU peripheral address.
+ */
 void MMAU_Reset(MMAU_Type *base)
 {
     /* Reset all MMAU register */
-    base->X0 = 0;
-    base->X1 = 0;
-    base->X2 = 0;
-    base->X3 = 0;
-    base->A0 = 0;
-    base->A1 = 0;
-    base->CSR = 0;
-    base->CSR_IF_CLR = 0;
+    base->X0         = 0U;
+    base->X1         = 0U;
+    base->X2         = 0U;
+    base->X3         = 0U;
+    base->A0         = 0U;
+    base->A1         = 0U;
+    base->CSR        = 0U;
+    base->CSR_IF_CLR = 0U;
 }
 
+/*!
+ * brief Clears interrupt flags.
+ *
+ * This function clears the interrupt flags.
+ * Example, if you want to clear Overflow and DivideByZero interrupt flags:
+   code
+   MMAU_ClearInterruptFlags(MMAU, kMMAU_OverflowInterruptFlag|kMMAU_DivideByZeroInterruptFlag);
+   endcode
+ *
+ * param base MMAU peripheral address.
+ * param mask Mask of the asserted interrupt flags
+ *          (kMMAU_AccumOverflowInterruptFlag|kMMAU_OverflowInterruptFlag|kMMAU_DivideByZeroInterruptFlag).
+ */
 void MMAU_ClearInterruptFlags(MMAU_Type *base, uint32_t mask)
 {
     uint32_t regVal;
@@ -53,14 +57,30 @@ void MMAU_ClearInterruptFlags(MMAU_Type *base, uint32_t mask)
     /* Assign regVal to MMAU_CSR_IF_CLR register's value */
     regVal = base->CSR_IF_CLR;
     /* Perform this command to avoid writing 1 into interrupt flag bits, which do not corresponding to the mask */
-    regVal &=
-        (uint32_t)(~(kMMAU_AccumOverflowInterruptFlag | kMMAU_OverflowInterruptFlag | kMMAU_DivideByZeroInterruptFlag));
+    regVal &= (uint32_t)(~((uint32_t)kMMAU_AccumOverflowInterruptFlag | (uint32_t)kMMAU_OverflowInterruptFlag |
+                           (uint32_t)kMMAU_DivideByZeroInterruptFlag));
     /* Write 1 to interrupt flag bits corresponding to mask */
-    regVal |= mask & (kMMAU_AccumOverflowInterruptFlag | kMMAU_OverflowInterruptFlag | kMMAU_DivideByZeroInterruptFlag);
+    regVal |= mask & ((uint32_t)kMMAU_AccumOverflowInterruptFlag | (uint32_t)kMMAU_OverflowInterruptFlag |
+                      (uint32_t)kMMAU_DivideByZeroInterruptFlag);
     /* Write regVal's value into MMAU_CSR_IF_CLR register */
     base->CSR_IF_CLR = regVal;
 }
 
+/*!
+ * brief Sets the instruction flags.
+ *
+ * This function sets the instruction flags.
+ * Example:
+   code
+   MMAU_SetInstructionFlags(MMAU, kMMAU_AccumOverflowInstructionFlag | kMMAU_NegativeInstructionFlag);
+   MMAU_SetInstructionFlags(MMAU, kMMAU_OverflowInstructionFlag | kMMAU_DivideByZeroInstructionFlag);
+   endcode
+ *
+ * param base MMAU peripheral address.
+ * param mask Mask of the instruction flags to be written
+ *
+ (kMMAU_AccumOverflowInstructionFlag|kMMAU_OverflowInstructionFlag|kMMAU_DivideByZeroInstructionFlag|kMMAU_NegativeInstructionFlag).
+ */
 void MMAU_SetInstructionFlags(MMAU_Type *base, uint32_t mask)
 {
     uint32_t regVal;
@@ -68,15 +88,29 @@ void MMAU_SetInstructionFlags(MMAU_Type *base, uint32_t mask)
     /* Assign regVal to MMAU_CSR_IF_CLR register's value */
     regVal = base->CSR_IF_CLR;
     /* Write 1 to interrupt flag bits corresponding to mask */
-    regVal |= mask & (kMMAU_AccumOverflowInstructionFlag | kMMAU_OverflowInstructionFlag |
-                      kMMAU_DivideByZeroInstructionFlag | kMMAU_NegativeInstructionFlag);
+    regVal |= mask & ((uint32_t)kMMAU_AccumOverflowInstructionFlag | (uint32_t)kMMAU_OverflowInstructionFlag |
+                      (uint32_t)kMMAU_DivideByZeroInstructionFlag | (uint32_t)kMMAU_NegativeInstructionFlag);
     /* Perform this command to avoid writing 1 into interrupt flag bits, which do not corresponding to the mask */
-    regVal &=
-        (uint32_t)(~(kMMAU_AccumOverflowInterruptFlag | kMMAU_OverflowInterruptFlag | kMMAU_DivideByZeroInterruptFlag));
+    regVal &= (uint32_t)(~((uint32_t)kMMAU_AccumOverflowInterruptFlag | (uint32_t)kMMAU_OverflowInterruptFlag |
+                           (uint32_t)kMMAU_DivideByZeroInterruptFlag));
     /* Write regVal's value into MMAU_CSR_IF_CLR register */
     base->CSR_IF_CLR = regVal;
 }
 
+/*!
+ * brief Clears instruction flags.
+ *
+ * This function clears the instruction flags.
+ * Example, if you want to clear Overflow and DivideByZero instruction flags:
+   code
+   MMAU_ClearInstructionFlags(MMAU, kMMAU_OverflowInstructionFlag|kMMAU_DivideByZeroInstructionFlag);
+   endcode
+ *
+ * param base MMAU peripheral address.
+ * param mask Mask of the asserted instruction flags
+ *
+ (kMMAU_AccumOverflowInstructionFlag|kMMAU_OverflowInstructionFlag|kMMAU_DivideByZeroInstructionFlag|kMMAU_NegativeInstructionFlag).
+ */
 void MMAU_ClearInstructionFlags(MMAU_Type *base, uint32_t mask)
 {
     uint32_t regVal;
@@ -84,11 +118,11 @@ void MMAU_ClearInstructionFlags(MMAU_Type *base, uint32_t mask)
     /* Assign regVal to MMAU_CSR_IF_CLR register's value */
     regVal = base->CSR_IF_CLR;
     /* Write 0 to interrupt flag bits corresponding to mask */
-    regVal &= ~(mask & (kMMAU_AccumOverflowInstructionFlag | kMMAU_OverflowInstructionFlag |
-                        kMMAU_DivideByZeroInstructionFlag | kMMAU_NegativeInstructionFlag));
+    regVal &= ~(mask & ((uint32_t)kMMAU_AccumOverflowInstructionFlag | (uint32_t)kMMAU_OverflowInstructionFlag |
+                        (uint32_t)kMMAU_DivideByZeroInstructionFlag | (uint32_t)kMMAU_NegativeInstructionFlag));
     /* Perform this command to avoid writing 1 into interrupt flag bits, which do not corresponding to the mask */
-    regVal &=
-        (uint32_t)(~(kMMAU_AccumOverflowInterruptFlag | kMMAU_OverflowInterruptFlag | kMMAU_DivideByZeroInterruptFlag));
+    regVal &= (uint32_t)(~((uint32_t)kMMAU_AccumOverflowInterruptFlag | (uint32_t)kMMAU_OverflowInterruptFlag |
+                           (uint32_t)kMMAU_DivideByZeroInterruptFlag));
     /* Write regVal's value into MMAU_CSR_IF_CLR register */
     base->CSR_IF_CLR = regVal;
 }

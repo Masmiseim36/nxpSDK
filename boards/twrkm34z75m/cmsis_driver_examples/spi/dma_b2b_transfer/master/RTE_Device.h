@@ -1,59 +1,32 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2020 NXP
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of the copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
-#ifndef __RTE_DEVICE_H
-#define __RTE_DEVICE_H
+#ifndef _RTE_DEVICE_H
+#define _RTE_DEVICE_H
+
+extern void SPI0_InitPins();
+extern void SPI0_DeinitPins();
 
 /*Driver name mapping.*/
-#define RTE_SPI0 1
+/* User needs to provide the implementation of SPIX_GetFreq/SPIX_InitPins/SPIX_DeinitPins for the enabled SPI instance.
+ */
+#define RTE_SPI0        1
 #define RTE_SPI0_DMA_EN 1
-#define RTE_SPI1 0
-#define RTE_SPI1_DMA_EN 0
 
 /* SPI configuration. */
-#define RTE_SPI0_DMA_TX_CH 3
-#define RTE_SPI0_DMA_TX_PERI_SEL (uint8_t) kDmaRequestMux0SPI0Tx
-#define RTE_SPI0_DMA_TX_DMAMUX_BASE DMAMUX0
-#define RTE_SPI0_DMA_TX_DMA_BASE DMA0
-#define RTE_SPI0_DMA_RX_CH 2
-#define RTE_SPI0_DMA_RX_PERI_SEL (uint8_t) kDmaRequestMux0SPI0Rx
-#define RTE_SPI0_DMA_RX_DMAMUX_BASE DMAMUX0
-#define RTE_SPI0_DMA_RX_DMA_BASE DMA0
+#define RTE_SPI0_PIN_INIT           SPI0_InitPins
+#define RTE_SPI0_PIN_DEINIT         SPI0_DeinitPins
+#define RTE_SPI0_DMA_TX_CH          3
+#define RTE_SPI0_DMA_TX_PERI_SEL    (uint8_t) kDmaRequestMux0SPI0Tx
+#define RTE_SPI0_DMA_TX_DMAMUX_BASE DMAMUX
+#define RTE_SPI0_DMA_TX_DMA_BASE    DMA0
+#define RTE_SPI0_DMA_RX_CH          2
+#define RTE_SPI0_DMA_RX_PERI_SEL    (uint8_t) kDmaRequestMux0SPI0Rx
+#define RTE_SPI0_DMA_RX_DMAMUX_BASE DMAMUX
+#define RTE_SPI0_DMA_RX_DMA_BASE    DMA0
 
-#define RTE_SPI1_DMA_TX_CH 2
-#define RTE_SPI1_DMA_TX_PERI_SEL (uint8_t) kDmaRequestMux0SPI1Tx
-#define RTE_SPI1_DMA_TX_DMAMUX_BASE DMAMUX0
-#define RTE_SPI1_DMA_TX_DMA_BASE DMA0
-#define RTE_SPI1_DMA_RX_CH 3
-#define RTE_SPI1_DMA_RX_PERI_SEL (uint8_t) kDmaRequestMux0SPI1Rx
-#define RTE_SPI1_DMA_RX_DMAMUX_BASE DMAMUX0
-#define RTE_SPI1_DMA_RX_DMA_BASE DMA0
-
-#endif /* __RTE_DEVICE_H */
+#endif /* _RTE_DEVICE_H */

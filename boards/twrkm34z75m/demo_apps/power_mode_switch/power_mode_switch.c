@@ -2,30 +2,7 @@
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of the copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #include "fsl_common.h"
@@ -35,40 +12,40 @@
 #include "fsl_lptmr.h"
 #include "fsl_port.h"
 #include "power_mode_switch.h"
+#include "pin_mux.h"
 #include "board.h"
 #include "fsl_debug_console.h"
 
-#include "pin_mux.h"
 #include "fsl_pmc.h"
 #include "fsl_uart.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define APP_DEBUG_UART_BAUDRATE 9600                 /* Debug console baud rate. */
-#define APP_DEBUG_UART_CLKSRC_NAME kCLOCK_BusClk     /* Bus clock. */
+#define APP_DEBUG_UART_BAUDRATE    9600          /* Debug console baud rate. */
+#define APP_DEBUG_UART_CLKSRC_NAME kCLOCK_BusClk /* Bus clock. */
 
-#define LLWU_LPTMR_IDX 0U       /* LLWU_M0IF */
-#define LLWU_WAKEUP_PIN_IDX 15U /* LLWU_P15 */
+#define LLWU_LPTMR_IDX       0U  /* LLWU_M0IF */
+#define LLWU_WAKEUP_PIN_IDX  15U /* LLWU_P15 */
 #define LLWU_WAKEUP_PIN_TYPE kLLWU_ExternalPinRisingEdge
 
-#define APP_WAKEUP_BUTTON_GPIO BOARD_SW1_GPIO
-#define APP_WAKEUP_BUTTON_PORT BOARD_SW1_PORT
-#define APP_WAKEUP_BUTTON_GPIO_PIN BOARD_SW1_GPIO_PIN
-#define APP_WAKEUP_BUTTON_IRQ BOARD_SW1_IRQ
+#define APP_WAKEUP_BUTTON_GPIO        BOARD_SW1_GPIO
+#define APP_WAKEUP_BUTTON_PORT        BOARD_SW1_PORT
+#define APP_WAKEUP_BUTTON_GPIO_PIN    BOARD_SW1_GPIO_PIN
+#define APP_WAKEUP_BUTTON_IRQ         BOARD_SW1_IRQ
 #define APP_WAKEUP_BUTTON_IRQ_HANDLER BOARD_SW1_IRQ_HANDLER
-#define APP_WAKEUP_BUTTON_NAME BOARD_SW1_NAME
-#define APP_WAKEUP_BUTTON_IRQ_TYPE kPORT_InterruptFallingEdge
+#define APP_WAKEUP_BUTTON_NAME        BOARD_SW1_NAME
+#define APP_WAKEUP_BUTTON_IRQ_TYPE    kPORT_InterruptFallingEdge
 /* Debug console RX pin: PORTI6 MUX: 2 */
-#define DEBUG_CONSOLE_RX_PORT PORTI
-#define DEBUG_CONSOLE_RX_GPIO GPIOI
-#define DEBUG_CONSOLE_RX_PIN 6U
+#define DEBUG_CONSOLE_RX_PORT   PORTI
+#define DEBUG_CONSOLE_RX_GPIO   GPIOI
+#define DEBUG_CONSOLE_RX_PIN    6U
 #define DEBUG_CONSOLE_RX_PINMUX kPORT_MuxAlt2
 /* Debug console TX pin: PORTI7 MUX: 2 */
-#define DEBUG_CONSOLE_TX_PORT PORTI
-#define DEBUG_CONSOLE_TX_GPIO GPIOI
-#define DEBUG_CONSOLE_TX_PIN 7U
+#define DEBUG_CONSOLE_TX_PORT   PORTI
+#define DEBUG_CONSOLE_TX_GPIO   GPIOI
+#define DEBUG_CONSOLE_TX_PIN    7U
 #define DEBUG_CONSOLE_TX_PINMUX kPORT_MuxAlt2
-#define CORE_CLK_FREQ CLOCK_GetFreq(kCLOCK_CoreSysClk)
+#define CORE_CLK_FREQ           CLOCK_GetFreq(kCLOCK_CoreSysClk)
 
 /*******************************************************************************
  * Prototypes
@@ -119,9 +96,9 @@ static void APP_FllStableDelay(void)
 void APP_SetClockVlpr(void)
 {
     const sim_clock_config_t simConfig = {
-        .pllFllSel = 0U,        /* PLLFLLSEL select FLL */
-        .er32kSrc = 0U,         /* ERCLK32K selection, use OSC */
-        .clkdiv1 = 0x03000000U, /* SIM_CLKDIV1 */
+        .pllFllSel = 0U,          /* PLLFLLSEL select FLL */
+        .er32kSrc  = 0U,          /* ERCLK32K selection, use OSC */
+        .clkdiv1   = 0x03000000U, /* SIM_CLKDIV1 */
     };
 
     CLOCK_SetSimSafeDivs();
@@ -130,7 +107,7 @@ void APP_SetClockVlpr(void)
     /* MCG works in FEE mode now, will switch to BLPI mode. */
 
     CLOCK_SetFbiMode(kMCG_Dmx32Default, kMCG_DrsLow, NULL); /* Enter FBI. */
-    CLOCK_SetLowPowerEnable(true);       /* Enter BLPI. */
+    CLOCK_SetLowPowerEnable(true);                          /* Enter BLPI. */
 
     CLOCK_SetSimConfig(&simConfig);
 }
@@ -138,9 +115,9 @@ void APP_SetClockVlpr(void)
 void APP_SetClockRunFromVlpr(void)
 {
     const sim_clock_config_t simConfig = {
-        .pllFllSel = 0U,        /* PLLFLLSEL select FLL */
-        .er32kSrc = 0U,         /* ERCLK32K selection, use OSC */
-        .clkdiv1 = 0x02000000U, /* SIM_CLKDIV1 */
+        .pllFllSel = 0U,          /* PLLFLLSEL select FLL */
+        .er32kSrc  = 0U,          /* ERCLK32K selection, use OSC */
+        .clkdiv1   = 0x02000000U, /* SIM_CLKDIV1 */
     };
 
     CLOCK_SetSimSafeDivs();
@@ -158,7 +135,7 @@ static void APP_InitDebugConsole(void)
 {
     uint32_t uartClkSrcFreq;
     uartClkSrcFreq = CLOCK_GetFreq(APP_DEBUG_UART_CLKSRC_NAME);
-    DbgConsole_Init(BOARD_DEBUG_UART_BASEADDR, APP_DEBUG_UART_BAUDRATE, BOARD_DEBUG_UART_TYPE, uartClkSrcFreq);
+    DbgConsole_Init(BOARD_DEBUG_UART_INSTANCE, APP_DEBUG_UART_BAUDRATE, BOARD_DEBUG_UART_TYPE, uartClkSrcFreq);
 }
 
 
@@ -227,6 +204,7 @@ void LLWU_IRQHandler(void)
         LLWU_ClearExternalWakeupPinFlag(LLWU, LLWU_WAKEUP_PIN_IDX);
     }
 
+    __DSB();
 }
 
 void LPTMR0_IRQHandler(void)
@@ -237,8 +215,8 @@ void LPTMR0_IRQHandler(void)
         LPTMR_ClearStatusFlags(LPTMR0, kLPTMR_TimerCompareFlag);
         LPTMR_StopTimer(LPTMR0);
     }
+    __DSB();
 }
-
 
 void APP_WAKEUP_BUTTON_IRQ_HANDLER(void)
 {
@@ -248,8 +226,8 @@ void APP_WAKEUP_BUTTON_IRQ_HANDLER(void)
         PORT_SetPinInterruptConfig(APP_WAKEUP_BUTTON_PORT, APP_WAKEUP_BUTTON_GPIO_PIN, kPORT_InterruptOrDMADisabled);
         PORT_ClearPinsInterruptFlags(APP_WAKEUP_BUTTON_PORT, (1U << APP_WAKEUP_BUTTON_GPIO_PIN));
     }
+    __DSB();
 }
-
 
 /*!
  * @brief Get input from user about wakeup timeout
@@ -278,7 +256,6 @@ static uint8_t APP_GetWakeupTimeout(void)
 /* Get wakeup source by user input. */
 static app_wakeup_source_t APP_GetWakeupSource(void)
 {
-
     uint8_t ch;
 
     while (1)
@@ -309,14 +286,12 @@ static app_wakeup_source_t APP_GetWakeupSource(void)
             PRINTF("Wrong value!\r\n");
         }
     }
-
-
 }
 
 /* Get wakeup timeout and wakeup source. */
 void APP_GetWakeupConfig(app_power_mode_t targetMode)
 {
-/* Get wakeup source by user input. */
+    /* Get wakeup source by user input. */
     if (targetMode == kAPP_PowerModeVlls0)
     {
         /* In VLLS0 mode, the LPO is disabled, LPTMR could not work. */
@@ -337,9 +312,7 @@ void APP_GetWakeupConfig(app_power_mode_t targetMode)
     }
     else
     {
-
         PRINTF("Press %s to wake up.\r\n", APP_WAKEUP_BUTTON_NAME);
-
     }
 }
 
@@ -359,9 +332,7 @@ void APP_SetWakeupConfig(app_power_mode_t targetMode)
     }
     else
     {
-
         PORT_SetPinInterruptConfig(APP_WAKEUP_BUTTON_PORT, APP_WAKEUP_BUTTON_GPIO_PIN, APP_WAKEUP_BUTTON_IRQ_TYPE);
-
     }
 
     /* If targetMode is VLLS/LLS, setup LLWU. */
@@ -374,9 +345,7 @@ void APP_SetWakeupConfig(app_power_mode_t targetMode)
         }
         else
         {
-
             LLWU_SetExternalWakeupPinMode(LLWU, LLWU_WAKEUP_PIN_IDX, LLWU_WAKEUP_PIN_TYPE);
-
         }
         NVIC_EnableIRQ(LLWU_IRQn);
     }
@@ -416,7 +385,6 @@ bool APP_CheckPowerMode(smc_power_state_t curPowerState, app_power_mode_t target
      */
     switch (curPowerState)
     {
-
         case kSMC_PowerStateRun:
             if (kAPP_PowerModeVlpw == targetPowerMode)
             {
@@ -426,8 +394,7 @@ bool APP_CheckPowerMode(smc_power_state_t curPowerState, app_power_mode_t target
             break;
 
         case kSMC_PowerStateVlpr:
-            if ((kAPP_PowerModeWait == targetPowerMode) ||
-                (kAPP_PowerModeStop == targetPowerMode))
+            if ((kAPP_PowerModeWait == targetPowerMode) || (kAPP_PowerModeStop == targetPowerMode))
             {
                 PRINTF("Could not enter HSRUN/STOP/WAIT modes from VLPR mode.\r\n");
                 modeValid = false;
@@ -488,7 +455,6 @@ void APP_PowerModeSwitch(smc_power_state_t curPowerState, app_power_mode_t targe
             }
             break;
 
-
         case kAPP_PowerModeWait:
             SMC_PreEnterWaitModes();
             SMC_SetPowerModeWait(SMC);
@@ -512,7 +478,6 @@ void APP_PowerModeSwitch(smc_power_state_t curPowerState, app_power_mode_t targe
             SMC_SetPowerModeVlps(SMC);
             SMC_PostExitStopModes();
             break;
-
 
         case kAPP_PowerModeVlls0:
             vlls_config.subMode = kSMC_StopSub0;
@@ -560,6 +525,9 @@ int main(void)
     bool needSetWakeup; /* Need to set wakeup. */
     lptmr_config_t lptmrConfig;
 
+    /* Must configure pins before PMC_ClearPeriphIOIsolationFlag */
+    BOARD_InitPins();
+
     /* Power related. */
     SMC_SetPowerModeProtection(SMC, kSMC_AllowPowerModeAll);
     if (kRCM_SourceWakeup & RCM_GetPreviousResetSources(RCM)) /* Wakeup from VLLS. */
@@ -568,14 +536,19 @@ int main(void)
         NVIC_ClearPendingIRQ(LLWU_IRQn);
     }
 
-    BOARD_InitPins();
     BOARD_BootClockRUN();
+
+    /* Disable the unnecessary clock of modules. */
+    CLOCK_DisableClock(kCLOCK_Dma0);
+    CLOCK_DisableClock(kCLOCK_Sysmpu0);
+    CLOCK_DisableClock(kCLOCK_Vref0);
+
     APP_InitDebugConsole();
 
     /* Setup LPTMR. */
     LPTMR_GetDefaultConfig(&lptmrConfig);
     lptmrConfig.prescalerClockSource = kLPTMR_PrescalerClock_1; /* Use LPO as clock source. */
-    lptmrConfig.bypassPrescaler = true;
+    lptmrConfig.bypassPrescaler      = true;
 
     LPTMR_Init(LPTMR0, &lptmrConfig);
 
@@ -583,7 +556,6 @@ int main(void)
     NVIC_EnableIRQ(LPTMR0_IRQn);
 
     NVIC_EnableIRQ(APP_WAKEUP_BUTTON_IRQ);
-
 
     if (kRCM_SourceWakeup & RCM_GetPreviousResetSources(RCM)) /* Wakeup from VLLS. */
     {
@@ -633,8 +605,7 @@ int main(void)
             }
 
             /* If target mode is RUN/VLPR/HSRUN, don't need to set wakeup source. */
-            if ((kAPP_PowerModeRun == targetPowerMode) ||
-                (kAPP_PowerModeVlpr == targetPowerMode))
+            if ((kAPP_PowerModeRun == targetPowerMode) || (kAPP_PowerModeVlpr == targetPowerMode))
             {
                 needSetWakeup = false;
             }

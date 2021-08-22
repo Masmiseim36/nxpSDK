@@ -1,33 +1,12 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
+ * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of the copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 #include "fsl_debug_console.h"
+#include "pin_mux.h"
 #include "board.h"
 #include "fsl_afe.h"
 #include "fsl_cmp.h"
@@ -35,25 +14,24 @@
 #include "fsl_qtmr.h"
 #include "fsl_xbar.h"
 
-#include "pin_mux.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_AFE_FIRST_CHANNEL 2U
+#define DEMO_AFE_FIRST_CHANNEL  2U
 #define DEMO_AFE_SECOND_CHANNEL 3U
 /* About 23 mV */
-#define DEMO_AFE_VREF_TRIM 46U
-#define DEMO_AFE_BASEADDR AFE
-#define DEMO_AFE_FIRST_IRQ_HANDLER_FUNC AFE_CH2_IRQHandler
+#define DEMO_AFE_VREF_TRIM               46U
+#define DEMO_AFE_BASEADDR                AFE
+#define DEMO_AFE_FIRST_IRQ_HANDLER_FUNC  AFE_CH2_IRQHandler
 #define DEMO_AFE_SECOND_IRQ_HANDLER_FUNC AFE_CH3_IRQHandler
-#define DEMO_AFE_FIRST_CHANNEL_IRQn AFE_CH2_IRQn
-#define DEMO_AFE_SECOND_CHANNEL_IRQn AFE_CH3_IRQn
+#define DEMO_AFE_FIRST_CHANNEL_IRQn      AFE_CH2_IRQn
+#define DEMO_AFE_SECOND_CHANNEL_IRQn     AFE_CH3_IRQn
 
-#define DEMO_CMP_BASEADDR CMP1
-#define DEMO_CMP_PLUS_CHANNEL 2U
+#define DEMO_CMP_BASEADDR      CMP1
+#define DEMO_CMP_PLUS_CHANNEL  2U
 #define DEMO_CMP_MINUS_CHANNEL 3U
 
-#define TMRPRCLK (double)(CLOCK_GetFreq(kCLOCK_BusClk) / 64)
+#define TMRPRCLK                 (double)(CLOCK_GetFreq(kCLOCK_BusClk) / 64)
 #define DEMO_QUAD_TIMER_BASEADDR TMR0
 
 #define TMR2FREQ(x) (double)(TMRPRCLK / (double)x) /* Calculate frequency */
@@ -93,10 +71,10 @@ static void APP_XBAR_Config(void);
 /*******************************************************************************
  * Variables
  ******************************************************************************/
-volatile bool g_bAfeFirstChannelConvDone = false;  /* Conversion done flag */
+volatile bool g_bAfeFirstChannelConvDone  = false; /* Conversion done flag */
 volatile bool g_bAfeSecondChannelConvDone = false; /* Conversion done flag */
-volatile int32_t g_result0 = 0;
-volatile int32_t g_result1 = 0;
+volatile int32_t g_result0                = 0;
+volatile int32_t g_result1                = 0;
 
 double g_freq_tmr; /* Frequency of quad timer */
 
@@ -113,6 +91,7 @@ void DEMO_AFE_FIRST_IRQ_HANDLER_FUNC(void)
         /* Set conversion done flag */
         g_bAfeFirstChannelConvDone = true;
     }
+    SDK_ISR_EXIT_BARRIER;
 }
 
 void DEMO_AFE_SECOND_IRQ_HANDLER_FUNC(void)
@@ -124,6 +103,7 @@ void DEMO_AFE_SECOND_IRQ_HANDLER_FUNC(void)
         /* Set conversion done flag */
         g_bAfeSecondChannelConvDone = true;
     }
+    SDK_ISR_EXIT_BARRIER;
 }
 
 static void APP_AFE_Config(void)
@@ -163,17 +143,10 @@ static void APP_CMP_Config(void)
 
 static void APP_XBAR_Config(void)
 {
-    /* Structure of initialize XBAR. */
-    xbar_control_config_t xbarConfig;
-
     /* Initialize xbar module. */
     XBAR_Init(XBAR);
     /* Configure the XBAR signal connections. */
     XBAR_SetSignalsConnection(XBAR, kXBAR_InputCmp1Output, kXBAR_OutputTmrCh0SecInput);
-    /* Configure the XBAR interrupt. */
-    xbarConfig.activeEdge = kXBAR_EdgeRisingAndFalling;
-    xbarConfig.requestType = kXBAR_RequestDisable;
-    XBAR_SetOutputSignalConfig(XBAR, kXBAR_OutputTmrCh0SecInput, &xbarConfig);
 }
 
 static void APP_QTIMER_Config(void)
@@ -216,7 +189,7 @@ static void APP_VREF_Config(void)
 
 int main(void)
 {
-    uint32_t regData = 0;
+    uint32_t regData        = 0;
     uint32_t measureCounter = 0;
 
     /* Initialize board hardware. */

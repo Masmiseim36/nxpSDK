@@ -1,17 +1,16 @@
 Overview
 ========
 The DMA memory to memory example is a simple demonstration program that uses the SDK software.
-It excuates one shot transfer from source buffer to destination buffer using the SDK DMA drivers.
+It executes one shot transfer from source buffer to destination buffer using the SDK DMA drivers.
 The purpose of this example is to show how to use the DMA and to provide a simple example for
 debugging and further development.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench 7.80.4
-- Keil MDK 5.21a
-- GCC ARM Embedded 2016-5.4-q3
-- Kinetis Development Studio IDE 3.2.0
-- MCUXpresso0.8
+- IAR embedded Workbench  9.10.2
+- Keil MDK  5.34
+- GCC ARM Embedded  10.2.1
+- MCUXpresso  11.4.0
 
 Hardware requirements
 =====================
@@ -42,15 +41,20 @@ When the demo runs successfully, the following message is displayed in the termi
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 DMA memory to memory transfer example begin.
 
+
+
 Destination Buffer:
-0       0       0       0
+
+0	0	0	0	
+
+
 
 DMA memory to memory transfer example finish.
 
-Destination Buffer:
-1       2       3       4
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Customization options
-=====================
+
+Destination Buffer:
+
+1	2	3	4	
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 

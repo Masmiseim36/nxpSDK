@@ -3,47 +3,26 @@
 **     Processors:          MKM34Z256VLL7
 **                          MKM34Z256VLQ7
 **
-**     Compilers:           Keil ARM C/C++ Compiler
-**                          Freescale C/C++ for Embedded ARM
+**     Compilers:           Freescale C/C++ for Embedded ARM
 **                          GNU C Compiler
 **                          IAR ANSI C/C++ Compiler for ARM
+**                          Keil ARM C/C++ Compiler
 **                          MCUXpresso Compiler
 **
 **     Reference manual:    KM34P144M75SF0RM, Rev.1, Jan 2015
 **     Version:             rev. 1.2, 2015-03-06
-**     Build:               b170112
+**     Build:               b201125
 **
 **     Abstract:
 **         Provides a system configuration function and a global variable that
 **         contains the system frequency. It configures the device and initializes
 **         the oscillator (PLL) that is part of the microcontroller device.
 **
-**     Copyright (c) 2016 Freescale Semiconductor, Inc.
-**     Copyright 2016 - 2017 NXP
-**     Redistribution and use in source and binary forms, with or without modification,
-**     are permitted provided that the following conditions are met:
+**     Copyright 2016 Freescale Semiconductor, Inc.
+**     Copyright 2016-2020 NXP
+**     All rights reserved.
 **
-**     o Redistributions of source code must retain the above copyright notice, this list
-**       of conditions and the following disclaimer.
-**
-**     o Redistributions in binary form must reproduce the above copyright notice, this
-**       list of conditions and the following disclaimer in the documentation and/or
-**       other materials provided with the distribution.
-**
-**     o Neither the name of the copyright holder nor the names of its
-**       contributors may be used to endorse or promote products derived from this
-**       software without specific prior written permission.
-**
-**     THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
-**     ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
-**     WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-**     DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
-**     ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
-**     (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
-**     LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
-**     ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-**     (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
-**     SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+**     SPDX-License-Identifier: BSD-3-Clause
 **
 **     http:                 www.nxp.com
 **     mail:                 support@nxp.com
@@ -71,7 +50,7 @@
  */
 
 #ifndef _SYSTEM_MKM34Z7_H_
-#define _SYSTEM_MKM34Z7_H_                       /**< Symbol preventing repeated inclusion */
+#define _SYSTEM_MKM34Z7_H_ /**< Symbol preventing repeated inclusion */
 
 #ifdef __cplusplus
 extern "C" {
@@ -79,24 +58,22 @@ extern "C" {
 
 #include <stdint.h>
 
-
 #ifndef DISABLE_WDOG
-  #define DISABLE_WDOG                 1
+#define DISABLE_WDOG 1
 #endif
 
 /* Define clock source values */
 
-#define CPU_XTAL_CLK_HZ                8000000u            /* Value of the external crystal or oscillator clock frequency in Hz */
-#define CPU_XTAL32k_CLK_HZ             32768u              /* Value of the external 32k crystal or oscillator clock frequency in Hz */
-#define CPU_INT_SLOW_CLK_HZ            32768u              /* Value of the slow internal oscillator clock frequency in Hz  */
-#define CPU_INT_FAST_CLK_HZ            4000000u            /* Value of the fast internal oscillator clock frequency in Hz  */
+#define CPU_XTAL_CLK_HZ     8000000u /* Value of the external crystal or oscillator clock frequency in Hz */
+#define CPU_XTAL32k_CLK_HZ  32768u   /* Value of the external 32k crystal or oscillator clock frequency in Hz */
+#define CPU_INT_SLOW_CLK_HZ 32768u   /* Value of the slow internal oscillator clock frequency in Hz  */
+#define CPU_INT_FAST_CLK_HZ 4000000u /* Value of the fast internal oscillator clock frequency in Hz  */
 
 /* Low power mode enable */
 /* SMC_PMPROT: AVLP=1,AVLLS=1 */
-#define SYSTEM_SMC_PMPROT_VALUE        0x22U               /* SMC_PMPROT */
+#define SYSTEM_SMC_PMPROT_VALUE 0x22U /* SMC_PMPROT */
 
-#define DEFAULT_SYSTEM_CLOCK           2000000u            /* Default System clock value */
-
+#define DEFAULT_SYSTEM_CLOCK 2000000u /* Default System clock value */
 
 /**
  * @brief System clock frequency (core clock)
@@ -116,7 +93,7 @@ extern uint32_t SystemCoreClock;
  * microcontroller device. For systems with variable clock speed it also updates
  * the variable SystemCoreClock. SystemInit is called from startup_device file.
  */
-void SystemInit (void);
+void SystemInit(void);
 
 /**
  * @brief Updates the SystemCoreClock variable.
@@ -125,10 +102,22 @@ void SystemInit (void);
  * execution. SystemCoreClockUpdate() evaluates the clock register settings and calculates
  * the current core clock.
  */
-void SystemCoreClockUpdate (void);
+void SystemCoreClockUpdate(void);
+
+/**
+ * @brief SystemInit function hook.
+ *
+ * This weak function allows to call specific initialization code during the
+ * SystemInit() execution.This can be used when an application specific code needs
+ * to be called as close to the reset entry as possible (for example the Multicore
+ * Manager MCMGR_EarlyInit() function call).
+ * NOTE: No global r/w variables can be used in this hook function because the
+ * initialization of these variables happens after this function.
+ */
+void SystemInitHook(void);
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif  /* _SYSTEM_MKM34Z7_H_ */
+#endif /* _SYSTEM_MKM34Z7_H_ */

@@ -1,7 +1,17 @@
 /*
- * Copyright 2019 NXP
+ * Copyright 2019-2020 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
+ */
+
+/*
+ * Change log:
+ *
+ * 1.0.1:
+ *   - Fix MISRA 2012 issues.
+ *
+ * 1.0.0:
+ *   - Initial version.
  */
 
 /*

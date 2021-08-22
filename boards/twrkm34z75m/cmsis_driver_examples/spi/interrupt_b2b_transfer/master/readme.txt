@@ -10,11 +10,10 @@ This example uses the transactional API in spi driver.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench 7.80.4
-- Keil MDK 5.21a
-- GCC ARM Embedded 2016-5.4-q3
-- Kinetis Development Studio IDE 3.2.0
-- MCUXpresso0.8
+- IAR embedded Workbench  9.10.2
+- Keil MDK  5.34
+- GCC ARM Embedded  10.2.1
+- MCUXpresso  11.4.0
 
 Hardware requirements
 =====================
@@ -82,6 +81,3 @@ SPI transfer all data matched!
  20 21 22 23 24 25 26 27 28 29 2A 2B 2C 2D 2E 2F
  30 31 32 33 34 35 36 37 38 39 3A 3B 3C 3D 3E 3F
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Customization options
-=====================
-

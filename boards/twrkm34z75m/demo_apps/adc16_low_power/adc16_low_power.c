@@ -1,50 +1,28 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2019 NXP
+ * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of the copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #include "fsl_debug_console.h"
 #include "fsl_smc.h"
 #include "fsl_pmc.h"
 #include "fsl_adc16.h"
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #include "fsl_lptmr.h"
 
-#include "clock_config.h"
-#include "pin_mux.h"
 #include "fsl_xbar.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_ADC16_BASEADDR ADC0
+#define DEMO_ADC16_BASEADDR      ADC0
 #define DEMO_ADC16_CHANNEL_GROUP 0U
 
-#define DEMO_ADC16_IRQ_ID ADC0_IRQn
+#define DEMO_ADC16_IRQ_ID           ADC0_IRQn
 #define DEMO_ADC16_IRQ_HANDLER_FUNC ADC0_IRQHandler
 
 #define DEMO_LPTMR_BASE LPTMR0
@@ -54,21 +32,21 @@
  * The method used in this demo to calculate temperature of chip is mapped to
  * Temperature Sensor for the HCS08 Microcontroller Family document (Document Number: AN3031)
  */
-#define ADCR_VDD (65535U) /* Maximum value when use 16b resolution */
-#define V_BG (1000U)      /* BANDGAP voltage in mV (trim to 1.0V) */
-#define V_TEMP25 (716U)   /* Typical VTEMP25 in mV */
-#define M (1620U)         /* Typical slope: (mV x 1000)/oC */
+#define ADCR_VDD      (65535U) /* Maximum value when use 16b resolution */
+#define V_BG          (1000U)  /* BANDGAP voltage in mV (trim to 1.0V) */
+#define V_TEMP25      (716U)   /* Typical VTEMP25 in mV */
+#define M             (1620U)  /* Typical slope: (mV x 1000)/oC */
 #define STANDARD_TEMP (25U)
 
 #define LED1_INIT() LED_RED_INIT(LOGIC_LED_OFF)
-#define LED1_ON() LED_RED_ON()
-#define LED1_OFF() LED_RED_OFF()
+#define LED1_ON()   LED_RED_ON()
+#define LED1_OFF()  LED_RED_OFF()
 
 #define LED2_INIT() LED_GREEN_INIT(LOGIC_LED_OFF)
-#define LED2_ON() LED_GREEN_ON()
-#define LED2_OFF() LED_GREEN_OFF()
+#define LED2_ON()   LED_GREEN_ON()
+#define LED2_OFF()  LED_GREEN_OFF()
 #define kAdcChannelTemperature (26U) /*! ADC channel of temperature sensor */
-#define kAdcChannelBandgap (27U)     /*! ADC channel of BANDGAP */
+#define kAdcChannelBandgap     (27U) /*! ADC channel of BANDGAP */
 
 #define UPPER_VALUE_LIMIT (1U) /*! This value/10 is going to be added to current Temp to set the upper boundary*/
 #define LOWER_VALUE_LIMIT                                                               \
@@ -81,8 +59,8 @@
 #define LPTMR_COMPARE_VALUE (500U) /* Low Power Timer interrupt time in miliseconds */
 
 /*!
-* @brief Boundaries struct
-*/
+ * @brief Boundaries struct
+ */
 typedef struct lowPowerAdcBoundaries
 {
     int32_t upperBoundary; /*! upper boundary in degree */
@@ -145,8 +123,8 @@ static lowPowerAdcBoundaries_t TempSensorCalibration(uint32_t updateBoundariesCo
  * Variables
  ******************************************************************************/
 volatile static uint32_t adcValue = 0; /*! ADC value */
-static uint32_t adcrTemp25 = 0;        /*! Calibrated ADCR_TEMP25 */
-static uint32_t adcr100m = 0;
+static uint32_t adcrTemp25        = 0; /*! Calibrated ADCR_TEMP25 */
+static uint32_t adcr100m          = 0;
 volatile bool conversionCompleted = false; /*! Conversion is completed Flag */
 
 /*******************************************************************************
@@ -155,9 +133,6 @@ volatile bool conversionCompleted = false; /*! Conversion is completed Flag */
 
 void BOARD_ConfigTriggerSource(void)
 {
-    /* Structure of initialize XBAR. */
-    xbar_control_config_t xbarConfig;
-
     /* Configure SIM for ADC hw trigger source selection */
     SIM->CTRL_REG |= 0x8U;
 
@@ -165,10 +140,6 @@ void BOARD_ConfigTriggerSource(void)
     XBAR_Init(XBAR);
     /* Configure the XBAR signal connections. */
     XBAR_SetSignalsConnection(XBAR, kXBAR_InputLptmr0Output, kXBAR_OutputAdcTrgA);
-    /* Configure the XBAR interrupt. */
-    xbarConfig.activeEdge = kXBAR_EdgeRising;
-    xbarConfig.requestType = kXBAR_RequestDisable;
-    XBAR_SetOutputSignalConfig(XBAR, kXBAR_OutputAdcTrgA, &xbarConfig);
 }
 /* Enable the trigger source of LPTimer */
 static void LPTMR_InitTriggerSourceOfAdc(LPTMR_Type *base)
@@ -205,7 +176,7 @@ static void ADC16_PauseConversion(ADC_Type *base)
 {
     adc16_channel_config_t adcChnConfig;
 
-    adcChnConfig.channelNumber = 31U; /*!< AD31 channel */
+    adcChnConfig.channelNumber                        = 31U; /*!< AD31 channel */
     adcChnConfig.enableInterruptOnConversionCompleted = false;
 #if defined(FSL_FEATURE_ADC16_HAS_DIFF_MODE) && FSL_FEATURE_ADC16_HAS_DIFF_MODE
     adcChnConfig.enableDifferentialConversion = false;
@@ -219,7 +190,7 @@ static void ADC16_PauseConversion(ADC_Type *base)
 static void ADC16_CalibrateParams(ADC_Type *base)
 {
     uint32_t bandgapValue = 0; /*! ADC value of BANDGAP */
-    uint32_t vdd = 0;          /*! VDD in mV */
+    uint32_t vdd          = 0; /*! VDD in mV */
 
     adc16_config_t adcUserConfig;
     adc16_channel_config_t adcChnConfig;
@@ -237,11 +208,11 @@ static void ADC16_CalibrateParams(ADC_Type *base)
     PMC_ConfigureBandgapBuffer(PMC, &pmcBandgapConfig);
 
     /*
-    * Initialization ADC for
-    * 16bit resolution, interrupt mode, hw trigger disabled.
-    * normal convert speed, VREFH/L as reference,
-    * disable continuous convert mode
-    */
+     * Initialization ADC for
+     * 16bit resolution, interrupt mode, hw trigger disabled.
+     * normal convert speed, VREFH/L as reference,
+     * disable continuous convert mode
+     */
     /*
      * adcUserConfig.referenceVoltageSource = kADC16_ReferenceVoltageSourceVref;
      * adcUserConfig.clockSource = kADC16_ClockSourceAsynchronousClock;
@@ -260,9 +231,9 @@ static void ADC16_CalibrateParams(ADC_Type *base)
     adcUserConfig.resolution = kADC16_ResolutionSE12Bit;
 #endif
     adcUserConfig.enableContinuousConversion = false;
-    adcUserConfig.clockSource = kADC16_ClockSourceAsynchronousClock;
-    adcUserConfig.enableLowPower = 1;
-    adcUserConfig.longSampleMode = kADC16_LongSampleCycle24;
+    adcUserConfig.clockSource                = kADC16_ClockSourceAsynchronousClock;
+    adcUserConfig.enableLowPower             = 1;
+    adcUserConfig.longSampleMode             = kADC16_LongSampleCycle24;
 #ifdef BOARD_ADC_USE_ALT_VREF
     adcUserConfig.referenceVoltageSource = kADC16_ReferenceVoltageSourceValt;
 #endif
@@ -270,7 +241,14 @@ static void ADC16_CalibrateParams(ADC_Type *base)
 
 #if defined(FSL_FEATURE_ADC16_HAS_CALIBRATION) && FSL_FEATURE_ADC16_HAS_CALIBRATION
     /* Auto calibration */
-    ADC16_DoAutoCalibration(base);
+    if (kStatus_Success == ADC16_DoAutoCalibration(base))
+    {
+        PRINTF("ADC16_DoAutoCalibration() Done.\r\n");
+    }
+    else
+    {
+        PRINTF("ADC16_DoAutoCalibration() Failed.\r\n");
+    }
 #endif
 
 #if defined(FSL_FEATURE_ADC16_HAS_HW_AVERAGE) && FSL_FEATURE_ADC16_HAS_HW_AVERAGE
@@ -320,16 +298,19 @@ static bool ADC16_InitHardwareTrigger(ADC_Type *base)
 
 #if defined(FSL_FEATURE_ADC16_HAS_CALIBRATION) && FSL_FEATURE_ADC16_HAS_CALIBRATION
     /* Auto calibration */
-    ADC16_DoAutoCalibration(base);
+    if (kStatus_Success != ADC16_DoAutoCalibration(base))
+    {
+        return false;
+    }
     offsetValue = base->OFS;
     ADC16_SetOffsetValue(base, offsetValue);
 #endif
     /*
-    * Initialization ADC for
-    * 16bit resolution, interrupt mode, hw trigger enabled.
-    * normal convert speed, VREFH/L as reference,
-    * disable continuous convert mode.
-    */
+     * Initialization ADC for
+     * 16bit resolution, interrupt mode, hw trigger enabled.
+     * normal convert speed, VREFH/L as reference,
+     * disable continuous convert mode.
+     */
     /*
      * adcUserConfig.referenceVoltageSource = kADC16_ReferenceVoltageSourceVref;
      * adcUserConfig.clockSource = kADC16_ClockSourceAsynchronousClock;
@@ -350,7 +331,7 @@ static bool ADC16_InitHardwareTrigger(ADC_Type *base)
     /* enabled hardware trigger  */
     ADC16_EnableHardwareTrigger(base, true);
     adcUserConfig.enableContinuousConversion = false;
-    adcUserConfig.clockSource = kADC16_ClockSourceAsynchronousClock;
+    adcUserConfig.clockSource                = kADC16_ClockSourceAsynchronousClock;
 
     adcUserConfig.longSampleMode = kADC16_LongSampleCycle24;
     adcUserConfig.enableLowPower = 1;
@@ -409,6 +390,7 @@ void DEMO_ADC16_IRQ_HANDLER_FUNC(void)
     adcValue = ADC16_GetChannelConversionValue(DEMO_ADC16_BASEADDR, DEMO_ADC16_CHANNEL_GROUP);
     /* Set conversionCompleted flag. This prevents an wrong conversion in main function */
     conversionCompleted = true;
+    SDK_ISR_EXIT_BARRIER;
 }
 
 /*!
@@ -416,7 +398,7 @@ void DEMO_ADC16_IRQ_HANDLER_FUNC(void)
  */
 int main(void)
 {
-    int32_t currentTemperature = 0;
+    int32_t currentTemperature       = 0;
     uint32_t updateBoundariesCounter = 0;
     int32_t tempArray[UPDATE_BOUNDARIES_TIME * 2];
     lowPowerAdcBoundaries_t boundaries;
@@ -461,14 +443,14 @@ int main(void)
         while (!conversionCompleted)
         {
         }
-        currentTemperature = GetCurrentTempValue();
+        currentTemperature                 = GetCurrentTempValue();
         tempArray[updateBoundariesCounter] = currentTemperature;
         updateBoundariesCounter++;
         conversionCompleted = false;
     }
 
     /* Temp Sensor Calibration */
-    boundaries = TempSensorCalibration(updateBoundariesCounter, tempArray);
+    boundaries              = TempSensorCalibration(updateBoundariesCounter, tempArray);
     updateBoundariesCounter = 0;
 
     /* Two LED is turned on indicating calibration is done */
@@ -511,7 +493,7 @@ int main(void)
         /* Call update function */
         if (updateBoundariesCounter >= (UPDATE_BOUNDARIES_TIME))
         {
-            boundaries = TempSensorCalibration(updateBoundariesCounter, tempArray);
+            boundaries              = TempSensorCalibration(updateBoundariesCounter, tempArray);
             updateBoundariesCounter = 0;
         }
         else

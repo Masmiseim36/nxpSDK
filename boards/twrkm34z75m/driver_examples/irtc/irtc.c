@@ -1,42 +1,20 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
+ * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of the copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 /*******************************************************************************
  * Includes
  ******************************************************************************/
 #include "fsl_debug_console.h"
+#include "pin_mux.h"
 #include "board.h"
 
 #include "fsl_irtc.h"
 
-#include "pin_mux.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -57,10 +35,10 @@ volatile static bool alarmHappen = false;
  ******************************************************************************/
 
 /*!
-* @brief ISR for Alarm interrupt
-*
-* This function change state of busyWait.
-*/
+ * @brief ISR for Alarm interrupt
+ *
+ * This function change state of busyWait.
+ */
 void RTC_IRQHandler(void)
 {
     if (IRTC_GetStatusFlags(RTC) & kIRTC_AlarmFlag)
@@ -71,6 +49,7 @@ void RTC_IRQHandler(void)
         /*Clear alarm flag */
         IRTC_ClearStatusFlags(RTC, kIRTC_AlarmInterruptEnable);
     }
+    SDK_ISR_EXIT_BARRIER;
 }
 
 /*!
@@ -81,20 +60,20 @@ int main(void)
     irtc_datetime_t datetime, alarmDatetime, datetimeGet;
     irtc_config_t irtcConfig;
 
-    datetime.year = 2015;
-    datetime.month = 1;
-    datetime.day = 21;
+    datetime.year    = 2015;
+    datetime.month   = 1;
+    datetime.day     = 21;
     datetime.weekDay = 3;
-    datetime.hour = 18;
-    datetime.minute = 55;
-    datetime.second = 30;
+    datetime.hour    = 18;
+    datetime.minute  = 55;
+    datetime.second  = 30;
 
-    alarmDatetime.year = 2015;
-    alarmDatetime.month = 1;
-    alarmDatetime.day = 21;
-    alarmDatetime.hour = 18;
-    alarmDatetime.minute = 55;
-    alarmDatetime.second = 33;
+    alarmDatetime.year    = 2015;
+    alarmDatetime.month   = 1;
+    alarmDatetime.day     = 21;
+    alarmDatetime.hour    = 18;
+    alarmDatetime.minute  = 55;
+    alarmDatetime.second  = 33;
     alarmDatetime.weekDay = 0; /* Don't care for alarm, however this should be set to a valid value */
 
     /* Init the IRTC module */

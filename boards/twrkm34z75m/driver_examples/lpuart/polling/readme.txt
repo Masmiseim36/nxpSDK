@@ -3,14 +3,15 @@ Overview
 The lpuart_polling Example project is to demonstrate usage of the KSDK lpuart driver.
 In the example, you can send characters to the console back and they will be printed out onto console
  instantly.
+Note: Please input one character at a time. If you input too many characters each time, the receiver may overflow
+because the LPUART uses simple polling way for receiving.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench 7.80.4
-- Keil MDK 5.21a
-- GCC ARM Embedded 2016-5.4-q3
-- Kinetis Development Studio IDE 3.2.0
-- MCUXpresso0.8
+- IAR embedded Workbench  9.10.2
+- Keil MDK  5.34
+- GCC ARM Embedded  10.2.1
+- MCUXpresso  11.4.0
 
 Hardware requirements
 =====================
@@ -46,6 +47,3 @@ When the example runs successfully, the log would be seen on the UART Terminal p
 Lpuart polling example
 Board will send back received characters
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Customization options
-=====================
-

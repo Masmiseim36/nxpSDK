@@ -9,11 +9,10 @@ independent capture/compare, fault input control, programmable input filters, an
 
 Toolchain supported
 ===================
-- IAR embedded Workbench 7.80.4
-- Keil MDK 5.21a
-- GCC ARM Embedded 2016-5.4-q3
-- Kinetis Development Studio IDE 3.2.0
-- MCUXpresso0.8
+- IAR embedded Workbench  9.10.2
+- Keil MDK  5.34
+- GCC ARM Embedded  10.2.1
+- MCUXpresso  11.4.0
 
 Hardware requirements
 =====================
@@ -23,7 +22,7 @@ Hardware requirements
 
 Board settings
 ==============
-No special settings are required.
+Probe signal at J25-20 using oscillator.
 
 Prepare the Demo
 ================
@@ -43,19 +42,26 @@ When the demo runs successfully, the following message is displayed in the termi
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 *********QUADTIMER EXAMPLE START*********
 ****Timer use-case, 1 second tick.****
- Timer interrupt has occured !
- Timer interrupt has occured !
+ Timer interrupt has occurred !
+ Timer interrupt has occurred !
 ....................
 ....................
 ****Chain Timer use-case, 10 second tick.****
- Timer interrupt has occured !
- Timer interrupt has occured !
+ Timer interrupt has occurred !
+ Timer interrupt has occurred !
 .........
 .........
 ****Input capture example.****
 ****Provide a signal input to the TMR0 pin****
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-And you will find the LED RED is taking turns to shine.
-Customization options
-=====================
+Input rising signal at J21-1. Then the following message is displayed:
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Input Captured value=bebe
 
+*********Make sure to connect a scope.*********
+
+****A 50 duty cycle PWM wave is observed in the scope.****
+
+*********QUADTIMER EXAMPLE END.*********
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+And you will find the LED RED is taking turns to shine.

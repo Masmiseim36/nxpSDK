@@ -1,31 +1,9 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2020 NXP
+ * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of the copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #include "fsl_debug_console.h"
@@ -33,37 +11,37 @@
 #include "fsl_pmc.h"
 #include "fsl_adc16.h"
 #include "fsl_dmamux.h"
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #include "fsl_lptmr.h"
 #include <stdlib.h>
 #include "fsl_dma.h"
 
-#include "clock_config.h"
-#include "pin_mux.h"
 #include "fsl_xbar.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_ADC16_BASEADDR ADC0
+#define DEMO_ADC16_BASEADDR      ADC0
 #define DEMO_ADC16_CHANNEL_GROUP 0U
-#define DEMO_ADC16_CHANNEL 26U
-#define ADC16_RESULT_REG_ADDR (uint32_t)(&ADC0->R[0]) /* Get ADC16 result register address */
+#define DEMO_ADC16_CHANNEL       26U
+#define ADC16_RESULT_REG_ADDR    (uint32_t)(&ADC0->R[0]) /* Get ADC16 result register address */
 
-#define DEMO_DMA_BASEADDR DMA0
-#define DEMO_DMA_IRQ_ID DMA0_IRQn
+#define DEMO_DMA_BASEADDR         DMA0
+#define DEMO_DMA_IRQ_ID           DMA0_IRQn
 #define DEMO_DMA_IRQ_HANDLER_FUNC DMA0_IRQHandler
-#define DEMO_DMA_CHANNEL 0U
-#define DEMO_DMA_ADC_SOURCE kDmaRequestMux0SarADC
+#define DEMO_DMA_CHANNEL          0U
+#define DEMO_DMA_ADC_SOURCE       kDmaRequestMux0SarADC
 
-#define DEMO_DMAMUX_BASEADDR DMAMUX0
+#define DEMO_DMAMUX_BASEADDR DMAMUX
 
 #define DEMO_LPTMR_BASE LPTMR0
 
-#define LED_INIT() LED_RED_INIT(LOGIC_LED_OFF)
+#define LED_INIT()   LED_RED_INIT(LOGIC_LED_OFF)
 #define LED_TOGGLE() LED_RED_TOGGLE()
 
 #define DEMO_LPTMR_COMPARE_VALUE 100U /* Low Power Timer interrupt time in miliseconds */
-#define DEMO_ADC16_SAMPLE_COUNT 16U   /* The ADC16 sample count */
+#define DEMO_ADC16_SAMPLE_COUNT  16U  /* The ADC16 sample count */
 
 /*******************************************************************************
  * Prototypes
@@ -113,6 +91,7 @@ static uint32_t g_adc16SampleDataArray[DEMO_ADC16_SAMPLE_COUNT]; /* ADC value ar
 static uint32_t g_avgADCValue = 0U;                              /* Average ADC value */
 dma_handle_t g_DMA_Handle;                                       /* Dma handler */
 dma_transfer_config_t g_transferConfig;                          /* Dma transfer config */
+const uint32_t g_Adc16_16bitFullRange = 65536U;
 
 /*******************************************************************************
  * Code
@@ -120,9 +99,6 @@ dma_transfer_config_t g_transferConfig;                          /* Dma transfer
 
 void BOARD_ConfigTriggerSource(void)
 {
-    /* Structure of initialize XBAR. */
-    xbar_control_config_t xbarConfig;
-
     /* Configure SIM for ADC hw trigger source selection */
     SIM->CTRL_REG |= 0x8U;
 
@@ -130,10 +106,6 @@ void BOARD_ConfigTriggerSource(void)
     XBAR_Init(XBAR);
     /* Configure the XBAR signal connections. */
     XBAR_SetSignalsConnection(XBAR, kXBAR_InputLptmr0Output, kXBAR_OutputAdcTrgA);
-    /* Configure the XBAR interrupt. */
-    xbarConfig.activeEdge = kXBAR_EdgeRising;
-    xbarConfig.requestType = kXBAR_RequestDisable;
-    XBAR_SetOutputSignalConfig(XBAR, kXBAR_OutputAdcTrgA, &xbarConfig);
 }
 /* Enable the trigger source of LPTimer */
 static void LPTMR_Configuration(void)
@@ -153,15 +125,15 @@ static void ADC16_Configuration(void)
     adc16_config_t adcUserConfig;
     adc16_channel_config_t adcChnConfig;
     /*
-    * Initialization ADC for
-    * 16bit resolution, interrupt mode, hw trigger enabled.
-    * normal convert speed, VREFH/L as reference,
-    * disable continuous convert mode.
-    */
+     * Initialization ADC for
+     * 16bit resolution, interrupt mode, hw trigger enabled.
+     * normal convert speed, VREFH/L as reference,
+     * disable continuous convert mode.
+     */
     ADC16_GetDefaultConfig(&adcUserConfig);
-    adcUserConfig.resolution = kADC16_Resolution16Bit;
+    adcUserConfig.resolution                 = kADC16_Resolution16Bit;
     adcUserConfig.enableContinuousConversion = false;
-    adcUserConfig.clockSource = kADC16_ClockSourceAsynchronousClock;
+    adcUserConfig.clockSource                = kADC16_ClockSourceAsynchronousClock;
 
     adcUserConfig.longSampleMode = kADC16_LongSampleCycle24;
     adcUserConfig.enableLowPower = true;
@@ -172,7 +144,14 @@ static void ADC16_Configuration(void)
 
 #if defined(FSL_FEATURE_ADC16_HAS_CALIBRATION) && FSL_FEATURE_ADC16_HAS_CALIBRATION
     /* Auto calibration */
-    ADC16_DoAutoCalibration(DEMO_ADC16_BASEADDR);
+    if (kStatus_Success == ADC16_DoAutoCalibration(DEMO_ADC16_BASEADDR))
+    {
+        PRINTF("ADC16_DoAutoCalibration() Done.\r\n");
+    }
+    else
+    {
+        PRINTF("ADC16_DoAutoCalibration() Failed.\r\n");
+    }
 #endif
 
     adcChnConfig.channelNumber = DEMO_ADC16_CHANNEL;
@@ -271,6 +250,7 @@ void DEMO_DMA_IRQ_HANDLER_FUNC(void)
                         (void *)g_adc16SampleDataArray, sizeof(uint32_t), sizeof(g_adc16SampleDataArray),
                         kDMA_PeripheralToMemory);
     DMA_SetTransferConfig(DEMO_DMA_BASEADDR, DEMO_DMA_CHANNEL, &g_transferConfig);
+    SDK_ISR_EXIT_BARRIER;
 }
 
 int main(void)
@@ -295,8 +275,12 @@ int main(void)
     /* Initialize SIM for ADC hw trigger source selection */
     BOARD_ConfigTriggerSource();
 
+    PRINTF("ADC Full Range: %d\r\n", g_Adc16_16bitFullRange);
     while (1)
     {
+        PRINTF("Please press any key to trigger ADC conversion.\r\n");
+        (void)GETCHAR();
+
         /* Start low power timer */
         LPTMR_StartTimer(DEMO_LPTMR_BASE);
         /* Enter to Very Low Power Stop Mode */

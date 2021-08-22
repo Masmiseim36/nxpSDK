@@ -14,11 +14,10 @@ output is logic one, or turned off when zero.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench 7.80.4
-- Keil MDK 5.21a
-- GCC ARM Embedded 2016-5.4-q3
-- Kinetis Development Studio IDE 3.2.0
-- MCUXpresso0.8
+- IAR embedded Workbench  9.10.2
+- Keil MDK  5.34
+- GCC ARM Embedded  10.2.1
+- MCUXpresso  11.4.0
 
 Hardware requirements
 =====================
@@ -29,7 +28,7 @@ Hardware requirements
 
 Board settings
 ==============
-No special settings are required.
+Connect J17.
 
 Prepare the Demo
 ================
@@ -56,6 +55,3 @@ CMP polling Example
 Then change CMP analog input, and watch the change of LED.
      - CMP0_IN1 (Jump A63 on Elevator Tower) connected to VCC = 3.3V (Jump B3 on Elevator Tower): LED ORANGE on
      - CMP0_IN1 (Jump A63 on Elevator Tower) connected to GND ( Jump B2 on Elevator Tower): LED ORANGE off
-Customization options
-=====================
-

@@ -1,31 +1,9 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2020 NXP
+ * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of the copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #ifndef _FSL_MMAU_H_
@@ -38,14 +16,13 @@
  * @{
  */
 
-
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
 
 /*! @name Driver version */
 /*@{*/
-#define FSL_MMAU_DRIVER_VERSION (MAKE_VERSION(2, 0, 0)) /*!< Version 2.0.0 */
+#define FSL_MMAU_DRIVER_VERSION (MAKE_VERSION(2, 0, 1)) /*!< Version 2.0.1 */
 /*@}*/
 
 /*******************************************************************************
@@ -56,12 +33,12 @@
  * @name Registers decorated load/store addresses
  * @{
  */
-#define MMAU__X0 0xF0004000UL  /*!< Accumulator register X0              */
-#define MMAU__X1 0xF0004004UL  /*!< Accumulator register X1              */
-#define MMAU__X2 0xF0004008UL  /*!< Accumulator register X2              */
-#define MMAU__X3 0xF000400CUL  /*!< Accumulator register X3              */
-#define MMAU__A0 0xF0004010UL  /*!< Accumulator register A0              */
-#define MMAU__A1 0xF0004014UL  /*!< Accumulator register A1              */
+#define MMAU__X0  0xF0004000UL /*!< Accumulator register X0              */
+#define MMAU__X1  0xF0004004UL /*!< Accumulator register X1              */
+#define MMAU__X2  0xF0004008UL /*!< Accumulator register X2              */
+#define MMAU__X3  0xF000400CUL /*!< Accumulator register X3              */
+#define MMAU__A0  0xF0004010UL /*!< Accumulator register A0              */
+#define MMAU__A1  0xF0004014UL /*!< Accumulator register A1              */
 #define MMAU__A10 0xF0004010UL /*!< Accumulator register pair A10        */
 
 /*! @} */
@@ -70,21 +47,21 @@
  * @name Unsigned integer instructions decorated load/store addresses
  * @{
  */
-#define MMAU__REGRW 0xF0004000UL   /*!< Registers RW                        */
-#define MMAU__UMUL 0xF0004020UL    /*!< A10=X2*X3                           */
-#define MMAU__UMULD 0xF0004040UL   /*!< A10=X21*X3                          */
-#define MMAU__UMULDA 0xF0004060UL  /*!< A10=A10*X3                          */
-#define MMAU__UMAC 0xF00040A0UL    /*!< A10=X2*X3+A10                       */
-#define MMAU__UMACD 0xF00040C0UL   /*!< A10=X21*X3+A10                      */
-#define MMAU__UMACDA 0xF00040E0UL  /*!< A10=A10*X3+X21                      */
-#define MMAU__UDIV 0xF0004120UL    /*!< X21/X3=A10                          */
-#define MMAU__UDIVD 0xF0004140UL   /*!< A10=X2/X3                           */
-#define MMAU__UDIVDA 0xF0004160UL  /*!< A10=X21/X3                          */
-#define MMAU__UDIVDD 0xF0004180UL  /*!< A10=A10/X3                          */
+#define MMAU__REGRW   0xF0004000UL /*!< Registers RW                        */
+#define MMAU__UMUL    0xF0004020UL /*!< A10=X2*X3                           */
+#define MMAU__UMULD   0xF0004040UL /*!< A10=X21*X3                          */
+#define MMAU__UMULDA  0xF0004060UL /*!< A10=A10*X3                          */
+#define MMAU__UMAC    0xF00040A0UL /*!< A10=X2*X3+A10                       */
+#define MMAU__UMACD   0xF00040C0UL /*!< A10=X21*X3+A10                      */
+#define MMAU__UMACDA  0xF00040E0UL /*!< A10=A10*X3+X21                      */
+#define MMAU__UDIV    0xF0004120UL /*!< X21/X3=A10                          */
+#define MMAU__UDIVD   0xF0004140UL /*!< A10=X2/X3                           */
+#define MMAU__UDIVDA  0xF0004160UL /*!< A10=X21/X3                          */
+#define MMAU__UDIVDD  0xF0004180UL /*!< A10=A10/X3                          */
 #define MMAU__UDIVDDA 0xF00041A0UL /*!< A10=A10/X32                         */
-#define MMAU__USQR 0xF0004220UL    /*!< A10=SQR(X3)                         */
-#define MMAU__USQRD 0xF0004240UL   /*!< A10=SQR(X32)                        */
-#define MMAU__USQRDA 0xF0004260UL  /*!< A10=SQR(A10)                        */
+#define MMAU__USQR    0xF0004220UL /*!< A10=SQR(X3)                         */
+#define MMAU__USQRD   0xF0004240UL /*!< A10=SQR(X32)                        */
+#define MMAU__USQRDA  0xF0004260UL /*!< A10=SQR(A10)                        */
 
 /*! @} */
 
@@ -92,17 +69,17 @@
  * @name Signed fractional instructions decorated load/store addresses
  * @{
  */
-#define MMAU__QSQR 0xF00042A0UL   /*!< A10=SQR(X3)                         */
-#define MMAU__QSQRD 0xF00042C0UL  /*!< A10=SQR(X32)                        */
+#define MMAU__QSQR   0xF00042A0UL /*!< A10=SQR(X3)                         */
+#define MMAU__QSQRD  0xF00042C0UL /*!< A10=SQR(X32)                        */
 #define MMAU__QSQRDA 0xF00042E0UL /*!< A10=SQR(A10)                        */
-#define MMAU__QDIV 0xF0004320UL   /*!< A10=X2/X3                           */
-#define MMAU__QDIVD 0xF0004340UL  /*!< A10=X21/X3                          */
+#define MMAU__QDIV   0xF0004320UL /*!< A10=X2/X3                           */
+#define MMAU__QDIVD  0xF0004340UL /*!< A10=X21/X3                          */
 #define MMAU__QDIVDA 0xF0004360UL /*!< A10=A10/X3                          */
-#define MMAU__QMUL 0xF0004420UL   /*!< A10=X2*X3                           */
-#define MMAU__QMULD 0xF0004440UL  /*!< A10=X21*X3                          */
+#define MMAU__QMUL   0xF0004420UL /*!< A10=X2*X3                           */
+#define MMAU__QMULD  0xF0004440UL /*!< A10=X21*X3                          */
 #define MMAU__QMULDA 0xF0004460UL /*!< A10=A10*X3                          */
-#define MMAU__QMAC 0xF00044A0UL   /*!< A10=X2*X3+A10                       */
-#define MMAU__QMACD 0xF00044C0UL  /*!< A10=X21*X3+A10                      */
+#define MMAU__QMAC   0xF00044A0UL /*!< A10=X2*X3+A10                       */
+#define MMAU__QMACD  0xF00044C0UL /*!< A10=X21*X3+A10                      */
 #define MMAU__QMACDA 0xF00044E0UL /*!< A10=A10*X3+X21                      */
 
 /*! @} */
@@ -111,16 +88,16 @@
  * @name Signed integer instructions decorated load/store addresses
  * @{
  */
-#define MMAU__SMUL 0xF0004620UL    /*!< A10=X2*X3                           */
-#define MMAU__SMULD 0xF0004640UL   /*!< A10=X21*X3                          */
-#define MMAU__SMULDA 0xF0004660UL  /*!< A10=A10*X3                          */
-#define MMAU__SMAC 0xF00046A0UL    /*!< A10=X2*X3+A10                       */
-#define MMAU__SMACD 0xF00046C0UL   /*!< A10=X21*X3+A10                      */
-#define MMAU__SMACDA 0xF00046E0UL  /*!< A10=A10*X3+X21                      */
-#define MMAU__SDIV 0xF0004720UL    /*!< A10=X2/X3                           */
-#define MMAU__SDIVD 0xF0004740UL   /*!< A10=X21/X3                          */
-#define MMAU__SDIVDA 0xF0004760UL  /*!< A10=A10/X3                          */
-#define MMAU__SDIVDD 0xF0004780UL  /*!< A10=X10/X32                         */
+#define MMAU__SMUL    0xF0004620UL /*!< A10=X2*X3                           */
+#define MMAU__SMULD   0xF0004640UL /*!< A10=X21*X3                          */
+#define MMAU__SMULDA  0xF0004660UL /*!< A10=A10*X3                          */
+#define MMAU__SMAC    0xF00046A0UL /*!< A10=X2*X3+A10                       */
+#define MMAU__SMACD   0xF00046C0UL /*!< A10=X21*X3+A10                      */
+#define MMAU__SMACDA  0xF00046E0UL /*!< A10=A10*X3+X21                      */
+#define MMAU__SDIV    0xF0004720UL /*!< A10=X2/X3                           */
+#define MMAU__SDIVD   0xF0004740UL /*!< A10=X21/X3                          */
+#define MMAU__SDIVDA  0xF0004760UL /*!< A10=A10/X3                          */
+#define MMAU__SDIVDD  0xF0004780UL /*!< A10=X10/X32                         */
 #define MMAU__SDIVDDA 0xF00047A0UL /*!< A10=A10/X32                         */
 
 /*! @} */
@@ -152,26 +129,26 @@ typedef long long frac64_t; /*!< Q0.63  fractional                */
  */
 typedef enum _mmau_interrupt_enable
 {
-    kMMAU_AccumOverflowInterruptEnable = (MMAU_CSR_QIE_MASK), /*!< Accumulation Overflow Enable */
-    kMMAU_OverflowInterruptEnable = (MMAU_CSR_VIE_MASK),      /*!< Multiply or Divide overflow Enable */
-    kMMAU_DivideByZeroInterruptEnable = (MMAU_CSR_DZIE_MASK), /*!< Divide by Zero Enable */
+    kMMAU_AccumOverflowInterruptEnable = (MMAU_CSR_QIE_MASK),  /*!< Accumulation Overflow Enable */
+    kMMAU_OverflowInterruptEnable      = (MMAU_CSR_VIE_MASK),  /*!< Multiply or Divide overflow Enable */
+    kMMAU_DivideByZeroInterruptEnable  = (MMAU_CSR_DZIE_MASK), /*!< Divide by Zero Enable */
 } mmau_interrupt_enable_t;
 
 /*! @brief MMAU interrupt and instruction flags */
 typedef enum _mmau_interrupt_flag
 {
-    kMMAU_AccumOverflowInterruptFlag = (MMAU_CSR_QIF_MASK), /*!< Accumulation Overflow Interrupt Flag */
-    kMMAU_OverflowInterruptFlag = (MMAU_CSR_VIF_MASK),      /*!< Multiply or Divide overflow Interrupt Flag */
-    kMMAU_DivideByZeroInterruptFlag = (MMAU_CSR_DZIF_MASK), /*!< Divide by Zero Interrupt Flag */
+    kMMAU_AccumOverflowInterruptFlag = (MMAU_CSR_QIF_MASK),  /*!< Accumulation Overflow Interrupt Flag */
+    kMMAU_OverflowInterruptFlag      = (MMAU_CSR_VIF_MASK),  /*!< Multiply or Divide overflow Interrupt Flag */
+    kMMAU_DivideByZeroInterruptFlag  = (MMAU_CSR_DZIF_MASK), /*!< Divide by Zero Interrupt Flag */
 } mmau_interrupt_flag_t;
 
 /*! @brief MMAU interrupt and instruction flags */
 typedef enum _mmau_instruction_flag
 {
-    kMMAU_AccumOverflowInstructionFlag = (MMAU_CSR_Q_MASK), /*!< Accumulation Overflow */
-    kMMAU_OverflowInstructionFlag = (MMAU_CSR_V_MASK),      /*!< Multiply or Divide overflow */
-    kMMAU_DivideByZeroInstructionFlag = (MMAU_CSR_DZ_MASK), /*!< Divide by Zero */
-    kMMAU_NegativeInstructionFlag = (MMAU_CSR_N_MASK),      /*!< Signed calculation result is negative */
+    kMMAU_AccumOverflowInstructionFlag = (MMAU_CSR_Q_MASK),  /*!< Accumulation Overflow */
+    kMMAU_OverflowInstructionFlag      = (MMAU_CSR_V_MASK),  /*!< Multiply or Divide overflow */
+    kMMAU_DivideByZeroInstructionFlag  = (MMAU_CSR_DZ_MASK), /*!< Divide by Zero */
+    kMMAU_NegativeInstructionFlag      = (MMAU_CSR_N_MASK),  /*!< Signed calculation result is negative */
 } mmau_instruction_flag_t;
 
 /*******************************************************************************
@@ -257,8 +234,8 @@ void MMAU_Reset(MMAU_Type *base);
  */
 static inline void MMAU_EnableInterrupts(MMAU_Type *base, uint32_t mask)
 {
-    base->CSR |= (mask & (kMMAU_AccumOverflowInterruptEnable | kMMAU_OverflowInterruptEnable |
-                          kMMAU_DivideByZeroInterruptEnable));
+    base->CSR |= (mask & ((uint32_t)kMMAU_AccumOverflowInterruptEnable | (uint32_t)kMMAU_OverflowInterruptEnable |
+                          (uint32_t)kMMAU_DivideByZeroInterruptEnable));
 }
 
 /*!
@@ -276,8 +253,8 @@ static inline void MMAU_EnableInterrupts(MMAU_Type *base, uint32_t mask)
  */
 static inline void MMAU_DisableInterrupts(MMAU_Type *base, uint32_t mask)
 {
-    base->CSR &= ~(mask & (kMMAU_AccumOverflowInterruptEnable | kMMAU_OverflowInterruptEnable |
-                           kMMAU_DivideByZeroInterruptEnable));
+    base->CSR &= ~(mask & ((uint32_t)kMMAU_AccumOverflowInterruptEnable | (uint32_t)kMMAU_OverflowInterruptEnable |
+                           (uint32_t)kMMAU_DivideByZeroInterruptEnable));
 }
 
 /*!
@@ -301,8 +278,8 @@ static inline void MMAU_DisableInterrupts(MMAU_Type *base, uint32_t mask)
  */
 static inline uint32_t MMAU_GetEnabledInterrupts(MMAU_Type *base)
 {
-    return base->CSR &
-           (kMMAU_AccumOverflowInterruptEnable | kMMAU_OverflowInterruptEnable | kMMAU_DivideByZeroInterruptEnable);
+    return base->CSR & ((uint32_t)kMMAU_AccumOverflowInterruptEnable | (uint32_t)kMMAU_OverflowInterruptEnable |
+                        (uint32_t)kMMAU_DivideByZeroInterruptEnable);
 }
 
 /*!
@@ -316,8 +293,8 @@ static inline uint32_t MMAU_GetEnabledInterrupts(MMAU_Type *base)
  */
 static inline uint32_t MMAU_GetInterruptFlags(MMAU_Type *base)
 {
-    return base->CSR &
-           (kMMAU_AccumOverflowInterruptFlag | kMMAU_OverflowInterruptFlag | kMMAU_DivideByZeroInterruptFlag);
+    return base->CSR & ((uint32_t)kMMAU_AccumOverflowInterruptFlag | (uint32_t)kMMAU_OverflowInterruptFlag |
+                        (uint32_t)kMMAU_DivideByZeroInterruptFlag);
 }
 
 /*!
@@ -364,8 +341,8 @@ void MMAU_ClearInterruptFlags(MMAU_Type *base, uint32_t mask);
  */
 static inline uint32_t MMAU_GetInstructionFlags(MMAU_Type *base)
 {
-    return base->CSR & (kMMAU_AccumOverflowInstructionFlag | kMMAU_OverflowInstructionFlag |
-                        kMMAU_DivideByZeroInstructionFlag | kMMAU_NegativeInstructionFlag);
+    return base->CSR & ((uint32_t)kMMAU_AccumOverflowInstructionFlag | (uint32_t)kMMAU_OverflowInstructionFlag |
+                        (uint32_t)kMMAU_DivideByZeroInstructionFlag | (uint32_t)kMMAU_NegativeInstructionFlag);
 }
 
 /*!
@@ -1894,7 +1871,7 @@ static inline frac32_t MMAU_l_diva_l(register frac32_t lden)
  */
 static inline frac32_t MMAU_l_sqr_l(register frac32_t lrad)
 {
-    *((frac32_t volatile *)(MMAU__QSQRD | MMAU__X2)) = 0l;
+    *((frac32_t volatile *)(MMAU__QSQRD | MMAU__X2)) = 0L;
     *((frac32_t volatile *)(MMAU__QSQRD | MMAU__X3)) = lrad;
     return *((frac32_t volatile *)(MMAU__QSQRD | MMAU__A1));
 }

@@ -9,11 +9,10 @@ slave is correct.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench 7.80.4
-- Keil MDK 5.21a
-- GCC ARM Embedded 2016-5.4-q3
-- Kinetis Development Studio IDE 3.2.0
-- MCUXpresso0.8
+- IAR embedded Workbench  9.10.2
+- Keil MDK  5.34
+- GCC ARM Embedded  10.2.1
+- MCUXpresso  11.4.0
 
 Hardware requirements
 =====================
@@ -53,7 +52,11 @@ When the demo runs successfully, the following message is displayed in the termi
 I2C board2board interrupt example -- Slave transfer.
 
 
-End of I2C example .
-Customization options
-=====================
+Slave received data :
+0x 0  0x 1  0x 2  0x 3  0x 4  0x 5  0x 6  0x 7
+0x 8  0x 9  0x a  0x b  0x c  0x d  0x e  0x f
+0x10  0x11  0x12  0x13  0x14  0x15  0x16  0x17
+0x18  0x19  0x1a  0x1b  0x1c  0x1d  0x1e  0x1f
 
+
+End of I2C example .

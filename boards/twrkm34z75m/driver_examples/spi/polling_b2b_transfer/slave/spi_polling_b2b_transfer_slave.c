@@ -1,40 +1,18 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
+ * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of the copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #include "fsl_spi.h"
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #include "fsl_debug_console.h"
 
 #include "fsl_common.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -55,11 +33,6 @@ static volatile bool slaveFinished = false;
 /*******************************************************************************
  * Code
  ******************************************************************************/
-
-void SPI0_SPI1_IRQHandler(void)
-{
-    SPI_SlaveTransferHandleIRQ(EXAMPLE_SPI_SLAVE, &handle);
-}
 static void slaveCallback(SPI_Type *base, spi_slave_handle_t *slaveHandle, status_t status, void *userData)
 {
     slaveFinished = true;
@@ -67,8 +40,8 @@ static void slaveCallback(SPI_Type *base, spi_slave_handle_t *slaveHandle, statu
 
 int main(void)
 {
-    uint32_t i = 0;
-    uint8_t err = 0;
+    uint32_t i          = 0;
+    uint8_t err         = 0;
     spi_transfer_t xfer = {0};
     spi_slave_config_t userConfig;
 
@@ -95,8 +68,8 @@ int main(void)
     }
 
     /* receive data from master */
-    xfer.txData = sendBuff;
-    xfer.rxData = buff;
+    xfer.txData   = sendBuff;
+    xfer.rxData   = buff;
     xfer.dataSize = BUFFER_SIZE;
     SPI_SlaveTransferNonBlocking(EXAMPLE_SPI_SLAVE, &handle, &xfer);
 
@@ -108,7 +81,7 @@ int main(void)
     {
         if (buff[i] != i)
         {
-            PRINTF("\n\rThe %d number is wrong! It is %dn\r", i, buff[i]);
+            PRINTF("\n\rThe %d number is wrong! It is %d\n\r", i, buff[i]);
             err++;
         }
     }

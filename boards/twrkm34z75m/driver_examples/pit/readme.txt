@@ -6,11 +6,10 @@ a message a printed on the UART terminal and an LED is toggled on the board.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench 7.80.4
-- Keil MDK 5.21a
-- GCC ARM Embedded 2016-5.4-q3
-- Kinetis Development Studio IDE 3.2.0
-- MCUXpresso0.8
+- IAR embedded Workbench  9.10.2
+- Keil MDK  5.34
+- GCC ARM Embedded  10.2.1
+- MCUXpresso  11.4.0
 
 Hardware requirements
 =====================
@@ -39,13 +38,10 @@ Running the demo
 When the demo runs successfully, the following message is displayed in the terminal:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Starting channel No.0 ...
- Channel No.0 interrupt is occured !
- Channel No.0 interrupt is occured !
- Channel No.0 interrupt is occured !
+ Channel No.0 interrupt is occurred !
+ Channel No.0 interrupt is occurred !
+ Channel No.0 interrupt is occurred !
 ....................
 ....................
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 And you will find the LED RED is taking turns to shine.
-Customization options
-=====================
-

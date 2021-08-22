@@ -1,15 +1,15 @@
 Overview
 ========
-The mbdedTLS Benchmark demo application performs cryptographic algorithm benchmarking and prints results to the
+The mbedTLS Benchmark demo application performs cryptographic algorithm benchmarking and prints results to the
 terminal.
 
 
 Toolchain supported
 ===================
-- Keil MDK  5.33
-- GCC ARM Embedded  9.3.1
-- MCUXpresso  11.3.0
-- IAR embedded Workbench  8.50.9
+- Keil MDK  5.34
+- GCC ARM Embedded  10.2.1
+- IAR embedded Workbench  9.10.2
+- MCUXpresso  11.4.0
 
 Hardware requirements
 =====================

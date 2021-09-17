@@ -685,6 +685,7 @@ typedef UINT16    API_RESULT;
 
 #define L2CAP_NO_LMP_CONNECTION                 (0x0054U | L2CAP_ERR_ID)
 #define L2CAP_API_NOT_ALLOWED                   (0x0055U | L2CAP_ERR_ID)
+#define L2CAP_TX_FLOW_OFF                       (0x0056U | L2CAP_ERR_ID)
 
 #define L2CAP_CHANNEL_NOT_FOUND                 (0x0070U | L2CAP_ERR_ID)
 #define L2CAP_NOT_ENOUGH_CREDITS                (0x0071U | L2CAP_ERR_ID)

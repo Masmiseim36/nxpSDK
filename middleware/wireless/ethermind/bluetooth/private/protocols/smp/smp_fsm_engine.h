@@ -71,7 +71,7 @@ typedef struct _SMP_EVENT_INFO
 
 } SMP_EVENT_INFO;
 
-void smp_fsm_update_state (UCHAR instance, RETVAL_T retval);
+/* void smp_fsm_update_state (UCHAR instance, RETVAL_T retval); */
 
 API_RESULT smp_fsm_post_event (UCHAR context, SMP_EVENT_INFO * smp_event);
 API_RESULT smp_access_state_handler (void * param, STATE_T * state);

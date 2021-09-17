@@ -7,7 +7,7 @@
 
 #include <porting.h>
 #include <string.h>
-#include <errno.h>
+#include <errno/errno.h>
 #include <stdbool.h>
 #include <sys/atomic.h>
 #include <sys/byteorder.h>
@@ -16,8 +16,6 @@
 #include <bluetooth/bluetooth.h>
 #include <bluetooth/conn.h>
 #include <bluetooth/l2cap.h>
-#include <bluetooth/a2dp.h>
-#include <bluetooth/a2dp-codec.h>
 #include <bluetooth/sdp.h>
 #include "clock_config.h"
 #include "board.h"
@@ -29,7 +27,8 @@ static void security_changed(struct bt_conn *conn, bt_security_t level,
 				 enum bt_security_err err);
 
 struct bt_conn *default_conn;
-bt_addr_t default_peer_addr;
+
+struct bt_conn *br_conns[CONFIG_BT_MAX_CONN];
 
 static struct bt_conn_cb conn_callbacks = {
     .connected = connected,
@@ -39,49 +38,82 @@ static struct bt_conn_cb conn_callbacks = {
 
 static void connected(struct bt_conn *conn, uint8_t err)
 {
+    struct bt_conn_info info;
+    uint8_t             index;
+    char                conn_addr[BT_ADDR_LE_STR_LEN];
+
     if (err)
     {
         if (default_conn != NULL)
         {
             default_conn = NULL;
         }
-        PRINTF("Connection failed (err 0x%02x)\n", err);
+        PRINTF("BR connection failed (err 0x%02x)\n", err);
     }
     else
     {
-        struct bt_conn_info info;
-
         bt_conn_get_info(conn, &info);
         if (info.type == BT_CONN_TYPE_LE)
         {
-            PRINTF("Invalid connection, disconnecting...\n");
+            PRINTF("Invalid br connection, disconnecting...\n");
             bt_conn_disconnect(conn, 0x13U);
         }
         else
         {
             default_conn = bt_conn_ref(conn);
-            PRINTF("Connected\n");
+
+            for(index = 0U; index < CONFIG_BT_MAX_CONN; index++)
+            {
+                if(NULL == br_conns[index])
+                {
+                    break;
+                }
+            }
+
+            if(CONFIG_BT_MAX_CONN == index)
+            {
+                PRINTF("CONFIG_BT_MAX_CONN %d is reached!\n", index);
+                bt_conn_disconnect(default_conn, BT_HCI_ERR_CONN_LIMIT_EXCEEDED);
+            }
+            else
+            {
+                bt_addr_to_str(bt_conn_get_dst_br(default_conn), conn_addr, sizeof(conn_addr));
+                PRINTF("BR connection with %s is created successfully!\n", conn_addr);
+                br_conns[index] = default_conn;
+            }
         }
     }
 }
 
 static void disconnected(struct bt_conn *conn, uint8_t reason)
 {
-    PRINTF("Disconnected (reason 0x%02x)\n", reason);
+    uint8_t index;
+    char    conn_addr[BT_ADDR_LE_STR_LEN];
 
-    if (default_conn != conn)
+    bt_conn_unref(conn);
+
+    for(index = 0U; index < CONFIG_BT_MAX_CONN; index++)
     {
-        return;
+        if(br_conns[index] == conn)
+        {
+            break;
+        }
     }
 
-    if (default_conn)
+    if(CONFIG_BT_MAX_CONN == index)
     {
-        bt_conn_unref(default_conn);
-        default_conn = NULL;
+        return;
     }
     else
     {
-        return;
+        bt_addr_to_str(bt_conn_get_dst_br(conn), conn_addr, sizeof(conn_addr));
+        PRINTF("BR connection with %s is disconnected (reason 0x%02x)\n", conn_addr, reason);
+
+        if (br_conns[index] == default_conn)
+        {
+            default_conn = NULL;
+        }
+        br_conns[index] = NULL;
     }
 }
 
@@ -115,8 +147,10 @@ static void security_changed(struct bt_conn *conn, bt_security_t level,
 
 void app_connect(uint8_t *addr)
 {
-    memcpy(&default_peer_addr, addr, 6U);
-    default_conn = bt_conn_create_br(&default_peer_addr, BT_BR_CONN_PARAM_DEFAULT);
+    bt_addr_t peer_addr;
+
+    memcpy(&peer_addr, addr, 6U);
+    default_conn = bt_conn_create_br(&peer_addr, BT_BR_CONN_PARAM_DEFAULT);
     if (!default_conn)
     {
         PRINTF("Connection failed\r\n");
@@ -139,10 +173,16 @@ void app_disconnect(void)
 
 void app_delete(void)
 {
-
 }
 
 void app_connect_init(void)
 {
+    uint8_t index;
+
     bt_conn_cb_register(&conn_callbacks);
+
+    for(index = 0U; index < CONFIG_BT_MAX_CONN; index++)
+    {
+        br_conns[index] = NULL;
+    }
 }

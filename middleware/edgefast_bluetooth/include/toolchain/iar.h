@@ -71,6 +71,8 @@ typedef int off_t; /* file offset */
 #define __typeof__
 #endif
 
+#define __used
+
 /* Unaligned access */
 #define UNALIGNED_GET(p) sys_get_le32((const uint8_t *)p)
 
@@ -91,8 +93,8 @@ typedef int off_t; /* file offset */
 
 #define __section_define_internal(s) _Pragma(#s)
 #define __section_define(x) __section_define_internal(section="."#x)
-#define __get_section_start(x, type, name) static __section_define(x) type *name = __section_begin("."#x);
-#define __get_section_end(x, type, name) static __section_define(x) type *name = __section_end("."#x);
+#define __get_section_start(x, type, name) static __section_define(x) type *name = (type *)__section_begin("."#x);
+#define __get_section_end(x, type, name) static __section_define(x) type *name = (type *)__section_end("."#x);
 
 #ifdef __cplusplus
 #define BUILD_ASSERT(EXPR) static_assert(EXPR, "")

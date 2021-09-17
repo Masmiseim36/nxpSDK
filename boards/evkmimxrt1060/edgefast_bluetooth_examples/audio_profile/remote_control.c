@@ -60,7 +60,7 @@
 
 /** stack size for task that handles shadow delta and updates
  */
-#define DEMO_REMOTE_CONTROL_TASK_STACK_SIZE ((uint16_t)configMINIMAL_STACK_SIZE * (uint16_t)40)
+#define DEMO_REMOTE_CONTROL_TASK_STACK_SIZE (IOT_THREAD_DEFAULT_STACK_SIZE)
 
 /**
  * @brief Size of the network buffer for MQTT packets.

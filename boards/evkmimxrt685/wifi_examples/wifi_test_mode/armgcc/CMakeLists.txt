@@ -143,6 +143,8 @@ include(CMSIS_Include_core_cm_MIMXRT685S_cm33)
 
 include(middleware_wifi_wifidriver_MIMXRT685S_cm33)
 
+include(middleware_wifi_fwdnld_MIMXRT685S_cm33)
+
 include(middleware_sdmmc_osa_freertos_MIMXRT685S_cm33)
 
 include(component_osa_free_rtos_MIMXRT685S_cm33)

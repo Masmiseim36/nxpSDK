@@ -10,7 +10,7 @@
  */
 
 #include <porting.h>
-#include <errno.h>
+#include <errno/errno.h>
 #include <sys/atomic.h>
 #include <sys/util.h>
 

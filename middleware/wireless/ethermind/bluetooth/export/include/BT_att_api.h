@@ -457,14 +457,14 @@
 #endif /* ATT_SUPPORT_128_BIT_UUID */
 
 /** ATT Macro to Unpack 16-bit or 128-bit UUID */
-#define ATT_UNPACK_UUID(uuid_out, buffer, size) \
-        if (ATT_128_BIT_UUID_SIZE == (size)) \
-        { \
+#define ATT_UNPACK_UUID(uuid_out, buffer, size)         \
+        if (ATT_128_BIT_UUID_SIZE == (size))            \
+        {                                               \
             BT_mem_copy ((uuid_out), (buffer), (size)); \
-        } \
-        else if (ATT_16_BIT_UUID_SIZE == (size)) \
-        { \
-            BT_UNPACK_LE_2_BYTE((uuid_out), (buffer)); \
+        }                                               \
+        else if (ATT_16_BIT_UUID_SIZE == (size))        \
+        {                                               \
+            BT_UNPACK_LE_2_BYTE((uuid_out), (buffer));  \
         }                                               \
         else                                            \
         {                                               \

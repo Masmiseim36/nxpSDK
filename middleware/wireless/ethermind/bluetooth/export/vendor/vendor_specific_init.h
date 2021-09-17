@@ -47,7 +47,7 @@
 
 #endif /* VS_INIT_DEBUG */
 
-void app_vendor_specific_init(void ((*) (void)));
+void app_vendor_specific_init(void ((*callback) (void)));
 
 #endif /* _H_VENDOR_SPECIFIC_INIT_ */
 

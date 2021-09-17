@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ksdk:manifest xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="SDK_2.x_MIMXRT1061xxxxA" name="MIMXRT1061xxxxA" brief="This is SDK version 2.10.0 manifest file. It describes the content of the MIMXRT1061xxxxA and additional settings for tools that support SDK version 2.10.0" format_version="3.8" api_version="2.0.0" configuration="e7b795cf7ae85c9460edc323fd75b685" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd http://nxp.com/mcuxpresso/sdk/sdk_manifest_v3.8.xsd">
-  <!--Timestamp (UTC): 2021-07-15 17:23:32.707096-->
-  <!--This manifest is generated based on sdk repo commit: fc8f976ec0bcffe5ca58bba20b19cf331786bbce-->
+<ksdk:manifest xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="SDK_2.x_MIMXRT1061xxxxA" name="MIMXRT1061xxxxA" brief="This is SDK version 2.10.1 manifest file. It describes the content of the MIMXRT1061xxxxA and additional settings for tools that support SDK version 2.10.1" format_version="3.8" api_version="2.0.0" configuration="3fba5c921c400b262ef19207b62e0f5f" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd http://nxp.com/mcuxpresso/sdk/sdk_manifest_v3.8.xsd">
+  <!--Timestamp (UTC): 2021-09-17 10:25:33.170451-->
+  <!--This manifest is generated based on sdk repo commit: be1cd2989fb5316ae10506ae936704c0dfea174f-->
   <defines>
     <define name="CPU_$|package|" value=""/>
     <define name="CPU_$|package|_$|core|" value=""/>
   </defines>
-  <ksdk id="MCUXpresso2100" name="MCUXpresso2100" version="2.10.0" revision="494 2021-07-15"/>
+  <ksdk id="MCUXpresso2101" name="MCUXpresso2101" version="2.10.1" revision="509 2021-09-14"/>
   <compilers>
     <compiler id="compiler_armclang" name="armclang" type="armclang"/>
     <compiler id="compiler_gcc" name="gcc" type="gcc"/>
@@ -98,12 +98,12 @@ ${load}</script>
       </memory>
       <total_memory flash_size_kb="8192" ram_size_kb="32768"/>
       <examples>
-        <example id="evkbmimxrt1060_a2dp_sink" name="a2dp_sink" brief="The ethermind audio source with simplified application." toolchain="armgcc iar mcuxpresso" compiler="compiler_gcc compiler_iar" category="edgefast_bluetooth_examples" path="boards/evkbmimxrt1060/edgefast_bluetooth_examples/a2dp_sink">
+        <example id="evkbmimxrt1060_a2dp_sink" name="a2dp_sink" brief="The ethermind audio source with simplified application." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="edgefast_bluetooth_examples" path="boards/evkbmimxrt1060/edgefast_bluetooth_examples/a2dp_sink">
           <external path="boards/evkbmimxrt1060/edgefast_bluetooth_examples/a2dp_sink" type="xml">
             <files mask="a2dp_sink_v3_8.xml"/>
           </external>
         </example>
-        <example id="evkbmimxrt1060_a2dp_source" name="a2dp_source" brief="The ethermind audio source with simplified application." toolchain="armgcc iar mcuxpresso" compiler="compiler_gcc compiler_iar" category="edgefast_bluetooth_examples" path="boards/evkbmimxrt1060/edgefast_bluetooth_examples/a2dp_source">
+        <example id="evkbmimxrt1060_a2dp_source" name="a2dp_source" brief="The ethermind audio source with simplified application." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="edgefast_bluetooth_examples" path="boards/evkbmimxrt1060/edgefast_bluetooth_examples/a2dp_source">
           <external path="boards/evkbmimxrt1060/edgefast_bluetooth_examples/a2dp_source" type="xml">
             <files mask="a2dp_source_v3_8.xml"/>
           </external>
@@ -168,6 +168,21 @@ ${load}</script>
             <files mask="aws_tests_wifi_nxp_v3_8.xml"/>
           </external>
         </example>
+        <example id="evkbmimxrt1060_azure_iot_embedded_sdk" name="azure_iot_embedded_sdk" brief="A simple mqtt example with azure-sdk-for-c." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="azure_rtos_examples" path="boards/evkbmimxrt1060/azure_rtos_examples/azure_iot_embedded_sdk">
+          <external path="boards/evkbmimxrt1060/azure_rtos_examples/azure_iot_embedded_sdk" type="xml">
+            <files mask="azure_iot_embedded_sdk_v3_8.xml"/>
+          </external>
+        </example>
+        <example id="evkbmimxrt1060_azure_iot_embedded_sdk_pnp" name="azure_iot_embedded_sdk_pnp" brief="A example that connects to azure iot hub with plug and play." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="azure_rtos_examples" path="boards/evkbmimxrt1060/azure_rtos_examples/azure_iot_embedded_sdk_pnp">
+          <external path="boards/evkbmimxrt1060/azure_rtos_examples/azure_iot_embedded_sdk_pnp" type="xml">
+            <files mask="azure_iot_embedded_sdk_pnp_v3_8.xml"/>
+          </external>
+        </example>
+        <example id="evkbmimxrt1060_azure_iot_mqtt" name="azure_iot_mqtt" brief="A simple mqtt example with azure IoT." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="azure_rtos_examples" path="boards/evkbmimxrt1060/azure_rtos_examples/azure_iot_mqtt">
+          <external path="boards/evkbmimxrt1060/azure_rtos_examples/azure_iot_mqtt" type="xml">
+            <files mask="azure_iot_mqtt_v3_8.xml"/>
+          </external>
+        </example>
         <example id="evkbmimxrt1060_bee" name="bee" brief="This driver example should demonstrate how to setup BEE driver for on the fly decryption of data stored in QSPI memory region. The BEE is configuerd to decrypt all data starting from location 0x6000_0000 to 0x6001_0000 using AES ECB mode with user specified key. If the BEE_KEY_SEL fuse is programmed, then OTPMK key will be used instead.The example itself does not perform any data decryption operation over QSPI. It is used only as a BEE setup guide." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="driver_examples/bee" path="boards/evkbmimxrt1060/driver_examples/bee">
           <external path="boards/evkbmimxrt1060/driver_examples/bee" type="xml">
             <files mask="bee_v3_8.xml"/>
@@ -208,22 +223,22 @@ ${load}</script>
             <files mask="ccm_clockout_v3_8.xml"/>
           </external>
         </example>
-        <example id="evkbmimxrt1060_central_hpc" name="central_hpc" brief="The ethermind hpc example with simplified application." toolchain="armgcc iar mcuxpresso" compiler="compiler_gcc compiler_iar" category="edgefast_bluetooth_examples" path="boards/evkbmimxrt1060/edgefast_bluetooth_examples/central_hpc">
+        <example id="evkbmimxrt1060_central_hpc" name="central_hpc" brief="The ethermind hpc example with simplified application." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="edgefast_bluetooth_examples" path="boards/evkbmimxrt1060/edgefast_bluetooth_examples/central_hpc">
           <external path="boards/evkbmimxrt1060/edgefast_bluetooth_examples/central_hpc" type="xml">
             <files mask="central_hpc_v3_8.xml"/>
           </external>
         </example>
-        <example id="evkbmimxrt1060_central_ht" name="central_ht" brief="The ethermind hts example with simplified application." toolchain="armgcc iar mcuxpresso" compiler="compiler_gcc compiler_iar" category="edgefast_bluetooth_examples" path="boards/evkbmimxrt1060/edgefast_bluetooth_examples/central_ht">
+        <example id="evkbmimxrt1060_central_ht" name="central_ht" brief="The ethermind hts example with simplified application." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="edgefast_bluetooth_examples" path="boards/evkbmimxrt1060/edgefast_bluetooth_examples/central_ht">
           <external path="boards/evkbmimxrt1060/edgefast_bluetooth_examples/central_ht" type="xml">
             <files mask="central_ht_v3_8.xml"/>
           </external>
         </example>
-        <example id="evkbmimxrt1060_central_ipsp" name="central_ipsp" brief="The ethermind ipsp example with simplified application." toolchain="armgcc iar mcuxpresso" compiler="compiler_gcc compiler_iar" category="edgefast_bluetooth_examples" path="boards/evkbmimxrt1060/edgefast_bluetooth_examples/central_ipsp">
+        <example id="evkbmimxrt1060_central_ipsp" name="central_ipsp" brief="The ethermind ipsp example with simplified application." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="edgefast_bluetooth_examples" path="boards/evkbmimxrt1060/edgefast_bluetooth_examples/central_ipsp">
           <external path="boards/evkbmimxrt1060/edgefast_bluetooth_examples/central_ipsp" type="xml">
             <files mask="central_ipsp_v3_8.xml"/>
           </external>
         </example>
-        <example id="evkbmimxrt1060_central_pxm" name="central_pxm" brief="The ethermind pxm example with simplified application." toolchain="armgcc iar mcuxpresso" compiler="compiler_gcc compiler_iar" category="edgefast_bluetooth_examples" path="boards/evkbmimxrt1060/edgefast_bluetooth_examples/central_pxm">
+        <example id="evkbmimxrt1060_central_pxm" name="central_pxm" brief="The ethermind pxm example with simplified application." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="edgefast_bluetooth_examples" path="boards/evkbmimxrt1060/edgefast_bluetooth_examples/central_pxm">
           <external path="boards/evkbmimxrt1060/edgefast_bluetooth_examples/central_pxm" type="xml">
             <files mask="central_pxm_v3_8.xml"/>
           </external>
@@ -326,6 +341,21 @@ ${load}</script>
         <example id="evkbmimxrt1060_dcp" name="dcp" brief="The DCP Example project is a demonstration program that uses the KSDK software implementseveral cryptography algorithms using the DCP software driver." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="driver_examples/dcp" path="boards/evkbmimxrt1060/driver_examples/dcp">
           <external path="boards/evkbmimxrt1060/driver_examples/dcp" type="xml">
             <files mask="dcp_v3_8.xml"/>
+          </external>
+        </example>
+        <example id="evkbmimxrt1060_deepviewrt_labelimage" name="deepviewrt_labelimage" brief="DeepViewRT LabelImage is as a basic &quot;labelimage&quot; example for using DeepViewRT on an RT106x platform.  The firmware integrates a user defined model with an example provided as well as a user provided image to classify." toolchain="armgcc mcuxpresso mdk" compiler="compiler_armclang compiler_gcc" category="eiq_examples" path="boards/evkbmimxrt1060/eiq_examples/deepviewrt_labelimage">
+          <external path="boards/evkbmimxrt1060/eiq_examples/deepviewrt_labelimage" type="xml">
+            <files mask="deepviewrt_labelimage_v3_8.xml"/>
+          </external>
+        </example>
+        <example id="evkbmimxrt1060_deepviewrt_modelrunner" name="deepviewrt_modelrunner" brief="DeepViewRT ModelRunner is a dedicated service for hosting and evaluating RTM graphs through a set of RPC protocols, it provides an HTTP REST API for loading an evaluating models. It can work with eIQ toolkit to evaluating and profiling models." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="eiq_examples" path="boards/evkbmimxrt1060/eiq_examples/deepviewrt_modelrunner">
+          <external path="boards/evkbmimxrt1060/eiq_examples/deepviewrt_modelrunner" type="xml">
+            <files mask="deepviewrt_modelrunner_v3_8.xml"/>
+          </external>
+        </example>
+        <example id="evkbmimxrt1060_deepviewrt_modelrunner-glow" name="deepviewrt_modelrunner-glow" brief="DeepViewRT ModelRunner for GLOW" toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="eiq_examples" path="boards/evkbmimxrt1060/eiq_examples/deepviewrt_modelrunner-glow">
+          <external path="boards/evkbmimxrt1060/eiq_examples/deepviewrt_modelrunner-glow" type="xml">
+            <files mask="deepviewrt_modelrunner-glow_v3_8.xml"/>
           </external>
         </example>
         <example id="evkbmimxrt1060_dev_audio_generator_bm" name="dev_audio_generator_bm" brief="The USB Audio Generator application is a simple demonstration program based on the MCUXpresso SDK.It is enumerated as a recording device and users can record the sound from this device via the &quot;Sound Recorder&quot; in the Windows Accessories." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="usb_examples" path="boards/evkbmimxrt1060/usb_examples/usb_device_audio_generator/bm">
@@ -613,6 +643,11 @@ ${load}</script>
             <files mask="dev_video_virtual_camera_lite_bm_v3_8.xml"/>
           </external>
         </example>
+        <example id="evkbmimxrt1060_edgefast_bluetooth_shell" name="edgefast_bluetooth_shell" brief="The ethermind shell example with simplified application." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="edgefast_bluetooth_examples" path="boards/evkbmimxrt1060/edgefast_bluetooth_examples/shell">
+          <external path="boards/evkbmimxrt1060/edgefast_bluetooth_examples/shell" type="xml">
+            <files mask="edgefast_bluetooth_shell_v3_8.xml"/>
+          </external>
+        </example>
         <example id="evkbmimxrt1060_edma_channel_link" name="edma_channel_link" brief="The EDMA memory to memory example is a simple demonstration program that uses the SDK software.It excuates one shot transfer from source buffer to destination buffer using the SDK EDMA drivers.The purpose of this example is to show how to use the EDMA and to provide a simple example fordebugging and further development." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="driver_examples/edma" path="boards/evkbmimxrt1060/driver_examples/edma/channel_link">
           <external path="boards/evkbmimxrt1060/driver_examples/edma/channel_link" type="xml">
             <files mask="edma_channel_link_v3_8.xml"/>
@@ -711,6 +746,16 @@ ${load}</script>
         <example id="evkbmimxrt1060_ewm" name="ewm" brief="The EWM Example project is to demonstrate usage of the KSDK EWM driver.In the example, EWM counter is continuously refreshed until button is pressed.Once the button is pressed, EWM counter will expire and interrupt will be generated.After the first pressing, another interrupt can be triggered by pressing button again." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="driver_examples/ewm" path="boards/evkbmimxrt1060/driver_examples/ewm">
           <external path="boards/evkbmimxrt1060/driver_examples/ewm" type="xml">
             <files mask="ewm_v3_8.xml"/>
+          </external>
+        </example>
+        <example id="evkbmimxrt1060_filex_lib" name="filex_lib" brief="FileX library" toolchain="iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="azure_rtos_libs" path="boards/evkbmimxrt1060/azure_rtos_examples/filex_lib">
+          <external path="boards/evkbmimxrt1060/azure_rtos_examples/filex_lib" type="xml">
+            <files mask="filex_lib_v3_8.xml"/>
+          </external>
+        </example>
+        <example id="evkbmimxrt1060_filex_ram_disk" name="filex_ram_disk" brief="The filex_ram_disk example." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="azure_rtos_examples" path="boards/evkbmimxrt1060/azure_rtos_examples/filex_ram_disk">
+          <external path="boards/evkbmimxrt1060/azure_rtos_examples/filex_ram_disk" type="xml">
+            <files mask="filex_ram_disk_v3_8.xml"/>
           </external>
         </example>
         <example id="evkbmimxrt1060_flash_component_nor" name="flash_component_nor" brief="nor flash demo shows the use of nor flash component to erase, program, and read an external nor flash device." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="component_examples/flash_component/flexspi_nor" path="boards/evkbmimxrt1060/component_examples/flash_component/flexspi_nor">
@@ -1028,17 +1073,27 @@ ${load}</script>
             <files mask="gpt_timer_v3_8.xml"/>
           </external>
         </example>
+        <example id="evkbmimxrt1060_guix_lib" name="guix_lib" brief="GUIX library" toolchain="iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="azure_rtos_libs" path="boards/evkbmimxrt1060/azure_rtos_examples/guix_lib">
+          <external path="boards/evkbmimxrt1060/azure_rtos_examples/guix_lib" type="xml">
+            <files mask="guix_lib_v3_8.xml"/>
+          </external>
+        </example>
+        <example id="evkbmimxrt1060_guix_washing_machine" name="guix_washing_machine" brief="The guix_washing_machine example." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="azure_rtos_examples" path="boards/evkbmimxrt1060/azure_rtos_examples/guix_washing_machine">
+          <external path="boards/evkbmimxrt1060/azure_rtos_examples/guix_washing_machine" type="xml">
+            <files mask="guix_washing_machine_v3_8.xml"/>
+          </external>
+        </example>
         <example id="evkbmimxrt1060_h264_freertos" name="h264_freertos" brief="This project read the h264 files from SD card, decode them and show the frames in LCD panel." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="display_examples" path="boards/evkbmimxrt1060/display_examples/h264_freertos">
           <external path="boards/evkbmimxrt1060/display_examples/h264_freertos" type="xml">
             <files mask="h264_freertos_v3_8.xml"/>
           </external>
         </example>
-        <example id="evkbmimxrt1060_handsfree" name="handsfree" brief="The ethermind bluetooth handsfree example with simplified application." toolchain="armgcc iar mcuxpresso" compiler="compiler_gcc compiler_iar" category="edgefast_bluetooth_examples" path="boards/evkbmimxrt1060/edgefast_bluetooth_examples/handsfree">
+        <example id="evkbmimxrt1060_handsfree" name="handsfree" brief="The ethermind bluetooth handsfree example with simplified application." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="edgefast_bluetooth_examples" path="boards/evkbmimxrt1060/edgefast_bluetooth_examples/handsfree">
           <external path="boards/evkbmimxrt1060/edgefast_bluetooth_examples/handsfree" type="xml">
             <files mask="handsfree_v3_8.xml"/>
           </external>
         </example>
-        <example id="evkbmimxrt1060_handsfree_ag" name="handsfree_ag" brief="The ethermind handsfree AG example with simplified application." toolchain="armgcc iar mcuxpresso" compiler="compiler_gcc compiler_iar" category="edgefast_bluetooth_examples" path="boards/evkbmimxrt1060/edgefast_bluetooth_examples/handsfree_ag">
+        <example id="evkbmimxrt1060_handsfree_ag" name="handsfree_ag" brief="The ethermind handsfree AG example with simplified application." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="edgefast_bluetooth_examples" path="boards/evkbmimxrt1060/edgefast_bluetooth_examples/handsfree_ag">
           <external path="boards/evkbmimxrt1060/edgefast_bluetooth_examples/handsfree_ag" type="xml">
             <files mask="handsfree_ag_v3_8.xml"/>
           </external>
@@ -1493,6 +1548,21 @@ ${load}</script>
             <files mask="mmccard_freertos_v3_8.xml"/>
           </external>
         </example>
+        <example id="evkbmimxrt1060_netx_duo_iperf" name="netx_duo_iperf" brief="The netx_duo_iperf example." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="azure_rtos_examples" path="boards/evkbmimxrt1060/azure_rtos_examples/netx_duo_iperf">
+          <external path="boards/evkbmimxrt1060/azure_rtos_examples/netx_duo_iperf" type="xml">
+            <files mask="netx_duo_iperf_v3_8.xml"/>
+          </external>
+        </example>
+        <example id="evkbmimxrt1060_netx_duo_ping" name="netx_duo_ping" brief="The netx_duo_ping example." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="azure_rtos_examples" path="boards/evkbmimxrt1060/azure_rtos_examples/netx_duo_ping">
+          <external path="boards/evkbmimxrt1060/azure_rtos_examples/netx_duo_ping" type="xml">
+            <files mask="netx_duo_ping_v3_8.xml"/>
+          </external>
+        </example>
+        <example id="evkbmimxrt1060_netxduo_lib" name="netxduo_lib" brief="NetX Duo library" toolchain="iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="azure_rtos_libs" path="boards/evkbmimxrt1060/azure_rtos_examples/netxduo_lib">
+          <external path="boards/evkbmimxrt1060/azure_rtos_examples/netxduo_lib" type="xml">
+            <files mask="netxduo_lib_v3_8.xml"/>
+          </external>
+        </example>
         <example id="evkbmimxrt1060_ocotp_example" name="ocotp_example" brief="The ocotp driver example shows how to operation the OCOTP register with driver API." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="driver_examples/ocotp" path="boards/evkbmimxrt1060/driver_examples/ocotp">
           <external path="boards/evkbmimxrt1060/driver_examples/ocotp" type="xml">
             <files mask="ocotp_example_v3_8.xml"/>
@@ -1503,22 +1573,22 @@ ${load}</script>
             <files mask="ota_bootloader_v3_8.xml"/>
           </external>
         </example>
-        <example id="evkbmimxrt1060_peripheral_hps" name="peripheral_hps" brief="The ethermind hps example with simplified application." toolchain="armgcc iar mcuxpresso" compiler="compiler_gcc compiler_iar" category="edgefast_bluetooth_examples" path="boards/evkbmimxrt1060/edgefast_bluetooth_examples/peripheral_hps">
+        <example id="evkbmimxrt1060_peripheral_hps" name="peripheral_hps" brief="The ethermind hps example with simplified application." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="edgefast_bluetooth_examples" path="boards/evkbmimxrt1060/edgefast_bluetooth_examples/peripheral_hps">
           <external path="boards/evkbmimxrt1060/edgefast_bluetooth_examples/peripheral_hps" type="xml">
             <files mask="peripheral_hps_v3_8.xml"/>
           </external>
         </example>
-        <example id="evkbmimxrt1060_peripheral_ht" name="peripheral_ht" brief="The ethermind hts example with simplified application." toolchain="armgcc iar mcuxpresso" compiler="compiler_gcc compiler_iar" category="edgefast_bluetooth_examples" path="boards/evkbmimxrt1060/edgefast_bluetooth_examples/peripheral_ht">
+        <example id="evkbmimxrt1060_peripheral_ht" name="peripheral_ht" brief="The ethermind hts example with simplified application." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="edgefast_bluetooth_examples" path="boards/evkbmimxrt1060/edgefast_bluetooth_examples/peripheral_ht">
           <external path="boards/evkbmimxrt1060/edgefast_bluetooth_examples/peripheral_ht" type="xml">
             <files mask="peripheral_ht_v3_8.xml"/>
           </external>
         </example>
-        <example id="evkbmimxrt1060_peripheral_ipsp" name="peripheral_ipsp" brief="The ethermind ipsp example with simplified application." toolchain="armgcc iar mcuxpresso" compiler="compiler_gcc compiler_iar" category="edgefast_bluetooth_examples" path="boards/evkbmimxrt1060/edgefast_bluetooth_examples/peripheral_ipsp">
+        <example id="evkbmimxrt1060_peripheral_ipsp" name="peripheral_ipsp" brief="The ethermind ipsp example with simplified application." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="edgefast_bluetooth_examples" path="boards/evkbmimxrt1060/edgefast_bluetooth_examples/peripheral_ipsp">
           <external path="boards/evkbmimxrt1060/edgefast_bluetooth_examples/peripheral_ipsp" type="xml">
             <files mask="peripheral_ipsp_v3_8.xml"/>
           </external>
         </example>
-        <example id="evkbmimxrt1060_peripheral_pxr" name="peripheral_pxr" brief="The ethermind pxr example with simplified application." toolchain="armgcc iar mcuxpresso" compiler="compiler_gcc compiler_iar" category="edgefast_bluetooth_examples" path="boards/evkbmimxrt1060/edgefast_bluetooth_examples/peripheral_pxr">
+        <example id="evkbmimxrt1060_peripheral_pxr" name="peripheral_pxr" brief="The ethermind pxr example with simplified application." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="edgefast_bluetooth_examples" path="boards/evkbmimxrt1060/edgefast_bluetooth_examples/peripheral_pxr">
           <external path="boards/evkbmimxrt1060/edgefast_bluetooth_examples/peripheral_pxr" type="xml">
             <files mask="peripheral_pxr_v3_8.xml"/>
           </external>
@@ -1546,6 +1616,11 @@ ${load}</script>
         <example id="evkbmimxrt1060_pit" name="pit" brief="The PIT project is a simple demonstration program of the SDK PIT driver. It sets up the PIThardware block to trigger a periodic interrupt after every 1 second. When the PIT interrupt is triggereda message a printed on the UART terminal and an LED is toggled on the board." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="driver_examples/pit" path="boards/evkbmimxrt1060/driver_examples/pit">
           <external path="boards/evkbmimxrt1060/driver_examples/pit" type="xml">
             <files mask="pit_v3_8.xml"/>
+          </external>
+        </example>
+        <example id="evkbmimxrt1060_pnp_temperature_controller" name="pnp_temperature_controller" brief="A example that implements the temperature controller with the azure Plug and Play." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="azure_rtos_examples" path="boards/evkbmimxrt1060/azure_rtos_examples/pnp_temperature_controller">
+          <external path="boards/evkbmimxrt1060/azure_rtos_examples/pnp_temperature_controller" type="xml">
+            <files mask="pnp_temperature_controller_v3_8.xml"/>
           </external>
         </example>
         <example id="evkbmimxrt1060_power_mode_switch_bm" name="power_mode_switch_bm" brief="The Power mode switch demo application demonstrates the use of power modes in the KSDK. The demo prints the power mode menuthrough the debug console, where the user can set the MCU to a specific power mode. The user can also set the wakeupsource by following the debug console prompts. The purpose of this demo is to show how to switch between different power modes, and how to configure a wakeup source and wakeup the MCU from low power modes. Tips: This demo is to show how the various power mode can switch to each other. However, in actual low power use case, to save energy and reduce the consumption even more, many things can be done including: - Disable the clock for unnecessary module during low power mode. That means, programmer can disable the clocks before entering the low power mode and re-enable them after exiting the low power mode when necessary. - Disable the function for unnecessary part of a module when other part would keep working in low power mode. At the most time, more powerful function means more power consumption. For example, disable the digital function for the unnecessary pin mux, and so on. - Set the proper pin state (direction and logic level) according to the actual application hardware. Otherwise, the pin cirrent would be activied unexpectedly waste some energy. - Other low power consideration based on the actual application hardware. - Debug pins(e.g SWD_DIO) would consume addtional power, had better to disable related pins or disconnect them. " toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="demo_apps" path="boards/evkbmimxrt1060/demo_apps/power_mode_switch/bm">
@@ -1718,9 +1793,39 @@ ${load}</script>
             <files mask="sdcard_polling_v3_8.xml"/>
           </external>
         </example>
+        <example id="evkbmimxrt1060_se05x_GetInfo" name="se05x_GetInfo" brief="This project can be used to get SE05X platform information." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="se_hostlib_examples" path="boards/evkbmimxrt1060/se_hostlib_examples/se05x_GetInfo">
+          <external path="boards/evkbmimxrt1060/se_hostlib_examples/se05x_GetInfo" type="xml">
+            <files mask="se05x_GetInfo_v3_8.xml"/>
+          </external>
+        </example>
+        <example id="evkbmimxrt1060_se05x_Minimal" name="se05x_Minimal" brief="This is a bare minimum example for se050. This gets the amount of free memory." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="se_hostlib_examples" path="boards/evkbmimxrt1060/se_hostlib_examples/se05x_Minimal">
+          <external path="boards/evkbmimxrt1060/se_hostlib_examples/se05x_Minimal" type="xml">
+            <files mask="se05x_Minimal_v3_8.xml"/>
+          </external>
+        </example>
+        <example id="evkbmimxrt1060_se05x_cloud_gcp" name="se05x_cloud_gcp" brief="This demo demonstrates connection to Google Cloud Platform using pre-provisioned device credentials and publish/subscribe procedure using MQTT." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="se_hostlib_examples" path="boards/evkbmimxrt1060/se_hostlib_examples/se05x_cloud_gcp">
+          <external path="boards/evkbmimxrt1060/se_hostlib_examples/se05x_cloud_gcp" type="xml">
+            <files mask="se05x_cloud_gcp_v3_8.xml"/>
+          </external>
+        </example>
+        <example id="evkbmimxrt1060_se05x_ex_ecc" name="se05x_ex_ecc" brief="This example does a elliptic curve cryptography signing and verify operation." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="se_hostlib_examples" path="boards/evkbmimxrt1060/se_hostlib_examples/se05x_ex_ecc">
+          <external path="boards/evkbmimxrt1060/se_hostlib_examples/se05x_ex_ecc" type="xml">
+            <files mask="se05x_ex_ecc_v3_8.xml"/>
+          </external>
+        </example>
+        <example id="evkbmimxrt1060_se05x_vcom" name="se05x_vcom" brief="The vcomSE050 demo application allows the board to be used as a bridge between the PC and the secure module and enables the execution of the config tool and other utilities from the PC." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="se_hostlib_examples" path="boards/evkbmimxrt1060/se_hostlib_examples/vcomSE050">
+          <external path="boards/evkbmimxrt1060/se_hostlib_examples/vcomSE050" type="xml">
+            <files mask="se05x_vcom_v3_8.xml"/>
+          </external>
+        </example>
         <example id="evkbmimxrt1060_semc" name="semc" brief="The sdramc example shows how to use SEMC controller driver to initialize the external SDRAM chip." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="driver_examples/semc" path="boards/evkbmimxrt1060/driver_examples/semc/sdram">
           <external path="boards/evkbmimxrt1060/driver_examples/semc/sdram" type="xml">
             <files mask="semc_v3_8.xml"/>
+          </external>
+        </example>
+        <example id="evkbmimxrt1060_shell" name="shell" brief="The Shell Demo application demonstrates to control Leds by commands." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="demo_apps" path="boards/evkbmimxrt1060/demo_apps/shell">
+          <external path="boards/evkbmimxrt1060/demo_apps/shell" type="xml">
+            <files mask="shell_v3_8.xml"/>
           </external>
         </example>
         <example id="evkbmimxrt1060_snvs_hp_hac" name="snvs_hp_hac" brief="The SNVS HP HAC project shows how to use the High Assurance Counter (HAC) based on SDK SNVS HP driver. In this example, The HAC is enabled and set a initial value. Software fatal security violation is triggered, and the SSM switches to soft fail mode. In soft fail mode, software stops the HAC counter, and clear the HAC to make SSM switch to hard fail mode. The system resets when enters hard fail mode." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="driver_examples/snvs" path="boards/evkbmimxrt1060/driver_examples/snvs/snvs_hp_hac">
@@ -1748,7 +1853,7 @@ ${load}</script>
             <files mask="snvs_sw_zmk_v3_8.xml"/>
           </external>
         </example>
-        <example id="evkbmimxrt1060_spp" name="spp" brief="The Bluetooth BR SPP example." toolchain="armgcc iar mcuxpresso" compiler="compiler_gcc compiler_iar" category="edgefast_bluetooth_examples" path="boards/evkbmimxrt1060/edgefast_bluetooth_examples/spp">
+        <example id="evkbmimxrt1060_spp" name="spp" brief="The Bluetooth BR SPP example." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="edgefast_bluetooth_examples" path="boards/evkbmimxrt1060/edgefast_bluetooth_examples/spp">
           <external path="boards/evkbmimxrt1060/edgefast_bluetooth_examples/spp" type="xml">
             <files mask="spp_v3_8.xml"/>
           </external>
@@ -1778,9 +1883,34 @@ ${load}</script>
             <files mask="tensorflow_lite_micro_label_image_v3_8.xml"/>
           </external>
         </example>
+        <example id="evkbmimxrt1060_threadx_demo" name="threadx_demo" brief="The ThreadX example." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="azure_rtos_examples" path="boards/evkbmimxrt1060/azure_rtos_examples/threadx_demo">
+          <external path="boards/evkbmimxrt1060/azure_rtos_examples/threadx_demo" type="xml">
+            <files mask="threadx_demo_v3_8.xml"/>
+          </external>
+        </example>
+        <example id="evkbmimxrt1060_threadx_lib" name="threadx_lib" brief="ThreadX library" toolchain="iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="azure_rtos_libs" path="boards/evkbmimxrt1060/azure_rtos_examples/threadx_lib">
+          <external path="boards/evkbmimxrt1060/azure_rtos_examples/threadx_lib" type="xml">
+            <files mask="threadx_lib_v3_8.xml"/>
+          </external>
+        </example>
         <example id="evkbmimxrt1060_trng_random" name="trng_random" brief="The True Random Number Generator (TRNG) is a hardware accelerator module that generates a 512-bitentropy as needed by an entropy consuming module or by other post processing functions. The TRNGExample project is a demonstration program that uses the KSDK software to generate random numbersand prints them to the terminal." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="driver_examples/trng" path="boards/evkbmimxrt1060/driver_examples/trng/random">
           <external path="boards/evkbmimxrt1060/driver_examples/trng/random" type="xml">
             <files mask="trng_random_v3_8.xml"/>
+          </external>
+        </example>
+        <example id="evkbmimxrt1060_usbx_device_mass_storage" name="usbx_device_mass_storage" brief="The usbx_device_mass_storage example." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="azure_rtos_examples" path="boards/evkbmimxrt1060/azure_rtos_examples/usbx_device_mass_storage">
+          <external path="boards/evkbmimxrt1060/azure_rtos_examples/usbx_device_mass_storage" type="xml">
+            <files mask="usbx_device_mass_storage_v3_8.xml"/>
+          </external>
+        </example>
+        <example id="evkbmimxrt1060_usbx_host_mass_storage" name="usbx_host_mass_storage" brief="The usbx_host_mass_storage example." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="azure_rtos_examples" path="boards/evkbmimxrt1060/azure_rtos_examples/usbx_host_mass_storage">
+          <external path="boards/evkbmimxrt1060/azure_rtos_examples/usbx_host_mass_storage" type="xml">
+            <files mask="usbx_host_mass_storage_v3_8.xml"/>
+          </external>
+        </example>
+        <example id="evkbmimxrt1060_usbx_lib" name="usbx_lib" brief="USBX library" toolchain="iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="azure_rtos_libs" path="boards/evkbmimxrt1060/azure_rtos_examples/usbx_lib">
+          <external path="boards/evkbmimxrt1060/azure_rtos_examples/usbx_lib" type="xml">
+            <files mask="usbx_lib_v3_8.xml"/>
           </external>
         </example>
         <example id="evkbmimxrt1060_wdog01" name="wdog01" brief="The WDOG Example project is to demonstrate usage of the KSDK wdog driver.In this example,implemented to test the wdog.And then after 10 times of refreshing the watchdog, a timeout reset is generated.We also try to refresh out of window to trigger reset after 10 times of refreshing.Please notice that because WDOG control registers are write-once only, so the WDOG_Init function and the WDOG_Disable function can be called only once after reset." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="driver_examples/wdog" path="boards/evkbmimxrt1060/driver_examples/wdog">
@@ -1808,7 +1938,7 @@ ${load}</script>
             <files mask="wifi_iperf_v3_8.xml"/>
           </external>
         </example>
-        <example id="evkbmimxrt1060_wifi_provisioning" name="wifi_provisioning" brief="The wifi provisioning example." toolchain="armgcc iar mcuxpresso" compiler="compiler_gcc compiler_iar" category="edgefast_bluetooth_examples" path="boards/evkbmimxrt1060/edgefast_bluetooth_examples/wifi_provisioning">
+        <example id="evkbmimxrt1060_wifi_provisioning" name="wifi_provisioning" brief="The wifi provisioning example." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="edgefast_bluetooth_examples" path="boards/evkbmimxrt1060/edgefast_bluetooth_examples/wifi_provisioning">
           <external path="boards/evkbmimxrt1060/edgefast_bluetooth_examples/wifi_provisioning" type="xml">
             <files mask="wifi_provisioning_v3_8.xml"/>
           </external>
@@ -1826,6 +1956,21 @@ ${load}</script>
         <example id="evkbmimxrt1060_wifi_webconfig" name="wifi_webconfig" brief="Simple AP to Client configuration over web." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="wifi_examples" path="boards/evkbmimxrt1060/wifi_examples/wifi_webconfig">
           <external path="boards/evkbmimxrt1060/wifi_examples/wifi_webconfig" type="xml">
             <files mask="wifi_webconfig_v3_8.xml"/>
+          </external>
+        </example>
+        <example id="evkbmimxrt1060_wireless_uart" name="wireless_uart" brief="The ethermind wireless uart example with simplified application." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="edgefast_bluetooth_examples" path="boards/evkbmimxrt1060/edgefast_bluetooth_examples/wireless_uart">
+          <external path="boards/evkbmimxrt1060/edgefast_bluetooth_examples/wireless_uart" type="xml">
+            <files mask="wireless_uart_v3_8.xml"/>
+          </external>
+        </example>
+        <example id="evkbmimxrt1060_wolfssl_benchmark" name="wolfssl_benchmark" brief="The mbdedTLS benchmark program performs cryptographic algorithm testing and prints results to theterminal." toolchain="armgcc iar" compiler="compiler_gcc compiler_iar" category="wolfssl_examples" path="boards/evkbmimxrt1060/wolfssl_examples/wolfssl_benchmark">
+          <external path="boards/evkbmimxrt1060/wolfssl_examples/wolfssl_benchmark" type="xml">
+            <files mask="wolfssl_benchmark_v3_8.xml"/>
+          </external>
+        </example>
+        <example id="evkbmimxrt1060_wolfssl_selftest" name="wolfssl_selftest" brief="The mbdedTLS SelfTest program performs cryptographic algorithm testing and prints results to theterminal." toolchain="armgcc" compiler="compiler_gcc" category="wolfssl_examples" path="boards/evkbmimxrt1060/wolfssl_examples/wolfssl_selftest">
+          <external path="boards/evkbmimxrt1060/wolfssl_examples/wolfssl_selftest" type="xml">
+            <files mask="wolfssl_selftest_v3_8.xml"/>
           </external>
         </example>
         <example id="evkbmimxrt1060_xbar_aoi" name="xbar_aoi" brief="The XBAR AOI demo application demonstrates the usage of the XBAR, AOI peripheral to combine interruptfrom CMP and PIT. If the button is pressed(CMP interrupt) and the PIT periodic interrupt occurs a message is printed." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="demo_apps" path="boards/evkbmimxrt1060/demo_apps/xbar_aoi">
@@ -1868,12 +2013,12 @@ ${load}</script>
       </memory>
       <total_memory flash_size_kb="8192" ram_size_kb="32768"/>
       <examples>
-        <example id="evkmimxrt1060_a2dp_sink" name="a2dp_sink" brief="The ethermind audio source with simplified application." toolchain="armgcc iar mcuxpresso" compiler="compiler_gcc compiler_iar" category="edgefast_bluetooth_examples" path="boards/evkmimxrt1060/edgefast_bluetooth_examples/a2dp_sink">
+        <example id="evkmimxrt1060_a2dp_sink" name="a2dp_sink" brief="The ethermind audio source with simplified application." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="edgefast_bluetooth_examples" path="boards/evkmimxrt1060/edgefast_bluetooth_examples/a2dp_sink">
           <external path="boards/evkmimxrt1060/edgefast_bluetooth_examples/a2dp_sink" type="xml">
             <files mask="a2dp_sink_v3_8.xml"/>
           </external>
         </example>
-        <example id="evkmimxrt1060_a2dp_source" name="a2dp_source" brief="The ethermind audio source with simplified application." toolchain="armgcc iar mcuxpresso" compiler="compiler_gcc compiler_iar" category="edgefast_bluetooth_examples" path="boards/evkmimxrt1060/edgefast_bluetooth_examples/a2dp_source">
+        <example id="evkmimxrt1060_a2dp_source" name="a2dp_source" brief="The ethermind audio source with simplified application." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="edgefast_bluetooth_examples" path="boards/evkmimxrt1060/edgefast_bluetooth_examples/a2dp_source">
           <external path="boards/evkmimxrt1060/edgefast_bluetooth_examples/a2dp_source" type="xml">
             <files mask="a2dp_source_v3_8.xml"/>
           </external>
@@ -1993,22 +2138,22 @@ ${load}</script>
             <files mask="ccm_clockout_v3_8.xml"/>
           </external>
         </example>
-        <example id="evkmimxrt1060_central_hpc" name="central_hpc" brief="The ethermind hpc example with simplified application." toolchain="armgcc iar mcuxpresso" compiler="compiler_gcc compiler_iar" category="edgefast_bluetooth_examples" path="boards/evkmimxrt1060/edgefast_bluetooth_examples/central_hpc">
+        <example id="evkmimxrt1060_central_hpc" name="central_hpc" brief="The ethermind hpc example with simplified application." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="edgefast_bluetooth_examples" path="boards/evkmimxrt1060/edgefast_bluetooth_examples/central_hpc">
           <external path="boards/evkmimxrt1060/edgefast_bluetooth_examples/central_hpc" type="xml">
             <files mask="central_hpc_v3_8.xml"/>
           </external>
         </example>
-        <example id="evkmimxrt1060_central_ht" name="central_ht" brief="The ethermind hts example with simplified application." toolchain="armgcc iar mcuxpresso" compiler="compiler_gcc compiler_iar" category="edgefast_bluetooth_examples" path="boards/evkmimxrt1060/edgefast_bluetooth_examples/central_ht">
+        <example id="evkmimxrt1060_central_ht" name="central_ht" brief="The ethermind hts example with simplified application." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="edgefast_bluetooth_examples" path="boards/evkmimxrt1060/edgefast_bluetooth_examples/central_ht">
           <external path="boards/evkmimxrt1060/edgefast_bluetooth_examples/central_ht" type="xml">
             <files mask="central_ht_v3_8.xml"/>
           </external>
         </example>
-        <example id="evkmimxrt1060_central_ipsp" name="central_ipsp" brief="The ethermind ipsp example with simplified application." toolchain="armgcc iar mcuxpresso" compiler="compiler_gcc compiler_iar" category="edgefast_bluetooth_examples" path="boards/evkmimxrt1060/edgefast_bluetooth_examples/central_ipsp">
+        <example id="evkmimxrt1060_central_ipsp" name="central_ipsp" brief="The ethermind ipsp example with simplified application." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="edgefast_bluetooth_examples" path="boards/evkmimxrt1060/edgefast_bluetooth_examples/central_ipsp">
           <external path="boards/evkmimxrt1060/edgefast_bluetooth_examples/central_ipsp" type="xml">
             <files mask="central_ipsp_v3_8.xml"/>
           </external>
         </example>
-        <example id="evkmimxrt1060_central_pxm" name="central_pxm" brief="The ethermind pxm example with simplified application." toolchain="armgcc iar mcuxpresso" compiler="compiler_gcc compiler_iar" category="edgefast_bluetooth_examples" path="boards/evkmimxrt1060/edgefast_bluetooth_examples/central_pxm">
+        <example id="evkmimxrt1060_central_pxm" name="central_pxm" brief="The ethermind pxm example with simplified application." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="edgefast_bluetooth_examples" path="boards/evkmimxrt1060/edgefast_bluetooth_examples/central_pxm">
           <external path="boards/evkmimxrt1060/edgefast_bluetooth_examples/central_pxm" type="xml">
             <files mask="central_pxm_v3_8.xml"/>
           </external>
@@ -2411,6 +2556,11 @@ ${load}</script>
         <example id="evkmimxrt1060_dev_video_virtual_camera_lite_bm" name="dev_video_virtual_camera_lite_bm" brief="The USB video virtual camera application is a simple demonstration program based on the MCUXpresso SDK.It is enumerated as a camera and users can see the video of the device by using a PC test tool." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="usb_examples" path="boards/evkmimxrt1060/usb_examples/usb_device_video_virtual_camera_lite/bm">
           <external path="boards/evkmimxrt1060/usb_examples/usb_device_video_virtual_camera_lite/bm" type="xml">
             <files mask="dev_video_virtual_camera_lite_bm_v3_8.xml"/>
+          </external>
+        </example>
+        <example id="evkmimxrt1060_edgefast_bluetooth_shell" name="edgefast_bluetooth_shell" brief="The ethermind shell example with simplified application." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="edgefast_bluetooth_examples" path="boards/evkmimxrt1060/edgefast_bluetooth_examples/shell">
+          <external path="boards/evkmimxrt1060/edgefast_bluetooth_examples/shell" type="xml">
+            <files mask="edgefast_bluetooth_shell_v3_8.xml"/>
           </external>
         </example>
         <example id="evkmimxrt1060_edma_channel_link" name="edma_channel_link" brief="The EDMA memory to memory example is a simple demonstration program that uses the SDK software.It excuates one shot transfer from source buffer to destination buffer using the SDK EDMA drivers.The purpose of this example is to show how to use the EDMA and to provide a simple example fordebugging and further development." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="driver_examples/edma" path="boards/evkmimxrt1060/driver_examples/edma/channel_link">
@@ -2853,12 +3003,12 @@ ${load}</script>
             <files mask="h264_freertos_v3_8.xml"/>
           </external>
         </example>
-        <example id="evkmimxrt1060_handsfree" name="handsfree" brief="The ethermind bluetooth handsfree example with simplified application." toolchain="armgcc iar mcuxpresso" compiler="compiler_gcc compiler_iar" category="edgefast_bluetooth_examples" path="boards/evkmimxrt1060/edgefast_bluetooth_examples/handsfree">
+        <example id="evkmimxrt1060_handsfree" name="handsfree" brief="The ethermind bluetooth handsfree example with simplified application." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="edgefast_bluetooth_examples" path="boards/evkmimxrt1060/edgefast_bluetooth_examples/handsfree">
           <external path="boards/evkmimxrt1060/edgefast_bluetooth_examples/handsfree" type="xml">
             <files mask="handsfree_v3_8.xml"/>
           </external>
         </example>
-        <example id="evkmimxrt1060_handsfree_ag" name="handsfree_ag" brief="The ethermind handsfree AG example with simplified application." toolchain="armgcc iar mcuxpresso" compiler="compiler_gcc compiler_iar" category="edgefast_bluetooth_examples" path="boards/evkmimxrt1060/edgefast_bluetooth_examples/handsfree_ag">
+        <example id="evkmimxrt1060_handsfree_ag" name="handsfree_ag" brief="The ethermind handsfree AG example with simplified application." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="edgefast_bluetooth_examples" path="boards/evkmimxrt1060/edgefast_bluetooth_examples/handsfree_ag">
           <external path="boards/evkmimxrt1060/edgefast_bluetooth_examples/handsfree_ag" type="xml">
             <files mask="handsfree_ag_v3_8.xml"/>
           </external>
@@ -3358,22 +3508,22 @@ ${load}</script>
             <files mask="ota_demo_wifi_nxp_v3_8.xml"/>
           </external>
         </example>
-        <example id="evkmimxrt1060_peripheral_hps" name="peripheral_hps" brief="The ethermind hps example with simplified application." toolchain="armgcc iar mcuxpresso" compiler="compiler_gcc compiler_iar" category="edgefast_bluetooth_examples" path="boards/evkmimxrt1060/edgefast_bluetooth_examples/peripheral_hps">
+        <example id="evkmimxrt1060_peripheral_hps" name="peripheral_hps" brief="The ethermind hps example with simplified application." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="edgefast_bluetooth_examples" path="boards/evkmimxrt1060/edgefast_bluetooth_examples/peripheral_hps">
           <external path="boards/evkmimxrt1060/edgefast_bluetooth_examples/peripheral_hps" type="xml">
             <files mask="peripheral_hps_v3_8.xml"/>
           </external>
         </example>
-        <example id="evkmimxrt1060_peripheral_ht" name="peripheral_ht" brief="The ethermind hts example with simplified application." toolchain="armgcc iar mcuxpresso" compiler="compiler_gcc compiler_iar" category="edgefast_bluetooth_examples" path="boards/evkmimxrt1060/edgefast_bluetooth_examples/peripheral_ht">
+        <example id="evkmimxrt1060_peripheral_ht" name="peripheral_ht" brief="The ethermind hts example with simplified application." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="edgefast_bluetooth_examples" path="boards/evkmimxrt1060/edgefast_bluetooth_examples/peripheral_ht">
           <external path="boards/evkmimxrt1060/edgefast_bluetooth_examples/peripheral_ht" type="xml">
             <files mask="peripheral_ht_v3_8.xml"/>
           </external>
         </example>
-        <example id="evkmimxrt1060_peripheral_ipsp" name="peripheral_ipsp" brief="The ethermind ipsp example with simplified application." toolchain="armgcc iar mcuxpresso" compiler="compiler_gcc compiler_iar" category="edgefast_bluetooth_examples" path="boards/evkmimxrt1060/edgefast_bluetooth_examples/peripheral_ipsp">
+        <example id="evkmimxrt1060_peripheral_ipsp" name="peripheral_ipsp" brief="The ethermind ipsp example with simplified application." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="edgefast_bluetooth_examples" path="boards/evkmimxrt1060/edgefast_bluetooth_examples/peripheral_ipsp">
           <external path="boards/evkmimxrt1060/edgefast_bluetooth_examples/peripheral_ipsp" type="xml">
             <files mask="peripheral_ipsp_v3_8.xml"/>
           </external>
         </example>
-        <example id="evkmimxrt1060_peripheral_pxr" name="peripheral_pxr" brief="The ethermind pxr example with simplified application." toolchain="armgcc iar mcuxpresso" compiler="compiler_gcc compiler_iar" category="edgefast_bluetooth_examples" path="boards/evkmimxrt1060/edgefast_bluetooth_examples/peripheral_pxr">
+        <example id="evkmimxrt1060_peripheral_pxr" name="peripheral_pxr" brief="The ethermind pxr example with simplified application." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="edgefast_bluetooth_examples" path="boards/evkmimxrt1060/edgefast_bluetooth_examples/peripheral_pxr">
           <external path="boards/evkmimxrt1060/edgefast_bluetooth_examples/peripheral_pxr" type="xml">
             <files mask="peripheral_pxr_v3_8.xml"/>
           </external>
@@ -3598,6 +3748,11 @@ ${load}</script>
             <files mask="semc_v3_8.xml"/>
           </external>
         </example>
+        <example id="evkmimxrt1060_shell" name="shell" brief="The Shell Demo application demonstrates to control Leds by commands." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="demo_apps" path="boards/evkmimxrt1060/demo_apps/shell">
+          <external path="boards/evkmimxrt1060/demo_apps/shell" type="xml">
+            <files mask="shell_v3_8.xml"/>
+          </external>
+        </example>
         <example id="evkmimxrt1060_snvs_hp_hac" name="snvs_hp_hac" brief="The SNVS HP HAC project shows how to use the High Assurance Counter (HAC) based on SDK SNVS HP driver. In this example, The HAC is enabled and set a initial value. Software fatal security violation is triggered, and the SSM switches to soft fail mode. In soft fail mode, software stops the HAC counter, and clear the HAC to make SSM switch to hard fail mode. The system resets when enters hard fail mode." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="driver_examples/snvs" path="boards/evkmimxrt1060/driver_examples/snvs/snvs_hp_hac">
           <external path="boards/evkmimxrt1060/driver_examples/snvs/snvs_hp_hac" type="xml">
             <files mask="snvs_hp_hac_v3_8.xml"/>
@@ -3623,7 +3778,7 @@ ${load}</script>
             <files mask="snvs_sw_zmk_v3_8.xml"/>
           </external>
         </example>
-        <example id="evkmimxrt1060_spp" name="spp" brief="The Bluetooth BR SPP example." toolchain="armgcc iar mcuxpresso" compiler="compiler_gcc compiler_iar" category="edgefast_bluetooth_examples" path="boards/evkmimxrt1060/edgefast_bluetooth_examples/spp">
+        <example id="evkmimxrt1060_spp" name="spp" brief="The Bluetooth BR SPP example." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="edgefast_bluetooth_examples" path="boards/evkmimxrt1060/edgefast_bluetooth_examples/spp">
           <external path="boards/evkmimxrt1060/edgefast_bluetooth_examples/spp" type="xml">
             <files mask="spp_v3_8.xml"/>
           </external>
@@ -3708,7 +3863,7 @@ ${load}</script>
             <files mask="wifi_iperf_v3_8.xml"/>
           </external>
         </example>
-        <example id="evkmimxrt1060_wifi_provisioning" name="wifi_provisioning" brief="The wifi provisioning example." toolchain="armgcc iar mcuxpresso" compiler="compiler_gcc compiler_iar" category="edgefast_bluetooth_examples" path="boards/evkmimxrt1060/edgefast_bluetooth_examples/wifi_provisioning">
+        <example id="evkmimxrt1060_wifi_provisioning" name="wifi_provisioning" brief="The wifi provisioning example." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="edgefast_bluetooth_examples" path="boards/evkmimxrt1060/edgefast_bluetooth_examples/wifi_provisioning">
           <external path="boards/evkmimxrt1060/edgefast_bluetooth_examples/wifi_provisioning" type="xml">
             <files mask="wifi_provisioning_v3_8.xml"/>
           </external>
@@ -3728,12 +3883,17 @@ ${load}</script>
             <files mask="wifi_webconfig_v3_8.xml"/>
           </external>
         </example>
+        <example id="evkmimxrt1060_wireless_uart" name="wireless_uart" brief="The ethermind wireless uart example with simplified application." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="edgefast_bluetooth_examples" path="boards/evkmimxrt1060/edgefast_bluetooth_examples/wireless_uart">
+          <external path="boards/evkmimxrt1060/edgefast_bluetooth_examples/wireless_uart" type="xml">
+            <files mask="wireless_uart_v3_8.xml"/>
+          </external>
+        </example>
         <example id="evkmimxrt1060_wolfssl_benchmark" name="wolfssl_benchmark" brief="The mbdedTLS benchmark program performs cryptographic algorithm testing and prints results to theterminal." toolchain="armgcc iar" compiler="compiler_gcc compiler_iar" category="wolfssl_examples" path="boards/evkmimxrt1060/wolfssl_examples/wolfssl_benchmark">
           <external path="boards/evkmimxrt1060/wolfssl_examples/wolfssl_benchmark" type="xml">
             <files mask="wolfssl_benchmark_v3_8.xml"/>
           </external>
         </example>
-        <example id="evkmimxrt1060_wolfssl_selftest" name="wolfssl_selftest" brief="The mbdedTLS SelfTest program performs cryptographic algorithm testing and prints results to theterminal." toolchain="armgcc iar" compiler="compiler_gcc compiler_iar" category="wolfssl_examples" path="boards/evkmimxrt1060/wolfssl_examples/wolfssl_selftest">
+        <example id="evkmimxrt1060_wolfssl_selftest" name="wolfssl_selftest" brief="The mbdedTLS SelfTest program performs cryptographic algorithm testing and prints results to theterminal." toolchain="armgcc" compiler="compiler_gcc" category="wolfssl_examples" path="boards/evkmimxrt1060/wolfssl_examples/wolfssl_selftest">
           <external path="boards/evkmimxrt1060/wolfssl_examples/wolfssl_selftest" type="xml">
             <files mask="wolfssl_selftest_v3_8.xml"/>
           </external>
@@ -5082,6 +5242,26 @@ ${load}</script>
         <files mask="armgcc_force_cpp.cmake"/>
       </source>
     </component>
+    <component id="component.audio_sai_edma_adapter.MIMXRT1062" name="sai_edma_adapter" brief="Component sai_edma_adapter" version="1.0.0" full_name="Component sai_edma_adapter" devices="MIMXRT1062xxxxA" device_cores="core0_MIMXRT1062xxxxA" user_visible="true" type="abstraction_layer" package_base_path="components/audio" project_base_path="component/audio">
+      <dependencies>
+        <all>
+          <component_dependency value="platform.drivers.common.MIMXRT1062"/>
+          <component_dependency value="platform.drivers.sai_edma.MIMXRT1062"/>
+        </all>
+      </dependencies>
+      <source relative_path="./" type="c_include">
+        <files mask="fsl_adapter_audio.h"/>
+      </source>
+      <source relative_path="./" type="src">
+        <files mask="fsl_adapter_sai.c"/>
+      </source>
+      <source toolchain="armgcc" relative_path="." type="workspace">
+        <files mask="component_audio_sai_edma_adapter_MIMXRT1062.cmake" hidden="true"/>
+      </source>
+      <include_paths>
+        <include_path relative_path="./" type="c_include"/>
+      </include_paths>
+    </component>
     <component id="component.button.MIMXRT1062" name="button" brief="Component button" version="1.0.0" full_name="Component button" devices="MIMXRT1062xxxxA" device_cores="core0_MIMXRT1062xxxxA" user_visible="true" type="software_component" package_base_path="components/button" project_base_path="component/button">
       <dependencies>
         <all>
@@ -5095,6 +5275,9 @@ ${load}</script>
       </source>
       <source relative_path="./" type="src">
         <files mask="fsl_component_button.c"/>
+      </source>
+      <source toolchain="armgcc" relative_path="." type="workspace">
+        <files mask="component_button_MIMXRT1062.cmake" hidden="true"/>
       </source>
       <include_paths>
         <include_path relative_path="./" type="c_include"/>
@@ -5431,6 +5614,23 @@ ${load}</script>
         <include_path relative_path="./" type="c_include"/>
       </include_paths>
     </component>
+    <component id="component.lpspi_adapter.MIMXRT1062" name="lpspi_adapter" brief="Component lpspi_adapter" version="1.0.0" full_name="Component lpspi_adapter" devices="MIMXRT1062xxxxA" device_cores="core0_MIMXRT1062xxxxA" user_visible="true" type="abstraction_layer" package_base_path="components/spi" project_base_path="component/spi">
+      <dependencies>
+        <all>
+          <component_dependency value="platform.drivers.common.MIMXRT1062"/>
+          <component_dependency value="platform.drivers.lpspi.MIMXRT1062"/>
+        </all>
+      </dependencies>
+      <source relative_path="./" type="c_include">
+        <files mask="fsl_adapter_spi.h"/>
+      </source>
+      <source relative_path="./" type="src">
+        <files mask="fsl_adapter_lpspi.c"/>
+      </source>
+      <include_paths>
+        <include_path relative_path="./" type="c_include"/>
+      </include_paths>
+    </component>
     <component id="component.lpuart_adapter.MIMXRT1062" name="lpuart_adapter" brief="Component lpuart_adapter" version="1.0.0" full_name="lpuart_adapter" devices="MIMXRT1062xxxxA" device_cores="core0_MIMXRT1062xxxxA" user_visible="true" type="utilities" package_base_path="components/uart" project_base_path="component/uart">
       <dependencies>
         <all>
@@ -5485,6 +5685,9 @@ ${load}</script>
       <source relative_path="./" type="src">
         <files mask="fsl_component_mem_manager.c"/>
       </source>
+      <source toolchain="armgcc" relative_path="." type="workspace">
+        <files mask="component_mem_manager_MIMXRT1062.cmake" hidden="true"/>
+      </source>
       <include_paths>
         <include_path relative_path="./" type="c_include"/>
       </include_paths>
@@ -5501,6 +5704,27 @@ ${load}</script>
       </source>
       <source relative_path="./" type="src">
         <files mask="fsl_component_mem_manager_light.c"/>
+      </source>
+      <include_paths>
+        <include_path relative_path="./" type="c_include"/>
+      </include_paths>
+    </component>
+    <component id="component.messaging.MIMXRT1062" name="messaging" brief="Component messaging" version="1.0.0" full_name="Component messaging" devices="MIMXRT1062xxxxA" device_cores="core0_MIMXRT1062xxxxA" category="Device/SDK Drivers" user_visible="true" type="other" package_base_path="components/messaging" project_base_path="component/messaging">
+      <dependencies>
+        <all>
+          <component_dependency value="platform.drivers.common.MIMXRT1062"/>
+          <component_dependency value="component.lists.MIMXRT1062"/>
+          <component_dependency value="component.mem_manager.MIMXRT1062"/>
+        </all>
+      </dependencies>
+      <source relative_path="./" type="c_include">
+        <files mask="fsl_component_messaging.h"/>
+      </source>
+      <source relative_path="./" type="src">
+        <files mask="fsl_component_messaging.c"/>
+      </source>
+      <source toolchain="armgcc" relative_path="." type="workspace">
+        <files mask="component_messaging_MIMXRT1062.cmake" hidden="true"/>
       </source>
       <include_paths>
         <include_path relative_path="./" type="c_include"/>
@@ -5572,9 +5796,6 @@ ${load}</script>
       </source>
       <source relative_path="./" type="src">
         <files mask="nvm_adapter.c"/>
-      </source>
-      <source toolchain="armgcc" relative_path="." type="workspace">
-        <files mask="component_nvm_adapter_MIMXRT1062.cmake" hidden="true"/>
       </source>
       <include_paths>
         <include_path relative_path="./" type="c_include"/>
@@ -5738,6 +5959,7 @@ ${load}</script>
           <component_dependency value="component.lists.MIMXRT1062"/>
           <any_of>
             <component_dependency value="component.serial_manager_uart.MIMXRT1062"/>
+            <component_dependency value="component.serial_manager_spi.MIMXRT1062"/>
             <component_dependency value="component.serial_manager_swo.MIMXRT1062"/>
             <component_dependency value="component.serial_manager_virtual.MIMXRT1062"/>
             <component_dependency value="component.serial_manager_usb_cdc.MIMXRT1062"/>
@@ -5753,6 +5975,30 @@ ${load}</script>
       </source>
       <source toolchain="armgcc" relative_path="." type="workspace">
         <files mask="component_serial_manager_MIMXRT1062.cmake" hidden="true"/>
+      </source>
+      <include_paths>
+        <include_path relative_path="./" type="c_include"/>
+      </include_paths>
+    </component>
+    <component id="component.serial_manager_spi.MIMXRT1062" name="serial_manager_spi" brief="Component serial_manager_spi" version="1.0.0" full_name="Serial Manager spi" devices="MIMXRT1062xxxxA" device_cores="core0_MIMXRT1062xxxxA" user_visible="true" type="utilities" package_base_path="components/serial_manager" project_base_path="component/serial_manager">
+      <defines>
+        <define name="SERIAL_PORT_TYPE_SPI" value="1"/>
+        <define name="SERIAL_PORT_TYPE_SPI_MASTER" value="1"/>
+        <define name="SERIAL_PORT_TYPE_SPI_SLAVE" value="1"/>
+        <define name="SERIAL_MANAGER_NON_BLOCKING_MODE" value="1"/>
+      </defines>
+      <dependencies>
+        <all>
+          <component_dependency value="component.serial_manager.MIMXRT1062"/>
+          <component_dependency value="platform.drivers.lpspi.MIMXRT1062"/>
+          <component_dependency value="component.lpspi_adapter.MIMXRT1062"/>
+        </all>
+      </dependencies>
+      <source relative_path="./" type="c_include">
+        <files mask="fsl_component_serial_port_spi.h"/>
+      </source>
+      <source relative_path="./" type="src">
+        <files mask="fsl_component_serial_port_spi.c"/>
       </source>
       <include_paths>
         <include_path relative_path="./" type="c_include"/>
@@ -5907,6 +6153,9 @@ ${load}</script>
       <source relative_path="./" type="src">
         <files mask="fsl_adapter_software_rng.c"/>
       </source>
+      <source toolchain="armgcc" relative_path="." type="workspace">
+        <files mask="component_software_rng_adapter_MIMXRT1062.cmake" hidden="true"/>
+      </source>
       <include_paths>
         <include_path relative_path="./" type="c_include"/>
       </include_paths>
@@ -5927,6 +6176,9 @@ ${load}</script>
       </source>
       <source relative_path="./" type="src">
         <files mask="fsl_component_timer_manager.c"/>
+      </source>
+      <source toolchain="armgcc" relative_path="." type="workspace">
+        <files mask="component_timer_manager_MIMXRT1062.cmake" hidden="true"/>
       </source>
       <include_paths>
         <include_path relative_path="./" type="c_include"/>
@@ -7665,7 +7917,7 @@ ${load}</script>
         <include_path relative_path="./" type="c_include"/>
       </include_paths>
     </component>
-    <component id="platform.drivers.sai.MIMXRT1062" name="sai" brief="SAI Driver" version="2.3.3" full_name="SAI Driver" devices="MIMXRT1062xxxxA" device_cores="core0_MIMXRT1062xxxxA" user_visible="true" type="driver" package_base_path="devices/MIMXRT1062/drivers" project_base_path="drivers">
+    <component id="platform.drivers.sai.MIMXRT1062" name="sai" brief="SAI Driver" version="2.3.4" full_name="SAI Driver" devices="MIMXRT1062xxxxA" device_cores="core0_MIMXRT1062xxxxA" user_visible="true" type="driver" package_base_path="devices/MIMXRT1062/drivers" project_base_path="drivers">
       <dependencies>
         <component_dependency value="platform.drivers.common.MIMXRT1062"/>
       </dependencies>
@@ -7951,7 +8203,7 @@ ${load}</script>
         <include_path relative_path="./" type="c_include"/>
       </include_paths>
     </component>
-    <component id="driver.wm8904.MIMXRT1062" name="wm8904" brief="Driver wm8904" version="2.4.4" full_name="Driver wm8904" devices="MIMXRT1062xxxxA" device_cores="core0_MIMXRT1062xxxxA" user_visible="true" type="software_component" package_base_path="components/codec/wm8904" project_base_path="codec">
+    <component id="driver.wm8904.MIMXRT1062" name="wm8904" brief="Driver wm8904" version="2.5.0" full_name="Driver wm8904" devices="MIMXRT1062xxxxA" device_cores="core0_MIMXRT1062xxxxA" user_visible="true" type="software_component" package_base_path="components/codec/wm8904" project_base_path="codec">
       <dependencies>
         <all>
           <component_dependency value="platform.drivers.common.MIMXRT1062"/>
@@ -16557,6 +16809,12 @@ ${load}</script>
           <component_dependency value="middleware.eiq.tensorflow_lite_micro.third_party.ruy.MIMXRT1062"/>
         </all>
       </dependencies>
+      <source relative_path="tensorflow-lite" type="doc">
+        <files mask="AUTHORS"/>
+        <files mask="LICENSE"/>
+        <files mask="ChangeLogKSDK.txt"/>
+        <files mask="readme.txt"/>
+      </source>
       <source relative_path="tensorflow-lite/tensorflow/core/public" type="c_include">
         <files mask="version.h"/>
       </source>
@@ -24405,7 +24663,7 @@ ${load}</script>
         <include_path relative_path="vendors/vendor/boards/board/aws_tests/config_files" type="c_include"/>
       </include_paths>
     </component>
-    <component id="middleware.freertos-kernel.MIMXRT1062" name="FreeRTOS kernel" brief="FreeRTOS kernel" version="202012.00.0" full_name="FreeRTOS kernel" devices="MIMXRT1062xxxxA" user_visible="true" type="OS" package_base_path="rtos/freertos" project_base_path="freertos">
+    <component id="middleware.freertos-kernel.MIMXRT1062" name="FreeRTOS kernel" brief="FreeRTOS kernel" version="10.4.3" revision="1" full_name="FreeRTOS kernel" devices="MIMXRT1062xxxxA" user_visible="true" type="OS" package_base_path="rtos/freertos" project_base_path="freertos">
       <defines>
         <define name="SDK_OS_FREE_RTOS" value=""/>
       </defines>
@@ -24474,7 +24732,7 @@ ${load}</script>
         <include_path relative_path="freertos_kernel/portable/IAR/ARM_CM4F" toolchain="iar" type="c_include" device_cores="core0_MIMXRT1062xxxxA"/>
       </include_paths>
     </component>
-    <component id="middleware.freertos-kernel.armv8m.MIMXRT1062" name="FreeRTOS port ARMv8M" brief="FreeRTOS port ARMv8M" version="202012.00.0" full_name="FreeRTOS port ARMv8M" devices="MIMXRT1062xxxxA" category="Operating System/FreeRTOS kernel" user_visible="false" type="other" package_base_path="rtos/freertos" project_base_path="freertos">
+    <component id="middleware.freertos-kernel.armv8m.MIMXRT1062" name="FreeRTOS port ARMv8M" brief="FreeRTOS port ARMv8M" version="10.4.3" revision="1" full_name="FreeRTOS port ARMv8M" devices="MIMXRT1062xxxxA" category="Operating System/FreeRTOS kernel" user_visible="false" type="other" package_base_path="rtos/freertos" project_base_path="freertos">
       <dependencies>
         <component_dependency value="middleware.freertos-kernel.MIMXRT1062"/>
       </dependencies>
@@ -24520,9 +24778,6 @@ ${load}</script>
       <source relative_path="freertos_kernel/portable/ARMv8M/secure/context/portable/GCC/ARM_CM33" type="src">
         <files mask="secure_context_port.c"/>
       </source>
-      <source relative_path="freertos_kernel/portable/ARMv8M/secure/context/portable/IAR/ARM_CM33" type="src">
-        <files mask="secure_context_port.c"/>
-      </source>
       <source relative_path="freertos_kernel/portable/ARMv8M/secure/context/portable/IAR/ARM_CM33" type="asm_include">
         <files mask="secure_context_port_asm.s"/>
       </source>
@@ -24562,7 +24817,7 @@ ${load}</script>
         <include_path relative_path="freertos_kernel/portable/ARMv8M/secure/macros" type="c_include"/>
       </include_paths>
     </component>
-    <component id="middleware.freertos-kernel.doc.MIMXRT1062" name="FreeRTOS doc" brief="FreeRTOS doc" version="202012.00.0" full_name="FreeRTOS doc" devices="MIMXRT1062xxxxA" category="Operating System/FreeRTOS kernel" user_visible="false" type="other" package_base_path="rtos/freertos" project_base_path="freertos">
+    <component id="middleware.freertos-kernel.doc.MIMXRT1062" name="FreeRTOS doc" brief="FreeRTOS doc" version="10.4.3" revision="1" full_name="FreeRTOS doc" devices="MIMXRT1062xxxxA" category="Operating System/FreeRTOS kernel" user_visible="false" type="other" package_base_path="rtos/freertos" project_base_path="freertos">
       <source relative_path="doc" type="doc">
         <files mask="AFQ Developer Guide - Board Qualification Errata.pdf"/>
         <files mask="Amazon FreeRTOS Qualification Developer Guide.pdf"/>
@@ -24642,7 +24897,7 @@ ${load}</script>
         <files mask="global_config.txt"/>
       </source>
     </component>
-    <component id="middleware.freertos-kernel.extension.MIMXRT1062" name="FreeRTOS NXP extension" brief="FreeRTOS NXP extension" version="202012.00.0" full_name="FreeRTOS NXP extension" devices="MIMXRT1062xxxxA" category="Operating System/FreeRTOS kernel extensions" user_visible="false" type="other" package_base_path="rtos/freertos" project_base_path="freertos">
+    <component id="middleware.freertos-kernel.extension.MIMXRT1062" name="FreeRTOS NXP extension" brief="FreeRTOS NXP extension" version="10.4.3" revision="1" full_name="FreeRTOS NXP extension" devices="MIMXRT1062xxxxA" category="Operating System/FreeRTOS kernel extensions" user_visible="false" type="other" package_base_path="rtos/freertos" project_base_path="freertos">
       <source relative_path="freertos_kernel/include" type="c_include">
         <files mask="freertos_tasks_c_additions.h"/>
       </source>
@@ -24653,7 +24908,7 @@ ${load}</script>
         <include_path relative_path="freertos_kernel/include" type="c_include"/>
       </include_paths>
     </component>
-    <component id="middleware.freertos-kernel.heap_1.MIMXRT1062" name="FreeRTOS heap 1" brief="FreeRTOS heap 1" version="202012.00.0" full_name="FreeRTOS heap 1" devices="MIMXRT1062xxxxA" category="Operating System/FreeRTOS kernel" user_visible="false" type="other" package_base_path="rtos/freertos" project_base_path="freertos">
+    <component id="middleware.freertos-kernel.heap_1.MIMXRT1062" name="FreeRTOS heap 1" brief="FreeRTOS heap 1" version="10.4.3" revision="1" full_name="FreeRTOS heap 1" devices="MIMXRT1062xxxxA" category="Operating System/FreeRTOS kernel" user_visible="false" type="other" package_base_path="rtos/freertos" project_base_path="freertos">
       <dependencies>
         <component_dependency value="middleware.freertos-kernel.MIMXRT1062"/>
       </dependencies>
@@ -24661,7 +24916,7 @@ ${load}</script>
         <files mask="heap_1.c"/>
       </source>
     </component>
-    <component id="middleware.freertos-kernel.heap_2.MIMXRT1062" name="FreeRTOS heap 2" brief="FreeRTOS heap 2" version="202012.00.0" full_name="FreeRTOS heap 2" devices="MIMXRT1062xxxxA" category="Operating System/FreeRTOS kernel" user_visible="false" type="other" package_base_path="rtos/freertos" project_base_path="freertos">
+    <component id="middleware.freertos-kernel.heap_2.MIMXRT1062" name="FreeRTOS heap 2" brief="FreeRTOS heap 2" version="10.4.3" revision="1" full_name="FreeRTOS heap 2" devices="MIMXRT1062xxxxA" category="Operating System/FreeRTOS kernel" user_visible="false" type="other" package_base_path="rtos/freertos" project_base_path="freertos">
       <dependencies>
         <component_dependency value="middleware.freertos-kernel.MIMXRT1062"/>
       </dependencies>
@@ -24669,7 +24924,7 @@ ${load}</script>
         <files mask="heap_2.c"/>
       </source>
     </component>
-    <component id="middleware.freertos-kernel.heap_3.MIMXRT1062" name="FreeRTOS heap 3" brief="FreeRTOS heap 3" version="202012.00.0" full_name="FreeRTOS heap_3" devices="MIMXRT1062xxxxA" category="Operating System/FreeRTOS kernel" user_visible="false" type="other" package_base_path="rtos/freertos" project_base_path="freertos">
+    <component id="middleware.freertos-kernel.heap_3.MIMXRT1062" name="FreeRTOS heap 3" brief="FreeRTOS heap 3" version="10.4.3" revision="1" full_name="FreeRTOS heap_3" devices="MIMXRT1062xxxxA" category="Operating System/FreeRTOS kernel" user_visible="false" type="other" package_base_path="rtos/freertos" project_base_path="freertos">
       <dependencies>
         <component_dependency value="middleware.freertos-kernel.MIMXRT1062"/>
       </dependencies>
@@ -24680,7 +24935,7 @@ ${load}</script>
         <files mask="middleware_freertos-kernel_heap_3_MIMXRT1062.cmake" hidden="true"/>
       </source>
     </component>
-    <component id="middleware.freertos-kernel.heap_4.MIMXRT1062" name="FreeRTOS heap 4" brief="FreeRTOS heap 4" version="202012.00.0" full_name="FreeRTOS heap 4" devices="MIMXRT1062xxxxA" category="Operating System/FreeRTOS kernel" user_visible="false" type="other" package_base_path="rtos/freertos" project_base_path="freertos">
+    <component id="middleware.freertos-kernel.heap_4.MIMXRT1062" name="FreeRTOS heap 4" brief="FreeRTOS heap 4" version="10.4.3" revision="1" full_name="FreeRTOS heap 4" devices="MIMXRT1062xxxxA" category="Operating System/FreeRTOS kernel" user_visible="false" type="other" package_base_path="rtos/freertos" project_base_path="freertos">
       <dependencies>
         <component_dependency value="middleware.freertos-kernel.MIMXRT1062"/>
       </dependencies>
@@ -24691,7 +24946,7 @@ ${load}</script>
         <files mask="middleware_freertos-kernel_heap_4_MIMXRT1062.cmake" hidden="true"/>
       </source>
     </component>
-    <component id="middleware.freertos-kernel.heap_5.MIMXRT1062" name="FreeRTOS heap 5" brief="FreeRTOS heap 5" version="202012.00.0" full_name="FreeRTOS heap 5" devices="MIMXRT1062xxxxA" category="Operating System/FreeRTOS kernel" user_visible="false" type="other" package_base_path="rtos/freertos" project_base_path="freertos">
+    <component id="middleware.freertos-kernel.heap_5.MIMXRT1062" name="FreeRTOS heap 5" brief="FreeRTOS heap 5" version="10.4.3" revision="1" full_name="FreeRTOS heap 5" devices="MIMXRT1062xxxxA" category="Operating System/FreeRTOS kernel" user_visible="false" type="other" package_base_path="rtos/freertos" project_base_path="freertos">
       <dependencies>
         <component_dependency value="middleware.freertos-kernel.MIMXRT1062"/>
       </dependencies>
@@ -24699,7 +24954,7 @@ ${load}</script>
         <files mask="heap_5.c"/>
       </source>
     </component>
-    <component id="middleware.freertos-kernel.mpu_wrappers.MIMXRT1062" name="FreeRTOS MPU wrappers" brief="FreeRTOS MPU wrappers" version="202012.00.0" full_name="FreeRTOS MPU wrappers" devices="MIMXRT1062xxxxA" category="Operating System/FreeRTOS kernel" user_visible="false" type="other" package_base_path="rtos/freertos" project_base_path="freertos">
+    <component id="middleware.freertos-kernel.mpu_wrappers.MIMXRT1062" name="FreeRTOS MPU wrappers" brief="FreeRTOS MPU wrappers" version="10.4.3" revision="1" full_name="FreeRTOS MPU wrappers" devices="MIMXRT1062xxxxA" category="Operating System/FreeRTOS kernel" user_visible="false" type="other" package_base_path="rtos/freertos" project_base_path="freertos">
       <dependencies>
         <component_dependency value="middleware.freertos-kernel.MIMXRT1062"/>
       </dependencies>
@@ -24707,7 +24962,7 @@ ${load}</script>
         <files mask="mpu_wrappers.c"/>
       </source>
     </component>
-    <component id="middleware.freertos-kernel.root_doc.MIMXRT1062" name="Root FreeRTOS documents." brief="FreeRTOS root documents" version="202012.00.0" full_name="FreeRTOS root documents" devices="MIMXRT1062xxxxA" category="Operating System/FreeRTOS kernel" user_visible="false" type="other" package_base_path="rtos/freertos" project_base_path="freertos">
+    <component id="middleware.freertos-kernel.root_doc.MIMXRT1062" name="Root FreeRTOS documents." brief="FreeRTOS root documents" version="10.4.3" revision="1" full_name="FreeRTOS root documents" devices="MIMXRT1062xxxxA" category="Operating System/FreeRTOS kernel" user_visible="false" type="other" package_base_path="rtos/freertos" project_base_path="freertos">
       <source relative_path="./" type="other">
         <files mask="CHANGELOG.md"/>
       </source>
@@ -24716,7 +24971,7 @@ ${load}</script>
         <files mask="directories.txt"/>
       </source>
     </component>
-    <component id="middleware.freertos-kernel.template.MIMXRT1062" name="FreeRTOS configuration template" brief="Template configuration file to be edited by user. Provides also memory allocator (heap_x), change variant if needed." version="202012.00.0" full_name="FreeRTOS configuration template" devices="MIMXRT1062xxxxA" category="Operating System/FreeRTOS kernel" user_visible="false" type="project_template" package_base_path="rtos/freertos" project_base_path="freertos">
+    <component id="middleware.freertos-kernel.template.MIMXRT1062" name="FreeRTOS configuration template" brief="Template configuration file to be edited by user. Provides also memory allocator (heap_x), change variant if needed." version="10.4.3" revision="1" full_name="FreeRTOS configuration template" devices="MIMXRT1062xxxxA" category="Operating System/FreeRTOS kernel" user_visible="false" type="project_template" package_base_path="rtos/freertos" project_base_path="freertos">
       <source exclude="true" relative_path="freertos_kernel/portable/MemMang" type="src">
         <files mask="heap_1.c"/>
         <files mask="heap_2.c"/>
@@ -24733,7 +24988,7 @@ ${load}</script>
         <include_path relative_path="template/ARM_CM4F" type="c_include" device_cores="core0_MIMXRT1062xxxxA"/>
       </include_paths>
     </component>
-    <component id="middleware.freertos-kernel.unused.MIMXRT1062" name="FreeRTOS unused" brief="FreeRTOS unused" version="202012.00.0" full_name="FreeRTOS unused" devices="MIMXRT1062xxxxA" category="Operating System/FreeRTOS kernel" user_visible="false" type="other" package_base_path="rtos/freertos" project_base_path="freertos">
+    <component id="middleware.freertos-kernel.unused.MIMXRT1062" name="FreeRTOS unused" brief="FreeRTOS unused" version="10.4.3" revision="1" full_name="FreeRTOS unused" devices="MIMXRT1062xxxxA" category="Operating System/FreeRTOS kernel" user_visible="false" type="other" package_base_path="rtos/freertos" project_base_path="freertos">
       <source relative_path="./" type="other">
         <files mask="CODE_OF_CONDUCT.md"/>
         <files mask="LICENSE"/>
@@ -27419,7 +27674,6 @@ ${load}</script>
     <component id="middleware.mbedtls.MIMXRT1062" name="mbedtls" brief="mbedTLS library" version="2.26.0" full_name="MbedTLS open source SSL library" devices="MIMXRT1062xxxxA" device_cores="core0_MIMXRT1062xxxxA" category="Security/mbedTLS library" user_visible="true" type="middleware" package_base_path="middleware/mbedtls" project_base_path="mbedtls">
       <dependencies>
         <all>
-          <component_dependency value="middleware.mbedtls.rt.MIMXRT1062"/>
           <component_dependency value="middleware.mbedtls.template.MIMXRT1062"/>
           <component_dependency value="utility.debug_console.MIMXRT1062"/>
         </all>
@@ -30608,7 +30862,7 @@ ${load}</script>
         <include_path relative_path="hostlib/hostLib/mbedtls/inc" type="c_include"/>
       </include_paths>
     </component>
-    <component id="middleware.se_hostlib.cloud_enet.MIMXRT1062" name="se_hostlib cloud_enet" brief="se_hostlib cloud_enet" version="1.0.0" full_name="Secure Element" devices="MIMXRT1062xxxxA" device_cores="core0_MIMXRT1062xxxxA" category="Security/Secure Element Host Library" user_visible="false" type="middleware" package_base_path="middleware/se_hostlib" project_base_path="se_hostlib">
+    <component id="middleware.se_hostlib.cloud_enet.evkmimxrt1060.MIMXRT1062" name="se_hostlib cloud_enet" brief="se_hostlib cloud_enet" version="1.0.0" full_name="Secure Element" devices="MIMXRT1062xxxxA" device_cores="core0_MIMXRT1062xxxxA" category="Security/Secure Element Host Library" user_visible="false" type="middleware" package_base_path="middleware/se_hostlib" project_base_path="se_hostlib">
       <dependencies>
         <all>
           <component_dependency value="platform.drivers.enet.MIMXRT1062"/>
@@ -30620,7 +30874,7 @@ ${load}</script>
         <files mask="lwipopts.h"/>
       </source>
       <source toolchain="armgcc" relative_path="." type="workspace">
-        <files mask="middleware_se_hostlib_cloud_enet_MIMXRT1062.cmake" hidden="true"/>
+        <files mask="middleware_se_hostlib_cloud_enet_evkmimxrt1060_MIMXRT1062.cmake" hidden="true"/>
       </source>
       <include_paths>
         <include_path relative_path="demos/ksdk/common/freertos/boards/evkmimxrt1060" type="c_include"/>
@@ -30644,7 +30898,7 @@ ${load}</script>
         <include_path relative_path="hostlib/hostLib/libCommon/smCom" type="c_include"/>
       </include_paths>
     </component>
-    <component id="middleware.se_hostlib.commonCloudDemos.MIMXRT1062" name="se_hostlib commonCloudDemos" brief="se_hostlib commonCloudDemos" version="1.0.0" full_name="Secure Element" devices="MIMXRT1062xxxxA" device_cores="core0_MIMXRT1062xxxxA" category="Security/Secure Element Host Library" user_visible="false" type="middleware" package_base_path="middleware/se_hostlib" project_base_path="se_hostlib">
+    <component id="middleware.se_hostlib.commonCloudDemos.evkmimxrt1060.MIMXRT1062" name="se_hostlib commonCloudDemos" brief="se_hostlib commonCloudDemos" version="1.0.0" full_name="Secure Element" devices="MIMXRT1062xxxxA" device_cores="core0_MIMXRT1062xxxxA" category="Security/Secure Element Host Library" user_visible="false" type="middleware" package_base_path="middleware/se_hostlib" project_base_path="se_hostlib">
       <dependencies>
         <all>
           <component_dependency value="middleware.freertos-kernel.heap_4.MIMXRT1062"/>
@@ -30711,7 +30965,7 @@ ${load}</script>
         <files mask="tstHostCrypto.h"/>
       </source>
       <source toolchain="armgcc" relative_path="." type="workspace">
-        <files mask="middleware_se_hostlib_commonCloudDemos_MIMXRT1062.cmake" hidden="true"/>
+        <files mask="middleware_se_hostlib_commonCloudDemos_evkmimxrt1060_MIMXRT1062.cmake" hidden="true"/>
       </source>
       <include_paths>
         <include_path relative_path="demos/ksdk/common/freertos/boards/evkmimxrt1060" type="c_include"/>
@@ -30867,11 +31121,11 @@ ${load}</script>
         <include_path relative_path="platform" type="c_include"/>
       </include_paths>
     </component>
-    <component id="middleware.se_hostlib.commonSe050CloudDemos.MIMXRT1062" name="se_hostlib commonSe050CloudDemos" brief="se_hostlib commonSe050CloudDemos" version="1.0.0" full_name="Secure Element" devices="MIMXRT1062xxxxA" device_cores="core0_MIMXRT1062xxxxA" category="Security/Secure Element Host Library" user_visible="false" type="middleware" package_base_path="middleware/se_hostlib" project_base_path="se_hostlib">
+    <component id="middleware.se_hostlib.commonSe050CloudDemos.evkmimxrt1060.MIMXRT1062" name="se_hostlib commonSe050CloudDemos" brief="se_hostlib commonSe050CloudDemos" version="1.0.0" full_name="Secure Element" devices="MIMXRT1062xxxxA" device_cores="core0_MIMXRT1062xxxxA" category="Security/Secure Element Host Library" user_visible="false" type="middleware" package_base_path="middleware/se_hostlib" project_base_path="se_hostlib">
       <dependencies>
         <all>
           <component_dependency value="middleware.se_hostlib.commonSe050.MIMXRT1062"/>
-          <component_dependency value="middleware.se_hostlib.commonCloudDemos.MIMXRT1062"/>
+          <component_dependency value="middleware.se_hostlib.commonCloudDemos.evkmimxrt1060.MIMXRT1062"/>
           <component_dependency value="middleware.se_hostlib.mbedtls_sss.MIMXRT1062"/>
         </all>
       </dependencies>
@@ -30879,7 +31133,7 @@ ${load}</script>
         <files mask="ChangeLogKSDK.txt" hidden="true"/>
       </source>
       <source toolchain="armgcc" relative_path="." type="workspace">
-        <files mask="middleware_se_hostlib_commonSe050CloudDemos_MIMXRT1062.cmake" hidden="true"/>
+        <files mask="middleware_se_hostlib_commonSe050CloudDemos_evkmimxrt1060_MIMXRT1062.cmake" hidden="true"/>
       </source>
       <include_paths>
         <include_path relative_path="sss/inc" type="c_include"/>
@@ -31206,6 +31460,7 @@ ${load}</script>
         <files mask="ecp_alt.h"/>
         <files mask="rsa_alt.h"/>
         <files mask="sss_mbedtls.h"/>
+        <files mask="sss_mbedtls_evkbmimxrt1060_config.h"/>
         <files mask="sss_mbedtls_evkmimxrt1060_config.h"/>
         <files mask="sss_mbedtls_evkmimxrt1170_config.h"/>
         <files mask="sss_mbedtls_frdmk64f_config.h"/>
@@ -31946,6 +32201,121 @@ ${load}</script>
         <include_path relative_path="incl/wlcmgr" type="c_include"/>
       </include_paths>
     </component>
+    <component id="middleware.wifi.fwdnld.MIMXRT1062" name="nxp_wireless_fwdnld" brief="NXP WLAN f/w dnld driver" version="1.0.0" full_name="NXP WLAN f/w dnld driver" devices="MIMXRT1062xxxxA" device_cores="core0_MIMXRT1062xxxxA" category="Wireless/NXP Wi-Fi" user_visible="true" type="middleware" package_base_path="middleware/wifi" project_base_path="wifi">
+      <dependencies>
+        <all>
+          <component_dependency value="middleware.freertos-kernel.MIMXRT1062"/>
+          <component_dependency value="middleware.sdmmc.sdio.MIMXRT1062"/>
+        </all>
+      </dependencies>
+      <source relative_path="incl/port/os" type="c_include">
+        <files mask="wm_os.h"/>
+      </source>
+      <source relative_path="incl" type="c_include">
+        <files mask="wifi_cal_data_ext.h"/>
+        <files mask="wm_utils.h"/>
+        <files mask="wmerrno.h"/>
+        <files mask="wmlog.h"/>
+        <files mask="wmtypes.h"/>
+      </source>
+      <source relative_path="wifidriver/incl" type="c_include">
+        <files mask="mlan_11ac.h"/>
+        <files mask="mlan_11h.h"/>
+        <files mask="mlan_11n.h"/>
+        <files mask="mlan_11n_aggr.h"/>
+        <files mask="mlan_11n_rxreorder.h"/>
+        <files mask="mlan_fw.h"/>
+        <files mask="mlan_ieee.h"/>
+        <files mask="mlan_init.h"/>
+        <files mask="mlan_join.h"/>
+        <files mask="mlan_main.h"/>
+        <files mask="mlan_meas.h"/>
+        <files mask="mlan_remap_mem_operations.h"/>
+        <files mask="mlan_sdio.h"/>
+        <files mask="mlan_uap.h"/>
+        <files mask="mlan_util.h"/>
+        <files mask="mlan_wmm.h"/>
+        <files mask="mlan.h"/>
+        <files mask="mlan_ioctl.h"/>
+        <files mask="mlan_decl.h"/>
+        <files mask="mlan_api.h"/>
+      </source>
+      <source relative_path="incl/wlcmgr" type="c_include">
+        <files mask="wlan_11d.h"/>
+        <files mask="wlan.h"/>
+      </source>
+      <source relative_path="incl/wifidriver" type="c_include">
+        <files mask="mlan_sdio_api.h"/>
+        <files mask="wifi-decl.h"/>
+        <files mask="wifi.h"/>
+        <files mask="wifi_events.h"/>
+      </source>
+      <source relative_path="port/os" type="src">
+        <files mask="os.c"/>
+      </source>
+      <source relative_path="wifi_bt_firmware" type="c_include">
+        <files mask="sd8801_wlan.h"/>
+        <files mask="sduart8977_wlan_bt.h"/>
+        <files mask="sduartIW416_wlan_bt.h"/>
+        <files mask="sduart8987_wlan_bt.h"/>
+        <files mask="wlan_bt_fw.h"/>
+      </source>
+      <source relative_path="wifidriver" type="c_include">
+        <files mask="wifi-debug.h"/>
+        <files mask="wifi-internal.h"/>
+        <files mask="wifi-sdio.h"/>
+        <files mask="sdio.h"/>
+        <files mask="firmware_dnld.h"/>
+      </source>
+      <source relative_path="wifidriver" type="src">
+        <files mask="mlan_sdio.c"/>
+        <files mask="sdio.c"/>
+        <files mask="firmware_dnld.c"/>
+      </source>
+      <source toolchain="armgcc" relative_path="." type="workspace">
+        <files mask="middleware_wifi_fwdnld_MIMXRT1062.cmake" hidden="true"/>
+      </source>
+      <include_paths>
+        <include_path relative_path="incl" type="c_include"/>
+        <include_path relative_path="incl/port/os" type="c_include"/>
+        <include_path relative_path="incl/wifidriver" type="c_include"/>
+        <include_path relative_path="incl/wlcmgr" type="c_include"/>
+        <include_path relative_path="wifi_bt_firmware" type="c_include"/>
+        <include_path relative_path="wifidriver" type="c_include"/>
+        <include_path relative_path="wifidriver/incl" type="c_include"/>
+      </include_paths>
+    </component>
+    <component id="middleware.wifi.murata_modules.MIMXRT1062" name="wifi_nxp_murata_tx_power_limit" brief="Middlware Wi-Fi Murata TX power limit" version="1.0.0" full_name="NXP Wi-Fi Murata TX power limit" devices="MIMXRT1062xxxxA" category="Wireless/NXP Wi-Fi" user_visible="false" type="middleware" package_base_path="middleware/wifi" project_base_path="wifi">
+      <source relative_path="incl/wlcmgr" type="c_include">
+        <files mask="wlan_enhanced_tests_murata_1XK_CA.h"/>
+        <files mask="wlan_enhanced_tests_murata_1XK_EU.h"/>
+        <files mask="wlan_enhanced_tests_murata_1XK_JP.h"/>
+        <files mask="wlan_enhanced_tests_murata_1XK_US.h"/>
+        <files mask="wlan_enhanced_tests_murata_1XK_WW.h"/>
+        <files mask="wlan_enhanced_tests_murata_1ZM_CA.h"/>
+        <files mask="wlan_enhanced_tests_murata_1ZM_EU.h"/>
+        <files mask="wlan_enhanced_tests_murata_1ZM_JP.h"/>
+        <files mask="wlan_enhanced_tests_murata_1ZM_US.h"/>
+        <files mask="wlan_enhanced_tests_murata_1ZM_WW.h"/>
+        <files mask="wlan_enhanced_tests_murata_2DS.h"/>
+        <files mask="wlan_enhanced_tests_murata_2DS_WW.h"/>
+        <files mask="wlan_txpwrlimit_cfg_murata_1XK_CA.h"/>
+        <files mask="wlan_txpwrlimit_cfg_murata_1XK_EU.h"/>
+        <files mask="wlan_txpwrlimit_cfg_murata_1XK_JP.h"/>
+        <files mask="wlan_txpwrlimit_cfg_murata_1XK_US.h"/>
+        <files mask="wlan_txpwrlimit_cfg_murata_1XK_WW.h"/>
+        <files mask="wlan_txpwrlimit_cfg_murata_1ZM_CA.h"/>
+        <files mask="wlan_txpwrlimit_cfg_murata_1ZM_EU.h"/>
+        <files mask="wlan_txpwrlimit_cfg_murata_1ZM_JP.h"/>
+        <files mask="wlan_txpwrlimit_cfg_murata_1ZM_US.h"/>
+        <files mask="wlan_txpwrlimit_cfg_murata_1ZM_WW.h"/>
+        <files mask="wlan_txpwrlimit_cfg_murata_2DS_CA.h"/>
+        <files mask="wlan_txpwrlimit_cfg_murata_2DS_EU.h"/>
+        <files mask="wlan_txpwrlimit_cfg_murata_2DS_JP.h"/>
+        <files mask="wlan_txpwrlimit_cfg_murata_2DS_US.h"/>
+        <files mask="wlan_txpwrlimit_cfg_murata_2DS_WW.h"/>
+      </source>
+    </component>
     <component id="middleware.wifi.unused.MIMXRT1062" name="wifi_nxp_unused" brief="Middlware Wi-Fi unused" version="1.3.33" full_name="NXP Wi-Fi unused" devices="MIMXRT1062xxxxA" category="Wireless/NXP Wi-Fi" user_visible="false" type="middleware" package_base_path="middleware/wifi" project_base_path="wifi">
       <source relative_path="wifi_bt_firmware" type="doc">
         <files mask="version.txt"/>
@@ -31957,59 +32327,11 @@ ${load}</script>
           <component_dependency value="middleware.freertos-kernel.MIMXRT1062"/>
           <component_dependency value="middleware.sdmmc.sdio.MIMXRT1062"/>
           <component_dependency value="utility.debug_console.MIMXRT1062"/>
+          <component_dependency value="middleware.wifi.fwdnld.MIMXRT1062"/>
         </all>
       </dependencies>
       <source relative_path="incl" type="c_include">
         <files mask="dhcp-server.h"/>
-        <files mask="wifi_cal_data_ext.h"/>
-        <files mask="wm_utils.h"/>
-        <files mask="wmerrno.h"/>
-        <files mask="wmlog.h"/>
-        <files mask="wmtypes.h"/>
-      </source>
-      <source relative_path="incl/port/os" type="c_include">
-        <files mask="wm_os.h"/>
-      </source>
-      <source relative_path="incl/wifidriver" type="c_include">
-        <files mask="mlan_sdio_api.h"/>
-        <files mask="wifi-decl.h"/>
-        <files mask="wifi.h"/>
-        <files mask="wifi_events.h"/>
-      </source>
-      <source relative_path="incl/wlcmgr" type="c_include">
-        <files mask="wlan.h"/>
-        <files mask="wlan_11d.h"/>
-      </source>
-      <source relative_path="port/os" type="src">
-        <files mask="os.c"/>
-      </source>
-      <source relative_path="wifi_bt_firmware" type="c_include">
-        <files mask="sd8801_wlan.h"/>
-        <files mask="sduart8977_wlan_bt.h"/>
-        <files mask="sduartIW416_wlan_bt.h"/>
-        <files mask="sduart8987_wlan_bt.h"/>
-      </source>
-      <source relative_path="wifidriver/incl" type="c_include">
-        <files mask="mlan.h"/>
-        <files mask="mlan_11ac.h"/>
-        <files mask="mlan_11h.h"/>
-        <files mask="mlan_11n.h"/>
-        <files mask="mlan_11n_aggr.h"/>
-        <files mask="mlan_11n_rxreorder.h"/>
-        <files mask="mlan_api.h"/>
-        <files mask="mlan_decl.h"/>
-        <files mask="mlan_fw.h"/>
-        <files mask="mlan_ieee.h"/>
-        <files mask="mlan_init.h"/>
-        <files mask="mlan_ioctl.h"/>
-        <files mask="mlan_join.h"/>
-        <files mask="mlan_main.h"/>
-        <files mask="mlan_meas.h"/>
-        <files mask="mlan_remap_mem_operations.h"/>
-        <files mask="mlan_sdio.h"/>
-        <files mask="mlan_uap.h"/>
-        <files mask="mlan_util.h"/>
-        <files mask="mlan_wmm.h"/>
       </source>
       <source relative_path="wifidriver" type="src">
         <files mask="mlan_11ac.c"/>
@@ -32026,7 +32348,6 @@ ${load}</script>
         <files mask="mlan_join.c"/>
         <files mask="mlan_misc.c"/>
         <files mask="mlan_scan.c"/>
-        <files mask="mlan_sdio.c"/>
         <files mask="mlan_shim.c"/>
         <files mask="mlan_sta_cmd.c"/>
         <files mask="mlan_sta_cmdresp.c"/>
@@ -32045,9 +32366,6 @@ ${load}</script>
         <files mask="wifi_pwrmgr.c"/>
       </source>
       <source relative_path="wifidriver" type="c_include">
-        <files mask="wifi-debug.h"/>
-        <files mask="wifi-internal.h"/>
-        <files mask="wifi-sdio.h"/>
         <files mask="wifi_common.h"/>
       </source>
       <source toolchain="armgcc" relative_path="." type="workspace">
@@ -32090,9 +32408,6 @@ ${load}</script>
       <source relative_path="framework/NVM/Source" project_relative_path="NVM/source" type="c_include">
         <files mask="NV_Flash.h"/>
       </source>
-      <source toolchain="armgcc" relative_path="." type="workspace">
-        <files mask="middleware_wireless_framework_NVM_MIMXRT1062.cmake" hidden="true"/>
-      </source>
       <include_paths>
         <include_path relative_path="framework/NVM/Interface" project_relative_path="NVM/interface" type="c_include"/>
         <include_path relative_path="framework/NVM/Source" project_relative_path="NVM/source" type="c_include"/>
@@ -32110,6 +32425,24 @@ ${load}</script>
       </source>
       <include_paths>
         <include_path relative_path="framework/FunctionLib" project_relative_path="FunctionLib" type="c_include"/>
+      </include_paths>
+    </component>
+    <component id="middleware.wireless.framework.sec_lib.MIMXRT1062" name="wireless framework Sec_lib" brief="Middleware wireless framework_sec_lib" version="1.0.0" full_name="wireless framework Sec_lib" devices="MIMXRT1062xxxxA" user_visible="false" type="middleware" package_base_path="middleware/wireless/framework" project_base_path="framework">
+      <source relative_path="SecLib" type="c_include">
+        <files mask="SecLib.h"/>
+        <files mask="CryptoLibSW.h"/>
+      </source>
+      <source relative_path="SecLib" type="src">
+        <files mask="SecLib.c"/>
+      </source>
+      <source toolchain="armgcc mcuxpresso iar mdk" relative_path="SecLib" type="lib">
+        <files mask="lib_crypto_m7.a"/>
+      </source>
+      <source toolchain="armgcc" relative_path="." type="workspace">
+        <files mask="middleware_wireless_framework_sec_lib_MIMXRT1062.cmake" hidden="true"/>
+      </source>
+      <include_paths>
+        <include_path relative_path="SecLib" type="c_include"/>
       </include_paths>
     </component>
     <component id="middleware.wolfssl.MIMXRT1062" name="wolfssl" brief="WolfSSL library" version="4.6.0" full_name="WolfSSL open source SSL library" devices="MIMXRT1062xxxxA" device_cores="core0_MIMXRT1062xxxxA" category="Security/WolfSSL library" user_visible="true" type="middleware" package_base_path="middleware/wolfssl" project_base_path="wolfssl">
@@ -32611,6 +32944,131 @@ ${load}</script>
         <files mask="frdm_stbc_agm01_shield.h"/>
         <files mask="issdk_hal.h"/>
       </source>
+    </component>
+    <component id="middleware.se_hostlib.cloud_enet.evkbmimxrt1060.MIMXRT1062" name="se_hostlib cloud_enet" brief="se_hostlib cloud_enet" version="1.0.0" full_name="Secure Element" devices="MIMXRT1062xxxxA" device_cores="core0_MIMXRT1062xxxxA" category="Security/Secure Element Host Library" user_visible="false" type="middleware" package_base_path="middleware/se_hostlib" project_base_path="se_hostlib">
+      <dependencies>
+        <all>
+          <component_dependency value="platform.drivers.enet.MIMXRT1062"/>
+          <component_dependency value="middleware.freertos-aws_iot.vendor.nxp.secure_sockets.lwip.MIMXRT1062"/>
+          <component_dependency value="middleware.lwip.MIMXRT1062"/>
+        </all>
+      </dependencies>
+      <source relative_path="demos/ksdk/common/freertos/boards/evkbmimxrt1060" type="c_include">
+        <files mask="lwipopts.h"/>
+      </source>
+      <source toolchain="armgcc" relative_path="." type="workspace">
+        <files mask="middleware_se_hostlib_cloud_enet_evkbmimxrt1060_MIMXRT1062.cmake" hidden="true"/>
+      </source>
+      <include_paths>
+        <include_path relative_path="demos/ksdk/common/freertos/boards/evkbmimxrt1060" type="c_include"/>
+      </include_paths>
+    </component>
+    <component id="middleware.se_hostlib.commonCloudDemos.evkbmimxrt1060.MIMXRT1062" name="se_hostlib commonCloudDemos" brief="se_hostlib commonCloudDemos" version="1.0.0" full_name="Secure Element" devices="MIMXRT1062xxxxA" device_cores="core0_MIMXRT1062xxxxA" category="Security/Secure Element Host Library" user_visible="false" type="middleware" package_base_path="middleware/se_hostlib" project_base_path="se_hostlib">
+      <dependencies>
+        <all>
+          <component_dependency value="middleware.freertos-kernel.heap_4.MIMXRT1062"/>
+          <component_dependency value="middleware.freertos-aws_iot.libraries.abstractions.platform.MIMXRT1062"/>
+          <component_dependency value="middleware.freertos-aws_iot.libraries.freertos_plus.standard.tls.MIMXRT1062"/>
+          <component_dependency value="middleware.freertos-aws_iot.libraries.freertos_plus.standard.crypto.MIMXRT1062"/>
+          <component_dependency value="middleware.freertos-aws_iot.libraries.freertos_plus.standard.utils.MIMXRT1062"/>
+          <component_dependency value="middleware.freertos-aws_iot.libraries.abstractions.secure_sockets.MIMXRT1062"/>
+          <component_dependency value="middleware.freertos-aws_iot.mqtt.MIMXRT1062"/>
+          <component_dependency value="middleware.freertos-aws_iot.libraries.3rdparty.pkcs11.MIMXRT1062"/>
+          <component_dependency value="middleware.freertos-aws_iot.libraries.3rdparty.jsmn.MIMXRT1062"/>
+          <component_dependency value="middleware.freertos-aws_iot.libraries.logging.MIMXRT1062"/>
+        </all>
+      </dependencies>
+      <source relative_path="demos/ksdk/common/freertos/boards/evkbmimxrt1060" type="c_include">
+        <files mask="FreeRTOSIPConfig.h"/>
+        <files mask="aws_secure_sockets_config.h"/>
+        <files mask="aws_mqtt_config.h"/>
+        <files mask="aws_bufferpool_config.h"/>
+        <files mask="iot_mqtt_agent_config.h"/>
+        <files mask="app.h"/>
+      </source>
+      <source relative_path="demos/ksdk/common" type="src">
+        <files mask="ledHandler.c"/>
+      </source>
+      <source relative_path="demos/ksdk/common" type="c_include">
+        <files mask="iot_logging_task.h"/>
+        <files mask="aws_pkcs11_config.h"/>
+        <files mask="aws_clientcredential.h"/>
+        <files mask="iot_config_common.h"/>
+        <files mask="aws_clientcredential_keys.h"/>
+        <files mask="iot_config.h"/>
+        <files mask="core_mqtt_config.h"/>
+        <files mask="aws_demo_config.h"/>
+        <files mask="core_pkcs11_config.h"/>
+      </source>
+      <source relative_path="hostlib/hostLib/inc" type="c_include">
+        <files mask="ledHandler.h"/>
+      </source>
+      <source relative_path="demos/ksdk/common/boards/evkbmimxrt1060/se_hostlib_examples/cloud_demo" type="src">
+        <files mask="pin_mux.c"/>
+      </source>
+      <source relative_path="demos/ksdk/common/boards/evkbmimxrt1060/se_hostlib_examples/cloud_demo" type="c_include">
+        <files mask="pin_mux.h"/>
+      </source>
+      <source relative_path="demos/ksdk/common/freertos" type="src">
+        <files mask="FreeRTOSConfig.c"/>
+      </source>
+      <source relative_path="hostlib/hostLib/libCommon/infra" type="src">
+        <files mask="sm_demo_utils.c"/>
+        <files mask="sm_demo_utils_rtos.c"/>
+      </source>
+      <source relative_path="sss/plugin/pkcs11" type="src">
+        <files mask="aws_pkcs11_pal.c"/>
+        <files mask="pkcs11_mbedtls_utils.c"/>
+      </source>
+      <source relative_path="sss/plugin/pkcs11" type="c_include">
+        <files mask="pkcs11_mbedtls_utils.h"/>
+      </source>
+      <source relative_path="demos/ksdk/common/https_client" type="c_include">
+        <files mask="httpsclient.h"/>
+      </source>
+      <source relative_path="hostlib/hostLib/tstUtil" type="c_include">
+        <files mask="tstHostCrypto.h"/>
+      </source>
+      <source toolchain="armgcc" relative_path="." type="workspace">
+        <files mask="middleware_se_hostlib_commonCloudDemos_evkbmimxrt1060_MIMXRT1062.cmake" hidden="true"/>
+      </source>
+      <include_paths>
+        <include_path relative_path="demos/ksdk/common/freertos/boards/evkbmimxrt1060" type="c_include"/>
+        <include_path relative_path="demos/ksdk/common" type="c_include"/>
+        <include_path relative_path="hostlib/hostLib/inc" type="c_include"/>
+        <include_path relative_path="demos/ksdk/common/boards/evkbmimxrt1060/se_hostlib_examples/cloud_demo" type="c_include"/>
+        <include_path relative_path="sss/plugin/pkcs11" type="c_include"/>
+        <include_path relative_path="demos/ksdk/common/https_client" type="c_include"/>
+        <include_path relative_path="hostlib/hostLib/tstUtil" type="c_include"/>
+      </include_paths>
+    </component>
+    <component id="middleware.se_hostlib.commonSe050CloudDemos.evkbmimxrt1060.MIMXRT1062" name="se_hostlib commonSe050CloudDemos" brief="se_hostlib commonSe050CloudDemos" version="1.0.0" full_name="Secure Element" devices="MIMXRT1062xxxxA" device_cores="core0_MIMXRT1062xxxxA" category="Security/Secure Element Host Library" user_visible="false" type="middleware" package_base_path="middleware/se_hostlib" project_base_path="se_hostlib">
+      <dependencies>
+        <all>
+          <component_dependency value="middleware.se_hostlib.commonSe050.MIMXRT1062"/>
+          <component_dependency value="middleware.se_hostlib.commonCloudDemos.evkbmimxrt1060.MIMXRT1062"/>
+          <component_dependency value="middleware.se_hostlib.mbedtls_sss.MIMXRT1062"/>
+        </all>
+      </dependencies>
+      <source exclude="true" relative_path="./" type="doc">
+        <files mask="ChangeLogKSDK.txt" hidden="true"/>
+      </source>
+      <source toolchain="armgcc" relative_path="." type="workspace">
+        <files mask="middleware_se_hostlib_commonSe050CloudDemos_evkbmimxrt1060_MIMXRT1062.cmake" hidden="true"/>
+      </source>
+      <include_paths>
+        <include_path relative_path="sss/inc" type="c_include"/>
+        <include_path relative_path="sss/ex/inc" type="c_include"/>
+        <include_path relative_path="sss/port/ksdk" type="c_include"/>
+        <include_path relative_path="hostlib/hostLib/se05x_03_xx_xx" type="c_include"/>
+        <include_path relative_path="sss/plugin/mbedtls" type="c_include"/>
+        <include_path relative_path="hostlib/hostLib/tstUtil" type="c_include"/>
+        <include_path relative_path="hostlib/hostLib/libCommon/infra" type="c_include"/>
+        <include_path relative_path="hostlib/hostLib/libCommon/log" type="c_include"/>
+        <include_path relative_path="hostlib/hostLib/mbedtls/inc" type="c_include"/>
+        <include_path relative_path="demos/ksdk/common/https_client" type="c_include"/>
+        <include_path relative_path="demos/ksdk/common/freertos/boards/evkbmimxrt1060" type="c_include"/>
+      </include_paths>
     </component>
     <component id="CMSIS_DSP_Library.MIMXRT1061" name="CMSIS_DSP_Library" brief="CMSIS-DSP Library for Cortex-M, SC000, and SC300" version="1.7.0" full_name="CMSIS DSP Library" devices="MIMXRT1061xxxxA" user_visible="true" type="CMSIS_driver" package_base_path="CMSIS/DSP" project_base_path="CMSIS/DSP">
       <source relative_path="Include" type="c_include">
@@ -33773,6 +34231,23 @@ ${load}</script>
         <include_path relative_path="./" type="c_include"/>
       </include_paths>
     </component>
+    <component id="component.lpspi_adapter.MIMXRT1061" name="lpspi_adapter" brief="Component lpspi_adapter" version="1.0.0" full_name="Component lpspi_adapter" devices="MIMXRT1061xxxxA" device_cores="core0_MIMXRT1061xxxxA" user_visible="true" type="abstraction_layer" package_base_path="components/spi" project_base_path="component/spi">
+      <dependencies>
+        <all>
+          <component_dependency value="platform.drivers.common.MIMXRT1061"/>
+          <component_dependency value="platform.drivers.lpspi.MIMXRT1061"/>
+        </all>
+      </dependencies>
+      <source relative_path="./" type="c_include">
+        <files mask="fsl_adapter_spi.h"/>
+      </source>
+      <source relative_path="./" type="src">
+        <files mask="fsl_adapter_lpspi.c"/>
+      </source>
+      <include_paths>
+        <include_path relative_path="./" type="c_include"/>
+      </include_paths>
+    </component>
     <component id="component.lpuart_adapter.MIMXRT1061" name="lpuart_adapter" brief="Component lpuart_adapter" version="1.0.0" full_name="lpuart_adapter" devices="MIMXRT1061xxxxA" device_cores="core0_MIMXRT1061xxxxA" user_visible="true" type="utilities" package_base_path="components/uart" project_base_path="component/uart">
       <dependencies>
         <all>
@@ -33979,6 +34454,7 @@ ${load}</script>
           <component_dependency value="component.lists.MIMXRT1061"/>
           <any_of>
             <component_dependency value="component.serial_manager_uart.MIMXRT1061"/>
+            <component_dependency value="component.serial_manager_spi.MIMXRT1061"/>
             <component_dependency value="component.serial_manager_swo.MIMXRT1061"/>
             <component_dependency value="component.serial_manager_virtual.MIMXRT1061"/>
             <component_dependency value="component.serial_manager_usb_cdc.MIMXRT1061"/>
@@ -33991,6 +34467,30 @@ ${load}</script>
       </source>
       <source relative_path="./" type="src">
         <files mask="fsl_component_serial_manager.c"/>
+      </source>
+      <include_paths>
+        <include_path relative_path="./" type="c_include"/>
+      </include_paths>
+    </component>
+    <component id="component.serial_manager_spi.MIMXRT1061" name="serial_manager_spi" brief="Component serial_manager_spi" version="1.0.0" full_name="Serial Manager spi" devices="MIMXRT1061xxxxA" device_cores="core0_MIMXRT1061xxxxA" user_visible="true" type="utilities" package_base_path="components/serial_manager" project_base_path="component/serial_manager">
+      <defines>
+        <define name="SERIAL_PORT_TYPE_SPI" value="1"/>
+        <define name="SERIAL_PORT_TYPE_SPI_MASTER" value="1"/>
+        <define name="SERIAL_PORT_TYPE_SPI_SLAVE" value="1"/>
+        <define name="SERIAL_MANAGER_NON_BLOCKING_MODE" value="1"/>
+      </defines>
+      <dependencies>
+        <all>
+          <component_dependency value="component.serial_manager.MIMXRT1061"/>
+          <component_dependency value="platform.drivers.lpspi.MIMXRT1061"/>
+          <component_dependency value="component.lpspi_adapter.MIMXRT1061"/>
+        </all>
+      </dependencies>
+      <source relative_path="./" type="c_include">
+        <files mask="fsl_component_serial_port_spi.h"/>
+      </source>
+      <source relative_path="./" type="src">
+        <files mask="fsl_component_serial_port_spi.c"/>
       </source>
       <include_paths>
         <include_path relative_path="./" type="c_include"/>
@@ -35102,7 +35602,7 @@ ${load}</script>
         <include_path relative_path="./" type="c_include"/>
       </include_paths>
     </component>
-    <component id="platform.drivers.sai.MIMXRT1061" name="sai" brief="SAI Driver" version="2.3.3" full_name="SAI Driver" devices="MIMXRT1061xxxxA" device_cores="core0_MIMXRT1061xxxxA" user_visible="true" type="driver" package_base_path="devices/MIMXRT1061/drivers" project_base_path="drivers">
+    <component id="platform.drivers.sai.MIMXRT1061" name="sai" brief="SAI Driver" version="2.3.4" full_name="SAI Driver" devices="MIMXRT1061xxxxA" device_cores="core0_MIMXRT1061xxxxA" user_visible="true" type="driver" package_base_path="devices/MIMXRT1061/drivers" project_base_path="drivers">
       <dependencies>
         <component_dependency value="platform.drivers.common.MIMXRT1061"/>
       </dependencies>
@@ -41649,7 +42149,7 @@ ${load}</script>
         <include_path relative_path="vendors/vendor/boards/board/aws_tests/config_files" type="c_include"/>
       </include_paths>
     </component>
-    <component id="middleware.freertos-kernel.MIMXRT1061" name="FreeRTOS kernel" brief="FreeRTOS kernel" version="202012.00.0" full_name="FreeRTOS kernel" devices="MIMXRT1061xxxxA" user_visible="true" type="OS" package_base_path="rtos/freertos" project_base_path="freertos">
+    <component id="middleware.freertos-kernel.MIMXRT1061" name="FreeRTOS kernel" brief="FreeRTOS kernel" version="10.4.3" revision="1" full_name="FreeRTOS kernel" devices="MIMXRT1061xxxxA" user_visible="true" type="OS" package_base_path="rtos/freertos" project_base_path="freertos">
       <defines>
         <define name="SDK_OS_FREE_RTOS" value=""/>
       </defines>
@@ -41715,7 +42215,7 @@ ${load}</script>
         <include_path relative_path="freertos_kernel/portable/IAR/ARM_CM4F" toolchain="iar" type="c_include" device_cores="core0_MIMXRT1061xxxxA"/>
       </include_paths>
     </component>
-    <component id="middleware.freertos-kernel.armv8m.MIMXRT1061" name="FreeRTOS port ARMv8M" brief="FreeRTOS port ARMv8M" version="202012.00.0" full_name="FreeRTOS port ARMv8M" devices="MIMXRT1061xxxxA" category="Operating System/FreeRTOS kernel" user_visible="false" type="other" package_base_path="rtos/freertos" project_base_path="freertos">
+    <component id="middleware.freertos-kernel.armv8m.MIMXRT1061" name="FreeRTOS port ARMv8M" brief="FreeRTOS port ARMv8M" version="10.4.3" revision="1" full_name="FreeRTOS port ARMv8M" devices="MIMXRT1061xxxxA" category="Operating System/FreeRTOS kernel" user_visible="false" type="other" package_base_path="rtos/freertos" project_base_path="freertos">
       <dependencies>
         <component_dependency value="middleware.freertos-kernel.MIMXRT1061"/>
       </dependencies>
@@ -41761,9 +42261,6 @@ ${load}</script>
       <source relative_path="freertos_kernel/portable/ARMv8M/secure/context/portable/GCC/ARM_CM33" type="src">
         <files mask="secure_context_port.c"/>
       </source>
-      <source relative_path="freertos_kernel/portable/ARMv8M/secure/context/portable/IAR/ARM_CM33" type="src">
-        <files mask="secure_context_port.c"/>
-      </source>
       <source relative_path="freertos_kernel/portable/ARMv8M/secure/context/portable/IAR/ARM_CM33" type="asm_include">
         <files mask="secure_context_port_asm.s"/>
       </source>
@@ -41803,7 +42300,7 @@ ${load}</script>
         <include_path relative_path="freertos_kernel/portable/ARMv8M/secure/macros" type="c_include"/>
       </include_paths>
     </component>
-    <component id="middleware.freertos-kernel.doc.MIMXRT1061" name="FreeRTOS doc" brief="FreeRTOS doc" version="202012.00.0" full_name="FreeRTOS doc" devices="MIMXRT1061xxxxA" category="Operating System/FreeRTOS kernel" user_visible="false" type="other" package_base_path="rtos/freertos" project_base_path="freertos">
+    <component id="middleware.freertos-kernel.doc.MIMXRT1061" name="FreeRTOS doc" brief="FreeRTOS doc" version="10.4.3" revision="1" full_name="FreeRTOS doc" devices="MIMXRT1061xxxxA" category="Operating System/FreeRTOS kernel" user_visible="false" type="other" package_base_path="rtos/freertos" project_base_path="freertos">
       <source relative_path="doc" type="doc">
         <files mask="AFQ Developer Guide - Board Qualification Errata.pdf"/>
         <files mask="Amazon FreeRTOS Qualification Developer Guide.pdf"/>
@@ -41883,7 +42380,7 @@ ${load}</script>
         <files mask="global_config.txt"/>
       </source>
     </component>
-    <component id="middleware.freertos-kernel.extension.MIMXRT1061" name="FreeRTOS NXP extension" brief="FreeRTOS NXP extension" version="202012.00.0" full_name="FreeRTOS NXP extension" devices="MIMXRT1061xxxxA" category="Operating System/FreeRTOS kernel extensions" user_visible="false" type="other" package_base_path="rtos/freertos" project_base_path="freertos">
+    <component id="middleware.freertos-kernel.extension.MIMXRT1061" name="FreeRTOS NXP extension" brief="FreeRTOS NXP extension" version="10.4.3" revision="1" full_name="FreeRTOS NXP extension" devices="MIMXRT1061xxxxA" category="Operating System/FreeRTOS kernel extensions" user_visible="false" type="other" package_base_path="rtos/freertos" project_base_path="freertos">
       <source relative_path="freertos_kernel/include" type="c_include">
         <files mask="freertos_tasks_c_additions.h"/>
       </source>
@@ -41891,7 +42388,7 @@ ${load}</script>
         <include_path relative_path="freertos_kernel/include" type="c_include"/>
       </include_paths>
     </component>
-    <component id="middleware.freertos-kernel.heap_1.MIMXRT1061" name="FreeRTOS heap 1" brief="FreeRTOS heap 1" version="202012.00.0" full_name="FreeRTOS heap 1" devices="MIMXRT1061xxxxA" category="Operating System/FreeRTOS kernel" user_visible="false" type="other" package_base_path="rtos/freertos" project_base_path="freertos">
+    <component id="middleware.freertos-kernel.heap_1.MIMXRT1061" name="FreeRTOS heap 1" brief="FreeRTOS heap 1" version="10.4.3" revision="1" full_name="FreeRTOS heap 1" devices="MIMXRT1061xxxxA" category="Operating System/FreeRTOS kernel" user_visible="false" type="other" package_base_path="rtos/freertos" project_base_path="freertos">
       <dependencies>
         <component_dependency value="middleware.freertos-kernel.MIMXRT1061"/>
       </dependencies>
@@ -41899,7 +42396,7 @@ ${load}</script>
         <files mask="heap_1.c"/>
       </source>
     </component>
-    <component id="middleware.freertos-kernel.heap_2.MIMXRT1061" name="FreeRTOS heap 2" brief="FreeRTOS heap 2" version="202012.00.0" full_name="FreeRTOS heap 2" devices="MIMXRT1061xxxxA" category="Operating System/FreeRTOS kernel" user_visible="false" type="other" package_base_path="rtos/freertos" project_base_path="freertos">
+    <component id="middleware.freertos-kernel.heap_2.MIMXRT1061" name="FreeRTOS heap 2" brief="FreeRTOS heap 2" version="10.4.3" revision="1" full_name="FreeRTOS heap 2" devices="MIMXRT1061xxxxA" category="Operating System/FreeRTOS kernel" user_visible="false" type="other" package_base_path="rtos/freertos" project_base_path="freertos">
       <dependencies>
         <component_dependency value="middleware.freertos-kernel.MIMXRT1061"/>
       </dependencies>
@@ -41907,7 +42404,7 @@ ${load}</script>
         <files mask="heap_2.c"/>
       </source>
     </component>
-    <component id="middleware.freertos-kernel.heap_3.MIMXRT1061" name="FreeRTOS heap 3" brief="FreeRTOS heap 3" version="202012.00.0" full_name="FreeRTOS heap_3" devices="MIMXRT1061xxxxA" category="Operating System/FreeRTOS kernel" user_visible="false" type="other" package_base_path="rtos/freertos" project_base_path="freertos">
+    <component id="middleware.freertos-kernel.heap_3.MIMXRT1061" name="FreeRTOS heap 3" brief="FreeRTOS heap 3" version="10.4.3" revision="1" full_name="FreeRTOS heap_3" devices="MIMXRT1061xxxxA" category="Operating System/FreeRTOS kernel" user_visible="false" type="other" package_base_path="rtos/freertos" project_base_path="freertos">
       <dependencies>
         <component_dependency value="middleware.freertos-kernel.MIMXRT1061"/>
       </dependencies>
@@ -41915,7 +42412,7 @@ ${load}</script>
         <files mask="heap_3.c"/>
       </source>
     </component>
-    <component id="middleware.freertos-kernel.heap_4.MIMXRT1061" name="FreeRTOS heap 4" brief="FreeRTOS heap 4" version="202012.00.0" full_name="FreeRTOS heap 4" devices="MIMXRT1061xxxxA" category="Operating System/FreeRTOS kernel" user_visible="false" type="other" package_base_path="rtos/freertos" project_base_path="freertos">
+    <component id="middleware.freertos-kernel.heap_4.MIMXRT1061" name="FreeRTOS heap 4" brief="FreeRTOS heap 4" version="10.4.3" revision="1" full_name="FreeRTOS heap 4" devices="MIMXRT1061xxxxA" category="Operating System/FreeRTOS kernel" user_visible="false" type="other" package_base_path="rtos/freertos" project_base_path="freertos">
       <dependencies>
         <component_dependency value="middleware.freertos-kernel.MIMXRT1061"/>
       </dependencies>
@@ -41923,7 +42420,7 @@ ${load}</script>
         <files mask="heap_4.c"/>
       </source>
     </component>
-    <component id="middleware.freertos-kernel.heap_5.MIMXRT1061" name="FreeRTOS heap 5" brief="FreeRTOS heap 5" version="202012.00.0" full_name="FreeRTOS heap 5" devices="MIMXRT1061xxxxA" category="Operating System/FreeRTOS kernel" user_visible="false" type="other" package_base_path="rtos/freertos" project_base_path="freertos">
+    <component id="middleware.freertos-kernel.heap_5.MIMXRT1061" name="FreeRTOS heap 5" brief="FreeRTOS heap 5" version="10.4.3" revision="1" full_name="FreeRTOS heap 5" devices="MIMXRT1061xxxxA" category="Operating System/FreeRTOS kernel" user_visible="false" type="other" package_base_path="rtos/freertos" project_base_path="freertos">
       <dependencies>
         <component_dependency value="middleware.freertos-kernel.MIMXRT1061"/>
       </dependencies>
@@ -41931,7 +42428,7 @@ ${load}</script>
         <files mask="heap_5.c"/>
       </source>
     </component>
-    <component id="middleware.freertos-kernel.mpu_wrappers.MIMXRT1061" name="FreeRTOS MPU wrappers" brief="FreeRTOS MPU wrappers" version="202012.00.0" full_name="FreeRTOS MPU wrappers" devices="MIMXRT1061xxxxA" category="Operating System/FreeRTOS kernel" user_visible="false" type="other" package_base_path="rtos/freertos" project_base_path="freertos">
+    <component id="middleware.freertos-kernel.mpu_wrappers.MIMXRT1061" name="FreeRTOS MPU wrappers" brief="FreeRTOS MPU wrappers" version="10.4.3" revision="1" full_name="FreeRTOS MPU wrappers" devices="MIMXRT1061xxxxA" category="Operating System/FreeRTOS kernel" user_visible="false" type="other" package_base_path="rtos/freertos" project_base_path="freertos">
       <dependencies>
         <component_dependency value="middleware.freertos-kernel.MIMXRT1061"/>
       </dependencies>
@@ -41939,7 +42436,7 @@ ${load}</script>
         <files mask="mpu_wrappers.c"/>
       </source>
     </component>
-    <component id="middleware.freertos-kernel.root_doc.MIMXRT1061" name="Root FreeRTOS documents." brief="FreeRTOS root documents" version="202012.00.0" full_name="FreeRTOS root documents" devices="MIMXRT1061xxxxA" category="Operating System/FreeRTOS kernel" user_visible="false" type="other" package_base_path="rtos/freertos" project_base_path="freertos">
+    <component id="middleware.freertos-kernel.root_doc.MIMXRT1061" name="Root FreeRTOS documents." brief="FreeRTOS root documents" version="10.4.3" revision="1" full_name="FreeRTOS root documents" devices="MIMXRT1061xxxxA" category="Operating System/FreeRTOS kernel" user_visible="false" type="other" package_base_path="rtos/freertos" project_base_path="freertos">
       <source relative_path="./" type="other">
         <files mask="CHANGELOG.md"/>
       </source>
@@ -41948,7 +42445,7 @@ ${load}</script>
         <files mask="directories.txt"/>
       </source>
     </component>
-    <component id="middleware.freertos-kernel.template.MIMXRT1061" name="FreeRTOS configuration template" brief="Template configuration file to be edited by user. Provides also memory allocator (heap_x), change variant if needed." version="202012.00.0" full_name="FreeRTOS configuration template" devices="MIMXRT1061xxxxA" category="Operating System/FreeRTOS kernel" user_visible="false" type="project_template" package_base_path="rtos/freertos" project_base_path="freertos">
+    <component id="middleware.freertos-kernel.template.MIMXRT1061" name="FreeRTOS configuration template" brief="Template configuration file to be edited by user. Provides also memory allocator (heap_x), change variant if needed." version="10.4.3" revision="1" full_name="FreeRTOS configuration template" devices="MIMXRT1061xxxxA" category="Operating System/FreeRTOS kernel" user_visible="false" type="project_template" package_base_path="rtos/freertos" project_base_path="freertos">
       <source exclude="true" relative_path="freertos_kernel/portable/MemMang" type="src">
         <files mask="heap_1.c"/>
         <files mask="heap_2.c"/>
@@ -41965,7 +42462,7 @@ ${load}</script>
         <include_path relative_path="template/ARM_CM4F" type="c_include" device_cores="core0_MIMXRT1061xxxxA"/>
       </include_paths>
     </component>
-    <component id="middleware.freertos-kernel.unused.MIMXRT1061" name="FreeRTOS unused" brief="FreeRTOS unused" version="202012.00.0" full_name="FreeRTOS unused" devices="MIMXRT1061xxxxA" category="Operating System/FreeRTOS kernel" user_visible="false" type="other" package_base_path="rtos/freertos" project_base_path="freertos">
+    <component id="middleware.freertos-kernel.unused.MIMXRT1061" name="FreeRTOS unused" brief="FreeRTOS unused" version="10.4.3" revision="1" full_name="FreeRTOS unused" devices="MIMXRT1061xxxxA" category="Operating System/FreeRTOS kernel" user_visible="false" type="other" package_base_path="rtos/freertos" project_base_path="freertos">
       <source relative_path="./" type="other">
         <files mask="CODE_OF_CONDUCT.md"/>
         <files mask="LICENSE"/>

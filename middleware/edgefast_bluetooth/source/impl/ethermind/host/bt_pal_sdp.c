@@ -10,7 +10,7 @@
  */
 
 #include <porting.h>
-#include <errno.h>
+#include <errno/errno.h>
 #include <zephyr/types.h>
 #include <sys/byteorder.h>
 
@@ -21,6 +21,7 @@
 #include "fsl_component_log.h"
 LOG_MODULE_DEFINE(LOG_MODULE_NAME, kLOG_LevelTrace);
 
+#if (defined(CONFIG_BT_BREDR) && ((CONFIG_BT_BREDR) > 0U))
 #include "BT_common.h"
 #include "bt_pal_hci_core.h"
 #include "bt_pal_conn_internal.h"
@@ -93,58 +94,58 @@ static uint8_t appl_sdp_attrib_data[SDP_ATTRIB_DATALEN];
 #if (CONFIG_BT_MAX_CONN == 1U)
 static void ethermind_sdp_callback0
 	 (
-		 UCHAR command,
-		 UCHAR * data,
-		 UINT16 length,
-		 UINT16 status
+		 uint8_t command,
+		 uint8_t * data,
+		 uint16_t length,
+		 uint16_t status
 	 );
 #elif (CONFIG_BT_MAX_CONN == 2U)
 static void ethermind_sdp_callback1
 	 (
-		 UCHAR command,
-		 UCHAR * data,
-		 UINT16 length,
-		 UINT16 status
+		 uint8_t command,
+		 uint8_t * data,
+		 uint16_t length,
+		 uint16_t status
 	 );
 #elif (CONFIG_BT_MAX_CONN == 3U)
 static void ethermind_sdp_callback2
 	 (
-		 UCHAR command,
-		 UCHAR * data,
-		 UINT16 length,
-		 UINT16 status
+		 uint8_t command,
+		 uint8_t * data,
+		 uint16_t length,
+		 uint16_t status
 	 );
 #elif (CONFIG_BT_MAX_CONN == 4U)
 static void ethermind_sdp_callback3
 	 (
-		 UCHAR command,
-		 UCHAR * data,
-		 UINT16 length,
-		 UINT16 status
+		 uint8_t command,
+		 uint8_t * data,
+		 uint16_t length,
+		 uint16_t status
 	 );
 #elif (CONFIG_BT_MAX_CONN == 5U)
 static void ethermind_sdp_callback4
 	 (
-		 UCHAR command,
-		 UCHAR * data,
-		 UINT16 length,
-		 UINT16 status
+		 uint8_t command,
+		 uint8_t * data,
+		 uint16_t length,
+		 uint16_t status
 	 );
 #elif (CONFIG_BT_MAX_CONN == 6U)
 static void ethermind_sdp_callback5
 	 (
-		 UCHAR command,
-		 UCHAR * data,
-		 UINT16 length,
-		 UINT16 status
+		 uint8_t command,
+		 uint8_t * data,
+		 uint16_t length,
+		 uint16_t status
 	 );
 #elif (CONFIG_BT_MAX_CONN == 7U)
 static void ethermind_sdp_callback6
 	 (
-		 UCHAR command,
-		 UCHAR * data,
-		 UINT16 length,
-		 UINT16 status
+		 uint8_t command,
+		 uint8_t * data,
+		 uint16_t length,
+		 uint16_t status
 	 );
 #else
 #error "please add the callback instances"
@@ -180,6 +181,25 @@ void bt_sdp_init(void)
 #endif
 }
 
+#if (defined(CONFIG_BT_AVRCP) && ((CONFIG_BT_AVRCP) > 0U))
+static uint8_t ct_additional_protocol_descriptor_list[] =
+{0x35, 0x12, 0x35, 0x10, 0x35, 0x06, 0x19, 0x01, 0x00, 0x09,
+ 0x00, 0x1B, 0x35, 0x06, 0x19, 0x00, 0x17, 0x09, 0x01, 0x03};
+
+static uint8_t tg_additional_protocol_descriptor_list[] =
+{0x35, 0x12, 0x35, 0x10, 0x35, 0x06, 0x19, 0x01, 0x00, 0x09,
+ 0x00, 0x1B, 0x35, 0x06, 0x19, 0x00, 0x17, 0x09, 0x01, 0x03};
+
+static uint8_t tg_cover_art_additional_protocol_desc_list[] =
+{0x35, 0x21, 0x35, 0x10, 0x35, 0x06, 0x19, 0x01, 0x00, 0x09, 0x00, 0x1B,
+ 0x35, 0x06, 0x19, 0x00, 0x17, 0x09, 0x01, 0x04, 0x35, 0x0D, 0x35, 0x06,
+ 0x19, 0x01, 0x00, 0x09, (uint8_t)(0x1005u >> 8),
+ (uint8_t)0x1005u, 0x35, 0x03, 0x19, 0x00, 0x08};
+#endif
+
+extern const uint8_t uuid_indices_arr[];
+extern SDP_RECORD dbase[DB_MAX_RECORDS];
+extern struct attr attr_arr[];
 int bt_sdp_register_service(struct bt_sdp_record *service)
 {
 	uint32_t record_handle = 0xFFFFFFFFu;
@@ -194,8 +214,7 @@ int bt_sdp_register_service(struct bt_sdp_record *service)
 		{
 			tempVal = ((uint8_t *)(((struct bt_sdp_data_elem *)(service->attrs[index].val.data))->data))[0];
 			tempVal |= ((uint8_t *)(((struct bt_sdp_data_elem *)(service->attrs[index].val.data))->data))[1] << 8U;
-			switch (tempVal)
-			{
+			switch (tempVal) {
 			case BT_SDP_AUDIO_SINK_SVCLASS:
 				BT_dbase_get_record_handle(DB_RECORD_A2DP_SINK, 0,&record_handle);
 				break;
@@ -210,12 +229,11 @@ int bt_sdp_register_service(struct bt_sdp_record *service)
 				struct bt_sdp_data_elem *dataEle2;
 				uint32_t total_size;
 				uint32_t dataEleIndex;
+				uint8_t found = 0;
 
-				for (index2 = 0; index2 < service->attr_count; index2++)
-				{
+				for (index2 = 0; index2 < service->attr_count; index2++) {
 					if ((service->attrs[index2].id == BT_SDP_ATTR_PROTO_DESC_LIST) &&
-						(service->attrs[index2].val.data != NULL))
-					{
+						(service->attrs[index2].val.data != NULL)) {
 						dataEle = (struct bt_sdp_data_elem *)(service->attrs[index2].val.data);
 						dataEle2 = NULL;
 						total_size = service->attrs[index2].val.total_size;
@@ -223,34 +241,25 @@ int bt_sdp_register_service(struct bt_sdp_record *service)
 
 						if ((dataEle == NULL) ||
 							(service->attrs[index2].val.type != BT_SDP_SEQ8) ||
-							(total_size < 2U))
-						{
+							(total_size < 2U)) {
 							continue;
 						}
 
 						total_size -= 2U;
-						while (total_size > 0U)
-						{
-							if (dataEle[dataEleIndex].type == BT_SDP_SEQ8)
-							{
-								if (total_size >= dataEle[dataEleIndex].total_size)
-								{
+						while (total_size > 0U) {
+							if (dataEle[dataEleIndex].type == BT_SDP_SEQ8) {
+								if (total_size >= dataEle[dataEleIndex].total_size) {
 									total_size -= dataEle[dataEleIndex].total_size;
-								}
-								else
-								{
+								} else {
 									break;
 								}
 
 								dataEle2 = (struct bt_sdp_data_elem *)(dataEle[dataEleIndex].data);
-								if ((dataEle2 != NULL) && (dataEle2[0].type == BT_SDP_UUID16))
-								{
+								if ((dataEle2 != NULL) && (dataEle2[0].type == BT_SDP_UUID16)) {
 									tempVal = ((uint8_t *)(dataEle2[0].data))[0];
 									tempVal |= ((uint8_t *)(dataEle2[0].data))[1] << 8U;
-									if (tempVal == BT_SDP_PROTO_RFCOMM)
-									{
-										if (dataEle2[1].type == BT_SDP_UINT8)
-										{
+									if (tempVal == BT_SDP_PROTO_RFCOMM) {
+										if (dataEle2[1].type == BT_SDP_UINT8) {
 											channel = ((uint8_t *)(dataEle2[1].data))[0];
 											break;
 										}
@@ -261,23 +270,48 @@ int bt_sdp_register_service(struct bt_sdp_record *service)
 						}
 					}
 
-					if (channel != 0U)
-					{
+					if (channel != 0U) {
 						break;
 					}
 				}
 
-				if (channel == 2U)
-				{
-					BT_dbase_get_record_handle(DB_RECORD_SPP, 0,&record_handle);
+				for (index2 = 0U; index2 < DB_MAX_RECORDS; index2++) {
+					uint16_t num_attrs;
+					uint16_t attr_offset;
+
+					BT_dbase_get_record_handle(DB_RECORD_SPP, index2, &record_handle);
+					if (record_handle == 0xFFFFFFFFu) {
+						break;
+					}
+
+					if ((record_handle & 0x0000FFFFU) >= DB_MAX_RECORDS) {
+						break;
+					}
+
+					attr_offset = dbase[record_handle & 0x0000FFFFU].attr_offset;
+					num_attrs = dbase[record_handle & 0x0000FFFFU].num_attrs;
+					for (uint16_t index3 = 0; index3 < num_attrs; index3++) {
+						if (0x0004u == attr_arr[attr_offset + index3].attr_id) {
+							uint8_t *value = attr_arr[attr_offset + index3].value;
+							uint16_t len = attr_arr[attr_offset + index3].len;
+
+							if (value[len - 1u] == channel) {
+								found = 1u;
+								break;
+							}
+						}
+						if (found == 1u) {
+							break;
+						}
+					}
+
+					if (found == 1u) {
+						break;
+					}
 				}
-				else if (channel == 3U)
-				{
-					BT_dbase_get_record_handle(DB_RECORD_SPP_VS, 0,&record_handle);
-				}
-				else
-				{
-					  /* MISRA 15.7 : Empty else without comment. */
+
+				if (found != 1u) {
+					record_handle = 0xFFFFFFFFu;
 				}
 				break;
 			}
@@ -287,6 +321,53 @@ int bt_sdp_register_service(struct bt_sdp_record *service)
 			case BT_SDP_HANDSFREE_AGW_SVCLASS:
 				BT_dbase_get_record_handle(DB_RECORD_HFAG, 0,&record_handle);
 				break;
+#if (defined(CONFIG_BT_AVRCP) && ((CONFIG_BT_AVRCP) > 0U))
+			case BT_SDP_AV_REMOTE_TARGET_SVCLASS:
+			{
+				uint16_t find_feature = 0;
+
+				BT_dbase_get_record_handle(DB_RECORD_AVRCP_TARGET, 0, &record_handle);
+				if (record_handle == 0xFFFFFFFFu)
+				{
+					break;
+				}
+
+				for (index = 0; index < service->attr_count; index++)
+				{
+					if ((service->attrs[index].id == BT_SDP_ATTR_SUPPORTED_FEATURES) &&
+						(service->attrs[index].val.data != NULL) &&
+						(service->attrs[index].val.type == BT_SDP_UINT16))
+					{
+						find_feature = *((uint16_t*)service->attrs[index].val.data);
+					}
+				}
+
+				/* bit8 is "Supports Cover Art" */
+				if (find_feature & (0x0001 << 8u))
+				{
+					BT_dbase_change_attr_value(record_handle, ADDITIONAL_PROT_DESC_LIST_ID, tg_cover_art_additional_protocol_desc_list,
+						sizeof(tg_cover_art_additional_protocol_desc_list));
+				}
+				else
+				{
+					BT_dbase_change_attr_value(record_handle, ADDITIONAL_PROT_DESC_LIST_ID, tg_additional_protocol_descriptor_list,
+						sizeof(tg_additional_protocol_descriptor_list));
+				}
+				break;
+			}
+			case BT_SDP_AV_REMOTE_CONTROLLER_SVCLASS:
+			{
+				BT_dbase_get_record_handle(DB_RECORD_AVRCP_CONTROLLER, 0, &record_handle);
+				if (record_handle == 0xFFFFFFFFu)
+				{
+					break;
+				}
+
+				BT_dbase_change_attr_value(record_handle, ADDITIONAL_PROT_DESC_LIST_ID, ct_additional_protocol_descriptor_list,
+					sizeof(ct_additional_protocol_descriptor_list));
+				break;
+			}
+#endif
 			default:
 			  /* MISRA 16.4 : The switch statement does not have a non-empty default clause. */
 				break;
@@ -316,7 +397,7 @@ static int sdp_client_ssa_search(struct bt_sdp_client *session)
 	/* SDP Attribute Datalen */
 	uint16_t appl_sdp_attrib_datalen;
 	S_UUID uuid;
-	UINT16 num_uuids;
+	uint16_t num_uuids;
 	API_RESULT retval;
 
 	/*
@@ -569,7 +650,7 @@ static int sdp_client_receive(struct bt_sdp_client *session, struct net_buf *buf
 		return 0;
 	}
 
-	hdr = net_buf_pull_mem(buf, sizeof(*hdr));
+	hdr = (struct bt_sdp_hdr *)net_buf_pull_mem(buf, sizeof(*hdr));
 	if (hdr->op_code == BT_SDP_ERROR_RSP) {
 		BT_INFO("Error SDP PDU response");
 		return 0;
@@ -1140,9 +1221,40 @@ err:
 	return -EMSGSIZE;
 }
 
+static int sdp_loop_seqs(uint8_t **data, size_t len)
+{
+	ssize_t slen;
+	ssize_t pre_slen;
+	uint8_t *end;
+
+	if (len <= 0) {
+		return -EMSGSIZE;
+	}
+
+	pre_slen = -EINVAL;
+	slen = -EINVAL;
+	end = *data + len;
+	/* loop all the SEQ */
+	while (*data < end) {
+		/* how long is current UUID's item data associated to */
+		slen = sdp_get_seq_len_item(data, end - *data);
+		if (slen < 0) {
+			break;
+		}
+		pre_slen = slen;
+	}
+
+	/* return the last seq len */
+	if (pre_slen < 0) {
+		return slen;
+	}
+	return pre_slen;
+}
+
 static int sdp_get_uuid_data(const struct bt_sdp_attr_item *attr,
-				 struct bt_sdp_uuid_desc *pd,
-				 uint16_t proto_profile)
+			     struct bt_sdp_uuid_desc *pd,
+			     uint16_t proto_profile,
+			     uint16_t proto_profile_index)
 {
 	/* get start address of attribute value */
 	uint8_t *p = attr->val;
@@ -1150,79 +1262,84 @@ static int sdp_get_uuid_data(const struct bt_sdp_attr_item *attr,
 
 	assert(p);
 
-	/* Attribute value is a SEQ, get length of parent SEQ frame */
-	slen = sdp_get_seq_len_item(&p, attr->len);
-	if (slen < 0) {
-		return slen;
-	}
+	while (proto_profile_index > 0) {
+		/* start reading stacked UUIDs in analyzed sequences tree */
+		while (p - attr->val < attr->len) {
+			size_t to_end, left = 0;
 
-	/* start reading stacked UUIDs in analyzed sequences tree */
-	while (p - attr->val < attr->len) {
-		size_t to_end, left = 0;
+			/* to_end tells how far to the end of input buffer */
+			to_end = attr->len - (p - attr->val);
+			/* loop all the SEQ, get the last SEQ len */
+			slen = sdp_loop_seqs(&p, to_end);
 
-		/* to_end tells how far to the end of input buffer */
-		to_end = attr->len - (p - attr->val);
-		/* how long is current UUID's item data associated to */
-		slen = sdp_get_seq_len_item(&p, to_end);
-		if (slen < 0) {
-			return slen;
-		}
+			if (slen < 0) {
+				return slen;
+			}
 
-		/* left tells how far is to the end of current UUID */
-		left = slen;
+			/* left tells how far is to the end of current UUID */
+			left = slen;
 
-		/* check if at least DTD + UUID16 can be read safely */
-		if (left < 3) {
-			return -EMSGSIZE;
-		}
-
-		/* check DTD and get stacked UUID value */
-		switch (p[0]) {
-		case BT_SDP_UUID16:
-			memcpy(&pd->uuid16,
-				   BT_UUID_DECLARE_16(sys_get_be16(++p)),
-				   sizeof(struct bt_uuid_16));
-			p += sizeof(uint16_t);
-			left -= sizeof(uint16_t);
-			break;
-		case BT_SDP_UUID32:
-			/* check if valid UUID32 can be read safely */
-			if (left < 5) {
+			/* check if at least DTD + UUID16 can be read safely */
+			if (left < 3) {
 				return -EMSGSIZE;
 			}
 
-			memcpy(&pd->uuid32,
-				   BT_UUID_DECLARE_32(sys_get_be32(++p)),
-				   sizeof(struct bt_uuid_32));
-			p += sizeof(uint32_t);
-			left -= sizeof(uint32_t);
-			break;
-		default:
-			BT_ERR("Invalid/unhandled DTD 0x%02x\n", p[0]);
-			return -EINVAL;
+			/* check DTD and get stacked UUID value */
+			switch (p[0]) {
+			case BT_SDP_UUID16:
+				memcpy(&pd->uuid16,
+					BT_UUID_DECLARE_16(sys_get_be16(++p)),
+					sizeof(struct bt_uuid_16));
+				p += sizeof(uint16_t);
+				left -= sizeof(uint16_t);
+				break;
+			case BT_SDP_UUID32:
+				/* check if valid UUID32 can be read safely */
+				if (left < 5) {
+					return -EMSGSIZE;
+				}
+
+				memcpy(&pd->uuid32,
+					BT_UUID_DECLARE_32(sys_get_be32(++p)),
+					sizeof(struct bt_uuid_32));
+				p += sizeof(uint32_t);
+				left -= sizeof(uint32_t);
+				break;
+			default:
+				BT_ERR("Invalid/unhandled DTD 0x%02x\n", p[0]);
+				return -EINVAL;
+			}
+
+			/* include last DTD in p[0] size itself updating left */
+			left -= sizeof(p[0]);
+
+			/*
+			 * Check if current UUID value matches input one given by user.
+			 * If found save it's location and length and return.
+			 */
+			if ((proto_profile == BT_UUID_16(&pd->uuid)->val) ||
+				(proto_profile == BT_UUID_32(&pd->uuid)->val)) {
+				pd->params = p;
+				pd->params_len = left;
+
+				BT_DBG("UUID 0x%s found", bt_uuid_str(&pd->uuid));
+				proto_profile_index--;
+				if (proto_profile_index > 0) {
+					p += left;
+					continue;
+				} else {
+					return 0;
+				}
+			}
+
+			/* skip left octets to point beginning of next UUID in tree */
+			p += left;
 		}
 
-		/* include last DTD in p[0] size itself updating left */
-		left -= sizeof(p[0]);
-
-		/*
-		 * Check if current UUID value matches input one given by user.
-		 * If found save it's location and length and return.
-		 */
-		if ((proto_profile == BT_UUID_16(&pd->uuid)->val) ||
-			(proto_profile == BT_UUID_32(&pd->uuid)->val)) {
-			pd->params = p;
-			pd->params_len = left;
-
-			BT_DBG("UUID 0x%s found", bt_uuid_str(&pd->uuid));
-			return 0;
-		}
-
-		/* skip left octets to point beginning of next UUID in tree */
-		p += left;
+		BT_DBG("Value 0x%04x not found", proto_profile);
+		return -ENOENT;
 	}
 
-	BT_DBG("Value 0x%04x not found", proto_profile);
 	return -ENOENT;
 }
 
@@ -1302,7 +1419,36 @@ int bt_sdp_get_proto_param(const struct net_buf *buf, enum bt_sdp_proto proto,
 		return res;
 	}
 
-	res = sdp_get_uuid_data(&attr, &pd, proto);
+	res = sdp_get_uuid_data(&attr, &pd, proto, 1U);
+	if (res < 0) {
+		BT_WARN("Protocol specifier 0x%04x not found, err %d", proto,
+			res);
+		return res;
+	}
+
+	return sdp_get_param_item(&pd, param);
+}
+
+int bt_sdp_get_addl_proto_param(const struct net_buf *buf, enum bt_sdp_proto proto,
+			uint8_t param_index, uint16_t *param)
+{
+	struct bt_sdp_attr_item attr;
+	struct bt_sdp_uuid_desc pd;
+	int res;
+
+	if (proto != BT_SDP_PROTO_RFCOMM && proto != BT_SDP_PROTO_L2CAP) {
+		BT_ERR("Invalid protocol specifier");
+		return -EINVAL;
+	}
+
+	res = bt_sdp_get_attr(buf, &attr, BT_SDP_ATTR_ADD_PROTO_DESC_LIST);
+	if (res < 0) {
+		BT_WARN("Attribute 0x%04x not found, err %d",
+			BT_SDP_ATTR_PROTO_DESC_LIST, res);
+		return res;
+	}
+
+	res = sdp_get_uuid_data(&attr, &pd, proto, (uint16_t)param_index + 1U);
 	if (res < 0) {
 		BT_WARN("Protocol specifier 0x%04x not found, err %d", proto,
 			res);
@@ -1326,7 +1472,7 @@ int bt_sdp_get_profile_version(const struct net_buf *buf, uint16_t profile,
 		return res;
 	}
 
-	res = sdp_get_uuid_data(&attr, &pd, profile);
+	res = sdp_get_uuid_data(&attr, &pd, profile, 1U);
 	if (res < 0) {
 		BT_WARN("Profile 0x%04x not found, err %d", profile, res);
 		return res;
@@ -1376,10 +1522,10 @@ int bt_sdp_get_features(const struct net_buf *buf, uint16_t *features)
 static void ethermind_sdp_callback
 	 (
 		 struct bt_sdp_client *session,
-		 UCHAR command,
-		 UCHAR * data,
-		 UINT16 length,
-		 UINT16 status
+		 uint8_t command,
+		 uint8_t * data,
+		 uint16_t length,
+		 uint16_t status
 	 )
 {
 	switch(command)
@@ -1438,10 +1584,10 @@ static void ethermind_sdp_callback
 #if (CONFIG_BT_MAX_CONN == 1U)
 static void ethermind_sdp_callback0
 	 (
-		 UCHAR command,
-		 UCHAR * data,
-		 UINT16 length,
-		 UINT16 status
+		 uint8_t command,
+		 uint8_t * data,
+		 uint16_t length,
+		 uint16_t status
 	 )
 {
 	ethermind_sdp_callback(&bt_sdp_client_pool[0], command, data, length, status);
@@ -1449,10 +1595,10 @@ static void ethermind_sdp_callback0
 #elif (CONFIG_BT_MAX_CONN == 2U)
 static void ethermind_sdp_callback1
 	 (
-		 UCHAR command,
-		 UCHAR * data,
-		 UINT16 length,
-		 UINT16 status
+		 uint8_t command,
+		 uint8_t * data,
+		 uint16_t length,
+		 uint16_t status
 	 )
 {
 	ethermind_sdp_callback(&bt_sdp_client_pool[1], command, data, length, status);
@@ -1460,10 +1606,10 @@ static void ethermind_sdp_callback1
 #elif (CONFIG_BT_MAX_CONN == 3U)
 static void ethermind_sdp_callback2
 	 (
-		 UCHAR command,
-		 UCHAR * data,
-		 UINT16 length,
-		 UINT16 status
+		 uint8_t command,
+		 uint8_t * data,
+		 uint16_t length,
+		 uint16_t status
 	 )
 {
 	ethermind_sdp_callback(&bt_sdp_client_pool[2], command, data, length, status);
@@ -1471,10 +1617,10 @@ static void ethermind_sdp_callback2
 #elif (CONFIG_BT_MAX_CONN == 4U)
 static void ethermind_sdp_callback3
 	 (
-		 UCHAR command,
-		 UCHAR * data,
-		 UINT16 length,
-		 UINT16 status
+		 uint8_t command,
+		 uint8_t * data,
+		 uint16_t length,
+		 uint16_t status
 	 )
 {
 	ethermind_sdp_callback(&bt_sdp_client_pool[3], command, data, length, status);
@@ -1482,10 +1628,10 @@ static void ethermind_sdp_callback3
 #elif (CONFIG_BT_MAX_CONN == 5U)
 static void ethermind_sdp_callback4
 	 (
-		 UCHAR command,
-		 UCHAR * data,
-		 UINT16 length,
-		 UINT16 status
+		 uint8_t command,
+		 uint8_t * data,
+		 uint16_t length,
+		 uint16_t status
 	 )
 {
 	ethermind_sdp_callback(&bt_sdp_client_pool[4], command, data, length, status);
@@ -1493,10 +1639,10 @@ static void ethermind_sdp_callback4
 #elif (CONFIG_BT_MAX_CONN == 6U)
 static void ethermind_sdp_callback5
 	 (
-		 UCHAR command,
-		 UCHAR * data,
-		 UINT16 length,
-		 UINT16 status
+		 uint8_t command,
+		 uint8_t * data,
+		 uint16_t length,
+		 uint16_t status
 	 )
 {
 	ethermind_sdp_callback(&bt_sdp_client_pool[5], command, data, length, status);
@@ -1504,10 +1650,10 @@ static void ethermind_sdp_callback5
 #elif (CONFIG_BT_MAX_CONN == 7U)
 static void ethermind_sdp_callback6
 	 (
-		 UCHAR command,
-		 UCHAR * data,
-		 UINT16 length,
-		 UINT16 status
+		 uint8_t command,
+		 uint8_t * data,
+		 uint16_t length,
+		 uint16_t status
 	 )
 {
 	ethermind_sdp_callback(&bt_sdp_client_pool[6], command, data, length, status);
@@ -1515,3 +1661,5 @@ static void ethermind_sdp_callback6
 #else
 #error "please add the callback instances"
 #endif
+
+#endif /* CONFIG_BT_BREDR */

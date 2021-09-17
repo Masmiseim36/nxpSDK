@@ -11,6 +11,7 @@
 typedef struct app_a2dp_
 {
     struct bt_a2dp *a2dp_handle;
+    struct bt_a2dp_endpoint *a2dp_ep;
     struct bt_conn *conn;
     uint8_t peer_key_missed;
     uint8_t acl_initiated;

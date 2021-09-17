@@ -347,45 +347,45 @@ typedef struct
 
 #ifdef MCAP_CLOCK_SYNC
 
-#define MCAP_PACK_1_BYTE(dst,val)                            \
+#define MCAP_PACK_1_BYTE(dst,val)                        \
         * (dst) = (UCHAR)val;
 
-#define MCAP_PACK_2_BYTES(dst,val)                           \
-        * ((dst)+1U) = (UCHAR)val;                           \
-        * ((dst)+0U) = (UCHAR)(val >>8U);
+#define MCAP_PACK_2_BYTES(dst,val)                       \
+        (dst)[1U] = (UCHAR)val;                          \
+        (dst)[0U] = (UCHAR)(val >>8U);
 
-#define MCAP_PACK_4_BYTES(dst,val)                           \
-        *((dst) + 3U) = (UCHAR)(val);                        \
-        *((dst) + 2U) = (UCHAR)((val) >>  8U);               \
-        *((dst) + 1U) = (UCHAR)((val) >> 16U);               \
-        *((dst) + 0U) = (UCHAR)((val) >> 24U);
+#define MCAP_PACK_4_BYTES(dst,val)                       \
+        (dst)[3U] = (UCHAR)(val);                        \
+        (dst)[2U] = (UCHAR)((val) >>  8U);               \
+        (dst)[1U] = (UCHAR)((val) >> 16U);               \
+        (dst)[0U] = (UCHAR)((val) >> 24U);
 
-#define MCAP_PACK_8_BYTES(dst,val)                           \
-        *((dst) + 7U) = (UCHAR)(val);                        \
-        *((dst) + 6U) = (UCHAR)((val) >>  8U);               \
-        *((dst) + 5U) = (UCHAR)((val) >> 16U);               \
-        *((dst) + 4U) = (UCHAR)((val) >> 24U);               \
-        *((dst) + 3U) = (UCHAR)((val) >> 32U);               \
-        *((dst) + 2U) = (UCHAR)((val) >> 40U);               \
-        *((dst) + 1U) = (UCHAR)((val) >> 48U);               \
-        *((dst) + 0U) = (UCHAR)((val) >> 56U);
+#define MCAP_PACK_8_BYTES(dst,val)                       \
+        (dst)[7U] = (UCHAR)(val);                        \
+        (dst)[6U] = (UCHAR)((val) >>  8U);               \
+        (dst)[5U] = (UCHAR)((val) >> 16U);               \
+        (dst)[4U] = (UCHAR)((val) >> 24U);               \
+        (dst)[3U] = (UCHAR)((val) >> 32U);               \
+        (dst)[2U] = (UCHAR)((val) >> 40U);               \
+        (dst)[1U] = (UCHAR)((val) >> 48U);               \
+        (dst)[0U] = (UCHAR)((val) >> 56U);
 
 #define MCAP_UNPACK_1_BYTE(dst,src)                          \
         *((UCHAR *)(dst)) = (UCHAR)(*(src));
 
 #define MCAP_UNPACK_2_BYTES(dst,src)                         \
-        *((UINT16 *)(dst)) = (UINT16)*((src) + 0U);          \
+        *((UINT16 *)(dst)) = (UINT16)((src)[0U]);            \
         *((UINT16 *)(dst)) = ((*((UINT16 *)(dst))) << 8U);   \
-        *((UINT16 *)(dst)) |= (UINT16)*((src) + 1U);
+        *((UINT16 *)(dst)) |= (UINT16)((src)[1U]);
 
 #define MCAP_UNPACK_4_BYTES(dst,src)                         \
-        *((UINT32 *)(dst)) = (UINT32)*((src) + 0U);          \
+        *((UINT32 *)(dst)) = (UINT32)((src)[0U]);            \
         *((UINT32 *)(dst)) = ((*((UINT32 *)(dst))) << 8U);   \
-        *((UINT32 *)(dst)) |= (UINT32)*((src) + 1U);         \
+        *((UINT32 *)(dst)) |= (UINT32)((src)[1U]);           \
         *((UINT32 *)(dst)) = ((*((UINT32 *)(dst))) << 8U);   \
-        *((UINT32 *)(dst)) |= (UINT32)*((src) + 2U);         \
+        *((UINT32 *)(dst)) |= (UINT32)((src)[2U]);           \
         *((UINT32 *)(dst)) = ((*((UINT32 *)(dst))) << 8U);   \
-        *((UINT32 *)(dst)) |= (UINT32)*((src) + 3U);
+        *((UINT32 *)(dst)) |= (UINT32)((src)[3U]);
 
 #define MCAP_UNPACK_8_BYTES(dst,src)                         \
         *((UINT64 *)(dst)) = (UINT64)*((src) + 0U);          \
@@ -629,7 +629,7 @@ API_RESULT BT_mcap_common_api_handler
             MCAP_MD_ABORT_IND,                               \
             API_SUCCESS,                                     \
             NULL,                                            \
-            0                                                \
+            0U                                               \
         );
 
 /**
@@ -654,7 +654,7 @@ API_RESULT BT_mcap_common_api_handler
             MCAP_MD_DELETE_IND,                              \
             API_SUCCESS,                                     \
             NULL,                                            \
-            0                                                \
+            0U                                               \
         );
 
 /**
@@ -681,7 +681,7 @@ API_RESULT BT_mcap_common_api_handler
             MCAP_MD_DELETE_ALL_IND,                          \
             API_SUCCESS,                                     \
             NULL,                                            \
-            0                                                \
+            0U                                               \
         ));
 
 /**
@@ -706,7 +706,7 @@ API_RESULT BT_mcap_common_api_handler
             MCAP_MD_DISCONNECT_IND,                          \
             API_SUCCESS,                                     \
             NULL,                                            \
-            0                                                \
+            0U                                               \
         );
 
 /**
@@ -763,11 +763,11 @@ API_RESULT BT_mcap_md_write
  *          failure
  */
 #define BT_mcap_md_create_rsp(handle,rsp_code,rsp_params,size)    \
-        BT_mcap_common_api_handler                           \
-        (                                                    \
-            handle,                                          \
-            MCAP_MD_CREATE_CNF,                              \
-            rsp_code,                                        \
+        BT_mcap_common_api_handler                                \
+        (                                                         \
+            handle,                                               \
+            MCAP_MD_CREATE_CNF,                                   \
+            rsp_code,                                             \
             rsp_params,                                           \
             size                                                  \
         );
@@ -795,7 +795,7 @@ API_RESULT BT_mcap_md_write
             MCAP_MD_RECONNECT_CNF,                           \
             rsp_code,                                        \
             NULL,                                            \
-            0                                                \
+            0U                                               \
         );
 
 /**
@@ -825,7 +825,7 @@ API_RESULT BT_mcap_md_write
             MCAP_MC_CREATE_CNF,                              \
             rsp_code,                                        \
             NULL,                                            \
-            0                                                \
+            0U                                               \
         );
 
 #ifdef MCAP_CLOCK_SYNC

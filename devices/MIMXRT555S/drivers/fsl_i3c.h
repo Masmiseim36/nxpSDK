@@ -21,7 +21,7 @@
 /*! @name Driver version */
 /*@{*/
 /*! @brief I3C driver version */
-#define FSL_I3C_DRIVER_VERSION (MAKE_VERSION(2, 3, 0))
+#define FSL_I3C_DRIVER_VERSION (MAKE_VERSION(2, 3, 2))
 /*@}*/
 
 /*! @brief Timeout times for waiting flag. */
@@ -352,6 +352,9 @@ struct _i3c_master_handle
     void *userData;                          /*!< Application data passed to callback. */
 };
 
+/*! @brief Typedef for master interrupt handler. */
+typedef void (*i3c_master_isr_t)(I3C_Type *base, i3c_master_handle_t *handle);
+
 /*! @} */
 
 /*!
@@ -606,6 +609,22 @@ typedef struct _i3c_config
 } i3c_config_t;
 
 /*! @} */
+
+/*******************************************************************************
+ * Variables
+ ******************************************************************************/
+/*! Array to map I3C instance number to IRQ number. */
+extern IRQn_Type const kI3cIrqs[];
+
+/*! Pointer to master IRQ handler for each instance. */
+extern i3c_master_isr_t s_i3cMasterIsr;
+
+/*! Pointers to master handles for each instance. */
+extern void *s_i3cMasterHandle[];
+
+/*! Pointers to slave handles for each instance. */
+extern i3c_slave_handle_t *s_i3cSlaveHandle[];
+
 /*******************************************************************************
  * API
  ******************************************************************************/

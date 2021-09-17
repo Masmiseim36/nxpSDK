@@ -2,7 +2,7 @@
  *
  *  @brief WLAN on SDIO
  *
- *  Copyright 2008-2020 NXP
+ *  Copyright 2008-2021 NXP
  *
  *  NXP CONFIDENTIAL
  *  The source code contained or described herein and all documents related to
@@ -82,8 +82,6 @@
 /*! @brief Data buffer size. */
 #define DATA_BUFFER_SIZE (FSL_SDMMC_DEFAULT_BLOCK_SIZE * DATA_BLOCK_COUNT)
 
-// extern uint8_t outbuf[SDIO_OUTBUF_LEN];
-
 typedef struct wlanfw_hdr
 {
     t_u32 magic_number;
@@ -148,8 +146,6 @@ HostCmd_DS_COMMAND *wifi_get_command_buffer(void);
 mlan_status wlan_xmit_pkt(t_u32 txlen, t_u8 interface);
 int raw_process_pkt_hdrs(void *pbuf, t_u32 payloadlen, t_u8 interface);
 uint32_t wifi_get_device_value1();
-
-uint8_t *wifi_get_sdio_outbuf(uint32_t *outbuf_len);
 
 #ifdef CONFIG_WMM
 uint8_t *wifi_wmm_get_sdio_outbuf(uint32_t *outbuf_len, mlan_wmm_ac_e queue);

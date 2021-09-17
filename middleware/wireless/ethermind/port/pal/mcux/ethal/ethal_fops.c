@@ -70,7 +70,7 @@ static void fops_list_directory (CHAR *path);
 
 /* ----------------------------------------- static Functions */
 #if EM_FOPS_FILE_SYNC_IN_IDLE
-static void fops_file_write_buffer_queue_init()
+static void fops_file_write_buffer_queue_init(void)
 {
     fops_file_write_buffer_node_t *node;
     uint32_t index = 0U;

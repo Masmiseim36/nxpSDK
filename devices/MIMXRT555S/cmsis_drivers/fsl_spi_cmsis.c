@@ -881,7 +881,7 @@ static int32_t SPI_DMAControl(uint32_t control, uint32_t arg, cmsis_spi_dma_driv
         DMA_CreateHandle(spi->dmaTxDataHandle, spi->dmaResource->txdmaBase, spi->dmaResource->txdmaChannel);
         DMA_CreateHandle(spi->dmaRxDataHandle, spi->dmaResource->rxdmaBase, spi->dmaResource->rxdmaChannel);
 
-        SPI_SlaveTransferCreateHandleDMA(spi->resource->base, &(spi->handle->slaveHandle), KSDK_SPI_SlaveDMACallback,
+        (void)SPI_SlaveTransferCreateHandleDMA(spi->resource->base, &(spi->handle->slaveHandle), KSDK_SPI_SlaveDMACallback,
                                          (void *)spi->cb_event, spi->dmaTxDataHandle, spi->dmaRxDataHandle);
 
         spi->flags |= (uint8_t)SPI_FLAG_CONFIGURED;
@@ -892,7 +892,7 @@ static int32_t SPI_DMAControl(uint32_t control, uint32_t arg, cmsis_spi_dma_driv
 
 static ARM_SPI_STATUS SPI_DMAGetStatus(cmsis_spi_dma_driver_state_t *spi)
 {
-    ARM_SPI_STATUS stat;
+    ARM_SPI_STATUS stat = {0};
 
     if ((spi->flags & (uint8_t)SPI_FLAG_MASTER) != 0U)
     {
@@ -1303,7 +1303,7 @@ static int32_t SPI_InterruptControl(uint32_t control, uint32_t arg, cmsis_spi_in
             SPI_Deinit(spi->resource->base);
         }
         (void)SPI_MasterInit(spi->resource->base, &masterConfig, spi->resource->GetFreq());
-        SPI_MasterTransferCreateHandle(spi->resource->base, &spi->handle->masterHandle,
+        (void)SPI_MasterTransferCreateHandle(spi->resource->base, &spi->handle->masterHandle,
                                        KSDK_SPI_MasterInterruptCallback, (void *)spi->cb_event);
         spi->flags |= (uint8_t)SPI_FLAG_CONFIGURED;
     }
@@ -1331,7 +1331,7 @@ static int32_t SPI_InterruptControl(uint32_t control, uint32_t arg, cmsis_spi_in
             SPI_Deinit(spi->resource->base);
         }
         (void)SPI_SlaveInit(spi->resource->base, &slaveConfig);
-        SPI_SlaveTransferCreateHandle(spi->resource->base, &spi->handle->slaveHandle, KSDK_SPI_SlaveInterruptCallback,
+        (void)SPI_SlaveTransferCreateHandle(spi->resource->base, &spi->handle->slaveHandle, KSDK_SPI_SlaveInterruptCallback,
                                       (void *)spi->cb_event);
         spi->flags |= (uint8_t)SPI_FLAG_CONFIGURED;
     }
@@ -1341,7 +1341,7 @@ static int32_t SPI_InterruptControl(uint32_t control, uint32_t arg, cmsis_spi_in
 
 static ARM_SPI_STATUS SPI_InterruptGetStatus(cmsis_spi_interrupt_driver_state_t *spi)
 {
-    ARM_SPI_STATUS stat;
+    ARM_SPI_STATUS stat = {0};
 
     if ((spi->flags & (uint8_t)SPI_FLAG_MASTER) != 0U)
     {

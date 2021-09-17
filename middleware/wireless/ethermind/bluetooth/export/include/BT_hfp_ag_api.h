@@ -79,10 +79,10 @@ typedef UCHAR HFP_AG_EVENTS;
 /** HFP Audio Gateway Event Notification Callback */
 typedef API_RESULT (* HFP_AG_EVENT_NOTIFY_CB)
                    (
-                       /* IN */  HFP_AG_EVENTS,
-                       /* IN */  API_RESULT,
-                       /* IN */  void *,
-                       /* IN */  UINT16
+                       /* IN */ HFP_AG_EVENTS    hfp_ag_event,
+                       /* IN */ API_RESULT       result,
+                       /* IN */ void *           data,
+                       /* IN */ UINT16           data_length
                    );
 
 /** \} */

@@ -616,6 +616,12 @@ typedef struct
 }GATT_DB_PARAMS;
 
 #ifdef GATT_DB_HAVE_REGISTERATION_SUPPORT
+
+#ifdef GATT_DB_HAVE_DB_SIGNATURE
+/* GATT DB Signature, used to uniquely distinguish a registered DB */
+typedef UINT32 GATT_DB_SIGNATURE;
+#endif /* GATT_DB_HAVE_DB_SIGNATURE */
+
 /**
  * Data structure used by application to register GATT Database
  * with GATT DB module.
@@ -668,6 +674,11 @@ typedef struct _GATT_DB_STRUCT
     /** GATT Max Peer Configuration */
     UINT16 gatt_db_max_peer_config;
 #endif /* STORAGE_RETENTION_SUPPORT */
+
+#ifdef GATT_DB_HAVE_DB_SIGNATURE
+    /* GATT DB Signature, used to uniquely distinguish a registered DB */
+    GATT_DB_SIGNATURE gatt_db_sign;
+#endif /* GATT_DB_HAVE_DB_SIGNATURE */
 
 }GATT_DB_STRUCT;
 #endif /* GATT_DB_HAVE_REGISTERATION_SUPPORT */
@@ -1729,7 +1740,7 @@ API_RESULT BT_gatt_db_set_attr_value
  *  \par Description:
  *  This API is to get attribute value in GATT database.
  *
- *  \param [in] attr_handle    Attribute Handle which is to be retrivedt.
+ *  \param [in] attr_handle    Attribute Handle which is to be retrived.
  *  \param [in] value          Pointer to the attribute value.
  *  \param [in] length         Pointer to the length of the attribute value.
  *
@@ -1768,6 +1779,22 @@ API_RESULT BT_gatt_db_dyn_register(void);
  *          - Attribute Count
  */
 UINT16 BT_gatt_db_get_attribute_count(void);
+
+#ifdef GATT_DB_HAVE_DB_SIGNATURE
+/**
+ *  \brief To set Unique Signature for the GATT DB.
+ *
+ *  \par Description:
+ *  This API is to set a unique signature for the GATT DB.
+ *
+ *  \param [in] gatt_db_sign
+ *
+ *  \return API_RESULT
+ *          - API_SUCCESS: If successful.
+ *          - Error Codes: Error code describing cause of failure.
+ */
+API_RESULT BT_gatt_db_dyn_set_db_signature(GATT_DB_SIGNATURE db_sign);
+#endif /* GATT_DB_HAVE_DB_SIGNATURE */
 
 #endif /* GATT_DB_DYNAMIC */
 

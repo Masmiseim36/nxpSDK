@@ -8,6 +8,7 @@ Toolchain supported
 ===================
 - MCUXpresso  11.4.0
 - IAR embedded Workbench  9.10.2
+- Keil MDK  5.34
 - GCC ARM Embedded  10.2.1
 
 Hardware requirements
@@ -15,15 +16,23 @@ Hardware requirements
 - Micro USB cable
 - evkbmimxrt1060 board
 - Personal Computer
-- One of the following WiFi modules:
+- One of the following modules:
   - AzureWave AW-AM457-uSD
   - AzureWave AW-CM358-uSD
 
 Board settings
 ==============
+Before building the example application select Wi-Fi module macro in the app_config.h. (see #define WIFI_<SoC Name>_BOARD_<Module Name>).
+If you want use the AzureWave WIFI_IW416_BOARD_AW_AM457_USD, please change the macro to WIFI_IW416_BOARD_AW_AM457_USD.
+If you want use the AzureWave WIFI_88W8987_BOARD_AW_CM358_USD, please change the macro to WIFI_88W8987_BOARD_AW_CM358_USD.
+
+Jumper settings for RT1060:
+remove  J40 5-6
+connect J40 1-2
+connect J45 with external power(controlled by SW6)
 
 Jumper settings for AzureWave AW-AM457-uSD Module:
-  - J42 2-3: VIO_SD 3.3V (Voltage level of SDIO pins is 3.3V)
+  - J11 2-3: VIO_SD 3.3V (Voltage level of SDIO pins is 3.3V)
   - J2  1-2: 3.3V VIO_uSD (Power Supply from uSD connector)
   - J4  2-3: 3.3V VIO
 
@@ -45,9 +54,9 @@ PIN NAME | AW-AM457-USD |   I.MXRT1060   | PIN NAME OF RT1060 | GPIO NAME OF RT1
 ------------------------------------------------------------------------------------
 PCM_IN   |  J9(pin 1)   |   J16(pin 5)   |    SAI2_TXD        | GPIO_AD_B0_09
 PCM_OUT  |  J9(pin 2)   |   TP11         |    SAI2_RXD        | GPIO_AD_B0_08   
-PCM_SYNC |  J9(pin 3)   |   J21(pin 9)   |    SAI2_RX_SYNC    | GPIO_AD_B0_07
-PCM_CLK  |  J9(pin 4)   |   J21(pin 7)   |    SAI2_RX_BCLK    | GPIO_AD_B0_06
-GND      |  J9(pin 6)   |   J21(pin 20)  |    GND             | GND
+PCM_SYNC |  J9(pin 3)   |   J2(pin 9)    |    SAI2_RX_SYNC    | GPIO_AD_B0_07
+PCM_CLK  |  J9(pin 4)   |   J10(pin 2)   |    SAI2_RX_BCLK    | GPIO_AD_B0_06
+GND      |  J9(pin 6)   |   J2(pin 20)   |    GND             | GND
 ------------------------------------------------------------------------------------
 
 Jumper settings for AzureWave AW-CM358-uSD Module:
@@ -70,11 +79,11 @@ The pin connect for PCM interface as the following table,
 ------------------------------------------------------------------------------------
 PIN NAME | AW-CM358-USD |   I.MXRT1060   | PIN NAME OF RT1060 | GPIO NAME OF RT1060
 ------------------------------------------------------------------------------------
-PCM_IN   |  J42(pin 1)  |   J16(pin 5)   |    SAI2_TXD        | GPIO_AD_B0_09
-PCM_OUT  |  J42(pin 2)  |   TP11         |    SAI2_RXD        | GPIO_AD_B0_08   
-PCM_SYNC |  J42(pin 3)  |   J21(pin 9)   |    SAI2_RX_SYNC    | GPIO_AD_B0_07
-PCM_CLK  |  J42(pin 4)  |   J21(pin 7)   |    SAI2_RX_BCLK    | GPIO_AD_B0_06
-GND      |  J42(pin 6)  |   J21(pin 20)  |    GND             | GND
+PCM_IN   |  J11(pin 1)  |   J16(pin 5)   |    SAI2_TXD        | GPIO_AD_B0_09
+PCM_OUT  |  J11(pin 2)  |   TP11         |    SAI2_RXD        | GPIO_AD_B0_08   
+PCM_SYNC |  J11(pin 3)  |   J2(pin 9)    |    SAI2_RX_SYNC    | GPIO_AD_B0_07
+PCM_CLK  |  J11(pin 4)  |   J10(pin 2)   |    SAI2_RX_BCLK    | GPIO_AD_B0_06
+GND      |  J11(pin 6)  |   J2(pin 20)   |    GND             | GND
 ------------------------------------------------------------------------------------
 
 Note:
@@ -111,14 +120,36 @@ Copyright  2020  NXP
 the bellow commands have been supported:
 "bt": BT related function
   USAGE: bt [discover|connect|disconnect|delete]
-    discover    start to find BT devices
-    connect     connect to the device that is found, for example: bt connect n (from 1)
-    sincall     start an incoming call.
-    aincall     accept the incoming call.
-    eincall     end an in comingcall.
-    disconnect  disconnect current connection.
-    delete      delete all devices. Ensure to disconnect the HCI link connection with the peer device before attempting to delete the bonding information.
+    discover             start to find BT devices
+    connect              connect to the device that is found, for example: bt connect n (from 1)
+    sincall              start an incoming call.
+    aincall              accept the call.
+    eincall              end an call.
+    set_tag              set phone num tag, for example: bt set_tag 123456789.
+    select_codec         codec select for codec Negotiation, for example: bt select_codec 2, it will select the codec 2 as codec.
+    set_mic_volume       update mic Volume, for example: bt set_mic_volume 14.
+    set_speaker_volume   update Speaker Volume, for example: bt set_speaker_volume 14.
+    stwcincall           start multiple an incoming call.
+    disconnect           disconnect current connection.
+    delete               delete all devices. Ensure to disconnect the HCI link connection with the peer device before attempting to delete the bonding information.
+1) "discover" start to find BT devices, it will list all device can be found, usage
+2) "connect" is used to connect to the device that is found, for example: bt connect n (from 1), usage :
+   bt connect 1
+3) "sincall" is used to start an incoming call
+4) "aincall" is used to accept an incoming call
+5) "eincall" is used to end or reject an incoming call
+6) "set_tag" is used to set phone num tag, for example: bt set_tag 123456789
+7) "select_codec" is used to  codec select for codec Negotiation, for example: bt select_codec 2, it will select the codec 2 as codec, usage:
+   bt select_codec 2
+8) "set_mic_volume" is used to set mic volume, the value  is from 1 to 15, usage as:
+    bt set_mic_volume 8
+9) "set_speaker_volume" is used to set speaker volume, the value is from 1 to 15, usage as:
+    bt set_speaker_volume 8
+10) "stwcincall"  to start multiple an incoming call, need run "sincall" is used to start an incoming call before run the command
+11) "disconnect"  to disconnect current connection
+12) "delete" is used to delete all devices. Ensure to disconnect the HCI link connection with the peer device before attempting to delete the bonding information.
 
-Note：
+Note:
 There is a short noise can be heard at headset at the begin audio streaming when in running HFP Ag . 
 The codec power on pop noise cannot eliminate.
+

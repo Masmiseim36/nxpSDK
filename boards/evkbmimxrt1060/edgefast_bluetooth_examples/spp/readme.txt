@@ -7,6 +7,7 @@ Toolchain supported
 ===================
 - MCUXpresso  11.4.0
 - IAR embedded Workbench  9.10.2
+- Keil MDK  5.34
 - GCC ARM Embedded  10.2.1
 
 Hardware requirements
@@ -14,15 +15,23 @@ Hardware requirements
 - Micro USB cable
 - evkbmimxrt1060 board
 - Personal Computer
-- One of the following WiFi modules:
+- One of the following modules:
   - AzureWave AW-AM457-uSD
   - AzureWave AW-CM358-uSD
 
 Board settings
 ==============
+Before building the example application select Wi-Fi module macro in the app_config.h. (see #define WIFI_<SoC Name>_BOARD_<Module Name>).
+If you want use the AzureWave WIFI_IW416_BOARD_AW_AM457_USD, please change the macro to WIFI_IW416_BOARD_AW_AM457_USD.
+If you want use the AzureWave WIFI_88W8987_BOARD_AW_CM358_USD, please change the macro to WIFI_88W8987_BOARD_AW_CM358_USD.
+
+Jumper settings for RT1060:
+remove  J40 5-6
+connect J40 1-2
+connect J45 with external power(controlled by SW6)
 
 Jumper settings for AzureWave AW-AM457-uSD Module:
-  - J42 2-3: VIO_SD 3.3V (Voltage level of SDIO pins is 3.3V)
+  - J11 2-3: VIO_SD 3.3V (Voltage level of SDIO pins is 3.3V)
   - J2  1-2: 3.3V VIO_uSD (Power Supply from uSD connector)
   - J4  2-3: 3.3V VIO
 
@@ -82,169 +91,35 @@ Running the demo
 The log below shows the output of the example in the terminal window. 
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-USB Host stack successfully initialized
 Bluetooth initialized
 BR/EDR set connectable and discoverable done
 
-SHELL build: Mar  2 2021
-Copyright  2021  NXP
+Copyright  2020  NXP
 
 >> 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Notice: SPP project doesn't support multiple roles and multiple connections, which means 
-        at one time, spp just servers as a server or a client and just supports 1 spp connection
-        with peer spp device.
-
 1.  Procedure to run SPP server
 1.1 input "help" to show command list
-1.2 input "spp register [5|3]" to register spp server channel 5/3, wait for spp connection
-1.3 After spp connection is created, input "spp send [1|2|3|4]" to send data
-1.4 After spp connection is created, input "spp disconnect" to disconnect with peer device
+1.2 input "spp register 3" to register spp server channel 3, wait for spp connection
+1.3 After spp connection on channel 3 is created, input "spp send [1|2|3|4]" to send data
+1.4 After peer device send "spp set_pn client 3", input "spp get_pn server 3" to test pn command
+1.5 After peer device send "spp set_port client 5", input "spp register 5" to register spp server channel 5 and wait for spp connection
+1.6 After spp connection on channel 5 is created, input "spp get_port server 5" to test remote port negotiation command after spp connection is created
+1.7 input "spp handle" to show current active spp handle
+1.8 input "spp switch 0" to select the first spp handle
+1.9 input "spp disconnect" to disconnect with peer device
 
 2.  Procedure to run SPP client
 2.1 input "bt discover" to discover connctable bluetooth device
 2.2 input "bt connect [index]" to create basic bluetooth connection with the discovered device
 2.3 input "spp discover" to discover registered spp server channel in peer device
-2.4 input "spp connect [channel]" to create spp connection with peer spp server channel
-2.5 After spp connection is created, input "spp send [1|2|3|4]" to send data
-2.6 After spp connection is created, input "spp disconnect" to disconnect with peer device
-
-Here is the log of spp server:
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-USB Host stack successfully initialized
-Bluetooth initialized
-BR/EDR set connectable and discoverable done
-
-SHELL build: Mar  2 2021
-Copyright  2021  NXP
-
->> help
-
-"help": List all the registered commands
-
-"exit": Exit program
-
-"bt": BT related function
-  USAGE: bt [discover|connect|disconnect|delete]
-    bt discover    start to find BT devices
-    bt connect     connect to the device that is found, for example: bt connectdevice n (from 1)
-    bt disconnect  disconnect current connection.
-    bt delete      delete all devices. Ensure to disconnect the HCI link connection with the peer device before attempting to delete the bonding information.
-
-"spp": SPP related function
-  USAGE: 
-    spp register [5|3]    register a spp server channel
-    spp discover          discover spp server channel on peer device
-    spp connect [channel] create spp connection
-    spp disconnect        disconnect current spp connection.
-    spp send [1|2|3|4]    send data over spp connection.
->> spp register 5
-Register spp server channel 5 successfully!
->> Connected
-Security changed: 00:0C:61:20:00:10 (0x80) level 2
-SPP connection is created successfully!
-
-SPP received 11 data!
-
-----------------CHAR DUMP-----------------------
-A T + C I N D = ? \ r 
-------------------------------------------------
-
-----------------HEX DUMP------------------------
-41 54 2B 43 49 4E 44 3D 3F 5C 72 
-------------------------------------------------
-spp send 2
->> 
-SPP sent 10 data successfully
-Sent data is:
-----------------CHAR DUMP-----------------------
-A T + C I N D ? \ r 
-------------------------------------------------
-
-SPP received 6 data!
-
-----------------CHAR DUMP-----------------------
-A T E P \ r 
-------------------------------------------------
-
-----------------HEX DUMP------------------------
-41 54 45 50 5C 72 
-------------------------------------------------
-spp send 4
->> 
-SPP sent 11 data successfully
-Sent data is:
-----------------CHAR DUMP-----------------------
-A T + C K P D = E \ r 
-------------------------------------------------
-SPP connection is disconnected successfully!
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Here is the log of spp client:
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-USB Host stack successfully initialized
-Bluetooth initialized
-BR/EDR set connectable and discoverable done
-
-SHELL build: Mar  2 2021
-Copyright  2021  NXP
-
->> bt discover
-Discovery started. Please wait ...
->> BR/EDR discovery complete
-[1]: 3C:6A:A7:ED:CD:BB, RSSI -79 
-[2]: 20:4E:F6:25:F3:20, RSSI -42 edgefast spp
-[3]: 58:A0:23:19:09:32, RSSI -84 
-[4]: B0:E2:35:07:FA:76, RSSI -80 灏忕背鎵嬫満
-[5]: 44:66:FC:1B:FC:70, RSSI -82 OPPO R15
-[6]: D8:C0:A6:BD:9C:3C, RSSI -78 edgefast hfp
-[7]: 7C:03:AB:43:0C:CB, RSSI -77 1162200453鐨凴edmi Note 7 Pro
-[8]: 48:2C:A0:39:6E:9F, RSSI -97 
-bt connect 2
-Connection pending
->> Connected
-spp discover
->> Discover 1 SPP server channel from device 20:F3:25:F6:4E:20!
-0x0005
-spp connect 5
-Connect SPP Successful!
->> Security changed: 00:0C:61:20:00:10 (0x80) level 2
-SPP connection is created successfully!
-spp send 1
->> 
-SPP sent 11 data successfully
-Sent data is:
-----------------CHAR DUMP-----------------------
-A T + C I N D = ? \ r 
-------------------------------------------------
-
-SPP received 10 data!
-
-----------------CHAR DUMP-----------------------
-A T + C I N D ? \ r 
-------------------------------------------------
-
-----------------HEX DUMP------------------------
-41 54 2B 43 49 4E 44 3F 5C 72 
-------------------------------------------------
-spp send 3
->> 
-SPP sent 6 data successfully
-Sent data is:
-----------------CHAR DUMP-----------------------
-A T E P \ r 
-------------------------------------------------
-
-SPP received 11 data!
-
-----------------CHAR DUMP-----------------------
-A T + C K P D = E \ r 
-------------------------------------------------
-
-----------------HEX DUMP------------------------
-41 54 2B 43 4B 50 44 3D 45 5C 72 
-------------------------------------------------
-spp disconnect
->> SPP connection is disconnected successfully!
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+2.4 input "spp connect 3" to create spp connection on channel 3 with peer device
+2.5 After spp connection on channel 3 is created, input "spp send [1|2|3|4]" to send data
+2.6 After spp connection on channel 3 is created, input "spp send_rls" to test remote line status command
+2.7 After spp connection on channel 3 is created, input "spp send_msc" to test modem status command
+2.8 After spp connection on channel 3 is created, input "spp set_pn client 3" to test parameter command
+2.9 input "spp get_port client 5" to test remote port negotiation command before spp connection on channel 5 is created
+2.10 input "spp set_port client 5" to test remote port negotiation command before spp connection on channel 5 is created
+2.11 input "spp connect 5" to create spp connection on channel 5 with peer device
+2.12 input "spp get_port client 5" to test remote port negotiation command after spp connection on channel 5 is created

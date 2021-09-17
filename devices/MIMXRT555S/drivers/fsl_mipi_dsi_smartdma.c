@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2020 NXP
+ * Copyright 2019-2021 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -49,10 +49,10 @@ status_t DSI_TransferCreateHandleSMARTDMA(MIPI_DSI_HOST_Type *base,
                                           dsi_smartdma_callback_t callback,
                                           void *userData)
 {
-    assert(handle);
+    assert(NULL != handle);
 
     /* Zero the handle */
-    memset(handle, 0, sizeof(*handle));
+    (void)memset(handle, 0, sizeof(*handle));
 
     /* Initialize the handle */
     handle->dsi      = base;
@@ -76,7 +76,7 @@ status_t DSI_TransferCreateHandleSMARTDMA(MIPI_DSI_HOST_Type *base,
  */
 void DSI_TransferAbortSMARTDMA(MIPI_DSI_HOST_Type *base, dsi_smartdma_handle_t *handle)
 {
-    assert(handle);
+    assert(NULL != handle);
 
     if (handle->isBusy)
     {
@@ -104,7 +104,7 @@ status_t DSI_TransferWriteMemorySMARTDMA(MIPI_DSI_HOST_Type *base,
                                          dsi_smartdma_handle_t *handle,
                                          dsi_smartdma_write_mem_transfer_t *xfer)
 {
-    assert(handle);
+    assert(NULL != handle);
 
     status_t status;
     uint32_t smartdmaApi;
@@ -124,24 +124,25 @@ status_t DSI_TransferWriteMemorySMARTDMA(MIPI_DSI_HOST_Type *base,
         {
             if (xfer->inputFormat == kDSI_SMARTDMA_InputPixelFormatRGB565)
             {
-                smartdmaApi = kSMARTDMA_MIPI_RGB565_DMA;
+                smartdmaApi = (uint32_t)kSMARTDMA_MIPI_RGB565_DMA;
             }
             else if (xfer->inputFormat == kDSI_SMARTDMA_InputPixelFormatRGB888)
             {
-                smartdmaApi = kSMARTDMA_MIPI_RGB888_DMA;
+                smartdmaApi = (uint32_t)kSMARTDMA_MIPI_RGB888_DMA;
             }
             else
             {
-                smartdmaApi = kSMARTDMA_MIPI_XRGB2RGB_DMA;
+                smartdmaApi = (uint32_t)kSMARTDMA_MIPI_XRGB2RGB_DMA;
             }
 
-            handle->param.p_buffer             = (uint32_t *)xfer->data;
+            handle->param.p_buffer             = xfer->data;
             handle->param.buffersize           = xfer->dataSize;
             handle->param.smartdma_stack       = handle->smartdmaStack;
             handle->param.disablePixelByteSwap = (uint32_t)xfer->disablePixelByteSwap;
 
             handle->isBusy = true;
-            DSI_EnableInterrupts(base, kDSI_InterruptGroup1ApbTxDone | kDSI_InterruptGroup1HtxTo, 0U);
+            DSI_EnableInterrupts(base, (uint32_t)kDSI_InterruptGroup1ApbTxDone | (uint32_t)kDSI_InterruptGroup1HtxTo,
+                                 0U);
             SMARTDMA_Reset();
             SMARTDMA_Boot(smartdmaApi, &handle->param, 0);
 
@@ -167,13 +168,14 @@ static void DSI_SMARTDMA_Callback(void *param)
 
     uint32_t intFlags1, intFlags2;
 
-    DSI_DisableInterrupts(handle->dsi, kDSI_InterruptGroup1ApbTxDone | kDSI_InterruptGroup1HtxTo, 0U);
+    DSI_DisableInterrupts(handle->dsi, (uint32_t)kDSI_InterruptGroup1ApbTxDone | (uint32_t)kDSI_InterruptGroup1HtxTo,
+                          0U);
 
     DSI_GetAndClearInterruptStatus(handle->dsi, &intFlags1, &intFlags2);
 
     handle->isBusy = false;
 
-    if (handle->callback)
+    if (NULL != handle->callback)
     {
         handle->callback(handle->dsi, handle, kStatus_Success, handle->userData);
     }

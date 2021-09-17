@@ -116,7 +116,7 @@ struct bt_l2cap_chan {
 
 /** @brief LE L2CAP Endpoint structure. */
 struct bt_l2cap_le_endpoint {
-	/** Endpoint CID */
+	/** Endpoint Channel Identifier (CID) */
 	uint16_t				cid;
 	/** Endpoint Maximum Transmission Unit */
 	uint16_t				mtu;
@@ -163,7 +163,7 @@ struct bt_l2cap_le_chan {
 
 /** @brief BREDR L2CAP Endpoint structure. */
 struct bt_l2cap_br_endpoint {
-	/** Endpoint CID */
+	/** Endpoint Channel Identifier (CID) */
 	uint16_t				cid;
 	/** Endpoint Maximum Transmission Unit */
 	uint16_t				mtu;
@@ -179,6 +179,76 @@ struct bt_l2cap_br_chan {
 	struct bt_l2cap_br_endpoint	tx;
 	/* For internal use only */
 	atomic_t			flags[1];
+};
+
+/** configuration parameter options type */
+#define BT_L2CAP_CFG_OPT_MTU 1u
+#define BT_L2CAP_CFG_OPT_FUSH_TIMEOUT 2u
+#define BT_L2CAP_CFG_OPT_QOS 3u
+#define BT_L2CAP_CFG_OPT_RETRANS_FC 4u
+#define BT_L2CAP_CFG_OPT_FCS 5u
+#define BT_L2CAP_CFG_OPT_EXT_FLOW_SPEC 6u
+#define BT_L2CAP_CFG_OPT_EXT_WIN_SIZE 7u
+
+/** L2CAP Operation Modes */
+#define BT_L2CAP_MODE_BASIC 0x00U
+#define BT_L2CAP_MODE_RTM   0x01U
+#define BT_L2CAP_MODE_FC    0x02U
+#define BT_L2CAP_MODE_ERTM  0x03U
+#define BT_L2CAP_MODE_SM    0x04U
+
+/** L2CAP Extended Feature Mask values */
+#define BT_L2CAP_FEATURE_FC                   0x00000001U
+#define BT_L2CAP_FEATURE_RTM                  0x00000002U
+#define BT_L2CAP_FEATURE_QOS                  0x00000004U
+#define BT_L2CAP_FEATURE_ERTM                 0x00000008U
+#define BT_L2CAP_FEATURE_SM                   0x00000010U
+#define BT_L2CAP_FEATURE_FCS                  0x00000020U
+#define BT_L2CAP_FEATURE_EFS_BR_EDR           0x00000040U
+#define BT_L2CAP_FEATURE_FIXED_CHANNELS       0x00000080U
+#define BT_L2CAP_FEATURE_EXTENDED_WINDOW_SIZE 0x00000100U
+#define BT_L2CAP_FEATURE_UCD                  0x00000200U
+
+/** QUALITY OF SERVICE (QOS) OPTION */
+struct bt_l2cap_qos {
+	uint8_t flags;
+	uint8_t service_type;
+	uint32_t token_rate;
+	uint32_t token_bucket_size;
+	uint32_t peak_bandwidth;
+	uint32_t latency;
+	uint32_t delay_variation;
+};
+
+/** RETRANSMISSION AND FLOW CONTROL OPTION */
+struct bt_l2cap_retrans_fc {
+	uint8_t mode;
+	uint8_t tx_window_size;
+	uint8_t max_transmit;
+	uint16_t retrans_time_out;
+	uint16_t monitor_time_out;
+	uint16_t max_pdu;
+};
+
+/** EXTENDED FLOW SPECIFICATION OPTION */
+struct bt_l2cap_ext_flow_spec {
+	uint8_t identifier;
+	uint8_t service_type;
+	uint16_t max_sdu;
+	uint32_t sdu_inter_arrival_time;
+	uint32_t access_latency;
+	uint32_t flush_timeout;
+};
+
+/** @brief L2CAP configuration parameter options. */
+struct bt_l2cap_cfg_options {
+	uint16_t *mtu;
+	uint16_t *flush_timeout;
+	uint8_t *fcs_type;
+	uint16_t *max_window_size;
+	struct bt_l2cap_qos *qos;
+	struct bt_l2cap_retrans_fc *retrans_fc;
+	struct bt_l2cap_ext_flow_spec *ext_fs;
 };
 
 /** @brief L2CAP Channel operations structure. */
@@ -271,6 +341,38 @@ struct bt_l2cap_chan_ops {
 	 * references to the channel object.
 	 */
 	void (*released)(struct bt_l2cap_chan *chan);
+#if (defined(CONFIG_BT_L2CAP_IFRAME_SUPPORT) && (CONFIG_BT_L2CAP_IFRAME_SUPPORT > 0U))
+	/** @brief get configuration callback
+	 *
+	 *  If it is set, callback to upper layer to get self configuration data
+	 *  to send configuration command; Otherwise, configure internally.
+	 *
+	 *  @param chan The channel which is configured
+	 *  @param[out] cfg get the configuration
+	 */
+	void (*get_cfg)(struct bt_l2cap_chan *chan, struct bt_l2cap_cfg_options *cfg);
+	/** @brief received the configuration command callback
+	 *
+	 *  If it is set, callback to upper layer to notify configuration data and get
+	 *  config rsp data when receivied peer configuration command;
+	 *  Otherwise, response internally.
+	 *
+	 *  @param chan The channel which is configured
+	 *  @param cfg the received configuration
+	 *  @param[out] rsp get the configuration response
+	 */
+	void (*cfg_req)(struct bt_l2cap_chan *chan, struct bt_l2cap_cfg_options *cfg, struct bt_l2cap_cfg_options *rsp);
+	/*  */
+	/** @brief received the configuration response callback
+	 *
+	 *  If it is set, callback to upper layer to notify configuration rsp data when
+	 *  received peer configuration response; Otherwise, don't callback.
+	 *
+	 *  @param chan The channel which is configured
+	 *  @param rsp the configuration response
+	 */
+	void (*cfg_rsp)(struct bt_l2cap_chan *chan, struct bt_l2cap_cfg_options *rsp);
+#endif
 };
 
 /** @def BT_L2CAP_CHAN_SEND_RESERVE
@@ -313,6 +415,9 @@ struct bt_l2cap_server {
 	 */
 	int (*accept)(struct bt_conn *conn, struct bt_l2cap_chan **chan);
 
+#if (defined(CONFIG_BT_L2CAP_IFRAME_SUPPORT) && (CONFIG_BT_L2CAP_IFRAME_SUPPORT > 0U))
+	uint32_t feature_mask;
+#endif
 	sys_snode_t node;
 };
 

@@ -1021,6 +1021,31 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>eiq/tensorflow-lite</GroupName>
+          <Files>
+            <File>
+              <FileName>AUTHORS</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/AUTHORS</FilePath>
+            </File>
+            <File>
+              <FileName>LICENSE</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/LICENSE</FilePath>
+            </File>
+            <File>
+              <FileName>ChangeLogKSDK.txt</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/ChangeLogKSDK.txt</FilePath>
+            </File>
+            <File>
+              <FileName>readme.txt</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/readme.txt</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>eiq/tensorflow-lite/tensorflow/core/public</GroupName>
           <Files>
             <File>
@@ -3831,6 +3856,31 @@
               <FileName>font.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/eiq/common/gprintf/font.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>eiq/tensorflow-lite</GroupName>
+          <Files>
+            <File>
+              <FileName>AUTHORS</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/AUTHORS</FilePath>
+            </File>
+            <File>
+              <FileName>LICENSE</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/LICENSE</FilePath>
+            </File>
+            <File>
+              <FileName>ChangeLogKSDK.txt</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/ChangeLogKSDK.txt</FilePath>
+            </File>
+            <File>
+              <FileName>readme.txt</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/readme.txt</FilePath>
             </File>
           </Files>
         </Group>

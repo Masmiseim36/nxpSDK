@@ -37,6 +37,8 @@ void EM_debug_init (void)
     /* Initialize runtime debug level */
     em_runtime_debug_level = EM_DEBUG_LEVEL_ALL;
 
+    (void)em_runtime_debug_level;
+
 #ifndef EM_DISABLE_DEBUG_LOG_ON_STARTUP
     /* Enable all module debug log - by default */
     enable_all_bit_mask = 0xFFFFFFFFU;
@@ -98,10 +100,10 @@ INT32 EM_debug_dump_bytes(UINT32 module_id, UCHAR *buffer, UINT32 length)
     UINT16 offset, count;
     UCHAR c;
 
-    (void) EM_debug_dump(module_id, "-- Dumping %d Bytes --\n",
+    EM_debug_dump(module_id, "-- Dumping %d Bytes --\n",
     (int)length);
 
-    (void) EM_debug_dump(module_id,
+    EM_debug_dump(module_id,
     "-------------------------------------------------------------------\n");
 
     count = 0U;
@@ -109,7 +111,7 @@ INT32 EM_debug_dump_bytes(UINT32 module_id, UCHAR *buffer, UINT32 length)
     for(i = 0U; i < length; i ++)
     {
         c =  buffer[i];
-        (void) sprintf(hex_stream + offset, "%02X ", c);
+        (void) sprintf(&hex_stream[offset], "%02X ", c);
 
         if ( (c >= 0x20U) && (c <= 0x7EU) )
         {
@@ -129,7 +131,7 @@ INT32 EM_debug_dump_bytes(UINT32 module_id, UCHAR *buffer, UINT32 length)
             count = 0U;
             offset = 0U;
 
-            (void) EM_debug_dump(module_id, "%s   %s\n",
+            EM_debug_dump(module_id, "%s   %s\n",
             hex_stream, char_stream);
 
             EM_mem_set(hex_stream, 0U, 49U);
@@ -142,11 +144,11 @@ INT32 EM_debug_dump_bytes(UINT32 module_id, UCHAR *buffer, UINT32 length)
         char_stream[count] = '\0';
 
         /* Maintain the alignment */
-        (void) EM_debug_dump(module_id, "%-48s   %s\n",
+        EM_debug_dump(module_id, "%-48s   %s\n",
         hex_stream, char_stream);
     }
 
-    (void) EM_debug_dump(module_id,
+    EM_debug_dump(module_id,
     "-------------------------------------------------------------------\n");
 
     return 0U;
@@ -159,14 +161,14 @@ INT32 EM_debug_dump_decimal(UINT32 module_id, UCHAR *buffer, UINT32 length)
     UINT32 i;
     UINT16 offset, count;
 
-    (void) EM_debug_dump(module_id, "Dumping %d Bytes (In Decimal): ------>\n",
+    EM_debug_dump(module_id, "Dumping %d Bytes (In Decimal): ------>\n",
     (int)length);
 
     count = 0U;
     offset = 0U;
     for(i = 0U; i < length; i ++)
     {
-        (void) sprintf(stream + offset, "%3d ", (unsigned int)buffer[i]);
+        (void) sprintf(&stream[offset], "%3d ", (unsigned int)buffer[i]);
         count ++;
         offset += 4U;
 
@@ -175,7 +177,7 @@ INT32 EM_debug_dump_decimal(UINT32 module_id, UCHAR *buffer, UINT32 length)
             count = 0U;
             offset = 0U;
 
-            (void) EM_debug_dump(module_id, "%s\n", stream);
+            EM_debug_dump(module_id, "%s\n", stream);
 
             EM_mem_set(stream, 0U, 100U);
         }
@@ -183,10 +185,10 @@ INT32 EM_debug_dump_decimal(UINT32 module_id, UCHAR *buffer, UINT32 length)
 
     if(0U != offset)
     {
-        (void) EM_debug_dump(module_id, "%s\n", stream);
+        EM_debug_dump(module_id, "%s\n", stream);
     }
 
-    (void) EM_debug_dump(module_id, "<------------------------------------>\n");
+    EM_debug_dump(module_id, "<------------------------------------>\n");
 
     return 0U;
 }

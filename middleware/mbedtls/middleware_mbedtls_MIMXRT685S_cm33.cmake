@@ -100,7 +100,5 @@ target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
 )
 
 
-include(middleware_mbedtls_rt1_MIMXRT685S_cm33)
-
 include(utility_debug_console_MIMXRT685S_cm33)
 

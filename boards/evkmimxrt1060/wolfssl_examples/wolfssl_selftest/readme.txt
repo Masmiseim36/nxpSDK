@@ -6,7 +6,6 @@ terminal.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  9.10.2
 - GCC ARM Embedded  10.2.1
 
 Hardware requirements

@@ -61,6 +61,8 @@ API_RESULT BT_ctn_build_object_listing_pl
     UINT16          start_offset;
     UCHAR first;
 
+    UINT16          max_list_size;
+
     /* param check */
     if ((NULL == dir_entry) ||
         (NULL == listingfile) ||
@@ -77,6 +79,7 @@ API_RESULT BT_ctn_build_object_listing_pl
     object_count                    = 0x00U;
     ctn_obj_param_mask              = 0xFFFFFFU;
     listing_obj_info->listing_count = 0x00U;
+    max_list_size = 0xFFFFU;
 
     /* MISRA C-2012 Rule 9.1 | Coverity UNINIT */
     xml_fd                          = NULL;
@@ -97,50 +100,6 @@ API_RESULT BT_ctn_build_object_listing_pl
     "[CTN_PL] Path = %s\n", dir_entry);
 
     first = BT_FALSE;
-
-#if 0
-    retval = BT_fops_access_first(dir, NULL, &h, &info);
-    if (API_SUCCESS != retval)
-    {
-        CTN_PL_ERR(
-        "[CTN_PL] Invalid File Handle. Get Last Error reports  %d\n");
-
-        /* MISRA C-2012 Rule 17.7 | Coverity CHECKED_RETURN */
-        (void)BT_fops_file_close(xml_fd);
-
-        return API_FAILURE;
-    }
-    else
-    {
-        CTN_PL_INF(
-        "[CTN_PL] The first file/directory found is %s\n",
-        info.fname);
-
-        if(info.fattrib & BT_FOPS_MASK_FOLDER)
-        {
-            CTN_PL_INF(
-            "[CTN_PL] It is a directory\n");
-        }
-        else
-        {
-            CTN_PL_INF(
-            "[CTN_PL] It is a file\n");
-        }
-    }
-
-    if(API_SUCCESS != BT_fops_set_path_forward(dir))
-    {
-        CTN_PL_ERR(
-        "[CTN_PL] Failure : could not change directory\n");
-    }
-    else
-    {
-        CTN_PL_INF(
-        "[CTN_PL] Success : could change directory\n");
-
-        BT_str_cat(dir, "*.*");
-    }
-#endif /* 0 */
 
     /* check for application param mask*/
     if (0U != (CTN_GET_APPL_PARAM_FLAG
@@ -165,10 +124,25 @@ API_RESULT BT_ctn_build_object_listing_pl
         start_offset = appl_param->list_start_offset;
     }
 
+    if (0U != (CTN_GET_APPL_PARAM_FLAG
+              (
+                  appl_param->appl_param_flag,
+                   CTN_FLAG_MAXLISTCOUNT
+              )))
+    {
+        max_list_size = appl_param->max_list_count;
+    }
+
     retval = API_SUCCESS;
 
     BT_LOOP_FOREVER()
     {
+        if ((0U != max_list_size) &&
+            (object_count >= max_list_size))
+        {
+            break;
+        }
+
         if (BT_FALSE == first)
         {
             first = BT_TRUE;
@@ -361,7 +335,7 @@ API_RESULT BT_ctn_build_object_listing_pl
         }
     }
 
-    if (API_SUCCESS == retval)
+    /* if (API_SUCCESS == retval) */
     {
         BT_get_local_time(&local_time);
 
@@ -430,47 +404,6 @@ API_RESULT BT_ctn_get_object_list
     "[CTN_PL] Path = %s\n", dir_entry);
 
     first = BT_FALSE;
-
-#if 0
-    retval = BT_fops_access_first(dir, NULL, &h, &info);
-    if (API_SUCCESS != retval)
-    {
-        CTN_PL_ERR(
-            "[CTN_PL] Invalid File Handle. Get Last Error reports  %d\n");
-
-        return API_FAILURE;
-    }
-    else
-    {
-        CTN_PL_INF(
-        "[CTN_PL] The first file/directory found is %s\n",
-        info.fname);
-
-        if(info.fattrib & BT_FOPS_MASK_FOLDER)
-        {
-            CTN_PL_INF(
-            "[CTN_PL] It is a directory\n");
-        }
-        else
-        {
-            CTN_PL_INF(
-            "[CTN_PL] It is a file\n");
-        }
-    }
-
-    if(API_SUCCESS != BT_fops_set_path_forward(dir))
-    {
-        CTN_PL_ERR(
-        "[CTN_PL] Failure : could not change directory\n");
-    }
-    else
-    {
-        CTN_PL_INF(
-        "[CTN_PL] Success : could change directory\n");
-
-        BT_str_cat(dir, "*.*");
-    }
-#endif /* 0 */
 
     BT_LOOP_FOREVER()
     {
@@ -1128,10 +1061,11 @@ CHAR  ctn_nibble_to_char(UCHAR nibble)
         (sizeof(dst_file_name) - 1)
     );
 
-    BT_str_cat
+    BT_str_n_cat
     (
         dst_file_name,
-        ".ics"
+        ".ics",
+        (sizeof(dst_file_name) - BT_str_len(dst_file_name) - 1)
     );
 
     /* MISRA C-2012 Rule 17.7 | Coverity CHECKED_RETURN */
@@ -1174,17 +1108,19 @@ CHAR  ctn_nibble_to_char(UCHAR nibble)
                 /* Yes, Version field found */
 
                 /* Construct HANDLE field */
-                BT_str_copy
+                BT_str_n_copy
                 (
                     handle_field,
-                    "HANDLE:"
+                    "HANDLE:",
+                    sizeof(handle_field)
                 );
 
                 /* Append handle value */
-                BT_str_cat
+                BT_str_n_cat
                 (
                     handle_field,
-                    ctn_handle
+                    ctn_handle,
+                    (sizeof(handle_field) - BT_str_len(handle_field) - 1)
                 );
 
                handle_field[7U+ctn_handle_len] = '\r';

@@ -37,10 +37,10 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../FreeRTOSConfig.h"
 "${ProjDirPath}/../pin_mux.c"
 "${ProjDirPath}/../pin_mux.h"
-"${ProjDirPath}/../wifi_config.h"
 "${ProjDirPath}/../../../sdmmc_config.c"
 "${ProjDirPath}/../../../sdmmc_config.h"
 "${ProjDirPath}/../app_config.h"
+"${ProjDirPath}/../wifi_config.h"
 "${ProjDirPath}/../board.c"
 "${ProjDirPath}/../board.h"
 "${ProjDirPath}/../clock_config.c"
@@ -130,6 +130,8 @@ include(CMSIS_Include_core_cm_MIMXRT1062)
 include(middleware_freertos-kernel_extension_MIMXRT1062)
 
 include(middleware_wifi_wifidriver_MIMXRT1062)
+
+include(middleware_wifi_fwdnld_MIMXRT1062)
 
 include(middleware_sdmmc_osa_freertos_MIMXRT1062)
 

@@ -1,5 +1,5 @@
 /*
- * FreeRTOS Kernel V10.4.3
+ * FreeRTOS Kernel V10.4.3 LTS Patch 1
  * Copyright (C) 2020 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
@@ -919,33 +919,6 @@ void MPU_vQueueDelete( QueueHandle_t xQueue ) /* FREERTOS_SYSTEM_CALL */
 
     vPortResetPrivilege( xRunningPrivileged );
 }
-/*-----------------------------------------------------------*/
-
-#if ( configSUPPORT_DYNAMIC_ALLOCATION == 1 )
-    void MPU_vPortInitialiseBlocks( void ) /* FREERTOS_SYSTEM_CALL */
-    {
-        BaseType_t xRunningPrivileged = xPortRaisePrivilege();
-
-        vPortInitialiseBlocks();
-
-        vPortResetPrivilege( xRunningPrivileged );
-    }
-#endif /* configSUPPORT_DYNAMIC_ALLOCATION */
-/*-----------------------------------------------------------*/
-
-#if ( configSUPPORT_DYNAMIC_ALLOCATION == 1 )
-    size_t MPU_xPortGetFreeHeapSize( void ) /* FREERTOS_SYSTEM_CALL */
-    {
-        size_t xReturn;
-        BaseType_t xRunningPrivileged = xPortRaisePrivilege();
-
-        xReturn = xPortGetFreeHeapSize();
-
-        vPortResetPrivilege( xRunningPrivileged );
-
-        return xReturn;
-    }
-#endif /* configSUPPORT_DYNAMIC_ALLOCATION */
 /*-----------------------------------------------------------*/
 
 #if ( ( configSUPPORT_DYNAMIC_ALLOCATION == 1 ) && ( configUSE_TIMERS == 1 ) )

@@ -24,9 +24,6 @@
 
 #pragma section = "NVM_ADAPTER_TABLE"
 
-#define __section_define_internal(s) _Pragma(#s)
-#define __section_define(x)          __section_define_internal(location = "" #x)
-
 #define NVM_ADAPTER_TABLE(table) const table @ "NVM_ADAPTER_TABLE"
 
 #else

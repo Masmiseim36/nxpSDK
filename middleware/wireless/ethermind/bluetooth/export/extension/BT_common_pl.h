@@ -40,6 +40,8 @@
 /* EtherMind Configuration File */
 #define BT_CONFIG_FILE                          "ethermind.conf"
 
+/* Feature to control usage of Upper Layer Callbacks for Init and Deinit */
+#define BT_COMMON_PL_SUPPORT_UL_CB
 
 /* ------------------------------------------- Data Structures */
 typedef struct
@@ -47,6 +49,14 @@ typedef struct
     CHAR byte[16];
 }INT128;
 
+/**
+ * BT Common Platform Interface of Initialization Callback to Upper Layer.
+ */
+typedef void (* BT_COMMON_UL_INIT_CB_PL)(void);
+/**
+ * BT Common Platform Interface of De-Initialization Callback to Upper Layer.
+ */
+typedef void (* BT_COMMON_UL_DEINIT_CB_PL)(void);
 
 /* ------------------------------------------- Function Declarations */
 /* EtherMind-Init: Platform Lower & Upper Handler */
@@ -60,6 +70,15 @@ void bluetooth_on_upper_pl(void);
 /* Bluetooth-OFF: Platform Lower & Upper Handler */
 void bluetooth_off_lower_pl(void);
 void bluetooth_off_upper_pl(void);
+
+#ifdef BT_COMMON_PL_SUPPORT_UL_CB
+/* Common platform registration for Upper Layer callback for Init & Deinit */
+void BT_ethermind_register_ul_cb_pl
+     (
+         /* IN */ BT_COMMON_UL_INIT_CB_PL   bt_on_init_cb,
+         /* IN */ BT_COMMON_UL_DEINIT_CB_PL bt_off_deinit_cb
+     );
+#endif /* BT_COMMON_PL_SUPPORT_UL_CB */
 
 #endif /* _H_BT_COMMON_PL_ */
 

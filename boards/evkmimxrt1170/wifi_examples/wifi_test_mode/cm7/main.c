@@ -17,23 +17,7 @@
 #include "clock_config.h"
 #include "board.h"
 #include "fsl_debug_console.h"
-
-#if defined(SD8801)
-#include "sd8801_wlan.h"
-#elif defined(SD8977)
-#include "sduart8977_wlan_bt.h"
-#elif defined(SD8978)
-#include "sduartIW416_wlan_bt.h"
-#elif defined(SD8987)
-#include "sduart8987_wlan_bt.h"
-#elif defined(SD8997)
-#include "sduart8997_wlan_bt.h"
-#elif defined(SD9097)
-#include "pvt_sd9097_wlan.h"
-#elif defined(SD9098)
-#include "pvt_sd9098_wlan.h"
-#endif
-
+#include "wlan_bt_fw.h"
 #include "wlan.h"
 #include "wifi.h"
 #include "wm_net.h"
@@ -271,16 +255,27 @@ int main(void)
     (void)result;
 
     BOARD_ConfigMPU();
-    BOARD_InitPins();
-#if defined(WIFI_BOARD_AW_CM358)
+    BOARD_InitBootPins();
+#if defined(WIFI_88W8987_BOARD_AW_CM358MA)
     /* Init SDIO_RST */
     BOARD_InitM2WifiResetPins();
 #endif
-    BOARD_BootClockRUN();
+
+#if defined(HOST_PDN_RESET)
+    /* Init WL_RST */
+    BOARD_InitWlRstPin();
+#endif
+
+    BOARD_InitBootClocks();
     BOARD_InitDebugConsole();
-#if defined(WIFI_BOARD_AW_CM358)
+#if defined(WIFI_88W8987_BOARD_AW_CM358MA)
     /* Set SDIO_RST to 1 */
     GPIO_PinWrite(BOARD_INITM2WIFIRESETPINS_SDIO_RST_GPIO, BOARD_INITM2WIFIRESETPINS_SDIO_RST_GPIO_PIN, 1U);
+#endif
+
+#if defined(HOST_PDN_RESET)
+    /* Set WL_RST to 1 */
+    GPIO_PinWrite(BOARD_INITWLRSTPIN_WL_RST_GPIO, BOARD_INITWLRSTPIN_WL_RST_GPIO_PIN, 1U);
 #endif
 
     printSeparator();

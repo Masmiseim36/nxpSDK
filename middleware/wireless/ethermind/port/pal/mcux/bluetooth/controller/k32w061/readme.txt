@@ -25,7 +25,7 @@ UART_CTS |  PIO(pin 7)   |   J23(pin 4)   |    LPUART3_RTS     | GPIO_AD_B1_05
 ------------------------------------------------------------------------------------
 Pin setting for evkmimxrt1170:
 ------------------------------------------------------------------------------------
-PIN NAME | DK6 (K32W061) |   I.MXRT1060   | PIN NAME OF RT1060 | GPIO NAME OF RT1060
+PIN NAME | DK6 (K32W061) |   I.MXRT1170    | PIN NAME OF RT1170 | GPIO NAME OF RT1170
 ------------------------------------------------------------------------------------
 UART_TXD |  PIO(pin 8)   |   J25(pin 13)   |    LPUART7_RXD     | GPIO_AD_01
 UART_RXD |  PIO(pin 9)   |   J25(pin 15)   |    LPUART7_TXD     | GPIO_AD_00
@@ -34,7 +34,7 @@ UART_CTS |  PIO(pin 7)   |   J25(pin 9)    |    LPUART7_RTS     | GPIO_AD_03
 ------------------------------------------------------------------------------------
 Pin setting for evkmimxrt685:
 ------------------------------------------------------------------------------------
-PIN NAME | DK6 (K32W061) |   I.MXRT1060   | PIN NAME OF RT1060 | GPIO NAME OF RT1060
+PIN NAME | DK6 (K32W061) |   I.MXRT685    | PIN NAME OF RT685 | GPIO NAME OF RT685
 ------------------------------------------------------------------------------------
 UART_TXD |  PIO(pin 8)   |   J27(pin 1)   |    USART4_RXD     | FC4_RXD_SDA_MOSI_DATA
 UART_RXD |  PIO(pin 9)   |   J27(pin 2)   |    USART4_TXD     | FC4_TXD_SCL_MISO_WS

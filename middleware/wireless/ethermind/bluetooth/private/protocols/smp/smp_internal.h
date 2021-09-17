@@ -32,6 +32,10 @@
 #include "aes_cmac.h"
 #endif /* SMP_DATA_SIGNING || SMP_LESC */
 
+#ifdef BT_SECURITY_VU_VALIDATION
+#include "BT_security.h"
+#endif /* BT_SECURITY_VU_VALIDATION */
+
 /* ----------------------------------------- SMP Debugging */
 #ifndef SMP_NO_DEBUG
 #define SMP_ERR(...)          BT_debug_error(BT_MODULE_ID_SMP, __VA_ARGS__)
@@ -1076,7 +1080,7 @@ void smp_storage_read(void);
 void smp_pstorage_cb (UCHAR id, UCHAR type, UCHAR action);
 #endif /* SMP_STORAGE */
 
-API_RESULT smp_handle_key_exchange (UCHAR ci, UCHAR di);
+/* API_RESULT smp_handle_key_exchange (UCHAR ci, UCHAR di); */
 API_RESULT smp_passkey_handler (UCHAR type, SMP_EVENT_INFO * param);
 API_RESULT smp_remote_pairing_confirm_handler (SMP_EVENT_INFO    * param);
 

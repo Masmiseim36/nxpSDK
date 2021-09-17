@@ -48,6 +48,7 @@ Offset      Width (Bytes) Field Description
  The SRAM region [0x0-0xFFFF], [0x1C000-0x1FFFF] is reserved for app-specific use cases.
  The SRAM region [0x10000-0x1BFFF] is reserved for ROM code. Application should not use this memory area during ROM API calls.
  The SRAM region [0x20000-0x7FFFF] is reserved for Non-cached shared memory between M33 and DSP.
+      NOTE: Ignored the SDK workaround region ([0x80000-0x27FFFF] reserved for DSP code and data), as we do not use DSP.
  It adds 0x00080000 offset*/
 #define S_DATA_OFFSET    (0x00080000)
 

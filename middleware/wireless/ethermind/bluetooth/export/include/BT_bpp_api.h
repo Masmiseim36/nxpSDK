@@ -1909,6 +1909,70 @@ API_RESULT BT_bpp_printer_send_response
                /* IN */  UCHAR           bpp_channel_type
            );
 
+/**
+ *  \brief To send a request to the Sender.
+ *
+ *  \par Description:
+ *       This API is used send the request to the sender with the event type
+ *       and data given by the application contained in the bpp_headers.
+ *       The application calls this API to continue any operation initiated
+ *       and to which the first notification (or response) has been received.
+ *       This, API shall be called from the Printer notification callback
+ *       function with event_type set to the received event.
+ *
+ *  \param [in] bpp_handle
+ *         BPP handle of the Printer instance.
+ *
+ *  \param [in] event_type
+ *         Event type that was received in the application callback, to indicate
+ *         that the request is the continuation of the operation for which it
+ *         was notified.
+ *
+ *  \param [in] event_result
+ *         This is the status of the request.
+ *
+ *  \param [in] bpp_headers
+ *         Structure containing either the connect information in case of
+ *         connect operation or get request information, in case of get
+ *         operation or put request information in case of put operation.
+ *
+ *  \param [in] bpp_channel_type
+ *         Channel type  on which the BPP request being sent.
+ *
+ *  \param [in] more
+ *         Indicates if application has remaining of object body still to be
+ *         sent or object complete
+ *         1 – Object part remaining
+ *         0 – No more object part remaining
+ *
+ *  \param [out] actual
+ *         Contains the actual number of bytes of BODY header, if any included
+ *         in the request, that is packed for transmission.
+ *
+ *  \return
+ *       API_RESULT
+ *       API_SUCCESS, on successful initiation of the request.
+ *       Error Code, describing the reason for failure.
+ *
+ *  \note
+ *      - This API is used only in case of the operations with multiple get or put
+ *      requests.
+ *      - This API shall never be used to send other requests for which direct
+ *      APIs are provided.
+ *      - The application shall make use of the actual parameter to track the
+ *      offset of the object used for BODY header, which may have to be
+ *      transmitted in subsequent chunks.
+ */
+API_RESULT BT_bpp_printer_send_request
+           (
+                /* IN  */ BPP_HANDLE     *bpp_handle,
+                /* IN  */ UINT8           event_type,
+                /* IN  */ UINT16          event_result,
+                /* IN  */ BPP_HEADERS    *bpp_headers,
+                /* IN  */ UCHAR           bpp_channel_type,
+                /* IN  */ UCHAR           more,
+                /* OUT */ UINT16         *actual
+           );
 #ifdef __cplusplus
 };
 #endif

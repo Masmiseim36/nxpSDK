@@ -8,7 +8,7 @@
 #include "fsl_common.h"
 
 #include "controller.h"
-#if defined(WIFI_BOARD_AW_AM457) || defined(WIFI_BOARD_AW_CM358)
+#if (defined(WIFI_IW416_BOARD_AW_AM457_USD) || defined(WIFI_88W8987_BOARD_AW_CM358_USD) || defined(WIFI_88W8987_BOARD_AW_CM358MA))
 #include "controller_wifi_nxp.h"
 #endif
 
@@ -41,7 +41,7 @@ __WEAK_FUNC int controller_hci_uart_get_configuration(controller_hci_uart_config
 /* Initialize the platform */
 void controller_init(void)
 {
-#if defined(WIFI_BOARD_AW_AM457) || defined(WIFI_BOARD_AW_CM358)
+#if (defined(WIFI_IW416_BOARD_AW_AM457_USD) || defined(WIFI_88W8987_BOARD_AW_CM358_USD) || defined(WIFI_88W8987_BOARD_AW_CM358MA))
     controller_wifi_nxp_init();
 #endif
 }

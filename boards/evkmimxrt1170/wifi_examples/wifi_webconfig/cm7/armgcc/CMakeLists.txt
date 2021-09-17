@@ -161,6 +161,8 @@ include(middleware_freertos-kernel_extension_MIMXRT1176_cm7)
 
 include(middleware_wifi_wifidriver_MIMXRT1176_cm7)
 
+include(middleware_wifi_fwdnld_MIMXRT1176_cm7)
+
 include(driver_memory_MIMXRT1176_cm7)
 
 include(middleware_sdmmc_osa_freertos_MIMXRT1176_cm7)

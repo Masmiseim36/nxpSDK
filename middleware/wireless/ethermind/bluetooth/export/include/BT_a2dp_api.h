@@ -439,10 +439,25 @@ typedef struct _A2DP_DEVICE_INFO
     /* Codec Configuration Element length */
     UCHAR  codec_ie_len;
 
+#ifdef AVDTP_HAVE_CONTENT_PROTECTION
+    AVDTP_CP_CAP cp_conf;
+#endif /* AVDTP_HAVE_CONTENT_PROTECTION */
+#ifdef AVDTP_HAVE_RECOVERY_SERVICE
+    AVDTP_RECOVERY_CAP recovery_conf;
+#endif /* AVDTP_HAVE_RECOVERY_SERVICE */
 #ifdef A2DP_1_3
     /* Delay report config flag */
     UCHAR   dr_config_flag;
 #endif /* A2DP_1_3 */
+#ifdef AVDTP_HAVE_REPORTING_SERVICE
+    UCHAR reporting_conf;
+#endif /* AVDTP_HAVE_REPORTING_SERVICE */
+#ifdef AVDTP_HAVE_ROHC_SERVICE
+    UCHAR rohc_conf;
+#endif /* AVDTP_HAVE_ROHC_SERVICE */
+#ifdef AVDTP_HAVE_MULTIPLEXING
+    UCHAR multiplexing_conf;
+#endif /* AVDTP_HAVE_MULTIPLEXING */
 
 }A2DP_DEVICE_INFO;
 
@@ -1775,6 +1790,7 @@ UINT16 BT_a2dp_get_sbc_frame_size
            /* IN */  UCHAR  bitpool
        );
 
+#ifdef A2DP_MPEG
 /**
  *  \brief To calculate MPEG-1,2 frame size
  *
@@ -1800,6 +1816,7 @@ UINT16 BT_a2dp_get_mpeg_1_2_frame_size
            /* IN */  UINT16  sampling_frequency,
            /* IN */  UINT16  bit_rate
        );
+#endif /* A2DP_MPEG */
 
 /**
  *  \brief To set Media MTU

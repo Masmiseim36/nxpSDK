@@ -20,6 +20,14 @@ typedef struct _controller_hci_uart_config
     uint8_t  instance;
     uint8_t  enableRxRTS;
     uint8_t  enableTxCTS;
+#if (defined(HAL_UART_DMA_ENABLE) && (HAL_UART_DMA_ENABLE> 0u))   
+    uint8_t dma_instance;
+    uint8_t rx_channel;
+    uint8_t tx_channel;
+    uint8_t dma_mux_instance;
+    uint32_t rx_request;
+    uint32_t tx_request;
+#endif
 } controller_hci_uart_config_t;
 
 /* Initialize the platform */

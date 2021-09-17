@@ -1499,7 +1499,15 @@ typedef enum
 {
     AssocAgentAuth_Open,
     AssocAgentAuth_Shared,
+/* Updating the auth type with respect to latest changes in firmware.
+ * Changes are available only for CA2.
+ * TODO: update when release is made from ToT fw for other SoCs.
+ */
+#if defined(SD8987)
+    AssocAgentAuth_Wpa3Sae = 6,
+#else
     AssocAgentAuth_Wpa3Sae = 5,
+#endif
     AssocAgentAuth_Owe,
     AssocAgentAuth_Auto,
 } AssocAgentAuthType_e;

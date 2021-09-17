@@ -82,9 +82,3 @@ target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
 )
 
 
-include(driver_casper_MIMXRT685S_cm33)
-
-include(driver_hashcrypt_MIMXRT685S_cm33)
-
-include(driver_trng_MIMXRT685S_cm33)
-

@@ -1232,6 +1232,7 @@ API_RESULT BT_obex_reqrsp
                /* IN */ UCHAR             flags
            );
 
+#ifdef OBEX_SUPPORT_RELIABLE_SSN
 /**
  *  \brief To send OBEX reliable request/response.
  *
@@ -1272,6 +1273,8 @@ API_RESULT BT_obex_ssn_reqrsp
                /* IN */ UCHAR             ssn_params_len,
                /* IN */ UCHAR             rsp_code
            );
+#endif /* OBEX_SUPPORT_RELIABLE_SSN */
+
 
 /* ================== OBEX Utility APIs =================================*/
 

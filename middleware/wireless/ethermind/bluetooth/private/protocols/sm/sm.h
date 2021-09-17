@@ -52,6 +52,7 @@ API_RESULT sm_access_request_ex
                /* IN */  UINT32           proto_data
            );
 
+#ifdef SM_HAVE_MODE_2
 API_RESULT sm_access_request_mode_1_3
            (
                /* IN */  UCHAR *    bd_addr,
@@ -59,6 +60,7 @@ API_RESULT sm_access_request_mode_1_3
                /* IN */  UCHAR      server_ch,
                /* IN */  UINT32     proto_data
            );
+#endif /* SM_HAVE_MODE_2 */
 
 
 /* ----------------------------------------- API Declarations */

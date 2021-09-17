@@ -34,7 +34,7 @@ EraseNVMLink = DEFINED(gEraseNVMLink_d) ? gEraseNVMLink_d : 0;
 NVMSectorCountLink = DEFINED(gNVMSectorCountLink_d) ? gNVMSectorCountLink_d : 4;
 
 _ROM_START_ = 0x30002400;
-_ROM_END_ = 0x30CBDBFF;
+_ROM_END_ = 0x30DBFFFF;
 
 STORAGE_AREA_LENGTH = 0x10000;
 STORAGE_AREA_SIZE  = STORAGE_AREA_LENGTH;
@@ -52,6 +52,13 @@ NVM_AREA_SIZE = NV_STORAGE_SECTOR_SIZE * NV_STORAGE_MAX_SECTORS;
 NV_STORAGE_END_ADDRESS = NVM_AREA_START + NVM_AREA_SIZE - 1;
 NV_STORAGE_START_ADDRESS = NVM_AREA_START;
 /*** NVM Configuration End ***/
+
+/*** littleFS configuration Start ***/
+LITTLEFS_STORAGE_START_ADDRESS = _ROM_END_ + 1;
+LITTLEFS_STORAGE_SECTOR_SIZE = 0x1000;  /* 4k flash sector size */
+LITTLEFS_STORAGE_MAX_SECTORS = (0x30FBFFFF - LITTLEFS_STORAGE_START_ADDRESS) / LITTLEFS_STORAGE_SECTOR_SIZE;
+/*** littleFS configuration End ***/
+
 HEAP_SIZE  = DEFINED(__heap_size__)  ? __heap_size__  : 0x400;
 STACK_SIZE = DEFINED(__stack_size__) ? __stack_size__ : 0x1000;
 RPMSG_SHMEM_SIZE = DEFINED(__use_shmem__) ? 0x2000 : 0;

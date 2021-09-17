@@ -78,27 +78,12 @@ API_RESULT BT_map_create_xml_folder_listing_pl
         return API_FAILURE;
     }
 
-    BT_str_copy(dir, dir_entry);
+    BT_str_n_copy(dir, dir_entry, sizeof(dir));
 
     BT_debug_trace(BT_MODULE_ID_MAP,
     "[MAP_PL] Path = %s\n", dir_entry);
 
     first = BT_FALSE;
-
-#if 0
-    if(API_SUCCESS != BT_fops_set_path_forward(dir))
-    {
-        BT_debug_error(BT_MODULE_ID_MAP,
-        "[MAP_PL] Failure : could not change directory\n");
-    }
-    else
-    {
-        BT_debug_info(BT_MODULE_ID_MAP,
-        "[MAP_PL] Success : could change directory\n");
-
-        BT_str_cat(dir, "*.*");
-    }
-#endif /* 0 */
 
     BT_fops_file_print(xml_fd ,"%s<%s %s>\n", xml_hdr, parent, version);
 
@@ -223,27 +208,12 @@ API_RESULT BT_map_create_xml_messages_listing_pl
         return API_FAILURE;
     }
 
-    BT_str_copy(dir, dir_entry);
+    BT_str_n_copy(dir, dir_entry, sizeof(dir));
 
     BT_debug_trace(BT_MODULE_ID_MAP,
     "[MAP_PL] Path = %s\n", dir_entry);
 
     first = BT_FALSE;
-
-#if 0
-    if(API_SUCCESS != BT_fops_set_path_forward(dir))
-    {
-        BT_debug_error(BT_MODULE_ID_MAP,
-        "[MAP_PL] Failure : could not change directory\n");
-    }
-    else
-    {
-        BT_debug_info(BT_MODULE_ID_MAP,
-        "[MAP_PL] Success : could change directory\n");
-
-        BT_str_cat(dir, "*.*");
-    }
-#endif /* 0 */
 
     BT_fops_file_print(xml_fd ,"%s<%s %s>\n", xml_hdr, parent, version);
 
@@ -910,9 +880,9 @@ API_RESULT BT_map_set_message_status_pl
     fd = NULL;
     fp = NULL;
 
-    BT_str_copy (fn, "l");
-    BT_str_cat (fn, handle);
-    BT_str_cat (fn, ".vmg");
+    BT_str_n_copy (fn, "l", sizeof(fn));
+    BT_str_n_cat (fn, handle, (sizeof(fn) - BT_str_len(fn) - 1));
+    BT_str_n_cat (fn, ".vmg", (sizeof(fn) - BT_str_len(fn) - 1));
 
     /* MISRA C-2012 Rule 17.7 | Coverity CHECKED_RETURN */
     (void)BT_vfops_create_object_name
@@ -926,6 +896,7 @@ API_RESULT BT_map_set_message_status_pl
     if (NULL == fd)
     {
         fn[0U] = 'h';
+
         /* MISRA C-2012 Rule 17.7 | Coverity CHECKED_RETURN */
         (void)BT_vfops_create_object_name
         (
@@ -1133,9 +1104,15 @@ API_RESULT BT_map_get_message_file_pl
 
     BT_IGNORE_UNUSED_PARAM(idir);
 
-    BT_str_copy(rdir, MAP_ROOT_FOLDER_BASE);
-    BT_str_cat(rdir, BT_FOPS_PATH_SEP"root_0"BT_FOPS_PATH_SEP"telecom"BT_FOPS_PATH_SEP"msg");
-    BT_str_copy(dir, rdir);
+    BT_str_n_copy(rdir, MAP_ROOT_FOLDER_BASE, sizeof(rdir));
+    BT_str_n_cat
+    (
+        rdir,
+        BT_FOPS_PATH_SEP"root_0"BT_FOPS_PATH_SEP"telecom"BT_FOPS_PATH_SEP"msg"BT_FOPS_PATH_SEP,
+        (sizeof(rdir) - BT_str_len(rdir) - 1)
+    );
+
+    BT_str_n_copy(dir, rdir, sizeof(dir));
 
     first = BT_FALSE;
 
@@ -1173,13 +1150,13 @@ API_RESULT BT_map_get_message_file_pl
 
             BT_mem_set (file_object, 0x00, sizeof(file_object));
 
-            BT_str_copy(cdir, rdir);
-            BT_str_cat(cdir, BT_FOPS_PATH_SEP);
-            BT_str_cat(cdir, info.fname);
+            BT_str_n_copy(cdir, rdir, sizeof(cdir));
+            BT_str_n_cat(cdir, BT_FOPS_PATH_SEP, (sizeof(cdir) - BT_str_len(cdir) - 1));
+            BT_str_n_cat(cdir, info.fname, (sizeof(cdir) - BT_str_len(cdir) - 1));
 
-            BT_str_copy(fn, "l");
-            BT_str_cat(fn, msg_handle);
-            BT_str_cat(fn, ".vmg");
+            BT_str_n_copy(fn, "l", sizeof(fn));
+            BT_str_n_cat(fn, msg_handle, (sizeof(fn) - BT_str_len(fn) - 1));
+            BT_str_n_cat(fn, ".vmg", (sizeof(fn) - BT_str_len(fn) - 1));
 
             printf ("%s, %s\n", cdir, fn);
 

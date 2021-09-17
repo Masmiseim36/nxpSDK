@@ -34,24 +34,19 @@ static OSA_TASK_DEFINE(work_queue_task, CONFIG_WORK_QUEUE_TASK_PRIORITY, 1, CONF
 
 static void work_queue_task(void *param)
 {
-    struct bt_work_queue *work_queue = param;
+    struct bt_work_queue *work_queue = (struct bt_work_queue *)param;
     struct bt_work *work;
     bt_work_handler_t handler;
     int32_t timeout;
     osa_status_t ret;
 
-    #define DELAY_WORK_TIMER_TASK_DELAY_FACTOR 1
+    #define DELAY_WORK_TIMER_TASK_DELAY_FACTOR 0
     #define DELAY_WORK_TIMER_TASK_DELAY_TIME                                  \
         ((((uint32_t)DELAYED_TIMER_INTERVAL) >> DELAY_WORK_TIMER_TASK_DELAY_FACTOR) >    \
          (1000/CONFIG_OS_TICK_INTERVAL)) ?                                         \
          (((uint32_t)DELAYED_TIMER_INTERVAL) >> DELAY_WORK_TIMER_TASK_DELAY_FACTOR) :     \
          (1000/CONFIG_OS_TICK_INTERVAL)
-/*misra 14.3 expression shall not be invariant */
-#if ((DELAYED_TIMER_INTERVAL) >> DELAY_WORK_TIMER_TASK_DELAY_FACTOR) > (1000/CONFIG_OS_TICK_INTERVAL)
-    timeout = ((uint32_t)DELAYED_TIMER_INTERVAL) >> DELAY_WORK_TIMER_TASK_DELAY_FACTOR;
-#else
-    timeout = (1000/CONFIG_OS_TICK_INTERVAL);
-#endif
+    timeout = DELAY_WORK_TIMER_TASK_DELAY_TIME;
     do
     {
         ret = OSA_MsgQGet(work_queue->queue, &work, timeout);
@@ -225,7 +220,7 @@ void bt_delayed_work_queue_insert_sort(struct bt_delayed_work_queue *work_queue,
             if (p->timeOut <= work->timeOut)
             {
                 q = p;
-                p = p->work.next;
+                p = (struct bt_delayed_work *)p->work.next;
             }
             else
             {
@@ -267,7 +262,7 @@ void bt_delayed_work_queue_remove(struct bt_delayed_work_queue *work_queue, stru
     {
         if (NULL == q)
         {
-            work_queue->pending = p->work.next;
+            work_queue->pending = (struct bt_delayed_work *)p->work.next;
         }
         else
         {

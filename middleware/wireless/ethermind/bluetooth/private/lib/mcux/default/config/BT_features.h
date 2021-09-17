@@ -74,7 +74,7 @@
  *  The appropriate source code must be chosen for compilation
  *  (the l2cap_1.2 & hci_1.2 source code directories).
  *
- *  The BT_1_2 flag is splitted into BT_HCI_1_2 and BT_L2CAP_1_2 so as to
+ *  The BT_1_2 flag is split into BT_HCI_1_2 and BT_L2CAP_1_2 so as to
  *  provide option for application to include Bluetooth v1.2 specific
  *  features for HCI & L2CAP individually.
  *
@@ -713,7 +713,7 @@
  *  HT_DUMP_RX_BUF_ON_SYNC_LOSS
  *
  *  This flag enables dumping the entire transport receive buffer
- *  to help in analyzing when synchronization loss is detected.
+ *  to help in analysing when synchronization loss is detected.
  *
  *  Dependency: None.
  */
@@ -860,7 +860,7 @@
 /*
  *  BT_HAVE_REENTRANT_DECL
  *
- *  This flag enables provision for declaring reentrant functions.
+ *  This flag enables provision for declaring re-entrant functions.
  *  At present used for callback function pointers for 8051 build.
  */
 /* #define BT_HAVE_REENTRANT_DECL */
@@ -957,6 +957,12 @@
  */
 #define BT_SNOOP
 
+/*
+ *  BT_SECURITY_VU_VALIDATION
+ *
+ *  This flag enables hooks to simulate security vulnerabilities.
+ */
+/* #define BT_SECURITY_VU_VALIDATION */
 
 /* ----------------------------------------------------------------------- */
 /* ==== Generic Access Profile Specific Flags ============================ */
@@ -1254,7 +1260,7 @@
 /*
  *  HCI_ENH_SCO
  *
- *  This flag enables HCI Enhaced SCO connection & data packet handling.
+ *  This flag enables HCI Enhanced SCO connection & data packet handling.
  *
  *  Dependency: BT_4_1.
  */
@@ -1363,7 +1369,7 @@
  *  This flag enables the initialization of HCI_COMMAND_PARAMS structure,
  *  to suppress MISRA C-2012 Rule 9.1 and Coverity UNINIT warnings.
  *
- *  Dependancy: None
+ *  Dependency: None
  */
 #define HAVE_HCI_COMMAND_PARAMS_INIT
 
@@ -1545,7 +1551,7 @@
 /* Set External Frame Configuration */
 /* #define HCI_SET_EXTERNAL_FRAME_CONFIGURATION_SUPPORT */
 
-/* Set MWS Signaling */
+/* Set MWS Signalling */
 /* #define HCI_SET_MWS_SIGNALING_SUPPORT */
 
 /* Set MWS Transport Layer */
@@ -1584,6 +1590,17 @@
 /* #define HCI_READ_LOCAL_SIMPLE_PAIRING_OPTIONS_SUPPORT */
 #endif /* BT_5_1 */
 #endif /* BR_EDR_HCI */
+
+/*
+ *  HCI_DONT_CHECK_LOCAL_ADDR_FOR_CONNECT
+ *
+ *  This flag is to be enabled if connection to remote device with same
+ *  BD Address as local device is to be allowed. Default behaviour
+ *  of the stack is to disallow such behaviour.
+ *
+ *  Dependency: None.
+ */
+/* #define HCI_DONT_CHECK_LOCAL_ADDR_FOR_CONNECT */
 
 /* ----------------------------------------------------------------------- */
 /* ==== SM Module Specific Flags ========================================= */
@@ -1667,7 +1684,7 @@
  *  SM_CLEAR_UNBONDED_ENTITY
  *
  *  This flag enables SM to free the entity and its device queue reference on disconnection
- *  of an unbonded device. This flag does not have any effect if the
+ *  of an non-bonded device. This flag does not have any effect if the
  *  SM_FORCE_CLEAR_ENTITY is defined.
  *
  *  Dependency: None
@@ -2172,6 +2189,7 @@
  */
 /* #define L2CAP_DATA_TX_NO_WRITE_TASK */
 
+#ifdef BR_EDR_L2CAP
 /*
  *  L2CAP_TX_QUEUE_FLOW
  *
@@ -2185,6 +2203,16 @@
 #define L2CAP_TX_QUEUE_FLOW
 
 /*
+ *  L2CAP_TX_QUEUE_FLOW_ON_CALLBACK
+ *
+ *  This flag enables L2CAP to indicate Tx Flow ON callback to the PSM registered
+ *  handler, when the local Tx queue becomes available for Tx by upper layers.
+ *
+ *  Dependency: None.
+ */
+#define L2CAP_TX_QUEUE_FLOW_ON_CALLBACK
+
+/*
  *  L2CAP_TX_COMPLETE_CALLBACK
  *
  *  This flag enables L2CAP transmission complete callback.
@@ -2192,6 +2220,7 @@
  *  Dependency: None
  */
 /* #define L2CAP_TX_COMPLETE_CALLBACK */
+#endif /* BR_EDR_L2CAP */
 
 /*
  *  L2CAP_HAVE_GET_REMOTE_CID_SUPPORT
@@ -2400,7 +2429,7 @@
  *  shall register a callback with SDP Server using the SDP Server API
  *  "BT_sdp_server_register_ind_cb()".
  *
- *  If this flag is defined, and the application has registed callback
+ *  If this flag is defined, and the application has registered callback
  *  using the above mentioned API, SDP Server will indicate following
  *  events to application:
  *  - SDP_SERVER_CONNECT_IND   :
@@ -2413,8 +2442,8 @@
  *
  *  Note: With both the above event indications, the SDP Server Callback
  *  will also provide the 'event_data' parameter which will contain
- *  the bluetooth device address of the peer device and the 'event_datalen'
- *  parameter which will be the length of the bluetooth device address
+ *  the Bluetooth device address of the peer device and the 'event_datalen'
+ *  parameter which will be the length of the Bluetooth device address
  *  of the peer device (i.e. 6 octet).
  *
  *  Dependency: SDP_SERVER must be defined.
@@ -2443,7 +2472,7 @@
  *  'SDP_MAX_REC_HANDLES' and usage of the same during the handling of SDP
  *  requests might be useful. When this feature flag is defined, SDP does one
  *  additional dynamic memory allocation, which can be avoided (if required)
- *  in such memory constrained systems, by not definining this feature flag
+ *  in such memory constrained systems, by not defining this feature flag
  *  and have the limitation of not getting all the service record related
  *  information on the peer device.
  *
@@ -2567,7 +2596,7 @@
  *
  *  Dependency: None.
  */
-/* #define AVDTP_HAVE_CONTENT_PROTECTION */
+#define AVDTP_HAVE_CONTENT_PROTECTION
 
 /*
  *  AVDTP_HAVE_REPORTING_SERVICE
@@ -2576,7 +2605,7 @@
  *
  *  Dependency: None.
  */
-/* #define AVDTP_HAVE_REPORTING_SERVICE */
+#define AVDTP_HAVE_REPORTING_SERVICE
 
 /*
  *  AVDTP_HAVE_RECOVERY_SERVICE
@@ -2585,7 +2614,7 @@
  *
  *  Dependency: None.
  */
-/* #define AVDTP_HAVE_RECOVERY_SERVICE */
+#define AVDTP_HAVE_RECOVERY_SERVICE
 
 /*
  *  AVDTP_HAVE_ROHC_SERVICE
@@ -2594,7 +2623,7 @@
  *
  *  Dependency: None.
  */
-/* #define AVDTP_HAVE_ROHC_SERVICE */
+#define AVDTP_HAVE_ROHC_SERVICE
 
 /*
  *  AVDTP_HAVE_MULTIPLEXING
@@ -2603,14 +2632,14 @@
  *
  *  Dependency: None.
  */
-/* #define AVDTP_HAVE_MULTIPLEXING */
+#define AVDTP_HAVE_MULTIPLEXING
 
 /*
  *  AVDTP_ASSISTIVE_MODE
  *
  *  This flag is used to enable interfaces to share media channel parameters
  *  to the application. Useful when stack used with TI DualMode controller that
- *  supports Assistive A2DP to decode and playout media.
+ *  supports Assistive A2DP to decode and play-out media.
  *
  *  Dependency: None.
  */
@@ -2661,7 +2690,7 @@
 /*
  *  HAVE_AVDTP_FRAGMENTED_SIG_MSG_IN_TEST_MODE
  *
- *  This flag enables Fragmentation of AVDTP signaling messages in EtherMind AVDTP module.
+ *  This flag enables Fragmentation of AVDTP signalling messages in EtherMind AVDTP module.
  *  Enable this flag to validate few test cases with PTS.
  *
  *  By default it shall be disabled.
@@ -2695,7 +2724,7 @@
 /*
  *  AVCTP_CHECK_BROWSING_CH_MTU
  *
- *  AVCTP Browsing Channel defines 335 as the mininum MTU size.
+ *  AVCTP Browsing Channel defines 335 as the minimum MTU size.
  *  This flag is used to enable validation of the AVCTP Browsing Channel MTU
  *  size received from the peer device.
  *
@@ -2717,7 +2746,7 @@
  *  the underlying AVCTP transport connection but the AVCTP connection is not
  *  complete, so the local AVRCP module is unaware of the on-going AVCTP connection.
  *
- * By deafault, this flag shall be enabled.
+ * By default, this flag shall be enabled.
  */
 #define AVCTP_CONNECT_NO_WRITE_TASK
 
@@ -2767,9 +2796,9 @@
  *  will be of size at least of length 3 bytes (which will include the OBEX
  *  packet length).
  *
- *  Since IrDA specification or the bluetooth adaptation of it does not impose
+ *  Since IrDA specification or the Bluetooth adaptation of it does not impose
  *  such restriction, it is possible to receive an entire OBEX packet in
- *  multiple fragments of differnt sizes. It is also possible to receive parts
+ *  multiple fragments of different sizes. It is also possible to receive parts
  *  of more than one OBEX packet in single underlying transport packet
  *  (RFCOMM/L2CAP).
  *
@@ -2816,9 +2845,9 @@
  *    2 bytes of the null terminator (0x00, 0x00). Therefore the length of the string Jumar
  *    would be 12 bytes; 5 visible characters plus the null terminator, each two bytes in length"
  *
- *  So, in the Tx. path, upper profiles/applications are expectected to send 'Jumar' as 5 byte + 1(null) char.
- *  and OBEX layer encode this 6 byte text to 12 byte text by converting each 1 byte char to 2 byte char(by apending
- *  0x00  to each character). In receive path, OBER layer decode this 12 byte text to 6 byte text by coverting 2 byte char
+ *  So, in the Tx. path, upper profiles/applications are expected to send 'Jumar' as 5 byte + 1(null) char.
+ *  and OBEX layer encode this 6 byte text to 12 byte text by converting each 1 byte char to 2 byte char(by appending
+ *  0x00  to each character). In receive path, OBER layer decode this 12 byte text to 6 byte text by converting 2 byte char
  *  to 1 byte char(by removing MSB of each 2 byte char).
  *
  *  Note:
@@ -2878,7 +2907,7 @@
  */
 /* #define OBEX_ENABLE_CONNECT_ID_HDR_CHECK */
 
-/* Check atleast one among RFCOMM and OBEX_OVER_L2CAP flag is defined */
+/* Check at-least one among RFCOMM and OBEX_OVER_L2CAP flag is defined */
 #if (!((defined RFCOMM) || (defined OBEX_OVER_L2CAP)))
 #error "Atleast one of RFCOMM, OBEX_OVER_L2CAP shall be defined"
 #endif /* (!((defined RFCOMM) || (defined OBEX_OVER_L2CAP))) */
@@ -3068,7 +3097,7 @@
  *
  *  Dependency: A2DP.
  */
-/* #define A2DP_MPEG_1_2 */
+#define A2DP_MPEG_1_2
 
 /*
  *  A2DP_MPEG_2_4
@@ -3077,7 +3106,7 @@
  *
  *  Dependency: A2DP.
  */
-/* #define A2DP_MPEG_2_4 */
+#define A2DP_MPEG_2_4
 
 /*
  *  A2DP_VENDOR_CODEC
@@ -3086,7 +3115,7 @@
  *
  *  Dependency: A2DP.
  */
-/* #define A2DP_VENDOR_CODEC */
+#define A2DP_VENDOR_CODEC
 
 /*
  *  A2DP_1_3
@@ -3438,7 +3467,7 @@
 /*
  *  This flag is used to choose the LITE version of EtherMind Stack.
  *  At present, this flag affects HCI, L2CAP, SDP and RFCOMM Modules.
- *  This flag helps in removing unnecessary APIs and related fuctions
+ *  This flag helps in removing unnecessary APIs and related functions
  *  for specific application (such as, Mono Headset Build).
  *
  *  Dependency: None.
@@ -3667,7 +3696,7 @@
 /*
  *  SMP_HNDL_SRK
  *
- *  This flag enables SMP module to handle remote SRK and aslo enable to the
+ *  This flag enables SMP module to handle remote SRK and also enable to the
  *  signature related APIs to send signed data.
  *
  *  Dependency: BT_LE && SMP
@@ -3707,7 +3736,7 @@
  *  SMP_CLEAR_UNBONDED_ENTITY
  *
  *  This flag enables SMP to free the entity and its device queue reference on disconnection
- *  of an unbonded device. This flag does not have any effect if the
+ *  of an non-bonded device. This flag does not have any effect if the
  *  SMP_FORCE_CLEAR_ENTITY is defined.
  *
  *
@@ -3752,18 +3781,6 @@
 /* #define SMP_HAVE_TBX_PL_ENC */
 
 /*
- *  SMP_HAVE_TBX_PL_ECDH
- *
- *  This flag enables the use of platform specific
- *  Elliptic Curve Diffe-Hellman Functions.
- *
- *  Dependency:
- */
-#ifdef SMP_LESC
-/* #define SMP_HAVE_TBX_PL_ECDH */
-#endif /* SMP_LESC */
-
-/*
  *  SMP_HAVE_TBX_CMD_WT_BH
  *
  *  This flag enables the use of SMP toolbox specific WriteTask BottomHalf function
@@ -3774,6 +3791,17 @@
 #define SMP_HAVE_TBX_CMD_WT_BH
 #endif /* SMP_HAVE_TBX_PL_ENC || SMP_HAVE_TBX_PL_ECDH */
 
+#ifdef SMP_LESC
+/*
+ *  SMP_HAVE_TBX_PL_ECDH
+ *
+ *  This flag enables the use of platform specific
+ *  Elliptic Curve Diffe-Hellman Functions.
+ *
+ *  Dependency:
+ */
+/* #define SMP_HAVE_TBX_PL_ECDH */
+
 /*
  *  SMP_TBX_TEST_LESC_FUNCTIONS
  *
@@ -3781,9 +3809,7 @@
  *
  *  Dependency: SMP_LESC
  */
-#ifdef SMP_LESC
 /* #define SMP_TBX_TEST_LESC_FUNCTIONS */
-#endif /* SMP_LESC */
 
 /*
  *  SMP_LESC_CROSS_TXP_KEY_GEN
@@ -3792,20 +3818,38 @@
  *
  *  Dependency: SMP_LESC
  */
-#ifdef SMP_LESC
 #define SMP_LESC_CROSS_TXP_KEY_GEN
-#endif /* SMP_LESC */
 
 /*
  *  SMP_HAVE_REMOTE_PUBLIC_KEY_VALIDATION
  *
- *  This flag enables Remote Public Key Validation,
+ *  This flag enables Remote Public Key Reflection Validation,
  *  introduced as part of SIG Spec Errata 10734.
  *
  *  Dependency: SMP_LESC
  */
-#ifdef SMP_LESC
 #define SMP_HAVE_REMOTE_PUBLIC_KEY_VALIDATION
+
+/*
+ *  SMP_HAVE_RPK_X_COORD_VALIDATION
+ *
+ *  This flag enables Remote Public Key Validation only on the
+ *  X Coordinate of the Public Key.
+ *
+ *  Dependency: SMP_LESC
+ */
+#define SMP_HAVE_RPK_X_COORD_VALIDATION
+
+
+/*
+ *  SMP_HAVE_REMOTE_CONFIRMVAL_VALIDATION
+ *
+ *  This flag enables ConfirmValue reflection attack
+ *  validation.
+ *
+ *  Dependency: SMP_LESC
+ */
+#define SMP_HAVE_REMOTE_CONFIRMVAL_VALIDATION
 #endif /* SMP_LESC */
 
 /*
@@ -3822,7 +3866,7 @@
 /*
  *  SMP_AUTH_REQ_RFU_TESTING
  *
- *  This flag enables tesing SMP with RFU bits of Auth Req paramteres set.
+ *  This flag enables testing SMP with RFU bits of Auth Req parameters set.
  *
  *  Dependency: BT_LE && SMP
  */
@@ -4075,7 +4119,7 @@
 /**
  *  ATT_HNDL_VAL_NOTIFICATION_SUPPORT
  *
- *  Enables Support for Handle Value Notifcation Procedure.
+ *  Enables Support for Handle Value Notification Procedure.
  *
  *  Dependency: None.
  */
@@ -4102,6 +4146,16 @@
  *  Dependency: None.
  */
 #define ATT_SUPPORT_128_BIT_UUID
+
+/**
+ *  ATT_NOTIFY_UNEXPECTED_PDU
+ *
+ *  Enables application notification of remote PDU received in unexpected
+ *  ATT state.
+ *
+ *  Dependency: None.
+ */
+#define ATT_NOTIFY_UNEXPECTED_PDU
 
 /* ----------------------------------------------------------------------- */
 /* ==== GATT Protocol Related Flags ====================================== */
@@ -4143,21 +4197,38 @@
 #define GATT_DB_HAVE_REGISTERATION_SUPPORT
 
 /*
+ *  GATT_DB_HAVE_DB_SIGNATURE
+ *
+ *  This flag enables the support for Registered GATT Databases to have a
+ *  uniquely distinguishable Database Signatures \ref GATT_DB_SIGNATURE.
+ *
+ *  Dependency: GATT_DB_HAVE_REGISTERATION_SUPPORT.
+ */
+#define GATT_DB_HAVE_DB_SIGNATURE
+#if ((defined GATT_DB_HAVE_DB_SIGNATURE) && !(defined GATT_DB_HAVE_REGISTERATION_SUPPORT))
+#error Please Enable GATT_DB_HAVE_REGISTERATION_SUPPORT if you need GATT_DB_HAVE_DB_SIGNATURE
+#endif /* GATT_DB_HAVE_DB_SIGNATURE && ! GATT_DB_HAVE_REGISTERATION_SUPPORT */
+
+/*
  *  GATT_DB_DYNAMIC
  *
  *  This flag shall be defined to enable dynamic creation of
  *  GATT Databases using exposed APIs.
  *
- *  Dependency: None.
+ *  Dependency: GATT_DB_HAVE_REGISTERATION_SUPPORT.
  */
 #define GATT_DB_DYNAMIC
+
+#if ((defined GATT_DB_DYNAMIC) && !(defined GATT_DB_HAVE_REGISTERATION_SUPPORT))
+#error Please Enable GATT_DB_HAVE_REGISTERATION_SUPPORT if you need GATT_DB_DYNAMIC
+#endif /* GATT_DB_DYNAMIC && ! GATT_DB_HAVE_REGISTERATION_SUPPORT */
 
 /*
  *  BT_HAVE_GATT_DB_DYNAMIC_GLOBAL_ARRAY
  *
  *  This flag enables dynamic allocation of global data structures.
  *
- *  If this flag is defined, the dynamic configuration of the data strucutures
+ *  If this flag is defined, the dynamic configuration of the data structures
  *  (like number of services supported etc.) shall be configured using
  *  GATT_DB_DYNAMIC_CONFIG data structure and BT_gatt_db_init() API.
  *
@@ -4275,20 +4346,12 @@
  */
 #define BT_DISABLE_ALL_DEBUG
 
-#ifdef BT_DISABLE_ALL_DEBUG
-#define EM_DISABLE_ALL_DEBUG
-#endif /* BT_DISABLE_ALL_DEBUG */
-
 /*
  *  Flag to control debug logging at run time.
  *  Debug level can be set using BT_set_debug_level() API.
- *  In addtion there are interfaces to enable/disable module specific flag at run time.
+ *  In addition there are interfaces to enable/disable module specific flag at run time.
  */
 #define BT_ENABLE_DISABLE_RUNTIME_DEBUG
-
-#ifdef BT_ENABLE_DISABLE_RUNTIME_DEBUG
-#define EM_ENABLE_DISABLE_RUNTIME_DEBUG
-#endif /* BT_ENABLE_DISABLE_RUNTIME_DEBUG */
 
 /*
  * BT_DEBUG_DONT_LOG_FILE_PATH
@@ -4296,11 +4359,7 @@
  * By default, debug log prints the file name with the path.
  * This flag enables logging only the file name, without the path.
  */
-/* #define BT_DEBUG_DONT_LOG_FILE_PATH */
-
-#ifdef BT_DEBUG_DONT_LOG_FILE_PATH
-#define EM_DEBUG_DONT_LOG_FILE_PATH
-#endif /* BT_DEBUG_DONT_LOG_FILE_PATH */
+#define BT_DEBUG_DONT_LOG_FILE_PATH
 
 /*
  *  BT_LOG_TIMESTAMP
@@ -4310,11 +4369,7 @@
  *
  *  Dependency: None
  */
-/* #define BT_LOG_TIMESTAMP */
-
-#ifdef BT_LOG_TIMESTAMP
-#define EM_LOG_TIMESTAMP
-#endif /* BT_LOG_TIMESTAMP */
+#define BT_LOG_TIMESTAMP
 
 /*
  * By Default SPP_MAX_ENTITY will be 2. 1 SPP instance is created having SERIALPORT_UUID with default server_channel number 2.

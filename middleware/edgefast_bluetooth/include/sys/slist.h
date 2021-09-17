@@ -29,6 +29,7 @@ bt_list_node_t *bt_list_peek_next(bt_list_node_t *node);
 bt_list_node_t *bt_list_peek_head(bt_list_t *list);
 bt_list_node_t *bt_list_peek_tail(bt_list_t *list);
 bool bt_list_find_and_remove(bt_list_t *list, bt_list_node_t *node);
+bool bt_list_find(bt_list_t *list, bt_list_node_t *node);
 bt_list_node_t *bt_list_get_not_empty(bt_list_t *list);
 void bt_list_remove(bt_list_t *list, bt_list_node_t *prev_node, bt_list_node_t *node);
 void bt_list_insert(bt_list_t *list, bt_list_node_t *prev, bt_list_node_t *node);
@@ -83,6 +84,7 @@ typedef bt_list_node_t sys_snode_t;
 #define sys_slist_peek_head         bt_list_peek_head
 #define sys_slist_peek_tail         bt_list_peek_tail
 #define sys_slist_find_and_remove   bt_list_find_and_remove
+#define sys_slist_find              bt_list_find
 #define sys_slist_get_not_empty     bt_list_get_not_empty
 #define sys_slist_remove            bt_list_remove
 #define sys_slist_insert            bt_list_insert

@@ -17,7 +17,7 @@
 
 #include <stddef.h>
 
-#include "errno.h"
+#include <errno/errno.h>
 #include <sys/work_queue.h>
 #include <sys/slist.h>
 

@@ -196,6 +196,16 @@
 #define BOARD_MIPI_PANEL_TOUCH_INT_PORT       3
 #define BOARD_MIPI_PANEL_TOUCH_INT_PIN        19
 
+#define BOARD_BT_UART_INSTANCE 12
+#define BOARD_BT_UART_BAUDRATE 3000000
+#define BOARD_BT_UART_CLK_FREQ CLOCK_GetFlexcommClkFreq(12U)
+#define BOARD_BT_UART_FRG_CLK \
+    (&(const clock_frg_clk_config_t){12, kCLOCK_FrgMainClk, 255, 12}) /*!< Select FRG0 mux as frg_pll */
+#define BOARD_BT_UART_CLK_ATTACH  kFRG_to_FLEXCOMM12
+#define BOARD_BT_UART_RST         kFC12_RST_SHIFT_RSTn
+#define BOARD_BT_UART_IRQ         FLEXCOMM12_IRQn
+#define BOARD_BT_UART_IRQ_HANDLER FLEXCOMM12_IRQHandler
+#define BOARD_BT_UART_CLKSRC      kCLOCK_Flexcomm12
 #if defined(__cplusplus)
 extern "C" {
 #endif /* __cplusplus */

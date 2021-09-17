@@ -1,13 +1,13 @@
 /*
 ** ###################################################################
 **     Version:             rev. 4.0, 2020-05-18
-**     Build:               b201228
+**     Build:               b210526
 **
 **     Abstract:
 **         Chip specific module features.
 **
 **     Copyright 2016 Freescale Semiconductor, Inc.
-**     Copyright 2016-2020 NXP
+**     Copyright 2016-2021 NXP
 **     All rights reserved.
 **
 **     SPDX-License-Identifier: BSD-3-Clause
@@ -420,6 +420,8 @@
 #define FSL_FEATURE_FLEXSPI_DMA_MULTIPLE_DES (1)
 /* @brief FlexSPI uses min DQS delay */
 #define FSL_FEATURE_FLEXSPI_DQS_DELAY_MIN (1)
+/* @brief FlexSPI has no MCR0 COMBINATIONEN bit */
+#define FSL_FEATURE_FLEXSPI_HAS_NO_MCR0_COMBINATIONEN (1)
 
 /* GPIO module features */
 
@@ -449,6 +451,12 @@
 
 /* @brief Does not have DPHY PLL */
 #define FSL_FEATURE_MIPI_DSI_HOST_NO_DPHY_PLL (1)
+/* @brief Support TX ULPS */
+#define FSL_FEATURE_MIPI_DSI_HOST_HAS_ULPS (0)
+/* @brief Has control register to enable or disable TX ULPS */
+#define FSL_FEATURE_MIPI_DSI_HOST_HAS_ULPS_CTRL (0)
+/* @brief Has pixel-link to DPI remap */
+#define FSL_FEATURE_MIPI_DSI_HOST_HAS_PXL2DPI (0)
 
 /* MRT module features */
 

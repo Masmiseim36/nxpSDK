@@ -141,6 +141,8 @@ include(CMSIS_Include_core_cm_MIMXRT1176_cm4)
 
 include(middleware_wifi_wifidriver_MIMXRT1176_cm4)
 
+include(middleware_wifi_fwdnld_MIMXRT1176_cm4)
+
 include(driver_memory_MIMXRT1176_cm4)
 
 include(middleware_sdmmc_osa_freertos_MIMXRT1176_cm4)

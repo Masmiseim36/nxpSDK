@@ -7,6 +7,7 @@ Toolchain supported
 ===================
 - MCUXpresso  11.4.0
 - IAR embedded Workbench  9.10.2
+- Keil MDK  5.34
 - GCC ARM Embedded  10.2.1
 
 Hardware requirements
@@ -21,9 +22,18 @@ Hardware requirements
 
 Board settings
 ==============
+Before building the example application select Wi-Fi module macro in the app_config.h. (see #define WIFI_<SoC Name>_BOARD_<Module Name>).
+If you want use the AzureWave WIFI_IW416_BOARD_AW_AM457_USD, please change the macro to WIFI_IW416_BOARD_AW_AM457_USD.
+If you want use the AzureWave WIFI_88W8987_BOARD_AW_CM358_USD, please change the macro to WIFI_88W8987_BOARD_AW_CM358_USD.
+If you want use the K32W061_TRANSCEIVER, please change the macro to K32W061_TRANSCEIVER.
+
+Jumper settings for RT1060:
+remove  J40 5-6
+connect J40 1-2
+connect J45 with external power(controlled by SW6)
 
 Jumper settings for AzureWave AW-AM457-uSD Module:
-  - J42 2-3: VIO_SD 3.3V (Voltage level of SDIO pins is 3.3V)
+  - J11 2-3: VIO_SD 3.3V (Voltage level of SDIO pins is 3.3V)
   - J2  1-2: 3.3V VIO_uSD (Power Supply from uSD connector)
   - J4  2-3: 3.3V VIO
 
@@ -60,10 +70,10 @@ The pin connect for UART HCI as the following table,
 ------------------------------------------------------------------------------------
 PIN NAME | DK6 (K32W061) |   I.MXRT1060   | PIN NAME OF RT1060 | GPIO NAME OF RT1060
 ------------------------------------------------------------------------------------
-UART_TXD |  PIO(pin 8)   |   J22(pin 1)   |    LPUART3_RXD     | GPIO_AD_B1_07
-UART_RXD |  PIO(pin 9)   |   J22(pin 2)   |    LPUART3_TXD     | GPIO_AD_B1_06
-UART_RTS |  PIO(pin 6)   |   J23(pin 3)   |    LPUART3_CTS     | GPIO_AD_B1_04
-UART_CTS |  PIO(pin 7)   |   J23(pin 4)   |    LPUART3_RTS     | GPIO_AD_B1_05
+UART_TXD |  PIO(pin 8)   |   J16(pin 1)   |    LPUART3_RXD     | GPIO_AD_B1_07
+UART_RXD |  PIO(pin 9)   |   J16(pin 2)   |    LPUART3_TXD     | GPIO_AD_B1_06
+UART_RTS |  PIO(pin 6)   |   J33(pin 3)   |    LPUART3_CTS     | GPIO_AD_B1_04
+UART_CTS |  PIO(pin 7)   |   J33(pin 4)   |    LPUART3_RTS     | GPIO_AD_B1_05
 ------------------------------------------------------------------------------------
 
 Note:

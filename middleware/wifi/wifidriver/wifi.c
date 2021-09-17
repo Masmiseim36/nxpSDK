@@ -35,6 +35,7 @@
 #include "wifi-internal.h"
 #include "wifi-sdio.h"
 #include "mlan_sdio.h"
+#include "sdio.h"
 
 #ifdef CONFIG_WMM
 #include "sdmmc_config.h"
@@ -939,7 +940,7 @@ static int add_mcast_ip(uint8_t *mac_addr)
     if (!cmp_mac_addr(node_t->mac_addr, mac_addr))
     {
         wifi_put_mcastf_lock();
-        return -WM_FAIL;
+        return -WM_E_EXIST;
     }
     new_node = os_mem_alloc(sizeof(mcast_filter));
     if (new_node == NULL)

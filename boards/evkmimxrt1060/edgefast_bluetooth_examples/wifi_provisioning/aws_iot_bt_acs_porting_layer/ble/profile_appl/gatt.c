@@ -671,6 +671,7 @@ API_RESULT gatt_handle_find_info_response
     pri_serv_uuid = GATT_PRIMARY_SERVICE;
     /* TODO: Check why handle to be set here */
     handle = 0;
+    data_elem_size = 0U;
 
     /* Get the context */
     retval = gatt_search_context (att_handle, &id);

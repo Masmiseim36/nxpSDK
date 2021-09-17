@@ -7,7 +7,7 @@
  */
 
 #include <string.h>
-#include <errno.h>
+#include <errno/errno.h>
 #include <sys/byteorder.h>
 #include <sys/printk.h>
 
@@ -30,7 +30,7 @@ static const struct bt_uuid_128 uuid128_base = {
 
 static void uuid_to_uuid128(const struct bt_uuid *src, struct bt_uuid_128 *dst)
 {
-	switch (src->type) 
+	switch (src->type)
 	{
 	case BT_UUID_TYPE_16:
 		*dst = uuid128_base;
@@ -64,13 +64,13 @@ static int uuid128_cmp(const struct bt_uuid *u1, const struct bt_uuid *u2)
 
 int bt_uuid_cmp(const struct bt_uuid *u1, const struct bt_uuid *u2)
 {
-        int status = -EINVAL;
+	int status = -EINVAL;
 	/* Convert to 128 bit if types don't match */
 	if (u1->type != u2->type) {
 		return uuid128_cmp(u1, u2);
 	}
 
-	switch (u1->type) 
+	switch (u1->type)
 	{
 	case BT_UUID_TYPE_16:
 		status = (int)BT_UUID_16(u1)->val - (int)BT_UUID_16(u2)->val;
@@ -79,11 +79,11 @@ int bt_uuid_cmp(const struct bt_uuid *u1, const struct bt_uuid *u2)
 		status = (int)BT_UUID_32(u1)->val - (int)BT_UUID_32(u2)->val;
 		break;
 	case BT_UUID_TYPE_128:
-    status =  memcmp(BT_UUID_128(u1)->val, BT_UUID_128(u2)->val, 16);
+		status =  memcmp(BT_UUID_128(u1)->val, BT_UUID_128(u2)->val, 16);
 		break;
 	default:
-    status = -EINVAL;
-    break;
+		status = -EINVAL;
+		break;
 	}
 
 	return status;
@@ -92,7 +92,7 @@ int bt_uuid_cmp(const struct bt_uuid *u1, const struct bt_uuid *u2)
 bool bt_uuid_create(struct bt_uuid *uuid, const uint8_t *data, uint8_t data_len)
 {
 	bool status = true;
-        /* Copy UUID from packet data/internal variable to internal bt_uuid */
+	/* Copy UUID from packet data/internal variable to internal bt_uuid */
 	switch (data_len) {
 	case 2:
 		uuid->type = BT_UUID_TYPE_16;
@@ -108,7 +108,7 @@ bool bt_uuid_create(struct bt_uuid *uuid, const uint8_t *data, uint8_t data_len)
 		break;
 	default:
 		status = false;
-                break;
+		break;
 	}
 	return status;
 }
@@ -120,10 +120,10 @@ void bt_uuid_to_str(const struct bt_uuid *uuid, char *str, size_t len)
 
 	switch (uuid->type) {
 	case BT_UUID_TYPE_16:
-		(void)snprintf(str, len, "%04x", BT_UUID_16(uuid)->val);
+		(void)snprintk(str, len, "%04"PRIx16, BT_UUID_16(uuid)->val);
 		break;
 	case BT_UUID_TYPE_32:
-		(void)snprintf(str, len, "%08lx", BT_UUID_32(uuid)->val);
+		(void)snprintk(str, len, "%08"PRIx32, BT_UUID_32(uuid)->val);
 		break;
 	case BT_UUID_TYPE_128:
 		(void)memcpy((void *)&tmp0, (void *)&BT_UUID_128(uuid)->val[0], sizeof(tmp0));
@@ -133,8 +133,10 @@ void bt_uuid_to_str(const struct bt_uuid *uuid, char *str, size_t len)
 		(void)memcpy((void *)&tmp4, (void *)&BT_UUID_128(uuid)->val[10], sizeof(tmp4));
 		(void)memcpy((void *)&tmp5, (void *)&BT_UUID_128(uuid)->val[12], sizeof(tmp5));
 
-		(void)snprintf(str, len, "%081x-%04x-%04x-%04x-%081x%04x",
-			 (unsigned int)tmp5, tmp4, tmp3, tmp2, (unsigned int)tmp1, tmp0);
+		(void)snprintk(str, len, "%08"PRIx32"-%04"PRIx16"-%04"PRIx16"-%04"PRIx16"-%08"PRIx32"%04"PRIx16,
+			 (unsigned long int)sys_le32_to_cpu(tmp5), sys_le16_to_cpu(tmp4),
+			 sys_le16_to_cpu(tmp3), sys_le16_to_cpu(tmp2),
+			 (unsigned long int)sys_le32_to_cpu(tmp1), sys_le16_to_cpu(tmp0));
 		break;
 	default:
 		(void)memset(str, 0, len);

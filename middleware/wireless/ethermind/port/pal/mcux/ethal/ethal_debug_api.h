@@ -17,7 +17,7 @@
 /* ----------------------------------------------- Header File Inclusion */
 #include "EM_os.h"
 
-/* Enalbe to not log file path in log */
+/* Enable to not log file path in log */
 #define EM_DEBUG_DONT_LOG_FILE_PATH
 
 /* Compilation Feature Flag to enable Timestamp in Debug Logs */
@@ -28,6 +28,9 @@
 
 /* Compilation feature flag to disable runtime logs on startup */
 #define EM_DISABLE_DEBUG_LOG_ON_STARTUP
+
+/* Compilation feature flag to disable all debug by default */
+#define EM_DISABLE_ALL_DEBUG
 
 /* ----------------------------------------------- Debug Macros */
 /* Define Debug Message Types */
@@ -98,9 +101,9 @@
 #endif /* EM_DEBUG_DONT_LOG_FILE_PATH */
 
 /* Debug print macros, based on the debug message types */
-#define EM_debug_printf_err(module_id, ...) EM_debug_printf(EM_DEBUG_MSG_ERR, (module_id), __VA_ARGS__)
-#define EM_debug_printf_trc(module_id, ...) EM_debug_printf(EM_DEBUG_MSG_TRC, (module_id), __VA_ARGS__)
-#define EM_debug_printf_inf(module_id, ...) EM_debug_printf(EM_DEBUG_MSG_INF, (module_id), __VA_ARGS__)
+#define EM_debug_printf_err(module_id, ...) EM_debug_printf_IGNORE_RETURN(EM_DEBUG_MSG_ERR, (module_id), __VA_ARGS__)
+#define EM_debug_printf_trc(module_id, ...) EM_debug_printf_IGNORE_RETURN(EM_DEBUG_MSG_TRC, (module_id), __VA_ARGS__)
+#define EM_debug_printf_inf(module_id, ...) EM_debug_printf_IGNORE_RETURN(EM_DEBUG_MSG_INF, (module_id), __VA_ARGS__)
 
 #ifdef EM_LOG_TIMESTAMP
 #define EM_debug_error(module_id, ...) \
@@ -171,16 +174,22 @@ void EM_debug_shutdown ( void );
 INT32 EM_debug_printf(UCHAR msg_type, UINT32 module_id, const CHAR *fmt, ...);
 INT32 EM_debug_dump_bytes(UINT32 module_id, UCHAR *buffer, UINT32 length);
 INT32 EM_debug_dump_decimal(UINT32 module_id, UCHAR *buffer, UINT32 length);
+
+#define EM_debug_printf_IGNORE_RETURN(level, module_id, ...) \
+        (void)EM_debug_printf((level), (module_id), __VA_ARGS__)
+
 #else
-#define EM_debug_printf(...)
 #define EM_debug_dump_bytes(module_id, buffer, length)
-#define EM_debug_dump_decimal(module_id, buffer, length )
+#define EM_debug_dump_decimal(module_id, buffer, length)
+
+#define EM_debug_printf_IGNORE_RETURN(level, module_id, ...)
+
 #endif /* EM_DISABLE_ALL_DEBUG */
 
 #ifdef EM_LOG_TIMESTAMP
 UCHAR * EM_debug_get_current_timestamp (void);
 #else /* EM_LOG_TIMESTAMP */
-#define EM_debug_get_current_timestamp(...)  NULL
+#define EM_debug_get_current_timestamp(...)  "** EM_LOG_TIMESTAMP Undefined! **"
 #endif /* EM_LOG_TIMESTAMP */
 
 #ifdef EM_ENABLE_DISABLE_RUNTIME_DEBUG

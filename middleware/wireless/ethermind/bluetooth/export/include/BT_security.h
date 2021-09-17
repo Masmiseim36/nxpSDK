@@ -66,6 +66,28 @@
 /* Security Level 4 - Secure Connection Requirement */
 #define BT_SEC_SL_3                         0x04U
 /** \} */
+
+#ifdef BT_SECURITY_VU_VALIDATION
+/* Security Vulnerability IDs */
+#define BT_SECURITY_VU_KNOB_ATTACK              1U
+#define BT_SECURITY_VU_ASBU_ATTACK              2U
+#define BT_SECURITY_VU_INVALID_PUBKEY           3U
+#define BT_SECURITY_VU_BLURTOOTH                4U
+#define BT_SECURITY_VU_ANSSI_REFLECT_CONFVAL    5U
+#define BT_SECURITY_VU_ANSSI_REFLECT_PUBKEY     6U
+#define BT_SECURITY_VU_UNEXPECTED_ENC_START     7U
+#define BT_SECURITY_VU_UNEXPECTED_PUBKEY        8U
+#define BT_SECURITY_VU_KEYSIZE_OVERFLOW         9U
+#define BT_SECURITY_VU_ZERO_LTK_INSTALL        10U
+#define BT_SECURITY_VU_DHCHECK_SKIP            11U
+#define BT_SECURITY_VU_NONZERO_EDIV_RAND       12U
+#define BT_SECURITY_VU_TRUNCATED_L2CAP         13U
+#define BT_SECURITY_VU_SILENT_LEN_OVERFLOW     14U
+#define BT_SECURITY_VU_INVALID_L2CAP_FRAGMENT  15U
+#define BT_SECURITY_VU_SEQUENTIAL_ATT_DEADLOCK 16U
+
+#endif /* BT_SECURITY_VU_VALIDATION */
+
 /* --------------------------------------------- Structures/Data Types */
 /**
  * \defgroup security_structures Structures
@@ -171,6 +193,32 @@ void BT_security_get_trusted_device_count
      (
          /* OUT */ UCHAR * ntrusted
      );
+
+#ifdef BT_SECURITY_VU_VALIDATION
+/**
+ *  \brief
+ *
+ *  \par Description:
+ *
+ *  \param [in]
+ *
+ *  \return
+ *      API_RESULT: API_SUCCESS or one of the error codes as defined in
+ *                  \ref BLE_ERROR_CODES.
+ */
+void BT_security_vu_set(UCHAR vu);
+
+/**
+ *  \brief
+ *
+ *  \par Description:
+ *
+ *  \return
+ *      API_RESULT: API_SUCCESS or one of the error codes as defined in
+ *                  \ref BLE_ERROR_CODES.
+ */
+UCHAR BT_security_vu_get(void);
+#endif /* BT_SECURITY_VU_VALIDATION */
 
 #ifdef __cplusplus
 };

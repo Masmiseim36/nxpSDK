@@ -8,7 +8,7 @@
 #include <zephyr/types.h>
 #include <stddef.h>
 #include <string.h>
-#include <errno.h>
+#include <errno/errno.h>
 #include <sys/printk.h>
 #include <sys/byteorder.h>
 #include <porting.h>
@@ -56,14 +56,17 @@ static void bt_ready(int err)
 
 void spp_task(void *pvParameters)
 {
-    int retval;
+    int err;
 
     /* Initialize BT Host stack */
-    retval = bt_enable(bt_ready);
-    if (retval)
+    err = bt_enable(bt_ready);
+    if (err)
     {
-        PRINTF("Bluetooth init failed (err %d)\n", retval);
-        return;
+        PRINTF("Bluetooth init failed (err %d)\n", err);
+        while (1)
+        {
+            vTaskDelay(2000);
+        }
     }
 
     vTaskDelete(NULL);

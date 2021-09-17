@@ -186,6 +186,8 @@ int get_security(int argc, char **argv, enum wlan_security_type type, struct wla
                 return 1;
             /* copy the PSK phrase */
             sec->psk_len = strlen(argv[0]);
+            if (sec->psk_len < WLAN_PSK_MIN_LENGTH)
+                return 1;
             if (sec->psk_len < sizeof(sec->psk))
                 strcpy(sec->psk, argv[0]);
             else

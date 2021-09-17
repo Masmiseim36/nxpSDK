@@ -2,7 +2,6 @@ include_guard(GLOBAL)
 message("middleware_wifi_wifidriver component is included.")
 
 target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
-    ${CMAKE_CURRENT_LIST_DIR}/port/os/os.c
     ${CMAKE_CURRENT_LIST_DIR}/wifidriver/mlan_11ac.c
     ${CMAKE_CURRENT_LIST_DIR}/wifidriver/mlan_11d.c
     ${CMAKE_CURRENT_LIST_DIR}/wifidriver/mlan_11h.c
@@ -17,7 +16,6 @@ target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
     ${CMAKE_CURRENT_LIST_DIR}/wifidriver/mlan_join.c
     ${CMAKE_CURRENT_LIST_DIR}/wifidriver/mlan_misc.c
     ${CMAKE_CURRENT_LIST_DIR}/wifidriver/mlan_scan.c
-    ${CMAKE_CURRENT_LIST_DIR}/wifidriver/mlan_sdio.c
     ${CMAKE_CURRENT_LIST_DIR}/wifidriver/mlan_shim.c
     ${CMAKE_CURRENT_LIST_DIR}/wifidriver/mlan_sta_cmd.c
     ${CMAKE_CURRENT_LIST_DIR}/wifidriver/mlan_sta_cmdresp.c
@@ -53,4 +51,6 @@ include(middleware_freertos-kernel_MIMXRT685S_cm33)
 include(middleware_sdmmc_sdio_MIMXRT685S_cm33)
 
 include(utility_debug_console_MIMXRT685S_cm33)
+
+include(middleware_wifi_fwdnld_MIMXRT685S_cm33)
 

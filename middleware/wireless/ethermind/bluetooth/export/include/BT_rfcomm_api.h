@@ -926,7 +926,7 @@ API_RESULT BT_rfcomm_send_pn
  *        be set to size of RFCOMM_RPN. If an RPN Request had been sent to the
  *        peer, the data parameter holds the current port settings of the peer
  *        device for the RFCOMM DLC. If an RPN Command had been sent to the peer,
- *        the data parameter holds the resultant port settings that the peer has
+ *        the data parameter holds the result and port settings that the peer has
  *        accepted or rejected (for more information see description of
  *        RFCOMM_RPN data type).
  */
@@ -1156,6 +1156,7 @@ API_RESULT BT_rfcomm_register_mtu
                /* IN */  UINT16    mtu
            );
 
+#ifdef RFCOMM_FLUSHABLE_PACKET
 /**
  *  \brief To mark the RFCOMM ACL data as flushable PDU.
  *
@@ -1180,7 +1181,9 @@ API_RESULT BT_rfcomm_set_flushable
            (
                /* IN */ RFCOMM_HANDLE *    handle
            );
+#endif /* RFCOMM_FLUSHABLE_PACKET */
 
+#ifdef RFCOMM_USE_L2CAP_ERTM_RUNTIME_CONFIG
 /**
  *  \brief To set the L2CAP operation mode for RFCOMM channel at runtime.
  *
@@ -1199,6 +1202,7 @@ API_RESULT BT_rfcomm_set_l2cap_operation_mode
            (
                /* IN */ UCHAR op_mode
            );
+#endif /* RFCOMM_USE_L2CAP_ERTM_RUNTIME_CONFIG */
 
 #ifdef __cplusplus
 };

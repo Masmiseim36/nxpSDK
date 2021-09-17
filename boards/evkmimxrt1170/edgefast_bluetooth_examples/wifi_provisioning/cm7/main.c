@@ -60,7 +60,6 @@
 
 #include "host_msd_fatfs.h"
 
-#include "nvm_adapter.h"
 #include "usb_host_config.h"
 #include "usb_host.h"
 #include "usb_host_msd.h"
@@ -91,7 +90,7 @@ extern usb_host_handle g_HostHandle;
  * Code
  ******************************************************************************/
 
-#if defined(WIFI_BOARD_AW_CM358)
+#if defined(WIFI_88W8987_BOARD_AW_CM358MA)
 int controller_hci_uart_get_configuration(controller_hci_uart_config_t *config)
 {
     if (NULL == config)
@@ -106,7 +105,7 @@ int controller_hci_uart_get_configuration(controller_hci_uart_config_t *config)
     config->enableTxCTS     = 1u;
     return 0;
 }
-#elif defined(WIFI_BOARD_AW_AM457)
+#elif defined(WIFI_IW416_BOARD_AW_AM457_USD)
 int controller_hci_uart_get_configuration(controller_hci_uart_config_t *config)
 {
     if (NULL == config)
@@ -199,7 +198,7 @@ void main_task(void *pvParameters)
 
 int main(void)
 {
-#if defined(WIFI_BOARD_AW_CM358)
+#if defined(WIFI_88W8987_BOARD_AW_CM358MA)
     /* GPIO configuration of wifi_reset on GPIO_AD_16 (pin N17) */
     gpio_pin_config_t wifi_reset_config = {
         .direction = kGPIO_DigitalOutput, .outputLogic = 0U, .interruptMode = kGPIO_NoIntmode};
@@ -207,7 +206,7 @@ int main(void)
 
     BOARD_ConfigMPU();
     BOARD_InitBootPins();
-#if defined(WIFI_BOARD_AW_CM358)
+#if defined(WIFI_88W8987_BOARD_AW_CM358MA)
     BOARD_InitM2UARTPins();
     BOARD_InitM2WifiResetPins();
     /* Initialize GPIO functionality on GPIO_AD_16 (pin N17) */
@@ -217,7 +216,7 @@ int main(void)
 #endif
     BOARD_InitBootClocks();
     BOARD_InitDebugConsole();
-#if defined(WIFI_BOARD_AW_CM358)
+#if defined(WIFI_88W8987_BOARD_AW_CM358MA)
     /* Wirte GPIO pin value on GPIO_AD_16 (pin N17) */
     GPIO_PinWrite(CM7_GPIO3, 15U, 1U);
 #endif

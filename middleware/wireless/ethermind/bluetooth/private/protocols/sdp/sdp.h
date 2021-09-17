@@ -40,6 +40,7 @@ void sdp_bt_init (void);
  */
 void sdp_bt_shutdown(void);
 
+#ifdef BT_DRIVER_MODE
 /*
  * This function returns the Global SDP User Context Identifier,
  * that stores the SDP context index for the recent-most
@@ -47,6 +48,7 @@ void sdp_bt_shutdown(void);
  * Callback has been called.
  */
 API_RESULT bt_sdp_get_user_context_id ( /* OUT */ UCHAR *context_id );
+#endif /* BT_DRIVER_MODE */
 
 
 #endif /* _H_SDP_ */

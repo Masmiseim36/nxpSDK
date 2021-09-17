@@ -244,6 +244,10 @@ status_t SPI_MasterTransferDMA(SPI_Type *base, spi_dma_handle_t *handle, spi_tra
     }
     else
     {
+        /* Clear FIFOs before transfer. */
+        base->FIFOCFG |= SPI_FIFOCFG_EMPTYTX_MASK | SPI_FIFOCFG_EMPTYRX_MASK;
+        base->FIFOSTAT |= SPI_FIFOSTAT_TXERR_MASK | SPI_FIFOSTAT_RXERR_MASK;
+
         dma_transfer_config_t xferConfig = {0};
         spi_config_p                     = (spi_config_t *)SPI_GetConfig(base);
 

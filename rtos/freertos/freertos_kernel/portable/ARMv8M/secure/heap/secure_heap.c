@@ -1,5 +1,5 @@
 /*
- * FreeRTOS Kernel V10.4.3
+ * FreeRTOS Kernel V10.4.3 LTS Patch 1
  * Copyright (C) 2020 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
@@ -37,7 +37,9 @@
 /**
  * @brief Total heap size.
  */
-#define secureconfigTOTAL_HEAP_SIZE    ( ( ( size_t ) ( 10 * 1024 ) ) )
+#ifndef secureconfigTOTAL_HEAP_SIZE
+    #define secureconfigTOTAL_HEAP_SIZE    ( ( ( size_t ) ( 10 * 1024 ) ) )
+#endif
 
 /* No test marker by default. */
 #ifndef mtCOVERAGE_TEST_MARKER
@@ -444,11 +446,5 @@ size_t xPortGetFreeHeapSize( void )
 size_t xPortGetMinimumEverFreeHeapSize( void )
 {
     return xMinimumEverFreeBytesRemaining;
-}
-/*-----------------------------------------------------------*/
-
-void vPortInitialiseBlocks( void )
-{
-    /* This just exists to keep the linker quiet. */
 }
 /*-----------------------------------------------------------*/

@@ -29,7 +29,7 @@
 
 /* Macro to declare a Bottom Half handler */
 #define BT_BOTTOM_HALF(x) \
-        void x (void *, UINT16)
+        void x (void *args, UINT16 args_len)
 
 
 /* ============================================= User Data Bottom Halves */
@@ -38,7 +38,9 @@ extern "C" {
 #endif
 
 /* --------------------------------------------- Section 'HCI' */
+#ifdef HCI_SCO
 BT_BOTTOM_HALF ( hci_sco_data_bh );
+#endif /* HCI_SCO */
 
 /* --------------------------------------------- Section 'RFCOMM' */
 BT_BOTTOM_HALF ( rfcomm_write_bh );
@@ -76,12 +78,19 @@ BT_BOTTOM_HALF ( rfcomm_send_msc_bh );
 BT_BOTTOM_HALF ( rfcomm_send_rpn_bh );
 BT_BOTTOM_HALF ( rfcomm_send_rls_bh );
 BT_BOTTOM_HALF ( rfcomm_session_fc_bh );
+
+#ifndef RFCOMM_NO_SEND_TEST
 BT_BOTTOM_HALF ( rfcomm_session_test_bh );
+#endif /* RFCOMM_NO_SEND_TEST */
+
 BT_BOTTOM_HALF ( rfcomm_credit_tx_bh );
+
+#ifdef RFCOMM_ENABLE_SUPPORT_APIS
 BT_BOTTOM_HALF ( rfcomm_session_open_bh );
 BT_BOTTOM_HALF ( rfcomm_session_close_bh );
 BT_BOTTOM_HALF ( rfcomm_dlc_open_bh );
 BT_BOTTOM_HALF ( rfcomm_dlc_close_bh );
+#endif /* RFCOMM_ENABLE_SUPPORT_APIS */
 
 BT_BOTTOM_HALF ( rfcomm_user_accept_cancel_bh );
 
@@ -118,12 +127,16 @@ BT_BOTTOM_HALF ( obex_send_bh );
 
 /* ============================================= Internal Bottom Halves  */
 /* --------------------------------------------- Section 'HCI Transport' */
+#ifdef BT_TRANSPORT_SINGLE_TASK
 BT_BOTTOM_HALF ( hci_transport_data_read_bh );
+#endif /* BT_TRANSPORT_SINGLE_TASK */
 
 /* --------------------------------------------- Section 'BCSP' */
+#if 0
 BT_BOTTOM_HALF ( bcsp_link_establishment_bh );
 BT_BOTTOM_HALF ( bcsp_sequence_tx_bh );
 BT_BOTTOM_HALF ( bcsp_sequence_ack_bh );
+#endif /* 0 */
 
 /* --------------------------------------------- Section 'HCI' */
 BT_BOTTOM_HALF ( hci_command_tx_bh );
@@ -138,7 +151,9 @@ BT_BOTTOM_HALF ( l2ca_channel_data_write_bh );
 #endif /* L2CAP_SUPPORT_CBFC_MODE */
 
 /* --------------------------------------------- Section 'SMP' */
+#ifdef SMP_HAVE_TBX_CMD_WT_BH
 BT_BOTTOM_HALF ( smp_tbx_commands_bh );
+#endif /* SMP_HAVE_TBX_CMD_WT_BH */
 
 /* ===================================================================== */
 #ifdef __cplusplus

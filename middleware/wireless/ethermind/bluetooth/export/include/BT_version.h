@@ -59,7 +59,7 @@
  *  internal function/variable names etc are viewed as changes that result in
  *  increment in this number.
  */
-#define BT_SUB_MINOR_VERSION_NUMBER   9U
+#define BT_SUB_MINOR_VERSION_NUMBER   13U
 
 /* -------------------------------------------- Macros */
 

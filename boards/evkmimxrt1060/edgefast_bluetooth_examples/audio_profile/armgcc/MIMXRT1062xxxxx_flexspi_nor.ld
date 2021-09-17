@@ -54,6 +54,12 @@ NV_STORAGE_END_ADDRESS = NVM_AREA_START + NVM_AREA_SIZE - 1;
 NV_STORAGE_START_ADDRESS = NVM_AREA_START;
 /*** NVM Configuration End ***/
 
+/*** littleFS configuration Start ***/
+LITTLEFS_STORAGE_START_ADDRESS = _ROM_END_ + 1;
+LITTLEFS_STORAGE_SECTOR_SIZE = 0x1000;  /* 4k flash sector size */
+LITTLEFS_STORAGE_MAX_SECTORS = (0x60800000 - LITTLEFS_STORAGE_START_ADDRESS) / LITTLEFS_STORAGE_SECTOR_SIZE;
+/*** littleFS configuration End ***/
+
 
 HEAP_SIZE  = DEFINED(__heap_size__)  ? __heap_size__  : 0x400;
 STACK_SIZE = DEFINED(__stack_size__) ? __stack_size__ : 0x1000;

@@ -19,6 +19,7 @@
 #ifndef CONFIG_BT_HCI_HOST
     #define CONFIG_BT_HCI_HOST 1
 #endif
+
 /*! @brief buffer reserved length, suggested value is 8.*/
 #ifndef CONFIG_BT_BUF_RESERVE
     #define CONFIG_BT_BUF_RESERVE 8
@@ -156,6 +157,22 @@ Select this for LE Peripheral role support.
 #endif
 #endif
 
+/*! @brief Central Role support, if the macro is set to 0,feature is disabled, if 1, feature is enabled.
+ * Select this for LE Central role support.
+ */
+#ifndef CONFIG_BT_CENTRAL
+    #define CONFIG_BT_CENTRAL 0
+#endif
+
+#if CONFIG_BT_CENTRAL
+/*! @brief Observer Role support.
+ * Select this for LE Observer role support.
+ */
+#ifndef CONFIG_BT_OBSERVER
+    #define CONFIG_BT_OBSERVER 1
+#endif
+#endif /* CONFIG_BT_CENTRAL */
+
 /*! @brief Extended Advertising and Scanning support [EXPERIMENTAL], if the macro is set to 0,feature is disabled, if 1, feature is enabled.
  * Select this to enable Extended Advertising API support.
  * This enables support for advertising with multiple advertising sets,
@@ -187,23 +204,42 @@ Select this for LE Peripheral role support.
     #define CONFIG_BT_EXT_ADV_MAX_ADV_SET 1
 #endif
 
+
+/*! @brief Periodic Advertising and Scanning support [EXPERIMENTAL]
+ *
+ *  This allows the device to send advertising data periodically at deterministic
+ *  intervals. Scanners can synchronize to the periodic advertisements
+ *  to periodically get the data.
+ */
+#ifndef CONFIG_BT_PER_ADV
+#define CONFIG_BT_PER_ADV 0
+#endif
+
+/*! @brief Periodic advertising sync support [EXPERIMENTAL]
+ *
+ *  Syncing with a periodic advertiser allows the device to periodically
+ *  and deterministic receive data from that device in a connectionless
+ *  manner.
+ */
+#ifndef CONFIG_BT_PER_ADV_SYNC
+#if CONFIG_BT_OBSERVER
+#define CONFIG_BT_PER_ADV_SYNC 1
+#else
+#define CONFIG_BT_PER_ADV_SYNC 0
+#endif /* CONFIG_BT_OBSERVER */
+#endif /* CONFIG_BT_PER_ADV_SYNC */
+
+#if CONFIG_BT_PER_ADV_SYNC
+/*! @brief Maximum number of simultaneous periodic advertising syncs, range 1 to 64
+ *
+ *  Maximum number of simultaneous periodic advertising syncs supported.
+ */
+#ifndef CONFIG_BT_PER_ADV_SYNC_MAX
+#define CONFIG_BT_PER_ADV_SYNC_MAX 1
+#endif /* CONFIG_BT_PER_ADV_SYNC_MAX */
+#endif /* CONFIG_BT_PER_ADV_SYNC */
+
 #endif /* CONFIG_BT_EXT_ADV */
-
-/*! @brief Central Role support, if the macro is set to 0,feature is disabled, if 1, feature is enabled.
- * Select this for LE Central role support.
- */
-#ifndef CONFIG_BT_CENTRAL
-    #define CONFIG_BT_CENTRAL 0
-#endif
-
-#if CONFIG_BT_CENTRAL
-/*! @brief Observer Role support.
- * Select this for LE Observer role support.
- */
-#ifndef CONFIG_BT_OBSERVER
-    #define CONFIG_BT_OBSERVER 1
-#endif
-#endif /* CONFIG_BT_CENTRAL */
 
 #if CONFIG_BT_HCI_HOST
 
@@ -748,6 +784,18 @@ Select this for LE Peripheral role support.
 #endif
 #endif /* CONFIG_BT_SMP */
 
+/*! @brief L2CAP RETRANSMISSION/FLOW CONTROL/STREAMING modes support.
+ * This option enables support for RETRANSMISSION/FLOW CONTROL/STREAMING
+ * modes.
+ * The Enhanced Retransmission Mode and Streaming Mode are supported.
+ * The Retransmission Mode and Flow control Mode are not supported yet.
+ * The Enhanced Retransmission Mode (Extended Flow Spec) and
+ * Streaming Mode (Extended Flow Sepc) are not supported yet.
+ */
+#ifndef CONFIG_BT_L2CAP_IFRAME_SUPPORT
+    #define CONFIG_BT_L2CAP_IFRAME_SUPPORT 0
+#endif
+
 /*************************** ATT layer ***********************/
 /*! @brief Number of ATT prepare write buffers, if the macro is set to 0, feature is disabled, if greater than 1, feature is enabled.
  * Number of buffers available for ATT prepare write, setting
@@ -766,6 +814,17 @@ Select this for LE Peripheral role support.
  */
 #ifndef CONFIG_BT_ATT_TX_MAX
     #define CONFIG_BT_ATT_TX_MAX (CONFIG_BT_L2CAP_TX_BUF_COUNT)
+#endif
+
+/*! @brief Maximum number of queued ingoing ATT PDUs.
+ * Number of ATT PDUs that can be at a single moment queued for
+ * transmission. If the application tries to send more than this
+ * amount the calls will block until an existing queued PDU gets
+ * sent.
+ * range is 1 to 255
+ */
+#ifndef CONFIG_BT_ATT_RX_MAX
+    #define CONFIG_BT_ATT_RX_MAX (CONFIG_BT_RX_BUF_COUNT)
 #endif
 
 /*! @brief Enhanced ATT Bearers support [EXPERIMENTAL], if the macro is set to 0, feature is disabled, if 1, feature is enabled.
@@ -1088,6 +1147,13 @@ Select this for LE Peripheral role support.
     #define CONFIG_BT_RFCOMM 0
 #endif
 
+/*! @brief Bluetooth SPP profile support [EXPERIMENTAL],if the macro is set to 0, feature is disabled,if 1, feature is enabled.
+ * This option enables Bluetooth SPP support
+ */
+#ifndef CONFIG_BT_SPP
+    #define CONFIG_BT_SPP   CONFIG_BT_RFCOMM
+#endif
+
 /*! @brief L2CAP MTU for RFCOMM frames.
  * Maximum size of L2CAP PDU for RFCOMM frames.
  */
@@ -1131,6 +1197,11 @@ Select this for LE Peripheral role support.
 
 #ifdef CONFIG_BT_A2DP
 
+/*! @brief Bluetooth A2DP count. */
+#ifndef CONFIG_BT_A2DP_MAX_CONN
+#define CONFIG_BT_A2DP_MAX_CONN CONFIG_BT_MAX_CONN
+#endif
+
 /*! @brief Bluetooth A2DP Profile Source function.
  * This option enables the A2DP profile Source function
  */
@@ -1145,6 +1216,38 @@ Select this for LE Peripheral role support.
     #define CONFIG_BT_A2DP_SINK 0
 #endif
 
+#ifndef CONFIG_BT_A2DP_MAX_ENDPOINT_COUNT
+    #define CONFIG_BT_A2DP_MAX_ENDPOINT_COUNT 2
+#endif
+
+#ifdef CONFIG_BT_A2DP_SOURCE
+
+#ifndef CONFIG_BT_A2DP_SBC_ENCODER_PCM_BUFFER_SIZE
+    #define CONFIG_BT_A2DP_SBC_ENCODER_PCM_BUFFER_SIZE 0
+#endif
+
+#ifndef CONFIG_BT_A2DP_SBC_ENCODER_BIT_RATE
+    #define CONFIG_BT_A2DP_SBC_ENCODER_BIT_RATE 328
+#endif
+
+#endif
+
+#ifdef CONFIG_BT_A2DP_SINK
+
+#ifndef CONFIG_BT_A2DP_SBC_DECODER_PCM_BUFFER_SIZE
+    #define CONFIG_BT_A2DP_SBC_DECODER_PCM_BUFFER_SIZE 0
+#endif
+
+#ifndef CONFIG_BT_A2DP_SBC_DATA_IND_COUNT
+    #define CONFIG_BT_A2DP_SBC_DATA_IND_COUNT 328
+#endif
+
+#ifndef CONFIG_BT_A2DP_SBC_DATA_IND_SAMPLES_COUNT
+    #define CONFIG_BT_A2DP_SBC_DATA_IND_SAMPLES_COUNT 328
+#endif
+
+#endif
+
 /*! @brief Bluetooth A2DP Profile task priority.
  * This option sets the task priority. The task is used to process the streamer data and retry command.
  */
@@ -1157,6 +1260,118 @@ Select this for LE Peripheral role support.
  */
 #ifndef CONFIG_BT_A2DP_TASK_STACK_SIZE
 #define CONFIG_BT_A2DP_TASK_STACK_SIZE (2048U)
+#endif
+
+/*! @brief Bluetooth A2DP content protection service.
+ * This option enables it or not.
+ */
+#ifndef CONFIG_BT_A2DP_CP_SERVICE
+    #define CONFIG_BT_A2DP_CP_SERVICE 0
+#endif
+
+/*! @brief Bluetooth A2DP recovery service.
+ * This option enables it or not.
+ * only the a2dp configuration is supported,
+ * data transfer is not supported yet.
+ */
+#ifndef CONFIG_BT_A2DP_RECOVERY_SERVICE
+    #define CONFIG_BT_A2DP_RECOVERY_SERVICE 0
+#endif
+
+/*! @brief Bluetooth A2DP reporting service.
+ * This option enables it or not.
+ * only the a2dp configuration is supported,
+ * data transfer is not supported yet.
+ */
+#ifndef CONFIG_BT_A2DP_REPORTING_SERVICE
+    #define CONFIG_BT_A2DP_REPORTING_SERVICE 0
+#endif
+
+/*! @brief Bluetooth A2DP delay report service.
+ * This option enables it or not.
+ */
+#ifndef CONFIG_BT_A2DP_DR_SERVICE
+    #define CONFIG_BT_A2DP_DR_SERVICE 0
+#endif
+
+/*! @brief Bluetooth A2DP header compression service.
+ * This option enables it or not.
+ * only the a2dp configuration is supported,
+ * data transfer is not supported yet.
+ */
+#ifndef CONFIG_BT_A2DP_HC_SERVICE
+    #define CONFIG_BT_A2DP_HC_SERVICE 0
+#endif
+
+/*! @brief Bluetooth A2DP multiplexing service.
+ * This option enables it or not.
+ * only the a2dp configuration is supported,
+ * data transfer is not supported yet.
+ */
+#ifndef CONFIG_BT_A2DP_MULTIPLEXING_SERVICE
+    #define CONFIG_BT_A2DP_MULTIPLEXING_SERVICE 0
+#endif
+
+#endif
+
+/*! @brief Bluetooth AVRCP profile.
+ * This option enables it or not.
+ */
+#ifndef CONFIG_BT_AVRCP
+#define CONFIG_BT_AVRCP 0
+#endif
+
+#ifdef CONFIG_BT_AVRCP
+
+/*! @brief Bluetooth AVRCP count. */
+#ifndef CONFIG_BT_AVRCP_MAX_CONN
+#define CONFIG_BT_AVRCP_MAX_CONN CONFIG_BT_MAX_CONN
+#endif
+
+/*! @brief Bluetooth AVRCP Controller.
+ * This option enables it or not.
+ */
+#ifndef CONFIG_BT_AVRCP_CT
+#define CONFIG_BT_AVRCP_CT 0
+#endif
+
+/*! @brief Bluetooth AVRCP Target.
+ * This option enables it or not.
+ */
+#ifndef CONFIG_BT_AVRCP_TG
+#define CONFIG_BT_AVRCP_TG 0
+#endif
+
+/*! @brief Bluetooth AVRCP browsing.
+ * This option enables it or not.
+ */
+#ifndef CONFIG_BT_AVRCP_BROWSING
+#define CONFIG_BT_AVRCP_BROWSING 0
+#endif
+
+/*! @brief Bluetooth AVRCP cover art.
+ * This option enables it or not.
+ */
+#ifndef CONFIG_BT_AVRCP_COVER_ART
+#define CONFIG_BT_AVRCP_COVER_ART 0
+#endif
+
+#ifdef CONFIG_BT_AVRCP_COVER_ART
+
+/*! @brief Bluetooth AVRCP cover art initiator.
+ * This option enables it or not.
+ */
+#ifndef CONFIG_BT_AVRCP_COVER_ART_INITIATOR
+#define CONFIG_BT_AVRCP_COVER_ART_INITIATOR 0
+#endif
+
+/*! @brief Bluetooth AVRCP cover art responder.
+ * This option enables it or not.
+ */
+#ifndef CONFIG_BT_AVRCP_COVER_ART_RESPONDER
+#define CONFIG_BT_AVRCP_COVER_ART_RESPONDER 0
+#endif
+
 #endif
 
 #endif
@@ -1384,6 +1599,47 @@ Select this for LE Peripheral role support.
 #ifndef CONFIG_BT_MSG_QUEUE_COUNT
     #define CONFIG_BT_MSG_QUEUE_COUNT 16
 #endif
+
+#if (defined(CONFIG_BT_RFCOMM) && (CONFIG_BT_RFCOMM > 0))
+/****************** RFCOMM Protocol configuration *********************/
+/*! @brief Maximum Number of RFCOMM Session supported. */
+#ifndef CONFIG_BT_RFCOMM_SESSION_MAX_COUNT
+    #define CONFIG_BT_RFCOMM_SESSION_MAX_COUNT     1
+#endif
+
+/*! @brief Maximum Number of RFCOMM Entity supported. */
+#ifndef CONFIG_BT_RFCOMM_CLIENT_MAX_COUNT
+    #define CONFIG_BT_RFCOMM_CLIENT_MAX_COUNT     1
+#endif
+
+/*! @brief Maximum Number of RFCOMM Server Entity supported. */
+#ifndef CONFIG_BT_RFCOMM_SERVER_MAX_COUNT
+    #define CONFIG_BT_RFCOMM_SERVER_MAX_COUNT     1
+#endif
+
+/*! @brief Enable RFCOMM Control Command. */
+#ifndef CONFIG_BT_RFCOMM_ENABLE_CONTROL_CMD
+    #define CONFIG_BT_RFCOMM_ENABLE_CONTROL_CMD   1
+#endif
+#endif /*(defined(CONFIG_BT_RFCOMM) && (CONFIG_BT_RFCOMM > 0))*/
+
+#if (defined(CONFIG_BT_SPP) && (CONFIG_BT_SPP > 0))
+/******************* SPP Profile configuration **********************/
+/*! @brief Maximum Number of SPP Entity supported. */
+#ifndef CONFIG_BT_SPP_MAX_CONN
+#define CONFIG_BT_SPP_MAX_CONN (CONFIG_BT_RFCOMM_SERVER_MAX_COUNT + CONFIG_BT_RFCOMM_CLIENT_MAX_COUNT)
+#endif
+
+/*! @brief Maximum Number of SPP Server Entity supported. */
+#ifndef CONFIG_BT_SPP_SERVER_MAX_COUNT
+#define CONFIG_BT_SPP_SERVER_MAX_COUNT CONFIG_BT_RFCOMM_SERVER_MAX_COUNT
+#endif
+
+/*! @brief Enable SPP Control Command. */
+#ifndef CONFIG_BT_SPP_ENABLE_CONTROL_CMD
+    #define CONFIG_BT_SPP_ENABLE_CONTROL_CMD CONFIG_BT_RFCOMM_ENABLE_CONTROL_CMD
+#endif
+#endif /*(defined(CONFIG_BT_SPP) && (CONFIG_BT_SPP > 0))*/
 
 /*! @}*/
 #endif /* __BLE_CONFIG_H__ */

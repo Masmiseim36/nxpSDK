@@ -41,7 +41,7 @@
  */
 #ifdef MAP_1_2
 /* OBEX L2CAP PSM for local client entities */
-#define MAP_OBEX_L2CAP_PSM                       0x8601U
+#define MAP_OBEX_L2CAP_PSM                       0x6007U
 #endif /* MAP_1_2 */
 
 /* MAP Notification Callback Event types */
@@ -786,7 +786,7 @@ typedef union _MAP_HEADERS
  * \{
  * Describes Application Callback defined by the module.
  */
- 
+
 /** MAP Event Notification Callback type */
 typedef API_RESULT (* MAP_EVENT_NTF_CB)
                    (
@@ -831,11 +831,11 @@ typedef API_RESULT (* MAP_EVENT_NTF_CB)
 #else /* MAP_1_3 */
 /** To set application parameter flag */
 #define MAP_SET_APPL_PARAM_FLAG_EXT(flag, set_field, index)   \
-        *((UINT32 *)((flag) + (index))) = *((UINT32 *)((flag) + (index))) | (set_field)
+        (flag)[(index)] = ((flag)[(index)]) | (set_field)
 
 /** To retrieve the field value (Set/Reset) */
 #define MAP_GET_APPL_PARAM_FLAG_EXT(flag, get_field, index)   \
-        (*((UINT32 *)((flag) + (index))) & (get_field))
+        (((flag)[(index)]) & (get_field))
 
 /** Resets all the fields of the application parameter flag */
 #define MAP_RESET_APPL_PARAM_FLAG_EXT(flag_ptr, index)        \

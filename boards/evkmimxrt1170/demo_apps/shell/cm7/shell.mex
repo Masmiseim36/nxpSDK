@@ -456,7 +456,6 @@
                         <command type="nop"/>
                         <command type="nop"/>
                         <command type="write_value" address="SEMC_INTR" value="0x03" value_width="4"/>
-                        <command type="write_value" address="SEMC_DCCR" value="0x17" value_width="4"/>
                         <command type="nop"/>
                         <command type="write_value" address="SEMC_SDRAMCR3" value="0x21210409" value_width="4"/>
                      </commands>

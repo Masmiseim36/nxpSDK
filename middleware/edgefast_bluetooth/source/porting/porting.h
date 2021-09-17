@@ -22,15 +22,20 @@
 #include <bluetooth/addr.h>
 #include <bluetooth/uuid.h>
 
+#include "bt_ble_settings.h"
+
 #define k_timeout_t size_t
+
+#include <bluetooth/buf.h>
+
 #define k_sleep OSA_TimeDelay
+
+#define K_NO_WAIT osaWaitNone_c
 
 /* TODO: K_KERNEL_STACK_MEMBER */
 #define K_KERNEL_STACK_MEMBER(s, size) size_t (s)[size]
 /* TODO: K_KERNEL_STACK_MEMBER */
 #define K_KERNEL_STACK_DEFINE(s, size) size_t (s)[size]
-
-#define K_MSEC(ms) (ms)
 
 #ifndef BT_DBG
 #define BT_DBG(fmt, ...) LOG_DBG("%s " fmt, __func__, ##__VA_ARGS__)
@@ -44,6 +49,56 @@
 #ifndef BT_INFO
 #define BT_INFO(fmt, ...) LOG_INF("%s " fmt, __func__, ##__VA_ARGS__)
 #endif /* BT_INFO */
+
+static inline char *log_strdup(const char *str)
+{
+	return (char *)str;
+}
+
+#define BT_HEXDUMP_DBG(data, length, msg)                           \
+do                                                                  \
+{                                                                   \
+    const uint8_t rowCount = 4;                                     \
+    uint32_t dataLen = (length);                                    \
+    uint32_t index = 0;                                             \
+                                                                    \
+    BT_DBG("%s", msg);                                              \
+    BT_DBG("Index: 0  1  2  3");                                    \
+    BT_DBG("=================");                                    \
+                                                                    \
+    while ((dataLen) >= rowCount)                                   \
+    {                                                               \
+        BT_DBG("%04d :%02X %02X %02X %02X", index / rowCount,       \
+              ((uint8_t *)(data))[index + 0],                       \
+              ((uint8_t *)(data))[index + 1],                       \
+              ((uint8_t *)(data))[index + 2],                       \
+              ((uint8_t *)(data))[index + 3]);                      \
+        (dataLen) -= rowCount;                                      \
+        index += rowCount;                                          \
+    }                                                               \
+                                                                    \
+    switch ((dataLen))                                              \
+    {                                                               \
+    case 3:                                                         \
+      BT_DBG("%04d :%02X %02X %02X", index / rowCount,              \
+            ((uint8_t *)(data))[index + 0],                         \
+            ((uint8_t *)(data))[index + 1],                         \
+            ((uint8_t *)(data))[index + 2]);                        \
+      break;                                                        \
+    case 2:                                                         \
+      BT_DBG("%04d :%02X %02X", index / rowCount,                   \
+            ((uint8_t *)(data))[index + 0],                         \
+            ((uint8_t *)(data))[index + 1]);                        \
+      break;                                                        \
+    case 1:                                                         \
+      BT_DBG("%04d :%02X", index / rowCount,                        \
+        ((uint8_t *)(data))[index + 0]);                            \
+      break;                                                        \
+    default:                                                        \
+      /* Fix MISRA C-2012 Rule 16.4 */                              \
+      break;                                                        \
+    }                                                               \
+} while (0);
 
 typedef struct k_thread
 {
@@ -81,5 +136,7 @@ const char *bt_addr_le_str(const bt_addr_le_t *addr);
 const char *bt_hex(const void *buf, size_t len);
 const char *bt_addr_str(const bt_addr_t *addr);
 const char *bt_uuid_str(const struct bt_uuid *uuid);
+
+size_t strnlen(const char *s, size_t maxlen);
 
 #endif /* __EDGEFAST_BT_BLE_PORTING_H__ */

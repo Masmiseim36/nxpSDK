@@ -12,7 +12,7 @@
 #include <zephyr/types.h>
 #include <stddef.h>
 #include <string.h>
-#include <errno.h>
+#include <errno/errno.h>
 #include <porting.h>
 
 #include <bluetooth/bluetooth.h>

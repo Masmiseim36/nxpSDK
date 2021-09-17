@@ -2241,6 +2241,18 @@
     <name>eiq</name>
     <group>
       <name>tensorflow-lite</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/AUTHORS</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/LICENSE</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/ChangeLogKSDK.txt</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/readme.txt</name>
+      </file>
       <group>
         <name>tensorflow</name>
         <group>

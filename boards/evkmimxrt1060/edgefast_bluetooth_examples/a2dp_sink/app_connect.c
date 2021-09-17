@@ -7,7 +7,7 @@
 
 #include <porting.h>
 #include <string.h>
-#include <errno.h>
+#include <errno/errno.h>
 #include <stdbool.h>
 #include <sys/atomic.h>
 #include <sys/byteorder.h>
@@ -17,7 +17,7 @@
 #include <bluetooth/conn.h>
 #include <bluetooth/l2cap.h>
 #include <bluetooth/a2dp.h>
-#include <bluetooth/a2dp-codec.h>
+#include <bluetooth/a2dp_codec_sbc.h>
 #include <bluetooth/sdp.h>
 #include "clock_config.h"
 #include "board.h"

@@ -71,15 +71,15 @@
     #include "att.h"
 #endif /* ATT */
 
+/* ------------------------------------------- External Global Variables */
 
 /* ------------------------------------------- External Global Variables */
 
-
-/* ------------------------------------------- External Global Variables */
-
-
-/* ------------------------------------------- External Global Variables */
-
+/* ------------------------------------------- Static Global Variables */
+#ifdef BT_COMMON_PL_SUPPORT_UL_CB
+DECL_STATIC BT_COMMON_UL_INIT_CB_PL   ul_bt_on_init_cb;
+DECL_STATIC BT_COMMON_UL_DEINIT_CB_PL ul_bt_off_deinit_cb;
+#endif /* BT_COMMON_PL_SUPPORT_UL_CB */
 
 /* ------------------------------------------- Functions */
 /* EtherMind-Init: Platform Lower Handler */
@@ -166,6 +166,11 @@ void ethermind_init_upper_pl (void)
 #ifdef ATT
     em_att_init();
 #endif /* ATT */
+
+#ifdef BT_COMMON_PL_SUPPORT_UL_CB
+    ul_bt_on_init_cb    = NULL;
+    ul_bt_off_deinit_cb = NULL;
+#endif /* BT_COMMON_PL_SUPPORT_UL_CB */
 }
 
 
@@ -247,6 +252,13 @@ void bluetooth_on_upper_pl (void)
 #ifdef ATT
     att_bt_init ();
 #endif /* ATT */
+
+#ifdef BT_COMMON_PL_SUPPORT_UL_CB
+    if (NULL != ul_bt_on_init_cb)
+    {
+        ul_bt_on_init_cb();
+    }
+#endif /* BT_COMMON_PL_SUPPORT_UL_CB */
 }
 
 
@@ -280,6 +292,13 @@ void bluetooth_off_lower_pl (void)
 /* Bluetooth-OFF: Platform Upper Handler */
 void bluetooth_off_upper_pl (void)
 {
+#ifdef BT_COMMON_PL_SUPPORT_UL_CB
+    if (NULL != ul_bt_off_deinit_cb)
+    {
+        ul_bt_off_deinit_cb();
+    }
+#endif /* BT_COMMON_PL_SUPPORT_UL_CB */
+
 #ifdef ATT
     /* Attribute Protocol BT Shutdown */
     att_bt_shutdown ();
@@ -329,5 +348,26 @@ void bluetooth_off_upper_pl (void)
 }
 
 #endif /* BT_NO_BLUETOOTH_OFF */
+
+#ifdef BT_COMMON_PL_SUPPORT_UL_CB
+void BT_ethermind_register_ul_cb_pl
+     (
+         /* IN */ BT_COMMON_UL_INIT_CB_PL   bt_on_init_cb,
+         /* IN */ BT_COMMON_UL_DEINIT_CB_PL bt_off_deinit_cb
+     )
+{
+    if (NULL != bt_on_init_cb)
+    {
+        ul_bt_on_init_cb = bt_on_init_cb;
+    }
+
+    if (NULL != bt_off_deinit_cb)
+    {
+        ul_bt_off_deinit_cb = bt_off_deinit_cb;
+    }
+}
+#endif /* BT_COMMON_PL_SUPPORT_UL_CB */
+
+
 
 

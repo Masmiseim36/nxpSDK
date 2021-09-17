@@ -67,7 +67,7 @@ typedef struct timer_entity_struct
     struct timer_entity_struct *handle;
 
     /* Callback to call when Timer expires */
-    void (* callback) (void *, UINT16);
+    void (* callback) (void *data, UINT16 datalen);
 
     /**
      * Timer Callback Parameter if
@@ -125,7 +125,7 @@ EM_RESULT EM_start_timer
           (
               EM_timer_handle *handle,
               UINT32 timeout,
-              void (* callback) (void *, UINT16),
+              void (* callback) (void *data, UINT16 datalen),
               void *args, UINT16 size_args
           );
 

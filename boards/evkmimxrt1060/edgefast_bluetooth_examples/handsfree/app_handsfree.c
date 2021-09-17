@@ -29,6 +29,7 @@
 #include "BT_sdp_api.h"
 #include "app_handsfree.h"
 #include "db_gen.h"
+#include "app_shell.h"
 
 #define HFP_CLASS_OF_DEVICE (0x200404U)
 static struct bt_conn *default_conn;
@@ -132,7 +133,29 @@ static void ring_cb(struct bt_conn *conn)
     printf("Incoming Call...\n");
     s_call_status = 1;
 }
+static void call_phnum(struct bt_conn *conn, char *number)
+{
+    printf("Phone call number: %s\n", number);
+}
+static void voicetag_phnum(struct bt_conn *conn, char *number)
+{
+    printf("voice tag_phnum number: %s\n", number);
+}
 
+static void waiting_call(struct bt_conn *conn, hf_waiting_call_state_t *wcs)
+{
+    printf("> CALL WAITING Received Number : %s\n", wcs->number);
+    printf("> Please use <multipcall> to handle multipe call operation\n");
+    printf(
+        " bt multipcall 0. Release all Held Calls and set UUDB tone "
+        "(Reject new incoming waiting call)\n");
+    printf(" bt multipcall 1. Release Active Calls and accept held/waiting call\n");
+    printf(
+        " bt multipcall 2. Hold Active Call and accept already "
+        "held/new waiting call\n");
+    printf(" bt multipcall 3. Conference all calls\n");
+    printf(" bt multipcall 4. Connect other calls and disconnect self from TWC\n");
+}
 static struct bt_hfp_hf_cb hf_cb = {
     .connected       = connected,
     .disconnected    = disconnected,
@@ -144,6 +167,9 @@ static struct bt_hfp_hf_cb hf_cb = {
     .roam            = roam,
     .battery         = battery,
     .ring_indication = ring_cb,
+    .call_phnum      = call_phnum,
+    .voicetag_phnum  = voicetag_phnum,
+    .waiting_call    = waiting_call,
 };
 
 static void handsfree_enable(void)
@@ -159,11 +185,11 @@ static void handsfree_enable(void)
 
 static void bt_ready(int err)
 {
-
     struct net_buf *buf = NULL;
     struct bt_hci_cp_write_class_of_device *cp;
 
-    if (err) {
+    if (err)
+    {
         PRINTF("Bluetooth init failed (err %d)\n", err);
         return;
     }
@@ -204,15 +230,81 @@ static void bt_ready(int err)
     PRINTF("BR/EDR set connectable and discoverable done\n");
 
     handsfree_enable();
-    PRINTF("Please use \"Y\" to accept the call,  use \"N\" to reject or end the call \r\n");
+    app_shell_init();
 }
 
+void hfp_AnswerCall(void)
+{
+    bt_hfp_hf_send_cmd(default_conn, BT_HFP_HF_ATA);
+    s_call_status = 2;
+}
+
+void hfp_RejectCall(void)
+{
+    bt_hfp_hf_send_cmd(default_conn, BT_HFP_HF_AT_CHUP);
+    s_call_status = 0;
+}
+void hfp_dial(const char *number)
+{
+    bt_hfp_hf_dial(default_conn, number);
+}
+void dial_memory(int location)
+{
+    bt_hfp_hf_dial_memory(default_conn, location);
+}
+void hfp_last_dial(void)
+{
+    bt_hfp_hf_last_dial(default_conn);
+}
+void hfp_start_voice_recognition(void)
+{
+    bt_hfp_hf_start_voice_recognition(default_conn);
+}
+
+void hfp_hf_get_last_voice_tag_number(void)
+{
+    bt_hfp_hf_get_last_voice_tag_number(default_conn);
+}
+
+void hfp_stop_voice_recognition(void)
+{
+    bt_hfp_hf_stop_voice_recognition(default_conn);
+}
+
+void hfp_volume_update(hf_volume_type_t type, int volume)
+{
+    bt_hfp_hf_volume_update(default_conn, type, volume);
+}
+void hfp_enable_ccwa(uint8_t enable)
+{
+    if (enable)
+    {
+        bt_hfp_hf_enable_call_waiting_notification(default_conn);
+    }
+    else
+    {
+        bt_hfp_hf_disable_call_waiting_notification(default_conn);
+    }
+}
+void hfp_enable_clip(uint8_t enable)
+{
+    if (enable)
+    {
+        bt_hfp_hf_enable_clip_notification(default_conn);
+    }
+    else
+    {
+        bt_hfp_hf_disable_clip_notification(default_conn);
+    }
+}
+
+void hfp_multiparty_call_option(uint8_t option)
+{
+    bt_hfp_hf_multiparty_call_option(default_conn, (hf_multiparty_call_option_t)option);
+}
 void peripheral_hfp_hf_task(void *pvParameters)
 {
     int err = 0;
-    char c;
-    (void)err;
-    status_t status;
 
     /* Initializate BT Host stack */
     err = bt_enable(bt_ready);
@@ -221,46 +313,5 @@ void peripheral_hfp_hf_task(void *pvParameters)
         PRINTF("Bluetooth init failed (err %d)\n", err);
         return;
     }
-
-    while (1)
-    {
-        vTaskDelay(1);
-
-        status = DbgConsole_TryGetchar(&c);
-        if (status == kStatus_Success)
-        {
-			if (s_call_status == 1)
-			{
-
-				if (NULL != default_conn)
-				{
-					if (('y' == c) || ('Y' == c))
-					{
-						bt_hfp_hf_send_cmd(default_conn, BT_HFP_HF_ATA);
-						s_call_status = 2;
-						PRINTF("Answered the incoming call.\n");
-					}
-					else if (('n' == c) || ('N' == c))
-					{
-						bt_hfp_hf_send_cmd(default_conn, BT_HFP_HF_AT_CHUP);
-						PRINTF("Rejected the incoming call.\n");
-					}
-				}
-				vTaskDelay(1000);
-			}
-			if (s_call_status == 2)
-			{
-				if (NULL != default_conn)
-				{
-					if (('n' == c) || ('N' == c))
-					{
-						bt_hfp_hf_send_cmd(default_conn, BT_HFP_HF_AT_CHUP);
-						s_call_status = 0;
-						PRINTF("Ended the activing call.\n");
-					}
-				}
-				vTaskDelay(1000);
-			}
-        }
-    }
+    vTaskDelete(NULL);
 }

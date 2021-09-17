@@ -1,0 +1,229 @@
+#!armclang --target=arm-arm-none-eabi -mcpu=cortex-m7 -E -x c
+/*
+** ###################################################################
+**     Processors:          MIMXRT1176AVM8A_cm7
+**                          MIMXRT1176CVM8A_cm7
+**                          MIMXRT1176DVMAA_cm7
+**
+**     Compiler:            Keil ARM C/C++ Compiler
+**     Reference manual:    IMXRT1170RM, Rev 0, 12/2020
+**     Version:             rev. 1.0, 2020-12-29
+**     Build:               b210226
+**
+**     Abstract:
+**         Linker file for the Keil ARM C/C++ Compiler
+**
+**     Copyright 2016 Freescale Semiconductor, Inc.
+**     Copyright 2016-2021 NXP
+**     All rights reserved.
+**
+**     SPDX-License-Identifier: BSD-3-Clause
+**
+**     http:                 www.nxp.com
+**     mail:                 support@nxp.com
+**
+** ###################################################################
+*/
+
+/* NVM */
+/* By default, the NVM is not used. */
+#if !(defined(gUseNVMLink_d))
+    #define gUseNVMLink_d              0
+#endif
+
+#if !(defined(gEraseNVMLink_d))
+    #define gEraseNVMLink_d            0
+#endif
+
+#if !(defined(gNVMSectorCountLink_d))
+    #define gNVMSectorCountLink_d      4
+#endif
+
+
+#if (defined(__ram_vector_table__))
+  #define __ram_vector_table_size__    0x00000400
+#else
+  #define __ram_vector_table_size__    0x00000000
+#endif
+
+#define m_flash_start                  0x30000000
+#define m_flash_end                    0x30FBFFFF
+
+#define m_flash_config_start           0x30000400
+#define m_flash_config_size            0x00000C00
+
+#define m_ivt_start                    0x30001000
+#define m_ivt_size                     0x00001000
+
+#define m_interrupts_start             0x30002000
+#define m_interrupts_size              0x00000400
+
+#define m_text_start                   0x30002400
+#define _ROM_END_                      0x30DBFFFF
+
+#define m_qacode_start                 0x00000000
+#define m_qacode_size                  0x00040000
+
+#define m_interrupts_ram_start         0x20000000
+#define m_interrupts_ram_size          __ram_vector_table_size__
+
+#define NVM_ADAPTER_TABLE_SIZE         0x200
+#define NVM_TABLE_SIZE                 0x1000
+#define NVM_TABLE_START                m_interrupts_ram_start + m_interrupts_ram_size
+
+#define m_data_start                   (m_interrupts_ram_start + m_interrupts_ram_size + NVM_TABLE_SIZE)
+#define m_data_size                    (0x00040000 - m_interrupts_ram_size - NVM_TABLE_SIZE)
+
+#if (defined(__use_shmem__))
+  #define m_rpmsg_sh_mem_start         0x202C0000
+  #define m_rpmsg_sh_mem_size          0x00002000
+
+  #define m_data2_start                0x202C2000
+  #define m_data2_size                 0x0007E000
+#else
+  #define m_data2_start                0x202C0000
+  #define m_data2_size                 0x00080000
+#endif
+
+#define m_core1_image_start            0x30FC0000
+#define m_core1_image_size             0x00040000
+
+
+#define STORAGE_AREA_LENGTH            0x10000
+
+#define STORAGE_AREA_SIZE             STORAGE_AREA_LENGTH
+#define STORAGE_AREA_START            (_ROM_END_ - STORAGE_AREA_SIZE + 1)
+#define m_text_size                   (_ROM_END_ - m_text_start - STORAGE_AREA_SIZE - NVM_ADAPTER_TABLE_SIZE + 1)
+
+/*** NVM Configuration Start ***/
+#if (defined(gUseNVMLink_d))
+  #define NVM_AREA_START              STORAGE_AREA_START
+  
+  /* 4k flash sector size */
+  #define NV_STORAGE_SECTOR_SIZE      0x1000
+  #define NV_STORAGE_MAX_SECTORS      gNVMSectorCountLink_d
+  #define NVM_AREA_SIZE               (NV_STORAGE_SECTOR_SIZE * NV_STORAGE_MAX_SECTORS)
+
+  #define NV_STORAGE_END_ADDRESS      (NVM_AREA_START + NVM_AREA_SIZE - 1)
+  #define NV_STORAGE_START_ADDRESS    (NVM_AREA_START)
+#endif
+/*** NVM Configuration End ***/
+
+/*** littleFS configuration Start ***/
+#define LITTLEFS_STORAGE_START_ADDRESS  (_ROM_END_ + 1)
+#define LITTLEFS_STORAGE_END_ADDRESS    (0x30FBFFFF + 1)
+#define LITTLEFS_STORAGE_SECTOR_SIZE    (0x1000)
+#define LITTLEFS_STORAGE_MAX_SECTORS    ((LITTLEFS_STORAGE_END_ADDRESS - LITTLEFS_STORAGE_START_ADDRESS) / LITTLEFS_STORAGE_SECTOR_SIZE)
+/*** littleFS configuration End ***/
+
+/* Sizes */
+#if (defined(__stack_size__))
+  #define Stack_Size                   __stack_size__
+#else
+  #define Stack_Size                   0x0400
+#endif
+
+#if (defined(__heap_size__))
+  #define Heap_Size                    __heap_size__
+#else
+  #define Heap_Size                    0x0400
+#endif
+
+#if defined(XIP_BOOT_HEADER_ENABLE) && (XIP_BOOT_HEADER_ENABLE == 1)
+LR_m_text m_flash_start m_flash_end-m_flash_start+1 {   ; load region size_region
+  RW_m_config_text m_flash_config_start FIXED m_flash_config_size { ; load address = execution address
+    * (.boot_hdr.conf, +FIRST)
+  }
+
+  RW_m_ivt_text m_ivt_start FIXED m_ivt_size { ; load address = execution address
+    * (.boot_hdr.ivt, +FIRST)
+    * (.boot_hdr.boot_data)
+    * (.boot_hdr.dcd_data)
+  }
+#else
+LR_m_text m_interrupts_start m_text_start+m_text_size-m_interrupts_start {   ; load region size_region
+#endif
+  VECTOR_ROM m_interrupts_start FIXED m_interrupts_size { ; load address = execution address
+    * (.isr_vector,+FIRST)
+  }
+
+
+  ER_m_text m_text_start FIXED m_text_size { ; load address = execution address
+    * (InRoot$$Sections)
+    .ANY (+RO)
+  }
+
+  ER_bt_gatt_service_static +0 { ;
+    * (._bt_gatt_service_static*)
+  }
+
+  ER_settings_handler_static +0 { ;
+    * (._settings_handler_static*)
+  }
+
+  ER_bt_l2cap_fixed_chan +0 { ;
+    * (._bt_l2cap_fixed_chan*)
+  }
+
+  ER_bt_l2cap_br_fixed_chan +0 { ;
+    * (._bt_l2cap_br_fixed_chan*)
+  }
+
+  ER_NVM_ADAPTER_TABLE m_text_start+m_text_size UNINIT NVM_ADAPTER_TABLE_SIZE { ; load address = execution address
+    * (*NVM_ADAPTER_TABLE)
+  }
+
+  NVM_region NV_STORAGE_START_ADDRESS EMPTY NVM_AREA_SIZE { ; load address = execution address
+  }
+
+  LittleFS_region LITTLEFS_STORAGE_START_ADDRESS EMPTY (LITTLEFS_STORAGE_END_ADDRESS - LITTLEFS_STORAGE_START_ADDRESS) { ; load address = execution address
+  }
+
+#if (defined(__ram_vector_table__))
+  VECTOR_RAM m_interrupts_ram_start EMPTY m_interrupts_ram_size {
+  }
+#else
+  VECTOR_RAM m_interrupts_start EMPTY 0 {
+  }
+#endif
+  RW_NVM_TABLE NVM_TABLE_START UNINIT NVM_TABLE_SIZE { ; RW data
+    * (*NVM_TABLE)
+  }
+#if (defined(__use_shmem__))
+  RPMSG_SH_MEM m_rpmsg_sh_mem_start UNINIT m_rpmsg_sh_mem_size { ; Shared memory used by RPMSG
+    * (rpmsg_sh_mem_section)
+  }
+#endif
+  RW_m_ram_text m_qacode_start m_qacode_size { ;
+    * (CodeQuickAccess)
+  }
+  RW_m_ncache m_data_start EMPTY 0 { ; RW data
+  }
+  RW_m_ncache_unused +0 EMPTY m_data_size-Stack_Size-Heap_Size-ImageLength(RW_m_ncache) { ; Empty region added for MPU configuration
+  }
+  ARM_LIB_HEAP +0 EMPTY Heap_Size {    ; Heap region growing up
+  }
+  ARM_LIB_STACK m_data_start+m_data_size EMPTY -Stack_Size { ; Stack region growing down
+  }
+  RW_m_data m_data2_start m_data2_size { ; RW data
+    .ANY (+RW +ZI)
+    * (RamFunction)
+    /* Necessary to run flash routines from SRAM */
+    fsl_adapter_flexspi_nor_flash.o (+RO +RW +ZI)
+    fsl_flexspi.o (+RO +RW +ZI)
+    NV_Flash.o (+RO +RW +ZI)
+    mflash_drv.o (+RO +RW +ZI)
+    * (NonCacheable.init)
+    * (*NonCacheable)
+  }
+
+  RW_net_buf_pool +0 { ;
+    * (._net_buf_pool*)
+  }
+}
+
+LR_CORE1_IMAGE m_core1_image_start {
+  CORE1_REGION m_core1_image_start m_core1_image_size {
+    *(*core1_code)
+  }
+}

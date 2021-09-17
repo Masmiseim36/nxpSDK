@@ -31,6 +31,7 @@
     <definition extID="CMSIS_Include_core_cm.MIMXRT1062"/>
     <definition extID="middleware.freertos-kernel.extension.MIMXRT1062"/>
     <definition extID="middleware.wifi.wifidriver.MIMXRT1062"/>
+    <definition extID="middleware.wifi.fwdnld.MIMXRT1062"/>
     <definition extID="middleware.sdmmc.osa.freertos.MIMXRT1062"/>
     <definition extID="component.osa_free_rtos.MIMXRT1062"/>
     <definition extID="platform.utilities.misc_utilities.MIMXRT1062"/>
@@ -43,7 +44,7 @@
     <definition extID="com.crt.advproject.config.exe.debug"/>
     <definition extID="com.crt.advproject.config.exe.release"/>
   </externalDefinitions>
-  <example id="evkmimxrt1060_wifi_cli" name="wifi_cli" dependency="platform.drivers.cache_armv7_m7.MIMXRT1062 middleware.freertos-kernel.MIMXRT1062 middleware.freertos-kernel.heap_4.MIMXRT1062 middleware.lwip.MIMXRT1062 utility.debug_console.MIMXRT1062 middleware.wifi.MIMXRT1062 middleware.lwip.apps.lwiperf.MIMXRT1062 middleware.wifi.cli.MIMXRT1062 platform.drivers.usdhc.MIMXRT1062 middleware.sdmmc.sdio.MIMXRT1062 middleware.sdmmc.common.MIMXRT1062 middleware.sdmmc.host.usdhc.MIMXRT1062 middleware.sdmmc.host.usdhc.freertos.MIMXRT1062 platform.drivers.clock.MIMXRT1062 platform.drivers.common.MIMXRT1062 device.MIMXRT1062_CMSIS.MIMXRT1062 component.lpuart_adapter.MIMXRT1062 component.serial_manager.MIMXRT1062 component.lists.MIMXRT1062 component.serial_manager_uart.MIMXRT1062 platform.drivers.lpuart.MIMXRT1062 device.MIMXRT1062_startup.MIMXRT1062 platform.drivers.iomuxc.MIMXRT1062 platform.utilities.assert.MIMXRT1062 platform.drivers.igpio.MIMXRT1062 platform.drivers.xip_device.MIMXRT1062 platform.drivers.xip_board.evkmimxrt1060.MIMXRT1062 CMSIS_Include_core_cm.MIMXRT1062 middleware.freertos-kernel.extension.MIMXRT1062 middleware.wifi.wifidriver.MIMXRT1062 middleware.sdmmc.osa.freertos.MIMXRT1062 component.osa_free_rtos.MIMXRT1062 platform.utilities.misc_utilities.MIMXRT1062 device.MIMXRT1062_system.MIMXRT1062" category="wifi_examples">
+  <example id="evkmimxrt1060_wifi_cli" name="wifi_cli" dependency="platform.drivers.cache_armv7_m7.MIMXRT1062 middleware.freertos-kernel.MIMXRT1062 middleware.freertos-kernel.heap_4.MIMXRT1062 middleware.lwip.MIMXRT1062 utility.debug_console.MIMXRT1062 middleware.wifi.MIMXRT1062 middleware.lwip.apps.lwiperf.MIMXRT1062 middleware.wifi.cli.MIMXRT1062 platform.drivers.usdhc.MIMXRT1062 middleware.sdmmc.sdio.MIMXRT1062 middleware.sdmmc.common.MIMXRT1062 middleware.sdmmc.host.usdhc.MIMXRT1062 middleware.sdmmc.host.usdhc.freertos.MIMXRT1062 platform.drivers.clock.MIMXRT1062 platform.drivers.common.MIMXRT1062 device.MIMXRT1062_CMSIS.MIMXRT1062 component.lpuart_adapter.MIMXRT1062 component.serial_manager.MIMXRT1062 component.lists.MIMXRT1062 component.serial_manager_uart.MIMXRT1062 platform.drivers.lpuart.MIMXRT1062 device.MIMXRT1062_startup.MIMXRT1062 platform.drivers.iomuxc.MIMXRT1062 platform.utilities.assert.MIMXRT1062 platform.drivers.igpio.MIMXRT1062 platform.drivers.xip_device.MIMXRT1062 platform.drivers.xip_board.evkmimxrt1060.MIMXRT1062 CMSIS_Include_core_cm.MIMXRT1062 middleware.freertos-kernel.extension.MIMXRT1062 middleware.wifi.wifidriver.MIMXRT1062 middleware.wifi.fwdnld.MIMXRT1062 middleware.sdmmc.osa.freertos.MIMXRT1062 component.osa_free_rtos.MIMXRT1062 platform.utilities.misc_utilities.MIMXRT1062 device.MIMXRT1062_system.MIMXRT1062" category="wifi_examples">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -180,7 +181,6 @@
       <files mask="lwipopts.h"/>
       <files mask="lwippools.h"/>
       <files mask="FreeRTOSConfig.h"/>
-      <files mask="wifi_config.h"/>
     </source>
     <source path="boards/evkmimxrt1060/wifi_examples/wifi_cli" project_relative_path="board" type="src">
       <files mask="pin_mux.c"/>
@@ -202,6 +202,9 @@
     </source>
     <source path="boards/evkmimxrt1060/wifi_examples/wifi_cli" project_relative_path="source" type="c_include">
       <files mask="app_config.h"/>
+    </source>
+    <source path="boards/evkmimxrt1060/wifi_examples/wifi_cli" project_relative_path="source" type="c_include">
+      <files mask="wifi_config.h"/>
     </source>
     <source path="boards/evkmimxrt1060/wifi_examples/wifi_cli" project_relative_path="doc" type="doc" toolchain="iar mdk mcuxpresso armgcc">
       <files mask="readme.txt"/>

@@ -1,6 +1,6 @@
 /*! *********************************************************************************
 * Copyright (c) 2015, Freescale Semiconductor, Inc.
-* Copyright 2016-2018 NXP
+* Copyright 2016-2018,2020 NXP
 * All rights reserved.
 *
 * \file
@@ -16,14 +16,13 @@
 * Include
 *************************************************************************************
 ********************************************************************************** */
+#include "fsl_component_mem_manager.h"
+#include "fsl_component_messaging.h"
 
-#include "MemManager.h"
-#include "Messaging.h"
 #include "FunctionLib.h"
 #include "SecLib.h"
 #include "fsl_device_registers.h"
 #include "fsl_os_abstraction.h"
-#include "Panic.h"
 #include "CryptoLibSW.h"
 
 #if (defined(FSL_FEATURE_SOC_MMCAU_COUNT) && (FSL_FEATURE_SOC_MMCAU_COUNT > 0))
@@ -85,8 +84,8 @@
      (defined(FSL_FEATURE_SOC_MMCAU_COUNT) && (FSL_FEATURE_SOC_MMCAU_COUNT > 0)) ||        \
      (defined(FSL_FEATURE_SOC_AES_HW)))                         \
      && (defined(gSecLibUseMutex_c) && (gSecLibUseMutex_c > 0)))
-    #define SECLIB_MUTEX_LOCK()   OSA_MutexLock(mSecLibMutexId, osaWaitForever_c)
-    #define SECLIB_MUTEX_UNLOCK() OSA_MutexUnlock(mSecLibMutexId)
+    #define SECLIB_MUTEX_LOCK()   OSA_MutexLock((osa_mutex_handle_t)mSecLibMutexId, osaWaitForever_c)
+    #define SECLIB_MUTEX_UNLOCK() OSA_MutexUnlock((osa_mutex_handle_t)mSecLibMutexId)
 #else
     #define SECLIB_MUTEX_LOCK()
     #define SECLIB_MUTEX_UNLOCK()
@@ -130,7 +129,7 @@ mmcauAesContext_t mmcauAesCtx;
       (defined(FSL_FEATURE_SOC_MMCAU_COUNT) && (FSL_FEATURE_SOC_MMCAU_COUNT > 0)) || \
       defined(FSL_FEATURE_SOC_AES_HW)))
 /*! Mutex used to protect the AES Context when an RTOS is used. */
-osaMutexId_t mSecLibMutexId;
+OSA_MUTEX_HANDLE_DEFINE(mSecLibMutexId);
 #endif /* USE_RTOS */
 
 typedef struct sha1Context_tag{
@@ -207,12 +206,16 @@ static void AES_128_CMAC_HW(AES_param_t* CMAC_p);
 ********************************************************************************** */
 void SecLib_Init(void)
 {
+    static bool initialized = false;
+    if(!initialized)
+    {
+        initialized = true;
 #if (defined(FSL_FEATURE_SOC_LTC_COUNT) && (FSL_FEATURE_SOC_LTC_COUNT > 0))
-    LTC_Init(LTC0);
+        LTC_Init(LTC0);
 #elif defined(FSL_FEATURE_SOC_AES_HW)
 #ifdef CPU_QN908X
 #if USE_TASK_FOR_HW_AES
-    AESM_Initialize();
+        AESM_Initialize();
 #endif /* CPU_QN908X */
 #endif /* FSL_FEATURE_SOC_AES_HW   */
 #endif /* FSL_FEATURE_SOC_LTC_COUNT */
@@ -221,13 +224,14 @@ void SecLib_Init(void)
      ((defined(FSL_FEATURE_SOC_LTC_COUNT) && (FSL_FEATURE_SOC_LTC_COUNT > 0)) || \
       (defined(FSL_FEATURE_SOC_MMCAU_COUNT) && (FSL_FEATURE_SOC_MMCAU_COUNT > 0)) || \
       defined(FSL_FEATURE_SOC_AES_HW)))
-    /*! Initialize the MMCAU AES Context Buffer Mutex here. */
-       mSecLibMutexId = OSA_MutexCreate();
-    if (mSecLibMutexId == (void*)NULL)
-    {
-        panic( ID_PANIC(0,0), (uint32_t)SecLib_Init, 0, 0 );
-    }
+        /*! Initialize the MMCAU AES Context Buffer Mutex here. */
+        (void)OSA_MutexCreate(mSecLibMutexId);
+        if( NULL == mSecLibMutexId)
+        {
+            assert(0);
+        }
 #endif
+    }
 }
 
 /*! *********************************************************************************
@@ -1280,7 +1284,7 @@ secResultType_t AES_128_EAX_Encrypt(uint8_t* pInput,
     buf = MEM_BufferAlloc(buf_len);
 
     if (buf != (void*)NULL)
-    {       
+    {
         FLib_MemSet(buf, 0u, 15u);
 
         buf[15] = 0u;

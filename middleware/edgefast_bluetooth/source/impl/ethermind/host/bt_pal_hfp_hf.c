@@ -9,7 +9,7 @@
 #include <porting.h>
 #include <string.h>
 #include <stdio.h>
-#include <errno.h>
+#include <errno/errno.h>
 #include <sys/atomic.h>
 #include <sys/util.h>
 #include <sys/slist.h>
@@ -153,7 +153,7 @@ typedef struct
 
 } bt_hfp_hf_parser_result;
 
-#define BT_HFP_HF_INITIAL_GAIN "7"
+#define BT_HFP_HF_INITIAL_GAIN "12"
 
 #define BT_HFP_HF_MAX_CLCC_PARAMS 8
 #define BT_HFP_HF_MAX_CCWA_PARAMS 4
@@ -912,6 +912,14 @@ static API_RESULT bt_hfp_hf_callback_registered_with_hfu(HFP_UNIT_HANDLE handle,
             {
                 hfp_hf->bt_hf_cb->call(hfp_hf->bt_conn, 1U);
             }
+             BT_hfp_unit_set_gain
+             (
+                 hfp_hf->handle,
+                 hf_volume_type_speaker,
+                 hfp_hf->bt_hfp_hp_speaker_volume,
+                 (UCHAR)BT_str_len(hfp_hf->bt_hfp_hp_speaker_volume)
+             );
+             sco_audio_set_speaker_volume_pl(atoi((char const *)(const char *)hfp_hf->bt_hfp_hp_speaker_volume));
             break;
         case HFP_UNIT_NO_CALL:
             BT_DBG("\n> Event    : HFP_UNIT_NO_CALL\n");
@@ -1000,7 +1008,7 @@ static API_RESULT bt_hfp_hf_callback_registered_with_hfu(HFP_UNIT_HANDLE handle,
                 hfp_hf->bt_hf_cb->ring_indication(hfp_hf->bt_conn);
             }
             /* Indicate platform of ring */
-            sco_audio_play_ringtone_pl();
+           sco_audio_play_ringtone_pl();
 
             break;
 
@@ -1011,6 +1019,10 @@ static API_RESULT bt_hfp_hf_callback_registered_with_hfu(HFP_UNIT_HANDLE handle,
             {
                 BT_DBG("> Name : %s\n", app_parser_result.result_param.cli_info.name);
             }
+            if (hfp_hf->bt_hf_cb->call_phnum)
+            {
+                hfp_hf->bt_hf_cb->call_phnum(hfp_hf->bt_conn, (char *)app_parser_result.result_param.cli_info.digits);
+            }
             break;
 
         case HFP_UNIT_CALL_WAITING_IND:
@@ -1020,6 +1032,10 @@ static API_RESULT bt_hfp_hf_callback_registered_with_hfu(HFP_UNIT_HANDLE handle,
             BT_DBG("> Number Type     : %d\n", app_parser_result.result_param.ccwa_result.type);
             BT_DBG("> Voice Class     : %d\n", app_parser_result.result_param.ccwa_result.voice_class);
             BT_DBG("> Operator Name   : %s\n", app_parser_result.result_param.ccwa_result.alpha);
+            if (hfp_hf->bt_hf_cb->waiting_call)
+            {
+                hfp_hf->bt_hf_cb->waiting_call(hfp_hf->bt_conn, (hf_waiting_call_state_t *)&app_parser_result.result_param.ccwa_result);
+            }
 
             break;
 
@@ -1086,7 +1102,6 @@ static API_RESULT bt_hfp_hf_callback_registered_with_hfu(HFP_UNIT_HANDLE handle,
                         data_to_app->parser_resp->param[0].value_length);
             /* NULL terminate the str */
             hfp_hf->bt_hfp_hp_speaker_volume[data_to_app->parser_resp->param[0].value_length] = '\0';
-
             sco_audio_set_speaker_volume_pl(atoi((char const *)(const char *)hfp_hf->bt_hfp_hp_speaker_volume));
             BT_DBG("> Data Received : %s\n", hfp_hf->bt_hfp_hp_speaker_volume);
             break;
@@ -1095,6 +1110,10 @@ static API_RESULT bt_hfp_hf_callback_registered_with_hfu(HFP_UNIT_HANDLE handle,
             BT_DBG("\n> Event           : HFP_UNIT_VOICETAG_PHNUM_IND\n");
             BT_DBG("> Instance        : 0x%02X\n", (unsigned int)handle);
             BT_DBG("> Received Number : %s\n", app_parser_result.result_param.digits);
+            if (hfp_hf->bt_hf_cb->voicetag_phnum)
+            {
+                hfp_hf->bt_hf_cb->voicetag_phnum(hfp_hf->bt_conn, (char *)app_parser_result.result_param.digits);
+            }            
             break;
 
         case HFP_UNIT_RECVD_BTRH_IND:
@@ -1629,8 +1648,7 @@ static void bt_connected(struct bt_conn *conn, uint8_t err)
         hfp_hf->actived     = 1U;
         hfp_hf->bt_conn     = conn;
         hfp_hf->hf_features = BT_HFP_HF_SUPPORTED_FEATURES;
-        BT_str_n_copy(&hfp_hf->bt_hfp_hp_speaker_volume[0], BT_HFP_HF_INITIAL_GAIN, 3);
-        BT_str_n_copy(&hfp_hf->bt_hfp_hp_microphone_gain[0], BT_HFP_HF_INITIAL_GAIN, 3);
+
     }
 }
 
@@ -1698,6 +1716,8 @@ int bt_hfp_hf_register(struct bt_hfp_hf_cb *cb)
     bt_conn_cb_register(&conn_callbacks);
     hfp_hf_init();
     hfp_hf->actived = 0;
+    BT_str_n_copy(&hfp_hf->bt_hfp_hp_speaker_volume[0], BT_HFP_HF_INITIAL_GAIN, 3);
+    BT_str_n_copy(&hfp_hf->bt_hfp_hp_microphone_gain[0], BT_HFP_HF_INITIAL_GAIN, 3);
 
     return 0;
 }
@@ -1769,6 +1789,421 @@ int bt_hfp_hf_send_cmd(struct bt_conn *conn, enum bt_hfp_hf_at_cmd cmd)
         hf->bt_hf_cb->cmd_complete_cb(conn, &cmd_complete);
     }
     return status;
+}
+int bt_hfp_hf_start_voice_recognition(struct bt_conn *conn)
+{
+    struct bt_hfp_hf_em *hf;
+    int api_retval;
+    int status                                 = 0;
+
+    if (!conn)
+    {
+        BT_ERR("Invalid connection");
+        return -ENOTCONN;
+    }
+
+    hf = bt_hfp_hf_lookup_bt_conn(conn);
+    if (!hf)
+    {
+        BT_ERR("No HF connection found");
+        
+        return -ENOTCONN;
+    }
+    api_retval = BT_hfp_unit_feature_control
+                 (
+                     hf->handle,
+                     HFP_UNIT_FEATURE_BVRA,
+                     HFP_UNIT_ACTION_ENABLE
+                 );
+
+    if (api_retval < 0)
+    {
+        BT_ERR("Failed start voice recognition");
+        status = api_retval;
+    }
+
+    return status;  
+}
+
+int bt_hfp_hf_stop_voice_recognition(struct bt_conn *conn)
+{
+    struct bt_hfp_hf_em *hf;
+    int api_retval;
+    int status                                 = 0;
+
+    if (!conn)
+    {
+        BT_ERR("Invalid connection");
+        return -ENOTCONN;
+    }
+
+    hf = bt_hfp_hf_lookup_bt_conn(conn);
+    if (!hf)
+    {
+        BT_ERR("No HF connection found");
+        return -ENOTCONN;
+    }
+    api_retval = BT_hfp_unit_feature_control
+                 (
+                     hf->handle,
+                     HFP_UNIT_FEATURE_BVRA,
+                     HFP_UNIT_ACTION_DISABLE
+                 );
+
+    if (api_retval < 0)
+    {
+        BT_ERR("Failed stop voice recognition");
+        status = api_retval;
+    }
+    return status;
+}
+int bt_hfp_hf_dial(struct bt_conn *conn, const char *number)
+{
+    struct bt_hfp_hf_em *hf;
+    int api_retval;
+    int status                                 = 0;
+
+    if (!conn)
+    {
+        BT_ERR("Invalid connection");
+        return -ENOTCONN;
+    }
+
+    hf = bt_hfp_hf_lookup_bt_conn(conn);
+    if (!hf)
+    {
+        BT_ERR("No HF connection found");
+        return -ENOTCONN;
+    }
+
+    api_retval = BT_hfp_unit_dial
+               (
+                   hf->handle,
+                   (void *)number,
+                   (UCHAR)BT_str_len(number)
+               );
+
+    if (api_retval < 0)
+    {
+        BT_ERR("Failed to dial number");
+        status = api_retval;
+    }
+    return status;  
+  
+}
+int bt_hfp_hf_dial_memory(struct bt_conn *conn, int location)
+{
+    struct bt_hfp_hf_em *hf;
+    int api_retval;
+    int status                                 = 0;
+    char                     memid[4U];
+
+    if (!conn)
+    {
+        BT_ERR("Invalid connection");
+        return -ENOTCONN;
+    }
+
+    hf = bt_hfp_hf_lookup_bt_conn(conn);
+    if (!hf)
+    {
+        BT_ERR("No HF connection found");
+        return -ENOTCONN;
+    }
+
+    sprintf(memid,"%d", location);
+
+    /* Remove the terminal '\n', if any */
+    if ('\n' == memid[sizeof(memid) - 1U])
+    {
+        memid[sizeof(memid) - 1U] = '\0';
+    }
+    else if ('\n' == memid[BT_str_len(memid) - 1U])
+    {
+        memid[BT_str_len(memid) - 1U] = '\0';
+    }
+    else
+    {
+        /* MISRA C-2012 Rule 15.7 */
+    }
+
+    api_retval = BT_hfp_unit_memdial
+                 (
+                     hf->handle,
+                     memid,
+                     (UCHAR)BT_str_len(memid)
+                 );
+
+
+    if (api_retval < 0)
+    {
+        BT_ERR("Failed to dial number");
+        status = api_retval;
+    }
+    return status;  
+    
+}
+int bt_hfp_hf_last_dial(struct bt_conn *conn)
+{
+    struct bt_hfp_hf_em *hf;
+    int api_retval;
+    int status                                 = 0;
+
+    if (!conn)
+    {
+        BT_ERR("Invalid connection");
+        return -ENOTCONN;
+    }
+
+    hf = bt_hfp_hf_lookup_bt_conn(conn);
+    if (!hf)
+    {
+        BT_ERR("No HF connection found");
+        return -ENOTCONN;
+    }
+
+    api_retval = BT_hfp_unit_redial
+                 (
+                     hf->handle
+                 );
+
+
+    if (api_retval < 0)
+    {
+        BT_ERR("Failed to dial number");
+        status = api_retval;
+    }
+    return status; 
+}
+int bt_hfp_hf_multiparty_call_option(struct bt_conn *conn, hf_multiparty_call_option_t option)
+{
+    struct bt_hfp_hf_em *hf;
+    int api_retval;
+    int status                                 = 0;
+
+    if (!conn)
+    {
+        BT_ERR("Invalid connection");
+        return -ENOTCONN;
+    }
+
+    hf = bt_hfp_hf_lookup_bt_conn(conn);
+    if (!hf)
+    {
+        BT_ERR("No HF connection found");
+        return -ENOTCONN;
+    }
+
+    api_retval = BT_hfp_unit_control_multiparty_call
+                 (
+                     hf->handle,
+                     option
+                 );
+    if (api_retval < 0)
+    {
+        BT_ERR("Failed to control multiparty call");
+        status = api_retval;
+    }
+    return status;   
+}
+int bt_hfp_hf_enable_clip_notification(struct bt_conn *conn)
+{
+    struct bt_hfp_hf_em *hf;
+    int api_retval;
+    int status                                 = 0;
+
+    if (!conn)
+    {
+        BT_ERR("Invalid connection");
+        return -ENOTCONN;
+    }
+
+    hf = bt_hfp_hf_lookup_bt_conn(conn);
+    if (!hf)
+    {
+        BT_ERR("No HF connection found");
+        return -ENOTCONN;
+    }
+
+    api_retval = BT_hfp_unit_feature_control
+                 (
+                     hf->handle,
+                     HFP_UNIT_FEATURE_CLIP,
+                     HFP_UNIT_ACTION_ENABLE
+                 );
+    if (api_retval < 0)
+    {
+        BT_ERR("Failed to control multiparty call");
+        status = api_retval;
+    }
+    return status;    
+}
+
+int bt_hfp_hf_disable_clip_notification(struct bt_conn *conn)
+{
+    struct bt_hfp_hf_em *hf;
+    int api_retval;
+    int status                                 = 0;
+
+    if (!conn)
+    {
+        BT_ERR("Invalid connection");
+        return -ENOTCONN;
+    }
+
+    hf = bt_hfp_hf_lookup_bt_conn(conn);
+    if (!hf)
+    {
+        BT_ERR("No HF connection found");
+        return -ENOTCONN;
+    }
+
+    api_retval = BT_hfp_unit_feature_control
+                 (
+                     hf->handle,
+                     HFP_UNIT_FEATURE_CLIP,
+                     HFP_UNIT_ACTION_DISABLE
+                 );
+    if (api_retval < 0)
+    {
+        BT_ERR("Failed to control multiparty call");
+        status = api_retval;
+    }
+    return status;    
+}
+int bt_hfp_hf_enable_call_waiting_notification(struct bt_conn *conn)
+{
+    struct bt_hfp_hf_em *hf;
+    int api_retval;
+    int status                                 = 0;
+
+    if (!conn)
+    {
+        BT_ERR("Invalid connection");
+        return -ENOTCONN;
+    }
+
+    hf = bt_hfp_hf_lookup_bt_conn(conn);
+    if (!hf)
+    {
+        BT_ERR("No HF connection found");
+        return -ENOTCONN;
+    }
+
+    api_retval = BT_hfp_unit_feature_control
+                 (
+                     hf->handle,
+                     HFP_UNIT_FEATURE_CCWA,
+                     HFP_UNIT_ACTION_ENABLE
+                 );
+    if (api_retval < 0)
+    {
+        BT_ERR("Failed to control multiparty call");
+        status = api_retval;
+    }
+    return status;    
+}
+int bt_hfp_hf_disable_call_waiting_notification(struct bt_conn *conn)
+{
+    struct bt_hfp_hf_em *hf;
+    int api_retval;
+    int status                                 = 0;
+
+    if (!conn)
+    {
+        BT_ERR("Invalid connection");
+        return -ENOTCONN;
+    }
+
+    hf = bt_hfp_hf_lookup_bt_conn(conn);
+    if (!hf)
+    {
+        BT_ERR("No HF connection found");
+        return -ENOTCONN;
+    }
+
+    api_retval = BT_hfp_unit_feature_control
+                 (
+                     hf->handle,
+                     HFP_UNIT_FEATURE_CCWA,
+                     HFP_UNIT_ACTION_DISABLE
+                 );
+    if (api_retval < 0)
+    {
+        BT_ERR("Failed to control multiparty call");
+        status = api_retval;
+    }
+    return status;    
+}
+int bt_hfp_hf_volume_update(struct bt_conn *conn, hf_volume_type_t type, int volume)
+{
+    struct bt_hfp_hf_em *hf;
+    int api_retval;
+    int status                                 = 0;
+    UCHAR volumeStr[3U];
+
+    if (!conn)
+    {
+        BT_ERR("Invalid connection");
+        return -ENOTCONN;
+    }
+
+    hf = bt_hfp_hf_lookup_bt_conn(conn);
+    if (!hf)
+    {
+        BT_ERR("No HF connection found");
+        return -ENOTCONN;
+    }
+
+    sprintf((char *)&volumeStr[0U],"%d", volume);
+    
+    api_retval = BT_hfp_unit_set_gain
+                 (
+                     hf->handle,
+                     type,
+                     volumeStr,
+                     (UCHAR)BT_str_len(volumeStr)
+                 );
+
+    printf("> API RETVAL Set Volume 0x%04X\n",api_retval);
+    if (type == hf_volume_type_speaker )
+    {
+        BT_str_n_copy(&hf->bt_hfp_hp_speaker_volume[0], volume, 3);
+        sco_audio_set_speaker_volume_pl(volume);
+    }
+    else
+    {
+        BT_str_n_copy(&hf->bt_hfp_hp_microphone_gain[0], volume, 3);
+    }
+    return status;    
+}
+int bt_hfp_hf_get_last_voice_tag_number(struct bt_conn *conn)
+{
+    struct bt_hfp_hf_em *hf;
+    int api_retval;
+    int status                                 = 0;
+
+    if (!conn)
+    {
+        BT_ERR("Invalid connection");
+        return -ENOTCONN;
+    }
+
+    hf = bt_hfp_hf_lookup_bt_conn(conn);
+    if (!hf)
+    {
+        BT_ERR("No HF connection found");
+        return -ENOTCONN;
+    }
+    api_retval = BT_hfp_unit_feature_control
+             (
+                 hf->handle,
+                 HFP_UNIT_FEATURE_BINP,
+                 HFP_UNIT_ACTION_ENABLE
+             );
+    printf("> API RETVAL Set Volume 0x%04X\n",api_retval);
+
+    return status;    
 }
 
 /**

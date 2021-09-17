@@ -7,7 +7,7 @@
 #include <porting.h>
 #include <string.h>
 #include <stdio.h>
-#include <errno.h>
+#include <errno/errno.h>
 #include <sys/atomic.h>
 #include <sys/util.h>
 #include <sys/slist.h>
@@ -41,6 +41,7 @@
 #include "db_gen.h"
 #include "sco_audio_pl.h"
 
+#if (defined(CONFIG_BT_BREDR) && ((CONFIG_BT_BREDR) > 0U))
 
 #define LOG_ENABLE IS_ENABLED(CONFIG_BT_DEBUG_HFP_AG)
 #define LOG_MODULE_NAME bt_hfp_ag
@@ -131,33 +132,33 @@ extern void bt_sco_cleanup(struct bt_conn *sco_conn);
 #define HFP_AG_ENH_VR_AND_VR_TXT_MSG (CHAR *)"\r\n+BVRA: 1,5,12AB,0,1,\"Message to Melissa\"\r\n"
 #define HFAG_ENHVR_TXTREP            (CHAR *)"12AB,0,1,\"Message to Melissa\""
 
-#define HFAG_NOCARRIER_STR "\r\nNO CARRIER\r\n"
-#define HFAG_BUSY_STR      "\r\nBUSY\r\n"
-#define HFAG_NOANSWER_STR  "\r\nNO ANSWER\r\n"
-#define HFAG_RING_STR      "\r\nRING\r\n"
+#define HFAG_NOCARRIER_STR (CHAR *)"\r\nNO CARRIER\r\n"
+#define HFAG_BUSY_STR      (CHAR *)"\r\nBUSY\r\n"
+#define HFAG_NOANSWER_STR  (CHAR *)"\r\nNO ANSWER\r\n"
+#define HFAG_RING_STR      (CHAR *)"\r\nRING\r\n"
 #define HFAG_CIND_TEST_STR                                                                            \
-    "\r\n+CIND: (\"service\",(0-1)), (\"call\",(0-1)), (\"callsetup\",(0-3)), (\"callheld\",(0-2)), " \
+    (CHAR *)"\r\n+CIND: (\"service\",(0-1)), (\"call\",(0-1)), (\"callsetup\",(0-3)), (\"callheld\",(0-2)), " \
     "(\"signal\",(0-5)), (\"roam\",(0-1)), (\"battchg\",(0-5))\r\n"
-#define HFAG_CHLD_TEST_STR "\r\n+CHLD: (0,1,2,3,4)\r\n"
+#define HFAG_CHLD_TEST_STR (CHAR *)"\r\n+CHLD: (0,1,2,3,4)\r\n"
 
-#define HFAG_COPS_READ_STR "\r\n+COPS: 0,0\r\n"
-#define HFAG_CNUM_STR      "\r\n+CNUM: ,\"918067064000\",143,,4\r\n"
+#define HFAG_COPS_READ_STR (CHAR *)"\r\n+COPS: 0,0\r\n"
+#define HFAG_CNUM_STR      (CHAR *)"\r\n+CNUM: ,\"918067064000\",143,,4\r\n"
 
 /* Variable Response Strings */
-#define HFAG_CLIP_STR      "\r\n+CLIP: "
-#define HFAG_CCWA_STR      "\r\n+CCWA: "
-#define HFAG_CIND_READ_STR "\r\n+CIND: "
-#define HFAG_SERVICE_STR   "\r\n+CIEV: 1,"
-#define HFAG_CALL_STR      "\r\n+CIEV: 2,"
-#define HFAG_CALLSETUP_STR "\r\n+CIEV: 3,"
-#define HFAG_CALLHELD_STR  "\r\n+CIEV: 4,"
-#define HFAG_SIGNAL_STR    "\r\n+CIEV: 5,"
-#define HFAG_ROAMING_STR   "\r\n+CIEV: 6,"
-#define HFAG_BATTERY_STR   "\r\n+CIEV: 7,"
-#define HFAG_CME_ERROR_STR "\r\n+CME ERROR: "
-#define HFAG_CLCC_STR      "\r\n+CLCC: "
+#define HFAG_CLIP_STR      (CHAR *)"\r\n+CLIP: "
+#define HFAG_CCWA_STR      (CHAR *)"\r\n+CCWA: "
+#define HFAG_CIND_READ_STR (CHAR *)"\r\n+CIND: "
+#define HFAG_SERVICE_STR   (CHAR *)"\r\n+CIEV: 1,"
+#define HFAG_CALL_STR      (CHAR *)"\r\n+CIEV: 2,"
+#define HFAG_CALLSETUP_STR (CHAR *)"\r\n+CIEV: 3,"
+#define HFAG_CALLHELD_STR  (CHAR *)"\r\n+CIEV: 4,"
+#define HFAG_SIGNAL_STR    (CHAR *)"\r\n+CIEV: 5,"
+#define HFAG_ROAMING_STR   (CHAR *)"\r\n+CIEV: 6,"
+#define HFAG_BATTERY_STR   (CHAR *)"\r\n+CIEV: 7,"
+#define HFAG_CME_ERROR_STR (CHAR *)"\r\n+CME ERROR: "
+#define HFAG_CLCC_STR      (CHAR *)"\r\n+CLCC: "
 
-#define HFAG_BTRH_STR "\r\n+BTRH: "
+#define HFAG_BTRH_STR (CHAR *)"\r\n+BTRH: "
 
 typedef enum _hfp_ag_index_t
 {
@@ -409,6 +410,7 @@ static API_RESULT hfp_ag_callback(HFP_AG_EVENTS hfp_ag_event, API_RESULT result,
     uint8_t recvd_bd_addr[BT_BD_ADDR_SIZE];
     uint16_t i;
     uint8_t *recvd_data;
+    uint8_t option, index;
     uint8_t cmd[16];
 
     switch (hfp_ag_event)
@@ -616,14 +618,24 @@ static API_RESULT hfp_ag_callback(HFP_AG_EVENTS hfp_ag_event, API_RESULT result,
                                 case '1':
                                     BT_DBG("VR Enabled\n");
                                     bt_hfp_ag_send_at_rsp(HFAG_OK, NULL);
-                                    bt_hfp_ag_open_audio(s_actived_bt_hfp_ag,
-                                                         s_actived_bt_hfp_ag->bt_hfp_ag_config->bt_hfp_ag_codec - 1);
+
+                                     if (s_actived_bt_hfp_ag->bt_hfp_ag_cb->brva)
+                                      {
+                                          s_actived_bt_hfp_ag->bt_hfp_ag_cb->brva(
+                                              s_actived_bt_hfp_ag,
+                                              1);
+                                      }
                                     break;
 
                                 case '0':
                                     BT_DBG("VR Disbled\n");
                                     bt_hfp_ag_send_at_rsp(HFAG_OK, NULL);
-                                    bt_hfp_ag_close_audio(s_actived_bt_hfp_ag);
+                                     if (s_actived_bt_hfp_ag->bt_hfp_ag_cb->brva)
+                                     {
+                                          s_actived_bt_hfp_ag->bt_hfp_ag_cb->brva(
+                                              s_actived_bt_hfp_ag,
+                                              0);
+                                      }
                                     break;
 
                                 case '2':
@@ -676,11 +688,20 @@ static API_RESULT hfp_ag_callback(HFP_AG_EVENTS hfp_ag_event, API_RESULT result,
 
                         case AT_BCS:
                             bt_hfp_ag_send_at_rsp(HFAG_OK, NULL);
+                            if (s_actived_bt_hfp_ag->bt_hfp_ag_cb->codec_negotiate)
+                            {
+                                s_actived_bt_hfp_ag->bt_hfp_ag_cb->codec_negotiate(
+                                    s_actived_bt_hfp_ag,
+                                    at_response.global_at_str[at_response.param->start_of_value_index - '0'] );
+                            }
                             s_actived_bt_hfp_ag->bt_hfp_ag_config->bt_hfp_ag_codec_negotiate = 0;
                             /* Trigger codec connection */
-                            bt_hfp_ag_open_audio(
-                                s_actived_bt_hfp_ag,
-                                (at_response.global_at_str[at_response.param->start_of_value_index] - '0') - 1);
+                            if (at_response.global_at_str[at_response.param->start_of_value_index] == s_actived_bt_hfp_ag->bt_hfp_ag_config->bt_hfp_ag_codec)
+                            {
+                                bt_hfp_ag_open_audio(
+                                    s_actived_bt_hfp_ag,
+                                    (at_response.global_at_str[at_response.param->start_of_value_index] - '0') - 1);
+                            }
                             break;
 
                         case AT_BAC:
@@ -726,9 +747,17 @@ static API_RESULT hfp_ag_callback(HFP_AG_EVENTS hfp_ag_event, API_RESULT result,
 
                         case ATD:
                             /* Hold the phone number */
+                            BT_mem_set(s_actived_bt_hfp_ag->bt_hfp_ag_config->bt_hfp_ag_phnum, 0x0, sizeof(s_actived_bt_hfp_ag->bt_hfp_ag_config->bt_hfp_ag_phnum));
                             BT_str_copy(s_actived_bt_hfp_ag->bt_hfp_ag_config->bt_hfp_ag_phnum,
                                         &at_response.global_at_str[at_response.param->start_of_value_index]);
                             bt_hfp_ag_send_rsp(recvd_data, buffer_size);
+                            if (s_actived_bt_hfp_ag->bt_hfp_ag_cb->dial)
+                            {
+                                s_actived_bt_hfp_ag->bt_hfp_ag_cb->dial(
+                                    s_actived_bt_hfp_ag,
+                                    s_actived_bt_hfp_ag->bt_hfp_ag_config->bt_hfp_ag_phnum);
+                            }
+
                             break;
 
                         case ATDM:
@@ -747,6 +776,21 @@ static API_RESULT hfp_ag_callback(HFP_AG_EVENTS hfp_ag_event, API_RESULT result,
                             /* todo , will impletment on full feature release*/
                             bt_hfp_ag_send_at_rsp(HFAG_ERROR, NULL);
                             break;
+
+                         case AT_CHLD:
+                            option = at_response.global_at_str[at_response.param->start_of_value_index] - '0';
+                            index = at_response.global_at_str[at_response.param->start_of_value_index + 1U];
+                            bt_hfp_ag_send_at_rsp(HFAG_OK, NULL);
+                            index = (index == '\r') ? 0U : index - '0';
+
+                            if (s_actived_bt_hfp_ag->bt_hfp_ag_cb->chld)
+                            {
+                                s_actived_bt_hfp_ag->bt_hfp_ag_cb->chld(
+                                    s_actived_bt_hfp_ag,
+                                    option, index);
+                            }
+                            break;
+
                         default:
                             if (s_actived_bt_hfp_ag->bt_hfp_ag_cb->unkown_at)
                             {
@@ -836,7 +880,7 @@ static void bt_hfp_ag_send_rsp(uint8_t *rsp, uint16_t rsplen)
         return;
     }
 
-    buf = BT_alloc_mem(rsplen);
+    buf = (uint8_t *)BT_alloc_mem(rsplen);
     if (NULL == buf)
     {
         BT_ERR("Failed to allocate buffer\n");
@@ -927,6 +971,10 @@ static void bt_hfp_ag_send_at_rsp(uint8_t rsp_code, void *value)
             break;
 
         case HFAG_BIND_TEST:
+            break;
+
+        case HFAG_CCWA:
+            sprintf((response + length), "\"%s\",129\r\n", (CHAR *)value);
             break;
 
         case HFAG_BTRH:
@@ -1131,17 +1179,19 @@ void bt_hfp_ag_open_audio(struct bt_hfp_ag *hfp_ag, uint8_t codec)
 
 void bt_hfp_ag_close_audio(struct bt_hfp_ag *hfp_ag)
 {
-    int retval = bt_conn_disconnect(hfp_ag->bt_so_conn, 0x13U);
-    if (0 == retval)
+    int retval;
+    if ( hfp_ag->bt_so_conn != NULL)
     {
-        BT_DBG("Disconnected SCO Connection 0x%04X\n", hfp_ag->bt_so_conn);
+        retval = bt_conn_disconnect(hfp_ag->bt_so_conn, 0x13U);
+        if (0 == retval)
+        {
+            BT_DBG("Disconnected SCO Connection 0x%04X\n", hfp_ag->bt_so_conn);
+        }
+        else
+        {
+            BT_ERR("SCO Connection for HFP-Unit not found\n");
+        }
     }
-    else
-    {
-        BT_ERR("SCO Connection for HFP-Unit not found\n");
-    }
-    bt_sco_cleanup(hfp_ag->bt_so_conn);
-    hfp_ag->bt_so_conn = NULL;
 }
 
 int bt_hfp_ag_register_supp_features(struct bt_hfp_ag *hfp_ag, uint32_t supported_features)
@@ -1168,7 +1218,7 @@ int bt_hfp_ag_set_phnum_tag(struct bt_hfp_ag *hfp_ag, char *name)
     {
         return -EINVAL;
     }
-    BT_str_n_cmp(hfp_ag->bt_hfp_ag_config->bt_hfp_ag_phnum_tag, name, 16);
+    BT_str_n_copy(hfp_ag->bt_hfp_ag_config->bt_hfp_ag_phnum_tag, name, 16);
     bt_hfp_ag_send_at_rsp(HFAG_BINP, NULL);
     return 0;
 }
@@ -1182,7 +1232,7 @@ int bt_hfp_ag_set_cops(struct bt_hfp_ag *hfp_ag, char *name)
     {
         return -EINVAL;
     }
-    BT_str_n_cmp(hfp_ag->ag_str_cops, name, 16);
+    BT_str_n_copy(hfp_ag->ag_str_cops, name, 16);
     bt_hfp_ag_send_at_rsp(HFAG_COPS_READ, NULL);
     return 0;
 }
@@ -1203,6 +1253,20 @@ int bt_hfp_ag_register_cind_features(struct bt_hfp_ag *hfp_ag, char *cind)
     return 0;
 }
 
+int bt_hfp_ag_send_ccwa_indicator(struct bt_hfp_ag *hfp_ag, char *number)
+{
+    if (!hfp_ag)
+    {
+        return -EINVAL;
+    }
+    PRINTF("bt_hfp_ag_send_ccwa_indicator %s\r\n", number);
+    if (NULL != number)
+    {
+          bt_hfp_ag_send_at_rsp(HFAG_CCWA, number);
+    }
+
+    return 0;
+}
 int bt_hfp_ag_set_volume_control(struct bt_hfp_ag *hfp_ag, hf_volume_type_t type, int value)
 {
     if (!hfp_ag)
@@ -1361,6 +1425,17 @@ int bt_hfp_ag_send_battery_indicator(struct bt_hfp_ag *hfp_ag, uint8_t value)
     return 0;
 }
 
+int bt_hfp_ag_codec_selector(struct bt_hfp_ag *hfp_ag, uint8_t value)
+{
+    if (!hfp_ag)
+    {
+        return -EINVAL;
+    }
+    s_actived_bt_hfp_ag->bt_hfp_ag_config->bt_hfp_ag_codec = value;
+    bt_hfp_ag_send_at_rsp(HFAG_BCS, NULL);
+    return 0;
+}
+
 static uint8_t bt_hfp_ag_sdp_user(struct bt_conn *conn, struct bt_sdp_client_result *result)
 {
     uint16_t param;
@@ -1430,3 +1505,5 @@ int bt_hfp_ag_discover(struct bt_conn *conn, bt_hfp_ag_discover_callback discove
     }
     return -ENOSPC;
 }
+
+#endif /* CONFIG_BT_BREDR */

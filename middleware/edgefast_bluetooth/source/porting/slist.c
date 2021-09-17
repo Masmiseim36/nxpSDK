@@ -205,3 +205,38 @@ void bt_list_remove(bt_list_t *list, bt_list_node_t *prev_node, bt_list_node_t *
 
     node->next = NULL;
 }
+
+bool bt_list_find(bt_list_t *list, bt_list_node_t *node)
+{
+    bt_list_node_t *p;
+    unsigned int reg;
+    bool ret;
+
+    if ((NULL == list) || (NULL == node) || (NULL == list->head))
+    {
+        return false;
+    }
+
+    reg = DisableGlobalIRQ();
+    p = list->head;
+    while (NULL != p)
+    {
+        if (p == node)
+        {
+            break;
+        }
+        p = p->next;
+    }
+
+    if (p == node)
+    {
+        ret = true;
+    }
+    else
+    {
+        ret = false;
+    }
+    EnableGlobalIRQ(reg);
+
+    return ret;
+}

@@ -210,8 +210,8 @@ API_RESULT att_cb
         IotLogDebug ("Found Handle        End Found Handle\n");
         for (i = 0; i < event_datalen; i+=4)
         {
-            BT_PACK_LE_2_BYTE(&attr_handle, (event_data+i));
-            BT_PACK_LE_2_BYTE(&handle_1, (event_data+i+2));
+            BT_UNPACK_LE_2_BYTE(&attr_handle, (event_data+i));
+            BT_UNPACK_LE_2_BYTE(&handle_1, (event_data+i+2));
             IotLogDebug ("%04X                  %04X\n", attr_handle, handle_1);
         }
         (void)handle_1;    /*fix build warning: set but never used.*/
@@ -256,9 +256,9 @@ API_RESULT att_cb
 
     case ATT_PREPARE_WRITE_RSP:
         IotLogDebug ("Prepare Write Response\n");
-        BT_PACK_LE_2_BYTE(&attr_handle, event_data);
+        BT_UNPACK_LE_2_BYTE(&attr_handle, event_data);
         IotLogDebug ("Handle - 0x%04X\n", attr_handle);
-        BT_PACK_LE_2_BYTE(&offset, event_data+2);
+        BT_UNPACK_LE_2_BYTE(&offset, event_data+2);
         IotLogDebug ("Offset - 0x%04X\n", offset);
         IotLogDebug ("Handle Value Received - \n");
         appl_dump_bytes(event_data + 4, event_datalen - 4);
@@ -286,7 +286,7 @@ API_RESULT att_cb
 
     case ATT_HANDLE_VALUE_NTF:
         IotLogDebug ("Received HVN\n");
-        BT_PACK_LE_2_BYTE(&attr_handle, event_data);
+        BT_UNPACK_LE_2_BYTE(&attr_handle, event_data);
         IotLogDebug ("Handle - 0x%04X\n", attr_handle);
         IotLogDebug ("Handle Value Received - \n");
         appl_dump_bytes(event_data + 2, event_datalen - 2);
@@ -295,7 +295,7 @@ API_RESULT att_cb
 
     case ATT_HANDLE_VALUE_IND:
         IotLogDebug ("Received HVI\n");
-        BT_PACK_LE_2_BYTE(&attr_handle, event_data);
+        BT_UNPACK_LE_2_BYTE(&attr_handle, event_data);
         IotLogDebug ("Handle - 0x%04X\n", attr_handle);
         IotLogDebug ("Handle Value Received - \n");
         appl_dump_bytes(event_data + 2, event_datalen);

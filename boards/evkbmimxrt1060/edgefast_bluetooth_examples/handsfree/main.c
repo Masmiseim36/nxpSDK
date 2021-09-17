@@ -5,7 +5,17 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 #include "fsl_debug_console.h"
-
+#include <porting.h>
+#include <string.h>
+#include <errno/errno.h>
+#include <stdbool.h>
+#include <sys/atomic.h>
+#include <sys/byteorder.h>
+#include <sys/util.h>
+#include <sys/slist.h>
+#include <bluetooth/bluetooth.h>
+#include <bluetooth/conn.h>
+#include <bluetooth/hfp_hf.h>
 #include "FreeRTOS.h"
 #include "task.h"
 
@@ -14,7 +24,13 @@
 #include "pin_mux.h"
 #include "clock_config.h"
 #include "board.h"
+#include "fsl_dmamux.h"
+#include "fsl_edma.h"
 #include "fsl_adapter_uart.h"
+#include "fsl_adapter_audio.h"
+#include "fsl_codec_common.h"
+#include "fsl_wm8960.h"
+#include "fsl_codec_adapter.h"
 #include "controller.h"
 #include "usb_host_config.h"
 #include "usb_phy.h"
@@ -38,13 +54,6 @@ extern void BOARD_InitHardware(void);
 /*******************************************************************************
  * Variables
  ******************************************************************************/
-#define BOARD_CODEC_SAI         SAI1
-#define DEMO_CODEC_SAI_IRQ      SAI1_IRQn
-#define SAI_CodecUserIRQHandler SAI1_IRQHandler
-#define BOARD_SCO_SAI           SAI2
-//#define DEMO_CODEC_SAI_IRQ      SAI1_IRQn
-//#define SAI_CodecUserIRQHandler SAI1_IRQHandler
-
 /* Select Audio/Video PLL (786.48 MHz) as sai1 clock source */
 #define DEMO_SAI1_CLOCK_SOURCE_SELECT (2U)
 /* Clock pre divider for sai1 clock source */
@@ -65,10 +74,31 @@ extern void BOARD_InitHardware(void);
 /* Get frequency of lpi2c clock */
 #define BOARD_SCO_DEMO_I2C_FREQ ((CLOCK_GetFreq(kCLOCK_Usb1PllClk) / 8) / (DEMO_LPI2C_CLOCK_SOURCE_DIVIDER + 1U))
 
+#define DEMO_CODEC_INSTANCE (1U)
+#define DEMO_SCO_INSTANCE   (2U)
+
+/* DMA */
+#define EXAMPLE_DMAMUX_INSTANCE      (0U)
+#define EXAMPLE_DMA_INSTANCE         (0U)
+#define EXAMPLE_MICBUF_TX_CHANNEL    (0U)
+#define EXAMPLE_MICBUF_RX_CHANNEL    (1U)
+#define EXAMPLE_SPKBUF_TX_CHANNEL    (2U)
+#define EXAMPLE_SPKBUF_RX_CHANNEL    (3U)
+#define EXAMPLE_SAI_MICBUF_TX_SOURCE (kDmaRequestMuxSai2Tx)
+#define EXAMPLE_SAI_MICBUF_RX_SOURCE (kDmaRequestMuxSai1Rx)
+#define EXAMPLE_SAI_SPKBUF_TX_SOURCE (kDmaRequestMuxSai1Tx)
+#define EXAMPLE_SAI_SPKBUF_RX_SOURCE (kDmaRequestMuxSai2Rx)
+
+/* demo audio data channel */
+#define DEMO_MICBUF_TX_CHANNEL (kHAL_AudioMono)
+#define DEMO_MICBUF_RX_CHANNEL (kHAL_AudioMonoRight)
+#define DEMO_SPKBUF_TX_CHANNEL (kHAL_AudioMonoLeft)
+#define DEMO_SPKBUF_RX_CHANNEL (kHAL_AudioMono)
+
 /*
- * AUDIO PLL setting: Frequency = Fref * (DIV_SELECT + NUM / DENOM)
- *                              = 24 * (32 + 77/100)
- *                              = 786.48 MHz
+ * AUDIO PLL setting: Frequency = Fref * (DIV_SELECT + NUM / DENOM) / (POST)
+ *                              = 24 * (32 + 77/100) / 1
+ *                              = 786.48MHz
  */
 const clock_audio_pll_config_t audioCodecPllConfig = {
     .loopDivider = 32,  /* PLL loop divider. Valid range for DIV_SELECT divider value: 27~54. */
@@ -77,80 +107,221 @@ const clock_audio_pll_config_t audioCodecPllConfig = {
     .denominator = 100, /* 30 bit denominator of fractional loop divider */
 };
 
+static wm8960_config_t wm8960ScoConfig = {
+    .i2cConfig = {.codecI2CInstance = BOARD_CODEC_I2C_INSTANCE, .codecI2CSourceClock = BOARD_CODEC_I2C_CLOCK_FREQ},
+    .route     = kWM8960_RoutePlaybackandRecord,
+    .rightInputSource = kWM8960_InputDifferentialMicInput2,
+    .playSource       = kWM8960_PlaySourceDAC,
+    .slaveAddress     = WM8960_I2C_ADDR,
+    .bus              = kWM8960_BusPCMB,
+    .format           = {.mclk_HZ = 6144000U, .sampleRate = 8000, .bitWidth = kWM8960_AudioBitWidth16bit},
+    .master_slave     = false,
+};
+
+codec_config_t boardCodecScoConfig = {.codecDevType = kCODEC_WM8960, .codecDevConfig = &wm8960ScoConfig};
+
+static wm8960_config_t wm8960ScoConfig1 = {
+    .i2cConfig = {.codecI2CInstance = BOARD_CODEC_I2C_INSTANCE, .codecI2CSourceClock = BOARD_CODEC_I2C_CLOCK_FREQ},
+    .route     = kWM8960_RoutePlaybackandRecord,
+    .rightInputSource = kWM8960_InputDifferentialMicInput2,
+    .playSource       = kWM8960_PlaySourceDAC,
+    .slaveAddress     = WM8960_I2C_ADDR,
+    .bus              = kWM8960_BusI2S,
+    .format           = {.mclk_HZ = 6144000U, .sampleRate = 8000, .bitWidth = kWM8960_AudioBitWidth16bit},
+    .master_slave     = false,
+};
+
+codec_config_t boardCodecScoConfig1 = {.codecDevType = kCODEC_WM8960, .codecDevConfig = &wm8960ScoConfig1};
+
+hal_audio_dma_mux_config_t txSpeakerDmaMuxConfig = {
+    .dmaMuxConfig.dmaMuxInstance   = EXAMPLE_DMAMUX_INSTANCE,
+    .dmaMuxConfig.dmaRequestSource = EXAMPLE_SAI_SPKBUF_TX_SOURCE,
+};
+
+hal_audio_dma_config_t txSpeakerDmaConfig = {
+    .instance             = EXAMPLE_DMA_INSTANCE,
+    .channel              = EXAMPLE_SPKBUF_TX_CHANNEL,
+    .enablePreemption     = false,
+    .enablePreemptAbility = false,
+    .priority             = kHAL_AudioDmaChannelPriorityDefault,
+    .dmaMuxConfig         = (void *)&txSpeakerDmaMuxConfig,
+    .dmaChannelMuxConfig  = NULL,
+};
+
+hal_audio_ip_config_t txSpeakerIpConfig = {
+    .sai.lineMask = 1U << 0U,
+    .sai.syncMode = kHAL_AudioSaiModeAsync,
+};
+
+hal_audio_config_t txSpeakerConfig = {
+    .dmaConfig         = &txSpeakerDmaConfig,
+    .ipConfig          = (void *)&txSpeakerIpConfig,
+    .srcClock_Hz       = 0,
+    .sampleRate_Hz     = 0,
+    .fifoWatermark     = FSL_FEATURE_SAI_FIFO_COUNT / 2U,
+    .msaterSlave       = kHAL_AudioMaster,
+    .bclkPolarity      = kHAL_AudioSampleOnRisingEdge,
+    .frameSyncWidth    = kHAL_AudioFrameSyncWidthHalfFrame,
+    .frameSyncPolarity = kHAL_AudioBeginAtRisingEdge,
+    .lineChannels      = DEMO_SPKBUF_TX_CHANNEL,
+    .dataFormat        = kHAL_AudioDataFormatDspModeB,
+    .bitWidth          = (uint8_t)kHAL_AudioWordWidth16bits,
+    .instance          = DEMO_CODEC_INSTANCE,
+};
+
+hal_audio_dma_mux_config_t rxMicDmaMuxConfig = {
+    .dmaMuxConfig.dmaMuxInstance   = EXAMPLE_DMAMUX_INSTANCE,
+    .dmaMuxConfig.dmaRequestSource = EXAMPLE_SAI_MICBUF_RX_SOURCE,
+};
+
+hal_audio_dma_config_t rxMicDmaConfig = {
+    .instance             = EXAMPLE_DMA_INSTANCE,
+    .channel              = EXAMPLE_MICBUF_RX_CHANNEL,
+    .enablePreemption     = false,
+    .enablePreemptAbility = false,
+    .priority             = kHAL_AudioDmaChannelPriorityDefault,
+    .dmaMuxConfig         = (void *)&rxMicDmaMuxConfig,
+    .dmaChannelMuxConfig  = NULL,
+};
+
+hal_audio_ip_config_t rxMicIpConfig = {
+    .sai.lineMask = 1U << 0U,
+    .sai.syncMode = kHAL_AudioSaiModeSync,
+};
+
+hal_audio_config_t rxMicConfig = {
+    .dmaConfig         = &rxMicDmaConfig,
+    .ipConfig          = (void *)&rxMicIpConfig,
+    .srcClock_Hz       = 0,
+    .sampleRate_Hz     = 0,
+    .fifoWatermark     = FSL_FEATURE_SAI_FIFO_COUNT / 2U,
+    .msaterSlave       = kHAL_AudioMaster,
+    .bclkPolarity      = kHAL_AudioSampleOnRisingEdge,
+    .frameSyncWidth    = kHAL_AudioFrameSyncWidthHalfFrame,
+    .frameSyncPolarity = kHAL_AudioBeginAtRisingEdge,
+    .lineChannels      = DEMO_MICBUF_RX_CHANNEL,
+    .dataFormat        = kHAL_AudioDataFormatDspModeB,
+    .bitWidth          = (uint8_t)kHAL_AudioWordWidth16bits,
+    .instance          = DEMO_CODEC_INSTANCE,
+};
+
+hal_audio_dma_mux_config_t txMicDmaMuxConfig = {
+    .dmaMuxConfig.dmaMuxInstance   = EXAMPLE_DMAMUX_INSTANCE,
+    .dmaMuxConfig.dmaRequestSource = EXAMPLE_SAI_MICBUF_TX_SOURCE,
+};
+
+hal_audio_dma_config_t txMicDmaConfig = {
+    .instance             = EXAMPLE_DMA_INSTANCE,
+    .channel              = EXAMPLE_MICBUF_TX_CHANNEL,
+    .enablePreemption     = false,
+    .enablePreemptAbility = false,
+    .priority             = kHAL_AudioDmaChannelPriorityDefault,
+    .dmaMuxConfig         = (void *)&txMicDmaMuxConfig,
+    .dmaChannelMuxConfig  = NULL,
+};
+
+hal_audio_ip_config_t txMicIpConfig = {
+    .sai.lineMask = 1U << 0U,
+#if defined(PCM_MODE_CONFIG_TX_CLK_SYNC)
+    .sai.syncMode = kHAL_AudioSaiModeAsync,
+#else
+    .sai.syncMode = kHAL_AudioSaiModeSync,
+#endif
+};
+
+hal_audio_config_t txMicConfig = {
+    .dmaConfig         = &txMicDmaConfig,
+    .ipConfig          = (void *)&txMicIpConfig,
+    .srcClock_Hz       = 0,
+    .sampleRate_Hz     = 0,
+    .fifoWatermark     = FSL_FEATURE_SAI_FIFO_COUNT / 2U,
+    .msaterSlave       = kHAL_AudioSlave,
+    .bclkPolarity      = kHAL_AudioSampleOnFallingEdge,
+    .frameSyncWidth    = kHAL_AudioFrameSyncWidthOneBitClk,
+    .frameSyncPolarity = kHAL_AudioBeginAtRisingEdge,
+    .lineChannels      = DEMO_MICBUF_TX_CHANNEL,
+    .dataFormat        = kHAL_AudioDataFormatDspModeA,
+    .bitWidth          = (uint8_t)kHAL_AudioWordWidth16bits,
+    .instance          = DEMO_SCO_INSTANCE,
+};
+
+hal_audio_dma_mux_config_t rxSpeakerDmaMuxConfig = {
+    .dmaMuxConfig.dmaMuxInstance   = EXAMPLE_DMAMUX_INSTANCE,
+    .dmaMuxConfig.dmaRequestSource = EXAMPLE_SAI_SPKBUF_RX_SOURCE,
+};
+
+hal_audio_dma_config_t rxSpeakerDmaConfig = {
+    .instance             = EXAMPLE_DMA_INSTANCE,
+    .channel              = EXAMPLE_SPKBUF_RX_CHANNEL,
+    .enablePreemption     = false,
+    .enablePreemptAbility = false,
+    .priority             = kHAL_AudioDmaChannelPriorityDefault,
+    .dmaMuxConfig         = (void *)&rxSpeakerDmaMuxConfig,
+    .dmaChannelMuxConfig  = NULL,
+};
+
+hal_audio_ip_config_t rxSpeakerIpConfig = {
+    .sai.lineMask = 1U << 0U,
+#if defined(PCM_MODE_CONFIG_TX_CLK_SYNC)
+    .sai.syncMode = kHAL_AudioSaiModeSync,
+#else
+    .sai.syncMode = kHAL_AudioSaiModeAsync,
+#endif
+};
+
+hal_audio_config_t rxSpeakerConfig = {
+    .dmaConfig         = &rxSpeakerDmaConfig,
+    .ipConfig          = (void *)&rxSpeakerIpConfig,
+    .srcClock_Hz       = 0,
+    .sampleRate_Hz     = 0,
+    .fifoWatermark     = FSL_FEATURE_SAI_FIFO_COUNT / 2U,
+    .msaterSlave       = kHAL_AudioSlave,
+    .bclkPolarity      = kHAL_AudioSampleOnFallingEdge,
+    .frameSyncWidth    = kHAL_AudioFrameSyncWidthOneBitClk,
+    .frameSyncPolarity = kHAL_AudioBeginAtRisingEdge,
+    .lineChannels      = DEMO_SPKBUF_RX_CHANNEL,
+    .dataFormat        = kHAL_AudioDataFormatDspModeA,
+    .bitWidth          = (uint8_t)kHAL_AudioWordWidth16bits,
+    .instance          = DEMO_SCO_INSTANCE,
+};
+
 /*******************************************************************************
  * Code
  ******************************************************************************/
-void BOARD_SCO_EnableSaiMclkOutput(bool enable)
+
+uint32_t BOARD_SwitchAudioFreq(uint32_t sampleRate)
 {
-    if (enable)
+    CLOCK_DeinitAudioPll();
+
+    if (0U == sampleRate)
     {
-        IOMUXC_GPR->GPR1 |= IOMUXC_GPR_GPR1_SAI1_MCLK_DIR_MASK;
+        /* Disable MCLK output */
+        IOMUXC_GPR->GPR1 &= (~IOMUXC_GPR_GPR1_SAI1_MCLK_DIR_MASK);
     }
     else
     {
-        IOMUXC_GPR->GPR1 &= (~IOMUXC_GPR_GPR1_SAI1_MCLK_DIR_MASK);
+        BOARD_InitScoPins();
+
+        CLOCK_InitAudioPll(&audioCodecPllConfig);
+
+        /*Clock setting fPRINTFor LPI2C*/
+        CLOCK_SetMux(kCLOCK_Lpi2cMux, DEMO_LPI2C_CLOCK_SOURCE_SELECT);
+        CLOCK_SetDiv(kCLOCK_Lpi2cDiv, DEMO_LPI2C_CLOCK_SOURCE_DIVIDER);
+
+        /*Clock setting for SAI1*/
+        CLOCK_SetMux(kCLOCK_Sai1Mux, DEMO_SAI1_CLOCK_SOURCE_SELECT);
+        CLOCK_SetDiv(kCLOCK_Sai1PreDiv, DEMO_SAI1_CLOCK_SOURCE_PRE_DIVIDER);
+        CLOCK_SetDiv(kCLOCK_Sai1Div, DEMO_SAI1_CLOCK_SOURCE_DIVIDER);
+
+        /* Enable MCLK output */
+        IOMUXC_GPR->GPR1 |= IOMUXC_GPR_GPR1_SAI1_MCLK_DIR_MASK;
     }
-}
-void BOARD_EnableSaiClkOutput(void)
-{
-    CLOCK_InitAudioPll(&audioCodecPllConfig);
 
-    /*Clock setting fPRINTFor LPI2C*/
-    CLOCK_SetMux(kCLOCK_Lpi2cMux, DEMO_LPI2C_CLOCK_SOURCE_SELECT);
-    CLOCK_SetDiv(kCLOCK_Lpi2cDiv, DEMO_LPI2C_CLOCK_SOURCE_DIVIDER);
-
-    /*Clock setting for SAI1*/
-    CLOCK_SetMux(kCLOCK_Sai1Mux, DEMO_SAI1_CLOCK_SOURCE_SELECT);
-    CLOCK_SetDiv(kCLOCK_Sai1PreDiv, DEMO_SAI1_CLOCK_SOURCE_PRE_DIVIDER);
-    CLOCK_SetDiv(kCLOCK_Sai1Div, DEMO_SAI1_CLOCK_SOURCE_DIVIDER);
-}
-
-I2S_Type *BOARD_SCO_SAI_BASE(void)
-{
-    return BOARD_SCO_SAI;
-}
-I2S_Type *BOARD_CODEC_SAI_BASE(void)
-{
-    return BOARD_CODEC_SAI;
-}
-
-IRQn_Type BOARD_SCO_SAI_IRQn(void)
-{
-    return SAI2_IRQn;
-}
-
-uint32_t BOARD_CODEC_SAI_CLK_FREQ(void)
-{
     return DEMO_SAI_CLK_FREQ;
 }
 
-uint32_t BOARD_CODEC_MCLK(void)
-{
-    return 6144000U;
-}
 
-uint32_t EXAMPLE_SAI_MICBUF_RX_SOURCE(void)
-{
-    return (uint32_t)kDmaRequestMuxSai1Rx;
-}
-
-uint32_t EXAMPLE_SAI_MICBUF_TX_SOURCE(void)
-{
-    return (uint32_t)kDmaRequestMuxSai2Tx;
-}
-
-uint32_t EXAMPLE_SAI_SPKBUF_TX_SOURCE(void)
-{
-    return (uint32_t)kDmaRequestMuxSai1Tx;
-}
-
-uint32_t EXAMPLE_SAI_SPKBUF_RX_SOURCE(void)
-{
-    return (uint32_t)kDmaRequestMuxSai2Rx;
-}
-
-
-#if defined(WIFI_BOARD_AW_CM358)
+#if defined(WIFI_88W8987_BOARD_AW_CM358_USD)
 int controller_hci_uart_get_configuration(controller_hci_uart_config_t *config)
 {
     if (NULL == config)
@@ -163,21 +334,42 @@ int controller_hci_uart_get_configuration(controller_hci_uart_config_t *config)
     config->instance        = BOARD_BT_UART_INSTANCE;
     config->enableRxRTS     = 1u;
     config->enableTxCTS     = 1u;
+#if (defined(HAL_UART_DMA_ENABLE) && (HAL_UART_DMA_ENABLE > 0U))
+    config->dma_instance     = 0U;
+    config->rx_channel       = 4U;
+    config->tx_channel       = 5U;
+    config->dma_mux_instance = 0U;
+    config->rx_request       = kDmaRequestMuxLPUART3Rx;
+    config->tx_request       = kDmaRequestMuxLPUART3Tx;
+#endif
     return 0;
 }
-#elif defined(WIFI_BOARD_AW_AM457)
+#elif defined(WIFI_IW416_BOARD_AW_AM457_USD)
 int controller_hci_uart_get_configuration(controller_hci_uart_config_t *config)
 {
     if (NULL == config)
     {
         return -1;
     }
-    config->clockSrc        = BOARD_BT_UART_CLK_FREQ;
+    /* This function (Init Uart Pins) is not expected to be called here.
+     * In order to not add more interfaces between BT stack and hardware level,
+     * it is put here. It may be removed in furture.
+     */
+    BOARD_InitArduinoUARTPins();
+    config->clockSrc = BOARD_BT_UART_CLK_FREQ;
     config->defaultBaudrate = BOARD_BT_UART_BAUDRATE;
     config->runningBaudrate = BOARD_BT_UART_BAUDRATE;
-    config->instance        = BOARD_BT_UART_INSTANCE;
-    config->enableRxRTS     = 1u;
-    config->enableTxCTS     = 1u;
+    config->instance = BOARD_BT_UART_INSTANCE;
+    config->enableRxRTS = 1u;
+    config->enableTxCTS = 1u;
+#if (defined(HAL_UART_DMA_ENABLE) && (HAL_UART_DMA_ENABLE > 0U))
+    config->dma_instance = 0U;
+    config->rx_channel = 4U;
+    config->tx_channel = 5U;
+    config->dma_mux_instance = 0U;
+    config->rx_request = kDmaRequestMuxLPUART3Rx;
+    config->tx_request = kDmaRequestMuxLPUART3Tx;
+#endif
     return 0;
 }
 #else
@@ -222,11 +414,24 @@ void USB_HostIsrEnable(void)
 
 int main(void)
 {
+    DMAMUX_Type *dmaMuxBases[] = DMAMUX_BASE_PTRS;
+    edma_config_t config;
+    DMA_Type *dmaBases[] = DMA_BASE_PTRS;
+
     BOARD_ConfigMPU();
     BOARD_InitBootPins();
+#if defined(WIFI_IW416_BOARD_AW_AM457_USD)
+    BOARD_DeinitArduinoUARTPins();
+#else
+    BOARD_InitArduinoUARTPins();
+#endif
     BOARD_InitBootClocks();
     BOARD_InitDebugConsole();
     SCB_DisableDCache();
+
+    DMAMUX_Init(dmaMuxBases[EXAMPLE_DMAMUX_INSTANCE]);
+    EDMA_GetDefaultConfig(&config);
+    EDMA_Init(dmaBases[EXAMPLE_DMA_INSTANCE], &config);
 
     if (xTaskCreate(peripheral_hfp_hf_task, "peripheral_hfp_hf_task", configMINIMAL_STACK_SIZE * 8, NULL,
                     tskIDLE_PRIORITY + 1, NULL) != pdPASS)

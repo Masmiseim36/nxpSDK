@@ -40,7 +40,7 @@
  * Describes Constants defined by the module.
  */
 /* OBEX L2CAP PSM for local entities */
-#define CTN_OBEX_L2CAP_PSM                       0x8001U
+#define CTN_OBEX_L2CAP_PSM                       0x6001U
 
 /* CTN Notification Callback Event types */
 /**

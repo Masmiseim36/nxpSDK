@@ -7,7 +7,7 @@
 
 #include <stdio.h>
 #include <stddef.h>
-#include <errno.h>
+#include <errno/errno.h>
 #include <toolchain.h>
 #include <porting.h>
 #include <bluetooth/gatt.h>

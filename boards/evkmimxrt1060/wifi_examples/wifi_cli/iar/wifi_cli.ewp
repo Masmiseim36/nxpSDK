@@ -2032,10 +2032,10 @@
       <name>$PROJ_DIR$/../FreeRTOSConfig.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../wifi_config.h</name>
+      <name>$PROJ_DIR$/../app_config.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../app_config.h</name>
+      <name>$PROJ_DIR$/../wifi_config.h</name>
     </file>
   </group>
   <group>
@@ -3035,10 +3035,10 @@
           <name>$PROJ_DIR$/../../../../../middleware/wifi/incl/wlcmgr/wlan_tests.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../middleware/wifi/incl/wlcmgr/wlan.h</name>
+          <name>$PROJ_DIR$/../../../../../middleware/wifi/incl/wlcmgr/wlan_11d.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../middleware/wifi/incl/wlcmgr/wlan_11d.h</name>
+          <name>$PROJ_DIR$/../../../../../middleware/wifi/incl/wlcmgr/wlan.h</name>
         </file>
       </group>
       <file>
@@ -3049,6 +3049,9 @@
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/wifi/incl/dhcp-server.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/wifi/incl/wifi_cal_data_ext.h</name>
       </file>
       <group>
         <name>wifidriver</name>
@@ -3065,9 +3068,6 @@
           <name>$PROJ_DIR$/../../../../../middleware/wifi/incl/wifidriver/wifi_events.h</name>
         </file>
       </group>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/wifi/incl/wifi_cal_data_ext.h</name>
-      </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/wifi/incl/wm_utils.h</name>
       </file>
@@ -3148,85 +3148,7 @@
       </file>
     </group>
     <group>
-      <name>wifi_bt_firmware</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/wifi/wifi_bt_firmware/sd8801_wlan.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/wifi/wifi_bt_firmware/sduart8977_wlan_bt.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/wifi/wifi_bt_firmware/sduartIW416_wlan_bt.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/wifi/wifi_bt_firmware/sduart8987_wlan_bt.h</name>
-      </file>
-    </group>
-    <group>
       <name>wifidriver</name>
-      <group>
-        <name>incl</name>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/wifi/wifidriver/incl/mlan.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/wifi/wifidriver/incl/mlan_11ac.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/wifi/wifidriver/incl/mlan_11h.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/wifi/wifidriver/incl/mlan_11n.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/wifi/wifidriver/incl/mlan_11n_aggr.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/wifi/wifidriver/incl/mlan_11n_rxreorder.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/wifi/wifidriver/incl/mlan_api.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/wifi/wifidriver/incl/mlan_decl.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/wifi/wifidriver/incl/mlan_fw.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/wifi/wifidriver/incl/mlan_ieee.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/wifi/wifidriver/incl/mlan_init.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/wifi/wifidriver/incl/mlan_ioctl.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/wifi/wifidriver/incl/mlan_join.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/wifi/wifidriver/incl/mlan_main.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/wifi/wifidriver/incl/mlan_meas.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/wifi/wifidriver/incl/mlan_remap_mem_operations.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/wifi/wifidriver/incl/mlan_sdio.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/wifi/wifidriver/incl/mlan_uap.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/wifi/wifidriver/incl/mlan_util.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/wifi/wifidriver/incl/mlan_wmm.h</name>
-        </file>
-      </group>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/wifi/wifidriver/mlan_11ac.c</name>
       </file>
@@ -3270,9 +3192,6 @@
         <name>$PROJ_DIR$/../../../../../middleware/wifi/wifidriver/mlan_scan.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/wifi/wifidriver/mlan_sdio.c</name>
-      </file>
-      <file>
         <name>$PROJ_DIR$/../../../../../middleware/wifi/wifidriver/mlan_shim.c</name>
       </file>
       <file>
@@ -3306,19 +3225,10 @@
         <name>$PROJ_DIR$/../../../../../middleware/wifi/wifidriver/wifi-debug.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/wifi/wifidriver/wifi-debug.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/wifi/wifidriver/wifi-internal.h</name>
-      </file>
-      <file>
         <name>$PROJ_DIR$/../../../../../middleware/wifi/wifidriver/wifi-mem.c</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/wifi/wifidriver/wifi-sdio.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/wifi/wifidriver/wifi-sdio.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/wifi/wifidriver/wifi-uap.c</name>
@@ -3331,6 +3241,111 @@
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/wifi/wifidriver/wifi_pwrmgr.c</name>
+      </file>
+      <group>
+        <name>incl</name>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/wifi/wifidriver/incl/mlan_11ac.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/wifi/wifidriver/incl/mlan_11h.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/wifi/wifidriver/incl/mlan_11n.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/wifi/wifidriver/incl/mlan_11n_aggr.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/wifi/wifidriver/incl/mlan_11n_rxreorder.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/wifi/wifidriver/incl/mlan_fw.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/wifi/wifidriver/incl/mlan_ieee.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/wifi/wifidriver/incl/mlan_init.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/wifi/wifidriver/incl/mlan_join.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/wifi/wifidriver/incl/mlan_main.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/wifi/wifidriver/incl/mlan_meas.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/wifi/wifidriver/incl/mlan_remap_mem_operations.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/wifi/wifidriver/incl/mlan_sdio.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/wifi/wifidriver/incl/mlan_uap.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/wifi/wifidriver/incl/mlan_util.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/wifi/wifidriver/incl/mlan_wmm.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/wifi/wifidriver/incl/mlan.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/wifi/wifidriver/incl/mlan_ioctl.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/wifi/wifidriver/incl/mlan_decl.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/wifi/wifidriver/incl/mlan_api.h</name>
+        </file>
+      </group>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/wifi/wifidriver/wifi-debug.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/wifi/wifidriver/wifi-internal.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/wifi/wifidriver/wifi-sdio.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/wifi/wifidriver/mlan_sdio.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/wifi/wifidriver/sdio.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/wifi/wifidriver/sdio.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/wifi/wifidriver/firmware_dnld.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/wifi/wifidriver/firmware_dnld.h</name>
+      </file>
+    </group>
+    <group>
+      <name>wifi_bt_firmware</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/wifi/wifi_bt_firmware/sd8801_wlan.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/wifi/wifi_bt_firmware/sduart8977_wlan_bt.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/wifi/wifi_bt_firmware/sduartIW416_wlan_bt.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/wifi/wifi_bt_firmware/sduart8987_wlan_bt.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/wifi/wifi_bt_firmware/wlan_bt_fw.h</name>
       </file>
     </group>
   </group>

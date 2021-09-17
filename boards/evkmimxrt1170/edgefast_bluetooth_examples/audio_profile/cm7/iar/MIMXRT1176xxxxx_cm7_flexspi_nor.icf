@@ -49,7 +49,7 @@ define symbol m_text_start             = 0x30002400;
 define symbol _ROM_END_                = 0x30DBFFFF;
 
 
-/* NOTE: Flash in range 0x30DBFFFF - 0x30FBFFFF is reserved for data */
+/* NOTE: Flash in range 0x30DBFFFF - 0x30FBFFFF is reserved for litteFS data */
 
 /*define symbol m_text_end               = 0x30FBFFFF;*/
 
@@ -107,6 +107,12 @@ if (isdefinedsymbol(gUseNVMLink_d))
   define exported symbol NV_STORAGE_START_ADDRESS = NVM_AREA_START;
 }
 /*** NVM Configuration End ***/
+
+/*** littleFS configuration Start ***/
+define exported symbol LITTLEFS_STORAGE_START_ADDRESS = _ROM_END_ + 1;
+define exported symbol LITTLEFS_STORAGE_SECTOR_SIZE = 0x1000;  /* 4k flash sector size */
+define exported symbol LITTLEFS_STORAGE_MAX_SECTORS = (0x30FBFFFF - LITTLEFS_STORAGE_START_ADDRESS) / LITTLEFS_STORAGE_SECTOR_SIZE;
+/*** littleFS configuration End ***/
 
 /* Sizes */
 if (isdefinedsymbol(__stack_size__)) {

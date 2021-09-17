@@ -7,7 +7,7 @@
 
 #include <porting.h>
 #include <string.h>
-#include <errno.h>
+#include <errno/errno.h>
 #include <stdbool.h>
 #include <sys/atomic.h>
 #include <sys/byteorder.h>

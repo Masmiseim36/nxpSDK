@@ -24,7 +24,7 @@ extern "C" {
 /** @brief bt hfp ag volume type */
 typedef enum _hf_volume_type_t
 {
-   /*speaker */
+    /*speaker */
     hf_volume_type_speaker, 
     /* mic */
     hf_volume_type_mic, 
@@ -160,7 +160,7 @@ struct bt_hfp_ag_cb
      *  @param hfp_ag  bt hfp ag Connection object.
      *  @param value  call information.
      */
-    void (*dial)(struct bt_hfp_ag *hfp_ag, uint32_t value);
+    void (*dial)(struct bt_hfp_ag *hfp_ag, char *number);
     
     /** AG remote voice recognition activation Callback
      *
@@ -179,8 +179,25 @@ struct bt_hfp_ag_cb
      *  @param value  Noise Reduction and Echo Canceling information.
      */    
      void (*nrec)(struct bt_hfp_ag *hfp_ag, uint32_t value);
+     /** AG remote codec negotiate Callback
+     *
+     *  This callback provides codec negotiate information of peer HF to the application
+     *
+     *  @param hfp_ag  bt hfp ag Connection object.
+     *  @param value  codec index of peer HF.
+     */    
+     void (*codec_negotiate)(struct bt_hfp_ag *hfp_ag, uint32_t value);     
+     
     
-
+     /** AG multiparty call status indicator Callback
+     *
+     *  This callback provides multiparty call status indicator Callback of peer HF to the application
+     *
+     *  @param hfp_ag  bt hfp ag Connection object.
+     *  @param option  Multiparty call option.
+     *  @param index   Multiparty call index.
+     */    
+     void (*chld)(struct bt_hfp_ag *hfp_ag, uint8_t option, uint8_t index);
     /** AG unkown at Callback
      *
      *  This callback provides AG unkown at  value to the application, the unkown at command could be handled by application
@@ -540,6 +557,30 @@ int bt_hfp_ag_send_roaming_indicator(struct bt_hfp_ag *hfp_ag, uint8_t value);
  *  of error.
  */
 int bt_hfp_ag_send_battery_indicator(struct bt_hfp_ag *hfp_ag, uint8_t value);
+
+/** @brief hfp ag set ccwa indicator to hfp hp
+ *
+ *  This function is hfp ag set ccwa indicator to hfp hp for mutiple call
+ *
+ *  @param phfp_ag  pointer to bt hfp ag connection object
+ *  @param value    value of battery level indicator
+ *
+ *  @return 0 in case of success or otherwise in case
+ *  of error.
+ */
+int bt_hfp_ag_send_ccwa_indicator(struct bt_hfp_ag *hfp_ag, char *number);
+
+/** @brief hfp ag set codec selector to hfp hp
+ *
+ *  This function is hfp ag set odec selector to hfp hp for codec negotiation
+ *
+ *  @param phfp_ag  pointer to bt hfp ag connection object
+ *  @param value    value of codec selector
+ *
+ *  @return 0 in case of success or otherwise in case
+ *  of error.
+ */
+int bt_hfp_ag_codec_selector(struct bt_hfp_ag *hfp_ag, uint8_t value);
 
 /** @brief hfp ag set unknown at command response to hfp fp
  *

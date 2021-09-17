@@ -55,7 +55,7 @@
     </cconfiguration>
   </storageModule>
   <storageModule moduleId="cdtBuildSystem" version="4.0.0">
-    <project id="dsp_audio_demo_bm_fusionf1.null.80259962" name="dsp_audio_demo_bm_fusionf1"/>
+    <project id="dsp_audio_demo_bm_fusionf1.null.51599884" name="dsp_audio_demo_bm_fusionf1"/>
   </storageModule>
   <storageModule moduleId="scannerConfiguration">
     <autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="org.eclipse.cdt.make.core.GCCStandardMakePerProjectProfile"/>

@@ -1,7 +1,7 @@
 /*
  * Amazon FreeRTOS Wi-Fi
  *
- *  Copyright 2019-2020 NXP
+ *  Copyright 2019-2021 NXP
  *
  *  NXP CONFIDENTIAL
  *  The source code contained or described herein and all documents related to
@@ -36,31 +36,16 @@
 /* Wi-Fi configuration includes. */
 #include "aws_wifi_config.h"
 
-#include <wlan.h>
-#include <wmlog.h>
-#include <wm_net.h>
-
-#if defined(SD8801)
-#include "sd8801_wlan.h"
-#elif defined(SD8977)
-#include "sduart8977_wlan_bt.h"
-#elif defined(SD8978)
-#include "sduartIW416_wlan_bt.h"
-#elif defined(SD8987)
-#include "sduart8987_wlan_bt.h"
-#elif defined(SD8997)
-#include "sduart8997_wlan_bt.h"
-#elif defined(SD9097)
-#include "pvt_sd9097_wlan.h"
-#elif defined(SD9098)
-#include "pvt_sd9098_wlan.h"
-#endif
+#include "wlan.h"
+#include "wmlog.h"
+#include "wm_net.h"
+#include "wlan_bt_fw.h"
 
 #include "fsl_debug_console.h"
 
 #if (defined(IOT_WIFI_ENABLE_SAVE_NETWORK) && (IOT_WIFI_ENABLE_SAVE_NETWORK > 0))
-#include "NVM_Interface.h"
-#include "nvm_adapter.h"
+#include "lfs.h"
+#include "littlefs_pl.h"
 #endif
 
 #ifndef IOT_WIFI_MAX_SAVED_NETWORKS
@@ -84,42 +69,14 @@ static os_mutex_t wlan_mtx;
 static WIFIEventHandler_t xWifiEventHandlers[ eWiFiEventMax ];
 
 #if (defined(IOT_WIFI_ENABLE_SAVE_NETWORK) && (IOT_WIFI_ENABLE_SAVE_NETWORK > 0))
-static int WIFI_NvmBackendInit(void);
-#if defined(__IAR_SYSTEMS_ICC__)
-_Pragma("location=\"NVM_TABLE\"") __root NVM_DataEntry_t iotWifiNvDataTable[IOT_WIFI_MAX_SAVED_NETWORKS + 1];
-NVM_ADAPTER_TABLE(nvm_adapter_table_t iotWifiNvAdapterDataTable[]) =
-{
-    iotWifiNvDataTable,
-    IOT_WIFI_MAX_SAVED_NETWORKS + 1,
-    WIFI_NvmBackendInit
-};
-#elif (defined(__CC_ARM) || defined(__ARMCC_VERSION))
-static NVM_DataEntry_t iotWifiNvDataTable[IOT_WIFI_MAX_SAVED_NETWORKS + 1] __attribute__((section("NVM_TABLE"), used));
-NVM_ADAPTER_TABLE(nvm_adapter_table_t iotWifiNvAdapterDataTable[]) =
-{
-    {
-        iotWifiNvDataTable,
-        IOT_WIFI_MAX_SAVED_NETWORKS + 1,
-        WIFI_NvmBackendInit,
-    },
-};
-#elif defined(__GNUC__)
-static NVM_DataEntry_t iotWifiNvDataTable[IOT_WIFI_MAX_SAVED_NETWORKS + 1] __attribute__((section(".NVM_TABLE"), used));
-NVM_ADAPTER_TABLE(nvm_adapter_table_t iotWifiNvAdapterDataTable[]) =
-{
-    {
-        iotWifiNvDataTable,
-        IOT_WIFI_MAX_SAVED_NETWORKS + 1,
-        WIFI_NvmBackendInit,
-    },
-};
-#else
-#error "Must define iotWifiNvDataTable"
-#endif
-
 static WIFINetworkProfile_t NvmSavedWifiNetworkProfile[IOT_WIFI_MAX_SAVED_NETWORKS];
-static uint8_t NvmSavedWifiNetworkProfileIndex;
-#endif
+static lfs_t * lfs;
+static lfs_file_t lfs_write_file;
+static lfs_file_t lfs_read_file;
+static char lfs_file_name[16];
+static struct lfs_info lfs_file_info;
+#define LFS_FILE_NAME "wifint"
+#endif /* IOT_WIFI_ENABLE_SAVE_NETWORK */
 
 static int wlan_event_callback(enum wlan_event_reason event, void *data)
 {
@@ -158,27 +115,6 @@ static int wlan_event_callback(enum wlan_event_reason event, void *data)
     return 0;
 }
 
-#if (defined(IOT_WIFI_ENABLE_SAVE_NETWORK) && (IOT_WIFI_ENABLE_SAVE_NETWORK > 0))
-static int WIFI_NvmBackendInit(void)
-{
-    /* NVM Init */
-    for (uint32_t index = 0; index < IOT_WIFI_MAX_SAVED_NETWORKS; index++)
-    {
-        iotWifiNvDataTable[index].pData         = &NvmSavedWifiNetworkProfile[index];
-        iotWifiNvDataTable[index].ElementSize   = sizeof(NvmSavedWifiNetworkProfile[index]);
-        iotWifiNvDataTable[index].ElementsCount = 1;
-        iotWifiNvDataTable[index].DataEntryID   = 0xfA01 + index;
-        iotWifiNvDataTable[index].DataEntryType = gNVM_MirroredInRam_c;
-    }
-    iotWifiNvDataTable[IOT_WIFI_MAX_SAVED_NETWORKS].pData         = &NvmSavedWifiNetworkProfileIndex;
-    iotWifiNvDataTable[IOT_WIFI_MAX_SAVED_NETWORKS].ElementSize   = sizeof(NvmSavedWifiNetworkProfileIndex);
-    iotWifiNvDataTable[IOT_WIFI_MAX_SAVED_NETWORKS].ElementsCount = 1;
-    iotWifiNvDataTable[IOT_WIFI_MAX_SAVED_NETWORKS].DataEntryID   = 0xfA01 + IOT_WIFI_MAX_SAVED_NETWORKS;
-    iotWifiNvDataTable[IOT_WIFI_MAX_SAVED_NETWORKS].DataEntryType = gNVM_MirroredInRam_c;
-    return 0;
-}
-#endif
-
 /*-----------------------------------------------------------*/
 WIFIReturnCode_t WIFI_On( void )
 {
@@ -189,14 +125,42 @@ WIFIReturnCode_t WIFI_On( void )
 	return eWiFiSuccess;
 
 #if (defined(IOT_WIFI_ENABLE_SAVE_NETWORK) && (IOT_WIFI_ENABLE_SAVE_NETWORK > 0))
-
-    NVM_AdapterInit();
-
-    for (uint32_t index = 0; index < IOT_WIFI_MAX_SAVED_NETWORKS; index++)
+    if (NULL == lfs)
     {
-        NvRestoreDataSet(&NvmSavedWifiNetworkProfile[index], false);
+        lfs = lfs_pl_init();
+        if (NULL == lfs)
+        {
+            return eWiFiFailure;
+        }
     }
-    NvRestoreDataSet(&NvmSavedWifiNetworkProfileIndex, false);
+
+    rv = lfs_stat(lfs, LFS_FILE_NAME, &lfs_file_info);
+    if (rv < 0)
+    {
+        rv = lfs_mkdir(lfs, LFS_FILE_NAME);
+        if (rv < 0)
+        {
+            return eWiFiFailure;
+        }
+    }
+
+
+    for (uint8_t index = 0; index < IOT_WIFI_MAX_SAVED_NETWORKS; index ++ )
+    {
+        snprintf(lfs_file_name, sizeof(lfs_file_name) - 1, "%s/%d", LFS_FILE_NAME, index);
+        rv = lfs_file_open (lfs, &lfs_read_file, (char *)lfs_file_name, LFS_O_RDONLY);
+        if (rv >= 0)
+        {
+            rv = lfs_file_read (lfs, &lfs_read_file, &NvmSavedWifiNetworkProfile[index], sizeof(NvmSavedWifiNetworkProfile[index]));
+
+            (void)lfs_file_close(lfs, &lfs_read_file);
+
+            if (rv < 0)
+            {
+                memset(&NvmSavedWifiNetworkProfile[index], 0, sizeof(NvmSavedWifiNetworkProfile[index]));
+            }
+        }
+    }
 #endif
 
     rv = os_semaphore_create(&wlan_init_sem, "wlansem");
@@ -671,6 +635,7 @@ WIFIReturnCode_t WIFI_NetworkAdd( const WIFINetworkProfile_t * const pxNetworkPr
 {
     /* FIX ME. */
 #if (defined(IOT_WIFI_ENABLE_SAVE_NETWORK) && (IOT_WIFI_ENABLE_SAVE_NETWORK > 0))
+    int rv;
     WIFIReturnCode_t ret = eWiFiSuccess;
     uint8_t savedIndex = IOT_WIFI_MAX_SAVED_NETWORKS;
 
@@ -695,10 +660,17 @@ WIFIReturnCode_t WIFI_NetworkAdd( const WIFINetworkProfile_t * const pxNetworkPr
         }
 
         memcpy(&NvmSavedWifiNetworkProfile[savedIndex], pxNetworkProfile, sizeof(NvmSavedWifiNetworkProfile[savedIndex]));
-        NvSyncSave(&NvmSavedWifiNetworkProfile[savedIndex], false);
         *pusIndex = savedIndex;
-        NvmSavedWifiNetworkProfileIndex = savedIndex;
-        NvSyncSave(&NvmSavedWifiNetworkProfileIndex, false);
+
+        snprintf(lfs_file_name, sizeof(lfs_file_name) - 1, "%s/%d", LFS_FILE_NAME, savedIndex);
+        rv = lfs_file_open (lfs, &lfs_write_file, (char *)lfs_file_name, LFS_O_WRONLY | LFS_O_CREAT);
+        if (rv >= 0)
+        {
+            rv = lfs_file_write (lfs, &lfs_write_file, &NvmSavedWifiNetworkProfile[savedIndex], sizeof(NvmSavedWifiNetworkProfile[savedIndex]));
+
+            (void)lfs_file_close(lfs, &lfs_write_file);
+            (void)rv;
+        }
     }
     return ret;
 #else
@@ -746,6 +718,7 @@ WIFIReturnCode_t WIFI_NetworkDelete( uint16_t usIndex )
 {
     /* FIX ME. */
 #if (defined(IOT_WIFI_ENABLE_SAVE_NETWORK) && (IOT_WIFI_ENABLE_SAVE_NETWORK > 0))
+    int rv;
     WIFIReturnCode_t ret = eWiFiSuccess;
 
     if ((eWiFiSuccess == ret) && (usIndex >= IOT_WIFI_MAX_SAVED_NETWORKS))
@@ -756,7 +729,15 @@ WIFIReturnCode_t WIFI_NetworkDelete( uint16_t usIndex )
     if (eWiFiSuccess == ret)
     {
         memset(&NvmSavedWifiNetworkProfile[usIndex], 0, sizeof(NvmSavedWifiNetworkProfile[usIndex]));
-        NvSyncSave(&NvmSavedWifiNetworkProfile[usIndex], false);
+        snprintf(lfs_file_name, sizeof(lfs_file_name) - 1, "%s/%d", LFS_FILE_NAME, usIndex);
+        rv = lfs_file_open (lfs, &lfs_write_file, (char *)lfs_file_name, LFS_O_WRONLY | LFS_O_CREAT);
+        if (rv >= 0)
+        {
+            rv = lfs_file_write (lfs, &lfs_write_file, &NvmSavedWifiNetworkProfile[usIndex], sizeof(NvmSavedWifiNetworkProfile[usIndex]));
+
+            (void)lfs_file_close(lfs, &lfs_write_file);
+            (void)rv;
+        }
     }
     return ret;
 #else

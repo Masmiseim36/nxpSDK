@@ -7,7 +7,7 @@
 
 #include <porting.h>
 #include <string.h>
-#include <errno.h>
+#include <errno/errno.h>
 #include <stdbool.h>
 #include <sys/atomic.h>
 #include <sys/byteorder.h>
@@ -17,15 +17,12 @@
 #include <bluetooth/conn.h>
 #include <bluetooth/l2cap.h>
 #include <bluetooth/a2dp.h>
-#include <bluetooth/a2dp-codec.h>
+#include <bluetooth/a2dp_codec_sbc.h>
 #include <bluetooth/sdp.h>
 #include "clock_config.h"
 #include "board.h"
-#include "fsl_sai.h"
-#include "fsl_dmamux.h"
-#include "fsl_sai_edma.h"
+#include "fsl_adapter_audio.h"
 #include "fsl_codec_common.h"
-#include "fsl_wm8960.h"
 #include "fsl_codec_adapter.h"
 #include "fsl_debug_console.h"
 #include "app_connect.h"
@@ -33,14 +30,18 @@
 #define A2DP_CLASS_OF_DEVICE (0x200404U)
 #define APP_A2DP_STREAMER_SYNC_TASK_PRIORITY (5U)
 
-extern void BOARD_CodecStop(void);
-extern void BOARD_CodecStart(void);
-extern void BOARD_CodecSet(uint32_t sample_rate, uint8_t channels);
-extern void BOARD_CodecStreamerPlay(uint8_t *data, uint32_t length);
+extern uint32_t BOARD_SwitchAudioFreq(uint32_t sampleRate);
 
 struct bt_a2dp *default_a2dp;
+struct bt_a2dp_endpoint *default_a2dp_endpoint;
 static uint32_t audio_start;
 static QueueHandle_t audio_sem;
+BT_A2DP_SBC_SINK_ENDPOINT(sbcEndpoint);
+
+extern hal_audio_config_t audioTxConfig;
+extern codec_config_t boardCodecConfig;
+static HAL_AUDIO_HANDLE_DEFINE(audio_tx_handle);
+static codec_handle_t codec_handle;
 
 static struct bt_sdp_attribute a2dp_sink_attrs[] = {
     BT_SDP_NEW_SERVICE,
@@ -111,67 +112,8 @@ static struct bt_sdp_attribute a2dp_sink_attrs[] = {
 
 static struct bt_sdp_record a2dp_sink_rec = BT_SDP_RECORD(a2dp_sink_attrs);
 
-static uint32_t app_a2dp_sbc_get_sample_rate(struct bt_a2dp_preset *config)
-{
-    if (config == NULL)
-    {
-        return 0U;
-    }
-
-    if (config->preset[0] & A2DP_SBC_SAMP_FREQ_16000)
-    {
-        return 16000U;
-    }
-    else if (config->preset[0] & A2DP_SBC_SAMP_FREQ_32000)
-    {
-        return 32000U;
-    }
-    else if (config->preset[0] & A2DP_SBC_SAMP_FREQ_44100)
-    {
-        return 44100U;
-    }
-    else if (config->preset[0] & A2DP_SBC_SAMP_FREQ_48000)
-    {
-        return 48000U;
-    }
-    else
-    {
-        return 0U;
-    }
-}
-
-static uint32_t app_a2dp_sbc_get_channel_number(struct bt_a2dp_preset *config)
-{
-    if (config == NULL)
-    {
-        return 0U;
-    }
-
-    /* Decode Support for Channel Mode */
-    if (config->preset[0] & A2DP_SBC_CH_MODE_MONO)
-    {
-        return 1U;
-    }
-    else if (config->preset[0] & A2DP_SBC_CH_MODE_DUAL)
-    {
-        return 2U;
-    }
-    else if (config->preset[0] & A2DP_SBC_CH_MODE_STREO)
-    {
-        return 2U;
-    }
-    else if (config->preset[0] & A2DP_SBC_CH_MODE_JOINT)
-    {
-        return 2U;
-    }
-    else
-    {
-        return 0U;
-    }
-}
-
 void app_audio_streamer_task_signal(void)
-{    
+{
     if (0U != __get_IPSR())
     {
         portBASE_TYPE task_to_wake = pdFALSE;
@@ -202,64 +144,99 @@ void AudioTask(void *handle)
             continue;
         }
 
-        bt_a2dp_snk_media_sync(default_a2dp, NULL, 0U);
+        bt_a2dp_snk_media_sync(default_a2dp_endpoint, NULL, 0U);
     }
 }
 
-void app_configured(struct bt_a2dp *a2dp, struct a2dp_configure_result *configResult)
+static void tx_callback(hal_audio_handle_t handle, hal_audio_status_t completionStatus, void *callbackParam)
+{
+    app_audio_streamer_task_signal();
+}
+
+void sbc_configured(struct bt_a2dp_endpoint_configure_result *configResult)
 {
     if (configResult->err == 0)
     {
-        BOARD_CodecSet(app_a2dp_sbc_get_sample_rate(configResult->config), app_a2dp_sbc_get_channel_number(configResult->config));
+        default_a2dp_endpoint = &sbcEndpoint;
+
+        audioTxConfig.sampleRate_Hz  = bt_a2dp_sbc_get_sampling_frequency((struct bt_a2dp_codec_sbc_params *)&configResult->config.media_config->codec_ie[0]);
+        audioTxConfig.lineChannels = (hal_audio_channel_t)bt_a2dp_sbc_get_channel_num((struct bt_a2dp_codec_sbc_params *)&configResult->config.media_config->codec_ie[0]);
+        audioTxConfig.srcClock_Hz = BOARD_SwitchAudioFreq(audioTxConfig.sampleRate_Hz);
+
+        PRINTF("a2dp configure sample rate %dHz\r\n", audioTxConfig.sampleRate_Hz);
+
+        HAL_AudioTxInit((hal_audio_handle_t)&audio_tx_handle[0], &audioTxConfig);
+        HAL_AudioTxInstallCallback((hal_audio_handle_t)&audio_tx_handle[0], tx_callback, NULL);
+
+        if (CODEC_Init(&codec_handle, &boardCodecConfig) != kStatus_Success)
+        {
+            PRINTF("codec init failed!\r\n");
+        }
+        CODEC_SetMute(&codec_handle, kCODEC_PlayChannelHeadphoneRight | kCODEC_PlayChannelHeadphoneLeft, true);
+        CODEC_SetFormat(&codec_handle, audioTxConfig.srcClock_Hz, audioTxConfig.sampleRate_Hz, audioTxConfig.bitWidth);
+        CODEC_SetMute(&codec_handle, kCODEC_PlayChannelHeadphoneRight | kCODEC_PlayChannelHeadphoneLeft, false);
     }
 }
 
-void app_start_play(struct bt_a2dp *a2dp, int err)
-{
-    if (err == 0)
-    {
-        audio_start = 1;
-        /* Start Audio Player */
-        BOARD_CodecStart();
-        PRINTF("a2dp start playing\r\n");
-    }
-}
-
-void app_suspend_play(struct bt_a2dp *a2dp, int err)
+void sbc_deconfigured(int err)
 {
     if (err == 0)
     {
         audio_start = 0;
         /* Stop Audio Player */
-        BOARD_CodecStop();
-        PRINTF("a2dp stop playing\r\n");
+        PRINTF("a2dp deconfigure\r\n");
+        CODEC_SetMute(&codec_handle, kCODEC_PlayChannelHeadphoneRight | kCODEC_PlayChannelHeadphoneLeft, true);
+        HAL_AudioTxDeinit((hal_audio_handle_t)&audio_tx_handle[0]);
+        (void)BOARD_SwitchAudioFreq(0U);
     }
 }
 
-void app_streamer_data(struct bt_a2dp *a2dp, uint8_t *data, uint32_t length)
+void sbc_start_play(int err)
+{
+    if (err == 0)
+    {
+        audio_start = 1;
+        /* Start Audio Player */
+        PRINTF("a2dp start playing\r\n");
+    }
+}
+
+void sbc_stop_play(int err)
+{
+    if (err == 0)
+    {
+        audio_start = 0;
+        /* Stop Audio Player */
+        PRINTF("a2dp stop playing\r\n");
+        HAL_AudioTransferAbortSend((hal_audio_handle_t)&audio_tx_handle[0]);
+    }
+}
+
+void sbc_streamer_data(uint8_t *data, uint32_t length)
 {
     if ((data != NULL) && (length != 0U))
     {
+        hal_audio_transfer_t xfer;
+
         if(0 == audio_start)
         {
             /*return;*/
         }
-        BOARD_CodecStreamerPlay(data, length);
+
+        xfer.dataSize       = length;
+        xfer.data           = data;
+        if (kStatus_HAL_AudioSuccess != HAL_AudioTransferSendNonBlocking((hal_audio_handle_t)&audio_tx_handle[0], &xfer))
+        {
+            PRINTF("prime fail\r\n");
+        }
     }
 }
 
 void app_connected(struct bt_a2dp *a2dp, int err)
 {
-    struct bt_a2dp_control_cb controlCb;
-
     if (!err)
     {
         default_a2dp = a2dp;
-        controlCb.configured = app_configured;
-        controlCb.sink_start_play = app_start_play;
-        controlCb.sink_suspend_play = app_suspend_play;
-        controlCb.sink_streamer_data = app_streamer_data;
-        bt_a2dp_register_control_callback(a2dp, &controlCb);
         PRINTF("a2dp connected success\r\n");
     }
     else
@@ -271,11 +248,7 @@ void app_connected(struct bt_a2dp *a2dp, int err)
 void app_disconnected(struct bt_a2dp *a2dp)
 {
     audio_start = 0;
-    /* Stop Audio Player */
-    BOARD_CodecStop();
 }
-
-BT_A2DP_SBC_SINK_ENDPOINT(sbcEndpoint);
 
 static void app_edgefast_a2dp_init(void)
 {
@@ -289,6 +262,11 @@ static void app_edgefast_a2dp_init(void)
     connectCb.connected = app_connected;
     connectCb.disconnected = app_disconnected;
 
+    sbcEndpoint.control_cbs.configured = sbc_configured;
+    sbcEndpoint.control_cbs.deconfigured = sbc_deconfigured;
+    sbcEndpoint.control_cbs.start_play = sbc_start_play;
+    sbcEndpoint.control_cbs.stop_play = sbc_stop_play;
+    sbcEndpoint.control_cbs.sink_streamer_data = sbc_streamer_data;
     bt_a2dp_register_endpoint(&sbcEndpoint, BT_A2DP_AUDIO, BT_A2DP_SINK);
 
     bt_a2dp_register_connect_callback(&connectCb);
@@ -350,7 +328,10 @@ void app_a2dp_sink_task(void *pvParameters)
     err = bt_enable(bt_ready);
     if (err) {
         PRINTF("Bluetooth init failed (err %d)\n", err);
-        return;
+        while (1)
+        {
+            vTaskDelay(2000);
+        }
     }
 
     vTaskDelete(NULL);

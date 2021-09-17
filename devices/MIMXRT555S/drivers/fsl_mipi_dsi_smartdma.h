@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2020 NXP
+ * Copyright 2019-2021 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -22,7 +22,7 @@
 
 /*! @name Driver version */
 /*@{*/
-#define FSL_MIPI_DSI_SMARTDMA_DRIVER_VERSION (MAKE_VERSION(2, 2, 0))
+#define FSL_MIPI_DSI_SMARTDMA_DRIVER_VERSION (MAKE_VERSION(2, 2, 1))
 /*@}*/
 
 /* Forward declaration of the handle typedef. */

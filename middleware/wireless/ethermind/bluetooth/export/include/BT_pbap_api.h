@@ -246,15 +246,15 @@
  * To set the filter flag
  */
 #define PBAP_SET_FILTER_FLAG(flag, set_field)                                    \
-        ((set_field) < 0x00010000U)? (*((flag) + 0U) = ((*((flag) + 0U)) | (set_field))):\
-        (*((flag) + 1) = ((*((flag) + 1U)) | ((set_field)/0x00010000U)))
+        (((set_field) < 0x00010000U)? (((flag)[0U]) = (((flag)[0U]) | (set_field))):\
+        (((flag)[1U]) = (((flag)[1U]) | ((set_field)>>16U))))
 
 /**
  * To retrieve the field value (Set/Reset)
  */
 #define PBAP_GET_FILTER_FLAG(flag, get_field)                     \
-        ((get_field) < 0x00010000U) ? (*((flag) + 0U) & (get_field)) :  \
-        (*((flag) + 1U) & ((get_field)/0x00010000U))
+        (((get_field) < 0x00010000U) ? (((flag)[0U]) & (get_field)) :  \
+        (((flag)[1U]) & ((get_field)>>16U)))
 
 /**
  * Resets all the fields of the filter flag

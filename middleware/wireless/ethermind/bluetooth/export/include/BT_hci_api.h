@@ -8,7 +8,6 @@
 
 /*
  *  Copyright (C) 2014. Mindtree Ltd.
- *  Copyright 2021 NXP
  *  All rights reserved.
  */
 
@@ -1223,22 +1222,22 @@
 
 /* =================================================== Macros */
 #define hci_pack_1_byte_param(dest, src) \
-    *((dest) + 0U) = (UCHAR)(*((UCHAR *)(src)));
+    (dest)[0U] = (UCHAR)(*((UCHAR *)(src)));
 
 #define hci_pack_2_byte_param(dest, src) \
-    *((dest) + 0U) = (UCHAR)(*((UINT16 *)(src))); \
-    *((dest) + 1U) = (UCHAR)(*((UINT16 *)(src)) >> 8U);
+    (dest)[0U] = (UCHAR)(*((UINT16 *)(src))); \
+    (dest)[1U] = (UCHAR)(*((UINT16 *)(src)) >> 8U);
 
 #define hci_pack_3_byte_param(dest, src) \
-    *((dest) + 0U) = (UCHAR)(*((UINT32 *)(src)));\
-    *((dest) + 1U) = (UCHAR)(*((UINT32 *)(src)) >> 8U);\
-    *((dest) + 2U) = (UCHAR)(*((UINT32 *)(src)) >> 16U);
+    (dest)[0U] = (UCHAR)(*((UINT32 *)(src)));\
+    (dest)[1U] = (UCHAR)(*((UINT32 *)(src)) >> 8U);\
+    (dest)[2U] = (UCHAR)(*((UINT32 *)(src)) >> 16U);
 
 #define hci_pack_4_byte_param(dest, src) \
-    *((dest) + 0U) = (UCHAR)(*((UINT32 *)(src)));\
-    *((dest) + 1U) = (UCHAR)(*((UINT32 *)(src)) >> 8U);\
-    *((dest) + 2U) = (UCHAR)(*((UINT32 *)(src)) >> 16U);\
-    *((dest) + 3U) = (UCHAR)(*((UINT32 *)(src)) >> 24U);
+    (dest)[0U] = (UCHAR)(*((UINT32 *)(src)));\
+    (dest)[1U] = (UCHAR)(*((UINT32 *)(src)) >> 8U);\
+    (dest)[2U] = (UCHAR)(*((UINT32 *)(src)) >> 16U);\
+    (dest)[3U] = (UCHAR)(*((UINT32 *)(src)) >> 24U);
 
 #define hci_unpack_1_byte_param BT_UNPACK_LE_1_BYTE
 
@@ -1903,6 +1902,8 @@ API_RESULT BT_hci_get_connection_handle
                UCHAR link_type,
                UINT16 *  handle
            );
+
+#if 0
 /**
  *  \brief To get connection type by using Bluetooth Device Address.
  *
@@ -1934,6 +1935,7 @@ API_RESULT BT_hci_get_connection_type
                UCHAR     bd_addr_type,
                UCHAR *   conn_type
            );
+#endif /* 0 */
 
 #ifdef BT_4_0
 

@@ -273,6 +273,10 @@ mlan_status wlan_update_rsn_ie(mlan_private *pmpriv, MrvlIEtypes_RsnParamSet_t *
         *prsn_cap |= PMF_MASK;
         *prsn_cap &= pmf_mask;
     }
+    else
+    {
+        *prsn_cap &= ~PMF_MASK;
+    }
 
     return ret;
 }
@@ -509,9 +513,10 @@ mlan_status wlan_cmd_802_11_associate(IN mlan_private *pmpriv, IN HostCmd_DS_COM
         wlan_11ac_bandconfig_allowed(pmpriv, pbss_desc->bss_band))
         wlan_cmd_append_11ac_tlv(pmpriv, pbss_desc, &pos);
 
-#ifdef CONFIG_WMM
+    /* Enabled WMM IE in assoc request.
+     * TODO: Check if this is required for all APs. TCP traffic was hampered with Linksys AP 1900AC if this is disabled.
+     * */
     wlan_wmm_process_association_req(pmpriv, &pos, &pbss_desc->wmm_ie, pbss_desc->pht_cap);
-#endif /* CONFIG_WMM */
 
     /* fixme: Currently not required */
 

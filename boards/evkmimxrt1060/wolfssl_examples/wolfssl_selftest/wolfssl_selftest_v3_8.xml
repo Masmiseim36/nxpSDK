@@ -26,12 +26,12 @@
     <definition extID="middleware.wolfssl.docs.MIMXRT1062"/>
     <definition extID="platform.utilities.misc_utilities.MIMXRT1062"/>
     <definition extID="device.MIMXRT1062_system.MIMXRT1062"/>
-    <definition extID="iar"/>
-    <definition extID="mcuxpresso"/>
     <definition extID="armgcc"/>
+    <definition extID="mcuxpresso"/>
     <definition extID="com.nxp.mcuxpresso"/>
     <definition extID="com.crt.advproject.config.exe.debug"/>
     <definition extID="com.crt.advproject.config.exe.release"/>
+    <definition extID="iar"/>
     <definition extID="mdk"/>
   </externalDefinitions>
   <example id="evkmimxrt1060_wolfssl_selftest" name="wolfssl_selftest" dependency="platform.drivers.dcp.MIMXRT1062 platform.drivers.trng.MIMXRT1062 platform.drivers.cache_armv7_m7.MIMXRT1062 middleware.wolfssl.rt.MIMXRT1062 middleware.wolfssl.MIMXRT1062 middleware.wolfssl.test.MIMXRT1062 platform.drivers.clock.MIMXRT1062 platform.drivers.common.MIMXRT1062 device.MIMXRT1062_CMSIS.MIMXRT1062 utility.debug_console.MIMXRT1062 component.lpuart_adapter.MIMXRT1062 component.serial_manager.MIMXRT1062 component.lists.MIMXRT1062 component.serial_manager_uart.MIMXRT1062 platform.drivers.lpuart.MIMXRT1062 device.MIMXRT1062_startup.MIMXRT1062 platform.drivers.iomuxc.MIMXRT1062 platform.utilities.assert.MIMXRT1062 platform.drivers.igpio.MIMXRT1062 platform.drivers.xip_device.MIMXRT1062 platform.drivers.xip_board.evkmimxrt1060.MIMXRT1062 CMSIS_Include_core_cm.MIMXRT1062 middleware.wolfssl.docs.MIMXRT1062 platform.utilities.misc_utilities.MIMXRT1062 device.MIMXRT1062_system.MIMXRT1062" category="wolfssl_examples">
@@ -47,7 +47,51 @@
       <memoryBlock id="NCACHE_REGION_evkmimxrt1060" name="NCACHE_REGION" addr="81E00000" size="00200000" type="RAM" access="RW"/>
     </memory>
     <toolchainSettings>
-      <toolchainSetting id_refs="com.nxp.mcuxpresso"/>
+      <toolchainSetting id_refs="com.nxp.mcuxpresso">
+        <option id="gnu.c.compiler.option.preprocessor.def.symbols" type="stringList">
+          <value>CPU_MIMXRT1062DVL6A</value>
+          <value>SDK_DEBUGCONSOLE=1</value>
+          <value>XIP_EXTERNAL_FLASH=1</value>
+          <value>XIP_BOOT_HEADER_ENABLE=1</value>
+          <value>WOLFSSL_IMXRT_DCP</value>
+          <value>DCP_USE_DCACHE=0</value>
+          <value>WOLFSSL_USER_SETTINGS</value>
+          <value>PRINTF_FLOAT_ENABLE=1</value>
+          <value>SERIAL_PORT_TYPE_UART=1</value>
+          <value>MCUXPRESSO_SDK</value>
+        </option>
+        <option id="com.crt.advproject.gcc.fpu" type="enum">
+          <value>com.crt.advproject.gcc.fpu.fpv5dp.hard</value>
+        </option>
+        <option id="gnu.c.compiler.option.optimization.flags" type="string">
+          <value>-fno-common</value>
+        </option>
+        <option id="com.crt.advproject.c.misc.dialect" type="enum">
+          <value>com.crt.advproject.misc.dialect.gnu99</value>
+        </option>
+        <option id="gnu.c.compiler.option.misc.other" type="string">
+          <value>-fomit-frame-pointer -c -ffunction-sections -fdata-sections -ffreestanding -fno-builtin</value>
+        </option>
+        <option id="gnu.c.compiler.option.warnings.allwarn" type="boolean">
+          <value>false</value>
+        </option>
+        <option id="com.crt.advproject.gas.fpu" type="enum">
+          <value>com.crt.advproject.gas.fpu.fpv5dp.hard</value>
+        </option>
+        <option id="com.crt.advproject.link.fpu" type="enum">
+          <value>com.crt.advproject.link.fpu.fpv5dp.hard</value>
+        </option>
+        <option id="gnu.c.link.option.nostdlibs" type="boolean">
+          <value>true</value>
+        </option>
+        <option id="com.crt.advproject.link.memory.sections" type="stringList">
+          <value>isd=*(NonCacheable.init);region=SRAM_DTC;type=.data</value>
+          <value>isd=*(NonCacheable);region=SRAM_DTC;type=.bss</value>
+        </option>
+        <option id="com.crt.advproject.link.memory.heapAndStack" type="string">
+          <value>&amp;Heap:Default;Default;0x8000&amp;Stack:Default;Default;0x2000</value>
+        </option>
+      </toolchainSetting>
     </toolchainSettings>
     <debug_configurations>
       <debug_configuration id_refs="com.crt.advproject.config.exe.debug com.crt.advproject.config.exe.release">
@@ -64,11 +108,6 @@
       <include_path path="boards/evkmimxrt1060/wolfssl_examples/wolfssl_selftest" project_relative_path="board" type="c_include"/>
       <include_path path="boards/evkmimxrt1060/wolfssl_examples/wolfssl_selftest" project_relative_path="source" type="c_include"/>
     </include_paths>
-    <source path="boards/evkmimxrt1060/wolfssl_examples/wolfssl_selftest/iar" project_relative_path="./" type="workspace" toolchain="iar">
-      <files mask="wolfssl_selftest.ewd"/>
-      <files mask="wolfssl_selftest.ewp"/>
-      <files mask="wolfssl_selftest.eww"/>
-    </source>
     <source path="boards/evkmimxrt1060/wolfssl_examples/wolfssl_selftest/armgcc" project_relative_path="./" type="workspace" toolchain="armgcc">
       <files mask="build_all.bat"/>
       <files mask="build_all.sh"/>
@@ -109,9 +148,6 @@
     </source>
     <source path="boards/evkmimxrt1060/wolfssl_examples/wolfssl_selftest" project_relative_path="doc" type="doc" toolchain="iar mdk armgcc">
       <files mask="readme.txt"/>
-    </source>
-    <source path="boards/evkmimxrt1060/wolfssl_examples/wolfssl_selftest/iar" project_relative_path="MIMXRT1062/iar" type="linker" toolchain="iar">
-      <files mask="MIMXRT1062xxxxx_flexspi_nor.icf"/>
     </source>
     <source path="boards/evkmimxrt1060/wolfssl_examples/wolfssl_selftest/armgcc" project_relative_path="MIMXRT1062/gcc" type="linker" toolchain="armgcc">
       <files mask="MIMXRT1062xxxxx_flexspi_nor.ld"/>

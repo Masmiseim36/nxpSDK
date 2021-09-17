@@ -97,6 +97,12 @@ if (isdefinedsymbol(gUseNVMLink_d))
 }
 /*** NVM Configuration End ***/
 
+/*** littleFS configuration Start ***/
+define exported symbol LITTLEFS_STORAGE_START_ADDRESS = _ROM_END_ + 1;
+define exported symbol LITTLEFS_STORAGE_SECTOR_SIZE = 0x1000;  /* 4k flash sector size */
+define exported symbol LITTLEFS_STORAGE_MAX_SECTORS = (0x08FBFFFF - LITTLEFS_STORAGE_START_ADDRESS) / LITTLEFS_STORAGE_SECTOR_SIZE;
+/*** littleFS configuration End ***/
+
 /* Sizes */
 if (isdefinedsymbol(__stack_size__)) {
   define symbol __size_cstack__        = __stack_size__;

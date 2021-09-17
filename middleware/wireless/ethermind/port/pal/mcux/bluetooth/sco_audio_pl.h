@@ -55,12 +55,12 @@ typedef struct _SCO_AUDIO_EP_INFO
     /**
      * EndPoint callback for read
      */
-    void (* sco_in_complete_cb)(UCHAR *, UINT16);
+    void (* sco_in_complete_cb)(UCHAR *data, UINT16 datalen);
 
     /**
      * EndPoint callback for write complete
      */
-    void (* sco_out_complete_cb)(UCHAR *, UINT16);
+    void (* sco_out_complete_cb)(UCHAR *data, UINT16 datalen);
 }SCO_AUDIO_EP_INFO;
 
 /* --------------------------------------------- Macros */

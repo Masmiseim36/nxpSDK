@@ -22,7 +22,7 @@
 #include "fsl_common.h"
 #include "fsl_os_abstraction.h"
 #include <string.h>
-#include <errno.h>
+#include <errno/errno.h>
 #include <stdbool.h>
 
 #include <toolchain.h>

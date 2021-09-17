@@ -274,7 +274,7 @@ typedef struct avdtp_sig_msg_reject_rsp_params
 /** \} */
 /** \} */
 /**
- * \defgroup avdtp_appl_callbacks Application Callbacks 
+ * \defgroup avdtp_appl_callbacks Application Callbacks
  * \{
  */
 /**
@@ -714,6 +714,18 @@ typedef struct
     /** Flag for delay report support */
     UCHAR dr_cap_flag;
 #endif /* AVDTP_HAVE_DELAY_REPORTING */
+#ifdef AVDTP_HAVE_REPORTING_SERVICE
+    UCHAR reporting_cap;
+#endif
+#ifdef AVDTP_HAVE_ROHC_SERVICE
+    /** header compression cap,
+    *  0x00 means the endpoint doesn't have this service.
+    */
+    UCHAR rohc_cap;
+#endif
+#ifdef AVDTP_HAVE_MULTIPLEXING
+    UCHAR multiplexing_cap;
+#endif
 
     /** Type of the SEP - Source/Sink */
     UCHAR sep_type;
@@ -1486,7 +1498,7 @@ API_RESULT avdtp_common_api_handler_set_1
            (
                /* IN */ AVDTP_HANDLE *  handle,
                /* IN */ UCHAR           event_type,
-               /* IN */ void            (* bh_func)(void *, UINT16)
+               /* IN */ void            (* bh_func)(void *args, UINT16 args_length)
            );
 
 /*
@@ -1501,7 +1513,7 @@ API_RESULT avdtp_common_api_handler_set_2
                /* IN */ UCHAR *         data,
                /* IN */ UINT16          datalen,
                /* IN */ UCHAR           event_type,
-               /* IN */ void            (* bh_func)(void *, UINT16)
+               /* IN */ void            (* bh_func)(void *args, UINT16 args_length)
            );
 
 /*
@@ -1514,7 +1526,7 @@ API_RESULT avdtp_common_api_handler_set_3
                /* IN */ AVDTP_HANDLE *      handle,
                /* IN */ AVDTP_SEP_CONF *    sep_conf,
                /* IN */ UCHAR               event_type,
-               /* IN */ void                (* bh_func)(void *, UINT16)
+               /* IN */ void                (* bh_func)(void *args, UINT16 args_length)
            );
 
 /*

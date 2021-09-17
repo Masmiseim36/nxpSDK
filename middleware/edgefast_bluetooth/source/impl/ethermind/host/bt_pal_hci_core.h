@@ -111,19 +111,27 @@ enum {
 	BT_PER_ADV_ENABLED,
 	/* Periodic Advertising parameters has been set in the controller. */
 	BT_PER_ADV_PARAMS_SET,
+	/* Constant Tone Extension parameters for Periodic Advertising
+	 * has been set in the controller.
+	 */
+	BT_PER_ADV_CTE_PARAMS_SET,
+	/* Constant Tone Extension for Periodic Advertising has been enabled
+	 * in the controller.
+	 */
+	BT_PER_ADV_CTE_ENABLED,
 
 	BT_ADV_NUM_FLAGS,
 };
 
 struct bt_le_ext_adv {
 	/* ID Address used for advertising */
-	uint8_t                    id;
+	uint8_t                 id;
 
 	/* Advertising handle */
-	uint16_t			handle;
+	uint8_t                 handle;
 
 	/* Current local Random Address */
-	bt_addr_le_t		random_addr;
+	bt_addr_le_t            random_addr;
 
 	/* Current target address */
 	bt_addr_le_t            target_addr;
@@ -149,6 +157,9 @@ enum {
 	/** Periodic advertising is attempting sync sync */
 	BT_PER_ADV_SYNC_SYNCING,
 
+	/** Periodic advertising is attempting sync sync */
+	BT_PER_ADV_SYNC_RECV_DISABLED,
+
 	BT_PER_ADV_SYNC_NUM_FLAGS,
 };
 
@@ -173,9 +184,6 @@ struct bt_le_per_adv_sync {
 
 	/** Flags */
 	ATOMIC_DEFINE(flags, BT_PER_ADV_SYNC_NUM_FLAGS);
-
-	/** Callbacks */
-	const struct bt_le_per_adv_sync_cb *cb;
 };
 
 struct bt_dev_le {
@@ -241,7 +249,7 @@ struct bt_dev_br {
 #endif /* CONFIG_BT_CONN */
 
 /* State tracking for the local Bluetooth controller */
-struct bt_dev {
+struct _bt_dev {
 	/* Local Identity Address(es) */
 	bt_addr_le_t            id_addr[CONFIG_BT_ID_MAX];
 	uint8_t                    id_count;
@@ -278,7 +286,7 @@ struct bt_dev {
 	uint8_t                    vs_commands[BT_DEV_VS_CMDS_MAX];
 #endif
 
-	struct bt_work           init;
+	struct k_work           init;
 
 	ATOMIC_DEFINE(flags, BT_DEV_NUM_FLAGS);
 
@@ -336,12 +344,38 @@ struct bt_dev {
 #endif
 };
 
-extern struct bt_dev bt_dev;
+extern struct _bt_dev bt_dev;
 #if ((defined(CONFIG_BT_SMP) && ((CONFIG_BT_SMP) > 0U)) || (defined(CONFIG_BT_BREDR) && ((CONFIG_BT_BREDR) > 0U)))
 extern const struct bt_conn_auth_cb *bt_auth;
 
 enum bt_security_err bt_security_err_get(uint8_t hci_err);
 #endif /* CONFIG_BT_SMP || CONFIG_BT_BREDR */
+
+/* Data type to store state related with command to be updated
+ * when command completes successfully.
+ */
+struct bt_hci_cmd_state_set {
+	/* Target memory to be updated */
+	atomic_t *target;
+	/* Bit number to be updated in target memory */
+	int bit;
+	/* Value to determine if enable or disable bit */
+	bool val;
+};
+
+/* Initialize command state instance */
+static inline void bt_hci_cmd_state_set_init(struct bt_hci_cmd_state_set *state,
+					     atomic_t *target, int bit,
+					     bool val)
+{
+	state->target = target;
+	state->bit = bit;
+	state->val = val;
+}
+
+/* Set command state related with the command buffer */
+void bt_hci_cmd_data_state_set(struct net_buf *buf,
+			       struct bt_hci_cmd_state_set *state);
 
 int bt_hci_disconnect(uint16_t handle, uint8_t reason);
 
@@ -368,7 +402,7 @@ int bt_recv(struct net_buf *buf);
 uint16_t ethermind_hci_event_callback(uint8_t event_type,
                         uint8_t *event_data, uint8_t  event_datalen);
 
-void bt_conn_unpair(uint8_t id, struct bt_conn *conn, const bt_addr_le_t *addr);
+void bt_conn_unpair(uint8_t id, const bt_addr_le_t *addr);
 
 /* Don't require everyone to include bt_pal_keys.h */
 struct bt_keys;
@@ -399,5 +433,25 @@ void hci_evt_user_confirm_req(struct net_buf *buf);
 void hci_evt_user_passkey_notify(struct net_buf *buf);
 void hci_evt_user_passkey_req(struct net_buf *buf);
 void hci_evt_auth_complete(struct net_buf *buf);
+
+/* HCI command complete response of le encrypt handlers */
+struct bt_hci_cmd_le_encrypt_rp_cb
+{
+	void (*cb)(struct net_buf *buf, void *user_data);
+	void *user_data;
+
+	sys_snode_t node;
+};
+
+int hci_cmd_le_encrypt_rp_cb_register(struct bt_hci_cmd_le_encrypt_rp_cb *cb);
+int hci_cmd_le_encrypt_rp_cb_unregister(struct bt_hci_cmd_le_encrypt_rp_cb *cb);
+
+struct bt_hci_acl_hdr_simulation
+{
+    void (*handler)(struct net_buf *buf);
+    uint16_t len;
+};
+
+bool update_sec_level(struct bt_conn *conn);
 
 #endif /* __HCI_CORE_H__ */

@@ -35,7 +35,7 @@ struct bt_pub_key_cb {
  *
  *  @return Zero on success or negative error code otherwise
  */
-int bt_pub_key_gen(struct bt_pub_key_cb *new_cb);
+int bt_pub_key_gen(struct bt_pub_key_cb *cb);
 
 /*  @brief Get the current Public Key.
  *

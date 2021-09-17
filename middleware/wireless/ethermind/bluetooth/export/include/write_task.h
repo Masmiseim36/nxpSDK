@@ -135,7 +135,7 @@ API_RESULT write_task_enqueue
                /* Queue Type */
                UCHAR   q_type,
                /* Bottom Half Function Pointer */
-               void    (* bh_func) ( void *, UINT16 ),
+               void    (* bh_func) ( void *args, UINT16 args_len),
                /* Data to be passed to Bottom Half */
                void    * data_param,
                /* Data length */

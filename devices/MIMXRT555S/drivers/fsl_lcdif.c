@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2020, NXP
+ * Copyright (c) 2019-2021, NXP
  * All rights reserved.
  *
  *
@@ -17,7 +17,7 @@
 #define FSL_COMPONENT_ID "platform.drivers.lcdif"
 #endif
 
-#define LCDIF_ALIGN_ADDR(addr, align) ((addr + align - 1U) & ~(align - 1U))
+#define LCDIF_ALIGN_ADDR(addr, align) (((addr) + (align)-1U) & ~((align)-1U))
 
 /*******************************************************************************
  * Prototypes
@@ -124,18 +124,18 @@ void LCDIF_Deinit(LCDIF_Type *base)
  */
 void LCDIF_DpiModeGetDefaultConfig(lcdif_dpi_config_t *config)
 {
-    assert(config);
+    assert(NULL != config);
 
-    config->panelWidth  = 0;
-    config->panelHeight = 0;
-    config->hsw         = 0;
-    config->hfp         = 0;
-    config->hbp         = 0;
-    config->vsw         = 0;
-    config->vfp         = 0;
-    config->vbp         = 0;
-    config->polarityFlags =
-        kLCDIF_VsyncActiveLow | kLCDIF_HsyncActiveLow | kLCDIF_DataEnableActiveHigh | kLCDIF_DriveDataOnFallingClkEdge;
+    config->panelWidth    = 0;
+    config->panelHeight   = 0;
+    config->hsw           = 0;
+    config->hfp           = 0;
+    config->hbp           = 0;
+    config->vsw           = 0;
+    config->vfp           = 0;
+    config->vbp           = 0;
+    config->polarityFlags = (uint32_t)kLCDIF_VsyncActiveLow | (uint32_t)kLCDIF_HsyncActiveLow |
+                            (uint32_t)kLCDIF_DataEnableActiveHigh | (uint32_t)kLCDIF_DriveDataOnFallingClkEdge;
     config->format = kLCDIF_Output24Bit;
 }
 
@@ -153,7 +153,7 @@ void LCDIF_DpiModeGetDefaultConfig(lcdif_dpi_config_t *config)
  */
 status_t LCDIF_DpiModeSetConfig(LCDIF_Type *base, uint8_t displayIndex, const lcdif_dpi_config_t *config)
 {
-    assert(config);
+    assert(NULL != config);
 
     uint32_t regHsync;
     uint32_t regVsync;
@@ -165,19 +165,22 @@ status_t LCDIF_DpiModeSetConfig(LCDIF_Type *base, uint8_t displayIndex, const lc
     /* Change to DPI mode. */
     base->DBICONFIG0 &= ~LCDIF_DBICONFIG0_BUS_OUTPUT_SEL_MASK;
 
-    base->DPICONFIG0 = config->format;
+    base->DPICONFIG0 = (uint32_t)config->format;
 
-    base->HDISPLAY0 = (config->panelWidth << LCDIF_HDISPLAY0_DISPLAY_END_SHIFT) |
-                      ((config->panelWidth + config->hsw + config->hfp + config->hbp) << LCDIF_HDISPLAY0_TOTAL_SHIFT);
+    base->HDISPLAY0 =
+        ((uint32_t)config->panelWidth << LCDIF_HDISPLAY0_DISPLAY_END_SHIFT) |
+        (((uint32_t)config->panelWidth + config->hsw + config->hfp + config->hbp) << LCDIF_HDISPLAY0_TOTAL_SHIFT);
 
-    base->VDISPLAY0 = (config->panelHeight << LCDIF_VDISPLAY0_DISPLAY_END_SHIFT) |
-                      ((config->panelHeight + config->vsw + config->vfp + config->vbp) << LCDIF_VDISPLAY0_TOTAL_SHIFT);
+    base->VDISPLAY0 =
+        ((uint32_t)config->panelHeight << LCDIF_VDISPLAY0_DISPLAY_END_SHIFT) |
+        (((uint32_t)config->panelHeight + config->vsw + config->vfp + config->vbp) << LCDIF_VDISPLAY0_TOTAL_SHIFT);
 
     /* HSYNC */
-    regHsync = ((config->panelWidth + config->hfp) << LCDIF_HSYNC0_START_SHIFT) |
-               ((config->panelWidth + config->hfp + config->hsw) << LCDIF_HSYNC0_END_SHIFT) | LCDIF_HSYNC0_PULSE_MASK;
+    regHsync = (((uint32_t)config->panelWidth + config->hfp) << LCDIF_HSYNC0_START_SHIFT) |
+               (((uint32_t)config->panelWidth + config->hfp + config->hsw) << LCDIF_HSYNC0_END_SHIFT) |
+               LCDIF_HSYNC0_PULSE_MASK;
 
-    if (kLCDIF_HsyncActiveHigh != (config->polarityFlags & kLCDIF_HsyncActiveHigh))
+    if ((uint32_t)kLCDIF_HsyncActiveHigh != (config->polarityFlags & (uint32_t)kLCDIF_HsyncActiveHigh))
     {
         regHsync |= LCDIF_HSYNC0_POLARITY_MASK;
     }
@@ -185,10 +188,11 @@ status_t LCDIF_DpiModeSetConfig(LCDIF_Type *base, uint8_t displayIndex, const lc
     base->HSYNC0 = regHsync;
 
     /* VSYNC */
-    regVsync = ((config->panelHeight + config->vfp) << LCDIF_VSYNC0_START_SHIFT) |
-               ((config->panelHeight + config->vfp + config->vsw) << LCDIF_VSYNC0_END_SHIFT) | LCDIF_VSYNC0_PULSE_MASK;
+    regVsync = (((uint32_t)config->panelHeight + config->vfp) << LCDIF_VSYNC0_START_SHIFT) |
+               (((uint32_t)config->panelHeight + config->vfp + config->vsw) << LCDIF_VSYNC0_END_SHIFT) |
+               LCDIF_VSYNC0_PULSE_MASK;
 
-    if (kLCDIF_VsyncActiveHigh != (config->polarityFlags & kLCDIF_VsyncActiveHigh))
+    if ((uint32_t)kLCDIF_VsyncActiveHigh != (config->polarityFlags & (uint32_t)kLCDIF_VsyncActiveHigh))
     {
         regVsync |= LCDIF_VSYNC0_POLARITY_MASK;
     }
@@ -198,12 +202,13 @@ status_t LCDIF_DpiModeSetConfig(LCDIF_Type *base, uint8_t displayIndex, const lc
     /* DE, Data, clock. */
     regPanelConfig = LCDIF_PANELCONFIG0_DE_MASK | LCDIF_PANELCONFIG0_CLOCK_MASK;
 
-    if (kLCDIF_DataEnableActiveHigh != (kLCDIF_DataEnableActiveHigh & config->polarityFlags))
+    if ((uint32_t)kLCDIF_DataEnableActiveHigh != ((uint32_t)kLCDIF_DataEnableActiveHigh & config->polarityFlags))
     {
         regPanelConfig |= LCDIF_PANELCONFIG0_DE_POLARITY_MASK;
     }
 
-    if (kLCDIF_DriveDataOnRisingClkEdge == (kLCDIF_DriveDataOnRisingClkEdge & config->polarityFlags))
+    if ((uint32_t)kLCDIF_DriveDataOnRisingClkEdge ==
+        ((uint32_t)kLCDIF_DriveDataOnRisingClkEdge & config->polarityFlags))
     {
         regPanelConfig |= LCDIF_PANELCONFIG0_CLOCK_POLARITY_MASK;
     }
@@ -241,7 +246,7 @@ void LCDIF_FrameBufferGetDefaultConfig(lcdif_fb_config_t *config)
  */
 void LCDIF_SetFrameBufferConfig(LCDIF_Type *base, uint8_t fbIndex, const lcdif_fb_config_t *config)
 {
-    assert(config);
+    assert(NULL != config);
     uint32_t reg;
 
     if (config->enable)
@@ -280,7 +285,7 @@ void LCDIF_SetFrameBufferStride(LCDIF_Type *base, uint8_t fbIndex, uint32_t stri
  */
 void LCDIF_SetDitherConfig(LCDIF_Type *base, uint8_t displayIndex, const lcdif_dither_config_t *config)
 {
-    assert(config);
+    assert(NULL != config);
 
     if (config->enable)
     {
@@ -316,7 +321,7 @@ void LCDIF_SetGammaData(
 
     base->GAMMAINDEX0 = startIndex;
 
-    while (gammaLen--)
+    while (0U != (gammaLen--))
     {
         base->GAMMADATA0 = *(gamma++);
     }
@@ -338,7 +343,7 @@ void LCDIF_SetGammaData(
  */
 void LCDIF_CursorGetDefaultConfig(lcdif_cursor_config_t *config)
 {
-    assert(config);
+    assert(NULL != config);
 
     config->enable         = true;
     config->format         = kLCDIF_CursorMasked;
@@ -354,15 +359,15 @@ void LCDIF_CursorGetDefaultConfig(lcdif_cursor_config_t *config)
  */
 void LCDIF_SetCursorConfig(LCDIF_Type *base, const lcdif_cursor_config_t *config)
 {
-    assert(config);
+    assert(NULL != config);
 
     uint32_t regConfig = 0U;
 
     if (config->enable)
     {
         regConfig |= (uint32_t)(config->format) << LCDIF_CURSORCONFIG_FORMAT_SHIFT;
-        regConfig |= ((config->hotspotOffsetX << LCDIF_CURSORCONFIG_HOT_SPOT_X_SHIFT) |
-                      (config->hotspotOffsetY << LCDIF_CURSORCONFIG_HOT_SPOT_Y_SHIFT));
+        regConfig |= (((uint32_t)config->hotspotOffsetX << LCDIF_CURSORCONFIG_HOT_SPOT_X_SHIFT) |
+                      ((uint32_t)config->hotspotOffsetY << LCDIF_CURSORCONFIG_HOT_SPOT_Y_SHIFT));
     }
 
     base->CURSORCONFIG = regConfig;

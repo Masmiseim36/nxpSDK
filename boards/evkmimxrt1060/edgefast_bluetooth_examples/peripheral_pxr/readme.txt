@@ -7,6 +7,7 @@ Toolchain supported
 ===================
 - MCUXpresso  11.4.0
 - IAR embedded Workbench  9.10.2
+- Keil MDK  5.34
 - GCC ARM Embedded  10.2.1
 
 Hardware requirements
@@ -21,6 +22,15 @@ Hardware requirements
 
 Board settings
 ==============
+Before building the example application select Wi-Fi module macro in the app_config.h. (see #define WIFI_<SoC Name>_BOARD_<Module Name>).
+If you want use the AzureWave WIFI_IW416_BOARD_AW_AM457_USD, please change the macro to WIFI_IW416_BOARD_AW_AM457_USD.
+If you want use the AzureWave WIFI_88W8987_BOARD_AW_CM358_USD, please change the macro to WIFI_88W8987_BOARD_AW_CM358_USD.
+If you want use the K32W061_TRANSCEIVER, please change the macro to K32W061_TRANSCEIVER
+
+Jumper settings for RT1060:
+remove  J1 5-6
+connect J1 1-2
+connect J2 with external power(controlled by SW1)
 
 Jumper settings for AzureWave AW-AM457-uSD Module:
   - J11 2-3: VIO_SD 3.3V (Voltage level of SDIO pins is 3.3V)

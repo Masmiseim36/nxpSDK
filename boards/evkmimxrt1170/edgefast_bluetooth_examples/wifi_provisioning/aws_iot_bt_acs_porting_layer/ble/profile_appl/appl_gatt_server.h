@@ -59,10 +59,9 @@ typedef API_RESULT (*APPL_ATT_EXECUTE_WRITE_HANDLER)(ATT_HANDLE   *handle);
 
 /** Application Defined error */
 #define APPL_ATT_INVALID_OFFSET                0xFFFF
-
-#if 0
+#ifndef ATT_INVALID_ATTR_HANDLE_VAL
 #define ATT_INVALID_ATTR_HANDLE_VAL            0x0000
-#endif
+#endif /* ATT_INVALID_ATTR_HANDLE_VAL */
 
 #define APPL_MAX_MULTIPLE_READ_COUNT           11
 

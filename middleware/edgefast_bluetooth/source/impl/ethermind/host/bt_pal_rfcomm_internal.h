@@ -21,6 +21,13 @@ typedef enum {
 
 /* RFCOMM signalling connection specific context */
 struct bt_rfcomm_session {
+#if 1
+    uint8_t state;
+    bt_rfcomm_role_t role;
+
+    struct bt_rfcomm_dlc *dlcs;
+    struct bt_conn *conn;
+#else
 	/* L2CAP channel this context is associated with */
 	struct bt_l2cap_br_chan br_chan;
 	/* Response Timeout eXpired (RTX) timer */
@@ -36,19 +43,30 @@ struct bt_rfcomm_session {
 	uint8_t state;
 	bt_rfcomm_role_t role;
 	bt_rfcomm_cfc_t cfc;
+#endif
 };
 
-enum {
+ENUM_PACKED_PRE
+enum bt_rfcomm_state
+{
 	BT_RFCOMM_STATE_IDLE,
 	BT_RFCOMM_STATE_INIT,
 	BT_RFCOMM_STATE_SECURITY_PENDING,
 	BT_RFCOMM_STATE_CONNECTING,
 	BT_RFCOMM_STATE_CONNECTED,
-	BT_RFCOMM_STATE_CONFIG,
 	BT_RFCOMM_STATE_USER_DISCONNECT,
 	BT_RFCOMM_STATE_DISCONNECTING,
 	BT_RFCOMM_STATE_DISCONNECTED,
-};
+}ENUM_PACKED_POST;
+typedef enum bt_rfcomm_state bt_rfcomm_state_t;
+
+/* rfcomm control response */
+#define BT_RFCOMM_CONTROL_RESPONSE_SUCCESS        0x00
+#define BT_RFCOMM_CONTROL_RESPONSE_ERROR          0x01
+#define BT_RFCOMM_TEST_RESPONSE_MISMATCH          0x02
+#define BT_RFCOMM_PN_RESPONSE_FRAME_SIZE_MISMATCH 0x03
+#define BT_RFCOMM_PN_RESPONSE_CBFC_MISMATCH       0x04
+
 STRUCT_PACKED_PRE
 struct bt_rfcomm_hdr {
 	uint8_t address;
@@ -65,61 +83,8 @@ struct bt_rfcomm_msg_hdr {
 	uint8_t len;
 } STRUCT_PACKED_POST;
 
-#define BT_RFCOMM_PN    0x20
-STRUCT_PACKED_PRE
-struct bt_rfcomm_pn {
-	uint8_t  dlci;
-	uint8_t  flow_ctrl;
-	uint8_t  priority;
-	uint8_t  ack_timer;
-	uint16_t mtu;
-	uint8_t  max_retrans;
-	uint8_t  credits;
-} STRUCT_PACKED_POST;
-
-#define BT_RFCOMM_MSC    0x38
-STRUCT_PACKED_PRE
-struct bt_rfcomm_msc {
-	uint8_t  dlci;
-	uint8_t  v24_signal;
-} STRUCT_PACKED_POST;
-
 #define BT_RFCOMM_DISC  0x43
 #define BT_RFCOMM_DM    0x0f
-
-#define BT_RFCOMM_RLS   0x14
-STRUCT_PACKED_PRE
-struct bt_rfcomm_rls {
-	uint8_t  dlci;
-	uint8_t  line_status;
-} STRUCT_PACKED_POST;
-
-#define BT_RFCOMM_RPN   0x24
-STRUCT_PACKED_PRE
-struct bt_rfcomm_rpn {
-	uint8_t  dlci;
-	uint8_t  baud_rate;
-	uint8_t  line_settings;
-	uint8_t  flow_control;
-	uint8_t  xon_char;
-	uint8_t  xoff_char;
-	uint16_t param_mask;
-} STRUCT_PACKED_POST;
-
-#define BT_RFCOMM_TEST  0x08
-#define BT_RFCOMM_NSC   0x04
-
-#define BT_RFCOMM_FCON  0x28
-#define BT_RFCOMM_FCOFF 0x18
-
-/* Default RPN Settings */
-#define BT_RFCOMM_RPN_BAUD_RATE_9600    0x03
-#define BT_RFCOMM_RPN_DATA_BITS_8       0x03
-#define BT_RFCOMM_RPN_STOP_BITS_1       0x00
-#define BT_RFCOMM_RPN_PARITY_NONE       0x00
-#define BT_RFCOMM_RPN_FLOW_NONE         0x00
-#define BT_RFCOMM_RPN_XON_CHAR          0x11
-#define BT_RFCOMM_RPN_XOFF_CHAR         0x13
 
 /* Set 1 to all the param mask except reserved */
 #define BT_RFCOMM_RPN_PARAM_MASK_ALL    0x3f7f
@@ -222,5 +187,4 @@ struct bt_rfcomm_rpn {
 
 /* Initialize RFCOMM signal layer */
 void bt_rfcomm_init(void);
-
 #endif /* __RFCOMM_INTERNAL_H__ */

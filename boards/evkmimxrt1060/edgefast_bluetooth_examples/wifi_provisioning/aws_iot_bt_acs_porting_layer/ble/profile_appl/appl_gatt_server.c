@@ -14,8 +14,9 @@
 #include "appl_gatt_server.h"
 #include "appl_smp.h"
 
-#include "appl_service.h"
 #include "BT_status.h"
+
+#include "appl_service.h"
 
 /* Configure logs for the functions in this file. */
 #ifdef IOT_LOG_LEVEL_GLOBAL

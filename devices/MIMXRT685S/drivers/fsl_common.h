@@ -153,6 +153,7 @@ enum _status_groups
     kStatusGroup_HAL_FLASH = 126,             /*!< Group number for HAL FLASH status codes. */
     kStatusGroup_HAL_PWM = 127,               /*!< Group number for HAL PWM status codes. */
     kStatusGroup_HAL_RNG = 128,               /*!< Group number for HAL RNG status codes. */
+    kStatusGroup_HAL_I2S = 129,               /*!< Group number for HAL I2S status codes. */
     kStatusGroup_TIMERMANAGER = 135,          /*!< Group number for TiMER MANAGER status codes. */
     kStatusGroup_SERIALMANAGER = 136,         /*!< Group number for SERIAL MANAGER status codes. */
     kStatusGroup_LED = 137,                   /*!< Group number for LED status codes. */

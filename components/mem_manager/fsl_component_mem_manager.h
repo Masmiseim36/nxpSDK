@@ -95,7 +95,7 @@
 #define MEM_BLOCK_BUFFER_NONAME_DEFINE(blockSize, numberOfBlocks, id)                   \
     MEM_BLOCK_DATA_BUFFER_NONAME_DEFINE(blockSize, numberOfBlocks, id)                  \
     const static mem_config_t g_poolHeadBuffer##blockSize##_##numberOfBlocks##_##id = { \
-        (blockSize), (numberOfBlocks), (id), (0), (uint8_t *)&g_poolBuffer####blockSize##_##numberOfBlocks##_##id[0]}
+        (blockSize), (numberOfBlocks), (id), (0), (uint8_t *)&g_poolBuffer##blockSize##_##numberOfBlocks##_##id[0]}
 #define MEM_BLOCK_NONAME_BUFFER(blockSize, numberOfBlocks, id) \
     (uint8_t *)&g_poolHeadBuffer##blockSize##_##numberOfBlocks##_##id
 #endif /* MEM_MANAGER_PRE_CONFIGURE */

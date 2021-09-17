@@ -4,11 +4,33 @@
 
 @section se_hostlib Secure Element hostlib for KSDK
 
+  - For Detailed change log please download the Plug & Trust MW package from
+    https://www.nxp.com/products/:SE050?tab=Design_Tools_Tab
+    and refer to the Changes Present in the User guide.
+
+  - 3.01.00
+    - Cleanup for heap management macros. Added support to redirect macros to FreeRTOS APIs.
+
+  - 3.00.03
+    - smCom_Init: return type is now *U16* instead of *void*. Return value indicates success/failure to create mutex/semophore.
+
+  - 3.00.02
+    - Fixed: potential null pointer dereference
+
+  - 2.16.00
+    - MIMXRT1050 support replaced with MIMXRT1060
+    - Examples renamed
+
+  - 2.14.00
+    - Extensively revamped ``fsl_sss_ftr.h`` file for finer control of build configuration selection.
+    - smCom Layer is refactored so that Application send down the connection handles/parameters to lower layer.
+    - Define ``T1oI2C_UM1225_SE050`` is no longer applicable, use  ``T1oI2C_UM11225_SE05X`` instead.
+
+  - 2.11.03
+    - hostlib file/folder moved
+
   - 2.11.0
     - Added Support for SE050 and SSS API's
-    - For Detailed change log please download the Plug & Trust MW package from
-      https://www.nxp.com/products/:SE050?tab=Design_Tools_Tab
-      and refer to the Changes Present in the User guide.
 
   - 1.6.0
     - Host Library version goes from 01.40 to 01.41 (A71CH Host API has not been extended)

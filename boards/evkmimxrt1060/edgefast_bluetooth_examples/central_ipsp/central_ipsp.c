@@ -6,7 +6,7 @@
  */
 
 #include <stddef.h>
-#include <errno.h>
+#include <errno/errno.h>
 #include <toolchain.h>
 #include <porting.h>
 #include <bluetooth/gatt.h>
@@ -33,12 +33,50 @@ static uint8_t discover_func(struct bt_conn *conn,
                  struct bt_gatt_discover_params *params);
 static int ipsp_rx_cb(struct net_buf *buf);
 
+#if CONFIG_BT_SMP
+static void security_changed(struct bt_conn *conn, bt_security_t level, enum bt_security_err err)
+{
+    char addr[BT_ADDR_LE_STR_LEN];
 
+    bt_addr_le_to_str(bt_conn_get_dst(conn), addr, sizeof(addr));
+
+    PRINTF("Security changed: %s level %u (error %d)\n", addr, level, err);
+}
+
+static void auth_passkey_display(struct bt_conn *conn, unsigned int passkey)
+{
+    char addr[BT_ADDR_LE_STR_LEN];
+
+    bt_addr_le_to_str(bt_conn_get_dst(conn), addr, sizeof(addr));
+
+    PRINTF("Passkey for %s: %06u\n", addr, passkey);
+}
+
+static void auth_cancel(struct bt_conn *conn)
+{
+    char addr[BT_ADDR_LE_STR_LEN];
+
+    bt_addr_le_to_str(bt_conn_get_dst(conn), addr, sizeof(addr));
+
+    PRINTF("Pairing cancelled: %s\n", addr);
+}
+#endif
 struct bt_conn *default_conn = NULL;
 static struct bt_conn_cb conn_callbacks = {
-	.connected = connected,
-	.disconnected = disconnected,
+    .connected = connected,
+    .disconnected = disconnected,
+#if CONFIG_BT_SMP
+    .security_changed = security_changed,
+#endif
 };
+
+#if CONFIG_BT_SMP
+static struct bt_conn_auth_cb auth_cb_display = {
+    .passkey_display = auth_passkey_display,
+    .passkey_entry = NULL,
+    .cancel = auth_cancel,
+};
+#endif
 static struct bt_gatt_discover_params discover_params;
 static struct bt_uuid_16 uuid = BT_UUID_INIT_16(0);
 
@@ -216,7 +254,7 @@ static uint8_t discover_func(struct bt_conn *conn,
 
     if (!attr)
     {
-        PRINTF("Discover complete\n");
+        PRINTF("Discover complete, No attribute found \n");
         (void)memset(params, 0, sizeof(*params));
         return BT_GATT_ITER_STOP;
     }
@@ -241,10 +279,17 @@ static void bt_ready(int err)
 		return;
 	}
 
-	PRINTF("Bluetooth initialized\n");
+	if (IS_ENABLED(CONFIG_BT_SETTINGS)) 
+    {
+        settings_load();
+    }
+    PRINTF("Bluetooth initialized\n");
 
     /* Register connection callbacks */
 	bt_conn_cb_register(&conn_callbacks);
+#if CONFIG_BT_SMP
+    bt_conn_auth_cb_register(&auth_cb_display);
+#endif
 
 	/* Start scanning */
     err = scan_start();
@@ -268,7 +313,10 @@ void central_ipsp_task(void *pvParameters)
     err = bt_enable(bt_ready);
 	if (err) {
 		PRINTF("Bluetooth init failed (err %d)\n", err);
-		return;
+        while (1)
+        {
+            vTaskDelay(2000);
+        }
 	}
 
     while (1)

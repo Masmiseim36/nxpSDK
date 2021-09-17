@@ -27,11 +27,17 @@
 
 void device_queue_pl_init ( void )
 {
+    DQ_PL_TRC("[DQ PL]: Init\n");
+
+    return;
 }
 
 
 void device_queue_pl_shutdown ( void )
 {
+    DQ_PL_TRC("[DQ PL]: Shutdown\n");
+
+    return;
 }
 
 

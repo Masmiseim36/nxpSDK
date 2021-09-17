@@ -74,7 +74,7 @@ API_RESULT BT_ftp_server_create_xml_dir_listing
         return FTP_INVALID_PARAMETERS;
     }
 
-    BT_str_copy(dir, dir_entry);
+    BT_str_n_copy(dir, dir_entry, sizeof(dir));
 
     FTP_PL_TRC(
     "[FTP_PL] Path = %s\n", dir_entry);
@@ -104,21 +104,6 @@ API_RESULT BT_ftp_server_create_xml_dir_listing
             "[FTP_PL] It is a file\n");
         }
     }
-
-#if 0
-    if(API_SUCCESS != BT_fops_set_path_forward(dir))
-    {
-        FTP_PL_ERR(
-        "[FTP_PL] Failure : could not change directory\n");
-    }
-    else
-    {
-        FTP_PL_INF(
-        "[FTP_PL] Success : could change directory\n");
-
-        BT_str_cat(dir, "*.*");
-    }
-#endif /* 0 */
 
     BT_fops_file_print(xml_fd ,"<%s>\n",parent);
 

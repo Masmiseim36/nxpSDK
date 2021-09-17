@@ -146,7 +146,7 @@ EM_RESULT EM_start_timer
           (
               EM_timer_handle *handle,
               UINT32 timeout,
-              void (* callback) (void *, UINT16),
+              void (* callback) (void *data, UINT16 datalen),
               void *data,
               UINT16 data_length
           )

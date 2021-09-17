@@ -363,6 +363,13 @@ API_RESULT BT_smp_get_local_capability_pl
     *keys = smp_key_distribution_pl;
     *ekey_size = smp_encrytion_key_size_pl;
 
+#ifdef BT_SECURITY_VU_VALIDATION
+    if (BT_SECURITY_VU_BLURTOOTH == BT_security_vu_get())
+    {
+        *ekey_size = (smp_encrytion_key_size_pl - 2U);
+    }
+#endif /* BT_SECURITY_VU_VALIDATION */
+
     return API_SUCCESS;
 }
 
@@ -754,7 +761,7 @@ API_RESULT smp_gen_public_key_pl (void)
 
     /* Copy the Local Public Key from the Temporary Structure */
     BT_mem_copy(smp_ecdh_pub_key_pl, &pub_key.x, SMP_LESC_PUBLIC_KEY_X_SIZE);
-    BT_mem_copy(smp_ecdh_pub_key_pl + SMP_LESC_PUBLIC_KEY_X_SIZE, &pub_key.y, SMP_LESC_PUBLIC_KEY_Y_SIZE);
+    BT_mem_copy(&smp_ecdh_pub_key_pl[SMP_LESC_PUBLIC_KEY_X_SIZE], &pub_key.y, SMP_LESC_PUBLIC_KEY_Y_SIZE);
 
     ssp_shutdown();
 #endif /* SMP_LESC_CONST_OOB_VAL_SUPPORT */
@@ -794,7 +801,7 @@ API_RESULT smp_gen_dh_key_pl (UCHAR * r_pub_key)
 
     /* Populate the temporary Public Key Structure */
     BT_mem_copy(&peer_ecdh_pub_key.x,r_pub_key, SMP_LESC_PUBLIC_KEY_X_SIZE);
-    BT_mem_copy(&peer_ecdh_pub_key.y,r_pub_key + SMP_LESC_PUBLIC_KEY_X_SIZE, SMP_LESC_PUBLIC_KEY_Y_SIZE);
+    BT_mem_copy(&peer_ecdh_pub_key.y,&r_pub_key[SMP_LESC_PUBLIC_KEY_X_SIZE], SMP_LESC_PUBLIC_KEY_Y_SIZE);
 
     BT_LOOP_FOREVER()
     {
@@ -2243,11 +2250,11 @@ void smp_lesc_oob_handle_cmd_complete(UCHAR * data, UINT16 datalen)
                 plain_text = BT_alloc_mem(SMP_TBX_F4_PLAIN_TEXT_LEN);
 
                 /* Populate PlainText here */
-                BT_mem_set(plain_text + plain_text_len,0x00,sizeof(UCHAR));
+                BT_mem_set(&plain_text[plain_text_len],0x00,sizeof(UCHAR));
                 plain_text_len += sizeof(UCHAR);
-                BT_mem_copy(plain_text + plain_text_len,smp_lesc_oob_data.pkey,SMP_OOB_PUBLIC_KEY_X_SIZE);
+                BT_mem_copy(&plain_text[plain_text_len],smp_lesc_oob_data.pkey,SMP_OOB_PUBLIC_KEY_X_SIZE);
                 plain_text_len += SMP_OOB_PUBLIC_KEY_X_SIZE;
-                BT_mem_copy(plain_text + plain_text_len,smp_lesc_oob_data.pkey,SMP_OOB_PUBLIC_KEY_X_SIZE);
+                BT_mem_copy(&plain_text[plain_text_len],smp_lesc_oob_data.pkey,SMP_OOB_PUBLIC_KEY_X_SIZE);
                 plain_text_len += SMP_OOB_PUBLIC_KEY_X_SIZE;
 
                 /* Call the G2 Security function */

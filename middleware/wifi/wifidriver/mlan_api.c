@@ -1403,7 +1403,7 @@ wifi_sub_band_set_t subband_CN_5_GHz[] = {
 };
 
 /* Region: World Wide Safe Mode(WWSM) 5 GHz */
-wifi_sub_band_set_t subband_WWSM_5_GHz[] = {{36, 8, 8}, {100, 11, 8}, {149, 5, 8}};
+wifi_sub_band_set_t subband_WWSM_5_GHz[] = {{36, 8, 8}, {100, 12, 8}, {149, 6, 8}};
 
 #endif /* CONFIG_5GHz_SUPPORT */
 

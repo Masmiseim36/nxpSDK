@@ -46,7 +46,7 @@ extern void app_audio_streamer_task_signal(void);
  * Code
  ******************************************************************************/
 
-#if defined(WIFI_BOARD_AW_CM358)
+#if defined(WIFI_88W8987_BOARD_AW_CM358MA)
 int controller_hci_uart_get_configuration(controller_hci_uart_config_t *config)
 {
     if (NULL == config)
@@ -61,7 +61,7 @@ int controller_hci_uart_get_configuration(controller_hci_uart_config_t *config)
     config->enableTxCTS     = 1u;
     return 0;
 }
-#elif defined(WIFI_BOARD_AW_AM457)
+#elif defined(WIFI_IW416_BOARD_AW_AM457_USD)
 int controller_hci_uart_get_configuration(controller_hci_uart_config_t *config)
 {
     if (NULL == config)
@@ -119,7 +119,7 @@ void USB_HostIsrEnable(void)
 
 int main(void)
 {
-#if defined(WIFI_BOARD_AW_CM358)
+#if defined(WIFI_88W8987_BOARD_AW_CM358MA)
     /* GPIO configuration of wifi_reset on GPIO_AD_16 (pin N17) */
     gpio_pin_config_t wifi_reset_config = {
         .direction = kGPIO_DigitalOutput, .outputLogic = 0U, .interruptMode = kGPIO_NoIntmode};
@@ -127,7 +127,7 @@ int main(void)
 
     BOARD_ConfigMPU();
     BOARD_InitBootPins();
-#if defined(WIFI_BOARD_AW_CM358)
+#if defined(WIFI_88W8987_BOARD_AW_CM358MA)
     BOARD_InitM2UARTPins();
     BOARD_InitM2WifiResetPins();
     /* Initialize GPIO functionality on GPIO_AD_16 (pin N17) */
@@ -137,7 +137,7 @@ int main(void)
 #endif
     BOARD_InitBootClocks();
     BOARD_InitDebugConsole();
-#if defined(WIFI_BOARD_AW_CM358)
+#if defined(WIFI_88W8987_BOARD_AW_CM358MA)
     /* Wirte GPIO pin value on GPIO_AD_16 (pin N17) */
     GPIO_PinWrite(CM7_GPIO3, 15U, 1U);
 #endif
@@ -145,7 +145,7 @@ int main(void)
 
     if (xTaskCreate(spp_task, "spp_task", configMINIMAL_STACK_SIZE * 8, NULL, tskIDLE_PRIORITY + 1, NULL) != pdPASS)
     {
-        PRINTF("pherial hrs task creation failed!\r\n");
+        PRINTF("spp task creation failed!\r\n");
         while (1)
             ;
     }

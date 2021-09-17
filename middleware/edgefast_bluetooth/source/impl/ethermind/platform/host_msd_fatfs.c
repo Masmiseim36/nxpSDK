@@ -20,6 +20,15 @@
 
 #include "fsl_debug_console.h"
 
+#ifndef CONFIG_BT_DEBUG_HOST_MSD_FATFS
+#define CONFIG_BT_DEBUG_HOST_MSD_FATFS 0
+#endif
+
+#define LOG_ENABLE CONFIG_BT_DEBUG_HOST_MSD_FATFS
+#define LOG_MODULE_NAME bt_host_msd_fatfs
+#include "fsl_component_log.h"
+LOG_MODULE_DEFINE(LOG_MODULE_NAME, kLOG_LevelTrace);
+
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -251,19 +260,19 @@ static usb_status_t USB_HostEvent(usb_device_handle deviceHandle,
 
             if (interfaceIndex < configuration->interfaceCount)
             {
-                (void)PRINTF("unsupported hub\r\n");
+                LOG_ERR("unsupported hub\r\n");
             }
             else
             {
-                (void)PRINTF("Unsupported Device\r\n");
+                LOG_ERR("Unsupported Device\r\n");
             }
 #else
-            (void)PRINTF("Unsupported Device\r\n");
+            LOG_ERR("Unsupported Device\r\n");
 #endif
             break;
 
         case kUSB_HostEventEnumerationDone:
-            (void)PRINTF("New USB MSD disk arrived\r\n");
+            LOG_DBG("New USB MSD disk arrived\r\n");
 #if ((defined USB_HOST_CONFIG_COMPLIANCE_TEST) && (USB_HOST_CONFIG_COMPLIANCE_TEST))
             status1 = USB_HostTestEvent(deviceHandle, configurationHandle, eventCode);
             status2 = USB_HostMsdEvent(deviceHandle, configurationHandle, eventCode);
@@ -290,7 +299,7 @@ static usb_status_t USB_HostEvent(usb_device_handle deviceHandle,
             break;
 
         case kUSB_HostEventEnumerationFail:
-            (void)PRINTF("Enumeration failed\r\n");
+            LOG_ERR("Enumeration failed\r\n");
             break;
 
         default:
@@ -317,7 +326,7 @@ static void USB_HostMsdAppControlCallback(void *param, uint8_t *data, uint32_t d
 
 static void USB_HostMsdFatfsTestDone(void)
 {
-    (void)PRINTF("............................test done......................\r\n");
+    LOG_DBG("............................test done......................\r\n");
 }
 
 static void USB_HostMsdFatfsThroughputTest(usb_host_msd_fatfs_instance_t *msdFatfsInstance)
@@ -336,7 +345,7 @@ static void USB_HostMsdFatfsThroughputTest(usb_host_msd_fatfs_instance_t *msdFat
         __NOP();
     }
 
-    (void)PRINTF("............................fatfs test.....................\r\n");
+    LOG_DBG("............................fatfs test.....................\r\n");
     CoreDebug->DEMCR |= (1 << CoreDebug_DEMCR_TRCENA_Pos);
 
     for (testSize = 0; testSize < (THROUGHPUT_BUFFER_SIZE / 4); ++testSize)
@@ -348,13 +357,13 @@ static void USB_HostMsdFatfsThroughputTest(usb_host_msd_fatfs_instance_t *msdFat
     fatfsCode = f_mount(&fatfs, test_file_name, 1);
     if (fatfsCode)
     {
-        (void)PRINTF("fatfs mount error\r\n");
+        LOG_ERR("fatfs mount error\r\n");
         USB_HostMsdFatfsTestDone();
         return;
     }
 
     sprintf(test_file_name, "%c:/thput.dat", USBDISK + '0');
-    (void)PRINTF("throughput test:\r\n");
+    LOG_DBG("throughput test:\r\n");
     for (testIndex = 0; testIndex < (sizeof(testSizeArray) / 4); ++testIndex)
     {
         fatfsCode = f_unlink(test_file_name); /* delete the file if it is existed */
@@ -385,7 +394,7 @@ static void USB_HostMsdFatfsThroughputTest(usb_host_msd_fatfs_instance_t *msdFat
             fatfsCode = f_write(&file, testThroughputBuffer, THROUGHPUT_BUFFER_SIZE, &resultSize);
             if (fatfsCode)
             {
-                (void)PRINTF("write error\r\n");
+                LOG_ERR("write error\r\n");
                 f_close(&file);
                 USB_HostMsdFatfsTestDone();
                 return;
@@ -395,7 +404,7 @@ static void USB_HostMsdFatfsThroughputTest(usb_host_msd_fatfs_instance_t *msdFat
             testSize -= THROUGHPUT_BUFFER_SIZE;
         }
         testSize = testSizeArray[testIndex];
-        (void)PRINTF("    write %dKB data the speed is %d KB/s\r\n", testSize,
+        LOG_DBG("    write %dKB data the speed is %d KB/s\r\n", testSize,
                (uint32_t)((uint64_t)testSize * (uint64_t)MCU_CORE_CLOCK / (uint64_t)totalTime));
 
         fatfsCode = f_lseek(&file, 0);
@@ -418,7 +427,7 @@ static void USB_HostMsdFatfsThroughputTest(usb_host_msd_fatfs_instance_t *msdFat
             fatfsCode = f_read(&file, testThroughputBuffer, THROUGHPUT_BUFFER_SIZE, &resultSize);
             if (fatfsCode)
             {
-                (void)PRINTF("read error\r\n");
+                LOG_ERR("read error\r\n");
                 f_close(&file);
                 USB_HostMsdFatfsTestDone();
                 return;
@@ -428,7 +437,7 @@ static void USB_HostMsdFatfsThroughputTest(usb_host_msd_fatfs_instance_t *msdFat
             testSize -= THROUGHPUT_BUFFER_SIZE;
         }
         testSize = testSizeArray[testIndex];
-        (void)PRINTF("    read %dKB data the speed is %d KB/s\r\n", testSize,
+        LOG_DBG("    read %dKB data the speed is %d KB/s\r\n", testSize,
                (uint32_t)((uint64_t)testSize * (uint64_t)MCU_CORE_CLOCK / (uint64_t)totalTime));
 
         fatfsCode = f_close(&file);
@@ -453,7 +462,7 @@ static void USB_HostMsdFatfsDisplayFileInfo(FILINFO *fileInfo)
     fileName = fileInfo->fname;
 #endif /* _USE_LFN */
     /* note: if this file/directory don't have one attribute, '_' replace the attribute letter ('R' - readonly, 'H' - hide, 'S' - system) */
-    (void)PRINTF("    %s - %c%c%c - %s - %dBytes - %d-%d-%d %d:%d:%d\r\n",( (fileInfo->fattrib & (uint8_t)AM_DIR) != 0U) ? "dir" : "fil",
+    LOG_DBG("    %s - %c%c%c - %s - %dBytes - %d-%d-%d %d:%d:%d\r\n",( (fileInfo->fattrib & (uint8_t)AM_DIR) != 0U) ? "dir" : "fil",
              ((fileInfo->fattrib & (uint8_t)AM_RDO) != 0U) ? 'R' : '_',
              ((fileInfo->fattrib & (uint8_t)AM_HID) != 0U) ? 'H' : '_',
              ((fileInfo->fattrib & (uint8_t)AM_SYS) != 0U) ? 'S' : '_',
@@ -466,6 +475,7 @@ static void USB_HostMsdFatfsDisplayFileInfo(FILINFO *fileInfo)
              (((uint32_t)fileInfo->ftime >> 5U) & (uint32_t)0x0000003Fu) /* minute */,
              ((uint32_t)fileInfo->ftime & (uint32_t)0x0000001Fu) /* second */
              );
+    (void)fileName;
 }
 
 static FRESULT USB_HostMsdFatfsListDirectory(const TCHAR *path)
@@ -498,7 +508,7 @@ static FRESULT USB_HostMsdFatfsListDirectory(const TCHAR *path)
     }
     if (outputLabel == 0U)
     {
-        (void)PRINTF("\r\n");
+        LOG_DBG("\r\n");
     }
 
     return fatfsCode;
@@ -517,7 +527,7 @@ static uint32_t USB_HostMsdFatfsForward(const uint8_t *data, uint32_t dataLength
     {
         do
         {
-            (void)PRINTF("%c", *data);
+            LOG_DBG("%c", *data);
             data++;
             resultCount--;
         } while (resultCount);
@@ -550,21 +560,21 @@ static void USB_HostMsdFatfsMount(usb_host_msd_fatfs_instance_t *msdFatfsInstanc
         __NOP();
     }
 
-    (void)PRINTF("fatfs mount as logiacal driver %d......", USBDISK);
+    LOG_DBG("fatfs mount as logiacal driver %d......", USBDISK);
     (void)sprintf((char *)&driver_number_buffer[0], "%c:", USBDISK + '0');
     fatfsCode = f_mount(&fatfs, (char const *)&driver_number_buffer[0], 0);
     if (fatfsCode != FR_OK)
     {
-        (void)PRINTF("Mount error\r\n");
+        LOG_ERR("Mount error\r\n");
         return;
     }
-    (void)PRINTF("success\r\n");
+    LOG_DBG("success\r\n");
 
 #if (FF_FS_RPATH >= 2)
     fatfsCode = f_chdrive((char const *)&driver_number_buffer[0]);
     if (fatfsCode != FR_OK)
     {
-        (void)PRINTF("Change current drive error\r\n");
+        LOG_ERR("Change current drive error\r\n");
         return;
     }
 #endif
@@ -573,42 +583,42 @@ static void USB_HostMsdFatfsMount(usb_host_msd_fatfs_instance_t *msdFatfsInstanc
 #if FF_USE_MKFS
     MKFS_PARM formatOptions;
     formatOptions.fmt = FM_SFD | FM_ANY;
-    (void)PRINTF("test f_mkfs......");
+    LOG_DBG("test f_mkfs......");
     fatfsCode = f_mkfs((char const *)&driver_number_buffer[0], &formatOptions, testBuffer, FF_MAX_SS);
     if (fatfsCode != FR_OK)
     {
-        (void)PRINTF("Make directory error\r\n");
+        LOG_ERR("Make directory error\r\n");
         return;
     }
-    (void)PRINTF("success\r\n");
+    LOG_DBG("success\r\n");
 #endif /* FF_USE_MKFS */
 #endif
 
-    (void)PRINTF("Get Disk information,\r\n");
+    LOG_DBG("Get Disk information,\r\n");
     fatfsCode = f_getfree((char const *)&driver_number_buffer[0], (DWORD *)&freeClusterNumber, &fs);
     if (fatfsCode != FR_OK)
     {
-        (void)PRINTF("Get free info error\r\n");
+        LOG_ERR("Get free info error\r\n");
         return;
     }
     if (fs->fs_type == (uint8_t)FS_FAT12)
     {
-        (void)PRINTF("    FAT type = FAT12\r\n");
+        LOG_DBG("    FAT type = FAT12\r\n");
     }
     else if (fs->fs_type == (uint8_t)FS_FAT16)
     {
-        (void)PRINTF("    FAT type = FAT16\r\n");
+        LOG_DBG("    FAT type = FAT16\r\n");
     }
     else
     {
-        (void)PRINTF("    FAT type = FAT32\r\n");
+        LOG_DBG("    FAT type = FAT32\r\n");
     }
-    (void)PRINTF("    bytes per cluster = %d; number of clusters=%lu \r\n", fs->csize * 512U, fs->n_fatent - 2U);
-    (void)PRINTF("    The free size: %dKB, the total size:%dKB\r\n", (freeClusterNumber * (fs->csize) / 2U),
+    LOG_DBG("    bytes per cluster = %d; number of clusters=%lu \r\n", fs->csize * 512U, fs->n_fatent - 2U);
+    LOG_DBG("    The free size: %dKB, the total size:%dKB\r\n", (freeClusterNumber * (fs->csize) / 2U),
            ((fs->n_fatent - 2U) * (fs->csize) / 2U));
 
-    (void)PRINTF("directory operation:\r\n");
-    (void)PRINTF("list root directory:\r\n");
+    LOG_DBG("directory operation:\r\n");
+    LOG_DBG("list root directory:\r\n");
     fatfsCode = USB_HostMsdFatfsListDirectory((char const *)&driver_number_buffer[0]);
     if (fatfsCode != FR_OK)
     {
@@ -637,7 +647,7 @@ void USB_HostMsdTask(void *arg)
                 g_UsbFatfsClassHandle = msdFatfsInstance->classHandle;
                 if (status != kStatus_USB_Success)
                 {
-                    (void)PRINTF("usb host msd init fail\r\n");
+                    LOG_DBG("usb host msd init fail\r\n");
                     return;
                 }
                 msdFatfsInstance->runState = kUSB_HostMsdRunSetInterface;
@@ -650,7 +660,7 @@ void USB_HostMsdTask(void *arg)
                                   msdFatfsInstance->classHandle); /* msd class de-initialization */
                 msdFatfsInstance->classHandle = NULL;
 
-                (void)PRINTF("The USB MSD disk is detached\r\n");
+                LOG_DBG("The USB MSD disk is detached\r\n");
                 break;
 
             default:
@@ -673,7 +683,7 @@ void USB_HostMsdTask(void *arg)
                                              USB_HostMsdAppControlCallback, msdFatfsInstance);
             if (status != kStatus_USB_Success)
             {
-                (void)PRINTF("set interface fail\r\n");
+                LOG_ERR("set interface fail\r\n");
             }
             break;
 
@@ -766,12 +776,12 @@ usb_status_t USB_HostMsdEvent(usb_device_handle deviceHandle,
                         (void)USB_HostHelperGetPeripheralInformation(deviceHandle, (uint32_t)kUSB_HostGetDevicePID, &pid);
                         (void)USB_HostHelperGetPeripheralInformation(deviceHandle, (uint32_t)kUSB_HostGetDeviceVID, &vid);
                         (void)USB_HostHelperGetPeripheralInformation(deviceHandle, (uint32_t)kUSB_HostGetDeviceAddress, &address);
-                        (void)PRINTF("The USB MSD disk is attached (pid=0x%x ,vid=0x%x) with assigned address=%d", pid, vid,
+                        LOG_DBG("The USB MSD disk is attached (pid=0x%x ,vid=0x%x) with assigned address=%d", pid, vid,
                                address);
                     }
                     else
                     {
-                        (void)PRINTF("No slot for new arrived disk\r\n");
+                        LOG_ERR("No slot for new arrived disk\r\n");
                         status = kStatus_USB_Error;
                     }
                 }
@@ -824,7 +834,7 @@ usb_status_t USB_HostTestEvent(usb_device_handle deviceHandle,
                 (void)USB_HostHelperGetPeripheralInformation(deviceHandle, kUSB_HostGetDeviceVID, &id);
                 if (id == 0x1a0a) /* certification Vendor ID */
                 {
-                    (void)PRINTF("cetification test device VID match\r\n");
+                    LOG_DBG("cetification test device VID match\r\n");
                     s_DeviceHandle    = deviceHandle;
                     s_InterfaceHandle = interface;
                     s_ConfigHandle    = configurationHandle;
@@ -835,7 +845,7 @@ usb_status_t USB_HostTestEvent(usb_device_handle deviceHandle,
             break;
 
         case kUSB_HostEventNotSupported:
-            (void)PRINTF("Unsupported Device\r\n");
+            LOG_ERR("Unsupported Device\r\n");
             break;
 
         case kUSB_HostEventEnumerationDone:
@@ -848,7 +858,7 @@ usb_status_t USB_HostTestEvent(usb_device_handle deviceHandle,
         case kUSB_HostEventDetach:
             if (s_ConfigHandle == configurationHandle)
             {
-                (void)PRINTF("PET test device detach\r\n");
+                LOG_DBG("PET test device detach\r\n");
                 USB_HostCloseDeviceInterface(s_DeviceHandle, s_InterfaceHandle);
                 /* the device is detached */
                 s_DeviceHandle    = NULL;
@@ -930,23 +940,23 @@ int USB_HostMsdFatfsInit(void)
     status = USB_HostInit((uint8_t)CONTROLLER_ID, &g_HostMsdFatfsHandle, USB_HostEvent);
     if (status != kStatus_USB_Success)
     {
-        (void)PRINTF("host init error\r\n");
+        LOG_ERR("host init error\r\n");
         return -1;
     }
     USB_HostIsrEnable();
 
-    (void)PRINTF("USB Host stack successfully initialized\r\n");
+    LOG_DBG("USB Host stack successfully initialized\r\n");
 
     if (xTaskCreate(USB_HostTask, "usb host task", ((int)2000UL / (int)sizeof(portSTACK_TYPE)), g_HostMsdFatfsHandle,
                     configMAX_PRIORITIES - 2, NULL) != pdPASS)
     {
-        (void)PRINTF("create host task error\r\n");
+        LOG_ERR("create host task error\r\n");
         return -2;
     }
     if (xTaskCreate(USB_HostApplicationTask, "app task", ((int)2300UL / (int)sizeof(portSTACK_TYPE)), &g_MsdFatfsInstance, 1,
                     NULL) != pdPASS)
     {
-        (void)PRINTF("create mouse task error\r\n");
+        LOG_ERR("create mouse task error\r\n");
         return -3;
     }
 

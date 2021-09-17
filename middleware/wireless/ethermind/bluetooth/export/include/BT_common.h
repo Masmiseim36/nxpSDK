@@ -186,7 +186,7 @@
     }
 
 #define BT_PACK_LE_1_BYTE_VAL(dst, src) \
-    *((UCHAR *)(dst) + 0U) = (src);
+    (dst)[0U] = (src);
 
 #define BT_PACK_LE_2_BYTE(dst, src) \
     { \
@@ -196,8 +196,8 @@
     }
 
 #define BT_PACK_LE_2_BYTE_VAL(dst, src) \
-    *((UCHAR *)(dst) + 0U) = (UCHAR)(src); \
-    *((UCHAR *)(dst) + 1U) = (UCHAR)((src) >> 8U);
+    (dst)[0U] = (UCHAR)(src); \
+    (dst)[1U] = (UCHAR)((src) >> 8U);
 
 #define BT_PACK_LE_3_BYTE(dst, src) \
     { \
@@ -207,9 +207,9 @@
     }
 
 #define BT_PACK_LE_3_BYTE_VAL(dst, src) \
-    *((UCHAR *)(dst) + 0U) = (UCHAR)(src);\
-    *((UCHAR *)(dst) + 1U) = (UCHAR)((src) >> 8U);\
-    *((UCHAR *)(dst) + 2U) = (UCHAR)((src) >> 16U);
+    (dst)[0U] = (UCHAR)(src);\
+    (dst)[1U] = (UCHAR)((src) >> 8U);\
+    (dst)[2U] = (UCHAR)((src) >> 16U);
 
 #define BT_PACK_LE_4_BYTE(dst, src) \
     { \
@@ -219,10 +219,10 @@
     }
 
 #define BT_PACK_LE_4_BYTE_VAL(dst, src) \
-    *((UCHAR *)(dst) + 0U) = (UCHAR)(src);\
-    *((UCHAR *)(dst) + 1U) = (UCHAR)((src) >> 8U);\
-    *((UCHAR *)(dst) + 2U) = (UCHAR)((src) >> 16U);\
-    *((UCHAR *)(dst) + 3U) = (UCHAR)((src) >> 24U);
+    (dst)[0U] = (UCHAR)(src);\
+    (dst)[1U] = (UCHAR)((src) >> 8U);\
+    (dst)[2U] = (UCHAR)((src) >> 16U);\
+    (dst)[3U] = (UCHAR)((src) >> 24U);
 
 /* TBD: Update based on 64 Bit, 128 Bit Data Types */
 #define BT_PACK_LE_8_BYTE(dst,val)\
@@ -243,7 +243,7 @@
     }
 
 #define BT_PACK_BE_1_BYTE_VAL(dst, src) \
-    *((UCHAR *)(dst) + 0U) = (src);
+    (dst)[0U] = (src);
 
 #define BT_PACK_BE_2_BYTE(dst, src) \
     { \
@@ -253,8 +253,8 @@
     }
 
 #define BT_PACK_BE_2_BYTE_VAL(dst, src) \
-    *((UCHAR *)(dst) + 1U) = (UCHAR)(src); \
-    *((UCHAR *)(dst) + 0U) = (UCHAR)((src) >> 8U);
+    (dst)[1U] = (UCHAR)(src); \
+    (dst)[0U] = (UCHAR)((src) >> 8U);
 
 #define BT_PACK_BE_3_BYTE(dst, src) \
     { \
@@ -264,9 +264,9 @@
     }
 
 #define BT_PACK_BE_3_BYTE_VAL(dst, src) \
-    *((UCHAR *)(dst) + 2U) = (UCHAR)(src);\
-    *((UCHAR *)(dst) + 1U) = (UCHAR)((src) >> 8U);\
-    *((UCHAR *)(dst) + 0U) = (UCHAR)((src) >> 16U);
+    (dst)[2U] = (UCHAR)(src);\
+    (dst)[1U] = (UCHAR)((src) >> 8U);\
+    (dst)[0U] = (UCHAR)((src) >> 16U);
 
 #define BT_PACK_BE_4_BYTE(dst, src) \
     { \
@@ -276,10 +276,10 @@
     }
 
 #define BT_PACK_BE_4_BYTE_VAL(dst, src) \
-    *((UCHAR *)(dst) + 3U) = (UCHAR)(src);\
-    *((UCHAR *)(dst) + 2U) = (UCHAR)((src) >> 8U);\
-    *((UCHAR *)(dst) + 1U) = (UCHAR)((src) >> 16U);\
-    *((UCHAR *)(dst) + 0U) = (UCHAR)((src) >> 24U);
+    (dst)[3U] = (UCHAR)(src);\
+    (dst)[2U] = (UCHAR)((src) >> 8U);\
+    (dst)[1U] = (UCHAR)((src) >> 16U);\
+    (dst)[0U] = (UCHAR)((src) >> 24U);
 
 /* TBD: Update based on 64 Bit, 128 Bit Data Types */
 #define BT_PACK_BE_8_BYTE(dst,val)\
@@ -310,25 +310,25 @@
     *((UCHAR *)(dst)) = (UCHAR)(*((UCHAR *)(src)));
 
 #define BT_UNPACK_LE_2_BYTE(dst,src)\
-        *((UINT16 *)(dst))  = *((src) + 1U); \
+        *((UINT16 *)(dst))  = (src)[1U]; \
         *((UINT16 *)(dst))  = *((UINT16 *)(dst)) << 8U; \
-        *((UINT16 *)(dst)) |= *((src) + 0U);
+        *((UINT16 *)(dst)) |= (src)[0U];
 
 #define BT_UNPACK_LE_3_BYTE(dst,src)\
-        *((UINT32 *)(dst))  = *((src) + 2U);\
+        *((UINT32 *)(dst))  = (src)[2U];\
         *((UINT32 *)(dst))  = (*((UINT32 *)(dst))) << 8U;\
-        *((UINT32 *)(dst)) |= *((src) + 1U);\
+        *((UINT32 *)(dst)) |= (src)[1U];\
         *((UINT32 *)(dst))  = (*((UINT32 *)(dst))) << 8U;\
-        *((UINT32 *)(dst)) |= *((src) + 0U);
+        *((UINT32 *)(dst)) |= (src)[0U];
 
 #define BT_UNPACK_LE_4_BYTE(dst,src)\
-        *((UINT32 *)(dst))  = *((src) + 3U);\
+        *((UINT32 *)(dst))  = (src)[3U];\
         *((UINT32 *)(dst))  = (*((UINT32 *)(dst))) << 8U;\
-        *((UINT32 *)(dst)) |= *((src) + 2U);\
+        *((UINT32 *)(dst)) |= (src)[2U];\
         *((UINT32 *)(dst))  = (*((UINT32 *)(dst))) << 8U;\
-        *((UINT32 *)(dst)) |= *((src) + 1U);\
+        *((UINT32 *)(dst)) |= (src)[1U];\
         *((UINT32 *)(dst))  = (*((UINT32 *)(dst))) << 8U;\
-        *((UINT32 *)(dst)) |= *((src) + 0U);
+        *((UINT32 *)(dst)) |= (src)[0U];
 
 /* TBD: Update based on 64 Bit, 128 Bit Data Types */
 #define BT_UNPACK_LE_8_BYTE(dst,src)\
@@ -345,25 +345,25 @@
     *((UCHAR *)(dst)) = (UCHAR)(*((UCHAR *)(src)));
 
 #define BT_UNPACK_BE_2_BYTE(dst,src)\
-        *((UINT16 *)(dst))  = *((src) + 0U); \
+        *((UINT16 *)(dst))  = (src)[0U]; \
         *((UINT16 *)(dst))  = *((UINT16 *)(dst)) << 8U; \
-        *((UINT16 *)(dst)) |= *((src) + 1U);
+        *((UINT16 *)(dst)) |= (src)[1U];
 
 #define BT_UNPACK_BE_3_BYTE(dst,src)\
-        *((UINT32 *)(dst))  = *((src) + 0U);\
+        *((UINT32 *)(dst))  = (src)[0U];\
         *((UINT32 *)(dst))  = (*((UINT32 *)(dst))) << 8U;\
-        *((UINT32 *)(dst)) |= *((src) + 1U);\
+        *((UINT32 *)(dst)) |= (src)[1U];\
         *((UINT32 *)(dst))  = (*((UINT32 *)(dst))) << 8U;\
-        *((UINT32 *)(dst)) |= *((src) + 2U);
+        *((UINT32 *)(dst)) |= (src)[2U];
 
 #define BT_UNPACK_BE_4_BYTE(dst,src)\
-        *((UINT32 *)(dst))  = *((src) + 0U);\
+        *((UINT32 *)(dst))  = (src)[0U];\
         *((UINT32 *)(dst))  = (*((UINT32 *)(dst))) << 8U;\
-        *((UINT32 *)(dst)) |= *((src) + 1U);\
+        *((UINT32 *)(dst)) |= (src)[1U];\
         *((UINT32 *)(dst))  = (*((UINT32 *)(dst))) << 8U;\
-        *((UINT32 *)(dst)) |= *((src) + 2U);\
+        *((UINT32 *)(dst)) |= (src)[2U];\
         *((UINT32 *)(dst))  = (*((UINT32 *)(dst))) << 8U;\
-        *((UINT32 *)(dst)) |= *((src) + 3U);
+        *((UINT32 *)(dst)) |= (src)[3U];
 
 /* TBD: Update based on 64 Bit, 128 Bit Data Types */
 #define BT_UNPACK_BE_8_BYTE(dst,src)\
@@ -411,7 +411,7 @@
         (((type_a) == (type_b))?BT_TRUE:BT_FALSE)
 
 #define BT_COMPARE_ADDR(addr_a,addr_b)\
-        ((0U == BT_mem_cmp((addr_a), (addr_b), BT_BD_ADDR_SIZE))?BT_TRUE:BT_FALSE)
+        ((0 == BT_mem_cmp((addr_a), (addr_b), BT_BD_ADDR_SIZE))?BT_TRUE:BT_FALSE)
 
 #define BT_INIT_BD_ADDR(bd_addr) \
         BT_mem_set ((bd_addr)->addr, 0U, BT_BD_ADDR_SIZE); \
@@ -424,7 +424,7 @@
         BT_mem_copy ((dest), (src), BT_BD_ADDR_SIZE);
 
 #define BT_BD_ADDR_IS_NON_ZERO(addr)\
-        ((0x00U == (*((addr) + 0U) | *((addr) + 1U) | *((addr) + 2U) | *((addr) + 3U) | *((addr) + 4U) | *((addr) + 5U)))?\
+        ((0x00U == ((addr)[0U] | (addr)[1U] | (addr)[2U] | (addr)[3U] | (addr)[4U] | (addr)[5U]))?\
         BT_FALSE:BT_TRUE)
 
 /* Macros to check Bluetooth Device Address type */
@@ -447,7 +447,7 @@
      (BT_RESOLV_PVT_ADDR_BIT_MASK == (BT_RANDOM_ADDR_TYPE_MASK & (bd_addr)->addr[5U])))
 
 #define BT_IS_ARRAY_EMPTY(buffer, buffer_size) \
-        (((0U == (buffer)[0U]) && (0U == BT_mem_cmp((buffer), (buffer)+1, ((buffer_size) - 1U)))) ? BT_TRUE : BT_FALSE)
+        (((0U == (buffer)[0U]) && (0 == BT_mem_cmp((buffer), &(buffer)[1U], ((buffer_size) - 1U)))) ? BT_TRUE : BT_FALSE)
 
 #ifndef BT_DISABLE_MUTEX
 
@@ -1028,7 +1028,7 @@ void BT_ethermind_init
  */
 API_RESULT BT_bluetooth_on
            (
-               /* IN */ API_RESULT (* hci_event_ind_cb) (UCHAR, UCHAR *, UCHAR),
+               /* IN */ API_RESULT (* hci_event_ind_cb) (UCHAR event_type, UCHAR *event_data, UCHAR event_datalen),
                /* IN */ API_RESULT (* bt_on_complete_cb) (void),
                /* IN */ CHAR * local_name
            );

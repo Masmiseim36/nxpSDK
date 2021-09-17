@@ -188,12 +188,21 @@ typedef struct
 
 #endif /* SM_HAVE_MODE_2 */
 
-
+/** Peer device information */
 typedef struct
 {
     UCHAR bd_addr[BT_BD_ADDR_SIZE];
 } SM_PEER_INFO;
 
+#ifdef BTSIG_ERRATA_11838
+/** Current security state information */
+typedef struct _SM_DEVICE_STATE
+{
+    /* Encryption key Size */
+    UCHAR ekey_size;
+
+} SM_DEVICE_STATE;
+#endif /* BTSIG_ERRATA_11838 */
 
 #ifdef __cplusplus
 extern "C"{
@@ -626,6 +635,33 @@ API_RESULT BT_sm_get_device_pin_code
  */
 #define BT_sm_delete_device_link_key(bd) \
         sm_device_link_key(SM_OPERATION_RESET, (bd), NULL)
+
+#ifdef BTSIG_ERRATA_11838
+/**
+ *  \brief To get the encryption key size with a specific device
+ *
+ *  \par Description:
+ *  This API enables application to get the encryption key size for
+ *  a remote device, stored in the Device Database.
+ *
+ *  \param [in] bd_addr
+ *         The Bluetooth Device Address of the remote device
+ *         for which encryption key size to be get
+ *  \param [out] state
+ *         Pointer to a caller allocated memory of \ref SM_DEVICE_STATE
+ *         onto which the encryption key size will be copied
+ *
+ *  \return API_RESULT:
+ *          - API_SUCCESS: If successful.
+ *          - Error Codes: An error code describing the cause of failure.
+ */
+API_RESULT BT_sm_get_device_security_state
+           (
+               /* IN */  UCHAR *    bd_addr,
+               /* OUT */ SM_DEVICE_STATE * state
+           );
+#endif /* BTSIG_ERRATA_11838 */
+
 #else  /* SM_LITE */
 /** To Get Link Key (if any) for a remote Bluetooth device */
 /**

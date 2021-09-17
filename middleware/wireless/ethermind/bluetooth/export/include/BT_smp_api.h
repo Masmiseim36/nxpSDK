@@ -682,8 +682,8 @@
  * for the local device, with the following values as parameters in the
  * \ref SMP_UI_NOTIFY_CB callback.
  *
- * \param [in] bd_handle  Pointer to invalid device handle
- * \ref SMP_BD_INVALID_HANDLE
+ * \param [in] bd_handle  Invalid device handle \ref SMP_BD_INVALID_HANDLE
+ * To be ignored.
  * \param [in] event  \ref SMP_RESOLVABLE_PVT_ADDR_CREATE_CNF
  * \param [in] bd_addr  Private address created
  * \param [in] result  \ref API_SUCCESS on successful procedure completion, else
@@ -700,7 +700,8 @@
  * for the Identity Resolving Key set, with the following values as parameters
  * in the \ref SMP_UI_NOTIFY_CB callback.
  *
- * \param [in] bd_handle  Pointer to invalid device handle \ref SMP_BD_INVALID_HANDLE
+ * \param [in] bd_handle  Invalid device handle \ref SMP_BD_INVALID_HANDLE
+ * To be ignored.
  * \param [in] event  \ref SMP_RESOLVABLE_PVT_ADDR_VERIFY_CNF
  * \param [in] result  \ref API_SUCCESS on successful procedure completion, else
  * an Error Code
@@ -716,8 +717,9 @@
  * was input to be signed, with the following values as parameters in the
  * \ref SMP_UI_NOTIFY_CB callback.
  *
+ * \param [in] bd_handle  Invalid device handle \ref SMP_BD_INVALID_HANDLE
+ * To be ignored.
  * \param [in] event  \ref SMP_DATA_SIGNING_COMPLETE
- * \param [in] bd_addr  Peer device address information
  * \param [in] result  \ref API_SUCCESS on successful procedure completion, else
  * an Error Code
  * \param [in] event_data  Signature byte stream. The last 8 octects represent
@@ -733,8 +735,9 @@
  * from peer device, with the following values as parameters in the
  * \ref SMP_UI_NOTIFY_CB callback.
  *
- * \param [in] event  \ref SMP_SIGN_DATA_VERIFICATION_COMPLETE
- * \param [in] bd_addr  Peer device address information
+ * \param [in] bd_handle  Invalid device handle \ref SMP_BD_INVALID_HANDLE
+ * To be ignored.
+ * \param [in] event  \ref SMP_DATA_SIGNING_COMPLETE
  * \param [in] result  \ref API_SUCCESS on successful procedure completion, else
  * an Error Code
  * \param [in] event_data  Signature byte stream. The last 8 octects represent
@@ -785,8 +788,23 @@
 #endif /* SMP_LESC */
 
 /**
- * \endcond
+ * This event indicates and unexpected PDU received from peer device in a given
+ * state attempting for an incorrect behaviour, with the following values as
+ * parameters in the \ref SMP_UI_NOTIFY_CB callback.
+ *
+ * \param [in] bd_handle  Pointer to peer device handle \ref SMP_BD_HANDLE
+ * \param [in] event  \ref SMP_INVALID_FSM_TRANSITION
+ * \param [in] result  \ref API_FAILURE
+ * \param [in] event_data  NULL
+ * \param [in] event_datalen  0
+ *
+ * \return \ref API_SUCCESS (always)
+ *
+ * \note This event is an informative event for the Upper Layer, which might be
+ *       due to a malicious behaviour from peer. Application may choose to
+ *       disconnect the link on receiving this event.
  */
+#define SMP_INVALID_FSM_TRANSITION                    0x0EU
 
 /**
  * This event indicates an invalid event received through
@@ -936,15 +954,6 @@ typedef struct _SMP_AUTH_INFO
      */
     UCHAR xtx_info;
 #endif /* SMP_LESC_CROSS_TXP_KEY_GEN */
-    /**
-     * The data length of the data
-     */
-    UCHAR    data_len;
-    /**
-     * The data for event,
-     *       Pairing request data for SMP_AUTHENTICATION_REQUEST event
-     */
-    UCHAR *  data;
 } SMP_AUTH_INFO;
 
 
@@ -1021,10 +1030,10 @@ typedef struct _SMP_RPA_RESOLV_INFO
 /**
  * SMP User Interface Notification Callback.
  * Security Manager Protocol calls the registered callback
- * to indicate events occured.
+ * to indicate events occurred.
  *
  * \param [in] bd_handle      Pointer to peer device handle as in \ref SMP_BD_HANDLE
- * \param [in] event_type     Any of the Event occured from the list at \ref smp_events.
+ * \param [in] event_type     Any of the Event occurred from the list at \ref smp_events.
  * \param [in] event_result   \ref API_SUCCESS or an error code in \ref smp_error_code or any
  *                           other internal error code from the stack.
  * \param [in] event_data     Data associated with the event if any or NULL.
@@ -1263,7 +1272,7 @@ API_RESULT BT_smp_encrypt
 #define BT_smp_passkey_entry_request_reply(bd_handle, pass_key, status) \
         BT_smp_param_request_reply                                      \
         ((bd_handle), SMP_PASSKEY_ENTRY_REQUEST_REPLY,                  \
-        (SMP_TRUE == (status))? (pass_key): NULL,                       \
+        (SMP_TRUE == (status))? (pass_key): (void *)NULL,               \
         (SMP_TRUE == (status))? sizeof(UINT32): 0U)
 
 /**
@@ -1293,7 +1302,7 @@ API_RESULT BT_smp_encrypt
 #define BT_smp_long_term_key_request_reply(bd_handle, ltk, status)      \
         BT_smp_param_request_reply                                      \
         ((bd_handle), SMP_LONG_TERM_KEY_REQUEST_REPLY,                  \
-        (SMP_TRUE == (status))? (ltk): NULL,                            \
+        (SMP_TRUE == (status))? (ltk): (void *)NULL,                    \
         (SMP_TRUE == (status))? SMP_LTK_SIZE: 0U)
 
 /**

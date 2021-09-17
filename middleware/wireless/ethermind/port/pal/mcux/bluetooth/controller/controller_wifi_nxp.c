@@ -7,19 +7,19 @@
 
 #include "fsl_common.h"
 
-#if defined(WIFI_BOARD_AW_AM457) || defined(WIFI_BOARD_AW_CM358)
+#if (defined(WIFI_IW416_BOARD_AW_AM457_USD) || defined(WIFI_88W8987_BOARD_AW_CM358_USD) || defined(WIFI_88W8987_BOARD_AW_CM358MA))
 
 #ifndef CONTROLLER_INIT_ESCAPE
-#if defined(WIFI_BOARD_AW_AM457)
+#if defined(SD8978)
 #include "sduartIW416_wlan_bt.h"
-#elif defined(WIFI_BOARD_AW_CM358)
+#elif defined(SD8987)
 #include "sduart8987_wlan_bt.h"
 #else
 #error The Wi-Fi module is unsupported
 #endif
 #endif /* CONTROLLER_INIT_ESCAPE */
-#include "wifi.h"
-#include "wlan.h"
+#include "sdio.h"
+#include "firmware_dnld.h"
 
 #include "fsl_os_abstraction.h"
 
@@ -51,8 +51,12 @@ void controller_wifi_nxp_init(void)
 {
 #ifndef CONTROLLER_INIT_ESCAPE
     int result;
-    /* Initialize WIFI Driver */
-    result = wifi_init(wlan_fw_bin, wlan_fw_bin_len);
+    /* Download firmware */
+    result = sdio_init();
+    assert(WM_SUCCESS == result);
+    result = sdio_ioport_init();
+    assert(WM_SUCCESS == result);
+    result = firmware_download(WLAN_FW_IN_RAM, wlan_fw_bin, wlan_fw_bin_len);
     assert(WM_SUCCESS == result);
     (void)result;
 #endif
@@ -127,4 +131,4 @@ static void controller_hci_uart_init(void)
     (void)error;
 }
 
-#endif /* defined(WIFI_BOARD_AW_AM457) || defined(WIFI_BOARD_AW_CM358) */
+#endif /* (defined(WIFI_IW416_BOARD_AW_AM457_USD) || defined(WIFI_88W8987_BOARD_AW_CM358_USD) || defined(WIFI_88W8987_BOARD_AW_CM358MA)) */

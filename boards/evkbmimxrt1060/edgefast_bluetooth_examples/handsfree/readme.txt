@@ -9,6 +9,7 @@ Toolchain supported
 ===================
 - MCUXpresso  11.4.0
 - IAR embedded Workbench  9.10.2
+- Keil MDK  5.34
 - GCC ARM Embedded  10.2.1
 
 Hardware requirements
@@ -16,15 +17,23 @@ Hardware requirements
 - Micro USB cable
 - evkbmimxrt1060 board
 - Personal Computer
-- One of the following WiFi modules:
+- One of the following modules:
   - AzureWave AW-AM457-uSD
   - AzureWave AW-CM358-uSD
 
 Board settings
 ==============
+Before building the example application select Wi-Fi module macro in the app_config.h. (see #define WIFI_<SoC Name>_BOARD_<Module Name>).
+If you want use the AzureWave WIFI_IW416_BOARD_AW_AM457_USD, please change the macro to WIFI_IW416_BOARD_AW_AM457_USD.
+If you want use the AzureWave WIFI_88W8987_BOARD_AW_CM358_USD, please change the macro to WIFI_88W8987_BOARD_AW_CM358_USD.
+
+Jumper settings for RT1060:
+remove  J40 5-6
+connect J40 1-2
+connect J45 with external power(controlled by SW6)
 
 Jumper settings for AzureWave AW-AM457-uSD Module:
-  - J42 2-3: VIO_SD 3.3V (Voltage level of SDIO pins is 3.3V)
+  - J11 2-3: VIO_SD 3.3V (Voltage level of SDIO pins is 3.3V)
   - J2  1-2: 3.3V VIO_uSD (Power Supply from uSD connector)
   - J4  2-3: 3.3V VIO
 
@@ -46,9 +55,9 @@ PIN NAME | AW-AM457-USD |   I.MXRT1060   | PIN NAME OF RT1060 | GPIO NAME OF RT1
 ------------------------------------------------------------------------------------
 PCM_IN   |  J9(pin 1)   |   J16(pin 5)   |    SAI2_TXD        | GPIO_AD_B0_09
 PCM_OUT  |  J9(pin 2)   |   TP11         |    SAI2_RXD        | GPIO_AD_B0_08   
-PCM_SYNC |  J9(pin 3)   |   J21(pin 9)   |    SAI2_RX_SYNC    | GPIO_AD_B0_07
-PCM_CLK  |  J9(pin 4)   |   J21(pin 7)   |    SAI2_RX_BCLK    | GPIO_AD_B0_06
-GND      |  J9(pin 6)   |   J21(pin 20)  |    GND             | GND
+PCM_SYNC |  J9(pin 3)   |   J2(pin 9)    |    SAI2_RX_SYNC    | GPIO_AD_B0_07
+PCM_CLK  |  J9(pin 4)   |   J10(pin 2)   |    SAI2_RX_BCLK    | GPIO_AD_B0_06
+GND      |  J9(pin 6)   |   J2(pin 20)   |    GND             | GND
 ------------------------------------------------------------------------------------
 
 Jumper settings for AzureWave AW-CM358-uSD Module:
@@ -71,11 +80,11 @@ The pin connect for PCM interface as the following table,
 ------------------------------------------------------------------------------------
 PIN NAME | AW-CM358-USD |   I.MXRT1060   | PIN NAME OF RT1060 | GPIO NAME OF RT1060
 ------------------------------------------------------------------------------------
-PCM_IN   |  J42(pin 1)  |   J16(pin 5)   |    SAI2_TXD        | GPIO_AD_B0_09
-PCM_OUT  |  J42(pin 2)  |   TP11         |    SAI2_RXD        | GPIO_AD_B0_08   
-PCM_SYNC |  J42(pin 3)  |   J21(pin 9)   |    SAI2_RX_SYNC    | GPIO_AD_B0_07
-PCM_CLK  |  J42(pin 4)  |   J21(pin 7)   |    SAI2_RX_BCLK    | GPIO_AD_B0_06
-GND      |  J42(pin 6)  |   J21(pin 20)  |    GND             | GND
+PCM_IN   |  J11(pin 1)  |   J16(pin 5)   |    SAI2_TXD        | GPIO_AD_B0_09
+PCM_OUT  |  J11(pin 2)  |   TP11         |    SAI2_RXD        | GPIO_AD_B0_08   
+PCM_SYNC |  J11(pin 3)  |   J2(pin 9)    |    SAI2_RX_SYNC    | GPIO_AD_B0_07
+PCM_CLK  |  J11(pin 4)  |   J10(pin 2)   |    SAI2_RX_BCLK    | GPIO_AD_B0_06
+GND      |  J11(pin 6)  |   J2(pin 20)   |    GND             | GND
 ------------------------------------------------------------------------------------
 
 Note:
@@ -104,15 +113,62 @@ Running the demo
 USB Host stack successfully initialized
 Bluetooth initialized
 BR/EDR set connectable and discoverable done
-Please use "Y" to accept the call,  use "N" to reject or end the call
 Now Start SDP Service and the Service is now discoverable by remote device
-- Can be connected by HFP AG device like a mobile phone or another device running HFP AG. 
-- Can be a Outcoming a call or incoming a call in peer HFP AG device.
-- In incoming call, use "Y" to accept the call or use "N" to reject the call
-- In an active call, use "N" to end the call
-- Just support adjust the volume on HFP AG side
+>>
+the bellow commands have been supported:
+"bt": BT related function
+ USAGE: bt [dial|aincall|eincall]
+    dial          dial out call.
+    aincall       accept the incoming call.
+    eincall       end an incoming call.
+    svr           start voice recognition.
+    evr           stop voice recognition.
+    clip          enable CLIP notification.
+    disclip       disable CLIP notification.
+    ccwa          enable call waiting notification.
+    disccwa       disable call waiting notification.
+    micVolume     Update mic Volume.
+    speakerVolume Update Speaker Volume.
+    lastdial      call the last dial number.
+    voicetag      Get Voice-tag Phone Number (BINP).
+    multipcall    multiple call option
+    
+1) "dial" is used to dial out a call with phone number after device is connected, usage :
+   bt dial 114
+2) "aincall" is used to accept the incoming call when a call is coming, usage :
+   bt aincallis 
+3) "eincall" is used to reject the incoming call when a call is coming or end an active call
+   bt eincall 
+4) "svr" is used to start voice recognition, you can check the voice recognition information in peer device side.
+   HFP voice recognition :1
+5) "evr" is used to stop voice recognition, you can check the voice recognition information in peer device side.
+   HFP voice recognition :0
+6) "clip" is used to enable CLIP notification, you can see the incoming call phone number is showing in screen when enable the feature 
+   Incoming Call...
+   Phone call number: 133xxxxxxxx
+7) "disclip" is used to disable CLIP notification, you can't see the incoming call phone number is showing in screen when enable the feature
+8) "ccwa" is used to enable enable call waiting notification, you can in waiting call phone number is showing in screen when enable the feature and have multiple call
+	>> > CALL WAITING Received Number : 133xxxxxxxx
+	> Please use <multipcall> to handle multipe call operation
+	 bt multipcall 0. Release all Held Calls and set UUDB tone (Reject new incoming waiting call)
+	 bt multipcall 1. Release Active Calls and accept held/waiting call
+	 bt multipcall 2. Hold Active Call and accept already held/new waiting call
+	 bt multipcall 3. Conference all calls
+	 bt multipcall 4. Connect other calls and disconnect self from TW
+9) "disccwa" is used to disable call waiting notification, you can in waiting call phone number is not showing in screen when enable the feature and have multiple call
+10) "micVolume" is used to set mic volume, the value  is from 1 to 15, usage as:
+    bt micVolume 8
+11) "speakerVolume" is used to set speaker volume, the value is from 1 to 15, usage as:
+    bt speakerVolume 8
+12) "lastdial" is used to call the last dial number.
+    bt lastdial
+13) "voicetag" is used to get Voice-tag Phone Number (BINP), need peer side to set Voice-tag Phone Number (BINP)
+    bt lastdial
+14) "multipcall"  is used call option, need peer side to set Voice-tag Phone Number (BINP), you can refer to ccwa information to do operation, usage:
+    bt multipcall 1
 
 Note:
 There is a short noise can be heard at headset at the begin audio streaming when in running HFP Unit and HFP ring tone   
 and at the end of each ring tone segment. The codec power on pop noise cannot eliminate.
+
 

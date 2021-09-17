@@ -19,12 +19,20 @@
 /*! @brief Work queue task stack size.
  */
 #ifndef CONFIG_WORK_QUEUE_TASK_STACK_SIZE
-    #define CONFIG_WORK_QUEUE_TASK_STACK_SIZE 1024
+#if (defined(CONFIG_BT_SMP) && (CONFIG_BT_SMP > 0))
+    #define CONFIG_WORK_QUEUE_TASK_STACK_SIZE 4096
+#else
+    #define CONFIG_WORK_QUEUE_TASK_STACK_SIZE 2048
+#endif /* CONFIG_BT_SMP */
 #endif
+
+#ifdef configTICK_RATE_HZ
+#define CONFIG_OS_TICK_INTERVAL configTICK_RATE_HZ
+#endif /* configTICK_RATE_HZ */
 
 #ifndef CONFIG_OS_TICK_INTERVAL
 #define CONFIG_OS_TICK_INTERVAL 1
-#endif
+#endif /* CONFIG_OS_TICK_INTERVAL */
 
 #ifndef CONFIG_WORK_QUEUE_MSG_QUEUE_COUNT
 #define CONFIG_WORK_QUEUE_MSG_QUEUE_COUNT 16
@@ -38,9 +46,9 @@ struct bt_work_queue {
 };
 
 typedef enum bt_work_state {
-    BT_WORK_STATE_NONE = 0,             /* NO Work state */
-    BT_WORK_STATE_PENDING = 1,          /* Work item pending state */
-    BT_WORK_STATE_DELAY_PENDING = 2,    /* Work item delay pending state */
+    BT_WORK_STATE_NONE = 0,                    /* NO Work state */
+    BT_WORK_STATE_PENDING = (1 << 0),          /* Work item pending state */
+    BT_WORK_STATE_DELAY_PENDING = (1 << 1),    /* Work item delay pending state */
 } bt_work_state_t ;
 
 struct bt_work;
@@ -51,7 +59,7 @@ struct bt_work
 {
     void *next;
     bt_work_handler_t handler;
-    bt_work_state_t state;
+    uint32_t state;
 };
 
 struct bt_delayed_work
@@ -73,28 +81,36 @@ struct bt_delayed_work_queue
     uint32_t                tick;
 };
 
-#define k_delayed_work bt_delayed_work
-#define k_work bt_work
-
 #define BT_WORK_INITIALIZER(work_handler) \
 { \
     .handler = work_handler, \
-    .state = { BT_WORK_STATE_NONE } \
+    .state = BT_WORK_STATE_NONE \
 }
 
 #define BT_WORK_DEFINE(work, work_handler) \
     struct bt_work work = \
-        Z_WORK_INITIALIZER(work_handler)
+        BT_WORK_INITIALIZER(work_handler)
 
 int bt_work_queue_init(void);
 
 int bt_work_init(struct bt_work *work, bt_work_handler_t handler);
+void bt_work_submit(struct bt_work *work);
 
 void bt_delayed_work_init(struct bt_delayed_work *work, bt_work_handler_t handler);
 int bt_delayed_work_remaining_get(struct bt_delayed_work *work);
 int bt_delayed_work_submit(struct bt_delayed_work *work, int32_t delay);
 int bt_delayed_work_cancel(struct bt_delayed_work *work);
 
-void bt_work_submit(struct bt_work *work);
+#define k_work_queue_init bt_work_queue_init
+
+#define k_work bt_work
+#define k_work_init bt_work_init
+#define k_work_submit bt_work_submit
+
+#define k_delayed_work bt_delayed_work
+#define k_delayed_work_init bt_delayed_work_init
+#define k_delayed_work_remaining_get bt_delayed_work_remaining_get
+#define k_delayed_work_submit bt_delayed_work_submit
+#define k_delayed_work_cancel bt_delayed_work_cancel
 
 #endif /* _WORK_QUEUE_H_ */

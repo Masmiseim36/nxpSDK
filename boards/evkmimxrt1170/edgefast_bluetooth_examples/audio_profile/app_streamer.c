@@ -16,8 +16,8 @@
 #define STREAMER_TASK_NAME         "Streamer"
 #define STREAMER_MESSAGE_TASK_NAME "StreamerMessage"
 
-#define STREAMER_TASK_STACK_SIZE         4 * 1024
-#define STREAMER_MESSAGE_TASK_STACK_SIZE 1024
+#define STREAMER_TASK_STACK_SIZE         8 * 1024
+#define STREAMER_MESSAGE_TASK_STACK_SIZE 2 * 1024
 
 OsaThread msg_thread;
 
@@ -141,7 +141,7 @@ status_t STREAMER_file_Create(streamer_handle_t *handle, char *filename)
     /* Create message process thread */
     osa_thread_attr_init(&thread_attr);
     osa_thread_attr_set_name(&thread_attr, STREAMER_MESSAGE_TASK_NAME);
-    osa_thread_attr_set_stack_size(&thread_attr, STREAMER_MESSAGE_TASK_STACK_SIZE);
+    osa_thread_attr_set_stack_size(&thread_attr, STREAMER_MESSAGE_TASK_STACK_SIZE / sizeof(portSTACK_TYPE));
     ret = osa_thread_create(&msg_thread, &thread_attr, STREAMER_MessageTask, (void *)handle);
     osa_thread_attr_destroy(&thread_attr);
     if (ERRCODE_NO_ERROR != ret)
@@ -156,7 +156,7 @@ status_t STREAMER_file_Create(streamer_handle_t *handle, char *filename)
 #else
     memset(params.out_mq_name, 0, sizeof(params.out_mq_name));
 #endif
-    params.stack_size    = STREAMER_TASK_STACK_SIZE;
+    params.stack_size    = STREAMER_TASK_STACK_SIZE / sizeof(portSTACK_TYPE);
     params.pipeline_type = STREAM_PIPELINE_FILESYSTEM;
     params.task_name     = STREAMER_TASK_NAME;
     params.in_dev_name   = "";

@@ -32,7 +32,7 @@
 
 /* ---------------------------------- Function Declarations */
 /** HCI UART enable interface */
-void hci_uart_enable(void);
+/* void hci_uart_enable(void); */
 
 /** HCI UART Initialization & Shutdown */
 void hci_uart_init (void);
@@ -40,8 +40,8 @@ void hci_uart_bt_init (void);
 void hci_uart_bt_shutdown (void);
 
 /* HCI UART Send Data */
-API_RESULT hci_uart_send_data (UCHAR, UCHAR *, UINT16, UCHAR);
-void hci_uart_write_data(UCHAR *, UINT16);
+API_RESULT hci_uart_send_data (UCHAR type, UCHAR *buf, UINT16 length, UCHAR flag);
+void hci_uart_write_data(UCHAR *data, UINT16 datalen);
 
 void hci_uart_set_serial_settings (CHAR *device, UINT32 baud);
 

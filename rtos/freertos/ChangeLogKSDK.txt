@@ -4,6 +4,9 @@
 @section FreeRTOS FreeRTOS for MCUXpresso SDK.
 The current version is Amazon-FreeRTOS 202012.00 Original package is available at <a href="https://github.com/aws/amazon-freertos">github.com/aws/amazon-freertos</a>.
 
+  - 202012.00_rev1
+      - apply FreeRTOS kernel v8-M update
+
   - 202012.00_rev0
       - update amazon freertos version.
       - update libraries/logging from github.com/aws/amazon-freertos (commit fc1d0e3c72ca791624477474bc7b5e5c15f9429d)

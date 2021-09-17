@@ -158,6 +158,8 @@ include(component_mflash_common_MIMXRT595S_cm33)
 
 include(middleware_wifi_wifidriver_MIMXRT595S_cm33)
 
+include(middleware_wifi_fwdnld_MIMXRT595S_cm33)
+
 include(middleware_sdmmc_osa_freertos_MIMXRT595S_cm33)
 
 include(component_osa_free_rtos_MIMXRT595S_cm33)

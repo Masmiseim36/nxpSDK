@@ -163,8 +163,6 @@ initSDRAM()
     __writeMemory32(0x00000000, 0x400E80A4, "AP1_Memory");
     __writeMemory32(0x00000000, 0x400E80A8, "AP1_Memory");
     __writeMemory32(0x00000010, 0x400E80AC, "AP1_Memory"); // EMC_39, DQS PIN, enable SION
-    __writeMemory32(0x00000000, 0x400E80B0, "AP1_Memory");
-    __writeMemory32(0x00000000, 0x400E80B4, "AP1_Memory");
     __writeMemory32(0x00000000, 0x400E80B8, "AP1_Memory");
     __writeMemory32(0x00000000, 0x400E80BC, "AP1_Memory");
     __writeMemory32(0x00000000, 0x400E80C0, "AP1_Memory");
@@ -183,9 +181,6 @@ initSDRAM()
     __writeMemory32(0x00000000, 0x400E80F4, "AP1_Memory");
     __writeMemory32(0x00000000, 0x400E80F8, "AP1_Memory");
     __writeMemory32(0x00000000, 0x400E80FC, "AP1_Memory");
-    __writeMemory32(0x00000000, 0x400E8100, "AP1_Memory");
-    __writeMemory32(0x00000000, 0x400E8104, "AP1_Memory");
-    __writeMemory32(0x00000000, 0x400E8108, "AP1_Memory");
 
     // PAD ctrl
     // PDRV = 1b (normal); PULL = 10b (PD)
@@ -229,8 +224,6 @@ initSDRAM()
     __writeMemory32(0x00000008, 0x400E82E8, "AP1_Memory");
     __writeMemory32(0x00000008, 0x400E82EC, "AP1_Memory");
     __writeMemory32(0x00000008, 0x400E82F0, "AP1_Memory");
-    __writeMemory32(0x00000008, 0x400E82F4, "AP1_Memory");
-    __writeMemory32(0x00000008, 0x400E82F8, "AP1_Memory");
     __writeMemory32(0x00000008, 0x400E82FC, "AP1_Memory");
     __writeMemory32(0x00000008, 0x400E8300, "AP1_Memory");
     __writeMemory32(0x00000008, 0x400E8304, "AP1_Memory");
@@ -248,10 +241,7 @@ initSDRAM()
     __writeMemory32(0x00000008, 0x400E8334, "AP1_Memory");
     __writeMemory32(0x00000008, 0x400E8338, "AP1_Memory");
     __writeMemory32(0x00000008, 0x400E833C, "AP1_Memory");
-    __writeMemory32(0x00000008, 0x400E8400, "AP1_Memory");
-    __writeMemory32(0x00000008, 0x400E8404, "AP1_Memory");
-    __writeMemory32(0x00000008, 0x400E8408, "AP1_Memory");
-    __writeMemory32(0x00000008, 0x400E840C, "AP1_Memory");
+    __writeMemory32(0x00000008, 0x400E8340, "AP1_Memory");
 
     // Config SDR Controller Registers/
     __writeMemory32(0x10000004, 0x400d4000, "AP1_Memory"); // MCR

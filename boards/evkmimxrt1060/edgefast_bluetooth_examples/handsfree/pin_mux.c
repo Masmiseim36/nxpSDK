@@ -38,7 +38,7 @@ void BOARD_InitBootPins(void) {
     BOARD_InitUSDHCPins();
     BOARD_InitArduinoUARTPins();
     BOARD_Init_Audio_Pins();
- //   BOARD_InitScoPins();
+    //BOARD_InitScoPins();
 }
 
 /*

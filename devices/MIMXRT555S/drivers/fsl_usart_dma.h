@@ -150,6 +150,20 @@ void USART_TransferAbortReceiveDMA(USART_Type *base, usart_dma_handle_t *handle)
  */
 status_t USART_TransferGetReceiveCountDMA(USART_Type *base, usart_dma_handle_t *handle, uint32_t *count);
 
+/*!
+ * @brief Get the number of bytes that have been sent.
+ *
+ * This function gets the number of bytes that have been sent.
+ *
+ * @param base USART peripheral base address.
+ * @param handle USART handle pointer.
+ * @param count Sent bytes count.
+ * @retval kStatus_NoTransferInProgress No receive in progress.
+ * @retval kStatus_InvalidArgument Parameter is invalid.
+ * @retval kStatus_Success Get successfully through the parameter \p count;
+ */
+status_t USART_TransferGetSendCountDMA(USART_Type *base, usart_dma_handle_t *handle, uint32_t *count);
+
 /* @} */
 
 #if defined(__cplusplus)

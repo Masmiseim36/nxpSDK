@@ -499,13 +499,14 @@ typedef struct
     /** Callback for l2ca_qos_violation_ind (Device Queue Handle) */
     API_RESULT (* l2ca_qos_violation_ind_cb)(DEVICE_HANDLE * handle);
 
-#ifdef BT_ENH_L2CAP
+/** #ifdef BT_ENH_L2CAP */
+#ifdef L2CAP_TX_QUEUE_FLOW_ON_CALLBACK
     /** Callback for l2ca_tx_flow_ind (CID, Flow On/Off) */
     API_RESULT (* l2ca_tx_flow_ind_cb)(UINT16 lcid, UCHAR flow_ctrl);
 
     /** Callback for l2ca_get_fec_params (CID, FEC) */
     API_RESULT (* l2ca_get_fec_params_cb) (UINT16 lcid, L2CAP_FEC_OPTION *fec_option);
-#endif /* BT_ENH_L2CAP */
+#endif /* L2CAP_TX_QUEUE_FLOW_ON_CALLBACK */
 
 #ifdef BT_ENH_L2CAP
     /* Bitmap to indicate support for L2CAP extended features */
@@ -552,6 +553,26 @@ typedef struct
 #endif /* !L2CAP_HAVE_PING_INFO_SUPPORT && !L2CAP_TX_COMPLETE_CALLBACK */
 
 } L2CAP_COMMON_CB;
+
+#ifdef BT_UCD
+/**
+ *  The structure representing L2CAP UCD. It stores the callback
+ *  functions. The upper layer uses this structure to register itself
+ *  with L2CAP for UCD.
+ */
+typedef struct
+{
+    /**
+     * Callback to inform UL/application of Unicast Connectionless data reception.
+     *
+     * l2ca_data_write_cb provides following parameters to the application:
+     *     1. data: Data Buffer Pointer containing receiving UCD payload
+     *     2. datalen: Received UCD payload length
+     */
+    API_RESULT (* l2ca_ucd_data_cb)(UCHAR *data, UINT16 datalen);
+
+} L2CAP_UCD_STRUCT;
+#endif /* BT_UCD */
 
 #ifdef L2CAP_SUPPORT_CBFC_MODE
 /**
@@ -975,7 +996,7 @@ API_RESULT l2cap_register_common_cb ( /* IN */ L2CAP_COMMON_CB *cb_struct );
  */
 API_RESULT l2cap_register_tx_queue_flow_cb
            (
-               /* IN */ API_RESULT (* callback_fn) (UCHAR, UINT16)
+               /* IN */ API_RESULT (* callback_fn) (UCHAR tx_q_state, UINT16 num_buf_available)
            );
 
 /**
@@ -1365,15 +1386,15 @@ API_RESULT l2cap_sm_access_response
 /** L2CA Config Request - CID, Config Options */
 API_RESULT l2ca_config_req
            (
-               /* IN */ UINT16,
-               /* IN */ L2CAP_CONFIG_OPTION *
+               /* IN */  UINT16                  local_cid,
+               /* IN */  L2CAP_CONFIG_OPTION    *config_option
            );
 
 /** L2CA Config Response - CID, Config Options */
 API_RESULT l2ca_config_rsp
            (
-               /* IN */ UINT16,
-               /* IN */ L2CAP_CONFIG_OPTION *
+               /* IN */  UINT16                 local_cid,
+               /* IN */  L2CAP_CONFIG_OPTION    *config_option
            );
 
 /** L2CA Disconnect Request - CID */
@@ -1644,7 +1665,7 @@ API_RESULT l2ca_group_create
  *          API_SUCCESS on success, or, an Error Code (see BT_error.h)
  *          describing the cause of failure.
  */
-API_RESULT l2ca_group_add_member 
+API_RESULT l2ca_group_add_member
            (
                 /* IN */ UINT16           cid,
                 /* IN */ DEVICE_HANDLE  * handle
@@ -1862,6 +1883,28 @@ void l2cap_init_ext_flow_spec_default
 void l2cap_init_fec_option_default (/* OUT */ L2CAP_FEC_OPTION *fec);
 #endif /* BT_ENH_L2CAP */
 
+#ifdef BT_UCD
+/**
+ *  \brief To register UCD payload reception callback with L2CAP.
+ *
+ *  \par Description:
+ *  This API registers a callback for Unicast Connectionless Data payload
+ *  reception with L2CAP.
+ *
+ *  \param [in] ucd
+ *         This parameter is pointer to UCD data data structure
+ *         containing pointer to function implemented by higher-level
+ *         protocol/application to handle received UCD payload.
+ *
+ *  \return API_RESULT
+ *          - API_SUCCESS: If successful.
+ *          - Error Codes: Error code describing cause of failure.
+ */
+API_RESULT l2cap_register_ucd_callback
+           (
+               /* IN */ L2CAP_UCD_STRUCT   * ucd
+           );
+#endif /* BT_UCD */
 
 /** L2CA Fixed Channel APIs */
 #ifdef BT_LE
@@ -2311,20 +2354,12 @@ void l2cap_test_packet_fcs_error
 
 #endif /* L2CAP_TEST_PACKET_DROP */
 
-void l2cap_test_drop_config (UCHAR flag);
-void l2cap_test_check_up (void);
+/* void l2cap_test_drop_config (UCHAR flag); */
+/* void l2cap_test_check_up (void); */
 
 #ifdef L2CAP_TEST_UPF
 API_RESULT l2cap_upf_i_frame_rx (UCHAR tx_seq);
 #endif /* L2CAP_TEST_UPF */
-
-#ifdef BT_UCD
-void l2ca_ucd_data_read_cb
-     (
-         UCHAR *data,
-         UINT16 datalen
-     );
-#endif /* BT_UCD */
 
 
 /* ---------------------------------------------- Feature Definitions */

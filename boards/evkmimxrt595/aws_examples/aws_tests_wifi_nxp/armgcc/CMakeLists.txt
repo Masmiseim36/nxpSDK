@@ -225,6 +225,8 @@ include(middleware_freertos-aws_iot_libraries_abstractions_wifi_MIMXRT595S_cm33)
 
 include(middleware_wifi_wifidriver_MIMXRT595S_cm33)
 
+include(middleware_wifi_fwdnld_MIMXRT595S_cm33)
+
 include(middleware_freertos-aws_iot_libraries_freertos_plus_standard_tls_MIMXRT595S_cm33)
 
 include(middleware_freertos-aws_iot_libraries_3rdparty_mbedtls_utils_MIMXRT595S_cm33)

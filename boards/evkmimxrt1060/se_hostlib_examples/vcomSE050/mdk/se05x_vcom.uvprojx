@@ -1856,6 +1856,11 @@
               <FilePath>../../../../../middleware/se_hostlib/sss/plugin/mbedtls/sss_mbedtls.h</FilePath>
             </File>
             <File>
+              <FileName>sss_mbedtls_evkbmimxrt1060_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/se_hostlib/sss/plugin/mbedtls/sss_mbedtls_evkbmimxrt1060_config.h</FilePath>
+            </File>
+            <File>
               <FileName>sss_mbedtls_evkmimxrt1060_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/se_hostlib/sss/plugin/mbedtls/sss_mbedtls_evkmimxrt1060_config.h</FilePath>
@@ -4975,6 +4980,11 @@
               <FileName>sss_mbedtls.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/se_hostlib/sss/plugin/mbedtls/sss_mbedtls.h</FilePath>
+            </File>
+            <File>
+              <FileName>sss_mbedtls_evkbmimxrt1060_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/se_hostlib/sss/plugin/mbedtls/sss_mbedtls_evkbmimxrt1060_config.h</FilePath>
             </File>
             <File>
               <FileName>sss_mbedtls_evkmimxrt1060_config.h</FileName>

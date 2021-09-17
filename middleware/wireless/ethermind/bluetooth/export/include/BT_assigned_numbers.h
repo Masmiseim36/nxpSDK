@@ -596,18 +596,39 @@
  *                  10         Bluetooth Core Specification 5.1
  *                  11 - 255   Reserved
  */
-#define BT_HCI_VERSION_1_0_B                       0
-#define BT_HCI_VERSION_1_1                         1
-#define BT_HCI_VERSION_1_2                         2
-#define BT_HCI_VERSION_2_0_EDR                     3
-#define BT_HCI_VERSION_2_1_EDR                     4
-#define BT_HCI_VERSION_3_0_HS                      5
-#define BT_HCI_VERSION_4_0                         6
-#define BT_HCI_VERSION_4_1                         7
-#define BT_HCI_VERSION_4_2                         8
-#define BT_HCI_VERSION_5_0                         9
-#define BT_HCI_VERSION_5_1                         10
-
+#ifndef BT_HCI_VERSION_1_0_B
+#define BT_HCI_VERSION_1_0_B                        0U
+#endif /*BT_HCI_VERSION_1_0_B*/
+#ifndef BT_HCI_VERSION_1_1
+#define BT_HCI_VERSION_1_1                          1U
+#endif /*BT_HCI_VERSION_1_1*/
+#ifndef BT_HCI_VERSION_1_2
+#define BT_HCI_VERSION_1_2                          2U
+#endif /*BT_HCI_VERSION_1_2*/
+#ifndef BT_HCI_VERSION_2_0_EDR
+#define BT_HCI_VERSION_2_0_EDR                      3U
+#endif /*BT_HCI_VERSION_2_0_EDR*/
+#ifndef BT_HCI_VERSION_2_1_EDR
+#define BT_HCI_VERSION_2_1_EDR                      4U
+#endif /*BT_HCI_VERSION_2_1_EDR*/
+#ifndef BT_HCI_VERSION_3_0_HS
+#define BT_HCI_VERSION_3_0_HS                       5U
+#endif /*BT_HCI_VERSION_3_0_HS*/
+#ifndef BT_HCI_VERSION_4_0
+#define BT_HCI_VERSION_4_0                          6U
+#endif /*BT_HCI_VERSION_4_0*/
+#ifndef BT_HCI_VERSION_4_1
+#define BT_HCI_VERSION_4_1                          7U
+#endif /*BT_HCI_VERSION_4_1*/
+#ifndef BT_HCI_VERSION_4_2
+#define BT_HCI_VERSION_4_2                          8U
+#endif /*BT_HCI_VERSION_4_2*/
+#ifndef BT_HCI_VERSION_5_0
+#define BT_HCI_VERSION_5_0                          9U
+#endif /*BT_HCI_VERSION_5_0*/
+#ifndef BT_HCI_VERSION_5_1
+#define BT_HCI_VERSION_5_1                          10U
+#endif /*BT_HCI_VERSION_5_1*/
 
 /* ========================  Protocol Adaptation Layer (PAL) Definitions */
 /*

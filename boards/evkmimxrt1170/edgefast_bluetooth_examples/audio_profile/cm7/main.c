@@ -33,7 +33,6 @@
 #include "app_music_control.h"
 #include "app_common.h"
 
-#include "nvm_adapter.h"
 #include "usb_host_msd.h"
 #include "usb_phy.h"
 #include "fsl_adapter_uart.h"
@@ -50,7 +49,7 @@
 #endif
 
 #define LOGGING_TASK_PRIORITY   (tskIDLE_PRIORITY + 1)
-#define LOGGING_TASK_STACK_SIZE (1024)
+#define LOGGING_TASK_STACK_SIZE (2 * 1024)
 #define LOGGING_QUEUE_LENGTH    (16)
 
 /*******************************************************************************
@@ -72,7 +71,7 @@ extern usb_host_handle g_HostHandle;
  * Code
  ******************************************************************************/
 
-#if defined(WIFI_BOARD_AW_CM358)
+#if defined(WIFI_88W8987_BOARD_AW_CM358MA)
 int controller_hci_uart_get_configuration(controller_hci_uart_config_t *config)
 {
     if (NULL == config)
@@ -87,7 +86,7 @@ int controller_hci_uart_get_configuration(controller_hci_uart_config_t *config)
     config->enableTxCTS     = 1u;
     return 0;
 }
-#elif defined(WIFI_BOARD_AW_AM457)
+#elif defined(WIFI_IW416_BOARD_AW_AM457_USD)
 int controller_hci_uart_get_configuration(controller_hci_uart_config_t *config)
 {
     if (NULL == config)
@@ -187,7 +186,7 @@ int main(void)
 void main(void)
 #endif
 {
-#if defined(WIFI_BOARD_AW_CM358)
+#if defined(WIFI_88W8987_BOARD_AW_CM358MA)
     /* GPIO configuration of wifi_reset on GPIO_AD_16 (pin N17) */
     gpio_pin_config_t wifi_reset_config = {
         .direction = kGPIO_DigitalOutput, .outputLogic = 0U, .interruptMode = kGPIO_NoIntmode};
@@ -195,7 +194,7 @@ void main(void)
 
     BOARD_ConfigMPU();
     BOARD_InitBootPins();
-#if defined(WIFI_BOARD_AW_CM358)
+#if defined(WIFI_88W8987_BOARD_AW_CM358MA)
     BOARD_InitM2UARTPins();
     BOARD_InitM2WifiResetPins();
     /* Initialize GPIO functionality on GPIO_AD_16 (pin N17) */
@@ -205,7 +204,7 @@ void main(void)
 #endif
     BOARD_InitBootClocks();
     BOARD_InitDebugConsole();
-#if defined(WIFI_BOARD_AW_CM358)
+#if defined(WIFI_88W8987_BOARD_AW_CM358MA)
     /* Wirte GPIO pin value on GPIO_AD_16 (pin N17) */
     GPIO_PinWrite(CM7_GPIO3, 15U, 1U);
 #endif
@@ -214,16 +213,16 @@ void main(void)
     USB_HostApplicationInit();
 
     app_bt_init_task();
-    if (xTaskCreate(main_task, "main_task", 2500L / sizeof(portSTACK_TYPE), NULL, tskIDLE_PRIORITY + 1, NULL) != pdPASS)
+    if (xTaskCreate(main_task, "main_task", 2000L / sizeof(portSTACK_TYPE), NULL, tskIDLE_PRIORITY + 1, NULL) != pdPASS)
     {
         PRINTF("Main task creation failed!.\r\n");
         while (1)
             ;
     }
 
-    xLoggingTaskInitialize(LOGGING_TASK_STACK_SIZE, LOGGING_TASK_PRIORITY, LOGGING_QUEUE_LENGTH);
+    xLoggingTaskInitialize(LOGGING_TASK_STACK_SIZE / sizeof(portSTACK_TYPE), LOGGING_TASK_PRIORITY, LOGGING_QUEUE_LENGTH);
 
-    if (xTaskCreate(USB_HostTask, "usb host task", 2400L / sizeof(portSTACK_TYPE), g_HostHandle, tskIDLE_PRIORITY + 5, NULL) != pdPASS)
+    if (xTaskCreate(USB_HostTask, "usb host task", 2000L / sizeof(portSTACK_TYPE), g_HostHandle, tskIDLE_PRIORITY + 5, NULL) != pdPASS)
     {
         usb_echo("create host task error\r\n");
         while (1)

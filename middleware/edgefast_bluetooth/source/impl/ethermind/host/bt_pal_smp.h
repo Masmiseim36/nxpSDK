@@ -18,6 +18,7 @@ struct bt_smp_hdr {
 	uint8_t  code;
 } STRUCT_PACKED_POST;
 
+#define BT_SMP_ERR_NONE 0x00
 #define BT_SMP_ERR_PASSKEY_ENTRY_FAILED		0x01
 #define BT_SMP_ERR_OOB_NOT_AVAIL		0x02
 #define BT_SMP_ERR_AUTH_REQUIREMENTS		0x03
@@ -32,6 +33,8 @@ struct bt_smp_hdr {
 #define BT_SMP_ERR_NUMERIC_COMP_FAILED		0x0c
 #define BT_SMP_ERR_BREDR_PAIRING_IN_PROGRESS	0x0d
 #define BT_SMP_ERR_CROSS_TRANSP_NOT_ALLOWED	0x0e
+
+#define BT_SMP_ERR_REMOTE_SIDE_PIN_KEY_MISSING 0xa1
 
 #define BT_SMP_IO_DISPLAY_ONLY			0x00
 #define BT_SMP_IO_DISPLAY_YESNO			0x01
@@ -140,6 +143,12 @@ struct bt_smp_dhkey_check {
 	uint8_t e[16];
 } STRUCT_PACKED_POST;
 
+#define BT_SMP_KEYPRESS_NOTIFICATION		0x0e
+STRUCT_PACKED_PRE
+struct bt_smp_keypress_notif {
+	uint8_t type;
+} STRUCT_PACKED_POST;
+
 int bt_smp_start_security(struct bt_conn *conn);
 bool bt_smp_request_ltk(struct bt_conn *conn, uint64_t rand, uint16_t ediv,
 			uint8_t *ltk);
@@ -151,6 +160,8 @@ int bt_smp_br_send_pairing_req(struct bt_conn *conn);
 int bt_smp_init(void);
 
 void bt_smp_update_io_cap(const struct bt_conn_auth_cb *auth);
+
+bool bt_smp_is_bonded(struct bt_conn *conn);
 
 int bt_smp_auth_passkey_entry(struct bt_conn *conn, unsigned int passkey);
 int bt_smp_auth_passkey_confirm(struct bt_conn *conn);

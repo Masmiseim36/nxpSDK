@@ -7,7 +7,7 @@
 
 #include <porting.h>
 #include <string.h>
-#include <errno.h>
+#include <errno/errno.h>
 #include <stdbool.h>
 #include <sys/atomic.h>
 #include <sys/byteorder.h>
@@ -17,7 +17,7 @@
 #include <bluetooth/conn.h>
 #include <bluetooth/l2cap.h>
 #include <bluetooth/a2dp.h>
-#include <bluetooth/a2dp-codec.h>
+#include <bluetooth/a2dp_codec_sbc.h>
 #include <bluetooth/sdp.h>
 #include "clock_config.h"
 #include "board.h"
@@ -54,65 +54,8 @@ uint8_t a2dp_src_nc;
 #define A2DP_SRC_PERIOD_MS    10
 
 struct bt_a2dp *default_a2dp;
-
-static uint32_t app_a2dp_sbc_get_sample_rate(struct bt_a2dp_preset *config)
-{
-    if (config == NULL)
-    {
-        return 0U;
-    }
-
-    if (config->preset[0] & A2DP_SBC_SAMP_FREQ_16000)
-    {
-        return 16000U;
-    }
-    else if (config->preset[0] & A2DP_SBC_SAMP_FREQ_32000)
-    {
-        return 32000U;
-    }
-    else if (config->preset[0] & A2DP_SBC_SAMP_FREQ_44100)
-    {
-        return 44100U;
-    }
-    else if (config->preset[0] & A2DP_SBC_SAMP_FREQ_48000)
-    {
-        return 48000U;
-    }
-    else
-    {
-        return 0U;
-    }
-}
-
-static uint32_t app_a2dp_sbc_get_channel_number(struct bt_a2dp_preset *config)
-{
-    if (config == NULL)
-    {
-        return 0U;
-    }
-
-    /* Decode Support for Channel Mode */
-    if (config->preset[0] & A2DP_SBC_CH_MODE_MONO)
-    {
-        return 1U;
-    }
-    else if (config->preset[0] & A2DP_SBC_CH_MODE_DUAL)
-    {
-        return 2U;
-    }
-    else if (config->preset[0] & A2DP_SBC_CH_MODE_STREO)
-    {
-        return 2U;
-    }
-    else if (config->preset[0] & A2DP_SBC_CH_MODE_JOINT)
-    {
-        return 2U;
-    }
-    else
-    {
-        return 0U;
-    }
-}
+struct bt_a2dp_endpoint *default_a2dp_endpoint;
+BT_A2DP_SBC_SOURCE_ENDPOINT(sbcEndpoint, A2DP_SBC_SAMP_FREQ_48000);
 
 static void a2dp_pl_produce_media(void)
 {
@@ -134,7 +77,6 @@ static void a2dp_pl_produce_media(void)
 
         if (NULL == media)
         {
-            PRINTF("Memory Allocation failed in Produce Media\n");
             return;
         }
 
@@ -181,7 +123,7 @@ static void a2dp_pl_produce_media(void)
     }
 
     /* Give data to callback */
-    bt_a2dp_src_media_write(default_a2dp, media, medialen);
+    bt_a2dp_src_media_write(default_a2dp_endpoint, media, medialen);
 
     if (malloc == 1)
     {
@@ -245,23 +187,31 @@ static void a2dp_pl_start_playback_timer(void)
     xTimerStart(a2dp_src_timer, 0);
 }
 
-static void music_control_a2dp_start_callback(struct bt_a2dp *a2dp, int err)
+static void music_control_a2dp_start_callback(int err)
 {
     /* Start Audio Source */
     a2dp_src_playback = 1U;
     a2dp_pl_start_playback_timer();
 }
 
-void app_configured(struct bt_a2dp *a2dp, struct a2dp_configure_result *result)
+void app_endpoint_configured(struct bt_a2dp_endpoint_configure_result *result)
 {
     if (result->err == 0)
     {
-        default_a2dp = a2dp;
+        default_a2dp_endpoint = &sbcEndpoint;
 
-        a2dp_src_sf = app_a2dp_sbc_get_sample_rate(result->config);
-        a2dp_src_nc = app_a2dp_sbc_get_channel_number(result->config);
-        bt_a2dp_src_start(default_a2dp, music_control_a2dp_start_callback);
+        a2dp_src_sf = bt_a2dp_sbc_get_sampling_frequency((struct bt_a2dp_codec_sbc_params *)&result->config.media_config->codec_ie[0]);
+        a2dp_src_nc = bt_a2dp_sbc_get_channel_num((struct bt_a2dp_codec_sbc_params *)&result->config.media_config->codec_ie[0]);
+        bt_a2dp_start(default_a2dp_endpoint);
         PRINTF("a2dp start playing\r\n");
+    }
+}
+
+void app_configured(int err)
+{
+    if (err)
+    {
+        PRINTF("configure fail\r\n");
     }
 }
 
@@ -347,14 +297,14 @@ void app_sdp_discover_a2dp_sink(void)
     }
 }
 
-BT_A2DP_SBC_SOURCE_ENDPOINT(sbcEndpoint, A2DP_SBC_SAMP_FREQ_48000);
-
 static void app_edgefast_a2dp_init(void)
 {
     struct bt_a2dp_connect_cb connectCb;
     connectCb.connected = app_connected;
     connectCb.disconnected = app_disconnected;
 
+    sbcEndpoint.control_cbs.start_play = music_control_a2dp_start_callback;
+    sbcEndpoint.control_cbs.configured = app_endpoint_configured;
     bt_a2dp_register_endpoint(&sbcEndpoint, BT_A2DP_AUDIO, BT_A2DP_SOURCE);
 
     bt_a2dp_register_connect_callback(&connectCb);

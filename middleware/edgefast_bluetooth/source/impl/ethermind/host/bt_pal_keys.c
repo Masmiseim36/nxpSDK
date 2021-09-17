@@ -16,16 +16,17 @@
 #include <bluetooth/conn.h>
 #include <bluetooth/hci.h>
 
-#define LOG_ENABLE IS_ENABLED(CONFIG_BT_DEBUG_KEYS)
-#define LOG_MODULE_NAME bt_keys
-#include "fsl_component_log.h"
-LOG_MODULE_DEFINE(LOG_MODULE_NAME, kLOG_LevelTrace);
 #include "bt_pal_rpa.h"
 #include "bt_pal_gatt_internal.h"
 #include "bt_pal_hci_core.h"
 #include "bt_pal_smp.h"
 #include "bt_pal_settings.h"
 #include "bt_pal_keys.h"
+
+#define LOG_ENABLE IS_ENABLED(CONFIG_BT_DEBUG_KEYS)
+#define LOG_MODULE_NAME bt_keys
+#include "fsl_component_log.h"
+LOG_MODULE_DEFINE(LOG_MODULE_NAME, kLOG_LevelTrace);
 
 #if (defined(CONFIG_BT_MAX_PAIRED) && (CONFIG_BT_MAX_PAIRED > 0))
 static struct bt_keys key_pool[CONFIG_BT_MAX_PAIRED];
@@ -241,26 +242,20 @@ void bt_keys_clear(struct bt_keys *keys)
 	if (keys->state & BT_KEYS_ID_ADDED) {
 		bt_id_del(keys);
 	}
-#if 0
+
 	if (IS_ENABLED(CONFIG_BT_SETTINGS)) {
 		char key[BT_SETTINGS_KEY_MAX];
-
 		/* Delete stored keys from flash */
-		if (keys->id) {
-			char id[4];
+		char id[4];
 
-			u8_to_dec(id, sizeof(id), keys->id);
-			bt_settings_encode_key(key, sizeof(key), "keys",
-					       &keys->addr, id);
-		} else {
-			bt_settings_encode_key(key, sizeof(key), "keys",
-					       &keys->addr, NULL);
-		}
+		u8_to_dec(id, sizeof(id), keys->id);
+		bt_settings_encode_key(key, sizeof(key), "keys",
+						&keys->addr, id);
 
 		BT_DBG("Deleting key %s", log_strdup(key));
 		settings_delete(key);
 	}
-#endif
+
 	(void)memset(keys, 0, sizeof(*keys));
 }
 
@@ -269,20 +264,14 @@ int bt_keys_store(struct bt_keys *keys)
 {
 	char key[BT_SETTINGS_KEY_MAX];
 	int err;
+	char id[4];
 
-	if (keys->id) {
-		char id[4];
-
-		u8_to_dec(id, sizeof(id), keys->id);
-		bt_settings_encode_key(key, sizeof(key), "keys", &keys->addr,
-				       id);
-	} else {
-		bt_settings_encode_key(key, sizeof(key), "keys", &keys->addr,
-				       NULL);
-	}
+	u8_to_dec(id, sizeof(id), keys->id);
+	bt_settings_encode_key(key, sizeof(key), "keys", &keys->addr,
+					id);
 
 	err = settings_save_one(key, keys->storage_start, BT_KEYS_STORAGE_LEN);
-	if (err) {
+	if (err < 0) {
 		BT_ERR("Failed to save keys (err %d)", err);
 		return err;
 	}
@@ -363,7 +352,7 @@ static int keys_set(const char *name, size_t len_rd, settings_read_cb read_cb,
 				continue;
 			}
 
-			BT_ERR("Invalid key length %zd != %lu", len,
+			BT_ERR("Invalid key length %zd != %zu", len,
 			       BT_KEYS_STORAGE_LEN);
 			bt_keys_clear(keys);
 

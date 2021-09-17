@@ -7,7 +7,7 @@
 
 #include <porting.h>
 #include <string.h>
-#include <errno.h>
+#include <errno/errno.h>
 #include <stdbool.h>
 #include <sys/atomic.h>
 #include <sys/byteorder.h>
@@ -43,7 +43,6 @@ static void connected(struct bt_conn *conn, uint8_t err)
     {
         if (default_conn != NULL)
         {
-            bt_conn_unref(default_conn);
             default_conn = NULL;
         }
         PRINTF("Connection failed (err 0x%02x)\n", err);

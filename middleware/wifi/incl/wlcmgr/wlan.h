@@ -143,7 +143,7 @@
 #include <wifi.h>
 #include <wlan_11d.h>
 
-#define WLAN_DRV_VERSION "v1.3.r33.p2"
+#define WLAN_DRV_VERSION "v1.3.r35.p2"
 
 /* Configuration */
 
@@ -198,8 +198,8 @@ typedef enum
 /** The space reserved for storing PSK (password) phrases. */
 /* Min WPA2 passphrase can be upto 8 ASCII chars */
 #define WLAN_PSK_MIN_LENGTH 8
-/* Max WPA2 passphrase can be upto 64 ASCII chars */
-#define WLAN_PSK_MAX_LENGTH 65
+/* Max WPA2 passphrase can be upto 63 ASCII chars as per standards + 1 '\0' char */
+#define WLAN_PSK_MAX_LENGTH 64
 /* Min WPA3 password can be upto 1 ASCII chars */
 #define WLAN_PASSWORD_MIN_LENGTH 1
 /* Max WPA3 password can be upto 255 ASCII chars */

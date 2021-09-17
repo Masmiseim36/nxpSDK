@@ -8,6 +8,7 @@ Toolchain supported
 ===================
 - MCUXpresso  11.4.0
 - IAR embedded Workbench  9.10.2
+- Keil MDK  5.34
 - GCC ARM Embedded  10.2.1
 
 Hardware requirements
@@ -17,11 +18,20 @@ Hardware requirements
 - Personal Computer
 - One of the following modules:
   - AzureWave AW-AM457-uSD
-  - AW-CM358-M.2
+  - AzureWave AW-CM358-uSD
   - K32W061
 
 Board settings
 ==============
+Before building the example application select Wi-Fi module macro in the app_config.h. (see #define WIFI_<SoC Name>_BOARD_<Module Name>).
+If you want use the AzureWave WIFI_IW416_BOARD_AW_AM457_USD, please change the macro to WIFI_IW416_BOARD_AW_AM457_USD.
+If you want use the AzureWave WIFI_88W8987_BOARD_AW_CM358MA, please change the macro to WIFI_88W8987_BOARD_AW_CM358MA.
+If you want use the K32W061_TRANSCEIVER, please change the macro to K32W061_TRANSCEIVER.
+
+Jumper settings for RT1170:
+remove  J38 5-6
+connect J38 1-2
+connect J43 with external power(controlled by SW5)
 
 Jumper settings for AzureWave AW-AM457-uSD Module:
   - J11 2-3: VIO_SD 3.3V (Voltage level of SDIO pins is 3.3V)
@@ -44,7 +54,7 @@ The hardware should be reworked according to the hardware rework guide for evkmi
 For K32W061, the readme located in <sdk>/middleware/wireless/ethermind/port/pal/mcux/bluetooth/controller/k32w061 explains how to flash the transceiver image and the hardware rework required.
 The pin connect for UART HCI as the following table,
 ------------------------------------------------------------------------------------
-PIN NAME | DK6 (K32W061) |   I.MXRT1170   | PIN NAME OF RT1170 | GPIO NAME OF RT1170
+PIN NAME | DK6 (K32W061) |   I.MXRT1170  | PIN NAME OF RT1170| GPIO NAME OF RT1170
 ------------------------------------------------------------------------------------
 UART_TXD |  PIO(pin 8)   |   J25(pin 13)   |    LPUART7_RXD     | GPIO_AD_01
 UART_RXD |  PIO(pin 9)   |   J25(pin 15)   |    LPUART7_TXD     | GPIO_AD_00

@@ -3,7 +3,7 @@
  *  \file db_gen.c
  *
  *  [DBG Version: 1.1.1] This is a generated file.
- *  Created On : Mon Nov 16 00:41:54 2020
+ *  Created On : Mon Apr 12 13:10:04 2021
  */
 
 /* Header File Inclusion */
@@ -29,64 +29,85 @@ UINT16 num_service_class_uuids;
  *   Record 00  : SDP Record
  *   Record 01  : SAP
  *   Record 02  : SPP
- *   Record 03  : SPP_VS
- *   Record 04  : FTP
- *   Record 05  : HFU
- *   Record 06  : HFAG
- *   Record 07  : HID
- *   Record 08  : A2DP Sink
- *   Record 09  : A2DP Source
- *   Record 10  : OPP
- *   Record 11  : NAP
- *   Record 12  : GN
- *   Record 13  : PANU
- *   Record 14  : BIP
- *   Record 15  : RO
- *   Record 16  : Archived Objects
- *   Record 17  : BPP
- *   Record 18  : Basic Printing Referenced Objects
- *   Record 19  : Printer Administrative User Interface
- *   Record 20  : AVRCP Controller
- *   Record 21  : AVRCP Target
- *   Record 22  : PBAP_PCE
- *   Record 23  : PBAP_PSE
- *   Record 24  : DID
- *   Record 25  : DID
- *   Record 26  : HDP
- *   Record 27  : MAP_MCE
- *   Record 28  : MAP_MSE
- *   Record 29  : MPS
- *   Record 30  : GAP
- *   Record 31  : GATT
- *   Record 32  : DIS
- *   Record 33  : BAS
- *   Record 34  : RSC
- *   Record 35  : CSC
- *   Record 36  : CPS
- *   Record 37  : HPS
- *   Record 38  : CTS
- *   Record 39  : CTN_CCE
- *   Record 40  : CTN_CSE
+ *   Record 03  : SPP
+ *   Record 04  : SPP
+ *   Record 05  : SPP
+ *   Record 06  : SPP
+ *   Record 07  : SPP
+ *   Record 08  : SPP
+ *   Record 09  : SPP
+ *   Record 10  : SPP
+ *   Record 11  : SPP
+ *   Record 12  : SPP
+ *   Record 13  : SPP
+ *   Record 14  : SPP
+ *   Record 15  : SPP
+ *   Record 16  : SPP
+ *   Record 17  : SPP
+ *   Record 18  : SPP
+ *   Record 19  : SPP
+ *   Record 20  : SPP
+ *   Record 21  : SPP
+ *   Record 22  : SPP_VS
+ *   Record 23  : FTP
+ *   Record 24  : HFU
+ *   Record 25  : HFAG
+ *   Record 26  : HID
+ *   Record 27  : A2DP Sink
+ *   Record 28  : A2DP Source
+ *   Record 29  : OPP
+ *   Record 30  : NAP
+ *   Record 31  : GN
+ *   Record 32  : PANU
+ *   Record 33  : BIP
+ *   Record 34  : RO
+ *   Record 35  : Archived Objects
+ *   Record 36  : BPP
+ *   Record 37  : Basic Printing Referenced Objects
+ *   Record 38  : Printer Administrative User Interface
+ *   Record 39  : AVRCP Controller
+ *   Record 40  : AVRCP Target
+ *   Record 41  : PBAP_PCE
+ *   Record 42  : PBAP_PSE
+ *   Record 43  : DID
+ *   Record 44  : DID
+ *   Record 45  : HDP
+ *   Record 46  : MAP_MCE
+ *   Record 47  : MAP_MSE
+ *   Record 48  : MAP_MSE
+ *   Record 49  : MPS
+ *   Record 50  : GAP
+ *   Record 51  : GATT
+ *   Record 52  : DIS
+ *   Record 53  : BAS
+ *   Record 54  : RSC
+ *   Record 55  : CSC
+ *   Record 56  : CPS
+ *   Record 57  : HPS
+ *   Record 58  : CTS
+ *   Record 59  : CTN_CCE
+ *   Record 60  : CTN_CSE
+ *   Record 61  : CTN_CSE
  */
 
 /**
  *   Data Size Calculation (For ARM Processor):
  *
- *   Number of SDP records (n_rec) = 41
- *   Number of attributes (n_attr) = 374
- *   UUID List Length (uuid_list_len) = 191
+ *   Number of SDP records (n_rec) = 62
+ *   Number of attributes (n_attr) = 527
+ *   UUID List Length (uuid_list_len) = 278
  *   Number of UUIDS (n_uuid) = 65
- *   Total attribute value length (attr_len) = 3435 Bytes
+ *   Total attribute value length (attr_len) = 4700 Bytes
  *   Other Global variables (other): Two UINT16 type variable = 4 Bytes
  *
  *   Read Only (RO) data = uuid_list_len + (n_uuid * 16)
- *                       = 1231 (0x4CF) Bytes
+ *                       = 1318 (0x526) Bytes
  *
  *   Read Write (RW) data = (n_attr * 8) + (attr_len)
- *                        = 6427 (0x191B) Bytes
+ *                        = 8916 (0x22D4) Bytes
  *
  *   Zero Initialized (ZI) data = (n_rec * 12) + (other)
- *                              = 496 (0x1F0) Bytes
+ *                              = 748 (0x2EC) Bytes
  */
 
 /* UUID indices array */
@@ -98,80 +119,122 @@ const UCHAR uuid_indices_arr[] = {
                                 /** Service Record 2 */
                                 0, 9, 11, 12,
                                 /** Service Record 3 */
-                                0, 9, 11, 12, 64,
+                                0, 9, 11, 12,
                                 /** Service Record 4 */
-                                0, 2, 9, 11, 14,
+                                0, 9, 11, 12,
                                 /** Service Record 5 */
-                                0, 9, 11, 30, 50,
+                                0, 9, 11, 12,
                                 /** Service Record 6 */
-                                0, 9, 11, 30, 31, 50,
+                                0, 9, 11, 12,
                                 /** Service Record 7 */
-                                4, 9, 11, 36,
+                                0, 9, 11, 12,
                                 /** Service Record 8 */
-                                6, 9, 11, 16, 18,
+                                0, 9, 11, 12,
                                 /** Service Record 9 */
-                                6, 9, 11, 15, 18,
+                                0, 9, 11, 12,
                                 /** Service Record 10 */
-                                0, 2, 9, 11, 13,
+                                0, 9, 11, 12,
                                 /** Service Record 11 */
-                                3, 9, 11, 22,
+                                0, 9, 11, 12,
                                 /** Service Record 12 */
-                                3, 9, 11, 23,
+                                0, 9, 11, 12,
                                 /** Service Record 13 */
-                                3, 9, 11, 21,
+                                0, 9, 11, 12,
                                 /** Service Record 14 */
-                                0, 2, 9, 11, 26, 27,
+                                0, 9, 11, 12,
                                 /** Service Record 15 */
-                                0, 2, 9, 11, 26, 29,
+                                0, 9, 11, 12,
                                 /** Service Record 16 */
-                                0, 2, 9, 11, 26, 28,
+                                0, 9, 11, 12,
                                 /** Service Record 17 */
-                                0, 2, 9, 11, 24, 25, 34, 35,
+                                0, 9, 11, 12,
                                 /** Service Record 18 */
-                                0, 2, 9, 11, 32, 34,
+                                0, 9, 11, 12,
                                 /** Service Record 19 */
-                                0, 2, 9, 11, 33,
+                                0, 9, 11, 12,
                                 /** Service Record 20 */
-                                5, 9, 11, 19, 20,
+                                0, 9, 11, 12,
                                 /** Service Record 21 */
-                                2, 5, 9, 11, 17, 19,
+                                0, 9, 11, 12,
                                 /** Service Record 22 */
-                                11, 38, 40,
+                                0, 9, 11, 12, 64,
                                 /** Service Record 23 */
-                                0, 2, 9, 11, 39, 40,
+                                0, 2, 9, 11, 14,
                                 /** Service Record 24 */
-                                11, 49,
+                                0, 9, 11, 30, 50,
                                 /** Service Record 25 */
-                                11, 49,
+                                0, 9, 11, 30, 31, 50,
                                 /** Service Record 26 */
-                                7, 8, 9, 11, 52, 53, 54,
+                                4, 9, 11, 36,
                                 /** Service Record 27 */
-                                0, 2, 9, 11, 42, 43,
+                                6, 9, 11, 16, 18,
                                 /** Service Record 28 */
-                                0, 2, 9, 11, 41, 43,
+                                6, 9, 11, 15, 18,
                                 /** Service Record 29 */
-                                11, 44, 45,
+                                0, 2, 9, 11, 13,
                                 /** Service Record 30 */
-                                1, 9, 11, 55,
+                                3, 9, 11, 22,
                                 /** Service Record 31 */
-                                1, 9, 11, 56,
+                                3, 9, 11, 23,
                                 /** Service Record 32 */
-                                1, 9, 11, 58,
+                                3, 9, 11, 21,
                                 /** Service Record 33 */
-                                1, 9, 11, 59,
+                                0, 2, 9, 11, 26, 27,
                                 /** Service Record 34 */
-                                1, 9, 11, 60,
+                                0, 2, 9, 11, 26, 29,
                                 /** Service Record 35 */
-                                1, 9, 11, 61,
+                                0, 2, 9, 11, 26, 28,
                                 /** Service Record 36 */
-                                1, 9, 11, 62,
+                                0, 2, 9, 11, 24, 25, 34, 35,
                                 /** Service Record 37 */
-                                1, 9, 11, 63,
+                                0, 2, 9, 11, 32, 34,
                                 /** Service Record 38 */
-                                1, 9, 11, 57,
+                                0, 2, 9, 11, 33,
                                 /** Service Record 39 */
-                                2, 9, 11, 47, 48,
+                                5, 9, 11, 19, 20,
                                 /** Service Record 40 */
+                                2, 5, 9, 11, 17, 19,
+                                /** Service Record 41 */
+                                11, 38, 40,
+                                /** Service Record 42 */
+                                0, 2, 9, 11, 39, 40,
+                                /** Service Record 43 */
+                                11, 49,
+                                /** Service Record 44 */
+                                11, 49,
+                                /** Service Record 45 */
+                                7, 8, 9, 11, 52, 53, 54,
+                                /** Service Record 46 */
+                                0, 2, 9, 11, 42, 43,
+                                /** Service Record 47 */
+                                0, 2, 9, 11, 41, 43,
+                                /** Service Record 48 */
+                                0, 2, 9, 11, 41, 43,
+                                /** Service Record 49 */
+                                11, 44, 45,
+                                /** Service Record 50 */
+                                1, 9, 11, 55,
+                                /** Service Record 51 */
+                                1, 9, 11, 56,
+                                /** Service Record 52 */
+                                1, 9, 11, 58,
+                                /** Service Record 53 */
+                                1, 9, 11, 59,
+                                /** Service Record 54 */
+                                1, 9, 11, 60,
+                                /** Service Record 55 */
+                                1, 9, 11, 61,
+                                /** Service Record 56 */
+                                1, 9, 11, 62,
+                                /** Service Record 57 */
+                                1, 9, 11, 63,
+                                /** Service Record 58 */
+                                1, 9, 11, 57,
+                                /** Service Record 59 */
+                                2, 9, 11, 47, 48,
+                                /** Service Record 60 */
+                                2, 9, 11, 46, 48,
+                                /** Service Record 61 */
                                 2, 9, 11, 46, 48
                                  };
 
@@ -237,7 +300,7 @@ UCHAR value_arr[] = {
 
     /* ProtocolDescriptorList */
     0x35, 0x0C, 0x35, 0x03, 0x19, 0x01, 0x00, 0x35, 0x05, 0x19,
-    0x00, 0x03, 0x08, 0x05,
+    0x00, 0x03, 0x08, 0x02,
 
     /* BrowseGroupList  */
     0x35, 0x03, 0x19, 0x10, 0x02,
@@ -258,9 +321,7 @@ UCHAR value_arr[] = {
     0x0A, 0x00, 0x09, 0x00, 0x03,
 
     /* ServiceClassIDList */
-    0x35, 0x14, 0x1C, 0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77,
-    0x88, 0x99, 0xAA, 0xBB, 0xCC, 0xDD, 0xEE, 0xFF, 0x00, 0x19,
-    0x11, 0x01,
+    0x35, 0x03, 0x19, 0x11, 0x01,
 
     /* ProtocolDescriptorList */
     0x35, 0x0C, 0x35, 0x03, 0x19, 0x01, 0x00, 0x35, 0x05, 0x19,
@@ -285,11 +346,488 @@ UCHAR value_arr[] = {
     0x0A, 0x00, 0x09, 0x00, 0x04,
 
     /* ServiceClassIDList */
+    0x35, 0x03, 0x19, 0x11, 0x01,
+
+    /* ProtocolDescriptorList */
+    0x35, 0x0C, 0x35, 0x03, 0x19, 0x01, 0x00, 0x35, 0x05, 0x19,
+    0x00, 0x03, 0x08, 0x04,
+
+    /* BrowseGroupList  */
+    0x35, 0x03, 0x19, 0x10, 0x02,
+
+    /* LanguageBaseAttributeIDList  */
+    0x35, 0x09, 0x09, 0x65, 0x6E, 0x09, 0x00, 0x6A, 0x09, 0x01,
+    0x00,
+
+    /* BluetoothProfileDescriptorList */
+    0x35, 0x08, 0x35, 0x06, 0x19, 0x11, 0x01, 0x09, 0x01, 0x02,
+
+    /* ServiceName */
+    0x25, 0x05, 0x43, 0x4F, 0x4D, 0x37, 0x00,
+
+    /** Service Record 5 */
+
+    /* ServiceRecordHandle */
+    0x0A, 0x00, 0x09, 0x00, 0x05,
+
+    /* ServiceClassIDList */
+    0x35, 0x03, 0x19, 0x11, 0x01,
+
+    /* ProtocolDescriptorList */
+    0x35, 0x0C, 0x35, 0x03, 0x19, 0x01, 0x00, 0x35, 0x05, 0x19,
+    0x00, 0x03, 0x08, 0x05,
+
+    /* BrowseGroupList  */
+    0x35, 0x03, 0x19, 0x10, 0x02,
+
+    /* LanguageBaseAttributeIDList  */
+    0x35, 0x09, 0x09, 0x65, 0x6E, 0x09, 0x00, 0x6A, 0x09, 0x01,
+    0x00,
+
+    /* BluetoothProfileDescriptorList */
+    0x35, 0x08, 0x35, 0x06, 0x19, 0x11, 0x01, 0x09, 0x01, 0x02,
+
+    /* ServiceName */
+    0x25, 0x05, 0x43, 0x4F, 0x4D, 0x38, 0x00,
+
+    /** Service Record 6 */
+
+    /* ServiceRecordHandle */
+    0x0A, 0x00, 0x09, 0x00, 0x06,
+
+    /* ServiceClassIDList */
+    0x35, 0x03, 0x19, 0x11, 0x01,
+
+    /* ProtocolDescriptorList */
+    0x35, 0x0C, 0x35, 0x03, 0x19, 0x01, 0x00, 0x35, 0x05, 0x19,
+    0x00, 0x03, 0x08, 0x06,
+
+    /* BrowseGroupList  */
+    0x35, 0x03, 0x19, 0x10, 0x02,
+
+    /* LanguageBaseAttributeIDList  */
+    0x35, 0x09, 0x09, 0x65, 0x6E, 0x09, 0x00, 0x6A, 0x09, 0x01,
+    0x00,
+
+    /* BluetoothProfileDescriptorList */
+    0x35, 0x08, 0x35, 0x06, 0x19, 0x11, 0x01, 0x09, 0x01, 0x02,
+
+    /* ServiceName */
+    0x25, 0x05, 0x43, 0x4F, 0x4D, 0x39, 0x00,
+
+    /** Service Record 7 */
+
+    /* ServiceRecordHandle */
+    0x0A, 0x00, 0x09, 0x00, 0x07,
+
+    /* ServiceClassIDList */
+    0x35, 0x03, 0x19, 0x11, 0x01,
+
+    /* ProtocolDescriptorList */
+    0x35, 0x0C, 0x35, 0x03, 0x19, 0x01, 0x00, 0x35, 0x05, 0x19,
+    0x00, 0x03, 0x08, 0x07,
+
+    /* BrowseGroupList  */
+    0x35, 0x03, 0x19, 0x10, 0x02,
+
+    /* LanguageBaseAttributeIDList  */
+    0x35, 0x09, 0x09, 0x65, 0x6E, 0x09, 0x00, 0x6A, 0x09, 0x01,
+    0x00,
+
+    /* BluetoothProfileDescriptorList */
+    0x35, 0x08, 0x35, 0x06, 0x19, 0x11, 0x01, 0x09, 0x01, 0x02,
+
+    /* ServiceName */
+    0x25, 0x06, 0x43, 0x4F, 0x4D, 0x31, 0x30, 0x00,
+
+    /** Service Record 8 */
+
+    /* ServiceRecordHandle */
+    0x0A, 0x00, 0x09, 0x00, 0x08,
+
+    /* ServiceClassIDList */
+    0x35, 0x03, 0x19, 0x11, 0x01,
+
+    /* ProtocolDescriptorList */
+    0x35, 0x0C, 0x35, 0x03, 0x19, 0x01, 0x00, 0x35, 0x05, 0x19,
+    0x00, 0x03, 0x08, 0x08,
+
+    /* BrowseGroupList  */
+    0x35, 0x03, 0x19, 0x10, 0x02,
+
+    /* LanguageBaseAttributeIDList  */
+    0x35, 0x09, 0x09, 0x65, 0x6E, 0x09, 0x00, 0x6A, 0x09, 0x01,
+    0x00,
+
+    /* BluetoothProfileDescriptorList */
+    0x35, 0x08, 0x35, 0x06, 0x19, 0x11, 0x01, 0x09, 0x01, 0x02,
+
+    /* ServiceName */
+    0x25, 0x06, 0x43, 0x4F, 0x4D, 0x31, 0x31, 0x00,
+
+    /** Service Record 9 */
+
+    /* ServiceRecordHandle */
+    0x0A, 0x00, 0x09, 0x00, 0x09,
+
+    /* ServiceClassIDList */
+    0x35, 0x03, 0x19, 0x11, 0x01,
+
+    /* ProtocolDescriptorList */
+    0x35, 0x0C, 0x35, 0x03, 0x19, 0x01, 0x00, 0x35, 0x05, 0x19,
+    0x00, 0x03, 0x08, 0x09,
+
+    /* BrowseGroupList  */
+    0x35, 0x03, 0x19, 0x10, 0x02,
+
+    /* LanguageBaseAttributeIDList  */
+    0x35, 0x09, 0x09, 0x65, 0x6E, 0x09, 0x00, 0x6A, 0x09, 0x01,
+    0x00,
+
+    /* BluetoothProfileDescriptorList */
+    0x35, 0x08, 0x35, 0x06, 0x19, 0x11, 0x01, 0x09, 0x01, 0x02,
+
+    /* ServiceName */
+    0x25, 0x06, 0x43, 0x4F, 0x4D, 0x31, 0x32, 0x00,
+
+    /** Service Record 10 */
+
+    /* ServiceRecordHandle */
+    0x0A, 0x00, 0x09, 0x00, 0x0A,
+
+    /* ServiceClassIDList */
+    0x35, 0x03, 0x19, 0x11, 0x01,
+
+    /* ProtocolDescriptorList */
+    0x35, 0x0C, 0x35, 0x03, 0x19, 0x01, 0x00, 0x35, 0x05, 0x19,
+    0x00, 0x03, 0x08, 0x0A,
+
+    /* BrowseGroupList  */
+    0x35, 0x03, 0x19, 0x10, 0x02,
+
+    /* LanguageBaseAttributeIDList  */
+    0x35, 0x09, 0x09, 0x65, 0x6E, 0x09, 0x00, 0x6A, 0x09, 0x01,
+    0x00,
+
+    /* BluetoothProfileDescriptorList */
+    0x35, 0x08, 0x35, 0x06, 0x19, 0x11, 0x01, 0x09, 0x01, 0x02,
+
+    /* ServiceName */
+    0x25, 0x06, 0x43, 0x4F, 0x4D, 0x31, 0x33, 0x00,
+
+    /** Service Record 11 */
+
+    /* ServiceRecordHandle */
+    0x0A, 0x00, 0x09, 0x00, 0x0B,
+
+    /* ServiceClassIDList */
+    0x35, 0x03, 0x19, 0x11, 0x01,
+
+    /* ProtocolDescriptorList */
+    0x35, 0x0C, 0x35, 0x03, 0x19, 0x01, 0x00, 0x35, 0x05, 0x19,
+    0x00, 0x03, 0x08, 0x0B,
+
+    /* BrowseGroupList  */
+    0x35, 0x03, 0x19, 0x10, 0x02,
+
+    /* LanguageBaseAttributeIDList  */
+    0x35, 0x09, 0x09, 0x65, 0x6E, 0x09, 0x00, 0x6A, 0x09, 0x01,
+    0x00,
+
+    /* BluetoothProfileDescriptorList */
+    0x35, 0x08, 0x35, 0x06, 0x19, 0x11, 0x01, 0x09, 0x01, 0x02,
+
+    /* ServiceName */
+    0x25, 0x06, 0x43, 0x4F, 0x4D, 0x31, 0x34, 0x00,
+
+    /** Service Record 12 */
+
+    /* ServiceRecordHandle */
+    0x0A, 0x00, 0x09, 0x00, 0x0C,
+
+    /* ServiceClassIDList */
+    0x35, 0x03, 0x19, 0x11, 0x01,
+
+    /* ProtocolDescriptorList */
+    0x35, 0x0C, 0x35, 0x03, 0x19, 0x01, 0x00, 0x35, 0x05, 0x19,
+    0x00, 0x03, 0x08, 0x0C,
+
+    /* BrowseGroupList  */
+    0x35, 0x03, 0x19, 0x10, 0x02,
+
+    /* LanguageBaseAttributeIDList  */
+    0x35, 0x09, 0x09, 0x65, 0x6E, 0x09, 0x00, 0x6A, 0x09, 0x01,
+    0x00,
+
+    /* BluetoothProfileDescriptorList */
+    0x35, 0x08, 0x35, 0x06, 0x19, 0x11, 0x01, 0x09, 0x01, 0x02,
+
+    /* ServiceName */
+    0x25, 0x06, 0x43, 0x4F, 0x4D, 0x31, 0x35, 0x00,
+
+    /** Service Record 13 */
+
+    /* ServiceRecordHandle */
+    0x0A, 0x00, 0x09, 0x00, 0x0D,
+
+    /* ServiceClassIDList */
+    0x35, 0x03, 0x19, 0x11, 0x01,
+
+    /* ProtocolDescriptorList */
+    0x35, 0x0C, 0x35, 0x03, 0x19, 0x01, 0x00, 0x35, 0x05, 0x19,
+    0x00, 0x03, 0x08, 0x0D,
+
+    /* BrowseGroupList  */
+    0x35, 0x03, 0x19, 0x10, 0x02,
+
+    /* LanguageBaseAttributeIDList  */
+    0x35, 0x09, 0x09, 0x65, 0x6E, 0x09, 0x00, 0x6A, 0x09, 0x01,
+    0x00,
+
+    /* BluetoothProfileDescriptorList */
+    0x35, 0x08, 0x35, 0x06, 0x19, 0x11, 0x01, 0x09, 0x01, 0x02,
+
+    /* ServiceName */
+    0x25, 0x06, 0x43, 0x4F, 0x4D, 0x31, 0x36, 0x00,
+
+    /** Service Record 14 */
+
+    /* ServiceRecordHandle */
+    0x0A, 0x00, 0x09, 0x00, 0x0E,
+
+    /* ServiceClassIDList */
+    0x35, 0x03, 0x19, 0x11, 0x01,
+
+    /* ProtocolDescriptorList */
+    0x35, 0x0C, 0x35, 0x03, 0x19, 0x01, 0x00, 0x35, 0x05, 0x19,
+    0x00, 0x03, 0x08, 0x0E,
+
+    /* BrowseGroupList  */
+    0x35, 0x03, 0x19, 0x10, 0x02,
+
+    /* LanguageBaseAttributeIDList  */
+    0x35, 0x09, 0x09, 0x65, 0x6E, 0x09, 0x00, 0x6A, 0x09, 0x01,
+    0x00,
+
+    /* BluetoothProfileDescriptorList */
+    0x35, 0x08, 0x35, 0x06, 0x19, 0x11, 0x01, 0x09, 0x01, 0x02,
+
+    /* ServiceName */
+    0x25, 0x06, 0x43, 0x4F, 0x4D, 0x31, 0x37, 0x00,
+
+    /** Service Record 15 */
+
+    /* ServiceRecordHandle */
+    0x0A, 0x00, 0x09, 0x00, 0x0F,
+
+    /* ServiceClassIDList */
+    0x35, 0x03, 0x19, 0x11, 0x01,
+
+    /* ProtocolDescriptorList */
+    0x35, 0x0C, 0x35, 0x03, 0x19, 0x01, 0x00, 0x35, 0x05, 0x19,
+    0x00, 0x03, 0x08, 0x0F,
+
+    /* BrowseGroupList  */
+    0x35, 0x03, 0x19, 0x10, 0x02,
+
+    /* LanguageBaseAttributeIDList  */
+    0x35, 0x09, 0x09, 0x65, 0x6E, 0x09, 0x00, 0x6A, 0x09, 0x01,
+    0x00,
+
+    /* BluetoothProfileDescriptorList */
+    0x35, 0x08, 0x35, 0x06, 0x19, 0x11, 0x01, 0x09, 0x01, 0x02,
+
+    /* ServiceName */
+    0x25, 0x06, 0x43, 0x4F, 0x4D, 0x31, 0x38, 0x00,
+
+    /** Service Record 16 */
+
+    /* ServiceRecordHandle */
+    0x0A, 0x00, 0x09, 0x00, 0x10,
+
+    /* ServiceClassIDList */
+    0x35, 0x03, 0x19, 0x11, 0x01,
+
+    /* ProtocolDescriptorList */
+    0x35, 0x0C, 0x35, 0x03, 0x19, 0x01, 0x00, 0x35, 0x05, 0x19,
+    0x00, 0x03, 0x08, 0x10,
+
+    /* BrowseGroupList  */
+    0x35, 0x03, 0x19, 0x10, 0x02,
+
+    /* LanguageBaseAttributeIDList  */
+    0x35, 0x09, 0x09, 0x65, 0x6E, 0x09, 0x00, 0x6A, 0x09, 0x01,
+    0x00,
+
+    /* BluetoothProfileDescriptorList */
+    0x35, 0x08, 0x35, 0x06, 0x19, 0x11, 0x01, 0x09, 0x01, 0x02,
+
+    /* ServiceName */
+    0x25, 0x06, 0x43, 0x4F, 0x4D, 0x31, 0x39, 0x00,
+
+    /** Service Record 17 */
+
+    /* ServiceRecordHandle */
+    0x0A, 0x00, 0x09, 0x00, 0x11,
+
+    /* ServiceClassIDList */
+    0x35, 0x03, 0x19, 0x11, 0x01,
+
+    /* ProtocolDescriptorList */
+    0x35, 0x0C, 0x35, 0x03, 0x19, 0x01, 0x00, 0x35, 0x05, 0x19,
+    0x00, 0x03, 0x08, 0x11,
+
+    /* BrowseGroupList  */
+    0x35, 0x03, 0x19, 0x10, 0x02,
+
+    /* LanguageBaseAttributeIDList  */
+    0x35, 0x09, 0x09, 0x65, 0x6E, 0x09, 0x00, 0x6A, 0x09, 0x01,
+    0x00,
+
+    /* BluetoothProfileDescriptorList */
+    0x35, 0x08, 0x35, 0x06, 0x19, 0x11, 0x01, 0x09, 0x01, 0x02,
+
+    /* ServiceName */
+    0x25, 0x06, 0x43, 0x4F, 0x4D, 0x32, 0x30, 0x00,
+
+    /** Service Record 18 */
+
+    /* ServiceRecordHandle */
+    0x0A, 0x00, 0x09, 0x00, 0x12,
+
+    /* ServiceClassIDList */
+    0x35, 0x03, 0x19, 0x11, 0x01,
+
+    /* ProtocolDescriptorList */
+    0x35, 0x0C, 0x35, 0x03, 0x19, 0x01, 0x00, 0x35, 0x05, 0x19,
+    0x00, 0x03, 0x08, 0x12,
+
+    /* BrowseGroupList  */
+    0x35, 0x03, 0x19, 0x10, 0x02,
+
+    /* LanguageBaseAttributeIDList  */
+    0x35, 0x09, 0x09, 0x65, 0x6E, 0x09, 0x00, 0x6A, 0x09, 0x01,
+    0x00,
+
+    /* BluetoothProfileDescriptorList */
+    0x35, 0x08, 0x35, 0x06, 0x19, 0x11, 0x01, 0x09, 0x01, 0x02,
+
+    /* ServiceName */
+    0x25, 0x06, 0x43, 0x4F, 0x4D, 0x32, 0x31, 0x00,
+
+    /** Service Record 19 */
+
+    /* ServiceRecordHandle */
+    0x0A, 0x00, 0x09, 0x00, 0x13,
+
+    /* ServiceClassIDList */
+    0x35, 0x03, 0x19, 0x11, 0x01,
+
+    /* ProtocolDescriptorList */
+    0x35, 0x0C, 0x35, 0x03, 0x19, 0x01, 0x00, 0x35, 0x05, 0x19,
+    0x00, 0x03, 0x08, 0x13,
+
+    /* BrowseGroupList  */
+    0x35, 0x03, 0x19, 0x10, 0x02,
+
+    /* LanguageBaseAttributeIDList  */
+    0x35, 0x09, 0x09, 0x65, 0x6E, 0x09, 0x00, 0x6A, 0x09, 0x01,
+    0x00,
+
+    /* BluetoothProfileDescriptorList */
+    0x35, 0x08, 0x35, 0x06, 0x19, 0x11, 0x01, 0x09, 0x01, 0x02,
+
+    /* ServiceName */
+    0x25, 0x06, 0x43, 0x4F, 0x4D, 0x32, 0x32, 0x00,
+
+    /** Service Record 20 */
+
+    /* ServiceRecordHandle */
+    0x0A, 0x00, 0x09, 0x00, 0x14,
+
+    /* ServiceClassIDList */
+    0x35, 0x03, 0x19, 0x11, 0x01,
+
+    /* ProtocolDescriptorList */
+    0x35, 0x0C, 0x35, 0x03, 0x19, 0x01, 0x00, 0x35, 0x05, 0x19,
+    0x00, 0x03, 0x08, 0x14,
+
+    /* BrowseGroupList  */
+    0x35, 0x03, 0x19, 0x10, 0x02,
+
+    /* LanguageBaseAttributeIDList  */
+    0x35, 0x09, 0x09, 0x65, 0x6E, 0x09, 0x00, 0x6A, 0x09, 0x01,
+    0x00,
+
+    /* BluetoothProfileDescriptorList */
+    0x35, 0x08, 0x35, 0x06, 0x19, 0x11, 0x01, 0x09, 0x01, 0x02,
+
+    /* ServiceName */
+    0x25, 0x06, 0x43, 0x4F, 0x4D, 0x32, 0x33, 0x00,
+
+    /** Service Record 21 */
+
+    /* ServiceRecordHandle */
+    0x0A, 0x00, 0x09, 0x00, 0x15,
+
+    /* ServiceClassIDList */
+    0x35, 0x03, 0x19, 0x11, 0x01,
+
+    /* ProtocolDescriptorList */
+    0x35, 0x0C, 0x35, 0x03, 0x19, 0x01, 0x00, 0x35, 0x05, 0x19,
+    0x00, 0x03, 0x08, 0x15,
+
+    /* BrowseGroupList  */
+    0x35, 0x03, 0x19, 0x10, 0x02,
+
+    /* LanguageBaseAttributeIDList  */
+    0x35, 0x09, 0x09, 0x65, 0x6E, 0x09, 0x00, 0x6A, 0x09, 0x01,
+    0x00,
+
+    /* BluetoothProfileDescriptorList */
+    0x35, 0x08, 0x35, 0x06, 0x19, 0x11, 0x01, 0x09, 0x01, 0x02,
+
+    /* ServiceName */
+    0x25, 0x06, 0x43, 0x4F, 0x4D, 0x32, 0x34, 0x00,
+
+    /** Service Record 22 */
+
+    /* ServiceRecordHandle */
+    0x0A, 0x00, 0x09, 0x00, 0x16,
+
+    /* ServiceClassIDList */
+    0x35, 0x14, 0x1C, 0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77,
+    0x88, 0x99, 0xAA, 0xBB, 0xCC, 0xDD, 0xEE, 0xFF, 0x00, 0x19,
+    0x11, 0x01,
+
+    /* ProtocolDescriptorList */
+    0x35, 0x0C, 0x35, 0x03, 0x19, 0x01, 0x00, 0x35, 0x05, 0x19,
+    0x00, 0x03, 0x08, 0x16,
+
+    /* BrowseGroupList  */
+    0x35, 0x03, 0x19, 0x10, 0x02,
+
+    /* LanguageBaseAttributeIDList  */
+    0x35, 0x09, 0x09, 0x65, 0x6E, 0x09, 0x00, 0x6A, 0x09, 0x01,
+    0x00,
+
+    /* BluetoothProfileDescriptorList */
+    0x35, 0x08, 0x35, 0x06, 0x19, 0x11, 0x01, 0x09, 0x01, 0x02,
+
+    /* ServiceName */
+    0x25, 0x05, 0x43, 0x4F, 0x4D, 0x30, 0x00,
+
+    /** Service Record 23 */
+
+    /* ServiceRecordHandle */
+    0x0A, 0x00, 0x09, 0x00, 0x17,
+
+    /* ServiceClassIDList */
     0x35, 0x03, 0x19, 0x11, 0x06,
 
     /* ProtocolDescriptorList */
     0x35, 0x11, 0x35, 0x03, 0x19, 0x01, 0x00, 0x35, 0x05, 0x19,
-    0x00, 0x03, 0x08, 0x04, 0x35, 0x03, 0x19, 0x00, 0x08,
+    0x00, 0x03, 0x08, 0x17, 0x35, 0x03, 0x19, 0x00, 0x08,
 
     /* BrowseGroupList  */
     0x35, 0x03, 0x19, 0x10, 0x02,
@@ -309,17 +847,17 @@ UCHAR value_arr[] = {
     /* HIDDeviceReleaseNumber */
     0x09, 0x82, 0x03,
 
-    /** Service Record 5 */
+    /** Service Record 24 */
 
     /* ServiceRecordHandle */
-    0x0A, 0x00, 0x09, 0x00, 0x05,
+    0x0A, 0x00, 0x09, 0x00, 0x18,
 
     /* ServiceClassIDList */
     0x35, 0x06, 0x19, 0x11, 0x1E, 0x19, 0x12, 0x03,
 
     /* ProtocolDescriptorList */
     0x35, 0x0C, 0x35, 0x03, 0x19, 0x01, 0x00, 0x35, 0x05, 0x19,
-    0x00, 0x03, 0x08, 0x05,
+    0x00, 0x03, 0x08, 0x18,
 
     /* BrowseGroupList  */
     0x35, 0x03, 0x19, 0x10, 0x02,
@@ -337,17 +875,17 @@ UCHAR value_arr[] = {
     /* SupportedFeatures */
     0x09, 0x00, 0x00,
 
-    /** Service Record 6 */
+    /** Service Record 25 */
 
     /* ServiceRecordHandle */
-    0x0A, 0x00, 0x09, 0x00, 0x06,
+    0x0A, 0x00, 0x09, 0x00, 0x19,
 
     /* ServiceClassIDList */
     0x35, 0x06, 0x19, 0x11, 0x1F, 0x19, 0x12, 0x03,
 
     /* ProtocolDescriptorList */
     0x35, 0x0C, 0x35, 0x03, 0x19, 0x01, 0x00, 0x35, 0x05, 0x19,
-    0x00, 0x03, 0x08, 0x06,
+    0x00, 0x03, 0x08, 0x19,
 
     /* BrowseGroupList  */
     0x35, 0x03, 0x19, 0x10, 0x02,
@@ -369,10 +907,10 @@ UCHAR value_arr[] = {
     /* SupportedFeatures */
     0x09, 0x00, 0xDE,
 
-    /** Service Record 7 */
+    /** Service Record 26 */
 
     /* ServiceRecordHandle */
-    0x0A, 0x00, 0x09, 0x00, 0x07,
+    0x0A, 0x00, 0x09, 0x00, 0x1A,
 
     /* ServiceClassIDList */
     0x35, 0x03, 0x19, 0x11, 0x24,
@@ -396,10 +934,10 @@ UCHAR value_arr[] = {
     0x00, 0x09, 0x00, 0x13, 0x35, 0x05, 0x35, 0x03, 0x19, 0x00,
     0x11,
 
-    /** Service Record 8 */
+    /** Service Record 27 */
 
     /* ServiceRecordHandle */
-    0x0A, 0x00, 0x09, 0x00, 0x08,
+    0x0A, 0x00, 0x09, 0x00, 0x1B,
 
     /* ServiceClassIDList */
     0x35, 0x03, 0x19, 0x11, 0x0B,
@@ -429,10 +967,10 @@ UCHAR value_arr[] = {
     /* SupportedFeatures */
     0x09, 0x00, 0x01,
 
-    /** Service Record 9 */
+    /** Service Record 28 */
 
     /* ServiceRecordHandle */
-    0x0A, 0x00, 0x09, 0x00, 0x09,
+    0x0A, 0x00, 0x09, 0x00, 0x1C,
 
     /* ServiceClassIDList */
     0x35, 0x03, 0x19, 0x11, 0x0A,
@@ -462,17 +1000,17 @@ UCHAR value_arr[] = {
     /* SupportedFeatures */
     0x09, 0x00, 0x01,
 
-    /** Service Record 10 */
+    /** Service Record 29 */
 
     /* ServiceRecordHandle */
-    0x0A, 0x00, 0x09, 0x00, 0x0A,
+    0x0A, 0x00, 0x09, 0x00, 0x1D,
 
     /* ServiceClassIDList */
     0x35, 0x03, 0x19, 0x11, 0x05,
 
     /* ProtocolDescriptorList */
     0x35, 0x11, 0x35, 0x03, 0x19, 0x01, 0x00, 0x35, 0x05, 0x19,
-    0x00, 0x03, 0x08, 0x07, 0x35, 0x03, 0x19, 0x00, 0x08,
+    0x00, 0x03, 0x08, 0x1A, 0x35, 0x03, 0x19, 0x00, 0x08,
 
     /* BrowseGroupList  */
     0x35, 0x03, 0x19, 0x10, 0x02,
@@ -493,10 +1031,10 @@ UCHAR value_arr[] = {
     /* SupportedFormatsList */
     0x35, 0x04, 0x08, 0x01, 0x08, 0x03,
 
-    /** Service Record 11 */
+    /** Service Record 30 */
 
     /* ServiceRecordHandle */
-    0x0A, 0x00, 0x09, 0x00, 0x0B,
+    0x0A, 0x00, 0x09, 0x00, 0x1E,
 
     /* ServiceClassIDList */
     0x35, 0x03, 0x19, 0x11, 0x16,
@@ -549,10 +1087,10 @@ UCHAR value_arr[] = {
     0x25, 0x0A, 0x66, 0x65, 0x38, 0x30, 0x3A, 0x3A, 0x2F, 0x34,
     0x38, 0x00,
 
-    /** Service Record 12 */
+    /** Service Record 31 */
 
     /* ServiceRecordHandle */
-    0x0A, 0x00, 0x09, 0x00, 0x0C,
+    0x0A, 0x00, 0x09, 0x00, 0x1F,
 
     /* ServiceClassIDList */
     0x35, 0x03, 0x19, 0x11, 0x17,
@@ -599,10 +1137,10 @@ UCHAR value_arr[] = {
     0x25, 0x0A, 0x66, 0x65, 0x38, 0x30, 0x3A, 0x3A, 0x2F, 0x34,
     0x38, 0x00,
 
-    /** Service Record 13 */
+    /** Service Record 32 */
 
     /* ServiceRecordHandle */
-    0x0A, 0x00, 0x09, 0x00, 0x0D,
+    0x0A, 0x00, 0x09, 0x00, 0x20,
 
     /* ServiceClassIDList */
     0x35, 0x03, 0x19, 0x11, 0x15,
@@ -641,17 +1179,17 @@ UCHAR value_arr[] = {
     /* SecurityDescription */
     0x09, 0x00, 0x00,
 
-    /** Service Record 14 */
+    /** Service Record 33 */
 
     /* ServiceRecordHandle */
-    0x0A, 0x00, 0x09, 0x00, 0x0E,
+    0x0A, 0x00, 0x09, 0x00, 0x21,
 
     /* ServiceClassIDList */
     0x35, 0x03, 0x19, 0x11, 0x1B,
 
     /* ProtocolDescriptorList */
     0x35, 0x11, 0x35, 0x03, 0x19, 0x01, 0x00, 0x35, 0x05, 0x19,
-    0x00, 0x03, 0x08, 0x08, 0x35, 0x03, 0x19, 0x00, 0x08,
+    0x00, 0x03, 0x08, 0x1B, 0x35, 0x03, 0x19, 0x00, 0x08,
 
     /* BrowseGroupList  */
     0x35, 0x03, 0x19, 0x10, 0x02,
@@ -681,10 +1219,10 @@ UCHAR value_arr[] = {
     /* TotalImagingDataCapacity */
     0x0B, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 
-    /** Service Record 15 */
+    /** Service Record 34 */
 
     /* ServiceRecordHandle */
-    0x0A, 0x00, 0x09, 0x00, 0x0F,
+    0x0A, 0x00, 0x09, 0x00, 0x22,
 
     /* ServiceClassIDList */
     0x35, 0x03, 0x19, 0x11, 0x1D,
@@ -694,7 +1232,7 @@ UCHAR value_arr[] = {
 
     /* ProtocolDescriptorList */
     0x35, 0x11, 0x35, 0x03, 0x19, 0x01, 0x00, 0x35, 0x05, 0x19,
-    0x00, 0x03, 0x08, 0x09, 0x35, 0x03, 0x19, 0x00, 0x08,
+    0x00, 0x03, 0x08, 0x1C, 0x35, 0x03, 0x19, 0x00, 0x08,
 
     /* BrowseGroupList  */
     0x35, 0x03, 0x19, 0x10, 0x02,
@@ -717,10 +1255,10 @@ UCHAR value_arr[] = {
     /* SupportedFunctions */
     0x0A, 0x00, 0x00, 0x00, 0x01,
 
-    /** Service Record 16 */
+    /** Service Record 35 */
 
     /* ServiceRecordHandle */
-    0x0A, 0x00, 0x09, 0x00, 0x10,
+    0x0A, 0x00, 0x09, 0x00, 0x23,
 
     /* ServiceClassIDList */
     0x35, 0x03, 0x19, 0x11, 0x1C,
@@ -730,7 +1268,7 @@ UCHAR value_arr[] = {
 
     /* ProtocolDescriptorList */
     0x35, 0x11, 0x35, 0x03, 0x19, 0x01, 0x00, 0x35, 0x05, 0x19,
-    0x00, 0x03, 0x08, 0x0A, 0x35, 0x03, 0x19, 0x00, 0x08,
+    0x00, 0x03, 0x08, 0x1D, 0x35, 0x03, 0x19, 0x00, 0x08,
 
     /* BrowseGroupList  */
     0x35, 0x03, 0x19, 0x10, 0x02,
@@ -753,10 +1291,10 @@ UCHAR value_arr[] = {
     /* SupportedFunctions */
     0x0A, 0x00, 0x00, 0x00, 0x01,
 
-    /** Service Record 17 */
+    /** Service Record 36 */
 
     /* ServiceRecordHandle */
-    0x0A, 0x00, 0x09, 0x00, 0x11,
+    0x0A, 0x00, 0x09, 0x00, 0x24,
 
     /* ServiceClassIDList */
     0x35, 0x09, 0x19, 0x11, 0x19, 0x19, 0x11, 0x23, 0x19, 0x11,
@@ -764,7 +1302,7 @@ UCHAR value_arr[] = {
 
     /* ProtocolDescriptorList */
     0x35, 0x11, 0x35, 0x03, 0x19, 0x01, 0x00, 0x35, 0x05, 0x19,
-    0x00, 0x03, 0x08, 0x0B, 0x35, 0x03, 0x19, 0x00, 0x08,
+    0x00, 0x03, 0x08, 0x1E, 0x35, 0x03, 0x19, 0x00, 0x08,
 
     /* BrowseGroupList  */
     0x35, 0x03, 0x19, 0x10, 0x02,
@@ -778,7 +1316,7 @@ UCHAR value_arr[] = {
 
     /* AdditionalProtocolDescriptorLists */
     0x35, 0x13, 0x35, 0x11, 0x35, 0x03, 0x19, 0x01, 0x00, 0x35,
-    0x05, 0x19, 0x00, 0x03, 0x08, 0x0C, 0x35, 0x03, 0x19, 0x00,
+    0x05, 0x19, 0x00, 0x03, 0x08, 0x1E, 0x35, 0x03, 0x19, 0x00,
     0x08,
 
     /* ServiceName */
@@ -837,17 +1375,17 @@ UCHAR value_arr[] = {
     /* DirectPrintingTopURL */
     0x45, 0x04, 0x78, 0x79, 0x7A, 0x00,
 
-    /** Service Record 18 */
+    /** Service Record 37 */
 
     /* ServiceRecordHandle */
-    0x0A, 0x00, 0x09, 0x00, 0x12,
+    0x0A, 0x00, 0x09, 0x00, 0x25,
 
     /* ServiceClassIDList */
     0x35, 0x03, 0x19, 0x11, 0x20,
 
     /* ProtocolDescriptorList */
     0x35, 0x11, 0x35, 0x03, 0x19, 0x01, 0x00, 0x35, 0x05, 0x19,
-    0x00, 0x03, 0x08, 0x0D, 0x35, 0x03, 0x19, 0x00, 0x08,
+    0x00, 0x03, 0x08, 0x1E, 0x35, 0x03, 0x19, 0x00, 0x08,
 
     /* BrowseGroupList  */
     0x35, 0x03, 0x19, 0x10, 0x02,
@@ -861,7 +1399,7 @@ UCHAR value_arr[] = {
 
     /* AdditionalProtocolDescriptorLists */
     0x35, 0x13, 0x35, 0x11, 0x35, 0x03, 0x19, 0x01, 0x00, 0x35,
-    0x05, 0x19, 0x00, 0x03, 0x08, 0x0E, 0x35, 0x03, 0x19, 0x00,
+    0x05, 0x19, 0x00, 0x03, 0x08, 0x1E, 0x35, 0x03, 0x19, 0x00,
     0x08,
 
     /* ServiceName */
@@ -869,17 +1407,17 @@ UCHAR value_arr[] = {
     0x69, 0x6E, 0x74, 0x69, 0x6E, 0x67, 0x20, 0x52, 0x65, 0x66,
     0x20, 0x4F, 0x62, 0x6A, 0x65, 0x63, 0x74, 0x73, 0x00,
 
-    /** Service Record 19 */
+    /** Service Record 38 */
 
     /* ServiceRecordHandle */
-    0x0A, 0x00, 0x09, 0x00, 0x13,
+    0x0A, 0x00, 0x09, 0x00, 0x26,
 
     /* ServiceClassIDList */
     0x35, 0x03, 0x19, 0x11, 0x21,
 
     /* ProtocolDescriptorList */
     0x35, 0x11, 0x35, 0x03, 0x19, 0x01, 0x00, 0x35, 0x05, 0x19,
-    0x00, 0x03, 0x08, 0x0F, 0x35, 0x03, 0x19, 0x00, 0x08,
+    0x00, 0x03, 0x08, 0x1E, 0x35, 0x03, 0x19, 0x00, 0x08,
 
     /* BrowseGroupList  */
     0x35, 0x03, 0x19, 0x10, 0x02,
@@ -900,10 +1438,10 @@ UCHAR value_arr[] = {
     /* PrinterAdminRUITopURL */
     0x45, 0x04, 0x41, 0x42, 0x43, 0x00,
 
-    /** Service Record 20 */
+    /** Service Record 39 */
 
     /* ServiceRecordHandle */
-    0x0A, 0x00, 0x09, 0x00, 0x14,
+    0x0A, 0x00, 0x09, 0x00, 0x27,
 
     /* ServiceClassIDList */
     0x35, 0x06, 0x19, 0x11, 0x0E, 0x19, 0x11, 0x0F,
@@ -937,10 +1475,10 @@ UCHAR value_arr[] = {
     /* SupportedFeatures */
     0x09, 0x03, 0xCF,
 
-    /** Service Record 21 */
+    /** Service Record 40 */
 
     /* ServiceRecordHandle */
-    0x0A, 0x00, 0x09, 0x00, 0x15,
+    0x0A, 0x00, 0x09, 0x00, 0x28,
 
     /* ServiceClassIDList */
     0x35, 0x03, 0x19, 0x11, 0x0C,
@@ -976,10 +1514,10 @@ UCHAR value_arr[] = {
     /* SupportedFeatures */
     0x09, 0x01, 0xFF,
 
-    /** Service Record 22 */
+    /** Service Record 41 */
 
     /* ServiceRecordHandle */
-    0x0A, 0x00, 0x09, 0x00, 0x16,
+    0x0A, 0x00, 0x09, 0x00, 0x29,
 
     /* ServiceClassIDList */
     0x35, 0x03, 0x19, 0x11, 0x2E,
@@ -999,17 +1537,17 @@ UCHAR value_arr[] = {
     0x6B, 0x20, 0x41, 0x63, 0x63, 0x63, 0x65, 0x73, 0x73, 0x20,
     0x50, 0x43, 0x45, 0x00,
 
-    /** Service Record 23 */
+    /** Service Record 42 */
 
     /* ServiceRecordHandle */
-    0x0A, 0x00, 0x09, 0x00, 0x17,
+    0x0A, 0x00, 0x09, 0x00, 0x2A,
 
     /* ServiceClassIDList */
     0x35, 0x03, 0x19, 0x11, 0x2F,
 
     /* ProtocolDescriptorList */
     0x35, 0x11, 0x35, 0x03, 0x19, 0x01, 0x00, 0x35, 0x05, 0x19,
-    0x00, 0x03, 0x08, 0x10, 0x35, 0x03, 0x19, 0x00, 0x08,
+    0x00, 0x03, 0x08, 0x1E, 0x35, 0x03, 0x19, 0x00, 0x08,
 
     /* BrowseGroupList  */
     0x35, 0x03, 0x19, 0x10, 0x02,
@@ -1035,10 +1573,10 @@ UCHAR value_arr[] = {
     /* MapSupportedFeatures */
     0x0A, 0x00, 0x00, 0x03, 0xFF,
 
-    /** Service Record 24 */
+    /** Service Record 43 */
 
     /* ServiceRecordHandle */
-    0x0A, 0x00, 0x09, 0x00, 0x18,
+    0x0A, 0x00, 0x09, 0x00, 0x2B,
 
     /* ServiceClassIDList */
     0x35, 0x03, 0x19, 0x12, 0x00,
@@ -1080,10 +1618,10 @@ UCHAR value_arr[] = {
     /* HIDReconnectInitiate */
     0x09, 0x00, 0x01,
 
-    /** Service Record 25 */
+    /** Service Record 44 */
 
     /* ServiceRecordHandle */
-    0x0A, 0x00, 0x09, 0x00, 0x19,
+    0x0A, 0x00, 0x09, 0x00, 0x2C,
 
     /* ServiceClassIDList */
     0x35, 0x03, 0x19, 0x12, 0x00,
@@ -1126,10 +1664,10 @@ UCHAR value_arr[] = {
     /* HIDReconnectInitiate */
     0x09, 0x00, 0x02,
 
-    /** Service Record 26 */
+    /** Service Record 45 */
 
     /* ServiceRecordHandle */
-    0x0A, 0x00, 0x09, 0x00, 0x1A,
+    0x0A, 0x00, 0x09, 0x00, 0x2D,
 
     /* ServiceClassIDList */
     0x35, 0x06, 0x19, 0x14, 0x02, 0x19, 0x14, 0x01,
@@ -1176,17 +1714,17 @@ UCHAR value_arr[] = {
     /* MCAPSupportedProcedures */
     0x08, 0x1E,
 
-    /** Service Record 27 */
+    /** Service Record 46 */
 
     /* ServiceRecordHandle */
-    0x0A, 0x00, 0x09, 0x00, 0x1B,
+    0x0A, 0x00, 0x09, 0x00, 0x2E,
 
     /* ServiceClassIDList */
     0x35, 0x03, 0x19, 0x11, 0x33,
 
     /* ProtocolDescriptorList */
     0x35, 0x11, 0x35, 0x03, 0x19, 0x01, 0x00, 0x35, 0x05, 0x19,
-    0x00, 0x03, 0x08, 0x11, 0x35, 0x03, 0x19, 0x00, 0x08,
+    0x00, 0x03, 0x08, 0x1E, 0x35, 0x03, 0x19, 0x00, 0x08,
 
     /* BrowseGroupList  */
     0x35, 0x03, 0x19, 0x10, 0x02,
@@ -1209,17 +1747,17 @@ UCHAR value_arr[] = {
     /* MapSupportedFeatures */
     0x0A, 0x00, 0x77, 0xFF, 0xFF,
 
-    /** Service Record 28 */
+    /** Service Record 47 */
 
     /* ServiceRecordHandle */
-    0x0A, 0x00, 0x09, 0x00, 0x1C,
+    0x0A, 0x00, 0x09, 0x00, 0x2F,
 
     /* ServiceClassIDList */
     0x35, 0x03, 0x19, 0x11, 0x32,
 
     /* ProtocolDescriptorList */
     0x35, 0x11, 0x35, 0x03, 0x19, 0x01, 0x00, 0x35, 0x05, 0x19,
-    0x00, 0x03, 0x08, 0x12, 0x35, 0x03, 0x19, 0x00, 0x08,
+    0x00, 0x03, 0x08, 0x1E, 0x35, 0x03, 0x19, 0x00, 0x08,
 
     /* BrowseGroupList  */
     0x35, 0x03, 0x19, 0x10, 0x02,
@@ -1248,10 +1786,49 @@ UCHAR value_arr[] = {
     /* MapSupportedFeatures */
     0x0A, 0x00, 0x7F, 0xFF, 0xFF,
 
-    /** Service Record 29 */
+    /** Service Record 48 */
 
     /* ServiceRecordHandle */
-    0x0A, 0x00, 0x09, 0x00, 0x1D,
+    0x0A, 0x00, 0x09, 0x00, 0x30,
+
+    /* ServiceClassIDList */
+    0x35, 0x03, 0x19, 0x11, 0x32,
+
+    /* ProtocolDescriptorList */
+    0x35, 0x11, 0x35, 0x03, 0x19, 0x01, 0x00, 0x35, 0x05, 0x19,
+    0x00, 0x03, 0x08, 0x1E, 0x35, 0x03, 0x19, 0x00, 0x08,
+
+    /* BrowseGroupList  */
+    0x35, 0x03, 0x19, 0x10, 0x02,
+
+    /* LanguageBaseAttributeIDList  */
+    0x35, 0x09, 0x09, 0x65, 0x6E, 0x09, 0x00, 0x6A, 0x09, 0x01,
+    0x00,
+
+    /* BluetoothProfileDescriptorList */
+    0x35, 0x08, 0x35, 0x06, 0x19, 0x11, 0x34, 0x09, 0x01, 0x04,
+
+    /* ServiceName */
+    0x25, 0x13, 0x4D, 0x41, 0x50, 0x20, 0x41, 0x63, 0x63, 0x65,
+    0x73, 0x73, 0x20, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65,
+    0x00,
+
+    /* HIDDeviceReleaseNumber */
+    0x09, 0x86, 0x05,
+
+    /* MASInstanceID */
+    0x08, 0x00,
+
+    /* SupportedMessageTypes */
+    0x08, 0x1F,
+
+    /* MapSupportedFeatures */
+    0x0A, 0x00, 0x7F, 0xFF, 0xFF,
+
+    /** Service Record 49 */
+
+    /* ServiceRecordHandle */
+    0x0A, 0x00, 0x09, 0x00, 0x31,
 
     /* ServiceClassIDList */
     0x35, 0x03, 0x19, 0x11, 0x3B,
@@ -1270,15 +1847,15 @@ UCHAR value_arr[] = {
     0x0B, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 
     /* HIDProfileVersion */
-    0x0B, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+    0x0B, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x04,
 
     /* HIDDeviceSubclass */
     0x09, 0x00, 0x00,
 
-    /** Service Record 30 */
+    /** Service Record 50 */
 
     /* ServiceRecordHandle */
-    0x0A, 0x00, 0x09, 0x00, 0x1E,
+    0x0A, 0x00, 0x09, 0x00, 0x32,
 
     /* ServiceClassIDList */
     0x35, 0x03, 0x19, 0x18, 0x00,
@@ -1295,10 +1872,10 @@ UCHAR value_arr[] = {
     0x35, 0x09, 0x09, 0x65, 0x6E, 0x09, 0x00, 0x6A, 0x09, 0x01,
     0x00,
 
-    /** Service Record 31 */
+    /** Service Record 51 */
 
     /* ServiceRecordHandle */
-    0x0A, 0x00, 0x09, 0x00, 0x1F,
+    0x0A, 0x00, 0x09, 0x00, 0x33,
 
     /* ServiceClassIDList */
     0x35, 0x03, 0x19, 0x18, 0x01,
@@ -1315,10 +1892,10 @@ UCHAR value_arr[] = {
     0x35, 0x09, 0x09, 0x65, 0x6E, 0x09, 0x00, 0x6A, 0x09, 0x01,
     0x00,
 
-    /** Service Record 32 */
+    /** Service Record 52 */
 
     /* ServiceRecordHandle */
-    0x0A, 0x00, 0x09, 0x00, 0x20,
+    0x0A, 0x00, 0x09, 0x00, 0x34,
 
     /* ServiceClassIDList */
     0x35, 0x03, 0x19, 0x18, 0x0A,
@@ -1335,10 +1912,10 @@ UCHAR value_arr[] = {
     0x35, 0x09, 0x09, 0x65, 0x6E, 0x09, 0x00, 0x6A, 0x09, 0x01,
     0x00,
 
-    /** Service Record 33 */
+    /** Service Record 53 */
 
     /* ServiceRecordHandle */
-    0x0A, 0x00, 0x09, 0x00, 0x21,
+    0x0A, 0x00, 0x09, 0x00, 0x35,
 
     /* ServiceClassIDList */
     0x35, 0x03, 0x19, 0x18, 0x0F,
@@ -1355,10 +1932,10 @@ UCHAR value_arr[] = {
     0x35, 0x09, 0x09, 0x65, 0x6E, 0x09, 0x00, 0x6A, 0x09, 0x01,
     0x00,
 
-    /** Service Record 34 */
+    /** Service Record 54 */
 
     /* ServiceRecordHandle */
-    0x0A, 0x00, 0x09, 0x00, 0x22,
+    0x0A, 0x00, 0x09, 0x00, 0x36,
 
     /* ServiceClassIDList */
     0x35, 0x03, 0x19, 0x18, 0x14,
@@ -1375,10 +1952,10 @@ UCHAR value_arr[] = {
     0x35, 0x09, 0x09, 0x65, 0x6E, 0x09, 0x00, 0x6A, 0x09, 0x01,
     0x00,
 
-    /** Service Record 35 */
+    /** Service Record 55 */
 
     /* ServiceRecordHandle */
-    0x0A, 0x00, 0x09, 0x00, 0x23,
+    0x0A, 0x00, 0x09, 0x00, 0x37,
 
     /* ServiceClassIDList */
     0x35, 0x03, 0x19, 0x18, 0x16,
@@ -1395,10 +1972,10 @@ UCHAR value_arr[] = {
     0x35, 0x09, 0x09, 0x65, 0x6E, 0x09, 0x00, 0x6A, 0x09, 0x01,
     0x00,
 
-    /** Service Record 36 */
+    /** Service Record 56 */
 
     /* ServiceRecordHandle */
-    0x0A, 0x00, 0x09, 0x00, 0x24,
+    0x0A, 0x00, 0x09, 0x00, 0x38,
 
     /* ServiceClassIDList */
     0x35, 0x03, 0x19, 0x18, 0x18,
@@ -1415,10 +1992,10 @@ UCHAR value_arr[] = {
     0x35, 0x09, 0x09, 0x65, 0x6E, 0x09, 0x00, 0x6A, 0x09, 0x01,
     0x00,
 
-    /** Service Record 37 */
+    /** Service Record 57 */
 
     /* ServiceRecordHandle */
-    0x0A, 0x00, 0x09, 0x00, 0x25,
+    0x0A, 0x00, 0x09, 0x00, 0x39,
 
     /* ServiceClassIDList */
     0x35, 0x03, 0x19, 0x18, 0x23,
@@ -1435,10 +2012,10 @@ UCHAR value_arr[] = {
     0x35, 0x09, 0x09, 0x65, 0x6E, 0x09, 0x00, 0x6A, 0x09, 0x01,
     0x00,
 
-    /** Service Record 38 */
+    /** Service Record 58 */
 
     /* ServiceRecordHandle */
-    0x0A, 0x00, 0x09, 0x00, 0x26,
+    0x0A, 0x00, 0x09, 0x00, 0x3A,
 
     /* ServiceClassIDList */
     0x35, 0x03, 0x19, 0x18, 0x05,
@@ -1455,10 +2032,10 @@ UCHAR value_arr[] = {
     0x35, 0x09, 0x09, 0x65, 0x6E, 0x09, 0x00, 0x6A, 0x09, 0x01,
     0x00,
 
-    /** Service Record 39 */
+    /** Service Record 59 */
 
     /* ServiceRecordHandle */
-    0x0A, 0x00, 0x09, 0x00, 0x27,
+    0x0A, 0x00, 0x09, 0x00, 0x3B,
 
     /* ServiceClassIDList */
     0x35, 0x03, 0x19, 0x11, 0x3D,
@@ -1485,16 +2062,49 @@ UCHAR value_arr[] = {
     /* MapSupportedFeatures */
     0x0A, 0x00, 0x00, 0x00, 0x7F,
 
-    /** Service Record 40 */
+    /** Service Record 60 */
 
     /* ServiceRecordHandle */
-    0x0A, 0x00, 0x09, 0x00, 0x28,
+    0x0A, 0x00, 0x09, 0x00, 0x3C,
 
     /* ServiceClassIDList */
     0x35, 0x03, 0x19, 0x11, 0x3C,
 
     /* ProtocolDescriptorList */
     0x35, 0x0D, 0x35, 0x06, 0x19, 0x01, 0x00, 0x09, 0x80, 0x03,
+    0x35, 0x03, 0x19, 0x00, 0x08,
+
+    /* BrowseGroupList  */
+    0x35, 0x03, 0x19, 0x10, 0x02,
+
+    /* LanguageBaseAttributeIDList  */
+    0x35, 0x09, 0x09, 0x65, 0x6E, 0x09, 0x00, 0x6A, 0x09, 0x01,
+    0x00,
+
+    /* BluetoothProfileDescriptorList */
+    0x35, 0x08, 0x35, 0x06, 0x19, 0x11, 0x3E, 0x09, 0x01, 0x00,
+
+    /* ServiceName */
+    0x25, 0x13, 0x43, 0x54, 0x4E, 0x20, 0x41, 0x63, 0x63, 0x65,
+    0x73, 0x73, 0x20, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65,
+    0x00,
+
+    /* MASInstanceID */
+    0x08, 0x00,
+
+    /* MapSupportedFeatures */
+    0x0A, 0x00, 0x00, 0x00, 0x7F,
+
+    /** Service Record 61 */
+
+    /* ServiceRecordHandle */
+    0x0A, 0x00, 0x09, 0x00, 0x3D,
+
+    /* ServiceClassIDList */
+    0x35, 0x03, 0x19, 0x11, 0x3C,
+
+    /* ProtocolDescriptorList */
+    0x35, 0x0D, 0x35, 0x06, 0x19, 0x01, 0x00, 0x09, 0x80, 0x05,
     0x35, 0x03, 0x19, 0x00, 0x08,
 
     /* BrowseGroupList  */
@@ -1524,179 +2134,597 @@ struct attr attr_arr[] = {
     /** Service Record 0 */
 
     /* ServiceRecordHandle */
-    {0x0000, 0x0005, value_arr + 0x0000},
+    {0x0000, 0x0005, &value_arr[0x0000]},
 
     /* ServiceClassIDList */
-    {0x0001, 0x0005, value_arr + 0x0005},
+    {0x0001, 0x0005, &value_arr[0x0005]},
 
     /* VersionNumberList */
-    {0x0200, 0x0005, value_arr + 0x000A},
+    {0x0200, 0x0005, &value_arr[0x000A]},
 
     /** Service Record 1 */
     /* ServiceRecordHandle */
-    {0x0000, 0x0005, value_arr + 0x000F},
+    {0x0000, 0x0005, &value_arr[0x000F]},
 
     /* ServiceClassIDList */
-    {0x0001, 0x0008, value_arr + 0x0014},
+    {0x0001, 0x0008, &value_arr[0x0014]},
 
     /* ProtocolDescriptorList */
-    {0x0004, 0x000E, value_arr + 0x001C},
+    {0x0004, 0x000E, &value_arr[0x001C]},
 
     /* BrowseGroupList  */
-    {0x0005, 0x0005, value_arr + 0x002A},
+    {0x0005, 0x0005, &value_arr[0x002A]},
 
     /* LanguageBaseAttributeIDList  */
-    {0x0006, 0x000B, value_arr + 0x002F},
+    {0x0006, 0x000B, &value_arr[0x002F]},
 
     /* BluetoothProfileDescriptorList */
-    {0x0009, 0x000A, value_arr + 0x003A},
+    {0x0009, 0x000A, &value_arr[0x003A]},
 
     /* ServiceName */
-    {0x0100, 0x000D, value_arr + 0x0044},
+    {0x0100, 0x000D, &value_arr[0x0044]},
 
     /** Service Record 2 */
     /* ServiceRecordHandle */
-    {0x0000, 0x0005, value_arr + 0x0051},
+    {0x0000, 0x0005, &value_arr[0x0051]},
 
     /* ServiceClassIDList */
-    {0x0001, 0x0005, value_arr + 0x0056},
+    {0x0001, 0x0005, &value_arr[0x0056]},
 
     /* ProtocolDescriptorList */
-    {0x0004, 0x000E, value_arr + 0x005B},
+    {0x0004, 0x000E, &value_arr[0x005B]},
 
     /* BrowseGroupList  */
-    {0x0005, 0x0005, value_arr + 0x0069},
+    {0x0005, 0x0005, &value_arr[0x0069]},
 
     /* LanguageBaseAttributeIDList  */
-    {0x0006, 0x000B, value_arr + 0x006E},
+    {0x0006, 0x000B, &value_arr[0x006E]},
 
     /* BluetoothProfileDescriptorList */
-    {0x0009, 0x000A, value_arr + 0x0079},
+    {0x0009, 0x000A, &value_arr[0x0079]},
 
     /* ServiceName */
-    {0x0100, 0x0007, value_arr + 0x0083},
+    {0x0100, 0x0007, &value_arr[0x0083]},
 
     /** Service Record 3 */
     /* ServiceRecordHandle */
-    {0x0000, 0x0005, value_arr + 0x008A},
+    {0x0000, 0x0005, &value_arr[0x008A]},
 
     /* ServiceClassIDList */
-    {0x0001, 0x0016, value_arr + 0x008F},
+    {0x0001, 0x0005, &value_arr[0x008F]},
 
     /* ProtocolDescriptorList */
-    {0x0004, 0x000E, value_arr + 0x00A5},
+    {0x0004, 0x000E, &value_arr[0x0094]},
 
     /* BrowseGroupList  */
-    {0x0005, 0x0005, value_arr + 0x00B3},
+    {0x0005, 0x0005, &value_arr[0x00A2]},
 
     /* LanguageBaseAttributeIDList  */
-    {0x0006, 0x000B, value_arr + 0x00B8},
+    {0x0006, 0x000B, &value_arr[0x00A7]},
 
     /* BluetoothProfileDescriptorList */
-    {0x0009, 0x000A, value_arr + 0x00C3},
+    {0x0009, 0x000A, &value_arr[0x00B2]},
 
     /* ServiceName */
-    {0x0100, 0x0007, value_arr + 0x00CD},
+    {0x0100, 0x0007, &value_arr[0x00BC]},
 
     /** Service Record 4 */
     /* ServiceRecordHandle */
-    {0x0000, 0x0005, value_arr + 0x00D4},
+    {0x0000, 0x0005, &value_arr[0x00C3]},
 
     /* ServiceClassIDList */
-    {0x0001, 0x0005, value_arr + 0x00D9},
+    {0x0001, 0x0005, &value_arr[0x00C8]},
 
     /* ProtocolDescriptorList */
-    {0x0004, 0x0013, value_arr + 0x00DE},
+    {0x0004, 0x000E, &value_arr[0x00CD]},
 
     /* BrowseGroupList  */
-    {0x0005, 0x0005, value_arr + 0x00F1},
+    {0x0005, 0x0005, &value_arr[0x00DB]},
 
     /* LanguageBaseAttributeIDList  */
-    {0x0006, 0x000B, value_arr + 0x00F6},
+    {0x0006, 0x000B, &value_arr[0x00E0]},
 
     /* BluetoothProfileDescriptorList */
-    {0x0009, 0x000A, value_arr + 0x0101},
+    {0x0009, 0x000A, &value_arr[0x00EB]},
 
     /* ServiceName */
-    {0x0100, 0x0015, value_arr + 0x010B},
-
-    /* HIDDeviceReleaseNumber */
-    {0x0200, 0x0003, value_arr + 0x0120},
+    {0x0100, 0x0007, &value_arr[0x00F5]},
 
     /** Service Record 5 */
     /* ServiceRecordHandle */
-    {0x0000, 0x0005, value_arr + 0x0123},
+    {0x0000, 0x0005, &value_arr[0x00FC]},
 
     /* ServiceClassIDList */
-    {0x0001, 0x0008, value_arr + 0x0128},
+    {0x0001, 0x0005, &value_arr[0x0101]},
 
     /* ProtocolDescriptorList */
-    {0x0004, 0x000E, value_arr + 0x0130},
+    {0x0004, 0x000E, &value_arr[0x0106]},
 
     /* BrowseGroupList  */
-    {0x0005, 0x0005, value_arr + 0x013E},
+    {0x0005, 0x0005, &value_arr[0x0114]},
 
     /* LanguageBaseAttributeIDList  */
-    {0x0006, 0x000B, value_arr + 0x0143},
+    {0x0006, 0x000B, &value_arr[0x0119]},
 
     /* BluetoothProfileDescriptorList */
-    {0x0009, 0x000A, value_arr + 0x014E},
+    {0x0009, 0x000A, &value_arr[0x0124]},
 
     /* ServiceName */
-    {0x0100, 0x0006, value_arr + 0x0158},
-
-    /* SupportedFeatures */
-    {0x0311, 0x0003, value_arr + 0x015E},
+    {0x0100, 0x0007, &value_arr[0x012E]},
 
     /** Service Record 6 */
     /* ServiceRecordHandle */
-    {0x0000, 0x0005, value_arr + 0x0161},
+    {0x0000, 0x0005, &value_arr[0x0135]},
 
     /* ServiceClassIDList */
-    {0x0001, 0x0008, value_arr + 0x0166},
+    {0x0001, 0x0005, &value_arr[0x013A]},
 
     /* ProtocolDescriptorList */
-    {0x0004, 0x000E, value_arr + 0x016E},
+    {0x0004, 0x000E, &value_arr[0x013F]},
 
     /* BrowseGroupList  */
-    {0x0005, 0x0005, value_arr + 0x017C},
+    {0x0005, 0x0005, &value_arr[0x014D]},
 
     /* LanguageBaseAttributeIDList  */
-    {0x0006, 0x000B, value_arr + 0x0181},
+    {0x0006, 0x000B, &value_arr[0x0152]},
 
     /* BluetoothProfileDescriptorList */
-    {0x0009, 0x000A, value_arr + 0x018C},
+    {0x0009, 0x000A, &value_arr[0x015D]},
 
     /* ServiceName */
-    {0x0100, 0x0010, value_arr + 0x0196},
-
-    /* Supported Data Stores List */
-    {0x0301, 0x0002, value_arr + 0x01A6},
-
-    /* SupportedFeatures */
-    {0x0311, 0x0003, value_arr + 0x01A8},
+    {0x0100, 0x0007, &value_arr[0x0167]},
 
     /** Service Record 7 */
     /* ServiceRecordHandle */
-    {0x0000, 0x0005, value_arr + 0x01AB},
+    {0x0000, 0x0005, &value_arr[0x016E]},
 
     /* ServiceClassIDList */
-    {0x0001, 0x0005, value_arr + 0x01B0},
+    {0x0001, 0x0005, &value_arr[0x0173]},
 
     /* ProtocolDescriptorList */
-    {0x0004, 0x0013, value_arr + 0x01B5},
+    {0x0004, 0x000E, &value_arr[0x0178]},
 
     /* BrowseGroupList  */
-    {0x0005, 0x0005, value_arr + 0x01C8},
+    {0x0005, 0x0005, &value_arr[0x0186]},
 
     /* LanguageBaseAttributeIDList  */
-    {0x0006, 0x000B, value_arr + 0x01CD},
+    {0x0006, 0x000B, &value_arr[0x018B]},
 
     /* BluetoothProfileDescriptorList */
-    {0x0009, 0x000A, value_arr + 0x01D8},
+    {0x0009, 0x000A, &value_arr[0x0196]},
+
+    /* ServiceName */
+    {0x0100, 0x0008, &value_arr[0x01A0]},
+
+    /** Service Record 8 */
+    /* ServiceRecordHandle */
+    {0x0000, 0x0005, &value_arr[0x01A8]},
+
+    /* ServiceClassIDList */
+    {0x0001, 0x0005, &value_arr[0x01AD]},
+
+    /* ProtocolDescriptorList */
+    {0x0004, 0x000E, &value_arr[0x01B2]},
+
+    /* BrowseGroupList  */
+    {0x0005, 0x0005, &value_arr[0x01C0]},
+
+    /* LanguageBaseAttributeIDList  */
+    {0x0006, 0x000B, &value_arr[0x01C5]},
+
+    /* BluetoothProfileDescriptorList */
+    {0x0009, 0x000A, &value_arr[0x01D0]},
+
+    /* ServiceName */
+    {0x0100, 0x0008, &value_arr[0x01DA]},
+
+    /** Service Record 9 */
+    /* ServiceRecordHandle */
+    {0x0000, 0x0005, &value_arr[0x01E2]},
+
+    /* ServiceClassIDList */
+    {0x0001, 0x0005, &value_arr[0x01E7]},
+
+    /* ProtocolDescriptorList */
+    {0x0004, 0x000E, &value_arr[0x01EC]},
+
+    /* BrowseGroupList  */
+    {0x0005, 0x0005, &value_arr[0x01FA]},
+
+    /* LanguageBaseAttributeIDList  */
+    {0x0006, 0x000B, &value_arr[0x01FF]},
+
+    /* BluetoothProfileDescriptorList */
+    {0x0009, 0x000A, &value_arr[0x020A]},
+
+    /* ServiceName */
+    {0x0100, 0x0008, &value_arr[0x0214]},
+
+    /** Service Record 10 */
+    /* ServiceRecordHandle */
+    {0x0000, 0x0005, &value_arr[0x021C]},
+
+    /* ServiceClassIDList */
+    {0x0001, 0x0005, &value_arr[0x0221]},
+
+    /* ProtocolDescriptorList */
+    {0x0004, 0x000E, &value_arr[0x0226]},
+
+    /* BrowseGroupList  */
+    {0x0005, 0x0005, &value_arr[0x0234]},
+
+    /* LanguageBaseAttributeIDList  */
+    {0x0006, 0x000B, &value_arr[0x0239]},
+
+    /* BluetoothProfileDescriptorList */
+    {0x0009, 0x000A, &value_arr[0x0244]},
+
+    /* ServiceName */
+    {0x0100, 0x0008, &value_arr[0x024E]},
+
+    /** Service Record 11 */
+    /* ServiceRecordHandle */
+    {0x0000, 0x0005, &value_arr[0x0256]},
+
+    /* ServiceClassIDList */
+    {0x0001, 0x0005, &value_arr[0x025B]},
+
+    /* ProtocolDescriptorList */
+    {0x0004, 0x000E, &value_arr[0x0260]},
+
+    /* BrowseGroupList  */
+    {0x0005, 0x0005, &value_arr[0x026E]},
+
+    /* LanguageBaseAttributeIDList  */
+    {0x0006, 0x000B, &value_arr[0x0273]},
+
+    /* BluetoothProfileDescriptorList */
+    {0x0009, 0x000A, &value_arr[0x027E]},
+
+    /* ServiceName */
+    {0x0100, 0x0008, &value_arr[0x0288]},
+
+    /** Service Record 12 */
+    /* ServiceRecordHandle */
+    {0x0000, 0x0005, &value_arr[0x0290]},
+
+    /* ServiceClassIDList */
+    {0x0001, 0x0005, &value_arr[0x0295]},
+
+    /* ProtocolDescriptorList */
+    {0x0004, 0x000E, &value_arr[0x029A]},
+
+    /* BrowseGroupList  */
+    {0x0005, 0x0005, &value_arr[0x02A8]},
+
+    /* LanguageBaseAttributeIDList  */
+    {0x0006, 0x000B, &value_arr[0x02AD]},
+
+    /* BluetoothProfileDescriptorList */
+    {0x0009, 0x000A, &value_arr[0x02B8]},
+
+    /* ServiceName */
+    {0x0100, 0x0008, &value_arr[0x02C2]},
+
+    /** Service Record 13 */
+    /* ServiceRecordHandle */
+    {0x0000, 0x0005, &value_arr[0x02CA]},
+
+    /* ServiceClassIDList */
+    {0x0001, 0x0005, &value_arr[0x02CF]},
+
+    /* ProtocolDescriptorList */
+    {0x0004, 0x000E, &value_arr[0x02D4]},
+
+    /* BrowseGroupList  */
+    {0x0005, 0x0005, &value_arr[0x02E2]},
+
+    /* LanguageBaseAttributeIDList  */
+    {0x0006, 0x000B, &value_arr[0x02E7]},
+
+    /* BluetoothProfileDescriptorList */
+    {0x0009, 0x000A, &value_arr[0x02F2]},
+
+    /* ServiceName */
+    {0x0100, 0x0008, &value_arr[0x02FC]},
+
+    /** Service Record 14 */
+    /* ServiceRecordHandle */
+    {0x0000, 0x0005, &value_arr[0x0304]},
+
+    /* ServiceClassIDList */
+    {0x0001, 0x0005, &value_arr[0x0309]},
+
+    /* ProtocolDescriptorList */
+    {0x0004, 0x000E, &value_arr[0x030E]},
+
+    /* BrowseGroupList  */
+    {0x0005, 0x0005, &value_arr[0x031C]},
+
+    /* LanguageBaseAttributeIDList  */
+    {0x0006, 0x000B, &value_arr[0x0321]},
+
+    /* BluetoothProfileDescriptorList */
+    {0x0009, 0x000A, &value_arr[0x032C]},
+
+    /* ServiceName */
+    {0x0100, 0x0008, &value_arr[0x0336]},
+
+    /** Service Record 15 */
+    /* ServiceRecordHandle */
+    {0x0000, 0x0005, &value_arr[0x033E]},
+
+    /* ServiceClassIDList */
+    {0x0001, 0x0005, &value_arr[0x0343]},
+
+    /* ProtocolDescriptorList */
+    {0x0004, 0x000E, &value_arr[0x0348]},
+
+    /* BrowseGroupList  */
+    {0x0005, 0x0005, &value_arr[0x0356]},
+
+    /* LanguageBaseAttributeIDList  */
+    {0x0006, 0x000B, &value_arr[0x035B]},
+
+    /* BluetoothProfileDescriptorList */
+    {0x0009, 0x000A, &value_arr[0x0366]},
+
+    /* ServiceName */
+    {0x0100, 0x0008, &value_arr[0x0370]},
+
+    /** Service Record 16 */
+    /* ServiceRecordHandle */
+    {0x0000, 0x0005, &value_arr[0x0378]},
+
+    /* ServiceClassIDList */
+    {0x0001, 0x0005, &value_arr[0x037D]},
+
+    /* ProtocolDescriptorList */
+    {0x0004, 0x000E, &value_arr[0x0382]},
+
+    /* BrowseGroupList  */
+    {0x0005, 0x0005, &value_arr[0x0390]},
+
+    /* LanguageBaseAttributeIDList  */
+    {0x0006, 0x000B, &value_arr[0x0395]},
+
+    /* BluetoothProfileDescriptorList */
+    {0x0009, 0x000A, &value_arr[0x03A0]},
+
+    /* ServiceName */
+    {0x0100, 0x0008, &value_arr[0x03AA]},
+
+    /** Service Record 17 */
+    /* ServiceRecordHandle */
+    {0x0000, 0x0005, &value_arr[0x03B2]},
+
+    /* ServiceClassIDList */
+    {0x0001, 0x0005, &value_arr[0x03B7]},
+
+    /* ProtocolDescriptorList */
+    {0x0004, 0x000E, &value_arr[0x03BC]},
+
+    /* BrowseGroupList  */
+    {0x0005, 0x0005, &value_arr[0x03CA]},
+
+    /* LanguageBaseAttributeIDList  */
+    {0x0006, 0x000B, &value_arr[0x03CF]},
+
+    /* BluetoothProfileDescriptorList */
+    {0x0009, 0x000A, &value_arr[0x03DA]},
+
+    /* ServiceName */
+    {0x0100, 0x0008, &value_arr[0x03E4]},
+
+    /** Service Record 18 */
+    /* ServiceRecordHandle */
+    {0x0000, 0x0005, &value_arr[0x03EC]},
+
+    /* ServiceClassIDList */
+    {0x0001, 0x0005, &value_arr[0x03F1]},
+
+    /* ProtocolDescriptorList */
+    {0x0004, 0x000E, &value_arr[0x03F6]},
+
+    /* BrowseGroupList  */
+    {0x0005, 0x0005, &value_arr[0x0404]},
+
+    /* LanguageBaseAttributeIDList  */
+    {0x0006, 0x000B, &value_arr[0x0409]},
+
+    /* BluetoothProfileDescriptorList */
+    {0x0009, 0x000A, &value_arr[0x0414]},
+
+    /* ServiceName */
+    {0x0100, 0x0008, &value_arr[0x041E]},
+
+    /** Service Record 19 */
+    /* ServiceRecordHandle */
+    {0x0000, 0x0005, &value_arr[0x0426]},
+
+    /* ServiceClassIDList */
+    {0x0001, 0x0005, &value_arr[0x042B]},
+
+    /* ProtocolDescriptorList */
+    {0x0004, 0x000E, &value_arr[0x0430]},
+
+    /* BrowseGroupList  */
+    {0x0005, 0x0005, &value_arr[0x043E]},
+
+    /* LanguageBaseAttributeIDList  */
+    {0x0006, 0x000B, &value_arr[0x0443]},
+
+    /* BluetoothProfileDescriptorList */
+    {0x0009, 0x000A, &value_arr[0x044E]},
+
+    /* ServiceName */
+    {0x0100, 0x0008, &value_arr[0x0458]},
+
+    /** Service Record 20 */
+    /* ServiceRecordHandle */
+    {0x0000, 0x0005, &value_arr[0x0460]},
+
+    /* ServiceClassIDList */
+    {0x0001, 0x0005, &value_arr[0x0465]},
+
+    /* ProtocolDescriptorList */
+    {0x0004, 0x000E, &value_arr[0x046A]},
+
+    /* BrowseGroupList  */
+    {0x0005, 0x0005, &value_arr[0x0478]},
+
+    /* LanguageBaseAttributeIDList  */
+    {0x0006, 0x000B, &value_arr[0x047D]},
+
+    /* BluetoothProfileDescriptorList */
+    {0x0009, 0x000A, &value_arr[0x0488]},
+
+    /* ServiceName */
+    {0x0100, 0x0008, &value_arr[0x0492]},
+
+    /** Service Record 21 */
+    /* ServiceRecordHandle */
+    {0x0000, 0x0005, &value_arr[0x049A]},
+
+    /* ServiceClassIDList */
+    {0x0001, 0x0005, &value_arr[0x049F]},
+
+    /* ProtocolDescriptorList */
+    {0x0004, 0x000E, &value_arr[0x04A4]},
+
+    /* BrowseGroupList  */
+    {0x0005, 0x0005, &value_arr[0x04B2]},
+
+    /* LanguageBaseAttributeIDList  */
+    {0x0006, 0x000B, &value_arr[0x04B7]},
+
+    /* BluetoothProfileDescriptorList */
+    {0x0009, 0x000A, &value_arr[0x04C2]},
+
+    /* ServiceName */
+    {0x0100, 0x0008, &value_arr[0x04CC]},
+
+    /** Service Record 22 */
+    /* ServiceRecordHandle */
+    {0x0000, 0x0005, &value_arr[0x04D4]},
+
+    /* ServiceClassIDList */
+    {0x0001, 0x0016, &value_arr[0x04D9]},
+
+    /* ProtocolDescriptorList */
+    {0x0004, 0x000E, &value_arr[0x04EF]},
+
+    /* BrowseGroupList  */
+    {0x0005, 0x0005, &value_arr[0x04FD]},
+
+    /* LanguageBaseAttributeIDList  */
+    {0x0006, 0x000B, &value_arr[0x0502]},
+
+    /* BluetoothProfileDescriptorList */
+    {0x0009, 0x000A, &value_arr[0x050D]},
+
+    /* ServiceName */
+    {0x0100, 0x0007, &value_arr[0x0517]},
+
+    /** Service Record 23 */
+    /* ServiceRecordHandle */
+    {0x0000, 0x0005, &value_arr[0x051E]},
+
+    /* ServiceClassIDList */
+    {0x0001, 0x0005, &value_arr[0x0523]},
+
+    /* ProtocolDescriptorList */
+    {0x0004, 0x0013, &value_arr[0x0528]},
+
+    /* BrowseGroupList  */
+    {0x0005, 0x0005, &value_arr[0x053B]},
+
+    /* LanguageBaseAttributeIDList  */
+    {0x0006, 0x000B, &value_arr[0x0540]},
+
+    /* BluetoothProfileDescriptorList */
+    {0x0009, 0x000A, &value_arr[0x054B]},
+
+    /* ServiceName */
+    {0x0100, 0x0015, &value_arr[0x0555]},
+
+    /* HIDDeviceReleaseNumber */
+    {0x0200, 0x0003, &value_arr[0x056A]},
+
+    /** Service Record 24 */
+    /* ServiceRecordHandle */
+    {0x0000, 0x0005, &value_arr[0x056D]},
+
+    /* ServiceClassIDList */
+    {0x0001, 0x0008, &value_arr[0x0572]},
+
+    /* ProtocolDescriptorList */
+    {0x0004, 0x000E, &value_arr[0x057A]},
+
+    /* BrowseGroupList  */
+    {0x0005, 0x0005, &value_arr[0x0588]},
+
+    /* LanguageBaseAttributeIDList  */
+    {0x0006, 0x000B, &value_arr[0x058D]},
+
+    /* BluetoothProfileDescriptorList */
+    {0x0009, 0x000A, &value_arr[0x0598]},
+
+    /* ServiceName */
+    {0x0100, 0x0006, &value_arr[0x05A2]},
+
+    /* SupportedFeatures */
+    {0x0311, 0x0003, &value_arr[0x05A8]},
+
+    /** Service Record 25 */
+    /* ServiceRecordHandle */
+    {0x0000, 0x0005, &value_arr[0x05AB]},
+
+    /* ServiceClassIDList */
+    {0x0001, 0x0008, &value_arr[0x05B0]},
+
+    /* ProtocolDescriptorList */
+    {0x0004, 0x000E, &value_arr[0x05B8]},
+
+    /* BrowseGroupList  */
+    {0x0005, 0x0005, &value_arr[0x05C6]},
+
+    /* LanguageBaseAttributeIDList  */
+    {0x0006, 0x000B, &value_arr[0x05CB]},
+
+    /* BluetoothProfileDescriptorList */
+    {0x0009, 0x000A, &value_arr[0x05D6]},
+
+    /* ServiceName */
+    {0x0100, 0x0010, &value_arr[0x05E0]},
+
+    /* Supported Data Stores List */
+    {0x0301, 0x0002, &value_arr[0x05F0]},
+
+    /* SupportedFeatures */
+    {0x0311, 0x0003, &value_arr[0x05F2]},
+
+    /** Service Record 26 */
+    /* ServiceRecordHandle */
+    {0x0000, 0x0005, &value_arr[0x05F5]},
+
+    /* ServiceClassIDList */
+    {0x0001, 0x0005, &value_arr[0x05FA]},
+
+    /* ProtocolDescriptorList */
+    {0x0004, 0x0013, &value_arr[0x05FF]},
+
+    /* BrowseGroupList  */
+    {0x0005, 0x0005, &value_arr[0x0612]},
+
+    /* LanguageBaseAttributeIDList  */
+    {0x0006, 0x000B, &value_arr[0x0617]},
+
+    /* BluetoothProfileDescriptorList */
+    {0x0009, 0x000A, &value_arr[0x0622]},
 
     /* AdditionalProtocolDescriptorLists */
-    {0x000D, 0x0015, value_arr + 0x01E2},
+    {0x000D, 0x0015, &value_arr[0x062C]},
 
     /* ServiceName */
     {0x0100, 0x0000, NULL},
@@ -1752,938 +2780,1000 @@ struct attr attr_arr[] = {
     /* HIDBootDevice */
     {0x020E, 0x0000, NULL},
 
-    /** Service Record 8 */
-    /* ServiceRecordHandle */
-    {0x0000, 0x0005, value_arr + 0x01F7},
-
-    /* ServiceClassIDList */
-    {0x0001, 0x0005, value_arr + 0x01FC},
-
-    /* ProtocolDescriptorList */
-    {0x0004, 0x0012, value_arr + 0x0201},
-
-    /* BrowseGroupList  */
-    {0x0005, 0x0005, value_arr + 0x0213},
-
-    /* LanguageBaseAttributeIDList  */
-    {0x0006, 0x000B, value_arr + 0x0218},
-
-    /* BluetoothProfileDescriptorList */
-    {0x0009, 0x000A, value_arr + 0x0223},
-
-    /* ServiceName */
-    {0x0100, 0x000B, value_arr + 0x022D},
-
-    /* ProviderName */
-    {0x0102, 0x000B, value_arr + 0x0238},
-
-    /* SupportedFeatures */
-    {0x0311, 0x0003, value_arr + 0x0243},
-
-    /** Service Record 9 */
-    /* ServiceRecordHandle */
-    {0x0000, 0x0005, value_arr + 0x0246},
-
-    /* ServiceClassIDList */
-    {0x0001, 0x0005, value_arr + 0x024B},
-
-    /* ProtocolDescriptorList */
-    {0x0004, 0x0012, value_arr + 0x0250},
-
-    /* BrowseGroupList  */
-    {0x0005, 0x0005, value_arr + 0x0262},
-
-    /* LanguageBaseAttributeIDList  */
-    {0x0006, 0x000B, value_arr + 0x0267},
-
-    /* BluetoothProfileDescriptorList */
-    {0x0009, 0x000A, value_arr + 0x0272},
-
-    /* ServiceName */
-    {0x0100, 0x000D, value_arr + 0x027C},
-
-    /* ProviderName */
-    {0x0102, 0x000B, value_arr + 0x0289},
-
-    /* SupportedFeatures */
-    {0x0311, 0x0003, value_arr + 0x0294},
-
-    /** Service Record 10 */
-    /* ServiceRecordHandle */
-    {0x0000, 0x0005, value_arr + 0x0297},
-
-    /* ServiceClassIDList */
-    {0x0001, 0x0005, value_arr + 0x029C},
-
-    /* ProtocolDescriptorList */
-    {0x0004, 0x0013, value_arr + 0x02A1},
-
-    /* BrowseGroupList  */
-    {0x0005, 0x0005, value_arr + 0x02B4},
-
-    /* LanguageBaseAttributeIDList  */
-    {0x0006, 0x000B, value_arr + 0x02B9},
-
-    /* BluetoothProfileDescriptorList */
-    {0x0009, 0x000A, value_arr + 0x02C4},
-
-    /* ServiceName */
-    {0x0100, 0x0006, value_arr + 0x02CE},
-
-    /* HIDDeviceReleaseNumber */
-    {0x0200, 0x0003, value_arr + 0x02D4},
-
-    /* SupportedFormatsList */
-    {0x0303, 0x0006, value_arr + 0x02D7},
-
-    /** Service Record 11 */
-    /* ServiceRecordHandle */
-    {0x0000, 0x0005, value_arr + 0x02DD},
-
-    /* ServiceClassIDList */
-    {0x0001, 0x0005, value_arr + 0x02E2},
-
-    /* ProtocolDescriptorList */
-    {0x0004, 0x0020, value_arr + 0x02E7},
-
-    /* BrowseGroupList  */
-    {0x0005, 0x0005, value_arr + 0x0307},
-
-    /* LanguageBaseAttributeIDList  */
-    {0x0006, 0x000B, value_arr + 0x030C},
-
-    /* ServiceAvailability */
-    {0x0008, 0x0002, value_arr + 0x0317},
-
-    /* BluetoothProfileDescriptorList */
-    {0x0009, 0x000A, value_arr + 0x0319},
-
-    /* ServiceName */
-    {0x0100, 0x001F, value_arr + 0x0323},
-
-    /* ServiceDescription */
-    {0x0101, 0x0022, value_arr + 0x0342},
-
-    /* SecurityDescription */
-    {0x030A, 0x0003, value_arr + 0x0364},
-
-    /* NetAccessType */
-    {0x030B, 0x0003, value_arr + 0x0367},
-
-    /* MaxNetAccessrate */
-    {0x030C, 0x0005, value_arr + 0x036A},
-
-    /* IPv4Subnet */
-    {0x030D, 0x000D, value_arr + 0x036F},
-
-    /* IPv6Subnet */
-    {0x030E, 0x000C, value_arr + 0x037C},
-
-    /** Service Record 12 */
-    /* ServiceRecordHandle */
-    {0x0000, 0x0005, value_arr + 0x0388},
-
-    /* ServiceClassIDList */
-    {0x0001, 0x0005, value_arr + 0x038D},
-
-    /* ProtocolDescriptorList */
-    {0x0004, 0x0020, value_arr + 0x0392},
-
-    /* BrowseGroupList  */
-    {0x0005, 0x0005, value_arr + 0x03B2},
-
-    /* LanguageBaseAttributeIDList  */
-    {0x0006, 0x000B, value_arr + 0x03B7},
-
-    /* ServiceAvailability */
-    {0x0008, 0x0002, value_arr + 0x03C2},
-
-    /* BluetoothProfileDescriptorList */
-    {0x0009, 0x000A, value_arr + 0x03C4},
-
-    /* ServiceName */
-    {0x0100, 0x001F, value_arr + 0x03CE},
-
-    /* ServiceDescription */
-    {0x0101, 0x0028, value_arr + 0x03ED},
-
-    /* SecurityDescription */
-    {0x030A, 0x0003, value_arr + 0x0415},
-
-    /* IPv4Subnet */
-    {0x030D, 0x000D, value_arr + 0x0418},
-
-    /* IPv6Subnet */
-    {0x030E, 0x000C, value_arr + 0x0425},
-
-    /** Service Record 13 */
-    /* ServiceRecordHandle */
-    {0x0000, 0x0005, value_arr + 0x0431},
-
-    /* ServiceClassIDList */
-    {0x0001, 0x0005, value_arr + 0x0436},
-
-    /* ProtocolDescriptorList */
-    {0x0004, 0x0020, value_arr + 0x043B},
-
-    /* BrowseGroupList  */
-    {0x0005, 0x0005, value_arr + 0x045B},
-
-    /* LanguageBaseAttributeIDList  */
-    {0x0006, 0x000B, value_arr + 0x0460},
-
-    /* ServiceAvailability */
-    {0x0008, 0x0002, value_arr + 0x046B},
-
-    /* BluetoothProfileDescriptorList */
-    {0x0009, 0x000A, value_arr + 0x046D},
-
-    /* ServiceName */
-    {0x0100, 0x001F, value_arr + 0x0477},
-
-    /* ServiceDescription */
-    {0x0101, 0x001F, value_arr + 0x0496},
-
-    /* SecurityDescription */
-    {0x030A, 0x0003, value_arr + 0x04B5},
-
-    /** Service Record 14 */
-    /* ServiceRecordHandle */
-    {0x0000, 0x0005, value_arr + 0x04B8},
-
-    /* ServiceClassIDList */
-    {0x0001, 0x0005, value_arr + 0x04BD},
-
-    /* ProtocolDescriptorList */
-    {0x0004, 0x0013, value_arr + 0x04C2},
-
-    /* BrowseGroupList  */
-    {0x0005, 0x0005, value_arr + 0x04D5},
-
-    /* LanguageBaseAttributeIDList  */
-    {0x0006, 0x000B, value_arr + 0x04DA},
-
-    /* BluetoothProfileDescriptorList */
-    {0x0009, 0x000A, value_arr + 0x04E5},
-
-    /* ServiceName */
-    {0x0100, 0x000A, value_arr + 0x04EF},
-
-    /* HIDDeviceReleaseNumber */
-    {0x0200, 0x0003, value_arr + 0x04F9},
-
-    /* SupportedCapabalities */
-    {0x0310, 0x0002, value_arr + 0x04FC},
-
-    /* SupportedFeatures */
-    {0x0311, 0x0003, value_arr + 0x04FE},
-
-    /* SupportedFunctions */
-    {0x0312, 0x0005, value_arr + 0x0501},
-
-    /* TotalImagingDataCapacity */
-    {0x0313, 0x0009, value_arr + 0x0506},
-
-    /** Service Record 15 */
-    /* ServiceRecordHandle */
-    {0x0000, 0x0005, value_arr + 0x050F},
-
-    /* ServiceClassIDList */
-    {0x0001, 0x0005, value_arr + 0x0514},
-
-    /* ServiceID */
-    {0x0003, 0x0003, value_arr + 0x0519},
-
-    /* ProtocolDescriptorList */
-    {0x0004, 0x0013, value_arr + 0x051C},
-
-    /* BrowseGroupList  */
-    {0x0005, 0x0005, value_arr + 0x052F},
-
-    /* LanguageBaseAttributeIDList  */
-    {0x0006, 0x000B, value_arr + 0x0534},
-
-    /* BluetoothProfileDescriptorList */
-    {0x0009, 0x000A, value_arr + 0x053F},
-
-    /* ServiceName */
-    {0x0100, 0x001D, value_arr + 0x0549},
-
-    /* HIDDeviceReleaseNumber */
-    {0x0200, 0x0003, value_arr + 0x0566},
-
-    /* SupportedFunctions */
-    {0x0312, 0x0005, value_arr + 0x0569},
-
-    /** Service Record 16 */
-    /* ServiceRecordHandle */
-    {0x0000, 0x0005, value_arr + 0x056E},
-
-    /* ServiceClassIDList */
-    {0x0001, 0x0005, value_arr + 0x0573},
-
-    /* ServiceID */
-    {0x0003, 0x0003, value_arr + 0x0578},
-
-    /* ProtocolDescriptorList */
-    {0x0004, 0x0013, value_arr + 0x057B},
-
-    /* BrowseGroupList  */
-    {0x0005, 0x0005, value_arr + 0x058E},
-
-    /* LanguageBaseAttributeIDList  */
-    {0x0006, 0x000B, value_arr + 0x0593},
-
-    /* BluetoothProfileDescriptorList */
-    {0x0009, 0x000A, value_arr + 0x059E},
-
-    /* ServiceName */
-    {0x0100, 0x001C, value_arr + 0x05A8},
-
-    /* HIDDeviceReleaseNumber */
-    {0x0200, 0x0003, value_arr + 0x05C4},
-
-    /* SupportedFunctions */
-    {0x0312, 0x0005, value_arr + 0x05C7},
-
-    /** Service Record 17 */
-    /* ServiceRecordHandle */
-    {0x0000, 0x0005, value_arr + 0x05CC},
-
-    /* ServiceClassIDList */
-    {0x0001, 0x000B, value_arr + 0x05D1},
-
-    /* ProtocolDescriptorList */
-    {0x0004, 0x0013, value_arr + 0x05DC},
-
-    /* BrowseGroupList  */
-    {0x0005, 0x0005, value_arr + 0x05EF},
-
-    /* LanguageBaseAttributeIDList  */
-    {0x0006, 0x000B, value_arr + 0x05F4},
-
-    /* BluetoothProfileDescriptorList */
-    {0x0009, 0x000A, value_arr + 0x05FF},
-
-    /* AdditionalProtocolDescriptorLists */
-    {0x000D, 0x0015, value_arr + 0x0609},
-
-    /* ServiceName */
-    {0x0100, 0x0011, value_arr + 0x061E},
-
-    /* DocumentFormatsSupported */
-    {0x0350, 0x000D, value_arr + 0x062F},
-
-    /* CharacterRepertoiresSupported */
-    {0x0352, 0x0011, value_arr + 0x063C},
-
-    /* XHTML-PrintImageFormatsSupported */
-    {0x0354, 0x000E, value_arr + 0x064D},
-
-    /* ColorSupported */
-    {0x0356, 0x0002, value_arr + 0x065B},
-
-    /* 1284ID */
-    {0x0358, 0x000A, value_arr + 0x065D},
-
-    /* PrinterName */
-    {0x035A, 0x0006, value_arr + 0x0667},
-
-    /* PrinterLocation */
-    {0x035C, 0x0006, value_arr + 0x066D},
-
-    /* DuplexSupported */
-    {0x035E, 0x0002, value_arr + 0x0673},
-
-    /* MediaTypesSupported */
-    {0x0360, 0x000D, value_arr + 0x0675},
-
-    /* MaxMediaWidth */
-    {0x0362, 0x0003, value_arr + 0x0682},
-
-    /* MaxMediaLength */
-    {0x0364, 0x0003, value_arr + 0x0685},
-
-    /* EnhancedLayoutSupported */
-    {0x0366, 0x0002, value_arr + 0x0688},
-
-    /* ReferencePrintingRUISupported */
-    {0x0370, 0x0002, value_arr + 0x068A},
-
-    /* DirectPrintingRUISupported */
-    {0x0372, 0x0002, value_arr + 0x068C},
-
-    /* ReferencePrintingTopURL */
-    {0x0374, 0x0006, value_arr + 0x068E},
-
-    /* DirectPrintingTopURL */
-    {0x0376, 0x0006, value_arr + 0x0694},
-
-    /** Service Record 18 */
-    /* ServiceRecordHandle */
-    {0x0000, 0x0005, value_arr + 0x069A},
-
-    /* ServiceClassIDList */
-    {0x0001, 0x0005, value_arr + 0x069F},
-
-    /* ProtocolDescriptorList */
-    {0x0004, 0x0013, value_arr + 0x06A4},
-
-    /* BrowseGroupList  */
-    {0x0005, 0x0005, value_arr + 0x06B7},
-
-    /* LanguageBaseAttributeIDList  */
-    {0x0006, 0x000B, value_arr + 0x06BC},
-
-    /* BluetoothProfileDescriptorList */
-    {0x0009, 0x000A, value_arr + 0x06C7},
-
-    /* AdditionalProtocolDescriptorLists */
-    {0x000D, 0x0015, value_arr + 0x06D1},
-
-    /* ServiceName */
-    {0x0100, 0x001D, value_arr + 0x06E6},
-
-    /** Service Record 19 */
-    /* ServiceRecordHandle */
-    {0x0000, 0x0005, value_arr + 0x0703},
-
-    /* ServiceClassIDList */
-    {0x0001, 0x0005, value_arr + 0x0708},
-
-    /* ProtocolDescriptorList */
-    {0x0004, 0x0013, value_arr + 0x070D},
-
-    /* BrowseGroupList  */
-    {0x0005, 0x0005, value_arr + 0x0720},
-
-    /* LanguageBaseAttributeIDList  */
-    {0x0006, 0x000B, value_arr + 0x0725},
-
-    /* ServiceName */
-    {0x0100, 0x0028, value_arr + 0x0730},
-
-    /* RUIFormatsSupported */
-    {0x0368, 0x0006, value_arr + 0x0758},
-
-    /* PrinterAdminRUITopURL */
-    {0x0378, 0x0006, value_arr + 0x075E},
-
-    /** Service Record 20 */
-    /* ServiceRecordHandle */
-    {0x0000, 0x0005, value_arr + 0x0764},
-
-    /* ServiceClassIDList */
-    {0x0001, 0x0008, value_arr + 0x0769},
-
-    /* ProtocolDescriptorList */
-    {0x0004, 0x0012, value_arr + 0x0771},
-
-    /* BrowseGroupList  */
-    {0x0005, 0x0005, value_arr + 0x0783},
-
-    /* LanguageBaseAttributeIDList  */
-    {0x0006, 0x000B, value_arr + 0x0788},
-
-    /* BluetoothProfileDescriptorList */
-    {0x0009, 0x000A, value_arr + 0x0793},
-
-    /* AdditionalProtocolDescriptorLists */
-    {0x000D, 0x0014, value_arr + 0x079D},
-
-    /* ServiceName */
-    {0x0100, 0x0013, value_arr + 0x07B1},
-
-    /* ProviderName */
-    {0x0102, 0x000B, value_arr + 0x07C4},
-
-    /* SupportedFeatures */
-    {0x0311, 0x0003, value_arr + 0x07CF},
-
-    /** Service Record 21 */
-    /* ServiceRecordHandle */
-    {0x0000, 0x0005, value_arr + 0x07D2},
-
-    /* ServiceClassIDList */
-    {0x0001, 0x0005, value_arr + 0x07D7},
-
-    /* ProtocolDescriptorList */
-    {0x0004, 0x0012, value_arr + 0x07DC},
-
-    /* BrowseGroupList  */
-    {0x0005, 0x0005, value_arr + 0x07EE},
-
-    /* LanguageBaseAttributeIDList  */
-    {0x0006, 0x000B, value_arr + 0x07F3},
-
-    /* BluetoothProfileDescriptorList */
-    {0x0009, 0x000A, value_arr + 0x07FE},
-
-    /* AdditionalProtocolDescriptorLists */
-    {0x000D, 0x0023, value_arr + 0x0808},
-
-    /* ServiceName */
-    {0x0100, 0x000F, value_arr + 0x082B},
-
-    /* ProviderName */
-    {0x0102, 0x000B, value_arr + 0x083A},
-
-    /* SupportedFeatures */
-    {0x0311, 0x0003, value_arr + 0x0845},
-
-    /** Service Record 22 */
-    /* ServiceRecordHandle */
-    {0x0000, 0x0005, value_arr + 0x0848},
-
-    /* ServiceClassIDList */
-    {0x0001, 0x0005, value_arr + 0x084D},
-
-    /* BrowseGroupList  */
-    {0x0005, 0x0005, value_arr + 0x0852},
-
-    /* LanguageBaseAttributeIDList  */
-    {0x0006, 0x000B, value_arr + 0x0857},
-
-    /* BluetoothProfileDescriptorList */
-    {0x0009, 0x000A, value_arr + 0x0862},
-
-    /* ServiceName */
-    {0x0100, 0x0018, value_arr + 0x086C},
-
-    /** Service Record 23 */
-    /* ServiceRecordHandle */
-    {0x0000, 0x0005, value_arr + 0x0884},
-
-    /* ServiceClassIDList */
-    {0x0001, 0x0005, value_arr + 0x0889},
-
-    /* ProtocolDescriptorList */
-    {0x0004, 0x0013, value_arr + 0x088E},
-
-    /* BrowseGroupList  */
-    {0x0005, 0x0005, value_arr + 0x08A1},
-
-    /* LanguageBaseAttributeIDList  */
-    {0x0006, 0x000B, value_arr + 0x08A6},
-
-    /* BluetoothProfileDescriptorList */
-    {0x0009, 0x000A, value_arr + 0x08B1},
-
-    /* ServiceName */
-    {0x0100, 0x0018, value_arr + 0x08BB},
-
-    /* HIDDeviceReleaseNumber */
-    {0x0200, 0x0003, value_arr + 0x08D3},
-
-    /* SupportedRepositories */
-    {0x0314, 0x0002, value_arr + 0x08D6},
-
-    /* MapSupportedFeatures */
-    {0x0317, 0x0005, value_arr + 0x08D8},
-
-    /** Service Record 24 */
-    /* ServiceRecordHandle */
-    {0x0000, 0x0005, value_arr + 0x08DD},
-
-    /* ServiceClassIDList */
-    {0x0001, 0x0005, value_arr + 0x08E2},
-
-    /* BrowseGroupList  */
-    {0x0005, 0x0005, value_arr + 0x08E7},
-
-    /* LanguageBaseAttributeIDList  */
-    {0x0006, 0x000B, value_arr + 0x08EC},
-
-    /* DocumentationURL */
-    {0x000A, 0x0014, value_arr + 0x08F7},
-
-    /* ClientExecutableURL */
-    {0x000B, 0x0011, value_arr + 0x090B},
-
-    /* ServiceDescription */
-    {0x0101, 0x000B, value_arr + 0x091C},
-
-    /* HIDDeviceReleaseNumber */
-    {0x0200, 0x0003, value_arr + 0x0927},
-
-    /* HIDProfileVersion */
-    {0x0201, 0x0003, value_arr + 0x092A},
-
-    /* HIDDeviceSubclass */
-    {0x0202, 0x0003, value_arr + 0x092D},
-
-    /* HIDCountryCode */
-    {0x0203, 0x0003, value_arr + 0x0930},
-
-    /* HIDVirtualCable */
-    {0x0204, 0x0002, value_arr + 0x0933},
-
-    /* HIDReconnectInitiate */
-    {0x0205, 0x0003, value_arr + 0x0935},
-
-    /** Service Record 25 */
-    /* ServiceRecordHandle */
-    {0x0000, 0x0005, value_arr + 0x0938},
-
-    /* ServiceClassIDList */
-    {0x0001, 0x0005, value_arr + 0x093D},
-
-    /* BrowseGroupList  */
-    {0x0005, 0x0005, value_arr + 0x0942},
-
-    /* LanguageBaseAttributeIDList  */
-    {0x0006, 0x000B, value_arr + 0x0947},
-
-    /* DocumentationURL */
-    {0x000A, 0x0016, value_arr + 0x0952},
-
-    /* ClientExecutableURL */
-    {0x000B, 0x0013, value_arr + 0x0968},
-
-    /* ServiceDescription */
-    {0x0101, 0x000D, value_arr + 0x097B},
-
-    /* HIDDeviceReleaseNumber */
-    {0x0200, 0x0003, value_arr + 0x0988},
-
-    /* HIDProfileVersion */
-    {0x0201, 0x0003, value_arr + 0x098B},
-
-    /* HIDDeviceSubclass */
-    {0x0202, 0x0003, value_arr + 0x098E},
-
-    /* HIDCountryCode */
-    {0x0203, 0x0003, value_arr + 0x0991},
-
-    /* HIDVirtualCable */
-    {0x0204, 0x0002, value_arr + 0x0994},
-
-    /* HIDReconnectInitiate */
-    {0x0205, 0x0003, value_arr + 0x0996},
-
-    /** Service Record 26 */
-    /* ServiceRecordHandle */
-    {0x0000, 0x0005, value_arr + 0x0999},
-
-    /* ServiceClassIDList */
-    {0x0001, 0x0008, value_arr + 0x099E},
-
-    /* ProtocolDescriptorList */
-    {0x0004, 0x0012, value_arr + 0x09A6},
-
-    /* BrowseGroupList  */
-    {0x0005, 0x0005, value_arr + 0x09B8},
-
-    /* LanguageBaseAttributeIDList  */
-    {0x0006, 0x000B, value_arr + 0x09BD},
-
-    /* BluetoothProfileDescriptorList */
-    {0x0009, 0x000A, value_arr + 0x09C8},
-
-    /* AdditionalProtocolDescriptorLists */
-    {0x000D, 0x0011, value_arr + 0x09D2},
-
-    /* ServiceName */
-    {0x0100, 0x0011, value_arr + 0x09E3},
-
-    /* ServiceDescription */
-    {0x0101, 0x0014, value_arr + 0x09F4},
-
-    /* ProviderName */
-    {0x0102, 0x000B, value_arr + 0x0A08},
-
-    /* HIDDeviceReleaseNumber */
-    {0x0200, 0x0020, value_arr + 0x0A13},
-
-    /* Supported Data Stores List */
-    {0x0301, 0x0002, value_arr + 0x0A33},
-
-    /* MCAPSupportedProcedures */
-    {0x0302, 0x0002, value_arr + 0x0A35},
-
     /** Service Record 27 */
     /* ServiceRecordHandle */
-    {0x0000, 0x0005, value_arr + 0x0A37},
+    {0x0000, 0x0005, &value_arr[0x0641]},
 
     /* ServiceClassIDList */
-    {0x0001, 0x0005, value_arr + 0x0A3C},
+    {0x0001, 0x0005, &value_arr[0x0646]},
 
     /* ProtocolDescriptorList */
-    {0x0004, 0x0013, value_arr + 0x0A41},
+    {0x0004, 0x0012, &value_arr[0x064B]},
 
     /* BrowseGroupList  */
-    {0x0005, 0x0005, value_arr + 0x0A54},
+    {0x0005, 0x0005, &value_arr[0x065D]},
 
     /* LanguageBaseAttributeIDList  */
-    {0x0006, 0x000B, value_arr + 0x0A59},
+    {0x0006, 0x000B, &value_arr[0x0662]},
 
     /* BluetoothProfileDescriptorList */
-    {0x0009, 0x000A, value_arr + 0x0A64},
+    {0x0009, 0x000A, &value_arr[0x066D]},
 
     /* ServiceName */
-    {0x0100, 0x001B, value_arr + 0x0A6E},
+    {0x0100, 0x000B, &value_arr[0x0677]},
 
-    /* HIDDeviceReleaseNumber */
-    {0x0200, 0x0003, value_arr + 0x0A89},
+    /* ProviderName */
+    {0x0102, 0x000B, &value_arr[0x0682]},
 
-    /* MapSupportedFeatures */
-    {0x0317, 0x0005, value_arr + 0x0A8C},
+    /* SupportedFeatures */
+    {0x0311, 0x0003, &value_arr[0x068D]},
 
     /** Service Record 28 */
     /* ServiceRecordHandle */
-    {0x0000, 0x0005, value_arr + 0x0A91},
+    {0x0000, 0x0005, &value_arr[0x0690]},
 
     /* ServiceClassIDList */
-    {0x0001, 0x0005, value_arr + 0x0A96},
+    {0x0001, 0x0005, &value_arr[0x0695]},
 
     /* ProtocolDescriptorList */
-    {0x0004, 0x0013, value_arr + 0x0A9B},
+    {0x0004, 0x0012, &value_arr[0x069A]},
 
     /* BrowseGroupList  */
-    {0x0005, 0x0005, value_arr + 0x0AAE},
+    {0x0005, 0x0005, &value_arr[0x06AC]},
 
     /* LanguageBaseAttributeIDList  */
-    {0x0006, 0x000B, value_arr + 0x0AB3},
+    {0x0006, 0x000B, &value_arr[0x06B1]},
 
     /* BluetoothProfileDescriptorList */
-    {0x0009, 0x000A, value_arr + 0x0ABE},
+    {0x0009, 0x000A, &value_arr[0x06BC]},
 
     /* ServiceName */
-    {0x0100, 0x0015, value_arr + 0x0AC8},
+    {0x0100, 0x000D, &value_arr[0x06C6]},
 
-    /* HIDDeviceReleaseNumber */
-    {0x0200, 0x0003, value_arr + 0x0ADD},
+    /* ProviderName */
+    {0x0102, 0x000B, &value_arr[0x06D3]},
 
-    /* MASInstanceID */
-    {0x0315, 0x0002, value_arr + 0x0AE0},
-
-    /* SupportedMessageTypes */
-    {0x0316, 0x0002, value_arr + 0x0AE2},
-
-    /* MapSupportedFeatures */
-    {0x0317, 0x0005, value_arr + 0x0AE4},
+    /* SupportedFeatures */
+    {0x0311, 0x0003, &value_arr[0x06DE]},
 
     /** Service Record 29 */
     /* ServiceRecordHandle */
-    {0x0000, 0x0005, value_arr + 0x0AE9},
+    {0x0000, 0x0005, &value_arr[0x06E1]},
 
     /* ServiceClassIDList */
-    {0x0001, 0x0005, value_arr + 0x0AEE},
+    {0x0001, 0x0005, &value_arr[0x06E6]},
+
+    /* ProtocolDescriptorList */
+    {0x0004, 0x0013, &value_arr[0x06EB]},
 
     /* BrowseGroupList  */
-    {0x0005, 0x0005, value_arr + 0x0AF3},
+    {0x0005, 0x0005, &value_arr[0x06FE]},
 
     /* LanguageBaseAttributeIDList  */
-    {0x0006, 0x000B, value_arr + 0x0AF8},
+    {0x0006, 0x000B, &value_arr[0x0703]},
 
     /* BluetoothProfileDescriptorList */
-    {0x0009, 0x000A, value_arr + 0x0B03},
+    {0x0009, 0x000A, &value_arr[0x070E]},
+
+    /* ServiceName */
+    {0x0100, 0x0006, &value_arr[0x0718]},
 
     /* HIDDeviceReleaseNumber */
-    {0x0200, 0x0009, value_arr + 0x0B0D},
+    {0x0200, 0x0003, &value_arr[0x071E]},
 
-    /* HIDProfileVersion */
-    {0x0201, 0x0009, value_arr + 0x0B16},
-
-    /* HIDDeviceSubclass */
-    {0x0202, 0x0003, value_arr + 0x0B1F},
+    /* SupportedFormatsList */
+    {0x0303, 0x0006, &value_arr[0x0721]},
 
     /** Service Record 30 */
     /* ServiceRecordHandle */
-    {0x0000, 0x0005, value_arr + 0x0B22},
+    {0x0000, 0x0005, &value_arr[0x0727]},
 
     /* ServiceClassIDList */
-    {0x0001, 0x0005, value_arr + 0x0B27},
+    {0x0001, 0x0005, &value_arr[0x072C]},
 
     /* ProtocolDescriptorList */
-    {0x0004, 0x0015, value_arr + 0x0B2C},
+    {0x0004, 0x0020, &value_arr[0x0731]},
 
     /* BrowseGroupList  */
-    {0x0005, 0x0005, value_arr + 0x0B41},
+    {0x0005, 0x0005, &value_arr[0x0751]},
 
     /* LanguageBaseAttributeIDList  */
-    {0x0006, 0x000B, value_arr + 0x0B46},
+    {0x0006, 0x000B, &value_arr[0x0756]},
+
+    /* ServiceAvailability */
+    {0x0008, 0x0002, &value_arr[0x0761]},
+
+    /* BluetoothProfileDescriptorList */
+    {0x0009, 0x000A, &value_arr[0x0763]},
+
+    /* ServiceName */
+    {0x0100, 0x001F, &value_arr[0x076D]},
+
+    /* ServiceDescription */
+    {0x0101, 0x0022, &value_arr[0x078C]},
+
+    /* SecurityDescription */
+    {0x030A, 0x0003, &value_arr[0x07AE]},
+
+    /* NetAccessType */
+    {0x030B, 0x0003, &value_arr[0x07B1]},
+
+    /* MaxNetAccessrate */
+    {0x030C, 0x0005, &value_arr[0x07B4]},
+
+    /* IPv4Subnet */
+    {0x030D, 0x000D, &value_arr[0x07B9]},
+
+    /* IPv6Subnet */
+    {0x030E, 0x000C, &value_arr[0x07C6]},
 
     /** Service Record 31 */
     /* ServiceRecordHandle */
-    {0x0000, 0x0005, value_arr + 0x0B51},
+    {0x0000, 0x0005, &value_arr[0x07D2]},
 
     /* ServiceClassIDList */
-    {0x0001, 0x0005, value_arr + 0x0B56},
+    {0x0001, 0x0005, &value_arr[0x07D7]},
 
     /* ProtocolDescriptorList */
-    {0x0004, 0x0015, value_arr + 0x0B5B},
+    {0x0004, 0x0020, &value_arr[0x07DC]},
 
     /* BrowseGroupList  */
-    {0x0005, 0x0005, value_arr + 0x0B70},
+    {0x0005, 0x0005, &value_arr[0x07FC]},
 
     /* LanguageBaseAttributeIDList  */
-    {0x0006, 0x000B, value_arr + 0x0B75},
+    {0x0006, 0x000B, &value_arr[0x0801]},
+
+    /* ServiceAvailability */
+    {0x0008, 0x0002, &value_arr[0x080C]},
+
+    /* BluetoothProfileDescriptorList */
+    {0x0009, 0x000A, &value_arr[0x080E]},
+
+    /* ServiceName */
+    {0x0100, 0x001F, &value_arr[0x0818]},
+
+    /* ServiceDescription */
+    {0x0101, 0x0028, &value_arr[0x0837]},
+
+    /* SecurityDescription */
+    {0x030A, 0x0003, &value_arr[0x085F]},
+
+    /* IPv4Subnet */
+    {0x030D, 0x000D, &value_arr[0x0862]},
+
+    /* IPv6Subnet */
+    {0x030E, 0x000C, &value_arr[0x086F]},
 
     /** Service Record 32 */
     /* ServiceRecordHandle */
-    {0x0000, 0x0005, value_arr + 0x0B80},
+    {0x0000, 0x0005, &value_arr[0x087B]},
 
     /* ServiceClassIDList */
-    {0x0001, 0x0005, value_arr + 0x0B85},
+    {0x0001, 0x0005, &value_arr[0x0880]},
 
     /* ProtocolDescriptorList */
-    {0x0004, 0x0015, value_arr + 0x0B8A},
+    {0x0004, 0x0020, &value_arr[0x0885]},
 
     /* BrowseGroupList  */
-    {0x0005, 0x0005, value_arr + 0x0B9F},
+    {0x0005, 0x0005, &value_arr[0x08A5]},
 
     /* LanguageBaseAttributeIDList  */
-    {0x0006, 0x000B, value_arr + 0x0BA4},
+    {0x0006, 0x000B, &value_arr[0x08AA]},
+
+    /* ServiceAvailability */
+    {0x0008, 0x0002, &value_arr[0x08B5]},
+
+    /* BluetoothProfileDescriptorList */
+    {0x0009, 0x000A, &value_arr[0x08B7]},
+
+    /* ServiceName */
+    {0x0100, 0x001F, &value_arr[0x08C1]},
+
+    /* ServiceDescription */
+    {0x0101, 0x001F, &value_arr[0x08E0]},
+
+    /* SecurityDescription */
+    {0x030A, 0x0003, &value_arr[0x08FF]},
 
     /** Service Record 33 */
     /* ServiceRecordHandle */
-    {0x0000, 0x0005, value_arr + 0x0BAF},
+    {0x0000, 0x0005, &value_arr[0x0902]},
 
     /* ServiceClassIDList */
-    {0x0001, 0x0005, value_arr + 0x0BB4},
+    {0x0001, 0x0005, &value_arr[0x0907]},
 
     /* ProtocolDescriptorList */
-    {0x0004, 0x0015, value_arr + 0x0BB9},
+    {0x0004, 0x0013, &value_arr[0x090C]},
 
     /* BrowseGroupList  */
-    {0x0005, 0x0005, value_arr + 0x0BCE},
+    {0x0005, 0x0005, &value_arr[0x091F]},
 
     /* LanguageBaseAttributeIDList  */
-    {0x0006, 0x000B, value_arr + 0x0BD3},
+    {0x0006, 0x000B, &value_arr[0x0924]},
+
+    /* BluetoothProfileDescriptorList */
+    {0x0009, 0x000A, &value_arr[0x092F]},
+
+    /* ServiceName */
+    {0x0100, 0x000A, &value_arr[0x0939]},
+
+    /* HIDDeviceReleaseNumber */
+    {0x0200, 0x0003, &value_arr[0x0943]},
+
+    /* SupportedCapabalities */
+    {0x0310, 0x0002, &value_arr[0x0946]},
+
+    /* SupportedFeatures */
+    {0x0311, 0x0003, &value_arr[0x0948]},
+
+    /* SupportedFunctions */
+    {0x0312, 0x0005, &value_arr[0x094B]},
+
+    /* TotalImagingDataCapacity */
+    {0x0313, 0x0009, &value_arr[0x0950]},
 
     /** Service Record 34 */
     /* ServiceRecordHandle */
-    {0x0000, 0x0005, value_arr + 0x0BDE},
+    {0x0000, 0x0005, &value_arr[0x0959]},
 
     /* ServiceClassIDList */
-    {0x0001, 0x0005, value_arr + 0x0BE3},
+    {0x0001, 0x0005, &value_arr[0x095E]},
+
+    /* ServiceID */
+    {0x0003, 0x0003, &value_arr[0x0963]},
 
     /* ProtocolDescriptorList */
-    {0x0004, 0x0015, value_arr + 0x0BE8},
+    {0x0004, 0x0013, &value_arr[0x0966]},
 
     /* BrowseGroupList  */
-    {0x0005, 0x0005, value_arr + 0x0BFD},
+    {0x0005, 0x0005, &value_arr[0x0979]},
 
     /* LanguageBaseAttributeIDList  */
-    {0x0006, 0x000B, value_arr + 0x0C02},
+    {0x0006, 0x000B, &value_arr[0x097E]},
+
+    /* BluetoothProfileDescriptorList */
+    {0x0009, 0x000A, &value_arr[0x0989]},
+
+    /* ServiceName */
+    {0x0100, 0x001D, &value_arr[0x0993]},
+
+    /* HIDDeviceReleaseNumber */
+    {0x0200, 0x0003, &value_arr[0x09B0]},
+
+    /* SupportedFunctions */
+    {0x0312, 0x0005, &value_arr[0x09B3]},
 
     /** Service Record 35 */
     /* ServiceRecordHandle */
-    {0x0000, 0x0005, value_arr + 0x0C0D},
+    {0x0000, 0x0005, &value_arr[0x09B8]},
 
     /* ServiceClassIDList */
-    {0x0001, 0x0005, value_arr + 0x0C12},
+    {0x0001, 0x0005, &value_arr[0x09BD]},
+
+    /* ServiceID */
+    {0x0003, 0x0003, &value_arr[0x09C2]},
 
     /* ProtocolDescriptorList */
-    {0x0004, 0x0015, value_arr + 0x0C17},
+    {0x0004, 0x0013, &value_arr[0x09C5]},
 
     /* BrowseGroupList  */
-    {0x0005, 0x0005, value_arr + 0x0C2C},
+    {0x0005, 0x0005, &value_arr[0x09D8]},
 
     /* LanguageBaseAttributeIDList  */
-    {0x0006, 0x000B, value_arr + 0x0C31},
+    {0x0006, 0x000B, &value_arr[0x09DD]},
+
+    /* BluetoothProfileDescriptorList */
+    {0x0009, 0x000A, &value_arr[0x09E8]},
+
+    /* ServiceName */
+    {0x0100, 0x001C, &value_arr[0x09F2]},
+
+    /* HIDDeviceReleaseNumber */
+    {0x0200, 0x0003, &value_arr[0x0A0E]},
+
+    /* SupportedFunctions */
+    {0x0312, 0x0005, &value_arr[0x0A11]},
 
     /** Service Record 36 */
     /* ServiceRecordHandle */
-    {0x0000, 0x0005, value_arr + 0x0C3C},
+    {0x0000, 0x0005, &value_arr[0x0A16]},
 
     /* ServiceClassIDList */
-    {0x0001, 0x0005, value_arr + 0x0C41},
+    {0x0001, 0x000B, &value_arr[0x0A1B]},
 
     /* ProtocolDescriptorList */
-    {0x0004, 0x0015, value_arr + 0x0C46},
+    {0x0004, 0x0013, &value_arr[0x0A26]},
 
     /* BrowseGroupList  */
-    {0x0005, 0x0005, value_arr + 0x0C5B},
+    {0x0005, 0x0005, &value_arr[0x0A39]},
 
     /* LanguageBaseAttributeIDList  */
-    {0x0006, 0x000B, value_arr + 0x0C60},
+    {0x0006, 0x000B, &value_arr[0x0A3E]},
+
+    /* BluetoothProfileDescriptorList */
+    {0x0009, 0x000A, &value_arr[0x0A49]},
+
+    /* AdditionalProtocolDescriptorLists */
+    {0x000D, 0x0015, &value_arr[0x0A53]},
+
+    /* ServiceName */
+    {0x0100, 0x0011, &value_arr[0x0A68]},
+
+    /* DocumentFormatsSupported */
+    {0x0350, 0x000D, &value_arr[0x0A79]},
+
+    /* CharacterRepertoiresSupported */
+    {0x0352, 0x0011, &value_arr[0x0A86]},
+
+    /* XHTML-PrintImageFormatsSupported */
+    {0x0354, 0x000E, &value_arr[0x0A97]},
+
+    /* ColorSupported */
+    {0x0356, 0x0002, &value_arr[0x0AA5]},
+
+    /* 1284ID */
+    {0x0358, 0x000A, &value_arr[0x0AA7]},
+
+    /* PrinterName */
+    {0x035A, 0x0006, &value_arr[0x0AB1]},
+
+    /* PrinterLocation */
+    {0x035C, 0x0006, &value_arr[0x0AB7]},
+
+    /* DuplexSupported */
+    {0x035E, 0x0002, &value_arr[0x0ABD]},
+
+    /* MediaTypesSupported */
+    {0x0360, 0x000D, &value_arr[0x0ABF]},
+
+    /* MaxMediaWidth */
+    {0x0362, 0x0003, &value_arr[0x0ACC]},
+
+    /* MaxMediaLength */
+    {0x0364, 0x0003, &value_arr[0x0ACF]},
+
+    /* EnhancedLayoutSupported */
+    {0x0366, 0x0002, &value_arr[0x0AD2]},
+
+    /* ReferencePrintingRUISupported */
+    {0x0370, 0x0002, &value_arr[0x0AD4]},
+
+    /* DirectPrintingRUISupported */
+    {0x0372, 0x0002, &value_arr[0x0AD6]},
+
+    /* ReferencePrintingTopURL */
+    {0x0374, 0x0006, &value_arr[0x0AD8]},
+
+    /* DirectPrintingTopURL */
+    {0x0376, 0x0006, &value_arr[0x0ADE]},
 
     /** Service Record 37 */
     /* ServiceRecordHandle */
-    {0x0000, 0x0005, value_arr + 0x0C6B},
+    {0x0000, 0x0005, &value_arr[0x0AE4]},
 
     /* ServiceClassIDList */
-    {0x0001, 0x0005, value_arr + 0x0C70},
+    {0x0001, 0x0005, &value_arr[0x0AE9]},
 
     /* ProtocolDescriptorList */
-    {0x0004, 0x0015, value_arr + 0x0C75},
+    {0x0004, 0x0013, &value_arr[0x0AEE]},
 
     /* BrowseGroupList  */
-    {0x0005, 0x0005, value_arr + 0x0C8A},
+    {0x0005, 0x0005, &value_arr[0x0B01]},
 
     /* LanguageBaseAttributeIDList  */
-    {0x0006, 0x000B, value_arr + 0x0C8F},
+    {0x0006, 0x000B, &value_arr[0x0B06]},
+
+    /* BluetoothProfileDescriptorList */
+    {0x0009, 0x000A, &value_arr[0x0B11]},
+
+    /* AdditionalProtocolDescriptorLists */
+    {0x000D, 0x0015, &value_arr[0x0B1B]},
+
+    /* ServiceName */
+    {0x0100, 0x001D, &value_arr[0x0B30]},
 
     /** Service Record 38 */
     /* ServiceRecordHandle */
-    {0x0000, 0x0005, value_arr + 0x0C9A},
+    {0x0000, 0x0005, &value_arr[0x0B4D]},
 
     /* ServiceClassIDList */
-    {0x0001, 0x0005, value_arr + 0x0C9F},
+    {0x0001, 0x0005, &value_arr[0x0B52]},
 
     /* ProtocolDescriptorList */
-    {0x0004, 0x0015, value_arr + 0x0CA4},
+    {0x0004, 0x0013, &value_arr[0x0B57]},
 
     /* BrowseGroupList  */
-    {0x0005, 0x0005, value_arr + 0x0CB9},
+    {0x0005, 0x0005, &value_arr[0x0B6A]},
 
     /* LanguageBaseAttributeIDList  */
-    {0x0006, 0x000B, value_arr + 0x0CBE},
+    {0x0006, 0x000B, &value_arr[0x0B6F]},
+
+    /* ServiceName */
+    {0x0100, 0x0028, &value_arr[0x0B7A]},
+
+    /* RUIFormatsSupported */
+    {0x0368, 0x0006, &value_arr[0x0BA2]},
+
+    /* PrinterAdminRUITopURL */
+    {0x0378, 0x0006, &value_arr[0x0BA8]},
 
     /** Service Record 39 */
     /* ServiceRecordHandle */
-    {0x0000, 0x0005, value_arr + 0x0CC9},
+    {0x0000, 0x0005, &value_arr[0x0BAE]},
 
     /* ServiceClassIDList */
-    {0x0001, 0x0005, value_arr + 0x0CCE},
+    {0x0001, 0x0008, &value_arr[0x0BB3]},
 
     /* ProtocolDescriptorList */
-    {0x0004, 0x000F, value_arr + 0x0CD3},
+    {0x0004, 0x0012, &value_arr[0x0BBB]},
 
     /* BrowseGroupList  */
-    {0x0005, 0x0005, value_arr + 0x0CE2},
+    {0x0005, 0x0005, &value_arr[0x0BCD]},
 
     /* LanguageBaseAttributeIDList  */
-    {0x0006, 0x000B, value_arr + 0x0CE7},
+    {0x0006, 0x000B, &value_arr[0x0BD2]},
 
     /* BluetoothProfileDescriptorList */
-    {0x0009, 0x000A, value_arr + 0x0CF2},
+    {0x0009, 0x000A, &value_arr[0x0BDD]},
+
+    /* AdditionalProtocolDescriptorLists */
+    {0x000D, 0x0014, &value_arr[0x0BE7]},
 
     /* ServiceName */
-    {0x0100, 0x001B, value_arr + 0x0CFC},
+    {0x0100, 0x0013, &value_arr[0x0BFB]},
 
-    /* MapSupportedFeatures */
-    {0x0317, 0x0005, value_arr + 0x0D17},
+    /* ProviderName */
+    {0x0102, 0x000B, &value_arr[0x0C0E]},
+
+    /* SupportedFeatures */
+    {0x0311, 0x0003, &value_arr[0x0C19]},
 
     /** Service Record 40 */
     /* ServiceRecordHandle */
-    {0x0000, 0x0005, value_arr + 0x0D1C},
+    {0x0000, 0x0005, &value_arr[0x0C1C]},
 
     /* ServiceClassIDList */
-    {0x0001, 0x0005, value_arr + 0x0D21},
+    {0x0001, 0x0005, &value_arr[0x0C21]},
 
     /* ProtocolDescriptorList */
-    {0x0004, 0x000F, value_arr + 0x0D26},
+    {0x0004, 0x0012, &value_arr[0x0C26]},
 
     /* BrowseGroupList  */
-    {0x0005, 0x0005, value_arr + 0x0D35},
+    {0x0005, 0x0005, &value_arr[0x0C38]},
 
     /* LanguageBaseAttributeIDList  */
-    {0x0006, 0x000B, value_arr + 0x0D3A},
+    {0x0006, 0x000B, &value_arr[0x0C3D]},
 
     /* BluetoothProfileDescriptorList */
-    {0x0009, 0x000A, value_arr + 0x0D45},
+    {0x0009, 0x000A, &value_arr[0x0C48]},
+
+    /* AdditionalProtocolDescriptorLists */
+    {0x000D, 0x0023, &value_arr[0x0C52]},
 
     /* ServiceName */
-    {0x0100, 0x0015, value_arr + 0x0D4F},
+    {0x0100, 0x000F, &value_arr[0x0C75]},
 
-    /* MASInstanceID */
-    {0x0315, 0x0002, value_arr + 0x0D64},
+    /* ProviderName */
+    {0x0102, 0x000B, &value_arr[0x0C84]},
+
+    /* SupportedFeatures */
+    {0x0311, 0x0003, &value_arr[0x0C8F]},
+
+    /** Service Record 41 */
+    /* ServiceRecordHandle */
+    {0x0000, 0x0005, &value_arr[0x0C92]},
+
+    /* ServiceClassIDList */
+    {0x0001, 0x0005, &value_arr[0x0C97]},
+
+    /* BrowseGroupList  */
+    {0x0005, 0x0005, &value_arr[0x0C9C]},
+
+    /* LanguageBaseAttributeIDList  */
+    {0x0006, 0x000B, &value_arr[0x0CA1]},
+
+    /* BluetoothProfileDescriptorList */
+    {0x0009, 0x000A, &value_arr[0x0CAC]},
+
+    /* ServiceName */
+    {0x0100, 0x0018, &value_arr[0x0CB6]},
+
+    /** Service Record 42 */
+    /* ServiceRecordHandle */
+    {0x0000, 0x0005, &value_arr[0x0CCE]},
+
+    /* ServiceClassIDList */
+    {0x0001, 0x0005, &value_arr[0x0CD3]},
+
+    /* ProtocolDescriptorList */
+    {0x0004, 0x0013, &value_arr[0x0CD8]},
+
+    /* BrowseGroupList  */
+    {0x0005, 0x0005, &value_arr[0x0CEB]},
+
+    /* LanguageBaseAttributeIDList  */
+    {0x0006, 0x000B, &value_arr[0x0CF0]},
+
+    /* BluetoothProfileDescriptorList */
+    {0x0009, 0x000A, &value_arr[0x0CFB]},
+
+    /* ServiceName */
+    {0x0100, 0x0018, &value_arr[0x0D05]},
+
+    /* HIDDeviceReleaseNumber */
+    {0x0200, 0x0003, &value_arr[0x0D1D]},
+
+    /* SupportedRepositories */
+    {0x0314, 0x0002, &value_arr[0x0D20]},
 
     /* MapSupportedFeatures */
-    {0x0317, 0x0005, value_arr + 0x0D66}
+    {0x0317, 0x0005, &value_arr[0x0D22]},
+
+    /** Service Record 43 */
+    /* ServiceRecordHandle */
+    {0x0000, 0x0005, &value_arr[0x0D27]},
+
+    /* ServiceClassIDList */
+    {0x0001, 0x0005, &value_arr[0x0D2C]},
+
+    /* BrowseGroupList  */
+    {0x0005, 0x0005, &value_arr[0x0D31]},
+
+    /* LanguageBaseAttributeIDList  */
+    {0x0006, 0x000B, &value_arr[0x0D36]},
+
+    /* DocumentationURL */
+    {0x000A, 0x0014, &value_arr[0x0D41]},
+
+    /* ClientExecutableURL */
+    {0x000B, 0x0011, &value_arr[0x0D55]},
+
+    /* ServiceDescription */
+    {0x0101, 0x000B, &value_arr[0x0D66]},
+
+    /* HIDDeviceReleaseNumber */
+    {0x0200, 0x0003, &value_arr[0x0D71]},
+
+    /* HIDProfileVersion */
+    {0x0201, 0x0003, &value_arr[0x0D74]},
+
+    /* HIDDeviceSubclass */
+    {0x0202, 0x0003, &value_arr[0x0D77]},
+
+    /* HIDCountryCode */
+    {0x0203, 0x0003, &value_arr[0x0D7A]},
+
+    /* HIDVirtualCable */
+    {0x0204, 0x0002, &value_arr[0x0D7D]},
+
+    /* HIDReconnectInitiate */
+    {0x0205, 0x0003, &value_arr[0x0D7F]},
+
+    /** Service Record 44 */
+    /* ServiceRecordHandle */
+    {0x0000, 0x0005, &value_arr[0x0D82]},
+
+    /* ServiceClassIDList */
+    {0x0001, 0x0005, &value_arr[0x0D87]},
+
+    /* BrowseGroupList  */
+    {0x0005, 0x0005, &value_arr[0x0D8C]},
+
+    /* LanguageBaseAttributeIDList  */
+    {0x0006, 0x000B, &value_arr[0x0D91]},
+
+    /* DocumentationURL */
+    {0x000A, 0x0016, &value_arr[0x0D9C]},
+
+    /* ClientExecutableURL */
+    {0x000B, 0x0013, &value_arr[0x0DB2]},
+
+    /* ServiceDescription */
+    {0x0101, 0x000D, &value_arr[0x0DC5]},
+
+    /* HIDDeviceReleaseNumber */
+    {0x0200, 0x0003, &value_arr[0x0DD2]},
+
+    /* HIDProfileVersion */
+    {0x0201, 0x0003, &value_arr[0x0DD5]},
+
+    /* HIDDeviceSubclass */
+    {0x0202, 0x0003, &value_arr[0x0DD8]},
+
+    /* HIDCountryCode */
+    {0x0203, 0x0003, &value_arr[0x0DDB]},
+
+    /* HIDVirtualCable */
+    {0x0204, 0x0002, &value_arr[0x0DDE]},
+
+    /* HIDReconnectInitiate */
+    {0x0205, 0x0003, &value_arr[0x0DE0]},
+
+    /** Service Record 45 */
+    /* ServiceRecordHandle */
+    {0x0000, 0x0005, &value_arr[0x0DE3]},
+
+    /* ServiceClassIDList */
+    {0x0001, 0x0008, &value_arr[0x0DE8]},
+
+    /* ProtocolDescriptorList */
+    {0x0004, 0x0012, &value_arr[0x0DF0]},
+
+    /* BrowseGroupList  */
+    {0x0005, 0x0005, &value_arr[0x0E02]},
+
+    /* LanguageBaseAttributeIDList  */
+    {0x0006, 0x000B, &value_arr[0x0E07]},
+
+    /* BluetoothProfileDescriptorList */
+    {0x0009, 0x000A, &value_arr[0x0E12]},
+
+    /* AdditionalProtocolDescriptorLists */
+    {0x000D, 0x0011, &value_arr[0x0E1C]},
+
+    /* ServiceName */
+    {0x0100, 0x0011, &value_arr[0x0E2D]},
+
+    /* ServiceDescription */
+    {0x0101, 0x0014, &value_arr[0x0E3E]},
+
+    /* ProviderName */
+    {0x0102, 0x000B, &value_arr[0x0E52]},
+
+    /* HIDDeviceReleaseNumber */
+    {0x0200, 0x0020, &value_arr[0x0E5D]},
+
+    /* Supported Data Stores List */
+    {0x0301, 0x0002, &value_arr[0x0E7D]},
+
+    /* MCAPSupportedProcedures */
+    {0x0302, 0x0002, &value_arr[0x0E7F]},
+
+    /** Service Record 46 */
+    /* ServiceRecordHandle */
+    {0x0000, 0x0005, &value_arr[0x0E81]},
+
+    /* ServiceClassIDList */
+    {0x0001, 0x0005, &value_arr[0x0E86]},
+
+    /* ProtocolDescriptorList */
+    {0x0004, 0x0013, &value_arr[0x0E8B]},
+
+    /* BrowseGroupList  */
+    {0x0005, 0x0005, &value_arr[0x0E9E]},
+
+    /* LanguageBaseAttributeIDList  */
+    {0x0006, 0x000B, &value_arr[0x0EA3]},
+
+    /* BluetoothProfileDescriptorList */
+    {0x0009, 0x000A, &value_arr[0x0EAE]},
+
+    /* ServiceName */
+    {0x0100, 0x001B, &value_arr[0x0EB8]},
+
+    /* HIDDeviceReleaseNumber */
+    {0x0200, 0x0003, &value_arr[0x0ED3]},
+
+    /* MapSupportedFeatures */
+    {0x0317, 0x0005, &value_arr[0x0ED6]},
+
+    /** Service Record 47 */
+    /* ServiceRecordHandle */
+    {0x0000, 0x0005, &value_arr[0x0EDB]},
+
+    /* ServiceClassIDList */
+    {0x0001, 0x0005, &value_arr[0x0EE0]},
+
+    /* ProtocolDescriptorList */
+    {0x0004, 0x0013, &value_arr[0x0EE5]},
+
+    /* BrowseGroupList  */
+    {0x0005, 0x0005, &value_arr[0x0EF8]},
+
+    /* LanguageBaseAttributeIDList  */
+    {0x0006, 0x000B, &value_arr[0x0EFD]},
+
+    /* BluetoothProfileDescriptorList */
+    {0x0009, 0x000A, &value_arr[0x0F08]},
+
+    /* ServiceName */
+    {0x0100, 0x0015, &value_arr[0x0F12]},
+
+    /* HIDDeviceReleaseNumber */
+    {0x0200, 0x0003, &value_arr[0x0F27]},
+
+    /* MASInstanceID */
+    {0x0315, 0x0002, &value_arr[0x0F2A]},
+
+    /* SupportedMessageTypes */
+    {0x0316, 0x0002, &value_arr[0x0F2C]},
+
+    /* MapSupportedFeatures */
+    {0x0317, 0x0005, &value_arr[0x0F2E]},
+
+    /** Service Record 48 */
+    /* ServiceRecordHandle */
+    {0x0000, 0x0005, &value_arr[0x0F33]},
+
+    /* ServiceClassIDList */
+    {0x0001, 0x0005, &value_arr[0x0F38]},
+
+    /* ProtocolDescriptorList */
+    {0x0004, 0x0013, &value_arr[0x0F3D]},
+
+    /* BrowseGroupList  */
+    {0x0005, 0x0005, &value_arr[0x0F50]},
+
+    /* LanguageBaseAttributeIDList  */
+    {0x0006, 0x000B, &value_arr[0x0F55]},
+
+    /* BluetoothProfileDescriptorList */
+    {0x0009, 0x000A, &value_arr[0x0F60]},
+
+    /* ServiceName */
+    {0x0100, 0x0015, &value_arr[0x0F6A]},
+
+    /* HIDDeviceReleaseNumber */
+    {0x0200, 0x0003, &value_arr[0x0F7F]},
+
+    /* MASInstanceID */
+    {0x0315, 0x0002, &value_arr[0x0F82]},
+
+    /* SupportedMessageTypes */
+    {0x0316, 0x0002, &value_arr[0x0F84]},
+
+    /* MapSupportedFeatures */
+    {0x0317, 0x0005, &value_arr[0x0F86]},
+
+    /** Service Record 49 */
+    /* ServiceRecordHandle */
+    {0x0000, 0x0005, &value_arr[0x0F8B]},
+
+    /* ServiceClassIDList */
+    {0x0001, 0x0005, &value_arr[0x0F90]},
+
+    /* BrowseGroupList  */
+    {0x0005, 0x0005, &value_arr[0x0F95]},
+
+    /* LanguageBaseAttributeIDList  */
+    {0x0006, 0x000B, &value_arr[0x0F9A]},
+
+    /* BluetoothProfileDescriptorList */
+    {0x0009, 0x000A, &value_arr[0x0FA5]},
+
+    /* HIDDeviceReleaseNumber */
+    {0x0200, 0x0009, &value_arr[0x0FAF]},
+
+    /* HIDProfileVersion */
+    {0x0201, 0x0009, &value_arr[0x0FB8]},
+
+    /* HIDDeviceSubclass */
+    {0x0202, 0x0003, &value_arr[0x0FC1]},
+
+    /** Service Record 50 */
+    /* ServiceRecordHandle */
+    {0x0000, 0x0005, &value_arr[0x0FC4]},
+
+    /* ServiceClassIDList */
+    {0x0001, 0x0005, &value_arr[0x0FC9]},
+
+    /* ProtocolDescriptorList */
+    {0x0004, 0x0015, &value_arr[0x0FCE]},
+
+    /* BrowseGroupList  */
+    {0x0005, 0x0005, &value_arr[0x0FE3]},
+
+    /* LanguageBaseAttributeIDList  */
+    {0x0006, 0x000B, &value_arr[0x0FE8]},
+
+    /** Service Record 51 */
+    /* ServiceRecordHandle */
+    {0x0000, 0x0005, &value_arr[0x0FF3]},
+
+    /* ServiceClassIDList */
+    {0x0001, 0x0005, &value_arr[0x0FF8]},
+
+    /* ProtocolDescriptorList */
+    {0x0004, 0x0015, &value_arr[0x0FFD]},
+
+    /* BrowseGroupList  */
+    {0x0005, 0x0005, &value_arr[0x1012]},
+
+    /* LanguageBaseAttributeIDList  */
+    {0x0006, 0x000B, &value_arr[0x1017]},
+
+    /** Service Record 52 */
+    /* ServiceRecordHandle */
+    {0x0000, 0x0005, &value_arr[0x1022]},
+
+    /* ServiceClassIDList */
+    {0x0001, 0x0005, &value_arr[0x1027]},
+
+    /* ProtocolDescriptorList */
+    {0x0004, 0x0015, &value_arr[0x102C]},
+
+    /* BrowseGroupList  */
+    {0x0005, 0x0005, &value_arr[0x1041]},
+
+    /* LanguageBaseAttributeIDList  */
+    {0x0006, 0x000B, &value_arr[0x1046]},
+
+    /** Service Record 53 */
+    /* ServiceRecordHandle */
+    {0x0000, 0x0005, &value_arr[0x1051]},
+
+    /* ServiceClassIDList */
+    {0x0001, 0x0005, &value_arr[0x1056]},
+
+    /* ProtocolDescriptorList */
+    {0x0004, 0x0015, &value_arr[0x105B]},
+
+    /* BrowseGroupList  */
+    {0x0005, 0x0005, &value_arr[0x1070]},
+
+    /* LanguageBaseAttributeIDList  */
+    {0x0006, 0x000B, &value_arr[0x1075]},
+
+    /** Service Record 54 */
+    /* ServiceRecordHandle */
+    {0x0000, 0x0005, &value_arr[0x1080]},
+
+    /* ServiceClassIDList */
+    {0x0001, 0x0005, &value_arr[0x1085]},
+
+    /* ProtocolDescriptorList */
+    {0x0004, 0x0015, &value_arr[0x108A]},
+
+    /* BrowseGroupList  */
+    {0x0005, 0x0005, &value_arr[0x109F]},
+
+    /* LanguageBaseAttributeIDList  */
+    {0x0006, 0x000B, &value_arr[0x10A4]},
+
+    /** Service Record 55 */
+    /* ServiceRecordHandle */
+    {0x0000, 0x0005, &value_arr[0x10AF]},
+
+    /* ServiceClassIDList */
+    {0x0001, 0x0005, &value_arr[0x10B4]},
+
+    /* ProtocolDescriptorList */
+    {0x0004, 0x0015, &value_arr[0x10B9]},
+
+    /* BrowseGroupList  */
+    {0x0005, 0x0005, &value_arr[0x10CE]},
+
+    /* LanguageBaseAttributeIDList  */
+    {0x0006, 0x000B, &value_arr[0x10D3]},
+
+    /** Service Record 56 */
+    /* ServiceRecordHandle */
+    {0x0000, 0x0005, &value_arr[0x10DE]},
+
+    /* ServiceClassIDList */
+    {0x0001, 0x0005, &value_arr[0x10E3]},
+
+    /* ProtocolDescriptorList */
+    {0x0004, 0x0015, &value_arr[0x10E8]},
+
+    /* BrowseGroupList  */
+    {0x0005, 0x0005, &value_arr[0x10FD]},
+
+    /* LanguageBaseAttributeIDList  */
+    {0x0006, 0x000B, &value_arr[0x1102]},
+
+    /** Service Record 57 */
+    /* ServiceRecordHandle */
+    {0x0000, 0x0005, &value_arr[0x110D]},
+
+    /* ServiceClassIDList */
+    {0x0001, 0x0005, &value_arr[0x1112]},
+
+    /* ProtocolDescriptorList */
+    {0x0004, 0x0015, &value_arr[0x1117]},
+
+    /* BrowseGroupList  */
+    {0x0005, 0x0005, &value_arr[0x112C]},
+
+    /* LanguageBaseAttributeIDList  */
+    {0x0006, 0x000B, &value_arr[0x1131]},
+
+    /** Service Record 58 */
+    /* ServiceRecordHandle */
+    {0x0000, 0x0005, &value_arr[0x113C]},
+
+    /* ServiceClassIDList */
+    {0x0001, 0x0005, &value_arr[0x1141]},
+
+    /* ProtocolDescriptorList */
+    {0x0004, 0x0015, &value_arr[0x1146]},
+
+    /* BrowseGroupList  */
+    {0x0005, 0x0005, &value_arr[0x115B]},
+
+    /* LanguageBaseAttributeIDList  */
+    {0x0006, 0x000B, &value_arr[0x1160]},
+
+    /** Service Record 59 */
+    /* ServiceRecordHandle */
+    {0x0000, 0x0005, &value_arr[0x116B]},
+
+    /* ServiceClassIDList */
+    {0x0001, 0x0005, &value_arr[0x1170]},
+
+    /* ProtocolDescriptorList */
+    {0x0004, 0x000F, &value_arr[0x1175]},
+
+    /* BrowseGroupList  */
+    {0x0005, 0x0005, &value_arr[0x1184]},
+
+    /* LanguageBaseAttributeIDList  */
+    {0x0006, 0x000B, &value_arr[0x1189]},
+
+    /* BluetoothProfileDescriptorList */
+    {0x0009, 0x000A, &value_arr[0x1194]},
+
+    /* ServiceName */
+    {0x0100, 0x001B, &value_arr[0x119E]},
+
+    /* MapSupportedFeatures */
+    {0x0317, 0x0005, &value_arr[0x11B9]},
+
+    /** Service Record 60 */
+    /* ServiceRecordHandle */
+    {0x0000, 0x0005, &value_arr[0x11BE]},
+
+    /* ServiceClassIDList */
+    {0x0001, 0x0005, &value_arr[0x11C3]},
+
+    /* ProtocolDescriptorList */
+    {0x0004, 0x000F, &value_arr[0x11C8]},
+
+    /* BrowseGroupList  */
+    {0x0005, 0x0005, &value_arr[0x11D7]},
+
+    /* LanguageBaseAttributeIDList  */
+    {0x0006, 0x000B, &value_arr[0x11DC]},
+
+    /* BluetoothProfileDescriptorList */
+    {0x0009, 0x000A, &value_arr[0x11E7]},
+
+    /* ServiceName */
+    {0x0100, 0x0015, &value_arr[0x11F1]},
+
+    /* MASInstanceID */
+    {0x0315, 0x0002, &value_arr[0x1206]},
+
+    /* MapSupportedFeatures */
+    {0x0317, 0x0005, &value_arr[0x1208]},
+
+    /** Service Record 61 */
+    /* ServiceRecordHandle */
+    {0x0000, 0x0005, &value_arr[0x120D]},
+
+    /* ServiceClassIDList */
+    {0x0001, 0x0005, &value_arr[0x1212]},
+
+    /* ProtocolDescriptorList */
+    {0x0004, 0x000F, &value_arr[0x1217]},
+
+    /* BrowseGroupList  */
+    {0x0005, 0x0005, &value_arr[0x1226]},
+
+    /* LanguageBaseAttributeIDList  */
+    {0x0006, 0x000B, &value_arr[0x122B]},
+
+    /* BluetoothProfileDescriptorList */
+    {0x0009, 0x000A, &value_arr[0x1236]},
+
+    /* ServiceName */
+    {0x0100, 0x0015, &value_arr[0x1240]},
+
+    /* MASInstanceID */
+    {0x0315, 0x0002, &value_arr[0x1255]},
+
+    /* MapSupportedFeatures */
+    {0x0317, 0x0005, &value_arr[0x1257]}
 };
 
 /* Functions */
@@ -2743,423 +3833,654 @@ void BT_dbase_init(void)
     /*
      *     SDP Record
      *        Of
-     *  SPP_VS Profile
+     *  SPP Profile
      */
     dbase[3].rec_handle = 0x00090003;
     dbase[3].active = DB_RECORD_INACTIVE;
-    dbase[3].num_uuids = 5;
+    dbase[3].num_uuids = 4;
     dbase[3].num_attrs = 7;
     dbase[3].attr_offset = 17;
 
     /*
      *     SDP Record
      *        Of
-     *  FTP Profile
+     *  SPP Profile
      */
     dbase[4].rec_handle = 0x00090004;
     dbase[4].active = DB_RECORD_INACTIVE;
-    dbase[4].num_uuids = 5;
-    dbase[4].num_attrs = 8;
+    dbase[4].num_uuids = 4;
+    dbase[4].num_attrs = 7;
     dbase[4].attr_offset = 24;
+
+    /*
+     *     SDP Record
+     *        Of
+     *  SPP Profile
+     */
+    dbase[5].rec_handle = 0x00090005;
+    dbase[5].active = DB_RECORD_INACTIVE;
+    dbase[5].num_uuids = 4;
+    dbase[5].num_attrs = 7;
+    dbase[5].attr_offset = 31;
+
+    /*
+     *     SDP Record
+     *        Of
+     *  SPP Profile
+     */
+    dbase[6].rec_handle = 0x00090006;
+    dbase[6].active = DB_RECORD_INACTIVE;
+    dbase[6].num_uuids = 4;
+    dbase[6].num_attrs = 7;
+    dbase[6].attr_offset = 38;
+
+    /*
+     *     SDP Record
+     *        Of
+     *  SPP Profile
+     */
+    dbase[7].rec_handle = 0x00090007;
+    dbase[7].active = DB_RECORD_INACTIVE;
+    dbase[7].num_uuids = 4;
+    dbase[7].num_attrs = 7;
+    dbase[7].attr_offset = 45;
+
+    /*
+     *     SDP Record
+     *        Of
+     *  SPP Profile
+     */
+    dbase[8].rec_handle = 0x00090008;
+    dbase[8].active = DB_RECORD_INACTIVE;
+    dbase[8].num_uuids = 4;
+    dbase[8].num_attrs = 7;
+    dbase[8].attr_offset = 52;
+
+    /*
+     *     SDP Record
+     *        Of
+     *  SPP Profile
+     */
+    dbase[9].rec_handle = 0x00090009;
+    dbase[9].active = DB_RECORD_INACTIVE;
+    dbase[9].num_uuids = 4;
+    dbase[9].num_attrs = 7;
+    dbase[9].attr_offset = 59;
+
+    /*
+     *     SDP Record
+     *        Of
+     *  SPP Profile
+     */
+    dbase[10].rec_handle = 0x0009000A;
+    dbase[10].active = DB_RECORD_INACTIVE;
+    dbase[10].num_uuids = 4;
+    dbase[10].num_attrs = 7;
+    dbase[10].attr_offset = 66;
+
+    /*
+     *     SDP Record
+     *        Of
+     *  SPP Profile
+     */
+    dbase[11].rec_handle = 0x0009000B;
+    dbase[11].active = DB_RECORD_INACTIVE;
+    dbase[11].num_uuids = 4;
+    dbase[11].num_attrs = 7;
+    dbase[11].attr_offset = 73;
+
+    /*
+     *     SDP Record
+     *        Of
+     *  SPP Profile
+     */
+    dbase[12].rec_handle = 0x0009000C;
+    dbase[12].active = DB_RECORD_INACTIVE;
+    dbase[12].num_uuids = 4;
+    dbase[12].num_attrs = 7;
+    dbase[12].attr_offset = 80;
+
+    /*
+     *     SDP Record
+     *        Of
+     *  SPP Profile
+     */
+    dbase[13].rec_handle = 0x0009000D;
+    dbase[13].active = DB_RECORD_INACTIVE;
+    dbase[13].num_uuids = 4;
+    dbase[13].num_attrs = 7;
+    dbase[13].attr_offset = 87;
+
+    /*
+     *     SDP Record
+     *        Of
+     *  SPP Profile
+     */
+    dbase[14].rec_handle = 0x0009000E;
+    dbase[14].active = DB_RECORD_INACTIVE;
+    dbase[14].num_uuids = 4;
+    dbase[14].num_attrs = 7;
+    dbase[14].attr_offset = 94;
+
+    /*
+     *     SDP Record
+     *        Of
+     *  SPP Profile
+     */
+    dbase[15].rec_handle = 0x0009000F;
+    dbase[15].active = DB_RECORD_INACTIVE;
+    dbase[15].num_uuids = 4;
+    dbase[15].num_attrs = 7;
+    dbase[15].attr_offset = 101;
+
+    /*
+     *     SDP Record
+     *        Of
+     *  SPP Profile
+     */
+    dbase[16].rec_handle = 0x00090010;
+    dbase[16].active = DB_RECORD_INACTIVE;
+    dbase[16].num_uuids = 4;
+    dbase[16].num_attrs = 7;
+    dbase[16].attr_offset = 108;
+
+    /*
+     *     SDP Record
+     *        Of
+     *  SPP Profile
+     */
+    dbase[17].rec_handle = 0x00090011;
+    dbase[17].active = DB_RECORD_INACTIVE;
+    dbase[17].num_uuids = 4;
+    dbase[17].num_attrs = 7;
+    dbase[17].attr_offset = 115;
+
+    /*
+     *     SDP Record
+     *        Of
+     *  SPP Profile
+     */
+    dbase[18].rec_handle = 0x00090012;
+    dbase[18].active = DB_RECORD_INACTIVE;
+    dbase[18].num_uuids = 4;
+    dbase[18].num_attrs = 7;
+    dbase[18].attr_offset = 122;
+
+    /*
+     *     SDP Record
+     *        Of
+     *  SPP Profile
+     */
+    dbase[19].rec_handle = 0x00090013;
+    dbase[19].active = DB_RECORD_INACTIVE;
+    dbase[19].num_uuids = 4;
+    dbase[19].num_attrs = 7;
+    dbase[19].attr_offset = 129;
+
+    /*
+     *     SDP Record
+     *        Of
+     *  SPP Profile
+     */
+    dbase[20].rec_handle = 0x00090014;
+    dbase[20].active = DB_RECORD_INACTIVE;
+    dbase[20].num_uuids = 4;
+    dbase[20].num_attrs = 7;
+    dbase[20].attr_offset = 136;
+
+    /*
+     *     SDP Record
+     *        Of
+     *  SPP Profile
+     */
+    dbase[21].rec_handle = 0x00090015;
+    dbase[21].active = DB_RECORD_INACTIVE;
+    dbase[21].num_uuids = 4;
+    dbase[21].num_attrs = 7;
+    dbase[21].attr_offset = 143;
+
+    /*
+     *     SDP Record
+     *        Of
+     *  SPP_VS Profile
+     */
+    dbase[22].rec_handle = 0x00090016;
+    dbase[22].active = DB_RECORD_INACTIVE;
+    dbase[22].num_uuids = 5;
+    dbase[22].num_attrs = 7;
+    dbase[22].attr_offset = 150;
+
+    /*
+     *     SDP Record
+     *        Of
+     *  FTP Profile
+     */
+    dbase[23].rec_handle = 0x00090017;
+    dbase[23].active = DB_RECORD_INACTIVE;
+    dbase[23].num_uuids = 5;
+    dbase[23].num_attrs = 8;
+    dbase[23].attr_offset = 157;
 
     /*
      *     SDP Record
      *        Of
      *  HFU Profile
      */
-    dbase[5].rec_handle = 0x00090005;
-    dbase[5].active = DB_RECORD_INACTIVE;
-    dbase[5].num_uuids = 5;
-    dbase[5].num_attrs = 8;
-    dbase[5].attr_offset = 32;
+    dbase[24].rec_handle = 0x00090018;
+    dbase[24].active = DB_RECORD_INACTIVE;
+    dbase[24].num_uuids = 5;
+    dbase[24].num_attrs = 8;
+    dbase[24].attr_offset = 165;
 
     /*
      *     SDP Record
      *        Of
      *  HFAG Profile
      */
-    dbase[6].rec_handle = 0x00090006;
-    dbase[6].active = DB_RECORD_INACTIVE;
-    dbase[6].num_uuids = 6;
-    dbase[6].num_attrs = 9;
-    dbase[6].attr_offset = 40;
+    dbase[25].rec_handle = 0x00090019;
+    dbase[25].active = DB_RECORD_INACTIVE;
+    dbase[25].num_uuids = 6;
+    dbase[25].num_attrs = 9;
+    dbase[25].attr_offset = 173;
 
     /*
      *     SDP Record
      *        Of
      *  HID Profile
      */
-    dbase[7].rec_handle = 0x00090007;
-    dbase[7].active = DB_RECORD_INACTIVE;
-    dbase[7].num_uuids = 4;
-    dbase[7].num_attrs = 25;
-    dbase[7].attr_offset = 49;
+    dbase[26].rec_handle = 0x0009001A;
+    dbase[26].active = DB_RECORD_INACTIVE;
+    dbase[26].num_uuids = 4;
+    dbase[26].num_attrs = 25;
+    dbase[26].attr_offset = 182;
 
     /*
      *     SDP Record
      *        Of
      *  A2DP Sink Profile
      */
-    dbase[8].rec_handle = 0x00090008;
-    dbase[8].active = DB_RECORD_INACTIVE;
-    dbase[8].num_uuids = 5;
-    dbase[8].num_attrs = 9;
-    dbase[8].attr_offset = 74;
+    dbase[27].rec_handle = 0x0009001B;
+    dbase[27].active = DB_RECORD_INACTIVE;
+    dbase[27].num_uuids = 5;
+    dbase[27].num_attrs = 9;
+    dbase[27].attr_offset = 207;
 
     /*
      *     SDP Record
      *        Of
      *  A2DP Source Profile
      */
-    dbase[9].rec_handle = 0x00090009;
-    dbase[9].active = DB_RECORD_INACTIVE;
-    dbase[9].num_uuids = 5;
-    dbase[9].num_attrs = 9;
-    dbase[9].attr_offset = 83;
+    dbase[28].rec_handle = 0x0009001C;
+    dbase[28].active = DB_RECORD_INACTIVE;
+    dbase[28].num_uuids = 5;
+    dbase[28].num_attrs = 9;
+    dbase[28].attr_offset = 216;
 
     /*
      *     SDP Record
      *        Of
      *  OPP Profile
      */
-    dbase[10].rec_handle = 0x0009000A;
-    dbase[10].active = DB_RECORD_INACTIVE;
-    dbase[10].num_uuids = 5;
-    dbase[10].num_attrs = 9;
-    dbase[10].attr_offset = 92;
+    dbase[29].rec_handle = 0x0009001D;
+    dbase[29].active = DB_RECORD_INACTIVE;
+    dbase[29].num_uuids = 5;
+    dbase[29].num_attrs = 9;
+    dbase[29].attr_offset = 225;
 
     /*
      *     SDP Record
      *        Of
      *  NAP Profile
      */
-    dbase[11].rec_handle = 0x0009000B;
-    dbase[11].active = DB_RECORD_INACTIVE;
-    dbase[11].num_uuids = 4;
-    dbase[11].num_attrs = 14;
-    dbase[11].attr_offset = 101;
+    dbase[30].rec_handle = 0x0009001E;
+    dbase[30].active = DB_RECORD_INACTIVE;
+    dbase[30].num_uuids = 4;
+    dbase[30].num_attrs = 14;
+    dbase[30].attr_offset = 234;
 
     /*
      *     SDP Record
      *        Of
      *  GN Profile
      */
-    dbase[12].rec_handle = 0x0009000C;
-    dbase[12].active = DB_RECORD_INACTIVE;
-    dbase[12].num_uuids = 4;
-    dbase[12].num_attrs = 12;
-    dbase[12].attr_offset = 115;
+    dbase[31].rec_handle = 0x0009001F;
+    dbase[31].active = DB_RECORD_INACTIVE;
+    dbase[31].num_uuids = 4;
+    dbase[31].num_attrs = 12;
+    dbase[31].attr_offset = 248;
 
     /*
      *     SDP Record
      *        Of
      *  PANU Profile
      */
-    dbase[13].rec_handle = 0x0009000D;
-    dbase[13].active = DB_RECORD_INACTIVE;
-    dbase[13].num_uuids = 4;
-    dbase[13].num_attrs = 10;
-    dbase[13].attr_offset = 127;
+    dbase[32].rec_handle = 0x00090020;
+    dbase[32].active = DB_RECORD_INACTIVE;
+    dbase[32].num_uuids = 4;
+    dbase[32].num_attrs = 10;
+    dbase[32].attr_offset = 260;
 
     /*
      *     SDP Record
      *        Of
      *  BIP Profile
      */
-    dbase[14].rec_handle = 0x0009000E;
-    dbase[14].active = DB_RECORD_INACTIVE;
-    dbase[14].num_uuids = 6;
-    dbase[14].num_attrs = 12;
-    dbase[14].attr_offset = 137;
+    dbase[33].rec_handle = 0x00090021;
+    dbase[33].active = DB_RECORD_INACTIVE;
+    dbase[33].num_uuids = 6;
+    dbase[33].num_attrs = 12;
+    dbase[33].attr_offset = 270;
 
     /*
      *     SDP Record
      *        Of
      *  RO Profile
      */
-    dbase[15].rec_handle = 0x0009000F;
-    dbase[15].active = DB_RECORD_INACTIVE;
-    dbase[15].num_uuids = 6;
-    dbase[15].num_attrs = 10;
-    dbase[15].attr_offset = 149;
+    dbase[34].rec_handle = 0x00090022;
+    dbase[34].active = DB_RECORD_INACTIVE;
+    dbase[34].num_uuids = 6;
+    dbase[34].num_attrs = 10;
+    dbase[34].attr_offset = 282;
 
     /*
      *     SDP Record
      *        Of
      *  Archived Objects Profile
      */
-    dbase[16].rec_handle = 0x00090010;
-    dbase[16].active = DB_RECORD_INACTIVE;
-    dbase[16].num_uuids = 6;
-    dbase[16].num_attrs = 10;
-    dbase[16].attr_offset = 159;
+    dbase[35].rec_handle = 0x00090023;
+    dbase[35].active = DB_RECORD_INACTIVE;
+    dbase[35].num_uuids = 6;
+    dbase[35].num_attrs = 10;
+    dbase[35].attr_offset = 292;
 
     /*
      *     SDP Record
      *        Of
      *  BPP Profile
      */
-    dbase[17].rec_handle = 0x00090011;
-    dbase[17].active = DB_RECORD_INACTIVE;
-    dbase[17].num_uuids = 8;
-    dbase[17].num_attrs = 24;
-    dbase[17].attr_offset = 169;
+    dbase[36].rec_handle = 0x00090024;
+    dbase[36].active = DB_RECORD_INACTIVE;
+    dbase[36].num_uuids = 8;
+    dbase[36].num_attrs = 24;
+    dbase[36].attr_offset = 302;
 
     /*
      *     SDP Record
      *        Of
      *  Basic Printing Referenced Objects Profile
      */
-    dbase[18].rec_handle = 0x00090012;
-    dbase[18].active = DB_RECORD_INACTIVE;
-    dbase[18].num_uuids = 6;
-    dbase[18].num_attrs = 8;
-    dbase[18].attr_offset = 193;
+    dbase[37].rec_handle = 0x00090025;
+    dbase[37].active = DB_RECORD_INACTIVE;
+    dbase[37].num_uuids = 6;
+    dbase[37].num_attrs = 8;
+    dbase[37].attr_offset = 326;
 
     /*
      *     SDP Record
      *        Of
      *  Printer Administrative User Interface Profile
      */
-    dbase[19].rec_handle = 0x00090013;
-    dbase[19].active = DB_RECORD_INACTIVE;
-    dbase[19].num_uuids = 5;
-    dbase[19].num_attrs = 8;
-    dbase[19].attr_offset = 201;
+    dbase[38].rec_handle = 0x00090026;
+    dbase[38].active = DB_RECORD_INACTIVE;
+    dbase[38].num_uuids = 5;
+    dbase[38].num_attrs = 8;
+    dbase[38].attr_offset = 334;
 
     /*
      *     SDP Record
      *        Of
      *  AVRCP Controller Profile
      */
-    dbase[20].rec_handle = 0x00090014;
-    dbase[20].active = DB_RECORD_INACTIVE;
-    dbase[20].num_uuids = 5;
-    dbase[20].num_attrs = 10;
-    dbase[20].attr_offset = 209;
+    dbase[39].rec_handle = 0x00090027;
+    dbase[39].active = DB_RECORD_INACTIVE;
+    dbase[39].num_uuids = 5;
+    dbase[39].num_attrs = 10;
+    dbase[39].attr_offset = 342;
 
     /*
      *     SDP Record
      *        Of
      *  AVRCP Target Profile
      */
-    dbase[21].rec_handle = 0x00090015;
-    dbase[21].active = DB_RECORD_INACTIVE;
-    dbase[21].num_uuids = 6;
-    dbase[21].num_attrs = 10;
-    dbase[21].attr_offset = 219;
+    dbase[40].rec_handle = 0x00090028;
+    dbase[40].active = DB_RECORD_INACTIVE;
+    dbase[40].num_uuids = 6;
+    dbase[40].num_attrs = 10;
+    dbase[40].attr_offset = 352;
 
     /*
      *     SDP Record
      *        Of
      *  PBAP_PCE Profile
      */
-    dbase[22].rec_handle = 0x00090016;
-    dbase[22].active = DB_RECORD_INACTIVE;
-    dbase[22].num_uuids = 3;
-    dbase[22].num_attrs = 6;
-    dbase[22].attr_offset = 229;
+    dbase[41].rec_handle = 0x00090029;
+    dbase[41].active = DB_RECORD_INACTIVE;
+    dbase[41].num_uuids = 3;
+    dbase[41].num_attrs = 6;
+    dbase[41].attr_offset = 362;
 
     /*
      *     SDP Record
      *        Of
      *  PBAP_PSE Profile
      */
-    dbase[23].rec_handle = 0x00090017;
-    dbase[23].active = DB_RECORD_INACTIVE;
-    dbase[23].num_uuids = 6;
-    dbase[23].num_attrs = 10;
-    dbase[23].attr_offset = 235;
+    dbase[42].rec_handle = 0x0009002A;
+    dbase[42].active = DB_RECORD_INACTIVE;
+    dbase[42].num_uuids = 6;
+    dbase[42].num_attrs = 10;
+    dbase[42].attr_offset = 368;
 
     /*
      *     SDP Record
      *        Of
      *  DID Profile
      */
-    dbase[24].rec_handle = 0x00090018;
-    dbase[24].active = DB_RECORD_INACTIVE;
-    dbase[24].num_uuids = 2;
-    dbase[24].num_attrs = 13;
-    dbase[24].attr_offset = 245;
+    dbase[43].rec_handle = 0x0009002B;
+    dbase[43].active = DB_RECORD_INACTIVE;
+    dbase[43].num_uuids = 2;
+    dbase[43].num_attrs = 13;
+    dbase[43].attr_offset = 378;
 
     /*
      *     SDP Record
      *        Of
      *  DID Profile
      */
-    dbase[25].rec_handle = 0x00090019;
-    dbase[25].active = DB_RECORD_INACTIVE;
-    dbase[25].num_uuids = 2;
-    dbase[25].num_attrs = 13;
-    dbase[25].attr_offset = 258;
+    dbase[44].rec_handle = 0x0009002C;
+    dbase[44].active = DB_RECORD_INACTIVE;
+    dbase[44].num_uuids = 2;
+    dbase[44].num_attrs = 13;
+    dbase[44].attr_offset = 391;
 
     /*
      *     SDP Record
      *        Of
      *  HDP Profile
      */
-    dbase[26].rec_handle = 0x0009001A;
-    dbase[26].active = DB_RECORD_INACTIVE;
-    dbase[26].num_uuids = 7;
-    dbase[26].num_attrs = 13;
-    dbase[26].attr_offset = 271;
+    dbase[45].rec_handle = 0x0009002D;
+    dbase[45].active = DB_RECORD_INACTIVE;
+    dbase[45].num_uuids = 7;
+    dbase[45].num_attrs = 13;
+    dbase[45].attr_offset = 404;
 
     /*
      *     SDP Record
      *        Of
      *  MAP_MCE Profile
      */
-    dbase[27].rec_handle = 0x0009001B;
-    dbase[27].active = DB_RECORD_INACTIVE;
-    dbase[27].num_uuids = 6;
-    dbase[27].num_attrs = 9;
-    dbase[27].attr_offset = 284;
+    dbase[46].rec_handle = 0x0009002E;
+    dbase[46].active = DB_RECORD_INACTIVE;
+    dbase[46].num_uuids = 6;
+    dbase[46].num_attrs = 9;
+    dbase[46].attr_offset = 417;
 
     /*
      *     SDP Record
      *        Of
      *  MAP_MSE Profile
      */
-    dbase[28].rec_handle = 0x0009001C;
-    dbase[28].active = DB_RECORD_INACTIVE;
-    dbase[28].num_uuids = 6;
-    dbase[28].num_attrs = 11;
-    dbase[28].attr_offset = 293;
+    dbase[47].rec_handle = 0x0009002F;
+    dbase[47].active = DB_RECORD_INACTIVE;
+    dbase[47].num_uuids = 6;
+    dbase[47].num_attrs = 11;
+    dbase[47].attr_offset = 426;
+
+    /*
+     *     SDP Record
+     *        Of
+     *  MAP_MSE Profile
+     */
+    dbase[48].rec_handle = 0x00090030;
+    dbase[48].active = DB_RECORD_INACTIVE;
+    dbase[48].num_uuids = 6;
+    dbase[48].num_attrs = 11;
+    dbase[48].attr_offset = 437;
 
     /*
      *     SDP Record
      *        Of
      *  MPS Profile
      */
-    dbase[29].rec_handle = 0x0009001D;
-    dbase[29].active = DB_RECORD_INACTIVE;
-    dbase[29].num_uuids = 3;
-    dbase[29].num_attrs = 8;
-    dbase[29].attr_offset = 304;
+    dbase[49].rec_handle = 0x00090031;
+    dbase[49].active = DB_RECORD_INACTIVE;
+    dbase[49].num_uuids = 3;
+    dbase[49].num_attrs = 8;
+    dbase[49].attr_offset = 448;
 
     /*
      *     SDP Record
      *        Of
      *  GAP Profile
      */
-    dbase[30].rec_handle = 0x0009001E;
-    dbase[30].active = DB_RECORD_INACTIVE;
-    dbase[30].num_uuids = 4;
-    dbase[30].num_attrs = 5;
-    dbase[30].attr_offset = 312;
+    dbase[50].rec_handle = 0x00090032;
+    dbase[50].active = DB_RECORD_INACTIVE;
+    dbase[50].num_uuids = 4;
+    dbase[50].num_attrs = 5;
+    dbase[50].attr_offset = 456;
 
     /*
      *     SDP Record
      *        Of
      *  GATT Profile
      */
-    dbase[31].rec_handle = 0x0009001F;
-    dbase[31].active = DB_RECORD_INACTIVE;
-    dbase[31].num_uuids = 4;
-    dbase[31].num_attrs = 5;
-    dbase[31].attr_offset = 317;
+    dbase[51].rec_handle = 0x00090033;
+    dbase[51].active = DB_RECORD_INACTIVE;
+    dbase[51].num_uuids = 4;
+    dbase[51].num_attrs = 5;
+    dbase[51].attr_offset = 461;
 
     /*
      *     SDP Record
      *        Of
      *  DIS Profile
      */
-    dbase[32].rec_handle = 0x00090020;
-    dbase[32].active = DB_RECORD_INACTIVE;
-    dbase[32].num_uuids = 4;
-    dbase[32].num_attrs = 5;
-    dbase[32].attr_offset = 322;
+    dbase[52].rec_handle = 0x00090034;
+    dbase[52].active = DB_RECORD_INACTIVE;
+    dbase[52].num_uuids = 4;
+    dbase[52].num_attrs = 5;
+    dbase[52].attr_offset = 466;
 
     /*
      *     SDP Record
      *        Of
      *  BAS Profile
      */
-    dbase[33].rec_handle = 0x00090021;
-    dbase[33].active = DB_RECORD_INACTIVE;
-    dbase[33].num_uuids = 4;
-    dbase[33].num_attrs = 5;
-    dbase[33].attr_offset = 327;
+    dbase[53].rec_handle = 0x00090035;
+    dbase[53].active = DB_RECORD_INACTIVE;
+    dbase[53].num_uuids = 4;
+    dbase[53].num_attrs = 5;
+    dbase[53].attr_offset = 471;
 
     /*
      *     SDP Record
      *        Of
      *  RSC Profile
      */
-    dbase[34].rec_handle = 0x00090022;
-    dbase[34].active = DB_RECORD_INACTIVE;
-    dbase[34].num_uuids = 4;
-    dbase[34].num_attrs = 5;
-    dbase[34].attr_offset = 332;
+    dbase[54].rec_handle = 0x00090036;
+    dbase[54].active = DB_RECORD_INACTIVE;
+    dbase[54].num_uuids = 4;
+    dbase[54].num_attrs = 5;
+    dbase[54].attr_offset = 476;
 
     /*
      *     SDP Record
      *        Of
      *  CSC Profile
      */
-    dbase[35].rec_handle = 0x00090023;
-    dbase[35].active = DB_RECORD_INACTIVE;
-    dbase[35].num_uuids = 4;
-    dbase[35].num_attrs = 5;
-    dbase[35].attr_offset = 337;
+    dbase[55].rec_handle = 0x00090037;
+    dbase[55].active = DB_RECORD_INACTIVE;
+    dbase[55].num_uuids = 4;
+    dbase[55].num_attrs = 5;
+    dbase[55].attr_offset = 481;
 
     /*
      *     SDP Record
      *        Of
      *  CPS Profile
      */
-    dbase[36].rec_handle = 0x00090024;
-    dbase[36].active = DB_RECORD_INACTIVE;
-    dbase[36].num_uuids = 4;
-    dbase[36].num_attrs = 5;
-    dbase[36].attr_offset = 342;
+    dbase[56].rec_handle = 0x00090038;
+    dbase[56].active = DB_RECORD_INACTIVE;
+    dbase[56].num_uuids = 4;
+    dbase[56].num_attrs = 5;
+    dbase[56].attr_offset = 486;
 
     /*
      *     SDP Record
      *        Of
      *  HPS Profile
      */
-    dbase[37].rec_handle = 0x00090025;
-    dbase[37].active = DB_RECORD_INACTIVE;
-    dbase[37].num_uuids = 4;
-    dbase[37].num_attrs = 5;
-    dbase[37].attr_offset = 347;
+    dbase[57].rec_handle = 0x00090039;
+    dbase[57].active = DB_RECORD_INACTIVE;
+    dbase[57].num_uuids = 4;
+    dbase[57].num_attrs = 5;
+    dbase[57].attr_offset = 491;
 
     /*
      *     SDP Record
      *        Of
      *  CTS Profile
      */
-    dbase[38].rec_handle = 0x00090026;
-    dbase[38].active = DB_RECORD_INACTIVE;
-    dbase[38].num_uuids = 4;
-    dbase[38].num_attrs = 5;
-    dbase[38].attr_offset = 352;
+    dbase[58].rec_handle = 0x0009003A;
+    dbase[58].active = DB_RECORD_INACTIVE;
+    dbase[58].num_uuids = 4;
+    dbase[58].num_attrs = 5;
+    dbase[58].attr_offset = 496;
 
     /*
      *     SDP Record
      *        Of
      *  CTN_CCE Profile
      */
-    dbase[39].rec_handle = 0x00090027;
-    dbase[39].active = DB_RECORD_INACTIVE;
-    dbase[39].num_uuids = 5;
-    dbase[39].num_attrs = 8;
-    dbase[39].attr_offset = 357;
+    dbase[59].rec_handle = 0x0009003B;
+    dbase[59].active = DB_RECORD_INACTIVE;
+    dbase[59].num_uuids = 5;
+    dbase[59].num_attrs = 8;
+    dbase[59].attr_offset = 501;
 
     /*
      *     SDP Record
      *        Of
      *  CTN_CSE Profile
      */
-    dbase[40].rec_handle = 0x00090028;
-    dbase[40].active = DB_RECORD_INACTIVE;
-    dbase[40].num_uuids = 5;
-    dbase[40].num_attrs = 9;
-    dbase[40].attr_offset = 365;
+    dbase[60].rec_handle = 0x0009003C;
+    dbase[60].active = DB_RECORD_INACTIVE;
+    dbase[60].num_uuids = 5;
+    dbase[60].num_attrs = 9;
+    dbase[60].attr_offset = 509;
+
+    /*
+     *     SDP Record
+     *        Of
+     *  CTN_CSE Profile
+     */
+    dbase[61].rec_handle = 0x0009003D;
+    dbase[61].active = DB_RECORD_INACTIVE;
+    dbase[61].num_uuids = 5;
+    dbase[61].num_attrs = 9;
+    dbase[61].attr_offset = 518;
 
     /* Number of SDP records */
-    num_records = 41;
+    num_records = 62;
 
     /* UUID List */
     num_128_ids = 65;
@@ -3675,246 +4996,347 @@ API_RESULT BT_dbase_get_record_handle ( /* IN */  UCHAR service_type,
 
         case DB_RECORD_SPP:
         {
-            *rec_hdl = 0x00090002;
+            if( 0 == service_instance )
+            {
+                *rec_hdl = 0x00090002;
+            }
+            else if( 1 == service_instance )
+            {
+                *rec_hdl = 0x00090003;
+            }
+            else if( 2 == service_instance )
+            {
+                *rec_hdl = 0x00090004;
+            }
+            else if( 3 == service_instance )
+            {
+                *rec_hdl = 0x00090005;
+            }
+            else if( 4 == service_instance )
+            {
+                *rec_hdl = 0x00090006;
+            }
+            else if( 5 == service_instance )
+            {
+                *rec_hdl = 0x00090007;
+            }
+            else if( 6 == service_instance )
+            {
+                *rec_hdl = 0x00090008;
+            }
+            else if( 7 == service_instance )
+            {
+                *rec_hdl = 0x00090009;
+            }
+            else if( 8 == service_instance )
+            {
+                *rec_hdl = 0x0009000A;
+            }
+            else if( 9 == service_instance )
+            {
+                *rec_hdl = 0x0009000B;
+            }
+            else if( 10 == service_instance )
+            {
+                *rec_hdl = 0x0009000C;
+            }
+            else if( 11 == service_instance )
+            {
+                *rec_hdl = 0x0009000D;
+            }
+            else if( 12 == service_instance )
+            {
+                *rec_hdl = 0x0009000E;
+            }
+            else if( 13 == service_instance )
+            {
+                *rec_hdl = 0x0009000F;
+            }
+            else if( 14 == service_instance )
+            {
+                *rec_hdl = 0x00090010;
+            }
+            else if( 15 == service_instance )
+            {
+                *rec_hdl = 0x00090011;
+            }
+            else if( 16 == service_instance )
+            {
+                *rec_hdl = 0x00090012;
+            }
+            else if( 17 == service_instance )
+            {
+                *rec_hdl = 0x00090013;
+            }
+            else if( 18 == service_instance )
+            {
+                *rec_hdl = 0x00090014;
+            }
+            else if( 19 == service_instance )
+            {
+                *rec_hdl = 0x00090015;
+            }
         }
         break;
 
         case DB_RECORD_SPP_VS:
         {
-            *rec_hdl = 0x00090003;
+            *rec_hdl = 0x00090016;
         }
         break;
 
         case DB_RECORD_FTP:
         {
-            *rec_hdl = 0x00090004;
+            *rec_hdl = 0x00090017;
         }
         break;
 
         case DB_RECORD_HFU:
         {
-            *rec_hdl = 0x00090005;
+            *rec_hdl = 0x00090018;
         }
         break;
 
         case DB_RECORD_HFAG:
         {
-            *rec_hdl = 0x00090006;
+            *rec_hdl = 0x00090019;
         }
         break;
 
         case DB_RECORD_HID:
         {
-            *rec_hdl = 0x00090007;
+            *rec_hdl = 0x0009001A;
         }
         break;
 
         case DB_RECORD_A2DP_SINK:
         {
-            *rec_hdl = 0x00090008;
+            *rec_hdl = 0x0009001B;
         }
         break;
 
         case DB_RECORD_A2DP_SOURCE:
         {
-            *rec_hdl = 0x00090009;
+            *rec_hdl = 0x0009001C;
         }
         break;
 
         case DB_RECORD_OPP:
         {
-            *rec_hdl = 0x0009000A;
+            *rec_hdl = 0x0009001D;
         }
         break;
 
         case DB_RECORD_NAP:
         {
-            *rec_hdl = 0x0009000B;
+            *rec_hdl = 0x0009001E;
         }
         break;
 
         case DB_RECORD_GN:
         {
-            *rec_hdl = 0x0009000C;
+            *rec_hdl = 0x0009001F;
         }
         break;
 
         case DB_RECORD_PANU:
         {
-            *rec_hdl = 0x0009000D;
+            *rec_hdl = 0x00090020;
         }
         break;
 
         case DB_RECORD_BIP:
         {
-            *rec_hdl = 0x0009000E;
+            *rec_hdl = 0x00090021;
         }
         break;
 
         case DB_RECORD_RO:
         {
-            *rec_hdl = 0x0009000F;
+            *rec_hdl = 0x00090022;
         }
         break;
 
         case DB_RECORD_ARCHIVED_OBJECTS:
         {
-            *rec_hdl = 0x00090010;
+            *rec_hdl = 0x00090023;
         }
         break;
 
         case DB_RECORD_BPP:
         {
-            *rec_hdl = 0x00090011;
+            *rec_hdl = 0x00090024;
         }
         break;
 
         case DB_RECORD_BASIC_PRINTING_REFERENCED_OBJECTS:
         {
-            *rec_hdl = 0x00090012;
+            *rec_hdl = 0x00090025;
         }
         break;
 
         case DB_RECORD_PRINTER_ADMINISTRATIVE_USER_INTERFACE:
         {
-            *rec_hdl = 0x00090013;
+            *rec_hdl = 0x00090026;
         }
         break;
 
         case DB_RECORD_AVRCP_CONTROLLER:
         {
-            *rec_hdl = 0x00090014;
+            *rec_hdl = 0x00090027;
         }
         break;
 
         case DB_RECORD_AVRCP_TARGET:
         {
-            *rec_hdl = 0x00090015;
+            *rec_hdl = 0x00090028;
         }
         break;
 
         case DB_RECORD_PBAP_PCE:
         {
-            *rec_hdl = 0x00090016;
+            *rec_hdl = 0x00090029;
         }
         break;
 
         case DB_RECORD_PBAP_PSE:
         {
-            *rec_hdl = 0x00090017;
+            *rec_hdl = 0x0009002A;
         }
         break;
 
         case DB_RECORD_DID:
         {
-            if( 0U == service_instance )
+            if( 0 == service_instance )
             {
-                *rec_hdl = 0x00090018;
+                *rec_hdl = 0x0009002B;
             }
-            else if( 1U == service_instance )
+            else if( 1 == service_instance )
             {
-                *rec_hdl = 0x00090019;
+                *rec_hdl = 0x0009002C;
             }
             else
             {
-                /* MISRA 15.7:  No non-empty terminating else statement. */
+                /* MISRA C-2012 Rule 15.7 */
             }
         }
         break;
 
         case DB_RECORD_HDP:
         {
-            *rec_hdl = 0x0009001A;
+            *rec_hdl = 0x0009002D;
         }
         break;
 
         case DB_RECORD_MAP_MCE:
         {
-            *rec_hdl = 0x0009001B;
+            *rec_hdl = 0x0009002E;
         }
         break;
 
         case DB_RECORD_MAP_MSE:
         {
-            *rec_hdl = 0x0009001C;
+            if( 0 == service_instance )
+            {
+                *rec_hdl = 0x0009002F;
+            }
+            else if( 1 == service_instance )
+            {
+                *rec_hdl = 0x00090030;
+            }
+            else
+            {
+                /* MISRA C-2012 Rule 15.7 */
+            }
         }
         break;
 
         case DB_RECORD_MPS:
         {
-            *rec_hdl = 0x0009001D;
+            *rec_hdl = 0x00090031;
         }
         break;
 
         case DB_RECORD_GAP:
         {
-            *rec_hdl = 0x0009001E;
+            *rec_hdl = 0x00090032;
         }
         break;
 
         case DB_RECORD_GATT:
         {
-            *rec_hdl = 0x0009001F;
+            *rec_hdl = 0x00090033;
         }
         break;
 
         case DB_RECORD_DIS:
         {
-            *rec_hdl = 0x00090020;
+            *rec_hdl = 0x00090034;
         }
         break;
 
         case DB_RECORD_BAS:
         {
-            *rec_hdl = 0x00090021;
+            *rec_hdl = 0x00090035;
         }
         break;
 
         case DB_RECORD_RSC:
         {
-            *rec_hdl = 0x00090022;
+            *rec_hdl = 0x00090036;
         }
         break;
 
         case DB_RECORD_CSC:
         {
-            *rec_hdl = 0x00090023;
+            *rec_hdl = 0x00090037;
         }
         break;
 
         case DB_RECORD_CPS:
         {
-            *rec_hdl = 0x00090024;
+            *rec_hdl = 0x00090038;
         }
         break;
 
         case DB_RECORD_HPS:
         {
-            *rec_hdl = 0x00090025;
+            *rec_hdl = 0x00090039;
         }
         break;
 
         case DB_RECORD_CTS:
         {
-            *rec_hdl = 0x00090026;
+            *rec_hdl = 0x0009003A;
         }
         break;
 
         case DB_RECORD_CTN_CCE:
         {
-            *rec_hdl = 0x00090027;
+            *rec_hdl = 0x0009003B;
         }
         break;
 
         case DB_RECORD_CTN_CSE:
         {
-            *rec_hdl = 0x00090028;
+            if( 0 == service_instance )
+            {
+                *rec_hdl = 0x0009003C;
+            }
+            else if( 1 == service_instance )
+            {
+                *rec_hdl = 0x0009003D;
+            }
+            else
+            {
+                /* MISRA C-2012 Rule 15.7 */
+            }
         }
         break;
 
         default:
-        /* MISRA 16.1: No default case found for the switch statement. */
-        break;
+            /* Unknows DB Record */
+            break;
     }
 
     return API_SUCCESS;

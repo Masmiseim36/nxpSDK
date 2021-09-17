@@ -126,7 +126,8 @@ typedef struct _shell_context_handle
     uint8_t c_pos;                                         /*!< Current line position */
     volatile uint8_t notificationPost;                     /*!< The serial manager notification is post */
     uint8_t exit;                                          /*!< Exit Flag*/
-    uint8_t printBusy;                                     /*!< Print is busy */
+    uint8_t printBusy : 1;                                 /*!< Print is busy */
+    uint8_t taskBusy : 1;                                  /*!< Task is busy */
 } shell_context_handle_t;
 
 #if 0
@@ -278,6 +279,17 @@ void SHELL_Task(shell_handle_t shellHandle)
 
     if (NULL != shellContextHandle)
     {
+        uint32_t osaCurrentSr = 0U;
+
+        osaCurrentSr                         = DisableGlobalIRQ();
+        shellContextHandle->notificationPost = 0U;
+        if (shellContextHandle->taskBusy > 0U)
+        {
+            EnableGlobalIRQ(osaCurrentSr);
+            return;
+        }
+        shellContextHandle->taskBusy = 1U;
+        EnableGlobalIRQ(osaCurrentSr);
 #if (defined(SHELL_NON_BLOCKING_MODE) && (SHELL_NON_BLOCKING_MODE > 0U))
 
 #if defined(OSA_USED)
@@ -298,7 +310,7 @@ void SHELL_Task(shell_handle_t shellHandle)
 
 #endif
         {
-            shellContextHandle->notificationPost = 0;
+            shellContextHandle->notificationPost = 0U;
             do
             {
                 if ((bool)shellContextHandle->exit)
@@ -515,6 +527,9 @@ void SHELL_Task(shell_handle_t shellHandle)
 #endif
 
 #endif
+        osaCurrentSr                 = DisableGlobalIRQ();
+        shellContextHandle->taskBusy = 0U;
+        EnableGlobalIRQ(osaCurrentSr);
     }
 }
 

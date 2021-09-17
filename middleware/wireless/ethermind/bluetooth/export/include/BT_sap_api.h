@@ -53,101 +53,101 @@
 typedef enum _SAP_MSG_ID
 {
     /** [0x00] CONNECT_REQ. Client -> Server */
-    SAP_MSG_CONNECT_REQ,
+    SAP_MSG_CONNECT_REQ = 0x00U,
 
     /** [0x01] CONNECT_RESP. Server -> Client */
-    SAP_MSG_CONNECT_RESP,
+    SAP_MSG_CONNECT_RESP = 0x01U,
 
     /** [0x02] DISCONNECT_REQ. Client -> Server */
-    SAP_MSG_DISCONNECT_REQ,
+    SAP_MSG_DISCONNECT_REQ = 0x02U,
 
     /** [0x03] DISCONNECT_RESP. Server -> Client */
-    SAP_MSG_DISCONNECT_RESP,
+    SAP_MSG_DISCONNECT_RESP = 0x03U,
 
     /** [0x04] DISCONNECT_IND. Server -> Client */
-    SAP_MSG_DISCONNECT_IND,
+    SAP_MSG_DISCONNECT_IND = 0x04U,
 
     /** [0x05] TRANSFER_APDU_REQ. Client -> Server */
-    SAP_MSG_TRANSFER_APDU_REQ,
+    SAP_MSG_TRANSFER_APDU_REQ = 0x05U,
 
     /** [0x06] TRANSFER_APDU_RESP. Server -> Client */
-    SAP_MSG_TRANSFER_APDU_RESP,
+    SAP_MSG_TRANSFER_APDU_RESP = 0x06U,
 
     /** [0x07] TRANSFER_ATR_REQ. Client -> Server */
-    SAP_MSG_TRANSFER_ATR_REQ,
+    SAP_MSG_TRANSFER_ATR_REQ = 0x07U,
 
     /** [0x08] TRANSFER_ATR_RESP. Server -> Client */
-    SAP_MSG_TRANSFER_ATR_RESP,
+    SAP_MSG_TRANSFER_ATR_RESP = 0x08U,
 
     /** [0x09] POWER_SIM_OFF_REQ. Client -> Server */
-    SAP_MSG_POWER_SIM_OFF_REQ,
+    SAP_MSG_POWER_SIM_OFF_REQ = 0x09U,
 
     /** [0x0A] POWER_SIM_OFF_RESP. Server -> Client */
-    SAP_MSG_POWER_SIM_OFF_RESP,
+    SAP_MSG_POWER_SIM_OFF_RESP = 0x0AU,
 
     /** [0x0B] POWER_SIM_ON_REQ. Client -> Server */
-    SAP_MSG_POWER_SIM_ON_REQ,
+    SAP_MSG_POWER_SIM_ON_REQ = 0x0BU,
 
     /** [0x0C] POWER_SIM_ON_RESP. Server -> Client */
-    SAP_MSG_POWER_SIM_ON_RESP,
+    SAP_MSG_POWER_SIM_ON_RESP = 0x0CU,
 
     /** [0x0D] RESET_SIM_REQ. Client -> Server */
-    SAP_MSG_RESET_SIM_REQ,
+    SAP_MSG_RESET_SIM_REQ = 0x0DU,
 
     /** [0x0E] RESET_SIM_RESP. Server -> Client */
-    SAP_MSG_RESET_SIM_RESP,
+    SAP_MSG_RESET_SIM_RESP = 0x0EU,
 
     /** [0x0F] TRANSFER_CARD_READER_STATUS_REQ. Client -> Server */
-    SAP_MSG_TRANSFER_CARD_READER_STATUS_REQ,
+    SAP_MSG_TRANSFER_CARD_READER_STATUS_REQ = 0x0FU,
 
     /** [0x10] TRANSFER_CARD_READER_STATUS_RESP. Server -> Client */
-    SAP_MSG_TRANSFER_CARD_READER_STATUS_RESP,
+    SAP_MSG_TRANSFER_CARD_READER_STATUS_RESP = 0x10U,
 
     /** [0x11] STATUS_IND. Server -> Client */
-    SAP_MSG_STATUS_IND,
+    SAP_MSG_STATUS_IND = 0x11U,
 
     /** [0x12] ERROR_RESP. Server -> Client */
-    SAP_MSG_ERROR_RESP,
+    SAP_MSG_ERROR_RESP = 0x12U,
 
     /** [0x13] SET_TRANSPORT_PROTOCOL_REQ. Client -> Server */
-    SAP_MSG_SET_TRANSPORT_PROTOCOL_REQ,
+    SAP_MSG_SET_TRANSPORT_PROTOCOL_REQ = 0x13U,
 
     /** [0x14] SET_TRANSPORT_PROTOCOL_RESP. Server -> Client */
-    SAP_MSG_SET_TRANSPORT_PROTOCOL_RESP
+    SAP_MSG_SET_TRANSPORT_PROTOCOL_RESP = 0x14U
 }SAP_MSG_ID;
 
 /** SAP Parameter IDs */
 typedef enum _SAP_PARAM_ID
 {
     /** MaxMsgSize. Param Length: 2 */
-    SAP_PID_MAX_MSG_SIZE,
+    SAP_PID_MAX_MSG_SIZE = 0x00U,
 
     /** ConnectionStatus. Param Length: 1 */
-    SAP_PID_CONNECTION_STATUS,
+    SAP_PID_CONNECTION_STATUS = 0x01U,
 
     /** ResultCode. Param Length: 1 */
-    SAP_PID_RESULT_CODE,
+    SAP_PID_RESULT_CODE = 0x02U,
 
     /** DisconnectionType. Param Length: 1 */
-    SAP_PID_DISCONNECT_TYPE,
+    SAP_PID_DISCONNECT_TYPE = 0x03U,
 
     /** CommandAPDU. Param Length: Varies */
-    SAP_PID_COMMAND_APDU,
+    SAP_PID_COMMAND_APDU = 0x04U,
 
     /** ResponseAPDU. Param Length: Varies */
-    SAP_PID_RESPONSE_APDU,
+    SAP_PID_RESPONSE_APDU = 0x05U,
 
     /** ATR. Param Length: Varies */
-    SAP_PID_ATR,
+    SAP_PID_ATR = 0x06U,
 
     /** CardReaderStatus. Param Length: 1 */
-    SAP_PID_CARD_READER_STATUS,
+    SAP_PID_CARD_READER_STATUS = 0x07U,
 
     /** StatusChange. Param Length: 1 */
     SAP_PID_STATUS_CHANGE = 0x08U,
 
     /** Transport Protocol. Param Length: 1 */
-    SAP_PID_TRANSPORT_PROTOCOL,
+    SAP_PID_TRANSPORT_PROTOCOL = 0x09U,
 
     /** CommandAPDU7816. Param Length: Varies */
     SAP_PID_COMMAND_APDU7816 = 0x10U
@@ -158,79 +158,79 @@ typedef enum _SAP_PARAM_ID
 typedef enum _SAP_CONNECTION_STATUS
 {
     /** OK, Server can fulfill requirements */
-    SAP_CONN_STATUS_OK_SRV_CAN_FULFILL_REQRMTS,
+    SAP_CONN_STATUS_OK_SRV_CAN_FULFILL_REQRMTS = 0x00U,
 
     /** Error, Server unable to establish connection */
-    SAP_CONN_STATUS_ERROR_SRV_UNABLE_TO_ESTABLISH_CONNECTION,
+    SAP_CONN_STATUS_ERROR_SRV_UNABLE_TO_ESTABLISH_CONNECTION = 0x01U,
 
     /** Error, Server does not support maximum message size */
-    SAP_CONN_STATUS_SRV_DOES_NOT_SUPPORT_MAX_MSG_SIZE,
+    SAP_CONN_STATUS_SRV_DOES_NOT_SUPPORT_MAX_MSG_SIZE = 0x02U,
 
     /** Error, maximum message size by Client is too small */
-    SAP_CONN_STATUS_MAX_MSG_SIZE_BY_CLIENT_TOO_SMALL,
+    SAP_CONN_STATUS_MAX_MSG_SIZE_BY_CLIENT_TOO_SMALL = 0x03U,
 
     /** OK, ongoing call */
-    SAP_CONN_STATUS_OK_ONGOING_CALL
+    SAP_CONN_STATUS_OK_ONGOING_CALL = 0x04U
 }SAP_CONNECTION_STATUS;
 
 /** SAP Status Change */
 typedef enum _SAP_STATUS_CHANGE
 {
     /** Unknown Error */
-    SAP_STATUS_CHANGE_UNKNOWN_ERROR,
+    SAP_STATUS_CHANGE_UNKNOWN_ERROR = 0x00U,
 
     /** Card reset */
-    SAP_STATUS_CHANGE_CARD_RESET,
+    SAP_STATUS_CHANGE_CARD_RESET = 0x01U,
 
     /** Card not accessible */
-    SAP_STATUS_CHANGE_CARD_NOT_ACCESSIBLE,
+    SAP_STATUS_CHANGE_CARD_NOT_ACCESSIBLE = 0x02U,
 
     /** Card removed */
-    SAP_STATUS_CHANGE_CARD_REMOVED,
+    SAP_STATUS_CHANGE_CARD_REMOVED = 0x03U,
 
     /** Card inserted */
-    SAP_STATUS_CHANGE_CARD_INSERTED,
+    SAP_STATUS_CHANGE_CARD_INSERTED = 0x04U,
 
     /** Card recovered */
-    SAP_STATUS_CHANGE_CARD_RECOVERED
+    SAP_STATUS_CHANGE_CARD_RECOVERED = 0x05U
 }SAP_STATUS_CHANGE;
 
 /** SAP Disconnection Type */
 typedef enum _SAP_DISCONNECTION_TYPE
 {
     /** Graceful */
-    SAP_GRACEFUL_DISCONNECTION,
+    SAP_GRACEFUL_DISCONNECTION = 0x00U,
 
     /** Immediate */
-    SAP_IMMEDIATE_DISCONNECTION
+    SAP_IMMEDIATE_DISCONNECTION = 0x01U
 }SAP_DISCONNECTION_TYPE;
 
 /** SAP Result Code */
 typedef enum _SAP_RESULT_CODE
 {
     /** OK, request processed correctly */
-    SAP_RESULT_OK_REQ_PROCESSED_CORRECTLY,
+    SAP_RESULT_OK_REQ_PROCESSED_CORRECTLY = 0x00U,
 
     /** Error, no reason defined */
-    SAP_RESULT_ERROR_NO_REASON_DEFINED,
+    SAP_RESULT_ERROR_NO_REASON_DEFINED = 0x01U,
 
     /** Error, card not accessible */
-    SAP_RESULT_ERROR_CARD_NOT_ACCESSIBLE,
+    SAP_RESULT_ERROR_CARD_NOT_ACCESSIBLE = 0x02U,
 
     /** Error, card (already) powered off */
-    SAP_RESULT_CARD_ALREADY_POWERED_OFF,
+    SAP_RESULT_CARD_ALREADY_POWERED_OFF = 0x03U,
 
     /** Error, card removed */
-    SAP_RESULT_CARD_REMOVED,
+    SAP_RESULT_CARD_REMOVED = 0x04U,
 
     /** Error, card already powered on */
-    SAP_RESULT_CARD_ALREADY_POWERED_ON,
+    SAP_RESULT_CARD_ALREADY_POWERED_ON = 0x05U,
 
     /** Error, data not available */
-    SAP_RESULT_DATA_NOT_AVALIABLE,
+    SAP_RESULT_DATA_NOT_AVALIABLE = 0x06U,
 
     /** Error, not supported */
-    SAP_RESULT_NOT_SUPPORTED
+    SAP_RESULT_NOT_SUPPORTED = 0x07U
 
 }SAP_RESULT_CODE;
 
@@ -408,6 +408,22 @@ API_RESULT BT_sap_server_report_status
                /* IN */ UCHAR status
            );
 
+/**
+ *  \brief To send APDU Response.
+ *
+ *  \par Description:
+ *       Transfers an APDU Response between the Server and the Client.
+ *       APDU transfers are always initiated by the Client.
+ *
+ *  \ingroup SIM_Access_Server_API Handler
+ *
+ *  \param  [in] rsp     Response data pointer
+ *  \param  [in] rsplen  Response data length
+ *
+ *  \return
+ *      API_RESULT: API_SUCCESS or Error code for failure
+ */
+API_RESULT BT_sap_server_transfer_apdu_response(UCHAR * rsp, UINT16 rsplen);
 
 /** SAP Client related APIs */
 /**
@@ -592,18 +608,22 @@ API_RESULT BT_sap_client_set_transport_protocol
            );
 
 /**
- *  \brief To transfer an APDU between the Client and the Server.
+ *  \brief To send APDU Command.
  *
  *  \par Description:
- *       Transfers an APDU between the Client and the Server.
+ *       Transfers an APDU Command between the Client and the Server.
  *       APDU transfers are always initiated by the Client.
  *
  *  \ingroup SIM_Access_Client_API Handler
  *
+ *  \param  [in] type    APDU Command Type: SAP_PID_COMMAND_APDU or SAP_PID_COMMAND_APDU7816
+ *  \param  [in] pdu     PDU data pointer
+ *  \param  [in] pdulen  PDU data length
+ *
  *  \return
  *      API_RESULT: API_SUCCESS or Error code for failure
  */
-API_RESULT BT_sap_client_transfer_apdu(void);
+API_RESULT BT_sap_client_transfer_apdu_command(UCHAR type, UCHAR * pdu, UINT16 pdulen);
 
 
 /** SAP Access Common APIs */

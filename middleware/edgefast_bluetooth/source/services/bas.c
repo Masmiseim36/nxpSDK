@@ -10,7 +10,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-#include <errno.h>
+#include <errno/errno.h>
 #include <stdbool.h>
 #include <zephyr/types.h>
 #include <sys/atomic.h>
@@ -55,8 +55,8 @@ static ssize_t read_blvl(struct bt_conn *conn,
 static BT_GATT_SERVICE_DEFINE(bas,
 	BT_GATT_PRIMARY_SERVICE(BT_UUID_BAS),
 	BT_GATT_CHARACTERISTIC(BT_UUID_BAS_BATTERY_LEVEL,
-			       BT_GATT_CHRC_READ | BT_GATT_CHRC_NOTIFY,
-			       BT_GATT_PERM_READ, read_blvl, NULL,
+			       BT_GATT_CHRC_AUTH | BT_GATT_CHRC_READ | BT_GATT_CHRC_NOTIFY,
+			       BT_GATT_PERM_READ_ENCRYPT, read_blvl, NULL,
 			       &battery_level),
 	BT_GATT_CCC(blvl_ccc_cfg_changed,
 		    BT_GATT_PERM_READ | BT_GATT_PERM_WRITE),

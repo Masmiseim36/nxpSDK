@@ -101,7 +101,7 @@ include(driver_mdio-enet_MIMXRT1062)
 
 include(driver_flexspi_MIMXRT1062)
 
-include(middleware_se_hostlib_cloud_enet_MIMXRT1062)
+include(middleware_se_hostlib_cloud_enet_evkmimxrt1060_MIMXRT1062)
 
 include(middleware_lwip_enet_ethernetif_MIMXRT1062)
 
@@ -117,7 +117,7 @@ include(middleware_mbedtls_MIMXRT1062)
 
 include(middleware_mbedtls_rt_MIMXRT1062)
 
-include(middleware_se_hostlib_commonSe050CloudDemos_MIMXRT1062)
+include(middleware_se_hostlib_commonSe050CloudDemos_evkmimxrt1060_MIMXRT1062)
 
 include(driver_common_MIMXRT1062)
 
@@ -193,7 +193,7 @@ include(middleware_se_hostlib_commonSe050_Scp03_MIMXRT1062)
 
 include(middleware_se_hostlib_mwlog_MIMXRT1062)
 
-include(middleware_se_hostlib_commonCloudDemos_MIMXRT1062)
+include(middleware_se_hostlib_commonCloudDemos_evkmimxrt1060_MIMXRT1062)
 
 include(middleware_freertos-kernel_heap_4_MIMXRT1062)
 

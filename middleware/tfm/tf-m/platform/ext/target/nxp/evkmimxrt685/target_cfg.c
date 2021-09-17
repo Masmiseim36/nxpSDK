@@ -228,10 +228,10 @@ int32_t mpc_init_cfg(void)
 
     /* Security access rules for boot ROM memory sectors. Each sector is 8 KB. Up to 32 sectors are supported. */
     /* Security control ROM memory configuration (0x3 = all regions set to secure and privileged user access). */
-    AHB_SECURE_CTRL->ROM_MEM_RULE[0] = 0x33333333U;
-    AHB_SECURE_CTRL->ROM_MEM_RULE[1] = 0x33333333U;
-    AHB_SECURE_CTRL->ROM_MEM_RULE[2] = 0x33333333U;
-    AHB_SECURE_CTRL->ROM_MEM_RULE[3] = 0x33333333U;
+    for(i=0; i < 4; i++)
+    {
+        AHB_SECURE_CTRL->ROM_MEM_RULE[i] = 0x33333333U;
+    }
     
     /* == Flash region == */
 
@@ -244,10 +244,10 @@ int32_t mpc_init_cfg(void)
 
     /* 1) Set FLASH memory security access rule configuration to init value (0x3 = all regions set to secure and privileged user access) */
     /* Region 0 has 32 regions of 256 KB each, totaling 8 MB.  */
-    AHB_SECURE_CTRL->FLEXSPI0_REGION0_RULE[0] = 0x33333333U;
-    AHB_SECURE_CTRL->FLEXSPI0_REGION0_RULE[1] = 0x33333333U;
-    AHB_SECURE_CTRL->FLEXSPI0_REGION0_RULE[2] = 0x33333333U;
-    AHB_SECURE_CTRL->FLEXSPI0_REGION0_RULE[3] = 0x33333333U;
+    for(i=0; i < 4; i++)
+    {
+        AHB_SECURE_CTRL->FLEXSPI0_REGION0_RULE[i] = 0x33333333U;
+    }
     /* Region 1 has 4 regions of 2 MB each, totaling 8 MB. */
     AHB_SECURE_CTRL->FLEXSPI0_REGION1_RULE0 = 0x00003333U;
     /* Region 2 has 4 regions of 4 MB each, totaling 16 MB. */
@@ -265,7 +265,6 @@ int32_t mpc_init_cfg(void)
     TFM_ASSERT(((memory_regions.non_secure_partition_base - NS_ROM_ALIAS_BASE) % FLASH_REGION0_SUBREGION_SIZE) == 0);
     TFM_ASSERT(((memory_regions.non_secure_partition_limit - NS_ROM_ALIAS_BASE +1) % FLASH_REGION0_SUBREGION_SIZE) == 0);
 
-    //TBD refactore it to the function.
     ns_region_start_id = (memory_regions.non_secure_partition_base - NS_ROM_ALIAS_BASE)/FLASH_REGION0_SUBREGION_SIZE;
     ns_region_end_id = (memory_regions.non_secure_partition_limit - NS_ROM_ALIAS_BASE + 1)/FLASH_REGION0_SUBREGION_SIZE;
    
@@ -394,14 +393,14 @@ int32_t mpc_init_cfg(void)
     /*  RAM0 to RAM7 256 KB, each 32 KB (32 * 1 KB)
         RAM8 to RAM11 256 KB, each 64 KB (32 * 2 KB)
         RAM12 to RAM15 512 KB, each 128 KB (32 * 4 KB)
-        RAM16 to RAM29 3 MB, each 256 KB (32 * 8 KB) */
+        RAM16 to RAM29 3.5 MB, each 256 KB (32 * 8 KB) */
 
     /* The regions have to be alligned to 1 kB to cover the AHB RAM Region */
     TFM_ASSERT((S_DATA_SIZE % DATA_REGION0_SUBREGION_SIZE) == 0);
     TFM_ASSERT(((S_DATA_SIZE + NS_DATA_SIZE) % DATA_REGION0_SUBREGION_SIZE) == 0);
     
-    /* Security access rules for RAM (0x3 = all regions set to secure and privileged user access*/
-    for(i=0; i < 3; i++)
+    /* Security access rules for RAM (0x3 = all regions set to secure and privileged user access) */
+    for(i=0; i < 4; i++)
     {
         AHB_SECURE_CTRL->RAM00_RULE[i] = 0x33333333U; /* 0x2000_0000 -  0x2000_7FFF */
         AHB_SECURE_CTRL->RAM01_RULE[i] = 0x33333333U; /* 0x2000_8000 -  0x2000_FFFF */
@@ -436,7 +435,6 @@ int32_t mpc_init_cfg(void)
     }
 
     /* == Region 0 == */
-    //TBD refactore it to the function.
     /* RAM memory configuration (set according to region_defs.h and flash_layout.h) */
     ns_region_start_id = S_DATA_SIZE/DATA_REGION0_SUBREGION_SIZE; /* NS starts after S */
     ns_region_end_id = (S_DATA_SIZE + NS_DATA_SIZE)/DATA_REGION0_SUBREGION_SIZE;
@@ -895,12 +893,11 @@ int32_t mpc_init_cfg(void)
             }
             break;
         }    
-
     }
     
     /* DSP (HiFi4) TCMs (0x24000000--0x240FFFFF) */
-    AHB_SECURE_CTRL->PIF_HIFI4_X_MEM_RULE0    = 0;
-	
+    AHB_SECURE_CTRL->PIF_HIFI4_X_MEM_RULE0 = 0x0U;
+
 #if TARGET_DEBUG_LOG
     LOG_MSG("=== [AHB MPC NS] =======\r\n");
     LOG_MSG("NS ROM [0x%x, 0x%x]\r\n", memory_regions.non_secure_partition_base, memory_regions.non_secure_partition_limit);
@@ -926,9 +923,12 @@ int32_t ppc_init_cfg(void)
      *  1    Non-secure, privileged access allowed.
      *  2    Secure, user access allowed.
      *  3    Secure, privileged access allowed. */
- 
+    
+    /* Write access attributes for AHB_SECURE_CTRL module are tier-4 (secure privileged). */ 
+    
     /* Security access rules for APB Bridge 0 peripherals. */
     AHB_SECURE_CTRL->APB_GRP0_MEM_RULE0 =
+        (0x30303000U) |                                                         /* Bits have to be set to '1' according to UM.*/
         AHB_SECURE_CTRL_APB_GRP0_MEM_RULE0_RSTCTL0_RULE(0x0U) |                 /* RSTCTL0*/
         AHB_SECURE_CTRL_APB_GRP0_MEM_RULE0_CLKCTL0_RULE(0x0U) |                 /* CLKCTL0 */
         AHB_SECURE_CTRL_APB_GRP0_MEM_RULE0_SYSCTL0_RULE(0x0U) |                 /* SYSCTL0 */
@@ -936,17 +936,19 @@ int32_t ppc_init_cfg(void)
         AHB_SECURE_CTRL_APB_GRP0_MEM_RULE0_PUFCTRL_RULE(0x3U);                  /* PUF */
 
     AHB_SECURE_CTRL->APB_GRP0_MEM_RULE1 =
+        (0x00333333U) |                                                         /* Bits have to be set to '1' according to UM.*/
         AHB_SECURE_CTRL_APB_GRP0_MEM_RULE1_WWDT0_RULE(0x0U) |                   /* Watchdog timer 0 */
         AHB_SECURE_CTRL_APB_GRP0_MEM_RULE1_UTICK_RULE(0x0U);                    /* U-Tick timer */
 
     /* Security access rules for APB Bridge 1 peripherals */
     AHB_SECURE_CTRL->APB_GRP1_MEM_RULE0 =
+        (0x30033000U) |                                                         /* Bits have to be set to '1' according to UM.*/
         AHB_SECURE_CTRL_APB_GRP1_MEM_RULE0_RSTCTL1_RULE(0x0U) |                 /* RSTCTL1 */
         AHB_SECURE_CTRL_APB_GRP1_MEM_RULE0_CLKCTL1_RULE(0x0U) |                 /* CLKCTL1 */
         AHB_SECURE_CTRL_APB_GRP1_MEM_RULE0_SYSCTL1_RULE(0x0U) |                 /* SYSCTL1 */
         AHB_SECURE_CTRL_APB_GRP1_MEM_RULE0_GPIO_INTR_CTRL_RULE(0x0U) |          /* GPIO pin interrupts (PINT) */
         AHB_SECURE_CTRL_APB_GRP1_MEM_RULE0_PERIPH_INPUT_MUX_RULE(0x0U);         /* Input Muxes */               
-    
+
     AHB_SECURE_CTRL->APB_GRP1_MEM_RULE1 =
         AHB_SECURE_CTRL_APB_GRP1_MEM_RULE1_CT32BIT0_RULE(0x0U) |                /* CTIMER0 */
         AHB_SECURE_CTRL_APB_GRP1_MEM_RULE1_CT32BIT1_RULE(0x0U) |                /* CTIMER1 */
@@ -956,13 +958,14 @@ int32_t ppc_init_cfg(void)
         AHB_SECURE_CTRL_APB_GRP1_MEM_RULE1_MRT_RULE(0x0U) |                     /* MRT */
         AHB_SECURE_CTRL_APB_GRP1_MEM_RULE1_WWDT1_RULE(0x0U) |                   /* Watchdog timer 1 */
         AHB_SECURE_CTRL_APB_GRP1_MEM_RULE1_FREQME_RULE(0x0U);                   /* Frequency measure */
-    
+
     AHB_SECURE_CTRL->APB_GRP1_MEM_RULE2 =
+        (0x30333330U) |                                                         /* Bits have to be set to '1' according to UM.*/
         AHB_SECURE_CTRL_APB_GRP1_MEM_RULE2_RTC_RULE(0x0U) |                     /* RTC */
         AHB_SECURE_CTRL_APB_GRP1_MEM_RULE2_I3C0_RULE(0x0U);                     /* I3C */
 
     /* Security access rules for AHB peripherals */ 
-    AHB_SECURE_CTRL->AHB_PERIPH0_SLAVE_RULE0 = 
+    AHB_SECURE_CTRL->AHB_PERIPH0_SLAVE_RULE0 =
         AHB_SECURE_CTRL_AHB_PERIPH0_SLAVE_RULE0_HSGPIO_RULE(0x0U) |             /* High-speed GPIO */
         AHB_SECURE_CTRL_AHB_PERIPH0_SLAVE_RULE0_DMA0_RULE(0x0U) |               /* DMAC0 */
         AHB_SECURE_CTRL_AHB_PERIPH0_SLAVE_RULE0_DMA1_RULE(0x0U) |               /* DMAC1 */
@@ -972,15 +975,16 @@ int32_t ppc_init_cfg(void)
         AHB_SECURE_CTRL_AHB_PERIPH0_SLAVE_RULE0_FLEXCOMM3_RULE(0x0U) |          /* Flexcomm Interface 3 */
         AHB_SECURE_CTRL_AHB_PERIPH0_SLAVE_RULE0_DEBUG_MAILBOX_RULE(0x0U);       /* Debug mailbox */
 
-    /* Security access rules for AIPS peripherals */ 
-    AHB_SECURE_CTRL->AIPS_BRIDGE0_MEM_RULE0 = 
+    /* Security access rules for AIPS peripherals */
+    AHB_SECURE_CTRL->AIPS_BRIDGE0_MEM_RULE0 =
+        (0x33300000U) |                                                         /* Bits have to be set to '1' according to UM.*/
         AHB_SECURE_CTRL_AIPS_BRIDGE0_MEM_RULE0_MU0_M33_RULE(0x0U) |             /* Message Unit for CM33 */
         AHB_SECURE_CTRL_AIPS_BRIDGE0_MEM_RULE0_MU0_DSP_RULE(0x0U) |             /* Message Unit for DSP */
         AHB_SECURE_CTRL_AIPS_BRIDGE0_MEM_RULE0_SEMAPHORE_RULE(0x0U) |           /* Semaphore */
         AHB_SECURE_CTRL_AIPS_BRIDGE0_MEM_RULE0_OS_EVENT_TIMER_M33_RULE(0x0U) |  /* OS Event Timer for CM33*/
         AHB_SECURE_CTRL_AIPS_BRIDGE0_MEM_RULE0_OS_EVENT_TIMER_DSP_RULE(0x0U);   /* OS Event Timer for DSP */
 
-    /* Security access rules for AHB peripherals */ 
+    /* Security access rules for AHB peripherals */
     AHB_SECURE_CTRL->AHB_PERIPH1_SLAVE_RULE0 =
         AHB_SECURE_CTRL_AHB_PERIPH1_SLAVE_RULE0_CRC_RULE(0x0U) |                /* CRC engine */
         AHB_SECURE_CTRL_AHB_PERIPH1_SLAVE_RULE0_DMIC_RULE(0x0U) |               /* DMIC and HWVAD */
@@ -990,9 +994,10 @@ int32_t ppc_init_cfg(void)
         AHB_SECURE_CTRL_AHB_PERIPH1_SLAVE_RULE0_FLEXCOMM7_RULE(0x0U) |          /* Flexcomm Interface 7 */
         AHB_SECURE_CTRL_AHB_PERIPH1_SLAVE_RULE0_FLEXCOMM14_RULE(0x0U) |         /* Flexcomm Interface 14 */
         AHB_SECURE_CTRL_AHB_PERIPH1_SLAVE_RULE0_FLEXCOMM15_RULE(0x0U);          /* Flexcomm Interface 15 */
-        
-    /* Security access rules for AIPS peripherals */ 
+
+    /* Security access rules for AIPS peripherals */
     AHB_SECURE_CTRL->AIPS_BRIDGE1_MEM_RULE0 =
+        (0x00300000U) |                                                         /* Bits have to be set to '1' according to UM.*/
         AHB_SECURE_CTRL_AIPS_BRIDGE1_MEM_RULE0_OTP_RULE0(0x0U) |                /* OTP 0 */
         AHB_SECURE_CTRL_AIPS_BRIDGE1_MEM_RULE0_OTP_RULE1(0x0U) |                /* OTP 1  */
         AHB_SECURE_CTRL_AIPS_BRIDGE1_MEM_RULE0_OTP_RULE2(0x0U) |                /* OTP 2  */
@@ -1000,9 +1005,10 @@ int32_t ppc_init_cfg(void)
         AHB_SECURE_CTRL_AIPS_BRIDGE1_MEM_RULE0_FLEXSPI_AND_OTFAD_RULE(0x0U) |   /* FlexSPI and OTFAD */
         AHB_SECURE_CTRL_AIPS_BRIDGE1_MEM_RULE0_SDIO0_RULE(0x0U) |               /* SDIO0 */
         AHB_SECURE_CTRL_AIPS_BRIDGE1_MEM_RULE0_SDIO1_RULE(0x0U);                /* SDIO1 */
-        
+
     AHB_SECURE_CTRL->AIPS_BRIDGE1_MEM_RULE1 =
-        0x000F0000U |                                                           /* Bits [19:16] have to be set to '1' according to UM. */
+        /* 0x000F0000U | */
+        (0x33330000U) |                                                         /* Bits have to be set to '1' according to UM.*/
         AHB_SECURE_CTRL_AIPS_BRIDGE1_MEM_RULE1_RNG_RULE(0x0U) |                 /* Random Number Generator */
         AHB_SECURE_CTRL_AIPS_BRIDGE1_MEM_RULE1_ACMP0_RULE(0x0U) |               /* Analog Comparator */
         AHB_SECURE_CTRL_AIPS_BRIDGE1_MEM_RULE1_ADC0_RULE(0x0U) |                /* ADC */
@@ -1010,23 +1016,24 @@ int32_t ppc_init_cfg(void)
 
     /* Security access rules for AHB peripherals */ 
     AHB_SECURE_CTRL->AHB_PERIPH2_SLAVE_RULE0 =
+        (0x00330000U) |                                                         /* Bits have to be set to '1' according to UM.*/
         AHB_SECURE_CTRL_AHB_PERIPH2_SLAVE_RULE0_USB_HS_RAM_RULE(0x0U) |         /* High Speed USB RAM */
         AHB_SECURE_CTRL_AHB_PERIPH2_SLAVE_RULE0_USB_HS_DEV_RULE(0x0U) |         /* High Speed USB Device registers */
         AHB_SECURE_CTRL_AHB_PERIPH2_SLAVE_RULE0_USB_HS_HOST_RULE(0x0U) |        /* High Speed USB Host registers */
         AHB_SECURE_CTRL_AHB_PERIPH2_SLAVE_RULE0_SCT_RULE(0x0U);                 /* SCTimer/PWM */
 
-    /* Security access rules for AHB peripherals */ 
+    /* Security access rules for AHB peripherals */
     AHB_SECURE_CTRL->AHB_PERIPH3_SLAVE_RULE0 =
         AHB_SECURE_CTRL_AHB_PERIPH3_SLAVE_RULE0_PQ_COPRO_RULE(0x0U) |           /* PowerQuad coprocessor registers */
         AHB_SECURE_CTRL_AHB_PERIPH3_SLAVE_RULE0_CASPER_COPRO_RULE(0x3U) |       /* Casper coprocessor registers */
         AHB_SECURE_CTRL_AHB_PERIPH3_SLAVE_RULE0_CASPER_RAM_RULE(0x3U) |         /* Casper RAM */
         AHB_SECURE_CTRL_AHB_PERIPH3_SLAVE_RULE0_SECURE_GPIO_RULE(0x0U) |        /* Secure GPIO */
         AHB_SECURE_CTRL_AHB_PERIPH3_SLAVE_RULE0_HASH_RULE(0x3U);                /* Hash-AES */
-        
+
     /* Secure GPIO mask for pins. 
     This register is used to block leakage of Secure interface (GPIOs, I2C, UART configured as secure peripherals) pin states to non-secure world. 
     0: GPIO can't read PIOn_PIN, 1: GPIO can read PIOn_PIN 0x1 */
-    AHB_SECURE_CTRL->SEC_GPIO_MASK0 = 0xFFFFFFFFU;
+    AHB_SECURE_CTRL->SEC_GPIO_MASK0 = 0xFFFFFFFFU; /* Reset value */
     AHB_SECURE_CTRL->SEC_GPIO_MASK1 = 0xFFFFFFFFU;
     AHB_SECURE_CTRL->SEC_GPIO_MASK2 = 0xFFFFFFFFU;
     AHB_SECURE_CTRL->SEC_GPIO_MASK3 = 0xFFFFFFFFU;
@@ -1034,17 +1041,17 @@ int32_t ppc_init_cfg(void)
     AHB_SECURE_CTRL->SEC_GPIO_MASK5 = 0xFFFFFFFFU;
     AHB_SECURE_CTRL->SEC_GPIO_MASK6 = 0xFFFFFFFFU;
     AHB_SECURE_CTRL->SEC_GPIO_MASK7 = 0xFFFFFFFFU;
-    
+
     /* Mask interrupts to DSP for security purpose 
        0: INTR[5-31] is invisible to DSP, 1: INTR[5-31] is visible to DSP*/
-    AHB_SECURE_CTRL->SEC_DSP_INT_MASK = 0xFFFFFFE0U;
+    AHB_SECURE_CTRL->SEC_DSP_INT_MASK = 0xFFFFFFE0U; /* Reset value */
    
-    //TBD SEC_MASK_LOCK
-    //TBD    AHB_SECURE_CTRL->MASTER_SEC_LEVEL          = 0x80000000U;
-    //    AHB_SECURE_CTRL->MASTER_SEC_LEVEL_ANTI_POL = 0xBFFFFFFFU;
+    /* SEC_MASK_LOCK */
+    /* MASTER_SEC_LEVEL          = 0x80000000U; */
+    /* MASTER_SEC_LEVEL_ANTI_POL = 0xBFFFFFFFU; */
     
     /* m33 lock control register (0x2: CM33 Non-secure VTOR is not locked.)*/
-    AHB_SECURE_CTRL->CM33_LOCK_REG    = 0x800002AAU;
+    AHB_SECURE_CTRL->CM33_LOCK_REG    = 0x800002AAU; /* Reset value */
 
     /* Enable AHB secure controller check */
     AHB_SECURE_CTRL->MISC_CTRL_REG = (AHB_SECURE_CTRL->MISC_CTRL_REG & ~(AHB_SECURE_CTRL_MISC_CTRL_REG_ENABLE_SECURE_CHECKING_MASK 

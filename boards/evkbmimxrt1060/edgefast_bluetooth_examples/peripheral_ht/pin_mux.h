@@ -360,6 +360,71 @@ void BOARD_InitQSPIPins(void);
  */
 void BOARD_InitArduinoUARTPins(void);
 
+
+#define BOARD_DEINITARDUINOUARTPINS_IOMUXC_GPR_GPR26_GPIO_MUX1_GPIO_SEL_MASK 0xF00000U /*!< GPIO1 and GPIO6 share same IO MUX function, GPIO_MUX1 selects one GPIO function: affected bits mask */
+
+/* GPIO_AD_B1_04 (coord L12), CSI_PIXCLK/J46[8]/BT_DEV_WAKE/U9[9]/J33[3] */
+/* Routed pin properties */
+#define BOARD_DEINITARDUINOUARTPINS_CSI_PIXCLK_PERIPHERAL                  GPIO1   /*!< Peripheral name */
+#define BOARD_DEINITARDUINOUARTPINS_CSI_PIXCLK_SIGNAL                    gpio_io   /*!< Signal name */
+#define BOARD_DEINITARDUINOUARTPINS_CSI_PIXCLK_CHANNEL                       20U   /*!< Signal channel */
+
+/* Symbols to be used with GPIO driver */
+#define BOARD_DEINITARDUINOUARTPINS_CSI_PIXCLK_GPIO                        GPIO1   /*!< GPIO peripheral base pointer */
+#define BOARD_DEINITARDUINOUARTPINS_CSI_PIXCLK_GPIO_PIN                      20U   /*!< GPIO pin number */
+#define BOARD_DEINITARDUINOUARTPINS_CSI_PIXCLK_GPIO_PIN_MASK         (1U << 20U)   /*!< GPIO pin mask */
+#define BOARD_DEINITARDUINOUARTPINS_CSI_PIXCLK_PORT                        GPIO1   /*!< PORT peripheral base pointer */
+#define BOARD_DEINITARDUINOUARTPINS_CSI_PIXCLK_PIN                           20U   /*!< PORT pin number */
+#define BOARD_DEINITARDUINOUARTPINS_CSI_PIXCLK_PIN_MASK              (1U << 20U)   /*!< PORT pin mask */
+
+/* GPIO_AD_B1_05 (coord K12), CSI_MCLK/J46[12]/WL_DEV_WAKE/U9[10]/J33[4] */
+/* Routed pin properties */
+#define BOARD_DEINITARDUINOUARTPINS_CSI_MCLK_PERIPHERAL                    GPIO1   /*!< Peripheral name */
+#define BOARD_DEINITARDUINOUARTPINS_CSI_MCLK_SIGNAL                      gpio_io   /*!< Signal name */
+#define BOARD_DEINITARDUINOUARTPINS_CSI_MCLK_CHANNEL                         21U   /*!< Signal channel */
+
+/* Symbols to be used with GPIO driver */
+#define BOARD_DEINITARDUINOUARTPINS_CSI_MCLK_GPIO                          GPIO1   /*!< GPIO peripheral base pointer */
+#define BOARD_DEINITARDUINOUARTPINS_CSI_MCLK_GPIO_PIN                        21U   /*!< GPIO pin number */
+#define BOARD_DEINITARDUINOUARTPINS_CSI_MCLK_GPIO_PIN_MASK           (1U << 21U)   /*!< GPIO pin mask */
+#define BOARD_DEINITARDUINOUARTPINS_CSI_MCLK_PORT                          GPIO1   /*!< PORT peripheral base pointer */
+#define BOARD_DEINITARDUINOUARTPINS_CSI_MCLK_PIN                             21U   /*!< PORT pin number */
+#define BOARD_DEINITARDUINOUARTPINS_CSI_MCLK_PIN_MASK                (1U << 21U)   /*!< PORT pin mask */
+
+/* GPIO_AD_B1_06 (coord J12), CSI_VSYNC/J46[18]/BT_UART_TXD/U9[4]/I2C3_SCL/J24[3]/J23[13]/J16[2] */
+/* Routed pin properties */
+#define BOARD_DEINITARDUINOUARTPINS_CSI_VSYNC_PERIPHERAL                   GPIO1   /*!< Peripheral name */
+#define BOARD_DEINITARDUINOUARTPINS_CSI_VSYNC_SIGNAL                     gpio_io   /*!< Signal name */
+#define BOARD_DEINITARDUINOUARTPINS_CSI_VSYNC_CHANNEL                        22U   /*!< Signal channel */
+
+/* Symbols to be used with GPIO driver */
+#define BOARD_DEINITARDUINOUARTPINS_CSI_VSYNC_GPIO                         GPIO1   /*!< GPIO peripheral base pointer */
+#define BOARD_DEINITARDUINOUARTPINS_CSI_VSYNC_GPIO_PIN                       22U   /*!< GPIO pin number */
+#define BOARD_DEINITARDUINOUARTPINS_CSI_VSYNC_GPIO_PIN_MASK          (1U << 22U)   /*!< GPIO pin mask */
+#define BOARD_DEINITARDUINOUARTPINS_CSI_VSYNC_PORT                         GPIO1   /*!< PORT peripheral base pointer */
+#define BOARD_DEINITARDUINOUARTPINS_CSI_VSYNC_PIN                            22U   /*!< PORT pin number */
+#define BOARD_DEINITARDUINOUARTPINS_CSI_VSYNC_PIN_MASK               (1U << 22U)   /*!< PORT pin mask */
+
+/* GPIO_AD_B1_07 (coord K10), CSI_HSYNC/J46[16]/BT_UART_RXD/U10[20]/I2C3_SDA/J24[5]/J23[15]/J16[1] */
+/* Routed pin properties */
+#define BOARD_DEINITARDUINOUARTPINS_CSI_HSYNC_PERIPHERAL                   GPIO1   /*!< Peripheral name */
+#define BOARD_DEINITARDUINOUARTPINS_CSI_HSYNC_SIGNAL                     gpio_io   /*!< Signal name */
+#define BOARD_DEINITARDUINOUARTPINS_CSI_HSYNC_CHANNEL                        23U   /*!< Signal channel */
+
+/* Symbols to be used with GPIO driver */
+#define BOARD_DEINITARDUINOUARTPINS_CSI_HSYNC_GPIO                         GPIO1   /*!< GPIO peripheral base pointer */
+#define BOARD_DEINITARDUINOUARTPINS_CSI_HSYNC_GPIO_PIN                       23U   /*!< GPIO pin number */
+#define BOARD_DEINITARDUINOUARTPINS_CSI_HSYNC_GPIO_PIN_MASK          (1U << 23U)   /*!< GPIO pin mask */
+#define BOARD_DEINITARDUINOUARTPINS_CSI_HSYNC_PORT                         GPIO1   /*!< PORT peripheral base pointer */
+#define BOARD_DEINITARDUINOUARTPINS_CSI_HSYNC_PIN                            23U   /*!< PORT pin number */
+#define BOARD_DEINITARDUINOUARTPINS_CSI_HSYNC_PIN_MASK               (1U << 23U)   /*!< PORT pin mask */
+
+/*!
+ * @brief Configures pin routing and optionally pin electrical features.
+ *
+ */
+void BOARD_DeinitArduinoUARTPins(void);
+
 #if defined(__cplusplus)
 }
 #endif

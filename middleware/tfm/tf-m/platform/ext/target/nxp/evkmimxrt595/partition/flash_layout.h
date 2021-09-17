@@ -160,10 +160,10 @@
 #define NS_ROM_ALIAS_BASE (0x08000000)
 
 /* Use SRAM memory to store RW data */
-#define S_RAM_ALIAS_BASE  (0x10000000) /* 4.5 MB Shared RAM via the CM33 code bus (secure access) */
-#define NS_RAM_ALIAS_BASE (0x00000000) /* 4.5 MB Shared RAM via the CM33 code bus (non-secure access). */
+#define S_RAM_ALIAS_BASE    (0x10000000) /* 5 MB Shared RAM via the CM33 code bus (secure access) */
+#define NS_RAM_ALIAS_BASE   (0x00000000) /* 5 MB Shared RAM via the CM33 code bus (non-secure access). */
 
-#define TOTAL_ROM_SIZE FLASH_TOTAL_SIZE
-#define TOTAL_RAM_SIZE (1024*1024*4 + 1024*512)     /* 4.5 MB SRAM*/
+#define TOTAL_ROM_SIZE      FLASH_TOTAL_SIZE
+#define TOTAL_RAM_SIZE      (1024*1024*5)     /* 5 MB SRAM*/
 
 #endif /* __FLASH_LAYOUT_H__ */

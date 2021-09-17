@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2020, NXP
+ * Copyright (c) 2019-2021, NXP
  * All rights reserved.
  *
  *
@@ -10,6 +10,10 @@
 #define _FSL_LCDIF_H_
 
 #include "fsl_common.h"
+
+#if defined(FSL_FEATURE_MEMORY_HAS_ADDRESS_OFFSET) && FSL_FEATURE_MEMORY_HAS_ADDRESS_OFFSET
+#include "fsl_memory.h"
+#endif
 
 /*!
  * @addtogroup lcdif_driver
@@ -22,7 +26,7 @@
 
 /*! @name Driver version */
 /*@{*/
-#define FSL_LCDIF_DRIVER_VERSION (MAKE_VERSION(2, 1, 0))
+#define FSL_LCDIF_DRIVER_VERSION (MAKE_VERSION(2, 1, 1))
 /*@}*/
 
 /*! @brief Construct the cursor color, every element should be in the range of 0 ~ 255. */
@@ -43,6 +47,12 @@
 #ifndef LCDIF_FRAMEBUFFERCONFIG0_OUTPUT_MASK
 #define LCDIF_FRAMEBUFFERCONFIG0_OUTPUT_MASK (1U << 8U)
 #endif
+
+#if defined(FSL_FEATURE_MEMORY_HAS_ADDRESS_OFFSET) && FSL_FEATURE_MEMORY_HAS_ADDRESS_OFFSET
+#define LCDIF_ADDR_CPU_2_IP(addr) (MEMORY_ConvertMemoryMapAddress((uint32_t)(addr), kMEMORY_Local2DMA))
+#else
+#define LCDIF_ADDR_CPU_2_IP(addr) (addr)
+#endif /* FSL_FEATURE_MEMORY_HAS_ADDRESS_OFFSET */
 
 /*!
  * @brief LCDIF signal polarity flags
@@ -265,7 +275,7 @@ static inline void LCDIF_SetFrameBufferAddr(LCDIF_Type *base, uint8_t fbIndex, u
     /* The frame buffer address and stride must be 128 bytes aligned. */
     assert(0U == (address & (LCDIF_FB_ALIGN - 1U)));
 
-    base->FRAMEBUFFERADDRESS0 = address;
+    base->FRAMEBUFFERADDRESS0 = LCDIF_ADDR_CPU_2_IP(address);
 }
 
 /*!
@@ -441,7 +451,8 @@ void LCDIF_SetCursorConfig(LCDIF_Type *base, const lcdif_cursor_config_t *config
  */
 static inline void LCDIF_SetCursorHotspotPosition(LCDIF_Type *base, uint16_t x, uint16_t y)
 {
-    base->CURSORLOCATION = (y << LCDIF_CURSORLOCATION_Y_SHIFT) | (x << LCDIF_CURSORLOCATION_X_SHIFT);
+    base->CURSORLOCATION =
+        ((uint32_t)y << LCDIF_CURSORLOCATION_Y_SHIFT) | ((uint32_t)x << LCDIF_CURSORLOCATION_X_SHIFT);
 }
 
 /*!
@@ -452,7 +463,7 @@ static inline void LCDIF_SetCursorHotspotPosition(LCDIF_Type *base, uint16_t x, 
  */
 static inline void LCDIF_SetCursorBufferAddress(LCDIF_Type *base, uint32_t address)
 {
-    base->CURSORADDRESS = address;
+    base->CURSORADDRESS = LCDIF_ADDR_CPU_2_IP(address);
 }
 
 /*!

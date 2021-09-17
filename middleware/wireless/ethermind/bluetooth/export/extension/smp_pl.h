@@ -499,6 +499,7 @@ API_RESULT smp_resolve_connection_address_pl
            );
 #endif /* HOST_RESOLVE_PVT_ADDR */
 
+#ifdef SMP_PL_ENABLE_KEY_GENERATION
 /**
  * \brief Rand Complete handler
  *
@@ -524,6 +525,7 @@ void smp_rand_complete_pl (UCHAR * data_param, UINT16 datalen);
  * \return void
  */
 void smp_encryption_complete_pl (UCHAR * data_param, UINT16 datalen);
+#endif /* SMP_PL_ENABLE_KEY_GENERATION */
 
 #if (defined SMP_LESC) && (defined SMP_HAVE_OOB_SUPPORT)
 void smp_lesc_oob_handle_cmd_complete(UCHAR * data, UINT16 datalen);
@@ -851,6 +853,7 @@ void BT_smp_set_key_press_ntf_pl (UCHAR flag);
  */
 API_RESULT BT_smp_set_local_identity_addr(/* IN */ SMP_BD_ADDR * bd_addr);
 
+#ifdef SMP_PL_ENABLE_KEY_GENERATION
 /**
  * \brief To generate the SMP platform keys
  *
@@ -920,6 +923,7 @@ API_RESULT BT_smp_generate_irk_pl (void);
  * cause of failure.
  */
 API_RESULT BT_smp_generate_dhk_pl (void);
+#endif /* SMP_PL_ENABLE_KEY_GENERATION */
 
 #ifdef SMP_HAVE_TBX_PL_ENC
 API_RESULT BT_smp_encrypt_pl

@@ -12,7 +12,13 @@
 /* --------------------------------------------- Header File Inclusion */
 #include "btsnoop_pl.h"
 
+#ifndef CONFIG_BT_SNOOP
+#define CONFIG_BT_SNOOP 1
+#endif /* CONFIG_BT_SNOOP */
+
 #ifdef BT_SNOOP
+
+#if (defined(CONFIG_BT_SNOOP) && (CONFIG_BT_SNOOP > 0))
 
 /* --------------------------------------------- External Global Variables */
 
@@ -37,7 +43,7 @@ API_RESULT btsnoop_open_pl (void)
     UCHAR bt_snoop_file_name[48U];
 
     /* Add Prefix */
-    BT_str_copy(bt_snoop_file_name, BT_SNOOP_FILE_NAME);
+    BT_str_n_copy(bt_snoop_file_name, BT_SNOOP_FILE_NAME, sizeof(bt_snoop_file_name));
 
     retval = BT_fops_file_open
              (
@@ -87,5 +93,32 @@ UINT64 btsnoop_get_us_timestamp_pl(void)
     return BT_get_us_timestamp();
 }
 
-#endif /* BT_SNOOP */
+#else
 
+void btsnoop_init_pl (void)
+{
+}
+
+API_RESULT btsnoop_open_pl (void)
+{
+    return API_FAILURE;
+}
+
+API_RESULT btsnoop_close_pl (void)
+{
+    return API_FAILURE;
+}
+
+UINT16 btsnoop_write_pl (void * buffer, UINT16 size)
+{
+    return 0;
+}
+
+UINT64 btsnoop_get_us_timestamp_pl(void)
+{
+    return 0;
+}
+
+#endif /* CONFIG_BT_SNOOP */
+
+#endif /* BT_SNOOP */

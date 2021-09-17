@@ -9,7 +9,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stddef.h>
-#include <errno.h>
+#include <errno/errno.h>
 #include <toolchain.h>
 #include <porting.h>
 #include <fsl_debug_console.h>
@@ -45,7 +45,7 @@ static void htmc_ccc_cfg_changed(const struct bt_gatt_attr *attr,
          uint16_t value);
 
 static void indicate_cb(struct bt_conn *conn,
-      const struct bt_gatt_attr *attr, uint8_t err);
+      struct bt_gatt_indicate_params *params, uint8_t err);
 
 static ssize_t read_str(struct bt_conn *conn, const struct bt_gatt_attr *attr,
           void *buf, uint16_t len, uint16_t offset);
@@ -80,7 +80,7 @@ static void htmc_ccc_cfg_changed(const struct bt_gatt_attr *attr,
 }
 
 static void indicate_cb(struct bt_conn *conn,
-      const struct bt_gatt_attr *attr, uint8_t err)
+      struct bt_gatt_indicate_params *params, uint8_t err)
 {
     PRINTF("Indication %s\n", err != 0U ? "fail" : "success");
     indicating = 0U;
@@ -135,5 +135,5 @@ static ssize_t read_str(struct bt_conn *conn, const struct bt_gatt_attr *attr,
           void *buf, uint16_t len, uint16_t offset)
 {
 	return bt_gatt_attr_read(conn, attr, buf, len, offset, attr->user_data,
-				 strlen(attr->user_data));
+				 strlen((char *)attr->user_data));
 }

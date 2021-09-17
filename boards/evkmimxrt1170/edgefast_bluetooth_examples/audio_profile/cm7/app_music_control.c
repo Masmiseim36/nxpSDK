@@ -24,8 +24,6 @@
 #include "app_common.h"
 #include "cmd.h"
 
-#define AUDIO_DMA_RX_BUFFER_SIZE (2048)
-
 enum _app_a2dp_speaker_state_t
 {
     A2DP_SPEAKER_NOT_PRESENCE = 0,
@@ -48,7 +46,6 @@ static uint8_t app_playing_state;
 static uint8_t app_a2dp_speaker_state;
 static streamer_handle_t app_streamer_handle;
 static QueueHandle_t app_music_control_queue = NULL;
-uint32_t app_audio_pcm_buffer[4][AUDIO_DMA_RX_BUFFER_SIZE / 4];
 extern void streamer_pcm_test_init(void);
 extern void streamer_pcm_test_send_data(uint8_t *buffer, uint32_t length);
 

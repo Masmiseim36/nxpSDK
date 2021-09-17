@@ -39,6 +39,10 @@
 #include "write_task.h"
 #include "BT_bottom_half.h"
 
+#ifdef BT_SECURITY_VU_VALIDATION
+#include "BT_security.h"
+#endif /* BT_SECURITY_VU_VALIDATION */
+
 /* TODO: Move to BT_features.h */
 #define SM_CLEAR_UNBONDED_DQ_ENTITY
 

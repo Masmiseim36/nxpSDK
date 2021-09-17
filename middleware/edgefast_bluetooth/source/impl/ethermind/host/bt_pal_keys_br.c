@@ -15,18 +15,18 @@
 #include <bluetooth/conn.h>
 #include <bluetooth/hci.h>
 
+#include "BT_sm_api.h"
+
 #define LOG_ENABLE IS_ENABLED(CONFIG_BT_DEBUG_KEYS)
 #define LOG_MODULE_NAME bt_keys_br
 #include "fsl_component_log.h"
 LOG_MODULE_DEFINE(LOG_MODULE_NAME, kLOG_LevelTrace);
 
-#include "BT_sm_api.h"
-
 #include "bt_pal_hci_core.h"
 #include "bt_pal_settings.h"
 #include "bt_pal_keys.h"
 
-static struct bt_keys_link_key key_pool[CONFIG_BT_MAX_PAIRED];
+static struct bt_keys_link_key key_pool_br[CONFIG_BT_MAX_PAIRED];
 
 #if IS_ENABLED(CONFIG_BT_KEYS_OVERWRITE_OLDEST)
 static uint32_t aging_counter_val;
@@ -40,8 +40,8 @@ struct bt_keys_link_key *bt_keys_find_link_key(const bt_addr_t *addr)
 
 	BT_DBG("%s", bt_addr_str(addr));
 
-	for (i = 0; i < ARRAY_SIZE(key_pool); i++) {
-		key = &key_pool[i];
+	for (i = 0; i < ARRAY_SIZE(key_pool_br); i++) {
+		key = &key_pool_br[i];
 
 		if (!bt_addr_cmp(&key->addr, addr)) {
 			return key;
@@ -65,9 +65,9 @@ struct bt_keys_link_key *bt_keys_get_link_key(const bt_addr_t *addr)
 	if (!key) {
 		int i;
 
-		key = &key_pool[0];
-		for (i = 1; i < ARRAY_SIZE(key_pool); i++) {
-			struct bt_keys_link_key *current = &key_pool[i];
+		key = &key_pool_br[0];
+		for (i = 1; i < ARRAY_SIZE(key_pool_br); i++) {
+			struct bt_keys_link_key *current = &key_pool_br[i];
 
 			if (current->aging_counter < key->aging_counter) {
 				key = current;
@@ -97,7 +97,6 @@ struct bt_keys_link_key *bt_keys_get_link_key(const bt_addr_t *addr)
 
 void bt_keys_link_key_clear(struct bt_keys_link_key *link_key)
 {
-#if 0
 	if (IS_ENABLED(CONFIG_BT_SETTINGS)) {
 		char key[BT_SETTINGS_KEY_MAX];
 		bt_addr_le_t le_addr;
@@ -108,20 +107,28 @@ void bt_keys_link_key_clear(struct bt_keys_link_key *link_key)
 				       &le_addr, NULL);
 		settings_delete(key);
 	}
-#endif
+
 	BT_DBG("%s", bt_addr_str(&link_key->addr));
 	(void)memset(link_key, 0, sizeof(*link_key));
 }
 
 void bt_keys_link_key_clear_addr(const bt_addr_t *addr)
 {
-#if 0
+
+	API_RESULT retval;
+    UCHAR bd_addr[BT_BD_ADDR_SIZE];
 	int i;
 	struct bt_keys_link_key *key;
 
+
+    memcpy(bd_addr, addr->val, sizeof(bd_addr));
+
+	retval = BT_sm_delete_device (bd_addr, SM_ANY_LIST);
+	(void)retval;
+
 	if (!addr) {
-		for (i = 0; i < ARRAY_SIZE(key_pool); i++) {
-			key = &key_pool[i];
+		for (i = 0; i < ARRAY_SIZE(key_pool_br); i++) {
+			key = &key_pool_br[i];
 			bt_keys_link_key_clear(key);
 		}
 		return;
@@ -131,20 +138,10 @@ void bt_keys_link_key_clear_addr(const bt_addr_t *addr)
 	if (key) {
 		bt_keys_link_key_clear(key);
 	}
-#else
-	API_RESULT retval;
-    UCHAR bd_addr[BT_BD_ADDR_SIZE];
-
-    memcpy(bd_addr, addr->val, sizeof(bd_addr));
-
-	retval = BT_sm_delete_device (bd_addr, SM_ANY_LIST);
-	(void)retval;
-#endif
 }
 
 void bt_keys_link_key_store(struct bt_keys_link_key *link_key)
 {
-#if 0
 	if (IS_ENABLED(CONFIG_BT_SETTINGS)) {
 		int err;
 		char key[BT_SETTINGS_KEY_MAX];
@@ -158,10 +155,9 @@ void bt_keys_link_key_store(struct bt_keys_link_key *link_key)
 		err = settings_save_one(key, link_key->storage_start,
 					BT_KEYS_LINK_KEY_STORAGE_LEN);
 		if (err) {
-			BT_ERR("Failed to svae link key (err %d)", err);
+			BT_ERR("Failed to save link key (err %d)", err);
 		}
 	}
-#endif
 }
 
 #if (defined(CONFIG_BT_SETTINGS) && ((CONFIG_BT_SETTINGS) > 0U))
@@ -182,7 +178,7 @@ static int link_key_set(const char *name, size_t len_rd,
 
 	len = read_cb(cb_arg, val, sizeof(val));
 	if (len < 0) {
-		BT_ERR("Failed to read value (err %lu)", len);
+		BT_ERR("Failed to read value (err %zu)", len);
 		return -EINVAL;
 	}
 

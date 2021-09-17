@@ -1016,7 +1016,7 @@ API_RESULT appl_gatt_cb
                 retval = BT_gatt_db_get_16_bit_uuid(&uuid128,&uuid16);
                 if (API_SUCCESS == retval)
                 {
-                    BT_PACK_LE_2_BYTE(&uuid_16, uuid16.val);
+                    BT_UNPACK_LE_2_BYTE(&uuid_16, uuid16.val);
                 }
 
                 IotLogInfo ("UUID: ");
@@ -1096,7 +1096,7 @@ API_RESULT appl_gatt_cb
                 retval = BT_gatt_db_get_16_bit_uuid(&uuid128,&uuid16);
                 if (API_SUCCESS == retval)
                 {
-                    BT_PACK_LE_2_BYTE(&uuid_16, uuid16.val);
+                    BT_UNPACK_LE_2_BYTE(&uuid_16, uuid16.val);
                 }
 
                 IotLogInfo ("UUID: ");
@@ -1149,7 +1149,7 @@ API_RESULT appl_gatt_cb
                 retval = BT_gatt_db_get_16_bit_uuid(&uuid128,&uuid16);
                 if (API_SUCCESS == retval)
                 {
-                    BT_PACK_LE_2_BYTE(&uuid_16, uuid16.val);
+                    BT_UNPACK_LE_2_BYTE(&uuid_16, uuid16.val);
                 }
 
                 IotLogInfo ("(%s)\nHandle: 0x%04X,",
@@ -1214,7 +1214,7 @@ API_RESULT appl_gatt_cb
                 retval = BT_gatt_db_get_16_bit_uuid(&uuid128,&uuid16);
                 if (API_SUCCESS == retval)
                 {
-                    BT_PACK_LE_2_BYTE(&uuid_16, uuid16.val);
+                    BT_UNPACK_LE_2_BYTE(&uuid_16, uuid16.val);
                 }
 
                 IotLogInfo ("(%s)\nChar Handle: 0x%04X,",
@@ -1257,7 +1257,7 @@ API_RESULT appl_gatt_cb
                         retval = BT_gatt_db_get_16_bit_uuid(&uuid128,&uuid16);
                         if (API_SUCCESS == retval)
                         {
-                            BT_PACK_LE_2_BYTE(&uuid_16, uuid16.val);
+                            BT_UNPACK_LE_2_BYTE(&uuid_16, uuid16.val);
                         }
 
                         IotLogInfo (

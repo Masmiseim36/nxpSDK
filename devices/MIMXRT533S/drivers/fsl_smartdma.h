@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2020 NXP
+ * Copyright 2019-2021 NXP
  * All rights reserved.
  *
  *
@@ -23,7 +23,7 @@
 /*! @name Driver version */
 /*@{*/
 /*! @brief SMARTDMA driver version */
-#define FSL_SMARTDMA_DRIVER_VERSION (MAKE_VERSION(2, 6, 0))
+#define FSL_SMARTDMA_DRIVER_VERSION (MAKE_VERSION(2, 6, 2))
 /*@}*/
 
 /*! @brief The firmware used for display. */
@@ -49,7 +49,7 @@ extern const uint32_t s_smartdmaDisplayFirmwareSize;
  */
 enum _smartdma_flexio_mculcd_api
 {
-    kSMARTDMA_FlexIO_DMA_Endian_Swap,
+    kSMARTDMA_FlexIO_DMA_Endian_Swap = 0U,
     kSMARTDMA_FlexIO_DMA_Reverse32,
     kSMARTDMA_FlexIO_DMA,
     kSMARTDMA_FlexIO_DMA_Reverse,              /*!< Send data to FlexIO with reverse order. */
@@ -100,7 +100,7 @@ typedef struct _smartdma_flexio_onelane_mculcd_param
 typedef struct _smartdma_dsi_param
 {
     /*! Pointer to the buffer to send. */
-    uint32_t *p_buffer;
+    const uint8_t *p_buffer;
     /*! Buffer size in byte. */
     uint32_t buffersize;
     /*! Stack used by SMARTDMA. */

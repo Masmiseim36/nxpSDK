@@ -20,6 +20,7 @@
 #include "fsl_component_log.h"
 LOG_MODULE_DEFINE(LOG_MODULE_NAME, kLOG_LevelTrace);
 
+#if (defined(CONFIG_BT_BREDR) && ((CONFIG_BT_BREDR) > 0U))
 #include "sm_ssp_pl.h"
 #include "BT_sm_api.h"
 
@@ -79,7 +80,7 @@ static int pin_code_neg_reply(bt_addr_t *bdaddr)
 #endif
 }
 
-static int pin_code_reply(struct bt_conn *conn, char *pin, uint8_t len)
+static int pin_code_reply(struct bt_conn *conn, const char *pin, uint8_t len)
 {
 #if 0
 	struct bt_hci_cp_pin_code_reply *cp;
@@ -100,23 +101,27 @@ static int pin_code_reply(struct bt_conn *conn, char *pin, uint8_t len)
 
 	return bt_hci_cmd_send_sync(BT_HCI_OP_PIN_CODE_REPLY, buf, NULL);
 #else
-    API_RESULT retval = BT_sm_pin_code_request_reply (conn->br.dst.val, (UCHAR *)pin, len);
+	UCHAR pinCode[16];
+	API_RESULT retval;
 
-    if (API_SUCCESS == retval)
-    {
-        return 0;
-    }
-    else
-    {
-        return -EIO;
-    }
+	memcpy(pinCode, pin, len);
+
+	retval = BT_sm_pin_code_request_reply (conn->br.dst.val, (UCHAR *)pinCode, len);
+
+	if (API_SUCCESS == retval)
+	{
+		return 0;
+	}
+	else
+	{
+		return -EIO;
+	}
 #endif
 }
 
 int bt_conn_auth_pincode_entry(struct bt_conn *conn, const char *pin)
 {
 	size_t len;
-    uint8_t pinCode[16];
 
 	if (!bt_auth) {
 		return -EINVAL;
@@ -130,7 +135,7 @@ int bt_conn_auth_pincode_entry(struct bt_conn *conn, const char *pin)
 	if (len > 16) {
 		return -EINVAL;
 	}
-    memcpy(pinCode, pin, len);
+
 	if (conn->required_sec_level == BT_SECURITY_L3 && len < 16) {
 		BT_WARN("PIN code for %s is not 16 bytes wide",
 			bt_addr_str(&conn->br.dst));
@@ -146,7 +151,7 @@ int bt_conn_auth_pincode_entry(struct bt_conn *conn, const char *pin)
 		atomic_set_bit(conn->flags, BT_CONN_BR_LEGACY_SECURE);
 	}
 
-	return pin_code_reply(conn, (char *)pinCode, len);
+	return pin_code_reply(conn, pin, len);
 }
 
 void pin_code_req(struct bt_conn *conn)
@@ -564,7 +569,7 @@ void hci_evt_pin_code_req(struct net_buf *buf)
 
 void hci_evt_link_key_notify(struct net_buf *buf)
 {
-	struct bt_hci_evt_link_key_notify *evt = (void *)buf->data;
+	struct bt_hci_evt_link_key_notify *evt = (struct bt_hci_evt_link_key_notify *)buf->data;
 	struct bt_conn *conn;
     SM_IO_CAPS peer_iocaps;
 
@@ -692,7 +697,7 @@ static void link_key_reply(bt_addr_t *bdaddr, uint8_t *lk)
 
 void hci_evt_link_key_req(struct net_buf *buf)
 {
-	struct bt_hci_evt_link_key_req *evt = (void *)buf->data;
+	struct bt_hci_evt_link_key_req *evt = (struct bt_hci_evt_link_key_req *)buf->data;
 	struct bt_conn *conn;
 
 	BT_DBG("%s", bt_addr_str(&evt->bdaddr));
@@ -838,7 +843,7 @@ void hci_evt_io_capa_req(struct net_buf *buf)
 
 void hci_evt_ssp_complete(struct net_buf *buf)
 {
-	struct bt_hci_evt_ssp_complete *evt = (void *)buf->data;
+	struct bt_hci_evt_ssp_complete *evt = (struct bt_hci_evt_ssp_complete *)buf->data;
 	struct bt_conn *conn;
 
 	BT_DBG("status 0x%02x", evt->status);
@@ -935,7 +940,7 @@ static void link_encr(const uint16_t handle)
 
 void hci_evt_auth_complete(struct net_buf *buf)
 {
-	struct bt_hci_evt_auth_complete *evt = (void *)buf->data;
+	struct bt_hci_evt_auth_complete *evt = (struct bt_hci_evt_auth_complete *)buf->data;
 	struct bt_conn *conn;
 	uint16_t handle = sys_le16_to_cpu(evt->handle);
 
@@ -960,3 +965,4 @@ void hci_evt_auth_complete(struct net_buf *buf)
 	}
 	bt_conn_unref(conn);
 }
+#endif /* #if CONFIG_BT_BREDR */

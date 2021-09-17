@@ -60,9 +60,10 @@
 
 #include "host_msd_fatfs.h"
 
-#include "nvm_adapter.h"
 #include "usb_host_config.h"
 #include "usb_host.h"
+#include "fsl_lpuart_edma.h"
+#include "fsl_dmamux.h"
 #include "usb_host_msd.h"
 #include "usb_phy.h"
 #include "fsl_adapter_uart.h"
@@ -97,7 +98,7 @@ void flexspi_clock_init(void)
 }
 
 
-#if defined(WIFI_BOARD_AW_CM358)
+#if defined(WIFI_88W8987_BOARD_AW_CM358_USD)
 int controller_hci_uart_get_configuration(controller_hci_uart_config_t *config)
 {
     if (NULL == config)
@@ -110,21 +111,37 @@ int controller_hci_uart_get_configuration(controller_hci_uart_config_t *config)
     config->instance        = BOARD_BT_UART_INSTANCE;
     config->enableRxRTS     = 1u;
     config->enableTxCTS     = 1u;
+#if (defined(HAL_UART_DMA_ENABLE) && (HAL_UART_DMA_ENABLE > 0U))
+    config->dma_instance     = 0U;
+    config->rx_channel       = 0U;
+    config->tx_channel       = 1U;
+    config->dma_mux_instance = 0U;
+    config->rx_request       = kDmaRequestMuxLPUART3Rx;
+    config->tx_request       = kDmaRequestMuxLPUART3Tx;
+#endif
     return 0;
 }
-#elif defined(WIFI_BOARD_AW_AM457)
+#elif defined(WIFI_IW416_BOARD_AW_AM457_USD)
 int controller_hci_uart_get_configuration(controller_hci_uart_config_t *config)
 {
     if (NULL == config)
     {
         return -1;
     }
-    config->clockSrc        = BOARD_BT_UART_CLK_FREQ;
-    config->defaultBaudrate = BOARD_BT_UART_BAUDRATE;
-    config->runningBaudrate = BOARD_BT_UART_BAUDRATE;
-    config->instance        = BOARD_BT_UART_INSTANCE;
-    config->enableRxRTS     = 1u;
-    config->enableTxCTS     = 1u;
+    config->clockSrc         = BOARD_BT_UART_CLK_FREQ;
+    config->defaultBaudrate  = BOARD_BT_UART_BAUDRATE;
+    config->runningBaudrate  = BOARD_BT_UART_BAUDRATE;
+    config->instance         = BOARD_BT_UART_INSTANCE;
+    config->enableRxRTS      = 1u;
+    config->enableTxCTS      = 1u;
+#if (defined(HAL_UART_DMA_ENABLE) && (HAL_UART_DMA_ENABLE > 0U))
+    config->dma_instance     = 0U;
+    config->rx_channel       = 0U;
+    config->tx_channel       = 1U;
+    config->dma_mux_instance = 0U;
+    config->rx_request       = kDmaRequestMuxLPUART3Rx;
+    config->tx_request       = kDmaRequestMuxLPUART3Tx;
+#endif
     return 0;
 }
 #else
@@ -212,6 +229,14 @@ int main(void)
     CLOCK_SetDiv(kCLOCK_UartDiv, 0); /* Set UART divider to 1 */
     BOARD_InitDebugConsole();
     SCB_DisableDCache();
+#if (defined(HAL_UART_DMA_ENABLE) && (HAL_UART_DMA_ENABLE > 0U))
+    DMAMUX_Type *dmaMuxBases[] = DMAMUX_BASE_PTRS;
+    edma_config_t config;
+    DMA_Type *dmaBases[] = DMA_BASE_PTRS;
+    DMAMUX_Init(dmaMuxBases[0]);
+    EDMA_GetDefaultConfig(&config);
+    EDMA_Init(dmaBases[0], &config);
+#endif
 
     // flexspi_clock_init();
     CRYPTO_InitHardware();

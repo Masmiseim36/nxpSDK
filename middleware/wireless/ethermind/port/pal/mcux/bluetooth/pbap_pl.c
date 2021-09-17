@@ -171,8 +171,8 @@ API_RESULT BT_pbap_build_xml_vcard_listing_pl
 
     /* Append the path of the new directory */
     BT_str_n_copy (obj_name, dir_entry, (sizeof(obj_name) - 1));
-    BT_str_n_cat (obj_name, BT_FOPS_PATH_SEP, (sizeof(obj_name) - BT_str_len(obj_name)));
-    BT_str_n_cat (obj_name, listingfile, (sizeof(obj_name) - BT_str_len(obj_name)));
+    BT_str_n_cat (obj_name, BT_FOPS_PATH_SEP, (sizeof(obj_name) - BT_str_len(obj_name) - 1));
+    BT_str_n_cat (obj_name, listingfile, (sizeof(obj_name) - BT_str_len(obj_name) - 1));
 
     /* Open the file */
     (BT_IGNORE_RETURN_VALUE) BT_fops_file_open (obj_name, (UCHAR *)"wb", &xml_fd);
@@ -276,47 +276,6 @@ API_RESULT BT_pbap_get_vcard_list_pl
     "[PBAP_PL] Path = %s\n", dir_entry);
 
     first = BT_FALSE;
-
-#if 0
-    retval = BT_fops_access_first(dir, NULL, &h, &info);
-    if (API_SUCCESS != retval)
-    {
-        BT_debug_error(BT_MODULE_ID_PBAP,
-        "[PBAP_PL] Invalid File Handle. Get Last Error reports  %d\n");
-
-        return API_FAILURE;
-    }
-    else
-    {
-        BT_debug_info(BT_MODULE_ID_PBAP,
-        "[PBAP_PL] The first file/directory found is %s\n",
-        FindFileData.cFileName);
-
-        if(info.fattrib & BT_FOPS_MASK_FOLDER)
-        {
-            BT_debug_info(BT_MODULE_ID_PBAP,
-            "[PBAP_PL] It is a directory\n");
-        }
-        else
-        {
-            BT_debug_info(BT_MODULE_ID_PBAP,
-            "[PBAP_PL] It is a file\n");
-        }
-    }
-
-    if(API_SUCCESS != BT_fops_set_path_forward(dir))
-    {
-        BT_debug_error(BT_MODULE_ID_PBAP,
-        "[PBAP_PL] Failure : could not change directory\n");
-    }
-    else
-    {
-        BT_debug_info(BT_MODULE_ID_PBAP,
-        "[PBAP_PL] Success : could change directory\n");
-
-        BT_str_cat(dir, "*.*");
-    }
-#endif /* 0 */
 
     BT_LOOP_FOREVER()
     {

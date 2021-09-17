@@ -124,10 +124,15 @@ struct bt_conn_tx {
 	uint32_t pending_no_cb;
 };
 
-struct bt_pending_chan_info {
-	struct bt_l2cap_chan *chan;
-	struct net_buf *buf;
-	size_t timeout;
+struct acl_data {
+	/* Extend the bt_buf user data */
+	struct bt_buf_data buf_data;
+
+	/* Index into the bt_conn storage array */
+	uint8_t  index;
+
+	/** ACL connection handle */
+	uint16_t handle;
 };
 
 struct bt_conn {
@@ -163,7 +168,7 @@ struct bt_conn {
 	/* Completed TX for which we need to call the callback */
 	sys_slist_t		tx_complete;
 #if 0
-	struct bt_work           tx_complete_work;
+	struct k_work           tx_complete_work;
 #endif
 
 	/* Queue for outgoing ACL data */
@@ -173,10 +178,12 @@ struct bt_conn {
 	/* Active L2CAP/ISO channels */
 	sys_slist_t		channels;
 
-	atomic_t		ref;
-
-	/* Delayed work for connection update and other deferred tasks */
-	struct bt_delayed_work	update_work;
+	/* Delayed work deferred tasks:
+	 * - Peripheral delayed connection update.
+	 * - Initiator connect create cancel.
+	 * - Connection cleanup.
+	 */
+	struct k_delayed_work	deferred_work;
 
 #if 0
 	union {
@@ -200,16 +207,12 @@ struct bt_conn {
 		uint16_t subversion;
 	} rv;
 #endif
-    /* ethermind status */
+	/* ethermind status */
 	uint8_t deviceId;
-
-#if (defined(CONFIG_BT_L2CAP_DYNAMIC_CHANNEL) && (CONFIG_BT_L2CAP_DYNAMIC_CHANNEL > 0))
-	/* active chan */
-	struct bt_l2cap_chan *activeChan;
-	/* pending chan for outgoing active connect req */
-	osa_msgq_handle_t pending_chan;
-    OSA_MSGQ_HANDLE_DEFINE(pending_chan_handle, CONFIG_BT_MSG_QUEUE_COUNT, sizeof(struct bt_pending_chan_info));
-#endif
+	/* Must be at the end so that everything else in the structure can be
+	 * memset to zero without affecting the ref.
+	 */
+	atomic_t		ref;
 };
 
 void bt_conn_reset_rx_state(struct bt_conn *conn);

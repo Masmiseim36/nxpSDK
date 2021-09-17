@@ -859,7 +859,7 @@ static wlan_chanlist_t chanlist_2g_cfg = {
 
 #ifdef CONFIG_5GHz_SUPPORT
 static wlan_chanlist_t chanlist_5g_cfg = {
-    .num_chans = 7,
+    .num_chans = 8,
     .chan_info[0] =
         {
             .chan_num                     = 36,
@@ -900,6 +900,12 @@ static wlan_chanlist_t chanlist_5g_cfg = {
         {
             .chan_num                     = 100,
             .chan_freq                    = 5500,
+            .passive_scan_or_radar_detect = true,
+        },
+    .chan_info[7] =
+        {
+            .chan_num                     = 144,
+            .chan_freq                    = 5720,
             .passive_scan_or_radar_detect = true,
         },
 };

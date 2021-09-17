@@ -12,7 +12,8 @@
  ******************************************************************************/
 
 extern struct bt_conn *default_conn;
-extern bt_addr_t default_peer_addr;
+
+extern struct bt_conn *br_conns[CONFIG_BT_MAX_CONN];
 
 /*******************************************************************************
  * API

@@ -10,10 +10,22 @@
 #include "fsl_component_log.h"
 #include "fsl_debug_console.h"
 
-#if 0
-#ifndef errno
+#include "SecLib.h"
+#include "CryptoLibSW.h"
+
+#if defined(__CC_ARM) || (defined(__ARMCC_VERSION))
+#ifndef porting_errno
 int errno = 0;
 #endif
+#endif
+
+/* Weak function. */
+#if defined(__CC_ARM) || defined(__ARMCC_VERSION)
+#define __WEAK_FUNC __attribute__((weak))
+#elif defined(__ICCARM__)
+#define __WEAK_FUNC __weak
+#elif defined(__GNUC__)
+#define __WEAK_FUNC __attribute__((weak))
 #endif
 
 #if (defined(CONFIG_BT_DEBUG) && (CONFIG_BT_DEBUG > 0))
@@ -32,6 +44,40 @@ static OSA_TASK_HANDLE_DEFINE(porting_log_task_data);
 OSA_TASK_DEFINE( porting_log_task, CONFIG_PORTING_LOG_PRIO, 1, CONFIG_PORTING_LOG_STACK_SIZE, 0);
 
 #endif
+
+#if defined(__CC_ARM) || (defined(__ARMCC_VERSION))
+size_t strnlen(const char *s, size_t maxlen)
+{
+    return MIN(strlen(s), maxlen);
+}
+#endif
+
+__WEAK_FUNC int16_t RNG_GetPseudoRandomNo (uint8_t* pOut,
+                               uint8_t  outBytes,
+                               uint8_t* pSeed)
+{
+    uint32_t rng;
+
+    if (NULL == pOut)
+    {
+        return (int16_t)-1;
+    }
+
+    if (NULL != pSeed)
+    {
+        (void)SecLib_set_rng_seed(*((uint32_t *)pSeed));
+    }
+
+    for (size_t index = 0; index < outBytes; index+=sizeof(rng))
+    {
+        rng = SecLib_get_random();
+        for (size_t i = 0; i < MIN(outBytes, (outBytes - index));i++)
+        {
+            ((uint8_t *)pOut)[index + i] = ((uint8_t *)&rng)[i];
+        }
+    }
+    return 0;
+}
 
 void k_fifo_init(k_fifo_t *fifo)
 {
@@ -219,11 +265,6 @@ static void porting_log_task(void* param)
 
 	BT_DBG("started");
 
-    (void)LOG_Init();
-#if LOG_ENABLE_TIMESTAMP
-	(void)LOG_SetTimestamp(bt_ble_get_timestamp);
-#endif
-
 	while (1) {
         dumpLength = 0;
         LOG_Dump(dumpBuffer, sizeof(dumpBuffer) - 1, &dumpLength);
@@ -245,6 +286,11 @@ void bt_ble_porting_init(void)
 #if (defined(CONFIG_BT_DEBUG) && (CONFIG_BT_DEBUG > 0))
     osa_status_t ret;
 
+    (void)LOG_Init();
+#if LOG_ENABLE_TIMESTAMP
+	(void)LOG_SetTimestamp(bt_ble_get_timestamp);
+#endif
+
 	ret = OSA_TaskCreate((osa_task_handle_t)porting_log_task_data, OSA_TASK(porting_log_task), NULL);
 	assert(KOSA_StatusSuccess == ret);
 
@@ -265,7 +311,7 @@ const char *bt_hex(const void *buf, size_t len)
 {
 	static const char hex[] = "0123456789abcdef";
 	static char str[129];
-	const uint8_t *b = buf;
+	const uint8_t *b = (const uint8_t *)buf;
 	size_t i;
 
 	len = MIN(len, (sizeof(str) - 1) / 2);
@@ -297,3 +343,4 @@ const char *bt_uuid_str(const struct bt_uuid *uuid)
 
 	return str;
 }
+

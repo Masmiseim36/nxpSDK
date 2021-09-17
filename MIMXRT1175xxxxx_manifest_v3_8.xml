@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ksdk:manifest xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="SDK_2.x_MIMXRT1175xxxxx" name="MIMXRT1175xxxxx" brief="This is SDK version 2.10.0 manifest file. It describes the content of the MIMXRT1175xxxxx and additional settings for tools that support SDK version 2.10.0" format_version="3.8" api_version="2.0.0" configuration="815e99308e2408b241c54cd0b054bff3" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd http://nxp.com/mcuxpresso/sdk/sdk_manifest_v3.8.xsd">
-  <!--Timestamp (UTC): 2021-07-16 08:43:58.495101-->
-  <!--This manifest is generated based on sdk repo commit: fc8f976ec0bcffe5ca58bba20b19cf331786bbce-->
+<ksdk:manifest xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="SDK_2.x_MIMXRT1175xxxxx" name="MIMXRT1175xxxxx" brief="This is SDK version 2.10.1 manifest file. It describes the content of the MIMXRT1175xxxxx and additional settings for tools that support SDK version 2.10.1" format_version="3.8" api_version="2.0.0" configuration="c105068e95593783fed14ffaaddb4f75" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd http://nxp.com/mcuxpresso/sdk/sdk_manifest_v3.8.xsd">
+  <!--Timestamp (UTC): 2021-09-17 10:01:23.447518-->
+  <!--This manifest is generated based on sdk repo commit: be1cd2989fb5316ae10506ae936704c0dfea174f-->
   <defines>
     <define name="CPU_$|package|" value=""/>
     <define name="CPU_$|package|_$|core|" value=""/>
   </defines>
-  <ksdk id="MCUXpresso2100" name="MCUXpresso2100" version="2.10.0" revision="494 2021-07-15"/>
+  <ksdk id="MCUXpresso2101" name="MCUXpresso2101" version="2.10.1" revision="509 2021-09-14"/>
   <compilers>
     <compiler id="compiler_armclang" name="armclang" type="armclang"/>
     <compiler id="compiler_gcc" name="gcc" type="gcc"/>
@@ -102,7 +102,7 @@ ${load}</script>
       </memory>
       <total_memory flash_size_kb="65536" ram_size_kb="32768"/>
       <examples>
-        <example id="evkmimxrt1170_a2dp_source_cm4" name="a2dp_source_cm4" brief="The ethermind audio source with simplified application." toolchain="armgcc iar" compiler="compiler_gcc compiler_iar" category="edgefast_bluetooth_examples" path="boards/evkmimxrt1170/edgefast_bluetooth_examples/a2dp_source/cm4">
+        <example id="evkmimxrt1170_a2dp_source_cm4" name="a2dp_source_cm4" brief="The ethermind audio source with simplified application." toolchain="armgcc iar mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="edgefast_bluetooth_examples" path="boards/evkmimxrt1170/edgefast_bluetooth_examples/a2dp_source/cm4">
           <external path="boards/evkmimxrt1170/edgefast_bluetooth_examples/a2dp_source/cm4" type="xml">
             <files mask="a2dp_source_cm4_v3_8.xml"/>
           </external>
@@ -1227,6 +1227,11 @@ ${load}</script>
             <files mask="semc_xecc_single_error_cm4_v3_8.xml"/>
           </external>
         </example>
+        <example id="evkmimxrt1170_shell_cm4" name="shell_cm4" brief="The Shell Demo application demonstrates to control Leds by commands." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="demo_apps" path="boards/evkmimxrt1170/demo_apps/shell/cm4">
+          <external path="boards/evkmimxrt1170/demo_apps/shell/cm4" type="xml">
+            <files mask="shell_cm4_v3_8.xml"/>
+          </external>
+        </example>
         <example id="evkmimxrt1170_smartcard_cm4" name="smartcard_cm4" brief="This example demonstrates the SDK Peripheral drivers working with different methods.This example demonstrates use of smartcard driver API to read GSM sim card ICC-ID (Integrated circuit card identifier,which should be placed on the card). Please be aware, that this example is just simple demonstration of smartcard driver API. It may not work with all typesof GSM sim cards." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="driver_examples/smartcard" path="boards/evkmimxrt1170/driver_examples/smartcard/cm4">
           <external path="boards/evkmimxrt1170/driver_examples/smartcard/cm4" type="xml">
             <files mask="smartcard_cm4_v3_8.xml"/>
@@ -1302,11 +1307,6 @@ ${load}</script>
             <files mask="wifi_test_mode_cm4_v3_8.xml"/>
           </external>
         </example>
-        <example id="evkmimxrt1170_wifi_webconfig_cm4" name="wifi_webconfig_cm4" brief="Simple AP to Client configuration over web." toolchain="armgcc iar mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="wifi_examples" path="boards/evkmimxrt1170/wifi_examples/wifi_webconfig/cm4">
-          <external path="boards/evkmimxrt1170/wifi_examples/wifi_webconfig/cm4" type="xml">
-            <files mask="wifi_webconfig_cm4_v3_8.xml"/>
-          </external>
-        </example>
         <example id="evkmimxrt1170_xbar_aoi_cm4" name="xbar_aoi_cm4" brief="The XBAR AOI demo application demonstrates the usage of the XBAR, AOI peripheral to combine interruptfrom CMP and PIT. If the button is pressed(CMP interrupt) and the PIT periodic interrupt occurs a message is printed." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="demo_apps" path="boards/evkmimxrt1170/demo_apps/xbar_aoi/cm4">
           <external path="boards/evkmimxrt1170/demo_apps/xbar_aoi/cm4" type="xml">
             <files mask="xbar_aoi_cm4_v3_8.xml"/>
@@ -1322,7 +1322,12 @@ ${load}</script>
             <files mask="xrdc2_cm4_v3_8.xml"/>
           </external>
         </example>
-        <example id="evkmimxrt1170_a2dp_source_cm7" name="a2dp_source_cm7" brief="The ethermind audio source with simplified application." toolchain="armgcc iar mcuxpresso" compiler="compiler_gcc compiler_iar" category="edgefast_bluetooth_examples" path="boards/evkmimxrt1170/edgefast_bluetooth_examples/a2dp_source/cm7">
+        <example id="evkmimxrt1170_a2dp_sink" name="a2dp_sink" brief="The ethermind audio source with simplified application." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="edgefast_bluetooth_examples" path="boards/evkmimxrt1170/edgefast_bluetooth_examples/a2dp_sink/cm7">
+          <external path="boards/evkmimxrt1170/edgefast_bluetooth_examples/a2dp_sink/cm7" type="xml">
+            <files mask="a2dp_sink_v3_8.xml"/>
+          </external>
+        </example>
+        <example id="evkmimxrt1170_a2dp_source_cm7" name="a2dp_source_cm7" brief="The ethermind audio source with simplified application." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="edgefast_bluetooth_examples" path="boards/evkmimxrt1170/edgefast_bluetooth_examples/a2dp_source/cm7">
           <external path="boards/evkmimxrt1170/edgefast_bluetooth_examples/a2dp_source/cm7" type="xml">
             <files mask="a2dp_source_cm7_v3_8.xml"/>
           </external>
@@ -1462,22 +1467,22 @@ ${load}</script>
             <files mask="cdog_cm7_v3_8.xml"/>
           </external>
         </example>
-        <example id="evkmimxrt1170_central_hpc" name="central_hpc" brief="The ethermind hpc example with simplified application." toolchain="armgcc iar mcuxpresso" compiler="compiler_gcc compiler_iar" category="edgefast_bluetooth_examples" path="boards/evkmimxrt1170/edgefast_bluetooth_examples/central_hpc/cm7">
+        <example id="evkmimxrt1170_central_hpc" name="central_hpc" brief="The ethermind hpc example with simplified application." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="edgefast_bluetooth_examples" path="boards/evkmimxrt1170/edgefast_bluetooth_examples/central_hpc/cm7">
           <external path="boards/evkmimxrt1170/edgefast_bluetooth_examples/central_hpc/cm7" type="xml">
             <files mask="central_hpc_v3_8.xml"/>
           </external>
         </example>
-        <example id="evkmimxrt1170_central_ht" name="central_ht" brief="The ethermind hts example with simplified application." toolchain="armgcc iar mcuxpresso" compiler="compiler_gcc compiler_iar" category="edgefast_bluetooth_examples" path="boards/evkmimxrt1170/edgefast_bluetooth_examples/central_ht/cm7">
+        <example id="evkmimxrt1170_central_ht" name="central_ht" brief="The ethermind hts example with simplified application." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="edgefast_bluetooth_examples" path="boards/evkmimxrt1170/edgefast_bluetooth_examples/central_ht/cm7">
           <external path="boards/evkmimxrt1170/edgefast_bluetooth_examples/central_ht/cm7" type="xml">
             <files mask="central_ht_v3_8.xml"/>
           </external>
         </example>
-        <example id="evkmimxrt1170_central_ipsp" name="central_ipsp" brief="The ethermind ipsp example with simplified application." toolchain="armgcc iar mcuxpresso" compiler="compiler_gcc compiler_iar" category="edgefast_bluetooth_examples" path="boards/evkmimxrt1170/edgefast_bluetooth_examples/central_ipsp/cm7">
+        <example id="evkmimxrt1170_central_ipsp" name="central_ipsp" brief="The ethermind ipsp example with simplified application." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="edgefast_bluetooth_examples" path="boards/evkmimxrt1170/edgefast_bluetooth_examples/central_ipsp/cm7">
           <external path="boards/evkmimxrt1170/edgefast_bluetooth_examples/central_ipsp/cm7" type="xml">
             <files mask="central_ipsp_v3_8.xml"/>
           </external>
         </example>
-        <example id="evkmimxrt1170_central_pxm" name="central_pxm" brief="The ethermind pxm example with simplified application." toolchain="armgcc iar mcuxpresso" compiler="compiler_gcc compiler_iar" category="edgefast_bluetooth_examples" path="boards/evkmimxrt1170/edgefast_bluetooth_examples/central_pxm/cm7">
+        <example id="evkmimxrt1170_central_pxm" name="central_pxm" brief="The ethermind pxm example with simplified application." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="edgefast_bluetooth_examples" path="boards/evkmimxrt1170/edgefast_bluetooth_examples/central_pxm/cm7">
           <external path="boards/evkmimxrt1170/edgefast_bluetooth_examples/central_pxm/cm7" type="xml">
             <files mask="central_pxm_v3_8.xml"/>
           </external>
@@ -1880,6 +1885,11 @@ ${load}</script>
         <example id="evkmimxrt1170_ecompass_cm7" name="ecompass_cm7" brief="The E-Compass demo application demonstrates the use of the FXOS8700 sensor. The tilt-compensated algorithm calculatesall three angles (pitch, roll, and yaw or compass heading)." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="demo_apps" path="boards/evkmimxrt1170/demo_apps/ecompass/cm7">
           <external path="boards/evkmimxrt1170/demo_apps/ecompass/cm7" type="xml">
             <files mask="ecompass_cm7_v3_8.xml"/>
+          </external>
+        </example>
+        <example id="evkmimxrt1170_edgefast_bluetooth_shell" name="edgefast_bluetooth_shell" brief="The ethermind shell example with simplified application." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="edgefast_bluetooth_examples" path="boards/evkmimxrt1170/edgefast_bluetooth_examples/shell/cm7">
+          <external path="boards/evkmimxrt1170/edgefast_bluetooth_examples/shell/cm7" type="xml">
+            <files mask="edgefast_bluetooth_shell_v3_8.xml"/>
           </external>
         </example>
         <example id="evkmimxrt1170_edma_channel_link_cm7" name="edma_channel_link_cm7" brief="The EDMA memory to memory example is a simple demonstration program that uses the SDK software.It excuates one shot transfer from source buffer to destination buffer using the SDK EDMA drivers.The purpose of this example is to show how to use the EDMA and to provide a simple example fordebugging and further development." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="driver_examples/edma" path="boards/evkmimxrt1170/driver_examples/edma/channel_link/cm7">
@@ -2912,22 +2922,22 @@ ${load}</script>
             <files mask="pdm_sai_multi_channel_edma_cm7_v3_8.xml"/>
           </external>
         </example>
-        <example id="evkmimxrt1170_peripheral_hps" name="peripheral_hps" brief="The ethermind hps example with simplified application." toolchain="armgcc iar mcuxpresso" compiler="compiler_gcc compiler_iar" category="edgefast_bluetooth_examples" path="boards/evkmimxrt1170/edgefast_bluetooth_examples/peripheral_hps/cm7">
+        <example id="evkmimxrt1170_peripheral_hps" name="peripheral_hps" brief="The ethermind hps example with simplified application." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="edgefast_bluetooth_examples" path="boards/evkmimxrt1170/edgefast_bluetooth_examples/peripheral_hps/cm7">
           <external path="boards/evkmimxrt1170/edgefast_bluetooth_examples/peripheral_hps/cm7" type="xml">
             <files mask="peripheral_hps_v3_8.xml"/>
           </external>
         </example>
-        <example id="evkmimxrt1170_peripheral_ht" name="peripheral_ht" brief="The ethermind hts example with simplified application." toolchain="armgcc iar mcuxpresso" compiler="compiler_gcc compiler_iar" category="edgefast_bluetooth_examples" path="boards/evkmimxrt1170/edgefast_bluetooth_examples/peripheral_ht/cm7">
+        <example id="evkmimxrt1170_peripheral_ht" name="peripheral_ht" brief="The ethermind hts example with simplified application." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="edgefast_bluetooth_examples" path="boards/evkmimxrt1170/edgefast_bluetooth_examples/peripheral_ht/cm7">
           <external path="boards/evkmimxrt1170/edgefast_bluetooth_examples/peripheral_ht/cm7" type="xml">
             <files mask="peripheral_ht_v3_8.xml"/>
           </external>
         </example>
-        <example id="evkmimxrt1170_peripheral_ipsp" name="peripheral_ipsp" brief="The ethermind ipsp example with simplified application." toolchain="armgcc iar mcuxpresso" compiler="compiler_gcc compiler_iar" category="edgefast_bluetooth_examples" path="boards/evkmimxrt1170/edgefast_bluetooth_examples/peripheral_ipsp/cm7">
+        <example id="evkmimxrt1170_peripheral_ipsp" name="peripheral_ipsp" brief="The ethermind ipsp example with simplified application." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="edgefast_bluetooth_examples" path="boards/evkmimxrt1170/edgefast_bluetooth_examples/peripheral_ipsp/cm7">
           <external path="boards/evkmimxrt1170/edgefast_bluetooth_examples/peripheral_ipsp/cm7" type="xml">
             <files mask="peripheral_ipsp_v3_8.xml"/>
           </external>
         </example>
-        <example id="evkmimxrt1170_peripheral_pxr" name="peripheral_pxr" brief="The ethermind pxr example with simplified application." toolchain="armgcc iar mcuxpresso" compiler="compiler_gcc compiler_iar" category="edgefast_bluetooth_examples" path="boards/evkmimxrt1170/edgefast_bluetooth_examples/peripheral_pxr/cm7">
+        <example id="evkmimxrt1170_peripheral_pxr" name="peripheral_pxr" brief="The ethermind pxr example with simplified application." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="edgefast_bluetooth_examples" path="boards/evkmimxrt1170/edgefast_bluetooth_examples/peripheral_pxr/cm7">
           <external path="boards/evkmimxrt1170/edgefast_bluetooth_examples/peripheral_pxr/cm7" type="xml">
             <files mask="peripheral_pxr_v3_8.xml"/>
           </external>
@@ -3152,6 +3162,11 @@ ${load}</script>
             <files mask="semc_xecc_single_error_cm7_v3_8.xml"/>
           </external>
         </example>
+        <example id="evkmimxrt1170_shell_cm7" name="shell_cm7" brief="The Shell Demo application demonstrates to control Leds by commands." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="demo_apps" path="boards/evkmimxrt1170/demo_apps/shell/cm7">
+          <external path="boards/evkmimxrt1170/demo_apps/shell/cm7" type="xml">
+            <files mask="shell_cm7_v3_8.xml"/>
+          </external>
+        </example>
         <example id="evkmimxrt1170_smartcard_cm7" name="smartcard_cm7" brief="This example demonstrates the SDK Peripheral drivers working with different methods.This example demonstrates use of smartcard driver API to read GSM sim card ICC-ID (Integrated circuit card identifier,which should be placed on the card). Please be aware, that this example is just simple demonstration of smartcard driver API. It may not work with all typesof GSM sim cards." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="driver_examples/smartcard" path="boards/evkmimxrt1170/driver_examples/smartcard/cm7">
           <external path="boards/evkmimxrt1170/driver_examples/smartcard/cm7" type="xml">
             <files mask="smartcard_cm7_v3_8.xml"/>
@@ -3197,7 +3212,7 @@ ${load}</script>
             <files mask="spdif_interrupt_transfer_cm7_v3_8.xml"/>
           </external>
         </example>
-        <example id="evkmimxrt1170_spp" name="spp" brief="The Bluetooth BR SPP example." toolchain="armgcc iar mcuxpresso" compiler="compiler_gcc compiler_iar" category="edgefast_bluetooth_examples" path="boards/evkmimxrt1170/edgefast_bluetooth_examples/spp/cm7">
+        <example id="evkmimxrt1170_spp" name="spp" brief="The Bluetooth BR SPP example." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="edgefast_bluetooth_examples" path="boards/evkmimxrt1170/edgefast_bluetooth_examples/spp/cm7">
           <external path="boards/evkmimxrt1170/edgefast_bluetooth_examples/spp/cm7" type="xml">
             <files mask="spp_v3_8.xml"/>
           </external>
@@ -3282,7 +3297,7 @@ ${load}</script>
             <files mask="wifi_iperf_cm7_v3_8.xml"/>
           </external>
         </example>
-        <example id="evkmimxrt1170_wifi_provisioning" name="wifi_provisioning" brief="The wifi provisioning example." toolchain="armgcc iar mcuxpresso" compiler="compiler_gcc compiler_iar" category="edgefast_bluetooth_examples" path="boards/evkmimxrt1170/edgefast_bluetooth_examples/wifi_provisioning/cm7">
+        <example id="evkmimxrt1170_wifi_provisioning" name="wifi_provisioning" brief="The wifi provisioning example." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="edgefast_bluetooth_examples" path="boards/evkmimxrt1170/edgefast_bluetooth_examples/wifi_provisioning/cm7">
           <external path="boards/evkmimxrt1170/edgefast_bluetooth_examples/wifi_provisioning/cm7" type="xml">
             <files mask="wifi_provisioning_v3_8.xml"/>
           </external>
@@ -3300,6 +3315,11 @@ ${load}</script>
         <example id="evkmimxrt1170_wifi_webconfig_cm7" name="wifi_webconfig_cm7" brief="Simple AP to Client configuration over web." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="wifi_examples" path="boards/evkmimxrt1170/wifi_examples/wifi_webconfig/cm7">
           <external path="boards/evkmimxrt1170/wifi_examples/wifi_webconfig/cm7" type="xml">
             <files mask="wifi_webconfig_cm7_v3_8.xml"/>
+          </external>
+        </example>
+        <example id="evkmimxrt1170_wireless_uart" name="wireless_uart" brief="The ethermind wireless uart example with simplified application." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="edgefast_bluetooth_examples" path="boards/evkmimxrt1170/edgefast_bluetooth_examples/wireless_uart/cm7">
+          <external path="boards/evkmimxrt1170/edgefast_bluetooth_examples/wireless_uart/cm7" type="xml">
+            <files mask="wireless_uart_v3_8.xml"/>
           </external>
         </example>
         <example id="evkmimxrt1170_xbar_aoi_cm7" name="xbar_aoi_cm7" brief="The XBAR AOI demo application demonstrates the usage of the XBAR, AOI peripheral to combine interruptfrom CMP and PIT. If the button is pressed(CMP interrupt) and the PIT periodic interrupt occurs a message is printed." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="demo_apps" path="boards/evkmimxrt1170/demo_apps/xbar_aoi/cm7">
@@ -3400,6 +3420,7 @@ ${load}</script>
           <debug_configuration id_refs="com.crt.advproject.config.exe.debug com.crt.advproject.config.exe.release">
             <params>
               <params id="misc.options.MIMXRT1176xxxx.core_cm4.MIMXRT1176xxxxx" name="misc.options" value="--no-packed --cachelib libahb_lmem.so"/>
+              <params id="internal.core.index.MIMXRT1176xxxx.core_cm4.MIMXRT1176xxxxx" name="internal.core.index" value="1"/>
             </params>
           </debug_configuration>
         </debug_configurations>
@@ -3416,6 +3437,7 @@ ${load}</script>
           <debug_configuration id_refs="com.crt.advproject.config.exe.debug com.crt.advproject.config.exe.release">
             <params>
               <params id="misc.options.MIMXRT1176xxxx.core_cm7.MIMXRT1176xxxxx" name="misc.options" value="--no-packed"/>
+              <params id="internal.core.index.MIMXRT1176xxxx.core_cm7.MIMXRT1176xxxxx" name="internal.core.index" value="0"/>
             </params>
           </debug_configuration>
         </debug_configurations>
@@ -4679,6 +4701,26 @@ ${load}</script>
         <files mask="armgcc_force_cpp.cmake"/>
       </source>
     </component>
+    <component id="component.audio_sai_edma_adapter.MIMXRT1176" name="sai_edma_adapter" brief="Component sai_edma_adapter" version="1.0.0" full_name="Component sai_edma_adapter" devices="MIMXRT1176xxxxx" device_cores="cm4_MIMXRT1176xxxxx cm7_MIMXRT1176xxxxx" slave_roles="M4SLAVE M7SLAVE" user_visible="true" type="abstraction_layer" package_base_path="components/audio" project_base_path="component/audio">
+      <dependencies>
+        <all>
+          <component_dependency value="platform.drivers.common.MIMXRT1176"/>
+          <component_dependency value="platform.drivers.sai_edma.MIMXRT1176"/>
+        </all>
+      </dependencies>
+      <source relative_path="./" type="c_include">
+        <files mask="fsl_adapter_audio.h"/>
+      </source>
+      <source relative_path="./" type="src">
+        <files mask="fsl_adapter_sai.c"/>
+      </source>
+      <source toolchain="armgcc" relative_path="." type="workspace" device_cores="cm7_MIMXRT1176xxxxx">
+        <files mask="component_audio_sai_edma_adapter_MIMXRT1176_cm7.cmake" hidden="true"/>
+      </source>
+      <include_paths>
+        <include_path relative_path="./" type="c_include"/>
+      </include_paths>
+    </component>
     <component id="component.button.MIMXRT1176" name="button" brief="Component button" version="1.0.0" full_name="Component button" devices="MIMXRT1176xxxxx" device_cores="cm4_MIMXRT1176xxxxx cm7_MIMXRT1176xxxxx" slave_roles="M4SLAVE M7SLAVE" user_visible="true" type="software_component" package_base_path="components/button" project_base_path="component/button">
       <dependencies>
         <all>
@@ -4692,6 +4734,9 @@ ${load}</script>
       </source>
       <source relative_path="./" type="src">
         <files mask="fsl_component_button.c"/>
+      </source>
+      <source toolchain="armgcc" relative_path="." type="workspace" device_cores="cm7_MIMXRT1176xxxxx">
+        <files mask="component_button_MIMXRT1176_cm7.cmake" hidden="true"/>
       </source>
       <include_paths>
         <include_path relative_path="./" type="c_include"/>
@@ -5009,6 +5054,23 @@ ${load}</script>
         <include_path relative_path="./" type="c_include"/>
       </include_paths>
     </component>
+    <component id="component.lpspi_adapter.MIMXRT1176" name="lpspi_adapter" brief="Component lpspi_adapter" version="1.0.0" full_name="Component lpspi_adapter" devices="MIMXRT1176xxxxx" device_cores="cm4_MIMXRT1176xxxxx cm7_MIMXRT1176xxxxx" slave_roles="M4SLAVE M7SLAVE" user_visible="true" type="abstraction_layer" package_base_path="components/spi" project_base_path="component/spi">
+      <dependencies>
+        <all>
+          <component_dependency value="platform.drivers.common.MIMXRT1176"/>
+          <component_dependency value="platform.drivers.lpspi.MIMXRT1176"/>
+        </all>
+      </dependencies>
+      <source relative_path="./" type="c_include">
+        <files mask="fsl_adapter_spi.h"/>
+      </source>
+      <source relative_path="./" type="src">
+        <files mask="fsl_adapter_lpspi.c"/>
+      </source>
+      <include_paths>
+        <include_path relative_path="./" type="c_include"/>
+      </include_paths>
+    </component>
     <component id="component.lpuart_adapter.MIMXRT1176" name="lpuart_adapter" brief="Component lpuart_adapter" version="1.0.0" full_name="lpuart_adapter" devices="MIMXRT1176xxxxx" device_cores="cm4_MIMXRT1176xxxxx cm7_MIMXRT1176xxxxx" slave_roles="M4SLAVE M7SLAVE" user_visible="true" type="utilities" package_base_path="components/uart" project_base_path="component/uart">
       <dependencies>
         <all>
@@ -5066,6 +5128,12 @@ ${load}</script>
       <source relative_path="./" type="src">
         <files mask="fsl_component_mem_manager.c"/>
       </source>
+      <source toolchain="armgcc" relative_path="." type="workspace" device_cores="cm4_MIMXRT1176xxxxx">
+        <files mask="component_mem_manager_MIMXRT1176_cm4.cmake" hidden="true"/>
+      </source>
+      <source toolchain="armgcc" relative_path="." type="workspace" device_cores="cm7_MIMXRT1176xxxxx">
+        <files mask="component_mem_manager_MIMXRT1176_cm7.cmake" hidden="true"/>
+      </source>
       <include_paths>
         <include_path relative_path="./" type="c_include"/>
       </include_paths>
@@ -5082,6 +5150,30 @@ ${load}</script>
       </source>
       <source relative_path="./" type="src">
         <files mask="fsl_component_mem_manager_light.c"/>
+      </source>
+      <include_paths>
+        <include_path relative_path="./" type="c_include"/>
+      </include_paths>
+    </component>
+    <component id="component.messaging.MIMXRT1176" name="messaging" brief="Component messaging" version="1.0.0" full_name="Component messaging" devices="MIMXRT1176xxxxx" device_cores="cm4_MIMXRT1176xxxxx cm7_MIMXRT1176xxxxx" slave_roles="M4SLAVE M7SLAVE" category="Device/SDK Drivers" user_visible="true" type="other" package_base_path="components/messaging" project_base_path="component/messaging">
+      <dependencies>
+        <all>
+          <component_dependency value="platform.drivers.common.MIMXRT1176"/>
+          <component_dependency value="component.lists.MIMXRT1176"/>
+          <component_dependency value="component.mem_manager.MIMXRT1176"/>
+        </all>
+      </dependencies>
+      <source relative_path="./" type="c_include">
+        <files mask="fsl_component_messaging.h"/>
+      </source>
+      <source relative_path="./" type="src">
+        <files mask="fsl_component_messaging.c"/>
+      </source>
+      <source toolchain="armgcc" relative_path="." type="workspace" device_cores="cm4_MIMXRT1176xxxxx">
+        <files mask="component_messaging_MIMXRT1176_cm4.cmake" hidden="true"/>
+      </source>
+      <source toolchain="armgcc" relative_path="." type="workspace" device_cores="cm7_MIMXRT1176xxxxx">
+        <files mask="component_messaging_MIMXRT1176_cm7.cmake" hidden="true"/>
       </source>
       <include_paths>
         <include_path relative_path="./" type="c_include"/>
@@ -5141,9 +5233,6 @@ ${load}</script>
       <source relative_path="./" type="doc">
         <files mask="readme.txt" hidden="true"/>
       </source>
-      <source toolchain="armgcc" relative_path="." type="workspace" device_cores="cm4_MIMXRT1176xxxxx">
-        <files mask="component_mflash_file_MIMXRT1176_cm4.cmake" hidden="true"/>
-      </source>
       <source toolchain="armgcc" relative_path="." type="workspace" device_cores="cm7_MIMXRT1176xxxxx">
         <files mask="component_mflash_file_MIMXRT1176_cm7.cmake" hidden="true"/>
       </source>
@@ -5165,12 +5254,6 @@ ${load}</script>
       </source>
       <source relative_path="./" type="src">
         <files mask="nvm_adapter.c"/>
-      </source>
-      <source toolchain="armgcc" relative_path="." type="workspace" device_cores="cm4_MIMXRT1176xxxxx">
-        <files mask="component_nvm_adapter_MIMXRT1176_cm4.cmake" hidden="true"/>
-      </source>
-      <source toolchain="armgcc" relative_path="." type="workspace" device_cores="cm7_MIMXRT1176xxxxx">
-        <files mask="component_nvm_adapter_MIMXRT1176_cm7.cmake" hidden="true"/>
       </source>
       <include_paths>
         <include_path relative_path="./" type="c_include"/>
@@ -5329,6 +5412,7 @@ ${load}</script>
           <component_dependency value="component.lists.MIMXRT1176"/>
           <any_of>
             <component_dependency value="component.serial_manager_uart.MIMXRT1176"/>
+            <component_dependency value="component.serial_manager_spi.MIMXRT1176"/>
             <component_dependency value="component.serial_manager_swo.MIMXRT1176"/>
             <component_dependency value="component.serial_manager_virtual.MIMXRT1176"/>
             <component_dependency value="component.serial_manager_usb_cdc.MIMXRT1176"/>
@@ -5347,6 +5431,30 @@ ${load}</script>
       </source>
       <source toolchain="armgcc" relative_path="." type="workspace" device_cores="cm7_MIMXRT1176xxxxx">
         <files mask="component_serial_manager_MIMXRT1176_cm7.cmake" hidden="true"/>
+      </source>
+      <include_paths>
+        <include_path relative_path="./" type="c_include"/>
+      </include_paths>
+    </component>
+    <component id="component.serial_manager_spi.MIMXRT1176" name="serial_manager_spi" brief="Component serial_manager_spi" version="1.0.0" full_name="Serial Manager spi" devices="MIMXRT1176xxxxx" device_cores="cm4_MIMXRT1176xxxxx cm7_MIMXRT1176xxxxx" slave_roles="M4SLAVE M7SLAVE" user_visible="true" type="utilities" package_base_path="components/serial_manager" project_base_path="component/serial_manager">
+      <defines>
+        <define name="SERIAL_PORT_TYPE_SPI" value="1"/>
+        <define name="SERIAL_PORT_TYPE_SPI_MASTER" value="1"/>
+        <define name="SERIAL_PORT_TYPE_SPI_SLAVE" value="1"/>
+        <define name="SERIAL_MANAGER_NON_BLOCKING_MODE" value="1"/>
+      </defines>
+      <dependencies>
+        <all>
+          <component_dependency value="component.serial_manager.MIMXRT1176"/>
+          <component_dependency value="platform.drivers.lpspi.MIMXRT1176"/>
+          <component_dependency value="component.lpspi_adapter.MIMXRT1176"/>
+        </all>
+      </dependencies>
+      <source relative_path="./" type="c_include">
+        <files mask="fsl_component_serial_port_spi.h"/>
+      </source>
+      <source relative_path="./" type="src">
+        <files mask="fsl_component_serial_port_spi.c"/>
       </source>
       <include_paths>
         <include_path relative_path="./" type="c_include"/>
@@ -5507,6 +5615,12 @@ ${load}</script>
       <source relative_path="./" type="src">
         <files mask="fsl_adapter_software_rng.c"/>
       </source>
+      <source toolchain="armgcc" relative_path="." type="workspace" device_cores="cm4_MIMXRT1176xxxxx">
+        <files mask="component_software_rng_adapter_MIMXRT1176_cm4.cmake" hidden="true"/>
+      </source>
+      <source toolchain="armgcc" relative_path="." type="workspace" device_cores="cm7_MIMXRT1176xxxxx">
+        <files mask="component_software_rng_adapter_MIMXRT1176_cm7.cmake" hidden="true"/>
+      </source>
       <include_paths>
         <include_path relative_path="./" type="c_include"/>
       </include_paths>
@@ -5527,6 +5641,9 @@ ${load}</script>
       </source>
       <source relative_path="./" type="src">
         <files mask="fsl_component_timer_manager.c"/>
+      </source>
+      <source toolchain="armgcc" relative_path="." type="workspace" device_cores="cm7_MIMXRT1176xxxxx">
+        <files mask="component_timer_manager_MIMXRT1176_cm7.cmake" hidden="true"/>
       </source>
       <include_paths>
         <include_path relative_path="./" type="c_include"/>
@@ -5889,7 +6006,6 @@ ${load}</script>
     <component id="driver.caam_cm4.MIMXRT1176" name="caam" brief="CAAM Driver CM4 core" version="2.1.3" full_name="CAAM Driver with CM4 cache driver" devices="MIMXRT1176xxxxx" device_cores="cm4_MIMXRT1176xxxxx" slave_roles="M4SLAVE" user_visible="true" type="driver" package_base_path="devices/MIMXRT1176/drivers" project_base_path="drivers">
       <dependencies>
         <all>
-          <component_dependency value="platform.drivers.caam.MIMXRT1176"/>
           <component_dependency value="platform.drivers.common.MIMXRT1176"/>
           <component_dependency value="platform.drivers.cache_lmem.MIMXRT1176"/>
         </all>
@@ -5907,7 +6023,6 @@ ${load}</script>
     <component id="driver.caam_cm7.MIMXRT1176" name="caam" brief="CAAM Driver CM7 core" version="2.1.3" full_name="CAAM Driver with CM7 cache driver" devices="MIMXRT1176xxxxx" device_cores="cm7_MIMXRT1176xxxxx" slave_roles="M7SLAVE" user_visible="true" type="driver" package_base_path="devices/MIMXRT1176/drivers" project_base_path="drivers">
       <dependencies>
         <all>
-          <component_dependency value="platform.drivers.caam.MIMXRT1176"/>
           <component_dependency value="platform.drivers.common.MIMXRT1176"/>
           <component_dependency value="platform.drivers.cache_armv7_m7.MIMXRT1176"/>
         </all>
@@ -8083,7 +8198,7 @@ ${load}</script>
         <include_path relative_path="./" type="c_include"/>
       </include_paths>
     </component>
-    <component id="platform.drivers.sai.MIMXRT1176" name="sai" brief="SAI Driver" version="2.3.3" full_name="SAI Driver" devices="MIMXRT1176xxxxx" device_cores="cm4_MIMXRT1176xxxxx cm7_MIMXRT1176xxxxx" slave_roles="M4SLAVE M7SLAVE" user_visible="true" type="driver" package_base_path="devices/MIMXRT1176/drivers" project_base_path="drivers">
+    <component id="platform.drivers.sai.MIMXRT1176" name="sai" brief="SAI Driver" version="2.3.4" full_name="SAI Driver" devices="MIMXRT1176xxxxx" device_cores="cm4_MIMXRT1176xxxxx cm7_MIMXRT1176xxxxx" slave_roles="M4SLAVE M7SLAVE" user_visible="true" type="driver" package_base_path="devices/MIMXRT1176/drivers" project_base_path="drivers">
       <dependencies>
         <component_dependency value="platform.drivers.common.MIMXRT1176"/>
       </dependencies>
@@ -8484,7 +8599,7 @@ ${load}</script>
         <include_path relative_path="./" type="c_include"/>
       </include_paths>
     </component>
-    <component id="driver.wm8904.MIMXRT1176" name="wm8904" brief="Driver wm8904" version="2.4.4" full_name="Driver wm8904" devices="MIMXRT1176xxxxx" device_cores="cm4_MIMXRT1176xxxxx cm7_MIMXRT1176xxxxx" slave_roles="M4SLAVE M7SLAVE" user_visible="true" type="software_component" package_base_path="components/codec/wm8904" project_base_path="codec">
+    <component id="driver.wm8904.MIMXRT1176" name="wm8904" brief="Driver wm8904" version="2.5.0" full_name="Driver wm8904" devices="MIMXRT1176xxxxx" device_cores="cm4_MIMXRT1176xxxxx cm7_MIMXRT1176xxxxx" slave_roles="M4SLAVE M7SLAVE" user_visible="true" type="software_component" package_base_path="components/codec/wm8904" project_base_path="codec">
       <dependencies>
         <all>
           <component_dependency value="platform.drivers.common.MIMXRT1176"/>
@@ -16441,7 +16556,7 @@ ${load}</script>
         <include_path relative_path="vendors/vendor/boards/board/aws_tests/config_files" type="c_include"/>
       </include_paths>
     </component>
-    <component id="middleware.freertos-kernel.MIMXRT1176" name="FreeRTOS kernel" brief="FreeRTOS kernel" version="202012.00.0" full_name="FreeRTOS kernel" devices="MIMXRT1176xxxxx" user_visible="true" type="OS" package_base_path="rtos/freertos" project_base_path="freertos">
+    <component id="middleware.freertos-kernel.MIMXRT1176" name="FreeRTOS kernel" brief="FreeRTOS kernel" version="10.4.3" revision="1" full_name="FreeRTOS kernel" devices="MIMXRT1176xxxxx" user_visible="true" type="OS" package_base_path="rtos/freertos" project_base_path="freertos">
       <defines>
         <define name="SDK_OS_FREE_RTOS" value=""/>
       </defines>
@@ -16513,7 +16628,7 @@ ${load}</script>
         <include_path relative_path="freertos_kernel/portable/IAR/ARM_CM4F" toolchain="iar" type="c_include" device_cores="cm4_MIMXRT1176xxxxx cm7_MIMXRT1176xxxxx"/>
       </include_paths>
     </component>
-    <component id="middleware.freertos-kernel.armv8m.MIMXRT1176" name="FreeRTOS port ARMv8M" brief="FreeRTOS port ARMv8M" version="202012.00.0" full_name="FreeRTOS port ARMv8M" devices="MIMXRT1176xxxxx" category="Operating System/FreeRTOS kernel" user_visible="false" type="other" package_base_path="rtos/freertos" project_base_path="freertos">
+    <component id="middleware.freertos-kernel.armv8m.MIMXRT1176" name="FreeRTOS port ARMv8M" brief="FreeRTOS port ARMv8M" version="10.4.3" revision="1" full_name="FreeRTOS port ARMv8M" devices="MIMXRT1176xxxxx" category="Operating System/FreeRTOS kernel" user_visible="false" type="other" package_base_path="rtos/freertos" project_base_path="freertos">
       <dependencies>
         <component_dependency value="middleware.freertos-kernel.MIMXRT1176"/>
       </dependencies>
@@ -16559,9 +16674,6 @@ ${load}</script>
       <source relative_path="freertos_kernel/portable/ARMv8M/secure/context/portable/GCC/ARM_CM33" type="src">
         <files mask="secure_context_port.c"/>
       </source>
-      <source relative_path="freertos_kernel/portable/ARMv8M/secure/context/portable/IAR/ARM_CM33" type="src">
-        <files mask="secure_context_port.c"/>
-      </source>
       <source relative_path="freertos_kernel/portable/ARMv8M/secure/context/portable/IAR/ARM_CM33" type="asm_include">
         <files mask="secure_context_port_asm.s"/>
       </source>
@@ -16601,7 +16713,7 @@ ${load}</script>
         <include_path relative_path="freertos_kernel/portable/ARMv8M/secure/macros" type="c_include"/>
       </include_paths>
     </component>
-    <component id="middleware.freertos-kernel.doc.MIMXRT1176" name="FreeRTOS doc" brief="FreeRTOS doc" version="202012.00.0" full_name="FreeRTOS doc" devices="MIMXRT1176xxxxx" category="Operating System/FreeRTOS kernel" user_visible="false" type="other" package_base_path="rtos/freertos" project_base_path="freertos">
+    <component id="middleware.freertos-kernel.doc.MIMXRT1176" name="FreeRTOS doc" brief="FreeRTOS doc" version="10.4.3" revision="1" full_name="FreeRTOS doc" devices="MIMXRT1176xxxxx" category="Operating System/FreeRTOS kernel" user_visible="false" type="other" package_base_path="rtos/freertos" project_base_path="freertos">
       <source relative_path="doc" type="doc">
         <files mask="AFQ Developer Guide - Board Qualification Errata.pdf"/>
         <files mask="Amazon FreeRTOS Qualification Developer Guide.pdf"/>
@@ -16681,7 +16793,7 @@ ${load}</script>
         <files mask="global_config.txt"/>
       </source>
     </component>
-    <component id="middleware.freertos-kernel.extension.MIMXRT1176" name="FreeRTOS NXP extension" brief="FreeRTOS NXP extension" version="202012.00.0" full_name="FreeRTOS NXP extension" devices="MIMXRT1176xxxxx" category="Operating System/FreeRTOS kernel extensions" user_visible="false" type="other" package_base_path="rtos/freertos" project_base_path="freertos">
+    <component id="middleware.freertos-kernel.extension.MIMXRT1176" name="FreeRTOS NXP extension" brief="FreeRTOS NXP extension" version="10.4.3" revision="1" full_name="FreeRTOS NXP extension" devices="MIMXRT1176xxxxx" category="Operating System/FreeRTOS kernel extensions" user_visible="false" type="other" package_base_path="rtos/freertos" project_base_path="freertos">
       <source relative_path="freertos_kernel/include" type="c_include">
         <files mask="freertos_tasks_c_additions.h"/>
       </source>
@@ -16695,7 +16807,7 @@ ${load}</script>
         <include_path relative_path="freertos_kernel/include" type="c_include"/>
       </include_paths>
     </component>
-    <component id="middleware.freertos-kernel.heap_1.MIMXRT1176" name="FreeRTOS heap 1" brief="FreeRTOS heap 1" version="202012.00.0" full_name="FreeRTOS heap 1" devices="MIMXRT1176xxxxx" category="Operating System/FreeRTOS kernel" user_visible="false" type="other" package_base_path="rtos/freertos" project_base_path="freertos">
+    <component id="middleware.freertos-kernel.heap_1.MIMXRT1176" name="FreeRTOS heap 1" brief="FreeRTOS heap 1" version="10.4.3" revision="1" full_name="FreeRTOS heap 1" devices="MIMXRT1176xxxxx" category="Operating System/FreeRTOS kernel" user_visible="false" type="other" package_base_path="rtos/freertos" project_base_path="freertos">
       <dependencies>
         <component_dependency value="middleware.freertos-kernel.MIMXRT1176"/>
       </dependencies>
@@ -16703,7 +16815,7 @@ ${load}</script>
         <files mask="heap_1.c"/>
       </source>
     </component>
-    <component id="middleware.freertos-kernel.heap_2.MIMXRT1176" name="FreeRTOS heap 2" brief="FreeRTOS heap 2" version="202012.00.0" full_name="FreeRTOS heap 2" devices="MIMXRT1176xxxxx" category="Operating System/FreeRTOS kernel" user_visible="false" type="other" package_base_path="rtos/freertos" project_base_path="freertos">
+    <component id="middleware.freertos-kernel.heap_2.MIMXRT1176" name="FreeRTOS heap 2" brief="FreeRTOS heap 2" version="10.4.3" revision="1" full_name="FreeRTOS heap 2" devices="MIMXRT1176xxxxx" category="Operating System/FreeRTOS kernel" user_visible="false" type="other" package_base_path="rtos/freertos" project_base_path="freertos">
       <dependencies>
         <component_dependency value="middleware.freertos-kernel.MIMXRT1176"/>
       </dependencies>
@@ -16711,7 +16823,7 @@ ${load}</script>
         <files mask="heap_2.c"/>
       </source>
     </component>
-    <component id="middleware.freertos-kernel.heap_3.MIMXRT1176" name="FreeRTOS heap 3" brief="FreeRTOS heap 3" version="202012.00.0" full_name="FreeRTOS heap_3" devices="MIMXRT1176xxxxx" category="Operating System/FreeRTOS kernel" user_visible="false" type="other" package_base_path="rtos/freertos" project_base_path="freertos">
+    <component id="middleware.freertos-kernel.heap_3.MIMXRT1176" name="FreeRTOS heap 3" brief="FreeRTOS heap 3" version="10.4.3" revision="1" full_name="FreeRTOS heap_3" devices="MIMXRT1176xxxxx" category="Operating System/FreeRTOS kernel" user_visible="false" type="other" package_base_path="rtos/freertos" project_base_path="freertos">
       <dependencies>
         <component_dependency value="middleware.freertos-kernel.MIMXRT1176"/>
       </dependencies>
@@ -16725,7 +16837,7 @@ ${load}</script>
         <files mask="middleware_freertos-kernel_heap_3_MIMXRT1176_cm7.cmake" hidden="true"/>
       </source>
     </component>
-    <component id="middleware.freertos-kernel.heap_4.MIMXRT1176" name="FreeRTOS heap 4" brief="FreeRTOS heap 4" version="202012.00.0" full_name="FreeRTOS heap 4" devices="MIMXRT1176xxxxx" category="Operating System/FreeRTOS kernel" user_visible="false" type="other" package_base_path="rtos/freertos" project_base_path="freertos">
+    <component id="middleware.freertos-kernel.heap_4.MIMXRT1176" name="FreeRTOS heap 4" brief="FreeRTOS heap 4" version="10.4.3" revision="1" full_name="FreeRTOS heap 4" devices="MIMXRT1176xxxxx" category="Operating System/FreeRTOS kernel" user_visible="false" type="other" package_base_path="rtos/freertos" project_base_path="freertos">
       <dependencies>
         <component_dependency value="middleware.freertos-kernel.MIMXRT1176"/>
       </dependencies>
@@ -16739,7 +16851,7 @@ ${load}</script>
         <files mask="middleware_freertos-kernel_heap_4_MIMXRT1176_cm7.cmake" hidden="true"/>
       </source>
     </component>
-    <component id="middleware.freertos-kernel.heap_5.MIMXRT1176" name="FreeRTOS heap 5" brief="FreeRTOS heap 5" version="202012.00.0" full_name="FreeRTOS heap 5" devices="MIMXRT1176xxxxx" category="Operating System/FreeRTOS kernel" user_visible="false" type="other" package_base_path="rtos/freertos" project_base_path="freertos">
+    <component id="middleware.freertos-kernel.heap_5.MIMXRT1176" name="FreeRTOS heap 5" brief="FreeRTOS heap 5" version="10.4.3" revision="1" full_name="FreeRTOS heap 5" devices="MIMXRT1176xxxxx" category="Operating System/FreeRTOS kernel" user_visible="false" type="other" package_base_path="rtos/freertos" project_base_path="freertos">
       <dependencies>
         <component_dependency value="middleware.freertos-kernel.MIMXRT1176"/>
       </dependencies>
@@ -16747,7 +16859,7 @@ ${load}</script>
         <files mask="heap_5.c"/>
       </source>
     </component>
-    <component id="middleware.freertos-kernel.mpu_wrappers.MIMXRT1176" name="FreeRTOS MPU wrappers" brief="FreeRTOS MPU wrappers" version="202012.00.0" full_name="FreeRTOS MPU wrappers" devices="MIMXRT1176xxxxx" category="Operating System/FreeRTOS kernel" user_visible="false" type="other" package_base_path="rtos/freertos" project_base_path="freertos">
+    <component id="middleware.freertos-kernel.mpu_wrappers.MIMXRT1176" name="FreeRTOS MPU wrappers" brief="FreeRTOS MPU wrappers" version="10.4.3" revision="1" full_name="FreeRTOS MPU wrappers" devices="MIMXRT1176xxxxx" category="Operating System/FreeRTOS kernel" user_visible="false" type="other" package_base_path="rtos/freertos" project_base_path="freertos">
       <dependencies>
         <component_dependency value="middleware.freertos-kernel.MIMXRT1176"/>
       </dependencies>
@@ -16755,7 +16867,7 @@ ${load}</script>
         <files mask="mpu_wrappers.c"/>
       </source>
     </component>
-    <component id="middleware.freertos-kernel.root_doc.MIMXRT1176" name="Root FreeRTOS documents." brief="FreeRTOS root documents" version="202012.00.0" full_name="FreeRTOS root documents" devices="MIMXRT1176xxxxx" category="Operating System/FreeRTOS kernel" user_visible="false" type="other" package_base_path="rtos/freertos" project_base_path="freertos">
+    <component id="middleware.freertos-kernel.root_doc.MIMXRT1176" name="Root FreeRTOS documents." brief="FreeRTOS root documents" version="10.4.3" revision="1" full_name="FreeRTOS root documents" devices="MIMXRT1176xxxxx" category="Operating System/FreeRTOS kernel" user_visible="false" type="other" package_base_path="rtos/freertos" project_base_path="freertos">
       <source relative_path="./" type="other">
         <files mask="CHANGELOG.md"/>
       </source>
@@ -16764,7 +16876,7 @@ ${load}</script>
         <files mask="directories.txt"/>
       </source>
     </component>
-    <component id="middleware.freertos-kernel.template.MIMXRT1176" name="FreeRTOS configuration template" brief="Template configuration file to be edited by user. Provides also memory allocator (heap_x), change variant if needed." version="202012.00.0" full_name="FreeRTOS configuration template" devices="MIMXRT1176xxxxx" category="Operating System/FreeRTOS kernel" user_visible="false" type="project_template" package_base_path="rtos/freertos" project_base_path="freertos">
+    <component id="middleware.freertos-kernel.template.MIMXRT1176" name="FreeRTOS configuration template" brief="Template configuration file to be edited by user. Provides also memory allocator (heap_x), change variant if needed." version="10.4.3" revision="1" full_name="FreeRTOS configuration template" devices="MIMXRT1176xxxxx" category="Operating System/FreeRTOS kernel" user_visible="false" type="project_template" package_base_path="rtos/freertos" project_base_path="freertos">
       <source exclude="true" relative_path="freertos_kernel/portable/MemMang" type="src">
         <files mask="heap_1.c"/>
         <files mask="heap_2.c"/>
@@ -16781,7 +16893,7 @@ ${load}</script>
         <include_path relative_path="template/ARM_CM4F" type="c_include" device_cores="cm4_MIMXRT1176xxxxx cm7_MIMXRT1176xxxxx"/>
       </include_paths>
     </component>
-    <component id="middleware.freertos-kernel.unused.MIMXRT1176" name="FreeRTOS unused" brief="FreeRTOS unused" version="202012.00.0" full_name="FreeRTOS unused" devices="MIMXRT1176xxxxx" category="Operating System/FreeRTOS kernel" user_visible="false" type="other" package_base_path="rtos/freertos" project_base_path="freertos">
+    <component id="middleware.freertos-kernel.unused.MIMXRT1176" name="FreeRTOS unused" brief="FreeRTOS unused" version="10.4.3" revision="1" full_name="FreeRTOS unused" devices="MIMXRT1176xxxxx" category="Operating System/FreeRTOS kernel" user_visible="false" type="other" package_base_path="rtos/freertos" project_base_path="freertos">
       <source relative_path="./" type="other">
         <files mask="CODE_OF_CONDUCT.md"/>
         <files mask="LICENSE"/>
@@ -19021,7 +19133,6 @@ ${load}</script>
     <component id="middleware.mbedtls.MIMXRT1176" name="mbedtls" brief="mbedTLS library" version="2.26.0" full_name="MbedTLS open source SSL library" devices="MIMXRT1176xxxxx" device_cores="cm4_MIMXRT1176xxxxx cm7_MIMXRT1176xxxxx" slave_roles="M4SLAVE M7SLAVE" category="Security/mbedTLS library" user_visible="true" type="middleware" package_base_path="middleware/mbedtls" project_base_path="mbedtls">
       <dependencies>
         <all>
-          <component_dependency value="middleware.mbedtls.rt2.MIMXRT1176"/>
           <component_dependency value="middleware.mbedtls.template.MIMXRT1176"/>
           <component_dependency value="utility.debug_console.MIMXRT1176"/>
         </all>
@@ -24984,6 +25095,124 @@ ${load}</script>
         <include_path relative_path="incl/wlcmgr" type="c_include"/>
       </include_paths>
     </component>
+    <component id="middleware.wifi.fwdnld.MIMXRT1176" name="nxp_wireless_fwdnld" brief="NXP WLAN f/w dnld driver" version="1.0.0" full_name="NXP WLAN f/w dnld driver" devices="MIMXRT1176xxxxx" device_cores="cm4_MIMXRT1176xxxxx cm7_MIMXRT1176xxxxx" slave_roles="M4SLAVE M7SLAVE" category="Wireless/NXP Wi-Fi" user_visible="true" type="middleware" package_base_path="middleware/wifi" project_base_path="wifi">
+      <dependencies>
+        <all>
+          <component_dependency value="middleware.freertos-kernel.MIMXRT1176"/>
+          <component_dependency value="middleware.sdmmc.sdio.MIMXRT1176"/>
+        </all>
+      </dependencies>
+      <source relative_path="incl/port/os" type="c_include">
+        <files mask="wm_os.h"/>
+      </source>
+      <source relative_path="incl" type="c_include">
+        <files mask="wifi_cal_data_ext.h"/>
+        <files mask="wm_utils.h"/>
+        <files mask="wmerrno.h"/>
+        <files mask="wmlog.h"/>
+        <files mask="wmtypes.h"/>
+      </source>
+      <source relative_path="wifidriver/incl" type="c_include">
+        <files mask="mlan_11ac.h"/>
+        <files mask="mlan_11h.h"/>
+        <files mask="mlan_11n.h"/>
+        <files mask="mlan_11n_aggr.h"/>
+        <files mask="mlan_11n_rxreorder.h"/>
+        <files mask="mlan_fw.h"/>
+        <files mask="mlan_ieee.h"/>
+        <files mask="mlan_init.h"/>
+        <files mask="mlan_join.h"/>
+        <files mask="mlan_main.h"/>
+        <files mask="mlan_meas.h"/>
+        <files mask="mlan_remap_mem_operations.h"/>
+        <files mask="mlan_sdio.h"/>
+        <files mask="mlan_uap.h"/>
+        <files mask="mlan_util.h"/>
+        <files mask="mlan_wmm.h"/>
+        <files mask="mlan.h"/>
+        <files mask="mlan_ioctl.h"/>
+        <files mask="mlan_decl.h"/>
+        <files mask="mlan_api.h"/>
+      </source>
+      <source relative_path="incl/wlcmgr" type="c_include">
+        <files mask="wlan_11d.h"/>
+        <files mask="wlan.h"/>
+      </source>
+      <source relative_path="incl/wifidriver" type="c_include">
+        <files mask="mlan_sdio_api.h"/>
+        <files mask="wifi-decl.h"/>
+        <files mask="wifi.h"/>
+        <files mask="wifi_events.h"/>
+      </source>
+      <source relative_path="port/os" type="src">
+        <files mask="os.c"/>
+      </source>
+      <source relative_path="wifi_bt_firmware" type="c_include">
+        <files mask="sd8801_wlan.h"/>
+        <files mask="sduart8977_wlan_bt.h"/>
+        <files mask="sduartIW416_wlan_bt.h"/>
+        <files mask="sduart8987_wlan_bt.h"/>
+        <files mask="wlan_bt_fw.h"/>
+      </source>
+      <source relative_path="wifidriver" type="c_include">
+        <files mask="wifi-debug.h"/>
+        <files mask="wifi-internal.h"/>
+        <files mask="wifi-sdio.h"/>
+        <files mask="sdio.h"/>
+        <files mask="firmware_dnld.h"/>
+      </source>
+      <source relative_path="wifidriver" type="src">
+        <files mask="mlan_sdio.c"/>
+        <files mask="sdio.c"/>
+        <files mask="firmware_dnld.c"/>
+      </source>
+      <source toolchain="armgcc" relative_path="." type="workspace" device_cores="cm4_MIMXRT1176xxxxx">
+        <files mask="middleware_wifi_fwdnld_MIMXRT1176_cm4.cmake" hidden="true"/>
+      </source>
+      <source toolchain="armgcc" relative_path="." type="workspace" device_cores="cm7_MIMXRT1176xxxxx">
+        <files mask="middleware_wifi_fwdnld_MIMXRT1176_cm7.cmake" hidden="true"/>
+      </source>
+      <include_paths>
+        <include_path relative_path="incl" type="c_include"/>
+        <include_path relative_path="incl/port/os" type="c_include"/>
+        <include_path relative_path="incl/wifidriver" type="c_include"/>
+        <include_path relative_path="incl/wlcmgr" type="c_include"/>
+        <include_path relative_path="wifi_bt_firmware" type="c_include"/>
+        <include_path relative_path="wifidriver" type="c_include"/>
+        <include_path relative_path="wifidriver/incl" type="c_include"/>
+      </include_paths>
+    </component>
+    <component id="middleware.wifi.murata_modules.MIMXRT1176" name="wifi_nxp_murata_tx_power_limit" brief="Middlware Wi-Fi Murata TX power limit" version="1.0.0" full_name="NXP Wi-Fi Murata TX power limit" devices="MIMXRT1176xxxxx" category="Wireless/NXP Wi-Fi" user_visible="false" type="middleware" package_base_path="middleware/wifi" project_base_path="wifi">
+      <source relative_path="incl/wlcmgr" type="c_include">
+        <files mask="wlan_enhanced_tests_murata_1XK_CA.h"/>
+        <files mask="wlan_enhanced_tests_murata_1XK_EU.h"/>
+        <files mask="wlan_enhanced_tests_murata_1XK_JP.h"/>
+        <files mask="wlan_enhanced_tests_murata_1XK_US.h"/>
+        <files mask="wlan_enhanced_tests_murata_1XK_WW.h"/>
+        <files mask="wlan_enhanced_tests_murata_1ZM_CA.h"/>
+        <files mask="wlan_enhanced_tests_murata_1ZM_EU.h"/>
+        <files mask="wlan_enhanced_tests_murata_1ZM_JP.h"/>
+        <files mask="wlan_enhanced_tests_murata_1ZM_US.h"/>
+        <files mask="wlan_enhanced_tests_murata_1ZM_WW.h"/>
+        <files mask="wlan_enhanced_tests_murata_2DS.h"/>
+        <files mask="wlan_enhanced_tests_murata_2DS_WW.h"/>
+        <files mask="wlan_txpwrlimit_cfg_murata_1XK_CA.h"/>
+        <files mask="wlan_txpwrlimit_cfg_murata_1XK_EU.h"/>
+        <files mask="wlan_txpwrlimit_cfg_murata_1XK_JP.h"/>
+        <files mask="wlan_txpwrlimit_cfg_murata_1XK_US.h"/>
+        <files mask="wlan_txpwrlimit_cfg_murata_1XK_WW.h"/>
+        <files mask="wlan_txpwrlimit_cfg_murata_1ZM_CA.h"/>
+        <files mask="wlan_txpwrlimit_cfg_murata_1ZM_EU.h"/>
+        <files mask="wlan_txpwrlimit_cfg_murata_1ZM_JP.h"/>
+        <files mask="wlan_txpwrlimit_cfg_murata_1ZM_US.h"/>
+        <files mask="wlan_txpwrlimit_cfg_murata_1ZM_WW.h"/>
+        <files mask="wlan_txpwrlimit_cfg_murata_2DS_CA.h"/>
+        <files mask="wlan_txpwrlimit_cfg_murata_2DS_EU.h"/>
+        <files mask="wlan_txpwrlimit_cfg_murata_2DS_JP.h"/>
+        <files mask="wlan_txpwrlimit_cfg_murata_2DS_US.h"/>
+        <files mask="wlan_txpwrlimit_cfg_murata_2DS_WW.h"/>
+      </source>
+    </component>
     <component id="middleware.wifi.unused.MIMXRT1176" name="wifi_nxp_unused" brief="Middlware Wi-Fi unused" version="1.3.33" full_name="NXP Wi-Fi unused" devices="MIMXRT1176xxxxx" category="Wireless/NXP Wi-Fi" user_visible="false" type="middleware" package_base_path="middleware/wifi" project_base_path="wifi">
       <source relative_path="wifi_bt_firmware" type="doc">
         <files mask="version.txt"/>
@@ -24995,59 +25224,11 @@ ${load}</script>
           <component_dependency value="middleware.freertos-kernel.MIMXRT1176"/>
           <component_dependency value="middleware.sdmmc.sdio.MIMXRT1176"/>
           <component_dependency value="utility.debug_console.MIMXRT1176"/>
+          <component_dependency value="middleware.wifi.fwdnld.MIMXRT1176"/>
         </all>
       </dependencies>
       <source relative_path="incl" type="c_include">
         <files mask="dhcp-server.h"/>
-        <files mask="wifi_cal_data_ext.h"/>
-        <files mask="wm_utils.h"/>
-        <files mask="wmerrno.h"/>
-        <files mask="wmlog.h"/>
-        <files mask="wmtypes.h"/>
-      </source>
-      <source relative_path="incl/port/os" type="c_include">
-        <files mask="wm_os.h"/>
-      </source>
-      <source relative_path="incl/wifidriver" type="c_include">
-        <files mask="mlan_sdio_api.h"/>
-        <files mask="wifi-decl.h"/>
-        <files mask="wifi.h"/>
-        <files mask="wifi_events.h"/>
-      </source>
-      <source relative_path="incl/wlcmgr" type="c_include">
-        <files mask="wlan.h"/>
-        <files mask="wlan_11d.h"/>
-      </source>
-      <source relative_path="port/os" type="src">
-        <files mask="os.c"/>
-      </source>
-      <source relative_path="wifi_bt_firmware" type="c_include">
-        <files mask="sd8801_wlan.h"/>
-        <files mask="sduart8977_wlan_bt.h"/>
-        <files mask="sduartIW416_wlan_bt.h"/>
-        <files mask="sduart8987_wlan_bt.h"/>
-      </source>
-      <source relative_path="wifidriver/incl" type="c_include">
-        <files mask="mlan.h"/>
-        <files mask="mlan_11ac.h"/>
-        <files mask="mlan_11h.h"/>
-        <files mask="mlan_11n.h"/>
-        <files mask="mlan_11n_aggr.h"/>
-        <files mask="mlan_11n_rxreorder.h"/>
-        <files mask="mlan_api.h"/>
-        <files mask="mlan_decl.h"/>
-        <files mask="mlan_fw.h"/>
-        <files mask="mlan_ieee.h"/>
-        <files mask="mlan_init.h"/>
-        <files mask="mlan_ioctl.h"/>
-        <files mask="mlan_join.h"/>
-        <files mask="mlan_main.h"/>
-        <files mask="mlan_meas.h"/>
-        <files mask="mlan_remap_mem_operations.h"/>
-        <files mask="mlan_sdio.h"/>
-        <files mask="mlan_uap.h"/>
-        <files mask="mlan_util.h"/>
-        <files mask="mlan_wmm.h"/>
       </source>
       <source relative_path="wifidriver" type="src">
         <files mask="mlan_11ac.c"/>
@@ -25064,7 +25245,6 @@ ${load}</script>
         <files mask="mlan_join.c"/>
         <files mask="mlan_misc.c"/>
         <files mask="mlan_scan.c"/>
-        <files mask="mlan_sdio.c"/>
         <files mask="mlan_shim.c"/>
         <files mask="mlan_sta_cmd.c"/>
         <files mask="mlan_sta_cmdresp.c"/>
@@ -25083,9 +25263,6 @@ ${load}</script>
         <files mask="wifi_pwrmgr.c"/>
       </source>
       <source relative_path="wifidriver" type="c_include">
-        <files mask="wifi-debug.h"/>
-        <files mask="wifi-internal.h"/>
-        <files mask="wifi-sdio.h"/>
         <files mask="wifi_common.h"/>
       </source>
       <source toolchain="armgcc" relative_path="." type="workspace" device_cores="cm4_MIMXRT1176xxxxx">
@@ -25134,12 +25311,6 @@ ${load}</script>
       <source relative_path="framework/NVM/Source" project_relative_path="NVM/source" type="c_include">
         <files mask="NV_Flash.h"/>
       </source>
-      <source toolchain="armgcc" relative_path="." type="workspace" device_cores="cm4_MIMXRT1176xxxxx">
-        <files mask="middleware_wireless_framework_NVM_MIMXRT1176_cm4.cmake" hidden="true"/>
-      </source>
-      <source toolchain="armgcc" relative_path="." type="workspace" device_cores="cm7_MIMXRT1176xxxxx">
-        <files mask="middleware_wireless_framework_NVM_MIMXRT1176_cm7.cmake" hidden="true"/>
-      </source>
       <include_paths>
         <include_path relative_path="framework/NVM/Interface" project_relative_path="NVM/interface" type="c_include"/>
         <include_path relative_path="framework/NVM/Source" project_relative_path="NVM/source" type="c_include"/>
@@ -25160,6 +25331,30 @@ ${load}</script>
       </source>
       <include_paths>
         <include_path relative_path="framework/FunctionLib" project_relative_path="FunctionLib" type="c_include"/>
+      </include_paths>
+    </component>
+    <component id="middleware.wireless.framework.sec_lib.MIMXRT1176" name="wireless framework Sec_lib" brief="Middleware wireless framework_sec_lib" version="1.0.0" full_name="wireless framework Sec_lib" devices="MIMXRT1176xxxxx" user_visible="false" type="middleware" package_base_path="middleware/wireless/framework" project_base_path="framework">
+      <source relative_path="SecLib" type="c_include">
+        <files mask="SecLib.h"/>
+        <files mask="CryptoLibSW.h"/>
+      </source>
+      <source relative_path="SecLib" type="src">
+        <files mask="SecLib.c"/>
+      </source>
+      <source toolchain="armgcc mcuxpresso iar mdk" relative_path="SecLib" type="lib">
+        <files mask="lib_crypto_m4.a"/>
+      </source>
+      <source toolchain="armgcc" relative_path="." type="workspace" device_cores="cm4_MIMXRT1176xxxxx">
+        <files mask="middleware_wireless_framework_sec_lib_MIMXRT1176_cm4.cmake" hidden="true"/>
+      </source>
+      <source toolchain="armgcc mcuxpresso iar mdk" relative_path="SecLib" type="lib">
+        <files mask="lib_crypto_m7.a"/>
+      </source>
+      <source toolchain="armgcc" relative_path="." type="workspace" device_cores="cm7_MIMXRT1176xxxxx">
+        <files mask="middleware_wireless_framework_sec_lib_MIMXRT1176_cm7.cmake" hidden="true"/>
+      </source>
+      <include_paths>
+        <include_path relative_path="SecLib" type="c_include"/>
       </include_paths>
     </component>
     <component id="platform.utilities.misc_utilities.MIMXRT1176" name="misc_utilities" brief="Utilities which is needed for particular toolchain like the SBRK function required to address limitation between HEAP and STACK in GCC toolchain library." version="1.0.0" full_name="Utilities miscellaneous" devices="MIMXRT1176xxxxx" user_visible="true" type="utilities" package_base_path="devices/MIMXRT1176/utilities" project_base_path="utilities">
@@ -33484,6 +33679,12 @@ ${load}</script>
           <component_dependency value="middleware.eiq.tensorflow_lite_micro.third_party.ruy.MIMXRT1176"/>
         </all>
       </dependencies>
+      <source relative_path="tensorflow-lite" type="doc">
+        <files mask="AUTHORS"/>
+        <files mask="LICENSE"/>
+        <files mask="ChangeLogKSDK.txt"/>
+        <files mask="readme.txt"/>
+      </source>
       <source relative_path="tensorflow-lite/tensorflow/core/public" type="c_include">
         <files mask="version.h"/>
       </source>
@@ -37817,6 +38018,23 @@ ${load}</script>
         <include_path relative_path="./" type="c_include"/>
       </include_paths>
     </component>
+    <component id="component.lpspi_adapter.MIMXRT1175" name="lpspi_adapter" brief="Component lpspi_adapter" version="1.0.0" full_name="Component lpspi_adapter" devices="MIMXRT1175xxxxx" device_cores="cm4_MIMXRT1175xxxxx cm7_MIMXRT1175xxxxx" slave_roles="M4SLAVE M7SLAVE" user_visible="true" type="abstraction_layer" package_base_path="components/spi" project_base_path="component/spi">
+      <dependencies>
+        <all>
+          <component_dependency value="platform.drivers.common.MIMXRT1175"/>
+          <component_dependency value="platform.drivers.lpspi.MIMXRT1175"/>
+        </all>
+      </dependencies>
+      <source relative_path="./" type="c_include">
+        <files mask="fsl_adapter_spi.h"/>
+      </source>
+      <source relative_path="./" type="src">
+        <files mask="fsl_adapter_lpspi.c"/>
+      </source>
+      <include_paths>
+        <include_path relative_path="./" type="c_include"/>
+      </include_paths>
+    </component>
     <component id="component.lpuart_adapter.MIMXRT1175" name="lpuart_adapter" brief="Component lpuart_adapter" version="1.0.0" full_name="lpuart_adapter" devices="MIMXRT1175xxxxx" device_cores="cm4_MIMXRT1175xxxxx cm7_MIMXRT1175xxxxx" slave_roles="M4SLAVE M7SLAVE" user_visible="true" type="utilities" package_base_path="components/uart" project_base_path="component/uart">
       <dependencies>
         <all>
@@ -38023,6 +38241,7 @@ ${load}</script>
           <component_dependency value="component.lists.MIMXRT1175"/>
           <any_of>
             <component_dependency value="component.serial_manager_uart.MIMXRT1175"/>
+            <component_dependency value="component.serial_manager_spi.MIMXRT1175"/>
             <component_dependency value="component.serial_manager_swo.MIMXRT1175"/>
             <component_dependency value="component.serial_manager_virtual.MIMXRT1175"/>
             <component_dependency value="component.serial_manager_usb_cdc.MIMXRT1175"/>
@@ -38035,6 +38254,30 @@ ${load}</script>
       </source>
       <source relative_path="./" type="src">
         <files mask="fsl_component_serial_manager.c"/>
+      </source>
+      <include_paths>
+        <include_path relative_path="./" type="c_include"/>
+      </include_paths>
+    </component>
+    <component id="component.serial_manager_spi.MIMXRT1175" name="serial_manager_spi" brief="Component serial_manager_spi" version="1.0.0" full_name="Serial Manager spi" devices="MIMXRT1175xxxxx" device_cores="cm4_MIMXRT1175xxxxx cm7_MIMXRT1175xxxxx" slave_roles="M4SLAVE M7SLAVE" user_visible="true" type="utilities" package_base_path="components/serial_manager" project_base_path="component/serial_manager">
+      <defines>
+        <define name="SERIAL_PORT_TYPE_SPI" value="1"/>
+        <define name="SERIAL_PORT_TYPE_SPI_MASTER" value="1"/>
+        <define name="SERIAL_PORT_TYPE_SPI_SLAVE" value="1"/>
+        <define name="SERIAL_MANAGER_NON_BLOCKING_MODE" value="1"/>
+      </defines>
+      <dependencies>
+        <all>
+          <component_dependency value="component.serial_manager.MIMXRT1175"/>
+          <component_dependency value="platform.drivers.lpspi.MIMXRT1175"/>
+          <component_dependency value="component.lpspi_adapter.MIMXRT1175"/>
+        </all>
+      </dependencies>
+      <source relative_path="./" type="c_include">
+        <files mask="fsl_component_serial_port_spi.h"/>
+      </source>
+      <source relative_path="./" type="src">
+        <files mask="fsl_component_serial_port_spi.c"/>
       </source>
       <include_paths>
         <include_path relative_path="./" type="c_include"/>
@@ -39619,7 +39862,7 @@ ${load}</script>
         <include_path relative_path="./" type="c_include"/>
       </include_paths>
     </component>
-    <component id="platform.drivers.sai.MIMXRT1175" name="sai" brief="SAI Driver" version="2.3.3" full_name="SAI Driver" devices="MIMXRT1175xxxxx" device_cores="cm4_MIMXRT1175xxxxx cm7_MIMXRT1175xxxxx" slave_roles="M4SLAVE M7SLAVE" user_visible="true" type="driver" package_base_path="devices/MIMXRT1175/drivers" project_base_path="drivers">
+    <component id="platform.drivers.sai.MIMXRT1175" name="sai" brief="SAI Driver" version="2.3.4" full_name="SAI Driver" devices="MIMXRT1175xxxxx" device_cores="cm4_MIMXRT1175xxxxx cm7_MIMXRT1175xxxxx" slave_roles="M4SLAVE M7SLAVE" user_visible="true" type="driver" package_base_path="devices/MIMXRT1175/drivers" project_base_path="drivers">
       <dependencies>
         <component_dependency value="platform.drivers.common.MIMXRT1175"/>
       </dependencies>
@@ -46476,7 +46719,7 @@ ${load}</script>
         <include_path relative_path="vendors/vendor/boards/board/aws_tests/config_files" type="c_include"/>
       </include_paths>
     </component>
-    <component id="middleware.freertos-kernel.MIMXRT1175" name="FreeRTOS kernel" brief="FreeRTOS kernel" version="202012.00.0" full_name="FreeRTOS kernel" devices="MIMXRT1175xxxxx" user_visible="true" type="OS" package_base_path="rtos/freertos" project_base_path="freertos">
+    <component id="middleware.freertos-kernel.MIMXRT1175" name="FreeRTOS kernel" brief="FreeRTOS kernel" version="10.4.3" revision="1" full_name="FreeRTOS kernel" devices="MIMXRT1175xxxxx" user_visible="true" type="OS" package_base_path="rtos/freertos" project_base_path="freertos">
       <defines>
         <define name="SDK_OS_FREE_RTOS" value=""/>
       </defines>
@@ -46542,7 +46785,7 @@ ${load}</script>
         <include_path relative_path="freertos_kernel/portable/IAR/ARM_CM4F" toolchain="iar" type="c_include" device_cores="cm4_MIMXRT1175xxxxx cm7_MIMXRT1175xxxxx"/>
       </include_paths>
     </component>
-    <component id="middleware.freertos-kernel.armv8m.MIMXRT1175" name="FreeRTOS port ARMv8M" brief="FreeRTOS port ARMv8M" version="202012.00.0" full_name="FreeRTOS port ARMv8M" devices="MIMXRT1175xxxxx" category="Operating System/FreeRTOS kernel" user_visible="false" type="other" package_base_path="rtos/freertos" project_base_path="freertos">
+    <component id="middleware.freertos-kernel.armv8m.MIMXRT1175" name="FreeRTOS port ARMv8M" brief="FreeRTOS port ARMv8M" version="10.4.3" revision="1" full_name="FreeRTOS port ARMv8M" devices="MIMXRT1175xxxxx" category="Operating System/FreeRTOS kernel" user_visible="false" type="other" package_base_path="rtos/freertos" project_base_path="freertos">
       <dependencies>
         <component_dependency value="middleware.freertos-kernel.MIMXRT1175"/>
       </dependencies>
@@ -46588,9 +46831,6 @@ ${load}</script>
       <source relative_path="freertos_kernel/portable/ARMv8M/secure/context/portable/GCC/ARM_CM33" type="src">
         <files mask="secure_context_port.c"/>
       </source>
-      <source relative_path="freertos_kernel/portable/ARMv8M/secure/context/portable/IAR/ARM_CM33" type="src">
-        <files mask="secure_context_port.c"/>
-      </source>
       <source relative_path="freertos_kernel/portable/ARMv8M/secure/context/portable/IAR/ARM_CM33" type="asm_include">
         <files mask="secure_context_port_asm.s"/>
       </source>
@@ -46630,7 +46870,7 @@ ${load}</script>
         <include_path relative_path="freertos_kernel/portable/ARMv8M/secure/macros" type="c_include"/>
       </include_paths>
     </component>
-    <component id="middleware.freertos-kernel.doc.MIMXRT1175" name="FreeRTOS doc" brief="FreeRTOS doc" version="202012.00.0" full_name="FreeRTOS doc" devices="MIMXRT1175xxxxx" category="Operating System/FreeRTOS kernel" user_visible="false" type="other" package_base_path="rtos/freertos" project_base_path="freertos">
+    <component id="middleware.freertos-kernel.doc.MIMXRT1175" name="FreeRTOS doc" brief="FreeRTOS doc" version="10.4.3" revision="1" full_name="FreeRTOS doc" devices="MIMXRT1175xxxxx" category="Operating System/FreeRTOS kernel" user_visible="false" type="other" package_base_path="rtos/freertos" project_base_path="freertos">
       <source relative_path="doc" type="doc">
         <files mask="AFQ Developer Guide - Board Qualification Errata.pdf"/>
         <files mask="Amazon FreeRTOS Qualification Developer Guide.pdf"/>
@@ -46710,7 +46950,7 @@ ${load}</script>
         <files mask="global_config.txt"/>
       </source>
     </component>
-    <component id="middleware.freertos-kernel.extension.MIMXRT1175" name="FreeRTOS NXP extension" brief="FreeRTOS NXP extension" version="202012.00.0" full_name="FreeRTOS NXP extension" devices="MIMXRT1175xxxxx" category="Operating System/FreeRTOS kernel extensions" user_visible="false" type="other" package_base_path="rtos/freertos" project_base_path="freertos">
+    <component id="middleware.freertos-kernel.extension.MIMXRT1175" name="FreeRTOS NXP extension" brief="FreeRTOS NXP extension" version="10.4.3" revision="1" full_name="FreeRTOS NXP extension" devices="MIMXRT1175xxxxx" category="Operating System/FreeRTOS kernel extensions" user_visible="false" type="other" package_base_path="rtos/freertos" project_base_path="freertos">
       <source relative_path="freertos_kernel/include" type="c_include">
         <files mask="freertos_tasks_c_additions.h"/>
       </source>
@@ -46718,7 +46958,7 @@ ${load}</script>
         <include_path relative_path="freertos_kernel/include" type="c_include"/>
       </include_paths>
     </component>
-    <component id="middleware.freertos-kernel.heap_1.MIMXRT1175" name="FreeRTOS heap 1" brief="FreeRTOS heap 1" version="202012.00.0" full_name="FreeRTOS heap 1" devices="MIMXRT1175xxxxx" category="Operating System/FreeRTOS kernel" user_visible="false" type="other" package_base_path="rtos/freertos" project_base_path="freertos">
+    <component id="middleware.freertos-kernel.heap_1.MIMXRT1175" name="FreeRTOS heap 1" brief="FreeRTOS heap 1" version="10.4.3" revision="1" full_name="FreeRTOS heap 1" devices="MIMXRT1175xxxxx" category="Operating System/FreeRTOS kernel" user_visible="false" type="other" package_base_path="rtos/freertos" project_base_path="freertos">
       <dependencies>
         <component_dependency value="middleware.freertos-kernel.MIMXRT1175"/>
       </dependencies>
@@ -46726,7 +46966,7 @@ ${load}</script>
         <files mask="heap_1.c"/>
       </source>
     </component>
-    <component id="middleware.freertos-kernel.heap_2.MIMXRT1175" name="FreeRTOS heap 2" brief="FreeRTOS heap 2" version="202012.00.0" full_name="FreeRTOS heap 2" devices="MIMXRT1175xxxxx" category="Operating System/FreeRTOS kernel" user_visible="false" type="other" package_base_path="rtos/freertos" project_base_path="freertos">
+    <component id="middleware.freertos-kernel.heap_2.MIMXRT1175" name="FreeRTOS heap 2" brief="FreeRTOS heap 2" version="10.4.3" revision="1" full_name="FreeRTOS heap 2" devices="MIMXRT1175xxxxx" category="Operating System/FreeRTOS kernel" user_visible="false" type="other" package_base_path="rtos/freertos" project_base_path="freertos">
       <dependencies>
         <component_dependency value="middleware.freertos-kernel.MIMXRT1175"/>
       </dependencies>
@@ -46734,7 +46974,7 @@ ${load}</script>
         <files mask="heap_2.c"/>
       </source>
     </component>
-    <component id="middleware.freertos-kernel.heap_3.MIMXRT1175" name="FreeRTOS heap 3" brief="FreeRTOS heap 3" version="202012.00.0" full_name="FreeRTOS heap_3" devices="MIMXRT1175xxxxx" category="Operating System/FreeRTOS kernel" user_visible="false" type="other" package_base_path="rtos/freertos" project_base_path="freertos">
+    <component id="middleware.freertos-kernel.heap_3.MIMXRT1175" name="FreeRTOS heap 3" brief="FreeRTOS heap 3" version="10.4.3" revision="1" full_name="FreeRTOS heap_3" devices="MIMXRT1175xxxxx" category="Operating System/FreeRTOS kernel" user_visible="false" type="other" package_base_path="rtos/freertos" project_base_path="freertos">
       <dependencies>
         <component_dependency value="middleware.freertos-kernel.MIMXRT1175"/>
       </dependencies>
@@ -46742,7 +46982,7 @@ ${load}</script>
         <files mask="heap_3.c"/>
       </source>
     </component>
-    <component id="middleware.freertos-kernel.heap_4.MIMXRT1175" name="FreeRTOS heap 4" brief="FreeRTOS heap 4" version="202012.00.0" full_name="FreeRTOS heap 4" devices="MIMXRT1175xxxxx" category="Operating System/FreeRTOS kernel" user_visible="false" type="other" package_base_path="rtos/freertos" project_base_path="freertos">
+    <component id="middleware.freertos-kernel.heap_4.MIMXRT1175" name="FreeRTOS heap 4" brief="FreeRTOS heap 4" version="10.4.3" revision="1" full_name="FreeRTOS heap 4" devices="MIMXRT1175xxxxx" category="Operating System/FreeRTOS kernel" user_visible="false" type="other" package_base_path="rtos/freertos" project_base_path="freertos">
       <dependencies>
         <component_dependency value="middleware.freertos-kernel.MIMXRT1175"/>
       </dependencies>
@@ -46750,7 +46990,7 @@ ${load}</script>
         <files mask="heap_4.c"/>
       </source>
     </component>
-    <component id="middleware.freertos-kernel.heap_5.MIMXRT1175" name="FreeRTOS heap 5" brief="FreeRTOS heap 5" version="202012.00.0" full_name="FreeRTOS heap 5" devices="MIMXRT1175xxxxx" category="Operating System/FreeRTOS kernel" user_visible="false" type="other" package_base_path="rtos/freertos" project_base_path="freertos">
+    <component id="middleware.freertos-kernel.heap_5.MIMXRT1175" name="FreeRTOS heap 5" brief="FreeRTOS heap 5" version="10.4.3" revision="1" full_name="FreeRTOS heap 5" devices="MIMXRT1175xxxxx" category="Operating System/FreeRTOS kernel" user_visible="false" type="other" package_base_path="rtos/freertos" project_base_path="freertos">
       <dependencies>
         <component_dependency value="middleware.freertos-kernel.MIMXRT1175"/>
       </dependencies>
@@ -46758,7 +46998,7 @@ ${load}</script>
         <files mask="heap_5.c"/>
       </source>
     </component>
-    <component id="middleware.freertos-kernel.mpu_wrappers.MIMXRT1175" name="FreeRTOS MPU wrappers" brief="FreeRTOS MPU wrappers" version="202012.00.0" full_name="FreeRTOS MPU wrappers" devices="MIMXRT1175xxxxx" category="Operating System/FreeRTOS kernel" user_visible="false" type="other" package_base_path="rtos/freertos" project_base_path="freertos">
+    <component id="middleware.freertos-kernel.mpu_wrappers.MIMXRT1175" name="FreeRTOS MPU wrappers" brief="FreeRTOS MPU wrappers" version="10.4.3" revision="1" full_name="FreeRTOS MPU wrappers" devices="MIMXRT1175xxxxx" category="Operating System/FreeRTOS kernel" user_visible="false" type="other" package_base_path="rtos/freertos" project_base_path="freertos">
       <dependencies>
         <component_dependency value="middleware.freertos-kernel.MIMXRT1175"/>
       </dependencies>
@@ -46766,7 +47006,7 @@ ${load}</script>
         <files mask="mpu_wrappers.c"/>
       </source>
     </component>
-    <component id="middleware.freertos-kernel.root_doc.MIMXRT1175" name="Root FreeRTOS documents." brief="FreeRTOS root documents" version="202012.00.0" full_name="FreeRTOS root documents" devices="MIMXRT1175xxxxx" category="Operating System/FreeRTOS kernel" user_visible="false" type="other" package_base_path="rtos/freertos" project_base_path="freertos">
+    <component id="middleware.freertos-kernel.root_doc.MIMXRT1175" name="Root FreeRTOS documents." brief="FreeRTOS root documents" version="10.4.3" revision="1" full_name="FreeRTOS root documents" devices="MIMXRT1175xxxxx" category="Operating System/FreeRTOS kernel" user_visible="false" type="other" package_base_path="rtos/freertos" project_base_path="freertos">
       <source relative_path="./" type="other">
         <files mask="CHANGELOG.md"/>
       </source>
@@ -46775,7 +47015,7 @@ ${load}</script>
         <files mask="directories.txt"/>
       </source>
     </component>
-    <component id="middleware.freertos-kernel.template.MIMXRT1175" name="FreeRTOS configuration template" brief="Template configuration file to be edited by user. Provides also memory allocator (heap_x), change variant if needed." version="202012.00.0" full_name="FreeRTOS configuration template" devices="MIMXRT1175xxxxx" category="Operating System/FreeRTOS kernel" user_visible="false" type="project_template" package_base_path="rtos/freertos" project_base_path="freertos">
+    <component id="middleware.freertos-kernel.template.MIMXRT1175" name="FreeRTOS configuration template" brief="Template configuration file to be edited by user. Provides also memory allocator (heap_x), change variant if needed." version="10.4.3" revision="1" full_name="FreeRTOS configuration template" devices="MIMXRT1175xxxxx" category="Operating System/FreeRTOS kernel" user_visible="false" type="project_template" package_base_path="rtos/freertos" project_base_path="freertos">
       <source exclude="true" relative_path="freertos_kernel/portable/MemMang" type="src">
         <files mask="heap_1.c"/>
         <files mask="heap_2.c"/>
@@ -46792,7 +47032,7 @@ ${load}</script>
         <include_path relative_path="template/ARM_CM4F" type="c_include" device_cores="cm4_MIMXRT1175xxxxx cm7_MIMXRT1175xxxxx"/>
       </include_paths>
     </component>
-    <component id="middleware.freertos-kernel.unused.MIMXRT1175" name="FreeRTOS unused" brief="FreeRTOS unused" version="202012.00.0" full_name="FreeRTOS unused" devices="MIMXRT1175xxxxx" category="Operating System/FreeRTOS kernel" user_visible="false" type="other" package_base_path="rtos/freertos" project_base_path="freertos">
+    <component id="middleware.freertos-kernel.unused.MIMXRT1175" name="FreeRTOS unused" brief="FreeRTOS unused" version="10.4.3" revision="1" full_name="FreeRTOS unused" devices="MIMXRT1175xxxxx" category="Operating System/FreeRTOS kernel" user_visible="false" type="other" package_base_path="rtos/freertos" project_base_path="freertos">
       <source relative_path="./" type="other">
         <files mask="CODE_OF_CONDUCT.md"/>
         <files mask="LICENSE"/>

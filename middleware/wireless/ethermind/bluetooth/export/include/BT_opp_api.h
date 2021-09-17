@@ -66,7 +66,12 @@
 #define OPP_OP_PUSH_OBJECT                          0x02U
 #define OPP_OP_PULL_BUSINESS_CARD                   0x03U
 #define OPP_OP_EXCH_BUSINESS_CARD                   0x04U
+#define OPP_OP_PULL_OBJECT                          0x05U
 
+/**
+ * OPP Object Type Header.Values
+ * These defines are taken from OBEX specification.
+ */
 #define OPP_TYPE_HDR_VCARD                          "text/x-vcard"
 
 /* #### OPP Client Events #### */
@@ -582,6 +587,37 @@ API_RESULT opp_client_push_object
                 /* OUT */ UINT16               *actual
            );
 
+
+/**
+ *  \brief To pull an object from the connected OPP server.
+ *
+ *  \par Description:
+ *       This API pulls the object of given type from the already connected OPP
+ *       server device. The application should send the contents of the object
+ *       in the OPP_REQUEST_STRUCT. The application will be notified each
+ *       time the OPP server responds to the request.
+ *
+ *  \param [in] opp_handle
+ *         Valid OPP instance handle.
+ *
+ *  \param [in] opp_req_info
+ *         This structure contains the type, name, body and size of the object.
+ *
+ *  \param [in] opp_operation
+ *          This indicate the OPP operation. like
+ *          - OPP_OP_PULL_BUSINESS_CARD
+ *          - OPP_OP_PULL_OBJECT
+ *
+ *  \return
+ *       API_SUCCESS or one of the error codes as defined in \ref BT_error.h.
+ */
+API_RESULT opp_client_pull_object
+           (
+               OPP_HANDLE           *opp_handle,
+               OPP_REQUEST_STRUCT   *opp_req_info,
+               UCHAR                 operation
+           );
+
 /**
  *  \brief To pull business card from the remote OPP server.
  *
@@ -612,15 +648,15 @@ API_RESULT BT_opp_client_pull_business_card
            );
 
 /**
- *  \brief To pull business card from the remote OPP server.
+ *  \brief To push an object to the remote OPP server.
  *
  *  \par Description:
- *       This API pulls the specified business card from the already connected
+ *       This API pushes the given object to the connected
  *       OPP server device.
  *
  *       The application is notified each time the server responds with the data
  *       through the following notification along with the data.
- *       OPP_CLIENT_PULL_BUSINESS_CARD_CNF
+ *       OPP_CLIENT_PUSH_OBJECT_CNF
  *
  *  \param [in] opp_handle
  *         Valid OPP instance handle.
@@ -683,8 +719,34 @@ API_RESULT BT_opp_client_pull_business_card
  *  \note Establish the OPP connection to a OPP server through
  *        BT_opp_client_connect() API before using this API.
  */
-#define BT_opp_client_exchange_business_card(opp_handle, opp_req_info, more, actual)\
+#define BT_opp_client_exchange_business_card(opp_handle, opp_req_info, more, actual) \
       opp_client_push_object ((opp_handle), (opp_req_info), OPP_OP_EXCH_BUSINESS_CARD, (more), (actual))
+
+/**
+ *  \brief To pull business card from the remote OPP server.
+ *
+ *  \par Description:
+ *       This API pulls the specified business card from the already connected
+ *       OPP server device.
+ *
+ *       The application is notified each time the server responds with the data
+ *       through the following notification along with the data.
+ *       OPP_CLIENT_PULL_BUSINESS_CARD_CNF
+ *
+ *  \param [in] opp_handle
+ *         Valid OPP instance handle.
+ *
+ *  \param [in] opp_req_info
+ *         This structure contains the type the business card to be pulled.
+ *
+ *  \return
+ *       API_SUCCESS or one of the error codes as defined in \ref BT_error.h.
+ *
+ *  \note Establish the OPP connection to a OPP server through
+ *        BT_opp_client_connect() API before using this API.
+ */
+#define BT_opp_client_pull_business_card(opp_handle, opp_req_info) \
+      opp_client_pull_object ((opp_handle), (opp_req_info), OPP_OP_PULL_BUSINESS_CARD)
 
 /**
  *  \brief To send request to the OPP server.

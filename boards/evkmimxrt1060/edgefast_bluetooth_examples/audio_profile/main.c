@@ -35,6 +35,8 @@
 
 #include "fsl_gpio.h"
 #include "fsl_iomuxc.h"
+#include "fsl_lpuart_edma.h"
+#include "fsl_dmamux.h"
 #include "usb_phy.h"
 #include "fsl_adapter_uart.h"
 #include "controller.h"
@@ -50,7 +52,7 @@
 #endif
 
 #define LOGGING_TASK_PRIORITY   (tskIDLE_PRIORITY + 1)
-#define LOGGING_TASK_STACK_SIZE (1024)
+#define LOGGING_TASK_STACK_SIZE (2 * 1024)
 #define LOGGING_QUEUE_LENGTH    (16)
 
 /*******************************************************************************
@@ -71,7 +73,7 @@ extern int app_main (int argc, char **argv);
  * Code
  ******************************************************************************/
 
-#if defined(WIFI_BOARD_AW_CM358)
+#if defined(WIFI_88W8987_BOARD_AW_CM358_USD)
 int controller_hci_uart_get_configuration(controller_hci_uart_config_t *config)
 {
     if (NULL == config)
@@ -84,21 +86,37 @@ int controller_hci_uart_get_configuration(controller_hci_uart_config_t *config)
     config->instance        = BOARD_BT_UART_INSTANCE;
     config->enableRxRTS     = 1u;
     config->enableTxCTS     = 1u;
+#if (defined(HAL_UART_DMA_ENABLE) && (HAL_UART_DMA_ENABLE > 0U))
+    config->dma_instance     = 0U;
+    config->rx_channel       = 0U;
+    config->tx_channel       = 1U;
+    config->dma_mux_instance = 0U;
+    config->rx_request       = kDmaRequestMuxLPUART3Rx;
+    config->tx_request       = kDmaRequestMuxLPUART3Tx;
+#endif
     return 0;
 }
-#elif defined(WIFI_BOARD_AW_AM457)
+#elif defined(WIFI_IW416_BOARD_AW_AM457_USD)
 int controller_hci_uart_get_configuration(controller_hci_uart_config_t *config)
 {
     if (NULL == config)
     {
         return -1;
     }
-    config->clockSrc        = BOARD_BT_UART_CLK_FREQ;
-    config->defaultBaudrate = BOARD_BT_UART_BAUDRATE;
-    config->runningBaudrate = BOARD_BT_UART_BAUDRATE;
-    config->instance        = BOARD_BT_UART_INSTANCE;
-    config->enableRxRTS     = 1u;
-    config->enableTxCTS     = 1u;
+    config->clockSrc         = BOARD_BT_UART_CLK_FREQ;
+    config->defaultBaudrate  = BOARD_BT_UART_BAUDRATE;
+    config->runningBaudrate  = BOARD_BT_UART_BAUDRATE;
+    config->instance         = BOARD_BT_UART_INSTANCE;
+    config->enableRxRTS      = 1u;
+    config->enableTxCTS      = 1u;
+#if (defined(HAL_UART_DMA_ENABLE) && (HAL_UART_DMA_ENABLE > 0U))
+    config->dma_instance     = 0U;
+    config->rx_channel       = 0U;
+    config->tx_channel       = 1U;
+    config->dma_mux_instance = 0U;
+    config->rx_request       = kDmaRequestMuxLPUART3Rx;
+    config->tx_request       = kDmaRequestMuxLPUART3Tx;
+#endif
     return 0;
 }
 #else
@@ -199,20 +217,28 @@ void main(void)
     CLOCK_SetDiv(kCLOCK_Lpi2cDiv, BOARD_CODEC_I2C_CLOCK_SOURCE_DIVIDER);
 
     SCB_DisableDCache();
+#if (defined(HAL_UART_DMA_ENABLE) && (HAL_UART_DMA_ENABLE > 0U))
+    DMAMUX_Type *dmaMuxBases[] = DMAMUX_BASE_PTRS;
+    edma_config_t config;
+    DMA_Type *dmaBases[] = DMA_BASE_PTRS;
+    DMAMUX_Init(dmaMuxBases[0]);
+    EDMA_GetDefaultConfig(&config);
+    EDMA_Init(dmaBases[0], &config);
+#endif
     CRYPTO_InitHardware();
     USB_HostApplicationInit();
 
     app_bt_init_task();
-    if (xTaskCreate(main_task, "main_task", 2500L / sizeof(portSTACK_TYPE), NULL, tskIDLE_PRIORITY + 1, NULL) != pdPASS)
+    if (xTaskCreate(main_task, "main_task", 2000L / sizeof(portSTACK_TYPE), NULL, tskIDLE_PRIORITY + 1, NULL) != pdPASS)
     {
         PRINTF("Main task creation failed!.\r\n");
         while (1)
             ;
     }
 
-    xLoggingTaskInitialize(LOGGING_TASK_STACK_SIZE, LOGGING_TASK_PRIORITY, LOGGING_QUEUE_LENGTH);
+    xLoggingTaskInitialize(LOGGING_TASK_STACK_SIZE / sizeof(portSTACK_TYPE), LOGGING_TASK_PRIORITY, LOGGING_QUEUE_LENGTH);
 
-    if (xTaskCreate(USB_HostTask, "usb host task", 2400L / sizeof(portSTACK_TYPE), g_HostHandle, tskIDLE_PRIORITY + 5, NULL) != pdPASS)
+    if (xTaskCreate(USB_HostTask, "usb host task", 2000L / sizeof(portSTACK_TYPE), g_HostHandle, tskIDLE_PRIORITY + 5, NULL) != pdPASS)
     {
         usb_echo("create host task error\r\n");
         while (1)

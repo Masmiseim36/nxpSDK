@@ -7,7 +7,7 @@
 
 #include <porting.h>
 #include <string.h>
-#include <errno.h>
+#include <errno/errno.h>
 #include <stdbool.h>
 #include <sys/atomic.h>
 #include <sys/byteorder.h>
@@ -16,8 +16,6 @@
 #include <bluetooth/bluetooth.h>
 #include <bluetooth/conn.h>
 #include <bluetooth/l2cap.h>
-#include <bluetooth/a2dp.h>
-#include <bluetooth/a2dp-codec.h>
 #include <bluetooth/sdp.h>
 #include "clock_config.h"
 #include "board.h"
@@ -37,7 +35,7 @@ static void br_device_found(size_t index, const bt_addr_t *addr, int8_t rssi,
     int len = 240;
 
     (void)memset(name, 0, sizeof(name));
-    
+
     while (len)
     {
         if (len < 2)
@@ -50,13 +48,13 @@ static void br_device_found(size_t index, const bt_addr_t *addr, int8_t rssi,
         {
             break;
         }
-        
+
         /* check if field length is correct */
         if (eir[0] > len - 1)
         {
             break;
         }
-        
+
         switch (eir[1])
         {
         case BT_DATA_NAME_SHORTENED:

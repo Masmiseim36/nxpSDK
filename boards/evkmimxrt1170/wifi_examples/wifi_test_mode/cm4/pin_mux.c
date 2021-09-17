@@ -20,6 +20,7 @@ mcu_data: ksdk2_0
 processor_version: 9.0.1
 pin_labels:
 - {pin_num: N17, pin_signal: GPIO_AD_16, label: SDIO_RST, identifier: SDIO_RESET;SDIO_RST}
+- {pin_num: J17, pin_signal: GPIO_AD_31, label: WL_RST, identifier: WL_RST}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 
@@ -177,6 +178,39 @@ void BOARD_InitM2WifiResetPins(void) {
 
   IOMUXC_SetPinMux(
       IOMUXC_GPIO_AD_16_GPIO9_IO15,           /* GPIO_AD_16 is configured as GPIO9_IO15 */
+      0U);                                    /* Software Input On Field: Input Path is determined by functionality */
+}
+
+
+/*
+ * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
+BOARD_InitWlRstPin:
+- options: {callFromInitBoot: 'false', coreID: cm7, enableClock: 'true'}
+- pin_list:
+  - {pin_num: J17, peripheral: GPIO9, signal: 'gpio_io, 30', pin_signal: GPIO_AD_31, direction: OUTPUT, gpio_init_state: 'false'}
+ * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
+ */
+
+/* FUNCTION ************************************************************************************************************
+ *
+ * Function Name : BOARD_InitWlRstPin, assigned for the Cortex-M7F core.
+ * Description   : Configures pin routing and optionally pin electrical features.
+ *
+ * END ****************************************************************************************************************/
+void BOARD_InitWlRstPin(void) {
+  CLOCK_EnableClock(kCLOCK_Iomuxc);           /* LPCG on: LPCG is ON. */
+
+  /* GPIO configuration of WL_RST on GPIO_AD_31 (pin J17) */
+  gpio_pin_config_t WL_RST_config = {
+      .direction = kGPIO_DigitalOutput,
+      .outputLogic = 0U,
+      .interruptMode = kGPIO_NoIntmode
+  };
+  /* Initialize GPIO functionality on GPIO_AD_31 (pin J17) */
+  GPIO_PinInit(GPIO9, 30U, &WL_RST_config);
+
+  IOMUXC_SetPinMux(
+      IOMUXC_GPIO_AD_31_GPIO9_IO30,           /* GPIO_AD_31 is configured as GPIO9_IO30 */
       0U);                                    /* Software Input On Field: Input Path is determined by functionality */
 }
 

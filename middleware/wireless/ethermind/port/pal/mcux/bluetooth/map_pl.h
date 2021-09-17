@@ -125,6 +125,7 @@ API_RESULT BT_map_get_message_file_pl
                /* OUT */  UCHAR    *message_file
            );
 
+#if 0
 API_RESULT BT_map_create_object_name_pl
            (
                /* IN */  UCHAR * path,
@@ -142,6 +143,7 @@ API_RESULT BT_map_set_path_forward_pl
                /* INOUT */  UCHAR * path,
                /* IN */     UCHAR * folder
            );
+#endif /* 0 */
 
 #endif /* _H_MAP_PL_ */
 

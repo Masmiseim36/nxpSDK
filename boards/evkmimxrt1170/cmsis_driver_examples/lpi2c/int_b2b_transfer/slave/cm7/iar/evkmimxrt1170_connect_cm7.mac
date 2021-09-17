@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2020 NXP
+ * Copyright 2019-2021 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -163,8 +163,6 @@ initSDRAM()
     __writeMemory32(0x00000000, 0x400E80A4, "Memory");
     __writeMemory32(0x00000000, 0x400E80A8, "Memory");
     __writeMemory32(0x00000010, 0x400E80AC, "Memory"); // EMC_39, DQS PIN, enable SION
-    __writeMemory32(0x00000000, 0x400E80B0, "Memory");
-    __writeMemory32(0x00000000, 0x400E80B4, "Memory");
     __writeMemory32(0x00000000, 0x400E80B8, "Memory");
     __writeMemory32(0x00000000, 0x400E80BC, "Memory");
     __writeMemory32(0x00000000, 0x400E80C0, "Memory");
@@ -183,9 +181,6 @@ initSDRAM()
     __writeMemory32(0x00000000, 0x400E80F4, "Memory");
     __writeMemory32(0x00000000, 0x400E80F8, "Memory");
     __writeMemory32(0x00000000, 0x400E80FC, "Memory");
-    __writeMemory32(0x00000000, 0x400E8100, "Memory");
-    __writeMemory32(0x00000000, 0x400E8104, "Memory");
-    __writeMemory32(0x00000000, 0x400E8108, "Memory");
 
     // PAD ctrl
     // PDRV = 1b (normal); PULL = 10b (PD)
@@ -229,8 +224,6 @@ initSDRAM()
     __writeMemory32(0x00000008, 0x400E82E8, "Memory");
     __writeMemory32(0x00000008, 0x400E82EC, "Memory");
     __writeMemory32(0x00000008, 0x400E82F0, "Memory");
-    __writeMemory32(0x00000008, 0x400E82F4, "Memory");
-    __writeMemory32(0x00000008, 0x400E82F8, "Memory");
     __writeMemory32(0x00000008, 0x400E82FC, "Memory");
     __writeMemory32(0x00000008, 0x400E8300, "Memory");
     __writeMemory32(0x00000008, 0x400E8304, "Memory");
@@ -248,10 +241,7 @@ initSDRAM()
     __writeMemory32(0x00000008, 0x400E8334, "Memory");
     __writeMemory32(0x00000008, 0x400E8338, "Memory");
     __writeMemory32(0x00000008, 0x400E833C, "Memory");
-    __writeMemory32(0x00000008, 0x400E8400, "Memory");
-    __writeMemory32(0x00000008, 0x400E8404, "Memory");
-    __writeMemory32(0x00000008, 0x400E8408, "Memory");
-    __writeMemory32(0x00000008, 0x400E840C, "Memory");
+    __writeMemory32(0x00000008, 0x400E8340, "Memory");
 
     // Config SDR Controller Registers/
     __writeMemory32(0x10000004, 0x400d4000, "Memory"); // MCR

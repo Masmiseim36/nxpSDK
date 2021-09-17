@@ -17,7 +17,7 @@
 #include "cmd.h"
 
 #define APP_INQUIRY_LENGTH        (10) /* 10 * 1.28 Sec */
-#define APP_INQUIRY_NUM_RESPONSES (20)
+#define APP_INQUIRY_NUM_RESPONSES (10)
 
 static struct bt_br_discovery_result br_discovery_results[APP_INQUIRY_NUM_RESPONSES];
 
@@ -341,7 +341,6 @@ static void connected(struct bt_conn *conn, uint8_t err)
     {
         if (app_a2dp.conn != NULL)
         {
-            bt_conn_unref(app_a2dp.conn);
             app_a2dp.conn = NULL;
         }
         PRINTF("Connection failed (err 0x%02x)\n", err);
@@ -409,23 +408,8 @@ static void disconnected(struct bt_conn *conn, uint8_t reason)
 
     if (app_a2dp.peer_key_missed)
     {
-        bt_addr_le_t addr;
         app_a2dp.peer_key_missed = 0U;
-
-        addr.type = BT_ADDR_LE_PUBLIC;
-        memcpy(&addr.a.val[0], app_a2dp.peer_bd_addr, 6U);
-        err = bt_unpair(BT_ID_DEFAULT, &addr);
-        /* todo: remove it */
-        /* err = BT_sm_delete_device(app_a2dp.peer_bd_addr, SM_ANY_LIST); */
-        if (0 == err)
-        {
-            PRINTF("Successfully delete binding information, try connecting again.\n");
-            app_bt_set_task_msg(APP_CONTROL_CONNECT);
-        }
-        else
-        {
-            PRINTF("Failed to delete binding information, please try shell command  \"bt deletedevice\", and try connecting again.\n");
-        }
+        app_bt_set_task_msg(APP_CONTROL_CONNECT);
     }
 }
 
@@ -442,12 +426,25 @@ static void security_changed(struct bt_conn *conn, bt_security_t level,
     }
     else
     {
+        PRINTF("Security failed: %s level %u err %d\n", addr, level, err);
         if (err == BT_SECURITY_ERR_PIN_OR_KEY_MISSING)
         {
+            int error;
+            bt_addr_le_t addr;
+
             app_a2dp.peer_key_missed = 1U;
-            app_bt_disconnect();
+            addr.type = BT_ADDR_LE_PUBLIC;
+            memcpy(&addr.a.val[0], app_a2dp.peer_bd_addr, 6U);
+            error = bt_unpair(BT_ID_DEFAULT, &addr);
+            if (0 == error)
+            {
+                PRINTF("Delete binding information, try connecting again.\n");
+            }
+            else
+            {
+                PRINTF("Failed to delete binding information, please try shell command  \"bt deletedevice\", and try connecting again.\n");
+            }
         }
-        PRINTF("Security failed: %s level %u err %d\n", addr, level, err);
     }
 }
 
@@ -506,7 +503,10 @@ int app_main (int argc, char **argv)
     if (err)
     {
         PRINTF("Bluetooth init failed (err %d)\n", err);
-        return 0;
+        while (1)
+        {
+            vTaskDelay(2000);
+        }
     }
 
     app_a2dp.acl_initiated = 0U;

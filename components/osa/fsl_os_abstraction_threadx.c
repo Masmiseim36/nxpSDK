@@ -172,8 +172,13 @@ void OSA_Init(void)
  *
  *END**************************************************************************/
 #if (defined(FSL_OSA_TASK_ENABLE) && (FSL_OSA_TASK_ENABLE > 0U))
+/* Configures _tx_initialize_low_level_ptr and tx_application_define_ptr */
+extern void Prepare_ThreadX(void);
+
 void OSA_Start(void)
 {
+    Prepare_ThreadX();
+    /* Start ThreadX */
     tx_kernel_enter();
 }
 #endif
@@ -250,7 +255,7 @@ osa_status_t OSA_TaskCreate(osa_task_handle_t taskHandle, const osa_task_def_t *
     if (tx_thread_create(&ptask->taskHandle,                            /* task handle, allocated by application */
                          (char *)thread_def->tname,                     /* thread name */
                          (void (*)(ULONG))thread_def->pthread,          /* entry function */
-                         (ULONG)(*(ULONG *)task_param),                 /* entry input */
+                         (ULONG)((ULONG *)task_param),                  /* entry input */
                          (void *)thread_def->tstack,                    /* stack start */
                          (ULONG)thread_def->stacksize,                  /* stack size */
                          PRIORITY_OSA_TO_THREAD(thread_def->tpriority), /* initial priority */
@@ -282,9 +287,9 @@ osa_status_t OSA_TaskDestroy(osa_task_handle_t taskHandle)
     assert(taskHandle);
     osa_thread_task_t *ptask = (osa_thread_task_t *)taskHandle;
     osa_status_t status      = KOSA_StatusSuccess;
-    uint16_t oldPriority;
 
 #if 0
+    uint16_t oldPriority;
     /*Change priority to avoid context switches*/
     oldPriority = OSA_TaskGetPriority(OSA_TaskGetCurrentHandle());
     (void)OSA_TaskSetPriority(OSA_TaskGetCurrentHandle(), OSA_PRIORITY_REAL_TIME);
@@ -438,10 +443,12 @@ osa_status_t OSA_MutexCreate(osa_mutex_handle_t mutexHandle)
     assert(mutexHandle);
     osa_status_t status = KOSA_StatusSuccess;
 
+#ifndef CPU2
     if (TX_SUCCESS != tx_mutex_create((TX_MUTEX *)mutexHandle, NULL, 0U))
     {
         status = KOSA_StatusError;
     }
+#endif
     return status;
 }
 
@@ -458,9 +465,10 @@ osa_status_t OSA_MutexCreate(osa_mutex_handle_t mutexHandle)
 osa_status_t OSA_MutexLock(osa_mutex_handle_t mutexHandle, uint32_t millisec)
 {
     assert(mutexHandle);
-    uint32_t timeoutTicks;
     osa_status_t status = KOSA_StatusSuccess;
 
+#ifndef CPU2
+    uint32_t timeoutTicks;
     /* Convert timeout from millisecond to tick. */
     if (millisec == osaWaitForever_c)
     {
@@ -475,6 +483,7 @@ osa_status_t OSA_MutexLock(osa_mutex_handle_t mutexHandle, uint32_t millisec)
     {
         status = KOSA_StatusError;
     }
+#endif
     return status;
 }
 
@@ -489,10 +498,12 @@ osa_status_t OSA_MutexUnlock(osa_mutex_handle_t mutexHandle)
     assert(mutexHandle);
     osa_status_t status = KOSA_StatusSuccess;
 
+#ifndef CPU2
     if (TX_SUCCESS != tx_mutex_put((TX_MUTEX *)mutexHandle))
     {
         status = KOSA_StatusError;
     }
+#endif
     return status;
 }
 

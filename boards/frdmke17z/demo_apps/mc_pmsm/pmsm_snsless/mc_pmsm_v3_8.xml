@@ -1,0 +1,393 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ksdk:examples xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd manifest.xsd">
+  <externalDefinitions>
+    <definition extID="platform.drivers.sim.MKE17Z7"/>
+    <definition extID="platform.drivers.port.MKE17Z7"/>
+    <definition extID="platform.drivers.dmamux.MKE17Z7"/>
+    <definition extID="platform.drivers.clock.MKE17Z7"/>
+    <definition extID="middleware.rtcesl.cm0p.MKE17Z7"/>
+    <definition extID="middleware.motor_control.mc_drivers_adc16sngl_ftm_frac.MKE17Z7"/>
+    <definition extID="middleware.mc_pmsm_snsless.frac.MKE17Z7"/>
+    <definition extID="middleware.motor_control_pmsm_frac.tsa.MKE17Z7"/>
+    <definition extID="platform.drivers.common.MKE17Z7"/>
+    <definition extID="device.MKE17Z7_CMSIS.MKE17Z7"/>
+    <definition extID="utility.debug_console.MKE17Z7"/>
+    <definition extID="component.lpuart_adapter.MKE17Z7"/>
+    <definition extID="component.serial_manager.MKE17Z7"/>
+    <definition extID="component.lists.MKE17Z7"/>
+    <definition extID="component.serial_manager_uart.MKE17Z7"/>
+    <definition extID="platform.drivers.lpuart.MKE17Z7"/>
+    <definition extID="device.MKE17Z7_startup.MKE17Z7"/>
+    <definition extID="platform.drivers.lpit.MKE17Z7"/>
+    <definition extID="platform.drivers.trgmux.MKE17Z7"/>
+    <definition extID="platform.drivers.smc.MKE17Z7"/>
+    <definition extID="platform.drivers.gpio.MKE17Z7"/>
+    <definition extID="platform.drivers.ftm.MKE17Z7"/>
+    <definition extID="platform.drivers.adc12.MKE17Z7"/>
+    <definition extID="platform.utilities.assert.MKE17Z7"/>
+    <definition extID="platform.drivers.acmp.MKE17Z7"/>
+    <definition extID="middleware.fmstr.MKE17Z7"/>
+    <definition extID="middleware.fmstr.platform_gen32le.MKE17Z7"/>
+    <definition extID="CMSIS_Include_core_cm.MKE17Z7"/>
+    <definition extID="platform.utilities.misc_utilities.MKE17Z7"/>
+    <definition extID="device.MKE17Z7_system.MKE17Z7"/>
+    <definition extID="iar"/>
+    <definition extID="mdk"/>
+    <definition extID="armgcc"/>
+    <definition extID="mcuxpresso"/>
+    <definition extID="com.nxp.mcuxpresso"/>
+  </externalDefinitions>
+  <example id="frdmke17z_mc_pmsm" name="mc_pmsm" dependency="platform.drivers.sim.MKE17Z7 platform.drivers.port.MKE17Z7 platform.drivers.dmamux.MKE17Z7 platform.drivers.clock.MKE17Z7 middleware.rtcesl.cm0p.MKE17Z7 middleware.motor_control.mc_drivers_adc16sngl_ftm_frac.MKE17Z7 middleware.mc_pmsm_snsless.frac.MKE17Z7 middleware.motor_control_pmsm_frac.tsa.MKE17Z7 platform.drivers.common.MKE17Z7 device.MKE17Z7_CMSIS.MKE17Z7 utility.debug_console.MKE17Z7 component.lpuart_adapter.MKE17Z7 component.serial_manager.MKE17Z7 component.lists.MKE17Z7 component.serial_manager_uart.MKE17Z7 platform.drivers.lpuart.MKE17Z7 device.MKE17Z7_startup.MKE17Z7 platform.drivers.lpit.MKE17Z7 platform.drivers.trgmux.MKE17Z7 platform.drivers.smc.MKE17Z7 platform.drivers.gpio.MKE17Z7 platform.drivers.ftm.MKE17Z7 platform.drivers.adc12.MKE17Z7 platform.utilities.assert.MKE17Z7 platform.drivers.acmp.MKE17Z7 middleware.fmstr.MKE17Z7 middleware.fmstr.platform_gen32le.MKE17Z7 CMSIS_Include_core_cm.MKE17Z7 platform.utilities.misc_utilities.MKE17Z7 device.MKE17Z7_system.MKE17Z7" category="demo_apps">
+    <projects>
+      <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
+    </projects>
+    <toolchainSettings>
+      <toolchainSetting id_refs="com.nxp.mcuxpresso">
+        <option id="gnu.c.compiler.option.preprocessor.def.symbols" type="stringList">
+          <value>CPU_MKE17Z256VLL7</value>
+          <value>FRDM_KE17Z</value>
+          <value>FREEDOM</value>
+          <value>SERIAL_PORT_TYPE_UART=1</value>
+          <value>MCUXPRESSO_SDK</value>
+        </option>
+        <option id="com.crt.advproject.gas.fpu" type="enum">
+          <value>com.crt.advproject.gas.fpu.none</value>
+        </option>
+        <option id="gnu.c.compiler.option.optimization.flags" type="string">
+          <value>-fno-common</value>
+        </option>
+        <option id="com.crt.advproject.c.misc.dialect" type="enum">
+          <value>com.crt.advproject.misc.dialect.gnu99</value>
+        </option>
+        <option id="com.crt.advproject.gcc.fpu" type="enum">
+          <value>com.crt.advproject.gcc.fpu.none</value>
+        </option>
+        <option id="gnu.c.compiler.option.misc.other" type="string">
+          <value>-c -ffunction-sections -fdata-sections -ffreestanding -fno-builtin</value>
+        </option>
+        <option id="gnu.c.compiler.option.warnings.allwarn" type="boolean">
+          <value>false</value>
+        </option>
+        <option id="gnu.c.link.option.nostdlibs" type="boolean">
+          <value>true</value>
+        </option>
+        <option id="com.crt.advproject.link.fpu" type="enum">
+          <value>com.crt.advproject.link.fpu.none</value>
+        </option>
+      </toolchainSetting>
+    </toolchainSettings>
+    <include_paths>
+      <include_path path="boards/frdmke17z/demo_apps/mc_pmsm/pmsm_snsless" project_relative_path="source" type="c_include"/>
+      <include_path path="boards/frdmke17z/demo_apps/mc_pmsm/pmsm_snsless" project_relative_path="board" type="c_include"/>
+    </include_paths>
+    <source path="boards/frdmke17z/demo_apps/mc_pmsm/pmsm_snsless/iar" project_relative_path="./" type="workspace" toolchain="iar">
+      <files mask="mc_pmsm.ewd"/>
+      <files mask="mc_pmsm.ewp"/>
+      <files mask="mc_pmsm.eww"/>
+    </source>
+    <source path="boards/frdmke17z/demo_apps/mc_pmsm/pmsm_snsless/iar/settings" project_relative_path="./" type="workspace" toolchain="iar">
+      <files mask="mc_pmsm.dni"/>
+    </source>
+    <source path="boards/frdmke17z/demo_apps/mc_pmsm/pmsm_snsless/mdk" project_relative_path="./" type="workspace" toolchain="mdk">
+      <files mask="mc_pmsm.uvprojx"/>
+      <files mask="mc_pmsm.uvoptx"/>
+      <files mask="pemicro_connection_settings.ini"/>
+      <files mask="mc_pmsm.uvmpw"/>
+    </source>
+    <source path="boards/frdmke17z/demo_apps/mc_pmsm/pmsm_snsless/armgcc" project_relative_path="./" type="workspace" toolchain="armgcc">
+      <files mask="build_all.bat"/>
+      <files mask="build_all.sh"/>
+      <files mask="clean.bat"/>
+      <files mask="clean.sh"/>
+      <files mask="CMakeLists.txt"/>
+      <files mask="flags.cmake"/>
+      <files mask="config.cmake"/>
+      <files mask="build_debug.bat"/>
+      <files mask="build_debug.sh"/>
+      <files mask="build_release.bat"/>
+      <files mask="build_release.sh"/>
+    </source>
+    <source path="middleware/motor_control/freemaster/pmsm_frac/fm_control" project_relative_path="motor_control/freemaster/pmsm_frac/fm_control" type="src">
+      <files mask="control_page_config.js" hidden="true"/>
+      <files mask="control_page_scripts.js" hidden="true"/>
+      <files mask="FM_control_M1.html" hidden="true"/>
+      <files mask="jquery-1.11.1.min.js" hidden="true"/>
+      <files mask="jqxbuttons.js" hidden="true"/>
+      <files mask="jqxcore.js" hidden="true"/>
+      <files mask="jqxdraw.js" hidden="true"/>
+      <files mask="jqxgauge.js" hidden="true"/>
+      <files mask="jqxlistmenu.js" hidden="true"/>
+      <files mask="jqxmenu.js" hidden="true"/>
+      <files mask="jqxnotification.js" hidden="true"/>
+      <files mask="jqxpanel.js" hidden="true"/>
+      <files mask="jqxradiobutton.js" hidden="true"/>
+      <files mask="jqxscrollbar.js" hidden="true"/>
+      <files mask="jqxslider.js" hidden="true"/>
+      <files mask="jqxswitchbutton.js" hidden="true"/>
+      <files mask="jqxtooltip.js" hidden="true"/>
+      <files mask="jqxwindow.js" hidden="true"/>
+      <files mask="logo.png" hidden="true"/>
+    </source>
+    <source path="middleware/motor_control/freemaster/pmsm_frac/fm_control/styles/images" project_relative_path="motor_control/freemaster/pmsm_frac/fm_control/styles/images" type="src">
+      <files mask="backgroundTop.png" hidden="true"/>
+      <files mask="backImage.png" hidden="true"/>
+      <files mask="bg_black.png" hidden="true"/>
+      <files mask="bg_black_horizontal.png" hidden="true"/>
+      <files mask="bg_blackhover.png" hidden="true"/>
+      <files mask="bg_blackhover_horizontal.png" hidden="true"/>
+      <files mask="bg_blackpressed.png" hidden="true"/>
+      <files mask="bg_blackpressed_horizontal.png" hidden="true"/>
+      <files mask="bg_blueenergy.png" hidden="true"/>
+      <files mask="bg_darkblue.png" hidden="true"/>
+      <files mask="bg_darkbluehover.png" hidden="true"/>
+      <files mask="bg_darkbluepressed.png" hidden="true"/>
+      <files mask="black_gradient.png" hidden="true"/>
+      <files mask="blackbackground.png" hidden="true"/>
+      <files mask="check_black.png" hidden="true"/>
+      <files mask="check_blue.png" hidden="true"/>
+      <files mask="check_blue_indeterminate.png" hidden="true"/>
+      <files mask="check_disabled.png" hidden="true"/>
+      <files mask="check_indeterminate_black.png" hidden="true"/>
+      <files mask="check_indeterminate_disabled.png" hidden="true"/>
+      <files mask="check_indeterminate_white.png" hidden="true"/>
+      <files mask="check_lightblue.png" hidden="true"/>
+      <files mask="check_lightblue_indeterminate.png" hidden="true"/>
+      <files mask="check_white.png" hidden="true"/>
+      <files mask="close.png" hidden="true"/>
+      <files mask="close_black.png" hidden="true"/>
+      <files mask="close_blue.png" hidden="true"/>
+      <files mask="close_white.png" hidden="true"/>
+      <files mask="crosshair.png" hidden="true"/>
+      <files mask="crosshair-white.png" hidden="true"/>
+      <files mask="darkred_gradient.png" hidden="true"/>
+      <files mask="drag.png" hidden="true"/>
+      <files mask="dragcancel.png" hidden="true"/>
+      <files mask="error.png" hidden="true"/>
+      <files mask="filter.png" hidden="true"/>
+      <files mask="html_editor.png" hidden="true"/>
+      <files mask="html_editor_white.png" hidden="true"/>
+      <files mask="icon-calendar.png" hidden="true"/>
+      <files mask="icon-calendar-white.png" hidden="true"/>
+      <files mask="icon-cancel.png" hidden="true"/>
+      <files mask="icon-cancel-white.png" hidden="true"/>
+      <files mask="icon-delete.png" hidden="true"/>
+      <files mask="icon-delete-white.png" hidden="true"/>
+      <files mask="icon-down.png" hidden="true"/>
+      <files mask="icon-down-blue.png" hidden="true"/>
+      <files mask="icon-down-transparent.png" hidden="true"/>
+      <files mask="icon-down-white.png" hidden="true"/>
+      <files mask="icon-edit.png" hidden="true"/>
+      <files mask="icon-edit-white.png" hidden="true"/>
+      <files mask="icon-first.png" hidden="true"/>
+      <files mask="icon-first-blue.png" hidden="true"/>
+      <files mask="icon-first-transparent.png" hidden="true"/>
+      <files mask="icon-first-white.png" hidden="true"/>
+      <files mask="icon-last.png" hidden="true"/>
+      <files mask="icon-last-blue.png" hidden="true"/>
+      <files mask="icon-last-transparent.png" hidden="true"/>
+      <files mask="icon-last-white.png" hidden="true"/>
+      <files mask="icon-left.png" hidden="true"/>
+      <files mask="icon-left-blue.png" hidden="true"/>
+      <files mask="icon-left-transparent.png" hidden="true"/>
+      <files mask="icon-left-white.png" hidden="true"/>
+      <files mask="icon-menu-minimized.png" hidden="true"/>
+      <files mask="icon-menu-minimized-white.png" hidden="true"/>
+      <files mask="icon-right.png" hidden="true"/>
+      <files mask="icon-right-blue.png" hidden="true"/>
+      <files mask="icon-right-transparent.png" hidden="true"/>
+      <files mask="icon-right-white.png" hidden="true"/>
+      <files mask="icon-save.png" hidden="true"/>
+      <files mask="icon-save-white.png" hidden="true"/>
+      <files mask="icon-showpassword.png" hidden="true"/>
+      <files mask="icon-showpassword-white.png" hidden="true"/>
+      <files mask="icon-up.png" hidden="true"/>
+      <files mask="icon-up-blue.png" hidden="true"/>
+      <files mask="icon-up-transparent.png" hidden="true"/>
+      <files mask="icon-up-white.png" hidden="true"/>
+      <files mask="info.png" hidden="true"/>
+      <files mask="loader.gif" hidden="true"/>
+      <files mask="loader-small.gif" hidden="true"/>
+      <files mask="mail.png" hidden="true"/>
+      <files mask="menubutton.png" hidden="true"/>
+      <files mask="metro-icon-down.png" hidden="true"/>
+      <files mask="metro-icon-down-white.png" hidden="true"/>
+      <files mask="metro-icon-first.png" hidden="true"/>
+      <files mask="metro-icon-first-white.png" hidden="true"/>
+      <files mask="metro-icon-last.png" hidden="true"/>
+      <files mask="metro-icon-last-white.png" hidden="true"/>
+      <files mask="metro-icon-left.png" hidden="true"/>
+      <files mask="metro-icon-left-white.png" hidden="true"/>
+      <files mask="metro-icon-right.png" hidden="true"/>
+      <files mask="metro-icon-right - Copy.png" hidden="true"/>
+      <files mask="metro-icon-right-white.png" hidden="true"/>
+      <files mask="metro-icon-up.png" hidden="true"/>
+      <files mask="metro-icon-up-white.png" hidden="true"/>
+      <files mask="multi-arrow.gif" hidden="true"/>
+      <files mask="office-icon-down.png" hidden="true"/>
+      <files mask="office-icon-first.png" hidden="true"/>
+      <files mask="office-icon-last.png" hidden="true"/>
+      <files mask="office-icon-left.png" hidden="true"/>
+      <files mask="office-icon-right.png" hidden="true"/>
+      <files mask="office-icon-up.png" hidden="true"/>
+      <files mask="plus.png" hidden="true"/>
+      <files mask="plus_white.png" hidden="true"/>
+      <files mask="pointer.png" hidden="true"/>
+      <files mask="rangebar_classic.png" hidden="true"/>
+      <files mask="rangebar_darkblue.png" hidden="true"/>
+      <files mask="rangebar_shinyblack.png" hidden="true"/>
+      <files mask="rangebar_summer.png" hidden="true"/>
+      <files mask="red_arrow_down.png" hidden="true"/>
+      <files mask="red_arrow_up.png" hidden="true"/>
+      <files mask="red_gradient.png" hidden="true"/>
+      <files mask="roundbg_check_black.png" hidden="true"/>
+      <files mask="roundbg_check_disabled.png" hidden="true"/>
+      <files mask="roundbg_check_indeterminate.png" hidden="true"/>
+      <files mask="roundbg_check_white.png" hidden="true"/>
+      <files mask="roundbg_classic_hover.png" hidden="true"/>
+      <files mask="roundbg_classic_normal.png" hidden="true"/>
+      <files mask="roundbg_disabled.png" hidden="true"/>
+      <files mask="search.png" hidden="true"/>
+      <files mask="search_white.png" hidden="true"/>
+      <files mask="sortasc.png" hidden="true"/>
+      <files mask="sortascbutton.png" hidden="true"/>
+      <files mask="sortdesc.png" hidden="true"/>
+      <files mask="sortdescbutton.png" hidden="true"/>
+      <files mask="sortremove.png" hidden="true"/>
+      <files mask="star.png" hidden="true"/>
+      <files mask="star_disabled.png" hidden="true"/>
+      <files mask="star_hover.png" hidden="true"/>
+      <files mask="success.png" hidden="true"/>
+      <files mask="tick.png" hidden="true"/>
+      <files mask="time.png" hidden="true"/>
+      <files mask="track_classic.png" hidden="true"/>
+      <files mask="track_darkblue.png" hidden="true"/>
+      <files mask="track_shinyblack.png" hidden="true"/>
+      <files mask="track_summer.png" hidden="true"/>
+      <files mask="warning.png" hidden="true"/>
+      <files mask="wp_check_indeterminate_white.png" hidden="true"/>
+      <files mask="wp_check_white.png" hidden="true"/>
+    </source>
+    <source path="middleware/motor_control/freemaster/pmsm_frac/fm_control/styles" project_relative_path="motor_control/freemaster/pmsm_frac/fm_control/styles" type="src">
+      <files mask="jqx.energyblue" hidden="true"/>
+      <files mask="jqx.base.css" hidden="true"/>
+      <files mask="jqx.energyblue.css" hidden="true"/>
+      <files mask="jqx.energyblue.txt" hidden="true"/>
+    </source>
+    <source path="middleware/motor_control/freemaster/pmsm_frac/mcat/param_files" project_relative_path="motor_control/freemaster/pmsm_frac/mcat/param_files" type="src">
+      <files mask="M1_params.txt" hidden="true"/>
+      <files mask="M1_params_pmsm_frdm-ke15z.txt" hidden="true"/>
+      <files mask="M1_params_pmsm_frdm-ke16z.txt" hidden="true"/>
+      <files mask="M1_params_pmsm_frdm-ke17z.txt" hidden="true"/>
+      <files mask="M1_params_pmsm_frdm-kv11z.txt" hidden="true"/>
+      <files mask="M1_params_pmsm_twr-kv11z.txt" hidden="true"/>
+      <files mask="M1_params_pmsm_hvp-kv11z.txt" hidden="true"/>
+      <files mask="Setting_params.txt" hidden="true"/>
+    </source>
+    <source path="middleware/motor_control/freemaster/pmsm_frac/mcat/src" project_relative_path="motor_control/freemaster/pmsm_frac/mcat/src" type="src">
+      <files mask="AppSetting.html" hidden="true"/>
+      <files mask="form_buttonCloseWindow.html" hidden="true"/>
+      <files mask="form_PathSelector.html" hidden="true"/>
+      <files mask="inner_CLoop.html" hidden="true"/>
+      <files mask="inner_CtrlStructure.html" hidden="true"/>
+      <files mask="inner_Intro_M1.html" hidden="true"/>
+      <files mask="inner_Intro_M2.html" hidden="true"/>
+      <files mask="inner_Intro_M3.html" hidden="true"/>
+      <files mask="inner_MID.html" hidden="true"/>
+      <files mask="inner_OutputHeader.html" hidden="true"/>
+      <files mask="inner_Parameters.html" hidden="true"/>
+      <files mask="inner_PoSpeBemfDQ.html" hidden="true"/>
+      <files mask="inner_PoSpeSensor.html" hidden="true"/>
+      <files mask="inner_SLoop.html" hidden="true"/>
+      <files mask="MainPage.html" hidden="true"/>
+      <files mask="style.css" hidden="true"/>
+    </source>
+    <source path="middleware/motor_control/freemaster/pmsm_frac/mcat/src/images" project_relative_path="motor_control/freemaster/pmsm_frac/mcat/src/images" type="src">
+      <files mask="Ccontrol.jpg" hidden="true"/>
+      <files mask="Ccontrol.png" hidden="true"/>
+      <files mask="logo.png" hidden="true"/>
+      <files mask="NXP-Logo.png" hidden="true"/>
+      <files mask="obr1.png" hidden="true"/>
+      <files mask="onoff_red_off.png" hidden="true"/>
+      <files mask="onoff_red_off1.png" hidden="true"/>
+      <files mask="onoff_red_on.png" hidden="true"/>
+      <files mask="onoff_red_on1.png" hidden="true"/>
+      <files mask="Pcontrol.png" hidden="true"/>
+      <files mask="pozadi.png" hidden="true"/>
+      <files mask="SCcontrol.jpg" hidden="true"/>
+      <files mask="SCcontrol.png" hidden="true"/>
+      <files mask="SCcontrol_n.png" hidden="true"/>
+      <files mask="speedFOCwOLSwBEMF.gif" hidden="true"/>
+      <files mask="switch_slide_off.png" hidden="true"/>
+      <files mask="switch_slide_on.png" hidden="true"/>
+      <files mask="ToolPic.png" hidden="true"/>
+      <files mask="Vcontrol.jpg" hidden="true"/>
+      <files mask="Vcontrol.png" hidden="true"/>
+      <files mask="Wcontrol.jpg" hidden="true"/>
+      <files mask="Wcontrol.png" hidden="true"/>
+    </source>
+    <source path="middleware/motor_control/freemaster/pmsm_frac/mcat/src/JS_functions" project_relative_path="motor_control/freemaster/pmsm_frac/mcat/src/JS_functions" type="src">
+      <files mask="calculations.js" hidden="true"/>
+      <files mask="config.js" hidden="true"/>
+      <files mask="fileProcessing.js" hidden="true"/>
+      <files mask="hFileConfig.js" hidden="true"/>
+      <files mask="inner_CLoop.js" hidden="true"/>
+      <files mask="inner_CtrlStruc.js" hidden="true"/>
+      <files mask="inner_MID.js" hidden="true"/>
+      <files mask="inner_Parameters.js" hidden="true"/>
+      <files mask="inner_PoSpeBemfDQ.js" hidden="true"/>
+      <files mask="inner_PoSpeSensor.js" hidden="true"/>
+      <files mask="inner_SLoop.js" hidden="true"/>
+      <files mask="mainInclude.js" hidden="true"/>
+      <files mask="settings.js" hidden="true"/>
+    </source>
+    <source path="middleware/motor_control/freemaster/pmsm_frac/mcat/src/xml_files" project_relative_path="motor_control/freemaster/pmsm_frac/mcat/src/xml_files" type="src">
+      <files mask="FM_params_list.xml" hidden="true"/>
+      <files mask="Header_file_constant_list.xml" hidden="true"/>
+    </source>
+    <source path="middleware/motor_control/freemaster/pmsm_frac" project_relative_path="motor_control/freemaster/pmsm_frac" type="src">
+      <files mask="readme.txt" hidden="true"/>
+    </source>
+    <source path="middleware/motor_control/freemaster" project_relative_path="motor_control/freemaster" type="src">
+      <files mask="pmsm_frac.pmp"/>
+    </source>
+    <source path="boards/frdmke17z/demo_apps/mc_pmsm/pmsm_snsless" project_relative_path="source" type="src">
+      <files mask="main.c"/>
+      <files mask="mc_periph_init.c"/>
+    </source>
+    <source path="boards/frdmke17z/demo_apps/mc_pmsm/pmsm_snsless" project_relative_path="source" type="c_include">
+      <files mask="m1_pmsm_appconfig.h"/>
+    </source>
+    <source path="boards/frdmke17z/demo_apps/mc_pmsm/pmsm_snsless" project_relative_path="board" type="src">
+      <files mask="pin_mux.c"/>
+      <files mask="clock_config.c"/>
+      <files mask="peripherals.c"/>
+    </source>
+    <source path="boards/frdmke17z/demo_apps/mc_pmsm/pmsm_snsless" project_relative_path="board" type="c_include">
+      <files mask="pin_mux.h"/>
+      <files mask="clock_config.h"/>
+      <files mask="peripherals.h"/>
+    </source>
+    <source path="boards/frdmke17z/demo_apps/mc_pmsm/pmsm_snsless" project_relative_path="source" type="c_include">
+      <files mask="freemaster_cfg.h"/>
+      <files mask="mc_periph_init.h"/>
+    </source>
+    <source path="boards/frdmke17z/demo_apps/mc_pmsm/pmsm_snsless" project_relative_path="doc" type="doc">
+      <files mask="readme.txt"/>
+    </source>
+    <source path="boards/frdmke17z/demo_apps/mc_pmsm/pmsm_snsless" project_relative_path="board" type="src">
+      <files mask="board.c"/>
+    </source>
+    <source path="boards/frdmke17z/demo_apps/mc_pmsm/pmsm_snsless" project_relative_path="board" type="c_include">
+      <files mask="board.h"/>
+    </source>
+    <source path="boards/frdmke17z/demo_apps/mc_pmsm/pmsm_snsless/iar" project_relative_path="MKE17Z7/iar" type="linker" toolchain="iar">
+      <files mask="MKE17Z256xxx7_flash.icf"/>
+    </source>
+    <source path="boards/frdmke17z/demo_apps/mc_pmsm/pmsm_snsless/mdk" project_relative_path="MKE17Z7/arm" type="linker" toolchain="mdk">
+      <files mask="MKE17Z256xxx7_flash.scf"/>
+    </source>
+    <source path="boards/frdmke17z/demo_apps/mc_pmsm/pmsm_snsless/armgcc" project_relative_path="MKE17Z7/gcc" type="linker" toolchain="armgcc">
+      <files mask="MKE17Z256xxx7_flash.ld"/>
+    </source>
+  </example>
+</ksdk:examples>

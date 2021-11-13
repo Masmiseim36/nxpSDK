@@ -1,0 +1,12 @@
+include_guard(GLOBAL)
+message("middleware_rtcesl_cm0 component is included.")
+
+
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
+    ${CMAKE_CURRENT_LIST_DIR}/CM0_RTCESL_4.6.2_MCUX/AMCLIB/Include
+    ${CMAKE_CURRENT_LIST_DIR}/CM0_RTCESL_4.6.2_MCUX/GDFLIB/Include
+    ${CMAKE_CURRENT_LIST_DIR}/CM0_RTCESL_4.6.2_MCUX/GFLIB/Include
+    ${CMAKE_CURRENT_LIST_DIR}/CM0_RTCESL_4.6.2_MCUX/GMCLIB/Include
+    ${CMAKE_CURRENT_LIST_DIR}/CM0_RTCESL_4.6.2_MCUX/MLIB/Include
+)
+

@@ -561,7 +561,12 @@ static void bootloader_init(void)
 
     // Init address range of flash array, SRAM_L and SRAM U.
     g_bootloaderContext.memoryInterface->init();
-
+    
+#if BL_FEATURE_PHANTOM_UPDATE
+    // Update the flash_size, ram_size and available peripherals and falshy_swap based on IFR    
+    phantom_update();     
+#endif // BL_FEATURE_PHANTOM_UPDATE
+    
     // Fully init the property store.
     g_bootloaderContext.propertyInterface->init();
 

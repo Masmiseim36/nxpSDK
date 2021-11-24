@@ -1,0 +1,8 @@
+ <#if memory.name=="SRAM_ITC_cm7">
+        *flexspi_nor_flash_ops.o(.text*)
+        *fsl_flexspi.o(.text*)
+        *sln_flash.o(.text*)
+        *libsln_afe.a:(.text*)
+        *liboasis_lite2D_DEFAULT_117f_ae.a:(.text*)
+        *liboasis_lite3D_DEFAULT_117f_ae.a:(.text*)
+</#if>

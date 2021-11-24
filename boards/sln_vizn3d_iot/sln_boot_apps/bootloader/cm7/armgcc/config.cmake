@@ -1,0 +1,10 @@
+# config to select component, the format is CONFIG_USE_${component}
+set(CONFIG_USE_middleware_sln_iot_common_platform_flexspi_nor_flash_config_w25q256jvs_MIMXRT117H true)
+set(CONFIG_USE_middleware_sdmmc_host_usdhc_freertos_MIMXRT117H true)
+set(CONFIG_USE_middleware_usb_device_ehci_MIMXRT117H true)
+set(CONFIG_USE_middleware_mbedtls_port_ksdk_MIMXRT117H true)
+set(CONFIG_USE_middleware_mbedtls_rt2_MIMXRT117H true)
+set(CONFIG_USE_CMSIS_Include_core_cm7_MIMXRT117H true)
+set(CONFIG_USE_component_serial_manager_uart_MIMXRT117H true)
+set(CONFIG_USE_driver_lpuart_MIMXRT117H true)
+set(CONFIG_USE_middleware_freertos-kernel_MIMXRT117H true)

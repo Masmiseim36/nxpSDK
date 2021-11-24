@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<workspace>
+  <batchBuild>
+    <batchDefinition>
+      <name>all</name>
+      <member>
+        <project>anactrl_measure_frequency</project>
+        <configuration>release</configuration>
+      </member>
+      <member>
+        <project>anactrl_measure_frequency</project>
+        <configuration>debug</configuration>
+      </member>
+    </batchDefinition>
+    <batchDefinition>
+      <name>release</name>
+      <member>
+        <project>anactrl_measure_frequency</project>
+        <configuration>release</configuration>
+      </member>
+    </batchDefinition>
+    <batchDefinition>
+      <name>debug</name>
+      <member>
+        <project>anactrl_measure_frequency</project>
+        <configuration>debug</configuration>
+      </member>
+    </batchDefinition>
+  </batchBuild>
+  <project>
+    <path>$WS_DIR$/anactrl_measure_frequency.ewp</path>
+  </project>
+</workspace>

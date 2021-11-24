@@ -1,0 +1,1 @@
+        *(EXCLUDE_FILE(*flexspi_nor_flash_ops.o *fsl_flexspi.o *sln_flash.o *libsln_afe.a: *liboasis_lite2D_DEFAULT_117f_ae.a: *liboasis_lite3D_DEFAULT_117f_ae.a:) .text*)

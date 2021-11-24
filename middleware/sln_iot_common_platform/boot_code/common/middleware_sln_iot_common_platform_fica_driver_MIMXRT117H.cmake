@@ -1,0 +1,21 @@
+if(NOT MIDDLEWARE_SLN_IOT_COMMON_PLATFORM_FICA_DRIVER_MIMXRT117H_INCLUDED)
+    
+    set(MIDDLEWARE_SLN_IOT_COMMON_PLATFORM_FICA_DRIVER_MIMXRT117H_INCLUDED true CACHE BOOL "middleware_sln_iot_common_platform_fica_driver component is included.")
+
+    target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
+        ${CMAKE_CURRENT_LIST_DIR}/flash_ica_driver.c
+    )
+
+
+    target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
+        ${CMAKE_CURRENT_LIST_DIR}/.
+    )
+
+
+    include(driver_flexspi_MIMXRT117H)
+
+    include(middleware_sln_iot_common_platform_fica_definition_MIMXRT117H)
+
+    include(middleware_sln_iot_common_platform_sln_flash_MIMXRT117H)
+
+endif()

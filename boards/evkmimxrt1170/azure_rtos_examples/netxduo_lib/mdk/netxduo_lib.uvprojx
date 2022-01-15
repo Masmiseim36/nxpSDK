@@ -1974,6 +1974,11 @@
               <FilePath>../../../../../rtos/azure-rtos/netxduo/nx_secure/src/nx_secure_x509_find_certificate_methods.c</FilePath>
             </File>
             <File>
+              <FileName>nx_secure_x509_find_curve_method.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/nx_secure/src/nx_secure_x509_find_curve_method.c</FilePath>
+            </File>
+            <File>
               <FileName>nx_secure_x509_free_certificate_get.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../rtos/azure-rtos/netxduo/nx_secure/src/nx_secure_x509_free_certificate_get.c</FilePath>
@@ -4651,6 +4656,11 @@
               <FileName>nx_secure_x509_find_certificate_methods.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../rtos/azure-rtos/netxduo/nx_secure/src/nx_secure_x509_find_certificate_methods.c</FilePath>
+            </File>
+            <File>
+              <FileName>nx_secure_x509_find_curve_method.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/nx_secure/src/nx_secure_x509_find_curve_method.c</FilePath>
             </File>
             <File>
               <FileName>nx_secure_x509_free_certificate_get.c</FileName>

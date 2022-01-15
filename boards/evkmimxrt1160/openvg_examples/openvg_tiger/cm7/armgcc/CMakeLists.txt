@@ -55,7 +55,7 @@ target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
 
 set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../../devices/MIMXRT1166/utilities/debug_console_lite
-    ${ProjDirPath}/../../../../../../rtos/freertos
+    ${ProjDirPath}/../../../../../../rtos/freertos/freertos_kernel
     ${ProjDirPath}/../../../../../../middleware/openvg
     ${ProjDirPath}/../../../../../../components/video/display/fbdev
     ${ProjDirPath}/../../../../../../components/video
@@ -65,6 +65,7 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../../components/video/display/mipi_dsi_cmd
     ${ProjDirPath}/../../../../../../components/video/display/rm68200
     ${ProjDirPath}/../../../../../../components/video/display/dc/lcdifv2
+    ${ProjDirPath}/../../../../../../components/video/display/hx8394
     ${ProjDirPath}/../../../../../../devices/MIMXRT1166
     ${ProjDirPath}/../../../../../../components/uart
     ${ProjDirPath}/../../../../../../components/lists
@@ -108,6 +109,8 @@ include(driver_display-mipi-dsi-cmd_MIMXRT1166_cm7)
 include(driver_display-rm68200_MIMXRT1166_cm7)
 
 include(driver_dc-fb-lcdifv2_MIMXRT1166_cm7)
+
+include(driver_display-hx8394_MIMXRT1166_cm7)
 
 include(device_MIMXRT1166_CMSIS_MIMXRT1166_cm7)
 

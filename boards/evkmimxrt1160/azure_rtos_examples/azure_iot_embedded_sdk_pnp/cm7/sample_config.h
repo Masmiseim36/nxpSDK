@@ -16,6 +16,7 @@
 extern   "C" {
 #endif
 
+/* @TEST_ANCHOR */
 
 /* This sample uses Symmetric key (SAS) to connect to IoT Hub by default,
    simply defining USE_DEVICE_CERTIFICATE and setting your device certificate

@@ -71,8 +71,9 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../../components/video/display/dc/lcdifv2
     ${ProjDirPath}/../../../../../../middleware/vglite
     ${ProjDirPath}/../../../../../../components/video/display/dc/elcdif
+    ${ProjDirPath}/../../../../../../components/video/display/hx8394
     ${ProjDirPath}/../../../../../../components/video/display/fbdev
-    ${ProjDirPath}/../../../../../../rtos/freertos
+    ${ProjDirPath}/../../../../../../rtos/freertos/freertos_kernel
     ${ProjDirPath}/../../../../../../devices/MIMXRT1166
     ${ProjDirPath}/../../../../../../devices/MIMXRT1166/utilities
     ${ProjDirPath}/../../../../../../components/uart
@@ -111,6 +112,8 @@ include(middleware_vglite_MIMXRT1166_cm7)
 include(driver_elcdif_MIMXRT1166_cm7)
 
 include(driver_dc-fb-elcdif_MIMXRT1166_cm7)
+
+include(driver_display-hx8394_MIMXRT1166_cm7)
 
 include(driver_fbdev_MIMXRT1166_cm7)
 

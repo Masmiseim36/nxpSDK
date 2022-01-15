@@ -9,7 +9,7 @@
 #ifndef MECH_MEASURE_H_
 #define MECH_MEASURE_H_
 
-#include "mid_def.h"
+#include "mid_mc_api_connector.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -18,7 +18,7 @@ extern "C" {
 /*******************************************************************************
  * API
  ******************************************************************************/
-extern void MID_getMech(mid_get_mech_t *sMechMeasFcn);
+extern void MID_getMech(mid_get_mech_t* sMechMeasFcn);
 
 #ifdef __cplusplus
 }

@@ -49,22 +49,6 @@ include(${ProjDirPath}/flags.cmake)
 include(${ProjDirPath}/config.cmake)
 
 add_executable(${MCUX_SDK_PROJECT_NAME} 
-"${ProjDirPath}/../../../../../../middleware/usb/include/usb.h"
-"${ProjDirPath}/../../../../../../middleware/usb/include/usb_misc.h"
-"${ProjDirPath}/../../../../../../middleware/usb/include/usb_spec.h"
-"${ProjDirPath}/../../../../../../middleware/usb/phy/usb_phy.c"
-"${ProjDirPath}/../../../../../../middleware/usb/phy/usb_phy.h"
-"${ProjDirPath}/../../../../../../components/osa/fsl_os_abstraction.h"
-"${ProjDirPath}/../../../../../../components/osa/fsl_os_abstraction_bm.h"
-"${ProjDirPath}/../../../../../../components/osa/fsl_os_abstraction_config.h"
-"${ProjDirPath}/../pin_mux.c"
-"${ProjDirPath}/../pin_mux.h"
-"${ProjDirPath}/../board_setup.c"
-"${ProjDirPath}/../board_setup.h"
-"${ProjDirPath}/../usbx_device_mass_storage.c"
-"${ProjDirPath}/../tx_user.h"
-"${ProjDirPath}/../fx_user.h"
-"${ProjDirPath}/../nx_user.h"
 "${ProjDirPath}/../usbx_device_controllers/ux_dcd_mcimx6.h"
 "${ProjDirPath}/../usbx_device_controllers/ux_dcd_mcimx6_address_set.c"
 "${ProjDirPath}/../usbx_device_controllers/ux_dcd_mcimx6_endpoint_address_get.c"
@@ -91,6 +75,22 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../usbx_device_controllers/ux_dcd_mcimx6_transfer_abort.c"
 "${ProjDirPath}/../usbx_device_controllers/ux_dcd_mcimx6_transfer_callback.c"
 "${ProjDirPath}/../usbx_device_controllers/ux_dcd_mcimx6_transfer_request.c"
+"${ProjDirPath}/../pin_mux.c"
+"${ProjDirPath}/../pin_mux.h"
+"${ProjDirPath}/../board_setup.c"
+"${ProjDirPath}/../board_setup.h"
+"${ProjDirPath}/../../../../../../middleware/usb/include/usb.h"
+"${ProjDirPath}/../../../../../../middleware/usb/include/usb_misc.h"
+"${ProjDirPath}/../../../../../../middleware/usb/include/usb_spec.h"
+"${ProjDirPath}/../../../../../../middleware/usb/phy/usb_phy.c"
+"${ProjDirPath}/../../../../../../middleware/usb/phy/usb_phy.h"
+"${ProjDirPath}/../../../../../../components/osa/fsl_os_abstraction.h"
+"${ProjDirPath}/../../../../../../components/osa/fsl_os_abstraction_bm.h"
+"${ProjDirPath}/../../../../../../components/osa/fsl_os_abstraction_config.h"
+"${ProjDirPath}/../usbx_device_mass_storage.c"
+"${ProjDirPath}/../tx_user.h"
+"${ProjDirPath}/../fx_user.h"
+"${ProjDirPath}/../nx_user.h"
 "${ProjDirPath}/../ux_dcd_interrupt_handler.c"
 "${ProjDirPath}/../ux_user.h"
 "${ProjDirPath}/../board.c"
@@ -102,11 +102,11 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 )
 
 target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
+    ${ProjDirPath}/../usbx_device_controllers
     ${ProjDirPath}/../../../../../../middleware/usb/include
     ${ProjDirPath}/../../../../../../middleware/usb/phy
     ${ProjDirPath}/../../../../../../components/osa
     ${ProjDirPath}/..
-    ${ProjDirPath}/../usbx_device_controllers
 )
 
 set(CMAKE_MODULE_PATH

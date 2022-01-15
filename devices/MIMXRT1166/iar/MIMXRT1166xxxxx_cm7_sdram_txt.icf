@@ -7,7 +7,7 @@
 **     Compiler:            IAR ANSI C/C++ Compiler for ARM
 **     Reference manual:    IMXRT1160RM, Rev 0, 03/2021
 **     Version:             rev. 0.1, 2020-12-29
-**     Build:               b210422
+**     Build:               b210709
 **
 **     Abstract:
 **         Linker file for the IAR ANSI C/C++ Compiler for ARM
@@ -74,15 +74,16 @@ define region DATA2_region = mem:[from m_data2_start to m_data2_end-__size_cstac
 define region DATA3_region  = mem:[from m_data3_start to m_data3_end];
 define region CSTACK_region = mem:[from m_data2_end-__size_cstack__+1 to m_data2_end];
 define region NCACHE_region = mem:[from m_ncache_start to m_ncache_end];
+
 define block CSTACK    with alignment = 8, size = __size_cstack__   { };
 define block HEAP      with alignment = 8, size = __size_heap__     { };
 define block RW        { first readwrite, section m_usb_dma_init_data };
 define block ZI         with alignment = 32  { first zi, section m_usb_dma_noninit_data };
-define block NCACHE_VAR { section NonCacheable , section NonCacheable.init };
-
+define block NCACHE_VAR    { section NonCacheable , section NonCacheable.init };
 define block QACCESS_CODE  { section CodeQuickAccess };
+define block QACCESS_DATA  { section DataQuickAccess };
 
-initialize by copy { readwrite, section .textrw, section CodeQuickAccess };
+initialize by copy { readwrite, section .textrw, section CodeQuickAccess, section DataQuickAccess };
 do not initialize  { section .noinit };
 
 place at address mem: m_interrupts_start    { readonly section .intvec };
@@ -95,7 +96,7 @@ if (isdefinedsymbol(__heap_noncacheable__)) {
 } else {
   place in DATA2_region                     { last block HEAP };
 }
-place in CSTACK_region                      { block CSTACK };
 place in NCACHE_region                      { block NCACHE_VAR };
-place in QACODE_region                      { section .textrw};
 place in QACODE_region                      { block QACCESS_CODE };
+place in DATA_region                        { block QACCESS_DATA };
+place in CSTACK_region                      { block CSTACK };

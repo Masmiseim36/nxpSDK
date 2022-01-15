@@ -62,6 +62,8 @@
 
 #include "usb_host_config.h"
 #include "usb_host.h"
+#include "fsl_lpuart_edma.h"
+#include "fsl_dmamux.h"
 #include "usb_host_msd.h"
 #include "usb_phy.h"
 #include "fsl_adapter_uart.h"
@@ -73,13 +75,21 @@
 #define LOGGING_TASK_STACK_SIZE (200)
 #define LOGGING_QUEUE_LENGTH    (16)
 
+#define DEMO_TASK_STACK_SIZE (configMINIMAL_STACK_SIZE * 15)
+#define DEMO_TASK_PRIORITY   (tskIDLE_PRIORITY + 1)
+
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
 extern void vStartLedDemoTask(void);
 extern int initNetwork(void);
 extern void BOARD_InitHardware(void);
-
+/* Declaration of demo function. */
+extern int RunDeviceShadowDemo(bool awsIotMqttMode,
+                                const char *pIdentifier,
+                                void *pNetworkServerInfo,
+                                void *pNetworkCredentialInfo,
+                                const IotNetworkInterface_t *pNetworkInterface);
 /*******************************************************************************
  * Variables
  ******************************************************************************/
@@ -90,7 +100,8 @@ extern usb_host_handle g_HostHandle;
  * Code
  ******************************************************************************/
 
-#if defined(WIFI_88W8987_BOARD_AW_CM358MA)
+#if (defined(WIFI_88W8987_BOARD_AW_CM358MA) || defined(WIFI_88W8987_BOARD_MURATA_1ZM_M2) || \
+     defined(WIFI_IW416_BOARD_MURATA_1XK_M2))
 int controller_hci_uart_get_configuration(controller_hci_uart_config_t *config)
 {
     if (NULL == config)
@@ -101,8 +112,62 @@ int controller_hci_uart_get_configuration(controller_hci_uart_config_t *config)
     config->defaultBaudrate = 115200u;
     config->runningBaudrate = BOARD_BT_UART_BAUDRATE;
     config->instance        = 2;
-    config->enableRxRTS     = 1u;
-    config->enableTxCTS     = 1u;
+#if (defined(HAL_UART_DMA_ENABLE) && (HAL_UART_DMA_ENABLE > 0U))
+    config->dma_instance     = 0U;
+    config->rx_channel       = 0U;
+    config->tx_channel       = 1U;
+    config->dma_mux_instance = 0U;
+    config->rx_request       = kDmaRequestMuxLPUART2Rx;
+    config->tx_request       = kDmaRequestMuxLPUART2Tx;
+#endif
+    config->enableRxRTS = 1u;
+    config->enableTxCTS = 1u;
+    return 0;
+}
+#elif defined(WIFI_IW416_BOARD_AW_AM510MA)
+int controller_hci_uart_get_configuration(controller_hci_uart_config_t *config)
+{
+    if (NULL == config)
+    {
+        return -1;
+    }
+    config->clockSrc = CLOCK_GetRootClockFreq(kCLOCK_Root_Lpuart2);
+    config->defaultBaudrate = BOARD_BT_UART_BAUDRATE;
+    config->runningBaudrate = BOARD_BT_UART_BAUDRATE;
+    config->instance = 2;
+#if (defined(HAL_UART_DMA_ENABLE) && (HAL_UART_DMA_ENABLE > 0U))
+    config->dma_instance = 0U;
+    config->rx_channel = 0U;
+    config->tx_channel = 1U;
+    config->dma_mux_instance = 0U;
+    config->rx_request = kDmaRequestMuxLPUART2Rx;
+    config->tx_request = kDmaRequestMuxLPUART2Tx;
+#endif
+    config->enableRxRTS = 1u;
+    config->enableTxCTS = 1u;
+    return 0;
+}
+#elif defined(WIFI_88W8987_BOARD_MURATA_1ZM_USD) || defined(WIFI_IW416_BOARD_MURATA_1XK_USD)
+int controller_hci_uart_get_configuration(controller_hci_uart_config_t *config)
+{
+    if (NULL == config)
+    {
+        return -1;
+    }
+    config->clockSrc         = BOARD_BT_UART_CLK_FREQ;
+    config->defaultBaudrate  = 115200u;
+    config->runningBaudrate  = BOARD_BT_UART_BAUDRATE;
+    config->instance         = BOARD_BT_UART_INSTANCE;
+    config->enableRxRTS      = 1u;
+    config->enableTxCTS      = 1u;
+#if (defined(HAL_UART_DMA_ENABLE) && (HAL_UART_DMA_ENABLE > 0U))
+    config->dma_instance     = 0U;
+    config->rx_channel       = 0U;
+    config->tx_channel       = 1U;
+    config->dma_mux_instance = 0U;
+    config->rx_request       = kDmaRequestMuxLPUART7Rx;
+    config->tx_request       = kDmaRequestMuxLPUART7Tx;
+#endif
     return 0;
 }
 #elif defined(WIFI_IW416_BOARD_AW_AM457_USD)
@@ -112,12 +177,21 @@ int controller_hci_uart_get_configuration(controller_hci_uart_config_t *config)
     {
         return -1;
     }
-    config->clockSrc = BOARD_BT_UART_CLK_FREQ;
-    config->defaultBaudrate = BOARD_BT_UART_BAUDRATE;
-    config->runningBaudrate = BOARD_BT_UART_BAUDRATE;
-    config->instance = BOARD_BT_UART_INSTANCE;
-    config->enableRxRTS = 1u;
-    config->enableTxCTS = 1u;
+    config->clockSrc         = BOARD_BT_UART_CLK_FREQ;
+    config->defaultBaudrate  = BOARD_BT_UART_BAUDRATE;
+    config->runningBaudrate  = BOARD_BT_UART_BAUDRATE;
+    config->instance         = BOARD_BT_UART_INSTANCE;
+#if (defined(HAL_UART_DMA_ENABLE) && (HAL_UART_DMA_ENABLE > 0U))
+    config->dma_instance     = 0U;
+    config->rx_channel       = 0U;
+    config->tx_channel       = 1U;
+    config->dma_mux_instance = 0U;
+    config->rx_request       = kDmaRequestMuxLPUART7Rx;
+    config->tx_request       = kDmaRequestMuxLPUART7Tx;
+#endif
+    config->enableRxRTS      = 1u;
+    config->enableTxCTS      = 1u;
+    return 0;
     return 0;
 }
 #else
@@ -189,8 +263,12 @@ void main_task(void *pvParameters)
 
     if (SYSTEM_Init() == pdPASS)
     {
-        /* Run all demos. */
-        DEMO_RUNNER_RunDemos();
+        static demoContext_t mqttDemoContext = {.networkTypes                = AWSIOT_NETWORK_TYPE_WIFI,
+                                                .demoFunction                = RunDeviceShadowDemo,
+                                                .networkConnectedCallback    = NULL,
+                                                .networkDisconnectedCallback = NULL};
+
+        Iot_CreateDetachedThread(runDemoTask, &mqttDemoContext, DEMO_TASK_PRIORITY, DEMO_TASK_STACK_SIZE);
     }
 
     vTaskDelete(NULL);
@@ -198,29 +276,26 @@ void main_task(void *pvParameters)
 
 int main(void)
 {
-#if defined(WIFI_88W8987_BOARD_AW_CM358MA)
-    /* GPIO configuration of wifi_reset on GPIO_AD_16 (pin N17) */
-    gpio_pin_config_t wifi_reset_config = {
-        .direction = kGPIO_DigitalOutput, .outputLogic = 0U, .interruptMode = kGPIO_NoIntmode};
-#endif
-
     BOARD_ConfigMPU();
     BOARD_InitBootPins();
-#if defined(WIFI_88W8987_BOARD_AW_CM358MA)
+#if (defined(WIFI_IW416_BOARD_AW_AM510MA) || defined(WIFI_88W8987_BOARD_AW_CM358MA) || \
+     defined(WIFI_88W8987_BOARD_MURATA_1ZM_M2) || defined(WIFI_IW416_BOARD_MURATA_1XK_M2))
     BOARD_InitM2UARTPins();
-    BOARD_InitM2WifiResetPins();
-    /* Initialize GPIO functionality on GPIO_AD_16 (pin N17) */
-    GPIO_PinInit(CM7_GPIO3, 15U, &wifi_reset_config);
 #else
     BOARD_InitArduinoUARTPins();
 #endif
     BOARD_InitBootClocks();
     BOARD_InitDebugConsole();
-#if defined(WIFI_88W8987_BOARD_AW_CM358MA)
-    /* Wirte GPIO pin value on GPIO_AD_16 (pin N17) */
-    GPIO_PinWrite(CM7_GPIO3, 15U, 1U);
-#endif
+
     SCB_DisableDCache();
+#if (defined(HAL_UART_DMA_ENABLE) && (HAL_UART_DMA_ENABLE > 0U))
+    DMAMUX_Type *dmaMuxBases[] = DMAMUX_BASE_PTRS;
+    edma_config_t config;
+    DMA_Type *dmaBases[] = DMA_BASE_PTRS;
+    DMAMUX_Init(dmaMuxBases[0]);
+    EDMA_GetDefaultConfig(&config);
+    EDMA_Init(dmaBases[0], &config);
+#endif
     CRYPTO_InitHardware();
 
     if (xTaskCreate(main_task, "main_task", configMINIMAL_STACK_SIZE * 8, NULL, tskIDLE_PRIORITY + 1, NULL) != pdPASS)
@@ -237,7 +312,6 @@ int main(void)
         ;
 }
 
-#if 1
 void *pvPortCalloc(size_t xNum, size_t xSize)
 {
     void *pvReturn;
@@ -250,29 +324,27 @@ void *pvPortCalloc(size_t xNum, size_t xSize)
 
     return pvReturn;
 }
-#endif
 
-BaseType_t getUserMessage( INPUTMessage_t * pxINPUTmessage,
-                                  TickType_t xAuthTimeout )
+int32_t xPortGetUserInput( uint8_t * pMessage,
+                           uint32_t messageLength,
+                           TickType_t timeoutTicks )
 {
     int ret;
-
-    ret = GETCHAR();
-
-    if (ret <= 127)
+    uint32_t i = messageLength;
+    
+    while (i > 0)
     {
-        pxINPUTmessage->pcData = pvPortMalloc(1);
-
-        if (NULL == pxINPUTmessage->pcData)
+        ret = GETCHAR();
+        
+        if ((ret <= 127) && (NULL != pMessage))
         {
-            return pdFALSE;
+            pMessage[messageLength - i] = (uint8_t)ret;
         }
-        pxINPUTmessage->xDataSize = 1;
-        pxINPUTmessage->pcData[0] = (uint8_t)ret;
-        return pdTRUE;
+        else
+        {
+            break;
+        }
+        i--;
     }
-    else
-    {
-        return pdFALSE;
-    }
+    return messageLength - i;
 }

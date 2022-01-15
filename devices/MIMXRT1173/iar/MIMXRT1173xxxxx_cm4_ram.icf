@@ -4,7 +4,7 @@
 **     Compiler:            IAR ANSI C/C++ Compiler for ARM
 **     Reference manual:    IMXRT1170RM, Rev 1, 02/2021
 **     Version:             rev. 1.0, 2020-12-29
-**     Build:               b210414
+**     Build:               b210709
 **
 **     Abstract:
 **         Linker file for the IAR ANSI C/C++ Compiler for ARM
@@ -38,14 +38,14 @@ if (isdefinedsymbol(__use_shmem__)) {
   define exported symbol __RPMSG_SH_MEM_SIZE     = rpmsg_sh_mem_end - rpmsg_sh_mem_start + 1;
 }
 
-  define symbol m_ncache_start                   = 0x20280000;
-  define symbol m_ncache_end                     = 0x202BFFFF;
+define symbol m_ncache_start           = 0x20280000;
+define symbol m_ncache_end             = 0x202BFFFF;
 
-  define symbol m_data2_start                    = 0x20240000;
-  define symbol m_data2_end                      = 0x2027FFFF;
+define symbol m_data2_start            = 0x20240000;
+define symbol m_data2_end              = 0x2027FFFF;
 
-  define exported symbol __NCACHE_REGION_START   = m_ncache_start;
-  define exported symbol __NCACHE_REGION_SIZE    = m_ncache_end - m_ncache_start + 1;
+define exported symbol __NCACHE_REGION_START   = m_ncache_start;
+define exported symbol __NCACHE_REGION_SIZE    = m_ncache_end - m_ncache_start + 1;
 
 /* Sizes */
 if (isdefinedsymbol(__stack_size__)) {
@@ -80,9 +80,10 @@ define block HEAP      with alignment = 8, size = __size_heap__     { };
 define block RW        { readwrite };
 define block ZI        { zi };
 define block NCACHE_VAR    { section NonCacheable , section NonCacheable.init };
+define block QACCESS_CODE  { section CodeQuickAccess };
+define block QACCESS_DATA  { section DataQuickAccess };
 
-
-initialize by copy { readwrite, section .textrw };
+initialize by copy { readwrite, section .textrw, section CodeQuickAccess, section DataQuickAccess };
 do not initialize  { section .noinit };
 if (isdefinedsymbol(__use_shmem__)) {
   do not initialize  { section rpmsg_sh_mem_section };
@@ -98,8 +99,10 @@ if (isdefinedsymbol(__heap_noncacheable__)) {
 } else {
   place in DATA_region                      { last block HEAP };
 }
-place in NCACHE_region                      { block NCACHE_VAR };
+place in TEXT_region                        { block QACCESS_CODE };
 place in CSTACK_region                      { block CSTACK };
+place in NCACHE_region                      { block NCACHE_VAR };
+place in DATA_region                        { block QACCESS_DATA };
 if (isdefinedsymbol(__use_shmem__)) {
   place in rpmsg_sh_mem_region                { section rpmsg_sh_mem_section };
 }

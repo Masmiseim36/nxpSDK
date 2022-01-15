@@ -1974,22 +1974,7 @@
     </settings>
   </configuration>
   <group>
-    <name>source</name>
-    <file>
-      <name>$PROJ_DIR$/../main_remote.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../FreeRTOSConfig.h</name>
-    </file>
-  </group>
-  <group>
     <name>board</name>
-    <file>
-      <name>$PROJ_DIR$/../pin_mux.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../pin_mux.h</name>
-    </file>
     <file>
       <name>$PROJ_DIR$/../board.c</name>
     </file>
@@ -2003,10 +1988,25 @@
       <name>$PROJ_DIR$/../clock_config.h</name>
     </file>
     <file>
+      <name>$PROJ_DIR$/../pin_mux.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../pin_mux.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../dcd.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../dcd.h</name>
+    </file>
+  </group>
+  <group>
+    <name>source</name>
+    <file>
+      <name>$PROJ_DIR$/../main_remote.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../FreeRTOSConfig.h</name>
     </file>
   </group>
   <group>
@@ -2191,6 +2191,9 @@
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include/StackMacros.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include/stdint.readme</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include/stream_buffer.h</name>

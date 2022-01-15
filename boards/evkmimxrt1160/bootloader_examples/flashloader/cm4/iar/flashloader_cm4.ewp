@@ -765,7 +765,7 @@
         </option>
         <option>
           <name>IlinkIcfFile</name>
-          <state>$PROJ_DIR$/../../../../../../middleware/mcu-boot/targets/common/linker/iar/MIMXRT1166/MIMXRT1166_ram_flashloader.icf</state>
+          <state>$PROJ_DIR$/MIMXRT1166_ram_flashloader.icf</state>
         </option>
         <option>
           <name>IlinkIcfFileSlave</name>

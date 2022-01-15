@@ -9,7 +9,7 @@
 #ifndef KE_MEASURE_H_
 #define KE_MEASURE_H_
 
-#include "mid_def.h"
+#include "mid_mc_api_connector.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -18,7 +18,7 @@ extern "C" {
 /*******************************************************************************
  * API
  ******************************************************************************/
-extern void MID_getKe(mid_get_ke_t *sKeMeasFcn);
+extern void MID_getKe(mid_get_ke_t* sKeMeasFcn);
 
 #ifdef __cplusplus
 }

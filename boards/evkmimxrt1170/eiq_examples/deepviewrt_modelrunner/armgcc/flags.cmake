@@ -1,6 +1,7 @@
 SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE " \
     ${CMAKE_ASM_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE} \
     -D__STARTUP_CLEAR_BSS \
+    -D__STARTUP_INITIALIZE_RAMFUNCTION \
     -D__STARTUP_INITIALIZE_NONCACHEDATA \
     -mcpu=cortex-m7 \
     -Wall \
@@ -18,6 +19,7 @@ SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE " \
 SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG " \
     ${CMAKE_ASM_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG} \
     -D__STARTUP_CLEAR_BSS \
+    -D__STARTUP_INITIALIZE_RAMFUNCTION \
     -D__STARTUP_INITIALIZE_NONCACHEDATA \
     -mcpu=cortex-m7 \
     -Wall \
@@ -34,6 +36,7 @@ SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG " \
 ")
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE " \
     ${CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE} \
+    -DNDEBUG \
     -DLWIP_TIMEVAL_PRIVATE=0 \
     -DCPU_MIMXRT1176DVMAA_cm7 \
     -DFSL_RTOS_FREE_RTOS \
@@ -75,6 +78,7 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE " \
 ")
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG " \
     ${CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG} \
+    -DDEBUG \
     -DLWIP_TIMEVAL_PRIVATE=0 \
     -DCPU_MIMXRT1176DVMAA_cm7 \
     -DFSL_RTOS_FREE_RTOS \
@@ -116,6 +120,7 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG " \
 ")
 SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE " \
     ${CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE} \
+    -DNDEBUG \
     -DCPU_MIMXRT1176DVMAA_cm7 \
     -DSERIAL_PORT_TYPE_UART=1 \
     -DMCUXPRESSO_SDK \
@@ -137,6 +142,7 @@ SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE " \
 ")
 SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG " \
     ${CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG} \
+    -DDEBUG \
     -DCPU_MIMXRT1176DVMAA_cm7 \
     -DSERIAL_PORT_TYPE_UART=1 \
     -DMCUXPRESSO_SDK \
@@ -186,6 +192,10 @@ SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE " \
     -Wl,--print-memory-usage \
     -Xlinker \
     -print-memory-usage \
+    -Xlinker \
+    --defsym=__heap_size__=0x400000 \
+    -Xlinker \
+    --defsym=__stack_size__=0x10000 \
     -T${ProjDirPath}/../../../../../middleware/eiq/deepviewrt/boards/evkmimxrt1170/modelrunner/MIMXRT1176xxxxx_cm7_flexspi_nor_sdram.ld -static \
 ")
 SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG " \
@@ -218,5 +228,9 @@ SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG " \
     -Wl,--print-memory-usage \
     -Xlinker \
     -print-memory-usage \
+    -Xlinker \
+    --defsym=__heap_size__=0x400000 \
+    -Xlinker \
+    --defsym=__stack_size__=0x10000 \
     -T${ProjDirPath}/../../../../../middleware/eiq/deepviewrt/boards/evkmimxrt1170/modelrunner/MIMXRT1176xxxxx_cm7_flexspi_nor_sdram.ld -static \
 ")

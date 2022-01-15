@@ -22,41 +22,67 @@
 #include "enet_ethernetif.h"
 
 #include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
 #include "fsl_phy.h"
 
 #include "fsl_phyrtl8211f.h"
 #include "fsl_enet_qos_mdio.h"
-#include "fsl_gpio.h"
-#include "fsl_iomuxc.h"
 #include "fsl_enet_qos.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
+
+/* @TEST_ANCHOR */
+
 /* IP address configuration. */
+#ifndef configIP_ADDR0
 #define configIP_ADDR0 192
+#endif
+#ifndef configIP_ADDR1
 #define configIP_ADDR1 168
+#endif
+#ifndef configIP_ADDR2
 #define configIP_ADDR2 0
+#endif
+#ifndef configIP_ADDR3
 #define configIP_ADDR3 102
+#endif
 
 /* Netmask configuration. */
+#ifndef configNET_MASK0
 #define configNET_MASK0 255
+#endif
+#ifndef configNET_MASK1
 #define configNET_MASK1 255
+#endif
+#ifndef configNET_MASK2
 #define configNET_MASK2 255
+#endif
+#ifndef configNET_MASK3
 #define configNET_MASK3 0
+#endif
 
 /* Gateway address configuration. */
+#ifndef configGW_ADDR0
 #define configGW_ADDR0 192
+#endif
+#ifndef configGW_ADDR1
 #define configGW_ADDR1 168
+#endif
+#ifndef configGW_ADDR2
 #define configGW_ADDR2 0
+#endif
+#ifndef configGW_ADDR3
 #define configGW_ADDR3 100
+#endif
 
 /* MAC address configuration. */
+#ifndef configMAC_ADDR
 #define configMAC_ADDR                     \
     {                                      \
         0x02, 0x12, 0x13, 0x10, 0x15, 0x11 \
     }
+#endif
 
 /* Address of PHY interface. */
 #define EXAMPLE_PHY_ADDRESS 0x01U
@@ -84,6 +110,12 @@
 #define IPERF_CLIENT_AMOUNT (-1000) /* 10 seconds */
 #endif                              /* IPERF_CLIENT_AMOUNT */
 
+/* @TEST_ANCHOR */
+
+#ifndef EXAMPLE_PORT
+#define EXAMPLE_PORT LWIPERF_TCP_PORT_DEFAULT
+#endif
+
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
@@ -99,8 +131,6 @@ static phy_handle_t phyHandle   = {.phyAddr = EXAMPLE_PHY_ADDRESS, .mdioHandle =
  ******************************************************************************/
 void BOARD_InitModuleClock(void)
 {
-    /* Select syspll2pfd3, 528*18/24 = 396M */
-    CLOCK_InitPfd(kCLOCK_PllSys2, kCLOCK_Pfd3, 24);
     const clock_sys_pll1_config_t sysPll1Config = {
         .pllDiv2En = true,
     };
@@ -109,10 +139,6 @@ void BOARD_InitModuleClock(void)
     CLOCK_SetRootClock(kCLOCK_Root_Enet_Qos, &rootCfg);
     rootCfg.div = 10;
     CLOCK_SetRootClock(kCLOCK_Root_Enet_Timer3, &rootCfg); /* Generate 50M PTP REF clock. */
-
-    rootCfg.mux = 7;
-    rootCfg.div = 2;
-    CLOCK_SetRootClock(kCLOCK_Root_Bus, &rootCfg); /* Generate 198M bus clock. */
 }
 
 void BOARD_UpdateENETModuleClock(enet_qos_mii_speed_t miiSpeed)
@@ -294,25 +320,25 @@ static void *start_iperf(ip4_addr_t *remote_addr)
     {
         if (tcp)
         {
-            iperf_session = lwiperf_start_tcp_server(IP_ADDR_ANY, LWIPERF_TCP_PORT_DEFAULT, lwiperf_report, 0);
+            iperf_session = lwiperf_start_tcp_server(IP_ADDR_ANY, EXAMPLE_PORT, lwiperf_report, 0);
         }
         else
         {
             iperf_session =
-                lwiperf_start_udp_server(netif_ip_addr4(netif_default), LWIPERF_TCP_PORT_DEFAULT, lwiperf_report, 0);
+                lwiperf_start_udp_server(netif_ip_addr4(netif_default), EXAMPLE_PORT, lwiperf_report, 0);
         }
     }
     else
     {
         if (tcp)
         {
-            iperf_session = lwiperf_start_tcp_client(remote_addr, LWIPERF_TCP_PORT_DEFAULT, client_type,
+            iperf_session = lwiperf_start_tcp_client(remote_addr, EXAMPLE_PORT, client_type,
                                                      IPERF_CLIENT_AMOUNT, lwiperf_report, 0);
         }
         else
         {
             iperf_session = lwiperf_start_udp_client(
-                netif_ip_addr4(netif_default), LWIPERF_TCP_PORT_DEFAULT, remote_addr, LWIPERF_TCP_PORT_DEFAULT,
+                netif_ip_addr4(netif_default), EXAMPLE_PORT, remote_addr, EXAMPLE_PORT,
                 client_type, IPERF_CLIENT_AMOUNT, IPERF_UDP_CLIENT_RATE, 0, lwiperf_report, NULL);
         }
     }
@@ -350,8 +376,8 @@ int main(void)
     BOARD_ConfigMPU();
     BOARD_InitBootPins();
     BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
     BOARD_InitModuleClock();
+    BOARD_InitDebugConsole();
 
     IOMUXC_GPR->GPR6 |= IOMUXC_GPR_GPR6_ENET_QOS_RGMII_EN_MASK; /* Set this bit to enable ENET_QOS RGMII TX clock output
                                                                    on TX_CLK pad. */

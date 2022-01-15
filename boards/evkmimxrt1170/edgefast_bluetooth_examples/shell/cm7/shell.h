@@ -15,6 +15,6 @@
  * API
  ******************************************************************************/
 
-void peripheral_hrs_task(void *param);
+void edgefast_bt_pal_shell_task(void *param);
 
 #endif /* __APPL_PERIPHERAL_HRS_MAIN_H__ */

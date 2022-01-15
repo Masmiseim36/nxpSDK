@@ -2,1036 +2,6 @@
 <project>
   <fileVersion>2</fileVersion>
   <configuration>
-    <name>sdram_txt_debug</name>
-    <toolchain>
-      <name>ARM</name>
-    </toolchain>
-    <debug>1</debug>
-    <settings>
-      <name>General</name>
-      <archiveVersion>3</archiveVersion>
-      <data>
-        <version>24</version>
-        <wantNonLocal>1</wantNonLocal>
-        <debug>1</debug>
-        <option>
-          <name>ExePath</name>
-          <state>$PROJ_DIR$/sdram_txt_debug</state>
-        </option>
-        <option>
-          <name>ObjPath</name>
-          <state>$PROJ_DIR$/sdram_txt_debug/obj</state>
-        </option>
-        <option>
-          <name>ListPath</name>
-          <state>$PROJ_DIR$/sdram_txt_debug/list</state>
-        </option>
-        <option>
-          <name>GEndianMode</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>Input variant</name>
-          <version>3</version>
-          <state>6</state>
-        </option>
-        <option>
-          <name>Input description</name>
-          <state>Automatic choice of formatter.</state>
-        </option>
-        <option>
-          <name>Output variant</name>
-          <version>2</version>
-          <state>5</state>
-        </option>
-        <option>
-          <name>Output description</name>
-          <state>Automatic choice of formatter.</state>
-        </option>
-        <option>
-          <name>GOutputBinary</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>OGCoreOrChip</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>GRuntimeLibSelect</name>
-          <version>0</version>
-          <state>1</state>
-        </option>
-        <option>
-          <name>GRuntimeLibSelectSlave</name>
-          <version>0</version>
-          <state>1</state>
-        </option>
-        <option>
-          <name>RTDescription</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>OGProductVersion</name>
-          <state>6.50.6.4952</state>
-        </option>
-        <option>
-          <name>OGLastSavedByProductVersion</name>
-          <state>7.80.4.12487</state>
-        </option>
-        <option>
-          <name>GeneralEnableMisra</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>GeneralMisraVerbose</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>OGChipSelectEditMenu</name>
-          <state>MIMXRT1166xxx6_M7	NXP MIMXRT1166xxx6_M7</state>
-        </option>
-        <option>
-          <name>GenLowLevelInterface</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>GEndianModeBE</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>OGBufferedTerminalOutput</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>GenStdoutInterface</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>GeneralMisraRules98</name>
-          <version>0</version>
-          <state>1000111110110101101110011100111111101110011011000101110111101101100111111111111100110011111001110111001111111111111111111111111</state>
-        </option>
-        <option>
-          <name>GeneralMisraVer</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>GeneralMisraRules04</name>
-          <version>0</version>
-          <state>011111110111111110111111110011011101111010111010111110001010101111110111111111010101111111101111111111110111110011111111011111111110111101111</state>
-        </option>
-        <option>
-          <name>RTConfigPath2</name>
-          <state>$TOOLKIT_DIR$\INC\c\DLib_Config_Normal.h</state>
-        </option>
-        <option>
-          <name>GBECoreSlave</name>
-          <version>24</version>
-          <state>41</state>
-        </option>
-        <option>
-          <name>OGUseCmsis</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>OGUseCmsisDspLib</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>GRuntimeLibThreads</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>CoreVariant</name>
-          <version>24</version>
-          <state>41</state>
-        </option>
-        <option>
-          <name>GFPUDeviceSlave</name>
-          <state>MIMXRT1166xxx6_M7	NXP MIMXRT1166xxx6_M7</state>
-        </option>
-        <option>
-          <name>FPU2</name>
-          <version>0</version>
-          <state>7</state>
-        </option>
-        <option>
-          <name>NrRegs</name>
-          <version>0</version>
-          <state>1</state>
-        </option>
-        <option>
-          <name>NEON</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>GFPUCoreSlave2</name>
-          <version>24</version>
-          <state>41</state>
-        </option>
-      </data>
-    </settings>
-    <settings>
-      <name>ICCARM</name>
-      <archiveVersion>2</archiveVersion>
-      <data>
-        <version>31</version>
-        <wantNonLocal>1</wantNonLocal>
-        <debug>1</debug>
-        <option>
-          <name>CCDefines</name>
-          <state>USE_SDRAM</state>
-          <state>DEBUG</state>
-          <state>CPU_MIMXRT1166DVM6A_cm7</state>
-          <state>FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE</state>
-          <state>SDK_DEBUGCONSOLE_UART</state>
-          <state>PRINTF_FLOAT_ENABLE=1</state>
-          <state>SCANF_FLOAT_ENABLE=1</state>
-          <state>PRINTF_ADVANCED_ENABLE=1</state>
-          <state>SCANF_ADVANCED_ENABLE=0</state>
-          <state>SERIAL_PORT_TYPE_UART=1</state>
-          <state>ASC_SERIALIZER_USE_CUSTOM_ALLOCATOR</state>
-          <state>AZ_NO_PRECONDITION_CHECKING</state>
-          <state>CRYPTO_USE_DRIVER_CAAM</state>
-          <state>NX_INCLUDE_USER_DEFINE_FILE</state>
-          <state>FX_INCLUDE_USER_DEFINE_FILE</state>
-          <state>TX_INCLUDE_USER_DEFINE_FILE</state>
-          <state>MCUXPRESSO_SDK</state>
-        </option>
-        <option>
-          <name>CCPreprocFile</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>CCPreprocComments</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>CCPreprocLine</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>CCListCFile</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>CCListCMnemonics</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>CCListCMessages</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>CCListAssFile</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>CCListAssSource</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>CCEnableRemarks</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>CCDiagSuppress</name>
-          <state>Pa082,Pa050,Pe111</state>
-        </option>
-        <option>
-          <name>CCDiagRemark</name>
-          <state/>
-        </option>
-        <option>
-          <name>CCDiagWarning</name>
-          <state/>
-        </option>
-        <option>
-          <name>CCDiagError</name>
-          <state/>
-        </option>
-        <option>
-          <name>CCObjPrefix</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>CCAllowList</name>
-          <version>1</version>
-          <state>00100000</state>
-        </option>
-        <option>
-          <name>CCDebugInfo</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>IEndianMode</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>IProcessor</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>IExtraOptionsCheck</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IExtraOptions</name>
-          <state/>
-        </option>
-        <option>
-          <name>CCLangConformance</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>CCSignedPlainChar</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>CCRequirePrototypes</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>CCMultibyteSupport</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>CCDiagWarnAreErr</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>CCCompilerRuntimeInfo</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IFpuProcessor</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>OutputFile</name>
-          <state>$FILE_BNAME$.o</state>
-        </option>
-        <option>
-          <name>CCLibConfigHeader</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>PreInclude</name>
-          <state/>
-        </option>
-        <option>
-          <name>CompilerMisraOverride</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>CCIncludePath2</name>
-          <state>$PROJ_DIR$/../azure_iot/azure-sdk-for-c/sdk/inc</state>
-          <state>$PROJ_DIR$/../azure_iot</state>
-          <state>$PROJ_DIR$/../azure_iot/azure_iot_security_module</state>
-          <state>$PROJ_DIR$/../azure_iot/azure_iot_security_module/inc</state>
-          <state>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc</state>
-          <state>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/deps/flatcc/src/runtime</state>
-          <state>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/deps/flatcc/include</state>
-          <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../../../../../components/phy/mdio/enet</state>
-          <state>$PROJ_DIR$/../../../../../../components/phy/device/phyksz8081</state>
-          <state>$PROJ_DIR$/../../../../../../components/phy/device/phyrtl8211f</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../components/lists</state>
-          <state>$PROJ_DIR$/../../../../../../components/uart</state>
-          <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/drivers/cm7</state>
-          <state>$PROJ_DIR$/../../../../xip</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/xip</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/utilities/debug_console</state>
-          <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/addons/auto_ip</state>
-          <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/addons/cloud</state>
-          <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/addons/BSD</state>
-          <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/addons/dhcp</state>
-          <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/addons/dns</state>
-          <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/addons/ftp</state>
-          <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/addons/http</state>
-          <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/addons/mdns</state>
-          <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/addons/mqtt</state>
-          <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/addons/nat</state>
-          <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/addons/pop3</state>
-          <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/addons/ppp</state>
-          <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/addons/pppoe</state>
-          <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/addons/smtp</state>
-          <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/addons/snmp</state>
-          <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/addons/sntp</state>
-          <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/addons/telnet</state>
-          <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/addons/tftp</state>
-          <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/addons/web</state>
-          <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/common/inc</state>
-          <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc</state>
-          <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/nx_secure/inc</state>
-          <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/nx_secure/ports</state>
-          <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/ports/cortex_m7/iar/inc</state>
-          <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/filex/common/inc</state>
-          <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/filex/ports/cortex_m7/iar/inc</state>
-          <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/threadx/common/inc</state>
-          <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/iar/inc</state>
-          <state>$PROJ_DIR$/../../../../../../components/phy</state>
-          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
-        </option>
-        <option>
-          <name>CCStdIncCheck</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>CCCodeSection</name>
-          <state>.text</state>
-        </option>
-        <option>
-          <name>IInterwork2</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IProcessorMode2</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>CCOptLevel</name>
-          <state>2</state>
-        </option>
-        <option>
-          <name>CCOptStrategy</name>
-          <version>0</version>
-          <state>0</state>
-        </option>
-        <option>
-          <name>CCOptLevelSlave</name>
-          <state>2</state>
-        </option>
-        <option>
-          <name>CompilerMisraRules98</name>
-          <version>0</version>
-          <state>1000111110110101101110011100111111101110011011000101110111101101100111111111111100110011111001110111001111111111111111111111111</state>
-        </option>
-        <option>
-          <name>CompilerMisraRules04</name>
-          <version>0</version>
-          <state>111101110010111111111000110111111111111111111111111110010111101111010101111111111111111111111111101111111011111001111011111011111111111111111</state>
-        </option>
-        <option>
-          <name>CCPosIndRopi</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>CCPosIndRwpi</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>CCPosIndNoDynInit</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IccLang</name>
-          <state>2</state>
-        </option>
-        <option>
-          <name>IccCDialect</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>IccAllowVLA</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IccCppDialect</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IccExceptions</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IccRTTI</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IccStaticDestr</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>IccCppInlineSemantics</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IccCmsis</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>IccFloatSemantics</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>CCOptimizationNoSizeConstraints</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>CCNoLiteralPool</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>CCOptStrategySlave</name>
-          <version>0</version>
-          <state>0</state>
-        </option>
-        <option>
-          <name>CCGuardCalls</name>
-          <state>1</state>
-        </option>
-      </data>
-    </settings>
-    <settings>
-      <name>AARM</name>
-      <archiveVersion>2</archiveVersion>
-      <data>
-        <version>9</version>
-        <wantNonLocal>1</wantNonLocal>
-        <debug>1</debug>
-        <option>
-          <name>AObjPrefix</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>AEndian</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>ACaseSensitivity</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>MacroChars</name>
-          <version>0</version>
-          <state>3</state>
-        </option>
-        <option>
-          <name>AWarnEnable</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>AWarnWhat</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>AWarnOne</name>
-          <state/>
-        </option>
-        <option>
-          <name>AWarnRange1</name>
-          <state/>
-        </option>
-        <option>
-          <name>AWarnRange2</name>
-          <state/>
-        </option>
-        <option>
-          <name>ADebug</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>AltRegisterNames</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>ADefines</name>
-          <state>DEBUG</state>
-          <state>__STARTUP_INITIALIZE_NONCACHEDATA</state>
-          <state>TX_ENABLE_FPU_SUPPORT</state>
-        </option>
-        <option>
-          <name>AList</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>AListHeader</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>AListing</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>Includes</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>MacDefs</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>MacExps</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>MacExec</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>OnlyAssed</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>MultiLine</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>PageLengthCheck</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>PageLength</name>
-          <state>80</state>
-        </option>
-        <option>
-          <name>TabSpacing</name>
-          <state>8</state>
-        </option>
-        <option>
-          <name>AXRef</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>AXRefDefines</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>AXRefInternal</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>AXRefDual</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>AProcessor</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>AFpuProcessor</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>AOutputFile</name>
-          <state>$FILE_BNAME$.o</state>
-        </option>
-        <option>
-          <name>AMultibyteSupport</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>ALimitErrorsCheck</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>ALimitErrorsEdit</name>
-          <state>100</state>
-        </option>
-        <option>
-          <name>AIgnoreStdInclude</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>AUserIncludes</name>
-        </option>
-        <option>
-          <name>AExtraOptionsCheckV2</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>AExtraOptionsV2</name>
-          <state/>
-        </option>
-        <option>
-          <name>AsmNoLiteralPool</name>
-          <state>0</state>
-        </option>
-      </data>
-    </settings>
-    <settings>
-      <name>OBJCOPY</name>
-      <archiveVersion>0</archiveVersion>
-      <data>
-        <version>1</version>
-        <wantNonLocal>1</wantNonLocal>
-        <debug>1</debug>
-        <option>
-          <name>OOCOutputFormat</name>
-          <version>3</version>
-          <state>0</state>
-        </option>
-        <option>
-          <name>OCOutputOverride</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>OOCOutputFile</name>
-          <state/>
-        </option>
-        <option>
-          <name>OOCCommandLineProducer</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>OOCObjCopyEnable</name>
-          <state>0</state>
-        </option>
-      </data>
-    </settings>
-    <settings>
-      <name>CUSTOM</name>
-      <archiveVersion>3</archiveVersion>
-      <data>
-        <extensions/>
-        <cmdline/>
-        <hasPrio>0</hasPrio>
-      </data>
-    </settings>
-    <settings>
-      <name>BICOMP</name>
-      <archiveVersion>0</archiveVersion>
-      <data/>
-    </settings>
-    <settings>
-      <name>BUILDACTION</name>
-      <archiveVersion>1</archiveVersion>
-      <data>
-        <prebuild/>
-        <postbuild/>
-      </data>
-    </settings>
-    <settings>
-      <name>ILINK</name>
-      <archiveVersion>0</archiveVersion>
-      <data>
-        <version>18</version>
-        <wantNonLocal>1</wantNonLocal>
-        <debug>1</debug>
-        <option>
-          <name>IlinkLibIOConfig</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>XLinkMisraHandler</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IlinkInputFileSlave</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IlinkOutputFile</name>
-          <state>azure_iot_embedded_sdk_pnp.out</state>
-        </option>
-        <option>
-          <name>IlinkDebugInfoEnable</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>IlinkKeepSymbols</name>
-          <state/>
-        </option>
-        <option>
-          <name>IlinkRawBinaryFile</name>
-          <state/>
-        </option>
-        <option>
-          <name>IlinkRawBinarySymbol</name>
-          <state/>
-        </option>
-        <option>
-          <name>IlinkRawBinarySegment</name>
-          <state/>
-        </option>
-        <option>
-          <name>IlinkRawBinaryAlign</name>
-          <state/>
-        </option>
-        <option>
-          <name>IlinkDefines</name>
-          <state/>
-        </option>
-        <option>
-          <name>IlinkConfigDefines</name>
-        </option>
-        <option>
-          <name>IlinkMapFile</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>IlinkLogFile</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IlinkLogInitialization</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IlinkLogModule</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IlinkLogSection</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IlinkLogVeneer</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IlinkIcfOverride</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>IlinkIcfFile</name>
-          <state>$PROJ_DIR$/MIMXRT1166xxxxx_cm7_sdram_txt.icf</state>
-        </option>
-        <option>
-          <name>IlinkIcfFileSlave</name>
-          <state/>
-        </option>
-        <option>
-          <name>IlinkEnableRemarks</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IlinkSuppressDiags</name>
-          <state/>
-        </option>
-        <option>
-          <name>IlinkTreatAsRem</name>
-          <state/>
-        </option>
-        <option>
-          <name>IlinkTreatAsWarn</name>
-          <state/>
-        </option>
-        <option>
-          <name>IlinkTreatAsErr</name>
-          <state/>
-        </option>
-        <option>
-          <name>IlinkWarningsAreErrors</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IlinkUseExtraOptions</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IlinkExtraOptions</name>
-        </option>
-        <option>
-          <name>IlinkLowLevelInterfaceSlave</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>IlinkAutoLibEnable</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>IlinkAdditionalLibs</name>
-          <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/binary/netxduo/cortex_m7/iar/libnetxduo.a</state>
-          <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/binary/filex/cortex_m7/iar/libfilex.a</state>
-          <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/binary/threadx/cortex_m7/iar/libthreadx.a</state>
-        </option>
-        <option>
-          <name>IlinkOverrideProgramEntryLabel</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>IlinkProgramEntryLabelSelect</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IlinkProgramEntryLabel</name>
-          <state>Reset_Handler</state>
-        </option>
-        <option>
-          <name>DoFill</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>FillerByte</name>
-          <state>0xFF</state>
-        </option>
-        <option>
-          <name>FillerStart</name>
-          <state>0x0</state>
-        </option>
-        <option>
-          <name>FillerEnd</name>
-          <state>0x0</state>
-        </option>
-        <option>
-          <name>CrcSize</name>
-          <version>0</version>
-          <state>1</state>
-        </option>
-        <option>
-          <name>CrcAlign</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>CrcPoly</name>
-          <state>0x11021</state>
-        </option>
-        <option>
-          <name>CrcCompl</name>
-          <version>0</version>
-          <state>0</state>
-        </option>
-        <option>
-          <name>CrcBitOrder</name>
-          <version>0</version>
-          <state>0</state>
-        </option>
-        <option>
-          <name>CrcInitialValue</name>
-          <state>0x0</state>
-        </option>
-        <option>
-          <name>DoCrc</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IlinkBE8Slave</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>IlinkBufferedTerminalOutput</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>IlinkStdoutInterfaceSlave</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>CrcFullSize</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IlinkIElfToolPostProcess</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IlinkLogAutoLibSelect</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IlinkLogRedirSymbols</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IlinkLogUnusedFragments</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IlinkCrcReverseByteOrder</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IlinkCrcUseAsInput</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>IlinkOptInline</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IlinkOptExceptionsAllow</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>IlinkOptExceptionsForce</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IlinkCmsis</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>IlinkOptMergeDuplSections</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IlinkOptUseVfe</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>IlinkOptForceVfe</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IlinkStackAnalysisEnable</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IlinkStackControlFile</name>
-          <state/>
-        </option>
-        <option>
-          <name>IlinkStackCallGraphFile</name>
-          <state/>
-        </option>
-        <option>
-          <name>CrcAlgorithm</name>
-          <version>1</version>
-          <state>1</state>
-        </option>
-        <option>
-          <name>CrcUnitSize</name>
-          <version>0</version>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IlinkThreadsSlave</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>IlinkLogCallGraph</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IlinkIcfFile_AltDefault</name>
-          <state/>
-        </option>
-      </data>
-    </settings>
-    <settings>
-      <name>IARCHIVE</name>
-      <archiveVersion>0</archiveVersion>
-      <data>
-        <version>0</version>
-        <wantNonLocal>1</wantNonLocal>
-        <debug>1</debug>
-        <option>
-          <name>IarchiveInputs</name>
-          <state/>
-        </option>
-        <option>
-          <name>IarchiveOverride</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IarchiveOutput</name>
-          <state>###Unitialized###</state>
-        </option>
-      </data>
-    </settings>
-    <settings>
-      <name>BILINK</name>
-      <archiveVersion>0</archiveVersion>
-      <data/>
-    </settings>
-  </configuration>
-  <configuration>
     <name>flexspi_nor_debug</name>
     <toolchain>
       <name>ARM</name>
@@ -1221,7 +191,6 @@
           <state>PRINTF_ADVANCED_ENABLE=1</state>
           <state>SCANF_ADVANCED_ENABLE=0</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
-          <state>ASC_SERIALIZER_USE_CUSTOM_ALLOCATOR</state>
           <state>AZ_NO_PRECONDITION_CHECKING</state>
           <state>CRYPTO_USE_DRIVER_CAAM</state>
           <state>NX_INCLUDE_USER_DEFINE_FILE</state>
@@ -1360,6 +329,7 @@
           <state>$PROJ_DIR$/../azure_iot</state>
           <state>$PROJ_DIR$/../azure_iot/azure_iot_security_module</state>
           <state>$PROJ_DIR$/../azure_iot/azure_iot_security_module/inc</state>
+          <state>$PROJ_DIR$/../azure_iot/azure_iot_security_module/inc/configs/RTOS_BASE</state>
           <state>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc</state>
           <state>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/deps/flatcc/src/runtime</state>
           <state>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/deps/flatcc/include</state>
@@ -1384,12 +354,14 @@
           <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/addons/dns</state>
           <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/addons/ftp</state>
           <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/addons/http</state>
+          <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/addons/lwm2m</state>
           <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/addons/mdns</state>
           <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/addons/mqtt</state>
           <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/addons/nat</state>
           <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/addons/pop3</state>
           <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/addons/ppp</state>
           <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/addons/pppoe</state>
+          <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/addons/ptp</state>
           <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/addons/smtp</state>
           <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/addons/snmp</state>
           <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/addons/sntp</state>
@@ -1574,7 +546,7 @@
           <name>ADefines</name>
           <state>DEBUG</state>
           <state>__STARTUP_INITIALIZE_NONCACHEDATA</state>
-          <state>TX_ENABLE_FPU_SUPPORT</state>
+          <state>TX_ENABLE_FPU_SUPPORT=1</state>
         </option>
         <option>
           <name>AList</name>
@@ -2063,1036 +1035,6 @@
     </settings>
   </configuration>
   <configuration>
-    <name>sdram_txt_release</name>
-    <toolchain>
-      <name>ARM</name>
-    </toolchain>
-    <debug>0</debug>
-    <settings>
-      <name>General</name>
-      <archiveVersion>3</archiveVersion>
-      <data>
-        <version>24</version>
-        <wantNonLocal>1</wantNonLocal>
-        <debug>0</debug>
-        <option>
-          <name>ExePath</name>
-          <state>$PROJ_DIR$/sdram_txt_release</state>
-        </option>
-        <option>
-          <name>ObjPath</name>
-          <state>$PROJ_DIR$/sdram_txt_release/obj</state>
-        </option>
-        <option>
-          <name>ListPath</name>
-          <state>$PROJ_DIR$/sdram_txt_release/list</state>
-        </option>
-        <option>
-          <name>GEndianMode</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>Input variant</name>
-          <version>3</version>
-          <state>6</state>
-        </option>
-        <option>
-          <name>Input description</name>
-          <state>Automatic choice of formatter.</state>
-        </option>
-        <option>
-          <name>Output variant</name>
-          <version>2</version>
-          <state>5</state>
-        </option>
-        <option>
-          <name>Output description</name>
-          <state>Automatic choice of formatter.</state>
-        </option>
-        <option>
-          <name>GOutputBinary</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>OGCoreOrChip</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>GRuntimeLibSelect</name>
-          <version>0</version>
-          <state>1</state>
-        </option>
-        <option>
-          <name>GRuntimeLibSelectSlave</name>
-          <version>0</version>
-          <state>1</state>
-        </option>
-        <option>
-          <name>RTDescription</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>OGProductVersion</name>
-          <state>6.50.6.4952</state>
-        </option>
-        <option>
-          <name>OGLastSavedByProductVersion</name>
-          <state>7.60.1.11206</state>
-        </option>
-        <option>
-          <name>GeneralEnableMisra</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>GeneralMisraVerbose</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>OGChipSelectEditMenu</name>
-          <state>MIMXRT1166xxx6_M7	NXP MIMXRT1166xxx6_M7</state>
-        </option>
-        <option>
-          <name>GenLowLevelInterface</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>GEndianModeBE</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>OGBufferedTerminalOutput</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>GenStdoutInterface</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>GeneralMisraRules98</name>
-          <version>0</version>
-          <state>1000111110110101101110011100111111101110011011000101110111101101100111111111111100110011111001110111001111111111111111111111111</state>
-        </option>
-        <option>
-          <name>GeneralMisraVer</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>GeneralMisraRules04</name>
-          <version>0</version>
-          <state>011111110111111110111111110011011101111010111010111110001010101111110111111111010101111111101111111111110111110011111111011111111110111101111</state>
-        </option>
-        <option>
-          <name>RTConfigPath2</name>
-          <state>$TOOLKIT_DIR$\INC\c\DLib_Config_Normal.h</state>
-        </option>
-        <option>
-          <name>GBECoreSlave</name>
-          <version>24</version>
-          <state>41</state>
-        </option>
-        <option>
-          <name>OGUseCmsis</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>OGUseCmsisDspLib</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>GRuntimeLibThreads</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>CoreVariant</name>
-          <version>24</version>
-          <state>41</state>
-        </option>
-        <option>
-          <name>GFPUDeviceSlave</name>
-          <state>MIMXRT1166xxx6_M7	NXP MIMXRT1166xxx6_M7</state>
-        </option>
-        <option>
-          <name>FPU2</name>
-          <version>0</version>
-          <state>7</state>
-        </option>
-        <option>
-          <name>NrRegs</name>
-          <version>0</version>
-          <state>1</state>
-        </option>
-        <option>
-          <name>NEON</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>GFPUCoreSlave2</name>
-          <version>24</version>
-          <state>41</state>
-        </option>
-      </data>
-    </settings>
-    <settings>
-      <name>ICCARM</name>
-      <archiveVersion>2</archiveVersion>
-      <data>
-        <version>31</version>
-        <wantNonLocal>1</wantNonLocal>
-        <debug>0</debug>
-        <option>
-          <name>CCDefines</name>
-          <state>NDEBUG</state>
-          <state>USE_SDRAM</state>
-          <state>CPU_MIMXRT1166DVM6A_cm7</state>
-          <state>FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE</state>
-          <state>SDK_DEBUGCONSOLE_UART</state>
-          <state>PRINTF_FLOAT_ENABLE=1</state>
-          <state>SCANF_FLOAT_ENABLE=1</state>
-          <state>PRINTF_ADVANCED_ENABLE=1</state>
-          <state>SCANF_ADVANCED_ENABLE=0</state>
-          <state>SERIAL_PORT_TYPE_UART=1</state>
-          <state>ASC_SERIALIZER_USE_CUSTOM_ALLOCATOR</state>
-          <state>AZ_NO_PRECONDITION_CHECKING</state>
-          <state>CRYPTO_USE_DRIVER_CAAM</state>
-          <state>NX_INCLUDE_USER_DEFINE_FILE</state>
-          <state>FX_INCLUDE_USER_DEFINE_FILE</state>
-          <state>TX_INCLUDE_USER_DEFINE_FILE</state>
-          <state>MCUXPRESSO_SDK</state>
-        </option>
-        <option>
-          <name>CCPreprocFile</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>CCPreprocComments</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>CCPreprocLine</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>CCListCFile</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>CCListCMnemonics</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>CCListCMessages</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>CCListAssFile</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>CCListAssSource</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>CCEnableRemarks</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>CCDiagSuppress</name>
-          <state>Pa082,Pa050,Pe111</state>
-        </option>
-        <option>
-          <name>CCDiagRemark</name>
-          <state/>
-        </option>
-        <option>
-          <name>CCDiagWarning</name>
-          <state/>
-        </option>
-        <option>
-          <name>CCDiagError</name>
-          <state/>
-        </option>
-        <option>
-          <name>CCObjPrefix</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>CCAllowList</name>
-          <version>1</version>
-          <state>11111110</state>
-        </option>
-        <option>
-          <name>CCDebugInfo</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IEndianMode</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>IProcessor</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>IExtraOptionsCheck</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IExtraOptions</name>
-          <state/>
-        </option>
-        <option>
-          <name>CCLangConformance</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>CCSignedPlainChar</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>CCRequirePrototypes</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>CCMultibyteSupport</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>CCDiagWarnAreErr</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>CCCompilerRuntimeInfo</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IFpuProcessor</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>OutputFile</name>
-          <state>$FILE_BNAME$.o</state>
-        </option>
-        <option>
-          <name>CCLibConfigHeader</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>PreInclude</name>
-          <state/>
-        </option>
-        <option>
-          <name>CompilerMisraOverride</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>CCIncludePath2</name>
-          <state>$PROJ_DIR$/../azure_iot/azure-sdk-for-c/sdk/inc</state>
-          <state>$PROJ_DIR$/../azure_iot</state>
-          <state>$PROJ_DIR$/../azure_iot/azure_iot_security_module</state>
-          <state>$PROJ_DIR$/../azure_iot/azure_iot_security_module/inc</state>
-          <state>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc</state>
-          <state>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/deps/flatcc/src/runtime</state>
-          <state>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/deps/flatcc/include</state>
-          <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../../../../../components/phy/mdio/enet</state>
-          <state>$PROJ_DIR$/../../../../../../components/phy/device/phyksz8081</state>
-          <state>$PROJ_DIR$/../../../../../../components/phy/device/phyrtl8211f</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../components/lists</state>
-          <state>$PROJ_DIR$/../../../../../../components/uart</state>
-          <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/drivers/cm7</state>
-          <state>$PROJ_DIR$/../../../../xip</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/xip</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/utilities/debug_console</state>
-          <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/addons/auto_ip</state>
-          <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/addons/cloud</state>
-          <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/addons/BSD</state>
-          <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/addons/dhcp</state>
-          <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/addons/dns</state>
-          <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/addons/ftp</state>
-          <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/addons/http</state>
-          <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/addons/mdns</state>
-          <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/addons/mqtt</state>
-          <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/addons/nat</state>
-          <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/addons/pop3</state>
-          <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/addons/ppp</state>
-          <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/addons/pppoe</state>
-          <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/addons/smtp</state>
-          <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/addons/snmp</state>
-          <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/addons/sntp</state>
-          <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/addons/telnet</state>
-          <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/addons/tftp</state>
-          <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/addons/web</state>
-          <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/common/inc</state>
-          <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc</state>
-          <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/nx_secure/inc</state>
-          <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/nx_secure/ports</state>
-          <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/ports/cortex_m7/iar/inc</state>
-          <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/filex/common/inc</state>
-          <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/filex/ports/cortex_m7/iar/inc</state>
-          <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/threadx/common/inc</state>
-          <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/iar/inc</state>
-          <state>$PROJ_DIR$/../../../../../../components/phy</state>
-          <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
-        </option>
-        <option>
-          <name>CCStdIncCheck</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>CCCodeSection</name>
-          <state>.text</state>
-        </option>
-        <option>
-          <name>IInterwork2</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IProcessorMode2</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>CCOptLevel</name>
-          <state>2</state>
-        </option>
-        <option>
-          <name>CCOptStrategy</name>
-          <version>0</version>
-          <state>0</state>
-        </option>
-        <option>
-          <name>CCOptLevelSlave</name>
-          <state>2</state>
-        </option>
-        <option>
-          <name>CompilerMisraRules98</name>
-          <version>0</version>
-          <state>1000111110110101101110011100111111101110011011000101110111101101100111111111111100110011111001110111001111111111111111111111111</state>
-        </option>
-        <option>
-          <name>CompilerMisraRules04</name>
-          <version>0</version>
-          <state>111101110010111111111000110111111111111111111111111110010111101111010101111111111111111111111111101111111011111001111011111011111111111111111</state>
-        </option>
-        <option>
-          <name>CCPosIndRopi</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>CCPosIndRwpi</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>CCPosIndNoDynInit</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IccLang</name>
-          <state>2</state>
-        </option>
-        <option>
-          <name>IccCDialect</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>IccAllowVLA</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IccCppDialect</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IccExceptions</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IccRTTI</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IccStaticDestr</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>IccCppInlineSemantics</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IccCmsis</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>IccFloatSemantics</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>CCOptimizationNoSizeConstraints</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>CCNoLiteralPool</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>CCOptStrategySlave</name>
-          <version>0</version>
-          <state>0</state>
-        </option>
-        <option>
-          <name>CCGuardCalls</name>
-          <state>1</state>
-        </option>
-      </data>
-    </settings>
-    <settings>
-      <name>AARM</name>
-      <archiveVersion>2</archiveVersion>
-      <data>
-        <version>9</version>
-        <wantNonLocal>1</wantNonLocal>
-        <debug>0</debug>
-        <option>
-          <name>AObjPrefix</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>AEndian</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>ACaseSensitivity</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>MacroChars</name>
-          <version>0</version>
-          <state>3</state>
-        </option>
-        <option>
-          <name>AWarnEnable</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>AWarnWhat</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>AWarnOne</name>
-          <state/>
-        </option>
-        <option>
-          <name>AWarnRange1</name>
-          <state/>
-        </option>
-        <option>
-          <name>AWarnRange2</name>
-          <state/>
-        </option>
-        <option>
-          <name>ADebug</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>AltRegisterNames</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>ADefines</name>
-          <state>NDEBUG</state>
-          <state>__STARTUP_INITIALIZE_NONCACHEDATA</state>
-          <state>TX_ENABLE_FPU_SUPPORT</state>
-        </option>
-        <option>
-          <name>AList</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>AListHeader</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>AListing</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>Includes</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>MacDefs</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>MacExps</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>MacExec</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>OnlyAssed</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>MultiLine</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>PageLengthCheck</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>PageLength</name>
-          <state>80</state>
-        </option>
-        <option>
-          <name>TabSpacing</name>
-          <state>8</state>
-        </option>
-        <option>
-          <name>AXRef</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>AXRefDefines</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>AXRefInternal</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>AXRefDual</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>AProcessor</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>AFpuProcessor</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>AOutputFile</name>
-          <state>$FILE_BNAME$.o</state>
-        </option>
-        <option>
-          <name>AMultibyteSupport</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>ALimitErrorsCheck</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>ALimitErrorsEdit</name>
-          <state>100</state>
-        </option>
-        <option>
-          <name>AIgnoreStdInclude</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>AUserIncludes</name>
-        </option>
-        <option>
-          <name>AExtraOptionsCheckV2</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>AExtraOptionsV2</name>
-          <state/>
-        </option>
-        <option>
-          <name>AsmNoLiteralPool</name>
-          <state>0</state>
-        </option>
-      </data>
-    </settings>
-    <settings>
-      <name>OBJCOPY</name>
-      <archiveVersion>0</archiveVersion>
-      <data>
-        <version>1</version>
-        <wantNonLocal>1</wantNonLocal>
-        <debug>0</debug>
-        <option>
-          <name>OOCOutputFormat</name>
-          <version>3</version>
-          <state>0</state>
-        </option>
-        <option>
-          <name>OCOutputOverride</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>OOCOutputFile</name>
-          <state/>
-        </option>
-        <option>
-          <name>OOCCommandLineProducer</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>OOCObjCopyEnable</name>
-          <state>0</state>
-        </option>
-      </data>
-    </settings>
-    <settings>
-      <name>CUSTOM</name>
-      <archiveVersion>3</archiveVersion>
-      <data>
-        <extensions/>
-        <cmdline/>
-        <hasPrio>0</hasPrio>
-      </data>
-    </settings>
-    <settings>
-      <name>BICOMP</name>
-      <archiveVersion>0</archiveVersion>
-      <data/>
-    </settings>
-    <settings>
-      <name>BUILDACTION</name>
-      <archiveVersion>1</archiveVersion>
-      <data>
-        <prebuild/>
-        <postbuild/>
-      </data>
-    </settings>
-    <settings>
-      <name>ILINK</name>
-      <archiveVersion>0</archiveVersion>
-      <data>
-        <version>18</version>
-        <wantNonLocal>1</wantNonLocal>
-        <debug>0</debug>
-        <option>
-          <name>IlinkLibIOConfig</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>XLinkMisraHandler</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IlinkInputFileSlave</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IlinkOutputFile</name>
-          <state>azure_iot_embedded_sdk_pnp.out</state>
-        </option>
-        <option>
-          <name>IlinkDebugInfoEnable</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>IlinkKeepSymbols</name>
-          <state/>
-        </option>
-        <option>
-          <name>IlinkRawBinaryFile</name>
-          <state/>
-        </option>
-        <option>
-          <name>IlinkRawBinarySymbol</name>
-          <state/>
-        </option>
-        <option>
-          <name>IlinkRawBinarySegment</name>
-          <state/>
-        </option>
-        <option>
-          <name>IlinkRawBinaryAlign</name>
-          <state/>
-        </option>
-        <option>
-          <name>IlinkDefines</name>
-          <state/>
-        </option>
-        <option>
-          <name>IlinkConfigDefines</name>
-        </option>
-        <option>
-          <name>IlinkMapFile</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>IlinkLogFile</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IlinkLogInitialization</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IlinkLogModule</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IlinkLogSection</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IlinkLogVeneer</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IlinkIcfOverride</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>IlinkIcfFile</name>
-          <state>$PROJ_DIR$/MIMXRT1166xxxxx_cm7_sdram_txt.icf</state>
-        </option>
-        <option>
-          <name>IlinkIcfFileSlave</name>
-          <state/>
-        </option>
-        <option>
-          <name>IlinkEnableRemarks</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IlinkSuppressDiags</name>
-          <state/>
-        </option>
-        <option>
-          <name>IlinkTreatAsRem</name>
-          <state/>
-        </option>
-        <option>
-          <name>IlinkTreatAsWarn</name>
-          <state/>
-        </option>
-        <option>
-          <name>IlinkTreatAsErr</name>
-          <state/>
-        </option>
-        <option>
-          <name>IlinkWarningsAreErrors</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IlinkUseExtraOptions</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IlinkExtraOptions</name>
-        </option>
-        <option>
-          <name>IlinkLowLevelInterfaceSlave</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>IlinkAutoLibEnable</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>IlinkAdditionalLibs</name>
-          <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/binary/netxduo/cortex_m7/iar/libnetxduo.a</state>
-          <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/binary/filex/cortex_m7/iar/libfilex.a</state>
-          <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/binary/threadx/cortex_m7/iar/libthreadx.a</state>
-        </option>
-        <option>
-          <name>IlinkOverrideProgramEntryLabel</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>IlinkProgramEntryLabelSelect</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IlinkProgramEntryLabel</name>
-          <state>Reset_Handler</state>
-        </option>
-        <option>
-          <name>DoFill</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>FillerByte</name>
-          <state>0xFF</state>
-        </option>
-        <option>
-          <name>FillerStart</name>
-          <state>0x0</state>
-        </option>
-        <option>
-          <name>FillerEnd</name>
-          <state>0x0</state>
-        </option>
-        <option>
-          <name>CrcSize</name>
-          <version>0</version>
-          <state>1</state>
-        </option>
-        <option>
-          <name>CrcAlign</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>CrcPoly</name>
-          <state>0x11021</state>
-        </option>
-        <option>
-          <name>CrcCompl</name>
-          <version>0</version>
-          <state>0</state>
-        </option>
-        <option>
-          <name>CrcBitOrder</name>
-          <version>0</version>
-          <state>0</state>
-        </option>
-        <option>
-          <name>CrcInitialValue</name>
-          <state>0x0</state>
-        </option>
-        <option>
-          <name>DoCrc</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IlinkBE8Slave</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>IlinkBufferedTerminalOutput</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>IlinkStdoutInterfaceSlave</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>CrcFullSize</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IlinkIElfToolPostProcess</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IlinkLogAutoLibSelect</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IlinkLogRedirSymbols</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IlinkLogUnusedFragments</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IlinkCrcReverseByteOrder</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IlinkCrcUseAsInput</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>IlinkOptInline</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>IlinkOptExceptionsAllow</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>IlinkOptExceptionsForce</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IlinkCmsis</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>IlinkOptMergeDuplSections</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IlinkOptUseVfe</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>IlinkOptForceVfe</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IlinkStackAnalysisEnable</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IlinkStackControlFile</name>
-          <state/>
-        </option>
-        <option>
-          <name>IlinkStackCallGraphFile</name>
-          <state/>
-        </option>
-        <option>
-          <name>CrcAlgorithm</name>
-          <version>1</version>
-          <state>1</state>
-        </option>
-        <option>
-          <name>CrcUnitSize</name>
-          <version>0</version>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IlinkThreadsSlave</name>
-          <state>1</state>
-        </option>
-        <option>
-          <name>IlinkLogCallGraph</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IlinkIcfFile_AltDefault</name>
-          <state/>
-        </option>
-      </data>
-    </settings>
-    <settings>
-      <name>IARCHIVE</name>
-      <archiveVersion>0</archiveVersion>
-      <data>
-        <version>0</version>
-        <wantNonLocal>1</wantNonLocal>
-        <debug>0</debug>
-        <option>
-          <name>IarchiveInputs</name>
-          <state/>
-        </option>
-        <option>
-          <name>IarchiveOverride</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IarchiveOutput</name>
-          <state/>
-        </option>
-      </data>
-    </settings>
-    <settings>
-      <name>BILINK</name>
-      <archiveVersion>0</archiveVersion>
-      <data/>
-    </settings>
-  </configuration>
-  <configuration>
     <name>flexspi_nor_release</name>
     <toolchain>
       <name>ARM</name>
@@ -3282,7 +1224,6 @@
           <state>PRINTF_ADVANCED_ENABLE=1</state>
           <state>SCANF_ADVANCED_ENABLE=0</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
-          <state>ASC_SERIALIZER_USE_CUSTOM_ALLOCATOR</state>
           <state>AZ_NO_PRECONDITION_CHECKING</state>
           <state>CRYPTO_USE_DRIVER_CAAM</state>
           <state>NX_INCLUDE_USER_DEFINE_FILE</state>
@@ -3421,6 +1362,7 @@
           <state>$PROJ_DIR$/../azure_iot</state>
           <state>$PROJ_DIR$/../azure_iot/azure_iot_security_module</state>
           <state>$PROJ_DIR$/../azure_iot/azure_iot_security_module/inc</state>
+          <state>$PROJ_DIR$/../azure_iot/azure_iot_security_module/inc/configs/RTOS_BASE</state>
           <state>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc</state>
           <state>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/deps/flatcc/src/runtime</state>
           <state>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/deps/flatcc/include</state>
@@ -3445,12 +1387,14 @@
           <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/addons/dns</state>
           <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/addons/ftp</state>
           <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/addons/http</state>
+          <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/addons/lwm2m</state>
           <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/addons/mdns</state>
           <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/addons/mqtt</state>
           <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/addons/nat</state>
           <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/addons/pop3</state>
           <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/addons/ppp</state>
           <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/addons/pppoe</state>
+          <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/addons/ptp</state>
           <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/addons/smtp</state>
           <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/addons/snmp</state>
           <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/addons/sntp</state>
@@ -3635,7 +1579,7 @@
           <name>ADefines</name>
           <state>NDEBUG</state>
           <state>__STARTUP_INITIALIZE_NONCACHEDATA</state>
-          <state>TX_ENABLE_FPU_SUPPORT</state>
+          <state>TX_ENABLE_FPU_SUPPORT=1</state>
         </option>
         <option>
           <name>AList</name>
@@ -4133,42 +2077,63 @@
           <name>inc</name>
           <group>
             <name>azure</name>
+            <file>
+              <name>$PROJ_DIR$/../azure_iot/azure-sdk-for-c/sdk/inc/azure/az_core.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../azure_iot/azure-sdk-for-c/sdk/inc/azure/az_iot.h</name>
+            </file>
             <group>
               <name>core</name>
               <file>
-                <name>$PROJ_DIR$/../azure_iot/azure-sdk-for-c/sdk/inc/azure/core/az_result.h</name>
+                <name>$PROJ_DIR$/../azure_iot/azure-sdk-for-c/sdk/inc/azure/core/_az_cfg.h</name>
               </file>
               <file>
-                <name>$PROJ_DIR$/../azure_iot/azure-sdk-for-c/sdk/inc/azure/core/az_http_transport.h</name>
+                <name>$PROJ_DIR$/../azure_iot/azure-sdk-for-c/sdk/inc/azure/core/_az_cfg_prefix.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../azure_iot/azure-sdk-for-c/sdk/inc/azure/core/_az_cfg_suffix.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../azure_iot/azure-sdk-for-c/sdk/inc/azure/core/az_config.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../azure_iot/azure-sdk-for-c/sdk/inc/azure/core/az_context.h</name>
               </file>
               <file>
                 <name>$PROJ_DIR$/../azure_iot/azure-sdk-for-c/sdk/inc/azure/core/az_credentials.h</name>
               </file>
               <file>
-                <name>$PROJ_DIR$/../azure_iot/azure-sdk-for-c/sdk/inc/azure/core/az_span.h</name>
+                <name>$PROJ_DIR$/../azure_iot/azure-sdk-for-c/sdk/inc/azure/core/az_http.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../azure_iot/azure-sdk-for-c/sdk/inc/azure/core/az_http_transport.h</name>
               </file>
               <file>
                 <name>$PROJ_DIR$/../azure_iot/azure-sdk-for-c/sdk/inc/azure/core/az_json.h</name>
               </file>
               <file>
-                <name>$PROJ_DIR$/../azure_iot/azure-sdk-for-c/sdk/inc/azure/core/_az_cfg_suffix.h</name>
+                <name>$PROJ_DIR$/../azure_iot/azure-sdk-for-c/sdk/inc/azure/core/az_log.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../azure_iot/azure-sdk-for-c/sdk/inc/azure/core/az_platform.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../azure_iot/azure-sdk-for-c/sdk/inc/azure/core/az_precondition.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../azure_iot/azure-sdk-for-c/sdk/inc/azure/core/az_result.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../azure_iot/azure-sdk-for-c/sdk/inc/azure/core/az_span.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../azure_iot/azure-sdk-for-c/sdk/inc/azure/core/az_version.h</name>
               </file>
               <group>
                 <name>internal</name>
                 <file>
-                  <name>$PROJ_DIR$/../azure_iot/azure-sdk-for-c/sdk/inc/azure/core/internal/az_span_internal.h</name>
-                </file>
-                <file>
-                  <name>$PROJ_DIR$/../azure_iot/azure-sdk-for-c/sdk/inc/azure/core/internal/az_result_internal.h</name>
-                </file>
-                <file>
                   <name>$PROJ_DIR$/../azure_iot/azure-sdk-for-c/sdk/inc/azure/core/internal/az_config_internal.h</name>
-                </file>
-                <file>
-                  <name>$PROJ_DIR$/../azure_iot/azure-sdk-for-c/sdk/inc/azure/core/internal/az_log_internal.h</name>
-                </file>
-                <file>
-                  <name>$PROJ_DIR$/../azure_iot/azure-sdk-for-c/sdk/inc/azure/core/internal/az_precondition_internal.h</name>
                 </file>
                 <file>
                   <name>$PROJ_DIR$/../azure_iot/azure-sdk-for-c/sdk/inc/azure/core/internal/az_credentials_internal.h</name>
@@ -4177,54 +2142,39 @@
                   <name>$PROJ_DIR$/../azure_iot/azure-sdk-for-c/sdk/inc/azure/core/internal/az_http_internal.h</name>
                 </file>
                 <file>
+                  <name>$PROJ_DIR$/../azure_iot/azure-sdk-for-c/sdk/inc/azure/core/internal/az_log_internal.h</name>
+                </file>
+                <file>
+                  <name>$PROJ_DIR$/../azure_iot/azure-sdk-for-c/sdk/inc/azure/core/internal/az_precondition_internal.h</name>
+                </file>
+                <file>
+                  <name>$PROJ_DIR$/../azure_iot/azure-sdk-for-c/sdk/inc/azure/core/internal/az_result_internal.h</name>
+                </file>
+                <file>
                   <name>$PROJ_DIR$/../azure_iot/azure-sdk-for-c/sdk/inc/azure/core/internal/az_retry_internal.h</name>
                 </file>
+                <file>
+                  <name>$PROJ_DIR$/../azure_iot/azure-sdk-for-c/sdk/inc/azure/core/internal/az_span_internal.h</name>
+                </file>
               </group>
-              <file>
-                <name>$PROJ_DIR$/../azure_iot/azure-sdk-for-c/sdk/inc/azure/core/az_precondition.h</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../azure_iot/azure-sdk-for-c/sdk/inc/azure/core/az_platform.h</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../azure_iot/azure-sdk-for-c/sdk/inc/azure/core/_az_cfg_prefix.h</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../azure_iot/azure-sdk-for-c/sdk/inc/azure/core/az_log.h</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../azure_iot/azure-sdk-for-c/sdk/inc/azure/core/az_version.h</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../azure_iot/azure-sdk-for-c/sdk/inc/azure/core/az_config.h</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../azure_iot/azure-sdk-for-c/sdk/inc/azure/core/az_http.h</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../azure_iot/azure-sdk-for-c/sdk/inc/azure/core/_az_cfg.h</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../azure_iot/azure-sdk-for-c/sdk/inc/azure/core/az_context.h</name>
-              </file>
             </group>
             <group>
               <name>iot</name>
-              <group>
-                <name>internal</name>
-                <file>
-                  <name>$PROJ_DIR$/../azure_iot/azure-sdk-for-c/sdk/inc/azure/iot/internal/az_iot_common_internal.h</name>
-                </file>
-              </group>
-              <file>
-                <name>$PROJ_DIR$/../azure_iot/azure-sdk-for-c/sdk/inc/azure/iot/az_iot_provisioning_client.h</name>
-              </file>
               <file>
                 <name>$PROJ_DIR$/../azure_iot/azure-sdk-for-c/sdk/inc/azure/iot/az_iot_common.h</name>
               </file>
               <file>
                 <name>$PROJ_DIR$/../azure_iot/azure-sdk-for-c/sdk/inc/azure/iot/az_iot_hub_client.h</name>
               </file>
+              <file>
+                <name>$PROJ_DIR$/../azure_iot/azure-sdk-for-c/sdk/inc/azure/iot/az_iot_provisioning_client.h</name>
+              </file>
+              <group>
+                <name>internal</name>
+                <file>
+                  <name>$PROJ_DIR$/../azure_iot/azure-sdk-for-c/sdk/inc/azure/iot/internal/az_iot_common_internal.h</name>
+                </file>
+              </group>
             </group>
           </group>
         </group>
@@ -4235,28 +2185,13 @@
             <group>
               <name>core</name>
               <file>
-                <name>$PROJ_DIR$/../azure_iot/azure-sdk-for-c/sdk/src/azure/core/az_http_header_validation_private.h</name>
+                <name>$PROJ_DIR$/../azure_iot/azure-sdk-for-c/sdk/src/azure/core/az_context.c</name>
               </file>
               <file>
                 <name>$PROJ_DIR$/../azure_iot/azure-sdk-for-c/sdk/src/azure/core/az_hex_private.h</name>
               </file>
               <file>
-                <name>$PROJ_DIR$/../azure_iot/azure-sdk-for-c/sdk/src/azure/core/az_json_private.h</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../azure_iot/azure-sdk-for-c/sdk/src/azure/core/az_span_private.h</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../azure_iot/azure-sdk-for-c/sdk/src/azure/core/az_http_policy_logging_private.h</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../azure_iot/azure-sdk-for-c/sdk/src/azure/core/az_http_private.h</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../azure_iot/azure-sdk-for-c/sdk/src/azure/core/az_precondition.c</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../azure_iot/azure-sdk-for-c/sdk/src/azure/core/az_http_request.c</name>
+                <name>$PROJ_DIR$/../azure_iot/azure-sdk-for-c/sdk/src/azure/core/az_http_header_validation_private.h</name>
               </file>
               <file>
                 <name>$PROJ_DIR$/../azure_iot/azure-sdk-for-c/sdk/src/azure/core/az_http_pipeline.c</name>
@@ -4265,44 +2200,50 @@
                 <name>$PROJ_DIR$/../azure_iot/azure-sdk-for-c/sdk/src/azure/core/az_http_policy.c</name>
               </file>
               <file>
-                <name>$PROJ_DIR$/../azure_iot/azure-sdk-for-c/sdk/src/azure/core/az_context.c</name>
+                <name>$PROJ_DIR$/../azure_iot/azure-sdk-for-c/sdk/src/azure/core/az_http_policy_logging.c</name>
               </file>
               <file>
-                <name>$PROJ_DIR$/../azure_iot/azure-sdk-for-c/sdk/src/azure/core/az_json_writer.c</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../azure_iot/azure-sdk-for-c/sdk/src/azure/core/az_json_token.c</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../azure_iot/azure-sdk-for-c/sdk/src/azure/core/az_log.c</name>
+                <name>$PROJ_DIR$/../azure_iot/azure-sdk-for-c/sdk/src/azure/core/az_http_policy_logging_private.h</name>
               </file>
               <file>
                 <name>$PROJ_DIR$/../azure_iot/azure-sdk-for-c/sdk/src/azure/core/az_http_policy_retry.c</name>
               </file>
               <file>
-                <name>$PROJ_DIR$/../azure_iot/azure-sdk-for-c/sdk/src/azure/core/az_span.c</name>
+                <name>$PROJ_DIR$/../azure_iot/azure-sdk-for-c/sdk/src/azure/core/az_http_private.h</name>
               </file>
               <file>
-                <name>$PROJ_DIR$/../azure_iot/azure-sdk-for-c/sdk/src/azure/core/az_http_policy_logging.c</name>
+                <name>$PROJ_DIR$/../azure_iot/azure-sdk-for-c/sdk/src/azure/core/az_http_request.c</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../azure_iot/azure-sdk-for-c/sdk/src/azure/core/az_http_response.c</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../azure_iot/azure-sdk-for-c/sdk/src/azure/core/az_json_private.h</name>
               </file>
               <file>
                 <name>$PROJ_DIR$/../azure_iot/azure-sdk-for-c/sdk/src/azure/core/az_json_reader.c</name>
               </file>
               <file>
-                <name>$PROJ_DIR$/../azure_iot/azure-sdk-for-c/sdk/src/azure/core/az_http_response.c</name>
+                <name>$PROJ_DIR$/../azure_iot/azure-sdk-for-c/sdk/src/azure/core/az_json_token.c</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../azure_iot/azure-sdk-for-c/sdk/src/azure/core/az_json_writer.c</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../azure_iot/azure-sdk-for-c/sdk/src/azure/core/az_log.c</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../azure_iot/azure-sdk-for-c/sdk/src/azure/core/az_precondition.c</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../azure_iot/azure-sdk-for-c/sdk/src/azure/core/az_span.c</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../azure_iot/azure-sdk-for-c/sdk/src/azure/core/az_span_private.h</name>
               </file>
             </group>
             <group>
               <name>iot</name>
-              <file>
-                <name>$PROJ_DIR$/../azure_iot/azure-sdk-for-c/sdk/src/azure/iot/az_iot_provisioning_client.c</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../azure_iot/azure-sdk-for-c/sdk/src/azure/iot/az_iot_hub_client_telemetry.c</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../azure_iot/azure-sdk-for-c/sdk/src/azure/iot/az_iot_provisioning_client_sas.c</name>
-              </file>
               <file>
                 <name>$PROJ_DIR$/../azure_iot/azure-sdk-for-c/sdk/src/azure/iot/az_iot_common.c</name>
               </file>
@@ -4313,41 +2254,50 @@
                 <name>$PROJ_DIR$/../azure_iot/azure-sdk-for-c/sdk/src/azure/iot/az_iot_hub_client_c2d.c</name>
               </file>
               <file>
-                <name>$PROJ_DIR$/../azure_iot/azure-sdk-for-c/sdk/src/azure/iot/az_iot_hub_client_sas.c</name>
-              </file>
-              <file>
                 <name>$PROJ_DIR$/../azure_iot/azure-sdk-for-c/sdk/src/azure/iot/az_iot_hub_client_methods.c</name>
               </file>
               <file>
+                <name>$PROJ_DIR$/../azure_iot/azure-sdk-for-c/sdk/src/azure/iot/az_iot_hub_client_sas.c</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../azure_iot/azure-sdk-for-c/sdk/src/azure/iot/az_iot_hub_client_telemetry.c</name>
+              </file>
+              <file>
                 <name>$PROJ_DIR$/../azure_iot/azure-sdk-for-c/sdk/src/azure/iot/az_iot_hub_client_twin.c</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../azure_iot/azure-sdk-for-c/sdk/src/azure/iot/az_iot_provisioning_client.c</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../azure_iot/azure-sdk-for-c/sdk/src/azure/iot/az_iot_provisioning_client_sas.c</name>
               </file>
             </group>
             <group>
               <name>platform</name>
               <file>
-                <name>$PROJ_DIR$/../azure_iot/azure-sdk-for-c/sdk/src/azure/platform/az_noplatform.c</name>
+                <name>$PROJ_DIR$/../azure_iot/azure-sdk-for-c/sdk/src/azure/platform/az_nohttp.c</name>
               </file>
               <file>
-                <name>$PROJ_DIR$/../azure_iot/azure-sdk-for-c/sdk/src/azure/platform/az_nohttp.c</name>
+                <name>$PROJ_DIR$/../azure_iot/azure-sdk-for-c/sdk/src/azure/platform/az_noplatform.c</name>
               </file>
             </group>
           </group>
         </group>
       </group>
     </group>
-    <file>
-      <name>$PROJ_DIR$/../azure_iot/nx_azure_iot_hub_client.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../azure_iot/nx_azure_iot.h</name>
-    </file>
     <group>
       <name>azure_iot_security_module</name>
       <group>
         <name>inc</name>
-        <file>
-          <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/inc/asc_version.h</name>
-        </file>
+        <group>
+          <name>configs</name>
+          <group>
+            <name>RTOS_BASE</name>
+            <file>
+              <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/inc/configs/RTOS_BASE/asc_config.h</name>
+            </file>
+          </group>
+        </group>
         <group>
           <name>iot_security_module</name>
           <group>
@@ -4363,25 +2313,166 @@
             <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/inc/iot_security_module/mti.h</name>
           </file>
         </group>
-        <file>
-          <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/inc/asc_port.h</name>
-        </file>
       </group>
       <group>
         <name>iot-security-module-core</name>
         <group>
+          <name>deps</name>
+          <group>
+            <name>flatcc</name>
+            <group>
+              <name>include</name>
+              <group>
+                <name>flatcc</name>
+                <file>
+                  <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/deps/flatcc/include/flatcc/flatcc_accessors.h</name>
+                </file>
+                <file>
+                  <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/deps/flatcc/include/flatcc/flatcc_alloc.h</name>
+                </file>
+                <file>
+                  <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/deps/flatcc/include/flatcc/flatcc_assert.h</name>
+                </file>
+                <file>
+                  <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/deps/flatcc/include/flatcc/flatcc_builder.h</name>
+                </file>
+                <file>
+                  <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/deps/flatcc/include/flatcc/flatcc_emitter.h</name>
+                </file>
+                <file>
+                  <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/deps/flatcc/include/flatcc/flatcc_endian.h</name>
+                </file>
+                <file>
+                  <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/deps/flatcc/include/flatcc/flatcc_epilogue.h</name>
+                </file>
+                <file>
+                  <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/deps/flatcc/include/flatcc/flatcc_flatbuffers.h</name>
+                </file>
+                <file>
+                  <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/deps/flatcc/include/flatcc/flatcc_identifier.h</name>
+                </file>
+                <file>
+                  <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/deps/flatcc/include/flatcc/flatcc_iov.h</name>
+                </file>
+                <file>
+                  <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/deps/flatcc/include/flatcc/flatcc_prologue.h</name>
+                </file>
+                <file>
+                  <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/deps/flatcc/include/flatcc/flatcc_refmap.h</name>
+                </file>
+                <file>
+                  <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/deps/flatcc/include/flatcc/flatcc_rtconfig.h</name>
+                </file>
+                <file>
+                  <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/deps/flatcc/include/flatcc/flatcc_types.h</name>
+                </file>
+                <group>
+                  <name>portable</name>
+                  <file>
+                    <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/deps/flatcc/include/flatcc/portable/paligned_alloc.h</name>
+                  </file>
+                  <file>
+                    <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/deps/flatcc/include/flatcc/portable/pdiagnostic.h</name>
+                  </file>
+                  <file>
+                    <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/deps/flatcc/include/flatcc/portable/pdiagnostic_pop.h</name>
+                  </file>
+                  <file>
+                    <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/deps/flatcc/include/flatcc/portable/pdiagnostic_push.h</name>
+                  </file>
+                  <file>
+                    <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/deps/flatcc/include/flatcc/portable/pendian.h</name>
+                  </file>
+                  <file>
+                    <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/deps/flatcc/include/flatcc/portable/pendian_detect.h</name>
+                  </file>
+                  <file>
+                    <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/deps/flatcc/include/flatcc/portable/pstatic_assert.h</name>
+                  </file>
+                  <file>
+                    <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/deps/flatcc/include/flatcc/portable/pstdalign.h</name>
+                  </file>
+                  <file>
+                    <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/deps/flatcc/include/flatcc/portable/pstdint.h</name>
+                  </file>
+                  <file>
+                    <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/deps/flatcc/include/flatcc/portable/pwarnings.h</name>
+                  </file>
+                </group>
+              </group>
+            </group>
+            <group>
+              <name>src</name>
+              <group>
+                <name>runtime</name>
+                <file>
+                  <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/deps/flatcc/src/runtime/builder.c</name>
+                </file>
+                <file>
+                  <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/deps/flatcc/src/runtime/emitter.c</name>
+                </file>
+                <file>
+                  <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/deps/flatcc/src/runtime/refmap.c</name>
+                </file>
+              </group>
+            </group>
+          </group>
+        </group>
+        <group>
           <name>inc</name>
           <group>
             <name>asc_security_core</name>
+            <file>
+              <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/asc_result.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/collector.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/collector_collection.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/collectors_info.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/component_id.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/component_info.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/components_factory.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/components_factory_declarations.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/components_factory_enum.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/components_factory_type.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/components_manager.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/core.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/logger.h</name>
+            </file>
             <group>
               <name>model</name>
+              <file>
+                <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/model/mti.h</name>
+              </file>
               <group>
                 <name>objects</name>
                 <file>
-                  <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/model/objects/objects.h</name>
+                  <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/model/objects/network_activity.h</name>
                 </file>
                 <file>
-                  <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/model/objects/network_activity.h</name>
+                  <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/model/objects/objects.h</name>
                 </file>
                 <file>
                   <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/model/objects/system_information.h</name>
@@ -4390,305 +2481,290 @@
                   <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/model/objects/transport_protocol.h</name>
                 </file>
               </group>
-              <file>
-                <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/model/security_message.h</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/model/mti.h</name>
-              </file>
               <group>
                 <name>schema</name>
-                <file>
-                  <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/model/schema/protocol_json_parser.h</name>
-                </file>
-                <file>
-                  <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/model/schema/uuid_json_parser.h</name>
-                </file>
-                <file>
-                  <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/model/schema/heartbeat_builder.h</name>
-                </file>
-                <file>
-                  <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/model/schema/system_information_reader.h</name>
-                </file>
-                <file>
-                  <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/model/schema/system_information_builder.h</name>
-                </file>
                 <file>
                   <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/model/schema/baseline_builder.h</name>
                 </file>
                 <file>
-                  <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/model/schema/uuid_reader.h</name>
+                  <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/model/schema/baseline_json_parser.h</name>
                 </file>
                 <file>
-                  <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/model/schema/heartbeat_json_parser.h</name>
-                </file>
-                <file>
-                  <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/model/schema/listening_ports_builder.h</name>
-                </file>
-                <file>
-                  <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/model/schema/network_activity_json_parser.h</name>
-                </file>
-                <file>
-                  <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/model/schema/message_json_parser.h</name>
-                </file>
-                <file>
-                  <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/model/schema/heartbeat_reader.h</name>
-                </file>
-                <file>
-                  <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/model/schema/system_information_json_parser.h</name>
-                </file>
-                <file>
-                  <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/model/schema/heartbeat_json_printer.h</name>
-                </file>
-                <file>
-                  <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/model/schema/uuid_builder.h</name>
-                </file>
-                <file>
-                  <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/model/schema/flatbuffers_common_reader.h</name>
-                </file>
-                <file>
-                  <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/model/schema/uuid_json_printer.h</name>
-                </file>
-                <file>
-                  <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/model/schema/event_builder.h</name>
-                </file>
-                <file>
-                  <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/model/schema/flatbuffers_common_builder.h</name>
-                </file>
-                <file>
-                  <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/model/schema/protocol_reader.h</name>
-                </file>
-                <file>
-                  <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/model/schema/event_json_parser.h</name>
-                </file>
-                <file>
-                  <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/model/schema/protocol_json_printer.h</name>
-                </file>
-                <file>
-                  <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/model/schema/network_activity_reader.h</name>
-                </file>
-                <file>
-                  <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/model/schema/payload_json_parser.h</name>
-                </file>
-                <file>
-                  <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/model/schema/payload_reader.h</name>
-                </file>
-                <file>
-                  <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/model/schema/event_json_printer.h</name>
-                </file>
-                <file>
-                  <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/model/schema/protocol_builder.h</name>
-                </file>
-                <file>
-                  <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/model/schema/event_reader.h</name>
-                </file>
-                <file>
-                  <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/model/schema/message_builder.h</name>
-                </file>
-                <file>
-                  <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/model/schema/payload_json_printer.h</name>
-                </file>
-                <file>
-                  <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/model/schema/listening_ports_reader.h</name>
-                </file>
-                <file>
-                  <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/model/schema/message_reader.h</name>
+                  <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/model/schema/baseline_json_printer.h</name>
                 </file>
                 <file>
                   <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/model/schema/baseline_reader.h</name>
                 </file>
                 <file>
+                  <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/model/schema/event_builder.h</name>
+                </file>
+                <file>
+                  <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/model/schema/event_json_parser.h</name>
+                </file>
+                <file>
+                  <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/model/schema/event_json_printer.h</name>
+                </file>
+                <file>
+                  <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/model/schema/event_reader.h</name>
+                </file>
+                <file>
+                  <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/model/schema/flatbuffers_common_builder.h</name>
+                </file>
+                <file>
+                  <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/model/schema/flatbuffers_common_reader.h</name>
+                </file>
+                <file>
+                  <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/model/schema/heartbeat_builder.h</name>
+                </file>
+                <file>
+                  <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/model/schema/heartbeat_json_parser.h</name>
+                </file>
+                <file>
+                  <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/model/schema/heartbeat_json_printer.h</name>
+                </file>
+                <file>
+                  <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/model/schema/heartbeat_reader.h</name>
+                </file>
+                <file>
+                  <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/model/schema/listening_ports_builder.h</name>
+                </file>
+                <file>
+                  <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/model/schema/listening_ports_json_parser.h</name>
+                </file>
+                <file>
+                  <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/model/schema/listening_ports_json_printer.h</name>
+                </file>
+                <file>
+                  <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/model/schema/listening_ports_reader.h</name>
+                </file>
+                <file>
+                  <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/model/schema/log_builder.h</name>
+                </file>
+                <file>
+                  <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/model/schema/log_json_parser.h</name>
+                </file>
+                <file>
+                  <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/model/schema/log_json_printer.h</name>
+                </file>
+                <file>
+                  <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/model/schema/log_reader.h</name>
+                </file>
+                <file>
+                  <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/model/schema/message_builder.h</name>
+                </file>
+                <file>
+                  <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/model/schema/message_json_parser.h</name>
+                </file>
+                <file>
+                  <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/model/schema/message_json_printer.h</name>
+                </file>
+                <file>
+                  <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/model/schema/message_reader.h</name>
+                </file>
+                <file>
                   <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/model/schema/network_activity_builder.h</name>
+                </file>
+                <file>
+                  <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/model/schema/network_activity_json_parser.h</name>
                 </file>
                 <file>
                   <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/model/schema/network_activity_json_printer.h</name>
                 </file>
                 <file>
-                  <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/model/schema/system_information_json_printer.h</name>
+                  <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/model/schema/network_activity_reader.h</name>
                 </file>
                 <file>
                   <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/model/schema/payload_builder.h</name>
                 </file>
                 <file>
-                  <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/model/schema/message_json_printer.h</name>
+                  <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/model/schema/payload_json_parser.h</name>
+                </file>
+                <file>
+                  <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/model/schema/payload_json_printer.h</name>
+                </file>
+                <file>
+                  <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/model/schema/payload_reader.h</name>
+                </file>
+                <file>
+                  <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/model/schema/process_builder.h</name>
+                </file>
+                <file>
+                  <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/model/schema/process_event_builder.h</name>
+                </file>
+                <file>
+                  <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/model/schema/process_event_json_parser.h</name>
+                </file>
+                <file>
+                  <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/model/schema/process_event_json_printer.h</name>
+                </file>
+                <file>
+                  <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/model/schema/process_event_reader.h</name>
+                </file>
+                <file>
+                  <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/model/schema/process_event_type_builder.h</name>
+                </file>
+                <file>
+                  <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/model/schema/process_event_type_json_parser.h</name>
+                </file>
+                <file>
+                  <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/model/schema/process_event_type_json_printer.h</name>
+                </file>
+                <file>
+                  <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/model/schema/process_event_type_reader.h</name>
+                </file>
+                <file>
+                  <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/model/schema/process_json_parser.h</name>
+                </file>
+                <file>
+                  <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/model/schema/process_json_printer.h</name>
+                </file>
+                <file>
+                  <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/model/schema/process_reader.h</name>
+                </file>
+                <file>
+                  <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/model/schema/protocol_builder.h</name>
+                </file>
+                <file>
+                  <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/model/schema/protocol_json_parser.h</name>
+                </file>
+                <file>
+                  <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/model/schema/protocol_json_printer.h</name>
+                </file>
+                <file>
+                  <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/model/schema/protocol_reader.h</name>
+                </file>
+                <file>
+                  <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/model/schema/system_information_builder.h</name>
+                </file>
+                <file>
+                  <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/model/schema/system_information_json_parser.h</name>
+                </file>
+                <file>
+                  <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/model/schema/system_information_json_printer.h</name>
+                </file>
+                <file>
+                  <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/model/schema/system_information_reader.h</name>
+                </file>
+                <file>
+                  <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/model/schema/uuid_builder.h</name>
+                </file>
+                <file>
+                  <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/model/schema/uuid_json_parser.h</name>
+                </file>
+                <file>
+                  <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/model/schema/uuid_json_printer.h</name>
+                </file>
+                <file>
+                  <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/model/schema/uuid_reader.h</name>
                 </file>
               </group>
-            </group>
-            <group>
-              <name>collectors</name>
               <file>
-                <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/collectors/heartbeat.h</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/collectors/network_activity.h</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/collectors/system_information.h</name>
+                <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/model/security_message.h</name>
               </file>
             </group>
             <file>
-              <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/collector_collection_internal.h</name>
+              <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/object_pool.h</name>
             </file>
             <file>
-              <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/collector_collection.h</name>
+              <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/object_pool_def.h</name>
             </file>
             <file>
               <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/object_pool_dynamic.h</name>
             </file>
             <file>
-              <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/collectors_headers.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/core.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/collectors_info.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/configuration.h</name>
-            </file>
-            <file>
               <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/object_pool_static.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/object_pool.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/logger.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/asc_result.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/collector_collection_factory.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/collector.h</name>
             </file>
             <file>
               <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/serializer.h</name>
             </file>
-            <file>
-              <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/collector_enums.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/version.h</name>
-            </file>
+            <group>
+              <name>serializer</name>
+              <file>
+                <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/serializer/custom_builder_allocator.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/serializer/page_allocator.h</name>
+              </file>
+            </group>
             <group>
               <name>utils</name>
               <group>
                 <name>collection</name>
                 <file>
+                  <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/utils/collection/bit_vector.h</name>
+                </file>
+                <file>
                   <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/utils/collection/collection.h</name>
+                </file>
+                <file>
+                  <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/utils/collection/hashset.h</name>
+                </file>
+                <file>
+                  <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/utils/collection/hashtable.h</name>
                 </file>
                 <file>
                   <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/utils/collection/linked_list.h</name>
                 </file>
                 <file>
-                  <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/utils/collection/hashset.h</name>
+                  <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/utils/collection/list.h</name>
                 </file>
                 <file>
                   <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/utils/collection/stack.h</name>
                 </file>
               </group>
               <file>
-                <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/utils/os_utils.h</name>
+                <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/utils/containerof.h</name>
               </file>
               <file>
                 <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/utils/event_loop_be.h</name>
               </file>
               <file>
-                <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/utils/ifile.h</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/utils/string_utils.h</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/utils/containerof.h</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/utils/notifier.h</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/utils/iuuid.h</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/utils/itime.h</name>
+                <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/utils/iconv.h</name>
               </file>
               <file>
                 <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/utils/ievent_loop.h</name>
               </file>
               <file>
-                <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/utils/macros.h</name>
+                <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/utils/ifile.h</name>
               </file>
               <file>
                 <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/utils/irand.h</name>
               </file>
               <file>
-                <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/utils/async.h</name>
+                <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/utils/istream.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/utils/itime.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/utils/macros.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/utils/notifier.h</name>
               </file>
               <file>
                 <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/utils/notifier_topics.h</name>
               </file>
+              <file>
+                <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/utils/num2str.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/utils/os_utils.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/utils/string_utils.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/utils/uuid.h</name>
+              </file>
             </group>
+            <file>
+              <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/inc/asc_security_core/version.h</name>
+            </file>
           </group>
         </group>
         <group>
           <name>src</name>
-          <group>
-            <name>serializer</name>
-            <file>
-              <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/src/serializer/serializer_private.h</name>
-            </file>
-            <group>
-              <name>extensions</name>
-              <file>
-                <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/src/serializer/extensions/page_allocator.h</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/src/serializer/extensions/custom_builder_allocator.h</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/src/serializer/extensions/custom_emitter.c</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/src/serializer/extensions/page_allocator.c</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/src/serializer/extensions/custom_builder_allocator.c</name>
-              </file>
-            </group>
-            <file>
-              <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/src/serializer/protocol_serialize_enum.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/src/serializer/serializer_private.c</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/src/serializer/serializer.c</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/src/serializer/heartbeat.c</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/src/serializer/system_information.c</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/src/serializer/network_activity.c</name>
-            </file>
-          </group>
-          <file>
-            <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/src/collector_collection_internal.c</name>
-          </file>
-          <group>
-            <name>model</name>
-            <file>
-              <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/src/model/security_message.c</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/src/model/collector.c</name>
-            </file>
-          </group>
           <file>
             <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/src/collector_collection.c</name>
           </file>
@@ -4702,7 +2778,10 @@
             <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/src/collectors_info.c</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/src/collector_collection_factory.c</name>
+            <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/src/components_factory.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/src/components_manager.c</name>
           </file>
           <file>
             <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/src/core.c</name>
@@ -4711,126 +2790,102 @@
             <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/src/logger.c</name>
           </file>
           <group>
-            <name>utils</name>
+            <name>model</name>
             <file>
-              <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/src/utils/notifier.c</name>
+              <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/src/model/collector.c</name>
             </file>
+            <file>
+              <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/src/model/security_message.c</name>
+            </file>
+          </group>
+          <file>
+            <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/src/object_pool_static.c</name>
+          </file>
+          <group>
+            <name>serializer</name>
+            <group>
+              <name>extensions</name>
+              <file>
+                <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/src/serializer/extensions/custom_builder_allocator.c</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/src/serializer/extensions/page_allocator.c</name>
+              </file>
+            </group>
+            <file>
+              <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/src/serializer/heartbeat.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/src/serializer/network_activity.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/src/serializer/protocol_serialize_enum.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/src/serializer/serializer.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/src/serializer/serializer_private.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/src/serializer/serializer_private.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/src/serializer/system_information.c</name>
+            </file>
+          </group>
+          <group>
+            <name>utils</name>
+            <group>
+              <name>collection</name>
+              <file>
+                <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/src/utils/collection/bit_vector.c</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/src/utils/collection/hashtable.c</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/src/utils/collection/list.c</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/src/utils/collection/stack.c</name>
+              </file>
+            </group>
             <file>
               <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/src/utils/event_loop_be.c</name>
             </file>
             <file>
+              <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/src/utils/iconv.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/src/utils/notifier.c</name>
+            </file>
+            <file>
               <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/src/utils/string_utils.c</name>
             </file>
-          </group>
-        </group>
-        <group>
-          <name>deps</name>
-          <group>
-            <name>flatcc</name>
-            <group>
-              <name>include</name>
-              <group>
-                <name>flatcc</name>
-                <file>
-                  <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/deps/flatcc/include/flatcc/flatcc_rtconfig.h</name>
-                </file>
-                <file>
-                  <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/deps/flatcc/include/flatcc/flatcc_accessors.h</name>
-                </file>
-                <file>
-                  <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/deps/flatcc/include/flatcc/flatcc_iov.h</name>
-                </file>
-                <file>
-                  <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/deps/flatcc/include/flatcc/flatcc_identifier.h</name>
-                </file>
-                <file>
-                  <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/deps/flatcc/include/flatcc/flatcc_epilogue.h</name>
-                </file>
-                <file>
-                  <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/deps/flatcc/include/flatcc/flatcc_refmap.h</name>
-                </file>
-                <file>
-                  <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/deps/flatcc/include/flatcc/flatcc_prologue.h</name>
-                </file>
-                <file>
-                  <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/deps/flatcc/include/flatcc/flatcc_assert.h</name>
-                </file>
-                <file>
-                  <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/deps/flatcc/include/flatcc/flatcc_types.h</name>
-                </file>
-                <file>
-                  <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/deps/flatcc/include/flatcc/flatcc_flatbuffers.h</name>
-                </file>
-                <file>
-                  <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/deps/flatcc/include/flatcc/flatcc_emitter.h</name>
-                </file>
-                <group>
-                  <name>portable</name>
-                  <file>
-                    <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/deps/flatcc/include/flatcc/portable/pwarnings.h</name>
-                  </file>
-                  <file>
-                    <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/deps/flatcc/include/flatcc/portable/pendian.h</name>
-                  </file>
-                  <file>
-                    <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/deps/flatcc/include/flatcc/portable/pstatic_assert.h</name>
-                  </file>
-                  <file>
-                    <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/deps/flatcc/include/flatcc/portable/pdiagnostic.h</name>
-                  </file>
-                  <file>
-                    <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/deps/flatcc/include/flatcc/portable/pstdalign.h</name>
-                  </file>
-                  <file>
-                    <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/deps/flatcc/include/flatcc/portable/pdiagnostic_push.h</name>
-                  </file>
-                  <file>
-                    <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/deps/flatcc/include/flatcc/portable/pstdint.h</name>
-                  </file>
-                  <file>
-                    <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/deps/flatcc/include/flatcc/portable/pendian_detect.h</name>
-                  </file>
-                  <file>
-                    <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/deps/flatcc/include/flatcc/portable/pdiagnostic_pop.h</name>
-                  </file>
-                  <file>
-                    <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/deps/flatcc/include/flatcc/portable/paligned_alloc.h</name>
-                  </file>
-                </group>
-                <file>
-                  <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/deps/flatcc/include/flatcc/flatcc_endian.h</name>
-                </file>
-                <file>
-                  <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/deps/flatcc/include/flatcc/flatcc_alloc.h</name>
-                </file>
-                <file>
-                  <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/deps/flatcc/include/flatcc/flatcc_builder.h</name>
-                </file>
-              </group>
-            </group>
-            <group>
-              <name>src</name>
-              <group>
-                <name>runtime</name>
-                <file>
-                  <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/deps/flatcc/src/runtime/builder.c</name>
-                </file>
-                <file>
-                  <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/deps/flatcc/src/runtime/refmap.c</name>
-                </file>
-              </group>
-            </group>
+            <file>
+              <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/iot-security-module-core/src/utils/uuid.c</name>
+            </file>
           </group>
         </group>
       </group>
       <file>
-        <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/nx_azure_iot_security_module.h</name>
+        <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/nx_azure_iot_security_module.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/nx_azure_iot_security_module.c</name>
+        <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/nx_azure_iot_security_module.h</name>
       </file>
       <group>
         <name>src</name>
+        <group>
+          <name>collectors</name>
+          <file>
+            <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/src/collectors/collector_network_activity.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/src/collectors/collector_system_information.c</name>
+          </file>
+        </group>
         <group>
           <name>model</name>
           <group>
@@ -4841,54 +2896,51 @@
           </group>
         </group>
         <group>
-          <name>collectors</name>
-          <file>
-            <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/src/collectors/collector_system_information.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/src/collectors/collector_network_activity.c</name>
-          </file>
-        </group>
-        <group>
           <name>utils</name>
           <file>
-            <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/src/utils/os_utils.c</name>
+            <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/src/utils/ievent_loop.c</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/src/utils/iuuid.c</name>
+            <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/src/utils/irand.c</name>
           </file>
           <file>
             <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/src/utils/itime.c</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/src/utils/irand.c</name>
+            <name>$PROJ_DIR$/../azure_iot/azure_iot_security_module/src/utils/os_utils.c</name>
           </file>
         </group>
       </group>
     </group>
     <file>
-      <name>$PROJ_DIR$/../azure_iot/nx_azure_iot_json_writer.h</name>
+      <name>$PROJ_DIR$/../azure_iot/nx_azure_iot.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../azure_iot/nx_azure_iot_provisioning_client.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../azure_iot/nx_azure_iot_json_reader.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../azure_iot/nx_azure_iot_json_reader.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../azure_iot/nx_azure_iot_provisioning_client.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../azure_iot/nx_azure_iot_json_writer.c</name>
+      <name>$PROJ_DIR$/../azure_iot/nx_azure_iot.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../azure_iot/nx_azure_iot_hub_client.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../azure_iot/nx_azure_iot.c</name>
+      <name>$PROJ_DIR$/../azure_iot/nx_azure_iot_hub_client.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../azure_iot/nx_azure_iot_json_reader.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../azure_iot/nx_azure_iot_json_reader.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../azure_iot/nx_azure_iot_json_writer.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../azure_iot/nx_azure_iot_json_writer.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../azure_iot/nx_azure_iot_provisioning_client.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../azure_iot/nx_azure_iot_provisioning_client.h</name>
     </file>
   </group>
   <group>
@@ -5057,6 +3109,15 @@
           </file>
         </group>
         <group>
+          <name>lwm2m</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/addons/lwm2m/nx_lwm2m_client.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/addons/lwm2m/nx_lwm2m_client.h</name>
+          </file>
+        </group>
+        <group>
           <name>mdns</name>
           <file>
             <name>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/addons/mdns/nxd_mdns.c</name>
@@ -5114,6 +3175,15 @@
           </file>
           <file>
             <name>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/addons/pppoe/nx_pppoe_server.h</name>
+          </file>
+        </group>
+        <group>
+          <name>ptp</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/addons/ptp/nxd_ptp_client.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/addons/ptp/nxd_ptp_client.h</name>
           </file>
         </group>
         <group>

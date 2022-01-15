@@ -23,7 +23,7 @@ void app_bt_connect_addr(char *addrStr);
 
 void app_bt_inquiry(void);
 
-void app_bt_connect_index(uint8_t index);
+int app_bt_connect_index(uint8_t index);
 
 void app_bt_disconnect(void);
 

@@ -31,15 +31,17 @@ include(${ProjDirPath}/flags.cmake)
 include(${ProjDirPath}/config.cmake)
 
 add_executable(${MCUX_SDK_PROJECT_NAME} 
+"${ProjDirPath}/../app_config.h"
 "${ProjDirPath}/../wifi_setup.c"
+"${ProjDirPath}/../pin_mux.c"
+"${ProjDirPath}/../pin_mux.h"
 "${ProjDirPath}/../lwipopts.h"
 "${ProjDirPath}/../lwippools.h"
 "${ProjDirPath}/../FreeRTOSConfig.h"
-"${ProjDirPath}/../pin_mux.c"
-"${ProjDirPath}/../pin_mux.h"
-"${ProjDirPath}/../../../../sdmmc_config.c"
-"${ProjDirPath}/../../../../sdmmc_config.h"
-"${ProjDirPath}/../app_config.h"
+"${ProjDirPath}/../sdmmc_config.c"
+"${ProjDirPath}/../sdmmc_config.h"
+"${ProjDirPath}/../wifi_bt_config.c"
+"${ProjDirPath}/../wifi_bt_config.h"
 "${ProjDirPath}/../wifi_config.h"
 "${ProjDirPath}/../board.c"
 "${ProjDirPath}/../board.h"
@@ -57,10 +59,11 @@ target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
 )
 
 set(CMAKE_MODULE_PATH
-    ${ProjDirPath}/../../../../../../rtos/freertos
+    ${ProjDirPath}/../../../../../../rtos/freertos/freertos_kernel
     ${ProjDirPath}/../../../../../../middleware/lwip
     ${ProjDirPath}/../../../../../../devices/MIMXRT1176/utilities
     ${ProjDirPath}/../../../../../../middleware/wifi
+    ${ProjDirPath}/../../../../../../components/wifi_bt_module
     ${ProjDirPath}/../../../../../../devices/MIMXRT1176/drivers
     ${ProjDirPath}/../../../../../../middleware/sdmmc
     ${ProjDirPath}/../../../../../../devices/MIMXRT1176
@@ -86,6 +89,8 @@ include(utility_debug_console_MIMXRT1176_cm4)
 include(middleware_wifi_MIMXRT1176_cm4)
 
 include(middleware_lwip_contrib_ping_MIMXRT1176_cm4)
+
+include(component_wifi_bt_module_tx_pwr_limits_MIMXRT1176_cm4)
 
 include(driver_usdhc_MIMXRT1176_cm4)
 
@@ -141,11 +146,11 @@ include(middleware_wifi_wifidriver_MIMXRT1176_cm4)
 
 include(middleware_wifi_fwdnld_MIMXRT1176_cm4)
 
-include(driver_memory_MIMXRT1176_cm4)
-
 include(middleware_sdmmc_osa_freertos_MIMXRT1176_cm4)
 
 include(component_osa_free_rtos_MIMXRT1176_cm4)
+
+include(driver_memory_MIMXRT1176_cm4)
 
 include(utilities_misc_utilities_MIMXRT1176_cm4)
 

@@ -56,6 +56,7 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../../components/video/display/rm68200
     ${ProjDirPath}/../../../../../../components/video/display/dc/lcdifv2
     ${ProjDirPath}/../../../../../../components/video/display/dc/elcdif
+    ${ProjDirPath}/../../../../../../components/video/display/hx8394
     ${ProjDirPath}/../../../../../../components/video
     ${ProjDirPath}/../../../../../../components/video/display
     ${ProjDirPath}/../../../../../../devices/MIMXRT1176
@@ -90,6 +91,8 @@ include(driver_dc-fb-lcdifv2_MIMXRT1176_cm7)
 include(driver_elcdif_MIMXRT1176_cm7)
 
 include(driver_dc-fb-elcdif_MIMXRT1176_cm7)
+
+include(driver_display-hx8394_MIMXRT1176_cm7)
 
 include(driver_video-common_MIMXRT1176_cm7)
 

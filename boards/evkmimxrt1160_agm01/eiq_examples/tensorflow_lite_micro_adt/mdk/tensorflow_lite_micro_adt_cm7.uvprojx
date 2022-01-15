@@ -331,10 +331,10 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>-Wno-missing-field-initializers  -Wno-self-assign  -Wno-unreachable-code  -fno-exceptions  -Wno-c++17-extensions  -fno-common  -fdata-sections  -mthumb</MiscControls>
+              <MiscControls>-Wno-missing-field-initializers  -Wno-self-assign  -Wno-unreachable-code  -ffp-mode=full  -fno-exceptions  -Wno-c++17-extensions  -fno-common  -fdata-sections  -mthumb</MiscControls>
               <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, XIP_BOOT_HEADER_DCD_ENABLE=1, USE_SDRAM, DATA_SECTION_IS_CACHEABLE=1, DEBUG, __STDC_CONSTANT_MACROS, __CLK_TCK=1000000, CPU_MIMXRT1166DVM6A_cm7, SDK_DEBUGCONSOLE_UART, ARM_MATH_CM7, __FPU_PRESENT=1, SDK_I2C_BASED_COMPONENT_USED=1, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, TF_LITE_STATIC_MEMORY, CMSIS_NN, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../middleware/eiq/tensorflow-lite/examples/adt;../../../../../middleware/eiq/common/model;../../../../../middleware/eiq/common;../../../../../middleware/issdk/drivers/gpio/i.mx;../../../../../middleware/issdk/drivers/gpio;../../../../../middleware/issdk/sensors;../../../../../devices/MIMXRT1166/drivers;../../../../../devices/MIMXRT1166/cmsis_drivers;../../../../../CMSIS/Driver/Include;../../../../../devices/MIMXRT1166/utilities/debug_console_lite;../../../../../middleware/eiq/common/sensor;../../../../../middleware/eiq/tensorflow-lite;../../../../../components/lists;../../../../../components/uart;../../../../../devices/MIMXRT1166;../../../../../devices/MIMXRT1166/xip;../../../../evkmimxrt1160/xip;../../../../../CMSIS/Core/Include;../../../../../middleware/eiq/tensorflow-lite/third_party/flatbuffers/include;../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp;../../../../../middleware/eiq/tensorflow-lite/third_party/ruy;../../../../../middleware/eiq/tensorflow-lite/third_party;../../../../../CMSIS/DSP/Include</IncludePath>
+              <IncludePath>..;../../../../../middleware/eiq/tensorflow-lite/examples/adt;../../../../../middleware/eiq/common/model;../../../../../middleware/eiq/common;../../../../../middleware/issdk/drivers/gpio/i.mx;../../../../../middleware/issdk/drivers/gpio;../../../../../middleware/issdk/sensors;../../../../../devices/MIMXRT1166/drivers;../../../../../devices/MIMXRT1166/cmsis_drivers;../../../../../CMSIS/Driver/Include;../../../../../devices/MIMXRT1166/utilities/debug_console_lite;../../../../../middleware/eiq/common/sensor;../../../../../middleware/eiq/tensorflow-lite;../../../../../components/lists;../../../../../components/uart;../../../../../devices/MIMXRT1166;../../../../../devices/MIMXRT1166/xip;../../../../evkmimxrt1160/xip;../../../../../CMSIS/Core/Include;../../../../../middleware/eiq/tensorflow-lite/third_party/flatbuffers/include;../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp;../../../../../middleware/eiq/tensorflow-lite/third_party/ruy;../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis;../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Include;../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/Core/Include;../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/DSP/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -368,7 +368,7 @@
             <ScatterFile>../../../../../devices/MIMXRT1166/arm/MIMXRT1166xxxxx_cm7_flexspi_nor_sdram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>../../../../../CMSIS/DSP/Lib/ARM/arm_cortexM7lfdp_math.lib --remove --predefine="-D__stack_size__=0x10000" --predefine="-D__heap_size__=0x80000" --entry=Reset_Handler --predefine="-DXIP_BOOT_HEADER_ENABLE=1"</Misc>
+            <Misc>--remove --predefine="-D__stack_size__=0x10000" --predefine="-D__heap_size__=0x80000" --entry=Reset_Handler --predefine="-DXIP_BOOT_HEADER_ENABLE=1"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314,6329,6439,6776</DisabledWarnings>
           </LDads>
@@ -884,6 +884,11 @@
               <FilePath>../../../../../devices/MIMXRT1166/drivers/fsl_lpi2c.h</FilePath>
             </File>
             <File>
+              <FileName>fsl_memory.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1166/drivers/fsl_memory.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_anatop_ai.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT1166/drivers/fsl_anatop_ai.h</FilePath>
@@ -966,12 +971,27 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>eiq/tensorflow-lite/tensorflow/core/public</GroupName>
+          <GroupName>eiq/tensorflow-lite</GroupName>
           <Files>
             <File>
-              <FileName>version.h</FileName>
+              <FileName>AUTHORS</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/core/public/version.h</FilePath>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/AUTHORS</FilePath>
+            </File>
+            <File>
+              <FileName>LICENSE</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/LICENSE</FilePath>
+            </File>
+            <File>
+              <FileName>ChangeLogKSDK.txt</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/ChangeLogKSDK.txt</FilePath>
+            </File>
+            <File>
+              <FileName>readme.txt</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/readme.txt</FilePath>
             </File>
           </Files>
         </Group>
@@ -982,11 +1002,6 @@
               <FileName>portable_type_to_tflitetype.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/portable_type_to_tflitetype.h</FilePath>
-            </File>
-            <File>
-              <FileName>version.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/version.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1008,6 +1023,11 @@
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/c/builtin_op_data.h</FilePath>
             </File>
+            <File>
+              <FileName>c_api_types.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/c/c_api_types.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -1027,11 +1047,6 @@
               <FileName>op_resolver.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/core/api/op_resolver.h</FilePath>
-            </File>
-            <File>
-              <FileName>profiler.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/core/api/profiler.h</FilePath>
             </File>
             <File>
               <FileName>tensor_utils.h</FileName>
@@ -1164,9 +1179,19 @@
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/reference/add.h</FilePath>
             </File>
             <File>
+              <FileName>add_n.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/reference/add_n.h</FilePath>
+            </File>
+            <File>
               <FileName>arg_min_max.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/reference/arg_min_max.h</FilePath>
+            </File>
+            <File>
+              <FileName>batch_to_space_nd.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/reference/batch_to_space_nd.h</FilePath>
             </File>
             <File>
               <FileName>binary_function.h</FileName>
@@ -1194,6 +1219,16 @@
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/reference/conv.h</FilePath>
             </File>
             <File>
+              <FileName>cumsum.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/reference/cumsum.h</FilePath>
+            </File>
+            <File>
+              <FileName>depth_to_space.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/reference/depth_to_space.h</FilePath>
+            </File>
+            <File>
               <FileName>depthwiseconv_float.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/reference/depthwiseconv_float.h</FilePath>
@@ -1209,9 +1244,34 @@
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/reference/dequantize.h</FilePath>
             </File>
             <File>
+              <FileName>elu.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/reference/elu.h</FilePath>
+            </File>
+            <File>
+              <FileName>exp.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/reference/exp.h</FilePath>
+            </File>
+            <File>
+              <FileName>fill.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/reference/fill.h</FilePath>
+            </File>
+            <File>
               <FileName>floor.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/reference/floor.h</FilePath>
+            </File>
+            <File>
+              <FileName>floor_div.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/reference/floor_div.h</FilePath>
+            </File>
+            <File>
+              <FileName>floor_mod.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/reference/floor_mod.h</FilePath>
             </File>
             <File>
               <FileName>fully_connected.h</FileName>
@@ -1227,6 +1287,16 @@
               <FileName>l2normalization.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/reference/l2normalization.h</FilePath>
+            </File>
+            <File>
+              <FileName>leaky_relu.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/reference/leaky_relu.h</FilePath>
+            </File>
+            <File>
+              <FileName>log_softmax.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/reference/log_softmax.h</FilePath>
             </File>
             <File>
               <FileName>logistic.h</FileName>
@@ -1284,6 +1354,11 @@
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/reference/requantize.h</FilePath>
             </File>
             <File>
+              <FileName>resize_bilinear.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/reference/resize_bilinear.h</FilePath>
+            </File>
+            <File>
               <FileName>resize_nearest_neighbor.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/reference/resize_nearest_neighbor.h</FilePath>
@@ -1299,6 +1374,11 @@
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/reference/softmax.h</FilePath>
             </File>
             <File>
+              <FileName>space_to_batch_nd.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/reference/space_to_batch_nd.h</FilePath>
+            </File>
+            <File>
               <FileName>strided_slice.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/reference/strided_slice.h</FilePath>
@@ -1312,6 +1392,16 @@
               <FileName>tanh.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/reference/tanh.h</FilePath>
+            </File>
+            <File>
+              <FileName>transpose.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/reference/transpose.h</FilePath>
+            </File>
+            <File>
+              <FileName>transpose_conv.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/reference/transpose_conv.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1367,6 +1457,11 @@
               <FileName>tanh.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/reference/integer_ops/tanh.h</FilePath>
+            </File>
+            <File>
+              <FileName>transpose_conv.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/reference/integer_ops/transpose_conv.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1427,6 +1522,16 @@
               <FileName>micro_error_reporter.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/micro_error_reporter.h</FilePath>
+            </File>
+            <File>
+              <FileName>micro_graph.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/micro_graph.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>micro_graph.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/micro_graph.h</FilePath>
             </File>
             <File>
               <FileName>micro_interpreter.cpp</FileName>
@@ -1499,11 +1604,6 @@
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/recording_micro_allocator.h</FilePath>
             </File>
             <File>
-              <FileName>recording_micro_interpreter.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/recording_micro_interpreter.h</FilePath>
-            </File>
-            <File>
               <FileName>recording_simple_memory_allocator.cpp</FileName>
               <FileType>8</FileType>
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/recording_simple_memory_allocator.cpp</FilePath>
@@ -1534,14 +1634,24 @@
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/activation_utils.h</FilePath>
             </File>
             <File>
+              <FileName>conv.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/conv.h</FilePath>
+            </File>
+            <File>
+              <FileName>depthwise_conv.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/depthwise_conv.h</FilePath>
+            </File>
+            <File>
+              <FileName>ethosu.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/ethosu.h</FilePath>
+            </File>
+            <File>
               <FileName>fully_connected.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/fully_connected.h</FilePath>
-            </File>
-            <File>
-              <FileName>kernel_runner.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/kernel_runner.h</FilePath>
             </File>
             <File>
               <FileName>kernel_util.h</FileName>
@@ -1559,9 +1669,39 @@
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/micro_utils.h</FilePath>
             </File>
             <File>
+              <FileName>quantize.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/quantize.h</FilePath>
+            </File>
+            <File>
+              <FileName>softmax.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/softmax.h</FilePath>
+            </File>
+            <File>
+              <FileName>svdf.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/svdf.h</FilePath>
+            </File>
+            <File>
+              <FileName>add_n.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/add_n.cpp</FilePath>
+            </File>
+            <File>
               <FileName>arg_min_max.cpp</FileName>
               <FileType>8</FileType>
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/arg_min_max.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>batch_to_space_nd.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/batch_to_space_nd.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>cast.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/cast.cpp</FilePath>
             </File>
             <File>
               <FileName>ceil.cpp</FileName>
@@ -1584,9 +1724,34 @@
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/concatenation.cpp</FilePath>
             </File>
             <File>
+              <FileName>conv_common.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/conv_common.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>cumsum.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/cumsum.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>depth_to_space.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/depth_to_space.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>depthwise_conv_common.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/depthwise_conv_common.cpp</FilePath>
+            </File>
+            <File>
               <FileName>dequantize.cpp</FileName>
               <FileType>8</FileType>
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/dequantize.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>detection_postprocess.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/detection_postprocess.cpp</FilePath>
             </File>
             <File>
               <FileName>elementwise.cpp</FileName>
@@ -1594,9 +1759,54 @@
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/elementwise.cpp</FilePath>
             </File>
             <File>
+              <FileName>elu.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/elu.cpp</FilePath>
+            </File>
+            <File>
               <FileName>ethosu.cpp</FileName>
               <FileType>8</FileType>
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/ethosu.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>exp.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/exp.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>expand_dims.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/expand_dims.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>fill.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/fill.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>floor_div.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/floor_div.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>floor_mod.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/floor_mod.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>fully_connected_common.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/fully_connected_common.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>gather.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/gather.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>gather_nd.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/gather_nd.cpp</FilePath>
             </File>
             <File>
               <FileName>hard_swish.cpp</FileName>
@@ -1604,9 +1814,9 @@
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/hard_swish.cpp</FilePath>
             </File>
             <File>
-              <FileName>kernel_runner.cpp</FileName>
+              <FileName>if.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/kernel_runner.cpp</FilePath>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/if.cpp</FilePath>
             </File>
             <File>
               <FileName>kernel_util.cpp</FileName>
@@ -1614,9 +1824,24 @@
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/kernel_util.cpp</FilePath>
             </File>
             <File>
+              <FileName>l2_pool_2d.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/l2_pool_2d.cpp</FilePath>
+            </File>
+            <File>
               <FileName>l2norm.cpp</FileName>
               <FileType>8</FileType>
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/l2norm.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>leaky_relu.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/leaky_relu.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>log_softmax.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/log_softmax.cpp</FilePath>
             </File>
             <File>
               <FileName>logical.cpp</FileName>
@@ -1649,9 +1874,9 @@
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/prelu.cpp</FilePath>
             </File>
             <File>
-              <FileName>quantize.cpp</FileName>
+              <FileName>quantize_common.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/quantize.cpp</FilePath>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/quantize_common.cpp</FilePath>
             </File>
             <File>
               <FileName>reduce.cpp</FileName>
@@ -1662,6 +1887,11 @@
               <FileName>reshape.cpp</FileName>
               <FileType>8</FileType>
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/reshape.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>resize_bilinear.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/resize_bilinear.cpp</FilePath>
             </File>
             <File>
               <FileName>resize_nearest_neighbor.cpp</FileName>
@@ -1679,6 +1909,16 @@
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/shape.cpp</FilePath>
             </File>
             <File>
+              <FileName>softmax_common.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/softmax_common.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>space_to_batch_nd.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/space_to_batch_nd.cpp</FilePath>
+            </File>
+            <File>
               <FileName>split.cpp</FileName>
               <FileType>8</FileType>
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/split.cpp</FilePath>
@@ -1687,6 +1927,11 @@
               <FileName>split_v.cpp</FileName>
               <FileType>8</FileType>
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/split_v.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>squeeze.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/squeeze.cpp</FilePath>
             </File>
             <File>
               <FileName>strided_slice.cpp</FileName>
@@ -1699,14 +1944,34 @@
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/sub.cpp</FilePath>
             </File>
             <File>
+              <FileName>svdf_common.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/svdf_common.cpp</FilePath>
+            </File>
+            <File>
               <FileName>tanh.cpp</FileName>
               <FileType>8</FileType>
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/tanh.cpp</FilePath>
             </File>
             <File>
+              <FileName>transpose.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/transpose.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>transpose_conv.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/transpose_conv.cpp</FilePath>
+            </File>
+            <File>
               <FileName>unpack.cpp</FileName>
               <FileType>8</FileType>
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/unpack.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>zeros_like.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/zeros_like.cpp</FilePath>
             </File>
             <File>
               <FileName>activations.cpp</FileName>
@@ -1722,6 +1987,11 @@
               <FileName>logistic.cpp</FileName>
               <FileType>8</FileType>
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/logistic.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>quantize.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/quantize.cpp</FilePath>
             </File>
           </Files>
         </Group>
@@ -1871,47 +2141,47 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/cmsis-nn</GroupName>
+          <GroupName>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/cmsis_nn</GroupName>
           <Files>
             <File>
               <FileName>add.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/cmsis-nn/add.cpp</FilePath>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/cmsis_nn/add.cpp</FilePath>
             </File>
             <File>
               <FileName>conv.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/cmsis-nn/conv.cpp</FilePath>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/cmsis_nn/conv.cpp</FilePath>
             </File>
             <File>
               <FileName>depthwise_conv.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/cmsis-nn/depthwise_conv.cpp</FilePath>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/cmsis_nn/depthwise_conv.cpp</FilePath>
             </File>
             <File>
               <FileName>fully_connected.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/cmsis-nn/fully_connected.cpp</FilePath>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/cmsis_nn/fully_connected.cpp</FilePath>
             </File>
             <File>
               <FileName>mul.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/cmsis-nn/mul.cpp</FilePath>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/cmsis_nn/mul.cpp</FilePath>
             </File>
             <File>
               <FileName>pooling.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/cmsis-nn/pooling.cpp</FilePath>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/cmsis_nn/pooling.cpp</FilePath>
             </File>
             <File>
               <FileName>softmax.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/cmsis-nn/softmax.cpp</FilePath>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/cmsis_nn/softmax.cpp</FilePath>
             </File>
             <File>
               <FileName>svdf.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/cmsis-nn/svdf.cpp</FilePath>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/cmsis_nn/svdf.cpp</FilePath>
             </File>
           </Files>
         </Group>
@@ -1994,9 +2264,19 @@
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/flatbuffers.h</FilePath>
             </File>
             <File>
+              <FileName>flexbuffers.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/flexbuffers.h</FilePath>
+            </File>
+            <File>
               <FileName>stl_emulation.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/stl_emulation.h</FilePath>
+            </File>
+            <File>
+              <FileName>util.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/util.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2209,9 +2489,34 @@
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/DSP/Include/arm_common_tables.h</FilePath>
             </File>
             <File>
+              <FileName>arm_common_tables_f16.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/DSP/Include/arm_common_tables_f16.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_const_structs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/DSP/Include/arm_const_structs.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_const_structs_f16.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/DSP/Include/arm_const_structs_f16.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_helium_utils.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/DSP/Include/arm_helium_utils.h</FilePath>
+            </File>
+            <File>
               <FileName>arm_math.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/DSP/Include/arm_math.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_math_f16.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/DSP/Include/arm_math_f16.h</FilePath>
             </File>
             <File>
               <FileName>arm_math_memory.h</FileName>
@@ -2222,6 +2527,31 @@
               <FileName>arm_math_types.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/DSP/Include/arm_math_types.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_math_types_f16.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/DSP/Include/arm_math_types_f16.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_mve_tables.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/DSP/Include/arm_mve_tables.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_mve_tables_f16.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/DSP/Include/arm_mve_tables_f16.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_vec_math.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/DSP/Include/arm_vec_math.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_vec_math_f16.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/DSP/Include/arm_vec_math_f16.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2234,9 +2564,19 @@
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/DSP/Include/dsp/basic_math_functions.h</FilePath>
             </File>
             <File>
+              <FileName>basic_math_functions_f16.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/DSP/Include/dsp/basic_math_functions_f16.h</FilePath>
+            </File>
+            <File>
               <FileName>bayes_functions.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/DSP/Include/dsp/bayes_functions.h</FilePath>
+            </File>
+            <File>
+              <FileName>bayes_functions_f16.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/DSP/Include/dsp/bayes_functions_f16.h</FilePath>
             </File>
             <File>
               <FileName>complex_math_functions.h</FileName>
@@ -2244,9 +2584,19 @@
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/DSP/Include/dsp/complex_math_functions.h</FilePath>
             </File>
             <File>
+              <FileName>complex_math_functions_f16.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/DSP/Include/dsp/complex_math_functions_f16.h</FilePath>
+            </File>
+            <File>
               <FileName>controller_functions.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/DSP/Include/dsp/controller_functions.h</FilePath>
+            </File>
+            <File>
+              <FileName>controller_functions_f16.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/DSP/Include/dsp/controller_functions_f16.h</FilePath>
             </File>
             <File>
               <FileName>distance_functions.h</FileName>
@@ -2254,9 +2604,19 @@
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/DSP/Include/dsp/distance_functions.h</FilePath>
             </File>
             <File>
+              <FileName>distance_functions_f16.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/DSP/Include/dsp/distance_functions_f16.h</FilePath>
+            </File>
+            <File>
               <FileName>fast_math_functions.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/DSP/Include/dsp/fast_math_functions.h</FilePath>
+            </File>
+            <File>
+              <FileName>fast_math_functions_f16.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/DSP/Include/dsp/fast_math_functions_f16.h</FilePath>
             </File>
             <File>
               <FileName>filtering_functions.h</FileName>
@@ -2264,9 +2624,19 @@
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/DSP/Include/dsp/filtering_functions.h</FilePath>
             </File>
             <File>
+              <FileName>filtering_functions_f16.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/DSP/Include/dsp/filtering_functions_f16.h</FilePath>
+            </File>
+            <File>
               <FileName>interpolation_functions.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/DSP/Include/dsp/interpolation_functions.h</FilePath>
+            </File>
+            <File>
+              <FileName>interpolation_functions_f16.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/DSP/Include/dsp/interpolation_functions_f16.h</FilePath>
             </File>
             <File>
               <FileName>matrix_functions.h</FileName>
@@ -2274,9 +2644,19 @@
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/DSP/Include/dsp/matrix_functions.h</FilePath>
             </File>
             <File>
+              <FileName>matrix_functions_f16.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/DSP/Include/dsp/matrix_functions_f16.h</FilePath>
+            </File>
+            <File>
               <FileName>none.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/DSP/Include/dsp/none.h</FilePath>
+            </File>
+            <File>
+              <FileName>quaternion_math_functions.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/DSP/Include/dsp/quaternion_math_functions.h</FilePath>
             </File>
             <File>
               <FileName>statistics_functions.h</FileName>
@@ -2284,9 +2664,19 @@
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/DSP/Include/dsp/statistics_functions.h</FilePath>
             </File>
             <File>
+              <FileName>statistics_functions_f16.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/DSP/Include/dsp/statistics_functions_f16.h</FilePath>
+            </File>
+            <File>
               <FileName>support_functions.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/DSP/Include/dsp/support_functions.h</FilePath>
+            </File>
+            <File>
+              <FileName>support_functions_f16.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/DSP/Include/dsp/support_functions_f16.h</FilePath>
             </File>
             <File>
               <FileName>svm_defines.h</FileName>
@@ -2299,9 +2689,19 @@
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/DSP/Include/dsp/svm_functions.h</FilePath>
             </File>
             <File>
+              <FileName>svm_functions_f16.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/DSP/Include/dsp/svm_functions_f16.h</FilePath>
+            </File>
+            <File>
               <FileName>transform_functions.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/DSP/Include/dsp/transform_functions.h</FilePath>
+            </File>
+            <File>
+              <FileName>transform_functions_f16.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/DSP/Include/dsp/transform_functions_f16.h</FilePath>
             </File>
             <File>
               <FileName>utils.h</FileName>
@@ -2634,6 +3034,11 @@
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/NNSupportFunctions/arm_nn_vec_mat_mult_t_s8.c</FilePath>
             </File>
             <File>
+              <FileName>arm_nn_vec_mat_mult_t_svdf_s8.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/NNSupportFunctions/arm_nn_vec_mat_mult_t_svdf_s8.c</FilePath>
+            </File>
+            <File>
               <FileName>arm_nntables.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/NNSupportFunctions/arm_nntables.c</FilePath>
@@ -2737,26 +3142,6 @@
               <FileName>LICENSE.txt</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/LICENSE.txt</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>CMSIS/DSP/Include</GroupName>
-          <Files>
-            <File>
-              <FileName>arm_common_tables.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/DSP/Include/arm_common_tables.h</FilePath>
-            </File>
-            <File>
-              <FileName>arm_const_structs.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/DSP/Include/arm_const_structs.h</FilePath>
-            </File>
-            <File>
-              <FileName>arm_math.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/DSP/Include/arm_math.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -3090,10 +3475,10 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>-Wno-missing-field-initializers  -Wno-self-assign  -Wno-unreachable-code  -fno-exceptions  -Wno-c++17-extensions  -fno-common  -fdata-sections  -mthumb</MiscControls>
+              <MiscControls>-Wno-missing-field-initializers  -Wno-self-assign  -Wno-unreachable-code  -ffp-mode=full  -fno-exceptions  -Wno-c++17-extensions  -fno-common  -fdata-sections  -mthumb</MiscControls>
               <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, XIP_BOOT_HEADER_DCD_ENABLE=1, USE_SDRAM, DATA_SECTION_IS_CACHEABLE=1, NDEBUG, __STDC_CONSTANT_MACROS, __CLK_TCK=1000000, CPU_MIMXRT1166DVM6A_cm7, SDK_DEBUGCONSOLE_UART, ARM_MATH_CM7, __FPU_PRESENT=1, SDK_I2C_BASED_COMPONENT_USED=1, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, TF_LITE_STATIC_MEMORY, CMSIS_NN, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../middleware/eiq/tensorflow-lite/examples/adt;../../../../../middleware/eiq/common/model;../../../../../middleware/eiq/common;../../../../../middleware/issdk/drivers/gpio/i.mx;../../../../../middleware/issdk/drivers/gpio;../../../../../middleware/issdk/sensors;../../../../../devices/MIMXRT1166/drivers;../../../../../devices/MIMXRT1166/cmsis_drivers;../../../../../CMSIS/Driver/Include;../../../../../devices/MIMXRT1166/utilities/debug_console_lite;../../../../../middleware/eiq/common/sensor;../../../../../middleware/eiq/tensorflow-lite;../../../../../components/lists;../../../../../components/uart;../../../../../devices/MIMXRT1166;../../../../../devices/MIMXRT1166/xip;../../../../evkmimxrt1160/xip;../../../../../CMSIS/Core/Include;../../../../../middleware/eiq/tensorflow-lite/third_party/flatbuffers/include;../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp;../../../../../middleware/eiq/tensorflow-lite/third_party/ruy;../../../../../middleware/eiq/tensorflow-lite/third_party;../../../../../CMSIS/DSP/Include</IncludePath>
+              <IncludePath>..;../../../../../middleware/eiq/tensorflow-lite/examples/adt;../../../../../middleware/eiq/common/model;../../../../../middleware/eiq/common;../../../../../middleware/issdk/drivers/gpio/i.mx;../../../../../middleware/issdk/drivers/gpio;../../../../../middleware/issdk/sensors;../../../../../devices/MIMXRT1166/drivers;../../../../../devices/MIMXRT1166/cmsis_drivers;../../../../../CMSIS/Driver/Include;../../../../../devices/MIMXRT1166/utilities/debug_console_lite;../../../../../middleware/eiq/common/sensor;../../../../../middleware/eiq/tensorflow-lite;../../../../../components/lists;../../../../../components/uart;../../../../../devices/MIMXRT1166;../../../../../devices/MIMXRT1166/xip;../../../../evkmimxrt1160/xip;../../../../../CMSIS/Core/Include;../../../../../middleware/eiq/tensorflow-lite/third_party/flatbuffers/include;../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp;../../../../../middleware/eiq/tensorflow-lite/third_party/ruy;../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis;../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Include;../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/Core/Include;../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/DSP/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -3127,7 +3512,7 @@
             <ScatterFile>../../../../../devices/MIMXRT1166/arm/MIMXRT1166xxxxx_cm7_flexspi_nor_sdram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>../../../../../CMSIS/DSP/Lib/ARM/arm_cortexM7lfdp_math.lib --remove --predefine="-D__stack_size__=0x10000" --predefine="-D__heap_size__=0x80000" --entry=Reset_Handler --predefine="-DXIP_BOOT_HEADER_ENABLE=1"</Misc>
+            <Misc>--remove --predefine="-D__stack_size__=0x10000" --predefine="-D__heap_size__=0x80000" --entry=Reset_Handler --predefine="-DXIP_BOOT_HEADER_ENABLE=1"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314,6329,6439,6776</DisabledWarnings>
           </LDads>
@@ -3643,6 +4028,11 @@
               <FilePath>../../../../../devices/MIMXRT1166/drivers/fsl_lpi2c.h</FilePath>
             </File>
             <File>
+              <FileName>fsl_memory.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1166/drivers/fsl_memory.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_anatop_ai.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT1166/drivers/fsl_anatop_ai.h</FilePath>
@@ -3725,12 +4115,27 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>eiq/tensorflow-lite/tensorflow/core/public</GroupName>
+          <GroupName>eiq/tensorflow-lite</GroupName>
           <Files>
             <File>
-              <FileName>version.h</FileName>
+              <FileName>AUTHORS</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/core/public/version.h</FilePath>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/AUTHORS</FilePath>
+            </File>
+            <File>
+              <FileName>LICENSE</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/LICENSE</FilePath>
+            </File>
+            <File>
+              <FileName>ChangeLogKSDK.txt</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/ChangeLogKSDK.txt</FilePath>
+            </File>
+            <File>
+              <FileName>readme.txt</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/readme.txt</FilePath>
             </File>
           </Files>
         </Group>
@@ -3741,11 +4146,6 @@
               <FileName>portable_type_to_tflitetype.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/portable_type_to_tflitetype.h</FilePath>
-            </File>
-            <File>
-              <FileName>version.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/version.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -3767,6 +4167,11 @@
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/c/builtin_op_data.h</FilePath>
             </File>
+            <File>
+              <FileName>c_api_types.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/c/c_api_types.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -3786,11 +4191,6 @@
               <FileName>op_resolver.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/core/api/op_resolver.h</FilePath>
-            </File>
-            <File>
-              <FileName>profiler.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/core/api/profiler.h</FilePath>
             </File>
             <File>
               <FileName>tensor_utils.h</FileName>
@@ -3923,9 +4323,19 @@
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/reference/add.h</FilePath>
             </File>
             <File>
+              <FileName>add_n.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/reference/add_n.h</FilePath>
+            </File>
+            <File>
               <FileName>arg_min_max.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/reference/arg_min_max.h</FilePath>
+            </File>
+            <File>
+              <FileName>batch_to_space_nd.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/reference/batch_to_space_nd.h</FilePath>
             </File>
             <File>
               <FileName>binary_function.h</FileName>
@@ -3953,6 +4363,16 @@
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/reference/conv.h</FilePath>
             </File>
             <File>
+              <FileName>cumsum.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/reference/cumsum.h</FilePath>
+            </File>
+            <File>
+              <FileName>depth_to_space.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/reference/depth_to_space.h</FilePath>
+            </File>
+            <File>
               <FileName>depthwiseconv_float.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/reference/depthwiseconv_float.h</FilePath>
@@ -3968,9 +4388,34 @@
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/reference/dequantize.h</FilePath>
             </File>
             <File>
+              <FileName>elu.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/reference/elu.h</FilePath>
+            </File>
+            <File>
+              <FileName>exp.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/reference/exp.h</FilePath>
+            </File>
+            <File>
+              <FileName>fill.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/reference/fill.h</FilePath>
+            </File>
+            <File>
               <FileName>floor.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/reference/floor.h</FilePath>
+            </File>
+            <File>
+              <FileName>floor_div.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/reference/floor_div.h</FilePath>
+            </File>
+            <File>
+              <FileName>floor_mod.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/reference/floor_mod.h</FilePath>
             </File>
             <File>
               <FileName>fully_connected.h</FileName>
@@ -3986,6 +4431,16 @@
               <FileName>l2normalization.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/reference/l2normalization.h</FilePath>
+            </File>
+            <File>
+              <FileName>leaky_relu.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/reference/leaky_relu.h</FilePath>
+            </File>
+            <File>
+              <FileName>log_softmax.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/reference/log_softmax.h</FilePath>
             </File>
             <File>
               <FileName>logistic.h</FileName>
@@ -4043,6 +4498,11 @@
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/reference/requantize.h</FilePath>
             </File>
             <File>
+              <FileName>resize_bilinear.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/reference/resize_bilinear.h</FilePath>
+            </File>
+            <File>
               <FileName>resize_nearest_neighbor.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/reference/resize_nearest_neighbor.h</FilePath>
@@ -4058,6 +4518,11 @@
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/reference/softmax.h</FilePath>
             </File>
             <File>
+              <FileName>space_to_batch_nd.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/reference/space_to_batch_nd.h</FilePath>
+            </File>
+            <File>
               <FileName>strided_slice.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/reference/strided_slice.h</FilePath>
@@ -4071,6 +4536,16 @@
               <FileName>tanh.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/reference/tanh.h</FilePath>
+            </File>
+            <File>
+              <FileName>transpose.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/reference/transpose.h</FilePath>
+            </File>
+            <File>
+              <FileName>transpose_conv.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/reference/transpose_conv.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -4126,6 +4601,11 @@
               <FileName>tanh.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/reference/integer_ops/tanh.h</FilePath>
+            </File>
+            <File>
+              <FileName>transpose_conv.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/reference/integer_ops/transpose_conv.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -4186,6 +4666,16 @@
               <FileName>micro_error_reporter.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/micro_error_reporter.h</FilePath>
+            </File>
+            <File>
+              <FileName>micro_graph.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/micro_graph.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>micro_graph.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/micro_graph.h</FilePath>
             </File>
             <File>
               <FileName>micro_interpreter.cpp</FileName>
@@ -4258,11 +4748,6 @@
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/recording_micro_allocator.h</FilePath>
             </File>
             <File>
-              <FileName>recording_micro_interpreter.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/recording_micro_interpreter.h</FilePath>
-            </File>
-            <File>
               <FileName>recording_simple_memory_allocator.cpp</FileName>
               <FileType>8</FileType>
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/recording_simple_memory_allocator.cpp</FilePath>
@@ -4293,14 +4778,24 @@
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/activation_utils.h</FilePath>
             </File>
             <File>
+              <FileName>conv.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/conv.h</FilePath>
+            </File>
+            <File>
+              <FileName>depthwise_conv.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/depthwise_conv.h</FilePath>
+            </File>
+            <File>
+              <FileName>ethosu.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/ethosu.h</FilePath>
+            </File>
+            <File>
               <FileName>fully_connected.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/fully_connected.h</FilePath>
-            </File>
-            <File>
-              <FileName>kernel_runner.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/kernel_runner.h</FilePath>
             </File>
             <File>
               <FileName>kernel_util.h</FileName>
@@ -4318,9 +4813,39 @@
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/micro_utils.h</FilePath>
             </File>
             <File>
+              <FileName>quantize.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/quantize.h</FilePath>
+            </File>
+            <File>
+              <FileName>softmax.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/softmax.h</FilePath>
+            </File>
+            <File>
+              <FileName>svdf.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/svdf.h</FilePath>
+            </File>
+            <File>
+              <FileName>add_n.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/add_n.cpp</FilePath>
+            </File>
+            <File>
               <FileName>arg_min_max.cpp</FileName>
               <FileType>8</FileType>
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/arg_min_max.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>batch_to_space_nd.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/batch_to_space_nd.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>cast.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/cast.cpp</FilePath>
             </File>
             <File>
               <FileName>ceil.cpp</FileName>
@@ -4343,9 +4868,34 @@
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/concatenation.cpp</FilePath>
             </File>
             <File>
+              <FileName>conv_common.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/conv_common.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>cumsum.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/cumsum.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>depth_to_space.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/depth_to_space.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>depthwise_conv_common.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/depthwise_conv_common.cpp</FilePath>
+            </File>
+            <File>
               <FileName>dequantize.cpp</FileName>
               <FileType>8</FileType>
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/dequantize.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>detection_postprocess.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/detection_postprocess.cpp</FilePath>
             </File>
             <File>
               <FileName>elementwise.cpp</FileName>
@@ -4353,9 +4903,54 @@
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/elementwise.cpp</FilePath>
             </File>
             <File>
+              <FileName>elu.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/elu.cpp</FilePath>
+            </File>
+            <File>
               <FileName>ethosu.cpp</FileName>
               <FileType>8</FileType>
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/ethosu.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>exp.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/exp.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>expand_dims.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/expand_dims.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>fill.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/fill.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>floor_div.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/floor_div.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>floor_mod.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/floor_mod.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>fully_connected_common.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/fully_connected_common.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>gather.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/gather.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>gather_nd.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/gather_nd.cpp</FilePath>
             </File>
             <File>
               <FileName>hard_swish.cpp</FileName>
@@ -4363,9 +4958,9 @@
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/hard_swish.cpp</FilePath>
             </File>
             <File>
-              <FileName>kernel_runner.cpp</FileName>
+              <FileName>if.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/kernel_runner.cpp</FilePath>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/if.cpp</FilePath>
             </File>
             <File>
               <FileName>kernel_util.cpp</FileName>
@@ -4373,9 +4968,24 @@
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/kernel_util.cpp</FilePath>
             </File>
             <File>
+              <FileName>l2_pool_2d.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/l2_pool_2d.cpp</FilePath>
+            </File>
+            <File>
               <FileName>l2norm.cpp</FileName>
               <FileType>8</FileType>
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/l2norm.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>leaky_relu.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/leaky_relu.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>log_softmax.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/log_softmax.cpp</FilePath>
             </File>
             <File>
               <FileName>logical.cpp</FileName>
@@ -4408,9 +5018,9 @@
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/prelu.cpp</FilePath>
             </File>
             <File>
-              <FileName>quantize.cpp</FileName>
+              <FileName>quantize_common.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/quantize.cpp</FilePath>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/quantize_common.cpp</FilePath>
             </File>
             <File>
               <FileName>reduce.cpp</FileName>
@@ -4421,6 +5031,11 @@
               <FileName>reshape.cpp</FileName>
               <FileType>8</FileType>
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/reshape.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>resize_bilinear.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/resize_bilinear.cpp</FilePath>
             </File>
             <File>
               <FileName>resize_nearest_neighbor.cpp</FileName>
@@ -4438,6 +5053,16 @@
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/shape.cpp</FilePath>
             </File>
             <File>
+              <FileName>softmax_common.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/softmax_common.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>space_to_batch_nd.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/space_to_batch_nd.cpp</FilePath>
+            </File>
+            <File>
               <FileName>split.cpp</FileName>
               <FileType>8</FileType>
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/split.cpp</FilePath>
@@ -4446,6 +5071,11 @@
               <FileName>split_v.cpp</FileName>
               <FileType>8</FileType>
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/split_v.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>squeeze.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/squeeze.cpp</FilePath>
             </File>
             <File>
               <FileName>strided_slice.cpp</FileName>
@@ -4458,14 +5088,34 @@
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/sub.cpp</FilePath>
             </File>
             <File>
+              <FileName>svdf_common.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/svdf_common.cpp</FilePath>
+            </File>
+            <File>
               <FileName>tanh.cpp</FileName>
               <FileType>8</FileType>
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/tanh.cpp</FilePath>
             </File>
             <File>
+              <FileName>transpose.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/transpose.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>transpose_conv.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/transpose_conv.cpp</FilePath>
+            </File>
+            <File>
               <FileName>unpack.cpp</FileName>
               <FileType>8</FileType>
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/unpack.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>zeros_like.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/zeros_like.cpp</FilePath>
             </File>
             <File>
               <FileName>activations.cpp</FileName>
@@ -4481,6 +5131,11 @@
               <FileName>logistic.cpp</FileName>
               <FileType>8</FileType>
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/logistic.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>quantize.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/quantize.cpp</FilePath>
             </File>
           </Files>
         </Group>
@@ -4630,47 +5285,47 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/cmsis-nn</GroupName>
+          <GroupName>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/cmsis_nn</GroupName>
           <Files>
             <File>
               <FileName>add.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/cmsis-nn/add.cpp</FilePath>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/cmsis_nn/add.cpp</FilePath>
             </File>
             <File>
               <FileName>conv.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/cmsis-nn/conv.cpp</FilePath>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/cmsis_nn/conv.cpp</FilePath>
             </File>
             <File>
               <FileName>depthwise_conv.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/cmsis-nn/depthwise_conv.cpp</FilePath>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/cmsis_nn/depthwise_conv.cpp</FilePath>
             </File>
             <File>
               <FileName>fully_connected.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/cmsis-nn/fully_connected.cpp</FilePath>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/cmsis_nn/fully_connected.cpp</FilePath>
             </File>
             <File>
               <FileName>mul.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/cmsis-nn/mul.cpp</FilePath>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/cmsis_nn/mul.cpp</FilePath>
             </File>
             <File>
               <FileName>pooling.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/cmsis-nn/pooling.cpp</FilePath>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/cmsis_nn/pooling.cpp</FilePath>
             </File>
             <File>
               <FileName>softmax.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/cmsis-nn/softmax.cpp</FilePath>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/cmsis_nn/softmax.cpp</FilePath>
             </File>
             <File>
               <FileName>svdf.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/cmsis-nn/svdf.cpp</FilePath>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/cmsis_nn/svdf.cpp</FilePath>
             </File>
           </Files>
         </Group>
@@ -4753,9 +5408,19 @@
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/flatbuffers.h</FilePath>
             </File>
             <File>
+              <FileName>flexbuffers.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/flexbuffers.h</FilePath>
+            </File>
+            <File>
               <FileName>stl_emulation.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/stl_emulation.h</FilePath>
+            </File>
+            <File>
+              <FileName>util.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/util.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -4968,9 +5633,34 @@
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/DSP/Include/arm_common_tables.h</FilePath>
             </File>
             <File>
+              <FileName>arm_common_tables_f16.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/DSP/Include/arm_common_tables_f16.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_const_structs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/DSP/Include/arm_const_structs.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_const_structs_f16.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/DSP/Include/arm_const_structs_f16.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_helium_utils.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/DSP/Include/arm_helium_utils.h</FilePath>
+            </File>
+            <File>
               <FileName>arm_math.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/DSP/Include/arm_math.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_math_f16.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/DSP/Include/arm_math_f16.h</FilePath>
             </File>
             <File>
               <FileName>arm_math_memory.h</FileName>
@@ -4981,6 +5671,31 @@
               <FileName>arm_math_types.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/DSP/Include/arm_math_types.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_math_types_f16.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/DSP/Include/arm_math_types_f16.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_mve_tables.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/DSP/Include/arm_mve_tables.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_mve_tables_f16.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/DSP/Include/arm_mve_tables_f16.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_vec_math.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/DSP/Include/arm_vec_math.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_vec_math_f16.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/DSP/Include/arm_vec_math_f16.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -4993,9 +5708,19 @@
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/DSP/Include/dsp/basic_math_functions.h</FilePath>
             </File>
             <File>
+              <FileName>basic_math_functions_f16.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/DSP/Include/dsp/basic_math_functions_f16.h</FilePath>
+            </File>
+            <File>
               <FileName>bayes_functions.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/DSP/Include/dsp/bayes_functions.h</FilePath>
+            </File>
+            <File>
+              <FileName>bayes_functions_f16.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/DSP/Include/dsp/bayes_functions_f16.h</FilePath>
             </File>
             <File>
               <FileName>complex_math_functions.h</FileName>
@@ -5003,9 +5728,19 @@
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/DSP/Include/dsp/complex_math_functions.h</FilePath>
             </File>
             <File>
+              <FileName>complex_math_functions_f16.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/DSP/Include/dsp/complex_math_functions_f16.h</FilePath>
+            </File>
+            <File>
               <FileName>controller_functions.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/DSP/Include/dsp/controller_functions.h</FilePath>
+            </File>
+            <File>
+              <FileName>controller_functions_f16.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/DSP/Include/dsp/controller_functions_f16.h</FilePath>
             </File>
             <File>
               <FileName>distance_functions.h</FileName>
@@ -5013,9 +5748,19 @@
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/DSP/Include/dsp/distance_functions.h</FilePath>
             </File>
             <File>
+              <FileName>distance_functions_f16.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/DSP/Include/dsp/distance_functions_f16.h</FilePath>
+            </File>
+            <File>
               <FileName>fast_math_functions.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/DSP/Include/dsp/fast_math_functions.h</FilePath>
+            </File>
+            <File>
+              <FileName>fast_math_functions_f16.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/DSP/Include/dsp/fast_math_functions_f16.h</FilePath>
             </File>
             <File>
               <FileName>filtering_functions.h</FileName>
@@ -5023,9 +5768,19 @@
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/DSP/Include/dsp/filtering_functions.h</FilePath>
             </File>
             <File>
+              <FileName>filtering_functions_f16.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/DSP/Include/dsp/filtering_functions_f16.h</FilePath>
+            </File>
+            <File>
               <FileName>interpolation_functions.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/DSP/Include/dsp/interpolation_functions.h</FilePath>
+            </File>
+            <File>
+              <FileName>interpolation_functions_f16.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/DSP/Include/dsp/interpolation_functions_f16.h</FilePath>
             </File>
             <File>
               <FileName>matrix_functions.h</FileName>
@@ -5033,9 +5788,19 @@
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/DSP/Include/dsp/matrix_functions.h</FilePath>
             </File>
             <File>
+              <FileName>matrix_functions_f16.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/DSP/Include/dsp/matrix_functions_f16.h</FilePath>
+            </File>
+            <File>
               <FileName>none.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/DSP/Include/dsp/none.h</FilePath>
+            </File>
+            <File>
+              <FileName>quaternion_math_functions.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/DSP/Include/dsp/quaternion_math_functions.h</FilePath>
             </File>
             <File>
               <FileName>statistics_functions.h</FileName>
@@ -5043,9 +5808,19 @@
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/DSP/Include/dsp/statistics_functions.h</FilePath>
             </File>
             <File>
+              <FileName>statistics_functions_f16.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/DSP/Include/dsp/statistics_functions_f16.h</FilePath>
+            </File>
+            <File>
               <FileName>support_functions.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/DSP/Include/dsp/support_functions.h</FilePath>
+            </File>
+            <File>
+              <FileName>support_functions_f16.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/DSP/Include/dsp/support_functions_f16.h</FilePath>
             </File>
             <File>
               <FileName>svm_defines.h</FileName>
@@ -5058,9 +5833,19 @@
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/DSP/Include/dsp/svm_functions.h</FilePath>
             </File>
             <File>
+              <FileName>svm_functions_f16.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/DSP/Include/dsp/svm_functions_f16.h</FilePath>
+            </File>
+            <File>
               <FileName>transform_functions.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/DSP/Include/dsp/transform_functions.h</FilePath>
+            </File>
+            <File>
+              <FileName>transform_functions_f16.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/DSP/Include/dsp/transform_functions_f16.h</FilePath>
             </File>
             <File>
               <FileName>utils.h</FileName>
@@ -5393,6 +6178,11 @@
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/NNSupportFunctions/arm_nn_vec_mat_mult_t_s8.c</FilePath>
             </File>
             <File>
+              <FileName>arm_nn_vec_mat_mult_t_svdf_s8.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/NNSupportFunctions/arm_nn_vec_mat_mult_t_svdf_s8.c</FilePath>
+            </File>
+            <File>
               <FileName>arm_nntables.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/NNSupportFunctions/arm_nntables.c</FilePath>
@@ -5496,26 +6286,6 @@
               <FileName>LICENSE.txt</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/LICENSE.txt</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>CMSIS/DSP/Include</GroupName>
-          <Files>
-            <File>
-              <FileName>arm_common_tables.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/DSP/Include/arm_common_tables.h</FilePath>
-            </File>
-            <File>
-              <FileName>arm_const_structs.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/DSP/Include/arm_const_structs.h</FilePath>
-            </File>
-            <File>
-              <FileName>arm_math.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/DSP/Include/arm_math.h</FilePath>
             </File>
           </Files>
         </Group>

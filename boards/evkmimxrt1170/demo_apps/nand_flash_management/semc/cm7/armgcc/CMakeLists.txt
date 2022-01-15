@@ -55,7 +55,7 @@ target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
 set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../../../components/flash/nand/semc
     ${ProjDirPath}/../../../../../../../middleware/dhara
-    ${ProjDirPath}/../../../../../../../rtos/freertos
+    ${ProjDirPath}/../../../../../../../rtos/freertos/freertos_kernel
     ${ProjDirPath}/../../../../../../../middleware/fatfs
     ${ProjDirPath}/../../../../../../../devices/MIMXRT1176/utilities
     ${ProjDirPath}/../../../../../../../devices/MIMXRT1176/drivers

@@ -7,6 +7,7 @@
  */
 
 #include <stdint.h>
+
 #include "fsl_device_registers.h"
 
 extern void init_interrupts(void);
@@ -58,6 +59,13 @@ void SystemInit(void)
    -- SystemCoreClockUpdate()
    ---------------------------------------------------------------------------- */
 
-void SystemCoreClockUpdate(void)
+void SystemCoreClockUpdate(void) {}
+
+/* ----------------------------------------------------------------------------
+   -- SystemInitHook()
+   ---------------------------------------------------------------------------- */
+
+__attribute__((weak)) void SystemInitHook(void)
 {
+    /* Void implementation of the weak function. */
 }

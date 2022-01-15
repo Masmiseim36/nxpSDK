@@ -5,8 +5,8 @@
 /*  specification file(s). For more information please refer to the Azure RTOS */
 /*  GUIX Studio User Guide, or visit our web site at azure.com/rtos            */
 /*                                                                             */
-/*  GUIX Studio Revision 6.1.5.0                                               */
-/*  Date (dd.mm.yyyy): 26. 3.2021   Time (hh:mm): 19:47                        */
+/*  GUIX Studio Revision 6.1.9.0                                               */
+/*  Date (dd.mm.yyyy): 12.11.2021   Time (hh:mm): 18:04                        */
 /*******************************************************************************/
 
 
@@ -23,7 +23,7 @@ MAIN_SCREEN_CONTROL_BLOCK main_screen;
 GX_DISPLAY main_display_control_block;
 GX_WINDOW_ROOT main_display_root_window;
 GX_CANVAS  main_display_canvas_control_block;
-ULONG      main_display_canvas_memory[153600];
+ULONG      main_display_canvas_memory[460800];
 
 extern GX_CONST GX_THEME *main_display_theme_table[];
 extern GX_CONST GX_STRING *main_display_language_table[];
@@ -38,13 +38,14 @@ GX_STUDIO_DISPLAY_INFO demo_guix_washing_machine_display_table[1] =
     MAIN_DISPLAY_THEME_TABLE_SIZE,
     MAIN_DISPLAY_LANGUAGE_TABLE_SIZE,
     MAIN_DISPLAY_STRING_TABLE_SIZE,
-    640,                                     /* x resolution                   */
-    480,                                     /* y resolution                   */
+    720,                                     /* x resolution                   */
+    1280,                                    /* y resolution                   */
     &main_display_control_block,
     &main_display_canvas_control_block,
     &main_display_root_window,
     main_display_canvas_memory,              /* canvas memory area             */
-    614400                                   /* canvas memory size in bytes    */
+    1843200,                                 /* canvas memory size in bytes    */
+    GX_SCREEN_ROTATION_NONE                  /* rotation angle                 */
     }
 };
 
@@ -278,7 +279,7 @@ GX_CONST GX_STUDIO_WIDGET temperature_window_water_label_3_define =
     gx_studio_prompt_create,                 /* create function                */
     GX_NULL,                                 /* drawing function override      */
     GX_NULL,                                 /* event function override        */
-    {278, 276, 292, 298},                    /* widget size                    */
+    {382, 642, 396, 664},                    /* widget size                    */
     GX_NULL,                                 /* no next widget                 */
     GX_NULL,                                 /* no child widgets               */ 
     offsetof(TEMPERATURE_WINDOW_CONTROL_BLOCK, temperature_window_water_label_3), /* control block */
@@ -302,7 +303,7 @@ GX_CONST GX_STUDIO_WIDGET temperature_window_temperature_value_define =
     gx_studio_prompt_create,                 /* create function                */
     GX_NULL,                                 /* drawing function override      */
     GX_NULL,                                 /* event function override        */
-    {227, 280, 274, 305},                    /* widget size                    */
+    {331, 646, 378, 671},                    /* widget size                    */
     &temperature_window_water_label_3_define, /* next widget definition        */
     GX_NULL,                                 /* no child widgets               */ 
     offsetof(TEMPERATURE_WINDOW_CONTROL_BLOCK, temperature_window_temperature_value), /* control block */
@@ -326,7 +327,7 @@ GX_CONST GX_STUDIO_WIDGET temperature_window_water_label_define =
     gx_studio_prompt_create,                 /* create function                */
     GX_NULL,                                 /* drawing function override      */
     GX_NULL,                                 /* event function override        */
-    {230, 234, 273, 246},                    /* widget size                    */
+    {334, 600, 377, 612},                    /* widget size                    */
     &temperature_window_temperature_value_define, /* next widget definition    */
     GX_NULL,                                 /* no child widgets               */ 
     offsetof(TEMPERATURE_WINDOW_CONTROL_BLOCK, temperature_window_water_label), /* control block */
@@ -350,7 +351,7 @@ GX_CONST GX_STUDIO_WIDGET temperature_window_temperature_label_define =
     gx_studio_prompt_create,                 /* create function                */
     GX_NULL,                                 /* drawing function override      */
     GX_NULL,                                 /* event function override        */
-    {208, 254, 299, 266},                    /* widget size                    */
+    {312, 620, 403, 632},                    /* widget size                    */
     &temperature_window_water_label_define,  /* next widget definition         */
     GX_NULL,                                 /* no child widgets               */ 
     offsetof(TEMPERATURE_WINDOW_CONTROL_BLOCK, temperature_window_temperature_label), /* control block */
@@ -374,7 +375,7 @@ GX_CONST GX_STUDIO_WIDGET temperature_window_water_t_hot_define =
     gx_studio_prompt_create,                 /* create function                */
     GX_NULL,                                 /* drawing function override      */
     GX_NULL,                                 /* event function override        */
-    {445, 373, 477, 392},                    /* widget size                    */
+    {549, 739, 581, 758},                    /* widget size                    */
     GX_NULL,                                 /* no next widget                 */
     GX_NULL,                                 /* no child widgets               */ 
     offsetof(TEMPERATURE_WINDOW_CONTROL_BLOCK, temperature_window_water_t_hot), /* control block */
@@ -398,7 +399,7 @@ GX_CONST GX_STUDIO_WIDGET temperature_window_water_t_cold_define =
     gx_studio_prompt_create,                 /* create function                */
     GX_NULL,                                 /* drawing function override      */
     GX_NULL,                                 /* event function override        */
-    {23, 373, 64, 392},                      /* widget size                    */
+    {127, 739, 168, 758},                    /* widget size                    */
     &temperature_window_water_t_hot_define,  /* next widget definition         */
     GX_NULL,                                 /* no child widgets               */ 
     offsetof(TEMPERATURE_WINDOW_CONTROL_BLOCK, temperature_window_water_t_cold), /* control block */
@@ -422,7 +423,7 @@ GX_CONST GX_STUDIO_WIDGET temperature_window_radial_slider_define =
     gx_studio_radial_slider_create,          /* create function                */
     GX_NULL,                                 /* drawing function override      */
     GX_NULL,                                 /* event function override        */
-    {108, 116, 400, 395},                    /* widget size                    */
+    {212, 482, 504, 761},                    /* widget size                    */
     &temperature_window_water_t_cold_define, /* next widget definition         */
     &temperature_window_temperature_label_define, /* child widget definition   */
     offsetof(TEMPERATURE_WINDOW_CONTROL_BLOCK, temperature_window_radial_slider), /* control block */
@@ -446,7 +447,7 @@ GX_CONST GX_STUDIO_WIDGET temperature_window_define =
     gx_studio_window_create,                 /* create function                */
     (VOID (*)(GX_WIDGET *)) temperature_window_draw, /* drawing function override */
     (UINT (*)(GX_WIDGET *, GX_EVENT *)) temperature_window_event_process, /* event function override */
-    {16, 104, 499, 402},                     /* widget size                    */
+    {120, 470, 603, 768},                    /* widget size                    */
     GX_NULL,                                 /* next widget                    */
     &temperature_window_radial_slider_define, /* child widget                  */
     0,                                       /* control block                  */
@@ -559,7 +560,7 @@ GX_CONST GX_STUDIO_WIDGET water_level_window_percent_label_define =
     gx_studio_prompt_create,                 /* create function                */
     GX_NULL,                                 /* drawing function override      */
     GX_NULL,                                 /* event function override        */
-    {329, 261, 352, 286},                    /* widget size                    */
+    {433, 605, 456, 630},                    /* widget size                    */
     GX_NULL,                                 /* no next widget                 */
     GX_NULL,                                 /* no child widgets               */ 
     offsetof(WATER_LEVEL_WINDOW_CONTROL_BLOCK, water_level_window_percent_label), /* control block */
@@ -583,7 +584,7 @@ GX_CONST GX_STUDIO_WIDGET water_level_window_water_level_value_define =
     gx_studio_prompt_create,                 /* create function                */
     GX_NULL,                                 /* drawing function override      */
     GX_NULL,                                 /* event function override        */
-    {256, 258, 326, 296},                    /* widget size                    */
+    {360, 602, 430, 640},                    /* widget size                    */
     &water_level_window_percent_label_define, /* next widget definition        */
     GX_NULL,                                 /* no child widgets               */ 
     offsetof(WATER_LEVEL_WINDOW_CONTROL_BLOCK, water_level_window_water_level_value), /* control block */
@@ -607,7 +608,7 @@ GX_CONST GX_STUDIO_WIDGET water_level_window_water_level_label_define =
     gx_studio_prompt_create,                 /* create function                */
     GX_NULL,                                 /* drawing function override      */
     GX_NULL,                                 /* event function override        */
-    {272, 245, 356, 257},                    /* widget size                    */
+    {376, 589, 460, 601},                    /* widget size                    */
     &water_level_window_water_level_value_define, /* next widget definition    */
     GX_NULL,                                 /* no child widgets               */ 
     offsetof(WATER_LEVEL_WINDOW_CONTROL_BLOCK, water_level_window_water_level_label), /* control block */
@@ -631,7 +632,7 @@ GX_CONST GX_STUDIO_WIDGET water_level_window_water_level_very_low_define =
     gx_studio_prompt_create,                 /* create function                */
     GX_NULL,                                 /* drawing function override      */
     GX_NULL,                                 /* event function override        */
-    {29, 334, 117, 353},                     /* widget size                    */
+    {133, 678, 221, 697},                    /* widget size                    */
     GX_NULL,                                 /* no next widget                 */
     GX_NULL,                                 /* no child widgets               */ 
     offsetof(WATER_LEVEL_WINDOW_CONTROL_BLOCK, water_level_window_water_level_very_low), /* control block */
@@ -655,7 +656,7 @@ GX_CONST GX_STUDIO_WIDGET water_level_window_water_level_low_define =
     gx_studio_prompt_create,                 /* create function                */
     GX_NULL,                                 /* drawing function override      */
     GX_NULL,                                 /* event function override        */
-    {29, 286, 67, 305},                      /* widget size                    */
+    {133, 630, 171, 649},                    /* widget size                    */
     &water_level_window_water_level_very_low_define, /* next widget definition */
     GX_NULL,                                 /* no child widgets               */ 
     offsetof(WATER_LEVEL_WINDOW_CONTROL_BLOCK, water_level_window_water_level_low), /* control block */
@@ -679,7 +680,7 @@ GX_CONST GX_STUDIO_WIDGET water_level_window_water_level_medium_define =
     gx_studio_prompt_create,                 /* create function                */
     GX_NULL,                                 /* drawing function override      */
     GX_NULL,                                 /* event function override        */
-    {29, 238, 104, 257},                     /* widget size                    */
+    {133, 582, 208, 601},                    /* widget size                    */
     &water_level_window_water_level_low_define, /* next widget definition      */
     GX_NULL,                                 /* no child widgets               */ 
     offsetof(WATER_LEVEL_WINDOW_CONTROL_BLOCK, water_level_window_water_level_medium), /* control block */
@@ -703,7 +704,7 @@ GX_CONST GX_STUDIO_WIDGET water_level_window_water_level_high_define =
     gx_studio_prompt_create,                 /* create function                */
     GX_NULL,                                 /* drawing function override      */
     GX_NULL,                                 /* event function override        */
-    {29, 190, 71, 209},                      /* widget size                    */
+    {133, 534, 175, 553},                    /* widget size                    */
     &water_level_window_water_level_medium_define, /* next widget definition   */
     GX_NULL,                                 /* no child widgets               */ 
     offsetof(WATER_LEVEL_WINDOW_CONTROL_BLOCK, water_level_window_water_level_high), /* control block */
@@ -727,7 +728,7 @@ GX_CONST GX_STUDIO_WIDGET water_level_window_water_level_extra_high_define =
     gx_studio_prompt_create,                 /* create function                */
     GX_NULL,                                 /* drawing function override      */
     GX_NULL,                                 /* event function override        */
-    {29, 142, 127, 161},                     /* widget size                    */
+    {133, 486, 231, 505},                    /* widget size                    */
     &water_level_window_water_level_high_define, /* next widget definition     */
     GX_NULL,                                 /* no child widgets               */ 
     offsetof(WATER_LEVEL_WINDOW_CONTROL_BLOCK, water_level_window_water_level_extra_high), /* control block */
@@ -751,7 +752,7 @@ GX_CONST GX_STUDIO_WIDGET water_level_window_water_level_slider_define =
     gx_studio_pixelmap_slider_create,        /* create function                */
     GX_NULL,                                 /* drawing function override      */
     GX_NULL,                                 /* event function override        */
-    {200, 150, 431, 347},                    /* widget size                    */
+    {304, 494, 535, 691},                    /* widget size                    */
     &water_level_window_water_level_extra_high_define, /* next widget definition */
     &water_level_window_water_level_label_define, /* child widget definition   */
     offsetof(WATER_LEVEL_WINDOW_CONTROL_BLOCK, water_level_window_water_level_slider), /* control block */
@@ -775,7 +776,7 @@ GX_CONST GX_STUDIO_WIDGET water_level_window_water_level_slider_background_defin
     gx_studio_icon_create,                   /* create function                */
     GX_NULL,                                 /* drawing function override      */
     GX_NULL,                                 /* event function override        */
-    {191, 150, 440, 388},                    /* widget size                    */
+    {295, 494, 544, 732},                    /* widget size                    */
     &water_level_window_water_level_slider_define, /* next widget definition   */
     GX_NULL,                                 /* no child widgets               */ 
     offsetof(WATER_LEVEL_WINDOW_CONTROL_BLOCK, water_level_window_water_level_slider_background), /* control block */
@@ -799,7 +800,7 @@ GX_CONST GX_STUDIO_WIDGET water_level_window_define =
     gx_studio_window_create,                 /* create function                */
     (VOID (*)(GX_WIDGET *)) water_level_window_draw, /* drawing function override */
     (UINT (*)(GX_WIDGET *, GX_EVENT *)) water_level_window_event_process, /* event function override */
-    {16, 126, 499, 404},                     /* widget size                    */
+    {120, 470, 603, 748},                    /* widget size                    */
     GX_NULL,                                 /* next widget                    */
     &water_level_window_water_level_slider_background_define, /* child widget  */
     0,                                       /* control block                  */
@@ -943,7 +944,7 @@ GX_CONST GX_STUDIO_WIDGET garments_window_icon_window_define =
     gx_studio_window_create,                 /* create function                */
     (VOID (*)(GX_WIDGET *)) icon_window_draw, /* drawing function override     */
     GX_NULL,                                 /* event function override        */
-    {200, 204, 319, 323},                    /* widget size                    */
+    {310, 550, 429, 669},                    /* widget size                    */
     GX_NULL,                                 /* no next widget                 */
     GX_NULL,                                 /* no child widgets               */ 
     offsetof(GARMENTS_WINDOW_CONTROL_BLOCK, garments_window_icon_window), /* control block */
@@ -967,7 +968,7 @@ GX_CONST GX_STUDIO_WIDGET garments_window_mode_cotton_define =
     gx_studio_prompt_create,                 /* create function                */
     GX_NULL,                                 /* drawing function override      */
     GX_NULL,                                 /* event function override        */
-    {14, 128, 76, 147},                      /* widget size                    */
+    {124, 474, 186, 493},                    /* widget size                    */
     GX_NULL,                                 /* no next widget                 */
     GX_NULL,                                 /* no child widgets               */ 
     offsetof(GARMENTS_WINDOW_CONTROL_BLOCK, garments_window_mode_cotton), /* control block */
@@ -991,7 +992,7 @@ GX_CONST GX_STUDIO_WIDGET garments_window_mode_synthetics_define =
     gx_studio_prompt_create,                 /* create function                */
     GX_NULL,                                 /* drawing function override      */
     GX_NULL,                                 /* event function override        */
-    {13, 178, 110, 197},                     /* widget size                    */
+    {123, 524, 220, 543},                    /* widget size                    */
     &garments_window_mode_cotton_define,     /* next widget definition         */
     GX_NULL,                                 /* no child widgets               */ 
     offsetof(GARMENTS_WINDOW_CONTROL_BLOCK, garments_window_mode_synthetics), /* control block */
@@ -1015,7 +1016,7 @@ GX_CONST GX_STUDIO_WIDGET garments_window_mode_linen_define =
     gx_studio_prompt_create,                 /* create function                */
     GX_NULL,                                 /* drawing function override      */
     GX_NULL,                                 /* event function override        */
-    {15, 278, 66, 297},                      /* widget size                    */
+    {125, 624, 176, 643},                    /* widget size                    */
     &garments_window_mode_synthetics_define, /* next widget definition         */
     GX_NULL,                                 /* no child widgets               */ 
     offsetof(GARMENTS_WINDOW_CONTROL_BLOCK, garments_window_mode_linen), /* control block */
@@ -1039,7 +1040,7 @@ GX_CONST GX_STUDIO_WIDGET garments_window_mode_dark_colors_define =
     gx_studio_prompt_create,                 /* create function                */
     GX_NULL,                                 /* drawing function override      */
     GX_NULL,                                 /* event function override        */
-    {13, 327, 124, 346},                     /* widget size                    */
+    {123, 673, 234, 692},                    /* widget size                    */
     &garments_window_mode_linen_define,      /* next widget definition         */
     GX_NULL,                                 /* no child widgets               */ 
     offsetof(GARMENTS_WINDOW_CONTROL_BLOCK, garments_window_mode_dark_colors), /* control block */
@@ -1063,7 +1064,7 @@ GX_CONST GX_STUDIO_WIDGET garments_window_mode_bedding_define =
     gx_studio_prompt_create,                 /* create function                */
     GX_NULL,                                 /* drawing function override      */
     GX_NULL,                                 /* event function override        */
-    {417, 178, 494, 197},                    /* widget size                    */
+    {527, 524, 604, 543},                    /* widget size                    */
     &garments_window_mode_dark_colors_define, /* next widget definition        */
     GX_NULL,                                 /* no child widgets               */ 
     offsetof(GARMENTS_WINDOW_CONTROL_BLOCK, garments_window_mode_bedding), /* control block */
@@ -1087,7 +1088,7 @@ GX_CONST GX_STUDIO_WIDGET garments_window_mode_silk_define =
     gx_studio_prompt_create,                 /* create function                */
     GX_NULL,                                 /* drawing function override      */
     GX_NULL,                                 /* event function override        */
-    {458, 228, 490, 247},                    /* widget size                    */
+    {568, 574, 600, 593},                    /* widget size                    */
     &garments_window_mode_bedding_define,    /* next widget definition         */
     GX_NULL,                                 /* no child widgets               */ 
     offsetof(GARMENTS_WINDOW_CONTROL_BLOCK, garments_window_mode_silk), /* control block */
@@ -1111,7 +1112,7 @@ GX_CONST GX_STUDIO_WIDGET garments_window_mode_wool_define =
     gx_studio_prompt_create,                 /* create function                */
     GX_NULL,                                 /* drawing function override      */
     GX_NULL,                                 /* event function override        */
-    {444, 280, 491, 299},                    /* widget size                    */
+    {554, 626, 601, 645},                    /* widget size                    */
     &garments_window_mode_silk_define,       /* next widget definition         */
     GX_NULL,                                 /* no child widgets               */ 
     offsetof(GARMENTS_WINDOW_CONTROL_BLOCK, garments_window_mode_wool), /* control block */
@@ -1135,7 +1136,7 @@ GX_CONST GX_STUDIO_WIDGET garments_window_mode_hand_wash_define =
     gx_studio_prompt_create,                 /* create function                */
     GX_NULL,                                 /* drawing function override      */
     GX_NULL,                                 /* event function override        */
-    {387, 329, 495, 348},                    /* widget size                    */
+    {497, 675, 605, 694},                    /* widget size                    */
     &garments_window_mode_wool_define,       /* next widget definition         */
     GX_NULL,                                 /* no child widgets               */ 
     offsetof(GARMENTS_WINDOW_CONTROL_BLOCK, garments_window_mode_hand_wash), /* control block */
@@ -1159,7 +1160,7 @@ GX_CONST GX_STUDIO_WIDGET garments_window_mode_light_colors_define =
     gx_studio_prompt_create,                 /* create function                */
     GX_NULL,                                 /* drawing function override      */
     GX_NULL,                                 /* event function override        */
-    {12, 378, 124, 397},                     /* widget size                    */
+    {122, 724, 234, 743},                    /* widget size                    */
     &garments_window_mode_hand_wash_define,  /* next widget definition         */
     GX_NULL,                                 /* no child widgets               */ 
     offsetof(GARMENTS_WINDOW_CONTROL_BLOCK, garments_window_mode_light_colors), /* control block */
@@ -1183,7 +1184,7 @@ GX_CONST GX_STUDIO_WIDGET garments_window_mode_workout_clothes_define =
     gx_studio_prompt_create,                 /* create function                */
     GX_NULL,                                 /* drawing function override      */
     GX_NULL,                                 /* event function override        */
-    {341, 377, 498, 396},                    /* widget size                    */
+    {451, 723, 608, 742},                    /* widget size                    */
     &garments_window_mode_light_colors_define, /* next widget definition       */
     GX_NULL,                                 /* no child widgets               */ 
     offsetof(GARMENTS_WINDOW_CONTROL_BLOCK, garments_window_mode_workout_clothes), /* control block */
@@ -1207,7 +1208,7 @@ GX_CONST GX_STUDIO_WIDGET garments_window_mode_baby_care_define =
     gx_studio_prompt_create,                 /* create function                */
     GX_NULL,                                 /* drawing function override      */
     GX_NULL,                                 /* event function override        */
-    {397, 127, 495, 146},                    /* widget size                    */
+    {507, 473, 605, 492},                    /* widget size                    */
     &garments_window_mode_workout_clothes_define, /* next widget definition    */
     GX_NULL,                                 /* no child widgets               */ 
     offsetof(GARMENTS_WINDOW_CONTROL_BLOCK, garments_window_mode_baby_care), /* control block */
@@ -1231,7 +1232,7 @@ GX_CONST GX_STUDIO_WIDGET garments_window_mode_denim_define =
     gx_studio_prompt_create,                 /* create function                */
     GX_NULL,                                 /* drawing function override      */
     GX_NULL,                                 /* event function override        */
-    {15, 228, 77, 247},                      /* widget size                    */
+    {125, 574, 187, 593},                    /* widget size                    */
     &garments_window_mode_baby_care_define,  /* next widget definition         */
     GX_NULL,                                 /* no child widgets               */ 
     offsetof(GARMENTS_WINDOW_CONTROL_BLOCK, garments_window_mode_denim), /* control block */
@@ -1255,7 +1256,7 @@ GX_CONST GX_STUDIO_WIDGET garments_window_radial_slider_define =
     gx_studio_radial_slider_create,          /* create function                */
     GX_NULL,                                 /* drawing function override      */
     GX_NULL,                                 /* event function override        */
-    {74, 133, 445, 394},                     /* widget size                    */
+    {184, 479, 555, 740},                    /* widget size                    */
     &garments_window_mode_denim_define,      /* next widget definition         */
     &garments_window_icon_window_define,     /* child widget definition        */
     offsetof(GARMENTS_WINDOW_CONTROL_BLOCK, garments_window_radial_slider), /* control block */
@@ -1279,7 +1280,7 @@ GX_CONST GX_STUDIO_WIDGET garments_window_define =
     gx_studio_window_create,                 /* create function                */
     (VOID (*)(GX_WIDGET *)) window_alpha_draw, /* drawing function override    */
     (UINT (*)(GX_WIDGET *, GX_EVENT *)) garments_window_event_process, /* event function override */
-    {10, 124, 502, 402},                     /* widget size                    */
+    {120, 470, 612, 748},                    /* widget size                    */
     GX_NULL,                                 /* next widget                    */
     &garments_window_radial_slider_define,   /* child widget                   */
     0,                                       /* control block                  */
@@ -1674,7 +1675,7 @@ GX_CONST GX_STUDIO_WIDGET main_screen_remain_minute_define =
     gx_studio_numeric_prompt_create,         /* create function                */
     GX_NULL,                                 /* drawing function override      */
     GX_NULL,                                 /* event function override        */
-    {239, 252, 286, 290},                    /* widget size                    */
+    {349, 596, 396, 634},                    /* widget size                    */
     GX_NULL,                                 /* no next widget                 */
     GX_NULL,                                 /* no child widgets               */ 
     offsetof(MAIN_SCREEN_CONTROL_BLOCK, main_screen_remain_minute), /* control block */
@@ -1698,7 +1699,7 @@ GX_CONST GX_STUDIO_WIDGET main_screen_remain_hour_define =
     gx_studio_numeric_prompt_create,         /* create function                */
     GX_NULL,                                 /* drawing function override      */
     GX_NULL,                                 /* event function override        */
-    {185, 252, 212, 290},                    /* widget size                    */
+    {295, 596, 322, 634},                    /* widget size                    */
     &main_screen_remain_minute_define,       /* next widget definition         */
     GX_NULL,                                 /* no child widgets               */ 
     offsetof(MAIN_SCREEN_CONTROL_BLOCK, main_screen_remain_hour), /* control block */
@@ -1722,7 +1723,7 @@ GX_CONST GX_STUDIO_WIDGET main_screen_remain_minute_label_define =
     gx_studio_prompt_create,                 /* create function                */
     GX_NULL,                                 /* drawing function override      */
     GX_NULL,                                 /* event function override        */
-    {289, 266, 326, 285},                    /* widget size                    */
+    {399, 610, 436, 629},                    /* widget size                    */
     &main_screen_remain_hour_define,         /* next widget definition         */
     GX_NULL,                                 /* no child widgets               */ 
     offsetof(MAIN_SCREEN_CONTROL_BLOCK, main_screen_remain_minute_label), /* control block */
@@ -1746,7 +1747,7 @@ GX_CONST GX_STUDIO_WIDGET main_screen_washer_mode_define =
     gx_studio_prompt_create,                 /* create function                */
     GX_NULL,                                 /* drawing function override      */
     GX_NULL,                                 /* event function override        */
-    {229, 299, 280, 318},                    /* widget size                    */
+    {339, 643, 390, 662},                    /* widget size                    */
     &main_screen_remain_minute_label_define, /* next widget definition         */
     GX_NULL,                                 /* no child widgets               */ 
     offsetof(MAIN_SCREEN_CONTROL_BLOCK, main_screen_washer_mode), /* control block */
@@ -1770,7 +1771,7 @@ GX_CONST GX_STUDIO_WIDGET main_screen_remain_hour_label_define =
     gx_studio_prompt_create,                 /* create function                */
     GX_NULL,                                 /* drawing function override      */
     GX_NULL,                                 /* event function override        */
-    {211, 266, 234, 288},                    /* widget size                    */
+    {321, 610, 344, 632},                    /* widget size                    */
     &main_screen_washer_mode_define,         /* next widget definition         */
     GX_NULL,                                 /* no child widgets               */ 
     offsetof(MAIN_SCREEN_CONTROL_BLOCK, main_screen_remain_hour_label), /* control block */
@@ -1794,7 +1795,7 @@ GX_CONST GX_STUDIO_WIDGET main_screen_remainning_time_define =
     gx_studio_prompt_create,                 /* create function                */
     GX_NULL,                                 /* drawing function override      */
     GX_NULL,                                 /* event function override        */
-    {199, 230, 309, 242},                    /* widget size                    */
+    {309, 574, 419, 586},                    /* widget size                    */
     &main_screen_remain_hour_label_define,   /* next widget definition         */
     GX_NULL,                                 /* no child widgets               */ 
     offsetof(MAIN_SCREEN_CONTROL_BLOCK, main_screen_remainning_time), /* control block */
@@ -1818,7 +1819,7 @@ GX_CONST GX_STUDIO_WIDGET main_screen_mode_very_fast_define =
     gx_studio_prompt_create,                 /* create function                */
     GX_NULL,                                 /* drawing function override      */
     GX_NULL,                                 /* event function override        */
-    {14, 129, 103, 148},                     /* widget size                    */
+    {124, 474, 213, 493},                    /* widget size                    */
     GX_NULL,                                 /* no next widget                 */
     GX_NULL,                                 /* no child widgets               */ 
     offsetof(MAIN_SCREEN_CONTROL_BLOCK, main_screen_mode_very_fast), /* control block */
@@ -1842,7 +1843,7 @@ GX_CONST GX_STUDIO_WIDGET main_screen_mode_fast_define =
     gx_studio_prompt_create,                 /* create function                */
     GX_NULL,                                 /* drawing function override      */
     GX_NULL,                                 /* event function override        */
-    {14, 179, 53, 198},                      /* widget size                    */
+    {124, 524, 163, 543},                    /* widget size                    */
     &main_screen_mode_very_fast_define,      /* next widget definition         */
     GX_NULL,                                 /* no child widgets               */ 
     offsetof(MAIN_SCREEN_CONTROL_BLOCK, main_screen_mode_fast), /* control block */
@@ -1866,7 +1867,7 @@ GX_CONST GX_STUDIO_WIDGET main_screen_mode_medium_define =
     gx_studio_prompt_create,                 /* create function                */
     GX_NULL,                                 /* drawing function override      */
     GX_NULL,                                 /* event function override        */
-    {14, 277, 89, 296},                      /* widget size                    */
+    {124, 622, 199, 641},                    /* widget size                    */
     &main_screen_mode_fast_define,           /* next widget definition         */
     GX_NULL,                                 /* no child widgets               */ 
     offsetof(MAIN_SCREEN_CONTROL_BLOCK, main_screen_mode_medium), /* control block */
@@ -1890,7 +1891,7 @@ GX_CONST GX_STUDIO_WIDGET main_screen_mode_light_define =
     gx_studio_prompt_create,                 /* create function                */
     GX_NULL,                                 /* drawing function override      */
     GX_NULL,                                 /* event function override        */
-    {14, 327, 60, 346},                      /* widget size                    */
+    {124, 672, 170, 691},                    /* widget size                    */
     &main_screen_mode_medium_define,         /* next widget definition         */
     GX_NULL,                                 /* no child widgets               */ 
     offsetof(MAIN_SCREEN_CONTROL_BLOCK, main_screen_mode_light), /* control block */
@@ -1914,7 +1915,7 @@ GX_CONST GX_STUDIO_WIDGET main_screen_mode_quick_wash_define =
     gx_studio_prompt_create,                 /* create function                */
     GX_NULL,                                 /* drawing function override      */
     GX_NULL,                                 /* event function override        */
-    {381, 178, 492, 197},                    /* widget size                    */
+    {491, 523, 602, 542},                    /* widget size                    */
     &main_screen_mode_light_define,          /* next widget definition         */
     GX_NULL,                                 /* no child widgets               */ 
     offsetof(MAIN_SCREEN_CONTROL_BLOCK, main_screen_mode_quick_wash), /* control block */
@@ -1938,7 +1939,7 @@ GX_CONST GX_STUDIO_WIDGET main_screen_mode_soak_define =
     gx_studio_prompt_create,                 /* create function                */
     GX_NULL,                                 /* drawing function override      */
     GX_NULL,                                 /* event function override        */
-    {446, 228, 492, 247},                    /* widget size                    */
+    {556, 573, 602, 592},                    /* widget size                    */
     &main_screen_mode_quick_wash_define,     /* next widget definition         */
     GX_NULL,                                 /* no child widgets               */ 
     offsetof(MAIN_SCREEN_CONTROL_BLOCK, main_screen_mode_soak), /* control block */
@@ -1962,7 +1963,7 @@ GX_CONST GX_STUDIO_WIDGET main_screen_mode_spin_define =
     gx_studio_prompt_create,                 /* create function                */
     GX_NULL,                                 /* drawing function override      */
     GX_NULL,                                 /* event function override        */
-    {452, 280, 492, 299},                    /* widget size                    */
+    {562, 625, 602, 644},                    /* widget size                    */
     &main_screen_mode_soak_define,           /* next widget definition         */
     GX_NULL,                                 /* no child widgets               */ 
     offsetof(MAIN_SCREEN_CONTROL_BLOCK, main_screen_mode_spin), /* control block */
@@ -1986,7 +1987,7 @@ GX_CONST GX_STUDIO_WIDGET main_screen_mode_no_spin_define =
     gx_studio_prompt_create,                 /* create function                */
     GX_NULL,                                 /* drawing function override      */
     GX_NULL,                                 /* event function override        */
-    {420, 329, 492, 348},                    /* widget size                    */
+    {530, 674, 602, 693},                    /* widget size                    */
     &main_screen_mode_spin_define,           /* next widget definition         */
     GX_NULL,                                 /* no child widgets               */ 
     offsetof(MAIN_SCREEN_CONTROL_BLOCK, main_screen_mode_no_spin), /* control block */
@@ -2010,7 +2011,7 @@ GX_CONST GX_STUDIO_WIDGET main_screen_mode_very_light_define =
     gx_studio_prompt_create,                 /* create function                */
     GX_NULL,                                 /* drawing function override      */
     GX_NULL,                                 /* event function override        */
-    {14, 378, 110, 397},                     /* widget size                    */
+    {124, 723, 220, 742},                    /* widget size                    */
     &main_screen_mode_no_spin_define,        /* next widget definition         */
     GX_NULL,                                 /* no child widgets               */ 
     offsetof(MAIN_SCREEN_CONTROL_BLOCK, main_screen_mode_very_light), /* control block */
@@ -2034,7 +2035,7 @@ GX_CONST GX_STUDIO_WIDGET main_screen_mode_rinse_spin_define =
     gx_studio_prompt_create,                 /* create function                */
     GX_NULL,                                 /* drawing function override      */
     GX_NULL,                                 /* event function override        */
-    {374, 378, 493, 397},                    /* widget size                    */
+    {484, 723, 603, 742},                    /* widget size                    */
     &main_screen_mode_very_light_define,     /* next widget definition         */
     GX_NULL,                                 /* no child widgets               */ 
     offsetof(MAIN_SCREEN_CONTROL_BLOCK, main_screen_mode_rinse_spin), /* control block */
@@ -2058,7 +2059,7 @@ GX_CONST GX_STUDIO_WIDGET main_screen_mode_perm_press_define =
     gx_studio_prompt_create,                 /* create function                */
     GX_NULL,                                 /* drawing function override      */
     GX_NULL,                                 /* event function override        */
-    {388, 127, 494, 146},                    /* widget size                    */
+    {498, 472, 604, 491},                    /* widget size                    */
     &main_screen_mode_rinse_spin_define,     /* next widget definition         */
     GX_NULL,                                 /* no child widgets               */ 
     offsetof(MAIN_SCREEN_CONTROL_BLOCK, main_screen_mode_perm_press), /* control block */
@@ -2082,7 +2083,7 @@ GX_CONST GX_STUDIO_WIDGET main_screen_mode_normal_define =
     gx_studio_prompt_create,                 /* create function                */
     GX_NULL,                                 /* drawing function override      */
     GX_NULL,                                 /* event function override        */
-    {14, 228, 83, 247},                      /* widget size                    */
+    {124, 573, 193, 592},                    /* widget size                    */
     &main_screen_mode_perm_press_define,     /* next widget definition         */
     GX_NULL,                                 /* no child widgets               */ 
     offsetof(MAIN_SCREEN_CONTROL_BLOCK, main_screen_mode_normal), /* control block */
@@ -2106,7 +2107,7 @@ GX_CONST GX_STUDIO_WIDGET main_screen_radial_slider_define =
     gx_studio_radial_slider_create,          /* create function                */
     GX_NULL,                                 /* drawing function override      */
     GX_NULL,                                 /* event function override        */
-    {65, 133, 438, 394},                     /* widget size                    */
+    {175, 477, 548, 738},                    /* widget size                    */
     &main_screen_mode_normal_define,         /* next widget definition         */
     &main_screen_remainning_time_define,     /* child widget definition        */
     offsetof(MAIN_SCREEN_CONTROL_BLOCK, main_screen_radial_slider), /* control block */
@@ -2130,7 +2131,7 @@ GX_CONST GX_STUDIO_WIDGET main_screen_washer_on_label_define =
     gx_studio_prompt_create,                 /* create function                */
     GX_NULL,                                 /* drawing function override      */
     GX_NULL,                                 /* event function override        */
-    {545, 173, 588, 185},                    /* widget size                    */
+    {107, 924, 150, 936},                    /* widget size                    */
     GX_NULL,                                 /* no next widget                 */
     GX_NULL,                                 /* no child widgets               */ 
     offsetof(MAIN_SCREEN_CONTROL_BLOCK, main_screen_washer_on_label), /* control block */
@@ -2154,7 +2155,7 @@ GX_CONST GX_STUDIO_WIDGET main_screen_washer_on_icon_define =
     gx_studio_icon_create,                   /* create function                */
     GX_NULL,                                 /* drawing function override      */
     GX_NULL,                                 /* event function override        */
-    {556, 150, 569, 165},                    /* widget size                    */
+    {118, 901, 131, 916},                    /* widget size                    */
     &main_screen_washer_on_label_define,     /* next widget definition         */
     GX_NULL,                                 /* no child widgets               */ 
     offsetof(MAIN_SCREEN_CONTROL_BLOCK, main_screen_washer_on_icon), /* control block */
@@ -2178,7 +2179,7 @@ GX_CONST GX_STUDIO_WIDGET main_screen_garments_label_define =
     gx_studio_prompt_create,                 /* create function                */
     GX_NULL,                                 /* drawing function override      */
     GX_NULL,                                 /* event function override        */
-    {532, 238, 600, 250},                    /* widget size                    */
+    {253, 926, 321, 938},                    /* widget size                    */
     GX_NULL,                                 /* no next widget                 */
     GX_NULL,                                 /* no child widgets               */ 
     offsetof(MAIN_SCREEN_CONTROL_BLOCK, main_screen_garments_label), /* control block */
@@ -2202,7 +2203,7 @@ GX_CONST GX_STUDIO_WIDGET main_screen_garments_icon_define =
     gx_studio_icon_create,                   /* create function                */
     GX_NULL,                                 /* drawing function override      */
     GX_NULL,                                 /* event function override        */
-    {556, 209, 571, 229},                    /* widget size                    */
+    {277, 897, 292, 917},                    /* widget size                    */
     &main_screen_garments_label_define,      /* next widget definition         */
     GX_NULL,                                 /* no child widgets               */ 
     offsetof(MAIN_SCREEN_CONTROL_BLOCK, main_screen_garments_icon), /* control block */
@@ -2226,7 +2227,7 @@ GX_CONST GX_STUDIO_WIDGET main_screen_prompt_9_define =
     gx_studio_prompt_create,                 /* create function                */
     GX_NULL,                                 /* drawing function override      */
     GX_NULL,                                 /* event function override        */
-    {597, 275, 617, 295},                    /* widget size                    */
+    {475, 900, 495, 920},                    /* widget size                    */
     GX_NULL,                                 /* no next widget                 */
     GX_NULL,                                 /* no child widgets               */ 
     offsetof(MAIN_SCREEN_CONTROL_BLOCK, main_screen_prompt_9), /* control block */
@@ -2250,7 +2251,7 @@ GX_CONST GX_STUDIO_WIDGET main_screen_water_level_value_define =
     gx_studio_prompt_create,                 /* create function                */
     GX_NULL,                                 /* drawing function override      */
     GX_NULL,                                 /* event function override        */
-    {553, 272, 596, 297},                    /* widget size                    */
+    {431, 897, 474, 922},                    /* widget size                    */
     &main_screen_prompt_9_define,            /* next widget definition         */
     GX_NULL,                                 /* no child widgets               */ 
     offsetof(MAIN_SCREEN_CONTROL_BLOCK, main_screen_water_level_value), /* control block */
@@ -2274,7 +2275,7 @@ GX_CONST GX_STUDIO_WIDGET main_screen_water_level_label_define =
     gx_studio_prompt_create,                 /* create function                */
     GX_NULL,                                 /* drawing function override      */
     GX_NULL,                                 /* event function override        */
-    {525, 300, 609, 312},                    /* widget size                    */
+    {403, 925, 487, 937},                    /* widget size                    */
     &main_screen_water_level_value_define,   /* next widget definition         */
     GX_NULL,                                 /* no child widgets               */ 
     offsetof(MAIN_SCREEN_CONTROL_BLOCK, main_screen_water_level_label), /* control block */
@@ -2298,7 +2299,7 @@ GX_CONST GX_STUDIO_WIDGET main_screen_water_level_icon_define =
     gx_studio_icon_create,                   /* create function                */
     GX_NULL,                                 /* drawing function override      */
     GX_NULL,                                 /* event function override        */
-    {530, 276, 549, 292},                    /* widget size                    */
+    {408, 901, 427, 917},                    /* widget size                    */
     &main_screen_water_level_label_define,   /* next widget definition         */
     GX_NULL,                                 /* no child widgets               */ 
     offsetof(MAIN_SCREEN_CONTROL_BLOCK, main_screen_water_level_icon), /* control block */
@@ -2322,7 +2323,7 @@ GX_CONST GX_STUDIO_WIDGET main_screen_prompt_8_define =
     gx_studio_prompt_create,                 /* create function                */
     GX_NULL,                                 /* drawing function override      */
     GX_NULL,                                 /* event function override        */
-    {591, 332, 598, 344},                    /* widget size                    */
+    {627, 894, 634, 906},                    /* widget size                    */
     GX_NULL,                                 /* no next widget                 */
     GX_NULL,                                 /* no child widgets               */ 
     offsetof(MAIN_SCREEN_CONTROL_BLOCK, main_screen_prompt_8), /* control block */
@@ -2346,7 +2347,7 @@ GX_CONST GX_STUDIO_WIDGET main_screen_temperature_value_define =
     gx_studio_prompt_create,                 /* create function                */
     GX_NULL,                                 /* drawing function override      */
     GX_NULL,                                 /* event function override        */
-    {556, 332, 593, 357},                    /* widget size                    */
+    {592, 894, 629, 919},                    /* widget size                    */
     &main_screen_prompt_8_define,            /* next widget definition         */
     GX_NULL,                                 /* no child widgets               */ 
     offsetof(MAIN_SCREEN_CONTROL_BLOCK, main_screen_temperature_value), /* control block */
@@ -2370,7 +2371,7 @@ GX_CONST GX_STUDIO_WIDGET main_screen_temperature_label_define =
     gx_studio_prompt_create,                 /* create function                */
     GX_NULL,                                 /* drawing function override      */
     GX_NULL,                                 /* event function override        */
-    {520, 364, 611, 376},                    /* widget size                    */
+    {556, 926, 647, 938},                    /* widget size                    */
     &main_screen_temperature_value_define,   /* next widget definition         */
     GX_NULL,                                 /* no child widgets               */ 
     offsetof(MAIN_SCREEN_CONTROL_BLOCK, main_screen_temperature_label), /* control block */
@@ -2394,7 +2395,7 @@ GX_CONST GX_STUDIO_WIDGET main_screen_temperature_icon_define =
     gx_studio_icon_create,                   /* create function                */
     GX_NULL,                                 /* drawing function override      */
     GX_NULL,                                 /* event function override        */
-    {530, 337, 549, 351},                    /* widget size                    */
+    {566, 899, 585, 913},                    /* widget size                    */
     &main_screen_temperature_label_define,   /* next widget definition         */
     GX_NULL,                                 /* no child widgets               */ 
     offsetof(MAIN_SCREEN_CONTROL_BLOCK, main_screen_temperature_icon), /* control block */
@@ -2418,7 +2419,7 @@ GX_CONST GX_STUDIO_WIDGET main_screen_power_off_label_define =
     gx_studio_prompt_create,                 /* create function                */
     GX_NULL,                                 /* drawing function override      */
     GX_NULL,                                 /* event function override        */
-    {532, 425, 601, 437},                    /* widget size                    */
+    {331, 1016, 400, 1028},                  /* widget size                    */
     GX_NULL,                                 /* no next widget                 */
     GX_NULL,                                 /* no child widgets               */ 
     offsetof(MAIN_SCREEN_CONTROL_BLOCK, main_screen_power_off_label), /* control block */
@@ -2442,7 +2443,7 @@ GX_CONST GX_STUDIO_WIDGET main_screen_power_off_icon_define =
     gx_studio_icon_create,                   /* create function                */
     GX_NULL,                                 /* drawing function override      */
     GX_NULL,                                 /* event function override        */
-    {558, 402, 571, 418},                    /* widget size                    */
+    {357, 993, 370, 1009},                   /* widget size                    */
     &main_screen_power_off_label_define,     /* next widget definition         */
     GX_NULL,                                 /* no child widgets               */ 
     offsetof(MAIN_SCREEN_CONTROL_BLOCK, main_screen_power_off_icon), /* control block */
@@ -2466,7 +2467,7 @@ GX_CONST GX_STUDIO_WIDGET main_screen_pixelmap_slider_define =
     gx_studio_pixelmap_slider_create,        /* create function                */
     (VOID (*)(GX_WIDGET *)) pixelmap_slider_alpha_draw, /* drawing function override */
     GX_NULL,                                 /* event function override        */
-    {24, 424, 478, 456},                     /* widget size                    */
+    {134, 811, 588, 843},                    /* widget size                    */
     GX_NULL,                                 /* no next widget                 */
     GX_NULL,                                 /* no child widgets               */ 
     offsetof(MAIN_SCREEN_CONTROL_BLOCK, main_screen_pixelmap_slider), /* control block */
@@ -2490,7 +2491,7 @@ GX_CONST GX_STUDIO_WIDGET main_screen_icon_1_define =
     gx_studio_icon_create,                   /* create function                */
     GX_NULL,                                 /* drawing function override      */
     GX_NULL,                                 /* event function override        */
-    {24, 432, 478, 450},                     /* widget size                    */
+    {133, 818, 587, 836},                    /* widget size                    */
     &main_screen_pixelmap_slider_define,     /* next widget definition         */
     GX_NULL,                                 /* no child widgets               */ 
     offsetof(MAIN_SCREEN_CONTROL_BLOCK, main_screen_icon_1), /* control block  */
@@ -2514,7 +2515,7 @@ GX_CONST GX_STUDIO_WIDGET main_screen_button_power_on_off_define =
     gx_studio_pixelmap_button_create,        /* create function                */
     GX_NULL,                                 /* drawing function override      */
     GX_NULL,                                 /* event function override        */
-    {511, 390, 624, 452},                    /* widget size                    */
+    {310, 981, 423, 1043},                   /* widget size                    */
     &main_screen_icon_1_define,              /* next widget definition         */
     &main_screen_power_off_icon_define,      /* child widget definition        */
     offsetof(MAIN_SCREEN_CONTROL_BLOCK, main_screen_button_power_on_off), /* control block */
@@ -2538,7 +2539,7 @@ GX_CONST GX_STUDIO_WIDGET main_screen_button_temperature_define =
     gx_studio_pixelmap_button_create,        /* create function                */
     (VOID (*)(GX_WIDGET *)) pixelmap_button_alpha_draw, /* drawing function override */
     GX_NULL,                                 /* event function override        */
-    {511, 327, 624, 389},                    /* widget size                    */
+    {547, 889, 660, 951},                    /* widget size                    */
     &main_screen_button_power_on_off_define, /* next widget definition         */
     &main_screen_temperature_icon_define,    /* child widget definition        */
     offsetof(MAIN_SCREEN_CONTROL_BLOCK, main_screen_button_temperature), /* control block */
@@ -2562,7 +2563,7 @@ GX_CONST GX_STUDIO_WIDGET main_screen_button_water_level_define =
     gx_studio_pixelmap_button_create,        /* create function                */
     (VOID (*)(GX_WIDGET *)) pixelmap_button_alpha_draw, /* drawing function override */
     GX_NULL,                                 /* event function override        */
-    {511, 264, 624, 326},                    /* widget size                    */
+    {389, 889, 502, 951},                    /* widget size                    */
     &main_screen_button_temperature_define,  /* next widget definition         */
     &main_screen_water_level_icon_define,    /* child widget definition        */
     offsetof(MAIN_SCREEN_CONTROL_BLOCK, main_screen_button_water_level), /* control block */
@@ -2586,7 +2587,7 @@ GX_CONST GX_STUDIO_WIDGET main_screen_button_garments_define =
     gx_studio_pixelmap_button_create,        /* create function                */
     (VOID (*)(GX_WIDGET *)) pixelmap_button_alpha_draw, /* drawing function override */
     GX_NULL,                                 /* event function override        */
-    {510, 201, 623, 263},                    /* widget size                    */
+    {231, 889, 344, 951},                    /* widget size                    */
     &main_screen_button_water_level_define,  /* next widget definition         */
     &main_screen_garments_icon_define,       /* child widget definition        */
     offsetof(MAIN_SCREEN_CONTROL_BLOCK, main_screen_button_garments), /* control block */
@@ -2610,7 +2611,7 @@ GX_CONST GX_STUDIO_WIDGET main_screen_page_name_define =
     gx_studio_prompt_create,                 /* create function                */
     (VOID (*)(GX_WIDGET *)) prompt_alpha_draw, /* drawing function override    */
     GX_NULL,                                 /* event function override        */
-    {340, 75, 585, 113},                     /* widget size                    */
+    {230, 399, 475, 437},                    /* widget size                    */
     &main_screen_button_garments_define,     /* next widget definition         */
     GX_NULL,                                 /* no child widgets               */ 
     offsetof(MAIN_SCREEN_CONTROL_BLOCK, main_screen_page_name), /* control block */
@@ -2634,7 +2635,7 @@ GX_CONST GX_STUDIO_WIDGET main_screen_button_washer_on_define =
     gx_studio_pixelmap_button_create,        /* create function                */
     (VOID (*)(GX_WIDGET *)) pixelmap_button_alpha_draw, /* drawing function override */
     GX_NULL,                                 /* event function override        */
-    {511, 138, 624, 200},                    /* widget size                    */
+    {73, 889, 186, 951},                     /* widget size                    */
     &main_screen_page_name_define,           /* next widget definition         */
     &main_screen_washer_on_icon_define,      /* child widget definition        */
     offsetof(MAIN_SCREEN_CONTROL_BLOCK, main_screen_button_washer_on), /* control block */
@@ -2658,7 +2659,7 @@ GX_CONST GX_STUDIO_WIDGET main_screen_washer_on_window_define =
     gx_studio_window_create,                 /* create function                */
     (VOID (*)(GX_WIDGET *)) window_alpha_draw, /* drawing function override    */
     (UINT (*)(GX_WIDGET *, GX_EVENT *)) washer_on_window_event_process, /* event function override */
-    {10, 124, 493, 402},                     /* widget size                    */
+    {120, 469, 619, 768},                    /* widget size                    */
     &main_screen_button_washer_on_define,    /* next widget definition         */
     &main_screen_radial_slider_define,       /* child widget definition        */
     offsetof(MAIN_SCREEN_CONTROL_BLOCK, main_screen_washer_on_window), /* control block */
@@ -2682,7 +2683,7 @@ GX_CONST GX_STUDIO_WIDGET main_screen_date_define =
     gx_studio_prompt_create,                 /* create function                */
     GX_NULL,                                 /* drawing function override      */
     GX_NULL,                                 /* event function override        */
-    {400, 34, 512, 51},                      /* widget size                    */
+    {440, 333, 552, 350},                    /* widget size                    */
     &main_screen_washer_on_window_define,    /* next widget definition         */
     GX_NULL,                                 /* no child widgets               */ 
     offsetof(MAIN_SCREEN_CONTROL_BLOCK, main_screen_date), /* control block    */
@@ -2706,7 +2707,7 @@ GX_CONST GX_STUDIO_WIDGET main_screen_day_of_week_define =
     gx_studio_prompt_create,                 /* create function                */
     GX_NULL,                                 /* drawing function override      */
     GX_NULL,                                 /* event function override        */
-    {400, 16, 491, 33},                      /* widget size                    */
+    {440, 315, 531, 332},                    /* widget size                    */
     &main_screen_date_define,                /* next widget definition         */
     GX_NULL,                                 /* no child widgets               */ 
     offsetof(MAIN_SCREEN_CONTROL_BLOCK, main_screen_day_of_week), /* control block */
@@ -2730,7 +2731,7 @@ GX_CONST GX_STUDIO_WIDGET main_screen_am_pm_define =
     gx_studio_prompt_create,                 /* create function                */
     GX_NULL,                                 /* drawing function override      */
     GX_NULL,                                 /* event function override        */
-    {365, 29, 387, 46},                      /* widget size                    */
+    {405, 328, 427, 345},                    /* widget size                    */
     &main_screen_day_of_week_define,         /* next widget definition         */
     GX_NULL,                                 /* no child widgets               */ 
     offsetof(MAIN_SCREEN_CONTROL_BLOCK, main_screen_am_pm), /* control block   */
@@ -2754,7 +2755,7 @@ GX_CONST GX_STUDIO_WIDGET main_screen_time_define =
     gx_studio_prompt_create,                 /* create function                */
     GX_NULL,                                 /* drawing function override      */
     GX_NULL,                                 /* event function override        */
-    {284, 21, 356, 46},                      /* widget size                    */
+    {324, 320, 396, 345},                    /* widget size                    */
     &main_screen_am_pm_define,               /* next widget definition         */
     GX_NULL,                                 /* no child widgets               */ 
     offsetof(MAIN_SCREEN_CONTROL_BLOCK, main_screen_time), /* control block    */
@@ -2778,7 +2779,7 @@ GX_CONST GX_STUDIO_WIDGET main_screen_home_define =
     gx_studio_pixelmap_button_create,        /* create function                */
     GX_NULL,                                 /* drawing function override      */
     GX_NULL,                                 /* event function override        */
-    {597, 23, 623, 44},                      /* widget size                    */
+    {637, 322, 663, 343},                    /* widget size                    */
     &main_screen_time_define,                /* next widget definition         */
     GX_NULL,                                 /* no child widgets               */ 
     offsetof(MAIN_SCREEN_CONTROL_BLOCK, main_screen_home), /* control block    */
@@ -2802,7 +2803,7 @@ GX_CONST GX_STUDIO_WIDGET main_screen_expresslogic_define =
     gx_studio_icon_create,                   /* create function                */
     GX_NULL,                                 /* drawing function override      */
     GX_NULL,                                 /* event function override        */
-    {12, 12, 200, 41},                       /* widget size                    */
+    {52, 311, 240, 340},                     /* widget size                    */
     &main_screen_home_define,                /* next widget definition         */
     GX_NULL,                                 /* no child widgets               */ 
     offsetof(MAIN_SCREEN_CONTROL_BLOCK, main_screen_expresslogic), /* control block */
@@ -2826,7 +2827,7 @@ GX_CONST GX_STUDIO_WIDGET main_screen_define =
     gx_studio_window_create,                 /* create function                */
     GX_NULL,                                 /* drawing function override      */
     (UINT (*)(GX_WIDGET *, GX_EVENT *)) main_screen_event_process, /* event function override */
-    {0, 0, 639, 479},                        /* widget size                    */
+    {40, 299, 679, 1048},                    /* widget size                    */
     GX_NULL,                                 /* next widget                    */
     &main_screen_expresslogic_define,        /* child widget                   */
     0,                                       /* control block                  */
@@ -3001,11 +3002,20 @@ UINT gx_studio_display_configure(USHORT display, UINT (*driver)(GX_DISPLAY *),
             gx_display_pixelmap_table_set(display_info->display, theme_ptr->theme_pixelmap_table, theme_ptr->theme_pixelmap_table_size);
             gx_system_scroll_appearance_set(theme_ptr->theme_vertical_scroll_style, (GX_SCROLLBAR_APPEARANCE *) &theme_ptr->theme_vertical_scrollbar_appearance);
             gx_system_scroll_appearance_set(theme_ptr->theme_horizontal_scroll_style, (GX_SCROLLBAR_APPEARANCE *) &theme_ptr->theme_horizontal_scrollbar_appearance);
-            gx_display_language_table_set_ext(display_info->display, display_info->language_table, (GX_UBYTE) display_info->language_table_size, display_info->string_table_size);
-            gx_display_active_language_set(display_info->display, language);
         }
     }
 
+/* Install the language table.                                                 */
+
+    if(display_info->language_table)
+    {
+        gx_display_language_table_set_ext(display_info->display, display_info->language_table, (GX_UBYTE) display_info->language_table_size, display_info->string_table_size);
+        gx_display_active_language_set(display_info->display, language);
+    }
+
+/* Set screen rotation angle.                                                  */
+
+    display_info->display->gx_display_rotation_angle = display_info->rotation_angle;
 
 /* create the canvas for this display                                          */
 

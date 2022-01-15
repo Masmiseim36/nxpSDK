@@ -376,33 +376,8 @@
       </TargetOption>
       <Groups>
         <Group>
-          <GroupName>source</GroupName>
-          <Files>
-            <File>
-              <FileName>main_remote.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../main_remote.c</FilePath>
-            </File>
-            <File>
-              <FileName>FreeRTOSConfig.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../FreeRTOSConfig.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>board</GroupName>
           <Files>
-            <File>
-              <FileName>pin_mux.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../pin_mux.c</FilePath>
-            </File>
-            <File>
-              <FileName>pin_mux.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../pin_mux.h</FilePath>
-            </File>
             <File>
               <FileName>board.c</FileName>
               <FileType>1</FileType>
@@ -424,6 +399,16 @@
               <FilePath>../clock_config.h</FilePath>
             </File>
             <File>
+              <FileName>pin_mux.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../pin_mux.c</FilePath>
+            </File>
+            <File>
+              <FileName>pin_mux.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../pin_mux.h</FilePath>
+            </File>
+            <File>
               <FileName>dcd.c</FileName>
               <FileType>1</FileType>
               <FilePath>../dcd.c</FilePath>
@@ -432,6 +417,21 @@
               <FileName>dcd.h</FileName>
               <FileType>5</FileType>
               <FilePath>../dcd.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>source</GroupName>
+          <Files>
+            <File>
+              <FileName>main_remote.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../main_remote.c</FilePath>
+            </File>
+            <File>
+              <FileName>FreeRTOSConfig.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../FreeRTOSConfig.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -937,6 +937,11 @@
               <FileName>StackMacros.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/StackMacros.h</FilePath>
+            </File>
+            <File>
+              <FileName>stdint.readme</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/stdint.readme</FilePath>
             </File>
             <File>
               <FileName>stream_buffer.h</FileName>
@@ -1360,33 +1365,8 @@
       </TargetOption>
       <Groups>
         <Group>
-          <GroupName>source</GroupName>
-          <Files>
-            <File>
-              <FileName>main_remote.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../main_remote.c</FilePath>
-            </File>
-            <File>
-              <FileName>FreeRTOSConfig.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../FreeRTOSConfig.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>board</GroupName>
           <Files>
-            <File>
-              <FileName>pin_mux.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../pin_mux.c</FilePath>
-            </File>
-            <File>
-              <FileName>pin_mux.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../pin_mux.h</FilePath>
-            </File>
             <File>
               <FileName>board.c</FileName>
               <FileType>1</FileType>
@@ -1408,6 +1388,16 @@
               <FilePath>../clock_config.h</FilePath>
             </File>
             <File>
+              <FileName>pin_mux.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../pin_mux.c</FilePath>
+            </File>
+            <File>
+              <FileName>pin_mux.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../pin_mux.h</FilePath>
+            </File>
+            <File>
               <FileName>dcd.c</FileName>
               <FileType>1</FileType>
               <FilePath>../dcd.c</FilePath>
@@ -1416,6 +1406,21 @@
               <FileName>dcd.h</FileName>
               <FileType>5</FileType>
               <FilePath>../dcd.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>source</GroupName>
+          <Files>
+            <File>
+              <FileName>main_remote.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../main_remote.c</FilePath>
+            </File>
+            <File>
+              <FileName>FreeRTOSConfig.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../FreeRTOSConfig.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1921,6 +1926,11 @@
               <FileName>StackMacros.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/StackMacros.h</FilePath>
+            </File>
+            <File>
+              <FileName>stdint.readme</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/stdint.readme</FilePath>
             </File>
             <File>
               <FileName>stream_buffer.h</FileName>

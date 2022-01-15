@@ -57,6 +57,7 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../../../devices/MIMXRT1166/drivers
     ${ProjDirPath}/../../../../../../../components/video/display/mipi_dsi_cmd
     ${ProjDirPath}/../../../../../../../components/video/display/rm68200
+    ${ProjDirPath}/../../../../../../../components/video/display/hx8394
     ${ProjDirPath}/../../../../../../../devices/MIMXRT1166
     ${ProjDirPath}/../../../../../../../devices/MIMXRT1166/utilities
     ${ProjDirPath}/../../../../../../../components/uart
@@ -84,6 +85,8 @@ include(driver_common_MIMXRT1166_cm7)
 include(driver_display-rm68200_MIMXRT1166_cm7)
 
 include(driver_soc_src_MIMXRT1166_cm7)
+
+include(driver_display-hx8394_MIMXRT1166_cm7)
 
 include(driver_lcdifv2_MIMXRT1166_cm7)
 

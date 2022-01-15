@@ -62,6 +62,7 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../../components/video/display/mipi_dsi_cmd
     ${ProjDirPath}/../../../../../../middleware/sdmmc
     ${ProjDirPath}/../../../../../../devices/MIMXRT1176/utilities/debug_console_lite
+    ${ProjDirPath}/../../../../../../components/video/display/hx8394
     ${ProjDirPath}/../../../../../../middleware/libjpeg
     ${ProjDirPath}/../../../../../../middleware/fatfs
     ${ProjDirPath}/../../../../../../components/video
@@ -108,6 +109,8 @@ include(driver_elcdif_MIMXRT1176_cm7)
 include(utility_debug_console_lite_MIMXRT1176_cm7)
 
 include(utility_assert_lite_MIMXRT1176_cm7)
+
+include(driver_display-hx8394_MIMXRT1176_cm7)
 
 include(driver_igpio_MIMXRT1176_cm7)
 

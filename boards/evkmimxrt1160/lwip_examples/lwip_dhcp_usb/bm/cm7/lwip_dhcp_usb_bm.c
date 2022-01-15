@@ -30,41 +30,67 @@
 #include "netif/etharp.h"
 
 #include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
 
 #include "fsl_device_registers.h"
 #include "usb_host_config.h"
 #include "usb_host.h"
 #include "usb_phy.h"
-#include "fsl_gpio.h"
-#include "fsl_iomuxc.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
+
+/* @TEST_ANCHOR */
+
 /* IP address configuration. */
+#ifndef configIP_ADDR0
 #define configIP_ADDR0 192
+#endif
+#ifndef configIP_ADDR1
 #define configIP_ADDR1 168
+#endif
+#ifndef configIP_ADDR2
 #define configIP_ADDR2 0
+#endif
+#ifndef configIP_ADDR3
 #define configIP_ADDR3 102
+#endif
 
 /* Netmask configuration. */
+#ifndef configNET_MASK0
 #define configNET_MASK0 255
+#endif
+#ifndef configNET_MASK1
 #define configNET_MASK1 255
+#endif
+#ifndef configNET_MASK2
 #define configNET_MASK2 255
+#endif
+#ifndef configNET_MASK3
 #define configNET_MASK3 0
+#endif
 
 /* Gateway address configuration. */
+#ifndef configGW_ADDR0
 #define configGW_ADDR0 192
+#endif
+#ifndef configGW_ADDR1
 #define configGW_ADDR1 168
+#endif
+#ifndef configGW_ADDR2
 #define configGW_ADDR2 0
+#endif
+#ifndef configGW_ADDR3
 #define configGW_ADDR3 100
+#endif
 
 /* MAC address configuration. */
+#ifndef configMAC_ADDR
 #define configMAC_ADDR                     \
     {                                      \
         0x02, 0x12, 0x13, 0x10, 0x15, 0x11 \
     }
+#endif
 
 /* Address of PHY interface. */
 #define EXAMPLE_PHY_ADDRESS BOARD_ENET0_PHY_ADDRESS
@@ -127,7 +153,7 @@ void BOARD_InitModuleClock(void)
 
 void IOMUXC_SelectENETClock(void)
 {
-    IOMUXC_GPR->GPR4 |= 0x3; /* 50M ENET_REF_CLOCK output to PHY and ENET module. */
+    IOMUXC_GPR->GPR4 |= IOMUXC_GPR_GPR4_ENET_REF_CLK_DIR_MASK; /* 50M ENET_REF_CLOCK output to PHY and ENET module. */
 }
 
 

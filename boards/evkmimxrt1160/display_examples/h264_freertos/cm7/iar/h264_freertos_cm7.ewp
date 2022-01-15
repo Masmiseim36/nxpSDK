@@ -338,6 +338,7 @@
           <state>$PROJ_DIR$/../../../../../../middleware/sdmmc/common</state>
           <state>$PROJ_DIR$/../../../../../../middleware/sdmmc/host/usdhc</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/utilities/debug_console_lite</state>
+          <state>$PROJ_DIR$/../../../../../../components/video/display/hx8394</state>
           <state>$PROJ_DIR$/../../../../../../middleware/fatfs/source</state>
           <state>$PROJ_DIR$/../../../../../../middleware/fatfs/source/fsl_sd_disk</state>
           <state>$PROJ_DIR$/../../../../../../components/video/display/fbdev</state>
@@ -1348,6 +1349,7 @@
           <state>$PROJ_DIR$/../../../../../../middleware/sdmmc/common</state>
           <state>$PROJ_DIR$/../../../../../../middleware/sdmmc/host/usdhc</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/utilities/debug_console_lite</state>
+          <state>$PROJ_DIR$/../../../../../../components/video/display/hx8394</state>
           <state>$PROJ_DIR$/../../../../../../middleware/fatfs/source</state>
           <state>$PROJ_DIR$/../../../../../../middleware/fatfs/source/fsl_sd_disk</state>
           <state>$PROJ_DIR$/../../../../../../components/video/display/fbdev</state>
@@ -2316,6 +2318,9 @@
           <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include/StackMacros.h</name>
         </file>
         <file>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include/stdint.readme</name>
+        </file>
+        <file>
           <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include/stream_buffer.h</name>
         </file>
         <file>
@@ -2391,6 +2396,12 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../components/video/display/dc/elcdif/fsl_dc_fb_elcdif.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../components/video/display/hx8394/fsl_hx8394.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../components/video/display/hx8394/fsl_hx8394.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../components/video/display/fbdev/fsl_fbdev.h</name>

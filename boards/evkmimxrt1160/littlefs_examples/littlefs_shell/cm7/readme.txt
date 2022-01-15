@@ -30,7 +30,7 @@ Print the content of the file using 'cat mynewdir/foo.txt'. The expected output 
 Toolchain supported
 ===================
 - IAR embedded Workbench  9.10.2
-- MCUXpresso  11.4.0
+- MCUXpresso  11.5.0
 - Keil MDK  5.34
 - GCC ARM Embedded  10.2.1
 

@@ -19,28 +19,35 @@
  *
  * @return None
  */
-void MID_alignment(mid_align_t *sAlignmentFcn)
+void MID_alignment(mid_align_t* sAlignmentFcn)
 {
+    GMCLIB_2COOR_DQ_T_FLT sIDQReq;
+
     /* if alignment hasn't started, set the duration of the alignment process */
-    if (sAlignmentFcn->bActive == FALSE)
+    if(sAlignmentFcn->bActive == FALSE)
     {
         sAlignmentFcn->ui16LoopCounter = sAlignmentFcn->ui16AlignDuration;
-        sAlignmentFcn->bActive      = TRUE;
+        sAlignmentFcn->bActive = TRUE;
     }
 
     /* decrement alignment timer/counter */
     sAlignmentFcn->ui16LoopCounter--;
 
     /* single position alignment */
-    if (sAlignmentFcn->ui16LoopCounter > 0U)
+    if(sAlignmentFcn->ui16LoopCounter > 0U)
     {
         /* require d-axis voltage for an alignment */
-        *(sAlignmentFcn->pfltIdReq) = sAlignmentFcn->fltCurrentAlign;
+        sIDQReq.fltD = sAlignmentFcn->fltCurrentAlign;
+        sIDQReq.fltQ = 0.0F;
+        MID_MC_SetIDQReq(sIDQReq);
     }
     else
     {
         /* after defined time period set required d-axis current to zero */
-        *(sAlignmentFcn->pfltIdReq) = 0.0F;
-        sAlignmentFcn->bActive   = FALSE;
+        sIDQReq.fltD = 0.0F;
+        sIDQReq.fltQ = 0.0F;
+        MID_MC_SetIDQReq(sIDQReq);
+        sAlignmentFcn->bActive = FALSE;
     }
 }
+

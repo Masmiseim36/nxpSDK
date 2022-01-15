@@ -125,9 +125,22 @@
 static MQTTContext_t xMqttContext;
 
 /**
- * @brief The network context used for Openssl operation.
+ * @brief The network context used for SSL operation.
  */
 static NetworkContext_t xNetworkContext;
+
+/**
+ * @brief Each compilation unit that consumes the NetworkContext must define it.
+ * It should contain a single pointer to the type of your desired transport.
+ * When using multiple transports in the same compilation unit, define this pointer as void *.
+ *
+ * @note Transport stacks are defined in
+ * amazon-freertos/libraries/abstractions/transport/secure_sockets/transport_secure_sockets.h.
+ */
+struct NetworkContext
+{
+    SecureSocketsTransportParams_t *pParams;
+};
 
 /**
  * @brief Static buffer used to hold MQTT messages being sent and received.
@@ -297,7 +310,7 @@ static uint32_t prvReportShadowJSON()
     }
     pcUpdateDocument[length] = ']';
     length += 1;
-    
+
 
     length += snprintf(&pcUpdateDocument[length], SHADOW_JSON_BUFFER_LENGTH - length,
                 "}"
@@ -442,7 +455,7 @@ static void prvUpdateDeltaHandler(MQTTPublishInfo_t *pxPublishInfo)
     {
         /* Set to received version as the current version. */
         ulCurrentVersion = ulVersion;
-        
+
         g_ParsedPlayState = 0xFFFFFFFFu;
         g_ParsedPlayIndex = 0xFFFFFFFFu;
 
@@ -829,7 +842,7 @@ int RunRemoteControlDemo(bool awsIotMqttMode,
 }
 
 void vStartMusicPlayerDemoTask(void)
-{     
+{
     static demoContext_t mqttDemoContext = {.networkTypes                = AWSIOT_NETWORK_TYPE_WIFI,
                                             .demoFunction                = RunRemoteControlDemo,
                                             .networkConnectedCallback    = NULL,

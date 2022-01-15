@@ -376,28 +376,8 @@
       </TargetOption>
       <Groups>
         <Group>
-          <GroupName>source</GroupName>
-          <Files>
-            <File>
-              <FileName>mcmgr_core1.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../mcmgr_core1.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>board</GroupName>
           <Files>
-            <File>
-              <FileName>pin_mux.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../pin_mux.c</FilePath>
-            </File>
-            <File>
-              <FileName>pin_mux.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../pin_mux.h</FilePath>
-            </File>
             <File>
               <FileName>board.c</FileName>
               <FileType>1</FileType>
@@ -419,6 +399,16 @@
               <FilePath>../clock_config.h</FilePath>
             </File>
             <File>
+              <FileName>pin_mux.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../pin_mux.c</FilePath>
+            </File>
+            <File>
+              <FileName>pin_mux.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../pin_mux.h</FilePath>
+            </File>
+            <File>
               <FileName>dcd.c</FileName>
               <FileType>1</FileType>
               <FilePath>../dcd.c</FilePath>
@@ -427,6 +417,16 @@
               <FileName>dcd.h</FileName>
               <FileType>5</FileType>
               <FilePath>../dcd.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>source</GroupName>
+          <Files>
+            <File>
+              <FileName>mcmgr_core1.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../mcmgr_core1.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1130,28 +1130,8 @@
       </TargetOption>
       <Groups>
         <Group>
-          <GroupName>source</GroupName>
-          <Files>
-            <File>
-              <FileName>mcmgr_core1.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../mcmgr_core1.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>board</GroupName>
           <Files>
-            <File>
-              <FileName>pin_mux.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../pin_mux.c</FilePath>
-            </File>
-            <File>
-              <FileName>pin_mux.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../pin_mux.h</FilePath>
-            </File>
             <File>
               <FileName>board.c</FileName>
               <FileType>1</FileType>
@@ -1173,6 +1153,16 @@
               <FilePath>../clock_config.h</FilePath>
             </File>
             <File>
+              <FileName>pin_mux.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../pin_mux.c</FilePath>
+            </File>
+            <File>
+              <FileName>pin_mux.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../pin_mux.h</FilePath>
+            </File>
+            <File>
               <FileName>dcd.c</FileName>
               <FileType>1</FileType>
               <FilePath>../dcd.c</FilePath>
@@ -1181,6 +1171,16 @@
               <FileName>dcd.h</FileName>
               <FileType>5</FileType>
               <FilePath>../dcd.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>source</GroupName>
+          <Files>
+            <File>
+              <FileName>mcmgr_core1.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../mcmgr_core1.c</FilePath>
             </File>
           </Files>
         </Group>

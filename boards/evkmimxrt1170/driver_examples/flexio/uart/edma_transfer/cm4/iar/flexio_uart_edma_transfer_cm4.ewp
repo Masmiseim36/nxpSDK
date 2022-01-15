@@ -5967,6 +5967,9 @@
       <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1176/drivers/cm4/fsl_cache.h</name>
     </file>
     <file>
+      <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1176/drivers/fsl_memory.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1176/drivers/fsl_anatop_ai.h</name>
     </file>
     <file>

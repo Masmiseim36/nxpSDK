@@ -979,6 +979,16 @@
               <FilePath>../../../../../../middleware/mbedtls/include/psa/crypto.h</FilePath>
             </File>
             <File>
+              <FileName>crypto_builtin_composites.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/include/psa/crypto_builtin_composites.h</FilePath>
+            </File>
+            <File>
+              <FileName>crypto_builtin_primitives.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/include/psa/crypto_builtin_primitives.h</FilePath>
+            </File>
+            <File>
               <FileName>crypto_compat.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/mbedtls/include/psa/crypto_compat.h</FilePath>
@@ -987,6 +997,16 @@
               <FileName>crypto_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/mbedtls/include/psa/crypto_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>crypto_driver_contexts_composites.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/include/psa/crypto_driver_contexts_composites.h</FilePath>
+            </File>
+            <File>
+              <FileName>crypto_driver_contexts_primitives.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/include/psa/crypto_driver_contexts_primitives.h</FilePath>
             </File>
             <File>
               <FileName>crypto_driver_common.h</FileName>
@@ -1174,6 +1194,11 @@
               <FilePath>../../../../../../middleware/mbedtls/library/ecp_curves.c</FilePath>
             </File>
             <File>
+              <FileName>ecp_invasive.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/ecp_invasive.h</FilePath>
+            </File>
+            <File>
               <FileName>entropy.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/mbedtls/library/entropy.c</FilePath>
@@ -1227,6 +1252,31 @@
               <FileName>md5.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/mbedtls/library/md5.c</FilePath>
+            </File>
+            <File>
+              <FileName>mps_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/mps_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>mps_error.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/mps_error.h</FilePath>
+            </File>
+            <File>
+              <FileName>mps_reader.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/mps_reader.c</FilePath>
+            </File>
+            <File>
+              <FileName>mps_trace.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/mps_trace.c</FilePath>
+            </File>
+            <File>
+              <FileName>mps_trace.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/mps_trace.h</FilePath>
             </File>
             <File>
               <FileName>memory_buffer_alloc.c</FileName>
@@ -1314,6 +1364,26 @@
               <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto.c</FilePath>
             </File>
             <File>
+              <FileName>psa_crypto_aead.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_aead.c</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_aead.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_aead.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_cipher.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_cipher.c</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_cipher.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_cipher.h</FilePath>
+            </File>
+            <File>
               <FileName>psa_crypto_client.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_client.c</FilePath>
@@ -1342,6 +1412,26 @@
               <FileName>psa_crypto_ecp.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_ecp.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_hash.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_hash.c</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_hash.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_hash.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_mac.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_mac.c</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_mac.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_mac.h</FilePath>
             </File>
             <File>
               <FileName>psa_crypto_invasive.h</FileName>
@@ -1377,11 +1467,6 @@
               <FileName>psa_crypto_se.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_se.h</FilePath>
-            </File>
-            <File>
-              <FileName>psa_crypto_service_integration.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_service_integration.h</FilePath>
             </File>
             <File>
               <FileName>psa_crypto_slot_management.c</FileName>
@@ -2818,6 +2903,16 @@
               <FilePath>../../../../../../middleware/mbedtls/include/psa/crypto.h</FilePath>
             </File>
             <File>
+              <FileName>crypto_builtin_composites.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/include/psa/crypto_builtin_composites.h</FilePath>
+            </File>
+            <File>
+              <FileName>crypto_builtin_primitives.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/include/psa/crypto_builtin_primitives.h</FilePath>
+            </File>
+            <File>
               <FileName>crypto_compat.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/mbedtls/include/psa/crypto_compat.h</FilePath>
@@ -2826,6 +2921,16 @@
               <FileName>crypto_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/mbedtls/include/psa/crypto_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>crypto_driver_contexts_composites.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/include/psa/crypto_driver_contexts_composites.h</FilePath>
+            </File>
+            <File>
+              <FileName>crypto_driver_contexts_primitives.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/include/psa/crypto_driver_contexts_primitives.h</FilePath>
             </File>
             <File>
               <FileName>crypto_driver_common.h</FileName>
@@ -3013,6 +3118,11 @@
               <FilePath>../../../../../../middleware/mbedtls/library/ecp_curves.c</FilePath>
             </File>
             <File>
+              <FileName>ecp_invasive.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/ecp_invasive.h</FilePath>
+            </File>
+            <File>
               <FileName>entropy.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/mbedtls/library/entropy.c</FilePath>
@@ -3066,6 +3176,31 @@
               <FileName>md5.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/mbedtls/library/md5.c</FilePath>
+            </File>
+            <File>
+              <FileName>mps_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/mps_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>mps_error.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/mps_error.h</FilePath>
+            </File>
+            <File>
+              <FileName>mps_reader.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/mps_reader.c</FilePath>
+            </File>
+            <File>
+              <FileName>mps_trace.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/mps_trace.c</FilePath>
+            </File>
+            <File>
+              <FileName>mps_trace.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/mps_trace.h</FilePath>
             </File>
             <File>
               <FileName>memory_buffer_alloc.c</FileName>
@@ -3153,6 +3288,26 @@
               <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto.c</FilePath>
             </File>
             <File>
+              <FileName>psa_crypto_aead.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_aead.c</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_aead.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_aead.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_cipher.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_cipher.c</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_cipher.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_cipher.h</FilePath>
+            </File>
+            <File>
               <FileName>psa_crypto_client.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_client.c</FilePath>
@@ -3181,6 +3336,26 @@
               <FileName>psa_crypto_ecp.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_ecp.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_hash.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_hash.c</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_hash.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_hash.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_mac.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_mac.c</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_mac.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_mac.h</FilePath>
             </File>
             <File>
               <FileName>psa_crypto_invasive.h</FileName>
@@ -3216,11 +3391,6 @@
               <FileName>psa_crypto_se.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_se.h</FilePath>
-            </File>
-            <File>
-              <FileName>psa_crypto_service_integration.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_service_integration.h</FilePath>
             </File>
             <File>
               <FileName>psa_crypto_slot_management.c</FileName>
@@ -4657,6 +4827,16 @@
               <FilePath>../../../../../../middleware/mbedtls/include/psa/crypto.h</FilePath>
             </File>
             <File>
+              <FileName>crypto_builtin_composites.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/include/psa/crypto_builtin_composites.h</FilePath>
+            </File>
+            <File>
+              <FileName>crypto_builtin_primitives.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/include/psa/crypto_builtin_primitives.h</FilePath>
+            </File>
+            <File>
               <FileName>crypto_compat.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/mbedtls/include/psa/crypto_compat.h</FilePath>
@@ -4665,6 +4845,16 @@
               <FileName>crypto_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/mbedtls/include/psa/crypto_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>crypto_driver_contexts_composites.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/include/psa/crypto_driver_contexts_composites.h</FilePath>
+            </File>
+            <File>
+              <FileName>crypto_driver_contexts_primitives.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/include/psa/crypto_driver_contexts_primitives.h</FilePath>
             </File>
             <File>
               <FileName>crypto_driver_common.h</FileName>
@@ -4852,6 +5042,11 @@
               <FilePath>../../../../../../middleware/mbedtls/library/ecp_curves.c</FilePath>
             </File>
             <File>
+              <FileName>ecp_invasive.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/ecp_invasive.h</FilePath>
+            </File>
+            <File>
               <FileName>entropy.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/mbedtls/library/entropy.c</FilePath>
@@ -4905,6 +5100,31 @@
               <FileName>md5.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/mbedtls/library/md5.c</FilePath>
+            </File>
+            <File>
+              <FileName>mps_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/mps_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>mps_error.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/mps_error.h</FilePath>
+            </File>
+            <File>
+              <FileName>mps_reader.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/mps_reader.c</FilePath>
+            </File>
+            <File>
+              <FileName>mps_trace.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/mps_trace.c</FilePath>
+            </File>
+            <File>
+              <FileName>mps_trace.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/mps_trace.h</FilePath>
             </File>
             <File>
               <FileName>memory_buffer_alloc.c</FileName>
@@ -4992,6 +5212,26 @@
               <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto.c</FilePath>
             </File>
             <File>
+              <FileName>psa_crypto_aead.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_aead.c</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_aead.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_aead.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_cipher.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_cipher.c</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_cipher.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_cipher.h</FilePath>
+            </File>
+            <File>
               <FileName>psa_crypto_client.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_client.c</FilePath>
@@ -5020,6 +5260,26 @@
               <FileName>psa_crypto_ecp.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_ecp.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_hash.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_hash.c</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_hash.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_hash.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_mac.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_mac.c</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_mac.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_mac.h</FilePath>
             </File>
             <File>
               <FileName>psa_crypto_invasive.h</FileName>
@@ -5055,11 +5315,6 @@
               <FileName>psa_crypto_se.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_se.h</FilePath>
-            </File>
-            <File>
-              <FileName>psa_crypto_service_integration.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_service_integration.h</FilePath>
             </File>
             <File>
               <FileName>psa_crypto_slot_management.c</FileName>
@@ -6496,6 +6751,16 @@
               <FilePath>../../../../../../middleware/mbedtls/include/psa/crypto.h</FilePath>
             </File>
             <File>
+              <FileName>crypto_builtin_composites.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/include/psa/crypto_builtin_composites.h</FilePath>
+            </File>
+            <File>
+              <FileName>crypto_builtin_primitives.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/include/psa/crypto_builtin_primitives.h</FilePath>
+            </File>
+            <File>
               <FileName>crypto_compat.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/mbedtls/include/psa/crypto_compat.h</FilePath>
@@ -6504,6 +6769,16 @@
               <FileName>crypto_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/mbedtls/include/psa/crypto_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>crypto_driver_contexts_composites.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/include/psa/crypto_driver_contexts_composites.h</FilePath>
+            </File>
+            <File>
+              <FileName>crypto_driver_contexts_primitives.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/include/psa/crypto_driver_contexts_primitives.h</FilePath>
             </File>
             <File>
               <FileName>crypto_driver_common.h</FileName>
@@ -6691,6 +6966,11 @@
               <FilePath>../../../../../../middleware/mbedtls/library/ecp_curves.c</FilePath>
             </File>
             <File>
+              <FileName>ecp_invasive.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/ecp_invasive.h</FilePath>
+            </File>
+            <File>
               <FileName>entropy.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/mbedtls/library/entropy.c</FilePath>
@@ -6744,6 +7024,31 @@
               <FileName>md5.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/mbedtls/library/md5.c</FilePath>
+            </File>
+            <File>
+              <FileName>mps_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/mps_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>mps_error.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/mps_error.h</FilePath>
+            </File>
+            <File>
+              <FileName>mps_reader.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/mps_reader.c</FilePath>
+            </File>
+            <File>
+              <FileName>mps_trace.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/mps_trace.c</FilePath>
+            </File>
+            <File>
+              <FileName>mps_trace.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/mps_trace.h</FilePath>
             </File>
             <File>
               <FileName>memory_buffer_alloc.c</FileName>
@@ -6831,6 +7136,26 @@
               <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto.c</FilePath>
             </File>
             <File>
+              <FileName>psa_crypto_aead.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_aead.c</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_aead.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_aead.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_cipher.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_cipher.c</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_cipher.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_cipher.h</FilePath>
+            </File>
+            <File>
               <FileName>psa_crypto_client.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_client.c</FilePath>
@@ -6859,6 +7184,26 @@
               <FileName>psa_crypto_ecp.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_ecp.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_hash.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_hash.c</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_hash.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_hash.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_mac.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_mac.c</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_mac.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_mac.h</FilePath>
             </File>
             <File>
               <FileName>psa_crypto_invasive.h</FileName>
@@ -6894,11 +7239,6 @@
               <FileName>psa_crypto_se.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_se.h</FilePath>
-            </File>
-            <File>
-              <FileName>psa_crypto_service_integration.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_service_integration.h</FilePath>
             </File>
             <File>
               <FileName>psa_crypto_slot_management.c</FileName>
@@ -8335,6 +8675,16 @@
               <FilePath>../../../../../../middleware/mbedtls/include/psa/crypto.h</FilePath>
             </File>
             <File>
+              <FileName>crypto_builtin_composites.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/include/psa/crypto_builtin_composites.h</FilePath>
+            </File>
+            <File>
+              <FileName>crypto_builtin_primitives.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/include/psa/crypto_builtin_primitives.h</FilePath>
+            </File>
+            <File>
               <FileName>crypto_compat.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/mbedtls/include/psa/crypto_compat.h</FilePath>
@@ -8343,6 +8693,16 @@
               <FileName>crypto_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/mbedtls/include/psa/crypto_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>crypto_driver_contexts_composites.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/include/psa/crypto_driver_contexts_composites.h</FilePath>
+            </File>
+            <File>
+              <FileName>crypto_driver_contexts_primitives.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/include/psa/crypto_driver_contexts_primitives.h</FilePath>
             </File>
             <File>
               <FileName>crypto_driver_common.h</FileName>
@@ -8530,6 +8890,11 @@
               <FilePath>../../../../../../middleware/mbedtls/library/ecp_curves.c</FilePath>
             </File>
             <File>
+              <FileName>ecp_invasive.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/ecp_invasive.h</FilePath>
+            </File>
+            <File>
               <FileName>entropy.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/mbedtls/library/entropy.c</FilePath>
@@ -8583,6 +8948,31 @@
               <FileName>md5.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/mbedtls/library/md5.c</FilePath>
+            </File>
+            <File>
+              <FileName>mps_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/mps_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>mps_error.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/mps_error.h</FilePath>
+            </File>
+            <File>
+              <FileName>mps_reader.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/mps_reader.c</FilePath>
+            </File>
+            <File>
+              <FileName>mps_trace.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/mps_trace.c</FilePath>
+            </File>
+            <File>
+              <FileName>mps_trace.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/mps_trace.h</FilePath>
             </File>
             <File>
               <FileName>memory_buffer_alloc.c</FileName>
@@ -8670,6 +9060,26 @@
               <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto.c</FilePath>
             </File>
             <File>
+              <FileName>psa_crypto_aead.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_aead.c</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_aead.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_aead.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_cipher.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_cipher.c</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_cipher.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_cipher.h</FilePath>
+            </File>
+            <File>
               <FileName>psa_crypto_client.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_client.c</FilePath>
@@ -8698,6 +9108,26 @@
               <FileName>psa_crypto_ecp.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_ecp.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_hash.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_hash.c</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_hash.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_hash.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_mac.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_mac.c</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_mac.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_mac.h</FilePath>
             </File>
             <File>
               <FileName>psa_crypto_invasive.h</FileName>
@@ -8733,11 +9163,6 @@
               <FileName>psa_crypto_se.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_se.h</FilePath>
-            </File>
-            <File>
-              <FileName>psa_crypto_service_integration.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_service_integration.h</FilePath>
             </File>
             <File>
               <FileName>psa_crypto_slot_management.c</FileName>
@@ -10174,6 +10599,16 @@
               <FilePath>../../../../../../middleware/mbedtls/include/psa/crypto.h</FilePath>
             </File>
             <File>
+              <FileName>crypto_builtin_composites.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/include/psa/crypto_builtin_composites.h</FilePath>
+            </File>
+            <File>
+              <FileName>crypto_builtin_primitives.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/include/psa/crypto_builtin_primitives.h</FilePath>
+            </File>
+            <File>
               <FileName>crypto_compat.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/mbedtls/include/psa/crypto_compat.h</FilePath>
@@ -10182,6 +10617,16 @@
               <FileName>crypto_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/mbedtls/include/psa/crypto_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>crypto_driver_contexts_composites.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/include/psa/crypto_driver_contexts_composites.h</FilePath>
+            </File>
+            <File>
+              <FileName>crypto_driver_contexts_primitives.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/include/psa/crypto_driver_contexts_primitives.h</FilePath>
             </File>
             <File>
               <FileName>crypto_driver_common.h</FileName>
@@ -10369,6 +10814,11 @@
               <FilePath>../../../../../../middleware/mbedtls/library/ecp_curves.c</FilePath>
             </File>
             <File>
+              <FileName>ecp_invasive.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/ecp_invasive.h</FilePath>
+            </File>
+            <File>
               <FileName>entropy.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/mbedtls/library/entropy.c</FilePath>
@@ -10422,6 +10872,31 @@
               <FileName>md5.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/mbedtls/library/md5.c</FilePath>
+            </File>
+            <File>
+              <FileName>mps_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/mps_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>mps_error.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/mps_error.h</FilePath>
+            </File>
+            <File>
+              <FileName>mps_reader.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/mps_reader.c</FilePath>
+            </File>
+            <File>
+              <FileName>mps_trace.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/mps_trace.c</FilePath>
+            </File>
+            <File>
+              <FileName>mps_trace.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/mps_trace.h</FilePath>
             </File>
             <File>
               <FileName>memory_buffer_alloc.c</FileName>
@@ -10509,6 +10984,26 @@
               <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto.c</FilePath>
             </File>
             <File>
+              <FileName>psa_crypto_aead.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_aead.c</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_aead.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_aead.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_cipher.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_cipher.c</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_cipher.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_cipher.h</FilePath>
+            </File>
+            <File>
               <FileName>psa_crypto_client.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_client.c</FilePath>
@@ -10537,6 +11032,26 @@
               <FileName>psa_crypto_ecp.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_ecp.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_hash.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_hash.c</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_hash.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_hash.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_mac.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_mac.c</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_mac.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_mac.h</FilePath>
             </File>
             <File>
               <FileName>psa_crypto_invasive.h</FileName>
@@ -10572,11 +11087,6 @@
               <FileName>psa_crypto_se.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_se.h</FilePath>
-            </File>
-            <File>
-              <FileName>psa_crypto_service_integration.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/mbedtls/library/psa_crypto_service_integration.h</FilePath>
             </File>
             <File>
               <FileName>psa_crypto_slot_management.c</FileName>

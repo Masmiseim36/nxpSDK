@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ksdk:examples xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd manifest.xsd">
+  <externalDefinitions>
+    <definition extID="cm4_MIMXRT1176xxxxx"/>
+    <definition extID="platform.devices.MIMXRT1176_CMSIS.MIMXRT1176"/>
+    <definition extID="platform.drivers.clock.MIMXRT1176"/>
+    <definition extID="platform.drivers.pmu_1.MIMXRT1176"/>
+    <definition extID="platform.drivers.igpio.MIMXRT1176"/>
+    <definition extID="platform.drivers.lpuart.MIMXRT1176"/>
+    <definition extID="platform.drivers.iomuxc.MIMXRT1176"/>
+    <definition extID="middleware.mcu-boot.MIMXRT1176_startup.MIMXRT1176"/>
+    <definition extID="middleware.mcu-boot.src_bm_usb_hid.MIMXRT1176"/>
+    <definition extID="middleware.mcu-boot.bootsources.MIMXRT1176"/>
+    <definition extID="middleware.mcu-boot.mem_sdmmc.MIMXRT1176"/>
+    <definition extID="middleware.mcu-boot.MIMXRT1176_sources.MIMXRT1176"/>
+    <definition extID="middleware.baremetal.MIMXRT1176"/>
+    <definition extID="middleware.usb.device.controller.driver.MIMXRT1176"/>
+    <definition extID="component.osa.MIMXRT1176"/>
+    <definition extID="middleware.usb.device_controller_ehci.MIMXRT1176"/>
+    <definition extID="middleware.mcu-boot.drv_semc_nand.MIMXRT1176"/>
+    <definition extID="middleware.mcu-boot.src_startup.MIMXRT1176"/>
+    <definition extID="middleware.mcu-boot.drv_microseconds_pit.MIMXRT1176"/>
+    <definition extID="middleware.mcu-boot.mem_flexspi_nor.MIMXRT1176"/>
+    <definition extID="middleware.mcu-boot.drv_flexspi_nand.MIMXRT1176"/>
+    <definition extID="middleware.mcu-boot.mem_spi_nand.MIMXRT1176"/>
+    <definition extID="middleware.mcu-boot.drv_ocotp.MIMXRT1176"/>
+    <definition extID="middleware.mcu-boot.mem_spi_nor_eeprom.MIMXRT1176"/>
+    <definition extID="CMSIS_Include_core_cm.MIMXRT1176"/>
+    <definition extID="platform.drivers.common.MIMXRT1176"/>
+    <definition extID="platform.drivers.anatop_ai.MIMXRT1176"/>
+    <definition extID="middleware.mcu-boot.drv_sdmmc.MIMXRT1176"/>
+    <definition extID="component.lists.MIMXRT1176"/>
+    <definition extID="middleware.usb.phy.MIMXRT1176"/>
+    <definition extID="middleware.usb.common_header.MIMXRT1176"/>
+    <definition extID="middleware.usb.device.common_header.MIMXRT1176"/>
+    <definition extID="middleware.mcu-boot.drv_flexspi_nor.MIMXRT1176"/>
+    <definition extID="middleware.mcu-boot.drv_serial_nor_eeprom.MIMXRT1176"/>
+    <definition extID="platform.drivers.lpspi.MIMXRT1176"/>
+    <definition extID="iar"/>
+    <definition extID="mdk"/>
+    <definition extID="armgcc"/>
+    <definition extID="mcuxpresso"/>
+    <definition extID="com.nxp.mcuxpresso"/>
+  </externalDefinitions>
+  <example id="evkmimxrt1170_flashloader_cm4" name="flashloader_cm4" device_core="cm4_MIMXRT1176xxxxx" dependency="platform.devices.MIMXRT1176_CMSIS.MIMXRT1176 platform.drivers.clock.MIMXRT1176 platform.drivers.pmu_1.MIMXRT1176 platform.drivers.igpio.MIMXRT1176 platform.drivers.lpuart.MIMXRT1176 platform.drivers.iomuxc.MIMXRT1176 middleware.mcu-boot.MIMXRT1176_startup.MIMXRT1176 middleware.mcu-boot.src_bm_usb_hid.MIMXRT1176 middleware.mcu-boot.bootsources.MIMXRT1176 middleware.mcu-boot.mem_sdmmc.MIMXRT1176 middleware.mcu-boot.MIMXRT1176_sources.MIMXRT1176 middleware.baremetal.MIMXRT1176 middleware.usb.device.controller.driver.MIMXRT1176 component.osa.MIMXRT1176 middleware.usb.device_controller_ehci.MIMXRT1176 middleware.mcu-boot.drv_semc_nand.MIMXRT1176 middleware.mcu-boot.src_startup.MIMXRT1176 middleware.mcu-boot.drv_microseconds_pit.MIMXRT1176 middleware.mcu-boot.mem_flexspi_nor.MIMXRT1176 middleware.mcu-boot.drv_flexspi_nand.MIMXRT1176 middleware.mcu-boot.mem_spi_nand.MIMXRT1176 middleware.mcu-boot.drv_ocotp.MIMXRT1176 middleware.mcu-boot.mem_spi_nor_eeprom.MIMXRT1176 CMSIS_Include_core_cm.MIMXRT1176 platform.drivers.common.MIMXRT1176 platform.drivers.anatop_ai.MIMXRT1176 middleware.mcu-boot.drv_sdmmc.MIMXRT1176 component.lists.MIMXRT1176 middleware.usb.phy.MIMXRT1176 middleware.usb.common_header.MIMXRT1176 middleware.usb.device.common_header.MIMXRT1176 middleware.mcu-boot.drv_flexspi_nor.MIMXRT1176 middleware.mcu-boot.drv_serial_nor_eeprom.MIMXRT1176 platform.drivers.lpspi.MIMXRT1176" category="bootloader_examples">
+    <projects>
+      <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
+    </projects>
+    <toolchainSettings>
+      <toolchainSetting id_refs="com.nxp.mcuxpresso">
+        <option id="gnu.c.compiler.option.preprocessor.def.symbols" type="stringList">
+          <value>CPU_MIMXRT1176DVMAA_cm4</value>
+          <value>CPU_IS_ARM_CORTEX_M4=1</value>
+          <value>__SEMIHOST_HARDFAULT_DISABLE=1</value>
+          <value>BL_TARGET_RAM</value>
+          <value>MIMXRT1176</value>
+          <value>USB_STACK_BM</value>
+        </option>
+        <option id="com.crt.advproject.gas.fpu" type="enum">
+          <value>com.crt.advproject.gas.fpu.fpv5dp.hard</value>
+        </option>
+        <option id="com.crt.advproject.gcc.exe.debug.option.debugging.level" type="enum">
+          <value>gnu.c.debugging.level.default</value>
+        </option>
+        <option id="com.crt.advproject.gcc.exe.debug.option.optimization.level" type="enum">
+          <value>gnu.c.optimization.level.size</value>
+        </option>
+        <option id="com.crt.advproject.gcc.fpu" type="enum">
+          <value>com.crt.advproject.gcc.fpu.fpv5dp.hard</value>
+        </option>
+        <option id="gnu.c.compiler.option.optimization.flags" type="string">
+          <value>-fno-common</value>
+        </option>
+        <option id="com.crt.advproject.c.misc.dialect" type="enum">
+          <value>com.crt.advproject.misc.dialect.gnu99</value>
+        </option>
+        <option id="com.crt.advproject.gcc.exe.release.option.optimization.level" type="enum">
+          <value>gnu.c.optimization.level.size</value>
+        </option>
+        <option id="gnu.c.compiler.option.misc.other" type="string">
+          <value>-c -ffunction-sections -fdata-sections -ffreestanding -fno-builtin</value>
+        </option>
+        <option id="gnu.c.compiler.option.warnings.allwarn" type="boolean">
+          <value>false</value>
+        </option>
+        <option id="com.crt.advproject.link.toram" type="boolean">
+          <value>true</value>
+        </option>
+        <option id="com.crt.advproject.link.fpu" type="enum">
+          <value>com.crt.advproject.link.fpu.fpv5dp.hard</value>
+        </option>
+        <option id="com.crt.advproject.gas.hdrlib" type="enum">
+          <value>com.crt.advproject.gas.hdrlib.newlibnano</value>
+        </option>
+        <option id="com.crt.advproject.gas.specs" type="enum">
+          <value>com.crt.advproject.gas.specs.newlibnano</value>
+        </option>
+        <option id="com.crt.advproject.gcc.hdrlib" type="enum">
+          <value>com.crt.advproject.gcc.hdrlib.newlibnano</value>
+        </option>
+        <option id="com.crt.advproject.gcc.specs" type="enum">
+          <value>com.crt.advproject.gcc.specs.newlibnano</value>
+        </option>
+        <option id="com.crt.advproject.link.gcc.hdrlib" type="enum">
+          <value>com.crt.advproject.gcc.link.hdrlib.newlibnano.none</value>
+        </option>
+        <option id="gnu.c.link.option.nostdlibs" type="boolean">
+          <value>true</value>
+        </option>
+        <option id="gnu.c.link.option.other" type="stringList">
+          <value>--gc-sections</value>
+          <value>-Map=${BuildArtifactFileBaseName}.map</value>
+        </option>
+      </toolchainSetting>
+    </toolchainSettings>
+    <include_paths>
+      <include_path path="boards/evkmimxrt1170/bootloader_examples/flashloader/cm4" project_relative_path="board" type="c_include"/>
+      <include_path path="boards/evkmimxrt1170/bootloader_examples/flashloader/cm4" project_relative_path="usb/device/class/hid" type="c_include"/>
+      <include_path path="boards/evkmimxrt1170/bootloader_examples/flashloader/cm4" project_relative_path="usb/device/source" type="c_include"/>
+      <include_path path="boards/evkmimxrt1170/bootloader_examples/flashloader/cm4" project_relative_path="usb/device/class" type="c_include"/>
+    </include_paths>
+    <source path="boards/evkmimxrt1170/bootloader_examples/flashloader/cm4/iar" project_relative_path="./" type="workspace" toolchain="iar">
+      <files mask="flashloader_cm4.ewd"/>
+      <files mask="flashloader_cm4.ewp"/>
+      <files mask="flashloader_cm4.eww"/>
+    </source>
+    <source path="boards/evkmimxrt1170/bootloader_examples/flashloader/cm4/mdk" project_relative_path="./" type="workspace" toolchain="mdk">
+      <files mask="flashloader_cm4.uvprojx"/>
+      <files mask="flashloader_cm4.uvoptx"/>
+      <files mask="flashloader_cm4.uvmpw"/>
+    </source>
+    <source path="boards/evkmimxrt1170/bootloader_examples/flashloader/cm4/armgcc" project_relative_path="./" type="workspace" toolchain="armgcc">
+      <files mask="build_all.bat"/>
+      <files mask="build_all.sh"/>
+      <files mask="clean.bat"/>
+      <files mask="clean.sh"/>
+      <files mask="CMakeLists.txt"/>
+      <files mask="flags.cmake"/>
+      <files mask="config.cmake"/>
+      <files mask="build_release.bat"/>
+      <files mask="build_release.sh"/>
+    </source>
+    <source path="boards/evkmimxrt1170/bootloader_examples/flashloader/cm4" project_relative_path="board" type="src">
+      <files mask="pin_mux.c"/>
+    </source>
+    <source path="boards/evkmimxrt1170/bootloader_examples/flashloader/cm4" project_relative_path="board" type="c_include">
+      <files mask="pin_mux.h"/>
+    </source>
+    <source path="boards/evkmimxrt1170/bootloader_examples/flashloader/cm4/mdk" project_relative_path="mcu-boot/boards/evkmimxrt1170/flashloader" type="configuration" toolchain="mdk">
+      <files mask="Debug_RAM.ini"/>
+    </source>
+    <source path="boards/evkmimxrt1170/bootloader_examples/flashloader/cm4/iar" project_relative_path="mcu-boot" type="linker" toolchain="iar">
+      <files mask="MIMXRT1176_ram_flashloader.icf"/>
+    </source>
+    <source path="boards/evkmimxrt1170/bootloader_examples/flashloader/cm4/mdk" project_relative_path="mcu-boot" type="linker" toolchain="mdk">
+      <files mask="MIMXRT1176_ram_flashloader.scf"/>
+    </source>
+    <source path="boards/evkmimxrt1170/bootloader_examples/flashloader/cm4/mcux" project_relative_path="mcu-boot" type="linker" toolchain="mcuxpresso">
+      <files mask="MIMXRT1176_ram_flashloader.ld"/>
+    </source>
+    <source path="boards/evkmimxrt1170/bootloader_examples/flashloader/cm4/armgcc" project_relative_path="mcu-boot" type="linker" toolchain="armgcc">
+      <files mask="MIMXRT1176_ram_flashloader.ld"/>
+    </source>
+    <source path="boards/evkmimxrt1170/bootloader_examples/flashloader/cm4" project_relative_path="usb/device/class/hid" type="src">
+      <files mask="usb_device_hid.c"/>
+    </source>
+    <source path="boards/evkmimxrt1170/bootloader_examples/flashloader/cm4" project_relative_path="usb/device/class/hid" type="c_include">
+      <files mask="usb_device_hid.h"/>
+    </source>
+    <source path="boards/evkmimxrt1170/bootloader_examples/flashloader/cm4" project_relative_path="usb/device/source" type="src">
+      <files mask="usb_device_ch9.c"/>
+    </source>
+    <source path="boards/evkmimxrt1170/bootloader_examples/flashloader/cm4" project_relative_path="usb/device/source" type="c_include">
+      <files mask="usb_device_ch9.h"/>
+    </source>
+    <source path="boards/evkmimxrt1170/bootloader_examples/flashloader/cm4" project_relative_path="usb/device/class" type="src">
+      <files mask="usb_device_class.c"/>
+    </source>
+    <source path="boards/evkmimxrt1170/bootloader_examples/flashloader/cm4" project_relative_path="usb/device/class" type="c_include">
+      <files mask="usb_device_class.h"/>
+    </source>
+  </example>
+</ksdk:examples>

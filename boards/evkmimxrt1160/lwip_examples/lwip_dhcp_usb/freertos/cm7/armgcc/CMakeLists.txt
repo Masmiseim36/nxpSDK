@@ -57,7 +57,7 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../../../middleware/lwip
     ${ProjDirPath}/../../../../../../../devices/MIMXRT1166/utilities
     ${ProjDirPath}/../../../../../../../devices/MIMXRT1166/drivers
-    ${ProjDirPath}/../../../../../../../rtos/freertos
+    ${ProjDirPath}/../../../../../../../rtos/freertos/freertos_kernel
     ${ProjDirPath}/../../../../../../../devices/MIMXRT1166
     ${ProjDirPath}/../../../../../../../components/uart
     ${ProjDirPath}/../../../../../../../components/serial_manager

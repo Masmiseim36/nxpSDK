@@ -31,13 +31,13 @@ include(${ProjDirPath}/flags.cmake)
 include(${ProjDirPath}/config.cmake)
 
 add_executable(${MCUX_SDK_PROJECT_NAME} 
-"${ProjDirPath}/../hello_world_core0.c"
-"${ProjDirPath}/../pin_mux.c"
-"${ProjDirPath}/../pin_mux.h"
 "${ProjDirPath}/../board.c"
 "${ProjDirPath}/../board.h"
 "${ProjDirPath}/../clock_config.c"
 "${ProjDirPath}/../clock_config.h"
+"${ProjDirPath}/../hello_world_core0.c"
+"${ProjDirPath}/../pin_mux.c"
+"${ProjDirPath}/../pin_mux.h"
 "${ProjDirPath}/../dcd.c"
 "${ProjDirPath}/../dcd.h"
 "${ProjDirPath}/../evkmimxrt1160_connect_cm4_cm7side.jlinkscript"

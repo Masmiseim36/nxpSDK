@@ -1,0 +1,33 @@
+Release Name: Industrial Motor Control Application Tuning
+Release Version: 1.0.0
+Package License: LA_OPT_NXP_Software_License.txt - Additional Distribution License granted, license in Section 2.3 applies
+VueJS						Name: VueJS
+							Version: 3.0.0
+							Outgoing License: MIT
+							Format: source code
+							Description: A progressive JavaScript framework used for developing and deploying the application
+							Origin: https://vuejs.org/
+Bootstrap					Name: Bootstrap
+							Version: 4.3.1
+							Outgoing License: MIT
+							Format: link
+							Description: a CSS library used for application styling 
+							Location: index.html <stylesheet tag>
+							Origin: https://getbootstrap.com
+Font Awesome				Name: Font Awesome
+							Version: 5.7.0
+							Outgoing License: SIL OFL 1.1.
+							Format: link
+							Description: a free icons database used for freeMaster integration icons 
+							Location: index.html <link tag>
+							Origin: https://fontawesome.com/
+Node JS 					Name: NodeJS
+							Version: 14.15.0
+							Outgoing License: MIT
+							Description: a JavaScript runtime built on Chrome's V8 JavaScript engine
+							Origin: https://nodejs.org/en/
+simple-jsonrpc-js			JSON-RPC implementation in JavaScript used by FreeMASTER HTML Welcome pages
+							License: MIT License
+							Original source: https://www.npmjs.org/package/simple-jsonrpc-js
+							Format: source code
+							Files: simple-jsonrpc-js.js

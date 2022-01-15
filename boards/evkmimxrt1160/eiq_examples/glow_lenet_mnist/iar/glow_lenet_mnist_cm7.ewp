@@ -2048,6 +2048,21 @@
     </file>
   </group>
   <group>
+    <name>scripts</name>
+    <file>
+      <name>$PROJ_DIR$/../scripts/glow_process_image.py</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../scripts/glow_process_sound.py</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../scripts/glow_show_detections.py</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../scripts/glow_show_segmentation.py</name>
+    </file>
+  </group>
+  <group>
     <name>utilities</name>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1166/utilities/debug_console_lite/fsl_debug_console.c</name>

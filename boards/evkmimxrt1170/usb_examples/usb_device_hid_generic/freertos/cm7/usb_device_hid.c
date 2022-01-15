@@ -319,6 +319,8 @@ usb_status_t USB_DeviceHidEvent(void *handle, uint32_t event, void *param)
     {
         return kStatus_USB_InvalidHandle;
     }
+    report.reportBuffer = (uint8_t *)NULL;
+    report.reportLength = 0U;
 
     /* Get the hid class handle. */
     hidHandle = (usb_device_hid_struct_t *)handle;
@@ -444,8 +446,17 @@ usb_status_t USB_DeviceHidEvent(void *handle, uint32_t event, void *param)
                                     endpointCallbackMessage.buffer  = hidHandle->interruptInPipeDataBuffer;
                                     endpointCallbackMessage.length  = hidHandle->interruptInPipeDataLen;
                                     endpointCallbackMessage.isSetup = 0U;
+#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
+                                    if (kStatus_USB_Success !=
+                                        USB_DeviceHidInterruptIn(hidHandle->handle, (void *)&endpointCallbackMessage,
+                                                                 handle))
+                                    {
+                                        return kStatus_USB_Error;
+                                    }
+#else
                                     (void)USB_DeviceHidInterruptIn(hidHandle->handle, (void *)&endpointCallbackMessage,
                                                                    handle);
+#endif
                                 }
                                 hidHandle->interruptInPipeDataBuffer = (uint8_t *)USB_INVALID_TRANSFER_BUFFER;
                                 hidHandle->interruptInPipeDataLen    = 0U;
@@ -470,8 +481,17 @@ usb_status_t USB_DeviceHidEvent(void *handle, uint32_t event, void *param)
                                     endpointCallbackMessage.buffer  = hidHandle->interruptOutPipeDataBuffer;
                                     endpointCallbackMessage.length  = hidHandle->interruptOutPipeDataLen;
                                     endpointCallbackMessage.isSetup = 0U;
+#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
+                                    if (kStatus_USB_Success !=
+                                        USB_DeviceHidInterruptOut(hidHandle->handle, (void *)&endpointCallbackMessage,
+                                                                  handle))
+                                    {
+                                        return kStatus_USB_Error;
+                                    }
+#else
                                     (void)USB_DeviceHidInterruptOut(hidHandle->handle, (void *)&endpointCallbackMessage,
                                                                     handle);
+#endif
                                 }
                                 hidHandle->interruptOutPipeDataBuffer = (uint8_t *)USB_INVALID_TRANSFER_BUFFER;
                                 hidHandle->interruptOutPipeDataLen    = 0U;
@@ -680,7 +700,14 @@ usb_status_t USB_DeviceHidDeinit(class_handle_t handle)
     /* De-initialzie the endpoints. */
     error = USB_DeviceHidEndpointsDeinit(hidHandle);
     /* Free the hid class handle. */
+#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
+    if (kStatus_USB_Success != USB_DeviceHidFreeHandle(hidHandle))
+    {
+        return kStatus_USB_Error;
+    }
+#else
     (void)USB_DeviceHidFreeHandle(hidHandle);
+#endif
     return error;
 }
 

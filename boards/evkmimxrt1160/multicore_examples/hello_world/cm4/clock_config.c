@@ -196,7 +196,6 @@ outputs:
 - {id: USDHC1_CLK_ROOT.outFreq, value: 24 MHz}
 - {id: USDHC2_CLK_ROOT.outFreq, value: 24 MHz}
 settings:
-- {id: CoreBusClockRootsInitializationConfig, value: selectedCore}
 - {id: ANADIG_OSC_OSC_24M_CTRL_LP_EN_CFG, value: Low}
 - {id: ANADIG_OSC_OSC_24M_CTRL_OSC_EN_CFG, value: Enabled}
 - {id: ANADIG_PLL.ARM_PLL_POST_DIV.scale, value: '4'}
@@ -310,7 +309,6 @@ void BOARD_BootClockRUN(void)
     }
 
     /* Swicth both core, M7 Systick and Bus_Lpsr to OscRC48MDiv2 first */
-#if __CORTEX_M == 7
     rootCfg.mux = kCLOCK_M7_ClockRoot_MuxOscRc48MDiv2;
     rootCfg.div = 1;
     CLOCK_SetRootClock(kCLOCK_Root_M7, &rootCfg);
@@ -318,8 +316,7 @@ void BOARD_BootClockRUN(void)
     rootCfg.mux = kCLOCK_M7_SYSTICK_ClockRoot_MuxOscRc48MDiv2;
     rootCfg.div = 1;
     CLOCK_SetRootClock(kCLOCK_Root_M7_Systick, &rootCfg);
-#endif
-#if __CORTEX_M == 4
+
     rootCfg.mux = kCLOCK_M4_ClockRoot_MuxOscRc48MDiv2;
     rootCfg.div = 1;
     CLOCK_SetRootClock(kCLOCK_Root_M4, &rootCfg);
@@ -327,7 +324,6 @@ void BOARD_BootClockRUN(void)
     rootCfg.mux = kCLOCK_BUS_LPSR_ClockRoot_MuxOscRc48MDiv2;
     rootCfg.div = 1;
     CLOCK_SetRootClock(kCLOCK_Root_Bus_Lpsr, &rootCfg);
-#endif
 
     /*
     * if DCD is used, please make sure the clock source of SEMC is not changed in the following PLL/PFD configuration code.
@@ -382,32 +378,24 @@ void BOARD_BootClockRUN(void)
 
     /* Module clock root configurations. */
     /* Configure M7 using ARM_PLL_CLK */
-#if __CORTEX_M == 7
     rootCfg.mux = kCLOCK_M7_ClockRoot_MuxArmPllOut;
     rootCfg.div = 1;
     CLOCK_SetRootClock(kCLOCK_Root_M7, &rootCfg);
-#endif
 
     /* Configure M4 using SYS_PLL3_CLK */
-#if __CORTEX_M == 4
     rootCfg.mux = kCLOCK_M4_ClockRoot_MuxSysPll3Out;
     rootCfg.div = 2;
     CLOCK_SetRootClock(kCLOCK_Root_M4, &rootCfg);
-#endif
 
     /* Configure BUS using SYS_PLL2_PFD3_CLK */
-#if __CORTEX_M == 7
     rootCfg.mux = kCLOCK_BUS_ClockRoot_MuxSysPll2Pfd3;
     rootCfg.div = 2;
     CLOCK_SetRootClock(kCLOCK_Root_Bus, &rootCfg);
-#endif
 
     /* Configure BUS_LPSR using SYS_PLL3_CLK */
-#if __CORTEX_M == 4
     rootCfg.mux = kCLOCK_BUS_LPSR_ClockRoot_MuxSysPll3Out;
     rootCfg.div = 4;
     CLOCK_SetRootClock(kCLOCK_Root_Bus_Lpsr, &rootCfg);
-#endif
 
     /* Configure SEMC using SYS_PLL2_PFD1_CLK */
 #ifndef SKIP_SEMC_INIT
@@ -433,18 +421,14 @@ void BOARD_BootClockRUN(void)
     CLOCK_SetRootClock(kCLOCK_Root_Cstrace, &rootCfg);
 
     /* Configure M4_SYSTICK using OSC_RC_48M_DIV2 */
-#if __CORTEX_M == 4
     rootCfg.mux = kCLOCK_M4_SYSTICK_ClockRoot_MuxOscRc48MDiv2;
     rootCfg.div = 1;
     CLOCK_SetRootClock(kCLOCK_Root_M4_Systick, &rootCfg);
-#endif
 
     /* Configure M7_SYSTICK using OSC_RC_48M_DIV2 */
-#if __CORTEX_M == 7
     rootCfg.mux = kCLOCK_M7_SYSTICK_ClockRoot_MuxOscRc48MDiv2;
     rootCfg.div = 240;
     CLOCK_SetRootClock(kCLOCK_Root_M7_Systick, &rootCfg);
-#endif
 
     /* Configure ADC1 using OSC_RC_48M_DIV2 */
     rootCfg.mux = kCLOCK_ADC1_ClockRoot_MuxOscRc48MDiv2;

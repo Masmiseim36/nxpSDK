@@ -54,7 +54,7 @@
 #include "netif/ethernet.h"
 #include "enet_ethernetif.h"
 #include "lwip/netifapi.h"
-#ifdef EXAMPLE_USE_100M_ENET_PORT
+#if BOARD_NETWORK_USE_100M_ENET_PORT
 #include "fsl_phyksz8081.h"
 #else
 #include "fsl_phyrtl8211f.h"
@@ -79,7 +79,7 @@
         0x02, 0x12, 0x13, 0x10, 0x15, 0x25 \
     }
 
-#ifdef EXAMPLE_USE_100M_ENET_PORT
+#if BOARD_NETWORK_USE_100M_ENET_PORT
 /* Address of PHY interface. */
 #define EXAMPLE_PHY_ADDRESS BOARD_ENET0_PHY_ADDRESS
 /* PHY operations. */
@@ -181,7 +181,7 @@ void BOARD_InitModuleClock(void)
     };
     CLOCK_InitSysPll1(&sysPll1Config);
 
-#ifdef EXAMPLE_USE_100M_ENET_PORT
+#if BOARD_NETWORK_USE_100M_ENET_PORT
     clock_root_config_t rootCfg = {.mux = 4, .div = 10}; /* Generate 50M root clock. */
     CLOCK_SetRootClock(kCLOCK_Root_Enet1, &rootCfg);
 #else
@@ -198,7 +198,7 @@ void BOARD_InitModuleClock(void)
 
 void IOMUXC_SelectENETClock(void)
 {
-#ifdef EXAMPLE_USE_100M_ENET_PORT
+#if BOARD_NETWORK_USE_100M_ENET_PORT
     IOMUXC_GPR->GPR4 |= 0x3; /* 50M ENET_REF_CLOCK output to PHY and ENET module. */
 #else
     IOMUXC_GPR->GPR5 |= IOMUXC_GPR_GPR5_ENET1G_RGMII_EN_MASK; /* bit1:iomuxc_gpr_enet_clk_dir
@@ -208,7 +208,7 @@ void IOMUXC_SelectENETClock(void)
 
 void BOARD_ENETFlexibleConfigure(enet_config_t *config)
 {
-#ifdef EXAMPLE_USE_100M_ENET_PORT
+#if BOARD_NETWORK_USE_100M_ENET_PORT
     config->miiMode = kENET_RmiiMode;
 #else
     config->miiMode = kENET_RgmiiMode;
@@ -258,7 +258,7 @@ int main(void)
 
     IOMUXC_SelectENETClock();
 
-#ifdef EXAMPLE_USE_100M_ENET_PORT
+#if BOARD_NETWORK_USE_100M_ENET_PORT
     BOARD_InitEnetPins();
     GPIO_PinInit(GPIO9, 11, &gpio_config);
     GPIO_PinInit(GPIO12, 12, &gpio_config);

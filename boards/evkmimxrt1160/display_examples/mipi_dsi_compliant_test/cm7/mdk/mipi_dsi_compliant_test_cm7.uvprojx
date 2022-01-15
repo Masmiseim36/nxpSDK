@@ -334,7 +334,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>USE_SDRAM, DATA_SECTION_IS_CACHEABLE=1, DEBUG, CPU_MIMXRT1166DVM6A_cm7, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, SERIAL_PORT_TYPE_UART=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../components/video/display/rm68191;../../../../../../devices/MIMXRT1166/drivers;../../../../../../components/video/display/mipi_dsi_cmd;../../../../../../components/video/display/rm68200;../../../../../../components/video/display/dc/lcdifv2;../../../../../../components/video/display/dc/elcdif;../../../../../../components/video;../../../../../../components/video/display;../../../../../../devices/MIMXRT1166;../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../devices/MIMXRT1166/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../devices/MIMXRT1166/xip;../../../../xip;../../../../../../devices/MIMXRT1166/drivers/cm7;../../../../../../CMSIS/Core/Include;../../../../../../components/video/display/dc</IncludePath>
+              <IncludePath>..;../../../../../../components/video/display/rm68191;../../../../../../devices/MIMXRT1166/drivers;../../../../../../components/video/display/mipi_dsi_cmd;../../../../../../components/video/display/rm68200;../../../../../../components/video/display/dc/lcdifv2;../../../../../../components/video/display/dc/elcdif;../../../../../../components/video/display/hx8394;../../../../../../components/video;../../../../../../components/video/display;../../../../../../devices/MIMXRT1166;../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../devices/MIMXRT1166/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../devices/MIMXRT1166/xip;../../../../xip;../../../../../../devices/MIMXRT1166/drivers/cm7;../../../../../../CMSIS/Core/Include;../../../../../../components/video/display/dc</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -512,6 +512,16 @@
               <FileName>fsl_dc_fb_elcdif.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../components/video/display/dc/elcdif/fsl_dc_fb_elcdif.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_hx8394.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/video/display/hx8394/fsl_hx8394.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_hx8394.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/video/display/hx8394/fsl_hx8394.c</FilePath>
             </File>
             <File>
               <FileName>fsl_video_common.h</FileName>
@@ -1233,7 +1243,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, XIP_BOOT_HEADER_DCD_ENABLE=1, USE_SDRAM, DATA_SECTION_IS_CACHEABLE=1, DEBUG, CPU_MIMXRT1166DVM6A_cm7, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, SERIAL_PORT_TYPE_UART=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../components/video/display/rm68191;../../../../../../devices/MIMXRT1166/drivers;../../../../../../components/video/display/mipi_dsi_cmd;../../../../../../components/video/display/rm68200;../../../../../../components/video/display/dc/lcdifv2;../../../../../../components/video/display/dc/elcdif;../../../../../../components/video;../../../../../../components/video/display;../../../../../../devices/MIMXRT1166;../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../devices/MIMXRT1166/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../devices/MIMXRT1166/xip;../../../../xip;../../../../../../devices/MIMXRT1166/drivers/cm7;../../../../../../CMSIS/Core/Include;../../../../../../components/video/display/dc</IncludePath>
+              <IncludePath>..;../../../../../../components/video/display/rm68191;../../../../../../devices/MIMXRT1166/drivers;../../../../../../components/video/display/mipi_dsi_cmd;../../../../../../components/video/display/rm68200;../../../../../../components/video/display/dc/lcdifv2;../../../../../../components/video/display/dc/elcdif;../../../../../../components/video/display/hx8394;../../../../../../components/video;../../../../../../components/video/display;../../../../../../devices/MIMXRT1166;../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../devices/MIMXRT1166/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../devices/MIMXRT1166/xip;../../../../xip;../../../../../../devices/MIMXRT1166/drivers/cm7;../../../../../../CMSIS/Core/Include;../../../../../../components/video/display/dc</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1411,6 +1421,16 @@
               <FileName>fsl_dc_fb_elcdif.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../components/video/display/dc/elcdif/fsl_dc_fb_elcdif.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_hx8394.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/video/display/hx8394/fsl_hx8394.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_hx8394.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/video/display/hx8394/fsl_hx8394.c</FilePath>
             </File>
             <File>
               <FileName>fsl_video_common.h</FileName>
@@ -2132,7 +2152,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>USE_SDRAM, DATA_SECTION_IS_CACHEABLE=1, NDEBUG, CPU_MIMXRT1166DVM6A_cm7, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, SERIAL_PORT_TYPE_UART=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../components/video/display/rm68191;../../../../../../devices/MIMXRT1166/drivers;../../../../../../components/video/display/mipi_dsi_cmd;../../../../../../components/video/display/rm68200;../../../../../../components/video/display/dc/lcdifv2;../../../../../../components/video/display/dc/elcdif;../../../../../../components/video;../../../../../../components/video/display;../../../../../../devices/MIMXRT1166;../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../devices/MIMXRT1166/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../devices/MIMXRT1166/xip;../../../../xip;../../../../../../devices/MIMXRT1166/drivers/cm7;../../../../../../CMSIS/Core/Include;../../../../../../components/video/display/dc</IncludePath>
+              <IncludePath>..;../../../../../../components/video/display/rm68191;../../../../../../devices/MIMXRT1166/drivers;../../../../../../components/video/display/mipi_dsi_cmd;../../../../../../components/video/display/rm68200;../../../../../../components/video/display/dc/lcdifv2;../../../../../../components/video/display/dc/elcdif;../../../../../../components/video/display/hx8394;../../../../../../components/video;../../../../../../components/video/display;../../../../../../devices/MIMXRT1166;../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../devices/MIMXRT1166/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../devices/MIMXRT1166/xip;../../../../xip;../../../../../../devices/MIMXRT1166/drivers/cm7;../../../../../../CMSIS/Core/Include;../../../../../../components/video/display/dc</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2310,6 +2330,16 @@
               <FileName>fsl_dc_fb_elcdif.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../components/video/display/dc/elcdif/fsl_dc_fb_elcdif.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_hx8394.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/video/display/hx8394/fsl_hx8394.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_hx8394.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/video/display/hx8394/fsl_hx8394.c</FilePath>
             </File>
             <File>
               <FileName>fsl_video_common.h</FileName>
@@ -3031,7 +3061,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, XIP_BOOT_HEADER_DCD_ENABLE=1, USE_SDRAM, DATA_SECTION_IS_CACHEABLE=1, NDEBUG, CPU_MIMXRT1166DVM6A_cm7, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, SERIAL_PORT_TYPE_UART=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../components/video/display/rm68191;../../../../../../devices/MIMXRT1166/drivers;../../../../../../components/video/display/mipi_dsi_cmd;../../../../../../components/video/display/rm68200;../../../../../../components/video/display/dc/lcdifv2;../../../../../../components/video/display/dc/elcdif;../../../../../../components/video;../../../../../../components/video/display;../../../../../../devices/MIMXRT1166;../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../devices/MIMXRT1166/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../devices/MIMXRT1166/xip;../../../../xip;../../../../../../devices/MIMXRT1166/drivers/cm7;../../../../../../CMSIS/Core/Include;../../../../../../components/video/display/dc</IncludePath>
+              <IncludePath>..;../../../../../../components/video/display/rm68191;../../../../../../devices/MIMXRT1166/drivers;../../../../../../components/video/display/mipi_dsi_cmd;../../../../../../components/video/display/rm68200;../../../../../../components/video/display/dc/lcdifv2;../../../../../../components/video/display/dc/elcdif;../../../../../../components/video/display/hx8394;../../../../../../components/video;../../../../../../components/video/display;../../../../../../devices/MIMXRT1166;../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../devices/MIMXRT1166/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../devices/MIMXRT1166/xip;../../../../xip;../../../../../../devices/MIMXRT1166/drivers/cm7;../../../../../../CMSIS/Core/Include;../../../../../../components/video/display/dc</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -3209,6 +3239,16 @@
               <FileName>fsl_dc_fb_elcdif.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../components/video/display/dc/elcdif/fsl_dc_fb_elcdif.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_hx8394.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/video/display/hx8394/fsl_hx8394.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_hx8394.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/video/display/hx8394/fsl_hx8394.c</FilePath>
             </File>
             <File>
               <FileName>fsl_video_common.h</FileName>

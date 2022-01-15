@@ -14,12 +14,31 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
+
+/* @TEST_ANCHOR */
+
+/*! @brief Whether UAC 7.1 is enabled or not. */
+#define USB_AUDIO_CHANNEL7_1 (0)
+
 /*! @brief Whether UAC 5.1 is enabled or not. */
 #define USB_AUDIO_CHANNEL5_1 (0)
 
+/*! @brief Whether UAC 3.1 is enabled or not. */
+#define USB_AUDIO_CHANNEL3_1 (0)
+
+#if defined(USB_AUDIO_CHANNEL7_1) && (USB_AUDIO_CHANNEL7_1 > 0U)
+#define USB_AUDIO_7_1_CHANNEL_PAIR_SEL                                                                               \
+    (0x01) /* 0x01: front left, front right; 0x02: front center, subwoofer; 0x03: rear left, rear right; 0x04: front \
+              left of center, front right of center  */
+#endif
+
 #if defined(USB_AUDIO_CHANNEL5_1) && (USB_AUDIO_CHANNEL5_1 > 0U)
 #define USB_AUDIO_5_1_CHANNEL_PAIR_SEL \
-    (0x01) /* 0x01: front left, front right; 0x02: rear left, rear right; 0x03: front center, subwoofer */
+    (0x01) /* 0x01: front left, front right; 0x02: front center, subwoofer; 0x03: rear left, rear right */
+#endif
+
+#if defined(USB_AUDIO_CHANNEL3_1) && (USB_AUDIO_CHANNEL3_1 > 0U)
+#define USB_AUDIO_3_1_CHANNEL_PAIR_SEL (0x01) /* 0x01: front left, front right; 0x02: front center, subwoofer */
 #endif
 
 #define USB_DEVICE_VID (0x1FC9U)
@@ -35,7 +54,9 @@
     2. usb host is Windows OS that supports USB audio 2.0, like Win 10
     3. use feedback endpoint
 */
+#ifndef USB_DEVICE_WORKAROUND_AUDIO_20_WINDOWS
 #define USB_DEVICE_WORKAROUND_AUDIO_20_WINDOWS (0U)
+#endif
 
 /* usb descriptor length */
 #define USB_DESCRIPTOR_LENGTH_CONFIGURATION_ALL (sizeof(g_UsbDeviceConfigurationDescriptor))
@@ -93,8 +114,12 @@ Specification, Revision 2.0 chapter 9.6.6*/
 #define USB_AUDIO_SPEAKER_STREAM_INTERFACE_COUNT  (1)
 
 /* Audio data format */
-#if defined(USB_AUDIO_CHANNEL5_1) && (USB_AUDIO_CHANNEL5_1 > 0U)
+#if defined(USB_AUDIO_CHANNEL7_1) && (USB_AUDIO_CHANNEL7_1 > 0U)
+#define AUDIO_FORMAT_CHANNELS (0x08)
+#elif defined(USB_AUDIO_CHANNEL5_1) && (USB_AUDIO_CHANNEL5_1 > 0U)
 #define AUDIO_FORMAT_CHANNELS (0x06)
+#elif defined(USB_AUDIO_CHANNEL3_1) && (USB_AUDIO_CHANNEL3_1 > 0U)
+#define AUDIO_FORMAT_CHANNELS (0x04)
 #else
 #define AUDIO_FORMAT_CHANNELS (0x02)
 #endif

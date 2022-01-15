@@ -97,6 +97,8 @@ include(driver_pmu_1_MIMXRT1166_cm4)
 
 include(driver_dcdc_soc_MIMXRT1166_cm4)
 
+include(driver_memory_MIMXRT1166_cm4)
+
 include(driver_anatop_ai_MIMXRT1166_cm4)
 
 include(CMSIS_Include_core_cm_MIMXRT1166_cm4)

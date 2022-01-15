@@ -334,7 +334,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>USE_SDRAM, XIP_BOOT_HEADER_DCD_ENABLE=1, DATA_SECTION_IS_CACHEABLE=1, XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, DEBUG, CPU_MIMXRT1176DVMAA_cm7, FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, SDK_I2C_BASED_COMPONENT_USED=1, SD_ENABLED, SDK_OS_FREE_RTOS, __NXP_MSDK__, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../rtos/freertos/libraries/abstractions/posix/include;../../../../../../rtos/freertos/libraries/freertos_plus/standard/freertos_plus_posix/include;../../../../../../rtos/freertos/libraries/c_sdk/standard/common/include/private;../../../../../../components/video;../../../../../../components/video/display;../../../../../../components/video/display/rm68191;../../../../../../devices/MIMXRT1176/drivers;../../../../../../components/video/display/mipi_dsi_cmd;../../../../../../components/video/display/rm68200;../../../../../../components/video/display/dc/lcdifv2;../../../../../../components/gt911;../../../../../../components/video/display/dc/elcdif;../../../../../../middleware/sdmmc/sd;../../../../../../middleware/sdmmc/common;../../../../../../middleware/sdmmc/host/usdhc;../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../middleware/fatfs/source;../../../../../../middleware/fatfs/source/fsl_sd_disk;../../../../../../components/video/display/fbdev;../../../../../../middleware/openh264/codec/decoder/core/inc;../../../../../../middleware/openh264/codec/decoder/plus/inc;../../../../../../devices/MIMXRT1176;../../../../../../components/uart;../../../../../../components/lists;../../../../../../devices/MIMXRT1176/xip;../../../../xip;../../../../../../devices/MIMXRT1176/drivers/cm7;../../../../../../CMSIS/Core/Include;../../../../../../components/video/display/dc;../../../../../../middleware/sdmmc/osa;../../../../../../components/osa;../../../../../../rtos/freertos/freertos_kernel/include;../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F;../../../../../../middleware/openh264/codec/api/svc;../../../../../../middleware/openh264/codec/common/inc</IncludePath>
+              <IncludePath>..;../../../../../../rtos/freertos/libraries/abstractions/posix/include;../../../../../../rtos/freertos/libraries/freertos_plus/standard/freertos_plus_posix/include;../../../../../../rtos/freertos/libraries/c_sdk/standard/common/include/private;../../../../../../components/video;../../../../../../components/video/display;../../../../../../components/video/display/rm68191;../../../../../../devices/MIMXRT1176/drivers;../../../../../../components/video/display/mipi_dsi_cmd;../../../../../../components/video/display/rm68200;../../../../../../components/video/display/dc/lcdifv2;../../../../../../components/gt911;../../../../../../components/video/display/dc/elcdif;../../../../../../middleware/sdmmc/sd;../../../../../../middleware/sdmmc/common;../../../../../../middleware/sdmmc/host/usdhc;../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../components/video/display/hx8394;../../../../../../middleware/fatfs/source;../../../../../../middleware/fatfs/source/fsl_sd_disk;../../../../../../components/video/display/fbdev;../../../../../../middleware/openh264/codec/decoder/core/inc;../../../../../../middleware/openh264/codec/decoder/plus/inc;../../../../../../devices/MIMXRT1176;../../../../../../components/uart;../../../../../../components/lists;../../../../../../devices/MIMXRT1176/xip;../../../../xip;../../../../../../devices/MIMXRT1176/drivers/cm7;../../../../../../CMSIS/Core/Include;../../../../../../components/video/display/dc;../../../../../../middleware/sdmmc/osa;../../../../../../components/osa;../../../../../../rtos/freertos/freertos_kernel/include;../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F;../../../../../../middleware/openh264/codec/api/svc;../../../../../../middleware/openh264/codec/common/inc</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -742,6 +742,16 @@
               <FileName>fsl_dc_fb_elcdif.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../components/video/display/dc/elcdif/fsl_dc_fb_elcdif.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_hx8394.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/video/display/hx8394/fsl_hx8394.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_hx8394.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/video/display/hx8394/fsl_hx8394.c</FilePath>
             </File>
             <File>
               <FileName>fsl_fbdev.h</FileName>
@@ -1712,6 +1722,11 @@
               <FileName>StackMacros.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/StackMacros.h</FilePath>
+            </File>
+            <File>
+              <FileName>stdint.readme</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/stdint.readme</FilePath>
             </File>
             <File>
               <FileName>stream_buffer.h</FileName>
@@ -2348,7 +2363,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>USE_SDRAM, XIP_BOOT_HEADER_DCD_ENABLE=1, DATA_SECTION_IS_CACHEABLE=1, XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, NDEBUG, CPU_MIMXRT1176DVMAA_cm7, FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, SDK_I2C_BASED_COMPONENT_USED=1, SD_ENABLED, SDK_OS_FREE_RTOS, __NXP_MSDK__, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../rtos/freertos/libraries/abstractions/posix/include;../../../../../../rtos/freertos/libraries/freertos_plus/standard/freertos_plus_posix/include;../../../../../../rtos/freertos/libraries/c_sdk/standard/common/include/private;../../../../../../components/video;../../../../../../components/video/display;../../../../../../components/video/display/rm68191;../../../../../../devices/MIMXRT1176/drivers;../../../../../../components/video/display/mipi_dsi_cmd;../../../../../../components/video/display/rm68200;../../../../../../components/video/display/dc/lcdifv2;../../../../../../components/gt911;../../../../../../components/video/display/dc/elcdif;../../../../../../middleware/sdmmc/sd;../../../../../../middleware/sdmmc/common;../../../../../../middleware/sdmmc/host/usdhc;../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../middleware/fatfs/source;../../../../../../middleware/fatfs/source/fsl_sd_disk;../../../../../../components/video/display/fbdev;../../../../../../middleware/openh264/codec/decoder/core/inc;../../../../../../middleware/openh264/codec/decoder/plus/inc;../../../../../../devices/MIMXRT1176;../../../../../../components/uart;../../../../../../components/lists;../../../../../../devices/MIMXRT1176/xip;../../../../xip;../../../../../../devices/MIMXRT1176/drivers/cm7;../../../../../../CMSIS/Core/Include;../../../../../../components/video/display/dc;../../../../../../middleware/sdmmc/osa;../../../../../../components/osa;../../../../../../rtos/freertos/freertos_kernel/include;../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F;../../../../../../middleware/openh264/codec/api/svc;../../../../../../middleware/openh264/codec/common/inc</IncludePath>
+              <IncludePath>..;../../../../../../rtos/freertos/libraries/abstractions/posix/include;../../../../../../rtos/freertos/libraries/freertos_plus/standard/freertos_plus_posix/include;../../../../../../rtos/freertos/libraries/c_sdk/standard/common/include/private;../../../../../../components/video;../../../../../../components/video/display;../../../../../../components/video/display/rm68191;../../../../../../devices/MIMXRT1176/drivers;../../../../../../components/video/display/mipi_dsi_cmd;../../../../../../components/video/display/rm68200;../../../../../../components/video/display/dc/lcdifv2;../../../../../../components/gt911;../../../../../../components/video/display/dc/elcdif;../../../../../../middleware/sdmmc/sd;../../../../../../middleware/sdmmc/common;../../../../../../middleware/sdmmc/host/usdhc;../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../components/video/display/hx8394;../../../../../../middleware/fatfs/source;../../../../../../middleware/fatfs/source/fsl_sd_disk;../../../../../../components/video/display/fbdev;../../../../../../middleware/openh264/codec/decoder/core/inc;../../../../../../middleware/openh264/codec/decoder/plus/inc;../../../../../../devices/MIMXRT1176;../../../../../../components/uart;../../../../../../components/lists;../../../../../../devices/MIMXRT1176/xip;../../../../xip;../../../../../../devices/MIMXRT1176/drivers/cm7;../../../../../../CMSIS/Core/Include;../../../../../../components/video/display/dc;../../../../../../middleware/sdmmc/osa;../../../../../../components/osa;../../../../../../rtos/freertos/freertos_kernel/include;../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F;../../../../../../middleware/openh264/codec/api/svc;../../../../../../middleware/openh264/codec/common/inc</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2756,6 +2771,16 @@
               <FileName>fsl_dc_fb_elcdif.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../components/video/display/dc/elcdif/fsl_dc_fb_elcdif.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_hx8394.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/video/display/hx8394/fsl_hx8394.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_hx8394.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/video/display/hx8394/fsl_hx8394.c</FilePath>
             </File>
             <File>
               <FileName>fsl_fbdev.h</FileName>
@@ -3726,6 +3751,11 @@
               <FileName>StackMacros.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/StackMacros.h</FilePath>
+            </File>
+            <File>
+              <FileName>stdint.readme</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/stdint.readme</FilePath>
             </File>
             <File>
               <FileName>stream_buffer.h</FileName>

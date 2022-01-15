@@ -22,9 +22,9 @@ SET(EXECUTABLE_OUTPUT_PATH ${ProjDirPath}/${CMAKE_BUILD_TYPE})
 SET(LIBRARY_OUTPUT_PATH ${ProjDirPath}/${CMAKE_BUILD_TYPE})
 
 
-project(deepviewrt_modelrunner-glow)
+project(deepviewrt_modelrunner_glow_cm7)
 
-set(MCUX_SDK_PROJECT_NAME deepviewrt_modelrunner-glow.elf)
+set(MCUX_SDK_PROJECT_NAME deepviewrt_modelrunner_glow_cm7.elf)
 
 include(${ProjDirPath}/flags.cmake)
 
@@ -71,7 +71,7 @@ target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
 
 set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../middleware/lwip
-    ${ProjDirPath}/../../../../../rtos/freertos
+    ${ProjDirPath}/../../../../../rtos/freertos/freertos_kernel
     ${ProjDirPath}/../../../../../components/phy
     ${ProjDirPath}/../../../../../devices/MIMXRT1176/drivers
     ${ProjDirPath}/../../../../../devices/MIMXRT1176/utilities

@@ -25,6 +25,12 @@ Connection from a smartphone with Android OS was tested with 'Magic iPerf' appli
 
 By default the example connects to network SSID "nxp_wifi_demo" with Open Security.
 
+Before building the example application select Wi-Fi module macro in the app_config.h. (see #define WIFI_<SoC Name>_BOARD_<Module Name>).
+For more information about Wi-Fi module connection see:
+    readme_modules.txt
+    Getting started guide on supported modules configuration:
+    https://www.nxp.com/document/guide/getting-started-with-nxp-wi-fi-modules-using-i-mx-rt-platform:GS-WIFI-MODULES-IMXRT-PLATFORM
+
 
 
 Toolchain supported
@@ -38,35 +44,10 @@ Hardware requirements
 - Micro USB cable
 - MIMXRT1170-EVK board
 - Personal Computer
-- One of the following Wi-Fi modules:
-  - Panasonic PAN9026 SDIO ADAPTER + SD to uSD adapter
-  - AzureWave AW-NM191NF-uSD
-  - AzureWave AW-AM457-uSD
-  - AzureWave AW-CM358MA
-  - Murata Type 2DS
-  - Murata Type 1XK
-  - Murata Type 1ZM
+
 
 Board settings
 ==============
-Before building the example application select Wi-Fi module macro in the app_config.h. (see #define WIFI_<SoC Name>_BOARD_<Module Name>)
-
-Getting started guide on supported modules configuration:
-https://www.nxp.com/document/guide/getting-started-with-nxp-wi-fi-modules-using-i-mx-rt-platform:GS-WIFI-MODULES-IMXRT-PLATFORM
-
-
-Jumper settings for AzureWave AW-NM191NF-uSD Module:
-  - J11 1-2: VIO_SD 1.8V (Voltage level of SDIO pins is 1.8V)
-  - J2  1-2: 3.3V VIO_uSD (Power Supply from uSD connector)
-
-Jumper settings for AzureWave AW-AM457-uSD Module:
-  - J11 1-2: VIO_SD 1.8V (Voltage level of SDIO pins is 1.8V)
-  - J2  1-2: 3.3V VIO_uSD (Power Supply from uSD connector)
-
-For Murata Wi-Fi modules (M.2 interface) are necessary these changes on MIMXRT1170-EVK board:
-  - remove R183
-  - add 0Ohm resistor at position R404
-
 
 Prepare the Demo
 ================
@@ -124,7 +105,6 @@ Running the demo
     WLAN Driver Version   : v1.3.r21.p1
     WLAN Firmware Version : w8977o-V2, RF87XX, FP91, 16.91.10.p89, WPA2_CVE_FIX 1, PVE_FIX 1
 
-
 3. Select the desired mode of operation for WiFi, A - Start Soft AP, c - Connect to External AP (SSID='nxp_mrvl')
 4. Start the JPerf application, using the jperf-2.0.0/jperf.bat batch file.
     It can be downloaded here: https://sourceforge.net/projects/iperf/files/jperf/jperf%202.0.0/jperf-2.0.0.zip/download.
@@ -172,6 +152,7 @@ Running the demo
         [  4]  8.0- 9.0 sec   N   KBytes  N    Kbits/sec
         [  4]  9.0-10.0 sec   N   KBytes  N    Kbits/sec
         [  4]  0.0-10.8 sec   N   KBytes  N    Kbits/sec
+
 10. Also, when the test is finished, the log would be seen on the terminal like below,
 	where occurrences of the symbol "N" would be replaced by actual measured values.
     The log will vary depending on the selected mode:

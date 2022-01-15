@@ -31,6 +31,10 @@ include(${ProjDirPath}/flags.cmake)
 include(${ProjDirPath}/config.cmake)
 
 add_executable(${MCUX_SDK_PROJECT_NAME} 
+"${ProjDirPath}/../board.c"
+"${ProjDirPath}/../board.h"
+"${ProjDirPath}/../clock_config.c"
+"${ProjDirPath}/../clock_config.h"
 "${ProjDirPath}/../../../erpc_common/erpc_error_handler.h"
 "${ProjDirPath}/../../../erpc_common/erpc_error_handler.cpp"
 "${ProjDirPath}/../../../erpc_common/erpc_matrix_multiply/service/erpc_matrix_multiply.erpc"
@@ -42,19 +46,15 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../pin_mux.h"
 "${ProjDirPath}/../../rpmsg_config.h"
 "${ProjDirPath}/../../erpc_config.h"
-"${ProjDirPath}/../board.c"
-"${ProjDirPath}/../board.h"
-"${ProjDirPath}/../clock_config.c"
-"${ProjDirPath}/../clock_config.h"
 "${ProjDirPath}/../dcd.c"
 "${ProjDirPath}/../dcd.h"
 "${ProjDirPath}/../evkmimxrt1170_connect_cm4_cm4side.jlinkscript"
 )
 
 target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
+    ${ProjDirPath}/..
     ${ProjDirPath}/../../../erpc_common
     ${ProjDirPath}/../../../erpc_common/erpc_matrix_multiply/service
-    ${ProjDirPath}/..
     ${ProjDirPath}/../..
 )
 
@@ -77,6 +77,10 @@ set(CMAKE_MODULE_PATH
 include(middleware_multicore_mcmgr_imxrt1170_MIMXRT1176_cm4)
 
 include(middleware_multicore_rpmsg_lite_imxrt1170_bm_MIMXRT1176_cm4)
+
+include(middleware_multicore_rpmsg_lite_MIMXRT1176_cm4)
+
+include(middleware_multicore_rpmsg_lite_bm_MIMXRT1176_cm4)
 
 include(utility_debug_console_lite_MIMXRT1176_cm4)
 
@@ -129,8 +133,6 @@ include(driver_cache_lmem_MIMXRT1176_cm4)
 include(driver_anatop_ai_MIMXRT1176_cm4)
 
 include(CMSIS_Include_core_cm_MIMXRT1176_cm4)
-
-include(middleware_multicore_rpmsg_lite_MIMXRT1176_cm4)
 
 include(middleware_multicore_erpc_common_MIMXRT1176_cm4)
 

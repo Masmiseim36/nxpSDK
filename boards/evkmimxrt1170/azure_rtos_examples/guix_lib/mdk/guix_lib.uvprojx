@@ -699,6 +699,61 @@
               <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_16bpp_row_pitch_get.c</FilePath>
             </File>
             <File>
+              <FileName>gx_display_driver_16bpp_rotated_block_move.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_16bpp_rotated_block_move.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_16bpp_rotated_canvas_copy.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_16bpp_rotated_canvas_copy.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_16bpp_rotated_horizontal_line_draw.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_16bpp_rotated_horizontal_line_draw.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_16bpp_rotated_horizontal_pattern_line_draw.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_16bpp_rotated_horizontal_pattern_line_draw.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_16bpp_rotated_pixel_write.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_16bpp_rotated_pixel_write.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_16bpp_rotated_pixelmap_blend.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_16bpp_rotated_pixelmap_blend.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_16bpp_rotated_pixelmap_draw.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_16bpp_rotated_pixelmap_draw.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_16bpp_rotated_pixelmap_rotate.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_16bpp_rotated_pixelmap_rotate.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_16bpp_rotated_simple_line_draw.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_16bpp_rotated_simple_line_draw.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_16bpp_rotated_vertical_line_draw.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_16bpp_rotated_vertical_line_draw.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_16bpp_rotated_vertical_pattern_line_draw.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_16bpp_rotated_vertical_pattern_line_draw.c</FilePath>
+            </File>
+            <File>
               <FileName>gx_display_driver_16bpp_simple_line_draw.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_16bpp_simple_line_draw.c</FilePath>
@@ -834,6 +889,31 @@
               <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_24xrgb_png_draw.c</FilePath>
             </File>
             <File>
+              <FileName>gx_display_driver_24xrgb_rotated_canvas_blend.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_24xrgb_rotated_canvas_blend.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_24xrgb_rotated_jpeg_draw.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_24xrgb_rotated_jpeg_draw.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_24xrgb_rotated_pixel_blend.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_24xrgb_rotated_pixel_blend.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_24xrgb_rotated_png_draw.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_24xrgb_rotated_png_draw.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_24xrgb_rotated_setup.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_24xrgb_rotated_setup.c</FilePath>
+            </File>
+            <File>
               <FileName>gx_display_driver_24xrgb_setup.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_24xrgb_setup.c</FilePath>
@@ -857,6 +937,16 @@
               <FileName>gx_display_driver_32argb_pixelmap_draw.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_32argb_pixelmap_draw.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_32argb_rotated_pixel_blend.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_32argb_rotated_pixel_blend.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_32argb_rotated_setup.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_32argb_rotated_setup.c</FilePath>
             </File>
             <File>
               <FileName>gx_display_driver_32argb_setup.c</FileName>
@@ -907,6 +997,71 @@
               <FileName>gx_display_driver_32bpp_pixelmap_rotate.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_32bpp_pixelmap_rotate.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_32bpp_rotated_block_move.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_32bpp_rotated_block_move.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_32bpp_rotated_canvas_copy.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_32bpp_rotated_canvas_copy.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_32bpp_rotated_glyph_1bit_draw.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_32bpp_rotated_glyph_1bit_draw.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_32bpp_rotated_horizontal_line_draw.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_32bpp_rotated_horizontal_line_draw.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_32bpp_rotated_horizontal_pattern_line_draw.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_32bpp_rotated_horizontal_pattern_line_draw.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_32bpp_rotated_horizontal_pixelmap_line_draw.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_32bpp_rotated_horizontal_pixelmap_line_draw.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_32bpp_rotated_pixel_write.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_32bpp_rotated_pixel_write.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_32bpp_rotated_pixelmap_blend.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_32bpp_rotated_pixelmap_blend.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_32bpp_rotated_pixelmap_draw.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_32bpp_rotated_pixelmap_draw.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_32bpp_rotated_pixelmap_rotate.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_32bpp_rotated_pixelmap_rotate.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_32bpp_rotated_simple_line_draw.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_32bpp_rotated_simple_line_draw.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_32bpp_rotated_vertical_line_draw.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_32bpp_rotated_vertical_line_draw.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_32bpp_rotated_vertical_pattern_line_draw.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_32bpp_rotated_vertical_pattern_line_draw.c</FilePath>
             </File>
             <File>
               <FileName>gx_display_driver_32bpp_row_pitch_get.c</FileName>
@@ -1114,6 +1269,41 @@
               <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_565rgb_png_draw.c</FilePath>
             </File>
             <File>
+              <FileName>gx_display_driver_565rgb_rotated_canvas_blend.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_565rgb_rotated_canvas_blend.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_565rgb_rotated_glyph_1bit_draw.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_565rgb_rotated_glyph_1bit_draw.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_565rgb_rotated_horizontal_pixelmap_line_draw.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_565rgb_rotated_horizontal_pixelmap_line_draw.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_565rgb_rotated_jpeg_draw.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_565rgb_rotated_jpeg_draw.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_565rgb_rotated_pixel_blend.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_565rgb_rotated_pixel_blend.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_565rgb_rotated_png_draw.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_565rgb_rotated_png_draw.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_565rgb_rotated_setup.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_565rgb_rotated_setup.c</FilePath>
+            </File>
+            <File>
               <FileName>gx_display_driver_565rgb_setup.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_565rgb_setup.c</FilePath>
@@ -1122,6 +1312,11 @@
               <FileName>gx_display_driver_8bit_palette_native_color_get.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_8bit_palette_native_color_get.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_8bit_palette_rotated_setup.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_8bit_palette_rotated_setup.c</FilePath>
             </File>
             <File>
               <FileName>gx_display_driver_8bit_palette_setup.c</FileName>
@@ -1204,6 +1399,76 @@
               <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_8bpp_row_pitch_get.c</FilePath>
             </File>
             <File>
+              <FileName>gx_display_driver_8bpp_rotated_block_move.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_8bpp_rotated_block_move.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_8bpp_rotated_canvas_copy.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_8bpp_rotated_canvas_copy.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_8bpp_rotated_glyph_1bit_draw.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_8bpp_rotated_glyph_1bit_draw.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_8bpp_rotated_glyph_3bit_draw.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_8bpp_rotated_glyph_3bit_draw.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_8bpp_rotated_glyph_4bit_draw.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_8bpp_rotated_glyph_4bit_draw.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_8bpp_rotated_horizontal_line_draw.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_8bpp_rotated_horizontal_line_draw.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_8bpp_rotated_horizontal_pattern_line_draw.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_8bpp_rotated_horizontal_pattern_line_draw.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_8bpp_rotated_horizontal_pixelmap_line_draw.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_8bpp_rotated_horizontal_pixelmap_line_draw.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_8bpp_rotated_pixel_write.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_8bpp_rotated_pixel_write.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_8bpp_rotated_pixelmap_draw.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_8bpp_rotated_pixelmap_draw.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_8bpp_rotated_pixelmap_rotate.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_8bpp_rotated_pixelmap_rotate.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_8bpp_rotated_simple_line_draw.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_8bpp_rotated_simple_line_draw.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_8bpp_rotated_vertical_line_draw.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_8bpp_rotated_vertical_line_draw.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_8bpp_rotated_vertical_pattern_line_draw.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_8bpp_rotated_vertical_pattern_line_draw.c</FilePath>
+            </File>
+            <File>
               <FileName>gx_display_driver_8bpp_simple_line_draw.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_8bpp_simple_line_draw.c</FilePath>
@@ -1217,6 +1482,11 @@
               <FileName>gx_display_driver_8bpp_vertical_pattern_line_draw.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_8bpp_vertical_pattern_line_draw.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_generic_rotated_polygon_fill.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_generic_rotated_polygon_fill.c</FilePath>
             </File>
             <File>
               <FileName>gx_system_font_mono.c</FileName>
@@ -2113,6 +2383,61 @@
               <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_16bpp_row_pitch_get.c</FilePath>
             </File>
             <File>
+              <FileName>gx_display_driver_16bpp_rotated_block_move.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_16bpp_rotated_block_move.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_16bpp_rotated_canvas_copy.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_16bpp_rotated_canvas_copy.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_16bpp_rotated_horizontal_line_draw.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_16bpp_rotated_horizontal_line_draw.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_16bpp_rotated_horizontal_pattern_line_draw.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_16bpp_rotated_horizontal_pattern_line_draw.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_16bpp_rotated_pixel_write.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_16bpp_rotated_pixel_write.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_16bpp_rotated_pixelmap_blend.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_16bpp_rotated_pixelmap_blend.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_16bpp_rotated_pixelmap_draw.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_16bpp_rotated_pixelmap_draw.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_16bpp_rotated_pixelmap_rotate.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_16bpp_rotated_pixelmap_rotate.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_16bpp_rotated_simple_line_draw.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_16bpp_rotated_simple_line_draw.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_16bpp_rotated_vertical_line_draw.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_16bpp_rotated_vertical_line_draw.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_16bpp_rotated_vertical_pattern_line_draw.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_16bpp_rotated_vertical_pattern_line_draw.c</FilePath>
+            </File>
+            <File>
               <FileName>gx_display_driver_16bpp_simple_line_draw.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_16bpp_simple_line_draw.c</FilePath>
@@ -2248,6 +2573,31 @@
               <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_24xrgb_png_draw.c</FilePath>
             </File>
             <File>
+              <FileName>gx_display_driver_24xrgb_rotated_canvas_blend.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_24xrgb_rotated_canvas_blend.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_24xrgb_rotated_jpeg_draw.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_24xrgb_rotated_jpeg_draw.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_24xrgb_rotated_pixel_blend.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_24xrgb_rotated_pixel_blend.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_24xrgb_rotated_png_draw.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_24xrgb_rotated_png_draw.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_24xrgb_rotated_setup.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_24xrgb_rotated_setup.c</FilePath>
+            </File>
+            <File>
               <FileName>gx_display_driver_24xrgb_setup.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_24xrgb_setup.c</FilePath>
@@ -2271,6 +2621,16 @@
               <FileName>gx_display_driver_32argb_pixelmap_draw.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_32argb_pixelmap_draw.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_32argb_rotated_pixel_blend.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_32argb_rotated_pixel_blend.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_32argb_rotated_setup.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_32argb_rotated_setup.c</FilePath>
             </File>
             <File>
               <FileName>gx_display_driver_32argb_setup.c</FileName>
@@ -2321,6 +2681,71 @@
               <FileName>gx_display_driver_32bpp_pixelmap_rotate.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_32bpp_pixelmap_rotate.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_32bpp_rotated_block_move.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_32bpp_rotated_block_move.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_32bpp_rotated_canvas_copy.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_32bpp_rotated_canvas_copy.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_32bpp_rotated_glyph_1bit_draw.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_32bpp_rotated_glyph_1bit_draw.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_32bpp_rotated_horizontal_line_draw.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_32bpp_rotated_horizontal_line_draw.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_32bpp_rotated_horizontal_pattern_line_draw.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_32bpp_rotated_horizontal_pattern_line_draw.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_32bpp_rotated_horizontal_pixelmap_line_draw.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_32bpp_rotated_horizontal_pixelmap_line_draw.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_32bpp_rotated_pixel_write.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_32bpp_rotated_pixel_write.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_32bpp_rotated_pixelmap_blend.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_32bpp_rotated_pixelmap_blend.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_32bpp_rotated_pixelmap_draw.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_32bpp_rotated_pixelmap_draw.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_32bpp_rotated_pixelmap_rotate.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_32bpp_rotated_pixelmap_rotate.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_32bpp_rotated_simple_line_draw.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_32bpp_rotated_simple_line_draw.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_32bpp_rotated_vertical_line_draw.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_32bpp_rotated_vertical_line_draw.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_32bpp_rotated_vertical_pattern_line_draw.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_32bpp_rotated_vertical_pattern_line_draw.c</FilePath>
             </File>
             <File>
               <FileName>gx_display_driver_32bpp_row_pitch_get.c</FileName>
@@ -2528,6 +2953,41 @@
               <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_565rgb_png_draw.c</FilePath>
             </File>
             <File>
+              <FileName>gx_display_driver_565rgb_rotated_canvas_blend.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_565rgb_rotated_canvas_blend.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_565rgb_rotated_glyph_1bit_draw.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_565rgb_rotated_glyph_1bit_draw.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_565rgb_rotated_horizontal_pixelmap_line_draw.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_565rgb_rotated_horizontal_pixelmap_line_draw.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_565rgb_rotated_jpeg_draw.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_565rgb_rotated_jpeg_draw.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_565rgb_rotated_pixel_blend.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_565rgb_rotated_pixel_blend.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_565rgb_rotated_png_draw.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_565rgb_rotated_png_draw.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_565rgb_rotated_setup.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_565rgb_rotated_setup.c</FilePath>
+            </File>
+            <File>
               <FileName>gx_display_driver_565rgb_setup.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_565rgb_setup.c</FilePath>
@@ -2536,6 +2996,11 @@
               <FileName>gx_display_driver_8bit_palette_native_color_get.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_8bit_palette_native_color_get.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_8bit_palette_rotated_setup.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_8bit_palette_rotated_setup.c</FilePath>
             </File>
             <File>
               <FileName>gx_display_driver_8bit_palette_setup.c</FileName>
@@ -2618,6 +3083,76 @@
               <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_8bpp_row_pitch_get.c</FilePath>
             </File>
             <File>
+              <FileName>gx_display_driver_8bpp_rotated_block_move.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_8bpp_rotated_block_move.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_8bpp_rotated_canvas_copy.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_8bpp_rotated_canvas_copy.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_8bpp_rotated_glyph_1bit_draw.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_8bpp_rotated_glyph_1bit_draw.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_8bpp_rotated_glyph_3bit_draw.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_8bpp_rotated_glyph_3bit_draw.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_8bpp_rotated_glyph_4bit_draw.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_8bpp_rotated_glyph_4bit_draw.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_8bpp_rotated_horizontal_line_draw.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_8bpp_rotated_horizontal_line_draw.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_8bpp_rotated_horizontal_pattern_line_draw.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_8bpp_rotated_horizontal_pattern_line_draw.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_8bpp_rotated_horizontal_pixelmap_line_draw.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_8bpp_rotated_horizontal_pixelmap_line_draw.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_8bpp_rotated_pixel_write.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_8bpp_rotated_pixel_write.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_8bpp_rotated_pixelmap_draw.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_8bpp_rotated_pixelmap_draw.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_8bpp_rotated_pixelmap_rotate.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_8bpp_rotated_pixelmap_rotate.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_8bpp_rotated_simple_line_draw.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_8bpp_rotated_simple_line_draw.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_8bpp_rotated_vertical_line_draw.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_8bpp_rotated_vertical_line_draw.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_8bpp_rotated_vertical_pattern_line_draw.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_8bpp_rotated_vertical_pattern_line_draw.c</FilePath>
+            </File>
+            <File>
               <FileName>gx_display_driver_8bpp_simple_line_draw.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_8bpp_simple_line_draw.c</FilePath>
@@ -2631,6 +3166,11 @@
               <FileName>gx_display_driver_8bpp_vertical_pattern_line_draw.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_8bpp_vertical_pattern_line_draw.c</FilePath>
+            </File>
+            <File>
+              <FileName>gx_display_driver_generic_rotated_polygon_fill.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/guix/common/src/gx_display_driver_generic_rotated_polygon_fill.c</FilePath>
             </File>
             <File>
               <FileName>gx_system_font_mono.c</FileName>

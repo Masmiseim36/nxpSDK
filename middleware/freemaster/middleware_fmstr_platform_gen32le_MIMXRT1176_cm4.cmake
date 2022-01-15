@@ -11,6 +11,7 @@ target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
     ${CMAKE_CURRENT_LIST_DIR}/src/drivers/mcuxsdk/serial/freemaster_serial_usart.c
     ${CMAKE_CURRENT_LIST_DIR}/src/drivers/mcuxsdk/serial/freemaster_serial_miniusart.c
     ${CMAKE_CURRENT_LIST_DIR}/src/drivers/mcuxsdk/serial/freemaster_serial_usb.c
+    ${CMAKE_CURRENT_LIST_DIR}/src/drivers/mcuxsdk/network/freemaster_net_segger_rtt.c
     ${CMAKE_CURRENT_LIST_DIR}/src/drivers/mcuxsdk/network/freemaster_net_lwip_udp.c
     ${CMAKE_CURRENT_LIST_DIR}/src/drivers/mcuxsdk/network/freemaster_net_lwip_tcp.c
 )

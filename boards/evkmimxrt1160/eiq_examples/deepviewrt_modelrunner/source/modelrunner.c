@@ -161,24 +161,24 @@ nn_model_memory_write(uint8_t* base,
 
 void modelrunner_task(void* arg)
 {
+    int                 err;
+    int                 listener;
+    struct sockaddr_in  addr;
+    void*               buf    = NULL;
+    size_t              bufsiz = HTTP_BUFSIZE;
+
+
 	sys_msleep(100);
 
 	server = nn_server_init(0, MEMPOOL_SIZE, mempool, CACHE_SIZE, cache, MEMBLOB_SIZE, memblob);
 	if (!server) {
 		PRINTF("[ERROR] out of memory to start deepview server\r\n");
-		goto finish;
 	}
 
 #if STATIC_JSON
 	((NNServer*)server)->json_buffer = nn_json_buffer;
 	((NNServer*)server)->json_size = JSON_BUFSIZE;
 #endif
-
-    int                 err;
-    int                 listener;
-    struct sockaddr_in  addr;
-    void*               buf    = NULL;
-    size_t              bufsiz = HTTP_BUFSIZE;
 
     struct http_route routes[] = {{"/", 0, server, nn_server_http_handler},
                                   {NULL, 0, NULL, NULL}};

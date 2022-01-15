@@ -321,7 +321,8 @@
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/device</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/phy</state>
-          <state>$PROJ_DIR$/../../../../../../../components/phyksz8081</state>
+          <state>$PROJ_DIR$/../../../../../../../components/phy/mdio/enet</state>
+          <state>$PROJ_DIR$/../../../../../../../components/phy/device/phyksz8081</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/drivers</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166</state>
@@ -332,6 +333,7 @@
           <state>$PROJ_DIR$/../../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/drivers/cm7</state>
           <state>$PROJ_DIR$/../../../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../../../components/phy</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1306,7 +1308,8 @@
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/device</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/phy</state>
-          <state>$PROJ_DIR$/../../../../../../../components/phyksz8081</state>
+          <state>$PROJ_DIR$/../../../../../../../components/phy/mdio/enet</state>
+          <state>$PROJ_DIR$/../../../../../../../components/phy/device/phyksz8081</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/drivers</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166</state>
@@ -1317,6 +1320,7 @@
           <state>$PROJ_DIR$/../../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/drivers/cm7</state>
           <state>$PROJ_DIR$/../../../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../../../components/phy</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -2292,7 +2296,8 @@
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/device</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/phy</state>
-          <state>$PROJ_DIR$/../../../../../../../components/phyksz8081</state>
+          <state>$PROJ_DIR$/../../../../../../../components/phy/mdio/enet</state>
+          <state>$PROJ_DIR$/../../../../../../../components/phy/device/phyksz8081</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/drivers</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166</state>
@@ -2303,6 +2308,7 @@
           <state>$PROJ_DIR$/../../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/drivers/cm7</state>
           <state>$PROJ_DIR$/../../../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../../../components/phy</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -3276,7 +3282,8 @@
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/device</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/phy</state>
-          <state>$PROJ_DIR$/../../../../../../../components/phyksz8081</state>
+          <state>$PROJ_DIR$/../../../../../../../components/phy/mdio/enet</state>
+          <state>$PROJ_DIR$/../../../../../../../components/phy/device/phyksz8081</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/drivers</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166</state>
@@ -3287,6 +3294,7 @@
           <state>$PROJ_DIR$/../../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/drivers/cm7</state>
           <state>$PROJ_DIR$/../../../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../../../components/phy</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -4261,7 +4269,8 @@
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/device</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/phy</state>
-          <state>$PROJ_DIR$/../../../../../../../components/phyksz8081</state>
+          <state>$PROJ_DIR$/../../../../../../../components/phy/mdio/enet</state>
+          <state>$PROJ_DIR$/../../../../../../../components/phy/device/phyksz8081</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/drivers</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166</state>
@@ -4272,6 +4281,7 @@
           <state>$PROJ_DIR$/../../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/drivers/cm7</state>
           <state>$PROJ_DIR$/../../../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../../../components/phy</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -5247,7 +5257,8 @@
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/device</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/usb/phy</state>
-          <state>$PROJ_DIR$/../../../../../../../components/phyksz8081</state>
+          <state>$PROJ_DIR$/../../../../../../../components/phy/mdio/enet</state>
+          <state>$PROJ_DIR$/../../../../../../../components/phy/device/phyksz8081</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/drivers</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166</state>
@@ -5258,6 +5269,7 @@
           <state>$PROJ_DIR$/../../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/drivers/cm7</state>
           <state>$PROJ_DIR$/../../../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../../../components/phy</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -5973,12 +5985,6 @@
     <file>
       <name>$PROJ_DIR$/../dcd.h</name>
     </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../components/phyksz8081/fsl_phy.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../components/phyksz8081/fsl_phy.c</name>
-    </file>
   </group>
   <group>
     <name>usb</name>
@@ -6069,6 +6075,30 @@
         <name>$PROJ_DIR$/../../../../../../../middleware/usb/include/usb_spec.h</name>
       </file>
     </group>
+  </group>
+  <group>
+    <name>mdio</name>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../components/phy/mdio/enet/fsl_enet_mdio.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../components/phy/mdio/enet/fsl_enet_mdio.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../components/phy/fsl_mdio.h</name>
+    </file>
+  </group>
+  <group>
+    <name>phy</name>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../components/phy/device/phyksz8081/fsl_phyksz8081.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../components/phy/device/phyksz8081/fsl_phyksz8081.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../components/phy/fsl_phy.h</name>
+    </file>
   </group>
   <group>
     <name>drivers</name>

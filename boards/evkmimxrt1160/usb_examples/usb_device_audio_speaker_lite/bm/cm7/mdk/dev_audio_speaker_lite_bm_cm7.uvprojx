@@ -332,9 +332,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>_DEBUG=1, DEBUG, CPU_MIMXRT1166DVM6A_cm7, USB_STACK_BM, USING_SAI, SDK_I2C_BASED_COMPONENT_USED=1, BOARD_USE_CODEC=1, CODEC_WM8960_ENABLE, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK</Define>
+              <Define>_DEBUG=1, DEBUG, CPU_MIMXRT1166DVM6A_cm7, HAL_AUDIO_ISR_PRIORITY=0, USB_STACK_BM, USING_SAI, SDK_I2C_BASED_COMPONENT_USED=1, BOARD_USE_CODEC=1, CODEC_WM8960_ENABLE, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../../middleware/usb/device;../../../../../../../middleware/usb/include;../../../../../../../middleware/usb/phy;../../../../../../../components/codec/wm8960;../../../../../../../components/codec;../../../../../../../devices/MIMXRT1166/drivers;../../../../../../../components/codec/port/wm8960;../../../../../../../components/codec/port;../../../../../../../components/codec/i2c;../../../../../../../components/i2c;../../../../../../../devices/MIMXRT1166/utilities/debug_console_lite;../../../../../../../devices/MIMXRT1166;../../../../../../../components/uart;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1166/xip;../../../../../xip;../../../../../../../components/osa;../../../../../../../devices/MIMXRT1166/drivers/cm7;../../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../../../middleware/usb/device;../../../../../../../middleware/usb/include;../../../../../../../middleware/usb/phy;../../../../../../../components/codec/wm8960;../../../../../../../components/codec;../../../../../../../devices/MIMXRT1166/drivers;../../../../../../../components/codec/port/wm8960;../../../../../../../components/codec/port;../../../../../../../components/codec/i2c;../../../../../../../components/i2c;../../../../../../../components/audio;../../../../../../../devices/MIMXRT1166/utilities/debug_console_lite;../../../../../../../devices/MIMXRT1166;../../../../../../../components/uart;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1166/xip;../../../../../xip;../../../../../../../components/osa;../../../../../../../devices/MIMXRT1166/drivers/cm7;../../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -698,6 +698,11 @@
               <FileType>1</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_anatop_ai.c</FilePath>
             </File>
+            <File>
+              <FileName>fsl_memory.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_memory.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -737,6 +742,21 @@
               <FileName>fsl_adapter_lpi2c.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../components/i2c/fsl_adapter_lpi2c.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/audio</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_adapter_audio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../components/audio/fsl_adapter_audio.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_adapter_sai.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../components/audio/fsl_adapter_sai.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1316,9 +1336,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>DATA_SECTION_IS_CACHEABLE=1, XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, DEBUG, CPU_MIMXRT1166DVM6A_cm7, USB_STACK_BM, USING_SAI, SDK_I2C_BASED_COMPONENT_USED=1, BOARD_USE_CODEC=1, CODEC_WM8960_ENABLE, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK</Define>
+              <Define>DATA_SECTION_IS_CACHEABLE=1, XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, DEBUG, CPU_MIMXRT1166DVM6A_cm7, HAL_AUDIO_ISR_PRIORITY=0, USB_STACK_BM, USING_SAI, SDK_I2C_BASED_COMPONENT_USED=1, BOARD_USE_CODEC=1, CODEC_WM8960_ENABLE, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../../middleware/usb/device;../../../../../../../middleware/usb/include;../../../../../../../middleware/usb/phy;../../../../../../../components/codec/wm8960;../../../../../../../components/codec;../../../../../../../devices/MIMXRT1166/drivers;../../../../../../../components/codec/port/wm8960;../../../../../../../components/codec/port;../../../../../../../components/codec/i2c;../../../../../../../components/i2c;../../../../../../../devices/MIMXRT1166/utilities/debug_console_lite;../../../../../../../devices/MIMXRT1166;../../../../../../../components/uart;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1166/xip;../../../../../xip;../../../../../../../components/osa;../../../../../../../devices/MIMXRT1166/drivers/cm7;../../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../../../middleware/usb/device;../../../../../../../middleware/usb/include;../../../../../../../middleware/usb/phy;../../../../../../../components/codec/wm8960;../../../../../../../components/codec;../../../../../../../devices/MIMXRT1166/drivers;../../../../../../../components/codec/port/wm8960;../../../../../../../components/codec/port;../../../../../../../components/codec/i2c;../../../../../../../components/i2c;../../../../../../../components/audio;../../../../../../../devices/MIMXRT1166/utilities/debug_console_lite;../../../../../../../devices/MIMXRT1166;../../../../../../../components/uart;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1166/xip;../../../../../xip;../../../../../../../components/osa;../../../../../../../devices/MIMXRT1166/drivers/cm7;../../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1682,6 +1702,11 @@
               <FileType>1</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_anatop_ai.c</FilePath>
             </File>
+            <File>
+              <FileName>fsl_memory.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_memory.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -1721,6 +1746,21 @@
               <FileName>fsl_adapter_lpi2c.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../components/i2c/fsl_adapter_lpi2c.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/audio</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_adapter_audio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../components/audio/fsl_adapter_audio.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_adapter_sai.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../components/audio/fsl_adapter_sai.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2300,9 +2340,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>DATA_SECTION_IS_CACHEABLE=1, USE_SDRAM, DEBUG, CPU_MIMXRT1166DVM6A_cm7, USB_STACK_BM, USING_SAI, SDK_I2C_BASED_COMPONENT_USED=1, BOARD_USE_CODEC=1, CODEC_WM8960_ENABLE, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK</Define>
+              <Define>DATA_SECTION_IS_CACHEABLE=1, USE_SDRAM, DEBUG, CPU_MIMXRT1166DVM6A_cm7, HAL_AUDIO_ISR_PRIORITY=0, USB_STACK_BM, USING_SAI, SDK_I2C_BASED_COMPONENT_USED=1, BOARD_USE_CODEC=1, CODEC_WM8960_ENABLE, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../../middleware/usb/device;../../../../../../../middleware/usb/include;../../../../../../../middleware/usb/phy;../../../../../../../components/codec/wm8960;../../../../../../../components/codec;../../../../../../../devices/MIMXRT1166/drivers;../../../../../../../components/codec/port/wm8960;../../../../../../../components/codec/port;../../../../../../../components/codec/i2c;../../../../../../../components/i2c;../../../../../../../devices/MIMXRT1166/utilities/debug_console_lite;../../../../../../../devices/MIMXRT1166;../../../../../../../components/uart;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1166/xip;../../../../../xip;../../../../../../../components/osa;../../../../../../../devices/MIMXRT1166/drivers/cm7;../../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../../../middleware/usb/device;../../../../../../../middleware/usb/include;../../../../../../../middleware/usb/phy;../../../../../../../components/codec/wm8960;../../../../../../../components/codec;../../../../../../../devices/MIMXRT1166/drivers;../../../../../../../components/codec/port/wm8960;../../../../../../../components/codec/port;../../../../../../../components/codec/i2c;../../../../../../../components/i2c;../../../../../../../components/audio;../../../../../../../devices/MIMXRT1166/utilities/debug_console_lite;../../../../../../../devices/MIMXRT1166;../../../../../../../components/uart;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1166/xip;../../../../../xip;../../../../../../../components/osa;../../../../../../../devices/MIMXRT1166/drivers/cm7;../../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2666,6 +2706,11 @@
               <FileType>1</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_anatop_ai.c</FilePath>
             </File>
+            <File>
+              <FileName>fsl_memory.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_memory.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -2705,6 +2750,21 @@
               <FileName>fsl_adapter_lpi2c.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../components/i2c/fsl_adapter_lpi2c.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/audio</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_adapter_audio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../components/audio/fsl_adapter_audio.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_adapter_sai.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../components/audio/fsl_adapter_sai.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -3284,9 +3344,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>_DEBUG=0, NDEBUG, CPU_MIMXRT1166DVM6A_cm7, USB_STACK_BM, USING_SAI, SDK_I2C_BASED_COMPONENT_USED=1, BOARD_USE_CODEC=1, CODEC_WM8960_ENABLE, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK</Define>
+              <Define>_DEBUG=0, NDEBUG, CPU_MIMXRT1166DVM6A_cm7, HAL_AUDIO_ISR_PRIORITY=0, USB_STACK_BM, USING_SAI, SDK_I2C_BASED_COMPONENT_USED=1, BOARD_USE_CODEC=1, CODEC_WM8960_ENABLE, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../../middleware/usb/device;../../../../../../../middleware/usb/include;../../../../../../../middleware/usb/phy;../../../../../../../components/codec/wm8960;../../../../../../../components/codec;../../../../../../../devices/MIMXRT1166/drivers;../../../../../../../components/codec/port/wm8960;../../../../../../../components/codec/port;../../../../../../../components/codec/i2c;../../../../../../../components/i2c;../../../../../../../devices/MIMXRT1166/utilities/debug_console_lite;../../../../../../../devices/MIMXRT1166;../../../../../../../components/uart;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1166/xip;../../../../../xip;../../../../../../../components/osa;../../../../../../../devices/MIMXRT1166/drivers/cm7;../../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../../../middleware/usb/device;../../../../../../../middleware/usb/include;../../../../../../../middleware/usb/phy;../../../../../../../components/codec/wm8960;../../../../../../../components/codec;../../../../../../../devices/MIMXRT1166/drivers;../../../../../../../components/codec/port/wm8960;../../../../../../../components/codec/port;../../../../../../../components/codec/i2c;../../../../../../../components/i2c;../../../../../../../components/audio;../../../../../../../devices/MIMXRT1166/utilities/debug_console_lite;../../../../../../../devices/MIMXRT1166;../../../../../../../components/uart;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1166/xip;../../../../../xip;../../../../../../../components/osa;../../../../../../../devices/MIMXRT1166/drivers/cm7;../../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -3650,6 +3710,11 @@
               <FileType>1</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_anatop_ai.c</FilePath>
             </File>
+            <File>
+              <FileName>fsl_memory.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_memory.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -3689,6 +3754,21 @@
               <FileName>fsl_adapter_lpi2c.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../components/i2c/fsl_adapter_lpi2c.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/audio</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_adapter_audio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../components/audio/fsl_adapter_audio.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_adapter_sai.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../components/audio/fsl_adapter_sai.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -4268,9 +4348,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>DATA_SECTION_IS_CACHEABLE=1, XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, NDEBUG, CPU_MIMXRT1166DVM6A_cm7, USB_STACK_BM, USING_SAI, SDK_I2C_BASED_COMPONENT_USED=1, BOARD_USE_CODEC=1, CODEC_WM8960_ENABLE, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK</Define>
+              <Define>DATA_SECTION_IS_CACHEABLE=1, XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, NDEBUG, CPU_MIMXRT1166DVM6A_cm7, HAL_AUDIO_ISR_PRIORITY=0, USB_STACK_BM, USING_SAI, SDK_I2C_BASED_COMPONENT_USED=1, BOARD_USE_CODEC=1, CODEC_WM8960_ENABLE, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../../middleware/usb/device;../../../../../../../middleware/usb/include;../../../../../../../middleware/usb/phy;../../../../../../../components/codec/wm8960;../../../../../../../components/codec;../../../../../../../devices/MIMXRT1166/drivers;../../../../../../../components/codec/port/wm8960;../../../../../../../components/codec/port;../../../../../../../components/codec/i2c;../../../../../../../components/i2c;../../../../../../../devices/MIMXRT1166/utilities/debug_console_lite;../../../../../../../devices/MIMXRT1166;../../../../../../../components/uart;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1166/xip;../../../../../xip;../../../../../../../components/osa;../../../../../../../devices/MIMXRT1166/drivers/cm7;../../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../../../middleware/usb/device;../../../../../../../middleware/usb/include;../../../../../../../middleware/usb/phy;../../../../../../../components/codec/wm8960;../../../../../../../components/codec;../../../../../../../devices/MIMXRT1166/drivers;../../../../../../../components/codec/port/wm8960;../../../../../../../components/codec/port;../../../../../../../components/codec/i2c;../../../../../../../components/i2c;../../../../../../../components/audio;../../../../../../../devices/MIMXRT1166/utilities/debug_console_lite;../../../../../../../devices/MIMXRT1166;../../../../../../../components/uart;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1166/xip;../../../../../xip;../../../../../../../components/osa;../../../../../../../devices/MIMXRT1166/drivers/cm7;../../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -4634,6 +4714,11 @@
               <FileType>1</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_anatop_ai.c</FilePath>
             </File>
+            <File>
+              <FileName>fsl_memory.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_memory.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -4673,6 +4758,21 @@
               <FileName>fsl_adapter_lpi2c.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../components/i2c/fsl_adapter_lpi2c.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/audio</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_adapter_audio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../components/audio/fsl_adapter_audio.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_adapter_sai.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../components/audio/fsl_adapter_sai.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -5252,9 +5352,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>DATA_SECTION_IS_CACHEABLE=1, USE_SDRAM, NDEBUG, CPU_MIMXRT1166DVM6A_cm7, USB_STACK_BM, USING_SAI, SDK_I2C_BASED_COMPONENT_USED=1, BOARD_USE_CODEC=1, CODEC_WM8960_ENABLE, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK</Define>
+              <Define>DATA_SECTION_IS_CACHEABLE=1, USE_SDRAM, NDEBUG, CPU_MIMXRT1166DVM6A_cm7, HAL_AUDIO_ISR_PRIORITY=0, USB_STACK_BM, USING_SAI, SDK_I2C_BASED_COMPONENT_USED=1, BOARD_USE_CODEC=1, CODEC_WM8960_ENABLE, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../../middleware/usb/device;../../../../../../../middleware/usb/include;../../../../../../../middleware/usb/phy;../../../../../../../components/codec/wm8960;../../../../../../../components/codec;../../../../../../../devices/MIMXRT1166/drivers;../../../../../../../components/codec/port/wm8960;../../../../../../../components/codec/port;../../../../../../../components/codec/i2c;../../../../../../../components/i2c;../../../../../../../devices/MIMXRT1166/utilities/debug_console_lite;../../../../../../../devices/MIMXRT1166;../../../../../../../components/uart;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1166/xip;../../../../../xip;../../../../../../../components/osa;../../../../../../../devices/MIMXRT1166/drivers/cm7;../../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../../../middleware/usb/device;../../../../../../../middleware/usb/include;../../../../../../../middleware/usb/phy;../../../../../../../components/codec/wm8960;../../../../../../../components/codec;../../../../../../../devices/MIMXRT1166/drivers;../../../../../../../components/codec/port/wm8960;../../../../../../../components/codec/port;../../../../../../../components/codec/i2c;../../../../../../../components/i2c;../../../../../../../components/audio;../../../../../../../devices/MIMXRT1166/utilities/debug_console_lite;../../../../../../../devices/MIMXRT1166;../../../../../../../components/uart;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1166/xip;../../../../../xip;../../../../../../../components/osa;../../../../../../../devices/MIMXRT1166/drivers/cm7;../../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -5618,6 +5718,11 @@
               <FileType>1</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_anatop_ai.c</FilePath>
             </File>
+            <File>
+              <FileName>fsl_memory.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_memory.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -5657,6 +5762,21 @@
               <FileName>fsl_adapter_lpi2c.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../components/i2c/fsl_adapter_lpi2c.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/audio</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_adapter_audio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../components/audio/fsl_adapter_audio.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_adapter_sai.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../components/audio/fsl_adapter_sai.c</FilePath>
             </File>
           </Files>
         </Group>

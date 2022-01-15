@@ -9,7 +9,7 @@
 #ifndef MID_AUXILIARY_H_
 #define MID_AUXILIARY_H_
 
-#include "mid_def.h"
+#include "mid_mc_api_connector.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -19,10 +19,11 @@ extern "C" {
  * API
  ******************************************************************************/
 
-extern void MID_alignment(mid_align_t *sAlignmentFcn);
+extern void MID_alignment(mid_align_t* sAlignmentFcn);
 
 #ifdef __cplusplus
 }
 #endif
 
 #endif /* MID_AUXILIARY_H_ */
+

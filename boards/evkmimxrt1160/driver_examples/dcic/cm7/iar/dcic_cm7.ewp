@@ -324,6 +324,7 @@
           <state>$PROJ_DIR$/../../../../../../components/video/display/dc/lcdifv2</state>
           <state>$PROJ_DIR$/../../../../../../components/video/display/dc/elcdif</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/utilities/debug_console_lite</state>
+          <state>$PROJ_DIR$/../../../../../../components/video/display/hx8394</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
@@ -1309,6 +1310,7 @@
           <state>$PROJ_DIR$/../../../../../../components/video/display/dc/lcdifv2</state>
           <state>$PROJ_DIR$/../../../../../../components/video/display/dc/elcdif</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/utilities/debug_console_lite</state>
+          <state>$PROJ_DIR$/../../../../../../components/video/display/hx8394</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
@@ -2291,6 +2293,7 @@
           <state>$PROJ_DIR$/../../../../../../components/video/display/dc/lcdifv2</state>
           <state>$PROJ_DIR$/../../../../../../components/video/display/dc/elcdif</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/utilities/debug_console_lite</state>
+          <state>$PROJ_DIR$/../../../../../../components/video/display/hx8394</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
@@ -3276,6 +3279,7 @@
           <state>$PROJ_DIR$/../../../../../../components/video/display/dc/lcdifv2</state>
           <state>$PROJ_DIR$/../../../../../../components/video/display/dc/elcdif</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/utilities/debug_console_lite</state>
+          <state>$PROJ_DIR$/../../../../../../components/video/display/hx8394</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
@@ -4026,6 +4030,12 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../components/video/display/dc/elcdif/fsl_dc_fb_elcdif.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../components/video/display/hx8394/fsl_hx8394.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../components/video/display/hx8394/fsl_hx8394.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../components/video/display/dc/fsl_dc_fb.h</name>

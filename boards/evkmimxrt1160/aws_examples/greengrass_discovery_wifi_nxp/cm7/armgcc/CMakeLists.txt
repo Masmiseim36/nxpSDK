@@ -38,24 +38,23 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../pin_mux.h"
 "${ProjDirPath}/../config_files/aws_ggd_config.h"
 "${ProjDirPath}/../config_files/aws_wifi_config.h"
-"${ProjDirPath}/../sdmmc_config.c"
-"${ProjDirPath}/../sdmmc_config.h"
-"${ProjDirPath}/../config_files/FreeRTOSConfig.h"
-"${ProjDirPath}/../config_files/aws_mbedtls_config.h"
-"${ProjDirPath}/../config_files/aws_bufferpool_config.h"
-"${ProjDirPath}/../config_files/aws_demo_config.h"
-"${ProjDirPath}/../config_files/aws_mqtt_config.h"
-"${ProjDirPath}/../config_files/aws_secure_sockets_config.h"
-"${ProjDirPath}/../config_files/aws_shadow_config.h"
-"${ProjDirPath}/../config_files/FreeRTOSIPConfig.h"
-"${ProjDirPath}/../config_files/iot_config.h"
-"${ProjDirPath}/../config_files/iot_mqtt_agent_config.h"
-"${ProjDirPath}/../config_files/core_mqtt_config.h"
-"${ProjDirPath}/../config_files/core_pkcs11_config.h"
-"${ProjDirPath}/../config_files/shadow_config.h"
-"${ProjDirPath}/../config_files/shadow_demo_config.h"
 "${ProjDirPath}/../app_config.h"
 "${ProjDirPath}/../wifi_config.h"
+"${ProjDirPath}/../sdmmc_config.c"
+"${ProjDirPath}/../sdmmc_config.h"
+"${ProjDirPath}/../wifi_bt_config.c"
+"${ProjDirPath}/../wifi_bt_config.h"
+"${ProjDirPath}/../config_files/FreeRTOSConfig.h"
+"${ProjDirPath}/../config_files/aws_mbedtls_config.h"
+"${ProjDirPath}/../config_files/aws_demo_config.h"
+"${ProjDirPath}/../config_files/aws_shadow_config.h"
+"${ProjDirPath}/../config_files/core_mqtt_config.h"
+"${ProjDirPath}/../config_files/core_pkcs11_config.h"
+"${ProjDirPath}/../config_files/FreeRTOSIPConfig.h"
+"${ProjDirPath}/../config_files/iot_config.h"
+"${ProjDirPath}/../config_files/iot_secure_sockets_config.h"
+"${ProjDirPath}/../config_files/shadow_config.h"
+"${ProjDirPath}/../config_files/shadow_demo_config.h"
 "${ProjDirPath}/../board.c"
 "${ProjDirPath}/../board.h"
 "${ProjDirPath}/../clock_config.c"
@@ -91,6 +90,8 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../../devices/MIMXRT1166/utilities
     ${ProjDirPath}/../../../../../../middleware/wifi
     ${ProjDirPath}/../../../../../../middleware/sdmmc
+    ${ProjDirPath}/../../../../../../rtos/freertos/freertos_kernel
+    ${ProjDirPath}/../../../../../../components/wifi_bt_module
     ${ProjDirPath}/../../../../../../devices/MIMXRT1166
     ${ProjDirPath}/../../../../../../components/uart
     ${ProjDirPath}/../../../../../../components/serial_manager
@@ -146,25 +147,29 @@ include(middleware_sdmmc_host_usdhc_MIMXRT1166_cm7)
 
 include(middleware_sdmmc_host_usdhc_freertos_MIMXRT1166_cm7)
 
+include(middleware_freertos-aws_iot_libraries_abstractions_transport_MIMXRT1166_cm7)
+
 include(middleware_freertos-kernel_MIMXRT1166_cm7)
 
-include(middleware_freertos-kernel_heap_4_MIMXRT1166_cm7)
+include(middleware_freertos-aws_iot_libraries_abstractions_secure_sockets_MIMXRT1166_cm7)
 
-include(middleware_freertos-aws_iot_libraries_c_sdk_standard_shadow_MIMXRT1166_cm7)
+include(middleware_freertos-aws_iot_libraries_logging_MIMXRT1166_cm7)
 
-include(middleware_freertos-aws_iot_libraries_c_sdk_standard_serializer_MIMXRT1166_cm7)
+include(middleware_freertos-aws_iot_libraries_coremqtt_MIMXRT1166_cm7)
+
+include(component_wifi_bt_module_tx_pwr_limits_MIMXRT1166_cm7)
+
+include(middleware_freertos-aws_iot_libraries_3rdparty_mbedtls_config_MIMXRT1166_cm7)
 
 include(middleware_freertos-aws_iot_libraries_3rdparty_pkcs11_MIMXRT1166_cm7)
-
-include(middleware_freertos-aws_iot_vendor_nxp_pkcs11_MIMXRT1166_cm7)
 
 include(middleware_freertos-aws_iot_libraries_abstractions_pkcs11_MIMXRT1166_cm7)
 
 include(middleware_freertos-aws_iot_libraries_abstractions_pkcs11_mbedtls_MIMXRT1166_cm7)
 
-include(middleware_freertos-aws_iot_libraries_logging_MIMXRT1166_cm7)
+include(middleware_freertos-aws_iot_vendor_nxp_pkcs11_MIMXRT1166_cm7)
 
-include(middleware_freertos-aws_iot_libraries_3rdparty_mbedtls_config_MIMXRT1166_cm7)
+include(middleware_freertos-kernel_heap_4_MIMXRT1166_cm7)
 
 include(driver_clock_MIMXRT1166_cm7)
 
@@ -206,15 +211,21 @@ include(CMSIS_Include_core_cm_MIMXRT1166_cm7)
 
 include(middleware_freertos-aws_iot_libraries_abstractions_wifi_MIMXRT1166_cm7)
 
-include(middleware_freertos-aws_iot_libraries_c_sdk_standard_common_MIMXRT1166_cm7)
-
 include(middleware_freertos-kernel_extension_MIMXRT1166_cm7)
 
-include(middleware_freertos-aws_iot_libraries_abstractions_platform_MIMXRT1166_cm7)
-
-include(middleware_freertos-aws_iot_libraries_abstractions_secure_sockets_MIMXRT1166_cm7)
-
 include(middleware_wifi_wifidriver_MIMXRT1166_cm7)
+
+include(middleware_wifi_fwdnld_MIMXRT1166_cm7)
+
+include(middleware_sdmmc_osa_freertos_MIMXRT1166_cm7)
+
+include(component_osa_free_rtos_MIMXRT1166_cm7)
+
+include(driver_usdhc_MIMXRT1166_cm7)
+
+include(middleware_freertos-aws_iot_libraries_c_sdk_standard_common_MIMXRT1166_cm7)
+
+include(middleware_freertos-aws_iot_libraries_abstractions_platform_MIMXRT1166_cm7)
 
 include(middleware_freertos-aws_iot_libraries_freertos_plus_standard_tls_MIMXRT1166_cm7)
 
@@ -226,17 +237,11 @@ include(middleware_freertos-aws_iot_libraries_freertos_plus_standard_utils_MIMXR
 
 include(middleware_freertos-aws_iot_network_manager_MIMXRT1166_cm7)
 
-include(middleware_freertos-aws_iot_mqtt_MIMXRT1166_cm7)
-
-include(middleware_freertos-aws_iot_libraries_coremqtt_MIMXRT1166_cm7)
+include(middleware_freertos-aws_iot_libraries_abstractions_backoff_algorithm_MIMXRT1166_cm7)
 
 include(middleware_freertos-aws_iot_libraries_3rdparty_jsmn_MIMXRT1166_cm7)
 
-include(middleware_sdmmc_osa_freertos_MIMXRT1166_cm7)
-
-include(component_osa_free_rtos_MIMXRT1166_cm7)
-
-include(driver_usdhc_MIMXRT1166_cm7)
+include(middleware_freertos-aws_iot_pkcs11_helpers_MIMXRT1166_cm7)
 
 include(utilities_misc_utilities_MIMXRT1166_cm7)
 

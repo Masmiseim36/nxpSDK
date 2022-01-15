@@ -15,7 +15,6 @@
 #if LWIP_IPV4 && LWIP_RAW && LWIP_NETCONN && LWIP_DHCP && LWIP_DNS
 
 #include "pin_mux.h"
-#include "clock_config.h"
 #include "board.h"
 #include "fsl_phy.h"
 
@@ -36,35 +35,62 @@
 
 #include "fsl_phyrtl8211f.h"
 #include "fsl_enet_qos_mdio.h"
-#include "fsl_gpio.h"
-#include "fsl_iomuxc.h"
 #include "fsl_enet_qos.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
+
+/* @TEST_ANCHOR */
+
 /* IP address configuration. */
+#ifndef configIP_ADDR0
 #define configIP_ADDR0 192
+#endif
+#ifndef configIP_ADDR1
 #define configIP_ADDR1 168
+#endif
+#ifndef configIP_ADDR2
 #define configIP_ADDR2 0
+#endif
+#ifndef configIP_ADDR3
 #define configIP_ADDR3 102
+#endif
 
 /* Netmask configuration. */
+#ifndef configNET_MASK0
 #define configNET_MASK0 255
+#endif
+#ifndef configNET_MASK1
 #define configNET_MASK1 255
+#endif
+#ifndef configNET_MASK2
 #define configNET_MASK2 255
+#endif
+#ifndef configNET_MASK3
 #define configNET_MASK3 0
+#endif
 
 /* Gateway address configuration. */
+#ifndef configGW_ADDR0
 #define configGW_ADDR0 192
+#endif
+#ifndef configGW_ADDR1
 #define configGW_ADDR1 168
+#endif
+#ifndef configGW_ADDR2
 #define configGW_ADDR2 0
+#endif
+#ifndef configGW_ADDR3
 #define configGW_ADDR3 100
+#endif
 
 /* MAC address configuration. */
+#ifndef configMAC_ADDR
 #define configMAC_ADDR                     \
     {                                      \
         0x02, 0x12, 0x13, 0x10, 0x15, 0x11 \
     }
+#endif
 
 /* Address of PHY interface. */
 #define EXAMPLE_PHY_ADDRESS 0x01U
@@ -152,8 +178,6 @@ static volatile bool connected = false;
  ******************************************************************************/
 void BOARD_InitModuleClock(void)
 {
-    /* Select syspll2pfd3, 528*18/24 = 396M */
-    CLOCK_InitPfd(kCLOCK_PllSys2, kCLOCK_Pfd3, 24);
     const clock_sys_pll1_config_t sysPll1Config = {
         .pllDiv2En = true,
     };
@@ -162,10 +186,6 @@ void BOARD_InitModuleClock(void)
     CLOCK_SetRootClock(kCLOCK_Root_Enet_Qos, &rootCfg);
     rootCfg.div = 10;
     CLOCK_SetRootClock(kCLOCK_Root_Enet_Timer3, &rootCfg); /* Generate 50M PTP REF clock. */
-
-    rootCfg.mux = 7;
-    rootCfg.div = 2;
-    CLOCK_SetRootClock(kCLOCK_Root_Bus, &rootCfg); /* Generate 198M bus clock. */
 }
 
 void BOARD_UpdateENETModuleClock(enet_qos_mii_speed_t miiSpeed)

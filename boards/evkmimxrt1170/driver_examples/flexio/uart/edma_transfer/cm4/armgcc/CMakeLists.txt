@@ -104,6 +104,8 @@ include(driver_dcdc_soc_MIMXRT1176_cm4)
 
 include(driver_cache_lmem_MIMXRT1176_cm4)
 
+include(driver_memory_MIMXRT1176_cm4)
+
 include(driver_anatop_ai_MIMXRT1176_cm4)
 
 include(CMSIS_Include_core_cm_MIMXRT1176_cm4)

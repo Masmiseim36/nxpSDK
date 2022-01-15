@@ -72,7 +72,8 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../../../devices/MIMXRT1176/drivers
     ${ProjDirPath}/../../../../../../../components/codec/i2c
     ${ProjDirPath}/../../../../../../../components/i2c
-    ${ProjDirPath}/../../../../../../../rtos/freertos
+    ${ProjDirPath}/../../../../../../../components/audio
+    ${ProjDirPath}/../../../../../../../rtos/freertos/freertos_kernel
     ${ProjDirPath}/../../../../../../../devices/MIMXRT1176
     ${ProjDirPath}/../../../../../../../devices/MIMXRT1176/utilities
     ${ProjDirPath}/../../../../../../../components/uart
@@ -101,6 +102,8 @@ include(component_wm8960_adapter_MIMXRT1176_cm7)
 include(component_codec_i2c_MIMXRT1176_cm7)
 
 include(component_lpi2c_adapter_MIMXRT1176_cm7)
+
+include(component_audio_sai_edma_adapter_MIMXRT1176_cm7)
 
 include(driver_lpi2c_MIMXRT1176_cm7)
 
@@ -161,6 +164,8 @@ include(driver_anatop_ai_MIMXRT1176_cm7)
 include(CMSIS_Include_core_cm_MIMXRT1176_cm7)
 
 include(middleware_usb_device_common_header_MIMXRT1176_cm7)
+
+include(driver_memory_MIMXRT1176_cm7)
 
 include(middleware_freertos-kernel_extension_MIMXRT1176_cm7)
 

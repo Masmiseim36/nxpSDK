@@ -31,14 +31,14 @@ include(${ProjDirPath}/flags.cmake)
 include(${ProjDirPath}/config.cmake)
 
 add_executable(${MCUX_SDK_PROJECT_NAME} 
-"${ProjDirPath}/../main_remote.c"
-"${ProjDirPath}/../pin_mux.c"
-"${ProjDirPath}/../pin_mux.h"
-"${ProjDirPath}/../rpmsg_config.h"
 "${ProjDirPath}/../board.c"
 "${ProjDirPath}/../board.h"
 "${ProjDirPath}/../clock_config.c"
 "${ProjDirPath}/../clock_config.h"
+"${ProjDirPath}/../main_remote.c"
+"${ProjDirPath}/../pin_mux.c"
+"${ProjDirPath}/../pin_mux.h"
+"${ProjDirPath}/../rpmsg_config.h"
 "${ProjDirPath}/../dcd.c"
 "${ProjDirPath}/../dcd.h"
 "${ProjDirPath}/../evkmimxrt1160_connect_cm4_cm4side.jlinkscript"
@@ -67,6 +67,10 @@ set(CMAKE_MODULE_PATH
 include(middleware_multicore_mcmgr_imxrt1160_MIMXRT1166_cm4)
 
 include(middleware_multicore_rpmsg_lite_imxrt1160_bm_MIMXRT1166_cm4)
+
+include(middleware_multicore_rpmsg_lite_MIMXRT1166_cm4)
+
+include(middleware_multicore_rpmsg_lite_bm_MIMXRT1166_cm4)
 
 include(utility_debug_console_lite_MIMXRT1166_cm4)
 
@@ -109,8 +113,6 @@ include(driver_cache_lmem_MIMXRT1166_cm4)
 include(driver_anatop_ai_MIMXRT1166_cm4)
 
 include(CMSIS_Include_core_cm_MIMXRT1166_cm4)
-
-include(middleware_multicore_rpmsg_lite_MIMXRT1166_cm4)
 
 include(utilities_misc_utilities_MIMXRT1166_cm4)
 

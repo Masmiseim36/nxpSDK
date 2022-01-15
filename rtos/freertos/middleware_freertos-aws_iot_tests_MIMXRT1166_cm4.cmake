@@ -7,20 +7,8 @@ target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
     ${CMAKE_CURRENT_LIST_DIR}/libraries/abstractions/pkcs11/test/iot_test_pkcs11.c
     ${CMAKE_CURRENT_LIST_DIR}/libraries/abstractions/secure_sockets/test/iot_test_tcp.c
     ${CMAKE_CURRENT_LIST_DIR}/libraries/abstractions/wifi/test/iot_test_wifi.c
-    ${CMAKE_CURRENT_LIST_DIR}/libraries/c_sdk/aws/shadow/test/aws_test_shadow.c
-    ${CMAKE_CURRENT_LIST_DIR}/libraries/c_sdk/aws/shadow/test/system/aws_iot_tests_shadow_system.c
-    ${CMAKE_CURRENT_LIST_DIR}/libraries/c_sdk/aws/shadow/test/unit/aws_iot_tests_shadow_api.c
-    ${CMAKE_CURRENT_LIST_DIR}/libraries/c_sdk/aws/shadow/test/unit/aws_iot_tests_shadow_parser.c
     ${CMAKE_CURRENT_LIST_DIR}/libraries/c_sdk/standard/common/test/iot_memory_leak.c
     ${CMAKE_CURRENT_LIST_DIR}/libraries/c_sdk/standard/common/test/iot_tests_taskpool.c
-    ${CMAKE_CURRENT_LIST_DIR}/libraries/c_sdk/standard/mqtt/test/iot_test_mqtt_agent.c
-    ${CMAKE_CURRENT_LIST_DIR}/libraries/c_sdk/standard/mqtt/test/mock/iot_tests_mqtt_mock.c
-    ${CMAKE_CURRENT_LIST_DIR}/libraries/c_sdk/standard/mqtt/test/system/iot_tests_mqtt_system.c
-    ${CMAKE_CURRENT_LIST_DIR}/libraries/c_sdk/standard/mqtt/test/unit/iot_tests_mqtt_api.c
-    ${CMAKE_CURRENT_LIST_DIR}/libraries/c_sdk/standard/mqtt/test/unit/iot_tests_mqtt_metrics.c
-    ${CMAKE_CURRENT_LIST_DIR}/libraries/c_sdk/standard/mqtt/test/unit/iot_tests_mqtt_receive.c
-    ${CMAKE_CURRENT_LIST_DIR}/libraries/c_sdk/standard/mqtt/test/unit/iot_tests_mqtt_subscription.c
-    ${CMAKE_CURRENT_LIST_DIR}/libraries/c_sdk/standard/mqtt/test/unit/iot_tests_mqtt_validate.c
     ${CMAKE_CURRENT_LIST_DIR}/libraries/freertos_plus/aws/greengrass/test/aws_test_helper_secure_connect.c
     ${CMAKE_CURRENT_LIST_DIR}/libraries/freertos_plus/standard/crypto/test/iot_test_crypto.c
     ${CMAKE_CURRENT_LIST_DIR}/libraries/freertos_plus/standard/tls/test/iot_test_tls.c
@@ -29,6 +17,9 @@ target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
     ${CMAKE_CURRENT_LIST_DIR}/tests/common/aws_test_runner.c
     ${CMAKE_CURRENT_LIST_DIR}/tests/common/iot_test_freertos.c
     ${CMAKE_CURRENT_LIST_DIR}/tests/common/iot_tests_network.c
+    ${CMAKE_CURRENT_LIST_DIR}/tests/integration_test/core_http_system_test.c
+    ${CMAKE_CURRENT_LIST_DIR}/tests/integration_test/core_mqtt_system_test.c
+    ${CMAKE_CURRENT_LIST_DIR}/tests/integration_test/shadow_system_test.c
 )
 
 
@@ -44,4 +35,12 @@ target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
     ${CMAKE_CURRENT_LIST_DIR}/tests/include
 )
 
+
+include(middleware_freertos-aws_iot_libraries_abstractions_backoff_algorithm_MIMXRT1166_cm4)
+
+include(middleware_freertos-aws_iot_libraries_device_shadow_for_aws_MIMXRT1166_cm4)
+
+include(middleware_freertos-aws_iot_libraries_corehttp_MIMXRT1166_cm4)
+
+include(middleware_freertos-aws_iot_libraries_freertos_plus_aws_greengrass_MIMXRT1166_cm4)
 

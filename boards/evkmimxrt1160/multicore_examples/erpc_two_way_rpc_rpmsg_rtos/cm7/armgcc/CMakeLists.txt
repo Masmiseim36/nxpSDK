@@ -31,6 +31,10 @@ include(${ProjDirPath}/flags.cmake)
 include(${ProjDirPath}/config.cmake)
 
 add_executable(${MCUX_SDK_PROJECT_NAME} 
+"${ProjDirPath}/../board.c"
+"${ProjDirPath}/../board.h"
+"${ProjDirPath}/../clock_config.c"
+"${ProjDirPath}/../clock_config.h"
 "${ProjDirPath}/../../../erpc_common/erpc_error_handler.h"
 "${ProjDirPath}/../../../erpc_common/erpc_error_handler.cpp"
 "${ProjDirPath}/../../../erpc_common/erpc_two_way_rpc/service/erpc_two_way_rpc.erpc"
@@ -45,10 +49,6 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../../rpmsg_config.h"
 "${ProjDirPath}/../../erpc_config.h"
 "${ProjDirPath}/../FreeRTOSConfig.h"
-"${ProjDirPath}/../board.c"
-"${ProjDirPath}/../board.h"
-"${ProjDirPath}/../clock_config.c"
-"${ProjDirPath}/../clock_config.h"
 "${ProjDirPath}/../dcd.c"
 "${ProjDirPath}/../dcd.h"
 "${ProjDirPath}/../evkmimxrt1160_connect_cm4_cm7side.jlinkscript"
@@ -72,7 +72,7 @@ endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
 set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../../middleware/multicore
     ${ProjDirPath}/../../../../../../devices/MIMXRT1166/drivers
-    ${ProjDirPath}/../../../../../../rtos/freertos
+    ${ProjDirPath}/../../../../../../rtos/freertos/freertos_kernel
     ${ProjDirPath}/../../../../../../devices/MIMXRT1166/utilities/incbin
     ${ProjDirPath}/../../../../../../devices/MIMXRT1166
     ${ProjDirPath}/../../../../../../devices/MIMXRT1166/utilities
@@ -89,6 +89,10 @@ set(CMAKE_MODULE_PATH
 include(middleware_multicore_mcmgr_imxrt1160_MIMXRT1166_cm7)
 
 include(middleware_multicore_rpmsg_lite_imxrt1160_freertos_MIMXRT1166_cm7)
+
+include(middleware_multicore_rpmsg_lite_MIMXRT1166_cm7)
+
+include(middleware_multicore_rpmsg_lite_freertos_MIMXRT1166_cm7)
 
 include(driver_clock_MIMXRT1166_cm7)
 
@@ -149,8 +153,6 @@ include(driver_mu_MIMXRT1166_cm7)
 include(driver_anatop_ai_MIMXRT1166_cm7)
 
 include(CMSIS_Include_core_cm_MIMXRT1166_cm7)
-
-include(middleware_multicore_rpmsg_lite_MIMXRT1166_cm7)
 
 include(middleware_freertos-kernel_extension_MIMXRT1166_cm7)
 

@@ -37,28 +37,28 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../pin_mux.c"
 "${ProjDirPath}/../pin_mux.h"
 "${ProjDirPath}/../freemaster_cfg.h"
-"${ProjDirPath}/../../common/fmstr_example/freemaster_example.c"
-"${ProjDirPath}/../../common/fmstr_example/freemaster_example.h"
+"${ProjDirPath}/../../../common/fmstr_example/freemaster_example.c"
+"${ProjDirPath}/../../../common/fmstr_example/freemaster_example.h"
 "${ProjDirPath}/../network.c"
 "${ProjDirPath}/../network.h"
 "${ProjDirPath}/../FreeRTOSConfig.h"
 "${ProjDirPath}/../FreeRTOSConfigBoard.h"
 "${ProjDirPath}/../lwipopts.h"
-"${ProjDirPath}/../../common/fmstr_example/data_example_pmp.h"
-"${ProjDirPath}/../../common/fmstr_example/data_img_logo.h"
-"${ProjDirPath}/../../common/fmstr_example/data_img_file.h"
-"${ProjDirPath}/../../common/fmstr_example/data_img_fmstrlogo.h"
-"${ProjDirPath}/../../common/fmstr_example/data_html_index.h"
-"${ProjDirPath}/../../common/fmstr_example/example_data.h"
 "${ProjDirPath}/../board.c"
 "${ProjDirPath}/../board.h"
+"${ProjDirPath}/../../../common/fmstr_example/data_example_pmp.h"
+"${ProjDirPath}/../../../common/fmstr_example/data_img_logo.h"
+"${ProjDirPath}/../../../common/fmstr_example/data_img_file.h"
+"${ProjDirPath}/../../../common/fmstr_example/data_img_fmstrlogo.h"
+"${ProjDirPath}/../../../common/fmstr_example/data_html_index.h"
+"${ProjDirPath}/../../../common/fmstr_example/example_data.h"
 "${ProjDirPath}/../dcd.c"
 "${ProjDirPath}/../dcd.h"
 )
 
 target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
     ${ProjDirPath}/..
-    ${ProjDirPath}/../../common/fmstr_example
+    ${ProjDirPath}/../../../common/fmstr_example
 )
 
 set(CMAKE_MODULE_PATH
@@ -69,7 +69,7 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../../components/phy
     ${ProjDirPath}/../../../../../../devices/MIMXRT1166/drivers
     ${ProjDirPath}/../../../../../../devices/MIMXRT1166/utilities
-    ${ProjDirPath}/../../../../../../rtos/freertos
+    ${ProjDirPath}/../../../../../../rtos/freertos/freertos_kernel
     ${ProjDirPath}/../../../../../../devices/MIMXRT1166/drivers/cm7
     ${ProjDirPath}/../../../../../../middleware/freemaster
     ${ProjDirPath}/../../../../../../devices/MIMXRT1166

@@ -8,18 +8,18 @@ Toolchain supported
 - IAR embedded Workbench  9.10.2
 - Keil MDK  5.34
 - GCC ARM Embedded  10.2.1
-- MCUXpresso  11.4.0
+- MCUXpresso  11.5.0
 
 Hardware requirements
 =====================
 - Micro USB cable
 - MIMXRT1160-EVK board
 - Personal Computer
-- RK055FN02H-CT LCD board
+- RK055MHD091-CTG LCD board
 
 Board settings
 ==============
-1. Connect the RK055FN02H-CT board to J8.
+1. Connect the RK055MHD091-CTG board to J8.
 
 Prepare the Demo
 ================

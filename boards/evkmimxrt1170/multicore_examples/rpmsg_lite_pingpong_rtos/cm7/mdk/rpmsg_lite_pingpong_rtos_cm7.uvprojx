@@ -334,7 +334,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, DEBUG, CORE1_IMAGE_COPY_TO_RAM, CPU_MIMXRT1176DVMAA_cm7, __USE_SHMEM, SDK_OS_FREE_RTOS, MULTICORE_APP=1, SERIAL_PORT_TYPE_UART=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../middleware/multicore/rpmsg_lite/lib/include/platform/imxrt1170;../../../../../../devices/MIMXRT1176/drivers;../../../../../../rtos/freertos/freertos_kernel/include;../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F;../../../../../../middleware/multicore/mcmgr/src;../../../../../../devices/MIMXRT1176;../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../devices/MIMXRT1176/xip;../../../../xip;../../../../../../devices/MIMXRT1176/drivers/cm7;../../../../../../CMSIS/Core/Include;../../../../../../middleware/multicore/rpmsg_lite/lib/include</IncludePath>
+              <IncludePath>..;../../../../../../middleware/multicore/rpmsg_lite/lib/include/platform/imxrt1170;../../../../../../middleware/multicore/rpmsg_lite/lib/include;../../../../../../middleware/multicore/rpmsg_lite/lib/include/environment/freertos;../../../../../../devices/MIMXRT1176/drivers;../../../../../../rtos/freertos/freertos_kernel/include;../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F;../../../../../../middleware/multicore/mcmgr/src;../../../../../../devices/MIMXRT1176;../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../devices/MIMXRT1176/xip;../../../../xip;../../../../../../devices/MIMXRT1176/drivers/cm7;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -376,38 +376,8 @@
       </TargetOption>
       <Groups>
         <Group>
-          <GroupName>source</GroupName>
-          <Files>
-            <File>
-              <FileName>main_master.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../main_master.c</FilePath>
-            </File>
-            <File>
-              <FileName>rpmsg_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../rpmsg_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>FreeRTOSConfig.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../FreeRTOSConfig.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>board</GroupName>
           <Files>
-            <File>
-              <FileName>pin_mux.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../pin_mux.c</FilePath>
-            </File>
-            <File>
-              <FileName>pin_mux.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../pin_mux.h</FilePath>
-            </File>
             <File>
               <FileName>board.c</FileName>
               <FileType>1</FileType>
@@ -429,6 +399,16 @@
               <FilePath>../clock_config.h</FilePath>
             </File>
             <File>
+              <FileName>pin_mux.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../pin_mux.c</FilePath>
+            </File>
+            <File>
+              <FileName>pin_mux.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../pin_mux.h</FilePath>
+            </File>
+            <File>
               <FileName>dcd.c</FileName>
               <FileType>1</FileType>
               <FilePath>../dcd.c</FilePath>
@@ -437,6 +417,26 @@
               <FileName>dcd.h</FileName>
               <FileType>5</FileType>
               <FilePath>../dcd.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>source</GroupName>
+          <Files>
+            <File>
+              <FileName>main_master.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../main_master.c</FilePath>
+            </File>
+            <File>
+              <FileName>rpmsg_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../rpmsg_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>FreeRTOSConfig.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../FreeRTOSConfig.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -491,17 +491,132 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>rpmsg_lite/porting</GroupName>
+          <GroupName>rpmsg_lite/include/platform/imxrt1170</GroupName>
           <Files>
             <File>
               <FileName>rpmsg_platform.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/include/platform/imxrt1170/rpmsg_platform.h</FilePath>
             </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>rpmsg_lite/rpmsg_lite/porting/platform/imxrt1170</GroupName>
+          <Files>
             <File>
               <FileName>rpmsg_platform.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/rpmsg_lite/porting/platform/imxrt1170/rpmsg_platform.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>rpmsg_lite/include</GroupName>
+          <Files>
+            <File>
+              <FileName>rpmsg_lite.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/include/rpmsg_lite.h</FilePath>
+            </File>
+            <File>
+              <FileName>rpmsg_ns.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/include/rpmsg_ns.h</FilePath>
+            </File>
+            <File>
+              <FileName>llist.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/include/llist.h</FilePath>
+            </File>
+            <File>
+              <FileName>rpmsg_default_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/include/rpmsg_default_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>virtio_ring.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/include/virtio_ring.h</FilePath>
+            </File>
+            <File>
+              <FileName>virtqueue.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/include/virtqueue.h</FilePath>
+            </File>
+            <File>
+              <FileName>rpmsg_compiler.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/include/rpmsg_compiler.h</FilePath>
+            </File>
+            <File>
+              <FileName>rpmsg_env.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/include/rpmsg_env.h</FilePath>
+            </File>
+            <File>
+              <FileName>rpmsg_queue.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/include/rpmsg_queue.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>rpmsg_lite/common</GroupName>
+          <Files>
+            <File>
+              <FileName>llist.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/common/llist.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>rpmsg_lite/rpmsg_lite</GroupName>
+          <Files>
+            <File>
+              <FileName>rpmsg_lite.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/rpmsg_lite/rpmsg_lite.c</FilePath>
+            </File>
+            <File>
+              <FileName>rpmsg_ns.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/rpmsg_lite/rpmsg_ns.c</FilePath>
+            </File>
+            <File>
+              <FileName>rpmsg_queue.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/rpmsg_lite/rpmsg_queue.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>rpmsg_lite/virtio</GroupName>
+          <Files>
+            <File>
+              <FileName>virtqueue.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/virtio/virtqueue.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>rpmsg_lite/rpmsg_lite/porting/environment</GroupName>
+          <Files>
+            <File>
+              <FileName>rpmsg_env_freertos.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/rpmsg_lite/porting/environment/rpmsg_env_freertos.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>rpmsg_lite/include/environment/freertos</GroupName>
+          <Files>
+            <File>
+              <FileName>rpmsg_env_specific.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/include/environment/freertos/rpmsg_env_specific.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -734,6 +849,11 @@
               <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/StackMacros.h</FilePath>
             </File>
             <File>
+              <FileName>stdint.readme</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/stdint.readme</FilePath>
+            </File>
+            <File>
               <FileName>stream_buffer.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/stream_buffer.h</FilePath>
@@ -802,6 +922,18 @@
               <FileName>fsl_incbin.S</FileName>
               <FileType>2</FileType>
               <FilePath>../../../../../../devices/MIMXRT1176/utilities/incbin/fsl_incbin.S</FilePath>
+              <FileOption>
+                                  <CommonProperty>
+                                    <IncludeInBuild>2</IncludeInBuild>
+                                    <AlwaysBuild>1</AlwaysBuild>
+                                    <GenerateAssemblyFile>2</GenerateAssemblyFile>
+                                    <AssembleAssemblyFile>2</AssembleAssemblyFile>
+                                    <PublicsOnly>2</PublicsOnly>
+                                    <StopOnExitCode>11</StopOnExitCode>
+                                  </CommonProperty>
+                                  <FileArmAds>
+                                  </FileArmAds>
+                                </FileOption>
             </File>
             <File>
               <FileName>fsl_str.c</FileName>
@@ -1007,91 +1139,6 @@
               <FileName>mpu_armv7.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Core/Include/mpu_armv7.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>rpmsg_lite</GroupName>
-          <Files>
-            <File>
-              <FileName>rpmsg_lite.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/include/rpmsg_lite.h</FilePath>
-            </File>
-            <File>
-              <FileName>rpmsg_ns.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/include/rpmsg_ns.h</FilePath>
-            </File>
-            <File>
-              <FileName>llist.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/include/llist.h</FilePath>
-            </File>
-            <File>
-              <FileName>rpmsg_default_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/include/rpmsg_default_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>virtio_ring.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/include/virtio_ring.h</FilePath>
-            </File>
-            <File>
-              <FileName>virtqueue.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/include/virtqueue.h</FilePath>
-            </File>
-            <File>
-              <FileName>rpmsg_compiler.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/include/rpmsg_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>llist.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/common/llist.c</FilePath>
-            </File>
-            <File>
-              <FileName>rpmsg_lite.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/rpmsg_lite/rpmsg_lite.c</FilePath>
-            </File>
-            <File>
-              <FileName>rpmsg_ns.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/rpmsg_lite/rpmsg_ns.c</FilePath>
-            </File>
-            <File>
-              <FileName>virtqueue.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/virtio/virtqueue.c</FilePath>
-            </File>
-            <File>
-              <FileName>rpmsg_env.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/include/rpmsg_env.h</FilePath>
-            </File>
-            <File>
-              <FileName>rpmsg_queue.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/include/rpmsg_queue.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>rpmsg_lite/env/freertos</GroupName>
-          <Files>
-            <File>
-              <FileName>rpmsg_env_freertos.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/rpmsg_lite/porting/environment/rpmsg_env_freertos.c</FilePath>
-            </File>
-            <File>
-              <FileName>rpmsg_queue.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/rpmsg_lite/rpmsg_queue.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1428,7 +1475,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, NDEBUG, CORE1_IMAGE_COPY_TO_RAM, CPU_MIMXRT1176DVMAA_cm7, __USE_SHMEM, SDK_OS_FREE_RTOS, MULTICORE_APP=1, SERIAL_PORT_TYPE_UART=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../middleware/multicore/rpmsg_lite/lib/include/platform/imxrt1170;../../../../../../devices/MIMXRT1176/drivers;../../../../../../rtos/freertos/freertos_kernel/include;../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F;../../../../../../middleware/multicore/mcmgr/src;../../../../../../devices/MIMXRT1176;../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../devices/MIMXRT1176/xip;../../../../xip;../../../../../../devices/MIMXRT1176/drivers/cm7;../../../../../../CMSIS/Core/Include;../../../../../../middleware/multicore/rpmsg_lite/lib/include</IncludePath>
+              <IncludePath>..;../../../../../../middleware/multicore/rpmsg_lite/lib/include/platform/imxrt1170;../../../../../../middleware/multicore/rpmsg_lite/lib/include;../../../../../../middleware/multicore/rpmsg_lite/lib/include/environment/freertos;../../../../../../devices/MIMXRT1176/drivers;../../../../../../rtos/freertos/freertos_kernel/include;../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F;../../../../../../middleware/multicore/mcmgr/src;../../../../../../devices/MIMXRT1176;../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../devices/MIMXRT1176/xip;../../../../xip;../../../../../../devices/MIMXRT1176/drivers/cm7;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1470,38 +1517,8 @@
       </TargetOption>
       <Groups>
         <Group>
-          <GroupName>source</GroupName>
-          <Files>
-            <File>
-              <FileName>main_master.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../main_master.c</FilePath>
-            </File>
-            <File>
-              <FileName>rpmsg_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../rpmsg_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>FreeRTOSConfig.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../FreeRTOSConfig.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>board</GroupName>
           <Files>
-            <File>
-              <FileName>pin_mux.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../pin_mux.c</FilePath>
-            </File>
-            <File>
-              <FileName>pin_mux.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../pin_mux.h</FilePath>
-            </File>
             <File>
               <FileName>board.c</FileName>
               <FileType>1</FileType>
@@ -1523,6 +1540,16 @@
               <FilePath>../clock_config.h</FilePath>
             </File>
             <File>
+              <FileName>pin_mux.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../pin_mux.c</FilePath>
+            </File>
+            <File>
+              <FileName>pin_mux.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../pin_mux.h</FilePath>
+            </File>
+            <File>
               <FileName>dcd.c</FileName>
               <FileType>1</FileType>
               <FilePath>../dcd.c</FilePath>
@@ -1531,6 +1558,26 @@
               <FileName>dcd.h</FileName>
               <FileType>5</FileType>
               <FilePath>../dcd.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>source</GroupName>
+          <Files>
+            <File>
+              <FileName>main_master.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../main_master.c</FilePath>
+            </File>
+            <File>
+              <FileName>rpmsg_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../rpmsg_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>FreeRTOSConfig.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../FreeRTOSConfig.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1585,17 +1632,132 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>rpmsg_lite/porting</GroupName>
+          <GroupName>rpmsg_lite/include/platform/imxrt1170</GroupName>
           <Files>
             <File>
               <FileName>rpmsg_platform.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/include/platform/imxrt1170/rpmsg_platform.h</FilePath>
             </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>rpmsg_lite/rpmsg_lite/porting/platform/imxrt1170</GroupName>
+          <Files>
             <File>
               <FileName>rpmsg_platform.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/rpmsg_lite/porting/platform/imxrt1170/rpmsg_platform.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>rpmsg_lite/include</GroupName>
+          <Files>
+            <File>
+              <FileName>rpmsg_lite.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/include/rpmsg_lite.h</FilePath>
+            </File>
+            <File>
+              <FileName>rpmsg_ns.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/include/rpmsg_ns.h</FilePath>
+            </File>
+            <File>
+              <FileName>llist.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/include/llist.h</FilePath>
+            </File>
+            <File>
+              <FileName>rpmsg_default_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/include/rpmsg_default_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>virtio_ring.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/include/virtio_ring.h</FilePath>
+            </File>
+            <File>
+              <FileName>virtqueue.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/include/virtqueue.h</FilePath>
+            </File>
+            <File>
+              <FileName>rpmsg_compiler.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/include/rpmsg_compiler.h</FilePath>
+            </File>
+            <File>
+              <FileName>rpmsg_env.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/include/rpmsg_env.h</FilePath>
+            </File>
+            <File>
+              <FileName>rpmsg_queue.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/include/rpmsg_queue.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>rpmsg_lite/common</GroupName>
+          <Files>
+            <File>
+              <FileName>llist.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/common/llist.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>rpmsg_lite/rpmsg_lite</GroupName>
+          <Files>
+            <File>
+              <FileName>rpmsg_lite.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/rpmsg_lite/rpmsg_lite.c</FilePath>
+            </File>
+            <File>
+              <FileName>rpmsg_ns.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/rpmsg_lite/rpmsg_ns.c</FilePath>
+            </File>
+            <File>
+              <FileName>rpmsg_queue.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/rpmsg_lite/rpmsg_queue.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>rpmsg_lite/virtio</GroupName>
+          <Files>
+            <File>
+              <FileName>virtqueue.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/virtio/virtqueue.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>rpmsg_lite/rpmsg_lite/porting/environment</GroupName>
+          <Files>
+            <File>
+              <FileName>rpmsg_env_freertos.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/rpmsg_lite/porting/environment/rpmsg_env_freertos.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>rpmsg_lite/include/environment/freertos</GroupName>
+          <Files>
+            <File>
+              <FileName>rpmsg_env_specific.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/include/environment/freertos/rpmsg_env_specific.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1828,6 +1990,11 @@
               <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/StackMacros.h</FilePath>
             </File>
             <File>
+              <FileName>stdint.readme</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/stdint.readme</FilePath>
+            </File>
+            <File>
               <FileName>stream_buffer.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/stream_buffer.h</FilePath>
@@ -1896,6 +2063,18 @@
               <FileName>fsl_incbin.S</FileName>
               <FileType>2</FileType>
               <FilePath>../../../../../../devices/MIMXRT1176/utilities/incbin/fsl_incbin.S</FilePath>
+              <FileOption>
+                                  <CommonProperty>
+                                    <IncludeInBuild>2</IncludeInBuild>
+                                    <AlwaysBuild>1</AlwaysBuild>
+                                    <GenerateAssemblyFile>2</GenerateAssemblyFile>
+                                    <AssembleAssemblyFile>2</AssembleAssemblyFile>
+                                    <PublicsOnly>2</PublicsOnly>
+                                    <StopOnExitCode>11</StopOnExitCode>
+                                  </CommonProperty>
+                                  <FileArmAds>
+                                  </FileArmAds>
+                                </FileOption>
             </File>
             <File>
               <FileName>fsl_str.c</FileName>
@@ -2101,91 +2280,6 @@
               <FileName>mpu_armv7.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Core/Include/mpu_armv7.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>rpmsg_lite</GroupName>
-          <Files>
-            <File>
-              <FileName>rpmsg_lite.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/include/rpmsg_lite.h</FilePath>
-            </File>
-            <File>
-              <FileName>rpmsg_ns.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/include/rpmsg_ns.h</FilePath>
-            </File>
-            <File>
-              <FileName>llist.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/include/llist.h</FilePath>
-            </File>
-            <File>
-              <FileName>rpmsg_default_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/include/rpmsg_default_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>virtio_ring.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/include/virtio_ring.h</FilePath>
-            </File>
-            <File>
-              <FileName>virtqueue.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/include/virtqueue.h</FilePath>
-            </File>
-            <File>
-              <FileName>rpmsg_compiler.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/include/rpmsg_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>llist.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/common/llist.c</FilePath>
-            </File>
-            <File>
-              <FileName>rpmsg_lite.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/rpmsg_lite/rpmsg_lite.c</FilePath>
-            </File>
-            <File>
-              <FileName>rpmsg_ns.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/rpmsg_lite/rpmsg_ns.c</FilePath>
-            </File>
-            <File>
-              <FileName>virtqueue.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/virtio/virtqueue.c</FilePath>
-            </File>
-            <File>
-              <FileName>rpmsg_env.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/include/rpmsg_env.h</FilePath>
-            </File>
-            <File>
-              <FileName>rpmsg_queue.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/include/rpmsg_queue.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>rpmsg_lite/env/freertos</GroupName>
-          <Files>
-            <File>
-              <FileName>rpmsg_env_freertos.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/rpmsg_lite/porting/environment/rpmsg_env_freertos.c</FilePath>
-            </File>
-            <File>
-              <FileName>rpmsg_queue.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/rpmsg_lite/rpmsg_queue.c</FilePath>
             </File>
           </Files>
         </Group>

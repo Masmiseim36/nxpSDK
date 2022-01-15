@@ -12,7 +12,7 @@ Toolchain supported
 ===================
 - IAR embedded Workbench  9.10.2
 - Keil MDK  5.34
-- MCUXpresso  11.4.0
+- MCUXpresso  11.5.0
 - GCC ARM Embedded  10.2.1
 
 Hardware requirements
@@ -23,7 +23,7 @@ Hardware requirements
 
 Board settings
 ==============
-Remove 0Ω resistors R404,R406,R408.
+Remove 0Ω resistors R200,R404,R406,R408.
 
 LPSPI:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

@@ -370,6 +370,7 @@
           <state>$PROJ_DIR$/../../../../../components/video/display/dc/elcdif</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1176/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../components/video/display/fbdev</state>
+          <state>$PROJ_DIR$/../../../../../components/video/display/hx8394</state>
           <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include</state>
           <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM4F</state>
           <state>$PROJ_DIR$/../../../../../middleware/Crank_Software/cortexM-vglite/include/freertos</state>
@@ -1437,6 +1438,7 @@
           <state>$PROJ_DIR$/../../../../../components/video/display/dc/elcdif</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1176/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../components/video/display/fbdev</state>
+          <state>$PROJ_DIR$/../../../../../components/video/display/hx8394</state>
           <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include</state>
           <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM4F</state>
           <state>$PROJ_DIR$/../../../../../middleware/Crank_Software/cortexM-vglite/include/freertos</state>
@@ -2384,6 +2386,12 @@
       <name>$PROJ_DIR$/../../../../../components/video/display/fbdev/fsl_fbdev.c</name>
     </file>
     <file>
+      <name>$PROJ_DIR$/../../../../../components/video/display/hx8394/fsl_hx8394.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../components/video/display/hx8394/fsl_hx8394.c</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../../../../../components/video/display/dc/fsl_dc_fb.h</name>
     </file>
   </group>
@@ -2455,6 +2463,9 @@
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include/StackMacros.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include/stdint.readme</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include/stream_buffer.h</name>

@@ -262,25 +262,18 @@ static void USB_HostMsdFatfsThroughputTest(usb_host_msd_fatfs_instance_t *msdFat
 static void USB_HostMsdFatfsDisplayFileInfo(FILINFO *fileInfo)
 {
     char *fileName;
-#if _USE_LFN
-    fileName = (fileInfo->lfname[0] ? fileInfo->lfname : fileInfo->fname;
-#else
     fileName = fileInfo->fname;
-#endif /* _USE_LFN */
-    /* note: if this file/directory don't have one attribute, '_' replace the attribute letter ('R' - readonly, 'H' - hide, 'S' - system) */
+    /* note: if this file/directory don't have one attribute, '_' replace the attribute letter ('R' - readonly, 'H' -
+     * hide, 'S' - system) */
     usb_echo("    %s - %c%c%c - %s - %dBytes - %d-%d-%d %d:%d:%d\r\n", (fileInfo->fattrib & AM_DIR) ? "dir" : "fil",
-             (fileInfo->fattrib & AM_RDO) ? 'R' : '_',
-             (fileInfo->fattrib & AM_HID) ? 'H' : '_',
-             (fileInfo->fattrib & AM_SYS) ? 'S' : '_',
-             fileName,
-             (fileInfo->fsize),
+             (fileInfo->fattrib & AM_RDO) ? 'R' : '_', (fileInfo->fattrib & AM_HID) ? 'H' : '_',
+             (fileInfo->fattrib & AM_SYS) ? 'S' : '_', fileName, (fileInfo->fsize),
              (uint32_t)((fileInfo->fdate >> 9) + 1980) /* year */,
-             (uint32_t)((fileInfo->fdate >> 5) & 0x000Fu) /* month */,
-             (uint32_t)(fileInfo->fdate & 0x001Fu) /* day */,
+             (uint32_t)((fileInfo->fdate >> 5) & 0x000Fu) /* month */, (uint32_t)(fileInfo->fdate & 0x001Fu) /* day */,
              (uint32_t)((fileInfo->ftime >> 11) & 0x0000001Fu) /* hour */,
              (uint32_t)((fileInfo->ftime >> 5) & 0x0000003Fu) /* minute */,
              (uint32_t)(fileInfo->ftime & 0x0000001Fu) /* second */
-             );
+    );
 }
 
 static FRESULT USB_HostMsdFatfsListDirectory(const TCHAR *path)
@@ -289,12 +282,6 @@ static FRESULT USB_HostMsdFatfsListDirectory(const TCHAR *path)
     FILINFO fileInfo;
     DIR dir;
     uint8_t outputLabel = 0;
-
-#if _USE_LFN
-    static uint8_t fileNameBuffer[_MAX_LFN];
-    fileInfo.lfname = fileNameBuffer;
-    fileInfo.lfsize = _MAX_LFN;
-#endif /* _USE_LFN */
 
     fatfsCode = f_opendir(&dir, path);
     if (fatfsCode)
@@ -352,12 +339,6 @@ static void USB_HostMsdFatfsTest(usb_host_msd_fatfs_instance_t *msdFatfsInstance
     uint32_t resultSize;
     char *testString;
     uint8_t driverNumberBuffer[3];
-
-#if _USE_LFN
-    static uint8_t fileNameBuffer[_MAX_LFN];
-    fileInfo.lfname = fileNameBuffer;
-    fileInfo.lfsize = _MAX_LFN;
-#endif /* _USE_LFN */
 
     /* time delay */
     for (freeClusterNumber = 0; freeClusterNumber < 10000; ++freeClusterNumber)
@@ -915,7 +896,7 @@ usb_status_t USB_HostMsdEvent(usb_device_handle deviceHandle,
     usb_host_configuration_t *configuration;
     uint8_t interfaceIndex;
     usb_host_interface_t *interface;
-    uint32_t infoValue;
+    uint32_t infoValue = 0U;
     uint8_t id;
 
     switch (eventCode)

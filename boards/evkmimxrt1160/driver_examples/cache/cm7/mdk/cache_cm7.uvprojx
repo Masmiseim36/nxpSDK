@@ -559,6 +559,11 @@
               <FilePath>../../../../../../devices/MIMXRT1166/drivers/cm7/fsl_cache.h</FilePath>
             </File>
             <File>
+              <FileName>fsl_memory.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1166/drivers/fsl_memory.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_anatop_ai.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT1166/drivers/fsl_anatop_ai.h</FilePath>
@@ -1291,6 +1296,11 @@
               <FileName>fsl_cache.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT1166/drivers/cm7/fsl_cache.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_memory.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1166/drivers/fsl_memory.h</FilePath>
             </File>
             <File>
               <FileName>fsl_anatop_ai.h</FileName>
@@ -2027,6 +2037,11 @@
               <FilePath>../../../../../../devices/MIMXRT1166/drivers/cm7/fsl_cache.h</FilePath>
             </File>
             <File>
+              <FileName>fsl_memory.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1166/drivers/fsl_memory.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_anatop_ai.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT1166/drivers/fsl_anatop_ai.h</FilePath>
@@ -2759,6 +2774,11 @@
               <FileName>fsl_cache.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT1166/drivers/cm7/fsl_cache.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_memory.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1166/drivers/fsl_memory.h</FilePath>
             </File>
             <File>
               <FileName>fsl_anatop_ai.h</FileName>
@@ -3495,6 +3515,11 @@
               <FilePath>../../../../../../devices/MIMXRT1166/drivers/cm7/fsl_cache.h</FilePath>
             </File>
             <File>
+              <FileName>fsl_memory.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1166/drivers/fsl_memory.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_anatop_ai.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT1166/drivers/fsl_anatop_ai.h</FilePath>
@@ -4227,6 +4252,11 @@
               <FileName>fsl_cache.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT1166/drivers/cm7/fsl_cache.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_memory.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1166/drivers/fsl_memory.h</FilePath>
             </File>
             <File>
               <FileName>fsl_anatop_ai.h</FileName>

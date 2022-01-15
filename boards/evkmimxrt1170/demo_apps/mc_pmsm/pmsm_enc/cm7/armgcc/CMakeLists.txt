@@ -31,12 +31,6 @@ include(${ProjDirPath}/flags.cmake)
 include(${ProjDirPath}/config.cmake)
 
 add_executable(${MCUX_SDK_PROJECT_NAME} 
-"${ProjDirPath}/../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_drivers/mcdrv_adc_imxrt117x.h"
-"${ProjDirPath}/../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_drivers/mcdrv_adc_imxrt117x.c"
-"${ProjDirPath}/../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_drivers/mcdrv_pwm3ph_pwma.c"
-"${ProjDirPath}/../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_drivers/mcdrv_pwm3ph_pwma.h"
-"${ProjDirPath}/../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_drivers/mcdrv_enc_qd.c"
-"${ProjDirPath}/../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_drivers/mcdrv_enc_qd.h"
 "${ProjDirPath}/../../../../../../../middleware/motor_control/freemaster/pmsm_float_enc.pmp"
 "${ProjDirPath}/../main.c"
 "${ProjDirPath}/../m1_pmsm_appconfig.h"
@@ -57,7 +51,6 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 )
 
 target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
-    ${ProjDirPath}/../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_drivers
     ${ProjDirPath}/..
 )
 
@@ -90,6 +83,12 @@ include(driver_lpadc_MIMXRT1176_cm7)
 include(driver_acmp_MIMXRT1176_cm7)
 
 include(middleware_rtcesl_cm7f_MIMXRT1176_cm7)
+
+include(middleware_motor_control_mc_drivers_adcimxrt11xx_pwma_enc_MIMXRT1176_cm7)
+
+include(middleware_motor_control_mcaa_cm7f_MIMXRT1176_cm7)
+
+include(middleware_motor_control_pmsm_float_imcat_MIMXRT1176_cm7)
 
 include(middleware_mc_pmsm_enc_float_MIMXRT1176_cm7)
 
@@ -147,163 +146,195 @@ target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE gcc)
 target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE nosys)
 
 if(CMAKE_BUILD_TYPE STREQUAL debug)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.6.2_MCUX/AMCLIB/libAMCLIB.a)
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7_MCUX/AMCLIB/libAMCLIB.a)
 endif(CMAKE_BUILD_TYPE STREQUAL debug)
 
 if(CMAKE_BUILD_TYPE STREQUAL debug)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.6.2_MCUX/GFLIB/libGFLIB.a)
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7_MCUX/GFLIB/libGFLIB.a)
 endif(CMAKE_BUILD_TYPE STREQUAL debug)
 
 if(CMAKE_BUILD_TYPE STREQUAL debug)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.6.2_MCUX/GDFLIB/libGDFLIB.a)
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7_MCUX/GDFLIB/libGDFLIB.a)
 endif(CMAKE_BUILD_TYPE STREQUAL debug)
 
 if(CMAKE_BUILD_TYPE STREQUAL debug)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.6.2_MCUX/GMCLIB/libGMCLIB.a)
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7_MCUX/GMCLIB/libGMCLIB.a)
 endif(CMAKE_BUILD_TYPE STREQUAL debug)
 
 if(CMAKE_BUILD_TYPE STREQUAL debug)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.6.2_MCUX/MLIB/libMLIB.a)
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7_MCUX/MLIB/libMLIB.a)
+endif(CMAKE_BUILD_TYPE STREQUAL debug)
+
+if(CMAKE_BUILD_TYPE STREQUAL debug)
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_algorithms/mcaa_lib/cm7f_mcux/libmcaa_lib.a)
 endif(CMAKE_BUILD_TYPE STREQUAL debug)
 
 if(CMAKE_BUILD_TYPE STREQUAL release)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.6.2_MCUX/AMCLIB/libAMCLIB.a)
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7_MCUX/AMCLIB/libAMCLIB.a)
 endif(CMAKE_BUILD_TYPE STREQUAL release)
 
 if(CMAKE_BUILD_TYPE STREQUAL release)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.6.2_MCUX/GFLIB/libGFLIB.a)
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7_MCUX/GFLIB/libGFLIB.a)
 endif(CMAKE_BUILD_TYPE STREQUAL release)
 
 if(CMAKE_BUILD_TYPE STREQUAL release)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.6.2_MCUX/GDFLIB/libGDFLIB.a)
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7_MCUX/GDFLIB/libGDFLIB.a)
 endif(CMAKE_BUILD_TYPE STREQUAL release)
 
 if(CMAKE_BUILD_TYPE STREQUAL release)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.6.2_MCUX/GMCLIB/libGMCLIB.a)
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7_MCUX/GMCLIB/libGMCLIB.a)
 endif(CMAKE_BUILD_TYPE STREQUAL release)
 
 if(CMAKE_BUILD_TYPE STREQUAL release)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.6.2_MCUX/MLIB/libMLIB.a)
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7_MCUX/MLIB/libMLIB.a)
+endif(CMAKE_BUILD_TYPE STREQUAL release)
+
+if(CMAKE_BUILD_TYPE STREQUAL release)
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_algorithms/mcaa_lib/cm7f_mcux/libmcaa_lib.a)
 endif(CMAKE_BUILD_TYPE STREQUAL release)
 
 if(CMAKE_BUILD_TYPE STREQUAL sdram_debug)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.6.2_MCUX/AMCLIB/libAMCLIB.a)
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7_MCUX/AMCLIB/libAMCLIB.a)
 endif(CMAKE_BUILD_TYPE STREQUAL sdram_debug)
 
 if(CMAKE_BUILD_TYPE STREQUAL sdram_debug)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.6.2_MCUX/GFLIB/libGFLIB.a)
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7_MCUX/GFLIB/libGFLIB.a)
 endif(CMAKE_BUILD_TYPE STREQUAL sdram_debug)
 
 if(CMAKE_BUILD_TYPE STREQUAL sdram_debug)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.6.2_MCUX/GDFLIB/libGDFLIB.a)
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7_MCUX/GDFLIB/libGDFLIB.a)
 endif(CMAKE_BUILD_TYPE STREQUAL sdram_debug)
 
 if(CMAKE_BUILD_TYPE STREQUAL sdram_debug)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.6.2_MCUX/GMCLIB/libGMCLIB.a)
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7_MCUX/GMCLIB/libGMCLIB.a)
 endif(CMAKE_BUILD_TYPE STREQUAL sdram_debug)
 
 if(CMAKE_BUILD_TYPE STREQUAL sdram_debug)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.6.2_MCUX/MLIB/libMLIB.a)
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7_MCUX/MLIB/libMLIB.a)
+endif(CMAKE_BUILD_TYPE STREQUAL sdram_debug)
+
+if(CMAKE_BUILD_TYPE STREQUAL sdram_debug)
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_algorithms/mcaa_lib/cm7f_mcux/libmcaa_lib.a)
 endif(CMAKE_BUILD_TYPE STREQUAL sdram_debug)
 
 if(CMAKE_BUILD_TYPE STREQUAL sdram_release)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.6.2_MCUX/AMCLIB/libAMCLIB.a)
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7_MCUX/AMCLIB/libAMCLIB.a)
 endif(CMAKE_BUILD_TYPE STREQUAL sdram_release)
 
 if(CMAKE_BUILD_TYPE STREQUAL sdram_release)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.6.2_MCUX/GFLIB/libGFLIB.a)
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7_MCUX/GFLIB/libGFLIB.a)
 endif(CMAKE_BUILD_TYPE STREQUAL sdram_release)
 
 if(CMAKE_BUILD_TYPE STREQUAL sdram_release)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.6.2_MCUX/GDFLIB/libGDFLIB.a)
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7_MCUX/GDFLIB/libGDFLIB.a)
 endif(CMAKE_BUILD_TYPE STREQUAL sdram_release)
 
 if(CMAKE_BUILD_TYPE STREQUAL sdram_release)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.6.2_MCUX/GMCLIB/libGMCLIB.a)
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7_MCUX/GMCLIB/libGMCLIB.a)
 endif(CMAKE_BUILD_TYPE STREQUAL sdram_release)
 
 if(CMAKE_BUILD_TYPE STREQUAL sdram_release)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.6.2_MCUX/MLIB/libMLIB.a)
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7_MCUX/MLIB/libMLIB.a)
+endif(CMAKE_BUILD_TYPE STREQUAL sdram_release)
+
+if(CMAKE_BUILD_TYPE STREQUAL sdram_release)
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_algorithms/mcaa_lib/cm7f_mcux/libmcaa_lib.a)
 endif(CMAKE_BUILD_TYPE STREQUAL sdram_release)
 
 if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.6.2_MCUX/AMCLIB/libAMCLIB.a)
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7_MCUX/AMCLIB/libAMCLIB.a)
 endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
 
 if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.6.2_MCUX/GFLIB/libGFLIB.a)
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7_MCUX/GFLIB/libGFLIB.a)
 endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
 
 if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.6.2_MCUX/GDFLIB/libGDFLIB.a)
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7_MCUX/GDFLIB/libGDFLIB.a)
 endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
 
 if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.6.2_MCUX/GMCLIB/libGMCLIB.a)
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7_MCUX/GMCLIB/libGMCLIB.a)
 endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
 
 if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.6.2_MCUX/MLIB/libMLIB.a)
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7_MCUX/MLIB/libMLIB.a)
+endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
+
+if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_algorithms/mcaa_lib/cm7f_mcux/libmcaa_lib.a)
 endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
 
 if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.6.2_MCUX/AMCLIB/libAMCLIB.a)
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7_MCUX/AMCLIB/libAMCLIB.a)
 endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
 
 if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.6.2_MCUX/GFLIB/libGFLIB.a)
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7_MCUX/GFLIB/libGFLIB.a)
 endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
 
 if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.6.2_MCUX/GDFLIB/libGDFLIB.a)
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7_MCUX/GDFLIB/libGDFLIB.a)
 endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
 
 if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.6.2_MCUX/GMCLIB/libGMCLIB.a)
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7_MCUX/GMCLIB/libGMCLIB.a)
 endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
 
 if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.6.2_MCUX/MLIB/libMLIB.a)
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7_MCUX/MLIB/libMLIB.a)
+endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
+
+if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_algorithms/mcaa_lib/cm7f_mcux/libmcaa_lib.a)
 endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
 
 if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_sdram_debug)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.6.2_MCUX/AMCLIB/libAMCLIB.a)
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7_MCUX/AMCLIB/libAMCLIB.a)
 endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_sdram_debug)
 
 if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_sdram_debug)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.6.2_MCUX/GFLIB/libGFLIB.a)
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7_MCUX/GFLIB/libGFLIB.a)
 endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_sdram_debug)
 
 if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_sdram_debug)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.6.2_MCUX/GDFLIB/libGDFLIB.a)
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7_MCUX/GDFLIB/libGDFLIB.a)
 endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_sdram_debug)
 
 if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_sdram_debug)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.6.2_MCUX/GMCLIB/libGMCLIB.a)
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7_MCUX/GMCLIB/libGMCLIB.a)
 endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_sdram_debug)
 
 if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_sdram_debug)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.6.2_MCUX/MLIB/libMLIB.a)
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7_MCUX/MLIB/libMLIB.a)
+endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_sdram_debug)
+
+if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_sdram_debug)
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_algorithms/mcaa_lib/cm7f_mcux/libmcaa_lib.a)
 endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_sdram_debug)
 
 if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_sdram_release)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.6.2_MCUX/AMCLIB/libAMCLIB.a)
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7_MCUX/AMCLIB/libAMCLIB.a)
 endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_sdram_release)
 
 if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_sdram_release)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.6.2_MCUX/GFLIB/libGFLIB.a)
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7_MCUX/GFLIB/libGFLIB.a)
 endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_sdram_release)
 
 if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_sdram_release)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.6.2_MCUX/GDFLIB/libGDFLIB.a)
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7_MCUX/GDFLIB/libGDFLIB.a)
 endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_sdram_release)
 
 if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_sdram_release)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.6.2_MCUX/GMCLIB/libGMCLIB.a)
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7_MCUX/GMCLIB/libGMCLIB.a)
 endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_sdram_release)
 
 if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_sdram_release)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.6.2_MCUX/MLIB/libMLIB.a)
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../../middleware/rtcesl/CM7F_RTCESL_4.7_MCUX/MLIB/libMLIB.a)
+endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_sdram_release)
+
+if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_sdram_release)
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../../middleware/motor_control/pmsm/pmsm_float/mc_algorithms/mcaa_lib/cm7f_mcux/libmcaa_lib.a)
 endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_sdram_release)
 
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--end-group)

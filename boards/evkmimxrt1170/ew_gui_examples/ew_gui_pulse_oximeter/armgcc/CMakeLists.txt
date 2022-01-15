@@ -194,9 +194,10 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../components/video/display/dc/elcdif
     ${ProjDirPath}/../../../../../devices/MIMXRT1176/utilities/debug_console_lite
     ${ProjDirPath}/../../../../../components/video/display/fbdev
-    ${ProjDirPath}/../../../../../rtos/freertos
+    ${ProjDirPath}/../../../../../rtos/freertos/freertos_kernel
     ${ProjDirPath}/../../../../../middleware/vglite
     ${ProjDirPath}/../../../../../middleware/EmbeddedWizard
+    ${ProjDirPath}/../../../../../components/video/display/hx8394
     ${ProjDirPath}/../../../../../devices/MIMXRT1176
     ${ProjDirPath}/../../../../../components/uart
     ${ProjDirPath}/../../../../../components/lists
@@ -252,6 +253,8 @@ include(middleware_vglite_MIMXRT1176_cm7)
 include(utility_assert_lite_MIMXRT1176_cm7)
 
 include(middleware_embedded_wizard_lib_evkmimxrt1170_MIMXRT1176_cm7)
+
+include(driver_display-hx8394_MIMXRT1176_cm7)
 
 include(driver_clock_MIMXRT1176_cm7)
 

@@ -13,6 +13,7 @@ target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
     ${CMAKE_CURRENT_LIST_DIR}/netxduo/addons/ftp/nxd_ftp_server.c
     ${CMAKE_CURRENT_LIST_DIR}/netxduo/addons/http/nxd_http_client.c
     ${CMAKE_CURRENT_LIST_DIR}/netxduo/addons/http/nxd_http_server.c
+    ${CMAKE_CURRENT_LIST_DIR}/netxduo/addons/lwm2m/nx_lwm2m_client.c
     ${CMAKE_CURRENT_LIST_DIR}/netxduo/addons/mdns/nxd_mdns.c
     ${CMAKE_CURRENT_LIST_DIR}/netxduo/addons/mqtt/nxd_mqtt_client.c
     ${CMAKE_CURRENT_LIST_DIR}/netxduo/addons/nat/nx_nat.c
@@ -20,6 +21,7 @@ target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
     ${CMAKE_CURRENT_LIST_DIR}/netxduo/addons/ppp/nx_ppp.c
     ${CMAKE_CURRENT_LIST_DIR}/netxduo/addons/pppoe/nx_pppoe_client.c
     ${CMAKE_CURRENT_LIST_DIR}/netxduo/addons/pppoe/nx_pppoe_server.c
+    ${CMAKE_CURRENT_LIST_DIR}/netxduo/addons/ptp/nxd_ptp_client.c
     ${CMAKE_CURRENT_LIST_DIR}/netxduo/addons/smtp/nxd_smtp_client.c
     ${CMAKE_CURRENT_LIST_DIR}/netxduo/addons/snmp/nx_des.c
     ${CMAKE_CURRENT_LIST_DIR}/netxduo/addons/snmp/nx_sha1.c
@@ -43,12 +45,14 @@ target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
     ${CMAKE_CURRENT_LIST_DIR}/netxduo/addons/dns
     ${CMAKE_CURRENT_LIST_DIR}/netxduo/addons/ftp
     ${CMAKE_CURRENT_LIST_DIR}/netxduo/addons/http
+    ${CMAKE_CURRENT_LIST_DIR}/netxduo/addons/lwm2m
     ${CMAKE_CURRENT_LIST_DIR}/netxduo/addons/mdns
     ${CMAKE_CURRENT_LIST_DIR}/netxduo/addons/mqtt
     ${CMAKE_CURRENT_LIST_DIR}/netxduo/addons/nat
     ${CMAKE_CURRENT_LIST_DIR}/netxduo/addons/pop3
     ${CMAKE_CURRENT_LIST_DIR}/netxduo/addons/ppp
     ${CMAKE_CURRENT_LIST_DIR}/netxduo/addons/pppoe
+    ${CMAKE_CURRENT_LIST_DIR}/netxduo/addons/ptp
     ${CMAKE_CURRENT_LIST_DIR}/netxduo/addons/smtp
     ${CMAKE_CURRENT_LIST_DIR}/netxduo/addons/snmp
     ${CMAKE_CURRENT_LIST_DIR}/netxduo/addons/sntp

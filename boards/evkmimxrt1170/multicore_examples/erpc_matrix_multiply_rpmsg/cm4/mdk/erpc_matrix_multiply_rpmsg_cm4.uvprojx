@@ -334,7 +334,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>DEBUG, CPU_MIMXRT1176DVMAA_cm4, __USE_SHMEM, FLEXSPI_IN_USE, MULTICORE_APP=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>../../../erpc_common;../../../erpc_common/erpc_matrix_multiply/service;..;../..;../../../../../../middleware/multicore/rpmsg_lite/lib/include/platform/imxrt1170;../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../devices/MIMXRT1176/drivers;../../../../../../middleware/multicore/erpc/erpc_c/infra;../../../../../../middleware/multicore/erpc/erpc_c/setup;../../../../../../middleware/multicore/erpc/erpc_c/transports;../../../../../../middleware/multicore/erpc/erpc_c/port;../../../../../../middleware/multicore/mcmgr/src;../../../../../../devices/MIMXRT1176;../../../../../../components/uart;../../../../../../components/lists;../../../../../../devices/MIMXRT1176/xip;../../../../xip;../../../../../../devices/MIMXRT1176/drivers/cm4;../../../../../../CMSIS/Core/Include;../../../../../../middleware/multicore/rpmsg_lite/lib/include;../../../../../../middleware/multicore/erpc/erpc_c</IncludePath>
+              <IncludePath>..;../../../erpc_common;../../../erpc_common/erpc_matrix_multiply/service;../..;../../../../../../middleware/multicore/rpmsg_lite/lib/include/platform/imxrt1170;../../../../../../middleware/multicore/rpmsg_lite/lib/include;../../../../../../middleware/multicore/rpmsg_lite/lib/include/environment/bm;../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../devices/MIMXRT1176/drivers;../../../../../../middleware/multicore/erpc/erpc_c/infra;../../../../../../middleware/multicore/erpc/erpc_c/setup;../../../../../../middleware/multicore/erpc/erpc_c/transports;../../../../../../middleware/multicore/erpc/erpc_c/port;../../../../../../middleware/multicore/mcmgr/src;../../../../../../devices/MIMXRT1176;../../../../../../components/uart;../../../../../../components/lists;../../../../../../devices/MIMXRT1176/xip;../../../../xip;../../../../../../devices/MIMXRT1176/drivers/cm4;../../../../../../CMSIS/Core/Include;../../../../../../middleware/multicore/erpc/erpc_c</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -375,6 +375,51 @@
         </TargetArmAds>
       </TargetOption>
       <Groups>
+        <Group>
+          <GroupName>board</GroupName>
+          <Files>
+            <File>
+              <FileName>board.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../board.c</FilePath>
+            </File>
+            <File>
+              <FileName>board.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../board.h</FilePath>
+            </File>
+            <File>
+              <FileName>clock_config.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../clock_config.c</FilePath>
+            </File>
+            <File>
+              <FileName>clock_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../clock_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>pin_mux.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../pin_mux.c</FilePath>
+            </File>
+            <File>
+              <FileName>pin_mux.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../pin_mux.h</FilePath>
+            </File>
+            <File>
+              <FileName>dcd.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../dcd.c</FilePath>
+            </File>
+            <File>
+              <FileName>dcd.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../dcd.h</FilePath>
+            </File>
+          </Files>
+        </Group>
         <Group>
           <GroupName>source</GroupName>
           <Files>
@@ -431,51 +476,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>board</GroupName>
-          <Files>
-            <File>
-              <FileName>pin_mux.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../pin_mux.c</FilePath>
-            </File>
-            <File>
-              <FileName>pin_mux.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../pin_mux.h</FilePath>
-            </File>
-            <File>
-              <FileName>board.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../board.c</FilePath>
-            </File>
-            <File>
-              <FileName>board.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../board.h</FilePath>
-            </File>
-            <File>
-              <FileName>clock_config.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../clock_config.c</FilePath>
-            </File>
-            <File>
-              <FileName>clock_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../clock_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>dcd.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../dcd.c</FilePath>
-            </File>
-            <File>
-              <FileName>dcd.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../dcd.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>doc</GroupName>
           <Files>
             <File>
@@ -526,17 +526,122 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>rpmsg_lite/porting</GroupName>
+          <GroupName>rpmsg_lite/include/platform/imxrt1170</GroupName>
           <Files>
             <File>
               <FileName>rpmsg_platform.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/include/platform/imxrt1170/rpmsg_platform.h</FilePath>
             </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>rpmsg_lite/rpmsg_lite/porting/platform/imxrt1170</GroupName>
+          <Files>
             <File>
               <FileName>rpmsg_platform.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/rpmsg_lite/porting/platform/imxrt1170/rpmsg_platform.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>rpmsg_lite/include</GroupName>
+          <Files>
+            <File>
+              <FileName>rpmsg_lite.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/include/rpmsg_lite.h</FilePath>
+            </File>
+            <File>
+              <FileName>rpmsg_ns.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/include/rpmsg_ns.h</FilePath>
+            </File>
+            <File>
+              <FileName>llist.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/include/llist.h</FilePath>
+            </File>
+            <File>
+              <FileName>rpmsg_default_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/include/rpmsg_default_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>virtio_ring.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/include/virtio_ring.h</FilePath>
+            </File>
+            <File>
+              <FileName>virtqueue.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/include/virtqueue.h</FilePath>
+            </File>
+            <File>
+              <FileName>rpmsg_compiler.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/include/rpmsg_compiler.h</FilePath>
+            </File>
+            <File>
+              <FileName>rpmsg_env.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/include/rpmsg_env.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>rpmsg_lite/common</GroupName>
+          <Files>
+            <File>
+              <FileName>llist.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/common/llist.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>rpmsg_lite/rpmsg_lite</GroupName>
+          <Files>
+            <File>
+              <FileName>rpmsg_lite.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/rpmsg_lite/rpmsg_lite.c</FilePath>
+            </File>
+            <File>
+              <FileName>rpmsg_ns.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/rpmsg_lite/rpmsg_ns.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>rpmsg_lite/virtio</GroupName>
+          <Files>
+            <File>
+              <FileName>virtqueue.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/virtio/virtqueue.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>rpmsg_lite/rpmsg_lite/porting/environment</GroupName>
+          <Files>
+            <File>
+              <FileName>rpmsg_env_bm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/rpmsg_lite/porting/environment/rpmsg_env_bm.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>rpmsg_lite/include/environment/bm</GroupName>
+          <Files>
+            <File>
+              <FileName>rpmsg_env_specific.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/include/environment/bm/rpmsg_env_specific.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1002,81 +1107,6 @@
               <FileName>mpu_armv7.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Core/Include/mpu_armv7.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>rpmsg_lite</GroupName>
-          <Files>
-            <File>
-              <FileName>rpmsg_lite.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/include/rpmsg_lite.h</FilePath>
-            </File>
-            <File>
-              <FileName>rpmsg_ns.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/include/rpmsg_ns.h</FilePath>
-            </File>
-            <File>
-              <FileName>llist.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/include/llist.h</FilePath>
-            </File>
-            <File>
-              <FileName>rpmsg_default_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/include/rpmsg_default_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>virtio_ring.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/include/virtio_ring.h</FilePath>
-            </File>
-            <File>
-              <FileName>virtqueue.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/include/virtqueue.h</FilePath>
-            </File>
-            <File>
-              <FileName>rpmsg_compiler.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/include/rpmsg_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>llist.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/common/llist.c</FilePath>
-            </File>
-            <File>
-              <FileName>rpmsg_lite.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/rpmsg_lite/rpmsg_lite.c</FilePath>
-            </File>
-            <File>
-              <FileName>rpmsg_ns.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/rpmsg_lite/rpmsg_ns.c</FilePath>
-            </File>
-            <File>
-              <FileName>virtqueue.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/virtio/virtqueue.c</FilePath>
-            </File>
-            <File>
-              <FileName>rpmsg_env.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/include/rpmsg_env.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>rpmsg_lite/env/bm</GroupName>
-          <Files>
-            <File>
-              <FileName>rpmsg_env_bm.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/rpmsg_lite/porting/environment/rpmsg_env_bm.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1413,7 +1443,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>NDEBUG, CPU_MIMXRT1176DVMAA_cm4, __USE_SHMEM, FLEXSPI_IN_USE, MULTICORE_APP=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>../../../erpc_common;../../../erpc_common/erpc_matrix_multiply/service;..;../..;../../../../../../middleware/multicore/rpmsg_lite/lib/include/platform/imxrt1170;../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../devices/MIMXRT1176/drivers;../../../../../../middleware/multicore/erpc/erpc_c/infra;../../../../../../middleware/multicore/erpc/erpc_c/setup;../../../../../../middleware/multicore/erpc/erpc_c/transports;../../../../../../middleware/multicore/erpc/erpc_c/port;../../../../../../middleware/multicore/mcmgr/src;../../../../../../devices/MIMXRT1176;../../../../../../components/uart;../../../../../../components/lists;../../../../../../devices/MIMXRT1176/xip;../../../../xip;../../../../../../devices/MIMXRT1176/drivers/cm4;../../../../../../CMSIS/Core/Include;../../../../../../middleware/multicore/rpmsg_lite/lib/include;../../../../../../middleware/multicore/erpc/erpc_c</IncludePath>
+              <IncludePath>..;../../../erpc_common;../../../erpc_common/erpc_matrix_multiply/service;../..;../../../../../../middleware/multicore/rpmsg_lite/lib/include/platform/imxrt1170;../../../../../../middleware/multicore/rpmsg_lite/lib/include;../../../../../../middleware/multicore/rpmsg_lite/lib/include/environment/bm;../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../devices/MIMXRT1176/drivers;../../../../../../middleware/multicore/erpc/erpc_c/infra;../../../../../../middleware/multicore/erpc/erpc_c/setup;../../../../../../middleware/multicore/erpc/erpc_c/transports;../../../../../../middleware/multicore/erpc/erpc_c/port;../../../../../../middleware/multicore/mcmgr/src;../../../../../../devices/MIMXRT1176;../../../../../../components/uart;../../../../../../components/lists;../../../../../../devices/MIMXRT1176/xip;../../../../xip;../../../../../../devices/MIMXRT1176/drivers/cm4;../../../../../../CMSIS/Core/Include;../../../../../../middleware/multicore/erpc/erpc_c</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1454,6 +1484,51 @@
         </TargetArmAds>
       </TargetOption>
       <Groups>
+        <Group>
+          <GroupName>board</GroupName>
+          <Files>
+            <File>
+              <FileName>board.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../board.c</FilePath>
+            </File>
+            <File>
+              <FileName>board.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../board.h</FilePath>
+            </File>
+            <File>
+              <FileName>clock_config.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../clock_config.c</FilePath>
+            </File>
+            <File>
+              <FileName>clock_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../clock_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>pin_mux.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../pin_mux.c</FilePath>
+            </File>
+            <File>
+              <FileName>pin_mux.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../pin_mux.h</FilePath>
+            </File>
+            <File>
+              <FileName>dcd.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../dcd.c</FilePath>
+            </File>
+            <File>
+              <FileName>dcd.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../dcd.h</FilePath>
+            </File>
+          </Files>
+        </Group>
         <Group>
           <GroupName>source</GroupName>
           <Files>
@@ -1510,51 +1585,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>board</GroupName>
-          <Files>
-            <File>
-              <FileName>pin_mux.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../pin_mux.c</FilePath>
-            </File>
-            <File>
-              <FileName>pin_mux.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../pin_mux.h</FilePath>
-            </File>
-            <File>
-              <FileName>board.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../board.c</FilePath>
-            </File>
-            <File>
-              <FileName>board.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../board.h</FilePath>
-            </File>
-            <File>
-              <FileName>clock_config.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../clock_config.c</FilePath>
-            </File>
-            <File>
-              <FileName>clock_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../clock_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>dcd.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../dcd.c</FilePath>
-            </File>
-            <File>
-              <FileName>dcd.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../dcd.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>doc</GroupName>
           <Files>
             <File>
@@ -1605,17 +1635,122 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>rpmsg_lite/porting</GroupName>
+          <GroupName>rpmsg_lite/include/platform/imxrt1170</GroupName>
           <Files>
             <File>
               <FileName>rpmsg_platform.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/include/platform/imxrt1170/rpmsg_platform.h</FilePath>
             </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>rpmsg_lite/rpmsg_lite/porting/platform/imxrt1170</GroupName>
+          <Files>
             <File>
               <FileName>rpmsg_platform.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/rpmsg_lite/porting/platform/imxrt1170/rpmsg_platform.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>rpmsg_lite/include</GroupName>
+          <Files>
+            <File>
+              <FileName>rpmsg_lite.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/include/rpmsg_lite.h</FilePath>
+            </File>
+            <File>
+              <FileName>rpmsg_ns.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/include/rpmsg_ns.h</FilePath>
+            </File>
+            <File>
+              <FileName>llist.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/include/llist.h</FilePath>
+            </File>
+            <File>
+              <FileName>rpmsg_default_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/include/rpmsg_default_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>virtio_ring.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/include/virtio_ring.h</FilePath>
+            </File>
+            <File>
+              <FileName>virtqueue.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/include/virtqueue.h</FilePath>
+            </File>
+            <File>
+              <FileName>rpmsg_compiler.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/include/rpmsg_compiler.h</FilePath>
+            </File>
+            <File>
+              <FileName>rpmsg_env.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/include/rpmsg_env.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>rpmsg_lite/common</GroupName>
+          <Files>
+            <File>
+              <FileName>llist.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/common/llist.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>rpmsg_lite/rpmsg_lite</GroupName>
+          <Files>
+            <File>
+              <FileName>rpmsg_lite.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/rpmsg_lite/rpmsg_lite.c</FilePath>
+            </File>
+            <File>
+              <FileName>rpmsg_ns.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/rpmsg_lite/rpmsg_ns.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>rpmsg_lite/virtio</GroupName>
+          <Files>
+            <File>
+              <FileName>virtqueue.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/virtio/virtqueue.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>rpmsg_lite/rpmsg_lite/porting/environment</GroupName>
+          <Files>
+            <File>
+              <FileName>rpmsg_env_bm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/rpmsg_lite/porting/environment/rpmsg_env_bm.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>rpmsg_lite/include/environment/bm</GroupName>
+          <Files>
+            <File>
+              <FileName>rpmsg_env_specific.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/include/environment/bm/rpmsg_env_specific.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2081,81 +2216,6 @@
               <FileName>mpu_armv7.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Core/Include/mpu_armv7.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>rpmsg_lite</GroupName>
-          <Files>
-            <File>
-              <FileName>rpmsg_lite.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/include/rpmsg_lite.h</FilePath>
-            </File>
-            <File>
-              <FileName>rpmsg_ns.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/include/rpmsg_ns.h</FilePath>
-            </File>
-            <File>
-              <FileName>llist.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/include/llist.h</FilePath>
-            </File>
-            <File>
-              <FileName>rpmsg_default_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/include/rpmsg_default_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>virtio_ring.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/include/virtio_ring.h</FilePath>
-            </File>
-            <File>
-              <FileName>virtqueue.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/include/virtqueue.h</FilePath>
-            </File>
-            <File>
-              <FileName>rpmsg_compiler.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/include/rpmsg_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>llist.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/common/llist.c</FilePath>
-            </File>
-            <File>
-              <FileName>rpmsg_lite.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/rpmsg_lite/rpmsg_lite.c</FilePath>
-            </File>
-            <File>
-              <FileName>rpmsg_ns.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/rpmsg_lite/rpmsg_ns.c</FilePath>
-            </File>
-            <File>
-              <FileName>virtqueue.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/virtio/virtqueue.c</FilePath>
-            </File>
-            <File>
-              <FileName>rpmsg_env.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/include/rpmsg_env.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>rpmsg_lite/env/bm</GroupName>
-          <Files>
-            <File>
-              <FileName>rpmsg_env_bm.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/rpmsg_lite/porting/environment/rpmsg_env_bm.c</FilePath>
             </File>
           </Files>
         </Group>

@@ -6213,6 +6213,9 @@
           <name>$PROJ_DIR$/../../../../../../../rtos/freertos/freertos_kernel/include/StackMacros.h</name>
         </file>
         <file>
+          <name>$PROJ_DIR$/../../../../../../../rtos/freertos/freertos_kernel/include/stdint.readme</name>
+        </file>
+        <file>
           <name>$PROJ_DIR$/../../../../../../../rtos/freertos/freertos_kernel/include/stream_buffer.h</name>
         </file>
         <file>

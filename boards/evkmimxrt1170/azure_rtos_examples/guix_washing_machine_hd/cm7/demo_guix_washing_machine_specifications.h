@@ -5,8 +5,8 @@
 /*  specification file(s). For more information please refer to the Azure RTOS */
 /*  GUIX Studio User Guide, or visit our web site at azure.com/rtos            */
 /*                                                                             */
-/*  GUIX Studio Revision 6.1.5.0                                               */
-/*  Date (dd.mm.yyyy): 26. 3.2021   Time (hh:mm): 19:47                        */
+/*  GUIX Studio Revision 6.1.9.0                                               */
+/*  Date (dd.mm.yyyy): 12.11.2021   Time (hh:mm): 18:04                        */
 /*******************************************************************************/
 
 
@@ -327,6 +327,7 @@ typedef struct GX_STUDIO_DISPLAY_INFO_STRUCT
     GX_WINDOW_ROOT *root_window;
     GX_COLOR   *canvas_memory;
     ULONG      canvas_memory_size;
+    USHORT     rotation_angle;
 } GX_STUDIO_DISPLAY_INFO;
 
 

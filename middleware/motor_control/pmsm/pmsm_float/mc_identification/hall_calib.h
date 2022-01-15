@@ -9,7 +9,7 @@
 #ifndef HALL_CALIB_H_
 #define HALL_CALIB_H_
 
-#include "mid_def.h"
+#include "mid_mc_api_connector.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -18,7 +18,7 @@ extern "C" {
 /*******************************************************************************
  * API
  ******************************************************************************/
-extern void MID_calibHall(mid_calib_hall_t *sHallCalibFcn);
+extern void MID_calibHall(mid_calib_hall_t* sHallCalibFcn);
 
 #ifdef __cplusplus
 }

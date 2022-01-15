@@ -37,23 +37,23 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../pin_mux.c"
 "${ProjDirPath}/../pin_mux.h"
 "${ProjDirPath}/../freemaster_cfg.h"
-"${ProjDirPath}/../../common/fmstr_example/freemaster_example.c"
-"${ProjDirPath}/../../common/fmstr_example/freemaster_example.h"
-"${ProjDirPath}/../../common/fmstr_example/data_example_pmp.h"
-"${ProjDirPath}/../../common/fmstr_example/data_img_logo.h"
-"${ProjDirPath}/../../common/fmstr_example/data_img_file.h"
-"${ProjDirPath}/../../common/fmstr_example/data_img_fmstrlogo.h"
-"${ProjDirPath}/../../common/fmstr_example/data_html_index.h"
-"${ProjDirPath}/../../common/fmstr_example/example_data.h"
+"${ProjDirPath}/../../../common/fmstr_example/freemaster_example.c"
+"${ProjDirPath}/../../../common/fmstr_example/freemaster_example.h"
 "${ProjDirPath}/../board.c"
 "${ProjDirPath}/../board.h"
+"${ProjDirPath}/../../../common/fmstr_example/data_example_pmp.h"
+"${ProjDirPath}/../../../common/fmstr_example/data_img_logo.h"
+"${ProjDirPath}/../../../common/fmstr_example/data_img_file.h"
+"${ProjDirPath}/../../../common/fmstr_example/data_img_fmstrlogo.h"
+"${ProjDirPath}/../../../common/fmstr_example/data_html_index.h"
+"${ProjDirPath}/../../../common/fmstr_example/example_data.h"
 "${ProjDirPath}/../dcd.c"
 "${ProjDirPath}/../dcd.h"
 )
 
 target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
     ${ProjDirPath}/..
-    ${ProjDirPath}/../../common/fmstr_example
+    ${ProjDirPath}/../../../common/fmstr_example
 )
 
 set(CMAKE_MODULE_PATH
@@ -62,7 +62,6 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../../devices/MIMXRT1166/utilities/debug_console_lite
     ${ProjDirPath}/../../../../../../devices/MIMXRT1166
     ${ProjDirPath}/../../../../../../components/uart
-    ${ProjDirPath}/../../../../../../components/serial_manager
     ${ProjDirPath}/../../../../../../components/lists
     ${ProjDirPath}/../../../../../../devices/MIMXRT1166/xip
     ${ProjDirPath}/../../../../xip
@@ -87,11 +86,7 @@ include(device_MIMXRT1166_CMSIS_MIMXRT1166_cm7)
 
 include(component_lpuart_adapter_MIMXRT1166_cm7)
 
-include(component_serial_manager_MIMXRT1166_cm7)
-
 include(component_lists_MIMXRT1166_cm7)
-
-include(component_serial_manager_uart_MIMXRT1166_cm7)
 
 include(device_MIMXRT1166_startup_MIMXRT1166_cm7)
 

@@ -184,16 +184,15 @@
           <state>XIP_EXTERNAL_FLASH=1</state>
           <state>XIP_BOOT_HEADER_ENABLE=1</state>
           <state>CPU_MIMXRT1176DVMAA_cm7</state>
-          <state>PRINTF_ADVANCED_ENABLE=1</state>
-          <state>PRINTF_FLOAT_ENABLE=1</state>
-          <state>MP3_DECODER=1</state>
-          <state>OPUS_DECODER=1</state>
-          <state>USB_STACK_FREERTOS</state>
-          <state>SAI_XFER_QUEUE_SIZE=3</state>
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
           <state>BOARD_USE_CODEC=1</state>
           <state>CODEC_WM8960_ENABLE</state>
           <state>SD_ENABLED</state>
+          <state>PRINTF_ADVANCED_ENABLE=1</state>
+          <state>PRINTF_FLOAT_ENABLE=1</state>
+          <state>MP3_DECODER=1</state>
+          <state>OPUS_DECODER=1</state>
+          <state>SAI_XFER_QUEUE_SIZE=3</state>
           <state>DEBUG_CONSOLE_RX_ENABLE=0</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>SDK_OS_FREE_RTOS</state>
@@ -328,7 +327,6 @@
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../..</state>
-          <state>$PROJ_DIR$/../../../..</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/wm8960</state>
           <state>$PROJ_DIR$/../../../../../../components/codec</state>
@@ -349,7 +347,9 @@
           <state>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-libs/osa</state>
           <state>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-libs/osa/freertos</state>
           <state>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-libs/common</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/inc</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/encoders/cei</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities</state>
           <state>$PROJ_DIR$/../../../../../../middleware/fatfs/source</state>
           <state>$PROJ_DIR$/../../../../../../middleware/fatfs/source/fsl_sd_disk</state>
@@ -1211,16 +1211,15 @@
           <state>XIP_BOOT_HEADER_ENABLE=1</state>
           <state>NDEBUG</state>
           <state>CPU_MIMXRT1176DVMAA_cm7</state>
-          <state>PRINTF_ADVANCED_ENABLE=1</state>
-          <state>PRINTF_FLOAT_ENABLE=1</state>
-          <state>MP3_DECODER=1</state>
-          <state>OPUS_DECODER=1</state>
-          <state>USB_STACK_FREERTOS</state>
-          <state>SAI_XFER_QUEUE_SIZE=3</state>
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
           <state>BOARD_USE_CODEC=1</state>
           <state>CODEC_WM8960_ENABLE</state>
           <state>SD_ENABLED</state>
+          <state>PRINTF_ADVANCED_ENABLE=1</state>
+          <state>PRINTF_FLOAT_ENABLE=1</state>
+          <state>MP3_DECODER=1</state>
+          <state>OPUS_DECODER=1</state>
+          <state>SAI_XFER_QUEUE_SIZE=3</state>
           <state>DEBUG_CONSOLE_RX_ENABLE=0</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>SDK_OS_FREE_RTOS</state>
@@ -1355,7 +1354,6 @@
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../..</state>
-          <state>$PROJ_DIR$/../../../..</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/wm8960</state>
           <state>$PROJ_DIR$/../../../../../../components/codec</state>
@@ -1376,7 +1374,9 @@
           <state>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-libs/osa</state>
           <state>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-libs/osa/freertos</state>
           <state>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-libs/common</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/inc</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/encoders/cei</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/utilities</state>
           <state>$PROJ_DIR$/../../../../../../middleware/fatfs/source</state>
           <state>$PROJ_DIR$/../../../../../../middleware/fatfs/source/fsl_sd_disk</state>
@@ -2058,7 +2058,13 @@
   <group>
     <name>source</name>
     <file>
-      <name>$PROJ_DIR$/../app_definitions.h</name>
+      <name>$PROJ_DIR$/../streamer_pcm.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../streamer_pcm_app.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../usb_device_config.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../app_streamer.c</name>
@@ -2073,22 +2079,10 @@
       <name>$PROJ_DIR$/../cmd.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../ffconf.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../main.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../main.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../streamer_pcm.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../streamer_pcm.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../usb_device_config.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../usb_device_descriptor.h</name>
@@ -2103,7 +2097,13 @@
       <name>$PROJ_DIR$/../audio_microphone.c</name>
     </file>
     <file>
+      <name>$PROJ_DIR$/../ffconf.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../FreeRTOSConfig.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../app_definitions.h</name>
     </file>
   </group>
   <group>
@@ -2113,12 +2113,6 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../pin_mux.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../sdmmc_config.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../sdmmc_config.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../board.c</name>
@@ -2241,13 +2235,13 @@
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_anatop_ai.c</name>
     </file>
     <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_memory.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_usdhc.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_usdhc.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_memory.h</name>
     </file>
   </group>
   <group>
@@ -2632,6 +2626,9 @@
           <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include/StackMacros.h</name>
         </file>
         <file>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include/stdint.readme</name>
+        </file>
+        <file>
           <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include/stream_buffer.h</name>
         </file>
         <file>
@@ -2751,6 +2748,45 @@
       </file>
     </group>
     <group>
+      <name>mcu-audio</name>
+      <group>
+        <name>opus</name>
+        <group>
+          <name>include</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/include/config.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/include/opus.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/include/opus_cci.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/include/opus_cci_raw.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/include/opus_custom.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/include/opus_defines.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/include/opus_multistream.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/include/opus_projection.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/include/opus_types.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/include/test_opus_common.h</name>
+          </file>
+        </group>
+      </group>
+    </group>
+    <group>
       <name>streamer</name>
       <group>
         <name>inc</name>
@@ -2763,6 +2799,21 @@
         <file>
           <name>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/inc/metadata_error.h</name>
         </file>
+      </group>
+      <group>
+        <name>encoders</name>
+        <group>
+          <name>cei</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/encoders/cei/cei.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/encoders/cei/cei_enctypes.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/encoders/cei/cei_table.h</name>
+          </file>
+        </group>
       </group>
     </group>
   </group>

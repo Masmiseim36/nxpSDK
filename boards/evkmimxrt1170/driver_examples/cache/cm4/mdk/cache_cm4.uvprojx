@@ -559,6 +559,11 @@
               <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_dcdc.c</FilePath>
             </File>
             <File>
+              <FileName>fsl_memory.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_memory.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_anatop_ai.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_anatop_ai.h</FilePath>
@@ -1291,6 +1296,11 @@
               <FileName>fsl_dcdc.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_dcdc.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_memory.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_memory.h</FilePath>
             </File>
             <File>
               <FileName>fsl_anatop_ai.h</FileName>
@@ -2027,6 +2037,11 @@
               <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_dcdc.c</FilePath>
             </File>
             <File>
+              <FileName>fsl_memory.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_memory.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_anatop_ai.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_anatop_ai.h</FilePath>
@@ -2759,6 +2774,11 @@
               <FileName>fsl_dcdc.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_dcdc.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_memory.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_memory.h</FilePath>
             </File>
             <File>
               <FileName>fsl_anatop_ai.h</FileName>

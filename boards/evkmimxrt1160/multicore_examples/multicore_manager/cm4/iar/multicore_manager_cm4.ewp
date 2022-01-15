@@ -1960,19 +1960,7 @@
     </settings>
   </configuration>
   <group>
-    <name>source</name>
-    <file>
-      <name>$PROJ_DIR$/../mcmgr_core1.c</name>
-    </file>
-  </group>
-  <group>
     <name>board</name>
-    <file>
-      <name>$PROJ_DIR$/../pin_mux.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../pin_mux.h</name>
-    </file>
     <file>
       <name>$PROJ_DIR$/../board.c</name>
     </file>
@@ -1986,10 +1974,22 @@
       <name>$PROJ_DIR$/../clock_config.h</name>
     </file>
     <file>
+      <name>$PROJ_DIR$/../pin_mux.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../pin_mux.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../dcd.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../dcd.h</name>
+    </file>
+  </group>
+  <group>
+    <name>source</name>
+    <file>
+      <name>$PROJ_DIR$/../mcmgr_core1.c</name>
     </file>
   </group>
   <group>

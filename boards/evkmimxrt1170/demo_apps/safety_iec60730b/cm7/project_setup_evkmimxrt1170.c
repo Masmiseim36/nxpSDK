@@ -234,7 +234,6 @@ void ClockInit(void)
  *
  * @return  None
  */
-extern uint32_t BOARD_DebugConsoleSrcFreq(void);
 void SerialInit()
 {
     const lpuart_config_t LPUART_1_config = {.baudRate_Bps    = UART_BAUD_RATE,
@@ -317,6 +316,8 @@ void AdcInit(void)
 
     /* Disable PAUSE between conversions */
     TESTED_ADC->PAUSE = 0U;
+    
+    TESTED_ADC->TCTRL[0] = ADC_TCTRL_TCMD(1);
 
     /* Enable ADC */
     TESTED_ADC->CTRL |= ADC_CTRL_ADCEN_MASK;

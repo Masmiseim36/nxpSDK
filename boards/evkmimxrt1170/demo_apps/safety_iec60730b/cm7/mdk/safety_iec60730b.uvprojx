@@ -334,7 +334,7 @@
               <MiscControls>-gdwarf-3</MiscControls>
               <Define>DEBUG, CPU_MIMXRT1176DVMAA_cm7, XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, SKIP_SYSCLK_INIT, SERIAL_PORT_TYPE_UART=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>../../../../../../middleware/safety_iec60730b/boards/common/cm4_cm7/startup/cm7;..;../../../../../../middleware/safety_iec60730b/boards/evkmimxrt1170/xip;linker;../../../../../../MIMXRT1176;../../../../../../middleware/safety_iec60730b/safety/v4_1/core_test/cm4_cm7/register;../../../../../../middleware/safety_iec60730b/safety/v4_1/core_test/cm4_cm7/ram;../../../../../../middleware/safety_iec60730b/safety/v4_1/core_test/cm4_cm7/flash;../../../../../../middleware/safety_iec60730b/safety/v4_1/core_test/cm4_cm7/stack;../../../../../../middleware/safety_iec60730b/safety/v4_1/core_test/cm4_cm7/programCounter;../../../../../../middleware/safety_iec60730b/safety/v4_1/core_test/cm4_cm7;../../../../../../middleware/safety_iec60730b/safety/v4_1;../../../../../../middleware/safety_iec60730b/safety/v4_1/compiler;../../../../../../middleware/safety_iec60730b/safety/v4_1/common_test/wdog;../../../../../../middleware/safety_iec60730b/safety/v4_1/common_test/tsi;../../../../../../middleware/safety_iec60730b/safety/v4_1/common_test/dio;../../../../../../middleware/safety_iec60730b/safety/v4_1/common_test/clock;../../../../../../middleware/safety_iec60730b/safety/v4_1/common_test/aio;../../../../../../devices/MIMXRT1176;../../../../../../devices/MIMXRT1176/drivers;../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../../middleware/freemaster/src/common;../../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../components/uart;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>../../../../../../middleware/safety_iec60730b/boards/evkmimxrt1170/xip;linker;..;../../../../../../devices/MIMXRT1176;../../../../../../middleware/safety_iec60730b/boards/common/cm4_cm7/startup/cm7;../../../../../../middleware/safety_iec60730b/safety/v4_2/core_test/cm4_cm7/register;../../../../../../middleware/safety_iec60730b/safety/v4_2/core_test/cm4_cm7/ram;../../../../../../middleware/safety_iec60730b/safety/v4_2/core_test/cm4_cm7/flash;../../../../../../middleware/safety_iec60730b/safety/v4_2/core_test/cm4_cm7/stack;../../../../../../middleware/safety_iec60730b/safety/v4_2/core_test/cm4_cm7/programCounter;../../../../../../middleware/safety_iec60730b/safety/v4_2/core_test/cm4_cm7;../../../../../../middleware/safety_iec60730b/safety/v4_2;../../../../../../middleware/safety_iec60730b/safety/v4_2/compiler;../../../../../../middleware/safety_iec60730b/safety/v4_2/common_test/wdog;../../../../../../middleware/safety_iec60730b/safety/v4_2/common_test/tsi;../../../../../../middleware/safety_iec60730b/safety/v4_2/common_test/dio;../../../../../../middleware/safety_iec60730b/safety/v4_2/common_test/clock;../../../../../../middleware/safety_iec60730b/safety/v4_2/common_test/flash;../../../../../../middleware/safety_iec60730b/safety/v4_2/common_test/aio;../../../../../../devices/MIMXRT1176/drivers;../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../../middleware/freemaster/src/common;../../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../components/uart;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -352,7 +352,7 @@
               <MiscControls/>
               <Define>DEBUG, __STARTUP_INITIALIZE_NONCACHEDATA</Define>
               <Undefine/>
-              <IncludePath>../../../../../../middleware/safety_iec60730b/boards/common/cm4_cm7/startup/cm7;../../../../../../middleware/safety_iec60730b/safety/v4_1/core_test/cm4_cm7/register;../../../../../../middleware/safety_iec60730b/safety/v4_1/core_test/cm4_cm7/ram;../../../../../../middleware/safety_iec60730b/safety/v4_1/core_test/cm4_cm7/flash;../../../../../../middleware/safety_iec60730b/safety/v4_1/core_test/cm4_cm7/stack;../../../../../../middleware/safety_iec60730b/safety/v4_1/core_test/cm4_cm7/programCounter;../../../../../../middleware/safety_iec60730b/safety/v4_1/core_test/cm4_cm7;../../../../../../middleware/safety_iec60730b/safety/v4_1;../../../../../../middleware/safety_iec60730b/safety/v4_1/compiler;../../../../../../middleware/safety_iec60730b/safety/v4_1/common_test/wdog;../../../../../../middleware/safety_iec60730b/safety/v4_1/common_test/tsi;../../../../../../middleware/safety_iec60730b/safety/v4_1/common_test/dio;../../../../../../middleware/safety_iec60730b/safety/v4_1/common_test/clock;../../../../../../middleware/safety_iec60730b/safety/v4_1/common_test/aio;../../../../../../middleware/safety_iec60730b/devices/MIMXRT1176</IncludePath>
+              <IncludePath>../../../../../../middleware/safety_iec60730b/boards/common/cm4_cm7/startup/cm7;../../../../../../middleware/safety_iec60730b/safety/v4_2/core_test/cm4_cm7/register;../../../../../../middleware/safety_iec60730b/safety/v4_2/core_test/cm4_cm7/ram;../../../../../../middleware/safety_iec60730b/safety/v4_2/core_test/cm4_cm7/flash;../../../../../../middleware/safety_iec60730b/safety/v4_2/core_test/cm4_cm7/stack;../../../../../../middleware/safety_iec60730b/safety/v4_2/core_test/cm4_cm7/programCounter;../../../../../../middleware/safety_iec60730b/safety/v4_2/core_test/cm4_cm7;../../../../../../middleware/safety_iec60730b/safety/v4_2;../../../../../../middleware/safety_iec60730b/safety/v4_2/compiler;../../../../../../middleware/safety_iec60730b/safety/v4_2/common_test/wdog;../../../../../../middleware/safety_iec60730b/safety/v4_2/common_test/tsi;../../../../../../middleware/safety_iec60730b/safety/v4_2/common_test/dio;../../../../../../middleware/safety_iec60730b/safety/v4_2/common_test/clock;../../../../../../middleware/safety_iec60730b/safety/v4_2/common_test/aio;../../../../../../middleware/safety_iec60730b/devices/MIMXRT1176</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -379,9 +379,9 @@
           <GroupName>source</GroupName>
           <Files>
             <File>
-              <FileName>freemaster_cfg.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../freemaster_cfg.h</FilePath>
+              <FileName>main_imxrt.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../main_imxrt.c</FilePath>
             </File>
             <File>
               <FileName>safety_test_items.h</FileName>
@@ -424,89 +424,9 @@
               <FilePath>../safety_cm7_imxrt.h</FilePath>
             </File>
             <File>
-              <FileName>main_imxrt.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../main_imxrt.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>doc</GroupName>
-          <Files>
-            <File>
-              <FileName>readme.txt</FileName>
+              <FileName>freemaster_cfg.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../readme.txt</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>board</GroupName>
-          <Files>
-            <File>
-              <FileName>pin_mux.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../pin_mux.c</FilePath>
-            </File>
-            <File>
-              <FileName>pin_mux.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../pin_mux.h</FilePath>
-            </File>
-            <File>
-              <FileName>board.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../board.c</FilePath>
-            </File>
-            <File>
-              <FileName>board.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../board.h</FilePath>
-            </File>
-            <File>
-              <FileName>clock_config.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../clock_config.c</FilePath>
-            </File>
-            <File>
-              <FileName>clock_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../clock_config.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>tools/srecord</GroupName>
-          <Files>
-            <File>
-              <FileName>srecord-1.64.zip</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../tools/srecord/srecord-1.64.zip</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>startup</GroupName>
-          <Files>
-            <File>
-              <FileName>start.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/safety_iec60730b/boards/common/cm4_cm7/startup/cm7/start.c</FilePath>
-            </File>
-            <File>
-              <FileName>startup_mdk.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/safety_iec60730b/boards/common/cm4_cm7/startup/cm7/startup_mdk.c</FilePath>
-            </File>
-            <File>
-              <FileName>vectors_mdk.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/safety_iec60730b/boards/common/cm4_cm7/startup/cm7/vectors_mdk.c</FilePath>
-            </File>
-            <File>
-              <FileName>vectors_mdk.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/safety_iec60730b/boards/common/cm4_cm7/startup/cm7/vectors_mdk.h</FilePath>
+              <FilePath>../freemaster_cfg.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -566,17 +486,17 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>MIMXRT1176</GroupName>
+          <GroupName>devices/MIMXRT1176</GroupName>
           <Files>
             <File>
               <FileName>system_MIMXRT1176_cm7.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../MIMXRT1176/system_MIMXRT1176_cm7.c</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT1176/system_MIMXRT1176_cm7.c</FilePath>
             </File>
             <File>
               <FileName>system_MIMXRT1176_cm7.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../MIMXRT1176/system_MIMXRT1176_cm7.h</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT1176/system_MIMXRT1176_cm7.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -591,12 +511,92 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>board</GroupName>
+          <Files>
+            <File>
+              <FileName>clock_config.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../clock_config.c</FilePath>
+            </File>
+            <File>
+              <FileName>clock_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../clock_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>pin_mux.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../pin_mux.c</FilePath>
+            </File>
+            <File>
+              <FileName>pin_mux.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../pin_mux.h</FilePath>
+            </File>
+            <File>
+              <FileName>board.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../board.c</FilePath>
+            </File>
+            <File>
+              <FileName>board.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../board.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>doc</GroupName>
+          <Files>
+            <File>
+              <FileName>readme.txt</FileName>
+              <FileType>5</FileType>
+              <FilePath>../readme.txt</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>tools/srecord</GroupName>
+          <Files>
+            <File>
+              <FileName>srecord-1.64.zip</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../tools/srecord/srecord-1.64.zip</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>startup</GroupName>
+          <Files>
+            <File>
+              <FileName>start.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/safety_iec60730b/boards/common/cm4_cm7/startup/cm7/start.c</FilePath>
+            </File>
+            <File>
+              <FileName>startup_mdk.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/safety_iec60730b/boards/common/cm4_cm7/startup/cm7/startup_mdk.c</FilePath>
+            </File>
+            <File>
+              <FileName>vectors_mdk.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/safety_iec60730b/boards/common/cm4_cm7/startup/cm7/vectors_mdk.c</FilePath>
+            </File>
+            <File>
+              <FileName>vectors_mdk.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/safety_iec60730b/boards/common/cm4_cm7/startup/cm7/vectors_mdk.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>safety_iec60730b/safety/register</GroupName>
           <Files>
             <File>
               <FileName>iec60730b_cm4_cm7_reg.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/safety_iec60730b/safety/v4_1/core_test/cm4_cm7/register/iec60730b_cm4_cm7_reg.h</FilePath>
+              <FilePath>../../../../../../middleware/safety_iec60730b/safety/v4_2/core_test/cm4_cm7/register/iec60730b_cm4_cm7_reg.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -606,7 +606,7 @@
             <File>
               <FileName>iec60730b_cm4_cm7_ram.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/safety_iec60730b/safety/v4_1/core_test/cm4_cm7/ram/iec60730b_cm4_cm7_ram.h</FilePath>
+              <FilePath>../../../../../../middleware/safety_iec60730b/safety/v4_2/core_test/cm4_cm7/ram/iec60730b_cm4_cm7_ram.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -616,7 +616,12 @@
             <File>
               <FileName>iec60730b_cm4_cm7_flash.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/safety_iec60730b/safety/v4_1/core_test/cm4_cm7/flash/iec60730b_cm4_cm7_flash.h</FilePath>
+              <FilePath>../../../../../../middleware/safety_iec60730b/safety/v4_2/core_test/cm4_cm7/flash/iec60730b_cm4_cm7_flash.h</FilePath>
+            </File>
+            <File>
+              <FileName>iec60730b_invariable_memory.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/safety_iec60730b/safety/v4_2/common_test/flash/iec60730b_invariable_memory.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -626,7 +631,7 @@
             <File>
               <FileName>iec60730b_cm4_cm7_stack.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/safety_iec60730b/safety/v4_1/core_test/cm4_cm7/stack/iec60730b_cm4_cm7_stack.h</FilePath>
+              <FilePath>../../../../../../middleware/safety_iec60730b/safety/v4_2/core_test/cm4_cm7/stack/iec60730b_cm4_cm7_stack.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -636,12 +641,12 @@
             <File>
               <FileName>iec60730b_cm4_cm7_pc.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/safety_iec60730b/safety/v4_1/core_test/cm4_cm7/programCounter/iec60730b_cm4_cm7_pc.h</FilePath>
+              <FilePath>../../../../../../middleware/safety_iec60730b/safety/v4_2/core_test/cm4_cm7/programCounter/iec60730b_cm4_cm7_pc.h</FilePath>
             </File>
             <File>
               <FileName>iec60730b_cm4_cm7_pc_object.S</FileName>
               <FileType>2</FileType>
-              <FilePath>../../../../../../middleware/safety_iec60730b/safety/v4_1/core_test/cm4_cm7/programCounter/iec60730b_cm4_cm7_pc_object.S</FilePath>
+              <FilePath>../../../../../../middleware/safety_iec60730b/safety/v4_2/core_test/cm4_cm7/programCounter/iec60730b_cm4_cm7_pc_object.S</FilePath>
             </File>
           </Files>
         </Group>
@@ -651,27 +656,27 @@
             <File>
               <FileName>iec60730b_core.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/safety_iec60730b/safety/v4_1/core_test/cm4_cm7/iec60730b_core.h</FilePath>
+              <FilePath>../../../../../../middleware/safety_iec60730b/safety/v4_2/core_test/cm4_cm7/iec60730b_core.h</FilePath>
             </File>
             <File>
               <FileName>iec60730b.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/safety_iec60730b/safety/v4_1/iec60730b.h</FilePath>
+              <FilePath>../../../../../../middleware/safety_iec60730b/safety/v4_2/iec60730b.h</FilePath>
             </File>
             <File>
               <FileName>iec60730b_types.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/safety_iec60730b/safety/v4_1/iec60730b_types.h</FilePath>
+              <FilePath>../../../../../../middleware/safety_iec60730b/safety/v4_2/iec60730b_types.h</FilePath>
             </File>
             <File>
               <FileName>IEC60730B_M4_M7_KEIL_v4_1.lib</FileName>
               <FileType>4</FileType>
-              <FilePath>../../../../../../middleware/safety_iec60730b/safety/v4_1/IEC60730B_M4_M7_KEIL_v4_1.lib</FilePath>
+              <FilePath>../../../../../../middleware/safety_iec60730b/safety/v4_2/IEC60730B_M4_M7_KEIL_v4_1.lib</FilePath>
             </File>
             <File>
-              <FileName>IEC60730B_M4_M7_COM_KEIL_v4_1.lib</FileName>
+              <FileName>IEC60730B_M4_M7_COM_KEIL_v4_2.lib</FileName>
               <FileType>4</FileType>
-              <FilePath>../../../../../../middleware/safety_iec60730b/safety/v4_1/IEC60730B_M4_M7_COM_KEIL_v4_1.lib</FilePath>
+              <FilePath>../../../../../../middleware/safety_iec60730b/safety/v4_2/IEC60730B_M4_M7_COM_KEIL_v4_2.lib</FilePath>
             </File>
           </Files>
         </Group>
@@ -681,7 +686,7 @@
             <File>
               <FileName>asm_mac_common.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/safety_iec60730b/safety/v4_1/compiler/asm_mac_common.h</FilePath>
+              <FilePath>../../../../../../middleware/safety_iec60730b/safety/v4_2/compiler/asm_mac_common.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -691,12 +696,12 @@
             <File>
               <FileName>iec60730b_wdog.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/safety_iec60730b/safety/v4_1/common_test/wdog/iec60730b_wdog.c</FilePath>
+              <FilePath>../../../../../../middleware/safety_iec60730b/safety/v4_2/common_test/wdog/iec60730b_wdog.c</FilePath>
             </File>
             <File>
               <FileName>iec60730b_wdog.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/safety_iec60730b/safety/v4_1/common_test/wdog/iec60730b_wdog.h</FilePath>
+              <FilePath>../../../../../../middleware/safety_iec60730b/safety/v4_2/common_test/wdog/iec60730b_wdog.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -706,7 +711,7 @@
             <File>
               <FileName>iec60730b_tsi.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/safety_iec60730b/safety/v4_1/common_test/tsi/iec60730b_tsi.h</FilePath>
+              <FilePath>../../../../../../middleware/safety_iec60730b/safety/v4_2/common_test/tsi/iec60730b_tsi.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -716,12 +721,12 @@
             <File>
               <FileName>iec60730b_dio_ext.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/safety_iec60730b/safety/v4_1/common_test/dio/iec60730b_dio_ext.h</FilePath>
+              <FilePath>../../../../../../middleware/safety_iec60730b/safety/v4_2/common_test/dio/iec60730b_dio_ext.h</FilePath>
             </File>
             <File>
               <FileName>iec60730b_dio.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/safety_iec60730b/safety/v4_1/common_test/dio/iec60730b_dio.h</FilePath>
+              <FilePath>../../../../../../middleware/safety_iec60730b/safety/v4_2/common_test/dio/iec60730b_dio.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -731,7 +736,7 @@
             <File>
               <FileName>iec60730b_clock.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/safety_iec60730b/safety/v4_1/common_test/clock/iec60730b_clock.h</FilePath>
+              <FilePath>../../../../../../middleware/safety_iec60730b/safety/v4_2/common_test/clock/iec60730b_clock.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -741,7 +746,7 @@
             <File>
               <FileName>iec60730b_aio.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/safety_iec60730b/safety/v4_1/common_test/aio/iec60730b_aio.h</FilePath>
+              <FilePath>../../../../../../middleware/safety_iec60730b/safety/v4_2/common_test/aio/iec60730b_aio.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1097,6 +1102,16 @@
               <FileName>freemaster_serial_usb.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial/freemaster_serial_usb.h</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_net_segger_rtt.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/freemaster/src/drivers/mcuxsdk/network/freemaster_net_segger_rtt.c</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_net_segger_rtt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/freemaster/src/drivers/mcuxsdk/network/freemaster_net_segger_rtt.h</FilePath>
             </File>
             <File>
               <FileName>freemaster_net_lwip_udp.c</FileName>

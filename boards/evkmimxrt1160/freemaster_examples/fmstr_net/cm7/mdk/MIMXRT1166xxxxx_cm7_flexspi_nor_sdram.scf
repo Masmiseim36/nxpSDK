@@ -8,7 +8,7 @@
 **     Compiler:            Keil ARM C/C++ Compiler
 **     Reference manual:    IMXRT1160RM, Rev 0, 03/2021
 **     Version:             rev. 0.1, 2020-12-29
-**     Build:               b210422
+**     Build:               b210709
 **
 **     Abstract:
 **         Linker file for the Keil ARM C/C++ Compiler
@@ -52,26 +52,26 @@
 #define  m_data_start                  (m_interrupts_ram_start + m_interrupts_ram_size)
 #define  m_data_size                   (0x03000000 - m_interrupts_ram_size)
 
-#define m_ncache_start                 0x83000000
-#define m_ncache_size                  0x01000000
-
 #define m_data2_start                  0x20000000
 #define m_data2_size                   0x00040000
 
 #define m_data3_start                  0x202C0000
 #define m_data3_size                   0x00010000
 
+#define m_ncache_start                 0x83000000
+#define m_ncache_size                  0x01000000
+
 /* Sizes */
 #if (defined(__stack_size__))
   #define Stack_Size                   __stack_size__
 #else
-  #define Stack_Size                   2048
+  #define Stack_Size                   0x800
 #endif
 
 #if (defined(__heap_size__))
   #define Heap_Size                    __heap_size__
 #else
-  #define Heap_Size                    25600
+  #define Heap_Size                    0x7000
 #endif
 
 #if defined(XIP_BOOT_HEADER_ENABLE) && (XIP_BOOT_HEADER_ENABLE == 1)
@@ -104,6 +104,7 @@ LR_m_text m_interrupts_start m_text_start+m_text_size-m_interrupts_start {   ; l
 #endif
   RW_m_data2 m_data2_start m_data2_size {
     * (RamFunction)
+    * (DataQuickAccess)
   }
 #if (defined(__heap_noncacheable__))
   RW_m_data m_data_start m_data_size-Stack_Size { ; RW data

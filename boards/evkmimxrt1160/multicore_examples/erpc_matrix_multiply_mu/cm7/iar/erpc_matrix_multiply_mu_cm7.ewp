@@ -315,9 +315,9 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
+          <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../erpc_common</state>
           <state>$PROJ_DIR$/../../../erpc_common/erpc_matrix_multiply/service</state>
-          <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../..</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/drivers</state>
@@ -1304,9 +1304,9 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
+          <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../erpc_common</state>
           <state>$PROJ_DIR$/../../../erpc_common/erpc_matrix_multiply/service</state>
-          <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../..</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/drivers</state>
@@ -1980,6 +1980,33 @@
     </settings>
   </configuration>
   <group>
+    <name>board</name>
+    <file>
+      <name>$PROJ_DIR$/../board.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../board.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../clock_config.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../clock_config.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../pin_mux.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../pin_mux.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../dcd.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../dcd.h</name>
+    </file>
+  </group>
+  <group>
     <name>source</name>
     <file>
       <name>$PROJ_DIR$/../../../erpc_common/erpc_error_handler.h</name>
@@ -2110,33 +2137,6 @@
         <name>$PROJ_DIR$/../../../../../../middleware/multicore/erpc/erpc_c/port/erpc_setup_extensions.h</name>
       </file>
     </group>
-  </group>
-  <group>
-    <name>board</name>
-    <file>
-      <name>$PROJ_DIR$/../pin_mux.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../pin_mux.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../board.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../board.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../clock_config.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../clock_config.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../dcd.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../dcd.h</name>
-    </file>
   </group>
   <group>
     <name>doc</name>

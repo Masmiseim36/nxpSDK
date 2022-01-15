@@ -11,8 +11,6 @@ target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
 )
 
 
-include(middleware_multicore_rpmsg_lite_MIMXRT1166_cm4)
-
 include(middleware_freertos-kernel_MIMXRT1166_cm4)
 
 include(middleware_freertos-kernel_heap_4_MIMXRT1166_cm4)

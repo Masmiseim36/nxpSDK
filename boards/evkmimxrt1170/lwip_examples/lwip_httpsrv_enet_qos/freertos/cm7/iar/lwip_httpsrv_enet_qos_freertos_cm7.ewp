@@ -2,7 +2,7 @@
 <project>
   <fileVersion>2</fileVersion>
   <configuration>
-    <name>flexspi_nor_debug</name>
+    <name>flexspi_nor_sdram_debug</name>
     <toolchain>
       <name>ARM</name>
     </toolchain>
@@ -16,15 +16,15 @@
         <debug>1</debug>
         <option>
           <name>ExePath</name>
-          <state>$PROJ_DIR$/flexspi_nor_debug</state>
+          <state>$PROJ_DIR$/flexspi_nor_sdram_debug</state>
         </option>
         <option>
           <name>ObjPath</name>
-          <state>$PROJ_DIR$/flexspi_nor_debug/obj</state>
+          <state>$PROJ_DIR$/flexspi_nor_sdram_debug/obj</state>
         </option>
         <option>
           <name>ListPath</name>
-          <state>$PROJ_DIR$/flexspi_nor_debug/list</state>
+          <state>$PROJ_DIR$/flexspi_nor_sdram_debug/list</state>
         </option>
         <option>
           <name>GEndianMode</name>
@@ -183,10 +183,14 @@
           <state>DEBUG</state>
           <state>XIP_EXTERNAL_FLASH=1</state>
           <state>XIP_BOOT_HEADER_ENABLE=1</state>
+          <state>XIP_BOOT_HEADER_DCD_ENABLE=1</state>
+          <state>USE_SDRAM</state>
+          <state>DATA_SECTION_IS_CACHEABLE=1</state>
           <state>CPU_MIMXRT1176DVMAA_cm7</state>
           <state>USE_RTOS=1</state>
           <state>PRINTF_ADVANCED_ENABLE=1</state>
           <state>HTTPSRV_CFG_WEBSOCKET_ENABLED=1</state>
+          <state>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</state>
           <state>LWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>SDK_OS_FREE_RTOS</state>
@@ -758,7 +762,7 @@
         </option>
         <option>
           <name>IlinkIcfFile</name>
-          <state>$PROJ_DIR$/MIMXRT1176xxxxx_cm7_flexspi_nor.icf</state>
+          <state>$PROJ_DIR$/MIMXRT1176xxxxx_cm7_flexspi_nor_sdram.icf</state>
         </option>
         <option>
           <name>IlinkIcfFileSlave</name>
@@ -997,7 +1001,7 @@
     </settings>
   </configuration>
   <configuration>
-    <name>flexspi_nor_release</name>
+    <name>flexspi_nor_sdram_release</name>
     <toolchain>
       <name>ARM</name>
     </toolchain>
@@ -1011,15 +1015,15 @@
         <debug>0</debug>
         <option>
           <name>ExePath</name>
-          <state>$PROJ_DIR$/flexspi_nor_release</state>
+          <state>$PROJ_DIR$/flexspi_nor_sdram_release</state>
         </option>
         <option>
           <name>ObjPath</name>
-          <state>$PROJ_DIR$/flexspi_nor_release/obj</state>
+          <state>$PROJ_DIR$/flexspi_nor_sdram_release/obj</state>
         </option>
         <option>
           <name>ListPath</name>
-          <state>$PROJ_DIR$/flexspi_nor_release/list</state>
+          <state>$PROJ_DIR$/flexspi_nor_sdram_release/list</state>
         </option>
         <option>
           <name>GEndianMode</name>
@@ -1177,11 +1181,15 @@
           <name>CCDefines</name>
           <state>XIP_EXTERNAL_FLASH=1</state>
           <state>XIP_BOOT_HEADER_ENABLE=1</state>
+          <state>XIP_BOOT_HEADER_DCD_ENABLE=1</state>
+          <state>USE_SDRAM</state>
+          <state>DATA_SECTION_IS_CACHEABLE=1</state>
           <state>NDEBUG</state>
           <state>CPU_MIMXRT1176DVMAA_cm7</state>
           <state>USE_RTOS=1</state>
           <state>PRINTF_ADVANCED_ENABLE=1</state>
           <state>HTTPSRV_CFG_WEBSOCKET_ENABLED=1</state>
+          <state>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</state>
           <state>LWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>SDK_OS_FREE_RTOS</state>
@@ -1753,7 +1761,7 @@
         </option>
         <option>
           <name>IlinkIcfFile</name>
-          <state>$PROJ_DIR$/MIMXRT1176xxxxx_cm7_flexspi_nor.icf</state>
+          <state>$PROJ_DIR$/MIMXRT1176xxxxx_cm7_flexspi_nor_sdram.icf</state>
         </option>
         <option>
           <name>IlinkIcfFileSlave</name>
@@ -3067,6 +3075,9 @@
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../../../rtos/freertos/freertos_kernel/include/StackMacros.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../../rtos/freertos/freertos_kernel/include/stdint.readme</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../../../rtos/freertos/freertos_kernel/include/stream_buffer.h</name>

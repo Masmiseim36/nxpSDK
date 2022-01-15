@@ -54,6 +54,8 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../pin_mux.c"
 "${ProjDirPath}/../pin_mux.h"
 "${ProjDirPath}/../bt_module_config.h"
+"${ProjDirPath}/../wifi_bt_config.c"
+"${ProjDirPath}/../wifi_bt_config.h"
 "${ProjDirPath}/../dcd.c"
 "${ProjDirPath}/../dcd.h"
 "${ProjDirPath}/../evkmimxrt1170_connect_cm4_cm4side.jlinkscript"
@@ -270,12 +272,21 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/bt_pal_gatt_internal.h"
 "${ProjDirPath}/../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/bt_pal_hci_core.c"
 "${ProjDirPath}/../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/bt_pal_hci_core.h"
+"${ProjDirPath}/../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/bt_pal_adv.c"
+"${ProjDirPath}/../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/bt_pal_adv.h"
+"${ProjDirPath}/../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/bt_pal_br.c"
+"${ProjDirPath}/../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/bt_pal_br.h"
+"${ProjDirPath}/../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/bt_pal_id.c"
+"${ProjDirPath}/../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/bt_pal_id.h"
+"${ProjDirPath}/../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/bt_pal_scan.c"
+"${ProjDirPath}/../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/bt_pal_scan.h"
+"${ProjDirPath}/../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/bt_pal_ecc.c"
+"${ProjDirPath}/../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/bt_pal_ecc.h"
 "${ProjDirPath}/../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/bt_pal_addr.c"
 "${ProjDirPath}/../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/bt_pal_buf.c"
 "${ProjDirPath}/../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/bt_pal_direction.c"
 "${ProjDirPath}/../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/bt_pal_direction_internal.h"
 "${ProjDirPath}/../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/bt_pal_hci_ecc.h"
-"${ProjDirPath}/../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/bt_pal_ecc.h"
 "${ProjDirPath}/../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/bt_pal_keys.c"
 "${ProjDirPath}/../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/bt_pal_keys.h"
 "${ProjDirPath}/../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/bt_pal_keys_br.c"
@@ -429,13 +440,14 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../../components/mem_manager
     ${ProjDirPath}/../../../../../../components/messaging
     ${ProjDirPath}/../../../../../../components/rng
-    ${ProjDirPath}/../../../../../../rtos/freertos
+    ${ProjDirPath}/../../../../../../rtos/freertos/freertos_kernel
     ${ProjDirPath}/../../../../../../middleware/wifi
     ${ProjDirPath}/../../../../../../components/common_task
     ${ProjDirPath}/../../../../../../components/internal_flash
     ${ProjDirPath}/../../../../../../middleware/wireless
     ${ProjDirPath}/../../../../../../middleware/littlefs
     ${ProjDirPath}/../../../../../../CMSIS/Core/Include
+    ${ProjDirPath}/../../../../../../components/wifi_bt_module
     ${ProjDirPath}/../../../../../../components/log
 )
 
@@ -512,6 +524,8 @@ include(middleware_wifi_fwdnld_MIMXRT1176_cm4)
 
 include(component_common_task_MIMXRT1176_cm4)
 
+include(driver_lpuart_edma_MIMXRT1176_cm4)
+
 include(driver_xip_board_evkmimxrt1170_MIMXRT1176_cm4)
 
 include(driver_pmu_1_MIMXRT1176_cm4)
@@ -552,9 +566,15 @@ include(middleware_usb_host_common_header_MIMXRT1176_cm4)
 
 include(middleware_usb_host_msd_MIMXRT1176_cm4)
 
+include(component_wifi_bt_module_tx_pwr_limits_MIMXRT1176_cm4)
+
 include(component_log_backend_debugconsole_MIMXRT1176_cm4)
 
 include(component_log_MIMXRT1176_cm4)
+
+include(driver_edma_MIMXRT1176_cm4)
+
+include(driver_dmamux_MIMXRT1176_cm4)
 
 
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--start-group)

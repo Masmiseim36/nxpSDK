@@ -78,6 +78,7 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../CMSIS/Driver/Include
     ${ProjDirPath}/../../../../../devices/MIMXRT1166/utilities/debug_console_lite
     ${ProjDirPath}/../../../../../middleware/eiq
+    ${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite
     ${ProjDirPath}/../../../../../components/lists
     ${ProjDirPath}/../../../../../components/uart
     ${ProjDirPath}/../../../../../devices/MIMXRT1166
@@ -85,7 +86,7 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../evkmimxrt1160/xip
     ${ProjDirPath}/../../../../../CMSIS/Core/Include
     ${ProjDirPath}/../../../../../devices/MIMXRT1166/utilities
-    ${ProjDirPath}/../../../../../CMSIS/DSP
+    ${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis
 )
 
 # include modules
@@ -163,6 +164,8 @@ include(driver_xip_board_evkmimxrt1160_MIMXRT1166_cm7)
 
 include(middleware_eiq_tensorflow_lite_micro_cmsis_nn_MIMXRT1166_cm7)
 
+include(driver_memory_MIMXRT1166_cm7)
+
 include(driver_anatop_ai_MIMXRT1166_cm7)
 
 include(CMSIS_Include_core_cm_MIMXRT1166_cm7)
@@ -179,8 +182,6 @@ include(device_MIMXRT1166_system_MIMXRT1166_cm7)
 
 include(middleware_eiq_tensorflow_lite_micro_third_party_cmsis_nn_MIMXRT1166_cm7)
 
-include(CMSIS_DSP_Library_MIMXRT1166_cm7)
-
 
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--start-group)
 
@@ -191,14 +192,6 @@ target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE c)
 target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE gcc)
 
 target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE nosys)
-
-if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_sdram_release)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../CMSIS/DSP/Lib/GCC/libarm_cortexM7lfdp_math.a)
-endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_sdram_release)
-
-if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_sdram_debug)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../CMSIS/DSP/Lib/GCC/libarm_cortexM7lfdp_math.a)
-endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_sdram_debug)
 
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--end-group)
 

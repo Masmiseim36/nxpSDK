@@ -18,11 +18,15 @@ processor: MIMXRT1176xxxxx
 package_id: MIMXRT1176DVMAA
 mcu_data: ksdk2_0
 processor_version: 0.10.5
+pin_labels:
+- {pin_num: N17, pin_signal: GPIO_AD_16, label: SDIO_RST, identifier: SDIO_RST}
+- {pin_num: J17, pin_signal: GPIO_AD_31, label: WL_RST, identifier: WL_RST}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 
 #include "fsl_common.h"
 #include "fsl_iomuxc.h"
+#include "fsl_gpio.h"
 #include "pin_mux.h"
 
 /* FUNCTION ************************************************************************************************************
@@ -448,35 +452,6 @@ void BOARD_InitM2UARTPins(void) {
                                                  Domain write protection lock: Neither of DWP bits is locked */
 }
 
-
-/*
- * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
-BOARD_InitM2WifiResetPins:
-- options: {callFromInitBoot: 'true', coreID: cm7, enableClock: 'true'}
-- pin_list:
-  - {pin_num: N17, peripheral: CM7_GPIO3, signal: 'gpio_mux_io_cm7, 15', pin_signal: GPIO_AD_16}
- * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
- */
-
-/* FUNCTION ************************************************************************************************************
- *
- * Function Name : BOARD_InitM2WifiResetPins, assigned for the Cortex-M7F core.
- * Description   : Configures pin routing and optionally pin electrical features.
- *
- * END ****************************************************************************************************************/
-void BOARD_InitM2WifiResetPins(void) {
-  CLOCK_EnableClock(kCLOCK_Iomuxc);           /* LPCG on: LPCG is ON. */
-
-  IOMUXC_SetPinMux(
-      IOMUXC_GPIO_AD_16_GPIO_MUX3_IO15,       /* GPIO_AD_16 is configured as GPIO_MUX3_IO15 */
-      0U);                                    /* Software Input On Field: Input Path is determined by functionality */
-  IOMUXC_GPR->GPR42 = ((IOMUXC_GPR->GPR42 &
-    (~(IOMUXC_GPR_GPR42_GPIO_MUX3_GPIO_SEL_LOW_MASK))) /* Mask bits to zero which are setting */
-      | IOMUXC_GPR_GPR42_GPIO_MUX3_GPIO_SEL_LOW(0x8000U) /* GPIO3 and CM7_GPIO3 share same IO MUX function, GPIO_MUX3 selects one GPIO function: 0x8000U */
-    );
-}
-
-
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 BOARD_InitM2ScoPins:
@@ -655,6 +630,53 @@ void BOARD_InitM2CodecPins(void) {
                                                  Domain write protection: Both cores are allowed
                                                  Domain write protection lock: Neither of DWP bits is locked */
 }
+
+
+/*
+ * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
+BOARD_InitPinsM2:
+- options: {callFromInitBoot: 'false', prefix: BOARD_INITPINSM2_, coreID: cm7, enableClock: 'true'}
+- pin_list:
+  - {pin_num: N17, peripheral: GPIO9, signal: 'gpio_io, 15', pin_signal: GPIO_AD_16, direction: OUTPUT}
+  - {pin_num: J17, peripheral: GPIO9, signal: 'gpio_io, 30', pin_signal: GPIO_AD_31, direction: OUTPUT}
+ * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
+ */
+
+/* FUNCTION ************************************************************************************************************
+ *
+ * Function Name : BOARD_InitPinsM2, assigned for the Cortex-M7F core.
+ * Description   : Configures pin routing and optionally pin electrical features.
+ *
+ * END ****************************************************************************************************************/
+void BOARD_InitPinsM2(void) {
+  CLOCK_EnableClock(kCLOCK_Iomuxc);           /* LPCG on: LPCG is ON. */
+
+  /* GPIO configuration of SDIO_RST on GPIO_AD_16 (pin N17) */
+  gpio_pin_config_t SDIO_RST_config = {
+      .direction = kGPIO_DigitalOutput,
+      .outputLogic = 0U,
+      .interruptMode = kGPIO_NoIntmode
+  };
+  /* Initialize GPIO functionality on GPIO_AD_16 (pin N17) */
+  GPIO_PinInit(GPIO9, 15U, &SDIO_RST_config);
+
+  /* GPIO configuration of WL_RST on GPIO_AD_31 (pin J17) */
+  gpio_pin_config_t WL_RST_config = {
+      .direction = kGPIO_DigitalOutput,
+      .outputLogic = 0U,
+      .interruptMode = kGPIO_NoIntmode
+  };
+  /* Initialize GPIO functionality on GPIO_AD_31 (pin J17) */
+  GPIO_PinInit(GPIO9, 30U, &WL_RST_config);
+
+  IOMUXC_SetPinMux(
+      IOMUXC_GPIO_AD_16_GPIO9_IO15,           /* GPIO_AD_16 is configured as GPIO9_IO15 */
+      0U);                                    /* Software Input On Field: Input Path is determined by functionality */
+  IOMUXC_SetPinMux(
+      IOMUXC_GPIO_AD_31_GPIO9_IO30,           /* GPIO_AD_31 is configured as GPIO9_IO30 */
+      0U);                                    /* Software Input On Field: Input Path is determined by functionality */
+}
+
 
 /***********************************************************************************************************************
  * EOF

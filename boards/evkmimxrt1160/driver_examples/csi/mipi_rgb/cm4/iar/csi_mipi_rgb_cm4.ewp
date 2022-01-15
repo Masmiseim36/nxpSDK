@@ -326,6 +326,7 @@
           <state>$PROJ_DIR$/../../../../../../../components/video/display/rm68200</state>
           <state>$PROJ_DIR$/../../../../../../../components/video/display/dc/elcdif</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/utilities/debug_console_lite</state>
+          <state>$PROJ_DIR$/../../../../../../../components/video/display/hx8394</state>
           <state>$PROJ_DIR$/../../../../../../../components/video/camera/receiver/csi</state>
           <state>$PROJ_DIR$/../../../../../../../components/video/camera</state>
           <state>$PROJ_DIR$/../../../../../../../components/video</state>
@@ -1318,6 +1319,7 @@
           <state>$PROJ_DIR$/../../../../../../../components/video/display/rm68200</state>
           <state>$PROJ_DIR$/../../../../../../../components/video/display/dc/elcdif</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/utilities/debug_console_lite</state>
+          <state>$PROJ_DIR$/../../../../../../../components/video/display/hx8394</state>
           <state>$PROJ_DIR$/../../../../../../../components/video/camera/receiver/csi</state>
           <state>$PROJ_DIR$/../../../../../../../components/video/camera</state>
           <state>$PROJ_DIR$/../../../../../../../components/video</state>
@@ -2307,6 +2309,7 @@
           <state>$PROJ_DIR$/../../../../../../../components/video/display/rm68200</state>
           <state>$PROJ_DIR$/../../../../../../../components/video/display/dc/elcdif</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/utilities/debug_console_lite</state>
+          <state>$PROJ_DIR$/../../../../../../../components/video/display/hx8394</state>
           <state>$PROJ_DIR$/../../../../../../../components/video/camera/receiver/csi</state>
           <state>$PROJ_DIR$/../../../../../../../components/video/camera</state>
           <state>$PROJ_DIR$/../../../../../../../components/video</state>
@@ -3299,6 +3302,7 @@
           <state>$PROJ_DIR$/../../../../../../../components/video/display/rm68200</state>
           <state>$PROJ_DIR$/../../../../../../../components/video/display/dc/elcdif</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/utilities/debug_console_lite</state>
+          <state>$PROJ_DIR$/../../../../../../../components/video/display/hx8394</state>
           <state>$PROJ_DIR$/../../../../../../../components/video/camera/receiver/csi</state>
           <state>$PROJ_DIR$/../../../../../../../components/video/camera</state>
           <state>$PROJ_DIR$/../../../../../../../components/video</state>
@@ -4066,6 +4070,12 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../../components/video/display/dc/elcdif/fsl_dc_fb_elcdif.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../components/video/display/hx8394/fsl_hx8394.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../components/video/display/hx8394/fsl_hx8394.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../../components/video/camera/receiver/csi/fsl_csi_camera_adapter.h</name>

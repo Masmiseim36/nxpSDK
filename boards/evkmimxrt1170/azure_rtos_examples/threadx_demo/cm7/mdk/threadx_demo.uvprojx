@@ -350,7 +350,7 @@
             <ClangAsOpt>2</ClangAsOpt>
             <VariousControls>
               <MiscControls/>
-              <Define>DEBUG, __STARTUP_INITIALIZE_NONCACHEDATA, TX_ENABLE_FPU_SUPPORT</Define>
+              <Define>DEBUG, __STARTUP_INITIALIZE_NONCACHEDATA, TX_ENABLE_FPU_SUPPORT=1</Define>
               <Undefine/>
               <IncludePath/>
             </VariousControls>
@@ -822,6 +822,16 @@
               <FileName>tx_thread_interrupt_control.S</FileName>
               <FileType>2</FileType>
               <FilePath>../../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/src/tx_thread_interrupt_control.S</FilePath>
+            </File>
+            <File>
+              <FileName>tx_thread_interrupt_disable.S</FileName>
+              <FileType>2</FileType>
+              <FilePath>../../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/src/tx_thread_interrupt_disable.S</FilePath>
+            </File>
+            <File>
+              <FileName>tx_thread_interrupt_restore.S</FileName>
+              <FileType>2</FileType>
+              <FilePath>../../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/src/tx_thread_interrupt_restore.S</FilePath>
             </File>
             <File>
               <FileName>tx_thread_schedule.S</FileName>
@@ -1244,7 +1254,7 @@
             <ClangAsOpt>2</ClangAsOpt>
             <VariousControls>
               <MiscControls/>
-              <Define>DEBUG, __STARTUP_INITIALIZE_NONCACHEDATA, TX_ENABLE_FPU_SUPPORT</Define>
+              <Define>DEBUG, __STARTUP_INITIALIZE_NONCACHEDATA, TX_ENABLE_FPU_SUPPORT=1</Define>
               <Undefine/>
               <IncludePath/>
             </VariousControls>
@@ -1718,6 +1728,16 @@
               <FilePath>../../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/src/tx_thread_interrupt_control.S</FilePath>
             </File>
             <File>
+              <FileName>tx_thread_interrupt_disable.S</FileName>
+              <FileType>2</FileType>
+              <FilePath>../../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/src/tx_thread_interrupt_disable.S</FilePath>
+            </File>
+            <File>
+              <FileName>tx_thread_interrupt_restore.S</FileName>
+              <FileType>2</FileType>
+              <FilePath>../../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/src/tx_thread_interrupt_restore.S</FilePath>
+            </File>
+            <File>
               <FileName>tx_thread_schedule.S</FileName>
               <FileType>2</FileType>
               <FilePath>../../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/src/tx_thread_schedule.S</FilePath>
@@ -2138,7 +2158,7 @@
             <ClangAsOpt>2</ClangAsOpt>
             <VariousControls>
               <MiscControls/>
-              <Define>NDEBUG, __STARTUP_INITIALIZE_NONCACHEDATA, TX_ENABLE_FPU_SUPPORT</Define>
+              <Define>NDEBUG, __STARTUP_INITIALIZE_NONCACHEDATA, TX_ENABLE_FPU_SUPPORT=1</Define>
               <Undefine/>
               <IncludePath/>
             </VariousControls>
@@ -2612,6 +2632,16 @@
               <FilePath>../../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/src/tx_thread_interrupt_control.S</FilePath>
             </File>
             <File>
+              <FileName>tx_thread_interrupt_disable.S</FileName>
+              <FileType>2</FileType>
+              <FilePath>../../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/src/tx_thread_interrupt_disable.S</FilePath>
+            </File>
+            <File>
+              <FileName>tx_thread_interrupt_restore.S</FileName>
+              <FileType>2</FileType>
+              <FilePath>../../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/src/tx_thread_interrupt_restore.S</FilePath>
+            </File>
+            <File>
               <FileName>tx_thread_schedule.S</FileName>
               <FileType>2</FileType>
               <FilePath>../../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/src/tx_thread_schedule.S</FilePath>
@@ -3032,7 +3062,7 @@
             <ClangAsOpt>2</ClangAsOpt>
             <VariousControls>
               <MiscControls/>
-              <Define>NDEBUG, __STARTUP_INITIALIZE_NONCACHEDATA, TX_ENABLE_FPU_SUPPORT</Define>
+              <Define>NDEBUG, __STARTUP_INITIALIZE_NONCACHEDATA, TX_ENABLE_FPU_SUPPORT=1</Define>
               <Undefine/>
               <IncludePath/>
             </VariousControls>
@@ -3504,6 +3534,16 @@
               <FileName>tx_thread_interrupt_control.S</FileName>
               <FileType>2</FileType>
               <FilePath>../../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/src/tx_thread_interrupt_control.S</FilePath>
+            </File>
+            <File>
+              <FileName>tx_thread_interrupt_disable.S</FileName>
+              <FileType>2</FileType>
+              <FilePath>../../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/src/tx_thread_interrupt_disable.S</FilePath>
+            </File>
+            <File>
+              <FileName>tx_thread_interrupt_restore.S</FileName>
+              <FileType>2</FileType>
+              <FilePath>../../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/src/tx_thread_interrupt_restore.S</FilePath>
             </File>
             <File>
               <FileName>tx_thread_schedule.S</FileName>

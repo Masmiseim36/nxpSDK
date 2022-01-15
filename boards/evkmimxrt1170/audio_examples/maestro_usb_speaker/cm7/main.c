@@ -156,8 +156,6 @@ int main(void)
     DMAMUX_Init(DEMO_DMAMUX);
     DMAMUX_SetSource(DEMO_DMAMUX, DEMO_TX_CHANNEL, (uint8_t)DEMO_SAI_TX_SOURCE);
     DMAMUX_EnableChannel(DEMO_DMAMUX, DEMO_TX_CHANNEL);
-    DMAMUX_SetSource(DEMO_DMAMUX, DEMO_RX_CHANNEL, (uint8_t)DEMO_SAI_RX_SOURCE);
-    DMAMUX_EnableChannel(DEMO_DMAMUX, DEMO_RX_CHANNEL);
 
     /* Clock setting for USB */
     USB_DeviceClockInit();

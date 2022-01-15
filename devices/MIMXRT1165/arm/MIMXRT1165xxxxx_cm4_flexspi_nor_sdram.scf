@@ -8,7 +8,7 @@
 **     Compiler:            Keil ARM C/C++ Compiler
 **     Reference manual:    IMXRT1160RM, Rev 0, 03/2021
 **     Version:             rev. 0.1, 2020-12-29
-**     Build:               b210422
+**     Build:               b210709
 **
 **     Abstract:
 **         Linker file for the Keil ARM C/C++ Compiler
@@ -104,6 +104,7 @@ LR_m_text m_interrupts_start m_text_start+m_text_size-m_interrupts_start {   ; l
 #endif
   RW_m_data2 m_data2_start m_data2_size {
     * (RamFunction)
+    * (DataQuickAccess)
   }
 #if (defined(__heap_noncacheable__))
   RW_m_data m_data_start m_data_size-Stack_Size { ; RW data

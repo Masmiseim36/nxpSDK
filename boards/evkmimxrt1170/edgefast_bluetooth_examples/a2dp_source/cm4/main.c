@@ -18,6 +18,8 @@
 #include "controller.h"
 #include "usb_host_config.h"
 #include "usb_host.h"
+#include "fsl_lpuart_edma.h"
+#include "fsl_dmamux.h"
 #include "usb_phy.h"
 /*******************************************************************************
  * Definitions
@@ -57,8 +59,39 @@ int controller_hci_uart_get_configuration(controller_hci_uart_config_t *config)
     config->defaultBaudrate = 115200u;
     config->runningBaudrate = BOARD_BT_UART_BAUDRATE;
     config->instance        = 2;
-    config->enableRxRTS     = 1u;
-    config->enableTxCTS     = 1u;
+#if (defined(HAL_UART_DMA_ENABLE) && (HAL_UART_DMA_ENABLE > 0U))
+    config->dma_instance     = 1U;
+    config->rx_channel       = 0U;
+    config->tx_channel       = 1U;
+    config->dma_mux_instance = 1U;
+    config->rx_request       = kDmaRequestMuxLPUART2Rx;
+    config->tx_request       = kDmaRequestMuxLPUART2Tx;
+#endif
+    config->enableRxRTS = 1u;
+    config->enableTxCTS = 1u;
+    return 0;
+}
+#elif defined(WIFI_IW416_BOARD_AW_AM510MA)
+int controller_hci_uart_get_configuration(controller_hci_uart_config_t *config)
+{
+    if (NULL == config)
+    {
+        return -1;
+    }
+    config->clockSrc = CLOCK_GetRootClockFreq(kCLOCK_Root_Lpuart2);
+    config->defaultBaudrate = BOARD_BT_UART_BAUDRATE;
+    config->runningBaudrate = BOARD_BT_UART_BAUDRATE;
+    config->instance = 2;
+#if (defined(HAL_UART_DMA_ENABLE) && (HAL_UART_DMA_ENABLE > 0U))
+    config->dma_instance = 1U;
+    config->rx_channel = 0U;
+    config->tx_channel = 1U;
+    config->dma_mux_instance = 1U;
+    config->rx_request = kDmaRequestMuxLPUART2Rx;
+    config->tx_request = kDmaRequestMuxLPUART2Tx;
+#endif
+    config->enableRxRTS = 1u;
+    config->enableTxCTS = 1u;
     return 0;
 }
 #elif defined(WIFI_IW416_BOARD_AW_AM457_USD)
@@ -68,12 +101,20 @@ int controller_hci_uart_get_configuration(controller_hci_uart_config_t *config)
     {
         return -1;
     }
-    config->clockSrc = BOARD_BT_UART_CLK_FREQ;
-    config->defaultBaudrate = BOARD_BT_UART_BAUDRATE;
-    config->runningBaudrate = BOARD_BT_UART_BAUDRATE;
-    config->instance = BOARD_BT_UART_INSTANCE;
-    config->enableRxRTS = 1u;
-    config->enableTxCTS = 1u;
+    config->clockSrc         = BOARD_BT_UART_CLK_FREQ;
+    config->defaultBaudrate  = BOARD_BT_UART_BAUDRATE;
+    config->runningBaudrate  = BOARD_BT_UART_BAUDRATE;
+    config->instance         = BOARD_BT_UART_INSTANCE;
+#if (defined(HAL_UART_DMA_ENABLE) && (HAL_UART_DMA_ENABLE > 0U))
+    config->dma_instance     = 1U;
+    config->rx_channel       = 0U;
+    config->tx_channel       = 1U;
+    config->dma_mux_instance = 1U;
+    config->rx_request       = kDmaRequestMuxLPUART7Rx;
+    config->tx_request       = kDmaRequestMuxLPUART7Tx;
+#endif
+    config->enableRxRTS      = 1u;
+    config->enableTxCTS      = 1u;
     return 0;
 }
 #else
@@ -119,27 +160,23 @@ void USB_HostIsrEnable(void)
 
 int main(void)
 {
-#if defined(WIFI_88W8987_BOARD_AW_CM358MA)
-    /* GPIO configuration of wifi_reset on GPIO_AD_16 (pin N17) */
-    gpio_pin_config_t wifi_reset_config = {
-        .direction = kGPIO_DigitalOutput, .outputLogic = 0U, .interruptMode = kGPIO_NoIntmode};
-#endif
-
     BOARD_ConfigMPU();
     BOARD_InitBootPins();
-#if defined(WIFI_88W8987_BOARD_AW_CM358MA)
+#if defined(WIFI_IW416_BOARD_AW_AM510MA) || defined(WIFI_88W8987_BOARD_AW_CM358MA)
     BOARD_InitM2UARTPins();
-    BOARD_InitM2WifiResetPins();
-    /* Initialize GPIO functionality on GPIO_AD_16 (pin N17) */
-    GPIO_PinInit(CM7_GPIO3, 15U, &wifi_reset_config);
+
 #else
     BOARD_InitArduinoUARTPins();
 #endif
     BOARD_InitBootClocks();
     BOARD_InitDebugConsole();
-#if defined(WIFI_88W8987_BOARD_AW_CM358MA)
-    /* Wirte GPIO pin value on GPIO_AD_16 (pin N17) */
-    GPIO_PinWrite(CM7_GPIO3, 15U, 1U);
+#if (defined(HAL_UART_DMA_ENABLE) && (HAL_UART_DMA_ENABLE > 0U))
+    DMAMUX_Type *dmaMuxBases[] = DMAMUX_BASE_PTRS;
+    edma_config_t config;
+    DMA_Type *dmaBases[] = DMA_BASE_PTRS;
+    DMAMUX_Init(dmaMuxBases[1]);
+    EDMA_GetDefaultConfig(&config);
+    EDMA_Init(dmaBases[1], &config);
 #endif
 
     if (xTaskCreate(app_a2dp_source_task, "app_a2dp_source_task", configMINIMAL_STACK_SIZE * 8, NULL, tskIDLE_PRIORITY + 1, NULL) != pdPASS)

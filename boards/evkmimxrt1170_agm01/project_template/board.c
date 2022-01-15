@@ -23,13 +23,7 @@
 /* Get debug console frequency. */
 uint32_t BOARD_DebugConsoleSrcFreq(void)
 {
-#if DEBUG_CONSOLE_UART_INDEX == 1
     return CLOCK_GetRootClockFreq(kCLOCK_Root_Lpuart1);
-#elif DEBUG_CONSOLE_UART_INDEX == 12
-    return CLOCK_GetRootClockFreq(kCLOCK_Root_Lpuart12);
-#else
-    return CLOCK_GetRootClockFreq(kCLOCK_Root_Lpuart2);
-#endif
 }
 
 /* Initialize debug console. */
@@ -346,9 +340,14 @@ void BOARD_ConfigMPU(void)
      * mpu_armv7.h.
      */
 
+    /*
+     * Add default region to deny access to whole address space to workaround speculative prefetch.
+     * Refer to Arm errata 1013783-B for more details.
+     *
+     */
     /* Region 0 setting: Instruction access disabled, No data access permission. */
     MPU->RBAR = ARM_MPU_RBAR(0, 0x00000000U);
-    MPU->RASR = ARM_MPU_RASR(1, ARM_MPU_AP_NONE, 2, 0, 0, 0, 0, ARM_MPU_REGION_SIZE_4GB);
+    MPU->RASR = ARM_MPU_RASR(1, ARM_MPU_AP_NONE, 0, 0, 0, 0, 0, ARM_MPU_REGION_SIZE_4GB);
 
     /* Region 1 setting: Memory with Device type, not shareable, non-cacheable. */
     MPU->RBAR = ARM_MPU_RBAR(1, 0x80000000U);
@@ -447,7 +446,7 @@ void BOARD_ConfigMPU(void)
     extern uint32_t Image$$RW_m_ncache_unused$$Base[];
     extern uint32_t Image$$RW_m_ncache_unused$$ZI$$Limit[];
     uint32_t nonCacheStart = (uint32_t)Image$$RW_m_ncache$$Base;
-    uint32_t nonCacheSize = ((uint32_t)Image$$RW_m_ncache_unused$$Base == nonCacheStart) ?
+    uint32_t nonCacheSize  = ((uint32_t)Image$$RW_m_ncache_unused$$Base == nonCacheStart) ?
                                 0 :
                                 ((uint32_t)Image$$RW_m_ncache_unused$$ZI$$Limit - nonCacheStart);
 #elif defined(__MCUXPRESSO)
@@ -468,7 +467,7 @@ void BOARD_ConfigMPU(void)
     extern uint32_t Image$$RPMSG_SH_MEM_unused$$Base[];
     extern uint32_t Image$$RPMSG_SH_MEM_unused$$ZI$$Limit[];
     uint32_t rpmsgShmemStart = (uint32_t)Image$$RPMSG_SH_MEM$$Base;
-    uint32_t rpmsgShmemSize = (uint32_t)Image$$RPMSG_SH_MEM_unused$$ZI$$Limit - rpmsgShmemStart;
+    uint32_t rpmsgShmemSize  = (uint32_t)Image$$RPMSG_SH_MEM_unused$$ZI$$Limit - rpmsgShmemStart;
 #elif defined(__MCUXPRESSO)
     extern uint32_t __base_rpmsg_sh_mem;
     extern uint32_t __top_rpmsg_sh_mem;
@@ -481,7 +480,7 @@ void BOARD_ConfigMPU(void)
     uint32_t rpmsgShmemSize  = (uint32_t)__RPMSG_SH_MEM_SIZE;
 #endif
 #endif
-    uint32_t i = 0;
+    uint32_t i               = 0;
 
     /* Only config non-cacheable region on system bus */
     assert(nonCacheStart >= 0x20000000);

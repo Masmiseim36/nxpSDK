@@ -389,7 +389,11 @@ usb_status_t USB_DeviceAudioStreamEndpointsDeinit(usb_device_audio_struct_t *aud
             if (0U != audioHandle->streamInPipeBusy)
             {
                 message.length = USB_CANCELLED_TRANSFER_LENGTH;
+#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
+                status = USB_DeviceAudioIsochronousIn(audioHandle->handle, &message, audioHandle);
+#else
                 (void)USB_DeviceAudioIsochronousIn(audioHandle->handle, &message, audioHandle);
+#endif
             }
         }
         else
@@ -397,7 +401,11 @@ usb_status_t USB_DeviceAudioStreamEndpointsDeinit(usb_device_audio_struct_t *aud
             if (0U != audioHandle->streamOutPipeBusy)
             {
                 message.length = USB_CANCELLED_TRANSFER_LENGTH;
+#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
+                status = USB_DeviceAudioIsochronousOut(audioHandle->handle, &message, audioHandle);
+#else
                 (void)USB_DeviceAudioIsochronousOut(audioHandle->handle, &message, audioHandle);
+#endif
             }
         }
     }

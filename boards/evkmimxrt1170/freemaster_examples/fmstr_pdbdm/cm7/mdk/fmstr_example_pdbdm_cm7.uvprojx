@@ -332,9 +332,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>DEBUG, CPU_MIMXRT1176DVMAA_cm7, SDK_DEBUGCONSOLE=1, SERIAL_PORT_TYPE_UART=1, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, MCUXPRESSO_SDK</Define>
+              <Define>DEBUG, CPU_MIMXRT1176DVMAA_cm7, SDK_DEBUGCONSOLE=1, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../common/fmstr_example;../../../../../../middleware/freemaster/src/common;../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../devices/MIMXRT1176/drivers;../../../../../../devices/MIMXRT1176;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../devices/MIMXRT1176/xip;../../../../xip;../../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../common/fmstr_example;../../../../../../middleware/freemaster/src/common;../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../devices/MIMXRT1176/drivers;../../../../../../devices/MIMXRT1176;../../../../../../components/uart;../../../../../../components/lists;../../../../../../devices/MIMXRT1176/xip;../../../../xip;../../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -391,12 +391,12 @@
             <File>
               <FileName>freemaster_example.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../common/fmstr_example/freemaster_example.c</FilePath>
+              <FilePath>../../../common/fmstr_example/freemaster_example.c</FilePath>
             </File>
             <File>
               <FileName>freemaster_example.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../common/fmstr_example/freemaster_example.h</FilePath>
+              <FilePath>../../../common/fmstr_example/freemaster_example.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -446,47 +446,47 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>source/example_data</GroupName>
-          <Files>
-            <File>
-              <FileName>data_example_pmp.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../common/fmstr_example/data_example_pmp.h</FilePath>
-            </File>
-            <File>
-              <FileName>data_img_logo.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../common/fmstr_example/data_img_logo.h</FilePath>
-            </File>
-            <File>
-              <FileName>data_img_file.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../common/fmstr_example/data_img_file.h</FilePath>
-            </File>
-            <File>
-              <FileName>data_img_fmstrlogo.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../common/fmstr_example/data_img_fmstrlogo.h</FilePath>
-            </File>
-            <File>
-              <FileName>data_html_index.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../common/fmstr_example/data_html_index.h</FilePath>
-            </File>
-            <File>
-              <FileName>example_data.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../common/fmstr_example/example_data.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>doc</GroupName>
           <Files>
             <File>
               <FileName>readme.txt</FileName>
               <FileType>5</FileType>
               <FilePath>../readme.txt</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>source/example_data</GroupName>
+          <Files>
+            <File>
+              <FileName>data_example_pmp.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../common/fmstr_example/data_example_pmp.h</FilePath>
+            </File>
+            <File>
+              <FileName>data_img_logo.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../common/fmstr_example/data_img_logo.h</FilePath>
+            </File>
+            <File>
+              <FileName>data_img_file.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../common/fmstr_example/data_img_file.h</FilePath>
+            </File>
+            <File>
+              <FileName>data_img_fmstrlogo.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../common/fmstr_example/data_img_fmstrlogo.h</FilePath>
+            </File>
+            <File>
+              <FileName>data_html_index.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../common/fmstr_example/data_html_index.h</FilePath>
+            </File>
+            <File>
+              <FileName>example_data.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../common/fmstr_example/example_data.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -771,36 +771,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component/serial_manager</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_component_serial_manager.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/serial_manager/fsl_component_serial_manager.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_serial_port_internal.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/serial_manager/fsl_component_serial_port_internal.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_serial_manager.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/serial_manager/fsl_component_serial_manager.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_serial_port_uart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_serial_port_uart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>component/lists</GroupName>
           <Files>
             <File>
@@ -952,6 +922,16 @@
               <FileName>freemaster_serial_usb.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial/freemaster_serial_usb.h</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_net_segger_rtt.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/freemaster/src/drivers/mcuxsdk/network/freemaster_net_segger_rtt.c</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_net_segger_rtt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/freemaster/src/drivers/mcuxsdk/network/freemaster_net_segger_rtt.h</FilePath>
             </File>
             <File>
               <FileName>freemaster_net_lwip_udp.c</FileName>
@@ -1356,9 +1336,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, XIP_BOOT_HEADER_DCD_ENABLE=1, USE_SDRAM, DATA_SECTION_IS_CACHEABLE=1, DEBUG, CPU_MIMXRT1176DVMAA_cm7, SDK_DEBUGCONSOLE=1, SERIAL_PORT_TYPE_UART=1, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, MCUXPRESSO_SDK</Define>
+              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, XIP_BOOT_HEADER_DCD_ENABLE=1, USE_SDRAM, DATA_SECTION_IS_CACHEABLE=1, DEBUG, CPU_MIMXRT1176DVMAA_cm7, SDK_DEBUGCONSOLE=1, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../common/fmstr_example;../../../../../../middleware/freemaster/src/common;../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../devices/MIMXRT1176/drivers;../../../../../../devices/MIMXRT1176;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../devices/MIMXRT1176/xip;../../../../xip;../../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../common/fmstr_example;../../../../../../middleware/freemaster/src/common;../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../devices/MIMXRT1176/drivers;../../../../../../devices/MIMXRT1176;../../../../../../components/uart;../../../../../../components/lists;../../../../../../devices/MIMXRT1176/xip;../../../../xip;../../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1415,12 +1395,12 @@
             <File>
               <FileName>freemaster_example.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../common/fmstr_example/freemaster_example.c</FilePath>
+              <FilePath>../../../common/fmstr_example/freemaster_example.c</FilePath>
             </File>
             <File>
               <FileName>freemaster_example.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../common/fmstr_example/freemaster_example.h</FilePath>
+              <FilePath>../../../common/fmstr_example/freemaster_example.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1470,47 +1450,47 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>source/example_data</GroupName>
-          <Files>
-            <File>
-              <FileName>data_example_pmp.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../common/fmstr_example/data_example_pmp.h</FilePath>
-            </File>
-            <File>
-              <FileName>data_img_logo.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../common/fmstr_example/data_img_logo.h</FilePath>
-            </File>
-            <File>
-              <FileName>data_img_file.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../common/fmstr_example/data_img_file.h</FilePath>
-            </File>
-            <File>
-              <FileName>data_img_fmstrlogo.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../common/fmstr_example/data_img_fmstrlogo.h</FilePath>
-            </File>
-            <File>
-              <FileName>data_html_index.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../common/fmstr_example/data_html_index.h</FilePath>
-            </File>
-            <File>
-              <FileName>example_data.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../common/fmstr_example/example_data.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>doc</GroupName>
           <Files>
             <File>
               <FileName>readme.txt</FileName>
               <FileType>5</FileType>
               <FilePath>../readme.txt</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>source/example_data</GroupName>
+          <Files>
+            <File>
+              <FileName>data_example_pmp.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../common/fmstr_example/data_example_pmp.h</FilePath>
+            </File>
+            <File>
+              <FileName>data_img_logo.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../common/fmstr_example/data_img_logo.h</FilePath>
+            </File>
+            <File>
+              <FileName>data_img_file.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../common/fmstr_example/data_img_file.h</FilePath>
+            </File>
+            <File>
+              <FileName>data_img_fmstrlogo.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../common/fmstr_example/data_img_fmstrlogo.h</FilePath>
+            </File>
+            <File>
+              <FileName>data_html_index.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../common/fmstr_example/data_html_index.h</FilePath>
+            </File>
+            <File>
+              <FileName>example_data.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../common/fmstr_example/example_data.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1795,36 +1775,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component/serial_manager</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_component_serial_manager.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/serial_manager/fsl_component_serial_manager.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_serial_port_internal.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/serial_manager/fsl_component_serial_port_internal.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_serial_manager.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/serial_manager/fsl_component_serial_manager.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_serial_port_uart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_serial_port_uart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>component/lists</GroupName>
           <Files>
             <File>
@@ -1976,6 +1926,16 @@
               <FileName>freemaster_serial_usb.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial/freemaster_serial_usb.h</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_net_segger_rtt.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/freemaster/src/drivers/mcuxsdk/network/freemaster_net_segger_rtt.c</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_net_segger_rtt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/freemaster/src/drivers/mcuxsdk/network/freemaster_net_segger_rtt.h</FilePath>
             </File>
             <File>
               <FileName>freemaster_net_lwip_udp.c</FileName>
@@ -2380,9 +2340,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, DEBUG, CPU_MIMXRT1176DVMAA_cm7, SDK_DEBUGCONSOLE=1, SERIAL_PORT_TYPE_UART=1, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, MCUXPRESSO_SDK</Define>
+              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, DEBUG, CPU_MIMXRT1176DVMAA_cm7, SDK_DEBUGCONSOLE=1, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../common/fmstr_example;../../../../../../middleware/freemaster/src/common;../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../devices/MIMXRT1176/drivers;../../../../../../devices/MIMXRT1176;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../devices/MIMXRT1176/xip;../../../../xip;../../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../common/fmstr_example;../../../../../../middleware/freemaster/src/common;../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../devices/MIMXRT1176/drivers;../../../../../../devices/MIMXRT1176;../../../../../../components/uart;../../../../../../components/lists;../../../../../../devices/MIMXRT1176/xip;../../../../xip;../../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2439,12 +2399,12 @@
             <File>
               <FileName>freemaster_example.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../common/fmstr_example/freemaster_example.c</FilePath>
+              <FilePath>../../../common/fmstr_example/freemaster_example.c</FilePath>
             </File>
             <File>
               <FileName>freemaster_example.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../common/fmstr_example/freemaster_example.h</FilePath>
+              <FilePath>../../../common/fmstr_example/freemaster_example.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2494,47 +2454,47 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>source/example_data</GroupName>
-          <Files>
-            <File>
-              <FileName>data_example_pmp.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../common/fmstr_example/data_example_pmp.h</FilePath>
-            </File>
-            <File>
-              <FileName>data_img_logo.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../common/fmstr_example/data_img_logo.h</FilePath>
-            </File>
-            <File>
-              <FileName>data_img_file.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../common/fmstr_example/data_img_file.h</FilePath>
-            </File>
-            <File>
-              <FileName>data_img_fmstrlogo.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../common/fmstr_example/data_img_fmstrlogo.h</FilePath>
-            </File>
-            <File>
-              <FileName>data_html_index.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../common/fmstr_example/data_html_index.h</FilePath>
-            </File>
-            <File>
-              <FileName>example_data.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../common/fmstr_example/example_data.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>doc</GroupName>
           <Files>
             <File>
               <FileName>readme.txt</FileName>
               <FileType>5</FileType>
               <FilePath>../readme.txt</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>source/example_data</GroupName>
+          <Files>
+            <File>
+              <FileName>data_example_pmp.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../common/fmstr_example/data_example_pmp.h</FilePath>
+            </File>
+            <File>
+              <FileName>data_img_logo.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../common/fmstr_example/data_img_logo.h</FilePath>
+            </File>
+            <File>
+              <FileName>data_img_file.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../common/fmstr_example/data_img_file.h</FilePath>
+            </File>
+            <File>
+              <FileName>data_img_fmstrlogo.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../common/fmstr_example/data_img_fmstrlogo.h</FilePath>
+            </File>
+            <File>
+              <FileName>data_html_index.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../common/fmstr_example/data_html_index.h</FilePath>
+            </File>
+            <File>
+              <FileName>example_data.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../common/fmstr_example/example_data.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2819,36 +2779,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component/serial_manager</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_component_serial_manager.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/serial_manager/fsl_component_serial_manager.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_serial_port_internal.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/serial_manager/fsl_component_serial_port_internal.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_serial_manager.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/serial_manager/fsl_component_serial_manager.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_serial_port_uart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_serial_port_uart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>component/lists</GroupName>
           <Files>
             <File>
@@ -3000,6 +2930,16 @@
               <FileName>freemaster_serial_usb.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial/freemaster_serial_usb.h</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_net_segger_rtt.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/freemaster/src/drivers/mcuxsdk/network/freemaster_net_segger_rtt.c</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_net_segger_rtt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/freemaster/src/drivers/mcuxsdk/network/freemaster_net_segger_rtt.h</FilePath>
             </File>
             <File>
               <FileName>freemaster_net_lwip_udp.c</FileName>
@@ -3404,9 +3344,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>NDEBUG, CPU_MIMXRT1176DVMAA_cm7, SDK_DEBUGCONSOLE=1, SERIAL_PORT_TYPE_UART=1, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, MCUXPRESSO_SDK</Define>
+              <Define>NDEBUG, CPU_MIMXRT1176DVMAA_cm7, SDK_DEBUGCONSOLE=1, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../common/fmstr_example;../../../../../../middleware/freemaster/src/common;../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../devices/MIMXRT1176/drivers;../../../../../../devices/MIMXRT1176;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../devices/MIMXRT1176/xip;../../../../xip;../../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../common/fmstr_example;../../../../../../middleware/freemaster/src/common;../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../devices/MIMXRT1176/drivers;../../../../../../devices/MIMXRT1176;../../../../../../components/uart;../../../../../../components/lists;../../../../../../devices/MIMXRT1176/xip;../../../../xip;../../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -3463,12 +3403,12 @@
             <File>
               <FileName>freemaster_example.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../common/fmstr_example/freemaster_example.c</FilePath>
+              <FilePath>../../../common/fmstr_example/freemaster_example.c</FilePath>
             </File>
             <File>
               <FileName>freemaster_example.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../common/fmstr_example/freemaster_example.h</FilePath>
+              <FilePath>../../../common/fmstr_example/freemaster_example.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -3518,47 +3458,47 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>source/example_data</GroupName>
-          <Files>
-            <File>
-              <FileName>data_example_pmp.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../common/fmstr_example/data_example_pmp.h</FilePath>
-            </File>
-            <File>
-              <FileName>data_img_logo.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../common/fmstr_example/data_img_logo.h</FilePath>
-            </File>
-            <File>
-              <FileName>data_img_file.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../common/fmstr_example/data_img_file.h</FilePath>
-            </File>
-            <File>
-              <FileName>data_img_fmstrlogo.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../common/fmstr_example/data_img_fmstrlogo.h</FilePath>
-            </File>
-            <File>
-              <FileName>data_html_index.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../common/fmstr_example/data_html_index.h</FilePath>
-            </File>
-            <File>
-              <FileName>example_data.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../common/fmstr_example/example_data.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>doc</GroupName>
           <Files>
             <File>
               <FileName>readme.txt</FileName>
               <FileType>5</FileType>
               <FilePath>../readme.txt</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>source/example_data</GroupName>
+          <Files>
+            <File>
+              <FileName>data_example_pmp.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../common/fmstr_example/data_example_pmp.h</FilePath>
+            </File>
+            <File>
+              <FileName>data_img_logo.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../common/fmstr_example/data_img_logo.h</FilePath>
+            </File>
+            <File>
+              <FileName>data_img_file.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../common/fmstr_example/data_img_file.h</FilePath>
+            </File>
+            <File>
+              <FileName>data_img_fmstrlogo.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../common/fmstr_example/data_img_fmstrlogo.h</FilePath>
+            </File>
+            <File>
+              <FileName>data_html_index.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../common/fmstr_example/data_html_index.h</FilePath>
+            </File>
+            <File>
+              <FileName>example_data.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../common/fmstr_example/example_data.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -3843,36 +3783,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component/serial_manager</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_component_serial_manager.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/serial_manager/fsl_component_serial_manager.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_serial_port_internal.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/serial_manager/fsl_component_serial_port_internal.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_serial_manager.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/serial_manager/fsl_component_serial_manager.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_serial_port_uart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_serial_port_uart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>component/lists</GroupName>
           <Files>
             <File>
@@ -4024,6 +3934,16 @@
               <FileName>freemaster_serial_usb.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial/freemaster_serial_usb.h</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_net_segger_rtt.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/freemaster/src/drivers/mcuxsdk/network/freemaster_net_segger_rtt.c</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_net_segger_rtt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/freemaster/src/drivers/mcuxsdk/network/freemaster_net_segger_rtt.h</FilePath>
             </File>
             <File>
               <FileName>freemaster_net_lwip_udp.c</FileName>
@@ -4428,9 +4348,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, XIP_BOOT_HEADER_DCD_ENABLE=1, USE_SDRAM, DATA_SECTION_IS_CACHEABLE=1, NDEBUG, CPU_MIMXRT1176DVMAA_cm7, SDK_DEBUGCONSOLE=1, SERIAL_PORT_TYPE_UART=1, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, MCUXPRESSO_SDK</Define>
+              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, XIP_BOOT_HEADER_DCD_ENABLE=1, USE_SDRAM, DATA_SECTION_IS_CACHEABLE=1, NDEBUG, CPU_MIMXRT1176DVMAA_cm7, SDK_DEBUGCONSOLE=1, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../common/fmstr_example;../../../../../../middleware/freemaster/src/common;../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../devices/MIMXRT1176/drivers;../../../../../../devices/MIMXRT1176;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../devices/MIMXRT1176/xip;../../../../xip;../../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../common/fmstr_example;../../../../../../middleware/freemaster/src/common;../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../devices/MIMXRT1176/drivers;../../../../../../devices/MIMXRT1176;../../../../../../components/uart;../../../../../../components/lists;../../../../../../devices/MIMXRT1176/xip;../../../../xip;../../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -4487,12 +4407,12 @@
             <File>
               <FileName>freemaster_example.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../common/fmstr_example/freemaster_example.c</FilePath>
+              <FilePath>../../../common/fmstr_example/freemaster_example.c</FilePath>
             </File>
             <File>
               <FileName>freemaster_example.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../common/fmstr_example/freemaster_example.h</FilePath>
+              <FilePath>../../../common/fmstr_example/freemaster_example.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -4542,47 +4462,47 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>source/example_data</GroupName>
-          <Files>
-            <File>
-              <FileName>data_example_pmp.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../common/fmstr_example/data_example_pmp.h</FilePath>
-            </File>
-            <File>
-              <FileName>data_img_logo.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../common/fmstr_example/data_img_logo.h</FilePath>
-            </File>
-            <File>
-              <FileName>data_img_file.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../common/fmstr_example/data_img_file.h</FilePath>
-            </File>
-            <File>
-              <FileName>data_img_fmstrlogo.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../common/fmstr_example/data_img_fmstrlogo.h</FilePath>
-            </File>
-            <File>
-              <FileName>data_html_index.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../common/fmstr_example/data_html_index.h</FilePath>
-            </File>
-            <File>
-              <FileName>example_data.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../common/fmstr_example/example_data.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>doc</GroupName>
           <Files>
             <File>
               <FileName>readme.txt</FileName>
               <FileType>5</FileType>
               <FilePath>../readme.txt</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>source/example_data</GroupName>
+          <Files>
+            <File>
+              <FileName>data_example_pmp.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../common/fmstr_example/data_example_pmp.h</FilePath>
+            </File>
+            <File>
+              <FileName>data_img_logo.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../common/fmstr_example/data_img_logo.h</FilePath>
+            </File>
+            <File>
+              <FileName>data_img_file.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../common/fmstr_example/data_img_file.h</FilePath>
+            </File>
+            <File>
+              <FileName>data_img_fmstrlogo.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../common/fmstr_example/data_img_fmstrlogo.h</FilePath>
+            </File>
+            <File>
+              <FileName>data_html_index.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../common/fmstr_example/data_html_index.h</FilePath>
+            </File>
+            <File>
+              <FileName>example_data.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../common/fmstr_example/example_data.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -4867,36 +4787,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component/serial_manager</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_component_serial_manager.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/serial_manager/fsl_component_serial_manager.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_serial_port_internal.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/serial_manager/fsl_component_serial_port_internal.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_serial_manager.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/serial_manager/fsl_component_serial_manager.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_serial_port_uart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_serial_port_uart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>component/lists</GroupName>
           <Files>
             <File>
@@ -5048,6 +4938,16 @@
               <FileName>freemaster_serial_usb.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial/freemaster_serial_usb.h</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_net_segger_rtt.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/freemaster/src/drivers/mcuxsdk/network/freemaster_net_segger_rtt.c</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_net_segger_rtt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/freemaster/src/drivers/mcuxsdk/network/freemaster_net_segger_rtt.h</FilePath>
             </File>
             <File>
               <FileName>freemaster_net_lwip_udp.c</FileName>
@@ -5452,9 +5352,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, NDEBUG, CPU_MIMXRT1176DVMAA_cm7, SDK_DEBUGCONSOLE=1, SERIAL_PORT_TYPE_UART=1, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, MCUXPRESSO_SDK</Define>
+              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, NDEBUG, CPU_MIMXRT1176DVMAA_cm7, SDK_DEBUGCONSOLE=1, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../common/fmstr_example;../../../../../../middleware/freemaster/src/common;../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../devices/MIMXRT1176/drivers;../../../../../../devices/MIMXRT1176;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../devices/MIMXRT1176/xip;../../../../xip;../../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../common/fmstr_example;../../../../../../middleware/freemaster/src/common;../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../devices/MIMXRT1176/drivers;../../../../../../devices/MIMXRT1176;../../../../../../components/uart;../../../../../../components/lists;../../../../../../devices/MIMXRT1176/xip;../../../../xip;../../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -5511,12 +5411,12 @@
             <File>
               <FileName>freemaster_example.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../common/fmstr_example/freemaster_example.c</FilePath>
+              <FilePath>../../../common/fmstr_example/freemaster_example.c</FilePath>
             </File>
             <File>
               <FileName>freemaster_example.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../common/fmstr_example/freemaster_example.h</FilePath>
+              <FilePath>../../../common/fmstr_example/freemaster_example.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -5566,47 +5466,47 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>source/example_data</GroupName>
-          <Files>
-            <File>
-              <FileName>data_example_pmp.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../common/fmstr_example/data_example_pmp.h</FilePath>
-            </File>
-            <File>
-              <FileName>data_img_logo.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../common/fmstr_example/data_img_logo.h</FilePath>
-            </File>
-            <File>
-              <FileName>data_img_file.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../common/fmstr_example/data_img_file.h</FilePath>
-            </File>
-            <File>
-              <FileName>data_img_fmstrlogo.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../common/fmstr_example/data_img_fmstrlogo.h</FilePath>
-            </File>
-            <File>
-              <FileName>data_html_index.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../common/fmstr_example/data_html_index.h</FilePath>
-            </File>
-            <File>
-              <FileName>example_data.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../common/fmstr_example/example_data.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>doc</GroupName>
           <Files>
             <File>
               <FileName>readme.txt</FileName>
               <FileType>5</FileType>
               <FilePath>../readme.txt</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>source/example_data</GroupName>
+          <Files>
+            <File>
+              <FileName>data_example_pmp.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../common/fmstr_example/data_example_pmp.h</FilePath>
+            </File>
+            <File>
+              <FileName>data_img_logo.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../common/fmstr_example/data_img_logo.h</FilePath>
+            </File>
+            <File>
+              <FileName>data_img_file.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../common/fmstr_example/data_img_file.h</FilePath>
+            </File>
+            <File>
+              <FileName>data_img_fmstrlogo.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../common/fmstr_example/data_img_fmstrlogo.h</FilePath>
+            </File>
+            <File>
+              <FileName>data_html_index.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../common/fmstr_example/data_html_index.h</FilePath>
+            </File>
+            <File>
+              <FileName>example_data.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../common/fmstr_example/example_data.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -5891,36 +5791,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component/serial_manager</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_component_serial_manager.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/serial_manager/fsl_component_serial_manager.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_serial_port_internal.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/serial_manager/fsl_component_serial_port_internal.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_serial_manager.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/serial_manager/fsl_component_serial_manager.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_serial_port_uart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_component_serial_port_uart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>component/lists</GroupName>
           <Files>
             <File>
@@ -6072,6 +5942,16 @@
               <FileName>freemaster_serial_usb.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial/freemaster_serial_usb.h</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_net_segger_rtt.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/freemaster/src/drivers/mcuxsdk/network/freemaster_net_segger_rtt.c</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_net_segger_rtt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/freemaster/src/drivers/mcuxsdk/network/freemaster_net_segger_rtt.h</FilePath>
             </File>
             <File>
               <FileName>freemaster_net_lwip_udp.c</FileName>

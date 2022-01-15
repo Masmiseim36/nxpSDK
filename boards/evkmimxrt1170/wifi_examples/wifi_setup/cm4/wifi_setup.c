@@ -30,9 +30,20 @@
 
 // Hardwired SSID, passphrase of AP to connect to
 // Change this to fit your AP
-#define AP_SSID       "SSID"
+
+/* @TEST_ANCHOR */
+
+#ifndef AP_SSID
+#define AP_SSID "SSID"
+#endif
+
+#ifndef AP_PASSPHRASE
 #define AP_PASSPHRASE "PASSWD"
-#define PING_ADDR     "8.8.8.8"
+#endif
+
+#ifndef PING_ADDR
+#define PING_ADDR "8.8.8.8"
+#endif
 
 /*******************************************************************************
  * Variables
@@ -335,27 +346,8 @@ int main(void)
 
     BOARD_ConfigMPU();
     BOARD_InitBootPins();
-#if defined(WIFI_88W8987_BOARD_AW_CM358MA)
-    /* Init SDIO_RST */
-    BOARD_InitM2WifiResetPins();
-#endif
-
-#if defined(HOST_PDN_RESET)
-    /* Init WL_RST */
-    BOARD_InitWlRstPin();
-#endif
-
     BOARD_InitBootClocks();
     BOARD_InitDebugConsole();
-#if defined(WIFI_88W8987_BOARD_AW_CM358MA)
-    /* Set SDIO_RST to 1 */
-    GPIO_PinWrite(BOARD_INITM2WIFIRESETPINS_SDIO_RST_GPIO, BOARD_INITM2WIFIRESETPINS_SDIO_RST_GPIO_PIN, 1U);
-#endif
-
-#if defined(HOST_PDN_RESET)
-    /* Set WL_RST to 1 */
-    GPIO_PinWrite(BOARD_INITWLRSTPIN_WL_RST_GPIO, BOARD_INITWLRSTPIN_WL_RST_GPIO_PIN, 1U);
-#endif
 
     PRINTF("Wifi setup example\r\n");
 

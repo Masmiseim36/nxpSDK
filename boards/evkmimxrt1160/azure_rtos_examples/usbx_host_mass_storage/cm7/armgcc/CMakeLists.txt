@@ -49,6 +49,10 @@ include(${ProjDirPath}/flags.cmake)
 include(${ProjDirPath}/config.cmake)
 
 add_executable(${MCUX_SDK_PROJECT_NAME} 
+"${ProjDirPath}/../pin_mux.c"
+"${ProjDirPath}/../pin_mux.h"
+"${ProjDirPath}/../board_setup.c"
+"${ProjDirPath}/../board_setup.h"
 "${ProjDirPath}/../../../../../../middleware/usb/include/usb.h"
 "${ProjDirPath}/../../../../../../middleware/usb/include/usb_misc.h"
 "${ProjDirPath}/../../../../../../middleware/usb/include/usb_spec.h"
@@ -57,10 +61,6 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../../../../../../components/osa/fsl_os_abstraction.h"
 "${ProjDirPath}/../../../../../../components/osa/fsl_os_abstraction_bm.h"
 "${ProjDirPath}/../../../../../../components/osa/fsl_os_abstraction_config.h"
-"${ProjDirPath}/../pin_mux.c"
-"${ProjDirPath}/../pin_mux.h"
-"${ProjDirPath}/../board_setup.c"
-"${ProjDirPath}/../board_setup.h"
 "${ProjDirPath}/../usbx_host_mass_storage.c"
 "${ProjDirPath}/../tx_user.h"
 "${ProjDirPath}/../fx_user.h"

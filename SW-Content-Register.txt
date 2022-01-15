@@ -445,7 +445,7 @@ lwip                       Name: lwIP TCP/IP Stack
                            Url: http://savannah.nongnu.org/projects/lwip     
 
 rtcesl                     Name: rtcesl                                      
-                           Version: 4.6.2 (CM0,CM4,CM7,CM33) + 4.5 (DSC)     
+                           Version: 4.7 (CM0,CM4,CM7,CM33) + 4.5 (DSC)       
                            Outgoing License: BSD-3-Clause                    
                            License File: COPYING-BSD-3                       
                            Format: object code & header files                
@@ -455,7 +455,7 @@ rtcesl                     Name: rtcesl
                            Origin: NXP (BSD-3-Clause)                        
 
 motor_control              Name: motor_control                               
-                           Version: 2.10.0                                   
+                           Version: 2.11.0                                   
                            Outgoing License: BSD-3-Clause                    
                            License File: COPYING-BSD-3                       
                            Format: source code                               
@@ -483,6 +483,20 @@ motor_control - JavaScript Name: motor_control
                            Description: Cross-platform JavaScript library.   
                            Location: middleware/motor_control/freemaster     
                            Origin: jQuery Foundation, Inc.                   
+
+motor_control - MCAA       Name: motor_control                               
+library                    Version: 1.0.0                                    
+                           Outgoing License: LA_OPT_NXP_Software_License.txt 
+                           - Additional distribution license granted -       
+                           License in Section 2.3 applies                    
+                           License File: LA_OPT_NXP_Software_License.txt     
+                           Format: object code & header files                
+                           Description: Motor Control Advanced Algorithms    
+                           library                                           
+                           Location:                                         
+                           middleware/motor_control/pmsm/pmsm_float/mc_algori
+                           thms/mcaa_lib                                     
+                           Origin: NXP (BSD-3-Clause)                        
 
 cmsis_drivers              Name: SDK CMSIS Peripheral Drivers                
                            Version: 2.x.x                                    
@@ -767,6 +781,15 @@ Dhara                      Name: Dhara
                            Origin: Daniel Beer (https://github.com/dlbeer/)  
                            Url: https://github.com/dlbeer/dhara              
 
+SE_hostlib                 Name: se_hostlib                                  
+                           Version: 2.12.0                                   
+                           Outgoing License: Plug & Trust Middleware License 
+                           License File: middleware/se_hostlib/EULA.pdf      
+                           Format: source code                               
+                           Description: Secure element host library          
+                           Location: middleware/se_hostlib                   
+                           Origin: NXP (Proprietary)                         
+
 TinyCBOR                   Name: TinyCBOR                                    
                            Version: 0.5.2                                    
                            Outgoing License: MIT                             
@@ -1011,11 +1034,11 @@ DeepviewRT Sample          Name: DeepviewRT Sample
                            Url: https://embeddedml.com                       
 
 safety_iec60730b           Name: safety iec60730b                            
-                           Version: 4.1                                      
+                           Version: 4.2                                      
                            Outgoing License: LA OPT NXP Software License.    
                            License File: LA_OPT_NXP_Software_License.txt     
                            Format: source code & object code & header files  
-                           Description: Safety IEC60730b Library             
+                           Description: Safety IEC60730b Example             
                            Location: middleware/safety_iec60730b             
                            Origin: NXP                                       
 
@@ -1425,15 +1448,6 @@ AwsDeviceConfiguration     Name: AWS Device Configuration
                            Origin: Android Open Source Project               
                            (https://source.android.com/) & NXP (Apache-2.0 & 
                            BSD)                                              
-
-SE_hostlib                 Name: se_hostlib                                  
-                           Version: 2.12.0                                   
-                           Outgoing License: Plug & Trust Middleware License 
-                           License File: middleware/se_hostlib/EULA.pdf      
-                           Format: source code                               
-                           Description: Secure element host library          
-                           Location: middleware/se_hostlib                   
-                           Origin: NXP (Proprietary)                         
 
 wolfssl                    Name: WolfSSL                                     
                            Version: 4.0.6                                    

@@ -13,23 +13,7 @@
 #include "clock_config.h"
 #include "board.h"
 #include "fsl_debug_console.h"
-
-#if defined(SD8801)
-#include "sd8801_wlan.h"
-#elif defined(SD8977)
-#include "sduart8977_wlan_bt.h"
-#elif defined(SD8978)
-#include "sduartIW416_wlan_bt.h"
-#elif defined(SD8987)
-#include "sduart8987_wlan_bt.h"
-#elif defined(SD8997)
-#include "sduart8997_wlan_bt.h"
-#elif defined(SD9097)
-#include "pvt_sd9097_wlan.h"
-#elif defined(SD9098)
-#include "pvt_sd9098_wlan.h"
-#endif
-
+#include "wlan_bt_fw.h"
 #include "wlan.h"
 #include "wifi.h"
 #include "wm_net.h"
@@ -46,9 +30,20 @@
 
 // Hardwired SSID, passphrase of AP to connect to
 // Change this to fit your AP
-#define AP_SSID       "SSID"
+
+/* @TEST_ANCHOR */
+
+#ifndef AP_SSID
+#define AP_SSID "SSID"
+#endif
+
+#ifndef AP_PASSPHRASE
 #define AP_PASSPHRASE "PASSWD"
-#define PING_ADDR     "8.8.8.8"
+#endif
+
+#ifndef PING_ADDR
+#define PING_ADDR "8.8.8.8"
+#endif
 
 /*******************************************************************************
  * Variables
@@ -62,6 +57,7 @@ TaskHandle_t taskMain_task_handler;
 struct wlan_network sta_network;
 
 static char firstResult             = 0;
+static TaskHandle_t xInitTaskNotify = NULL;
 static TaskHandle_t xJoinTaskNotify = NULL;
 
 /*******************************************************************************
@@ -216,9 +212,22 @@ int wlan_event_callback(enum wlan_event_reason reason, void *data)
                 network_added = 1;
             }
 
+            if (xInitTaskNotify != NULL)
+            {
+                xTaskNotify(xInitTaskNotify, WM_SUCCESS, eSetValueWithOverwrite);
+                xInitTaskNotify = NULL;
+            }
+
             break;
         case WLAN_REASON_INITIALIZATION_FAILED:
             PRINTF("app_cb: WLAN: initialization failed\r\n");
+
+            if (xInitTaskNotify != NULL)
+            {
+                xTaskNotify(xInitTaskNotify, WM_FAIL, eSetValueWithOverwrite);
+                xInitTaskNotify = NULL;
+            }
+
             break;
         case WLAN_REASON_ADDRESS_SUCCESS:
             PRINTF("network mgr: DHCP new lease\r\n");
@@ -290,16 +299,24 @@ void taskMain(void *param)
         __BKPT(0);
     }
 
-    result = wlan_start(wlan_event_callback);
+    xInitTaskNotify = xTaskGetCurrentTaskHandle();
+    result          = wlan_start(wlan_event_callback);
     if (WM_SUCCESS != result)
     {
         PRINTF("Couldn't start wlan\r\n");
         __BKPT(0);
     }
 
-    // we need to wait for IDLE status
-    os_thread_sleep(os_msec_to_ticks(500));
-    scan();
+    // we need to wait for wi-fi initialization
+    if (WM_SUCCESS == ulTaskNotifyTake(pdTRUE, portMAX_DELAY))
+    {
+        scan();
+    }
+    else
+    {
+        // WLAN: initialization failed
+        __BKPT(0);
+    }
 
     while (!firstResult)
     {
@@ -328,17 +345,9 @@ int main(void)
     (void)result;
 
     BOARD_ConfigMPU();
-    BOARD_InitPins();
-#if defined(WIFI_BOARD_AW_CM358)
-    /* Init SDIO_RST */
-    BOARD_InitM2WifiResetPins();
-#endif
-    BOARD_BootClockRUN();
+    BOARD_InitBootPins();
+    BOARD_InitBootClocks();
     BOARD_InitDebugConsole();
-#if defined(WIFI_BOARD_AW_CM358)
-    /* Set SDIO_RST to 1 */
-    GPIO_PinWrite(BOARD_INITM2WIFIRESETPINS_SDIO_RST_GPIO, BOARD_INITM2WIFIRESETPINS_SDIO_RST_GPIO_PIN, 1U);
-#endif
 
     PRINTF("Wifi setup example\r\n");
 

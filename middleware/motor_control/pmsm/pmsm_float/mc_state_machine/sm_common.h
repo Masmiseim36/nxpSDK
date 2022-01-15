@@ -78,12 +78,33 @@ typedef struct _mcdef_pmsm_t
     bool_t bFaultClearMan;                         /* Manual fault clear detection */
 } mcdef_pmsm_t;
 
+/*! @brief Control application modes */
+typedef enum _mcs_app_state_t
+{
+    kAppStateMID      = 0,
+    kAppStateMid2Spin = 1,
+    kAppStateSpin2Mid = 2,
+    kAppStateSpin     = 3,
+} mcs_app_state_t;
+
+/*! @brief Control switching between Spin and MID */
+typedef struct _ctrl_m1_mid_t
+{
+    bool_t bCmdRunM1;                   /* Request to Spin */
+    bool_t bCmdRunMid;                  /* Request to MID */
+    mcs_app_state_t eAppState;          /* 0 - MID, 1 - transition MID -> Spin, 2 - transition Spin -> MID, 3 - Spin */
+    mcdef_fault_t sFaultCtrlM1_Mid;     /* 0x01 - Spin is on or not in Stop state, 0x02 - MID is not in Stop state */
+} ctrl_m1_mid_t;
+
 #define FAULT_I_DCBUS_OVER 0  /* OverCurrent fault flag */
 #define FAULT_U_DCBUS_UNDER 1 /* Undervoltage fault flag */
 #define FAULT_U_DCBUS_OVER 2  /* Overvoltage fault flag */
 #define FAULT_LOAD_OVER 3     /* Overload fault flag */
 #define FAULT_SPEED_OVER 4    /* Over speed fault flag */
 #define FAULT_ROTOR_BLOCKED 5 /* Blocked rotor fault flag */
+
+#define FAULT_APP_SPIN 1        /* Spin on fault flag */
+#define FAULT_APP_MID  2        /* MID run fault flag */
 
 /* Sets the fault bit defined by faultid in the faults variable */
 #define FAULT_SET(faults, faultid) ((faults) |= ((mcdef_fault_t)1 << (faultid)))

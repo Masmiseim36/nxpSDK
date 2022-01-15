@@ -5,8 +5,8 @@
 /*  resource file(s). For more information please refer to the Azure RTOS GUIX */
 /*  Studio User Guide, or visit our web site at azure.com/rtos                 */
 /*                                                                             */
-/*  GUIX Studio Revision 6.1.5.0                                               */
-/*  Date (dd.mm.yyyy): 26. 3.2021   Time (hh:mm): 19:47                        */
+/*  GUIX Studio Revision 6.1.9.0                                               */
+/*  Date (dd.mm.yyyy): 12.11.2021   Time (hh:mm): 18:04                        */
 /*******************************************************************************/
 
 
@@ -19,8 +19,8 @@
 
 #define MAIN_DISPLAY 0
 #define MAIN_DISPLAY_COLOR_FORMAT GX_COLOR_FORMAT_565RGB
-#define MAIN_DISPLAY_X_RESOLUTION 640
-#define MAIN_DISPLAY_Y_RESOLUTION 480
+#define MAIN_DISPLAY_X_RESOLUTION 720
+#define MAIN_DISPLAY_Y_RESOLUTION 1280
 #define MAIN_DISPLAY_THEME_1 0
 #define MAIN_DISPLAY_THEME_TABLE_SIZE 1
 

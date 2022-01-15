@@ -37,22 +37,22 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../pin_mux.c"
 "${ProjDirPath}/../pin_mux.h"
 "${ProjDirPath}/../freemaster_cfg.h"
-"${ProjDirPath}/../../common/fmstr_example/freemaster_example.c"
-"${ProjDirPath}/../../common/fmstr_example/freemaster_example.h"
-"${ProjDirPath}/../support/mcuxsdk_usb/freemaster_usb.c"
-"${ProjDirPath}/../support/mcuxsdk_usb/freemaster_usb.h"
-"${ProjDirPath}/../support/mcuxsdk_usb/freemaster_usb_device_descriptor.c"
-"${ProjDirPath}/../support/mcuxsdk_usb/freemaster_usb_device_descriptor.h"
-"${ProjDirPath}/../support/mcuxsdk_usb/usb_device_config.h"
-"${ProjDirPath}/../support/mcuxsdk_usb/usb_device_descriptor.h"
-"${ProjDirPath}/../../common/fmstr_example/data_example_pmp.h"
-"${ProjDirPath}/../../common/fmstr_example/data_img_logo.h"
-"${ProjDirPath}/../../common/fmstr_example/data_img_file.h"
-"${ProjDirPath}/../../common/fmstr_example/data_img_fmstrlogo.h"
-"${ProjDirPath}/../../common/fmstr_example/data_html_index.h"
-"${ProjDirPath}/../../common/fmstr_example/example_data.h"
+"${ProjDirPath}/../../../common/fmstr_example/freemaster_example.c"
+"${ProjDirPath}/../../../common/fmstr_example/freemaster_example.h"
+"${ProjDirPath}/../../../../../../middleware/freemaster/src/support/mcuxsdk_usb/freemaster_usb.c"
+"${ProjDirPath}/../../../../../../middleware/freemaster/src/support/mcuxsdk_usb/freemaster_usb.h"
+"${ProjDirPath}/../../../../../../middleware/freemaster/src/support/mcuxsdk_usb/freemaster_usb_device_descriptor.c"
+"${ProjDirPath}/../../../../../../middleware/freemaster/src/support/mcuxsdk_usb/freemaster_usb_device_descriptor.h"
+"${ProjDirPath}/../../../../../../middleware/freemaster/src/support/mcuxsdk_usb/usb_device_config.h"
+"${ProjDirPath}/../../../../../../middleware/freemaster/src/support/mcuxsdk_usb/usb_device_descriptor.h"
 "${ProjDirPath}/../board.c"
 "${ProjDirPath}/../board.h"
+"${ProjDirPath}/../../../common/fmstr_example/data_example_pmp.h"
+"${ProjDirPath}/../../../common/fmstr_example/data_img_logo.h"
+"${ProjDirPath}/../../../common/fmstr_example/data_img_file.h"
+"${ProjDirPath}/../../../common/fmstr_example/data_img_fmstrlogo.h"
+"${ProjDirPath}/../../../common/fmstr_example/data_html_index.h"
+"${ProjDirPath}/../../../common/fmstr_example/example_data.h"
 "${ProjDirPath}/../dcd.c"
 "${ProjDirPath}/../dcd.h"
 "${ProjDirPath}/../evkmimxrt1170_connect_cm4_cm4side.jlinkscript"
@@ -67,8 +67,8 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 
 target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
     ${ProjDirPath}/..
-    ${ProjDirPath}/../../common/fmstr_example
-    ${ProjDirPath}/../support/mcuxsdk_usb
+    ${ProjDirPath}/../../../common/fmstr_example
+    ${ProjDirPath}/../../../../../../middleware/freemaster/src/support/mcuxsdk_usb
 )
 
 set(CMAKE_MODULE_PATH
@@ -80,7 +80,6 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../../devices/MIMXRT1176/drivers
     ${ProjDirPath}/../../../../../../devices/MIMXRT1176
     ${ProjDirPath}/../../../../../../components/uart
-    ${ProjDirPath}/../../../../../../components/serial_manager
     ${ProjDirPath}/../../../../../../components/lists
     ${ProjDirPath}/../../../../../../devices/MIMXRT1176/xip
     ${ProjDirPath}/../../../../xip
@@ -112,11 +111,7 @@ include(device_MIMXRT1176_CMSIS_MIMXRT1176_cm4)
 
 include(component_lpuart_adapter_MIMXRT1176_cm4)
 
-include(component_serial_manager_MIMXRT1176_cm4)
-
 include(component_lists_MIMXRT1176_cm4)
-
-include(component_serial_manager_uart_MIMXRT1176_cm4)
 
 include(driver_lpuart_MIMXRT1176_cm4)
 

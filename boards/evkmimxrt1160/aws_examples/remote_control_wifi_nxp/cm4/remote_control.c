@@ -128,9 +128,22 @@ typedef struct
 static MQTTContext_t xMqttContext;
 
 /**
- * @brief The network context used for Openssl operation.
+ * @brief The network context used for SSL operation.
  */
 static NetworkContext_t xNetworkContext;
+
+/**
+ * @brief Each compilation unit that consumes the NetworkContext must define it.
+ * It should contain a single pointer to the type of your desired transport.
+ * When using multiple transports in the same compilation unit, define this pointer as void *.
+ *
+ * @note Transport stacks are defined in
+ * amazon-freertos/libraries/abstractions/transport/secure_sockets/transport_secure_sockets.h.
+ */
+struct NetworkContext
+{
+    SecureSocketsTransportParams_t *pParams;
+};
 
 /**
  * @brief Static buffer used to hold MQTT messages being sent and received.

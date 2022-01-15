@@ -618,6 +618,11 @@
               <FileType>1</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_edma.c</FilePath>
             </File>
+            <File>
+              <FileName>fsl_memory.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_memory.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -1476,6 +1481,11 @@
               <FileName>fsl_edma.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_edma.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_memory.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_memory.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2336,6 +2346,11 @@
               <FileType>1</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_edma.c</FilePath>
             </File>
+            <File>
+              <FileName>fsl_memory.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_memory.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -3194,6 +3209,11 @@
               <FileName>fsl_edma.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_edma.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_memory.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_memory.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -4054,6 +4074,11 @@
               <FileType>1</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_edma.c</FilePath>
             </File>
+            <File>
+              <FileName>fsl_memory.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_memory.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -4912,6 +4937,11 @@
               <FileName>fsl_edma.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_edma.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_memory.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1166/drivers/fsl_memory.h</FilePath>
             </File>
           </Files>
         </Group>

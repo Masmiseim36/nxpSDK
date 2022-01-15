@@ -31,6 +31,10 @@ include(${ProjDirPath}/flags.cmake)
 include(${ProjDirPath}/config.cmake)
 
 add_executable(${MCUX_SDK_PROJECT_NAME} 
+"${ProjDirPath}/../board.c"
+"${ProjDirPath}/../board.h"
+"${ProjDirPath}/../clock_config.c"
+"${ProjDirPath}/../clock_config.h"
 "${ProjDirPath}/../../../erpc_common/erpc_error_handler.h"
 "${ProjDirPath}/../../../erpc_common/erpc_error_handler.cpp"
 "${ProjDirPath}/../../../erpc_common/erpc_matrix_multiply/service/erpc_matrix_multiply.erpc"
@@ -40,19 +44,15 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../pin_mux.c"
 "${ProjDirPath}/../pin_mux.h"
 "${ProjDirPath}/../../erpc_config.h"
-"${ProjDirPath}/../board.c"
-"${ProjDirPath}/../board.h"
-"${ProjDirPath}/../clock_config.c"
-"${ProjDirPath}/../clock_config.h"
 "${ProjDirPath}/../dcd.c"
 "${ProjDirPath}/../dcd.h"
 "${ProjDirPath}/../evkmimxrt1160_connect_cm4_cm7side.jlinkscript"
 )
 
 target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
+    ${ProjDirPath}/..
     ${ProjDirPath}/../../../erpc_common
     ${ProjDirPath}/../../../erpc_common/erpc_matrix_multiply/service
-    ${ProjDirPath}/..
     ${ProjDirPath}/../..
 )
 

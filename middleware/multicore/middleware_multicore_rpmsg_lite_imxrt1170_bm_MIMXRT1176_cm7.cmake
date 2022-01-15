@@ -11,5 +11,3 @@ target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
 )
 
 
-include(middleware_multicore_rpmsg_lite_MIMXRT1176_cm7)
-

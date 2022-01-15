@@ -31,11 +31,17 @@
 #endif /* FSL_FEATURE_SOC_SYSMPU_COUNT */
 
 #include "usb_phy.h"
-#include "fsl_gpio.h"
-#include "fsl_iomuxc.h"
+#include "fsl_enet_mdio.h"
+#include "fsl_phyksz8081.h"
+#include "fsl_phy.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
+#define EXAMPLE_PHY_ADDRESS BOARD_ENET0_PHY_ADDRESS
+/* MDIO operations. */
+#define EXAMPLE_MDIO_OPS enet_ops
+/* PHY operations. */
+#define EXAMPLE_PHY_OPS phyksz8081_ops
 /* Base unit for ENIT layer is 1Mbps while for RNDIS its 100bps*/
 #define ENET_CONVERT_FACTOR (10000)
 
@@ -58,6 +64,11 @@ usb_status_t VNIC_EnetTxDone(void);
 /*******************************************************************************
  * Variables
  ******************************************************************************/
+/*! @brief Enet PHY and MDIO interface handler. */
+mdio_handle_t mdioHandle = {.resource.base = ENET, .ops = &EXAMPLE_MDIO_OPS};
+phy_handle_t phyHandle   = {.phyAddr = EXAMPLE_PHY_ADDRESS, .mdioHandle = &mdioHandle, .ops = &EXAMPLE_PHY_OPS};
+
+extern usb_cdc_vnic_t g_cdcVnic;
 extern queue_t g_enetRxServiceQueue;
 extern queue_t g_enetTxServiceQueue;
 extern uint8_t g_hwaddr[ENET_MAC_ADDR_SIZE];
@@ -105,32 +116,18 @@ uint32_t BOARD_GetPhySysClock(void)
 {
     return CLOCK_GetRootClockFreq(kCLOCK_Root_Bus);
 }
+
 void BOARD_InitModuleClock(void)
 {
-    /* Select syspll2pfd3, 528*18/24 = 396M */
-    CLOCK_InitPfd(kCLOCK_PllSys2, kCLOCK_Pfd3, 24);
     /* Select syspll2pfd3, 528*18/19 = 500M */
     CLOCK_InitPfd(kCLOCK_PllSys2, kCLOCK_Pfd1, 19);
     clock_root_config_t rootCfg = {.mux = 7, .div = 10}; /* Generate 50M root clock. */
     CLOCK_SetRootClock(kCLOCK_Root_Enet1, &rootCfg);
-
-    rootCfg.mux = 7;
-    rootCfg.div = 2;
-    CLOCK_SetRootClock(kCLOCK_Root_Bus, &rootCfg); /* Generate 198M bus clock. */
-}
-
-void delay(void)
-{
-    volatile uint32_t i = 0;
-    for (i = 0; i < 10000000; ++i)
-    {
-        __asm("NOP"); /* delay */
-    }
 }
 
 void IOMUXC_SelectENETClock(void)
 {
-    IOMUXC_GPR->GPR4 |= 0x3; /* 50M ENET_REF_CLOCK output to PHY and ENET module. */
+    IOMUXC_GPR->GPR4 |= IOMUXC_GPR_GPR4_ENET_REF_CLK_DIR_MASK; /* 50M ENET_REF_CLOCK output to PHY and ENET module. */
 }
 
 
@@ -1036,8 +1033,9 @@ void main(void)
     /* Pull up the ENET_INT before RESET. */
     GPIO_WritePinOutput(GPIO9, 11, 1);
     GPIO_WritePinOutput(GPIO12, 12, 0);
-    delay();
+    SDK_DelayAtLeastUs(10000, CLOCK_GetFreq(kCLOCK_CpuClk));
     GPIO_WritePinOutput(GPIO12, 12, 1);
+    SDK_DelayAtLeastUs(6, CLOCK_GetFreq(kCLOCK_CpuClk));
 
     APPInit();
 

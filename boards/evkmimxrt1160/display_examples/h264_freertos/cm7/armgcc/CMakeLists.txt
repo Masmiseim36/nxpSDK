@@ -102,9 +102,10 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../../components/video/display/dc/elcdif
     ${ProjDirPath}/../../../../../../middleware/sdmmc
     ${ProjDirPath}/../../../../../../devices/MIMXRT1166/utilities/debug_console_lite
+    ${ProjDirPath}/../../../../../../components/video/display/hx8394
     ${ProjDirPath}/../../../../../../middleware/fatfs
     ${ProjDirPath}/../../../../../../components/video/display/fbdev
-    ${ProjDirPath}/../../../../../../rtos/freertos
+    ${ProjDirPath}/../../../../../../rtos/freertos/freertos_kernel
     ${ProjDirPath}/../../../../../../middleware/openh264
     ${ProjDirPath}/../../../../../../devices/MIMXRT1166
     ${ProjDirPath}/../../../../../../components/uart
@@ -160,6 +161,8 @@ include(middleware_sdmmc_host_usdhc_freertos_MIMXRT1166_cm7)
 include(utility_debug_console_lite_MIMXRT1166_cm7)
 
 include(utility_assert_lite_MIMXRT1166_cm7)
+
+include(driver_display-hx8394_MIMXRT1166_cm7)
 
 include(middleware_fatfs_MIMXRT1166_cm7)
 

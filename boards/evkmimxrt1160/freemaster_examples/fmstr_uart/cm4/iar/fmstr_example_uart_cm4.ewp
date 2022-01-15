@@ -183,7 +183,6 @@
           <state>DEBUG</state>
           <state>CPU_MIMXRT1166DVM6A_cm4</state>
           <state>SDK_DEBUGCONSOLE=1</state>
-          <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</state>
           <state>MCUXPRESSO_SDK</state>
         </option>
@@ -315,13 +314,12 @@
         <option>
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../common/fmstr_example</state>
+          <state>$PROJ_DIR$/../../../common/fmstr_example</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/drivers</state>
           <state>$PROJ_DIR$/../../../../../../middleware/freemaster/src/common</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
-          <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/xip</state>
           <state>$PROJ_DIR$/../../../../xip</state>
@@ -1168,7 +1166,6 @@
           <state>DATA_SECTION_IS_CACHEABLE=1</state>
           <state>CPU_MIMXRT1166DVM6A_cm4</state>
           <state>SDK_DEBUGCONSOLE=1</state>
-          <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</state>
           <state>MCUXPRESSO_SDK</state>
         </option>
@@ -1300,13 +1297,12 @@
         <option>
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../common/fmstr_example</state>
+          <state>$PROJ_DIR$/../../../common/fmstr_example</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/drivers</state>
           <state>$PROJ_DIR$/../../../../../../middleware/freemaster/src/common</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
-          <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/xip</state>
           <state>$PROJ_DIR$/../../../../xip</state>
@@ -2150,7 +2146,6 @@
           <state>XIP_BOOT_HEADER_ENABLE=0</state>
           <state>CPU_MIMXRT1166DVM6A_cm4</state>
           <state>SDK_DEBUGCONSOLE=1</state>
-          <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</state>
           <state>MCUXPRESSO_SDK</state>
         </option>
@@ -2282,13 +2277,12 @@
         <option>
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../common/fmstr_example</state>
+          <state>$PROJ_DIR$/../../../common/fmstr_example</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/drivers</state>
           <state>$PROJ_DIR$/../../../../../../middleware/freemaster/src/common</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
-          <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/xip</state>
           <state>$PROJ_DIR$/../../../../xip</state>
@@ -3132,7 +3126,6 @@
           <state>DEBUG</state>
           <state>CPU_MIMXRT1166DVM6A_cm4</state>
           <state>SDK_DEBUGCONSOLE=1</state>
-          <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</state>
           <state>MCUXPRESSO_SDK</state>
         </option>
@@ -3264,13 +3257,12 @@
         <option>
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../common/fmstr_example</state>
+          <state>$PROJ_DIR$/../../../common/fmstr_example</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/drivers</state>
           <state>$PROJ_DIR$/../../../../../../middleware/freemaster/src/common</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
-          <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/xip</state>
           <state>$PROJ_DIR$/../../../../xip</state>
@@ -4112,7 +4104,6 @@
           <state>NDEBUG</state>
           <state>CPU_MIMXRT1166DVM6A_cm4</state>
           <state>SDK_DEBUGCONSOLE=1</state>
-          <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</state>
           <state>MCUXPRESSO_SDK</state>
         </option>
@@ -4244,13 +4235,12 @@
         <option>
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../common/fmstr_example</state>
+          <state>$PROJ_DIR$/../../../common/fmstr_example</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/drivers</state>
           <state>$PROJ_DIR$/../../../../../../middleware/freemaster/src/common</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
-          <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/xip</state>
           <state>$PROJ_DIR$/../../../../xip</state>
@@ -5097,7 +5087,6 @@
           <state>NDEBUG</state>
           <state>CPU_MIMXRT1166DVM6A_cm4</state>
           <state>SDK_DEBUGCONSOLE=1</state>
-          <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</state>
           <state>MCUXPRESSO_SDK</state>
         </option>
@@ -5229,13 +5218,12 @@
         <option>
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../common/fmstr_example</state>
+          <state>$PROJ_DIR$/../../../common/fmstr_example</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/drivers</state>
           <state>$PROJ_DIR$/../../../../../../middleware/freemaster/src/common</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
-          <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/xip</state>
           <state>$PROJ_DIR$/../../../../xip</state>
@@ -6079,7 +6067,6 @@
           <state>NDEBUG</state>
           <state>CPU_MIMXRT1166DVM6A_cm4</state>
           <state>SDK_DEBUGCONSOLE=1</state>
-          <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</state>
           <state>MCUXPRESSO_SDK</state>
         </option>
@@ -6211,13 +6198,12 @@
         <option>
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../common/fmstr_example</state>
+          <state>$PROJ_DIR$/../../../common/fmstr_example</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/drivers</state>
           <state>$PROJ_DIR$/../../../../../../middleware/freemaster/src/common</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
-          <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/xip</state>
           <state>$PROJ_DIR$/../../../../xip</state>
@@ -7061,7 +7047,6 @@
           <state>DATA_SECTION_IS_CACHEABLE=1</state>
           <state>CPU_MIMXRT1166DVM6A_cm4</state>
           <state>SDK_DEBUGCONSOLE=1</state>
-          <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</state>
           <state>MCUXPRESSO_SDK</state>
         </option>
@@ -7193,13 +7178,12 @@
         <option>
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../common/fmstr_example</state>
+          <state>$PROJ_DIR$/../../../common/fmstr_example</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/drivers</state>
           <state>$PROJ_DIR$/../../../../../../middleware/freemaster/src/common</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
-          <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/xip</state>
           <state>$PROJ_DIR$/../../../../xip</state>
@@ -7868,30 +7852,30 @@
       <name>$PROJ_DIR$/../freemaster_cfg.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../common/fmstr_example/freemaster_example.c</name>
+      <name>$PROJ_DIR$/../../../common/fmstr_example/freemaster_example.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../common/fmstr_example/freemaster_example.h</name>
+      <name>$PROJ_DIR$/../../../common/fmstr_example/freemaster_example.h</name>
     </file>
     <group>
       <name>example_data</name>
       <file>
-        <name>$PROJ_DIR$/../../common/fmstr_example/data_example_pmp.h</name>
+        <name>$PROJ_DIR$/../../../common/fmstr_example/data_example_pmp.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../common/fmstr_example/data_img_logo.h</name>
+        <name>$PROJ_DIR$/../../../common/fmstr_example/data_img_logo.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../common/fmstr_example/data_img_file.h</name>
+        <name>$PROJ_DIR$/../../../common/fmstr_example/data_img_file.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../common/fmstr_example/data_img_fmstrlogo.h</name>
+        <name>$PROJ_DIR$/../../../common/fmstr_example/data_img_fmstrlogo.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../common/fmstr_example/data_html_index.h</name>
+        <name>$PROJ_DIR$/../../../common/fmstr_example/data_html_index.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../common/fmstr_example/example_data.h</name>
+        <name>$PROJ_DIR$/../../../common/fmstr_example/example_data.h</name>
       </file>
     </group>
   </group>
@@ -8134,6 +8118,12 @@
         <name>$PROJ_DIR$/../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial/freemaster_serial_usb.h</name>
       </file>
       <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/freemaster/src/drivers/mcuxsdk/network/freemaster_net_segger_rtt.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/freemaster/src/drivers/mcuxsdk/network/freemaster_net_segger_rtt.h</name>
+      </file>
+      <file>
         <name>$PROJ_DIR$/../../../../../../middleware/freemaster/src/drivers/mcuxsdk/network/freemaster_net_lwip_udp.c</name>
       </file>
       <file>
@@ -8186,24 +8176,6 @@
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../../components/uart/fsl_adapter_lpuart.c</name>
-      </file>
-    </group>
-    <group>
-      <name>serial_manager</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/serial_manager/fsl_component_serial_manager.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/serial_manager/fsl_component_serial_port_internal.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/serial_manager/fsl_component_serial_manager.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/serial_manager/fsl_component_serial_port_uart.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/serial_manager/fsl_component_serial_port_uart.c</name>
       </file>
     </group>
     <group>

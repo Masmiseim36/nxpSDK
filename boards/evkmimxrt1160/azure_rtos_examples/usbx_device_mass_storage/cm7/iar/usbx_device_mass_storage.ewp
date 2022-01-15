@@ -323,11 +323,11 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
+          <state>$PROJ_DIR$/../usbx_device_controllers</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
           <state>$PROJ_DIR$/../../../../../../components/osa</state>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../usbx_device_controllers</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
@@ -352,12 +352,14 @@
           <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/addons/dns</state>
           <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/addons/ftp</state>
           <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/addons/http</state>
+          <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/addons/lwm2m</state>
           <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/addons/mdns</state>
           <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/addons/mqtt</state>
           <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/addons/nat</state>
           <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/addons/pop3</state>
           <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/addons/ppp</state>
           <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/addons/pppoe</state>
+          <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/addons/ptp</state>
           <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/addons/smtp</state>
           <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/addons/snmp</state>
           <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/addons/sntp</state>
@@ -541,7 +543,7 @@
           <name>ADefines</name>
           <state>DEBUG</state>
           <state>__STARTUP_INITIALIZE_NONCACHEDATA</state>
-          <state>TX_ENABLE_FPU_SUPPORT</state>
+          <state>TX_ENABLE_FPU_SUPPORT=1</state>
         </option>
         <option>
           <name>AList</name>
@@ -1354,11 +1356,11 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
+          <state>$PROJ_DIR$/../usbx_device_controllers</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
           <state>$PROJ_DIR$/../../../../../../components/osa</state>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../usbx_device_controllers</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
@@ -1383,12 +1385,14 @@
           <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/addons/dns</state>
           <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/addons/ftp</state>
           <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/addons/http</state>
+          <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/addons/lwm2m</state>
           <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/addons/mdns</state>
           <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/addons/mqtt</state>
           <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/addons/nat</state>
           <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/addons/pop3</state>
           <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/addons/ppp</state>
           <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/addons/pppoe</state>
+          <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/addons/ptp</state>
           <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/addons/smtp</state>
           <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/addons/snmp</state>
           <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/addons/sntp</state>
@@ -1572,7 +1576,7 @@
           <name>ADefines</name>
           <state>DEBUG</state>
           <state>__STARTUP_INITIALIZE_NONCACHEDATA</state>
-          <state>TX_ENABLE_FPU_SUPPORT</state>
+          <state>TX_ENABLE_FPU_SUPPORT=1</state>
         </option>
         <option>
           <name>AList</name>
@@ -2383,11 +2387,11 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
+          <state>$PROJ_DIR$/../usbx_device_controllers</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
           <state>$PROJ_DIR$/../../../../../../components/osa</state>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../usbx_device_controllers</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
@@ -2412,12 +2416,14 @@
           <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/addons/dns</state>
           <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/addons/ftp</state>
           <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/addons/http</state>
+          <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/addons/lwm2m</state>
           <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/addons/mdns</state>
           <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/addons/mqtt</state>
           <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/addons/nat</state>
           <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/addons/pop3</state>
           <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/addons/ppp</state>
           <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/addons/pppoe</state>
+          <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/addons/ptp</state>
           <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/addons/smtp</state>
           <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/addons/snmp</state>
           <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/addons/sntp</state>
@@ -2601,7 +2607,7 @@
           <name>ADefines</name>
           <state>NDEBUG</state>
           <state>__STARTUP_INITIALIZE_NONCACHEDATA</state>
-          <state>TX_ENABLE_FPU_SUPPORT</state>
+          <state>TX_ENABLE_FPU_SUPPORT=1</state>
         </option>
         <option>
           <name>AList</name>
@@ -3414,11 +3420,11 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
+          <state>$PROJ_DIR$/../usbx_device_controllers</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
           <state>$PROJ_DIR$/../../../../../../components/osa</state>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../usbx_device_controllers</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
@@ -3443,12 +3449,14 @@
           <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/addons/dns</state>
           <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/addons/ftp</state>
           <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/addons/http</state>
+          <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/addons/lwm2m</state>
           <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/addons/mdns</state>
           <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/addons/mqtt</state>
           <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/addons/nat</state>
           <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/addons/pop3</state>
           <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/addons/ppp</state>
           <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/addons/pppoe</state>
+          <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/addons/ptp</state>
           <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/addons/smtp</state>
           <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/addons/snmp</state>
           <state>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/addons/sntp</state>
@@ -3632,7 +3640,7 @@
           <name>ADefines</name>
           <state>NDEBUG</state>
           <state>__STARTUP_INITIALIZE_NONCACHEDATA</state>
-          <state>TX_ENABLE_FPU_SUPPORT</state>
+          <state>TX_ENABLE_FPU_SUPPORT=1</state>
         </option>
         <option>
           <name>AList</name>
@@ -4122,87 +4130,90 @@
     </settings>
   </configuration>
   <group>
-    <name>board</name>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../middleware/usb/include/usb.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../middleware/usb/include/usb_misc.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../middleware/usb/include/usb_spec.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../middleware/usb/phy/usb_phy.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../middleware/usb/phy/usb_phy.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction_bm.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction_config.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../pin_mux.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../pin_mux.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../board_setup.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../board_setup.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../board.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../board.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../clock_config.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../clock_config.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../dcd.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../dcd.h</name>
-    </file>
-  </group>
-  <group>
-    <name>source</name>
-    <file>
-      <name>$PROJ_DIR$/../usbx_device_mass_storage.c</name>
-    </file>
-  </group>
-  <group>
     <name>azure-rtos</name>
     <group>
-      <name>config</name>
-      <file>
-        <name>$PROJ_DIR$/../tx_user.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../fx_user.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../nx_user.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../ux_user.h</name>
-      </file>
-    </group>
-    <group>
       <name>usbx</name>
+      <group>
+        <name>usbx_device_controllers</name>
+        <file>
+          <name>$PROJ_DIR$/../usbx_device_controllers/ux_dcd_mcimx6.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../usbx_device_controllers/ux_dcd_mcimx6_address_set.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../usbx_device_controllers/ux_dcd_mcimx6_endpoint_address_get.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../usbx_device_controllers/ux_dcd_mcimx6_endpoint_create.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../usbx_device_controllers/ux_dcd_mcimx6_endpoint_destroy.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../usbx_device_controllers/ux_dcd_mcimx6_endpoint_flush.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../usbx_device_controllers/ux_dcd_mcimx6_endpoint_reset.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../usbx_device_controllers/ux_dcd_mcimx6_endpoint_stall.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../usbx_device_controllers/ux_dcd_mcimx6_endpoint_stall_clear.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../usbx_device_controllers/ux_dcd_mcimx6_endpoint_status.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../usbx_device_controllers/ux_dcd_mcimx6_frame_number_get.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../usbx_device_controllers/ux_dcd_mcimx6_function.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../usbx_device_controllers/ux_dcd_mcimx6_initialize.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../usbx_device_controllers/ux_dcd_mcimx6_initialize_complete.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../usbx_device_controllers/ux_dcd_mcimx6_interrupt_handler.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../usbx_device_controllers/ux_dcd_mcimx6_interrupt_thread.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../usbx_device_controllers/ux_dcd_mcimx6_qtd_get.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../usbx_device_controllers/ux_dcd_mcimx6_register_clear.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../usbx_device_controllers/ux_dcd_mcimx6_register_read.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../usbx_device_controllers/ux_dcd_mcimx6_register_set.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../usbx_device_controllers/ux_dcd_mcimx6_register_write.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../usbx_device_controllers/ux_dcd_mcimx6_state_change.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../usbx_device_controllers/ux_dcd_mcimx6_status_phase_hook.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../usbx_device_controllers/ux_dcd_mcimx6_transfer_abort.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../usbx_device_controllers/ux_dcd_mcimx6_transfer_callback.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../usbx_device_controllers/ux_dcd_mcimx6_transfer_request.c</name>
+        </file>
+      </group>
       <file>
         <name>$PROJ_DIR$/../../../../../../rtos/azure-rtos/usbx/LICENSE.txt</name>
       </file>
@@ -4403,6 +4414,21 @@
       </group>
     </group>
     <group>
+      <name>config</name>
+      <file>
+        <name>$PROJ_DIR$/../tx_user.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../fx_user.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../nx_user.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../ux_user.h</name>
+      </file>
+    </group>
+    <group>
       <name>netxduo</name>
       <group>
         <name>addons</name>
@@ -4491,6 +4517,15 @@
           </file>
         </group>
         <group>
+          <name>lwm2m</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/addons/lwm2m/nx_lwm2m_client.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/addons/lwm2m/nx_lwm2m_client.h</name>
+          </file>
+        </group>
+        <group>
           <name>mdns</name>
           <file>
             <name>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/addons/mdns/nxd_mdns.c</name>
@@ -4548,6 +4583,15 @@
           </file>
           <file>
             <name>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/addons/pppoe/nx_pppoe_server.h</name>
+          </file>
+        </group>
+        <group>
+          <name>ptp</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/addons/ptp/nxd_ptp_client.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../rtos/azure-rtos/netxduo/addons/ptp/nxd_ptp_client.h</name>
           </file>
         </group>
         <group>
@@ -5019,88 +5063,70 @@
     </group>
   </group>
   <group>
+    <name>board</name>
+    <file>
+      <name>$PROJ_DIR$/../pin_mux.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../pin_mux.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../board_setup.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../board_setup.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../middleware/usb/include/usb.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../middleware/usb/include/usb_misc.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../middleware/usb/include/usb_spec.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../middleware/usb/phy/usb_phy.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../middleware/usb/phy/usb_phy.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction_bm.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction_config.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../board.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../board.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../clock_config.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../clock_config.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../dcd.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../dcd.h</name>
+    </file>
+  </group>
+  <group>
+    <name>source</name>
+    <file>
+      <name>$PROJ_DIR$/../usbx_device_mass_storage.c</name>
+    </file>
+  </group>
+  <group>
     <name>ports</name>
-    <group>
-      <name>usbx</name>
-      <file>
-        <name>$PROJ_DIR$/../usbx_device_controllers/ux_dcd_mcimx6.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../usbx_device_controllers/ux_dcd_mcimx6_address_set.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../usbx_device_controllers/ux_dcd_mcimx6_endpoint_address_get.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../usbx_device_controllers/ux_dcd_mcimx6_endpoint_create.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../usbx_device_controllers/ux_dcd_mcimx6_endpoint_destroy.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../usbx_device_controllers/ux_dcd_mcimx6_endpoint_flush.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../usbx_device_controllers/ux_dcd_mcimx6_endpoint_reset.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../usbx_device_controllers/ux_dcd_mcimx6_endpoint_stall.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../usbx_device_controllers/ux_dcd_mcimx6_endpoint_stall_clear.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../usbx_device_controllers/ux_dcd_mcimx6_endpoint_status.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../usbx_device_controllers/ux_dcd_mcimx6_frame_number_get.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../usbx_device_controllers/ux_dcd_mcimx6_function.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../usbx_device_controllers/ux_dcd_mcimx6_initialize.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../usbx_device_controllers/ux_dcd_mcimx6_initialize_complete.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../usbx_device_controllers/ux_dcd_mcimx6_interrupt_handler.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../usbx_device_controllers/ux_dcd_mcimx6_interrupt_thread.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../usbx_device_controllers/ux_dcd_mcimx6_qtd_get.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../usbx_device_controllers/ux_dcd_mcimx6_register_clear.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../usbx_device_controllers/ux_dcd_mcimx6_register_read.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../usbx_device_controllers/ux_dcd_mcimx6_register_set.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../usbx_device_controllers/ux_dcd_mcimx6_register_write.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../usbx_device_controllers/ux_dcd_mcimx6_state_change.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../usbx_device_controllers/ux_dcd_mcimx6_status_phase_hook.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../usbx_device_controllers/ux_dcd_mcimx6_transfer_abort.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../usbx_device_controllers/ux_dcd_mcimx6_transfer_callback.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../usbx_device_controllers/ux_dcd_mcimx6_transfer_request.c</name>
-      </file>
-    </group>
     <file>
       <name>$PROJ_DIR$/../ux_dcd_interrupt_handler.c</name>
     </file>

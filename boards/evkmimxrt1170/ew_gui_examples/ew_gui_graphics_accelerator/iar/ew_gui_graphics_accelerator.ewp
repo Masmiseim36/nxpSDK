@@ -371,6 +371,7 @@
           <state>$PROJ_DIR$/../../../../../middleware/vglite/VGLite/rtos</state>
           <state>$PROJ_DIR$/../../../../../middleware/vglite/VGLiteKernel</state>
           <state>$PROJ_DIR$/../../../../../middleware/vglite/VGLiteKernel/rtos</state>
+          <state>$PROJ_DIR$/../../../../../components/video/display/hx8394</state>
           <state>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/TargetSpecific/evkmimxrt1170</state>
           <state>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/PlatformPackage/evkmimxrt1170/RGB565</state>
           <state>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/PlatformPackage/evkmimxrt1170/RTE</state>
@@ -1409,6 +1410,7 @@
           <state>$PROJ_DIR$/../../../../../middleware/vglite/VGLite/rtos</state>
           <state>$PROJ_DIR$/../../../../../middleware/vglite/VGLiteKernel</state>
           <state>$PROJ_DIR$/../../../../../middleware/vglite/VGLiteKernel/rtos</state>
+          <state>$PROJ_DIR$/../../../../../components/video/display/hx8394</state>
           <state>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/TargetSpecific/evkmimxrt1170</state>
           <state>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/PlatformPackage/evkmimxrt1170/RGB565</state>
           <state>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/PlatformPackage/evkmimxrt1170/RTE</state>
@@ -2572,6 +2574,12 @@
       <name>$PROJ_DIR$/../../../../../components/video/display/fbdev/fsl_fbdev.c</name>
     </file>
     <file>
+      <name>$PROJ_DIR$/../../../../../components/video/display/hx8394/fsl_hx8394.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../components/video/display/hx8394/fsl_hx8394.c</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../../../../../components/video/display/dc/fsl_dc_fb.h</name>
     </file>
   </group>
@@ -2673,6 +2681,9 @@
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include/StackMacros.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include/stdint.readme</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include/stream_buffer.h</name>

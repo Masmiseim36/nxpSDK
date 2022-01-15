@@ -47,6 +47,8 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../pin_mux.c"
 "${ProjDirPath}/../pin_mux.h"
 "${ProjDirPath}/../bt_module_config.h"
+"${ProjDirPath}/../wifi_bt_config.c"
+"${ProjDirPath}/../wifi_bt_config.h"
 "${ProjDirPath}/../dcd.c"
 "${ProjDirPath}/../dcd.h"
 "${ProjDirPath}/../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/controller/configs/lwipopts.h"
@@ -251,12 +253,21 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/bt_pal_gatt_internal.h"
 "${ProjDirPath}/../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/bt_pal_hci_core.c"
 "${ProjDirPath}/../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/bt_pal_hci_core.h"
+"${ProjDirPath}/../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/bt_pal_adv.c"
+"${ProjDirPath}/../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/bt_pal_adv.h"
+"${ProjDirPath}/../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/bt_pal_br.c"
+"${ProjDirPath}/../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/bt_pal_br.h"
+"${ProjDirPath}/../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/bt_pal_id.c"
+"${ProjDirPath}/../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/bt_pal_id.h"
+"${ProjDirPath}/../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/bt_pal_scan.c"
+"${ProjDirPath}/../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/bt_pal_scan.h"
+"${ProjDirPath}/../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/bt_pal_ecc.c"
+"${ProjDirPath}/../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/bt_pal_ecc.h"
 "${ProjDirPath}/../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/bt_pal_addr.c"
 "${ProjDirPath}/../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/bt_pal_buf.c"
 "${ProjDirPath}/../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/bt_pal_direction.c"
 "${ProjDirPath}/../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/bt_pal_direction_internal.h"
 "${ProjDirPath}/../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/bt_pal_hci_ecc.h"
-"${ProjDirPath}/../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/bt_pal_ecc.h"
 "${ProjDirPath}/../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/bt_pal_keys.c"
 "${ProjDirPath}/../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/bt_pal_keys.h"
 "${ProjDirPath}/../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/bt_pal_l2cap.c"
@@ -396,13 +407,14 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../../components/gpio
     ${ProjDirPath}/../../../../../../components/timer
     ${ProjDirPath}/../../../../../../components/common_task
-    ${ProjDirPath}/../../../../../../rtos/freertos
+    ${ProjDirPath}/../../../../../../rtos/freertos/freertos_kernel
     ${ProjDirPath}/../../../../../../middleware/wifi
     ${ProjDirPath}/../../../../../../middleware/wireless/ethermind
     ${ProjDirPath}/../../../../../../components/internal_flash
     ${ProjDirPath}/../../../../../../middleware/wireless
     ${ProjDirPath}/../../../../../../middleware/littlefs
     ${ProjDirPath}/../../../../../../CMSIS/Core/Include
+    ${ProjDirPath}/../../../../../../components/wifi_bt_module
     ${ProjDirPath}/../../../../../../components/log
 )
 
@@ -487,6 +499,8 @@ include(middleware_wifi_fwdnld_MIMXRT1176_cm7)
 
 include(middleware_edgefast_bluetooth_k32w061_controller_MIMXRT1176_cm7)
 
+include(driver_lpuart_edma_MIMXRT1176_cm7)
+
 include(driver_pmu_1_MIMXRT1176_cm7)
 
 include(driver_dcdc_soc_MIMXRT1176_cm7)
@@ -527,9 +541,15 @@ include(middleware_usb_host_msd_MIMXRT1176_cm7)
 
 include(driver_pit_MIMXRT1176_cm7)
 
+include(component_wifi_bt_module_tx_pwr_limits_MIMXRT1176_cm7)
+
 include(component_log_backend_debugconsole_MIMXRT1176_cm7)
 
 include(component_log_MIMXRT1176_cm7)
+
+include(driver_edma_MIMXRT1176_cm7)
+
+include(driver_dmamux_MIMXRT1176_cm7)
 
 
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--start-group)
@@ -547,87 +567,19 @@ if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
 endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
 
 if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/btdm/cm7f/gcc/libethermind_bt_a2dp.a)
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/ble/cm7f/gcc/libethermind_ble_core.a)
 endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
 
 if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/btdm/cm7f/gcc/libethermind_bt_avrcp.a)
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/ble/cm7f/gcc/libethermind_ble_gatt.a)
 endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
 
 if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/btdm/cm7f/gcc/libethermind_bt_bip.a)
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/ble/cm7f/gcc/libethermind_ble_protocol.a)
 endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
 
 if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/btdm/cm7f/gcc/libethermind_bt_bpp.a)
-endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
-
-if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/btdm/cm7f/gcc/libethermind_bt_core.a)
-endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
-
-if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/btdm/cm7f/gcc/libethermind_bt_ctn.a)
-endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
-
-if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/btdm/cm7f/gcc/libethermind_bt_ftp.a)
-endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
-
-if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/btdm/cm7f/gcc/libethermind_bt_gatt.a)
-endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
-
-if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/btdm/cm7f/gcc/libethermind_bt_hfp.a)
-endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
-
-if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/btdm/cm7f/gcc/libethermind_bt_hid.a)
-endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
-
-if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/btdm/cm7f/gcc/libethermind_bt_map.a)
-endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
-
-if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/btdm/cm7f/gcc/libethermind_bt_opp.a)
-endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
-
-if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/btdm/cm7f/gcc/libethermind_bt_pan.a)
-endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
-
-if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/btdm/cm7f/gcc/libethermind_bt_pbap.a)
-endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
-
-if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/btdm/cm7f/gcc/libethermind_bt_protocol.a)
-endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
-
-if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/btdm/cm7f/gcc/libethermind_bt_sap.a)
-endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
-
-if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/btdm/cm7f/gcc/libethermind_bt_spp.a)
-endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
-
-if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/btdm/cm7f/gcc/libethermind_bt_util.a)
-endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
-
-if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/btdm/cm7f/gcc/libethermind_sbc_common.a)
-endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
-
-if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/btdm/cm7f/gcc/libethermind_sbc_decoder.a)
-endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
-
-if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/btdm/cm7f/gcc/libethermind_sbc_encoder.a)
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/ble/cm7f/gcc/libethermind_ble_util.a)
 endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
 
 if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
@@ -635,87 +587,19 @@ if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
 endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
 
 if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/btdm/cm7f/gcc/libethermind_bt_a2dp.a)
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/ble/cm7f/gcc/libethermind_ble_core.a)
 endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
 
 if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/btdm/cm7f/gcc/libethermind_bt_avrcp.a)
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/ble/cm7f/gcc/libethermind_ble_gatt.a)
 endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
 
 if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/btdm/cm7f/gcc/libethermind_bt_bip.a)
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/ble/cm7f/gcc/libethermind_ble_protocol.a)
 endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
 
 if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/btdm/cm7f/gcc/libethermind_bt_bpp.a)
-endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
-
-if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/btdm/cm7f/gcc/libethermind_bt_core.a)
-endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
-
-if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/btdm/cm7f/gcc/libethermind_bt_ctn.a)
-endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
-
-if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/btdm/cm7f/gcc/libethermind_bt_ftp.a)
-endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
-
-if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/btdm/cm7f/gcc/libethermind_bt_gatt.a)
-endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
-
-if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/btdm/cm7f/gcc/libethermind_bt_hfp.a)
-endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
-
-if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/btdm/cm7f/gcc/libethermind_bt_hid.a)
-endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
-
-if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/btdm/cm7f/gcc/libethermind_bt_map.a)
-endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
-
-if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/btdm/cm7f/gcc/libethermind_bt_opp.a)
-endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
-
-if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/btdm/cm7f/gcc/libethermind_bt_pan.a)
-endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
-
-if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/btdm/cm7f/gcc/libethermind_bt_pbap.a)
-endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
-
-if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/btdm/cm7f/gcc/libethermind_bt_protocol.a)
-endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
-
-if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/btdm/cm7f/gcc/libethermind_bt_sap.a)
-endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
-
-if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/btdm/cm7f/gcc/libethermind_bt_spp.a)
-endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
-
-if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/btdm/cm7f/gcc/libethermind_bt_util.a)
-endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
-
-if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/btdm/cm7f/gcc/libethermind_sbc_common.a)
-endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
-
-if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/btdm/cm7f/gcc/libethermind_sbc_decoder.a)
-endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
-
-if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/btdm/cm7f/gcc/libethermind_sbc_encoder.a)
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/ble/cm7f/gcc/libethermind_ble_util.a)
 endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
 
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--end-group)

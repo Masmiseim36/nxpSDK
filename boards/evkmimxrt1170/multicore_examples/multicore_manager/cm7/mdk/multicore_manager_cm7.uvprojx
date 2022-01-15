@@ -376,28 +376,8 @@
       </TargetOption>
       <Groups>
         <Group>
-          <GroupName>source</GroupName>
-          <Files>
-            <File>
-              <FileName>mcmgr_core0.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../mcmgr_core0.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>board</GroupName>
           <Files>
-            <File>
-              <FileName>pin_mux.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../pin_mux.c</FilePath>
-            </File>
-            <File>
-              <FileName>pin_mux.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../pin_mux.h</FilePath>
-            </File>
             <File>
               <FileName>board.c</FileName>
               <FileType>1</FileType>
@@ -419,6 +399,16 @@
               <FilePath>../clock_config.h</FilePath>
             </File>
             <File>
+              <FileName>pin_mux.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../pin_mux.c</FilePath>
+            </File>
+            <File>
+              <FileName>pin_mux.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../pin_mux.h</FilePath>
+            </File>
+            <File>
               <FileName>dcd.c</FileName>
               <FileType>1</FileType>
               <FilePath>../dcd.c</FilePath>
@@ -427,6 +417,16 @@
               <FileName>dcd.h</FileName>
               <FileType>5</FileType>
               <FilePath>../dcd.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>source</GroupName>
+          <Files>
+            <File>
+              <FileName>mcmgr_core0.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../mcmgr_core0.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -502,6 +502,18 @@
               <FileName>fsl_incbin.S</FileName>
               <FileType>2</FileType>
               <FilePath>../../../../../../devices/MIMXRT1176/utilities/incbin/fsl_incbin.S</FilePath>
+              <FileOption>
+                                  <CommonProperty>
+                                    <IncludeInBuild>2</IncludeInBuild>
+                                    <AlwaysBuild>1</AlwaysBuild>
+                                    <GenerateAssemblyFile>2</GenerateAssemblyFile>
+                                    <AssembleAssemblyFile>2</AssembleAssemblyFile>
+                                    <PublicsOnly>2</PublicsOnly>
+                                    <StopOnExitCode>11</StopOnExitCode>
+                                  </CommonProperty>
+                                  <FileArmAds>
+                                  </FileArmAds>
+                                </FileOption>
             </File>
           </Files>
         </Group>
@@ -1135,28 +1147,8 @@
       </TargetOption>
       <Groups>
         <Group>
-          <GroupName>source</GroupName>
-          <Files>
-            <File>
-              <FileName>mcmgr_core0.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../mcmgr_core0.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>board</GroupName>
           <Files>
-            <File>
-              <FileName>pin_mux.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../pin_mux.c</FilePath>
-            </File>
-            <File>
-              <FileName>pin_mux.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../pin_mux.h</FilePath>
-            </File>
             <File>
               <FileName>board.c</FileName>
               <FileType>1</FileType>
@@ -1178,6 +1170,16 @@
               <FilePath>../clock_config.h</FilePath>
             </File>
             <File>
+              <FileName>pin_mux.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../pin_mux.c</FilePath>
+            </File>
+            <File>
+              <FileName>pin_mux.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../pin_mux.h</FilePath>
+            </File>
+            <File>
               <FileName>dcd.c</FileName>
               <FileType>1</FileType>
               <FilePath>../dcd.c</FilePath>
@@ -1186,6 +1188,16 @@
               <FileName>dcd.h</FileName>
               <FileType>5</FileType>
               <FilePath>../dcd.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>source</GroupName>
+          <Files>
+            <File>
+              <FileName>mcmgr_core0.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../mcmgr_core0.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1261,6 +1273,18 @@
               <FileName>fsl_incbin.S</FileName>
               <FileType>2</FileType>
               <FilePath>../../../../../../devices/MIMXRT1176/utilities/incbin/fsl_incbin.S</FilePath>
+              <FileOption>
+                                  <CommonProperty>
+                                    <IncludeInBuild>2</IncludeInBuild>
+                                    <AlwaysBuild>1</AlwaysBuild>
+                                    <GenerateAssemblyFile>2</GenerateAssemblyFile>
+                                    <AssembleAssemblyFile>2</AssembleAssemblyFile>
+                                    <PublicsOnly>2</PublicsOnly>
+                                    <StopOnExitCode>11</StopOnExitCode>
+                                  </CommonProperty>
+                                  <FileArmAds>
+                                  </FileArmAds>
+                                </FileOption>
             </File>
           </Files>
         </Group>

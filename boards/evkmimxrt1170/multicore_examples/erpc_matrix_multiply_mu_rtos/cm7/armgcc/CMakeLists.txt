@@ -31,6 +31,10 @@ include(${ProjDirPath}/flags.cmake)
 include(${ProjDirPath}/config.cmake)
 
 add_executable(${MCUX_SDK_PROJECT_NAME} 
+"${ProjDirPath}/../board.c"
+"${ProjDirPath}/../board.h"
+"${ProjDirPath}/../clock_config.c"
+"${ProjDirPath}/../clock_config.h"
 "${ProjDirPath}/../../../erpc_common/erpc_error_handler.h"
 "${ProjDirPath}/../../../erpc_common/erpc_error_handler.cpp"
 "${ProjDirPath}/../../../erpc_common/erpc_matrix_multiply/service/erpc_matrix_multiply.erpc"
@@ -41,10 +45,6 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../pin_mux.h"
 "${ProjDirPath}/../../erpc_config.h"
 "${ProjDirPath}/../FreeRTOSConfig.h"
-"${ProjDirPath}/../board.c"
-"${ProjDirPath}/../board.h"
-"${ProjDirPath}/../clock_config.c"
-"${ProjDirPath}/../clock_config.h"
 "${ProjDirPath}/../dcd.c"
 "${ProjDirPath}/../dcd.h"
 "${ProjDirPath}/../evkmimxrt1170_connect_cm4_cm7side.jlinkscript"
@@ -68,7 +68,7 @@ endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
 set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../../middleware/multicore
     ${ProjDirPath}/../../../../../../devices/MIMXRT1176/drivers
-    ${ProjDirPath}/../../../../../../rtos/freertos
+    ${ProjDirPath}/../../../../../../rtos/freertos/freertos_kernel
     ${ProjDirPath}/../../../../../../devices/MIMXRT1176/utilities/incbin
     ${ProjDirPath}/../../../../../../devices/MIMXRT1176
     ${ProjDirPath}/../../../../../../devices/MIMXRT1176/utilities

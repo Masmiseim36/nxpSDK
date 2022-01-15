@@ -8,8 +8,8 @@
 #ifndef _PROJECT_SETUP_IMXRT_H_
 #define _PROJECT_SETUP_IMXRT_H_
 
+#include "MIMXRT1176_cm7.h"
 #include "safety_config.h"
-
 
 #include "fsl_lpuart.h"
 

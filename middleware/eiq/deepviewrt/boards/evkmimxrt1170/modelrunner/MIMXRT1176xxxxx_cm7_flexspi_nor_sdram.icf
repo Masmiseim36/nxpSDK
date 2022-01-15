@@ -63,7 +63,7 @@ define symbol m_boot_hdr_dcd_data_start      = 0x30001030;
 if (isdefinedsymbol(__stack_size__)) {
   define symbol __size_cstack__        = __stack_size__;
 } else {
-  define symbol __size_cstack__        = 0x8000;
+  define symbol __size_cstack__        = 0x10000;
 }
 
 if (isdefinedsymbol(__heap_size__)) {

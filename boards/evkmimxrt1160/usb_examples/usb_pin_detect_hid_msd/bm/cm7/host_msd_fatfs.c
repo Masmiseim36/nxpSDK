@@ -918,7 +918,7 @@ usb_status_t USB_HostMsdEvent(usb_device_handle deviceHandle,
     usb_host_configuration_t *configuration;
     uint8_t interfaceIndex;
     usb_host_interface_t *interface;
-    uint32_t infoValue;
+    uint32_t infoValue = 0U;
     uint8_t id;
 
     switch (eventCode)

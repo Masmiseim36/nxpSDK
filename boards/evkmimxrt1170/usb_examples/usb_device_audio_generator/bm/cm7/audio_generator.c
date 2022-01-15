@@ -202,7 +202,7 @@ void USB_DeviceTaskFn(void *deviceHandle)
  *
  * @return A USB error code or kStatus_USB_Success.
  */
-usb_status_t USB_DeviceAudioRequest(class_handle_t handle, uint32_t event, void *param)
+static usb_status_t USB_DeviceAudioRequest(class_handle_t handle, uint32_t event, void *param)
 {
     usb_device_control_request_struct_t *request = (usb_device_control_request_struct_t *)param;
     usb_status_t error                           = kStatus_USB_Success;
@@ -694,9 +694,10 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
                             USB_AudioRecorderGetBuffer(s_wavBuff, (USB_SPEED_HIGH == s_audioGenerator.speed) ?
                                                                       HS_ISO_IN_ENDP_PACKET_SIZE :
                                                                       FS_ISO_IN_ENDP_PACKET_SIZE);
-                            error = USB_DeviceAudioSend(s_audioGenerator.audioHandle, USB_AUDIO_STREAM_ENDPOINT, s_wavBuff,
-                                                (USB_SPEED_HIGH == s_audioGenerator.speed) ? HS_ISO_IN_ENDP_PACKET_SIZE :
-                                                                                             FS_ISO_IN_ENDP_PACKET_SIZE);
+                            error = USB_DeviceAudioSend(
+                                s_audioGenerator.audioHandle, USB_AUDIO_STREAM_ENDPOINT, s_wavBuff,
+                                (USB_SPEED_HIGH == s_audioGenerator.speed) ? HS_ISO_IN_ENDP_PACKET_SIZE :
+                                                                             FS_ISO_IN_ENDP_PACKET_SIZE);
                         }
                     }
                 }
@@ -762,7 +763,7 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
  *
  * @return None.
  */
-void APPInit(void)
+static void APPInit(void)
 {
     USB_DeviceClockInit();
 #if (defined(FSL_FEATURE_SOC_SYSMPU_COUNT) && (FSL_FEATURE_SOC_SYSMPU_COUNT > 0U))

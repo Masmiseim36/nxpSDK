@@ -267,7 +267,14 @@ usb_status_t USB_DeviceDfuDeinit(class_handle_t handle)
     }
 
     /* Free the dfu class handle. */
+#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
+    if (kStatus_USB_Success != USB_DeviceDfuFreeHandle(dfuHandle))
+    {
+        return kStatus_USB_Error;
+    }
+#else
     (void)USB_DeviceDfuFreeHandle(dfuHandle);
+#endif
     return error;
 }
 #endif

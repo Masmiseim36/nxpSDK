@@ -334,7 +334,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, XIP_BOOT_HEADER_DCD_ENABLE=1, USE_SDRAM, DATA_SECTION_IS_CACHEABLE=1, DEBUG, __CLANG_ARM, CPU_MIMXRT1166DVM6A_cm7, SDK_DEBUGCONSOLE_UART, PRINTF_FLOAT_ENABLE=1, SCANF_FLOAT_ENABLE=1, PRINTF_ADVANCED_ENABLE=1, SCANF_ADVANCED_ENABLE=0, SERIAL_PORT_TYPE_UART=1, GX_INCLUDE_USER_DEFINE_FILE, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, SDK_I2C_BASED_COMPONENT_USED=1, TX_INCLUDE_USER_DEFINE_FILE, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../rtos/azure-rtos/guix/common/inc;../../../../../../rtos/azure-rtos/guix/ports/cortex_m7/ac6/inc;../../../../../../components/video;../../../../../../components/video/display;../../../../../../components/video/display/rm68200;../../../../../../components/video/display/rm68191;../../../../../../devices/MIMXRT1166/drivers;../../../../../../components/video/display/mipi_dsi_cmd;../../../../../../components/video/display/dc/lcdifv2;../../../../../../components/video/display/dc/elcdif;../../../../../../components/gt911;../../../../../../components/lists;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../devices/MIMXRT1166;../../../../../../devices/MIMXRT1166/drivers/cm7;../../../../xip;../../../../../../devices/MIMXRT1166/xip;../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../devices/MIMXRT1166/utilities/debug_console;../../../../../../rtos/azure-rtos/threadx/common/inc;../../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/inc;../../../../../../CMSIS/Core/Include;../../../../../../components/video/display/dc</IncludePath>
+              <IncludePath>..;../../../../../../rtos/azure-rtos/guix/common/inc;../../../../../../rtos/azure-rtos/guix/ports/cortex_m7/ac6/inc;../../../../../../components/video;../../../../../../components/video/display;../../../../../../components/video/display/rm68200;../../../../../../components/video/display/hx8394;../../../../../../components/video/display/rm68191;../../../../../../devices/MIMXRT1166/drivers;../../../../../../components/video/display/mipi_dsi_cmd;../../../../../../components/video/display/dc/lcdifv2;../../../../../../components/video/display/dc/elcdif;../../../../../../components/gt911;../../../../../../components/lists;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../devices/MIMXRT1166;../../../../../../devices/MIMXRT1166/drivers/cm7;../../../../xip;../../../../../../devices/MIMXRT1166/xip;../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../devices/MIMXRT1166/utilities/debug_console;../../../../../../rtos/azure-rtos/threadx/common/inc;../../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/inc;../../../../../../CMSIS/Core/Include;../../../../../../components/video/display/dc</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -350,7 +350,7 @@
             <ClangAsOpt>2</ClangAsOpt>
             <VariousControls>
               <MiscControls/>
-              <Define>DEBUG, __STARTUP_INITIALIZE_NONCACHEDATA, TX_ENABLE_FPU_SUPPORT</Define>
+              <Define>DEBUG, __STARTUP_INITIALIZE_NONCACHEDATA, TX_ENABLE_FPU_SUPPORT=1</Define>
               <Undefine/>
               <IncludePath/>
             </VariousControls>
@@ -752,6 +752,16 @@
               <FileName>fsl_rm68200.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../components/video/display/rm68200/fsl_rm68200.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_hx8394.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/video/display/hx8394/fsl_hx8394.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_hx8394.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/video/display/hx8394/fsl_hx8394.c</FilePath>
             </File>
             <File>
               <FileName>fsl_rm68191.h</FileName>
@@ -1242,6 +1252,16 @@
               <FileName>tx_thread_interrupt_control.S</FileName>
               <FileType>2</FileType>
               <FilePath>../../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/src/tx_thread_interrupt_control.S</FilePath>
+            </File>
+            <File>
+              <FileName>tx_thread_interrupt_disable.S</FileName>
+              <FileType>2</FileType>
+              <FilePath>../../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/src/tx_thread_interrupt_disable.S</FilePath>
+            </File>
+            <File>
+              <FileName>tx_thread_interrupt_restore.S</FileName>
+              <FileType>2</FileType>
+              <FilePath>../../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/src/tx_thread_interrupt_restore.S</FilePath>
             </File>
             <File>
               <FileName>tx_thread_schedule.S</FileName>
@@ -1648,7 +1668,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, XIP_BOOT_HEADER_DCD_ENABLE=1, USE_SDRAM, DATA_SECTION_IS_CACHEABLE=1, NDEBUG, __CLANG_ARM, CPU_MIMXRT1166DVM6A_cm7, SDK_DEBUGCONSOLE_UART, PRINTF_FLOAT_ENABLE=1, SCANF_FLOAT_ENABLE=1, PRINTF_ADVANCED_ENABLE=1, SCANF_ADVANCED_ENABLE=0, SERIAL_PORT_TYPE_UART=1, GX_INCLUDE_USER_DEFINE_FILE, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, SDK_I2C_BASED_COMPONENT_USED=1, TX_INCLUDE_USER_DEFINE_FILE, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../rtos/azure-rtos/guix/common/inc;../../../../../../rtos/azure-rtos/guix/ports/cortex_m7/ac6/inc;../../../../../../components/video;../../../../../../components/video/display;../../../../../../components/video/display/rm68200;../../../../../../components/video/display/rm68191;../../../../../../devices/MIMXRT1166/drivers;../../../../../../components/video/display/mipi_dsi_cmd;../../../../../../components/video/display/dc/lcdifv2;../../../../../../components/video/display/dc/elcdif;../../../../../../components/gt911;../../../../../../components/lists;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../devices/MIMXRT1166;../../../../../../devices/MIMXRT1166/drivers/cm7;../../../../xip;../../../../../../devices/MIMXRT1166/xip;../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../devices/MIMXRT1166/utilities/debug_console;../../../../../../rtos/azure-rtos/threadx/common/inc;../../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/inc;../../../../../../CMSIS/Core/Include;../../../../../../components/video/display/dc</IncludePath>
+              <IncludePath>..;../../../../../../rtos/azure-rtos/guix/common/inc;../../../../../../rtos/azure-rtos/guix/ports/cortex_m7/ac6/inc;../../../../../../components/video;../../../../../../components/video/display;../../../../../../components/video/display/rm68200;../../../../../../components/video/display/hx8394;../../../../../../components/video/display/rm68191;../../../../../../devices/MIMXRT1166/drivers;../../../../../../components/video/display/mipi_dsi_cmd;../../../../../../components/video/display/dc/lcdifv2;../../../../../../components/video/display/dc/elcdif;../../../../../../components/gt911;../../../../../../components/lists;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../devices/MIMXRT1166;../../../../../../devices/MIMXRT1166/drivers/cm7;../../../../xip;../../../../../../devices/MIMXRT1166/xip;../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../devices/MIMXRT1166/utilities/debug_console;../../../../../../rtos/azure-rtos/threadx/common/inc;../../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/inc;../../../../../../CMSIS/Core/Include;../../../../../../components/video/display/dc</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1664,7 +1684,7 @@
             <ClangAsOpt>2</ClangAsOpt>
             <VariousControls>
               <MiscControls/>
-              <Define>NDEBUG, __STARTUP_INITIALIZE_NONCACHEDATA, TX_ENABLE_FPU_SUPPORT</Define>
+              <Define>NDEBUG, __STARTUP_INITIALIZE_NONCACHEDATA, TX_ENABLE_FPU_SUPPORT=1</Define>
               <Undefine/>
               <IncludePath/>
             </VariousControls>
@@ -2066,6 +2086,16 @@
               <FileName>fsl_rm68200.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../components/video/display/rm68200/fsl_rm68200.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_hx8394.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/video/display/hx8394/fsl_hx8394.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_hx8394.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/video/display/hx8394/fsl_hx8394.c</FilePath>
             </File>
             <File>
               <FileName>fsl_rm68191.h</FileName>
@@ -2556,6 +2586,16 @@
               <FileName>tx_thread_interrupt_control.S</FileName>
               <FileType>2</FileType>
               <FilePath>../../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/src/tx_thread_interrupt_control.S</FilePath>
+            </File>
+            <File>
+              <FileName>tx_thread_interrupt_disable.S</FileName>
+              <FileType>2</FileType>
+              <FilePath>../../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/src/tx_thread_interrupt_disable.S</FilePath>
+            </File>
+            <File>
+              <FileName>tx_thread_interrupt_restore.S</FileName>
+              <FileType>2</FileType>
+              <FilePath>../../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/src/tx_thread_interrupt_restore.S</FilePath>
             </File>
             <File>
               <FileName>tx_thread_schedule.S</FileName>

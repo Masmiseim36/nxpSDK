@@ -7,7 +7,7 @@
 **     Compiler:            IAR ANSI C/C++ Compiler for ARM
 **     Reference manual:    IMXRT1160RM, Rev 0, 03/2021
 **     Version:             rev. 0.1, 2020-12-29
-**     Build:               b210422
+**     Build:               b210709
 **
 **     Abstract:
 **         Linker file for the IAR ANSI C/C++ Compiler for ARM
@@ -39,11 +39,11 @@ define symbol m_interrupts_ram_end     = 0x20000000 + __ram_vector_table_offset_
 define symbol m_data_start             = m_interrupts_ram_start + __ram_vector_table_size__;
 define symbol m_data_end               = 0x2001FFFF;
 
-define symbol m_ncache_start           = 0x20248000;
-define symbol m_ncache_end             = 0x2024FFFF;
-
 define symbol m_data2_start            = 0x20240000;
 define symbol m_data2_end              = 0x20247FFF;
+
+define symbol m_ncache_start           = 0x20248000;
+define symbol m_ncache_end             = 0x2024FFFF;
 
 define exported symbol __NCACHE_REGION_START   = m_ncache_start;
 define exported symbol __NCACHE_REGION_SIZE    = m_ncache_end - m_ncache_start + 1;
@@ -79,25 +79,24 @@ define region TEXT_region = mem:[from m_interrupts_start to m_interrupts_end]
 define region QACODE_region = mem:[from m_qacode_start to m_qacode_end];
 define region DATA_region = mem:[from m_data_start to m_data_end-__size_cstack__];
 define region DATA2_region = mem:[from m_data2_start to m_data2_end];
-define region NCACHE_region = mem:[from m_ncache_start to m_ncache_end];
 define region CSTACK_region = mem:[from m_data_end-__size_cstack__+1 to m_data_end];
-define block CSTACK    with alignment = 8, size = __size_cstack__   { };
-define block HEAP      with alignment = 8, size = __size_heap__     { };
+define region NCACHE_region = mem:[from m_ncache_start to m_ncache_end];
 define block RW        { readwrite };
 define block ZI        { zi };
 define block NCACHE_VAR    { section NonCacheable , section NonCacheable.init };
-
+define block CSTACK    with alignment = 8, size = __size_cstack__   { };
+define block HEAP      with alignment = 8, size = __size_heap__     { };
 define block QACCESS_CODE  { section CodeQuickAccess };
+define block QACCESS_DATA  { section DataQuickAccess };
 
-initialize by copy { readwrite, section .textrw, section CodeQuickAccess };
+initialize by copy { readwrite, section .textrw, section CodeQuickAccess, section DataQuickAccess };
 do not initialize  { section .noinit };
 
 place at address mem: m_interrupts_start    { readonly section .intvec };
-
-place at address mem:m_boot_hdr_conf_start { section .boot_hdr.conf };
-place at address mem:m_boot_hdr_ivt_start { section .boot_hdr.ivt };
-place at address mem:m_boot_hdr_boot_data_start { readonly section .boot_hdr.boot_data };
-place at address mem:m_boot_hdr_dcd_data_start { readonly section .boot_hdr.dcd_data };
+place at address mem: m_boot_hdr_conf_start { section .boot_hdr.conf };
+place at address mem: m_boot_hdr_ivt_start { section .boot_hdr.ivt };
+place at address mem: m_boot_hdr_boot_data_start { readonly section .boot_hdr.boot_data };
+place at address mem: m_boot_hdr_dcd_data_start { readonly section .boot_hdr.dcd_data };
 
 keep{ section .boot_hdr.conf, section .boot_hdr.ivt, section .boot_hdr.boot_data, section .boot_hdr.dcd_data };
 
@@ -109,7 +108,7 @@ if (isdefinedsymbol(__heap_noncacheable__)) {
 } else {
   place in DATA_region                      { last block HEAP };
 }
-place in NCACHE_region                      { block NCACHE_VAR };
 place in CSTACK_region                      { block CSTACK };
-place in QACODE_region                      { section .textrw};
+place in NCACHE_region                      { block NCACHE_VAR };
 place in QACODE_region                      { block QACCESS_CODE };
+place in DATA_region                        { block QACCESS_DATA };

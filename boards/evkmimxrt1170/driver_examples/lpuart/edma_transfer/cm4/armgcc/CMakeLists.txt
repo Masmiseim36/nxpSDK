@@ -104,6 +104,8 @@ include(driver_anatop_ai_MIMXRT1176_cm4)
 
 include(CMSIS_Include_core_cm_MIMXRT1176_cm4)
 
+include(driver_memory_MIMXRT1176_cm4)
+
 include(utilities_misc_utilities_MIMXRT1176_cm4)
 
 include(device_MIMXRT1176_system_MIMXRT1176_cm4)

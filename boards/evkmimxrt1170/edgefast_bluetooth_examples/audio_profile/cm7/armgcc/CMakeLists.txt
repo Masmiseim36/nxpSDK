@@ -59,14 +59,11 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../../usb_host_config.h"
 "${ProjDirPath}/../../ffconf.h"
 "${ProjDirPath}/../config_files/aws_mbedtls_config.h"
-"${ProjDirPath}/../config_files/aws_bufferpool_config.h"
 "${ProjDirPath}/../config_files/aws_demo_config.h"
-"${ProjDirPath}/../config_files/aws_mqtt_config.h"
-"${ProjDirPath}/../config_files/aws_secure_sockets_config.h"
+"${ProjDirPath}/../config_files/iot_secure_sockets_config.h"
 "${ProjDirPath}/../config_files/aws_shadow_config.h"
 "${ProjDirPath}/../config_files/FreeRTOSIPConfig.h"
 "${ProjDirPath}/../config_files/iot_config.h"
-"${ProjDirPath}/../config_files/iot_mqtt_agent_config.h"
 "${ProjDirPath}/../config_files/core_mqtt_config.h"
 "${ProjDirPath}/../config_files/core_pkcs11_config.h"
 "${ProjDirPath}/../config_files/aws_iot_network_config.h"
@@ -78,6 +75,8 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../pin_mux.c"
 "${ProjDirPath}/../pin_mux.h"
 "${ProjDirPath}/../bt_module_config.h"
+"${ProjDirPath}/../wifi_bt_config.c"
+"${ProjDirPath}/../wifi_bt_config.h"
 "${ProjDirPath}/../dcd.c"
 "${ProjDirPath}/../dcd.h"
 "${ProjDirPath}/../../../../../../middleware/wifi/wifidriver/mlan_sdio.c"
@@ -357,12 +356,21 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/bt_pal_gatt_internal.h"
 "${ProjDirPath}/../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/bt_pal_hci_core.c"
 "${ProjDirPath}/../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/bt_pal_hci_core.h"
+"${ProjDirPath}/../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/bt_pal_adv.c"
+"${ProjDirPath}/../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/bt_pal_adv.h"
+"${ProjDirPath}/../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/bt_pal_br.c"
+"${ProjDirPath}/../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/bt_pal_br.h"
+"${ProjDirPath}/../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/bt_pal_id.c"
+"${ProjDirPath}/../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/bt_pal_id.h"
+"${ProjDirPath}/../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/bt_pal_scan.c"
+"${ProjDirPath}/../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/bt_pal_scan.h"
+"${ProjDirPath}/../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/bt_pal_ecc.c"
+"${ProjDirPath}/../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/bt_pal_ecc.h"
 "${ProjDirPath}/../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/bt_pal_addr.c"
 "${ProjDirPath}/../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/bt_pal_buf.c"
 "${ProjDirPath}/../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/bt_pal_direction.c"
 "${ProjDirPath}/../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/bt_pal_direction_internal.h"
 "${ProjDirPath}/../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/bt_pal_hci_ecc.h"
-"${ProjDirPath}/../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/bt_pal_ecc.h"
 "${ProjDirPath}/../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/bt_pal_keys.c"
 "${ProjDirPath}/../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/bt_pal_keys.h"
 "${ProjDirPath}/../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/bt_pal_keys_br.c"
@@ -530,8 +538,10 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../../components/flash/mflash
     ${ProjDirPath}/../../../../../../components/flash/mflash/mimxrt1170
     ${ProjDirPath}/../../../../../../middleware/mbedtls
+    ${ProjDirPath}/../../../../../../rtos/freertos/freertos_kernel
     ${ProjDirPath}/../../../../../../middleware/lwip
     ${ProjDirPath}/../../../../../../middleware/wifi
+    ${ProjDirPath}/../../../../../../components/wifi_bt_module
     ${ProjDirPath}/../../../../../../components/internal_flash
     ${ProjDirPath}/../../../../../../middleware/wireless
     ${ProjDirPath}/../../../../../../middleware/littlefs
@@ -656,8 +666,6 @@ include(middleware_freertos-aws_iot_libraries_3rdparty_pkcs11_MIMXRT1176_cm7)
 
 include(middleware_freertos-aws_iot_vendor_nxp_pkcs11_MIMXRT1176_cm7)
 
-include(middleware_freertos-aws_iot_libraries_c_sdk_standard_shadow_MIMXRT1176_cm7)
-
 include(middleware_lwip_MIMXRT1176_cm7)
 
 include(middleware_wifi_MIMXRT1176_cm7)
@@ -669,6 +677,14 @@ include(middleware_freertos-aws_iot_libraries_device_shadow_for_aws_MIMXRT1176_c
 include(middleware_freertos-aws_iot_libraries_corejason_MIMXRT1176_cm7)
 
 include(middleware_freertos-aws_iot_mqtt_demo_helpers_MIMXRT1176_cm7)
+
+include(middleware_freertos-aws_iot_libraries_abstractions_transport_MIMXRT1176_cm7)
+
+include(middleware_freertos-aws_iot_libraries_coremqtt_MIMXRT1176_cm7)
+
+include(component_wifi_bt_module_tx_pwr_limits_MIMXRT1176_cm7)
+
+include(driver_lpuart_edma_MIMXRT1176_cm7)
 
 include(driver_pmu_1_MIMXRT1176_cm7)
 
@@ -702,8 +718,6 @@ include(driver_usdhc_MIMXRT1176_cm7)
 
 include(driver_memory_MIMXRT1176_cm7)
 
-include(middleware_freertos-aws_iot_libraries_c_sdk_standard_common_MIMXRT1176_cm7)
-
 include(middleware_maestro_framework_doc_MIMXRT1176_cm7)
 
 include(middleware_usb_common_header_MIMXRT1176_cm7)
@@ -718,23 +732,17 @@ include(middleware_wifi_wifidriver_MIMXRT1176_cm7)
 
 include(middleware_wifi_fwdnld_MIMXRT1176_cm7)
 
+include(middleware_freertos-aws_iot_libraries_c_sdk_standard_common_MIMXRT1176_cm7)
+
 include(middleware_freertos-aws_iot_libraries_3rdparty_mbedtls_utils_MIMXRT1176_cm7)
 
 include(middleware_freertos-aws_iot_libraries_3rdparty_mbedtls_config_MIMXRT1176_cm7)
 
 include(middleware_freertos-aws_iot_network_manager_MIMXRT1176_cm7)
 
-include(middleware_freertos-aws_iot_mqtt_MIMXRT1176_cm7)
-
-include(middleware_freertos-aws_iot_libraries_coremqtt_MIMXRT1176_cm7)
-
-include(middleware_freertos-aws_iot_libraries_c_sdk_standard_serializer_MIMXRT1176_cm7)
-
 include(component_log_backend_debugconsole_MIMXRT1176_cm7)
 
 include(component_log_MIMXRT1176_cm7)
-
-include(middleware_freertos-aws_iot_libraries_abstractions_transport_MIMXRT1176_cm7)
 
 include(middleware_freertos-aws_iot_libraries_abstractions_backoff_algorithm_MIMXRT1176_cm7)
 

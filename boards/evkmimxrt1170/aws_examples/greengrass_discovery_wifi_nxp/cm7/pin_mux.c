@@ -13,11 +13,11 @@
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 !!GlobalInfo
-product: Pins v9.0
+product: Pins v10.0
 processor: MIMXRT1176xxxxx
 package_id: MIMXRT1176DVMAA
 mcu_data: ksdk2_0
-processor_version: 9.0.1
+processor_version: 10.0.0
 pin_labels:
 - {pin_num: N17, pin_signal: GPIO_AD_16, label: SDIO_RST, identifier: SDIO_RESET;SDIO_RST}
 - {pin_num: J17, pin_signal: GPIO_AD_31, label: WL_RST, identifier: WL_RST}
@@ -151,20 +151,21 @@ void BOARD_InitPins(void) {
 
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
-BOARD_InitM2WifiResetPins:
+BOARD_InitPinsM2:
 - options: {callFromInitBoot: 'false', coreID: cm7, enableClock: 'true'}
 - pin_list:
   - {pin_num: N17, peripheral: GPIO9, signal: 'gpio_io, 15', pin_signal: GPIO_AD_16, identifier: SDIO_RST, direction: OUTPUT, gpio_init_state: 'false'}
+  - {pin_num: J17, peripheral: GPIO9, signal: 'gpio_io, 30', pin_signal: GPIO_AD_31, direction: OUTPUT, gpio_init_state: 'false'}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 
 /* FUNCTION ************************************************************************************************************
  *
- * Function Name : BOARD_InitM2WifiResetPins, assigned for the Cortex-M7F core.
+ * Function Name : BOARD_InitPinsM2, assigned for the Cortex-M7F core.
  * Description   : Configures pin routing and optionally pin electrical features.
  *
  * END ****************************************************************************************************************/
-void BOARD_InitM2WifiResetPins(void) {
+void BOARD_InitPinsM2(void) {
   CLOCK_EnableClock(kCLOCK_Iomuxc);           /* LPCG on: LPCG is ON. */
 
   /* GPIO configuration of SDIO_RST on GPIO_AD_16 (pin N17) */
@@ -176,30 +177,6 @@ void BOARD_InitM2WifiResetPins(void) {
   /* Initialize GPIO functionality on GPIO_AD_16 (pin N17) */
   GPIO_PinInit(GPIO9, 15U, &SDIO_RST_config);
 
-  IOMUXC_SetPinMux(
-      IOMUXC_GPIO_AD_16_GPIO9_IO15,           /* GPIO_AD_16 is configured as GPIO9_IO15 */
-      0U);                                    /* Software Input On Field: Input Path is determined by functionality */
-}
-
-
-/*
- * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
-BOARD_InitWlRstPin:
-- options: {callFromInitBoot: 'false', coreID: cm7, enableClock: 'true'}
-- pin_list:
-  - {pin_num: J17, peripheral: GPIO9, signal: 'gpio_io, 30', pin_signal: GPIO_AD_31, direction: OUTPUT, gpio_init_state: 'false'}
- * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
- */
-
-/* FUNCTION ************************************************************************************************************
- *
- * Function Name : BOARD_InitWlRstPin, assigned for the Cortex-M7F core.
- * Description   : Configures pin routing and optionally pin electrical features.
- *
- * END ****************************************************************************************************************/
-void BOARD_InitWlRstPin(void) {
-  CLOCK_EnableClock(kCLOCK_Iomuxc);           /* LPCG on: LPCG is ON. */
-
   /* GPIO configuration of WL_RST on GPIO_AD_31 (pin J17) */
   gpio_pin_config_t WL_RST_config = {
       .direction = kGPIO_DigitalOutput,
@@ -209,6 +186,9 @@ void BOARD_InitWlRstPin(void) {
   /* Initialize GPIO functionality on GPIO_AD_31 (pin J17) */
   GPIO_PinInit(GPIO9, 30U, &WL_RST_config);
 
+  IOMUXC_SetPinMux(
+      IOMUXC_GPIO_AD_16_GPIO9_IO15,           /* GPIO_AD_16 is configured as GPIO9_IO15 */
+      0U);                                    /* Software Input On Field: Input Path is determined by functionality */
   IOMUXC_SetPinMux(
       IOMUXC_GPIO_AD_31_GPIO9_IO30,           /* GPIO_AD_31 is configured as GPIO9_IO30 */
       0U);                                    /* Software Input On Field: Input Path is determined by functionality */

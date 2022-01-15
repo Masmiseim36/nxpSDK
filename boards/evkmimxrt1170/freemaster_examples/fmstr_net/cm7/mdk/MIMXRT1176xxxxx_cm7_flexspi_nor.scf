@@ -8,7 +8,7 @@
 **     Compiler:            Keil ARM C/C++ Compiler
 **     Reference manual:    IMXRT1170RM, Rev 1, 02/2021
 **     Version:             rev. 1.0, 2020-12-29
-**     Build:               b210402
+**     Build:               b210709
 **
 **     Abstract:
 **         Linker file for the Keil ARM C/C++ Compiler
@@ -70,13 +70,13 @@
 #if (defined(__stack_size__))
   #define Stack_Size                   __stack_size__
 #else
-  #define Stack_Size                   2048
+  #define Stack_Size                   0x800
 #endif
 
 #if (defined(__heap_size__))
   #define Heap_Size                    __heap_size__
 #else
-  #define Heap_Size                    25600
+  #define Heap_Size                    0x7000
 #endif
 
 #if defined(XIP_BOOT_HEADER_ENABLE) && (XIP_BOOT_HEADER_ENABLE == 1)
@@ -112,6 +112,7 @@ LR_m_text m_interrupts_start m_text_start+m_text_size-m_interrupts_start {   ; l
     * (RamFunction)
     * (NonCacheable.init)
     * (*NonCacheable)
+    * (DataQuickAccess)
   }
   ARM_LIB_HEAP +0 EMPTY Heap_Size {    ; Heap region growing up
   }

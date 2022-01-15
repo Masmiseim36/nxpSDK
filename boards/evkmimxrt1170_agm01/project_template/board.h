@@ -24,27 +24,11 @@
 
 /* The UART to use for debug messages. */
 #define BOARD_DEBUG_UART_TYPE     kSerialPort_Uart
-#define BOARD_DEBUG_UART_CLK_FREQ 24000000
-
-#if DEBUG_CONSOLE_UART_INDEX == 1
+#define BOARD_DEBUG_UART_CLK_FREQ BOARD_DebugConsoleSrcFreq()
 #define BOARD_DEBUG_UART_BASEADDR (uint32_t) LPUART1
 #define BOARD_DEBUG_UART_INSTANCE 1U
 #define BOARD_UART_IRQ            LPUART1_IRQn
 #define BOARD_UART_IRQ_HANDLER    LPUART1_IRQHandler
-#elif DEBUG_CONSOLE_UART_INDEX == 2
-#define BOARD_DEBUG_UART_BASEADDR (uint32_t) LPUART2
-#define BOARD_DEBUG_UART_INSTANCE 2U
-#define BOARD_UART_IRQ            LPUART2_IRQn
-#define BOARD_UART_IRQ_HANDLER    LPUART2_IRQHandler
-#elif DEBUG_CONSOLE_UART_INDEX == 12
-#define BOARD_DEBUG_UART_BASEADDR (uint32_t) LPUART12
-#define BOARD_DEBUG_UART_INSTANCE 12U
-#define BOARD_UART_IRQ            LPUART12_IRQn
-#define BOARD_UART_IRQ_HANDLER    LPUART12_IRQHandler
-#else
-#error "Unsupported UART"
-#endif
-
 #ifndef BOARD_DEBUG_UART_BAUDRATE
 #define BOARD_DEBUG_UART_BAUDRATE (115200U)
 #endif /* BOARD_DEBUG_UART_BAUDRATE */
@@ -169,6 +153,19 @@
 
 /* SD card detection method when using wifi module. */
 #define BOARD_WIFI_SD_DETECT_TYPE kSDMMCHOST_DetectCardByHostDATA3
+
+#define BOARD_BT_UART_INSTANCE    7
+#define BOARD_BT_UART_BAUDRATE    3000000
+#define BOARD_BT_UART_CLK_FREQ    CLOCK_GetRootClockFreq(kCLOCK_Root_Lpuart7);
+#define BOARD_BT_UART_IRQ         LPUART7_IRQn
+#define BOARD_BT_UART_IRQ_HANDLER LPUART7_IRQHandler
+
+/*! @brief The Ethernet port used by network examples, default use 1G port. */
+/* Below comment is for test script to easily define which port to be used, please don't delete. */
+/* @TEST_ANCHOR */
+#ifndef BOARD_NETWORK_USE_100M_ENET_PORT
+#define BOARD_NETWORK_USE_100M_ENET_PORT (0U)
+#endif
 
 #if defined(__cplusplus)
 extern "C" {

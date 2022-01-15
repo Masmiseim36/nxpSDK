@@ -24,12 +24,12 @@
  * Definitions
  ******************************************************************************/
 /* This macro enables infinity while loop in SafetyErrorHandling() function */
-#define SAFETY_ERROR_ACTION 1
+#define SAFETY_ERROR_ACTION 0
 
 /* TEST SWITCHES - for debugging it is better to turn the flash test and watchdog OFF */
 #define ADC_TEST_ENABLED    0
 #define CLOCK_TEST_ENABLED  1
-#define DIO_TEST_ENABLED    0
+#define DIO_TEST_ENABLED    1
 #define FLASH_TEST_ENABLED  1
 #define RAM_TEST_ENABLED    1
 #define PC_TEST_ENABLED     1
@@ -82,7 +82,7 @@
 #define USED_WDOG        RTWDOG3
 #define Watchdog_refresh USED_WDOG->CNT = RTWDOG_REFRESH_KEY
 
-#define ENDLESS_LOOP_ENABLE          1 /* Set 1 or 0 */
+#define ENDLESS_LOOP_ENABLE          0 /* Set 1 or 0 */
 #define WATCHDOG_RESETS_LIMIT        1000
 #define WD_TEST_TOLERANCE            20          /* % */
 #define WATCHDOG_CLOCK               32768U      /* 32.768 kHz */
@@ -157,9 +157,7 @@
 
 /********* ADC *********/
 #define TESTED_ADC              LPADC1
-#define TESTED_ADC_CMD          1U
-#define TESTED_ADC_CONTROL      0U
-#define TESTED_ADC_TRIGGER      1U
+#define ADC_USED_FIFO_NUM       0
 #define ADC_RESOLUTION          12
 #define ADC_MAX                 ((1 << (ADC_RESOLUTION)) - 1)
 #define ADC_REFERENCE           1.8
@@ -169,6 +167,11 @@
 #define ADC_MIN_LIMIT(val)      (uint16_t)(((val) * (100 - ADC_DEVIATION_PERCENT)) / 100)
 #define ADC_MAX_LIMIT(val)      (uint16_t)(((val) * (100 + ADC_DEVIATION_PERCENT)) / 100)
 #define FS_CFG_AIO_CHANNELS_CNT 3
+      
+#define ADC_COMMAND_BUFFER       1
+#define TRIGGER_EVENT            0  /* write to the SWTRIG register  select between 0 - 3, SWTRIG[SWT0] is associated with TCTRL0 */       
+      
+      
 #define FS_CFG_AIO_CHANNELS_LIMITS_INIT                                                                     \
     {                                                                                                       \
         {(uint32_t)ADC_MIN_LIMIT(0), (uint32_t)ADC_MAX_LIMIT(60)},                                          \
@@ -182,6 +185,9 @@
     {                            \
         0x01U, 0x03U, 0x02U      \
     } /* ADC Channels for V_refl, V_refh, bandgap */
+
+#define FS_CFG_AIO_CHANNELS_SIDE_INIT {0, 0, 0}  /* sides associated with input channels,  0 = A, 1 = B */    
+
 /********* ADC END *********/
 
 /* Define i.MX device (to differentiate from other devices in the vector table etc.) */

@@ -334,7 +334,7 @@
               <MiscControls>-include ../app_config.h -fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=0, DEBUG, CPU_MIMXRT1176DVMAA_cm4, USE_RTOS=1, PRINTF_ADVANCED_ENABLE=1, SDK_OS_FREE_RTOS, SDIO_ENABLED, SERIAL_PORT_TYPE_UART=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../common/cm4;../../../..;../../../../../../rtos/freertos/freertos_kernel/include;../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F;../../../../../../middleware/lwip/port;../../../../../../middleware/lwip/src;../../../../../../middleware/lwip/src/include;../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../../middleware/wifi/dhcpd;../../../../../../middleware/wifi/incl/port/lwip;../../../../../../middleware/wifi/port/lwip;../../../../../../middleware/lwip/src/include/lwip/apps;../../../../../../devices/MIMXRT1176/drivers;../../../../../../middleware/sdmmc/sdio;../../../../../../middleware/sdmmc/common;../../../../../../middleware/sdmmc/host/usdhc;../../../../../../devices/MIMXRT1176;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../devices/MIMXRT1176/xip;../../../../xip;../../../../../../devices/MIMXRT1176/drivers/cm4;../../../../../../CMSIS/Core/Include;../../../../../../middleware/wifi/incl;../../../../../../middleware/wifi/incl/port/os;../../../../../../middleware/wifi/incl/wifidriver;../../../../../../middleware/wifi/incl/wlcmgr;../../../../../../middleware/wifi/wifi_bt_firmware;../../../../../../middleware/wifi/wifidriver;../../../../../../middleware/wifi/wifidriver/incl;../../../../../../middleware/sdmmc/osa;../../../../../../components/osa</IncludePath>
+              <IncludePath>..;../../../..;../../../../../../rtos/freertos/freertos_kernel/include;../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F;../../../../../../middleware/lwip/port;../../../../../../middleware/lwip/src;../../../../../../middleware/lwip/src/include;../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../../middleware/wifi/dhcpd;../../../../../../middleware/wifi/incl/port/lwip;../../../../../../middleware/wifi/port/lwip;../../../../../../middleware/lwip/src/include/lwip/apps;../../../../../../components/wifi_bt_module/AzureWave/tx_pwr_limits;../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits;../../../../../../devices/MIMXRT1176/drivers;../../../../../../middleware/sdmmc/sdio;../../../../../../middleware/sdmmc/common;../../../../../../middleware/sdmmc/host/usdhc;../../../../../../devices/MIMXRT1176;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../devices/MIMXRT1176/xip;../../../../xip;../../../../../../devices/MIMXRT1176/drivers/cm4;../../../../../../CMSIS/Core/Include;../../../../../../middleware/wifi/incl;../../../../../../middleware/wifi/incl/port/os;../../../../../../middleware/wifi/incl/wifidriver;../../../../../../middleware/wifi/incl/wlcmgr;../../../../../../middleware/wifi/wifi_bt_firmware;../../../../../../middleware/wifi/wifidriver;../../../../../../middleware/wifi/wifidriver/incl;../../../../../../middleware/sdmmc/osa;../../../../../../components/osa</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -379,6 +379,11 @@
           <GroupName>source</GroupName>
           <Files>
             <File>
+              <FileName>app_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../app_config.h</FilePath>
+            </File>
+            <File>
               <FileName>main.c</FileName>
               <FileType>1</FileType>
               <FilePath>../main.c</FilePath>
@@ -397,11 +402,6 @@
               <FileName>FreeRTOSConfig.h</FileName>
               <FileType>5</FileType>
               <FilePath>../FreeRTOSConfig.h</FilePath>
-            </File>
-            <File>
-              <FileName>app_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../app_config.h</FilePath>
             </File>
             <File>
               <FileName>wifi_config.h</FileName>
@@ -432,6 +432,16 @@
               <FileName>sdmmc_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../sdmmc_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>wifi_bt_config.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../wifi_bt_config.c</FilePath>
+            </File>
+            <File>
+              <FileName>wifi_bt_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../wifi_bt_config.h</FilePath>
             </File>
             <File>
               <FileName>board.c</FileName>
@@ -602,6 +612,11 @@
               <FileName>StackMacros.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/StackMacros.h</FilePath>
+            </File>
+            <File>
+              <FileName>stdint.readme</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/stdint.readme</FilePath>
             </File>
             <File>
               <FileName>stream_buffer.h</FileName>
@@ -1951,6 +1966,96 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>component/wifi_bt_module/AzureWave/tx_pwr_limits</GroupName>
+          <Files>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_WW.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/wifi_bt_module/AzureWave/tx_pwr_limits/wlan_txpwrlimit_cfg_WW.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/wifi_bt_module/Murata/tx_pwr_limits</GroupName>
+          <Files>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_1XK_CA.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1XK_CA.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_1XK_EU.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1XK_EU.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_1XK_JP.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1XK_JP.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_1XK_US.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1XK_US.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_1XK_WW.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1XK_WW.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_1ZM_CA.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1ZM_CA.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_1ZM_EU.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1ZM_EU.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_1ZM_JP.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1ZM_JP.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_1ZM_US.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1ZM_US.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_1ZM_WW.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1ZM_WW.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_2DS_CA.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_2DS_CA.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_2DS_EU.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_2DS_EU.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_2DS_JP.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_2DS_JP.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_2DS_US.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_2DS_US.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_2DS_WW.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_2DS_WW.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>drivers</GroupName>
           <Files>
             <File>
@@ -2324,9 +2429,9 @@
               <FilePath>../../../../../../middleware/wifi/incl/dhcp-server.h</FilePath>
             </File>
             <File>
-              <FileName>wifi_cal_data_ext.h</FileName>
+              <FileName>WIFI_IW416_BOARD_AW_AM457_CAL_DATA_EXT.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/wifi/incl/wifi_cal_data_ext.h</FilePath>
+              <FilePath>../../../../../../middleware/wifi/incl/WIFI_IW416_BOARD_AW_AM457_CAL_DATA_EXT.h</FilePath>
             </File>
             <File>
               <FileName>wm_utils.h</FileName>
@@ -3118,7 +3223,7 @@
               <MiscControls>-include ../app_config.h -fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=0, NDEBUG, CPU_MIMXRT1176DVMAA_cm4, USE_RTOS=1, PRINTF_ADVANCED_ENABLE=1, SDK_OS_FREE_RTOS, SDIO_ENABLED, SERIAL_PORT_TYPE_UART=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../common/cm4;../../../..;../../../../../../rtos/freertos/freertos_kernel/include;../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F;../../../../../../middleware/lwip/port;../../../../../../middleware/lwip/src;../../../../../../middleware/lwip/src/include;../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../../middleware/wifi/dhcpd;../../../../../../middleware/wifi/incl/port/lwip;../../../../../../middleware/wifi/port/lwip;../../../../../../middleware/lwip/src/include/lwip/apps;../../../../../../devices/MIMXRT1176/drivers;../../../../../../middleware/sdmmc/sdio;../../../../../../middleware/sdmmc/common;../../../../../../middleware/sdmmc/host/usdhc;../../../../../../devices/MIMXRT1176;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../devices/MIMXRT1176/xip;../../../../xip;../../../../../../devices/MIMXRT1176/drivers/cm4;../../../../../../CMSIS/Core/Include;../../../../../../middleware/wifi/incl;../../../../../../middleware/wifi/incl/port/os;../../../../../../middleware/wifi/incl/wifidriver;../../../../../../middleware/wifi/incl/wlcmgr;../../../../../../middleware/wifi/wifi_bt_firmware;../../../../../../middleware/wifi/wifidriver;../../../../../../middleware/wifi/wifidriver/incl;../../../../../../middleware/sdmmc/osa;../../../../../../components/osa</IncludePath>
+              <IncludePath>..;../../../..;../../../../../../rtos/freertos/freertos_kernel/include;../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F;../../../../../../middleware/lwip/port;../../../../../../middleware/lwip/src;../../../../../../middleware/lwip/src/include;../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../../middleware/wifi/dhcpd;../../../../../../middleware/wifi/incl/port/lwip;../../../../../../middleware/wifi/port/lwip;../../../../../../middleware/lwip/src/include/lwip/apps;../../../../../../components/wifi_bt_module/AzureWave/tx_pwr_limits;../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits;../../../../../../devices/MIMXRT1176/drivers;../../../../../../middleware/sdmmc/sdio;../../../../../../middleware/sdmmc/common;../../../../../../middleware/sdmmc/host/usdhc;../../../../../../devices/MIMXRT1176;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../devices/MIMXRT1176/xip;../../../../xip;../../../../../../devices/MIMXRT1176/drivers/cm4;../../../../../../CMSIS/Core/Include;../../../../../../middleware/wifi/incl;../../../../../../middleware/wifi/incl/port/os;../../../../../../middleware/wifi/incl/wifidriver;../../../../../../middleware/wifi/incl/wlcmgr;../../../../../../middleware/wifi/wifi_bt_firmware;../../../../../../middleware/wifi/wifidriver;../../../../../../middleware/wifi/wifidriver/incl;../../../../../../middleware/sdmmc/osa;../../../../../../components/osa</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -3163,6 +3268,11 @@
           <GroupName>source</GroupName>
           <Files>
             <File>
+              <FileName>app_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../app_config.h</FilePath>
+            </File>
+            <File>
               <FileName>main.c</FileName>
               <FileType>1</FileType>
               <FilePath>../main.c</FilePath>
@@ -3181,11 +3291,6 @@
               <FileName>FreeRTOSConfig.h</FileName>
               <FileType>5</FileType>
               <FilePath>../FreeRTOSConfig.h</FilePath>
-            </File>
-            <File>
-              <FileName>app_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../app_config.h</FilePath>
             </File>
             <File>
               <FileName>wifi_config.h</FileName>
@@ -3216,6 +3321,16 @@
               <FileName>sdmmc_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../sdmmc_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>wifi_bt_config.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../wifi_bt_config.c</FilePath>
+            </File>
+            <File>
+              <FileName>wifi_bt_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../wifi_bt_config.h</FilePath>
             </File>
             <File>
               <FileName>board.c</FileName>
@@ -3386,6 +3501,11 @@
               <FileName>StackMacros.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/StackMacros.h</FilePath>
+            </File>
+            <File>
+              <FileName>stdint.readme</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/stdint.readme</FilePath>
             </File>
             <File>
               <FileName>stream_buffer.h</FileName>
@@ -4735,6 +4855,96 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>component/wifi_bt_module/AzureWave/tx_pwr_limits</GroupName>
+          <Files>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_WW.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/wifi_bt_module/AzureWave/tx_pwr_limits/wlan_txpwrlimit_cfg_WW.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/wifi_bt_module/Murata/tx_pwr_limits</GroupName>
+          <Files>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_1XK_CA.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1XK_CA.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_1XK_EU.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1XK_EU.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_1XK_JP.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1XK_JP.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_1XK_US.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1XK_US.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_1XK_WW.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1XK_WW.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_1ZM_CA.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1ZM_CA.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_1ZM_EU.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1ZM_EU.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_1ZM_JP.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1ZM_JP.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_1ZM_US.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1ZM_US.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_1ZM_WW.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1ZM_WW.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_2DS_CA.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_2DS_CA.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_2DS_EU.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_2DS_EU.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_2DS_JP.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_2DS_JP.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_2DS_US.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_2DS_US.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_2DS_WW.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_2DS_WW.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>drivers</GroupName>
           <Files>
             <File>
@@ -5108,9 +5318,9 @@
               <FilePath>../../../../../../middleware/wifi/incl/dhcp-server.h</FilePath>
             </File>
             <File>
-              <FileName>wifi_cal_data_ext.h</FileName>
+              <FileName>WIFI_IW416_BOARD_AW_AM457_CAL_DATA_EXT.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/wifi/incl/wifi_cal_data_ext.h</FilePath>
+              <FilePath>../../../../../../middleware/wifi/incl/WIFI_IW416_BOARD_AW_AM457_CAL_DATA_EXT.h</FilePath>
             </File>
             <File>
               <FileName>wm_utils.h</FileName>

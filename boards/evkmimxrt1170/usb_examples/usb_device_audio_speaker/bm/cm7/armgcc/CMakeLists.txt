@@ -64,6 +64,7 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../../../devices/MIMXRT1176/drivers
     ${ProjDirPath}/../../../../../../../components/codec/i2c
     ${ProjDirPath}/../../../../../../../components/i2c
+    ${ProjDirPath}/../../../../../../../components/audio
     ${ProjDirPath}/../../../../../../../devices/MIMXRT1176/utilities/debug_console_lite
     ${ProjDirPath}/../../../../../../../middleware
     ${ProjDirPath}/../../../../../../../devices/MIMXRT1176
@@ -99,6 +100,8 @@ include(driver_lpi2c_MIMXRT1176_cm7)
 include(driver_sai_MIMXRT1176_cm7)
 
 include(driver_sai_edma_MIMXRT1176_cm7)
+
+include(component_audio_sai_edma_adapter_MIMXRT1176_cm7)
 
 include(driver_dmamux_MIMXRT1176_cm7)
 
@@ -147,6 +150,8 @@ include(driver_anatop_ai_MIMXRT1176_cm7)
 include(CMSIS_Include_core_cm_MIMXRT1176_cm7)
 
 include(middleware_usb_device_common_header_MIMXRT1176_cm7)
+
+include(driver_memory_MIMXRT1176_cm7)
 
 include(utilities_misc_utilities_MIMXRT1176_cm7)
 

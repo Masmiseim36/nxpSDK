@@ -129,8 +129,14 @@ static usb_status_t USB_DeviceCh9GetStatus(usb_device_common_class_struct_t *cla
     {
         return error;
     }
-
+#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
+    if (kStatus_USB_Success != USB_DeviceGetStatus(classHandle->handle, kUSB_DeviceStatusDeviceState, &state))
+    {
+        return kStatus_USB_Error;
+    }
+#else
     (void)USB_DeviceGetStatus(classHandle->handle, kUSB_DeviceStatusDeviceState, &state);
+#endif
 
     if (((uint8_t)kUSB_DeviceStateAddress != state) && ((uint8_t)kUSB_DeviceStateConfigured != state))
     {
@@ -236,8 +242,14 @@ static usb_status_t USB_DeviceCh9SetClearFeature(usb_device_common_class_struct_
     {
         return error;
     }
-
+#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
+    if (kStatus_USB_Success != USB_DeviceGetStatus(classHandle->handle, kUSB_DeviceStatusDeviceState, &state))
+    {
+        return kStatus_USB_Error;
+    }
+#else
     (void)USB_DeviceGetStatus(classHandle->handle, kUSB_DeviceStatusDeviceState, &state);
+#endif
 
     if (((uint8_t)kUSB_DeviceStateAddress != state) && ((uint8_t)kUSB_DeviceStateConfigured != state))
     {
@@ -312,11 +324,25 @@ static usb_status_t USB_DeviceCh9SetClearFeature(usb_device_common_class_struct_
                 /* Set or Clear the control endpoint status(halt or not). */
                 if (0U != isSet)
                 {
+#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
+                    if (kStatus_USB_Success != USB_DeviceStallEndpoint(classHandle->handle, (uint8_t)setup->wIndex))
+                    {
+                        return kStatus_USB_Error;
+                    }
+#else
                     (void)USB_DeviceStallEndpoint(classHandle->handle, (uint8_t)setup->wIndex);
+#endif
                 }
                 else
                 {
+#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
+                    if (kStatus_USB_Success != USB_DeviceUnstallEndpoint(classHandle->handle, (uint8_t)setup->wIndex))
+                    {
+                        return kStatus_USB_Error;
+                    }
+#else
                     (void)USB_DeviceUnstallEndpoint(classHandle->handle, (uint8_t)setup->wIndex);
+#endif
                 }
             }
 #endif
@@ -372,7 +398,14 @@ static usb_status_t USB_DeviceCh9SetAddress(usb_device_common_class_struct_t *cl
         return error;
     }
 
+#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
+    if (kStatus_USB_Success != USB_DeviceGetStatus(classHandle->handle, kUSB_DeviceStatusDeviceState, &state))
+    {
+        return kStatus_USB_Error;
+    }
+#else
     (void)USB_DeviceGetStatus(classHandle->handle, kUSB_DeviceStatusDeviceState, &state);
+#endif
 
     if (((uint8_t)kUSB_DeviceStateAddressing != state) && ((uint8_t)kUSB_DeviceStateAddress != state) &&
         ((uint8_t)kUSB_DeviceStateDefault != state)
@@ -445,7 +478,14 @@ static usb_status_t USB_DeviceCh9GetDescriptor(usb_device_common_class_struct_t 
         return error;
     }
 
+#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
+    if (kStatus_USB_Success != USB_DeviceGetStatus(classHandle->handle, kUSB_DeviceStatusDeviceState, &state))
+    {
+        return kStatus_USB_Error;
+    }
+#else
     (void)USB_DeviceGetStatus(classHandle->handle, kUSB_DeviceStatusDeviceState, &state);
+#endif
 
     if (((uint8_t)kUSB_DeviceStateAddress != state) && ((uint8_t)kUSB_DeviceStateConfigured != state) &&
         ((uint8_t)kUSB_DeviceStateDefault != state))
@@ -581,7 +621,14 @@ static usb_status_t USB_DeviceCh9GetConfiguration(usb_device_common_class_struct
         return kStatus_USB_InvalidRequest;
     }
 
+#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
+    if (kStatus_USB_Success != USB_DeviceGetStatus(classHandle->handle, kUSB_DeviceStatusDeviceState, &state))
+    {
+        return kStatus_USB_Error;
+    }
+#else
     (void)USB_DeviceGetStatus(classHandle->handle, kUSB_DeviceStatusDeviceState, &state);
+#endif
 
     if (((uint8_t)kUSB_DeviceStateAddress != state) && (((uint8_t)kUSB_DeviceStateConfigured != state)))
     {
@@ -614,6 +661,9 @@ static usb_status_t USB_DeviceCh9SetConfiguration(usb_device_common_class_struct
                                                   uint32_t *length)
 {
     uint8_t state = 0U;
+#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
+    usb_status_t error = kStatus_USB_InvalidRequest;
+#endif
 
     if (((setup->bmRequestType & USB_REQUEST_TYPE_DIR_MASK) != USB_REQUEST_TYPE_DIR_OUT) ||
         ((setup->bmRequestType & USB_REQUEST_TYPE_RECIPIENT_MASK) != USB_REQUEST_TYPE_RECIPIENT_DEVICE) ||
@@ -622,7 +672,14 @@ static usb_status_t USB_DeviceCh9SetConfiguration(usb_device_common_class_struct
         return kStatus_USB_InvalidRequest;
     }
 
+#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
+    if (kStatus_USB_Success != USB_DeviceGetStatus(classHandle->handle, kUSB_DeviceStatusDeviceState, &state))
+    {
+        return kStatus_USB_Error;
+    }
+#else
     (void)USB_DeviceGetStatus(classHandle->handle, kUSB_DeviceStatusDeviceState, &state);
+#endif
 
     if (((uint8_t)kUSB_DeviceStateAddress != state) && ((uint8_t)kUSB_DeviceStateConfigured != state))
     {
@@ -631,16 +688,38 @@ static usb_status_t USB_DeviceCh9SetConfiguration(usb_device_common_class_struct
 
     /* The device state is changed to kUSB_DeviceStateConfigured */
     state = (uint8_t)kUSB_DeviceStateConfigured;
+#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
+    if (kStatus_USB_Success != USB_DeviceSetStatus(classHandle->handle, kUSB_DeviceStatusDeviceState, &state))
+    {
+        return kStatus_USB_Error;
+    }
+#else
     (void)USB_DeviceSetStatus(classHandle->handle, kUSB_DeviceStatusDeviceState, &state);
+#endif
     if (0U == setup->wValue)
     {
         /* If the new configuration is zero, the device state is changed to kUSB_DeviceStateAddress */
         state = (uint8_t)kUSB_DeviceStateAddress;
+#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
+        if (kStatus_USB_Success != USB_DeviceSetStatus(classHandle->handle, kUSB_DeviceStatusDeviceState, &state))
+        {
+            return kStatus_USB_Error;
+        }
+#else
         (void)USB_DeviceSetStatus(classHandle->handle, kUSB_DeviceStatusDeviceState, &state);
+#endif
     }
 
     /* Notify the class layer the configuration is changed */
+#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
+    error = USB_DeviceClassEvent(classHandle->handle, kUSB_DeviceClassEventSetConfiguration, &setup->wValue);
+    if (kStatus_USB_Success != error)
+    {
+        return error;
+    }
+#else
     (void)USB_DeviceClassEvent(classHandle->handle, kUSB_DeviceClassEventSetConfiguration, &setup->wValue);
+#endif
     /* Notify the application the configuration is changed */
     return USB_DeviceClassCallback(classHandle->handle, (uint32_t)kUSB_DeviceEventSetConfiguration, &setup->wValue);
 }
@@ -674,7 +753,14 @@ static usb_status_t USB_DeviceCh9GetInterface(usb_device_common_class_struct_t *
         return error;
     }
 
+#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
+    if (kStatus_USB_Success != USB_DeviceGetStatus(classHandle->handle, kUSB_DeviceStatusDeviceState, &state))
+    {
+        return kStatus_USB_Error;
+    }
+#else
     (void)USB_DeviceGetStatus(classHandle->handle, kUSB_DeviceStatusDeviceState, &state);
+#endif
 
     if (state != (uint8_t)kUSB_DeviceStateConfigured)
     {
@@ -711,6 +797,9 @@ static usb_status_t USB_DeviceCh9SetInterface(usb_device_common_class_struct_t *
                                               uint32_t *length)
 {
     uint8_t state = 0U;
+#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
+    usb_status_t error = kStatus_USB_InvalidRequest;
+#endif
 
     if (((setup->bmRequestType & USB_REQUEST_TYPE_DIR_MASK) != USB_REQUEST_TYPE_DIR_OUT) ||
         ((setup->bmRequestType & USB_REQUEST_TYPE_RECIPIENT_MASK) != USB_REQUEST_TYPE_RECIPIENT_INTERFACE) ||
@@ -719,7 +808,14 @@ static usb_status_t USB_DeviceCh9SetInterface(usb_device_common_class_struct_t *
         return kStatus_USB_InvalidRequest;
     }
 
+#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
+    if (kStatus_USB_Success != USB_DeviceGetStatus(classHandle->handle, kUSB_DeviceStatusDeviceState, &state))
+    {
+        return kStatus_USB_Error;
+    }
+#else
     (void)USB_DeviceGetStatus(classHandle->handle, kUSB_DeviceStatusDeviceState, &state);
+#endif
 
     if (state != (uint8_t)kUSB_DeviceStateConfigured)
     {
@@ -728,8 +824,17 @@ static usb_status_t USB_DeviceCh9SetInterface(usb_device_common_class_struct_t *
     classHandle->standardTranscationBuffer = ((setup->wIndex & 0xFFU) << 8U) | (setup->wValue & 0xFFU);
     /* Notify the class driver the alternate setting of the interface is changed. */
     /* The Bit[15~8] is used to save the interface index, and the alternate setting is saved in Bit[7~0]. */
+#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
+    error = USB_DeviceClassEvent(classHandle->handle, kUSB_DeviceClassEventSetInterface,
+                                 &classHandle->standardTranscationBuffer);
+    if (kStatus_USB_Success != error)
+    {
+        return error;
+    }
+#else
     (void)USB_DeviceClassEvent(classHandle->handle, kUSB_DeviceClassEventSetInterface,
                                &classHandle->standardTranscationBuffer);
+#endif
     /* Notify the application the alternate setting of the interface is changed. */
     /* The Bit[15~8] is used to save the interface index, and the alternate setting will is saved in Bit[7~0]. */
     return USB_DeviceClassCallback(classHandle->handle, (uint32_t)kUSB_DeviceEventSetInterface,
@@ -765,7 +870,14 @@ static usb_status_t USB_DeviceCh9SynchFrame(usb_device_common_class_struct_t *cl
         return error;
     }
 
+#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
+    if (kStatus_USB_Success != USB_DeviceGetStatus(classHandle->handle, kUSB_DeviceStatusDeviceState, &state))
+    {
+        return kStatus_USB_Error;
+    }
+#else
     (void)USB_DeviceGetStatus(classHandle->handle, kUSB_DeviceStatusDeviceState, &state);
+#endif
 
     if (state != (uint8_t)kUSB_DeviceStateConfigured)
     {
@@ -888,7 +1000,14 @@ static usb_status_t USB_DeviceControlCallback(usb_device_handle handle,
     classHandle = (usb_device_common_class_struct_t *)callbackParam;
     temp        = (void *)&classHandle->setupBuffer[0];
     deviceSetup = (usb_setup_struct_t *)temp;
+#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
+    if (kStatus_USB_Success != USB_DeviceGetStatus(handle, kUSB_DeviceStatusDeviceState, &state))
+    {
+        return kStatus_USB_Error;
+    }
+#else
     (void)USB_DeviceGetStatus(handle, kUSB_DeviceStatusDeviceState, &state);
+#endif
 
     if (0U != message->isSetup)
     {
@@ -920,9 +1039,15 @@ static usb_status_t USB_DeviceControlCallback(usb_device_handle handle,
         /* Check the invalid value */
         if ((deviceSetup->bmRequestType & USB_REQUEST_TYPE_RECIPIENT_MASK) > USB_REQUEST_TYPE_RECIPIENT_OTHER)
         {
+#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
+            status = USB_DeviceControlCallbackFeedback(handle, deviceSetup, kStatus_USB_InvalidRequest,
+                                                       kUSB_DeviceControlPipeSetupStage, NULL, NULL);
+            return kStatus_USB_InvalidRequest;
+#else
             (void)USB_DeviceControlCallbackFeedback(handle, deviceSetup, kStatus_USB_InvalidRequest,
                                                     kUSB_DeviceControlPipeSetupStage, NULL, NULL);
             return status;
+#endif
         }
 
         if ((deviceSetup->bmRequestType & USB_REQUEST_TYPE_TYPE_MASK) == USB_REQUEST_TYPE_TYPE_STANDARD)
@@ -1125,8 +1250,17 @@ usb_status_t USB_DeviceControlPipeInit(usb_device_handle handle, void *param)
 
     if (kStatus_USB_Success != status)
     {
+#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
+        if (kStatus_USB_Success !=
+            USB_DeviceDeinitEndpoint(
+                handle, USB_CONTROL_ENDPOINT | (USB_IN << USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_SHIFT)))
+        {
+            return kStatus_USB_Error;
+        }
+#else
         (void)USB_DeviceDeinitEndpoint(
             handle, USB_CONTROL_ENDPOINT | (USB_IN << USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_SHIFT));
+#endif
         return status;
     }
 

@@ -110,6 +110,8 @@ include(CMSIS_Include_core_cm_MIMXRT1176_cm4)
 
 include(driver_edma_MIMXRT1176_cm4)
 
+include(driver_memory_MIMXRT1176_cm4)
+
 include(driver_dmamux_MIMXRT1176_cm4)
 
 include(utilities_misc_utilities_MIMXRT1176_cm4)

@@ -1,6 +1,5 @@
 #include "cr_section_macros.h"
 #include "lwip/sys.h"
-#include "glow_bundle_utils.h"
 #include "modelrunner.h"
 
 #define TEST_IMAGE_INC 0

@@ -343,6 +343,7 @@
           <state>$PROJ_DIR$/../../../../../../components/video/display/mipi_dsi_cmd</state>
           <state>$PROJ_DIR$/../../../../../../components/video/display/rm68200</state>
           <state>$PROJ_DIR$/../../../../../../components/video/display/dc/lcdifv2</state>
+          <state>$PROJ_DIR$/../../../../../../components/video/display/hx8394</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
@@ -1349,6 +1350,7 @@
           <state>$PROJ_DIR$/../../../../../../components/video/display/mipi_dsi_cmd</state>
           <state>$PROJ_DIR$/../../../../../../components/video/display/rm68200</state>
           <state>$PROJ_DIR$/../../../../../../components/video/display/dc/lcdifv2</state>
+          <state>$PROJ_DIR$/../../../../../../components/video/display/hx8394</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1176</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
@@ -2173,6 +2175,9 @@
           <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include/StackMacros.h</name>
         </file>
         <file>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include/stdint.readme</name>
+        </file>
+        <file>
           <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include/stream_buffer.h</name>
         </file>
         <file>
@@ -2287,6 +2292,12 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../components/video/display/dc/lcdifv2/fsl_dc_fb_lcdifv2.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../components/video/display/hx8394/fsl_hx8394.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../components/video/display/hx8394/fsl_hx8394.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../components/video/display/dc/fsl_dc_fb.h</name>

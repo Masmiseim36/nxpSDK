@@ -320,6 +320,8 @@
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/include/platform/imxrt1160</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/include</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/include/environment/freertos</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/drivers</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM4F</state>
@@ -334,7 +336,6 @@
           <state>$PROJ_DIR$/../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/drivers/cm7</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1311,6 +1312,8 @@
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/include/platform/imxrt1160</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/include</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/include/environment/freertos</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/drivers</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM4F</state>
@@ -1325,7 +1328,6 @@
           <state>$PROJ_DIR$/../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/drivers/cm7</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1984,25 +1986,7 @@
     </settings>
   </configuration>
   <group>
-    <name>source</name>
-    <file>
-      <name>$PROJ_DIR$/../main_master.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../rpmsg_config.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../FreeRTOSConfig.h</name>
-    </file>
-  </group>
-  <group>
     <name>board</name>
-    <file>
-      <name>$PROJ_DIR$/../pin_mux.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../pin_mux.h</name>
-    </file>
     <file>
       <name>$PROJ_DIR$/../board.c</name>
     </file>
@@ -2016,10 +2000,28 @@
       <name>$PROJ_DIR$/../clock_config.h</name>
     </file>
     <file>
+      <name>$PROJ_DIR$/../pin_mux.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../pin_mux.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../dcd.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../dcd.h</name>
+    </file>
+  </group>
+  <group>
+    <name>source</name>
+    <file>
+      <name>$PROJ_DIR$/../main_master.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../rpmsg_config.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../FreeRTOSConfig.h</name>
     </file>
   </group>
   <group>
@@ -2055,65 +2057,95 @@
   <group>
     <name>rpmsg_lite</name>
     <group>
-      <name>porting</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/include/platform/imxrt1160/rpmsg_platform.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/rpmsg_lite/porting/platform/imxrt1160/rpmsg_platform.c</name>
-      </file>
-    </group>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/include/rpmsg_lite.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/include/rpmsg_ns.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/include/llist.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/include/rpmsg_default_config.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/include/virtio_ring.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/include/virtqueue.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/include/rpmsg_compiler.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/common/llist.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/rpmsg_lite/rpmsg_lite.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/rpmsg_lite/rpmsg_ns.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/virtio/virtqueue.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/include/rpmsg_env.h</name>
-    </file>
-    <group>
-      <name>env</name>
+      <name>include</name>
       <group>
-        <name>freertos</name>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/rpmsg_lite/porting/environment/rpmsg_env_freertos.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/rpmsg_lite/rpmsg_queue.c</name>
-        </file>
+        <name>platform</name>
+        <group>
+          <name>imxrt1160</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/include/platform/imxrt1160/rpmsg_platform.h</name>
+          </file>
+        </group>
+      </group>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/include/rpmsg_lite.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/include/rpmsg_ns.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/include/llist.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/include/rpmsg_default_config.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/include/virtio_ring.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/include/virtqueue.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/include/rpmsg_compiler.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/include/rpmsg_env.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/include/rpmsg_queue.h</name>
+      </file>
+      <group>
+        <name>environment</name>
+        <group>
+          <name>freertos</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/include/environment/freertos/rpmsg_env_specific.h</name>
+          </file>
+        </group>
       </group>
     </group>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/include/rpmsg_queue.h</name>
-    </file>
+    <group>
+      <name>rpmsg_lite</name>
+      <group>
+        <name>porting</name>
+        <group>
+          <name>platform</name>
+          <group>
+            <name>imxrt1160</name>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/rpmsg_lite/porting/platform/imxrt1160/rpmsg_platform.c</name>
+            </file>
+          </group>
+        </group>
+        <group>
+          <name>environment</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/rpmsg_lite/porting/environment/rpmsg_env_freertos.c</name>
+          </file>
+        </group>
+      </group>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/rpmsg_lite/rpmsg_lite.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/rpmsg_lite/rpmsg_ns.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/rpmsg_lite/rpmsg_queue.c</name>
+      </file>
+    </group>
+    <group>
+      <name>common</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/common/llist.c</name>
+      </file>
+    </group>
+    <group>
+      <name>virtio</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/virtio/virtqueue.c</name>
+      </file>
+    </group>
   </group>
   <group>
     <name>drivers</name>
@@ -2237,6 +2269,9 @@
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include/StackMacros.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include/stdint.readme</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include/stream_buffer.h</name>

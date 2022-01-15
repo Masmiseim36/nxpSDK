@@ -59,6 +59,7 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../../components/video/display/dc/lcdifv2
     ${ProjDirPath}/../../../../../../components/video/display/dc/elcdif
     ${ProjDirPath}/../../../../../../devices/MIMXRT1166/utilities/debug_console_lite
+    ${ProjDirPath}/../../../../../../components/video/display/hx8394
     ${ProjDirPath}/../../../../../../devices/MIMXRT1166
     ${ProjDirPath}/../../../../../../components/uart
     ${ProjDirPath}/../../../../../../components/lists
@@ -96,6 +97,8 @@ include(driver_dc-fb-elcdif_MIMXRT1166_cm4)
 include(utility_debug_console_lite_MIMXRT1166_cm4)
 
 include(utility_assert_lite_MIMXRT1166_cm4)
+
+include(driver_display-hx8394_MIMXRT1166_cm4)
 
 include(driver_dcic_MIMXRT1166_cm4)
 

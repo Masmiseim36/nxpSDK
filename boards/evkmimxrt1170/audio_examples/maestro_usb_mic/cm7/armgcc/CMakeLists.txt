@@ -31,27 +31,25 @@ include(${ProjDirPath}/flags.cmake)
 include(${ProjDirPath}/config.cmake)
 
 add_executable(${MCUX_SDK_PROJECT_NAME} 
-"${ProjDirPath}/../app_definitions.h"
+"${ProjDirPath}/../streamer_pcm.c"
+"${ProjDirPath}/../streamer_pcm_app.h"
+"${ProjDirPath}/../usb_device_config.h"
+"${ProjDirPath}/../startup_armgcc.c"
 "${ProjDirPath}/../app_streamer.c"
 "${ProjDirPath}/../app_streamer.h"
 "${ProjDirPath}/../cmd.c"
 "${ProjDirPath}/../cmd.h"
-"${ProjDirPath}/../ffconf.h"
 "${ProjDirPath}/../main.c"
 "${ProjDirPath}/../main.h"
-"${ProjDirPath}/../streamer_pcm.c"
-"${ProjDirPath}/../streamer_pcm.h"
-"${ProjDirPath}/../usb_device_config.h"
 "${ProjDirPath}/../usb_device_descriptor.h"
 "${ProjDirPath}/../usb_device_descriptor.c"
 "${ProjDirPath}/../audio_microphone.h"
 "${ProjDirPath}/../audio_microphone.c"
 "${ProjDirPath}/../../pin_mux.c"
 "${ProjDirPath}/../../pin_mux.h"
+"${ProjDirPath}/../ffconf.h"
 "${ProjDirPath}/../FreeRTOSConfig.h"
-"${ProjDirPath}/../startup_armgcc.c"
-"${ProjDirPath}/../../../../sdmmc_config.c"
-"${ProjDirPath}/../../../../sdmmc_config.h"
+"${ProjDirPath}/../app_definitions.h"
 "${ProjDirPath}/../board.c"
 "${ProjDirPath}/../board.h"
 "${ProjDirPath}/../clock_config.c"
@@ -70,7 +68,6 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
     ${ProjDirPath}/..
     ${ProjDirPath}/../..
-    ${ProjDirPath}/../../../..
 )
 
 set(CMAKE_MODULE_PATH
@@ -84,7 +81,7 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../../CMSIS/DSP
     ${ProjDirPath}/../../../../../../middleware/usb
     ${ProjDirPath}/../../../../../../components/osa
-    ${ProjDirPath}/../../../../../../rtos/freertos
+    ${ProjDirPath}/../../../../../../rtos/freertos/freertos_kernel
     ${ProjDirPath}/../../../../../../middleware/maestro
     ${ProjDirPath}/../../../../../../devices/MIMXRT1176/utilities
     ${ProjDirPath}/../../../../../../middleware/fatfs
@@ -186,6 +183,8 @@ include(driver_anatop_ai_MIMXRT1176_cm7)
 
 include(CMSIS_Include_core_cm_MIMXRT1176_cm7)
 
+include(driver_memory_MIMXRT1176_cm7)
+
 include(middleware_sdmmc_osa_freertos_MIMXRT1176_cm7)
 
 include(component_osa_free_rtos_MIMXRT1176_cm7)
@@ -195,8 +194,6 @@ include(middleware_freertos-kernel_MIMXRT1176_cm7)
 include(middleware_freertos-kernel_extension_MIMXRT1176_cm7)
 
 include(driver_usdhc_MIMXRT1176_cm7)
-
-include(driver_memory_MIMXRT1176_cm7)
 
 include(middleware_usb_common_header_MIMXRT1176_cm7)
 

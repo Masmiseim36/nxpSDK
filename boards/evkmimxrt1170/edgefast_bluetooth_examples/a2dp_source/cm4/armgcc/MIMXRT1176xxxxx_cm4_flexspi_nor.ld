@@ -59,7 +59,7 @@ LITTLEFS_STORAGE_SECTOR_SIZE = 0x1000;  /* 4k flash sector size */
 LITTLEFS_STORAGE_MAX_SECTORS = (0x08FBFFFF - LITTLEFS_STORAGE_START_ADDRESS) / LITTLEFS_STORAGE_SECTOR_SIZE;
 /*** littleFS configuration End ***/
 
-HEAP_SIZE  = DEFINED(__heap_size__)  ? __heap_size__  : 0x0400;
+HEAP_SIZE  = DEFINED(__heap_size__)  ? __heap_size__  : 0x1000;
 STACK_SIZE = DEFINED(__stack_size__) ? __stack_size__ : 0x0400;
 VECTOR_RAM_SIZE = DEFINED(__ram_vector_table__) ? 0x00000400 : 0;
 NCACHE_HEAP_START = DEFINED(__heap_noncacheable__) ? 0x202C0000 - HEAP_SIZE : 0x20020000 - HEAP_SIZE;

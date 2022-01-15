@@ -11,14 +11,6 @@
         <project>pnp_temperature_controller</project>
         <configuration>flexspi_nor_release</configuration>
       </member>
-      <member>
-        <project>pnp_temperature_controller</project>
-        <configuration>sdram_txt_debug</configuration>
-      </member>
-      <member>
-        <project>pnp_temperature_controller</project>
-        <configuration>sdram_txt_release</configuration>
-      </member>
     </batchDefinition>
     <batchDefinition>
       <name>flexspi_nor_debug</name>
@@ -32,20 +24,6 @@
       <member>
         <project>pnp_temperature_controller</project>
         <configuration>flexspi_nor_release</configuration>
-      </member>
-    </batchDefinition>
-    <batchDefinition>
-      <name>sdram_txt_debug</name>
-      <member>
-        <project>pnp_temperature_controller</project>
-        <configuration>sdram_txt_debug</configuration>
-      </member>
-    </batchDefinition>
-    <batchDefinition>
-      <name>sdram_txt_release</name>
-      <member>
-        <project>pnp_temperature_controller</project>
-        <configuration>sdram_txt_release</configuration>
       </member>
     </batchDefinition>
   </batchBuild>

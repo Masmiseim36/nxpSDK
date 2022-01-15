@@ -5992,6 +5992,9 @@
       <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1166/drivers/fsl_edma.c</name>
     </file>
     <file>
+      <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1166/drivers/fsl_memory.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../../../../../../../../devices/MIMXRT1166/drivers/fsl_dmamux.h</name>
     </file>
     <file>

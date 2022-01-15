@@ -21,6 +21,7 @@
 #include "freemaster.h"
 #include "network.h"
 #include "freemaster_example.h"
+#include "freemaster_net.h"
 
 ////////////////////////////////////////////////////////////////////////////////
 // Definitions
@@ -42,6 +43,8 @@
 //! Note: All global variables accessed by FreeMASTER are defined in a shared
 //! freemaster_example.c file
 
+static FMSTR_BOOL fmstr_initialized = FMSTR_FALSE;
+
 ////////////////////////////////////////////////////////////////////////////////
 // Prototypes
 ////////////////////////////////////////////////////////////////////////////////
@@ -55,11 +58,14 @@ static void example_task(void *arg);
 
 int main(void)
 {
+    FMSTR_NET_IF_CAPS caps;
     gpio_pin_config_t gpio_config = {kGPIO_DigitalOutput, 0, kGPIO_NoIntmode};
     const clock_sys_pll1_config_t sysPll1Config = {
         .pllDiv2En = true,
     };
-
+	
+    memset(&caps, 0, sizeof(caps));
+    
     /* Board initialization */
     BOARD_ConfigMPU();
     BOARD_InitPins();
@@ -89,9 +95,6 @@ int main(void)
     GPIO_WritePinOutput(GPIO12, 12, 1);
     SDK_DelayAtLeastUs(6, CLOCK_GetFreq(kCLOCK_CpuClk));
 
-    /* Network interface initialization */
-    Network_Init(CLOCK_GetRootClockFreq(kCLOCK_Root_Bus));
-
     /* FreeMaster task */
     if(xTaskCreate(fmstr_task, "fmstr_task", EXAMPLE_THREAD_STACKSIZE, NULL, EXAMPLE_FMSTR_THREAD_PRIO, NULL) == pdFAIL)
         LWIP_ASSERT("fmstr_task: Task creation failed.", 0);
@@ -100,7 +103,12 @@ int main(void)
     if(xTaskCreate(example_task, "example_task", EXAMPLE_THREAD_STACKSIZE, NULL, EXAMPLE_APP_THREAD_PRIO, NULL) == pdFAIL)
         LWIP_ASSERT("example_task: Task creation failed.", 0);
 
-    PRINTF("\n\nFreeMaster TCP/UDP %s Example\n\n", (FMSTR_NET_BLOCKING_TIMEOUT == 0 ? "Non-Blocking" : "Blocking"));
+    FMSTR_ASSERT_RETURN(FMSTR_NET_DRV.GetCaps != NULL, 0);
+    FMSTR_NET_DRV.GetCaps(&caps);
+    
+    PRINTF("\n\nFreeMaster %s %s Example\n\n", 
+           ((caps.flags & FMSTR_NET_IF_CAPS_FLAG_UDP) != 0U ? "UDP" : "TCP"), 
+           (FMSTR_NET_BLOCKING_TIMEOUT == 0 ? "Non-Blocking" : "Blocking"));
 
     vTaskStartScheduler();
 
@@ -124,10 +132,15 @@ void BOARD_ENETFlexibleConfigure(enet_config_t *config)
  */
 static void example_task(void *arg)
 {
+    while (!fmstr_initialized)
+    {
+        vTaskDelay(10);
+    };
+
     /* Generic example initialization code */
     FMSTR_Example_Init_Ex(FMSTR_FALSE);
 
-    while(1)
+    while (1)
     {
         /* Increment test variables periodically, use the
            FreeMASTER PC Host tool to visualize the variables */
@@ -146,10 +159,15 @@ static void example_task(void *arg)
  */
 static void fmstr_task(void *arg)
 {
+    /* Network interface initialization */
+    Network_Init(CLOCK_GetRootClockFreq(kCLOCK_Root_Bus));
+
     /* FreeMASTER driver initialization */
     FMSTR_Init();
 
-    while(1)
+    fmstr_initialized = FMSTR_TRUE;
+
+    while (1)
     {
         /* The FreeMASTER poll handles the communication interface and protocol
            processing. This call will block the task execution when no communication
@@ -164,7 +182,6 @@ static void fmstr_task(void *arg)
 #endif
     }
 }
-
 
 ////////////////////////////////////////////////////////////////////////////////
 // EOF

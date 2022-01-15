@@ -62,7 +62,8 @@ target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
 
 set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../../../middleware/usb
-    ${ProjDirPath}/../../../../../../../components/phyksz8081
+    ${ProjDirPath}/../../../../../../../components/phy/mdio/enet
+    ${ProjDirPath}/../../../../../../../components/phy/device/phyksz8081
     ${ProjDirPath}/../../../../../../../devices/MIMXRT1166/drivers
     ${ProjDirPath}/../../../../../../../devices/MIMXRT1166/utilities/debug_console_lite
     ${ProjDirPath}/../../../../../../../middleware
@@ -74,6 +75,7 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../../../components/osa
     ${ProjDirPath}/../../../../../../../devices/MIMXRT1166/drivers/cm7
     ${ProjDirPath}/../../../../../../../CMSIS/Core/Include
+    ${ProjDirPath}/../../../../../../../components/phy
     ${ProjDirPath}/../../../../../../../devices/MIMXRT1166/utilities
 )
 
@@ -82,7 +84,9 @@ include(middleware_usb_device_ehci_MIMXRT1166_cm7)
 
 include(middleware_usb_phy_MIMXRT1166_cm7)
 
-include(driver_phyksz8081_MIMXRT1166_cm7)
+include(driver_mdio-enet_MIMXRT1166_cm7)
+
+include(driver_phy-device-ksz8081_MIMXRT1166_cm7)
 
 include(driver_igpio_MIMXRT1166_cm7)
 
@@ -132,7 +136,11 @@ include(CMSIS_Include_core_cm_MIMXRT1166_cm7)
 
 include(middleware_usb_device_common_header_MIMXRT1166_cm7)
 
+include(driver_mdio-common_MIMXRT1166_cm7)
+
 include(driver_memory_MIMXRT1166_cm7)
+
+include(driver_phy-common_MIMXRT1166_cm7)
 
 include(utilities_misc_utilities_MIMXRT1166_cm7)
 

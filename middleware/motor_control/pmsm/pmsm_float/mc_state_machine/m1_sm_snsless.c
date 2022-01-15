@@ -39,7 +39,6 @@ static void M1_TransRunFault(void);
 static void M1_TransRunStop(void);
 
 static void M1_StateRunCalibFast(void);
-static void M1_StateRunMeasureFast(void);
 static void M1_StateRunReadyFast(void);
 static void M1_StateRunAlignFast(void);
 static void M1_StateRunStartupFast(void);
@@ -47,7 +46,6 @@ static void M1_StateRunSpinFast(void);
 static void M1_StateRunFreewheelFast(void);
 
 static void M1_StateRunCalibSlow(void);
-static void M1_StateRunMeasureSlow(void);
 static void M1_StateRunReadySlow(void);
 static void M1_StateRunAlignSlow(void);
 static void M1_StateRunStartupSlow(void);
@@ -55,8 +53,6 @@ static void M1_StateRunSpinSlow(void);
 static void M1_StateRunFreewheelSlow(void);
 
 static void M1_TransRunCalibReady(void);
-static void M1_TransRunCalibMeasure(void);
-static void M1_TransRunMeasureReady(void);
 static void M1_TransRunReadyAlign(void);
 static void M1_TransRunAlignStartup(void);
 static void M1_TransRunAlignReady(void);
@@ -98,14 +94,14 @@ const sm_app_state_fcn_t s_M1_STATE_FAST = {M1_StateFaultFast, M1_StateInitFast,
 const sm_app_state_fcn_t s_M1_STATE_SLOW = {M1_StateFaultSlow, M1_StateInitSlow, M1_StateStopSlow, M1_StateRunSlow};
 
 /*! @brief Application sub-state function field - fast */
-static const pfcn_void_void s_M1_STATE_RUN_TABLE_FAST[7] = {
+static const pfcn_void_void s_M1_STATE_RUN_TABLE_FAST[6] = {
     M1_StateRunCalibFast, M1_StateRunReadyFast,     M1_StateRunAlignFast,  M1_StateRunStartupFast,
-    M1_StateRunSpinFast,  M1_StateRunFreewheelFast, M1_StateRunMeasureFast};
+    M1_StateRunSpinFast,  M1_StateRunFreewheelFast};
 
 /*! @brief Application sub-state function field - slow */
-static const pfcn_void_void s_M1_STATE_RUN_TABLE_SLOW[7] = {
+static const pfcn_void_void s_M1_STATE_RUN_TABLE_SLOW[6] = {
     M1_StateRunCalibSlow, M1_StateRunReadySlow,     M1_StateRunAlignSlow,  M1_StateRunStartupSlow,
-    M1_StateRunSpinSlow,  M1_StateRunFreewheelSlow, M1_StateRunMeasureSlow};
+    M1_StateRunSpinSlow,  M1_StateRunFreewheelSlow};
 
 /*! @brief Application state-transition functions field  */
 static const sm_app_trans_fcn_t s_TRANS = {M1_TransFaultStop, M1_TransInitFault, M1_TransInitStop, M1_TransStopFault,
@@ -316,16 +312,17 @@ static void M1_StateInitFast(void)
     /* Power Stage characteristic data */
     g_sM1Drive.sFocPMSM.fltPwrStgCharIRange   = DTCOMP_I_RANGE;
     g_sM1Drive.sFocPMSM.fltPwrStgCharLinCoeff = DTCOMP_LINCOEFF;
-
+    
     /* Initialize dead time LUT */
     GFLIB_Lut1DInit_FLT(-DTCOMP_I_RANGE, DTCOMP_I_RANGE, DTCOMP_TABLE_SIZE, &sLUTUDtComp);
-
+    
     /* Clear rest of variables  */
     M1_ClearFOCVariables();
 
     /* Init sensors/actuators pointers */
     /* For PWM driver */
     g_sM1Pwm3ph.psUABC = &(g_sM1Drive.sFocPMSM.sDutyABC);
+    
     /* For ADC driver */
     g_sM1AdcSensor.pf16UDcBus     = &(g_sM1Drive.sFocPMSM.f16UDcBus);
     g_sM1AdcSensor.psIABC         = &(g_sM1Drive.sFocPMSM.sIABCFrac);
@@ -686,83 +683,6 @@ static void M1_StateRunCalibFast(void)
 }
 
 /*!
- * @brief Motor identification process called in fast state machine as Run sub state
- *
- * @param void  No input parameter
- *
- * @return None
- */
-
-static void M1_StateRunMeasureFast(void)
-{
-    /* Set zero position at all measurements */
-    if ((g_sMIDCtrl.eState == kMID_Ld) || (g_sMIDCtrl.eState == kMID_Lq) || (g_sMIDCtrl.eState == kMID_Start) ||
-        (g_sMIDCtrl.eState == kMID_Rs) || (g_sMIDCtrl.eState == kMID_PwrStgCharact))
-    {
-        /* Zero position is needed for RL measurement */
-        g_sM1Drive.sFocPMSM.f16PosEl = FRAC16(0.0);
-
-        g_sM1Drive.sFocPMSM.sAnglePosEl.fltSin = 0.0F;
-        g_sM1Drive.sFocPMSM.sAnglePosEl.fltCos = 1.0F;
-    }
-
-    /* Turn on dead-time compensation in case of Rs measurement */
-    g_sM1Drive.sFocPMSM.bFlagDTComp = (g_sMIDCtrl.eState == kMID_Rs);
-
-    /* Perform current transformations if voltage control will be done.
-     * At other measurements it is done in a current loop calculation */
-    if ((g_sMIDCtrl.eState == kMID_Ld) || (g_sMIDCtrl.eState == kMID_Lq))
-    {
-        /* Current transformations */
-        GMCLIB_Clark_FLT(&g_sM1Drive.sFocPMSM.sIABC, &g_sM1Drive.sFocPMSM.sIAlBe);
-        GMCLIB_Park_FLT(&g_sM1Drive.sFocPMSM.sIAlBe, &g_sM1Drive.sFocPMSM.sAnglePosEl, &g_sM1Drive.sFocPMSM.sIDQ);
-    }
-
-    /* If electrical parameters are being measured, put external position to FOC */
-    if (g_sMIDCtrl.eState == kMID_Mech)
-    {
-        g_sM1Drive.sFocPMSM.bPosExtOn = (g_sMID.sMIDMech.eState == kMID_MechStartUp);
-        g_sM1Drive.sFocPMSM.bOpenLoop = g_sMID.sMIDMech.sStartup.bOpenLoop;
-    }
-    else
-    {
-    	g_sM1Drive.sFocPMSM.bPosExtOn = TRUE;
-    }
-
-    /* Motor parameters measurement state machine */
-    MID_SM_StateMachine(&g_sMIDCtrl);
-
-    /* Perform Current control if MID_START or MID_PWR_STG_CHARACT or MID_RS or MID_PP or MID_KE state */
-    if ((g_sMIDCtrl.eState == kMID_Start) || (g_sMIDCtrl.eState == kMID_PwrStgCharact) ||
-        (g_sMIDCtrl.eState == kMID_Rs) || (g_sMIDCtrl.eState == kMID_Pp) || (g_sMIDCtrl.eState == kMID_Ke) ||
-        (g_sMIDCtrl.eState == kMID_Mech))
-    {
-        /* Enable current control loop */
-        g_sM1Drive.sFocPMSM.bCurrentLoopOn = TRUE;
-    }
-    /* Perform Voltage control if MID_LD or MID_LQ or START state*/
-    else
-    {
-        /* Disable current control loop */
-        g_sM1Drive.sFocPMSM.bCurrentLoopOn = FALSE;
-    }
-
-    /* FOC */
-    MCS_PMSMFocCtrl(&g_sM1Drive.sFocPMSM);
-
-    /* Force sector to 4 to ensure that currents Ia, Ib will be sensed and Ic calculated */
-    g_sM1Drive.sFocPMSM.ui16SectorSVM = 4U;
-
-    /* When Measurement done go to RUN READY sub-state and then to STOP state and reset uw16Enable measurement */
-    if ((bool_t)(g_sMIDCtrl.uiCtrl & MID_SM_CTRL_STOP_ACK))
-    {
-        M1_TransRunMeasureReady();
-        g_bM1SwitchAppOnOff          = FALSE;
-        g_sMID.bEnableMeasurement = FALSE;
-    }
-}
-
-/*!
  * @brief Ready state called in fast state machine as Run sub state
  *
  * @param void  No input parameter
@@ -1086,33 +1006,14 @@ static void M1_StateRunFreewheelFast(void)
  */
 static void M1_StateRunCalibSlow(void)
 {
+    /* Write calibrated offset values */
+    M1_MCDRV_CURR_3PH_CALIB_SET(&g_sM1AdcSensor);
+    
     if (--g_sM1Drive.ui16CounterState == 0U)
     {
-        /* Write calibrated offset values */
-    	M1_MCDRV_CURR_3PH_CALIB_SET(&g_sM1AdcSensor);
-
-        if (g_sMID.bEnableMeasurement != FALSE)
-        {
-        	/* To switch to the RUN MEASURE sub-state */
-        	M1_TransRunCalibMeasure();
-        }
-        else
-        {
-            /* To switch to the RUN READY sub-state */
-            M1_TransRunCalibReady();
-        }
+      /* To switch to the RUN READY sub-state */
+      M1_TransRunCalibReady();
     }
-}
-
-/*!
- * @brief Measure state called in slow state machine as Run sub state
- *
- * @param void  No input parameter
- *
- * @return None
- */
-static void M1_StateRunMeasureSlow(void)
-{
 }
 
 /*!
@@ -1245,97 +1146,6 @@ static void M1_TransRunCalibReady(void)
     g_sM1Drive.sFocPMSM.sDutyABC.f16C = FRAC16(0.5);
 
     /* Switch to sub state READY */
-    g_eM1StateRun = kRunState_Ready;
-}
-
-/*!
- * @brief Transition from Calib to Measure state
- *
- * @param void  No input parameter
- *
- * @return None
- */
-static void M1_TransRunCalibMeasure(void)
-{
-    /* Type the code to do when going from the RUN CALIB to the RUN MEASURE sub-state */
-    /* Initialise measurement */
-  
-    /* Clear external position */
-    g_sM1Drive.sFocPMSM.f16PosElExt = FRAC16(0.0); 
-
-    /* Set all measurement as inactive */
-    g_sMID.sMIDAlignment.bActive  = FALSE;
-    g_sMID.sMIDPwrStgChar.bActive = FALSE;
-    g_sMID.sMIDRs.bActive         = FALSE;
-    g_sMID.sMIDLs.bActive         = FALSE;
-    g_sMID.sMIDKe.bActive         = FALSE;
-    g_sMID.sMIDPp.bActive         = FALSE;
-    g_sMID.sMIDMech.bActive       = FALSE;
-
-    /* I/O pointers */
-    g_sMID.sIO.pf16PosElExt = &(g_sM1Drive.sFocPMSM.f16PosElExt);
-    g_sMID.sIO.pfltId       = &(g_sM1Drive.sFocPMSM.sIDQ.fltD);
-    g_sMID.sIO.pfltIq       = &(g_sM1Drive.sFocPMSM.sIDQ.fltQ);
-    g_sMID.sIO.pfltIdReq    = &(g_sM1Drive.sFocPMSM.sIDQReq.fltD);
-    g_sMID.sIO.pfltIqReq    = &(g_sM1Drive.sFocPMSM.sIDQReq.fltQ);
-    g_sMID.sIO.pfltUdReq    = &(g_sM1Drive.sFocPMSM.sUDQReq.fltD);
-    g_sMID.sIO.pfltUqReq    = &(g_sM1Drive.sFocPMSM.sUDQReq.fltQ);
-    g_sMID.sIO.pfltUDCbus   = &(g_sM1Drive.sFocPMSM.fltUDcBusFilt);
-    g_sMID.sIO.pfltEd       = &(g_sM1Drive.sFocPMSM.sBemfObsrv.sEObsrv.fltD);
-    g_sMID.sIO.pfltEq       = &(g_sM1Drive.sFocPMSM.sBemfObsrv.sEObsrv.fltQ);
-    g_sMID.sIO.pfltSpeedEst = &(g_sM1Drive.sFocPMSM.fltSpeedElEst);
-    g_sMID.sIO.pf16PosElEst = &(g_sM1Drive.sFocPMSM.f16PosElEst);
-    g_sMID.sIO.pf16PosElExt = &(g_sM1Drive.sFocPMSM.f16PosElExt);
-
-    /* Ls measurement init */
-    g_sMID.sMIDLs.fltUdMax   = MLIB_Mul_FLT(MID_K_MODULATION_RATIO, g_sM1Drive.sFocPMSM.fltUDcBusFilt);
-    g_sMID.sMIDLs.fltFreqMax = (float_t)(g_sM1Drive.ui16FastCtrlLoopFreq / 2U);
-
-    /* Ke measurement init */
-    g_sMID.sMIDKe.fltFreqMax = (float_t)(g_sM1Drive.ui16FastCtrlLoopFreq / 2U);
-
-    /* Pp measurement init */
-    g_sMID.sMIDPp.fltFreqMax = (float_t)(g_sM1Drive.ui16FastCtrlLoopFreq / 2U);
-
-    /* PwrStg char init */
-    g_sMID.sMIDPwrStgChar.ui16NumOfChPnts = MID_CHAR_CURRENT_POINT_NUMBERS;
-
-    /* During the measurement motor is driven open-loop */
-    g_sM1Drive.sFocPMSM.bOpenLoop = TRUE;
-
-    /* Reset DONE & ACK of all MID states */
-    g_sMIDCtrl.uiCtrl = 0U;
-
-    /* First state in MID state machine will be kMID_Start */
-    g_sMIDCtrl.eState = kMID_Start;
-
-    /* Sub-state RUN MEASURE */
-    g_eM1StateRun = kRunState_Measure;
-}
-
-/*!
- * @brief Transition from Measure to Ready state
- *
- * @param void  No input parameter
- *
- * @return None
- */
-
-static void M1_TransRunMeasureReady(void)
-{
-    /* Type the code to do when going from the RUN CALIB to the RUN READY sub-state */
-    /* Set off measurement */
-    g_sMID.bEnableMeasurement = FALSE;
-
-    /* Set 50% PWM duty cycle */
-    g_sM1Drive.sFocPMSM.sDutyABC.f16A = FRAC16(0.5);
-    g_sM1Drive.sFocPMSM.sDutyABC.f16B = FRAC16(0.5);
-    g_sM1Drive.sFocPMSM.sDutyABC.f16C = FRAC16(0.5);
-
-    /* Disable passing external electrical position to FOC */
-    g_sM1Drive.sFocPMSM.bPosExtOn = FALSE;
-
-    /* Swith to sub state READY */
     g_eM1StateRun = kRunState_Ready;
 }
 

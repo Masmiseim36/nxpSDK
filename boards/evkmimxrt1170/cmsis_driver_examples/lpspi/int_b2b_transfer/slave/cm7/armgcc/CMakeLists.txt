@@ -110,6 +110,8 @@ include(driver_anatop_ai_MIMXRT1176_cm7)
 
 include(CMSIS_Include_core_cm_MIMXRT1176_cm7)
 
+include(driver_memory_MIMXRT1176_cm7)
+
 include(CMSIS_Driver_Include_SPI_MIMXRT1176_cm7)
 
 include(CMSIS_Driver_Include_Common_MIMXRT1176_cm7)

@@ -434,6 +434,7 @@ static void USB_HostVideoWriteSDCard(void *param)
             }
             else
             {
+                return;
             }
 
             fileStatus = f_open(&fileObj, _T(fileName), FA_WRITE | FA_CREATE_ALWAYS);
@@ -492,8 +493,8 @@ void USB_HostVideoTask(void *param)
     uint8_t minSolutionFrameIndex = 0xFF;
     uint32_t frameInterval        = 0;
     uint32_t resolution           = 0;
-    uint32_t speed;
-    uint8_t i = 0;
+    uint32_t speed                = 0U;
+    uint8_t i                     = 0;
 
     /* device state changes */
     if (videoAppInstance->devState != videoAppInstance->prevState)
@@ -1036,7 +1037,7 @@ usb_status_t USB_HostVideoEvent(usb_device_handle deviceHandle,
     usb_host_configuration_t *configuration;
     uint8_t interface_index;
     usb_host_interface_t *hostInterface;
-    uint32_t info_value;
+    uint32_t info_value = 0U;
 
     switch (eventCode)
     {

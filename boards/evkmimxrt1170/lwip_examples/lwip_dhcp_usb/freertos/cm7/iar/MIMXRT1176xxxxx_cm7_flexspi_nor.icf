@@ -7,7 +7,7 @@
 **     Compiler:            IAR ANSI C/C++ Compiler for ARM
 **     Reference manual:    IMXRT1170RM, Rev 1, 02/2021
 **     Version:             rev. 1.0, 2020-12-29
-**     Build:               b210402
+**     Build:               b210709
 **
 **     Abstract:
 **         Linker file for the IAR ANSI C/C++ Compiler for ARM
@@ -100,24 +100,23 @@ define block HEAP      with alignment = 8, size = __size_heap__     { };
 define block RW        { readwrite };
 define block ZI        { zi };
 define block NCACHE_VAR    { section NonCacheable , section NonCacheable.init };
-
 define block QACCESS_CODE  { section CodeQuickAccess };
+define block QACCESS_DATA  { section DataQuickAccess };
 
 define region core1_region = mem:[from core1_image_start to core1_image_end];
 define block CORE1_IMAGE_BLOCK          { section  __core1_image };
 
-initialize by copy { readwrite, section .textrw, section CodeQuickAccess };
+initialize by copy { readwrite, section .textrw, section CodeQuickAccess, section DataQuickAccess };
 do not initialize  { section .noinit };
 if (isdefinedsymbol(__use_shmem__)) {
   do not initialize  { section rpmsg_sh_mem_section };
 }
 
 place at address mem: m_interrupts_start    { readonly section .intvec };
-
-place at address mem:m_boot_hdr_conf_start { section .boot_hdr.conf };
-place at address mem:m_boot_hdr_ivt_start { section .boot_hdr.ivt };
-place at address mem:m_boot_hdr_boot_data_start { readonly section .boot_hdr.boot_data };
-place at address mem:m_boot_hdr_dcd_data_start { readonly section .boot_hdr.dcd_data };
+place at address mem: m_boot_hdr_conf_start { section .boot_hdr.conf };
+place at address mem: m_boot_hdr_ivt_start { section .boot_hdr.ivt };
+place at address mem: m_boot_hdr_boot_data_start { readonly section .boot_hdr.boot_data };
+place at address mem: m_boot_hdr_dcd_data_start { readonly section .boot_hdr.dcd_data };
 
 keep{ section .boot_hdr.conf, section .boot_hdr.ivt, section .boot_hdr.boot_data, section .boot_hdr.dcd_data };
 
@@ -126,10 +125,10 @@ place in DATA_region                        { block RW };
 place in DATA_region                        { block ZI };
 place in DATA_region                        { last block HEAP };
 place in DATA_region                        { block NCACHE_VAR };
-place in CSTACK_region                      { block CSTACK };
-place in QACODE_region                      { section .textrw};
-place in QACODE_region                      { block QACCESS_CODE };
 if (isdefinedsymbol(__use_shmem__)) {
   place in rpmsg_sh_mem_region                { section rpmsg_sh_mem_section };
 }
 place in core1_region                       { block CORE1_IMAGE_BLOCK };
+place in CSTACK_region                      { block CSTACK };
+place in QACODE_region                      { block QACCESS_CODE };
+place in DATA_region                        { block QACCESS_DATA };

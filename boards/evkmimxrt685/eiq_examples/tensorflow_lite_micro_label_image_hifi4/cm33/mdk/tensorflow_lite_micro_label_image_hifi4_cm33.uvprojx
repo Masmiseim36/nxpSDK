@@ -391,38 +391,8 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>source</GroupName>
-          <Files>
-            <File>
-              <FileName>main.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../main.c</FilePath>
-            </File>
-            <File>
-              <FileName>incbin.S</FileName>
-              <FileType>2</FileType>
-              <FilePath>../incbin.S</FilePath>
-            </File>
-            <File>
-              <FileName>dsp_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../dsp_config.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>board</GroupName>
           <Files>
-            <File>
-              <FileName>pin_mux.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../pin_mux.c</FilePath>
-            </File>
-            <File>
-              <FileName>pin_mux.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../pin_mux.h</FilePath>
-            </File>
             <File>
               <FileName>board.c</FileName>
               <FileType>1</FileType>
@@ -454,6 +424,16 @@
               <FilePath>../board_init.h</FilePath>
             </File>
             <File>
+              <FileName>pin_mux.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../pin_mux.c</FilePath>
+            </File>
+            <File>
+              <FileName>pin_mux.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../pin_mux.h</FilePath>
+            </File>
+            <File>
               <FileName>dsp_support.c</FileName>
               <FileType>1</FileType>
               <FilePath>../dsp_support.c</FilePath>
@@ -472,6 +452,26 @@
               <FileName>pmic_support.h</FileName>
               <FileType>5</FileType>
               <FilePath>../pmic_support.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>source</GroupName>
+          <Files>
+            <File>
+              <FileName>incbin.S</FileName>
+              <FileType>2</FileType>
+              <FilePath>../incbin.S</FilePath>
+            </File>
+            <File>
+              <FileName>dsp_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../dsp_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>main.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../main.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1200,38 +1200,8 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>source</GroupName>
-          <Files>
-            <File>
-              <FileName>main.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../main.c</FilePath>
-            </File>
-            <File>
-              <FileName>incbin.S</FileName>
-              <FileType>2</FileType>
-              <FilePath>../incbin.S</FilePath>
-            </File>
-            <File>
-              <FileName>dsp_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../dsp_config.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>board</GroupName>
           <Files>
-            <File>
-              <FileName>pin_mux.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../pin_mux.c</FilePath>
-            </File>
-            <File>
-              <FileName>pin_mux.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../pin_mux.h</FilePath>
-            </File>
             <File>
               <FileName>board.c</FileName>
               <FileType>1</FileType>
@@ -1263,6 +1233,16 @@
               <FilePath>../board_init.h</FilePath>
             </File>
             <File>
+              <FileName>pin_mux.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../pin_mux.c</FilePath>
+            </File>
+            <File>
+              <FileName>pin_mux.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../pin_mux.h</FilePath>
+            </File>
+            <File>
               <FileName>dsp_support.c</FileName>
               <FileType>1</FileType>
               <FilePath>../dsp_support.c</FilePath>
@@ -1281,6 +1261,26 @@
               <FileName>pmic_support.h</FileName>
               <FileType>5</FileType>
               <FilePath>../pmic_support.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>source</GroupName>
+          <Files>
+            <File>
+              <FileName>incbin.S</FileName>
+              <FileType>2</FileType>
+              <FilePath>../incbin.S</FilePath>
+            </File>
+            <File>
+              <FileName>dsp_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../dsp_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>main.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../main.c</FilePath>
             </File>
           </Files>
         </Group>

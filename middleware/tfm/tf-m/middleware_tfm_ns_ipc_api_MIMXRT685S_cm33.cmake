@@ -13,6 +13,7 @@ target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
 
 target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
     ${CMAKE_CURRENT_LIST_DIR}/interface/include/psa_manifest
+    ${CMAKE_CURRENT_LIST_DIR}/interface/include
 )
 
 

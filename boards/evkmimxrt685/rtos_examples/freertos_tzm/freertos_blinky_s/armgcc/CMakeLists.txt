@@ -51,7 +51,7 @@ target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
 
 set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../../devices/MIMXRT685S/drivers
-    ${ProjDirPath}/../../../../../../rtos/freertos
+    ${ProjDirPath}/../../../../../../rtos/freertos/freertos_kernel
     ${ProjDirPath}/../../../../../../devices/MIMXRT685S
     ${ProjDirPath}/../../../../../../devices/MIMXRT685S/utilities
     ${ProjDirPath}/../../../../../../components/uart
@@ -78,7 +78,7 @@ include(utility_assert_MIMXRT685S_cm33)
 
 include(component_usart_adapter_MIMXRT685S_cm33)
 
-include(driver_flash_config_MIMXRT685S_cm33)
+include(driver_flash_config_evkmimxrt685_MIMXRT685S_cm33)
 
 include(driver_flexspi_MIMXRT685S_cm33)
 

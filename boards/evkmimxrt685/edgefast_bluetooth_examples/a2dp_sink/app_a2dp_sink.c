@@ -29,6 +29,8 @@
 
 #define A2DP_CLASS_OF_DEVICE (0x200404U)
 #define APP_A2DP_STREAMER_SYNC_TASK_PRIORITY (5U)
+#define A2DP_CODEC_DAC_VOLUME (100U) /* Range: 0 ~ 100 */
+#define A2DP_CODEC_HP_VOLUME  (70U)  /* Range: 0 ~ 100 */
 
 extern uint32_t BOARD_SwitchAudioFreq(uint32_t sampleRate);
 
@@ -174,6 +176,8 @@ void sbc_configured(struct bt_a2dp_endpoint_configure_result *configResult)
         }
         CODEC_SetMute(&codec_handle, kCODEC_PlayChannelHeadphoneRight | kCODEC_PlayChannelHeadphoneLeft, true);
         CODEC_SetFormat(&codec_handle, audioTxConfig.srcClock_Hz, audioTxConfig.sampleRate_Hz, audioTxConfig.bitWidth);
+        CODEC_SetVolume(&codec_handle, kCODEC_VolumeDAC, A2DP_CODEC_DAC_VOLUME);
+        CODEC_SetVolume(&codec_handle, kCODEC_VolumeHeadphoneLeft | kCODEC_VolumeHeadphoneRight, A2DP_CODEC_HP_VOLUME);
         CODEC_SetMute(&codec_handle, kCODEC_PlayChannelHeadphoneRight | kCODEC_PlayChannelHeadphoneLeft, false);
     }
 }

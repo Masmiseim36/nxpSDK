@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2020 Cadence Design Systems, Inc.
+ * Copyright (c) 2012-2021 Cadence Design Systems, Inc.
  * 
  * Permission is hereby granted, free of charge, to any person obtaining
  * a copy of this software and associated documentation files (the
@@ -373,7 +373,7 @@ XA_ERRORCODE xa_g711_dec_main_process(char *in_out_tests[], int argc)
     /**************************************************
      Handle the optional pattern loss file
     ***************************************************/
-    if ( ( argc == 6 ) ) {
+    if ( argc == 6 ) {
 
         loss_pattern_fid = fopen(in_out_tests[5],"rb");
         if (loss_pattern_fid == NULL) {

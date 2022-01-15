@@ -7,8 +7,10 @@ target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
     ${CMAKE_CURRENT_LIST_DIR}/test/framework/test_framework_helpers.c
     ${CMAKE_CURRENT_LIST_DIR}/test/framework/test_framework_integ_test_helper.c
     ${CMAKE_CURRENT_LIST_DIR}/test/test_services/tfm_secure_client_service/auto_generated/intermedia_tfm_secure_client_service.c
+    ${CMAKE_CURRENT_LIST_DIR}/test/test_services/tfm_secure_client_service/auto_generated/load_info_tfm_secure_client_service.c
     ${CMAKE_CURRENT_LIST_DIR}/test/test_services/tfm_secure_client_service/tfm_secure_client_service.c
     ${CMAKE_CURRENT_LIST_DIR}/test/test_services/tfm_secure_client_2/auto_generated/intermedia_tfm_secure_client_2.c
+    ${CMAKE_CURRENT_LIST_DIR}/test/test_services/tfm_secure_client_2/auto_generated/load_info_tfm_secure_client_2.c
     ${CMAKE_CURRENT_LIST_DIR}/test/test_services/tfm_secure_client_2/tfm_secure_client_2.c
     ${CMAKE_CURRENT_LIST_DIR}/test/test_services/tfm_secure_client_2/tfm_secure_client_2_api.c
 )

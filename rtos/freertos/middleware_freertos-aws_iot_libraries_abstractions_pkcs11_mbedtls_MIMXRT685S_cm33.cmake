@@ -6,3 +6,9 @@ target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
 )
 
 
+include(middleware_freertos-aws_iot_libraries_3rdparty_mbedtls_utils_MIMXRT685S_cm33)
+
+include(middleware_freertos-aws_iot_libraries_abstractions_pkcs11_MIMXRT685S_cm33)
+
+include(middleware_mbedtls_MIMXRT685S_cm33)
+

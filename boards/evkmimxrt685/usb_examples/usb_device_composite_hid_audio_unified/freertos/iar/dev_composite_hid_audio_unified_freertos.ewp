@@ -224,6 +224,7 @@
           <state>DEBUG</state>
           <state>CPU_MIMXRT685SFVKB_cm33</state>
           <state>BOOT_HEADER_ENABLE=1</state>
+          <state>HAL_AUDIO_ISR_PRIORITY=0</state>
           <state>USB_STACK_FREERTOS</state>
           <state>CPU_MIMXRT685SFVKB=1</state>
           <state>USB_STACK_FREERTOS_HEAP_SIZE=16384</state>
@@ -373,6 +374,7 @@
           <state>$PROJ_DIR$/../../../../../../components/codec/port</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/i2c</state>
           <state>$PROJ_DIR$/../../../../../../components/i2c</state>
+          <state>$PROJ_DIR$/../../../../../../components/audio</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/str</state>
@@ -1283,6 +1285,7 @@
           <state>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</state>
           <state>BOOT_HEADER_ENABLE=1</state>
           <state>CPU_MIMXRT685SFVKB_cm33</state>
+          <state>HAL_AUDIO_ISR_PRIORITY=0</state>
           <state>USB_STACK_FREERTOS</state>
           <state>CPU_MIMXRT685SFVKB=1</state>
           <state>USB_STACK_FREERTOS_HEAP_SIZE=16384</state>
@@ -1432,6 +1435,7 @@
           <state>$PROJ_DIR$/../../../../../../components/codec/port</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/i2c</state>
           <state>$PROJ_DIR$/../../../../../../components/i2c</state>
+          <state>$PROJ_DIR$/../../../../../../components/audio</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/str</state>
@@ -2342,6 +2346,7 @@
           <state>NDEBUG</state>
           <state>CPU_MIMXRT685SFVKB_cm33</state>
           <state>BOOT_HEADER_ENABLE=1</state>
+          <state>HAL_AUDIO_ISR_PRIORITY=0</state>
           <state>USB_STACK_FREERTOS</state>
           <state>CPU_MIMXRT685SFVKB=1</state>
           <state>USB_STACK_FREERTOS_HEAP_SIZE=16384</state>
@@ -2491,6 +2496,7 @@
           <state>$PROJ_DIR$/../../../../../../components/codec/port</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/i2c</state>
           <state>$PROJ_DIR$/../../../../../../components/i2c</state>
+          <state>$PROJ_DIR$/../../../../../../components/audio</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/str</state>
@@ -3401,6 +3407,7 @@
           <state>CPU_MIMXRT685SFVKB_cm33</state>
           <state>BOOT_HEADER_ENABLE=1</state>
           <state>NDEBUG</state>
+          <state>HAL_AUDIO_ISR_PRIORITY=0</state>
           <state>USB_STACK_FREERTOS</state>
           <state>CPU_MIMXRT685SFVKB=1</state>
           <state>USB_STACK_FREERTOS_HEAP_SIZE=16384</state>
@@ -3550,6 +3557,7 @@
           <state>$PROJ_DIR$/../../../../../../components/codec/port</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/i2c</state>
           <state>$PROJ_DIR$/../../../../../../components/i2c</state>
+          <state>$PROJ_DIR$/../../../../../../components/audio</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/str</state>
@@ -4554,6 +4562,15 @@
       </file>
     </group>
     <group>
+      <name>audio</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/audio/fsl_adapter_audio.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/audio/fsl_adapter_flexcomm_i2s.c</name>
+      </file>
+    </group>
+    <group>
       <name>uart</name>
       <file>
         <name>$PROJ_DIR$/../../../../../../components/uart/fsl_adapter_uart.h</name>
@@ -4697,6 +4714,9 @@
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include/StackMacros.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include/stdint.readme</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include/stream_buffer.h</name>

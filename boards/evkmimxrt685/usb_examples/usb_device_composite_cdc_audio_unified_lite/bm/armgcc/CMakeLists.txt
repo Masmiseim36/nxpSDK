@@ -66,6 +66,7 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../../devices/MIMXRT685S/drivers
     ${ProjDirPath}/../../../../../../components/codec/wm8904
     ${ProjDirPath}/../../../../../../components/codec
+    ${ProjDirPath}/../../../../../../components/audio
     ${ProjDirPath}/../../../../../../components/codec/i2c
     ${ProjDirPath}/../../../../../../components/i2c
     ${ProjDirPath}/../../../../../../devices/MIMXRT685S/utilities/debug_console_lite
@@ -110,6 +111,8 @@ include(driver_common_MIMXRT685S_cm33)
 
 include(component_wm8904_adapter_MIMXRT685S_cm33)
 
+include(component_audio_flexcomm_i2s_dma_adapter_MIMXRT685S_cm33)
+
 include(component_codec_i2c_MIMXRT685S_cm33)
 
 include(component_i3c_adapter_MIMXRT685S_cm33)
@@ -128,7 +131,7 @@ include(component_usart_adapter_MIMXRT685S_cm33)
 
 include(driver_power_MIMXRT685S_cm33)
 
-include(driver_flash_config_MIMXRT685S_cm33)
+include(driver_flash_config_evkmimxrt685_MIMXRT685S_cm33)
 
 include(component_lists_MIMXRT685S_cm33)
 

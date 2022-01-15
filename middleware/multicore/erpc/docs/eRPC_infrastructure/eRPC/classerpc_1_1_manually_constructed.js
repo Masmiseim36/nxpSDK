@@ -16,5 +16,7 @@ var classerpc_1_1_manually_constructed =
     [ "construct", "classerpc_1_1_manually_constructed.html#aab05586fce056b9fa87510fe9553beb4", null ],
     [ "construct", "classerpc_1_1_manually_constructed.html#a7a93a5f83f4188c2c832963ff3ea7c8d", null ],
     [ "destroy", "classerpc_1_1_manually_constructed.html#ac898468f9a960e8be8054821d73cbc34", null ],
-    [ "m_storage", "classerpc_1_1_manually_constructed.html#a6d220c46013cfd6f7713013c3a77e592", null ]
+    [ "isUsed", "classerpc_1_1_manually_constructed.html#a92e41d0ac26472d4e8be67e6594d6f31", null ],
+    [ "m_storage", "classerpc_1_1_manually_constructed.html#a6d220c46013cfd6f7713013c3a77e592", null ],
+    [ "m_isConstructed", "classerpc_1_1_manually_constructed.html#a1411b92ba272e36fb98f9b53dce4f35e", null ]
 ];

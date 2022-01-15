@@ -32,13 +32,15 @@ include(${ProjDirPath}/config.cmake)
 
 add_executable(${MCUX_SDK_PROJECT_NAME} 
 "${ProjDirPath}/../wifi_setup.c"
+"${ProjDirPath}/../pin_mux.c"
+"${ProjDirPath}/../pin_mux.h"
 "${ProjDirPath}/../lwipopts.h"
 "${ProjDirPath}/../lwippools.h"
 "${ProjDirPath}/../FreeRTOSConfig.h"
-"${ProjDirPath}/../pin_mux.c"
-"${ProjDirPath}/../pin_mux.h"
-"${ProjDirPath}/../../../sdmmc_config.c"
-"${ProjDirPath}/../../../sdmmc_config.h"
+"${ProjDirPath}/../sdmmc_config.c"
+"${ProjDirPath}/../sdmmc_config.h"
+"${ProjDirPath}/../wifi_bt_config.c"
+"${ProjDirPath}/../wifi_bt_config.h"
 "${ProjDirPath}/../app_config.h"
 "${ProjDirPath}/../wifi_config.h"
 "${ProjDirPath}/../board.c"
@@ -54,10 +56,11 @@ target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
 )
 
 set(CMAKE_MODULE_PATH
-    ${ProjDirPath}/../../../../../rtos/freertos
+    ${ProjDirPath}/../../../../../rtos/freertos/freertos_kernel
     ${ProjDirPath}/../../../../../middleware/lwip
     ${ProjDirPath}/../../../../../devices/MIMXRT685S/utilities
     ${ProjDirPath}/../../../../../middleware/wifi
+    ${ProjDirPath}/../../../../../components/wifi_bt_module
     ${ProjDirPath}/../../../../../devices/MIMXRT685S/drivers
     ${ProjDirPath}/../../../../../middleware/sdmmc
     ${ProjDirPath}/../../../../../components/pca9420
@@ -82,6 +85,8 @@ include(utility_debug_console_MIMXRT685S_cm33)
 include(middleware_wifi_MIMXRT685S_cm33)
 
 include(middleware_lwip_contrib_ping_MIMXRT685S_cm33)
+
+include(component_wifi_bt_module_tx_pwr_limits_MIMXRT685S_cm33)
 
 include(driver_usdhc_MIMXRT685S_cm33)
 
@@ -111,7 +116,7 @@ include(component_usart_adapter_MIMXRT685S_cm33)
 
 include(driver_power_MIMXRT685S_cm33)
 
-include(driver_flash_config_MIMXRT685S_cm33)
+include(driver_flash_config_evkmimxrt685_MIMXRT685S_cm33)
 
 include(driver_flexspi_MIMXRT685S_cm33)
 

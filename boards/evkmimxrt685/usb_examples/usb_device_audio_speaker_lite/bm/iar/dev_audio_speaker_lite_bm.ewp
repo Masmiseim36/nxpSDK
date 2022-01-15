@@ -224,6 +224,7 @@
           <state>DEBUG</state>
           <state>CPU_MIMXRT685SFVKB_cm33</state>
           <state>BOOT_HEADER_ENABLE=1</state>
+          <state>HAL_AUDIO_ISR_PRIORITY=0</state>
           <state>USB_STACK_BM</state>
           <state>USING_SAI</state>
           <state>CPU_MIMXRT685SFVKB=1</state>
@@ -368,6 +369,7 @@
           <state>$PROJ_DIR$/../../../../../../components/codec</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/port/wm8904</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/port</state>
+          <state>$PROJ_DIR$/../../../../../../components/audio</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/i2c</state>
           <state>$PROJ_DIR$/../../../../../../components/i2c</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/debug_console_lite</state>
@@ -1274,6 +1276,7 @@
           <state>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</state>
           <state>BOOT_HEADER_ENABLE=1</state>
           <state>CPU_MIMXRT685SFVKB_cm33</state>
+          <state>HAL_AUDIO_ISR_PRIORITY=0</state>
           <state>USB_STACK_BM</state>
           <state>USING_SAI</state>
           <state>CPU_MIMXRT685SFVKB=1</state>
@@ -1418,6 +1421,7 @@
           <state>$PROJ_DIR$/../../../../../../components/codec</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/port/wm8904</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/port</state>
+          <state>$PROJ_DIR$/../../../../../../components/audio</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/i2c</state>
           <state>$PROJ_DIR$/../../../../../../components/i2c</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/debug_console_lite</state>
@@ -2324,6 +2328,7 @@
           <state>NDEBUG</state>
           <state>CPU_MIMXRT685SFVKB_cm33</state>
           <state>BOOT_HEADER_ENABLE=1</state>
+          <state>HAL_AUDIO_ISR_PRIORITY=0</state>
           <state>USB_STACK_BM</state>
           <state>USING_SAI</state>
           <state>CPU_MIMXRT685SFVKB=1</state>
@@ -2468,6 +2473,7 @@
           <state>$PROJ_DIR$/../../../../../../components/codec</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/port/wm8904</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/port</state>
+          <state>$PROJ_DIR$/../../../../../../components/audio</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/i2c</state>
           <state>$PROJ_DIR$/../../../../../../components/i2c</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/debug_console_lite</state>
@@ -3374,6 +3380,7 @@
           <state>CPU_MIMXRT685SFVKB_cm33</state>
           <state>BOOT_HEADER_ENABLE=1</state>
           <state>NDEBUG</state>
+          <state>HAL_AUDIO_ISR_PRIORITY=0</state>
           <state>USB_STACK_BM</state>
           <state>USING_SAI</state>
           <state>CPU_MIMXRT685SFVKB=1</state>
@@ -3518,6 +3525,7 @@
           <state>$PROJ_DIR$/../../../../../../components/codec</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/port/wm8904</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/port</state>
+          <state>$PROJ_DIR$/../../../../../../components/audio</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/i2c</state>
           <state>$PROJ_DIR$/../../../../../../components/i2c</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/debug_console_lite</state>
@@ -4457,6 +4465,15 @@
   </group>
   <group>
     <name>component</name>
+    <group>
+      <name>audio</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/audio/fsl_adapter_audio.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/audio/fsl_adapter_flexcomm_i2s.c</name>
+      </file>
+    </group>
     <group>
       <name>i2c</name>
       <file>

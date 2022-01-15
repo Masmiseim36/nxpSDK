@@ -186,7 +186,7 @@ hal_audio_config_t txMicConfig = {
     .sampleRate_Hz = (uint32_t)kHAL_AudioSampleRate8KHz,
 #if defined(WIFI_88W8987_BOARD_AW_CM358_USD)
     .frameLength = 22, /* Here is 22 because the bt module will generate 22 bits clock after one clock WS. */
-#elif defined(WIFI_IW416_BOARD_AW_AM457_USD)
+#elif (defined(WIFI_IW416_BOARD_AW_AM510_USD) || defined(WIFI_IW416_BOARD_AW_AM457_USD))
     .frameLength = 256, /* Here is 256 because the bt module will generate 256 bits clock after one clock WS. */
 #else
 #endif
@@ -218,7 +218,7 @@ hal_audio_config_t rxSpeakerConfig = {
     .sampleRate_Hz = (uint32_t)kHAL_AudioSampleRate8KHz,
 #if defined(WIFI_88W8987_BOARD_AW_CM358_USD)
     .frameLength = 22, /* Here is 22 because the bt module will generate 22 bits clock after one clock WS. */
-#elif defined(WIFI_IW416_BOARD_AW_AM457_USD)
+#elif (defined(WIFI_IW416_BOARD_AW_AM510_USD) || defined(WIFI_IW416_BOARD_AW_AM457_USD))
     .frameLength = 256, /* Here is 256 because the bt module will generate 256 bits clock after one clock WS. */
 #else
 #endif
@@ -383,7 +383,8 @@ void BOARD_I3C_ReleaseBus(void)
 }
 
 
-#if defined(WIFI_88W8987_BOARD_AW_CM358_USD)
+#if defined(WIFI_88W8987_BOARD_AW_CM358_USD) || defined(WIFI_IW416_BOARD_MURATA_1XK_USD) || \
+    defined(WIFI_88W8987_BOARD_MURATA_1ZM_USD)
 int controller_hci_uart_get_configuration(controller_hci_uart_config_t *config)
 {
     if (NULL == config)
@@ -398,7 +399,7 @@ int controller_hci_uart_get_configuration(controller_hci_uart_config_t *config)
     config->enableTxCTS     = 1u;
     return 0;
 }
-#elif defined(WIFI_IW416_BOARD_AW_AM457_USD)
+#elif (defined(WIFI_IW416_BOARD_AW_AM510_USD) || defined(WIFI_IW416_BOARD_AW_AM457_USD))
 int controller_hci_uart_get_configuration(controller_hci_uart_config_t *config)
 {
     if (NULL == config)

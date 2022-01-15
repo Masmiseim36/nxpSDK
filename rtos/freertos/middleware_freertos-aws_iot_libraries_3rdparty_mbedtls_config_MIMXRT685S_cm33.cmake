@@ -6,3 +6,5 @@ target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
     ${CMAKE_CURRENT_LIST_DIR}/libraries/3rdparty/mbedtls_config
 )
 
+include(middleware_freertos-kernel_MIMXRT685S_cm33)
+

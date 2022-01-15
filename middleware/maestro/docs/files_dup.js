@@ -1,20 +1,17 @@
 var files_dup =
 [
-    [ "af_error.h", "af__error_8h.html", "af__error_8h" ],
     [ "container.h", "container_8h.html", "container_8h" ],
     [ "error.h", "error_8h.html", "error_8h" ],
     [ "file_utils.h", "file__utils_8h.html", "file__utils_8h" ],
     [ "general_utils.h", "general__utils_8h.html", "general__utils_8h" ],
     [ "logging.h", "logging_8h.html", "logging_8h" ],
-    [ "memtypes.h", "memtypes_8h.html", "memtypes_8h" ],
-    [ "metadata_error.h", "metadata__error_8h.html", "metadata__error_8h" ],
     [ "osa_common.h", "osa__common_8h.html", "osa__common_8h" ],
     [ "osa_cond.h", "osa__cond_8h.html", "osa__cond_8h" ],
     [ "osa_dir.h", "osa__dir_8h.html", "osa__dir_8h" ],
     [ "osa_event.h", "osa__event_8h.html", "osa__event_8h" ],
     [ "osa_freertos.h", "osa__freertos_8h.html", "osa__freertos_8h" ],
     [ "osa_init.h", "osa__init_8h.html", "osa__init_8h" ],
-    [ "osa_isr.h", "osa__isr_8h.html", "osa__isr_8h" ],
+    [ "osa_isr.h", "osa__isr_8h.html", null ],
     [ "osa_memory.h", "osa__memory_8h.html", "osa__memory_8h" ],
     [ "osa_message.h", "osa__message_8h.html", "osa__message_8h" ],
     [ "osa_misc.h", "osa__misc_8h.html", "osa__misc_8h" ],
@@ -29,5 +26,8 @@ var files_dup =
     [ "streamer_error.h", "streamer__error_8h.html", "streamer__error_8h" ],
     [ "streamer_message.h", "streamer__message_8h.html", "streamer__message_8h" ],
     [ "streamer_pcm.h", "streamer__pcm_8h.html", "streamer__pcm_8h" ],
-    [ "vector.h", "vector_8h.html", "vector_8h" ]
+    [ "vector.h", "vector_8h.html", "vector_8h" ],
+    [ "af_error.h", "af__error_8h.html", "af__error_8h" ],
+    [ "memtypes.h", "memtypes_8h.html", null ],
+    [ "metadata_error.h", "metadata__error_8h.html", "metadata__error_8h" ]
 ];

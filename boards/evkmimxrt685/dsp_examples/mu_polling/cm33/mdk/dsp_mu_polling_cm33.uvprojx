@@ -387,6 +387,18 @@
               <FileName>incbin.S</FileName>
               <FileType>2</FileType>
               <FilePath>../incbin.S</FilePath>
+              <FileOption>
+                                  <CommonProperty>
+                                    <IncludeInBuild>2</IncludeInBuild>
+                                    <AlwaysBuild>1</AlwaysBuild>
+                                    <GenerateAssemblyFile>2</GenerateAssemblyFile>
+                                    <AssembleAssemblyFile>2</AssembleAssemblyFile>
+                                    <PublicsOnly>2</PublicsOnly>
+                                    <StopOnExitCode>11</StopOnExitCode>
+                                  </CommonProperty>
+                                  <FileArmAds>
+                                  </FileArmAds>
+                                </FileOption>
             </File>
             <File>
               <FileName>dsp_config.h</FileName>
@@ -1196,6 +1208,18 @@
               <FileName>incbin.S</FileName>
               <FileType>2</FileType>
               <FilePath>../incbin.S</FilePath>
+              <FileOption>
+                                  <CommonProperty>
+                                    <IncludeInBuild>2</IncludeInBuild>
+                                    <AlwaysBuild>1</AlwaysBuild>
+                                    <GenerateAssemblyFile>2</GenerateAssemblyFile>
+                                    <AssembleAssemblyFile>2</AssembleAssemblyFile>
+                                    <PublicsOnly>2</PublicsOnly>
+                                    <StopOnExitCode>11</StopOnExitCode>
+                                  </CommonProperty>
+                                  <FileArmAds>
+                                  </FileArmAds>
+                                </FileOption>
             </File>
             <File>
               <FileName>dsp_config.h</FileName>
@@ -2005,6 +2029,18 @@
               <FileName>incbin.S</FileName>
               <FileType>2</FileType>
               <FilePath>../incbin.S</FilePath>
+              <FileOption>
+                                  <CommonProperty>
+                                    <IncludeInBuild>2</IncludeInBuild>
+                                    <AlwaysBuild>1</AlwaysBuild>
+                                    <GenerateAssemblyFile>2</GenerateAssemblyFile>
+                                    <AssembleAssemblyFile>2</AssembleAssemblyFile>
+                                    <PublicsOnly>2</PublicsOnly>
+                                    <StopOnExitCode>11</StopOnExitCode>
+                                  </CommonProperty>
+                                  <FileArmAds>
+                                  </FileArmAds>
+                                </FileOption>
             </File>
             <File>
               <FileName>dsp_config.h</FileName>
@@ -2814,6 +2850,18 @@
               <FileName>incbin.S</FileName>
               <FileType>2</FileType>
               <FilePath>../incbin.S</FilePath>
+              <FileOption>
+                                  <CommonProperty>
+                                    <IncludeInBuild>2</IncludeInBuild>
+                                    <AlwaysBuild>1</AlwaysBuild>
+                                    <GenerateAssemblyFile>2</GenerateAssemblyFile>
+                                    <AssembleAssemblyFile>2</AssembleAssemblyFile>
+                                    <PublicsOnly>2</PublicsOnly>
+                                    <StopOnExitCode>11</StopOnExitCode>
+                                  </CommonProperty>
+                                  <FileArmAds>
+                                  </FileArmAds>
+                                </FileOption>
             </File>
             <File>
               <FileName>dsp_config.h</FileName>

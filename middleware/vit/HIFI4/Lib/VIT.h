@@ -14,8 +14,8 @@ required by the calling layer. All other types, structures and functions are
 private.
 */
 
-#ifndef __VIT_H__
-#define __VIT_H__
+#ifndef VIT_H_
+#define VIT_H_
 
 #ifdef __cplusplus
 extern "C" {
@@ -59,10 +59,12 @@ typedef enum { _1CHAN = 1, _2CHAN, _3CHAN} NumberOfChannel_en;
 
 /*
  *  VIT lib not integrating AFE :
- *               - IMXRT500          : VIT_MAX_NUMBER_OF_CHANNEL  = _1CHAN
+ *               - IMXRT500           : VIT_MAX_NUMBER_OF_CHANNEL  = _1CHAN
  *  VIT lib integrating AFE :
- *               - IMXRT1170 / RT600 : VIT_MAX_NUMBER_OF_CHANNEL  = _3CHAN
- *               - IMXRT1060         : VIT_MAX_NUMBER_OF_CHANNEL  = _2CHAN
+ *               - IMXRT1060          : VIT_MAX_NUMBER_OF_CHANNEL  = _3CHAN
+ *               - IMXRT1160 / RT1170 : VIT_MAX_NUMBER_OF_CHANNEL  = _3CHAN
+ *               - IMXRT600           : VIT_MAX_NUMBER_OF_CHANNEL  = _3CHAN
+ 
  */
 
 
@@ -139,10 +141,12 @@ typedef enum
 typedef enum
 {
     VIT_IMXRT1060 = 1,                         // I.MXRT1060 : VIT running on Cortex-M7
+    VIT_IMXRT1160 ,                            // I.MXRT1160 : VIT running on Cortex-M7
     VIT_IMXRT1170,                             // I.MXRT1170 : VIT running on Cortex-M7
     VIT_IMXRT500,                              // I.MXRT500  : VIT running on FusionF1
     VIT_IMXRT600,                              // I.MXRT600  : VIT running on HIFI4
-    VIT_NB_OF_DEVICES = VIT_IMXRT600,
+    VIT_IMX8MINIM4,                            // I.MX8MINI  : VIT running on Cortex-M4
+    VIT_NB_OF_DEVICES = VIT_IMX8MINIM4,
     VIT_DUMMY_DEVICE  = PL_MAXENUM
 }VIT_DeviceId_en;
 
@@ -175,9 +179,9 @@ typedef struct
 /* Input Buffer structure */
 typedef struct
 {
-    const PL_INT16               *pBuffer_Chan1;
-    const PL_INT16               *pBuffer_Chan2;
-    const PL_INT16               *pBuffer_Chan3;
+    const PL_INT16               *pBuffer_Chan1;       // Linked to MIC1 considered as the reference MIC for AFE        
+    const PL_INT16               *pBuffer_Chan2;       // Linked to MIC2
+    const PL_INT16               *pBuffer_Chan3;       // Linked to MIC3
 } VIT_DataIn_st;
 
 /* Voice Command structure */
@@ -191,6 +195,8 @@ typedef struct
 typedef struct
 {
     VIT_OperatingMode_en         OperatingMode;
+    PL_UINT16                    MIC1_MIC2_Distance;   // Distance between MIC2 and the reference MIC in mm
+    PL_UINT16                    MIC1_MIC3_Distance;   // Distance between MIC3 and the reference MIC in mm
     PL_UINT32                    Reserved;
 } VIT_ControlParams_st;
 
@@ -200,6 +206,7 @@ typedef struct
     PL_UINT32                    VIT_Model_Release;
     const char                   *pLanguage;
     PL_BOOL                      WW_VoiceCmds_Strings;        // Inform whether the model is integrating WakeWord and Commands strings
+    PL_UINT16                    NbOfWakeWords;
     const char                   *pWakeWord;
     PL_UINT16                    NbOfVoiceCmds;
     const char                   *pVoiceCmds_List;
@@ -287,7 +294,7 @@ VIT_ReturnStatus_en VIT_SetModel (const PL_UINT8* pVITModel, VIT_Model_Location_
 *                                      is NULL
 *
 */
-VIT_ReturnStatus_en VIT_GetMemoryTable(VIT_Handle_t           phInstance,
+VIT_ReturnStatus_en VIT_GetMemoryTable(VIT_Handle_t           hInstance,
                                        PL_MemoryTable_st      *pMemoryTable,
                                        VIT_InstanceParams_st  *pInstanceParams);
 
@@ -544,6 +551,6 @@ VIT_ReturnStatus_en VIT_GetLibInfo(VIT_LibInfo_st    *pLib_Info);
 }
 #endif /* __cplusplus */
 
-#endif      /* __VIT_H__ */
+#endif      /* VIT_H_ */
 
 /* End of file */

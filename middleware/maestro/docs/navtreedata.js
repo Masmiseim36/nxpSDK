@@ -28,18 +28,25 @@ var NAVTREE =
     [ "Getting started with Maestro framework", "index.html", [
       [ "Introduction", "index.html#autotoc_md1", null ],
       [ "Supported examples", "index.html#autotoc_md2", null ],
-      [ "Streamer setup", "index.html#autotoc_md3", null ],
-      [ "Commands", "index.html#autotoc_md4", [
-        [ "file", "index.html#autotoc_md5", null ],
-        [ "record_mic", "index.html#autotoc_md6", null ],
-        [ "usb_mic", "index.html#autotoc_md7", null ],
-        [ "usb_speaker", "index.html#autotoc_md8", null ]
+      [ "Streamer setup", "index.html#autotoc_md3", [
+        [ "common", "index.html#autotoc_md4", null ],
+        [ "maestro_playback", "index.html#autotoc_md5", null ],
+        [ "maestro_playback_8ch_96kHz", "index.html#autotoc_md6", null ],
+        [ "maestro_record", "index.html#autotoc_md7", null ],
+        [ "maestro_usb_mic", "index.html#autotoc_md8", null ],
+        [ "maestro_usb_speaker", "index.html#autotoc_md9", null ]
       ] ],
-      [ "Configuration options", "index.html#autotoc_md9", null ],
-      [ "Supported features", "index.html#autotoc_md10", [
-        [ "Codecs", "index.html#autotoc_md11", null ],
-        [ "VIT", "index.html#autotoc_md12", null ],
-        [ "EAP", "index.html#autotoc_md13", null ]
+      [ "Commands", "index.html#autotoc_md10", [
+        [ "file", "index.html#autotoc_md11", null ],
+        [ "record_mic", "index.html#autotoc_md12", null ],
+        [ "usb_mic", "index.html#autotoc_md13", null ],
+        [ "usb_speaker", "index.html#autotoc_md14", null ]
+      ] ],
+      [ "Configuration options", "index.html#autotoc_md15", null ],
+      [ "Supported features", "index.html#autotoc_md16", [
+        [ "Codecs", "index.html#autotoc_md17", null ],
+        [ "VIT", "index.html#autotoc_md18", null ],
+        [ "EAP", "index.html#autotoc_md19", null ]
       ] ]
     ] ],
     [ "Data Structures", "annotated.html", [
@@ -66,9 +73,8 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "af__error_8h.html",
-"memtypes_8h.html#afa375fa79568f9f2be4a3a044361f50e",
-"streamer__api_8h.html#a7420bd1fd03172c467cc24548e61978aa03de4e2df5beb97a49a34aa54018a9e4",
-"structAlbumArt.html#a96cdfff72f9cda573941127b0ffe5756"
+"streamer__api_8h.html#a477bc238b10958849277f79d585eff2aa8ab4d1752775bbc70372d7dc8b20065b",
+"structTrackInfo.html#a3c02ac9eb1b1050ac0b3411f70fec195"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

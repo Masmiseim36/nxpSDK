@@ -229,10 +229,10 @@
           <state>PRINTF_ADVANCED_ENABLE=1</state>
           <state>SDK_DEBUGCONSOLE_UART</state>
           <state>DSP_NCACHE</state>
+          <state>SDIO_ENABLED</state>
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
           <state>BOARD_USE_CODEC=1</state>
           <state>CODEC_WM8904_ENABLE</state>
-          <state>SDIO_ENABLED</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>SDK_OS_FREE_RTOS</state>
           <state>MCUXPRESSO_SDK</state>
@@ -363,13 +363,9 @@
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../..</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../components/codec/wm8904</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/include</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/include/environment/freertos</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM33_NTZ/non_secure</state>
-          <state>$PROJ_DIR$/../../../../../../components/codec</state>
-          <state>$PROJ_DIR$/../../../../../../components/codec/port/wm8904</state>
-          <state>$PROJ_DIR$/../../../../../../components/codec/port</state>
-          <state>$PROJ_DIR$/../../../../../../components/codec/i2c</state>
-          <state>$PROJ_DIR$/../../../../../../components/i2c</state>
           <state>$PROJ_DIR$/../../../../../../middleware/lwip/port</state>
           <state>$PROJ_DIR$/../../../../../../middleware/lwip/src</state>
           <state>$PROJ_DIR$/../../../../../../middleware/lwip/src/include</state>
@@ -378,11 +374,19 @@
           <state>$PROJ_DIR$/../../../../../../middleware/wifi/dhcpd</state>
           <state>$PROJ_DIR$/../../../../../../middleware/wifi/incl/port/lwip</state>
           <state>$PROJ_DIR$/../../../../../../middleware/wifi/port/lwip</state>
+          <state>$PROJ_DIR$/../../../../../../components/wifi_bt_module/AzureWave/tx_pwr_limits</state>
+          <state>$PROJ_DIR$/../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits</state>
           <state>$PROJ_DIR$/../../../../../../middleware/sdmmc/sdio</state>
           <state>$PROJ_DIR$/../../../../../../middleware/sdmmc/common</state>
           <state>$PROJ_DIR$/../../../../../../middleware/sdmmc/host/usdhc</state>
           <state>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/include/platform/imxrt600_m33</state>
           <state>$PROJ_DIR$/../../../../../../components/pca9420</state>
+          <state>$PROJ_DIR$/../../../../../../components/codec/wm8904</state>
+          <state>$PROJ_DIR$/../../../../../../components/codec</state>
+          <state>$PROJ_DIR$/../../../../../../components/codec/port/wm8904</state>
+          <state>$PROJ_DIR$/../../../../../../components/codec/port</state>
+          <state>$PROJ_DIR$/../../../../../../components/codec/i2c</state>
+          <state>$PROJ_DIR$/../../../../../../components/i2c</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../flash_config</state>
@@ -399,7 +403,6 @@
           <state>$PROJ_DIR$/../../../../../../middleware/wifi/wifidriver/incl</state>
           <state>$PROJ_DIR$/../../../../../../middleware/sdmmc/osa</state>
           <state>$PROJ_DIR$/../../../../../../components/osa</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1307,10 +1310,10 @@
           <state>PRINTF_ADVANCED_ENABLE=1</state>
           <state>SDK_DEBUGCONSOLE_UART</state>
           <state>DSP_NCACHE</state>
+          <state>SDIO_ENABLED</state>
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
           <state>BOARD_USE_CODEC=1</state>
           <state>CODEC_WM8904_ENABLE</state>
-          <state>SDIO_ENABLED</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>SDK_OS_FREE_RTOS</state>
           <state>MCUXPRESSO_SDK</state>
@@ -1441,13 +1444,9 @@
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../..</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../components/codec/wm8904</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/include</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/include/environment/freertos</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM33_NTZ/non_secure</state>
-          <state>$PROJ_DIR$/../../../../../../components/codec</state>
-          <state>$PROJ_DIR$/../../../../../../components/codec/port/wm8904</state>
-          <state>$PROJ_DIR$/../../../../../../components/codec/port</state>
-          <state>$PROJ_DIR$/../../../../../../components/codec/i2c</state>
-          <state>$PROJ_DIR$/../../../../../../components/i2c</state>
           <state>$PROJ_DIR$/../../../../../../middleware/lwip/port</state>
           <state>$PROJ_DIR$/../../../../../../middleware/lwip/src</state>
           <state>$PROJ_DIR$/../../../../../../middleware/lwip/src/include</state>
@@ -1456,11 +1455,19 @@
           <state>$PROJ_DIR$/../../../../../../middleware/wifi/dhcpd</state>
           <state>$PROJ_DIR$/../../../../../../middleware/wifi/incl/port/lwip</state>
           <state>$PROJ_DIR$/../../../../../../middleware/wifi/port/lwip</state>
+          <state>$PROJ_DIR$/../../../../../../components/wifi_bt_module/AzureWave/tx_pwr_limits</state>
+          <state>$PROJ_DIR$/../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits</state>
           <state>$PROJ_DIR$/../../../../../../middleware/sdmmc/sdio</state>
           <state>$PROJ_DIR$/../../../../../../middleware/sdmmc/common</state>
           <state>$PROJ_DIR$/../../../../../../middleware/sdmmc/host/usdhc</state>
           <state>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/include/platform/imxrt600_m33</state>
           <state>$PROJ_DIR$/../../../../../../components/pca9420</state>
+          <state>$PROJ_DIR$/../../../../../../components/codec/wm8904</state>
+          <state>$PROJ_DIR$/../../../../../../components/codec</state>
+          <state>$PROJ_DIR$/../../../../../../components/codec/port/wm8904</state>
+          <state>$PROJ_DIR$/../../../../../../components/codec/port</state>
+          <state>$PROJ_DIR$/../../../../../../components/codec/i2c</state>
+          <state>$PROJ_DIR$/../../../../../../components/i2c</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../flash_config</state>
@@ -1477,7 +1484,6 @@
           <state>$PROJ_DIR$/../../../../../../middleware/wifi/wifidriver/incl</state>
           <state>$PROJ_DIR$/../../../../../../middleware/sdmmc/osa</state>
           <state>$PROJ_DIR$/../../../../../../components/osa</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -2249,6 +2255,12 @@
       <name>$PROJ_DIR$/../../../../sdmmc_config.h</name>
     </file>
     <file>
+      <name>$PROJ_DIR$/../../../../wifi_bt_config.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../wifi_bt_config.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../pmic_support.c</name>
     </file>
     <file>
@@ -2300,10 +2312,16 @@
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_i2c.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_i3c.h</name>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_gpio.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_i3c.c</name>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_gpio.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_usdhc.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_usdhc.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_common.h</name>
@@ -2316,18 +2334,6 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_common_arm.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_gpio.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_gpio.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_usdhc.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_usdhc.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_power.h</name>
@@ -2358,6 +2364,12 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_mu.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_i3c.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_i3c.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_flexspi.c</name>
@@ -2391,40 +2403,97 @@
     </file>
   </group>
   <group>
-    <name>codec</name>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../components/codec/wm8904/fsl_wm8904.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../components/codec/wm8904/fsl_wm8904.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../components/codec/fsl_codec_common.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../components/codec/fsl_codec_common.c</name>
-    </file>
+    <name>rpmsg_lite</name>
     <group>
-      <name>port</name>
-      <group>
-        <name>wm8904</name>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../components/codec/port/wm8904/fsl_codec_wm8904_adapter.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../components/codec/port/wm8904/fsl_codec_wm8904_adapter.h</name>
-        </file>
-      </group>
+      <name>include</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../../components/codec/port/fsl_codec_adapter.h</name>
+        <name>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/include/rpmsg_lite.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/include/rpmsg_ns.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/include/llist.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/include/rpmsg_default_config.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/include/virtio_ring.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/include/virtqueue.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/include/rpmsg_compiler.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/include/rpmsg_env.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/include/rpmsg_queue.h</name>
+      </file>
+      <group>
+        <name>environment</name>
+        <group>
+          <name>freertos</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/include/environment/freertos/rpmsg_env_specific.h</name>
+          </file>
+        </group>
+      </group>
+      <group>
+        <name>platform</name>
+        <group>
+          <name>imxrt600_m33</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/include/platform/imxrt600_m33/rpmsg_platform.h</name>
+          </file>
+        </group>
+      </group>
+    </group>
+    <group>
+      <name>common</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/common/llist.c</name>
       </file>
     </group>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../components/codec/i2c/fsl_codec_i2c.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../components/codec/i2c/fsl_codec_i2c.c</name>
-    </file>
+    <group>
+      <name>rpmsg_lite</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/rpmsg_lite/rpmsg_lite.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/rpmsg_lite/rpmsg_ns.c</name>
+      </file>
+      <group>
+        <name>porting</name>
+        <group>
+          <name>environment</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/rpmsg_lite/porting/environment/rpmsg_env_freertos.c</name>
+          </file>
+        </group>
+        <group>
+          <name>platform</name>
+          <group>
+            <name>imxrt600_m33</name>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/rpmsg_lite/porting/platform/imxrt600_m33/rpmsg_platform.c</name>
+            </file>
+          </group>
+        </group>
+      </group>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/rpmsg_lite/rpmsg_queue.c</name>
+      </file>
+    </group>
+    <group>
+      <name>virtio</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/virtio/virtqueue.c</name>
+      </file>
+    </group>
   </group>
   <group>
     <name>freertos</name>
@@ -2520,6 +2589,9 @@
           <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include/StackMacros.h</name>
         </file>
         <file>
+          <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include/stdint.readme</name>
+        </file>
+        <file>
           <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include/stream_buffer.h</name>
         </file>
         <file>
@@ -2546,69 +2618,6 @@
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/timers.c</name>
-      </file>
-    </group>
-  </group>
-  <group>
-    <name>component</name>
-    <group>
-      <name>i2c</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/i2c/fsl_adapter_i2c.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/i2c/fsl_adapter_i3c.c</name>
-      </file>
-    </group>
-    <group>
-      <name>uart</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/uart/fsl_adapter_uart.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/uart/fsl_adapter_usart.c</name>
-      </file>
-    </group>
-    <group>
-      <name>serial_manager</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/serial_manager/fsl_component_serial_manager.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/serial_manager/fsl_component_serial_port_internal.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/serial_manager/fsl_component_serial_manager.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/serial_manager/fsl_component_serial_port_uart.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/serial_manager/fsl_component_serial_port_uart.c</name>
-      </file>
-    </group>
-    <group>
-      <name>lists</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/lists/fsl_component_generic_list.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/lists/fsl_component_generic_list.c</name>
-      </file>
-    </group>
-    <group>
-      <name>osa</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction_free_rtos.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction_config.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction_free_rtos.c</name>
       </file>
     </group>
   </group>
@@ -3379,7 +3388,7 @@
         <name>$PROJ_DIR$/../../../../../../middleware/wifi/incl/dhcp-server.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/wifi/incl/wifi_cal_data_ext.h</name>
+        <name>$PROJ_DIR$/../../../../../../middleware/wifi/incl/WIFI_IW416_BOARD_AW_AM457_CAL_DATA_EXT.h</name>
       </file>
       <group>
         <name>wlcmgr</name>
@@ -3651,6 +3660,132 @@
     </group>
   </group>
   <group>
+    <name>component</name>
+    <group>
+      <name>wifi_bt_module</name>
+      <group>
+        <name>AzureWave</name>
+        <group>
+          <name>tx_pwr_limits</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../components/wifi_bt_module/AzureWave/tx_pwr_limits/wlan_txpwrlimit_cfg_WW.h</name>
+          </file>
+        </group>
+      </group>
+      <group>
+        <name>Murata</name>
+        <group>
+          <name>tx_pwr_limits</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1XK_CA.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1XK_EU.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1XK_JP.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1XK_US.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1XK_WW.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1ZM_CA.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1ZM_EU.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1ZM_JP.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1ZM_US.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1ZM_WW.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_2DS_CA.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_2DS_EU.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_2DS_JP.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_2DS_US.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_2DS_WW.h</name>
+          </file>
+        </group>
+      </group>
+    </group>
+    <group>
+      <name>i2c</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/i2c/fsl_adapter_i2c.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/i2c/fsl_adapter_i3c.c</name>
+      </file>
+    </group>
+    <group>
+      <name>uart</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/uart/fsl_adapter_uart.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/uart/fsl_adapter_usart.c</name>
+      </file>
+    </group>
+    <group>
+      <name>serial_manager</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/serial_manager/fsl_component_serial_manager.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/serial_manager/fsl_component_serial_port_internal.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/serial_manager/fsl_component_serial_manager.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/serial_manager/fsl_component_serial_port_uart.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/serial_manager/fsl_component_serial_port_uart.c</name>
+      </file>
+    </group>
+    <group>
+      <name>lists</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/lists/fsl_component_generic_list.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/lists/fsl_component_generic_list.c</name>
+      </file>
+    </group>
+    <group>
+      <name>osa</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction_free_rtos.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction_config.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction_free_rtos.c</name>
+      </file>
+    </group>
+  </group>
+  <group>
     <name>sdmmc</name>
     <group>
       <name>src</name>
@@ -3708,75 +3843,48 @@
     </group>
   </group>
   <group>
-    <name>rpmsg_lite</name>
-    <group>
-      <name>porting</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/include/platform/imxrt600_m33/rpmsg_platform.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/rpmsg_lite/porting/platform/imxrt600_m33/rpmsg_platform.c</name>
-      </file>
-    </group>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/include/rpmsg_lite.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/include/rpmsg_ns.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/include/llist.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/include/rpmsg_default_config.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/include/virtio_ring.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/include/virtqueue.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/include/rpmsg_compiler.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/common/llist.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/rpmsg_lite/rpmsg_lite.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/rpmsg_lite/rpmsg_ns.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/virtio/virtqueue.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/include/rpmsg_env.h</name>
-    </file>
-    <group>
-      <name>env</name>
-      <group>
-        <name>freertos</name>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/rpmsg_lite/porting/environment/rpmsg_env_freertos.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/rpmsg_lite/rpmsg_queue.c</name>
-        </file>
-      </group>
-    </group>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../middleware/multicore/rpmsg_lite/lib/include/rpmsg_queue.h</name>
-    </file>
-  </group>
-  <group>
     <name>pmic_driver</name>
     <file>
       <name>$PROJ_DIR$/../../../../../../components/pca9420/fsl_pca9420.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../components/pca9420/fsl_pca9420.c</name>
+    </file>
+  </group>
+  <group>
+    <name>codec</name>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../components/codec/wm8904/fsl_wm8904.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../components/codec/wm8904/fsl_wm8904.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../components/codec/fsl_codec_common.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../components/codec/fsl_codec_common.c</name>
+    </file>
+    <group>
+      <name>port</name>
+      <group>
+        <name>wm8904</name>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../components/codec/port/wm8904/fsl_codec_wm8904_adapter.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../components/codec/port/wm8904/fsl_codec_wm8904_adapter.h</name>
+        </file>
+      </group>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/codec/port/fsl_codec_adapter.h</name>
+      </file>
+    </group>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../components/codec/i2c/fsl_codec_i2c.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../components/codec/i2c/fsl_codec_i2c.c</name>
     </file>
   </group>
   <group>

@@ -29,6 +29,9 @@
 #define AUDIO_DUMMY_SIZE (64U)
 #define HFP_STREAMER_TASK_PRIORITY (6U)
 
+#define HFP_CODEC_DAC_VOLUME (100U) /* Range: 0 ~ 100 */
+#define HFP_CODEC_HP_VOLUME  (70U)  /* Range: 0 ~ 100 */
+
 /* --------------------------------------------- External Global Variables */
 
 extern codec_config_t boardCodecScoConfig;
@@ -308,48 +311,49 @@ static void Init_Board_Sco_Audio(uint32_t samplingRate, UCHAR bitWidth)
         src_clk_hz = BOARD_SwitchAudioFreq(samplingRate);
 
         /* Audio streamer */
-        txSpeakerConfig.sampleRate_Hz = samplingRate;
-        txSpeakerConfig.bitWidth      = bitWidth;
-        txSpeakerConfig.frameSyncWidth    = kHAL_AudioFrameSyncWidthOneBitClk,
-        txSpeakerConfig.frameSyncPolarity = kHAL_AudioBeginAtRisingEdge,
-        txSpeakerConfig.lineChannels      = kHAL_AudioMonoLeft;
-        txSpeakerConfig.dataFormat        = kHAL_AudioDataFormatDspModeB;
 #if (defined FSL_FEATURE_SAI_HAS_MCLKDIV_REGISTER && FSL_FEATURE_SAI_HAS_MCLKDIV_REGISTER) || \
     (defined FSL_FEATURE_PCC_HAS_SAI_DIVIDER && FSL_FEATURE_PCC_HAS_SAI_DIVIDER)
         txSpeakerConfig.srcClock_Hz = OVER_SAMPLE_RATE * samplingRate;
 #else
         txSpeakerConfig.srcClock_Hz = src_clk_hz;
 #endif
+        txSpeakerConfig.sampleRate_Hz     = samplingRate;
+        txSpeakerConfig.frameSyncWidth    = kHAL_AudioFrameSyncWidthHalfFrame,
+        txSpeakerConfig.frameSyncPolarity = kHAL_AudioBeginAtRisingEdge,
+        txSpeakerConfig.lineChannels      = kHAL_AudioMonoLeft;
+        txSpeakerConfig.dataFormat        = kHAL_AudioDataFormatDspModeB;
         HAL_AudioTxInit((hal_audio_handle_t)&tx_speaker_handle[0], &txSpeakerConfig);
         HAL_AudioTxInstallCallback((hal_audio_handle_t)&tx_speaker_handle[0], txSpeakerCallback, NULL);
 
-        rxMicConfig.sampleRate_Hz = samplingRate;
-        rxMicConfig.bitWidth      = bitWidth;
 #if (defined FSL_FEATURE_SAI_HAS_MCLKDIV_REGISTER && FSL_FEATURE_SAI_HAS_MCLKDIV_REGISTER) || \
     (defined FSL_FEATURE_PCC_HAS_SAI_DIVIDER && FSL_FEATURE_PCC_HAS_SAI_DIVIDER)
         rxMicConfig.srcClock_Hz = OVER_SAMPLE_RATE * samplingRate;
 #else
         rxMicConfig.srcClock_Hz = src_clk_hz;
 #endif
+        rxMicConfig.sampleRate_Hz = samplingRate;
         HAL_AudioRxInit((hal_audio_handle_t)&rx_mic_handle[0], &rxMicConfig);
         HAL_AudioRxInstallCallback((hal_audio_handle_t)&rx_mic_handle[0], rxMicCallback, NULL);
 
-        txMicConfig.sampleRate_Hz = samplingRate;
-        txMicConfig.bitWidth      = bitWidth;
         txMicConfig.srcClock_Hz   = src_clk_hz;
+        txMicConfig.sampleRate_Hz = samplingRate;
         HAL_AudioTxInit((hal_audio_handle_t)&tx_mic_handle[0], &txMicConfig);
         HAL_AudioTxInstallCallback((hal_audio_handle_t)&tx_mic_handle[0], txMicCallback, NULL);
 
-        rxSpeakerConfig.sampleRate_Hz = samplingRate;
-        rxSpeakerConfig.bitWidth      = bitWidth;
         rxSpeakerConfig.srcClock_Hz   = src_clk_hz;
+        rxSpeakerConfig.sampleRate_Hz = samplingRate;
         HAL_AudioRxInit((hal_audio_handle_t)&rx_speaker_handle[0], &rxSpeakerConfig);
         HAL_AudioRxInstallCallback((hal_audio_handle_t)&rx_speaker_handle[0], rxSpeakerCallback, NULL);
 
         /* Codec */
-        CODEC_Init(&codec_handle, &boardCodecScoConfig);
+        if (CODEC_Init(&codec_handle, &boardCodecScoConfig) != kStatus_Success)
+        {
+            PRINTF("codec init failed!\r\n");
+        }
         CODEC_SetMute(&codec_handle, kCODEC_PlayChannelHeadphoneRight | kCODEC_PlayChannelHeadphoneLeft, true);
         CODEC_SetFormat(&codec_handle, txSpeakerConfig.srcClock_Hz, txSpeakerConfig.sampleRate_Hz, txSpeakerConfig.bitWidth);
+        CODEC_SetVolume(&codec_handle, kCODEC_VolumeDAC, HFP_CODEC_DAC_VOLUME);
+        CODEC_SetVolume(&codec_handle, kCODEC_VolumeHeadphoneLeft | kCODEC_VolumeHeadphoneRight, HFP_CODEC_HP_VOLUME);
         CODEC_SetMute(&codec_handle, kCODEC_PlayChannelHeadphoneRight | kCODEC_PlayChannelHeadphoneLeft, false);
     }
 }
@@ -365,8 +369,7 @@ static void Init_Board_RingTone_Audio(uint32_t samplingRate, UCHAR bitWidth)
         src_clk_hz = BOARD_SwitchAudioFreq(samplingRate);
 
         /* Audio streamer */
-        txSpeakerConfig.sampleRate_Hz = samplingRate;
-        txSpeakerConfig.bitWidth      = bitWidth;
+        txSpeakerConfig.sampleRate_Hz     = samplingRate;
         txSpeakerConfig.frameSyncWidth    = kHAL_AudioFrameSyncWidthHalfFrame,
         txSpeakerConfig.frameSyncPolarity = kHAL_AudioBeginAtFallingEdge,
         txSpeakerConfig.lineChannels      = kHAL_AudioStereo;
@@ -383,6 +386,8 @@ static void Init_Board_RingTone_Audio(uint32_t samplingRate, UCHAR bitWidth)
         CODEC_Init(&codec_handle, &boardCodecScoConfig1);
         CODEC_SetMute(&codec_handle, kCODEC_PlayChannelHeadphoneRight | kCODEC_PlayChannelHeadphoneLeft, true);
         CODEC_SetFormat(&codec_handle, txSpeakerConfig.srcClock_Hz, txSpeakerConfig.sampleRate_Hz, txSpeakerConfig.bitWidth);
+        CODEC_SetVolume(&codec_handle, kCODEC_VolumeDAC, HFP_CODEC_DAC_VOLUME);
+        CODEC_SetVolume(&codec_handle, kCODEC_VolumeHeadphoneLeft | kCODEC_VolumeHeadphoneRight, HFP_CODEC_HP_VOLUME);
         CODEC_SetMute(&codec_handle, kCODEC_PlayChannelHeadphoneRight | kCODEC_PlayChannelHeadphoneLeft, false);
     }
 }
@@ -650,12 +655,9 @@ API_RESULT sco_audio_set_speaker_volume(UCHAR volume)
         return API_FAILURE;
     }
     /* HFP support 0- 15, codec support 0-100*/
-    if (kStatus_Success == CODEC_SetVolume(&codec_handle, kCODEC_PlayChannelHeadphoneLeft, ((volume * 6U) + 9U)))
+    if (kStatus_Success == CODEC_SetVolume(&codec_handle, kCODEC_PlayChannelHeadphoneRight | kCODEC_PlayChannelHeadphoneLeft, ((volume * 6U) + 9U)))
     {
-        if (kStatus_Success == CODEC_SetVolume(&codec_handle, kCODEC_PlayChannelHeadphoneRight, ((volume * 6U) + 9U)))
-        {
-            return API_SUCCESS;
-        }
+        return API_SUCCESS;
     }
 
     return API_FAILURE;

@@ -29,14 +29,6 @@
 // The data format should be aligned with VIT interface (16kHz, 16-bit, number of channel) 
 #define INPUT_FILE                   "../../../_INPUT/HEYNXP_WW_CMD.pcm"
 
-
-// Specify number of channel of VIT input
-// If AFE is enable  : only 2 or 3 channels input is supported
-// If AFE is disable : only 1 channel input is supported
-// see VIT.h for further information on VIT configurations : section "Valid VIT Configurations"
-#define NUMBER_OF_CHANNELS          _1CHAN
-
-
 #ifndef MEMORY_MALLOC
 // STATIC ALLOCATION 
 // Memory region size for VIT must be filled by user :
@@ -51,6 +43,61 @@
 
 #endif
 
+
+// Configurations below are provided as examples of possible VIT configurations
+// Configuration should be adapted to number of MICs supported and VIT features targeted.
+// If AFE is enable  : only 2 or 3 channels input is supported
+// If AFE is disable : only 1 channel input is supported
+// see VIT.h for further information on VIT configurations : section "Valid VIT Configurations"
+#ifdef PLATFORM_RT1060
+    #include "PL_platformTypes_CortexM7.h"
+    #define MODEL_LOCATION              VIT_MODEL_IN_ROM
+    #define DEVICE_ID                   VIT_IMXRT1060
+    // Configuration : VIT lib integrating AFE - AFE selected - 2 Mics enabled
+    #define VIT_OPERATING_MODE          VIT_ALL_MODULE_ENABLE    // LPVAD + AFE + WakeWord + Voice Commands
+    #define NUMBER_OF_CHANNELS          _2CHAN
+    #define VIT_MIC1_MIC2_DISTANCE      63                       // Distance between MIC2 and the reference MIC in mm
+    #define VIT_MIC1_MIC3_DISTANCE      0                        // Distance between MIC3 and the reference MIC in mm
+#elif defined PLATFORM_RT1170
+    #include "PL_platformTypes_CortexM7.h"
+    #define MODEL_LOCATION              VIT_MODEL_IN_ROM
+    #define DEVICE_ID                   VIT_IMXRT1170
+    // Configuration : VIT lib integrating AFE - AFE selected  - 3Mics enabled
+    #define VIT_OPERATING_MODE          VIT_ALL_MODULE_ENABLE    // LPVAD + AFE + WakeWord + Voice Commands
+    #define NUMBER_OF_CHANNELS          _3CHAN
+    #define VIT_MIC1_MIC2_DISTANCE      63                       // Distance between MIC2 and the reference MIC in mm
+    #define VIT_MIC1_MIC3_DISTANCE      63                       // Distance between MIC3 and the reference MIC in mm
+#elif defined  PLATFORM_RT600
+    #include "PL_platformTypes_HIFI4_FUSIONF1.h"
+    #define MODEL_LOCATION              VIT_MODEL_IN_RAM
+    #define DEVICE_ID                   VIT_IMXRT600
+    // Configuration : VIT lib integrating AFE - AFE selected - 2 enabled
+    #define VIT_OPERATING_MODE          VIT_ALL_MODULE_ENABLE    // LPVAD + AFE + WakeWord + Voice Commands
+    #define NUMBER_OF_CHANNELS          _2CHAN
+    #define VIT_MIC1_MIC2_DISTANCE      95                       // Distance between MIC2 and the reference MIC in mm
+    #define VIT_MIC1_MIC3_DISTANCE      0                        // Distance between MIC3 and the reference MIC in mm
+#elif defined  PLATFORM_RT500
+    #include "PL_platformTypes_HIFI4_FUSIONF1.h"
+    #define MODEL_LOCATION              VIT_MODEL_IN_RAM
+    #define DEVICE_ID                   VIT_IMXRT500
+    // Configuration : VIT lib not integrating AFE - only 1Mic supported
+    #define VIT_OPERATING_MODE          VIT_LPVAD_ENABLE | VIT_WAKEWORD_ENABLE | VIT_VOICECMD_ENABLE
+    #define NUMBER_OF_CHANNELS          _1CHAN
+    #define VIT_MIC1_MIC2_DISTANCE      0 
+    #define VIT_MIC1_MIC3_DISTANCE      0
+#elif defined  PLATFORM_WINDOWS
+#include "PL_platformTypes_windows.h"
+    #define MODEL_LOCATION              VIT_MODEL_IN_ROM
+    #define VIT_OPERATING_MODE          VIT_LPVAD_ENABLE | VIT_WAKEWORD_ENABLE | VIT_VOICECMD_ENABLE
+    #define NUMBER_OF_CHANNELS          _1CHAN
+    #define VIT_MIC1_MIC2_DISTANCE      0
+    #define VIT_MIC1_MIC3_DISTANCE      0
+
+#else
+    #error "No platform selected"
+#endif
+
+
 /****************************************************************************************/
 /*                                                                                      */
 /*  Includes                                                                            */
@@ -60,42 +107,8 @@
 #include <stdlib.h>
 #include <string.h>
 
-
-#ifdef PLATFORM_RT1060
-    #include "PL_platformTypes_CortexM7.h"
-    #define MODEL_LOCATION              VIT_MODEL_IN_ROM
-    #define DEVICE_ID                   VIT_IMXRT1060
-    // Configuration : VIT lib integrating AFE - AFE selected - 2 Mics supported
-    #define VIT_OPERATING_MODE          VIT_ALL_MODULE_ENABLE    // LPVAD + AFE + WakeWord + Voice Commands
-#elif defined PLATFORM_RT1170
-    #include "PL_platformTypes_CortexM7.h"
-    #define MODEL_LOCATION              VIT_MODEL_IN_ROM
-    #define DEVICE_ID                   VIT_IMXRT1170
-    // Configuration : VIT lib integrating AFE - AFE selected  - 2 or 3Mics supported
-    #define VIT_OPERATING_MODE          VIT_ALL_MODULE_ENABLE    // LPVAD + AFE + WakeWord + Voice Commands
-#elif defined  PLATFORM_RT600
-    #include "PL_platformTypes_HIFI4_FUSIONF1.h"
-    #define MODEL_LOCATION             VIT_MODEL_IN_RAM
-    #define DEVICE_ID                  VIT_IMXRT600
-    // Configuration : VIT lib integrating AFE - AFE selected - 2 or 3Mics supported
-    #define VIT_OPERATING_MODE         VIT_ALL_MODULE_ENABLE    // LPVAD + AFE + WakeWord + Voice Commands
-#elif defined  PLATFORM_RT500
-    #include "PL_platformTypes_HIFI4_FUSIONF1.h"
-    #define MODEL_LOCATION             VIT_MODEL_IN_RAM
-    #define DEVICE_ID                  VIT_IMXRT500
-    // Configuration : VIT lib not integrating AFE - only 1Mic supported
-    #define VIT_OPERATING_MODE         VIT_LPVAD_ENABLE | VIT_WAKEWORD_ENABLE | VIT_VOICECMD_ENABLE
-#elif defined  PLATFORM_WINDOWS
-#include "PL_platformTypes_windows.h"
-    #define MODEL_LOCATION             VIT_MODEL_IN_ROM
-    #define VIT_OPERATING_MODE         VIT_ALL_MODULE_ENABLE    // LPVAD + AFE + WakeWord + Voice Commands
-#else
-    #error "No platform selected"
-#endif
-
-
 #include "VIT.h"
-#include "VIT_Model.h"
+#include "VIT_Model_en.h"
 
 
 /****************************************************************************************/
@@ -198,7 +211,7 @@ PL_INT32 main(void)
     /* 
      *   VIT Set Model : register the Model in VIT
      */
-    Status = VIT_SetModel(VIT_Model, MODEL_LOCATION);
+    Status = VIT_SetModel(VIT_Model_en, MODEL_LOCATION);
     if (Status != VIT_SUCCESS)
     {
         printf("VIT_SetModel error : %d\n", Status);
@@ -417,7 +430,9 @@ PL_INT32 main(void)
     /* 
     *   Set and Apply VIT control parameters
     */
-    VITControlParams.OperatingMode   = VIT_OPERATING_MODE;
+    VITControlParams.OperatingMode      = VIT_OPERATING_MODE;
+    VITControlParams.MIC1_MIC2_Distance = VIT_MIC1_MIC2_DISTANCE;
+    VITControlParams.MIC1_MIC3_Distance = VIT_MIC1_MIC3_DISTANCE;
 
     if (!InitPhase_Error)
     {

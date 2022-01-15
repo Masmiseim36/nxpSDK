@@ -34,7 +34,7 @@
   <td id="projectlogo"><img alt="Logo" src="nxp_logo_small.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">eRPC API Reference
-   &#160;<span id="projectnumber">Rev. 1.8.1</span>
+   &#160;<span id="projectnumber">Rev. 1.9.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -113,7 +113,6 @@ $(document).ready(function(){initNavTree('classerpc_1_1_r_p_msg_transport.html',
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pro-static-methods">Static Protected Member Functions</a> &#124;
 <a href="#pro-attribs">Protected Attributes</a> &#124;
-<a href="#pro-static-attribs">Static Protected Attributes</a> &#124;
 <a href="classerpc_1_1_r_p_msg_transport-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">erpc::RPMsgTransport Class Reference<div class="ingroups"><a class="el" href="group__transports.html">Transport Layers</a> &raquo; <a class="el" href="group__rpmsg__lite__transport.html">RPMsg-Lite</a></div></div>  </div>
@@ -148,7 +147,7 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:ae361cc53021d8286ac7b0ca9ff87b5ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9170c0983cf46938b63433d1256f08c8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9170c0983cf46938b63433d1256f08c8"></a>
 virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_r_p_msg_transport.html#a9170c0983cf46938b63433d1256f08c8">~RPMsgTransport</a> (void)</td></tr>
-<tr class="memdesc:a9170c0983cf46938b63433d1256f08c8"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classerpc_1_1_codec.html" title="Abstract serialization encoder/decoder interface. ">Codec</a> destructor. <br /></td></tr>
+<tr class="memdesc:a9170c0983cf46938b63433d1256f08c8"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classerpc_1_1_r_p_msg_transport.html" title="Transport that uses RPMsg zero copy API for interprocessor messaging. ">RPMsgTransport</a> destructor. <br /></td></tr>
 <tr class="separator:a9170c0983cf46938b63433d1256f08c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5d98c0f410ac60ee1cd4705eb6310ea3"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="group__infra.html#gadea8a058796ed8b9a73c5f833445a661">erpc_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_r_p_msg_transport.html#a5d98c0f410ac60ee1cd4705eb6310ea3">init</a> (uint32_t src_addr, uint32_t dst_addr, void *base_address, uint32_t length, uint32_t rpmsg_link_id)</td></tr>
 <tr class="memdesc:a5d98c0f410ac60ee1cd4705eb6310ea3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialization of <a class="el" href="classerpc_1_1_r_p_msg_transport.html" title="Transport that uses RPMsg zero copy API for interprocessor messaging. ">RPMsgTransport</a> layer - as RPMsg master.  <a href="#a5d98c0f410ac60ee1cd4705eb6310ea3">More...</a><br /></td></tr>
@@ -194,15 +193,11 @@ Protected Attributes</h2></td></tr>
 <tr class="separator:a05ba7ce33f48a0c622fd3cec49f4b2a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6990f9092b21bb0c243d16fc06fd7180"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_r_p_msg_transport.html#a6990f9092b21bb0c243d16fc06fd7180">m_dst_addr</a></td></tr>
 <tr class="separator:a6990f9092b21bb0c243d16fc06fd7180"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa5287d7a0abc8384cbaaadfadb6ef1b3"><td class="memItemLeft" align="right" valign="top">struct rpmsg_lite_ept_static_context&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_r_p_msg_transport.html#aa5287d7a0abc8384cbaaadfadb6ef1b3">m_rpmsg_ept_context</a></td></tr>
-<tr class="separator:aa5287d7a0abc8384cbaaadfadb6ef1b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8b9bbb8ec36ea15a065356cd9f23c871"><td class="memItemLeft" align="right" valign="top">struct rpmsg_lite_endpoint *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_r_p_msg_transport.html#a8b9bbb8ec36ea15a065356cd9f23c871">m_rpmsg_ept</a></td></tr>
 <tr class="separator:a8b9bbb8ec36ea15a065356cd9f23c871"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-static-attribs"></a>
-Static Protected Attributes</h2></td></tr>
-<tr class="memitem:a0c6e6c1024de77fe08c1439e2eabddd6"><td class="memItemLeft" align="right" valign="top">static struct rpmsg_lite_instance&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_r_p_msg_transport.html#a0c6e6c1024de77fe08c1439e2eabddd6">s_rpmsg_ctxt</a></td></tr>
-<tr class="separator:a0c6e6c1024de77fe08c1439e2eabddd6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
+Additional Inherited Members</h2></td></tr>
 <tr class="inherit_header pro_static_attribs_classerpc_1_1_r_p_msg_base_transport"><td colspan="2" onclick="javascript:toggleInherit('pro_static_attribs_classerpc_1_1_r_p_msg_base_transport')"><img src="closed.png" alt="-"/>&#160;Static Protected Attributes inherited from <a class="el" href="classerpc_1_1_r_p_msg_base_transport.html">erpc::RPMsgBaseTransport</a></td></tr>
 <tr class="memitem:abbb9e11e0a1e71baa21cddbbba92b36b inherit pro_static_attribs_classerpc_1_1_r_p_msg_base_transport"><td class="memItemLeft" align="right" valign="top">static struct rpmsg_lite_instance *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_r_p_msg_base_transport.html#abbb9e11e0a1e71baa21cddbbba92b36b">s_rpmsg</a></td></tr>
 <tr class="separator:abbb9e11e0a1e71baa21cddbbba92b36b inherit pro_static_attribs_classerpc_1_1_r_p_msg_base_transport"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -592,27 +587,6 @@ Static Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="aa5287d7a0abc8384cbaaadfadb6ef1b3"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">struct rpmsg_lite_ept_static_context erpc::RPMsgTransport::m_rpmsg_ept_context</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>RPMsg Lite Endpoint static context. </p>
-
-</div>
-</div>
 <a class="anchor" id="a8b9bbb8ec36ea15a065356cd9f23c871"></a>
 <div class="memitem">
 <div class="memproto">
@@ -631,27 +605,6 @@ Static Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 <p>Pointer to RPMsg Lite Endpoint structure. </p>
-
-</div>
-</div>
-<a class="anchor" id="a0c6e6c1024de77fe08c1439e2eabddd6"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">struct rpmsg_lite_instance erpc::RPMsgTransport::s_rpmsg_ctxt</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Context for RPMsg Lite stack instance. </p>
 
 </div>
 </div>

@@ -9,7 +9,7 @@ Toolchain supported
 - IAR embedded Workbench  9.10.2
 - Keil MDK  5.34
 - GCC ARM Embedded  10.2.1
-- MCUXpresso  11.4.0
+- MCUXpresso  11.5.0
 
 Hardware requirements
 =====================
@@ -39,3 +39,4 @@ SCTimer example to use it in 16-bit mode
 
 The example shows both 16-bit counters running and toggling an output periodically
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+- Probe oscilloscope at Q4-5(5Hz) and Q3-2(2.5Hz) to see output signal.

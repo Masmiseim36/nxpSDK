@@ -7,7 +7,7 @@
 ; *----------------------------------------------------------------------------
 ; *
 ; Copyright 1997-2016 Freescale Semiconductor, Inc.
-; Copyright 2016-2020 NXP
+; Copyright 2016-2021 NXP
 ; All rights reserved.
 ;
 ; SPDX-License-Identifier: BSD-3-Clause
@@ -59,7 +59,7 @@ __vector_table
         DCD     UsageFault_Handler
 __vector_table_0x1c
         DCD     SecureFault_Handler
-#if (__ARM_FEATURE_CMSE & 0x2)
+#if (defined(__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE & 0x2))
         DCD     0x180000 ;Image length
 #else
         DCD     sfe(RO) - __vector_table ;Image length

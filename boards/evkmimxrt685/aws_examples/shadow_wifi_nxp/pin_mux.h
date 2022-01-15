@@ -49,53 +49,123 @@ void BOARD_InitBootPins(void);
 
 /*! @name FC0_TXD_SCL_MISO_WS (coord G2), J16[1]/U27[3]/U9[12]
   @{ */
+/* Routed pin properties */
+/*!
+ * @brief Peripheral name */
+#define BOARD_INITPINS_DEBUG_UART_TXD_PERIPHERAL FLEXCOMM0
+/*!
+ * @brief Signal name */
+#define BOARD_INITPINS_DEBUG_UART_TXD_SIGNAL TXD_SCL_MISO_WS
 /* @} */
 
 /*! @name FC0_RXD_SDA_MOSI_DATA (coord G4), JP21[2]/U28[3]/U9[13]
   @{ */
+/* Routed pin properties */
+/*!
+ * @brief Peripheral name */
+#define BOARD_INITPINS_DEBUG_UART_RXD_PERIPHERAL FLEXCOMM0
+/*!
+ * @brief Signal name */
+#define BOARD_INITPINS_DEBUG_UART_RXD_SIGNAL RXD_SDA_MOSI_DATA
 /* @} */
 
 /*! @name SD0_CARD_DET_N (coord R13), J32[10]/CARD_CD/SD_CD
   @{ */
+/* Routed pin properties */
+#define BOARD_INITPINS_SD_CD_PERIPHERAL USDHC0             /*!<@brief Peripheral name */
+#define BOARD_INITPINS_SD_CD_SIGNAL USDHC_CD_B             /*!<@brief Signal name */
                                                            /* @} */
 
 /*! @name SD0_CLK (coord P10), J32[5]/SD_CLK
   @{ */
+/* Routed pin properties */
+#define BOARD_INITPINS_SD_CLK_PERIPHERAL USDHC0     /*!<@brief Peripheral name */
+#define BOARD_INITPINS_SD_CLK_SIGNAL USDHC_CLK      /*!<@brief Signal name */
                                                     /* @} */
 
 /*! @name SD0_CMD (coord R9), J32[2]/SD_CMD
   @{ */
+/* Routed pin properties */
+#define BOARD_INITPINS_SD_CMD_PERIPHERAL USDHC0     /*!<@brief Peripheral name */
+#define BOARD_INITPINS_SD_CMD_SIGNAL USDHC_CMD      /*!<@brief Signal name */
                                                     /* @} */
 
 /*! @name SD0_D0 (coord R11), J32[7]/SD_DAT0
   @{ */
+/* Routed pin properties */
+#define BOARD_INITPINS_SD_DAT0_PERIPHERAL USDHC0      /*!<@brief Peripheral name */
+#define BOARD_INITPINS_SD_DAT0_SIGNAL USDHC_DATA      /*!<@brief Signal name */
+#define BOARD_INITPINS_SD_DAT0_CHANNEL 0              /*!<@brief Signal channel */
                                                       /* @} */
 
 /*! @name SD0_D1 (coord T11), J32[8]/SD_DAT1
   @{ */
+/* Routed pin properties */
+#define BOARD_INITPINS_SD_DAT1_PERIPHERAL USDHC0      /*!<@brief Peripheral name */
+#define BOARD_INITPINS_SD_DAT1_SIGNAL USDHC_DATA      /*!<@brief Signal name */
+#define BOARD_INITPINS_SD_DAT1_CHANNEL 1              /*!<@brief Signal channel */
                                                       /* @} */
 
 /*! @name SD0_D2 (coord U11), J32[9]/SD_DAT2
   @{ */
+/* Routed pin properties */
+#define BOARD_INITPINS_SD_DAT2_PERIPHERAL USDHC0      /*!<@brief Peripheral name */
+#define BOARD_INITPINS_SD_DAT2_SIGNAL USDHC_DATA      /*!<@brief Signal name */
+#define BOARD_INITPINS_SD_DAT2_CHANNEL 2              /*!<@brief Signal channel */
                                                       /* @} */
 
 /*! @name SD0_D3 (coord T12), J32[1]/SD_DAT3
   @{ */
+/* Routed pin properties */
+#define BOARD_INITPINS_SD_DAT3_PERIPHERAL USDHC0      /*!<@brief Peripheral name */
+#define BOARD_INITPINS_SD_DAT3_SIGNAL USDHC_DATA      /*!<@brief Signal name */
+#define BOARD_INITPINS_SD_DAT3_CHANNEL 3              /*!<@brief Signal channel */
                                                       /* @} */
 
 /*! @name PIO2_10 (coord T15), U23[3]/SD_RST_N
   @{ */
-#define BOARD_INITPINS_SD_RST_N_GPIO GPIO               /*!<@brief GPIO device name: GPIO */
-#define BOARD_INITPINS_SD_RST_N_PORT 2U                 /*!<@brief PORT device name: 2U */
-#define BOARD_INITPINS_SD_RST_N_PIN 10U                 /*!<@brief 2U pin index: 10 */
-                                                        /* @} */
+/* Routed pin properties */
+#define BOARD_INITPINS_SD_RST_N_PERIPHERAL GPIO           /*!<@brief Peripheral name */
+#define BOARD_INITPINS_SD_RST_N_SIGNAL PIO2               /*!<@brief Signal name */
+#define BOARD_INITPINS_SD_RST_N_CHANNEL 10                /*!<@brief Signal channel */
+
+/* Symbols to be used with GPIO driver */
+#define BOARD_INITPINS_SD_RST_N_GPIO GPIO                 /*!<@brief GPIO peripheral base pointer */
+#define BOARD_INITPINS_SD_RST_N_GPIO_PIN_MASK (1U << 10U) /*!<@brief GPIO pin mask */
+#define BOARD_INITPINS_SD_RST_N_PORT 2U                   /*!<@brief PORT peripheral base pointer */
+#define BOARD_INITPINS_SD_RST_N_PIN 10U                   /*!<@brief PORT pin number */
+#define BOARD_INITPINS_SD_RST_N_PIN_MASK (1U << 10U)      /*!<@brief PORT pin mask */
+                                                          /* @} */
 
 /*! @name PIO2_4 (coord T13), J32[11]/CARD_WR_PRT/SD_WR_PRT
   @{ */
-#define BOARD_INITPINS_SD_WR_PRT_GPIO GPIO                             /*!<@brief GPIO device name: GPIO */
-#define BOARD_INITPINS_SD_WR_PRT_PORT 2U                               /*!<@brief PORT device name: 2U */
-#define BOARD_INITPINS_SD_WR_PRT_PIN 4U                                /*!<@brief 2U pin index: 4 */
+/* Routed pin properties */
+#define BOARD_INITPINS_SD_WR_PRT_PERIPHERAL GPIO                       /*!<@brief Peripheral name */
+#define BOARD_INITPINS_SD_WR_PRT_SIGNAL PIO2                           /*!<@brief Signal name */
+#define BOARD_INITPINS_SD_WR_PRT_CHANNEL 4                             /*!<@brief Signal channel */
+
+/* Symbols to be used with GPIO driver */
+#define BOARD_INITPINS_SD_WR_PRT_GPIO GPIO                             /*!<@brief GPIO peripheral base pointer */
+#define BOARD_INITPINS_SD_WR_PRT_GPIO_PIN_MASK (1U << 4U)              /*!<@brief GPIO pin mask */
+#define BOARD_INITPINS_SD_WR_PRT_PORT 2U                               /*!<@brief PORT peripheral base pointer */
+#define BOARD_INITPINS_SD_WR_PRT_PIN 4U                                /*!<@brief PORT pin number */
+#define BOARD_INITPINS_SD_WR_PRT_PIN_MASK (1U << 4U)                   /*!<@brief PORT pin mask */
                                                                        /* @} */
+
+/*! @name PIO2_12 (coord T3), J1[4]
+  @{ */
+/* Routed pin properties */
+#define BOARD_INITPINS_nRESET_OSPI_PERIPHERAL GPIO           /*!<@brief Peripheral name */
+#define BOARD_INITPINS_nRESET_OSPI_SIGNAL PIO2               /*!<@brief Signal name */
+#define BOARD_INITPINS_nRESET_OSPI_CHANNEL 12                /*!<@brief Signal channel */
+
+/* Symbols to be used with GPIO driver */
+#define BOARD_INITPINS_nRESET_OSPI_GPIO GPIO                 /*!<@brief GPIO peripheral base pointer */
+#define BOARD_INITPINS_nRESET_OSPI_GPIO_PIN_MASK (1U << 12U) /*!<@brief GPIO pin mask */
+#define BOARD_INITPINS_nRESET_OSPI_PORT 2U                   /*!<@brief PORT peripheral base pointer */
+#define BOARD_INITPINS_nRESET_OSPI_PIN 12U                   /*!<@brief PORT pin number */
+#define BOARD_INITPINS_nRESET_OSPI_PIN_MASK (1U << 12U)      /*!<@brief PORT pin mask */
+                                                             /* @} */
 
 /*!
  * @brief Configures pin routing and optionally pin electrical features.

@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2020 NXP
+ * Copyright 2019-2021 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -14,12 +14,14 @@
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 !!GlobalInfo
-product: Pins v7.0
+product: Pins v10.0
 processor: MIMXRT685S
 package_id: MIMXRT685SFVKB
 mcu_data: ksdk2_0
-processor_version: 0.0.2
+processor_version: 10.0.0
 board: MIMXRT685-EVK
+pin_labels:
+- {pin_num: T3, pin_signal: PIO2_12/SCT0_OUT6/CTIMER2_MAT2, label: 'J1[4]', identifier: nRESET_OSPI}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 /* clang-format on */
@@ -390,26 +392,26 @@ void BOARD_InitPins(void)
     /* PORT2 PIN10 (coords: T15) is configured as PIO2_10 */
     IOPCTL_PinMuxSet(IOPCTL, BOARD_INITPINS_SD_RST_N_PORT, BOARD_INITPINS_SD_RST_N_PIN, SD_RST_N);
 
-    const uint32_t port2_pin12_config = (/* Pin is configured as PIO2_12 */
-                                         IOPCTL_PIO_FUNC0 |
-                                         /* Disable pull-up / pull-down function */
-                                         IOPCTL_PIO_PUPD_DI |
-                                         /* Enable pull-down function */
-                                         IOPCTL_PIO_PULLDOWN_EN |
-                                         /* Disable input buffer function */
-                                         IOPCTL_PIO_INBUF_DI |
-                                         /* Normal mode */
-                                         IOPCTL_PIO_SLEW_RATE_NORMAL |
-                                         /* Normal drive */
-                                         IOPCTL_PIO_FULLDRIVE_DI |
-                                         /* Analog mux is disabled */
-                                         IOPCTL_PIO_ANAMUX_DI |
-                                         /* Pseudo Output Drain is disabled */
-                                         IOPCTL_PIO_PSEDRAIN_DI |
-                                         /* Input function is not inverted */
-                                         IOPCTL_PIO_INV_DI);
+    const uint32_t nRESET_OSPI = (/* Pin is configured as PIO2_12 */
+                                  IOPCTL_PIO_FUNC0 |
+                                  /* Disable pull-up / pull-down function */
+                                  IOPCTL_PIO_PUPD_DI |
+                                  /* Enable pull-down function */
+                                  IOPCTL_PIO_PULLDOWN_EN |
+                                  /* Disable input buffer function */
+                                  IOPCTL_PIO_INBUF_DI |
+                                  /* Normal mode */
+                                  IOPCTL_PIO_SLEW_RATE_NORMAL |
+                                  /* Normal drive */
+                                  IOPCTL_PIO_FULLDRIVE_DI |
+                                  /* Analog mux is disabled */
+                                  IOPCTL_PIO_ANAMUX_DI |
+                                  /* Pseudo Output Drain is disabled */
+                                  IOPCTL_PIO_PSEDRAIN_DI |
+                                  /* Input function is not inverted */
+                                  IOPCTL_PIO_INV_DI);
     /* PORT2 PIN12 (coords: T3) is configured as PIO2_12 */
-    IOPCTL_PinMuxSet(IOPCTL, 2U, 12U, port2_pin12_config);
+    IOPCTL_PinMuxSet(IOPCTL, BOARD_INITPINS_nRESET_OSPI_PORT, BOARD_INITPINS_nRESET_OSPI_PIN, nRESET_OSPI);
 
     const uint32_t port2_pin2_config = (/* Pin is configured as SD0_D2 */
                                         IOPCTL_PIO_FUNC1 |

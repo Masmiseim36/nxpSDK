@@ -39,9 +39,9 @@ extern gpioHandleiMXSDK_t D1;
 // I2C_S1: Pin mapping and driver information for default I2C brought to shield
 #define I2C_S1_SCL_PIN      A5
 #define I2C_S1_SDA_PIN      A4
-#define I2C_S1_DRIVER       Driver_I2C4
-#define I2C_S1_DEVICE_INDEX I2C4_INDEX
-#define I2C_S1_SIGNAL_EVENT I2C4_SignalEvent_t
+#define I2C_S1_DRIVER       Driver_I2C2
+#define I2C_S1_DEVICE_INDEX I2C2_INDEX
+#define I2C_S1_SIGNAL_EVENT I2C2_SignalEvent_t
 
 // I2C_S2: Pin mapping and driver information for alternate I2C bus on shield
 #define I2C_S2_SCL_PIN      D15

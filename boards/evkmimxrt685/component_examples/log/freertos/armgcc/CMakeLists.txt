@@ -52,7 +52,7 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../../components/serial_manager
     ${ProjDirPath}/../../../../../../devices/MIMXRT685S/drivers
     ${ProjDirPath}/../../../../../../components/osa
-    ${ProjDirPath}/../../../../../../rtos/freertos
+    ${ProjDirPath}/../../../../../../rtos/freertos/freertos_kernel
     ${ProjDirPath}/../../../../../../components/log
     ${ProjDirPath}/../../../../../../devices/MIMXRT685S
     ${ProjDirPath}/../../../../../../components/uart
@@ -97,7 +97,7 @@ include(component_usart_adapter_MIMXRT685S_cm33)
 
 include(driver_power_MIMXRT685S_cm33)
 
-include(driver_flash_config_MIMXRT685S_cm33)
+include(driver_flash_config_evkmimxrt685_MIMXRT685S_cm33)
 
 include(driver_flexspi_MIMXRT685S_cm33)
 

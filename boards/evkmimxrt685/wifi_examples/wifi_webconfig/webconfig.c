@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2020 NXP
+ * Copyright 2016-2021 NXP
  * All rights reserved.
  *
  *
@@ -25,11 +25,12 @@
 
 #include <stdio.h>
 
+#include "FreeRTOS.h"
+
 #include "fsl_gpio.h"
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
-
 static int CGI_HandleGet(HTTPSRV_CGI_REQ_STRUCT *param);
 static int CGI_HandlePost(HTTPSRV_CGI_REQ_STRUCT *param);
 static int CGI_HandleReset(HTTPSRV_CGI_REQ_STRUCT *param);
@@ -39,6 +40,10 @@ static uint32_t SetBoardToClient();
 static uint32_t SetBoardToAP();
 static uint32_t CleanUpAP();
 static uint32_t CleanUpClient();
+
+/*******************************************************************************
+ * Definitions
+ ******************************************************************************/
 
 typedef enum board_wifi_states
 {
@@ -58,11 +63,6 @@ struct board_state_variables
     TaskHandle_t mainTask;
 };
 
-/*******************************************************************************
- * Definitions
- ******************************************************************************/
-
-
 const HTTPSRV_CGI_LINK_STRUCT cgi_lnk_tbl[] = {
     {"reset", CGI_HandleReset},
     {"get", CGI_HandleGet},
@@ -71,57 +71,62 @@ const HTTPSRV_CGI_LINK_STRUCT cgi_lnk_tbl[] = {
     {0, 0} // DO NOT REMOVE - last item - end of table
 };
 
+/*******************************************************************************
+ * Variables
+ ******************************************************************************/
 struct board_state_variables g_BoardState;
 
 /*******************************************************************************
  * Code
  ******************************************************************************/
-
 /*CGI*/
 /* Example Common Gateway Interface callback. */
 /* These callbacks are called from the session tasks according to the Link struct above */
 /* The get.cgi request triggers a scan and responds with a list of the SSIDs */
 static int CGI_HandleGet(HTTPSRV_CGI_REQ_STRUCT *param)
 {
+    /* Buffer for hodling response JSON data */
+    char buffer[32]                 = {0};
+    char *ssids                     = NULL;
     HTTPSRV_CGI_RES_STRUCT response = {0};
 
-    response.ses_handle  = param->ses_handle;
-    response.status_code = HTTPSRV_CODE_OK;
-
-    /* Buffer for hodling response JSON data */
-    char buffer[CGI_BUFFER_LENGTH] = {0};
-    char *ssids;
+    response.ses_handle   = param->ses_handle;
+    response.status_code  = HTTPSRV_CODE_OK;
+    response.content_type = HTTPSRV_CONTENT_TYPE_PLAIN;
+    response.data         = buffer;
 
     if (g_BoardState.wifiState == WIFI_STATE_CLIENT || g_BoardState.wifiState == WIFI_STATE_AP)
     {
         /* Initiate Scan */
-        int result = WPL_Scan();
-        if (result != WPL_SUCCESS)
+        PRINTF("\r\nInitiating scan...\r\n\r\n");
+        ssids = WPL_Scan();
+        if (ssids == NULL)
         {
             PRINTF("[!] Scan Error\r\n");
-            ssids = "null"; // Interpreted as error by the website
+            /* "null" string is interpreted as error by the website */
+            strcpy(buffer, "{\"networks\":\"null\"}");
         }
         else
         {
-            /* Get JSON with scanned SSIDs */
-            ssids = WPL_getSSIDs();
+            response.data = ssids;
         }
-
-        // Build the response JSON
-        snprintf(buffer, sizeof(buffer), "{\"networks\":%s}", ssids);
     }
     else
     {
-        // We can not start a scan if a previous scan is running or if we are connecting
-        snprintf(buffer, sizeof(buffer), "{\"networks\":false}");
+        /* We can not start a scan if a previous scan is running or if we are connecting */
+        strcpy(buffer, "{\"networks\":\"false\"}");
     }
 
-    // Send the response back to browser
-    response.content_type   = HTTPSRV_CONTENT_TYPE_PLAIN;
-    response.data           = buffer;
-    response.data_length    = strlen(buffer);
+    /* Send the response back to browser */
+    response.data_length    = strlen(response.data);
     response.content_length = response.data_length;
     HTTPSRV_cgi_write(&response);
+
+    if (ssids != NULL)
+    {
+        /* Release JSON buffer from WPL_Scan() */
+        vPortFree(ssids);
+    }
 
     return (response.content_length);
 }
@@ -131,59 +136,81 @@ static int CGI_HandlePost(HTTPSRV_CGI_REQ_STRUCT *param)
 {
     HTTPSRV_CGI_RES_STRUCT response = {0};
 
-    response.ses_handle  = param->ses_handle;
-    response.status_code = HTTPSRV_CODE_OK;
+    response.ses_handle   = param->ses_handle;
+    response.status_code  = HTTPSRV_CODE_OK;
+    response.content_type = HTTPSRV_CONTENT_TYPE_PLAIN;
 
-    char buffer[CGI_BUFFER_LENGTH] = {0};
+    char buffer[256] = {0};
 
     uint32_t length = 0;
-    uint32_t read;
+    uint32_t read   = 0;
     char posted_passphrase[WPL_WIFI_PASSWORD_LENGTH + 1];
     char posted_ssid[WPL_WIFI_SSID_LENGTH + 1];
 
-    /* We can not join another AP  if we are already connected to one */
+    int32_t result = WPLRET_FAIL;
+    bool err       = false;
+
+    /* We can not join another AP if we are already connected to one */
     if (g_BoardState.wifiState == WIFI_STATE_CLIENT)
     {
-        response.data           = "{\"status\":\"failed\"}";
-        response.data_length    = strlen(response.data);
-        response.content_length = response.data_length;
-        HTTPSRV_cgi_write(&response);
-        return 0;
+        err = true;
     }
 
-    length = param->content_length;
-    read   = HTTPSRV_cgi_read(param->ses_handle, buffer, (length < sizeof(buffer)) ? length : sizeof(buffer));
-
-    if (read > 0)
+    if (err == false)
     {
-        cgi_get_varval(buffer, "post_ssid", posted_ssid, sizeof(posted_ssid));
-        cgi_get_varval(buffer, "post_passphrase", posted_passphrase, sizeof(posted_passphrase));
-        cgi_urldecode(posted_ssid);
-        cgi_urldecode(posted_passphrase);
+        length = MIN(param->content_length, (sizeof(buffer) - 1));
+        read   = HTTPSRV_cgi_read(param->ses_handle, buffer, length);
+        if (read > 0)
+        {
+            buffer[length] = '\0';
+            cgi_get_varval(buffer, "post_ssid", posted_ssid, sizeof(posted_ssid));
+            cgi_get_varval(buffer, "post_passphrase", posted_passphrase, sizeof(posted_passphrase));
+            cgi_urldecode(posted_ssid);
+            cgi_urldecode(posted_passphrase);
+
+            /* Any post processing of the posted data (sanitation, validation) */
+            format_post_data(posted_ssid);
+            format_post_data(posted_passphrase);
+
+            WC_DEBUG("[i] Chosen ssid: %s\r\n[i] Chosen passphrase: \"%s\" \r\n", posted_ssid, posted_passphrase);
+        }
+        else
+        {
+            err = true;
+        }
     }
 
-    /* Any post processing of the posted data (sanitation, validation) */
-    format_post_data(posted_ssid);
-    format_post_data(posted_passphrase);
-
-    WC_DEBUG("[i] Chosen ssid: %s\r\n[i] Chosen passphrase: \"%s\" \r\n", posted_ssid, posted_passphrase);
-
-    response.content_type = HTTPSRV_CONTENT_TYPE_HTML;
-
-    /* Initiate joining process */
-    PRINTF("[i] Joining: %s\r\n", posted_ssid);
-    int32_t result = WPL_Join(posted_ssid, posted_passphrase);
-    if (result != WPL_SUCCESS)
+    if (err == false)
     {
-        PRINTF("[!] Cannot connect to wifi\r\n[!]ssid: %s\r\n[!]passphrase: %s\r\n", posted_ssid, posted_passphrase);
+        /* Add Wi-Fi network */
+        result = WPL_AddNetwork(posted_ssid, posted_passphrase, WIFI_NETWORK_LABEL);
+        if (result != WPLRET_SUCCESS)
+        {
+            err = true;
+        }
+    }
+
+    if (err == false)
+    {
+        /* Initiate joining process */
+        PRINTF("[i] Joining: %s\r\n", posted_ssid);
+        result = WPL_Join(WIFI_NETWORK_LABEL);
+        if (result != WPLRET_SUCCESS)
+        {
+            err = true;
+        }
+    }
+
+    if (err == true)
+    {
+        PRINTF("[!] Cannot connect to wifi\r\n[!] ssid: %s\r\n[!] passphrase: %s\r\n", posted_ssid, posted_passphrase);
         /* Respond with a failure to the browser */
         response.data           = "{\"status\":\"failed\"}";
         response.data_length    = strlen(response.data);
         response.content_length = response.data_length;
         HTTPSRV_cgi_write(&response);
-        response.data_length    = 0;
-        response.content_length = response.data_length;
-        HTTPSRV_cgi_write(&response);
+
+        WPL_RemoveNetwork(WIFI_NETWORK_LABEL);
     }
     else
     {
@@ -200,9 +227,6 @@ static int CGI_HandlePost(HTTPSRV_CGI_REQ_STRUCT *param)
 
         response.data           = buffer;
         response.data_length    = strlen(response.data);
-        response.content_length = response.data_length;
-        HTTPSRV_cgi_write(&response);
-        response.data_length    = 0;
         response.content_length = response.data_length;
         HTTPSRV_cgi_write(&response);
 
@@ -228,7 +252,7 @@ static int CGI_HandleReset(HTTPSRV_CGI_REQ_STRUCT *param)
     response.ses_handle   = param->ses_handle;
     response.status_code  = HTTPSRV_CODE_OK;
     response.content_type = HTTPSRV_CONTENT_TYPE_PLAIN;
-    char str_buffer[128];
+    char str_buffer[64];
 
     /* Try to clear the flash memory */
     if (reset_saved_wifi_credentials(CONNECTION_INFO_FILENAME) != 0)
@@ -240,7 +264,7 @@ static int CGI_HandleReset(HTTPSRV_CGI_REQ_STRUCT *param)
     else
     {
         /* The new ip will be the static ip configured for the local AP */
-        snprintf(str_buffer, sizeof(str_buffer), "{\"status\":\"success\",\"new_ip\":\"%s\"}", WIFI_AP_IP_ADDR);
+        snprintf(str_buffer, sizeof(str_buffer), "{\"status\":\"success\",\"new_ip\":\"%s\"}", WPL_WIFI_AP_IP_ADDR);
 
         response.data        = str_buffer;
         response.data_length = strlen(str_buffer);
@@ -248,11 +272,8 @@ static int CGI_HandleReset(HTTPSRV_CGI_REQ_STRUCT *param)
 
     response.content_length = response.data_length;
     HTTPSRV_cgi_write(&response);
-    response.data_length    = 0;
-    response.content_length = response.data_length;
-    HTTPSRV_cgi_write(&response);
 
-    // If we were client, disconnect from the external AP and start local AP
+    /* If we were client, disconnect from the external AP and start local AP */
     if (g_BoardState.wifiState == WIFI_STATE_CLIENT)
     {
         g_BoardState.wifiState = WIFI_STATE_AP;
@@ -276,7 +297,7 @@ static int CGI_HandleStatus(HTTPSRV_CGI_REQ_STRUCT *param)
     response.status_code = HTTPSRV_CODE_OK;
 
     /* Buffer for hodling response JSON data */
-    char buffer[CGI_BUFFER_LENGTH] = {0};
+    char buffer[256] = {0};
     char ip[16];
     char status_str[32] = {'\0'};
 
@@ -315,6 +336,23 @@ static int CGI_HandleStatus(HTTPSRV_CGI_REQ_STRUCT *param)
     return (response.content_length);
 }
 
+/* Link lost callback */
+static void LinkStatusChangeCallback(bool linkState)
+{
+    if (linkState == false)
+    {
+        /* -------- LINK LOST -------- */
+        /* DO SOMETHING */
+        PRINTF("-------- LINK LOST --------\r\n");
+    }
+    else
+    {
+        /* -------- LINK REESTABLISHED -------- */
+        /* DO SOMETHING */
+        PRINTF("-------- LINK REESTABLISHED --------\r\n");
+    }
+}
+
 /*!
  * @brief The main task function
  */
@@ -330,7 +368,7 @@ static void main_task(void *arg)
      * credentials have been saved from previous runs.
      * If the mflash is empty, the board starts and AP allowing the user to configure
      * the desired Wi-Fi network.
-     * Otherwise the stored credentials will be used to connect to the WiFi network.*/
+     * Otherwise the stored credentials will be used to connect to the Wi-Fi network.*/
     WC_DEBUG("[i] Trying to load data from mflash.\r\n");
 
     init_flash_storage(CONNECTION_INFO_FILENAME);
@@ -360,18 +398,24 @@ static void main_task(void *arg)
 
     g_BoardState.connected = false;
 
-    /* Initialize WiFi board */
-    WC_DEBUG("[i] Initializing WiFi connection... \r\n");
-    WPL_Init();
-    if ((result = WPL_Start()) != WPL_SUCCESS)
+    /* Initialize Wi-Fi board */
+    WC_DEBUG("[i] Initializing Wi-Fi connection... \r\n");
+
+    result = WPL_Init();
+    if (result != WPLRET_SUCCESS)
     {
-        PRINTF("[!] Could not initialize WiFi module %d\r\n", (uint32_t)result);
+        PRINTF("[!] WPL Init failed: %d\r\n", (uint32_t)result);
         __BKPT(0);
     }
-    else
+
+    result = WPL_Start(LinkStatusChangeCallback);
+    if (result != WPLRET_SUCCESS)
     {
-        WC_DEBUG("[i] Successfully initialized WiFi module\r\n");
+        PRINTF("[!] WPL Start failed %d\r\n", (uint32_t)result);
+        __BKPT(0);
     }
+
+    WC_DEBUG("[i] Successfully initialized Wi-Fi module\r\n");
 
     /* Start WebServer */
     if (xTaskCreate(http_srv_task, "http_srv_task", HTTPD_STACKSIZE, NULL, HTTPD_PRIORITY, NULL) != pdPASS)
@@ -389,7 +433,7 @@ static void main_task(void *arg)
         /* The SetBoardTo<state> function will configure the board Wifi to that given state.
          * After that, this task will suspend itself. It will remain suspended until it is time
          * to switch the state again. Uppon resuming, it will clean up the current state.
-         * Every time the WiFi state changes, this loop will perform an iteration switching back
+         * Every time the Wi-Fi state changes, this loop will perform an iteration switching back
          * and fourth between the two states as required.
          */
         switch (g_BoardState.wifiState)
@@ -423,15 +467,13 @@ static uint32_t SetBoardToAP()
     PRINTF("Starting Access Point: SSID: %s, Chnl: %d\r\n", g_BoardState.ssid, WIFI_AP_CHANNEL);
     result = WPL_Start_AP(g_BoardState.ssid, g_BoardState.password, WIFI_AP_CHANNEL);
 
-    if (result != WPL_SUCCESS)
+    if (result != WPLRET_SUCCESS)
     {
         PRINTF("[!] Failed to start access point\r\n");
         while (1)
             __BKPT(0);
     }
     g_BoardState.connected = true;
-    /* Start DHCP server */
-    WPL_StartDHCPServer(WIFI_AP_IP_ADDR, WIFI_AP_NET_MASK);
 
     char ip[16];
     WPL_GetIP(ip, 0);
@@ -447,14 +489,13 @@ static uint32_t CleanUpAP()
     vTaskDelay(10000 / portTICK_PERIOD_MS);
 
     WC_DEBUG("[i] Stopping AP!\r\n");
-    if (WPL_Stop_AP() != WPL_SUCCESS)
+    if (WPL_Stop_AP() != WPLRET_SUCCESS)
     {
         PRINTF("Error while stopping ap\r\n");
         while (1)
             __BKPT(0);
     }
 
-    WPL_StopDHCPServer();
     return 0;
 }
 
@@ -465,10 +506,15 @@ static uint32_t SetBoardToClient()
     // If we are already connected, skip the initialization
     if (!g_BoardState.connected)
     {
-        PRINTF("Connecting as client to ssid: %s with password %s\r\n\t", g_BoardState.ssid, g_BoardState.password);
+        /* Add Wi-Fi network */
+        result = WPL_AddNetwork(g_BoardState.ssid, g_BoardState.password, WIFI_NETWORK_LABEL);
+        if (result == WPLRET_SUCCESS)
+        {
+            PRINTF("Connecting as client to ssid: %s with password %s\r\n\t", g_BoardState.ssid, g_BoardState.password);
+            result = WPL_Join(WIFI_NETWORK_LABEL);
+        }
 
-        result = WPL_Join(g_BoardState.ssid, g_BoardState.password);
-        if (result != WPL_SUCCESS)
+        if (result != WPLRET_SUCCESS)
         {
             PRINTF("[!] Cannot connect to Wi-Fi\r\n[!]ssid: %s\r\n[!]passphrase: %s\r\n", g_BoardState.ssid,
                    g_BoardState.password);
@@ -527,15 +573,23 @@ static uint32_t SetBoardToClient()
 /* Wait for any transmissions to finish and clean up the Client connection */
 static uint32_t CleanUpClient()
 {
-    /* Give time for reply message to reach the web interface before destorying the conection */
+    /* Give time for reply message to reach the web interface before destroying the connection */
     vTaskDelay(1000 / portTICK_PERIOD_MS);
 
     /* Leave the external AP */
-    if (WPL_Leave() != WPL_SUCCESS)
+    if (WPL_Leave() != WPLRET_SUCCESS)
     {
         PRINTF("[!] Error Leaving from Client network.\r\n");
         __BKPT(0);
     }
+
+    /* Remove the network profile */
+    if (WPL_RemoveNetwork(WIFI_NETWORK_LABEL) != WPLRET_SUCCESS)
+    {
+        PRINTF("[!] Failed to remove network profile.\r\n");
+        __BKPT(0);
+    }
+
     return 0;
 }
 /*!

@@ -29,6 +29,9 @@
 #define AUDIO_DUMMY_SIZE (64U)
 #define HFP_STREAMER_TASK_PRIORITY (6U)
 
+#define HFP_CODEC_DAC_VOLUME (100U) /* Range: 0 ~ 100 */
+#define HFP_CODEC_HP_VOLUME  (70U)  /* Range: 0 ~ 100 */
+
 /* --------------------------------------------- External Global Variables */
 
 extern codec_config_t boardCodecScoConfig;
@@ -349,6 +352,8 @@ static void Init_Board_Sco_Audio(uint32_t samplingRate, UCHAR bitWidth)
         }
         CODEC_SetMute(&codec_handle, kCODEC_PlayChannelHeadphoneRight | kCODEC_PlayChannelHeadphoneLeft, true);
         CODEC_SetFormat(&codec_handle, txSpeakerConfig.srcClock_Hz, txSpeakerConfig.sampleRate_Hz, txSpeakerConfig.bitWidth);
+        CODEC_SetVolume(&codec_handle, kCODEC_VolumeDAC, HFP_CODEC_DAC_VOLUME);
+        CODEC_SetVolume(&codec_handle, kCODEC_VolumeHeadphoneLeft | kCODEC_VolumeHeadphoneRight, HFP_CODEC_HP_VOLUME);
         CODEC_SetMute(&codec_handle, kCODEC_PlayChannelHeadphoneRight | kCODEC_PlayChannelHeadphoneLeft, false);
     }
 }
@@ -381,6 +386,8 @@ static void Init_Board_RingTone_Audio(uint32_t samplingRate, UCHAR bitWidth)
         CODEC_Init(&codec_handle, &boardCodecScoConfig1);
         CODEC_SetMute(&codec_handle, kCODEC_PlayChannelHeadphoneRight | kCODEC_PlayChannelHeadphoneLeft, true);
         CODEC_SetFormat(&codec_handle, txSpeakerConfig.srcClock_Hz, txSpeakerConfig.sampleRate_Hz, txSpeakerConfig.bitWidth);
+        CODEC_SetVolume(&codec_handle, kCODEC_VolumeDAC, HFP_CODEC_DAC_VOLUME);
+        CODEC_SetVolume(&codec_handle, kCODEC_VolumeHeadphoneLeft | kCODEC_VolumeHeadphoneRight, HFP_CODEC_HP_VOLUME);
         CODEC_SetMute(&codec_handle, kCODEC_PlayChannelHeadphoneRight | kCODEC_PlayChannelHeadphoneLeft, false);
     }
 }
@@ -416,8 +423,8 @@ void SCO_Edma_Task(void *handle)
 #ifdef SCO_DEBUG_MSG
         if (count % 300 == 0)
         {
-            PRINTF("@(%d  %d)\r\n", emptyMicBlock, emptySpeakerBlock);
-            PRINTF("#( %d %d)\r\n", rxSpeaker_test, rxMic_test);
+            PRINTF("@(%d  %d)", emptyMicBlock, emptySpeakerBlock);
+            PRINTF("#( %d %d)", rxSpeaker_test, rxMic_test);
         }
 #endif
 #if SCO_SAI_LOOPBACK

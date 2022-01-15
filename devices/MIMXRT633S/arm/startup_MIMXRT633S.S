@@ -33,7 +33,7 @@ __Vectors:
     .long   BusFault_Handler                                /* Bus Fault Handler*/
     .long   UsageFault_Handler                              /* Usage Fault Handler*/
     .long   SecureFault_Handler                             /* Secure Fault Handler*/
-#if (__ARM_FEATURE_CMSE & 0x2)
+#if (defined(__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE & 0x2))
     .long   0x180000                                        /* Image length*/
 #else
     .long   Load$$LR$$LR_m_interrupts$$Length               /* Image length*/
@@ -126,8 +126,8 @@ Reset_Handler:
     str     r1, [r0]
     ldr     r2, [r1]
     msr     msp, r2
-    ldr     R0, =Image$$ARM_LIB_STACK$$ZI$$Base
-    msr     msplim, R0
+    ldr     r0, =Image$$ARM_LIB_STACK$$ZI$$Base
+    msr     msplim, r0
     ldr     r0,=SystemInit
     blx     r0
     cpsie   i               /* Unmask interrupts */

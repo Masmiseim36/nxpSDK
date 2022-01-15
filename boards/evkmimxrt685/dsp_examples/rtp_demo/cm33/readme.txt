@@ -33,8 +33,12 @@ loading the DSP application.
 To be able to build the DSP project, please see the document
 'Getting Started with Xplorer for EVK-MIMXRT685.pdf'.
 
-Known Issues
-Experienced exception in G.711 decoding library version 1.0 when it does PLC sometimes. PLC can be disabled by overriding PLC_ENABLED symbol to the value 0.
+Before building the example application select Wi-Fi module macro in the app_config.h. (see #define WIFI_<SoC Name>_BOARD_<Module Name>).
+For more information about Wi-Fi module connection see:
+    readme_modules.txt
+    Getting started guide on supported modules configuration:
+    https://www.nxp.com/document/guide/getting-started-with-nxp-wi-fi-modules-using-i-mx-rt-platform:GS-WIFI-MODULES-IMXRT-PLATFORM
+
 
 Customization
 It is necessary to configure WiFi network to which the ARM application will connect.
@@ -77,7 +81,7 @@ Multiple instances of VLC media player could be opened to test mixed playback of
 Toolchain supported
 ===================
 - GCC ARM Embedded  10.2.1
-- MCUXpresso  11.4.0
+- MCUXpresso  11.5.0
 - IAR embedded Workbench  9.10.2
 - Keil MDK  5.34
 
@@ -89,40 +93,14 @@ Hardware requirements
 - Personal Computer
 - Headphones with 3.5 mm stereo jack
 - WiFi access point with DHCP server
-- One of the following Wi-Fi modules:
-  - AzureWave AW-AM457-uSD + uSD to SD adapter
-  - AzureWave AW-NM191NF-uSD + uSD to SD adapter
-  - Panasonic PAN9026 SDIO ADAPTER
-  - AzureWave AW-CM358-uSD + uSD to SD adapter
+
 
 Board settings
 ==============
-
 To enable the example audio using WM8904 codec, connect pins as follows:
   JP7-1        <-->        JP8-2
   JP7-2        <-->        JP8-1
 
-This example, by default, is built to work with the AzureWave AW-AM457-uSD. It is configured by the macro definition in file app_config.h (#define WIFI_BOARD_AW_AM457).
-If you want use the AzureWave AW-NM191NF-uSD, please change the macro to WIFI_BOARD_AW_NM191.
-If you want use the Panasonic PAN9026 SDIO ADAPTER, please change the macro to WIFI_BOARD_PAN9026_SDIO.
-If you want use the AzureWave AW-CM358-uSD, please change the macro to WIFI_BOARD_AW_CM358.
-
-Jumper settings for AzureWave AW-AM457-uSD Module:
-  - J11 1-2: VIO_SD 1.8V (Voltage level of SDIO pins is 1.8V)
-  - J2  1-2: 3.3V VIO_uSD (Power Supply from uSD connector)
-
-Jumper settings for AzureWave AW-NM191NF-uSD Module:
-  - J11 1-2: VIO_SD 1.8V (Voltage level of SDIO pins is 1.8V)
-  - J2  1-2: 3.3V VIO_uSD (Power Supply from uSD connector)
-
-Jumper settings for AzureWave AW-CM358-uSD Module:
-  - J4 1-2: VIO 1.8V (Voltage level of SDIO pins is 1.8V)
-  - J2 1-2: 3.3V VIO_uSD (Power Supply from uSD connector)
-  - The pin 1 of J4 is not marked on the board. Please note that pin numbering of J4 is opposite to J2 (pin 1 is close to the "J4" label):
-         3 2 1
-         o o=o J4
-      J2 o=o o
-         1 2 3
 
 Prepare the Demo
 ================
@@ -162,7 +140,7 @@ When the demo runs successfully, the terminal will display similar output:
     Starting WLAN
     [net] Initialized TCP/IP networking stack
     WLAN initialized
-    WLAN FW version: w8977o-V2, RF87XX, FP91, 16.91.10.p184, WPA2_CVE_FIX 1, PVE_FIX 1
+    WLAN FW version: IW416-V0, RF878X, FP91, 16.91.10.p214, WPA2_CVE_FIX 1, PVE_FIX 1
     Connecting to "test-network"
     Connected to "test-network" with IP = [192.168.0.3]
     [wifi_client_task] done
@@ -176,11 +154,11 @@ When the demo runs successfully, the terminal will display the following:
 
     Cadence Xtensa Audio Framework
       Library Name    : Audio Framework (Hostless)
-      Library Version : 2.6p1
+      Library Version : 2.6p2
       API Version     : 2.0
 
     G.711
-      Library Version : 1.0
+      Library Version : 1.3p1
       API Version     : 1.0
 
     [main_dsp] established RPMsg link

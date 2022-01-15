@@ -1,7 +1,6 @@
 var osa__thread_8h =
 [
     [ "OsaThreadAttr", "structOsaThreadAttr.html", "structOsaThreadAttr" ],
-    [ "OSA_MAX_THREAD_NAME_LENGTH", "osa__thread_8h.html#a2c1738774b9bfd3c3cb7def5f926cf3e", null ],
     [ "OsaSchedPriority", "osa__thread_8h.html#aa8c31b1dcf38291b3f32effdec5a83fd", [
       [ "OSA_SCHED_PRIORITY_LOW", "osa__thread_8h.html#aa8c31b1dcf38291b3f32effdec5a83fdac70b4cab2779e5bbac8a1d63e82c0634", null ],
       [ "OSA_SCHED_PRIORITY_NORMAL", "osa__thread_8h.html#aa8c31b1dcf38291b3f32effdec5a83fdaa1e6047f5fe2ab4f536ac175ecfa24fc", null ],

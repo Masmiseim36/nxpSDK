@@ -54,32 +54,12 @@ target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
     ${CMAKE_CURRENT_LIST_DIR}/dev_apis/crypto/test_c024/test_entry_c024.c
     ${CMAKE_CURRENT_LIST_DIR}/dev_apis/crypto/test_c025/test_c025.c
     ${CMAKE_CURRENT_LIST_DIR}/dev_apis/crypto/test_c025/test_entry_c025.c
-    ${CMAKE_CURRENT_LIST_DIR}/dev_apis/crypto/test_c026/test_c026.c
-    ${CMAKE_CURRENT_LIST_DIR}/dev_apis/crypto/test_c026/test_entry_c026.c
-    ${CMAKE_CURRENT_LIST_DIR}/dev_apis/crypto/test_c027/test_c027.c
-    ${CMAKE_CURRENT_LIST_DIR}/dev_apis/crypto/test_c027/test_entry_c027.c
-    ${CMAKE_CURRENT_LIST_DIR}/dev_apis/crypto/test_c028/test_c028.c
-    ${CMAKE_CURRENT_LIST_DIR}/dev_apis/crypto/test_c028/test_entry_c028.c
-    ${CMAKE_CURRENT_LIST_DIR}/dev_apis/crypto/test_c029/test_c029.c
-    ${CMAKE_CURRENT_LIST_DIR}/dev_apis/crypto/test_c029/test_entry_c029.c
-    ${CMAKE_CURRENT_LIST_DIR}/dev_apis/crypto/test_c030/test_c030.c
-    ${CMAKE_CURRENT_LIST_DIR}/dev_apis/crypto/test_c030/test_entry_c030.c
     ${CMAKE_CURRENT_LIST_DIR}/dev_apis/crypto/test_c031/test_c031.c
     ${CMAKE_CURRENT_LIST_DIR}/dev_apis/crypto/test_c031/test_entry_c031.c
     ${CMAKE_CURRENT_LIST_DIR}/dev_apis/crypto/test_c032/test_c032.c
     ${CMAKE_CURRENT_LIST_DIR}/dev_apis/crypto/test_c032/test_entry_c032.c
     ${CMAKE_CURRENT_LIST_DIR}/dev_apis/crypto/test_c033/test_c033.c
     ${CMAKE_CURRENT_LIST_DIR}/dev_apis/crypto/test_c033/test_entry_c033.c
-    ${CMAKE_CURRENT_LIST_DIR}/dev_apis/crypto/test_c034/test_c034.c
-    ${CMAKE_CURRENT_LIST_DIR}/dev_apis/crypto/test_c034/test_entry_c034.c
-    ${CMAKE_CURRENT_LIST_DIR}/dev_apis/crypto/test_c035/test_c035.c
-    ${CMAKE_CURRENT_LIST_DIR}/dev_apis/crypto/test_c035/test_entry_c035.c
-    ${CMAKE_CURRENT_LIST_DIR}/dev_apis/crypto/test_c036/test_c036.c
-    ${CMAKE_CURRENT_LIST_DIR}/dev_apis/crypto/test_c036/test_entry_c036.c
-    ${CMAKE_CURRENT_LIST_DIR}/dev_apis/crypto/test_c037/test_c037.c
-    ${CMAKE_CURRENT_LIST_DIR}/dev_apis/crypto/test_c037/test_entry_c037.c
-    ${CMAKE_CURRENT_LIST_DIR}/dev_apis/crypto/test_c038/test_c038.c
-    ${CMAKE_CURRENT_LIST_DIR}/dev_apis/crypto/test_c038/test_entry_c038.c
     ${CMAKE_CURRENT_LIST_DIR}/dev_apis/crypto/test_c039/test_c039.c
     ${CMAKE_CURRENT_LIST_DIR}/dev_apis/crypto/test_c039/test_entry_c039.c
     ${CMAKE_CURRENT_LIST_DIR}/dev_apis/crypto/test_c040/test_c040.c
@@ -98,14 +78,6 @@ target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
     ${CMAKE_CURRENT_LIST_DIR}/dev_apis/crypto/test_c046/test_entry_c046.c
     ${CMAKE_CURRENT_LIST_DIR}/dev_apis/crypto/test_c047/test_c047.c
     ${CMAKE_CURRENT_LIST_DIR}/dev_apis/crypto/test_c047/test_entry_c047.c
-    ${CMAKE_CURRENT_LIST_DIR}/dev_apis/crypto/test_c048/test_c048.c
-    ${CMAKE_CURRENT_LIST_DIR}/dev_apis/crypto/test_c048/test_entry_c048.c
-    ${CMAKE_CURRENT_LIST_DIR}/dev_apis/crypto/test_c049/test_c049.c
-    ${CMAKE_CURRENT_LIST_DIR}/dev_apis/crypto/test_c049/test_entry_c049.c
-    ${CMAKE_CURRENT_LIST_DIR}/dev_apis/crypto/test_c050/test_c050.c
-    ${CMAKE_CURRENT_LIST_DIR}/dev_apis/crypto/test_c050/test_entry_c050.c
-    ${CMAKE_CURRENT_LIST_DIR}/dev_apis/crypto/test_c051/test_c051.c
-    ${CMAKE_CURRENT_LIST_DIR}/dev_apis/crypto/test_c051/test_entry_c051.c
     ${CMAKE_CURRENT_LIST_DIR}/dev_apis/crypto/test_c052/test_c052.c
     ${CMAKE_CURRENT_LIST_DIR}/dev_apis/crypto/test_c052/test_entry_c052.c
     ${CMAKE_CURRENT_LIST_DIR}/dev_apis/crypto/test_c053/test_c053.c

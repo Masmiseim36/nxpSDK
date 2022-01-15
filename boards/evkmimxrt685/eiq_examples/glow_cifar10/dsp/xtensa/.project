@@ -178,6 +178,16 @@
       <locationURI>PARENT-1-PROJECT_LOC/board_hifi4.h</locationURI>
     </link>
     <link>
+      <name>glow_bundle</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>glow_bundle/model.h</name>
+      <type>1</type>
+      <locationURI>PARENT-1-PROJECT_LOC/glow_bundle/model.h</locationURI>
+    </link>
+    <link>
       <name>drivers</name>
       <type>2</type>
       <locationURI>virtual:/virtual</locationURI>
@@ -438,22 +448,22 @@
       <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT685S/drivers/fsl_dma.h</locationURI>
     </link>
     <link>
-      <name>rpmsg_lite/porting</name>
+      <name>rpmsg_lite/include/platform/imxrt600_hifi4</name>
       <type>2</type>
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
-      <name>rpmsg_lite/porting/rpmsg_platform.h</name>
+      <name>rpmsg_lite/include/platform/imxrt600_hifi4/rpmsg_platform.h</name>
       <type>1</type>
       <locationURI>PARENT-6-PROJECT_LOC/middleware/multicore/rpmsg_lite/lib/include/platform/imxrt600_hifi4/rpmsg_platform.h</locationURI>
     </link>
     <link>
-      <name>rpmsg_lite/porting</name>
+      <name>rpmsg_lite/rpmsg_lite/porting/platform/imxrt600_hifi4</name>
       <type>2</type>
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
-      <name>rpmsg_lite/porting/rpmsg_platform.c</name>
+      <name>rpmsg_lite/rpmsg_lite/porting/platform/imxrt600_hifi4/rpmsg_platform.c</name>
       <type>1</type>
       <locationURI>PARENT-6-PROJECT_LOC/middleware/multicore/rpmsg_lite/lib/rpmsg_lite/porting/platform/imxrt600_hifi4/rpmsg_platform.c</locationURI>
     </link>
@@ -476,6 +486,146 @@
       <name>utilities/fsl_debug_console.h</name>
       <type>1</type>
       <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT685S/utilities/debug_console_lite/fsl_debug_console.h</locationURI>
+    </link>
+    <link>
+      <name>rpmsg_lite/include</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>rpmsg_lite/include/rpmsg_lite.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/multicore/rpmsg_lite/lib/include/rpmsg_lite.h</locationURI>
+    </link>
+    <link>
+      <name>rpmsg_lite/include</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>rpmsg_lite/include/rpmsg_ns.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/multicore/rpmsg_lite/lib/include/rpmsg_ns.h</locationURI>
+    </link>
+    <link>
+      <name>rpmsg_lite/include</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>rpmsg_lite/include/llist.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/multicore/rpmsg_lite/lib/include/llist.h</locationURI>
+    </link>
+    <link>
+      <name>rpmsg_lite/include</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>rpmsg_lite/include/rpmsg_default_config.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/multicore/rpmsg_lite/lib/include/rpmsg_default_config.h</locationURI>
+    </link>
+    <link>
+      <name>rpmsg_lite/include</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>rpmsg_lite/include/virtio_ring.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/multicore/rpmsg_lite/lib/include/virtio_ring.h</locationURI>
+    </link>
+    <link>
+      <name>rpmsg_lite/include</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>rpmsg_lite/include/virtqueue.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/multicore/rpmsg_lite/lib/include/virtqueue.h</locationURI>
+    </link>
+    <link>
+      <name>rpmsg_lite/include</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>rpmsg_lite/include/rpmsg_compiler.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/multicore/rpmsg_lite/lib/include/rpmsg_compiler.h</locationURI>
+    </link>
+    <link>
+      <name>rpmsg_lite/common</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>rpmsg_lite/common/llist.c</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/multicore/rpmsg_lite/lib/common/llist.c</locationURI>
+    </link>
+    <link>
+      <name>rpmsg_lite/rpmsg_lite</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>rpmsg_lite/rpmsg_lite/rpmsg_lite.c</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/multicore/rpmsg_lite/lib/rpmsg_lite/rpmsg_lite.c</locationURI>
+    </link>
+    <link>
+      <name>rpmsg_lite/rpmsg_lite</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>rpmsg_lite/rpmsg_lite/rpmsg_ns.c</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/multicore/rpmsg_lite/lib/rpmsg_lite/rpmsg_ns.c</locationURI>
+    </link>
+    <link>
+      <name>rpmsg_lite/virtio</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>rpmsg_lite/virtio/virtqueue.c</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/multicore/rpmsg_lite/lib/virtio/virtqueue.c</locationURI>
+    </link>
+    <link>
+      <name>rpmsg_lite/include</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>rpmsg_lite/include/rpmsg_env.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/multicore/rpmsg_lite/lib/include/rpmsg_env.h</locationURI>
+    </link>
+    <link>
+      <name>rpmsg_lite/rpmsg_lite/porting/environment</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>rpmsg_lite/rpmsg_lite/porting/environment/rpmsg_env_bm.c</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/multicore/rpmsg_lite/lib/rpmsg_lite/porting/environment/rpmsg_env_bm.c</locationURI>
+    </link>
+    <link>
+      <name>rpmsg_lite/include/environment/bm</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>rpmsg_lite/include/environment/bm/rpmsg_env_specific.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/multicore/rpmsg_lite/lib/include/environment/bm/rpmsg_env_specific.h</locationURI>
     </link>
     <link>
       <name>utilities</name>
@@ -656,136 +806,6 @@
       <name>drivers/fsl_iopctl.h</name>
       <type>1</type>
       <locationURI>PARENT-6-PROJECT_LOC/devices/MIMXRT685S/drivers/fsl_iopctl.h</locationURI>
-    </link>
-    <link>
-      <name>rpmsg_lite</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>rpmsg_lite/rpmsg_lite.h</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/multicore/rpmsg_lite/lib/include/rpmsg_lite.h</locationURI>
-    </link>
-    <link>
-      <name>rpmsg_lite</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>rpmsg_lite/rpmsg_ns.h</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/multicore/rpmsg_lite/lib/include/rpmsg_ns.h</locationURI>
-    </link>
-    <link>
-      <name>rpmsg_lite</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>rpmsg_lite/llist.h</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/multicore/rpmsg_lite/lib/include/llist.h</locationURI>
-    </link>
-    <link>
-      <name>rpmsg_lite</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>rpmsg_lite/rpmsg_default_config.h</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/multicore/rpmsg_lite/lib/include/rpmsg_default_config.h</locationURI>
-    </link>
-    <link>
-      <name>rpmsg_lite</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>rpmsg_lite/virtio_ring.h</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/multicore/rpmsg_lite/lib/include/virtio_ring.h</locationURI>
-    </link>
-    <link>
-      <name>rpmsg_lite</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>rpmsg_lite/virtqueue.h</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/multicore/rpmsg_lite/lib/include/virtqueue.h</locationURI>
-    </link>
-    <link>
-      <name>rpmsg_lite</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>rpmsg_lite/rpmsg_compiler.h</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/multicore/rpmsg_lite/lib/include/rpmsg_compiler.h</locationURI>
-    </link>
-    <link>
-      <name>rpmsg_lite</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>rpmsg_lite/llist.c</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/multicore/rpmsg_lite/lib/common/llist.c</locationURI>
-    </link>
-    <link>
-      <name>rpmsg_lite</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>rpmsg_lite/rpmsg_lite.c</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/multicore/rpmsg_lite/lib/rpmsg_lite/rpmsg_lite.c</locationURI>
-    </link>
-    <link>
-      <name>rpmsg_lite</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>rpmsg_lite/rpmsg_ns.c</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/multicore/rpmsg_lite/lib/rpmsg_lite/rpmsg_ns.c</locationURI>
-    </link>
-    <link>
-      <name>rpmsg_lite</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>rpmsg_lite/virtqueue.c</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/multicore/rpmsg_lite/lib/virtio/virtqueue.c</locationURI>
-    </link>
-    <link>
-      <name>rpmsg_lite</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>rpmsg_lite/rpmsg_env.h</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/multicore/rpmsg_lite/lib/include/rpmsg_env.h</locationURI>
-    </link>
-    <link>
-      <name>rpmsg_lite/env/bm</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>rpmsg_lite/env/bm/rpmsg_env_bm.c</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/multicore/rpmsg_lite/lib/rpmsg_lite/porting/environment/rpmsg_env_bm.c</locationURI>
     </link>
     <link>
       <name>hifi4_nn</name>

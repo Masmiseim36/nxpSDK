@@ -40,18 +40,17 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../config_files/aws_wifi_config.h"
 "${ProjDirPath}/../sdmmc_config.c"
 "${ProjDirPath}/../sdmmc_config.h"
+"${ProjDirPath}/../wifi_bt_config.c"
+"${ProjDirPath}/../wifi_bt_config.h"
 "${ProjDirPath}/../config_files/FreeRTOSConfig.h"
 "${ProjDirPath}/../config_files/aws_mbedtls_config.h"
-"${ProjDirPath}/../config_files/aws_bufferpool_config.h"
 "${ProjDirPath}/../config_files/aws_demo_config.h"
-"${ProjDirPath}/../config_files/aws_mqtt_config.h"
-"${ProjDirPath}/../config_files/aws_secure_sockets_config.h"
 "${ProjDirPath}/../config_files/aws_shadow_config.h"
-"${ProjDirPath}/../config_files/FreeRTOSIPConfig.h"
-"${ProjDirPath}/../config_files/iot_config.h"
-"${ProjDirPath}/../config_files/iot_mqtt_agent_config.h"
 "${ProjDirPath}/../config_files/core_mqtt_config.h"
 "${ProjDirPath}/../config_files/core_pkcs11_config.h"
+"${ProjDirPath}/../config_files/FreeRTOSIPConfig.h"
+"${ProjDirPath}/../config_files/iot_config.h"
+"${ProjDirPath}/../config_files/iot_secure_sockets_config.h"
 "${ProjDirPath}/../config_files/shadow_config.h"
 "${ProjDirPath}/../config_files/shadow_demo_config.h"
 "${ProjDirPath}/../app_config.h"
@@ -81,13 +80,15 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../middleware/mbedtls
     ${ProjDirPath}/../../../../../components/flash/mflash
     ${ProjDirPath}/../../../../../components/flash/mflash/mimxrt685
-    ${ProjDirPath}/../../../../../rtos/freertos
+    ${ProjDirPath}/../../../../../rtos/freertos/freertos_kernel
     ${ProjDirPath}/../../../../../components/pca9420
     ${ProjDirPath}/../../../../../components/fxos8700cq
+    ${ProjDirPath}/../../../../../rtos/freertos
     ${ProjDirPath}/../../../../../middleware/lwip
     ${ProjDirPath}/../../../../../devices/MIMXRT685S/utilities
     ${ProjDirPath}/../../../../../middleware/wifi
     ${ProjDirPath}/../../../../../middleware/sdmmc
+    ${ProjDirPath}/../../../../../components/wifi_bt_module
     ${ProjDirPath}/../../../../../devices/MIMXRT685S
     ${ProjDirPath}/../../../../../components/uart
     ${ProjDirPath}/../../../flash_config
@@ -150,25 +151,29 @@ include(middleware_freertos-aws_iot_libraries_corejason_MIMXRT685S_cm33)
 
 include(middleware_freertos-aws_iot_mqtt_demo_helpers_MIMXRT685S_cm33)
 
+include(middleware_freertos-aws_iot_libraries_abstractions_transport_MIMXRT685S_cm33)
+
 include(middleware_freertos-kernel_MIMXRT685S_cm33)
 
-include(middleware_freertos-kernel_heap_4_MIMXRT685S_cm33)
+include(middleware_freertos-aws_iot_libraries_abstractions_secure_sockets_MIMXRT685S_cm33)
 
-include(middleware_freertos-aws_iot_libraries_c_sdk_standard_shadow_MIMXRT685S_cm33)
+include(middleware_freertos-aws_iot_libraries_logging_MIMXRT685S_cm33)
 
-include(middleware_freertos-aws_iot_libraries_c_sdk_standard_serializer_MIMXRT685S_cm33)
+include(middleware_freertos-aws_iot_libraries_coremqtt_MIMXRT685S_cm33)
+
+include(component_wifi_bt_module_tx_pwr_limits_MIMXRT685S_cm33)
+
+include(middleware_freertos-aws_iot_libraries_3rdparty_mbedtls_config_MIMXRT685S_cm33)
 
 include(middleware_freertos-aws_iot_libraries_3rdparty_pkcs11_MIMXRT685S_cm33)
-
-include(middleware_freertos-aws_iot_vendor_nxp_pkcs11_MIMXRT685S_cm33)
 
 include(middleware_freertos-aws_iot_libraries_abstractions_pkcs11_MIMXRT685S_cm33)
 
 include(middleware_freertos-aws_iot_libraries_abstractions_pkcs11_mbedtls_MIMXRT685S_cm33)
 
-include(middleware_freertos-aws_iot_libraries_logging_MIMXRT685S_cm33)
+include(middleware_freertos-aws_iot_vendor_nxp_pkcs11_MIMXRT685S_cm33)
 
-include(middleware_freertos-aws_iot_libraries_3rdparty_mbedtls_config_MIMXRT685S_cm33)
+include(middleware_freertos-kernel_heap_4_MIMXRT685S_cm33)
 
 include(driver_clock_MIMXRT685S_cm33)
 
@@ -182,7 +187,7 @@ include(component_usart_adapter_MIMXRT685S_cm33)
 
 include(driver_power_MIMXRT685S_cm33)
 
-include(driver_flash_config_MIMXRT685S_cm33)
+include(driver_flash_config_evkmimxrt685_MIMXRT685S_cm33)
 
 include(driver_flexspi_MIMXRT685S_cm33)
 
@@ -214,15 +219,19 @@ include(middleware_freertos-kernel_extension_MIMXRT685S_cm33)
 
 include(middleware_freertos-aws_iot_libraries_abstractions_wifi_MIMXRT685S_cm33)
 
-include(middleware_freertos-aws_iot_libraries_c_sdk_standard_common_MIMXRT685S_cm33)
-
-include(middleware_freertos-aws_iot_libraries_abstractions_platform_MIMXRT685S_cm33)
-
-include(middleware_freertos-aws_iot_libraries_abstractions_secure_sockets_MIMXRT685S_cm33)
-
 include(middleware_wifi_wifidriver_MIMXRT685S_cm33)
 
 include(middleware_wifi_fwdnld_MIMXRT685S_cm33)
+
+include(middleware_sdmmc_osa_freertos_MIMXRT685S_cm33)
+
+include(component_osa_free_rtos_MIMXRT685S_cm33)
+
+include(driver_usdhc_MIMXRT685S_cm33)
+
+include(middleware_freertos-aws_iot_libraries_c_sdk_standard_common_MIMXRT685S_cm33)
+
+include(middleware_freertos-aws_iot_libraries_abstractions_platform_MIMXRT685S_cm33)
 
 include(middleware_freertos-aws_iot_libraries_freertos_plus_standard_tls_MIMXRT685S_cm33)
 
@@ -233,18 +242,6 @@ include(middleware_freertos-aws_iot_libraries_freertos_plus_standard_crypto_MIMX
 include(middleware_freertos-aws_iot_libraries_freertos_plus_standard_utils_MIMXRT685S_cm33)
 
 include(middleware_freertos-aws_iot_network_manager_MIMXRT685S_cm33)
-
-include(middleware_freertos-aws_iot_mqtt_MIMXRT685S_cm33)
-
-include(middleware_freertos-aws_iot_libraries_coremqtt_MIMXRT685S_cm33)
-
-include(middleware_sdmmc_osa_freertos_MIMXRT685S_cm33)
-
-include(component_osa_free_rtos_MIMXRT685S_cm33)
-
-include(driver_usdhc_MIMXRT685S_cm33)
-
-include(middleware_freertos-aws_iot_libraries_abstractions_transport_MIMXRT685S_cm33)
 
 include(middleware_freertos-aws_iot_libraries_abstractions_backoff_algorithm_MIMXRT685S_cm33)
 

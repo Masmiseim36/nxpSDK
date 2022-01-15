@@ -528,7 +528,7 @@ rpmsg_lite                 Name: RPMsg-Lite
                            Url: https://github.com/NXPmicro/rpmsg-lite       
 
 erpc                       Name: eRPC                                        
-                           Version: 1.8.1                                    
+                           Version: 1.9.0                                    
                            Outgoing License: BSD-3-Clause                    
                            License File: middleware/multicore/erpc/LICENSE   
                            Format: source code                               
@@ -1032,7 +1032,7 @@ srecord                    Name: SRecord 1.64 For Windows
                            Url: http://srecord.sourceforge.net/index.html    
 
 maestro                    Name: Maestro Audio Framework                     
-                           Version: 1.0.0                                    
+                           Version: 1.2.0                                    
                            Outgoing License: LA_OPT_NXP_Software_License -   
                            Additional distribution license granted - License 
                            in Section 2.3 applies                            
@@ -1180,7 +1180,7 @@ i4                         Version: 3.8
                            Origin: Cadence Design Systems                    
 
 dsp_audio_codec_g711_hifi4 Name: dsp_audio_codec_g711_hifi4                  
-                           Version: 1.0                                      
+                           Version: 1.3p1                                    
                            Outgoing License: LA_OPT_NXP_Software_License.txt 
                            - Additional distribution license granted -       
                            License in Section 2.3 applies                    
@@ -1259,7 +1259,7 @@ i4                         Version: 1.5
                            Origin: Cadence Design Systems                    
 
 dsp_nn                     Name: Cadence HiFi4 Neural Network (NN) Library   
-                           Version: 2.2.0                                    
+                           Version: 2.4.1                                    
                            Outgoing License: LA_OPT_NXP_Software_License.txt 
                            - No distribution permitted, license in Section   
                            2.2 applies.                                      

@@ -50,15 +50,15 @@ target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
 )
 
 if(CMAKE_BUILD_TYPE STREQUAL debug)
-     target_compile_definitions(${MCUX_SDK_PROJECT_NAME}  PRIVATE MBEDTLS_CONFIG_FILE="evkmimxrt685_mbedcrypto_config.h")
+     target_compile_definitions(${MCUX_SDK_PROJECT_NAME}  PRIVATE MBEDTLS_CONFIG_FILE="tfm_mbedcrypto_config_profile_medium.h" MBEDTLS_USER_CONFIG_FILE="mbedcrypto_user_config.h")
 endif(CMAKE_BUILD_TYPE STREQUAL debug)
 
 if(CMAKE_BUILD_TYPE STREQUAL release)
-     target_compile_definitions(${MCUX_SDK_PROJECT_NAME}  PRIVATE MBEDTLS_CONFIG_FILE="evkmimxrt685_mbedcrypto_config.h")
+     target_compile_definitions(${MCUX_SDK_PROJECT_NAME}  PRIVATE MBEDTLS_CONFIG_FILE="tfm_mbedcrypto_config_profile_medium.h" MBEDTLS_USER_CONFIG_FILE="mbedcrypto_user_config.h")
 endif(CMAKE_BUILD_TYPE STREQUAL release)
 
 ADD_CUSTOM_COMMAND(TARGET ${MCUX_SDK_PROJECT_NAME} PRE_BUILD COMMAND
-${TOOLCHAIN_DIR}/bin/arm-none-eabi-gcc -DTFM_LVL=2 -DTFM_PSA_API -DTFM_PARTITION_CRYPTO -DTFM_PARTITION_INITIAL_ATTESTATION -DTFM_PARTITION_INTERNAL_TRUSTED_STORAGE -DTFM_PARTITION_PROTECTED_STORAGE -DTFM_PARTITION_PLATFORM -E -P -xc -I${ProjDirPath}/../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/evkmimxrt685/partition ${ProjDirPath}/../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/armgcc/tfm_common_s.ld -o ${ProjDirPath}/../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/armgcc/tfm_common_s_pre.ld
+${TOOLCHAIN_DIR}/bin/arm-none-eabi-gcc -DTFM_LVL=2 -DTFM_PSA_API -E -P -xc -I${ProjDirPath}/../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/evkmimxrt685/partition ${ProjDirPath}/../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/armgcc/tfm_common_s.ld -o ${ProjDirPath}/../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/armgcc/tfm_common_s_pre.ld
 )
 
 set(CMAKE_MODULE_PATH
@@ -87,7 +87,7 @@ include(middleware_tfm_flash_iap_MIMXRT685S_cm33)
 
 include(middleware_mbedcrypto_MIMXRT685S_cm33)
 
-include(middleware_tfm_s_MIMXRT685S_cm33)
+include(middleware_tfm_s_evkmimxrt685_MIMXRT685S_cm33)
 
 include(middleware_tfm_s_ipc_api_MIMXRT685S_cm33)
 
@@ -100,6 +100,8 @@ include(middleware_tfm_s_its_MIMXRT685S_cm33)
 include(middleware_tfm_s_ps_MIMXRT685S_cm33)
 
 include(middleware_tfm_s_platform_MIMXRT685S_cm33)
+
+include(middleware_tfm_s_profile_medium_MIMXRT685S_cm33)
 
 include(driver_common_MIMXRT685S_cm33)
 
@@ -117,7 +119,7 @@ include(utility_assert_MIMXRT685S_cm33)
 
 include(component_usart_adapter_MIMXRT685S_cm33)
 
-include(driver_flash_config_MIMXRT685S_cm33)
+include(driver_flash_config_evkmimxrt685_MIMXRT685S_cm33)
 
 include(driver_flexspi_MIMXRT685S_cm33)
 
@@ -140,6 +142,8 @@ include(driver_lpc_gpio_MIMXRT685S_cm33)
 include(CMSIS_Include_core_cm_MIMXRT685S_cm33)
 
 include(driver_iap_MIMXRT685S_cm33)
+
+include(middleware_tfm_s_MIMXRT685S_cm33)
 
 include(middleware_tfm_memory_utils_MIMXRT685S_cm33)
 

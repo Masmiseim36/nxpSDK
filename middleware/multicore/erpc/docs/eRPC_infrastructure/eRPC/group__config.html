@@ -34,7 +34,7 @@
   <td id="projectlogo"><img alt="Logo" src="nxp_logo_small.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">eRPC API Reference
-   &#160;<span id="projectnumber">Rev. 1.8.1</span>
+   &#160;<span id="projectnumber">Rev. 1.9.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -128,6 +128,14 @@ Macros</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Threading model options</h2></td></tr>
+<tr class="memitem:gaa9a8a748384d698121f91e1de97a1adc"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaa9a8a748384d698121f91e1de97a1adc"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__config.html#gaa9a8a748384d698121f91e1de97a1adc">ERPC_ALLOCATION_POLICY_DYNAMIC</a></td></tr>
+<tr class="memdesc:gaa9a8a748384d698121f91e1de97a1adc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dynamic allocation policy. <br /></td></tr>
+<tr class="separator:gaa9a8a748384d698121f91e1de97a1adc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf5da122d31a4a067dc1f57913bbdca31"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaf5da122d31a4a067dc1f57913bbdca31"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__config.html#gaf5da122d31a4a067dc1f57913bbdca31">ERPC_ALLOCATION_POLICY_STATIC</a></td></tr>
+<tr class="memdesc:gaf5da122d31a4a067dc1f57913bbdca31"><td class="mdescLeft">&#160;</td><td class="mdescRight">Static allocation policy. <br /></td></tr>
+<tr class="separator:gaf5da122d31a4a067dc1f57913bbdca31"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gac6d21dc92dda4bf73e0d8b7e6cd62401"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gac6d21dc92dda4bf73e0d8b7e6cd62401"></a>
 #define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__config.html#gac6d21dc92dda4bf73e0d8b7e6cd62401">ERPC_THREADS_NONE</a></td></tr>
 <tr class="memdesc:gac6d21dc92dda4bf73e0d8b7e6cd62401"><td class="mdescLeft">&#160;</td><td class="mdescRight">No threads. <br /></td></tr>
@@ -152,6 +160,10 @@ Threading model options</h2></td></tr>
 #define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__config.html#gaba195e47c390bd98ca3ea1e825047905">ERPC_THREADS_WIN32</a></td></tr>
 <tr class="memdesc:gaba195e47c390bd98ca3ea1e825047905"><td class="mdescLeft">&#160;</td><td class="mdescRight">WIN32. <br /></td></tr>
 <tr class="separator:gaba195e47c390bd98ca3ea1e825047905"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5efdadfb5a9e6c95b780a4de80f9ba5c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga5efdadfb5a9e6c95b780a4de80f9ba5c"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__config.html#ga5efdadfb5a9e6c95b780a4de80f9ba5c">ERPC_THREADS_THREADX</a></td></tr>
+<tr class="memdesc:ga5efdadfb5a9e6c95b780a4de80f9ba5c"><td class="mdescLeft">&#160;</td><td class="mdescRight">THREADX. <br /></td></tr>
+<tr class="separator:ga5efdadfb5a9e6c95b780a4de80f9ba5c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga1940cf01227ad6e0a6481a19a3b1eb08"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga1940cf01227ad6e0a6481a19a3b1eb08"></a>
 #define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__config.html#ga1940cf01227ad6e0a6481a19a3b1eb08">ERPC_NOEXCEPT_DISABLED</a></td></tr>
 <tr class="memdesc:ga1940cf01227ad6e0a6481a19a3b1eb08"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disabling noexcept feature. <br /></td></tr>
@@ -211,6 +223,21 @@ Threading model options</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Configuration options</h2></td></tr>
+<tr class="memitem:ga30c09317aa68f87b08a5b4b5ef85d65a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__config.html#ga30c09317aa68f87b08a5b4b5ef85d65a">ERPC_ALLOCATION_POLICY</a></td></tr>
+<tr class="memdesc:ga30c09317aa68f87b08a5b4b5ef85d65a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Choose which allocation policy should be used.  <a href="#ga30c09317aa68f87b08a5b4b5ef85d65a">More...</a><br /></td></tr>
+<tr class="separator:ga30c09317aa68f87b08a5b4b5ef85d65a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabd0458cc0a1c72d5b0bbcb2d46ea632e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gabd0458cc0a1c72d5b0bbcb2d46ea632e"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__config.html#gabd0458cc0a1c72d5b0bbcb2d46ea632e">ERPC_CODEC_COUNT</a></td></tr>
+<tr class="memdesc:gabd0458cc0a1c72d5b0bbcb2d46ea632e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set amount of codecs objects used simultaneously in case of ERPC_ALLOCATION_POLICY is set to ERPC_ALLOCATION_POLICY_STATIC. For example if client or server is used in one thread then 1. If both are used in one thread per each then 2, ... Default value 2. <br /></td></tr>
+<tr class="separator:gabd0458cc0a1c72d5b0bbcb2d46ea632e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga89adbdbfcc8499eee5948540efdcc21a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga89adbdbfcc8499eee5948540efdcc21a"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__config.html#ga89adbdbfcc8499eee5948540efdcc21a">ERPC_MESSAGE_LOGGERS_COUNT</a></td></tr>
+<tr class="memdesc:ga89adbdbfcc8499eee5948540efdcc21a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set amount of message loggers objects used simultaneously in case of ERPC_ALLOCATION_POLICY is set to ERPC_ALLOCATION_POLICY_STATIC. For example if client or server is used in one thread then 1. If both are used in one thread per each then 2, ... For arbitrated client 1 is enough. Default value 0 (May not be used). <br /></td></tr>
+<tr class="separator:ga89adbdbfcc8499eee5948540efdcc21a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf261b7d9cc6f74c03857983a590c74e4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaf261b7d9cc6f74c03857983a590c74e4"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__config.html#gaf261b7d9cc6f74c03857983a590c74e4">ERPC_CLIENTS_THREADS_AMOUNT</a></td></tr>
+<tr class="memdesc:gaf261b7d9cc6f74c03857983a590c74e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set amount of client threads objects used in case of ERPC_ALLOCATION_POLICY is set to ERPC_ALLOCATION_POLICY_STATIC. Default value 1 (Most of current cases). <br /></td></tr>
+<tr class="separator:gaf261b7d9cc6f74c03857983a590c74e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga31c380773a119185d1ab1816accc3f04"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__config.html#ga31c380773a119185d1ab1816accc3f04">ERPC_DEFAULT_BUFFER_SIZE</a></td></tr>
 <tr class="memdesc:ga31c380773a119185d1ab1816accc3f04"><td class="mdescLeft">&#160;</td><td class="mdescRight">Size of buffers allocated by BasicMessageBufferFactory in setup functions.  <a href="#ga31c380773a119185d1ab1816accc3f04">More...</a><br /></td></tr>
 <tr class="separator:ga31c380773a119185d1ab1816accc3f04"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -228,6 +255,22 @@ Configuration options</h2></td></tr>
 <tr class="separator:ga6bf78dda89db480b3f31f224836b21c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Macro Definition Documentation</h2>
+<a class="anchor" id="ga30c09317aa68f87b08a5b4b5ef85d65a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ERPC_ALLOCATION_POLICY</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Choose which allocation policy should be used. </p>
+<p>Set ERPC_ALLOCATION_POLICY_DYNAMIC if dynamic allocations should be used. Set ERPC_ALLOCATION_POLICY_STATIC if static allocations should be used.</p>
+<p>Default value is ERPC_ALLOCATION_POLICY_DYNAMIC or in case of FreeRTOS it can be auto-detected if __has_include() is supported by compiler. Uncomment comment bellow to use static allocation policy. In case of static implementation user need consider another values to set (ERPC_CODEC_COUNT, ERPC_MESSAGE_LOGGERS_COUNT, ERPC_CLIENTS_THREADS_AMOUNT). </p>
+
+</div>
+</div>
 <a class="anchor" id="ga31c380773a119185d1ab1816accc3f04"></a>
 <div class="memitem">
 <div class="memproto">

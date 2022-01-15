@@ -14,6 +14,9 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
+
+/* @TEST_ANCHOR */
+
 #define USB_DEVICE_VID (0x1FC9U)
 #define USB_DEVICE_PID (0x00A6U)
 
@@ -27,7 +30,9 @@
     2. usb host is Windows OS that supports USB audio 2.0, like Win 10
     3. use feedback endpoint
 */
+#ifndef USB_DEVICE_WORKAROUND_AUDIO_20_WINDOWS
 #define USB_DEVICE_WORKAROUND_AUDIO_20_WINDOWS (0U)
+#endif
 
 /* Communication Class SubClass Codes */
 #define USB_CDC_DIRECT_LINE_CONTROL_MODEL         (0x01)

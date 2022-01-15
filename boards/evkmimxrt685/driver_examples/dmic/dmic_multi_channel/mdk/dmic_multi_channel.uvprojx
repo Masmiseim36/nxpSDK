@@ -332,9 +332,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>DEBUG, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, SDK_I2C_BASED_COMPONENT_USED=1, SDK_I2C_BASED_COMPONENT_USED=1, CODEC_CS42888_ENABLE, MCUXPRESSO_SDK</Define>
+              <Define>DEBUG, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, SDK_I2C_BASED_COMPONENT_USED=1, SDK_I2C_BASED_COMPONENT_USED=1, CODEC_CS42448_ENABLE, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../devices/MIMXRT685S/drivers;../../../../../../components/codec/i2c;../../../../../../components/i2c;../../../../../../devices/MIMXRT685S/utilities/debug_console_lite;../../../../../../components/codec/cs42888;../../../../../../components/codec;../../../../../../components/codec/port/cs42888;../../../../../../components/codec/port;../../../../../../devices/MIMXRT685S;../../../../../../components/uart;../../../../flash_config;../../../../../../components/lists;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../../devices/MIMXRT685S/drivers;../../../../../../components/codec/i2c;../../../../../../components/i2c;../../../../../../devices/MIMXRT685S/utilities/debug_console_lite;../../../../../../components/codec;../../../../../../components/codec/port/cs42448;../../../../../../components/codec/port;../../../../../../devices/MIMXRT685S;../../../../../../components/uart;../../../../flash_config;../../../../../../components/lists;../../../../../../CMSIS/Core/Include;../../../../../../components/codec/cs42448</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -629,16 +629,6 @@
               <FilePath>../../../../../../components/codec/i2c/fsl_codec_i2c.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_cs42888.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/codec/cs42888/fsl_cs42888.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_cs42888.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/codec/cs42888/fsl_cs42888.c</FilePath>
-            </File>
-            <File>
               <FileName>fsl_codec_common.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../components/codec/fsl_codec_common.h</FilePath>
@@ -647,6 +637,16 @@
               <FileName>fsl_codec_common.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../components/codec/fsl_codec_common.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_cs42448.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/codec/cs42448/fsl_cs42448.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_cs42448.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/codec/cs42448/fsl_cs42448.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -686,17 +686,17 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>codec/port/cs42888</GroupName>
+          <GroupName>codec/port/cs42448</GroupName>
           <Files>
             <File>
-              <FileName>fsl_codec_cs42888_adapter.c</FileName>
+              <FileName>fsl_codec_cs42448_adapter.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../components/codec/port/cs42888/fsl_codec_cs42888_adapter.c</FilePath>
+              <FilePath>../../../../../../components/codec/port/cs42448/fsl_codec_cs42448_adapter.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_codec_cs42888_adapter.h</FileName>
+              <FileName>fsl_codec_cs42448_adapter.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../components/codec/port/cs42888/fsl_codec_cs42888_adapter.h</FilePath>
+              <FilePath>../../../../../../components/codec/port/cs42448/fsl_codec_cs42448_adapter.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1186,9 +1186,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>NDEBUG, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, SDK_I2C_BASED_COMPONENT_USED=1, SDK_I2C_BASED_COMPONENT_USED=1, CODEC_CS42888_ENABLE, MCUXPRESSO_SDK</Define>
+              <Define>NDEBUG, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, SDK_I2C_BASED_COMPONENT_USED=1, SDK_I2C_BASED_COMPONENT_USED=1, CODEC_CS42448_ENABLE, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../devices/MIMXRT685S/drivers;../../../../../../components/codec/i2c;../../../../../../components/i2c;../../../../../../devices/MIMXRT685S/utilities/debug_console_lite;../../../../../../components/codec/cs42888;../../../../../../components/codec;../../../../../../components/codec/port/cs42888;../../../../../../components/codec/port;../../../../../../devices/MIMXRT685S;../../../../../../components/uart;../../../../flash_config;../../../../../../components/lists;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../../devices/MIMXRT685S/drivers;../../../../../../components/codec/i2c;../../../../../../components/i2c;../../../../../../devices/MIMXRT685S/utilities/debug_console_lite;../../../../../../components/codec;../../../../../../components/codec/port/cs42448;../../../../../../components/codec/port;../../../../../../devices/MIMXRT685S;../../../../../../components/uart;../../../../flash_config;../../../../../../components/lists;../../../../../../CMSIS/Core/Include;../../../../../../components/codec/cs42448</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1483,16 +1483,6 @@
               <FilePath>../../../../../../components/codec/i2c/fsl_codec_i2c.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_cs42888.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/codec/cs42888/fsl_cs42888.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_cs42888.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/codec/cs42888/fsl_cs42888.c</FilePath>
-            </File>
-            <File>
               <FileName>fsl_codec_common.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../components/codec/fsl_codec_common.h</FilePath>
@@ -1501,6 +1491,16 @@
               <FileName>fsl_codec_common.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../components/codec/fsl_codec_common.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_cs42448.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/codec/cs42448/fsl_cs42448.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_cs42448.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/codec/cs42448/fsl_cs42448.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1540,17 +1540,17 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>codec/port/cs42888</GroupName>
+          <GroupName>codec/port/cs42448</GroupName>
           <Files>
             <File>
-              <FileName>fsl_codec_cs42888_adapter.c</FileName>
+              <FileName>fsl_codec_cs42448_adapter.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../components/codec/port/cs42888/fsl_codec_cs42888_adapter.c</FilePath>
+              <FilePath>../../../../../../components/codec/port/cs42448/fsl_codec_cs42448_adapter.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_codec_cs42888_adapter.h</FileName>
+              <FileName>fsl_codec_cs42448_adapter.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../components/codec/port/cs42888/fsl_codec_cs42888_adapter.h</FilePath>
+              <FilePath>../../../../../../components/codec/port/cs42448/fsl_codec_cs42448_adapter.h</FilePath>
             </File>
           </Files>
         </Group>

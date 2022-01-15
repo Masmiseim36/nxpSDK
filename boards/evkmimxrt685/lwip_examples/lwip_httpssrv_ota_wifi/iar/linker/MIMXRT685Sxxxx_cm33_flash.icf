@@ -46,13 +46,11 @@ if (isdefinedsymbol(__heap_size__)) {
 define symbol __ram_vector_table_size__        =  isdefinedsymbol(__ram_vector_table__) ? 0x00000130 : 0;
 define symbol __ram_vector_table_offset__      =  isdefinedsymbol(__ram_vector_table__) ? 0x0000012F : 0;
 
-define symbol m_ota_boot_hdr_start             = 0x08040000;
-
-define symbol m_interrupts_start               = 0x08041000;
-define symbol m_interrupts_end                 = 0x0804112F;
+define symbol m_interrupts_start               = 0x08040400;
+define symbol m_interrupts_end                 = 0x0804052F;
 
 /* Primary application image is up to 2 MB in size including headers and interrupt vectors */
-define symbol m_text_start                     = 0x08041130;
+define symbol m_text_start                     = 0x08040530;
 define symbol m_text_end                       = 0x0823FFFF;
 
 /* Reserved area for "mflash_files" */
@@ -102,9 +100,6 @@ initialize by copy {
 };
 
 do not initialize  { section .noinit, section m_usb_bdt, section m_usb_global  };
-
-keep { object ota_bootloader_hdr.o };
-place at address mem:m_ota_boot_hdr_start { object ota_bootloader_hdr.o };
 
 place at address mem: m_interrupts_start    { readonly section .intvec };
 place in TEXT_region                        { readonly };

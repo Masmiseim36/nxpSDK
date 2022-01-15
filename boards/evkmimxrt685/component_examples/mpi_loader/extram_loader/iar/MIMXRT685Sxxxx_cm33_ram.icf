@@ -76,7 +76,7 @@ define block ZI        { zi };
 define region USB_BDT_region = mem:[from m_usb_sram_start to m_usb_sram_start + usb_bdt_size - 1];
 define region USB_SRAM_region = mem:[from m_usb_sram_start + usb_bdt_size to m_usb_sram_end];
 
-initialize by copy { readwrite, section .textrw };
+initialize by copy { readwrite, section .textrw, section CodeQuickAccess, section DataQuickAccess };
 
 do not initialize  { section .noinit, section m_usb_bdt, section m_usb_global  };
 

@@ -5,6 +5,5 @@ var structSTREAMER__T =
     [ "exit_thread", "structSTREAMER__T.html#a520814d7b1b16eb8a98fe328eedf5171", null ],
     [ "mq_out", "structSTREAMER__T.html#a0b6c98dedf589f854d97bab114a96d4d", null ],
     [ "streamer_mq", "structSTREAMER__T.html#a66b13d09720398f8b0c28e04512fabe8", null ],
-    [ "is_active", "structSTREAMER__T.html#ac7df54421861313e0c6cb18fad1cb729", null ],
-    [ "pipeline_type", "structSTREAMER__T.html#abd6a73a80a9eacde4d04576d3880a2d3", null ]
+    [ "is_active", "structSTREAMER__T.html#ac7df54421861313e0c6cb18fad1cb729", null ]
 ];

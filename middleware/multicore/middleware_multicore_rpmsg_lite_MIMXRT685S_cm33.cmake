@@ -8,22 +8,21 @@ target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
     ${CMAKE_CURRENT_LIST_DIR}/rpmsg_lite/lib/virtio/virtqueue.c
 )
 
-if(CONFIG_USE_middleware_baremetal_MIMXRT685S_cm33)
-target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
-    ${CMAKE_CURRENT_LIST_DIR}/rpmsg_lite/lib/rpmsg_lite/porting/environment/rpmsg_env_bm.c
-)
-elseif(CONFIG_USE_middleware_freertos-kernel_MIMXRT685S_cm33)
-target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
-    ${CMAKE_CURRENT_LIST_DIR}/rpmsg_lite/lib/rpmsg_lite/porting/environment/rpmsg_env_freertos.c
-    ${CMAKE_CURRENT_LIST_DIR}/rpmsg_lite/lib/rpmsg_lite/rpmsg_queue.c
-)
-else()
-    message(WARNING "please config middleware.baremetal_MIMXRT685S_cm33 or middleware.freertos-kernel_MIMXRT685S_cm33 first.")
-endif()
-
 
 target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
     ${CMAKE_CURRENT_LIST_DIR}/rpmsg_lite/lib/include
 )
 
+
+#OR Logic component
+if(CONFIG_USE_middleware_multicore_rpmsg_lite_freertos_MIMXRT685S_cm33)
+     include(middleware_multicore_rpmsg_lite_freertos_MIMXRT685S_cm33)
+endif()
+if(CONFIG_USE_middleware_multicore_rpmsg_lite_bm_MIMXRT685S_cm33)
+     include(middleware_multicore_rpmsg_lite_bm_MIMXRT685S_cm33)
+endif()
+if(NOT (CONFIG_USE_middleware_multicore_rpmsg_lite_freertos_MIMXRT685S_cm33 OR CONFIG_USE_middleware_multicore_rpmsg_lite_bm_MIMXRT685S_cm33))
+    message(WARNING "Since middleware_multicore_rpmsg_lite_freertos_MIMXRT685S_cm33/middleware_multicore_rpmsg_lite_bm_MIMXRT685S_cm33 is not included at first or config in config.cmake file, use middleware_multicore_rpmsg_lite_bm_MIMXRT685S_cm33 by default.")
+    include(middleware_multicore_rpmsg_lite_bm_MIMXRT685S_cm33)
+endif()
 

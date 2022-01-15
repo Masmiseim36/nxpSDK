@@ -745,7 +745,7 @@
         </option>
         <option>
           <name>IlinkIcfFile</name>
-          <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/targets/common/linker/iar/MIMXRT685S/MIMXRT685S_flash_bootloader.icf</state>
+          <state>$PROJ_DIR$/MIMXRT685S_flash_bootloader.icf</state>
         </option>
         <option>
           <name>IlinkIcfFileSlave</name>

@@ -1,5 +1,5 @@
 var classerpc_1_1_basic_codec_factory =
 [
-    [ "create", "classerpc_1_1_basic_codec_factory.html#aa27b971dad474de5c5316c5cd13cf4ff", null ],
-    [ "dispose", "classerpc_1_1_basic_codec_factory.html#a1504f8b65f7abe7da749677039cd050f", null ]
+    [ "create", "classerpc_1_1_basic_codec_factory.html#ad498ae49e4180191cc8ec63c51f6aedd", null ],
+    [ "dispose", "classerpc_1_1_basic_codec_factory.html#ae2d5f6edf7255cb0bdacba3e0040f51a", null ]
 ];

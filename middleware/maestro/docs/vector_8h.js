@@ -2,7 +2,7 @@ var vector_8h =
 [
     [ "Vector", "structVector.html", "structVector" ],
     [ "VectorIter", "structVectorIter.html", "structVectorIter" ],
-    [ "vector_create", "vector_8h.html#aa0d4479122eda045b6909433032580b1", null ],
+    [ "vector_create", "vector_8h.html#af9ca35a477ad93396537227b05ce40bb", null ],
     [ "vector_destroy", "vector_8h.html#acb50892ea864b1d6341c20942c05a1b5", null ],
     [ "vector_capacity", "vector_8h.html#a40a24421e793db77afb474192d8c9b7a", null ],
     [ "vector_size", "vector_8h.html#ad4ec83b349440fa8e141b799395f522a", null ],
@@ -22,6 +22,6 @@ var vector_8h =
     [ "vector_iter_prev", "vector_8h.html#a40de0682b5c2c0fb0d7ec3b3f90e1b1c", null ],
     [ "vector_iter_equal", "vector_8h.html#a11639b37f93c8aebeb0b79e6821ae56b", null ],
     [ "vector_iter_at", "vector_8h.html#a7321990ff0cf6473fb064d239e0f5adb", null ],
-    [ "vector_iter_node", "vector_8h.html#a444975edc0a30e50a969acc8ee1e6341", null ],
+    [ "vector_iter_node", "vector_8h.html#a2e88c89f26ac1795c95ebfd76488f54f", null ],
     [ "vector_iter_value", "vector_8h.html#afcb6335e631cc7760a441c0d83c66b4f", null ]
 ];

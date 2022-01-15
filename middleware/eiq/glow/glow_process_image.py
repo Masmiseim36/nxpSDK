@@ -5,8 +5,8 @@
 # SPDX-License-Identifier: BSD-3-Clause
 #
 
-""" This is a Glow utility script to serialize images into text format (e.g. "image.txt") which can be later included
-    into a C application as a C buffer array like this:
+""" This is a Glow utility script to serialize image files into text format (e.g. "image.txt") or binary format which
+    can be later included into a C application as a C buffer array like this:
       uint8_t imageData[] = {
         #include "image.txt"
       };
@@ -18,28 +18,30 @@ import argparse
 from imageio import imread
 
 OUTPUT_FORMAT_OPTS = ['txt', 'bin']
-IMAGE_TYPE_OPTS = ['int8', 'uint8', 'float32']
+OUTPUT_TYPE_OPTS = ['int8', 'uint8', 'float32']
 IMAGE_MODE_OPTS = ['neg1to1', 'neg1to1i8', '0to1', '0to255', 'neg128to127']
 IMAGE_LAYOUT_OPTS = ['NHWC', 'NCHW']
 IMAGE_CHANNEL_ORDER_OPTS = ['RGB', 'BGR']
 
 
-# Performs pre-processing of a given image and serialization to text in order to include in the code.
+# ----------------------------------------------------------------------------------------------------------------------
+# Performs pre-processing of a given image file and serialization to text/binary in order to include in the code.
 # It requires the following parameters:
-# - input_path - full path to the image
+# - input_path - full path to the image file
 # - output_path - full path to the output file
 # - output_format - 'txt' or 'bin' (default is 'txt')
-# - image_type - 'int8', 'uint8' or 'float32' (default is 'float32')
+# - output_type - 'int8', 'uint8' or 'float32' (default is 'float32')
 # - image_mode - image normalization mode: '0to1', 'neg1to1'
 # - image_layout - 'NCHW' or 'NHWC'
 # - image_channel_order - 'RGB' or 'BGR'
 # - image_batch - the image will be repeated in order to obtain a batch (default is 1)
 # Function returns serialized image size (bytes).
-def process_image(input_path, output_path, output_format, image_type, image_mode, image_layout, image_channel_order,
+# ----------------------------------------------------------------------------------------------------------------------
+def process_image(input_path, output_path, output_format, output_type, image_mode, image_layout, image_channel_order,
                   image_batch):
     # Validate parameters.
     assert os.path.isfile(input_path), 'Input path invalid!'
-    assert image_type in IMAGE_TYPE_OPTS, 'Output format invalid!'
+    assert output_type in OUTPUT_TYPE_OPTS, 'Output type invalid!'
     assert image_mode in IMAGE_MODE_OPTS, 'Image mode invalid!'
     assert image_layout in IMAGE_LAYOUT_OPTS, 'Image layout invalid!'
     assert image_channel_order in IMAGE_CHANNEL_ORDER_OPTS, 'Image channel invalid!'
@@ -64,18 +66,18 @@ def process_image(input_path, output_path, output_format, image_type, image_mode
         img_data = np.transpose(img_data, (2, 0, 1))
 
     # Data type conversion.
-    if image_type == 'int8':
+    if output_type == 'int8':
         img_data = img_data - 128
         img_data = img_data.astype(np.int8)
-    elif image_type == 'uint8':
+    elif output_type == 'uint8':
         img_data = img_data.astype(np.uint8)
-    elif image_type == 'float32':
+    elif output_type == 'float32':
         img_data = img_data.astype(np.float32)
     else:
         assert False, 'Output type invalid!'
 
     # Image normalization (for float32 only).
-    if image_type == 'float32':
+    if output_type == 'float32':
         if image_mode == 'neg1to1':
             range_min = -1.0
             range_max = 1.0
@@ -106,7 +108,7 @@ def process_image(input_path, output_path, output_format, image_type, image_mode
     # Serialize image batch.
     img_data_bytes = bytearray(img_data.tobytes(order='C'))
     if output_format == 'txt':
-        image_bytes_per_line = 20
+        bytes_per_line = 20
         with open(output_path, 'wt') as f:
             # Write header.
             f.write('// %s\n' % ('-' * 117))
@@ -115,9 +117,9 @@ def process_image(input_path, output_path, output_format, image_type, image_mode
                                                       img_data.shape[1],
                                                       img_data.shape[2],
                                                       img_data.shape[3]))
-            f.write('// Type: %s\n' % image_type)
+            f.write('// Type: %s\n' % output_type)
             f.write('// Size: %d [bytes]\n' % len(img_data_bytes))
-            if image_type == 'float32':
+            if output_type == 'float32':
                 f.write('// Mode: %s\n' % image_mode)
             f.write('// Layout: %s\n' % image_layout)
             f.write('// Channel order: %s\n' % image_channel_order)
@@ -126,7 +128,7 @@ def process_image(input_path, output_path, output_format, image_type, image_mode
             idx = 0
             for byte in img_data_bytes:
                 f.write('0X%02X, ' % byte)
-                if idx % image_bytes_per_line == (image_bytes_per_line - 1):
+                if idx % bytes_per_line == (bytes_per_line - 1):
                     f.write('\n')
                 idx = idx + 1
     elif output_format == 'bin':
@@ -135,7 +137,7 @@ def process_image(input_path, output_path, output_format, image_type, image_mode
     else:
         assert False, 'Output format invalid! Expected options are \'txt\' or \'bin\'!'
 
-    # Return serialized image size
+    # Return serialized image size.
     return len(img_data_bytes)
 
 
@@ -143,16 +145,16 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
 
     parser.add_argument('-input-path', '-image-path', '-i', action='store', dest='input_path', required=True,
-                        help='Input image path or a directory of images.')
+                        help='Input image file path or a directory.')
 
     parser.add_argument('-output-path', '-o', action='store', dest='output_path', required=True,
                         help='Output file path or a directory when -input-path is also a directory.')
 
     parser.add_argument('-output-format', '-f', action='store', dest='output_format', default='txt',
-                        choices=OUTPUT_FORMAT_OPTS, help='Output file format. Default is txt.')
+                        choices=OUTPUT_FORMAT_OPTS, help='Output file format: txt, bin. Default is txt.')
 
-    parser.add_argument('-image-type', '-type', '-t', action='store', dest='image_type', default='float32',
-                        choices=IMAGE_TYPE_OPTS, help='Image output type. Default is float32.')
+    parser.add_argument('-image-type', '-output-type', '-type', '-t', action='store', dest='output_type',
+                        default='float32', choices=OUTPUT_TYPE_OPTS, help='Output type. Default is float32.')
 
     parser.add_argument('-image-mode', '-mode', '-m', action='store', dest='image_mode', default='0to255',
                         choices=IMAGE_MODE_OPTS, help='Image normalization mode. Default is 0to255.')
@@ -192,28 +194,27 @@ if __name__ == '__main__':
                 continue
 
             # Process current image.
-            img_size = process_image(input_path=input_file,
-                                     output_path=output_file,
-                                     output_format=args.output_format,
-                                     image_type=args.image_type,
-                                     image_mode=args.image_mode,
-                                     image_layout=args.image_layout,
-                                     image_channel_order=args.image_channel_order,
-                                     image_batch=args.image_batch)
+            process_image(input_path=input_file,
+                          output_path=output_file,
+                          output_format=args.output_format,
+                          output_type=args.output_type,
+                          image_mode=args.image_mode,
+                          image_layout=args.image_layout,
+                          image_channel_order=args.image_channel_order,
+                          image_batch=args.image_batch)
 
             print('Image processed to file \"%s\" ...' % output_file)
 
     else:
 
         # Process only one image.
-        img_size = process_image(input_path=args.input_path,
-                                 output_path=args.output_path,
-                                 output_format=args.output_format,
-                                 image_type=args.image_type,
-                                 image_mode=args.image_mode,
-                                 image_layout=args.image_layout,
-                                 image_channel_order=args.image_channel_order,
-                                 image_batch=args.image_batch)
+        process_image(input_path=args.input_path,
+                      output_path=args.output_path,
+                      output_format=args.output_format,
+                      output_type=args.output_type,
+                      image_mode=args.image_mode,
+                      image_layout=args.image_layout,
+                      image_channel_order=args.image_channel_order,
+                      image_batch=args.image_batch)
 
         print('Image processed to file \"%s\" ...' % args.output_path)
-        print('Image size = %d (bytes)' % img_size)

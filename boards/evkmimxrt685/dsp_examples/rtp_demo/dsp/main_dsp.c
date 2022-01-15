@@ -67,6 +67,8 @@ static void BOARD_InitClock(void)
 
     /* DSP_INT0_SEL18 = DMA1 */
     INPUTMUX_AttachSignal(INPUTMUX, 18U, kINPUTMUX_Dmac1ToDspInterrupt);
+    /* MUB interrupt signal is selected for DSP interrupt input 1 */
+    INPUTMUX_AttachSignal(INPUTMUX, 1U, kINPUTMUX_MuBToDspInterrupt);
 
     /* I2S clocks */
     CLOCK_AttachClk(kAUDIO_PLL_to_FLEXCOMM1);

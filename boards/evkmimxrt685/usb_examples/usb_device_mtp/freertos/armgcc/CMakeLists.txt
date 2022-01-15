@@ -73,7 +73,7 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../../middleware/sdmmc
     ${ProjDirPath}/../../../../../../middleware/fatfs
     ${ProjDirPath}/../../../../../../components/pca9420
-    ${ProjDirPath}/../../../../../../rtos/freertos
+    ${ProjDirPath}/../../../../../../rtos/freertos/freertos_kernel
     ${ProjDirPath}/../../../../../../devices/MIMXRT685S
     ${ProjDirPath}/../../../../../../devices/MIMXRT685S/utilities
     ${ProjDirPath}/../../../../../../components/uart
@@ -125,7 +125,7 @@ include(component_usart_adapter_MIMXRT685S_cm33)
 
 include(driver_power_MIMXRT685S_cm33)
 
-include(driver_flash_config_MIMXRT685S_cm33)
+include(driver_flash_config_evkmimxrt685_MIMXRT685S_cm33)
 
 include(component_serial_manager_MIMXRT685S_cm33)
 

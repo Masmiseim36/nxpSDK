@@ -9,8 +9,8 @@
 #ifndef _RTE_DEVICE_H
 #define _RTE_DEVICE_H
 
-extern void I2C4_InitPins();
-extern void I2C4_DeinitPins();
+extern void I2C2_InitPins();
+extern void I2C2_DeinitPins();
 extern void USART0_InitPins();
 extern void USART0_DeinitPins();
 extern void SPI5_InitPins();
@@ -19,14 +19,10 @@ extern void SPI5_DeinitPins();
 /*Driver name mapping*/
 /* User needs to provide the implementation of I2CX_GetFreq/I2CX_InitPins/I2CX_DeinitPins for the enabled I2C instance.
  */
-#define RTE_I2C4            1
-#define RTE_I2C4_PIN_INIT   I2C4_InitPins
-#define RTE_I2C4_PIN_DEINIT I2C4_DeinitPins
-#define RTE_I2C4_DMA_EN     0
-
-/*I2C configuration*/
-#define RTE_I2C4_Master_DMA_BASE DMA0
-#define RTE_I2C4_Master_DMA_CH   9
+#define RTE_I2C2            1
+#define RTE_I2C2_PIN_INIT   I2C2_InitPins
+#define RTE_I2C2_PIN_DEINIT I2C2_DeinitPins
+#define RTE_I2C2_DMA_EN     0
 
 /* Driver name mapping. */
 /* User needs to provide the implementation of USARTX_GetFreq/USARTX_InitPins/USARTX_DeinitPins for the enabled USART

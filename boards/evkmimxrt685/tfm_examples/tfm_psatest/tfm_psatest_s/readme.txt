@@ -3,12 +3,16 @@ Overview
 The Trusted Firmware M (TF-M) PSA Dev API test application provides verification that secure service API behaviours are implemented correctly.
 The PSA Dev API tests are the basis for getting the PSA Functional API Certification.
 
+NOTE: The TF-M main() functions have a non-standard location:
+       - Secure main() is in the tf-m\secure_fw\spm\cmsis_psa\main.c file.
+       - Non-Secure main() is in the tf-m-tests\app\main_ns.c file.
+
 Toolchain supported
 ===================
 - GCC ARM Embedded  10.2.1
 - Keil MDK  5.34
 - IAR embedded Workbench  9.10.2
-- MCUXpresso  11.4.0
+- MCUXpresso  11.5.0
 
 Hardware requirements
 =====================
@@ -29,7 +33,7 @@ Prepare the Demo
     - No parity
     - One stop bit
     - No flow control
-3.  Use secure project to download the program to target board.
+3.  Use secure project to download the program to target board. Please refer to "TrustZone application debugging" below for details.
 4.  Launch the debugger in your IDE to begin running the demo.
 Note: Refering to the "Getting started with MCUXpresso SDK for EVK-MIMXRT685" documentation for more information
       on how to build and run the TrustZone examples in various IDEs.
@@ -40,15 +44,15 @@ The log below shows the output of the TFM PSA API tests in the terminal window:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 [Sec Thread] Secure image initializing!
-Booting TFM v1.3.0
+Booting TFM v1.4.0
 Non-Secure system starting...
 
-***** PSA Architecture Test Suite - Version 1.1 *****
+***** PSA Architecture Test Suite - Version 1.2 *****
 
 Running.. Crypto Suite
 ******************************************
 
-TEST: 201 | DESCRIPTION: Testing psa_crypto_init API: Basic
+TEST: 201 | DESCRIPTION: Testing crypto key management APIs | UT:  psa_crypto_init
 [Info] Executing tests from non-secure
 [Check 1] Test calling crypto functions before psa_crypto_init
 [Check 2] Test psa_crypto_init
@@ -58,57 +62,39 @@ TEST RESULT: PASSED
 
 ******************************************
 
-TEST: 202 | DESCRIPTION: Testing crypto key management APIs
+TEST: 202 | DESCRIPTION: Testing crypto key management APIs | UT: psa_import_key
 [Info] Executing tests from non-secure
-[Check 1] Test psa_import_key 16 bytes AES
-[Check 2] Test psa_import_key 24 bytes AES
-[Check 3] Test psa_import_key 32 bytes AES
-[Check 4] Test psa_import_key with EC Public key
-[Check 5] Test psa_import_key 16 bytes AES with invalid bits
-[Check 6] Test psa_import_key with key data greater than the algorithm size
-[Check 7] Test psa_import_key with incorrect key data size
-[Check 8] Test psa_import_key with invalid key type value
+[Check 1] Test psa_import_key with EC Public key
 
 TEST RESULT: PASSED
 
 ******************************************
 
-TEST: 203 | DESCRIPTION: Testing crypto key management APIs
+TEST: 203 | DESCRIPTION: Testing crypto key management APIs | UT: psa_export_key
 [Info] Executing tests from non-secure
-[Check 1] Test psa_export_key 16 Byte AES
-[Check 2] Test psa_export_key 24 Byte AES
-[Check 3] Test psa_export_key 32 Byte AES
-[Check 4] Test psa_export_key with EC Public key
-[Check 5] Test psa_export_key with key policy verify
-[Check 6] Test psa_export_key with less buffer size
+[Check 1] Test psa_export_key with EC Public key
 
 TEST RESULT: PASSED
 
 ******************************************
 
-TEST: 204 | DESCRIPTION: Testing crypto key management APIs
+TEST: 204 | DESCRIPTION: Testing crypto key management APIs | UT: psa_export_public_key
 [Info] Executing tests from non-secure
-[Check 1] Test psa_export_public_key 16 Byte AES
-[Check 2] Test psa_export_public_key 24 Byte AES
-[Check 3] Test psa_export_public_key 32 Byte AES
-[Check 4] Test psa_export_public_key with EC Public key
+[Check 1] Test psa_export_public_key with EC Public key
 
 TEST RESULT: PASSED
 
 ******************************************
 
-TEST: 205 | DESCRIPTION: Testing crypto key management APIs
+TEST: 205 | DESCRIPTION: Testing crypto key management APIs | UT: psa_destroy_key
 [Info] Executing tests from non-secure
-[Check 1] Test psa_destroy_key 16 Byte AES
-[Check 2] Test psa_destroy_key 24 Byte AES
-[Check 3] Test psa_destroy_key 32 Byte AES
-[Check 4] Test psa_destroy_key with EC Public key
+[Check 1] Test psa_destroy_key with EC Public key
 
 TEST RESULT: PASSED
 
 ******************************************
 
-TEST: 208 | DESCRIPTION: Testing crypto key derivation APIs
+TEST: 208 | DESCRIPTION: Testing crypto key derivation APIs | UT: psa_key_derivation_setup
 [Info] Executing tests from non-secure
 [Check 1] Test psa_key_derivation_setup - ECDH + HKDF-SHA-256
 [Check 2] Test psa_key_derivation_setup - ECDH, unknown KDF
@@ -119,15 +105,15 @@ TEST RESULT: PASSED
 
 ******************************************
 
-TEST: 210 | DESCRIPTION: Testing crypto key attributes APIs
+TEST: 210 | DESCRIPTION: Testing crypto key attributes APIs | UT: psa_key_attributes_set_get
 [Info] Executing tests from non-secure
-[Check 1] Test set/get key attributes
+[Check 1] Test psa_key_attributes_set_get key attributes
 
 TEST RESULT: PASSED
 
 ******************************************
 
-TEST: 211 | DESCRIPTION: Testing crypto hash functions APIs
+TEST: 211 | DESCRIPTION: Testing crypto hash functions APIs | UT: psa_hash_setup
 [Info] Executing tests from non-secure
 [Check 1] Test psa_hash_setup with SHA256 algorithm
 [Check 2] Test psa_hash_setup with Invalid hash algorithm
@@ -138,7 +124,7 @@ TEST RESULT: PASSED
 
 ******************************************
 
-TEST: 212 | DESCRIPTION: Testing crypto hash functions APIs
+TEST: 212 | DESCRIPTION: Testing crypto hash functions APIs | UT: psa_hash_update
 [Info] Executing tests from non-secure
 [Check 1] Test psa_hash_update with SHA256 algorithm
 [Check 2] Test psa_hash_update without hash setup
@@ -148,7 +134,7 @@ TEST RESULT: PASSED
 
 ******************************************
 
-TEST: 213 | DESCRIPTION: Testing crypto hash functions APIs
+TEST: 213 | DESCRIPTION: Testing crypto hash functions APIs | UT: psa_hash_verify
 [Info] Executing tests from non-secure
 [Check 1] Test psa_hash_verify with SHA256 algorithm
 [Check 2] Test psa_hash_verify with incorrect expected hash
@@ -159,7 +145,7 @@ TEST RESULT: PASSED
 
 ******************************************
 
-TEST: 214 | DESCRIPTION: Testing crypto hash functions APIs
+TEST: 214 | DESCRIPTION: Testing crypto hash functions APIs | UT: psa_hash_finish
 [Info] Executing tests from non-secure
 [Check 1] Test psa_hash_finish with SHA256 algorithm
 [Check 2] Test psa_hash_finish with invalid hash buffer size
@@ -169,7 +155,7 @@ TEST RESULT: PASSED
 
 ******************************************
 
-TEST: 215 | DESCRIPTION: Testing crypto hash functions APIs
+TEST: 215 | DESCRIPTION: Testing crypto hash functions APIs | UT: psa_hash_abort
 [Info] Executing tests from non-secure
 [Check 1] Test psa_hash_abort with SHA256 algorithm
 [Check 2] Test psa_hash_finish after calling psa_hash_abort
@@ -178,19 +164,16 @@ TEST RESULT: PASSED
 
 ******************************************
 
-TEST: 216 | DESCRIPTION: Testing crypto generator functions APIs
+TEST: 216 | DESCRIPTION: Testing crypto generator functions APIs | UT: psa_generate_key
 [Info] Executing tests from non-secure
-[Check 1] Test psa_generate_key 16 Byte AES
-[Check 2] Test psa_generate_key 24 Byte AES
-[Check 3] Test psa_generate_key 32 Byte AES
-[Check 4] Test psa_generate_key with invalid key type
-[Check 5] Test psa_generate_key with invalid usage flags
+[Check 1] Test psa_generate_key with invalid key type
+[Check 2] Test psa_generate_key with invalid usage flags
 
 TEST RESULT: PASSED
 
 ******************************************
 
-TEST: 217 | DESCRIPTION: Testing crypto generation APIs
+TEST: 217 | DESCRIPTION: Testing crypto generation APIs | UT: psa_generate_random
 [Info] Executing tests from non-secure
 [Check 1] Test psa_generate_random to get 0 Byte data
 [Check 2] Test psa_generate_random to get 16 Byte data
@@ -206,7 +189,7 @@ TEST RESULT: PASSED
 
 ******************************************
 
-TEST: 218 | DESCRIPTION: Testing crypto key derivation APIs
+TEST: 218 | DESCRIPTION: Testing crypto key derivation APIs | UT: psa_key_derivation_input_key
 [Info] Executing tests from non-secure
 [Check 1] Test psa_key_derivation_input_key 16 Byte Key
 [Check 2] Test psa_key_derivation_input_key with invalid usage
@@ -224,17 +207,15 @@ TEST RESULT: PASSED
 
 ******************************************
 
-TEST: 219 | DESCRIPTION: Testing crypto key derivation APIs
+TEST: 219 | DESCRIPTION: Testing crypto key derivation APIs | UT: psa_key_derivation_key_agreement
 [Info] Executing tests from non-secure
 [Check 1] Test psa_key_derivation_key_agreement - KDF not a key agreement alg
-[Check 2] Test psa_key_derivation_key_agreement - Invalid handle
-[Check 3] Test psa_key_derivation_key_agreement - Zero as handle
 
-TEST RESULT: PASSED
+TEST RESULT: SKIPPED (Skip Code=0x2d)
 
 ******************************************
 
-TEST: 222 | DESCRIPTION: Testing crypto key derivation APIs
+TEST: 222 | DESCRIPTION: Testing crypto key derivation APIs | UT: psa_key_derivation_abort
 [Info] Executing tests from non-secure
 [Check 1] Test psa_key_derivation_abort
 
@@ -242,7 +223,7 @@ TEST RESULT: PASSED
 
 ******************************************
 
-TEST: 223 | DESCRIPTION: Testing crypto key derivation APIs
+TEST: 223 | DESCRIPTION: Testing crypto key derivation APIs | UT: psa_key_derivation_set_get_capacity
 [Info] Executing tests from non-secure
 [Check 1] Test psa_key_derivation_set_get_capacity - < operation's capacity
 [Check 2] Test psa_key_derivation_set_get_capacity - = operation's capacity
@@ -253,7 +234,7 @@ TEST RESULT: PASSED
 
 ******************************************
 
-TEST: 224 | DESCRIPTION: Testing crypto AEAD APIs
+TEST: 224 | DESCRIPTION: Testing crypto AEAD APIs | UT: psa_aead_encrypt
 [Info] Executing tests from non-secure
 [Check 1] Test psa_aead_encrypt - CCM - AES - 13B nonce & 8B add data
 [Check 2] Test psa_aead_encrypt - CCM - AES - 13B nonce & 32B add data
@@ -270,7 +251,7 @@ TEST RESULT: PASSED
 
 ******************************************
 
-TEST: 225 | DESCRIPTION: Testing crypto AEAD APIs
+TEST: 225 | DESCRIPTION: Testing crypto AEAD APIs | UT: psa_aead_decrypt
 [Info] Executing tests from non-secure
 [Check 1] Test psa_aead_decrypt - CCM - AES - 13B nonce & 8B add data
 [Check 2] Test psa_aead_decrypt - CCM - AES - 13B nonce & 32B add data
@@ -289,212 +270,38 @@ TEST RESULT: PASSED
 
 ******************************************
 
-TEST: 225 | DESCRIPTION: Testing crypto AEAD APIs
+TEST: 231 | DESCRIPTION: Testing crypto MAC APIs | UT: psa_mac_abort
 [Info] Executing tests from non-secure
-[Check 1] Test psa_aead_decrypt - CCM - AES - 13B nonce & 8B add data
-[Check 2] Test psa_aead_decrypt - CCM - AES - 13B nonce & 32B add data
-[Check 3] Test psa_aead_decrypt - CCM - AES - 24 bytes Tag length = 4
-[Check 4] Test psa_aead_decrypt - CCM - AES - Zero additional data
-[Check 5] Test psa_aead_decrypt - CCM - AES - Zero plaintext
-[Check 6] Test psa_aead_decrypt - Unsupported algorithm
-[Check 7] Test psa_aead_decrypt - Invalid usage flag
-[Check 8] Test psa_aead_decrypt - Invalid plaintext_size
-[Check 9] Test psa_aead_decrypt - Invalid nonce
-[Check 10] Test psa_aead_decrypt - Invalid cihpertext
-[Check 11] Test psa_aead_decrypt - Invalid cihpertext_size
-[Check 12] Test psa_aead_decrypt - Invalid tag length 0
+[Check 1] Test psa_mac_abort - HMAC - SHA256
+[Check 2] Test psa_mac_sign_finish after calling psa_mac_abort
 
 TEST RESULT: PASSED
 
 ******************************************
 
-TEST: 225 | DESCRIPTION: Testing crypto AEAD APIs
+TEST: 232 | DESCRIPTION: Testing crypto symmetric cipher APIs | UT: psa_cipher_encrypt_setup
 [Info] Executing tests from non-secure
-[Check 1] Test psa_aead_decrypt - CCM - AES - 13B nonce & 8B add data
-[Check 2] Test psa_aead_decrypt - CCM - AES - 13B nonce & 32B add data
-[Check 3] Test psa_aead_decrypt - CCM - AES - 24 bytes Tag length = 4
-[Check 4] Test psa_aead_decrypt - CCM - AES - Zero additional data
-[Check 5] Test psa_aead_decrypt - CCM - AES - Zero plaintext
-[Check 6] Test psa_aead_decrypt - Unsupported algorithm
-[Check 7] Test psa_aead_decrypt - Invalid usage flag
-[Check 8] Test psa_aead_decrypt - Invalid plaintext_size
-[Check 9] Test psa_aead_decrypt - Invalid nonce
-[Check 10] Test psa_aead_decrypt - Invalid cihpertext
-[Check 11] Test psa_aead_decrypt - Invalid cihpertext_size
-[Check 12] Test psa_aead_decrypt - Invalid tag length 0
+[Check 1] Test psa_cipher_encrypt_setup - unknown cipher algorithm
+[Check 2] Test psa_cipher_encrypt_setup - EC Public key
+[Check 3] Test psa_cipher_encrypt_setup - Invalid key handle
+[Check 4] Test psa_cipher_encrypt_setup - Zero as key handle
 
 TEST RESULT: PASSED
 
 ******************************************
 
-TEST: 225 | DESCRIPTION: Testing crypto AEAD APIs
+TEST: 233 | DESCRIPTION: Testing crypto symmetric cipher APIs | UT: psa_cipher_decrypt_setup
 [Info] Executing tests from non-secure
-[Check 1] Test psa_aead_decrypt - CCM - AES - 13B nonce & 8B add data
-[Check 2] Test psa_aead_decrypt - CCM - AES - 13B nonce & 32B add data
-[Check 3] Test psa_aead_decrypt - CCM - AES - 24 bytes Tag length = 4
-[Check 4] Test psa_aead_decrypt - CCM - AES - Zero additional data
-[Check 5] Test psa_aead_decrypt - CCM - AES - Zero plaintext
-[Check 6] Test psa_aead_decrypt - Unsupported algorithm
-[Check 7] Test psa_aead_decrypt - Invalid usage flag
-[Check 8] Test psa_aead_decrypt - Invalid plaintext_size
-[Check 9] Test psa_aead_decrypt - Invalid nonce
-[Check 10] Test psa_aead_decrypt - Invalid cihpertext
-[Check 11] Test psa_aead_decrypt - Invalid cihpertext_size
-[Check 12] Test psa_aead_decrypt - Invalid tag length 0
+[Check 1] Test psa_cipher_decrypt_setup - unknown cipher algorithm
+[Check 2] Test psa_cipher_decrypt_setup - EC Public key
+[Check 3] Test psa_cipher_decrypt_setup - Invalid key handle
+[Check 4] Test psa_cipher_decrypt_setup - Zero as key handle
 
 TEST RESULT: PASSED
 
 ******************************************
 
-TEST: 225 | DESCRIPTION: Testing crypto AEAD APIs
-[Info] Executing tests from non-secure
-[Check 1] Test psa_aead_decrypt - CCM - AES - 13B nonce & 8B add data
-[Check 2] Test psa_aead_decrypt - CCM - AES - 13B nonce & 32B add data
-[Check 3] Test psa_aead_decrypt - CCM - AES - 24 bytes Tag length = 4
-[Check 4] Test psa_aead_decrypt - CCM - AES - Zero additional data
-[Check 5] Test psa_aead_decrypt - CCM - AES - Zero plaintext
-[Check 6] Test psa_aead_decrypt - Unsupported algorithm
-[Check 7] Test psa_aead_decrypt - Invalid usage flag
-[Check 8] Test psa_aead_decrypt - Invalid plaintext_size
-[Check 9] Test psa_aead_decrypt - Invalid nonce
-[Check 10] Test psa_aead_decrypt - Invalid cihpertext
-[Check 11] Test psa_aead_decrypt - Invalid cihpertext_size
-[Check 12] Test psa_aead_decrypt - Invalid tag length 0
-
-TEST RESULT: PASSED
-
-******************************************
-
-TEST: 225 | DESCRIPTION: Testing crypto AEAD APIs
-[Info] Executing tests from non-secure
-[Check 1] Test psa_aead_decrypt - CCM - AES - 13B nonce & 8B add data
-[Check 2] Test psa_aead_decrypt - CCM - AES - 13B nonce & 32B add data
-[Check 3] Test psa_aead_decrypt - CCM - AES - 24 bytes Tag length = 4
-[Check 4] Test psa_aead_decrypt - CCM - AES - Zero additional data
-[Check 5] Test psa_aead_decrypt - CCM - AES - Zero plaintext
-[Check 6] Test psa_aead_decrypt - Unsupported algorithm
-[Check 7] Test psa_aead_decrypt - Invalid usage flag
-[Check 8] Test psa_aead_decrypt - Invalid plaintext_size
-[Check 9] Test psa_aead_decrypt - Invalid nonce
-[Check 10] Test psa_aead_decrypt - Invalid cihpertext
-[Check 11] Test psa_aead_decrypt - Invalid cihpertext_size
-[Check 12] Test psa_aead_decrypt - Invalid tag length 0
-
-TEST RESULT: PASSED
-
-******************************************
-
-TEST: 225 | DESCRIPTION: Testing crypto AEAD APIs
-[Info] Executing tests from non-secure
-[Check 1] Test psa_aead_decrypt - CCM - AES - 13B nonce & 8B add data
-[Check 2] Test psa_aead_decrypt - CCM - AES - 13B nonce & 32B add data
-[Check 3] Test psa_aead_decrypt - CCM - AES - 24 bytes Tag length = 4
-[Check 4] Test psa_aead_decrypt - CCM - AES - Zero additional data
-[Check 5] Test psa_aead_decrypt - CCM - AES - Zero plaintext
-[Check 6] Test psa_aead_decrypt - Unsupported algorithm
-[Check 7] Test psa_aead_decrypt - Invalid usage flag
-[Check 8] Test psa_aead_decrypt - Invalid plaintext_size
-[Check 9] Test psa_aead_decrypt - Invalid nonce
-[Check 10] Test psa_aead_decrypt - Invalid cihpertext
-[Check 11] Test psa_aead_decrypt - Invalid cihpertext_size
-[Check 12] Test psa_aead_decrypt - Invalid tag length 0
-
-TEST RESULT: PASSED
-
-******************************************
-
-TEST: 232 | DESCRIPTION: Testing crypto symmetric cipher APIs
-[Info] Executing tests from non-secure
-[Check 1] Test psa_cipher_encrypt_setup 16 Byte AES
-[Check 2] Test psa_cipher_encrypt_setup 24 Byte AES
-[Check 3] Test psa_cipher_encrypt_setup 32 Byte AES
-[Check 4] Test psa_cipher_encrypt_setup 16 Byte raw data
-[Check 5] Test psa_cipher_encrypt_setup - unknown cipher algorithm
-[Check 6] Test psa_cipher_encrypt_setup - incorrect usage
-[Check 7] Test psa_cipher_encrypt_setup - EC Public key
-[Check 8] Test psa_cipher_encrypt_setup - Invalid key handle
-[Check 9] Test psa_cipher_encrypt_setup - Zero as key handle
-
-TEST RESULT: PASSED
-
-******************************************
-
-TEST: 233 | DESCRIPTION: Testing crypto symmetric cipher APIs
-[Info] Executing tests from non-secure
-[Check 1] Test psa_cipher_decrypt_setup 16 Byte AES
-[Check 2] Test psa_cipher_decrypt_setup 24 Byte AES
-[Check 3] Test psa_cipher_decrypt_setup 32 Byte AES
-[Check 4] Test psa_cipher_decrypt_setup 16 Byte raw data
-[Check 5] Test psa_cipher_decrypt_setup - unknown cipher algorithm
-[Check 6] Test psa_cipher_decrypt_setup - incorrect usage
-[Check 7] Test psa_cipher_decrypt_setup - EC Public key
-[Check 8] Test psa_cipher_decrypt_setup - Invalid key handle
-[Check 9] Test psa_cipher_decrypt_setup - Zero as key handle
-
-TEST RESULT: PASSED
-
-******************************************
-
-TEST: 233 | DESCRIPTION: Testing crypto symmetric cipher APIs
-[Info] Executing tests from non-secure
-[Check 1] Test psa_cipher_decrypt_setup 16 Byte AES
-[Check 2] Test psa_cipher_decrypt_setup 24 Byte AES
-[Check 3] Test psa_cipher_decrypt_setup 32 Byte AES
-[Check 4] Test psa_cipher_decrypt_setup 16 Byte raw data
-[Check 5] Test psa_cipher_decrypt_setup - unknown cipher algorithm
-[Check 6] Test psa_cipher_decrypt_setup - incorrect usage
-[Check 7] Test psa_cipher_decrypt_setup - EC Public key
-[Check 8] Test psa_cipher_decrypt_setup - Invalid key handle
-[Check 9] Test psa_cipher_decrypt_setup - Zero as key handle
-
-TEST RESULT: PASSED
-
-******************************************
-
-TEST: 235 | DESCRIPTION: Testing crypto symmetric cipher APIs
-[Info] Executing tests from non-secure
-[Check 1] Test psa_cipher_set_iv 16 Byte AES
-[Check 2] Test psa_cipher_set_iv 24 Byte AES
-[Check 3] Test psa_cipher_set_iv 32 Byte AES
-[Check 4] Test psa_cipher_set_iv AES - small iv buffer
-[Check 5] Test psa_cipher_set_iv AES - large iv buffer
-
-TEST RESULT: PASSED
-
-******************************************
-
-TEST: 236 | DESCRIPTION: Testing crypto symmetric cipher APIs
-[Info] Executing tests from non-secure
-[Check 1] Test psa_cipher_update - Encrypt - AES CTR
-[Check 2] Test psa_cipher_update - Decrypt - AES CTR
-[Check 3] Test psa_cipher_update without cipher setup
-
-TEST RESULT: PASSED
-
-******************************************
-
-TEST: 237 | DESCRIPTION: Testing crypto symmetric cipher APIs
-[Info] Executing tests from non-secure
-[Check 1] Test psa_cipher_finish - Encrypt - AES CTR
-[Check 2] Test psa_cipher_finish - Encrypt - AES CTR (short input)
-[Check 3] Test psa_cipher_finish - Decrypt - AES CTR
-[Check 4] Test psa_cipher_finish - Decrypt - AES CTR (short input)
-
-TEST RESULT: PASSED
-
-******************************************
-
-TEST: 238 | DESCRIPTION: Testing crypto symmetric cipher APIs
-[Info] Executing tests from non-secure
-[Check 1] Test psa_cipher_abort - Encrypt - AES CTR
-[Check 2] Test psa_cipher_abort - Decrypt - AES CTR
-[Check 3] Test psa_cipher_update after psa_cipher_abort should fail
-
-TEST RESULT: PASSED
-
-******************************************
-
-TEST: 239 | DESCRIPTION: Testing crypto asymmetric APIs
+TEST: 239 | DESCRIPTION: Testing crypto asymmetric APIs | UT: psa_asymmetric_encrypt
 [Info] Executing tests from non-secure
 No test available for the selected crypto configuration
 
@@ -502,7 +309,7 @@ TEST RESULT: SKIPPED (Skip Code=0x2d)
 
 ******************************************
 
-TEST: 240 | DESCRIPTION: Testing crypto asymmetric APIs
+TEST: 240 | DESCRIPTION: Testing crypto asymmetric APIs | UT: psa_asymmetric_decrypt
 [Info] Executing tests from non-secure
 No test available for the selected crypto configuration
 
@@ -510,28 +317,28 @@ TEST RESULT: SKIPPED (Skip Code=0x2d)
 
 ******************************************
 
-TEST: 241 | DESCRIPTION: Testing crypto asymmetric APIs
+TEST: 241 | DESCRIPTION: Testing crypto asymmetric APIs | UT: psa_sign_hash
 [Info] Executing tests from non-secure
-[Check 1] Test psa_asymmetric_sign - ECDSA SECP256R1 SHA-256
-[Check 2] Test psa_asymmetric_sign - Invalid key handle
-[Check 3] Test psa_asymmetric_sign - Zero as key handle
+[Check 1] Test psa_sign_hash - ECDSA SECP256R1 SHA-256
+[Check 2] Test psa_sign_hash - Invalid key handle
+[Check 3] Test psa_sign_hash - Zero as key handle
 
 TEST RESULT: PASSED
 
 ******************************************
 
-TEST: 242 | DESCRIPTION: Testing crypto asymmetric APIs
+TEST: 242 | DESCRIPTION: Testing crypto asymmetric APIs | UT: psa_verify_hash
 [Info] Executing tests from non-secure
-[Check 1] Test psa_asymmetric_verify - ECDSA KEY_PAIR SECP256R1 SHA-256
-[Check 2] Test psa_asymmetric_verify - EC public key
-[Check 3] Test psa_asymmetric_verify - Invalid key handle
-[Check 4] Test psa_asymmetric_verify - Zero as key handle
+[Check 1] Test psa_verify_hash - ECDSA KEY_PAIR SECP256R1 SHA-256
+[Check 2] Test psa_verify_hash - EC public key
+[Check 3] Test psa_verify_hash - Invalid key handle
+[Check 4] Test psa_verify_hash - Zero as key handle
 
 TEST RESULT: PASSED
 
 ******************************************
 
-TEST: 243 | DESCRIPTION: Testing crypto key derivation APIs
+TEST: 243 | DESCRIPTION: Testing crypto key derivation APIs | UT: psa_raw_key_agreement
 [Info] Executing tests from non-secure
 [Check 1] Test psa_raw_key_agreement - Not a key agreement alg
 
@@ -539,22 +346,15 @@ TEST RESULT: PASSED
 
 ******************************************
 
-TEST: 244 | DESCRIPTION: Testing crypto key management APIs
+TEST: 244 | DESCRIPTION: Testing crypto key management APIs | UT: psa_copy_key
 [Info] Executing tests from non-secure
-[Check 1] Test psa_copy_key - 16 Byte AES
-[Check 2] Test psa_copy_key - without copy usage
-[Check 3] Test psa_copy_key - invalid lifetime
-[Check 4] Test psa_copy_key - invalid key type
-[Check 5] Test psa_copy_key - invalid key bits
-[Check 6] Test psa_copy_key - 24 Byte AES
-[Check 7] Test psa_copy_key - 32 Byte AES
-[Check 8] Test psa_copy_key - EC Public key
+[Check 1] Test psa_copy_key - EC Public key
 
 TEST RESULT: PASSED
 
 ******************************************
 
-TEST: 245 | DESCRIPTION: Testing crypto hash functions APIs
+TEST: 245 | DESCRIPTION: Testing crypto hash functions APIs | UT: psa_hash_clone
 [Info] Executing tests from non-secure
 [Check 1] Test psa_hash_clone - SHA256 algorithm
 [Check 2] Test psa_hash_clone - from an inactive source operation
@@ -565,17 +365,17 @@ TEST RESULT: PASSED
 ******************************************
 
 ************ Crypto Suite Report **********
-TOTAL TESTS     : 40
-TOTAL PASSED    : 38
+TOTAL TESTS     : 30
+TOTAL PASSED    : 27
 TOTAL SIM ERROR : 0
 TOTAL FAILED    : 0
-TOTAL SKIPPED   : 2
+TOTAL SKIPPED   : 3
 ******************************************
 
 Running.. Attestation Suite
 ******************************************
 
-TEST: 601 | DESCRIPTION: Testing initial attestation APIs
+TEST: 601 | DESCRIPTION: Testing attestation initial attestation APIs | UT: psa_initial_attestation
 [Info] Executing tests from non-secure
 [Check 1] Test psa_initial_attestation_get_token with Challenge 32
 [Check 2] Test psa_initial_attestation_get_token with Challenge 48
@@ -609,7 +409,7 @@ TOTAL SKIPPED   : 0
 Running.. Storage Suite
 ******************************************
 
-TEST: 401 | DESCRIPTION: UID not found check
+TEST: 401 | DESCRIPTION: UID not found check | UT: ITS
 [Info] Executing tests from non-secure
 
 [Info] Executing ITS tests
@@ -640,7 +440,7 @@ TEST RESULT: PASSED
 
 ******************************************
 
-TEST: 402 | DESCRIPTION: Write once error check
+TEST: 402 | DESCRIPTION: Write once error check | UT: ITS
 [Info] Executing tests from non-secure
 
 [Info] Executing ITS tests
@@ -667,7 +467,7 @@ TEST RESULT: PASSED
 
 ******************************************
 
-TEST: 403 | DESCRIPTION: Insufficient space check
+TEST: 403 | DESCRIPTION: Insufficient space check | UT: ITS
 [Info] Executing tests from non-secure
 
 [Info] Executing ITS tests
@@ -690,7 +490,7 @@ TEST RESULT: PASSED
 
 ******************************************
 
-TEST: 404 | DESCRIPTION: Data Consistency check
+TEST: 404 | DESCRIPTION: Data Consistency check | UT: ITS
 [Info] Executing tests from non-secure
 
 [Info] Executing ITS tests
@@ -705,7 +505,7 @@ TEST RESULT: PASSED
 
 ******************************************
 
-TEST: 405 | DESCRIPTION: Success scenarios check
+TEST: 405 | DESCRIPTION: Success scenarios check | UT: ITS
 [Info] Executing tests from non-secure
 
 [Info] Executing ITS tests
@@ -720,7 +520,7 @@ TEST RESULT: PASSED
 
 ******************************************
 
-TEST: 406 | DESCRIPTION: Check for storage create flags
+TEST: 406 | DESCRIPTION: Check for storage create flags | UT: ITS
 [Info] Executing tests from non-secure
 
 [Info] Executing ITS tests
@@ -737,7 +537,7 @@ TEST RESULT: PASSED
 
 ******************************************
 
-TEST: 407 | DESCRIPTION: Incorrect Size check
+TEST: 407 | DESCRIPTION: Incorrect Size check | UT: ITS
 [Info] Executing tests from non-secure
 
 [Info] Executing ITS tests
@@ -764,7 +564,7 @@ TEST RESULT: PASSED
 
 ******************************************
 
-TEST: 408 | DESCRIPTION: Invalid offset check
+TEST: 408 | DESCRIPTION: Invalid offset check | UT: ITS
 [Info] Executing tests from non-secure
 
 [Info] Executing ITS tests
@@ -779,7 +579,7 @@ TEST RESULT: PASSED
 
 ******************************************
 
-TEST: 409 | DESCRIPTION: Invalid Arguments check
+TEST: 409 | DESCRIPTION: Invalid Arguments check | UT: ITS
 [Info] Executing tests from non-secure
 
 [Info] Executing ITS tests
@@ -804,7 +604,7 @@ TEST RESULT: PASSED
 
 ******************************************
 
-TEST: 410 | DESCRIPTION: UID value zero check
+TEST: 410 | DESCRIPTION: UID value zero check | UT: ITS
 [Info] Executing tests from non-secure
 
 [Info] Executing ITS tests
@@ -821,7 +621,7 @@ TEST RESULT: PASSED
 
 ******************************************
 
-TEST: 411 | DESCRIPTION: Optional APIs: UID not found check
+TEST: 411 | DESCRIPTION: Optional APIs: UID not found check | UT: ITS
 [Info] Executing tests from non-secure
 
 [Info] Executing PS tests
@@ -831,7 +631,7 @@ TEST RESULT: SKIPPED (Skip Code=0x2b)
 
 ******************************************
 
-TEST: 412 | DESCRIPTION: Optional APIs: Invalid arguments and offset invalid
+TEST: 412 | DESCRIPTION: Optional APIs: Invalid arguments and offset invalid | UT: ITS
 [Info] Executing tests from non-secure
 
 [Info] Executing PS tests
@@ -841,7 +641,7 @@ TEST RESULT: SKIPPED (Skip Code=0x2b)
 
 ******************************************
 
-TEST: 413 | DESCRIPTION: Set_Extended and Create api : Success
+TEST: 413 | DESCRIPTION: Set_Extended and Create api : Success | UT: ITS
 [Info] Executing tests from non-secure
 
 [Info] Executing PS tests
@@ -851,7 +651,7 @@ TEST RESULT: SKIPPED (Skip Code=0x2b)
 
 ******************************************
 
-TEST: 414 | DESCRIPTION: Optional APIs not supported check
+TEST: 414 | DESCRIPTION: Optional APIs not supported check | UT: ITS
 [Info] Executing tests from non-secure
 
 [Info] Executing PS tests
@@ -865,7 +665,7 @@ TEST RESULT: PASSED
 
 ******************************************
 
-TEST: 415 | DESCRIPTION: Create API write_once flag value check
+TEST: 415 | DESCRIPTION: Create API write_once flag value check | UT: ITS
 [Info] Executing tests from non-secure
 
 [Info] Executing PS tests
@@ -875,7 +675,7 @@ TEST RESULT: SKIPPED (Skip Code=0x2b)
 
 ******************************************
 
-TEST: 416 | DESCRIPTION: Storage assest capacity modification check
+TEST: 416 | DESCRIPTION: Storage assest capacity modification check | UT: ITS
 [Info] Executing tests from non-secure
 
 [Info] Executing PS tests
@@ -885,7 +685,7 @@ TEST RESULT: SKIPPED (Skip Code=0x2b)
 
 ******************************************
 
-TEST: 417 | DESCRIPTION: Storage assest capacity modification check
+TEST: 417 | DESCRIPTION: Storage assest capacity modification check | UT: ITS
 [Info] Executing tests from non-secure
 
 [Info] Executing PS tests
@@ -904,6 +704,7 @@ TOTAL SKIPPED   : 6
 ******************************************
 
 Entering standby..
+
                              
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -945,3 +746,4 @@ For secure project using <PERIPH_BASE> means access through secure alias (addres
 using <PERIPH_BASE>_NS means access through non-secure alias(address bit A28=0)
 For non-secure project using <PERIPH_BASE> means access through non-secure alias (address bit A28=0). 
 The non-secure project doesn't have access to secure memory or peripherals regions so the secure access is not defined.
+

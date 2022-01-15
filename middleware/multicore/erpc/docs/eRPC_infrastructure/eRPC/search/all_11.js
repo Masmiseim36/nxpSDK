@@ -6,7 +6,7 @@ var searchData=
   ['tcptransport',['TCPTransport',['../classerpc_1_1_t_c_p_transport.html',1,'erpc']]],
   ['tcptransport',['TCPTransport',['../classerpc_1_1_t_c_p_transport.html#aeb1f592078d519301d3bc0742670ed78',1,'erpc::TCPTransport::TCPTransport(bool isServer)'],['../classerpc_1_1_t_c_p_transport.html#ac2f9d1dc1d6aecf85e6672656c8ad487',1,'erpc::TCPTransport::TCPTransport(const char *host, uint16_t port, bool isServer)']]],
   ['thread',['Thread',['../classerpc_1_1_thread.html',1,'erpc']]],
-  ['thread',['Thread',['../classerpc_1_1_thread.html#a5bdd8acf426795e33c858e070ba0e8bb',1,'erpc::Thread::Thread(const char *name=0)'],['../classerpc_1_1_thread.html#aa1eb90e1cae20fc83ab9a631f7c705e3',1,'erpc::Thread::Thread(thread_entry_t entry, uint32_t priority=0, uint32_t stackSize=0, const char *name=0)']]],
+  ['thread',['Thread',['../classerpc_1_1_thread.html#a5bdd8acf426795e33c858e070ba0e8bb',1,'erpc::Thread::Thread(const char *name=0)'],['../classerpc_1_1_thread.html#a22c6807cf41955a6a9a2ad88c455a245',1,'erpc::Thread::Thread(thread_entry_t entry, uint32_t priority=0, uint32_t stackSize=0, const char *name=0, thread_stack_pointer stackPtr=0)']]],
   ['thread_5fentry_5ft',['thread_entry_t',['../group__port__threads.html#ga2c28da51e513ff5423a1c6d6aa56fef9',1,'erpc_threading.h']]],
   ['thread_5fid_5ft',['thread_id_t',['../classerpc_1_1_thread.html#a51c5d04c6a574d77d38db8d59c77a9d9',1,'erpc::Thread']]],
   ['threadentrypoint',['threadEntryPoint',['../classerpc_1_1_thread.html#a549c658e575af0342283a688e58b26eb',1,'erpc::Thread']]],

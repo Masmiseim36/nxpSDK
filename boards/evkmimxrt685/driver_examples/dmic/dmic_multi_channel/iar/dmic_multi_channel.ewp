@@ -225,7 +225,7 @@
           <state>BOOT_HEADER_ENABLE=1</state>
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
-          <state>CODEC_CS42888_ENABLE</state>
+          <state>CODEC_CS42448_ENABLE</state>
           <state>MCUXPRESSO_SDK</state>
         </option>
         <option>
@@ -356,15 +356,15 @@
           <state>$PROJ_DIR$/../../../../../../components/codec/i2c</state>
           <state>$PROJ_DIR$/../../../../../../components/i2c</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/debug_console_lite</state>
-          <state>$PROJ_DIR$/../../../../../../components/codec/cs42888</state>
           <state>$PROJ_DIR$/../../../../../../components/codec</state>
-          <state>$PROJ_DIR$/../../../../../../components/codec/port/cs42888</state>
+          <state>$PROJ_DIR$/../../../../../../components/codec/port/cs42448</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/port</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../flash_config</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../../components/codec/cs42448</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1262,7 +1262,7 @@
           <state>BOOT_HEADER_ENABLE=1</state>
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
-          <state>CODEC_CS42888_ENABLE</state>
+          <state>CODEC_CS42448_ENABLE</state>
           <state>MCUXPRESSO_SDK</state>
         </option>
         <option>
@@ -1393,15 +1393,15 @@
           <state>$PROJ_DIR$/../../../../../../components/codec/i2c</state>
           <state>$PROJ_DIR$/../../../../../../components/i2c</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/debug_console_lite</state>
-          <state>$PROJ_DIR$/../../../../../../components/codec/cs42888</state>
           <state>$PROJ_DIR$/../../../../../../components/codec</state>
-          <state>$PROJ_DIR$/../../../../../../components/codec/port/cs42888</state>
+          <state>$PROJ_DIR$/../../../../../../components/codec/port/cs42448</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/port</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../flash_config</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
+          <state>$PROJ_DIR$/../../../../../../components/codec/cs42448</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -2228,12 +2228,6 @@
       <name>$PROJ_DIR$/../../../../../../components/codec/i2c/fsl_codec_i2c.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../components/codec/cs42888/fsl_cs42888.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../components/codec/cs42888/fsl_cs42888.c</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../../components/codec/fsl_codec_common.h</name>
     </file>
     <file>
@@ -2242,18 +2236,24 @@
     <group>
       <name>port</name>
       <group>
-        <name>cs42888</name>
+        <name>cs42448</name>
         <file>
-          <name>$PROJ_DIR$/../../../../../../components/codec/port/cs42888/fsl_codec_cs42888_adapter.c</name>
+          <name>$PROJ_DIR$/../../../../../../components/codec/port/cs42448/fsl_codec_cs42448_adapter.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../components/codec/port/cs42888/fsl_codec_cs42888_adapter.h</name>
+          <name>$PROJ_DIR$/../../../../../../components/codec/port/cs42448/fsl_codec_cs42448_adapter.h</name>
         </file>
       </group>
       <file>
         <name>$PROJ_DIR$/../../../../../../components/codec/port/fsl_codec_adapter.h</name>
       </file>
     </group>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../components/codec/cs42448/fsl_cs42448.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../components/codec/cs42448/fsl_cs42448.c</name>
+    </file>
   </group>
   <group>
     <name>component</name>

@@ -3,12 +3,16 @@ Overview
 The Trusted Firmware M (TF-M) demo application provides a sanity check for the TF-M core and RoT services.
 It can be used as a template for a new application which requires functionality of the TF-M Secure Services.
 
+NOTE: The TF-M main() functions have a non-standard location:
+       - Secure main() is in the tf-m\secure_fw\spm\cmsis_psa\main.c file.
+       - Non-Secure main() is in the tf-m-tests\app\main_ns.c file.
+
 Toolchain supported
 ===================
 - GCC ARM Embedded  10.2.1
 - Keil MDK  5.34
 - IAR embedded Workbench  9.10.2
-- MCUXpresso  11.4.0
+- MCUXpresso  11.5.0
 
 Hardware requirements
 =====================
@@ -28,7 +32,7 @@ Prepare the Demo
     - No parity
     - One stop bit
     - No flow control
-3.  Use secure project to download the program to target board.
+3.  Use secure project to download the program to target board. Please refer to "TrustZone application debugging" below for details.
 4.  Launch the debugger in your IDE to begin running the demo.
 Note: Refering to the "Getting started with MCUXpresso SDK for EVK-MIMXRT685" documentation for more information
       on how to build and run the TrustZone examples in various IDEs.
@@ -38,7 +42,7 @@ Running the demo
 The log below shows the output of the TFM demo in the terminal window:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 [Sec Thread] Secure image initializing!
-Booting TFM v1.3.0
+Booting TFM v1.4.0
 Non-Secure system starting...
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 

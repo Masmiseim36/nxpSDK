@@ -21,9 +21,9 @@ target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
 
 include(middleware_freertos-kernel_MIMXRT685S_cm33)
 
-include(middleware_sdmmc_sdio_MIMXRT685S_cm33)
-
 include(utility_debug_console_MIMXRT685S_cm33)
 
 include(middleware_wifi_wifidriver_MIMXRT685S_cm33)
+
+include(middleware_lwip_MIMXRT685S_cm33)
 

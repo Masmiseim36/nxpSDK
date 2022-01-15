@@ -90,7 +90,7 @@ include(device_MIMXRT685S_CMSIS_MIMXRT685S_cm33)
 
 include(component_usart_adapter_MIMXRT685S_cm33)
 
-include(driver_flash_config_MIMXRT685S_cm33)
+include(driver_flash_config_evkmimxrt685_MIMXRT685S_cm33)
 
 include(driver_flexspi_MIMXRT685S_cm33)
 

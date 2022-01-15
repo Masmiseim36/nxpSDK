@@ -332,9 +332,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../app_config.h -fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>DSP_IMAGE_COPY_TO_RAM=0, DEBUG, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, USE_RTOS=1, PRINTF_ADVANCED_ENABLE=1, SDK_DEBUGCONSOLE_UART, DSP_NCACHE, SDK_I2C_BASED_COMPONENT_USED=1, BOARD_USE_CODEC=1, CODEC_WM8904_ENABLE, SDIO_ENABLED, SERIAL_PORT_TYPE_UART=1, SDK_OS_FREE_RTOS, MCUXPRESSO_SDK</Define>
+              <Define>DSP_IMAGE_COPY_TO_RAM=0, DEBUG, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, USE_RTOS=1, PRINTF_ADVANCED_ENABLE=1, SDK_DEBUGCONSOLE_UART, DSP_NCACHE, SDIO_ENABLED, SDK_I2C_BASED_COMPONENT_USED=1, BOARD_USE_CODEC=1, CODEC_WM8904_ENABLE, SERIAL_PORT_TYPE_UART=1, SDK_OS_FREE_RTOS, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../..;../../../../../../devices/MIMXRT685S/drivers;../../../../../../components/codec/wm8904;../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../../components/codec;../../../../../../components/codec/port/wm8904;../../../../../../components/codec/port;../../../../../../components/codec/i2c;../../../../../../components/i2c;../../../../../../middleware/lwip/port;../../../../../../middleware/lwip/src;../../../../../../middleware/lwip/src/include;../../../../../../devices/MIMXRT685S/utilities/str;../../../../../../devices/MIMXRT685S/utilities/debug_console;../../../../../../middleware/wifi/dhcpd;../../../../../../middleware/wifi/incl/port/lwip;../../../../../../middleware/wifi/port/lwip;../../../../../../middleware/sdmmc/sdio;../../../../../../middleware/sdmmc/common;../../../../../../middleware/sdmmc/host/usdhc;../../../../../../middleware/multicore/rpmsg_lite/lib/include/platform/imxrt600_m33;../../../../../../components/pca9420;../../../../../../devices/MIMXRT685S;../../../../../../components/uart;../../../../flash_config;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../CMSIS/Core/Include;../../../../../../rtos/freertos/freertos_kernel/include;../../../../../../middleware/wifi/incl;../../../../../../middleware/wifi/incl/port/os;../../../../../../middleware/wifi/incl/wifidriver;../../../../../../middleware/wifi/incl/wlcmgr;../../../../../../middleware/wifi/wifi_bt_firmware;../../../../../../middleware/wifi/wifidriver;../../../../../../middleware/wifi/wifidriver/incl;../../../../../../middleware/sdmmc/osa;../../../../../../components/osa;../../../../../../middleware/multicore/rpmsg_lite/lib/include</IncludePath>
+              <IncludePath>..;../../../..;../../../../../../devices/MIMXRT685S/drivers;../../../../../../middleware/multicore/rpmsg_lite/lib/include;../../../../../../middleware/multicore/rpmsg_lite/lib/include/environment/freertos;../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../../middleware/lwip/port;../../../../../../middleware/lwip/src;../../../../../../middleware/lwip/src/include;../../../../../../devices/MIMXRT685S/utilities/str;../../../../../../devices/MIMXRT685S/utilities/debug_console;../../../../../../middleware/wifi/dhcpd;../../../../../../middleware/wifi/incl/port/lwip;../../../../../../middleware/wifi/port/lwip;../../../../../../components/wifi_bt_module/AzureWave/tx_pwr_limits;../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits;../../../../../../middleware/sdmmc/sdio;../../../../../../middleware/sdmmc/common;../../../../../../middleware/sdmmc/host/usdhc;../../../../../../middleware/multicore/rpmsg_lite/lib/include/platform/imxrt600_m33;../../../../../../components/pca9420;../../../../../../components/codec/wm8904;../../../../../../components/codec;../../../../../../components/codec/port/wm8904;../../../../../../components/codec/port;../../../../../../components/codec/i2c;../../../../../../components/i2c;../../../../../../devices/MIMXRT685S;../../../../../../components/uart;../../../../flash_config;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../CMSIS/Core/Include;../../../../../../rtos/freertos/freertos_kernel/include;../../../../../../middleware/wifi/incl;../../../../../../middleware/wifi/incl/port/os;../../../../../../middleware/wifi/incl/wifidriver;../../../../../../middleware/wifi/incl/wlcmgr;../../../../../../middleware/wifi/wifi_bt_firmware;../../../../../../middleware/wifi/wifidriver;../../../../../../middleware/wifi/wifidriver/incl;../../../../../../middleware/sdmmc/osa;../../../../../../components/osa</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -472,6 +472,18 @@
               <FileName>incbin.S</FileName>
               <FileType>2</FileType>
               <FilePath>../incbin.S</FilePath>
+              <FileOption>
+                                  <CommonProperty>
+                                    <IncludeInBuild>2</IncludeInBuild>
+                                    <AlwaysBuild>1</AlwaysBuild>
+                                    <GenerateAssemblyFile>2</GenerateAssemblyFile>
+                                    <AssembleAssemblyFile>2</AssembleAssemblyFile>
+                                    <PublicsOnly>2</PublicsOnly>
+                                    <StopOnExitCode>11</StopOnExitCode>
+                                  </CommonProperty>
+                                  <FileArmAds>
+                                  </FileArmAds>
+                                </FileOption>
             </File>
             <File>
               <FileName>wifi_config.h</FileName>
@@ -522,6 +534,16 @@
               <FileName>sdmmc_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../sdmmc_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>wifi_bt_config.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../wifi_bt_config.c</FilePath>
+            </File>
+            <File>
+              <FileName>wifi_bt_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../wifi_bt_config.h</FilePath>
             </File>
             <File>
               <FileName>pmic_support.c</FileName>
@@ -609,14 +631,24 @@
               <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_i2c.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_i3c.h</FileName>
+              <FileName>fsl_gpio.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_i3c.h</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_gpio.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_i3c.c</FileName>
+              <FileName>fsl_gpio.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_i3c.c</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_gpio.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_usdhc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_usdhc.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_usdhc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_usdhc.h</FilePath>
             </File>
             <File>
               <FileName>fsl_common.h</FileName>
@@ -637,26 +669,6 @@
               <FileName>fsl_common_arm.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_common_arm.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_gpio.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_gpio.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_gpio.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_gpio.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_usdhc.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_usdhc.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_usdhc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_usdhc.h</FilePath>
             </File>
             <File>
               <FileName>fsl_power.h</FileName>
@@ -707,6 +719,16 @@
               <FileName>fsl_mu.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_mu.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_i3c.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_i3c.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_i3c.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_i3c.c</FilePath>
             </File>
             <File>
               <FileName>fsl_flexspi.c</FileName>
@@ -761,37 +783,112 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>codec</GroupName>
+          <GroupName>rpmsg_lite/include</GroupName>
           <Files>
             <File>
-              <FileName>fsl_wm8904.h</FileName>
+              <FileName>rpmsg_lite.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../components/codec/wm8904/fsl_wm8904.h</FilePath>
+              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/include/rpmsg_lite.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_wm8904.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/codec/wm8904/fsl_wm8904.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_codec_common.h</FileName>
+              <FileName>rpmsg_ns.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../components/codec/fsl_codec_common.h</FilePath>
+              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/include/rpmsg_ns.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_codec_common.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/codec/fsl_codec_common.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_codec_i2c.h</FileName>
+              <FileName>llist.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../components/codec/i2c/fsl_codec_i2c.h</FilePath>
+              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/include/llist.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_codec_i2c.c</FileName>
+              <FileName>rpmsg_default_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/include/rpmsg_default_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>virtio_ring.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/include/virtio_ring.h</FilePath>
+            </File>
+            <File>
+              <FileName>virtqueue.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/include/virtqueue.h</FilePath>
+            </File>
+            <File>
+              <FileName>rpmsg_compiler.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/include/rpmsg_compiler.h</FilePath>
+            </File>
+            <File>
+              <FileName>rpmsg_env.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/include/rpmsg_env.h</FilePath>
+            </File>
+            <File>
+              <FileName>rpmsg_queue.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/include/rpmsg_queue.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>rpmsg_lite/common</GroupName>
+          <Files>
+            <File>
+              <FileName>llist.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../components/codec/i2c/fsl_codec_i2c.c</FilePath>
+              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/common/llist.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>rpmsg_lite/rpmsg_lite</GroupName>
+          <Files>
+            <File>
+              <FileName>rpmsg_lite.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/rpmsg_lite/rpmsg_lite.c</FilePath>
+            </File>
+            <File>
+              <FileName>rpmsg_ns.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/rpmsg_lite/rpmsg_ns.c</FilePath>
+            </File>
+            <File>
+              <FileName>rpmsg_queue.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/rpmsg_lite/rpmsg_queue.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>rpmsg_lite/virtio</GroupName>
+          <Files>
+            <File>
+              <FileName>virtqueue.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/virtio/virtqueue.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>rpmsg_lite/rpmsg_lite/porting/environment</GroupName>
+          <Files>
+            <File>
+              <FileName>rpmsg_env_freertos.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/rpmsg_lite/porting/environment/rpmsg_env_freertos.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>rpmsg_lite/include/environment/freertos</GroupName>
+          <Files>
+            <File>
+              <FileName>rpmsg_env_specific.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/include/environment/freertos/rpmsg_env_specific.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -817,46 +914,6 @@
               <FileName>portmacro.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33_NTZ/non_secure/portmacro.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>codec/port/wm8904</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_codec_wm8904_adapter.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/codec/port/wm8904/fsl_codec_wm8904_adapter.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_codec_wm8904_adapter.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/codec/port/wm8904/fsl_codec_wm8904_adapter.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>codec/port</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_codec_adapter.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/codec/port/fsl_codec_adapter.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>component/i2c</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_adapter_i2c.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/i2c/fsl_adapter_i2c.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_adapter_i3c.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/i2c/fsl_adapter_i3c.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2126,6 +2183,96 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>component/wifi_bt_module/AzureWave/tx_pwr_limits</GroupName>
+          <Files>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_WW.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/wifi_bt_module/AzureWave/tx_pwr_limits/wlan_txpwrlimit_cfg_WW.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/wifi_bt_module/Murata/tx_pwr_limits</GroupName>
+          <Files>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_1XK_CA.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1XK_CA.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_1XK_EU.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1XK_EU.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_1XK_JP.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1XK_JP.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_1XK_US.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1XK_US.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_1XK_WW.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1XK_WW.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_1ZM_CA.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1ZM_CA.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_1ZM_EU.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1ZM_EU.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_1ZM_JP.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1ZM_JP.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_1ZM_US.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1ZM_US.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_1ZM_WW.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1ZM_WW.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_2DS_CA.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_2DS_CA.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_2DS_EU.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_2DS_EU.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_2DS_JP.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_2DS_JP.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_2DS_US.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_2DS_US.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_2DS_WW.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_2DS_WW.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>sdmmc/src</GroupName>
           <Files>
             <File>
@@ -2201,13 +2348,18 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>rpmsg_lite/porting</GroupName>
+          <GroupName>rpmsg_lite/include/platform/imxrt600_m33</GroupName>
           <Files>
             <File>
               <FileName>rpmsg_platform.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/include/platform/imxrt600_m33/rpmsg_platform.h</FilePath>
             </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>rpmsg_lite/rpmsg_lite/porting/platform/imxrt600_m33</GroupName>
+          <Files>
             <File>
               <FileName>rpmsg_platform.c</FileName>
               <FileType>1</FileType>
@@ -2227,6 +2379,81 @@
               <FileName>fsl_pca9420.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../components/pca9420/fsl_pca9420.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>codec</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_wm8904.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/codec/wm8904/fsl_wm8904.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_wm8904.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/codec/wm8904/fsl_wm8904.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_codec_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/codec/fsl_codec_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_codec_common.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/codec/fsl_codec_common.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_codec_i2c.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/codec/i2c/fsl_codec_i2c.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_codec_i2c.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/codec/i2c/fsl_codec_i2c.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>codec/port/wm8904</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_codec_wm8904_adapter.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/codec/port/wm8904/fsl_codec_wm8904_adapter.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_codec_wm8904_adapter.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/codec/port/wm8904/fsl_codec_wm8904_adapter.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>codec/port</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_codec_adapter.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/codec/port/fsl_codec_adapter.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/i2c</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_adapter_i2c.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/i2c/fsl_adapter_i2c.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_adapter_i3c.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/i2c/fsl_adapter_i3c.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2524,6 +2751,11 @@
               <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/StackMacros.h</FilePath>
             </File>
             <File>
+              <FileName>stdint.readme</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/stdint.readme</FilePath>
+            </File>
+            <File>
               <FileName>stream_buffer.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/stream_buffer.h</FilePath>
@@ -2579,9 +2811,9 @@
               <FilePath>../../../../../../middleware/wifi/incl/dhcp-server.h</FilePath>
             </File>
             <File>
-              <FileName>wifi_cal_data_ext.h</FileName>
+              <FileName>WIFI_IW416_BOARD_AW_AM457_CAL_DATA_EXT.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/wifi/incl/wifi_cal_data_ext.h</FilePath>
+              <FilePath>../../../../../../middleware/wifi/incl/WIFI_IW416_BOARD_AW_AM457_CAL_DATA_EXT.h</FilePath>
             </File>
             <File>
               <FileName>wm_utils.h</FileName>
@@ -3037,91 +3269,6 @@
               <FileName>fsl_os_abstraction_free_rtos.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../components/osa/fsl_os_abstraction_free_rtos.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>rpmsg_lite</GroupName>
-          <Files>
-            <File>
-              <FileName>rpmsg_lite.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/include/rpmsg_lite.h</FilePath>
-            </File>
-            <File>
-              <FileName>rpmsg_ns.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/include/rpmsg_ns.h</FilePath>
-            </File>
-            <File>
-              <FileName>llist.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/include/llist.h</FilePath>
-            </File>
-            <File>
-              <FileName>rpmsg_default_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/include/rpmsg_default_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>virtio_ring.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/include/virtio_ring.h</FilePath>
-            </File>
-            <File>
-              <FileName>virtqueue.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/include/virtqueue.h</FilePath>
-            </File>
-            <File>
-              <FileName>rpmsg_compiler.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/include/rpmsg_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>llist.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/common/llist.c</FilePath>
-            </File>
-            <File>
-              <FileName>rpmsg_lite.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/rpmsg_lite/rpmsg_lite.c</FilePath>
-            </File>
-            <File>
-              <FileName>rpmsg_ns.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/rpmsg_lite/rpmsg_ns.c</FilePath>
-            </File>
-            <File>
-              <FileName>virtqueue.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/virtio/virtqueue.c</FilePath>
-            </File>
-            <File>
-              <FileName>rpmsg_env.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/include/rpmsg_env.h</FilePath>
-            </File>
-            <File>
-              <FileName>rpmsg_queue.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/include/rpmsg_queue.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>rpmsg_lite/env/freertos</GroupName>
-          <Files>
-            <File>
-              <FileName>rpmsg_env_freertos.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/rpmsg_lite/porting/environment/rpmsg_env_freertos.c</FilePath>
-            </File>
-            <File>
-              <FileName>rpmsg_queue.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/rpmsg_lite/rpmsg_queue.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -3456,9 +3603,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../app_config.h -fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>DSP_IMAGE_COPY_TO_RAM=1, NDEBUG, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, USE_RTOS=1, PRINTF_ADVANCED_ENABLE=1, SDK_DEBUGCONSOLE_UART, DSP_NCACHE, SDK_I2C_BASED_COMPONENT_USED=1, BOARD_USE_CODEC=1, CODEC_WM8904_ENABLE, SDIO_ENABLED, SERIAL_PORT_TYPE_UART=1, SDK_OS_FREE_RTOS, MCUXPRESSO_SDK</Define>
+              <Define>DSP_IMAGE_COPY_TO_RAM=1, NDEBUG, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, USE_RTOS=1, PRINTF_ADVANCED_ENABLE=1, SDK_DEBUGCONSOLE_UART, DSP_NCACHE, SDIO_ENABLED, SDK_I2C_BASED_COMPONENT_USED=1, BOARD_USE_CODEC=1, CODEC_WM8904_ENABLE, SERIAL_PORT_TYPE_UART=1, SDK_OS_FREE_RTOS, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../..;../../../../../../devices/MIMXRT685S/drivers;../../../../../../components/codec/wm8904;../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../../components/codec;../../../../../../components/codec/port/wm8904;../../../../../../components/codec/port;../../../../../../components/codec/i2c;../../../../../../components/i2c;../../../../../../middleware/lwip/port;../../../../../../middleware/lwip/src;../../../../../../middleware/lwip/src/include;../../../../../../devices/MIMXRT685S/utilities/str;../../../../../../devices/MIMXRT685S/utilities/debug_console;../../../../../../middleware/wifi/dhcpd;../../../../../../middleware/wifi/incl/port/lwip;../../../../../../middleware/wifi/port/lwip;../../../../../../middleware/sdmmc/sdio;../../../../../../middleware/sdmmc/common;../../../../../../middleware/sdmmc/host/usdhc;../../../../../../middleware/multicore/rpmsg_lite/lib/include/platform/imxrt600_m33;../../../../../../components/pca9420;../../../../../../devices/MIMXRT685S;../../../../../../components/uart;../../../../flash_config;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../CMSIS/Core/Include;../../../../../../rtos/freertos/freertos_kernel/include;../../../../../../middleware/wifi/incl;../../../../../../middleware/wifi/incl/port/os;../../../../../../middleware/wifi/incl/wifidriver;../../../../../../middleware/wifi/incl/wlcmgr;../../../../../../middleware/wifi/wifi_bt_firmware;../../../../../../middleware/wifi/wifidriver;../../../../../../middleware/wifi/wifidriver/incl;../../../../../../middleware/sdmmc/osa;../../../../../../components/osa;../../../../../../middleware/multicore/rpmsg_lite/lib/include</IncludePath>
+              <IncludePath>..;../../../..;../../../../../../devices/MIMXRT685S/drivers;../../../../../../middleware/multicore/rpmsg_lite/lib/include;../../../../../../middleware/multicore/rpmsg_lite/lib/include/environment/freertos;../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../../middleware/lwip/port;../../../../../../middleware/lwip/src;../../../../../../middleware/lwip/src/include;../../../../../../devices/MIMXRT685S/utilities/str;../../../../../../devices/MIMXRT685S/utilities/debug_console;../../../../../../middleware/wifi/dhcpd;../../../../../../middleware/wifi/incl/port/lwip;../../../../../../middleware/wifi/port/lwip;../../../../../../components/wifi_bt_module/AzureWave/tx_pwr_limits;../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits;../../../../../../middleware/sdmmc/sdio;../../../../../../middleware/sdmmc/common;../../../../../../middleware/sdmmc/host/usdhc;../../../../../../middleware/multicore/rpmsg_lite/lib/include/platform/imxrt600_m33;../../../../../../components/pca9420;../../../../../../components/codec/wm8904;../../../../../../components/codec;../../../../../../components/codec/port/wm8904;../../../../../../components/codec/port;../../../../../../components/codec/i2c;../../../../../../components/i2c;../../../../../../devices/MIMXRT685S;../../../../../../components/uart;../../../../flash_config;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../CMSIS/Core/Include;../../../../../../rtos/freertos/freertos_kernel/include;../../../../../../middleware/wifi/incl;../../../../../../middleware/wifi/incl/port/os;../../../../../../middleware/wifi/incl/wifidriver;../../../../../../middleware/wifi/incl/wlcmgr;../../../../../../middleware/wifi/wifi_bt_firmware;../../../../../../middleware/wifi/wifidriver;../../../../../../middleware/wifi/wifidriver/incl;../../../../../../middleware/sdmmc/osa;../../../../../../components/osa</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -3596,6 +3743,18 @@
               <FileName>incbin.S</FileName>
               <FileType>2</FileType>
               <FilePath>../incbin.S</FilePath>
+              <FileOption>
+                                  <CommonProperty>
+                                    <IncludeInBuild>2</IncludeInBuild>
+                                    <AlwaysBuild>1</AlwaysBuild>
+                                    <GenerateAssemblyFile>2</GenerateAssemblyFile>
+                                    <AssembleAssemblyFile>2</AssembleAssemblyFile>
+                                    <PublicsOnly>2</PublicsOnly>
+                                    <StopOnExitCode>11</StopOnExitCode>
+                                  </CommonProperty>
+                                  <FileArmAds>
+                                  </FileArmAds>
+                                </FileOption>
             </File>
             <File>
               <FileName>wifi_config.h</FileName>
@@ -3646,6 +3805,16 @@
               <FileName>sdmmc_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../sdmmc_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>wifi_bt_config.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../wifi_bt_config.c</FilePath>
+            </File>
+            <File>
+              <FileName>wifi_bt_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../wifi_bt_config.h</FilePath>
             </File>
             <File>
               <FileName>pmic_support.c</FileName>
@@ -3733,14 +3902,24 @@
               <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_i2c.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_i3c.h</FileName>
+              <FileName>fsl_gpio.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_i3c.h</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_gpio.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_i3c.c</FileName>
+              <FileName>fsl_gpio.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_i3c.c</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_gpio.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_usdhc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_usdhc.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_usdhc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_usdhc.h</FilePath>
             </File>
             <File>
               <FileName>fsl_common.h</FileName>
@@ -3761,26 +3940,6 @@
               <FileName>fsl_common_arm.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_common_arm.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_gpio.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_gpio.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_gpio.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_gpio.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_usdhc.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_usdhc.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_usdhc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_usdhc.h</FilePath>
             </File>
             <File>
               <FileName>fsl_power.h</FileName>
@@ -3831,6 +3990,16 @@
               <FileName>fsl_mu.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_mu.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_i3c.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_i3c.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_i3c.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_i3c.c</FilePath>
             </File>
             <File>
               <FileName>fsl_flexspi.c</FileName>
@@ -3885,37 +4054,112 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>codec</GroupName>
+          <GroupName>rpmsg_lite/include</GroupName>
           <Files>
             <File>
-              <FileName>fsl_wm8904.h</FileName>
+              <FileName>rpmsg_lite.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../components/codec/wm8904/fsl_wm8904.h</FilePath>
+              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/include/rpmsg_lite.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_wm8904.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/codec/wm8904/fsl_wm8904.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_codec_common.h</FileName>
+              <FileName>rpmsg_ns.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../components/codec/fsl_codec_common.h</FilePath>
+              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/include/rpmsg_ns.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_codec_common.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/codec/fsl_codec_common.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_codec_i2c.h</FileName>
+              <FileName>llist.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../components/codec/i2c/fsl_codec_i2c.h</FilePath>
+              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/include/llist.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_codec_i2c.c</FileName>
+              <FileName>rpmsg_default_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/include/rpmsg_default_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>virtio_ring.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/include/virtio_ring.h</FilePath>
+            </File>
+            <File>
+              <FileName>virtqueue.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/include/virtqueue.h</FilePath>
+            </File>
+            <File>
+              <FileName>rpmsg_compiler.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/include/rpmsg_compiler.h</FilePath>
+            </File>
+            <File>
+              <FileName>rpmsg_env.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/include/rpmsg_env.h</FilePath>
+            </File>
+            <File>
+              <FileName>rpmsg_queue.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/include/rpmsg_queue.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>rpmsg_lite/common</GroupName>
+          <Files>
+            <File>
+              <FileName>llist.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../components/codec/i2c/fsl_codec_i2c.c</FilePath>
+              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/common/llist.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>rpmsg_lite/rpmsg_lite</GroupName>
+          <Files>
+            <File>
+              <FileName>rpmsg_lite.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/rpmsg_lite/rpmsg_lite.c</FilePath>
+            </File>
+            <File>
+              <FileName>rpmsg_ns.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/rpmsg_lite/rpmsg_ns.c</FilePath>
+            </File>
+            <File>
+              <FileName>rpmsg_queue.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/rpmsg_lite/rpmsg_queue.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>rpmsg_lite/virtio</GroupName>
+          <Files>
+            <File>
+              <FileName>virtqueue.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/virtio/virtqueue.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>rpmsg_lite/rpmsg_lite/porting/environment</GroupName>
+          <Files>
+            <File>
+              <FileName>rpmsg_env_freertos.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/rpmsg_lite/porting/environment/rpmsg_env_freertos.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>rpmsg_lite/include/environment/freertos</GroupName>
+          <Files>
+            <File>
+              <FileName>rpmsg_env_specific.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/include/environment/freertos/rpmsg_env_specific.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -3941,46 +4185,6 @@
               <FileName>portmacro.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33_NTZ/non_secure/portmacro.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>codec/port/wm8904</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_codec_wm8904_adapter.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/codec/port/wm8904/fsl_codec_wm8904_adapter.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_codec_wm8904_adapter.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/codec/port/wm8904/fsl_codec_wm8904_adapter.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>codec/port</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_codec_adapter.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/codec/port/fsl_codec_adapter.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>component/i2c</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_adapter_i2c.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/i2c/fsl_adapter_i2c.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_adapter_i3c.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/i2c/fsl_adapter_i3c.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -5250,6 +5454,96 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>component/wifi_bt_module/AzureWave/tx_pwr_limits</GroupName>
+          <Files>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_WW.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/wifi_bt_module/AzureWave/tx_pwr_limits/wlan_txpwrlimit_cfg_WW.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/wifi_bt_module/Murata/tx_pwr_limits</GroupName>
+          <Files>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_1XK_CA.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1XK_CA.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_1XK_EU.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1XK_EU.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_1XK_JP.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1XK_JP.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_1XK_US.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1XK_US.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_1XK_WW.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1XK_WW.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_1ZM_CA.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1ZM_CA.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_1ZM_EU.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1ZM_EU.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_1ZM_JP.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1ZM_JP.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_1ZM_US.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1ZM_US.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_1ZM_WW.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1ZM_WW.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_2DS_CA.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_2DS_CA.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_2DS_EU.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_2DS_EU.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_2DS_JP.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_2DS_JP.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_2DS_US.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_2DS_US.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_2DS_WW.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_2DS_WW.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>sdmmc/src</GroupName>
           <Files>
             <File>
@@ -5325,13 +5619,18 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>rpmsg_lite/porting</GroupName>
+          <GroupName>rpmsg_lite/include/platform/imxrt600_m33</GroupName>
           <Files>
             <File>
               <FileName>rpmsg_platform.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/include/platform/imxrt600_m33/rpmsg_platform.h</FilePath>
             </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>rpmsg_lite/rpmsg_lite/porting/platform/imxrt600_m33</GroupName>
+          <Files>
             <File>
               <FileName>rpmsg_platform.c</FileName>
               <FileType>1</FileType>
@@ -5351,6 +5650,81 @@
               <FileName>fsl_pca9420.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../components/pca9420/fsl_pca9420.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>codec</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_wm8904.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/codec/wm8904/fsl_wm8904.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_wm8904.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/codec/wm8904/fsl_wm8904.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_codec_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/codec/fsl_codec_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_codec_common.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/codec/fsl_codec_common.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_codec_i2c.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/codec/i2c/fsl_codec_i2c.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_codec_i2c.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/codec/i2c/fsl_codec_i2c.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>codec/port/wm8904</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_codec_wm8904_adapter.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/codec/port/wm8904/fsl_codec_wm8904_adapter.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_codec_wm8904_adapter.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/codec/port/wm8904/fsl_codec_wm8904_adapter.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>codec/port</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_codec_adapter.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/codec/port/fsl_codec_adapter.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/i2c</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_adapter_i2c.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/i2c/fsl_adapter_i2c.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_adapter_i3c.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/i2c/fsl_adapter_i3c.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -5648,6 +6022,11 @@
               <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/StackMacros.h</FilePath>
             </File>
             <File>
+              <FileName>stdint.readme</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/stdint.readme</FilePath>
+            </File>
+            <File>
               <FileName>stream_buffer.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/stream_buffer.h</FilePath>
@@ -5703,9 +6082,9 @@
               <FilePath>../../../../../../middleware/wifi/incl/dhcp-server.h</FilePath>
             </File>
             <File>
-              <FileName>wifi_cal_data_ext.h</FileName>
+              <FileName>WIFI_IW416_BOARD_AW_AM457_CAL_DATA_EXT.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/wifi/incl/wifi_cal_data_ext.h</FilePath>
+              <FilePath>../../../../../../middleware/wifi/incl/WIFI_IW416_BOARD_AW_AM457_CAL_DATA_EXT.h</FilePath>
             </File>
             <File>
               <FileName>wm_utils.h</FileName>
@@ -6161,91 +6540,6 @@
               <FileName>fsl_os_abstraction_free_rtos.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../components/osa/fsl_os_abstraction_free_rtos.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>rpmsg_lite</GroupName>
-          <Files>
-            <File>
-              <FileName>rpmsg_lite.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/include/rpmsg_lite.h</FilePath>
-            </File>
-            <File>
-              <FileName>rpmsg_ns.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/include/rpmsg_ns.h</FilePath>
-            </File>
-            <File>
-              <FileName>llist.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/include/llist.h</FilePath>
-            </File>
-            <File>
-              <FileName>rpmsg_default_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/include/rpmsg_default_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>virtio_ring.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/include/virtio_ring.h</FilePath>
-            </File>
-            <File>
-              <FileName>virtqueue.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/include/virtqueue.h</FilePath>
-            </File>
-            <File>
-              <FileName>rpmsg_compiler.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/include/rpmsg_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>llist.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/common/llist.c</FilePath>
-            </File>
-            <File>
-              <FileName>rpmsg_lite.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/rpmsg_lite/rpmsg_lite.c</FilePath>
-            </File>
-            <File>
-              <FileName>rpmsg_ns.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/rpmsg_lite/rpmsg_ns.c</FilePath>
-            </File>
-            <File>
-              <FileName>virtqueue.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/virtio/virtqueue.c</FilePath>
-            </File>
-            <File>
-              <FileName>rpmsg_env.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/include/rpmsg_env.h</FilePath>
-            </File>
-            <File>
-              <FileName>rpmsg_queue.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/include/rpmsg_queue.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>rpmsg_lite/env/freertos</GroupName>
-          <Files>
-            <File>
-              <FileName>rpmsg_env_freertos.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/rpmsg_lite/porting/environment/rpmsg_env_freertos.c</FilePath>
-            </File>
-            <File>
-              <FileName>rpmsg_queue.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/multicore/rpmsg_lite/lib/rpmsg_lite/rpmsg_queue.c</FilePath>
             </File>
           </Files>
         </Group>

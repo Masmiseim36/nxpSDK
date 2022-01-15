@@ -49,8 +49,8 @@ var group__infra__codec =
       [ "readCallback", "classerpc_1_1_basic_codec.html#a5a0125e98aa650b4f9bd1aa1db552223", null ]
     ] ],
     [ "BasicCodecFactory", "classerpc_1_1_basic_codec_factory.html", [
-      [ "create", "classerpc_1_1_basic_codec_factory.html#aa27b971dad474de5c5316c5cd13cf4ff", null ],
-      [ "dispose", "classerpc_1_1_basic_codec_factory.html#a1504f8b65f7abe7da749677039cd050f", null ]
+      [ "create", "classerpc_1_1_basic_codec_factory.html#ad498ae49e4180191cc8ec63c51f6aedd", null ],
+      [ "dispose", "classerpc_1_1_basic_codec_factory.html#ae2d5f6edf7255cb0bdacba3e0040f51a", null ]
     ] ],
     [ "Codec", "classerpc_1_1_codec.html", [
       [ "Codec", "classerpc_1_1_codec.html#a39f0596a2957fb80bf3b5de6a4420f26", null ],

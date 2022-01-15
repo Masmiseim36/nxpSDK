@@ -133,7 +133,7 @@ int main(void)
     BOARD_DSP_Init();
 
 #if DSP_IMAGE_COPY_TO_RAM
-    PRINTF("DSP image copied to 0x%x\r\n", DSP_BOOT_ADDRESS);
+    PRINTF("DSP image copied to DSP TCM\r\n");
 #endif
 
     /* Initialize application context */

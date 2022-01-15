@@ -16,6 +16,7 @@
 #include "config_nn.h"
 #include "srtm_config.h"
 
+unsigned int xa_nn_get_version();
 int handleMSG_NN(srtm_message *msg);
 
 #endif // __DSP_NN_H__

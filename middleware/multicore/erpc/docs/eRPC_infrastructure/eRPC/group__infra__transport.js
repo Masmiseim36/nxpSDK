@@ -55,6 +55,8 @@ var group__infra__transport =
       [ "clientReceive", "classerpc_1_1_transport_arbitrator.html#aba5660b83cd5f9ca55eaa362c84c7916", null ],
       [ "send", "classerpc_1_1_transport_arbitrator.html#a84e50c39ad807ebc1bdfce2bf4eef1ea", null ],
       [ "setCrc16", "classerpc_1_1_transport_arbitrator.html#a1f8677af45f5637f6714c5f10593ca8d", null ],
+      [ "hasMessage", "classerpc_1_1_transport_arbitrator.html#ac8e0873216bf60c047e0c7bbb8df4cfd", null ],
+      [ "createPendingClient", "classerpc_1_1_transport_arbitrator.html#ac6182b2b87601dc70d96daca6821b406", null ],
       [ "addPendingClient", "classerpc_1_1_transport_arbitrator.html#a9adeefc97b7e3fa1fdabf36739ad1715", null ],
       [ "removePendingClient", "classerpc_1_1_transport_arbitrator.html#a7e2fe51df4bf80ec12718b1754dc42c5", null ],
       [ "freeClientList", "classerpc_1_1_transport_arbitrator.html#a17b725cac5a35715e0676e92a6c02114", null ],

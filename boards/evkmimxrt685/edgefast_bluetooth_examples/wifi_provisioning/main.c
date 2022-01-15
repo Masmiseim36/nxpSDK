@@ -75,13 +75,21 @@
 #define LOGGING_TASK_STACK_SIZE (200)
 #define LOGGING_QUEUE_LENGTH    (16)
 
+#define DEMO_TASK_STACK_SIZE (configMINIMAL_STACK_SIZE * 15)
+#define DEMO_TASK_PRIORITY   (tskIDLE_PRIORITY + 1)
+
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
 extern void vStartLedDemoTask(void);
 extern int initNetwork(void);
 extern void BOARD_InitHardware(void);
-
+/* Declaration of demo function. */
+extern int RunDeviceShadowDemo(bool awsIotMqttMode,
+                                const char *pIdentifier,
+                                void *pNetworkServerInfo,
+                                void *pNetworkCredentialInfo,
+                                const IotNetworkInterface_t *pNetworkInterface);
 /*******************************************************************************
  * Variables
  ******************************************************************************/
@@ -90,7 +98,8 @@ extern usb_host_handle g_HostHandle;
 /*******************************************************************************
  * Code
  ******************************************************************************/
-#if defined(WIFI_88W8987_BOARD_AW_CM358_USD)
+#if defined(WIFI_88W8987_BOARD_AW_CM358_USD) || defined(WIFI_IW416_BOARD_MURATA_1XK_USD) || \
+    defined(WIFI_88W8987_BOARD_MURATA_1ZM_USD)
 int controller_hci_uart_get_configuration(controller_hci_uart_config_t *config)
 {
     if (NULL == config)
@@ -105,7 +114,7 @@ int controller_hci_uart_get_configuration(controller_hci_uart_config_t *config)
     config->enableTxCTS     = 1u;
     return 0;
 }
-#elif defined(WIFI_IW416_BOARD_AW_AM457_USD)
+#elif (defined(WIFI_IW416_BOARD_AW_AM510_USD) || defined(WIFI_IW416_BOARD_AW_AM457_USD))
 int controller_hci_uart_get_configuration(controller_hci_uart_config_t *config)
 {
     if (NULL == config)
@@ -203,8 +212,12 @@ void main_task(void *pvParameters)
 
     if (SYSTEM_Init() == pdPASS)
     {
-        /* Run all demos. */
-        DEMO_RUNNER_RunDemos();
+        static demoContext_t mqttDemoContext = {.networkTypes                = AWSIOT_NETWORK_TYPE_WIFI,
+                                                .demoFunction                = RunDeviceShadowDemo,
+                                                .networkConnectedCallback    = NULL,
+                                                .networkDisconnectedCallback = NULL};
+
+        Iot_CreateDetachedThread(runDemoTask, &mqttDemoContext, DEMO_TASK_PRIORITY, DEMO_TASK_STACK_SIZE);
     }
 
     vTaskDelete(NULL);
@@ -250,7 +263,6 @@ int main(void)
         ;
 }
 
-#if 1
 void *pvPortCalloc(size_t xNum, size_t xSize)
 {
     void *pvReturn;
@@ -263,29 +275,27 @@ void *pvPortCalloc(size_t xNum, size_t xSize)
 
     return pvReturn;
 }
-#endif
 
-BaseType_t getUserMessage( INPUTMessage_t * pxINPUTmessage,
-                                  TickType_t xAuthTimeout )
+int32_t xPortGetUserInput( uint8_t * pMessage,
+                           uint32_t messageLength,
+                           TickType_t timeoutTicks )
 {
     int ret;
-
-    ret = GETCHAR();
-
-    if (ret <= 127)
+    uint32_t i = messageLength;
+    
+    while (i > 0)
     {
-        pxINPUTmessage->pcData = pvPortMalloc(1);
-
-        if (NULL == pxINPUTmessage->pcData)
+        ret = GETCHAR();
+        
+        if ((ret <= 127) && (NULL != pMessage))
         {
-            return pdFALSE;
+            pMessage[messageLength - i] = (uint8_t)ret;
         }
-        pxINPUTmessage->xDataSize = 1;
-        pxINPUTmessage->pcData[0] = (uint8_t)ret;
-        return pdTRUE;
+        else
+        {
+            break;
+        }
+        i--;
     }
-    else
-    {
-        return pdFALSE;
-    }
+    return messageLength - i;
 }

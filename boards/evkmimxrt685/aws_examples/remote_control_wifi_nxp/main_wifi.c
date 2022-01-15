@@ -263,8 +263,8 @@ int main(void)
     };
 
     /* Init output OSPI reset pin. */
-    GPIO_PortInit(GPIO, 2);
-    GPIO_PinInit(GPIO, 2, 12, &reset_config);
+    GPIO_PortInit(BOARD_FLASH_RESET_GPIO, BOARD_FLASH_RESET_GPIO_PORT);
+    GPIO_PinInit(BOARD_FLASH_RESET_GPIO, BOARD_FLASH_RESET_GPIO_PORT, BOARD_FLASH_RESET_GPIO_PIN, &reset_config);
 
     /* Make sure casper ram buffer has power up */
     POWER_DisablePD(kPDRUNCFG_APD_CASPER_SRAM);

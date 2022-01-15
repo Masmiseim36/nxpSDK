@@ -34,7 +34,7 @@
   <td id="projectlogo"><img alt="Logo" src="nxp_logo_small.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">eRPC API Reference
-   &#160;<span id="projectnumber">Rev. 1.8.1</span>
+   &#160;<span id="projectnumber">Rev. 1.9.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -108,19 +108,21 @@ $(document).ready(function(){initNavTree('erpc__manually__constructed_8h.html','
 
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Classes</a>  </div>
+<a href="#nested-classes">Classes</a> &#124;
+<a href="#define-members">Macros</a>  </div>
   <div class="headertitle">
 <div class="title">erpc_manually_constructed.h File Reference<div class="ingroups"><a class="el" href="group__infra.html">Infrastructure</a> &raquo; <a class="el" href="group__infra__utility.html">Utilities</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &lt;new&gt;</code><br />
+<div class="textblock"><code>#include &quot;erpc_config_internal.h&quot;</code><br />
+<code>#include &lt;new&gt;</code><br />
 <code>#include &lt;stdint.h&gt;</code><br />
 </div><div class="textblock"><div id="dynsection-0" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-0-trigger" src="closed.png" alt="+"/> Include dependency graph for erpc_manually_constructed.h:</div>
 <div id="dynsection-0-summary" class="dynsummary" style="display:block;">
 </div>
 <div id="dynsection-0-content" class="dyncontent" style="display:none;">
-<div class="center"><iframe scrolling="no" frameborder="0" src="erpc__manually__constructed_8h__incl.svg" width="203" height="112"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
+<div class="center"><iframe scrolling="no" frameborder="0" src="erpc__manually__constructed_8h__incl.svg" width="319" height="187"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
 </div>
 </div>
 </div>
@@ -131,6 +133,27 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_manually_constructed.html">erpc::ManuallyConstructed&lt; T &gt;</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allocates static storage for an object.  <a href="classerpc_1_1_manually_constructed.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:a6540518da2196babfd64cba772f0f360"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6540518da2196babfd64cba772f0f360"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ERPC_MANUALLY_CONSTRUCTED</b>(class,  variableName)</td></tr>
+<tr class="separator:a6540518da2196babfd64cba772f0f360"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6ddcae9c09bb8cea999ccb63953ffeb1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6ddcae9c09bb8cea999ccb63953ffeb1"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ERPC_MANUALLY_CONSTRUCTED_ARRAY</b>(class,  variableName,  dimension)</td></tr>
+<tr class="separator:a6ddcae9c09bb8cea999ccb63953ffeb1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a92ccb7db5dd885f95ea89d8640e6ebfc"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a92ccb7db5dd885f95ea89d8640e6ebfc"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ERPC_MANUALLY_CONSTRUCTED_STATIC</b>(class,  variableName)</td></tr>
+<tr class="separator:a92ccb7db5dd885f95ea89d8640e6ebfc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0ff42509dd592d95ed309f01c38cc9ca"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0ff42509dd592d95ed309f01c38cc9ca"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ERPC_MANUALLY_CONSTRUCTED_ARRAY_STATIC</b>(class,  variableName,  dimension)</td></tr>
+<tr class="separator:a0ff42509dd592d95ed309f01c38cc9ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6c908768a47441d85c5ee6b69913850c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6c908768a47441d85c5ee6b69913850c"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ERPC_CREATE_NEW_OBJECT</b>(class,  arrayOfObjects,  numberOfObjects, ...)</td></tr>
+<tr class="separator:a6c908768a47441d85c5ee6b69913850c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab6aebe26e467cc5e57dc2decc7020e8b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab6aebe26e467cc5e57dc2decc7020e8b"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ERPC_DESTROY_OBJECT</b>(object, ...)</td></tr>
+<tr class="separator:ab6aebe26e467cc5e57dc2decc7020e8b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
 </div><!-- doc-content -->

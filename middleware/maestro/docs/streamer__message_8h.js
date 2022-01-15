@@ -1,9 +1,5 @@
 var streamer__message_8h =
 [
-    [ "BLD_MESSAGE", "streamer__message_8h.html#ac22ac630c93f408b7362e0347a9ea9ae", null ],
-    [ "MESSAGE_ID", "streamer__message_8h.html#a2e88b5cbfe28fed33a29a0a6a1bccdbc", null ],
-    [ "MESSAGE_TYPE", "streamer__message_8h.html#a1804c7313b1f18e7fc8ad9df96787c1e", null ],
-    [ "MSG_NULL", "streamer__message_8h.html#aa3055d928f852bdf5f45863ab0acceff", null ],
     [ "MSG_EOS", "streamer__message_8h.html#a00e728a8bcf3e9fe9e0e17802670ea61", null ],
     [ "MSG_ERROR_AUDIO", "streamer__message_8h.html#a70b1817a9f121e95183758673748e5fb", null ],
     [ "MSG_ERROR_VIDEO", "streamer__message_8h.html#a6ed07c4377b6be6cb566ec15d182179b", null ],

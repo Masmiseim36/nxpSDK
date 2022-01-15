@@ -1,7 +1,9 @@
 <map id="erpc_rpmsg_lite_rtos_transport.h" name="erpc_rpmsg_lite_rtos_transport.h">
-<area shape="rect" id="node2" href="$erpc__message__buffer_8h.html" title="erpc_message_buffer.h" alt="" coords="7,259,163,285"/>
-<area shape="rect" id="node6" href="$erpc__rpmsg__lite__base__transport_8h.html" title="erpc_rpmsg_lite_base\l_transport.h" alt="" coords="135,95,284,136"/>
-<area shape="rect" id="node3" href="$erpc__common_8h_source.html" title="erpc_common.h" alt="" coords="144,333,259,360"/>
-<area shape="rect" id="node7" href="$erpc__transport_8h.html" title="erpc_transport.h" alt="" coords="143,184,259,211"/>
-<area shape="rect" id="node8" href="$erpc__crc16_8h.html" title="erpc_crc16.h" alt="" coords="286,333,383,360"/>
+<area shape="rect" id="node2" href="$erpc__message__buffer_8h.html" title="erpc_message_buffer.h" alt="" coords="5,259,161,285"/>
+<area shape="rect" id="node6" href="$erpc__rpmsg__lite__base__transport_8h.html" title="erpc_rpmsg_lite_base\l_transport.h" alt="" coords="287,95,437,136"/>
+<area shape="rect" id="node3" href="$erpc__common_8h_source.html" title="erpc_common.h" alt="" coords="147,333,262,360"/>
+<area shape="rect" id="node7" href="$erpc__transport_8h.html" title="erpc_transport.h" alt="" coords="227,184,343,211"/>
+<area shape="rect" id="node10" href="$erpc__config__internal_8h_source.html" title="erpc_config_internal.h" alt="" coords="367,184,515,211"/>
+<area shape="rect" id="node8" href="$erpc__crc16_8h.html" title="erpc_crc16.h" alt="" coords="287,333,384,360"/>
+<area shape="rect" id="node11" href="$erpc__config_8h.html" title="erpc_config.h" alt="" coords="391,259,490,285"/>
 </map>

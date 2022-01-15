@@ -2088,22 +2088,7 @@
     </file>
   </group>
   <group>
-    <name>source</name>
-    <file>
-      <name>$PROJ_DIR$/../main.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../dsp_config.h</name>
-    </file>
-  </group>
-  <group>
     <name>board</name>
-    <file>
-      <name>$PROJ_DIR$/../pin_mux.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../pin_mux.h</name>
-    </file>
     <file>
       <name>$PROJ_DIR$/../board.c</name>
     </file>
@@ -2123,6 +2108,12 @@
       <name>$PROJ_DIR$/../board_init.h</name>
     </file>
     <file>
+      <name>$PROJ_DIR$/../pin_mux.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../pin_mux.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../dsp_support.c</name>
     </file>
     <file>
@@ -2133,6 +2124,15 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../pmic_support.h</name>
+    </file>
+  </group>
+  <group>
+    <name>source</name>
+    <file>
+      <name>$PROJ_DIR$/../dsp_config.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../main.c</name>
     </file>
   </group>
   <group>

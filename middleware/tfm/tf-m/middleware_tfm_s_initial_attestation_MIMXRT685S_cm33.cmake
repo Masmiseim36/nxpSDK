@@ -2,7 +2,9 @@ include_guard(GLOBAL)
 message("middleware_tfm_s_initial_attestation component is included.")
 
 target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
+    ${CMAKE_CURRENT_LIST_DIR}/platform/ext/common/template/tfm_initial_attest_pub_key.c
     ${CMAKE_CURRENT_LIST_DIR}/secure_fw/partitions/initial_attestation/auto_generated/intermedia_tfm_initial_attestation.c
+    ${CMAKE_CURRENT_LIST_DIR}/secure_fw/partitions/initial_attestation/auto_generated/load_info_tfm_initial_attestation.c
     ${CMAKE_CURRENT_LIST_DIR}/secure_fw/partitions/initial_attestation/attest_asymmetric_key.c
     ${CMAKE_CURRENT_LIST_DIR}/secure_fw/partitions/initial_attestation/attest_core.c
     ${CMAKE_CURRENT_LIST_DIR}/secure_fw/partitions/initial_attestation/attest_token_encode.c

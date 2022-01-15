@@ -9,6 +9,5 @@ var classerpc_1_1_r_p_msg_transport =
     [ "hasMessage", "classerpc_1_1_r_p_msg_transport.html#a51eac0d87a7d70408df2290c8175706d", null ],
     [ "m_messageQueue", "classerpc_1_1_r_p_msg_transport.html#a05ba7ce33f48a0c622fd3cec49f4b2a2", null ],
     [ "m_dst_addr", "classerpc_1_1_r_p_msg_transport.html#a6990f9092b21bb0c243d16fc06fd7180", null ],
-    [ "m_rpmsg_ept_context", "classerpc_1_1_r_p_msg_transport.html#aa5287d7a0abc8384cbaaadfadb6ef1b3", null ],
     [ "m_rpmsg_ept", "classerpc_1_1_r_p_msg_transport.html#a8b9bbb8ec36ea15a065356cd9f23c871", null ]
 ];

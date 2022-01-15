@@ -71,7 +71,7 @@ set(CMAKE_MODULE_PATH
 )
 
 # include modules
-include(middleware_tfm_ns_MIMXRT685S_cm33)
+include(middleware_tfm_ns_evkmimxrt685_MIMXRT685S_cm33)
 
 include(middleware_tfm_ns_rtx_MIMXRT685S_cm33)
 
@@ -105,7 +105,7 @@ include(utility_assert_MIMXRT685S_cm33)
 
 include(component_usart_adapter_MIMXRT685S_cm33)
 
-include(driver_flash_config_MIMXRT685S_cm33)
+include(driver_flash_config_evkmimxrt685_MIMXRT685S_cm33)
 
 include(driver_flexspi_MIMXRT685S_cm33)
 
@@ -124,6 +124,8 @@ include(driver_flexcomm_MIMXRT685S_cm33)
 include(driver_lpc_iopctl_MIMXRT685S_cm33)
 
 include(driver_lpc_gpio_MIMXRT685S_cm33)
+
+include(middleware_tfm_ns_MIMXRT685S_cm33)
 
 include(middleware_tfmtests_ns_MIMXRT685S_cm33)
 

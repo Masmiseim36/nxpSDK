@@ -13,7 +13,6 @@ var structSTREAMER__MSG__T =
     [ "time_ms", "structSTREAMER__MSG__T.html#a4ddf553ef89ca26d5b32e03b6e4394fa", null ],
     [ "in_dev_name", "structSTREAMER__MSG__T.html#a1ae14264593a60a0887b8e4ae26583ed", null ],
     [ "out_dev_name", "structSTREAMER__MSG__T.html#adffc4d47f6f3d4e00329fa413f9e1e12", null ],
-    [ "mutex", "structSTREAMER__MSG__T.html#a0f79360a950520dbb83201044b5afe80", null ],
     [ "cond", "structSTREAMER__MSG__T.html#a3852e497d9b94bb845f8bcc1d16ce007", null ],
     [ "processed", "structSTREAMER__MSG__T.html#a4c86041095d43112c527b23cbd839c3a", null ],
     [ "ret", "structSTREAMER__MSG__T.html#af0fb1798d930c51469722e212de8644c", null ],

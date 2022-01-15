@@ -35,8 +35,8 @@ extern "C" {
 
 /* Predefined NOR flash config options (Macronix Octal SPI Flash MX25UM51345G flash, connected to FlexSPI Port B) [UM11147, Table 1007] */
 #define NOR_FLASH_INSTANCE      0U    /* This the instance number of FLEXSPI, only support 0 */
-#define NOR_FLASH_OPTION0       0xC1503051U 
-#define NOR_FLASH_OPTION1       0x20000014U
+#define NOR_FLASH_OPTION0       0xC1500051U /* In SDK it was 0xC1503051U */
+#define NOR_FLASH_OPTION1       0x20000008U /* In SDK it was 0x20000014U */
 #define FLASH_NEED_RESET        1
 #define CACHE_BASE              CACHE64
 

@@ -231,11 +231,6 @@
           <state>TF_M_PROFILE_MEDIUM</state>
           <state>__DOMAIN_NS=1</state>
           <state>DOMAIN_NS=1</state>
-          <state>TFM_PARTITION_PLATFORM</state>
-          <state>TFM_PARTITION_PROTECTED_STORAGE</state>
-          <state>TFM_PARTITION_INTERNAL_TRUSTED_STORAGE</state>
-          <state>TFM_PARTITION_CRYPTO</state>
-          <state>TFM_PARTITION_INITIAL_ATTESTATION</state>
           <state>OS_DYNAMIC_MEM_SIZE=8192</state>
           <state>TFM_PSA_API</state>
           <state>INITIAL_ATTESTATION</state>
@@ -285,7 +280,7 @@
         </option>
         <option>
           <name>CCDiagSuppress</name>
-          <state>Pa084,Pe111,Pe177,Pe188,Pe546,Pe549</state>
+          <state>Pa084,Pe111,Pe177,Pe188,Pe546,Pe549,Pe550,Pa167</state>
         </option>
         <option>
           <name>CCDiagRemark</name>
@@ -372,21 +367,12 @@
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S</state>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/include</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/ext</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/ext/common</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/ext/driver</state>
           <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/evkmimxrt685/Device/Include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/evkmimxrt685</state>
           <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/evkmimxrt685/partition</state>
           <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/evkmimxrt685/Device/Config</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/interface/include</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/interface/include/os_wrapper</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/interface/include/psa</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/bl2/include</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/secure_fw/spm/include</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/secure_fw/include/tfm</state>
           <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/interface/include/psa_manifest</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/interface/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/tfm/psa-arch-tests/api-tests/val/nspe</state>
           <state>$PROJ_DIR$/../../../../../../middleware/tfm/psa-arch-tests/api-tests/val/common</state>
           <state>$PROJ_DIR$/../../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/drivers/nvmem</state>
@@ -490,8 +476,18 @@
           <state>$PROJ_DIR$/../../../../flash_config</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/include</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/ext</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/ext/common</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/ext/driver</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/interface/include/psa</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/bl2/include</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/secure_fw/spm/include</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/secure_fw/include/tfm</state>
           <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/app</state>
           <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/log</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/ns_interface</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/ns_interface/ns_client_id</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/RTOS2/RTX/Source</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/RTOS2/RTX/Include</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/RTOS2/RTX/Config</state>
@@ -1403,11 +1399,6 @@
           <state>TF_M_PROFILE_MEDIUM</state>
           <state>__DOMAIN_NS=1</state>
           <state>DOMAIN_NS=1</state>
-          <state>TFM_PARTITION_PLATFORM</state>
-          <state>TFM_PARTITION_PROTECTED_STORAGE</state>
-          <state>TFM_PARTITION_INTERNAL_TRUSTED_STORAGE</state>
-          <state>TFM_PARTITION_CRYPTO</state>
-          <state>TFM_PARTITION_INITIAL_ATTESTATION</state>
           <state>OS_DYNAMIC_MEM_SIZE=8192</state>
           <state>TFM_PSA_API</state>
           <state>INITIAL_ATTESTATION</state>
@@ -1457,7 +1448,7 @@
         </option>
         <option>
           <name>CCDiagSuppress</name>
-          <state>Pa084,Pe111,Pe177,Pe188,Pe546,Pe549</state>
+          <state>Pa084,Pe111,Pe177,Pe188,Pe546,Pe549,Pe550,Pa167</state>
         </option>
         <option>
           <name>CCDiagRemark</name>
@@ -1544,21 +1535,12 @@
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S</state>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/include</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/ext</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/ext/common</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/ext/driver</state>
           <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/evkmimxrt685/Device/Include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/evkmimxrt685</state>
           <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/evkmimxrt685/partition</state>
           <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/evkmimxrt685/Device/Config</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/interface/include</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/interface/include/os_wrapper</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/interface/include/psa</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/bl2/include</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/secure_fw/spm/include</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/secure_fw/include/tfm</state>
           <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/interface/include/psa_manifest</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/interface/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/tfm/psa-arch-tests/api-tests/val/nspe</state>
           <state>$PROJ_DIR$/../../../../../../middleware/tfm/psa-arch-tests/api-tests/val/common</state>
           <state>$PROJ_DIR$/../../../../../../middleware/tfm/psa-arch-tests/api-tests/platform/drivers/nvmem</state>
@@ -1662,8 +1644,18 @@
           <state>$PROJ_DIR$/../../../../flash_config</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/include</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/ext</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/ext/common</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/ext/driver</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/interface/include/psa</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/bl2/include</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/secure_fw/spm/include</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/secure_fw/include/tfm</state>
           <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/app</state>
           <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/log</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/ns_interface</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/ns_interface/ns_client_id</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/RTOS2/RTX/Source</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/RTOS2/RTX/Include</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/RTOS2/RTX/Config</state>
@@ -2407,52 +2399,7 @@
     <group>
       <name>platform</name>
       <group>
-        <name>include</name>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/include/tfm_plat_crypto_keys.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/include/tfm_hal_device_header.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/include/tfm_plat_boot_seed.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/include/tfm_plat_device_id.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/include/tfm_plat_defs.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/include/tfm_plat_ns.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/include/region.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/include/tfm_plat_test.h</name>
-        </file>
-      </group>
-      <group>
         <name>ext</name>
-        <group>
-          <name>common</name>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/ext/common/uart_stdout.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/ext/common/uart_stdout.c</name>
-          </file>
-        </group>
-        <group>
-          <name>driver</name>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/ext/driver/Driver_USART.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/ext/driver/Driver_Common.h</name>
-          </file>
-        </group>
         <group>
           <name>target</name>
           <group>
@@ -2513,36 +2460,75 @@
             </group>
           </group>
         </group>
+        <group>
+          <name>common</name>
+          <group>
+            <name>template</name>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/ext/common/template/tfm_initial_attest_pub_key.c</name>
+            </file>
+          </group>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/ext/common/uart_stdout.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/ext/common/uart_stdout.c</name>
+          </file>
+        </group>
+        <group>
+          <name>driver</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/ext/driver/Driver_USART.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/ext/driver/Driver_Common.h</name>
+          </file>
+        </group>
+      </group>
+      <group>
+        <name>include</name>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/include/tfm_plat_crypto_keys.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/include/tfm_hal_device_header.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/include/tfm_plat_boot_seed.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/include/tfm_plat_device_id.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/include/tfm_plat_defs.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/include/tfm_plat_ns.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/include/region.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/include/tfm_plat_test.h</name>
+        </file>
       </group>
     </group>
     <group>
       <name>interface</name>
       <group>
-        <name>src</name>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/interface/src/tfm_ns_interface.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/interface/src/tfm_crypto_ipc_api.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/interface/src/tfm_initial_attestation_ipc_api.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/interface/src/tfm_its_ipc_api.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/interface/src/tfm_ps_ipc_api.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/interface/src/tfm_platform_ipc_api.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/interface/src/tfm_psa_ns_api.c</name>
-        </file>
-      </group>
-      <group>
         <name>include</name>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/interface/include/tfm_attest_defs.h</name>
+        </file>
+        <group>
+          <name>psa_manifest</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/interface/include/psa_manifest/sid.h</name>
+          </file>
+        </group>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/interface/include/tfm_psa_call_param.h</name>
+        </file>
         <file>
           <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/interface/include/tfm_veneers.h</name>
         </file>
@@ -2562,35 +2548,8 @@
           <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/interface/include/tfm_ns_interface.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/interface/include/tfm_ns_svc.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/interface/include/tfm_nspm_api.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/interface/include/tfm_nspm_svc_handler.h</name>
-        </file>
-        <file>
           <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/interface/include/tfm_platform_api.h</name>
         </file>
-        <group>
-          <name>os_wrapper</name>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/interface/include/os_wrapper/common.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/interface/include/os_wrapper/msg_queue.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/interface/include/os_wrapper/mutex.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/interface/include/os_wrapper/semaphore.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/interface/include/os_wrapper/thread.h</name>
-          </file>
-        </group>
         <group>
           <name>psa</name>
           <file>
@@ -2642,48 +2601,27 @@
             <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/interface/include/psa/crypto_compat.h</name>
           </file>
         </group>
-        <group>
-          <name>psa_manifest</name>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/interface/include/psa_manifest/sid.h</name>
-          </file>
-        </group>
-      </group>
-    </group>
-    <group>
-      <name>secure_fw</name>
-      <group>
-        <name>spm</name>
-        <group>
-          <name>include</name>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/tfm_arch.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/tfm_arch_v8m.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/utilities.h</name>
-          </file>
-        </group>
       </group>
       <group>
-        <name>include</name>
-        <group>
-          <name>tfm</name>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/secure_fw/include/tfm/tfm_core_svc.h</name>
-          </file>
-        </group>
-      </group>
-      <group>
-        <name>partitions</name>
-        <group>
-          <name>initial_attestation</name>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/secure_fw/partitions/initial_attestation/attest_token.h</name>
-          </file>
-        </group>
+        <name>src</name>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/interface/src/tfm_crypto_ipc_api.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/interface/src/tfm_initial_attestation_ipc_api.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/interface/src/tfm_its_ipc_api.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/interface/src/tfm_ps_ipc_api.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/interface/src/tfm_platform_ipc_api.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/interface/src/tfm_psa_ns_api.c</name>
+        </file>
       </group>
     </group>
     <group>
@@ -2743,6 +2681,33 @@
               <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/lib/ext/qcbor/util/qcbor_util.h</name>
             </file>
           </group>
+        </group>
+      </group>
+    </group>
+    <group>
+      <name>secure_fw</name>
+      <group>
+        <name>partitions</name>
+        <group>
+          <name>initial_attestation</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/secure_fw/partitions/initial_attestation/attest_token.h</name>
+          </file>
+        </group>
+      </group>
+      <group>
+        <name>spm</name>
+        <group>
+          <name>include</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/tfm_arch.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/tfm_arch_v8m.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/utilities.h</name>
+          </file>
         </group>
       </group>
     </group>
@@ -3333,81 +3298,6 @@
           </file>
         </group>
         <group>
-          <name>test_c026</name>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c026/test_c026.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c026/test_c026.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c026/test_data.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c026/test_entry_c026.c</name>
-          </file>
-        </group>
-        <group>
-          <name>test_c027</name>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c027/test_c027.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c027/test_c027.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c027/test_data.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c027/test_entry_c027.c</name>
-          </file>
-        </group>
-        <group>
-          <name>test_c028</name>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c028/test_c028.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c028/test_c028.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c028/test_data.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c028/test_entry_c028.c</name>
-          </file>
-        </group>
-        <group>
-          <name>test_c029</name>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c029/test_c029.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c029/test_c029.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c029/test_data.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c029/test_entry_c029.c</name>
-          </file>
-        </group>
-        <group>
-          <name>test_c030</name>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c030/test_c030.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c030/test_c030.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c030/test_data.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c030/test_entry_c030.c</name>
-          </file>
-        </group>
-        <group>
           <name>test_c031</name>
           <file>
             <name>$PROJ_DIR$/../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c031/test_c031.c</name>
@@ -3450,81 +3340,6 @@
           </file>
           <file>
             <name>$PROJ_DIR$/../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c033/test_entry_c033.c</name>
-          </file>
-        </group>
-        <group>
-          <name>test_c034</name>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c034/test_c034.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c034/test_c034.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c034/test_data.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c034/test_entry_c034.c</name>
-          </file>
-        </group>
-        <group>
-          <name>test_c035</name>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c035/test_c035.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c035/test_c035.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c035/test_data.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c035/test_entry_c035.c</name>
-          </file>
-        </group>
-        <group>
-          <name>test_c036</name>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c036/test_c036.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c036/test_c036.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c036/test_data.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c036/test_entry_c036.c</name>
-          </file>
-        </group>
-        <group>
-          <name>test_c037</name>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c037/test_c037.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c037/test_c037.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c037/test_data.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c037/test_entry_c037.c</name>
-          </file>
-        </group>
-        <group>
-          <name>test_c038</name>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c038/test_c038.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c038/test_c038.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c038/test_data.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c038/test_entry_c038.c</name>
           </file>
         </group>
         <group>
@@ -3660,66 +3475,6 @@
           </file>
           <file>
             <name>$PROJ_DIR$/../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c047/test_entry_c047.c</name>
-          </file>
-        </group>
-        <group>
-          <name>test_c048</name>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c048/test_c048.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c048/test_c048.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c048/test_data.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c048/test_entry_c048.c</name>
-          </file>
-        </group>
-        <group>
-          <name>test_c049</name>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c049/test_c049.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c049/test_c049.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c049/test_data.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c049/test_entry_c049.c</name>
-          </file>
-        </group>
-        <group>
-          <name>test_c050</name>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c050/test_c050.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c050/test_c050.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c050/test_data.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c050/test_entry_c050.c</name>
-          </file>
-        </group>
-        <group>
-          <name>test_c051</name>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c051/test_c051.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c051/test_c051.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c051/test_data.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/tfm/psa-arch-tests/api-tests/dev_apis/crypto/test_c051/test_entry_c051.c</name>
           </file>
         </group>
         <group>
@@ -4416,6 +4171,9 @@
       <file>
         <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/app/tfm_log.h</name>
       </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/app/tfm_ns_interface.c</name>
+      </file>
     </group>
     <group>
       <name>log</name>
@@ -4425,6 +4183,39 @@
       <file>
         <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/log/tfm_log_raw.h</name>
       </file>
+    </group>
+    <group>
+      <name>ns_interface</name>
+      <group>
+        <name>ns_client_id</name>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/ns_interface/ns_client_id/tfm_ns_svc.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/ns_interface/ns_client_id/tfm_nspm_api.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/ns_interface/ns_client_id/tfm_nspm_svc_handler.h</name>
+        </file>
+      </group>
+      <group>
+        <name>os_wrapper</name>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/ns_interface/os_wrapper/common.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/ns_interface/os_wrapper/msg_queue.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/ns_interface/os_wrapper/mutex.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/ns_interface/os_wrapper/semaphore.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/ns_interface/os_wrapper/thread.h</name>
+        </file>
+      </group>
     </group>
   </group>
   <group>

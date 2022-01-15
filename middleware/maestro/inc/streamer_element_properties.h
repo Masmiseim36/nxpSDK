@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2020 NXP.
+ * Copyright 2018-2021 NXP.
  * This software is owned or controlled by NXP and may only be used strictly in accordance with the
  * license terms that accompany it. By expressly accepting such terms or by downloading, installing,
  * activating and/or otherwise using the software, you are agreeing that you have read, and that you
@@ -17,7 +17,7 @@
 
 typedef struct {
     int (*init_func) (void *);
-    int (*proc_func) (void *, short *, int);
+    int (*proc_func) (void *, void *, int);
     int (*deinit_func) (void);
     void *arg_ptr;
     uint8_t  bl_enabled;
@@ -28,6 +28,7 @@ typedef struct {
 	int preset_num;
 	int num_channels;
 	int sample_rate;
+    uint8_t xo_enabled;
 } ext_proc_args;
 
 /*! Structure for Set Buffer */
@@ -50,6 +51,10 @@ typedef struct {
 #define PROP_FILESRC_SET_LOCATION                   0x100
 #define PROP_FILESRC_SET_CHUNK_SIZE                 0x101
 #define PROP_FILESRC_GET_CHUNK_SIZE                 0x102
+#define PROP_FILESRC_SET_FILE_TYPE                  0x103
+#define PROP_FILESRC_SET_SAMPLE_RATE                0x104
+#define PROP_FILESRC_SET_NUM_CHANNELS               0x105
+#define PROP_FILESRC_SET_BIT_WIDTH                  0x106
 
 /* AUDIO SOURCE */
 #define PROP_AUDIOSRC_MASK                          0x200
@@ -91,6 +96,7 @@ typedef struct {
 #define PROP_AUDIOSINK_TIME_UPDATE_MS               0x703
 #define PROP_AUDIOSINK_DEVICE_DRIVER_STRING_NAME    0x704
 #define PROP_AUDIOSINK_BUFFER_USE_CHUNK_SIZE        0x705
+#define PROP_AUDIOSINK_SET_VOLUME                   0x706
 
 /* FILE SINK */
 #define PROP_FILESINK_MASK                          0x800
@@ -118,6 +124,13 @@ typedef struct {
 /* EAP */
 #define PROP_EAP_MASK                               0xc00
 #define PROP_EAP_FPOINT                             0xc00
+
+/* ENCODER */
+#define PROP_ENCODER_MASK                           0xd00
+#define PROP_ENCODER_CHUNK_SIZE                     0xd00
+#define PROP_ENCODER_TYPE                           0xd01
+#define PROP_ENCODER_CONFIG                         0xd02
+#define PROP_ENCODER_BITSTREAMINFO                  0xd03
 
 typedef struct {
     int8_t    *location;

@@ -33,9 +33,6 @@ include(${ProjDirPath}/config.cmake)
 add_executable(${MCUX_SDK_PROJECT_NAME} 
 "${ProjDirPath}/../../hifi4/binary/dsp_text_release.bin"
 "${ProjDirPath}/../../hifi4/binary/dsp_data_release.bin"
-"${ProjDirPath}/../main.c"
-"${ProjDirPath}/../pin_mux.c"
-"${ProjDirPath}/../pin_mux.h"
 "${ProjDirPath}/../board.c"
 "${ProjDirPath}/../board.h"
 "${ProjDirPath}/../clock_config.c"
@@ -48,6 +45,9 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../dsp_support.h"
 "${ProjDirPath}/../pmic_support.c"
 "${ProjDirPath}/../pmic_support.h"
+"${ProjDirPath}/../main.c"
+"${ProjDirPath}/../pin_mux.c"
+"${ProjDirPath}/../pin_mux.h"
 )
 
 target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
@@ -56,21 +56,39 @@ target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
 )
 
 set(CMAKE_MODULE_PATH
-    ${ProjDirPath}/../../../../../../components/lists
+    ${ProjDirPath}/../../../../../../components/codec/i2c
     ${ProjDirPath}/../../../../../../devices/MIMXRT685S/drivers
+    ${ProjDirPath}/../../../../../../components/i2c
+    ${ProjDirPath}/../../../../../../components/codec
+    ${ProjDirPath}/../../../../../../components/codec/wm8904
+    ${ProjDirPath}/../../../../../../components/lists
     ${ProjDirPath}/../../../../../../components/uart
     ${ProjDirPath}/../../../../../../devices/MIMXRT685S
     ${ProjDirPath}/../../../../flash_config
     ${ProjDirPath}/../../../../../../components/pca9420
     ${ProjDirPath}/../../../../../../devices/MIMXRT685S/utilities/debug_console_lite
-    ${ProjDirPath}/../../../../../../devices/MIMXRT685S/utilities
     ${ProjDirPath}/../../../../../../CMSIS/Core/Include
+    ${ProjDirPath}/../../../../../../devices/MIMXRT685S/utilities
 )
 
 # include modules
-include(component_lists_MIMXRT685S_cm33)
+include(component_codec_i2c_MIMXRT685S_cm33)
 
 include(driver_common_MIMXRT685S_cm33)
+
+include(component_i3c_adapter_MIMXRT685S_cm33)
+
+include(driver_codec_MIMXRT685S_cm33)
+
+include(component_wm8904_adapter_MIMXRT685S_cm33)
+
+include(driver_flexcomm_i2c_MIMXRT685S_cm33)
+
+include(driver_i3c_MIMXRT685S_cm33)
+
+include(driver_wm8904_MIMXRT685S_cm33)
+
+include(component_lists_MIMXRT685S_cm33)
 
 include(component_usart_adapter_MIMXRT685S_cm33)
 
@@ -86,11 +104,9 @@ include(driver_clock_MIMXRT685S_cm33)
 
 include(driver_dsp_MIMXRT685S_cm33)
 
-include(driver_flash_config_MIMXRT685S_cm33)
+include(driver_flash_config_evkmimxrt685_MIMXRT685S_cm33)
 
 include(driver_flexcomm_MIMXRT685S_cm33)
-
-include(driver_flexcomm_i2c_MIMXRT685S_cm33)
 
 include(driver_flexspi_MIMXRT685S_cm33)
 
@@ -110,9 +126,9 @@ include(utility_debug_console_lite_MIMXRT685S_cm33)
 
 include(utility_assert_lite_MIMXRT685S_cm33)
 
-include(utilities_misc_utilities_MIMXRT685S_cm33)
-
 include(CMSIS_Include_core_cm_MIMXRT685S_cm33)
+
+include(utilities_misc_utilities_MIMXRT685S_cm33)
 
 include(driver_inputmux_connections_MIMXRT685S_cm33)
 

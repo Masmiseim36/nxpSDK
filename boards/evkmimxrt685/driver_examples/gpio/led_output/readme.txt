@@ -11,7 +11,7 @@ Toolchain supported
 - IAR embedded Workbench  9.10.2
 - Keil MDK  5.34
 - GCC ARM Embedded  10.2.1
-- MCUXpresso  11.4.0
+- MCUXpresso  11.5.0
 
 Hardware requirements
 =====================
@@ -51,4 +51,4 @@ The log below shows the output in the terminal window:
  Port state: 18004
  ...
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-When press sw2 the LED BLUE will turn to shine.
+Press the SW2 will toggle the LED BLUE state.

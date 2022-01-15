@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2020 NXP.
+ * Copyright 2018-2021 NXP.
  * This software is owned or controlled by NXP and may only be used strictly in accordance with the
  * license terms that accompany it. By expressly accepting such terms or by downloading, installing,
  * activating and/or otherwise using the software, you are agreeing that you have read, and that you
@@ -22,8 +22,7 @@
 
 /*! @brief Opaque type for PCM interface
  * Application should extend this for PCM interface implementation. */
-typedef void* pcm_rtos_t;
-
+typedef struct _pcm_rtos_t pcm_rtos_t;
 
 /*******************************************************************************
  * API
@@ -171,14 +170,17 @@ int streamer_pcm_read(pcm_rtos_t *pcm, uint8_t *data, uint8_t *next_buffer, uint
  * @param bit_width Size of each PCM data sample, in bits
  * @param num_channels Number of channels of audio data for each PCM frame
  * @param transfer Flag for setting params of input/output pcm interface
+ * @param dummy_tx Dummy tx setting for clock enablement
+ * @param volume Output volume
  * @return 0 on success, non-zero on failure
  */
 int streamer_pcm_setparams(pcm_rtos_t *pcm,
                            uint32_t sample_rate,
                            uint32_t bit_width,
                            uint8_t num_channels,
-						   bool transfer,
-                           bool dummy_tx);
+                           bool transfer,
+                           bool dummy_tx,
+                           int volume);
 
 /*!
  * @brief Get PCM interface parameters
@@ -213,6 +215,17 @@ void streamer_pcm_getparams(pcm_rtos_t *pcm,
  */
 int streamer_pcm_mute(pcm_rtos_t *pcm, bool mute);
 
+/*!
+ * @brief Set PCM interface output volume
+ *
+ * This function is called by the application interface to adjust the output
+ * volume for the PCM interface.
+ *
+ * @param pcm Pointer to PCM interface handle
+ * @param volume Volume on a scale from 0-100
+ * @return 0 on success, non-zero on failure
+ */
+int streamer_pcm_set_volume(pcm_rtos_t *pcm, int volume);
 
 #if defined(__cplusplus)
 }

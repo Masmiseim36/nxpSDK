@@ -81,8 +81,8 @@ target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
 
 set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../../devices/MIMXRT685S/drivers
-    ${ProjDirPath}/../../../../../../rtos/freertos
     ${ProjDirPath}/../../../../../../middleware/multicore
+    ${ProjDirPath}/../../../../../../rtos/freertos/freertos_kernel
     ${ProjDirPath}/../../../../../../components/pca9420
     ${ProjDirPath}/../../../../../../devices/MIMXRT685S
     ${ProjDirPath}/../../../../../../devices/MIMXRT685S/utilities
@@ -101,6 +101,10 @@ include(driver_flexcomm_i2c_MIMXRT685S_cm33)
 include(driver_i3c_MIMXRT685S_cm33)
 
 include(driver_lpc_dma_MIMXRT685S_cm33)
+
+include(middleware_multicore_rpmsg_lite_MIMXRT685S_cm33)
+
+include(middleware_multicore_rpmsg_lite_freertos_MIMXRT685S_cm33)
 
 include(middleware_freertos-kernel_cm33_nonsecure_port_MIMXRT685S_cm33)
 
@@ -128,7 +132,7 @@ include(utility_assert_MIMXRT685S_cm33)
 
 include(component_usart_adapter_MIMXRT685S_cm33)
 
-include(driver_flash_config_MIMXRT685S_cm33)
+include(driver_flash_config_evkmimxrt685_MIMXRT685S_cm33)
 
 include(driver_flexspi_MIMXRT685S_cm33)
 
@@ -157,8 +161,6 @@ include(middleware_freertos-kernel_MIMXRT685S_cm33)
 include(middleware_freertos-kernel_extension_MIMXRT685S_cm33)
 
 include(driver_inputmux_connections_MIMXRT685S_cm33)
-
-include(middleware_multicore_rpmsg_lite_MIMXRT685S_cm33)
 
 include(middleware_freertos-kernel_heap_4_MIMXRT685S_cm33)
 

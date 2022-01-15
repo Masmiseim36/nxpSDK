@@ -1,4 +1,4 @@
-﻿## Identifiers, literals, whitespace
+## Identifiers, literals, whitespace
 #### Identifiers
 Follow the same rules as in C/C++. Identifiers must start with an alphabetic character or underscore, and may include alphanumeric characters and underscores.
 #### Literals
@@ -52,9 +52,6 @@ When this annotation is used, then crc value is generated based on eRPC version 
 
 ##### ``@discriminator(string)``
 When non-encapsulated unions are used, discriminator needs be specified with using this annotation.
-
-##### ``@dynamic_services``
-Service objects will be dynamically allocated otherwise statically.
 
 ##### ``@error_return(value)``
 When the annotation ``@error_return`` is set, then this _value _ is used for the return value from the client-side called function, when the error will occur inside.

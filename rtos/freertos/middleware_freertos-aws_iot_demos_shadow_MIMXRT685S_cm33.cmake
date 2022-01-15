@@ -8,9 +8,13 @@ target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
 
 include(middleware_freertos-aws_iot_demos_MIMXRT685S_cm33)
 
-include(middleware_freertos-aws_iot_libraries_device_shadow_for_aws_MIMXRT685S_cm33)
+include(middleware_freertos-aws_iot_libraries_abstractions_transport_MIMXRT685S_cm33)
 
 include(middleware_freertos-aws_iot_libraries_corejason_MIMXRT685S_cm33)
 
+include(middleware_freertos-aws_iot_libraries_device_shadow_for_aws_MIMXRT685S_cm33)
+
 include(middleware_freertos-aws_iot_mqtt_demo_helpers_MIMXRT685S_cm33)
+
+include(middleware_freertos-kernel_MIMXRT685S_cm33)
 

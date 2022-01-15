@@ -31,10 +31,10 @@
 
 /**************************************************************************/
 /*                                                                        */
-/*  FUNCTION                                                 RELEASE      */
+/*  FUNCTION                                               RELEASE        */
 /*                                                                        */
-/*    _ux_dcd_mcimx6_interrupt_thread                       PORTABLE C    */
-/*                                                           6.0          */
+/*    _ux_dcd_mcimx6_interrupt_thread                     PORTABLE C      */
+/*                                                           6.x          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Chaoqiong Xiao, Microsoft Corporation                               */
@@ -70,12 +70,19 @@
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Chaoqiong Xiao           Initial Version 6.0           */
+/*  09-30-2020     Chaoqiong Xiao           Modified comment(s),          */
+/*                                            Used UX_ things instead of  */
+/*                                            TX_ things directly,        */
+/*                                            resulting in version 6.1    */
+/*  xx-xx-xxxx     Chaoqiong Xiao           Modified comment(s),          */
+/*                                            improved disconnect check,  */
+/*                                            resulting in version 6.x    */
 /*                                                                        */
 /**************************************************************************/
 VOID  _ux_dcd_mcimx6_interrupt_thread(ULONG dcd_pointer)
 {
 
-TX_INTERRUPT_SAVE_AREA
+UX_INTERRUPT_SAVE_AREA
 UX_DCD_MCIMX6           *dcd_mcimx6;
 ULONG                   mcimx6_int_status;
 ULONG                   mcimx6_register;
@@ -108,7 +115,7 @@ ULONG                    status;
         _ux_utility_semaphore_get(&dcd_mcimx6 -> ux_dcd_mcimx6_semaphore, UX_WAIT_FOREVER);
 
         /* Disable interrupt.  */
-        TX_DISABLE
+        UX_DISABLE
 
         /* Read the interrupt status register that awaken the controller.  */
         mcimx6_int_status = dcd_mcimx6 -> ux_dcd_mcimx6_interrupt;
@@ -117,7 +124,7 @@ ULONG                    status;
         dcd_mcimx6 -> ux_dcd_mcimx6_interrupt =  0;
 
         /* Restore interrupt.  */
-        TX_RESTORE
+        UX_RESTORE
 
         /* Check the source of the interrupt. Is it a Bus Reset?  */
         if (mcimx6_int_status & UX_DCD_MCIMX6_USBSTS_URI)
@@ -218,7 +225,7 @@ ULONG                    status;
             }
             else
             {
-                if (device -> ux_slave_device_state ==  UX_DEVICE_ATTACHED)
+                if (device -> ux_slave_device_state >=  UX_DEVICE_ATTACHED)
 
                     /* We have a device disconnection.  */
                     _ux_device_stack_disconnect();

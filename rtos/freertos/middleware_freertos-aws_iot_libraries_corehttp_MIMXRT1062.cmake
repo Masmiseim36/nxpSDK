@@ -11,3 +11,5 @@ target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
 )
 
 
+include(middleware_freertos-aws_iot_libraries_3rdparty_http_parser_MIMXRT1062)
+

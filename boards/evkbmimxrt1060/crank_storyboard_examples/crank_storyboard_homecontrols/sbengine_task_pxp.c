@@ -225,6 +225,9 @@ static void APP_InitPxp(void)
     PXP_SetProcessSurfaceBufferConfig(APP_PXP, &psBufferConfig);
     PXP_SetProcessSurfacePosition(APP_PXP, 0, 0, APP_IMG_WIDTH, APP_IMG_HEIGHT);
 
+	/* Disable AS. */
+    PXP_SetAlphaSurfacePosition(APP_PXP, 0xFFFFU, 0xFFFFU, 0U, 0U);
+
     /* Output config. */
     outputBufferConfig.pixelFormat = kPXP_OutputPixelFormatRGB565;
     outputBufferConfig.interlacedMode = kPXP_OutputProgressive;

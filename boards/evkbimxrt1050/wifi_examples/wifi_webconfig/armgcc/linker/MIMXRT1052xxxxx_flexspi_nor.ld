@@ -40,6 +40,7 @@ MEMORY
   m_text                (RX)  : ORIGIN = 0x60002400, LENGTH = 0x03D7DC00
   m_data                (RW)  : ORIGIN = 0x20000000, LENGTH = 0x00020000
   m_data2               (RW)  : ORIGIN = 0x20200000, LENGTH = 0x00040000
+  m_mflash              (RW)  : ORIGIN = 0x63D80000, LENGTH = 0x00280000
 }
 
 /* NOTE: Flash in range 0x63D8_0000 - 0x63FF_FFFF is reserved for  data */
@@ -57,7 +58,7 @@ SECTIONS
     KEEP(* (.boot_hdr.conf))     /* flash config section */
     . = ALIGN(4);
   } > m_flash_config
-
+  
   ivt_begin= ORIGIN(m_flash_config) + LENGTH(m_flash_config);
 
   .ivt : AT(ivt_begin)
@@ -247,6 +248,12 @@ SECTIONS
     . = ALIGN(8);
     . += STACK_SIZE;
   } > m_data
+  
+  .mflash_fs :
+  {
+    KEEP(* (.mflash_fs))
+    . = ALIGN(4);
+  } > m_mflash
 
   /* Initializes stack on the end of block */
   __StackTop   = ORIGIN(m_data) + LENGTH(m_data);

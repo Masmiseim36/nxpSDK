@@ -15,18 +15,30 @@
  * Definitions
  ******************************************************************************/
 
+/* @TEST_ANCHOR */
+
 #if ((defined USB_HOST_CONFIG_KHCI) && (USB_HOST_CONFIG_KHCI))
+#ifndef CONTROLLER_ID
 #define CONTROLLER_ID kUSB_ControllerKhci0
+#endif
 #endif /* USB_HOST_CONFIG_KHCI */
 #if ((defined USB_HOST_CONFIG_EHCI) && (USB_HOST_CONFIG_EHCI))
+#ifndef CONTROLLER_USB1_ID
 #define CONTROLLER_USB1_ID kUSB_ControllerEhci0
+#endif
+#ifndef CONTROLLER_USB2_ID
 #define CONTROLLER_USB2_ID kUSB_ControllerEhci1
+#endif
 #endif /* USB_HOST_CONFIG_EHCI */
 #if ((defined USB_HOST_CONFIG_OHCI) && (USB_HOST_CONFIG_OHCI))
+#ifndef CONTROLLER_ID
 #define CONTROLLER_ID kUSB_ControllerOhci0
+#endif
 #endif /* USB_HOST_CONFIG_OHCI */
 #if ((defined USB_HOST_CONFIG_IP3516HS) && (USB_HOST_CONFIG_IP3516HS))
+#ifndef CONTROLLER_ID
 #define CONTROLLER_ID kUSB_ControllerIp3516Hs0
+#endif
 #endif /* USB_HOST_CONFIG_IP3516HS */
 
 #if defined(__GIC_PRIO_BITS)

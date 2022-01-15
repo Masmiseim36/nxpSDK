@@ -748,6 +748,11 @@ static status_t semc_config_nor_flash_control_registers(semc_mem_config_t *confi
                    SEMC_NORCR2_LC(config->norMemConfig.syncLatencyCount) |
                    SEMC_NORCR2_AWDH(config->norMemConfig.asyncAddressTocsHoldTime) |
                    SEMC_NORCR2_TA(config->norMemConfig.asyncTurnaroundTime);
+#elif defined (MIMXRT1052_SERIES)
+     base->NORCR2 =
+        SEMC_NORCR2_CEITV(config->norMemConfig.ceMinIntervalTime) |
+        SEMC_NORCR2_AWDH(config->norMemConfig.asyncAddressTocsHoldTime) |
+        SEMC_NORCR2_TA(config->norMemConfig.asyncTurnaroundTime);
 #else
     base->NORCR2 =
         SEMC_NORCR2_CEITV(config->norMemConfig.ceMinIntervalTime) |

@@ -187,7 +187,9 @@
           <state>SDK_DEBUGCONSOLE=1</state>
           <state>SDK_DEBUGCONSOLE_UART</state>
           <state>IMX_RT</state>
-          <state>MBEDTLS_CONFIG_FILE="sss_mbedtls_evkbmimxrt1060_config.h"</state>
+          <state>MBEDTLS_CONFIG_FILE="ksdk_mbedtls_config.h"</state>
+          <state>MBEDTLS_USER_CONFIG_FILE="sss_ksdk_mbedtls_config.h"</state>
+          <state>SIMW_DEMO_ENABLE__DEMO_SE05X_GETINFO</state>
           <state>PRINTF_ADVANCED_ENABLE=1</state>
           <state>MBEDTLS</state>
           <state>SCP_MODE=C_MAC_C_ENC_R_MAC_R_ENC</state>
@@ -331,6 +333,7 @@
           <state>$PROJ_DIR$/../../../../../middleware/mbedtls/library</state>
           <state>$PROJ_DIR$/../../../../../middleware/mbedtls/port/ksdk</state>
           <state>$PROJ_DIR$/../../../../../middleware/se_hostlib/sss/plugin/mbedtls</state>
+          <state>$PROJ_DIR$/../../../../../middleware/se_hostlib/sss/port/ksdk</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/debug_console</state>
@@ -340,7 +343,6 @@
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/xip</state>
           <state>$PROJ_DIR$/../../../xip</state>
           <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
-          <state>$PROJ_DIR$/../../../../../middleware/se_hostlib/sss/port/ksdk</state>
           <state>$PROJ_DIR$/../../../../../middleware/se_hostlib/hostlib/hostLib/inc</state>
           <state>$PROJ_DIR$/../../../../../middleware/se_hostlib/hostlib/hostLib/se05x/src</state>
           <state>$PROJ_DIR$/../../../../../middleware/se_hostlib/sss/inc</state>
@@ -1195,7 +1197,9 @@
           <state>SDK_DEBUGCONSOLE=1</state>
           <state>SDK_DEBUGCONSOLE_UART</state>
           <state>IMX_RT</state>
-          <state>MBEDTLS_CONFIG_FILE="sss_mbedtls_evkbmimxrt1060_config.h"</state>
+          <state>MBEDTLS_CONFIG_FILE="ksdk_mbedtls_config.h"</state>
+          <state>MBEDTLS_USER_CONFIG_FILE="sss_ksdk_mbedtls_config.h"</state>
+          <state>SIMW_DEMO_ENABLE__DEMO_SE05X_GETINFO</state>
           <state>PRINTF_ADVANCED_ENABLE=1</state>
           <state>MBEDTLS</state>
           <state>SCP_MODE=C_MAC_C_ENC_R_MAC_R_ENC</state>
@@ -1339,6 +1343,7 @@
           <state>$PROJ_DIR$/../../../../../middleware/mbedtls/library</state>
           <state>$PROJ_DIR$/../../../../../middleware/mbedtls/port/ksdk</state>
           <state>$PROJ_DIR$/../../../../../middleware/se_hostlib/sss/plugin/mbedtls</state>
+          <state>$PROJ_DIR$/../../../../../middleware/se_hostlib/sss/port/ksdk</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/debug_console</state>
@@ -1348,7 +1353,6 @@
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/xip</state>
           <state>$PROJ_DIR$/../../../xip</state>
           <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
-          <state>$PROJ_DIR$/../../../../../middleware/se_hostlib/sss/port/ksdk</state>
           <state>$PROJ_DIR$/../../../../../middleware/se_hostlib/hostlib/hostLib/inc</state>
           <state>$PROJ_DIR$/../../../../../middleware/se_hostlib/hostlib/hostLib/se05x/src</state>
           <state>$PROJ_DIR$/../../../../../middleware/se_hostlib/sss/inc</state>
@@ -2378,10 +2382,22 @@
           <name>$PROJ_DIR$/../../../../../middleware/mbedtls/include/psa/crypto.h</name>
         </file>
         <file>
+          <name>$PROJ_DIR$/../../../../../middleware/mbedtls/include/psa/crypto_builtin_composites.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/mbedtls/include/psa/crypto_builtin_primitives.h</name>
+        </file>
+        <file>
           <name>$PROJ_DIR$/../../../../../middleware/mbedtls/include/psa/crypto_compat.h</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../middleware/mbedtls/include/psa/crypto_config.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/mbedtls/include/psa/crypto_driver_contexts_composites.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/mbedtls/include/psa/crypto_driver_contexts_primitives.h</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../middleware/mbedtls/include/psa/crypto_driver_common.h</name>
@@ -2496,6 +2512,9 @@
         <name>$PROJ_DIR$/../../../../../middleware/mbedtls/library/ecp_curves.c</name>
       </file>
       <file>
+        <name>$PROJ_DIR$/../../../../../middleware/mbedtls/library/ecp_invasive.h</name>
+      </file>
+      <file>
         <name>$PROJ_DIR$/../../../../../middleware/mbedtls/library/entropy.c</name>
       </file>
       <file>
@@ -2527,6 +2546,21 @@
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/mbedtls/library/md5.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/mbedtls/library/mps_common.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/mbedtls/library/mps_error.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/mbedtls/library/mps_reader.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/mbedtls/library/mps_trace.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/mbedtls/library/mps_trace.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/mbedtls/library/memory_buffer_alloc.c</name>
@@ -2580,6 +2614,18 @@
         <name>$PROJ_DIR$/../../../../../middleware/mbedtls/library/psa_crypto.c</name>
       </file>
       <file>
+        <name>$PROJ_DIR$/../../../../../middleware/mbedtls/library/psa_crypto_aead.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/mbedtls/library/psa_crypto_aead.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/mbedtls/library/psa_crypto_cipher.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/mbedtls/library/psa_crypto_cipher.h</name>
+      </file>
+      <file>
         <name>$PROJ_DIR$/../../../../../middleware/mbedtls/library/psa_crypto_client.c</name>
       </file>
       <file>
@@ -2596,6 +2642,18 @@
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/mbedtls/library/psa_crypto_ecp.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/mbedtls/library/psa_crypto_hash.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/mbedtls/library/psa_crypto_hash.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/mbedtls/library/psa_crypto_mac.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/mbedtls/library/psa_crypto_mac.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/mbedtls/library/psa_crypto_invasive.h</name>
@@ -2617,9 +2675,6 @@
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/mbedtls/library/psa_crypto_se.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/mbedtls/library/psa_crypto_service_integration.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/mbedtls/library/psa_crypto_slot_management.c</name>
@@ -2808,27 +2863,6 @@
           <file>
             <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/sss/plugin/mbedtls/sss_mbedtls.h</name>
           </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/sss/plugin/mbedtls/sss_mbedtls_evkbmimxrt1060_config.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/sss/plugin/mbedtls/sss_mbedtls_evkmimxrt1060_config.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/sss/plugin/mbedtls/sss_mbedtls_evkmimxrt1170_config.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/sss/plugin/mbedtls/sss_mbedtls_frdmk64f_config.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/sss/plugin/mbedtls/sss_mbedtls_frdmkw41z_config.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/sss/plugin/mbedtls/sss_mbedtls_lpcxpresso55s69_config.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/sss/plugin/mbedtls/sss_mbedtls_x86_config.h</name>
-          </file>
         </group>
       </group>
       <group>
@@ -2837,6 +2871,15 @@
           <name>ksdk</name>
           <file>
             <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/sss/port/ksdk/fsl_sss_types.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/sss/port/ksdk/fsl_sss_types.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/sss/port/ksdk/sss_ksdk_mbedcrypto_config.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/sss/port/ksdk/sss_ksdk_mbedtls_config.h</name>
           </file>
         </group>
       </group>
@@ -3207,7 +3250,7 @@
               <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/hostlib/hostLib/platform/ksdk/i2c_frdm.c</name>
             </file>
             <file>
-              <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/hostlib/hostLib/platform/ksdk/i2c_imxrt10xx.c</name>
+              <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/hostlib/hostLib/platform/ksdk/i2c_imxrt.c</name>
             </file>
             <file>
               <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/hostlib/hostLib/platform/ksdk/i2c_lpc54xxx.c</name>
@@ -3408,43 +3451,7 @@
           <group>
             <name>inc</name>
             <file>
-              <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/hostlib/hostLib/mbedtls/inc/a71ch_mbedtls_evkmimxrt1060_config.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/hostlib/hostLib/mbedtls/inc/a71ch_mbedtls_evkmimxrt1170_config.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/hostlib/hostLib/mbedtls/inc/a71ch_mbedtls_frdm_config.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/hostlib/hostLib/mbedtls/inc/a71ch_mbedtls_frdmk64f_config.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/hostlib/hostLib/mbedtls/inc/a71ch_mbedtls_frdmk82f_config.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/hostlib/hostLib/mbedtls/inc/a71ch_mbedtls_frdmkw41z_config.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/hostlib/hostLib/mbedtls/inc/a71ch_mbedtls_lpc54018iotmodule_config.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/hostlib/hostLib/mbedtls/inc/a71ch_mbedtls_lpcxpresso54018_config.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/hostlib/hostLib/mbedtls/inc/a71ch_mbedtls_lpcxpresso55s69_config.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/hostlib/hostLib/mbedtls/inc/a71ch_mbedtls_pi_config.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/hostlib/hostLib/mbedtls/inc/a71ch_mbedtls_x86_config.h</name>
-            </file>
-            <file>
               <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/hostlib/hostLib/mbedtls/inc/ax_mbedtls.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/hostlib/hostLib/mbedtls/inc/ecp_alt.h</name>
             </file>
           </group>
           <group>

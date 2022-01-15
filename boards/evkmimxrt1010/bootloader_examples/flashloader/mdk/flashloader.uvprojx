@@ -364,7 +364,7 @@
             <TextAddressRange>0x00000000</TextAddressRange>
             <DataAddressRange>0x20000000</DataAddressRange>
             <pXoBase/>
-            <ScatterFile>../../../../../middleware/mcu-boot/targets/common/linker/arm/MIMXRT1011/MIMXRT1011_ram_flashloader.scf</ScatterFile>
+            <ScatterFile>MIMXRT1011_ram_flashloader.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
             <Misc>--remove --legacyalign --datacompressor off --entry=Reset_Handler</Misc>

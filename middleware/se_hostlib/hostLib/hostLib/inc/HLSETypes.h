@@ -110,7 +110,7 @@ typedef HLSE_TYPE HLSE_OBJECT_TYPE;
 #ifdef TGT_A71CL
 #define HLSE_KEK_KEY        0x00040000       /**< Key Encryption Key for loading wrapped data */
 #endif
-#if (SSS_HAVE_A71CH || SSS_HAVE_A71CH_SIM || SSS_HAVE_APPLET_SE05X_IOT)
+#if (SSS_HAVE_APPLET_A71CH || SSS_HAVE_APPLET_A71CH_SIM || SSS_HAVE_APPLET_SE05X_IOT)
 #define HLSE_CONFIG_KEY     0x00040000       /**< Configuration keys used for key wrapping and module unlocking */
 #endif
 #define HLSE_COUNTER        0x00050000       /**< Counter with rollback protection; size  4 bytes */

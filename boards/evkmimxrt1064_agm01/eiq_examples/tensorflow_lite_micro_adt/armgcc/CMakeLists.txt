@@ -78,6 +78,7 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../CMSIS/Driver/Include
     ${ProjDirPath}/../../../../../devices/MIMXRT1064/utilities/debug_console_lite
     ${ProjDirPath}/../../../../../middleware/eiq
+    ${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite
     ${ProjDirPath}/../../../../../components/lists
     ${ProjDirPath}/../../../../../components/uart
     ${ProjDirPath}/../../../../../devices/MIMXRT1064
@@ -85,7 +86,7 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../evkmimxrt1064/xip
     ${ProjDirPath}/../../../../../CMSIS/Core/Include
     ${ProjDirPath}/../../../../../devices/MIMXRT1064/utilities
-    ${ProjDirPath}/../../../../../CMSIS/DSP
+    ${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis
 )
 
 # include modules
@@ -171,8 +172,6 @@ include(device_MIMXRT1064_system_MIMXRT1064)
 
 include(middleware_eiq_tensorflow_lite_micro_third_party_cmsis_nn_MIMXRT1064)
 
-include(CMSIS_DSP_Library_MIMXRT1064)
-
 
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--start-group)
 
@@ -183,14 +182,6 @@ target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE c)
 target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE gcc)
 
 target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE nosys)
-
-if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_sdram_release)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../CMSIS/DSP/Lib/GCC/libarm_cortexM7lfdp_math.a)
-endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_sdram_release)
-
-if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_sdram_debug)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../CMSIS/DSP/Lib/GCC/libarm_cortexM7lfdp_math.a)
-endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_sdram_debug)
 
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--end-group)
 

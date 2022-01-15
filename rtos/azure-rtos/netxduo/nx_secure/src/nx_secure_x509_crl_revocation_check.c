@@ -15,14 +15,13 @@
 /**                                                                       */
 /** NetX Secure Component                                                 */
 /**                                                                       */
-/**    X509 Digital Certificates                                          */
+/**    X.509 Digital Certificates                                         */
 /**                                                                       */
 /**************************************************************************/
 /**************************************************************************/
 
 #define NX_SECURE_SOURCE_CODE
 
-#include "nx_secure_tls.h"
 #include "nx_secure_x509.h"
 
 
@@ -36,7 +35,7 @@ static UINT _nx_secure_x509_crl_parse_entry(const UCHAR *buffer, ULONG length, U
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _nx_secure_x509_crl_revocation_check                PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.1.8        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Timothy Stapko, Microsoft Corporation                               */
@@ -88,6 +87,12 @@ static UINT _nx_secure_x509_crl_parse_entry(const UCHAR *buffer, ULONG length, U
 /*  05-19-2020     Timothy Stapko           Initial Version 6.0           */
 /*  09-30-2020     Timothy Stapko           Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  04-02-2021     Timothy Stapko           Modified comment(s),          */
+/*                                            removed dependency on TLS,  */
+/*                                            resulting in version 6.1.6  */
+/*  08-02-2021     Timothy Stapko           Modified comment(s),          */
+/*                                            fixed compiler warnings,    */
+/*                                            resulting in version 6.1.8  */
 /*                                                                        */
 /**************************************************************************/
 UINT _nx_secure_x509_crl_revocation_check(const UCHAR *crl_data, UINT crl_length,
@@ -104,7 +109,7 @@ UINT                 length;
 const UCHAR         *current_buffer;
 NX_SECURE_X509_CERT *issuer_certificate;
 UINT                 issuer_location;
-const UCHAR         *serial_number;
+const UCHAR         *serial_number = NX_NULL;
 UINT                 serial_number_length;
 
     NX_SECURE_MEMSET(&crl, 0, sizeof(NX_SECURE_X509_CRL));
@@ -112,7 +117,7 @@ UINT                 serial_number_length;
     /* First, parse the CRL. */
     status = _nx_secure_x509_certificate_revocation_list_parse(crl_data, crl_length, &crl_bytes, &crl);
 
-    if (status != NX_SUCCESS)
+    if (status != NX_SECURE_X509_SUCCESS)
     {
         return(status);
     }
@@ -131,7 +136,7 @@ UINT                 serial_number_length;
     /* First, get the issuer certificate. If we have a valid store and CRL, the issuer should be available. */
     status = _nx_secure_x509_store_certificate_find(store, &crl.nx_secure_x509_crl_issuer, 0, &issuer_certificate, &issuer_location);
 
-    if (status != NX_SUCCESS)
+    if (status != NX_SECURE_X509_SUCCESS)
     {
         return(status);
     }
@@ -139,7 +144,7 @@ UINT                 serial_number_length;
     /* Now, check that the issuer is valid. */
     status = _nx_secure_x509_certificate_chain_verify(store, issuer_certificate);
 
-    if (status != NX_SUCCESS)
+    if (status != NX_SECURE_X509_SUCCESS)
     {
         return(status);
     }
@@ -147,7 +152,7 @@ UINT                 serial_number_length;
     /* Now, verify that the CRL itself is OK. */
     status = _nx_secure_x509_crl_verify(certificate, &crl, store, issuer_certificate);
 
-    if (status != NX_SUCCESS)
+    if (status != NX_SECURE_X509_SUCCESS)
     {
         return(status);
     }
@@ -173,7 +178,7 @@ UINT                 serial_number_length;
         /* Parse an entry in the revokedCertificates list and get back the serial number. */
         status = _nx_secure_x509_crl_parse_entry(current_buffer, length, &bytes_processed, &serial_number, &serial_number_length);
 
-        if (status != NX_SUCCESS)
+        if (status != NX_SECURE_X509_SUCCESS)
         {
             return(status);
         }
@@ -201,13 +206,17 @@ UINT                 serial_number_length;
     }
 
     /* If we get here, the CRL was good and the certificate has not been revoked. */
-    return(NX_SUCCESS);
+    return(NX_SECURE_X509_SUCCESS);
 #else /* NX_SECURE_X509_DISABLE_CRL */
-    NX_PARAMETER_NOT_USED(crl_data);
-    NX_PARAMETER_NOT_USED(crl_length);
-    NX_PARAMETER_NOT_USED(store);
-    NX_PARAMETER_NOT_USED(certificate);
+    NX_CRYPTO_PARAMETER_NOT_USED(crl_data);
+    NX_CRYPTO_PARAMETER_NOT_USED(crl_length);
+    NX_CRYPTO_PARAMETER_NOT_USED(store);
+    NX_CRYPTO_PARAMETER_NOT_USED(certificate);
+#ifdef NX_CRYPTO_STANDALONE_ENABLE
+    return(NX_CRYPTO_FORMAT_NOT_SUPPORTED);
+#else
     return(NX_NOT_SUPPORTED);
+#endif /* NX_CRYPTO_STANDALONE_ENABLE */
 #endif /* NX_SECURE_X509_DISABLE_CRL */
 }
 

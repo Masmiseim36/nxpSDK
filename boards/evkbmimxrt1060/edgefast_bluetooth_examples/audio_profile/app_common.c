@@ -169,10 +169,15 @@ void app_bt_connect_addr(char *addrStr)
     app_bt_set_task_msg(APP_CONTROL_CONNECT);
 }
 
-void app_bt_connect_index(uint8_t index)
+int app_bt_connect_index(uint8_t index)
 {
+    if (index >= APP_INQUIRY_NUM_RESPONSES)
+    {
+        return -1;
+    }
     memcpy(app_a2dp.peer_bd_addr, &br_discovery_results[index].addr.val[0], 6U);
     app_bt_set_task_msg(APP_CONTROL_CONNECT);
+    return 0;
 }
 
 void app_bt_disconnect(void)
@@ -388,7 +393,7 @@ static void connected(struct bt_conn *conn, uint8_t err)
 
 static void disconnected(struct bt_conn *conn, uint8_t reason)
 {
-    int err;
+
     PRINTF("Disconnected (reason 0x%02x)\n", reason);
 
     if (app_a2dp.conn != conn)

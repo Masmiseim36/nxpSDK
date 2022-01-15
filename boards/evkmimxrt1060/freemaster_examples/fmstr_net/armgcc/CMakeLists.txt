@@ -44,14 +44,14 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../FreeRTOSConfig.h"
 "${ProjDirPath}/../FreeRTOSConfigBoard.h"
 "${ProjDirPath}/../lwipopts.h"
+"${ProjDirPath}/../board.c"
+"${ProjDirPath}/../board.h"
 "${ProjDirPath}/../../common/fmstr_example/data_example_pmp.h"
 "${ProjDirPath}/../../common/fmstr_example/data_img_logo.h"
 "${ProjDirPath}/../../common/fmstr_example/data_img_file.h"
 "${ProjDirPath}/../../common/fmstr_example/data_img_fmstrlogo.h"
 "${ProjDirPath}/../../common/fmstr_example/data_html_index.h"
 "${ProjDirPath}/../../common/fmstr_example/example_data.h"
-"${ProjDirPath}/../board.c"
-"${ProjDirPath}/../board.h"
 "${ProjDirPath}/../dcd.c"
 "${ProjDirPath}/../dcd.h"
 )
@@ -68,7 +68,7 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../components/phy
     ${ProjDirPath}/../../../../../devices/MIMXRT1062/drivers
     ${ProjDirPath}/../../../../../devices/MIMXRT1062/utilities
-    ${ProjDirPath}/../../../../../rtos/freertos
+    ${ProjDirPath}/../../../../../rtos/freertos/freertos_kernel
     ${ProjDirPath}/../../../../../middleware/freemaster
     ${ProjDirPath}/../../../../../devices/MIMXRT1062
     ${ProjDirPath}/../../../../../components/uart

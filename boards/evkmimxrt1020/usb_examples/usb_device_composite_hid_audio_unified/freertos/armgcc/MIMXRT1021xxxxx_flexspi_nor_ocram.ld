@@ -8,7 +8,7 @@
 **     Compiler:            GNU C Compiler
 **     Reference manual:    IMXRT1020RM Rev.1, 12/2018 | IMXRT1020SRM Rev.3
 **     Version:             rev. 0.1, 2017-06-06
-**     Build:               b210226
+**     Build:               b210709
 **
 **     Abstract:
 **         Linker file for the GNU C Compiler
@@ -58,7 +58,7 @@ SECTIONS
     . = ALIGN(4);
   } > m_flash_config
 
-  ivt_begin= ORIGIN(m_flash_config) + LENGTH(m_flash_config);
+  ivt_begin = ORIGIN(m_flash_config) + LENGTH(m_flash_config);
 
   .ivt : AT(ivt_begin)
   {
@@ -226,6 +226,13 @@ SECTIONS
   text_end = ORIGIN(m_text) + LENGTH(m_text);
   ASSERT(__DATA_END <= text_end, "region m_text overflowed with text and data")
 
+  .qadata :
+  {
+    . = ALIGN(4);
+    *(DataQuickAccess)       /* quick access data section */
+    . = ALIGN(4);
+  } > m_data
+
   /* Uninitialized data section */
   .bss :
   {
@@ -268,4 +275,3 @@ SECTIONS
 
   ASSERT(__StackLimit >= __HeapLimit, "region m_data overflowed with stack and heap")
 }
-

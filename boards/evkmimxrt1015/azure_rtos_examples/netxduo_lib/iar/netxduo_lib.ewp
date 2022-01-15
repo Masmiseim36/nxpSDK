@@ -2964,6 +2964,9 @@
             <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/nx_secure/src/nx_secure_x509_find_certificate_methods.c</name>
           </file>
           <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/nx_secure/src/nx_secure_x509_find_curve_method.c</name>
+          </file>
+          <file>
             <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/nx_secure/src/nx_secure_x509_free_certificate_get.c</name>
           </file>
           <file>

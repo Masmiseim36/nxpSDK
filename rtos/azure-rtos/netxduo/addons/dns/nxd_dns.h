@@ -26,7 +26,7 @@
 /*  APPLICATION INTERFACE DEFINITION                       RELEASE        */ 
 /*                                                                        */  
 /*    nxd_dns.h                                           PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.1.5        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Yuxin Zhou, Microsoft Corporation                                   */
@@ -45,6 +45,14 @@
 /*  05-19-2020     Yuxin Zhou               Initial Version 6.0           */
 /*  09-30-2020     Yuxin Zhou               Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  12-31-2020     Yuxin Zhou               Modified comment(s), prevented*/
+/*                                            infinite loop in name       */
+/*                                            compression, resulting in   */
+/*                                            version 6.1.3               */
+/*  03-02-2021     Yuxin Zhou               Modified comment(s), and      */
+/*                                            improved the logic of       */
+/*                                            receiving dns response,     */
+/*                                            resulting in version 6.1.5  */
 /*                                                                        */
 /**************************************************************************/
           
@@ -295,6 +303,10 @@ extern   "C" {
 #define NX_DNS_PACKET_ALLOCATE_TIMEOUT          NX_IP_PERIODIC_RATE
 #endif
 
+/* Define the maximum number of pointers allowed in name compression.  */
+#ifndef NX_DNS_MAX_COMPRESSION_POINTERS
+#define NX_DNS_MAX_COMPRESSION_POINTERS        16
+#endif
 
 /* Define the basic DNS data structure.  */
 
@@ -1004,6 +1016,10 @@ UINT        _nx_dns_cache_notify_clear(NX_DNS *dns_ptr);
 #endif /* NX_DNS_CACHE_ENABLE  */
 
 #endif
+
+/* Internal DNS response getting function.  */
+UINT        _nx_dns_response_get(NX_DNS *dns_ptr, UCHAR *host_name, UCHAR *record_buffer, UINT buffer_size, 
+                                 UINT *record_count, ULONG wait_option);
 
 /* Determine if a C++ compiler is being used.  If so, complete the standard
    C conditional started above.  */

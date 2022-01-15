@@ -111,5 +111,5 @@ void sscp_a71ch_closeConnect(void);
  *@}
  */ /* end of sscp_a71ch */
 
-#endif /* SSS_HAVE_A71CH */
+#endif /* SSS_HAVE_APPLET_A71CH */
 #endif /* _FSL_SSCP_A71CH_H_ */

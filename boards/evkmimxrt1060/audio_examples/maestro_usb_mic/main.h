@@ -12,8 +12,6 @@
 #include "task.h"
 #include "semphr.h"
 
-#include "ff.h"
-
 #include <stdbool.h>
 
 /*******************************************************************************

@@ -106,11 +106,10 @@ static shell_status_t shell_bt(shell_handle_t shellHandle, int32_t argc, char **
             break;
         }
 
-        if (select_index == 0U)
+        if ((select_index == 0U) || (app_bt_connect_index(select_index - 1) < 0))
         {
             PRINTF("the parameter is wrong\r\n");
         }
-        app_bt_connect_index(select_index - 1);
     }
     else if (strcmp(argv[1], "disconnect") == 0)
     {

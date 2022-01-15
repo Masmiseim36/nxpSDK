@@ -10,7 +10,7 @@
 #include "fsl_sscp.h"
 #include "fsl_sss_sscp.h"
 
-#if SSS_HAVE_A71CL || SSS_HAVE_SE050_L
+#if SSS_HAVE_APPLET_A71CL || SSS_HAVE_SE050_L
 
 #include <HLSEAPI.h>
 #include <fsl_sss_keyid_map.h>
@@ -109,5 +109,5 @@ void sscp_a71cl_closeSession(void);
  *@}
  */ /* end of sscp_a71cl */
 
-#endif /* SSS_HAVE_A71CL || SSS_HAVE_SE050_L */
+#endif /* SSS_HAVE_APPLET_A71CL || SSS_HAVE_SE050_L */
 #endif /* _FSL_SSCP_a71cl_H_ */

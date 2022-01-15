@@ -48,6 +48,11 @@ static const int32_t block_size = 1048576;
 //static const size_t mime_data_limit = 4 * 1024 * 1024;
 //static const char*  mime_tensor     = "application/vnd.deepview.tensor";
 
+static char* uuid_null()
+{
+    return NULL;
+}
+
 static void
 parse_out_data(char* src, char* dest, char* line_end, size_t dest_sz)
 {
@@ -79,7 +84,7 @@ parse_out_data(char* src, char* dest, char* line_end, size_t dest_sz)
     } else {
         do {
             end++;
-        } while ((*end != ' ' || *end != ';' || *end != '\'') &&
+        } while ((*end != ' ' && *end != ';' && *end != '\'') &&
                  end < line_end);
     }
 
@@ -430,7 +435,7 @@ v1_hostinfo(SOCKET             sock,
     if (!json) { goto json_oom; }
 
     if (1) {
-        const char* model_uuid = NULL;
+        const char* model_uuid = uuid_null();
         const char* model_name = server->model_name;
 
         json = json_objOpen_flex(&server->json_buffer,
@@ -587,7 +592,7 @@ v1_modelinfo(SOCKET             sock,
     const char* model_uuid;
     NNServer*   server = (NNServer *)user_data;
 
-    model_uuid = NULL;
+    model_uuid = uuid_null();
     model_name = server->model_name;
 
     json = server->json_buffer;

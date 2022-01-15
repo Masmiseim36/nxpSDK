@@ -12,6 +12,9 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
+
+/* @TEST_ANCHOR */
+
 #define USB_DEVICE_VID (0x1FC9U)
 /* Note: If any of the USB parameters change, it is often necessary to uninstall
  *       the device driver in the Windows OS or change the value of USB_DEVICE_PID
@@ -29,14 +32,16 @@
     2. usb host is Windows OS that supports USB audio 2.0, like Win 10
     3. use feedback endpoint
 */
+#ifndef USB_DEVICE_WORKAROUND_AUDIO_20_WINDOWS
 #define USB_DEVICE_WORKAROUND_AUDIO_20_WINDOWS (0U)
+#endif
 
 /*! @brief Whether UAC 5.1 is enabled or not. */
 #define USB_AUDIO_CHANNEL5_1 (0)
 
 #if defined(USB_AUDIO_CHANNEL5_1) && (USB_AUDIO_CHANNEL5_1 > 0U)
 #define USB_AUDIO_5_1_CHANNEL_PAIR_SEL \
-    (0x01) /* 0x01: front left, front right; 0x02: rear left, rear right; 0x03: front center, subwoofer */
+    (0x01) /* 0x01: front left, front right; 0x02: front center, subwoofer; 0x03: rear left, rear right */
 #endif
 
 /* usb descriptor length */
@@ -115,6 +120,7 @@ Specification, Revision 2.0 chapter 9.6.6*/
 #else
 #define USB_AUDIO_SPATIAL_LOCATION (0x03U)
 #endif
+
 /* transfer length during 1 ms */
 #define AUDIO_OUT_TRANSFER_LENGTH_ONE_FRAME (AUDIO_SAMPLING_RATE_KHZ * AUDIO_FORMAT_CHANNELS * AUDIO_FORMAT_SIZE)
 

@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 NXP
+ * Copyright 2020-2021 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -152,22 +152,22 @@ void BOARD_InitPins(void);
  */
 void BOARD_InitUSDHCPins(void);
 
-/* GPIO_AD_B1_06 (coord J12), CSI_VSYNC/J35[18]/J22[2]/UART_TX */
+/* GPIO_AD_B1_06 (coord J12), CSI_VSYNC/J46[18]/BT_UART_TXD/U9[4]/I2C3_SCL/J24[3]/J23[13]/J16[2] */
 /* Routed pin properties */
 #define BOARD_INITARDUINOUARTPINS_CSI_VSYNC_PERIPHERAL                   LPUART3   /*!< Peripheral name */
 #define BOARD_INITARDUINOUARTPINS_CSI_VSYNC_SIGNAL                            TX   /*!< Signal name */
 
-/* GPIO_AD_B1_05 (coord K12), CSI_MCLK/J35[12]/J23[4] */
+/* GPIO_AD_B1_05 (coord K12), CSI_MCLK/J46[12]/WL_DEV_WAKE/U9[10]/J33[4] */
 /* Routed pin properties */
 #define BOARD_INITARDUINOUARTPINS_CSI_MCLK_PERIPHERAL                    LPUART3   /*!< Peripheral name */
 #define BOARD_INITARDUINOUARTPINS_CSI_MCLK_SIGNAL                          RTS_B   /*!< Signal name */
 
-/* GPIO_AD_B1_04 (coord L12), CSI_PIXCLK/J35[8]/J23[3] */
+/* GPIO_AD_B1_04 (coord L12), CSI_PIXCLK/J46[8]/BT_DEV_WAKE/U9[9]/J33[3] */
 /* Routed pin properties */
 #define BOARD_INITARDUINOUARTPINS_CSI_PIXCLK_PERIPHERAL                  LPUART3   /*!< Peripheral name */
 #define BOARD_INITARDUINOUARTPINS_CSI_PIXCLK_SIGNAL                        CTS_B   /*!< Signal name */
 
-/* GPIO_AD_B1_07 (coord K10), CSI_HSYNC/J35[16]/J22[1]/UART_RX */
+/* GPIO_AD_B1_07 (coord K10), CSI_HSYNC/J46[16]/BT_UART_RXD/U10[20]/I2C3_SDA/J24[5]/J23[15]/J16[1] */
 /* Routed pin properties */
 #define BOARD_INITARDUINOUARTPINS_CSI_HSYNC_PERIPHERAL                   LPUART3   /*!< Peripheral name */
 #define BOARD_INITARDUINOUARTPINS_CSI_HSYNC_SIGNAL                            RX   /*!< Signal name */
@@ -178,6 +178,41 @@ void BOARD_InitUSDHCPins(void);
  */
 void BOARD_InitArduinoUARTPins(void);
 
+#define BOARD_INITPINSM2_IOMUXC_GPR_GPR26_GPIO_MUX1_GPIO_SEL_MASK 0x01080000U /*!< GPIO1 and GPIO6 share same IO MUX function, GPIO_MUX1 selects one GPIO function: affected bits mask */
+
+/* GPIO_AD_B1_03 (coord M12), SPDIF_IN/U15[4]/WL_RST#/J8[56]/SD_PWREN/Q5[1]/J16[8] */
+/* Routed pin properties */
+#define BOARD_INITPINSM2_WL_RST_PERIPHERAL                                 GPIO1   /*!< Peripheral name */
+#define BOARD_INITPINSM2_WL_RST_SIGNAL                                   gpio_io   /*!< Signal name */
+#define BOARD_INITPINSM2_WL_RST_CHANNEL                                      19U   /*!< Signal channel */
+
+/* Symbols to be used with GPIO driver */
+#define BOARD_INITPINSM2_WL_RST_GPIO                                       GPIO1   /*!< GPIO peripheral base pointer */
+#define BOARD_INITPINSM2_WL_RST_GPIO_PIN                                     19U   /*!< GPIO pin number */
+#define BOARD_INITPINSM2_WL_RST_GPIO_PIN_MASK                        (1U << 19U)   /*!< GPIO pin mask */
+#define BOARD_INITPINSM2_WL_RST_PORT                                       GPIO1   /*!< PORT peripheral base pointer */
+#define BOARD_INITPINSM2_WL_RST_PIN                                          19U   /*!< PORT pin number */
+#define BOARD_INITPINSM2_WL_RST_PIN_MASK                             (1U << 19U)   /*!< PORT pin mask */
+
+/* GPIO_AD_B1_08 (coord H13), AUD_INT/J34[5]/U25[15]/WIFI_RST_B/U9[3]/CSI_D9/J46[13]/J16[4] */
+/* Routed pin properties */
+#define BOARD_INITPINSM2_SDIO_RST_PERIPHERAL                               GPIO1   /*!< Peripheral name */
+#define BOARD_INITPINSM2_SDIO_RST_SIGNAL                                 gpio_io   /*!< Signal name */
+#define BOARD_INITPINSM2_SDIO_RST_CHANNEL                                    24U   /*!< Signal channel */
+
+/* Symbols to be used with GPIO driver */
+#define BOARD_INITPINSM2_SDIO_RST_GPIO                                     GPIO1   /*!< GPIO peripheral base pointer */
+#define BOARD_INITPINSM2_SDIO_RST_GPIO_PIN                                   24U   /*!< GPIO pin number */
+#define BOARD_INITPINSM2_SDIO_RST_GPIO_PIN_MASK                      (1U << 24U)   /*!< GPIO pin mask */
+#define BOARD_INITPINSM2_SDIO_RST_PORT                                     GPIO1   /*!< PORT peripheral base pointer */
+#define BOARD_INITPINSM2_SDIO_RST_PIN                                        24U   /*!< PORT pin number */
+#define BOARD_INITPINSM2_SDIO_RST_PIN_MASK                           (1U << 24U)   /*!< PORT pin mask */
+
+/*!
+ * @brief Configures pin routing and optionally pin electrical features.
+ *
+ */
+void BOARD_InitPinsM2(void);
 
 #define BOARD_DEINITARDUINOUARTPINS_IOMUXC_GPR_GPR26_GPIO_MUX1_GPIO_SEL_MASK 0xF00000U /*!< GPIO1 and GPIO6 share same IO MUX function, GPIO_MUX1 selects one GPIO function: affected bits mask */
 

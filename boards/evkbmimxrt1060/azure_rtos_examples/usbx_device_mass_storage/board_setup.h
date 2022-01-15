@@ -7,12 +7,8 @@
  ******************************************************************************/
 void board_setup(void);
 
-void usb_host_setup(void);
-void usb_host_interrupt_setup(int priority);
-ULONG usb_host_base(void);
-
 void usb_device_setup(void);
-void usb_device_interrupt_setup(int priority);
-ULONG usb_device_base(void);
+
+void usb_device_hw_setup(void);
 
 #endif /* _BOARD_SETUP_H_ */

@@ -2,7 +2,7 @@
 <project>
   <fileVersion>2</fileVersion>
   <configuration>
-    <name>flexspi_nor_debug</name>
+    <name>flexspi_nor_sdram_debug</name>
     <toolchain>
       <name>ARM</name>
     </toolchain>
@@ -16,15 +16,15 @@
         <debug>1</debug>
         <option>
           <name>ExePath</name>
-          <state>$PROJ_DIR$/flexspi_nor_debug</state>
+          <state>$PROJ_DIR$/flexspi_nor_sdram_debug</state>
         </option>
         <option>
           <name>ObjPath</name>
-          <state>$PROJ_DIR$/flexspi_nor_debug/obj</state>
+          <state>$PROJ_DIR$/flexspi_nor_sdram_debug/obj</state>
         </option>
         <option>
           <name>ListPath</name>
-          <state>$PROJ_DIR$/flexspi_nor_debug/list</state>
+          <state>$PROJ_DIR$/flexspi_nor_sdram_debug/list</state>
         </option>
         <option>
           <name>GEndianMode</name>
@@ -183,20 +183,25 @@
           <state>DEBUG</state>
           <state>XIP_EXTERNAL_FLASH=1</state>
           <state>XIP_BOOT_HEADER_ENABLE=1</state>
+          <state>XIP_BOOT_HEADER_DCD_ENABLE=1</state>
+          <state>SKIP_SYSCLK_INIT</state>
+          <state>DATA_SECTION_IS_CACHEABLE=1</state>
           <state>CPU_MIMXRT1064DVL6A</state>
           <state>FSL_RTOS_FREE_RTOS</state>
           <state>FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE</state>
           <state>FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1</state>
           <state>FSL_RTOS_BM</state>
           <state>_POSIX_C_SOURCE=200809L</state>
-          <state>CPU_MIMXRT1064DVL6A_cm7</state>
+          <state>ARM_MATH_CM7</state>
+          <state>__FPU_PRESENT=1</state>
+          <state>SDK_DEBUGCONSOLE_UART</state>
           <state>PRINTF_FLOAT_ENABLE=1</state>
           <state>PRINTF_ADVANCED_ENABLE=1</state>
           <state>XIP_EXTERNAL_FLASH=1</state>
           <state>XIP_BOOT_HEADER_ENABLE=1</state>
           <state>XIP_BOOT_HEADER_DCD_ENABLE=1</state>
           <state>SDK_DEBUGCONSOLE=1</state>
-          <state>SKIP_SYSCLK_INIT</state>
+          <state>SDK_OS_BAREMETAL</state>
           <state>USE_RTOS=1</state>
           <state>SDK_OS_FREE_RTOS</state>
           <state>LWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1</state>
@@ -357,6 +362,7 @@
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/xip</state>
           <state>$PROJ_DIR$/../../../xip</state>
+          <state>$PROJ_DIR$/../../../../../CMSIS/DSP/Include</state>
           <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
@@ -524,8 +530,6 @@
         <option>
           <name>ADefines</name>
           <state>DEBUG</state>
-          <state>FLEXRAM_CFG_ENABLE</state>
-          <state>FLEXRAM_ITCM_ZERO_SIZE</state>
           <state>__STARTUP_INITIALIZE_NONCACHEDATA</state>
         </option>
         <option>
@@ -777,7 +781,7 @@
         </option>
         <option>
           <name>IlinkIcfFile</name>
-          <state>$PROJ_DIR$/MIMXRT1064xxxxx_flexspi_nor_sdram.icf</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/iar/MIMXRT1064xxxxx_flexspi_nor_sdram.icf</state>
         </option>
         <option>
           <name>IlinkIcfFileSlave</name>
@@ -827,6 +831,7 @@
           <name>IlinkAdditionalLibs</name>
           <state>$PROJ_DIR$/../../../../../middleware/eiq/deepviewrt/lib/libmodelrunner-rt-flash-iar.a</state>
           <state>$PROJ_DIR$/../../../../../middleware/eiq/deepviewrt/lib/deepview-rt-iar.a</state>
+          <state>$PROJ_DIR$/../../../../../CMSIS/DSP/Lib/IAR/iar_cortexM7lf_math.a</state>
         </option>
         <option>
           <name>IlinkOverrideProgramEntryLabel</name>
@@ -1019,7 +1024,7 @@
     </settings>
   </configuration>
   <configuration>
-    <name>flexspi_nor_release</name>
+    <name>flexspi_nor_sdram_release</name>
     <toolchain>
       <name>ARM</name>
     </toolchain>
@@ -1033,15 +1038,15 @@
         <debug>0</debug>
         <option>
           <name>ExePath</name>
-          <state>$PROJ_DIR$/flexspi_nor_release</state>
+          <state>$PROJ_DIR$/flexspi_nor_sdram_release</state>
         </option>
         <option>
           <name>ObjPath</name>
-          <state>$PROJ_DIR$/flexspi_nor_release/obj</state>
+          <state>$PROJ_DIR$/flexspi_nor_sdram_release/obj</state>
         </option>
         <option>
           <name>ListPath</name>
-          <state>$PROJ_DIR$/flexspi_nor_release/list</state>
+          <state>$PROJ_DIR$/flexspi_nor_sdram_release/list</state>
         </option>
         <option>
           <name>GEndianMode</name>
@@ -1199,6 +1204,9 @@
           <name>CCDefines</name>
           <state>XIP_EXTERNAL_FLASH=1</state>
           <state>XIP_BOOT_HEADER_ENABLE=1</state>
+          <state>XIP_BOOT_HEADER_DCD_ENABLE=1</state>
+          <state>SKIP_SYSCLK_INIT</state>
+          <state>DATA_SECTION_IS_CACHEABLE=1</state>
           <state>NDEBUG</state>
           <state>CPU_MIMXRT1064DVL6A</state>
           <state>FSL_RTOS_FREE_RTOS</state>
@@ -1206,14 +1214,16 @@
           <state>FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1</state>
           <state>FSL_RTOS_BM</state>
           <state>_POSIX_C_SOURCE=200809L</state>
-          <state>CPU_MIMXRT1064DVL6A_cm7</state>
+          <state>ARM_MATH_CM7</state>
+          <state>__FPU_PRESENT=1</state>
+          <state>SDK_DEBUGCONSOLE_UART</state>
           <state>PRINTF_FLOAT_ENABLE=1</state>
           <state>PRINTF_ADVANCED_ENABLE=1</state>
           <state>XIP_EXTERNAL_FLASH=1</state>
           <state>XIP_BOOT_HEADER_ENABLE=1</state>
           <state>XIP_BOOT_HEADER_DCD_ENABLE=1</state>
           <state>SDK_DEBUGCONSOLE=1</state>
-          <state>SKIP_SYSCLK_INIT</state>
+          <state>SDK_OS_BAREMETAL</state>
           <state>USE_RTOS=1</state>
           <state>SDK_OS_FREE_RTOS</state>
           <state>LWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1</state>
@@ -1374,6 +1384,7 @@
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/xip</state>
           <state>$PROJ_DIR$/../../../xip</state>
+          <state>$PROJ_DIR$/../../../../../CMSIS/DSP/Include</state>
           <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
@@ -1394,7 +1405,7 @@
         </option>
         <option>
           <name>CCOptLevel</name>
-          <state>2</state>
+          <state>3</state>
         </option>
         <option>
           <name>CCOptStrategy</name>
@@ -1403,7 +1414,7 @@
         </option>
         <option>
           <name>CCOptLevelSlave</name>
-          <state>2</state>
+          <state>3</state>
         </option>
         <option>
           <name>CompilerMisraRules98</name>
@@ -1541,8 +1552,6 @@
         <option>
           <name>ADefines</name>
           <state>NDEBUG</state>
-          <state>FLEXRAM_CFG_ENABLE</state>
-          <state>FLEXRAM_ITCM_ZERO_SIZE</state>
           <state>__STARTUP_INITIALIZE_NONCACHEDATA</state>
         </option>
         <option>
@@ -1794,7 +1803,7 @@
         </option>
         <option>
           <name>IlinkIcfFile</name>
-          <state>$PROJ_DIR$/MIMXRT1064xxxxx_flexspi_nor_sdram.icf</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/iar/MIMXRT1064xxxxx_flexspi_nor_sdram.icf</state>
         </option>
         <option>
           <name>IlinkIcfFileSlave</name>
@@ -1844,6 +1853,7 @@
           <name>IlinkAdditionalLibs</name>
           <state>$PROJ_DIR$/../../../../../middleware/eiq/deepviewrt/lib/libmodelrunner-rt-flash-iar.a</state>
           <state>$PROJ_DIR$/../../../../../middleware/eiq/deepviewrt/lib/deepview-rt-iar.a</state>
+          <state>$PROJ_DIR$/../../../../../CMSIS/DSP/Lib/IAR/iar_cortexM7lf_math.a</state>
         </option>
         <option>
           <name>IlinkOverrideProgramEntryLabel</name>
@@ -3026,6 +3036,9 @@
           <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include/StackMacros.h</name>
         </file>
         <file>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include/stdint.readme</name>
+        </file>
+        <file>
           <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include/stream_buffer.h</name>
         </file>
         <file>
@@ -3185,6 +3198,9 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/debug_console/fsl_debug_console_conf.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/fsl_assert.c</name>
     </file>
   </group>
   <group>
@@ -3456,6 +3472,21 @@
   </group>
   <group>
     <name>CMSIS</name>
+    <group>
+      <name>DSP</name>
+      <group>
+        <name>Include</name>
+        <file>
+          <name>$PROJ_DIR$/../../../../../CMSIS/DSP/Include/arm_common_tables.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../CMSIS/DSP/Include/arm_const_structs.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../CMSIS/DSP/Include/arm_math.h</name>
+        </file>
+      </group>
+    </group>
     <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Core/Include/cmsis_armcc.h</name>
     </file>

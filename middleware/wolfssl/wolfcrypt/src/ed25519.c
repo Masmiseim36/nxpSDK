@@ -1,6 +1,6 @@
 /* ed25519.c
  *
- * Copyright (C) 2006-2020 wolfSSL Inc.
+ * Copyright (C) 2006-2021 wolfSSL Inc.
  *
  * This file is part of wolfSSL.
  *
@@ -45,12 +45,43 @@
     #include <wolfssl/wolfcrypt/port/nxp/ksdk_port.h>
 #endif
 
+#ifdef WOLF_CRYPTO_CB
+    #include <wolfssl/wolfcrypt/cryptocb.h>
+#endif
+
 #if defined(HAVE_ED25519_SIGN) || defined(HAVE_ED25519_VERIFY)
 #define ED25519CTX_SIZE    32
 
 static const byte ed25519Ctx[ED25519CTX_SIZE+1] =
                                              "SigEd25519 no Ed25519 collisions";
 #endif
+
+static int ed25519_hash(ed25519_key* key, const byte* in, word32 inLen,
+    byte* hash)
+{
+    int ret;
+    wc_Sha512 sha;
+    int devId = INVALID_DEVID;
+
+    if (key == NULL || (in == NULL && inLen > 0) || hash == NULL) {
+        return BAD_FUNC_ARG;
+    }
+
+#ifdef WOLF_CRYPTO_CB
+    devId = key->devId;
+#endif
+
+    ret = wc_InitSha512_ex(&sha, NULL, devId);
+    if (ret == 0) {
+        ret = wc_Sha512Update(&sha, in, inLen);
+        if (ret == 0)
+            ret = wc_Sha512Final(&sha, hash);
+        wc_Sha512Free(&sha);
+    }
+
+    (void)devId;
+    return ret;
+}
 
 int wc_ed25519_make_public(ed25519_key* key, unsigned char* pubKey,
                            word32 pubKeySz)
@@ -65,7 +96,7 @@ int wc_ed25519_make_public(ed25519_key* key, unsigned char* pubKey,
         ret = BAD_FUNC_ARG;
 
     if (ret == 0)
-        ret = wc_Sha512Hash(key->k, ED25519_KEY_SIZE, az);
+        ret = ed25519_hash(key, key->k, ED25519_KEY_SIZE, az);
     if (ret == 0) {
         /* apply clamp */
         az[0]  &= 248;
@@ -102,6 +133,15 @@ int wc_ed25519_make_key(WC_RNG* rng, int keySz, ed25519_key* key)
     if (keySz != ED25519_KEY_SIZE)
         return BAD_FUNC_ARG;
 
+#ifdef WOLF_CRYPTO_CB
+    if (key->devId != INVALID_DEVID) {
+        ret = wc_CryptoCb_Ed25519Gen(rng, keySz, key);
+        if (ret != CRYPTOCB_UNAVAILABLE)
+            return ret;
+        /* fall-through when unavailable */
+    }
+#endif
+
     ret  = wc_RNG_GenerateBlock(rng, key->k, ED25519_KEY_SIZE);
     if (ret != 0)
         return ret;
@@ -134,12 +174,13 @@ int wc_ed25519_make_key(WC_RNG* rng, int keySz, ed25519_key* key)
     contextLen  length of extra signing data
     return 0 on success
  */
-static int ed25519_sign_msg(const byte* in, word32 inLen, byte* out,
+int wc_ed25519_sign_msg_ex(const byte* in, word32 inLen, byte* out,
                             word32 *outLen, ed25519_key* key, byte type,
                             const byte* context, byte contextLen)
 {
 #ifdef FREESCALE_LTC_ECC
     byte   tempBuf[ED25519_PRV_KEY_SIZE];
+    ltc_pkha_ecc_point_t ltcPoint = {0};
 #else
     ge_p3  R;
 #endif
@@ -148,12 +189,25 @@ static int ed25519_sign_msg(const byte* in, word32 inLen, byte* out,
     byte   az[ED25519_PRV_KEY_SIZE];
     wc_Sha512 sha;
     int    ret;
+    int    devId = INVALID_DEVID;
 
     /* sanity check on arguments */
     if (in == NULL || out == NULL || outLen == NULL || key == NULL ||
                                          (context == NULL && contextLen != 0)) {
         return BAD_FUNC_ARG;
     }
+
+#ifdef WOLF_CRYPTO_CB
+    devId = key->devId;
+    if (devId != INVALID_DEVID) {
+        ret = wc_CryptoCb_Ed25519Sign(in, inLen, out, outLen, key, type,
+            context, contextLen);
+        if (ret != CRYPTOCB_UNAVAILABLE)
+            return ret;
+        /* fall-through when unavailable */
+    }
+#endif
+
     if (!key->pubKeySet)
         return BAD_FUNC_ARG;
 
@@ -166,7 +220,7 @@ static int ed25519_sign_msg(const byte* in, word32 inLen, byte* out,
 
     /* step 1: create nonce to use where nonce is r in
        r = H(h_b, ... ,h_2b-1,M) */
-    ret = wc_Sha512Hash(key->k, ED25519_KEY_SIZE, az);
+    ret = ed25519_hash(key, key->k, ED25519_KEY_SIZE, az);
     if (ret != 0)
         return ret;
 
@@ -175,7 +229,7 @@ static int ed25519_sign_msg(const byte* in, word32 inLen, byte* out,
     az[31] &= 63; /* same than az[31] &= 127 because of az[31] |= 64 */
     az[31] |= 64;
 
-    ret = wc_InitSha512(&sha);
+    ret = wc_InitSha512_ex(&sha, NULL, devId);
     if (ret != 0)
         return ret;
     if (type == Ed25519ctx || type == Ed25519ph) {
@@ -198,7 +252,6 @@ static int ed25519_sign_msg(const byte* in, word32 inLen, byte* out,
         return ret;
 
 #ifdef FREESCALE_LTC_ECC
-    ltc_pkha_ecc_point_t ltcPoint = {0};
     ltcPoint.X = &tempBuf[0];
     ltcPoint.Y = &tempBuf[32];
     LTC_PKHA_sc_reduce(nonce);
@@ -216,7 +269,7 @@ static int ed25519_sign_msg(const byte* in, word32 inLen, byte* out,
 
     /* step 3: hash R + public key + message getting H(R,A,M) then
        creating S = (r + H(R,A,M)a) mod l */
-    ret = wc_InitSha512(&sha);
+    ret = wc_InitSha512_ex(&sha, NULL, devId);
     if (ret != 0)
         return ret;
     if (type == Ed25519ctx || type == Ed25519ph) {
@@ -248,6 +301,7 @@ static int ed25519_sign_msg(const byte* in, word32 inLen, byte* out,
     sc_muladd(out + (ED25519_SIG_SIZE/2), hram, az, nonce);
 #endif
 
+    (void)devId;
     return ret;
 }
 
@@ -263,7 +317,8 @@ static int ed25519_sign_msg(const byte* in, word32 inLen, byte* out,
 int wc_ed25519_sign_msg(const byte* in, word32 inLen, byte* out,
                         word32 *outLen, ed25519_key* key)
 {
-    return ed25519_sign_msg(in, inLen, out, outLen, key, (byte)Ed25519, NULL, 0);
+    return wc_ed25519_sign_msg_ex(in, inLen, out, outLen, key, (byte)Ed25519,
+        NULL, 0);
 }
 
 /*
@@ -281,8 +336,8 @@ int wc_ed25519ctx_sign_msg(const byte* in, word32 inLen, byte* out,
                            word32 *outLen, ed25519_key* key,
                            const byte* context, byte contextLen)
 {
-    return ed25519_sign_msg(in, inLen, out, outLen, key, Ed25519ctx, context,
-                                                                    contextLen);
+    return wc_ed25519_sign_msg_ex(in, inLen, out, outLen, key, Ed25519ctx,
+                                                           context, contextLen);
 }
 
 /*
@@ -300,8 +355,8 @@ int wc_ed25519ph_sign_hash(const byte* hash, word32 hashLen, byte* out,
                            word32 *outLen, ed25519_key* key,
                            const byte* context, byte contextLen)
 {
-    return ed25519_sign_msg(hash, hashLen, out, outLen, key, Ed25519ph, context,
-                                                                    contextLen);
+    return wc_ed25519_sign_msg_ex(hash, hashLen, out, outLen, key, Ed25519ph,
+                                                           context, contextLen);
 }
 
 /*
@@ -322,12 +377,12 @@ int wc_ed25519ph_sign_msg(const byte* in, word32 inLen, byte* out,
     int  ret;
     byte hash[WC_SHA512_DIGEST_SIZE];
 
-    ret = wc_Sha512Hash(in, inLen, hash);
+    ret = ed25519_hash(key, in, inLen, hash);
     if (ret != 0)
         return ret;
 
-    return wc_ed25519ph_sign_hash(hash, sizeof(hash), out, outLen, key, context,
-                                                                    contextLen);
+    return wc_ed25519_sign_msg_ex(hash, sizeof(hash), out, outLen, key,
+                                                Ed25519ph, context, contextLen);
 }
 #endif /* HAVE_ED25519_SIGN */
 
@@ -342,7 +397,7 @@ int wc_ed25519ph_sign_msg(const byte* in, word32 inLen, byte* out,
    key     Ed25519 public key
    return  0 and res of 1 on success
 */
-static int ed25519_verify_msg(const byte* sig, word32 sigLen, const byte* msg,
+int wc_ed25519_verify_msg_ex(const byte* sig, word32 sigLen, const byte* msg,
                               word32 msgLen, int* res, ed25519_key* key,
                               byte type, const byte* context, byte contextLen)
 {
@@ -353,6 +408,7 @@ static int ed25519_verify_msg(const byte* sig, word32 sigLen, const byte* msg,
     ge_p2  R;
 #endif
     int    ret;
+    int    devId = INVALID_DEVID;
     wc_Sha512 sha;
 
     /* sanity check on arguments */
@@ -368,6 +424,17 @@ static int ed25519_verify_msg(const byte* sig, word32 sigLen, const byte* msg,
     if (sigLen != ED25519_SIG_SIZE || (sig[ED25519_SIG_SIZE-1] & 224))
         return BAD_FUNC_ARG;
 
+#ifdef WOLF_CRYPTO_CB
+    devId = key->devId;
+    if (devId != INVALID_DEVID) {
+        ret = wc_CryptoCb_Ed25519Verify(sig, sigLen, msg, msgLen, res, key,
+            type, context, contextLen);
+        if (ret != CRYPTOCB_UNAVAILABLE)
+            return ret;
+        /* fall-through when unavailable */
+    }
+#endif
+
     /* uncompress A (public key), test if valid, and negate it */
 #ifndef FREESCALE_LTC_ECC
     if (ge_frombytes_negate_vartime(&A, key->p) != 0)
@@ -375,7 +442,7 @@ static int ed25519_verify_msg(const byte* sig, word32 sigLen, const byte* msg,
 #endif
 
     /* find H(R,A,M) and store it as h */
-    ret  = wc_InitSha512(&sha);
+    ret = wc_InitSha512_ex(&sha, NULL, devId);
     if (ret != 0)
         return ret;
     if (type == Ed25519ctx || type == Ed25519ph) {
@@ -424,6 +491,7 @@ static int ed25519_verify_msg(const byte* sig, word32 sigLen, const byte* msg,
     /* set the verification status */
     *res = 1;
 
+    (void)devId;
     return ret;
 }
 
@@ -439,8 +507,8 @@ static int ed25519_verify_msg(const byte* sig, word32 sigLen, const byte* msg,
 int wc_ed25519_verify_msg(const byte* sig, word32 sigLen, const byte* msg,
                           word32 msgLen, int* res, ed25519_key* key)
 {
-    return ed25519_verify_msg(sig, sigLen, msg, msgLen, res, key, (byte)Ed25519,
-                                                                       NULL, 0);
+    return wc_ed25519_verify_msg_ex(sig, sigLen, msg, msgLen, res, key,
+                                                        (byte)Ed25519, NULL, 0);
 }
 
 /*
@@ -450,16 +518,16 @@ int wc_ed25519_verify_msg(const byte* sig, word32 sigLen, const byte* msg,
    msgLen      length of msg array
    res         will be 1 on successful verify and 0 on unsuccessful
    key         Ed25519 public key
-   context     extra sigining data
-   contextLen  length of extra sigining data
+   context     extra signing data
+   contextLen  length of extra signing data
    return  0 and res of 1 on success
 */
 int wc_ed25519ctx_verify_msg(const byte* sig, word32 sigLen, const byte* msg,
                              word32 msgLen, int* res, ed25519_key* key,
                              const byte* context, byte contextLen)
 {
-    return ed25519_verify_msg(sig, sigLen, msg, msgLen, res, key, Ed25519ctx,
-                                                           context, contextLen);
+    return wc_ed25519_verify_msg_ex(sig, sigLen, msg, msgLen, res, key,
+                                               Ed25519ctx, context, contextLen);
 }
 
 /*
@@ -469,16 +537,16 @@ int wc_ed25519ctx_verify_msg(const byte* sig, word32 sigLen, const byte* msg,
    hashLen     length of hash array
    res         will be 1 on successful verify and 0 on unsuccessful
    key         Ed25519 public key
-   context     extra sigining data
-   contextLen  length of extra sigining data
+   context     extra signing data
+   contextLen  length of extra signing data
    return  0 and res of 1 on success
 */
 int wc_ed25519ph_verify_hash(const byte* sig, word32 sigLen, const byte* hash,
                              word32 hashLen, int* res, ed25519_key* key,
                              const byte* context, byte contextLen)
 {
-    return ed25519_verify_msg(sig, sigLen, hash, hashLen, res, key, Ed25519ph,
-                                                           context, contextLen);
+    return wc_ed25519_verify_msg_ex(sig, sigLen, hash, hashLen, res, key,
+                                                Ed25519ph, context, contextLen);
 }
 
 /*
@@ -488,8 +556,8 @@ int wc_ed25519ph_verify_hash(const byte* sig, word32 sigLen, const byte* hash,
    msgLen      length of msg array
    res         will be 1 on successful verify and 0 on unsuccessful
    key         Ed25519 public key
-   context     extra sigining data
-   contextLen  length of extra sigining data
+   context     extra signing data
+   contextLen  length of extra signing data
    return  0 and res of 1 on success
 */
 int wc_ed25519ph_verify_msg(const byte* sig, word32 sigLen, const byte* msg,
@@ -499,23 +567,29 @@ int wc_ed25519ph_verify_msg(const byte* sig, word32 sigLen, const byte* msg,
     int  ret;
     byte hash[WC_SHA512_DIGEST_SIZE];
 
-    ret = wc_Sha512Hash(msg, msgLen, hash);
+    ret = ed25519_hash(key, msg, msgLen, hash);
     if (ret != 0)
         return ret;
 
-    return wc_ed25519ph_verify_hash(sig, sigLen, hash, sizeof(hash), res, key,
-                                                           context, contextLen);
+    return wc_ed25519_verify_msg_ex(sig, sigLen, hash, sizeof(hash), res, key,
+                                                Ed25519ph, context, contextLen);
 }
 #endif /* HAVE_ED25519_VERIFY */
 
 
 /* initialize information and memory for key */
-int wc_ed25519_init(ed25519_key* key)
+int wc_ed25519_init_ex(ed25519_key* key, void* heap, int devId)
 {
     if (key == NULL)
         return BAD_FUNC_ARG;
 
     XMEMSET(key, 0, sizeof(ed25519_key));
+#ifdef WOLF_CRYPTO_CB
+    key->devId = devId;
+#else
+    (void)devId;
+#endif
+    (void)heap; /* if needed for XMALLOC/XFREE in future */
 
 #ifndef FREESCALE_LTC_ECC
     fe_init();
@@ -524,6 +598,10 @@ int wc_ed25519_init(ed25519_key* key)
     return 0;
 }
 
+int wc_ed25519_init(ed25519_key* key)
+{
+    return wc_ed25519_init_ex(key, NULL, INVALID_DEVID);
+}
 
 /* clear memory of key */
 void wc_ed25519_free(ed25519_key* key)
@@ -811,4 +889,3 @@ int wc_ed25519_sig_size(ed25519_key* key)
 }
 
 #endif /* HAVE_ED25519 */
-

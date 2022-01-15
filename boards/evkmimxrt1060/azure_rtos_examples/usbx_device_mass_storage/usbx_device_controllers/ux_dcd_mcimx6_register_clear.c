@@ -81,19 +81,19 @@ VOID  _ux_dcd_mcimx6_register_clear(UX_DCD_MCIMX6 *dcd_mcimx6, ULONG width,
         case UX_DCD_MCIMX6_32BIT_REG        :
 
             /* 32 bit value.  */
-            *((ULONG *) (dcd_mcimx6 -> ux_dcd_mcimx6_base + mcimx6_register)) &=~ value;
+            *((volatile ULONG *) (dcd_mcimx6 -> ux_dcd_mcimx6_base + mcimx6_register)) &=~ value;
             break;
 
         case UX_DCD_MCIMX6_16BIT_REG        :
 
             /* 16 bit value.  */
-            *((USHORT *) (dcd_mcimx6 -> ux_dcd_mcimx6_base + mcimx6_register)) &=~ (USHORT) value;
+            *((volatile USHORT *) (dcd_mcimx6 -> ux_dcd_mcimx6_base + mcimx6_register)) &=~ (USHORT) value;
             break;
 
         case UX_DCD_MCIMX6_8BIT_REG        :
 
             /* 8 bit value.  */
-            *((UCHAR *) (dcd_mcimx6 -> ux_dcd_mcimx6_base + mcimx6_register)) &=~ (UCHAR) value;
+            *((volatile UCHAR *) (dcd_mcimx6 -> ux_dcd_mcimx6_base + mcimx6_register)) &=~ (UCHAR) value;
             break;
 
     }

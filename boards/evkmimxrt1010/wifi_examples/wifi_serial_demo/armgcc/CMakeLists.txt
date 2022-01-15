@@ -54,7 +54,7 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../components/lists
     ${ProjDirPath}/../../../../../middleware/usb
     ${ProjDirPath}/../../../../../components/osa
-    ${ProjDirPath}/../../../../../rtos/freertos
+    ${ProjDirPath}/../../../../../rtos/freertos/freertos_kernel
     ${ProjDirPath}/../../../../../devices/MIMXRT1011
     ${ProjDirPath}/../../../../../devices/MIMXRT1011/utilities
     ${ProjDirPath}/../../../../../devices/MIMXRT1011/xip

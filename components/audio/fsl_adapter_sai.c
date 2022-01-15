@@ -79,7 +79,7 @@ static uint8_t s_dmaMuxOccupied[ARRAY_SIZE((DMAMUX_Type *[])DMAMUX_BASE_PTRS)];
 #if (defined(FSL_FEATURE_SOC_I2S_COUNT) && (FSL_FEATURE_SOC_I2S_COUNT > 0U))
 static void HAL_AudioFifoErrorIsr(I2S_Type *base)
 {
-    if (base->TCSR & kSAI_FIFOErrorFlag)
+    if (0U != (base->TCSR & (uint32_t)kSAI_FIFOErrorFlag))
     {
         /* Clear the FIFO error flag */
         SAI_TxClearStatusFlags(base, kSAI_FIFOErrorFlag);
@@ -87,7 +87,7 @@ static void HAL_AudioFifoErrorIsr(I2S_Type *base)
         SAI_TxSoftwareReset(base, kSAI_ResetTypeFIFO);
     }
 
-    if (base->RCSR & kSAI_FIFOErrorFlag)
+    if (0U != (base->RCSR & (uint32_t)kSAI_FIFOErrorFlag))
     {
         /* Clear the FIFO error flag */
         SAI_RxClearStatusFlags(base, kSAI_FIFOErrorFlag);
@@ -295,13 +295,13 @@ static hal_audio_status_t HAL_AudioCommonInit(hal_audio_handle_t handle,
 #endif /* FSL_FEATURE_SAI_HAS_FIFO_COMBINE_MODE */
 
 #if (defined(FSL_FEATURE_SAI_FIFO_COUNT) && (FSL_FEATURE_SAI_FIFO_COUNT > 1))
-    if (config->fifoWatermark < FSL_FEATURE_SAI_FIFO_COUNT)
+    if (config->fifoWatermark < (uint16_t)FSL_FEATURE_SAI_FIFO_COUNT)
     {
         saiConfig.fifo.fifoWatermark = (uint8_t)config->fifoWatermark;
     }
     else
     {
-        saiConfig.fifo.fifoWatermark = FSL_FEATURE_SAI_FIFO_COUNT - 1U;
+        saiConfig.fifo.fifoWatermark = (uint8_t)FSL_FEATURE_SAI_FIFO_COUNT - 1U;
     }
 #endif /* FSL_FEATURE_SAI_FIFO_COUNT */
 
@@ -326,7 +326,7 @@ static hal_audio_status_t HAL_AudioCommonInit(hal_audio_handle_t handle,
     {
         saiConfig.frameSync.frameSyncWidth  = config->bitWidth;
         saiConfig.serialData.dataWordNum    = 2U;
-        saiConfig.serialData.dataMaskedWord = 0x1U << channelNum;
+        saiConfig.serialData.dataMaskedWord = 0x1UL << channelNum;
         channelNum                          = 2;
     }
     else
@@ -525,7 +525,7 @@ static hal_audio_status_t HAL_AudioCommonInit(hal_audio_handle_t handle,
         SAI_TxSetBitClockRate(s_i2sBases[audioHandle->instance], config->srcClock_Hz, config->sampleRate_Hz,
                               config->bitWidth, channelNum);
 
-        EnableIRQ(txIrqNumber[audioHandle->instance]);
+        (void)EnableIRQ(txIrqNumber[audioHandle->instance]);
 
         SAI_TxEnableInterrupts(s_i2sBases[audioHandle->instance], kSAI_FIFOErrorInterruptEnable);
     }
@@ -534,7 +534,7 @@ static hal_audio_status_t HAL_AudioCommonInit(hal_audio_handle_t handle,
         SAI_RxSetBitClockRate(s_i2sBases[audioHandle->instance], config->srcClock_Hz, config->sampleRate_Hz,
                               config->bitWidth, channelNum);
 
-        EnableIRQ(rxIrqNumber[audioHandle->instance]);
+        (void)EnableIRQ(rxIrqNumber[audioHandle->instance]);
 
         SAI_RxEnableInterrupts(s_i2sBases[audioHandle->instance], kSAI_FIFOErrorInterruptEnable);
     }
@@ -566,11 +566,11 @@ static hal_audio_status_t HAL_AudioCommonDeinit(hal_audio_handle_t handle, bool 
 
     if (direction)
     {
-        HAL_AudioTransferAbortSend(handle);
+        (void)HAL_AudioTransferAbortSend(handle);
     }
     else
     {
-        HAL_AudioTransferAbortReceive(handle);
+        (void)HAL_AudioTransferAbortReceive(handle);
     }
 
     if (s_i2sOccupied[audioHandle->instance] != 0U)

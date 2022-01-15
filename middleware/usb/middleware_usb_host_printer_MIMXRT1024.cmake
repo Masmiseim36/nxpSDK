@@ -1,17 +1,15 @@
-if(NOT MIDDLEWARE_USB_HOST_PRINTER_MIMXRT1024_INCLUDED)
-    
-    set(MIDDLEWARE_USB_HOST_PRINTER_MIMXRT1024_INCLUDED true CACHE BOOL "middleware_usb_host_printer component is included.")
+include_guard(GLOBAL)
+message("middleware_usb_host_printer component is included.")
 
-    target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
-        ${CMAKE_CURRENT_LIST_DIR}/host/class/usb_host_printer.c
-    )
-
-
-    target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
-        ${CMAKE_CURRENT_LIST_DIR}/host/class
-    )
+target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
+    ${CMAKE_CURRENT_LIST_DIR}/host/class/usb_host_printer.c
+)
 
 
-    include(middleware_usb_host_stack_MIMXRT1024)
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
+    ${CMAKE_CURRENT_LIST_DIR}/host/class
+)
 
-endif()
+
+include(middleware_usb_host_stack_MIMXRT1024)
+

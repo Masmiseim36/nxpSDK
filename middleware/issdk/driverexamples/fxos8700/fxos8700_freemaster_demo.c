@@ -12,9 +12,9 @@
  */
 
 /*  SDK Includes */
-#include "board.h"
 #include "pin_mux.h"
 #include "clock_config.h"
+#include "board.h"
 #include "fsl_debug_console.h"
 #include "math.h"
 #include "fsl_uart.h"
@@ -914,7 +914,9 @@ void mag_off_noise(fxos8700_accelmagdata_t* rawData,fxos8700_offset_noise_t *off
 	static float xm[N], ym[N], zm[N];
 	static float xsq[N], ysq[N], zsq[N];
 	float mm[3];
-	float Bx[2], By[2], Bz[2];
+	float Bx[2] = {0,0};
+	float By[2] = {0,0};
+	float Bz[2] = {0,0};
 	float sens=0.1; //uT
 	static float sumx=0.0;
 	static float sumy=0.0;

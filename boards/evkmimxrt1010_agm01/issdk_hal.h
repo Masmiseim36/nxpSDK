@@ -27,10 +27,10 @@
 // By default, we use I2C_S2 defined in the evkmimxrt1050.h file.
 // Other options: I2C_S1.
 // S1 is on A5:4.  S2 is on D15:14.
-#define I2C_S_SCL_PIN      I2C_S1_SCL_PIN
-#define I2C_S_SDA_PIN      I2C_S1_SDA_PIN
-#define I2C_S_DRIVER       I2C_S1_DRIVER
-#define I2C_S_SIGNAL_EVENT I2C_S1_SIGNAL_EVENT
-#define I2C_S_DEVICE_INDEX I2C_S1_DEVICE_INDEX
+#define I2C_S_SCL_PIN      I2C_S2_SCL_PIN
+#define I2C_S_SDA_PIN      I2C_S2_SDA_PIN
+#define I2C_S_DRIVER       I2C_S2_DRIVER
+#define I2C_S_SIGNAL_EVENT I2C_S2_SIGNAL_EVENT
+#define I2C_S_DEVICE_INDEX I2C_S2_DEVICE_INDEX
 
 #endif // __ISSDK_HAL_H__

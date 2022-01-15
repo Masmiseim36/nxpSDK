@@ -1,8 +1,8 @@
 
 ----------------------------------------------------------------------
-REL 5.02.00 - LA_OPT_NXP_Software_License
+REL 5.04.00 - LA_OPT_NXP_Software_License
 ----------------------------------------------------------------------
-VIT integrating LP_VAD, 2 MICs AFE, WakeWordEngine Text2Model and Voice Commands Text2Model features.
+VIT integrating LP_VAD, 2/3 MICs AFE, WakeWordEngine Text2Model and Voice Commands Text2Model features.
 Core supported : Cortex-M7
 Library validated on IMXRT1060 platform 
 
@@ -14,10 +14,5 @@ See VIT_Model.h for the list of commands supported by the VIT lib.
 
 Dependency : CMSIS_DSP lib
 
-Changes : 
-    - WakeWord Text2Model support
-    - new features : LP_VAD, 2 MICs AFE
-
-
-Notes : VIT AFE is supporting up to 2 MICs 
+Notes : VIT lib is supporting up to 3 MICs 
         AFE is not enabled in RT1060 MCU SDK example since RT1060 EVK is integrating only 1 on board MIC

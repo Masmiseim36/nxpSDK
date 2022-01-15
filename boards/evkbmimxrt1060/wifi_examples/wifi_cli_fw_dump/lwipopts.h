@@ -328,18 +328,6 @@
  */
 #define LWIP_RAW 1
 
-#ifdef CONFIG_IPV6
-#define LWIP_IPV6 1
-
-/**
- * LWIP_NETIF_IPV6_STATUS_CALLBACK==1: Support a callback function
- * whenever IPv6 address state is changed - Invalid, valid, preferred,
- * tentative, deprecated
- */
-
-#define LWIP_NETIF_IPV6_STATUS_CALLBACK LWIP_IPV6
-#endif
-
 /* Enable IPv4 Auto IP	*/
 #ifdef CONFIG_AUTOIP
 #define LWIP_AUTOIP                 1

@@ -596,16 +596,26 @@ usb_status_t USB_DeviceMscBulkIn(usb_device_handle deviceHandle,
 
             /*data transfer has been done, send the csw to host */
             mscHandle->cswPrimeFlag = 1;
-            USB_DeviceSendRequest(g_deviceComposite->deviceHandle, mscHandle->bulkInEndpoint,
-                                  (uint8_t *)mscHandle->g_mscCsw, USB_DEVICE_MSC_CSW_LENGTH);
+#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
+            error = USB_DeviceSendRequest(g_deviceComposite->deviceHandle, mscHandle->bulkInEndpoint,
+                                          (uint8_t *)mscHandle->g_mscCsw, USB_DEVICE_MSC_CSW_LENGTH);
+#else
+            (void)USB_DeviceSendRequest(g_deviceComposite->deviceHandle, mscHandle->bulkInEndpoint,
+                                        (uint8_t *)mscHandle->g_mscCsw, USB_DEVICE_MSC_CSW_LENGTH);
+#endif
         }
     }
     else if ((event->length == USB_DEVICE_MSC_CSW_LENGTH) && (csw->signature == USB_DEVICE_MSC_DCSWSIGNATURE))
     {
         mscHandle->cbwValidFlag = 1;
         mscHandle->cswPrimeFlag = 0;
+#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
+        error = USB_DeviceRecvRequest(g_deviceComposite->deviceHandle, mscHandle->bulkOutEndpoint,
+                                      (uint8_t *)mscHandle->g_mscCbw, USB_DEVICE_MSC_CBW_LENGTH);
+#else
         (void)USB_DeviceRecvRequest(g_deviceComposite->deviceHandle, mscHandle->bulkOutEndpoint,
                                     (uint8_t *)mscHandle->g_mscCbw, USB_DEVICE_MSC_CBW_LENGTH);
+#endif
         mscHandle->cbwPrimeFlag = 1;
     }
     else

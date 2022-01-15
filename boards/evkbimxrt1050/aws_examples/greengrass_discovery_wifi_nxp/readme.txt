@@ -4,6 +4,12 @@ This example demonstrates how the board can discover Greengrass core and communi
 You will need device (A Mac, Windows PC, or UNIX-like system) for running AWS Greengrass. Example will connect to Wi-Fi network, try to discover your AWS Greengrass device and send Hello World message to AWS IoT cloud through it.
 This demo needs Wi-Fi network with internet access and opened 8883 and 8443 ports.
 
+Before building the example application select Wi-Fi module macro in the app_config.h. (see #define WIFI_<SoC Name>_BOARD_<Module Name>).
+For more information about Wi-Fi module connection see:
+    readme_modules.txt
+    Getting started guide on supported modules configuration:
+    https://www.nxp.com/document/guide/getting-started-with-nxp-wi-fi-modules-using-i-mx-rt-platform:GS-WIFI-MODULES-IMXRT-PLATFORM
+
 
 Prepare the AWS Greengrass and AWS IoT
 Before running the demo it is needed to configure AWS IoT Console, AWS Greengrass:
@@ -31,46 +37,20 @@ Toolchain supported
 - IAR embedded Workbench  9.10.2
 - Keil MDK  5.34
 - GCC ARM Embedded  10.2.1
-- MCUXpresso  11.4.0
+- MCUXpresso  11.5.0
 
 Hardware requirements
 =====================
 - Micro USB cable
 - evkbimxrt1050 board
 - Personal Computer
-- One of the following Wi-Fi modules:
-  - Panasonic PAN9026 SDIO ADAPTER + SD to uSD adapter
-  - AzureWave AW-NM191NF-uSD
-  - AzureWave AW-AM457-uSD
-  - AzureWave AW-CM358-uSD
+
 
 Board settings
 ==============
-This example, by default, is built to work with the AzureWave AW-AM457-uSD. It is configured by the macro definition in file app_config.h (#define WIFI_BOARD_AW_AM457).
-If you want use the AzureWave AW-NM191NF-uSD, please change the macro to WIFI_BOARD_AW_NM191.
-If you want use the Panasonic PAN9026 SDIO ADAPTER, please change the macro to WIFI_BOARD_PAN9026_SDIO.
-If you want use the AzureWave AW-CM358-uSD, please change the macro to WIFI_BOARD_AW_CM358.
-
-Jumper settings for AzureWave AW-NM191NF-uSD Module:
-  - J11 1-2: VIO_SD 1.8V (Voltage level of SDIO pins is 1.8V)
-  - J2  1-2: 3.3V VIO_uSD (Power Supply from uSD connector)
-
-Jumper settings for AzureWave AW-AM457-uSD Module:
-  - J11 1-2: VIO_SD 1.8V (Voltage level of SDIO pins is 1.8V)
-  - J2  1-2: 3.3V VIO_uSD (Power Supply from uSD connector)
-
-Jumper settings for AzureWave AW-CM358-uSD Module:
-  - J4 1-2: VIO 1.8V (Voltage level of SDIO pins is 1.8V)
-  - J2 1-2: 3.3V VIO_uSD (Power Supply from uSD connector)
-  - The pin 1 of J4 is not marked on the board. Please note that pin numbering of J4 is opposite to J2 (pin 1 is close to the "J4" label):
-         3 2 1
-         o o=o J4
-      J2 o=o o
-         1 2 3
 
 Prepare the Demo
 ================
-
 1.  Open file "aws_clientcredential.h" and fill in your "Thing name" and "REST API endpoint" which can be found in AWS IoT under "Greengrass/Devices/<your device>/Interact":
 
     Example:
@@ -115,9 +95,9 @@ Prepare the Demo
 
 7.  Either press the reset button on your board or launch the debugger in your IDE to begin running the demo.
 
+
 Running the demo
 ================
-
 Demo is by default set to send message "Hello #0 from Amazon FreeRTOS to Greengrass Core." 3 times (can be changed with ggdDEMO_MAX_MQTT_MESSAGES).
 
 You can check connection log in Greengrass device on path: /greengrass/ggc/var/log/system/connection_manager.log

@@ -330,7 +330,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>_DEBUG=1, DEBUG, CPU_MIMXRT1052DVL6B, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, USB_STACK_FREERTOS, USB_STACK_FREERTOS_HEAP_SIZE=32768, SDK_OS_FREE_RTOS, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, SERIAL_PORT_TYPE_UART=1, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../..;../../../../../../middleware/usb/device;../../../../../../middleware/usb/include;../../../../../../middleware/usb/phy;../../../../../../devices/MIMXRT1052/drivers;../../../../../../components/phyksz8081;../../../../../../rtos/freertos/freertos_kernel/include;../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F;../../../../../../devices/MIMXRT1052;../../../../../../devices/MIMXRT1052/xip;../../../../xip;../../../../../../devices/MIMXRT1052/utilities/str;../../../../../../devices/MIMXRT1052/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../components/osa;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../..;../../../../../../middleware/usb/device;../../../../../../middleware/usb/include;../../../../../../middleware/usb/phy;../../../../../../devices/MIMXRT1052/drivers;../../../../../../components/phy/mdio/enet;../../../../../../components/phy/device/phyksz8081;../../../../../../rtos/freertos/freertos_kernel/include;../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F;../../../../../../devices/MIMXRT1052;../../../../../../devices/MIMXRT1052/xip;../../../../xip;../../../../../../devices/MIMXRT1052/utilities/str;../../../../../../devices/MIMXRT1052/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../components/osa;../../../../../../CMSIS/Core/Include;../../../../../../components/phy</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -480,16 +480,6 @@
               <FileType>5</FileType>
               <FilePath>../dcd.h</FilePath>
             </File>
-            <File>
-              <FileName>fsl_phy.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/phyksz8081/fsl_phy.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_phy.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/phyksz8081/fsl_phy.c</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>
@@ -599,6 +589,46 @@
               <FileName>fsl_iomuxc.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT1052/drivers/fsl_iomuxc.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>mdio</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_enet_mdio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/phy/mdio/enet/fsl_enet_mdio.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_enet_mdio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/phy/mdio/enet/fsl_enet_mdio.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_mdio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/phy/fsl_mdio.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>phy</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_phyksz8081.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/phy/device/phyksz8081/fsl_phyksz8081.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_phyksz8081.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/phy/device/phyksz8081/fsl_phyksz8081.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_phy.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/phy/fsl_phy.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -734,6 +764,11 @@
               <FileName>StackMacros.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/StackMacros.h</FilePath>
+            </File>
+            <File>
+              <FileName>stdint.readme</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/stdint.readme</FilePath>
             </File>
             <File>
               <FileName>stream_buffer.h</FileName>
@@ -1456,7 +1491,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, DEBUG, CPU_MIMXRT1052DVL6B, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, USB_STACK_FREERTOS, USB_STACK_FREERTOS_HEAP_SIZE=32768, SDK_OS_FREE_RTOS, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, SERIAL_PORT_TYPE_UART=1, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../..;../../../../../../middleware/usb/device;../../../../../../middleware/usb/include;../../../../../../middleware/usb/phy;../../../../../../devices/MIMXRT1052/drivers;../../../../../../components/phyksz8081;../../../../../../rtos/freertos/freertos_kernel/include;../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F;../../../../../../devices/MIMXRT1052;../../../../../../devices/MIMXRT1052/xip;../../../../xip;../../../../../../devices/MIMXRT1052/utilities/str;../../../../../../devices/MIMXRT1052/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../components/osa;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../..;../../../../../../middleware/usb/device;../../../../../../middleware/usb/include;../../../../../../middleware/usb/phy;../../../../../../devices/MIMXRT1052/drivers;../../../../../../components/phy/mdio/enet;../../../../../../components/phy/device/phyksz8081;../../../../../../rtos/freertos/freertos_kernel/include;../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F;../../../../../../devices/MIMXRT1052;../../../../../../devices/MIMXRT1052/xip;../../../../xip;../../../../../../devices/MIMXRT1052/utilities/str;../../../../../../devices/MIMXRT1052/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../components/osa;../../../../../../CMSIS/Core/Include;../../../../../../components/phy</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1606,16 +1641,6 @@
               <FileType>5</FileType>
               <FilePath>../dcd.h</FilePath>
             </File>
-            <File>
-              <FileName>fsl_phy.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/phyksz8081/fsl_phy.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_phy.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/phyksz8081/fsl_phy.c</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>
@@ -1725,6 +1750,46 @@
               <FileName>fsl_iomuxc.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT1052/drivers/fsl_iomuxc.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>mdio</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_enet_mdio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/phy/mdio/enet/fsl_enet_mdio.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_enet_mdio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/phy/mdio/enet/fsl_enet_mdio.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_mdio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/phy/fsl_mdio.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>phy</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_phyksz8081.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/phy/device/phyksz8081/fsl_phyksz8081.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_phyksz8081.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/phy/device/phyksz8081/fsl_phyksz8081.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_phy.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/phy/fsl_phy.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1860,6 +1925,11 @@
               <FileName>StackMacros.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/StackMacros.h</FilePath>
+            </File>
+            <File>
+              <FileName>stdint.readme</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/stdint.readme</FilePath>
             </File>
             <File>
               <FileName>stream_buffer.h</FileName>
@@ -2582,7 +2652,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, DATA_SECTION_IS_CACHEABLE=1, SKIP_SYSCLK_INIT, DEBUG, CPU_MIMXRT1052DVL6B, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, USB_STACK_FREERTOS, USB_STACK_FREERTOS_HEAP_SIZE=32768, SDK_OS_FREE_RTOS, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, SERIAL_PORT_TYPE_UART=1, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../..;../../../../../../middleware/usb/device;../../../../../../middleware/usb/include;../../../../../../middleware/usb/phy;../../../../../../devices/MIMXRT1052/drivers;../../../../../../components/phyksz8081;../../../../../../rtos/freertos/freertos_kernel/include;../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F;../../../../../../devices/MIMXRT1052;../../../../../../devices/MIMXRT1052/xip;../../../../xip;../../../../../../devices/MIMXRT1052/utilities/str;../../../../../../devices/MIMXRT1052/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../components/osa;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../..;../../../../../../middleware/usb/device;../../../../../../middleware/usb/include;../../../../../../middleware/usb/phy;../../../../../../devices/MIMXRT1052/drivers;../../../../../../components/phy/mdio/enet;../../../../../../components/phy/device/phyksz8081;../../../../../../rtos/freertos/freertos_kernel/include;../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F;../../../../../../devices/MIMXRT1052;../../../../../../devices/MIMXRT1052/xip;../../../../xip;../../../../../../devices/MIMXRT1052/utilities/str;../../../../../../devices/MIMXRT1052/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../components/osa;../../../../../../CMSIS/Core/Include;../../../../../../components/phy</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2732,16 +2802,6 @@
               <FileType>5</FileType>
               <FilePath>../dcd.h</FilePath>
             </File>
-            <File>
-              <FileName>fsl_phy.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/phyksz8081/fsl_phy.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_phy.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/phyksz8081/fsl_phy.c</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>
@@ -2851,6 +2911,46 @@
               <FileName>fsl_iomuxc.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT1052/drivers/fsl_iomuxc.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>mdio</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_enet_mdio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/phy/mdio/enet/fsl_enet_mdio.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_enet_mdio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/phy/mdio/enet/fsl_enet_mdio.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_mdio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/phy/fsl_mdio.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>phy</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_phyksz8081.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/phy/device/phyksz8081/fsl_phyksz8081.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_phyksz8081.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/phy/device/phyksz8081/fsl_phyksz8081.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_phy.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/phy/fsl_phy.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2986,6 +3086,11 @@
               <FileName>StackMacros.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/StackMacros.h</FilePath>
+            </File>
+            <File>
+              <FileName>stdint.readme</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/stdint.readme</FilePath>
             </File>
             <File>
               <FileName>stream_buffer.h</FileName>
@@ -3708,7 +3813,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>_DEBUG=0, NDEBUG, CPU_MIMXRT1052DVL6B, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, USB_STACK_FREERTOS, USB_STACK_FREERTOS_HEAP_SIZE=32768, SDK_OS_FREE_RTOS, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, SERIAL_PORT_TYPE_UART=1, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../..;../../../../../../middleware/usb/device;../../../../../../middleware/usb/include;../../../../../../middleware/usb/phy;../../../../../../devices/MIMXRT1052/drivers;../../../../../../components/phyksz8081;../../../../../../rtos/freertos/freertos_kernel/include;../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F;../../../../../../devices/MIMXRT1052;../../../../../../devices/MIMXRT1052/xip;../../../../xip;../../../../../../devices/MIMXRT1052/utilities/str;../../../../../../devices/MIMXRT1052/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../components/osa;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../..;../../../../../../middleware/usb/device;../../../../../../middleware/usb/include;../../../../../../middleware/usb/phy;../../../../../../devices/MIMXRT1052/drivers;../../../../../../components/phy/mdio/enet;../../../../../../components/phy/device/phyksz8081;../../../../../../rtos/freertos/freertos_kernel/include;../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F;../../../../../../devices/MIMXRT1052;../../../../../../devices/MIMXRT1052/xip;../../../../xip;../../../../../../devices/MIMXRT1052/utilities/str;../../../../../../devices/MIMXRT1052/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../components/osa;../../../../../../CMSIS/Core/Include;../../../../../../components/phy</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -3858,16 +3963,6 @@
               <FileType>5</FileType>
               <FilePath>../dcd.h</FilePath>
             </File>
-            <File>
-              <FileName>fsl_phy.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/phyksz8081/fsl_phy.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_phy.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/phyksz8081/fsl_phy.c</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>
@@ -3977,6 +4072,46 @@
               <FileName>fsl_iomuxc.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT1052/drivers/fsl_iomuxc.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>mdio</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_enet_mdio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/phy/mdio/enet/fsl_enet_mdio.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_enet_mdio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/phy/mdio/enet/fsl_enet_mdio.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_mdio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/phy/fsl_mdio.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>phy</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_phyksz8081.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/phy/device/phyksz8081/fsl_phyksz8081.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_phyksz8081.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/phy/device/phyksz8081/fsl_phyksz8081.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_phy.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/phy/fsl_phy.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -4112,6 +4247,11 @@
               <FileName>StackMacros.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/StackMacros.h</FilePath>
+            </File>
+            <File>
+              <FileName>stdint.readme</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/stdint.readme</FilePath>
             </File>
             <File>
               <FileName>stream_buffer.h</FileName>
@@ -4834,7 +4974,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, NDEBUG, CPU_MIMXRT1052DVL6B, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, USB_STACK_FREERTOS, USB_STACK_FREERTOS_HEAP_SIZE=32768, SDK_OS_FREE_RTOS, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, SERIAL_PORT_TYPE_UART=1, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../..;../../../../../../middleware/usb/device;../../../../../../middleware/usb/include;../../../../../../middleware/usb/phy;../../../../../../devices/MIMXRT1052/drivers;../../../../../../components/phyksz8081;../../../../../../rtos/freertos/freertos_kernel/include;../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F;../../../../../../devices/MIMXRT1052;../../../../../../devices/MIMXRT1052/xip;../../../../xip;../../../../../../devices/MIMXRT1052/utilities/str;../../../../../../devices/MIMXRT1052/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../components/osa;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../..;../../../../../../middleware/usb/device;../../../../../../middleware/usb/include;../../../../../../middleware/usb/phy;../../../../../../devices/MIMXRT1052/drivers;../../../../../../components/phy/mdio/enet;../../../../../../components/phy/device/phyksz8081;../../../../../../rtos/freertos/freertos_kernel/include;../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F;../../../../../../devices/MIMXRT1052;../../../../../../devices/MIMXRT1052/xip;../../../../xip;../../../../../../devices/MIMXRT1052/utilities/str;../../../../../../devices/MIMXRT1052/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../components/osa;../../../../../../CMSIS/Core/Include;../../../../../../components/phy</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -4984,16 +5124,6 @@
               <FileType>5</FileType>
               <FilePath>../dcd.h</FilePath>
             </File>
-            <File>
-              <FileName>fsl_phy.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/phyksz8081/fsl_phy.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_phy.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/phyksz8081/fsl_phy.c</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>
@@ -5103,6 +5233,46 @@
               <FileName>fsl_iomuxc.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT1052/drivers/fsl_iomuxc.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>mdio</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_enet_mdio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/phy/mdio/enet/fsl_enet_mdio.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_enet_mdio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/phy/mdio/enet/fsl_enet_mdio.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_mdio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/phy/fsl_mdio.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>phy</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_phyksz8081.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/phy/device/phyksz8081/fsl_phyksz8081.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_phyksz8081.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/phy/device/phyksz8081/fsl_phyksz8081.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_phy.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/phy/fsl_phy.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -5238,6 +5408,11 @@
               <FileName>StackMacros.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/StackMacros.h</FilePath>
+            </File>
+            <File>
+              <FileName>stdint.readme</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/stdint.readme</FilePath>
             </File>
             <File>
               <FileName>stream_buffer.h</FileName>
@@ -5960,7 +6135,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, DATA_SECTION_IS_CACHEABLE=1, SKIP_SYSCLK_INIT, NDEBUG, CPU_MIMXRT1052DVL6B, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, USB_STACK_FREERTOS, USB_STACK_FREERTOS_HEAP_SIZE=32768, SDK_OS_FREE_RTOS, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, SERIAL_PORT_TYPE_UART=1, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../..;../../../../../../middleware/usb/device;../../../../../../middleware/usb/include;../../../../../../middleware/usb/phy;../../../../../../devices/MIMXRT1052/drivers;../../../../../../components/phyksz8081;../../../../../../rtos/freertos/freertos_kernel/include;../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F;../../../../../../devices/MIMXRT1052;../../../../../../devices/MIMXRT1052/xip;../../../../xip;../../../../../../devices/MIMXRT1052/utilities/str;../../../../../../devices/MIMXRT1052/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../components/osa;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../..;../../../../../../middleware/usb/device;../../../../../../middleware/usb/include;../../../../../../middleware/usb/phy;../../../../../../devices/MIMXRT1052/drivers;../../../../../../components/phy/mdio/enet;../../../../../../components/phy/device/phyksz8081;../../../../../../rtos/freertos/freertos_kernel/include;../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F;../../../../../../devices/MIMXRT1052;../../../../../../devices/MIMXRT1052/xip;../../../../xip;../../../../../../devices/MIMXRT1052/utilities/str;../../../../../../devices/MIMXRT1052/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../components/osa;../../../../../../CMSIS/Core/Include;../../../../../../components/phy</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -6110,16 +6285,6 @@
               <FileType>5</FileType>
               <FilePath>../dcd.h</FilePath>
             </File>
-            <File>
-              <FileName>fsl_phy.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/phyksz8081/fsl_phy.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_phy.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/phyksz8081/fsl_phy.c</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>
@@ -6229,6 +6394,46 @@
               <FileName>fsl_iomuxc.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT1052/drivers/fsl_iomuxc.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>mdio</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_enet_mdio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/phy/mdio/enet/fsl_enet_mdio.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_enet_mdio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/phy/mdio/enet/fsl_enet_mdio.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_mdio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/phy/fsl_mdio.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>phy</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_phyksz8081.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/phy/device/phyksz8081/fsl_phyksz8081.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_phyksz8081.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/phy/device/phyksz8081/fsl_phyksz8081.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_phy.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/phy/fsl_phy.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -6364,6 +6569,11 @@
               <FileName>StackMacros.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/StackMacros.h</FilePath>
+            </File>
+            <File>
+              <FileName>stdint.readme</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/stdint.readme</FilePath>
             </File>
             <File>
               <FileName>stream_buffer.h</FileName>

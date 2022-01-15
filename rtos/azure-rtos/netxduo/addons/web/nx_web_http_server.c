@@ -46,12 +46,6 @@
 #error "Content length needed when keepalive is enabled"
 #endif /* NX_WEB_HTTP_SERVER_OMIT_CONTENT_LENGTH */
 
-/* Define the Base64 array that is used to build username and passwords for Basic authentication. Indexing
-   into this array yields the base64 representation of the 6bit number.  */
-
-CHAR  _nx_web_http_server_base64_array[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
-
-
 #ifdef  NX_WEB_HTTP_DIGEST_ENABLE
 /* Define the default nonce, used only for MD5 authentication.  For security reasons, this ASCII value should
    change over time.  */
@@ -277,7 +271,7 @@ UINT  _nxe_web_http_server_packet_content_find(NX_WEB_HTTP_SERVER *server_ptr, N
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _nx_web_http_server_packet_content_find             PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.1.7        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Yuxin Zhou, Microsoft Corporation                                   */
@@ -324,6 +318,9 @@ UINT  _nxe_web_http_server_packet_content_find(NX_WEB_HTTP_SERVER *server_ptr, N
 /*  05-19-2020     Yuxin Zhou               Initial Version 6.0           */
 /*  09-30-2020     Yuxin Zhou               Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  06-02-2021     Yuxin Zhou               Modified comment(s),          */
+/*                                            fixed compiler warnings,    */
+/*                                            resulting in version 6.1.7  */
 /*                                                                        */
 /**************************************************************************/
 UINT  _nx_web_http_server_packet_content_find(NX_WEB_HTTP_SERVER *server_ptr, NX_PACKET **packet_ptr, ULONG *content_length)
@@ -396,6 +393,12 @@ ULONG       temp_offset;
         {
             temp_offset -= (ULONG)((*packet_ptr) -> nx_packet_append_ptr - (*packet_ptr) -> nx_packet_prepend_ptr);
             (*packet_ptr) = (*packet_ptr) -> nx_packet_next;
+        }
+
+        /* Chack if packet is valid.  */
+        if ((*packet_ptr) == NX_NULL)
+        {
+            return(NX_WEB_HTTP_BAD_PACKET_LENGTH);
         }
 
         /* If this packet contain no content, set next packet as the first packet of the content.  */
@@ -5034,7 +5037,7 @@ NX_PACKET   *packet_ptr;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _nx_web_http_server_basic_authenticate              PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.1.6        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Yuxin Zhou, Microsoft Corporation                                   */
@@ -5085,6 +5088,10 @@ NX_PACKET   *packet_ptr;
 /*  05-19-2020     Yuxin Zhou               Initial Version 6.0           */
 /*  09-30-2020     Yuxin Zhou               Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  04-02-2021     Yuxin Zhou               Modified comment(s), and      */
+/*                                            improved the logic of       */
+/*                                            parsing base64,             */
+/*                                            resulting in version 6.1.6  */
 /*                                                                        */
 /**************************************************************************/
 UINT  _nx_web_http_server_basic_authenticate(NX_WEB_HTTP_SERVER *server_ptr, NX_PACKET *packet_ptr, CHAR *name_ptr, CHAR *password_ptr, CHAR *realm_ptr, UINT *auth_request_present)
@@ -5097,6 +5104,7 @@ CHAR        crlf[2] = {13,10};
 UINT        match;
 UINT        realm_length;
 UINT        length;
+UINT        authorization_decoded_size;
 
     /* Default to no authentication request detected. */
     *auth_request_present = NX_FALSE;
@@ -5117,14 +5125,14 @@ UINT        length;
         *auth_request_present = NX_TRUE;
 
         /* Convert the request from Base64 representation to ASCII.  */
-        _nx_web_http_base64_decode(authorization_request, length, authorization_decoded);
+        _nx_utility_base64_decode((UCHAR *)authorization_request, length, (UCHAR *)authorization_decoded, sizeof(authorization_decoded), &authorization_decoded_size);
 
         /* See if it is valid.  */
 
         /* Compare the name.  */
         i =  0;
         match = NX_TRUE;
-        while (name_ptr[i] && (i < sizeof(authorization_decoded)))
+        while (name_ptr[i] && (i < authorization_decoded_size))
         {
 
             /* Is there a mismatch?  */
@@ -5140,7 +5148,7 @@ UINT        length;
         }
 
         /* Determine if everything matches.  */
-        if (match && (i < sizeof(authorization_decoded)) && (authorization_decoded[i] == ':'))
+        if (match && (i < authorization_decoded_size) && (authorization_decoded[i] == ':'))
         {
 
             /* Move the authorization index past the semicolon.  */
@@ -5149,7 +5157,7 @@ UINT        length;
             /* Now compare the passwords.  */
             j =  0;
             match = NX_TRUE;
-            while (password_ptr[j] && (i < sizeof(authorization_decoded)))
+            while (password_ptr[j] && (i < authorization_decoded_size))
             {
 
                 /* Is there a mismatch?  */
@@ -5166,7 +5174,7 @@ UINT        length;
             }
 
             /* Determine if we have a match.  */
-            if (match && (i < sizeof(authorization_decoded)) && (authorization_decoded[i] == (CHAR) NX_NULL))
+            if (match && (i == authorization_decoded_size) && (authorization_decoded[i] == (CHAR) NX_NULL))
             {
 
                 /* Yes, we have successful authorization!!  */
@@ -5761,105 +5769,6 @@ UINT       crlf_found = 0;
 /*                                                                        */
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
-/*    _nx_web_http_server_number_convert                  PORTABLE C      */
-/*                                                           6.1          */
-/*  AUTHOR                                                                */
-/*                                                                        */
-/*    Yuxin Zhou, Microsoft Corporation                                   */
-/*                                                                        */
-/*  DESCRIPTION                                                           */
-/*                                                                        */
-/*    This function converts a number into an ASCII string.               */
-/*                                                                        */
-/*  INPUT                                                                 */
-/*                                                                        */
-/*    number                                Unsigned integer number       */
-/*    string                                Destination string            */
-/*                                                                        */
-/*  OUTPUT                                                                */
-/*                                                                        */
-/*    Size                                  Number of bytes in string     */
-/*                                           (0 implies an error)         */
-/*                                                                        */
-/*  CALLS                                                                 */
-/*                                                                        */
-/*    None                                                                */
-/*                                                                        */
-/*  CALLED BY                                                             */
-/*                                                                        */
-/*    _nx_web_http_server_get_process       Process GET request           */
-/*    _nx_web_http_server_response_send     Send response to client       */
-/*                                                                        */
-/*  RELEASE HISTORY                                                       */
-/*                                                                        */
-/*    DATE              NAME                      DESCRIPTION             */
-/*                                                                        */
-/*  05-19-2020     Yuxin Zhou               Initial Version 6.0           */
-/*  09-30-2020     Yuxin Zhou               Modified comment(s),          */
-/*                                            resulting in version 6.1    */
-/*                                                                        */
-/**************************************************************************/
-UINT  _nx_web_http_server_number_convert(UINT number, CHAR *string)
-{
-
-UINT    j;
-UINT    digit;
-UINT    size;
-
-
-    /* Initialize counters.  */
-    size =  0;
-
-    /* Loop to convert the number to ASCII.  */
-    while (size < 10)
-    {
-
-        /* Shift the current digits over one.  */
-        for (j = size; j != 0; j--)
-        {
-
-            /* Move each digit over one place.  */
-            string[j] =  string[j-1];
-        }
-
-        /* Compute the next decimal digit.  */
-        digit =  number % 10;
-
-        /* Update the input number.  */
-        number =  number / 10;
-
-        /* Store the new digit in ASCII form.  */
-        string[0] =  (CHAR) (digit + 0x30);
-
-        /* Increment the size.  */
-        size++;
-
-        /* Determine if the number is now zero.  */
-        if (number == 0)
-            break;
-    }
-
-    /* Make the string NULL terminated.  */
-    string[size] =  (CHAR) NX_NULL;
-
-    /* Determine if there is an overflow error.  */
-    if (number)
-    {
-
-        /* Error, return bad values to user.  */
-        size =  0;
-        string[0] = '0';
-    }
-
-    /* Return size to caller.  */
-    return(size);
-}
-
-
-/**************************************************************************/
-/*                                                                        */
-/*  FUNCTION                                               RELEASE        */
-/*                                                                        */
 /*    _nxe_web_http_server_type_get                       PORTABLE C      */
 /*                                                           6.1          */
 /*  AUTHOR                                                                */
@@ -6221,262 +6130,6 @@ UINT    temp_name_length;
     *string_size = sizeof(NX_WEB_HTTP_SERVER_DEFAULT_MIME) - 1;
     return(NX_WEB_HTTP_EXTENSION_MIME_DEFAULT);
 }
-
-
-/**************************************************************************/
-/*                                                                        */
-/*  FUNCTION                                               RELEASE        */
-/*                                                                        */
-/*    _nx_web_http_base64_encode                          PORTABLE C      */
-/*                                                           6.1          */
-/*  AUTHOR                                                                */
-/*                                                                        */
-/*    Yuxin Zhou, Microsoft Corporation                                   */
-/*                                                                        */
-/*  DESCRIPTION                                                           */
-/*                                                                        */
-/*    This function encodes the input string into a base64                */
-/*    representation.                                                     */
-/*                                                                        */
-/*  INPUT                                                                 */
-/*                                                                        */
-/*    name                                  Name string                   */
-/*    name                                  Length of name                */
-/*    base64name                            Encoded base64 name string    */
-/*                                                                        */
-/*  OUTPUT                                                                */
-/*                                                                        */
-/*    None                                                                */
-/*                                                                        */
-/*  CALLS                                                                 */
-/*                                                                        */
-/*    _nx_utility_string_length_check       Check string length           */
-/*                                                                        */
-/*  CALLED BY                                                             */
-/*                                                                        */
-/*    None                                                                */
-/*                                                                        */
-/*  RELEASE HISTORY                                                       */
-/*                                                                        */
-/*    DATE              NAME                      DESCRIPTION             */
-/*                                                                        */
-/*  05-19-2020     Yuxin Zhou               Initial Version 6.0           */
-/*  09-30-2020     Yuxin Zhou               Modified comment(s),          */
-/*                                            resulting in version 6.1    */
-/*                                                                        */
-/**************************************************************************/
-VOID _nx_web_http_base64_encode(CHAR *name, UINT length, CHAR *base64name)
-{
-
-UINT    pad;
-UINT    i, j;
-UINT    step;
-
-
-    /* Adjust the length to represent the base64 name.  */
-    length =  ((length * 8) / 6);
-
-    /* Default padding to none.  */
-    pad =  0;
-
-    /* Determine if an extra conversion is needed.  */
-    if ((length * 6) % 24)
-    {
-
-        /* Some padding is needed.  */
-
-        /* Calculate the number of pad characters.  */
-        pad =  (length * 6) % 24;
-        pad =  (24 - pad) / 6;
-        pad =  pad - 1;
-
-        /* Adjust the length to pickup the character fraction.  */
-        length++;
-    }
-
-    /* Setup index into the base64name.  */
-    j =  0;
-
-    /* Compute the base64name.  */
-    step =  0;
-    i =     0;
-    while (j < length)
-    {
-
-        /* Determine which step we are in.  */
-        if (step == 0)
-        {
-
-            /* Use first 6 bits of name character for index.  */
-            base64name[j++] =  _nx_web_http_server_base64_array[((UINT) name[i]) >> 2];
-            step++;
-        }
-        else if (step == 1)
-        {
-
-            /* Use last 2 bits of name character and first 4 bits of next name character for index.  */
-            base64name[j++] =  _nx_web_http_server_base64_array[((((UINT) name[i]) & 0x3) << 4) | (((UINT) name[i+1]) >> 4)];
-            i++;
-            step++;
-        }
-        else if (step == 2)
-        {
-
-            /* Use last 4 bits of name character and first 2 bits of next name character for index.  */
-            base64name[j++] =  _nx_web_http_server_base64_array[((((UINT) name[i]) & 0xF) << 2) | (((UINT) name[i+1]) >> 6)];
-            i++;
-            step++;
-        }
-        else /* Step 3 */
-        {
-
-            /* Use last 6 bits of name character for index.  */
-            base64name[j++] =  _nx_web_http_server_base64_array[(((UINT) name[i]) & 0x3F)];
-            i++;
-            step = 0;
-        }
-    }
-
-    /* Determine if the index needs to be advanced.  */
-    if (step != 3)
-        i++;
-
-    /* Now add the PAD characters.  */
-    while ((pad--) && (j < NX_WEB_HTTP_MAX_STRING))
-    {
-
-        /* Pad base64name with '=' characters.  */
-        base64name[j++] = '=';
-    }
-
-    /* Put a NULL character in.  */
-    base64name[j] =  NX_NULL;
-}
-
-
-/**************************************************************************/
-/*                                                                        */
-/*  FUNCTION                                               RELEASE        */
-/*                                                                        */
-/*    _nx_web_http_base64_decode                          PORTABLE C      */
-/*                                                           6.1          */
-/*  AUTHOR                                                                */
-/*                                                                        */
-/*    Yuxin Zhou, Microsoft Corporation                                   */
-/*                                                                        */
-/*  DESCRIPTION                                                           */
-/*                                                                        */
-/*    This function decodes the input base64 ASCII string and converts    */
-/*    it into a standard ASCII representation.                            */
-/*                                                                        */
-/*  INPUT                                                                 */
-/*                                                                        */
-/*    base64name                            Encoded base64 name string    */
-/*    length                                Length of encoded base64 name */
-/*    name                                  Name string                   */
-/*                                                                        */
-/*  OUTPUT                                                                */
-/*                                                                        */
-/*    None                                                                */
-/*                                                                        */
-/*  CALLS                                                                 */
-/*                                                                        */
-/*    None                                                                */
-/*                                                                        */
-/*  CALLED BY                                                             */
-/*                                                                        */
-/*    _nx_web_http_server_basic_authenticate                              */
-/*                                          Basic authentication          */
-/*                                                                        */
-/*  RELEASE HISTORY                                                       */
-/*                                                                        */
-/*    DATE              NAME                      DESCRIPTION             */
-/*                                                                        */
-/*  05-19-2020     Yuxin Zhou               Initial Version 6.0           */
-/*  09-30-2020     Yuxin Zhou               Modified comment(s),          */
-/*                                            resulting in version 6.1    */
-/*                                                                        */
-/**************************************************************************/
-VOID _nx_web_http_base64_decode(CHAR *base64name, UINT length, CHAR *name)
-{
-
-UINT    i, j;
-UINT    value1, value2;
-UINT    step;
-
-
-    /* Adjust the length to represent the ASCII name.  */
-    length =  ((length * 6) / 8);
-
-    /* Setup index into the ASCII name.  */
-    j =  0;
-
-    /* Compute the ASCII name.  */
-    step =  0;
-    i =     0;
-    while ((j < length) && (base64name[i]) && (base64name[i] != '='))
-    {
-
-        /* Derive values of the Base64 name.  */
-        if ((base64name[i] >= 'A') && (base64name[i] <= 'Z'))
-            value1 =  (UINT) (base64name[i] - 'A');
-        else if ((base64name[i] >= 'a') && (base64name[i] <= 'z'))
-            value1 =  (UINT) (base64name[i] - 'a') + 26;
-        else if ((base64name[i] >= '0') && (base64name[i] <= '9'))
-            value1 =  (UINT) (base64name[i] - '0') + 52;
-        else if (base64name[i] == '+')
-            value1 =  62;
-        else if (base64name[i] == '/')
-            value1 =  63;
-        else
-            value1 =  0;
-
-        /* Derive value for the next character.  */
-        if ((base64name[i+1] >= 'A') && (base64name[i+1] <= 'Z'))
-            value2 =  (UINT) (base64name[i+1] - 'A');
-        else if ((base64name[i+1] >= 'a') && (base64name[i+1] <= 'z'))
-            value2 =  (UINT) (base64name[i+1] - 'a') + 26;
-        else if ((base64name[i+1] >= '0') && (base64name[i+1] <= '9'))
-            value2 =  (UINT) (base64name[i+1] - '0') + 52;
-        else if (base64name[i+1] == '+')
-            value2 =  62;
-        else if (base64name[i+1] == '/')
-            value2 =  63;
-        else
-            value2 =  0;
-
-        /* Determine which step we are in.  */
-        if (step == 0)
-        {
-
-            /* Use first value and first 2 bits of second value.  */
-            name[j++] =    (CHAR) (((value1 & 0x3f) << 2) | ((value2 >> 4) & 3));
-            i++;
-            step++;
-        }
-        else if (step == 1)
-        {
-
-            /* Use last 4 bits of first value and first 4 bits of next value.  */
-            name[j++] =    (CHAR) (((value1 & 0xF) << 4) | (value2 >> 2));
-            i++;
-            step++;
-        }
-        else if (step == 2)
-        {
-
-            /* Use first 2 bits and following 6 bits of next value.  */
-            name[j++] =   (CHAR) (((value1 & 3) << 6) | (value2 & 0x3f));
-            i++;
-            i++;
-            step =  0;
-        }
-    }
-
-    /* Put a NULL character in.  */
-    name[j] =  NX_NULL;
-}
-
 
 #ifdef NX_WEB_HTTP_DIGEST_ENABLE
 /**************************************************************************/
@@ -8516,7 +8169,7 @@ UCHAR   ch;
 /*  FUNCTION                                               RELEASE        */ 
 /*                                                                        */ 
 /*    _nx_web_http_server_generate_response_header        PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.1.8        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Yuxin Zhou, Microsoft Corporation                                   */
@@ -8547,7 +8200,7 @@ UCHAR   ch;
 /*                                          Allocate response packet      */
 /*    nx_packet_data_append                 Append packet data            */
 /*    memcmp                                Compare string                */
-/*    _nx_web_http_server_number_convert    Convert number to ASCII       */
+/*    _nx_utility_uint_to_string            Convert number to ASCII       */
 /*    _nx_web_http_server_date_to_string    Convert data to string        */
 /*    nx_packet_release                     Release packet                */
 /*                                                                        */ 
@@ -8566,6 +8219,10 @@ UCHAR   ch;
 /*  05-19-2020     Yuxin Zhou               Initial Version 6.0           */
 /*  09-30-2020     Yuxin Zhou               Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  08-02-2021     Yuxin Zhou               Modified comment(s),          */
+/*                                            improved the logic of       */
+/*                                            converting number to string,*/
+/*                                            resulting in version 6.1.8  */
 /*                                                                        */
 /**************************************************************************/
 UINT  _nx_web_http_server_generate_response_header(NX_WEB_HTTP_SERVER *server_ptr, NX_PACKET **packet_pptr,
@@ -8665,7 +8322,7 @@ CHAR        status_code_not_modified;
         {
 
             /* Convert the content_length to ASCII representation.  */
-            temp = _nx_web_http_server_number_convert(content_length, temp_string);
+            temp = _nx_utility_uint_to_string(content_length, 10, temp_string, sizeof(temp_string));
 
             /* Place the "Content-Length" field in the header.  */
             status += nx_packet_data_append(packet_ptr, "Content-Length: ", 16,
@@ -8733,7 +8390,7 @@ CHAR        status_code_not_modified;
                                                 server_ptr -> nx_web_http_server_packet_pool_ptr, NX_WAIT_FOREVER);
 
                 /* Convert the max-age to ASCII representation.  */
-                temp = _nx_web_http_server_number_convert(max_age, temp_string);
+                temp = _nx_utility_uint_to_string(max_age, 10, temp_string, sizeof(temp_string));
                 status += nx_packet_data_append(packet_ptr, temp_string, temp,
                                                 server_ptr -> nx_web_http_server_packet_pool_ptr, NX_WAIT_FOREVER);
 

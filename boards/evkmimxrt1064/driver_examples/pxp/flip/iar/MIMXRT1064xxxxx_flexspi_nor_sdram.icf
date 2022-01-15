@@ -8,7 +8,7 @@
 **     Compiler:            IAR ANSI C/C++ Compiler for ARM
 **     Reference manual:    IMXRT1064RM Rev.0.1, 12/2018 | IMXRT1064SRM Rev.3
 **     Version:             rev. 0.1, 2018-06-22
-**     Build:               b210227
+**     Build:               b210709
 **
 **     Abstract:
 **         Linker file for the IAR ANSI C/C++ Compiler for ARM
@@ -61,13 +61,13 @@ define symbol m_boot_hdr_dcd_data_start      = 0x70001030;
 if (isdefinedsymbol(__stack_size__)) {
   define symbol __size_cstack__        = __stack_size__;
 } else {
-  define symbol __size_cstack__        = 0x0400;
+  define symbol __size_cstack__        = 0x10000;
 }
 
 if (isdefinedsymbol(__heap_size__)) {
   define symbol __size_heap__          = __heap_size__;
 } else {
-  define symbol __size_heap__          = 0x0400;
+  define symbol __size_heap__          = 0x800000;
 }
 
 define exported symbol __NCACHE_REGION_START   = m_ncache_start;
@@ -91,18 +91,18 @@ define block CSTACK    with alignment = 8, size = __size_cstack__   { };
 define block HEAP      with alignment = 8, size = __size_heap__     { };
 define block RW        { first readwrite, section m_usb_dma_init_data };
 define block ZI         with alignment = 32  { first zi, section m_usb_dma_noninit_data };
-define block NCACHE_VAR { section NonCacheable , section NonCacheable.init };
-
+define block NCACHE_VAR    { section NonCacheable , section NonCacheable.init };
 define block QACCESS_CODE  { section CodeQuickAccess };
-initialize by copy { readwrite, section .textrw, section CodeQuickAccess };
+define block QACCESS_DATA  { section DataQuickAccess };
+
+initialize by copy { readwrite, section .textrw, section CodeQuickAccess, section DataQuickAccess};
 do not initialize  { section .noinit };
 
 place at address mem: m_interrupts_start    { readonly section .intvec };
-
-place at address mem:m_boot_hdr_conf_start { section .boot_hdr.conf };
-place at address mem:m_boot_hdr_ivt_start { section .boot_hdr.ivt };
-place at address mem:m_boot_hdr_boot_data_start { readonly section .boot_hdr.boot_data };
-place at address mem:m_boot_hdr_dcd_data_start { readonly section .boot_hdr.dcd_data };
+place at address mem: m_boot_hdr_conf_start { section .boot_hdr.conf };
+place at address mem: m_boot_hdr_ivt_start { section .boot_hdr.ivt };
+place at address mem: m_boot_hdr_boot_data_start { readonly section .boot_hdr.boot_data };
+place at address mem: m_boot_hdr_dcd_data_start { readonly section .boot_hdr.dcd_data };
 
 keep{ section .boot_hdr.conf, section .boot_hdr.ivt, section .boot_hdr.boot_data, section .boot_hdr.dcd_data };
 
@@ -114,7 +114,7 @@ if (isdefinedsymbol(__heap_noncacheable__)) {
 } else {
   place in DATA3_region                     { last block HEAP };
 }
-place in CSTACK_region                      { block CSTACK };
 place in NCACHE_region                      { block NCACHE_VAR };
-place in QACODE_region                      { section .textrw};
+place in CSTACK_region                      { block CSTACK };
 place in QACODE_region                      { block QACCESS_CODE };
+place in DATA_region                        { block QACCESS_DATA };

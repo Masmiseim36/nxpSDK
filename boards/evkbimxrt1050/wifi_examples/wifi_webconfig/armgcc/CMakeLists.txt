@@ -31,11 +31,10 @@ include(${ProjDirPath}/flags.cmake)
 include(${ProjDirPath}/config.cmake)
 
 add_executable(${MCUX_SDK_PROJECT_NAME} 
-"${ProjDirPath}/../pin_mux.c"
-"${ProjDirPath}/../pin_mux.h"
 "${ProjDirPath}/../lwipopts.h"
 "${ProjDirPath}/../lwippools.h"
-"${ProjDirPath}/../wifi_config.h"
+"${ProjDirPath}/../pin_mux.c"
+"${ProjDirPath}/../pin_mux.h"
 "${ProjDirPath}/../webconfig.c"
 "${ProjDirPath}/../webconfig.h"
 "${ProjDirPath}/../httpsrv_fs_data.c"
@@ -43,12 +42,13 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../cred_flash_storage.h"
 "${ProjDirPath}/../http_server.c"
 "${ProjDirPath}/../http_server.h"
-"${ProjDirPath}/../wpl.h"
-"${ProjDirPath}/../wpl_nxp.c"
 "${ProjDirPath}/../FreeRTOSConfig.h"
 "${ProjDirPath}/../sdmmc_config.c"
 "${ProjDirPath}/../sdmmc_config.h"
+"${ProjDirPath}/../wifi_bt_config.c"
+"${ProjDirPath}/../wifi_bt_config.h"
 "${ProjDirPath}/../app_config.h"
+"${ProjDirPath}/../wifi_config.h"
 "${ProjDirPath}/../board.c"
 "${ProjDirPath}/../board.h"
 "${ProjDirPath}/../clock_config.c"
@@ -58,12 +58,9 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 )
 
 target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
-    ${ProjDirPath}/../../../../src/wifi_common/webconfig/nxp
-    ${ProjDirPath}/../../../../src/wifi_common/webconfig
     ${ProjDirPath}/..
-    ${ProjDirPath}/../../..
     ${ProjDirPath}/../../common
-    ${ProjDirPath}/../../../../../middleware/lwip/src/apps/httpsrv
+    ${ProjDirPath}/../../..
 )
 
 set(CMAKE_MODULE_PATH
@@ -71,10 +68,12 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../components/flash/mflash
     ${ProjDirPath}/../../../../../components/flash/mflash/mimxrt1052
     ${ProjDirPath}/../../../../../middleware/lwip
-    ${ProjDirPath}/../../../../../rtos/freertos
+    ${ProjDirPath}/../../../../../rtos/freertos/freertos_kernel
     ${ProjDirPath}/../../../../../devices/MIMXRT1052/utilities
     ${ProjDirPath}/../../../../../middleware/wifi
+    ${ProjDirPath}/../../../../../components/wifi_bt_module
     ${ProjDirPath}/../../../../../middleware/sdmmc
+    ${ProjDirPath}/../../../../../middleware/edgefast_wifi
     ${ProjDirPath}/../../../../../devices/MIMXRT1052
     ${ProjDirPath}/../../../../../components/uart
     ${ProjDirPath}/../../../../../components/serial_manager
@@ -92,6 +91,8 @@ include(component_mflash_file_MIMXRT1052)
 
 include(component_mflash_rt1050_MIMXRT1052)
 
+include(component_mflash_dummy_MIMXRT1052)
+
 include(driver_flexspi_MIMXRT1052)
 
 include(middleware_lwip_apps_httpsrv_MIMXRT1052)
@@ -108,6 +109,8 @@ include(middleware_wifi_MIMXRT1052)
 
 include(driver_usdhc_MIMXRT1052)
 
+include(component_wifi_bt_module_tx_pwr_limits_MIMXRT1052)
+
 include(middleware_sdmmc_sdio_MIMXRT1052)
 
 include(middleware_sdmmc_common_MIMXRT1052)
@@ -115,6 +118,8 @@ include(middleware_sdmmc_common_MIMXRT1052)
 include(middleware_sdmmc_host_usdhc_MIMXRT1052)
 
 include(middleware_sdmmc_host_usdhc_freertos_MIMXRT1052)
+
+include(middleware_edgefast_wifi_nxp_MIMXRT1052)
 
 include(driver_common_MIMXRT1052)
 
@@ -152,9 +157,13 @@ include(middleware_freertos-kernel_extension_MIMXRT1052)
 
 include(middleware_wifi_wifidriver_MIMXRT1052)
 
+include(middleware_wifi_fwdnld_MIMXRT1052)
+
 include(middleware_sdmmc_osa_freertos_MIMXRT1052)
 
 include(component_osa_free_rtos_MIMXRT1052)
+
+include(middleware_edgefast_wifi_MIMXRT1052)
 
 include(utilities_misc_utilities_MIMXRT1052)
 

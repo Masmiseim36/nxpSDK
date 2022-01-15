@@ -22,17 +22,27 @@
  * @{
  */
 
+/* @TEST_ANCHOR */
+
 /*! @brief KHCI instance count */
+#ifndef USB_DEVICE_CONFIG_KHCI
 #define USB_DEVICE_CONFIG_KHCI (0U)
+#endif
 
 /*! @brief EHCI instance count */
+#ifndef USB_DEVICE_CONFIG_EHCI
 #define USB_DEVICE_CONFIG_EHCI (1U)
+#endif
 
 /*! @brief LPC USB IP3511 FS instance count */
+#ifndef USB_DEVICE_CONFIG_LPCIP3511FS
 #define USB_DEVICE_CONFIG_LPCIP3511FS (0U)
+#endif
 
 /*! @brief LPC USB IP3511 HS instance count */
+#ifndef USB_DEVICE_CONFIG_LPCIP3511HS
 #define USB_DEVICE_CONFIG_LPCIP3511HS (0U)
+#endif
 
 /*! @brief Device instance count, the sum of KHCI and EHCI instance counts*/
 #define USB_DEVICE_CONFIG_NUM \
@@ -49,7 +59,7 @@
 #define USB_DEVICE_CONFIG_HID (0U)
 
 /*! @brief CDC ACM instance count */
-#define USB_DEVICE_CONFIG_CDC_ACM (1U)
+#define USB_DEVICE_CONFIG_CDC_ACM   (1U)
 #define USB_DEVICE_CONFIG_CDC_RNDIS (1U)
 
 /*! @brief MSC instance count */
@@ -95,7 +105,9 @@
 
 /*! @brief Whether device compliance test is enabled. If the macro is enabled,
     the test mode and CV test macroes will be set.*/
+#ifndef USB_DEVICE_CONFIG_COMPLIANCE_TEST
 #define USB_DEVICE_CONFIG_COMPLIANCE_TEST (0U)
+#endif
 
 #if ((defined(USB_DEVICE_CONFIG_COMPLIANCE_TEST)) && (USB_DEVICE_CONFIG_COMPLIANCE_TEST > 0U))
 
@@ -152,6 +164,9 @@
 
 /*! @brief Whether handle the USB bus error. */
 #define USB_DEVICE_CONFIG_ERROR_HANDLING (0U)
+
+/*! @brief Whether checking return value is enabled. */
+#define USB_DEVICE_CONFIG_RETURN_VALUE_CHECK (0U)
 
 /* @} */
 

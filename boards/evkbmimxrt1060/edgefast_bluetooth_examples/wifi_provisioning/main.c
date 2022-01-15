@@ -75,13 +75,21 @@
 #define LOGGING_TASK_STACK_SIZE (200)
 #define LOGGING_QUEUE_LENGTH    (16)
 
+#define DEMO_TASK_STACK_SIZE (configMINIMAL_STACK_SIZE * 15)
+#define DEMO_TASK_PRIORITY   (tskIDLE_PRIORITY + 1)
+
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
 extern void vStartLedDemoTask(void);
 extern int initNetwork(void);
 extern void BOARD_InitHardware(void);
-
+/* Declaration of demo function. */
+extern int RunDeviceShadowDemo(bool awsIotMqttMode,
+                                const char *pIdentifier,
+                                void *pNetworkServerInfo,
+                                void *pNetworkCredentialInfo,
+                                const IotNetworkInterface_t *pNetworkInterface);
 /*******************************************************************************
  * Variables
  ******************************************************************************/
@@ -98,7 +106,8 @@ void flexspi_clock_init(void)
 }
 
 
-#if defined(WIFI_88W8987_BOARD_AW_CM358_USD)
+#if (defined(WIFI_88W8987_BOARD_AW_CM358MA) || defined(WIFI_88W8987_BOARD_MURATA_1ZM_M2) || \
+     defined(WIFI_IW416_BOARD_MURATA_1XK_M2))
 int controller_hci_uart_get_configuration(controller_hci_uart_config_t *config)
 {
     if (NULL == config)
@@ -121,18 +130,13 @@ int controller_hci_uart_get_configuration(controller_hci_uart_config_t *config)
 #endif
     return 0;
 }
-#elif defined(WIFI_IW416_BOARD_AW_AM457_USD)
+#elif defined(WIFI_IW416_BOARD_AW_AM510MA)
 int controller_hci_uart_get_configuration(controller_hci_uart_config_t *config)
 {
     if (NULL == config)
     {
         return -1;
     }
-    /* This function (Init Uart Pins) is not expected to be called here.
-     * In order to not add more interfaces between BT stack and hardware level,
-     * it is put here. It may be removed in furture.
-     */
-    BOARD_InitArduinoUARTPins();
     config->clockSrc = BOARD_BT_UART_CLK_FREQ;
     config->defaultBaudrate = BOARD_BT_UART_BAUDRATE;
     config->runningBaudrate = BOARD_BT_UART_BAUDRATE;
@@ -146,6 +150,80 @@ int controller_hci_uart_get_configuration(controller_hci_uart_config_t *config)
     config->dma_mux_instance = 0U;
     config->rx_request = kDmaRequestMuxLPUART3Rx;
     config->tx_request = kDmaRequestMuxLPUART3Tx;
+#endif
+    return 0;
+}
+#elif defined(WIFI_88W8987_BOARD_AW_CM358_USD)
+int controller_hci_uart_get_configuration(controller_hci_uart_config_t *config)
+{
+    if (NULL == config)
+    {
+        return -1;
+    }
+    config->clockSrc         = BOARD_BT_UART_CLK_FREQ;
+    config->defaultBaudrate  = 115200u;
+    config->runningBaudrate  = BOARD_BT_UART_BAUDRATE;
+    config->instance         = BOARD_BT_UART_INSTANCE;
+    config->enableRxRTS      = 1u;
+    config->enableTxCTS      = 1u;
+#if (defined(HAL_UART_DMA_ENABLE) && (HAL_UART_DMA_ENABLE > 0U))
+    config->dma_instance     = 0U;
+    config->rx_channel       = 0U;
+    config->tx_channel       = 1U;
+    config->dma_mux_instance = 0U;
+    config->rx_request       = kDmaRequestMuxLPUART3Rx;
+    config->tx_request       = kDmaRequestMuxLPUART3Tx;
+#endif
+    return 0;
+}
+#elif defined(WIFI_IW416_BOARD_AW_AM510_USD)
+int controller_hci_uart_get_configuration(controller_hci_uart_config_t *config)
+{
+    if (NULL == config)
+    {
+        return -1;
+    }
+    /* This function (Init Uart Pins) is not expected to be called here.
+     * In order to not add more interfaces between BT stack and hardware level,
+     * it is put here. It may be removed in furture.
+     */
+    BOARD_InitArduinoUARTPins();
+    config->clockSrc         = BOARD_BT_UART_CLK_FREQ;
+    config->defaultBaudrate  = BOARD_BT_UART_BAUDRATE;
+    config->runningBaudrate  = BOARD_BT_UART_BAUDRATE;
+    config->instance         = BOARD_BT_UART_INSTANCE;
+    config->enableRxRTS      = 1u;
+    config->enableTxCTS      = 1u;
+#if (defined(HAL_UART_DMA_ENABLE) && (HAL_UART_DMA_ENABLE > 0U))
+    config->dma_instance     = 0U;
+    config->rx_channel       = 0U;
+    config->tx_channel       = 1U;
+    config->dma_mux_instance = 0U;
+    config->rx_request       = kDmaRequestMuxLPUART3Rx;
+    config->tx_request       = kDmaRequestMuxLPUART3Tx;
+#endif
+    return 0;
+}
+#elif defined(WIFI_88W8987_BOARD_MURATA_1ZM_USD) || defined(WIFI_IW416_BOARD_MURATA_1XK_USD)
+int controller_hci_uart_get_configuration(controller_hci_uart_config_t *config)
+{
+    if (NULL == config)
+    {
+        return -1;
+    }
+    config->clockSrc         = BOARD_BT_UART_CLK_FREQ;
+    config->defaultBaudrate  = 115200u;
+    config->runningBaudrate  = BOARD_BT_UART_BAUDRATE;
+    config->instance         = BOARD_BT_UART_INSTANCE;
+    config->enableRxRTS      = 1u;
+    config->enableTxCTS      = 1u;
+#if (defined(HAL_UART_DMA_ENABLE) && (HAL_UART_DMA_ENABLE > 0U))
+    config->dma_instance     = 0U;
+    config->rx_channel       = 0U;
+    config->tx_channel       = 1U;
+    config->dma_mux_instance = 0U;
+    config->rx_request       = kDmaRequestMuxLPUART3Rx;
+    config->tx_request       = kDmaRequestMuxLPUART3Tx;
 #endif
     return 0;
 }
@@ -217,8 +295,12 @@ void main_task(void *pvParameters)
 
     if (SYSTEM_Init() == pdPASS)
     {
-        /* Run all demos. */
-        DEMO_RUNNER_RunDemos();
+        static demoContext_t mqttDemoContext = {.networkTypes                = AWSIOT_NETWORK_TYPE_WIFI,
+                                                .demoFunction                = RunDeviceShadowDemo,
+                                                .networkConnectedCallback    = NULL,
+                                                .networkDisconnectedCallback = NULL};
+
+        Iot_CreateDetachedThread(runDemoTask, &mqttDemoContext, DEMO_TASK_PRIORITY, DEMO_TASK_STACK_SIZE);
     }
 
     vTaskDelete(NULL);
@@ -228,10 +310,12 @@ int main(void)
 {
     BOARD_ConfigMPU();
     BOARD_InitBootPins();
-#if defined(WIFI_IW416_BOARD_AW_AM457_USD)
+#if defined(WIFI_IW416_BOARD_AW_AM510_USD)
     BOARD_DeinitArduinoUARTPins();
-#else
+#elif defined(WIFI_88W8987_BOARD_AW_CM358_USD) || defined(WIFI_88W8987_BOARD_MURATA_1ZM_USD) || \
+    defined(WIFI_IW416_BOARD_MURATA_1XK_USD)
     BOARD_InitArduinoUARTPins();
+#else
 #endif
     BOARD_InitBootClocks();
     /* Configure UART divider to default */
@@ -265,7 +349,6 @@ int main(void)
         ;
 }
 
-#if 1
 void *pvPortCalloc(size_t xNum, size_t xSize)
 {
     void *pvReturn;
@@ -278,29 +361,27 @@ void *pvPortCalloc(size_t xNum, size_t xSize)
 
     return pvReturn;
 }
-#endif
 
-BaseType_t getUserMessage( INPUTMessage_t * pxINPUTmessage,
-                                  TickType_t xAuthTimeout )
+int32_t xPortGetUserInput( uint8_t * pMessage,
+                           uint32_t messageLength,
+                           TickType_t timeoutTicks )
 {
     int ret;
-
-    ret = GETCHAR();
-
-    if (ret <= 127)
+    uint32_t i = messageLength;
+    
+    while (i > 0)
     {
-        pxINPUTmessage->pcData = pvPortMalloc(1);
-
-        if (NULL == pxINPUTmessage->pcData)
+        ret = GETCHAR();
+        
+        if ((ret <= 127) && (NULL != pMessage))
         {
-            return pdFALSE;
+            pMessage[messageLength - i] = (uint8_t)ret;
         }
-        pxINPUTmessage->xDataSize = 1;
-        pxINPUTmessage->pcData[0] = (uint8_t)ret;
-        return pdTRUE;
+        else
+        {
+            break;
+        }
+        i--;
     }
-    else
-    {
-        return pdFALSE;
-    }
+    return messageLength - i;
 }

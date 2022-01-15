@@ -37,10 +37,10 @@ extern serial_handle_t g_serialHandle;
 SDK_ALIGN(static uint8_t shell_handle_buffer[SHELL_HANDLE_SIZE], 4);
 static shell_handle_t shell_handle;
 
-void peripheral_hrs_task(void *pvParameters)
+void edgefast_bt_pal_shell_task(void *pvParameters)
 {
     uint8_t level = 0;
-    PRINTF("BLE shell demo start...\n");
+    PRINTF("Edgefast Bluetooth PAL shell demo start...\n");
 
     shell_handle = (shell_handle_t)&shell_handle_buffer[0];
     if (kStatus_SHELL_Success != SHELL_Init(shell_handle, g_serialHandle, ""))

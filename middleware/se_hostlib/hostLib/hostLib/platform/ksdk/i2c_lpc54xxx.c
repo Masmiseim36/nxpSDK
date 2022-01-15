@@ -154,6 +154,11 @@ unsigned int axI2CWrite(
     i2c_master_transfer_t masterXfer;
     memset(&masterXfer, 0, sizeof(masterXfer)); //clear values
 
+    if(pTx == NULL || txLen > MAX_DATA_LEN)
+    {
+        return I2C_FAILED;
+    }
+
 #if defined(SCI2C_DEBUG)
     I2C_LOG_PRINTF("\r\n I2C Write \r\n");
 #endif
@@ -195,6 +200,17 @@ unsigned int axI2CWriteRead(void* conn_ctx, unsigned char bus_unused_param, unsi
     uint32_t master_state;
     uint32_t status = 0;
     memset(&masterXfer, 0, sizeof(masterXfer)); //clear values
+
+    if(pTx == NULL || txLen > MAX_DATA_LEN)
+    {
+        return I2C_FAILED;
+    }
+
+    if(pRx == NULL || *pRxLen > MAX_DATA_LEN)
+    {
+        return I2C_FAILED;
+    }
+
     *pRxLen = 0;
     memset(pRx, 0, 2);
 

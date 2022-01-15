@@ -329,7 +329,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, DEBUG, CPU_MIMXRT1062DVL6A, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, MBEDTLS_SSL_CIPHERSUITES=MBEDTLS_TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256, FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, USE_RTOS=1, PRINTF_ADVANCED_ENABLE=1, HTTPSRV_CFG_WEBSOCKET_ENABLED=0, HTTPSRV_CFG_MBEDTLS_ENABLE=1, HTTPSRV_CFG_DEFAULT_SES_CNT=8, MBEDTLS_CONFIG_FILE='\"mbedtls_config.h\"', OTA_DEVEL_MODE=1, MFLASH_FILE_BASEADDR=7340032, LWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1, SERIAL_PORT_TYPE_UART=1, SDK_OS_FREE_RTOS, MCUXPRESSO_SDK</Define>
+              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, DEBUG, CPU_MIMXRT1062DVL6A, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, MBEDTLS_SSL_CIPHERSUITES=MBEDTLS_TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256, FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, USE_RTOS=1, PRINTF_ADVANCED_ENABLE=1, HTTPSRV_CFG_WEBSOCKET_ENABLED=0, HTTPSRV_CFG_MBEDTLS_ENABLE=1, HTTPSRV_CFG_DEFAULT_SES_CNT=8, MBEDTLS_CONFIG_FILE='\"mbedtls_config.h\"', MFLASH_FILE_BASEADDR=7340032, LWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1, SERIAL_PORT_TYPE_UART=1, SDK_OS_FREE_RTOS, MCUXPRESSO_SDK</Define>
               <Undefine/>
               <IncludePath>..;../../../../../components/phy/mdio/enet;../../../../../components/phy/device/phyksz8081;../../../../../devices/MIMXRT1062/drivers;../../../../../components/flash/mflash/mimxrt1062;../../../../../middleware/mbedtls/include;../../../../../middleware/mbedtls/library;../../../../../middleware/mbedtls/port/ksdk;../../../../../middleware/lwip/src/apps/httpsrv;../../../../../middleware/lwip/port;../../../../../middleware/lwip/src;../../../../../middleware/lwip/src/include;../../../../../components/phy;../../../../../devices/MIMXRT1062/utilities/str;../../../../../devices/MIMXRT1062/utilities/debug_console;../../../../../devices/MIMXRT1062;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../../../CMSIS/Core/Include;../../../../../components/flash/mflash;../../../../../rtos/freertos/freertos_kernel/include;../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F</IncludePath>
             </VariousControls>
@@ -365,7 +365,7 @@
             <ScatterFile>MIMXRT1062xxxxx_flexspi_nor.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --keep=ota_bootloader_hdr.o(.rodata.*) --entry=Reset_Handler --predefine="-DXIP_BOOT_HEADER_ENABLE=1" --predefine="-D__stack_size__=1000" --predefine="-D__heap_size__=100000"</Misc>
+            <Misc>--remove --entry=Reset_Handler --predefine="-DXIP_BOOT_HEADER_ENABLE=1" --predefine="-D__stack_size__=1000" --predefine="-D__heap_size__=100000"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -396,26 +396,6 @@
               <FilePath>../lwipopts.h</FilePath>
             </File>
             <File>
-              <FileName>ota_bootloader_supp.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../ota_bootloader_supp.c</FilePath>
-            </File>
-            <File>
-              <FileName>ota_bootloader_supp.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../ota_bootloader_supp.h</FilePath>
-            </File>
-            <File>
-              <FileName>ota_bootloader_hdr.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../ota_bootloader_hdr.c</FilePath>
-            </File>
-            <File>
-              <FileName>ota_bootloader_board.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../ota_bootloader_board.h</FilePath>
-            </File>
-            <File>
               <FileName>httpsrv_fs_data.c</FileName>
               <FileType>1</FileType>
               <FilePath>../httpsrv_fs_data.c</FilePath>
@@ -429,6 +409,16 @@
               <FileName>FreeRTOSConfig.h</FileName>
               <FileType>5</FileType>
               <FilePath>../FreeRTOSConfig.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcuboot_app_support.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../mcuboot_app_support.c</FilePath>
+            </File>
+            <File>
+              <FileName>mcuboot_app_support.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../mcuboot_app_support.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -444,6 +434,11 @@
               <FileName>pin_mux.h</FileName>
               <FileType>5</FileType>
               <FilePath>../pin_mux.h</FilePath>
+            </File>
+            <File>
+              <FileName>flash_partitioning.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../flash_partitioning.h</FilePath>
             </File>
             <File>
               <FileName>board.c</FileName>
@@ -531,26 +526,6 @@
           <GroupName>drivers</GroupName>
           <Files>
             <File>
-              <FileName>fsl_trng.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1062/drivers/fsl_trng.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_trng.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1062/drivers/fsl_trng.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_dcp.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1062/drivers/fsl_dcp.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_dcp.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1062/drivers/fsl_dcp.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_cache.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MIMXRT1062/drivers/fsl_cache.c</FilePath>
@@ -634,6 +609,26 @@
               <FileName>fsl_gpio.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MIMXRT1062/drivers/fsl_gpio.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_dcp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1062/drivers/fsl_dcp.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_dcp.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1062/drivers/fsl_dcp.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_trng.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1062/drivers/fsl_trng.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_trng.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1062/drivers/fsl_trng.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1066,6 +1061,16 @@
               <FilePath>../../../../../middleware/mbedtls/include/psa/crypto.h</FilePath>
             </File>
             <File>
+              <FileName>crypto_builtin_composites.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls/include/psa/crypto_builtin_composites.h</FilePath>
+            </File>
+            <File>
+              <FileName>crypto_builtin_primitives.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls/include/psa/crypto_builtin_primitives.h</FilePath>
+            </File>
+            <File>
               <FileName>crypto_compat.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/mbedtls/include/psa/crypto_compat.h</FilePath>
@@ -1074,6 +1079,16 @@
               <FileName>crypto_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/mbedtls/include/psa/crypto_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>crypto_driver_contexts_composites.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls/include/psa/crypto_driver_contexts_composites.h</FilePath>
+            </File>
+            <File>
+              <FileName>crypto_driver_contexts_primitives.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls/include/psa/crypto_driver_contexts_primitives.h</FilePath>
             </File>
             <File>
               <FileName>crypto_driver_common.h</FileName>
@@ -1261,6 +1276,11 @@
               <FilePath>../../../../../middleware/mbedtls/library/ecp_curves.c</FilePath>
             </File>
             <File>
+              <FileName>ecp_invasive.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls/library/ecp_invasive.h</FilePath>
+            </File>
+            <File>
               <FileName>entropy.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/mbedtls/library/entropy.c</FilePath>
@@ -1314,6 +1334,31 @@
               <FileName>md5.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/mbedtls/library/md5.c</FilePath>
+            </File>
+            <File>
+              <FileName>mps_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls/library/mps_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>mps_error.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls/library/mps_error.h</FilePath>
+            </File>
+            <File>
+              <FileName>mps_reader.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mbedtls/library/mps_reader.c</FilePath>
+            </File>
+            <File>
+              <FileName>mps_trace.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mbedtls/library/mps_trace.c</FilePath>
+            </File>
+            <File>
+              <FileName>mps_trace.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls/library/mps_trace.h</FilePath>
             </File>
             <File>
               <FileName>memory_buffer_alloc.c</FileName>
@@ -1401,6 +1446,26 @@
               <FilePath>../../../../../middleware/mbedtls/library/psa_crypto.c</FilePath>
             </File>
             <File>
+              <FileName>psa_crypto_aead.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mbedtls/library/psa_crypto_aead.c</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_aead.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls/library/psa_crypto_aead.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_cipher.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mbedtls/library/psa_crypto_cipher.c</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_cipher.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls/library/psa_crypto_cipher.h</FilePath>
+            </File>
+            <File>
               <FileName>psa_crypto_client.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/mbedtls/library/psa_crypto_client.c</FilePath>
@@ -1429,6 +1494,26 @@
               <FileName>psa_crypto_ecp.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/mbedtls/library/psa_crypto_ecp.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_hash.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mbedtls/library/psa_crypto_hash.c</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_hash.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls/library/psa_crypto_hash.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_mac.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mbedtls/library/psa_crypto_mac.c</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_mac.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls/library/psa_crypto_mac.h</FilePath>
             </File>
             <File>
               <FileName>psa_crypto_invasive.h</FileName>
@@ -1464,11 +1549,6 @@
               <FileName>psa_crypto_se.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/mbedtls/library/psa_crypto_se.h</FilePath>
-            </File>
-            <File>
-              <FileName>psa_crypto_service_integration.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/mbedtls/library/psa_crypto_service_integration.h</FilePath>
             </File>
             <File>
               <FileName>psa_crypto_slot_management.c</FileName>
@@ -3339,6 +3419,11 @@
               <FileName>StackMacros.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../rtos/freertos/freertos_kernel/include/StackMacros.h</FilePath>
+            </File>
+            <File>
+              <FileName>stdint.readme</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/stdint.readme</FilePath>
             </File>
             <File>
               <FileName>stream_buffer.h</FileName>
@@ -3715,7 +3800,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, NDEBUG, CPU_MIMXRT1062DVL6A, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, MBEDTLS_SSL_CIPHERSUITES=MBEDTLS_TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256, FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, USE_RTOS=1, PRINTF_ADVANCED_ENABLE=1, HTTPSRV_CFG_WEBSOCKET_ENABLED=0, HTTPSRV_CFG_MBEDTLS_ENABLE=1, HTTPSRV_CFG_DEFAULT_SES_CNT=8, MBEDTLS_CONFIG_FILE='\"mbedtls_config.h\"', OTA_DEVEL_MODE=1, MFLASH_FILE_BASEADDR=7340032, LWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1, SERIAL_PORT_TYPE_UART=1, SDK_OS_FREE_RTOS, MCUXPRESSO_SDK</Define>
+              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, NDEBUG, CPU_MIMXRT1062DVL6A, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, MBEDTLS_SSL_CIPHERSUITES=MBEDTLS_TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256, FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, USE_RTOS=1, PRINTF_ADVANCED_ENABLE=1, HTTPSRV_CFG_WEBSOCKET_ENABLED=0, HTTPSRV_CFG_MBEDTLS_ENABLE=1, HTTPSRV_CFG_DEFAULT_SES_CNT=8, MBEDTLS_CONFIG_FILE='\"mbedtls_config.h\"', MFLASH_FILE_BASEADDR=7340032, LWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1, SERIAL_PORT_TYPE_UART=1, SDK_OS_FREE_RTOS, MCUXPRESSO_SDK</Define>
               <Undefine/>
               <IncludePath>..;../../../../../components/phy/mdio/enet;../../../../../components/phy/device/phyksz8081;../../../../../devices/MIMXRT1062/drivers;../../../../../components/flash/mflash/mimxrt1062;../../../../../middleware/mbedtls/include;../../../../../middleware/mbedtls/library;../../../../../middleware/mbedtls/port/ksdk;../../../../../middleware/lwip/src/apps/httpsrv;../../../../../middleware/lwip/port;../../../../../middleware/lwip/src;../../../../../middleware/lwip/src/include;../../../../../components/phy;../../../../../devices/MIMXRT1062/utilities/str;../../../../../devices/MIMXRT1062/utilities/debug_console;../../../../../devices/MIMXRT1062;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../../../CMSIS/Core/Include;../../../../../components/flash/mflash;../../../../../rtos/freertos/freertos_kernel/include;../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F</IncludePath>
             </VariousControls>
@@ -3751,7 +3836,7 @@
             <ScatterFile>MIMXRT1062xxxxx_flexspi_nor.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --keep=ota_bootloader_hdr.o(.rodata.*) --entry=Reset_Handler --predefine="-DXIP_BOOT_HEADER_ENABLE=1" --predefine="-D__stack_size__=1000" --predefine="-D__heap_size__=100000"</Misc>
+            <Misc>--remove --entry=Reset_Handler --predefine="-DXIP_BOOT_HEADER_ENABLE=1" --predefine="-D__stack_size__=1000" --predefine="-D__heap_size__=100000"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -3782,26 +3867,6 @@
               <FilePath>../lwipopts.h</FilePath>
             </File>
             <File>
-              <FileName>ota_bootloader_supp.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../ota_bootloader_supp.c</FilePath>
-            </File>
-            <File>
-              <FileName>ota_bootloader_supp.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../ota_bootloader_supp.h</FilePath>
-            </File>
-            <File>
-              <FileName>ota_bootloader_hdr.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../ota_bootloader_hdr.c</FilePath>
-            </File>
-            <File>
-              <FileName>ota_bootloader_board.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../ota_bootloader_board.h</FilePath>
-            </File>
-            <File>
               <FileName>httpsrv_fs_data.c</FileName>
               <FileType>1</FileType>
               <FilePath>../httpsrv_fs_data.c</FilePath>
@@ -3815,6 +3880,16 @@
               <FileName>FreeRTOSConfig.h</FileName>
               <FileType>5</FileType>
               <FilePath>../FreeRTOSConfig.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcuboot_app_support.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../mcuboot_app_support.c</FilePath>
+            </File>
+            <File>
+              <FileName>mcuboot_app_support.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../mcuboot_app_support.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -3830,6 +3905,11 @@
               <FileName>pin_mux.h</FileName>
               <FileType>5</FileType>
               <FilePath>../pin_mux.h</FilePath>
+            </File>
+            <File>
+              <FileName>flash_partitioning.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../flash_partitioning.h</FilePath>
             </File>
             <File>
               <FileName>board.c</FileName>
@@ -3917,26 +3997,6 @@
           <GroupName>drivers</GroupName>
           <Files>
             <File>
-              <FileName>fsl_trng.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1062/drivers/fsl_trng.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_trng.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1062/drivers/fsl_trng.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_dcp.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1062/drivers/fsl_dcp.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_dcp.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1062/drivers/fsl_dcp.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_cache.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MIMXRT1062/drivers/fsl_cache.c</FilePath>
@@ -4020,6 +4080,26 @@
               <FileName>fsl_gpio.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MIMXRT1062/drivers/fsl_gpio.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_dcp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1062/drivers/fsl_dcp.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_dcp.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1062/drivers/fsl_dcp.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_trng.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1062/drivers/fsl_trng.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_trng.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1062/drivers/fsl_trng.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -4452,6 +4532,16 @@
               <FilePath>../../../../../middleware/mbedtls/include/psa/crypto.h</FilePath>
             </File>
             <File>
+              <FileName>crypto_builtin_composites.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls/include/psa/crypto_builtin_composites.h</FilePath>
+            </File>
+            <File>
+              <FileName>crypto_builtin_primitives.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls/include/psa/crypto_builtin_primitives.h</FilePath>
+            </File>
+            <File>
               <FileName>crypto_compat.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/mbedtls/include/psa/crypto_compat.h</FilePath>
@@ -4460,6 +4550,16 @@
               <FileName>crypto_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/mbedtls/include/psa/crypto_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>crypto_driver_contexts_composites.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls/include/psa/crypto_driver_contexts_composites.h</FilePath>
+            </File>
+            <File>
+              <FileName>crypto_driver_contexts_primitives.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls/include/psa/crypto_driver_contexts_primitives.h</FilePath>
             </File>
             <File>
               <FileName>crypto_driver_common.h</FileName>
@@ -4647,6 +4747,11 @@
               <FilePath>../../../../../middleware/mbedtls/library/ecp_curves.c</FilePath>
             </File>
             <File>
+              <FileName>ecp_invasive.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls/library/ecp_invasive.h</FilePath>
+            </File>
+            <File>
               <FileName>entropy.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/mbedtls/library/entropy.c</FilePath>
@@ -4700,6 +4805,31 @@
               <FileName>md5.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/mbedtls/library/md5.c</FilePath>
+            </File>
+            <File>
+              <FileName>mps_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls/library/mps_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>mps_error.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls/library/mps_error.h</FilePath>
+            </File>
+            <File>
+              <FileName>mps_reader.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mbedtls/library/mps_reader.c</FilePath>
+            </File>
+            <File>
+              <FileName>mps_trace.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mbedtls/library/mps_trace.c</FilePath>
+            </File>
+            <File>
+              <FileName>mps_trace.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls/library/mps_trace.h</FilePath>
             </File>
             <File>
               <FileName>memory_buffer_alloc.c</FileName>
@@ -4787,6 +4917,26 @@
               <FilePath>../../../../../middleware/mbedtls/library/psa_crypto.c</FilePath>
             </File>
             <File>
+              <FileName>psa_crypto_aead.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mbedtls/library/psa_crypto_aead.c</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_aead.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls/library/psa_crypto_aead.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_cipher.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mbedtls/library/psa_crypto_cipher.c</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_cipher.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls/library/psa_crypto_cipher.h</FilePath>
+            </File>
+            <File>
               <FileName>psa_crypto_client.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/mbedtls/library/psa_crypto_client.c</FilePath>
@@ -4815,6 +4965,26 @@
               <FileName>psa_crypto_ecp.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/mbedtls/library/psa_crypto_ecp.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_hash.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mbedtls/library/psa_crypto_hash.c</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_hash.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls/library/psa_crypto_hash.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_mac.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mbedtls/library/psa_crypto_mac.c</FilePath>
+            </File>
+            <File>
+              <FileName>psa_crypto_mac.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls/library/psa_crypto_mac.h</FilePath>
             </File>
             <File>
               <FileName>psa_crypto_invasive.h</FileName>
@@ -4850,11 +5020,6 @@
               <FileName>psa_crypto_se.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/mbedtls/library/psa_crypto_se.h</FilePath>
-            </File>
-            <File>
-              <FileName>psa_crypto_service_integration.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/mbedtls/library/psa_crypto_service_integration.h</FilePath>
             </File>
             <File>
               <FileName>psa_crypto_slot_management.c</FileName>
@@ -6725,6 +6890,11 @@
               <FileName>StackMacros.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../rtos/freertos/freertos_kernel/include/StackMacros.h</FilePath>
+            </File>
+            <File>
+              <FileName>stdint.readme</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/stdint.readme</FilePath>
             </File>
             <File>
               <FileName>stream_buffer.h</FileName>

@@ -36,7 +36,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _tx_thread_create                                   PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.1.8        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    William E. Lamie, Microsoft Corporation                             */
@@ -79,11 +79,15 @@
 /*                                                                        */
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
-/*  05-19-2020     William E. Lamie         Initial Version 6.0           */
-/*  09-30-2020     William E. Lamie         Modified comment(s), and      */
+/*  05-19-2020      William E. Lamie        Initial Version 6.0           */
+/*  09-30-2020      William E. Lamie        Modified comment(s), and      */
 /*                                            changed stack calculations  */
 /*                                            to use ALIGN_TYPE integers, */
 /*                                            resulting in version 6.1    */
+/*  06-02-2021      William E. Lamie        Modified comment(s), and      */
+/*                                            supported TX_MISRA_ENABLE,  */
+/*  08-02-2021      Scott Larson            Removed unneeded cast,        */
+/*                                            resulting in version 6.1.8  */
 /*                                                                        */
 /**************************************************************************/
 UINT  _tx_thread_create(TX_THREAD *thread_ptr, CHAR *name_ptr, VOID (*entry_function)(ULONG id), ULONG entry_input,
@@ -120,8 +124,12 @@ ALIGN_TYPE              updated_stack_start;
     stack_size =  ((stack_size/(sizeof(ULONG))) * (sizeof(ULONG))) - (sizeof(ULONG));
 
     /* Ensure the starting stack address is evenly aligned.  */
+#ifdef TX_MISRA_ENABLE
+    new_stack_start = TX_POINTER_TO_ULONG_CONVERT(stack_start);
+#else
     new_stack_start =  TX_POINTER_TO_ALIGN_TYPE_CONVERT(stack_start);
-    updated_stack_start =  ((((ULONG) new_stack_start) + ((sizeof(ULONG)) - ((ULONG) 1)) ) & (~((sizeof(ULONG)) - ((ULONG) 1))));
+#endif /* TX_MISRA_ENABLE */
+    updated_stack_start =  (((new_stack_start) + ((sizeof(ULONG)) - ((ULONG) 1)) ) & (~((sizeof(ULONG)) - ((ULONG) 1))));
 
     /* Determine if the starting stack address is different.  */
     if (new_stack_start != updated_stack_start)
@@ -132,7 +140,11 @@ ALIGN_TYPE              updated_stack_start;
     }
 
     /* Update the starting stack pointer.  */
+#ifdef TX_MISRA_ENABLE
+    stack_start = TX_ULONG_TO_POINTER_CONVERT(updated_stack_start);
+#else
     stack_start =  TX_ALIGN_TYPE_TO_POINTER_CONVERT(updated_stack_start);
+#endif /* TX_MISRA_ENABLE */
 #endif
 
     /* Prepare the thread control block prior to placing it on the created

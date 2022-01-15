@@ -36,11 +36,6 @@
 #endif
 
 #define WIRELESS_UART_SENDING_BUFFER_LENGTH 64
-#if CONFIG_BT_MAX_CONN > 1
-#define WIRELESS_UART_MAX_CONN (CONFIG_BT_MAX_CONN >> 1)
-#else
-#define WIRELESS_UART_MAX_CONN CONFIG_BT_MAX_CONN
-#endif
 
 typedef struct _wireless_uart_peer_state
 {
@@ -55,8 +50,8 @@ typedef struct _wireless_uart_state
 {
     uint32_t serialReadHandleBuffer[((SERIAL_MANAGER_READ_HANDLE_SIZE - 1) >> 2) + 1];
     serial_read_handle_t serialReadHandle;
-    wireless_uart_peer_state_t peerCentral[WIRELESS_UART_MAX_CONN];
-    wireless_uart_peer_state_t peerPeripheral[WIRELESS_UART_MAX_CONN];
+    wireless_uart_peer_state_t peerCentral[CONFIG_BT_MAX_CONN];
+    wireless_uart_peer_state_t peerPeripheral[CONFIG_BT_MAX_CONN];
 #if (defined(BUTTON_COUNT) && (BUTTON_COUNT > 0U))
     uint8_t buttonHandleBuffer[BUTTON_COUNT][BUTTON_HANDLE_SIZE];
     button_handle_t buttonHandle[BUTTON_COUNT];
@@ -136,7 +131,7 @@ static void connected(struct bt_conn *conn, uint8_t err)
 
         switch (info.role) {
         case BT_HCI_ROLE_SLAVE:
-            for (i = 0;i < WIRELESS_UART_MAX_CONN;i++)
+            for (i = 0;i < CONFIG_BT_MAX_CONN;i++)
             {
                 if (conn == g_WirelessUartState.peerCentral[i].conn)
                 {
@@ -158,7 +153,7 @@ static void connected(struct bt_conn *conn, uint8_t err)
             }
             break;
         case BT_HCI_ROLE_MASTER:
-            for (i = 0;i < WIRELESS_UART_MAX_CONN;i++)
+            for (i = 0;i < CONFIG_BT_MAX_CONN;i++)
             {
                 if (conn == g_WirelessUartState.peerPeripheral[i].conn)
                 {
@@ -197,7 +192,7 @@ static void disconnected(struct bt_conn *conn, uint8_t reason)
     uint32_t i;
     uint8_t found = 0;
 
-    for (i = 0;i < WIRELESS_UART_MAX_CONN;i++)
+    for (i = 0;i < CONFIG_BT_MAX_CONN;i++)
     {
         if (conn == g_WirelessUartState.peerCentral[i].conn)
         {
@@ -210,7 +205,7 @@ static void disconnected(struct bt_conn *conn, uint8_t reason)
         {
         }
     }
-    for (i = 0;i < WIRELESS_UART_MAX_CONN;i++)
+    for (i = 0;i < CONFIG_BT_MAX_CONN;i++)
     {
         if (conn == g_WirelessUartState.peerPeripheral[i].conn)
         {
@@ -281,7 +276,7 @@ static void wireless_uart_rx_callback(void *callbackParam,
             break;
         }
         OSA_ENTER_CRITICAL();
-        for (int index = 0;index < WIRELESS_UART_MAX_CONN;index++)
+        for (int index = 0;index < CONFIG_BT_MAX_CONN;index++)
         {
             if (NULL != g_WirelessUartState.peerCentral[index].conn)
             {
@@ -338,7 +333,7 @@ static int wireless_uart_read(struct bt_conn *conn, uint8_t** buffer, ssize_t* l
     OSA_SR_ALLOC();
     uint32_t index;
 
-    for (index = 0;index < WIRELESS_UART_MAX_CONN;index++)
+    for (index = 0;index < CONFIG_BT_MAX_CONN;index++)
     {
         if (conn == g_WirelessUartState.peerCentral[index].conn)
         {
@@ -363,7 +358,7 @@ static int wireless_uart_read(struct bt_conn *conn, uint8_t** buffer, ssize_t* l
             break;
         }
     }
-    for (index = 0;index < WIRELESS_UART_MAX_CONN;index++)
+    for (index = 0;index < CONFIG_BT_MAX_CONN;index++)
     {
         if (conn == g_WirelessUartState.peerPeripheral[index].conn)
         {
@@ -419,7 +414,7 @@ static bool wu_central_parse_callback(struct bt_data *data, void *user_data)
                 continue;
             }
 
-            for (index = 0;index < WIRELESS_UART_MAX_CONN;index++)
+            for (index = 0;index < CONFIG_BT_MAX_CONN;index++)
             {
                 if (NULL != g_WirelessUartState.peerPeripheral[index].conn)
                 {
@@ -441,25 +436,30 @@ static bool wu_central_parse_callback(struct bt_data *data, void *user_data)
             }
 
             bt_le_scan_stop();
-
-            for (index = 0;index < WIRELESS_UART_MAX_CONN;index++)
+            if((g_WirelessUartState.peerPeripheralConnCount + g_WirelessUartState.peerCentralConnCount) <= CONFIG_BT_MAX_CONN)
             {
-                if (NULL == g_WirelessUartState.peerPeripheral[index].conn)
+                for (index = 0;index < CONFIG_BT_MAX_CONN;index++)
                 {
-                    struct bt_conn_le_create_param param = BT_CONN_LE_CREATE_PARAM_INIT(
-                        BT_CONN_LE_OPT_NONE,
-                        BT_GAP_SCAN_FAST_INTERVAL,
-                        BT_GAP_SCAN_FAST_INTERVAL);
-                    error = bt_conn_le_create(addr, &param, BT_LE_CONN_PARAM_DEFAULT, &g_WirelessUartState.peerPeripheral[index].conn);
-                    if (0 == error)
+                    if (NULL == g_WirelessUartState.peerPeripheral[index].conn)
                     {
-                        break;
+                        struct bt_conn_le_create_param param = BT_CONN_LE_CREATE_PARAM_INIT(
+                            BT_CONN_LE_OPT_NONE,
+                            BT_GAP_SCAN_FAST_INTERVAL,
+                            BT_GAP_SCAN_FAST_INTERVAL);
+                        error = bt_conn_le_create(addr, &param, BT_LE_CONN_PARAM_DEFAULT, &g_WirelessUartState.peerPeripheral[index].conn);
+                        if (0 == error)
+                        {
+                            break;
+                        }
+                    }
+                    else
+                    {
                     }
                 }
-                else
-                {
-                }
+
             }
+
+
             if (0 == error)
             {
                 return false;
@@ -502,7 +502,7 @@ button_status_t wireless_uart_button_callback(void *buttonHandle, button_callbac
         bt_le_scan_stop();
         bt_le_adv_stop();
 
-        if (g_WirelessUartState.peerPeripheralConnCount < WIRELESS_UART_MAX_CONN)
+        if ((g_WirelessUartState.peerPeripheralConnCount + g_WirelessUartState.peerCentralConnCount) <= CONFIG_BT_MAX_CONN)
         {
             int error = bt_le_scan_start(BT_LE_SCAN_ACTIVE, wu_central_scan_callback);
             if (error)
@@ -520,7 +520,7 @@ button_status_t wireless_uart_button_callback(void *buttonHandle, button_callbac
         bt_le_scan_stop();
         bt_le_adv_stop();
 
-        if (g_WirelessUartState.peerCentralConnCount < WIRELESS_UART_MAX_CONN)
+        if ((g_WirelessUartState.peerPeripheralConnCount + g_WirelessUartState.peerCentralConnCount) <= CONFIG_BT_MAX_CONN)
         {
             int error = bt_le_adv_start(BT_LE_ADV_CONN, ad, ARRAY_SIZE(ad), sd, ARRAY_SIZE(sd));
             if (error)
@@ -541,7 +541,7 @@ button_status_t wireless_uart_button_callback(void *buttonHandle, button_callbac
             bt_le_scan_stop();
             bt_le_adv_stop();
 
-            if (g_WirelessUartState.peerPeripheralConnCount < WIRELESS_UART_MAX_CONN)
+            if ((g_WirelessUartState.peerPeripheralConnCount + g_WirelessUartState.peerCentralConnCount) <= CONFIG_BT_MAX_CONN)
             {
                 int error = bt_le_scan_start(BT_LE_SCAN_ACTIVE, wu_central_scan_callback);
                 if (error)
@@ -553,13 +553,18 @@ button_status_t wireless_uart_button_callback(void *buttonHandle, button_callbac
                     PRINTF("Scanning successfully started\n");
                 }
             }
+            else
+            {
+                
+            
+            }
             break;
         case kBUTTON_EventDoubleClick:
         case kBUTTON_EventLongPress:
             bt_le_scan_stop();
             bt_le_adv_stop();
 
-            if (g_WirelessUartState.peerCentralConnCount < WIRELESS_UART_MAX_CONN)
+            if ((g_WirelessUartState.peerPeripheralConnCount + g_WirelessUartState.peerCentralConnCount) <= CONFIG_BT_MAX_CONN)
             {
                 int error = bt_le_adv_start(BT_LE_ADV_CONN, ad, ARRAY_SIZE(ad), sd, ARRAY_SIZE(sd));
                 if (error)
@@ -656,13 +661,13 @@ void wireless_uart_task(void *argument)
     SerialManager_InstallRxCallback(g_WirelessUartState.serialReadHandle, wireless_uart_rx_callback, &g_WirelessUartState);
 #endif
 
-    for (index = 0;index < WIRELESS_UART_MAX_CONN;index++)
+    for (index = 0;index < CONFIG_BT_MAX_CONN;index++)
     {
         g_WirelessUartState.peerCentral[index].wait4SendingBufferIndex = 0;
         g_WirelessUartState.peerCentral[index].wait4SendingBuffer = &g_WirelessUartState.peerCentral[index].wait4SendingBufferPool[g_WirelessUartState.peerCentral[index].wait4SendingBufferIndex][0];
         g_WirelessUartState.peerCentral[index].wait4SendingLength = 0;
     }
-    for (index = 0;index < WIRELESS_UART_MAX_CONN;index++)
+    for (index = 0;index < CONFIG_BT_MAX_CONN;index++)
     {
         g_WirelessUartState.peerPeripheral[index].wait4SendingBufferIndex = 0;
         g_WirelessUartState.peerPeripheral[index].wait4SendingBuffer = &g_WirelessUartState.peerPeripheral[index].wait4SendingBufferPool[g_WirelessUartState.peerPeripheral[index].wait4SendingBufferIndex][0];

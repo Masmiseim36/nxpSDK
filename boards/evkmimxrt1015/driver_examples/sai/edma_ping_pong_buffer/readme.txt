@@ -7,9 +7,9 @@ In this example, one sai instance playbacks the audio data received from externa
 Toolchain supported
 ===================
 - IAR embedded Workbench  9.10.2
-- Keil MDK  5.34
 - GCC ARM Embedded  10.2.1
-- MCUXpresso  11.4.0
+- Keil MDK  5.34
+- MCUXpresso  11.5.0
 
 Hardware requirements
 =====================

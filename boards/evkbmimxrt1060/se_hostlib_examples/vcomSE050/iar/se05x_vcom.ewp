@@ -188,10 +188,10 @@
           <state>IMX_RT</state>
           <state>USB_STACK_BM</state>
           <state>SDK_DEBUGCONSOLE_UART</state>
-          <state>MBEDTLS_CONFIG_FILE="sss_mbedtls_evkbmimxrt1060_config.h"</state>
+          <state>MBEDTLS_CONFIG_FILE="ksdk_mbedtls_config.h"</state>
+          <state>MBEDTLS_USER_CONFIG_FILE="sss_ksdk_mbedtls_config.h"</state>
           <state>USB_ISR_REDIRECT</state>
           <state>PRINTF_ADVANCED_ENABLE=1</state>
-          <state>SERIAL_PORT_TYPE_USBCDC=1</state>
           <state>DEBUG_CONSOLE_TRANSFER_NON_BLOCKING</state>
           <state>USB_DEVICE_CONFIG_CDC_ACM=1</state>
           <state>MBEDTLS</state>
@@ -332,27 +332,27 @@
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers</state>
-          <state>$PROJ_DIR$/../../../../../components/lists</state>
-          <state>$PROJ_DIR$/../../../../../components/serial_manager/usb_cdc_adapter</state>
+          <state>$PROJ_DIR$/../../../../../middleware/se_hostlib/hostlib/hostLib/vcom/ksdk</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/device</state>
           <state>$PROJ_DIR$/../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/include</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers</state>
           <state>$PROJ_DIR$/../../../../../middleware/mbedtls/include</state>
           <state>$PROJ_DIR$/../../../../../middleware/mbedtls/library</state>
           <state>$PROJ_DIR$/../../../../../middleware/mbedtls/port/ksdk</state>
           <state>$PROJ_DIR$/../../../../../middleware/se_hostlib/sss/plugin/mbedtls</state>
+          <state>$PROJ_DIR$/../../../../../middleware/se_hostlib/sss/port/ksdk</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
+          <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/xip</state>
           <state>$PROJ_DIR$/../../../xip</state>
-          <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/output/source/device/class</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/output/source/device</state>
+          <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/phy</state>
-          <state>$PROJ_DIR$/../../../../../middleware/se_hostlib/sss/port/ksdk</state>
           <state>$PROJ_DIR$/../../../../../middleware/se_hostlib/hostlib/hostLib/inc</state>
           <state>$PROJ_DIR$/../../../../../middleware/se_hostlib/hostlib/hostLib/se05x/src</state>
           <state>$PROJ_DIR$/../../../../../middleware/se_hostlib/sss/inc</state>
@@ -1208,10 +1208,10 @@
           <state>IMX_RT</state>
           <state>USB_STACK_BM</state>
           <state>SDK_DEBUGCONSOLE_UART</state>
-          <state>MBEDTLS_CONFIG_FILE="sss_mbedtls_evkbmimxrt1060_config.h"</state>
+          <state>MBEDTLS_CONFIG_FILE="ksdk_mbedtls_config.h"</state>
+          <state>MBEDTLS_USER_CONFIG_FILE="sss_ksdk_mbedtls_config.h"</state>
           <state>USB_ISR_REDIRECT</state>
           <state>PRINTF_ADVANCED_ENABLE=1</state>
-          <state>SERIAL_PORT_TYPE_USBCDC=1</state>
           <state>DEBUG_CONSOLE_TRANSFER_NON_BLOCKING</state>
           <state>USB_DEVICE_CONFIG_CDC_ACM=1</state>
           <state>MBEDTLS</state>
@@ -1352,27 +1352,27 @@
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers</state>
-          <state>$PROJ_DIR$/../../../../../components/lists</state>
-          <state>$PROJ_DIR$/../../../../../components/serial_manager/usb_cdc_adapter</state>
+          <state>$PROJ_DIR$/../../../../../middleware/se_hostlib/hostlib/hostLib/vcom/ksdk</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/device</state>
           <state>$PROJ_DIR$/../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/include</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers</state>
           <state>$PROJ_DIR$/../../../../../middleware/mbedtls/include</state>
           <state>$PROJ_DIR$/../../../../../middleware/mbedtls/library</state>
           <state>$PROJ_DIR$/../../../../../middleware/mbedtls/port/ksdk</state>
           <state>$PROJ_DIR$/../../../../../middleware/se_hostlib/sss/plugin/mbedtls</state>
+          <state>$PROJ_DIR$/../../../../../middleware/se_hostlib/sss/port/ksdk</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
+          <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/xip</state>
           <state>$PROJ_DIR$/../../../xip</state>
-          <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/output/source/device/class</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/output/source/device</state>
+          <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/phy</state>
-          <state>$PROJ_DIR$/../../../../../middleware/se_hostlib/sss/port/ksdk</state>
           <state>$PROJ_DIR$/../../../../../middleware/se_hostlib/hostlib/hostLib/inc</state>
           <state>$PROJ_DIR$/../../../../../middleware/se_hostlib/hostlib/hostLib/se05x/src</state>
           <state>$PROJ_DIR$/../../../../../middleware/se_hostlib/sss/inc</state>
@@ -2102,9 +2102,54 @@
     </file>
   </group>
   <group>
+    <name>middleware</name>
+    <group>
+      <name>se_hostlib</name>
+      <group>
+        <name>hostlib</name>
+        <group>
+          <name>hostLib</name>
+          <group>
+            <name>vcom</name>
+            <group>
+              <name>ksdk</name>
+              <file>
+                <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/hostlib/hostLib/vcom/ksdk/usb_device_descriptor.c</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/hostlib/hostLib/vcom/ksdk/usb_device_descriptor.h</name>
+              </file>
+            </group>
+          </group>
+        </group>
+      </group>
+    </group>
+  </group>
+  <group>
     <name>component</name>
     <group>
       <name>serial_manager</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/serial_manager/fsl_component_serial_manager.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/serial_manager/fsl_component_serial_manager.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/serial_manager/fsl_component_serial_port_internal.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/serial_manager/fsl_component_serial_port_uart.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/serial_manager/fsl_component_serial_port_uart.h</name>
+      </file>
+      <group>
+        <name>usb_cdc_adapter</name>
+        <file>
+          <name>$PROJ_DIR$/../usb_device_config.h</name>
+        </file>
+      </group>
       <file>
         <name>$PROJ_DIR$/../../../../../components/serial_manager/fsl_component_serial_manager.h</name>
       </file>
@@ -2115,37 +2160,10 @@
         <name>$PROJ_DIR$/../../../../../components/serial_manager/fsl_component_serial_manager.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../components/serial_manager/fsl_component_serial_port_usb.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../components/serial_manager/fsl_component_serial_port_usb.c</name>
-      </file>
-      <group>
-        <name>usb_cdc_adapter</name>
-        <file>
-          <name>$PROJ_DIR$/../../../../../components/serial_manager/usb_cdc_adapter/usb_device_descriptor.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../components/serial_manager/usb_cdc_adapter/usb_device_descriptor.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../usb_device_config.h</name>
-        </file>
-      </group>
-      <file>
         <name>$PROJ_DIR$/../../../../../components/serial_manager/fsl_component_serial_port_uart.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../components/serial_manager/fsl_component_serial_port_uart.c</name>
-      </file>
-    </group>
-    <group>
-      <name>lists</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../components/lists/fsl_component_generic_list.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../components/lists/fsl_component_generic_list.c</name>
       </file>
     </group>
     <group>
@@ -2172,72 +2190,15 @@
         <name>$PROJ_DIR$/../../../../../components/uart/fsl_adapter_lpuart.c</name>
       </file>
     </group>
-  </group>
-  <group>
-    <name>drivers</name>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers/fsl_common.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers/fsl_common.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers/fsl_common_arm.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers/fsl_common_arm.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers/fsl_cache.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers/fsl_cache.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers/fsl_trng.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers/fsl_trng.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers/fsl_lpi2c.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers/fsl_lpi2c.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers/fsl_dcp.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers/fsl_dcp.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers/fsl_pit.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers/fsl_pit.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers/fsl_clock.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers/fsl_clock.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers/fsl_lpuart.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers/fsl_lpuart.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers/fsl_iomuxc.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers/fsl_gpio.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers/fsl_gpio.c</name>
-    </file>
+    <group>
+      <name>lists</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/lists/fsl_component_generic_list.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/lists/fsl_component_generic_list.c</name>
+      </file>
+    </group>
   </group>
   <group>
     <name>usb</name>
@@ -2319,6 +2280,72 @@
         <name>$PROJ_DIR$/../../../../../middleware/usb/include/usb_spec.h</name>
       </file>
     </group>
+  </group>
+  <group>
+    <name>drivers</name>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers/fsl_cache.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers/fsl_cache.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers/fsl_trng.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers/fsl_trng.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers/fsl_lpi2c.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers/fsl_lpi2c.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers/fsl_dcp.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers/fsl_dcp.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers/fsl_pit.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers/fsl_pit.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers/fsl_common.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers/fsl_common.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers/fsl_common_arm.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers/fsl_common_arm.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers/fsl_clock.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers/fsl_clock.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers/fsl_lpuart.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers/fsl_lpuart.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers/fsl_iomuxc.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers/fsl_gpio.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers/fsl_gpio.c</name>
+    </file>
   </group>
   <group>
     <name>mbedtls</name>
@@ -2573,10 +2600,22 @@
           <name>$PROJ_DIR$/../../../../../middleware/mbedtls/include/psa/crypto.h</name>
         </file>
         <file>
+          <name>$PROJ_DIR$/../../../../../middleware/mbedtls/include/psa/crypto_builtin_composites.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/mbedtls/include/psa/crypto_builtin_primitives.h</name>
+        </file>
+        <file>
           <name>$PROJ_DIR$/../../../../../middleware/mbedtls/include/psa/crypto_compat.h</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../middleware/mbedtls/include/psa/crypto_config.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/mbedtls/include/psa/crypto_driver_contexts_composites.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/mbedtls/include/psa/crypto_driver_contexts_primitives.h</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../middleware/mbedtls/include/psa/crypto_driver_common.h</name>
@@ -2691,6 +2730,9 @@
         <name>$PROJ_DIR$/../../../../../middleware/mbedtls/library/ecp_curves.c</name>
       </file>
       <file>
+        <name>$PROJ_DIR$/../../../../../middleware/mbedtls/library/ecp_invasive.h</name>
+      </file>
+      <file>
         <name>$PROJ_DIR$/../../../../../middleware/mbedtls/library/entropy.c</name>
       </file>
       <file>
@@ -2722,6 +2764,21 @@
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/mbedtls/library/md5.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/mbedtls/library/mps_common.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/mbedtls/library/mps_error.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/mbedtls/library/mps_reader.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/mbedtls/library/mps_trace.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/mbedtls/library/mps_trace.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/mbedtls/library/memory_buffer_alloc.c</name>
@@ -2775,6 +2832,18 @@
         <name>$PROJ_DIR$/../../../../../middleware/mbedtls/library/psa_crypto.c</name>
       </file>
       <file>
+        <name>$PROJ_DIR$/../../../../../middleware/mbedtls/library/psa_crypto_aead.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/mbedtls/library/psa_crypto_aead.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/mbedtls/library/psa_crypto_cipher.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/mbedtls/library/psa_crypto_cipher.h</name>
+      </file>
+      <file>
         <name>$PROJ_DIR$/../../../../../middleware/mbedtls/library/psa_crypto_client.c</name>
       </file>
       <file>
@@ -2791,6 +2860,18 @@
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/mbedtls/library/psa_crypto_ecp.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/mbedtls/library/psa_crypto_hash.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/mbedtls/library/psa_crypto_hash.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/mbedtls/library/psa_crypto_mac.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/mbedtls/library/psa_crypto_mac.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/mbedtls/library/psa_crypto_invasive.h</name>
@@ -2812,9 +2893,6 @@
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/mbedtls/library/psa_crypto_se.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/mbedtls/library/psa_crypto_service_integration.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/mbedtls/library/psa_crypto_slot_management.c</name>
@@ -3003,27 +3081,6 @@
           <file>
             <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/sss/plugin/mbedtls/sss_mbedtls.h</name>
           </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/sss/plugin/mbedtls/sss_mbedtls_evkbmimxrt1060_config.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/sss/plugin/mbedtls/sss_mbedtls_evkmimxrt1060_config.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/sss/plugin/mbedtls/sss_mbedtls_evkmimxrt1170_config.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/sss/plugin/mbedtls/sss_mbedtls_frdmk64f_config.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/sss/plugin/mbedtls/sss_mbedtls_frdmkw41z_config.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/sss/plugin/mbedtls/sss_mbedtls_lpcxpresso55s69_config.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/sss/plugin/mbedtls/sss_mbedtls_x86_config.h</name>
-          </file>
         </group>
       </group>
       <group>
@@ -3032,6 +3089,15 @@
           <name>ksdk</name>
           <file>
             <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/sss/port/ksdk/fsl_sss_types.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/sss/port/ksdk/fsl_sss_types.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/sss/port/ksdk/sss_ksdk_mbedcrypto_config.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/sss/port/ksdk/sss_ksdk_mbedtls_config.h</name>
           </file>
         </group>
       </group>
@@ -3402,7 +3468,7 @@
               <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/hostlib/hostLib/platform/ksdk/i2c_frdm.c</name>
             </file>
             <file>
-              <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/hostlib/hostLib/platform/ksdk/i2c_imxrt10xx.c</name>
+              <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/hostlib/hostLib/platform/ksdk/i2c_imxrt.c</name>
             </file>
             <file>
               <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/hostlib/hostLib/platform/ksdk/i2c_lpc54xxx.c</name>
@@ -3603,43 +3669,7 @@
           <group>
             <name>inc</name>
             <file>
-              <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/hostlib/hostLib/mbedtls/inc/a71ch_mbedtls_evkmimxrt1060_config.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/hostlib/hostLib/mbedtls/inc/a71ch_mbedtls_evkmimxrt1170_config.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/hostlib/hostLib/mbedtls/inc/a71ch_mbedtls_frdm_config.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/hostlib/hostLib/mbedtls/inc/a71ch_mbedtls_frdmk64f_config.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/hostlib/hostLib/mbedtls/inc/a71ch_mbedtls_frdmk82f_config.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/hostlib/hostLib/mbedtls/inc/a71ch_mbedtls_frdmkw41z_config.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/hostlib/hostLib/mbedtls/inc/a71ch_mbedtls_lpc54018iotmodule_config.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/hostlib/hostLib/mbedtls/inc/a71ch_mbedtls_lpcxpresso54018_config.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/hostlib/hostLib/mbedtls/inc/a71ch_mbedtls_lpcxpresso55s69_config.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/hostlib/hostLib/mbedtls/inc/a71ch_mbedtls_pi_config.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/hostlib/hostLib/mbedtls/inc/a71ch_mbedtls_x86_config.h</name>
-            </file>
-            <file>
               <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/hostlib/hostLib/mbedtls/inc/ax_mbedtls.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/se_hostlib/hostlib/hostLib/mbedtls/inc/ecp_alt.h</name>
             </file>
           </group>
           <group>

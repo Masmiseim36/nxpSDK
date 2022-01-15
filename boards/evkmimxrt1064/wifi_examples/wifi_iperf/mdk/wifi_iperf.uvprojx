@@ -330,7 +330,7 @@
               <MiscControls>-include ../app_config.h -fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, DEBUG, CPU_MIMXRT1064DVL6A, USE_RTOS=1, PRINTF_ADVANCED_ENABLE=1, SDK_OS_FREE_RTOS, SDIO_ENABLED, SERIAL_PORT_TYPE_UART=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../common;../../..;../../../../../devices/MIMXRT1064/drivers;../../../../../rtos/freertos/freertos_kernel/include;../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F;../../../../../middleware/lwip/port;../../../../../middleware/lwip/src;../../../../../middleware/lwip/src/include;../../../../../devices/MIMXRT1064/utilities/str;../../../../../devices/MIMXRT1064/utilities/debug_console;../../../../../middleware/wifi/dhcpd;../../../../../middleware/wifi/incl/port/lwip;../../../../../middleware/wifi/port/lwip;../../../../../middleware/lwip/src/include/lwip/apps;../../../../../middleware/sdmmc/sdio;../../../../../middleware/sdmmc/common;../../../../../middleware/sdmmc/host/usdhc;../../../../../devices/MIMXRT1064;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../../../devices/MIMXRT1064/xip;../../../xip;../../../../../CMSIS/Core/Include;../../../../../middleware/wifi/incl;../../../../../middleware/wifi/incl/port/os;../../../../../middleware/wifi/incl/wifidriver;../../../../../middleware/wifi/incl/wlcmgr;../../../../../middleware/wifi/wifi_bt_firmware;../../../../../middleware/wifi/wifidriver;../../../../../middleware/wifi/wifidriver/incl;../../../../../middleware/sdmmc/osa;../../../../../components/osa</IncludePath>
+              <IncludePath>..;../../..;../../../../../devices/MIMXRT1064/drivers;../../../../../rtos/freertos/freertos_kernel/include;../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F;../../../../../middleware/lwip/port;../../../../../middleware/lwip/src;../../../../../middleware/lwip/src/include;../../../../../devices/MIMXRT1064/utilities/str;../../../../../devices/MIMXRT1064/utilities/debug_console;../../../../../middleware/wifi/dhcpd;../../../../../middleware/wifi/incl/port/lwip;../../../../../middleware/wifi/port/lwip;../../../../../middleware/lwip/src/include/lwip/apps;../../../../../components/wifi_bt_module/AzureWave/tx_pwr_limits;../../../../../components/wifi_bt_module/Murata/tx_pwr_limits;../../../../../middleware/sdmmc/sdio;../../../../../middleware/sdmmc/common;../../../../../middleware/sdmmc/host/usdhc;../../../../../devices/MIMXRT1064;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../../../devices/MIMXRT1064/xip;../../../xip;../../../../../CMSIS/Core/Include;../../../../../middleware/wifi/incl;../../../../../middleware/wifi/incl/port/os;../../../../../middleware/wifi/incl/wifidriver;../../../../../middleware/wifi/incl/wlcmgr;../../../../../middleware/wifi/wifi_bt_firmware;../../../../../middleware/wifi/wifidriver;../../../../../middleware/wifi/wifidriver/incl;../../../../../middleware/sdmmc/osa;../../../../../components/osa</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -396,14 +396,14 @@
               <FilePath>../FreeRTOSConfig.h</FilePath>
             </File>
             <File>
-              <FileName>wifi_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../wifi_config.h</FilePath>
-            </File>
-            <File>
               <FileName>app_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../app_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>wifi_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../wifi_config.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -429,6 +429,16 @@
               <FileName>sdmmc_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../sdmmc_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>wifi_bt_config.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../wifi_bt_config.c</FilePath>
+            </File>
+            <File>
+              <FileName>wifi_bt_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../wifi_bt_config.h</FilePath>
             </File>
             <File>
               <FileName>board.c</FileName>
@@ -669,6 +679,11 @@
               <FileName>StackMacros.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../rtos/freertos/freertos_kernel/include/StackMacros.h</FilePath>
+            </File>
+            <File>
+              <FileName>stdint.readme</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/stdint.readme</FilePath>
             </File>
             <File>
               <FileName>stream_buffer.h</FileName>
@@ -2018,6 +2033,96 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>component/wifi_bt_module/AzureWave/tx_pwr_limits</GroupName>
+          <Files>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_WW.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/wifi_bt_module/AzureWave/tx_pwr_limits/wlan_txpwrlimit_cfg_WW.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/wifi_bt_module/Murata/tx_pwr_limits</GroupName>
+          <Files>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_1XK_CA.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1XK_CA.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_1XK_EU.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1XK_EU.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_1XK_JP.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1XK_JP.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_1XK_US.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1XK_US.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_1XK_WW.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1XK_WW.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_1ZM_CA.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1ZM_CA.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_1ZM_EU.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1ZM_EU.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_1ZM_JP.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1ZM_JP.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_1ZM_US.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1ZM_US.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_1ZM_WW.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1ZM_WW.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_2DS_CA.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_2DS_CA.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_2DS_EU.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_2DS_EU.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_2DS_JP.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_2DS_JP.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_2DS_US.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_2DS_US.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_2DS_WW.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_2DS_WW.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>sdmmc/src</GroupName>
           <Files>
             <File>
@@ -2276,9 +2381,9 @@
               <FilePath>../../../../../middleware/wifi/incl/dhcp-server.h</FilePath>
             </File>
             <File>
-              <FileName>wifi_cal_data_ext.h</FileName>
+              <FileName>WIFI_IW416_BOARD_AW_AM457_CAL_DATA_EXT.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi/incl/wifi_cal_data_ext.h</FilePath>
+              <FilePath>../../../../../middleware/wifi/incl/WIFI_IW416_BOARD_AW_AM457_CAL_DATA_EXT.h</FilePath>
             </File>
             <File>
               <FileName>wm_utils.h</FileName>
@@ -2299,196 +2404,6 @@
               <FileName>wmtypes.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/wifi/incl/wmtypes.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>wifi/incl/port/os</GroupName>
-          <Files>
-            <File>
-              <FileName>wm_os.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi/incl/port/os/wm_os.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>wifi/incl/wifidriver</GroupName>
-          <Files>
-            <File>
-              <FileName>mlan_sdio_api.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi/incl/wifidriver/mlan_sdio_api.h</FilePath>
-            </File>
-            <File>
-              <FileName>wifi-decl.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi/incl/wifidriver/wifi-decl.h</FilePath>
-            </File>
-            <File>
-              <FileName>wifi.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi/incl/wifidriver/wifi.h</FilePath>
-            </File>
-            <File>
-              <FileName>wifi_events.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi/incl/wifidriver/wifi_events.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>wifi/incl/wlcmgr</GroupName>
-          <Files>
-            <File>
-              <FileName>wlan.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi/incl/wlcmgr/wlan.h</FilePath>
-            </File>
-            <File>
-              <FileName>wlan_11d.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi/incl/wlcmgr/wlan_11d.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>wifi/port/os</GroupName>
-          <Files>
-            <File>
-              <FileName>os.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/wifi/port/os/os.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>wifi/wifi_bt_firmware</GroupName>
-          <Files>
-            <File>
-              <FileName>sd8801_wlan.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi/wifi_bt_firmware/sd8801_wlan.h</FilePath>
-            </File>
-            <File>
-              <FileName>sduart8977_wlan_bt.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi/wifi_bt_firmware/sduart8977_wlan_bt.h</FilePath>
-            </File>
-            <File>
-              <FileName>sduartIW416_wlan_bt.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi/wifi_bt_firmware/sduartIW416_wlan_bt.h</FilePath>
-            </File>
-            <File>
-              <FileName>sduart8987_wlan_bt.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi/wifi_bt_firmware/sduart8987_wlan_bt.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>wifi/wifidriver/incl</GroupName>
-          <Files>
-            <File>
-              <FileName>mlan.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi/wifidriver/incl/mlan.h</FilePath>
-            </File>
-            <File>
-              <FileName>mlan_11ac.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi/wifidriver/incl/mlan_11ac.h</FilePath>
-            </File>
-            <File>
-              <FileName>mlan_11h.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi/wifidriver/incl/mlan_11h.h</FilePath>
-            </File>
-            <File>
-              <FileName>mlan_11n.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi/wifidriver/incl/mlan_11n.h</FilePath>
-            </File>
-            <File>
-              <FileName>mlan_11n_aggr.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi/wifidriver/incl/mlan_11n_aggr.h</FilePath>
-            </File>
-            <File>
-              <FileName>mlan_11n_rxreorder.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi/wifidriver/incl/mlan_11n_rxreorder.h</FilePath>
-            </File>
-            <File>
-              <FileName>mlan_api.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi/wifidriver/incl/mlan_api.h</FilePath>
-            </File>
-            <File>
-              <FileName>mlan_decl.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi/wifidriver/incl/mlan_decl.h</FilePath>
-            </File>
-            <File>
-              <FileName>mlan_fw.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi/wifidriver/incl/mlan_fw.h</FilePath>
-            </File>
-            <File>
-              <FileName>mlan_ieee.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi/wifidriver/incl/mlan_ieee.h</FilePath>
-            </File>
-            <File>
-              <FileName>mlan_init.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi/wifidriver/incl/mlan_init.h</FilePath>
-            </File>
-            <File>
-              <FileName>mlan_ioctl.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi/wifidriver/incl/mlan_ioctl.h</FilePath>
-            </File>
-            <File>
-              <FileName>mlan_join.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi/wifidriver/incl/mlan_join.h</FilePath>
-            </File>
-            <File>
-              <FileName>mlan_main.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi/wifidriver/incl/mlan_main.h</FilePath>
-            </File>
-            <File>
-              <FileName>mlan_meas.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi/wifidriver/incl/mlan_meas.h</FilePath>
-            </File>
-            <File>
-              <FileName>mlan_remap_mem_operations.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi/wifidriver/incl/mlan_remap_mem_operations.h</FilePath>
-            </File>
-            <File>
-              <FileName>mlan_sdio.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi/wifidriver/incl/mlan_sdio.h</FilePath>
-            </File>
-            <File>
-              <FileName>mlan_uap.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi/wifidriver/incl/mlan_uap.h</FilePath>
-            </File>
-            <File>
-              <FileName>mlan_util.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi/wifidriver/incl/mlan_util.h</FilePath>
-            </File>
-            <File>
-              <FileName>mlan_wmm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi/wifidriver/incl/mlan_wmm.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2566,11 +2481,6 @@
               <FilePath>../../../../../middleware/wifi/wifidriver/mlan_scan.c</FilePath>
             </File>
             <File>
-              <FileName>mlan_sdio.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/wifi/wifidriver/mlan_sdio.c</FilePath>
-            </File>
-            <File>
               <FileName>mlan_shim.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/wifi/wifidriver/mlan_shim.c</FilePath>
@@ -2626,16 +2536,6 @@
               <FilePath>../../../../../middleware/wifi/wifidriver/wifi-debug.c</FilePath>
             </File>
             <File>
-              <FileName>wifi-debug.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi/wifidriver/wifi-debug.h</FilePath>
-            </File>
-            <File>
-              <FileName>wifi-internal.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi/wifidriver/wifi-internal.h</FilePath>
-            </File>
-            <File>
               <FileName>wifi-mem.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/wifi/wifidriver/wifi-mem.c</FilePath>
@@ -2644,11 +2544,6 @@
               <FileName>wifi-sdio.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/wifi/wifidriver/wifi-sdio.c</FilePath>
-            </File>
-            <File>
-              <FileName>wifi-sdio.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi/wifidriver/wifi-sdio.h</FilePath>
             </File>
             <File>
               <FileName>wifi-uap.c</FileName>
@@ -2669,6 +2564,241 @@
               <FileName>wifi_pwrmgr.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/wifi/wifidriver/wifi_pwrmgr.c</FilePath>
+            </File>
+            <File>
+              <FileName>wifi-debug.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi/wifidriver/wifi-debug.h</FilePath>
+            </File>
+            <File>
+              <FileName>wifi-internal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi/wifidriver/wifi-internal.h</FilePath>
+            </File>
+            <File>
+              <FileName>wifi-sdio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi/wifidriver/wifi-sdio.h</FilePath>
+            </File>
+            <File>
+              <FileName>mlan_sdio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/wifi/wifidriver/mlan_sdio.c</FilePath>
+            </File>
+            <File>
+              <FileName>sdio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/wifi/wifidriver/sdio.c</FilePath>
+            </File>
+            <File>
+              <FileName>sdio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi/wifidriver/sdio.h</FilePath>
+            </File>
+            <File>
+              <FileName>firmware_dnld.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/wifi/wifidriver/firmware_dnld.c</FilePath>
+            </File>
+            <File>
+              <FileName>firmware_dnld.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi/wifidriver/firmware_dnld.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>wifi/incl/port/os</GroupName>
+          <Files>
+            <File>
+              <FileName>wm_os.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi/incl/port/os/wm_os.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>wifi/wifidriver/incl</GroupName>
+          <Files>
+            <File>
+              <FileName>mlan_11ac.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi/wifidriver/incl/mlan_11ac.h</FilePath>
+            </File>
+            <File>
+              <FileName>mlan_11h.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi/wifidriver/incl/mlan_11h.h</FilePath>
+            </File>
+            <File>
+              <FileName>mlan_11n.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi/wifidriver/incl/mlan_11n.h</FilePath>
+            </File>
+            <File>
+              <FileName>mlan_11n_aggr.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi/wifidriver/incl/mlan_11n_aggr.h</FilePath>
+            </File>
+            <File>
+              <FileName>mlan_11n_rxreorder.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi/wifidriver/incl/mlan_11n_rxreorder.h</FilePath>
+            </File>
+            <File>
+              <FileName>mlan_fw.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi/wifidriver/incl/mlan_fw.h</FilePath>
+            </File>
+            <File>
+              <FileName>mlan_ieee.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi/wifidriver/incl/mlan_ieee.h</FilePath>
+            </File>
+            <File>
+              <FileName>mlan_init.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi/wifidriver/incl/mlan_init.h</FilePath>
+            </File>
+            <File>
+              <FileName>mlan_join.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi/wifidriver/incl/mlan_join.h</FilePath>
+            </File>
+            <File>
+              <FileName>mlan_main.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi/wifidriver/incl/mlan_main.h</FilePath>
+            </File>
+            <File>
+              <FileName>mlan_meas.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi/wifidriver/incl/mlan_meas.h</FilePath>
+            </File>
+            <File>
+              <FileName>mlan_remap_mem_operations.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi/wifidriver/incl/mlan_remap_mem_operations.h</FilePath>
+            </File>
+            <File>
+              <FileName>mlan_sdio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi/wifidriver/incl/mlan_sdio.h</FilePath>
+            </File>
+            <File>
+              <FileName>mlan_uap.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi/wifidriver/incl/mlan_uap.h</FilePath>
+            </File>
+            <File>
+              <FileName>mlan_util.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi/wifidriver/incl/mlan_util.h</FilePath>
+            </File>
+            <File>
+              <FileName>mlan_wmm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi/wifidriver/incl/mlan_wmm.h</FilePath>
+            </File>
+            <File>
+              <FileName>mlan.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi/wifidriver/incl/mlan.h</FilePath>
+            </File>
+            <File>
+              <FileName>mlan_ioctl.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi/wifidriver/incl/mlan_ioctl.h</FilePath>
+            </File>
+            <File>
+              <FileName>mlan_decl.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi/wifidriver/incl/mlan_decl.h</FilePath>
+            </File>
+            <File>
+              <FileName>mlan_api.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi/wifidriver/incl/mlan_api.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>wifi/incl/wlcmgr</GroupName>
+          <Files>
+            <File>
+              <FileName>wlan_11d.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi/incl/wlcmgr/wlan_11d.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi/incl/wlcmgr/wlan.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>wifi/incl/wifidriver</GroupName>
+          <Files>
+            <File>
+              <FileName>mlan_sdio_api.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi/incl/wifidriver/mlan_sdio_api.h</FilePath>
+            </File>
+            <File>
+              <FileName>wifi-decl.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi/incl/wifidriver/wifi-decl.h</FilePath>
+            </File>
+            <File>
+              <FileName>wifi.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi/incl/wifidriver/wifi.h</FilePath>
+            </File>
+            <File>
+              <FileName>wifi_events.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi/incl/wifidriver/wifi_events.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>wifi/port/os</GroupName>
+          <Files>
+            <File>
+              <FileName>os.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/wifi/port/os/os.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>wifi/wifi_bt_firmware</GroupName>
+          <Files>
+            <File>
+              <FileName>sd8801_wlan.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi/wifi_bt_firmware/sd8801_wlan.h</FilePath>
+            </File>
+            <File>
+              <FileName>sduart8977_wlan_bt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi/wifi_bt_firmware/sduart8977_wlan_bt.h</FilePath>
+            </File>
+            <File>
+              <FileName>sduartIW416_wlan_bt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi/wifi_bt_firmware/sduartIW416_wlan_bt.h</FilePath>
+            </File>
+            <File>
+              <FileName>sduart8987_wlan_bt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi/wifi_bt_firmware/sduart8987_wlan_bt.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_bt_fw.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi/wifi_bt_firmware/wlan_bt_fw.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -3041,7 +3171,7 @@
               <MiscControls>-include ../app_config.h -fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, NDEBUG, CPU_MIMXRT1064DVL6A, USE_RTOS=1, PRINTF_ADVANCED_ENABLE=1, SDK_OS_FREE_RTOS, SDIO_ENABLED, SERIAL_PORT_TYPE_UART=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../common;../../..;../../../../../devices/MIMXRT1064/drivers;../../../../../rtos/freertos/freertos_kernel/include;../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F;../../../../../middleware/lwip/port;../../../../../middleware/lwip/src;../../../../../middleware/lwip/src/include;../../../../../devices/MIMXRT1064/utilities/str;../../../../../devices/MIMXRT1064/utilities/debug_console;../../../../../middleware/wifi/dhcpd;../../../../../middleware/wifi/incl/port/lwip;../../../../../middleware/wifi/port/lwip;../../../../../middleware/lwip/src/include/lwip/apps;../../../../../middleware/sdmmc/sdio;../../../../../middleware/sdmmc/common;../../../../../middleware/sdmmc/host/usdhc;../../../../../devices/MIMXRT1064;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../../../devices/MIMXRT1064/xip;../../../xip;../../../../../CMSIS/Core/Include;../../../../../middleware/wifi/incl;../../../../../middleware/wifi/incl/port/os;../../../../../middleware/wifi/incl/wifidriver;../../../../../middleware/wifi/incl/wlcmgr;../../../../../middleware/wifi/wifi_bt_firmware;../../../../../middleware/wifi/wifidriver;../../../../../middleware/wifi/wifidriver/incl;../../../../../middleware/sdmmc/osa;../../../../../components/osa</IncludePath>
+              <IncludePath>..;../../..;../../../../../devices/MIMXRT1064/drivers;../../../../../rtos/freertos/freertos_kernel/include;../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F;../../../../../middleware/lwip/port;../../../../../middleware/lwip/src;../../../../../middleware/lwip/src/include;../../../../../devices/MIMXRT1064/utilities/str;../../../../../devices/MIMXRT1064/utilities/debug_console;../../../../../middleware/wifi/dhcpd;../../../../../middleware/wifi/incl/port/lwip;../../../../../middleware/wifi/port/lwip;../../../../../middleware/lwip/src/include/lwip/apps;../../../../../components/wifi_bt_module/AzureWave/tx_pwr_limits;../../../../../components/wifi_bt_module/Murata/tx_pwr_limits;../../../../../middleware/sdmmc/sdio;../../../../../middleware/sdmmc/common;../../../../../middleware/sdmmc/host/usdhc;../../../../../devices/MIMXRT1064;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../../../devices/MIMXRT1064/xip;../../../xip;../../../../../CMSIS/Core/Include;../../../../../middleware/wifi/incl;../../../../../middleware/wifi/incl/port/os;../../../../../middleware/wifi/incl/wifidriver;../../../../../middleware/wifi/incl/wlcmgr;../../../../../middleware/wifi/wifi_bt_firmware;../../../../../middleware/wifi/wifidriver;../../../../../middleware/wifi/wifidriver/incl;../../../../../middleware/sdmmc/osa;../../../../../components/osa</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -3107,14 +3237,14 @@
               <FilePath>../FreeRTOSConfig.h</FilePath>
             </File>
             <File>
-              <FileName>wifi_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../wifi_config.h</FilePath>
-            </File>
-            <File>
               <FileName>app_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../app_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>wifi_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../wifi_config.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -3140,6 +3270,16 @@
               <FileName>sdmmc_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../sdmmc_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>wifi_bt_config.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../wifi_bt_config.c</FilePath>
+            </File>
+            <File>
+              <FileName>wifi_bt_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../wifi_bt_config.h</FilePath>
             </File>
             <File>
               <FileName>board.c</FileName>
@@ -3380,6 +3520,11 @@
               <FileName>StackMacros.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../rtos/freertos/freertos_kernel/include/StackMacros.h</FilePath>
+            </File>
+            <File>
+              <FileName>stdint.readme</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/stdint.readme</FilePath>
             </File>
             <File>
               <FileName>stream_buffer.h</FileName>
@@ -4729,6 +4874,96 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>component/wifi_bt_module/AzureWave/tx_pwr_limits</GroupName>
+          <Files>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_WW.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/wifi_bt_module/AzureWave/tx_pwr_limits/wlan_txpwrlimit_cfg_WW.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/wifi_bt_module/Murata/tx_pwr_limits</GroupName>
+          <Files>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_1XK_CA.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1XK_CA.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_1XK_EU.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1XK_EU.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_1XK_JP.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1XK_JP.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_1XK_US.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1XK_US.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_1XK_WW.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1XK_WW.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_1ZM_CA.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1ZM_CA.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_1ZM_EU.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1ZM_EU.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_1ZM_JP.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1ZM_JP.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_1ZM_US.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1ZM_US.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_1ZM_WW.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1ZM_WW.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_2DS_CA.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_2DS_CA.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_2DS_EU.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_2DS_EU.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_2DS_JP.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_2DS_JP.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_2DS_US.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_2DS_US.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_2DS_WW.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_2DS_WW.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>sdmmc/src</GroupName>
           <Files>
             <File>
@@ -4987,9 +5222,9 @@
               <FilePath>../../../../../middleware/wifi/incl/dhcp-server.h</FilePath>
             </File>
             <File>
-              <FileName>wifi_cal_data_ext.h</FileName>
+              <FileName>WIFI_IW416_BOARD_AW_AM457_CAL_DATA_EXT.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi/incl/wifi_cal_data_ext.h</FilePath>
+              <FilePath>../../../../../middleware/wifi/incl/WIFI_IW416_BOARD_AW_AM457_CAL_DATA_EXT.h</FilePath>
             </File>
             <File>
               <FileName>wm_utils.h</FileName>
@@ -5010,196 +5245,6 @@
               <FileName>wmtypes.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/wifi/incl/wmtypes.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>wifi/incl/port/os</GroupName>
-          <Files>
-            <File>
-              <FileName>wm_os.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi/incl/port/os/wm_os.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>wifi/incl/wifidriver</GroupName>
-          <Files>
-            <File>
-              <FileName>mlan_sdio_api.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi/incl/wifidriver/mlan_sdio_api.h</FilePath>
-            </File>
-            <File>
-              <FileName>wifi-decl.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi/incl/wifidriver/wifi-decl.h</FilePath>
-            </File>
-            <File>
-              <FileName>wifi.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi/incl/wifidriver/wifi.h</FilePath>
-            </File>
-            <File>
-              <FileName>wifi_events.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi/incl/wifidriver/wifi_events.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>wifi/incl/wlcmgr</GroupName>
-          <Files>
-            <File>
-              <FileName>wlan.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi/incl/wlcmgr/wlan.h</FilePath>
-            </File>
-            <File>
-              <FileName>wlan_11d.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi/incl/wlcmgr/wlan_11d.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>wifi/port/os</GroupName>
-          <Files>
-            <File>
-              <FileName>os.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/wifi/port/os/os.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>wifi/wifi_bt_firmware</GroupName>
-          <Files>
-            <File>
-              <FileName>sd8801_wlan.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi/wifi_bt_firmware/sd8801_wlan.h</FilePath>
-            </File>
-            <File>
-              <FileName>sduart8977_wlan_bt.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi/wifi_bt_firmware/sduart8977_wlan_bt.h</FilePath>
-            </File>
-            <File>
-              <FileName>sduartIW416_wlan_bt.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi/wifi_bt_firmware/sduartIW416_wlan_bt.h</FilePath>
-            </File>
-            <File>
-              <FileName>sduart8987_wlan_bt.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi/wifi_bt_firmware/sduart8987_wlan_bt.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>wifi/wifidriver/incl</GroupName>
-          <Files>
-            <File>
-              <FileName>mlan.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi/wifidriver/incl/mlan.h</FilePath>
-            </File>
-            <File>
-              <FileName>mlan_11ac.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi/wifidriver/incl/mlan_11ac.h</FilePath>
-            </File>
-            <File>
-              <FileName>mlan_11h.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi/wifidriver/incl/mlan_11h.h</FilePath>
-            </File>
-            <File>
-              <FileName>mlan_11n.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi/wifidriver/incl/mlan_11n.h</FilePath>
-            </File>
-            <File>
-              <FileName>mlan_11n_aggr.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi/wifidriver/incl/mlan_11n_aggr.h</FilePath>
-            </File>
-            <File>
-              <FileName>mlan_11n_rxreorder.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi/wifidriver/incl/mlan_11n_rxreorder.h</FilePath>
-            </File>
-            <File>
-              <FileName>mlan_api.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi/wifidriver/incl/mlan_api.h</FilePath>
-            </File>
-            <File>
-              <FileName>mlan_decl.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi/wifidriver/incl/mlan_decl.h</FilePath>
-            </File>
-            <File>
-              <FileName>mlan_fw.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi/wifidriver/incl/mlan_fw.h</FilePath>
-            </File>
-            <File>
-              <FileName>mlan_ieee.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi/wifidriver/incl/mlan_ieee.h</FilePath>
-            </File>
-            <File>
-              <FileName>mlan_init.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi/wifidriver/incl/mlan_init.h</FilePath>
-            </File>
-            <File>
-              <FileName>mlan_ioctl.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi/wifidriver/incl/mlan_ioctl.h</FilePath>
-            </File>
-            <File>
-              <FileName>mlan_join.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi/wifidriver/incl/mlan_join.h</FilePath>
-            </File>
-            <File>
-              <FileName>mlan_main.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi/wifidriver/incl/mlan_main.h</FilePath>
-            </File>
-            <File>
-              <FileName>mlan_meas.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi/wifidriver/incl/mlan_meas.h</FilePath>
-            </File>
-            <File>
-              <FileName>mlan_remap_mem_operations.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi/wifidriver/incl/mlan_remap_mem_operations.h</FilePath>
-            </File>
-            <File>
-              <FileName>mlan_sdio.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi/wifidriver/incl/mlan_sdio.h</FilePath>
-            </File>
-            <File>
-              <FileName>mlan_uap.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi/wifidriver/incl/mlan_uap.h</FilePath>
-            </File>
-            <File>
-              <FileName>mlan_util.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi/wifidriver/incl/mlan_util.h</FilePath>
-            </File>
-            <File>
-              <FileName>mlan_wmm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi/wifidriver/incl/mlan_wmm.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -5277,11 +5322,6 @@
               <FilePath>../../../../../middleware/wifi/wifidriver/mlan_scan.c</FilePath>
             </File>
             <File>
-              <FileName>mlan_sdio.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/wifi/wifidriver/mlan_sdio.c</FilePath>
-            </File>
-            <File>
               <FileName>mlan_shim.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/wifi/wifidriver/mlan_shim.c</FilePath>
@@ -5337,16 +5377,6 @@
               <FilePath>../../../../../middleware/wifi/wifidriver/wifi-debug.c</FilePath>
             </File>
             <File>
-              <FileName>wifi-debug.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi/wifidriver/wifi-debug.h</FilePath>
-            </File>
-            <File>
-              <FileName>wifi-internal.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi/wifidriver/wifi-internal.h</FilePath>
-            </File>
-            <File>
               <FileName>wifi-mem.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/wifi/wifidriver/wifi-mem.c</FilePath>
@@ -5355,11 +5385,6 @@
               <FileName>wifi-sdio.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/wifi/wifidriver/wifi-sdio.c</FilePath>
-            </File>
-            <File>
-              <FileName>wifi-sdio.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi/wifidriver/wifi-sdio.h</FilePath>
             </File>
             <File>
               <FileName>wifi-uap.c</FileName>
@@ -5380,6 +5405,241 @@
               <FileName>wifi_pwrmgr.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/wifi/wifidriver/wifi_pwrmgr.c</FilePath>
+            </File>
+            <File>
+              <FileName>wifi-debug.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi/wifidriver/wifi-debug.h</FilePath>
+            </File>
+            <File>
+              <FileName>wifi-internal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi/wifidriver/wifi-internal.h</FilePath>
+            </File>
+            <File>
+              <FileName>wifi-sdio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi/wifidriver/wifi-sdio.h</FilePath>
+            </File>
+            <File>
+              <FileName>mlan_sdio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/wifi/wifidriver/mlan_sdio.c</FilePath>
+            </File>
+            <File>
+              <FileName>sdio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/wifi/wifidriver/sdio.c</FilePath>
+            </File>
+            <File>
+              <FileName>sdio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi/wifidriver/sdio.h</FilePath>
+            </File>
+            <File>
+              <FileName>firmware_dnld.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/wifi/wifidriver/firmware_dnld.c</FilePath>
+            </File>
+            <File>
+              <FileName>firmware_dnld.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi/wifidriver/firmware_dnld.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>wifi/incl/port/os</GroupName>
+          <Files>
+            <File>
+              <FileName>wm_os.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi/incl/port/os/wm_os.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>wifi/wifidriver/incl</GroupName>
+          <Files>
+            <File>
+              <FileName>mlan_11ac.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi/wifidriver/incl/mlan_11ac.h</FilePath>
+            </File>
+            <File>
+              <FileName>mlan_11h.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi/wifidriver/incl/mlan_11h.h</FilePath>
+            </File>
+            <File>
+              <FileName>mlan_11n.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi/wifidriver/incl/mlan_11n.h</FilePath>
+            </File>
+            <File>
+              <FileName>mlan_11n_aggr.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi/wifidriver/incl/mlan_11n_aggr.h</FilePath>
+            </File>
+            <File>
+              <FileName>mlan_11n_rxreorder.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi/wifidriver/incl/mlan_11n_rxreorder.h</FilePath>
+            </File>
+            <File>
+              <FileName>mlan_fw.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi/wifidriver/incl/mlan_fw.h</FilePath>
+            </File>
+            <File>
+              <FileName>mlan_ieee.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi/wifidriver/incl/mlan_ieee.h</FilePath>
+            </File>
+            <File>
+              <FileName>mlan_init.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi/wifidriver/incl/mlan_init.h</FilePath>
+            </File>
+            <File>
+              <FileName>mlan_join.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi/wifidriver/incl/mlan_join.h</FilePath>
+            </File>
+            <File>
+              <FileName>mlan_main.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi/wifidriver/incl/mlan_main.h</FilePath>
+            </File>
+            <File>
+              <FileName>mlan_meas.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi/wifidriver/incl/mlan_meas.h</FilePath>
+            </File>
+            <File>
+              <FileName>mlan_remap_mem_operations.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi/wifidriver/incl/mlan_remap_mem_operations.h</FilePath>
+            </File>
+            <File>
+              <FileName>mlan_sdio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi/wifidriver/incl/mlan_sdio.h</FilePath>
+            </File>
+            <File>
+              <FileName>mlan_uap.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi/wifidriver/incl/mlan_uap.h</FilePath>
+            </File>
+            <File>
+              <FileName>mlan_util.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi/wifidriver/incl/mlan_util.h</FilePath>
+            </File>
+            <File>
+              <FileName>mlan_wmm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi/wifidriver/incl/mlan_wmm.h</FilePath>
+            </File>
+            <File>
+              <FileName>mlan.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi/wifidriver/incl/mlan.h</FilePath>
+            </File>
+            <File>
+              <FileName>mlan_ioctl.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi/wifidriver/incl/mlan_ioctl.h</FilePath>
+            </File>
+            <File>
+              <FileName>mlan_decl.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi/wifidriver/incl/mlan_decl.h</FilePath>
+            </File>
+            <File>
+              <FileName>mlan_api.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi/wifidriver/incl/mlan_api.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>wifi/incl/wlcmgr</GroupName>
+          <Files>
+            <File>
+              <FileName>wlan_11d.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi/incl/wlcmgr/wlan_11d.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi/incl/wlcmgr/wlan.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>wifi/incl/wifidriver</GroupName>
+          <Files>
+            <File>
+              <FileName>mlan_sdio_api.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi/incl/wifidriver/mlan_sdio_api.h</FilePath>
+            </File>
+            <File>
+              <FileName>wifi-decl.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi/incl/wifidriver/wifi-decl.h</FilePath>
+            </File>
+            <File>
+              <FileName>wifi.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi/incl/wifidriver/wifi.h</FilePath>
+            </File>
+            <File>
+              <FileName>wifi_events.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi/incl/wifidriver/wifi_events.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>wifi/port/os</GroupName>
+          <Files>
+            <File>
+              <FileName>os.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/wifi/port/os/os.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>wifi/wifi_bt_firmware</GroupName>
+          <Files>
+            <File>
+              <FileName>sd8801_wlan.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi/wifi_bt_firmware/sd8801_wlan.h</FilePath>
+            </File>
+            <File>
+              <FileName>sduart8977_wlan_bt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi/wifi_bt_firmware/sduart8977_wlan_bt.h</FilePath>
+            </File>
+            <File>
+              <FileName>sduartIW416_wlan_bt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi/wifi_bt_firmware/sduartIW416_wlan_bt.h</FilePath>
+            </File>
+            <File>
+              <FileName>sduart8987_wlan_bt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi/wifi_bt_firmware/sduart8987_wlan_bt.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_bt_fw.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/wifi/wifi_bt_firmware/wlan_bt_fw.h</FilePath>
             </File>
           </Files>
         </Group>

@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 NXP
+ * Copyright 2020 ,2021 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -13,11 +13,11 @@
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 !!GlobalInfo
-product: Pins v8.0
+product: Pins v9.0
 processor: MIMXRT1024xxxxx
 package_id: MIMXRT1024DAG5A
 mcu_data: ksdk2_0
-processor_version: 8.0.0
+processor_version: 9.0.0
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 
@@ -26,10 +26,10 @@ processor_version: 8.0.0
 #include "pin_mux.h"
 
 /* FUNCTION ************************************************************************************************************
- *
+ * 
  * Function Name : BOARD_InitBootPins
  * Description   : Calls initialization functions.
- *
+ * 
  * END ****************************************************************************************************************/
 void BOARD_InitBootPins(void) {
     BOARD_InitPins();

@@ -9,7 +9,7 @@
 **     Compiler:            Keil ARM C/C++ Compiler
 **     Reference manual:    IMXRT1060RM Rev.1, 12/2018 | IMXRT1060SRM Rev.3
 **     Version:             rev. 0.1, 2017-01-10
-**     Build:               b210227
+**     Build:               b210709
 **
 **     Abstract:
 **         Linker file for the Keil ARM C/C++ Compiler
@@ -57,6 +57,7 @@ LR_m_text m_interrupts_start m_text_start+m_text_size-m_interrupts_start {   ; l
   }
   ER_m_text m_text_start FIXED m_text_size { ; load address = execution address
     * (InRoot$$Sections)
+    * (CodeQuickAccess)
     .ANY (+RO)
   }
   VECTOR_RAM m_interrupts_start EMPTY 0 {
@@ -65,6 +66,7 @@ LR_m_text m_interrupts_start m_text_start+m_text_size-m_interrupts_start {   ; l
     .ANY (+RW +ZI)
     * (NonCacheable.init)
     * (*NonCacheable)
+    * (DataQuickAccess)
   }
   ARM_LIB_HEAP +0 EMPTY Heap_Size {    ; Heap region growing up
   }

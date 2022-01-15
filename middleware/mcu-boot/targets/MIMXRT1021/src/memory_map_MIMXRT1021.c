@@ -13,7 +13,7 @@
 // Variables
 ////////////////////////////////////////////////////////////////////////////////
 
-//! @brief Memory map for RT105x.
+//! @brief Memory map for RT102x.
 //!
 //! This map is not const because it is updated at runtime with the actual sizes of
 //! flash and RAM for the chip we're running on.

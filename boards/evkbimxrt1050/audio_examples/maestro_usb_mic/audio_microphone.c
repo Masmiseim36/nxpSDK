@@ -18,7 +18,7 @@
 #endif
 
 #include "audio_microphone.h"
-#include "streamer_pcm.h"
+#include "streamer_pcm_app.h"
 
 /*******************************************************************************
  * Definitions

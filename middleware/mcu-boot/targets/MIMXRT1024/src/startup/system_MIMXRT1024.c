@@ -106,3 +106,12 @@ void SystemInit(void)
    ---------------------------------------------------------------------------- */
 
 void SystemCoreClockUpdate(void) {}
+
+/* ----------------------------------------------------------------------------
+   -- SystemInitHook()
+   ---------------------------------------------------------------------------- */
+
+__attribute__((weak)) void SystemInitHook(void)
+{
+    /* Void implementation of the weak function. */
+}

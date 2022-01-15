@@ -182,7 +182,9 @@ static usb_status_t USB_DeviceMtpFreeHandle(usb_device_mtp_struct_t *handle)
 static void USB_DeviceMtpPrimeCommand(usb_device_mtp_struct_t *mtpHandle)
 {
     mtpHandle->mtpState = USB_DEVICE_MTP_STATE_COMMAND;
-
+#if (defined(DEVICE_ECHO) && (DEVICE_ECHO > 0U))
+    usb_echo("start transfer error\r\n");
+#endif
     USB_DeviceRecvRequest(mtpHandle->handle, mtpHandle->bulkOutEndpoint, (uint8_t *)mtpHandle->mtpContainer,
                           USB_DEVICE_MTP_COMMAND_LENGTH);
 }
@@ -239,8 +241,16 @@ void USB_DevicePrimeDataOut(usb_device_mtp_struct_t *mtpHandle, usb_device_mtp_c
     mtpHandle->transferBuffer = dataInfo->buffer;
     mtpHandle->transferDone   = 0;
     mtpHandle->transferOffset = 0;
-
-    USB_DeviceMtpRecv(mtpHandle);
+#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
+    if (kStatus_USB_Success != USB_DeviceMtpRecv(mtpHandle))
+    {
+#if (defined(DEVICE_ECHO) && (DEVICE_ECHO > 0U))
+        usb_echo("mtp receive error\r\n");
+#endif
+    }
+#else
+    (void)USB_DeviceMtpRecv(mtpHandle);
+#endif
 }
 
 void USB_DevicePrimeBulkInAndOutStall(usb_device_mtp_struct_t *mtpHandle, uint16_t code, uint8_t epNeed)
@@ -260,9 +270,18 @@ void USB_DevicePrimeBulkInAndOutStall(usb_device_mtp_struct_t *mtpHandle, uint16
         mtpHandle->deviceStatus->wLength = 4U;
     }
     mtpHandle->deviceStatus->code = code;
-
+#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
+    if ((kStatus_USB_Success != USB_DeviceStallEndpoint(mtpHandle->handle, mtpHandle->bulkInEndpoint)) ||
+        (kStatus_USB_Success != USB_DeviceStallEndpoint(mtpHandle->handle, mtpHandle->bulkOutEndpoint)))
+    {
+#if (defined(DEVICE_ECHO) && (DEVICE_ECHO > 0U))
+        usb_echo("stall endpoint error\r\n");
+#endif
+    }
+#else
     (void)USB_DeviceStallEndpoint(mtpHandle->handle, mtpHandle->bulkInEndpoint);
     (void)USB_DeviceStallEndpoint(mtpHandle->handle, mtpHandle->bulkOutEndpoint);
+#endif
 }
 
 static void USB_DeviceMtpStateMachine(usb_device_mtp_struct_t *mtpHandle,
@@ -331,7 +350,17 @@ static void USB_DeviceMtpStateMachine(usb_device_mtp_struct_t *mtpHandle,
                     (mtpHandle->transferLength == 0U) && (message->length != 0U))
                 {
                     /* Prime NULL packet */
-                    USB_DeviceSendRequest(mtpHandle->handle, mtpHandle->bulkOutEndpoint, NULL, 0);
+#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
+                    if (kStatus_USB_Success !=
+                        USB_DeviceSendRequest(mtpHandle->handle, mtpHandle->bulkOutEndpoint, NULL, 0))
+                    {
+#if (defined(DEVICE_ECHO) && (DEVICE_ECHO > 0U))
+                        usb_echo("send error\r\n");
+#endif
+                    }
+#else
+                    (void)USB_DeviceSendRequest(mtpHandle->handle, mtpHandle->bulkOutEndpoint, NULL, 0);
+#endif
                     break;
                 }
 
@@ -363,7 +392,16 @@ static void USB_DeviceMtpStateMachine(usb_device_mtp_struct_t *mtpHandle,
                 if (mtpHandle->transferLength != 0U)
                 {
                     /* continue to transfer */
-                    USB_DeviceMtpSend(mtpHandle);
+#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
+                    if (kStatus_USB_Success != USB_DeviceMtpSend(mtpHandle))
+                    {
+#if (defined(DEVICE_ECHO) && (DEVICE_ECHO > 0U))
+                        usb_echo("mtp send error\r\n");
+#endif
+                    }
+#else
+                    (void)USB_DeviceMtpSend(mtpHandle);
+#endif
                 }
                 else
                 {
@@ -385,8 +423,16 @@ static void USB_DeviceMtpStateMachine(usb_device_mtp_struct_t *mtpHandle,
                         mtpHandle->transferLength = dataInfo.curSize;
                         mtpHandle->transferBuffer = dataInfo.buffer;
                         mtpHandle->transferOffset = 0U;
-
-                        USB_DeviceMtpSend(mtpHandle);
+#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
+                        if (kStatus_USB_Success != USB_DeviceMtpSend(mtpHandle))
+                        {
+#if (defined(DEVICE_ECHO) && (DEVICE_ECHO > 0U))
+                            usb_echo("mtp send error\r\n");
+#endif
+                        }
+#else
+                        (void)USB_DeviceMtpSend(mtpHandle);
+#endif
                     }
                 }
             }
@@ -425,7 +471,17 @@ static void USB_DeviceMtpStateMachine(usb_device_mtp_struct_t *mtpHandle,
                     (mtpHandle->transferLength == 0U) && (message->length != 0U))
                 {
                     /* Prime NULL packet */
-                    USB_DeviceRecvRequest(mtpHandle->handle, mtpHandle->bulkOutEndpoint, NULL, 0);
+#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
+                    if (kStatus_USB_Success !=
+                        USB_DeviceRecvRequest(mtpHandle->handle, mtpHandle->bulkOutEndpoint, NULL, 0))
+                    {
+#if (defined(DEVICE_ECHO) && (DEVICE_ECHO > 0U))
+                        usb_echo("mtp receive error\r\n");
+#endif
+                    }
+#else
+                    (void)USB_DeviceRecvRequest(mtpHandle->handle, mtpHandle->bulkOutEndpoint, NULL, 0);
+#endif
                     break;
                 }
 
@@ -478,7 +534,16 @@ static void USB_DeviceMtpStateMachine(usb_device_mtp_struct_t *mtpHandle,
                 if (mtpHandle->transferLength != 0U)
                 {
                     /* continue to transfer */
-                    USB_DeviceMtpRecv(mtpHandle);
+#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
+                    if (kStatus_USB_Success != USB_DeviceMtpRecv(mtpHandle))
+                    {
+#if (defined(DEVICE_ECHO) && (DEVICE_ECHO > 0U))
+                        usb_echo("mtp receive error\r\n");
+#endif
+                    }
+#else
+                    (void)USB_DeviceMtpRecv(mtpHandle);
+#endif
                 }
                 else
                 {
@@ -501,8 +566,16 @@ static void USB_DeviceMtpStateMachine(usb_device_mtp_struct_t *mtpHandle,
                         mtpHandle->transferLength = dataInfo.curSize;
                         mtpHandle->transferBuffer = dataInfo.buffer;
                         mtpHandle->transferOffset = 0U;
-
-                        USB_DeviceMtpRecv(mtpHandle);
+#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
+                        if (kStatus_USB_Success != USB_DeviceMtpRecv(mtpHandle))
+                        {
+#if (defined(DEVICE_ECHO) && (DEVICE_ECHO > 0U))
+                            usb_echo("mtp receive error\r\n");
+#endif
+                        }
+#else
+                        (void)USB_DeviceMtpRecv(mtpHandle);
+#endif
                     }
                 }
             }
@@ -808,7 +881,14 @@ usb_status_t USB_DeviceMtpInit(uint8_t controllerId, usb_device_class_config_str
 
     if ((kStatus_USB_Success != error) || (NULL == mtpHandle->handle))
     {
+#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
+        if (kStatus_USB_Success != USB_DeviceMtpFreeHandle(mtpHandle))
+        {
+            return kStatus_USB_Error;
+        }
+#else
         (void)USB_DeviceMtpFreeHandle(mtpHandle);
+#endif
         return error;
     }
 
@@ -846,7 +926,14 @@ usb_status_t USB_DeviceMtpDeinit(class_handle_t handle)
         return kStatus_USB_InvalidHandle;
     }
     status = USB_DeviceMtpEndpointsDeinit(mtpHandle);
+#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
+    if (kStatus_USB_Success != USB_DeviceMtpFreeHandle(mtpHandle))
+    {
+        kStatus_USB_Error;
+    }
+#else
     (void)USB_DeviceMtpFreeHandle(mtpHandle);
+#endif
 
     return status;
 }
@@ -888,8 +975,7 @@ usb_status_t USB_DeviceMtpEvent(void *handle, uint32_t event, void *param)
             mtpHandle->configuration = 0U;
             mtpHandle->transactionID = 0xFFFFFFFFU;
             mtpHandle->sessionID     = 0U;
-
-            error = kStatus_USB_Success;
+            error                    = kStatus_USB_Success;
             break;
         case kUSB_DeviceClassEventSetConfiguration:
             /* Get the new configuration. */
@@ -900,6 +986,7 @@ usb_status_t USB_DeviceMtpEvent(void *handle, uint32_t event, void *param)
             }
             if (*temp8 == mtpHandle->configuration)
             {
+                error = kStatus_USB_Success;
                 break;
             }
 
@@ -938,6 +1025,7 @@ usb_status_t USB_DeviceMtpEvent(void *handle, uint32_t event, void *param)
             /* Only handle new alternate setting. */
             if (alternate == mtpHandle->alternate)
             {
+                error = kStatus_USB_Success;
                 break;
             }
             error = USB_DeviceMtpEndpointsDeinit(mtpHandle);
@@ -986,13 +1074,6 @@ usb_status_t USB_DeviceMtpEvent(void *handle, uint32_t event, void *param)
                 break;
             }
 
-            if ((mtpHandle->bulkInStallFlag != USB_DEVICE_MTP_STATE_BULK_IN_STALL) &&
-                (mtpHandle->bulkOutStallFlag != USB_DEVICE_MTP_STATE_BULK_OUT_STALL) &&
-                (mtpHandle->interruptInEndpoint != USB_DEVICE_MTP_STATE_INTERRUPT_IN_STALL))
-            {
-                break;
-            }
-
             /* Get the endpoint address */
             temp8 = ((uint8_t *)param);
             /* Only un-stall the endpoint belongs to the class , If the endpoint is in stall status ,then
@@ -1002,12 +1083,20 @@ usb_status_t USB_DeviceMtpEvent(void *handle, uint32_t event, void *param)
             {
                 mtpHandle->bulkInStallFlag = USB_DEVICE_MTP_STATE_BULK_IN_UNSTALL;
                 error                      = USB_DeviceUnstallEndpoint(mtpHandle->handle, *temp8);
+                if (mtpHandle->bulkOutStallFlag != USB_DEVICE_MTP_STATE_BULK_OUT_STALL)
+                {
+                    USB_DeviceMtpPrimeCommand(mtpHandle);
+                }
             }
             if ((mtpHandle->bulkOutStallFlag == USB_DEVICE_MTP_STATE_BULK_OUT_STALL) &&
                 (*temp8 == mtpHandle->bulkOutEndpoint))
             {
                 mtpHandle->bulkOutStallFlag = USB_DEVICE_MTP_STATE_BULK_OUT_UNSTALL;
                 error                       = USB_DeviceUnstallEndpoint(mtpHandle->handle, *temp8);
+                if (mtpHandle->bulkInEndpoint != USB_DEVICE_MTP_STATE_BULK_IN_STALL)
+                {
+                    USB_DeviceMtpPrimeCommand(mtpHandle);
+                }
             }
             if ((mtpHandle->interruptInStallFlag == USB_DEVICE_MTP_STATE_INTERRUPT_IN_STALL) &&
                 (*temp8 == mtpHandle->interruptInEndpoint))
@@ -1015,180 +1104,161 @@ usb_status_t USB_DeviceMtpEvent(void *handle, uint32_t event, void *param)
                 mtpHandle->interruptInStallFlag = USB_DEVICE_MTP_STATE_INTERRUPT_IN_UNSTALL;
                 error                           = USB_DeviceUnstallEndpoint(mtpHandle->handle, *temp8);
             }
-
-            if ((mtpHandle->bulkInStallFlag != USB_DEVICE_MTP_STATE_BULK_OUT_STALL) &&
-                (mtpHandle->bulkOutStallFlag != USB_DEVICE_MTP_STATE_BULK_OUT_STALL))
-            {
-                USB_DeviceMtpPrimeCommand(mtpHandle);
-            }
             break;
         case kUSB_DeviceClassEventClassRequest:
         {
             /* Handle the mtp class specific request. */
             usb_device_control_request_struct_t *control_request = (usb_device_control_request_struct_t *)param;
 
-            if ((control_request->isSetup != 0U) &&
-                (control_request->setup->bmRequestType & USB_REQUEST_TYPE_RECIPIENT_MASK) !=
-                    USB_REQUEST_TYPE_RECIPIENT_INTERFACE)
+            if ((control_request->setup->bmRequestType & USB_REQUEST_TYPE_RECIPIENT_MASK) !=
+                USB_REQUEST_TYPE_RECIPIENT_INTERFACE)
             {
                 break;
             }
 
-            if (control_request->isSetup != 0U)
+            if ((control_request->setup->wIndex & 0xFFU) != mtpHandle->interfaceNumber)
             {
-                switch (control_request->setup->bRequest)
-                {
-                    case USB_DEVICE_MTP_CANCEL_REQUEST:
-                        if ((control_request->setup->wIndex == mtpHandle->interfaceNumber) &&
-                            (0U == mtpHandle->isHostCancel) && (0U == control_request->setup->wValue) &&
-                            (0x0006U == control_request->setup->wLength) &&
-                            ((control_request->setup->bmRequestType & USB_REQUEST_TYPE_DIR_MASK) ==
-                             USB_REQUEST_TYPE_DIR_OUT))
-                        {
-                            /* assign buffer to receive data from host */
-                            control_request->buffer = (uint8_t *)mtpHandle->cancelRequest;
-                            control_request->length = 0x0006U;
-                            mtpHandle->isHostCancel = 1;
+                break;
+            }
 
-                            error = kStatus_USB_Success;
+            error = kStatus_USB_InvalidRequest;
+            switch (control_request->setup->bRequest)
+            {
+                case USB_DEVICE_MTP_CANCEL_REQUEST:
+                    if ((0U == control_request->setup->wValue) && (0x0006U == control_request->setup->wLength) &&
+                        ((control_request->setup->bmRequestType & USB_REQUEST_TYPE_DIR_MASK) ==
+                         USB_REQUEST_TYPE_DIR_OUT))
+                    {
+                        if (control_request->isSetup != 0U)
+                        {
+                            if (0U == mtpHandle->isHostCancel)
+                            {
+                                /* assign buffer to receive data from host */
+                                control_request->buffer = (uint8_t *)mtpHandle->cancelRequest;
+                                control_request->length = 0x0006U;
+                                mtpHandle->isHostCancel = 1;
+                                error                   = kStatus_USB_Success;
+                            }
                         }
                         else
                         {
-                            error = kStatus_USB_InvalidRequest;
+                            if (0U != mtpHandle->isHostCancel)
+                            {
+                                if ((mtpHandle->cancelRequest->code == MTP_EVENT_CANCEL_TRANSACTION) &&
+                                    (USB_LONG_FROM_LITTLE_ENDIAN_ADDRESS(
+                                         ((uint8_t *)&mtpHandle->cancelRequest->transactionID)) ==
+                                     mtpHandle->transactionID))
+                                {
+                                    /* Host cancels current transaction */
+                                    error = USB_DeviceMtpCancelCurrentTransaction(mtpHandle);
+                                }
+                            }
                         }
-                        break;
+                    }
+                    break;
 
-                    case USB_DEVICE_MTP_GET_EXTENDED_EVENT_DATA:
-                        if ((control_request->setup->wIndex == mtpHandle->interfaceNumber) &&
-                            (0U == control_request->setup->wValue) &&
-                            ((control_request->setup->bmRequestType & USB_REQUEST_TYPE_DIR_MASK) ==
-                             USB_REQUEST_TYPE_DIR_IN))
+                case USB_DEVICE_MTP_GET_EXTENDED_EVENT_DATA:
+                    if ((0U == control_request->setup->wValue) && (0U != control_request->setup->wLength) &&
+                        ((control_request->setup->bmRequestType & USB_REQUEST_TYPE_DIR_MASK) ==
+                         USB_REQUEST_TYPE_DIR_IN))
+                    {
+                        usb_device_mtp_extended_event_struct_t extendedEvent;
+                        extendedEvent.buffer = NULL;
+                        extendedEvent.length = 0U;
+
+                        error = mtpHandle->configurationStruct->classCallback(
+                            (class_handle_t)mtpHandle, kUSB_DeviceMtpEventGetExtendedEventData, &extendedEvent);
+
+                        if ((kStatus_USB_Success == error) && (NULL != extendedEvent.buffer))
                         {
-                            usb_device_mtp_extended_event_struct_t extendedEvent;
-
-                            error = mtpHandle->configurationStruct->classCallback(
-                                (class_handle_t)mtpHandle, kUSB_DeviceMtpEventGetExtendedEventData, &extendedEvent);
-
                             USB_LONG_TO_LITTLE_ENDIAN_ADDRESS(mtpHandle->mtpContainer->transactionID,
                                                               (extendedEvent.buffer + 2U));
-
-                            control_request->buffer = extendedEvent.buffer;
-                            control_request->length = extendedEvent.length;
                         }
-                        else
+
+                        control_request->buffer = extendedEvent.buffer;
+                        control_request->length = extendedEvent.length;
+                    }
+                    break;
+
+                case USB_DEVICE_MTP_DEVICE_RESET_REQUEST:
+                    if ((0U == control_request->setup->wValue) && (0U == control_request->setup->wLength) &&
+                        ((control_request->setup->bmRequestType & USB_REQUEST_TYPE_DIR_MASK) ==
+                         USB_REQUEST_TYPE_DIR_OUT))
+                    {
+                        /* The DEVICE clears its command buffer, closes all open sessions, and returns to the
+                           Configured State. */
+                        mtpHandle->transactionID = 0xFFFFFFFFU;
+                        mtpHandle->sessionID     = 0U;
+
+                        if (mtpHandle->bulkInStallFlag == USB_DEVICE_MTP_STATE_BULK_IN_STALL)
                         {
-                            error = kStatus_USB_InvalidRequest;
+                            mtpHandle->bulkInStallFlag = USB_DEVICE_MTP_STATE_BULK_IN_UNSTALL;
+                            error = USB_DeviceUnstallEndpoint(mtpHandle->handle, mtpHandle->bulkInEndpoint);
+                            if (kStatus_USB_Success != error)
+                            {
+                                break;
+                            }
                         }
-                        break;
-
-                    case USB_DEVICE_MTP_DEVICE_RESET_REQUEST:
-                        if ((control_request->setup->wIndex == mtpHandle->interfaceNumber) &&
-                            (0U == control_request->setup->wValue) && (0U == control_request->setup->wLength) &&
-                            ((control_request->setup->bmRequestType & USB_REQUEST_TYPE_DIR_MASK) ==
-                             USB_REQUEST_TYPE_DIR_OUT))
+                        if (mtpHandle->bulkOutStallFlag == USB_DEVICE_MTP_STATE_BULK_OUT_STALL)
                         {
-                            /* The DEVICE clears its command buffer, closes all open sessions, and returns to the
-                               Configured State. */
-                            mtpHandle->transactionID = 0xFFFFFFFFU;
-                            mtpHandle->sessionID     = 0U;
-
-                            if (mtpHandle->bulkInStallFlag == USB_DEVICE_MTP_STATE_BULK_IN_STALL)
+                            mtpHandle->bulkOutStallFlag = USB_DEVICE_MTP_STATE_BULK_OUT_UNSTALL;
+                            error = USB_DeviceUnstallEndpoint(mtpHandle->handle, mtpHandle->bulkOutEndpoint);
+                            if (kStatus_USB_Success != error)
                             {
-                                mtpHandle->bulkInStallFlag = USB_DEVICE_MTP_STATE_BULK_IN_UNSTALL;
-                                error = USB_DeviceUnstallEndpoint(mtpHandle->handle, mtpHandle->bulkInEndpoint);
-                                if (kStatus_USB_Success != error)
-                                {
-                                    break;
-                                }
+                                break;
                             }
-                            if (mtpHandle->bulkOutStallFlag == USB_DEVICE_MTP_STATE_BULK_OUT_STALL)
+                        }
+                        if (mtpHandle->interruptInStallFlag == USB_DEVICE_MTP_STATE_INTERRUPT_IN_STALL)
+                        {
+                            mtpHandle->interruptInStallFlag = USB_DEVICE_MTP_STATE_INTERRUPT_IN_UNSTALL;
+                            error = USB_DeviceUnstallEndpoint(mtpHandle->handle, mtpHandle->interruptInEndpoint);
+                            if (kStatus_USB_Success != error)
                             {
-                                mtpHandle->bulkOutStallFlag = USB_DEVICE_MTP_STATE_BULK_OUT_UNSTALL;
-                                error = USB_DeviceUnstallEndpoint(mtpHandle->handle, mtpHandle->bulkOutEndpoint);
-                                if (kStatus_USB_Success != error)
-                                {
-                                    break;
-                                }
+                                break;
                             }
-                            if (mtpHandle->interruptInStallFlag == USB_DEVICE_MTP_STATE_INTERRUPT_IN_STALL)
-                            {
-                                mtpHandle->interruptInStallFlag = USB_DEVICE_MTP_STATE_INTERRUPT_IN_UNSTALL;
-                                error = USB_DeviceUnstallEndpoint(mtpHandle->handle, mtpHandle->interruptInEndpoint);
-                                if (kStatus_USB_Success != error)
-                                {
-                                    break;
-                                }
-                            }
+                        }
 
-                            error = mtpHandle->configurationStruct->classCallback(
-                                (class_handle_t)mtpHandle, kUSB_DeviceMtpEventDeviceResetRequest, NULL);
+                        error = mtpHandle->configurationStruct->classCallback(
+                            (class_handle_t)mtpHandle, kUSB_DeviceMtpEventDeviceResetRequest, NULL);
 
+                        USB_DeviceMtpPrimeCommand(mtpHandle);
+                    }
+                    break;
+
+                case USB_DEVICE_MTP_GET_DEVICE_STATUS_REQUEST:
+                    if ((0U == control_request->setup->wValue) && (4U <= control_request->setup->wLength) &&
+                        ((control_request->setup->bmRequestType & USB_REQUEST_TYPE_DIR_MASK) ==
+                         USB_REQUEST_TYPE_DIR_IN))
+                    {
+                        if ((mtpHandle->bulkInStallFlag == USB_DEVICE_MTP_STATE_BULK_IN_STALL) ||
+                            (mtpHandle->bulkOutStallFlag == USB_DEVICE_MTP_STATE_BULK_OUT_STALL))
+                        {
+                            /* do nothing, device status has been built before. */
+                        }
+                        else if (0U != mtpHandle->isHostCancel)
+                        {
+                            mtpHandle->deviceStatus->wLength = 4U;
+                            mtpHandle->deviceStatus->code    = MTP_RESPONSE_DEVICE_BUSY;
+
+                            mtpHandle->isHostCancel = 0;
                             USB_DeviceMtpPrimeCommand(mtpHandle);
                         }
                         else
                         {
-                            error = kStatus_USB_InvalidRequest;
+                            mtpHandle->deviceStatus->wLength = 4U;
+                            mtpHandle->deviceStatus->code    = MTP_RESPONSE_OK;
                         }
 
-                        break;
+                        control_request->buffer = (uint8_t *)mtpHandle->deviceStatus;
+                        control_request->length = mtpHandle->deviceStatus->wLength;
 
-                    case USB_DEVICE_MTP_GET_DEVICE_STATUS_REQUEST:
-                        if ((control_request->setup->wIndex == mtpHandle->interfaceNumber) &&
-                            (0U == control_request->setup->wValue) && (4U <= control_request->setup->wLength) &&
-                            ((control_request->setup->bmRequestType & USB_REQUEST_TYPE_DIR_MASK) ==
-                             USB_REQUEST_TYPE_DIR_IN))
-                        {
-                            if ((mtpHandle->bulkInStallFlag == USB_DEVICE_MTP_STATE_BULK_IN_STALL) ||
-                                (mtpHandle->bulkOutStallFlag == USB_DEVICE_MTP_STATE_BULK_OUT_STALL))
-                            {
-                                /* do nothing, device status has been built before. */
-                            }
-                            else if (0U != mtpHandle->isHostCancel)
-                            {
-                                mtpHandle->deviceStatus->wLength = 4U;
-                                mtpHandle->deviceStatus->code    = MTP_RESPONSE_DEVICE_BUSY;
-
-                                mtpHandle->isHostCancel = 0;
-                                USB_DeviceMtpPrimeCommand(mtpHandle);
-                            }
-                            else
-                            {
-                                mtpHandle->deviceStatus->wLength = 4U;
-                                mtpHandle->deviceStatus->code    = MTP_RESPONSE_OK;
-                            }
-
-                            control_request->buffer = (uint8_t *)mtpHandle->deviceStatus;
-                            control_request->length = mtpHandle->deviceStatus->wLength;
-
-                            error = kStatus_USB_Success;
-                        }
-                        else
-                        {
-                            error = kStatus_USB_InvalidRequest;
-                        }
-                        break;
-
-                    default:
-                        /*no action*/
-                        break;
-                }
-            }
-            else
-            {
-                if (0U != mtpHandle->isHostCancel)
-                {
-                    if ((mtpHandle->cancelRequest->code == MTP_EVENT_CANCEL_TRANSACTION) &&
-                        (USB_LONG_FROM_LITTLE_ENDIAN_ADDRESS(((uint8_t *)&mtpHandle->cancelRequest->transactionID)) ==
-                         mtpHandle->transactionID))
-                    {
-                        /* Host cancels current transaction */
-                        error = USB_DeviceMtpCancelCurrentTransaction(mtpHandle);
+                        error = kStatus_USB_Success;
                     }
-                    else
-                    {
-                        error = kStatus_USB_Error;
-                    }
-                }
+                    break;
+
+                default:
+                    /*no action*/
+                    break;
             }
         }
         break;
@@ -1339,9 +1409,18 @@ usb_status_t USB_DeviceMtpCancelCurrentTransaction(class_handle_t handle)
 
     mtpHandle = (usb_device_mtp_struct_t *)handle;
 
+#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
+    if ((kStatus_USB_Success != USB_DeviceCancel(mtpHandle->handle, mtpHandle->bulkInEndpoint)) ||
+        (kStatus_USB_Success != USB_DeviceCancel(mtpHandle->handle, mtpHandle->bulkOutEndpoint)) ||
+        (kStatus_USB_Success != USB_DeviceCancel(mtpHandle->handle, mtpHandle->interruptInEndpoint)))
+    {
+        kStatus_USB_Error;
+    }
+#else
     (void)USB_DeviceCancel(mtpHandle->handle, mtpHandle->bulkInEndpoint);
     (void)USB_DeviceCancel(mtpHandle->handle, mtpHandle->bulkOutEndpoint);
     (void)USB_DeviceCancel(mtpHandle->handle, mtpHandle->interruptInEndpoint);
+#endif
 
     /* callback to cancel current transaction */
     dataInfo.curSize  = 0;

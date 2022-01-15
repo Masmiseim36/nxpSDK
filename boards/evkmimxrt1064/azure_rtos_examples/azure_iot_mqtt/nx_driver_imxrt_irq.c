@@ -6,7 +6,6 @@
 
 #include "fsl_common.h"
 #include "nx_driver_imxrt.h"
-#include "fsl_debug_console.h"
 
 extern VOID nx_driver_imx_ethernet_isr(VOID);
 

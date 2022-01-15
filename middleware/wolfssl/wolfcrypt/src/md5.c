@@ -1,6 +1,6 @@
 /* md5.c
  *
- * Copyright (C) 2006-2020 wolfSSL Inc.
+ * Copyright (C) 2006-2021 wolfSSL Inc.
  *
  * This file is part of wolfSSL.
  *
@@ -139,7 +139,7 @@ static int Transform_Len(wc_Md5* md5, const byte* data, word32 len)
     int ret = wolfSSL_CryptHwMutexLock();
     if (ret == 0) {
     #if defined(WC_HASH_DATA_ALIGNMENT) && WC_HASH_DATA_ALIGNMENT > 0
-        if ((size_t)data % WC_HASH_DATA_ALIGNMENT) {
+        if ((wc_ptr_t)data % WC_HASH_DATA_ALIGNMENT) {
             /* data pointer is NOT aligned,
              * so copy and perform one block at a time */
             byte* local = (byte*)md5->buffer;
@@ -174,7 +174,8 @@ static int Transform_Len(wc_Md5* md5, const byte* data, word32 len)
 #include <wolfssl/wolfcrypt/port/pic32/pic32mz-crypt.h>
 #define HAVE_MD5_CUST_API
 
-#elif defined(WOLFSSL_IMX6_CAAM) && !defined(NO_IMX6_CAAM_HASH)
+#elif defined(WOLFSSL_IMX6_CAAM) && !defined(NO_IMX6_CAAM_HASH) && \
+    !defined(WOLFSSL_QNX_CAAM)
 /* functions implemented in wolfcrypt/src/port/caam/caam_sha.c */
 #define HAVE_MD5_CUST_API
 #else
@@ -195,7 +196,7 @@ static int Transform_Len(wc_Md5* md5, const byte* data, word32 len)
 
 static int Transform(wc_Md5* md5, const byte* data)
 {
-    word32* buffer = (word32*)data;
+    const word32* buffer = (const word32*)data;
     /* Copy context->state[] to working vars  */
     word32 a = md5->digest[0];
     word32 b = md5->digest[1];
@@ -404,7 +405,7 @@ int wc_Md5Update(wc_Md5* md5, const byte* data, word32 len)
         /* optimization to avoid memcpy if data pointer is properly aligned */
         /* Big Endian requires byte swap, so can't use data directly */
     #if defined(WC_HASH_DATA_ALIGNMENT) && !defined(BIG_ENDIAN_ORDER)
-        if (((size_t)data % WC_HASH_DATA_ALIGNMENT) == 0) {
+        if (((wc_ptr_t)data % WC_HASH_DATA_ALIGNMENT) == 0) {
             local32 = (word32*)data;
         }
         else
@@ -550,7 +551,20 @@ int wc_Md5Copy(wc_Md5* src, wc_Md5* dst)
 
     return ret;
 }
-
+#ifdef OPENSSL_EXTRA
+/* Apply MD5 transformation to the data                   */
+/* @param md5  a pointer to wc_MD5 structure              */
+/* @param data data to be applied MD5 transformation      */
+/* @return 0 on successful, otherwise non-zero on failure */
+int wc_Md5Transform(wc_Md5* md5, const byte* data)
+{
+    /* sanity check */
+    if (md5 == NULL || data == NULL) {
+        return BAD_FUNC_ARG;
+    }
+    return Transform(md5, data);
+}
+#endif
 #if defined(WOLFSSL_HASH_FLAGS) || defined(WOLF_CRYPTO_CB)
 int wc_Md5SetFlags(wc_Md5* md5, word32 flags)
 {

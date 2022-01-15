@@ -1,10 +1,18 @@
-#ifndef _AP_HTTPSRV_H_
-#define _AP_HTTPSRV_H_
+/*
+ * Copyright 2020-2021 NXP
+ * All rights reserved.
+ *
+ * SPDX-License-Identifier: BSD-3-Clause
+ */
+
+#ifndef _WEBCONFIG_H_
+#define _WEBCONFIG_H_
+
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
 
-/* Common WiFi parameters */
+/* Common Wi-Fi parameters */
 #ifndef WIFI_SSID
 #define WIFI_SSID "nxp_configuration_access_point"
 #endif
@@ -13,35 +21,22 @@
 #define WIFI_PASSWORD "NXP0123456789"
 #endif
 
+#define WIFI_NETWORK_LABEL "MyWifi"
+
 /* Parameters that apply to AP mode only */
 #ifndef WIFI_AP_CHANNEL
 #define WIFI_AP_CHANNEL 1
 #endif
 
-#define WIFI_AP_IP_ADDR  "192.168.1.1"
-#define WIFI_AP_NET_MASK "255.255.0.0"
-
 #define MAX_RETRY_TICKS 50
 
-#ifndef EXAMPLE_NETIF_INIT_FN
-/*! @brief Network interface initialization function. */
-#define EXAMPLE_NETIF_INIT_FN ethernetif0_init
-#endif /* EXAMPLE_NETIF_INIT_FN */
-
-#ifndef HTTPD_DEBUG
-#define HTTPD_DEBUG LWIP_DBG_ON
-#endif
 #ifndef HTTPD_STACKSIZE
 #define HTTPD_STACKSIZE 512
 #endif
 #ifndef HTTPD_PRIORITY
 #define HTTPD_PRIORITY DEFAULT_THREAD_PRIO
 #endif
-#ifndef DEBUG_WS
-#define DEBUG_WS 0
-#endif
 
-#define CGI_BUFFER_LENGTH        (2048)
 #define CONNECTION_INFO_FILENAME ("connection_info.dat")
 
 #define WEBCONFIG_DEBUG
@@ -52,8 +47,4 @@
 #define WC_DEBUG(...)
 #endif
 
-/*******************************************************************************
- * Prototypes
- ******************************************************************************/
-
-#endif
+#endif /* _WEBCONFIG_H_ */

@@ -13,7 +13,7 @@ Toolchain supported
 - IAR embedded Workbench  9.10.2
 - Keil MDK  5.34
 - GCC ARM Embedded  10.2.1
-- MCUXpresso  11.4.0
+- MCUXpresso  11.5.0
 
 Hardware requirements
 =====================
@@ -68,3 +68,6 @@ LPSPI transfer all data matched!
  30 31 32 33 34 35 36 37 38 39 3A 3B 3C 3D 3E 3F
 End of slave example! 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Note: Please ensure not to insert any SD CARD device on two boards
+

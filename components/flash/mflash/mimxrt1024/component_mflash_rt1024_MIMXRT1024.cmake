@@ -1,21 +1,19 @@
-if(NOT COMPONENT_MFLASH_RT1024_MIMXRT1024_INCLUDED)
-    
-    set(COMPONENT_MFLASH_RT1024_MIMXRT1024_INCLUDED true CACHE BOOL "component_mflash_rt1024 component is included.")
+include_guard(GLOBAL)
+message("component_mflash_rt1024 component is included.")
 
-    target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
-        ${CMAKE_CURRENT_LIST_DIR}/mflash_drv.c
-    )
-
-
-    target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
-        ${CMAKE_CURRENT_LIST_DIR}/.
-    )
+target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
+    ${CMAKE_CURRENT_LIST_DIR}/mflash_drv.c
+)
 
 
-    include(component_mflash_common_MIMXRT1024)
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
+    ${CMAKE_CURRENT_LIST_DIR}/.
+)
 
-    include(driver_flexspi_MIMXRT1024)
 
-    include(driver_cache_armv7_m7_MIMXRT1024)
+include(component_mflash_common_MIMXRT1024)
 
-endif()
+include(driver_flexspi_MIMXRT1024)
+
+include(driver_cache_armv7_m7_MIMXRT1024)
+

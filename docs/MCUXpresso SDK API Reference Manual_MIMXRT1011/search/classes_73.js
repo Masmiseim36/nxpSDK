@@ -1,0 +1,28 @@
+var searchData=
+[
+  ['sai_5fbit_5fclock_5ft',['sai_bit_clock_t',['../a00050.html#a00355',1,'']]],
+  ['sai_5fconfig_5ft',['sai_config_t',['../a00050.html#a00356',1,'']]],
+  ['sai_5fedma_5fhandle',['sai_edma_handle',['../a00051.html#a00357',1,'']]],
+  ['sai_5ffifo_5ft',['sai_fifo_t',['../a00050.html#a00358',1,'']]],
+  ['sai_5fframe_5fsync_5ft',['sai_frame_sync_t',['../a00050.html#a00359',1,'']]],
+  ['sai_5fserial_5fdata_5ft',['sai_serial_data_t',['../a00050.html#a00360',1,'']]],
+  ['sai_5ftransceiver_5ft',['sai_transceiver_t',['../a00050.html#a00361',1,'']]],
+  ['sai_5ftransfer_5fformat_5ft',['sai_transfer_format_t',['../a00050.html#a00362',1,'']]],
+  ['sai_5ftransfer_5ft',['sai_transfer_t',['../a00050.html#a00363',1,'']]],
+  ['serial_5fmanager_5fcallback_5fmessage_5ft',['serial_manager_callback_message_t',['../a00052.html#a00364',1,'']]],
+  ['serial_5fmanager_5fconfig_5ft',['serial_manager_config_t',['../a00052.html#a00365',1,'']]],
+  ['serial_5fport_5fswo_5fconfig_5ft',['serial_port_swo_config_t',['../a00053.html#a00366',1,'']]],
+  ['serial_5fport_5fusb_5fcdc_5fconfig_5ft',['serial_port_usb_cdc_config_t',['../a00054.html#a00367',1,'']]],
+  ['sgtl_5faudio_5fformat_5ft',['sgtl_audio_format_t',['../a00055.html#a00368',1,'']]],
+  ['sgtl_5fconfig_5ft',['sgtl_config_t',['../a00055.html#a00369',1,'']]],
+  ['sgtl_5fhandle_5ft',['sgtl_handle_t',['../a00055.html#a00370',1,'']]],
+  ['shell_5fcommand_5ft',['shell_command_t',['../a00056.html#a00371',1,'']]],
+  ['snvs_5fhp_5frtc_5fconfig_5ft',['snvs_hp_rtc_config_t',['../a00057.html#a00372',1,'']]],
+  ['snvs_5fhp_5frtc_5fdatetime_5ft',['snvs_hp_rtc_datetime_t',['../a00057.html#a00373',1,'']]],
+  ['snvs_5flp_5fpassive_5ftamper_5ft',['snvs_lp_passive_tamper_t',['../a00058.html#a00374',1,'']]],
+  ['snvs_5flp_5fsrtc_5fconfig_5ft',['snvs_lp_srtc_config_t',['../a00058.html#a00375',1,'']]],
+  ['snvs_5flp_5fsrtc_5fdatetime_5ft',['snvs_lp_srtc_datetime_t',['../a00058.html#a00376',1,'']]],
+  ['spdif_5fconfig_5ft',['spdif_config_t',['../a00059.html#a00377',1,'']]],
+  ['spdif_5fedma_5ftransfer_5ft',['spdif_edma_transfer_t',['../a00060.html#a00378',1,'']]],
+  ['spdif_5ftransfer_5ft',['spdif_transfer_t',['../a00059.html#a00379',1,'']]]
+];

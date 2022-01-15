@@ -254,6 +254,7 @@ const uint16_t wavSize        = sizeof(wavData) / sizeof(wavData[0]);
 
 USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) uint8_t s_wavBuff[AUDIO_ENDPOINT_MAX_PACKET_SIZE];
 uint32_t audioPosition = 0U;
+void USB_AudioRecorderGetBuffer(uint8_t *buffer, uint32_t size);
 /*******************************************************************************
  * Code
  ******************************************************************************/

@@ -29,7 +29,7 @@
 extern "C" {
 #endif
 
-#if SSS_HAVE_A71CH
+#if SSS_HAVE_APPLET_A71CH
 #include <HLSETypes.h>
 #endif
 
@@ -38,6 +38,9 @@ extern "C" {
  ******************************************************************************/
 #if defined (LPC_ENET) || defined (LPC_WIFI)
 #include "jsmn.h"
+#endif
+#if defined (LPC_WIFI)
+#   include "iot_wifi.h"
 #endif
 
 /*******************************************************************************
@@ -57,7 +60,7 @@ typedef enum GpStorageMode
 /*******************************************************************
 * GLOBAL VARIABLES
 *******************************************************************/
-#if SSS_HAVE_A71CH
+#if SSS_HAVE_APPLET_A71CH
 extern HLSE_OBJECT_HANDLE Gpstorage_handle;
 #endif
 
@@ -72,7 +75,7 @@ extern HLSE_OBJECT_HANDLE Gpstorage_handle;
  */
 extern void BOARD_InitNetwork_MAC(const unsigned char buffer[18]);
 
-#if SSS_HAVE_A71CH
+#if SSS_HAVE_APPLET_A71CH
 extern int SetGetFlag_GPstorage(U32 *p_val, GpStorageMode_t mode, HLSE_OBJECT_HANDLE handle);
 
 extern int GetHandle_GPstorage(HLSE_OBJECT_INDEX index);
@@ -84,4 +87,13 @@ extern int8_t jsoneq(const char *json, jsmntok_t *tok, const char *s);
 #ifdef __cplusplus
 }
 #endif
+
+#if defined(LPC_WIFI)
+
+WIFIReturnCode_t network_wifi_init(void);
+
+WIFIReturnCode_t network_wifi_connect_ap();
+
+#endif //LPC_WIFI
+
 #endif /*_sm_demo_utils_H_*/

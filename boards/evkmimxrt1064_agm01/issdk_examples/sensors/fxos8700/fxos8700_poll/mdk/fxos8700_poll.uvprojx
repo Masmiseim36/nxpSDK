@@ -328,9 +328,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>DEBUG, CPU_MIMXRT1064DVL6A, SERIAL_PORT_TYPE_UART=1, MCUXPRESSO_SDK</Define>
+              <Define>DEBUG, CPU_MIMXRT1064DVL6A, PRINTF_ADVANCED_ENABLE=1, SERIAL_PORT_TYPE_UART=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>../../../../..;..;../../../../../../../middleware/issdk/drivers/gpio/i.mx;../../../../../../../middleware/issdk/drivers/gpio;../../../../../../../devices/MIMXRT1064/drivers;../../../../../../../devices/MIMXRT1064/cmsis_drivers;../../../../../../../middleware/issdk/drivers/systick;../../../../../../../middleware/issdk/sensors;../../../../../../../devices/MIMXRT1064;../../../../../../../devices/MIMXRT1064/utilities/str;../../../../../../../devices/MIMXRT1064/utilities/debug_console;../../../../../../../devices/MIMXRT1064/xip;../../../../../../evkmimxrt1064/xip;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../components/lists;../../../../../../../CMSIS/Core/Include;../../../../../../../CMSIS/Driver/Include</IncludePath>
+              <IncludePath>../../../../..;..;../../../../../../../middleware/issdk/drivers/gpio/i.mx;../../../../../../../middleware/issdk/drivers/gpio;../../../../../../../devices/MIMXRT1064/drivers;../../../../../../../devices/MIMXRT1064/cmsis_drivers;../../../../../../../middleware/issdk/drivers/systick;../../../../../../../middleware/issdk/sensors;../../../../../../../devices/MIMXRT1064;../../../../../../../devices/MIMXRT1064/utilities/str;../../../../../../../devices/MIMXRT1064/utilities/debug_console;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1064/xip;../../../../../../evkmimxrt1064/xip;../../../../../../../CMSIS/Core/Include;../../../../../../../CMSIS/Driver/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -798,41 +798,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>startup</GroupName>
-          <Files>
-            <File>
-              <FileName>startup_MIMXRT1064.S</FileName>
-              <FileType>2</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1064/arm/startup_MIMXRT1064.S</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>xip</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_flexspi_nor_boot.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1064/xip/fsl_flexspi_nor_boot.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_flexspi_nor_boot.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1064/xip/fsl_flexspi_nor_boot.c</FilePath>
-            </File>
-            <File>
-              <FileName>evkmimxrt1064_flexspi_nor_config.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../evkmimxrt1064/xip/evkmimxrt1064_flexspi_nor_config.c</FilePath>
-            </File>
-            <File>
-              <FileName>evkmimxrt1064_flexspi_nor_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../evkmimxrt1064/xip/evkmimxrt1064_flexspi_nor_config.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>component/uart</GroupName>
           <Files>
             <File>
@@ -889,6 +854,41 @@
               <FileName>fsl_component_generic_list.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../components/lists/fsl_component_generic_list.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>startup</GroupName>
+          <Files>
+            <File>
+              <FileName>startup_MIMXRT1064.S</FileName>
+              <FileType>2</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1064/arm/startup_MIMXRT1064.S</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>xip</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_flexspi_nor_boot.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1064/xip/fsl_flexspi_nor_boot.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_flexspi_nor_boot.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1064/xip/fsl_flexspi_nor_boot.c</FilePath>
+            </File>
+            <File>
+              <FileName>evkmimxrt1064_flexspi_nor_config.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../evkmimxrt1064/xip/evkmimxrt1064_flexspi_nor_config.c</FilePath>
+            </File>
+            <File>
+              <FileName>evkmimxrt1064_flexspi_nor_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../evkmimxrt1064/xip/evkmimxrt1064_flexspi_nor_config.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1294,9 +1294,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, DEBUG, CPU_MIMXRT1064DVL6A, SERIAL_PORT_TYPE_UART=1, MCUXPRESSO_SDK</Define>
+              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, DEBUG, CPU_MIMXRT1064DVL6A, PRINTF_ADVANCED_ENABLE=1, SERIAL_PORT_TYPE_UART=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>../../../../..;..;../../../../../../../middleware/issdk/drivers/gpio/i.mx;../../../../../../../middleware/issdk/drivers/gpio;../../../../../../../devices/MIMXRT1064/drivers;../../../../../../../devices/MIMXRT1064/cmsis_drivers;../../../../../../../middleware/issdk/drivers/systick;../../../../../../../middleware/issdk/sensors;../../../../../../../devices/MIMXRT1064;../../../../../../../devices/MIMXRT1064/utilities/str;../../../../../../../devices/MIMXRT1064/utilities/debug_console;../../../../../../../devices/MIMXRT1064/xip;../../../../../../evkmimxrt1064/xip;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../components/lists;../../../../../../../CMSIS/Core/Include;../../../../../../../CMSIS/Driver/Include</IncludePath>
+              <IncludePath>../../../../..;..;../../../../../../../middleware/issdk/drivers/gpio/i.mx;../../../../../../../middleware/issdk/drivers/gpio;../../../../../../../devices/MIMXRT1064/drivers;../../../../../../../devices/MIMXRT1064/cmsis_drivers;../../../../../../../middleware/issdk/drivers/systick;../../../../../../../middleware/issdk/sensors;../../../../../../../devices/MIMXRT1064;../../../../../../../devices/MIMXRT1064/utilities/str;../../../../../../../devices/MIMXRT1064/utilities/debug_console;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1064/xip;../../../../../../evkmimxrt1064/xip;../../../../../../../CMSIS/Core/Include;../../../../../../../CMSIS/Driver/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1764,41 +1764,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>startup</GroupName>
-          <Files>
-            <File>
-              <FileName>startup_MIMXRT1064.S</FileName>
-              <FileType>2</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1064/arm/startup_MIMXRT1064.S</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>xip</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_flexspi_nor_boot.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1064/xip/fsl_flexspi_nor_boot.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_flexspi_nor_boot.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1064/xip/fsl_flexspi_nor_boot.c</FilePath>
-            </File>
-            <File>
-              <FileName>evkmimxrt1064_flexspi_nor_config.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../evkmimxrt1064/xip/evkmimxrt1064_flexspi_nor_config.c</FilePath>
-            </File>
-            <File>
-              <FileName>evkmimxrt1064_flexspi_nor_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../evkmimxrt1064/xip/evkmimxrt1064_flexspi_nor_config.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>component/uart</GroupName>
           <Files>
             <File>
@@ -1855,6 +1820,41 @@
               <FileName>fsl_component_generic_list.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../components/lists/fsl_component_generic_list.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>startup</GroupName>
+          <Files>
+            <File>
+              <FileName>startup_MIMXRT1064.S</FileName>
+              <FileType>2</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1064/arm/startup_MIMXRT1064.S</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>xip</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_flexspi_nor_boot.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1064/xip/fsl_flexspi_nor_boot.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_flexspi_nor_boot.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1064/xip/fsl_flexspi_nor_boot.c</FilePath>
+            </File>
+            <File>
+              <FileName>evkmimxrt1064_flexspi_nor_config.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../evkmimxrt1064/xip/evkmimxrt1064_flexspi_nor_config.c</FilePath>
+            </File>
+            <File>
+              <FileName>evkmimxrt1064_flexspi_nor_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../evkmimxrt1064/xip/evkmimxrt1064_flexspi_nor_config.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2260,9 +2260,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>SKIP_SYSCLK_INIT, DATA_SECTION_IS_CACHEABLE=1, DEBUG, CPU_MIMXRT1064DVL6A, SERIAL_PORT_TYPE_UART=1, MCUXPRESSO_SDK</Define>
+              <Define>SKIP_SYSCLK_INIT, DATA_SECTION_IS_CACHEABLE=1, DEBUG, CPU_MIMXRT1064DVL6A, PRINTF_ADVANCED_ENABLE=1, SERIAL_PORT_TYPE_UART=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>../../../../..;..;../../../../../../../middleware/issdk/drivers/gpio/i.mx;../../../../../../../middleware/issdk/drivers/gpio;../../../../../../../devices/MIMXRT1064/drivers;../../../../../../../devices/MIMXRT1064/cmsis_drivers;../../../../../../../middleware/issdk/drivers/systick;../../../../../../../middleware/issdk/sensors;../../../../../../../devices/MIMXRT1064;../../../../../../../devices/MIMXRT1064/utilities/str;../../../../../../../devices/MIMXRT1064/utilities/debug_console;../../../../../../../devices/MIMXRT1064/xip;../../../../../../evkmimxrt1064/xip;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../components/lists;../../../../../../../CMSIS/Core/Include;../../../../../../../CMSIS/Driver/Include</IncludePath>
+              <IncludePath>../../../../..;..;../../../../../../../middleware/issdk/drivers/gpio/i.mx;../../../../../../../middleware/issdk/drivers/gpio;../../../../../../../devices/MIMXRT1064/drivers;../../../../../../../devices/MIMXRT1064/cmsis_drivers;../../../../../../../middleware/issdk/drivers/systick;../../../../../../../middleware/issdk/sensors;../../../../../../../devices/MIMXRT1064;../../../../../../../devices/MIMXRT1064/utilities/str;../../../../../../../devices/MIMXRT1064/utilities/debug_console;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1064/xip;../../../../../../evkmimxrt1064/xip;../../../../../../../CMSIS/Core/Include;../../../../../../../CMSIS/Driver/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2730,41 +2730,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>startup</GroupName>
-          <Files>
-            <File>
-              <FileName>startup_MIMXRT1064.S</FileName>
-              <FileType>2</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1064/arm/startup_MIMXRT1064.S</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>xip</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_flexspi_nor_boot.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1064/xip/fsl_flexspi_nor_boot.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_flexspi_nor_boot.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1064/xip/fsl_flexspi_nor_boot.c</FilePath>
-            </File>
-            <File>
-              <FileName>evkmimxrt1064_flexspi_nor_config.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../evkmimxrt1064/xip/evkmimxrt1064_flexspi_nor_config.c</FilePath>
-            </File>
-            <File>
-              <FileName>evkmimxrt1064_flexspi_nor_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../evkmimxrt1064/xip/evkmimxrt1064_flexspi_nor_config.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>component/uart</GroupName>
           <Files>
             <File>
@@ -2821,6 +2786,41 @@
               <FileName>fsl_component_generic_list.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../components/lists/fsl_component_generic_list.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>startup</GroupName>
+          <Files>
+            <File>
+              <FileName>startup_MIMXRT1064.S</FileName>
+              <FileType>2</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1064/arm/startup_MIMXRT1064.S</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>xip</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_flexspi_nor_boot.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1064/xip/fsl_flexspi_nor_boot.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_flexspi_nor_boot.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1064/xip/fsl_flexspi_nor_boot.c</FilePath>
+            </File>
+            <File>
+              <FileName>evkmimxrt1064_flexspi_nor_config.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../evkmimxrt1064/xip/evkmimxrt1064_flexspi_nor_config.c</FilePath>
+            </File>
+            <File>
+              <FileName>evkmimxrt1064_flexspi_nor_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../evkmimxrt1064/xip/evkmimxrt1064_flexspi_nor_config.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -3226,9 +3226,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>NDEBUG, CPU_MIMXRT1064DVL6A, SERIAL_PORT_TYPE_UART=1, MCUXPRESSO_SDK</Define>
+              <Define>NDEBUG, CPU_MIMXRT1064DVL6A, PRINTF_ADVANCED_ENABLE=1, SERIAL_PORT_TYPE_UART=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>../../../../..;..;../../../../../../../middleware/issdk/drivers/gpio/i.mx;../../../../../../../middleware/issdk/drivers/gpio;../../../../../../../devices/MIMXRT1064/drivers;../../../../../../../devices/MIMXRT1064/cmsis_drivers;../../../../../../../middleware/issdk/drivers/systick;../../../../../../../middleware/issdk/sensors;../../../../../../../devices/MIMXRT1064;../../../../../../../devices/MIMXRT1064/utilities/str;../../../../../../../devices/MIMXRT1064/utilities/debug_console;../../../../../../../devices/MIMXRT1064/xip;../../../../../../evkmimxrt1064/xip;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../components/lists;../../../../../../../CMSIS/Core/Include;../../../../../../../CMSIS/Driver/Include</IncludePath>
+              <IncludePath>../../../../..;..;../../../../../../../middleware/issdk/drivers/gpio/i.mx;../../../../../../../middleware/issdk/drivers/gpio;../../../../../../../devices/MIMXRT1064/drivers;../../../../../../../devices/MIMXRT1064/cmsis_drivers;../../../../../../../middleware/issdk/drivers/systick;../../../../../../../middleware/issdk/sensors;../../../../../../../devices/MIMXRT1064;../../../../../../../devices/MIMXRT1064/utilities/str;../../../../../../../devices/MIMXRT1064/utilities/debug_console;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1064/xip;../../../../../../evkmimxrt1064/xip;../../../../../../../CMSIS/Core/Include;../../../../../../../CMSIS/Driver/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -3696,41 +3696,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>startup</GroupName>
-          <Files>
-            <File>
-              <FileName>startup_MIMXRT1064.S</FileName>
-              <FileType>2</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1064/arm/startup_MIMXRT1064.S</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>xip</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_flexspi_nor_boot.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1064/xip/fsl_flexspi_nor_boot.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_flexspi_nor_boot.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1064/xip/fsl_flexspi_nor_boot.c</FilePath>
-            </File>
-            <File>
-              <FileName>evkmimxrt1064_flexspi_nor_config.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../evkmimxrt1064/xip/evkmimxrt1064_flexspi_nor_config.c</FilePath>
-            </File>
-            <File>
-              <FileName>evkmimxrt1064_flexspi_nor_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../evkmimxrt1064/xip/evkmimxrt1064_flexspi_nor_config.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>component/uart</GroupName>
           <Files>
             <File>
@@ -3787,6 +3752,41 @@
               <FileName>fsl_component_generic_list.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../components/lists/fsl_component_generic_list.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>startup</GroupName>
+          <Files>
+            <File>
+              <FileName>startup_MIMXRT1064.S</FileName>
+              <FileType>2</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1064/arm/startup_MIMXRT1064.S</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>xip</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_flexspi_nor_boot.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1064/xip/fsl_flexspi_nor_boot.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_flexspi_nor_boot.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1064/xip/fsl_flexspi_nor_boot.c</FilePath>
+            </File>
+            <File>
+              <FileName>evkmimxrt1064_flexspi_nor_config.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../evkmimxrt1064/xip/evkmimxrt1064_flexspi_nor_config.c</FilePath>
+            </File>
+            <File>
+              <FileName>evkmimxrt1064_flexspi_nor_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../evkmimxrt1064/xip/evkmimxrt1064_flexspi_nor_config.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -4192,9 +4192,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, NDEBUG, CPU_MIMXRT1064DVL6A, SERIAL_PORT_TYPE_UART=1, MCUXPRESSO_SDK</Define>
+              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, NDEBUG, CPU_MIMXRT1064DVL6A, PRINTF_ADVANCED_ENABLE=1, SERIAL_PORT_TYPE_UART=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>../../../../..;..;../../../../../../../middleware/issdk/drivers/gpio/i.mx;../../../../../../../middleware/issdk/drivers/gpio;../../../../../../../devices/MIMXRT1064/drivers;../../../../../../../devices/MIMXRT1064/cmsis_drivers;../../../../../../../middleware/issdk/drivers/systick;../../../../../../../middleware/issdk/sensors;../../../../../../../devices/MIMXRT1064;../../../../../../../devices/MIMXRT1064/utilities/str;../../../../../../../devices/MIMXRT1064/utilities/debug_console;../../../../../../../devices/MIMXRT1064/xip;../../../../../../evkmimxrt1064/xip;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../components/lists;../../../../../../../CMSIS/Core/Include;../../../../../../../CMSIS/Driver/Include</IncludePath>
+              <IncludePath>../../../../..;..;../../../../../../../middleware/issdk/drivers/gpio/i.mx;../../../../../../../middleware/issdk/drivers/gpio;../../../../../../../devices/MIMXRT1064/drivers;../../../../../../../devices/MIMXRT1064/cmsis_drivers;../../../../../../../middleware/issdk/drivers/systick;../../../../../../../middleware/issdk/sensors;../../../../../../../devices/MIMXRT1064;../../../../../../../devices/MIMXRT1064/utilities/str;../../../../../../../devices/MIMXRT1064/utilities/debug_console;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1064/xip;../../../../../../evkmimxrt1064/xip;../../../../../../../CMSIS/Core/Include;../../../../../../../CMSIS/Driver/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -4662,41 +4662,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>startup</GroupName>
-          <Files>
-            <File>
-              <FileName>startup_MIMXRT1064.S</FileName>
-              <FileType>2</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1064/arm/startup_MIMXRT1064.S</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>xip</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_flexspi_nor_boot.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1064/xip/fsl_flexspi_nor_boot.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_flexspi_nor_boot.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1064/xip/fsl_flexspi_nor_boot.c</FilePath>
-            </File>
-            <File>
-              <FileName>evkmimxrt1064_flexspi_nor_config.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../evkmimxrt1064/xip/evkmimxrt1064_flexspi_nor_config.c</FilePath>
-            </File>
-            <File>
-              <FileName>evkmimxrt1064_flexspi_nor_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../evkmimxrt1064/xip/evkmimxrt1064_flexspi_nor_config.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>component/uart</GroupName>
           <Files>
             <File>
@@ -4753,6 +4718,41 @@
               <FileName>fsl_component_generic_list.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../components/lists/fsl_component_generic_list.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>startup</GroupName>
+          <Files>
+            <File>
+              <FileName>startup_MIMXRT1064.S</FileName>
+              <FileType>2</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1064/arm/startup_MIMXRT1064.S</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>xip</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_flexspi_nor_boot.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1064/xip/fsl_flexspi_nor_boot.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_flexspi_nor_boot.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1064/xip/fsl_flexspi_nor_boot.c</FilePath>
+            </File>
+            <File>
+              <FileName>evkmimxrt1064_flexspi_nor_config.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../evkmimxrt1064/xip/evkmimxrt1064_flexspi_nor_config.c</FilePath>
+            </File>
+            <File>
+              <FileName>evkmimxrt1064_flexspi_nor_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../evkmimxrt1064/xip/evkmimxrt1064_flexspi_nor_config.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -5158,9 +5158,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>SKIP_SYSCLK_INIT, DATA_SECTION_IS_CACHEABLE=1, NDEBUG, CPU_MIMXRT1064DVL6A, SERIAL_PORT_TYPE_UART=1, MCUXPRESSO_SDK</Define>
+              <Define>SKIP_SYSCLK_INIT, DATA_SECTION_IS_CACHEABLE=1, NDEBUG, CPU_MIMXRT1064DVL6A, PRINTF_ADVANCED_ENABLE=1, SERIAL_PORT_TYPE_UART=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>../../../../..;..;../../../../../../../middleware/issdk/drivers/gpio/i.mx;../../../../../../../middleware/issdk/drivers/gpio;../../../../../../../devices/MIMXRT1064/drivers;../../../../../../../devices/MIMXRT1064/cmsis_drivers;../../../../../../../middleware/issdk/drivers/systick;../../../../../../../middleware/issdk/sensors;../../../../../../../devices/MIMXRT1064;../../../../../../../devices/MIMXRT1064/utilities/str;../../../../../../../devices/MIMXRT1064/utilities/debug_console;../../../../../../../devices/MIMXRT1064/xip;../../../../../../evkmimxrt1064/xip;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../components/lists;../../../../../../../CMSIS/Core/Include;../../../../../../../CMSIS/Driver/Include</IncludePath>
+              <IncludePath>../../../../..;..;../../../../../../../middleware/issdk/drivers/gpio/i.mx;../../../../../../../middleware/issdk/drivers/gpio;../../../../../../../devices/MIMXRT1064/drivers;../../../../../../../devices/MIMXRT1064/cmsis_drivers;../../../../../../../middleware/issdk/drivers/systick;../../../../../../../middleware/issdk/sensors;../../../../../../../devices/MIMXRT1064;../../../../../../../devices/MIMXRT1064/utilities/str;../../../../../../../devices/MIMXRT1064/utilities/debug_console;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1064/xip;../../../../../../evkmimxrt1064/xip;../../../../../../../CMSIS/Core/Include;../../../../../../../CMSIS/Driver/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -5628,41 +5628,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>startup</GroupName>
-          <Files>
-            <File>
-              <FileName>startup_MIMXRT1064.S</FileName>
-              <FileType>2</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1064/arm/startup_MIMXRT1064.S</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>xip</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_flexspi_nor_boot.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1064/xip/fsl_flexspi_nor_boot.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_flexspi_nor_boot.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1064/xip/fsl_flexspi_nor_boot.c</FilePath>
-            </File>
-            <File>
-              <FileName>evkmimxrt1064_flexspi_nor_config.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../evkmimxrt1064/xip/evkmimxrt1064_flexspi_nor_config.c</FilePath>
-            </File>
-            <File>
-              <FileName>evkmimxrt1064_flexspi_nor_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../evkmimxrt1064/xip/evkmimxrt1064_flexspi_nor_config.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>component/uart</GroupName>
           <Files>
             <File>
@@ -5719,6 +5684,41 @@
               <FileName>fsl_component_generic_list.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../components/lists/fsl_component_generic_list.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>startup</GroupName>
+          <Files>
+            <File>
+              <FileName>startup_MIMXRT1064.S</FileName>
+              <FileType>2</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1064/arm/startup_MIMXRT1064.S</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>xip</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_flexspi_nor_boot.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1064/xip/fsl_flexspi_nor_boot.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_flexspi_nor_boot.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1064/xip/fsl_flexspi_nor_boot.c</FilePath>
+            </File>
+            <File>
+              <FileName>evkmimxrt1064_flexspi_nor_config.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../evkmimxrt1064/xip/evkmimxrt1064_flexspi_nor_config.c</FilePath>
+            </File>
+            <File>
+              <FileName>evkmimxrt1064_flexspi_nor_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../evkmimxrt1064/xip/evkmimxrt1064_flexspi_nor_config.h</FilePath>
             </File>
           </Files>
         </Group>

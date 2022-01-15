@@ -75,7 +75,7 @@
 #include "task.h"
 #endif
 
-#if SSS_HAVE_A71CH || SSS_HAVE_A71CH_SIM
+#if SSS_HAVE_APPLET_A71CH || SSS_HAVE_APPLET_A71CH_SIM
 #include "ex_a71ch_scp03.h"
 #endif
 
@@ -162,7 +162,7 @@ int main(int argc, const char *argv[])
 
     //Session to SE is opened inside the Demo
 
-#if (SSS_HAVE_A71CH || SSS_HAVE_A71CH_SIM) && SSS_HAVE_A71CH_AUTH_SCP03
+#if (SSS_HAVE_APPLET_A71CH || SSS_HAVE_APPLET_A71CH_SIM) && SSS_HAVE_A71CH_AUTH_SCP03
     LOG_I("A71CH SCP03 add-on");
     {
         // Variables used by calls to legacy API
@@ -189,7 +189,7 @@ int main(int argc, const char *argv[])
         ENSURE_OR_GO_CLEANUP(sw == SW_OK);
         LOG_I("** Establish SCP03 session: End **");
     }
-#endif // SSS_HAVE_A71CH && SSS_HAVE_A71CH_AUTH_SCP03
+#endif // SSS_HAVE_APPLET_A71CH && SSS_HAVE_A71CH_AUTH_SCP03
 
     status = ex_sss_entry((PCONTEXT));
     LOG_I("ex_sss Finished");
@@ -263,7 +263,7 @@ static void sss_ex_rtos_task(void *ctx)
 #endif // INCLUDE_uxTaskGetStackHighWaterMark
 #endif
 
-#if SSS_HAVE_A71CH || SSS_HAVE_A71CH_SIM
+#if SSS_HAVE_APPLET_A71CH || SSS_HAVE_APPLET_A71CH_SIM
 #if EX_SSS_BOOT_OPEN_HOST_SESSION
     ex_sss_boot_open_host_session((PCONTEXT));
 #endif

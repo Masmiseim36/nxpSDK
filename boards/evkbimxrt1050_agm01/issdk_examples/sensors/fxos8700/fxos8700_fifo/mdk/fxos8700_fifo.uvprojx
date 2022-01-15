@@ -328,7 +328,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>DEBUG, CPU_MIMXRT1052DVL6B, SERIAL_PORT_TYPE_UART=1, MCUXPRESSO_SDK</Define>
+              <Define>DEBUG, CPU_MIMXRT1052DVL6B, PRINTF_ADVANCED_ENABLE=1, SERIAL_PORT_TYPE_UART=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
               <IncludePath>../../../../..;..;../../../../../../../middleware/issdk/drivers/gpio/i.mx;../../../../../../../middleware/issdk/drivers/gpio;../../../../../../../devices/MIMXRT1052/drivers;../../../../../../../devices/MIMXRT1052/cmsis_drivers;../../../../../../../middleware/issdk/drivers/systick;../../../../../../../middleware/issdk/sensors;../../../../../../../devices/MIMXRT1052;../../../../../../../devices/MIMXRT1052/utilities/str;../../../../../../../devices/MIMXRT1052/utilities/debug_console;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1052/xip;../../../../../../evkbimxrt1050/xip;../../../../../../../CMSIS/Core/Include;../../../../../../../CMSIS/Driver/Include</IncludePath>
             </VariousControls>
@@ -364,7 +364,7 @@
             <ScatterFile>MIMXRT1052xxxxx_ram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --entry=Reset_Handler --predefine="-D__stack_size__=0x800" --predefine="-D__heap_size__=0x1000"</Misc>
+            <Misc>--remove --entry=Reset_Handler</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -798,16 +798,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>startup</GroupName>
-          <Files>
-            <File>
-              <FileName>startup_MIMXRT1052.S</FileName>
-              <FileType>2</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1052/arm/startup_MIMXRT1052.S</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>component/uart</GroupName>
           <Files>
             <File>
@@ -864,6 +854,16 @@
               <FileName>fsl_component_generic_list.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../components/lists/fsl_component_generic_list.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>startup</GroupName>
+          <Files>
+            <File>
+              <FileName>startup_MIMXRT1052.S</FileName>
+              <FileType>2</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1052/arm/startup_MIMXRT1052.S</FilePath>
             </File>
           </Files>
         </Group>
@@ -1294,7 +1294,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, DEBUG, CPU_MIMXRT1052DVL6B, SERIAL_PORT_TYPE_UART=1, MCUXPRESSO_SDK</Define>
+              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, DEBUG, CPU_MIMXRT1052DVL6B, PRINTF_ADVANCED_ENABLE=1, SERIAL_PORT_TYPE_UART=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
               <IncludePath>../../../../..;..;../../../../../../../middleware/issdk/drivers/gpio/i.mx;../../../../../../../middleware/issdk/drivers/gpio;../../../../../../../devices/MIMXRT1052/drivers;../../../../../../../devices/MIMXRT1052/cmsis_drivers;../../../../../../../middleware/issdk/drivers/systick;../../../../../../../middleware/issdk/sensors;../../../../../../../devices/MIMXRT1052;../../../../../../../devices/MIMXRT1052/utilities/str;../../../../../../../devices/MIMXRT1052/utilities/debug_console;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1052/xip;../../../../../../evkbimxrt1050/xip;../../../../../../../CMSIS/Core/Include;../../../../../../../CMSIS/Driver/Include</IncludePath>
             </VariousControls>
@@ -1330,7 +1330,7 @@
             <ScatterFile>MIMXRT1052xxxxx_flexspi_nor.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --entry=Reset_Handler --predefine="-DXIP_BOOT_HEADER_ENABLE=1" --predefine="-D__stack_size__=0x800" --predefine="-D__heap_size__=0x1000"</Misc>
+            <Misc>--remove --entry=Reset_Handler --predefine="-DXIP_BOOT_HEADER_ENABLE=1"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -1764,16 +1764,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>startup</GroupName>
-          <Files>
-            <File>
-              <FileName>startup_MIMXRT1052.S</FileName>
-              <FileType>2</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1052/arm/startup_MIMXRT1052.S</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>component/uart</GroupName>
           <Files>
             <File>
@@ -1830,6 +1820,16 @@
               <FileName>fsl_component_generic_list.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../components/lists/fsl_component_generic_list.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>startup</GroupName>
+          <Files>
+            <File>
+              <FileName>startup_MIMXRT1052.S</FileName>
+              <FileType>2</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1052/arm/startup_MIMXRT1052.S</FilePath>
             </File>
           </Files>
         </Group>
@@ -2260,7 +2260,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>SKIP_SYSCLK_INIT, DATA_SECTION_IS_CACHEABLE=1, DEBUG, CPU_MIMXRT1052DVL6B, SERIAL_PORT_TYPE_UART=1, MCUXPRESSO_SDK</Define>
+              <Define>SKIP_SYSCLK_INIT, DATA_SECTION_IS_CACHEABLE=1, DEBUG, CPU_MIMXRT1052DVL6B, PRINTF_ADVANCED_ENABLE=1, SERIAL_PORT_TYPE_UART=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
               <IncludePath>../../../../..;..;../../../../../../../middleware/issdk/drivers/gpio/i.mx;../../../../../../../middleware/issdk/drivers/gpio;../../../../../../../devices/MIMXRT1052/drivers;../../../../../../../devices/MIMXRT1052/cmsis_drivers;../../../../../../../middleware/issdk/drivers/systick;../../../../../../../middleware/issdk/sensors;../../../../../../../devices/MIMXRT1052;../../../../../../../devices/MIMXRT1052/utilities/str;../../../../../../../devices/MIMXRT1052/utilities/debug_console;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1052/xip;../../../../../../evkbimxrt1050/xip;../../../../../../../CMSIS/Core/Include;../../../../../../../CMSIS/Driver/Include</IncludePath>
             </VariousControls>
@@ -2296,7 +2296,7 @@
             <ScatterFile>MIMXRT1052xxxxx_sdram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --entry=Reset_Handler --predefine="-D__stack_size__=0x800" --predefine="-D__heap_size__=0x1000"</Misc>
+            <Misc>--remove --entry=Reset_Handler</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -2730,16 +2730,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>startup</GroupName>
-          <Files>
-            <File>
-              <FileName>startup_MIMXRT1052.S</FileName>
-              <FileType>2</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1052/arm/startup_MIMXRT1052.S</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>component/uart</GroupName>
           <Files>
             <File>
@@ -2796,6 +2786,16 @@
               <FileName>fsl_component_generic_list.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../components/lists/fsl_component_generic_list.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>startup</GroupName>
+          <Files>
+            <File>
+              <FileName>startup_MIMXRT1052.S</FileName>
+              <FileType>2</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1052/arm/startup_MIMXRT1052.S</FilePath>
             </File>
           </Files>
         </Group>
@@ -3226,7 +3226,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>NDEBUG, CPU_MIMXRT1052DVL6B, SERIAL_PORT_TYPE_UART=1, MCUXPRESSO_SDK</Define>
+              <Define>NDEBUG, CPU_MIMXRT1052DVL6B, PRINTF_ADVANCED_ENABLE=1, SERIAL_PORT_TYPE_UART=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
               <IncludePath>../../../../..;..;../../../../../../../middleware/issdk/drivers/gpio/i.mx;../../../../../../../middleware/issdk/drivers/gpio;../../../../../../../devices/MIMXRT1052/drivers;../../../../../../../devices/MIMXRT1052/cmsis_drivers;../../../../../../../middleware/issdk/drivers/systick;../../../../../../../middleware/issdk/sensors;../../../../../../../devices/MIMXRT1052;../../../../../../../devices/MIMXRT1052/utilities/str;../../../../../../../devices/MIMXRT1052/utilities/debug_console;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1052/xip;../../../../../../evkbimxrt1050/xip;../../../../../../../CMSIS/Core/Include;../../../../../../../CMSIS/Driver/Include</IncludePath>
             </VariousControls>
@@ -3262,7 +3262,7 @@
             <ScatterFile>MIMXRT1052xxxxx_ram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --entry=Reset_Handler --predefine="-D__stack_size__=0x800" --predefine="-D__heap_size__=0x1000"</Misc>
+            <Misc>--remove --entry=Reset_Handler</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -3696,16 +3696,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>startup</GroupName>
-          <Files>
-            <File>
-              <FileName>startup_MIMXRT1052.S</FileName>
-              <FileType>2</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1052/arm/startup_MIMXRT1052.S</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>component/uart</GroupName>
           <Files>
             <File>
@@ -3762,6 +3752,16 @@
               <FileName>fsl_component_generic_list.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../components/lists/fsl_component_generic_list.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>startup</GroupName>
+          <Files>
+            <File>
+              <FileName>startup_MIMXRT1052.S</FileName>
+              <FileType>2</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1052/arm/startup_MIMXRT1052.S</FilePath>
             </File>
           </Files>
         </Group>
@@ -4192,7 +4192,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, NDEBUG, CPU_MIMXRT1052DVL6B, SERIAL_PORT_TYPE_UART=1, MCUXPRESSO_SDK</Define>
+              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, NDEBUG, CPU_MIMXRT1052DVL6B, PRINTF_ADVANCED_ENABLE=1, SERIAL_PORT_TYPE_UART=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
               <IncludePath>../../../../..;..;../../../../../../../middleware/issdk/drivers/gpio/i.mx;../../../../../../../middleware/issdk/drivers/gpio;../../../../../../../devices/MIMXRT1052/drivers;../../../../../../../devices/MIMXRT1052/cmsis_drivers;../../../../../../../middleware/issdk/drivers/systick;../../../../../../../middleware/issdk/sensors;../../../../../../../devices/MIMXRT1052;../../../../../../../devices/MIMXRT1052/utilities/str;../../../../../../../devices/MIMXRT1052/utilities/debug_console;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1052/xip;../../../../../../evkbimxrt1050/xip;../../../../../../../CMSIS/Core/Include;../../../../../../../CMSIS/Driver/Include</IncludePath>
             </VariousControls>
@@ -4228,7 +4228,7 @@
             <ScatterFile>MIMXRT1052xxxxx_flexspi_nor.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --entry=Reset_Handler --predefine="-DXIP_BOOT_HEADER_ENABLE=1" --predefine="-D__stack_size__=0x800" --predefine="-D__heap_size__=0x1000"</Misc>
+            <Misc>--remove --entry=Reset_Handler --predefine="-DXIP_BOOT_HEADER_ENABLE=1"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -4662,16 +4662,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>startup</GroupName>
-          <Files>
-            <File>
-              <FileName>startup_MIMXRT1052.S</FileName>
-              <FileType>2</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1052/arm/startup_MIMXRT1052.S</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>component/uart</GroupName>
           <Files>
             <File>
@@ -4728,6 +4718,16 @@
               <FileName>fsl_component_generic_list.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../components/lists/fsl_component_generic_list.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>startup</GroupName>
+          <Files>
+            <File>
+              <FileName>startup_MIMXRT1052.S</FileName>
+              <FileType>2</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1052/arm/startup_MIMXRT1052.S</FilePath>
             </File>
           </Files>
         </Group>
@@ -5158,7 +5158,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>SKIP_SYSCLK_INIT, DATA_SECTION_IS_CACHEABLE=1, NDEBUG, CPU_MIMXRT1052DVL6B, SERIAL_PORT_TYPE_UART=1, MCUXPRESSO_SDK</Define>
+              <Define>SKIP_SYSCLK_INIT, DATA_SECTION_IS_CACHEABLE=1, NDEBUG, CPU_MIMXRT1052DVL6B, PRINTF_ADVANCED_ENABLE=1, SERIAL_PORT_TYPE_UART=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
               <IncludePath>../../../../..;..;../../../../../../../middleware/issdk/drivers/gpio/i.mx;../../../../../../../middleware/issdk/drivers/gpio;../../../../../../../devices/MIMXRT1052/drivers;../../../../../../../devices/MIMXRT1052/cmsis_drivers;../../../../../../../middleware/issdk/drivers/systick;../../../../../../../middleware/issdk/sensors;../../../../../../../devices/MIMXRT1052;../../../../../../../devices/MIMXRT1052/utilities/str;../../../../../../../devices/MIMXRT1052/utilities/debug_console;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1052/xip;../../../../../../evkbimxrt1050/xip;../../../../../../../CMSIS/Core/Include;../../../../../../../CMSIS/Driver/Include</IncludePath>
             </VariousControls>
@@ -5194,7 +5194,7 @@
             <ScatterFile>MIMXRT1052xxxxx_sdram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --entry=Reset_Handler --predefine="-D__stack_size__=0x800" --predefine="-D__heap_size__=0x1000"</Misc>
+            <Misc>--remove --entry=Reset_Handler</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -5628,16 +5628,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>startup</GroupName>
-          <Files>
-            <File>
-              <FileName>startup_MIMXRT1052.S</FileName>
-              <FileType>2</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1052/arm/startup_MIMXRT1052.S</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>component/uart</GroupName>
           <Files>
             <File>
@@ -5694,6 +5684,16 @@
               <FileName>fsl_component_generic_list.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../components/lists/fsl_component_generic_list.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>startup</GroupName>
+          <Files>
+            <File>
+              <FileName>startup_MIMXRT1052.S</FileName>
+              <FileType>2</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1052/arm/startup_MIMXRT1052.S</FilePath>
             </File>
           </Files>
         </Group>

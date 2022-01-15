@@ -1,6 +1,6 @@
 Hardware requirements
 =====================
-- MIMXRT1020-EVK board
+- MIMXRT1010-EVK board
 - Personal Computer
 - FreeMASTER 3.0 or later installed on PC
 - Serial line or USB equipment as needed to connect over selected interface.

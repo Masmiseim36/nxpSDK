@@ -1,7 +1,7 @@
 Hardware requirements
 =====================
 - Mini/micro USB cable
-- MIMXRT1064-EVK board
+- IMXRT1050-EVKB board
 - 3.3V CAN transceiver
 - Supported CAN interface (IXXAT, Vector, Kvaser, etc.)
 - Personal Computer

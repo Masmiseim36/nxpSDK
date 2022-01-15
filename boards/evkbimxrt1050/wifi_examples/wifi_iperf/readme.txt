@@ -25,6 +25,12 @@ Connection from a smartphone with Android OS was tested with 'Magic iPerf' appli
 
 By default the example connects to network SSID "nxp_wifi_demo" with Open Security.
 
+Before building the example application select Wi-Fi module macro in the app_config.h. (see #define WIFI_<SoC Name>_BOARD_<Module Name>).
+For more information about Wi-Fi module connection see:
+    readme_modules.txt
+    Getting started guide on supported modules configuration:
+    https://www.nxp.com/document/guide/getting-started-with-nxp-wi-fi-modules-using-i-mx-rt-platform:GS-WIFI-MODULES-IMXRT-PLATFORM
+
 
 
 Toolchain supported
@@ -32,42 +38,17 @@ Toolchain supported
 - IAR embedded Workbench  9.10.2
 - Keil MDK  5.34
 - GCC ARM Embedded  10.2.1
-- MCUXpresso  11.4.0
+- MCUXpresso  11.5.0
 
 Hardware requirements
 =====================
 - Micro USB cable
 - evkbimxrt1050 board
 - Personal Computer
-- One of the following Wi-Fi modules:
-  - Panasonic PAN9026 SDIO ADAPTER + SD to uSD adapter
-  - AzureWave AW-NM191NF-uSD
-  - AzureWave AW-AM457-uSD
-  - AzureWave AW-CM358-uSD
+
 
 Board settings
 ==============
-This example, by default, is built to work with the AzureWave AW-AM457-uSD. It is configured by the macro definition in file app_config.h (#define WIFI_BOARD_AW_AM457).
-If you want use the AzureWave AW-NM191NF-uSD, please change the macro to WIFI_BOARD_AW_NM191.
-If you want use the Panasonic PAN9026 SDIO ADAPTER, please change the macro to WIFI_BOARD_PAN9026_SDIO.
-If you want use the AzureWave AW-CM358-uSD, please change the macro to WIFI_BOARD_AW_CM358.
-
-Jumper settings for AzureWave AW-NM191NF-uSD Module:
-  - J11 1-2: VIO_SD 1.8V (Voltage level of SDIO pins is 1.8V)
-  - J2  1-2: 3.3V VIO_uSD (Power Supply from uSD connector)
-
-Jumper settings for AzureWave AW-AM457-uSD Module:
-  - J11 1-2: VIO_SD 1.8V (Voltage level of SDIO pins is 1.8V)
-  - J2  1-2: 3.3V VIO_uSD (Power Supply from uSD connector)
-
-Jumper settings for AzureWave AW-CM358-uSD Module:
-  - J4 1-2: VIO 1.8V (Voltage level of SDIO pins is 1.8V)
-  - J2 1-2: 3.3V VIO_uSD (Power Supply from uSD connector)
-  - The pin 1 of J4 is not marked on the board. Please note that pin numbering of J4 is opposite to J2 (pin 1 is close to the "J4" label):
-         3 2 1
-         o o=o J4
-      J2 o=o o
-         1 2 3
 
 Prepare the Demo
 ================
@@ -125,7 +106,6 @@ Running the demo
     WLAN Driver Version   : v1.3.r21.p1
     WLAN Firmware Version : w8977o-V2, RF87XX, FP91, 16.91.10.p89, WPA2_CVE_FIX 1, PVE_FIX 1
 
-
 3. Select the desired mode of operation for WiFi, A - Start Soft AP, c - Connect to External AP (SSID='nxp_mrvl')
 4. Start the JPerf application, using the jperf-2.0.0/jperf.bat batch file.
     It can be downloaded here: https://sourceforge.net/projects/iperf/files/jperf/jperf%202.0.0/jperf-2.0.0.zip/download.
@@ -173,6 +153,7 @@ Running the demo
         [  4]  8.0- 9.0 sec   N   KBytes  N    Kbits/sec
         [  4]  9.0-10.0 sec   N   KBytes  N    Kbits/sec
         [  4]  0.0-10.8 sec   N   KBytes  N    Kbits/sec
+
 10. Also, when the test is finished, the log would be seen on the terminal like below,
 	where occurrences of the symbol "N" would be replaced by actual measured values.
     The log will vary depending on the selected mode:

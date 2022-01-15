@@ -182,6 +182,7 @@
           <name>CCDefines</name>
           <state>DEBUG</state>
           <state>CPU_MIMXRT1064DVL6A</state>
+          <state>PRINTF_ADVANCED_ENABLE=1</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>MCUXPRESSO_SDK</state>
         </option>
@@ -323,11 +324,11 @@
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1064</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1064/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1064/utilities/debug_console</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1064/xip</state>
-          <state>$PROJ_DIR$/../../../../../../evkmimxrt1064/xip</state>
           <state>$PROJ_DIR$/../../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1064/xip</state>
+          <state>$PROJ_DIR$/../../../../../../evkmimxrt1064/xip</state>
           <state>$PROJ_DIR$/../../../../../../../CMSIS/Core/Include</state>
           <state>$PROJ_DIR$/../../../../../../../CMSIS/Driver/Include</state>
         </option>
@@ -1164,6 +1165,7 @@
           <state>XIP_EXTERNAL_FLASH=1</state>
           <state>XIP_BOOT_HEADER_ENABLE=1</state>
           <state>CPU_MIMXRT1064DVL6A</state>
+          <state>PRINTF_ADVANCED_ENABLE=1</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>MCUXPRESSO_SDK</state>
         </option>
@@ -1305,11 +1307,11 @@
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1064</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1064/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1064/utilities/debug_console</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1064/xip</state>
-          <state>$PROJ_DIR$/../../../../../../evkmimxrt1064/xip</state>
           <state>$PROJ_DIR$/../../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1064/xip</state>
+          <state>$PROJ_DIR$/../../../../../../evkmimxrt1064/xip</state>
           <state>$PROJ_DIR$/../../../../../../../CMSIS/Core/Include</state>
           <state>$PROJ_DIR$/../../../../../../../CMSIS/Driver/Include</state>
         </option>
@@ -2146,6 +2148,7 @@
           <state>DATA_SECTION_IS_CACHEABLE=1</state>
           <state>DEBUG</state>
           <state>CPU_MIMXRT1064DVL6A</state>
+          <state>PRINTF_ADVANCED_ENABLE=1</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>MCUXPRESSO_SDK</state>
         </option>
@@ -2287,11 +2290,11 @@
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1064</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1064/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1064/utilities/debug_console</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1064/xip</state>
-          <state>$PROJ_DIR$/../../../../../../evkmimxrt1064/xip</state>
           <state>$PROJ_DIR$/../../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1064/xip</state>
+          <state>$PROJ_DIR$/../../../../../../evkmimxrt1064/xip</state>
           <state>$PROJ_DIR$/../../../../../../../CMSIS/Core/Include</state>
           <state>$PROJ_DIR$/../../../../../../../CMSIS/Driver/Include</state>
         </option>
@@ -3126,6 +3129,7 @@
           <name>CCDefines</name>
           <state>NDEBUG</state>
           <state>CPU_MIMXRT1064DVL6A</state>
+          <state>PRINTF_ADVANCED_ENABLE=1</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>MCUXPRESSO_SDK</state>
         </option>
@@ -3267,11 +3271,11 @@
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1064</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1064/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1064/utilities/debug_console</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1064/xip</state>
-          <state>$PROJ_DIR$/../../../../../../evkmimxrt1064/xip</state>
           <state>$PROJ_DIR$/../../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1064/xip</state>
+          <state>$PROJ_DIR$/../../../../../../evkmimxrt1064/xip</state>
           <state>$PROJ_DIR$/../../../../../../../CMSIS/Core/Include</state>
           <state>$PROJ_DIR$/../../../../../../../CMSIS/Driver/Include</state>
         </option>
@@ -4108,6 +4112,7 @@
           <state>XIP_BOOT_HEADER_ENABLE=1</state>
           <state>NDEBUG</state>
           <state>CPU_MIMXRT1064DVL6A</state>
+          <state>PRINTF_ADVANCED_ENABLE=1</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>MCUXPRESSO_SDK</state>
         </option>
@@ -4249,11 +4254,11 @@
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1064</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1064/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1064/utilities/debug_console</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1064/xip</state>
-          <state>$PROJ_DIR$/../../../../../../evkmimxrt1064/xip</state>
           <state>$PROJ_DIR$/../../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1064/xip</state>
+          <state>$PROJ_DIR$/../../../../../../evkmimxrt1064/xip</state>
           <state>$PROJ_DIR$/../../../../../../../CMSIS/Core/Include</state>
           <state>$PROJ_DIR$/../../../../../../../CMSIS/Driver/Include</state>
         </option>
@@ -5090,6 +5095,7 @@
           <state>SKIP_SYSCLK_INIT</state>
           <state>DATA_SECTION_IS_CACHEABLE=1</state>
           <state>CPU_MIMXRT1064DVL6A</state>
+          <state>PRINTF_ADVANCED_ENABLE=1</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>MCUXPRESSO_SDK</state>
         </option>
@@ -5231,11 +5237,11 @@
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1064</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1064/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1064/utilities/debug_console</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1064/xip</state>
-          <state>$PROJ_DIR$/../../../../../../evkmimxrt1064/xip</state>
           <state>$PROJ_DIR$/../../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1064/xip</state>
+          <state>$PROJ_DIR$/../../../../../../evkmimxrt1064/xip</state>
           <state>$PROJ_DIR$/../../../../../../../CMSIS/Core/Include</state>
           <state>$PROJ_DIR$/../../../../../../../CMSIS/Driver/Include</state>
         </option>
@@ -6145,27 +6151,6 @@
     </file>
   </group>
   <group>
-    <name>startup</name>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1064/iar/startup_MIMXRT1064.s</name>
-    </file>
-  </group>
-  <group>
-    <name>xip</name>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1064/xip/fsl_flexspi_nor_boot.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1064/xip/fsl_flexspi_nor_boot.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../evkmimxrt1064/xip/evkmimxrt1064_flexspi_nor_config.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../evkmimxrt1064/xip/evkmimxrt1064_flexspi_nor_config.h</name>
-    </file>
-  </group>
-  <group>
     <name>component</name>
     <group>
       <name>uart</name>
@@ -6203,6 +6188,27 @@
         <name>$PROJ_DIR$/../../../../../../../components/lists/fsl_component_generic_list.c</name>
       </file>
     </group>
+  </group>
+  <group>
+    <name>startup</name>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1064/iar/startup_MIMXRT1064.s</name>
+    </file>
+  </group>
+  <group>
+    <name>xip</name>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1064/xip/fsl_flexspi_nor_boot.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1064/xip/fsl_flexspi_nor_boot.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../evkmimxrt1064/xip/evkmimxrt1064_flexspi_nor_config.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../evkmimxrt1064/xip/evkmimxrt1064_flexspi_nor_config.h</name>
+    </file>
   </group>
   <group>
     <name>CMSIS</name>

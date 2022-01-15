@@ -189,7 +189,15 @@ usb_status_t USB_DeviceMscUfiThirteenCasesCheck(struct _usb_device_msc_struct *m
         {
             /*case 8, device intends to receive data from the host*/
             mscHandle->mscCsw->dataResidue = mscCheckEvent->hostExpectedDataLength;
+#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
+            if (kStatus_USB_Success !=
+                USB_DeviceSendRequest(mscHandle->handle, mscHandle->bulkInEndpoint, mscCheckEvent->buffer, 0))
+            {
+                return kStatus_USB_Error;
+            }
+#else
             (void)USB_DeviceSendRequest(mscHandle->handle, mscHandle->bulkInEndpoint, mscCheckEvent->buffer, 0);
+#endif
             mscHandle->mscCsw->cswStatus = USB_DEVICE_MSC_PHASE_ERROR;
             status                       = kStatus_USB_InvalidRequest;
         }
@@ -199,7 +207,14 @@ usb_status_t USB_DeviceMscUfiThirteenCasesCheck(struct _usb_device_msc_struct *m
         /*Host expects to send data to the device*/
         if (0U == mscCheckEvent->deviceExpectedDataLength)
         { /*case 9,Device intends to transfer no data*/
+#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
+            if (kStatus_USB_Success != USB_DeviceStallEndpoint(mscHandle->handle, mscHandle->bulkOutEndpoint))
+            {
+                return kStatus_USB_Error;
+            }
+#else
             (void)USB_DeviceStallEndpoint(mscHandle->handle, mscHandle->bulkOutEndpoint);
+#endif
             mscHandle->mscCsw->dataResidue  = mscCheckEvent->hostExpectedDataLength;
             mscHandle->mscCsw->cswStatus    = USB_DEVICE_MSC_COMMAND_FAILED;
             mscHandle->outEndpointStallFlag = 1;
@@ -207,7 +222,14 @@ usb_status_t USB_DeviceMscUfiThirteenCasesCheck(struct _usb_device_msc_struct *m
         }
         else if (0U != mscCheckEvent->deviceExpectedDirection)
         { /*case 10,Device intends to send data to the host*/
+#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
+            if (kStatus_USB_Success != USB_DeviceStallEndpoint(mscHandle->handle, mscHandle->bulkOutEndpoint))
+            {
+                return kStatus_USB_Error;
+            }
+#else
             (void)USB_DeviceStallEndpoint(mscHandle->handle, mscHandle->bulkOutEndpoint);
+#endif
             mscHandle->mscCsw->dataResidue  = mscCheckEvent->hostExpectedDataLength;
             mscHandle->mscCsw->cswStatus    = USB_DEVICE_MSC_PHASE_ERROR;
             mscHandle->outEndpointStallFlag = 1U;
@@ -331,8 +353,16 @@ usb_status_t USB_DeviceMscUfiRequestSenseCommand(struct _usb_device_msc_struct *
     {
         /* classCallback is initialized in classInit of s_UsbDeviceClassInterfaceMap,
         it is from the second parameter of classInit */
+#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
+        if (kStatus_USB_Success != mscHandle->configurationStruct->classCallback(
+                                       (class_handle_t)mscHandle, kUSB_DeviceMscEventRequestSense, (void *)&temp))
+        {
+            return kStatus_USB_Error;
+        }
+#else
         (void)mscHandle->configurationStruct->classCallback((class_handle_t)mscHandle, kUSB_DeviceMscEventRequestSense,
                                                             (void *)&temp);
+#endif
     }
 
     ufi->thirteenCase.deviceExpectedDataLength = USB_DEVICE_MSC_UFI_REQ_SENSE_DATA_LENGTH;
@@ -370,8 +400,16 @@ usb_status_t USB_DeviceMscUfiInquiryCommand(struct _usb_device_msc_struct *mscHa
     {
         /* classCallback is initialized in classInit of s_UsbDeviceClassInterfaceMap,
         it is from the second parameter of classInit */
+#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
+        if (kStatus_USB_Success != mscHandle->configurationStruct->classCallback(
+                                       (class_handle_t)mscHandle, kUSB_DeviceMscEventInquiry, (void *)&temp))
+        {
+            return kStatus_USB_Error;
+        }
+#else
         (void)mscHandle->configurationStruct->classCallback((class_handle_t)mscHandle, kUSB_DeviceMscEventInquiry,
                                                             (void *)&temp);
+#endif
     }
     ufi->thirteenCase.deviceExpectedDataLength = temp.size;
     ufi->thirteenCase.deviceExpectedDirection  = USB_IN;
@@ -517,8 +555,16 @@ usb_status_t USB_DeviceMscUfiTestUnitReadyCommand(struct _usb_device_msc_struct 
     {
         /* classCallback is initialized in classInit of s_UsbDeviceClassInterfaceMap,
         it is from the second parameter of classInit */
+#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
+        if (kStatus_USB_Success != mscHandle->configurationStruct->classCallback(
+                                       (class_handle_t)mscHandle, kUSB_DeviceMscEventTestUnitReady, (void *)&temp))
+        {
+            return kStatus_USB_Error;
+        }
+#else
         (void)mscHandle->configurationStruct->classCallback((class_handle_t)mscHandle, kUSB_DeviceMscEventTestUnitReady,
                                                             (void *)&temp);
+#endif
     }
     return status;
 }
@@ -575,8 +621,16 @@ usb_status_t USB_DeviceMscUfiModeSenseCommand(struct _usb_device_msc_struct *msc
     {
         /* classCallback is initialized in classInit of s_UsbDeviceClassInterfaceMap,
         it is from the second parameter of classInit */
+#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
+        if (kStatus_USB_Success != mscHandle->configurationStruct->classCallback(
+                                       (class_handle_t)mscHandle, kUSB_DeviceMscEventModeSense, (void *)&temp))
+        {
+            return kStatus_USB_Error;
+        }
+#else
         (void)mscHandle->configurationStruct->classCallback((class_handle_t)mscHandle, kUSB_DeviceMscEventModeSense,
                                                             (void *)&temp);
+#endif
     }
     ufi->thirteenCase.deviceExpectedDataLength = temp.size;
     ufi->thirteenCase.deviceExpectedDirection  = USB_IN;
@@ -614,8 +668,16 @@ usb_status_t USB_DeviceMscUfiModeSelectCommand(struct _usb_device_msc_struct *ms
     {
         /* classCallback is initialized in classInit of s_UsbDeviceClassInterfaceMap,
         it is from the second parameter of classInit */
+#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
+        if (kStatus_USB_Success != mscHandle->configurationStruct->classCallback(
+                                       (class_handle_t)mscHandle, kUSB_DeviceMscEventModeSelect, (void *)&temp))
+        {
+            return kStatus_USB_Error;
+        }
+#else
         (void)mscHandle->configurationStruct->classCallback((class_handle_t)mscHandle, kUSB_DeviceMscEventModeSelect,
                                                             (void *)&temp);
+#endif
     }
 
     ufi->thirteenCase.deviceExpectedDataLength = temp.size;
@@ -660,8 +722,17 @@ usb_status_t USB_DeviceMscUfiReadCapacityCommand(struct _usb_device_msc_struct *
     {
         /* classCallback is initialized in classInit of s_UsbDeviceClassInterfaceMap,
         it is from the second parameter of classInit */
-        status = mscHandle->configurationStruct->classCallback(
-            (class_handle_t)mscHandle, kUSB_DeviceMscEventReadCapacity, (void *)&diskInformation);
+#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
+        if (kStatus_USB_Success != mscHandle->configurationStruct->classCallback((class_handle_t)mscHandle,
+                                                                                 kUSB_DeviceMscEventReadCapacity,
+                                                                                 (void *)&diskInformation))
+        {
+            return kStatus_USB_Error;
+        }
+#else
+        (void)mscHandle->configurationStruct->classCallback((class_handle_t)mscHandle, kUSB_DeviceMscEventReadCapacity,
+                                                            (void *)&diskInformation);
+#endif
     }
 
     if (logicalUnitNumber > mscHandle->logicalUnitNumber)
@@ -892,8 +963,16 @@ usb_status_t USB_DeviceMscUfiPreventAllowMediumCommand(struct _usb_device_msc_st
     {
         /* classCallback is initialized in classInit of s_UsbDeviceClassInterfaceMap,
         it is from the second parameter of classInit */
+#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
+        if (kStatus_USB_Success != mscHandle->configurationStruct->classCallback(
+                                       (class_handle_t)mscHandle, kUSB_DeviceMscEventRemovalRequest, (void *)&temp))
+        {
+            return kStatus_USB_Error;
+        }
+#else
         (void)mscHandle->configurationStruct->classCallback((class_handle_t)mscHandle,
                                                             kUSB_DeviceMscEventRemovalRequest, (void *)&temp);
+#endif
     }
 
     return status;
@@ -929,8 +1008,16 @@ usb_status_t USB_DeviceMscUfiSendDiagnosticCommand(struct _usb_device_msc_struct
     {
         /* classCallback is initialized in classInit of s_UsbDeviceClassInterfaceMap,
         it is from the second parameter of classInit */
+#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
+        if (kStatus_USB_Success != mscHandle->configurationStruct->classCallback(
+                                       (class_handle_t)mscHandle, kUSB_DeviceMscEventSendDiagnostic, (void *)&temp))
+        {
+            return kStatus_USB_Error;
+        }
+#else
         (void)mscHandle->configurationStruct->classCallback((class_handle_t)mscHandle,
                                                             kUSB_DeviceMscEventSendDiagnostic, (void *)&temp);
+#endif
     }
     return status;
 }
@@ -968,8 +1055,16 @@ usb_status_t USB_DeviceMscUfiStartStopUnitCommand(struct _usb_device_msc_struct 
         {
             /* classCallback is initialized in classInit of s_UsbDeviceClassInterfaceMap,
             it is from the second parameter of classInit */
+#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
+            if (kStatus_USB_Success != mscHandle->configurationStruct->classCallback(
+                                           (class_handle_t)mscHandle, kUSB_DeviceMscEventStopEjectMedia, (void *)&temp))
+            {
+                return kStatus_USB_Error;
+            }
+#else
             (void)mscHandle->configurationStruct->classCallback((class_handle_t)mscHandle,
                                                                 kUSB_DeviceMscEventStopEjectMedia, (void *)&temp);
+#endif
         }
     }
 

@@ -355,12 +355,14 @@
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/dns</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/ftp</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/http</state>
+          <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/lwm2m</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/mdns</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/mqtt</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/nat</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/pop3</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/ppp</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/pppoe</state>
+          <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/ptp</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/smtp</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/snmp</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/sntp</state>
@@ -544,7 +546,7 @@
           <name>ADefines</name>
           <state>DEBUG</state>
           <state>__STARTUP_INITIALIZE_NONCACHEDATA</state>
-          <state>TX_ENABLE_FPU_SUPPORT</state>
+          <state>TX_ENABLE_FPU_SUPPORT=1</state>
         </option>
         <option>
           <name>AList</name>
@@ -1387,12 +1389,14 @@
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/dns</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/ftp</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/http</state>
+          <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/lwm2m</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/mdns</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/mqtt</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/nat</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/pop3</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/ppp</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/pppoe</state>
+          <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/ptp</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/smtp</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/snmp</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/sntp</state>
@@ -1576,7 +1580,7 @@
           <name>ADefines</name>
           <state>NDEBUG</state>
           <state>__STARTUP_INITIALIZE_NONCACHEDATA</state>
-          <state>TX_ENABLE_FPU_SUPPORT</state>
+          <state>TX_ENABLE_FPU_SUPPORT=1</state>
         </option>
         <option>
           <name>AList</name>
@@ -2068,6 +2072,18 @@
   <group>
     <name>board</name>
     <file>
+      <name>$PROJ_DIR$/../pin_mux.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../pin_mux.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../board_setup.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../board_setup.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../../../../../middleware/usb/include/usb.h</name>
     </file>
     <file>
@@ -2090,18 +2106,6 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../components/osa/fsl_os_abstraction_config.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../pin_mux.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../pin_mux.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../board_setup.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../board_setup.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../board.c</name>
@@ -2429,6 +2433,15 @@
           </file>
         </group>
         <group>
+          <name>lwm2m</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/lwm2m/nx_lwm2m_client.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/lwm2m/nx_lwm2m_client.h</name>
+          </file>
+        </group>
+        <group>
           <name>mdns</name>
           <file>
             <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/mdns/nxd_mdns.c</name>
@@ -2486,6 +2499,15 @@
           </file>
           <file>
             <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/pppoe/nx_pppoe_server.h</name>
+          </file>
+        </group>
+        <group>
+          <name>ptp</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/ptp/nxd_ptp_client.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/ptp/nxd_ptp_client.h</name>
           </file>
         </group>
         <group>

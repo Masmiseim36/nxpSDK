@@ -15,17 +15,28 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
+
+/* @TEST_ANCHOR */
+
 #if defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0U)
+#ifndef CONTROLLER_ID
 #define CONTROLLER_ID kUSB_ControllerEhci0
 #endif
+#endif
 #if defined(USB_DEVICE_CONFIG_KHCI) && (USB_DEVICE_CONFIG_KHCI > 0U)
+#ifndef CONTROLLER_ID
 #define CONTROLLER_ID kUSB_ControllerKhci0
 #endif
+#endif
 #if defined(USB_DEVICE_CONFIG_LPCIP3511FS) && (USB_DEVICE_CONFIG_LPCIP3511FS > 0U)
+#ifndef CONTROLLER_ID
 #define CONTROLLER_ID kUSB_ControllerLpcIp3511Fs0
 #endif
+#endif
 #if defined(USB_DEVICE_CONFIG_LPCIP3511HS) && (USB_DEVICE_CONFIG_LPCIP3511HS > 0U)
+#ifndef CONTROLLER_ID
 #define CONTROLLER_ID kUSB_ControllerLpcIp3511Hs0
+#endif
 #endif
 
 #if defined(USB_DEVICE_AUDIO_USE_SYNC_MODE) && (USB_DEVICE_AUDIO_USE_SYNC_MODE > 0U)
@@ -79,10 +90,17 @@ typedef struct _usb_audio_generator_struct
     uint8_t maxTreble;
     uint8_t resTreble;
     uint8_t curAutomaticGain;
+#if (USB_DEVICE_CONFIG_AUDIO_CLASS_2_0)
+    uint8_t curDelay[4]; /* need to consider the endians */
+    uint8_t minDelay[4]; /* need to consider the endians */
+    uint8_t maxDelay[4]; /* need to consider the endians */
+    uint8_t resDelay[4]; /* need to consider the endians */
+#else
     uint8_t curDelay[2]; /* need to consider the endians */
     uint8_t minDelay[2]; /* need to consider the endians */
     uint8_t maxDelay[2]; /* need to consider the endians */
     uint8_t resDelay[2]; /* need to consider the endians */
+#endif
     uint8_t curLoudness;
     uint8_t curSamplingFrequency[3]; /* need to consider the endians */
     uint8_t minSamplingFrequency[3]; /* need to consider the endians */

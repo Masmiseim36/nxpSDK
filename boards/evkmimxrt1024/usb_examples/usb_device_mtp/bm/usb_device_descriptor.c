@@ -52,7 +52,7 @@ usb_device_endpoint_struct_t g_UsbDeviceMtpEndpoints[USB_MTP_ENDPOINT_COUNT] = {
 /* mtp interface information */
 usb_device_interface_struct_t g_UsbDeviceMtpInterface[] = {{
     /* The alternate setting of the interface */
-    0U,
+    USB_MTP_INTERFACE_ALTERNATE_0,
     {
         USB_MTP_ENDPOINT_COUNT,  /* Endpoint count */
         g_UsbDeviceMtpEndpoints, /* Endpoints handle */
@@ -140,7 +140,7 @@ uint8_t g_UsbDeviceConfigurationDescriptor[] = {
     USB_DESCRIPTOR_LENGTH_INTERFACE, /* Size of this descriptor in bytes */
     USB_DESCRIPTOR_TYPE_INTERFACE,   /* INTERFACE Descriptor Type */
     USB_MTP_INTERFACE_INDEX,         /* Number of this interface. */
-    0x00U,                           /* Value used to select this alternate setting
+    USB_MTP_INTERFACE_ALTERNATE_0,   /* Value used to select this alternate setting
                                                             for the interface identified in the prior field */
     USB_MTP_ENDPOINT_COUNT,          /* Number of endpoints used by this
                                                               interface (excluding endpoint zero). */
@@ -259,7 +259,7 @@ uint8_t g_UsbDeviceString3[] = {2U + 2U * 16U, USB_DESCRIPTOR_TYPE_STRING,
                                 'F',           0x00U};
 
 USB_DMA_INIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE)
-uint8_t g_UsbDeviceString4[] = {2U + 2U * 16U, USB_DESCRIPTOR_TYPE_STRING, 'M', 0x00U, 'T', 0x00U, 'P', 0x00U};
+uint8_t g_UsbDeviceString4[] = {2U + 2U * 3U, USB_DESCRIPTOR_TYPE_STRING, 'M', 0x00U, 'T', 0x00U, 'P', 0x00U};
 
 USB_DMA_INIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE)
 uint8_t g_UsbDeviceStringN[] = {2U + 2U * 16U, USB_DESCRIPTOR_TYPE_STRING,

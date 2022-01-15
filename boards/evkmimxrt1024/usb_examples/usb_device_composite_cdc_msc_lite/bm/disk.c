@@ -292,8 +292,8 @@ usb_status_t USB_DeviceMscBulkIn(usb_device_handle deviceHandle,
                                  usb_device_endpoint_callback_message_struct_t *event,
                                  void *arg)
 {
-    usb_device_msc_csw_t *csw;
-    usb_status_t error = kStatus_USB_Error;
+    usb_device_msc_csw_t *csw = NULL;
+    usb_status_t error        = kStatus_USB_Error;
     usb_device_msc_struct_t *mscHandle;
 
     mscHandle = &(g_deviceComposite->mscDisk.handle);
@@ -343,16 +343,26 @@ usb_status_t USB_DeviceMscBulkIn(usb_device_handle deviceHandle,
 
             /*data transfer has been done, send the csw to host */
             mscHandle->cswPrimeFlag = 1;
-            USB_DeviceSendRequest(deviceHandle, mscHandle->bulkInEndpoint, (uint8_t *)mscHandle->g_mscCsw,
-                                  USB_DEVICE_MSC_CSW_LENGTH);
+#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
+            error = USB_DeviceSendRequest(deviceHandle, mscHandle->bulkInEndpoint, (uint8_t *)mscHandle->g_mscCsw,
+                                          USB_DEVICE_MSC_CSW_LENGTH);
+#else
+            (void)USB_DeviceSendRequest(deviceHandle, mscHandle->bulkInEndpoint, (uint8_t *)mscHandle->g_mscCsw,
+                                        USB_DEVICE_MSC_CSW_LENGTH);
+#endif
         }
     }
     else if ((event->length == USB_DEVICE_MSC_CSW_LENGTH) && (csw->signature == USB_DEVICE_MSC_DCSWSIGNATURE))
     {
         mscHandle->cbwValidFlag = 1;
         mscHandle->cswPrimeFlag = 0;
+#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
+        error = UUSB_DeviceRecvRequest(deviceHandle, mscHandle->bulkOutEndpoint, (uint8_t *)mscHandle->g_mscCbw,
+                                       USB_DEVICE_MSC_CBW_LENGTH);
+#else
         (void)USB_DeviceRecvRequest(deviceHandle, mscHandle->bulkOutEndpoint, (uint8_t *)mscHandle->g_mscCbw,
                                     USB_DEVICE_MSC_CBW_LENGTH);
+#endif
         mscHandle->cbwPrimeFlag = 1;
     }
     else
@@ -699,7 +709,7 @@ usb_status_t USB_DeviceMscDiskClassRequest(usb_device_handle handle,
                                            uint32_t *length,
                                            uint8_t **buffer)
 {
-    usb_status_t error = kStatus_USB_Error;
+    usb_status_t error = kStatus_USB_InvalidRequest;
     usb_device_msc_struct_t *mscHandle;
 
     mscHandle = &(g_deviceComposite->mscDisk.handle);
@@ -711,19 +721,16 @@ usb_status_t USB_DeviceMscDiskClassRequest(usb_device_handle handle,
     switch (setup->bRequest)
     {
         case USB_DEVICE_MSC_GET_MAX_LUN:
-            if ((setup->wIndex == USB_MSC_DISK_INTERFACE_INDEX) && (!setup->wValue) && (setup->wLength == 0x0001) &&
+            if ((!setup->wValue) && (setup->wLength == 0x0001) &&
                 ((setup->bmRequestType & USB_REQUEST_TYPE_DIR_MASK) == USB_REQUEST_TYPE_DIR_IN))
             {
                 *buffer = (uint8_t *)&mscHandle->logicalUnitNumber;
-                *length = setup->wLength;
-            }
-            else
-            {
-                error = kStatus_USB_InvalidRequest;
+                *length = sizeof(mscHandle->logicalUnitNumber);
+                error   = kStatus_USB_Success;
             }
             break;
         case USB_DEVICE_MSC_BULK_ONLY_MASS_STORAGE_RESET:
-            if ((setup->wIndex == USB_MSC_DISK_INTERFACE_INDEX) && (!setup->wValue) && (!setup->wLength) &&
+            if ((!setup->wValue) && (!setup->wLength) &&
                 ((setup->bmRequestType & USB_REQUEST_TYPE_DIR_MASK) == USB_REQUEST_TYPE_DIR_OUT))
             {
                 /*Need to go to stall process, because reset recovery contains reset command and clare feature command*/
@@ -733,10 +740,7 @@ usb_status_t USB_DeviceMscDiskClassRequest(usb_device_handle handle,
                 mscHandle->inEndpointStallFlag  = 1;
                 mscHandle->performResetRecover  = 0;
                 mscHandle->performResetDoneFlag = 1;
-            }
-            else
-            {
-                error = kStatus_USB_InvalidRequest;
+                error                           = kStatus_USB_Success;
             }
             break;
         default:

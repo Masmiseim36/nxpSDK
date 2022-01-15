@@ -225,7 +225,14 @@ static usb_status_t USB_DeviceEhciEndpointInit(usb_device_ehci_state_struct_t *e
     uint8_t transferType = epInit->transferType & USB_DESCRIPTOR_ENDPOINT_ATTRIBUTE_TYPE_MASK;
 
     /* Cancel pending transfer of the endpoint */
+#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
+    if (kStatus_USB_Success != USB_DeviceEhciCancel(ehciState, epInit->endpointAddress))
+    {
+        return kStatus_USB_Error;
+    }
+#else
     (void)USB_DeviceEhciCancel(ehciState, epInit->endpointAddress);
+#endif
 
     if ((0U != (ehciState->registerBase->EPPRIME & primeBit)) || (0U != (ehciState->registerBase->EPSR & primeBit)))
     {
@@ -309,7 +316,15 @@ static usb_status_t USB_DeviceEhciEndpointDeinit(usb_device_ehci_state_struct_t 
     ehciState->qh[index].endpointStatusUnion.endpointStatusBitmap.isOpened = 0U;
 
     /* Cancel the transfer of the endpoint */
+#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
+    if (kStatus_USB_Success != USB_DeviceEhciCancel(ehciState, ep))
+    {
+        return kStatus_USB_Error;
+    }
+#else
     (void)USB_DeviceEhciCancel(ehciState, ep);
+#endif
+
     if ((0U != (ehciState->registerBase->EPPRIME & primeBit)) || (0U != (ehciState->registerBase->EPSR & primeBit)))
     {
         return kStatus_USB_Busy;
@@ -354,14 +369,29 @@ static usb_status_t USB_DeviceEhciEndpointStall(usb_device_ehci_state_struct_t *
     if (0U == endpoint)
     {
         /* Cancel the transfer of the endpoint */
+#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
+        if ((kStatus_USB_Success != USB_DeviceEhciCancel(ehciState, 0x00)) ||
+            (kStatus_USB_Success != USB_DeviceEhciCancel(ehciState, 0x80)))
+        {
+            return kStatus_USB_Error;
+        }
+#else
         (void)USB_DeviceEhciCancel(ehciState, 0x00);
         (void)USB_DeviceEhciCancel(ehciState, 0x80);
+#endif
         ehciState->registerBase->EPCR0 |= (USBHS_EPCR_TXS_MASK | USBHS_EPCR_RXS_MASK);
     }
     else
     {
         /* Cancel the transfer of the endpoint */
+#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
+        if (kStatus_USB_Success != USB_DeviceEhciCancel(ehciState, ep))
+        {
+            return kStatus_USB_Error;
+        }
+#else
         (void)USB_DeviceEhciCancel(ehciState, ep);
+#endif
 
         ehciState->registerBase->EPCR[endpoint - 1U] |= ((0U != direction) ? USBHS_EPCR_TXS_MASK : USBHS_EPCR_RXS_MASK);
     }
@@ -398,7 +428,14 @@ static usb_status_t USB_DeviceEhciEndpointUnstall(usb_device_ehci_state_struct_t
         ehciState->registerBase->EPCR[endpoint - 1U] |= ((0U != direction) ? USBHS_EPCR_TXR_MASK : USBHS_EPCR_RXR_MASK);
     }
     /* Cancel the transfer of the endpoint */
+#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
+    if (kStatus_USB_Success != USB_DeviceEhciCancel(ehciState, ep))
+    {
+        return kStatus_USB_Error;
+    }
+#else
     (void)USB_DeviceEhciCancel(ehciState, ep);
+#endif
 
     return kStatus_USB_Success;
 }
@@ -503,7 +540,16 @@ static void USB_DeviceEhciCancelControlPipe(usb_device_ehci_state_struct_t *ehci
         {
             message.code    = endpoint | (uint8_t)((uint32_t)direction << 0x07U);
             message.isSetup = 0U;
+#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
+            if (kStatus_USB_Success != USB_DeviceNotificationTrigger(ehciState->deviceHandle, &message))
+            {
+#if (defined(DEVICE_ECHO) && (DEVICE_ECHO > 0U))
+                usb_echo("notification error\n");
+#endif
+            }
+#else
             (void)USB_DeviceNotificationTrigger(ehciState->deviceHandle, &message);
+#endif
             message.buffer = NULL;
             message.length = 0U;
         }
@@ -568,7 +614,16 @@ static void USB_DeviceEhciInterruptTokenDone(usb_device_ehci_state_struct_t *ehc
                 /* Fill the setup packet to the backup buffer */
                 USB_DeviceEhciFillSetupBuffer(ehciState, endpoint);
                 /* Notify the up layer the EHCI status changed. */
+#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
+                if (kStatus_USB_Success != USB_DeviceNotificationTrigger(ehciState->deviceHandle, &message))
+                {
+#if (defined(DEVICE_ECHO) && (DEVICE_ECHO > 0U))
+                    usb_echo("notification error\n");
+#endif
+                }
+#else
                 (void)USB_DeviceNotificationTrigger(ehciState->deviceHandle, &message);
+#endif
             }
         }
     }
@@ -690,7 +745,16 @@ static void USB_DeviceEhciInterruptTokenDone(usb_device_ehci_state_struct_t *ehc
                         {
                             message.code    = endpoint | (uint8_t)((uint32_t)direction << 0x07U);
                             message.isSetup = 0U;
+#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
+                            if (kStatus_USB_Success != USB_DeviceNotificationTrigger(ehciState->deviceHandle, &message))
+                            {
+#if (defined(DEVICE_ECHO) && (DEVICE_ECHO > 0U))
+                                usb_echo("notification error\n");
+#endif
+                            }
+#else
                             (void)USB_DeviceNotificationTrigger(ehciState->deviceHandle, &message);
+#endif
                             message.buffer = NULL;
                             message.length = 0U;
                         }
@@ -770,7 +834,16 @@ static void USB_DeviceEhciInterruptPortChange(usb_device_ehci_state_struct_t *eh
         if (0U != ehciState->isResetting)
         {
             message.code = (uint8_t)kUSB_DeviceNotifyBusReset;
+#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
+            if (kStatus_USB_Success != USB_DeviceNotificationTrigger(ehciState->deviceHandle, &message))
+            {
+#if (defined(DEVICE_ECHO) && (DEVICE_ECHO > 0U))
+                usb_echo("notification error\n");
+#endif
+            }
+#else
             (void)USB_DeviceNotificationTrigger(ehciState->deviceHandle, &message);
+#endif
             ehciState->isResetting = 0U;
         }
     }
@@ -782,7 +855,14 @@ static void USB_DeviceEhciInterruptPortChange(usb_device_ehci_state_struct_t *eh
         ehciState->isSuspending = 0U;
 
         message.code = (uint8_t)kUSB_DeviceNotifyResume;
+#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
+        if (kStatus_USB_Success != USB_DeviceNotificationTrigger(ehciState->deviceHandle, &message))
+        {
+            return kStatus_USB_Error;
+        }
+#else
         (void)USB_DeviceNotificationTrigger(ehciState->deviceHandle, &message);
+#endif
     }
 #endif /* USB_DEVICE_CONFIG_LOW_POWER_MODE */
 }
@@ -824,8 +904,16 @@ static void USB_DeviceEhciInterruptReset(usb_device_ehci_state_struct_t *ehciSta
         message.code    = (uint8_t)kUSB_DeviceNotifyBusReset;
         message.length  = 0U;
         message.isSetup = 0U;
-
+#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
+        if (kStatus_USB_Success != USB_DeviceNotificationTrigger(ehciState->deviceHandle, &message))
+        {
+#if (defined(DEVICE_ECHO) && (DEVICE_ECHO > 0U))
+            usb_echo("notification error\n");
+#endif
+        }
+#else
         (void)USB_DeviceNotificationTrigger(ehciState->deviceHandle, &message);
+#endif
     }
 }
 
@@ -865,7 +953,14 @@ static void USB_DeviceEhciInterruptSuspend(usb_device_ehci_state_struct_t *ehciS
             message.length  = 0U;
             message.isSetup = 0U;
             message.code    = (uint8_t)kUSB_DeviceNotifySuspend;
+#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
+            if (kStatus_USB_Success != USB_DeviceNotificationTrigger(ehciState->deviceHandle, &message))
+            {
+                return kStatus_USB_Error;
+            }
+#else
             (void)USB_DeviceNotificationTrigger(ehciState->deviceHandle, &message);
+#endif
         }
     }
 }
@@ -1123,7 +1218,14 @@ static usb_hsdcd_status_t USB_DeviceEhciIsrHSDCDCallback(void *handle, uint32_t 
     message.length  = 0U;
     message.isSetup = 0U;
     message.code    = (uint8_t)kUSB_DeviceNotifyDcdDetectFinished;
+#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
+    if (kStatus_USB_Success != USB_DeviceNotificationTrigger(ehciState->deviceHandle, &message))
+    {
+        return kStatus_USB_Error;
+    }
+#else
     (void)USB_DeviceNotificationTrigger(ehciState->deviceHandle, &message);
+#endif
 
     return error;
 }
@@ -1158,7 +1260,14 @@ static usb_phydcd_status_t USB_DeviceEhciIsrPHYDCDCallback(void *handle, uint32_
     message.length = 0U;
     message.isSetup = 0U;
     message.code = (uint8_t)kUSB_DeviceNotifyDcdDetectFinished;
+#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
+    if (kStatus_USB_Success != USB_DeviceNotificationTrigger(ehciState->deviceHandle, &message))
+    {
+        return kStatus_USB_Error;
+    }
+#else
     (void)USB_DeviceNotificationTrigger(ehciState->deviceHandle, &message);
+#endif
 
     return error;
 }
@@ -1274,8 +1383,16 @@ usb_status_t USB_DeviceEhciInit(uint8_t controllerId,
     {
         /* Device is connected to a host. */
         message.code = (uint8_t)kUSB_DeviceNotifyAttach;
+#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
+        if ((kStatus_USB_Success != USB_DeviceNotificationTrigger(ehciState->deviceHandle, &message)) ||
+            (kStatus_USB_Success != USB_HSDCD_Control(ehciState->dcdHandle, kUSB_DeviceHSDcdRun, NULL)))
+        {
+            return kStatus_USB_Error;
+        }
+#else
         (void)USB_DeviceNotificationTrigger(ehciState->deviceHandle, &message);
         (void)USB_HSDCD_Control(ehciState->dcdHandle, kUSB_DeviceHSDcdRun, NULL);
+#endif
     }
 #elif (defined(USB_DEVICE_CONFIG_CHARGER_DETECT) && (USB_DEVICE_CONFIG_CHARGER_DETECT > 0U)) && \
     (defined(FSL_FEATURE_SOC_USB_ANALOG_COUNT) && (FSL_FEATURE_SOC_USB_ANALOG_COUNT > 0U))
@@ -1296,9 +1413,16 @@ usb_status_t USB_DeviceEhciInit(uint8_t controllerId,
     {
         /* Device is connected to a host. */
         message.code = (uint8_t)kUSB_DeviceNotifyAttach;
+#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
+        if ((kStatus_USB_Success != USB_DeviceNotificationTrigger(ehciState->deviceHandle, &message)) ||
+            (kStatus_USB_Success != USB_HSDCD_Control(ehciState->dcdHandle, kUSB_DevicePHYDcdRun, NULL)))
+        {
+            return kStatus_USB_Error;
+        }
+#else
         (void)USB_DeviceNotificationTrigger(ehciState->deviceHandle, &message);
-
         (void)USB_PHYDCD_Control(ehciState->dcdHandle, kUSB_DevicePHYDcdRun, NULL);
+#endif
     }
 #endif
 
@@ -1339,10 +1463,24 @@ usb_status_t USB_DeviceEhciDeinit(usb_device_controller_handle ehciHandle)
 
 #if (defined(USB_DEVICE_CONFIG_CHARGER_DETECT) && (USB_DEVICE_CONFIG_CHARGER_DETECT > 0U)) && \
     (defined(FSL_FEATURE_SOC_USBHSDCD_COUNT) && (FSL_FEATURE_SOC_USBHSDCD_COUNT > 0U))
+#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
+    if (kStatus_USB_Success != USB_HSDCD_Deinit(ehciState->dcdHandle))
+    {
+        return kStatus_USB_Error;
+    }
+#else
     (void)USB_HSDCD_Deinit(ehciState->dcdHandle);
+#endif
 #elif (defined(USB_DEVICE_CONFIG_CHARGER_DETECT) && (USB_DEVICE_CONFIG_CHARGER_DETECT > 0U)) && \
     (defined(FSL_FEATURE_SOC_USB_ANALOG_COUNT) && (FSL_FEATURE_SOC_USB_ANALOG_COUNT > 0U))
+#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
+    if (kStatus_USB_Success != USB_PHYDCD_Deinit(ehciState->dcdHandle))
+    {
+        return kStatus_USB_Error;
+    }
+#else
     (void)USB_PHYDCD_Deinit(ehciState->dcdHandle);
+#endif
 #endif
 
     return kStatus_USB_Success;
@@ -1539,7 +1677,14 @@ usb_status_t USB_DeviceEhciCancel(usb_device_controller_handle ehciHandle, uint8
     {
         message.code    = ep;
         message.isSetup = 0U;
+#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
+        if (kStatus_USB_Success != USB_DeviceNotificationTrigger(ehciState->deviceHandle, &message))
+        {
+            return kStatus_USB_Error;
+        }
+#else
         (void)USB_DeviceNotificationTrigger(ehciState->deviceHandle, &message);
+#endif
         message.buffer = NULL;
     }
 
@@ -1566,6 +1711,7 @@ usb_status_t USB_DeviceEhciControl(usb_device_controller_handle ehciHandle, usb_
 #endif
     uint16_t *temp16;
     uint8_t *temp8;
+
 #if ((defined(USB_DEVICE_CONFIG_REMOTE_WAKEUP)) && (USB_DEVICE_CONFIG_REMOTE_WAKEUP > 0U))
     usb_device_struct_t *deviceHandle;
 #endif
@@ -1733,8 +1879,16 @@ usb_status_t USB_DeviceEhciControl(usb_device_controller_handle ehciHandle, usb_
         case kUSB_DeviceControlSetDefaultStatus:
             for (uint8_t count = 0U; count < USB_DEVICE_CONFIG_ENDPOINTS; count++)
             {
+#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
+                if ((kStatus_USB_Success != USB_DeviceEhciEndpointDeinit(ehciState, (count | (USB_IN << 0x07U)))) ||
+                    (kStatus_USB_Success != USB_DeviceEhciEndpointDeinit(ehciState, (count | (USB_OUT << 0x07U)))))
+                {
+                    return kStatus_USB_Error;
+                }
+#else
                 (void)USB_DeviceEhciEndpointDeinit(ehciState, (count | (USB_IN << 0x07U)));
                 (void)USB_DeviceEhciEndpointDeinit(ehciState, (count | (USB_OUT << 0x07U)));
+#endif
             }
             USB_DeviceEhciSetDefaultState(ehciState);
             error = kStatus_USB_Success;
@@ -1770,7 +1924,14 @@ usb_status_t USB_DeviceEhciControl(usb_device_controller_handle ehciHandle, usb_
             USB_HSDcdIsrFunction(ehciState->dcdHandle);
 #endif
 #elif (defined(FSL_FEATURE_SOC_USB_ANALOG_COUNT) && (FSL_FEATURE_SOC_USB_ANALOG_COUNT > 0U))
+#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
+            if (kStatus_USB_Success != USB_PHYDCD_TimerIsrFunction(ehciState->dcdHandle))
+            {
+                return kStatus_USB_Error;
+            }
+#else
             (void)USB_PHYDCD_TimerIsrFunction(ehciState->dcdHandle);
+#endif
 #endif
 
             error = kStatus_USB_Success;
@@ -1900,22 +2061,53 @@ void USB_DeviceEhciIsrFunction(void *deviceHandle)
         {
             /* Device is connected to a host. */
             message.code = (uint8_t)kUSB_DeviceNotifyAttach;
+#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
+            if (kStatus_USB_Success != USB_DeviceNotificationTrigger(ehciState->deviceHandle, &message))
+            {
+#if (defined(DEVICE_ECHO) && (DEVICE_ECHO > 0U))
+                usb_echo("notification triigger error\n");
+#endif
+            }
+#else
             (void)USB_DeviceNotificationTrigger(ehciState->deviceHandle, &message);
+#endif
 
 #if (defined(FSL_FEATURE_SOC_USBHSDCD_COUNT) && (FSL_FEATURE_SOC_USBHSDCD_COUNT > 0U)) && \
     (defined(USB_DEVICE_CONFIG_CHARGER_DETECT) && (USB_DEVICE_CONFIG_CHARGER_DETECT > 0U))
-
+#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
+            if (kStatus_USB_Success != USB_HSDCD_Control(ehciState->dcdHandle, kUSB_DeviceHSDcdRun, NULL))
+            {
+                return kStatus_USB_Error;
+            }
+#else
             (void)USB_HSDCD_Control(ehciState->dcdHandle, kUSB_DeviceHSDcdRun, NULL);
+#endif
 #elif (defined(USB_DEVICE_CONFIG_CHARGER_DETECT) && (USB_DEVICE_CONFIG_CHARGER_DETECT > 0U)) && \
     (defined(FSL_FEATURE_SOC_USB_ANALOG_COUNT) && (FSL_FEATURE_SOC_USB_ANALOG_COUNT > 0U))
+#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
+            if (kStatus_USB_Success != USB_PHYDCD_Control(ehciState->dcdHandle, kUSB_DevicePHYDcdRun, NULL))
+            {
+                return kStatus_USB_Error;
+            }
+#else
             (void)USB_PHYDCD_Control(ehciState->dcdHandle, kUSB_DevicePHYDcdRun, NULL);
+#endif
 #endif
         }
         else
         {
             /* Device is disconnected from a host. */
             message.code = (uint8_t)kUSB_DeviceNotifyDetach;
+#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
+            if (kStatus_USB_Success != USB_DeviceNotificationTrigger(ehciState->deviceHandle, &message))
+            {
+#if (defined(DEVICE_ECHO) && (DEVICE_ECHO > 0U))
+                usb_echo("notification trigger error\n");
+#endif
+            }
+#else
             (void)USB_DeviceNotificationTrigger(ehciState->deviceHandle, &message);
+#endif
         }
     }
 #endif /* USB_DEVICE_CONFIG_DETACH_ENABLE */

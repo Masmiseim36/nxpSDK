@@ -2,7 +2,7 @@
  *
  *  @brief main file
  *
- *  Copyright 2020 NXP
+ *  Copyright 2020-2021 NXP
  *  All rights reserved.
  *
  *  SPDX-License-Identifier: BSD-3-Clause
@@ -36,6 +36,12 @@
  ******************************************************************************/
 
 
+/* @TEST_ANCHOR */
+
+#ifndef EXAMPLE_PORT
+#define EXAMPLE_PORT LWIPERF_TCP_PORT_DEFAULT
+#endif
+
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
@@ -54,16 +60,29 @@ TimerHandle_t timer;
 static void timer_poll_udp_client(TimerHandle_t timer);
 
 // Hardwired SSID, passphrase of Soft AP to star
-#define AP_SSID       "NXP_Soft_AP"
+#ifndef AP_SSID
+#define AP_SSID "NXP_Soft_AP"
+#endif
+#ifndef AP_PASSPHRASE
 #define AP_PASSPHRASE "12345678"
+#endif
 
 // Hardwired SSID, passphrase of AP to connect to
 // Change this to fit your AP
-#define EXT_AP_SSID       "nxp_wifi_demo"
+#ifndef EXT_AP_SSID
+#define EXT_AP_SSID "nxp_wifi_demo"
+#endif
+
+#ifndef EXT_AP_PASSPHRASE
 #define EXT_AP_PASSPHRASE ""
+#endif
 
 #ifndef IPERF_SERVER_ADDRESS
 #define IPERF_SERVER_ADDRESS "192.168.1.2"
+#endif
+
+#ifndef UAP_ADDRESS
+#define UAP_ADDRESS "192.168.10.1"
 #endif
 
 #ifndef IPERF_UDP_CLIENT_RATE
@@ -76,6 +95,7 @@ static void timer_poll_udp_client(TimerHandle_t timer);
 
 struct iperf_test_context
 {
+    bool uap_mode;
     bool server_mode;
     bool tcp;
     enum lwiperf_client_type client_type;
@@ -365,7 +385,7 @@ static void menuExtraHelp(void)
 {
     PRINTF("For Soft AP demonstration\r\n");
     PRINTF("Start a Soft AP using option \"A\" in WPA2 security mode from menu\r\n");
-    PRINTF("This also starts DHCP Server with IP 192.168.10.1, NETMASK 255.255.255.0\r\n");
+    PRINTF("This also starts DHCP Server with IP %s, NETMASK 255.255.255.0\r\n", UAP_ADDRESS);
     printSeparator();
     PRINTF("For Station demonstration\r\n");
     PRINTF("Start an External AP with SSID as \"%s\" in Open mode\r\n", EXT_AP_SSID);
@@ -811,6 +831,7 @@ int wlan_event_callback(enum wlan_event_reason reason, void *data)
 
             PRINTF("DHCP Server started successfully\r\n");
             printSeparator();
+            ctx.uap_mode = true;
             break;
         case WLAN_REASON_UAP_CLIENT_ASSOC:
             PRINTF("app_cb: WLAN: UAP a Client Associated\r\n");
@@ -838,6 +859,7 @@ int wlan_event_callback(enum wlan_event_reason reason, void *data)
 
             PRINTF("DHCP Server stopped successfully\r\n");
             printSeparator();
+            ctx.uap_mode = false;
             break;
         case WLAN_REASON_PS_ENTER:
             PRINTF("app_cb: WLAN: PS_ENTER\r\n");
@@ -944,7 +966,8 @@ static void lwiperf_report(void *arg,
 static void iperf_test_start(void *arg)
 {
     struct iperf_test_context *ctx = (struct iperf_test_context *)arg;
-    ip4_addr_t server_address;
+    ip_addr_t server_address;
+    ip_addr_t uap_address;
 
     ctx->iperf_session = NULL;
 
@@ -967,8 +990,15 @@ static void iperf_test_start(void *arg)
         }
         else
         {
-            ctx->iperf_session =
-                lwiperf_start_udp_server(netif_ip_addr4(netif_default), LWIPERF_TCP_PORT_DEFAULT, lwiperf_report, 0);
+            if (ctx->uap_mode)
+            {
+                net_get_if_ip_addr(&uap_address.addr, net_get_uap_handle());
+                ctx->iperf_session =
+                    lwiperf_start_udp_server(&uap_address, LWIPERF_TCP_PORT_DEFAULT, lwiperf_report, 0);
+            }
+            else
+                ctx->iperf_session = lwiperf_start_udp_server(netif_ip_addr4(netif_default), LWIPERF_TCP_PORT_DEFAULT,
+                                                              lwiperf_report, 0);
         }
     }
     else
@@ -982,9 +1012,18 @@ static void iperf_test_start(void *arg)
             }
             else
             {
-                ctx->iperf_session = lwiperf_start_udp_client(
-                    netif_ip_addr4(netif_default), LWIPERF_TCP_PORT_DEFAULT, &server_address, LWIPERF_TCP_PORT_DEFAULT,
-                    ctx->client_type, IPERF_CLIENT_AMOUNT, IPERF_UDP_CLIENT_RATE, 0, lwiperf_report, NULL);
+                if (ctx->uap_mode)
+                {
+                    net_get_if_ip_addr(&uap_address.addr, net_get_uap_handle());
+                    ctx->iperf_session = lwiperf_start_udp_client(
+                        &uap_address, LWIPERF_TCP_PORT_DEFAULT, &server_address, LWIPERF_TCP_PORT_DEFAULT,
+                        ctx->client_type, IPERF_CLIENT_AMOUNT, IPERF_UDP_CLIENT_RATE, 0, lwiperf_report, NULL);
+                }
+                else
+                    ctx->iperf_session =
+                        lwiperf_start_udp_client(netif_ip_addr4(netif_default), LWIPERF_TCP_PORT_DEFAULT,
+                                                 &server_address, LWIPERF_TCP_PORT_DEFAULT, ctx->client_type,
+                                                 IPERF_CLIENT_AMOUNT, IPERF_UDP_CLIENT_RATE, 0, lwiperf_report, NULL);
             }
         }
         else

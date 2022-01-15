@@ -30,9 +30,20 @@
 
 // Hardwired SSID, passphrase of AP to connect to
 // Change this to fit your AP
-#define AP_SSID       "SSID"
+
+/* @TEST_ANCHOR */
+
+#ifndef AP_SSID
+#define AP_SSID "SSID"
+#endif
+
+#ifndef AP_PASSPHRASE
 #define AP_PASSPHRASE "PASSWD"
-#define PING_ADDR     "8.8.8.8"
+#endif
+
+#ifndef PING_ADDR
+#define PING_ADDR "8.8.8.8"
+#endif
 
 /*******************************************************************************
  * Variables

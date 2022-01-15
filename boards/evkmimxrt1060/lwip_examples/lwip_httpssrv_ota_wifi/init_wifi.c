@@ -23,6 +23,12 @@
 /*${macro:start}*/
 /*${macro:end}*/
 
+/* @TEST_ANCHOR */
+
+#ifndef WIFI_BANNER
+#define WIFI_BANNER "Successfully initialized WiFi module\r\n"
+#endif
+
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
@@ -55,7 +61,7 @@ int initNetwork()
     }
     else
     {
-        PRINTF("Successfully initialized WiFi module\r\n");
+        PRINTF(WIFI_BANNER);
     }
 
     if (wifi_ap_mode)

@@ -367,7 +367,7 @@
             <IncludeLibsPath/>
             <Misc>../../../../../CMSIS/DSP/Lib/ARM/arm_cortexM7lfdp_math.lib --remove --entry=Reset_Handler --predefine="-DXIP_BOOT_HEADER_ENABLE=1"</Misc>
             <LinkerInputFile/>
-            <DisabledWarnings>6314</DisabledWarnings>
+            <DisabledWarnings>6314,6242</DisabledWarnings>
           </LDads>
         </TargetArmAds>
       </TargetOption>
@@ -484,6 +484,31 @@
               <FileName>dcd.h</FileName>
               <FileType>5</FileType>
               <FilePath>../dcd.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>scripts</GroupName>
+          <Files>
+            <File>
+              <FileName>glow_process_image.py</FileName>
+              <FileType>5</FileType>
+              <FilePath>../scripts/glow_process_image.py</FilePath>
+            </File>
+            <File>
+              <FileName>glow_process_sound.py</FileName>
+              <FileType>5</FileType>
+              <FilePath>../scripts/glow_process_sound.py</FilePath>
+            </File>
+            <File>
+              <FileName>glow_show_detections.py</FileName>
+              <FileType>5</FileType>
+              <FilePath>../scripts/glow_show_detections.py</FilePath>
+            </File>
+            <File>
+              <FileName>glow_show_segmentation.py</FileName>
+              <FileType>5</FileType>
+              <FilePath>../scripts/glow_show_segmentation.py</FilePath>
             </File>
           </Files>
         </Group>
@@ -1138,7 +1163,7 @@
             <IncludeLibsPath/>
             <Misc>../../../../../CMSIS/DSP/Lib/ARM/arm_cortexM7lfdp_math.lib --remove --entry=Reset_Handler --predefine="-DXIP_BOOT_HEADER_ENABLE=1"</Misc>
             <LinkerInputFile/>
-            <DisabledWarnings>6314</DisabledWarnings>
+            <DisabledWarnings>6314,6242</DisabledWarnings>
           </LDads>
         </TargetArmAds>
       </TargetOption>
@@ -1255,6 +1280,31 @@
               <FileName>dcd.h</FileName>
               <FileType>5</FileType>
               <FilePath>../dcd.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>scripts</GroupName>
+          <Files>
+            <File>
+              <FileName>glow_process_image.py</FileName>
+              <FileType>5</FileType>
+              <FilePath>../scripts/glow_process_image.py</FilePath>
+            </File>
+            <File>
+              <FileName>glow_process_sound.py</FileName>
+              <FileType>5</FileType>
+              <FilePath>../scripts/glow_process_sound.py</FilePath>
+            </File>
+            <File>
+              <FileName>glow_show_detections.py</FileName>
+              <FileType>5</FileType>
+              <FilePath>../scripts/glow_show_detections.py</FilePath>
+            </File>
+            <File>
+              <FileName>glow_show_segmentation.py</FileName>
+              <FileType>5</FileType>
+              <FilePath>../scripts/glow_show_segmentation.py</FilePath>
             </File>
           </Files>
         </Group>

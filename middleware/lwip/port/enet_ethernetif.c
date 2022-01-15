@@ -71,15 +71,15 @@ void ethernetif_phy_init(struct ethernetif *ethernetif,
                          phy_speed_t *speed,
                          phy_duplex_t *duplex)
 {
-    phy_config_t phyConfig;
     status_t status;
-    bool link = false;
-    bool autonego = false;
+    bool link              = false;
+    bool autonego          = false;
     uint32_t initWaitCount = 0;
     uint32_t autoWaitCount = 0;
-
-    phyConfig.phyAddr = ethernetifConfig->phyHandle->phyAddr;
-    phyConfig.autoNeg = true;
+    phy_config_t phyConfig = {
+        .phyAddr = ethernetifConfig->phyHandle->phyAddr,
+        .autoNeg = true,
+    };
 
     ethernetifConfig->phyHandle->mdioHandle->resource.base = *ethernetif_enet_ptr(ethernetif);
 
@@ -157,14 +157,14 @@ void ethernetif_input(struct netif *netif)
 
 void *ethernetif_get_enet_base(const uint8_t enetIdx)
 {
-    ENET_Type* enets[] = ENET_BASE_PTRS;
+    ENET_Type *enets[] = ENET_BASE_PTRS;
     int arrayIdx;
     int enetCount;
 
     for (arrayIdx = 0, enetCount = 0; arrayIdx < ARRAY_SIZE(enets); arrayIdx++)
     {
-        if (enets[arrayIdx] != 0U)    /* process only defined positions */
-        {                             /* (some SOC headers count ENETs from 1 instead of 0) */
+        if (enets[arrayIdx] != 0U) /* process only defined positions */
+        {                          /* (some SOC headers count ENETs from 1 instead of 0) */
             if (enetCount == enetIdx)
             {
                 return (void *)enets[arrayIdx];
@@ -179,14 +179,14 @@ void *ethernetif_get_enet_base(const uint8_t enetIdx)
 #if defined(FSL_FEATURE_SOC_ENET_QOS_COUNT) && (FSL_FEATURE_SOC_ENET_QOS_COUNT > 0)
 void *ethernetif_get_enet_qos_base(const uint8_t enetIdx)
 {
-    ENET_QOS_Type* enets[] = ENET_QOS_BASE_PTRS;
+    ENET_QOS_Type *enets[] = ENET_QOS_BASE_PTRS;
     int arrayIdx;
     int enetCount;
 
     for (arrayIdx = 0, enetCount = 0; arrayIdx < ARRAY_SIZE(enets); arrayIdx++)
     {
-        if (enets[arrayIdx] != 0U)    /* process only defined positions */
-        {                             /* (some SOC headers count ENETs from 1 instead of 0) */
+        if (enets[arrayIdx] != 0U) /* process only defined positions */
+        {                          /* (some SOC headers count ENETs from 1 instead of 0) */
             if (enetCount == enetIdx)
             {
                 return (void *)enets[arrayIdx];
@@ -199,7 +199,8 @@ void *ethernetif_get_enet_qos_base(const uint8_t enetIdx)
 }
 #endif
 
-err_t ethernetif_init(struct netif *netif, struct ethernetif *ethernetif,
+err_t ethernetif_init(struct netif *netif,
+                      struct ethernetif *ethernetif,
                       void *enetBase,
                       const ethernetif_config_t *ethernetifConfig)
 {
@@ -218,7 +219,7 @@ err_t ethernetif_init(struct netif *netif, struct ethernetif *ethernetif,
      */
     MIB2_INIT_NETIF(netif, snmp_ifType_ethernet_csmacd, LINK_SPEED_OF_YOUR_NETIF_IN_BPS);
 
-    netif->state = ethernetif;
+    netif->state   = ethernetif;
     netif->name[0] = IFNAME0;
     netif->name[1] = IFNAME1;
 /* We directly use etharp_output() here to save a function call.

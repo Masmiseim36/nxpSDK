@@ -40,19 +40,18 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG " \
     -DXIP_EXTERNAL_FLASH=1 \
     -DXIP_BOOT_HEADER_ENABLE=1 \
     -DDEBUG \
-    -DFSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE \
-    -DFSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1 \
     -DLWIP_TIMEVAL_PRIVATE=0 \
     -DCPU_MIMXRT1062DVL6A \
     -DUSE_RTOS=1 \
     -DSDK_DEBUGCONSOLE=1 \
     -DLWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1 \
+    -DFSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE \
+    -DFSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1 \
     -DSERIAL_PORT_TYPE_UART=1 \
     -DSDK_OS_FREE_RTOS \
     -DMCUXPRESSO_SDK \
     -g \
     -O0 \
-    -O1 \
     -mcpu=cortex-m7 \
     -Wall \
     -mfloat-abi=hard \
@@ -73,18 +72,17 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE " \
     -DXIP_EXTERNAL_FLASH=1 \
     -DXIP_BOOT_HEADER_ENABLE=1 \
     -DNDEBUG \
-    -DFSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE \
-    -DFSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1 \
     -DLWIP_TIMEVAL_PRIVATE=0 \
     -DCPU_MIMXRT1062DVL6A \
     -DUSE_RTOS=1 \
     -DSDK_DEBUGCONSOLE=1 \
     -DLWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1 \
+    -DFSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE \
+    -DFSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1 \
     -DSERIAL_PORT_TYPE_UART=1 \
     -DSDK_OS_FREE_RTOS \
     -DMCUXPRESSO_SDK \
     -Os \
-    -O1 \
     -mcpu=cortex-m7 \
     -Wall \
     -mfloat-abi=hard \
@@ -175,9 +173,9 @@ SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_DEBUG " \
     -Map=output.map \
     -Wl,--print-memory-usage \
     -Xlinker \
-    --defsym=__stack_size__=2048 \
+    --defsym=__stack_size__=0x800 \
     -Xlinker \
-    --defsym=__heap_size__=25600 \
+    --defsym=__heap_size__=0x7000 \
     -T${ProjDirPath}/MIMXRT1062xxxxx_flexspi_nor.ld -static \
 ")
 SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_RELEASE " \
@@ -207,8 +205,8 @@ SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_RELEASE " \
     -Map=output.map \
     -Wl,--print-memory-usage \
     -Xlinker \
-    --defsym=__stack_size__=2048 \
+    --defsym=__stack_size__=0x800 \
     -Xlinker \
-    --defsym=__heap_size__=25600 \
+    --defsym=__heap_size__=0x7000 \
     -T${ProjDirPath}/MIMXRT1062xxxxx_flexspi_nor.ld -static \
 ")

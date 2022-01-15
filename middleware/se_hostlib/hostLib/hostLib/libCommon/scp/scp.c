@@ -31,21 +31,23 @@
 #include "fsl_sss_ftr_default.h"
 #endif
 
-#if ! (SSS_HAVE_A71CH)
+#if ! (SSS_HAVE_APPLET_A71CH)
 
 
 U32 scp_Transceive(void *conn_ctx, apdu_t * pApdu, scp_CommandType_t type)
 {
     U32 rv = ERR_COMM_ERROR;
 
-    if (pApdu->hasLe)
+    if (pApdu->hasLe) {
         smApduAdaptLcLe(pApdu, pApdu->lc, pApdu->le);
-    else
+    }
+    else {
         smApduAdaptLcLe(pApdu, pApdu->lc, 0);
+    }
 
     rv = smCom_Transceive(conn_ctx, pApdu);
 
     return rv;
 }
 
-#endif  // (SSS_HAVE_SE05X) || (SSS_HAVE_LOOPBACK)
+#endif  // (SSS_HAVE_APPLET_SE05X_IOT) || (SSS_HAVE_APPLET_LOOPBACK)

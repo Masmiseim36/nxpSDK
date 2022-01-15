@@ -32,11 +32,18 @@
 #endif /* FSL_FEATURE_SOC_SYSMPU_COUNT */
 
 #include "usb_phy.h"
-#include "fsl_gpio.h"
 #include "fsl_iomuxc.h"
+#include "fsl_enet_mdio.h"
+#include "fsl_phyksz8081.h"
+#include "fsl_phy.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
+#define EXAMPLE_PHY_ADDRESS BOARD_ENET0_PHY_ADDRESS
+/* MDIO operations. */
+#define EXAMPLE_MDIO_OPS enet_ops
+/* PHY operations. */
+#define EXAMPLE_PHY_OPS phyksz8081_ops
 /* Base unit for ENIT layer is 1Mbps while for RNDIS its 100bps*/
 #define ENET_CONVERT_FACTOR (10000)
 
@@ -62,6 +69,11 @@ usb_status_t VNIC_EnetTxDone(void);
 /*******************************************************************************
  * Variables
  ******************************************************************************/
+/*! @brief Enet PHY and MDIO interface handler. */
+mdio_handle_t mdioHandle = {.resource.base = ENET, .ops = &EXAMPLE_MDIO_OPS};
+phy_handle_t phyHandle   = {.phyAddr = EXAMPLE_PHY_ADDRESS, .mdioHandle = &mdioHandle, .ops = &EXAMPLE_PHY_OPS};
+
+extern usb_cdc_vnic_t g_cdcVnic;
 extern usb_device_endpoint_struct_t g_cdcVnicDicEp[];
 extern usb_device_class_struct_t g_cdcVnicClass;
 extern queue_t g_enetRxServiceQueue;
@@ -129,15 +141,6 @@ void BOARD_InitModuleClock(void)
 {
     const clock_enet_pll_config_t config = {.enableClkOutput = true, .enableClkOutput25M = false, .loopDivider = 1};
     CLOCK_InitEnetPll(&config);
-}
-
-void delay(void)
-{
-    volatile uint32_t i = 0;
-    for (i = 0; i < 1000000; ++i)
-    {
-        __asm("NOP"); /* delay */
-    }
 }
 
 
@@ -943,8 +946,9 @@ void main(void)
     /* pull up the ENET_INT before RESET. */
     GPIO_WritePinOutput(GPIO1, 10, 1);
     GPIO_WritePinOutput(GPIO1, 9, 0);
-    delay();
+    SDK_DelayAtLeastUs(10000, CLOCK_GetFreq(kCLOCK_CpuClk));
     GPIO_WritePinOutput(GPIO1, 9, 1);
+    SDK_DelayAtLeastUs(6, CLOCK_GetFreq(kCLOCK_CpuClk));
 
     if (xTaskCreate(APPTask,                         /* pointer to the task                      */
                     s_appName,                       /* task name for kernel awareness debugging */

@@ -3,7 +3,7 @@ SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG " \
     -D__STARTUP_CLEAR_BSS \
     -DDEBUG \
     -D__STARTUP_INITIALIZE_NONCACHEDATA \
-    -DTX_ENABLE_FPU_SUPPORT \
+    -DTX_ENABLE_FPU_SUPPORT=1 \
     -g \
     -x \
     assembler-with-cpp \
@@ -25,7 +25,7 @@ SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE " \
     -D__STARTUP_CLEAR_BSS \
     -DNDEBUG \
     -D__STARTUP_INITIALIZE_NONCACHEDATA \
-    -DTX_ENABLE_FPU_SUPPORT \
+    -DTX_ENABLE_FPU_SUPPORT=1 \
     -x \
     assembler-with-cpp \
     -mcpu=cortex-m7 \
@@ -46,7 +46,7 @@ SET(CMAKE_ASM_FLAGS_SDRAM_DEBUG " \
     -D__STARTUP_CLEAR_BSS \
     -DDEBUG \
     -D__STARTUP_INITIALIZE_NONCACHEDATA \
-    -DTX_ENABLE_FPU_SUPPORT \
+    -DTX_ENABLE_FPU_SUPPORT=1 \
     -g \
     -x \
     assembler-with-cpp \
@@ -68,7 +68,7 @@ SET(CMAKE_ASM_FLAGS_SDRAM_RELEASE " \
     -D__STARTUP_CLEAR_BSS \
     -DNDEBUG \
     -D__STARTUP_INITIALIZE_NONCACHEDATA \
-    -DTX_ENABLE_FPU_SUPPORT \
+    -DTX_ENABLE_FPU_SUPPORT=1 \
     -x \
     assembler-with-cpp \
     -mcpu=cortex-m7 \

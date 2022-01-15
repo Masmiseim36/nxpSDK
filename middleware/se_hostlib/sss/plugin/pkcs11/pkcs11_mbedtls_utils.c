@@ -67,11 +67,13 @@ static int pk_group_from_specified(const mbedtls_asn1_buf *params, mbedtls_ecp_g
     int ver;
 
     /* SpecifiedECDomainVersion ::= INTEGER { 1, 2, 3 } */
-    if ((ret = mbedtls_asn1_get_int(&p, end, &ver)) != 0)
+    if ((ret = mbedtls_asn1_get_int(&p, end, &ver)) != 0) {
         return (MBEDTLS_ERR_PK_KEY_INVALID_FORMAT + ret);
+    }
 
-    if (ver < 1 || ver > 3)
+    if (ver < 1 || ver > 3) {
         return (MBEDTLS_ERR_PK_KEY_INVALID_FORMAT);
+    }
 
     /*
      * FieldID { FIELD-ID:IOSet } ::= SEQUENCE { -- Finite field
@@ -79,8 +81,9 @@ static int pk_group_from_specified(const mbedtls_asn1_buf *params, mbedtls_ecp_g
      *       parameters FIELD-ID.&Type({IOSet}{@fieldType})
      * }
      */
-    if ((ret = mbedtls_asn1_get_tag(&p, end, &len, MBEDTLS_ASN1_CONSTRUCTED | MBEDTLS_ASN1_SEQUENCE)) != 0)
+    if ((ret = mbedtls_asn1_get_tag(&p, end, &len, MBEDTLS_ASN1_CONSTRUCTED | MBEDTLS_ASN1_SEQUENCE)) != 0) {
         return (ret);
+    }
 
     end_field = p + len;
 
@@ -92,8 +95,9 @@ static int pk_group_from_specified(const mbedtls_asn1_buf *params, mbedtls_ecp_g
      * }
      * prime-field OBJECT IDENTIFIER ::= { id-fieldType 1 }
      */
-    if ((ret = mbedtls_asn1_get_tag(&p, end_field, &len, MBEDTLS_ASN1_OID)) != 0)
+    if ((ret = mbedtls_asn1_get_tag(&p, end_field, &len, MBEDTLS_ASN1_OID)) != 0) {
         return (ret);
+    }
 
     if (len != MBEDTLS_OID_SIZE(MBEDTLS_OID_ANSI_X9_62_PRIME_FIELD) ||
         memcmp(p, MBEDTLS_OID_ANSI_X9_62_PRIME_FIELD, len) != 0) {
@@ -103,13 +107,15 @@ static int pk_group_from_specified(const mbedtls_asn1_buf *params, mbedtls_ecp_g
     p += len;
 
     /* Prime-p ::= INTEGER -- Field of size p. */
-    if ((ret = mbedtls_asn1_get_mpi(&p, end_field, &grp->P)) != 0)
+    if ((ret = mbedtls_asn1_get_mpi(&p, end_field, &grp->P)) != 0) {
         return (MBEDTLS_ERR_PK_KEY_INVALID_FORMAT + ret);
+    }
 
     grp->pbits = mbedtls_mpi_bitlen(&grp->P);
 
-    if (p != end_field)
+    if (p != end_field) {
         return (MBEDTLS_ERR_PK_KEY_INVALID_FORMAT + MBEDTLS_ERR_ASN1_LENGTH_MISMATCH);
+    }
 
     /*
      * Curve ::= SEQUENCE {
@@ -120,8 +126,9 @@ static int pk_group_from_specified(const mbedtls_asn1_buf *params, mbedtls_ecp_g
      *       -- with version equal to ecdpVer2 or ecdpVer3
      * }
      */
-    if ((ret = mbedtls_asn1_get_tag(&p, end, &len, MBEDTLS_ASN1_CONSTRUCTED | MBEDTLS_ASN1_SEQUENCE)) != 0)
+    if ((ret = mbedtls_asn1_get_tag(&p, end, &len, MBEDTLS_ASN1_CONSTRUCTED | MBEDTLS_ASN1_SEQUENCE)) != 0) {
         return (ret);
+    }
 
     end_curve = p + len;
 
@@ -144,17 +151,20 @@ static int pk_group_from_specified(const mbedtls_asn1_buf *params, mbedtls_ecp_g
     p += len;
 
     /* Ignore seed BIT STRING OPTIONAL */
-    if ((ret = mbedtls_asn1_get_tag(&p, end_curve, &len, MBEDTLS_ASN1_BIT_STRING)) == 0)
+    if ((ret = mbedtls_asn1_get_tag(&p, end_curve, &len, MBEDTLS_ASN1_BIT_STRING)) == 0) {
         p += len;
+    }
 
-    if (p != end_curve)
+    if (p != end_curve) {
         return (MBEDTLS_ERR_PK_KEY_INVALID_FORMAT + MBEDTLS_ERR_ASN1_LENGTH_MISMATCH);
+    }
 
     /*
      * ECPoint ::= OCTET STRING
      */
-    if ((ret = mbedtls_asn1_get_tag(&p, end, &len, MBEDTLS_ASN1_OCTET_STRING)) != 0)
+    if ((ret = mbedtls_asn1_get_tag(&p, end, &len, MBEDTLS_ASN1_OCTET_STRING)) != 0) {
         return (MBEDTLS_ERR_PK_KEY_INVALID_FORMAT + ret);
+    }
 
     if ((ret = mbedtls_ecp_point_read_binary(grp, &grp->G, (const unsigned char *)p, len)) != 0) {
         /*
@@ -173,8 +183,9 @@ static int pk_group_from_specified(const mbedtls_asn1_buf *params, mbedtls_ecp_g
     /*
      * order INTEGER
      */
-    if ((ret = mbedtls_asn1_get_mpi(&p, end, &grp->N)) != 0)
+    if ((ret = mbedtls_asn1_get_mpi(&p, end, &grp->N)) != 0) {
         return (MBEDTLS_ERR_PK_KEY_INVALID_FORMAT + ret);
+    }
 
     grp->nbits = mbedtls_mpi_bitlen(&grp->N);
 
@@ -218,8 +229,9 @@ cleanup:
 
     *grp_id = *id;
 
-    if (ret == 0 && *id == MBEDTLS_ECP_DP_NONE)
+    if (ret == 0 && *id == MBEDTLS_ECP_DP_NONE) {
         ret = MBEDTLS_ERR_ECP_FEATURE_UNAVAILABLE;
+    }
 
     return (ret);
 }
@@ -234,8 +246,9 @@ static int pk_group_id_from_specified(const mbedtls_asn1_buf *params, mbedtls_ec
 
     mbedtls_ecp_group_init(&grp);
 
-    if ((ret = pk_group_from_specified(params, &grp)) != 0)
+    if ((ret = pk_group_from_specified(params, &grp)) != 0) {
         goto cleanup;
+    }
 
     ret = pk_group_id_from_group(&grp, grp_id);
 
@@ -260,13 +273,15 @@ int pk_use_ecparams(const mbedtls_asn1_buf *params, mbedtls_ecp_group *grp)
     mbedtls_ecp_group_id grp_id;
 
     if (params->tag == MBEDTLS_ASN1_OID) {
-        if (mbedtls_oid_get_ec_grp(params, &grp_id) != 0)
+        if (mbedtls_oid_get_ec_grp(params, &grp_id) != 0) {
             return (MBEDTLS_ERR_PK_UNKNOWN_NAMED_CURVE);
+        }
     }
     else {
 #if defined(MBEDTLS_PK_PARSE_EC_EXTENDED)
-        if ((ret = pk_group_id_from_specified(params, &grp_id)) != 0)
+        if ((ret = pk_group_id_from_specified(params, &grp_id)) != 0) {
             return (ret);
+        }
 #else
         return (MBEDTLS_ERR_PK_KEY_INVALID_FORMAT);
 #endif
@@ -275,11 +290,13 @@ int pk_use_ecparams(const mbedtls_asn1_buf *params, mbedtls_ecp_group *grp)
     /*
      * grp may already be initilialized; if so, make sure IDs match
      */
-    if (grp->id != MBEDTLS_ECP_DP_NONE && grp->id != grp_id)
+    if (grp->id != MBEDTLS_ECP_DP_NONE && grp->id != grp_id) {
         return (MBEDTLS_ERR_PK_KEY_INVALID_FORMAT);
+    }
 
-    if ((ret = mbedtls_ecp_group_load(grp, grp_id)) != 0)
+    if ((ret = mbedtls_ecp_group_load(grp, grp_id)) != 0) {
         return (ret);
+    }
 
     return (0);
 }
@@ -296,8 +313,9 @@ int pk_get_ecparams(unsigned char **p, const unsigned char *end, mbedtls_asn1_bu
 {
     int ret;
 
-    if (end - *p < 1)
+    if (end - *p < 1) {
         return (MBEDTLS_ERR_PK_KEY_INVALID_FORMAT + MBEDTLS_ERR_ASN1_OUT_OF_DATA);
+    }
 
     /* Tag may be either OID or SEQUENCE */
     params->tag = **p;
@@ -316,8 +334,9 @@ int pk_get_ecparams(unsigned char **p, const unsigned char *end, mbedtls_asn1_bu
     params->p = *p;
     *p += params->len;
 
-    if (*p != end)
+    if (*p != end) {
         return (MBEDTLS_ERR_PK_KEY_INVALID_FORMAT + MBEDTLS_ERR_ASN1_LENGTH_MISMATCH);
+    }
 
     return (0);
 }

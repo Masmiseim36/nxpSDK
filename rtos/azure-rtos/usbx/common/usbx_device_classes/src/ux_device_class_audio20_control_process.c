@@ -162,7 +162,7 @@ ULONG                               i;
                     _ux_utility_long_put(transfer -> ux_slave_transfer_request_data_pointer + 2, control -> ux_device_class_audio20_control_sampling_frequency);
                     _ux_utility_long_put(transfer -> ux_slave_transfer_request_data_pointer + 6, control -> ux_device_class_audio20_control_sampling_frequency);
                     _ux_utility_long_put(transfer -> ux_slave_transfer_request_data_pointer + 10, 0);
-                    _ux_device_stack_transfer_request(transfer, 14, request_length);
+                    _ux_device_stack_transfer_request(transfer, UX_MIN(14, request_length), request_length);
                     return(UX_SUCCESS);
 
                 default:

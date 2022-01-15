@@ -14,7 +14,7 @@
 **         Linker file for the GNU C Compiler
 **
 **     Copyright 2016 Freescale Semiconductor, Inc.
-**     Copyright 2016-2019 NXP
+**     Copyright 2016-2021 NXP
 **     All rights reserved.
 **
 **     SPDX-License-Identifier: BSD-3-Clause
@@ -34,7 +34,6 @@ STACK_SIZE = DEFINED(__stack_size__) ? __stack_size__ : 1000;
 /* Specify the memory areas */
 MEMORY
 {
-  m_boot_hdr            (RX)  : ORIGIN = 0x60040000, LENGTH = 0x00000400
   m_interrupts          (RX)  : ORIGIN = 0x60040400, LENGTH = 0x00000400
   m_text                (RX)  : ORIGIN = 0x60040800, LENGTH = 0x001FF800
   m_data                (RW)  : ORIGIN = 0x20000000, LENGTH = 0x00020000
@@ -46,13 +45,6 @@ SECTIONS
 {
   __NCACHE_REGION_START = ORIGIN(m_data2);
   __NCACHE_REGION_SIZE  = 0;
-
-  /* OTA boot header */
-  boot_hdr :
-  {
-    . = ALIGN(4);
-    KEEP (*/ota_bootloader_hdr.c.obj(.text .text* .rodata .rodata*))
-  } > m_boot_hdr
 
   /* The startup code goes first into internal RAM */
   .interrupts :

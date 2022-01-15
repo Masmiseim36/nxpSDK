@@ -51,6 +51,8 @@
  * @{
  */
 
+/* @TEST_ANCHOR */
+
 /*! @brief HID instance count */
 #ifndef USB_DEVICE_CONFIG_HID
 #define USB_DEVICE_CONFIG_HID (0U)
@@ -173,7 +175,9 @@
 #endif
 
 /*! @brief Whether the device detached feature is enabled or not. */
+#ifndef USB_DEVICE_CONFIG_DETACH_ENABLE
 #define USB_DEVICE_CONFIG_DETACH_ENABLE (0U)
+#endif
 
 /*! @brief Whether handle the USB bus error. */
 #define USB_DEVICE_CONFIG_ERROR_HANDLING (0U)

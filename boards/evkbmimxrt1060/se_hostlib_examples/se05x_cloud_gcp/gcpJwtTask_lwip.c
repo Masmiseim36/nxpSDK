@@ -16,7 +16,7 @@
 #include "gcp_client_credential_keys.h"
 #include "ledHandler.h"
 
-#if SSS_HAVE_ALT_A71CH
+#if SSS_HAVE_MBEDTLS_ALT_A71CH
 #include "ax_api.h"
 #include "gcpJWTDemo.h"
 
@@ -28,19 +28,19 @@
 #include <a71ch_api.h>
 #include "nxLog_App.h"
 
-#if SSS_HAVE_ALT_SSS
+#if SSS_HAVE_MBEDTLS_ALT_SSS
 #include "ax_api.h"
 #include "sss_mbedtls.h"
 #include "ex_sss.h"
 #include "sm_printf.h"
 #endif
 
-#if SSS_HAVE_ALT_A71CH
+#if SSS_HAVE_MBEDTLS_ALT_A71CH
 #include "ax_mbedtls.h"
 #include "sm_printf.h"
 #endif
 
-#if SSS_HAVE_ALT_SSS
+#if SSS_HAVE_MBEDTLS_ALT_SSS
 #include <fsl_sss_api.h>
 #include <fsl_sss_sscp.h>
 sss_sscp_session_t *sscp_session;
@@ -57,7 +57,7 @@ void gcp_jwt_task_lwip(void *ctx)
     mbedtls_pk_context pk;
     int ret;
 
-#if (SSS_HAVE_ALT)
+#if (SSS_HAVE_MBEDTLS_ALT)
 
     sss_status_t status;
     LOG_I("GCP JWT NXP Secure Element example\n\n");
@@ -87,7 +87,7 @@ void gcp_jwt_task_lwip(void *ctx)
         goto exit;
     }
 
-#endif //SSS_HAVE_ALT
+#endif //SSS_HAVE_MBEDTLS_ALT
 
     gcpPubSub((void *)&pk);
 

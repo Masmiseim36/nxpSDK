@@ -2023,6 +2023,12 @@
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1064/drivers/fsl_lpi2c.h</name>
     </file>
     <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1064/drivers/fsl_gpt.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1064/drivers/fsl_gpt.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1064/drivers/fsl_common.h</name>
     </file>
     <file>

@@ -1,19 +1,17 @@
-if(NOT DRIVER_MDIO-ENET_MIMXRT1024_INCLUDED)
-    
-    set(DRIVER_MDIO-ENET_MIMXRT1024_INCLUDED true CACHE BOOL "driver_mdio-enet component is included.")
+include_guard(GLOBAL)
+message("driver_mdio-enet component is included.")
 
-    target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
-        ${CMAKE_CURRENT_LIST_DIR}/fsl_enet_mdio.c
-    )
-
-
-    target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
-        ${CMAKE_CURRENT_LIST_DIR}/.
-    )
+target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
+    ${CMAKE_CURRENT_LIST_DIR}/fsl_enet_mdio.c
+)
 
 
-    include(driver_mdio-common_MIMXRT1024)
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
+    ${CMAKE_CURRENT_LIST_DIR}/.
+)
 
-    include(driver_enet_MIMXRT1024)
 
-endif()
+include(driver_mdio-common_MIMXRT1024)
+
+include(driver_enet_MIMXRT1024)
+

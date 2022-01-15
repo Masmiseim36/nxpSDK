@@ -47,7 +47,8 @@ extern void BOARD_InitHardware(void);
  * Code
  ******************************************************************************/
 
-#if defined(WIFI_88W8987_BOARD_AW_CM358_USD)
+#if (defined(WIFI_88W8987_BOARD_AW_CM358MA) || defined(WIFI_88W8987_BOARD_MURATA_1ZM_M2) || \
+     defined(WIFI_IW416_BOARD_MURATA_1XK_M2))
 int controller_hci_uart_get_configuration(controller_hci_uart_config_t *config)
 {
     if (NULL == config)
@@ -55,7 +56,7 @@ int controller_hci_uart_get_configuration(controller_hci_uart_config_t *config)
         return -1;
     }
     config->clockSrc        = BOARD_BT_UART_CLK_FREQ;
-    config->defaultBaudrate = 115200u;
+    config->defaultBaudrate = 115200;
     config->runningBaudrate = BOARD_BT_UART_BAUDRATE;
     config->instance        = BOARD_BT_UART_INSTANCE;
     config->enableRxRTS     = 1u;
@@ -70,18 +71,13 @@ int controller_hci_uart_get_configuration(controller_hci_uart_config_t *config)
 #endif
     return 0;
 }
-#elif defined(WIFI_IW416_BOARD_AW_AM457_USD)
+#elif defined(WIFI_IW416_BOARD_AW_AM510MA)
 int controller_hci_uart_get_configuration(controller_hci_uart_config_t *config)
 {
     if (NULL == config)
     {
         return -1;
     }
-    /* This function (Init Uart Pins) is not expected to be called here.
-     * In order to not add more interfaces between BT stack and hardware level,
-     * it is put here. It may be removed in furture.
-     */
-    BOARD_InitArduinoUARTPins();
     config->clockSrc = BOARD_BT_UART_CLK_FREQ;
     config->defaultBaudrate = BOARD_BT_UART_BAUDRATE;
     config->runningBaudrate = BOARD_BT_UART_BAUDRATE;
@@ -95,6 +91,80 @@ int controller_hci_uart_get_configuration(controller_hci_uart_config_t *config)
     config->dma_mux_instance = 0U;
     config->rx_request = kDmaRequestMuxLPUART3Rx;
     config->tx_request = kDmaRequestMuxLPUART3Tx;
+#endif
+    return 0;
+}
+#elif defined(WIFI_88W8987_BOARD_AW_CM358_USD)
+int controller_hci_uart_get_configuration(controller_hci_uart_config_t *config)
+{
+    if (NULL == config)
+    {
+        return -1;
+    }
+    config->clockSrc         = BOARD_BT_UART_CLK_FREQ;
+    config->defaultBaudrate  = 115200u;
+    config->runningBaudrate  = BOARD_BT_UART_BAUDRATE;
+    config->instance         = BOARD_BT_UART_INSTANCE;
+    config->enableRxRTS      = 1u;
+    config->enableTxCTS      = 1u;
+#if (defined(HAL_UART_DMA_ENABLE) && (HAL_UART_DMA_ENABLE > 0U))
+    config->dma_instance     = 0U;
+    config->rx_channel       = 0U;
+    config->tx_channel       = 1U;
+    config->dma_mux_instance = 0U;
+    config->rx_request       = kDmaRequestMuxLPUART3Rx;
+    config->tx_request       = kDmaRequestMuxLPUART3Tx;
+#endif
+    return 0;
+}
+#elif defined(WIFI_IW416_BOARD_AW_AM510_USD)
+int controller_hci_uart_get_configuration(controller_hci_uart_config_t *config)
+{
+    if (NULL == config)
+    {
+        return -1;
+    }
+    /* This function (Init Uart Pins) is not expected to be called here.
+     * In order to not add more interfaces between BT stack and hardware level,
+     * it is put here. It may be removed in furture.
+     */
+    BOARD_InitArduinoUARTPins();
+    config->clockSrc         = BOARD_BT_UART_CLK_FREQ;
+    config->defaultBaudrate  = BOARD_BT_UART_BAUDRATE;
+    config->runningBaudrate  = BOARD_BT_UART_BAUDRATE;
+    config->instance         = BOARD_BT_UART_INSTANCE;
+    config->enableRxRTS      = 1u;
+    config->enableTxCTS      = 1u;
+#if (defined(HAL_UART_DMA_ENABLE) && (HAL_UART_DMA_ENABLE > 0U))
+    config->dma_instance     = 0U;
+    config->rx_channel       = 0U;
+    config->tx_channel       = 1U;
+    config->dma_mux_instance = 0U;
+    config->rx_request       = kDmaRequestMuxLPUART3Rx;
+    config->tx_request       = kDmaRequestMuxLPUART3Tx;
+#endif
+    return 0;
+}
+#elif defined(WIFI_88W8987_BOARD_MURATA_1ZM_USD) || defined(WIFI_IW416_BOARD_MURATA_1XK_USD)
+int controller_hci_uart_get_configuration(controller_hci_uart_config_t *config)
+{
+    if (NULL == config)
+    {
+        return -1;
+    }
+    config->clockSrc         = BOARD_BT_UART_CLK_FREQ;
+    config->defaultBaudrate  = 115200u;
+    config->runningBaudrate  = BOARD_BT_UART_BAUDRATE;
+    config->instance         = BOARD_BT_UART_INSTANCE;
+    config->enableRxRTS      = 1u;
+    config->enableTxCTS      = 1u;
+#if (defined(HAL_UART_DMA_ENABLE) && (HAL_UART_DMA_ENABLE > 0U))
+    config->dma_instance     = 0U;
+    config->rx_channel       = 0U;
+    config->tx_channel       = 1U;
+    config->dma_mux_instance = 0U;
+    config->rx_request       = kDmaRequestMuxLPUART3Rx;
+    config->tx_request       = kDmaRequestMuxLPUART3Tx;
 #endif
     return 0;
 }
@@ -142,10 +212,12 @@ int main(void)
 {
     BOARD_ConfigMPU();
     BOARD_InitBootPins();
-#if defined(WIFI_IW416_BOARD_AW_AM457_USD)
+#if defined(WIFI_IW416_BOARD_AW_AM510_USD)
     BOARD_DeinitArduinoUARTPins();
-#else
+#elif defined(WIFI_88W8987_BOARD_AW_CM358_USD) || defined(WIFI_88W8987_BOARD_MURATA_1ZM_USD) || \
+    defined(WIFI_IW416_BOARD_MURATA_1XK_USD)
     BOARD_InitArduinoUARTPins();
+#else
 #endif
     BOARD_InitBootClocks();
     BOARD_InitDebugConsole();

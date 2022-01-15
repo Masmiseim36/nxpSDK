@@ -317,7 +317,7 @@ typedef struct {
 #define P1_DISABLE_DEBUG               (0x00)
 #define INS_AX_DEBUG                   A70CM_INS_DEBUG
 
-#elif (SSS_HAVE_A71CH || SSS_HAVE_A71CH_SIM || SSS_HAVE_APPLET_SE05X_IOT)
+#elif (SSS_HAVE_APPLET_A71CH || SSS_HAVE_APPLET_A71CH_SIM || SSS_HAVE_APPLET_SE05X_IOT)
 #define A71CH_CLA                     (0x80)
 
 /// @cond

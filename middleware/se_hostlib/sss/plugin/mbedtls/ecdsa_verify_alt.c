@@ -95,8 +95,9 @@ static void ecdsa_restart_ver_init(mbedtls_ecdsa_restart_ver_ctx *ctx)
 */
 static void ecdsa_restart_ver_free(mbedtls_ecdsa_restart_ver_ctx *ctx)
 {
-    if (ctx == NULL)
+    if (ctx == NULL) {
         return;
+    }
 
     mbedtls_mpi_free(&ctx->u1);
     mbedtls_mpi_free(&ctx->u2);
@@ -138,8 +139,9 @@ static void ecdsa_restart_sig_init(mbedtls_ecdsa_restart_sig_ctx *ctx)
 */
 static void ecdsa_restart_sig_free(mbedtls_ecdsa_restart_sig_ctx *ctx)
 {
-    if (ctx == NULL)
+    if (ctx == NULL) {
         return;
+    }
 
     mbedtls_mpi_free(&ctx->k);
     mbedtls_mpi_free(&ctx->r);
@@ -173,8 +175,9 @@ static void ecdsa_restart_det_init(mbedtls_ecdsa_restart_det_ctx *ctx)
 */
 static void ecdsa_restart_det_free(mbedtls_ecdsa_restart_det_ctx *ctx)
 {
-    if (ctx == NULL)
+    if (ctx == NULL) {
         return;
+    }
 
     mbedtls_hmac_drbg_free(&ctx->rng_ctx);
 
@@ -240,12 +243,14 @@ static int derive_mpi(const mbedtls_ecp_group *grp, mbedtls_mpi *x, const unsign
     size_t use_size = blen > n_size ? n_size : blen;
 
     MBEDTLS_MPI_CHK(mbedtls_mpi_read_binary(x, buf, use_size));
-    if (use_size * 8 > grp->nbits)
+    if (use_size * 8 > grp->nbits) {
         MBEDTLS_MPI_CHK(mbedtls_mpi_shift_r(x, use_size * 8 - grp->nbits));
+    }
 
     /* While at it, reduce modulo N */
-    if (mbedtls_mpi_cmp_mpi(x, &grp->N) >= 0)
+    if (mbedtls_mpi_cmp_mpi(x, &grp->N) >= 0) {
         MBEDTLS_MPI_CHK(mbedtls_mpi_sub_mpi(x, x, &grp->N));
+    }
 
 cleanup:
     return (ret);
@@ -278,8 +283,9 @@ static int ecdsa_verify_restartable_o(mbedtls_ecp_group *grp,
     mbedtls_mpi_init(&u2);
 
     /* Fail cleanly on curves such as Curve25519 that can't be used for ECDSA */
-    if (grp->N.p == NULL)
+    if (grp->N.p == NULL) {
         return (MBEDTLS_ERR_ECP_BAD_INPUT_DATA);
+    }
 
     ECDSA_RS_ENTER(ver);
 
@@ -290,8 +296,9 @@ static int ecdsa_verify_restartable_o(mbedtls_ecp_group *grp,
         pu2 = &rs_ctx->ver->u2;
 
         /* jump to current step */
-        if (rs_ctx->ver->state == ecdsa_ver_muladd)
+        if (rs_ctx->ver->state == ecdsa_ver_muladd) {
             goto muladd;
+        }
     }
 #endif /* MBEDTLS_ECP_RESTARTABLE */
 
@@ -323,8 +330,9 @@ static int ecdsa_verify_restartable_o(mbedtls_ecp_group *grp,
     MBEDTLS_MPI_CHK(mbedtls_mpi_mod_mpi(pu2, pu2, &grp->N));
 
 #if defined(MBEDTLS_ECP_RESTARTABLE)
-    if (rs_ctx != NULL && rs_ctx->ver != NULL)
+    if (rs_ctx != NULL && rs_ctx->ver != NULL) {
         rs_ctx->ver->state = ecdsa_ver_muladd;
+    }
 
 muladd:
 #endif

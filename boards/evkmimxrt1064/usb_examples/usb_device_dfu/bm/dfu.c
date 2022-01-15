@@ -873,7 +873,14 @@ usb_status_t USB_DeviceDfuDemoCallback(class_handle_t handle, uint32_t event, vo
 void USB_DeviceDfuSwitchMode(void)
 {
 #if defined(__DSC__) || defined(__CW__)
+#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
+    if (kStatus_USB_Success != USB_DeviceClassDeinit(CONTROLLER_ID))
+    {
+        usb_echo("device classs deinit error\r\n");
+    }
+#else
     (void)USB_DeviceClassDeinit(CONTROLLER_ID);
+#endif
     __DI();
     SIM->PSWR3 = SIM_PSWR3_USB_OTG_MASK;
     SIM->PSWR2 = SIM_PSWR2_PIT0_MASK;
@@ -887,7 +894,14 @@ void USB_DeviceDfuSwitchMode(void)
     address = (uint32_t)(USB_DFU_APP_ADDRESS);
 
     static uint32_t newSP, newPC;
+#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
+    if (kStatus_USB_Success != USB_DeviceClassDeinit(CONTROLLER_ID))
+    {
+        usb_echo("device classs deinit error\r\n");
+    }
+#else
     (void)USB_DeviceClassDeinit(CONTROLLER_ID);
+#endif
     SCB->VTOR = address;
     newSP     = ((uint32_t *)address)[0U];
     newPC     = ((uint32_t *)address)[1U];
@@ -1027,7 +1041,7 @@ void USB_DeviceDfuDemoInit(void)
  * @return None.
  */
 
-void USB_DeviceDfuManifest(void)
+static void USB_DeviceDfuManifest(void)
 {
     uint32_t remainingLen;
     uint8_t *startAddress;
@@ -1091,7 +1105,7 @@ void USB_DeviceDfuManifest(void)
  * @return None.
  */
 
-void USB_DeviceDfuDnload(void)
+static void USB_DeviceDfuDnload(void)
 {
     uint8_t usbOsaCurrentSr;
 
@@ -1720,7 +1734,7 @@ static usb_status_t USB_DeviceStateDfuError(usb_dfu_struct_t *dfu_dev, usb_devic
  *
  * @return A USB error code or kStatus_USB_Success.
  */
-usb_status_t USB_DeviceStateUpdate(void)
+static usb_status_t USB_DeviceStateUpdate(void)
 {
     usb_status_t error = kStatus_USB_Success;
     usb_device_dfu_event_struct_t event;

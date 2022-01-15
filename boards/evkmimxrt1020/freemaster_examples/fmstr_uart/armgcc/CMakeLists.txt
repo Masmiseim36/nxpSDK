@@ -39,14 +39,14 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../freemaster_cfg.h"
 "${ProjDirPath}/../../common/fmstr_example/freemaster_example.c"
 "${ProjDirPath}/../../common/fmstr_example/freemaster_example.h"
+"${ProjDirPath}/../board.c"
+"${ProjDirPath}/../board.h"
 "${ProjDirPath}/../../common/fmstr_example/data_example_pmp.h"
 "${ProjDirPath}/../../common/fmstr_example/data_img_logo.h"
 "${ProjDirPath}/../../common/fmstr_example/data_img_file.h"
 "${ProjDirPath}/../../common/fmstr_example/data_img_fmstrlogo.h"
 "${ProjDirPath}/../../common/fmstr_example/data_html_index.h"
 "${ProjDirPath}/../../common/fmstr_example/example_data.h"
-"${ProjDirPath}/../board.c"
-"${ProjDirPath}/../board.h"
 "${ProjDirPath}/../dcd.c"
 "${ProjDirPath}/../dcd.h"
 )
@@ -62,7 +62,6 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../devices/MIMXRT1021/utilities/debug_console_lite
     ${ProjDirPath}/../../../../../devices/MIMXRT1021
     ${ProjDirPath}/../../../../../components/uart
-    ${ProjDirPath}/../../../../../components/serial_manager
     ${ProjDirPath}/../../../../../components/lists
     ${ProjDirPath}/../../../../../devices/MIMXRT1021/xip
     ${ProjDirPath}/../../../xip
@@ -87,11 +86,7 @@ include(device_MIMXRT1021_CMSIS_MIMXRT1021)
 
 include(component_lpuart_adapter_MIMXRT1021)
 
-include(component_serial_manager_MIMXRT1021)
-
 include(component_lists_MIMXRT1021)
-
-include(component_serial_manager_uart_MIMXRT1021)
 
 include(device_MIMXRT1021_startup_MIMXRT1021)
 

@@ -104,8 +104,6 @@ include(driver_common_MIMXRT1062)
 
 include(device_MIMXRT1062_CMSIS_MIMXRT1062)
 
-include(device_MIMXRT1062_startup_MIMXRT1062)
-
 include(utility_debug_console_MIMXRT1062)
 
 include(component_lpuart_adapter_MIMXRT1062)
@@ -115,6 +113,8 @@ include(component_serial_manager_MIMXRT1062)
 include(component_lists_MIMXRT1062)
 
 include(component_serial_manager_uart_MIMXRT1062)
+
+include(device_MIMXRT1062_startup_MIMXRT1062)
 
 include(driver_iomuxc_MIMXRT1062)
 

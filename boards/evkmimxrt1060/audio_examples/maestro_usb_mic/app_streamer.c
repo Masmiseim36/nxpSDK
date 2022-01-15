@@ -1,10 +1,15 @@
-
+/*
+ * Copyright 2021 NXP
+ * All rights reserved.
+ *
+ * SPDX-License-Identifier: BSD-3-Clause
+ */
 #include "osa_common.h"
 #include "fsl_common.h"
 #include "fsl_debug_console.h"
 
 #include "app_streamer.h"
-#include "streamer_pcm.h"
+#include "streamer_pcm_app.h"
 #include "audio_microphone.h"
 
 #define APP_STREAMER_MSG_QUEUE     "app_queue"

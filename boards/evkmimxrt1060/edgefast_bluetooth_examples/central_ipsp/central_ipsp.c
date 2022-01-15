@@ -322,7 +322,7 @@ void central_ipsp_task(void *pvParameters)
     while (1)
     {
         vTaskDelay(5000);
-        PRINTF("Sending message...\r\n");
+        
         buf = net_buf_alloc(&buf_pool, osaWaitNone_c);
         if (NULL != buf)
         {
@@ -340,6 +340,10 @@ void central_ipsp_task(void *pvParameters)
                     PRINTF("IPSP send failed (err %d)\r\n", err);
                 }
                 
+            }
+            else
+            {
+                PRINTF("Sending message...\r\n");
             }
         }
 

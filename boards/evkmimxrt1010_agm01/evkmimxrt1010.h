@@ -68,9 +68,9 @@ extern gpioHandleiMXSDK_t INT2;
 // I2C_S2: Pin mapping and driver information for alternate I2C bus on shield
 #define I2C_S2_SCL_PIN      D15
 #define I2C_S2_SDA_PIN      D14
-#define I2C_S2_DRIVER       Driver_I2C0
-#define I2C_S2_DEVICE_INDEX I2C0_INDEX
-#define I2C_S2_SIGNAL_EVENT I2C0_SignalEvent_t
+#define I2C_S2_DRIVER       Driver_I2C1
+#define I2C_S2_DEVICE_INDEX I2C1_INDEX
+#define I2C_S2_SIGNAL_EVENT I2C1_SignalEvent_t
 
 // I2C_B: Pin mapping and driver information for I2C routed on base board
 #define I2C_BB_SCL_PIN      A5

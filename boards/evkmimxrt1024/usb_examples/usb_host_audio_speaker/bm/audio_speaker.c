@@ -36,7 +36,7 @@ static char *strDataType[4] = {"Data endpoint", "Feedback endpoint", "Implicit f
 usb_device_handle g_audioDeviceHandle;
 usb_host_interface_handle g_audioOutControlifHandle;
 usb_host_interface_handle g_audioOutStreamifHandle;
-audio_speraker_instance_t g_audio;
+audio_speaker_instance_t g_audio;
 USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) uint8_t g_wavBuff[MAX_ISO_PACKET_SIZE * NUMBER_OF_BUFFER];
 extern const unsigned char wav_data[];
 extern const uint32_t wav_size;
@@ -58,7 +58,7 @@ USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) uint8_t g_curMute[2];
 USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) static uint16_t minVol[2];
 USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) static uint16_t maxVol[2];
 USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) static uint16_t resVol[2];
-USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) uint32_t freq;
+USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) uint32_t g_sampleFreq;
 uint8_t *g_frequencyAllRang;
 static uint32_t audio_position = 0U;
 /*******************************************************************************
@@ -76,8 +76,8 @@ static uint32_t audio_position = 0U;
  */
 void Audio_ControlCallback(void *param, uint8_t *data, uint32_t dataLen, usb_status_t status)
 {
-    audio_speraker_instance_t *audio_ptr = (audio_speraker_instance_t *)param;
-    static uint32_t retryCount           = 0;
+    audio_speaker_instance_t *audio_ptr = (audio_speaker_instance_t *)param;
+    static uint32_t retryCount          = 0;
 
     if (status != kStatus_USB_Success)
     {
@@ -253,7 +253,7 @@ void Audio_ControlCallback(void *param, uint8_t *data, uint32_t dataLen, usb_sta
  */
 void Audio_OutCallback(void *param, uint8_t *data, uint32_t dataLen, usb_status_t status)
 {
-    audio_speraker_instance_t *audio_ptr = (audio_speraker_instance_t *)param;
+    audio_speaker_instance_t *audio_ptr = (audio_speaker_instance_t *)param;
     if (status == kStatus_USB_TransferCancel)
     {
         return;
@@ -284,27 +284,9 @@ static void USB_HostAudioAppCalculateTransferSampleCount(void)
     uint32_t sendSampleCountInOneSecond;
     uint32_t sendFreq;
     uint32_t interval;
-    uint32_t speed;
+    uint32_t speed = 0U;
 
-    if (AUDIO_DEVICE_VERSION_01 == g_audio.deviceAudioVersion)
-    {
-        sendFreq = (((uint32_t)g_pFormatTypeDesc->tsamfreq[0][2]) << 16U) |
-                   (((uint32_t)g_pFormatTypeDesc->tsamfreq[0][1]) << 8U) |
-                   (((uint32_t)g_pFormatTypeDesc->tsamfreq[0][0]) << 0U);
-    }
-    else
-    {
-        uint8_t *frequencyArray;
-        if (1U < USB_SHORT_FROM_LITTLE_ENDIAN_ADDRESS((&g_frequencyRang.wNumSubRanges[0])))
-        {
-            frequencyArray = (uint8_t *)(g_frequencyAllRang + 2U);
-        }
-        else
-        {
-            frequencyArray = (uint8_t *)&g_frequencyRang.wMIN[0];
-        }
-        sendFreq = USB_LONG_FROM_LITTLE_ENDIAN_ADDRESS((frequencyArray));
-    }
+    sendFreq = g_sampleFreq;
 
     interval = 1U << (g_pIsoEndpDesc->bInterval - 1U);
     (void)USB_HostHelperGetPeripheralInformation(g_audio.deviceHandle, (uint32_t)kUSB_HostGetDeviceSpeed, &speed);
@@ -796,8 +778,8 @@ void USB_AudioTask(void *arg)
                 g_deviceVolumeStep =
                     (int16_t)(((int16_t)(g_maxVolume) - (int16_t)(g_minVolume)) / (HOST_MAX_VOLUME - HOST_MIN_VOLUME));
                 g_curVolume          = (int16_t)(g_minVolume + g_deviceVolumeStep * g_hostCurVolume);
-                g_curVol[0]          = ((uint8_t)(g_curVolume)&0x00FF);
-                g_curVol[1]          = ((uint8_t)(g_curVolume) >> 8U);
+                g_curVol[0]          = (uint8_t)((uint16_t)g_curVolume & 0x00FF);
+                g_curVol[1]          = (uint8_t)((uint16_t)g_curVolume >> 8U);
                 g_curMute[0]         = 0U;
                 g_audio.runWaitState = kUSB_HostAudioRunWaitAudioConfigChannel;
                 if (kStatus_USB_Success != USB_HostAudioGetSetFeatureUnitRequest(
@@ -814,8 +796,8 @@ void USB_AudioTask(void *arg)
                 g_minVolume          = USB_SHORT_FROM_LITTLE_ENDIAN_ADDRESS((&g_volumeRang.wMIN[0]));
                 g_maxVolume          = USB_SHORT_FROM_LITTLE_ENDIAN_ADDRESS((&g_volumeRang.wMAX[0]));
                 g_deviceVolumeStep   = USB_SHORT_FROM_LITTLE_ENDIAN_ADDRESS((&g_volumeRang.wRES[0]));
-                g_curVol[0]          = ((uint8_t)(g_curVolume)&0x00FF);
-                g_curVol[1]          = ((uint8_t)(g_curVolume) >> 8U);
+                g_curVol[0]          = (uint8_t)((uint16_t)g_curVolume & 0x00FF);
+                g_curVol[1]          = (uint8_t)((uint16_t)g_curVolume >> 8U);
                 g_curMute[0]         = 0U;
                 g_audio.runWaitState = kUSB_HostAudioRunWaitAudioConfigChannel;
                 if (kStatus_USB_Success != USB_HostAudioGetSetFeatureUnitRequest(
@@ -965,12 +947,11 @@ void USB_AudioTask(void *arg)
                 }
                 usb_echo("   - Sample size    : %d bits\n\r", g_pFormatTypeDesc->bbitresolution);
                 usb_echo("   - Number of channels : %d channels\n\r", g_pFormatTypeDesc->bnrchannels);
+                g_sampleFreq = (((uint32_t)g_pFormatTypeDesc->tsamfreq[0][2]) << 16U) |
+                               (((uint32_t)g_pFormatTypeDesc->tsamfreq[0][1]) << 8U) |
+                               (((uint32_t)g_pFormatTypeDesc->tsamfreq[0][0]) << 0U);
                 usb_echo("USB Speaker example will loop playback %dk_%dbit_%dch format audio.\r\n",
-                         ((((uint32_t)g_pFormatTypeDesc->tsamfreq[0][2]) << 16U) |
-                          (((uint32_t)g_pFormatTypeDesc->tsamfreq[0][1]) << 8U) |
-                          (((uint32_t)g_pFormatTypeDesc->tsamfreq[0][0]) << 0U)) /
-                             1000U,
-                         g_pFormatTypeDesc->bbitresolution, g_pFormatTypeDesc->bnrchannels);
+                         g_sampleFreq / 1000U, g_pFormatTypeDesc->bbitresolution, g_pFormatTypeDesc->bnrchannels);
             }
             else if ((AUDIO_DEVICE_VERSION_02 == g_audio.deviceAudioVersion))
             {
@@ -998,8 +979,13 @@ void USB_AudioTask(void *arg)
                         USB_LONG_FROM_LITTLE_ENDIAN_ADDRESS((frequencyArrayStart)),
                         USB_LONG_FROM_LITTLE_ENDIAN_ADDRESS((frequencyArrayStart + 4U)),
                         USB_LONG_FROM_LITTLE_ENDIAN_ADDRESS((frequencyArrayStart + 8U)));
+                    if (48000U == USB_LONG_FROM_LITTLE_ENDIAN_ADDRESS((frequencyArrayStart)))
+                    {
+                        frequencyArray = frequencyArrayStart;
+                    }
                     frequencyArrayStart += sizeof(usb_audio_2_0_layout3_struct_t);
                 }
+                g_sampleFreq = USB_SHORT_FROM_LITTLE_ENDIAN_ADDRESS((frequencyArray));
                 usb_echo("   - Bit resolution : %d bits\n\r", g_pFormatTypeDesc_20->bBitResolution);
                 usb_echo("   - Number of channels : %d channels\n\r", g_generalDesc_20->bNrChannels);
                 usb_echo("   - Transfer type : %s\n\r", strTransferType[(g_pIsoEndpDesc->bmAttributes) & EP_TYPE_MASK]);
@@ -1007,10 +993,8 @@ void USB_AudioTask(void *arg)
                          strSyncType[(uint8_t)(g_pIsoEndpDesc->bmAttributes >> 2U) & EP_TYPE_MASK]);
                 usb_echo("   - Usage type : %s  \n\r",
                          strDataType[(uint8_t)(g_pIsoEndpDesc->bmAttributes >> 4U) & EP_TYPE_MASK]);
-
                 usb_echo("USB Speaker example will loop playback %dk_%dbit_%d ch format audio.\r\n",
-                         USB_SHORT_FROM_LITTLE_ENDIAN_ADDRESS((frequencyArray)) / 1000U,
-                         g_pFormatTypeDesc_20->bBitResolution, g_generalDesc_20->bNrChannels);
+                         g_sampleFreq / 1000U, g_pFormatTypeDesc_20->bBitResolution, g_generalDesc_20->bNrChannels);
             }
             else
             {
@@ -1026,15 +1010,15 @@ void USB_AudioTask(void *arg)
             {
                 USB_HostAudioGetSetEndpointRequest(g_audio.classHandle,
                                                    (uint32_t)((USB_AUDIO_EP_CS_SAMPING_FREQ_CONTROL << 8U)),
-                                                   ((0U << 8U) | USB_AUDIO_CS_REQUEST_CODE_SET_CUR), &freq,
-                                                   sizeof(freq), Audio_ControlCallback, &g_audio);
+                                                   ((0U << 8U) | USB_AUDIO_CS_REQUEST_CODE_SET_CUR), &g_sampleFreq,
+                                                   sizeof(g_sampleFreq), Audio_ControlCallback, &g_audio);
             }
             else if ((AUDIO_DEVICE_VERSION_02 == g_audio.deviceAudioVersion))
             {
                 USB_HostAudioGetSetClockSourceRequest(g_audio.classHandle,
                                                       (uint32_t)((USB_AUDIO_CS_SAM_FREQ_CONTROL_20 << 8U) | 0U),
-                                                      ((0U << 8U) | USB_AUDIO_CS_REQUEST_CODE_CUR_20), &freq,
-                                                      sizeof(freq), Audio_ControlCallback, &g_audio);
+                                                      ((0U << 8U) | USB_AUDIO_CS_REQUEST_CODE_CUR_20), &g_sampleFreq,
+                                                      sizeof(g_sampleFreq), Audio_ControlCallback, &g_audio);
             }
             else
             {
@@ -1202,7 +1186,7 @@ usb_status_t USB_HostAudioEvent(usb_device_handle deviceHandle,
     usb_host_configuration_t *configuration_ptr;
     uint8_t interface_g_index;
     usb_host_interface_t *interface_ptr;
-    uint32_t info_value;
+    uint32_t info_value = 0U;
     usb_status_t status = kStatus_USB_Success;
 
     switch (eventCode)

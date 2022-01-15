@@ -18,7 +18,7 @@ extern "C" {
 #include "fsl_sss_ftr_default.h"
 #endif
 
-#if SSS_HAVE_SE05X
+#if SSS_HAVE_APPLET_SE05X_IOT
 
 #ifdef FLOW_VERBOSE
 #define VERBOSE_APDU_LOGS 1
@@ -55,9 +55,14 @@ smStatus_t Se05x_API_I2CM_Send(
     uint8_t *pCmdbuf = &cmdbuf[0];
     size_t cmdbufLen = 0;
     int tlvRet       = 0;
-    uint8_t rspbuf[SE05X_MAX_BUF_SIZE_RSP];
+    uint8_t rspbuf[SE05X_MAX_BUF_SIZE_RSP] = {0};
     uint8_t *pRspbuf = &rspbuf[0];
     size_t rspbufLen = ARRAY_SIZE(rspbuf);
+
+#if VERBOSE_APDU_LOGS
+    NEWLINE();
+    nLog("APDU", NX_LEVEL_DEBUG, "Se05x_API_I2CM_Send []");
+#endif /* VERBOSE_APDU_LOGS */
 
     /*tlvRet = TLVSET_Se05xSession("session identifier", &pCmdbuf, &cmdbufLen, kSE05x_TAG_SESSION_ID, session_ctx);
     if (0 != tlvRet) {
@@ -84,7 +89,7 @@ smStatus_t Se05x_API_I2CM_Send(
 cleanup:
     return retStatus;
 }
-#endif // SSS_HAVE_SE05X
+#endif // SSS_HAVE_APPLET_SE05X_IOT
 
 #ifdef __cplusplus
 }

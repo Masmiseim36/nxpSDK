@@ -2,17 +2,14 @@
 #ifndef _BOARD_SETUP_H_
 #define _BOARD_SETUP_H_
 
-/*******************************************************************************
- * Prototypes
- ******************************************************************************/
+#include "ux_api.h"
+
 void board_setup(void);
 
-void usb_host_setup(void);
-void usb_host_interrupt_setup(int priority);
-ULONG usb_host_base(void);
+void usb_host_hw_setup(void);
 
-void usb_device_setup(void);
-void usb_device_interrupt_setup(int priority);
-ULONG usb_device_base(void);
+UINT usbx_host_hcd_register(VOID);
+
+VOID usbx_mem_init(VOID);
 
 #endif /* _BOARD_SETUP_H_ */

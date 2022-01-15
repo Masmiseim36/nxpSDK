@@ -1,6 +1,6 @@
 Overview
 ========
-The SDCARD FATFS project is a demonstration program that uses the SDK software. Tt mounts a file 
+The SDCARD FATFS project is a demonstration program that uses the SDK software. It mounts a file 
 system based on a SD card then does "creat directory/read directory/create file/write file/read file"
 operation. The file sdhc_config.h has default SDHC configuration which can be adjusted to let card
 driver has different performance. The purpose of this example is to show how to use SDCARD driver 
@@ -8,10 +8,10 @@ based FATFS disk in SDK software.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.9
-- Keil MDK  5.33
-- GCC ARM Embedded  9.3.1
-- MCUXpresso  11.3.0
+- IAR embedded Workbench  9.10.2
+- Keil MDK  5.34
+- GCC ARM Embedded  10.2.1
+- MCUXpresso  11.5.0
 
 Hardware requirements
 =====================

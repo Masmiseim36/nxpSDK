@@ -13,6 +13,7 @@ target_sources(${PROJECT_NAME}
 	${CMAKE_CURRENT_LIST_DIR}/src/gx_animation_drag_event_process.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gx_animation_drag_tracking.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gx_animation_drag_tracking_start.c
+	${CMAKE_CURRENT_LIST_DIR}/src/gx_animation_delete.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gx_animation_landing_speed_set.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gx_animation_slide_landing.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gx_animation_slide_landing_start.c
@@ -126,6 +127,17 @@ target_sources(${PROJECT_NAME}
 	${CMAKE_CURRENT_LIST_DIR}/src/gx_display_driver_16bpp_simple_line_draw.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gx_display_driver_16bpp_vertical_line_draw.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gx_display_driver_16bpp_vertical_pattern_line_draw.c
+	${CMAKE_CURRENT_LIST_DIR}/src/gx_display_driver_16bpp_rotated_block_move.c
+	${CMAKE_CURRENT_LIST_DIR}/src/gx_display_driver_16bpp_rotated_canvas_copy.c
+	${CMAKE_CURRENT_LIST_DIR}/src/gx_display_driver_16bpp_rotated_horizontal_line_draw.c
+	${CMAKE_CURRENT_LIST_DIR}/src/gx_display_driver_16bpp_rotated_horizontal_pattern_line_draw.c
+	${CMAKE_CURRENT_LIST_DIR}/src/gx_display_driver_16bpp_rotated_pixel_write.c
+	${CMAKE_CURRENT_LIST_DIR}/src/gx_display_driver_16bpp_rotated_pixelmap_blend.c
+	${CMAKE_CURRENT_LIST_DIR}/src/gx_display_driver_16bpp_rotated_pixelmap_draw.c
+	${CMAKE_CURRENT_LIST_DIR}/src/gx_display_driver_16bpp_rotated_pixelmap_rotate.c
+	${CMAKE_CURRENT_LIST_DIR}/src/gx_display_driver_16bpp_rotated_simple_line_draw.c
+	${CMAKE_CURRENT_LIST_DIR}/src/gx_display_driver_16bpp_rotated_vertical_line_draw.c
+	${CMAKE_CURRENT_LIST_DIR}/src/gx_display_driver_16bpp_rotated_vertical_pattern_line_draw.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gx_display_driver_1bpp_block_move.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gx_display_driver_1bpp_canvas_copy.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gx_display_driver_1bpp_glyph_1bpp_draw.c
@@ -151,11 +163,18 @@ target_sources(${PROJECT_NAME}
 	${CMAKE_CURRENT_LIST_DIR}/src/gx_display_driver_24xrgb_pixelmap_blend.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gx_display_driver_24xrgb_png_draw.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gx_display_driver_24xrgb_setup.c
+	${CMAKE_CURRENT_LIST_DIR}/src/gx_display_driver_24xrgb_rotated_canvas_blend.c
+	${CMAKE_CURRENT_LIST_DIR}/src/gx_display_driver_24xrgb_rotated_jpeg_draw.c
+	${CMAKE_CURRENT_LIST_DIR}/src/gx_display_driver_24xrgb_rotated_pixel_blend.c
+	${CMAKE_CURRENT_LIST_DIR}/src/gx_display_driver_24xrgb_rotated_png_draw.c
+	${CMAKE_CURRENT_LIST_DIR}/src/gx_display_driver_24xrgb_rotated_setup.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gx_display_driver_32argb_native_color_get.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gx_display_driver_32argb_pixel_blend.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gx_display_driver_32argb_pixelmap_blend.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gx_display_driver_32argb_pixelmap_draw.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gx_display_driver_32argb_setup.c
+	${CMAKE_CURRENT_LIST_DIR}/src/gx_display_driver_32argb_rotated_pixel_blend.c
+	${CMAKE_CURRENT_LIST_DIR}/src/gx_display_driver_32argb_rotated_setup.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gx_display_driver_32bpp_block_move.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gx_display_driver_32bpp_canvas_copy.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gx_display_driver_32bpp_glyph_1bit_draw.c
@@ -169,6 +188,19 @@ target_sources(${PROJECT_NAME}
 	${CMAKE_CURRENT_LIST_DIR}/src/gx_display_driver_32bpp_simple_line_draw.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gx_display_driver_32bpp_vertical_line_draw.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gx_display_driver_32bpp_vertical_pattern_line_draw.c
+	${CMAKE_CURRENT_LIST_DIR}/src/gx_display_driver_32bpp_rotated_block_move.c
+	${CMAKE_CURRENT_LIST_DIR}/src/gx_display_driver_32bpp_rotated_canvas_copy.c
+	${CMAKE_CURRENT_LIST_DIR}/src/gx_display_driver_32bpp_rotated_glyph_1bit_draw.c
+	${CMAKE_CURRENT_LIST_DIR}/src/gx_display_driver_32bpp_rotated_horizontal_line_draw.c
+	${CMAKE_CURRENT_LIST_DIR}/src/gx_display_driver_32bpp_rotated_horizontal_pattern_line_draw.c
+	${CMAKE_CURRENT_LIST_DIR}/src/gx_display_driver_32bpp_rotated_horizontal_pixelmap_line_draw.c
+	${CMAKE_CURRENT_LIST_DIR}/src/gx_display_driver_32bpp_rotated_pixel_write.c
+	${CMAKE_CURRENT_LIST_DIR}/src/gx_display_driver_32bpp_rotated_pixelmap_blend.c
+	${CMAKE_CURRENT_LIST_DIR}/src/gx_display_driver_32bpp_rotated_pixelmap_draw.c
+	${CMAKE_CURRENT_LIST_DIR}/src/gx_display_driver_32bpp_rotated_pixelmap_rotate.c
+	${CMAKE_CURRENT_LIST_DIR}/src/gx_display_driver_32bpp_rotated_simple_line_draw.c
+	${CMAKE_CURRENT_LIST_DIR}/src/gx_display_driver_32bpp_rotated_vertical_line_draw.c
+	${CMAKE_CURRENT_LIST_DIR}/src/gx_display_driver_32bpp_rotated_vertical_pattern_line_draw.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gx_display_driver_332rgb_native_color_get.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gx_display_driver_332rgb_pixel_blend.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gx_display_driver_332rgb_pixelmap_draw.c
@@ -207,7 +239,15 @@ target_sources(${PROJECT_NAME}
 	${CMAKE_CURRENT_LIST_DIR}/src/gx_display_driver_565rgb_pixel_blend.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gx_display_driver_565rgb_png_draw.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gx_display_driver_565rgb_setup.c
+	${CMAKE_CURRENT_LIST_DIR}/src/gx_display_driver_565rgb_rotated_canvas_blend.c
+	${CMAKE_CURRENT_LIST_DIR}/src/gx_display_driver_565rgb_rotated_glyph_1bit_draw.c
+	${CMAKE_CURRENT_LIST_DIR}/src/gx_display_driver_565rgb_rotated_horizontal_pixelmap_line_draw.c
+	${CMAKE_CURRENT_LIST_DIR}/src/gx_display_driver_565rgb_rotated_pixel_blend.c
+	${CMAKE_CURRENT_LIST_DIR}/src/gx_display_driver_565rgb_rotated_jpeg_draw.c
+	${CMAKE_CURRENT_LIST_DIR}/src/gx_display_driver_565rgb_rotated_png_draw.c
+	${CMAKE_CURRENT_LIST_DIR}/src/gx_display_driver_565rgb_rotated_setup.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gx_display_driver_8bit_palette_native_color_get.c
+	${CMAKE_CURRENT_LIST_DIR}/src/gx_display_driver_8bit_palette_rotated_setup.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gx_display_driver_8bit_palette_setup.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gx_display_driver_8bpp_block_move.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gx_display_driver_8bpp_canvas_copy.c
@@ -227,6 +267,20 @@ target_sources(${PROJECT_NAME}
 	${CMAKE_CURRENT_LIST_DIR}/src/gx_display_driver_8bpp_simple_line_draw.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gx_display_driver_8bpp_vertical_line_draw.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gx_display_driver_8bpp_vertical_pattern_line_draw.c
+	${CMAKE_CURRENT_LIST_DIR}/src/gx_display_driver_8bpp_rotated_block_move.c
+	${CMAKE_CURRENT_LIST_DIR}/src/gx_display_driver_8bpp_rotated_canvas_copy.c
+	${CMAKE_CURRENT_LIST_DIR}/src/gx_display_driver_8bpp_rotated_glyph_1bit_draw.c
+	${CMAKE_CURRENT_LIST_DIR}/src/gx_display_driver_8bpp_rotated_glyph_3bit_draw.c
+	${CMAKE_CURRENT_LIST_DIR}/src/gx_display_driver_8bpp_rotated_glyph_4bit_draw.c
+	${CMAKE_CURRENT_LIST_DIR}/src/gx_display_driver_8bpp_rotated_horizontal_line_draw.c
+	${CMAKE_CURRENT_LIST_DIR}/src/gx_display_driver_8bpp_rotated_horizontal_pattern_line_draw.c
+	${CMAKE_CURRENT_LIST_DIR}/src/gx_display_driver_8bpp_rotated_horizontal_pixelmap_line_draw.c
+	${CMAKE_CURRENT_LIST_DIR}/src/gx_display_driver_8bpp_rotated_pixel_write.c
+	${CMAKE_CURRENT_LIST_DIR}/src/gx_display_driver_8bpp_rotated_pixelmap_draw.c
+	${CMAKE_CURRENT_LIST_DIR}/src/gx_display_driver_8bpp_rotated_pixelmap_rotate.c
+	${CMAKE_CURRENT_LIST_DIR}/src/gx_display_driver_8bpp_rotated_simple_line_draw.c
+	${CMAKE_CURRENT_LIST_DIR}/src/gx_display_driver_8bpp_rotated_vertical_line_draw.c
+	${CMAKE_CURRENT_LIST_DIR}/src/gx_display_driver_8bpp_rotated_vertical_pattern_line_draw.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gx_display_driver_arc_clipping_get.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gx_display_driver_generic_aliased_arc_draw.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gx_display_driver_generic_aliased_circle_draw.c
@@ -239,6 +293,8 @@ target_sources(${PROJECT_NAME}
 	${CMAKE_CURRENT_LIST_DIR}/src/gx_display_driver_generic_aliased_wide_ellipse_draw.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gx_display_driver_generic_aliased_wide_line_draw.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gx_display_driver_generic_alphamap_draw.c
+	${CMAKE_CURRENT_LIST_DIR}/src/gx_display_driver_generic_rotated_glyph_4bit_draw.c
+	${CMAKE_CURRENT_LIST_DIR}/src/gx_display_driver_generic_rotated_glyph_8bit_draw.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gx_display_driver_generic_arc_draw.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gx_display_driver_generic_arc_fill.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gx_display_driver_generic_circle_draw.c
@@ -264,6 +320,13 @@ target_sources(${PROJECT_NAME}
 	${CMAKE_CURRENT_LIST_DIR}/src/gx_display_driver_generic_wide_ellipse_draw.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gx_display_driver_generic_wide_line_fill.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gx_display_driver_generic_wide_line_points_calculate.c
+	${CMAKE_CURRENT_LIST_DIR}/src/gx_display_driver_generic_rotated_alphamap_draw.c
+	${CMAKE_CURRENT_LIST_DIR}/src/gx_display_driver_generic_rotated_arc_fill.c
+	${CMAKE_CURRENT_LIST_DIR}/src/gx_display_driver_generic_rotated_circle_fill.c
+	${CMAKE_CURRENT_LIST_DIR}/src/gx_display_driver_generic_rotated_ellipse_fill.c
+	${CMAKE_CURRENT_LIST_DIR}/src/gx_display_driver_generic_rotated_pie_fill.c
+	${CMAKE_CURRENT_LIST_DIR}/src/gx_display_driver_generic_rotated_polygon_fill.c
+	${CMAKE_CURRENT_LIST_DIR}/src/gx_display_driver_generic_rotated_wide_line_fill.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gx_display_driver_horizontal_line_alpha_draw.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gx_display_driver_monochrome_setup.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gx_display_driver_simple_line_alpha_draw.c
@@ -283,6 +346,16 @@ target_sources(${PROJECT_NAME}
 	${CMAKE_CURRENT_LIST_DIR}/src/gx_drop_list_open.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gx_drop_list_pixelmap_set.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gx_drop_list_popup_get.c
+	${CMAKE_CURRENT_LIST_DIR}/src/gx_generic_scroll_wheel_children_position.c
+	${CMAKE_CURRENT_LIST_DIR}/src/gx_generic_scroll_wheel_create.c
+	${CMAKE_CURRENT_LIST_DIR}/src/gx_generic_scroll_wheel_down_wrap.c
+	${CMAKE_CURRENT_LIST_DIR}/src/gx_generic_scroll_wheel_draw.c
+	${CMAKE_CURRENT_LIST_DIR}/src/gx_generic_scroll_wheel_event_process.c
+	${CMAKE_CURRENT_LIST_DIR}/src/gx_generic_scroll_wheel_row_height_set.c
+	${CMAKE_CURRENT_LIST_DIR}/src/gx_generic_scroll_wheel_scroll.c
+	${CMAKE_CURRENT_LIST_DIR}/src/gx_generic_scroll_wheel_total_rows_set.c
+	${CMAKE_CURRENT_LIST_DIR}/src/gx_generic_scroll_wheel_up_wrap.c
+	${CMAKE_CURRENT_LIST_DIR}/src/gx_generic_scroll_wheel_wrap_style_check.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gx_horizontal_list_children_position.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gx_horizontal_list_create.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gx_horizontal_list_event_process.c
@@ -326,6 +399,7 @@ target_sources(${PROJECT_NAME}
 	${CMAKE_CURRENT_LIST_DIR}/src/gx_line_chart_y_scale_calculate.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gx_menu_create.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gx_menu_draw.c
+	${CMAKE_CURRENT_LIST_DIR}/src/gx_menu_event_process.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gx_menu_insert.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gx_menu_position.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gx_menu_remove.c
@@ -501,6 +575,7 @@ target_sources(${PROJECT_NAME}
 	${CMAKE_CURRENT_LIST_DIR}/src/gx_scroll_wheel_selected_get.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gx_scroll_wheel_selected_row_calculate.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gx_scroll_wheel_selected_set.c
+	${CMAKE_CURRENT_LIST_DIR}/src/gx_scroll_wheel_wrap_style_check.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gx_scroll_wheel_speed_set.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gx_scroll_wheel_total_rows_set.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gx_scrollbar_draw.c
@@ -652,7 +727,6 @@ target_sources(${PROJECT_NAME}
 	${CMAKE_CURRENT_LIST_DIR}/src/gx_text_scroll_wheel_draw.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gx_text_scroll_wheel_font_set.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gx_text_scroll_wheel_text_color_set.c
-	${CMAKE_CURRENT_LIST_DIR}/src/gx_touch_driver_generic_resistive.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gx_tree_view_create.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gx_tree_view_draw.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gx_tree_view_event_process.c
@@ -685,6 +759,7 @@ target_sources(${PROJECT_NAME}
 	${CMAKE_CURRENT_LIST_DIR}/src/gx_utility_bidi_character_type_get.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gx_utility_bidi_mirroring_get.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gx_utility_bidi_paragraph_reorder.c
+	${CMAKE_CURRENT_LIST_DIR}/src/gx_utility_bidi_resolved_text_info_delete.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gx_utility_canvas_to_bmp.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gx_utility_circle_point_get.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gx_utility_easing_function_calculate.c
@@ -828,6 +903,7 @@ target_sources(${PROJECT_NAME}
 	${CMAKE_CURRENT_LIST_DIR}/src/gxe_accordion_menu_position.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gxe_animation_canvas_define.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gxe_animation_create.c
+	${CMAKE_CURRENT_LIST_DIR}/src/gxe_animation_delete.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gxe_animation_drag_disable.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gxe_animation_drag_enable.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gxe_animation_landing_speed_set.c
@@ -918,6 +994,11 @@ target_sources(${PROJECT_NAME}
 	${CMAKE_CURRENT_LIST_DIR}/src/gxe_drop_list_open.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gxe_drop_list_pixelmap_set.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gxe_drop_list_popup_get.c
+	${CMAKE_CURRENT_LIST_DIR}/src/gxe_generic_scroll_wheel_children_position.c
+	${CMAKE_CURRENT_LIST_DIR}/src/gxe_generic_scroll_wheel_create.c
+	${CMAKE_CURRENT_LIST_DIR}/src/gxe_generic_scroll_wheel_event_process.c
+	${CMAKE_CURRENT_LIST_DIR}/src/gxe_generic_scroll_wheel_row_height_set.c
+	${CMAKE_CURRENT_LIST_DIR}/src/gxe_generic_scroll_wheel_total_rows_set.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gxe_horizontal_list_children_position.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gxe_horizontal_list_create.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gxe_horizontal_list_event_process.c
@@ -939,6 +1020,7 @@ target_sources(${PROJECT_NAME}
 	${CMAKE_CURRENT_LIST_DIR}/src/gxe_line_chart_update.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gxe_line_chart_y_scale_calculate.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gxe_menu_create.c
+	${CMAKE_CURRENT_LIST_DIR}/src/gxe_menu_event_process.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gxe_menu_insert.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gxe_menu_remove.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gxe_menu_text_offset_set.c
@@ -1134,6 +1216,8 @@ target_sources(${PROJECT_NAME}
 	${CMAKE_CURRENT_LIST_DIR}/src/gxe_tree_view_root_pixelmap_set.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gxe_tree_view_selected_get.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gxe_tree_view_selected_set.c
+	${CMAKE_CURRENT_LIST_DIR}/src/gxe_utility_bidi_paragraph_reorder.c
+	${CMAKE_CURRENT_LIST_DIR}/src/gxe_utility_bidi_resolved_text_info_delete.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gxe_utility_canvas_to_bmp.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gxe_utility_circle_point_get.c
 	${CMAKE_CURRENT_LIST_DIR}/src/gxe_utility_gradient_create.c

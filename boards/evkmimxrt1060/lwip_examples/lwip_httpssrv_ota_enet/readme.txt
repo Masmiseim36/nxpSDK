@@ -10,7 +10,7 @@ Toolchain supported
 - IAR embedded Workbench  9.10.2
 - Keil MDK  5.34
 - GCC ARM Embedded  10.2.1
-- MCUXpresso  11.4.0
+- MCUXpresso  11.5.0
 
 Hardware requirements
 =====================
@@ -25,23 +25,40 @@ No special settings are required.
 
 Prepare the Demo
 ================
-1. Prior launching the demo it is recommended to pre-build modified version of the application in .bin format to test the OTA update process.
-   It is also required to have ota_bootloder programmed to the FLASH memory. Please see readme for the ota_bootloader for details.
-2. Connect a USB cable between the PC host and the OpenSDA(or USB to Serial) USB port on the target board.
-3. Open a serial terminal on PC for OpenSDA serial(or USB to Serial) device with these settings:
+1. The demo requires MCUBoot booloader to be present in the FLASH memory to function properly.
+   It is recommended to build and program the bootloader first, then go on with the application.
+   Please refer to respective readme of the mcuboot_opensource example and follow the steps there before you continue.
+2. Prior launching the demo it is recommended to pre-build image with modified version of the application to test the OTA update process.
+3. Connect a USB cable between the PC host and the OpenSDA(or USB to Serial) USB port on the target board.
+4. Open a serial terminal on PC for OpenSDA serial(or USB to Serial) device with these settings:
     - 115200 baud rate
     - 8 data bits
     - No parity
     - One stop bit
     - No flow control
-4.  Insert the Ethernet Cable into the target board's RJ45 port and connect it to your PC network adapter.
+5. Insert the Ethernet Cable into the target board's RJ45 port and connect it to your PC network adapter.
+6. Configure the host PC IP address to 192.168.0.100.
 
 Running the demo
 ================
+To get the application properly executed by the bootloader, it is necessary to put signed application image to the primary application partition.
+There are multiple options how to achieve that, however in principle the are two main methods (both presuming the bootlaoder is already in place):
+
+a)  programing signed application image to the primary application partition using an external tool (direct method)
+b)  jump-starting the application by debugger, performing OTA update with the signed image, resetting the board and letting the bootloader to perform update (indirect method)
+
+The latter method is described step by step below:
+
 1.  Load the demo project and build it.
     Known issue: MDK linker issues warning about unused boot_hdr sections. This does not affect the functionality of the example.
-2.  Launch the debugger in your IDE to begin running the demo.
-3.  When the demo runs successfully, the terminal will display the following:
+    
+2.  Prepare signed image of the application from raw binary as described in the mcuboot_opensource readme.
+     - In case of MCUXpress raw binary may not be generated automatically. Use binary tools after right clicking Binaries/.axf file in the project tree to generate it manually.
+    
+3.  Launch the debugger in your IDE to jump-start the application.
+     - In case of MCUXpresso IDE the execution stalls in an endless loop in the bootloader. Pause the debugging and use debugger console and issue command 'jump ResetISR'.
+     
+4.  When the demo runs successfully, the terminal will display the following:
         Initializing PHY...
 
         ************************************************
@@ -51,12 +68,11 @@ Running the demo
          IPv4 Subnet mask : 255.255.255.0
          IPv4 Gateway     : 192.168.0.100
         ************************************************
-4. Configure the host PC IP address to 192.168.0.100.
 5. Open web browser and type https://192.168.0.102 (IP address of the board) on the browser address bar.
    The browser should show the main web page of the example.
    Note: Be sure to include "https" protocol specifier in the address bar, so that your browser attempts to establish secure connection to TCP port 443,
    as browsers generally tend to use non-secure connection to port 80 by default.
-6. Go to OTA page, select file with udpated firmware and upload it.
+6. Go to OTA page, select file with udpated firmware (signed image) and upload it.
 7. After the file is uploaded, click "Reboot" button to start newly uploaded firmware in test mode.
 8. Once the updated firmware executes, the "Accept update" button becomes active. Click it to make the update permanent.
 

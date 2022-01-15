@@ -37,18 +37,19 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../wpl.h"
 "${ProjDirPath}/../wpl_nxp.c"
 "${ProjDirPath}/../lwipopts.h"
-"${ProjDirPath}/../ota_bootloader_supp.c"
-"${ProjDirPath}/../ota_bootloader_supp.h"
-"${ProjDirPath}/../ota_bootloader_hdr.c"
-"${ProjDirPath}/../ota_bootloader_board.h"
 "${ProjDirPath}/../httpsrv_fs_data.c"
 "${ProjDirPath}/../mbedtls_config.h"
 "${ProjDirPath}/../FreeRTOSConfig.h"
 "${ProjDirPath}/../pin_mux.c"
 "${ProjDirPath}/../pin_mux.h"
 "${ProjDirPath}/../wifi_config.h"
+"${ProjDirPath}/../mcuboot_app_support.c"
+"${ProjDirPath}/../mcuboot_app_support.h"
+"${ProjDirPath}/../flash_partitioning.h"
 "${ProjDirPath}/../sdmmc_config.c"
 "${ProjDirPath}/../sdmmc_config.h"
+"${ProjDirPath}/../wifi_bt_config.c"
+"${ProjDirPath}/../wifi_bt_config.h"
 "${ProjDirPath}/../app_config.h"
 "${ProjDirPath}/../board.c"
 "${ProjDirPath}/../board.h"
@@ -76,9 +77,10 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../components/flash/mflash/mimxrt1062
     ${ProjDirPath}/../../../../../middleware/mbedtls
     ${ProjDirPath}/../../../../../middleware/lwip
-    ${ProjDirPath}/../../../../../rtos/freertos
+    ${ProjDirPath}/../../../../../rtos/freertos/freertos_kernel
     ${ProjDirPath}/../../../../../devices/MIMXRT1062/utilities
     ${ProjDirPath}/../../../../../middleware/wifi
+    ${ProjDirPath}/../../../../../components/wifi_bt_module
     ${ProjDirPath}/../../../../../middleware/sdmmc
     ${ProjDirPath}/../../../../../devices/MIMXRT1062
     ${ProjDirPath}/../../../../../components/uart
@@ -90,10 +92,6 @@ set(CMAKE_MODULE_PATH
 )
 
 # include modules
-include(driver_trng_MIMXRT1062)
-
-include(driver_dcp_MIMXRT1062)
-
 include(driver_cache_armv7_m7_MIMXRT1062)
 
 include(driver_flexspi_MIMXRT1062)
@@ -119,6 +117,8 @@ include(middleware_lwip_MIMXRT1062)
 include(utility_debug_console_MIMXRT1062)
 
 include(middleware_wifi_MIMXRT1062)
+
+include(component_wifi_bt_module_tx_pwr_limits_MIMXRT1062)
 
 include(driver_usdhc_MIMXRT1062)
 
@@ -155,6 +155,10 @@ include(driver_igpio_MIMXRT1062)
 include(CMSIS_Include_core_cm_MIMXRT1062)
 
 include(component_mflash_common_MIMXRT1062)
+
+include(driver_dcp_MIMXRT1062)
+
+include(driver_trng_MIMXRT1062)
 
 include(middleware_lwip_apps_httpsrv_MIMXRT1062)
 

@@ -64,7 +64,7 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../xip
     ${ProjDirPath}/../../../../../../CMSIS/Core/Include
     ${ProjDirPath}/../../../../../../components/osa
-    ${ProjDirPath}/../../../../../../components/codec/cs42888
+    ${ProjDirPath}/../../../../../../components/codec/cs42448
     ${ProjDirPath}/../../../../../../devices/MIMXRT1052/utilities
 )
 
@@ -87,7 +87,7 @@ include(component_lpi2c_adapter_MIMXRT1052)
 
 include(driver_codec_MIMXRT1052)
 
-include(component_cs42888_adapter_MIMXRT1052)
+include(component_cs42448_adapter_MIMXRT1052)
 
 include(driver_cache_armv7_m7_MIMXRT1052)
 
@@ -135,7 +135,7 @@ include(component_osa_bm_MIMXRT1052)
 
 include(driver_usdhc_MIMXRT1052)
 
-include(driver_cs42888_MIMXRT1052)
+include(driver_cs42448_MIMXRT1052)
 
 include(utilities_misc_utilities_MIMXRT1052)
 

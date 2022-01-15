@@ -1,6 +1,6 @@
 # CROSS COMPILER SETTING
 SET(CMAKE_SYSTEM_NAME Generic)
-CMAKE_MINIMUM_REQUIRED (VERSION 3.1.1)
+CMAKE_MINIMUM_REQUIRED (VERSION 3.10.0)
 
 # THE VERSION NUMBER
 SET (Tutorial_VERSION_MAJOR 1)
@@ -39,19 +39,20 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../freemaster_cfg.h"
 "${ProjDirPath}/../../common/fmstr_example/freemaster_example.c"
 "${ProjDirPath}/../../common/fmstr_example/freemaster_example.h"
-"${ProjDirPath}/../support/mcuxsdk_usb/freemaster_usb.c"
-"${ProjDirPath}/../support/mcuxsdk_usb/freemaster_usb.h"
-"${ProjDirPath}/../support/mcuxsdk_usb/freemaster_usb_device_descriptor.c"
-"${ProjDirPath}/../support/mcuxsdk_usb/freemaster_usb_device_descriptor.h"
-"${ProjDirPath}/../support/mcuxsdk_usb/usb_device_config.h"
+"${ProjDirPath}/../../../../../middleware/freemaster/src/support/mcuxsdk_usb/freemaster_usb.c"
+"${ProjDirPath}/../../../../../middleware/freemaster/src/support/mcuxsdk_usb/freemaster_usb.h"
+"${ProjDirPath}/../../../../../middleware/freemaster/src/support/mcuxsdk_usb/freemaster_usb_device_descriptor.c"
+"${ProjDirPath}/../../../../../middleware/freemaster/src/support/mcuxsdk_usb/freemaster_usb_device_descriptor.h"
+"${ProjDirPath}/../../../../../middleware/freemaster/src/support/mcuxsdk_usb/usb_device_config.h"
+"${ProjDirPath}/../../../../../middleware/freemaster/src/support/mcuxsdk_usb/usb_device_descriptor.h"
+"${ProjDirPath}/../board.c"
+"${ProjDirPath}/../board.h"
 "${ProjDirPath}/../../common/fmstr_example/data_example_pmp.h"
 "${ProjDirPath}/../../common/fmstr_example/data_img_logo.h"
 "${ProjDirPath}/../../common/fmstr_example/data_img_file.h"
 "${ProjDirPath}/../../common/fmstr_example/data_img_fmstrlogo.h"
 "${ProjDirPath}/../../common/fmstr_example/data_html_index.h"
 "${ProjDirPath}/../../common/fmstr_example/example_data.h"
-"${ProjDirPath}/../board.c"
-"${ProjDirPath}/../board.h"
 "${ProjDirPath}/../dcd.c"
 "${ProjDirPath}/../dcd.h"
 "${ProjDirPath}/../usb_device_ch9.c"
@@ -65,7 +66,7 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
     ${ProjDirPath}/..
     ${ProjDirPath}/../../common/fmstr_example
-    ${ProjDirPath}/../support/mcuxsdk_usb
+    ${ProjDirPath}/../../../../../middleware/freemaster/src/support/mcuxsdk_usb
 )
 
 set(CMAKE_MODULE_PATH
@@ -80,7 +81,7 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../components/lists
     ${ProjDirPath}/../../../../../devices/MIMXRT1024/xip
     ${ProjDirPath}/../../../xip
-    ${ProjDirPath}/../../../../../CMSIS/Include
+    ${ProjDirPath}/../../../../../CMSIS/Core/Include
     ${ProjDirPath}/../../../../../devices/MIMXRT1024/utilities
 )
 
@@ -119,15 +120,11 @@ include(driver_igpio_MIMXRT1024)
 
 include(driver_xip_device_MIMXRT1024)
 
-include(driver_xip_board_MIMXRT1024)
+include(driver_xip_board_evkmimxrt1024_MIMXRT1024)
 
 include(middleware_fmstr_platform_gen32le_MIMXRT1024)
 
-include(CMSIS_Include_core_cm7_MIMXRT1024)
-
-include(CMSIS_Include_common_MIMXRT1024)
-
-include(CMSIS_Include_dsp_MIMXRT1024)
+include(CMSIS_Include_core_cm_MIMXRT1024)
 
 include(middleware_usb_phy_MIMXRT1024)
 

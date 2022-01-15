@@ -19,6 +19,10 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
+
+/* @TEST_ANCHOR */
+
+#ifndef CONTROLLER_ID
 #if defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0U)
 #define CONTROLLER_ID kUSB_ControllerEhci0
 #endif
@@ -30,6 +34,7 @@
 #endif
 #if defined(USB_DEVICE_CONFIG_LPCIP3511HS) && (USB_DEVICE_CONFIG_LPCIP3511HS > 0U)
 #define CONTROLLER_ID kUSB_ControllerLpcIp3511Hs0
+#endif
 #endif
 
 /* the threshold transfer count that can tolerance by frame */
@@ -48,11 +53,11 @@
 
 #if (defined(USB_DEVICE_CONFIG_LPCIP3511HS) && (USB_DEVICE_CONFIG_LPCIP3511HS > 0U))
 #define AUDIO_CLASS_2_0_HS_LOW_LATENCY_TRANSFER_COUNT (0x08U) /* 0x08 means 8 frames (8ms) */
-#define AUDIO_CLASS_2_0_HS_LOW_LATENCY_BUFFER_COUNT \
+#define AUDIO_SPEAKER_DATA_WHOLE_BUFFER_COUNT \
     (16U) /* 16 units size buffer (1 unit means the size to play during 1ms) */
 #elif (defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0U))
 #define AUDIO_CLASS_2_0_HS_LOW_LATENCY_TRANSFER_COUNT (0x08U) /* 0x08 means 8 frames (8ms) */
-#define AUDIO_CLASS_2_0_HS_LOW_LATENCY_BUFFER_COUNT \
+#define AUDIO_SPEAKER_DATA_WHOLE_BUFFER_COUNT \
     (16U) /* 16 units size buffer (1 unit means the size to play during 1ms) */
 #endif
 
@@ -116,8 +121,9 @@ typedef struct _usb_audio_speaker_struct
     volatile uint8_t startPlayFlag;
     volatile uint32_t tdWriteNumberPlay;
     volatile uint32_t tdReadNumberPlay;
-    volatile uint32_t audioSendCount;
-    volatile uint32_t lastAudioSendCount;
+    volatile uint32_t audioSendCount[2];
+    volatile uint32_t audioSpeakerReadDataCount[2];
+    volatile uint32_t audioSpeakerWriteDataCount[2];
     volatile uint32_t usbRecvCount;
     volatile uint32_t audioSendTimes;
     volatile uint32_t usbRecvTimes;

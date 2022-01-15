@@ -20,6 +20,8 @@
 // Use Device Explorer to generate [SAS].
 //
 
+/* @TEST_ANCHOR */
+
 #ifndef HOST_NAME
 #define HOST_NAME ""
 #endif /* HOST_NAME */

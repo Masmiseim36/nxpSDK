@@ -66,7 +66,8 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../../components/codec
     ${ProjDirPath}/../../../../../../components/codec/i2c
     ${ProjDirPath}/../../../../../../components/i2c
-    ${ProjDirPath}/../../../../../../rtos/freertos
+    ${ProjDirPath}/../../../../../../components/audio
+    ${ProjDirPath}/../../../../../../rtos/freertos/freertos_kernel
     ${ProjDirPath}/../../../../../../devices/MIMXRT1052
     ${ProjDirPath}/../../../../../../devices/MIMXRT1052/utilities
     ${ProjDirPath}/../../../../../../devices/MIMXRT1052/xip
@@ -96,6 +97,8 @@ include(component_wm8960_adapter_MIMXRT1052)
 include(component_codec_i2c_MIMXRT1052)
 
 include(component_lpi2c_adapter_MIMXRT1052)
+
+include(component_audio_sai_edma_adapter_MIMXRT1052)
 
 include(driver_lpi2c_MIMXRT1052)
 

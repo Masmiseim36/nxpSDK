@@ -114,7 +114,7 @@ int main(void)
     PRINTF("\r\n Successfully Initiliazed Sensor\r\n");
 
     /*!  Set the task to be executed while waiting for I2C transactions to complete. */
-    FXOS8700_I2C_SetIdleTask(&FXOS8700drv, (registeridlefunction_t)SMC_SetPowerModeVlpr, SMC);
+    //FXOS8700_I2C_SetIdleTask(&FXOS8700drv, (registeridlefunction_t)SMC_SetPowerModeVlpr, SMC);
 
     /*! Configure the fxos8700 sensor driver. */
     status = FXOS8700_I2C_Configure(&FXOS8700drv, fxos8700_Config_Hybrid);

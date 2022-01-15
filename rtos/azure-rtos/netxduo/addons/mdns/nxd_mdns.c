@@ -81,11 +81,11 @@ static UINT         _nx_mdns_packet_address_check(NX_PACKET *packet_ptr);
 static UINT         _nx_mdns_service_name_assemble(UCHAR *name, UCHAR *type, UCHAR *sub_type, UCHAR *domain, UCHAR *record_buffer, UINT buffer_size, UINT *type_index);
 static UINT         _nx_mdns_service_name_resolve(UCHAR *srv_name, UCHAR **name, UCHAR **type, UCHAR **domain);
 static UINT         _nx_mdns_rr_delete(NX_MDNS *mdns_ptr, NX_MDNS_RR *record_rr); 
-static UINT         _nx_mdns_rr_size_get(UCHAR *resource);
+static UINT         _nx_mdns_rr_size_get(UCHAR *resource, NX_PACKET *packet_ptr);
 static UINT         _nx_mdns_name_match(UCHAR *src, UCHAR *dst, UINT length);  
-static UINT         _nx_mdns_name_size_calculate(UCHAR *name);
+static UINT         _nx_mdns_name_size_calculate(UCHAR *name, NX_PACKET *packet_ptr);
 static UINT         _nx_mdns_name_string_encode(UCHAR *ptr, UCHAR *name);
-static UINT         _nx_mdns_name_string_decode(UCHAR *data, UINT start, UCHAR *buffer, UINT size); 
+static UINT         _nx_mdns_name_string_decode(UCHAR *data, UINT start, UINT data_length, UCHAR *buffer, UINT size); 
 static UINT         _nx_mdns_txt_string_encode(UCHAR *ptr, UCHAR *name);
 static UINT         _nx_mdns_txt_string_decode(UCHAR *data, UINT data_length, UCHAR *buffer, UINT size);
 static VOID         _nx_mdns_short_to_network_convert(UCHAR *ptr, USHORT value);
@@ -7791,7 +7791,7 @@ UINT             interface_index;
 /*  FUNCTION                                               RELEASE        */ 
 /*                                                                        */ 
 /*    _nx_mdns_packet_process                             PORTABLE C      */ 
-/*                                                           6.1          */
+/*                                                           6.1.4        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Yuxin Zhou, Microsoft Corporation                                   */
@@ -7837,6 +7837,9 @@ UINT             interface_index;
 /*  05-19-2020     Yuxin Zhou               Initial Version 6.0           */
 /*  09-30-2020     Yuxin Zhou               Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  02-02-2021     Yuxin Zhou               Modified comment(s), improved */
+/*                                            packet length verification, */
+/*                                            resulting in version 6.1.4  */
 /*                                                                        */
 /**************************************************************************/
 static UINT _nx_mdns_packet_process(NX_MDNS *mdns_ptr, NX_PACKET *packet_ptr, UINT interface_index)
@@ -7912,7 +7915,7 @@ NX_MDNS_RR         *nsec_rr;
 
             /* Multicast DNS responses MUST NOT contain any question in the Question Section, 
                Any questions in the Question Section of a received Multicast DNS response MUST be silently ignored. RFC6762, Section6, Page14.  */
-            data_ptr += (_nx_mdns_name_size_calculate(data_ptr) + 4);
+            data_ptr += (_nx_mdns_name_size_calculate(data_ptr, packet_ptr) + 4);
         }
         else
         {
@@ -8105,7 +8108,7 @@ NX_MDNS_RR         *nsec_rr;
 #endif /* NX_MDNS_DISABLE_SERVER */
 
             /* Update the data_ptr.  */
-            data_ptr += (_nx_mdns_name_size_calculate(data_ptr) + 4);
+            data_ptr += (_nx_mdns_name_size_calculate(data_ptr, packet_ptr) + 4);
         }
     }
     
@@ -8137,7 +8140,7 @@ NX_MDNS_RR         *nsec_rr;
                         _nx_mdns_conflict_process(mdns_ptr, rr_search);
 
                         /* Update the data_ptr.  */
-                        data_ptr += _nx_mdns_rr_size_get(data_ptr);
+                        data_ptr += _nx_mdns_rr_size_get(data_ptr, packet_ptr);
 
                         continue;
                     }
@@ -8179,7 +8182,7 @@ NX_MDNS_RR         *nsec_rr;
                     {
 
                         /* Update the data_ptr.  */
-                        data_ptr += _nx_mdns_rr_size_get(data_ptr);
+                        data_ptr += _nx_mdns_rr_size_get(data_ptr, packet_ptr);
 
                         continue;
                     }
@@ -8200,7 +8203,7 @@ NX_MDNS_RR         *nsec_rr;
                         _nx_mdns_conflict_process(mdns_ptr, rr_search);
 
                         /* Update the data_ptr.  */
-                        data_ptr += _nx_mdns_rr_size_get(data_ptr);
+                        data_ptr += _nx_mdns_rr_size_get(data_ptr, packet_ptr);
 
                         continue;
                     }
@@ -8279,7 +8282,7 @@ NX_MDNS_RR         *nsec_rr;
         }
 
         /* Update the data_ptr.  */
-        data_ptr += _nx_mdns_rr_size_get(data_ptr);
+        data_ptr += _nx_mdns_rr_size_get(data_ptr, packet_ptr);
     }
 
     return(NX_MDNS_SUCCESS);
@@ -9632,7 +9635,7 @@ UINT        rr_name_length;
 /*  FUNCTION                                               RELEASE        */ 
 /*                                                                        */ 
 /*    _nx_mdns_packet_rr_set                              PORTABLE C      */ 
-/*                                                           6.1          */
+/*                                                           6.1.4        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Yuxin Zhou, Microsoft Corporation                                   */
@@ -9671,6 +9674,12 @@ UINT        rr_name_length;
 /*  05-19-2020     Yuxin Zhou               Initial Version 6.0           */
 /*  09-30-2020     Yuxin Zhou               Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  12-31-2020     Yuxin Zhou               Modified comment(s), improved */
+/*                                            buffer length verification, */
+/*                                            resulting in version 6.1.3  */
+/*  02-02-2021     Yuxin Zhou               Modified comment(s), improved */
+/*                                            packet length verification, */
+/*                                            resulting in version 6.1.4  */
 /*                                                                        */
 /**************************************************************************/
 static UINT _nx_mdns_packet_rr_set(NX_MDNS *mdns_ptr, NX_PACKET *packet_ptr, UCHAR *data_ptr, NX_MDNS_RR *rr_ptr, UINT op, UINT interface_index)
@@ -9713,8 +9722,9 @@ UINT            temp_string_length;
 
     /* Process the name string.  */
     if (_nx_mdns_name_string_decode(packet_ptr -> nx_packet_prepend_ptr, 
-                                   (UINT)(data_ptr - packet_ptr -> nx_packet_prepend_ptr), 
-                                   temp_string_buffer, NX_MDNS_NAME_MAX))
+                                    (UINT)(data_ptr - packet_ptr -> nx_packet_prepend_ptr),
+                                    packet_ptr -> nx_packet_length,
+                                    temp_string_buffer, NX_MDNS_NAME_MAX))
     {
 
         /* Check string length.  */
@@ -9735,11 +9745,18 @@ UINT            temp_string_length;
         return(NX_MDNS_ERROR);
     }
 
+    /* Plus 4 for 2 bytes type and 2 bytes class. */
+    temp_string_length = _nx_mdns_name_size_calculate(data_ptr, packet_ptr);
+    if ((temp_string_length == 0) || ((data_ptr + temp_string_length + 4) > packet_ptr -> nx_packet_append_ptr))
+    {
+        return(NX_MDNS_ERROR);
+    }
+
     /* Set the resource record type. */
-    rr_ptr -> nx_mdns_rr_type = NX_MDNS_GET_USHORT_DATA(data_ptr + _nx_mdns_name_size_calculate(data_ptr));
+    rr_ptr -> nx_mdns_rr_type = NX_MDNS_GET_USHORT_DATA(data_ptr + temp_string_length);
 
     /* Get the resource record class.*/
-    record_class = NX_MDNS_GET_USHORT_DATA(data_ptr + _nx_mdns_name_size_calculate(data_ptr) + 2);
+    record_class = NX_MDNS_GET_USHORT_DATA(data_ptr + temp_string_length + 2);
 
     /* Remote RR, set the RR owner flag.*/
     if (cache_type == NX_MDNS_CACHE_TYPE_PEER)
@@ -9776,7 +9793,7 @@ UINT            temp_string_length;
 /*  FUNCTION                                               RELEASE        */ 
 /*                                                                        */ 
 /*    _nx_mdns_packet_rr_process                          PORTABLE C      */ 
-/*                                                           6.1          */
+/*                                                           6.1.4        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Yuxin Zhou, Microsoft Corporation                                   */
@@ -9818,6 +9835,12 @@ UINT            temp_string_length;
 /*  09-30-2020     Yuxin Zhou               Modified comment(s), and      */
 /*                                            verified memcpy use cases,  */
 /*                                            resulting in version 6.1    */
+/*  12-31-2020     Yuxin Zhou               Modified comment(s), improved */
+/*                                            buffer length verification, */
+/*                                            resulting in version 6.1.3  */
+/*  02-02-2021     Yuxin Zhou               Modified comment(s), improved */
+/*                                            packet length verification, */
+/*                                            resulting in version 6.1.4  */
 /*                                                                        */
 /**************************************************************************/
 static UINT _nx_mdns_packet_rr_process(NX_MDNS *mdns_ptr, NX_PACKET *packet_ptr, UCHAR *data_ptr, UINT interface_index)
@@ -9847,8 +9870,9 @@ UINT            rr_name_length;
 
     /* Process the name string.  */
     if (_nx_mdns_name_string_decode(packet_ptr -> nx_packet_prepend_ptr, 
-                                   (UINT)(data_ptr - packet_ptr -> nx_packet_prepend_ptr), 
-                                   temp_string_buffer, NX_MDNS_NAME_MAX))
+                                    (UINT)(data_ptr - packet_ptr -> nx_packet_prepend_ptr),
+                                    packet_ptr -> nx_packet_length,
+                                    temp_string_buffer, NX_MDNS_NAME_MAX))
     {
 
         /* Check string length.  */
@@ -9869,11 +9893,18 @@ UINT            rr_name_length;
         return(NX_MDNS_ERROR);
     }
 
+    /* Plus 4 for 2 bytes type and 2 bytes class. */
+    temp_string_length = _nx_mdns_name_size_calculate(data_ptr, packet_ptr);
+    if ((temp_string_length == 0) || ((data_ptr + temp_string_length + 4) > packet_ptr -> nx_packet_append_ptr))
+    {
+        return(NX_MDNS_ERROR);
+    }
+
     /* Set the resource record type. */
-    rr_ptr.nx_mdns_rr_type = NX_MDNS_GET_USHORT_DATA(data_ptr + _nx_mdns_name_size_calculate(data_ptr));
+    rr_ptr.nx_mdns_rr_type = NX_MDNS_GET_USHORT_DATA(data_ptr + temp_string_length);
 
     /* Get the resource record class.*/
-    record_class = NX_MDNS_GET_USHORT_DATA(data_ptr + _nx_mdns_name_size_calculate(data_ptr) + 2);
+    record_class = NX_MDNS_GET_USHORT_DATA(data_ptr + temp_string_length + 2);
 
     /* Set the resource record class.  */
     rr_ptr.nx_mdns_rr_class = record_class & NX_MDNS_TOP_BIT_MASK;
@@ -10079,7 +10110,7 @@ UINT            rr_name_length;
 /*  FUNCTION                                               RELEASE        */ 
 /*                                                                        */ 
 /*    _nx_mdns_packet_rr_data_set                         PORTABLE C      */ 
-/*                                                           6.1          */
+/*                                                           6.1.4        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Yuxin Zhou, Microsoft Corporation                                   */
@@ -10121,6 +10152,12 @@ UINT            rr_name_length;
 /*  05-19-2020     Yuxin Zhou               Initial Version 6.0           */
 /*  09-30-2020     Yuxin Zhou               Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  12-31-2020     Yuxin Zhou               Modified comment(s), improved */
+/*                                            buffer length verification, */
+/*                                            resulting in version 6.1.3  */
+/*  02-02-2021     Yuxin Zhou               Modified comment(s), improved */
+/*                                            packet length verification, */
+/*                                            resulting in version 6.1.4  */
 /*                                                                        */
 /**************************************************************************/
 static UINT _nx_mdns_packet_rr_data_set(NX_MDNS *mdns_ptr, NX_PACKET *packet_ptr, UCHAR *data_ptr, NX_MDNS_RR *rr_ptr, UINT op)
@@ -10146,20 +10183,33 @@ UINT            temp_string_length;
         find_string = NX_FALSE;
     }
 
+    /* Plus 10 for 2 bytes type, 2 bytes class, 4 bytes ttl and 2 bytes rdata length. */
+    temp_string_length = _nx_mdns_name_size_calculate(data_ptr, packet_ptr);
+    if ((temp_string_length == 0) || ((data_ptr + temp_string_length + 10) > packet_ptr -> nx_packet_append_ptr))
+    {
+        return(NX_MDNS_ERROR);
+    }
+
     /* Set the resource record time to live.*/
-    rr_ptr -> nx_mdns_rr_ttl = NX_MDNS_GET_ULONG_DATA(data_ptr + _nx_mdns_name_size_calculate(data_ptr) + 4);
+    rr_ptr -> nx_mdns_rr_ttl = NX_MDNS_GET_ULONG_DATA(data_ptr + temp_string_length + 4);
 
     /* Set the resource record rdata length.  */
-    rr_ptr -> nx_mdns_rr_rdata_length = NX_MDNS_GET_USHORT_DATA(data_ptr + _nx_mdns_name_size_calculate(data_ptr) + 8);;
+    rr_ptr -> nx_mdns_rr_rdata_length = NX_MDNS_GET_USHORT_DATA(data_ptr + temp_string_length + 8);;
 
     /* Update the pointer to point at the resource data.  */
-    data_ptr = data_ptr + _nx_mdns_name_size_calculate(data_ptr) + 10;
+    data_ptr = data_ptr + temp_string_length + 10;
 
     /* Check the type.  */
     switch (rr_ptr -> nx_mdns_rr_type)
     {
         case NX_MDNS_RR_TYPE_A:
         {
+
+            /* 4 bytes IP address. */
+            if (data_ptr + 4 > packet_ptr -> nx_packet_append_ptr)
+            {
+                return(NX_MDNS_ERROR);
+            }
 
             /* Get the rdata.  */
             rr_ptr -> nx_mdns_rr_rdata.nx_mdns_rr_rdata_a.nx_mdns_rr_a_address = NX_MDNS_GET_ULONG_DATA(data_ptr);
@@ -10171,6 +10221,12 @@ UINT            temp_string_length;
         }
         case NX_MDNS_RR_TYPE_AAAA:
         {
+
+            /* 16 bytes IPv6 address. */
+            if (data_ptr + 16 > packet_ptr -> nx_packet_append_ptr)
+            {
+                return(NX_MDNS_ERROR);
+            }
 
             /* Get the rdata.  */
             rr_ptr -> nx_mdns_rr_rdata.nx_mdns_rr_rdata_aaaa.nx_mdns_rr_aaaa_address[0] = NX_MDNS_GET_ULONG_DATA(data_ptr);
@@ -10195,6 +10251,11 @@ UINT            temp_string_length;
             }
             else if (rr_ptr -> nx_mdns_rr_rdata_length > 1)
             {
+
+                if (data_ptr + rr_ptr -> nx_mdns_rr_rdata_length > packet_ptr -> nx_packet_append_ptr)
+                {
+                    return(NX_MDNS_ERROR);
+                }
 
                 /* Add the txt string.  */
                 if (_nx_mdns_txt_string_decode(data_ptr, rr_ptr -> nx_mdns_rr_rdata_length, temp_string_buffer, NX_MDNS_NAME_MAX) == NX_MDNS_SUCCESS)
@@ -10227,6 +10288,12 @@ UINT            temp_string_length;
         }
         case NX_MDNS_RR_TYPE_SRV:
         {
+
+            /* Plus 6 bytes for 2 bytes priority, 2 bytes weights and 2 bytes port. */
+            if (data_ptr + 6 > packet_ptr -> nx_packet_append_ptr)
+            {
+                return(NX_MDNS_ERROR);
+            }
 
             /* Get the priority.  */
             rr_ptr -> nx_mdns_rr_rdata.nx_mdns_rr_rdata_srv.nx_mdns_rr_srv_priority = NX_MDNS_GET_USHORT_DATA(data_ptr);
@@ -10265,6 +10332,12 @@ UINT            temp_string_length;
         case NX_MDNS_RR_TYPE_MX:
         {
 
+            /* Plus 2 bytes for preference. */
+            if (data_ptr + 2 > packet_ptr -> nx_packet_append_ptr)
+            {
+                return(NX_MDNS_ERROR);
+            }
+
             /* Set the preference.  */
             rr_ptr -> nx_mdns_rr_rdata.nx_mdns_rr_rdata_mx.nx_mdns_rr_mx_preference = NX_MDNS_GET_USHORT_DATA(data_ptr);
             data_ptr += 2;
@@ -10285,7 +10358,8 @@ UINT            temp_string_length;
 
         /* Process the target/domain name string.  */
         if (_nx_mdns_name_string_decode(packet_ptr -> nx_packet_prepend_ptr, 
-                                       (UINT)(data_ptr - packet_ptr -> nx_packet_prepend_ptr), 
+                                       (UINT)(data_ptr - packet_ptr -> nx_packet_prepend_ptr),
+                                        packet_ptr -> nx_packet_length,
                                        temp_string_buffer, NX_MDNS_NAME_MAX))
         {
 
@@ -10323,7 +10397,7 @@ UINT            temp_string_length;
 /*  FUNCTION                                               RELEASE        */ 
 /*                                                                        */ 
 /*    _nx_mdns_packet_address_check                       PORTABLE C      */ 
-/*                                                           6.1          */
+/*                                                           6.1.4        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Yuxin Zhou, Microsoft Corporation                                   */
@@ -10355,6 +10429,9 @@ UINT            temp_string_length;
 /*  05-19-2020     Yuxin Zhou               Initial Version 6.0           */
 /*  09-30-2020     Yuxin Zhou               Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  02-02-2021     Yuxin Zhou               Modified comment(s), improved */
+/*                                            packet length verification, */
+/*                                            resulting in version 6.1.4  */
 /*                                                                        */
 /**************************************************************************/
 static UINT _nx_mdns_packet_address_check(NX_PACKET *packet_ptr)
@@ -10377,6 +10454,12 @@ NX_IPV4_HEADER     *ipv4_header;
 NX_IPV6_HEADER     *ipv6_header;
 #endif /* NX_MDNS_ENABLE_IPV6  */
 
+
+    /* 2 bytes ID and 2 bytes flags. */
+    if (packet_ptr -> nx_packet_length < 4)
+    {
+        return(NX_MDNS_ERROR);
+    }
 
     /* Extract the message type which should be the first byte.  */
     mdns_flags = NX_MDNS_GET_USHORT_DATA(packet_ptr -> nx_packet_prepend_ptr + NX_MDNS_FLAGS_OFFSET);
@@ -13567,7 +13650,7 @@ UINT    count =  1;
 /*  FUNCTION                                               RELEASE        */ 
 /*                                                                        */ 
 /*    _nx_mdns_txt_string_decode                          PORTABLE C      */ 
-/*                                                           6.1          */
+/*                                                           6.1.3        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Yuxin Zhou, Microsoft Corporation                                   */
@@ -13605,6 +13688,9 @@ UINT    count =  1;
 /*  05-19-2020     Yuxin Zhou               Initial Version 6.0           */
 /*  09-30-2020     Yuxin Zhou               Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  12-31-2020     Yuxin Zhou               Modified comment(s), improved */
+/*                                            buffer length verification, */
+/*                                            resulting in version 6.1.3  */
 /*                                                                        */
 /**************************************************************************/
 static UINT _nx_mdns_txt_string_decode(UCHAR *data, UINT data_length, UCHAR *buffer, UINT size)
@@ -13628,7 +13714,7 @@ static UINT _nx_mdns_txt_string_decode(UCHAR *data, UINT data_length, UCHAR *buf
         {
 
             /* Simple count, check for space and copy the label.  */
-            while (labelSize > 0)
+            while ((labelSize > 0) && (data_length > 1))
             {
 
                 *buffer++ =  *data++;
@@ -13666,7 +13752,7 @@ static UINT _nx_mdns_txt_string_decode(UCHAR *data, UINT data_length, UCHAR *buf
 /*  FUNCTION                                               RELEASE        */ 
 /*                                                                        */ 
 /*    _nx_mdns_name_size_calculate                        PORTABLE C      */ 
-/*                                                           6.1          */
+/*                                                           6.1.4        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Yuxin Zhou, Microsoft Corporation                                   */
@@ -13678,6 +13764,7 @@ static UINT _nx_mdns_txt_string_decode(UCHAR *data, UINT data_length, UCHAR *buf
 /*  INPUT                                                                 */ 
 /*                                                                        */ 
 /*    name                                  Pointer to the name           */ 
+/*    packet_ptr                            Pointer to received packet    */ 
 /*                                                                        */ 
 /*  OUTPUT                                                                */ 
 /*                                                                        */ 
@@ -13697,9 +13784,12 @@ static UINT _nx_mdns_txt_string_decode(UCHAR *data, UINT data_length, UCHAR *buf
 /*  05-19-2020     Yuxin Zhou               Initial Version 6.0           */
 /*  09-30-2020     Yuxin Zhou               Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  02-02-2021     Yuxin Zhou               Modified comment(s), improved */
+/*                                            packet length verification, */
+/*                                            resulting in version 6.1.4  */
 /*                                                                        */
 /**************************************************************************/
-static UINT  _nx_mdns_name_size_calculate(UCHAR *name)
+static UINT  _nx_mdns_name_size_calculate(UCHAR *name, NX_PACKET *packet_ptr)
 {
 
 UINT size =  0;
@@ -13714,6 +13804,13 @@ UINT size =  0;
         /* Is this a compression pointer or a count.  */
         if (labelSize <= NX_MDNS_LABEL_MAX)
         {
+
+            if (name + labelSize >= packet_ptr -> nx_packet_append_ptr)
+            {
+
+                /* If name buffer is OOB, just fail. */
+                return(0);
+            }
 
             /* Simple count, adjust size and skip the label.  */
             size +=  labelSize + 1;
@@ -13842,7 +13939,7 @@ UINT    count =  1;
 /*  FUNCTION                                               RELEASE        */ 
 /*                                                                        */ 
 /*    _nx_mdns_name_string_decode                       PORTABLE C        */ 
-/*                                                           6.1          */
+/*                                                           6.1.4        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Yuxin Zhou, Microsoft Corporation                                   */
@@ -13857,6 +13954,7 @@ UINT    count =  1;
 /*                                                                        */ 
 /*    data                                  Pointer to buffer to decode   */ 
 /*    start                                 Location of start of data     */
+/*    data_length                           Length of data buffer         */
 /*    buffer                                Pointer to decoded data       */ 
 /*    size                                  Size of data buffer to decode */ 
 /*                                                                        */ 
@@ -13878,21 +13976,42 @@ UINT    count =  1;
 /*  05-19-2020     Yuxin Zhou               Initial Version 6.0           */
 /*  09-30-2020     Yuxin Zhou               Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  12-31-2020     Yuxin Zhou               Modified comment(s), improved */
+/*                                            buffer length verification, */
+/*                                            prevented infinite loop in  */
+/*                                            name compression,           */
+/*                                            resulting in version 6.1.3  */
+/*  02-02-2021     Yuxin Zhou               Modified comment(s), improved */
+/*                                            packet length verification, */
+/*                                            resulting in version 6.1.4  */
 /*                                                                        */
 /**************************************************************************/
-static UINT _nx_mdns_name_string_decode(UCHAR *data, UINT start, UCHAR *buffer, UINT size)
+static UINT _nx_mdns_name_string_decode(UCHAR *data, UINT start, UINT data_length, UCHAR *buffer, UINT size)
 {
 
 UCHAR   *character =  data + start;
 UINT    length = 0;
+UINT    offset;
+UINT    pointer_count = 0;
+UINT    labelSize;
 
   
     /* As long as there is space in the buffer and we haven't 
        found a zero terminating label */
-    while ((size > length) && (*character != '\0'))
+    while (1)
     {
 
-    UINT  labelSize =  *character++;
+        if (character >= data + data_length)
+        {
+            return(0);
+        }
+
+        if ((size <= length) || (*character == '\0'))
+        {
+            break;
+        }
+
+        labelSize =  *character++;
 
         /* Is this a compression pointer or a count.  */
         if (labelSize <= NX_MDNS_LABEL_MAX)
@@ -13901,6 +14020,10 @@ UINT    length = 0;
             /* Simple count, check for space and copy the label.  */
             while ((size > length) && (labelSize > 0))
             {
+                if (character >= data + data_length)
+                {
+                    return(0);
+                }
 
                 *buffer++ =  *character++;
                 length++;
@@ -13914,8 +14037,34 @@ UINT    length = 0;
         else if ((labelSize & NX_MDNS_COMPRESS_MASK) == NX_MDNS_COMPRESS_VALUE)
         {
 
+            if (character >= data + data_length)
+            {
+                return(0);
+            }
+
             /* This is a pointer, just adjust the source.  */
-            character =  data + ((labelSize & NX_MDNS_LABEL_MAX) << 8) + *character;
+            offset = ((labelSize & NX_MDNS_LABEL_MAX) << 8) + *character;
+
+            /* Make sure offset is in the buffer.  */
+            if (offset >= data_length)
+            {
+                return(0);
+            }
+
+            /* Pointer must not point back to itself. */
+            if ((data + offset == character) || (data + offset == character - 1))
+            {
+                return(0);
+            }
+
+            /* Prevent infinite loop with compression pointers. */
+            pointer_count++;
+            if (pointer_count > NX_MDNS_MAX_COMPRESSION_POINTERS)
+            {
+                return(0);
+            }
+
+            character =  data + offset;
         }
         else
         {
@@ -13926,7 +14075,7 @@ UINT    length = 0;
     }
 
     /* Done copying the data, set the last . to a trailing null */
-    if (*(buffer - 1) == '.')
+    if ((length > 0) && (*(buffer - 1) == '.'))
     {
 
         buffer--;
@@ -13946,7 +14095,7 @@ UINT    length = 0;
 /*  FUNCTION                                               RELEASE        */ 
 /*                                                                        */ 
 /*    _nx_mdns_rr_size_get                                PORTABLE C      */ 
-/*                                                           6.1          */
+/*                                                           6.1.4        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Yuxin Zhou, Microsoft Corporation                                   */
@@ -13958,6 +14107,7 @@ UINT    length = 0;
 /*  INPUT                                                                 */ 
 /*                                                                        */ 
 /*    resource                              Pointer to the resource       */ 
+/*    packet_ptr                            Pointer to received packet    */ 
 /*                                                                        */ 
 /*  OUTPUT                                                                */ 
 /*                                                                        */ 
@@ -13976,9 +14126,12 @@ UINT    length = 0;
 /*  05-19-2020     Yuxin Zhou               Initial Version 6.0           */
 /*  09-30-2020     Yuxin Zhou               Modified comment(s),          */
 /*                                            resulting in version 6.1    */
+/*  02-02-2021     Yuxin Zhou               Modified comment(s), improved */
+/*                                            packet length verification, */
+/*                                            resulting in version 6.1.4  */
 /*                                                                        */
 /**************************************************************************/
-static UINT  _nx_mdns_rr_size_get(UCHAR *resource)
+static UINT  _nx_mdns_rr_size_get(UCHAR *resource, NX_PACKET *packet_ptr)
 {
 
 UINT    name_size;
@@ -13988,7 +14141,12 @@ UINT    data_size;
         name size + data size + 2 bytes for type, 2 for class, 4 for time to live and 2 for data length
         i.e. name size + data size + 10 bytes overhead.
     */
-    name_size = _nx_mdns_name_size_calculate(resource);
+    name_size = _nx_mdns_name_size_calculate(resource, packet_ptr);
+
+    if (resource + name_size + 8 + 2 > packet_ptr -> nx_packet_append_ptr)
+    {
+        return(0);
+    }
     data_size = NX_MDNS_GET_USHORT_DATA(resource + name_size + 8);
 
     /* Return resource size.  */

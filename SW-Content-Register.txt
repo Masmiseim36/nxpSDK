@@ -1329,7 +1329,7 @@ amazon-freertos-ble-androidName: FreeRTOS BLE Mobile SDK for Android
                            -sdk                                              
 
 azure_rtos_threadx         Name: Azure RTOS ThreadX                          
-                           Version: 6.1.2                                    
+                           Version: 6.1.8                                    
                            Outgoing License: LA_OPT_NXP_Software_License.txt 
                            - Additional distribution license granted -       
                            License in Section 2.3 applies                    
@@ -1342,7 +1342,7 @@ azure_rtos_threadx         Name: Azure RTOS ThreadX
                            https://azure.microsoft.com/en-us/services/rtos/  
 
 azure_rtos_filex           Name: Azure RTOS FileX                            
-                           Version: 6.1.2                                    
+                           Version: 6.1.8                                    
                            Outgoing License: LA_OPT_NXP_Software_License.txt 
                            - Additional distribution license granted -       
                            License in Section 2.3 applies                    
@@ -1355,7 +1355,7 @@ azure_rtos_filex           Name: Azure RTOS FileX
                            https://azure.microsoft.com/en-us/services/rtos/  
 
 azure_rtos_levelx          Name: Azure RTOS LevelX                           
-                           Version: 6.1.2                                    
+                           Version: 6.1.8                                    
                            Outgoing License: LA_OPT_NXP_Software_License.txt 
                            - Additional distribution license granted -       
                            License in Section 2.3 applies                    
@@ -1369,7 +1369,7 @@ azure_rtos_levelx          Name: Azure RTOS LevelX
                            https://azure.microsoft.com/en-us/services/rtos/  
 
 azure_rtos_netxduo         Name: Azure RTOS NetX Duo                         
-                           Version: 6.1.2                                    
+                           Version: 6.1.8                                    
                            Outgoing License: LA_OPT_NXP_Software_License.txt 
                            - Additional distribution license granted -       
                            License in Section 2.3 applies                    
@@ -1383,7 +1383,7 @@ azure_rtos_netxduo         Name: Azure RTOS NetX Duo
                            https://azure.microsoft.com/en-us/services/rtos/  
 
 azure_rtos_guix            Name: Azure RTOS GUIX                             
-                           Version: 6.1.2                                    
+                           Version: 6.1.8                                    
                            Outgoing License: LA_OPT_NXP_Software_License.txt 
                            - Additional distribution license granted -       
                            License in Section 2.3 applies                    
@@ -1397,7 +1397,7 @@ azure_rtos_guix            Name: Azure RTOS GUIX
                            https://azure.microsoft.com/en-us/services/rtos/  
 
 azure_rtos_usbx            Name: Azure RTOS USBX                             
-                           Version: 6.1.6                                    
+                           Version: 6.1.9                                    
                            Outgoing License: LA_OPT_NXP_Software_License.txt 
                            - Additional distribution license granted -       
                            License in Section 2.3 applies                    

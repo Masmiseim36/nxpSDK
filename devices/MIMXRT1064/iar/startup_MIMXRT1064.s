@@ -4,11 +4,11 @@
 ;            MIMXRT1064
 ;  @version: 1.2
 ;  @date:    2019-4-29
-;  @build:   b200319
+;  @build:   b210707
 ; -------------------------------------------------------------------------
 ;
 ; Copyright 1997-2016 Freescale Semiconductor, Inc.
-; Copyright 2016-2020 NXP
+; Copyright 2016-2021 NXP
 ; All rights reserved.
 ;
 ; SPDX-License-Identifier: BSD-3-Clause
@@ -140,7 +140,7 @@ __vector_table_0x1c
         DCD     ADC2_IRQHandler                               ;ADC2 interrupt
         DCD     DCDC_IRQHandler                               ;DCDC interrupt
         DCD     Reserved86_IRQHandler                         ;Reserved interrupt
-        DCD     Reserved87_IRQHandler                         ;Reserved interrupt
+        DCD     GPIO10_IRQHandler                             ;GPIO10 interrupt
         DCD     GPIO1_INT0_IRQHandler                         ;Active HIGH Interrupt from INT0 from GPIO
         DCD     GPIO1_INT1_IRQHandler                         ;Active HIGH Interrupt from INT1 from GPIO
         DCD     GPIO1_INT2_IRQHandler                         ;Active HIGH Interrupt from INT2 from GPIO
@@ -692,7 +692,7 @@ SPDIF_IRQHandler
         PUBWEAK ADC2_IRQHandler
         PUBWEAK DCDC_IRQHandler
         PUBWEAK Reserved86_IRQHandler
-        PUBWEAK Reserved87_IRQHandler
+        PUBWEAK GPIO10_IRQHandler
         PUBWEAK GPIO1_INT0_IRQHandler
         PUBWEAK GPIO1_INT1_IRQHandler
         PUBWEAK GPIO1_INT2_IRQHandler
@@ -924,7 +924,7 @@ ADC1_IRQHandler
 ADC2_IRQHandler
 DCDC_IRQHandler
 Reserved86_IRQHandler
-Reserved87_IRQHandler
+GPIO10_IRQHandler
 GPIO1_INT0_IRQHandler
 GPIO1_INT1_IRQHandler
 GPIO1_INT2_IRQHandler

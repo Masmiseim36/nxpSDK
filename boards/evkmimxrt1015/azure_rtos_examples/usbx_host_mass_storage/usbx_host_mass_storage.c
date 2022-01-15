@@ -1,175 +1,110 @@
 
 /* This example illustrates USBX Host Mass Storage. */
 
-/* Include necessary system files. */
+#include "fsl_debug_console.h"
+#include "board_setup.h"
+
 #include "fx_api.h"
 #include "ux_api.h"
 #include "ux_system.h"
 #include "ux_utility.h"
-#include "ux_hcd_ehci.h"
 #include "ux_host_class_hub.h"
 #include "ux_host_class_storage.h"
-
-#include "fsl_debug_console.h"
-#include "board_setup.h"
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
+
 /* Define constants. */
-#ifndef USBX_MEMORY_SIZE
-#define USBX_MEMORY_SIZE            (60 * 1024)
-#endif
-
-#ifndef USBX_MEMORY_CACHESAFE_SIZE
-#define USBX_MEMORY_CACHESAFE_SIZE  (60 * 1024)
-#endif
-
-#define DEMO_STACK_SIZE  (4 * 1024)
-#define DEMO_BUFFER_SIZE 1024
-
-#define USB_HOST_INTERRUPT_PRIORITY (1U)
+#define DEMO_STACK_SIZE                 (4 * 1024)
+#define DEMO_BUFFER_SIZE                (1024)
 
 /*******************************************************************************
  * Variables
  ******************************************************************************/
+
 /* Define global data structures. */
 TX_THREAD tx_demo_thread;
-
-UX_HOST_CLASS_STORAGE *storage;
-
-FX_MEDIA *media;
 
 ULONG local_buffer[DEMO_BUFFER_SIZE / sizeof(ULONG)];
 ULONG demo_stack[DEMO_STACK_SIZE / sizeof(ULONG)];
 
-ULONG usb_memory[USBX_MEMORY_SIZE / sizeof(ULONG)];
-AT_NONCACHEABLE_SECTION_ALIGN(char usb_memory_cachesafe[USBX_MEMORY_CACHESAFE_SIZE], 64);
-
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
-/* Define local function prototypes.  */
-void demo_thread_entry(ULONG arg);
-void demo_read_file(FX_MEDIA *fx_media);
-UINT demo_class_storage_get(void);
 
 /*******************************************************************************
  * Code
  ******************************************************************************/
 
-/* this function is for the macro UX_HCD_EHCI_EXT_USBPHY_HIGHSPEED_MODE_SET in ux_user.h */
-void usbphy_set_highspeed_mode(void *regs, int on_off)
+static UINT usbx_host_change_callback(ULONG event, UX_HOST_CLASS *host_class, VOID *instance)
 {
-    USB_Type* usb_base[] = USB_BASE_PTRS;
-    USBPHY_Type* usbphy_base[] = USBPHY_BASE_PTRS;
-    uint32_t ehci_base;
-    UX_HCD_EHCI *hcd_ehci;
-    int i;
+    UX_DEVICE *device;
 
-    hcd_ehci = (UX_HCD_EHCI *)regs;
-    if (hcd_ehci->ux_hcd_ehci_base == 0)
-        return;
-
-    /* the first value in USB_BASE_ADDRS is always zero, so skip it */
-    for (i = 1; i < sizeof(usb_base) / sizeof(usb_base[0]); i++)
+    /* Check if there is a device connection event, make sure the instance is valid.  */
+    if ((event == UX_DEVICE_CONNECTION) && (instance != UX_NULL))
     {
-        ehci_base = (uint32_t)(&usb_base[i]->CAPLENGTH);
-        if ((uint32_t)hcd_ehci->ux_hcd_ehci_base == ehci_base) {
-            if (on_off)
-                usbphy_base[i]->CTRL_SET = USBPHY_CTRL_SET_ENHOSTDISCONDETECT_MASK;
-            else
-                usbphy_base[i]->CTRL_CLR = USBPHY_CTRL_CLR_ENHOSTDISCONDETECT_MASK;
+        /* Get the device instance.  */
+        device = (UX_DEVICE *)instance;
+
+        PRINTF("USB device: vid=0x%x, pid=0x%x\r\n", device->ux_device_descriptor.idVendor,
+               device->ux_device_descriptor.idProduct);
+
+        /* Check if the device is configured.  */
+        if (device->ux_device_state != UX_DEVICE_CONFIGURED)
+        {
+            /* Not configured. Check if there is another configuration.  */
+            if ((device->ux_device_first_configuration != UX_NULL) &&
+                (device->ux_device_first_configuration->ux_configuration_next_configuration != UX_NULL))
+            {
+                /* Try the second configuration.  */
+                ux_host_stack_device_configuration_activate(
+                    device->ux_device_first_configuration->ux_configuration_next_configuration);
+            }
         }
     }
+
+    return (UX_SUCCESS);
 }
 
-int main(void)
+static UINT demo_class_storage_get(FX_MEDIA **media)
 {
-    /* Initialize the board. */
-    board_setup();
-
-    PRINTF("USBX host mass storage example\r\n");
-
-    /* Enter the ThreadX kernel. */
-    tx_kernel_enter();
-
-    return 0;
-}
-
-/* Define what the initial system looks like. */
-void tx_application_define(void *first_unused_memory)
-{
-    TX_THREAD_NOT_USED(first_unused_memory);
-
-    /* Initialize FileX.  */
-    fx_system_initialize();
-
-    /* Initialize USBX memory. */
-    ux_system_initialize((VOID *)usb_memory, USBX_MEMORY_SIZE, usb_memory_cachesafe, USBX_MEMORY_CACHESAFE_SIZE);
-
-    /* Create the main demo thread. */
-    tx_thread_create(&tx_demo_thread, "tx demo", demo_thread_entry, 0, (VOID *)demo_stack, DEMO_STACK_SIZE, 20, 20, 1,
-                     TX_AUTO_START);
-}
-
-void demo_thread_entry(ULONG arg)
-{
-    UX_DEVICE *usb_device;
+    UX_HOST_CLASS_STORAGE_MEDIA *storage_media;
+    UX_HOST_CLASS_STORAGE *storage;
+    UX_HOST_CLASS *class;
     UINT status;
 
-    usb_host_setup();
-
-    /* The code below is required for installing the host portion of USBX.  */
-    status = ux_host_stack_initialize(NULL);
+    /* Find the main storage container */
+    status =
+        ux_host_stack_class_get(_ux_system_host_class_storage_name, &class);
     if (status != UX_SUCCESS)
-        goto err;
+        return (status);
 
-    /* Register the HUB class. */
-    status = ux_host_stack_class_register(_ux_system_host_class_hub_name, _ux_host_class_hub_entry);
-    if (status != UX_SUCCESS)
-        goto err;
-
-    /* Register storage class. */
-    status = ux_host_stack_class_register(_ux_system_host_class_storage_name, _ux_host_class_storage_entry);
-    if (status != UX_SUCCESS)
-        goto err;
-
-    usb_host_interrupt_setup(USB_HOST_INTERRUPT_PRIORITY);
-
-    /* Register all the USB host controllers available in this system.  */
-    status = ux_host_stack_hcd_register((UCHAR *)"ehci test", _ux_hcd_ehci_initialize, usb_host_base(), 0x0);
-    if (status != UX_SUCCESS)
-        goto err;
-
-    while (1)
+    /* We get the first instance of the storage device */
+    do
     {
-        /* Find the storage class. */
-        status = demo_class_storage_get();
-        if (status == UX_SUCCESS) {
+        status = ux_host_stack_class_instance_get(class, 0, (void **)&storage);
+        tx_thread_sleep(10);
+    } while (status != UX_SUCCESS);
 
-            /* get the first USB device */
-            status = ux_host_stack_device_get(0, &usb_device);
-            if (status != UX_SUCCESS)
-                continue;
+    /* We still need to wait for the storage status to be live */
+    while (storage->ux_host_class_storage_state != UX_HOST_CLASS_INSTANCE_LIVE)
+        tx_thread_sleep(10);
 
-            PRINTF("USB device: vid=0x%x, pid=0x%x\r\n",
-                    usb_device->ux_device_descriptor.idVendor,
-                    usb_device->ux_device_descriptor.idProduct);
-
-            demo_read_file(media);
-        }
-
-        tx_thread_sleep(4 * TX_TIMER_TICKS_PER_SECOND);
+    /* We try to get the first media attached to the class container. */
+    while (class->ux_host_class_media == UX_NULL)
+    {
+        tx_thread_sleep(10);
     }
 
-err:
-    PRINTF("demo_thread_entry: FAIL(0x%x)\r\n", status);
-    while(1)
-        ;
+    /* Setup media pointer. */
+    storage_media = (UX_HOST_CLASS_STORAGE_MEDIA *)class->ux_host_class_media;
+    *media        = &storage_media->ux_host_class_storage_media;
+
+    return (UX_SUCCESS);
 }
 
-void demo_read_file(FX_MEDIA *fx_media)
+static void demo_read_file(FX_MEDIA *fx_media)
 {
     FX_FILE my_file;
     ULONG requested_length;
@@ -217,45 +152,87 @@ void demo_read_file(FX_MEDIA *fx_media)
                                                    FX_NULL, FX_NULL, FX_NULL, FX_NULL,
                                                    FX_NULL, FX_NULL, FX_NULL);
         if (status != FX_SUCCESS)
-        {
             break;
-        }
 
     } while (1);
 
 }
 
-UINT demo_class_storage_get(void)
+static void demo_thread_entry(ULONG arg)
 {
-    UX_HOST_CLASS_STORAGE_MEDIA *storage_media;
-    UX_HOST_CLASS *class;
+    FX_MEDIA *fx_media;
     UINT status;
 
-    /* Find the main storage container */
-    status = ux_host_stack_class_get(_ux_system_host_class_storage_name, &class);
+    /* The code below is required for installing the host portion of USBX.  */
+    status = ux_host_stack_initialize(usbx_host_change_callback);
     if (status != UX_SUCCESS)
-        return (status);
+        goto err;
 
-    /* We get the first instance of the storage device */
-    do
+    /* Register the HUB class. */
+    status = ux_host_stack_class_register(_ux_system_host_class_hub_name,
+                                          _ux_host_class_hub_entry);
+    if (status != UX_SUCCESS)
+        goto err;
+
+    /* Register storage class. */
+    status = ux_host_stack_class_register(_ux_system_host_class_storage_name,
+                                          _ux_host_class_storage_entry);
+    if (status != UX_SUCCESS)
+        goto err;
+
+    status = usbx_host_hcd_register();
+    if (status != UX_SUCCESS)
+        goto err;
+
+    while (1)
     {
-        status = ux_host_stack_class_instance_get(class, 0, (void **)&storage);
-        tx_thread_sleep(10);
-    } while (status != UX_SUCCESS);
+        /* Find the storage class. */
+        status = demo_class_storage_get(&fx_media);
+        if (status == UX_SUCCESS)
+        {
+            demo_read_file(fx_media);
+        }
 
-    /* We still need to wait for the storage status to be live */
-    while (storage->ux_host_class_storage_state != UX_HOST_CLASS_INSTANCE_LIVE)
-        tx_thread_sleep(10);
-
-    /* We try to get the first media attached to the class container. */
-    while (class->ux_host_class_media == UX_NULL)
-    {
-        tx_thread_sleep(10);
+        tx_thread_sleep(4 * TX_TIMER_TICKS_PER_SECOND);
     }
 
-    /* Setup media pointer. */
-    storage_media = (UX_HOST_CLASS_STORAGE_MEDIA *)class->ux_host_class_media;
-    media         = &storage_media->ux_host_class_storage_media;
+err:
+    PRINTF("demo_thread_entry: ERROR(0x%x)\r\n", status);
 
-    return (UX_SUCCESS);
+    while (1)
+    {
+        tx_thread_sleep(TX_TIMER_TICKS_PER_SECOND);
+    }
+}
+
+int main(void)
+{
+    /* Initialize the board. */
+    board_setup();
+
+    usb_host_hw_setup();
+
+    PRINTF("USBX host mass storage example\r\n");
+
+    /* Enter the ThreadX kernel. */
+    tx_kernel_enter();
+
+    return 0;
+}
+
+/* Define what the initial system looks like. */
+void tx_application_define(void *first_unused_memory)
+{
+    TX_THREAD_NOT_USED(first_unused_memory);
+
+    /* Initialize FileX.  */
+    fx_system_initialize();
+
+    /* Initialize USBX memory. */
+    usbx_mem_init();
+
+    /* Create the main demo thread. */
+    tx_thread_create(&tx_demo_thread, "tx demo", demo_thread_entry, 0,
+                     (VOID *)demo_stack, DEMO_STACK_SIZE, 20, 20, 1,
+                     TX_AUTO_START);
 }

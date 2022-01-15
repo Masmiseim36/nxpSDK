@@ -26,10 +26,6 @@
 ** ###################################################################
 */
 
-
-#define m_boot_hdr_start               0x60040000
-#define m_boot_hdr_size                0x00000400
-
 #define m_interrupts_start             0x60040400
 #define m_interrupts_size              0x00000400
 
@@ -60,11 +56,7 @@
 #endif
 
 
-LR_m_text m_boot_hdr_start m_text_start+m_text_size-m_boot_hdr_start {   ; load region size_region
-  RO_m_boot_hdr m_boot_hdr_start m_boot_hdr_size {
-    /* Header for OTA bootloader */
-    ota_bootloader_hdr.o (+RO +RW +ZI)
-  }
+LR_m_text m_interrupts_start m_text_start+m_text_size-m_interrupts_start {   ; load region size_region
   VECTOR_ROM m_interrupts_start FIXED m_interrupts_size { ; load address = execution address
     * (.isr_vector,+FIRST)
   }

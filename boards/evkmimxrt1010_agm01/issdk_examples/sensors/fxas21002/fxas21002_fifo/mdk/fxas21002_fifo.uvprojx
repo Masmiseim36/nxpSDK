@@ -331,7 +331,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>DEBUG, CPU_MIMXRT1011DAE5A, SERIAL_PORT_TYPE_UART=1, MCUXPRESSO_SDK</Define>
+              <Define>DEBUG, CPU_MIMXRT1011DAE5A, PRINTF_ADVANCED_ENABLE=1, SERIAL_PORT_TYPE_UART=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
               <IncludePath>../../../../..;..;../../../../../../../middleware/issdk/drivers/gpio/i.mx;../../../../../../../middleware/issdk/drivers/gpio;../../../../../../../devices/MIMXRT1011/drivers;../../../../../../../devices/MIMXRT1011/cmsis_drivers;../../../../../../../middleware/issdk/drivers/systick;../../../../../../../middleware/issdk/sensors;../../../../../../../devices/MIMXRT1011;../../../../../../../devices/MIMXRT1011/utilities/str;../../../../../../../devices/MIMXRT1011/utilities/debug_console;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1011/xip;../../../../../../evkmimxrt1010/xip;../../../../../../../CMSIS/Core/Include;../../../../../../../CMSIS/Driver/Include</IncludePath>
             </VariousControls>
@@ -1284,7 +1284,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, DEBUG, CPU_MIMXRT1011DAE5A, SERIAL_PORT_TYPE_UART=1, MCUXPRESSO_SDK</Define>
+              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, DEBUG, CPU_MIMXRT1011DAE5A, PRINTF_ADVANCED_ENABLE=1, SERIAL_PORT_TYPE_UART=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
               <IncludePath>../../../../..;..;../../../../../../../middleware/issdk/drivers/gpio/i.mx;../../../../../../../middleware/issdk/drivers/gpio;../../../../../../../devices/MIMXRT1011/drivers;../../../../../../../devices/MIMXRT1011/cmsis_drivers;../../../../../../../middleware/issdk/drivers/systick;../../../../../../../middleware/issdk/sensors;../../../../../../../devices/MIMXRT1011;../../../../../../../devices/MIMXRT1011/utilities/str;../../../../../../../devices/MIMXRT1011/utilities/debug_console;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1011/xip;../../../../../../evkmimxrt1010/xip;../../../../../../../CMSIS/Core/Include;../../../../../../../CMSIS/Driver/Include</IncludePath>
             </VariousControls>
@@ -2237,7 +2237,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>NDEBUG, CPU_MIMXRT1011DAE5A, SERIAL_PORT_TYPE_UART=1, MCUXPRESSO_SDK</Define>
+              <Define>NDEBUG, CPU_MIMXRT1011DAE5A, PRINTF_ADVANCED_ENABLE=1, SERIAL_PORT_TYPE_UART=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
               <IncludePath>../../../../..;..;../../../../../../../middleware/issdk/drivers/gpio/i.mx;../../../../../../../middleware/issdk/drivers/gpio;../../../../../../../devices/MIMXRT1011/drivers;../../../../../../../devices/MIMXRT1011/cmsis_drivers;../../../../../../../middleware/issdk/drivers/systick;../../../../../../../middleware/issdk/sensors;../../../../../../../devices/MIMXRT1011;../../../../../../../devices/MIMXRT1011/utilities/str;../../../../../../../devices/MIMXRT1011/utilities/debug_console;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1011/xip;../../../../../../evkmimxrt1010/xip;../../../../../../../CMSIS/Core/Include;../../../../../../../CMSIS/Driver/Include</IncludePath>
             </VariousControls>
@@ -3190,7 +3190,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, NDEBUG, CPU_MIMXRT1011DAE5A, SERIAL_PORT_TYPE_UART=1, MCUXPRESSO_SDK</Define>
+              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, NDEBUG, CPU_MIMXRT1011DAE5A, PRINTF_ADVANCED_ENABLE=1, SERIAL_PORT_TYPE_UART=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
               <IncludePath>../../../../..;..;../../../../../../../middleware/issdk/drivers/gpio/i.mx;../../../../../../../middleware/issdk/drivers/gpio;../../../../../../../devices/MIMXRT1011/drivers;../../../../../../../devices/MIMXRT1011/cmsis_drivers;../../../../../../../middleware/issdk/drivers/systick;../../../../../../../middleware/issdk/sensors;../../../../../../../devices/MIMXRT1011;../../../../../../../devices/MIMXRT1011/utilities/str;../../../../../../../devices/MIMXRT1011/utilities/debug_console;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1011/xip;../../../../../../evkmimxrt1010/xip;../../../../../../../CMSIS/Core/Include;../../../../../../../CMSIS/Driver/Include</IncludePath>
             </VariousControls>

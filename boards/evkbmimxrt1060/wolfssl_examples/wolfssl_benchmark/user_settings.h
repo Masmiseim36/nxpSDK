@@ -57,6 +57,7 @@ int32_t cust_rand_generate_block(uint8_t *rndb, uint32_t sz);
 #define WOLFSSL_SP
 #define WOLFSSL_SP_MATH
 #define WOLFSSL_SP_SMALL
+#define WOLFSSL_SP_NO_DYN_STACK
 #define SP_WORD_SIZE 32
 
 /* Curve */

@@ -54,7 +54,7 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../../components/serial_manager
     ${ProjDirPath}/../../../../../../devices/MIMXRT1052/drivers
     ${ProjDirPath}/../../../../../../components/osa
-    ${ProjDirPath}/../../../../../../rtos/freertos
+    ${ProjDirPath}/../../../../../../rtos/freertos/freertos_kernel
     ${ProjDirPath}/../../../../../../components/log
     ${ProjDirPath}/../../../../../../devices/MIMXRT1052
     ${ProjDirPath}/../../../../../../components/uart

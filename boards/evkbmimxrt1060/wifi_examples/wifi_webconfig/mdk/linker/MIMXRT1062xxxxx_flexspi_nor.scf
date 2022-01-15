@@ -39,7 +39,7 @@
 #define m_text_size                    0x0057DC00
 
 /* Reserved area for "mflash_files" */
-#define  m_mflash_start                0x60580000
+#define  m_mflash_start                0x60700000
 #define  m_mflash_size                 0x00280000
 
 #define m_data_start                   0x20000000
@@ -99,5 +99,8 @@ LR_m_text m_flash_config_start m_text_start+m_text_size-m_flash_config_start {  
   RW_m_ncache +0 EMPTY 0 {
   }
   RW_m_ncache_unused +0 EMPTY m_data2_size-ImageLength(RW_m_data2)-ImageLength(RW_m_ncache) { ; Empty region added for MPU configuration
+  }
+  mflash_region m_mflash_start m_mflash_size{
+      * (.mflash_fs)
   }
 }

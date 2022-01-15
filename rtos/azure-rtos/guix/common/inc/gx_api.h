@@ -24,7 +24,7 @@
 /*  APPLICATION INTERFACE DEFINITION                       RELEASE        */
 /*                                                                        */
 /*    gx_api.h                                            PORTABLE C      */
-/*                                                           6.1          */
+/*                                                           6.1.8        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -48,6 +48,33 @@
 /*                                            modified controls blocks,   */
 /*                                            added new APIs,             */
 /*                                            resulting in version 6.1    */
+/*  12-31-2020     Kenneth Maxwell          Modified comment(s), added    */
+/*                                            display rotation support,   */
+/*                                            declare new APIs,           */
+/*                                            defined new status,         */
+/*                                            resulting in version 6.1.3  */
+/*  03-02-2021     Kenneth Maxwell          Modified comment(s),          */
+/*                                            change scroll_wheel style   */
+/*                                            flag to status flag,        */
+/*                                            renamed                     */
+/*                                            GX_STATUS_TRACKING_START to */
+/*                                            GX_STATUS_TRACKING_PEN,     */
+/*                                            added rotation angle        */
+/*                                            definitions, changed        */
+/*                                            pixelmap rotation flag      */
+/*                                            definitions,                */
+/*                                            resulting in version 6.1.5  */
+/*  06-02-2021     Ting Zhu                   Modified comment(s),        */
+/*                                            added new widget type       */
+/*                                            GX_GENERIC_SCROLL_WHEEL,    */
+/*                                            added animation delete API, */
+/*                                            added generic Dave2D        */ 
+/*                                            graphics accelerator        */
+/*                                            support,                    */
+/*                                            resulting in version 6.1.7  */
+/*  08-02-2021     Ting Zhu                   Modified comment(s), added  */
+/*                                            GX_TICKS_SECOND definition  */
+/*                                            resulting in version 6.1.8  */
 /*                                                                        */
 /**************************************************************************/
 
@@ -71,7 +98,7 @@ extern   "C" {
 #define AZURE_RTOS_GUIX
 #define GUIX_MAJOR_VERSION 6
 #define GUIX_MINOR_VERSION 1
-#define GUIX_PATCH_VERSION 0
+#define GUIX_PATCH_VERSION 8
 
 /* The following symbols are defined for backward compatibility reasons.*/
 #define __PRODUCT_GUIX__
@@ -151,10 +178,13 @@ typedef struct GX_STRING_STRUCT
 #define TX_TIMER_TICKS_PER_SECOND ((ULONG)100)
 #endif
 
-
 /* Derive GX_SYSTEM_TIMER_TICKS based on GX_SYSTEM_TIMER_MS value. */
 #ifndef GX_SYSTEM_TIMER_TICKS
 #define GX_SYSTEM_TIMER_TICKS     ((GX_SYSTEM_TIMER_MS * TX_TIMER_TICKS_PER_SECOND) / 1000)
+#endif
+
+#ifndef GX_TICKS_SECOND
+#define GX_TICKS_SECOND           (1000 / GX_SYSTEM_TIMER_MS)
 #endif
 
 #endif /* GX_THREADX_BINDING */
@@ -276,7 +306,27 @@ typedef struct GX_STRING_STRUCT
 #define GX_PARAMETER_NOT_USED(p) ((void) (p))
 #endif /* GX_PARAMETER_NOT_USED */
 
+/* defines for backwards compatiblity */
+#ifndef GX_RENESAS_DAVE2D_DRAW
+#ifdef  GX_USE_SYNERGY_DRW
+#define GX_RENESAS_DAVE2D_DRAW
+#endif
+#endif
+
+#ifndef GX_RENESAS_DAVE2D_FONT_SUPPORT
+#ifdef  GX_SYNERGY_FONT_FORMAT_SUPPORT
+#define GX_RENESAS_DAVE2D_FONT_SUPPORT
+#endif
+#endif
+/* end of defines for backwards compatiblity */
+
 #define GX_MAX_PIXELMAP_RESOLUTION 0x3FFF
+
+/* Define screen rotation types. */
+#define GX_SCREEN_ROTATION_NONE   0
+#define GX_SCREEN_ROTATION_CW    90
+#define GX_SCREEN_ROTATION_CCW  270
+#define GX_SCREEN_ROTATION_FLIP 180
 
 /* API input parameters and general constants.  */
 
@@ -645,6 +695,7 @@ typedef struct GX_STRING_STRUCT
 #define GX_TYPE_NUMERIC_SCROLL_WHEEL        142
 #define GX_TYPE_TREE_VIEW                   143
 #define GX_TYPE_RICH_TEXT_VIEW              144
+#define GX_TYPE_GENERIC_SCROLL_WHEEL        145
 
 /* A pseudo-type, used by Studio code generator */ 
 #define GX_TYPE_TEMPLATE                    200
@@ -681,10 +732,11 @@ typedef struct GX_STRING_STRUCT
 
 /* Define radial slider status flags */
 #define GX_STATUS_ANIMATION_NONE            0x00010000UL
-#define GX_STATUS_TRACKING_START            0x00020000UL
+#define GX_STATUS_TRACKING_PEN              0x00020000UL
 
 #define GX_STATUS_MODAL                     0x00100000UL
 
+#define GX_STATUS_DYNAMIC_BUFFER            0x01000000UL
 #define GX_STATUS_LINE_BREAK_PROCESSED      0x02000000UL
 #define GX_STATUS_RESIZE_NOTIFY             0x04000000UL
 #define GX_STATUS_STUDIO_CREATED            0x08000000UL
@@ -766,6 +818,7 @@ typedef struct GX_STRING_STRUCT
 /* Define Radial Progress Bar style flags.  */
 #define GX_STYLE_RADIAL_PROGRESS_ALIAS      0x00000200UL
 #define GX_STYLE_RADIAL_PROGRESS_ROUND      0x00000400UL
+#define GX_STYLE_RADIAL_PROGRESS_NO_BACKTRACK 0x00000800UL
 
 /* Define Text alignment styles.  */
 
@@ -803,10 +856,6 @@ typedef struct GX_STRING_STRUCT
 #define GX_SCROLLBAR_VERTICAL               0x01000000UL
 #define GX_SCROLLBAR_HORIZONTAL             0x02000000UL
 
-/* Define Animation Styles.  */
-
-/* Define generic scroll wheel styles*/
-#define GX_STYLE_SCROLL_WHEEL_DRAG          0x00000200UL
 
 /* Define text scroll wheel styles*/
 #define GX_STYLE_TEXT_SCROLL_WHEEL_ROUND    0x00000100UL
@@ -1008,13 +1057,6 @@ typedef GX_UBYTE GX_CHAR_CODE;
 #endif 
 
 #if defined(GX_DYNAMIC_BIDI_TEXT_SUPPORT)
-typedef struct GX_BIDI_RESOLVED_TEXT_INFO_STRUCT
-{
-    GX_STRING                                *gx_bidi_resolved_text_info_text;
-    UINT                                      gx_bidi_resolved_text_info_total_lines;
-    struct GX_BIDI_RESOLVED_TEXT_INFO_STRUCT *gx_bidi_resolved_text_info_next;
-} GX_BIDI_RESOLVED_TEXT_INFO;
-
 #define GX_PROMPT_BIDI_RESOLVED_TEXT_INFO               GX_BIDI_RESOLVED_TEXT_INFO *gx_prompt_bidi_resolved_text_info;
 #define GX_TEXT_BUTTON_BIDI_RESOLVED_TEXT_INFO          GX_BIDI_RESOLVED_TEXT_INFO *gx_text_button_bidi_resolved_text_info;
 #define GX_MULTI_LINE_TEXT_VIEW_BIDI_RESOLVED_TEXT_INFO GX_BIDI_RESOLVED_TEXT_INFO *gx_multi_line_text_view_bidi_resolved_text_info;
@@ -1128,16 +1170,18 @@ typedef struct GX_FONT_STRUCT
     GX_CONST struct GX_FONT_STRUCT *gx_font_next_page;         /* For multiple page fonts (Unicode)        */
 } GX_FONT;
 
-#define GX_FONT_FORMAT_BPP_MASK   0x0F
-#define GX_FONT_FORMAT_1BPP       0x01
-#define GX_FONT_FORMAT_2BPP       0x02
-#define GX_FONT_FORMAT_4BPP       0x04
-#define GX_FONT_FORMAT_8BPP       0x08
+#define GX_FONT_FORMAT_BPP_MASK   0x03
+#define GX_FONT_FORMAT_1BPP       0x00
+#define GX_FONT_FORMAT_2BPP       0x01
+#define GX_FONT_FORMAT_4BPP       0x02
+#define GX_FONT_FORMAT_8BPP       0x03
 
 #define GX_FONT_FORMAT_COMPRESSED     0x10
 #define GX_FONT_FORMAT_FREETYPE       0x20
 #define GX_FONT_FORMAT_KERNING        0x40
 #define GX_FONT_FORMAT_REVERSED_ORDER 0x80  /* For 4bpp font, half bytes order reversed. For 1bpp font, bits order reversed with least signigicant bit in left. */
+#define GX_FONT_FORMAT_ROTATED_90     0x04
+#define GX_FONT_FORMAT_ROTATED_270    0x08
 
 /* Define Pixelmap type.  */
 
@@ -1164,12 +1208,32 @@ typedef struct GX_PIXELMAP_STRUCT
 #define GX_PIXELMAP_ALPHA          0x04                         /* Pixelmap has alpha channel               */
 #define GX_PIXELMAP_TARGA          0x08                         /* Pixelmap uses Targa format compresssion  */
 #define GX_PIXELMAP_RAW_FORMAT     0x10                         /* RAW JPG/PNG format                       */
-#if defined(GX_USE_SYNERGY_DRW)
 #define GX_PIXELMAP_DYNAMICALLY_ALLOCATED  0x20                 /* Pixelmap is dynamically allocated        */
-#endif
+
+#define GX_PIXELMAP_ROTATED_CW     0x40
+#define GX_PIXELMAP_ROTATED_CCW    0x80
+
+/* Deprecated definitions, provided only for backward compatibility */
+#define GX_PIXELMAP_ROTATED_90  GX_PIXELMAP_ROTATED_CW
+#define GX_PIXELMAP_ROTATED_270 GX_PIXELMAP_ROTATED_CCW
 
 #define PIXELMAP_IS_TRANSPARENT(a) (a -> gx_pixelmap_flags & (GX_PIXELMAP_TRANSPARENT | GX_PIXELMAP_ALPHA))
 
+#if defined(GX_DYNAMIC_BIDI_TEXT_SUPPORT)
+typedef struct GX_BIDI_TEXT_INFO_STRUCT
+{
+    GX_STRING gx_bidi_text_info_text;
+    GX_FONT  *gx_bidi_text_info_font;
+    GX_VALUE  gx_bidi_text_info_display_width;
+} GX_BIDI_TEXT_INFO;
+
+typedef struct GX_BIDI_RESOLVED_TEXT_INFO_STRUCT
+{
+    GX_STRING                                *gx_bidi_resolved_text_info_text;
+    UINT                                      gx_bidi_resolved_text_info_total_lines;
+    struct GX_BIDI_RESOLVED_TEXT_INFO_STRUCT *gx_bidi_resolved_text_info_next;
+} GX_BIDI_RESOLVED_TEXT_INFO;
+#endif
 
 /* Define Brush type.  */
 
@@ -1498,6 +1562,7 @@ typedef struct GX_DISPLAY_STRUCT
     GX_UBYTE                  gx_display_active_language;       /* Define the active language.              */
     GX_UBYTE                  gx_display_language_table_size;
     GX_UBYTE                  gx_display_driver_ready;
+    USHORT                    gx_display_rotation_angle;
 
     GX_VALUE                  gx_display_width;
     GX_VALUE                  gx_display_height;
@@ -2310,6 +2375,8 @@ typedef struct GX_RICH_TEXT_CONTEXT_STACK_STRUCT
 /* Define macro for GX_SCROLL_WHEEL members */
 #define GX_SCROLL_WHEEL_MEMBERS_DECLARE                            \
     GX_WINDOW_MEMBERS_DECLARE                                      \
+    UINT            (*gx_scroll_wheel_scroll)(struct GX_SCROLL_WHEEL_STRUCT *wheel, GX_VALUE amount); \
+    GX_BOOL         (*gx_scroll_wheel_wrap_style_check)(struct GX_SCROLL_WHEEL_STRUCT *wheel); \
     INT               gx_scroll_wheel_selected_row;                \
     INT               gx_scroll_wheel_total_rows;                  \
     GX_RESOURCE_ID    gx_scroll_wheel_selected_background;         \
@@ -2325,7 +2392,15 @@ typedef struct GX_RICH_TEXT_CONTEXT_STACK_STRUCT
     GX_VALUE          gx_scroll_wheel_row_height;                  \
     GX_VALUE          gx_scroll_wheel_shift_error;
 
-/* Define macro for GX_TEXT_SCROLL_WHEEL_BASE members. */
+/* Define macro for GX_GENERIC_SCROLL_WHEEL members. */
+#define GX_GENERIC_SCROLL_WHEEL_MEMBERS_DECLARE                                                                      \
+    GX_SCROLL_WHEEL_MEMBERS_DECLARE                                                                                  \
+    VOID (*gx_generic_scroll_wheel_callback)(struct GX_GENERIC_SCROLL_WHEEL_STRUCT *, GX_WIDGET *widget, INT index); \
+    INT    gx_generic_scroll_wheel_top_index;                                                                        \
+    INT    gx_generic_scroll_wheel_child_count;                                                                      \
+    INT    gx_generic_scroll_wheel_visible_rows;
+
+/* Define macro for GX_TEXT_SCROLL_WHEEL members. */
 #define GX_TEXT_SCROLL_WHEEL_MEMBERS_DECLARE                                                                   \
     GX_SCROLL_WHEEL_MEMBERS_DECLARE                                                                            \
     GX_RESOURCE_ID      gx_text_scroll_wheel_normal_font;                                                      \
@@ -2621,7 +2696,7 @@ typedef struct GX_RADIAL_PROGRESS_BAR_STRUCT
 typedef struct GX_RADIAL_SLIDER_STRUCT
 {
     GX_RADIAL_SLIDER_MEMBERS_DECLARE
-}GX_RADIAL_SLIDER;
+} GX_RADIAL_SLIDER;
 
 /* Define GX_LINE_CHART control block type */
 typedef struct GX_LINE_CHART_STRUCT
@@ -2635,12 +2710,17 @@ typedef struct GX_SCROLL_WHEEL_STRUCT
     GX_SCROLL_WHEEL_MEMBERS_DECLARE
 } GX_SCROLL_WHEEL;
 
+/* Define GX_GENERIC_SCROLL_WHEEL control block type. */
+typedef struct GX_GENERIC_SCROLL_WHEEL_STRUCT
+{
+    GX_GENERIC_SCROLL_WHEEL_MEMBERS_DECLARE
+} GX_GENERIC_SCROLL_WHEEL;
+
 /* Define GX_TEXT_SCROLL_WHEEL_BASE control block type */
 typedef struct GX_TEXT_SCROLL_WHEEL_STRUCT
 {
     GX_TEXT_SCROLL_WHEEL_MEMBERS_DECLARE
 } GX_TEXT_SCROLL_WHEEL;
-
 
 /* Define GX_STRING_SCROLL_WHEEL control block type */
 typedef struct GX_STRING_SCROLL_WHEEL_STRUCT
@@ -2734,6 +2814,8 @@ typedef struct GX_IMAGE_READER_STRUCT
     GX_UBYTE           *gx_image_reader_getauxdata;
     GX_UBYTE           *gx_image_reader_putdata;
     GX_UBYTE           *gx_image_reader_putauxdata;
+    GX_UBYTE           *gx_image_reader_putdatarow;
+    GX_UBYTE           *gx_image_reader_putauxdatarow;
     GX_UBYTE            gx_image_reader_color_format;
     GX_UBYTE            gx_image_reader_mode;
     GX_UBYTE            gx_image_reader_image_type;
@@ -2743,6 +2825,8 @@ typedef struct GX_IMAGE_READER_STRUCT
     GX_COLOR           *gx_image_reader_palette;
     UINT                gx_image_reader_palette_size;
     UINT                gx_image_reader_input_stride;
+    GX_BYTE             gx_image_reader_putdatarow_stride;
+    GX_BYTE             gx_image_reader_putauxdatarow_stride;
     GX_BOOL             gx_image_reader_size_testing;
     GX_COLOR           *gx_image_reader_png_trans;
     GX_COLOR           *gx_image_reader_png_palette;
@@ -2755,6 +2839,8 @@ typedef struct GX_IMAGE_READER_STRUCT
 #define GX_IMAGE_READER_MODE_COMPRESS   0x01
 #define GX_IMAGE_READER_MODE_ALPHA      0x02
 #define GX_IMAGE_READER_MODE_DITHER     0x04
+#define GX_IMAGE_READER_MODE_ROTATE_CW  0x10
+#define GX_IMAGE_READER_MODE_ROTATE_CCW 0x20
 
 /* Define Screen stack control block */
 typedef struct GX_SCREEN_STACK_CONTROL_STRUCT
@@ -2859,6 +2945,7 @@ typedef struct GX_FIXED_POINT_STRUCT
 
 #define gx_animation_canvas_define                               _gx_animation_canvas_define
 #define gx_animation_create                                      _gx_animation_create
+#define gx_animation_delete                                      _gx_animation_delete
 #define gx_animation_drag_disable                                _gx_animation_drag_disable
 #define gx_animation_drag_enable                                 _gx_animation_drag_enable
 #define gx_animation_landing_speed_set                           _gx_animation_landing_speed_set
@@ -2987,6 +3074,13 @@ typedef struct GX_FIXED_POINT_STRUCT
 #define gx_drop_list_pixelmap_set                                _gx_drop_list_pixelmap_set
 #define gx_drop_list_popup_get                                   _gx_drop_list_popup_get
 
+#define gx_generic_scroll_wheel_children_position                _gx_generic_scroll_wheel_children_position
+#define gx_generic_scroll_wheel_create                           _gx_generic_scroll_wheel_create
+#define gx_generic_scroll_wheel_draw                             _gx_generic_scroll_wheel_draw
+#define gx_generic_scroll_wheel_event_process                    _gx_generic_scroll_wheel_event_process
+#define gx_generic_scroll_wheel_row_height_set                   _gx_generic_scroll_wheel_row_height_set
+#define gx_generic_scroll_wheel_total_rows_set                   _gx_generic_scroll_wheel_total_rows_set
+
 #define gx_horizontal_list_children_position                     _gx_horizontal_list_children_position
 #define gx_horizontal_list_create(a, b, c, d, e, f, g, h)        _gx_horizontal_list_create(a, b, (GX_WIDGET *)c, d, e, f, g, h)
 #define gx_horizontal_list_event_process                         _gx_horizontal_list_event_process
@@ -3020,6 +3114,7 @@ typedef struct GX_FIXED_POINT_STRUCT
 
 #define gx_menu_create(a, b, c, d, e, f, g, h)                   _gx_menu_create((GX_MENU *)a, b, (GX_WIDGET *)c, d, e, f, g, h)
 #define gx_menu_draw                                             _gx_menu_draw
+#define gx_menu_event_process                                    _gx_menu_event_process
 #define gx_menu_insert                                           _gx_menu_insert
 #define gx_menu_remove                                           _gx_menu_remove
 #define gx_menu_remove                                           _gx_menu_remove
@@ -3358,6 +3453,10 @@ typedef struct GX_FIXED_POINT_STRUCT
 #define gx_tree_view_selected_get                                _gx_tree_view_selected_get
 #define gx_tree_view_selected_set                                _gx_tree_view_selected_set
 
+#if defined(GX_DYNAMIC_BIDI_TEXT_SUPPORT)
+#define gx_utility_bidi_paragraph_reorder                        _gx_utility_bidi_paragraph_reorder
+#define gx_utility_bidi_resolved_text_info_delete                _gx_utility_bidi_resolved_text_info_delete
+#endif
 #define gx_utility_canvas_to_bmp                                 _gx_utility_canvas_to_bmp
 #define gx_utility_gradient_create                               _gx_utility_gradient_create
 #define gx_utility_gradient_delete                               _gx_utility_gradient_delete
@@ -3501,6 +3600,7 @@ UINT _gx_accordion_menu_position(GX_ACCORDION_MENU *accordion);
 
 UINT _gx_animation_canvas_define(GX_ANIMATION *animation, GX_CANVAS *canvas);
 UINT _gx_animation_create(GX_ANIMATION *animation);
+UINT _gx_animation_delete(GX_ANIMATION *target, GX_WIDGET *parent);
 UINT _gx_animation_drag_disable(GX_ANIMATION *animation, GX_WIDGET *widget);
 UINT _gx_animation_drag_enable(GX_ANIMATION *animation, GX_WIDGET *widget, GX_ANIMATION_INFO *info);
 UINT _gx_animation_landing_speed_set(GX_ANIMATION *animation, USHORT shift_per_step);
@@ -3512,7 +3612,7 @@ UINT _gx_binres_language_info_load(GX_UBYTE *root_address, GX_LANGUAGE_HEADER *p
 #if defined(GX_ENABLE_DEPRECATED_STRING_API)
 UINT _gx_binres_language_table_load(GX_UBYTE *root_address, GX_UBYTE ****returned_language_table);
 #endif
-UINT _gx_binres_language_table_load_ext(GX_UBYTE* root_address, GX_STRING*** returned_language_table);
+UINT _gx_binres_language_table_load_ext(GX_UBYTE *root_address, GX_STRING ***returned_language_table);
 UINT _gx_binres_theme_load(GX_UBYTE *root_address, INT theme_id, GX_THEME **returned_theme);
 
 UINT _gx_brush_default(GX_BRUSH *brush);
@@ -3544,7 +3644,7 @@ UINT _gx_canvas_hide(GX_CANVAS *canvas);
 UINT _gx_canvas_line_draw(GX_VALUE x_start, GX_VALUE y_start, GX_VALUE x_end, GX_VALUE y_end);
 UINT _gx_canvas_memory_define(GX_CANVAS *canvas, GX_COLOR *memory, ULONG memsize);
 
-#if defined (GX_MOUSE_SUPPORT)
+#if defined(GX_MOUSE_SUPPORT)
 UINT _gx_canvas_mouse_define(GX_CANVAS *canvas, GX_MOUSE_CURSOR_INFO *info);
 UINT _gx_canvas_mouse_hide(GX_CANVAS *canvas);
 UINT _gx_canvas_mouse_show(GX_CANVAS *canvas);
@@ -3560,10 +3660,10 @@ UINT _gx_canvas_pixelmap_rotate(GX_VALUE x_position, GX_VALUE y_position, GX_PIX
 UINT _gx_canvas_pixelmap_tile(GX_RECTANGLE *fill, GX_PIXELMAP *pixelmap);
 UINT _gx_canvas_polygon_draw(GX_POINT *point_array, INT number_of_points);
 UINT _gx_canvas_rectangle_draw(GX_RECTANGLE *rectangle);
-#if defined (GX_ENABLE_DEPRECATED_STRING_API)
+#if defined(GX_ENABLE_DEPRECATED_STRING_API)
 UINT _gx_canvas_rotated_text_draw(GX_CONST GX_CHAR *text, GX_VALUE xcenter, GX_VALUE ycenter, INT angle);
 #endif
-UINT _gx_canvas_rotated_text_draw_ext(GX_CONST GX_STRING* text, GX_VALUE xcenter, GX_VALUE ycenter, INT angle);
+UINT _gx_canvas_rotated_text_draw_ext(GX_CONST GX_STRING *text, GX_VALUE xcenter, GX_VALUE ycenter, INT angle);
 UINT _gx_canvas_shift(GX_CANVAS *canvas, GX_VALUE x, GX_VALUE y);
 UINT _gx_canvas_show(GX_CANVAS *canvas);
 
@@ -3631,8 +3731,8 @@ UINT _gx_display_font_table_set(GX_DISPLAY *display, GX_FONT **font_table, UINT 
 UINT _gx_display_language_table_get(GX_DISPLAY *display, GX_CHAR ****table, GX_UBYTE *language_count, UINT *string_count);
 UINT _gx_display_language_table_set(GX_DISPLAY *display, GX_CHAR ***table, GX_UBYTE num_languages, UINT number_of_strings);
 #endif
-UINT _gx_display_language_table_get_ext(GX_DISPLAY* display, GX_STRING ***table, GX_UBYTE *language_count, UINT* string_count);
-UINT _gx_display_language_table_set_ext(GX_DISPLAY* display, GX_CONST GX_STRING **table, GX_UBYTE num_languages, UINT number_of_strings);
+UINT _gx_display_language_table_get_ext(GX_DISPLAY *display, GX_STRING ***table, GX_UBYTE *language_count, UINT *string_count);
+UINT _gx_display_language_table_set_ext(GX_DISPLAY *display, GX_CONST GX_STRING **table, GX_UBYTE num_languages, UINT number_of_strings);
 
 UINT _gx_display_pixelmap_table_set(GX_DISPLAY *display, GX_PIXELMAP **pixelmap_table, UINT number_of_pixelmaps);
 
@@ -3640,8 +3740,8 @@ UINT _gx_display_pixelmap_table_set(GX_DISPLAY *display, GX_PIXELMAP **pixelmap_
 UINT _gx_display_string_get(GX_DISPLAY *display, GX_RESOURCE_ID string_id, GX_CONST GX_CHAR **return_string);
 UINT _gx_display_string_table_get(GX_DISPLAY *display, GX_UBYTE language, GX_CHAR ***table, UINT *size);
 #endif
-UINT _gx_display_string_get_ext(GX_DISPLAY* display, GX_RESOURCE_ID string_id, GX_STRING *return_string);
-UINT _gx_display_string_table_get_ext(GX_DISPLAY* display, GX_UBYTE language, GX_STRING **table, UINT *size);
+UINT _gx_display_string_get_ext(GX_DISPLAY *display, GX_RESOURCE_ID string_id, GX_STRING *return_string);
+UINT _gx_display_string_table_get_ext(GX_DISPLAY *display, GX_UBYTE language, GX_STRING **table, UINT *size);
 
 UINT _gx_display_theme_install(GX_DISPLAY *display, GX_CONST GX_THEME *theme_ptr);
 
@@ -3657,6 +3757,19 @@ UINT _gx_drop_list_event_process(GX_DROP_LIST *list, GX_EVENT *event_ptr);
 UINT _gx_drop_list_open(GX_DROP_LIST *list);
 UINT _gx_drop_list_pixelmap_set(GX_DROP_LIST *drop_list, GX_RESOURCE_ID pixelmap_id);
 UINT _gx_drop_list_popup_get(GX_DROP_LIST *box, GX_VERTICAL_LIST **return_list);
+
+UINT _gx_generic_scroll_wheel_create(GX_GENERIC_SCROLL_WHEEL *wheel,
+                                     GX_CONST GX_CHAR *name,
+                                     GX_WIDGET *parent,
+                                     INT total_rows,
+                                     VOID (*callback)(GX_GENERIC_SCROLL_WHEEL *, GX_WIDGET *, INT),
+                                     ULONG style,
+                                     USHORT id,
+                                     GX_CONST GX_RECTANGLE *size);
+UINT _gx_generic_scroll_wheel_children_position(GX_GENERIC_SCROLL_WHEEL *wheel);
+UINT _gx_generic_scroll_wheel_event_process(GX_GENERIC_SCROLL_WHEEL *wheel, GX_EVENT *event_ptr);
+UINT _gx_generic_scroll_wheel_row_height_set(GX_GENERIC_SCROLL_WHEEL *wheel, GX_VALUE row_height);
+UINT _gx_generic_scroll_wheel_total_rows_set(GX_GENERIC_SCROLL_WHEEL *wheel, INT count);
 
 UINT _gx_horizontal_list_children_position(GX_HORIZONTAL_LIST *horizontal_list);
 UINT _gx_horizontal_list_create(GX_HORIZONTAL_LIST *horizontal_list,
@@ -3704,21 +3817,22 @@ UINT _gx_image_reader_start(GX_IMAGE_READER *image_reader, GX_PIXELMAP *outmap);
 
 VOID _gx_line_chart_axis_draw(GX_LINE_CHART *chart);
 UINT _gx_line_chart_create(GX_LINE_CHART *chart,
-                          GX_CONST GX_CHAR *name,
-                          GX_WIDGET *parent,
-                          GX_CONST GX_LINE_CHART_INFO *info,
-                          ULONG style,
-                          USHORT chart_id,
-                          GX_CONST GX_RECTANGLE *size);
+                           GX_CONST GX_CHAR *name,
+                           GX_WIDGET *parent,
+                           GX_CONST GX_LINE_CHART_INFO *info,
+                           ULONG style,
+                           USHORT chart_id,
+                           GX_CONST GX_RECTANGLE *size);
 VOID _gx_line_chart_data_draw(GX_LINE_CHART *chart);
 VOID _gx_line_chart_draw(GX_LINE_CHART *chart);
 UINT _gx_line_chart_update(GX_LINE_CHART *chart, INT *data, INT data_count);
 UINT _gx_line_chart_y_scale_calculate(GX_LINE_CHART *chart, INT *return_val);
 
 UINT _gx_menu_create(GX_MENU *menu, GX_CONST GX_CHAR *name, GX_WIDGET *parent,
-    GX_RESOURCE_ID text_id, GX_RESOURCE_ID fill_id,
-    ULONG style, USHORT menu_id, GX_CONST GX_RECTANGLE *size);
+                     GX_RESOURCE_ID text_id, GX_RESOURCE_ID fill_id,
+                     ULONG style, USHORT menu_id, GX_CONST GX_RECTANGLE *size);
 VOID _gx_menu_draw(GX_MENU *menu);
+UINT _gx_menu_event_process(GX_MENU *menu, GX_EVENT *event_ptr);
 UINT _gx_menu_insert(GX_MENU *menu, GX_WIDGET *widget);
 UINT _gx_menu_remove(GX_MENU *menu, GX_WIDGET *widget);
 UINT _gx_menu_remove(GX_MENU *menu, GX_WIDGET *widget);
@@ -3815,13 +3929,13 @@ UINT _gx_numeric_pixelmap_prompt_format_function_set(GX_NUMERIC_PIXELMAP_PROMPT 
 UINT _gx_numeric_pixelmap_prompt_value_set(GX_NUMERIC_PIXELMAP_PROMPT *prompt, INT value);
 
 UINT _gx_numeric_prompt_create(GX_NUMERIC_PROMPT *prompt, GX_CONST GX_CHAR *name, GX_WIDGET *parent,
-    GX_RESOURCE_ID text_id, ULONG style, USHORT prompt_id, GX_CONST GX_RECTANGLE *size);
+                               GX_RESOURCE_ID text_id, ULONG style, USHORT prompt_id, GX_CONST GX_RECTANGLE *size);
 UINT _gx_numeric_prompt_format_function_set(GX_NUMERIC_PROMPT *prompt, VOID (*format_func)(GX_NUMERIC_PROMPT *, INT));
 UINT _gx_numeric_prompt_value_set(GX_NUMERIC_PROMPT *prompt, INT value);
 
 UINT _gx_numeric_scroll_wheel_create(GX_NUMERIC_SCROLL_WHEEL *wheel, GX_CONST GX_CHAR *name, GX_WIDGET *parent,
-                                  INT start_val, INT end_val, 
-                                  ULONG style, USHORT Id, GX_CONST GX_RECTANGLE *size);
+                                     INT start_val, INT end_val,
+                                     ULONG style, USHORT Id, GX_CONST GX_RECTANGLE *size);
 UINT _gx_numeric_scroll_wheel_range_set(GX_NUMERIC_SCROLL_WHEEL *wheel, INT start_val, INT end_val);
 
 UINT _gx_pixelmap_button_create(GX_PIXELMAP_BUTTON *button,
@@ -3913,7 +4027,7 @@ UINT _gx_radial_progress_bar_value_set(GX_RADIAL_PROGRESS_BAR *progress_bar, GX_
 
 UINT _gx_radial_slider_anchor_angles_set(GX_RADIAL_SLIDER *slider, GX_VALUE *anchor_angles, USHORT anchor_count);
 UINT _gx_radial_slider_animation_set(GX_RADIAL_SLIDER *slider, USHORT steps, USHORT delay, USHORT animation_style,
-                                     VOID(*animation_update_callback)(GX_RADIAL_SLIDER *slider));
+                                     VOID (*animation_update_callback)(GX_RADIAL_SLIDER *slider));
 UINT _gx_radial_slider_animation_start(GX_RADIAL_SLIDER *slider, GX_VALUE new_value);
 UINT _gx_radial_slider_create(GX_RADIAL_SLIDER *slider, GX_CONST GX_CHAR *name, GX_WIDGET *parent,
                               GX_RADIAL_SLIDER_INFO *info, ULONG style, USHORT slider_id, GX_CONST GX_RECTANGLE *size);
@@ -4016,13 +4130,13 @@ UINT _gx_sprite_start(GX_SPRITE *sprite, USHORT start_frame);
 UINT _gx_sprite_stop(GX_SPRITE *sprite);
 
 #if defined(GX_ENABLE_DEPRECATED_STRING_API)
-UINT _gx_string_scroll_wheel_create(GX_STRING_SCROLL_WHEEL *wheel, GX_CONST GX_CHAR *name, GX_WIDGET *parent, INT total_rows, 
+UINT _gx_string_scroll_wheel_create(GX_STRING_SCROLL_WHEEL *wheel, GX_CONST GX_CHAR *name, GX_WIDGET *parent, INT total_rows,
                                     GX_CONST GX_CHAR **string_list,
                                     ULONG style, USHORT Id, GX_CONST GX_RECTANGLE *size);
 #endif
-UINT _gx_string_scroll_wheel_create_ext(GX_STRING_SCROLL_WHEEL* wheel, GX_CONST GX_CHAR* name, GX_WIDGET* parent, INT total_rows,
-                                        GX_CONST GX_STRING* string_list,
-                                        ULONG style, USHORT Id, GX_CONST GX_RECTANGLE* size);
+UINT _gx_string_scroll_wheel_create_ext(GX_STRING_SCROLL_WHEEL *wheel, GX_CONST GX_CHAR *name, GX_WIDGET *parent, INT total_rows,
+                                        GX_CONST GX_STRING *string_list,
+                                        ULONG style, USHORT Id, GX_CONST GX_RECTANGLE *size);
 UINT _gx_string_scroll_wheel_event_process(GX_STRING_SCROLL_WHEEL *wheel, GX_EVENT *event_ptr);
 UINT _gx_string_scroll_wheel_string_id_list_set(GX_STRING_SCROLL_WHEEL *wheel,
                                                 GX_CONST GX_RESOURCE_ID *string_id_list,
@@ -4034,8 +4148,8 @@ UINT _gx_string_scroll_wheel_string_list_set(GX_STRING_SCROLL_WHEEL *wheel,
                                              INT string_count);
 #endif
 UINT _gx_string_scroll_wheel_string_list_set_ext(GX_STRING_SCROLL_WHEEL *wheel,
-                                             GX_CONST GX_STRING *string_list,
-                                             INT string_count);
+                                                 GX_CONST GX_STRING *string_list,
+                                                 INT string_count);
 
 UINT _gx_system_active_language_set(GX_UBYTE language);
 
@@ -4115,10 +4229,10 @@ UINT _gx_text_input_cursor_height_set(GX_TEXT_INPUT_CURSOR *cursor_input, GX_UBY
 UINT _gx_text_input_cursor_width_set(GX_TEXT_INPUT_CURSOR *cursor_input, GX_UBYTE width);
 
 #if defined(GX_ENABLE_DEPRECATED_STRING_API)
-UINT _gx_text_scroll_wheel_callback_set(GX_TEXT_SCROLL_WHEEL *wheel, GX_CONST GX_CHAR *(*callback)(GX_TEXT_SCROLL_WHEEL *, INT)); 
+UINT _gx_text_scroll_wheel_callback_set(GX_TEXT_SCROLL_WHEEL * wheel, GX_CONST GX_CHAR * (*callback)(GX_TEXT_SCROLL_WHEEL *, INT));
 #endif
-UINT _gx_text_scroll_wheel_callback_set_ext(GX_TEXT_SCROLL_WHEEL *wheel, UINT (*callback)(GX_TEXT_SCROLL_WHEEL*, INT, GX_STRING *));
-UINT _gx_text_scroll_wheel_create(GX_TEXT_SCROLL_WHEEL *wheel, GX_CONST GX_CHAR *name, GX_WIDGET *parent, INT total_rows, 
+UINT _gx_text_scroll_wheel_callback_set_ext(GX_TEXT_SCROLL_WHEEL *wheel, UINT (*callback)(GX_TEXT_SCROLL_WHEEL *, INT, GX_STRING *));
+UINT _gx_text_scroll_wheel_create(GX_TEXT_SCROLL_WHEEL *wheel, GX_CONST GX_CHAR *name, GX_WIDGET *parent, INT total_rows,
                                   ULONG style, USHORT Id, GX_CONST GX_RECTANGLE *size);
 VOID _gx_text_scroll_wheel_draw(GX_TEXT_SCROLL_WHEEL *wheel);
 UINT _gx_text_scroll_wheel_event_process(GX_TEXT_SCROLL_WHEEL *wheel, GX_EVENT *event_ptr);
@@ -4137,6 +4251,10 @@ UINT _gx_tree_view_root_pixelmap_set(GX_TREE_VIEW *tree, GX_RESOURCE_ID expand_m
 UINT _gx_tree_view_selected_get(GX_TREE_VIEW *tree, GX_WIDGET **selected);
 UINT _gx_tree_view_selected_set(GX_TREE_VIEW *tree, GX_WIDGET *selected);
 
+#if defined(GX_DYNAMIC_BIDI_TEXT_SUPPORT)
+UINT    _gx_utility_bidi_paragraph_reorder(GX_BIDI_TEXT_INFO *input_info, GX_BIDI_RESOLVED_TEXT_INFO **resolved_info_head);
+UINT    _gx_utility_bidi_resolved_text_info_delete(GX_BIDI_RESOLVED_TEXT_INFO **resolved_info_head);
+#endif
 UINT    _gx_utility_canvas_to_bmp(GX_CANVAS *canvas, GX_RECTANGLE *rect, UINT(*write_data)(GX_UBYTE *byte_data, UINT data_count));
 UINT    _gx_utility_gradient_create(GX_GRADIENT *gradient, GX_VALUE width, GX_VALUE height, UCHAR type, GX_UBYTE start_alpha, GX_UBYTE end_alpha);
 UINT    _gx_utility_gradient_delete(GX_GRADIENT *gradient);
@@ -4256,9 +4374,9 @@ VOID _gx_widget_text_draw(GX_WIDGET *widget, UINT tColor, UINT font_id, GX_CONST
                           INT x_offset, INT y_offset);
 #endif
 UINT _gx_widget_text_blend_ext(GX_WIDGET *widget, UINT tColor, UINT font_id, GX_CONST GX_STRING *string,
-                           INT x_offset, INT y_offset, UCHAR alpha);
+                               INT x_offset, INT y_offset, UCHAR alpha);
 VOID _gx_widget_text_draw_ext(GX_WIDGET *widget, UINT tColor, UINT font_id, GX_CONST GX_STRING *string,
-                          INT x_offset, INT y_offset);
+                              INT x_offset, INT y_offset);
 VOID _gx_widget_text_id_draw(GX_WIDGET *widget, UINT tColor,
                              UINT font_id, UINT text_id,
                              INT x_offset, INT y_offset);
@@ -4278,7 +4396,7 @@ UINT _gx_window_create(GX_WINDOW *window,
                        GX_CONST GX_RECTANGLE *size);
 VOID _gx_window_draw(GX_WINDOW *window);
 UINT _gx_window_event_process(GX_WINDOW *window, GX_EVENT *event_ptr);
-UINT _gx_window_execute(GX_WINDOW *window, ULONG *return_code); 
+UINT _gx_window_execute(GX_WINDOW *window, ULONG *return_code);
 UINT _gx_window_root_create(GX_WINDOW_ROOT *root_window,
                             GX_CONST GX_CHAR *name,
                             GX_CANVAS *canvas, ULONG style, USHORT Id,
@@ -4300,6 +4418,7 @@ UINT _gx_window_wallpaper_set(GX_WINDOW *window, GX_RESOURCE_ID wallpaper_id, GX
 
 #define gx_animation_canvas_define                               _gxe_animation_canvas_define
 #define gx_animation_create                                      _gxe_animation_create
+#define gx_animation_delete                                      _gxe_animation_delete
 #define gx_animation_drag_disable                                _gxe_animation_drag_disable
 #define gx_animation_drag_enable                                 _gxe_animation_drag_enable
 #define gx_animation_landing_speed_set                           _gxe_animation_landing_speed_set
@@ -4429,6 +4548,13 @@ UINT _gx_window_wallpaper_set(GX_WINDOW *window, GX_RESOURCE_ID wallpaper_id, GX
 #define gx_drop_list_pixelmap_set                                _gxe_drop_list_pixelmap_set
 #define gx_drop_list_popup_get                                   _gxe_drop_list_popup_get
 
+#define gx_generic_scroll_wheel_children_position                _gxe_generic_scroll_wheel_children_position
+#define gx_generic_scroll_wheel_create(a, b, c, d, e, f, g, h)   _gxe_generic_scroll_wheel_create(a, b, c, d, e, f, g, h, sizeof(GX_GENERIC_SCROLL_WHEEL))
+#define gx_generic_scroll_wheel_draw                             _gxe_generic_scroll_wheel_draw
+#define gx_generic_scroll_wheel_event_process                    _gxe_generic_scroll_wheel_event_process
+#define gx_generic_scroll_wheel_row_height_set                   _gxe_generic_scroll_wheel_row_height_set
+#define gx_generic_scroll_wheel_total_rows_set                   _gxe_generic_scroll_wheel_total_rows_set
+
 #define gx_horizontal_list_children_position                     _gxe_horizontal_list_children_position
 #define gx_horizontal_list_create(a, b, c, d, e, f, g, h)        _gxe_horizontal_list_create(a, b, (GX_WIDGET *)c, d, e, f, g, h, sizeof(GX_HORIZONTAL_LIST))
 #define gx_horizontal_list_event_process                         _gxe_horizontal_list_event_process
@@ -4462,6 +4588,7 @@ UINT _gx_window_wallpaper_set(GX_WINDOW *window, GX_RESOURCE_ID wallpaper_id, GX
 
 #define gx_menu_create(a, b, c, d, e, f, g, h)                   _gxe_menu_create((GX_MENU *)a, b, (GX_WIDGET *)c, d, e, f, g, h, sizeof(GX_MENU))
 #define gx_menu_draw                                             _gx_menu_draw
+#define gx_menu_event_process                                    _gxe_menu_event_process
 #define gx_menu_insert                                           _gxe_menu_insert
 #define gx_menu_remove                                           _gxe_menu_remove
 #define gx_menu_text_draw                                        _gx_menu_text_draw
@@ -4797,6 +4924,10 @@ UINT _gx_window_wallpaper_set(GX_WINDOW *window, GX_RESOURCE_ID wallpaper_id, GX
 #define gx_tree_view_selected_get                                _gxe_tree_view_selected_get
 #define gx_tree_view_selected_set                                _gxe_tree_view_selected_set
 
+#if defined(GX_DYNAMIC_BIDI_TEXT_SUPPORT)
+#define gx_utility_bidi_paragraph_reorder                        _gxe_utility_bidi_paragraph_reorder
+#define gx_utility_bidi_resolved_text_info_delete                _gxe_utility_bidi_resolved_text_info_delete
+#endif
 #define gx_utility_canvas_to_bmp                                 _gxe_utility_canvas_to_bmp
 #define gx_utility_circle_point_get                              _gxe_utility_circle_point_get
 #define gx_utility_ltoa                                          _gxe_utility_ltoa
@@ -4937,6 +5068,7 @@ UINT _gxe_accordion_menu_position(GX_ACCORDION_MENU *accordion);
 
 UINT _gxe_animation_canvas_define(GX_ANIMATION *animation, GX_CANVAS *canvas);
 UINT _gxe_animation_create(GX_ANIMATION *animation);
+UINT _gxe_animation_delete(GX_ANIMATION *target, GX_WIDGET *parent);
 UINT _gxe_animation_drag_disable(GX_ANIMATION *animation, GX_WIDGET *widget);
 UINT _gxe_animation_drag_enable(GX_ANIMATION *animation, GX_WIDGET *widget, GX_ANIMATION_INFO *info);
 UINT _gxe_animation_landing_speed_set(GX_ANIMATION *animation, USHORT shift_per_step);
@@ -4948,7 +5080,7 @@ UINT _gxe_binres_language_info_load(GX_UBYTE *root_address, GX_LANGUAGE_HEADER *
 #if defined(GX_ENABLE_DEPRECATED_STRING_API)
 UINT _gxe_binres_language_table_load(GX_UBYTE *root_address, GX_UBYTE ****returned_language_table);
 #endif
-UINT _gxe_binres_language_table_load_ext(GX_UBYTE* root_address, GX_STRING*** returned_language_table);
+UINT _gxe_binres_language_table_load_ext(GX_UBYTE *root_address, GX_STRING ***returned_language_table);
 UINT _gxe_binres_theme_load(GX_UBYTE *root_address, INT theme_id, GX_THEME **returned_theme);
 
 UINT _gxe_brush_default(GX_BRUSH *brush);
@@ -4982,7 +5114,7 @@ UINT _gxe_canvas_hide(GX_CANVAS *canvas);
 UINT _gxe_canvas_line_draw(GX_VALUE x_start, GX_VALUE y_start, GX_VALUE x_end, GX_VALUE y_end);
 UINT _gxe_canvas_memory_define(GX_CANVAS *canvas, GX_COLOR *memory, ULONG memsize);
 
-#if defined (GX_MOUSE_SUPPORT)
+#if defined(GX_MOUSE_SUPPORT)
 UINT _gxe_canvas_mouse_define(GX_CANVAS *canvas, GX_MOUSE_CURSOR_INFO *info);
 UINT _gxe_canvas_mouse_hide(GX_CANVAS *canvas);
 UINT _gxe_canvas_mouse_show(GX_CANVAS *canvas);
@@ -4994,14 +5126,14 @@ UINT _gxe_canvas_pixelmap_blend(GX_VALUE x_position, GX_VALUE y_position, GX_PIX
 UINT _gxe_canvas_pixelmap_draw(GX_VALUE x_position, GX_VALUE y_position, GX_PIXELMAP *pixelmap);
 UINT _gxe_canvas_pixelmap_get(GX_PIXELMAP *pixelmap);
 UINT _gxe_canvas_pixelmap_rotate(GX_VALUE x_position, GX_VALUE y_position, GX_PIXELMAP *pixelmap,
-                                INT angle, INT rot_cx, INT rot_cy);
+                                 INT angle, INT rot_cx, INT rot_cy);
 UINT _gxe_canvas_pixelmap_tile(GX_RECTANGLE *fill, GX_PIXELMAP *pixelmap);
 UINT _gxe_canvas_polygon_draw(GX_POINT *point_array, INT number_of_points);
 UINT _gxe_canvas_rectangle_draw(GX_RECTANGLE *rectangle);
 #if defined(GX_ENABLE_DEPRECATED_STRING_API)
 UINT _gxe_canvas_rotated_text_draw(GX_CONST GX_CHAR *text, GX_VALUE xcenter, GX_VALUE ycenter, INT angle);
 #endif
-UINT _gxe_canvas_rotated_text_draw_ext(GX_CONST GX_STRING* text, GX_VALUE xcenter, GX_VALUE ycenter, INT angle);
+UINT _gxe_canvas_rotated_text_draw_ext(GX_CONST GX_STRING *text, GX_VALUE xcenter, GX_VALUE ycenter, INT angle);
 UINT _gxe_canvas_shift(GX_CANVAS *canvas, GX_VALUE x, GX_VALUE y);
 UINT _gxe_canvas_show(GX_CANVAS *canvas);
 
@@ -5073,9 +5205,9 @@ UINT _gxe_display_language_table_set_ext(GX_DISPLAY *display, GX_CONST GX_STRING
 UINT _gxe_display_pixelmap_table_set(GX_DISPLAY *display, GX_PIXELMAP **pixelmap_table, UINT number_of_pixelmaps);
 #if defined(GX_ENABLE_DEPRECATED_STRING_API)
 UINT _gxe_display_string_get(GX_DISPLAY *display, GX_RESOURCE_ID string_id, GX_CONST GX_CHAR **return_string);
-UINT _gxe_display_string_table_get(GX_DISPLAY* display, GX_UBYTE language, GX_CHAR*** table, UINT* size);
+UINT _gxe_display_string_table_get(GX_DISPLAY *display, GX_UBYTE language, GX_CHAR ***table, UINT *size);
 #endif
-UINT _gxe_display_string_get_ext(GX_DISPLAY* display, GX_RESOURCE_ID string_id, GX_STRING *return_string);
+UINT _gxe_display_string_get_ext(GX_DISPLAY *display, GX_RESOURCE_ID string_id, GX_STRING *return_string);
 UINT _gxe_display_string_table_get_ext(GX_DISPLAY *display, GX_UBYTE language, GX_STRING **table, UINT *size);
 UINT _gxe_display_theme_install(GX_DISPLAY *display, GX_CONST GX_THEME *theme_ptr);
 
@@ -5088,6 +5220,20 @@ UINT _gxe_drop_list_event_process(GX_DROP_LIST *list, GX_EVENT *event_ptr);
 UINT _gxe_drop_list_open(GX_DROP_LIST *list);
 UINT _gxe_drop_list_pixelmap_set(GX_DROP_LIST *drop_list, GX_RESOURCE_ID pixelmap_id);
 UINT _gxe_drop_list_popup_get(GX_DROP_LIST *box, GX_VERTICAL_LIST **return_list);
+
+UINT _gxe_generic_scroll_wheel_create(GX_GENERIC_SCROLL_WHEEL *wheel,
+                                      GX_CONST GX_CHAR *name,
+                                      GX_WIDGET *parent,
+                                      INT total_rows,
+                                      VOID (*callback)(GX_GENERIC_SCROLL_WHEEL *, GX_WIDGET *, INT),
+                                      ULONG style,
+                                      USHORT id,
+                                      GX_CONST GX_RECTANGLE *size,
+                                      UINT control_block_size);
+UINT _gxe_generic_scroll_wheel_children_position(GX_GENERIC_SCROLL_WHEEL *wheel);
+UINT _gxe_generic_scroll_wheel_event_process(GX_GENERIC_SCROLL_WHEEL *wheel, GX_EVENT *event_ptr);
+UINT _gxe_generic_scroll_wheel_row_height_set(GX_GENERIC_SCROLL_WHEEL *wheel, GX_VALUE row_height);
+UINT _gxe_generic_scroll_wheel_total_rows_set(GX_GENERIC_SCROLL_WHEEL *wheel, INT count);
 
 UINT _gxe_horizontal_list_children_position(GX_HORIZONTAL_LIST *horizontal_list);
 UINT _gxe_horizontal_list_create(GX_HORIZONTAL_LIST *horizontal_list, GX_CONST GX_CHAR *name, GX_WIDGET *parent,
@@ -5127,22 +5273,23 @@ UINT _gxe_image_reader_start(GX_IMAGE_READER *image_reader, GX_PIXELMAP *outmap)
 
 VOID _gx_line_chart_axis_draw(GX_LINE_CHART *chart);
 UINT _gxe_line_chart_create(GX_LINE_CHART *chart,
-                          GX_CONST GX_CHAR *name,
-                          GX_WIDGET *parent,
-                          GX_CONST GX_LINE_CHART_INFO *info,
-                          ULONG style,
-                          USHORT chart_id,
-                          GX_CONST GX_RECTANGLE *size,
-                          UINT chart_control_block_size);
+                            GX_CONST GX_CHAR *name,
+                            GX_WIDGET *parent,
+                            GX_CONST GX_LINE_CHART_INFO *info,
+                            ULONG style,
+                            USHORT chart_id,
+                            GX_CONST GX_RECTANGLE *size,
+                            UINT chart_control_block_size);
 VOID _gx_line_chart_data_draw(GX_LINE_CHART *chart);
 VOID _gx_line_chart_draw(GX_LINE_CHART *chart);
 UINT _gxe_line_chart_update(GX_LINE_CHART *chart, INT *data, INT data_count);
 UINT _gxe_line_chart_y_scale_calculate(GX_LINE_CHART *chart, INT *return_val);
 
 UINT _gxe_menu_create(GX_MENU *menu, GX_CONST GX_CHAR *name, GX_WIDGET *parent,
-    GX_RESOURCE_ID text_id, GX_RESOURCE_ID fill_id,
-    ULONG style, USHORT menu_id, GX_CONST GX_RECTANGLE *size, UINT control_block_size);
+                      GX_RESOURCE_ID text_id, GX_RESOURCE_ID fill_id,
+                      ULONG style, USHORT menu_id, GX_CONST GX_RECTANGLE *size, UINT control_block_size);
 VOID _gx_menu_draw(GX_MENU *menu);
+UINT _gxe_menu_event_process(GX_MENU *menu, GX_EVENT *event_ptr);
 UINT _gxe_menu_insert(GX_MENU *menu, GX_WIDGET *widget);
 UINT _gxe_menu_remove(GX_MENU *menu, GX_WIDGET *widget);
 VOID _gx_menu_text_draw(GX_MENU *menu);
@@ -5158,7 +5305,7 @@ UINT _gxe_multi_line_text_button_text_id_set(GX_MULTI_LINE_TEXT_BUTTON *button, 
 #if defined(GX_ENABLE_DEPRECATED_STRING_API)
 UINT _gxe_multi_line_text_button_text_set(GX_MULTI_LINE_TEXT_BUTTON *button, GX_CONST GX_CHAR *text);
 #endif
-UINT _gxe_multi_line_text_button_text_set_ext(GX_MULTI_LINE_TEXT_BUTTON* button, GX_CONST GX_STRING* text);
+UINT _gxe_multi_line_text_button_text_set_ext(GX_MULTI_LINE_TEXT_BUTTON *button, GX_CONST GX_STRING *text);
 
 UINT _gxe_multi_line_text_input_backspace(GX_MULTI_LINE_TEXT_INPUT *text_input);
 UINT _gxe_multi_line_text_input_buffer_clear(GX_MULTI_LINE_TEXT_INPUT *text_input_ptr);
@@ -5167,7 +5314,7 @@ UINT _gxe_multi_line_text_input_buffer_get(GX_MULTI_LINE_TEXT_INPUT *text_input_
 #if defined(GX_ENABLE_DEPRECATED_STRING_API)
 UINT _gxe_multi_line_text_input_char_insert(GX_MULTI_LINE_TEXT_INPUT *text_input, GX_UBYTE *str, UINT str_size);
 #endif
-UINT _gxe_multi_line_text_input_char_insert_ext(GX_MULTI_LINE_TEXT_INPUT* text_input, GX_CONST GX_STRING* str);
+UINT _gxe_multi_line_text_input_char_insert_ext(GX_MULTI_LINE_TEXT_INPUT *text_input, GX_CONST GX_STRING *str);
 UINT _gxe_multi_line_text_input_create(GX_MULTI_LINE_TEXT_INPUT *text_input_ptr, GX_CONST GX_CHAR *name_ptr,
                                        GX_WIDGET *parent, GX_CHAR *input_buffer, UINT buffer_size,
                                        ULONG style, USHORT Id, GX_CONST GX_RECTANGLE *size,
@@ -5197,7 +5344,7 @@ UINT _gxe_multi_line_text_input_text_select(GX_MULTI_LINE_TEXT_INPUT *input, UIN
 #if defined(GX_ENABLE_DEPRECATED_STRING_API)
 UINT _gxe_multi_line_text_input_text_set(GX_MULTI_LINE_TEXT_INPUT *text_input, GX_CONST GX_CHAR *text);
 #endif
-UINT _gxe_multi_line_text_input_text_set_ext(GX_MULTI_LINE_TEXT_INPUT* text_input, GX_CONST GX_STRING *text);
+UINT _gxe_multi_line_text_input_text_set_ext(GX_MULTI_LINE_TEXT_INPUT *text_input, GX_CONST GX_STRING *text);
 UINT _gxe_multi_line_text_input_up_arrow(GX_MULTI_LINE_TEXT_INPUT *text_input);
 
 UINT _gxe_multi_line_text_view_create(GX_MULTI_LINE_TEXT_VIEW *text_view_ptr, GX_CONST GX_CHAR *name_ptr,
@@ -5243,15 +5390,15 @@ UINT _gxe_numeric_pixelmap_prompt_format_function_set(GX_NUMERIC_PIXELMAP_PROMPT
 UINT _gxe_numeric_pixelmap_prompt_value_set(GX_NUMERIC_PIXELMAP_PROMPT *prompt, INT value);
 
 UINT _gxe_numeric_prompt_create(GX_NUMERIC_PROMPT *prompt, GX_CONST GX_CHAR *name, GX_WIDGET *parent,
-    GX_RESOURCE_ID text_id, ULONG style, USHORT prompt_id, GX_CONST GX_RECTANGLE *size,
-    UINT control_block_size);
+                                GX_RESOURCE_ID text_id, ULONG style, USHORT prompt_id, GX_CONST GX_RECTANGLE *size,
+                                UINT control_block_size);
 UINT _gxe_numeric_prompt_format_function_set(GX_NUMERIC_PROMPT *prompt, VOID (*format_func)(GX_NUMERIC_PROMPT *, INT));
 UINT _gxe_numeric_prompt_value_set(GX_NUMERIC_PROMPT *prompt, INT value);
 
 UINT _gxe_numeric_scroll_wheel_create(GX_NUMERIC_SCROLL_WHEEL *wheel, GX_CONST GX_CHAR *name, GX_WIDGET *parent,
-                                  INT start_val, INT end_val, 
-                                  ULONG style, USHORT Id, GX_CONST GX_RECTANGLE *size,
-                                  UINT numeric_scroll_control_block_size);
+                                      INT start_val, INT end_val,
+                                      ULONG style, USHORT Id, GX_CONST GX_RECTANGLE *size,
+                                      UINT numeric_scroll_control_block_size);
 UINT _gxe_numeric_scroll_wheel_range_set(GX_NUMERIC_SCROLL_WHEEL *wheel, INT start_val, INT end_val);
 
 UINT _gxe_pixelmap_button_create(GX_PIXELMAP_BUTTON *button, GX_CONST GX_CHAR *name, GX_WIDGET *parent,
@@ -5307,7 +5454,7 @@ UINT _gxe_prompt_create(GX_PROMPT *prompt, GX_CONST GX_CHAR *name, GX_WIDGET *pa
 UINT _gxe_prompt_event_process(GX_PROMPT *prompt, GX_EVENT *event_ptr);
 VOID _gx_prompt_draw(GX_PROMPT *prompt);
 UINT _gxe_prompt_font_set(GX_PROMPT *prompt, GX_RESOURCE_ID fontid);
-UINT _gxe_prompt_text_color_set(GX_PROMPT *prompt, 
+UINT _gxe_prompt_text_color_set(GX_PROMPT *prompt,
                                 GX_RESOURCE_ID normal_text_color_id,
                                 GX_RESOURCE_ID selected_text_color_id,
                                 GX_RESOURCE_ID disabled_text_color_id);
@@ -5315,7 +5462,7 @@ VOID _gx_prompt_text_draw(GX_PROMPT *prompt);
 #if defined(GX_ENABLE_DEPRECATED_STRING_API)
 UINT _gxe_prompt_text_get(GX_PROMPT *prompt, GX_CONST GX_CHAR **return_text);
 #endif
-UINT _gxe_prompt_text_get_ext(GX_PROMPT* prompt, GX_STRING* return_text);
+UINT _gxe_prompt_text_get_ext(GX_PROMPT *prompt, GX_STRING *return_text);
 UINT _gxe_prompt_text_id_set(GX_PROMPT *prompt, GX_RESOURCE_ID string_id);
 #if defined(GX_ENABLE_DEPRECATED_STRING_API)
 UINT _gxe_prompt_text_set(GX_PROMPT *prompt, GX_CONST GX_CHAR *text);
@@ -5344,7 +5491,7 @@ UINT _gxe_radial_progress_bar_value_set(GX_RADIAL_PROGRESS_BAR *progress_bar, GX
 
 UINT _gxe_radial_slider_anchor_angles_set(GX_RADIAL_SLIDER *slider, GX_VALUE *anchor_angles, USHORT anchor_count);
 UINT _gxe_radial_slider_animation_set(GX_RADIAL_SLIDER *slider, USHORT steps, USHORT delay, USHORT animation_style,
-                                     VOID(*animation_update_callback)(GX_RADIAL_SLIDER *slider));
+                                      VOID (*animation_update_callback)(GX_RADIAL_SLIDER *slider));
 UINT _gxe_radial_slider_animation_start(GX_RADIAL_SLIDER *slider, GX_VALUE new_value);
 UINT _gxe_radial_slider_create(GX_RADIAL_SLIDER *slider, GX_CONST GX_CHAR *name, GX_WIDGET *parent,
                                GX_RADIAL_SLIDER_INFO *info, ULONG style, USHORT slider_id, GX_CONST GX_RECTANGLE *size, UINT control_block_size);
@@ -5448,10 +5595,10 @@ UINT _gxe_sprite_start(GX_SPRITE *sprite, USHORT start_frame);
 UINT _gxe_sprite_stop(GX_SPRITE *sprite);
 
 #if defined(GX_ENABLE_DEPRECATED_STRING_API)
-UINT _gxe_string_scroll_wheel_create(GX_STRING_SCROLL_WHEEL *wheel, GX_CONST GX_CHAR *name, GX_WIDGET *parent, INT value_count, 
-                                   GX_CONST GX_CHAR **string_list,
-                                   ULONG style, USHORT Id, GX_CONST GX_RECTANGLE *size,
-                                   UINT control_block_size);
+UINT _gxe_string_scroll_wheel_create(GX_STRING_SCROLL_WHEEL *wheel, GX_CONST GX_CHAR *name, GX_WIDGET *parent, INT value_count,
+                                     GX_CONST GX_CHAR **string_list,
+                                     ULONG style, USHORT Id, GX_CONST GX_RECTANGLE *size,
+                                     UINT control_block_size);
 #endif
 UINT _gxe_string_scroll_wheel_create_ext(GX_STRING_SCROLL_WHEEL *wheel, GX_CONST GX_CHAR *name, GX_WIDGET *parent, INT total_rows,
                                          GX_CONST GX_STRING *string_list,
@@ -5466,8 +5613,8 @@ UINT _gxe_string_scroll_wheel_string_list_set(GX_STRING_SCROLL_WHEEL *wheel,
                                               GX_CONST GX_CHAR **string_list,
                                               INT string_count);
 #endif
-UINT _gxe_string_scroll_wheel_string_list_set_ext(GX_STRING_SCROLL_WHEEL* wheel,
-                                                  GX_CONST GX_STRING* string_list,
+UINT _gxe_string_scroll_wheel_string_list_set_ext(GX_STRING_SCROLL_WHEEL *wheel,
+                                                  GX_CONST GX_STRING *string_list,
                                                   INT string_count);
 
 UINT _gxe_system_active_language_set(GX_UBYTE language);
@@ -5509,13 +5656,13 @@ UINT _gxe_system_string_get(GX_RESOURCE_ID string_id, GX_CONST GX_CHAR **return_
 UINT _gxe_system_string_table_get(GX_UBYTE language, GX_CHAR ***get_table, UINT *get_size);
 UINT _gxe_system_string_width_get(GX_CONST GX_FONT *font, GX_CONST GX_CHAR *string, INT string_length, GX_VALUE *return_width);
 #endif
-UINT _gxe_system_string_width_get_ext(GX_CONST GX_FONT* font, GX_CONST GX_STRING* string, GX_VALUE* return_width);
+UINT _gxe_system_string_width_get_ext(GX_CONST GX_FONT *font, GX_CONST GX_STRING *string, GX_VALUE *return_width);
 UINT _gxe_system_timer_start(GX_WIDGET *owner, UINT timer_id, UINT initial_ticks, UINT reschedule_ticks);
 UINT _gxe_system_timer_stop(GX_WIDGET *owner, UINT timer_id);
 #if defined(GX_ENABLE_DEPRECATED_STRING_API)
 UINT _gxe_system_version_string_get(GX_CHAR **return_string);
 #endif
-UINT _gxe_system_version_string_get_ext(GX_STRING* return_string);
+UINT _gxe_system_version_string_get_ext(GX_STRING *return_string);
 UINT _gxe_system_widget_find(USHORT widget_id, INT search_level, GX_WIDGET **return_search_result);
 
 UINT _gxe_text_button_create(GX_TEXT_BUTTON *button, GX_CONST GX_CHAR *name, GX_WIDGET *parent,
@@ -5532,7 +5679,7 @@ VOID _gx_text_button_text_draw(GX_TEXT_BUTTON *button);
 #if defined(GX_ENABLE_DEPRECATED_STRING_API)
 UINT _gxe_text_button_text_get(GX_TEXT_BUTTON *button, GX_CONST GX_CHAR **return_text);
 #endif
-UINT _gxe_text_button_text_get_ext(GX_TEXT_BUTTON* button, GX_STRING* return_text);
+UINT _gxe_text_button_text_get_ext(GX_TEXT_BUTTON *button, GX_STRING *return_text);
 UINT _gxe_text_button_text_id_set(GX_TEXT_BUTTON *button, GX_RESOURCE_ID string_id);
 #if defined(GX_ENABLE_DEPRECATED_STRING_API)
 UINT _gxe_text_button_text_set(GX_TEXT_BUTTON *button, GX_CONST GX_CHAR *text);
@@ -5544,13 +5691,13 @@ UINT _gxe_text_input_cursor_height_set(GX_TEXT_INPUT_CURSOR *cursor_input, GX_UB
 UINT _gxe_text_input_cursor_width_set(GX_TEXT_INPUT_CURSOR *cursor_input, GX_UBYTE width);
 
 #if defined(GX_ENABLE_DEPRECATED_STRING_API)
-UINT _gxe_text_scroll_wheel_callback_set(GX_TEXT_SCROLL_WHEEL *wheel, GX_CONST GX_CHAR *(*callback)(GX_TEXT_SCROLL_WHEEL *, INT));
+UINT _gxe_text_scroll_wheel_callback_set(GX_TEXT_SCROLL_WHEEL * wheel, GX_CONST GX_CHAR * (*callback)(GX_TEXT_SCROLL_WHEEL *, INT));
 #endif
-UINT _gxe_text_scroll_wheel_callback_set_ext(GX_TEXT_SCROLL_WHEEL* wheel, UINT (*callback)(GX_TEXT_SCROLL_WHEEL*, INT, GX_STRING *));
+UINT _gxe_text_scroll_wheel_callback_set_ext(GX_TEXT_SCROLL_WHEEL *wheel, UINT (*callback)(GX_TEXT_SCROLL_WHEEL *, INT, GX_STRING *));
 UINT _gxe_text_scroll_wheel_font_set(GX_TEXT_SCROLL_WHEEL *wheel, GX_RESOURCE_ID normal_font, GX_RESOURCE_ID selected_font);
 UINT _gxe_text_scroll_wheel_text_color_set(GX_TEXT_SCROLL_WHEEL *wheel, GX_RESOURCE_ID normal_text_color,
                                            GX_RESOURCE_ID selected_text_color, GX_RESOURCE_ID disabled_text_color);
-UINT _gxe_text_scroll_wheel_create(GX_TEXT_SCROLL_WHEEL *wheel, GX_CONST GX_CHAR *name, GX_WIDGET *parent, INT value_count, 
+UINT _gxe_text_scroll_wheel_create(GX_TEXT_SCROLL_WHEEL *wheel, GX_CONST GX_CHAR *name, GX_WIDGET *parent, INT value_count,
                                    ULONG style, USHORT Id, GX_CONST GX_RECTANGLE *size,
                                    UINT control_block_size);
 UINT _gxe_text_scroll_wheel_event_process(GX_TEXT_SCROLL_WHEEL *wheel, GX_EVENT *event_ptr);
@@ -5569,6 +5716,10 @@ UINT _gxe_tree_view_selected_set(GX_TREE_VIEW *tree, GX_WIDGET *selected);
 
 UINT    _gxe_utility_gradient_create(GX_GRADIENT *gradient, GX_VALUE width, GX_VALUE height, UCHAR type, UCHAR alpha_start, UCHAR alpha_end);
 UINT    _gxe_utility_gradient_delete(GX_GRADIENT *gradient);
+#if defined(GX_DYNAMIC_BIDI_TEXT_SUPPORT)
+UINT    _gxe_utility_bidi_paragraph_reorder(GX_BIDI_TEXT_INFO *input_info, GX_BIDI_RESOLVED_TEXT_INFO **resolved_info_head);
+UINT    _gxe_utility_bidi_resolved_text_info_delete(GX_BIDI_RESOLVED_TEXT_INFO **resolved_info_head);
+#endif
 UINT    _gxe_utility_canvas_to_bmp(GX_CANVAS *canvas, GX_RECTANGLE *rect, UINT(*write_data)(GX_UBYTE *byte_data, UINT data_count));
 UINT    _gxe_utility_circle_point_get(INT xcenter, INT ycenter, UINT r, INT angle, GX_POINT *point);
 UINT    _gxe_utility_ltoa(LONG value, GX_CHAR *return_buffer, UINT return_buffer_size);
@@ -5626,7 +5777,7 @@ UINT _gxe_widget_back_attach(GX_WIDGET *parent, GX_WIDGET *widget);
 UINT _gxe_widget_back_move(GX_WIDGET *widget, GX_BOOL *widget_moved);
 VOID _gx_widget_background_draw(GX_WIDGET *a);
 UINT _gxe_widget_block_move(GX_WIDGET *widget, GX_RECTANGLE *block, INT x_shift, INT y_shift);
-VOID _gx_widget_border_draw(GX_WIDGET* widget, GX_RESOURCE_ID border_color, GX_RESOURCE_ID upper_color, GX_RESOURCE_ID lower_color, GX_BOOL fill);
+VOID _gx_widget_border_draw(GX_WIDGET *widget, GX_RESOURCE_ID border_color, GX_RESOURCE_ID upper_color, GX_RESOURCE_ID lower_color, GX_BOOL fill);
 UINT _gxe_widget_border_style_set(GX_WIDGET *widget, ULONG Style);
 UINT _gxe_widget_border_width_get(GX_WIDGET *widget, GX_VALUE *return_width);
 UINT _gxe_widget_canvas_get(GX_WIDGET *widget, GX_CANVAS **return_canvas);
@@ -5674,7 +5825,7 @@ UINT _gxe_widget_status_test(GX_WIDGET *widget, ULONG status, GX_BOOL *return_te
 #if defined(GX_ENABLE_DEPRECATED_STRING_API)
 UINT _gxe_widget_string_get(GX_WIDGET *widget, GX_RESOURCE_ID string_id, GX_CONST GX_CHAR **return_string);
 #endif
-UINT _gxe_widget_string_get_ext(GX_WIDGET* widget, GX_RESOURCE_ID string_id, GX_STRING* return_string);
+UINT _gxe_widget_string_get_ext(GX_WIDGET *widget, GX_RESOURCE_ID string_id, GX_STRING *return_string);
 UINT _gxe_widget_style_add(GX_WIDGET *widget, ULONG style);
 UINT _gxe_widget_style_get(GX_WIDGET *widget, ULONG *return_style);
 UINT _gxe_widget_style_remove(GX_WIDGET *widget, ULONG style);
@@ -5682,19 +5833,19 @@ UINT _gxe_widget_style_set(GX_WIDGET *widget, ULONG style);
 
 #if defined(GX_ENABLE_DEPRECATED_STRING_API)
 UINT _gxe_widget_text_blend(GX_WIDGET *widget, UINT tColor, UINT font_id, GX_CONST GX_CHAR *string,
-                           INT x_offset, INT y_offset, UCHAR alpha);
-VOID _gx_widget_text_draw(GX_WIDGET* widget, UINT tColor, UINT font_id, GX_CONST GX_CHAR* string,
+                            INT x_offset, INT y_offset, UCHAR alpha);
+VOID _gx_widget_text_draw(GX_WIDGET *widget, UINT tColor, UINT font_id, GX_CONST GX_CHAR *string,
                           INT x_offset, INT y_offset);
 #endif
 UINT _gxe_widget_text_blend_ext(GX_WIDGET *widget,  UINT tColor, UINT font_id, GX_CONST GX_STRING *string,
                                 INT x_offset, INT y_offset, UCHAR alpha);
 
-VOID _gx_widget_text_draw_ext(GX_WIDGET* widget, UINT tColor, UINT font_id, GX_CONST GX_STRING* string,
+VOID _gx_widget_text_draw_ext(GX_WIDGET *widget, UINT tColor, UINT font_id, GX_CONST GX_STRING *string,
                               INT x_offset, INT y_offset);
 
 VOID _gx_widget_text_id_draw(GX_WIDGET *widget, UINT tColor,
-                              UINT font_id, UINT text_id,
-                              INT x_offset, INT y_offset);
+                             UINT font_id, UINT text_id,
+                             INT x_offset, INT y_offset);
 
 UINT _gxe_widget_top_visible_child_find(GX_WIDGET *parent, GX_WIDGET **child_return);
 UINT _gxe_widget_type_find(GX_WIDGET *parent, USHORT widget_type, GX_WIDGET **return_widget);

@@ -362,7 +362,7 @@
             <TextAddressRange>0x00000000</TextAddressRange>
             <DataAddressRange>0x20000000</DataAddressRange>
             <pXoBase/>
-            <ScatterFile>../../../../../middleware/mcu-boot/targets/common/linker/arm/MIMXRT1062/MIMXRT1062_flash_bootloader.scf</ScatterFile>
+            <ScatterFile>MIMXRT1062_flash_bootloader.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
             <Misc>--remove --keep=*(.boot_hdr.ivt) --keep=*(.boot_hdr.boot_data) --keep=*(.boot_hdr.conf) --datacompressor off --predefine="-DXIP_BOOT_HEADER_ENABLE=1" --entry=Reset_Handler</Misc>

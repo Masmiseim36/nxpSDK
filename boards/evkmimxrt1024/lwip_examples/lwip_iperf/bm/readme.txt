@@ -18,17 +18,21 @@ The contents of the downloaded archive have to be unpacked into jperf-2.0.0/bin 
 The application has been tested also with IPerf 2.0.10, which can be downloaded here:
 https://sourceforge.net/projects/iperf2/files/
 
-To experiment with the receive throughput, try to increase the value of TCP_WND in the file lwipopts.h and make sure
-that the PBUF_POOL_SIZE is larger than (TCP_WND / TCP_MSS). Increase the PBUF_POOL_SIZE if necessary.
+To experiment with the receive throughput, try to increase the number of receive buffers.
+For LPC platforms, where zero-copy on receive is implemented, the number of buffers is determined by ENET_RXBD_NUM definition.
+When using ENET QOS, where zero-copy on receive is not implemented, increase the PBUF_POOL_SIZE in the file lwipopts.h or on command line.
+For other platforms, where zero-copy on receive is implemented, it is determined by ENET_RXBUFF_NUM definition.
+Also increase the TCP receive window by changing TCP_WND definition in the file lwipopts.h or on command line.
+Make sure that TCP_WND is not larger than (number of receive buffers / TCP_MSS).
 For RTOS applications, DEFAULT_THREAD_PRIO and TCPIP_THREAD_PRIO values can have effect on maximum throughput as well.
 
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.9
-- Keil MDK  5.33
-- GCC ARM Embedded  9.3.1
-- MCUXpresso  11.3.0
+- IAR embedded Workbench  9.10.2
+- Keil MDK  5.34
+- GCC ARM Embedded  10.2.1
+- MCUXpresso  11.5.0
 
 Hardware requirements
 =====================

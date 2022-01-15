@@ -6,7 +6,5 @@ target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
     ${CMAKE_CURRENT_LIST_DIR}/libraries/abstractions/wifi/include
 )
 
-include(middleware_freertos-aws_iot_libraries_c_sdk_standard_common_MIMXRT1064)
-
 include(middleware_freertos-kernel_MIMXRT1064)
 

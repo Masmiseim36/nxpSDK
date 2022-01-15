@@ -5,6 +5,8 @@
 #include "task.h"
 #include "semphr.h"
 
+/* @TEST_ANCHOR */
+
 /******************************************************************/
 /*                          Iperf States                          */
 #define TEST_START       1
@@ -33,7 +35,9 @@
 #define TCP                 1
 #define UDP                 2
 #define OUTPUT_STR_MAX      (1024)
+#ifndef SENDER_PORT_NUM
 #define SENDER_PORT_NUM     5201
+#endif
 
 struct iperf_ip
 {

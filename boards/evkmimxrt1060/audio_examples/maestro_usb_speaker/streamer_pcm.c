@@ -8,7 +8,7 @@
 #include "osa_common.h"
 
 #include "board.h"
-#include "streamer_pcm.h"
+#include "streamer_pcm_app.h"
 #include "fsl_codec_common.h"
 #include "fsl_wm8960.h"
 #include "app_definitions.h"
@@ -140,7 +140,9 @@ int streamer_pcm_write(pcm_rtos_t *pcm, uint8_t *data, uint32_t size)
 
 int streamer_pcm_read(pcm_rtos_t *pcm, uint8_t *data, uint8_t *next_buffer, uint32_t size)
 {
-    sai_transfer_t xfer = {0};
+    uint32_t audioSpeakerPreReadDataCount = 0U;
+    uint32_t preAudioSendCount            = 0U;
+    sai_transfer_t xfer                   = {0};
 
     if ((USB_AudioSpeakerBufferSpaceUsed() < (g_UsbDeviceAudioSpeaker.audioPlayTransferSize)) &&
         (g_UsbDeviceAudioSpeaker.startPlayFlag == 1U))
@@ -148,17 +150,28 @@ int streamer_pcm_read(pcm_rtos_t *pcm, uint8_t *data, uint8_t *next_buffer, uint
         g_UsbDeviceAudioSpeaker.startPlayFlag          = 0;
         g_UsbDeviceAudioSpeaker.speakerDetachOrNoInput = 1;
     }
-    if (g_UsbDeviceAudioSpeaker.startPlayFlag)
+    if (0U != g_UsbDeviceAudioSpeaker.startPlayFlag)
     {
         USB_DeviceCalculateFeedback();
-        xfer.dataSize = g_UsbDeviceAudioSpeaker.audioPlayTransferSize;
-        xfer.data     = audioPlayDataBuff + g_UsbDeviceAudioSpeaker.tdReadNumberPlay;
-        g_UsbDeviceAudioSpeaker.audioSendCount += g_UsbDeviceAudioSpeaker.audioPlayTransferSize;
+        xfer.dataSize     = g_UsbDeviceAudioSpeaker.audioPlayTransferSize;
+        xfer.data         = audioPlayDataBuff + g_UsbDeviceAudioSpeaker.tdReadNumberPlay;
+        preAudioSendCount = g_UsbDeviceAudioSpeaker.audioSendCount[0];
+        g_UsbDeviceAudioSpeaker.audioSendCount[0] += g_UsbDeviceAudioSpeaker.audioPlayTransferSize;
+        if (preAudioSendCount > g_UsbDeviceAudioSpeaker.audioSendCount[0])
+        {
+            g_UsbDeviceAudioSpeaker.audioSendCount[1] += 1U;
+        }
         g_UsbDeviceAudioSpeaker.audioSendTimes++;
         g_UsbDeviceAudioSpeaker.tdReadNumberPlay += g_UsbDeviceAudioSpeaker.audioPlayTransferSize;
         if (g_UsbDeviceAudioSpeaker.tdReadNumberPlay >= g_UsbDeviceAudioSpeaker.audioPlayBufferSize)
         {
             g_UsbDeviceAudioSpeaker.tdReadNumberPlay = 0;
+        }
+        audioSpeakerPreReadDataCount = g_UsbDeviceAudioSpeaker.audioSpeakerReadDataCount[0];
+        g_UsbDeviceAudioSpeaker.audioSpeakerReadDataCount[0] += g_UsbDeviceAudioSpeaker.audioPlayTransferSize;
+        if (audioSpeakerPreReadDataCount > g_UsbDeviceAudioSpeaker.audioSpeakerReadDataCount[0])
+        {
+            g_UsbDeviceAudioSpeaker.audioSpeakerReadDataCount[1] += 1U;
         }
     }
     else
@@ -234,8 +247,13 @@ static sai_mono_stereo_t _pcm_map_channels(uint8_t num_channels)
         return kSAI_MonoRight;
 }
 
-int streamer_pcm_setparams(
-    pcm_rtos_t *pcm, uint32_t sample_rate, uint32_t bit_width, uint8_t num_channels, bool transfer, bool dummy_tx)
+int streamer_pcm_setparams(pcm_rtos_t *pcm,
+                           uint32_t sample_rate,
+                           uint32_t bit_width,
+                           uint8_t num_channels,
+                           bool transfer,
+                           bool dummy_tx,
+                           int volume)
 {
     sai_transfer_format_t format = {0};
     sai_transceiver_t saiConfig;
@@ -302,7 +320,7 @@ int streamer_pcm_setparams(
 
         CODEC_SetFormat(&codecHandle, masterClockHz, format.sampleRate_Hz, format.bitWidth);
 
-        streamer_pcm_mute(pcm, false);
+        streamer_pcm_set_volume(pcm, volume);
     }
 
     return 0;
@@ -322,9 +340,13 @@ int streamer_pcm_mute(pcm_rtos_t *pcm, bool mute)
     return 0;
 }
 
-int streamer_pcm_set_volume(uint32_t volume)
+int streamer_pcm_set_volume(pcm_rtos_t *pcm, int volume)
 {
-    CODEC_SetVolume(&codecHandle, kCODEC_PlayChannelHeadphoneRight | kCODEC_PlayChannelHeadphoneLeft, volume);
+    if (volume <= 0)
+        CODEC_SetMute(&codecHandle, kCODEC_PlayChannelHeadphoneRight | kCODEC_PlayChannelHeadphoneLeft, true);
+    else
+        CODEC_SetVolume(&codecHandle, kCODEC_PlayChannelHeadphoneRight | kCODEC_PlayChannelHeadphoneLeft,
+                        volume > CODEC_VOLUME_MAX_VALUE ? CODEC_VOLUME_MAX_VALUE : volume);
 
     return 0;
 }

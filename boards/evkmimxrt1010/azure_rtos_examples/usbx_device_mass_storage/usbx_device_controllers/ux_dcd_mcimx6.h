@@ -50,12 +50,11 @@
 /* Define MCIMX6 generic equivalences.  */
 
 #define UX_DCD_MCIMX6_SLAVE_CONTROLLER                                 0x80
-#define UX_DCD_MCIMX6_MAX_ED                                           8
 #define UX_DCD_MCIMX6_8BIT_REG                                         8
 #define UX_DCD_MCIMX6_16BIT_REG                                        16
 #define UX_DCD_MCIMX6_32BIT_REG                                        32
-#define UX_DCD_MCIMX6_MAX_ED                                           8
-#define UX_DCD_MCIMX6_MAX_ED_VALUE                                     4
+#define UX_DCD_MCIMX6_MAX_ED                                           16
+#define UX_DCD_MCIMX6_MAX_ED_VALUE                                     8
 #define UX_DCD_MCIMX6_MAX_QTD                                          32
 #define UX_DCD_MCIMX6_MAX_QTD_TRANSFER                                 (16*1024)
 #define UX_DCD_MCIMX6_RESET_RETRY                                      1000

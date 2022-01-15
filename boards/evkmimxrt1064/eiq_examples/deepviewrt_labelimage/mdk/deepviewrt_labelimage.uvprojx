@@ -4,7 +4,7 @@
   <Header>### uVision Project, (C) Keil Software</Header>
   <Targets>
     <Target>
-      <TargetName>deepviewrt_labelimage flexspi_nor_debug</TargetName>
+      <TargetName>deepviewrt_labelimage flexspi_nor_sdram_debug</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
       <TargetOption>
@@ -42,7 +42,7 @@
             <NotGenerated>0</NotGenerated>
             <InvalidFlash>1</InvalidFlash>
           </TargetStatus>
-          <OutputDirectory>flexspi_nor_debug\</OutputDirectory>
+          <OutputDirectory>flexspi_nor_sdram_debug\</OutputDirectory>
           <OutputName>deepviewrt_labelimage.out</OutputName>
           <CreateExecutable>1</CreateExecutable>
           <CreateLib>0</CreateLib>
@@ -126,7 +126,7 @@
             <UseTargetDll>1</UseTargetDll>
             <UseExternalTool>0</UseExternalTool>
             <RunIndependent>0</RunIndependent>
-            <UpdateFlashBeforeDebugging>1</UpdateFlashBeforeDebugging>
+            <UpdateFlashBeforeDebugging>0</UpdateFlashBeforeDebugging>
             <Capability>1</Capability>
             <DriverSelection>4096</DriverSelection>
           </Flash1>
@@ -328,9 +328,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, DEBUG, CPU_MIMXRT1064DVL6A, SDK_DEBUGCONSOLE_UART, _POSIX_C_SOURCE=200809L, CPU_MIMXRT1064DVL6A_cm7, PRINTF_FLOAT_ENABLE=1, PRINTF_ADVANCED_ENABLE=1, XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, XIP_BOOT_HEADER_DCD_ENABLE=1, SDK_DEBUGCONSOLE=1, SKIP_SYSCLK_INIT, SDK_I2C_BASED_COMPONENT_USED=1, MCUXPRESSO_SDK</Define>
+              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, XIP_BOOT_HEADER_DCD_ENABLE=1, SKIP_SYSCLK_INIT, DATA_SECTION_IS_CACHEABLE=1, DEBUG, CPU_MIMXRT1064DVL6A, _POSIX_C_SOURCE=200809L, ARM_MATH_CM7, __FPU_PRESENT=1, SDK_DEBUGCONSOLE_UART, PRINTF_FLOAT_ENABLE=1, PRINTF_ADVANCED_ENABLE=1, XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, XIP_BOOT_HEADER_DCD_ENABLE=1, SDK_DEBUGCONSOLE=1, FSL_RTOS_BM, SDK_OS_BAREMETAL, SDK_I2C_BASED_COMPONENT_USED=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>../source;..;../../../../../devices/MIMXRT1064/utilities/debug_console_lite;../../../../../devices/MIMXRT1064/drivers;../../../../../components/ft5406_rt;../../../../../components/video/camera/device;../../../../../components/video/camera/receiver;../../../../../components/video/camera/device/sccb;../../../../../components/video/camera/device/ov7725;../../../../../components/video/camera/device/mt9m114;../../../../../components/video/camera;../../../../../components/video/camera/receiver/csi;../../../../../components/video;../../../../../components/video/i2c;../../../../../components/video/display/dc;../../../../../components/video/display/dc/elcdif;../../../../../middleware/eiq/deepviewrt/include;../../../../../components/lists;../../../../../components/uart;../../../../../devices/MIMXRT1064;../../../../../devices/MIMXRT1064/xip;../../../xip;../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>../source;..;../../../../../devices/MIMXRT1064/utilities/debug_console_lite;../../../../../devices/MIMXRT1064/drivers;../../../../../components/ft5406_rt;../../../../../components/video/camera/device;../../../../../components/video/camera/receiver;../../../../../components/video/camera/device/sccb;../../../../../components/video/camera/device/ov7725;../../../../../components/video/camera/device/mt9m114;../../../../../components/video/camera;../../../../../components/video/camera/receiver/csi;../../../../../components/video;../../../../../components/video/i2c;../../../../../components/video/display/dc;../../../../../components/video/display/dc/elcdif;../../../../../middleware/eiq/deepviewrt/include;../../../../../components/lists;../../../../../components/uart;../../../../../devices/MIMXRT1064;../../../../../devices/MIMXRT1064/xip;../../../xip;../../../../../CMSIS/DSP/Include;../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -346,7 +346,7 @@
             <uClangAs>1</uClangAs>
             <VariousControls>
               <MiscControls/>
-              <Define>DEBUG, FLEXRAM_CFG_ENABLE, FLEXRAM_ITCM_ZERO_SIZE, __STARTUP_INITIALIZE_NONCACHEDATA</Define>
+              <Define>DEBUG, __STARTUP_INITIALIZE_NONCACHEDATA</Define>
               <Undefine/>
               <IncludePath>../source</IncludePath>
             </VariousControls>
@@ -364,7 +364,7 @@
             <ScatterFile>MIMXRT1064xxxxx_flexspi_nor_sdram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>../../../../../middleware/eiq/deepviewrt/lib/deepview-rt-mdk.lib --remove --diag-warning=6242 --predefine="-D__stack_size__=0x10000" --predefine="-D__heap_size__=0x800000" --entry=Reset_Handler --predefine="-DXIP_BOOT_HEADER_ENABLE=1"</Misc>
+            <Misc>../../../../../middleware/eiq/deepviewrt/lib/deepview-rt-mdk.lib ../../../../../CMSIS/DSP/Lib/ARM/arm_cortexM7lfdp_math.lib --remove --predefine="-D__stack_size__=0x10000" --predefine="-D__heap_size__=0x800000" --diag-warning=6242 --entry=Reset_Handler --predefine="-DXIP_BOOT_HEADER_ENABLE=1"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -372,16 +372,6 @@
       </TargetOption>
       <uAC6>1</uAC6>
       <Groups>
-        <Group>
-          <GroupName>startup</GroupName>
-          <Files>
-            <File>
-              <FileName>startup_MIMXRT1064_mdk.S</FileName>
-              <FileType>2</FileType>
-              <FilePath>../startup/startup_MIMXRT1064_mdk.S</FilePath>
-            </File>
-          </Files>
-        </Group>
         <Group>
           <GroupName>source</GroupName>
           <Files>
@@ -571,16 +561,6 @@
               <FilePath>../../../../../devices/MIMXRT1064/drivers/fsl_flexram.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_flexram_allocate.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1064/drivers/fsl_flexram_allocate.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_flexram_allocate.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1064/drivers/fsl_flexram_allocate.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_pxp.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MIMXRT1064/drivers/fsl_pxp.c</FilePath>
@@ -644,6 +624,16 @@
               <FileName>fsl_iomuxc.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT1064/drivers/fsl_iomuxc.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_flexram_allocate.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1064/drivers/fsl_flexram_allocate.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_flexram_allocate.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1064/drivers/fsl_flexram_allocate.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -878,6 +868,16 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>startup</GroupName>
+          <Files>
+            <File>
+              <FileName>startup_MIMXRT1064.S</FileName>
+              <FileType>2</FileType>
+              <FilePath>../../../../../devices/MIMXRT1064/arm/startup_MIMXRT1064.S</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>xip</GroupName>
           <Files>
             <File>
@@ -899,6 +899,26 @@
               <FileName>evkmimxrt1064_flexspi_nor_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../xip/evkmimxrt1064_flexspi_nor_config.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>CMSIS/DSP/Include</GroupName>
+          <Files>
+            <File>
+              <FileName>arm_common_tables.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/DSP/Include/arm_common_tables.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_const_structs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/DSP/Include/arm_const_structs.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_math.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/DSP/Include/arm_math.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -955,7 +975,7 @@
       </Groups>
     </Target>
     <Target>
-      <TargetName>deepviewrt_labelimage flexspi_nor_release</TargetName>
+      <TargetName>deepviewrt_labelimage flexspi_nor_sdram_release</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
       <TargetOption>
@@ -993,7 +1013,7 @@
             <NotGenerated>0</NotGenerated>
             <InvalidFlash>1</InvalidFlash>
           </TargetStatus>
-          <OutputDirectory>flexspi_nor_release\</OutputDirectory>
+          <OutputDirectory>flexspi_nor_sdram_release\</OutputDirectory>
           <OutputName>deepviewrt_labelimage.out</OutputName>
           <CreateExecutable>1</CreateExecutable>
           <CreateLib>0</CreateLib>
@@ -1077,7 +1097,7 @@
             <UseTargetDll>1</UseTargetDll>
             <UseExternalTool>0</UseExternalTool>
             <RunIndependent>0</RunIndependent>
-            <UpdateFlashBeforeDebugging>1</UpdateFlashBeforeDebugging>
+            <UpdateFlashBeforeDebugging>0</UpdateFlashBeforeDebugging>
             <Capability>1</Capability>
             <DriverSelection>4096</DriverSelection>
           </Flash1>
@@ -1256,7 +1276,7 @@
           </ArmAdsMisc>
           <Cads>
             <interw>0</interw>
-            <Optim>7</Optim>
+            <Optim>6</Optim>
             <oTime>0</oTime>
             <SplitLS>0</SplitLS>
             <OneElfS>1</OneElfS>
@@ -1279,9 +1299,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, NDEBUG, CPU_MIMXRT1064DVL6A, SDK_DEBUGCONSOLE_UART, _POSIX_C_SOURCE=200809L, CPU_MIMXRT1064DVL6A_cm7, PRINTF_FLOAT_ENABLE=1, PRINTF_ADVANCED_ENABLE=1, XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, XIP_BOOT_HEADER_DCD_ENABLE=1, SDK_DEBUGCONSOLE=1, SKIP_SYSCLK_INIT, SDK_I2C_BASED_COMPONENT_USED=1, MCUXPRESSO_SDK</Define>
+              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, XIP_BOOT_HEADER_DCD_ENABLE=1, SKIP_SYSCLK_INIT, DATA_SECTION_IS_CACHEABLE=1, NDEBUG, CPU_MIMXRT1064DVL6A, _POSIX_C_SOURCE=200809L, ARM_MATH_CM7, __FPU_PRESENT=1, SDK_DEBUGCONSOLE_UART, PRINTF_FLOAT_ENABLE=1, PRINTF_ADVANCED_ENABLE=1, XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, XIP_BOOT_HEADER_DCD_ENABLE=1, SDK_DEBUGCONSOLE=1, FSL_RTOS_BM, SDK_OS_BAREMETAL, SDK_I2C_BASED_COMPONENT_USED=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>../source;..;../../../../../devices/MIMXRT1064/utilities/debug_console_lite;../../../../../devices/MIMXRT1064/drivers;../../../../../components/ft5406_rt;../../../../../components/video/camera/device;../../../../../components/video/camera/receiver;../../../../../components/video/camera/device/sccb;../../../../../components/video/camera/device/ov7725;../../../../../components/video/camera/device/mt9m114;../../../../../components/video/camera;../../../../../components/video/camera/receiver/csi;../../../../../components/video;../../../../../components/video/i2c;../../../../../components/video/display/dc;../../../../../components/video/display/dc/elcdif;../../../../../middleware/eiq/deepviewrt/include;../../../../../components/lists;../../../../../components/uart;../../../../../devices/MIMXRT1064;../../../../../devices/MIMXRT1064/xip;../../../xip;../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>../source;..;../../../../../devices/MIMXRT1064/utilities/debug_console_lite;../../../../../devices/MIMXRT1064/drivers;../../../../../components/ft5406_rt;../../../../../components/video/camera/device;../../../../../components/video/camera/receiver;../../../../../components/video/camera/device/sccb;../../../../../components/video/camera/device/ov7725;../../../../../components/video/camera/device/mt9m114;../../../../../components/video/camera;../../../../../components/video/camera/receiver/csi;../../../../../components/video;../../../../../components/video/i2c;../../../../../components/video/display/dc;../../../../../components/video/display/dc/elcdif;../../../../../middleware/eiq/deepviewrt/include;../../../../../components/lists;../../../../../components/uart;../../../../../devices/MIMXRT1064;../../../../../devices/MIMXRT1064/xip;../../../xip;../../../../../CMSIS/DSP/Include;../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1297,7 +1317,7 @@
             <uClangAs>1</uClangAs>
             <VariousControls>
               <MiscControls/>
-              <Define>NDEBUG, FLEXRAM_CFG_ENABLE, FLEXRAM_ITCM_ZERO_SIZE, __STARTUP_INITIALIZE_NONCACHEDATA</Define>
+              <Define>NDEBUG, __STARTUP_INITIALIZE_NONCACHEDATA</Define>
               <Undefine/>
               <IncludePath>../source</IncludePath>
             </VariousControls>
@@ -1315,7 +1335,7 @@
             <ScatterFile>MIMXRT1064xxxxx_flexspi_nor_sdram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>../../../../../middleware/eiq/deepviewrt/lib/deepview-rt-mdk.lib --remove --diag-warning=6242 --predefine="-D__stack_size__=0x10000" --predefine="-D__heap_size__=0x800000" --entry=Reset_Handler --predefine="-DXIP_BOOT_HEADER_ENABLE=1"</Misc>
+            <Misc>../../../../../middleware/eiq/deepviewrt/lib/deepview-rt-mdk.lib ../../../../../CMSIS/DSP/Lib/ARM/arm_cortexM7lfdp_math.lib --remove --predefine="-D__stack_size__=0x10000" --predefine="-D__heap_size__=0x800000" --diag-warning=6242 --entry=Reset_Handler --predefine="-DXIP_BOOT_HEADER_ENABLE=1"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -1323,16 +1343,6 @@
       </TargetOption>
       <uAC6>1</uAC6>
       <Groups>
-        <Group>
-          <GroupName>startup</GroupName>
-          <Files>
-            <File>
-              <FileName>startup_MIMXRT1064_mdk.S</FileName>
-              <FileType>2</FileType>
-              <FilePath>../startup/startup_MIMXRT1064_mdk.S</FilePath>
-            </File>
-          </Files>
-        </Group>
         <Group>
           <GroupName>source</GroupName>
           <Files>
@@ -1522,16 +1532,6 @@
               <FilePath>../../../../../devices/MIMXRT1064/drivers/fsl_flexram.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_flexram_allocate.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1064/drivers/fsl_flexram_allocate.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_flexram_allocate.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1064/drivers/fsl_flexram_allocate.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_pxp.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MIMXRT1064/drivers/fsl_pxp.c</FilePath>
@@ -1595,6 +1595,16 @@
               <FileName>fsl_iomuxc.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT1064/drivers/fsl_iomuxc.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_flexram_allocate.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1064/drivers/fsl_flexram_allocate.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_flexram_allocate.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1064/drivers/fsl_flexram_allocate.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1829,6 +1839,16 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>startup</GroupName>
+          <Files>
+            <File>
+              <FileName>startup_MIMXRT1064.S</FileName>
+              <FileType>2</FileType>
+              <FilePath>../../../../../devices/MIMXRT1064/arm/startup_MIMXRT1064.S</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>xip</GroupName>
           <Files>
             <File>
@@ -1850,6 +1870,26 @@
               <FileName>evkmimxrt1064_flexspi_nor_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../xip/evkmimxrt1064_flexspi_nor_config.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>CMSIS/DSP/Include</GroupName>
+          <Files>
+            <File>
+              <FileName>arm_common_tables.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/DSP/Include/arm_common_tables.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_const_structs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/DSP/Include/arm_const_structs.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_math.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/DSP/Include/arm_math.h</FilePath>
             </File>
           </Files>
         </Group>

@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 NXP
+ * Copyright 2020 ,2021 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -13,11 +13,11 @@
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 !!GlobalInfo
-product: Pins v8.0
+product: Pins v9.0
 processor: MIMXRT1024xxxxx
 package_id: MIMXRT1024DAG5A
 mcu_data: ksdk2_0
-processor_version: 8.0.0
+processor_version: 9.0.0
 pin_labels:
 - {pin_num: '83', pin_signal: GPIO_AD_B1_07, label: 'SD0_VSELECT/J19[2]', identifier: SD0_VSELECT}
 - {pin_num: '75', pin_signal: GPIO_AD_B1_14, label: 'I2C1_SCL/U10[17]/J18[12]', identifier: I2C1_SCL}

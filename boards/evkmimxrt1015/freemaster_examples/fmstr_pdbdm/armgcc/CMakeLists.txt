@@ -39,14 +39,14 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../freemaster_cfg.h"
 "${ProjDirPath}/../../common/fmstr_example/freemaster_example.c"
 "${ProjDirPath}/../../common/fmstr_example/freemaster_example.h"
+"${ProjDirPath}/../board.c"
+"${ProjDirPath}/../board.h"
 "${ProjDirPath}/../../common/fmstr_example/data_example_pmp.h"
 "${ProjDirPath}/../../common/fmstr_example/data_img_logo.h"
 "${ProjDirPath}/../../common/fmstr_example/data_img_file.h"
 "${ProjDirPath}/../../common/fmstr_example/data_img_fmstrlogo.h"
 "${ProjDirPath}/../../common/fmstr_example/data_html_index.h"
 "${ProjDirPath}/../../common/fmstr_example/example_data.h"
-"${ProjDirPath}/../board.c"
-"${ProjDirPath}/../board.h"
 )
 
 target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
@@ -60,7 +60,6 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../devices/MIMXRT1015/drivers
     ${ProjDirPath}/../../../../../devices/MIMXRT1015
     ${ProjDirPath}/../../../../../components/uart
-    ${ProjDirPath}/../../../../../components/serial_manager
     ${ProjDirPath}/../../../../../components/lists
     ${ProjDirPath}/../../../../../devices/MIMXRT1015/xip
     ${ProjDirPath}/../../../xip
@@ -83,11 +82,7 @@ include(device_MIMXRT1015_CMSIS_MIMXRT1015)
 
 include(component_lpuart_adapter_MIMXRT1015)
 
-include(component_serial_manager_MIMXRT1015)
-
 include(component_lists_MIMXRT1015)
-
-include(component_serial_manager_uart_MIMXRT1015)
 
 include(driver_lpuart_MIMXRT1015)
 

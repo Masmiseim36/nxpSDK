@@ -33,10 +33,10 @@
 
 /**************************************************************************/
 /*                                                                        */
-/*  FUNCTION                                                 RELEASE      */
+/*  FUNCTION                                               RELEASE        */
 /*                                                                        */
-/*    _ux_dcd_mcimx6_endpoint_stall_clear                   PORTABLE C    */
-/*                                                           6.0          */
+/*    _ux_dcd_mcimx6_endpoint_stall_clear                 PORTABLE C      */
+/*                                                           6.x          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Chaoqiong Xiao, Microsoft Corporation                               */
@@ -68,20 +68,17 @@
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Chaoqiong Xiao           Initial Version 6.0           */
+/*  09-30-2020     Chaoqiong Xiao           Modified comment(s),          */
+/*                                            resulting in version 6.1    */
+/*  xx-xx-xxxx     Chaoqiong Xiao           Modified comment(s),          */
+/*                                            improved stall clear,       */
+/*                                            resulting in version 6.x    */
 /*                                                                        */
 /**************************************************************************/
 UINT  _ux_dcd_mcimx6_endpoint_stall_clear(UX_DCD_MCIMX6 *dcd_mcimx6, UX_SLAVE_ENDPOINT *endpoint)
 {
 
 UX_DCD_MCIMX6_ED        *ed;
-UX_SLAVE_TRANSFER       *transfer_request;
-
-    /* Get the pointer to the transfer request associated with the endpoint.  */
-    transfer_request =  &endpoint -> ux_slave_endpoint_transfer_request;
-
-    /* Ensure we do not have a pending transfer.  */
-    if (transfer_request -> ux_slave_transfer_request_status ==  UX_TRANSFER_STATUS_PENDING)
-        return(UX_SUCCESS);
 
     /* Get the endpoint address according to its type and direction.  */
     if ((endpoint -> ux_slave_endpoint_descriptor.bmAttributes & UX_MASK_ENDPOINT_TYPE) != UX_CONTROL_ENDPOINT)

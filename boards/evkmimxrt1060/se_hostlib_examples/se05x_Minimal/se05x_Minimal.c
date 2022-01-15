@@ -19,6 +19,12 @@ extern "C" {
 }
 #endif
 
+#ifndef SIMW_DEMO_ENABLE__DEMO_SE05X_MINIMAL
+#include "UWBIOT_APP_BUILD.h"
+#endif
+
+#if defined(SIMW_DEMO_ENABLE__DEMO_SE05X_MINIMAL)
+
 static ex_sss_boot_ctx_t gex_sss_boot_ctx;
 
 #define EX_SSS_BOOT_PCONTEXT (&gex_sss_boot_ctx)
@@ -50,3 +56,5 @@ sss_status_t ex_sss_entry(ex_sss_boot_ctx_t *pCtx)
     }
     return status;
 }
+
+#endif // SIMW_DEMO_ENABLE__DEMO_SE05X_MINIMAL

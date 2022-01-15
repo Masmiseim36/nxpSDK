@@ -26,7 +26,7 @@
 /*  APPLICATION INTERFACE DEFINITION                       RELEASE        */
 /*                                                                        */
 /*    tx_api.h                                            PORTABLE C      */
-/*                                                           6.1.2        */
+/*                                                           6.1.8        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    William E. Lamie, Microsoft Corporation                             */
@@ -43,21 +43,38 @@
 /*                                                                        */
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
-/*  05-19-2020     William E. Lamie         Initial Version 6.0           */
-/*  09-30-2020     William E. Lamie         Modified comment(s), and      */
+/*  05-19-2020      William E. Lamie        Initial Version 6.0           */
+/*  09-30-2020      William E. Lamie        Modified comment(s), and      */
 /*                                            updated product constants,  */
 /*                                            added new thread execution  */
 /*                                            state TX_PRIORITY_CHANGE,   */
 /*                                            added macros for casting    */
 /*                                            pointers to ALIGN_TYPE,     */
 /*                                            resulting in version 6.1    */
-/*  10-16-2020     William E. Lamie         Modified comment(s), and      */
+/*  10-16-2020      William E. Lamie        Modified comment(s), and      */
 /*                                            increased patch version,    */
 /*                                            resulting in version 6.1.1  */
-/*  11-09-2020     Yuxin Zhou               Modified comment(s), and      */
+/*  11-09-2020      Yuxin Zhou              Modified comment(s), and      */
 /*                                            moved TX_THREAD_GET_SYSTEM_ */
 /*                                            STATE to tx_api.h,          */
 /*                                            resulting in version 6.1.2  */
+/*  12-31-2020      William E. Lamie        Modified comment(s), and      */
+/*                                            increased patch version,    */
+/*                                            resulting in version 6.1.3  */
+/*  03-02-2021      Scott Larson            Modified comment(s), and      */
+/*                                            order defines numerically,  */
+/*                                            add option to remove FileX  */
+/*                                            pointer,                    */
+/*                                            resulting in version 6.1.5  */
+/*  04-02-2021      Scott Larson            Modified comment(s), and      */
+/*                                            update patch number,        */
+/*                                            resulting in version 6.1.6  */
+/*  06-02-2021      Yuxin Zhou              Modified comment(s), added    */
+/*                                            Execution Profile support,  */
+/*                                            resulting in version 6.1.7  */   
+/*  08-02-2021      Scott Larson            Modified comment(s), and      */
+/*                                            update patch number,        */
+/*                                            resulting in version 6.1.8  */
 /*                                                                        */
 /**************************************************************************/
 
@@ -90,7 +107,7 @@ extern   "C" {
 #define AZURE_RTOS_THREADX
 #define THREADX_MAJOR_VERSION           6
 #define THREADX_MINOR_VERSION           1
-#define THREADX_PATCH_VERSION           2
+#define THREADX_PATCH_VERSION           8
 
 /* Define the following symbol for backward compatibility */
 #define EL_PRODUCT_THREADX
@@ -151,7 +168,6 @@ extern   "C" {
 
 #define TX_SUCCESS                      ((UINT) 0x00)
 #define TX_DELETED                      ((UINT) 0x01)
-#define TX_NO_MEMORY                    ((UINT) 0x10)
 #define TX_POOL_ERROR                   ((UINT) 0x02)
 #define TX_PTR_ERROR                    ((UINT) 0x03)
 #define TX_WAIT_ERROR                   ((UINT) 0x04)
@@ -166,6 +182,7 @@ extern   "C" {
 #define TX_NO_INSTANCE                  ((UINT) 0x0D)
 #define TX_THREAD_ERROR                 ((UINT) 0x0E)
 #define TX_PRIORITY_ERROR               ((UINT) 0x0F)
+#define TX_NO_MEMORY                    ((UINT) 0x10)
 #define TX_START_ERROR                  ((UINT) 0x10)
 #define TX_DELETE_ERROR                 ((UINT) 0x11)
 #define TX_RESUME_ERROR                 ((UINT) 0x12)
@@ -419,8 +436,10 @@ typedef struct TX_THREAD_STRUCT
     TX_THREAD_EXTENSION_2
 
     /* Define a pointer type for FileX extensions.  */
+#ifndef TX_NO_FILEX_POINTER
     VOID                *tx_thread_filex_ptr;
-
+#endif
+    
     /* Define the priority inheritance variables. These will be used
        to manage priority inheritance changes applied to this thread 
        as a result of mutex get operations.  */
@@ -484,6 +503,17 @@ typedef struct TX_THREAD_STRUCT
     /* Define the fourth port extension in the thread control block. This 
        is typically defined to whitespace in tx_port.h.  */
     TX_THREAD_EXTENSION_3
+
+
+    /* Define variables for supporting execution profile. */
+    /* Note that in ThreadX 5.x, user would define TX_ENABLE_EXECUTION_CHANGE_NOTIFY and use TX_THREAD_EXTENSION_3
+       to define the following two variables.  
+       For Azure RTOS 6, user shall use TX_EXECUTION_PROFILE_ENABLE instead of TX_ENABLE_EXECUTION_CHANGE_NOTIFY,
+       and SHALL NOT add variables to TX_THREAD_EXTENSION_3. */
+#if (defined(TX_EXECUTION_PROFILE_ENABLE) && !defined(TX_ENABLE_EXECUTION_CHANGE_NOTIFY))
+    unsigned long long  tx_thread_execution_time_total;  
+    unsigned long long  tx_thread_execution_time_last_start; 
+#endif
 
     /* Define suspension sequence number.  This is used to ensure suspension is still valid when 
        cleanup routine executes.  */
@@ -1088,7 +1118,6 @@ UINT    _tx_trace_interrupt_control(UINT new_posture);
    checking behavior selected by the user.  */
 
 #ifdef TX_ENABLE_MULTI_ERROR_CHECKING
-
 
 /* Services with MULTI runtime error checking ThreadX.  */
 
@@ -1787,7 +1816,6 @@ VOID                    _tx_misra_user_timer_pointer_get(TX_TIMER_INTERNAL *inte
 VOID                    _tx_misra_thread_stack_check(TX_THREAD *thread_ptr, VOID **highest_stack);
 VOID                    _tx_misra_trace_event_insert(ULONG event_id, VOID *info_field_1, ULONG info_field_2, ULONG info_field_3, ULONG info_field_4, ULONG filter, ULONG time_stamp);
 UINT                    _tx_misra_always_true(void);
-
 UCHAR                   **_tx_misra_indirect_void_to_uchar_pointer_convert(VOID **pointer);
 UCHAR                   **_tx_misra_uchar_to_indirect_uchar_pointer_convert(UCHAR *pointer);
 UCHAR                   *_tx_misra_block_pool_to_uchar_pointer_convert(TX_BLOCK_POOL *pool);
@@ -1820,7 +1848,6 @@ VOID                    _tx_misra_semaphore_put_notify_not_used(VOID (*semaphore
 VOID                    _tx_misra_thread_not_used(TX_THREAD *thread_ptr);
 VOID                    _tx_misra_thread_entry_exit_notify_not_used(VOID (*thread_entry_exit_notify)(TX_THREAD *notify_thread_ptr, UINT id));
 
-
 #define TX_MEMSET(a,b,c)                                _tx_misra_memset((a), (UINT) (b), (UINT) (c))
 #define TX_UCHAR_POINTER_ADD(a,b)                       _tx_misra_uchar_pointer_add((UCHAR *) (a), (ULONG) (b))
 #define TX_UCHAR_POINTER_SUB(a,b)                       _tx_misra_uchar_pointer_sub((UCHAR *) (a), (ULONG) (b))
@@ -1839,8 +1866,6 @@ VOID                    _tx_misra_thread_entry_exit_notify_not_used(VOID (*threa
 #define TX_TRACE_IN_LINE_INSERT(i,a,b,c,d,e)            _tx_misra_trace_event_insert((ULONG) (i), (VOID *) (a), (ULONG) (b), (ULONG) (c), (ULONG) (d), (ULONG) (e), ((ULONG) TX_TRACE_TIME_SOURCE));
 #endif
 #define TX_LOOP_FOREVER                                 (_tx_misra_always_true() == TX_TRUE)
-
-
 #define TX_INDIRECT_VOID_TO_UCHAR_POINTER_CONVERT(a)    _tx_misra_indirect_void_to_uchar_pointer_convert((a))
 #define TX_UCHAR_TO_INDIRECT_UCHAR_POINTER_CONVERT(a)   _tx_misra_uchar_to_indirect_uchar_pointer_convert((a))
 #define TX_BLOCK_POOL_TO_UCHAR_POINTER_CONVERT(a)       _tx_misra_block_pool_to_uchar_pointer_convert((a))
@@ -1876,7 +1901,6 @@ VOID                    _tx_misra_thread_entry_exit_notify_not_used(VOID (*threa
 #define TX_THREAD_NOT_USED(a)                           _tx_misra_thread_not_used((a))
 #define TX_THREAD_ENTRY_EXIT_NOTIFY_NOT_USED(a)         _tx_misra_thread_entry_exit_notify_not_used((a))
 
-
 #else
 
 /* Define the TX_MEMSET macro to the standard library function, if not already defined.  */
@@ -1905,8 +1929,6 @@ VOID                    _tx_misra_thread_entry_exit_notify_not_used(VOID (*threa
                                                             (b) =  (TX_TIMER *) working_ptr; \
                                                         }
 #define TX_LOOP_FOREVER                                 ((UINT) 1)
-
-
 #define TX_INDIRECT_VOID_TO_UCHAR_POINTER_CONVERT(a)    ((UCHAR **) ((VOID *) (a)))
 #define TX_UCHAR_TO_INDIRECT_UCHAR_POINTER_CONVERT(a)   ((UCHAR **) ((VOID *) (a)))
 #define TX_BLOCK_POOL_TO_UCHAR_POINTER_CONVERT(a)       ((UCHAR *) ((VOID *) (a)))

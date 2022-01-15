@@ -54,7 +54,7 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../devices/MIMXRT1052/drivers
     ${ProjDirPath}/../../../../../middleware/sdmmc
     ${ProjDirPath}/../../../../../middleware/fatfs
-    ${ProjDirPath}/../../../../../rtos/freertos
+    ${ProjDirPath}/../../../../../rtos/freertos/freertos_kernel
     ${ProjDirPath}/../../../../../devices/MIMXRT1052
     ${ProjDirPath}/../../../../../devices/MIMXRT1052/utilities
     ${ProjDirPath}/../../../../../components/uart

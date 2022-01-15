@@ -83,6 +83,9 @@ void USB_WaitClockLocked(void);
 extern usb_host_mouse_instance_t g_HostHidMouse;
 extern usb_host_handle g_HostHandle;
 uint32_t g_halTimerHandle[(HAL_TIMER_HANDLE_SIZE + 3) / 4];
+#if ((defined(FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE)) && (FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE > 0U))
+static uint32_t g_savedPrimask;
+#endif
 /*! @brief USB host mouse instance global variable */
 extern usb_host_mouse_instance_t g_HostHidMouse;
 usb_host_handle g_HostHandle;
@@ -163,10 +166,25 @@ void USB_PreLowpowerMode(void)
 /*
  * Execute the instrument to enter low power.
  */
-static void stop(void)
+#if ((defined(FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE)) && (FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE > 0U))
+AT_QUICKACCESS_SECTION_CODE(void stop(void));
+#endif
+void stop(void)
 {
     SCB->SCR |= SCB_SCR_SLEEPDEEP_Msk;
+#if ((defined(FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE)) && (FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE > 0U))
+    g_savedPrimask = DisableGlobalIRQ();
+    __DSB();
+    __ISB();
+#endif
     __asm("WFI");
+#if ((defined(FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE)) && (FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE > 0U))
+    CCM_ANALOG->PFD_480 |= CCM_ANALOG_PFD_480_PFD0_CLKGATE_MASK;
+    CCM_ANALOG->PFD_480 &= ~CCM_ANALOG_PFD_480_PFD0_CLKGATE_MASK;
+    EnableGlobalIRQ(g_savedPrimask);
+    __DSB();
+    __ISB();
+#endif
 }
 /*
  * Enter the LowPower mode.
@@ -279,7 +297,7 @@ usb_status_t USB_HostControlRemoteWakeup(usb_host_handle hostHandle,
                                          uint8_t enable)
 {
     usb_host_transfer_t *transfer;
-    uint32_t infoValue;
+    uint32_t infoValue = 0U;
 
     if (hostHandle == NULL)
     {
@@ -619,8 +637,8 @@ void USB_HostSuspendResumeTask(void)
 int main(void)
 {
     BOARD_ConfigMPU();
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
+    BOARD_InitBootPins();
+    BOARD_InitBootClocks();
     BOARD_InitDebugConsole();
 
     /* Set PERCLK_CLK source to OSC_CLK*/

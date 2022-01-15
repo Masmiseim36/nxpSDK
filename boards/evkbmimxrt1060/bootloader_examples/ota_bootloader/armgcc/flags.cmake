@@ -83,5 +83,5 @@ SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_RELEASE " \
     muldefs \
     -Xlinker \
     -Map=output.map \
-    -T${ProjDirPath}/../../../../../middleware/mcu-boot/targets/common/linker/gcc/MIMXRT1062/MIMXRT1062_flash_bootloader.ld -static \
+    -T${ProjDirPath}/MIMXRT1062_flash_bootloader.ld -static \
 ")

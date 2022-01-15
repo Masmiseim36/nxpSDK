@@ -883,7 +883,14 @@ void USB_DeviceDfuSwitchMode(void)
     address = (uint32_t)(USB_DFU_APP_ADDRESS);
 
     static uint32_t newSP, newPC;
+#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
+    if (kStatus_USB_Success != USB_DeviceDeinit(g_UsbDeviceDfu.deviceHandle))
+    {
+        usb_echo("device deinit error\r\n");
+    }
+#else
     (void)USB_DeviceDeinit(g_UsbDeviceDfu.deviceHandle);
+#endif
     SCB->VTOR = address;
     newSP     = ((uint32_t *)address)[0U];
     newPC     = ((uint32_t *)address)[1U];

@@ -32,13 +32,15 @@ include(${ProjDirPath}/config.cmake)
 
 add_executable(${MCUX_SDK_PROJECT_NAME} 
 "${ProjDirPath}/../main.c"
+"${ProjDirPath}/../pin_mux.c"
+"${ProjDirPath}/../pin_mux.h"
 "${ProjDirPath}/../lwipopts.h"
 "${ProjDirPath}/../lwippools.h"
 "${ProjDirPath}/../FreeRTOSConfig.h"
-"${ProjDirPath}/../pin_mux.c"
-"${ProjDirPath}/../pin_mux.h"
 "${ProjDirPath}/../sdmmc_config.c"
 "${ProjDirPath}/../sdmmc_config.h"
+"${ProjDirPath}/../wifi_bt_config.c"
+"${ProjDirPath}/../wifi_bt_config.h"
 "${ProjDirPath}/../app_config.h"
 "${ProjDirPath}/../wifi_config.h"
 "${ProjDirPath}/../board.c"
@@ -51,16 +53,17 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 
 target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
     ${ProjDirPath}/..
-    ${ProjDirPath}/../../..
     ${ProjDirPath}/../../common
+    ${ProjDirPath}/../../..
 )
 
 set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../devices/MIMXRT1062/drivers
-    ${ProjDirPath}/../../../../../rtos/freertos
+    ${ProjDirPath}/../../../../../rtos/freertos/freertos_kernel
     ${ProjDirPath}/../../../../../middleware/lwip
     ${ProjDirPath}/../../../../../devices/MIMXRT1062/utilities
     ${ProjDirPath}/../../../../../middleware/wifi
+    ${ProjDirPath}/../../../../../components/wifi_bt_module
     ${ProjDirPath}/../../../../../middleware/sdmmc
     ${ProjDirPath}/../../../../../devices/MIMXRT1062
     ${ProjDirPath}/../../../../../components/uart
@@ -86,6 +89,8 @@ include(utility_debug_console_MIMXRT1062)
 include(middleware_wifi_MIMXRT1062)
 
 include(middleware_lwip_apps_lwiperf_MIMXRT1062)
+
+include(component_wifi_bt_module_tx_pwr_limits_MIMXRT1062)
 
 include(middleware_wifi_cli_MIMXRT1062)
 

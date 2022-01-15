@@ -8,7 +8,7 @@ Toolchain supported
 - IAR embedded Workbench  9.10.2
 - Keil MDK  5.34
 - GCC ARM Embedded  10.2.1
-- MCUXpresso  11.4.0
+- MCUXpresso  11.5.0
 
 Hardware requirements
 =====================
@@ -43,9 +43,14 @@ The serial port will output:
 USBX device mass storage example
 
 Then, connect a USB cable between PC and USB device port
-of the board. PC will detect a u-disk and can format it.
-After format is completed, the PC will display a removable
-disk and it can be used as a normal u-disk.
+of the board. The serial port will output:
+
+USB MSD device activate
+
+PC will detect a u-disk and can format it. After format
+is completed, the PC will display a removable disk and
+it can be used as a normal u-disk.
+
 Please note that the USBX Device Mass Storage example use
 RAM disk as storage media, data will lost after board is
 reset.

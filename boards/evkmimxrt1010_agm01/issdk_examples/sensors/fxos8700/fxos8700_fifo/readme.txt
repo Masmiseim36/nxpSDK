@@ -9,7 +9,7 @@ Board settings
 ==============
 On FRDM-STBC-AGM01 sensor shield board:
 --------------------------------------
-For I2C Mode: The examples use I2C1 and Pins 2-3 of Jumpers J6 and J7 on FRDM-STBC-AGM01 should be connected.
+For I2C Mode: The examples use I2C1 and Pins 1-2 of Jumpers J6 and J7 on FRDM-STBC-AGM01 should be connected.
 For SPI Mode: The examples use SPI0 and the FRDM-STBC-AGM01 needs to be rewired for SPI which requires removal of Resistor R3.
 
 Demo Overview

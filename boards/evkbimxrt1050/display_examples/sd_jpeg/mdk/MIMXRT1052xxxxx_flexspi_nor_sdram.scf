@@ -9,7 +9,7 @@
 **     Compiler:            Keil ARM C/C++ Compiler
 **     Reference manual:    IMXRT1050RM Rev.2.1, 12/2018 | IMXRT1050SRM Rev.2
 **     Version:             rev. 1.0, 2018-09-21
-**     Build:               b210227
+**     Build:               b210709
 **
 **     Abstract:
 **         Linker file for the Keil ARM C/C++ Compiler
@@ -105,6 +105,7 @@ LR_m_text m_interrupts_start m_text_start+m_text_size-m_interrupts_start {   ; l
 #endif
   RW_m_data2 m_data2_start m_data2_size {
     * (RamFunction)
+    * (DataQuickAccess)
   }
 #if (defined(__heap_noncacheable__))
   RW_m_data m_data_start m_data_size-Stack_Size { ; RW data
@@ -112,8 +113,8 @@ LR_m_text m_interrupts_start m_text_start+m_text_size-m_interrupts_start {   ; l
   RW_m_data m_data_start m_data_size-Stack_Size-Heap_Size { ; RW data
 #endif
     .ANY (+RW +ZI)
-    *(*m_usb_dma_init_data)
-    *(*m_usb_dma_noninit_data)
+    * (*m_usb_dma_init_data)
+    * (*m_usb_dma_noninit_data)
   }
 #if (!defined(__heap_noncacheable__))
   ARM_LIB_HEAP +0 EMPTY Heap_Size {    ; Heap region growing up

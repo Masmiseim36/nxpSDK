@@ -12,6 +12,13 @@
 
 #include "evkmimxrt1024.h"
 
+/* Select USB1 PLL (480 MHz) as master lpi2c clock source */
+#define LPI2C_CLOCK_SOURCE_SELECT (0U)
+/* Clock divider for master lpi2c clock source */
+#define LPI2C_CLOCK_SOURCE_DIVIDER (5U)
+/* Get frequency of lpi2c clock */
+#define LPI2C_CLOCK_FREQUENCY ((CLOCK_GetFreq(kCLOCK_Usb1PllClk) / 8) / (LPI2C_CLOCK_SOURCE_DIVIDER + 1U))
+
 // I2C20 Pin Handles
 // GPIO_SD_B1_02
 gpioHandleiMXSDK_t D15 = {
@@ -151,7 +158,10 @@ uint32_t LPUART1_GetFreq(void)
  */
 uint32_t LPI2C1_GetFreq(void)
 {
-    return CLOCK_GetFreq((clock_name_t)kCLOCK_Lpi2c1);
+	/*Clock setting for LPI2C*/
+    CLOCK_SetMux(kCLOCK_Lpi2cMux, LPI2C_CLOCK_SOURCE_SELECT);
+    CLOCK_SetDiv(kCLOCK_Lpi2cDiv, LPI2C_CLOCK_SOURCE_DIVIDER);
+    return LPI2C_CLOCK_FREQUENCY;
 }
 
 /*! @brief       Determines the Clock Frequency feature.

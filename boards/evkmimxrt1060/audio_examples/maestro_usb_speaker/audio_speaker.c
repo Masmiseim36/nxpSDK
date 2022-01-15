@@ -19,7 +19,7 @@
 #endif
 
 #include "audio_speaker.h"
-#include "streamer_pcm.h"
+#include "streamer_pcm_app.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -141,8 +141,9 @@ usb_audio_speaker_struct_t g_UsbDeviceAudioSpeaker = {
     .speed                         = USB_SPEED_FULL,
     .tdWriteNumberPlay             = 0,
     .tdReadNumberPlay              = 0,
-    .audioSendCount                = 0,
-    .lastAudioSendCount            = 0,
+    .audioSendCount                = {0, 0},
+    .audioSpeakerReadDataCount     = {0, 0},
+    .audioSpeakerWriteDataCount    = {0, 0},
     .usbRecvCount                  = 0,
     .audioSendTimes                = 0,
     .usbRecvTimes                  = 0,
@@ -555,31 +556,22 @@ usb_status_t USB_DeviceAudioRequest(class_handle_t handle, uint32_t event, void 
 
 uint32_t USB_AudioSpeakerBufferSpaceUsed(void)
 {
-    if (g_UsbDeviceAudioSpeaker.tdWriteNumberPlay > g_UsbDeviceAudioSpeaker.tdReadNumberPlay)
+    uint64_t write_count = 0U;
+    uint64_t read_count  = 0U;
+
+    write_count = (uint64_t)((((uint64_t)g_UsbDeviceAudioSpeaker.audioSpeakerWriteDataCount[1]) << 32U) |
+                             g_UsbDeviceAudioSpeaker.audioSpeakerWriteDataCount[0]);
+    read_count  = (uint64_t)((((uint64_t)g_UsbDeviceAudioSpeaker.audioSpeakerReadDataCount[1]) << 32U) |
+                            g_UsbDeviceAudioSpeaker.audioSpeakerReadDataCount[0]);
+
+    if (write_count >= read_count)
     {
-        g_UsbDeviceAudioSpeaker.speakerReservedSpace =
-            g_UsbDeviceAudioSpeaker.tdWriteNumberPlay - g_UsbDeviceAudioSpeaker.tdReadNumberPlay;
+        return (uint32_t)(write_count - read_count);
     }
     else
     {
-        /* vaild sync solution should make sure tdReadNumberPlay is not equal to tdWriteNumberPlay */
-        if ((g_UsbDeviceAudioSpeaker.tdWriteNumberPlay == 0U) && (g_UsbDeviceAudioSpeaker.tdReadNumberPlay == 0U))
-        {
-            return 0;
-        }
-
-        /* stop playing */
-        if ((0U != g_UsbDeviceAudioSpeaker.stopFeedbackUpdate) &&
-            (g_UsbDeviceAudioSpeaker.tdWriteNumberPlay == g_UsbDeviceAudioSpeaker.tdReadNumberPlay))
-        {
-            return 0;
-        }
-
-        g_UsbDeviceAudioSpeaker.speakerReservedSpace = g_UsbDeviceAudioSpeaker.tdWriteNumberPlay +
-                                                       g_UsbDeviceAudioSpeaker.audioPlayBufferSize -
-                                                       g_UsbDeviceAudioSpeaker.tdReadNumberPlay;
+        return 0;
     }
-    return g_UsbDeviceAudioSpeaker.speakerReservedSpace;
 }
 
 void USB_DeviceCalculateFeedback(void)
@@ -614,7 +606,8 @@ void USB_DeviceCalculateFeedback(void)
     {
         g_UsbDeviceAudioSpeaker.speakerIntervalCount = 0;
         g_UsbDeviceAudioSpeaker.currentFrameCount    = 0;
-        g_UsbDeviceAudioSpeaker.audioSendCount       = 0;
+        g_UsbDeviceAudioSpeaker.audioSendCount[0]    = 0;
+        g_UsbDeviceAudioSpeaker.audioSendCount[1]    = 0;
         totalFrameValue                              = 0;
         frameDistance                                = 0;
         feedbackValue                                = 0;
@@ -667,21 +660,26 @@ void USB_DeviceCalculateFeedback(void)
     if (USB_SPEED_HIGH == g_UsbDeviceAudioSpeaker.speed)
     {
 #if defined(USB_AUDIO_CHANNEL5_1) && (USB_AUDIO_CHANNEL5_1 > 0U)
-        feedbackValue = (uint32_t)(((uint64_t)g_UsbDeviceAudioSpeaker.audioSendCount) * 1024UL * 8UL / totalFrameValue /
-                                   (uint64_t)(AUDIO_FORMAT_CHANNELS / 3U * AUDIO_FORMAT_SIZE));
+        feedbackValue = (uint32_t)(((((uint64_t)g_UsbDeviceAudioSpeaker.audioSendCount[1]) << 32U) |
+                                    g_UsbDeviceAudioSpeaker.audioSendCount[0]) *
+                                   1024UL * 8UL / totalFrameValue / ((uint64_t)(2U * AUDIO_FORMAT_SIZE)));
 #else
-        feedbackValue = (uint32_t)(((uint64_t)g_UsbDeviceAudioSpeaker.audioSendCount) * 1024UL * 8UL / totalFrameValue /
-                                   (uint64_t)(AUDIO_FORMAT_CHANNELS * AUDIO_FORMAT_SIZE));
+        feedbackValue =
+            (uint32_t)(((((uint64_t)g_UsbDeviceAudioSpeaker.audioSendCount[1]) << 32U) |
+                        g_UsbDeviceAudioSpeaker.audioSendCount[0]) *
+                       1024UL * 8UL / totalFrameValue / ((uint64_t)(AUDIO_FORMAT_CHANNELS * AUDIO_FORMAT_SIZE)));
 #endif
     }
     else
     {
 #if defined(USB_AUDIO_CHANNEL5_1) && (USB_AUDIO_CHANNEL5_1 > 0U)
-        feedbackValue = (uint32_t)(((uint64_t)g_UsbDeviceAudioSpeaker.audioSendCount) * 1024UL / totalFrameValue /
-                                   (uint64_t)(AUDIO_FORMAT_CHANNELS / 3U * AUDIO_FORMAT_SIZE));
+        feedbackValue = (uint32_t)(((((uint64_t)g_UsbDeviceAudioSpeaker.audioSendCount[1]) << 32U) |
+                                    g_UsbDeviceAudioSpeaker.audioSendCount[0]) *
+                                   1024UL / totalFrameValue / ((uint64_t)(2U * AUDIO_FORMAT_SIZE)));
 #else
-        feedbackValue = (uint32_t)(((uint64_t)g_UsbDeviceAudioSpeaker.audioSendCount) * 1024UL / totalFrameValue /
-                                   (uint64_t)(AUDIO_FORMAT_CHANNELS * AUDIO_FORMAT_SIZE));
+        feedbackValue = (uint32_t)(((((uint64_t)g_UsbDeviceAudioSpeaker.audioSendCount[1]) << 32U) |
+                                    g_UsbDeviceAudioSpeaker.audioSendCount[0]) *
+                                   1024UL / totalFrameValue / ((uint64_t)(AUDIO_FORMAT_CHANNELS * AUDIO_FORMAT_SIZE)));
 #endif
     }
 
@@ -713,6 +711,7 @@ void USB_DeviceCalculateFeedback(void)
 void USB_AudioSpeakerPutBuffer(uint8_t *buffer, uint32_t size)
 {
     uint32_t remainBufferSpace;
+    uint32_t audioSpeakerPreWriteDataCount;
 
 #if defined(USB_AUDIO_CHANNEL5_1) && (USB_AUDIO_CHANNEL5_1 > 0U)
     uint8_t *buffer_temp;
@@ -722,8 +721,8 @@ void USB_AudioSpeakerPutBuffer(uint8_t *buffer, uint32_t size)
     {
         size = (size / (AUDIO_FORMAT_SIZE * AUDIO_FORMAT_CHANNELS)) * (AUDIO_FORMAT_SIZE * AUDIO_FORMAT_CHANNELS);
     }
-    play2ChannelLength = size / 3U;             /* only play the selected two channels */
-    if (play2ChannelLength > remainBufferSpace) /* discard the overflow data */
+    play2ChannelLength = size / (AUDIO_FORMAT_CHANNELS / 2U); /* only play the selected two channels */
+    if (play2ChannelLength > remainBufferSpace)               /* discard the overflow data */
     {
         play2ChannelLength = remainBufferSpace;
     }
@@ -762,10 +761,16 @@ void USB_AudioSpeakerPutBuffer(uint8_t *buffer, uint32_t size)
             }
         }
     }
+    audioSpeakerPreWriteDataCount = g_UsbDeviceAudioSpeaker.audioSpeakerWriteDataCount[0];
+    g_UsbDeviceAudioSpeaker.audioSpeakerWriteDataCount[0] += play2ChannelLength;
+    if (audioSpeakerPreWriteDataCount > g_UsbDeviceAudioSpeaker.audioSpeakerWriteDataCount[0])
+    {
+        g_UsbDeviceAudioSpeaker.audioSpeakerWriteDataCount[1] += 1U;
+    }
 #else
     uint32_t buffer_length = 0;
     remainBufferSpace      = g_UsbDeviceAudioSpeaker.audioPlayBufferSize - USB_AudioSpeakerBufferSpaceUsed();
-    if (size >= remainBufferSpace) /* discard the overflow data */
+    if (size > remainBufferSpace) /* discard the overflow data */
     {
         if (remainBufferSpace > (AUDIO_FORMAT_CHANNELS * AUDIO_FORMAT_SIZE))
         {
@@ -801,6 +806,12 @@ void USB_AudioSpeakerPutBuffer(uint8_t *buffer, uint32_t size)
                 g_UsbDeviceAudioSpeaker.tdWriteNumberPlay = 0;
             }
         }
+    }
+    audioSpeakerPreWriteDataCount = g_UsbDeviceAudioSpeaker.audioSpeakerWriteDataCount[0];
+    g_UsbDeviceAudioSpeaker.audioSpeakerWriteDataCount[0] += size;
+    if (audioSpeakerPreWriteDataCount > g_UsbDeviceAudioSpeaker.audioSpeakerWriteDataCount[0])
+    {
+        g_UsbDeviceAudioSpeaker.audioSpeakerWriteDataCount[1] += 1U;
     }
 #endif
 }
@@ -912,22 +923,26 @@ usb_status_t USB_DeviceAudioCallback(class_handle_t handle, uint32_t event, void
 
 void USB_DeviceAudioSpeakerStatusReset(void)
 {
-    g_UsbDeviceAudioSpeaker.startPlayFlag          = 0;
-    g_UsbDeviceAudioSpeaker.tdWriteNumberPlay      = 0;
-    g_UsbDeviceAudioSpeaker.tdReadNumberPlay       = 0;
-    g_UsbDeviceAudioSpeaker.audioSendCount         = 0;
-    g_UsbDeviceAudioSpeaker.usbRecvCount           = 0;
-    g_UsbDeviceAudioSpeaker.lastAudioSendCount     = 0;
-    g_UsbDeviceAudioSpeaker.audioSendTimes         = 0;
-    g_UsbDeviceAudioSpeaker.usbRecvTimes           = 0;
-    g_UsbDeviceAudioSpeaker.speakerIntervalCount   = 0;
-    g_UsbDeviceAudioSpeaker.speakerReservedSpace   = 0;
-    g_UsbDeviceAudioSpeaker.speakerDetachOrNoInput = 0;
-    g_UsbDeviceAudioSpeaker.firstCalculateFeedback = 0U;
-    g_UsbDeviceAudioSpeaker.lastFrameCount         = 0U;
-    g_UsbDeviceAudioSpeaker.currentFrameCount      = 0U;
-    g_UsbDeviceAudioSpeaker.feedbackDiscardFlag    = 0U;
-    g_UsbDeviceAudioSpeaker.feedbackDiscardTimes   = AUDIO_SPEAKER_FEEDBACK_DISCARD_COUNT;
+    g_UsbDeviceAudioSpeaker.startPlayFlag                 = 0;
+    g_UsbDeviceAudioSpeaker.tdWriteNumberPlay             = 0;
+    g_UsbDeviceAudioSpeaker.tdReadNumberPlay              = 0;
+    g_UsbDeviceAudioSpeaker.audioSendCount[0]             = 0;
+    g_UsbDeviceAudioSpeaker.audioSendCount[1]             = 0;
+    g_UsbDeviceAudioSpeaker.audioSpeakerReadDataCount[0]  = 0;
+    g_UsbDeviceAudioSpeaker.audioSpeakerReadDataCount[1]  = 0;
+    g_UsbDeviceAudioSpeaker.audioSpeakerWriteDataCount[0] = 0;
+    g_UsbDeviceAudioSpeaker.audioSpeakerWriteDataCount[1] = 0;
+    g_UsbDeviceAudioSpeaker.usbRecvCount                  = 0;
+    g_UsbDeviceAudioSpeaker.audioSendTimes                = 0;
+    g_UsbDeviceAudioSpeaker.usbRecvTimes                  = 0;
+    g_UsbDeviceAudioSpeaker.speakerIntervalCount          = 0;
+    g_UsbDeviceAudioSpeaker.speakerReservedSpace          = 0;
+    g_UsbDeviceAudioSpeaker.speakerDetachOrNoInput        = 0;
+    g_UsbDeviceAudioSpeaker.firstCalculateFeedback        = 0U;
+    g_UsbDeviceAudioSpeaker.lastFrameCount                = 0U;
+    g_UsbDeviceAudioSpeaker.currentFrameCount             = 0U;
+    g_UsbDeviceAudioSpeaker.feedbackDiscardFlag           = 0U;
+    g_UsbDeviceAudioSpeaker.feedbackDiscardTimes          = AUDIO_SPEAKER_FEEDBACK_DISCARD_COUNT;
 
     /* use the last saved feedback value */
     if (g_UsbDeviceAudioSpeaker.lastFeedbackValue)
@@ -984,13 +999,14 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
                 AUDIO_UPDATE_FEEDBACK_DATA(audioFeedBackBuffer, AUDIO_SAMPLING_RATE_TO_16_16);
                 /* high speed and audio 2.0, audio play interval is set by HS EP packet size */
 #if defined(USB_AUDIO_CHANNEL5_1) && (USB_AUDIO_CHANNEL5_1 > 0U)
-                g_UsbDeviceAudioSpeaker.audioPlayTransferSize = HS_ISO_OUT_ENDP_PACKET_SIZE / 3U;
+                g_UsbDeviceAudioSpeaker.audioPlayTransferSize =
+                    HS_ISO_OUT_ENDP_PACKET_SIZE / (AUDIO_FORMAT_CHANNELS / 2U);
 #else
                 g_UsbDeviceAudioSpeaker.audioPlayTransferSize = HS_ISO_OUT_ENDP_PACKET_SIZE;
 #endif
                 /* use short play buffer size, only use two elements */
                 g_UsbDeviceAudioSpeaker.audioPlayBufferSize =
-                    AUDIO_PLAY_BUFFER_SIZE_ONE_FRAME * AUDIO_CLASS_2_0_HS_LOW_LATENCY_BUFFER_COUNT;
+                    AUDIO_PLAY_BUFFER_SIZE_ONE_FRAME * AUDIO_SPEAKER_DATA_WHOLE_BUFFER_COUNT;
             }
             else
             {

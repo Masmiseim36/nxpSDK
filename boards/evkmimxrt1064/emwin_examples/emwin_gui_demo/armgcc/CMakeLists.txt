@@ -75,6 +75,8 @@ include(utility_debug_console_lite_MIMXRT1064)
 
 include(utility_assert_lite_MIMXRT1064)
 
+include(driver_gpt_MIMXRT1064)
+
 include(middleware_emwin_MIMXRT1064)
 
 include(driver_common_MIMXRT1064)

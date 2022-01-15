@@ -40,6 +40,8 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../wifi_config.h"
 "${ProjDirPath}/../sdmmc_config.c"
 "${ProjDirPath}/../sdmmc_config.h"
+"${ProjDirPath}/../wifi_bt_config.c"
+"${ProjDirPath}/../wifi_bt_config.h"
 "${ProjDirPath}/../app_config.h"
 "${ProjDirPath}/../board.c"
 "${ProjDirPath}/../board.h"
@@ -57,10 +59,11 @@ target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
 
 set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../devices/MIMXRT1052/drivers
-    ${ProjDirPath}/../../../../../rtos/freertos
+    ${ProjDirPath}/../../../../../rtos/freertos/freertos_kernel
     ${ProjDirPath}/../../../../../middleware/lwip
     ${ProjDirPath}/../../../../../devices/MIMXRT1052/utilities
     ${ProjDirPath}/../../../../../middleware/wifi
+    ${ProjDirPath}/../../../../../components/wifi_bt_module
     ${ProjDirPath}/../../../../../middleware/sdmmc
     ${ProjDirPath}/../../../../../devices/MIMXRT1052
     ${ProjDirPath}/../../../../../components/uart
@@ -86,6 +89,8 @@ include(utility_debug_console_MIMXRT1052)
 include(middleware_wifi_MIMXRT1052)
 
 include(middleware_lwip_apps_lwiperf_MIMXRT1052)
+
+include(component_wifi_bt_module_tx_pwr_limits_MIMXRT1052)
 
 include(middleware_wifi_cli_MIMXRT1052)
 
@@ -132,6 +137,8 @@ include(CMSIS_Include_core_cm_MIMXRT1052)
 include(middleware_freertos-kernel_extension_MIMXRT1052)
 
 include(middleware_wifi_wifidriver_MIMXRT1052)
+
+include(middleware_wifi_fwdnld_MIMXRT1052)
 
 include(middleware_sdmmc_osa_freertos_MIMXRT1052)
 

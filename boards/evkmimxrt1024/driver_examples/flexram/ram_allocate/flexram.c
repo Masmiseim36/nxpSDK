@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 NXP
+ * Copyright 2017-2021 NXP
  * All rights reserved.
  *
  *
@@ -11,6 +11,7 @@
 #include "clock_config.h"
 #include "board.h"
 #include "fsl_flexram.h"
+#include "fsl_flexram_allocate.h"
 
 /*******************************************************************************
  * Definitions
@@ -26,7 +27,9 @@
 #define APP_FLEXRAM_DTCM_START_ADDR 0x20000000
 #define APP_FLEXRAM_DTCM_MAGIC_ADDR 0x200000A0
 
-#define APP_FLEXRAM_ITCM_START_ADDR 0x0
+/* Start adddress shouldn't be 0x00U, because some toolchain(such as ARMGCC) maybe consider it as null point and assert
+ * UDF instruction. */
+#define APP_FLEXRAM_ITCM_START_ADDR 0x4
 #define APP_FLEXRAM_ITCM_MAGIC_ADDR 0xA0
 
 /* OCRAM relocate definition */
@@ -59,6 +62,20 @@ static status_t OCRAM_Reallocate(void);
  */
 static void OCRAM_Access(void);
 
+/*!
+ * @brief DTCM access function.
+ *
+ * @param base FLEXRAM base address.
+ */
+static void DTCM_Access(void);
+
+/*!
+ * @brief ITCM access function.
+ *
+ * @param base FLEXRAM base address.
+ */
+static void ITCM_Access(void);
+
 /*******************************************************************************
  * Variables
  ******************************************************************************/
@@ -75,6 +92,16 @@ void APP_FLEXRAM_IRQ_HANDLER(void)
         s_flexram_ocram_access_error_match = true;
     }
 
+    if (FLEXRAM_GetInterruptStatus(APP_FLEXRAM) & kFLEXRAM_DTCMAccessError)
+    {
+        FLEXRAM_ClearInterruptStatus(APP_FLEXRAM, kFLEXRAM_DTCMAccessError);
+    }
+
+    if (FLEXRAM_GetInterruptStatus(APP_FLEXRAM) & kFLEXRAM_ITCMAccessError)
+    {
+        FLEXRAM_ClearInterruptStatus(APP_FLEXRAM, kFLEXRAM_ITCMAccessError);
+    }
+
     __DSB();
 }
 
@@ -89,8 +116,8 @@ int main(void)
 {
     /* Board pin, clock, debug console init */
     BOARD_ConfigMPU();
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
+    BOARD_InitBootPins();
+    BOARD_InitBootClocks();
     BOARD_InitDebugConsole();
 
     PRINTF("\r\nFLEXRAM ram allocate example.\r\n");
@@ -103,6 +130,10 @@ int main(void)
     FLEXRAM_Init(APP_FLEXRAM);
     /*test OCRAM access*/
     OCRAM_Access();
+    /*test DTCM access*/
+    DTCM_Access();
+    /*test ITCM access*/
+    ITCM_Access();
 
     PRINTF("\r\nFLEXRAM ram allocate example finish.\r\n");
 
@@ -164,5 +195,55 @@ static void OCRAM_Access(void)
         }
 
         ocramAddr++;
+    }
+}
+
+static void DTCM_Access(void)
+{
+    uint32_t *dtcmAddr = (uint32_t *)APP_FLEXRAM_DTCM_START_ADDR;
+
+    /* enable FLEXRAM DTCM access error interrupt*/
+    FLEXRAM_EnableInterruptSignal(APP_FLEXRAM, kFLEXRAM_DTCMAccessError);
+
+    for (;;)
+    {
+        *dtcmAddr = 0xCCU;
+        /* Synchronizes the execution stream with memory accesses */
+        __DSB();
+        __ISB();
+
+        if ((uint32_t)dtcmAddr == (APP_FLEXRAM_DTCM_START_ADDR +
+                                   APP_DTCM_ALLOCATE_BANK_NUM * FSL_FEATURE_FLEXRAM_INTERNAL_RAM_BANK_SIZE - 0x04U))
+        {
+            PRINTF("\r\nDTCM access to nearly 0x%x boundary.\r\n", ((uint32_t)dtcmAddr + 0x04U));
+            break;
+        }
+
+        dtcmAddr++;
+    }
+}
+
+static void ITCM_Access(void)
+{
+    uint32_t *itcmAddr = (uint32_t *)APP_FLEXRAM_ITCM_START_ADDR;
+
+    /* enable FLEXRAM DTCM access error interrupt*/
+    FLEXRAM_EnableInterruptSignal(APP_FLEXRAM, kFLEXRAM_ITCMAccessError);
+
+    for (;;)
+    {
+        *itcmAddr = 0xCCU;
+        /* Synchronizes the execution stream with memory accesses */
+        __DSB();
+        __ISB();
+
+        if ((uint32_t)itcmAddr == (APP_FLEXRAM_ITCM_START_ADDR +
+                                   APP_ITCM_ALLOCATE_BANK_NUM * FSL_FEATURE_FLEXRAM_INTERNAL_RAM_BANK_SIZE - 0x08U))
+        {
+            PRINTF("\r\nITCM access to nearly 0x%x boundary.\r\n", ((uint32_t)itcmAddr + 0x04U));
+            break;
+        }
+
+        itcmAddr++;
     }
 }

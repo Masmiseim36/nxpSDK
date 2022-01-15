@@ -24,6 +24,12 @@
 /*${macro:start}*/
 #define INIT_SUCCESS 0
 #define INIT_FAIL    1
+
+/* @TEST_ANCHOR */
+
+#ifndef EXAMPLE_BANNER
+#define EXAMPLE_BANNER "mbedTLS HTTPS Server example"
+#endif
 /*${macro:end}*/
 
 /*******************************************************************************
@@ -69,7 +75,7 @@ int initNetwork(void)
     netifapi_netif_set_up(&netif);
 
     LWIP_PLATFORM_DIAG(("\r\n************************************************"));
-    LWIP_PLATFORM_DIAG(("mbedTLS HTTPS Server example"));
+    LWIP_PLATFORM_DIAG((EXAMPLE_BANNER));
     LWIP_PLATFORM_DIAG(("************************************************"));
     LWIP_PLATFORM_DIAG((" IPv4 Address     : %u.%u.%u.%u", ((u8_t *)&netif_ipaddr)[0], ((u8_t *)&netif_ipaddr)[1],
                         ((u8_t *)&netif_ipaddr)[2], ((u8_t *)&netif_ipaddr)[3]));

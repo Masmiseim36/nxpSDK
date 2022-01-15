@@ -31,7 +31,8 @@ define symbol m_interrupts_end         = 0x600023FF;
 define symbol m_text_start             = 0x60002400;
 define symbol m_text_end               = 0x6057FFFF;
 
-/* NOTE: Flash in range 0x6058_0000 - 0x607F_FFFF is reserved for  data */
+/* NOTE: Flash in range 0x6070_0000 - 0x607F_FFFF is reserved for  data */
+define symbol mflash_start             = 0x60700000;
 
 define symbol m_data_start             = 0x20000000;
 define symbol m_data_end               = 0x2001FFFF;
@@ -92,8 +93,9 @@ place at address mem:m_boot_hdr_conf_start { section .boot_hdr.conf };
 place at address mem:m_boot_hdr_ivt_start { section .boot_hdr.ivt };
 place at address mem:m_boot_hdr_boot_data_start { readonly section .boot_hdr.boot_data };
 place at address mem:m_boot_hdr_dcd_data_start { readonly section .boot_hdr.dcd_data };
+place at address mem:mflash_start { readonly section .mflash_fs };
 
-keep{ section .boot_hdr.conf, section .boot_hdr.ivt, section .boot_hdr.boot_data, section .boot_hdr.dcd_data };
+keep{ section .boot_hdr.conf, section .boot_hdr.ivt, section .boot_hdr.boot_data, section .boot_hdr.dcd_data, section .mflash_fs };
 
 place in TEXT_region                        { readonly };
 place in DATA2_region                       { block RW };

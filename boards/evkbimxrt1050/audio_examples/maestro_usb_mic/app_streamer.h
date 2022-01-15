@@ -1,4 +1,9 @@
-
+/*
+ * Copyright 2021 NXP
+ * All rights reserved.
+ *
+ * SPDX-License-Identifier: BSD-3-Clause
+ */
 #ifndef _FSL_STREAMER_H_
 #define _FSL_STREAMER_H_
 

@@ -164,7 +164,7 @@ uint32_t LPI2C1_GetFreq(void)
     /*Clock setting for LPI2C*/
     CLOCK_SetMux(kCLOCK_Lpi2cMux, LPI2C_CLOCK_SOURCE_SELECT);
     CLOCK_SetDiv(kCLOCK_Lpi2cDiv, LPI2C_CLOCK_SOURCE_DIVIDER);
-    return CLOCK_GetFreq((clock_name_t)kCLOCK_Lpi2c1);
+    return LPI2C_CLOCK_FREQUENCY;
 }
 
 /*! @brief       Determines the Clock Frequency feature.

@@ -239,7 +239,7 @@ void USB_HostCdcDataInCallback(void *param, uint8_t *data, uint32_t dataLength, 
 
         if (cdcInstance->bulkInMaxPacketSize == dataLength)
         {
-            /*host will send zero length packet after recvive one maxpacketsize */
+            /* host will prime to receive zero length packet after recvive one maxpacketsize */
             USB_HostCdcDataRecv(g_cdc.classHandle, NULL, 0, USB_HostCdcDataInCallback, &g_cdc);
         }
     }
@@ -639,7 +639,7 @@ usb_status_t USB_HostCdcEvent(usb_device_handle deviceHandle,
     usb_host_configuration_t *configuration;
     uint8_t interface_index;
     usb_host_interface_t *hostInterface;
-    uint32_t info_value;
+    uint32_t info_value = 0U;
 
     status = kStatus_USB_Success;
 

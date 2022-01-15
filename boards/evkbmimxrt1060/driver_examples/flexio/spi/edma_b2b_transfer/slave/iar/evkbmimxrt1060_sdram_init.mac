@@ -89,7 +89,10 @@ _clock_init()
   
   // PFD2_FRAC: 29, PLL2 PFD2=528*18/PFD2_FRAC=327
   // Ungate SYS PLL PFD2
-  __writeMemory32(0x001d0000, 0x400D8100, "Memory");
+  reg = __readMemory32(0x400D8100, "Memory");
+  reg &= ~0xBF0000;
+  reg |= 0x1D0000;
+  __writeMemory32(reg, 0x400D8100, "Memory");
   
   // SEMC_PODF: 001, AHB_PODF: 011, IPG_PODF: 01
   // SEMC_ALT_CLK_SEL: 0 PLL2 (SYS PLL) PFD2

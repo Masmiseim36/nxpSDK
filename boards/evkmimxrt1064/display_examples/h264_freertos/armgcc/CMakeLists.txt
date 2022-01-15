@@ -97,7 +97,7 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../middleware/fatfs
     ${ProjDirPath}/../../../../../components/video/display/fbdev
     ${ProjDirPath}/../../../../../components/video
-    ${ProjDirPath}/../../../../../rtos/freertos
+    ${ProjDirPath}/../../../../../rtos/freertos/freertos_kernel
     ${ProjDirPath}/../../../../../middleware/openh264
     ${ProjDirPath}/../../../../../devices/MIMXRT1064
     ${ProjDirPath}/../../../../../components/uart

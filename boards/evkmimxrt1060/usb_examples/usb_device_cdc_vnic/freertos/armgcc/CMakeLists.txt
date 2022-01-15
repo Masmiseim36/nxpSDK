@@ -67,8 +67,9 @@ target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
 set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../../middleware/usb
     ${ProjDirPath}/../../../../../../devices/MIMXRT1062/drivers
-    ${ProjDirPath}/../../../../../../components/phyksz8081
-    ${ProjDirPath}/../../../../../../rtos/freertos
+    ${ProjDirPath}/../../../../../../components/phy/mdio/enet
+    ${ProjDirPath}/../../../../../../components/phy/device/phyksz8081
+    ${ProjDirPath}/../../../../../../rtos/freertos/freertos_kernel
     ${ProjDirPath}/../../../../../../devices/MIMXRT1062
     ${ProjDirPath}/../../../../../../devices/MIMXRT1062/utilities
     ${ProjDirPath}/../../../../../../devices/MIMXRT1062/xip
@@ -78,6 +79,7 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../../components/lists
     ${ProjDirPath}/../../../../../../components/osa
     ${ProjDirPath}/../../../../../../CMSIS/Core/Include
+    ${ProjDirPath}/../../../../../../components/phy
 )
 
 # include modules
@@ -87,7 +89,9 @@ include(middleware_usb_phy_MIMXRT1062)
 
 include(driver_cache_armv7_m7_MIMXRT1062)
 
-include(driver_phyksz8081_MIMXRT1062)
+include(driver_mdio-enet_MIMXRT1062)
+
+include(driver_phy-device-ksz8081_MIMXRT1062)
 
 include(driver_igpio_MIMXRT1062)
 
@@ -134,6 +138,10 @@ include(middleware_usb_common_header_MIMXRT1062)
 include(CMSIS_Include_core_cm_MIMXRT1062)
 
 include(middleware_usb_device_common_header_MIMXRT1062)
+
+include(driver_mdio-common_MIMXRT1062)
+
+include(driver_phy-common_MIMXRT1062)
 
 include(middleware_freertos-kernel_extension_MIMXRT1062)
 

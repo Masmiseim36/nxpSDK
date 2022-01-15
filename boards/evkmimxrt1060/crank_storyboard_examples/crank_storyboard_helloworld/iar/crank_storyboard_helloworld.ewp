@@ -825,14 +825,14 @@
           <state>$PROJ_DIR$/../../../../../middleware/Crank_Software/cortexM7/plugins/iar/libgre-plugin-screen-path.a</state>
           <state>$PROJ_DIR$/../../../../../middleware/Crank_Software/cortexM7/plugins/iar/libgre-plugin-timer.a</state>
           <state>$PROJ_DIR$/../../../../../middleware/Crank_Software/cortexM7/plugins/iar/libgre-plugin-sbimage-soil.a</state>
-          <state>$PROJ_DIR$/../../../../../middleware/Crank_Software/cortexM7/plugins/iar/libfont-plugin-freetype.a</state>
           <state>$PROJ_DIR$/../../../../../middleware/Crank_Software/cortexM7/plugins/iar/librender-plugin-swrender.a</state>
           <state>$PROJ_DIR$/../../../../../middleware/Crank_Software/cortexM7/lib/iar/liblogging-util.a</state>
           <state>$PROJ_DIR$/../../../../../middleware/Crank_Software/cortexM7/lib/iar/libgreio.a</state>
           <state>$PROJ_DIR$/../../../../../middleware/Crank_Software/cortexM7/lib/iar/libswrender.a</state>
-          <state>$PROJ_DIR$/../../../../../middleware/Crank_Software/cortexM7/lib/iar/libsbfreetype.a</state>
           <state>$PROJ_DIR$/../../../../../middleware/Crank_Software/cortexM7/lib/iar/libsblua.a</state>
           <state>$PROJ_DIR$/../../../../../middleware/Crank_Software/cortexM7/lib/iar/libsoil.a</state>
+          <state>$PROJ_DIR$/../../../../../middleware/Crank_Software/cortexM7/plugins/iar/libfont-plugin-freetype.a</state>
+          <state>$PROJ_DIR$/../../../../../middleware/Crank_Software/cortexM7/lib/iar/libsbfreetype.a</state>
           <state>$PROJ_DIR$/../../../../../middleware/Crank_Software/cortexM7/lib/iar/libpng.a</state>
           <state>$PROJ_DIR$/../../../../../middleware/Crank_Software/cortexM7/lib/iar/libsbz.a</state>
         </option>
@@ -1850,14 +1850,14 @@
           <state>$PROJ_DIR$/../../../../../middleware/Crank_Software/cortexM7/plugins/iar/libgre-plugin-screen-path.a</state>
           <state>$PROJ_DIR$/../../../../../middleware/Crank_Software/cortexM7/plugins/iar/libgre-plugin-timer.a</state>
           <state>$PROJ_DIR$/../../../../../middleware/Crank_Software/cortexM7/plugins/iar/libgre-plugin-sbimage-soil.a</state>
-          <state>$PROJ_DIR$/../../../../../middleware/Crank_Software/cortexM7/plugins/iar/libfont-plugin-freetype.a</state>
           <state>$PROJ_DIR$/../../../../../middleware/Crank_Software/cortexM7/plugins/iar/librender-plugin-swrender.a</state>
           <state>$PROJ_DIR$/../../../../../middleware/Crank_Software/cortexM7/lib/iar/liblogging-util.a</state>
           <state>$PROJ_DIR$/../../../../../middleware/Crank_Software/cortexM7/lib/iar/libgreio.a</state>
           <state>$PROJ_DIR$/../../../../../middleware/Crank_Software/cortexM7/lib/iar/libswrender.a</state>
-          <state>$PROJ_DIR$/../../../../../middleware/Crank_Software/cortexM7/lib/iar/libsbfreetype.a</state>
           <state>$PROJ_DIR$/../../../../../middleware/Crank_Software/cortexM7/lib/iar/libsblua.a</state>
           <state>$PROJ_DIR$/../../../../../middleware/Crank_Software/cortexM7/lib/iar/libsoil.a</state>
+          <state>$PROJ_DIR$/../../../../../middleware/Crank_Software/cortexM7/plugins/iar/libfont-plugin-freetype.a</state>
+          <state>$PROJ_DIR$/../../../../../middleware/Crank_Software/cortexM7/lib/iar/libsbfreetype.a</state>
           <state>$PROJ_DIR$/../../../../../middleware/Crank_Software/cortexM7/lib/iar/libpng.a</state>
           <state>$PROJ_DIR$/../../../../../middleware/Crank_Software/cortexM7/lib/iar/libsbz.a</state>
         </option>
@@ -2245,6 +2245,9 @@
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include/StackMacros.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include/stdint.readme</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include/stream_buffer.h</name>

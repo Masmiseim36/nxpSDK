@@ -1,40 +1,41 @@
-if(NOT COMPONENT_SERIAL_MANAGER_MIMXRT1024_INCLUDED)
-    
-    set(COMPONENT_SERIAL_MANAGER_MIMXRT1024_INCLUDED true CACHE BOOL "component_serial_manager component is included.")
+include_guard(GLOBAL)
+message("component_serial_manager component is included.")
 
-    target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
-        ${CMAKE_CURRENT_LIST_DIR}/fsl_component_serial_manager.c
-    )
-
-
-    target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
-        ${CMAKE_CURRENT_LIST_DIR}/.
-    )
+target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
+    ${CMAKE_CURRENT_LIST_DIR}/fsl_component_serial_manager.c
+)
 
 
-    #OR Logic component
-    if(CONFIG_USE_component_serial_manager_uart_MIMXRT1024)
-         include(component_serial_manager_uart_MIMXRT1024)
-    endif()
-    if(CONFIG_USE_component_serial_manager_usb_cdc_MIMXRT1024)
-         include(component_serial_manager_usb_cdc_MIMXRT1024)
-    endif()
-    if(CONFIG_USE_component_serial_manager_virtual_MIMXRT1024)
-         include(component_serial_manager_virtual_MIMXRT1024)
-    endif()
-    if(CONFIG_USE_component_serial_manager_swo_MIMXRT1024)
-         include(component_serial_manager_swo_MIMXRT1024)
-    endif()
-    if(CONFIG_USE_component_serial_manager_rpmsg_MIMXRT1024)
-         include(component_serial_manager_rpmsg_MIMXRT1024)
-    endif()
-    if(NOT (CONFIG_USE_component_serial_manager_uart_MIMXRT1024 OR CONFIG_USE_component_serial_manager_usb_cdc_MIMXRT1024 OR CONFIG_USE_component_serial_manager_virtual_MIMXRT1024 OR CONFIG_USE_component_serial_manager_swo_MIMXRT1024 OR CONFIG_USE_component_serial_manager_rpmsg_MIMXRT1024))
-        message(WARNING "Since component_serial_manager_uart_MIMXRT1024/component_serial_manager_usb_cdc_MIMXRT1024/component_serial_manager_virtual_MIMXRT1024/component_serial_manager_swo_MIMXRT1024/component_serial_manager_rpmsg_MIMXRT1024 is not included at first or config in config.cmake file, use component_serial_manager_uart_MIMXRT1024 by default.")
-        include(component_serial_manager_uart_MIMXRT1024)
-    endif()
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
+    ${CMAKE_CURRENT_LIST_DIR}/.
+)
 
-    include(driver_common_MIMXRT1024)
 
-    include(component_lists_MIMXRT1024)
-
+#OR Logic component
+if(CONFIG_USE_component_serial_manager_uart_MIMXRT1024)
+     include(component_serial_manager_uart_MIMXRT1024)
 endif()
+if(CONFIG_USE_component_serial_manager_usb_cdc_MIMXRT1024)
+     include(component_serial_manager_usb_cdc_MIMXRT1024)
+endif()
+if(CONFIG_USE_component_serial_manager_virtual_MIMXRT1024)
+     include(component_serial_manager_virtual_MIMXRT1024)
+endif()
+if(CONFIG_USE_component_serial_manager_swo_MIMXRT1024)
+     include(component_serial_manager_swo_MIMXRT1024)
+endif()
+if(CONFIG_USE_component_serial_manager_rpmsg_MIMXRT1024)
+     include(component_serial_manager_rpmsg_MIMXRT1024)
+endif()
+if(CONFIG_USE_component_serial_manager_spi_MIMXRT1024)
+     include(component_serial_manager_spi_MIMXRT1024)
+endif()
+if(NOT (CONFIG_USE_component_serial_manager_uart_MIMXRT1024 OR CONFIG_USE_component_serial_manager_usb_cdc_MIMXRT1024 OR CONFIG_USE_component_serial_manager_virtual_MIMXRT1024 OR CONFIG_USE_component_serial_manager_swo_MIMXRT1024 OR CONFIG_USE_component_serial_manager_rpmsg_MIMXRT1024 OR CONFIG_USE_component_serial_manager_spi_MIMXRT1024))
+    message(WARNING "Since component_serial_manager_uart_MIMXRT1024/component_serial_manager_usb_cdc_MIMXRT1024/component_serial_manager_virtual_MIMXRT1024/component_serial_manager_swo_MIMXRT1024/component_serial_manager_rpmsg_MIMXRT1024/component_serial_manager_spi_MIMXRT1024 is not included at first or config in config.cmake file, use component_serial_manager_uart_MIMXRT1024 by default.")
+    include(component_serial_manager_uart_MIMXRT1024)
+endif()
+
+include(driver_common_MIMXRT1024)
+
+include(component_lists_MIMXRT1024)
+

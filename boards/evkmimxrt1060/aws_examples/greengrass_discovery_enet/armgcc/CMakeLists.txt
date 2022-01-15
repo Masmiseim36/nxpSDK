@@ -40,16 +40,13 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../config_files/aws_wifi_config.h"
 "${ProjDirPath}/../config_files/FreeRTOSConfig.h"
 "${ProjDirPath}/../config_files/aws_mbedtls_config.h"
-"${ProjDirPath}/../config_files/aws_bufferpool_config.h"
 "${ProjDirPath}/../config_files/aws_demo_config.h"
-"${ProjDirPath}/../config_files/aws_mqtt_config.h"
-"${ProjDirPath}/../config_files/aws_secure_sockets_config.h"
 "${ProjDirPath}/../config_files/aws_shadow_config.h"
-"${ProjDirPath}/../config_files/FreeRTOSIPConfig.h"
-"${ProjDirPath}/../config_files/iot_config.h"
-"${ProjDirPath}/../config_files/iot_mqtt_agent_config.h"
 "${ProjDirPath}/../config_files/core_mqtt_config.h"
 "${ProjDirPath}/../config_files/core_pkcs11_config.h"
+"${ProjDirPath}/../config_files/FreeRTOSIPConfig.h"
+"${ProjDirPath}/../config_files/iot_config.h"
+"${ProjDirPath}/../config_files/iot_secure_sockets_config.h"
 "${ProjDirPath}/../config_files/shadow_config.h"
 "${ProjDirPath}/../config_files/shadow_demo_config.h"
 "${ProjDirPath}/../board.c"
@@ -85,6 +82,7 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../components/flash/mflash
     ${ProjDirPath}/../../../../../components/flash/mflash/mimxrt1062
     ${ProjDirPath}/../../../../../rtos/freertos
+    ${ProjDirPath}/../../../../../rtos/freertos/freertos_kernel
     ${ProjDirPath}/../../../../../devices/MIMXRT1062
     ${ProjDirPath}/../../../../../components/uart
     ${ProjDirPath}/../../../../../components/serial_manager
@@ -127,35 +125,37 @@ include(component_mflash_file_MIMXRT1062)
 
 include(component_mflash_rt1060_MIMXRT1062)
 
-include(middleware_freertos-aws_iot_vendor_nxp_secure_sockets_lwip_MIMXRT1062)
-
-include(middleware_freertos-aws_iot_libraries_freertos_plus_aws_greengrass_MIMXRT1062)
-
 include(middleware_freertos-aws_iot_demos_MIMXRT1062)
-
-include(middleware_freertos-aws_iot_demos_greengrass_discovery_MIMXRT1062)
 
 include(middleware_freertos-aws_iot_demos_dev_mode_key_provisioning_MIMXRT1062)
 
+include(middleware_freertos-aws_iot_demos_greengrass_discovery_MIMXRT1062)
+
+include(middleware_freertos-aws_iot_libraries_abstractions_transport_MIMXRT1062)
+
 include(middleware_freertos-kernel_MIMXRT1062)
 
-include(middleware_freertos-kernel_heap_4_MIMXRT1062)
+include(middleware_freertos-aws_iot_libraries_abstractions_secure_sockets_MIMXRT1062)
 
-include(middleware_freertos-aws_iot_libraries_c_sdk_standard_shadow_MIMXRT1062)
+include(middleware_freertos-aws_iot_libraries_logging_MIMXRT1062)
 
-include(middleware_freertos-aws_iot_libraries_c_sdk_standard_serializer_MIMXRT1062)
+include(middleware_freertos-aws_iot_libraries_coremqtt_MIMXRT1062)
+
+include(middleware_freertos-aws_iot_libraries_freertos_plus_aws_greengrass_MIMXRT1062)
+
+include(middleware_freertos-aws_iot_vendor_nxp_secure_sockets_lwip_MIMXRT1062)
+
+include(middleware_freertos-aws_iot_libraries_3rdparty_mbedtls_config_MIMXRT1062)
 
 include(middleware_freertos-aws_iot_libraries_3rdparty_pkcs11_MIMXRT1062)
-
-include(middleware_freertos-aws_iot_vendor_nxp_pkcs11_MIMXRT1062)
 
 include(middleware_freertos-aws_iot_libraries_abstractions_pkcs11_MIMXRT1062)
 
 include(middleware_freertos-aws_iot_libraries_abstractions_pkcs11_mbedtls_MIMXRT1062)
 
-include(middleware_freertos-aws_iot_libraries_logging_MIMXRT1062)
+include(middleware_freertos-aws_iot_vendor_nxp_pkcs11_MIMXRT1062)
 
-include(middleware_freertos-aws_iot_libraries_3rdparty_mbedtls_config_MIMXRT1062)
+include(middleware_freertos-kernel_heap_4_MIMXRT1062)
 
 include(driver_clock_MIMXRT1062)
 
@@ -191,13 +191,19 @@ include(CMSIS_Include_core_cm_MIMXRT1062)
 
 include(component_mflash_common_MIMXRT1062)
 
-include(middleware_freertos-aws_iot_libraries_abstractions_secure_sockets_MIMXRT1062)
+include(middleware_freertos-aws_iot_libraries_abstractions_platform_MIMXRT1062)
 
 include(middleware_freertos-aws_iot_libraries_c_sdk_standard_common_MIMXRT1062)
 
 include(middleware_freertos-kernel_extension_MIMXRT1062)
 
-include(middleware_freertos-aws_iot_libraries_abstractions_platform_MIMXRT1062)
+include(middleware_freertos-aws_iot_network_manager_MIMXRT1062)
+
+include(middleware_freertos-aws_iot_libraries_abstractions_backoff_algorithm_MIMXRT1062)
+
+include(middleware_freertos-aws_iot_libraries_3rdparty_jsmn_MIMXRT1062)
+
+include(middleware_freertos-aws_iot_pkcs11_helpers_MIMXRT1062)
 
 include(middleware_freertos-aws_iot_libraries_freertos_plus_standard_tls_MIMXRT1062)
 
@@ -206,16 +212,6 @@ include(middleware_freertos-aws_iot_libraries_3rdparty_mbedtls_utils_MIMXRT1062)
 include(middleware_freertos-aws_iot_libraries_freertos_plus_standard_crypto_MIMXRT1062)
 
 include(middleware_freertos-aws_iot_libraries_freertos_plus_standard_utils_MIMXRT1062)
-
-include(middleware_freertos-aws_iot_libraries_3rdparty_jsmn_MIMXRT1062)
-
-include(middleware_freertos-aws_iot_network_manager_MIMXRT1062)
-
-include(middleware_freertos-aws_iot_mqtt_MIMXRT1062)
-
-include(middleware_freertos-aws_iot_libraries_coremqtt_MIMXRT1062)
-
-include(middleware_freertos-aws_iot_libraries_abstractions_wifi_MIMXRT1062)
 
 include(utilities_misc_utilities_MIMXRT1062)
 

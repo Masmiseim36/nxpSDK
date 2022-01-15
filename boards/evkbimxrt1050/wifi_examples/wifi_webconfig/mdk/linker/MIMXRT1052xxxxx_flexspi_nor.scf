@@ -99,4 +99,7 @@ LR_m_text m_flash_config_start m_text_start+m_text_size-m_flash_config_start {  
   }
   RW_m_ncache_unused +0 EMPTY m_data2_size-ImageLength(RW_m_data2)-ImageLength(RW_m_ncache) { ; Empty region added for MPU configuration
   }
+  mflash_region m_mflash_start m_mflash_size{
+    * (.mflash_fs)
+  }
 }

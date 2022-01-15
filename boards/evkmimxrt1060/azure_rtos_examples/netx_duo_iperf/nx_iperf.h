@@ -15,95 +15,71 @@
 /**                                                                       */
 /** NetX Utility                                                          */
 /**                                                                       */
-/**   NetX/NetX Duo IPerf Test Program                                    */
+/**   NetX Duo IPerf Test Program                                         */
 /**                                                                       */
 /**************************************************************************/
 /**************************************************************************/
 
-#define     DEMO_STACK_SIZE  8192
+/* Enable authentication.
+#define     NX_IPERF_AUTH_ENABLE
+*/
 
-/* #define     NX_IPERF_AUTH_ENABLE */
-
-#define     IPERF_TEST
-
-#define     NETX_DEFAULT_PORT   14000
-
-#define     CTRL_SIGN_MASK      0x0F
-#define     CLEAN_UP_MASK       0x01
-
-#ifdef      IPERF_TEST
-
-/* @TEST_ANCHOR */
-
-#ifndef     TCP_RX_PORT
-#define     TCP_RX_PORT         5001
-#endif
-#ifndef     UDP_RX_PORT
-#define     UDP_RX_PORT         5001
+#ifndef NX_IPERF_TCP_RX_PORT
+#define NX_IPERF_TCP_RX_PORT      5001
 #endif
 
-#else
-#define     TCP_RX_PORT          77
-#define     UDP_RX_PORT          79
+#ifndef NX_IPERF_UDP_RX_PORT
+#define NX_IPERF_UDP_RX_PORT      5001
 #endif
 
-#define     TCP_TX_PORT          78
-#define     UDP_TX_PORT          81
-
-#define     CLIENT_DEFAULT_IP        IP_ADDRESS(192, 168, 0, 6)
-#define     CLIENT_DEFAULT_PORT      5001
-
-#ifndef     TCP_RX_THREAD_PRIORITY
-#define     TCP_RX_THREAD_PRIORITY   1
+#ifndef NX_IPERF_DESTINATION_PORT
+#define NX_IPERF_DESTINATION_PORT 5001
 #endif
 
-#define     MAX_TCP_RX_COUNTER   1
-#define     MAX_TCP_TX_COUNTER   1
-#define     MAX_UDP_RX_COUNTER   4
-#define     MAX_UDP_TX_COUNTER   1
+#ifndef NX_IPERF_THREAD_PRIORITY
+#define NX_IPERF_THREAD_PRIORITY  1
+#endif
 
-#define     DEFAULT_IPERF_IP        IP_ADDRESS(192, 168, 0, 6)
+#ifndef ULONG64_DEFINED
+#define ULONG64_DEFINED
+#define ULONG64                   unsigned long long
+#endif
 
-#define     pingtest   "Start+Ping+test"
-#define     udprxtest  "UDP_Rx"
-#define     udptxtest  "UDP_Tx"
-#define     tcprxtest  "TCP_Rx"
-#define     tcptxtest  "TCP_Tx"
+#define NX_IPERF_CTRL_SIGN_MASK   0x0F
+#define NX_IPERF_CLEAN_UP_MASK    0x01
 
 typedef struct
 {
-    ULONG     CmdID;
-    ULONG     version;
-    ULONG     ip;
-    ULONG     ipv6[4];
-    ULONG     port;
-    UCHAR     ctrl_sign;
-    UINT      ErrorCode;
-    ULONG     WperfPort;
-    UINT      PingRate;
-    UINT      TotalPings;
-    UINT      PacketsTxed;
-    UINT      PacketsRxed;
-    UINT      BytesTxed;
-    UINT      BytesRxed;
-    UINT      StartTime;
-    UINT      RunTime;
-    UINT      TestTime;
-    UINT      ThroughPut;
-    UINT      PacketSize;
-    UINT      Rate;
-    UINT      TestStatus;   /* 0 means no test is running.
+    ULONG   CmdID;
+    ULONG   version;
+    ULONG   ip;
+    ULONG   ipv6[4];
+    ULONG   port;
+    UCHAR   ctrl_sign;
+    UINT    ErrorCode;
+    ULONG   WperfPort;
+    ULONG64 PacketsTxed;
+    ULONG64 PacketsRxed;
+    ULONG64 BytesTxed;
+    ULONG64 BytesRxed;
+    ULONG64 StartTime;
+    ULONG64 RunTime;
+    ULONG64 TestTime;
+    ULONG64 ThroughPut;
+    ULONG64 PacketSize;
+    ULONG64 Rate;
+    UINT    TestStatus;     /* 0 means no test is running.
                                1 means Test Thread is created and is running.
                                2 means a test has finished. */
-    UINT      idleTime;
-}ctrl_info;
+    ULONG64 idleTime;
+} ctrl_info;
 
 /*test list for wperf*/
 typedef struct
 {
-  ULONG cmdID;
-  ULONG threadID;
-}thread_list;
+    ULONG cmdID;
+    ULONG threadID;
+} thread_list;
 
 /* test type enum */
 enum testTypeList
@@ -117,175 +93,153 @@ enum testTypeList
     UDP_RX_STOP,
     TCP_RX_STOP,
     UDP_TX_STOP,
-    TCP_TX_STOP,
-    PING_TEST
+    TCP_TX_STOP
 };
 
 enum errorCodeList
 {
-  UDP_RX_STOP_ERROR = 5000,
-  UDP_RX_CREATE_ERROR,
-  UDP_TX_STOP_ERROR,
-  UDP_TX_CREATE_ERROR,
-  TCP_RX_STOP_ERROR,
-  TCP_RX_CREATE_ERROR,
-  TCP_TX_STOP_ERROR,
-  TCP_TX_CREATE_ERROR
+    UDP_RX_STOP_ERROR = 5000,
+    UDP_RX_CREATE_ERROR,
+    UDP_TX_STOP_ERROR,
+    UDP_TX_CREATE_ERROR,
+    TCP_RX_STOP_ERROR,
+    TCP_RX_CREATE_ERROR,
+    TCP_TX_STOP_ERROR,
+    TCP_TX_CREATE_ERROR
 };
 
 typedef struct
 {
-   int            udp_id;
-   ULONG          tv_sec;
-   ULONG          tv_usec;
-}udp_payload;
+    int   udp_id;
+    ULONG tv_sec;
+    ULONG tv_usec;
+} udp_payload;
 
-#define htmlwrite(p,s)  (nx_packet_data_append(p,s,strlen(s), server_ptr-> nx_http_server_packet_pool_ptr, NX_WAIT_FOREVER))
+#define htmlwrite(p, s, l) (nx_packet_data_append(p, s, l, server_ptr -> nx_web_http_server_packet_pool_ptr, NX_WAIT_FOREVER))
 
-#define htmlresponse "HTTP/1.0 200 \r\nContent-Type: text/html\r\n\r\n"
-#define htmltag      "<HTML>"
-#define htmlendtag   "</HTML>"
-#define titleline    "<HEAD><TITLE>NetX IPerf Demonstration</TITLE></HEAD>\r\n"
+#define htmlresponse    "HTTP/1.0 200 \r\nContent-Type: text/html\r\n\r\n"
+#define htmltag         "<HTML>"
+#define htmlendtag      "</HTML>"
+#define titleline       "<HEAD><TITLE>NetX IPerf Demonstration</TITLE></HEAD>\r\n"
 
-#define bodytag "<body bgcolor=\"#000000\">\r\n"
-#define bodyendtag "</body>\r\n"
+#define bodytag         "<body bgcolor=\"#000000\">\r\n"
+#define bodyendtag      "</body>\r\n"
 
-#define DEFAULT_HOST_IP      "192.168.1.2"
-#define DEFAULT_TEST_TIME    "10"
-#define DEFAULT_PACKET_SIZE  "1470"
-
-#define logo_area    \
-    "<table border=0 align=center width=90%><tr>" \
-    "<td width=30%><img align=left src=ellogo.jpg>" \
+#define logo_area                                   \
+    "<table border=0 align=center width=90%><tr>"   \
+    "<td width=30%><img align=left src=mslogo.jpg>" \
     "</td><td width=33%></td><td width=33%><img align=right src=nxlogo.png></td></tr></table>"
 
-#define hrline       "<HR SIZE=6 WIDTH=\"90%\" NOSHADE COLOR=\"#FFFF00\">"
-#define h1line1       " <H1><font face=arial color=\"#FFFFFF\">NetX IP Address: "
-#define h1line2       "</font></H1><br>\r\n"
-#define tabletag      "<table height=50%>"
-#define fonttag       "<font face=arial color=\"#FFFFFF\" size=\"5\">"
-#define fontcolortag  "<font face=arial color=\"#FFFF00\" size=\"5\">"
-#define fontendtag   "</font>"
+#define hrline          "<HR SIZE=6 WIDTH=\"90%\" NOSHADE COLOR=\"#FFFF00\">"
+#define h1line1         " <H1><font face=arial color=\"#FFFFFF\">NetX IP Address: "
+#define h1line2         "</font></H1><br>\r\n"
+#define tabletag        "<table height=50%>"
+#define fonttag         "<font face=arial color=\"#FFFFFF\" size=\"5\">"
+#define fontcolortag    "<font face=arial color=\"#FFFF00\" size=\"5\">"
+#define fontendtag      "</font>"
 
-#define centertag    "<center WIDTH=\"90%\">\r\n"
-#define centerendtag "</center>"
+#define centertag       "<center WIDTH=\"90%\">\r\n"
+#define centerendtag    "</center>"
 #define outtermosttable "<table width=80% border=0 bordercolor=#ffff00 rules=cols color=#FFFF00 farme=void><tr><td width=55%>\r\n"
 #define maintabletag    "<TABLE BORDER=0 ALIGN=left WIDTH=85% ><TR><TD colspan=4>\r\n"
-#define tableendtag   "</TABLE>"
-#define trtag         "<TR>"
-#define trendtag      "</TR>"
-#define tdtag         "<TD>"
-#define toptdtag      "<TD align=center style=\"vertical-align:top;\">"
-#define tdcolspan4tag "<TD colspan=\"4\">"
-#define tdcolspan3tag "<TD colspan=\"3\">"
-#define tdcolspan2tag "<TD colspan=\"2\">"
-#define tdendtag      "</TD>\r\n"
-#define doublebr      "<br><br>\r\n"
-#define spanline      "<TR><TD colspan=\"4\"><br><br></TD></TR>"
-#define rightspanline      "<TR><TD><br><br></TD></TR>"
-#define tdcentertag   "<TD align=center>"
+#define tableendtag     "</TABLE>"
+#define trtag           "<TR>"
+#define trendtag        "</TR>"
+#define tdtag           "<TD>"
+#define toptdtag        "<TD align=center style=\"vertical-align:top;\">"
+#define tdcolspan4tag   "<TD colspan=\"4\">"
+#define tdcolspan3tag   "<TD colspan=\"3\">"
+#define tdcolspan2tag   "<TD colspan=\"2\">"
+#define tdendtag        "</TD>\r\n"
+#define doublebr        "<br><br>\r\n"
+#define spanline        "<TR><TD colspan=\"4\"><br><br></TD></TR>"
+#define rightspanline   "<TR><TD><br><br></TD></TR>"
+#define tdcentertag     "<TD align=center>"
 
 
-#define formtag       "<form action=\"/test.htm\" method=\"get\">"
-#define formendtag    "</form>"
+#define formtag         "<form action=\"/test.htm\" method=\"get\">"
+#define formendtag      "</form>"
 
-#define PINGTESTSTRING "Start Ping Test"
-#define Ping_Test      "Ping_Test"
-#define pingsubmittag1  \
-    "<form action=\"/test.htm\" method=\"get\">\r\n" \
-    "<TR><TD colspan=\"2\"><input type=\"submit\" name=\"TestType\" Value=\""PINGTESTSTRING"                \" "\
-    "style= \"background-color:#FFFF00; font-size:19px; font-weight: bold\"></TD></TR>\r\n" \
-    "<TR><TD><input type=\"hidden\" name=\"TestType\" value=\""Ping_Test"\"></input></TD></TR>" \
-    "<TR><TD>"fonttag"Destination IP Address:</font></TD>\r\n" \
-    "<TD><input name=\"ip\" value=\""
-#define pingsubmittag2 \
-    "\"></input></TD></TR>\r\n"                     \
-    "<TR><TD>"fonttag"Rate(ticks):</font></TD>\r\n" \
-    "<TD><input name=\"ping_rate\" value=50></input></TD></TR>\r\n" \
-    "<TR><TD>"fonttag"Ping Messages To Send:</font></TD>\r\n" \
-    "<TD><input face=arial name=\"total\" value=10></input></TD></TR>" \
-    "<br>\r\n</form>\r\n<TR><TD colspan=\"4\"><br><br></TD></TR>"
-
-#define UDPTXSTRING "Start UDP Transmit Test"
-#define UDP_Tx      "UDP_Tx"
-#define udptxsubmittag1 \
-    "<form action=\"/test.htm\" method=\"get\">\r\n" \
-    "<TR><TD><input type=\"submit\" Value=\""UDPTXSTRING"\" style= \"background-color:#FFFF00; "\
-    "font-size:19px; font-weight: bold\"></TD></TR>\r\n" \
-    "<TR><TD><input type=\"hidden\" name=\"TestType\" value=\""UDP_Tx"\"></input></TD></TR>" \
-    "<TR><TD>"fonttag"Destination IP Address:</font></TD>\r\n" \
+#define UDPTXSTRING     "Start UDP Transmit Test"
+#define UDP_Tx          "UDP_Tx"
+#define udptxsubmittag1                                                                           \
+    "<form action=\"/test.htm\" method=\"get\">\r\n"                                              \
+    "<TR><TD><input type=\"submit\" Value=\""UDPTXSTRING "\" style= \"background-color:#FFFF00; " \
+    "font-size:19px; font-weight: bold\"></TD></TR>\r\n"                                          \
+    "<TR><TD><input type=\"hidden\" name=\"TestType\" value=\""UDP_Tx "\"></input></TD></TR>"     \
+    "<TR><TD>"fonttag "Destination IP Address:</font></TD>\r\n"                                   \
     "<TD><input name=\"ip\" value=\""
 
-#define udptxsubmittag2 \
-    "\"></input></TD></TR>\r\n"             \
-    "<TR><TD>"fonttag"Destination Port:</font></TD>\r\n" \
+#define udptxsubmittag2                                   \
+    "\"></input></TD></TR>\r\n"                           \
+    "<TR><TD>"fonttag "Destination Port:</font></TD>\r\n" \
     "<TD><input name=\"port\" value=\""
 
-#define udptxsubmittag3 \
-    "\"></input></TD></TR>\r\n"             \
-    "<TR><TD>"fonttag"Test Time(Seconds):</font></TD>\r\n" \
+#define udptxsubmittag3                                     \
+    "\"></input></TD></TR>\r\n"                             \
+    "<TR><TD>"fonttag "Test Time(Seconds):</font></TD>\r\n" \
     "<TD><input name=\"test_time\" value=\""
 
-#define udptxsubmittag4 \
-     "\"></input></TD></TR>\r\n" \
-    "<TR><TD>"fonttag"Packet size:</font></TD>\r\n" \
+#define udptxsubmittag4                              \
+    "\"></input></TD></TR>\r\n"                      \
+    "<TR><TD>"fonttag "Packet size:</font></TD>\r\n" \
     "<TD><input name=\"size\" value=\""
 
-#define udptxsubmittag5 \
-      "\"></input></TD></TR>\r\n" \
+#define udptxsubmittag5         \
+    "\"></input></TD></TR>\r\n" \
     "</form><TR><TD colspan=\"4\"><br><br></TD></TR>\r\n"
 
 #define UDPRXSTRING "Start UDP Receive Test"
 #define UDP_Rx      "UDP_Rx"
-#define udprxsubmittag1 \
-    "<form action=\"/test.htm\" method=\"get\">\r\n" \
-    "<TR><TD><input type=\"submit\" Value=\""UDPRXSTRING"\" style= \"background-color:#FFFF00; font-size:19px; font-weight: bold\"></TD></TR>\r\n" \
-    "<TR><TD><input type=\"hidden\" name=\"TestType\" value=\""UDP_Rx"\"></input></TD></TR>" \
-    "<TR><TD>"fonttag"Test Time(Seconds):</font></TD>\r\n" \
+#define udprxsubmittag1                                                                                                                             \
+    "<form action=\"/test.htm\" method=\"get\">\r\n"                                                                                                \
+    "<TR><TD><input type=\"submit\" Value=\""UDPRXSTRING "\" style= \"background-color:#FFFF00; font-size:19px; font-weight: bold\"></TD></TR>\r\n" \
+    "<TR><TD><input type=\"hidden\" name=\"TestType\" value=\""UDP_Rx "\"></input></TD></TR>"                                                       \
+    "<TR><TD>"fonttag "Test Time(Seconds):</font></TD>\r\n"                                                                                         \
     "<TD><input name=\"test_time\" value=\""
 
-#define udprxsubmittag2 \
-    "\"></input></TD></TR></form>\r\n"                    \
+#define udprxsubmittag2                \
+    "\"></input></TD></TR></form>\r\n" \
     "<TR><TD colspan=\"4\"><br><br></TD></TR>\r\n"
 
-#define TCP_Tx "TCP_Tx"
-#define tcptxsubmittag1 \
-    "<form action=\"/test.htm\" method=\"get\">\r\n" \
+#define TCP_Tx      "TCP_Tx"
+#define tcptxsubmittag1                                                                                                                                      \
+    "<form action=\"/test.htm\" method=\"get\">\r\n"                                                                                                         \
     "<TR><TD><input type=\"submit\" Value=\"Start TCP Transmit Test\" style= \"background-color:#FFFF00; font-size:19px; font-weight: bold\"></TD></TR>\r\n" \
-    "<TR><TD><input type=\"hidden\" name=\"TestType\" value=\""TCP_Tx"\"></input></TD></TR>" \
-    "<TR><TD>"fonttag"Destination IP Address:</font></TD>\r\n" \
+    "<TR><TD><input type=\"hidden\" name=\"TestType\" value=\""TCP_Tx "\"></input></TD></TR>"                                                                \
+    "<TR><TD>"fonttag "Destination IP Address:</font></TD>\r\n"                                                                                              \
     "<TD><input name=\"ip\" value=\""
 
-#define tcptxsubmittag2 \
-    "\"></input></TD></TR>\r\n"             \
-    "<TR><TD>"fonttag"Destination Port:</font></TD>\r\n" \
+#define tcptxsubmittag2                                   \
+    "\"></input></TD></TR>\r\n"                           \
+    "<TR><TD>"fonttag "Destination Port:</font></TD>\r\n" \
     "<TD><input name=\"port\" value=\""
 
-#define tcptxsubmittag3 \
-    "\"></input></TD></TR>\r\n"                            \
-    "<TR><TD>"fonttag"Test Time(Seconds):</font></TD>\r\n" \
+#define tcptxsubmittag3                                     \
+    "\"></input></TD></TR>\r\n"                             \
+    "<TR><TD>"fonttag "Test Time(Seconds):</font></TD>\r\n" \
     "<TD><input name=\"test_time\" value=\""
 
-#define tcptxsubmittag4 \
-      "\"></input></TD></TR>\r\n" \
+#define tcptxsubmittag4         \
+    "\"></input></TD></TR>\r\n" \
     "</form><TR><TD colspan=\"4\"><br><br></TD></TR>\r\n"
 
-#define TCP_Rx "TCP_Rx"
-#define tcprxsubmittag1 \
-    "<form action=\"/test.htm\" method=\"get\">\r\n" \
+#define TCP_Rx      "TCP_Rx"
+#define tcprxsubmittag1                                                                                                                                     \
+    "<form action=\"/test.htm\" method=\"get\">\r\n"                                                                                                        \
     "<TR><TD><input type=\"submit\" Value=\"Start TCP Receive Test\" style= \"background-color:#FFFF00; font-size:19px; font-weight: bold\"></TD></TR>\r\n" \
-    "<TR><TD><input type=\"hidden\" name=\"TestType\" value=\""TCP_Rx"\"></input></TD></TR>" \
-    "<TR><TD>"fonttag"Test Time(Seconds):</font></TD>\r\n" \
+    "<TR><TD><input type=\"hidden\" name=\"TestType\" value=\""TCP_Rx "\"></input></TD></TR>"                                                               \
+    "<TR><TD>"fonttag "Test Time(Seconds):</font></TD>\r\n"                                                                                                 \
     "<TD><input name=\"test_time\" value=\""
 
-#define tcprxsubmittag2 \
-      "\"></input></TD></TR>\r\n"                                   \
+#define tcprxsubmittag2         \
+    "\"></input></TD></TR>\r\n" \
     "</form>\r\n<TR><TD colspan=\"4\"><br><br></TD></TR>\r\n"
 
 #define choosetesttag \
     "<TD align=center><font align=center face=arial color=\"#FFFFFF\" size=\"5\">Choose a test from the left.</font></TD>\r\n"
 
-const unsigned char ellogo_jpg[] = {
+const unsigned char mslogo_jpg[] = {
     0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a,
     0x00, 0x00, 0x00, 0x0d, 0x49, 0x48, 0x44, 0x52,
     0x00, 0x00, 0x01, 0xd7, 0x00, 0x00, 0x00, 0x9c,
@@ -1127,7 +1081,7 @@ const unsigned char ellogo_jpg[] = {
     0x60, 0x82,
 };
 
-unsigned int ellogo_jpg_size = sizeof(ellogo_jpg);
+unsigned int        mslogo_jpg_size = sizeof(mslogo_jpg);
 
 const unsigned char nxlogo_png[] = {
     0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a, 0x00, 0x00, 0x00,
@@ -2260,4 +2214,5 @@ const unsigned char nxlogo_png[] = {
     0x49, 0x45, 0x4e, 0x44, 0xae, 0x42, 0x60, 0x82
 };
 
-unsigned int nxlogo_png_size = sizeof(nxlogo_png);
+unsigned int        nxlogo_png_size = sizeof(nxlogo_png);
+

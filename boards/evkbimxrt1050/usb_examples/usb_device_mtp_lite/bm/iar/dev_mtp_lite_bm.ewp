@@ -725,6 +725,7 @@
         <option>
           <name>IlinkConfigDefines</name>
           <state>__stack_size__=0x2000</state>
+          <state>__heap_size__=0x2000</state>
         </option>
         <option>
           <name>IlinkMapFile</name>
@@ -1718,6 +1719,7 @@
         <option>
           <name>IlinkConfigDefines</name>
           <state>__stack_size__=0x2000</state>
+          <state>__heap_size__=0x2000</state>
         </option>
         <option>
           <name>IlinkMapFile</name>

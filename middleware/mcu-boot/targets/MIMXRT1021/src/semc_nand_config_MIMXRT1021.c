@@ -17,8 +17,8 @@
 // Definitions
 ////////////////////////////////////////////////////////////////////////////////
 
-// 0 - RT1050 A0
-// 1 - RT1050 A1
+// 0 - RT1020 A0
+// 1 - RT1020 A1
 #define SEMC_NAND_FUSE_MAP_VERSION (0)
 
 #define SEMC_NAND_TYPICAL_PAGES_IN_BLOCK (64U)

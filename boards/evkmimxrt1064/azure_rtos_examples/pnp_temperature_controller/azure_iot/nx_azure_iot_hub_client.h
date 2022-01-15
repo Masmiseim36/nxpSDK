@@ -60,10 +60,14 @@ extern   "C" {
 #define NX_AZURE_IOT_HUB_CLIENT_DNS_TIMEOUT                         (5 * NX_IP_PERIODIC_RATE)
 #endif /* NX_AZURE_IOT_HUB_CLIENT_DNS_TIMEOUT */
 
-/* Set the default token expiry in secs.  */
-#ifndef NX_AZURE_IOT_HUB_CLIENT_TOKEN_EXPIRY
-#define NX_AZURE_IOT_HUB_CLIENT_TOKEN_EXPIRY                        (3600)
+/* Set the default timeout for connection with SAS token authentication in secs.  */
+#ifndef NX_AZURE_IOT_HUB_CLIENT_TOKEN_CONNECTION_TIMEOUT
+#ifdef NX_AZURE_IOT_HUB_CLIENT_TOKEN_EXPIRY
+#define NX_AZURE_IOT_HUB_CLIENT_TOKEN_CONNECTION_TIMEOUT            NX_AZURE_IOT_HUB_CLIENT_TOKEN_EXPIRY
+#else
+#define NX_AZURE_IOT_HUB_CLIENT_TOKEN_CONNECTION_TIMEOUT            (3600)
 #endif /* NX_AZURE_IOT_HUB_CLIENT_TOKEN_EXPIRY */
+#endif /* NX_AZURE_IOT_HUB_CLIENT_SAS_CONNECTION_TIMEOUT */
 
 #ifndef NX_AZURE_IOT_HUB_CLIENT_MAX_BACKOFF_IN_SEC
 #define NX_AZURE_IOT_HUB_CLIENT_MAX_BACKOFF_IN_SEC                  (10 * 60)
@@ -77,7 +81,7 @@ extern   "C" {
 #define NX_AZURE_IOT_HUB_CLIENT_MAX_BACKOFF_JITTER_PERCENT          (60)
 #endif /* NX_AZURE_IOT_HUB_CLIENT_MAX_BACKOFF_JITTER_PERCENT */
 
-/* Define AZ IoT Hub Client state.  */
+/* Define Azure IoT Hub Client state.  */
 /**< The client is not connected */
 #define NX_AZURE_IOT_HUB_CLIENT_STATUS_NOT_CONNECTED                0
 
@@ -91,15 +95,6 @@ extern   "C" {
 #ifndef NX_AZURE_IOT_HUB_CLIENT_TELEMETRY_QOS
 #define NX_AZURE_IOT_HUB_CLIENT_TELEMETRY_QOS                       NX_AZURE_IOT_MQTT_QOS_1
 #endif /* NX_AZURE_IOT_HUB_CLIENT_TELEMETRY_QOS */
-
-typedef struct NX_AZURE_IOT_THREAD_STRUCT
-{
-    TX_THREAD                           *thread_ptr;
-    struct NX_AZURE_IOT_THREAD_STRUCT   *thread_next;
-    UINT                                 thread_message_type;
-    UINT                                 thread_expected_id;     /* Used by device twin. */
-    NX_PACKET                           *thread_received_message;
-} NX_AZURE_IOT_THREAD;
 
 /* Forward declration*/
 struct NX_AZURE_IOT_HUB_CLIENT_STRUCT;
@@ -153,6 +148,7 @@ typedef struct NX_AZURE_IOT_HUB_CLIENT_STRUCT
     az_iot_hub_client                       iot_hub_client_core;
     UINT                                    nx_azure_iot_hub_client_throttle_count;
     ULONG                                   nx_azure_iot_hub_client_throttle_end_time;
+    ULONG                                   nx_azure_iot_hub_client_sas_token_expiry_time;
 } NX_AZURE_IOT_HUB_CLIENT;
 
 
@@ -200,13 +196,27 @@ UINT nx_azure_iot_hub_client_initialize(NX_AZURE_IOT_HUB_CLIENT *hub_client_ptr,
 UINT nx_azure_iot_hub_client_deinitialize(NX_AZURE_IOT_HUB_CLIENT *hub_client_ptr);
 
 /**
- * @brief Set the client certificate in the IoT Hub client.
+ * @brief Add more trusted certificate in the IoT Hub client if needed. It can be called multiple times to set multiple trusted certificates.
+ *
+ * @param[in] hub_client_ptr A pointer to a #NX_AZURE_IOT_HUB_CLIENT.
+ * @param[in] trusted_certificate A pointer to a `NX_SECURE_X509_CERT`, which is the trusted certificate.
+ * @return A `UINT` with the result of the API.
+ *   @retval #NX_AZURE_IOT_SUCCESS Successfully add trusted certificate to Azure IoT Hub Instance.
+ *   @retval #NX_AZURE_IOT_INVALID_PARAMETER Fail to add trusted certificate to Azure IoT Hub Instance due to invalid parameter.
+ *   @retval #NX_AZURE_IOT_INSUFFICIENT_BUFFER_SPACE Fail to add trusted certificate due to NX_AZURE_IOT_MAX_NUM_OF_TRUSTED_CERTS is too small.
+ */
+UINT nx_azure_iot_hub_client_trusted_cert_add(NX_AZURE_IOT_HUB_CLIENT *hub_client_ptr,
+                                              NX_SECURE_X509_CERT *trusted_certificate);
+
+/**
+ * @brief Set the client certificate in the IoT Hub client. It can be called multiple times to set certificate chain.
  *
  * @param[in] hub_client_ptr A pointer to a #NX_AZURE_IOT_HUB_CLIENT.
  * @param[in] device_certificate A pointer to a `NX_SECURE_X509_CERT`, which is the device certificate.
  * @return A `UINT` with the result of the API.
- *   @retval #NX_AZURE_IOT_SUCCESS Successfully set device certificate to AZ IoT Hub Instance.
- *   @retval #NX_AZURE_IOT_INVALID_PARAMETER Fail to set device certificate to AZ IoT Hub Instance due to invalid parameter.
+ *   @retval #NX_AZURE_IOT_SUCCESS Successfully set device certificate to Azure IoT Hub Instance.
+ *   @retval #NX_AZURE_IOT_INVALID_PARAMETER Fail to set device certificate to Azure IoT Hub Instance due to invalid parameter.
+ *   @retval #NX_AZURE_IOT_INSUFFICIENT_BUFFER_SPACE Fail to set device certificate due to NX_AZURE_IOT_MAX_NUM_OF_DEVICE_CERTS is too small.
  */
 UINT nx_azure_iot_hub_client_device_cert_set(NX_AZURE_IOT_HUB_CLIENT *hub_client_ptr,
                                              NX_SECURE_X509_CERT *device_certificate);
@@ -226,8 +236,6 @@ UINT nx_azure_iot_hub_client_symmetric_key_set(NX_AZURE_IOT_HUB_CLIENT *hub_clie
 
 /**
  * @brief Set Device Twin model id in the IoT Hub client.
- *
- * @warning THIS FUNCTION IS TEMPORARY. IT IS SUBJECT TO CHANGE OR BE REMOVED IN THE FUTURE.
  *
  * @param[in] hub_client_ptr A pointer to a #NX_AZURE_IOT_HUB_CLIENT.
  * @param[in] model_id_ptr A pointer to a model id.

@@ -21,7 +21,7 @@ extern void uart_pinmux_config(uint32_t instance, pinmux_type_t pinmux);
 #error At least one peripheral must be enabled!
 #endif
 
-//! @brief Peripheral array for MIMXRT1051.
+//! @brief Peripheral array for MIMXRT1021.
 const peripheral_descriptor_t g_peripherals[] = {
 #if BL_CONFIG_LPUART_1 && BL_CONFIG_LPUART
     // LPUART1

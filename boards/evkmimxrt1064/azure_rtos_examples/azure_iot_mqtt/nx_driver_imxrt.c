@@ -316,11 +316,6 @@ VOID  nx_driver_imx(NX_IP_DRIVER *driver_req_ptr)
     default:
 
         /* Invalid driver request.  */
-
-        /* Return the unhandled command status.  */
-        driver_req_ptr -> nx_ip_driver_status =  NX_UNHANDLED_COMMAND;
-
-        /* Default to successful return.  */
         driver_req_ptr -> nx_ip_driver_status =  NX_DRIVER_ERROR;
     }
 }

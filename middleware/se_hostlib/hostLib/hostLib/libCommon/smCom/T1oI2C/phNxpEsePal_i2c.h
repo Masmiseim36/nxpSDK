@@ -41,7 +41,11 @@
 #if AX_EMBEDDED //back off delay is implemented for AX_EMBEDDED devices
   /*TODO:semslite need more than 20 polling count right now max is set to 60 as 46 was the max sof counter observed
    SIMW-2927*/
+#if defined(LPC_55x)
+  #define ESE_NAD_POLLING_MAX (2*250)
+ #else
   #define ESE_NAD_POLLING_MAX (2*30)
+#endif
 #else
   #define ESE_NAD_POLLING_MAX (2*250)
 #endif

@@ -86,7 +86,9 @@
 
 #define FRAME_BUFFER_ALIGN 64
 
-#define VRAM_SIZE (LCD_HEIGHT * LCD_WIDTH * LCD_BYTES_PER_PIXEL)
+#define VRAM_SIZE              (LCD_HEIGHT * LCD_WIDTH * LCD_BYTES_PER_PIXEL)
+#define EXAMPLE_GPT            GPT2
+#define EXAMPLE_GPT_TICK_TO_MS 25
 
 extern int BOARD_Touch_Poll(void);
 

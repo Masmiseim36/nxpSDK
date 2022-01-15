@@ -8,7 +8,7 @@
 **     Compiler:            GNU C Compiler
 **     Reference manual:    IMXRT1064RM Rev.0.1, 12/2018 | IMXRT1064SRM Rev.3
 **     Version:             rev. 0.1, 2018-06-22
-**     Build:               b210227
+**     Build:               b210709
 **
 **     Abstract:
 **         Linker file for the GNU C Compiler
@@ -28,8 +28,8 @@
 /* Entry Point */
 ENTRY(Reset_Handler)
 
-HEAP_SIZE  = DEFINED(__heap_size__)  ? __heap_size__  : 25600;
-STACK_SIZE = DEFINED(__stack_size__) ? __stack_size__ : 2048;
+HEAP_SIZE  = DEFINED(__heap_size__)  ? __heap_size__  : 0x7000;
+STACK_SIZE = DEFINED(__stack_size__) ? __stack_size__ : 0x800;
 VECTOR_RAM_SIZE = DEFINED(__ram_vector_table__) ? 0x00000400 : 0;
 
 /* Specify the memory areas */
@@ -58,7 +58,7 @@ SECTIONS
     . = ALIGN(4);
   } > m_flash_config
 
-  ivt_begin= ORIGIN(m_flash_config) + LENGTH(m_flash_config);
+  ivt_begin = ORIGIN(m_flash_config) + LENGTH(m_flash_config);
 
   .ivt : AT(ivt_begin)
   {
@@ -190,6 +190,7 @@ SECTIONS
     *(m_usb_dma_init_data)
     *(.data)                 /* .data sections */
     *(.data*)                /* .data* sections */
+    *(DataQuickAccess)       /* quick access data section */
     KEEP(*(.jcr*))
     . = ALIGN(4);
     __data_end__ = .;        /* define a global symbol at data end */
@@ -268,4 +269,3 @@ SECTIONS
 
   ASSERT(__StackLimit >= __HeapLimit, "region m_data overflowed with stack and heap")
 }
-

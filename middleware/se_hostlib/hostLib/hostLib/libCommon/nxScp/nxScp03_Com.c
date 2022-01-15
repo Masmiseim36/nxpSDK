@@ -115,10 +115,10 @@ uint16_t nxpSCP03_Decrypt_ResponseAPDU(
     size_t signatureLen = sizeof(respMac);
     size_t compareoffset = 0;
     size_t macSize = SCP_CMAC_SIZE;
-    uint8_t iv[SCP_IV_SIZE];
+    uint8_t iv[SCP_IV_SIZE] = {0};
     uint8_t *pIv = (uint8_t *)iv;
     uint8_t response[NX_SCP03_MAX_BUFFER_SIZE];
-    uint8_t plaintextResponse[NX_SCP03_MAX_BUFFER_SIZE];
+    uint8_t plaintextResponse[NX_SCP03_MAX_BUFFER_SIZE] = {0};
     sss_algorithm_t algorithm_aes = kAlgorithm_SSS_AES_CBC;
     sss_mode_t mode_aes = kMode_SSS_Decrypt;
     sss_symmetric_t symm;

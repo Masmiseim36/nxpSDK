@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2020 NXP
+ * Copyright 2018-2021 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -44,11 +44,36 @@ extern "C" {
  */
 void BOARD_InitBootPins(void);
 
-/* GPIO_AD_B0_08 (coord F13), LED */
-#define BOARD_INITPINS_LED_GPIO                                            GPIO1   /*!< GPIO device name: GPIO1 */
-#define BOARD_INITPINS_LED_PORT                                            GPIO1   /*!< PORT device name: GPIO1 */
-#define BOARD_INITPINS_LED_PIN                                                8U   /*!< GPIO1 pin index: 8 */
+#define BOARD_INITPINS_IOMUXC_GPR_GPR26_GPIO_MUX1_GPIO_SEL_MASK 0x080100U /*!< GPIO1 and GPIO6 share same IO MUX function, GPIO_MUX1 selects one GPIO function: affected bits mask */
+#define BOARD_INITPINS_IOMUXC_GPR_GPR27_GPIO_MUX2_GPIO_SEL_MASK 0x10000000U /*!< GPIO2 and GPIO7 share same IO MUX function, GPIO_MUX2 selects one GPIO function: affected bits mask */
 
+/* GPIO_AD_B1_03 (coord M12), WL_RST */
+/* Routed pin properties */
+#define BOARD_INITPINS_WL_RST_PERIPHERAL                                   GPIO1   /*!< Peripheral name */
+#define BOARD_INITPINS_WL_RST_SIGNAL                                     gpio_io   /*!< Signal name */
+#define BOARD_INITPINS_WL_RST_CHANNEL                                        19U   /*!< Signal channel */
+
+/* Symbols to be used with GPIO driver */
+#define BOARD_INITPINS_WL_RST_GPIO                                         GPIO1   /*!< GPIO peripheral base pointer */
+#define BOARD_INITPINS_WL_RST_GPIO_PIN                                       19U   /*!< GPIO pin number */
+#define BOARD_INITPINS_WL_RST_GPIO_PIN_MASK                          (1U << 19U)   /*!< GPIO pin mask */
+#define BOARD_INITPINS_WL_RST_PORT                                         GPIO1   /*!< PORT peripheral base pointer */
+#define BOARD_INITPINS_WL_RST_PIN                                            19U   /*!< PORT pin number */
+#define BOARD_INITPINS_WL_RST_PIN_MASK                               (1U << 19U)   /*!< PORT pin mask */
+
+/* GPIO_AD_B0_08 (coord F13), LED */
+/* Routed pin properties */
+#define BOARD_INITPINS_LED_PERIPHERAL                                      GPIO1   /*!< Peripheral name */
+#define BOARD_INITPINS_LED_SIGNAL                                        gpio_io   /*!< Signal name */
+#define BOARD_INITPINS_LED_CHANNEL                                            8U   /*!< Signal channel */
+
+/* Symbols to be used with GPIO driver */
+#define BOARD_INITPINS_LED_GPIO                                            GPIO1   /*!< GPIO peripheral base pointer */
+#define BOARD_INITPINS_LED_GPIO_PIN                                           8U   /*!< GPIO pin number */
+#define BOARD_INITPINS_LED_GPIO_PIN_MASK                              (1U << 8U)   /*!< GPIO pin mask */
+#define BOARD_INITPINS_LED_PORT                                            GPIO1   /*!< PORT peripheral base pointer */
+#define BOARD_INITPINS_LED_PIN                                                8U   /*!< PORT pin number */
+#define BOARD_INITPINS_LED_PIN_MASK                                   (1U << 8U)   /*!< PORT pin mask */
 
 /*!
  * @brief Configures pin routing and optionally pin electrical features.
@@ -56,6 +81,41 @@ void BOARD_InitBootPins(void);
  */
 void BOARD_InitPins(void);
 
+#define BOARD_INITPINSM2_IOMUXC_GPR_GPR26_GPIO_MUX1_GPIO_SEL_MASK 0x01080000U /*!< GPIO1 and GPIO6 share same IO MUX function, GPIO_MUX1 selects one GPIO function: affected bits mask */
+
+/* GPIO_AD_B1_03 (coord M12), WL_RST */
+/* Routed pin properties */
+#define BOARD_INITPINSM2_WL_RST_PERIPHERAL                                 GPIO1   /*!< Peripheral name */
+#define BOARD_INITPINSM2_WL_RST_SIGNAL                                   gpio_io   /*!< Signal name */
+#define BOARD_INITPINSM2_WL_RST_CHANNEL                                      19U   /*!< Signal channel */
+
+/* Symbols to be used with GPIO driver */
+#define BOARD_INITPINSM2_WL_RST_GPIO                                       GPIO1   /*!< GPIO peripheral base pointer */
+#define BOARD_INITPINSM2_WL_RST_GPIO_PIN                                     19U   /*!< GPIO pin number */
+#define BOARD_INITPINSM2_WL_RST_GPIO_PIN_MASK                        (1U << 19U)   /*!< GPIO pin mask */
+#define BOARD_INITPINSM2_WL_RST_PORT                                       GPIO1   /*!< PORT peripheral base pointer */
+#define BOARD_INITPINSM2_WL_RST_PIN                                          19U   /*!< PORT pin number */
+#define BOARD_INITPINSM2_WL_RST_PIN_MASK                             (1U << 19U)   /*!< PORT pin mask */
+
+/* GPIO_AD_B1_08 (coord H13), SDIO_RST */
+/* Routed pin properties */
+#define BOARD_INITPINSM2_SDIO_RST_PERIPHERAL                               GPIO1   /*!< Peripheral name */
+#define BOARD_INITPINSM2_SDIO_RST_SIGNAL                                 gpio_io   /*!< Signal name */
+#define BOARD_INITPINSM2_SDIO_RST_CHANNEL                                    24U   /*!< Signal channel */
+
+/* Symbols to be used with GPIO driver */
+#define BOARD_INITPINSM2_SDIO_RST_GPIO                                     GPIO1   /*!< GPIO peripheral base pointer */
+#define BOARD_INITPINSM2_SDIO_RST_GPIO_PIN                                   24U   /*!< GPIO pin number */
+#define BOARD_INITPINSM2_SDIO_RST_GPIO_PIN_MASK                      (1U << 24U)   /*!< GPIO pin mask */
+#define BOARD_INITPINSM2_SDIO_RST_PORT                                     GPIO1   /*!< PORT peripheral base pointer */
+#define BOARD_INITPINSM2_SDIO_RST_PIN                                        24U   /*!< PORT pin number */
+#define BOARD_INITPINSM2_SDIO_RST_PIN_MASK                           (1U << 24U)   /*!< PORT pin mask */
+
+/*!
+ * @brief Configures pin routing and optionally pin electrical features.
+ *
+ */
+void BOARD_InitPinsM2(void);
 
 /*!
  * @brief Configures pin routing and optionally pin electrical features.

@@ -11,7 +11,7 @@ target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
 )
 
 
-include(driver_edma_MIMXRT1021)
-
 include(driver_flexio_spi_MIMXRT1021)
+
+include(driver_edma_MIMXRT1021)
 

@@ -39,7 +39,21 @@
 #include "wlan.h"
 #include "wmlog.h"
 #include "wm_net.h"
-#include "wlan_bt_fw.h"
+#if defined(SD8801)
+#include "sd8801_wlan.h"
+#elif defined(SD8977)
+#include "sduart8977_wlan_bt.h"
+#elif defined(SD8978)
+#include "sduartIW416_wlan_bt.h"
+#elif defined(SD8987)
+#include "sduart8987_wlan_bt.h"
+#elif defined(SD8997)
+#include "sduart8997_wlan_bt.h"
+#elif defined(SD9097)
+#include "pvt_sd9097_wlan.h"
+#elif defined(SD9098)
+#include "pvt_sd9098_wlan.h"
+#endif
 
 #include "fsl_debug_console.h"
 
@@ -193,6 +207,20 @@ WIFIReturnCode_t WIFI_On( void )
     os_semaphore_delete(&wlan_init_sem);
 
     wifi_init_done = true;
+
+    /* For Test Only */
+#if 0
+    WIFINetworkProfile_t xNetworkProfile = {0};
+    WIFIReturnCode_t xWiFiStatus;
+    uint16_t usIndex;
+    strncpy( (char *)xNetworkProfile.ucSSID, "test", strlen("test"));
+    xNetworkProfile.ucSSIDLength = strlen("test");
+    strncpy( (char *)xNetworkProfile.cPassword, "12348765", strlen("12348765"));
+    xNetworkProfile.ucPasswordLength = strlen("12348765");
+    xNetworkProfile.xSecurity = eWiFiSecurityWPA2;
+    WIFI_NetworkAdd( &xNetworkProfile, &usIndex );
+#endif
+
     return eWiFiSuccess;
 }
 /*-----------------------------------------------------------*/

@@ -868,7 +868,14 @@ void USB_DeviceDfuSwitchMode(void)
 
     static uint32_t newSP, newPC;
     SysTick->CTRL &= ~SysTick_CTRL_ENABLE_Msk;
+#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
+    if (kStatus_USB_Success != USB_DeviceClassDeinit(CONTROLLER_ID))
+    {
+        usb_echo("device classs deinit error\r\n");
+    }
+#else
     (void)USB_DeviceClassDeinit(CONTROLLER_ID);
+#endif
     SCB->VTOR = address;
     newSP     = ((uint32_t *)address)[0U];
     newPC     = ((uint32_t *)address)[1U];

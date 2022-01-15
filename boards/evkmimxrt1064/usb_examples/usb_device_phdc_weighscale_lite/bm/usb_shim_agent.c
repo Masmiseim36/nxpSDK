@@ -159,10 +159,20 @@ usb_status_t USB_ShimAgentRecvComplete(void *handle, void *param)
     else
     {
         /* The data is still pending for receiving */
+#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
+        if (kStatus_USB_Success != USB_DeviceRecvRequest((void *)handle, g_shimAgent.bulkOutData.epNumber,
+                                                         (uint8_t *)(g_shimAgent.bulkOutData.recvData.buffer +
+                                                                     g_shimAgent.bulkOutData.transferCount),
+                                                         g_shimAgent.bulkOutData.epMaxPacketSize))
+        {
+            return kStatus_USB_Error;
+        }
+#else
         (void)USB_DeviceRecvRequest(
             (void *)handle, g_shimAgent.bulkOutData.epNumber,
             (uint8_t *)(g_shimAgent.bulkOutData.recvData.buffer + g_shimAgent.bulkOutData.transferCount),
             g_shimAgent.bulkOutData.epMaxPacketSize);
+#endif
     }
     return kStatus_USB_Success;
 }

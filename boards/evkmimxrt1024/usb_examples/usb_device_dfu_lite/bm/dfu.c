@@ -38,9 +38,9 @@ typedef usb_status_t (*dfu_state_func)(usb_dfu_struct_t *dfu_dev, usb_device_dfu
 static usb_status_t USB_DeviceDfuDetachReqest(uint16_t wTimeout);
 static usb_status_t USB_DeviceDfuDownLoadReqest(uint16_t wLength, uint8_t **data);
 static usb_status_t USB_DeviceDfuUpLoadReqest(uint32_t *length, uint8_t **data);
-static usb_status_t USB_DeviceDfuGetStatusReqest(uint8_t *length, uint8_t **data);
+static usb_status_t USB_DeviceDfuGetStatusReqest(uint32_t *length, uint8_t **data);
 static usb_status_t USB_DeviceDfuClearStatusReqest(void);
-static usb_status_t USB_DeviceDfuGetStateReqest(uint8_t *length, uint8_t **data);
+static usb_status_t USB_DeviceDfuGetStateReqest(uint32_t *length, uint8_t **data);
 static usb_status_t USB_DeviceDfuAbortReqest(void);
 static usb_status_t USB_DeviceStateAppIdle(usb_dfu_struct_t *dfu_dev, usb_device_dfu_event_struct_t *event);
 static usb_status_t USB_DeviceStateAppDetach(usb_dfu_struct_t *dfu_dev, usb_device_dfu_event_struct_t *event);
@@ -396,6 +396,14 @@ static usb_status_t USB_DeviceDfuDetachReqest(uint16_t wTimeout)
     usb_dfu_state_struct_t state;
     usb_device_dfu_event_struct_t event;
     uint32_t status;
+
+    if (wTimeout > USB_DFU_DETACH_TIMEOUT)
+    {
+        /* wTimeout should not contain a value larger than the value specified in wDetachTimeout,
+           or return kStatus_USB_InvalidRequest to stall endpoint. */
+        return kStatus_USB_InvalidRequest;
+    }
+
     state = USB_DeviceDfuGetState();
     if (kState_AppIdle != state)
     {
@@ -438,7 +446,14 @@ static usb_status_t USB_DeviceDfuDownLoadReqest(uint16_t wLength, uint8_t **data
     usb_dfu_state_struct_t state;
     usb_device_dfu_event_struct_t event;
     uint32_t status;
+
     state = USB_DeviceDfuGetState();
+
+    if (wLength > MAX_TRANSFER_SIZE)
+    {
+        wLength = MAX_TRANSFER_SIZE;
+    }
+
     if ((kState_DfuIdle == state) || (kState_DfuDnLoadIdle == state))
     {
         if (USB_DFU_BIT_CAN_DNLOAD && (wLength > 0))
@@ -501,6 +516,15 @@ static usb_status_t USB_DeviceDfuUpLoadReqest(uint32_t *length, uint8_t **data)
     usb_device_dfu_event_struct_t event;
     uint32_t status;
     uint32_t uploadLength;
+
+    uploadLength = *((uint32_t *)length);
+    if (uploadLength > MAX_TRANSFER_SIZE)
+    {
+        /* The maximum length should not exceed the value specified in the wTransferSize field,
+           or return kStatus_USB_InvalidRequest to stall endpoint. */
+        return kStatus_USB_InvalidRequest;
+    }
+
     state = USB_DeviceDfuGetState();
     if (kState_DfuIdle == state)
     {
@@ -523,13 +547,13 @@ static usb_status_t USB_DeviceDfuUpLoadReqest(uint32_t *length, uint8_t **data)
             s_UsbDeviceDfuDemo.dfuStatus->bState      = kState_DfuUpLoadIdle;
             s_UsbDeviceDfuDemo.dfuCurrentUploadLenght = 0U;
 
-            uploadLength = *((uint32_t *)length);
             for (uint32_t i = 0; i < uploadLength; i++)
             {
                 s_UsbDeviceDfuDemo.dfuFirmwareBlock[i] = (((uint8_t *)s_UsbDeviceDfuDemo.dfuFirmwareAddress))[i];
             }
             s_UsbDeviceDfuDemo.dfuCurrentUploadLenght += uploadLength;
-            *data = s_UsbDeviceDfuDemo.dfuFirmwareBlock;
+            *length = uploadLength;
+            *data   = s_UsbDeviceDfuDemo.dfuFirmwareBlock;
         }
 #else
         USB_DeviceDfuSetStatus(USB_DFU_STATUS_ERR_STALLEDPKT);
@@ -539,22 +563,21 @@ static usb_status_t USB_DeviceDfuUpLoadReqest(uint32_t *length, uint8_t **data)
     {
         /* uploading indicator */
         usb_echo("&");
-        if (s_UsbDeviceDfuDemo.dfuFirmwareSize - s_UsbDeviceDfuDemo.dfuCurrentUploadLenght >= *length)
+        if (s_UsbDeviceDfuDemo.dfuFirmwareSize - s_UsbDeviceDfuDemo.dfuCurrentUploadLenght >= uploadLength)
         {
-            uploadLength = *((uint32_t *)length);
             for (uint32_t i = 0; i < uploadLength; i++)
             {
                 s_UsbDeviceDfuDemo.dfuFirmwareBlock[i] =
                     (((uint8_t *)s_UsbDeviceDfuDemo.dfuFirmwareAddress) + s_UsbDeviceDfuDemo.dfuCurrentUploadLenght)[i];
             }
             s_UsbDeviceDfuDemo.dfuCurrentUploadLenght += uploadLength;
-            *data = s_UsbDeviceDfuDemo.dfuFirmwareBlock;
+            *length = uploadLength;
+            *data   = s_UsbDeviceDfuDemo.dfuFirmwareBlock;
         }
         else
         {
             usb_echo("\nUploading firmware completed.\n");
-            uploadLength = *((uint32_t *)length);
-            *length      = s_UsbDeviceDfuDemo.dfuFirmwareSize - s_UsbDeviceDfuDemo.dfuCurrentUploadLenght;
+            *length = s_UsbDeviceDfuDemo.dfuFirmwareSize - s_UsbDeviceDfuDemo.dfuCurrentUploadLenght;
             for (uint32_t i = 0; i < *length; i++)
             {
                 s_UsbDeviceDfuDemo.dfuFirmwareBlock[i] =
@@ -599,7 +622,7 @@ static usb_status_t USB_DeviceDfuUpLoadReqest(uint32_t *length, uint8_t **data)
  *
  * @return A USB error code or kStatus_USB_Success.
  */
-static usb_status_t USB_DeviceDfuGetStatusReqest(uint8_t *length, uint8_t **data)
+static usb_status_t USB_DeviceDfuGetStatusReqest(uint32_t *length, uint8_t **data)
 {
     usb_status_t error = kStatus_USB_Success;
     usb_dfu_state_struct_t state;
@@ -691,7 +714,7 @@ static usb_status_t USB_DeviceDfuClearStatusReqest(void)
  *
  * @return A USB error code or kStatus_USB_Success.
  */
-static usb_status_t USB_DeviceDfuGetStateReqest(uint8_t *length, uint8_t **data)
+static usb_status_t USB_DeviceDfuGetStateReqest(uint32_t *length, uint8_t **data)
 {
     usb_status_t error = kStatus_USB_Success;
     usb_dfu_state_struct_t state;
@@ -788,35 +811,62 @@ usb_status_t USB_DeviceDfuClassRequest(usb_device_handle handle,
 {
     usb_status_t error = kStatus_USB_InvalidRequest;
 
-    if (setup->wIndex != USB_DFU_INTERFACE_INDEX)
+    if ((setup->bmRequestType & USB_REQUEST_TYPE_RECIPIENT_MASK) != USB_REQUEST_TYPE_RECIPIENT_INTERFACE)
     {
         return error;
     }
-    switch (setup->bRequest)
+
+    if ((setup->bmRequestType & USB_REQUEST_TYPE_DIR_MASK) == USB_REQUEST_TYPE_DIR_OUT)
     {
-        case USB_DEVICE_DFU_DETACH:
-            error = USB_DeviceDfuDetachReqest(setup->wValue);
-            break;
-        case USB_DEVICE_DFU_DNLOAD:
-            error = USB_DeviceDfuDownLoadReqest(setup->wLength, buffer);
-            break;
-        case USB_DEVICE_DFU_UPLOAD:
-            error = USB_DeviceDfuUpLoadReqest(length, buffer);
-            break;
-        case USB_DEVICE_DFU_GETSTATUS:
-            error = USB_DeviceDfuGetStatusReqest((uint8_t *)length, buffer);
-            break;
-        case USB_DEVICE_DFU_CLRSTATUS:
-            error = USB_DeviceDfuClearStatusReqest();
-            break;
-        case USB_DEVICE_DFU_GETSTATE:
-            error = USB_DeviceDfuGetStateReqest((uint8_t *)length, buffer);
-            break;
-        case USB_DEVICE_DFU_ABORT:
-            error = USB_DeviceDfuAbortReqest();
-            break;
-        default:
-            break;
+        switch (setup->bRequest)
+        {
+            case USB_DEVICE_DFU_DETACH:
+                if (setup->wLength == 0U)
+                {
+                    error = USB_DeviceDfuDetachReqest(setup->wValue);
+                }
+                break;
+            case USB_DEVICE_DFU_DNLOAD:
+                error = USB_DeviceDfuDownLoadReqest(setup->wLength, buffer);
+                break;
+            case USB_DEVICE_DFU_CLRSTATUS:
+                if (setup->wLength == 0U)
+                {
+                    error = USB_DeviceDfuClearStatusReqest();
+                }
+                break;
+            case USB_DEVICE_DFU_ABORT:
+                if (setup->wLength == 0U)
+                {
+                    error = USB_DeviceDfuAbortReqest();
+                }
+                break;
+            default:
+                break;
+        }
+    }
+    else
+    {
+        switch (setup->bRequest)
+        {
+            case USB_DEVICE_DFU_UPLOAD:
+                error = USB_DeviceDfuUpLoadReqest(length, buffer);
+                break;
+            case USB_DEVICE_DFU_GETSTATUS:
+                if (setup->wLength != 0U)
+                {
+                    error = USB_DeviceDfuGetStatusReqest(length, buffer);
+                }
+                break;
+            case USB_DEVICE_DFU_GETSTATE:
+                if (setup->wLength != 0U)
+                {
+                    error = USB_DeviceDfuGetStateReqest(length, buffer);
+                }
+                break;
+            default:
+                break;
+        }
     }
     return error;
 }
@@ -833,7 +883,14 @@ void USB_DeviceDfuSwitchMode(void)
     address = (uint32_t)(USB_DFU_APP_ADDRESS);
 
     static uint32_t newSP, newPC;
-    USB_DeviceDeinit(g_UsbDeviceDfu.deviceHandle);
+#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
+    if (kStatus_USB_Success != USB_DeviceDeinit(g_UsbDeviceDfu.deviceHandle))
+    {
+        usb_echo("device deinit error\r\n");
+    }
+#else
+    (void)USB_DeviceDeinit(g_UsbDeviceDfu.deviceHandle);
+#endif
     SCB->VTOR = address;
     newSP     = ((uint32_t *)address)[0U];
     newPC     = ((uint32_t *)address)[1U];

@@ -37,11 +37,21 @@ static uint8_t s_buff[MWM_BUFFER_SIZE];
  ******************************************************************************/
 int mwm_init(void)
 {
+#if defined(BOARD_SERIAL_MWM_RST_WRITE)
     /* Reset Wi-Fi module */
     BOARD_SERIAL_MWM_RST_WRITE(0);
     vTaskDelay(pdMS_TO_TICKS(1));
     BOARD_SERIAL_MWM_RST_WRITE(1);
     vTaskDelay(pdMS_TO_TICKS(MWM_REBOOT_DELAY_MS));
+#else
+/*
+ * Example of Wi-Fi reset pin settings:
+ * #define BOARD_SERIAL_MWM_RST_GPIO          GPIO1
+ * #define BOARD_SERIAL_MWM_RST_PIN           22
+ * #define BOARD_SERIAL_MWM_RST_WRITE(output) GPIO_PinWrite(BOARD_SERIAL_MWM_RST_GPIO, BOARD_SERIAL_MWM_RST_PIN, output)
+ */
+#warning "Define BOARD_SERIAL_MWM_RST_WRITE(output) in board.h"
+#endif
 
     return mwm_port_init();
 }
@@ -693,7 +703,13 @@ int mwm_wlan_scan(mwm_wlan_t *wlans, uint32_t wlan_count)
                 j--;
             }
 
-            (void)memcpy((void *)wlans[i].ssid, (void *)(s_buff + 1), j);
+            uint32_t len = MIN(j, (sizeof(wlans[i].ssid) - 1));
+            if (len > 0u)
+            {
+                (void)memcpy((void *)wlans[i].ssid, (void *)(s_buff + 1), len);
+            }
+            wlans[i].ssid[len] = '\0';
+
             j += 2u;
             wlans[i].channel = (uint8_t)strtol((char *)&s_buff[j], NULL, 10);
 

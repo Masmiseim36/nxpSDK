@@ -15,7 +15,7 @@ static void delay(void)
 
 uint32_t get_seed(void)
 {
-    uint32_t random_val;
+    uint32_t random_val = 0;
     trng_config_t trngConfig;
 
     TRNG_GetDefaultConfig(&trngConfig);
@@ -38,7 +38,7 @@ AT_NONCACHEABLE_SECTION(static caam_job_ring_interface_t s_jrif0);
 
 uint32_t get_seed(void)
 {
-    uint32_t random_val;
+    uint32_t random_val = 0;
     caam_config_t caam_config;
     caam_handle_t caam_handle = {.jobRing = kCAAM_JobRing0};
 

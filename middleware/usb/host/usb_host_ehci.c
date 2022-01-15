@@ -1082,7 +1082,7 @@ static void USB_HostBandwidthHsHostComputeCurrentFsls(usb_host_ehci_instance_t *
 {
     usb_host_ehci_pipe_t *ehciPipePointer;
     uint8_t index;
-    uint32_t deviceInfo;
+    uint32_t deviceInfo = 0U;
     void *temp;
 
     for (index = 0; index < 8U; ++index)
@@ -1154,7 +1154,7 @@ static void USB_HostBandwidthHsHostComputeCurrentHsAll(usb_host_ehci_instance_t 
 {
     usb_host_ehci_pipe_t *ehciPipePointer;
     uint16_t index;
-    uint32_t deviceInfo;
+    uint32_t deviceInfo = 0U;
     uint16_t frameInterval;
     void *temp;
     for (index = 0; index < 8U; ++index)
@@ -3621,7 +3621,7 @@ void USB_HostEhciTransactionDone(usb_host_ehci_instance_t *ehciInstance)
      ((defined USB_HOST_CONFIG_EHCI_MAX_SITD) && (USB_HOST_CONFIG_EHCI_MAX_SITD)))
     usb_host_ehci_iso_t *isoPointer;
     uint32_t dataLength;
-    uint32_t speed;
+    uint32_t speed = 0U;
 #endif
     void *temp;
     uint32_t transferResults;

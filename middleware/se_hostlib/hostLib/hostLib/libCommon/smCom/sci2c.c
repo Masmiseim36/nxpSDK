@@ -72,8 +72,8 @@
 static U8 gSeqCtr = 0;
 
 
-static uint8_t rxData[270];
-static uint8_t txData[270];
+static uint8_t rxData[MAX_DATA_LEN];
+static uint8_t txData[MAX_DATA_LEN];
 
 static uint8_t * pRx = rxData;
 

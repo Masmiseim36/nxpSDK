@@ -206,6 +206,7 @@
           <state>DEBUG_CONSOLE_TRANSFER_NON_BLOCKING</state>
           <state>MBEDTLS_CONFIG_FILE="mbedtls_config_client.h"</state>
           <state>SDK_DEBUGCONSOLE_UART=1</state>
+          <state>CFG_BLE</state>
           <state>NVM_NO_COMPONNET=1</state>
           <state>CPU_MIMXRT1062DVL6A_cm7</state>
           <state>HAL_UART_DMA_ENABLE=1</state>
@@ -438,6 +439,8 @@
           <state>$PROJ_DIR$/../../../../../components/flash/mflash/mimxrt1062</state>
           <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/osa</state>
+          <state>$PROJ_DIR$/../../../../../components/wifi_bt_module/AzureWave/tx_pwr_limits</state>
+          <state>$PROJ_DIR$/../../../../../components/wifi_bt_module/Murata/tx_pwr_limits</state>
           <state>$PROJ_DIR$/../../../../../components/log</state>
         </option>
         <option>
@@ -902,27 +905,10 @@
         <option>
           <name>IlinkAdditionalLibs</name>
           <state>$PROJ_DIR$/../../../../../middleware/wireless/framework/SecLib/lib_crypto_m7.a</state>
-          <state>$PROJ_DIR$/../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/btdm/cm7f/iar/libethermind_bt_a2dp.a</state>
-          <state>$PROJ_DIR$/../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/btdm/cm7f/iar/libethermind_bt_avrcp.a</state>
-          <state>$PROJ_DIR$/../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/btdm/cm7f/iar/libethermind_bt_bip.a</state>
-          <state>$PROJ_DIR$/../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/btdm/cm7f/iar/libethermind_bt_bpp.a</state>
-          <state>$PROJ_DIR$/../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/btdm/cm7f/iar/libethermind_bt_core.a</state>
-          <state>$PROJ_DIR$/../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/btdm/cm7f/iar/libethermind_bt_ctn.a</state>
-          <state>$PROJ_DIR$/../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/btdm/cm7f/iar/libethermind_bt_ftp.a</state>
-          <state>$PROJ_DIR$/../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/btdm/cm7f/iar/libethermind_bt_gatt.a</state>
-          <state>$PROJ_DIR$/../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/btdm/cm7f/iar/libethermind_bt_hfp.a</state>
-          <state>$PROJ_DIR$/../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/btdm/cm7f/iar/libethermind_bt_hid.a</state>
-          <state>$PROJ_DIR$/../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/btdm/cm7f/iar/libethermind_bt_map.a</state>
-          <state>$PROJ_DIR$/../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/btdm/cm7f/iar/libethermind_bt_opp.a</state>
-          <state>$PROJ_DIR$/../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/btdm/cm7f/iar/libethermind_bt_pan.a</state>
-          <state>$PROJ_DIR$/../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/btdm/cm7f/iar/libethermind_bt_pbap.a</state>
-          <state>$PROJ_DIR$/../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/btdm/cm7f/iar/libethermind_bt_protocol.a</state>
-          <state>$PROJ_DIR$/../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/btdm/cm7f/iar/libethermind_bt_sap.a</state>
-          <state>$PROJ_DIR$/../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/btdm/cm7f/iar/libethermind_bt_spp.a</state>
-          <state>$PROJ_DIR$/../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/btdm/cm7f/iar/libethermind_bt_util.a</state>
-          <state>$PROJ_DIR$/../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/btdm/cm7f/iar/libethermind_sbc_common.a</state>
-          <state>$PROJ_DIR$/../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/btdm/cm7f/iar/libethermind_sbc_decoder.a</state>
-          <state>$PROJ_DIR$/../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/btdm/cm7f/iar/libethermind_sbc_encoder.a</state>
+          <state>$PROJ_DIR$/../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/ble/cm7f/iar/libethermind_ble_core.a</state>
+          <state>$PROJ_DIR$/../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/ble/cm7f/iar/libethermind_ble_gatt.a</state>
+          <state>$PROJ_DIR$/../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/ble/cm7f/iar/libethermind_ble_protocol.a</state>
+          <state>$PROJ_DIR$/../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/ble/cm7f/iar/libethermind_ble_util.a</state>
         </option>
         <option>
           <name>IlinkOverrideProgramEntryLabel</name>
@@ -1319,6 +1305,7 @@
           <state>DEBUG_CONSOLE_TRANSFER_NON_BLOCKING</state>
           <state>MBEDTLS_CONFIG_FILE="mbedtls_config_client.h"</state>
           <state>SDK_DEBUGCONSOLE_UART=1</state>
+          <state>CFG_BLE</state>
           <state>NVM_NO_COMPONNET=1</state>
           <state>CPU_MIMXRT1062DVL6A_cm7</state>
           <state>HAL_UART_DMA_ENABLE=1</state>
@@ -1551,6 +1538,8 @@
           <state>$PROJ_DIR$/../../../../../components/flash/mflash/mimxrt1062</state>
           <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/osa</state>
+          <state>$PROJ_DIR$/../../../../../components/wifi_bt_module/AzureWave/tx_pwr_limits</state>
+          <state>$PROJ_DIR$/../../../../../components/wifi_bt_module/Murata/tx_pwr_limits</state>
           <state>$PROJ_DIR$/../../../../../components/log</state>
         </option>
         <option>
@@ -2015,27 +2004,10 @@
         <option>
           <name>IlinkAdditionalLibs</name>
           <state>$PROJ_DIR$/../../../../../middleware/wireless/framework/SecLib/lib_crypto_m7.a</state>
-          <state>$PROJ_DIR$/../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/btdm/cm7f/iar/libethermind_bt_a2dp.a</state>
-          <state>$PROJ_DIR$/../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/btdm/cm7f/iar/libethermind_bt_avrcp.a</state>
-          <state>$PROJ_DIR$/../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/btdm/cm7f/iar/libethermind_bt_bip.a</state>
-          <state>$PROJ_DIR$/../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/btdm/cm7f/iar/libethermind_bt_bpp.a</state>
-          <state>$PROJ_DIR$/../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/btdm/cm7f/iar/libethermind_bt_core.a</state>
-          <state>$PROJ_DIR$/../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/btdm/cm7f/iar/libethermind_bt_ctn.a</state>
-          <state>$PROJ_DIR$/../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/btdm/cm7f/iar/libethermind_bt_ftp.a</state>
-          <state>$PROJ_DIR$/../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/btdm/cm7f/iar/libethermind_bt_gatt.a</state>
-          <state>$PROJ_DIR$/../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/btdm/cm7f/iar/libethermind_bt_hfp.a</state>
-          <state>$PROJ_DIR$/../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/btdm/cm7f/iar/libethermind_bt_hid.a</state>
-          <state>$PROJ_DIR$/../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/btdm/cm7f/iar/libethermind_bt_map.a</state>
-          <state>$PROJ_DIR$/../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/btdm/cm7f/iar/libethermind_bt_opp.a</state>
-          <state>$PROJ_DIR$/../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/btdm/cm7f/iar/libethermind_bt_pan.a</state>
-          <state>$PROJ_DIR$/../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/btdm/cm7f/iar/libethermind_bt_pbap.a</state>
-          <state>$PROJ_DIR$/../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/btdm/cm7f/iar/libethermind_bt_protocol.a</state>
-          <state>$PROJ_DIR$/../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/btdm/cm7f/iar/libethermind_bt_sap.a</state>
-          <state>$PROJ_DIR$/../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/btdm/cm7f/iar/libethermind_bt_spp.a</state>
-          <state>$PROJ_DIR$/../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/btdm/cm7f/iar/libethermind_bt_util.a</state>
-          <state>$PROJ_DIR$/../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/btdm/cm7f/iar/libethermind_sbc_common.a</state>
-          <state>$PROJ_DIR$/../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/btdm/cm7f/iar/libethermind_sbc_decoder.a</state>
-          <state>$PROJ_DIR$/../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/btdm/cm7f/iar/libethermind_sbc_encoder.a</state>
+          <state>$PROJ_DIR$/../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/ble/cm7f/iar/libethermind_ble_core.a</state>
+          <state>$PROJ_DIR$/../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/ble/cm7f/iar/libethermind_ble_gatt.a</state>
+          <state>$PROJ_DIR$/../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/ble/cm7f/iar/libethermind_ble_protocol.a</state>
+          <state>$PROJ_DIR$/../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/ble/cm7f/iar/libethermind_ble_util.a</state>
         </option>
         <option>
           <name>IlinkOverrideProgramEntryLabel</name>
@@ -2286,7 +2258,7 @@
         </group>
       </group>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/wifi/incl/wifi_cal_data_ext.h</name>
+        <name>$PROJ_DIR$/../../../../../middleware/wifi/incl/WIFI_IW416_BOARD_AW_AM457_CAL_DATA_EXT.h</name>
       </file>
       <group>
         <name>wlcmgr</name>
@@ -2432,6 +2404,12 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../sdmmc_config.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../wifi_bt_config.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../wifi_bt_config.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../board.c</name>
@@ -2725,6 +2703,69 @@
       </file>
     </group>
     <group>
+      <name>wifi_bt_module</name>
+      <group>
+        <name>AzureWave</name>
+        <group>
+          <name>tx_pwr_limits</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../components/wifi_bt_module/AzureWave/tx_pwr_limits/wlan_txpwrlimit_cfg_WW.h</name>
+          </file>
+        </group>
+      </group>
+      <group>
+        <name>Murata</name>
+        <group>
+          <name>tx_pwr_limits</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1XK_CA.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1XK_EU.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1XK_JP.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1XK_US.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1XK_WW.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1ZM_CA.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1ZM_EU.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1ZM_JP.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1ZM_US.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1ZM_WW.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_2DS_CA.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_2DS_EU.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_2DS_JP.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_2DS_US.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_2DS_WW.h</name>
+          </file>
+        </group>
+      </group>
+    </group>
+    <group>
       <name>log</name>
       <file>
         <name>$PROJ_DIR$/../../../../../components/log/fsl_component_log_backend_debugconsole.c</name>
@@ -3011,6 +3052,36 @@
           <name>$PROJ_DIR$/../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/bt_pal_hci_core.h</name>
         </file>
         <file>
+          <name>$PROJ_DIR$/../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/bt_pal_adv.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/bt_pal_adv.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/bt_pal_br.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/bt_pal_br.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/bt_pal_id.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/bt_pal_id.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/bt_pal_scan.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/bt_pal_scan.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/bt_pal_ecc.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/bt_pal_ecc.h</name>
+        </file>
+        <file>
           <name>$PROJ_DIR$/../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/bt_pal_addr.c</name>
         </file>
         <file>
@@ -3024,9 +3095,6 @@
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/bt_pal_hci_ecc.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/bt_pal_ecc.h</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/host/bt_pal_keys.c</name>
@@ -4065,6 +4133,9 @@
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include/StackMacros.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include/stdint.readme</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include/stream_buffer.h</name>

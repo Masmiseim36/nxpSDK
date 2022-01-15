@@ -50,7 +50,7 @@ uint8_t slaveTxData[TRANSFER_SIZE] = {0U};
 volatile uint32_t slaveTxCount;
 volatile uint32_t slaveRxCount;
 volatile uint8_t g_slaveRxWatermark;
-uint8_t g_slaveFifoSize;
+volatile uint8_t g_slaveFifoSize;
 
 volatile bool isSlaveTransferCompleted = false;
 
@@ -118,8 +118,8 @@ void EXAMPLE_LPSPI_SLAVE_IRQHandler(void)
 int main(void)
 {
     BOARD_ConfigMPU();
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
+    BOARD_InitBootPins();
+    BOARD_InitBootClocks();
     BOARD_InitDebugConsole();
 
     /*Set clock source for LPSPI*/

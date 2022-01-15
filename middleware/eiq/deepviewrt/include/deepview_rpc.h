@@ -100,7 +100,7 @@ struct rpc_request {
      * physical address of the video memory for the current frame.  For shared
      * memory this is the offset into the shared memory object.
      */
-    uint32_t memory;
+    uint64_t memory;
 };
 
 /**

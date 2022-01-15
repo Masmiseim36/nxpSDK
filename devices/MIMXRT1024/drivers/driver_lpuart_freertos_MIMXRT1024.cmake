@@ -1,19 +1,17 @@
-if(NOT DRIVER_LPUART_FREERTOS_MIMXRT1024_INCLUDED)
-    
-    set(DRIVER_LPUART_FREERTOS_MIMXRT1024_INCLUDED true CACHE BOOL "driver_lpuart_freertos component is included.")
+include_guard(GLOBAL)
+message("driver_lpuart_freertos component is included.")
 
-    target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
-        ${CMAKE_CURRENT_LIST_DIR}/fsl_lpuart_freertos.c
-    )
-
-
-    target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
-        ${CMAKE_CURRENT_LIST_DIR}/.
-    )
+target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
+    ${CMAKE_CURRENT_LIST_DIR}/fsl_lpuart_freertos.c
+)
 
 
-    include(driver_lpuart_MIMXRT1024)
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
+    ${CMAKE_CURRENT_LIST_DIR}/.
+)
 
-    include(middleware_freertos-kernel_MIMXRT1024)
 
-endif()
+include(driver_lpuart_MIMXRT1024)
+
+include(middleware_freertos-kernel_MIMXRT1024)
+

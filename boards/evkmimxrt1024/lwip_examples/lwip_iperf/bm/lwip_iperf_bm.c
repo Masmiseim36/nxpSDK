@@ -26,37 +26,65 @@
 #include "board.h"
 #include "fsl_phy.h"
 
-#include "fsl_gpio.h"
-#include "fsl_iomuxc.h"
 #include "fsl_phyksz8081.h"
 #include "fsl_enet_mdio.h"
+#include "fsl_gpio.h"
+#include "fsl_iomuxc.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
+
+/* @TEST_ANCHOR */
+
 /* IP address configuration. */
+#ifndef configIP_ADDR0
 #define configIP_ADDR0 192
+#endif
+#ifndef configIP_ADDR1
 #define configIP_ADDR1 168
+#endif
+#ifndef configIP_ADDR2
 #define configIP_ADDR2 0
+#endif
+#ifndef configIP_ADDR3
 #define configIP_ADDR3 102
+#endif
 
 /* Netmask configuration. */
+#ifndef configNET_MASK0
 #define configNET_MASK0 255
+#endif
+#ifndef configNET_MASK1
 #define configNET_MASK1 255
+#endif
+#ifndef configNET_MASK2
 #define configNET_MASK2 255
+#endif
+#ifndef configNET_MASK3
 #define configNET_MASK3 0
+#endif
 
 /* Gateway address configuration. */
+#ifndef configGW_ADDR0
 #define configGW_ADDR0 192
+#endif
+#ifndef configGW_ADDR1
 #define configGW_ADDR1 168
+#endif
+#ifndef configGW_ADDR2
 #define configGW_ADDR2 0
+#endif
+#ifndef configGW_ADDR3
 #define configGW_ADDR3 100
+#endif
 
 /* MAC address configuration. */
+#ifndef configMAC_ADDR
 #define configMAC_ADDR                     \
     {                                      \
         0x02, 0x12, 0x13, 0x10, 0x15, 0x11 \
     }
-
+#endif
 /* Address of PHY interface. */
 #define EXAMPLE_PHY_ADDRESS BOARD_ENET0_PHY_ADDRESS
 
@@ -81,6 +109,12 @@
 #ifndef IPERF_CLIENT_AMOUNT
 #define IPERF_CLIENT_AMOUNT (-1000) /* 10 seconds */
 #endif                              /* IPERF_CLIENT_AMOUNT */
+
+/* @TEST_ANCHOR */
+
+#ifndef EXAMPLE_PORT
+#define EXAMPLE_PORT LWIPERF_TCP_PORT_DEFAULT
+#endif
 
 /*******************************************************************************
  * Prototypes
@@ -258,25 +292,25 @@ static void *start_iperf(ip4_addr_t *remote_addr)
     {
         if (tcp)
         {
-            iperf_session = lwiperf_start_tcp_server(IP_ADDR_ANY, LWIPERF_TCP_PORT_DEFAULT, lwiperf_report, 0);
+            iperf_session = lwiperf_start_tcp_server(IP_ADDR_ANY, EXAMPLE_PORT, lwiperf_report, 0);
         }
         else
         {
             iperf_session =
-                lwiperf_start_udp_server(netif_ip_addr4(netif_default), LWIPERF_TCP_PORT_DEFAULT, lwiperf_report, 0);
+                lwiperf_start_udp_server(netif_ip_addr4(netif_default), EXAMPLE_PORT, lwiperf_report, 0);
         }
     }
     else
     {
         if (tcp)
         {
-            iperf_session = lwiperf_start_tcp_client(remote_addr, LWIPERF_TCP_PORT_DEFAULT, client_type,
+            iperf_session = lwiperf_start_tcp_client(remote_addr, EXAMPLE_PORT, client_type,
                                                      IPERF_CLIENT_AMOUNT, lwiperf_report, 0);
         }
         else
         {
             iperf_session = lwiperf_start_udp_client(
-                netif_ip_addr4(netif_default), LWIPERF_TCP_PORT_DEFAULT, remote_addr, LWIPERF_TCP_PORT_DEFAULT,
+                netif_ip_addr4(netif_default), EXAMPLE_PORT, remote_addr, EXAMPLE_PORT,
                 client_type, IPERF_CLIENT_AMOUNT, IPERF_UDP_CLIENT_RATE, 0, lwiperf_report, NULL);
         }
     }
@@ -302,16 +336,10 @@ int main(void)
     status_t status;
     char key;
     struct netif netif;
-#if defined(FSL_FEATURE_SOC_LPC_ENET_COUNT) && (FSL_FEATURE_SOC_LPC_ENET_COUNT > 0)
-    mem_range_t non_dma_memory[] = NON_DMA_MEMORY_ARRAY;
-#endif /* FSL_FEATURE_SOC_LPC_ENET_COUNT */
     ip4_addr_t netif_ipaddr, netif_netmask, netif_gw;
     ethernetif_config_t enet_config = {
         .phyHandle  = &phyHandle,
         .macAddress = configMAC_ADDR,
-#if defined(FSL_FEATURE_SOC_LPC_ENET_COUNT) && (FSL_FEATURE_SOC_LPC_ENET_COUNT > 0)
-        .non_dma_memory = non_dma_memory,
-#endif /* FSL_FEATURE_SOC_LPC_ENET_COUNT */
     };
 
     gpio_pin_config_t gpio_config = {kGPIO_DigitalOutput, 0, kGPIO_NoIntmode};

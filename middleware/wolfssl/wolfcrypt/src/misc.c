@@ -1,6 +1,6 @@
 /* misc.c
  *
- * Copyright (C) 2006-2020 wolfSSL Inc.
+ * Copyright (C) 2006-2021 wolfSSL Inc.
  *
  * This file is part of wolfSSL.
  *
@@ -81,6 +81,30 @@ masking and clearing memory logic.
         return y ? _lrotr(x, y) : x;
     }
 
+#elif defined(__CCRX__)
+
+    #include <builtin.h>      /* get intrinsic definitions */
+
+    #if !defined(NO_INLINE)
+
+    #define rotlFixed(x, y) _builtin_rotl(x, y)
+
+    #define rotrFixed(x, y) _builtin_rotr(x, y)
+
+    #else /* create real function */
+
+    WC_STATIC WC_INLINE word32 rotlFixed(word32 x, word32 y)
+    {
+        return _builtin_rotl(x, y);
+    }
+
+    WC_STATIC WC_INLINE word32 rotrFixed(word32 x, word32 y)
+    {
+        return _builtin_rotr(x, y);
+    }
+
+    #endif
+
 #else /* generic */
 /* This routine performs a left circular arithmetic shift of <x> by <y> value. */
 
@@ -115,6 +139,9 @@ WC_STATIC WC_INLINE word16 rotrFixed16(word16 x, word16 y)
 #endif /* WC_RC2 */
 
 /* This routine performs a byte swap of 32-bit word value. */
+#if defined(__CCRX__) && !defined(NO_INLINE) // shortest version for CC-RX
+    #define ByteReverseWord32(value) _builtin_revl(value)
+#else
 WC_STATIC WC_INLINE word32 ByteReverseWord32(word32 value)
 {
 #ifdef PPC_INTRINSICS
@@ -124,6 +151,8 @@ WC_STATIC WC_INLINE word32 ByteReverseWord32(word32 value)
     return (word32)__REV(value);
 #elif defined(KEIL_INTRINSICS)
     return (word32)__rev(value);
+#elif defined(__CCRX__)
+    return (word32)_builtin_revl(value);
 #elif defined(WOLF_ALLOW_BUILTIN) && \
         defined(__GNUC_PREREQ) && __GNUC_PREREQ(4, 3)
     return (word32)__builtin_bswap32(value);
@@ -153,6 +182,7 @@ WC_STATIC WC_INLINE word32 ByteReverseWord32(word32 value)
     return rotlFixed(value, 16U);
 #endif
 }
+#endif /* __CCRX__ */
 /* This routine performs a byte swap of words array of a given count. */
 WC_STATIC WC_INLINE void ByteReverseWords(word32* out, const word32* in,
                                     word32 byteCount)
@@ -225,7 +255,7 @@ counts, placing the result in <*buf>. */
 WC_STATIC WC_INLINE void xorbufout(void*out, const void* buf, const void* mask,
                                    word32 count)
 {
-    if (((wolfssl_word)out | (wolfssl_word)buf | (wolfssl_word)mask | count) % \
+    if (((wc_ptr_t)out | (wc_ptr_t)buf | (wc_ptr_t)mask | count) %
                                                          WOLFSSL_WORD_SIZE == 0)
         XorWordsOut( (wolfssl_word*)out, (wolfssl_word*)buf,
                      (const wolfssl_word*)mask, count / WOLFSSL_WORD_SIZE);
@@ -253,7 +283,7 @@ counts, placing the result in <*buf>. */
 
 WC_STATIC WC_INLINE void xorbuf(void* buf, const void* mask, word32 count)
 {
-    if (((wolfssl_word)buf | (wolfssl_word)mask | count) % WOLFSSL_WORD_SIZE == 0)
+    if (((wc_ptr_t)buf | (wc_ptr_t)mask | count) % WOLFSSL_WORD_SIZE == 0)
         XorWords( (wolfssl_word*)buf,
                   (const wolfssl_word*)mask, count / WOLFSSL_WORD_SIZE);
     else {

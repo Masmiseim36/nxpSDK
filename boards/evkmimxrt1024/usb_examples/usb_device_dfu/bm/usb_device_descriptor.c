@@ -107,7 +107,7 @@ uint8_t g_UsbDeviceConfigurationDescriptor[] = {
     USB_DESCRIPTOR_LENGTH_INTERFACE, /* Size of this descriptor in bytes */
     USB_DESCRIPTOR_TYPE_INTERFACE,   /* INTERFACE Descriptor Type */
     USB_DFU_INTERFACE_INDEX,         /* Number of this interface. */
-    0x00U,                           /* Value used to select this alternate setting
+    USB_DFU_INTERFACE_ALTERNATE_0,   /* Value used to select this alternate setting
                                         for the interface identified in the prior field */
     0x00,                            /* Only the control endpoint is used */
     USB_DFU_CLASS,                   /* Class code (assigned by the USB-IF). */
@@ -198,7 +198,7 @@ uint8_t g_UsbDeviceCompatibleIDDescriptor[] = {
     /*Microsoft Compatible ID Feature Descriptor*/
     /*The Header Section*/
     0x28U, 0x00U, 0x00U, 0x00U,                      /*Descriptor length of the complete extended compat ID descriptor*/
-    0x00U, 0x01U,                                    /*Descriptor¡¯s version number*/
+    0x00U, 0x01U,                                    /*Descriptor's version number*/
     0x04U, 0x00U,                                    /*Compatibility ID Descriptor index*/
     0x01U,                                           /*Number of sections */
     0x00U, 0x00U, 0x00U, 0x00U, 0x00U, 0x00U, 0x00U, /*Reserved */
@@ -219,7 +219,7 @@ uint8_t g_UsbDeviceOSExendedDescriptor[] = {
     0x00,
     0x00, /*the length, in bytes, of the complete extended properties descriptor*/
     USB_SHORT_GET_LOW(USB_DEVICE_OS_DESCRIPTOR_BCD_VERSION),
-    USB_SHORT_GET_HIGH(USB_DEVICE_OS_DESCRIPTOR_BCD_VERSION), /* The descriptor¡¯s version number. */
+    USB_SHORT_GET_HIGH(USB_DEVICE_OS_DESCRIPTOR_BCD_VERSION), /* The descriptor's version number. */
     0x05U,
     0x00U, /*Descriptor index*/
     0x01U,
@@ -395,10 +395,11 @@ usb_language_list_t g_UsbDeviceLanguageList = {
 /* Get verdor descriptor request */
 usb_status_t USB_DeviceGetVerdorDescriptor(usb_device_handle handle, void *param)
 {
-    usb_status_t errorReturn = kStatus_USB_Error;
+    usb_status_t errorReturn = kStatus_USB_InvalidRequest;
     usb_device_control_request_struct_t *controlRequest;
     controlRequest = (usb_device_control_request_struct_t *)param;
-    if (g_UsbDeviceOSString[16] != controlRequest->setup->bRequest)
+    if ((g_UsbDeviceOSString[16] != controlRequest->setup->bRequest) ||
+        ((controlRequest->setup->bmRequestType & USB_REQUEST_TYPE_DIR_MASK) != USB_REQUEST_TYPE_DIR_IN))
     {
         /*only handle request to its own verdor*/
         return errorReturn;
@@ -409,16 +410,21 @@ usb_status_t USB_DeviceGetVerdorDescriptor(usb_device_handle handle, void *param
         {
             controlRequest->buffer = g_UsbDeviceCompatibleIDDescriptor;
             controlRequest->length = USB_DESCRIPTOR_LENGTH_COMPAT;
+            errorReturn            = kStatus_USB_Success;
         }
-        if (USB_MICROSOFT_EXTENDED_PROPERTIES_ID == controlRequest->setup->wIndex)
+        else if (USB_MICROSOFT_EXTENDED_PROPERTIES_ID == controlRequest->setup->wIndex)
         {
             controlRequest->buffer = g_UsbDeviceOSExendedDescriptor;
             controlRequest->length = USB_DESCRIPTOR_LENGTH_OSExended;
+            errorReturn            = kStatus_USB_Success;
         }
-        errorReturn = kStatus_USB_Success;
+        else
+        {
+            /* no action */
+        }
     }
-    if ((controlRequest->setup->bmRequestType & USB_REQUEST_TYPE_RECIPIENT_MASK) ==
-        USB_REQUEST_TYPE_RECIPIENT_INTERFACE)
+    else if ((controlRequest->setup->bmRequestType & USB_REQUEST_TYPE_RECIPIENT_MASK) ==
+             USB_REQUEST_TYPE_RECIPIENT_INTERFACE)
     {
         /*add this based on wiki.*/
         /*https://github.com/pbatard/libwdi/wiki/WCID-Devices, Defining a Device Interface GUID or other device specific
@@ -427,8 +433,16 @@ usb_status_t USB_DeviceGetVerdorDescriptor(usb_device_handle handle, void *param
         {
             controlRequest->buffer = g_UsbDeviceOSExendedDescriptor;
             controlRequest->length = USB_DESCRIPTOR_LENGTH_OSExended;
+            errorReturn            = kStatus_USB_Success;
         }
-        errorReturn = kStatus_USB_Success;
+        else
+        {
+            /* no action */
+        }
+    }
+    else
+    {
+        /* no action */
     }
 
     return errorReturn;
@@ -447,7 +461,7 @@ usb_status_t USB_DeviceGetDeviceDescriptor(usb_device_handle handle,
 usb_status_t USB_DeviceGetConfigurationDescriptor(
     usb_device_handle handle, usb_device_get_configuration_descriptor_struct_t *configurationDescriptor)
 {
-    if (USB_DFU_INTERFACE_COUNT > configurationDescriptor->configuration)
+    if (USB_DFU_CONFIGURE_INDEX > configurationDescriptor->configuration)
     {
         /*g_detachRequest = 0U;*/
         configurationDescriptor->buffer = g_UsbDeviceConfigurationDescriptor;

@@ -122,14 +122,23 @@ void USB_DeviceTaskFn(void *deviceHandle)
 /* The hid class callback */
 static usb_status_t USB_DeviceHidGenericCallback(class_handle_t handle, uint32_t event, void *param)
 {
-    usb_status_t error = kStatus_USB_Error;
+    usb_status_t error = kStatus_USB_InvalidRequest;
+#if (defined(USB_DEVICE_CONFIG_ROOT2_TEST) && (USB_DEVICE_CONFIG_ROOT2_TEST > 0U))
+    usb_device_endpoint_callback_message_struct_t *ep_cb_param;
+    ep_cb_param = (usb_device_endpoint_callback_message_struct_t *)param;
+#endif
 
     switch (event)
     {
         case kUSB_DeviceHidEventSendResponse:
+            error = kStatus_USB_Success;
             break;
         case kUSB_DeviceHidEventRecvResponse:
-            if (g_UsbDeviceHidGeneric.attach)
+            if (g_UsbDeviceHidGeneric.attach
+#if (defined(USB_DEVICE_CONFIG_ROOT2_TEST) && (USB_DEVICE_CONFIG_ROOT2_TEST > 0U))
+                && (ep_cb_param->length != (USB_CANCELLED_TRANSFER_LENGTH))
+#endif
+            )
             {
                 USB_DeviceHidSend(g_UsbDeviceHidGeneric.hidHandle, USB_HID_GENERIC_ENDPOINT_IN,
                                   (uint8_t *)&g_UsbDeviceHidGeneric.buffer[g_UsbDeviceHidGeneric.bufferIndex][0],
@@ -143,12 +152,12 @@ static usb_status_t USB_DeviceHidGenericCallback(class_handle_t handle, uint32_t
         case kUSB_DeviceHidEventGetReport:
         case kUSB_DeviceHidEventSetReport:
         case kUSB_DeviceHidEventRequestReportBuffer:
-            error = kStatus_USB_InvalidRequest;
             break;
         case kUSB_DeviceHidEventGetIdle:
         case kUSB_DeviceHidEventGetProtocol:
         case kUSB_DeviceHidEventSetIdle:
         case kUSB_DeviceHidEventSetProtocol:
+            error = kStatus_USB_Success;
             break;
         default:
             break;
@@ -160,7 +169,7 @@ static usb_status_t USB_DeviceHidGenericCallback(class_handle_t handle, uint32_t
 /* The device callback */
 static usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *param)
 {
-    usb_status_t error = kStatus_USB_Success;
+    usb_status_t error = kStatus_USB_InvalidRequest;
     uint8_t *temp8     = (uint8_t *)param;
     uint16_t *temp16   = (uint16_t *)param;
 
@@ -171,6 +180,7 @@ static usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event,
             /* USB bus reset signal detected */
             g_UsbDeviceHidGeneric.attach               = 0U;
             g_UsbDeviceHidGeneric.currentConfiguration = 0U;
+            error                                      = kStatus_USB_Success;
 #if (defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0U)) || \
     (defined(USB_DEVICE_CONFIG_LPCIP3511HS) && (USB_DEVICE_CONFIG_LPCIP3511HS > 0U))
             /* Get USB speed to configure the device, including max packet size and interval of the endpoints. */
@@ -186,6 +196,7 @@ static usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event,
             {
                 g_UsbDeviceHidGeneric.attach               = 0U;
                 g_UsbDeviceHidGeneric.currentConfiguration = 0U;
+                error                                      = kStatus_USB_Success;
             }
             else if (USB_HID_GENERIC_CONFIGURE_INDEX == (*temp8))
             {
@@ -199,7 +210,7 @@ static usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event,
             }
             else
             {
-                error = kStatus_USB_InvalidRequest;
+                /* no action required, the default return value is kStatus_USB_InvalidRequest. */
             }
             break;
         case kUSB_DeviceEventSetInterface:
@@ -208,17 +219,36 @@ static usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event,
                 /* Set device interface request */
                 uint8_t interface        = (uint8_t)((*temp16 & 0xFF00U) >> 0x08U);
                 uint8_t alternateSetting = (uint8_t)(*temp16 & 0x00FFU);
-                if (interface < USB_HID_GENERIC_INTERFACE_COUNT)
+#if (defined(USB_DEVICE_CONFIG_ROOT2_TEST) && (USB_DEVICE_CONFIG_ROOT2_TEST > 0U))
+                /* If a device only supports a default setting for the specified interface, then a STALL may
+                be returned in the Status stage of the request. */
+                if (1U == USB_HID_GENERIC_INTERFACE_ALTERNATE_COUNT)
                 {
-                    g_UsbDeviceHidGeneric.currentInterfaceAlternateSetting[interface] = alternateSetting;
-                    if (alternateSetting == 0U)
+                    return kStatus_USB_InvalidRequest;
+                }
+                else if (interface < USB_HID_GENERIC_INTERFACE_COUNT)
+#else
+                if (interface < USB_HID_GENERIC_INTERFACE_COUNT)
+#endif
+                {
+                    if (alternateSetting < USB_HID_GENERIC_INTERFACE_ALTERNATE_COUNT)
                     {
-                        error = USB_DeviceHidRecv(
-                            g_UsbDeviceHidGeneric.hidHandle, USB_HID_GENERIC_ENDPOINT_OUT,
-                            (uint8_t *)&g_UsbDeviceHidGeneric.buffer[g_UsbDeviceHidGeneric.bufferIndex][0],
-                            USB_HID_GENERIC_OUT_BUFFER_LENGTH);
+                        g_UsbDeviceHidGeneric.currentInterfaceAlternateSetting[interface] = alternateSetting;
+                        if (alternateSetting == USB_HID_GENERIC_INTERFACE_ALTERNATE_0)
+                        {
+                            error = USB_DeviceHidRecv(
+                                g_UsbDeviceHidGeneric.hidHandle, USB_HID_GENERIC_ENDPOINT_OUT,
+                                (uint8_t *)&g_UsbDeviceHidGeneric.buffer[g_UsbDeviceHidGeneric.bufferIndex][0],
+                                USB_HID_GENERIC_OUT_BUFFER_LENGTH);
+                        }
                     }
                 }
+#if (defined(USB_DEVICE_CONFIG_ROOT2_TEST) && (USB_DEVICE_CONFIG_ROOT2_TEST > 0U))
+                else
+                {
+                    /* no action */
+                }
+#endif
             }
             break;
         case kUSB_DeviceEventGetConfiguration:
@@ -234,15 +264,29 @@ static usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event,
             {
                 /* Get current alternate setting of the interface request */
                 uint8_t interface = (uint8_t)((*temp16 & 0xFF00U) >> 0x08U);
-                if (interface < USB_HID_GENERIC_INTERFACE_COUNT)
+#if (defined(USB_DEVICE_CONFIG_ROOT2_TEST) && (USB_DEVICE_CONFIG_ROOT2_TEST > 0U))
+                /* If a device only supports a default setting for the specified interface, then a STALL may
+                   be returned in the Status stage of the request. */
+                if (1U == USB_HID_GENERIC_INTERFACE_ALTERNATE_COUNT)
+                {
+                    return kStatus_USB_InvalidRequest;
+                }
+                else if (interface < USB_HID_GENERIC_INTERFACE_COUNT)
                 {
                     *temp16 = (*temp16 & 0xFF00U) | g_UsbDeviceHidGeneric.currentInterfaceAlternateSetting[interface];
                     error   = kStatus_USB_Success;
                 }
                 else
                 {
-                    error = kStatus_USB_InvalidRequest;
+                    /* no action */
                 }
+#else
+                if (interface < USB_HID_GENERIC_INTERFACE_COUNT)
+                {
+                    *temp16 = (*temp16 & 0xFF00U) | g_UsbDeviceHidGeneric.currentInterfaceAlternateSetting[interface];
+                    error   = kStatus_USB_Success;
+                }
+#endif
             }
             break;
         case kUSB_DeviceEventGetDeviceDescriptor:
@@ -300,6 +344,17 @@ static usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event,
                                                            (usb_device_get_hid_physical_descriptor_struct_t *)param);
             }
             break;
+#if (defined(USB_DEVICE_CONFIG_ROOT2_TEST) && (USB_DEVICE_CONFIG_ROOT2_TEST > 0U))
+#if ((defined(USB_DEVICE_CONFIG_REMOTE_WAKEUP)) && (USB_DEVICE_CONFIG_REMOTE_WAKEUP > 0U))
+        case kUSB_DeviceEventSetRemoteWakeup:
+            if (param)
+            {
+                g_UsbDeviceHidGeneric.remoteWakeup = *temp8;
+                error                              = kStatus_USB_Success;
+            }
+            break;
+#endif
+#endif
         default:
             break;
     }
@@ -387,8 +442,8 @@ void main(void)
 #endif
 {
     BOARD_ConfigMPU();
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
+    BOARD_InitBootPins();
+    BOARD_InitBootClocks();
     BOARD_InitDebugConsole();
 
     if (xTaskCreate(APP_task,                                    /* pointer to the task */

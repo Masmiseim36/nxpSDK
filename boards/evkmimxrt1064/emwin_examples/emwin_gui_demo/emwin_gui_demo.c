@@ -22,6 +22,7 @@
 #include "MULTIPAGE.h"
 
 #include "fsl_gpio.h"
+#include "fsl_gpt.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -130,6 +131,20 @@ void BOARD_InitLcdifPixelClock(void)
     CLOCK_SetDiv(kCLOCK_LcdifPreDiv, 4);
 
     CLOCK_SetDiv(kCLOCK_LcdifDiv, 1);
+}
+
+void BOARD_InitGPT(void)
+{
+    gpt_config_t gptConfig;
+
+    GPT_GetDefaultConfig(&gptConfig);
+
+    gptConfig.enableFreeRun = true;
+    gptConfig.divider       = 3000;
+
+    /* Initialize GPT module */
+    GPT_Init(EXAMPLE_GPT, &gptConfig);
+    GPT_StartTimer(EXAMPLE_GPT);
 }
 
 
@@ -304,6 +319,7 @@ int main(void)
     BOARD_InitLcdifPixelClock();
     BOARD_InitDebugConsole();
     BOARD_InitLcd();
+    BOARD_InitGPT();
 
     PRINTF("GUI demo start.\r\n");
 

@@ -41,7 +41,7 @@
 
 // USB HS port
 #if !defined(BL_CONFIG_HS_USB_HID)
-#define BL_CONFIG_HS_USB_HID (1) // i.MX RT Series only supoort HS USB
+#define BL_CONFIG_HS_USB_HID (1U) // i.MX RT Series only supoort HS USB
 #endif
 //@}
 #if !defined(BL_TARGET_RAM)

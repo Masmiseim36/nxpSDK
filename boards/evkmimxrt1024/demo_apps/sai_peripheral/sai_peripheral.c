@@ -7,12 +7,12 @@
 
 #include "sai.h"
 
-#include "fsl_wm8960.h"
 #include "pin_mux.h"
 #include "clock_config.h"
 #include "peripherals.h"
 #include "board.h"
 #include "fsl_codec_common.h"
+#include "fsl_wm8960.h"
 #include "fsl_codec_adapter.h"
 /*******************************************************************************
  * Definitions
@@ -47,7 +47,9 @@
 /* Get frequency of lpi2c clock */
 #define DEMO_I2C_CLK_FREQ ((CLOCK_GetFreq(kCLOCK_Usb1PllClk) / 8) / (DEMO_LPI2C_CLOCK_SOURCE_DIVIDER + 1U))
 
-
+#ifndef DEMO_CODEC_VOLUME
+#define DEMO_CODEC_VOLUME 100
+#endif
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
@@ -69,6 +71,7 @@ static int SD_FatFsInit(void);
 wm8960_config_t wm8960Config = {
     .i2cConfig = {.codecI2CInstance = BOARD_CODEC_I2C_INSTANCE, .codecI2CSourceClock = BOARD_CODEC_I2C_CLOCK_FREQ},
     .route     = kWM8960_RoutePlaybackandRecord,
+    .leftInputSource  = kWM8960_InputDifferentialMicInput3,
     .rightInputSource = kWM8960_InputDifferentialMicInput2,
     .playSource       = kWM8960_PlaySourceDAC,
     .slaveAddress     = WM8960_I2C_ADDR,
@@ -182,7 +185,8 @@ int SD_FatFsInit()
     /* If there is SDCard, Initialize SDcard and Fatfs */
     FRESULT error;
 
-    const TCHAR driverNumberBuffer[3U] = {SDDISK + '0', ':', '/'};
+    static const TCHAR driverNumberBuffer[3U] = {SDDISK + '0', ':', '/'};
+    static const TCHAR recordpathBuffer[]     = DEMO_RECORD_PATH;
 
     PRINTF("\r\nPlease insert a card into board.\r\n");
 
@@ -190,8 +194,26 @@ int SD_FatFsInit()
     {
         return -1;
     }
-
-    if (f_mount(&g_fileSystem, driverNumberBuffer, 0U))
+    error = f_mount(&g_fileSystem, driverNumberBuffer, 1U);
+    if (error == FR_OK)
+    {
+        PRINTF("Mount volume Successfully.\r\n");
+    }
+    else if (error == FR_NO_FILESYSTEM)
+    {
+#if FF_USE_MKFS
+        PRINTF("\r\nMake file system......The time may be long if the card capacity is big.\r\n");
+        if (f_mkfs(driverNumberBuffer, 0, work, sizeof work) != FR_OK)
+        {
+            PRINTF("Make file system failed.\r\n");
+            return -1;
+        }
+#else
+        PRINTF("No file system detected, Please check.\r\n");
+        return -1;
+#endif /* FF_USE_MKFS */
+    }
+    else
     {
         PRINTF("Mount volume failed.\r\n");
         return -1;
@@ -206,17 +228,8 @@ int SD_FatFsInit()
     }
 #endif
 
-#if FF_USE_MKFS
-    PRINTF("\r\nMake file system......The time may be long if the card capacity is big.\r\n");
-    if (f_mkfs(driverNumberBuffer, 0, work, sizeof work))
-    {
-        PRINTF("Make file system failed.\r\n");
-        return -1;
-    }
-#endif /* FF_USE_MKFS */
-
     PRINTF("\r\nCreate directory......\r\n");
-    error = f_mkdir(_T("/record"));
+    error = f_mkdir((char const *)&recordpathBuffer[0U]);
     if (error)
     {
         if (error == FR_EXIST)
@@ -243,7 +256,7 @@ int main(void)
     uint8_t userItem = 1U;
 
     BOARD_ConfigMPU();
-    BOARD_InitPins();
+    BOARD_InitBootPins();
     BOARD_InitBootClocks();
     CLOCK_InitAudioPll(&audioPllConfig);
     BOARD_InitBootPeripherals();
@@ -268,7 +281,11 @@ int main(void)
     {
         assert(false);
     }
-
+    if (CODEC_SetVolume(&codecHandle, kCODEC_PlayChannelHeadphoneLeft | kCODEC_PlayChannelHeadphoneRight,
+                        DEMO_CODEC_VOLUME) != kStatus_Success)
+    {
+        assert(false);
+    }
     /* Enable interrupt to handle FIFO error */
     SAI_TxEnableInterrupts(DEMO_SAI_PERIPHERAL, kSAI_FIFOErrorInterruptEnable);
     SAI_RxEnableInterrupts(DEMO_SAI_PERIPHERAL, kSAI_FIFOErrorInterruptEnable);

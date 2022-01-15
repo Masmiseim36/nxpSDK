@@ -392,11 +392,19 @@ usb_status_t USB_DeviceClassCallback(usb_device_handle handle, uint32_t event, v
 
     if ((uint32_t)kUSB_DeviceEventBusReset == event)
     {
+#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
+        if ((kStatus_USB_Success != USB_DeviceControlPipeInit(handle, classHandle)) ||
+            (kStatus_USB_Success != USB_DeviceClassEvent(handle, kUSB_DeviceClassEventDeviceReset, classHandle)))
+        {
+            return kStatus_USB_Error;
+        }
+#else
         /* Initialize the control pipes */
         (void)USB_DeviceControlPipeInit(handle, classHandle);
 
         /* Notify the classes the USB bus reset signal detected. */
         (void)USB_DeviceClassEvent(handle, kUSB_DeviceClassEventDeviceReset, classHandle);
+#endif
     }
 
     /* Call the application device callback function. deviceCallback is from the second parameter of
@@ -452,8 +460,16 @@ usb_status_t USB_DeviceClassInit(
 
     if (kStatus_USB_Success != error)
     {
+#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
+        if (((kStatus_USB_Success != USB_DeviceDeinit(classHandle->handle))) ||
+            (kStatus_USB_Success != USB_DeviceClassFreeHandle(controllerId)))
+        {
+            return kStatus_USB_Error;
+        }
+#else
         (void)USB_DeviceDeinit(classHandle->handle);
         (void)USB_DeviceClassFreeHandle(controllerId);
+#endif
         return error;
     }
 
@@ -466,9 +482,19 @@ usb_status_t USB_DeviceClassInit(
             if (classHandle->configList->config[classIndex].classInfomation->type ==
                 s_UsbDeviceClassInterfaceMap[mapIndex].type)
             {
+#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
+                error = s_UsbDeviceClassInterfaceMap[mapIndex].classInit(
+                    controllerId, &classHandle->configList->config[classIndex],
+                    &classHandle->configList->config[classIndex].classHandle);
+                if (kStatus_USB_Success != error)
+                {
+                    return error;
+                }
+#else
                 (void)s_UsbDeviceClassInterfaceMap[mapIndex].classInit(
                     controllerId, &classHandle->configList->config[classIndex],
                     &classHandle->configList->config[classIndex].classHandle);
+#endif
             }
         }
     }
@@ -511,8 +537,17 @@ usb_status_t USB_DeviceClassDeinit(uint8_t controllerId /*!< [IN] Controller ID 
             if (classHandle->configList->config[classIndex].classInfomation->type ==
                 s_UsbDeviceClassInterfaceMap[mapIndex].type)
             {
+#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
+                error = s_UsbDeviceClassInterfaceMap[mapIndex].classDeinit(
+                    classHandle->configList->config[classIndex].classHandle);
+                if (kStatus_USB_Success != error)
+                {
+                    return error;
+                }
+#else
                 (void)s_UsbDeviceClassInterfaceMap[mapIndex].classDeinit(
                     classHandle->configList->config[classIndex].classHandle);
+#endif
             }
         }
     }
@@ -522,7 +557,14 @@ usb_status_t USB_DeviceClassDeinit(uint8_t controllerId /*!< [IN] Controller ID 
     if (kStatus_USB_Success == error)
     {
         /* Free the common class handle. */
+#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
+        if (kStatus_USB_Success != USB_DeviceClassFreeHandle(controllerId))
+        {
+            return kStatus_USB_Error;
+        }
+#else
         (void)USB_DeviceClassFreeHandle(controllerId);
+#endif
     }
     return error;
 }

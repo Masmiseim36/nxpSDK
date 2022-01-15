@@ -172,6 +172,8 @@ SET(CMAKE_C_FLAGS_SDRAM_RELEASE " \
 ")
 SET(CMAKE_C_FLAGS_DEBUG " \
     ${CMAKE_C_FLAGS_DEBUG} \
+    -DDEBUG_CONSOLE_ASSERT_DISABLE=1 \
+    -DNDEBUG \
     -D_DEBUG=1 \
     -DDEBUG \
     -DCPU_MIMXRT1021DAG5A \
@@ -181,8 +183,8 @@ SET(CMAKE_C_FLAGS_DEBUG " \
     -DFSL_OSA_BM_TIMER_CONFIG=0 \
     -DSDK_DEBUGCONSOLE=1 \
     -DMCUXPRESSO_SDK \
+    -O1 \
     -g \
-    -O0 \
     -mcpu=cortex-m7 \
     -Wall \
     -mfloat-abi=hard \

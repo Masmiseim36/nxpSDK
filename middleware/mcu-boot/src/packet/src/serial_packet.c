@@ -481,7 +481,9 @@ static status_t read_length(framing_data_packet_t *packet)
         uint8_t bytes[sizeof(uint16_t)];
         uint16_t halfword;
     } buffer;
-
+    
+    buffer.halfword = 0u;
+    
     status_t status = read_data((uint8_t *)&buffer.bytes, sizeof(buffer), kDefaultByteReadTimeoutMs * sizeof(buffer));
 
     packet->length = buffer.halfword;
@@ -496,7 +498,7 @@ static status_t read_crc16(framing_data_packet_t *packet)
         uint8_t bytes[sizeof(uint16_t)];
         uint16_t halfword;
     } buffer;
-
+    buffer.halfword = 0u;
     status_t status = read_data((uint8_t *)&buffer.bytes, sizeof(buffer), kDefaultByteReadTimeoutMs * sizeof(buffer));
 
     packet->crc16 = buffer.halfword;

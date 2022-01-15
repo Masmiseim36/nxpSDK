@@ -37,7 +37,7 @@ extern "C" {
 /** \name Debug functions (only available in case the Applet is in Debug Mode)
    @{ */
 
-#if (SSS_HAVE_A71CH || SSS_HAVE_A71CL || SSS_HAVE_A71CH_SIM || SSS_HAVE_SE050_L)
+#if (SSS_HAVE_APPLET_A71CH || SSS_HAVE_APPLET_A71CL || SSS_HAVE_APPLET_A71CH_SIM || SSS_HAVE_SE050_L)
 U16 A71_DbgDisableDebug(void);
 U16 A71_DbgEraseCounter(SST_Index_t index);
 U16 A71_DbgGetFreePersistentMemory(S16 *freeMem);

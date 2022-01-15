@@ -22,11 +22,17 @@
  * @{
  */
 
+/* @TEST_ANCHOR */
+
 /*! @brief KHCI instance count */
+#ifndef USB_DEVICE_CONFIG_KHCI
 #define USB_DEVICE_CONFIG_KHCI (0U)
+#endif
 
 /*! @brief EHCI instance count */
+#ifndef USB_DEVICE_CONFIG_EHCI
 #define USB_DEVICE_CONFIG_EHCI (1U)
+#endif
 
 /*! @brief Device instance count, the sum of KHCI and EHCI instance counts*/
 #define USB_DEVICE_CONFIG_NUM (USB_DEVICE_CONFIG_KHCI + USB_DEVICE_CONFIG_EHCI)
@@ -87,7 +93,9 @@
 
 /*! @brief Whether device compliance test is enabled. If the macro is enabled,
     the test mode and CV test macroes will be set.*/
+#ifndef USB_DEVICE_CONFIG_COMPLIANCE_TEST
 #define USB_DEVICE_CONFIG_COMPLIANCE_TEST (0U)
+#endif
 
 #if ((defined(USB_DEVICE_CONFIG_COMPLIANCE_TEST)) && (USB_DEVICE_CONFIG_COMPLIANCE_TEST > 0U))
 
@@ -144,6 +152,9 @@
 
 /*! @brief Whether handle the USB bus error. */
 #define USB_DEVICE_CONFIG_ERROR_HANDLING (0U)
+
+/*! @brief Whether checking return value is enabled. */
+#define USB_DEVICE_CONFIG_RETURN_VALUE_CHECK (0U)
 
 /* @} */
 

@@ -44,7 +44,7 @@ Running the demo
 When the demo runs successfully, the terminal will display similar information like the following:
 
 ------------------------------------------------------------------------------
- wolfSSL version 4.6.0
+ wolfSSL version 4.8.1
 ------------------------------------------------------------------------------
 error    test passed!
 MEMORY   test passed!

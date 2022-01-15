@@ -132,6 +132,7 @@ SET(CMAKE_C_FLAGS_DEBUG " \
     -std=gnu99 \
     -g \
     -O1 \
+    -Wno-unused-function \
 ")
 SET(CMAKE_C_FLAGS_SDRAM_DEBUG " \
     ${CMAKE_C_FLAGS_SDRAM_DEBUG} \
@@ -158,6 +159,7 @@ SET(CMAKE_C_FLAGS_SDRAM_DEBUG " \
     -std=gnu99 \
     -g \
     -O1 \
+    -Wno-unused-function \
 ")
 SET(CMAKE_C_FLAGS_RELEASE " \
     ${CMAKE_C_FLAGS_RELEASE} \
@@ -289,6 +291,7 @@ SET(CMAKE_CXX_FLAGS_DEBUG " \
     -fno-exceptions \
     -g \
     -O1 \
+    -Wno-unused-function \
 ")
 SET(CMAKE_CXX_FLAGS_SDRAM_DEBUG " \
     ${CMAKE_CXX_FLAGS_SDRAM_DEBUG} \
@@ -313,6 +316,7 @@ SET(CMAKE_CXX_FLAGS_SDRAM_DEBUG " \
     -fno-exceptions \
     -g \
     -O1 \
+    -Wno-unused-function \
 ")
 SET(CMAKE_CXX_FLAGS_RELEASE " \
     ${CMAKE_CXX_FLAGS_RELEASE} \

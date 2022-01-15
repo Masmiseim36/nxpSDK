@@ -37,14 +37,15 @@
 
 /* Logging configuration for the HTTP library. */
 #ifndef LIBRARY_LOG_NAME
-#define LIBRARY_LOG_NAME "HTTP"
+    #define LIBRARY_LOG_NAME    "HTTP"
 #endif
 
 #ifndef LIBRARY_LOG_LEVEL
-#define LIBRARY_LOG_LEVEL LOG_NONE
+    #define LIBRARY_LOG_LEVEL    LOG_NONE
 #endif
 
 #include "logging_stack.h"
+
 
 /************ End of logging configuration ****************/
 

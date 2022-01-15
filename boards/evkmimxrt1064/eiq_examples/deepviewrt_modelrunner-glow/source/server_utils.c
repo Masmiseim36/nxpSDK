@@ -90,6 +90,7 @@ rgb_statsf(const float* data, int n, float* mean, float* std)
     if (n == 0) {
         *mean = 0;
         *std  = 0;
+        return;
     }
 
     float sum    = 0.0f;

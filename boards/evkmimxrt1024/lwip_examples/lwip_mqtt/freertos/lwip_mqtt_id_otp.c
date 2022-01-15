@@ -24,7 +24,7 @@ void get_mqtt_id(uint32_t *id)
     id[1] = OCOTP->CFG1;
     id[0] = OCOTP->CFG0;
 #else
-    id[1] = OCOTP->FUSE001;
-    id[0] = OCOTP->FUSE000;
+    id[1] = OCOTP->FUSEN[1].FUSE;
+    id[0] = OCOTP->FUSEN[0].FUSE;
 #endif
 }

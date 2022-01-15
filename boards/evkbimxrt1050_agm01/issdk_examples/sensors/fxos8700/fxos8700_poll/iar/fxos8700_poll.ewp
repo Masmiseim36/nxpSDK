@@ -182,6 +182,7 @@
           <name>CCDefines</name>
           <state>DEBUG</state>
           <state>CPU_MIMXRT1052DVL6B</state>
+          <state>PRINTF_ADVANCED_ENABLE=1</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>MCUXPRESSO_SDK</state>
         </option>
@@ -712,8 +713,6 @@
         </option>
         <option>
           <name>IlinkConfigDefines</name>
-          <state>__stack_size__=0x800</state>
-          <state>__heap_size__=0x1000</state>
         </option>
         <option>
           <name>IlinkMapFile</name>
@@ -1166,6 +1165,7 @@
           <state>XIP_EXTERNAL_FLASH=1</state>
           <state>XIP_BOOT_HEADER_ENABLE=1</state>
           <state>CPU_MIMXRT1052DVL6B</state>
+          <state>PRINTF_ADVANCED_ENABLE=1</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>MCUXPRESSO_SDK</state>
         </option>
@@ -1696,8 +1696,6 @@
         </option>
         <option>
           <name>IlinkConfigDefines</name>
-          <state>__stack_size__=0x800</state>
-          <state>__heap_size__=0x1000</state>
         </option>
         <option>
           <name>IlinkMapFile</name>
@@ -2150,6 +2148,7 @@
           <state>DATA_SECTION_IS_CACHEABLE=1</state>
           <state>DEBUG</state>
           <state>CPU_MIMXRT1052DVL6B</state>
+          <state>PRINTF_ADVANCED_ENABLE=1</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>MCUXPRESSO_SDK</state>
         </option>
@@ -2680,8 +2679,6 @@
         </option>
         <option>
           <name>IlinkConfigDefines</name>
-          <state>__stack_size__=0x800</state>
-          <state>__heap_size__=0x1000</state>
         </option>
         <option>
           <name>IlinkMapFile</name>
@@ -3132,6 +3129,7 @@
           <name>CCDefines</name>
           <state>NDEBUG</state>
           <state>CPU_MIMXRT1052DVL6B</state>
+          <state>PRINTF_ADVANCED_ENABLE=1</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>MCUXPRESSO_SDK</state>
         </option>
@@ -3662,8 +3660,6 @@
         </option>
         <option>
           <name>IlinkConfigDefines</name>
-          <state>__stack_size__=0x800</state>
-          <state>__heap_size__=0x1000</state>
         </option>
         <option>
           <name>IlinkMapFile</name>
@@ -4116,6 +4112,7 @@
           <state>XIP_BOOT_HEADER_ENABLE=1</state>
           <state>NDEBUG</state>
           <state>CPU_MIMXRT1052DVL6B</state>
+          <state>PRINTF_ADVANCED_ENABLE=1</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>MCUXPRESSO_SDK</state>
         </option>
@@ -4646,8 +4643,6 @@
         </option>
         <option>
           <name>IlinkConfigDefines</name>
-          <state>__stack_size__=0x800</state>
-          <state>__heap_size__=0x1000</state>
         </option>
         <option>
           <name>IlinkMapFile</name>
@@ -5100,6 +5095,7 @@
           <state>SKIP_SYSCLK_INIT</state>
           <state>DATA_SECTION_IS_CACHEABLE=1</state>
           <state>CPU_MIMXRT1052DVL6B</state>
+          <state>PRINTF_ADVANCED_ENABLE=1</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>MCUXPRESSO_SDK</state>
         </option>
@@ -5630,8 +5626,6 @@
         </option>
         <option>
           <name>IlinkConfigDefines</name>
-          <state>__stack_size__=0x800</state>
-          <state>__heap_size__=0x1000</state>
         </option>
         <option>
           <name>IlinkMapFile</name>
@@ -6157,12 +6151,6 @@
     </file>
   </group>
   <group>
-    <name>startup</name>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1052/iar/startup_MIMXRT1052.s</name>
-    </file>
-  </group>
-  <group>
     <name>component</name>
     <group>
       <name>uart</name>
@@ -6200,6 +6188,12 @@
         <name>$PROJ_DIR$/../../../../../../../components/lists/fsl_component_generic_list.c</name>
       </file>
     </group>
+  </group>
+  <group>
+    <name>startup</name>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1052/iar/startup_MIMXRT1052.s</name>
+    </file>
   </group>
   <group>
     <name>xip</name>

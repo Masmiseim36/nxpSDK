@@ -1,6 +1,6 @@
 # CROSS COMPILER SETTING
 SET(CMAKE_SYSTEM_NAME Generic)
-CMAKE_MINIMUM_REQUIRED (VERSION 3.1.1)
+CMAKE_MINIMUM_REQUIRED (VERSION 3.10.0)
 
 # THE VERSION NUMBER
 SET (Tutorial_VERSION_MAJOR 1)
@@ -65,7 +65,8 @@ target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
 set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../../middleware/usb
     ${ProjDirPath}/../../../../../../devices/MIMXRT1024/drivers
-    ${ProjDirPath}/../../../../../../components/phyksz8081
+    ${ProjDirPath}/../../../../../../components/phy/mdio/enet
+    ${ProjDirPath}/../../../../../../components/phy/device/phyksz8081
     ${ProjDirPath}/../../../../../../devices/MIMXRT1024/utilities/debug_console_lite
     ${ProjDirPath}/../../../../../../middleware
     ${ProjDirPath}/../../../../../../devices/MIMXRT1024
@@ -74,7 +75,8 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../../components/uart
     ${ProjDirPath}/../../../../../../components/lists
     ${ProjDirPath}/../../../../../../components/osa
-    ${ProjDirPath}/../../../../../../CMSIS/Include
+    ${ProjDirPath}/../../../../../../CMSIS/Core/Include
+    ${ProjDirPath}/../../../../../../components/phy
     ${ProjDirPath}/../../../../../../devices/MIMXRT1024/utilities
 )
 
@@ -85,7 +87,9 @@ include(middleware_usb_phy_MIMXRT1024)
 
 include(driver_cache_armv7_m7_MIMXRT1024)
 
-include(driver_phyksz8081_MIMXRT1024)
+include(driver_mdio-enet_MIMXRT1024)
+
+include(driver_phy-device-ksz8081_MIMXRT1024)
 
 include(driver_igpio_MIMXRT1024)
 
@@ -111,7 +115,7 @@ include(driver_iomuxc_MIMXRT1024)
 
 include(driver_xip_device_MIMXRT1024)
 
-include(driver_xip_board_MIMXRT1024)
+include(driver_xip_board_evkmimxrt1024_MIMXRT1024)
 
 include(component_lpuart_adapter_MIMXRT1024)
 
@@ -123,13 +127,13 @@ include(component_osa_MIMXRT1024)
 
 include(middleware_usb_common_header_MIMXRT1024)
 
-include(CMSIS_Include_core_cm7_MIMXRT1024)
-
-include(CMSIS_Include_common_MIMXRT1024)
-
-include(CMSIS_Include_dsp_MIMXRT1024)
+include(CMSIS_Include_core_cm_MIMXRT1024)
 
 include(middleware_usb_device_common_header_MIMXRT1024)
+
+include(driver_mdio-common_MIMXRT1024)
+
+include(driver_phy-common_MIMXRT1024)
 
 include(utilities_misc_utilities_MIMXRT1024)
 

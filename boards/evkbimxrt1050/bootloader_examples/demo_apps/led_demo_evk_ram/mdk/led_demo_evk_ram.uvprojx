@@ -361,7 +361,7 @@
             <TextAddressRange>0x00000000</TextAddressRange>
             <DataAddressRange>0x20000000</DataAddressRange>
             <pXoBase/>
-            <ScatterFile>../../../../../../middleware/mcu-boot/targets/common/linker/arm/MIMXRT1052/MIMXRT1052_application_0xa000.scf</ScatterFile>
+            <ScatterFile>MIMXRT1052_application_0xa000.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
             <Misc>--remove --datacompressor off</Misc>

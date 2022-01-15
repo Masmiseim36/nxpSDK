@@ -74,7 +74,7 @@
  * Definitions
  ******************************************************************************/
 
-/* The length or RX buffer. */
+/* The length of RX buffer. */
 #ifndef ENET_RXBUFF_SIZE
 #define ENET_RXBUFF_SIZE (ENET_FRAME_MAX_FRAMELEN)
 #endif
@@ -83,7 +83,7 @@
 #define MAX_BUFFERS_PER_FRAME \
     ((ENET_FRAME_MAX_FRAMELEN / ENET_RXBUFF_SIZE) + ((ENET_FRAME_MAX_FRAMELEN % ENET_RXBUFF_SIZE == 0) ? 0 : 1))
 
-/* The length or TX buffer. */
+/* The length of TX buffer. */
 #ifndef ENET_TXBUFF_SIZE
 #define ENET_TXBUFF_SIZE (ENET_FRAME_MAX_FRAMELEN)
 #endif

@@ -330,7 +330,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>SKIP_SYSCLK_INIT, DATA_SECTION_IS_CACHEABLE=1, DEBUG, __CLANG_ARM, CPU_MIMXRT1052DVL6B, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, SDK_DEBUGCONSOLE_UART, PRINTF_FLOAT_ENABLE=1, SCANF_FLOAT_ENABLE=1, PRINTF_ADVANCED_ENABLE=1, SCANF_ADVANCED_ENABLE=0, SERIAL_PORT_TYPE_UART=1, NX_INCLUDE_USER_DEFINE_FILE, FX_INCLUDE_USER_DEFINE_FILE, TX_INCLUDE_USER_DEFINE_FILE, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../components/phy/mdio/enet;../../../../../components/phy/device/phyksz8081;../../../../../devices/MIMXRT1052/drivers;../../../../../devices/MIMXRT1052;../../../../../devices/MIMXRT1052/utilities/str;../../../../../devices/MIMXRT1052/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../../../devices/MIMXRT1052/xip;../../../xip;../../../../../rtos/azure-rtos/netxduo/addons/auto_ip;../../../../../rtos/azure-rtos/netxduo/addons/cloud;../../../../../rtos/azure-rtos/netxduo/addons/BSD;../../../../../rtos/azure-rtos/netxduo/addons/dhcp;../../../../../rtos/azure-rtos/netxduo/addons/dns;../../../../../rtos/azure-rtos/netxduo/addons/ftp;../../../../../rtos/azure-rtos/netxduo/addons/http;../../../../../rtos/azure-rtos/netxduo/addons/mdns;../../../../../rtos/azure-rtos/netxduo/addons/mqtt;../../../../../rtos/azure-rtos/netxduo/addons/nat;../../../../../rtos/azure-rtos/netxduo/addons/pop3;../../../../../rtos/azure-rtos/netxduo/addons/ppp;../../../../../rtos/azure-rtos/netxduo/addons/pppoe;../../../../../rtos/azure-rtos/netxduo/addons/smtp;../../../../../rtos/azure-rtos/netxduo/addons/snmp;../../../../../rtos/azure-rtos/netxduo/addons/sntp;../../../../../rtos/azure-rtos/netxduo/addons/telnet;../../../../../rtos/azure-rtos/netxduo/addons/tftp;../../../../../rtos/azure-rtos/netxduo/addons/web;../../../../../rtos/azure-rtos/netxduo/common/inc;../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc;../../../../../rtos/azure-rtos/netxduo/nx_secure/inc;../../../../../rtos/azure-rtos/netxduo/nx_secure/ports;../../../../../rtos/azure-rtos/netxduo/ports/cortex_m7/ac6/inc;../../../../../rtos/azure-rtos/filex/common/inc;../../../../../rtos/azure-rtos/filex/ports/cortex_m7/ac6/inc;../../../../../rtos/azure-rtos/threadx/common/inc;../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/inc;../../../../../components/phy;../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../components/phy/mdio/enet;../../../../../components/phy/device/phyksz8081;../../../../../devices/MIMXRT1052/drivers;../../../../../devices/MIMXRT1052;../../../../../devices/MIMXRT1052/utilities/str;../../../../../devices/MIMXRT1052/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../../../devices/MIMXRT1052/xip;../../../xip;../../../../../rtos/azure-rtos/netxduo/addons/auto_ip;../../../../../rtos/azure-rtos/netxduo/addons/cloud;../../../../../rtos/azure-rtos/netxduo/addons/BSD;../../../../../rtos/azure-rtos/netxduo/addons/dhcp;../../../../../rtos/azure-rtos/netxduo/addons/dns;../../../../../rtos/azure-rtos/netxduo/addons/ftp;../../../../../rtos/azure-rtos/netxduo/addons/http;../../../../../rtos/azure-rtos/netxduo/addons/lwm2m;../../../../../rtos/azure-rtos/netxduo/addons/mdns;../../../../../rtos/azure-rtos/netxduo/addons/mqtt;../../../../../rtos/azure-rtos/netxduo/addons/nat;../../../../../rtos/azure-rtos/netxduo/addons/pop3;../../../../../rtos/azure-rtos/netxduo/addons/ppp;../../../../../rtos/azure-rtos/netxduo/addons/pppoe;../../../../../rtos/azure-rtos/netxduo/addons/ptp;../../../../../rtos/azure-rtos/netxduo/addons/smtp;../../../../../rtos/azure-rtos/netxduo/addons/snmp;../../../../../rtos/azure-rtos/netxduo/addons/sntp;../../../../../rtos/azure-rtos/netxduo/addons/telnet;../../../../../rtos/azure-rtos/netxduo/addons/tftp;../../../../../rtos/azure-rtos/netxduo/addons/web;../../../../../rtos/azure-rtos/netxduo/common/inc;../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc;../../../../../rtos/azure-rtos/netxduo/nx_secure/inc;../../../../../rtos/azure-rtos/netxduo/nx_secure/ports;../../../../../rtos/azure-rtos/netxduo/ports/cortex_m7/ac6/inc;../../../../../rtos/azure-rtos/filex/common/inc;../../../../../rtos/azure-rtos/filex/ports/cortex_m7/ac6/inc;../../../../../rtos/azure-rtos/threadx/common/inc;../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/inc;../../../../../components/phy;../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -346,7 +346,7 @@
             <uClangAs>1</uClangAs>
             <VariousControls>
               <MiscControls/>
-              <Define>DEBUG, __STARTUP_INITIALIZE_NONCACHEDATA, TX_ENABLE_FPU_SUPPORT</Define>
+              <Define>DEBUG, __STARTUP_INITIALIZE_NONCACHEDATA, TX_ENABLE_FPU_SUPPORT=1</Define>
               <Undefine/>
               <IncludePath/>
             </VariousControls>
@@ -908,6 +908,21 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>azure-rtos/netxduo/addons/lwm2m</GroupName>
+          <Files>
+            <File>
+              <FileName>nx_lwm2m_client.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/addons/lwm2m/nx_lwm2m_client.c</FilePath>
+            </File>
+            <File>
+              <FileName>nx_lwm2m_client.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/addons/lwm2m/nx_lwm2m_client.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>azure-rtos/netxduo/addons/mdns</GroupName>
           <Files>
             <File>
@@ -1004,6 +1019,21 @@
               <FileName>nx_pppoe_server.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../rtos/azure-rtos/netxduo/addons/pppoe/nx_pppoe_server.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>azure-rtos/netxduo/addons/ptp</GroupName>
+          <Files>
+            <File>
+              <FileName>nxd_ptp_client.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/addons/ptp/nxd_ptp_client.c</FilePath>
+            </File>
+            <File>
+              <FileName>nxd_ptp_client.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/addons/ptp/nxd_ptp_client.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1669,6 +1699,16 @@
               <FileName>tx_thread_interrupt_control.S</FileName>
               <FileType>2</FileType>
               <FilePath>../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/src/tx_thread_interrupt_control.S</FilePath>
+            </File>
+            <File>
+              <FileName>tx_thread_interrupt_disable.S</FileName>
+              <FileType>2</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/src/tx_thread_interrupt_disable.S</FilePath>
+            </File>
+            <File>
+              <FileName>tx_thread_interrupt_restore.S</FileName>
+              <FileType>2</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/src/tx_thread_interrupt_restore.S</FilePath>
             </File>
             <File>
               <FileName>tx_thread_schedule.S</FileName>
@@ -2071,7 +2111,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, DEBUG, __CLANG_ARM, CPU_MIMXRT1052DVL6B, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, SDK_DEBUGCONSOLE_UART, PRINTF_FLOAT_ENABLE=1, SCANF_FLOAT_ENABLE=1, PRINTF_ADVANCED_ENABLE=1, SCANF_ADVANCED_ENABLE=0, SERIAL_PORT_TYPE_UART=1, NX_INCLUDE_USER_DEFINE_FILE, FX_INCLUDE_USER_DEFINE_FILE, TX_INCLUDE_USER_DEFINE_FILE, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../components/phy/mdio/enet;../../../../../components/phy/device/phyksz8081;../../../../../devices/MIMXRT1052/drivers;../../../../../devices/MIMXRT1052;../../../../../devices/MIMXRT1052/utilities/str;../../../../../devices/MIMXRT1052/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../../../devices/MIMXRT1052/xip;../../../xip;../../../../../rtos/azure-rtos/netxduo/addons/auto_ip;../../../../../rtos/azure-rtos/netxduo/addons/cloud;../../../../../rtos/azure-rtos/netxduo/addons/BSD;../../../../../rtos/azure-rtos/netxduo/addons/dhcp;../../../../../rtos/azure-rtos/netxduo/addons/dns;../../../../../rtos/azure-rtos/netxduo/addons/ftp;../../../../../rtos/azure-rtos/netxduo/addons/http;../../../../../rtos/azure-rtos/netxduo/addons/mdns;../../../../../rtos/azure-rtos/netxduo/addons/mqtt;../../../../../rtos/azure-rtos/netxduo/addons/nat;../../../../../rtos/azure-rtos/netxduo/addons/pop3;../../../../../rtos/azure-rtos/netxduo/addons/ppp;../../../../../rtos/azure-rtos/netxduo/addons/pppoe;../../../../../rtos/azure-rtos/netxduo/addons/smtp;../../../../../rtos/azure-rtos/netxduo/addons/snmp;../../../../../rtos/azure-rtos/netxduo/addons/sntp;../../../../../rtos/azure-rtos/netxduo/addons/telnet;../../../../../rtos/azure-rtos/netxduo/addons/tftp;../../../../../rtos/azure-rtos/netxduo/addons/web;../../../../../rtos/azure-rtos/netxduo/common/inc;../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc;../../../../../rtos/azure-rtos/netxduo/nx_secure/inc;../../../../../rtos/azure-rtos/netxduo/nx_secure/ports;../../../../../rtos/azure-rtos/netxduo/ports/cortex_m7/ac6/inc;../../../../../rtos/azure-rtos/filex/common/inc;../../../../../rtos/azure-rtos/filex/ports/cortex_m7/ac6/inc;../../../../../rtos/azure-rtos/threadx/common/inc;../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/inc;../../../../../components/phy;../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../components/phy/mdio/enet;../../../../../components/phy/device/phyksz8081;../../../../../devices/MIMXRT1052/drivers;../../../../../devices/MIMXRT1052;../../../../../devices/MIMXRT1052/utilities/str;../../../../../devices/MIMXRT1052/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../../../devices/MIMXRT1052/xip;../../../xip;../../../../../rtos/azure-rtos/netxduo/addons/auto_ip;../../../../../rtos/azure-rtos/netxduo/addons/cloud;../../../../../rtos/azure-rtos/netxduo/addons/BSD;../../../../../rtos/azure-rtos/netxduo/addons/dhcp;../../../../../rtos/azure-rtos/netxduo/addons/dns;../../../../../rtos/azure-rtos/netxduo/addons/ftp;../../../../../rtos/azure-rtos/netxduo/addons/http;../../../../../rtos/azure-rtos/netxduo/addons/lwm2m;../../../../../rtos/azure-rtos/netxduo/addons/mdns;../../../../../rtos/azure-rtos/netxduo/addons/mqtt;../../../../../rtos/azure-rtos/netxduo/addons/nat;../../../../../rtos/azure-rtos/netxduo/addons/pop3;../../../../../rtos/azure-rtos/netxduo/addons/ppp;../../../../../rtos/azure-rtos/netxduo/addons/pppoe;../../../../../rtos/azure-rtos/netxduo/addons/ptp;../../../../../rtos/azure-rtos/netxduo/addons/smtp;../../../../../rtos/azure-rtos/netxduo/addons/snmp;../../../../../rtos/azure-rtos/netxduo/addons/sntp;../../../../../rtos/azure-rtos/netxduo/addons/telnet;../../../../../rtos/azure-rtos/netxduo/addons/tftp;../../../../../rtos/azure-rtos/netxduo/addons/web;../../../../../rtos/azure-rtos/netxduo/common/inc;../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc;../../../../../rtos/azure-rtos/netxduo/nx_secure/inc;../../../../../rtos/azure-rtos/netxduo/nx_secure/ports;../../../../../rtos/azure-rtos/netxduo/ports/cortex_m7/ac6/inc;../../../../../rtos/azure-rtos/filex/common/inc;../../../../../rtos/azure-rtos/filex/ports/cortex_m7/ac6/inc;../../../../../rtos/azure-rtos/threadx/common/inc;../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/inc;../../../../../components/phy;../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2087,7 +2127,7 @@
             <uClangAs>1</uClangAs>
             <VariousControls>
               <MiscControls/>
-              <Define>DEBUG, __STARTUP_INITIALIZE_NONCACHEDATA, TX_ENABLE_FPU_SUPPORT</Define>
+              <Define>DEBUG, __STARTUP_INITIALIZE_NONCACHEDATA, TX_ENABLE_FPU_SUPPORT=1</Define>
               <Undefine/>
               <IncludePath/>
             </VariousControls>
@@ -2649,6 +2689,21 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>azure-rtos/netxduo/addons/lwm2m</GroupName>
+          <Files>
+            <File>
+              <FileName>nx_lwm2m_client.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/addons/lwm2m/nx_lwm2m_client.c</FilePath>
+            </File>
+            <File>
+              <FileName>nx_lwm2m_client.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/addons/lwm2m/nx_lwm2m_client.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>azure-rtos/netxduo/addons/mdns</GroupName>
           <Files>
             <File>
@@ -2745,6 +2800,21 @@
               <FileName>nx_pppoe_server.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../rtos/azure-rtos/netxduo/addons/pppoe/nx_pppoe_server.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>azure-rtos/netxduo/addons/ptp</GroupName>
+          <Files>
+            <File>
+              <FileName>nxd_ptp_client.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/addons/ptp/nxd_ptp_client.c</FilePath>
+            </File>
+            <File>
+              <FileName>nxd_ptp_client.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/addons/ptp/nxd_ptp_client.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -3412,6 +3482,16 @@
               <FilePath>../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/src/tx_thread_interrupt_control.S</FilePath>
             </File>
             <File>
+              <FileName>tx_thread_interrupt_disable.S</FileName>
+              <FileType>2</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/src/tx_thread_interrupt_disable.S</FilePath>
+            </File>
+            <File>
+              <FileName>tx_thread_interrupt_restore.S</FileName>
+              <FileType>2</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/src/tx_thread_interrupt_restore.S</FilePath>
+            </File>
+            <File>
               <FileName>tx_thread_schedule.S</FileName>
               <FileType>2</FileType>
               <FilePath>../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/src/tx_thread_schedule.S</FilePath>
@@ -3812,7 +3892,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>SKIP_SYSCLK_INIT, DATA_SECTION_IS_CACHEABLE=1, NDEBUG, __CLANG_ARM, CPU_MIMXRT1052DVL6B, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, SDK_DEBUGCONSOLE_UART, PRINTF_FLOAT_ENABLE=1, SCANF_FLOAT_ENABLE=1, PRINTF_ADVANCED_ENABLE=1, SCANF_ADVANCED_ENABLE=0, SERIAL_PORT_TYPE_UART=1, NX_INCLUDE_USER_DEFINE_FILE, FX_INCLUDE_USER_DEFINE_FILE, TX_INCLUDE_USER_DEFINE_FILE, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../components/phy/mdio/enet;../../../../../components/phy/device/phyksz8081;../../../../../devices/MIMXRT1052/drivers;../../../../../devices/MIMXRT1052;../../../../../devices/MIMXRT1052/utilities/str;../../../../../devices/MIMXRT1052/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../../../devices/MIMXRT1052/xip;../../../xip;../../../../../rtos/azure-rtos/netxduo/addons/auto_ip;../../../../../rtos/azure-rtos/netxduo/addons/cloud;../../../../../rtos/azure-rtos/netxduo/addons/BSD;../../../../../rtos/azure-rtos/netxduo/addons/dhcp;../../../../../rtos/azure-rtos/netxduo/addons/dns;../../../../../rtos/azure-rtos/netxduo/addons/ftp;../../../../../rtos/azure-rtos/netxduo/addons/http;../../../../../rtos/azure-rtos/netxduo/addons/mdns;../../../../../rtos/azure-rtos/netxduo/addons/mqtt;../../../../../rtos/azure-rtos/netxduo/addons/nat;../../../../../rtos/azure-rtos/netxduo/addons/pop3;../../../../../rtos/azure-rtos/netxduo/addons/ppp;../../../../../rtos/azure-rtos/netxduo/addons/pppoe;../../../../../rtos/azure-rtos/netxduo/addons/smtp;../../../../../rtos/azure-rtos/netxduo/addons/snmp;../../../../../rtos/azure-rtos/netxduo/addons/sntp;../../../../../rtos/azure-rtos/netxduo/addons/telnet;../../../../../rtos/azure-rtos/netxduo/addons/tftp;../../../../../rtos/azure-rtos/netxduo/addons/web;../../../../../rtos/azure-rtos/netxduo/common/inc;../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc;../../../../../rtos/azure-rtos/netxduo/nx_secure/inc;../../../../../rtos/azure-rtos/netxduo/nx_secure/ports;../../../../../rtos/azure-rtos/netxduo/ports/cortex_m7/ac6/inc;../../../../../rtos/azure-rtos/filex/common/inc;../../../../../rtos/azure-rtos/filex/ports/cortex_m7/ac6/inc;../../../../../rtos/azure-rtos/threadx/common/inc;../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/inc;../../../../../components/phy;../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../components/phy/mdio/enet;../../../../../components/phy/device/phyksz8081;../../../../../devices/MIMXRT1052/drivers;../../../../../devices/MIMXRT1052;../../../../../devices/MIMXRT1052/utilities/str;../../../../../devices/MIMXRT1052/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../../../devices/MIMXRT1052/xip;../../../xip;../../../../../rtos/azure-rtos/netxduo/addons/auto_ip;../../../../../rtos/azure-rtos/netxduo/addons/cloud;../../../../../rtos/azure-rtos/netxduo/addons/BSD;../../../../../rtos/azure-rtos/netxduo/addons/dhcp;../../../../../rtos/azure-rtos/netxduo/addons/dns;../../../../../rtos/azure-rtos/netxduo/addons/ftp;../../../../../rtos/azure-rtos/netxduo/addons/http;../../../../../rtos/azure-rtos/netxduo/addons/lwm2m;../../../../../rtos/azure-rtos/netxduo/addons/mdns;../../../../../rtos/azure-rtos/netxduo/addons/mqtt;../../../../../rtos/azure-rtos/netxduo/addons/nat;../../../../../rtos/azure-rtos/netxduo/addons/pop3;../../../../../rtos/azure-rtos/netxduo/addons/ppp;../../../../../rtos/azure-rtos/netxduo/addons/pppoe;../../../../../rtos/azure-rtos/netxduo/addons/ptp;../../../../../rtos/azure-rtos/netxduo/addons/smtp;../../../../../rtos/azure-rtos/netxduo/addons/snmp;../../../../../rtos/azure-rtos/netxduo/addons/sntp;../../../../../rtos/azure-rtos/netxduo/addons/telnet;../../../../../rtos/azure-rtos/netxduo/addons/tftp;../../../../../rtos/azure-rtos/netxduo/addons/web;../../../../../rtos/azure-rtos/netxduo/common/inc;../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc;../../../../../rtos/azure-rtos/netxduo/nx_secure/inc;../../../../../rtos/azure-rtos/netxduo/nx_secure/ports;../../../../../rtos/azure-rtos/netxduo/ports/cortex_m7/ac6/inc;../../../../../rtos/azure-rtos/filex/common/inc;../../../../../rtos/azure-rtos/filex/ports/cortex_m7/ac6/inc;../../../../../rtos/azure-rtos/threadx/common/inc;../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/inc;../../../../../components/phy;../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -3828,7 +3908,7 @@
             <uClangAs>1</uClangAs>
             <VariousControls>
               <MiscControls/>
-              <Define>NDEBUG, __STARTUP_INITIALIZE_NONCACHEDATA, TX_ENABLE_FPU_SUPPORT</Define>
+              <Define>NDEBUG, __STARTUP_INITIALIZE_NONCACHEDATA, TX_ENABLE_FPU_SUPPORT=1</Define>
               <Undefine/>
               <IncludePath/>
             </VariousControls>
@@ -4390,6 +4470,21 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>azure-rtos/netxduo/addons/lwm2m</GroupName>
+          <Files>
+            <File>
+              <FileName>nx_lwm2m_client.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/addons/lwm2m/nx_lwm2m_client.c</FilePath>
+            </File>
+            <File>
+              <FileName>nx_lwm2m_client.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/addons/lwm2m/nx_lwm2m_client.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>azure-rtos/netxduo/addons/mdns</GroupName>
           <Files>
             <File>
@@ -4486,6 +4581,21 @@
               <FileName>nx_pppoe_server.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../rtos/azure-rtos/netxduo/addons/pppoe/nx_pppoe_server.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>azure-rtos/netxduo/addons/ptp</GroupName>
+          <Files>
+            <File>
+              <FileName>nxd_ptp_client.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/addons/ptp/nxd_ptp_client.c</FilePath>
+            </File>
+            <File>
+              <FileName>nxd_ptp_client.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/addons/ptp/nxd_ptp_client.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -5153,6 +5263,16 @@
               <FilePath>../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/src/tx_thread_interrupt_control.S</FilePath>
             </File>
             <File>
+              <FileName>tx_thread_interrupt_disable.S</FileName>
+              <FileType>2</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/src/tx_thread_interrupt_disable.S</FilePath>
+            </File>
+            <File>
+              <FileName>tx_thread_interrupt_restore.S</FileName>
+              <FileType>2</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/src/tx_thread_interrupt_restore.S</FilePath>
+            </File>
+            <File>
               <FileName>tx_thread_schedule.S</FileName>
               <FileType>2</FileType>
               <FilePath>../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/src/tx_thread_schedule.S</FilePath>
@@ -5553,7 +5673,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, NDEBUG, __CLANG_ARM, CPU_MIMXRT1052DVL6B, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, SDK_DEBUGCONSOLE_UART, PRINTF_FLOAT_ENABLE=1, SCANF_FLOAT_ENABLE=1, PRINTF_ADVANCED_ENABLE=1, SCANF_ADVANCED_ENABLE=0, SERIAL_PORT_TYPE_UART=1, NX_INCLUDE_USER_DEFINE_FILE, FX_INCLUDE_USER_DEFINE_FILE, TX_INCLUDE_USER_DEFINE_FILE, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../components/phy/mdio/enet;../../../../../components/phy/device/phyksz8081;../../../../../devices/MIMXRT1052/drivers;../../../../../devices/MIMXRT1052;../../../../../devices/MIMXRT1052/utilities/str;../../../../../devices/MIMXRT1052/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../../../devices/MIMXRT1052/xip;../../../xip;../../../../../rtos/azure-rtos/netxduo/addons/auto_ip;../../../../../rtos/azure-rtos/netxduo/addons/cloud;../../../../../rtos/azure-rtos/netxduo/addons/BSD;../../../../../rtos/azure-rtos/netxduo/addons/dhcp;../../../../../rtos/azure-rtos/netxduo/addons/dns;../../../../../rtos/azure-rtos/netxduo/addons/ftp;../../../../../rtos/azure-rtos/netxduo/addons/http;../../../../../rtos/azure-rtos/netxduo/addons/mdns;../../../../../rtos/azure-rtos/netxduo/addons/mqtt;../../../../../rtos/azure-rtos/netxduo/addons/nat;../../../../../rtos/azure-rtos/netxduo/addons/pop3;../../../../../rtos/azure-rtos/netxduo/addons/ppp;../../../../../rtos/azure-rtos/netxduo/addons/pppoe;../../../../../rtos/azure-rtos/netxduo/addons/smtp;../../../../../rtos/azure-rtos/netxduo/addons/snmp;../../../../../rtos/azure-rtos/netxduo/addons/sntp;../../../../../rtos/azure-rtos/netxduo/addons/telnet;../../../../../rtos/azure-rtos/netxduo/addons/tftp;../../../../../rtos/azure-rtos/netxduo/addons/web;../../../../../rtos/azure-rtos/netxduo/common/inc;../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc;../../../../../rtos/azure-rtos/netxduo/nx_secure/inc;../../../../../rtos/azure-rtos/netxduo/nx_secure/ports;../../../../../rtos/azure-rtos/netxduo/ports/cortex_m7/ac6/inc;../../../../../rtos/azure-rtos/filex/common/inc;../../../../../rtos/azure-rtos/filex/ports/cortex_m7/ac6/inc;../../../../../rtos/azure-rtos/threadx/common/inc;../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/inc;../../../../../components/phy;../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../components/phy/mdio/enet;../../../../../components/phy/device/phyksz8081;../../../../../devices/MIMXRT1052/drivers;../../../../../devices/MIMXRT1052;../../../../../devices/MIMXRT1052/utilities/str;../../../../../devices/MIMXRT1052/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../../../devices/MIMXRT1052/xip;../../../xip;../../../../../rtos/azure-rtos/netxduo/addons/auto_ip;../../../../../rtos/azure-rtos/netxduo/addons/cloud;../../../../../rtos/azure-rtos/netxduo/addons/BSD;../../../../../rtos/azure-rtos/netxduo/addons/dhcp;../../../../../rtos/azure-rtos/netxduo/addons/dns;../../../../../rtos/azure-rtos/netxduo/addons/ftp;../../../../../rtos/azure-rtos/netxduo/addons/http;../../../../../rtos/azure-rtos/netxduo/addons/lwm2m;../../../../../rtos/azure-rtos/netxduo/addons/mdns;../../../../../rtos/azure-rtos/netxduo/addons/mqtt;../../../../../rtos/azure-rtos/netxduo/addons/nat;../../../../../rtos/azure-rtos/netxduo/addons/pop3;../../../../../rtos/azure-rtos/netxduo/addons/ppp;../../../../../rtos/azure-rtos/netxduo/addons/pppoe;../../../../../rtos/azure-rtos/netxduo/addons/ptp;../../../../../rtos/azure-rtos/netxduo/addons/smtp;../../../../../rtos/azure-rtos/netxduo/addons/snmp;../../../../../rtos/azure-rtos/netxduo/addons/sntp;../../../../../rtos/azure-rtos/netxduo/addons/telnet;../../../../../rtos/azure-rtos/netxduo/addons/tftp;../../../../../rtos/azure-rtos/netxduo/addons/web;../../../../../rtos/azure-rtos/netxduo/common/inc;../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc;../../../../../rtos/azure-rtos/netxduo/nx_secure/inc;../../../../../rtos/azure-rtos/netxduo/nx_secure/ports;../../../../../rtos/azure-rtos/netxduo/ports/cortex_m7/ac6/inc;../../../../../rtos/azure-rtos/filex/common/inc;../../../../../rtos/azure-rtos/filex/ports/cortex_m7/ac6/inc;../../../../../rtos/azure-rtos/threadx/common/inc;../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/inc;../../../../../components/phy;../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -5569,7 +5689,7 @@
             <uClangAs>1</uClangAs>
             <VariousControls>
               <MiscControls/>
-              <Define>NDEBUG, __STARTUP_INITIALIZE_NONCACHEDATA, TX_ENABLE_FPU_SUPPORT</Define>
+              <Define>NDEBUG, __STARTUP_INITIALIZE_NONCACHEDATA, TX_ENABLE_FPU_SUPPORT=1</Define>
               <Undefine/>
               <IncludePath/>
             </VariousControls>
@@ -6131,6 +6251,21 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>azure-rtos/netxduo/addons/lwm2m</GroupName>
+          <Files>
+            <File>
+              <FileName>nx_lwm2m_client.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/addons/lwm2m/nx_lwm2m_client.c</FilePath>
+            </File>
+            <File>
+              <FileName>nx_lwm2m_client.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/addons/lwm2m/nx_lwm2m_client.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>azure-rtos/netxduo/addons/mdns</GroupName>
           <Files>
             <File>
@@ -6227,6 +6362,21 @@
               <FileName>nx_pppoe_server.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../rtos/azure-rtos/netxduo/addons/pppoe/nx_pppoe_server.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>azure-rtos/netxduo/addons/ptp</GroupName>
+          <Files>
+            <File>
+              <FileName>nxd_ptp_client.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/addons/ptp/nxd_ptp_client.c</FilePath>
+            </File>
+            <File>
+              <FileName>nxd_ptp_client.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/netxduo/addons/ptp/nxd_ptp_client.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -6892,6 +7042,16 @@
               <FileName>tx_thread_interrupt_control.S</FileName>
               <FileType>2</FileType>
               <FilePath>../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/src/tx_thread_interrupt_control.S</FilePath>
+            </File>
+            <File>
+              <FileName>tx_thread_interrupt_disable.S</FileName>
+              <FileType>2</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/src/tx_thread_interrupt_disable.S</FilePath>
+            </File>
+            <File>
+              <FileName>tx_thread_interrupt_restore.S</FileName>
+              <FileType>2</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/src/tx_thread_interrupt_restore.S</FilePath>
             </File>
             <File>
               <FileName>tx_thread_schedule.S</FileName>

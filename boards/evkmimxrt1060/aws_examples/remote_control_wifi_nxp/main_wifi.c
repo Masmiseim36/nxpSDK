@@ -237,7 +237,7 @@ int main(void)
 {
     BOARD_ConfigMPU();
     BOARD_InitPins();
-    BOARD_BootClockRUN();
+    BOARD_InitBootClocks();
     BOARD_I2C_ConfigurePins();
     BOARD_InitDebugConsole();
 

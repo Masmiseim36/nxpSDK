@@ -25,7 +25,7 @@
 #include "mbedtls/ecp.h"
 #include "mbedtls/version.h"
 
-#if defined(MBEDTLS_ECP_ALT) && SSS_HAVE_ALT_SSS
+#if defined(MBEDTLS_ECP_ALT) && SSS_HAVE_MBEDTLS_ALT_SSS
 
 #include <sss_mbedtls.h>
 
@@ -36,8 +36,9 @@ void mbedtls_ecp_keypair_free_o(mbedtls_ecp_keypair *key);
 
 void mbedtls_ecp_keypair_free(mbedtls_ecp_keypair *key)
 {
-    if (key == NULL)
+    if (key == NULL) {
         return;
+    }
 
     // if ( key->grp.hlse_handle != 0 )
     // {

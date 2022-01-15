@@ -59,12 +59,12 @@
         <option>
           <name>GRuntimeLibSelect</name>
           <version>0</version>
-          <state>1</state>
+          <state>2</state>
         </option>
         <option>
           <name>GRuntimeLibSelectSlave</name>
           <version>0</version>
-          <state>1</state>
+          <state>2</state>
         </option>
         <option>
           <name>RTDescription</name>
@@ -356,17 +356,18 @@
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/sdio</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/common</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/host/usdhc</state>
+          <state>$PROJ_DIR$/../../../../../rtos/freertos/libraries/abstractions/transport/secure_sockets</state>
           <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include</state>
           <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM4F</state>
-          <state>$PROJ_DIR$/../../../../../rtos/freertos/libraries/c_sdk/aws/shadow/include</state>
-          <state>$PROJ_DIR$/../../../../../rtos/freertos/libraries/c_sdk/aws/shadow/include/types</state>
-          <state>$PROJ_DIR$/../../../../../rtos/freertos/libraries/c_sdk/aws/shadow/src</state>
-          <state>$PROJ_DIR$/../../../../../rtos/freertos/libraries/c_sdk/aws/shadow/src/private</state>
-          <state>$PROJ_DIR$/../../../../../rtos/freertos/libraries/c_sdk/standard/serializer/include</state>
+          <state>$PROJ_DIR$/../../../../../rtos/freertos/libraries/abstractions/secure_sockets/include</state>
+          <state>$PROJ_DIR$/../../../../../rtos/freertos/libraries/logging/include</state>
+          <state>$PROJ_DIR$/../../../../../rtos/freertos/libraries/coreMQTT/source/include</state>
+          <state>$PROJ_DIR$/../../../../../rtos/freertos/libraries/coreMQTT/source/interface</state>
+          <state>$PROJ_DIR$/../../../../../components/wifi_bt_module/AzureWave/tx_pwr_limits</state>
+          <state>$PROJ_DIR$/../../../../../components/wifi_bt_module/Murata/tx_pwr_limits</state>
+          <state>$PROJ_DIR$/../../../../../rtos/freertos/libraries/3rdparty/mbedtls_config</state>
           <state>$PROJ_DIR$/../../../../../rtos/freertos/libraries/3rdparty/pkcs11</state>
           <state>$PROJ_DIR$/../../../../../rtos/freertos/libraries/abstractions/pkcs11/corePKCS11/source/include</state>
-          <state>$PROJ_DIR$/../../../../../rtos/freertos/libraries/logging/include</state>
-          <state>$PROJ_DIR$/../../../../../rtos/freertos/libraries/3rdparty/mbedtls_config</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
@@ -382,9 +383,6 @@
           <state>$PROJ_DIR$/../../../../../rtos/freertos/libraries/abstractions/platform/include/types</state>
           <state>$PROJ_DIR$/../../../../../rtos/freertos/libraries/abstractions/platform/freertos/include</state>
           <state>$PROJ_DIR$/../../../../../rtos/freertos/libraries/abstractions/platform/include</state>
-          <state>$PROJ_DIR$/../../../../../rtos/freertos/libraries/abstractions/secure_sockets/include</state>
-          <state>$PROJ_DIR$/../../../../../rtos/freertos/libraries/freertos_plus/standard/utils/include</state>
-          <state>$PROJ_DIR$/../../../../../rtos/freertos/libraries/freertos_plus/standard/crypto/include</state>
           <state>$PROJ_DIR$/../../../../../rtos/freertos/libraries/abstractions/wifi/include</state>
           <state>$PROJ_DIR$/../../../../../middleware/wifi/incl</state>
           <state>$PROJ_DIR$/../../../../../middleware/wifi/incl/port/os</state>
@@ -393,17 +391,17 @@
           <state>$PROJ_DIR$/../../../../../middleware/wifi/wifi_bt_firmware</state>
           <state>$PROJ_DIR$/../../../../../middleware/wifi/wifidriver</state>
           <state>$PROJ_DIR$/../../../../../middleware/wifi/wifidriver/incl</state>
-          <state>$PROJ_DIR$/../../../../../rtos/freertos/libraries/freertos_plus/standard/tls/include</state>
-          <state>$PROJ_DIR$/../../../../../rtos/freertos/libraries/3rdparty/mbedtls_utils</state>
-          <state>$PROJ_DIR$/../../../../../rtos/freertos/libraries/3rdparty/jsmn</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/osa</state>
           <state>$PROJ_DIR$/../../../../../components/osa</state>
-          <state>$PROJ_DIR$/../../../../../rtos/freertos/libraries/c_sdk/standard/mqtt/include</state>
-          <state>$PROJ_DIR$/../../../../../rtos/freertos/libraries/c_sdk/standard/mqtt/include/types</state>
-          <state>$PROJ_DIR$/../../../../../rtos/freertos/libraries/c_sdk/standard/mqtt/src/private</state>
-          <state>$PROJ_DIR$/../../../../../rtos/freertos/libraries/c_sdk/standard/mqtt/src</state>
-          <state>$PROJ_DIR$/../../../../../rtos/freertos/libraries/coreMQTT/source/include</state>
-          <state>$PROJ_DIR$/../../../../../rtos/freertos/libraries/coreMQTT/source/interface</state>
+          <state>$PROJ_DIR$/../../../../../rtos/freertos/libraries/abstractions/backoff_algorithm/source/include</state>
+          <state>$PROJ_DIR$/../../../../../rtos/freertos/libraries/device_shadow_for_aws/source/include</state>
+          <state>$PROJ_DIR$/../../../../../rtos/freertos/libraries/coreHTTP/source/include</state>
+          <state>$PROJ_DIR$/../../../../../rtos/freertos/libraries/coreHTTP/source/dependency/3rdparty/http_parser</state>
+          <state>$PROJ_DIR$/../../../../../rtos/freertos/libraries/3rdparty/jsmn</state>
+          <state>$PROJ_DIR$/../../../../../rtos/freertos/libraries/freertos_plus/standard/tls/include</state>
+          <state>$PROJ_DIR$/../../../../../rtos/freertos/libraries/3rdparty/mbedtls_utils</state>
+          <state>$PROJ_DIR$/../../../../../rtos/freertos/libraries/freertos_plus/standard/crypto/include</state>
+          <state>$PROJ_DIR$/../../../../../rtos/freertos/libraries/freertos_plus/standard/utils/include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1117,12 +1115,12 @@
         <option>
           <name>GRuntimeLibSelect</name>
           <version>0</version>
-          <state>1</state>
+          <state>2</state>
         </option>
         <option>
           <name>GRuntimeLibSelectSlave</name>
           <version>0</version>
-          <state>1</state>
+          <state>2</state>
         </option>
         <option>
           <name>RTDescription</name>
@@ -1414,17 +1412,18 @@
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/sdio</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/common</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/host/usdhc</state>
+          <state>$PROJ_DIR$/../../../../../rtos/freertos/libraries/abstractions/transport/secure_sockets</state>
           <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include</state>
           <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM4F</state>
-          <state>$PROJ_DIR$/../../../../../rtos/freertos/libraries/c_sdk/aws/shadow/include</state>
-          <state>$PROJ_DIR$/../../../../../rtos/freertos/libraries/c_sdk/aws/shadow/include/types</state>
-          <state>$PROJ_DIR$/../../../../../rtos/freertos/libraries/c_sdk/aws/shadow/src</state>
-          <state>$PROJ_DIR$/../../../../../rtos/freertos/libraries/c_sdk/aws/shadow/src/private</state>
-          <state>$PROJ_DIR$/../../../../../rtos/freertos/libraries/c_sdk/standard/serializer/include</state>
+          <state>$PROJ_DIR$/../../../../../rtos/freertos/libraries/abstractions/secure_sockets/include</state>
+          <state>$PROJ_DIR$/../../../../../rtos/freertos/libraries/logging/include</state>
+          <state>$PROJ_DIR$/../../../../../rtos/freertos/libraries/coreMQTT/source/include</state>
+          <state>$PROJ_DIR$/../../../../../rtos/freertos/libraries/coreMQTT/source/interface</state>
+          <state>$PROJ_DIR$/../../../../../components/wifi_bt_module/AzureWave/tx_pwr_limits</state>
+          <state>$PROJ_DIR$/../../../../../components/wifi_bt_module/Murata/tx_pwr_limits</state>
+          <state>$PROJ_DIR$/../../../../../rtos/freertos/libraries/3rdparty/mbedtls_config</state>
           <state>$PROJ_DIR$/../../../../../rtos/freertos/libraries/3rdparty/pkcs11</state>
           <state>$PROJ_DIR$/../../../../../rtos/freertos/libraries/abstractions/pkcs11/corePKCS11/source/include</state>
-          <state>$PROJ_DIR$/../../../../../rtos/freertos/libraries/logging/include</state>
-          <state>$PROJ_DIR$/../../../../../rtos/freertos/libraries/3rdparty/mbedtls_config</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
@@ -1440,9 +1439,6 @@
           <state>$PROJ_DIR$/../../../../../rtos/freertos/libraries/abstractions/platform/include/types</state>
           <state>$PROJ_DIR$/../../../../../rtos/freertos/libraries/abstractions/platform/freertos/include</state>
           <state>$PROJ_DIR$/../../../../../rtos/freertos/libraries/abstractions/platform/include</state>
-          <state>$PROJ_DIR$/../../../../../rtos/freertos/libraries/abstractions/secure_sockets/include</state>
-          <state>$PROJ_DIR$/../../../../../rtos/freertos/libraries/freertos_plus/standard/utils/include</state>
-          <state>$PROJ_DIR$/../../../../../rtos/freertos/libraries/freertos_plus/standard/crypto/include</state>
           <state>$PROJ_DIR$/../../../../../rtos/freertos/libraries/abstractions/wifi/include</state>
           <state>$PROJ_DIR$/../../../../../middleware/wifi/incl</state>
           <state>$PROJ_DIR$/../../../../../middleware/wifi/incl/port/os</state>
@@ -1451,17 +1447,17 @@
           <state>$PROJ_DIR$/../../../../../middleware/wifi/wifi_bt_firmware</state>
           <state>$PROJ_DIR$/../../../../../middleware/wifi/wifidriver</state>
           <state>$PROJ_DIR$/../../../../../middleware/wifi/wifidriver/incl</state>
-          <state>$PROJ_DIR$/../../../../../rtos/freertos/libraries/freertos_plus/standard/tls/include</state>
-          <state>$PROJ_DIR$/../../../../../rtos/freertos/libraries/3rdparty/mbedtls_utils</state>
-          <state>$PROJ_DIR$/../../../../../rtos/freertos/libraries/3rdparty/jsmn</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/osa</state>
           <state>$PROJ_DIR$/../../../../../components/osa</state>
-          <state>$PROJ_DIR$/../../../../../rtos/freertos/libraries/c_sdk/standard/mqtt/include</state>
-          <state>$PROJ_DIR$/../../../../../rtos/freertos/libraries/c_sdk/standard/mqtt/include/types</state>
-          <state>$PROJ_DIR$/../../../../../rtos/freertos/libraries/c_sdk/standard/mqtt/src/private</state>
-          <state>$PROJ_DIR$/../../../../../rtos/freertos/libraries/c_sdk/standard/mqtt/src</state>
-          <state>$PROJ_DIR$/../../../../../rtos/freertos/libraries/coreMQTT/source/include</state>
-          <state>$PROJ_DIR$/../../../../../rtos/freertos/libraries/coreMQTT/source/interface</state>
+          <state>$PROJ_DIR$/../../../../../rtos/freertos/libraries/abstractions/backoff_algorithm/source/include</state>
+          <state>$PROJ_DIR$/../../../../../rtos/freertos/libraries/device_shadow_for_aws/source/include</state>
+          <state>$PROJ_DIR$/../../../../../rtos/freertos/libraries/coreHTTP/source/include</state>
+          <state>$PROJ_DIR$/../../../../../rtos/freertos/libraries/coreHTTP/source/dependency/3rdparty/http_parser</state>
+          <state>$PROJ_DIR$/../../../../../rtos/freertos/libraries/3rdparty/jsmn</state>
+          <state>$PROJ_DIR$/../../../../../rtos/freertos/libraries/freertos_plus/standard/tls/include</state>
+          <state>$PROJ_DIR$/../../../../../rtos/freertos/libraries/3rdparty/mbedtls_utils</state>
+          <state>$PROJ_DIR$/../../../../../rtos/freertos/libraries/freertos_plus/standard/crypto/include</state>
+          <state>$PROJ_DIR$/../../../../../rtos/freertos/libraries/freertos_plus/standard/utils/include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -2132,6 +2128,12 @@
       <name>$PROJ_DIR$/../sdmmc_config.h</name>
     </file>
     <file>
+      <name>$PROJ_DIR$/../wifi_bt_config.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../wifi_bt_config.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../board.c</name>
     </file>
     <file>
@@ -2165,22 +2167,10 @@
   <group>
     <name>configs</name>
     <file>
-      <name>$PROJ_DIR$/../config_files/aws_bufferpool_config.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../config_files/aws_ggd_config.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../config_files/aws_mbedtls_config.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../config_files/aws_mqtt_config.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../config_files/aws_secure_sockets_config.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../config_files/aws_shadow_config.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../config_files/aws_test_runner_config.h</name>
@@ -2195,6 +2185,18 @@
       <name>$PROJ_DIR$/../config_files/aws_wifi_config.h</name>
     </file>
     <file>
+      <name>$PROJ_DIR$/../config_files/core_http_config.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../config_files/core_mqtt_config.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../config_files/core_pkcs11_config.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../config_files/core_test_pkcs11_config.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../config_files/FreeRTOSConfig.h</name>
     </file>
     <file>
@@ -2204,34 +2206,13 @@
       <name>$PROJ_DIR$/../config_files/iot_config.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../config_files/iot_mqtt_agent_config.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../config_files/core_pkcs11_config.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../config_files/core_test_pkcs11_config.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../config_files/unity_config.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../config_files/aws_ota_agent_config.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../config_files/aws_test_ota_config.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../config_files/core_http_config.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../config_files/core_mqtt_config.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../config_files/defender_config.h</name>
+      <name>$PROJ_DIR$/../config_files/iot_secure_sockets_config.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../config_files/shadow_config.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../config_files/unity_config.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../config_files/lwipopts.h</name>
@@ -2586,10 +2567,22 @@
           <name>$PROJ_DIR$/../../../../../middleware/mbedtls/include/psa/crypto.h</name>
         </file>
         <file>
+          <name>$PROJ_DIR$/../../../../../middleware/mbedtls/include/psa/crypto_builtin_composites.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/mbedtls/include/psa/crypto_builtin_primitives.h</name>
+        </file>
+        <file>
           <name>$PROJ_DIR$/../../../../../middleware/mbedtls/include/psa/crypto_compat.h</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../middleware/mbedtls/include/psa/crypto_config.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/mbedtls/include/psa/crypto_driver_contexts_composites.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/mbedtls/include/psa/crypto_driver_contexts_primitives.h</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../middleware/mbedtls/include/psa/crypto_driver_common.h</name>
@@ -2704,6 +2697,9 @@
         <name>$PROJ_DIR$/../../../../../middleware/mbedtls/library/ecp_curves.c</name>
       </file>
       <file>
+        <name>$PROJ_DIR$/../../../../../middleware/mbedtls/library/ecp_invasive.h</name>
+      </file>
+      <file>
         <name>$PROJ_DIR$/../../../../../middleware/mbedtls/library/entropy.c</name>
       </file>
       <file>
@@ -2735,6 +2731,21 @@
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/mbedtls/library/md5.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/mbedtls/library/mps_common.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/mbedtls/library/mps_error.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/mbedtls/library/mps_reader.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/mbedtls/library/mps_trace.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/mbedtls/library/mps_trace.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/mbedtls/library/memory_buffer_alloc.c</name>
@@ -2788,6 +2799,18 @@
         <name>$PROJ_DIR$/../../../../../middleware/mbedtls/library/psa_crypto.c</name>
       </file>
       <file>
+        <name>$PROJ_DIR$/../../../../../middleware/mbedtls/library/psa_crypto_aead.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/mbedtls/library/psa_crypto_aead.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/mbedtls/library/psa_crypto_cipher.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/mbedtls/library/psa_crypto_cipher.h</name>
+      </file>
+      <file>
         <name>$PROJ_DIR$/../../../../../middleware/mbedtls/library/psa_crypto_client.c</name>
       </file>
       <file>
@@ -2804,6 +2827,18 @@
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/mbedtls/library/psa_crypto_ecp.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/mbedtls/library/psa_crypto_hash.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/mbedtls/library/psa_crypto_hash.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/mbedtls/library/psa_crypto_mac.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/mbedtls/library/psa_crypto_mac.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/mbedtls/library/psa_crypto_invasive.h</name>
@@ -2825,9 +2860,6 @@
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/mbedtls/library/psa_crypto_se.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/mbedtls/library/psa_crypto_service_integration.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/mbedtls/library/psa_crypto_slot_management.c</name>
@@ -3075,6 +3107,12 @@
           </group>
         </group>
         <group>
+          <name>mbedtls_config</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/freertos/libraries/3rdparty/mbedtls_config/threading_alt.h</name>
+          </file>
+        </group>
+        <group>
           <name>pkcs11</name>
           <file>
             <name>$PROJ_DIR$/../../../../../rtos/freertos/libraries/3rdparty/pkcs11/CONTRIBUTING.md</name>
@@ -3096,9 +3134,15 @@
           </file>
         </group>
         <group>
-          <name>mbedtls_config</name>
+          <name>jsmn</name>
           <file>
-            <name>$PROJ_DIR$/../../../../../rtos/freertos/libraries/3rdparty/mbedtls_config/threading_alt.h</name>
+            <name>$PROJ_DIR$/../../../../../rtos/freertos/libraries/3rdparty/jsmn/jsmn.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/freertos/libraries/3rdparty/jsmn/jsmn.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/freertos/libraries/3rdparty/jsmn/LICENSE</name>
           </file>
         </group>
         <group>
@@ -3117,18 +3161,6 @@
           </file>
           <file>
             <name>$PROJ_DIR$/../../../../../rtos/freertos/libraries/3rdparty/mbedtls_utils/README.md</name>
-          </file>
-        </group>
-        <group>
-          <name>jsmn</name>
-          <file>
-            <name>$PROJ_DIR$/../../../../../rtos/freertos/libraries/3rdparty/jsmn/jsmn.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../rtos/freertos/libraries/3rdparty/jsmn/jsmn.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../rtos/freertos/libraries/3rdparty/jsmn/LICENSE</name>
           </file>
         </group>
       </group>
@@ -3214,7 +3246,22 @@
           <group>
             <name>include</name>
             <file>
+              <name>$PROJ_DIR$/../../../../../rtos/freertos/libraries/abstractions/wifi/include/iot_softap_wifi_provisioning.h</name>
+            </file>
+            <file>
               <name>$PROJ_DIR$/../../../../../rtos/freertos/libraries/abstractions/wifi/include/iot_wifi.h</name>
+            </file>
+          </group>
+        </group>
+        <group>
+          <name>transport</name>
+          <group>
+            <name>secure_sockets</name>
+            <file>
+              <name>$PROJ_DIR$/../../../../../rtos/freertos/libraries/abstractions/transport/secure_sockets/transport_secure_sockets.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../rtos/freertos/libraries/abstractions/transport/secure_sockets/transport_secure_sockets.h</name>
             </file>
           </group>
         </group>
@@ -3226,9 +3273,6 @@
               <name>include</name>
               <group>
                 <name>platform</name>
-                <file>
-                  <name>$PROJ_DIR$/../../../../../rtos/freertos/libraries/abstractions/platform/freertos/include/platform/iot_network_ble.h</name>
-                </file>
                 <file>
                   <name>$PROJ_DIR$/../../../../../rtos/freertos/libraries/abstractions/platform/freertos/include/platform/iot_network_freertos.h</name>
                 </file>
@@ -3270,7 +3314,25 @@
             <group>
               <name>types</name>
               <file>
+                <name>$PROJ_DIR$/../../../../../rtos/freertos/libraries/abstractions/platform/include/types/iot_network_types.h</name>
+              </file>
+              <file>
                 <name>$PROJ_DIR$/../../../../../rtos/freertos/libraries/abstractions/platform/include/types/iot_platform_types.h</name>
+              </file>
+            </group>
+          </group>
+        </group>
+        <group>
+          <name>backoff_algorithm</name>
+          <group>
+            <name>source</name>
+            <file>
+              <name>$PROJ_DIR$/../../../../../rtos/freertos/libraries/abstractions/backoff_algorithm/source/backoff_algorithm.c</name>
+            </file>
+            <group>
+              <name>include</name>
+              <file>
+                <name>$PROJ_DIR$/../../../../../rtos/freertos/libraries/abstractions/backoff_algorithm/source/include/backoff_algorithm.h</name>
               </file>
             </group>
           </group>
@@ -3278,78 +3340,6 @@
       </group>
       <group>
         <name>c_sdk</name>
-        <group>
-          <name>aws</name>
-          <group>
-            <name>shadow</name>
-            <group>
-              <name>test</name>
-              <file>
-                <name>$PROJ_DIR$/../../../../../rtos/freertos/libraries/c_sdk/aws/shadow/test/aws_test_shadow.c</name>
-              </file>
-              <group>
-                <name>system</name>
-                <file>
-                  <name>$PROJ_DIR$/../../../../../rtos/freertos/libraries/c_sdk/aws/shadow/test/system/aws_iot_tests_shadow_system.c</name>
-                </file>
-              </group>
-              <group>
-                <name>unit</name>
-                <file>
-                  <name>$PROJ_DIR$/../../../../../rtos/freertos/libraries/c_sdk/aws/shadow/test/unit/aws_iot_tests_shadow_api.c</name>
-                </file>
-                <file>
-                  <name>$PROJ_DIR$/../../../../../rtos/freertos/libraries/c_sdk/aws/shadow/test/unit/aws_iot_tests_shadow_parser.c</name>
-                </file>
-              </group>
-            </group>
-            <group>
-              <name>include</name>
-              <file>
-                <name>$PROJ_DIR$/../../../../../rtos/freertos/libraries/c_sdk/aws/shadow/include/aws_iot_shadow.h</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../rtos/freertos/libraries/c_sdk/aws/shadow/include/aws_shadow.h</name>
-              </file>
-              <group>
-                <name>types</name>
-                <file>
-                  <name>$PROJ_DIR$/../../../../../rtos/freertos/libraries/c_sdk/aws/shadow/include/types/aws_iot_shadow_types.h</name>
-                </file>
-              </group>
-            </group>
-            <group>
-              <name>src</name>
-              <file>
-                <name>$PROJ_DIR$/../../../../../rtos/freertos/libraries/c_sdk/aws/shadow/src/aws_iot_shadow_api.c</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../rtos/freertos/libraries/c_sdk/aws/shadow/src/aws_iot_shadow_operation.c</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../rtos/freertos/libraries/c_sdk/aws/shadow/src/aws_iot_shadow_parser.c</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../rtos/freertos/libraries/c_sdk/aws/shadow/src/aws_iot_shadow_static_memory.c</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../rtos/freertos/libraries/c_sdk/aws/shadow/src/aws_iot_shadow_subscription.c</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../rtos/freertos/libraries/c_sdk/aws/shadow/src/aws_shadow.c</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../rtos/freertos/libraries/c_sdk/aws/shadow/src/aws_shadow_config_defaults.h</name>
-              </file>
-              <group>
-                <name>private</name>
-                <file>
-                  <name>$PROJ_DIR$/../../../../../rtos/freertos/libraries/c_sdk/aws/shadow/src/private/aws_iot_shadow_internal.h</name>
-                </file>
-              </group>
-            </group>
-          </group>
-        </group>
         <group>
           <name>standard</name>
           <group>
@@ -3365,9 +3355,6 @@
             </group>
             <group>
               <name>include</name>
-              <file>
-                <name>$PROJ_DIR$/../../../../../rtos/freertos/libraries/c_sdk/standard/common/include/iot_appversion32.h</name>
-              </file>
               <file>
                 <name>$PROJ_DIR$/../../../../../rtos/freertos/libraries/c_sdk/standard/common/include/iot_atomic.h</name>
               </file>
@@ -3410,9 +3397,6 @@
               <group>
                 <name>types</name>
                 <file>
-                  <name>$PROJ_DIR$/../../../../../rtos/freertos/libraries/c_sdk/standard/common/include/types/iot_network_types.h</name>
-                </file>
-                <file>
                   <name>$PROJ_DIR$/../../../../../rtos/freertos/libraries/c_sdk/standard/common/include/types/iot_taskpool_types.h</name>
                 </file>
               </group>
@@ -3434,162 +3418,6 @@
               <file>
                 <name>$PROJ_DIR$/../../../../../rtos/freertos/libraries/c_sdk/standard/common/taskpool/iot_taskpool_static_memory.c</name>
               </file>
-            </group>
-          </group>
-          <group>
-            <name>mqtt</name>
-            <group>
-              <name>test</name>
-              <group>
-                <name>access</name>
-                <file>
-                  <name>$PROJ_DIR$/../../../../../rtos/freertos/libraries/c_sdk/standard/mqtt/test/access/iot_test_access_mqtt.h</name>
-                </file>
-              </group>
-              <file>
-                <name>$PROJ_DIR$/../../../../../rtos/freertos/libraries/c_sdk/standard/mqtt/test/iot_test_mqtt_agent.c</name>
-              </file>
-              <group>
-                <name>mock</name>
-                <file>
-                  <name>$PROJ_DIR$/../../../../../rtos/freertos/libraries/c_sdk/standard/mqtt/test/mock/iot_tests_mqtt_mock.c</name>
-                </file>
-                <file>
-                  <name>$PROJ_DIR$/../../../../../rtos/freertos/libraries/c_sdk/standard/mqtt/test/mock/iot_tests_mqtt_mock.h</name>
-                </file>
-              </group>
-              <group>
-                <name>system</name>
-                <file>
-                  <name>$PROJ_DIR$/../../../../../rtos/freertos/libraries/c_sdk/standard/mqtt/test/system/iot_tests_mqtt_system.c</name>
-                </file>
-              </group>
-              <group>
-                <name>unit</name>
-                <file>
-                  <name>$PROJ_DIR$/../../../../../rtos/freertos/libraries/c_sdk/standard/mqtt/test/unit/iot_tests_mqtt_api.c</name>
-                </file>
-                <file>
-                  <name>$PROJ_DIR$/../../../../../rtos/freertos/libraries/c_sdk/standard/mqtt/test/unit/iot_tests_mqtt_metrics.c</name>
-                </file>
-                <file>
-                  <name>$PROJ_DIR$/../../../../../rtos/freertos/libraries/c_sdk/standard/mqtt/test/unit/iot_tests_mqtt_receive.c</name>
-                </file>
-                <file>
-                  <name>$PROJ_DIR$/../../../../../rtos/freertos/libraries/c_sdk/standard/mqtt/test/unit/iot_tests_mqtt_subscription.c</name>
-                </file>
-                <file>
-                  <name>$PROJ_DIR$/../../../../../rtos/freertos/libraries/c_sdk/standard/mqtt/test/unit/iot_tests_mqtt_validate.c</name>
-                </file>
-              </group>
-            </group>
-            <file>
-              <name>$PROJ_DIR$/../../../../../rtos/freertos/libraries/c_sdk/standard/mqtt/CODESIZE.md</name>
-            </file>
-            <group>
-              <name>include</name>
-              <file>
-                <name>$PROJ_DIR$/../../../../../rtos/freertos/libraries/c_sdk/standard/mqtt/include/iot_mqtt.h</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../rtos/freertos/libraries/c_sdk/standard/mqtt/include/iot_mqtt_agent.h</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../rtos/freertos/libraries/c_sdk/standard/mqtt/include/iot_mqtt_agent_config_defaults.h</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../rtos/freertos/libraries/c_sdk/standard/mqtt/include/iot_mqtt_config_defaults.h</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../rtos/freertos/libraries/c_sdk/standard/mqtt/include/iot_mqtt_lib.h</name>
-              </file>
-              <group>
-                <name>types</name>
-                <file>
-                  <name>$PROJ_DIR$/../../../../../rtos/freertos/libraries/c_sdk/standard/mqtt/include/types/iot_mqtt_types.h</name>
-                </file>
-              </group>
-            </group>
-            <file>
-              <name>$PROJ_DIR$/../../../../../rtos/freertos/libraries/c_sdk/standard/mqtt/README.md</name>
-            </file>
-            <group>
-              <name>src</name>
-              <file>
-                <name>$PROJ_DIR$/../../../../../rtos/freertos/libraries/c_sdk/standard/mqtt/src/iot_mqtt_agent.c</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../rtos/freertos/libraries/c_sdk/standard/mqtt/src/iot_mqtt_api.c</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../rtos/freertos/libraries/c_sdk/standard/mqtt/src/iot_mqtt_context_connection.c</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../rtos/freertos/libraries/c_sdk/standard/mqtt/src/iot_mqtt_managed_function_wrapper.c</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../rtos/freertos/libraries/c_sdk/standard/mqtt/src/iot_mqtt_mutex_wrapper.c</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../rtos/freertos/libraries/c_sdk/standard/mqtt/src/iot_mqtt_network.c</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../rtos/freertos/libraries/c_sdk/standard/mqtt/src/iot_mqtt_operation.c</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../rtos/freertos/libraries/c_sdk/standard/mqtt/src/iot_mqtt_publish_duplicates.c</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../rtos/freertos/libraries/c_sdk/standard/mqtt/src/iot_mqtt_serializer_deserializer_wrapper.c</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../rtos/freertos/libraries/c_sdk/standard/mqtt/src/iot_mqtt_static_memory.c</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../rtos/freertos/libraries/c_sdk/standard/mqtt/src/iot_mqtt_subscription.c</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../rtos/freertos/libraries/c_sdk/standard/mqtt/src/iot_mqtt_subscription_container.c</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../rtos/freertos/libraries/c_sdk/standard/mqtt/src/iot_mqtt_validate.c</name>
-              </file>
-              <group>
-                <name>private</name>
-                <file>
-                  <name>$PROJ_DIR$/../../../../../rtos/freertos/libraries/c_sdk/standard/mqtt/src/private/iot_mqtt_internal.h</name>
-                </file>
-              </group>
-            </group>
-          </group>
-          <group>
-            <name>serializer</name>
-            <group>
-              <name>include</name>
-              <file>
-                <name>$PROJ_DIR$/../../../../../rtos/freertos/libraries/c_sdk/standard/serializer/include/iot_json_utils.h</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../rtos/freertos/libraries/c_sdk/standard/serializer/include/iot_serializer.h</name>
-              </file>
-            </group>
-            <group>
-              <name>src</name>
-              <file>
-                <name>$PROJ_DIR$/../../../../../rtos/freertos/libraries/c_sdk/standard/serializer/src/iot_json_utils.c</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../rtos/freertos/libraries/c_sdk/standard/serializer/src/iot_serializer_static_memory.c</name>
-              </file>
-              <group>
-                <name>json</name>
-                <file>
-                  <name>$PROJ_DIR$/../../../../../rtos/freertos/libraries/c_sdk/standard/serializer/src/json/iot_serializer_json_decoder.c</name>
-                </file>
-                <file>
-                  <name>$PROJ_DIR$/../../../../../rtos/freertos/libraries/c_sdk/standard/serializer/src/json/iot_serializer_json_encoder.c</name>
-                </file>
-              </group>
             </group>
           </group>
         </group>
@@ -3719,6 +3547,9 @@
         <file>
           <name>$PROJ_DIR$/../../../../../rtos/freertos/libraries/logging/iot_logging_task_dynamic_buffers.c</name>
         </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/libraries/logging/README.md</name>
+        </file>
       </group>
       <group>
         <name>coreMQTT</name>
@@ -3756,6 +3587,66 @@
           </group>
         </group>
       </group>
+      <group>
+        <name>device_shadow_for_aws</name>
+        <group>
+          <name>source</name>
+          <group>
+            <name>include</name>
+            <file>
+              <name>$PROJ_DIR$/../../../../../rtos/freertos/libraries/device_shadow_for_aws/source/include/shadow.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../rtos/freertos/libraries/device_shadow_for_aws/source/include/shadow_config_defaults.h</name>
+            </file>
+          </group>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/freertos/libraries/device_shadow_for_aws/source/shadow.c</name>
+          </file>
+        </group>
+      </group>
+      <group>
+        <name>coreHTTP</name>
+        <group>
+          <name>source</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/freertos/libraries/coreHTTP/source/core_http_client.c</name>
+          </file>
+          <group>
+            <name>include</name>
+            <file>
+              <name>$PROJ_DIR$/../../../../../rtos/freertos/libraries/coreHTTP/source/include/core_http_client.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../rtos/freertos/libraries/coreHTTP/source/include/core_http_client_private.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../rtos/freertos/libraries/coreHTTP/source/include/core_http_config_defaults.h</name>
+            </file>
+          </group>
+          <group>
+            <name>interface</name>
+            <file>
+              <name>$PROJ_DIR$/../../../../../rtos/freertos/libraries/coreHTTP/source/interface/transport_interface.h</name>
+            </file>
+          </group>
+          <group>
+            <name>dependency</name>
+            <group>
+              <name>3rdparty</name>
+              <group>
+                <name>http_parser</name>
+                <file>
+                  <name>$PROJ_DIR$/../../../../../rtos/freertos/libraries/coreHTTP/source/dependency/3rdparty/http_parser/http_parser.c</name>
+                </file>
+                <file>
+                  <name>$PROJ_DIR$/../../../../../rtos/freertos/libraries/coreHTTP/source/dependency/3rdparty/http_parser/http_parser.h</name>
+                </file>
+              </group>
+            </group>
+          </group>
+        </group>
+      </group>
     </group>
     <group>
       <name>tests</name>
@@ -3780,9 +3671,6 @@
       <group>
         <name>include</name>
         <file>
-          <name>$PROJ_DIR$/../../../../../rtos/freertos/tests/include/aws_application_version.h</name>
-        </file>
-        <file>
           <name>$PROJ_DIR$/../../../../../rtos/freertos/tests/include/aws_clientcredential.h</name>
         </file>
         <file>
@@ -3805,6 +3693,18 @@
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../rtos/freertos/tests/include/iot_config_common.h</name>
+        </file>
+      </group>
+      <group>
+        <name>integration_test</name>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/tests/integration_test/core_http_system_test.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/tests/integration_test/core_mqtt_system_test.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/tests/integration_test/shadow_system_test.c</name>
         </file>
       </group>
     </group>
@@ -3862,6 +3762,9 @@
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include/StackMacros.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include/stdint.readme</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include/stream_buffer.h</name>
@@ -4689,6 +4592,18 @@
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/wifi/incl/dhcp-server.h</name>
       </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/wifi/incl/WIFI_IW416_BOARD_AW_AM457_CAL_DATA_EXT.h</name>
+      </file>
+      <group>
+        <name>wlcmgr</name>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/wifi/incl/wlcmgr/wlan_11d.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/wifi/incl/wlcmgr/wlan.h</name>
+        </file>
+      </group>
       <group>
         <name>wifidriver</name>
         <file>
@@ -4704,18 +4619,6 @@
           <name>$PROJ_DIR$/../../../../../middleware/wifi/incl/wifidriver/wifi_events.h</name>
         </file>
       </group>
-      <group>
-        <name>wlcmgr</name>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/wifi/incl/wlcmgr/wlan.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/wifi/incl/wlcmgr/wlan_11d.h</name>
-        </file>
-      </group>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/wifi/incl/wifi_cal_data_ext.h</name>
-      </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/wifi/incl/wm_utils.h</name>
       </file>
@@ -4760,85 +4663,7 @@
       </file>
     </group>
     <group>
-      <name>wifi_bt_firmware</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/wifi/wifi_bt_firmware/sd8801_wlan.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/wifi/wifi_bt_firmware/sduart8977_wlan_bt.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/wifi/wifi_bt_firmware/sduartIW416_wlan_bt.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/wifi/wifi_bt_firmware/sduart8987_wlan_bt.h</name>
-      </file>
-    </group>
-    <group>
       <name>wifidriver</name>
-      <group>
-        <name>incl</name>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/wifi/wifidriver/incl/mlan.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/wifi/wifidriver/incl/mlan_11ac.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/wifi/wifidriver/incl/mlan_11h.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/wifi/wifidriver/incl/mlan_11n.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/wifi/wifidriver/incl/mlan_11n_aggr.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/wifi/wifidriver/incl/mlan_11n_rxreorder.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/wifi/wifidriver/incl/mlan_api.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/wifi/wifidriver/incl/mlan_decl.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/wifi/wifidriver/incl/mlan_fw.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/wifi/wifidriver/incl/mlan_ieee.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/wifi/wifidriver/incl/mlan_init.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/wifi/wifidriver/incl/mlan_ioctl.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/wifi/wifidriver/incl/mlan_join.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/wifi/wifidriver/incl/mlan_main.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/wifi/wifidriver/incl/mlan_meas.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/wifi/wifidriver/incl/mlan_remap_mem_operations.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/wifi/wifidriver/incl/mlan_sdio.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/wifi/wifidriver/incl/mlan_uap.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/wifi/wifidriver/incl/mlan_util.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/wifi/wifidriver/incl/mlan_wmm.h</name>
-        </file>
-      </group>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/wifi/wifidriver/mlan_11ac.c</name>
       </file>
@@ -4882,9 +4707,6 @@
         <name>$PROJ_DIR$/../../../../../middleware/wifi/wifidriver/mlan_scan.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/wifi/wifidriver/mlan_sdio.c</name>
-      </file>
-      <file>
         <name>$PROJ_DIR$/../../../../../middleware/wifi/wifidriver/mlan_shim.c</name>
       </file>
       <file>
@@ -4918,19 +4740,10 @@
         <name>$PROJ_DIR$/../../../../../middleware/wifi/wifidriver/wifi-debug.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/wifi/wifidriver/wifi-debug.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/wifi/wifidriver/wifi-internal.h</name>
-      </file>
-      <file>
         <name>$PROJ_DIR$/../../../../../middleware/wifi/wifidriver/wifi-mem.c</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/wifi/wifidriver/wifi-sdio.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/wifi/wifidriver/wifi-sdio.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/wifi/wifidriver/wifi-uap.c</name>
@@ -4943,6 +4756,111 @@
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/wifi/wifidriver/wifi_pwrmgr.c</name>
+      </file>
+      <group>
+        <name>incl</name>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/wifi/wifidriver/incl/mlan_11ac.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/wifi/wifidriver/incl/mlan_11h.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/wifi/wifidriver/incl/mlan_11n.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/wifi/wifidriver/incl/mlan_11n_aggr.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/wifi/wifidriver/incl/mlan_11n_rxreorder.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/wifi/wifidriver/incl/mlan_fw.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/wifi/wifidriver/incl/mlan_ieee.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/wifi/wifidriver/incl/mlan_init.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/wifi/wifidriver/incl/mlan_join.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/wifi/wifidriver/incl/mlan_main.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/wifi/wifidriver/incl/mlan_meas.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/wifi/wifidriver/incl/mlan_remap_mem_operations.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/wifi/wifidriver/incl/mlan_sdio.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/wifi/wifidriver/incl/mlan_uap.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/wifi/wifidriver/incl/mlan_util.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/wifi/wifidriver/incl/mlan_wmm.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/wifi/wifidriver/incl/mlan.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/wifi/wifidriver/incl/mlan_ioctl.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/wifi/wifidriver/incl/mlan_decl.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/wifi/wifidriver/incl/mlan_api.h</name>
+        </file>
+      </group>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/wifi/wifidriver/wifi-debug.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/wifi/wifidriver/wifi-internal.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/wifi/wifidriver/wifi-sdio.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/wifi/wifidriver/mlan_sdio.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/wifi/wifidriver/sdio.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/wifi/wifidriver/sdio.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/wifi/wifidriver/firmware_dnld.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/wifi/wifidriver/firmware_dnld.h</name>
+      </file>
+    </group>
+    <group>
+      <name>wifi_bt_firmware</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/wifi/wifi_bt_firmware/sd8801_wlan.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/wifi/wifi_bt_firmware/sduart8977_wlan_bt.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/wifi/wifi_bt_firmware/sduartIW416_wlan_bt.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/wifi/wifi_bt_firmware/sduart8987_wlan_bt.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/wifi/wifi_bt_firmware/wlan_bt_fw.h</name>
       </file>
     </group>
   </group>
@@ -5004,25 +4922,70 @@
     </group>
   </group>
   <group>
-    <name>device</name>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1052/fsl_device_registers.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1052/MIMXRT1052.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1052/MIMXRT1052_features.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1052/system_MIMXRT1052.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1052/system_MIMXRT1052.h</name>
-    </file>
-  </group>
-  <group>
     <name>component</name>
+    <group>
+      <name>wifi_bt_module</name>
+      <group>
+        <name>AzureWave</name>
+        <group>
+          <name>tx_pwr_limits</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../components/wifi_bt_module/AzureWave/tx_pwr_limits/wlan_txpwrlimit_cfg_WW.h</name>
+          </file>
+        </group>
+      </group>
+      <group>
+        <name>Murata</name>
+        <group>
+          <name>tx_pwr_limits</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1XK_CA.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1XK_EU.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1XK_JP.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1XK_US.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1XK_WW.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1ZM_CA.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1ZM_EU.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1ZM_JP.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1ZM_US.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1ZM_WW.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_2DS_CA.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_2DS_EU.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_2DS_JP.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_2DS_US.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_2DS_WW.h</name>
+          </file>
+        </group>
+      </group>
+    </group>
     <group>
       <name>uart</name>
       <file>
@@ -5074,6 +5037,24 @@
         <name>$PROJ_DIR$/../../../../../components/osa/fsl_os_abstraction_free_rtos.c</name>
       </file>
     </group>
+  </group>
+  <group>
+    <name>device</name>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1052/fsl_device_registers.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1052/MIMXRT1052.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1052/MIMXRT1052_features.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1052/system_MIMXRT1052.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1052/system_MIMXRT1052.h</name>
+    </file>
   </group>
   <group>
     <name>startup</name>

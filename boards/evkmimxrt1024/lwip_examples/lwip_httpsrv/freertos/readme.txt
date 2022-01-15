@@ -8,10 +8,10 @@ page back to the PC.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.9
-- Keil MDK  5.33
-- GCC ARM Embedded  9.3.1
-- MCUXpresso  11.3.0
+- IAR embedded Workbench  9.10.2
+- Keil MDK  5.34
+- GCC ARM Embedded  10.2.1
+- MCUXpresso  11.5.0
 
 Hardware requirements
 =====================
@@ -62,6 +62,8 @@ Running the demo
 	The browser should show a web page. The board also advertises itself using mDNS so that it can be accessed using URL http://lwip-http.local.
 	Please note that your system may not support mDNS out-of-the-box as it is necessary to have an mDNS resolver installed.
     For instance Bonjour Print Services for Windows contain such resolver. In case of Linux nss-mdns serves this purpose.
+    Username admin and password admin is required to access "Authorization example" section of the web page.
+
 
 Modifying content of static web pages
 To modify content available through the web server you must complete following steps:

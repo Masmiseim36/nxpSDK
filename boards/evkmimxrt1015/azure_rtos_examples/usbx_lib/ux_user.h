@@ -87,4 +87,7 @@ extern void usbphy_set_highspeed_mode(void *regs, int on_off);
 #define UX_HCD_EHCI_EXT_USBPHY_HIGHSPEED_MODE_SET(hcd_ehci, on_off)             \
     usbphy_set_highspeed_mode(hcd_ehci, on_off)
 
+/* Defined, this value will enable split transaction on EHCI host. */
+#define UX_HCD_EHCI_SPLIT_TRANSFER_ENABLE
+
 #endif

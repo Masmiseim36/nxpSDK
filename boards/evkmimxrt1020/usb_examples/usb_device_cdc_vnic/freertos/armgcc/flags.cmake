@@ -90,8 +90,8 @@ SET(CMAKE_C_FLAGS_SDRAM_DEBUG " \
     -DSERIAL_PORT_TYPE_UART=1 \
     -DSDK_DEBUGCONSOLE=1 \
     -DMCUXPRESSO_SDK \
+    -O1 \
     -g \
-    -O0 \
     -mcpu=cortex-m7 \
     -Wall \
     -mfloat-abi=hard \

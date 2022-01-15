@@ -8,34 +8,44 @@
 #ifndef _USB_HOST_CONFIG_H_
 #define _USB_HOST_CONFIG_H_
 
+/* @TEST_ANCHOR */
+
 /* Host Controller Enable */
 /*!
  * @brief host khci instance count, meantime it indicates khci enable or disable.
  *        - if 0, host khci driver is disable.
  *        - if greater than 0, host khci driver is enable.
  */
+#ifndef USB_HOST_CONFIG_KHCI
 #define USB_HOST_CONFIG_KHCI (0U)
+#endif
 
 /*!
  * @brief host ehci instance count, meantime it indicates ehci enable or disable.
  *        - if 0, host ehci driver is disable.
  *        - if greater than 0, host ehci driver is enable.
  */
+#ifndef USB_HOST_CONFIG_EHCI
 #define USB_HOST_CONFIG_EHCI (1U)
+#endif
 
 /*!
  * @brief host ohci instance count, meantime it indicates ohci enable or disable.
  *        - if 0, host ohci driver is disable.
  *        - if greater than 0, host ohci driver is enable.
  */
+#ifndef USB_HOST_CONFIG_OHCI
 #define USB_HOST_CONFIG_OHCI (0U)
+#endif
 
 /*!
  * @brief host ip3516hs instance count, meantime it indicates ohci enable or disable.
  *        - if 0, host ip3516hs driver is disable.
  *        - if greater than 0, host ip3516hs driver is enable.
  */
+#ifndef USB_HOST_CONFIG_IP3516HS
 #define USB_HOST_CONFIG_IP3516HS (0U)
+#endif
 
 /* Common configuration macros for all controllers */
 
@@ -99,7 +109,9 @@
 #define USB_HOST_CONFIG_BUFFER_PROPERTY_CACHEABLE (0U)
 #endif
 /*! @brief if 1, enable usb compliance test codes; if 0, disable usb compliance test codes. */
+#ifndef USB_HOST_CONFIG_COMPLIANCE_TEST
 #define USB_HOST_CONFIG_COMPLIANCE_TEST (0U)
+#endif
 
 /*! @brief if 1, class driver clear stall automatically; if 0, class driver don't clear stall. */
 #define USB_HOST_CONFIG_CLASS_AUTO_CLEAR_STALL (0U)

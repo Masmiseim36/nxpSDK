@@ -35,11 +35,15 @@ include(middleware_freertos-aws_iot_libraries_freertos_plus_standard_utils_MIMXR
 
 include(middleware_freertos-aws_iot_libraries_abstractions_secure_sockets_MIMXRT1062)
 
-include(middleware_freertos-aws_iot_mqtt_MIMXRT1062)
+include(middleware_freertos-aws_iot_libraries_coremqtt_MIMXRT1062)
 
 include(middleware_freertos-aws_iot_libraries_3rdparty_pkcs11_MIMXRT1062)
 
 include(middleware_freertos-aws_iot_libraries_3rdparty_jsmn_MIMXRT1062)
 
 include(middleware_freertos-aws_iot_libraries_logging_MIMXRT1062)
+
+include(middleware_freertos-aws_iot_pkcs11_helpers_MIMXRT1062)
+
+include(middleware_freertos-aws_iot_libraries_abstractions_backoff_algorithm_MIMXRT1062)
 

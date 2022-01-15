@@ -227,6 +227,7 @@ usb_status_t USB_DeviceCdcVcomCallback(class_handle_t handle, uint32_t event, vo
             if ((1 == s_cdcVcom.attach) && (1 == s_cdcVcom.startTransactions))
             {
                 s_recvSize = epCbParam->length;
+                error      = kStatus_USB_Success;
 
 #if defined(FSL_FEATURE_USB_KHCI_KEEP_ALIVE_ENABLED) && (FSL_FEATURE_USB_KHCI_KEEP_ALIVE_ENABLED > 0U) && \
     defined(USB_DEVICE_CONFIG_KEEP_ALIVE_MODE) && (USB_DEVICE_CONFIG_KEEP_ALIVE_MODE > 0U) &&             \
@@ -392,29 +393,18 @@ usb_status_t USB_DeviceCdcVcomCallback(class_handle_t handle, uint32_t event, vo
             {
                 /* To do: CARRIER_DEACTIVATED */
             }
-            if (acmInfo->dteStatus & USB_DEVICE_CDC_CONTROL_SIG_BITMAP_DTE_PRESENCE)
+
+            if (1 == s_cdcVcom.attach)
             {
-                /* DTE_ACTIVATED */
-                if (1 == s_cdcVcom.attach)
-                {
-                    s_cdcVcom.startTransactions = 1;
+                s_cdcVcom.startTransactions = 1;
 #if defined(FSL_FEATURE_USB_KHCI_KEEP_ALIVE_ENABLED) && (FSL_FEATURE_USB_KHCI_KEEP_ALIVE_ENABLED > 0U) && \
     defined(USB_DEVICE_CONFIG_KEEP_ALIVE_MODE) && (USB_DEVICE_CONFIG_KEEP_ALIVE_MODE > 0U) &&             \
     defined(FSL_FEATURE_USB_KHCI_USB_RAM) && (FSL_FEATURE_USB_KHCI_USB_RAM > 0U)
-                    s_waitForDataReceive = 1;
-                    USB0->INTEN &= ~USB_INTEN_SOFTOKEN_MASK;
-                    s_comOpen = 1;
-                    usb_echo("USB_APP_CDC_DTE_ACTIVATED\r\n");
+                s_waitForDataReceive = 1;
+                USB0->INTEN &= ~USB_INTEN_SOFTOKEN_MASK;
+                s_comOpen = 1;
+                usb_echo("USB_APP_CDC_DTE_ACTIVATED\r\n");
 #endif
-                }
-            }
-            else
-            {
-                /* DTE_DEACTIVATED */
-                if (1 == s_cdcVcom.attach)
-                {
-                    s_cdcVcom.startTransactions = 0;
-                }
             }
             error = kStatus_USB_Success;
         }

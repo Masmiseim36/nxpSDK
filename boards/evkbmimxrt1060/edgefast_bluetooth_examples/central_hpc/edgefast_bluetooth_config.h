@@ -30,79 +30,12 @@
     #define CONFIG_BT_SNOOP 0
 #endif
 
-/*! @brief Number of HCI command buffers, ranging from 2 to 64.
- * Number of buffers available for HCI commands
- * Range 2 to 64 is valid.
- */
-#ifndef CONFIG_BT_HCI_CMD_COUNT
-    #define CONFIG_BT_HCI_CMD_COUNT 2
-#endif
-
-/*! @brief Number of HCI RX buffers, ranging from 2 to 255.
- * Number of buffers available for incoming ACL packets or HCI events
-  * from the controller
-* Range 2 to 255 is valid.*/
-#ifndef CONFIG_BT_RX_BUF_COUNT
-
-#if (defined(CONFIG_BT_RECV_IS_RX_THREAD) && (CONFIG_BT_RECV_IS_RX_THREAD > 0U))
-    #define CONFIG_BT_RX_BUF_COUNT 3
-#else
-    #define CONFIG_BT_RX_BUF_COUNT 10
-#endif
-#endif
-
-/*! @brief Maximum supported HCI RX buffer length, ranging from 73 to 2000.
- * Maximum data size for each HCI RX buffer. This size includes
- * everything starting with the ACL or HCI event headers. Note that
- * buffer sizes are always rounded up to the nearest multiple of 4,
- * so if this Kconfig value is something else then there will be some
- * wasted space. The minimum of 73 has been taken for LE SC which has
- * an L2CAP MTU of 65 bytes. On top of this there's the L2CAP header
- * (4 bytes) and the ACL header (also 4 bytes) which yields 73 bytes.
- * range is 73 to 2000
- */
-#ifndef CONFIG_BT_RX_BUF_LEN
-    #if(defined(CONFIG_BT_BREDR) && (CONFIG_BT_BREDR > 0U))
-    #define CONFIG_BT_RX_BUF_LEN 264
-    #elif (defined(CONFIG_BT_EXT_ADV) && (CONFIG_BT_EXT_ADV > 0))
-    #define CONFIG_BT_RX_BUF_LEN 258
-    #else
-    #define CONFIG_BT_RX_BUF_LEN 251
-    #endif
-#endif
-
 /*! @brief Reserve buffer size for user.
  * Headroom that the driver needs for sending and receiving buffers. Add a
  * new 'default' entry for each new driver.
  */
 #ifndef CONFIG_BT_HCI_RESERVE
     #define CONFIG_BT_HCI_RESERVE 4
-#endif
-
-/*! @brief Number of discardable event buffers, if the macro is set to 0, disable this feature, if greater than 0, this feature is enabled.
- * Number of buffers in a separate buffer pool for events which
- * the HCI driver considers discardable. Examples of such events
- * could be e.g. Advertising Reports. The benefit of having such
- * a pool means that the if there is a heavy inflow of such events
- * it will not cause the allocation for other critical events to
- * block and may even eliminate deadlocks in some cases.
- */
-#ifndef CONFIG_BT_DISCARDABLE_BUF_COUNT
-    #define CONFIG_BT_DISCARDABLE_BUF_COUNT 0
-#endif
-
-/*! @brief Size of discardable event buffers, ranging from 45 to 257.
- * Size of buffers in the separate discardable event buffer pool.
- * The minimum size is set based on the Advertising Report. Setting
- * the buffer can save memory if with size set differently from that of the CONFIG_BT_RX_BUF_LEN.
- * range is 45 to 257.
- */
-#ifndef CONFIG_BT_DISCARDABLE_BUF_SIZE
-    #if (defined(CONFIG_BT_BREDR) && (CONFIG_BT_BREDR > 0U)) || (defined(CONFIG_BT_EXT_ADV) && (CONFIG_BT_EXT_ADV > 0))
-    #define CONFIG_BT_DISCARDABLE_BUF_SIZE 257
-    #else
-    #define CONFIG_BT_DISCARDABLE_BUF_SIZE 45
-    #endif
 #endif
 
 /*! @brief HCI TX task stack size needed for executing bt_send
@@ -332,18 +265,6 @@ Select this for LE Peripheral role support.
 #ifndef CONFIG_BT_HCI_ACL_FLOW_CONTROL
     #define CONFIG_BT_HCI_ACL_FLOW_CONTROL 0
 #endif
-
-#if CONFIG_BT_HCI_ACL_FLOW_CONTROL
-
-/*! @brief Number of incoming ACL data buffers, ranging from 1 to 64.
- * Number of buffers available for incoming ACL data.
- * range is 1 to 64.
- */
-#ifndef CONFIG_BT_ACL_RX_COUNT
-#define CONFIG_BT_ACL_RX_COUNT 6
-#endif
-
-#endif /* CONFIG_BT_HCI_ACL_FLOW_CONTROL */
 
 /*! @brief PHY Update, if the macro is set to 0,feature is disabled, if 1, feature is enabled.
  * Enable support for Bluetooth 5.0 PHY Update Procedure.
@@ -719,26 +640,20 @@ Select this for LE Peripheral role support.
     #define CONFIG_BT_HOST_CCM 0
 #endif
 
+/*! @brief "Minimum encryption key size accepted in octets, rangeing from 7 to 16
+ * This option sets the minimum encryption key size accepted during pairing.
+ */
+#ifndef CONFIG_BT_SMP_MIN_ENC_KEY_SIZE
+#if (defined(CONFIG_BT_SMP_SC_ONLY) && (CONFIG_BT_SMP_SC_ONLY > 0))
+#define CONFIG_BT_SMP_MIN_ENC_KEY_SIZE 16
+#else
+#define CONFIG_BT_SMP_MIN_ENC_KEY_SIZE 7
+#endif /* CONFIG_BT_SMP_SC_ONLY */
+#endif /* CONFIG_BT_SMP_MIN_ENC_KEY_SIZE */
+
 #endif /* CONFIG_BT_SMP */
 
 /*************************** L2CAP layer ********************/
-
-/*! @brief Maximum supported L2CAP MTU for incoming data, if CONFIG_BT_SMP is set, range is 65 to 1300, otherwise range is 23 to 1300.
- * Maximum size of each incoming L2CAP PDU.
- * range is 23 to 1300
- * range is 65 to 1300 for CONFIG_BT_SMP
- */
-#ifndef CONFIG_BT_L2CAP_RX_MTU
-
-#if ((defined(CONFIG_BT_BREDR)) && (CONFIG_BT_BREDR))
-#define CONFIG_BT_L2CAP_RX_MTU 200
-#elif ((defined(CONFIG_BT_SMP)) && (CONFIG_BT_SMP > 0))
-#define CONFIG_BT_L2CAP_RX_MTU 65
-#else
-#define CONFIG_BT_L2CAP_RX_MTU 23
-#endif
-
-#endif /*CONFIG_BT_L2CAP_RX_MTU */
 
 /*! @brief Number of buffers available for outgoing L2CAP packets, ranging from 2 to 255.
  * range is 2 to 255
@@ -824,7 +739,7 @@ Select this for LE Peripheral role support.
  * range is 1 to 255
  */
 #ifndef CONFIG_BT_ATT_RX_MAX
-    #define CONFIG_BT_ATT_RX_MAX (CONFIG_BT_RX_BUF_COUNT)
+    #define CONFIG_BT_ATT_RX_MAX (CONFIG_BT_BUF_ACL_RX_COUNT)
 #endif
 
 /*! @brief Enhanced ATT Bearers support [EXPERIMENTAL], if the macro is set to 0, feature is disabled, if 1, feature is enabled.
@@ -847,17 +762,6 @@ Select this for LE Peripheral role support.
  */
 #ifndef CONFIG_BT_EATT_MAX
     #define CONFIG_BT_EATT_MAX 3
-#endif
-
-/*! @brief Maximum supported Enhanced ATT MTU for incoming data, range 7 to 519 is valid.
- * Maximum size incoming PDUs on EATT bearers, value shall include L2CAP
- * headers and SDU length, maximum is limited to 512 bytes payload, which
- * is the maximum size for a GATT attribute, plus 1 byte for ATT opcode.
- * This option influences the stack buffer size and by that may also
- * limit the outgoing MTU.
- */
-#ifndef CONFIG_BT_EATT_RX_MTU
-    #define CONFIG_BT_EATT_RX_MTU 70
 #endif
 
 /*! @brief Enhanced ATT bearer security level, range 1 to 4 is valid.
@@ -1002,6 +906,25 @@ Select this for LE Peripheral role support.
 #ifndef CONFIG_BT_DEVICE_NAME_GATT_WRITABLE
     #define CONFIG_BT_DEVICE_NAME_GATT_WRITABLE 1
 #endif
+
+#if CONFIG_BT_DEVICE_NAME_GATT_WRITABLE
+/*! @brief Encryption required to write name by remote GATT clients
+ * Enabling this option requires the connection to be encrypted to write
+ * to the device name GAP characteristic.
+ */
+#ifndef CONFIG_DEVICE_NAME_GATT_WRITABLE_ENCRYPT
+#define CONFIG_DEVICE_NAME_GATT_WRITABLE_ENCRYPT 1
+#endif /* CONFIG_DEVICE_NAME_GATT_WRITABLE_ENCRYPT */
+
+/*! @brief Authentication required to write name by remote GATT clients
+ * Enabling this option requires the connection to be encrypted and
+ * authenticated to write to the device name GAP characteristic.
+ */
+#ifndef CONFIG_DEVICE_NAME_GATT_WRITABLE_AUTHEN
+#define CONFIG_DEVICE_NAME_GATT_WRITABLE_AUTHEN 0
+#endif /* CONFIG_DEVICE_NAME_GATT_WRITABLE_AUTHEN */
+#endif /* CONFIG_BT_DEVICE_NAME_GATT_WRITABLE */
+
 #endif /* CONFIG_BT_DEVICE_NAME_DYNAMIC */
 
 #endif /* CONFIG_BT_PERIPHERAL */
@@ -1158,13 +1081,7 @@ Select this for LE Peripheral role support.
  * Maximum size of L2CAP PDU for RFCOMM frames.
  */
 #ifndef CONFIG_BT_RFCOMM_L2CAP_MTU
-
-#if CONFIG_BT_HCI_ACL_FLOW_CONTROL
-    #define CONFIG_BT_RFCOMM_L2CAP_MTU CONFIG_BT_L2CAP_RX_MTU
-#else
-    #define CONFIG_BT_RFCOMM_L2CAP_MTU CONFIG_BT_RX_BUF_LEN
-#endif
-
+    #define CONFIG_BT_RFCOMM_L2CAP_MTU CONFIG_BT_BUF_ACL_RX_SIZE
 #endif /* CONFIG_BT_RFCOMM_L2CAP_MTU */
 
 /*! @brief Bluetooth Handsfree profile HF Role support [EXPERIMENTAL], if the macro is set to 0, feature is disabled, if 1, feature is enabled.
@@ -1384,6 +1301,183 @@ Select this for LE Peripheral role support.
 #endif
 
 #endif /* CONFIG_BT_BREDR */
+
+/******************* BT Common configuration **********************/
+
+/*! @brief Maximum supported ACL size for outgoing data, ranging from 27 to 251
+ * Maximum supported ACL size of data packets sent from the Host to the
+ * Controller. This value does not include the HCI ACL header.
+ * The Host will segment the data transmitted to the Controller so that
+ * packets sent to the Controller will contain data up to this size.
+ * In a combined build this value will be set in both the Host and the
+ * Controller.
+ * In a Host-only build the Host will read the maximum ACL size supported
+ * by the Controller and use the smallest value supported by both the
+ * Bost and the Controller.
+ * The Host supports sending of larger L2CAP PDUs than the ACL size and
+ * will fragment L2CAP PDUs into ACL data packets.
+ * The Controller will return this value in the HCI LE Read Buffer
+ * Size command response. If this size if greater than effective Link
+ * Layer transmission size then the Controller will perform
+ * fragmentation before transmitting the packet(s) on air.
+ * If this value is less than the effective Link Layer transmission size
+ * then this will restrict the maximum Link Layer transmission size.
+ * Maximum is set to 251 due to implementation limitations (use of
+ * uint8_t for length field in PDU buffer structure).
+ */
+#ifndef CONFIG_BT_BUF_ACL_TX_SIZE
+    #define CONFIG_BT_BUF_ACL_TX_SIZE 27
+#endif
+
+/*! @brief Number of outgoing ACL data buffers, ranging from 1 to 255
+ * Number of outgoing ACL data buffers sent from the Host to the
+ * Controller. This determines the maximum amount of data packets the
+ * Host can have queued in the Controller before waiting for the
+ * to notify the Host that more packets can be queued with the Number of
+ * Completed Packets event.
+ * The buffers are shared between all of the connections and the Host
+ * determines how to divide the buffers between the connections.
+ * The Controller will return this value in the HCI LE Read Buffer Size
+ * command response.
+ */
+#ifndef CONFIG_BT_BUF_ACL_TX_COUNT
+    #define CONFIG_BT_BUF_ACL_TX_COUNT 3
+#endif
+
+/*! @brief Maximum supported ACL size for incoming data, ranging from 27 to 1300
+ * Maximum support ACL size of data packets sent from the Controller to
+ * the Host. This value does not include the HCI ACL header.
+ * In a combined Host and Controller build the buffer sizes in both the
+ * Host and the Controller will use this value for buffer sizes, and
+ * therefore Controller to Host flow Controller is not needed.
+ * In a Host only build with Controller to Host flow control enabled
+ * the Host will inform the Controller about the maximum ACL data size it
+ * can send by setting this value in the Host Buffer Size command.
+ * If Controller to Host flow control is not enabled then the Controller
+ * can assume the Host has infinite buffer size so this value should then
+ * be set to something that is guaranteed the Controller will not exceed
+ * or the data packets will be dropped.
+ * In a Controller only build this will determine the maximum ACL size
+ * that the Controller will send to the Host.
+ * The Host supports reassembling of L2CAP PDUs from ACL data packets,
+ * but the maximum supported L2CAP PDU size is limited by the maximum
+ * supported ACL size.
+ * This means the maximum L2CAP PDU MTU is restricted by the maximum ACL
+ * size subtracting the 4 byte header of an L2CAP PDU.
+ * When using L2CAP Connection oriented Channels without segmentation
+ * then the L2CAP SDU MTU is also restricetd by the maximum ACL size
+ * subtracting the 4 Byte header of an L2CAP PDU plus the 2 byte header
+ * of an L2CAP SDU.
+
+ * With Enhanced ATT enabled the minimum of 70 is needed to support the
+ * minimum ATT_MTU of 64 octets in an L2CAP SDU without segmentation.
+ * With SMP LE Secure Connections enabled the minimum of 69 is needed to
+ * support the minimum SMP MTU of 65 octets (public key + opcode) in an
+ * L2CAP PDU.
+ *
+ * An L2CAP PDU is also referred to as an L2CAP basic frame or B-frame.
+ * An L2CAP SDU is also referred to as an L2CAP Credit-based frame or
+ * K-frame.
+ */
+#ifndef CONFIG_BT_BUF_ACL_RX_SIZE
+    #if CONFIG_BT_BREDR
+        #define CONFIG_BT_BUF_ACL_RX_SIZE 200
+    #elif CONFIG_BT_EATT
+        #define CONFIG_BT_BUF_ACL_RX_SIZE 70
+    #elif CONFIG_BT_SMP
+        #define CONFIG_BT_BUF_ACL_RX_SIZE 69
+    #else
+        #define CONFIG_BT_BUF_ACL_RX_SIZE 27
+    #endif
+#endif
+
+/*! @brief Number of incoming ACL data buffers, ranging from 1 to 64
+ * Number or incoming ACL data buffers sent from the Controller to the
+ * Host.
+ * In a combined Host and Controller build the buffers are shared and
+ * therefore Controller to Host flow control is not needed.
+ * In a Host only build with Controller to Host flow control enabled
+ * the Host will inform the Controller about the maximum number of
+ * buffers by setting this value in the Host Buffer Size command.
+ * When Controller to Host flow control is not enabled the Controller
+ * can assume that the Host has infinite amount of buffers.
+ */
+#ifndef CONFIG_BT_BUF_ACL_RX_COUNT
+    #define CONFIG_BT_BUF_ACL_RX_COUNT 6
+#endif
+
+/*! @brief Maximum supported HCI Event buffer length, ranging from 68 to 255
+ * Maximum supported HCI event buffer size. This value does not include
+ * the HCI Event header.
+ * This value is used by both the Host and the Controller for buffer
+ * sizes that include HCI events. It should be set according to the
+ * expected HCI events that can be generated from the configuration.
+ * If the subset of possible HCI events is unknown, this should be set to
+ * the maximum of 255.
+ */
+#ifndef CONFIG_BT_BUF_EVT_RX_SIZE
+    #define CONFIG_BT_BUF_EVT_RX_SIZE 255
+#endif
+
+/*! @brief Number of HCI Event buffers, ranging from 2 to 255
+ * Number of buffers available for incoming HCI events from the
+ * Controller.
+ */
+#ifndef CONFIG_BT_BUF_EVT_RX_COUNT
+    #define CONFIG_BT_BUF_EVT_RX_COUNT 10
+#endif
+
+/*! @brief Maximum supported discardable HCI Event buffer length, ranging from 43 to 255
+ * Maximum support discardable HCI event size of buffers in the separate
+ * discardable event buffer pool. This value does not include the
+ * HCI Event header.
+ * The minimum size is set based on the Advertising Report. Setting
+ * the buffer size different than BT_BUF_EVT_RX_SIZE can save memory.
+ */
+#ifndef CONFIG_BT_BUF_EVT_DISCARDABLE_SIZE
+    #if (defined(CONFIG_BT_BREDR) && (CONFIG_BT_BREDR > 0U)) || (defined(CONFIG_BT_EXT_ADV) && (CONFIG_BT_EXT_ADV > 0))
+        #define CONFIG_BT_BUF_EVT_DISCARDABLE_SIZE 255
+    #else
+        #define CONFIG_BT_BUF_EVT_DISCARDABLE_SIZE 43
+    #endif
+#endif
+
+/*! @brief Number of discardable HCI Event buffers, ranging from 1 to 255
+ * Number of buffers in a separate buffer pool for events which
+ * the HCI driver considers discardable. Examples of such events
+ * could be e.g. Advertising Reports. The benefit of having such
+ * a pool is that the if there is a heavy inflow of such events
+ * it will not cause the allocation for other critical events to
+ * block and may even eliminate deadlocks in some cases.
+ */
+#ifndef CONFIG_BT_BUF_EVT_DISCARDABLE_COUNT
+    #define CONFIG_BT_BUF_EVT_DISCARDABLE_COUNT 3
+#endif
+
+/*! @brief Maximum support HCI Command buffer length, ranging from 65 to 255
+ * Maximum data size for each HCI Command buffer. This value does not
+ * include the HCI Command header.
+ * This value is used by both the Host and the Controller for buffer
+ * sizes that include HCI commands. It should be set according to the
+ * expected HCI commands that can be sent from the configuration.
+ * If the subset of possible HCI commands is unknown, this should be set
+ * to the maximum of 255.
+ */
+#ifndef CONFIG_BT_BUF_CMD_TX_SIZE
+    #if (defined(CONFIG_BT_BREDR) && (CONFIG_BT_BREDR > 0U)) || (defined(CONFIG_BT_EXT_ADV) && (CONFIG_BT_EXT_ADV > 0))
+        #define CONFIG_BT_BUF_CMD_TX_SIZE 255
+    #else
+        #define CONFIG_BT_BUF_CMD_TX_SIZE 65
+    #endif
+#endif
+
+/*! @brief Number of HCI command buffers, ranging from 2 to 64
+ * Number of buffers available for outgoing HCI commands from the Host.
+ */
+#ifndef CONFIG_BT_BUF_CMD_TX_COUNT
+    #define CONFIG_BT_BUF_CMD_TX_COUNT 2
+#endif
+
 
 /****************** DIS Service configuration *********************/
 /*! @brief Model name.

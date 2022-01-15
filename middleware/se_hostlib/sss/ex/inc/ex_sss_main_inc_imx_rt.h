@@ -26,7 +26,7 @@
 #include "fsl_sss_ftr_default.h"
 #endif
 
-#if (SSS_HAVE_MBEDTLS)
+#if (SSS_HAVE_HOSTCRYPTO_MBEDTLS)
 #include "ksdk_mbedtls.h"
 #endif
 
@@ -151,7 +151,7 @@ void ex_sss_main_ksdk_bm()
     axReset_HostConfigure();
     axReset_PowerUp();
 
-#if (SSS_HAVE_MBEDTLS)
+#if (SSS_HAVE_HOSTCRYPTO_MBEDTLS)
     CRYPTO_InitHardware();
 #if defined(FSL_FEATURE_SOC_SHA_COUNT) && (FSL_FEATURE_SOC_SHA_COUNT > 0)
     CLOCK_EnableClock(kCLOCK_Sha0);

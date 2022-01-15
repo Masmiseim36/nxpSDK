@@ -36,10 +36,14 @@ void ex_sss_main_ksdk_bm()
     /* attach 12 MHz clock to FLEXCOMM8 (I2C master) */
     CLOCK_AttachClk(kFRO12M_to_FLEXCOMM4);
 
+    /* attach main clock divide to FLEXCOMM2 */
+    CLOCK_AttachClk(kFRO12M_to_FLEXCOMM2);
+
     /* reset FLEXCOMM for I2C */
     RESET_PeripheralReset(kFC4_RST_SHIFT_RSTn);
 
-    BOARD_InitPins();
+    BOARD_InitBootPins();
+    // BOARD_BootClockPLL100M();
     BOARD_BootClockFROHF96M();
     BOARD_InitDebugConsole();
 

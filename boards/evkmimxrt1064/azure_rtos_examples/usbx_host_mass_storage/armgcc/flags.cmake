@@ -3,7 +3,7 @@ SET(CMAKE_ASM_FLAGS_DEBUG " \
     -DDEBUG \
     -D__STARTUP_CLEAR_BSS \
     -D__STARTUP_INITIALIZE_NONCACHEDATA \
-    -DTX_ENABLE_FPU_SUPPORT \
+    -DTX_ENABLE_FPU_SUPPORT=1 \
     -g \
     -mcpu=cortex-m7 \
     -Wall \
@@ -25,7 +25,7 @@ SET(CMAKE_ASM_FLAGS_RELEASE " \
     -DNDEBUG \
     -D__STARTUP_CLEAR_BSS \
     -D__STARTUP_INITIALIZE_NONCACHEDATA \
-    -DTX_ENABLE_FPU_SUPPORT \
+    -DTX_ENABLE_FPU_SUPPORT=1 \
     -mcpu=cortex-m7 \
     -Wall \
     -mfloat-abi=hard \
@@ -46,7 +46,7 @@ SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_DEBUG " \
     -D__STARTUP_CLEAR_BSS \
     -DDEBUG \
     -D__STARTUP_INITIALIZE_NONCACHEDATA \
-    -DTX_ENABLE_FPU_SUPPORT \
+    -DTX_ENABLE_FPU_SUPPORT=1 \
     -g \
     -mcpu=cortex-m7 \
     -Wall \
@@ -68,7 +68,7 @@ SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_RELEASE " \
     -D__STARTUP_CLEAR_BSS \
     -DNDEBUG \
     -D__STARTUP_INITIALIZE_NONCACHEDATA \
-    -DTX_ENABLE_FPU_SUPPORT \
+    -DTX_ENABLE_FPU_SUPPORT=1 \
     -mcpu=cortex-m7 \
     -Wall \
     -mfloat-abi=hard \

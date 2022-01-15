@@ -45,29 +45,56 @@ extern void BOARD_InitHardware(void);
  * Variables
  ******************************************************************************/
 
-/* Select Audio/Video PLL (786.48 MHz) as sai1 clock source */
-#define DEMO_SAI1_CLOCK_SOURCE_SELECT (2U)
-/* Clock pre divider for sai1 clock source */
-#define DEMO_SAI1_CLOCK_SOURCE_PRE_DIVIDER (0U)
-/* Clock divider for sai1 clock source */
-#define DEMO_SAI1_CLOCK_SOURCE_DIVIDER (63U)
-/* Get frequency of sai1 clock */
+#if defined(WIFI_88W8987_BOARD_AW_CM358MA) || defined(WIFI_IW416_BOARD_AW_AM510MA)
+/* Select Audio/Video PLL (786.48 MHz) as sai2 clock source */
+#define DEMO_SAI2_CLOCK_SOURCE_SELECT (2U)
+/* Clock pre divider for sai2 clock source */
+#define DEMO_SAI2_CLOCK_SOURCE_PRE_DIVIDER (0U)
+/* Clock divider for sai2 clock source */
+#define DEMO_SAI2_CLOCK_SOURCE_DIVIDER (63U)
+/* Get frequency of sai2 clock */
 #define DEMO_SAI_CLK_FREQ                                                        \
-    (CLOCK_GetFreq(kCLOCK_AudioPllClk) / (DEMO_SAI1_CLOCK_SOURCE_DIVIDER + 1U) / \
-     (DEMO_SAI1_CLOCK_SOURCE_PRE_DIVIDER + 1U))
+    (CLOCK_GetFreq(kCLOCK_AudioPllClk) / (DEMO_SAI2_CLOCK_SOURCE_DIVIDER + 1U) / \
+     (DEMO_SAI2_CLOCK_SOURCE_PRE_DIVIDER + 1U))
 
 /* Select USB1 PLL (480 MHz) as master lpi2c clock source */
 #define DEMO_LPI2C_CLOCK_SOURCE_SELECT (0U)
 /* Clock divider for master lpi2c clock source */
 #define DEMO_LPI2C_CLOCK_SOURCE_DIVIDER (5U)
 
-#define DEMO_AUDIO_INSTANCE (1U)
+#define DEMO_AUDIO_INSTANCE (2U)
+
+/* DMA */
+#define EXAMPLE_DMAMUX_INSTANCE (0U)
+#define EXAMPLE_DMA_INSTANCE    (0U)
+#define EXAMPLE_TX_CHANNEL      (0U)
+#define EXAMPLE_SAI_TX_SOURCE   (kDmaRequestMuxSai2Tx)
+#else
+/* Select Audio/Video PLL (786.48 MHz) as sai1 clock source */
+#define DEMO_SAI1_CLOCK_SOURCE_SELECT      (2U)
+/* Clock pre divider for sai1 clock source */
+#define DEMO_SAI1_CLOCK_SOURCE_PRE_DIVIDER (0U)
+/* Clock divider for sai1 clock source */
+#define DEMO_SAI1_CLOCK_SOURCE_DIVIDER     (63U)
+/* Get frequency of sai1 clock */
+#define DEMO_SAI_CLK_FREQ                                                        \
+    (CLOCK_GetFreq(kCLOCK_AudioPllClk) / (DEMO_SAI1_CLOCK_SOURCE_DIVIDER + 1U) / \
+     (DEMO_SAI1_CLOCK_SOURCE_PRE_DIVIDER + 1U))
+
+/* Select USB1 PLL (480 MHz) as master lpi2c clock source */
+#define DEMO_LPI2C_CLOCK_SOURCE_SELECT  (0U)
+/* Clock divider for master lpi2c clock source */
+#define DEMO_LPI2C_CLOCK_SOURCE_DIVIDER (5U)
+
+#define DEMO_AUDIO_INSTANCE     (1U)
 
 /* DMA */
 #define EXAMPLE_DMAMUX_INSTANCE (0U)
 #define EXAMPLE_DMA_INSTANCE    (0U)
 #define EXAMPLE_TX_CHANNEL      (0U)
 #define EXAMPLE_SAI_TX_SOURCE   (kDmaRequestMuxSai1Tx)
+
+#endif
 
 /* demo audio data channel */
 #define DEMO_AUDIO_DATA_CHANNEL (kHAL_AudioStereo)
@@ -155,7 +182,47 @@ hal_audio_config_t audioTxConfig = {
 /*******************************************************************************
  * Code
  ******************************************************************************/
+#if defined(WIFI_88W8987_BOARD_AW_CM358MA) || defined(WIFI_IW416_BOARD_AW_AM510MA)
+uint32_t BOARD_SwitchAudioFreq(uint32_t sampleRate)
+{
+    CLOCK_DeinitAudioPll();
 
+    if (0U == sampleRate)
+    {
+        /* Disable MCLK output */
+        IOMUXC_GPR->GPR1 &= (~IOMUXC_GPR_GPR1_SAI2_MCLK_DIR_MASK);
+    }
+    else
+    {
+        if (44100U == sampleRate)
+        {
+            CLOCK_InitAudioPll(&audioPllConfig);
+        }
+        else if (0U == sampleRate % 8000U)
+        {
+            CLOCK_InitAudioPll(&audioPllConfig1);
+        }
+        else
+        {
+            /* no action */
+        }
+
+        /*Clock setting for LPI2C*/
+        CLOCK_SetMux(kCLOCK_Lpi2cMux, DEMO_LPI2C_CLOCK_SOURCE_SELECT);
+        CLOCK_SetDiv(kCLOCK_Lpi2cDiv, DEMO_LPI2C_CLOCK_SOURCE_DIVIDER);
+
+        /*Clock setting for SAI2*/
+        CLOCK_SetMux(kCLOCK_Sai2Mux, DEMO_SAI2_CLOCK_SOURCE_SELECT);
+        CLOCK_SetDiv(kCLOCK_Sai2PreDiv, DEMO_SAI2_CLOCK_SOURCE_PRE_DIVIDER);
+        CLOCK_SetDiv(kCLOCK_Sai2Div, DEMO_SAI2_CLOCK_SOURCE_DIVIDER);
+
+        /* Enable MCLK output */
+        IOMUXC_GPR->GPR1 |= IOMUXC_GPR_GPR1_SAI2_MCLK_DIR_MASK;
+    }
+
+    return DEMO_SAI_CLK_FREQ;
+}
+#else
 uint32_t BOARD_SwitchAudioFreq(uint32_t sampleRate)
 {
     CLOCK_DeinitAudioPll();
@@ -196,8 +263,10 @@ uint32_t BOARD_SwitchAudioFreq(uint32_t sampleRate)
     return DEMO_SAI_CLK_FREQ;
 }
 
+#endif
 
-#if defined(WIFI_88W8987_BOARD_AW_CM358_USD)
+#if (defined(WIFI_88W8987_BOARD_AW_CM358MA) || defined(WIFI_88W8987_BOARD_MURATA_1ZM_M2) || \
+     defined(WIFI_IW416_BOARD_MURATA_1XK_M2))
 int controller_hci_uart_get_configuration(controller_hci_uart_config_t *config)
 {
     if (NULL == config)
@@ -220,7 +289,54 @@ int controller_hci_uart_get_configuration(controller_hci_uart_config_t *config)
 #endif
     return 0;
 }
-#elif defined(WIFI_IW416_BOARD_AW_AM457_USD)
+#elif defined(WIFI_IW416_BOARD_AW_AM510MA)
+int controller_hci_uart_get_configuration(controller_hci_uart_config_t *config)
+{
+    if (NULL == config)
+    {
+        return -1;
+    }
+
+    config->clockSrc         = BOARD_BT_UART_CLK_FREQ;
+    config->defaultBaudrate  = BOARD_BT_UART_BAUDRATE;
+    config->runningBaudrate  = BOARD_BT_UART_BAUDRATE;
+    config->instance         = BOARD_BT_UART_INSTANCE;
+    config->enableRxRTS      = 1u;
+    config->enableTxCTS      = 1u;
+#if (defined(HAL_UART_DMA_ENABLE) && (HAL_UART_DMA_ENABLE > 0U))
+    config->dma_instance     = 0U;
+    config->rx_channel       = 1U;
+    config->tx_channel       = 2U;
+    config->dma_mux_instance = 0U;
+    config->rx_request       = kDmaRequestMuxLPUART3Rx;
+    config->tx_request       = kDmaRequestMuxLPUART3Tx;
+#endif
+    return 0;
+}
+#elif defined(WIFI_88W8987_BOARD_AW_CM358_USD)
+int controller_hci_uart_get_configuration(controller_hci_uart_config_t *config)
+{
+    if (NULL == config)
+    {
+        return -1;
+    }
+    config->clockSrc         = BOARD_BT_UART_CLK_FREQ;
+    config->defaultBaudrate  = 115200u;
+    config->runningBaudrate  = BOARD_BT_UART_BAUDRATE;
+    config->instance         = BOARD_BT_UART_INSTANCE;
+    config->enableRxRTS      = 1u;
+    config->enableTxCTS      = 1u;
+#if (defined(HAL_UART_DMA_ENABLE) && (HAL_UART_DMA_ENABLE > 0U))
+    config->dma_instance     = 0U;
+    config->rx_channel       = 1U;
+    config->tx_channel       = 2U;
+    config->dma_mux_instance = 0U;
+    config->rx_request       = kDmaRequestMuxLPUART3Rx;
+    config->tx_request       = kDmaRequestMuxLPUART3Tx;
+#endif
+    return 0;
+}
+#elif defined(WIFI_IW416_BOARD_AW_AM510_USD)
 int controller_hci_uart_get_configuration(controller_hci_uart_config_t *config)
 {
     if (NULL == config)
@@ -232,19 +348,42 @@ int controller_hci_uart_get_configuration(controller_hci_uart_config_t *config)
      * it is put here. It may be removed in furture.
      */
     BOARD_InitArduinoUARTPins();
-    config->clockSrc = BOARD_BT_UART_CLK_FREQ;
-    config->defaultBaudrate = BOARD_BT_UART_BAUDRATE;
-    config->runningBaudrate = BOARD_BT_UART_BAUDRATE;
-    config->instance = BOARD_BT_UART_INSTANCE;
-    config->enableRxRTS = 1u;
-    config->enableTxCTS = 1u;
+    config->clockSrc         = BOARD_BT_UART_CLK_FREQ;
+    config->defaultBaudrate  = BOARD_BT_UART_BAUDRATE;
+    config->runningBaudrate  = BOARD_BT_UART_BAUDRATE;
+    config->instance         = BOARD_BT_UART_INSTANCE;
+    config->enableRxRTS      = 1u;
+    config->enableTxCTS      = 1u;
 #if (defined(HAL_UART_DMA_ENABLE) && (HAL_UART_DMA_ENABLE > 0U))
-    config->dma_instance = 0U;
-    config->rx_channel = 1U;
-    config->tx_channel = 2U;
+    config->dma_instance     = 0U;
+    config->rx_channel       = 1U;
+    config->tx_channel       = 2U;
     config->dma_mux_instance = 0U;
-    config->rx_request = kDmaRequestMuxLPUART3Rx;
-    config->tx_request = kDmaRequestMuxLPUART3Tx;
+    config->rx_request       = kDmaRequestMuxLPUART3Rx;
+    config->tx_request       = kDmaRequestMuxLPUART3Tx;
+#endif
+    return 0;
+}
+#elif defined(WIFI_88W8987_BOARD_MURATA_1ZM_USD) || defined(WIFI_IW416_BOARD_MURATA_1XK_USD)
+int controller_hci_uart_get_configuration(controller_hci_uart_config_t *config)
+{
+    if (NULL == config)
+    {
+        return -1;
+    }
+    config->clockSrc         = BOARD_BT_UART_CLK_FREQ;
+    config->defaultBaudrate  = 115200u;
+    config->runningBaudrate  = BOARD_BT_UART_BAUDRATE;
+    config->instance         = BOARD_BT_UART_INSTANCE;
+    config->enableRxRTS      = 1u;
+    config->enableTxCTS      = 1u;
+#if (defined(HAL_UART_DMA_ENABLE) && (HAL_UART_DMA_ENABLE > 0U))
+    config->dma_instance     = 0U;
+    config->rx_channel       = 1U;
+    config->tx_channel       = 2U;
+    config->dma_mux_instance = 0U;
+    config->rx_request       = kDmaRequestMuxLPUART3Rx;
+    config->tx_request       = kDmaRequestMuxLPUART3Tx;
 #endif
     return 0;
 }
@@ -296,11 +435,20 @@ int main(void)
 
     BOARD_ConfigMPU();
     BOARD_InitBootPins();
-#if defined(WIFI_IW416_BOARD_AW_AM457_USD)
-    BOARD_DeinitArduinoUARTPins();
+#if defined(WIFI_88W8987_BOARD_AW_CM358MA) || defined(WIFI_IW416_BOARD_AW_AM510MA) || \
+    defined(WIFI_IW416_BOARD_MURATA_1XK_M2) || defined(WIFI_88W8987_BOARD_MURATA_1ZM_M2)
+    BOARD_Init_Audio_Pins();
 #else
-    BOARD_InitArduinoUARTPins();
+    BOARD_Init_USDAudio_Pins();
 #endif
+#if defined(WIFI_IW416_BOARD_AW_AM510_USD)
+    BOARD_DeinitArduinoUARTPins();
+#elif defined(WIFI_88W8987_BOARD_AW_CM358_USD) || defined(WIFI_88W8987_BOARD_MURATA_1ZM_USD) || \
+    defined(WIFI_IW416_BOARD_MURATA_1XK_USD)
+    BOARD_InitArduinoUARTPins();
+#else
+#endif
+
     BOARD_InitBootClocks();
     BOARD_InitDebugConsole();
     SCB_DisableDCache();

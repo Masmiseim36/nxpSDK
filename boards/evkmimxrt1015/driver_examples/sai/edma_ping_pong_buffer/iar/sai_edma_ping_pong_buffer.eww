@@ -9,10 +9,6 @@
       </member>
       <member>
         <project>sai_edma_ping_pong_buffer</project>
-        <configuration>debug</configuration>
-      </member>
-      <member>
-        <project>sai_edma_ping_pong_buffer</project>
         <configuration>flexspi_nor_debug</configuration>
       </member>
       <member>
@@ -25,13 +21,6 @@
       <member>
         <project>sai_edma_ping_pong_buffer</project>
         <configuration>release</configuration>
-      </member>
-    </batchDefinition>
-    <batchDefinition>
-      <name>debug</name>
-      <member>
-        <project>sai_edma_ping_pong_buffer</project>
-        <configuration>debug</configuration>
       </member>
     </batchDefinition>
     <batchDefinition>

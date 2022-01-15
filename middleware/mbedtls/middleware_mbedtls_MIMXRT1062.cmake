@@ -39,6 +39,8 @@ target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
     ${CMAKE_CURRENT_LIST_DIR}/library/md2.c
     ${CMAKE_CURRENT_LIST_DIR}/library/md4.c
     ${CMAKE_CURRENT_LIST_DIR}/library/md5.c
+    ${CMAKE_CURRENT_LIST_DIR}/library/mps_reader.c
+    ${CMAKE_CURRENT_LIST_DIR}/library/mps_trace.c
     ${CMAKE_CURRENT_LIST_DIR}/library/memory_buffer_alloc.c
     ${CMAKE_CURRENT_LIST_DIR}/library/net_sockets.c
     ${CMAKE_CURRENT_LIST_DIR}/library/nist_kw.c
@@ -56,9 +58,13 @@ target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
     ${CMAKE_CURRENT_LIST_DIR}/library/platform_util.c
     ${CMAKE_CURRENT_LIST_DIR}/library/poly1305.c
     ${CMAKE_CURRENT_LIST_DIR}/library/psa_crypto.c
+    ${CMAKE_CURRENT_LIST_DIR}/library/psa_crypto_aead.c
+    ${CMAKE_CURRENT_LIST_DIR}/library/psa_crypto_cipher.c
     ${CMAKE_CURRENT_LIST_DIR}/library/psa_crypto_client.c
     ${CMAKE_CURRENT_LIST_DIR}/library/psa_crypto_driver_wrappers.c
     ${CMAKE_CURRENT_LIST_DIR}/library/psa_crypto_ecp.c
+    ${CMAKE_CURRENT_LIST_DIR}/library/psa_crypto_hash.c
+    ${CMAKE_CURRENT_LIST_DIR}/library/psa_crypto_mac.c
     ${CMAKE_CURRENT_LIST_DIR}/library/psa_crypto_rsa.c
     ${CMAKE_CURRENT_LIST_DIR}/library/psa_crypto_se.c
     ${CMAKE_CURRENT_LIST_DIR}/library/psa_crypto_slot_management.c
@@ -99,6 +105,8 @@ target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
     ${CMAKE_CURRENT_LIST_DIR}/library
 )
 
+
+include(middleware_mbedtls_rt_MIMXRT1062)
 
 include(utility_debug_console_MIMXRT1062)
 

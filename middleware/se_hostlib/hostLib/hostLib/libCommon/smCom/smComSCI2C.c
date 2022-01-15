@@ -89,8 +89,9 @@ static U32 smComSCI2C_Transceive(void* conn_ctx, apdu_t *pApdu)
     void* ctx = (conn_ctx == NULL) ? gpHandle : conn_ctx;
     LOG_MAU8_D("Tx>", pApdu->pBuf, pApdu->buflen);
     status = sci2c_Transceive(ctx, pApdu);
-    if ((status == SMCOM_OK) && (pApdu->rxlen > 0))
+    if ((status == SMCOM_OK) && (pApdu->rxlen > 0)){
         LOG_MAU8_D("<Rx", pApdu->pBuf, pApdu->rxlen);
+    }
     return status;
 }
 

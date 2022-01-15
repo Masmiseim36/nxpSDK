@@ -67,10 +67,10 @@
 
 #include "HLSEAPI.h"
 #include "ex_sss.h"
-#if SSS_HAVE_ALT_A71CH
+#if SSS_HAVE_MBEDTLS_ALT_A71CH
 #include "ax_mbedtls.h"
 #endif
-#if SSS_HAVE_ALT_SSS
+#if SSS_HAVE_MBEDTLS_ALT_SSS
 #include "sss_mbedtls.h"
 #endif
 
@@ -218,6 +218,17 @@ extern char *g_port_name;
 
 // uint8_t nist_header_end[] = {0xA1, 0x44, 0x03, 0x42, 0x00 };
 
+#if SSS_HAVE_SE05X_VER_GTE_06_16
+#define DEFAULT_POLICY_SYMM_KEY                                                                                       \
+    (POLICY_OBJ_ALLOW_DELETE | POLICY_OBJ_ALLOW_SIGN | POLICY_OBJ_ALLOW_VERIFY | POLICY_OBJ_ALLOW_ENC |               \
+        POLICY_OBJ_ALLOW_DEC | POLICY_OBJ_ALLOW_HKDF | POLICY_OBJ_ALLOW_WRAP | POLICY_OBJ_ALLOW_WRITE |               \
+        POLICY_OBJ_ALLOW_GEN | POLICY_OBJ_ALLOW_DESFIRE_AUTHENTICATION | POLICY_OBJ_ALLOW_DESFIRE_DUMP_SESSION_KEYS | \
+        POLICY_OBJ_ALLOW_IMPORT_EXPORT)
+#define DEFAULT_POLICY_ASYMM_KEY                                                                           \
+    (POLICY_OBJ_ALLOW_DELETE | POLICY_OBJ_ALLOW_SIGN | POLICY_OBJ_ALLOW_VERIFY | POLICY_OBJ_ALLOW_ENC |    \
+        POLICY_OBJ_ALLOW_DEC | POLICY_OBJ_ALLOW_TLS_KDF | POLICY_OBJ_ALLOW_WRAP | POLICY_OBJ_ALLOW_WRITE | \
+        POLICY_OBJ_ALLOW_GEN | POLICY_OBJ_ALLOW_KA | POLICY_OBJ_ALLOW_READ | POLICY_OBJ_ALLOW_IMPORT_EXPORT)
+#else
 #define DEFAULT_POLICY_SYMM_KEY                                                                                       \
     (POLICY_OBJ_ALLOW_DELETE | POLICY_OBJ_ALLOW_SIGN | POLICY_OBJ_ALLOW_VERIFY | POLICY_OBJ_ALLOW_ENC |               \
         POLICY_OBJ_ALLOW_DEC | POLICY_OBJ_ALLOW_KDF | POLICY_OBJ_ALLOW_WRAP | POLICY_OBJ_ALLOW_WRITE |                \
@@ -227,6 +238,7 @@ extern char *g_port_name;
     (POLICY_OBJ_ALLOW_DELETE | POLICY_OBJ_ALLOW_SIGN | POLICY_OBJ_ALLOW_VERIFY | POLICY_OBJ_ALLOW_ENC | \
         POLICY_OBJ_ALLOW_DEC | POLICY_OBJ_ALLOW_KDF | POLICY_OBJ_ALLOW_WRAP | POLICY_OBJ_ALLOW_WRITE |  \
         POLICY_OBJ_ALLOW_GEN | POLICY_OBJ_ALLOW_KA | POLICY_OBJ_ALLOW_READ | POLICY_OBJ_ALLOW_IMPORT_EXPORT)
+#endif // SSS_HAVE_SE05X_VER_GTE_06_16
 #define DEFAULT_POLICY_BIN_COUNT_PCR (POLICY_OBJ_ALLOW_DELETE | POLICY_OBJ_ALLOW_WRITE | POLICY_OBJ_ALLOW_READ)
 #define DEFAULT_POLICY_USERID (POLICY_OBJ_ALLOW_DELETE | POLICY_OBJ_ALLOW_WRITE)
 
@@ -287,7 +299,7 @@ typedef struct P11Session
     size_t labelLen;
     void *mechParameter;
     CK_ULONG mechParameterLen;
-#if SSS_HAVE_ALT_SSS
+#if SSS_HAVE_MBEDTLS_ALT_SSS
     sss_digest_t digest_ctx;
 #endif
 } P11Session_t, *P11SessionPtr_t;
@@ -354,7 +366,7 @@ CK_RV parseCertificateGetAttribute(
     uint32_t xObject, CK_ATTRIBUTE_TYPE attributeType, uint8_t *pData, CK_ULONG *ulAttrLength);
 CK_BBOOL isX509Certificate(uint32_t xObject);
 
-#if SSS_HAVE_ALT_A71CH
+#if SSS_HAVE_MBEDTLS_ALT_A71CH
 static U16 HLSE_Create_token(
     uint32_t keyId, HLSE_OBJECT_TYPE objType, void *buff, unsigned long bufflen, HLSE_OBJECT_HANDLE handle_object);
 static mbedtls_ecp_group_id curve_list[16] = {
@@ -369,7 +381,7 @@ static CK_RV read_object_size(uint32_t keyId, uint16_t *keyLen);
 static uint8_t CheckIfKeyIdExists(uint32_t keyId, pSe05xSession_t session_ctx);
 #endif
 
-#if SSS_HAVE_ALT_SSS
+#if SSS_HAVE_MBEDTLS_ALT_SSS
 static int convertpemtoder(const unsigned char *input, size_t ilen, unsigned char *output, size_t *olen);
 static sss_status_t sss_create_token(sss_key_store_t *keystore,
     sss_object_t *CreateObject,
@@ -421,7 +433,7 @@ static object_identifiers_t object_identifiers[] = {
     },
 };
 
-#if SSS_HAVE_ALT
+#if SSS_HAVE_MBEDTLS_ALT
 // int mbedtls_ssl_set_curve_list(mbedtls_ssl_config *conf, const char * pcLabelName)
 int mbedtls_ssl_set_curve_list(mbedtls_ssl_config *conf, uint32_t keyIndex)
 {
@@ -490,7 +502,7 @@ int mbedtls_ssl_set_curve_list(mbedtls_ssl_config *conf, uint32_t keyIndex)
     return 1;
 }
 
-#endif //SSS_HAVE_ALT
+#endif //SSS_HAVE_MBEDTLS_ALT
 
 /**
  * @brief Maps an opaque caller session handle into its internal state structure.
@@ -1054,7 +1066,7 @@ CK_RV LabelToKeyId(unsigned char *label, size_t labelSize, uint32_t *keyId)
     if (labelSize == 0) {
         LOCK_MUTEX_FOR_RTOS
         {
-            sss_rng_context_t sss_rng_ctx;
+            sss_rng_context_t sss_rng_ctx = {0};
             uint8_t rngData[10] = {0};
             size_t rngDataLen   = sizeof(rngData);
             status              = sss_rng_context_init(&sss_rng_ctx, &pex_sss_demo_boot_ctx->session /* Session */);
@@ -1704,12 +1716,15 @@ CK_RV EcSignatureToRandS(uint8_t *signature, size_t *sigLen)
     int index          = 0;
     size_t i           = 0;
     size_t len         = 0;
-    if (signature[index++] != 0x30)
+    if (signature[index++] != 0x30) {
         goto exit;
-    if (signature[index++] != (*sigLen - 2))
+    }
+    if (signature[index++] != (*sigLen - 2)) {
         goto exit;
-    if (signature[index++] != 0x02)
+    }
+    if (signature[index++] != 0x02) {
         goto exit;
+    }
 
     len = signature[index++];
     if (len & 0x01) {
@@ -2037,7 +2052,7 @@ CK_RV parseCertificateGetAttribute(
 
     case CKA_SUBJECT:
         if (certificate.subject_raw.p != NULL) {
-            if ((int)(*ulAttrLength) < certificate.subject_raw.len) {
+            if ((size_t)(*ulAttrLength) < certificate.subject_raw.len) {
                 LOG_E("Buffer too small");
                 xResult = CKR_BUFFER_TOO_SMALL;
                 break;
@@ -2231,7 +2246,7 @@ CK_DEFINE_FUNCTION(CK_RV, C_DigestFinal)
     }
 
     if (xResult == CKR_OK) {
-#if SSS_HAVE_ALT_SSS
+#if SSS_HAVE_MBEDTLS_ALT_SSS
         LOCK_MUTEX_FOR_RTOS
         {
             size_t outputLen = 0;
@@ -2328,7 +2343,7 @@ CK_DEFINE_FUNCTION(CK_RV, C_DigestUpdate)
 
     if (xResult == CKR_OK) {
         pxSession->digestUpdateCalled = CK_TRUE;
-#if SSS_HAVE_ALT_SSS
+#if SSS_HAVE_MBEDTLS_ALT_SSS
         sss_status_t sss_status = kStatus_SSS_Fail;
         LOCK_MUTEX_FOR_RTOS
         {
@@ -2377,7 +2392,7 @@ CK_DEFINE_FUNCTION(CK_RV, C_DigestInit)
         return xResult;
     }
 
-#if SSS_HAVE_ALT_SSS
+#if SSS_HAVE_MBEDTLS_ALT_SSS
     sss_status_t sss_status         = kStatus_SSS_Fail;
     sss_algorithm_t algorithm       = kAlgorithm_None;
     pxSession->xOperationInProgress = pMechanism->mechanism;
@@ -2442,7 +2457,7 @@ CK_DEFINE_FUNCTION(CK_RV, C_GenerateRandom)
 
     /*lint !e9072 It's OK to have different parameter name. */
     // return CKR_DEVICE_ERROR;
-#if SSS_HAVE_ALT_SSS || SSS_HAVE_ALT_A71CH
+#if SSS_HAVE_MBEDTLS_ALT_SSS || SSS_HAVE_MBEDTLS_ALT_A71CH
     (void)(xSession);
 #else
     P11SessionPtr_t pxSessionObj = prvSessionPointerFromHandle(xSession);
@@ -2458,7 +2473,7 @@ CK_DEFINE_FUNCTION(CK_RV, C_GenerateRandom)
         return CKR_OK;
     }
     else {
-#if SSS_HAVE_ALT_SSS || SSS_HAVE_ALT_A71CH
+#if SSS_HAVE_MBEDTLS_ALT_SSS || SSS_HAVE_MBEDTLS_ALT_A71CH
         LOCK_MUTEX_FOR_RTOS
         {
             sss_status_t sss_status = kStatus_SSS_Fail;
@@ -2501,7 +2516,7 @@ CK_DEFINE_FUNCTION(CK_RV, C_Verify)
     // printf("\n\n%s\n\n", __FUNCTION__);
 
     P11SessionPtr_t pxSessionObj = prvSessionPointerFromHandle(xSession);
-#if SSS_HAVE_ALT_A71CH
+#if SSS_HAVE_MBEDTLS_ALT_A71CH
     (void)(pxSessionObj);
     U8 index = 0;
     HLSE_OBJECT_HANDLE handles[5];
@@ -2510,7 +2525,7 @@ CK_DEFINE_FUNCTION(CK_RV, C_Verify)
     U16 err;
 #endif
 
-#if SSS_HAVE_ALT_SSS
+#if SSS_HAVE_MBEDTLS_ALT_SSS
     sss_status_t status;
     sss_object_t object;
     sss_asymmetric_t asymmCtx;
@@ -2525,7 +2540,7 @@ CK_DEFINE_FUNCTION(CK_RV, C_Verify)
         xResult = CKR_ARGUMENTS_BAD;
         return xResult;
     }
-#if SSS_HAVE_ALT_A71CH
+#if SSS_HAVE_MBEDTLS_ALT_A71CH
     err = HLSE_EnumerateObjects(HLSE_PUBLIC_KEY, handles, &handleNum);
 
     if ((err != HLSE_SW_OK) || (handleNum <= index)) {
@@ -2543,7 +2558,7 @@ CK_DEFINE_FUNCTION(CK_RV, C_Verify)
     }
 #endif
 
-#if SSS_HAVE_ALT_SSS
+#if SSS_HAVE_MBEDTLS_ALT_SSS
 
     xResult = ParseSignMechanism(pxSessionObj, &algorithm);
     if (xResult != CKR_OK) {
@@ -3000,7 +3015,7 @@ CK_DEFINE_FUNCTION(CK_RV, C_DestroyObject)
     return CKR_OK;
 }
 
-#if SSS_HAVE_ALT_A71CH
+#if SSS_HAVE_MBEDTLS_ALT_A71CH
 
 static U16 HLSE_Create_token(
     uint32_t keyId, HLSE_OBJECT_TYPE objType, void *buff, unsigned long bufflen, HLSE_OBJECT_HANDLE handle_object)
@@ -3024,7 +3039,7 @@ static U16 HLSE_Create_token(
 
 #endif
 
-#if SSS_HAVE_ALT_SSS
+#if SSS_HAVE_MBEDTLS_ALT_SSS
 
 static sss_status_t sss_create_token(sss_key_store_t *keystore,
     sss_object_t *CreateObject,
@@ -3224,7 +3239,7 @@ U16 axZeroSignExtend(U8 *pStore, U16 actualLength, U16 expectedLength)
     return sw;
 }
 
-// #if SSS_HAVE_ALT_A71CH
+// #if SSS_HAVE_MBEDTLS_ALT_A71CH
 
 // /**
 //  * Extract the public key - as a byte array in uncompress format - from an ECC key
@@ -3320,7 +3335,7 @@ U16 axZeroSignExtend(U8 *pStore, U16 actualLength, U16 expectedLength)
 //     return res;
 // }
 
-// #endif  // SSS_HAVE_ALT_A71CH
+// #endif  // SSS_HAVE_MBEDTLS_ALT_A71CH
 
 /**
  * @brief Provides import and storage of a single client certificate and
@@ -3333,12 +3348,12 @@ CK_DEFINE_FUNCTION(CK_RV, C_CreateObject)
     CK_RV xResult = CKR_OK;
     // printf("\n\n%s\n\n", __FUNCTION__);
 
-#if SSS_HAVE_ALT_A71CH
+#if SSS_HAVE_MBEDTLS_ALT_A71CH
     HLSE_OBJECT_HANDLE HLSE_Handle_Create_obj = 0x0;
     U16 err                                   = 0;
 #endif
     int ret;
-    U8 buff[4096];
+    U8 buff[4096] = {0};
     mbedtls_pk_context pk;
     CK_ULONG Valueindex = 0;
     uint32_t keyId      = 0xffffffff;
@@ -3346,7 +3361,7 @@ CK_DEFINE_FUNCTION(CK_RV, C_CreateObject)
     CK_ULONG classIndex = 0;
     size_t buff_len     = sizeof(buff);
 
-#if SSS_HAVE_ALT_SSS
+#if SSS_HAVE_MBEDTLS_ALT_SSS
     CK_ULONG keyidindex;
     CK_ULONG labelIndex = 0;
     CK_BBOOL foundKeyId = CK_FALSE;
@@ -3365,7 +3380,7 @@ CK_DEFINE_FUNCTION(CK_RV, C_CreateObject)
     if ((pkcs11CREATEOBJECT_MINIMUM_ATTRIBUTE_COUNT > ulCount) || (NULL == pxTemplate) || (NULL == pxObject)) {
         return CKR_ARGUMENTS_BAD;
     }
-    if (ulCount == -1) {
+    if (ulCount == (CK_ULONG)-1) {
         return CKR_ARGUMENTS_BAD;
     }
 
@@ -3375,7 +3390,7 @@ CK_DEFINE_FUNCTION(CK_RV, C_CreateObject)
     }
 
     /*Find the key id as it's needed while provisiong keys and certificate*/
-#if SSS_HAVE_ALT_SSS
+#if SSS_HAVE_MBEDTLS_ALT_SSS
     xResult = GetAttributeParameterIndex(pxTemplate, ulCount, CKA_SSS_ID, &keyidindex);
     if (xResult == CKR_OK) {
         foundKeyId = CK_TRUE;
@@ -3399,7 +3414,7 @@ CK_DEFINE_FUNCTION(CK_RV, C_CreateObject)
             memcpy(buff, pxTemplate[i].pValue, pxTemplate[i].ulValueLen);
             buff_len = (size_t)pxTemplate[i].ulValueLen;
 
-#if SSS_HAVE_ALT_A71CH
+#if SSS_HAVE_MBEDTLS_ALT_A71CH
 
             err = HLSE_Create_token(
                 keyId, HLSE_CERTIFICATE, pxTemplate[i].pValue, pxTemplate[i].ulValueLen, HLSE_Handle_Create_obj);
@@ -3412,7 +3427,7 @@ CK_DEFINE_FUNCTION(CK_RV, C_CreateObject)
             pxObject = (CK_OBJECT_HANDLE_PTR)&HLSE_Handle_Create_obj;
 #endif
 
-#if SSS_HAVE_ALT_SSS
+#if SSS_HAVE_MBEDTLS_ALT_SSS
 
             if (0 != pxTemplate[i].ulValueLen) {
                 if (!foundKeyId) {
@@ -3517,7 +3532,7 @@ CK_DEFINE_FUNCTION(CK_RV, C_CreateObject)
                 }
             }
 
-#if SSS_HAVE_ALT_A71CH
+#if SSS_HAVE_MBEDTLS_ALT_A71CH
 
             err = HLSE_Create_token(keyId, HLSE_KEY_PAIR, buff, buff_len, HLSE_Handle_Create_obj);
             if (err != HLSE_SW_OK) {
@@ -3528,7 +3543,7 @@ CK_DEFINE_FUNCTION(CK_RV, C_CreateObject)
             pxObject = (CK_OBJECT_HANDLE_PTR)&HLSE_Handle_Create_obj;
 #endif
 
-#if SSS_HAVE_ALT_SSS
+#if SSS_HAVE_MBEDTLS_ALT_SSS
 
             if (!foundKeyId) {
                 xResult = GetAttributeParameterIndex(pxTemplate, ulCount, CKA_LABEL, &labelIndex);
@@ -3645,7 +3660,7 @@ CK_DEFINE_FUNCTION(CK_RV, C_CreateObject)
                 buff_len = (size_t)pxTemplate[Valueindex].ulValueLen;
             }
 
-#if SSS_HAVE_ALT_A71CH
+#if SSS_HAVE_MBEDTLS_ALT_A71CH
 
             err = HLSE_Create_token(keyId, HLSE_PUBLIC_KEY, buff, buff_len, HLSE_Handle_Create_obj);
             if (err != HLSE_SW_OK) {
@@ -3656,7 +3671,7 @@ CK_DEFINE_FUNCTION(CK_RV, C_CreateObject)
             pxObject = (CK_OBJECT_HANDLE_PTR)&HLSE_Handle_Create_obj;
 #endif
 
-#if SSS_HAVE_ALT_SSS
+#if SSS_HAVE_MBEDTLS_ALT_SSS
             if (!foundKeyId) {
                 xResult = GetAttributeParameterIndex(pxTemplate, ulCount, CKA_LABEL, &labelIndex);
                 if (xResult != CKR_OK) {
@@ -3730,10 +3745,10 @@ CK_DEFINE_FUNCTION(CK_RV, C_CreateObject)
 
         case CKO_SECRET_KEY:
 
-#if SSS_HAVE_ALT_A71CH
+#if SSS_HAVE_MBEDTLS_ALT_A71CH
             xResult = CKR_ARGUMENTS_BAD;
 #endif
-#if SSS_HAVE_ALT_SSS
+#if SSS_HAVE_MBEDTLS_ALT_SSS
 
             if (!foundKeyId) {
                 xResult = GetAttributeParameterIndex(pxTemplate, ulCount, CKA_LABEL, &labelIndex);
@@ -4070,17 +4085,20 @@ static sss_status_t parseAtrribute(se05x_object_attribute *pAttribute,
             else if (cipherType == kSSS_CipherType_UserID) {
                 default_policy = DEFAULT_POLICY_USERID;
             }
-            else
+            else {
                 default_policy = DEFAULT_POLICY_SYMM_KEY;
+            }
         }
 #ifdef DEBUG_PKCS11_PAL
         LOG_I("Default policy : 0x%02X, Required policy : 0x%02X", default_policy, policy_map);
 #endif
 
-        if (default_policy & policy_map)
+        if (default_policy & policy_map) {
             *pAllow = CK_TRUE;
-        else
+        }
+        else {
             *pAllow = CK_FALSE;
+        }
     }
 
     return kStatus_SSS_Success;
@@ -4189,7 +4207,10 @@ CK_DEFINE_FUNCTION(CK_RV, C_GetAttributeValue)
                     xResult      = CKR_FUNCTION_FAILED;
                     break;
                 }
-                keyId        = sss_object.keyId;
+                keyId        = (uint32_t)((((sss_object.keyId >> (8 * 0)) & 0x000000FF) << (8 * 3)) |
+                                   (((sss_object.keyId >> (8 * 1)) & 0x000000FF) << (8 * 2)) |
+                                   (((sss_object.keyId >> (8 * 2)) & 0x000000FF) << (8 * 1)) |
+                                   (((sss_object.keyId >> (8 * 3)) & 0x000000FF) << (8 * 0)));
                 pvAttr       = &keyId;
                 ulAttrLength = sizeof(keyId);
                 break;
@@ -4989,8 +5010,9 @@ CK_DEFINE_FUNCTION(CK_RV, C_GetAttributeValue)
                 if (obj_attr.origin == kSE05x_Origin_INTERNAL) {
                     supported = CK_TRUE;
                 }
-                else
+                else {
                     supported = CK_FALSE;
+                }
 #else
                 // SE050 doesn't support ReadObjectAttributes, so use pre-defined value.
                 supported = CK_FALSE;
@@ -5333,7 +5355,7 @@ CK_DEFINE_FUNCTION(CK_RV, C_FindObjects)
     }
 
     else if ((pdFALSE == xDone)) {
-#if SSS_HAVE_ALT_SSS && SSS_HAVE_APPLET_SE05X_IOT
+#if SSS_HAVE_MBEDTLS_ALT_SSS && SSS_HAVE_APPLET_SE05X_IOT
         uint32_t object_list[40] = {0};
         size_t object_list_size  = sizeof(object_list) / sizeof(object_list[0]);
         smStatus_t sm_status     = read_id_list(object_list, &object_list_size);
@@ -5702,7 +5724,7 @@ CK_DEFINE_FUNCTION(CK_RV, C_CloseSession)(CK_SESSION_HANDLE xSession)
         pthread_mutex_lock(&gSessionlock);
 #endif
         if (CKR_OK == xResult) {
-#ifdef PKCS11_SESSION_OPEN //SSS_HAVE_ALT_SSS || SSS_HAVE_ALT_A71CH
+#ifdef PKCS11_SESSION_OPEN //SSS_HAVE_MBEDTLS_ALT_SSS || SSS_HAVE_MBEDTLS_ALT_A71CH
             // static const char *g_port_name;
             // printf("\nIn session close");
             if (sessionCount == 1) {
@@ -5761,7 +5783,7 @@ CK_DEFINE_FUNCTION(CK_RV, C_CloseSession)(CK_SESSION_HANDLE xSession)
 //     }
 //     return ret;
 // }
-#if SSS_HAVE_ALT_SSS
+#if SSS_HAVE_MBEDTLS_ALT_SSS
 
 static int convertpemtoder(const unsigned char *input, size_t ilen, unsigned char *output, size_t *olen)
 {
@@ -5770,32 +5792,39 @@ static int convertpemtoder(const unsigned char *input, size_t ilen, unsigned cha
     size_t len = 0;
 
     s1 = (unsigned char *)strstr((const char *)input, "-----BEGIN");
-    if (s1 == NULL)
+    if (s1 == NULL) {
         return (-1);
+    }
 
     s2 = (unsigned char *)strstr((const char *)input, "-----END");
-    if (s2 == NULL)
+    if (s2 == NULL) {
         return (-1);
+    }
 
     s1 += 10;
     while (s1 < end && *s1 != '-')
         s1++;
     while (s1 < end && *s1 == '-')
         s1++;
-    if (*s1 == '\r')
+    if (*s1 == '\r') {
         s1++;
-    if (*s1 == '\n')
+    }
+    if (*s1 == '\n') {
         s1++;
+    }
 
-    if (s2 <= s1 || s2 > end)
+    if (s2 <= s1 || s2 > end) {
         return (-1);
+    }
 
     ret = mbedtls_base64_decode(NULL, 0, &len, (const unsigned char *)s1, s2 - s1);
-    if (ret == MBEDTLS_ERR_BASE64_INVALID_CHARACTER)
+    if (ret == MBEDTLS_ERR_BASE64_INVALID_CHARACTER) {
         return (ret);
+    }
 
-    if (len > *olen)
+    if (len > *olen) {
         return (-1);
+    }
 
     if ((ret = mbedtls_base64_decode(output, len, &len, (const unsigned char *)s1, s2 - s1)) != 0) {
         return (ret);
@@ -6517,36 +6546,9 @@ CK_DEFINE_FUNCTION(CK_RV, C_DeriveKey)
 
         LOCK_MUTEX_FOR_RTOS
         {
-            sss_status = sss_key_object_init(&derivedObject, &pex_sss_demo_boot_ctx->host_ks);
-            UNLOCK_MUTEX_FOR_RTOS_EXIT_ON_FAIL(sss_status == kStatus_SSS_Success);
-            // ENSURE_OR_GO_EXIT(sss_status == kStatus_SSS_Success);
-            sss_status = sss_key_object_allocate_handle(&derivedObject,
-                derivedKeyId,
-                kSSS_KeyPart_Default,
-                kSSS_CipherType_AES,
-                derivedKeyLen * 8,
-                kKeyObject_Mode_Persistent);
-            UNLOCK_MUTEX_FOR_RTOS_EXIT_ON_FAIL(sss_status == kStatus_SSS_Success);
-            // ENSURE_OR_GO_EXIT(sss_status == kStatus_SSS_Success);
-
-            sss_status = sss_derive_key_context_init(
-                &ctx_derive_key, &pex_sss_demo_boot_ctx->session, &privKeyObj, algorithm, mode);
-            UNLOCK_MUTEX_FOR_RTOS_EXIT_ON_FAIL(sss_status == kStatus_SSS_Success);
-            // ENSURE_OR_GO_EXIT(sss_status == kStatus_SSS_Success);
-
-            sss_status = sss_derive_key_dh(&ctx_derive_key, &pubKeyObj, &derivedObject);
-            UNLOCK_MUTEX_FOR_RTOS_EXIT_ON_FAIL(sss_status == kStatus_SSS_Success);
-            // ENSURE_OR_GO_EXIT(sss_status == kStatus_SSS_Success);
-
-            uint8_t derivedKey[32]  = {0};
-            size_t derivedKeySize   = sizeof(derivedKey);
-            size_t derivedKeyBitLen = derivedKeyLen * 8;
-
-            sss_status = sss_key_store_get_key(
-                &pex_sss_demo_boot_ctx->host_ks, &derivedObject, derivedKey, &derivedKeySize, &derivedKeyBitLen);
-            UNLOCK_MUTEX_FOR_RTOS_EXIT_ON_FAIL(sss_status == kStatus_SSS_Success);
-            // ENSURE_OR_GO_EXIT(sss_status == kStatus_SSS_Success);
-
+#if SSS_HAVE_SE05X_VER_GTE_06_00
+            uint8_t derived_key_dummy[100] = {1, 2, 3};
+#endif
             sss_status = sss_key_object_init(&derivedObject, &pex_sss_demo_boot_ctx->ks);
             UNLOCK_MUTEX_FOR_RTOS_EXIT_ON_FAIL(sss_status == kStatus_SSS_Success);
             // ENSURE_OR_GO_EXIT(sss_status == kStatus_SSS_Success);
@@ -6558,8 +6560,25 @@ CK_DEFINE_FUNCTION(CK_RV, C_DeriveKey)
                 kKeyObject_Mode_Persistent);
             UNLOCK_MUTEX_FOR_RTOS_EXIT_ON_FAIL(sss_status == kStatus_SSS_Success);
             // ENSURE_OR_GO_EXIT(sss_status == kStatus_SSS_Success);
-            sss_status = sss_key_store_set_key(
-                &pex_sss_demo_boot_ctx->ks, &derivedObject, derivedKey, derivedKeySize, derivedKeyBitLen, NULL, 0);
+
+#if SSS_HAVE_SE05X_VER_GTE_06_00
+            UNLOCK_MUTEX_FOR_RTOS_EXIT_ON_FAIL(sizeof(derived_key_dummy) >= derivedKeyLen);
+            sss_status = sss_key_store_set_key(&pex_sss_demo_boot_ctx->ks,
+                &derivedObject,
+                derived_key_dummy,
+                derivedKeyLen,
+                derivedKeyLen * 8,
+                NULL,
+                0);
+            UNLOCK_MUTEX_FOR_RTOS_EXIT_ON_FAIL(sss_status == kStatus_SSS_Success);
+#endif
+
+            sss_status = sss_derive_key_context_init(
+                &ctx_derive_key, &pex_sss_demo_boot_ctx->session, &privKeyObj, algorithm, mode);
+            UNLOCK_MUTEX_FOR_RTOS_EXIT_ON_FAIL(sss_status == kStatus_SSS_Success);
+            // ENSURE_OR_GO_EXIT(sss_status == kStatus_SSS_Success);
+
+            sss_status = sss_derive_key_dh(&ctx_derive_key, &pubKeyObj, &derivedObject);
             UNLOCK_MUTEX_FOR_RTOS_EXIT_ON_FAIL(sss_status == kStatus_SSS_Success);
             // ENSURE_OR_GO_EXIT(sss_status == kStatus_SSS_Success);
 
@@ -6600,7 +6619,7 @@ CK_DEFINE_FUNCTION(CK_RV, C_Digest)
     if (xResult != CKR_OK) {
         return xResult;
     }
-#if SSS_HAVE_ALT_SSS
+#if SSS_HAVE_MBEDTLS_ALT_SSS
     uint8_t *input = (uint8_t *)SSS_MALLOC(ulDataLen * sizeof(uint8_t));
     memset(input, 0, (ulDataLen * sizeof(uint8_t)));
     sss_status_t status = kStatus_SSS_Fail;
@@ -6807,7 +6826,7 @@ CK_DEFINE_FUNCTION(CK_RV, C_GenerateKey)
         template_[Attribute.VALUE_LEN] = key_length // 8  # In bytes
     */
     CK_RV xResult = CKR_FUNCTION_NOT_SUPPORTED;
-#if SSS_HAVE_ALT_SSS
+#if SSS_HAVE_MBEDTLS_ALT_SSS
     sss_status_t sss_status = kStatus_SSS_Fail;
     sss_rng_context_t sss_rng_ctx;
     uint32_t keyId               = 0x0;

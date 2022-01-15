@@ -82,6 +82,12 @@
 #define IPERF_CLIENT_AMOUNT (-1000) /* 10 seconds */
 #endif                              /* IPERF_CLIENT_AMOUNT */
 
+/* @TEST_ANCHOR */
+
+#ifndef EXAMPLE_PORT
+#define EXAMPLE_PORT LWIPERF_TCP_PORT_DEFAULT
+#endif
+
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
@@ -257,25 +263,25 @@ static void *start_iperf(ip4_addr_t *remote_addr)
     {
         if (tcp)
         {
-            iperf_session = lwiperf_start_tcp_server(IP_ADDR_ANY, LWIPERF_TCP_PORT_DEFAULT, lwiperf_report, 0);
+            iperf_session = lwiperf_start_tcp_server(IP_ADDR_ANY, EXAMPLE_PORT, lwiperf_report, 0);
         }
         else
         {
             iperf_session =
-                lwiperf_start_udp_server(netif_ip_addr4(netif_default), LWIPERF_TCP_PORT_DEFAULT, lwiperf_report, 0);
+                lwiperf_start_udp_server(netif_ip_addr4(netif_default), EXAMPLE_PORT, lwiperf_report, 0);
         }
     }
     else
     {
         if (tcp)
         {
-            iperf_session = lwiperf_start_tcp_client(remote_addr, LWIPERF_TCP_PORT_DEFAULT, client_type,
+            iperf_session = lwiperf_start_tcp_client(remote_addr, EXAMPLE_PORT, client_type,
                                                      IPERF_CLIENT_AMOUNT, lwiperf_report, 0);
         }
         else
         {
             iperf_session = lwiperf_start_udp_client(
-                netif_ip_addr4(netif_default), LWIPERF_TCP_PORT_DEFAULT, remote_addr, LWIPERF_TCP_PORT_DEFAULT,
+                netif_ip_addr4(netif_default), EXAMPLE_PORT, remote_addr, EXAMPLE_PORT,
                 client_type, IPERF_CLIENT_AMOUNT, IPERF_UDP_CLIENT_RATE, 0, lwiperf_report, NULL);
         }
     }

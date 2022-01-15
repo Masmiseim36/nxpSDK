@@ -35,6 +35,11 @@
 #else
 #define USB_HOST_INTERRUPT_PRIORITY (3U)
 #endif
+/* MURATA wifi reset pin */
+#if (defined(WIFI_IW416_BOARD_MURATA_1XK_USD) || defined(WIFI_88W8987_BOARD_MURATA_1ZM_USD))
+#define MURATA_WIFI_RESET_GPIO     GPIO1
+#define MURATA_WIFI_RESET_GPIO_PIN 24U
+#endif
 
 /*******************************************************************************
  * Prototypes
@@ -197,7 +202,8 @@ uint32_t BOARD_SwitchAudioFreq(uint32_t sampleRate)
 }
 
 
-#if defined(WIFI_88W8987_BOARD_AW_CM358_USD)
+#if (defined(WIFI_88W8987_BOARD_AW_CM358_USD) || defined(WIFI_88W8987_BOARD_MURATA_1ZM_USD) || \
+     defined(WIFI_IW416_BOARD_MURATA_1XK_USD))
 int controller_hci_uart_get_configuration(controller_hci_uart_config_t *config)
 {
     if (NULL == config)
@@ -220,7 +226,7 @@ int controller_hci_uart_get_configuration(controller_hci_uart_config_t *config)
 #endif
     return 0;
 }
-#elif defined(WIFI_IW416_BOARD_AW_AM457_USD)
+#elif (defined(WIFI_IW416_BOARD_AW_AM510_USD) || defined(WIFI_IW416_BOARD_AW_AM457_USD))
 int controller_hci_uart_get_configuration(controller_hci_uart_config_t *config)
 {
     if (NULL == config)
@@ -291,6 +297,9 @@ int main(void)
 
     BOARD_ConfigMPU();
     BOARD_InitBootPins();
+#if (defined(WIFI_IW416_BOARD_MURATA_1XK_USD) || defined(WIFI_88W8987_BOARD_MURATA_1ZM_USD))
+    BOARD_InitMurataModulePins();
+#endif
     BOARD_InitBootClocks();
     BOARD_InitDebugConsole();
     SCB_DisableDCache();
@@ -298,6 +307,10 @@ int main(void)
     DMAMUX_Init(dmaMuxBases[EXAMPLE_DMAMUX_INSTANCE]);
     EDMA_GetDefaultConfig(&config);
     EDMA_Init(dmaBases[EXAMPLE_DMA_INSTANCE], &config);
+#if (defined(WIFI_IW416_BOARD_MURATA_1XK_USD) || defined(WIFI_88W8987_BOARD_MURATA_1ZM_USD))
+    /* Turn on Bluetooth module */
+    GPIO_PinWrite(MURATA_WIFI_RESET_GPIO, MURATA_WIFI_RESET_GPIO_PIN, 1U);
+#endif
 
     if (xTaskCreate(app_a2dp_sink_task, "app_a2dp_sink_task", configMINIMAL_STACK_SIZE * 8, NULL, tskIDLE_PRIORITY + 1, NULL) != pdPASS)
     {

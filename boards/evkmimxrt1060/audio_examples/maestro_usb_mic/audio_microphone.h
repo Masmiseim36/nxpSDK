@@ -23,6 +23,7 @@
 #define AUDIO_BUFFER_UPPER_LIMIT(x)               (((x)*5) / 8)
 #define AUDIO_BUFFER_LOWER_LIMIT(x)               (((x)*3) / 8)
 
+#ifndef CONTROLLER_ID
 #if defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0U)
 #define CONTROLLER_ID kUSB_ControllerEhci0
 #endif
@@ -34,6 +35,7 @@
 #endif
 #if defined(USB_DEVICE_CONFIG_LPCIP3511HS) && (USB_DEVICE_CONFIG_LPCIP3511HS > 0U)
 #define CONTROLLER_ID kUSB_ControllerLpcIp3511Hs0
+#endif
 #endif
 
 #if defined(__GIC_PRIO_BITS)

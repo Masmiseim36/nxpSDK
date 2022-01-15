@@ -85,5 +85,5 @@ SET(CMAKE_EXE_LINKER_FLAGS_RELEASE " \
     muldefs \
     -Xlinker \
     -Map=output.map \
-    -T${ProjDirPath}/../../../../../middleware/mcu-boot/targets/common/linker/gcc/MIMXRT1021/MIMXRT1021_ram_flashloader.ld -static \
+    -T${ProjDirPath}/MIMXRT1021_ram_flashloader.ld -static \
 ")

@@ -34,63 +34,63 @@
 /**
  * @brief Max SSID length
  */
-#define wificonfigMAX_SSID_LEN (32)
+#define wificonfigMAX_SSID_LEN                ( 32 )
 
 /**
  * @brief Max BSSID length
  */
-#define wificonfigMAX_BSSID_LEN (6)
+#define wificonfigMAX_BSSID_LEN               ( 6 )
 
 /**
  * @brief Max number of WEP keys supported.
  */
-#define wificonfigMAX_WEPKEYS (4)
+#define wificonfigMAX_WEPKEYS                  ( 4 )
 
 /**
  * @brief Max WEP key length
  */
-#define wificonfigMAX_WEPKEY_LEN (26)
+#define wificonfigMAX_WEPKEY_LEN              ( 26 )
 
 /**
  * @brief Max passphrase length
- *
+ * 
  * This length is designated by the Wi-Fi driver as both the WPA PSK and
  * Passphrase length.
  */
-#define wificonfigMAX_PASSPHRASE_LEN (64)
+#define wificonfigMAX_PASSPHRASE_LEN          ( 64 )
 
 /**
  * @brief Soft Access point SSID
  */
-#define wificonfigACCESS_POINT_SSID_PREFIX ("ConfigureMe")
+#define wificonfigACCESS_POINT_SSID_PREFIX    ( "ConfigureMe" )
 
 /**
  * @brief Soft Access point Passkey
  */
-#define wificonfigACCESS_POINT_PASSKEY ("awsiotdevice")
+#define wificonfigACCESS_POINT_PASSKEY        ( "awsiotdevice" )
 
 /**
  * @brief Soft Access point Channel
  */
-#define wificonfigACCESS_POINT_CHANNEL (11)
+#define wificonfigACCESS_POINT_CHANNEL        ( 11 )
 
 /**
  * @brief Soft Access point security
  * WPA2 Security, see WIFISecurity_t
  * other values are - eWiFiSecurityOpen, eWiFiSecurityWEP, eWiFiSecurityWPA
  */
-#define wificonfigACCESS_POINT_SECURITY (eWiFiSecurityWPA2)
+#define wificonfigACCESS_POINT_SECURITY       ( eWiFiSecurityWPA2 )
 
 /**
  * @brief DNS query timeout when getting a host IP.
  */
-#define wificonfigDNS_QUERY_TIMEOUT (10000)
+#define wificonfigDNS_QUERY_TIMEOUT           ( 10000 )
 
 /**
  * @brief WiFi semaphore timeout
  */
-#define wificonfigMAX_SEMAPHORE_WAIT_TIME_MS (60000)
+#define wificonfigMAX_SEMAPHORE_WAIT_TIME_MS  ( 60000 )
 
 /* Timeout for all of the tasks to finish the test. */
-#define testwifiMULTITASK_TEST_TIMEOUT pdMS_TO_TICKS(150000)
+#define testwifiMULTITASK_TEST_TIMEOUT pdMS_TO_TICKS( 150000 )
 #endif /* ifndef _AWS_WIFI_CONFIG_H_ */

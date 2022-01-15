@@ -67,7 +67,7 @@ usb_status_t USB_DeviceHidKeyboardAction(void)
 
 usb_status_t USB_DeviceHidKeyboardCallback(class_handle_t handle, uint32_t event, void *param)
 {
-    usb_status_t error = kStatus_USB_Error;
+    usb_status_t error = kStatus_USB_InvalidRequest;
 
     switch (event)
     {
@@ -80,12 +80,12 @@ usb_status_t USB_DeviceHidKeyboardCallback(class_handle_t handle, uint32_t event
         case kUSB_DeviceHidEventGetReport:
         case kUSB_DeviceHidEventSetReport:
         case kUSB_DeviceHidEventRequestReportBuffer:
-            error = kStatus_USB_InvalidRequest;
             break;
         case kUSB_DeviceHidEventGetIdle:
         case kUSB_DeviceHidEventGetProtocol:
         case kUSB_DeviceHidEventSetIdle:
         case kUSB_DeviceHidEventSetProtocol:
+            error = kStatus_USB_Success;
             break;
         default:
             break;

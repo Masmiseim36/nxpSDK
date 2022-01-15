@@ -308,8 +308,7 @@ static void USB_HostVideoStreamDataInCallback(void *param, uint8_t *data, uint32
                     s_savePicture = 0;
                 }
                 /* the current picture buffers are not available, now discard the receiving picture */
-                if ((videoAppInstance->pictureBufferState[videoAppInstance->pictureBufferIndex] &&
-                     s_savePicture)) 
+                if ((videoAppInstance->pictureBufferState[videoAppInstance->pictureBufferIndex] && s_savePicture))
                 {
                     s_savePicture = 0;
                 }
@@ -391,7 +390,7 @@ static void USB_HostVideoStreamDataInCallback(void *param, uint8_t *data, uint32
             }
         }
     }
-    
+
     /* prime transfer for this usb stream buffer again */
     USB_HosVideoStreamRecv(
         videoAppInstance->classHandle, (uint8_t *)&s_streamBuffer[videoAppInstance->streamBufferIndex][0],
@@ -435,6 +434,7 @@ static void USB_HostVideoWriteSDCard(void *param)
             }
             else
             {
+                return;
             }
 
             fileStatus = f_open(&fileObj, _T(fileName), FA_WRITE | FA_CREATE_ALWAYS);
@@ -476,30 +476,6 @@ static void USB_HostVideoWriteSDCard(void *param)
     }
 }
 
-static usb_status_t USB_HostVideoAppSdcardWaitCardInsert(void)
-{
-    /* SD host init function */
-    if (SD_HostInit(&g_sd) != kStatus_Success)
-    {
-        return kStatus_USB_Error;
-    }
-    /* power off card */
-    SD_SetCardPower(&g_sd, false);
-
-    /* wait card insert */
-    if (SD_PollingCardInsert(&g_sd, kSD_Inserted) == kStatus_Success)
-    {
-        /* power on the card */
-        SD_SetCardPower(&g_sd, true);
-    }
-    else
-    {
-        return kStatus_USB_Error;
-    }
-
-    return kStatus_USB_Success;
-}
-
 /*!
  * @brief host usb video task function.
  *
@@ -517,8 +493,8 @@ void USB_HostVideoTask(void *param)
     uint8_t minSolutionFrameIndex = 0xFF;
     uint32_t frameInterval        = 0;
     uint32_t resolution           = 0;
-    uint32_t speed;
-    uint8_t i = 0;
+    uint32_t speed                = 0U;
+    uint8_t i                     = 0;
 
     /* device state changes */
     if (videoAppInstance->devState != videoAppInstance->prevState)
@@ -672,7 +648,7 @@ void USB_HostVideoTask(void *param)
                             videoAppInstance->classHandle, videoAppInstance->videoStreamFormatDescriptor,
                             USB_HOST_DESC_SUBTYPE_VS_FRAME_UNCOMPRESSED, index, (void *)&frameDesc);
                     }
-                    
+
                     /* choose a frame descriptor that has a minimum resolution */
                     if ((kStatus_USB_Success == status) && (NULL != frameDesc))
                     {
@@ -701,7 +677,7 @@ void USB_HostVideoTask(void *param)
                         }
                     }
                 }
-                
+
                 /* successfully get frame descriptor that has a minimum resolution, or go into idle state */
                 if (minSolutionFrameIndex != 0xFF)
                 {
@@ -793,7 +769,7 @@ void USB_HostVideoTask(void *param)
                                                       ->dwMinFrameInterval[0]) +
                                      4));
                             }
-                             /* save the frame interval, frame index and format index */
+                            /* save the frame interval, frame index and format index */
                             USB_LONG_TO_LITTLE_ENDIAN_DATA(frameInterval, s_VideoProbe.dwFrameInterval);
                             s_VideoProbe.bFormatIndex =
                                 videoAppInstance->videoStreamUncompressedFormatDescriptor->bFormatIndex;
@@ -810,7 +786,7 @@ void USB_HostVideoTask(void *param)
                 case 4:
                 case 5:
                 case 6:
-                    /* get the current/min/max state of device camera */ 
+                    /* get the current/min/max state of device camera */
                     if (videoAppInstance->isControlTransferring == 0)
                     {
                         videoAppInstance->isControlTransferring = 1;
@@ -956,7 +932,8 @@ void USB_HostVideoTask(void *param)
                         videoAppInstance->videoStreamMjpegFrameDescriptor->wHeight))) *
                     ((uint32_t)(USB_SHORT_FROM_LITTLE_ENDIAN_ADDRESS(
                         videoAppInstance->videoStreamMjpegFrameDescriptor->wWitd)));
-                /* consider the compression rate of MJPEG, allocate a reasonable size, compression rate can be changed according to the actual situation */
+                /* consider the compression rate of MJPEG, allocate a reasonable size, compression rate can be changed
+                 * according to the actual situation */
                 videoAppInstance->videoCameraPictureBufferSize = videoAppInstance->videoCameraPictureBufferSize / 100U;
                 videoAppInstance->videoCameraPictureBufferSize =
                     videoAppInstance->videoCameraPictureBufferSize * USB_MJPEG_COMPRESSION_RATIO;
@@ -1060,7 +1037,7 @@ usb_status_t USB_HostVideoEvent(usb_device_handle deviceHandle,
     usb_host_configuration_t *configuration;
     uint8_t interface_index;
     usb_host_interface_t *hostInterface;
-    uint32_t info_value;
+    uint32_t info_value = 0U;
 
     switch (eventCode)
     {
@@ -1158,20 +1135,14 @@ usb_status_t USB_HostVideoAppSDcardInit(void)
     char fileName[25];
 
     usb_echo("please insert SD card\r\n");
-    if (USB_HostVideoAppSdcardWaitCardInsert() != kStatus_USB_Success)
+    if (f_mount(&g_fileSystem, g_DriverNumberBuffer, 1U))
     {
-        usb_echo("sdcard init fail\r\n");
+        usb_echo("f_mount failed.\r\n");
         return kStatus_USB_Error;
     }
     else
     {
         usb_echo("sdcard inserted\r\n");
-    }
-
-    if (f_mount(&g_fileSystem, g_DriverNumberBuffer, 1U))
-    {
-        usb_echo("f_mount failed.\r\n");
-        return kStatus_USB_Error;
     }
 
     if (f_getfree(&g_DriverNumberBuffer[0], (DWORD *)&freeClusterNumber, &fs))

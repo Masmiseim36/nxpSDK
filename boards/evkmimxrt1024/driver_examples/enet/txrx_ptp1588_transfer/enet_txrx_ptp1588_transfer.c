@@ -16,16 +16,16 @@
 #if defined(FSL_FEATURE_MEMORY_HAS_ADDRESS_OFFSET) && FSL_FEATURE_MEMORY_HAS_ADDRESS_OFFSET
 #include "fsl_memory.h"
 #endif
-#include "fsl_gpio.h"
-#include "fsl_iomuxc.h"
 #include "fsl_enet_mdio.h"
 #include "fsl_phyksz8081.h"
+#include "fsl_gpio.h"
+#include "fsl_iomuxc.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
 #define EXAMPLE_ENET        ENET
 #define EXAMPLE_PHY_ADDRESS 0x02U
-#define PTP_CLK_FREQ        50000000U
+#define PTP_CLK_FREQ        25000000U
 
 /* MDIO operations. */
 #define EXAMPLE_MDIO_OPS enet_ops
@@ -48,6 +48,12 @@
 #endif
 #ifndef PHY_STABILITY_DELAY_US
 #define PHY_STABILITY_DELAY_US (0U)
+#endif
+
+/* @TEST_ANCHOR */
+
+#ifndef MAC_ADDRESS
+#define MAC_ADDRESS {0xd4, 0xbe, 0xd9, 0x45, 0x22, 0x60}
 #endif
 
 /*******************************************************************************
@@ -78,7 +84,7 @@ uint32_t g_testTxNum = 0;
 enet_frame_info_t txFrameInfoArray[ENET_TXBD_NUM];
 
 /* The MAC address for ENET device. */
-uint8_t g_macAddr[6] = {0xd4, 0xbe, 0xd9, 0x45, 0x22, 0x60};
+uint8_t g_macAddr[6] = MAC_ADDRESS;
 
 static volatile bool tx_frame_over   = false;
 static enet_frame_info_t txFrameInfo = {0};
@@ -92,9 +98,13 @@ static phy_handle_t phyHandle   = {.phyAddr = EXAMPLE_PHY_ADDRESS, .mdioHandle =
  ******************************************************************************/
 void BOARD_InitModuleClock(void)
 {
+    /* Set 50MHz output clock required by PHY, set PTP clock 25MHz. The 500MHz is for core rather than ethernet. */
     const clock_enet_pll_config_t config = {
         .enableClkOutput = true, .enableClkOutput500M = true, .enableClkOutput25M = true, .loopDivider = 1};
     CLOCK_InitEnetPll(&config);
+
+    /* Output 50MHz clock to PHY. */
+    IOMUXC_EnableMode(IOMUXC_GPR, kIOMUXC_GPR_ENET1TxClkOutputDir, true);
 }
 
 
@@ -163,16 +173,14 @@ int main(void)
     gpio_pin_config_t gpio_config = {kGPIO_DigitalOutput, 0, kGPIO_NoIntmode};
 
     BOARD_ConfigMPU();
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
+    BOARD_InitBootPins();
+    BOARD_InitBootClocks();
     BOARD_InitDebugConsole();
     BOARD_InitModuleClock();
 
-    IOMUXC_EnableMode(IOMUXC_GPR, kIOMUXC_GPR_ENET1TxClkOutputDir, true);
-
     GPIO_PinInit(GPIO1, 4, &gpio_config);
     GPIO_PinInit(GPIO1, 22, &gpio_config);
-    /* pull up the ENET_INT before RESET. */
+    /* Pull up the ENET_INT before RESET. */
     GPIO_WritePinOutput(GPIO1, 22, 1);
     GPIO_WritePinOutput(GPIO1, 4, 0);
     SDK_DelayAtLeastUs(1000000, CLOCK_GetFreq(kCLOCK_CpuClk));

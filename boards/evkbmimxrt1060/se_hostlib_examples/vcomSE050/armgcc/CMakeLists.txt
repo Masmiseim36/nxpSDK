@@ -55,38 +55,32 @@ target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
 )
 
 if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
-     target_compile_definitions(${MCUX_SDK_PROJECT_NAME}  PRIVATE MBEDTLS_CONFIG_FILE="sss_mbedtls_evkbmimxrt1060_config.h")
+     target_compile_definitions(${MCUX_SDK_PROJECT_NAME}  PRIVATE MBEDTLS_CONFIG_FILE="ksdk_mbedtls_config.h" MBEDTLS_USER_CONFIG_FILE="sss_ksdk_mbedtls_config.h")
 endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
 
 if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
-     target_compile_definitions(${MCUX_SDK_PROJECT_NAME}  PRIVATE MBEDTLS_CONFIG_FILE="sss_mbedtls_evkbmimxrt1060_config.h")
+     target_compile_definitions(${MCUX_SDK_PROJECT_NAME}  PRIVATE MBEDTLS_CONFIG_FILE="ksdk_mbedtls_config.h" MBEDTLS_USER_CONFIG_FILE="sss_ksdk_mbedtls_config.h")
 endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
 
 set(CMAKE_MODULE_PATH
-    ${ProjDirPath}/../../../../../components/serial_manager
-    ${ProjDirPath}/../../../../../devices/MIMXRT1062/drivers
-    ${ProjDirPath}/../../../../../components/lists
+    ${ProjDirPath}/../../../../../middleware/se_hostlib
     ${ProjDirPath}/../../../../../middleware/usb
     ${ProjDirPath}/../../../../../components/osa
+    ${ProjDirPath}/../../../../../devices/MIMXRT1062/drivers
     ${ProjDirPath}/../../../../../middleware/mbedtls
-    ${ProjDirPath}/../../../../../middleware/se_hostlib
     ${ProjDirPath}/../../../../../middleware
     ${ProjDirPath}/../../../../../devices/MIMXRT1062
     ${ProjDirPath}/../../../../../devices/MIMXRT1062/utilities
     ${ProjDirPath}/../../../../../components/uart
+    ${ProjDirPath}/../../../../../components/serial_manager
+    ${ProjDirPath}/../../../../../components/lists
     ${ProjDirPath}/../../../../../devices/MIMXRT1062/xip
     ${ProjDirPath}/../../../xip
     ${ProjDirPath}/../../../../../CMSIS/Core/Include
 )
 
 # include modules
-include(component_serial_manager_MIMXRT1062)
-
-include(driver_common_MIMXRT1062)
-
-include(component_lists_MIMXRT1062)
-
-include(component_serial_manager_usb_cdc_MIMXRT1062)
+include(middleware_se_hostlib_serial_manager_usb_cdc_MIMXRT1062)
 
 include(middleware_usb_device_controller_driver_MIMXRT1062)
 
@@ -114,6 +108,8 @@ include(middleware_se_hostlib_mbedtls_sss_MIMXRT1062)
 
 include(middleware_baremetal_MIMXRT1062)
 
+include(driver_common_MIMXRT1062)
+
 include(driver_clock_MIMXRT1062)
 
 include(device_MIMXRT1062_CMSIS_MIMXRT1062)
@@ -121,6 +117,10 @@ include(device_MIMXRT1062_CMSIS_MIMXRT1062)
 include(utility_debug_console_MIMXRT1062)
 
 include(component_lpuart_adapter_MIMXRT1062)
+
+include(component_serial_manager_MIMXRT1062)
+
+include(component_lists_MIMXRT1062)
 
 include(component_serial_manager_uart_MIMXRT1062)
 
@@ -138,11 +138,11 @@ include(driver_xip_device_MIMXRT1062)
 
 include(driver_xip_board_evkbmimxrt1060_MIMXRT1062)
 
-include(CMSIS_Include_core_cm_MIMXRT1062)
-
 include(middleware_usb_device_cdc_external_MIMXRT1062)
 
 include(middleware_usb_device_stack_external_MIMXRT1062)
+
+include(CMSIS_Include_core_cm_MIMXRT1062)
 
 include(middleware_usb_phy_MIMXRT1062)
 

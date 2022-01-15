@@ -64,6 +64,7 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../../components/codec
     ${ProjDirPath}/../../../../../../components/codec/i2c
     ${ProjDirPath}/../../../../../../components/i2c
+    ${ProjDirPath}/../../../../../../components/audio
     ${ProjDirPath}/../../../../../../devices/MIMXRT1064/utilities/debug_console_lite
     ${ProjDirPath}/../../../../../../middleware
     ${ProjDirPath}/../../../../../../devices/MIMXRT1064
@@ -94,6 +95,8 @@ include(component_wm8960_adapter_MIMXRT1064)
 include(component_codec_i2c_MIMXRT1064)
 
 include(component_lpi2c_adapter_MIMXRT1064)
+
+include(component_audio_sai_edma_adapter_MIMXRT1064)
 
 include(driver_lpi2c_MIMXRT1064)
 

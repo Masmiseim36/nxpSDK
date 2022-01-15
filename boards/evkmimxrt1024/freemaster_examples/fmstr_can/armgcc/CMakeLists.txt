@@ -1,6 +1,6 @@
 # CROSS COMPILER SETTING
 SET(CMAKE_SYSTEM_NAME Generic)
-CMAKE_MINIMUM_REQUIRED (VERSION 3.1.1)
+CMAKE_MINIMUM_REQUIRED (VERSION 3.10.0)
 
 # THE VERSION NUMBER
 SET (Tutorial_VERSION_MAJOR 1)
@@ -39,14 +39,14 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../freemaster_cfg.h"
 "${ProjDirPath}/../../common/fmstr_example/freemaster_example.c"
 "${ProjDirPath}/../../common/fmstr_example/freemaster_example.h"
+"${ProjDirPath}/../board.c"
+"${ProjDirPath}/../board.h"
 "${ProjDirPath}/../../common/fmstr_example/data_example_pmp.h"
 "${ProjDirPath}/../../common/fmstr_example/data_img_logo.h"
 "${ProjDirPath}/../../common/fmstr_example/data_img_file.h"
 "${ProjDirPath}/../../common/fmstr_example/data_img_fmstrlogo.h"
 "${ProjDirPath}/../../common/fmstr_example/data_html_index.h"
 "${ProjDirPath}/../../common/fmstr_example/example_data.h"
-"${ProjDirPath}/../board.c"
-"${ProjDirPath}/../board.h"
 "${ProjDirPath}/../dcd.c"
 "${ProjDirPath}/../dcd.h"
 )
@@ -65,7 +65,7 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../components/lists
     ${ProjDirPath}/../../../../../devices/MIMXRT1024/xip
     ${ProjDirPath}/../../../xip
-    ${ProjDirPath}/../../../../../CMSIS/Include
+    ${ProjDirPath}/../../../../../CMSIS/Core/Include
     ${ProjDirPath}/../../../../../devices/MIMXRT1024/utilities
 )
 
@@ -98,15 +98,11 @@ include(driver_igpio_MIMXRT1024)
 
 include(driver_xip_device_MIMXRT1024)
 
-include(driver_xip_board_MIMXRT1024)
+include(driver_xip_board_evkmimxrt1024_MIMXRT1024)
 
 include(middleware_fmstr_platform_gen32le_MIMXRT1024)
 
-include(CMSIS_Include_core_cm7_MIMXRT1024)
-
-include(CMSIS_Include_common_MIMXRT1024)
-
-include(CMSIS_Include_dsp_MIMXRT1024)
+include(CMSIS_Include_core_cm_MIMXRT1024)
 
 include(utilities_misc_utilities_MIMXRT1024)
 

@@ -40,6 +40,7 @@ MEMORY
   m_text                (RX)  : ORIGIN = 0x70002400, LENGTH = 0x0017DC00
   m_data                (RW)  : ORIGIN = 0x20000000, LENGTH = 0x00020000
   m_data2               (RW)  : ORIGIN = 0x20200000, LENGTH = 0x000C0000
+  m_mflash              (RW)  : ORIGIN = 0x70180000, LENGTH = 0x00280000
 }
 
 /* NOTE: Flash in range 0x7018_0000 - 0x703F_FFFF is reserved for  data */
@@ -247,6 +248,12 @@ SECTIONS
     . = ALIGN(8);
     . += STACK_SIZE;
   } > m_data
+
+  .mflash_fs :
+  {
+    KEEP(* (.mflash_fs))
+    . = ALIGN(4);
+  } > m_mflash
 
   /* Initializes stack on the end of block */
   __StackTop   = ORIGIN(m_data) + LENGTH(m_data);

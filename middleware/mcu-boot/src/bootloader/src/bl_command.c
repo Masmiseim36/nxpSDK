@@ -1104,7 +1104,7 @@ status_t handle_data_producer(bool *hasMoreData)
         g_bootloaderContext.activePeripheral->packetInterface->getMaxPacketSize(g_bootloaderContext.activePeripheral);
     packetSize = MIN(packetBufferSize, remaining);
 #else
-    uint8_t packet[kMinPacketBufferSize];
+    uint8_t packet[kMinPacketBufferSize] = {0};
     packetSize = MIN(kMinPacketBufferSize, remaining);
 #endif // BL_FEATURE_EXPAND_PACKET_SIZE
 
@@ -1211,7 +1211,20 @@ void handle_fill_memory(uint8_t *packet, uint32_t packetLength)
 }
 
 //! @brief Execute command handler.
+#if (defined(__GNUC__))
+/* #pragma GCC push_options */
+/* #pragma GCC optimize("O0") */
+void __attribute__((optimize("O0"))) handle_execute(uint8_t *packet, uint32_t packetLength)
+#else
+#if (defined(__ICCARM__))
+#pragma optimize = none
+#endif
+#if (defined(__CC_ARM))
+#pragma push
+#pragma O0
+#endif
 void handle_execute(uint8_t *packet, uint32_t packetLength)
+#endif
 {
     execute_call_packet_t *command = (execute_call_packet_t *)packet;
 

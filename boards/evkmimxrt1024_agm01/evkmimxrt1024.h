@@ -120,8 +120,8 @@ extern gpioHandleiMXSDK_t INT2;
 #define SMC NULL
 
 /* @brief Kinetis style Wrapper API for Power Mode Wait (Wait for Interrupt). */
-status_t SMC_SetPowerModeWait(void *);
+status_t SMC_SetPowerModeWait(void *arg);
 /* @brief Kinetis style Wrapper API for Power Mode VLPR (Wait for Interrupt). */
-status_t SMC_SetPowerModeVlpr(void *);
+status_t SMC_SetPowerModeVlpr(void *arg);
 
 #endif /* EVKMIMX1024_H_ */

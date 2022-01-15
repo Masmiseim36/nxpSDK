@@ -1,10 +1,16 @@
+/*
+ * Copyright 2021 NXP
+ * All rights reserved.
+ *
+ * SPDX-License-Identifier: BSD-3-Clause
+ */
 
 #include "osa_common.h"
 #include "fsl_common.h"
 #include "fsl_debug_console.h"
 
 #include "app_streamer.h"
-#include "streamer_pcm.h"
+#include "streamer_pcm_app.h"
 #include "audio_speaker.h"
 
 #define APP_STREAMER_MSG_QUEUE     "app_queue"
@@ -157,6 +163,11 @@ status_t STREAMER_speaker_Create(streamer_handle_t *handle)
 
     prop.prop = PROP_AUDIOSRC_SET_NUM_CHANNELS;
     prop.val  = 2;
+
+    streamer_set_property(handle->streamer, prop, true);
+
+    prop.prop = PROP_AUDIOSINK_SET_VOLUME;
+    prop.val  = 100;
 
     streamer_set_property(handle->streamer, prop, true);
 

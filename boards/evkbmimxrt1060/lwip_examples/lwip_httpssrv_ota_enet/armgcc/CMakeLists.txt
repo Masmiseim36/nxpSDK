@@ -35,15 +35,14 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../network_cfg.h"
 "${ProjDirPath}/../init_enet.c"
 "${ProjDirPath}/../lwipopts.h"
-"${ProjDirPath}/../ota_bootloader_supp.c"
-"${ProjDirPath}/../ota_bootloader_supp.h"
-"${ProjDirPath}/../ota_bootloader_hdr.c"
-"${ProjDirPath}/../ota_bootloader_board.h"
 "${ProjDirPath}/../httpsrv_fs_data.c"
 "${ProjDirPath}/../mbedtls_config.h"
 "${ProjDirPath}/../FreeRTOSConfig.h"
 "${ProjDirPath}/../pin_mux.c"
 "${ProjDirPath}/../pin_mux.h"
+"${ProjDirPath}/../mcuboot_app_support.c"
+"${ProjDirPath}/../mcuboot_app_support.h"
+"${ProjDirPath}/../flash_partitioning.h"
 "${ProjDirPath}/../board.c"
 "${ProjDirPath}/../board.h"
 "${ProjDirPath}/../clock_config.c"
@@ -73,7 +72,7 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../middleware/lwip
     ${ProjDirPath}/../../../../../components/phy
     ${ProjDirPath}/../../../../../devices/MIMXRT1062/utilities
-    ${ProjDirPath}/../../../../../rtos/freertos
+    ${ProjDirPath}/../../../../../rtos/freertos/freertos_kernel
     ${ProjDirPath}/../../../../../devices/MIMXRT1062
     ${ProjDirPath}/../../../../../components/uart
     ${ProjDirPath}/../../../../../components/serial_manager
@@ -86,10 +85,6 @@ set(CMAKE_MODULE_PATH
 include(driver_mdio-enet_MIMXRT1062)
 
 include(driver_phy-device-ksz8081_MIMXRT1062)
-
-include(driver_trng_MIMXRT1062)
-
-include(driver_dcp_MIMXRT1062)
 
 include(driver_cache_armv7_m7_MIMXRT1062)
 
@@ -146,6 +141,10 @@ include(driver_mdio-common_MIMXRT1062)
 include(CMSIS_Include_core_cm_MIMXRT1062)
 
 include(component_mflash_common_MIMXRT1062)
+
+include(driver_dcp_MIMXRT1062)
+
+include(driver_trng_MIMXRT1062)
 
 include(middleware_lwip_apps_httpsrv_MIMXRT1062)
 

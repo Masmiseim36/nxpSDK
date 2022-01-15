@@ -24,3 +24,5 @@ target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
 
 include(middleware_wifi_MIMXRT1062)
 
+include(middleware_lwip_apps_lwiperf_MIMXRT1062)
+

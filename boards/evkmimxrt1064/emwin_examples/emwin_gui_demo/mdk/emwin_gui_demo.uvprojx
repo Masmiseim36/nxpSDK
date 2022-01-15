@@ -481,6 +481,16 @@
               <FilePath>../../../../../devices/MIMXRT1064/drivers/fsl_lpi2c.h</FilePath>
             </File>
             <File>
+              <FileName>fsl_gpt.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1064/drivers/fsl_gpt.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_gpt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1064/drivers/fsl_gpt.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_common.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT1064/drivers/fsl_common.h</FilePath>
@@ -1870,6 +1880,16 @@
               <FileName>fsl_lpi2c.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT1064/drivers/fsl_lpi2c.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_gpt.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1064/drivers/fsl_gpt.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_gpt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1064/drivers/fsl_gpt.h</FilePath>
             </File>
             <File>
               <FileName>fsl_common.h</FileName>

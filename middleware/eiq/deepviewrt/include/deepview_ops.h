@@ -30,20 +30,20 @@ typedef enum {
      */
     NNActivation_Linear = 0,
     /**
-     * ReLU activation performs x = max(0, x)
+     * ReLU activation performs \f$ f(x) = max(0, x) \f$
      */
     NNActivation_ReLU = 1,
     /**
-     * ReLU6 activation performs x = min(max(0, x), 6)
+     * ReLU6 activation performs \f$ f(x) = min(max(0, x), 6) \f$
      */
     NNActivation_ReLU6 = 2,
     /**
-     * Sigmoid activation performs x = 1/(1+e^-x)
+     * Sigmoid activation performs \f$ f(x) = 1/(1+e^-x) \f$
      */
     NNActivation_Sigmoid     = 3,
     NNActivation_SigmoidFast = 4,
     /**
-     * Tanh activation performs x = tanh(x)
+     * Tanh activation performs \f$ f(x) = tanh(x) \f$
      */
     NNActivation_Tanh = 5,
 } NNActivation;
@@ -70,6 +70,10 @@ typedef enum {
  * @param output pointer to the output tensor
  * @param input_a pointer to the first input tensor
  * @param input_b pointer to the second input tensor
+ *
+ * @return NNError
+ *
+ * @since 2.0
  */
 NN_AVAILABLE_SINCE_2_0
 NN_API
@@ -86,6 +90,10 @@ nn_add(NNTensor* output, NNTensor* input_a, NNTensor* input_b);
  * @param output pointer to the output tensor
  * @param input_a pointer to the tensor being subtracted from
  * @param input_b pointer to the tensor to subtract from input_a
+ *
+ * @return NNError
+ *
+ * @since 2.0
  */
 NN_AVAILABLE_SINCE_2_0
 NN_API
@@ -102,6 +110,10 @@ nn_subtract(NNTensor* output, NNTensor* input_a, NNTensor* input_b);
  * @param output pointer to the output tensor
  * @param input_a pointer to the first input tensor
  * @param input_b pointer to the second input tensor
+ *
+ * @return NNError
+ *
+ * @since 2.0
  */
 NN_AVAILABLE_SINCE_2_0
 NN_API
@@ -118,6 +130,10 @@ nn_multiply(NNTensor* output, NNTensor* input_a, NNTensor* input_b);
  * @param output pointer to the output tensor
  * @param input_a pointer to the tensor representing the dividend
  * @param input_b pointer to the tensor representing the divisor
+ *
+ * @return NNError
+ *
+ * @since 2.0
  */
 NN_AVAILABLE_SINCE_2_0
 NN_API
@@ -129,6 +145,10 @@ nn_divide(NNTensor* output, NNTensor* input_a, NNTensor* input_b);
  *
  * @param output pointer to the output tensor
  * @param input point to the input tensor
+ *
+ * @return NNError
+ *
+ * @since 2.0
  */
 NN_AVAILABLE_SINCE_2_0
 NN_API
@@ -140,6 +160,10 @@ nn_abs(NNTensor* output, NNTensor* input);
  *
  * @param output pointer to the output tensor
  * @param input pointer to the input tensor
+ *
+ * @return NNError
+ *
+ * @since 2.0
  */
 NN_AVAILABLE_SINCE_2_0
 NN_API
@@ -152,6 +176,12 @@ nn_sqrt(NNTensor* output, NNTensor* input);
  *
  * @param output pointer to the output tensor
  * @param input pointer to the input tensor
+ * @param epsilon epsilon parameter is applied to the input to avoid divide by
+ * zero.
+ *
+ * @return NNError
+ *
+ * @since 2.0
  */
 NN_AVAILABLE_SINCE_2_0
 NN_API
@@ -159,7 +189,14 @@ NNError
 nn_rsqrt(NNTensor* output, NNTensor* input, const float* epsilon);
 
 /**
- * Pre-release of log operation.
+ * Implements the log operation.
+ *
+ * @param output pointer to the output tensor
+ * @param input pointer to the input tensor
+ *
+ * @return NNError
+ *
+ * @since 2.4
  */
 NN_AVAILABLE_SINCE_2_4
 NN_API
@@ -167,7 +204,14 @@ NNError
 nn_log(NNTensor* output, NNTensor* input);
 
 /**
- * Pre-release of exp operation.
+ * Implements the exp operation.
+ *
+ * @param output pointer to the output tensor
+ * @param input pointer to the input tensor
+ *
+ * @return NNError
+ *
+ * @since 2.4
  */
 NN_AVAILABLE_SINCE_2_4
 NN_API
@@ -179,6 +223,10 @@ nn_exp(NNTensor* output, NNTensor* input);
  *
  * @param output pointer to the output tensor
  * @param input pointer to the input tensor
+ *
+ * @return NNError
+ *
+ * @since 2.0
  */
 NN_AVAILABLE_SINCE_2_0
 NN_API
@@ -190,6 +238,10 @@ nn_sigmoid_fast(NNTensor* output, NNTensor* input);
  *
  * @param output pointer to the output tensor
  * @param input pointer to the input tensor
+ *
+ * @return NNError
+ *
+ * @since 2.0
  */
 NN_AVAILABLE_SINCE_2_0
 NN_API
@@ -201,6 +253,10 @@ nn_sigmoid(NNTensor* output, NNTensor* input);
  *
  * @param output pointer to the output tensor
  * @param input pointer to the input tensor
+ *
+ * @return NNError
+ *
+ * @since 2.0
  */
 NN_AVAILABLE_SINCE_2_0
 NN_API
@@ -217,6 +273,10 @@ nn_tanh(NNTensor* output, NNTensor* input);
  *
  * @param output pointer to the output tensor
  * @param input pointer to the input tensor
+ *
+ * @return NNError
+ *
+ * @since 2.0
  */
 NN_AVAILABLE_SINCE_2_0
 NN_API
@@ -233,21 +293,53 @@ nn_relu(NNTensor* output, NNTensor* input);
  *
  * @param output pointer to the output tensor
  * @param input pointer to the input tensor
+ *
+ * @return NNError
+ *
+ * @since 2.0
  */
 NN_AVAILABLE_SINCE_2_0
 NN_API
 NNError
 nn_relu6(NNTensor* output, NNTensor* input);
 
-
+/**
+ * Hard-Swish activation function.
+ *
+ * @param output
+ * @param input
+ *
+ * @return NNError
+ *
+ * @since 2.4
+ */
 NN_AVAILABLE_SINCE_2_4
 NN_API
 NNError
 nn_swish(NNTensor* output, NNTensor* input);
 
-
 /**
- * @brief nn_prelu implements the parametric rectified linear unit.
+ * Implements the parametric rectified linear unit.  A PReLU is a specialization
+ * of ReLU where negative values are multiplied against a weight instead of set
+ * to zero.
+ *
+ * The weights can be a vector but must fit evenly within the output tensor.
+ *
+ * @f[
+ *  f(x) =
+ *  \begin{cases}
+ *      x,  & \text{if } x \geq 0\\
+ *      x*w,& \text{otherwise}
+ *  \end{cases}
+ * @f]
+ *
+ * @param output tensor which will receive the processed results
+ * @param input input tensor against which the output will be generated
+ * @param weights the weights tensor used for calculating the prelu
+ *
+ * @return NNError
+ *
+ * @since 2.4
  */
 NN_AVAILABLE_SINCE_2_4
 NN_API
@@ -264,6 +356,11 @@ nn_prelu(NNTensor* output, NNTensor* input, NNTensor* weights);
  *
  * @param output pointer to the output tensor
  * @param input pointer to the input tensor
+ * @param alpha the alpha value multiplied to the result.
+ *
+ * @return NNError
+ *
+ * @since 2.4
  */
 NN_AVAILABLE_SINCE_2_4
 NN_API
@@ -289,6 +386,10 @@ nn_leaky_relu(NNTensor* output, NNTensor* input, float alpha);
  * @param b pointer to the second input tensor
  * @param transpose_a boolean stating whether to transpose A
  * @param transpose_b boolean stating whether to transpose B
+ *
+ * @return NNError
+ *
+ * @since 2.0
  */
 NN_AVAILABLE_SINCE_2_0
 NN_API
@@ -301,6 +402,19 @@ nn_matmul(NNTensor* output,
 
 /**
  * Special version of @ref nn_matmul that can use cache tensor, useful for MCU.
+ * If the cache tensor is at least as large as the b tensor then it will be
+ * cached there.
+ *
+ * @param output pointer to the output tensor
+ * @param cache pointer to the cache tensor
+ * @param a pointer to the first input tensor
+ * @param b pointer to the second input tensor
+ * @param transpose_a boolean stating whether to transpose A
+ * @param transpose_b boolean stating whether to transpose B
+ *
+ * @return NNError
+ *
+ * @since 2.0
  */
 NN_AVAILABLE_SINCE_2_0
 NN_API
@@ -320,11 +434,17 @@ nn_matmul_cache(NNTensor* output,
  * The output shape is [input[0], weights[1]].
  * </p>
  *
+ * @see NNActivation
+ *
  * @param output pointer to the output tensor
  * @param input pointer to the input tensor
  * @param weights pointer to the weight tensor
  * @param bias pointer to the bias tensor
  * @param activation the activation to be performed
+ *
+ * @return NNError
+ *
+ * @since 2.0
  */
 NN_AVAILABLE_SINCE_2_0
 NN_API
@@ -343,11 +463,17 @@ nn_dense(NNTensor*    output,
  * The output shape is [input[0], weights[0]].
  * </p>
  *
+ * @see NNActivation
+ *
  * @param output pointer to the output tensor
  * @param input pointer to the input tensor
  * @param weights pointer to the weight tensor
  * @param bias pointer to the bias tensor
  * @param activation the activation to be performed
+ *
+ * @return NNError
+ *
+ * @since 2.0
  */
 NN_AVAILABLE_SINCE_2_0
 NN_API
@@ -368,6 +494,8 @@ nn_linear(NNTensor*    output,
  * floor((input[i] - filter[i]) / stride[i]) + 1
  * </p>
  *
+ * @see NNActivation
+ *
  * @param output pointer to the output tensor
  * @param cache pointer to the cache tensor, used to increase efficiency
  * @param input pointer to the input tensor
@@ -376,6 +504,10 @@ nn_linear(NNTensor*    output,
  * @param stride array providing the strides
  * @param groups the number of convolution groups
  * @param activation the activation to be performed after the convolution
+ *
+ * @return NNError
+ *
+ * @since 2.0
  */
 NN_AVAILABLE_SINCE_2_0
 NN_API
@@ -403,6 +535,23 @@ nn_conv(NNTensor*     output,
  * represent the dilation rate of the filter in each of the 4 dimensions used by
  * nn_conv_ex.  Dilation of 1 is the same as the standard convolution with each
  * filter spatial element moving by 1 in their respective dimension.
+ *
+ * @see NNActivation
+ *
+ * @param output pointer to the output tensor
+ * @param cache pointer to the cache tensor, used to increase efficiency
+ * @param input pointer to the input tensor
+ * @param filter pointer to the filter tensor
+ * @param bias pointer to the bias tensor
+ * @param stride array providing the strides
+ * @param padding array providing the padding sizes
+ * @param dilation array providing the dilation amounts
+ * @param groups the number of convolution groups
+ * @param activation the activation to be performed after the convolution
+ *
+ * @return NNError
+ *
+ * @since 2.3
  */
 NN_AVAILABLE_SINCE_2_3
 NN_API
@@ -419,6 +568,37 @@ nn_conv_ex(NNTensor*     output,
            NNActivation  activation);
 
 /**
+ * @brief nn_transpose_conv2d_ex implements the 2d transpose convolution
+ * It is the adjoint operator of the standard conv2d.
+ *
+ * @see NNActivation
+ *
+ * @param output pointer to the output tensor
+ * @param cache pointer to the cache tensor, used to increase efficiency
+ * @param input pointer to the input tensor
+ * @param filter pointer to the filter tensor
+ * @param bias pointer to the bias tensor
+ * @param stride array providing the strides
+ * @param padding array providing the padding amounts
+ * @param activation the activation to be performed after the convolution
+ *
+ * @return NNError
+ *
+ * @since 2.4
+ */
+NN_AVAILABLE_SINCE_2_4
+NN_API
+NNError
+nn_transpose_conv2d_ex(NNTensor*     output,
+                       NNTensor*     cache,
+                       NNTensor*     input,
+                       NNTensor*     filter,
+                       NNTensor*     bias,
+                       const int32_t stride[4],
+                       const int32_t padding[8],
+                       NNActivation  activation);
+
+/**
  * @brief nn_maxpool implements the max pooling layer
  * given a 4-D input.
  * <p>
@@ -432,6 +612,10 @@ nn_conv_ex(NNTensor*     output,
  * @param input pointer to the input tensor
  * @param window array providing the window size
  * @param stride array providing the strides
+ *
+ * @return NNError
+ *
+ * @since 2.0
  */
 NN_AVAILABLE_SINCE_2_0
 NN_API
@@ -445,6 +629,17 @@ nn_maxpool(NNTensor*     output,
  * Extended version of @ref nn_maxpool which provides fused padding support and
  * window dilation, refer to @ref nn_conv_ex for details for padding and
  * dilation parameters.
+ *
+ * @param output pointer to the output tensor
+ * @param input pointer to the input tensor
+ * @param window array providing the window size
+ * @param stride array providing the strides
+ * @param padding array providing the padding amounts
+ * @param dilation array providing the dilation amounts
+ *
+ * @return NNError
+ *
+ * @since 2.3
  */
 NN_AVAILABLE_SINCE_2_3
 NN_API
@@ -470,6 +665,10 @@ nn_maxpool_ex(NNTensor*     output,
  * @param input pointer to the input tensor
  * @param window array providing the window size
  * @param stride array providing the strides
+ *
+ * @return NNError
+ *
+ * @since 2.0
  */
 NN_AVAILABLE_SINCE_2_0
 NN_API
@@ -483,6 +682,17 @@ nn_avgpool(NNTensor*     output,
  * Extended version of @ref nn_avgpool which provides fused padding support and
  * window dilation, refer to @ref nn_conv_ex for details for padding and
  * dilation parameters.
+ *
+ * @param output pointer to the output tensor
+ * @param input pointer to the input tensor
+ * @param window array providing the window size
+ * @param stride array providing the strides
+ * @param padding array providing the padding amounts
+ * @param dilation array providing the dilation amounts
+ *
+ * @return NNError
+ *
+ * @since 2.0
  */
 NN_AVAILABLE_SINCE_2_3
 NN_API
@@ -506,6 +716,10 @@ nn_avgpool_ex(NNTensor*     output,
  * @param n_axes number of axes to be reduced
  * @param keep_dims boolean to determine whether to maintain the reduced
  * dimensions as 1
+ *
+ * @return NNError
+ *
+ * @since 2.0
  */
 NN_AVAILABLE_SINCE_2_0
 NN_API
@@ -527,6 +741,10 @@ nn_reduce_sum(NNTensor*     output,
  * @param n_axes number of axes to be reduced
  * @param keep_dims boolean to determine whether to maintain the reduced
  * dimensions as 1
+ *
+ * @return NNError
+ *
+ * @since 2.0
  */
 NN_AVAILABLE_SINCE_2_0
 NN_API
@@ -548,6 +766,10 @@ nn_reduce_min(NNTensor*     output,
  * @param n_axes number of axes to be reduced
  * @param keep_dims boolean to determine whether to maintain the reduced
  * dimensions as 1
+ *
+ * @return NNError
+ *
+ * @since 2.0
  */
 NN_AVAILABLE_SINCE_2_0
 NN_API
@@ -569,6 +791,10 @@ nn_reduce_max(NNTensor*     output,
  * @param n_axes number of axes to be reduced
  * @param keep_dims boolean to determine whether to maintain the reduced
  * dimensions as 1
+ *
+ * @return NNError
+ *
+ * @since 2.0
  */
 NN_AVAILABLE_SINCE_2_0
 NN_API
@@ -590,6 +816,10 @@ nn_reduce_mean(NNTensor*     output,
  * @param n_axes number of axes to be reduced
  * @param keep_dims boolean to determine whether to maintain the reduced
  * dimensions as 1
+ *
+ * @return NNError
+ *
+ * @since 2.0
  */
 NN_AVAILABLE_SINCE_2_0
 NN_API
@@ -607,6 +837,10 @@ nn_reduce_product(NNTensor*     output,
  *
  * @param output pointer to the output tensor
  * @param input pointer to the input tensor
+ *
+ * @return NNError
+ *
+ * @since 2.0
  */
 NN_AVAILABLE_SINCE_2_0
 NN_API
@@ -620,6 +854,17 @@ nn_softmax(NNTensor* output, NNTensor* input);
  * bytes long which in turn must be large enough to hold input's scalar size.
  *
  * For non-flattened version refer to @ref nn_reduce_max.
+ *
+ * @param input pointer to the input tensor
+ * @param index pointer to an integer to receive the index of the maximum value.
+ * @param value pointer to a variable of size @p value_size which will receive
+ * the maximum value found.  If NULL value is not saved and @p value_size can
+ * be zero.
+ * @param value_size size of the variable pointed to by @p value.
+ *
+ * @return NNError
+ *
+ * @since 2.0
  */
 NN_AVAILABLE_SINCE_2_0
 NN_API
@@ -642,6 +887,10 @@ nn_argmax(NNTensor* input, int* index, void* value, size_t value_size);
  * @param offset pointer to the offset tensor
  * @param scale pointer to the scale tensor
  * @param epsilon pointer to the epsilon tensor
+ *
+ * @return NNError
+ *
+ * @since 2.0
  */
 NN_AVAILABLE_SINCE_2_0
 NN_API
@@ -656,93 +905,28 @@ nn_batchnorm(NNTensor* output,
              NNTensor* epsilon);
 
 /**
+ * Resizes the tensor spatial (height/width) dimensions using either nearest
+ * neighbour or bilinear interpolation.
  *
- */
-typedef struct nn_gru_context NNGruContext;
-
-/**
+ * Modes:
+ *  - 0: nearest neighbour scaling
+ *  - 1: bilinear interpolation scaling
  *
- */
-NN_AVAILABLE_SINCE_2_0
-NN_API
-NNError
-nn_gru_init(NNGruContext** gru_,
-            NNTensor*      cache,
-            NNTensorType   datatype,
-            int            num_features,
-            int            num_hidden,
-            int            num_outputs);
-
-/**
+ * @note Currently bilinear interpolation is not implemented on CPU and will
+ * fallback to nearest neighbour.
  *
- */
-NN_AVAILABLE_SINCE_2_0
-NN_API
-void
-nn_gru_release(NNGruContext* gru);
-
-/**
- * @brief nn_gru implements the GRU layer.
+ * @param output tensor which will receive the results and should be the target
+ *               shape into which the resize operation will be performed.
+ * @param input input tensor for resize operation.
+ * @param mode the interpolation model to be used, modes are noted above.
+ * @param align_corners not currently implemented
+ * @param half_pixel_centers not currently implemented
  *
- * @note GRU requires a number of tensor views internally which means this
- * function will use 1KB of stack space beyond typical ops.
+ * @return NNError
  *
- * @param output pointer to the output tensor
+ * @since 2.4.18
  */
-NN_AVAILABLE_SINCE_2_0
-NN_API
-NNError
-nn_gru(NNTensor*     output,
-       NNTensor*     input,
-       NNTensor*     H,
-       NNTensor*     Wir,
-       NNTensor*     Bir,
-       NNTensor*     Wh,
-       NNTensor*     Bwh,
-       NNTensor*     Rh,
-       NNTensor*     Brh,
-       NNGruContext* gru);
-
-NN_AVAILABLE_SINCE_2_0
-NN_API
-NNError
-nn_svm_update_kernel(NNTensor* output,
-                     NNTensor* cache,
-                     NNTensor* input,
-                     NNTensor* sv,
-                     NNTensor* idx);
-
-NN_AVAILABLE_SINCE_2_0
-NN_API
-NNError
-nn_svm_decision_stats(NNTensor* output,
-                      NNTensor* cache,
-                      NNTensor* input,
-                      NNTensor* alpha,
-                      NNTensor* rho);
-
-NN_AVAILABLE_SINCE_2_0
-NN_API
-NNError
-nn_svm_soft_probability(NNTensor* output,
-                        NNTensor* cache,
-                        NNTensor* input,
-                        NNTensor* a,
-                        NNTensor* b);
-
-NN_AVAILABLE_SINCE_2_4
-NN_API
-NNError
-nn_decode_centernet(NNTensor* heatmap_tensor,
-					NNTensor* regression_tensor,
-					NNTensor* size_tensor,
-					NNTensor* cache,
-					NNTensor* decode_out);
-
-/**
- * @brief nn_resize implements Nearest Neighbor or Bilinear interpolation
- */
-NN_AVAILABLE_SINCE_2_4
+NN_AVAILABLE_SINCE_2_4_18
 NN_API
 NNError
 nn_resize(NNTensor* output,
@@ -750,6 +934,152 @@ nn_resize(NNTensor* output,
           int       mode,
           bool      align_corners,
           bool      half_pixel_centers);
+
+/**
+ *
+ * @note Currently bilinear interpolation is not implemented on CPU and will
+ * fallback to nearest neighbour.
+ *
+ * @param output tensor which will receive the results and should be the target
+ *               shape into which the resize operation will be performed.
+ * @param input input tensor for resize operation.
+ * @param mode
+ * @param align_corners
+ * @param half_pixel_centers
+ *
+ * @return
+ *
+ * @since 2.4.18
+ */
+NN_AVAILABLE_SINCE_2_4_18
+NN_API
+NNError
+nn_resize(NNTensor* output,
+          NNTensor* input,
+          int       mode,
+          bool      align_corners,
+          bool      half_pixel_centers);
+
+/**
+ * Implements the post-processing for TensorFlow Object Detection API SSD.
+ *
+ * It supports both version 1 and 2 of the TensorFlow Object Detection API for
+ * SSD models.
+ *
+ * Anchors are an unlearned constant which defines the starting candidates for
+ * bounding boxes.  The anchors can generally be extracted from the source .pb
+ * or SavedModel files as well as the Keras H5.  Otherwise the source code for
+ * the model trainer is where the anchors would be defined.
+ *
+ * The detectv4.c example provides an example of using this API and how to
+ * access the needed tensors from the model.
+ *
+ * @note While this API was originally added in DeepViewRT 2.4.28 it was not
+ * exposed by deepview_ops.h until 2.4.32.  To use it in versions 2.4.28 and
+ * 2.4.30 the function signature needs to be manually "extern" into the user
+ * application.
+ *
+ * @param score Tensor holding scores of tensorflow ssd (the first output)
+ * @param trans Tensor holding transformation parameters of tensorflow ssd
+ *  (second output).
+ * @param anchors Tensor holding pre-defined anchors for the ssd model
+ * @param cache_tensor Tensor holding the optional cache tensor
+ * @param score_threshold threshold to filter out noises
+ * @param iou_threshold threshold for nms
+ * @param max_output_size_per_class maximum detection per class
+ * @param bbx_out_tensor Tensor receiving the bounding box output.
+ * @param bbx_out_dim_tensor Tensor receiving the number of valid detections
+ *  for each class.
+ *
+ * @return NNError
+ *
+ * @since 2.4.28
+ */
+NN_AVAILABLE_SINCE_2_4_28
+NN_API
+NNError
+nn_ssd_decode_nms_standard_bbx(NNTensor* score,
+                               NNTensor* trans,
+                               NNTensor* anchors,
+                               NNTensor* cache,
+                               float     score_threshold,
+                               float     iou_threshold,
+                               int32_t   max_output_size_per_class,
+                               NNTensor* bbx_out_tensor,
+                               NNTensor* bbx_out_dim_tensor);
+
+/**
+ * Implements the post-processing for the eIQ Portal variant of SSD.
+ *
+ * In this approach, the bounding box encoding method is slightly different
+ * compared to the standard TensorFlow approach, each encoded representation
+ * is further divided by their corresponding variance and the two outputs of
+ * `score` and `trans` are concatenated into a single output `prediction`.
+ *
+ * Anchors are an unlearned constant which defines the starting candidates for
+ * bounding boxes.  When using eIQ Portal the exported DeepViewRT Model will
+ * have the anchors embedded into the model automatically.  They are also saved
+ * in the model's checkpoint folder.
+ *
+ * The detectv4.c example provides an example of using this API and how to
+ * access the needed tensors from the model.
+ *
+ * @note While this API was originally added in DeepViewRT 2.4.28 it was not
+ * exposed by deepview_ops.h until 2.4.32.  To use it in versions 2.4.28 and
+ * 2.4.30 the function signature needs to be manually "extern" into the user
+ * application.
+ *
+ * @param prediction Tensor holding the concatenated scores and transforms
+ * @param anchors Tensor holding the pre-defined anchors for the ssd model
+ * @param cache_tensor Tensor holding the optional cache memory
+ * @param score_threshold threshold to filter out noises
+ * @param iou_threshold threshold for nms
+ * @param max_output_size_per_class maximum detection per class
+ * @param bbx_out_tensor Tensor receiving the bounding boxes
+ * @param bbx_out_dim_tensor Tensor receiving the number of valid detections
+ *  for each class.
+ *
+ * @return NNError
+ *
+ * @since 2.4.28
+ */
+NN_AVAILABLE_SINCE_2_4_28
+NN_API
+NNError
+nn_ssd_decode_nms_variance_bbx(NNTensor* prediction,
+                               NNTensor* anchors,
+                               NNTensor* cache,
+                               float     score_threshold,
+                               float     iou_threshold,
+                               int32_t   max_output_size_per_class,
+                               NNTensor* bbx_out_tensor,
+                               NNTensor* bbx_out_dim_tensor);
+
+/**
+ * @brief Performs the NMS portion of the SSD box decoding algorithm.
+ *
+ * @deprecated It is deprecated since 2.4.32 in favour of the more complete
+ * implementations applicable to eIQ Portal models using
+ * @ref nn_ssd_decode_nms_variance_bbx() or for TensorFlow 1.x/2.x  Object
+ * Detection API models by using @ref nn_ssd_decode_nms_standard_bbx().
+ *
+ * @return NNError
+ *
+ * @since 2.4.25
+ */
+NN_DEPRECATED_SINCE_2_4_30
+NN_AVAILABLE_SINCE_2_4_25
+NN_API
+NNError
+nn_ssd_nms_full(NNTensor* input,
+                NNTensor* bbx_tensor,
+                NNTensor* score_tensor,
+                NNTensor* cache,
+                float     score_threshold,
+                float     iou_threshold,
+                int32_t   max_output_size,
+                NNTensor* bbx_out_tensor,
+                NNTensor* bbx_out_dim_tensor);
 
 #ifdef __cplusplus
 }

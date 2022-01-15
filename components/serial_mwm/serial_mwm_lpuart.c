@@ -79,10 +79,20 @@ int mwm_tx(uint8_t *write_buf, uint32_t len)
 
 int mwm_port_init(void)
 {
+#if defined(BOARD_SERIAL_MWM_PORT) && defined(BOARD_SERIAL_MWM_PORT_CLK_FREQ) && defined(BOARD_SERIAL_MWM_PORT_IRQn)
     s_lpuart_config.srcclk = BOARD_SERIAL_MWM_PORT_CLK_FREQ;
     s_lpuart_config.base   = BOARD_SERIAL_MWM_PORT;
 
     NVIC_SetPriority(BOARD_SERIAL_MWM_PORT_IRQn, SERIAL_MWM_PORT_NVIC_PRIO);
+#else
+/*
+ * Example of LPUART settings:
+ * #define BOARD_SERIAL_MWM_PORT_CLK_FREQ     BOARD_DebugConsoleSrcFreq()
+ * #define BOARD_SERIAL_MWM_PORT              LPUART2
+ * #define BOARD_SERIAL_MWM_PORT_IRQn         LPUART2_IRQn
+ */
+#warning "Define BOARD_SERIAL_MWM_PORT, BOARD_SERIAL_MWM_PORT_CLK_FREQ, BOARD_SERIAL_MWM_PORT_IRQn in board.h"
+#endif
 
     if (0 > LPUART_RTOS_Init(&s_handle, &s_t_handle, &s_lpuart_config))
     {

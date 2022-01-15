@@ -81,8 +81,9 @@ void axI2CResetBackoffDelay() {
 }
 
 static void BackOffDelay_Wait() {
-    if (gBackoffDelay < 200 )
+    if (gBackoffDelay < 200 ) {
         gBackoffDelay += 1;
+    }
     sm_sleep(gBackoffDelay);
 }
 
@@ -180,6 +181,11 @@ unsigned int axI2CWrite(
     i2c_master_transfer_t masterXfer;
     memset(&masterXfer, 0, sizeof(masterXfer)); //clear values
 
+    if(pTx == NULL || txLen > MAX_DATA_LEN)
+    {
+        return I2C_FAILED;
+    }
+
 #if defined(SCI2C_DEBUG)
     I2C_LOG_PRINTF("\r\n SCI2C Write \r\n");
 #endif
@@ -218,6 +224,16 @@ unsigned int axI2CWriteRead(
     i2c_master_transfer_t masterXfer;
     status_t result;
     memset(&masterXfer, 0, sizeof(masterXfer)); //clear values
+
+    if(pTx == NULL || txLen > MAX_DATA_LEN)
+    {
+        return I2C_FAILED;
+    }
+
+    if(pRx == NULL || *pRxLen > MAX_DATA_LEN)
+    {
+        return I2C_FAILED;
+    }
 
     *pRxLen = 0;
     memset(pRx, 0, 2);
@@ -339,6 +355,11 @@ unsigned int axI2CRead(void* conn_ctx, unsigned char bus, unsigned char addr, un
     i2c_master_transfer_t masterXfer;
     status_t result;
     memset(&masterXfer, 0, sizeof(masterXfer)); //clear values
+
+    if(pRx == NULL || rxLen > MAX_DATA_LEN)
+    {
+        return I2C_FAILED;
+    }
 
 #if defined(SCI2C_DEBUG)
     I2C_LOG_PRINTF("\r\n SCI2C Read \r\n");

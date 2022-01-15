@@ -314,8 +314,14 @@ usb_status_t USB_DevicePrinterDeinit(class_handle_t handle)
     }
 
     status = USB_DevicePrinterEndpointsDeinit(printerHandle);
+#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
+    if (kStatus_USB_Success != USB_DevicePrinterFreeHandle(printerHandle))
+    {
+        return kStatus_USB_Error;
+    }
+#else
     (void)USB_DevicePrinterFreeHandle(printerHandle);
-
+#endif
     return status;
 }
 
@@ -463,8 +469,17 @@ usb_status_t USB_DevicePrinterEvent(void *handle, uint32_t event, void *param)
                                     endpointCallbackMessage.buffer  = printerHandle->bulkInPipeDataBuffer;
                                     endpointCallbackMessage.length  = printerHandle->bulkInPipeDataLen;
                                     endpointCallbackMessage.isSetup = 0U;
+#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
+                                    if (kStatus_USB_Success !=
+                                        USB_DevicePrinterBulkInCallback(printerHandle->deviceHandle,
+                                                                        (void *)&endpointCallbackMessage, handle))
+                                    {
+                                        return kStatus_USB_Error;
+                                    }
+#else
                                     (void)USB_DevicePrinterBulkInCallback(printerHandle->deviceHandle,
                                                                           (void *)&endpointCallbackMessage, handle);
+#endif
                                 }
                                 printerHandle->bulkInPipeDataBuffer = (uint8_t *)USB_INVALID_TRANSFER_BUFFER;
                                 printerHandle->bulkInPipeDataLen    = 0U;
@@ -489,8 +504,17 @@ usb_status_t USB_DevicePrinterEvent(void *handle, uint32_t event, void *param)
                                     endpointCallbackMessage.buffer  = printerHandle->bulkOutPipeDataBuffer;
                                     endpointCallbackMessage.length  = printerHandle->bulkOutPipeDataLen;
                                     endpointCallbackMessage.isSetup = 0U;
+#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
+                                    if (kStatus_USB_Success !=
+                                        USB_DevicePrinterBulkInCallback(printerHandle->deviceHandle,
+                                                                        (void *)&endpointCallbackMessage, handle))
+                                    {
+                                        return kStatus_USB_Error;
+                                    }
+#else
                                     (void)USB_DevicePrinterBulkInCallback(printerHandle->deviceHandle,
                                                                           (void *)&endpointCallbackMessage, handle);
+#endif
                                 }
                                 printerHandle->bulkOutPipeDataBuffer = (uint8_t *)USB_INVALID_TRANSFER_BUFFER;
                                 printerHandle->bulkOutPipeDataLen    = 0U;
@@ -520,15 +544,16 @@ usb_status_t USB_DevicePrinterEvent(void *handle, uint32_t event, void *param)
             }
 
             classRequest.alternateSetting = (uint8_t)(controlRequest->setup->wIndex);
-            status = kStatus_USB_InvalidRequest;
+            status                        = kStatus_USB_InvalidRequest;
             switch (controlRequest->setup->bRequest)
             {
                 case USB_DEVICE_PRINTER_GET_DEVICE_ID:
                     /* GET_DEVICE_ID */
-                    if (((controlRequest->setup->bmRequestType & USB_REQUEST_TYPE_DIR_MASK) == USB_REQUEST_TYPE_DIR_IN)
-                        && (controlRequest->setup->wLength != 0U))
+                    if (((controlRequest->setup->bmRequestType & USB_REQUEST_TYPE_DIR_MASK) ==
+                         USB_REQUEST_TYPE_DIR_IN) &&
+                        (controlRequest->setup->wLength != 0U))
                     {
-                        classRequest.configIndex      = (uint8_t)controlRequest->setup->wValue;
+                        classRequest.configIndex = (uint8_t)controlRequest->setup->wValue;
 
                         /* ClassCallback is initialized in classInit of s_UsbDeviceClassInterfaceMap,
                         it is from the second parameter of classInit */
@@ -541,8 +566,9 @@ usb_status_t USB_DevicePrinterEvent(void *handle, uint32_t event, void *param)
 
                 case USB_DEVICE_PRINTER_GET_PORT_STATUS:
                     /* GET_PORT_STATUS */
-                    if (((controlRequest->setup->bmRequestType & USB_REQUEST_TYPE_DIR_MASK) == USB_REQUEST_TYPE_DIR_IN)
-                        && (controlRequest->setup->wLength == 1U))
+                    if (((controlRequest->setup->bmRequestType & USB_REQUEST_TYPE_DIR_MASK) ==
+                         USB_REQUEST_TYPE_DIR_IN) &&
+                        (controlRequest->setup->wLength == 1U))
                     {
                         /* ClassCallback is initialized in classInit of s_UsbDeviceClassInterfaceMap,
                         it is from the second parameter of classInit */
@@ -554,12 +580,21 @@ usb_status_t USB_DevicePrinterEvent(void *handle, uint32_t event, void *param)
                     break;
 
                 case USB_DEVICE_PRINTER_SOFT_RESET:
-                    if (((controlRequest->setup->bmRequestType & USB_REQUEST_TYPE_DIR_MASK) == USB_REQUEST_TYPE_DIR_OUT)
-                        && (controlRequest->setup->wLength == 0U))
+                    if (((controlRequest->setup->bmRequestType & USB_REQUEST_TYPE_DIR_MASK) ==
+                         USB_REQUEST_TYPE_DIR_OUT) &&
+                        (controlRequest->setup->wLength == 0U))
                     {
                         /* reset BULK_IN/OUT endpoint and inform application */
+#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
+                        if ((kStatus_USB_Success != USB_DevicePrinterEndpointsDeinit(printerHandle)) ||
+                            (kStatus_USB_Success != USB_DevicePrinterEndpointsInit(printerHandle)))
+                        {
+                            return kStatus_USB_Error;
+                        }
+#else
                         (void)USB_DevicePrinterEndpointsDeinit(printerHandle);
                         (void)USB_DevicePrinterEndpointsInit(printerHandle);
+#endif
                         /* ClassCallback is initialized in classInit of s_UsbDeviceClassInterfaceMap,
                         it is from the second parameter of classInit */
                         status = printerHandle->classConfig->classCallback(

@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 NXP
+ * Copyright 2021 NXP
  * All rights reserved.
  *
  *
@@ -12,13 +12,15 @@
  * Definitions
  ******************************************************************************/
 /*${macro:start}*/
-#define EXAMPLE_FLEXSPI           FLEXSPI
-#define FLASH_SIZE                0x1000 /* 32Mb/KByte */
-#define EXAMPLE_FLEXSPI_AMBA_BASE FlexSPI_AMBA_BASE
-#define FLASH_PAGE_SIZE           256
-#define EXAMPLE_SECTOR            6
-#define SECTOR_SIZE               0x1000 /* 4K */
-#define EXAMPLE_FLEXSPI_CLOCK     kCLOCK_FlexSpi
+#define EXAMPLE_FLEXSPI                 FLEXSPI
+#define FLASH_SIZE                      0x1000 /* 32Mb/KByte */
+#define EXAMPLE_FLEXSPI_AMBA_BASE       FlexSPI_AMBA_BASE
+#define FLASH_PAGE_SIZE                 256
+#define EXAMPLE_SECTOR                  6
+#define SECTOR_SIZE                     0x1000 /* 4K */
+#define EXAMPLE_FLEXSPI_CLOCK           kCLOCK_FlexSpi
+#define FLASH_PORT                      kFLEXSPI_PortA1
+#define EXAMPLE_FLEXSPI_RX_SAMPLE_CLOCK kFLEXSPI_ReadSampleClkLoopbackFromDqsPad
 
 #define NOR_CMD_LUT_SEQ_IDX_READ_NORMAL        7
 #define NOR_CMD_LUT_SEQ_IDX_READ_FAST          13
@@ -41,7 +43,26 @@
 #define FLASH_BUSY_STATUS_OFFSET 0
 #define FLASH_ERROR_STATUS_MASK  0x0e
 
+/*
+ * If cache is enabled, this example should maintain the cache to make sure
+ * CPU core accesses the memory, not cache only.
+ */
+#define CACHE_MAINTAIN 1
+
 /*${macro:end}*/
+
+/*******************************************************************************
+ * Variables
+ ******************************************************************************/
+/*${variable:start}*/
+#if (defined CACHE_MAINTAIN) && (CACHE_MAINTAIN == 1)
+typedef struct _flexspi_cache_status
+{
+    volatile bool DCacheEnableFlag;
+    volatile bool ICacheEnableFlag;
+} flexspi_cache_status_t;
+#endif
+/*${variable:end}*/
 
 /*******************************************************************************
  * Prototypes

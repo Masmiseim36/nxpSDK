@@ -66,7 +66,7 @@ target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
 set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../../middleware/usb
     ${ProjDirPath}/../../../../../../devices/MIMXRT1064/drivers
-    ${ProjDirPath}/../../../../../../rtos/freertos
+    ${ProjDirPath}/../../../../../../rtos/freertos/freertos_kernel
     ${ProjDirPath}/../../../../../../devices/MIMXRT1064
     ${ProjDirPath}/../../../../../../devices/MIMXRT1064/utilities
     ${ProjDirPath}/../../../../../../devices/MIMXRT1064/xip

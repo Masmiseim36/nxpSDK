@@ -183,12 +183,12 @@
           <state>DEBUG</state>
           <state>XIP_EXTERNAL_FLASH=1</state>
           <state>XIP_BOOT_HEADER_ENABLE=1</state>
-          <state>FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE</state>
-          <state>FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1</state>
           <state>CPU_MIMXRT1052DVL6B</state>
           <state>USE_RTOS=1</state>
           <state>SDK_DEBUGCONSOLE=1</state>
           <state>LWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1</state>
+          <state>FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE</state>
+          <state>FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>SDK_OS_FREE_RTOS</state>
           <state>MCUXPRESSO_SDK</state>
@@ -727,8 +727,8 @@
         </option>
         <option>
           <name>IlinkConfigDefines</name>
-          <state>__stack_size__=2048</state>
-          <state>__heap_size__=25600</state>
+          <state>__stack_size__=0x800</state>
+          <state>__heap_size__=0x7000</state>
         </option>
         <option>
           <name>IlinkMapFile</name>
@@ -1180,12 +1180,12 @@
           <state>XIP_EXTERNAL_FLASH=1</state>
           <state>XIP_BOOT_HEADER_ENABLE=1</state>
           <state>NDEBUG</state>
-          <state>FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE</state>
-          <state>FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1</state>
           <state>CPU_MIMXRT1052DVL6B</state>
           <state>USE_RTOS=1</state>
           <state>SDK_DEBUGCONSOLE=1</state>
           <state>LWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1</state>
+          <state>FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE</state>
+          <state>FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>SDK_OS_FREE_RTOS</state>
           <state>MCUXPRESSO_SDK</state>
@@ -1724,8 +1724,8 @@
         </option>
         <option>
           <name>IlinkConfigDefines</name>
-          <state>__stack_size__=2048</state>
-          <state>__heap_size__=25600</state>
+          <state>__stack_size__=0x800</state>
+          <state>__heap_size__=0x7000</state>
         </option>
         <option>
           <name>IlinkMapFile</name>
@@ -2974,6 +2974,9 @@
           <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include/StackMacros.h</name>
         </file>
         <file>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include/stdint.readme</name>
+        </file>
+        <file>
           <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include/stream_buffer.h</name>
         </file>
         <file>
@@ -3138,6 +3141,12 @@
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial/freemaster_serial_usb.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/drivers/mcuxsdk/network/freemaster_net_segger_rtt.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/drivers/mcuxsdk/network/freemaster_net_segger_rtt.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/drivers/mcuxsdk/network/freemaster_net_lwip_udp.c</name>

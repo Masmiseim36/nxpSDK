@@ -92,8 +92,8 @@ int main(void)
     uint32_t timeout        = UINT32_MAX;
 
     BOARD_ConfigMPU();
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
+    BOARD_InitBootPins();
+    BOARD_InitBootClocks();
     BOARD_InitDebugConsole();
 
     /* Clock setting for Lpi2c */
@@ -105,11 +105,6 @@ int main(void)
     CLOCK_SetDiv(kCLOCK_Flexio1Div, FLEXIO_CLOCK_DIVIDER);
 
     PRINTF("\r\nFlexIO I2C interrupt - LPI2C interrupt\r\n");
-
-    /*  Set i2c slave interrupt priority higher. */
-    NVIC_SetPriority(BOARD_LPI2C_SLAVE_IRQn, 0);
-
-    NVIC_SetPriority(flexio_irqs[FLEXIO_GetInstance(BOARD_FLEXIO_BASE)], 1);
 
     /*1.Set up i2c slave first*/
     /*

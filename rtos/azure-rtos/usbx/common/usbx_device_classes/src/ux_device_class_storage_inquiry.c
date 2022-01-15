@@ -214,6 +214,12 @@ UCHAR                   *inquiry_buffer;
     if (inquiry_length)
         _ux_device_stack_transfer_request(transfer_request, inquiry_length, inquiry_length);
 
+    /* Check length.  */
+    if (storage -> ux_slave_class_storage_host_length != inquiry_length)
+    {
+        _ux_device_stack_endpoint_stall(endpoint_in);
+    }
+
     /* Return completion status.  */
     return(status);
 }

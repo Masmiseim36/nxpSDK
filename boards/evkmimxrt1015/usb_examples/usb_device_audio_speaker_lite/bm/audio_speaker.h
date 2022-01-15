@@ -11,17 +11,28 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
+
+/* @TEST_ANCHOR */
+
 #if defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0U)
+#ifndef CONTROLLER_ID
 #define CONTROLLER_ID kUSB_ControllerEhci0
 #endif
+#endif
 #if defined(USB_DEVICE_CONFIG_KHCI) && (USB_DEVICE_CONFIG_KHCI > 0U)
+#ifndef CONTROLLER_ID
 #define CONTROLLER_ID kUSB_ControllerKhci0
 #endif
+#endif
 #if defined(USB_DEVICE_CONFIG_LPCIP3511FS) && (USB_DEVICE_CONFIG_LPCIP3511FS > 0U)
+#ifndef CONTROLLER_ID
 #define CONTROLLER_ID kUSB_ControllerLpcIp3511Fs0
 #endif
+#endif
 #if defined(USB_DEVICE_CONFIG_LPCIP3511HS) && (USB_DEVICE_CONFIG_LPCIP3511HS > 0U)
+#ifndef CONTROLLER_ID
 #define CONTROLLER_ID kUSB_ControllerLpcIp3511Hs0
+#endif
 #endif
 
 #define AUDIO_SAMPLING_RATE_KHZ   (48)
@@ -32,10 +43,25 @@
 #define TSAMFREQ2BYTESHS(f)   (f & 0xFFU), ((f >> 8U) & 0xFFU), ((f >> 16U) & 0xFFU), ((f >> 24U) & 0xFFU)
 #define AUDIO_ADJUST_MIN_STEP (0x01)
 
-#if defined(USB_AUDIO_CHANNEL5_1) && (USB_AUDIO_CHANNEL5_1 > 0U)
-#define AUDIO_PLAY_BUFFER_SIZE_ONE_FRAME (AUDIO_OUT_TRANSFER_LENGTH_ONE_FRAME / 3)
+#if defined(AUDIO_SPEAKER_MULTI_CHANNEL_PLAY) && (AUDIO_SPEAKER_MULTI_CHANNEL_PLAY > 0U)
+#if ((defined(USB_AUDIO_CHANNEL7_1) && (USB_AUDIO_CHANNEL7_1 > 0U)) || \
+     (defined(USB_AUDIO_CHANNEL5_1) && (USB_AUDIO_CHANNEL5_1 > 0U)) || \
+     (defined(USB_AUDIO_CHANNEL3_1) && (USB_AUDIO_CHANNEL3_1 > 0U)))
+#define AUDIO_PLAY_BUFFER_SIZE_ONE_FRAME \
+    (AUDIO_OUT_TRANSFER_LENGTH_ONE_FRAME / AUDIO_FORMAT_SIZE * 4U / AUDIO_FORMAT_CHANNELS * 8U)
 #else
 #define AUDIO_PLAY_BUFFER_SIZE_ONE_FRAME AUDIO_OUT_TRANSFER_LENGTH_ONE_FRAME
+#endif
+#else
+#if defined(USB_AUDIO_CHANNEL7_1) && (USB_AUDIO_CHANNEL7_1 > 0U)
+#define AUDIO_PLAY_BUFFER_SIZE_ONE_FRAME (AUDIO_OUT_TRANSFER_LENGTH_ONE_FRAME / 4)
+#elif defined(USB_AUDIO_CHANNEL5_1) && (USB_AUDIO_CHANNEL5_1 > 0U)
+#define AUDIO_PLAY_BUFFER_SIZE_ONE_FRAME (AUDIO_OUT_TRANSFER_LENGTH_ONE_FRAME / 3)
+#elif defined(USB_AUDIO_CHANNEL3_1) && (USB_AUDIO_CHANNEL3_1 > 0U)
+#define AUDIO_PLAY_BUFFER_SIZE_ONE_FRAME (AUDIO_OUT_TRANSFER_LENGTH_ONE_FRAME / 2)
+#else
+#define AUDIO_PLAY_BUFFER_SIZE_ONE_FRAME AUDIO_OUT_TRANSFER_LENGTH_ONE_FRAME
+#endif
 #endif
 
 #define AUDIO_FRO_USB_SOF_INTERVAL_VALID_DEVIATION ((AUDIO_FRO_USB_SOF_INTERVAL_TICK_COUNT) >> 7)
@@ -101,8 +127,9 @@ typedef struct _usb_audio_speaker_struct
     volatile uint8_t startPlayFlag;
     volatile uint32_t tdWriteNumberPlay;
     volatile uint32_t tdReadNumberPlay;
-    volatile uint32_t audioSendCount;
-    volatile uint32_t lastAudioSendCount;
+    volatile uint32_t audioSendCount[2];
+    volatile uint32_t audioSpeakerReadDataCount[2];
+    volatile uint32_t audioSpeakerWriteDataCount[2];
     volatile uint32_t usbRecvCount;
     volatile uint32_t audioSendTimes;
     volatile uint32_t usbRecvTimes;

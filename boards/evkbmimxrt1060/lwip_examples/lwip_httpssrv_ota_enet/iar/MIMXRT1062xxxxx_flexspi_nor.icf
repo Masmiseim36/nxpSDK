@@ -25,8 +25,6 @@
 ** ###################################################################
 */
 
-define symbol m_ota_boot_hdr_start     = 0x60040000;
-
 define symbol m_interrupts_start       = 0x60040400;
 define symbol m_interrupts_end         = 0x600407FF;
 
@@ -87,9 +85,6 @@ initialize by copy {
 do not initialize  { section .noinit };
 
 place at address mem: m_interrupts_start    { readonly section .intvec };
-
-place at address mem:m_ota_boot_hdr_start { object ota_bootloader_hdr.o };
-keep { object ota_bootloader_hdr.o };
 
 place in TEXT_region                        { readonly };
 place in DATA2_region                       { block RW };

@@ -7,7 +7,7 @@
 **     Compiler:            Keil ARM C/C++ Compiler
 **     Reference manual:    IMXRT1015RM Rev.0, 12/2018 | IMXRT1015SRM Rev.3
 **     Version:             rev. 1.0, 2019-01-18
-**     Build:               b210226
+**     Build:               b210709
 **
 **     Abstract:
 **         Linker file for the Keil ARM C/C++ Compiler
@@ -97,6 +97,7 @@ LR_m_text m_interrupts_start m_text_start+m_text_size-m_interrupts_start {   ; l
 #endif
   RW_m_data m_data_start m_data_size-Stack_Size-Heap_Size { ; RW data
     * (RamFunction)
+    * (DataQuickAccess)
     * (NonCacheable.init)
     * (*NonCacheable)
   }

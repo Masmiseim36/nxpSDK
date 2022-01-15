@@ -58,11 +58,11 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../../../devices/MIMXRT1064/cmsis_drivers
     ${ProjDirPath}/../../../../../../../devices/MIMXRT1064
     ${ProjDirPath}/../../../../../../../devices/MIMXRT1064/utilities
-    ${ProjDirPath}/../../../../../../../devices/MIMXRT1064/xip
-    ${ProjDirPath}/../../../../../../evkmimxrt1064/xip
     ${ProjDirPath}/../../../../../../../components/uart
     ${ProjDirPath}/../../../../../../../components/serial_manager
     ${ProjDirPath}/../../../../../../../components/lists
+    ${ProjDirPath}/../../../../../../../devices/MIMXRT1064/xip
+    ${ProjDirPath}/../../../../../../evkmimxrt1064/xip
     ${ProjDirPath}/../../../../../../../CMSIS/Core/Include
     ${ProjDirPath}/../../../../../../../CMSIS/Driver/Include
 )
@@ -104,9 +104,17 @@ include(driver_common_MIMXRT1064)
 
 include(device_MIMXRT1064_CMSIS_MIMXRT1064)
 
-include(device_MIMXRT1064_startup_MIMXRT1064)
-
 include(utility_debug_console_MIMXRT1064)
+
+include(component_lpuart_adapter_MIMXRT1064)
+
+include(component_serial_manager_MIMXRT1064)
+
+include(component_lists_MIMXRT1064)
+
+include(component_serial_manager_uart_MIMXRT1064)
+
+include(device_MIMXRT1064_startup_MIMXRT1064)
 
 include(driver_iomuxc_MIMXRT1064)
 
@@ -117,14 +125,6 @@ include(driver_igpio_MIMXRT1064)
 include(driver_xip_device_MIMXRT1064)
 
 include(driver_xip_board_evkmimxrt1064_MIMXRT1064)
-
-include(component_lpuart_adapter_MIMXRT1064)
-
-include(component_serial_manager_MIMXRT1064)
-
-include(component_lists_MIMXRT1064)
-
-include(component_serial_manager_uart_MIMXRT1064)
 
 include(CMSIS_Include_core_cm_MIMXRT1064)
 

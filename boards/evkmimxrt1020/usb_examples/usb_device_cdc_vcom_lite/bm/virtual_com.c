@@ -180,7 +180,7 @@ usb_status_t USB_DeviceCdcAcmBulkIn(usb_device_handle handle,
          ** meaning that we want to inform the host that we do not have any additional
          ** data, so it can flush the output.
          */
-        USB_DeviceSendRequest(handle, USB_CDC_VCOM_BULK_IN_ENDPOINT, NULL, 0);
+        error = USB_DeviceSendRequest(handle, USB_CDC_VCOM_BULK_IN_ENDPOINT, NULL, 0);
     }
     else if ((1 == s_cdcVcom.attach) && (1 == s_cdcVcom.startTransactions))
     {
@@ -188,7 +188,8 @@ usb_status_t USB_DeviceCdcAcmBulkIn(usb_device_handle handle,
         {
             /* User: add your own code for send complete event */
             /* Schedule buffer for next receive event */
-            USB_DeviceRecvRequest(handle, USB_CDC_VCOM_BULK_OUT_ENDPOINT, s_currRecvBuf, s_usbBulkMaxPacketSize);
+            error =
+                USB_DeviceRecvRequest(handle, USB_CDC_VCOM_BULK_OUT_ENDPOINT, s_currRecvBuf, s_usbBulkMaxPacketSize);
 #if defined(FSL_FEATURE_USB_KHCI_KEEP_ALIVE_ENABLED) && (FSL_FEATURE_USB_KHCI_KEEP_ALIVE_ENABLED > 0U) && \
     defined(USB_DEVICE_CONFIG_KEEP_ALIVE_MODE) && (USB_DEVICE_CONFIG_KEEP_ALIVE_MODE > 0U) &&             \
     defined(FSL_FEATURE_USB_KHCI_USB_RAM) && (FSL_FEATURE_USB_KHCI_USB_RAM > 0U)
@@ -223,6 +224,7 @@ usb_status_t USB_DeviceCdcAcmBulkOut(usb_device_handle handle,
     if ((1 == s_cdcVcom.attach) && (1 == s_cdcVcom.startTransactions))
     {
         s_recvSize = message->length;
+        error      = kStatus_USB_Success;
 
 #if defined(FSL_FEATURE_USB_KHCI_KEEP_ALIVE_ENABLED) && (FSL_FEATURE_USB_KHCI_KEEP_ALIVE_ENABLED > 0U) && \
     defined(USB_DEVICE_CONFIG_KEEP_ALIVE_MODE) && (USB_DEVICE_CONFIG_KEEP_ALIVE_MODE > 0U) &&             \
@@ -430,7 +432,8 @@ usb_status_t USB_DeviceProcessClassRequest(usb_device_handle handle,
                 }
 
                 /* Indicates to DCE if DTE is present or not */
-                acmInfo->dtePresent = (acmInfo->dteStatus & USB_DEVICE_CDC_CONTROL_SIG_BITMAP_DTE_PRESENCE) ? true : false;
+                acmInfo->dtePresent =
+                    (acmInfo->dteStatus & USB_DEVICE_CDC_CONTROL_SIG_BITMAP_DTE_PRESENCE) ? true : false;
 
                 /* Initialize the serial state buffer */
                 acmInfo->serialStateBuf[0] = NOTIF_REQUEST_TYPE;                        /* bmRequestType */
@@ -452,7 +455,8 @@ usb_status_t USB_DeviceProcessClassRequest(usb_device_handle handle,
                 len = (uint32_t)(NOTIF_PACKET_SIZE + UART_BITMAP_SIZE);
                 if (0 == s_cdcVcom.hasSentState)
                 {
-                    error = USB_DeviceSendRequest(handle, USB_CDC_VCOM_INTERRUPT_IN_ENDPOINT, acmInfo->serialStateBuf, len);
+                    error =
+                        USB_DeviceSendRequest(handle, USB_CDC_VCOM_INTERRUPT_IN_ENDPOINT, acmInfo->serialStateBuf, len);
                     if (kStatus_USB_Success != error)
                     {
                         usb_echo("kUSB_DeviceCdcEventSetControlLineState error!");
@@ -469,29 +473,18 @@ usb_status_t USB_DeviceProcessClassRequest(usb_device_handle handle,
                 {
                     /* To do: CARRIER_DEACTIVATED */
                 }
-                if (acmInfo->dteStatus & USB_DEVICE_CDC_CONTROL_SIG_BITMAP_DTE_PRESENCE)
+
+                if (1 == s_cdcVcom.attach)
                 {
-                    /* DTE_ACTIVATED */
-                    if (1 == s_cdcVcom.attach)
-                    {
-                        s_cdcVcom.startTransactions = 1;
+                    s_cdcVcom.startTransactions = 1;
 #if defined(FSL_FEATURE_USB_KHCI_KEEP_ALIVE_ENABLED) && (FSL_FEATURE_USB_KHCI_KEEP_ALIVE_ENABLED > 0U) && \
     defined(USB_DEVICE_CONFIG_KEEP_ALIVE_MODE) && (USB_DEVICE_CONFIG_KEEP_ALIVE_MODE > 0U) &&             \
     defined(FSL_FEATURE_USB_KHCI_USB_RAM) && (FSL_FEATURE_USB_KHCI_USB_RAM > 0U)
-                        s_waitForDataReceive = 1;
-                        USB0->INTEN &= ~USB_INTEN_SOFTOKEN_MASK;
-                        s_comOpen = 1;
-                        usb_echo("USB_APP_CDC_DTE_ACTIVATED\r\n");
+                    s_waitForDataReceive = 1;
+                    USB0->INTEN &= ~USB_INTEN_SOFTOKEN_MASK;
+                    s_comOpen = 1;
+                    usb_echo("USB_APP_CDC_DTE_ACTIVATED\r\n");
 #endif
-                    }
-                }
-                else
-                {
-                    /* DTE_DEACTIVATED */
-                    if (1 == s_cdcVcom.attach)
-                    {
-                        s_cdcVcom.startTransactions = 0;
-                    }
                 }
             }
         }
@@ -627,7 +620,8 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
                     s_usbBulkMaxPacketSize = FS_CDC_VCOM_BULK_OUT_PACKET_SIZE;
                 }
                 /* Schedule buffer for receive */
-                error = USB_DeviceRecvRequest(handle, USB_CDC_VCOM_BULK_OUT_ENDPOINT, s_currRecvBuf, s_usbBulkMaxPacketSize);
+                error = USB_DeviceRecvRequest(handle, USB_CDC_VCOM_BULK_OUT_ENDPOINT, s_currRecvBuf,
+                                              s_usbBulkMaxPacketSize);
             }
             else
             {

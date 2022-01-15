@@ -28,10 +28,12 @@
 
 #include "mbedtls/certs.h"
 
-#include "ota_bootloader_supp.h"
+#include "mcuboot_app_support.h"
 #include "mflash_drv.h"
 
 #include "timers.h"
+
+#include "fsl_debug_console.h"
 
 #include "fsl_gpio.h"
 #include "fsl_iomuxc.h"
@@ -489,9 +491,7 @@ int32_t store_update_image(struct multipart_read_ctx *ctx, uint32_t partition_lo
 
     /* Page buffers */
     uint32_t page_size;
-    uint32_t *page_buffers;
     uint32_t *page_buffer;
-    uint32_t *first_page_buffer;
 
     /* Received/processed data counter */
     uint32_t total_processed = 0;
@@ -512,56 +512,50 @@ int32_t store_update_image(struct multipart_read_ctx *ctx, uint32_t partition_lo
     }
 
     /* Allocate page buffer(s) is one go */
-    page_size    = MFLASH_PAGE_SIZE;
-    page_buffers = httpsrv_mem_alloc(2 * page_size);
-    if (page_buffers == NULL)
+    page_size   = MFLASH_PAGE_SIZE;
+    page_buffer = httpsrv_mem_alloc(page_size);
+    if (page_buffer == NULL)
     {
         PRINTF("store_update_image: page buffer allocation error\r\n");
         return -1;
     }
 
-    first_page_buffer = page_buffers;                                     /* Buffer for the first page */
-    page_buffer       = page_buffers + page_size / sizeof(*page_buffers); /* Buffer for subsequent pages */
-
     /* Pre-set address of area not erased so far */
-    next_erase_addr = partition_phys_addr;
-
-    /* Receive first page into buffer and keep it there (do not write to flash) until the rest of the image is written
-     */
-    memset(first_page_buffer, 0xff, page_size);
+    next_erase_addr  = partition_phys_addr;
     chunk_flash_addr = partition_phys_addr;
-    chunk_len        = multipart_read_data(ctx, (uint8_t *)first_page_buffer, page_size);
-    total_processed  = chunk_len > 0 ? chunk_len : 0;
+    total_processed  = 0;
 
-    /* The data is epxected for be received by page sized chunks (except for the last one) */
-    while (chunk_len == page_size)
+    do
     {
-        chunk_flash_addr += chunk_len;
-        if (chunk_flash_addr >= partition_phys_addr + partition_size)
-        {
-            /* Partition boundary exceeded */
-            PRINTF("\rstore_update_image: partition boundary exceedded");
-            retval = -1;
-            break;
-        }
-
-        /* Perform erase when encountering next sector */
-        if (chunk_flash_addr >= next_erase_addr)
-        {
-            mflash_result = mflash_drv_sector_erase(next_erase_addr);
-            if (mflash_result != 0)
-            {
-                break;
-            }
-            next_erase_addr += MFLASH_SECTOR_SIZE;
-        }
-
+        /* The data is epxected for be received by page sized chunks (except for the last one) */
         chunk_len = multipart_read_data(ctx, (uint8_t *)page_buffer, page_size);
+
         if (chunk_len > 0)
         {
-            /* Clear the unused portion of the buffer */
+            if (chunk_flash_addr >= partition_phys_addr + partition_size)
+            {
+                /* Partition boundary exceeded */
+                PRINTF("\rstore_update_image: partition boundary exceedded");
+                retval = -1;
+                break;
+            }
+
+            /* Perform erase when encountering next sector */
+            if (chunk_flash_addr >= next_erase_addr)
+            {
+                mflash_result = mflash_drv_sector_erase(next_erase_addr);
+                if (mflash_result != 0)
+                {
+                    break;
+                }
+                next_erase_addr += MFLASH_SECTOR_SIZE;
+            }
+
+            /* Clear the unused portion of the buffer (applicable to the last chunk) */
             if (chunk_len < page_size)
+            {
                 memset((uint8_t *)page_buffer + chunk_len, 0xff, page_size - chunk_len);
+            }
 
             /* Program the page */
             mflash_result = mflash_drv_page_program(chunk_flash_addr, page_buffer);
@@ -571,40 +565,18 @@ int32_t store_update_image(struct multipart_read_ctx *ctx, uint32_t partition_lo
             }
 
             total_processed += chunk_len;
+            chunk_flash_addr += chunk_len;
+
             PRINTF("\rstore_update_image: processed %i bytes", total_processed);
         }
-    }
+
+    } while (chunk_len == page_size);
 
     /* If there was error reading multipart content, report failure */
     if ((chunk_len < 0))
     {
         PRINTF("store_update_image: error reading data\r\n");
         retval = -1;
-    }
-    else if ((retval == 0) && (mflash_result == 0))
-    {
-#if OTA_DEVEL_MODE
-        /* Fixes image header required by ota_bootloader by setting the length and generating the proper checksum.
-         * This is to provide easy way of testing/debugging of OTA enabled application.
-         * Should not be used in production environment! */
-
-        /* Assuming the image header always fits into single FLASH page */
-        assert(page_size > sizeof(boot_image_header_t));
-
-        boot_image_header_t *bih = (boot_image_header_t *)first_page_buffer;
-        /* The image data should start in the following page thanks to header padding - required for checksum
-         * calculation */
-        if ((bih->image_size == 0) && (bih->header_size >= page_size) && (bih->header_size < total_processed))
-        {
-            PRINTF("\r\nstore_update_image: validating the image in development mode");
-            bih->image_size  = total_processed - bih->header_size;
-            bih->checksum[0] = bl_crc32((uint8_t *)partition_log_addr + bih->header_size, bih->image_size);
-            bih->algorithm   = IMG_CHK_ALG_CRC32;
-        }
-#endif
-
-        /* Put the first page of the partition into place */
-        mflash_result = mflash_drv_page_program(partition_phys_addr, first_page_buffer);
     }
 
     /* Check result of the last flash operation */
@@ -623,7 +595,7 @@ int32_t store_update_image(struct multipart_read_ctx *ctx, uint32_t partition_lo
     }
 
     /* Clean up */
-    httpsrv_mem_free(page_buffers);
+    httpsrv_mem_free(page_buffer);
 
     return retval;
 }
@@ -726,6 +698,8 @@ static int cgi_ota_upload(HTTPSRV_CGI_REQ_STRUCT *param)
 
 void reboot_timer_callback(TimerHandle_t timer)
 {
+    PRINTF("SystemReset\r\n");
+    vTaskDelay(100 / portTICK_PERIOD_MS);
     NVIC_SystemReset();
 }
 
@@ -798,7 +772,7 @@ static int cgi_ota_accept(HTTPSRV_CGI_REQ_STRUCT *param)
     response.data_length = 0;
     HTTPSRV_cgi_write(&response);
 
-    if (ota_status == OTA_STATUS_TESTING)
+    if (1 || ota_status == OTA_STATUS_TESTING)
     {
         /* There is an update under test, instruct bootloader to make it permanent */
         status_t status;
@@ -901,11 +875,13 @@ int main(void)
         /* Error retrieving status, the bootloader might not be installed correctly */
         ota_status = OTA_STATUS_BOOTLOADER_ERROR;
     }
-    else if (state == kSwapType_Test)
+    else if (state == kSwapType_Testing)
     {
-        /* Device is executiing in test mode */
+        /* Device is executing in test mode */
         ota_status = OTA_STATUS_TESTING;
     }
+
+    PRINTF("Build " __DATE__ " " __TIME__ "\r\n");
 
     /* create server thread in RTOS */
     if (sys_thread_new("main", main_thread, NULL, HTTPD_STACKSIZE, HTTPD_PRIORITY) == NULL)

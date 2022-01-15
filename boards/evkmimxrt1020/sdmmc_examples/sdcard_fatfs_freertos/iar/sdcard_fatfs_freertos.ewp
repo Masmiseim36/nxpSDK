@@ -183,6 +183,7 @@
           <state>DEBUG</state>
           <state>CPU_MIMXRT1021DAG5A</state>
           <state>FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1</state>
+          <state>DEBUG_CONSOLE_TRANSFER_NON_BLOCKING</state>
           <state>SD_ENABLED</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>SDK_OS_FREE_RTOS</state>
@@ -1173,6 +1174,7 @@
           <state>XIP_BOOT_HEADER_ENABLE=1</state>
           <state>CPU_MIMXRT1021DAG5A</state>
           <state>FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1</state>
+          <state>DEBUG_CONSOLE_TRANSFER_NON_BLOCKING</state>
           <state>SD_ENABLED</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>SDK_OS_FREE_RTOS</state>
@@ -2163,6 +2165,7 @@
           <state>DEBUG</state>
           <state>CPU_MIMXRT1021DAG5A</state>
           <state>FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1</state>
+          <state>DEBUG_CONSOLE_TRANSFER_NON_BLOCKING</state>
           <state>SD_ENABLED</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>SDK_OS_FREE_RTOS</state>
@@ -3151,6 +3154,7 @@
           <state>NDEBUG</state>
           <state>CPU_MIMXRT1021DAG5A</state>
           <state>FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1</state>
+          <state>DEBUG_CONSOLE_TRANSFER_NON_BLOCKING</state>
           <state>SD_ENABLED</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>SDK_OS_FREE_RTOS</state>
@@ -4141,6 +4145,7 @@
           <state>NDEBUG</state>
           <state>CPU_MIMXRT1021DAG5A</state>
           <state>FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1</state>
+          <state>DEBUG_CONSOLE_TRANSFER_NON_BLOCKING</state>
           <state>SD_ENABLED</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>SDK_OS_FREE_RTOS</state>
@@ -5131,6 +5136,7 @@
           <state>DATA_SECTION_IS_CACHEABLE=1</state>
           <state>CPU_MIMXRT1021DAG5A</state>
           <state>FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1</state>
+          <state>DEBUG_CONSOLE_TRANSFER_NON_BLOCKING</state>
           <state>SD_ENABLED</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>SDK_OS_FREE_RTOS</state>
@@ -6212,6 +6218,9 @@
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include/StackMacros.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include/stdint.readme</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include/stream_buffer.h</name>

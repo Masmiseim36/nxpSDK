@@ -8,7 +8,7 @@
 #include "osa_common.h"
 
 #include "board.h"
-#include "streamer_pcm.h"
+#include "streamer_pcm_app.h"
 #include "fsl_codec_common.h"
 #include "fsl_wm8960.h"
 #include "app_definitions.h"
@@ -219,8 +219,13 @@ static sai_mono_stereo_t _pcm_map_channels(uint8_t num_channels)
         return kSAI_MonoRight;
 }
 
-int streamer_pcm_setparams(
-    pcm_rtos_t *pcm, uint32_t sample_rate, uint32_t bit_width, uint8_t num_channels, bool transfer, bool dummy_tx)
+int streamer_pcm_setparams(pcm_rtos_t *pcm,
+                           uint32_t sample_rate,
+                           uint32_t bit_width,
+                           uint8_t num_channels,
+                           bool transfer,
+                           bool dummy_tx,
+                           int volume)
 {
     sai_transfer_format_t format = {0};
     sai_transceiver_t saiConfig;
@@ -330,9 +335,7 @@ int streamer_pcm_mute(pcm_rtos_t *pcm, bool mute)
     return 0;
 }
 
-int streamer_pcm_set_volume(uint32_t volume)
+int streamer_pcm_set_volume(pcm_rtos_t *pcm, int volume)
 {
-    CODEC_SetVolume(&codecHandle, kCODEC_PlayChannelHeadphoneRight | kCODEC_PlayChannelHeadphoneLeft, volume);
-
     return 0;
 }

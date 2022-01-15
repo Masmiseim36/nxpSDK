@@ -20,10 +20,10 @@
 #include "fsl_sss_ftr_default.h"
 #endif
 
-#if SSS_HAVE_MBEDTLS
+#if SSS_HAVE_HOSTCRYPTO_MBEDTLS
 #include <fsl_sss_mbedtls_apis.h>
 #endif
-#if SSS_HAVE_OPENSSL
+#if SSS_HAVE_HOSTCRYPTO_OPENSSL
 #include <fsl_sss_openssl_apis.h>
 #endif
 #if SSS_HAVE_HOSTCRYPTO_USER

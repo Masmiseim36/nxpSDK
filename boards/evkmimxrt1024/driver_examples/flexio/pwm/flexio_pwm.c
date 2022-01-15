@@ -31,7 +31,8 @@
 /* FLEXIO output PWM frequency */
 #define DEMO_FLEXIO_FREQUENCY (48000U)
 #define FLEXIO_MAX_FREQUENCY (DEMO_FLEXIO_CLOCK_FREQUENCY / 2U)
-#define FLEXIO_MIN_FREQUENCY (DEMO_FLEXIO_CLOCK_FREQUENCY / 256U)
+#define FLEXIO_MIN_FREQUENCY (DEMO_FLEXIO_CLOCK_FREQUENCY / 512U)
+
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
@@ -116,8 +117,8 @@ int main(void)
 
     /* Init board hardware */
     BOARD_ConfigMPU();
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
+    BOARD_InitBootPins();
+    BOARD_InitBootClocks();
     BOARD_InitDebugConsole();
 
     /* Clock setting for Flexio */

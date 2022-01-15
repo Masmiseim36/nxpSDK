@@ -58,7 +58,7 @@ ULONG thread_0_counter;
 /*******************************************************************************
  * Code
  ******************************************************************************/
-void main(void)
+int main(void)
 {
     /* Initialize the board.  */
     BOARD_ConfigMPU();
@@ -70,6 +70,8 @@ void main(void)
 
     /* Enter the ThreadX kernel.  */
     tx_kernel_enter();
+
+    return 0;
 }
 
 /* Define what the initial system looks like.  */

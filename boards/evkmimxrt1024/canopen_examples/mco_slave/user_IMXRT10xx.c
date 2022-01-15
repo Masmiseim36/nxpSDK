@@ -84,10 +84,11 @@ void MCOUSER_ResetApplication(void)
     PRINTF("\r\nCANopen Library Event - Reset Application ");
 #endif
 
-#if defined(XIP_EXTERNAL_FLASH) && (XIP_EXTERNAL_FLASH == 1)
+    // Not call reset by default (In the ram target or M4 side target, application data will lose after reset), call the
+    // reset communication instead
+#if defined(ENABLE_RESET_SLAVE_NODE) && defined(XIP_EXTERNAL_FLASH) && (XIP_EXTERNAL_FLASH == 1) && (__CORTEX_M == 7)
     __NVIC_SystemReset(); // Use CMSIS function to generate a software reset
 #else
-    // In the ram target, ignore NMT reset requests and call the reset communication
     MCOUSER_ResetCommunication();
 #endif
 }
